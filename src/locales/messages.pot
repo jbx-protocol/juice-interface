@@ -77,9 +77,6 @@ msgstr ""
 msgid "<0/> Archived projects haven't been modified or deleted on-chain. They can still be interacted with directly through the Juicebox contracts."
 msgstr ""
 
-msgid "<0/> The Juicebox protocol is open to anyone, and project's rules can vary widely. There are risks associated with interacting with all projects on the protocol. Projects built on the protocol are not endorsed or vetted by JuiceboxDAO or Peel. Do your own research and understand the <1>risks</1> before committing your ETH."
-msgstr ""
-
 msgid "<0/> Your project’s rules cannot be edited during the first cycle."
 msgstr ""
 
@@ -650,9 +647,6 @@ msgstr ""
 msgid "Choose how you would like to set up payouts."
 msgstr ""
 
-msgid "Choose wallets or Juicebox projects to receive reserved tokens."
-msgstr ""
-
 msgid "Choosing 'None' will clear your payout recipients and reset other payout options."
 msgstr ""
 
@@ -1163,6 +1157,9 @@ msgstr ""
 msgid "Edit payouts"
 msgstr ""
 
+msgid "Edit profile"
+msgstr ""
+
 msgid "Edit project"
 msgstr ""
 
@@ -1205,9 +1202,6 @@ msgstr ""
 msgid "Edited cycle"
 msgstr ""
 
-msgid "Edited payout"
-msgstr ""
-
 msgid "Editing NFTs"
 msgstr ""
 
@@ -1245,6 +1239,9 @@ msgid "Enabling owner token minting isn't recommended as it allows the project o
 msgstr ""
 
 msgid "End"
+msgstr ""
+
+msgid "Enter email address..."
 msgstr ""
 
 msgid "Enter your project's details. You can edit your project's details at any time after you deploy your project, but the transaction will cost gas."
@@ -1296,6 +1293,9 @@ msgid "Existing project payer addresses can be found in the Tools drawer (<0/>) 
 msgstr ""
 
 msgid "Explore"
+msgstr ""
+
+msgid "Explore Projects"
 msgstr ""
 
 msgid "Explore projects"
@@ -1601,6 +1601,9 @@ msgstr ""
 msgid "Issue as ERC-20"
 msgstr ""
 
+msgid "JB721Delegate v{version}"
+msgstr ""
+
 msgid "JBX membership fee ({0}%):"
 msgstr ""
 
@@ -1617,6 +1620,9 @@ msgid "Juicebox Project ID"
 msgstr ""
 
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building."
+msgstr ""
+
+msgid "Juicebox has a fresh new look"
 msgstr ""
 
 msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks </2>of crypto fundraising!"
@@ -1686,6 +1692,9 @@ msgid "Legacy tokens to migrate"
 msgstr ""
 
 msgid "Legal"
+msgstr ""
+
+msgid "Let us know what you think"
 msgstr ""
 
 msgid "Light theme"
@@ -2861,9 +2870,6 @@ msgstr ""
 msgid "Set aside a percentage of freshly minted NFTs."
 msgstr ""
 
-msgid "Set aside a percentage of token issuance for the Ethereum wallets or Juicebox projects of your choice."
-msgstr ""
-
 msgid "Set aside a percentage of token issuance for the wallets and Juicebox projects of your choosing."
 msgstr ""
 
@@ -2996,13 +3002,25 @@ msgstr ""
 msgid "Starting over will erase all currently saved progress."
 msgstr ""
 
+msgid "Stay up to date 🧃"
+msgstr ""
+
 msgid "Stay up to date."
+msgstr ""
+
+msgid "Subcription to juicenews failed."
 msgstr ""
 
 msgid "Subject"
 msgstr ""
 
+msgid "Subscribe to Juicenews to get the latest updates from the Juicebox ecosystem."
+msgstr ""
+
 msgid "Successfully approved ERC-20 spending."
+msgstr ""
+
+msgid "Successfully subscribed to Juicenews!"
 msgstr ""
 
 msgid "Sum of percentages cannot exceed 100%"
@@ -3392,6 +3410,9 @@ msgstr ""
 msgid "Total paid"
 msgstr ""
 
+msgid "Total payouts: {0}"
+msgstr ""
+
 msgid "Total raised"
 msgstr ""
 
@@ -3516,6 +3537,9 @@ msgid "Unix timestamp in seconds. Leave blank to start immediately."
 msgstr ""
 
 msgid "Unknown Project"
+msgstr ""
+
+msgid "Unknown datasource"
 msgstr ""
 
 msgid "Unless payments to this project are paused in your cycle's rules, your project can still receive payments directly through the Juicebox protocol contracts."
@@ -3804,6 +3828,9 @@ msgid "You haven't created any projects yet."
 msgstr ""
 
 msgid "You haven't launched an NFT collection yet! Edit your cycle to add NFTs."
+msgstr ""
+
+msgid "You must <0>Edit your Cycle</0> to change your total payout amount."
 msgstr ""
 
 msgid "You must edit your cycle's rules to allow controller migrations."

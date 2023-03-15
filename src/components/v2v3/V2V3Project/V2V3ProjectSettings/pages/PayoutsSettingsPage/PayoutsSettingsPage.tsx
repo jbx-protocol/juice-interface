@@ -50,7 +50,7 @@ export function PayoutsSettingsPage() {
   )
 
   return (
-    <div className="flex flex-col gap-4">
+    <>
       <V2V3EditPayouts
         editingSplits={editingSplits}
         setEditingSplits={setEditingSplits}
@@ -60,11 +60,13 @@ export function PayoutsSettingsPage() {
         onClick={() => onSplitsConfirmed(editingSplits)}
         disabled={totalSplitsPercentageInvalid}
         type="primary"
+        size="large"
+        className="mt-6"
       >
         <span>
           <Trans>Save payouts</Trans>
         </span>
       </Button>
-    </div>
+    </>
   )
 }

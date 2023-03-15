@@ -46,10 +46,10 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
 
   const initialValues: AccountSettingsFormType = useMemo(
     () => ({
-      bio: user.bio,
-      email: user.email_verified ? user.email : null,
-      website: user.website,
-      twitter: user.twitter,
+      bio: user.bio ?? '',
+      email: user.email_verified ? user.email : '',
+      website: user.website ?? '',
+      twitter: user.twitter ?? '',
     }),
     [user.bio, user.email, user.email_verified, user.twitter, user.website],
   )
@@ -76,12 +76,17 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
           setLastEmailUpdated(values.email ?? '')
         }
         emitInfoNotification(t`Profile details were updated`)
-      } catch (e) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
         console.error(
-          'Error occurred whiling submitting account settings form',
+          'Error occurred while submitting account settings form',
           e,
         )
+        emitErrorNotification(
+          e?.response?.data?.message ?? 'Unknown error occurred.',
+        )
       }
+
       helpers.setSubmitting(false)
     },
     [initialValues, lastEmailUpdated],
@@ -93,9 +98,17 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
         t`Something has gone wrong, please contact support.`,
       )
 
-    await axios.post('/api/account/update-email', {
-      email: lastEmailUpdated,
-    })
+    try {
+      await axios.post('/api/account/update-email', {
+        email: lastEmailUpdated,
+      })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      console.error('Error occurred while resubmitting email', e)
+      emitErrorNotification(
+        e?.response?.data?.message ?? 'Unknown error occurred.',
+      )
+    }
     emitInfoNotification(
       t`Check ${lastEmailUpdated} and verify your new email address.`,
     )

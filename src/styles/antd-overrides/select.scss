@@ -5,6 +5,7 @@
     background-color: transparent;
     @apply text-primary;
     @apply stroke-secondary;
+    @apply rounded-lg;
   }
 
   .ant-select-arrow {
@@ -42,6 +43,7 @@
   @apply stroke-tertiary;
   @apply shadow-md;
   @apply shadow-smoke-100 dark:shadow-slate-600;
+  @apply rounded-lg;
 
   .ant-select-item-option {
     @apply text-primary;

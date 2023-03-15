@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { AppWrapper } from 'components/common'
 import Faq from './home/Faq'
-import Footer from './home/Footer'
+import { Footer } from './home/Footer'
 import { HeroSection } from './home/HeroSection'
 import { HowItWorksSection } from './home/HowItWorksSection'
 import { NewsletterSection } from './home/NewsletterSection'

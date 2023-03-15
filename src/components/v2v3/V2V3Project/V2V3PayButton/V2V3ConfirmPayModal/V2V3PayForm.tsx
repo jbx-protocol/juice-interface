@@ -196,7 +196,7 @@ export const V2V3PayForm = ({
 
           {riskCount && fundingCycle ? (
             <Form.Item
-              className="mb-0 border border-solid border-grey-300 p-4 dark:border-slate-200"
+              className="mb-0 rounded-lg border border-solid border-grey-300 p-4 dark:border-slate-200"
               name="riskCheckbox"
               valuePropName="checked"
               rules={[

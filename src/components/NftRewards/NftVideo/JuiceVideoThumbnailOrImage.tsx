@@ -30,7 +30,7 @@ export function JuiceVideoThumbnailOrImage({
     widthClass ?? 'w-full',
     heightClass ?? 'h-full',
     showPreviewOnClick ? 'cursor-pointer' : '',
-    'rounded-sm overflow-hidden',
+    'rounded-lg overflow-hidden',
   )
 
   return (

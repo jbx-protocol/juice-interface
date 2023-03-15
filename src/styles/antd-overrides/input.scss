@@ -7,13 +7,15 @@
 .ant-input-number,
 .ant-input,
 .ant-input-affix-wrapper,
+.ant-input-group-addon,
+.ant-input-number-input,
 .ant-input-affix-wrapper-disabled,
 .ant-input[disabled] {
   background: transparent;
   @apply text-primary;
   @apply stroke-secondary;
   @apply bg-smoke-50 dark:bg-slate-600;
-  border-radius: 1px;
+  @apply rounded-lg;
 
   &:hover {
     @apply stroke-primary;
@@ -31,6 +33,14 @@
       @apply text-warning;
     }
   }
+}
+
+.ant-input-lg {
+  @apply h-12;
+}
+
+.ant-input-number-lg input {
+  height: 46px; // Ant-d has different rules for number inputs. Needs to be [48-2]px to account for borders. 
 }
 
 .ant-form-item-explain.ant-form-item-explain-error {
@@ -224,12 +234,31 @@ textarea.ant-input::placeholder {
   background: transparent;
 }
 
+
+/* EXPLORE PAGE SEARCH BAR */
 .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
 .ant-input-search-button {
   border: 1px solid;
   @apply stroke-primary;
   @apply text-primary;
 }
+.ant-input-search-button {
+  @apply h-12;
+  @apply w-12;
+  border-radius: 0 8px 8px 0 !important;
+}
+
+.ant-input-group-addon {
+  border: none;
+}
+
+// The input field (left of the button)
+.ant-input-search .ant-input-group .ant-input-affix-wrapper {
+  @apply h-12;
+  border-radius: 8px 0 0 8px !important;
+}
+
+/* */
 
 .ant-input-clear-icon {
   @apply text-secondary;
@@ -247,13 +276,11 @@ textarea.ant-input::placeholder {
   }
 }
 
-// To align new currency prop in FormattedNumberInput
+/* FORMATTED NUMBER INPUT */
 .formatted-number-input {
   display: flex;
   width: 100%;
 }
-
-// added a wrapping Form.Item on FormattedNumberInput which gave it Form.Item's margin-bottom
 .ant-form-item.formatted-number-input {
   margin-bottom: 0;
   width: 100%;

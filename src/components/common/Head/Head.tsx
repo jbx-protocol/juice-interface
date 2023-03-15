@@ -35,13 +35,6 @@ export const Head: VFC<SEOProps> = props => {
       <link rel="manifest" href="/manifest.json" />
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#f5a312" />
 
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap"
-        rel="stylesheet"
-      />
-
       {process.env.NODE_ENV === 'production' && (
         <>
           <FathomScript />

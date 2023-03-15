@@ -12,7 +12,6 @@ import { DistributeToPayoutSplitEvent } from './subgraph-entities/v2/distribute-
 import { DistributeToReservedTokenSplitEvent } from './subgraph-entities/v2/distribute-to-reserved-token-split-event'
 import { ETHERC20ProjectPayer } from './subgraph-entities/v2/eth-erc20-project-payer'
 import { JB721DelegateToken } from './subgraph-entities/v2/jb-721-delegate-tokens'
-import { SetFundAccessConstraintsEvent } from './subgraph-entities/v2/set-fund-access-constraints-event'
 import { UseAllowanceEvent } from './subgraph-entities/v2/use-allowance-event'
 import { VeNftContract } from './subgraph-entities/v2/venft-contract'
 import { VeNftToken } from './subgraph-entities/v2/venft-token'
@@ -27,39 +26,36 @@ import { ProjectCreateEvent } from './subgraph-entities/vX/project-create-event'
 import { ProjectEvent } from './subgraph-entities/vX/project-event'
 import { ProtocolLog } from './subgraph-entities/vX/protocol-log'
 import { RedeemEvent } from './subgraph-entities/vX/redeem-event'
-import { Wallet } from './subgraph-entities/vX/wallet'
 
 interface SGEntities {
-  addToBalanceEvent: AddToBalanceEvent
-  burnEvent: BurnEvent
-  configureEvent: ConfigureEvent
+  protocolLog: ProtocolLog
+  projectEvent: ProjectEvent
+  projectCreateEvent: ProjectCreateEvent
   deployedERC20Event: DeployedERC20Event
-  deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEvent
+  project: Project
+  projectSearch: Project
+  payEvent: PayEvent
+  burnEvent: BurnEvent
+  addToBalanceEvent: AddToBalanceEvent
+  redeemEvent: RedeemEvent
+  participant: Participant
+  tapEvent: TapEvent
+  distributeToPayoutModEvent: DistributeToPayoutModEvent
+  distributeToTicketModEvent: DistributeToTicketModEvent
+  printReservesEvent: PrintReservesEvent
+  mintTokensEvent: MintTokensEvent
   distributePayoutsEvent: DistributePayoutsEvent
   distributeReservedTokensEvent: DistributeReservedTokensEvent
-  distributeToPayoutModEvent: DistributeToPayoutModEvent
-  distributeToPayoutSplitEvent: DistributeToPayoutSplitEvent
   distributeToReservedTokenSplitEvent: DistributeToReservedTokenSplitEvent
-  distributeToTicketModEvent: DistributeToTicketModEvent
-  etherc20ProjectPayer: ETHERC20ProjectPayer
-  jb721DelegateToken: JB721DelegateToken
-  mintTokensEvent: MintTokensEvent
-  payEvent: PayEvent
-  project: Project
-  projectCreateEvent: ProjectCreateEvent
-  projectEvent: ProjectEvent
-  projectSearch: Project
-  protocolLog: ProtocolLog
-  participant: Participant
-  printReservesEvent: PrintReservesEvent
-  redeemEvent: RedeemEvent
-  setFundAccessConstraintsEvent: SetFundAccessConstraintsEvent
-  tapEvent: TapEvent
+  distributeToPayoutSplitEvent: DistributeToPayoutSplitEvent
   useAllowanceEvent: UseAllowanceEvent
-  v1ConfigureEvent: V1ConfigureEvent
-  veNftContract: VeNftContract
+  etherc20ProjectPayer: ETHERC20ProjectPayer
+  deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEvent
   veNftToken: VeNftToken
-  wallet: Wallet
+  veNftContract: VeNftContract
+  configureEvent: ConfigureEvent
+  v1ConfigureEvent: V1ConfigureEvent
+  jb721DelegateToken: JB721DelegateToken
 }
 
 export type SGEntityName = keyof SGEntities

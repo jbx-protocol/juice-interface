@@ -1,5 +1,6 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { twMerge } from 'tailwind-merge'
+import { classNames } from 'utils/classNames'
 
 export const CheckedCircle: React.FC<{
   className?: string
@@ -7,7 +8,14 @@ export const CheckedCircle: React.FC<{
   defocused?: boolean
 }> = ({ className, checked, defocused }) => {
   if (checked) {
-    return <CheckCircleFilled className="text-xl leading-none text-haze-400" />
+    return (
+      <CheckCircleFilled
+        className={classNames(
+          `text-xl leading-none text-bluebs-500`,
+          className,
+        )}
+      />
+    )
   }
   return (
     <div

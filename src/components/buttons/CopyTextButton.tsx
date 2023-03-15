@@ -34,7 +34,7 @@ export default function CopyTextButton({
       title={<span>{copied ? t`Copied!` : _tooltipText}</span>}
     >
       <span
-        className="cursor-pointer text-black dark:text-grey-100"
+        className="cursor-pointer"
         onClick={e => {
           e.stopPropagation()
           handleCopy()

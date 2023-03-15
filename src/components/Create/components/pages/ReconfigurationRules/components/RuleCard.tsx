@@ -14,7 +14,7 @@ export const RuleCard = ({
       checkPosition="left"
       name={strategy.id}
       title={
-        <>
+        <div className="flex items-center gap-3">
           {strategy.name}
           {strategy.isDefault && (
             <>
@@ -22,7 +22,7 @@ export const RuleCard = ({
               <CreateBadge.Default />
             </>
           )}
-        </>
+        </div>
       }
       description={
         <>

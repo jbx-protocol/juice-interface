@@ -12,17 +12,18 @@ export default function Grid({
   list?: boolean
   gutter?: number
 }>) {
+  const _gutter = gutter ?? DEFAULT_GUTTER
   const colProps: ColProps = {
     xs: 24,
     md: 12,
-    style: { marginBottom: gutter ?? DEFAULT_GUTTER },
+    style: { marginBottom: _gutter },
   }
 
   if (!children) return <></>
   if (!isReactNodeArray(children)) return <>{children}</>
 
   return list ? (
-    <Space className="w-full" direction="vertical">
+    <Space className="w-full" direction="vertical" size={_gutter}>
       {children}
     </Space>
   ) : (
@@ -30,7 +31,7 @@ export default function Grid({
       {children.map(
         (child, i) =>
           i % 2 === 0 && (
-            <Row gutter={gutter ?? DEFAULT_GUTTER} key={i}>
+            <Row gutter={_gutter} key={i}>
               <Col {...colProps}>{child}</Col>
               {i + 1 < children.length && (
                 <Col {...colProps}>{children[i + 1]}</Col>

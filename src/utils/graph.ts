@@ -25,7 +25,6 @@ import { parseDistributeToPayoutSplitEventJson } from 'models/subgraph-entities/
 import { parseDistributeToReservedTokenSplitEventJson } from 'models/subgraph-entities/v2/distribute-to-reserved-token-split-event'
 import { parseETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-project-payer'
 import { parseJB721DelegateTokenJson } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
-import { parseSetFundAccessConstraintsEvent } from 'models/subgraph-entities/v2/set-fund-access-constraints-event'
 import { parseUseAllowanceEventJson } from 'models/subgraph-entities/v2/use-allowance-event'
 import { parseVeNftContractJson } from 'models/subgraph-entities/v2/venft-contract'
 import { parseVeNftTokenJson } from 'models/subgraph-entities/v2/venft-token'
@@ -40,7 +39,6 @@ import { parseProjectCreateEventJson } from 'models/subgraph-entities/vX/project
 import { parseProjectEventJson } from 'models/subgraph-entities/vX/project-event'
 import { parseProtocolLogJson } from 'models/subgraph-entities/vX/protocol-log'
 import { parseRedeemEventJson } from 'models/subgraph-entities/vX/redeem-event'
-import { parseWalletJson } from 'models/subgraph-entities/vX/wallet'
 
 const PLURAL_ENTITY_EXCLUSIONS: SGEntityName[] = ['projectSearch']
 
@@ -218,9 +216,6 @@ export function parseSubgraphEntity<
     case 'participant':
       fn = parseParticipantJson
       break
-    case 'setFundAccessConstraintsEvent':
-      fn = parseSetFundAccessConstraintsEvent
-      break
     case 'tapEvent':
       fn = parseTapEventJson
       break
@@ -235,9 +230,6 @@ export function parseSubgraphEntity<
       break
     case 'veNftToken':
       fn = parseVeNftTokenJson
-      break
-    case 'wallet':
-      fn = parseWalletJson
       break
     default:
       throw Error(`parseSubgraphEntity(): Unhandled "${entityName}"`)

@@ -20,19 +20,19 @@ export default function ReconfigurationStrategyOption({
       className={classNames(
         'flex rounded-sm border border-solid bg-white p-4 transition-colors dark:bg-slate-700',
         selected
-          ? 'border-haze-400'
+          ? 'border-bluebs-500'
           : 'cursor-pointer border-smoke-300 hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100',
       )}
       onClick={() => onSelectBallot(strategy)}
     >
-      <div className="mr-2 min-w-[20px] text-haze-400 dark:text-haze-300">
+      <div className="mr-2 min-w-[20px] text-bluebs-500 dark:text-bluebs-300">
         {selected ? <CheckCircleFilled /> : null}
       </div>
       <div className="text-black dark:text-slate-100">
         <h3
           className={classNames(
             selected
-              ? 'text-haze-400 dark:text-haze-300'
+              ? 'text-bluebs-500 dark:text-bluebs-300'
               : 'text-black dark:text-slate-100',
           )}
         >

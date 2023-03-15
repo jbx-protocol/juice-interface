@@ -280,3 +280,7 @@ export const formatOrTruncate = (
   }
   return formattedNum(num, config?.formatConfig)
 }
+
+export const hexToInt = (hexString: string | undefined) => {
+  return Number(hexString)
+}

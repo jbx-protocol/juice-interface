@@ -3,9 +3,9 @@ import { Plural, t, Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
+import { PROJECT_CARD_BG } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2 } from 'constants/pv'
-import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
@@ -16,6 +16,7 @@ import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
 export default function TrendingProjectCard({
   project,
   rank,
+  size = 'sm',
 }: {
   project: Pick<
     Project,
@@ -30,12 +31,9 @@ export default function TrendingProjectCard({
     | 'projectId'
   >
   rank: number
+  size?: 'sm' | 'lg'
 }) {
   const { data: metadata } = useProjectMetadata(project.metadataUri)
-  const { handleText } = useProjectHandleText({
-    handle: project.handle,
-    projectId: project.projectId,
-  })
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =
@@ -74,6 +72,15 @@ export default function TrendingProjectCard({
 
   const paymentCount = project.trendingPaymentsCount
 
+  const projectLogo = (
+    <ProjectLogo
+      className={size === 'sm' ? 'h-20 w-20' : 'h-28 w-28'}
+      uri={metadata?.logoUri}
+      name={metadata?.name}
+      projectId={project.projectId}
+    />
+  )
+
   return (
     <Link
       key={project.handle}
@@ -84,44 +91,32 @@ export default function TrendingProjectCard({
       }
     >
       <a>
-        <div className="cursor-pointer overflow-hidden rounded-sm">
-          <div className="flex h-full items-center overflow-hidden whitespace-pre py-4 transition-colors md:border md:border-solid md:border-smoke-300 md:px-5 md:py-6 md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
-            <div className="relative mr-5 h-24 w-24 md:hidden">
+        <div
+          className={`cursor-pointer overflow-hidden rounded-lg ${PROJECT_CARD_BG}`}
+        >
+          <div className="flex h-full items-center overflow-hidden whitespace-pre rounded-lg py-4 transition-colors md:border md:border-solid md:border-smoke-300 md:px-5 md:py-6 md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
+            <div className="relative mr-5 h-20 w-20 md:hidden">
               <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-br bg-white text-xl font-normal font-bold text-black dark:bg-slate-800 dark:text-slate-100">
                 {rank}
               </div>
-              <ProjectLogo
-                className="h-24 w-24"
-                uri={metadata?.logoUri}
-                name={metadata?.name}
-                projectId={project.projectId}
-              />
+              {projectLogo}
             </div>
 
             <div className="mr-5 hidden items-center md:flex">
               <div className="mr-4 w-6 text-center text-xl font-normal text-black dark:text-slate-100">
                 {rank}
               </div>
-              <ProjectLogo
-                className="h-28 w-28"
-                uri={metadata?.logoUri}
-                name={metadata?.name}
-                projectId={project.projectId}
-              />
+              {projectLogo}
             </div>
 
             <div className="min-w-0 flex-1 font-normal">
               {metadata ? (
-                <h2 className="m-0 overflow-hidden text-ellipsis text-base text-black dark:text-slate-100 md:text-xl">
+                <h4 className="m-0 overflow-hidden text-ellipsis text-base text-black dark:text-slate-100 md:text-xl">
                   {metadata.name}
-                </h2>
+                </h4>
               ) : (
                 <Skeleton paragraph={false} title={{ width: 120 }} active />
               )}
-
-              <div className="hidden font-medium text-black dark:text-slate-100 md:block">
-                {handleText}
-              </div>
 
               <div className="flex w-full flex-wrap text-black dark:text-slate-100">
                 <span className="flex flex-wrap items-baseline">

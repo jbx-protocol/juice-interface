@@ -1,9 +1,7 @@
-import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
-import ExternalLink from 'components/ExternalLink'
 import { PROJECTS_PAGE } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V1, PV_V2 } from 'constants/pv'
@@ -15,7 +13,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { helpPagePath } from 'utils/routes'
 
 import AllProjects from './AllProjects'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
@@ -90,12 +87,12 @@ function Projects() {
   }, [includeV1, includeV2])
 
   return (
-    <div className="my-0 mx-auto max-w-5xl p-5">
+    <div className="my-0 mx-auto max-w-5xl p-5 pt-16">
       <Space direction="vertical" className="w-full" size="large">
         <div>
           <header className="flex flex-wrap items-center justify-between gap-y-4 pb-3">
             <h1 className="mb-0 text-4xl text-black dark:text-slate-100">
-              <Trans>Projects on Juicebox</Trans>
+              <Trans>Explore Projects</Trans>
             </h1>
 
             <Link href="/create">
@@ -112,20 +109,6 @@ function Projects() {
               </a>
             </Link>
           </header>
-
-          <p className="m-0 my-3 max-w-[800px] text-grey-500 dark:text-grey-300">
-            <Trans>
-              <InfoCircleOutlined /> The Juicebox protocol is open to anyone,
-              and project's rules can vary widely. There are risks associated
-              with interacting with all projects on the protocol. Projects built
-              on the protocol are not endorsed or vetted by JuiceboxDAO or Peel.
-              Do your own research and understand the{' '}
-              <ExternalLink href={helpPagePath('/dev/learn/risks')}>
-                risks
-              </ExternalLink>{' '}
-              before committing your ETH.
-            </Trans>
-          </p>
         </div>
 
         <div>

@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Col, Form, Input, Row } from 'antd'
 import useMobile from 'hooks/Mobile'
 import { createJuicenewsSubscription } from 'lib/api/juicenews'
@@ -35,7 +35,7 @@ export function NewsletterSection() {
       <div className="my-0 mx-auto max-w-5xl">
         <Row align="middle" gutter={40}>
           <Col xs={24} md={14}>
-            <SectionHeading className="mb-6 text-left">
+            <SectionHeading className="mb-6 text-left text-black dark:text-slate-100">
               <Trans>Stay up to date.</Trans>
             </SectionHeading>
             <div className="text-black">
@@ -50,24 +50,26 @@ export function NewsletterSection() {
                     <Input
                       type="email"
                       size="large"
-                      placeholder="Your email address"
+                      placeholder={t`Enter email address...`}
                     />
                   </Form.Item>
-                  <Button
-                    size="large"
-                    type="primary"
-                    htmlType="submit"
-                    loading={loading}
-                    className="w-full md:w-auto"
-                  >
-                    Subscribe Now
-                  </Button>
+                  <div className="ml-0 md:ml-2">
+                    <Button
+                      size="large"
+                      type="primary"
+                      htmlType="submit"
+                      loading={loading}
+                      className="w-full md:w-auto"
+                    >
+                      Subscribe
+                    </Button>
+                  </div>
                 </Input.Group>
               </Form>
 
               <p>
                 {success && (
-                  <span className="text-haze-500">
+                  <span className="text-bluebs-500">
                     You successfully subscribed!
                   </span>
                 )}

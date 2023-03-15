@@ -15,7 +15,7 @@ export function V2BugNoticeBanner() {
             <strong>No ETH is in danger</strong> and projects are unlikely to be
             affected.{' '}
             <ExternalLink
-              className="text-black underline hover:text-haze-400 dark:text-smoke-200 dark:hover:text-haze-400"
+              className="text-black underline hover:text-bluebs-500 dark:text-smoke-200 dark:hover:text-bluebs-500"
               href="https://docs.juicebox.money/dev/resources/post-mortem/2022-05-24/"
             >
               Read the postmortem.

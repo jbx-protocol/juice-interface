@@ -16,6 +16,8 @@ import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 
+export const PROJECT_CARD_BG = 'bg-white dark:bg-slate-600'
+
 export type ProjectCardProject = Pick<
   Project,
   | 'id'
@@ -126,7 +128,9 @@ export default function ProjectCard({
   return (
     <Link href={projectCardHref} as={projectCardUrl}>
       <a>
-        <div className="relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-sm py-4 md:border md:border-solid md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
+        <div
+          className={`relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-lg py-4 md:border md:border-solid md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100 ${PROJECT_CARD_BG}`}
+        >
           <div className="mr-5">
             <ProjectLogo
               className="h-24 w-24 md:h-28 md:w-28"
@@ -137,9 +141,9 @@ export default function ProjectCard({
           </div>
           <div className="min-w-0 flex-1 font-normal">
             {metadata ? (
-              <h2 className="m-0 overflow-hidden overflow-ellipsis text-xl leading-8 text-black dark:text-slate-100">
+              <h4 className="m-0 overflow-hidden overflow-ellipsis text-xl leading-8 text-black dark:text-slate-100">
                 {metadata.name}
-              </h2>
+              </h4>
             ) : (
               <Skeleton paragraph={false} title={{ width: 120 }} active />
             )}

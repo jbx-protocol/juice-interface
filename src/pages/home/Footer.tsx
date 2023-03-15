@@ -1,14 +1,23 @@
 import { GithubFilled, TwitterCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Discord from 'components/icons/Discord'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import Logo from 'components/Navbar/Logo'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
 import { ThemeOption } from 'constants/theme/themeOption'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
+import { createJuicenewsSubscription } from 'lib/api/juicenews'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ReactNode, useContext } from 'react'
+import {
+  emitErrorNotification,
+  emitInfoNotification,
+} from 'utils/notifications'
+import * as Yup from 'yup'
 import orangeLadyOd from '/public/assets/orange_lady-od.png'
 import orangeLadyOl from '/public/assets/orange_lady-ol.png'
 
@@ -106,7 +115,7 @@ const ImageButtons = [
   },
 ]
 
-export default function Footer() {
+export function Footer() {
   const gitCommit = process.env.NEXT_PUBLIC_VERSION
 
   return (
@@ -114,6 +123,7 @@ export default function Footer() {
       <div className="-mb-3 flex justify-center">
         <JuiceLady />
       </div>
+      <NewsletterSection />
       <div className="bg-slate-900 px-12 pt-12 text-white">
         <div className="m-auto max-w-6xl">
           <div className="flex flex-col gap-y-10 md:grid md:grid-cols-6 md:items-start md:gap-x-10">
@@ -138,7 +148,7 @@ export default function Footer() {
                 {ImageButtons.map(({ name, image, link }) => (
                   <ExternalLink
                     key={name}
-                    className="text-lg leading-none text-grey-300 hover:text-haze-400"
+                    className="text-lg leading-none text-grey-300 hover:text-bluebs-500"
                     href={link}
                   >
                     {image}
@@ -153,6 +163,79 @@ export default function Footer() {
   )
 }
 
+const NewsletterSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Invalid email')
+    .required(t`Required`),
+})
+
+type NewsletterFormType = {
+  email: string
+}
+
+const NewsletterSection = () => {
+  const initialValues: NewsletterFormType = {
+    email: '',
+  }
+
+  const onSubmit = async (
+    values: NewsletterFormType,
+    helpers: FormikHelpers<NewsletterFormType>,
+  ) => {
+    try {
+      await createJuicenewsSubscription(values.email)
+      emitInfoNotification(t`Successfully subscribed to Juicenews!`)
+    } catch (e) {
+      emitErrorNotification(t`Subcription to juicenews failed.`)
+    }
+    helpers.setSubmitting(false)
+  }
+
+  return (
+    <section className="bg-smoke-50 px-12 py-8 dark:bg-slate-600">
+      <div className="m-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
+        <div>
+          <div className="text-base font-medium">
+            <Trans>Stay up to date 🧃</Trans>
+          </div>
+          <div>
+            <Trans>
+              Subscribe to Juicenews to get the latest updates from the Juicebox
+              ecosystem.
+            </Trans>
+          </div>
+        </div>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={NewsletterSchema}
+          onSubmit={onSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form className="flex flex-col gap-3 md:flex-row">
+              <div className="relative min-w-[300px] flex-1">
+                <Field
+                  type="email"
+                  name="email"
+                  placeholder={t`Email address`}
+                  as={JuiceInput}
+                />
+                <ErrorMessage
+                  className="text-error mt-2 md:absolute md:top-8"
+                  name="email"
+                  component="div"
+                />
+              </div>
+              <Button htmlType="submit" type="primary" loading={isSubmitting}>
+                Subscribe
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </section>
+  )
+}
+
 const LinkColumn: React.FC<{ title: ReactNode; items: LinkItem[] }> = ({
   title,
   items,
@@ -163,14 +246,14 @@ const LinkColumn: React.FC<{ title: ReactNode; items: LinkItem[] }> = ({
       <div key={i}>
         {externalLink ? (
           <ExternalLink
-            className="text-slate-100 hover:text-haze-400"
+            className="text-slate-100 hover:text-bluebs-500"
             href={link}
           >
             {title}
           </ExternalLink>
         ) : (
           <Link href={link}>
-            <a className="text-slate-100 hover:text-haze-400">{title}</a>
+            <a className="text-slate-100 hover:text-bluebs-500">{title}</a>
           </Link>
         )}
       </div>
@@ -185,7 +268,7 @@ const AppVersion = ({ gitCommit }: { gitCommit: string }) => {
       Version:{' '}
       <ExternalLink
         href={gitCommitLink}
-        className="text-grey-300 underline hover:text-haze-400"
+        className="text-grey-300 underline hover:text-bluebs-500"
       >
         #{gitCommit}
       </ExternalLink>

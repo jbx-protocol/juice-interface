@@ -5,7 +5,10 @@ import {
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
 } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
-import { JB721_DELEGATE_V1_1 } from 'constants/delegateVersions'
+import {
+  JB721_DELEGATE_V1,
+  JB721_DELEGATE_V1_1,
+} from 'constants/delegateVersions'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { WAD_DECIMALS } from 'constants/numbers'
@@ -15,6 +18,7 @@ import {
 } from 'constants/transactionDefaults'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
+import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/JB721Delegate/contracts/JBTiered721DelegateProjectDeployer'
 import { pinJson } from 'lib/api/ipfs'
 import { round } from 'lodash'
 import {
@@ -27,6 +31,7 @@ import {
   JBDeployTiered721DelegateData,
   JBTiered721Flags,
   JB_721_TIER_PARAMS_V1_1,
+  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1,
   NftRewardTier,
 } from 'models/nftRewards'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
@@ -421,7 +426,7 @@ export function sumTierFloors(
   )
 }
 
-export function buildJBDeployTiered721DelegateData({
+export function buildDeployTiered721DelegateData({
   collectionUri,
   collectionName,
   collectionSymbol,
@@ -449,7 +454,7 @@ export function buildJBDeployTiered721DelegateData({
     JBTiered721DelegateStoreAddress: string
   }
   flags: JBTiered721Flags
-}): JBDeployTiered721DelegateData {
+}): JBDeployTiered721DelegateData | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1 {
   const pricing: JB721PricingParams = {
     tiers,
     currency: V2V3_CURRENCY_ETH,
@@ -457,8 +462,7 @@ export function buildJBDeployTiered721DelegateData({
     prices: JBPricesAddress,
   }
 
-  return {
-    directory: JBDirectoryAddress,
+  const baseArgs = {
     name: collectionName,
     symbol: collectionSymbol,
     fundingCycleStore: JBFundingCycleStoreAddress,
@@ -472,6 +476,16 @@ export function buildJBDeployTiered721DelegateData({
     flags,
     governanceType,
   }
+
+  // Only need to specify directory in V1
+  if (DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V1) {
+    return {
+      ...baseArgs,
+      directory: JBDirectoryAddress,
+    }
+  }
+
+  return baseArgs
 }
 
 export const fileTypeIsVideo = (fileType: string | undefined) => {

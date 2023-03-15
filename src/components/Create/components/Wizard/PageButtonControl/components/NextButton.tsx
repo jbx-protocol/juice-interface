@@ -4,7 +4,7 @@ import { Button, ButtonProps } from 'antd'
 
 export const NextButton = (props: ButtonProps) => {
   return (
-    <Button htmlType="submit" type="primary" size="large" {...props}>
+    <Button htmlType="submit" type="primary" size="middle" {...props}>
       <Trans>Next</Trans> <ArrowRightOutlined />
     </Button>
   )

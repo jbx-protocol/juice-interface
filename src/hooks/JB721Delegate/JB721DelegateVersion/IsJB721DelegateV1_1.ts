@@ -1,23 +1,24 @@
-import { JB721_DELEGATE_V1_1 } from 'constants/delegateVersions'
 import { useContractReadValue } from 'hooks/ContractReader'
-import { useJB721TieredGovernance } from '../contracts/JB721TieredGovernance'
-
-const IJB721TieredDelegate_V1_1_INTERFACE_ID = '0x82d4b284'
+import { useJBDelegatesRegistry } from 'hooks/JBDelegatesRegistry/contracts/JBDelegatesRegistry'
+import { isZeroAddress } from 'utils/address'
 
 export function useIsJB721DelegateV1_1({
   dataSourceAddress,
 }: {
   dataSourceAddress: string | undefined
 }): { value: boolean; loading: boolean } {
-  const contract = useJB721TieredGovernance({
-    address: dataSourceAddress,
-    version: JB721_DELEGATE_V1_1,
-  })
-  const { value: isJB721DelegateV1_1, loading } = useContractReadValue({
-    contract,
-    functionName: 'supportsInterface',
-    args: [IJB721TieredDelegate_V1_1_INTERFACE_ID],
+  const JBDelegatesRegistry = useJBDelegatesRegistry()
+  const { value: deployerAddress, loading } = useContractReadValue<
+    string,
+    string
+  >({
+    contract: JBDelegatesRegistry,
+    functionName: 'deployerOf',
+    args: dataSourceAddress ? [dataSourceAddress] : null,
   })
 
-  return { value: Boolean(isJB721DelegateV1_1), loading }
+  const isJB721DelegateV1_1 =
+    Boolean(deployerAddress) && !isZeroAddress(deployerAddress)
+
+  return { value: isJB721DelegateV1_1, loading }
 }

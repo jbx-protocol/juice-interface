@@ -16,7 +16,6 @@ import ConfigureEventElem from './eventElems/ConfigureEventElem'
 import DeployETHERC20ProjectPayerEventElem from './eventElems/DeployETHERC20ProjectPayerEventElem'
 import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
 import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
-import SetFundAccessConstraintsEventElem from './eventElems/SetFundAccessConstraintsEventElem'
 import { EventFilter, useProjectActivity } from './hooks/ProjectActivity'
 
 export default function ProjectActivity() {
@@ -82,13 +81,6 @@ export default function ProjectActivity() {
           if (e.configureEvent) {
             elem = <ConfigureEventElem event={e.configureEvent} />
           }
-          if (e.setFundAccessConstraintsEvent) {
-            elem = (
-              <SetFundAccessConstraintsEventElem
-                event={e.setFundAccessConstraintsEvent}
-              />
-            )
-          }
 
           if (!elem) return null
 
@@ -144,7 +136,7 @@ export default function ProjectActivity() {
 
   return (
     <div>
-      <div className="mb-5 flex items-baseline justify-between">
+      <div className="mb-5 flex items-start justify-between">
         <SectionHeader className="m-0" text={t`Activity`} />
 
         <Space direction="horizontal" align="center" size="small">
@@ -157,7 +149,7 @@ export default function ProjectActivity() {
           )}
 
           <Select
-            className="small w-[200px]"
+            className="w-[200px]"
             value={eventFilter}
             onChange={val => setEventFilter(val)}
           >
@@ -181,9 +173,6 @@ export default function ProjectActivity() {
             </Select.Option>
             <Select.Option value="configure">
               <Trans>Edited cycle</Trans>
-            </Select.Option>
-            <Select.Option value="setFundAccessConstraints">
-              <Trans>Edited payout</Trans>
             </Select.Option>
             <Select.Option value="addToBalance">
               <Trans>Transferred ETH to project</Trans>

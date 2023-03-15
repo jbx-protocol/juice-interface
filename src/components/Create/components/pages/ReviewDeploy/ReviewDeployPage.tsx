@@ -41,16 +41,16 @@ const Header: React.FC<{ skipped?: boolean }> = ({
   skipped = false,
 }) => {
   return (
-    <h2 className="mb-0 flex items-center gap-2 text-lg font-medium text-black dark:text-grey-200">
+    <h4 className="mb-0 flex items-center gap-2 text-xl font-medium text-black dark:text-grey-200">
       {children}
       {skipped ? (
-        <span>
+        <div className="flex">
           <CreateBadge.Skipped />
-        </span>
+        </div>
       ) : (
-        <CheckCircleFilled className="text-haze-400" />
+        <CheckCircleFilled className="text-bluebs-500" />
       )}
-    </h2>
+    </h4>
   )
 }
 

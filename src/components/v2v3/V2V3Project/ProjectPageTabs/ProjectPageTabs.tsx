@@ -4,6 +4,7 @@ import Loading from 'components/Loading'
 import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import { lazy, Suspense } from 'react'
 import { COL_SIZE_MD } from '../V2V3Project'
+import { TabLabel } from './TabLabel'
 const OverviewTab = lazy(() => import('./OverviewTab'))
 const TokensTab = lazy(() => import('./TokensTab'))
 const V2V3FundingCycleSection = lazy(() => import('../V2V3FundingCycleSection'))
@@ -13,7 +14,7 @@ export function ProjectPageTabs() {
 
   const tabItems = [
     {
-      label: t`Overview`,
+      label: <TabLabel label={t`Overview`} />,
       key: 'overview',
       children: (
         <Suspense fallback={<Loading />}>
@@ -22,7 +23,7 @@ export function ProjectPageTabs() {
       ),
     },
     {
-      label: t`Cycle`,
+      label: <TabLabel label={t`Cycle`} />,
       key: 'cycle',
       children: (
         <Suspense fallback={<Loading />}>
@@ -33,7 +34,7 @@ export function ProjectPageTabs() {
       ),
     },
     {
-      label: t`Tokens`,
+      label: <TabLabel label={t`Tokens`} />,
       key: 'tokens',
       children: (
         <Suspense fallback={<Loading />}>

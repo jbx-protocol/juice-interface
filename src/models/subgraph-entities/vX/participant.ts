@@ -15,7 +15,7 @@ export interface Participant extends BaseProjectEntity {
   totalPaidUSD: BigNumber
   balance: BigNumber
   stakedBalance: BigNumber
-  erc20Balance: BigNumber
+  unstakedBalance: BigNumber
   lastPaidTimestamp: number
 }
 
@@ -27,6 +27,6 @@ export const parseParticipantJson = (j: Json<Participant>): Participant => ({
     'totalPaidUSD',
     'balance',
     'stakedBalance',
-    'erc20Balance',
+    'unstakedBalance',
   ]),
 })

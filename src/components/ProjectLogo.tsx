@@ -41,8 +41,8 @@ export default function ProjectLogo({
   return (
     <div
       className={twMerge(
-        'flex h-20 w-20 items-center justify-center overflow-hidden rounded-sm',
-        'bg-smoke-100 dark:bg-slate-600',
+        'flex h-20 w-20 items-center justify-center overflow-hidden rounded-lg',
+        'bg-smoke-100 dark:bg-slate-700',
         className,
       )}
     >

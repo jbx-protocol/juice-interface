@@ -5,7 +5,7 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useReconfigureV2V3FundingCycleWithNftsTx } from 'hooks/JB721Delegate/transactor/ReconfigureV2V3FundingCycleWithNftsTx'
 import {
-  ReconfigureTxArgs,
+  ReconfigureFundingCycleTxParams,
   useReconfigureV2V3FundingCycleTx,
 } from 'hooks/v2v3/transactor/ReconfigureV2V3FundingCycleTx'
 import { revalidateProject } from 'lib/api/nextjs'
@@ -99,7 +99,7 @@ export const useReconfigureFundingCycle = ({
       newFundingCycleWeight: editingFundingCycleData.weight,
     })
 
-    const reconfigureFundingCycleData: ReconfigureTxArgs = {
+    const reconfigureFundingCycleData: ReconfigureFundingCycleTxParams = {
       fundingCycleData: {
         ...editingFundingCycleData,
         weight,

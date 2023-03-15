@@ -4,7 +4,7 @@ import { Button, ButtonProps } from 'antd'
 
 export const BackButton = (props: ButtonProps) => {
   return (
-    <Button size="large" {...props}>
+    <Button size="middle" {...props}>
       <ArrowLeftOutlined /> <Trans>Back</Trans>
     </Button>
   )

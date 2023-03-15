@@ -1,17 +1,12 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row, Space } from 'antd'
 import { HOMEPAGE } from 'constants/fathomEvents'
-import { ThemeOption } from 'constants/theme/themeOption'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { trackFathomGoal } from 'lib/fathom'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useContext } from 'react'
 import { HeroHeading, HeroSubheading } from './strings'
-import bananaOd from '/public/assets/banana-od.webp'
-import bananaOl from '/public/assets/banana-ol.webp'
 import bolt from '/public/assets/icons/bolt.svg'
-
+import juiceHero from '/public/assets/juice-homepage-hero.webp'
 function BuiltForList() {
   return (
     <div className="grid grid-flow-row gap-y-2 text-base font-medium">
@@ -69,20 +64,18 @@ const CallToAction = () => {
 }
 
 export function HeroSection() {
-  const { forThemeOption } = useContext(ThemeContext)
-
   return (
     <section className="mt-20 mb-24 px-10">
       <div className="my-0 mx-auto max-w-6xl">
         <Row gutter={30} align="middle">
-          <Col className="flex items-center pb-6" xs={24} md={14}>
+          <Col className="flex items-center pb-6" xs={24} md={13}>
             <div>
               <Space direction="vertical" size="large">
-                <h1 className="text-brand m-0 text-5xl font-semibold md:text-7xl">
+                <h1 className="text-brand m-0 text-5xl md:text-6xl">
                   <HeroHeading />
                 </h1>
                 <div className="mb-4">
-                  <div className="mb-4 text-base font-medium">
+                  <div className="mb-10 text-base">
                     <HeroSubheading />
                   </div>
 
@@ -93,12 +86,9 @@ export function HeroSection() {
               </Space>
             </div>
           </Col>
-          <Col xs={24} md={10} className="hidden md:block">
+          <Col xs={24} md={11} className="hidden md:block">
             <Image
-              src={forThemeOption?.({
-                [ThemeOption.dark]: bananaOd,
-                [ThemeOption.light]: bananaOl,
-              })}
+              src={juiceHero}
               alt="Banny the chill Juicebox banana drinking juice"
               priority
             />

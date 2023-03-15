@@ -1,23 +1,15 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Dropdown, MenuProps } from 'antd'
+import { Dropdown, MenuProps } from 'antd'
 import { TOP_NAV } from 'constants/fathomEvents'
 import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
 import { CSSProperties } from 'react'
 import Logo from './Logo'
-import ThemePickerMobile from './Mobile/ThemePickerMobile'
-import NavLanguageSelector from './NavLanguageSelector'
-import WalletButton from './WalletButton'
 
 type ResourceItem = {
   label: JSX.Element
   key: string
-}
-
-const externalMenuLinkProps = {
-  target: '_blank',
-  rel: 'noopener noreferrer',
 }
 
 const DesktopDropDown = ({
@@ -158,66 +150,5 @@ export const desktopMenuItems = ({
         >{t`Create a project`}</a>
       </Link>
     ),
-  },
-]
-
-export const mobileNavItems = ({
-  isConnected,
-  disconnect,
-  collapseNav,
-}: {
-  isConnected: boolean
-  disconnect: () => void
-  collapseNav: () => void
-}) => [
-  {
-    key: 'projects',
-    label: (
-      <Link href="/projects">
-        <a
-          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          onClick={() => trackFathomGoal(TOP_NAV.EXPLORE_CTA)}
-          {...{ ...collapseNav }}
-        >{t`Explore`}</a>
-      </Link>
-    ),
-  },
-  {
-    key: 'discord',
-    label: (
-      <Link href="https://discord.gg/wFTh4QnDzk">
-        <a
-          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          onClick={() => trackFathomGoal(TOP_NAV.DISCORD_CTA)}
-          {...{ ...externalMenuLinkProps, ...collapseNav }}
-        >{t`Discord`}</a>
-      </Link>
-    ),
-  },
-  {
-    key: 'resources',
-    label: (
-      <Link href="">
-        <a className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100">
-          {t`Resources`}
-        </a>
-      </Link>
-    ),
-    children: [...resourcesMenuItems()],
-  },
-
-  { key: 'language-picker', label: <NavLanguageSelector /> },
-  { key: 'theme-picker', label: <ThemePickerMobile /> },
-  {
-    key: 'wallet',
-    label: <WalletButton />,
-  },
-  {
-    key: 'disconnect',
-    label: isConnected ? (
-      <Button className="mt-2" onClick={disconnect} block>
-        <Trans>Disconnect</Trans>
-      </Button>
-    ) : null,
   },
 ]

@@ -5,6 +5,7 @@ import { useModal } from 'hooks/Modal'
 import { ReactNode, useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { projectIdToHex } from 'utils/splits'
 import { amountFromPercent } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { CreateButton } from '../buttons/CreateButton'
@@ -16,8 +17,13 @@ import { Allocation, AllocationSplit } from './Allocation'
 
 type AddButtonSize = 'small' | 'large'
 
-const allocationId = (beneficiary: string, projectId: string | undefined) =>
-  `${beneficiary}${projectId ? `-${projectId}` : ''}`
+const allocationId = (
+  beneficiary: string,
+  projectIdHex: string | undefined,
+) => {
+  const hasProjectId = Boolean(projectIdHex && projectIdHex !== '0x00')
+  return `${beneficiary}${hasProjectId ? `-${projectIdHex}` : ''}`
+}
 
 export const AllocationList = ({
   allocationName = t`allocation`,
@@ -53,11 +59,11 @@ export const AllocationList = ({
   const setSelectedAllocation = useCallback(
     (value: AllocationSplit | undefined) => {
       const entity = value
-        ? allocationToEntity(value, totalAllocationAmount)
+        ? allocationToEntity(value, totalAllocationAmount, availableModes)
         : undefined
       _setSelectedAllocation(entity)
     },
-    [totalAllocationAmount],
+    [totalAllocationAmount, availableModes],
   )
 
   const removeAllocation = useCallback(
@@ -135,7 +141,6 @@ export const AllocationList = ({
           const newPercent = (currentAmount / totalAmount) * 100
           return { ...alloc, percent: newPercent }
         })
-
         setAllocations(adjustedAllocations)
         setTotalAllocationAmount(parseWad(totalAmount))
       } else {
@@ -152,7 +157,10 @@ export const AllocationList = ({
           const originalTotal = parseFloat(
             fromWad(totalAllocationAmount ?? BigNumber.from(0)),
           )
-          const id = allocationId(result.beneficiary!, result.projectId)
+          const id = allocationId(
+            result.beneficiary!,
+            projectIdToHex(result.projectId),
+          )
           const existingAllocation = isEditing
             ? allocations.find(a => a.id === id)
             : undefined
@@ -258,10 +266,11 @@ const entityToAllocation = (
   entity: AddEditAllocationModalEntity & { projectOwner: false },
   totalAllocationAmount: BigNumber | undefined,
 ): AllocationSplit => {
+  const projectIdHex = projectIdToHex(entity.projectId)
   const allocationProps = {
-    id: allocationId(entity.beneficiary!, entity.projectId),
+    id: allocationId(entity.beneficiary!, projectIdHex),
     beneficiary: entity.beneficiary,
-    projectId: entity.projectId,
+    projectId: projectIdHex,
     lockedUntil: entity.lockedUntil,
     percent: entity.amount.value ? parseFloat(entity.amount.value) : 0,
     preferClaimed: undefined,
@@ -285,9 +294,12 @@ const entityToAllocation = (
 const allocationToEntity = (
   alloc: AllocationSplit,
   totalAllocationAmount: BigNumber | undefined,
+  availableModes: Set<'amount' | 'percentage'>,
 ): AddEditAllocationModalEntity & { projectOwner: false } => {
   const isPercent =
-    !totalAllocationAmount || totalAllocationAmount.eq(MAX_DISTRIBUTION_LIMIT)
+    !totalAllocationAmount ||
+    totalAllocationAmount.eq(MAX_DISTRIBUTION_LIMIT) ||
+    !availableModes.has('amount') // override if amount not available in the instance
   let amount = { value: alloc.percent.toString(), isPercent }
 
   if (!isPercent && totalAllocationAmount) {

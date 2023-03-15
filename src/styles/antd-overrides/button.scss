@@ -1,17 +1,19 @@
 .ant-btn {
   background: transparent;
-  @apply border-haze-400 dark:border-slate-300;
+  @apply border-bluebs-500 dark:border-slate-300;
   @apply text-over-action-secondary;
   @apply font-medium;
-  border-radius: 1px;
+  @apply rounded-lg;
   transition: all 100ms linear;
+  @apply h-10;
+  @apply px-6;
 
   .anticon {
     transition: margin 100ms linear;
   }
 
   &:hover {
-    @apply bg-haze-50 dark:bg-haze-900;
+    @apply bg-bluebs-50 dark:bg-bluebs-900;
     @apply stroke-action-secondary;
     @apply text-action-primary;
   }
@@ -27,23 +29,35 @@
     &:hover .anticon-arrow-left {
       margin-right: 2px;
     }
-  
+
     &:hover .anticon-arrow-right {
       margin-left: 10px;
     }
-  }  
+  }
+}
+
+.ant-btn.ant-btn-loading::before {
+  @apply opacity-25;
+  @apply bg-disabled;
+}
+
+.ant-btn-icon-only {
+  @apply px-0;
+  &:hover {
+    @apply bg-transparent dark:bg-transparent;
+  }
 }
 
 .ant-btn-primary {
   &:not(.ant-btn[disabled]) {
     @apply bg-action-primary;
-    border-color: transparent;
-    @apply text-over-action-primary;
+    @apply stroke-action-primary;
+    @apply text-over-action-primary dark:text-grey-900;
     box-shadow: none;
   }
 
   &:hover:not(.ant-btn[disabled]) {
-    @apply bg-action-highlight;
+    @apply bg-bluebs-600 dark:bg-bluebs-400;
     @apply text-over-action-primary;
   }
 
@@ -91,6 +105,9 @@
 
 .ant-btn-text {
   border: transparent;
+  &:hover {
+    @apply bg-transparent dark:bg-transparent;
+  }
 }
 
 .ant-btn-link {
@@ -100,12 +117,22 @@
   @apply font-medium;
 
   &:hover {
-    @apply bg-haze-50;
+    @apply text-action-primary-hover;
+    @apply bg-transparent dark:bg-transparent;
   }
   &:focus,
   &:active {
     @apply text-action-primary;
   }
+}
+
+.ant-btn-lg {
+  @apply h-12;
+  line-height: 2.12rem;
+}
+
+.ant-btn-sm {
+  padding: 4px 15px;
 }
 
 .ant-upload.ant-upload-select-picture-card:hover {

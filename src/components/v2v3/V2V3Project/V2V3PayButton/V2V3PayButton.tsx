@@ -71,7 +71,7 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
         </Button>
       </Tooltip>
       {payInCurrency === V2V3_CURRENCY_USD && (
-        <div className="mt-1 text-xs">
+        <div className="mt-2 text-xs">
           <Trans>
             Paid as <ETHAmount amount={weiPayAmt} />
           </Trans>

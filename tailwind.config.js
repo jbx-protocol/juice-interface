@@ -7,23 +7,34 @@ module.exports = {
   darkMode: 'class', // Use class for now, switch to media later
   important: true,
   theme: {
+    fontFamily: {
+      display: ['Agrandir-Wide', 'Helvetica Neue', 'Arial', 'sans-serif'],
+      heading: ['Agrandir', 'Helvetica Neue', 'Arial', 'sans-serif'],
+      body: ['Beatrice', 'Helvetica Neue', 'Arial', 'sans-serif'],
+    },
+    extend: {
+      boxShadow: {
+        inputDark: '0 0 0 2px #013944',
+        inputLight: '0 0 0 2px #E9F9FA',
+      },
+    },
     colors: {
       transparent: '#00000000',
       black: '#000000',
       white: '#FFFFFF',
-      haze: {
-        25: '#F5FEFF',
-        50: '#E9F9FA',
-        100: '#D7F6FA',
-        200: '#AAEAF2',
-        300: '#48D0E0',
-        400: '#18B4C7',
-        500: '#049EB2',
-        600: '#008198',
-        700: '#015F72',
-        800: '#013944',
-        900: '#00262E',
-        950: '#002127',
+      bluebs: {
+        25: '#EEF1FD',
+        50: '#DEE5FC',
+        100: '#CFD9FA',
+        200: '#BBC8F6',
+        300: '#9AAEF5',
+        400: '#748EED',
+        500: '#5777EB',
+        600: '#4864C8',
+        700: '#3A52A6',
+        800: '#233575',
+        900: '#152254',
+        950: '#11172D',
       },
       juice: {
         25: '#FFFCF5',
@@ -38,6 +49,20 @@ module.exports = {
         800: '#93370D',
         900: '#7A2E0E',
         950: '#592109',
+      },
+      split: {
+        25: '#FFFBF5',
+        50: '#FFF7E8',
+        100: '#FFEECC',
+        200: '#FFE1A6',
+        300: '#FFD27A',
+        400: '#FFBB45',
+        500: '#F08B08',
+        600: '#D98909',
+        700: '#BD6800',
+        800: '#824100',
+        900: '#5C2C00',
+        950: '#421D00',
       },
       grape: {
         25: '#FAFAFF',

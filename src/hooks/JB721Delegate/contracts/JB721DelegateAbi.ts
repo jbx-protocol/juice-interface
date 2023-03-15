@@ -13,16 +13,24 @@ type JB721DelegateContractName =
   | 'IJBTiered721Delegate'
   | 'IJBTiered721DelegateProjectDeployer'
 
+/**
+ * Get the NPM package "version string" for a given JB721Delegate version.
+ * The version string is used to determine which npm package to import.
+ * Inspect the package.json to learn more.
+ */
+export function JB721DelegatePackageVersion(version: JB721DelegateVersion) {
+  return version === JB721_DELEGATE_V1
+    ? 'v1'
+    : version === JB721_DELEGATE_V1_1
+    ? 'v1-1'
+    : undefined
+}
+
 export async function loadJB721DelegateJson(
   contractName: JB721DelegateContractName,
   version: JB721DelegateVersion,
 ): Promise<ContractJson | undefined> {
-  const versionString =
-    version === JB721_DELEGATE_V1
-      ? 'v1'
-      : version === JB721_DELEGATE_V1_1
-      ? 'v1-1'
-      : undefined
+  const versionString = JB721DelegatePackageVersion(version)
   if (!versionString) return
   console.info(
     'Loading JB721Delegate contract json',

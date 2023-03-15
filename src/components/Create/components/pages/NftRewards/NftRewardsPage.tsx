@@ -141,10 +141,10 @@ export const NftRewardsPage = () => {
                       <RadioItem
                         value={JB721GovernanceType.NONE}
                         title={
-                          <>
+                          <div className="flex items-center gap-3">
                             <Trans>No on-chain governance</Trans>{' '}
                             <CreateBadge.Default />
-                          </>
+                          </div>
                         }
                         description={t`Your project's NFTs will not have on-chain governance capabilities. Select this option if you don't want governance, or if you plan to use an off-chain voting client (like Snapshot).`}
                       />

@@ -1,6 +1,7 @@
 import { VFC } from 'react'
 
 import { SEO, SEOProps } from '../SEO'
+import { FONT_PATHS } from './fonts'
 import { FathomScript } from './scripts/FathomScript'
 import { HotjarScript } from './scripts/HotjarScript'
 
@@ -34,6 +35,16 @@ export const Head: VFC<SEOProps> = props => {
       />
       <link rel="manifest" href="/manifest.json" />
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#f5a312" />
+      {FONT_PATHS.map(path => (
+        <link
+          key={path}
+          rel="preload"
+          href={path}
+          as="font"
+          type="font/woff2"
+          crossOrigin="true"
+        />
+      ))}
 
       {process.env.NODE_ENV === 'production' && (
         <>

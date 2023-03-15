@@ -2,38 +2,26 @@
 /* FONT FACES */
 @font-face {
   font-family: 'Beatrice';
-  src: url('/assets/fonts/Beatrice.woff');
+  src: url('/assets/fonts/Beatrice-Regular.woff2') format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Beatrice';
-  src: url('/assets/fonts/Beatrice-Medium.woff');
+  src: url('/assets/fonts/Beatrice-Medium.woff2') format("woff2");
   font-weight: 500;
 }
 
 @font-face {
-  font-family: 'Beatrice';
-  src: url('/assets/fonts/Beatrice-Semibold.woff');
-  font-weight: 600;
-}
-
-@font-face {
   font-family: 'Agrandir-Wide';
-  src: url('/assets/fonts/PPAgrandirWide-Bold.woff');
+  src: url('/assets/fonts/PPAgrandir-WideBold.woff2') format("woff2");
   font-weight: 700;
 }
 
 @font-face {
-  font-family: 'Agrandir-Wide';
-  src: url('/assets/fonts/PPAgrandirWide-Medium.woff');
-  font-weight: 500;
-}
-
-@font-face {
   font-family: 'Agrandir';
-  src: url('/assets/fonts/PPAgrandir.woff');
+  src: url('/assets/fonts/PPAgrandir-Medium.woff2') format("woff2");
   font-weight: 400;
   font-style: normal;
 }

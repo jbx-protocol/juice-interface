@@ -1238,9 +1238,6 @@ msgstr ""
 msgid "End"
 msgstr ""
 
-msgid "Enter email address..."
-msgstr ""
-
 msgid "Enter your project's details. You can edit your project's details at any time after you deploy your project, but the transaction will cost gas."
 msgstr ""
 
@@ -3894,6 +3891,9 @@ msgid "Your cycle rules have been pre-populated using the rules you originally l
 msgstr ""
 
 msgid "Your edits will take effect in <0>cycle #{0}</0>. The current cycle (#{currentFCNumber}) won't be altered."
+msgstr ""
+
+msgid "Your email address"
 msgstr ""
 
 msgid "Your legacy project token holders can now migrate their tokens in the <0>Tokens</0> section on your V3 project page."

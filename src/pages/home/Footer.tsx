@@ -1,6 +1,6 @@
 import { GithubFilled, TwitterCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, InputProps } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Discord from 'components/icons/Discord'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
@@ -216,8 +216,10 @@ const NewsletterSection = () => {
                 <Field
                   type="email"
                   name="email"
-                  placeholder={t`Email address`}
-                  as={JuiceInput}
+                  placeholder={t`Your email address`}
+                  as={(props: InputProps) => (
+                    <JuiceInput {...props} className="h-10" />
+                  )}
                 />
                 <ErrorMessage
                   className="text-error mt-2 md:absolute md:top-8"

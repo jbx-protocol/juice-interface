@@ -50,7 +50,7 @@ export function NewsletterSection() {
                     <Input
                       type="email"
                       size="large"
-                      placeholder={t`Enter email address...`}
+                      placeholder={t`Your email address`}
                     />
                   </Form.Item>
                   <div className="ml-0 md:ml-2">

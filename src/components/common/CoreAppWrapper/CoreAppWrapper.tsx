@@ -52,7 +52,7 @@ const _Wrapper: React.FC = ({ children }) => {
   return (
     <Layout className="flex h-screen flex-col bg-transparent">
       <SiteNavigation />
-      <Content className="pt-16 md:p-0">{children}</Content>
+      <Content className="pt-20 md:p-0">{children}</Content>
     </Layout>
   )
 }

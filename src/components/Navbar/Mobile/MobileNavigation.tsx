@@ -33,6 +33,13 @@ export default function MobileNavigation() {
               </Link>
             </Menu.Item>
             <Menu.Item>
+              <Link href="/create">
+                <a className="text-primary">
+                  <Trans>Create a project</Trans>
+                </a>
+              </Link>
+            </Menu.Item>
+            <Menu.Item>
               <ExternalLink
                 className="text-primary"
                 href="https://discord.gg/wFTh4QnDzk"

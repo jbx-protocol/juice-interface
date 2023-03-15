@@ -1,6 +1,5 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import { BrandUpdateBanner } from 'components/Navbar/BrandUpdateBanner'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
@@ -52,7 +51,6 @@ const _Wrapper: React.FC = ({ children }) => {
 
   return (
     <Layout className="flex h-screen flex-col bg-transparent">
-      <BrandUpdateBanner />
       <SiteNavigation />
       <Content className="pt-16 md:p-0">{children}</Content>
     </Layout>

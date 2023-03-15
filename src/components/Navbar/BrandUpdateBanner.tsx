@@ -2,8 +2,9 @@ import { CloseOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import { useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
-export function BrandUpdateBanner() {
+export function BrandUpdateBanner({ className }: { className?: string }) {
   const [visible, setVisible] = useState<boolean>(true)
 
   const twitterMessage = `@juiceboxETH https://juicebox.money`
@@ -15,20 +16,25 @@ export function BrandUpdateBanner() {
 
   return (
     <div>
-      <div className="flex h-9 items-center justify-center bg-split-400">
-        <span className="text-xs text-grey-900">
+      <div
+        className={twMerge(
+          'flex w-full items-center justify-center gap-x-4 bg-split-400 px-2 py-4 md:h-9',
+          className,
+        )}
+      >
+        <span className="flex-1 text-xs text-grey-900 md:text-center">
           <Trans>Juicebox has a fresh new look</Trans> &#128064;{' '}
           <ExternalLink
             href={twitterUrl}
             className="font-normal text-black underline"
           >
-            Let us know what you think
+            <Trans>Let us know what you think</Trans>
           </ExternalLink>
           .
         </span>
         <CloseOutlined
+          className="justify-self-end text-black md:absolute md:right-5"
           onClick={() => setVisible(false)}
-          className="absolute right-5 text-black"
         />
       </div>
     </div>

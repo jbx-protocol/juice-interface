@@ -1712,6 +1712,9 @@ msgstr ""
 msgid "Legal"
 msgstr ""
 
+msgid "Let us know what you think"
+msgstr ""
+
 msgid "Light theme"
 msgstr ""
 

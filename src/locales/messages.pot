@@ -755,6 +755,9 @@ msgstr ""
 msgid "Contact JuiceboxDAO for feature requests, support, or project advice."
 msgstr ""
 
+msgid "Contact WAGMI Studios"
+msgstr ""
+
 msgid "Contact a contributor"
 msgstr ""
 
@@ -1932,6 +1935,9 @@ msgid "NO LIMIT"
 msgstr ""
 
 msgid "Name"
+msgstr ""
+
+msgid "Need artwork?"
 msgstr ""
 
 msgid "Need help?"

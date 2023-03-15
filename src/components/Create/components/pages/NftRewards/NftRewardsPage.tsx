@@ -1,3 +1,4 @@
+import { RightOutlined } from '@ant-design/icons'
 import { EyeOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Radio, Space } from 'antd'
@@ -293,6 +294,19 @@ export const NftRewardsPage = () => {
         </Space>
         <Wizard.Page.ButtonControl />
       </Form>
+
+      <div className="mt-8 text-center">
+        <Trans>Need artwork?</Trans>
+        <div>
+          <ExternalLink href="https://discord.gg/XnYFFGaXsu">
+            <a className="text-sm hover:underline">
+              <Trans>Contact WAGMI Studios</Trans>{' '}
+              <RightOutlined className="text-xs" />
+            </a>
+          </ExternalLink>
+        </div>
+      </div>
+
       {postPayModalData && (
         <NftPostPayModal
           open={postPayModal.visible}

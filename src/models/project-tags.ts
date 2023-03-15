@@ -1,15 +1,14 @@
 export const projectTagOptions = [
-'art',
-'dao',
-'defi',
-'education',
-'fundraising',
-'games',
-'grants',
-'infrastructure',
-'music',
-'revenue',
-'social',
+  'art',
+  'dao',
+  'defi',
+  'education',
+  'fundraising',
+  'games',
+  'grants',
+  'music',
+  'revenue',
+  'social',
 ] as const
 
 export type ProjectTag = typeof projectTagOptions extends Readonly<

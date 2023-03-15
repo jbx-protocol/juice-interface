@@ -13,7 +13,7 @@ const Stat = ({
   loading: boolean
 }) => {
   return (
-    <div className="my-0 mx-auto flex w-full max-w-[200px] flex-col gap-2 text-center">
+    <div className="my-0 mx-auto flex flex-col gap-2 text-center">
       <div className="text-4xl font-medium text-juice-400 dark:text-juice-300 md:text-6xl">
         {loading ? '-' : value}
       </div>

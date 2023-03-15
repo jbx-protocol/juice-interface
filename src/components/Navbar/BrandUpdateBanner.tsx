@@ -23,14 +23,15 @@ export function BrandUpdateBanner({ className }: { className?: string }) {
         )}
       >
         <span className="flex-1 text-xs text-grey-900 md:text-center">
-          <Trans>Juicebox has a fresh new look</Trans> &#128064;{' '}
+          <span className="mr-2">
+            <Trans>Juicebox has a fresh new look</Trans> &#128064;
+          </span>
           <ExternalLink
             href={twitterUrl}
-            className="font-normal text-black underline"
+            className="font-normal text-black underline hover:text-grey-700"
           >
             <Trans>Let us know what you think</Trans>
           </ExternalLink>
-          .
         </span>
         <CloseOutlined
           className="justify-self-end text-black md:absolute md:right-5"

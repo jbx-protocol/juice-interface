@@ -79,7 +79,7 @@ export default function Contact() {
       <div className="mx-auto max-w-5xl px-10">
         <Row align="middle" gutter={40}>
           <Col xs={24} md={14}>
-            <h1 className="m-0 my-4 text-4xl font-semibold">
+            <h1 className="m-0 my-4 font-display text-4xl">
               <Trans>Contact</Trans>
             </h1>
             <p>

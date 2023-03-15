@@ -26,7 +26,7 @@ export const ProjectTokenReview = () => {
   return (
     <div className="flex flex-col gap-y-10 pt-5 pb-12 md:grid md:grid-cols-4">
       <ReviewDescription
-        title={t`Initial mint rate`}
+        title={t`Total issuance rate`}
         desc={
           <div className="text-base font-medium">
             {formatAmount(
@@ -38,7 +38,7 @@ export const ProjectTokenReview = () => {
         }
       />
       <ReviewDescription
-        title={t`Reserved tokens`}
+        title={t`Reserved rate`}
         desc={
           <div className="text-base font-medium">
             {formatReservedRate(
@@ -51,7 +51,7 @@ export const ProjectTokenReview = () => {
       />
       <ReviewDescription
         className="col-span-2"
-        title={t`Reserved token allocation`}
+        title={t`Reserved token recipients`}
         desc={
           <ReservedTokensList
             isEditable={false}
@@ -61,7 +61,7 @@ export const ProjectTokenReview = () => {
         }
       />
       <ReviewDescription
-        title={t`Discount rate`}
+        title={t`Issuance reduction rate`}
         desc={
           <div className="text-base font-medium">
             {formatDiscountRate(
@@ -85,7 +85,7 @@ export const ProjectTokenReview = () => {
         }
       />
       <ReviewDescription
-        title={t`Allow token minting`}
+        title={t`Owner token minting`}
         desc={<div className="text-base font-medium">{allowTokenMinting}</div>}
       />
 

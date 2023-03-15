@@ -3,6 +3,7 @@ import { Button, Form, FormInstance, Space, Switch } from 'antd'
 import FormItemWarningText from 'components/FormItemWarningText'
 import {
   OWNER_MINTING_EXPLAINATION,
+  OWNER_MINTING_RISK,
   PAUSE_PAYMENTS_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { useEffect, useState } from 'react'
@@ -48,7 +49,7 @@ export default function RestrictedActionsForm({
       <Form form={form} layout="vertical">
         <Form.Item
           name="payIsPaused"
-          label={t`Pause payments`}
+          label={t`Pause payments to this project`}
           extra={PAUSE_PAYMENTS_EXPLANATION}
           valuePropName={'checked'}
         >
@@ -68,11 +69,7 @@ export default function RestrictedActionsForm({
         </Form.Item>
         {showTicketPrintingWarning && (
           <Form.Item>
-            <FormItemWarningText>
-              <Trans>
-                Enabling owner token minting will appear risky to contributors.
-              </Trans>
-            </FormItemWarningText>
+            <FormItemWarningText>{OWNER_MINTING_RISK}</FormItemWarningText>
           </Form.Item>
         )}
         <Form.Item>

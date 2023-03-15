@@ -470,8 +470,8 @@ export async function downloadAdditionsToBalance(
   const rows = [
     [
       t`Date`,
-      t`ETH added`,
-      t`USD value of ETH added`,
+      t`ETH transferred`,
+      t`USD value of ETH transferred`,
       t`Caller`,
       t`Transaction hash`,
     ], // CSV header row
@@ -499,7 +499,7 @@ export async function downloadAdditionsToBalance(
     })
 
     if (!additions) {
-      emitErrorNotification(t`Error loading additions to balance`)
+      emitErrorNotification(t`Error loading ETH transfers to project`)
       throw new Error('No data.')
     }
 
@@ -517,9 +517,11 @@ export async function downloadAdditionsToBalance(
       ])
     })
 
-    downloadCsvFile(`additions_v${pv}p${projectId}_block-${blockNumber}`, rows)
+    downloadCsvFile(`transfers_v${pv}p${projectId}_block-${blockNumber}`, rows)
   } catch (e) {
-    console.error('Error downloading additions to balance', e)
-    emitErrorNotification(t`Error downloading additions to balance, try again.`)
+    console.error('Error downloading ETH transfers to project', e)
+    emitErrorNotification(
+      t`Error downloading ETH transfers to project, try again.`,
+    )
   }
 }

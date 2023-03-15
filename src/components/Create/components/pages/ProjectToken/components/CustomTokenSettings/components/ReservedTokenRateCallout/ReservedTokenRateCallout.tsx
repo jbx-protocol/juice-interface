@@ -26,19 +26,17 @@ export const ReservedTokenRateCallout: React.FC = () => {
 
   return (
     <Callout.Info noIcon collapsible={false}>
-      <Trans>
-        <span>Contributor rate:</span>{' '}
-        <span className="whitespace-nowrap">
-          {formattedNum(contributorTokens)} / 1 ETH
-        </span>
-      </Trans>
-      <br />
-      <Trans>
-        <span>Reserved rate:</span>{' '}
-        <span className="whitespace-nowrap">
-          {formattedNum(reservedTokens)} / 1 ETH
-        </span>
-      </Trans>
+      <Trans>When someone pays your project 1 ETH:</Trans>
+      <ul>
+        <li>
+          <Trans>
+            {formattedNum(contributorTokens)} tokens will be sent to the payer.
+          </Trans>
+        </li>
+        <li>
+          <Trans>{formattedNum(reservedTokens)} tokens will be reserved.</Trans>
+        </li>
+      </ul>
     </Callout.Info>
   )
 }

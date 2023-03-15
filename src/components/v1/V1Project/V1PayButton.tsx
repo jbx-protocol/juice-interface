@@ -73,7 +73,7 @@ export function V1PayButton({ wrapperClassName, disabled }: PayButtonProps) {
   } else if (isV1AndMaxRR) {
     disabledMessage = t`We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment.`
   } else if (fcMetadata.payIsPaused) {
-    disabledMessage = t`Payments are paused in this cycle.`
+    disabledMessage = t`Payments to this project are paused in this cycle.`
   }
 
   const onPayButtonClick = () => {

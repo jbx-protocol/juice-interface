@@ -63,20 +63,25 @@ export const ProjectTokenPage: React.FC = () => {
               name="default"
               title={
                 <div className="flex items-center gap-3">
-                  <Trans>Default Token Settings</Trans> <CreateBadge.Default />
+                  <Trans>Basic Token Rules</Trans> <CreateBadge.Default />
                 </div>
               }
               icon={<Icons.Tokens />}
-              description={<DefaultSettings />}
-            />
-            <Selection.Card
-              name="custom"
-              title={t`Custom Token Settings`}
-              icon={<SettingOutlined />}
               description={
                 <Trans>
-                  Set custom rules & parameters for your project tokens.
+                  Simple token rules that will work for most projects. You can
+                  edit these rules in future cycles.
                 </Trans>
+              }
+            >
+              <DefaultSettings />
+            </Selection.Card>
+            <Selection.Card
+              name="custom"
+              title={t`Custom Token Rules`}
+              icon={<SettingOutlined />}
+              description={
+                <Trans>Set up custom rules for your project's tokens.</Trans>
               }
             >
               <CustomTokenSettings />
@@ -85,9 +90,9 @@ export const ProjectTokenPage: React.FC = () => {
         </Form.Item>
         <Callout.Info>
           <Trans>
-            Project tokens are not ERC-20 tokens by default. Once you deploy
-            your project, you can issue an ERC-20 for your holders to claim.
-            This is optional.
+            Your project's tokens are not ERC-20 tokens by default. After you
+            create your project, you can create an ERC-20 for your token holders
+            to claim. This is optional.
           </Trans>
         </Callout.Info>
       </Space>

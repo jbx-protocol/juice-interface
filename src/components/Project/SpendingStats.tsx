@@ -48,9 +48,9 @@ export default function SpendingStats({
           label={<Trans>AVAILABLE</Trans>}
           tip={
             <Trans>
-              ETH available for this cycle's payouts (before the {feePercentage}
-              % JBX fee). This amount won't roll over to the next cycle — make
-              sure that somebody sends the payouts before the cycle ends!
+              ETH currently available to send to the payout recipients below
+              (before the {feePercentage}% JBX fee). These payouts won't roll
+              over to next cycle, so they must be sent out before then.
             </Trans>
           }
         />

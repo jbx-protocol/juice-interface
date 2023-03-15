@@ -29,9 +29,9 @@ export default function PayWarningModal({
           <ExternalLink href="https://github.com/jbx-protocol/juice-contracts-v3">
             Juicebox protocol
           </ExternalLink>{' '}
-          could be vulnerable to bugs or hacks. All funds moved through Juicebox
-          could be lost or stolen. JuiceboxDAO and Peel are not liable for any
-          losses.
+          could be vulnerable to bugs or hacks. All of the ETH moved through
+          Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable
+          for any losses.
         </Trans>
       </strong>
     </Modal>

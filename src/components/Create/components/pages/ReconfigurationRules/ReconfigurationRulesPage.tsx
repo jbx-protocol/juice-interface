@@ -4,15 +4,21 @@ import { useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { Selection } from 'components/Create/components/Selection'
 import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
-import ExternalLink from 'components/ExternalLink'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
-import { HOLD_FEES_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import {
+  CONTROLLER_CONFIG_EXPLAINATION,
+  CONTROLLER_MIGRATION_EXPLAINATION,
+  HOLD_FEES_EXPLAINATION,
+  PAUSE_PAYMENTS_EXPLANATION,
+  RECONFIG_RULES_WARN,
+  TERMINAL_CONFIG_EXPLAINATION,
+  TERMINAL_MIGRATION_EXPLAINATION,
+} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { readNetwork } from 'constants/networks'
 import { trackFathomGoal } from 'lib/fathom'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
-import { helpPagePath } from 'utils/routes'
 import { CreateCollapse } from '../../CreateCollapse'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -58,22 +64,17 @@ export const ReconfigurationRulesPage = () => {
         </Space>
 
         {selection === 'none' && (
-          <Callout.Warning>
-            <Trans>
-              Using a reconfiguration strategy is recommended. Projects with no
-              strategy will appear risky to contributors.
-            </Trans>
-          </Callout.Warning>
+          <Callout.Warning>{RECONFIG_RULES_WARN}</Callout.Warning>
         )}
 
         <CreateCollapse>
-          <CreateCollapse.Panel key={0} header={t`Funding Rules`} hideDivider>
+          <CreateCollapse.Panel key={0} header={t`Other rules`} hideDivider>
             <Form.Item
               className="pt-8"
               name="pausePayments"
-              extra={t`When enabled, your project can't accept payments.`}
+              extra={PAUSE_PAYMENTS_EXPLANATION}
             >
-              <JuiceSwitch label={t`Pause payments`} />
+              <JuiceSwitch label={t`Pause payments to this project`} />
             </Form.Item>
 
             <Form.Item name="holdFees" extra={HOLD_FEES_EXPLAINATION}>
@@ -82,7 +83,7 @@ export const ReconfigurationRulesPage = () => {
           </CreateCollapse.Panel>
           <CreateCollapse.Panel
             key={1}
-            header={t`Owner Permissions`}
+            header={t`Contract permissions`}
             hideDivider
           >
             <h3 className="mt-3 mb-5 text-sm font-normal uppercase text-black dark:text-slate-100">
@@ -91,35 +92,13 @@ export const ReconfigurationRulesPage = () => {
             <div className="mb-8">
               <Form.Item
                 name="allowTerminalConfiguration"
-                extra={
-                  <Trans>
-                    When enabled, the project owner can change the project's
-                    Payment Terminals.{' '}
-                    <ExternalLink
-                      href={helpPagePath('dev/learn/glossary/payment-terminal')}
-                    >
-                      Learn more
-                    </ExternalLink>
-                  </Trans>
-                }
+                extra={TERMINAL_CONFIG_EXPLAINATION}
               >
                 <JuiceSwitch label={t`Allow Payment Terminal configuration`} />
               </Form.Item>
               <Form.Item
                 name="allowControllerConfiguration"
-                extra={
-                  <Trans>
-                    When enabled, the project owner can change the project's
-                    Controller.{' '}
-                    <ExternalLink
-                      href={helpPagePath(
-                        'dev/api/contracts/or-controllers/jbcontroller',
-                      )}
-                    >
-                      Learn more
-                    </ExternalLink>
-                  </Trans>
-                }
+                extra={CONTROLLER_CONFIG_EXPLAINATION}
               >
                 <JuiceSwitch label={t`Allow Controller configuration`} />
               </Form.Item>
@@ -130,36 +109,13 @@ export const ReconfigurationRulesPage = () => {
             <div className="mb-8">
               <Form.Item
                 name="allowTerminalMigration"
-                extra={
-                  <Trans>
-                    When enabled, the project owner can migrate the project's
-                    existing Payment Terminals to a newer version of the
-                    contract.{' '}
-                    <ExternalLink
-                      href={helpPagePath('dev/learn/glossary/payment-terminal')}
-                    >
-                      Learn more
-                    </ExternalLink>
-                  </Trans>
-                }
+                extra={TERMINAL_MIGRATION_EXPLAINATION}
               >
                 <JuiceSwitch label={t`Allow Payment Terminal migration`} />
               </Form.Item>
               <Form.Item
                 name="allowControllerMigration"
-                extra={
-                  <Trans>
-                    When enabled, the project owner can migrate the project's
-                    Controller to a newer version of the contract.{' '}
-                    <ExternalLink
-                      href={helpPagePath(
-                        'dev/api/contracts/or-controllers/jbcontroller',
-                      )}
-                    >
-                      Learn more
-                    </ExternalLink>
-                  </Trans>
-                }
+                extra={CONTROLLER_MIGRATION_EXPLAINATION}
               >
                 <JuiceSwitch label={t`Allow Controller migration`} />
               </Form.Item>

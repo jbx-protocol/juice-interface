@@ -18,7 +18,7 @@ export function LaunchProjectPayerButton({
     <>
       <Button onClick={() => setModalVisible(true)} type="primary" size="small">
         <span>
-          <Trans>Create project payer address</Trans>
+          <Trans>Create a project payer address</Trans>
         </span>
       </Button>
 

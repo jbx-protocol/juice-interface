@@ -55,7 +55,7 @@ export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayer
       ],
       {
         ...txOpts,
-        title: t`Deploy project payer address for ${projectTitle}`,
+        title: t`Create a project payer address for ${projectTitle}`,
       },
     )
   }

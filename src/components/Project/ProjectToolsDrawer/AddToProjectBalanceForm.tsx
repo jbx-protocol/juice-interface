@@ -53,16 +53,15 @@ export function AddToProjectBalanceForm({
   return (
     <Form form={addToBalanceForm} layout="vertical">
       <h3 className="text-primary">
-        <Trans>Add to balance</Trans>
+        <Trans>Transfer ETH to this project</Trans>
       </h3>
       <p>
         <Trans>
-          Add ETH from your wallet to this project's balance without minting
-          tokens.
+          Transfer ETH from your wallet to this project without minting tokens.
         </Trans>
       </p>
 
-      <Form.Item name="amount" label={<Trans>Add amount</Trans>}>
+      <Form.Item name="amount" label={<Trans>Transfer amount</Trans>}>
         <FormattedNumberInput
           placeholder="0"
           accessory={<InputAccessoryButton content="ETH" />}
@@ -74,9 +73,9 @@ export function AddToProjectBalanceForm({
           loading={loadingAddToBalance}
           size="small"
           type="primary"
-          text={<Trans>Add to balance</Trans>}
+          text={<Trans>Transfer ETH to project</Trans>}
           disabled={!userAddress}
-          connectWalletText={<Trans>Connect wallet to add to balance</Trans>}
+          connectWalletText={<Trans>Connect wallet to transfer ETH</Trans>}
         />
       </Form.Item>
     </Form>

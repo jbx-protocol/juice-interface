@@ -1,10 +1,14 @@
 import { t, Trans } from '@lingui/macro'
 import { DeployButtonText } from 'components/buttons/DeployProjectButtonText'
 import { Callout } from 'components/Callout'
+import { CYCLE_EXPLANATION } from 'components/Explanations'
 import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
+import { RECONFIG_RULES_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { readNetwork } from 'constants/networks'
+import { NetworkName } from 'models/networkName'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { helpPagePath } from 'utils/routes'
 import {
   FundingCyclesPage,
   NftRewardsPage,
@@ -53,11 +57,12 @@ export function Create() {
               </strong>
               <p>
                 <Trans>
-                  We recommend you visit the{' '}
+                  We recommend you <Link href="/contact">contact us</Link> or
+                  visit the{' '}
                   <ExternalLink href="https://discord.gg/6jXrJSyDFf">
                     Juicebox Discord
                   </ExternalLink>{' '}
-                  for help and advice on this process.
+                  for help with this process.
                 </Trans>
               </p>
             </Callout.Info>
@@ -71,18 +76,8 @@ export function Create() {
           </Wizard.Page>
           <Wizard.Page
             name="fundingCycles"
-            title={t`Funding Cycles`}
-            description={
-              <Trans>
-                Juicebox projects are funded in cycles. A Funding Cycle is a set
-                period of time in which your project settings are locked.{' '}
-                <ExternalLink
-                  href={helpPagePath('/dev/learn/glossary/funding-cycle')}
-                >
-                  Learn more.
-                </ExternalLink>
-              </Trans>
-            }
+            title={t`Cycles`}
+            description={CYCLE_EXPLANATION}
           >
             <FundingCyclesPage />
           </Wizard.Page>
@@ -91,10 +86,10 @@ export function Create() {
             title={t`Payouts`}
             description={
               <Trans>
-                Add payouts to wallet addresses or Juicebox projects to receive
-                funds from your treasury each cycle. Any unallocated funds will
-                stay in your treasury for use in a future cycle, or to be
-                claimed by token holders.
+                Pay out ETH from your project to the Ethereum wallets or
+                Juicebox projects of your choice. ETH which <em>isn't</em> paid
+                out will be available for token redemptions, or for use in
+                future cycles. Payouts reset each cycle.
               </Trans>
             }
           >
@@ -102,15 +97,14 @@ export function Create() {
           </Wizard.Page>
           <Wizard.Page
             name="projectToken"
-            title={t`Project Token`}
+            title={t`Token`}
             description={
               <Trans>
-                Design how your project's tokens should work. You can use your
-                project tokens for governance, ownership & treasury redemptions.{' '}
-                <ExternalLink href="https://docs.juicebox.money/dev/learn/glossary/tokens">
-                  Learn more
-                </ExternalLink>
-                .
+                When people pay your project, they receive its tokens. Project
+                tokens can be used for governance or community access, and token
+                holders can redeem their tokens to reclaim some ETH from your
+                project. You can also reserve some tokens for recipients of your
+                choosing.
               </Trans>
             }
           >
@@ -127,24 +121,15 @@ export function Create() {
               </div>
             }
             description={
-              <Trans>
-                Reward contributors with NFTs when they meet your funding
-                criteria.
-              </Trans>
+              <Trans>Reward your supporters with custom NFTs.</Trans>
             }
           >
             <NftRewardsPage />
           </Wizard.Page>
           <Wizard.Page
             name="reconfigurationRules"
-            title={<Trans>Reconfiguration Rules</Trans>}
-            description={
-              <Trans>
-                Setting a reconfiguration delay means changes to your funding
-                cycle settings only take effect after the delay period has
-                passed. This helps build trust with your contributors.
-              </Trans>
-            }
+            title={<Trans>Edit Deadline</Trans>}
+            description={RECONFIG_RULES_EXPLAINATION}
           >
             <ReconfigurationRulesPage />
           </Wizard.Page>
@@ -154,10 +139,8 @@ export function Create() {
             title={t`Review & Deploy`}
             description={
               <Trans>
-                Review your project data below. Once launched, your first
-                funding cycle can't be changed. You can reconfigure upcoming
-                funding cycles according to your project's reconfiguration
-                rules.
+                Review your project and deploy it to{' '}
+                {readNetwork.name ?? NetworkName.mainnet}.
               </Trans>
             }
           >

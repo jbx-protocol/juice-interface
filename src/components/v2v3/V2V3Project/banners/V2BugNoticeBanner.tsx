@@ -12,8 +12,8 @@ export function V2BugNoticeBanner() {
           <p>
             This project uses an old version of the V2 Juicebox protocol
             contracts. This version of the contracts contains a minor bug.{' '}
-            <strong>No funds are in danger</strong> and projects are unlikely to
-            be affected.{' '}
+            <strong>No ETH is in danger</strong> and projects are unlikely to be
+            affected.{' '}
             <ExternalLink
               className="text-black underline hover:text-bluebs-500 dark:text-smoke-200 dark:hover:text-bluebs-500"
               href="https://docs.juicebox.money/dev/resources/post-mortem/2022-05-24/"

@@ -103,7 +103,7 @@ export function V1DownloadActivityModal({
           onClick={() => downloadAdditionsToBalance(blockNumber, projectId, pv)}
         >
           <span>
-            <Trans>Additions to balance</Trans>
+            <Trans>ETH transfers to project</Trans>
           </span>
         </Button>
       </Space>

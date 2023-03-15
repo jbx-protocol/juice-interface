@@ -50,15 +50,15 @@ export const ProjectDetailsPage: React.FC = () => {
       <Space className="w-full" direction="vertical" size="large">
         <Form.Item
           name="projectName"
-          label={t`Project Name`}
+          label={t`Project name`}
           required
           rules={lockPageRulesWrapper([
-            inputMustExistRule({ label: t`Project Name` }),
+            inputMustExistRule({ label: t`A project name` }),
           ])}
         >
           <JuiceInput />
         </Form.Item>
-        <Form.Item name="projectDescription" label={t`Project Description`}>
+        <Form.Item name="projectDescription" label={t`Project description`}>
           <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
         </Form.Item>
         <Form.Item name="logo" label={t`Logo`}>
@@ -67,7 +67,7 @@ export const ProjectDetailsPage: React.FC = () => {
         <CreateCollapse>
           <CreateCollapse.Panel
             key={0}
-            header={<OptionalHeader header={t`Project Links`} />}
+            header={<OptionalHeader header={t`Project links`} />}
             hideDivider
           >
             {/* Adding paddingBottom is a bit of a hack, but horizontal gutters not working */}
@@ -79,7 +79,7 @@ export const ProjectDetailsPage: React.FC = () => {
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item name="projectTwitter" label={t`Twitter`}>
+                <Form.Item name="projectTwitter" label={t`Twitter handle`}>
                   <PrefixedInput prefix={'@'} />
                 </Form.Item>
               </Col>
@@ -99,17 +99,17 @@ export const ProjectDetailsPage: React.FC = () => {
           </CreateCollapse.Panel>
           <CreateCollapse.Panel
             key={1}
-            header={<OptionalHeader header={t`Project Owner`} />}
+            header={<OptionalHeader header={t`Project owner`} />}
             hideDivider
           >
             <Form.Item
               className="pb-8 pt-5"
               name="inputProjectOwner"
-              label={t`Input project owner address`}
-              extra={t`Nominate an Ethereum wallet address to become the ‘owner’ of this project. If you intend to manage this project from the address that deployed it, leave this blank.`}
+              label={t`Project owner address`}
+              extra={t`Leave this blank to make your currently connected wallet the project owner. Fill this out with an Ethereum address to make that address this project's owner.`}
               rules={lockPageRulesWrapper([
                 inputMustBeEthAddressRule({
-                  label: t`Input project owner address`,
+                  label: t`Project owner address`,
                 }),
               ])}
             >
@@ -118,9 +118,9 @@ export const ProjectDetailsPage: React.FC = () => {
             {projectOwnerDifferentThanWalletAddress && (
               <Callout.Warning collapsible={false}>
                 <Trans>
-                  Warning: once deployed, the nominated address will become the
-                  owner of this project and you will not be able to make changes
-                  unless you have access to the wallet address nominated.
+                  Warning: Only the project owner can edit a project. If you
+                  don't have access to the address above, you will lose access
+                  to your project.
                 </Trans>
               </Callout.Warning>
             )}
@@ -133,8 +133,8 @@ export const ProjectDetailsPage: React.FC = () => {
             <Form.Item
               name="coverImage"
               label={t`Cover image`}
-              tooltip={t`Add a cover image to your project page. This will be displayed at the top of your project page.`}
-              extra={t`1400px x 256px image size recommended.`}
+              tooltip={t`Add a banner to the top of your project's page.`}
+              extra={t`1400x256 recommended.`}
             >
               <FormImageUploader text={t`Upload`} maxSizeKBs={10000} />
             </Form.Item>
@@ -143,8 +143,9 @@ export const ProjectDetailsPage: React.FC = () => {
               <Col span={12}>
                 <Form.Item
                   name="payButtonText"
-                  label={<Trans>Pay Button Text</Trans>}
-                  tooltip={t`This is the button that contributors will click to pay your project`}
+                  label={<Trans>Pay button text</Trans>}
+                  tooltip={t`The text on the button supporters will click to pay your project`}
+                  extra={t`Use a simple term like 'Pay' or 'Donate'.`}
                 >
                   <JuiceInput placeholder={t`Pay`} />
                 </Form.Item>
@@ -152,8 +153,8 @@ export const ProjectDetailsPage: React.FC = () => {
             </Row>
             <Form.Item
               name="payDisclosure"
-              label={<Trans>Pay Disclosure</Trans>}
-              tooltip={t`Display a message or warning to contributors before they approve a payment to your project`}
+              label={<Trans>Payment notice</Trans>}
+              tooltip={t`Show a disclosure, a message, or a warning to supporters before they pay your project`}
             >
               <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
             </Form.Item>

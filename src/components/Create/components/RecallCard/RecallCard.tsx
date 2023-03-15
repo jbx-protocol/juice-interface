@@ -31,7 +31,7 @@ const FundingCycleRecallOption: React.FC = () => {
 
   return (
     <RecallOption
-      option={t`Funding Cycle`}
+      option={t`Cycle`}
       value={fundingCycleRecallValue}
       onClick={onClick}
     />

@@ -75,7 +75,7 @@ export default function RedeemEventElem({
       extra={
         <div className="text-grey-900 dark:text-slate-100">
           <Trans>
-            <ETHAmount amount={event.returnAmount} /> returned from project
+            <ETHAmount amount={event.returnAmount} /> reclaimed from project
           </Trans>
           {event.memo && <RichNote className="mt-4" note={event.memo} />}
         </div>

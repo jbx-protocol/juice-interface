@@ -2,8 +2,8 @@ import { Trans } from '@lingui/macro'
 
 export const ISSUE_ERC20_EXPLANATION = (
   <Trans>
-    Issue an ERC-20, and allow your supporters to claim your project's tokens as
-    that ERC-20. This makes your tokens compatible with tools like Uniswap.
+    Create an ERC-20, and allow your supporters to claim your project's tokens
+    as that ERC-20. This makes your tokens compatible with tools like Uniswap.
   </Trans>
 )
 
@@ -21,6 +21,10 @@ export const CYCLE_EXPLANATION = (
       With locked cycles, you can lock your project's rules for a period of time
       (like 3 minutes, 2 years, or 14 days), helping you build trust with your
       supporters.
+    </p>
+    <p>
+      This choice isn't permanent — you can switch between locked and unlocked
+      cycles in the future.
     </p>
   </Trans>
 )

@@ -11,7 +11,7 @@ const stepNames: Record<string, string> = {
   payouts: t`Payouts`,
   projectToken: t`Token`,
   nftRewards: t`NFTs`,
-  reconfigurationRules: t`Rules`,
+  reconfigurationRules: t`Deadline`,
   reviewDeploy: t`Deploy`,
 }
 

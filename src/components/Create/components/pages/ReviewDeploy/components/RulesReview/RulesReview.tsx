@@ -18,7 +18,7 @@ export const RulesReview = () => {
   return (
     <div className="flex flex-col gap-y-10 pt-5 pb-8 md:grid md:grid-cols-4">
       <ReviewDescription
-        title={t`Reconfiguration`}
+        title={t`Edit deadline`}
         desc={
           <div className="text-base font-medium">
             {strategy ? (
@@ -32,7 +32,7 @@ export const RulesReview = () => {
         }
       />
       <ReviewDescription
-        title={t`Payments`}
+        title={t`Payments to this project`}
         desc={<div className="text-base font-medium">{pausePayments}</div>}
       />
       <ReviewDescription

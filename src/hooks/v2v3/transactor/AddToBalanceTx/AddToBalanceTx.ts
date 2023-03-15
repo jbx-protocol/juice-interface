@@ -68,7 +68,7 @@ export function useAddToBalanceTx(): TransactorInstance<{
         {
           ...txOpts,
           value,
-          title: t`Add to balance of ${projectTitle}`,
+          title: t`Transfer ETH to ${projectTitle}`,
         },
       )
     } catch {

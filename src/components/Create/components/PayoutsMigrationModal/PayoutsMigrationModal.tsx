@@ -107,7 +107,7 @@ const V1MigrationCard = ({
             ) : (
               <div className="mb-6">
                 <Trans>
-                  All payouts have been deleted for this beneficiary. Save to
+                  All payouts have been deleted for this recipient. Save to
                   continue...
                 </Trans>
               </div>

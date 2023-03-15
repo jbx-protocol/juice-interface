@@ -107,7 +107,7 @@ export function LaunchFundingCycleForm() {
         </Form>
         <RichButton
           heading={t`Funding`}
-          description={t`Configure how your project will collect and spend funds.`}
+          description={t`Configure how your project will collect and spend ETH.`}
           onClick={() => setFundingDrawerVisible(true)}
         />
         <RichButton

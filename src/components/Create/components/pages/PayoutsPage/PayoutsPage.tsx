@@ -6,6 +6,7 @@ import { Divider, Form } from 'antd'
 import { Callout } from 'components/Callout'
 import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
 import TooltipLabel from 'components/TooltipLabel'
+import { FEES_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { useModal } from 'hooks/Modal'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { TreasurySelection } from 'models/treasurySelection'
@@ -60,11 +61,11 @@ export const PayoutsPage = () => {
   const calloutText = useMemo(() => {
     switch (treasuryOption) {
       case 'amount':
-        return t`You will pay out a specific amount of funds from your treasury each cycle. These funds are allocated in 'Payout Addresses' below.`
+        return t`A fixed amount of ETH can be paid out from your project each cycle. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token redemptions or use in future cycles.`
       case 'unlimited':
-        return t`There will be no limit on the amount of funds you can pay out or 'withdraw' from your treasury each cycle. Unlimited payouts are allocated in percentages only.`
+        return t`All of your project's ETH can be paid out at any time. You can send percentages of that ETH to one or more recipients.`
       case 'zero':
-        return t`All funds raised will be redeemable by your project's token holders. You can turn off redemptions in the Token settings. You will not be able to add payouts while your Payouts are set to None.`
+        return t`None of your project's ETH can be paid out. All ETH will stay in your project for token redemptions or use in future cycles.`
     }
   }, [treasuryOption])
 
@@ -219,11 +220,11 @@ export const PayoutsPage = () => {
             label={
               <TooltipLabel
                 className="text-lg font-medium text-black dark:text-grey-200"
-                label={<Trans>Payout Addresses</Trans>}
+                label={<Trans>Payout Recipients</Trans>}
                 tip={
                   <Trans>
-                    These are the addresses or entities that will receive
-                    payouts from your treasury each funding cycle.
+                    Your project will pay out ETH to these addresses and
+                    Juicebox projects.
                   </Trans>
                 }
               />
@@ -261,19 +262,15 @@ export const PayoutsPage = () => {
             <span className="text-grey-500 dark:text-slate-200">
               {hasAllocations && treasuryOption === 'amount' ? (
                 <Trans>
-                  Any funds raised over this amount may be redeemed by your
-                  project's token holders. You can turn off redemptions in the
-                  Token settings. Payouts to Ethereum wallets will incur a 2.5%
-                  fee. Sending funds to other Juicebox projects will not incur
-                  any fees. Learn more about fees.
+                  If redemptions are enabled, supporters can burn their tokens
+                  to reclaim some of the ETH not needed for payouts (any ETH
+                  exceeding the amount above). You can turn off redemptions in
+                  the Token settings.
                 </Trans>
               ) : (
-                <Trans>
-                  Payouts to Ethereum wallets will incur a 2.5% fee. Sending
-                  funds to other Juicebox projects will not incur any fees.
-                  Learn more about fees.
-                </Trans>
+                ''
               )}
+              {FEES_EXPLANATION}
             </span>
           </>
         )}
@@ -281,7 +278,7 @@ export const PayoutsPage = () => {
       </Form>
 
       <DeleteConfirmationModal
-        body={t`Choosing zero will delete all payouts and remove any target.`}
+        body={t`Choosing 'None' will clear your payout recipients and reset other payout options.`}
         open={switchingToZeroAmountsModal.visible}
         onOk={switchToZeroPayoutSelection}
         onCancel={switchingToZeroAmountsModal.close}

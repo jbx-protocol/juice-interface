@@ -14,9 +14,9 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   console.info('Deploy: SUCCESS', projectId)
   const router = useRouter()
   const { chain } = useWallet()
-  let deployGreeting = t`Your project has successfully launched!`
+  let deployGreeting = t`Your project was successfully created!`
   if (chain?.name) {
-    deployGreeting = t`Your project has successfully launched on ${chain.name}!`
+    deployGreeting = t`Your project was successfully created on ${chain.name}!`
   }
 
   const [gotoProjectClicked, setGotoProjectClicked] = useState<boolean>(false)
@@ -71,7 +71,7 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
         <ExternalLink href="https://discord.gg/juicebox">
           <Button icon={<ShareAltOutlined />}>
             <span>
-              <Trans> Share on Discord</Trans>
+              <Trans> Share to JuiceboxDAO</Trans>
             </span>
           </Button>
         </ExternalLink>

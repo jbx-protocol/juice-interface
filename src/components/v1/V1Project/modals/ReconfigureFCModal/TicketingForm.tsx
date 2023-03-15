@@ -48,8 +48,8 @@ export default function TicketingForm({
         </p>
         <p>
           <Trans>
-            Optionally, you can issue ERC-20 tokens once your project has been
-            deployed. Until then, the Juicebox protocol will track token
+            Optionally, you can create an ERC-20 token once your project has
+            been deployed. Until then, the Juicebox protocol will track token
             balances internally, allowing your supporters to receive tokens and
             redeem them for ETH.
           </Trans>

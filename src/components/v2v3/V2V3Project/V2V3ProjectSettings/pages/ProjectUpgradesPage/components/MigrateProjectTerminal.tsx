@@ -55,7 +55,7 @@ export function MigrateProjectTerminal({
     <div>
       <InfoCallout className="mb-5">
         <Trans>
-          This transaction will move your project's funds to the new Payment
+          This transaction will move your project's ETH to the new Payment
           Terminal contract:{' '}
           <EtherscanLink type="address" value={terminalAddress}>
             {terminalAddress}
@@ -64,7 +64,7 @@ export function MigrateProjectTerminal({
         </Trans>
       </InfoCallout>
       <Button onClick={onClick} type="primary" loading={loading}>
-        <Trans>Move funds</Trans>
+        <Trans>Move ETH</Trans>
       </Button>
     </div>
   )

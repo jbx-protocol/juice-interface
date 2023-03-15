@@ -101,7 +101,7 @@ export function RulesListItems({
         helperText={RECONFIG_RULES_EXPLAINATION}
       />
       <FundingCycleListItem
-        name={t`Payments`}
+        name={t`Payments to this project`}
         value={<PausePayValue pausePay={fundingCycleMetadata.pausePay} />}
         oldValue={
           showDiffs && pausePayHasDiff ? (

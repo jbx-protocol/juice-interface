@@ -87,7 +87,7 @@ export default function NewDeployModal({
         <RichButton
           className="mb-4"
           prefix="2"
-          heading={<Trans>Issue an ERC-20 token (optional)</Trans>}
+          heading={<Trans>Create an ERC-20 token (optional)</Trans>}
           description={ISSUE_ERC20_EXPLANATION}
           onClick={() => setIssueTokenModalVisible(true)}
           disabled={hasIssuedToken}

@@ -41,7 +41,7 @@ export const Head: VFC<SEOProps> = props => {
           rel="preload"
           href={path}
           as="font"
-          type="font/woff"
+          type="font/woff2"
           crossOrigin="true"
         />
       ))}

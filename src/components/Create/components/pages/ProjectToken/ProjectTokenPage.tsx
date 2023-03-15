@@ -68,15 +68,14 @@ export const ProjectTokenPage: React.FC = () => {
               }
               icon={<Icons.Tokens />}
               description={
-                <>
-                  <Trans>
-                    Simple token rules that will work for most projects. You can
-                    edit these rules in future cycles.
-                  </Trans>
-                  <DefaultSettings />
-                </>
+                <Trans>
+                  Simple token rules that will work for most projects. You can
+                  edit these rules in future cycles.
+                </Trans>
               }
-            />
+            >
+              <DefaultSettings />
+            </Selection.Card>
             <Selection.Card
               name="custom"
               title={t`Custom Token Rules`}

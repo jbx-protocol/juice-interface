@@ -2,6 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
+import ProjectTagsRow from 'components/ProjectTagsRow'
 import { PROJECTS_PAGE } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V1, PV_V2 } from 'constants/pv'
@@ -10,7 +11,7 @@ import { trackFathomGoal } from 'lib/fathom'
 import {
   MAX_PROJECT_TAGS,
   ProjectTag,
-  projectTagOptions
+  projectTagOptions,
 } from 'models/project-tags'
 import { ProjectCategory } from 'models/projectVisibility'
 import { PV } from 'models/pv'
@@ -153,7 +154,7 @@ function Projects() {
                 tags={[...projectTagOptions].sort(a =>
                   searchTags.includes(a) ? -1 : 1,
                 )}
-                tagClassName="text-sm"
+                tagClassName="text-xs"
                 selectedTags={searchTags}
                 onClickTag={t => {
                   let newTags: ProjectTag[] = []

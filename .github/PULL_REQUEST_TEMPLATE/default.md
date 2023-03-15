@@ -9,5 +9,5 @@ _If applicable, provide screenshots or screen recordings to demonstrate the chan
 ## Acceptance checklist
 
 - [ ] I have evaluated the [Approval Guidelines](https://github.com/jbx-protocol/juice-interface/blob/main/CONTRIBUTING.md#approval-guidelines) for this PR.
-- [ ] I have tested this PR in [all supported browsers](https://github.com/jbx-protocol/juice-interface/blob/main/CONTRIBUTING.md#supported-browsers).
-- [ ] I have tested this PR in dark mode and light mode (if applicable).
+- [ ] (if relevant) I have tested this PR in [all supported browsers](https://github.com/jbx-protocol/juice-interface/blob/main/CONTRIBUTING.md#supported-browsers).
+- [ ] (if relevant) I have tested this PR in dark mode and light mode (if applicable).

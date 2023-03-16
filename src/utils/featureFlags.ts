@@ -17,6 +17,10 @@ const FEATURE_FLAG_DEFAULTS: {
     mainnet: true,
     goerli: true,
   },
+  [FEATURE_FLAGS.JB_V3_1_UPGRADE]: {
+    mainnet: true,
+    goerli: true,
+  },
 }
 
 const featureFlagKey = (baseKey: string) => {

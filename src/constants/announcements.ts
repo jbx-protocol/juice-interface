@@ -10,7 +10,7 @@ export const announcements: Announcement[] = [
     content: IntroProjectTags,
     expire: new Date('2023-04-01T00:00:00.000Z').valueOf(),
     cta: {
-      text: 'Go to settings',
+      text: 'Set project tags',
       fn: (router: NextRouter) => {
         router.push(router.asPath + '/settings?page=general')
       },

@@ -225,6 +225,9 @@ export function useProjectActivity({
       case 'configure':
         key = 'configureEvent'
         break
+      case 'setFundAccessConstraints':
+        key = 'setFundAccessConstraintsEvent'
+        break
     }
 
     if (key) {

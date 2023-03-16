@@ -1,0 +1,18 @@
+.ant-table-thead > tr > th {
+  @apply bg-l2;
+  @apply text-primary;
+  @apply stroke-tertiary;
+}
+
+.ant-table-tbody > tr > td {
+  @apply bg-l0;
+  @apply text-primary;
+  @apply stroke-tertiary;
+  &:hover {
+    @apply bg-l0;
+  }
+}
+
+.ant-table-tbody > tr > td.ant-table-cell-row-hover {
+  @apply bg-l0;
+}

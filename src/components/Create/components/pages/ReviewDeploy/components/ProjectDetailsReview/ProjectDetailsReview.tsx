@@ -91,7 +91,7 @@ export const ProjectDetailsReview = () => {
       />
       <ReviewDescription
         title={t`Tags`}
-        desc={tags?.length ? <ProjectTagsRow tags={tags} /> : 'No tags'}
+        desc={tags?.length ? <ProjectTagsRow tags={tags} /> : t`No tags`}
       />
       <ReviewDescription
         title={t`Pay button text`}

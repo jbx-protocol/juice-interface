@@ -3,18 +3,14 @@ import {
   ArrowRightOutlined,
   ArrowUpOutlined,
   EnterOutlined,
-  SearchOutlined,
+  SearchOutlined
 } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
 import { PV_V2 } from 'constants/pv'
 import { useModal } from 'hooks/Modal'
-<<<<<<< HEAD
-import { useProjectsSearch, useSepanaProjectsQuery } from 'hooks/Projects'
-=======
-import { useSepanaProjectsSearch } from 'hooks/Projects'
->>>>>>> e835a531b (remove feature flags. tag style tweaks)
+import { useSepanaProjectsQuery } from 'hooks/Projects'
 import { trackFathomGoal } from 'lib/fathom'
 import { SepanaProject } from 'models/sepana'
 import { useRouter } from 'next/router'
@@ -58,30 +54,10 @@ export default function QuickProjectSearch({
     }
   }, [inputText])
 
-<<<<<<< HEAD
-  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
-
-  const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
-    useSepanaProjectsQuery(
-      { text: searchText, pageSize: MAX_RESULTS },
-      { enabled: sepanaEnabled },
-    )
-
-  const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
-    useProjectsSearch(searchText, { enabled: !sepanaEnabled })
-
-  const searchResults = sepanaEnabled ? sepanaSearchResults : graphSearchResults
-  const isLoadingSearch = sepanaEnabled
-    ? isLoadingSepanaSearch
-    : isLoadingGraphSearch
-=======
-  const { data: searchResults, isLoading } = useSepanaProjectsSearch(
-    searchText,
-    {
-      pageSize: MAX_RESULTS,
-    },
-  )
->>>>>>> e835a531b (remove feature flags. tag style tweaks)
+  const { data: searchResults, isLoading } = useSepanaProjectsQuery({
+    text: searchText,
+    pageSize: MAX_RESULTS,
+  })
 
   const goToProject = useCallback(() => {
     if (highlightIndex === undefined || !searchResults?.length) return

@@ -18,6 +18,7 @@ import { DistributePayoutsEvent } from '../v2/distribute-payouts-event'
 import { DistributeReservedTokensEvent } from '../v2/distribute-reserved-tokens-event'
 import { DistributeToPayoutSplitEvent } from '../v2/distribute-to-payout-split-event'
 import { DistributeToReservedTokenSplitEvent } from '../v2/distribute-to-reserved-token-split-event'
+import { SetFundAccessConstraintsEvent } from '../v2/set-fund-access-constraints-event'
 import { UseAllowanceEvent } from '../v2/use-allowance-event'
 import { AddToBalanceEvent } from './add-to-balance-event'
 import { BurnEvent } from './burn-event'
@@ -56,6 +57,7 @@ export interface ProjectEvent extends TerminalEventEntity, BaseProjectEntity {
   useAllowanceEvent: UseAllowanceEvent | null
   deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEvent | null
   configureEvent: ConfigureEvent | null
+  setFundAccessConstraintsEvent: SetFundAccessConstraintsEvent | null
 }
 
 export const parseProjectEventJson = (j: Json<ProjectEvent>): ProjectEvent => ({
@@ -82,5 +84,6 @@ export const parseProjectEventJson = (j: Json<ProjectEvent>): ProjectEvent => ({
     'deployETHERC20ProjectPayerEvent',
     'configureEvent',
     'v1ConfigureEvent',
+    'setFundAccessConstraintsEvent',
   ]),
 })

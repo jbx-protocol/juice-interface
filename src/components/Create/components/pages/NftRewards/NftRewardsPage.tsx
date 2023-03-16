@@ -16,7 +16,6 @@ import {
   USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { CREATE_FLOW } from 'constants/fathomEvents'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useModal } from 'hooks/Modal'
 import { trackFathomGoal } from 'lib/fathom'
 import { JB721GovernanceType } from 'models/nftRewards'
@@ -24,7 +23,6 @@ import { useContext } from 'react'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { inputMustExistRule } from 'utils/antdRules'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { helpPagePath } from 'utils/routes'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse'
@@ -45,7 +43,6 @@ export const NftRewardsPage = () => {
     state => state.editingV2Project.nftRewards.postPayModal,
   )
 
-  const delegateV1_1Enabled = featureFlagEnabled(FEATURE_FLAGS.DELEGATE_V1_1)
   const hasNfts = !!Form.useWatch('rewards', form)?.length
 
   return (
@@ -279,14 +276,12 @@ export const NftRewardsPage = () => {
                   >
                     <JuiceSwitch label={t`Use NFTs for redemptions`} />
                   </Form.Item>
-                  {delegateV1_1Enabled ? (
-                    <Form.Item
-                      name="preventOverspending"
-                      extra={PREVENT_OVERSPENDING_EXPLAINATION}
-                    >
-                      <JuiceSwitch label={t`Prevent NFT overspending`} />
-                    </Form.Item>
-                  ) : null}
+                  <Form.Item
+                    name="preventOverspending"
+                    extra={PREVENT_OVERSPENDING_EXPLAINATION}
+                  >
+                    <JuiceSwitch label={t`Prevent NFT overspending`} />
+                  </Form.Item>
                 </CreateCollapse.Panel>
               </CreateCollapse>
             </Space>

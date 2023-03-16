@@ -30,6 +30,7 @@ const CONTRACT_EXCLUSIONS = [
   V2V3ContractName.JBVeTokenUriResolver,
   V2V3ContractName.JBTiered721DelegateProjectDeployer,
   V2V3ContractName.JBSingleTokenPaymentTerminalStore,
+  V2V3ContractName.JBFundAccessConstraintsStore,
 ]
 
 export function V2V3ProjectContractsDashboard() {
@@ -69,7 +70,10 @@ export function V2V3ProjectContractsDashboard() {
           address: projectContracts[k as keyof V2V3ProjectContracts]?.address,
         }
       })
-      .filter(c => c.address !== undefined),
+      .filter(
+        c =>
+          c.address !== undefined && c.name !== 'JBFundAccessConstraintsStore',
+      ),
     ...Object.keys(contracts)
       .map(k => {
         return {
@@ -83,6 +87,13 @@ export function V2V3ProjectContractsDashboard() {
           c.address !== undefined &&
           !CONTRACT_EXCLUSIONS.includes(c.name as V2V3ContractName),
       ),
+    {
+      key: 'JBFundAccessConstraintsStore',
+      name: 'JBFundAccessConstraintsStore',
+      address:
+        projectContracts.JBFundAccessConstraintsStore?.address ||
+        contracts.JBFundAccessConstraintsStore.address,
+    },
   ].sort((a, b) => a.name.localeCompare(b.name))
 
   return (

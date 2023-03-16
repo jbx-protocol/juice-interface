@@ -8,12 +8,8 @@ export const HeroSubheading = () => (
     Light enough for a group of friends, powerful enough for a global network of
     anons.{' '}
     <a
-      href="/p/juicebox"
+      href="/@juicebox"
       className="text-black underline hover:text-bluebs-500 hover:underline dark:text-grey-100 dark:hover:text-bluebs-500"
-      style={{
-        // TODO: not supported in tailwind
-        fontWeight: 'inherit',
-      }}
     >
       Community-owned
     </a>

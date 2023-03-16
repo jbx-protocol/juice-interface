@@ -1,5 +1,6 @@
 import { AppWrapper } from 'components/common'
 import ExternalLink from 'components/ExternalLink'
+import Link from 'next/link'
 
 export default function PrivacyPolicyPage() {
   return (
@@ -13,6 +14,14 @@ function PrivacyPolicy() {
   return (
     <div className="my-0 mx-auto max-w-5xl p-10">
       <h1>Privacy Policy</h1>
+      <p>
+        <Link href="/">juicebox.money</Link> uses{' '}
+        <ExternalLink href="https://arcx.money/">ARCx</ExternalLink>,{' '}
+        <ExternalLink href="https://www.hotjar.com/">Hotjar</ExternalLink>, and{' '}
+        <ExternalLink href="https://usefathom.com/">Fathom</ExternalLink> to
+        collect and analyze user data.
+      </p>
+      <h2>Fathom</h2>
       <p>
         We want to process as little personal information as possible when you
         use our website. That's why we've chosen Fathom Analytics for our
@@ -35,7 +44,7 @@ function PrivacyPolicy() {
         and business continually." As per the explanation, no personal data is
         stored over time.
       </p>
-
+      <h2>Hotjar</h2>
       <p>
         We use Hotjar in order to better understand our users’ needs and to
         optimize this service and experience. Hotjar is a technology service
@@ -51,6 +60,15 @@ function PrivacyPolicy() {
         stores this information on our behalf in a pseudonymized user profile.
         Hotjar is contractually forbidden to sell any of the data collected on
         our behalf.
+      </p>
+      <h2>ARCx</h2>
+      <p>
+        We use ARCx to collect non-personally identifiable information to help
+        us understand how users interact with our website. To learn more, read{' '}
+        <ExternalLink href="https://arcx.notion.site/Privacy-Policy-12e5f98a1756409d9ec72110b430eed5">
+          ARCx's Privacy Policy
+        </ExternalLink>
+        .
       </p>
     </div>
   )

@@ -1,6 +1,8 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
+import { AnnouncementLauncher } from 'contexts/Announcements/AnnouncementLauncher'
+import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import LanguageProvider from 'contexts/Language/LanguageProvider'
@@ -31,7 +33,11 @@ export const AppWrapper: React.FC = ({ children }) => {
               <ThemeProvider>
                 <EtherPriceProvider>
                   <ArcxProvider>
-                    <_Wrapper>{children}</_Wrapper>
+                    <AnnouncementsProvider>
+                      <AnnouncementLauncher>
+                        <_Wrapper>{children}</_Wrapper>
+                      </AnnouncementLauncher>
+                    </AnnouncementsProvider>
                   </ArcxProvider>
                 </EtherPriceProvider>
               </ThemeProvider>

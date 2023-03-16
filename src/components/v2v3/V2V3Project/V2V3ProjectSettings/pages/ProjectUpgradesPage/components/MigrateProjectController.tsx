@@ -9,6 +9,7 @@ import { useMigrateControllerTx } from 'hooks/v2v3/transactor/MigrateControllerT
 import Link from 'next/link'
 import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'
+import { RequiredFlagsList } from './RequiredFlagsList'
 
 /**
  * Component to call `migrateController` on a project.
@@ -42,11 +43,7 @@ export function MigrateProjectController({
     return (
       <div>
         <InfoCallout className="mb-5">
-          <p>
-            <Trans>
-              You must edit your cycle's rules to allow controller migrations.
-            </Trans>
-          </p>
+          <RequiredFlagsList />
           <Link href={settingsPagePath('reconfigurefc', { projectId, handle })}>
             <Button type="primary">
               <Trans>Edit cycle</Trans>

@@ -1202,6 +1202,9 @@ msgstr ""
 msgid "Edited cycle"
 msgstr ""
 
+msgid "Edited payout"
+msgstr ""
+
 msgid "Editing NFTs"
 msgstr ""
 
@@ -1422,6 +1425,9 @@ msgid "Go to project"
 msgstr ""
 
 msgid "Go to your Safe"
+msgstr ""
+
+msgid "Got it"
 msgstr ""
 
 msgid "Governance"
@@ -3833,13 +3839,7 @@ msgstr ""
 msgid "You must <0>Edit your Cycle</0> to change your total payout amount."
 msgstr ""
 
-msgid "You must edit your cycle's rules to allow controller migrations."
-msgstr ""
-
-msgid "You must edit your funding cycle rules to allow terminal configuration."
-msgstr ""
-
-msgid "You must edit your funding cycle rules to allow terminal migrations."
+msgid "You must enable the following cycle rules:<0>{0}{1}{2}</0>"
 msgstr ""
 
 msgid "You must grant permission to migrate your V1 tokens."

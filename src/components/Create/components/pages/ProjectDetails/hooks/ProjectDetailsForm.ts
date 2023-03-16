@@ -74,7 +74,7 @@ export const useProjectDetailsForm = () => {
   useFormDispatchWatch({
     form,
     fieldName: 'tags',
-    ignoreUndefined: false,
+    ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setTags,
     formatter: v => v ?? [],
   })

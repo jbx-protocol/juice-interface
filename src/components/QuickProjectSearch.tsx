@@ -8,16 +8,18 @@ import {
 import { t, Trans } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V2 } from 'constants/pv'
 import { useModal } from 'hooks/Modal'
+<<<<<<< HEAD
 import { useProjectsSearch, useSepanaProjectsQuery } from 'hooks/Projects'
+=======
+import { useSepanaProjectsSearch } from 'hooks/Projects'
+>>>>>>> e835a531b (remove feature flags. tag style tweaks)
 import { trackFathomGoal } from 'lib/fathom'
 import { SepanaProject } from 'models/sepana'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatWad } from 'utils/format/formatNumber'
 import { v2v3ProjectRoute } from 'utils/routes'
 
@@ -56,6 +58,7 @@ export default function QuickProjectSearch({
     }
   }, [inputText])
 
+<<<<<<< HEAD
   const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
 
   const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
@@ -71,6 +74,14 @@ export default function QuickProjectSearch({
   const isLoadingSearch = sepanaEnabled
     ? isLoadingSepanaSearch
     : isLoadingGraphSearch
+=======
+  const { data: searchResults, isLoading } = useSepanaProjectsSearch(
+    searchText,
+    {
+      pageSize: MAX_RESULTS,
+    },
+  )
+>>>>>>> e835a531b (remove feature flags. tag style tweaks)
 
   const goToProject = useCallback(() => {
     if (highlightIndex === undefined || !searchResults?.length) return
@@ -134,7 +145,7 @@ export default function QuickProjectSearch({
   // Arrow key up/down & tab listener
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
-      if (!searchResults || isLoadingSearch) return
+      if (!searchResults || isLoading) return
 
       switch (e.key) {
         case 'ArrowUp':
@@ -154,14 +165,7 @@ export default function QuickProjectSearch({
     return () => {
       window.removeEventListener('keydown', listener)
     }
-  }, [
-    modal.visible,
-    searchText,
-    router,
-    goToProject,
-    searchResults,
-    isLoadingSearch,
-  ])
+  }, [modal.visible, searchText, router, goToProject, searchResults, isLoading])
 
   return (
     <>
@@ -203,7 +207,7 @@ export default function QuickProjectSearch({
           </div>
 
           <div hidden={!searchText}>
-            {isLoadingSearch && <Loading />}
+            {isLoading && <Loading />}
 
             {!!searchResults?.length && (
               <div className="flex flex-col">
@@ -223,9 +227,7 @@ export default function QuickProjectSearch({
                       <V2V3ProjectHandleLink
                         projectId={p.projectId}
                         handle={p.handle}
-                        name={
-                          sepanaEnabled ? (p as SepanaProject).name : undefined
-                        }
+                        name={(p as SepanaProject).name}
                       />
                     ) : (
                       <V1ProjectHandle
@@ -254,7 +256,7 @@ export default function QuickProjectSearch({
               </div>
             )}
 
-            {searchText && !isLoadingSearch && searchResults?.length === 0 && (
+            {searchText && !isLoading && searchResults?.length === 0 && (
               <div className="text-center text-grey-400">
                 <Trans>No results</Trans>
               </div>

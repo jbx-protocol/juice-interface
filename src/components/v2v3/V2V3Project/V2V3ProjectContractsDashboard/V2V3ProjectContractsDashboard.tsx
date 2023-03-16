@@ -72,7 +72,7 @@ export function V2V3ProjectContractsDashboard() {
       })
       .filter(
         c =>
-          c.address !== undefined && c.name !== 'JBFundAccessConstraintsStore',
+          c.address !== undefined && c.name !== 'JBFundAccessConstraintsStores',
       ),
     ...Object.keys(contracts)
       .map(k => {

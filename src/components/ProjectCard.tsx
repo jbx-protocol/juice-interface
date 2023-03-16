@@ -176,7 +176,7 @@ export default function ProjectCard({
             {tags?.length ? (
               <div className="mt-1">
                 <ProjectTagsRow
-                  tagClassName="text-xs text-grey-400 dark:text-slate-200"
+                  tagClassName="text-xs text-grey-400 dark:text-slate-200 border-solid border border-grey-400 dark:border-slate-200 bg-transparent"
                   tags={tags}
                 />
               </div>

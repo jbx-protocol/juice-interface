@@ -8,6 +8,7 @@ export const announcements: Announcement[] = [
     id: 'introProjectTags',
     conditions: [({ isProjectOwner }) => isProjectOwner],
     content: IntroProjectTags,
+    expire: new Date('2023-04-01T00:00:00.000Z').valueOf(),
     cta: {
       text: 'Go to settings',
       fn: (router: NextRouter) => {
@@ -19,6 +20,7 @@ export const announcements: Announcement[] = [
     id: 'introSepanaSearch',
     conditions: [({ router }) => router.pathname.includes('projects')],
     content: IntroSepanaSearch,
+    expire: new Date('2023-04-01T00:00:00.000Z').valueOf(),
   },
 ]
 

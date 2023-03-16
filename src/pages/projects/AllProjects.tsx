@@ -2,11 +2,9 @@ import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useLoadMoreContent } from 'hooks/LoadMore'
 import {
   useInfiniteProjectsQuery,
-  useProjectsSearch,
   useProjectTagsQuery,
   useSepanaProjectsSearch,
 } from 'hooks/Projects'
@@ -14,7 +12,6 @@ import { ProjectTag } from 'models/project-tags'
 import { PV } from 'models/pv'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
-import { featureFlagEnabled } from 'utils/featureFlags'
 
 export default function AllProjects({
   pv,
@@ -48,28 +45,15 @@ export default function AllProjects({
     pv,
   })
 
-  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
+  const { data: textSearchResults, isLoading: isLoadingTextSearch } =
+    useSepanaProjectsSearch(searchText)
 
-  const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
-    useSepanaProjectsSearch(searchText, { enabled: sepanaEnabled })
-
-  const { data: sepanaTagSearchResults, isLoading: isLoadingSepanaTagsSearch } =
+  const { data: tagSearchResults, isLoading: isLoadingTagsSearch } =
     useProjectTagsQuery(searchTags, {
-      enabled: sepanaEnabled && !!searchTags.length,
+      enabled: !!searchTags.length,
     })
 
-  const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
-    useProjectsSearch(searchText, { enabled: !sepanaEnabled })
-
-  const searchResults = sepanaEnabled
-    ? searchTags.length
-      ? sepanaTagSearchResults
-      : sepanaSearchResults
-    : graphSearchResults
-
-  const isLoadingSearch = sepanaEnabled
-    ? isLoadingSepanaSearch || isLoadingSepanaTagsSearch
-    : isLoadingGraphSearch
+  const isLoadingSearch = isLoadingTextSearch || isLoadingTagsSearch
 
   const [scrolledToBottom] = useLoadMoreContent({
     loadMoreContainerRef,
@@ -78,10 +62,13 @@ export default function AllProjects({
 
   const isLoading = isLoadingProjects || isLoadingSearch
 
+  // If searching tags, show tag results (sepana)
+  // If searching text, show text results (sepana)
+  // Else just use subgraph for infinite query
   const concatenatedPages = searchTags.length
-    ? sepanaTagSearchResults
+    ? tagSearchResults
     : searchText?.length
-    ? searchResults
+    ? textSearchResults
     : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
 
   useEffect(() => {

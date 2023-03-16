@@ -1,10 +1,21 @@
+import { Trans } from '@lingui/macro'
+import ProjectTagsRow from 'components/ProjectTagsRow'
+import { projectTagOptions } from 'models/project-tags'
+
 export default function IntroProjectTags() {
   return (
     <div>
-      <h1>Introducing project tags</h1>
-      Project tags are fun and great and fun
+      <h1>
+        <Trans>
+          <span className="text-juice-500">NEW:</span> Project tags
+        </Trans>
+      </h1>
+      <ProjectTagsRow tags={[...projectTagOptions]} />
       <br />
-      Go to project settings and tag it up baby
+      <Trans>
+        You can now add tags to describe your project, and help contributors
+        find it. Anyone can search for projects by tag on the Explore page.
+      </Trans>
     </div>
   )
 }

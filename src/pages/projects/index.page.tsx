@@ -4,7 +4,6 @@ import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
 import ProjectTagsRow from 'components/ProjectTagsRow'
 import { PROJECTS_PAGE } from 'constants/fathomEvents'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
@@ -18,7 +17,6 @@ import { PV } from 'models/pv'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 
 import AllProjects from './AllProjects'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
@@ -66,8 +64,6 @@ function Projects() {
   const { userAddress } = useWallet()
   const [searchText, setSearchText] = useState<typeof search>(search)
   const [searchTags, setSearchTags] = useState<ProjectTag[]>([])
-
-  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
 
   useEffect(() => {
     setSelectedTab(() => {
@@ -133,11 +129,7 @@ function Projects() {
             <Search
               className="mb-4 flex-1"
               autoFocus
-              placeholder={
-                sepanaEnabled
-                  ? t`Search projects`
-                  : t`Search projects by handle`
-              }
+              placeholder={t`Search projects`}
               onSearch={val => {
                 setSearchText(val)
                 router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
@@ -148,7 +140,7 @@ function Projects() {
             />
           )}
 
-          {sepanaEnabled && !searchText && (
+          {!searchText && (
             <div className="mb-3">
               <ProjectTagsRow
                 tags={[...projectTagOptions].sort(a =>

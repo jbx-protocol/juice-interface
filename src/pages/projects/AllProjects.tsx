@@ -2,18 +2,12 @@ import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useLoadMoreContent } from 'hooks/LoadMore'
-import {
-  useInfiniteProjectsQuery,
-  useProjectsSearch,
-  useSepanaProjectsQuery
-} from 'hooks/Projects'
+import { useSepanaProjectsInfiniteQuery } from 'hooks/Projects'
 import { ProjectTag } from 'models/project-tags'
 import { PV } from 'models/pv'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
-import { featureFlagEnabled } from 'utils/featureFlags'
 
 export default function AllProjects({
   pv,
@@ -34,48 +28,30 @@ export default function AllProjects({
   const pageSize = 20
 
   const {
-    data: pages,
-    isLoading: isLoadingProjects,
-    isFetchingNextPage,
+    data: projects,
+    isLoading,
     hasNextPage,
     fetchNextPage,
-  } = useInfiniteProjectsQuery({
-    orderBy,
-    pageSize,
-    orderDirection: reversed ? 'asc' : 'desc',
-    state: showArchived ? 'archived' : 'active',
+    isFetchingNextPage,
+  } = useSepanaProjectsInfiniteQuery({
+    text: searchText,
+    tags: searchTags,
     pv,
+    orderBy,
+    archived: showArchived,
+    orderDirection: reversed ? 'asc' : 'desc',
+    pageSize,
   })
-
-  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
-
-  const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
-    useSepanaProjectsQuery(
-      { text: searchText, tags: searchTags, pageSize },
-      { enabled: sepanaEnabled },
-    )
-
-  const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
-    useProjectsSearch(searchText, { enabled: !sepanaEnabled })
-
-  const searchResults = sepanaEnabled ? sepanaSearchResults : graphSearchResults
-
-  const isLoadingSearch = sepanaEnabled
-    ? isLoadingSepanaSearch
-    : isLoadingGraphSearch
 
   const [scrolledToBottom] = useLoadMoreContent({
     loadMoreContainerRef,
     hasNextPage,
   })
 
-  const isLoading = isLoadingProjects || isLoadingSearch
-
-  const concatenatedPages = sepanaEnabled
-    ? sepanaSearchResults
-    : searchText?.length
-    ? searchResults
-    : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
+  const concatenatedPages = projects?.pages?.reduce(
+    (prev, group) => [...prev, ...group],
+    [],
+  )
 
   useEffect(() => {
     if (scrolledToBottom) {
@@ -109,8 +85,7 @@ export default function AllProjects({
           <Trans>Load more</Trans>
         </div>
       ) : (
-        !isLoadingSearch &&
-        !isLoadingProjects && (
+        !isLoading && (
           <div
             className={classNames(
               'px-5 pb-5 text-center text-grey-400 dark:text-slate-200',

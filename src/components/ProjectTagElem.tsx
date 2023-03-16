@@ -15,7 +15,7 @@ export default function ProjectTagElem({
   return (
     <div
       onClick={() => onClick?.(tag)}
-      className={`cursor-pointer rounded-full py-1 px-3 text-sm ${
+      className={`cursor-pointer rounded-full py-1 px-3 ${
         selected
           ? 'bg-smoke-300 font-medium dark:bg-slate-400'
           : 'bg-smoke-100 dark:bg-slate-600'

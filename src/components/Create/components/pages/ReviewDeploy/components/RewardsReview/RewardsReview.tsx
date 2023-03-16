@@ -1,12 +1,10 @@
 import { t } from '@lingui/macro'
 import { RewardsList } from 'components/Create/components/RewardsList'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { JB721GovernanceType, NftRewardTier } from 'models/nftRewards'
 import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/AppDispatch'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { formatEnabled } from 'utils/format/formatBoolean'
 import { v4 } from 'uuid'
 import { ReviewDescription } from '../ReviewDescription'
@@ -68,8 +66,6 @@ export const RewardsReview = () => {
     return formatEnabled(flags.preventOverspending)
   }, [flags.preventOverspending])
 
-  const delegateV1_1Enabled = featureFlagEnabled(FEATURE_FLAGS.DELEGATE_V1_1)
-
   const onChainGovernance = useMemo(() => {
     switch (governanceType) {
       case JB721GovernanceType.GLOBAL:
@@ -100,14 +96,12 @@ export const RewardsReview = () => {
             <div className="text-base font-medium">{onChainGovernance}</div>
           }
         />
-        {delegateV1_1Enabled ? (
-          <ReviewDescription
-            title={t`Prevent NFT overspending`}
-            desc={
-              <div className="text-base font-medium">{preventOverspending}</div>
-            }
-          />
-        ) : null}
+        <ReviewDescription
+          title={t`Prevent NFT overspending`}
+          desc={
+            <div className="text-base font-medium">{preventOverspending}</div>
+          }
+        />
       </div>
     </div>
   )

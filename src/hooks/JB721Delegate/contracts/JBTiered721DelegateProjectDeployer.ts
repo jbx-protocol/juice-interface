@@ -1,4 +1,4 @@
-import { JB721_DELEGATE_V1 } from 'constants/delegateVersions'
+import { JB721_DELEGATE_V1_1 } from 'constants/delegateVersions'
 import { readNetwork } from 'constants/networks'
 import {
   JB721DelegatePackageVersion,
@@ -9,7 +9,7 @@ import { JB721DelegateVersion } from 'models/nftRewards'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 
 export const DEFAULT_JB_721_DELEGATE_VERSION: JB721DelegateVersion =
-  JB721_DELEGATE_V1
+  JB721_DELEGATE_V1_1
 
 async function loadDefaultJB721DelegateDeployment() {
   const versionString = JB721DelegatePackageVersion(

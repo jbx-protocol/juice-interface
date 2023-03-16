@@ -22,10 +22,11 @@ import {
   useUploadNftRewards,
 } from './hooks'
 
-// TODO: This is copy pasted from ReviewDeployTab
+const CREATE_EVENT_IDX = 2
 const NFT_CREATE_EVENT_IDX_V1 = 2
 const NFT_CREATE_EVENT_IDX_V1_1 = 3 // v1.1's log is a different index.
-const NFT_PROJECT_ID_TOPIC_IDX = 1
+const PROJECT_ID_TOPIC_IDX = 1
+
 /**
  * Return the project ID created from a `launchProjectFor` transaction.
  * @param txReceipt receipt of `launchProjectFor` transaction
@@ -38,7 +39,21 @@ const getProjectIdFromNftLaunchReceipt = (
       DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V1_1
         ? NFT_CREATE_EVENT_IDX_V1_1
         : NFT_CREATE_EVENT_IDX_V1
-    ]?.topics?.[NFT_PROJECT_ID_TOPIC_IDX]
+    ]?.topics?.[PROJECT_ID_TOPIC_IDX]
+  const projectId = BigNumber.from(projectIdHex).toNumber()
+
+  return projectId
+}
+
+/**
+ * Return the project ID created from a `launchProjectFor` transaction.
+ * @param txReceipt receipt of `launchProjectFor` transaction
+ */
+const getProjectIdFromLaunchReceipt = (
+  txReceipt: TransactionReceipt,
+): number => {
+  const projectIdHex: unknown | undefined =
+    txReceipt?.logs[CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
   const projectId = BigNumber.from(projectIdHex).toNumber()
 
   return projectId
@@ -121,7 +136,9 @@ export const useDeployProject = () => {
           return // TODO error notification
         }
 
-        const projectId = getProjectIdFromNftLaunchReceipt(txReceipt)
+        const projectId = isNftProject
+          ? getProjectIdFromNftLaunchReceipt(txReceipt)
+          : getProjectIdFromLaunchReceipt(txReceipt)
 
         if (projectId === undefined) {
           return // TODO error notification
@@ -137,7 +154,7 @@ export const useDeployProject = () => {
         setTransactionPending(false)
       },
     }),
-    [dispatch],
+    [dispatch, isNftProject],
   )
 
   /**

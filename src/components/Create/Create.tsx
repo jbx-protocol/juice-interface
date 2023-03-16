@@ -40,7 +40,7 @@ export function Create() {
 
   return (
     <div className="mt-10">
-      <h1 className="mb-0 text-center text-base font-medium uppercase text-black dark:text-slate-100">
+      <h1 className="mb-0 text-center font-heading text-base font-medium uppercase text-black dark:text-slate-100">
         {!isMigration ? (
           <Trans>Create a project</Trans>
         ) : (
@@ -113,11 +113,9 @@ export function Create() {
           <Wizard.Page
             name="nftRewards"
             title={
-              <div className="inline-flex items-center gap-3">
+              <div className="flex items-center gap-3">
                 <Trans>NFTs</Trans>
-                <div>
-                  <CreateBadge.Optional />
-                </div>
+                <CreateBadge.Optional />
               </div>
             }
             description={

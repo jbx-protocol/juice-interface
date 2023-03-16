@@ -39,7 +39,7 @@ export function Create() {
   if (initialStateLoading) return <Loading />
 
   return (
-    <div className="mt-10">
+    <div className="mt-12 md:mt-10">
       <h1 className="mb-0 text-center font-heading text-base font-medium uppercase text-black dark:text-slate-100">
         {!isMigration ? (
           <Trans>Create a project</Trans>

@@ -25,7 +25,7 @@ export function BrandUpdateBanner({ className }: { className?: string }) {
           className,
         )}
       >
-        <span className="flex-1 text-xs text-grey-900 md:text-center">
+        <span className="flex-1 text-center text-xs text-grey-900">
           <span className="mr-2">
             <Trans>Juicebox has a fresh new look</Trans> &#128064;
           </span>

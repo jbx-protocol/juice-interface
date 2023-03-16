@@ -1,13 +1,14 @@
 export const projectTagOptions = [
   'art',
+  'business',
+  'charity',
   'dao',
   'defi',
   'education',
+  'events',
   'fundraising',
   'games',
-  'grants',
   'music',
-  'revenue',
   'social',
 ] as const
 

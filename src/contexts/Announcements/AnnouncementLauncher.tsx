@@ -22,7 +22,7 @@ export const AnnouncementLauncher: React.FC = ({ children }) => {
   const shouldActivateAnnouncement = useCallback(
     (a: Announcement) => {
       // Don't activate if expired
-      if (a.expire && a.expire > Date.now().valueOf()) return false
+      if (a.expire && a.expire < Date.now().valueOf()) return false
 
       return a.conditions.every(c => c({ router, isProjectOwner }))
     },

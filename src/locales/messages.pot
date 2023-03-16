@@ -134,6 +134,12 @@ msgstr ""
 msgid "<0>Max. supply:</0> <1>{0}</1>"
 msgstr ""
 
+msgid "<0>NEW:</0> Improved search"
+msgstr ""
+
+msgid "<0>NEW:</0> Project tags"
+msgstr ""
+
 msgid "<0>No cycle duration.</0>You can edit your rules and start new cycles at any time."
 msgstr ""
 
@@ -2786,9 +2792,6 @@ msgstr ""
 msgid "Search projects"
 msgstr ""
 
-msgid "Search projects by handle"
-msgstr ""
-
 msgid "Second"
 msgstr ""
 
@@ -3804,6 +3807,12 @@ msgid "Yes, start over"
 msgstr ""
 
 msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
+msgstr ""
+
+msgid "You can now add tags to describe your project, and help contributors find it. Anyone can search for projects by tag on the Explore page."
+msgstr ""
+
+msgid "You can now search for projects by their name, description, and tags, as well as their @handle."
 msgstr ""
 
 msgid "You can redeem your {tokenSymbol} for ETH without claiming them. You can transfer your unclaimed {tokenSymbol} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right-hand corner of this project."

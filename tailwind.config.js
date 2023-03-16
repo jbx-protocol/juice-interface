@@ -11,6 +11,16 @@ module.exports = {
       display: ['Agrandir-Wide', 'Helvetica Neue', 'Arial', 'sans-serif'],
       heading: ['Agrandir', 'Helvetica Neue', 'Arial', 'sans-serif'],
       body: ['Beatrice', 'Helvetica Neue', 'Arial', 'sans-serif'],
+      mono: [
+        'ui-monospace',
+        'SFMono-Regular',
+        'Menlo',
+        'Monaco',
+        'Consolas',
+        'Liberation Mono',
+        'Courier New',
+        'monospace',
+      ],
     },
     extend: {
       boxShadow: {

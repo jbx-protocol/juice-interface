@@ -55,7 +55,11 @@ export default function FormattedAddress({
           />
         )}
         <EtherscanLink
-          className={twMerge('select-all leading-[22px]', className)}
+          className={twMerge(
+            'select-all leading-[22px]',
+            className,
+            !ensName ? 'font-mono font-medium' : undefined,
+          )}
           onClick={onClick}
           type="address"
           value={address}

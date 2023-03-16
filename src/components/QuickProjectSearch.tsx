@@ -54,12 +54,10 @@ export default function QuickProjectSearch({
     }
   }, [inputText])
 
-  const { data: searchResults, isLoading } = useSepanaProjectsSearch(
-    searchText,
-    {
+  const { data: searchResults, isLoading: isLoadingSearch } =
+    useSepanaProjectsSearch(searchText, {
       pageSize: MAX_RESULTS,
-    },
-  )
+    })
 
   const goToProject = useCallback(() => {
     if (highlightIndex === undefined || !searchResults?.length) return
@@ -123,7 +121,7 @@ export default function QuickProjectSearch({
   // Arrow key up/down & tab listener
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
-      if (!searchResults || isLoading) return
+      if (!searchResults || isLoadingSearch) return
 
       switch (e.key) {
         case 'ArrowUp':
@@ -143,7 +141,14 @@ export default function QuickProjectSearch({
     return () => {
       window.removeEventListener('keydown', listener)
     }
-  }, [modal.visible, searchText, router, goToProject, searchResults, isLoading])
+  }, [
+    modal.visible,
+    searchText,
+    router,
+    goToProject,
+    searchResults,
+    isLoadingSearch,
+  ])
 
   return (
     <>
@@ -185,7 +190,7 @@ export default function QuickProjectSearch({
           </div>
 
           <div hidden={!searchText}>
-            {isLoading && <Loading />}
+            {isLoadingSearch && <Loading />}
 
             {!!searchResults?.length && (
               <div className="flex flex-col">
@@ -234,7 +239,7 @@ export default function QuickProjectSearch({
               </div>
             )}
 
-            {searchText && !isLoading && searchResults?.length === 0 && (
+            {searchText && !isLoadingSearch && searchResults?.length === 0 && (
               <div className="text-center text-grey-400">
                 <Trans>No results</Trans>
               </div>

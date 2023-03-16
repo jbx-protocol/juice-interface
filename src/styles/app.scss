@@ -30,11 +30,11 @@ label {
 }
 
 a {
-  @apply text-bluebs-500;
+  @apply text-bluebs-500 dark:text-bluebs-400;
   transition: none;
 
   &:hover {
-    @apply text-bluebs-600 dark:text-bluebs-400;
+    @apply text-bluebs-600 dark:text-bluebs-300;
   }
 }
 

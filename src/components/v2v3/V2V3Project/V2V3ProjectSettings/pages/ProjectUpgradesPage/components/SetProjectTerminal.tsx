@@ -9,6 +9,7 @@ import { useSetTerminalsTx } from 'hooks/v2v3/transactor/SetTerminalsTx'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'
+import { RequiredFlagsList } from './RequiredFlagsList'
 
 /**
  * Component to call `migrateTerminal` on a project.
@@ -39,12 +40,7 @@ export function SetProjectTerminal({
     return (
       <div>
         <InfoCallout className="mb-5">
-          <p>
-            <Trans>
-              You must edit your funding cycle rules to allow terminal
-              configuration.
-            </Trans>
-          </p>
+          <RequiredFlagsList />
           <Link href={settingsPagePath('reconfigurefc', { projectId, handle })}>
             <Button type="primary">
               <Trans>Edit funding cycle</Trans>

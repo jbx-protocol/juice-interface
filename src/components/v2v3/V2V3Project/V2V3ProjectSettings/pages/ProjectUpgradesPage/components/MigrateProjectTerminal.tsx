@@ -9,6 +9,7 @@ import { useMigrateETHPaymentTerminalTx } from 'hooks/v2v3/transactor/MigrateTer
 import Link from 'next/link'
 import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'
+import { RequiredFlagsList } from './RequiredFlagsList'
 
 /**
  * Component to call `migrateTerminal` on a project.
@@ -35,12 +36,7 @@ export function MigrateProjectTerminal({
     return (
       <div>
         <InfoCallout className="mb-5">
-          <p>
-            <Trans>
-              You must edit your funding cycle rules to allow terminal
-              migrations.
-            </Trans>
-          </p>
+          <RequiredFlagsList />
           <Link href={settingsPagePath('reconfigurefc', { projectId, handle })}>
             <Button type="primary">
               <Trans>Edit funding cycle</Trans>

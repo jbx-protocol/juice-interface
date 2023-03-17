@@ -12,12 +12,14 @@ import { TerminalEventEntity } from '../base/terminal-event'
 import { DistributeToPayoutModEvent } from '../v1/distribute-to-payout-mod-event'
 import { DistributeToTicketModEvent } from '../v1/distribute-to-ticket-mod-event'
 import { V1ConfigureEvent } from '../v1/v1-configure'
+import { V1InitEvent } from '../v1/v1-init'
 import { ConfigureEvent } from '../v2/configure'
 import { DeployETHERC20ProjectPayerEvent } from '../v2/deploy-eth-erc20-project-payer-event'
 import { DistributePayoutsEvent } from '../v2/distribute-payouts-event'
 import { DistributeReservedTokensEvent } from '../v2/distribute-reserved-tokens-event'
 import { DistributeToPayoutSplitEvent } from '../v2/distribute-to-payout-split-event'
 import { DistributeToReservedTokenSplitEvent } from '../v2/distribute-to-reserved-token-split-event'
+import { InitEvent } from '../v2/init'
 import { SetFundAccessConstraintsEvent } from '../v2/set-fund-access-constraints-event'
 import { UseAllowanceEvent } from '../v2/use-allowance-event'
 import { AddToBalanceEvent } from './add-to-balance-event'
@@ -48,6 +50,7 @@ export interface ProjectEvent extends TerminalEventEntity, BaseProjectEntity {
   distributeToPayoutModEvent: DistributeToPayoutModEvent | null
   distributeToTicketModEvent: DistributeToTicketModEvent | null
   v1ConfigureEvent: V1ConfigureEvent | null
+  v1InitEvent: V1InitEvent | null
 
   // Only V2
   distributePayoutsEvent: DistributePayoutsEvent | null
@@ -58,6 +61,7 @@ export interface ProjectEvent extends TerminalEventEntity, BaseProjectEntity {
   deployETHERC20ProjectPayerEvent: DeployETHERC20ProjectPayerEvent | null
   configureEvent: ConfigureEvent | null
   setFundAccessConstraintsEvent: SetFundAccessConstraintsEvent | null
+  initEvent: InitEvent | null
 }
 
 export const parseProjectEventJson = (j: Json<ProjectEvent>): ProjectEvent => ({
@@ -84,6 +88,8 @@ export const parseProjectEventJson = (j: Json<ProjectEvent>): ProjectEvent => ({
     'deployETHERC20ProjectPayerEvent',
     'configureEvent',
     'v1ConfigureEvent',
+    'v1InitEvent',
     'setFundAccessConstraintsEvent',
+    'initEvent',
   ]),
 })

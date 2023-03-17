@@ -180,6 +180,10 @@ export function useProjectActivity({
         value: null, // Exclude all distributeToReservedTokenSplitEvent, no UI support
       },
       {
+        key: 'initEvent',
+        value: null, // Exclude all initEvents, no UI support
+      },
+      {
         key: 'pv',
         value: PV_V2,
       },

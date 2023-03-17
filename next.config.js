@@ -46,6 +46,7 @@ const CONNECT_SRC = [
   ...WALLET_CONNECT_URLS,
   'https://juicenews.beehiiv.com',
   'https://*.supabase.co',
+  'https://api.ensideas.com',
 ]
 if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')

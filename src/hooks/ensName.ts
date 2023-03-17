@@ -1,7 +1,7 @@
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
 import { getAddress } from 'ethers/lib/utils'
-import { resolveAddress } from 'lib/api/ens'
+import { resolveAddress } from 'lib/ensIdeas'
 import { useEffect, useState } from 'react'
 
 type EnsCacheRecord = {
@@ -77,15 +77,15 @@ export function useEnsName(address: string | undefined) {
       }
 
       setLoading(true)
-      const name = await resolveAddress(normalizedAddress)
+      const data = await resolveAddress(normalizedAddress)
 
       const newRecord = {
-        name: name ?? null, // set name to null to indicate no ENS name.
+        name: data.name ?? null, // set name to null to indicate no ENS name.
         expires: now + SECONDS_IN_DAY * 1000, // Expires in one day
       }
 
       // update state
-      setEnsName(name)
+      setEnsName(data.name)
       setLoading(false)
 
       // sync with localstorage

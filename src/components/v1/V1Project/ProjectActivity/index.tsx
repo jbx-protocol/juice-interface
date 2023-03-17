@@ -73,6 +73,10 @@ export default function ProjectActivity() {
         key: 'distributeToPayoutModEvent',
         value: null, // Exclude all distributeToPayoutModEvent, no UI support
       },
+      {
+        key: 'v1InitEvent',
+        value: null, // Exclude all v1InitEvents, no UI support
+      },
     ]
 
     if (projectId) {

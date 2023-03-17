@@ -1,8 +1,8 @@
 import { ProjectTag } from 'models/project-tags'
 
-import ProjectTagElem from './ProjectTagElem'
+import { ProjectTagElem } from './ProjectTagElem'
 
-export default function ProjectTagsRow({
+export function ProjectTagsRow({
   tags,
   selectedTags,
   onClickTag,

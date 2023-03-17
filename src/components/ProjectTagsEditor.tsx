@@ -5,8 +5,8 @@ import {
 } from 'models/project-tags'
 import { useCallback, useEffect, useState } from 'react'
 
-import ProjectTagElem from './ProjectTagElem'
-import ProjectTagsRow from './ProjectTagsRow'
+import { ProjectTagElem } from './ProjectTagElem'
+import { ProjectTagsRow } from './ProjectTagsRow'
 
 export default function ProjectTagsEditor({
   initialValue,

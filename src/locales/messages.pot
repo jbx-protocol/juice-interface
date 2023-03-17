@@ -2234,9 +2234,6 @@ msgstr ""
 msgid "Project Owner"
 msgstr ""
 
-msgid "Project Tags"
-msgstr ""
-
 msgid "Project Token"
 msgstr ""
 
@@ -2648,7 +2645,7 @@ msgstr ""
 msgid "Select NFTs to redeem"
 msgstr ""
 
-msgid "Select up to 3 tags to help contributors find your project."
+msgid "Select up to 3 tags to help supporters find your project."
 msgstr ""
 
 msgid "Send Message"

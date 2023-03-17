@@ -1904,6 +1904,9 @@ msgstr ""
 msgid "No results"
 msgstr ""
 
+msgid "No tags"
+msgstr ""
+
 msgid "No transaction history"
 msgstr ""
 

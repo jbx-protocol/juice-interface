@@ -128,7 +128,7 @@ export const ProjectDetailsPage: React.FC = () => {
           </CreateCollapse.Panel>
           <CreateCollapse.Panel
             key={2}
-            header={<OptionalHeader header={t`Project Tags`} />}
+            header={<OptionalHeader header={t`Project tags`} />}
             hideDivider
           >
             <FormItems.ProjectTags

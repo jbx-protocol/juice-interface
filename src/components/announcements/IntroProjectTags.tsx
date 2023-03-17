@@ -13,7 +13,7 @@ export default function IntroProjectTags() {
       <ProjectTagsRow tags={[...projectTagOptions]} />
       <br />
       <Trans>
-        You can now add tags to describe your project, and help contributors
+        You can now add tags to describe your project, and help supporters
         find it. Anyone can search for projects by tag on the Explore page.
       </Trans>
     </div>

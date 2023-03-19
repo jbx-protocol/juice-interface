@@ -1,7 +1,8 @@
 import { hashMessage } from '@ethersproject/hash'
 import { recoverAddress } from '@ethersproject/transactions'
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { SupabaseClient } from '@supabase/supabase-js'
 import * as jsonwebtoken from 'jsonwebtoken'
+import { juiceAuthDbClient, sudoPublicDbClient } from 'lib/api/supabase'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Database } from 'types/database.types'
 
@@ -12,16 +13,6 @@ import { Database } from 'types/database.types'
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const juiceAuth = createClient<Database, 'juice_auth'>(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
-      { db: { schema: 'juice_auth' } },
-    )
-    const sudoPublic = createClient<Database>(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
-      { db: { schema: 'public' } },
-    )
     if (req.method !== 'POST')
       return res.status(405).json({ message: 'Method not allowed.' })
 
@@ -37,7 +28,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
     const walletAddressNormalized = walletAddress.toLowerCase()
 
-    const signingRequestResult = await juiceAuth
+    const signingRequestResult = await juiceAuthDbClient
       .from('signing_requests')
       .select('challenge_message, wallet_id, nonce')
       .eq('wallet_id', walletAddressNormalized)
@@ -65,10 +56,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(401).json({ message: 'Unauthorized.' })
     }
 
-    const user = await getOrCreateUser(sudoPublic, walletAddressNormalized)
+    const user = await getOrCreateUser(
+      sudoPublicDbClient,
+      walletAddressNormalized,
+    )
     const jwt = buildJwt(user)
 
-    await deleteSigningRequest(juiceAuth, signingRequestResult.data)
+    await deleteSigningRequest(juiceAuthDbClient, signingRequestResult.data)
 
     return res.status(200).json({ accessToken: jwt })
   } catch (e) {

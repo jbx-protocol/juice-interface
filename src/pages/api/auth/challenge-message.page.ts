@@ -1,7 +1,6 @@
-import { createClient } from '@supabase/supabase-js'
+import { juiceAuthDbClient } from 'lib/api/supabase'
 import { template } from 'lodash'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { Database } from 'types/database.types'
 import { v4 } from 'uuid'
 
 const WalletSigningRequestMessageTemplate = template(
@@ -15,11 +14,6 @@ const WalletSigningRequestMessageTemplate = template(
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const juiceAuth = createClient<Database, 'juice_auth'>(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
-      { db: { schema: 'juice_auth' } },
-    )
     if (req.method !== 'GET')
       return res.status(405).json({ message: 'Method not allowed.' })
     const { walletAddress } = req.query ?? {}
@@ -32,7 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       nonce,
       walletAddress: walletAddressNormalized,
     })
-    const { error } = await juiceAuth.from('signing_requests').insert({
+    const { error } = await juiceAuthDbClient.from('signing_requests').insert({
       wallet_id: walletAddressNormalized,
       challenge_message: challengeMessage,
       nonce,

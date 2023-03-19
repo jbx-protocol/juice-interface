@@ -11,6 +11,8 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { fromWad } from 'utils/format/formatNumber'
 import * as Yup from 'yup'
 
+const JUICE_API_BEARER_TOKEN = process.env.JUICE_API_BEARER_TOKEN
+
 const BigNumberValidator = (errorMessage: string) => {
   return Yup.mixed<BigNumber>()
     .transform(current => {
@@ -47,6 +49,12 @@ const Schema = Yup.object().shape({
 type OnPayEvent = Awaited<ReturnType<typeof Schema.validate>>
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (
+    JUICE_API_BEARER_TOKEN &&
+    req.headers.authorization !== `Bearer ${JUICE_API_BEARER_TOKEN}`
+  ) {
+    return res.status(401).json({ message: 'Unauthorized.' })
+  }
   if (req.method !== 'POST') {
     return res.status(404).json({ message: 'Not found.' })
   }

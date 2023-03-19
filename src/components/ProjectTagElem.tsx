@@ -17,7 +17,7 @@ export function ProjectTagElem({
     <div
       onClick={() => onClick?.(tag)}
       className={twMerge(
-        `cursor-pointer rounded-full py-1 px-3 ${
+        `cursor-pointer rounded-full py-1 px-3 uppercase ${
           selected
             ? 'bg-smoke-300 font-medium dark:bg-slate-400'
             : 'bg-smoke-100 dark:bg-slate-600'
@@ -26,7 +26,7 @@ export function ProjectTagElem({
       )}
     >
       {selected ? <CloseOutlined className="mr-2" /> : null}
-      {tag.toUpperCase()}
+      {tag}
     </div>
   )
 }

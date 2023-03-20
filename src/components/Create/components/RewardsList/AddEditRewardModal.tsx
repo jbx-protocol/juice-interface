@@ -215,10 +215,7 @@ export const AddEditRewardModal = ({
           label={t`Minimum Contribution`}
           extra={t`Contributors will receive this NFT when they contribute at least this amount.`}
           required
-          rules={[
-            inputMustExistRule({ label: t`Minimum Contribution` }),
-            inputNonZeroRule({ label: t`Minimum Contribution` }),
-          ]}
+          rules={[inputMustExistRule({ label: t`Minimum Contribution` })]}
         >
           <FormattedNumberInput
             className="w-1/2"

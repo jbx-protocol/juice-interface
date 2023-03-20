@@ -3,18 +3,9 @@ import { Divider, Form, Space } from 'antd'
 import { Callout } from 'components/Callout'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import NumberSlider from 'components/inputs/NumberSlider'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
+import NumberSlider from 'components/inputs/NumberSlider'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
-import { useAppSelector } from 'redux/hooks/AppSelector'
-import useMobile from 'hooks/Mobile'
-import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
-import { inputMustExistRule } from 'utils/antdRules'
-import { formatAmount } from 'utils/format/formatAmount'
-import { MAX_DISTRIBUTION_LIMIT, MAX_MINT_RATE } from 'utils/v2v3/math'
-import * as ProjectTokenForm from '../../hooks/ProjectTokenForm'
-import { ProjectTokensFormProps } from '../../hooks/ProjectTokenForm'
-import { ReservedTokenRateCallout, ReservedTokensList } from './components'
 import {
   MINT_RATE_EXPLANATION,
   OWNER_MINTING_EXPLAINATION,
@@ -22,6 +13,15 @@ import {
   PAUSE_TRANSFERS_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import useMobile from 'hooks/Mobile'
+import { useAppSelector } from 'redux/hooks/AppSelector'
+import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
+import { inputMustExistRule } from 'utils/antdRules'
+import { formatAmount } from 'utils/format/formatAmount'
+import { MAX_DISTRIBUTION_LIMIT, MAX_MINT_RATE } from 'utils/v2v3/math'
+import * as ProjectTokenForm from '../../hooks/ProjectTokenForm'
+import { ProjectTokensFormProps } from '../../hooks/ProjectTokenForm'
+import { ReservedTokenRateCallout, ReservedTokensList } from './components'
 
 const calculateMintRateAfterDiscount = ({
   mintRate,

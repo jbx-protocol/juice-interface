@@ -2,6 +2,7 @@ import { FilterOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Collapse, Select } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
+import { ProjectTag, projectTagOptions } from 'models/project-tags'
 import { useEffect, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import FilterCheckboxItem from './FilterCheckboxItem'
@@ -21,6 +22,8 @@ export default function ProjectsFilterAndSort({
   setIncludeV2,
   showArchived,
   setShowArchived,
+  searchTags,
+  setSearchTags,
   reversed,
   setReversed,
   orderBy,
@@ -32,6 +35,8 @@ export default function ProjectsFilterAndSort({
   setIncludeV2: CheckboxOnChange
   showArchived: boolean
   setShowArchived: CheckboxOnChange
+  searchTags: ProjectTag[]
+  setSearchTags: (tags: ProjectTag[]) => void
   reversed: boolean
   setReversed: CheckboxOnChange
   orderBy: OrderByOption
@@ -98,6 +103,20 @@ export default function ProjectsFilterAndSort({
               checked={reversed}
               onChange={setReversed}
             />
+            <div className="mt-3 font-bold">Tags</div>
+            {projectTagOptions.map(t => (
+              <FilterCheckboxItem
+                label={t}
+                checked={searchTags.includes(t)}
+                onChange={() =>
+                  setSearchTags(
+                    searchTags.includes(t)
+                      ? searchTags.filter(_t => _t !== t)
+                      : [...searchTags, t],
+                  )
+                }
+              />
+            ))}
           </div>
         </CollapsePanel>
       </Collapse>

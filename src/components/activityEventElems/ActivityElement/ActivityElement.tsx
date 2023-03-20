@@ -108,7 +108,7 @@ export function ActivityEvent({
           <TimestampVersion {...event} />
         </div>
 
-        <div className="mt-1 flex items-center justify-between">
+        <div className="mt-1 flex items-start justify-between">
           <Subject subject={subject} />
           <CallerBeneficiary {...event} />
         </div>

@@ -4,7 +4,6 @@ import { NetworkName } from 'models/networkName'
 import { SignerOrProvider } from 'models/signerOrProvider'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { CV2V3 } from 'models/v2v3/cv'
-import { loadJBTiered721DelegateProjectDeployerContract } from '../../hooks/JB721Delegate/contracts/JBTiered721DelegateProjectDeployer'
 import { loadJBProjectHandlesContract } from './contractLoaders/JBProjectHandles'
 import { loadJuiceboxV2OrV3Contract } from './contractLoaders/JuiceboxV2OrV3'
 import { loadPublicResolverContract } from './contractLoaders/PublicResolver'
@@ -23,10 +22,6 @@ export const loadV2V3Contract = async (
     contractJson = await loadJBProjectHandlesContract(network)
   } else if (contractName === V2V3ContractName.PublicResolver) {
     contractJson = loadPublicResolverContract(network)
-  } else if (
-    contractName === V2V3ContractName.JBTiered721DelegateProjectDeployer
-  ) {
-    contractJson = await loadJBTiered721DelegateProjectDeployerContract()
   } else if (contractName === V2V3ContractName.JBVeNftDeployer) {
     contractJson = await loadVeNftDeployer()
   } else if (contractName === V2V3ContractName.JBVeTokenUriResolver) {

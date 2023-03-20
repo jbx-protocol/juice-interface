@@ -1,8 +1,8 @@
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { getAddress } from 'ethers/lib/utils'
 import { useV2V3HasPermissions } from 'hooks/v2v3/contractReader/V2V3HasPermissions'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
-import { useContext } from 'react'
+import { useJBTiered721DelegateProjectDeployer } from '../contracts/JBTiered721DelegateProjectDeployer'
+import { useProjectControllerJB721DelegateVersion } from '../contracts/ProjectJB721DelegateVersion'
 
 /**
  * Checks whether the given [projectOwnerAddress] has given the JBTiered721DelegateProjectDeployer
@@ -19,11 +19,14 @@ export function useNftDeployerCanReconfigure({
   projectOwnerAddress: string | undefined
   projectId: number | undefined
 }) {
-  const { contracts } = useContext(V2V3ContractsContext)
+  const JB721DelegateVersion = useProjectControllerJB721DelegateVersion()
+  const JBTiered721DelegateProjectDeployer =
+    useJBTiered721DelegateProjectDeployer({ version: JB721DelegateVersion })
 
-  const JBTiered721DelegateProjectDeployerAddress = contracts
-    ? getAddress(contracts.JBTiered721DelegateProjectDeployer.address)
-    : undefined
+  const JBTiered721DelegateProjectDeployerAddress =
+    JBTiered721DelegateProjectDeployer
+      ? getAddress(JBTiered721DelegateProjectDeployer?.address)
+      : undefined
 
   const { data: JBTiered721DelegateProjectDeployerCanReconfigure } =
     useV2V3HasPermissions({

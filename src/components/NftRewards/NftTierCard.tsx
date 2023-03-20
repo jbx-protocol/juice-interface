@@ -91,7 +91,7 @@ export function NftTierCard({
         {/* Image/video container */}
         <div
           className={classNames(
-            `relative flex w-full items-center justify-center rounded-lg ${NFT_DISPLAY_HEIGHT_CLASS}`,
+            `relative flex w-full items-center justify-center rounded-t-lg ${NFT_DISPLAY_HEIGHT_CLASS}`,
             _isSelected
               ? 'bg-smoke-25 dark:bg-slate-800'
               : 'bg-smoke-100 dark:bg-slate-600',

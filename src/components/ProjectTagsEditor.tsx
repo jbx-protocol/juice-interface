@@ -1,54 +1,60 @@
-import {
-  MAX_PROJECT_TAGS,
-  ProjectTag,
-  projectTagOptions,
-} from 'models/project-tags'
-import { useCallback, useEffect, useState } from 'react'
+import { ProjectTag } from 'models/project-tags'
+import { useCallback, useMemo, useState } from 'react'
 
 import { ProjectTagElem } from './ProjectTagElem'
-import { ProjectTagsRow } from './ProjectTagsRow'
 
 export default function ProjectTagsEditor({
-  initialValue,
+  tags,
+  value: v,
   onChange,
 }: {
-  initialValue?: ProjectTag[]
+  tags: ProjectTag[]
+  value?: ProjectTag[]
   onChange?: (tags: ProjectTag[]) => void
 }) {
-  const [value, setValue] = useState<ProjectTag[]>([])
+  // Used as a fallback when value and onChange are not supplied or used
+  const [_value, _setValue] = useState<ProjectTag[]>([])
 
-  useEffect(() => {
-    if (initialValue) setValue(initialValue)
-  }, [initialValue])
+  const value = v ?? _value
+  const setValue = onChange ?? _setValue
 
-  const update = useCallback(
-    (fn: (v: ProjectTag[]) => ProjectTag[]) => {
-      setValue(v => {
-        const newValue = fn(v)
-        onChange?.(newValue)
-        return newValue
-      })
+  const addTag = useCallback(
+    (tag: ProjectTag) => {
+      return () => setValue([...value, tag])
     },
-    [onChange],
+    [setValue, value],
+  )
+
+  const removeTag = useCallback(
+    (tag: ProjectTag) => {
+      return () => {
+        const i = value.indexOf(tag)
+        if (i === -1) return
+        setValue([...value.slice(0, i), ...value.slice(i + 1)])
+      }
+    },
+    [setValue, value],
+  )
+
+  // Tags that are still selectable. Filters out any tags that have already been selected.
+  const selectableTags = useMemo(
+    () => tags.filter(t => !value.includes(t)),
+    [tags, value],
   )
 
   return (
     <div>
       <div className="mb-3 flex select-none flex-wrap gap-1">
         {value.map(t => (
-          <ProjectTagElem
-            selected
-            key={t}
-            tag={t}
-            onClick={() => update(v => v.filter(_t => _t !== t))}
-          />
+          <ProjectTagElem selected key={t} tag={t} onClick={removeTag(t)} />
         ))}
       </div>
 
-      <ProjectTagsRow
-        tags={projectTagOptions.filter(t => !value.includes(t))}
-        onClickTag={t => update(v => [...v, t].slice(0, MAX_PROJECT_TAGS))}
-      />
+      <div className="flex select-none flex-wrap gap-1">
+        {selectableTags.map(t => (
+          <ProjectTagElem key={t} tag={t} onClick={addTag(t)} />
+        ))}
+      </div>
     </div>
   )
 }

@@ -16,7 +16,6 @@ import ProjectPayButton from './ProjectPayButton'
 import ProjectPayDisclosure from './ProjectPayDisclosure'
 import { ProjectRedemptionRate } from './ProjectRedemptionRate'
 import ProjectReserved from './ProjectReserved'
-import ProjectTags from './ProjectTags'
 import ProjectTarget from './ProjectTarget'
 import ProjectTelegram from './ProjectTelegram'
 import ProjectTwitter from './ProjectTwitter'
@@ -37,7 +36,6 @@ export const FormItems = {
   ProjectPayButton,
   ProjectPayDisclosure,
   ProjectReserved,
-  ProjectTags,
   ProjectTarget,
   ProjectTicketMods,
   ProjectTwitter,

@@ -4,12 +4,12 @@ import { ADDRESS_ZERO } from '@uniswap/v3-sdk'
 import { Col, Form, Row, Space } from 'antd'
 import { Callout } from 'components/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
-import { FormItems } from 'components/formItems'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/PrefixedInput'
+import ProjectTagsEditor from 'components/ProjectTagsEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
@@ -131,11 +131,27 @@ export const ProjectDetailsPage: React.FC = () => {
             header={<OptionalHeader header={t`Project tags`} />}
             hideDivider
           >
-            <FormItems.ProjectTags
+            <Form.Item
               name="tags"
-              hideLabel
-              initialTags={formProps.form.getFieldValue('tags')}
-            />
+              extra={t`Select up to 3 tags to help supporters find your project.`}
+            >
+              <ProjectTagsEditor
+                // We should probably move this to a shared element in models. I tried using the one where ProjectTag is defined, but couldn't get it to work for some reason.
+                tags={[
+                  'art',
+                  'business',
+                  'charity',
+                  'dao',
+                  'defi',
+                  'education',
+                  'events',
+                  'fundraising',
+                  'games',
+                  'music',
+                  'social',
+                ]}
+              />
+            </Form.Item>
           </CreateCollapse.Panel>
           <CreateCollapse.Panel
             key={3}

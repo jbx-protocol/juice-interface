@@ -4,6 +4,7 @@ import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { MinimalCollapse } from 'components/MinimalCollapse'
+import ProjectTagsEditor from 'components/ProjectTagsEditor'
 import { ProjectTag } from 'models/project-tags'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
@@ -85,11 +86,23 @@ export function ProjectDetailsForm({
         </div>
 
         <div>
-          <FormItems.ProjectTags
-            name="tags"
-            initialTags={form.getFieldValue('tags')}
-            onChange={tags => form.setFieldsValue({ tags })}
-          />
+          <Form.Item name="tags">
+            <ProjectTagsEditor
+              tags={[
+                'art',
+                'business',
+                'charity',
+                'dao',
+                'defi',
+                'education',
+                'events',
+                'fundraising',
+                'games',
+                'music',
+                'social',
+              ]}
+            />
+          </Form.Item>
         </div>
 
         <div>

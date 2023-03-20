@@ -2,6 +2,7 @@ import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { Button, Tabs } from 'antd'
+import { ActivityList } from 'components/ActivityList/ActivityList'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import Grid from 'components/Grid'
@@ -165,6 +166,11 @@ export function AccountDashboard({
   }, [router, supabase.auth, wallet])
 
   const items = [
+    {
+      label: t`Activity`,
+      key: 'activity',
+      children: <ActivityList caller={address} />,
+    },
     {
       label: t`Contributions`,
       key: 'holding',

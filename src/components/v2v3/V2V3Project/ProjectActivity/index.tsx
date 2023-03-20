@@ -1,146 +1,22 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Divider, Select, Space } from 'antd'
-import AddToBalanceEventElem from 'components/activityEventElems/AddToBalanceEventElem'
-import BurnEventElem from 'components/activityEventElems/BurnEventElem'
-import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
-import PayEventElem from 'components/activityEventElems/PayEventElem'
-import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateEventElem'
-import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
-import Loading from 'components/Loading'
+import { Button, Select, Space } from 'antd'
+import { ActivityList } from 'components/ActivityList/ActivityList'
 import SectionHeader from 'components/SectionHeader'
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useContext, useMemo, useState } from 'react'
+import { PV_V2 } from 'constants/pv'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { ProjectEventFilter } from 'hooks/ProjectEvents/types/eventFilters'
+import { useContext, useState } from 'react'
+
 import V2V3DownloadActivityModal from '../modals/V2V3DownloadActivityModal'
-import ConfigureEventElem from './eventElems/ConfigureEventElem'
-import DeployETHERC20ProjectPayerEventElem from './eventElems/DeployETHERC20ProjectPayerEventElem'
-import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
-import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
-import SetFundAccessConstraintsEventElem from './eventElems/SetFundAccessConstraintsEventElem'
-import { EventFilter, useProjectActivity } from './hooks/ProjectActivity'
+
+const PAGE_SIZE = 10
 
 export default function ProjectActivity() {
-  const { tokenSymbol } = useContext(V2V3ProjectContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
-  const [eventFilter, setEventFilter] = useState<EventFilter>('all')
-
-  const {
-    data: projectEvents,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-    isFetchingNextPage,
-  } = useProjectActivity({ eventFilter })
-
-  const count =
-    projectEvents?.pages?.reduce((prev, cur) => prev + cur.length, 0) ?? 0
-
-  const list = useMemo(
-    () =>
-      projectEvents?.pages.map(group =>
-        group.map(e => {
-          let elem: JSX.Element | undefined = undefined
-
-          if (e.payEvent) {
-            elem = <PayEventElem event={e.payEvent} />
-          }
-          if (e.burnEvent) {
-            elem = (
-              <BurnEventElem event={e.burnEvent} tokenSymbol={tokenSymbol} />
-            )
-          }
-          if (e.addToBalanceEvent) {
-            elem = <AddToBalanceEventElem event={e.addToBalanceEvent} />
-          }
-          if (e.redeemEvent) {
-            elem = <RedeemEventElem event={e.redeemEvent} />
-          }
-          if (e.projectCreateEvent) {
-            elem = <ProjectCreateEventElem event={e.projectCreateEvent} />
-          }
-          if (e.deployedERC20Event) {
-            elem = <DeployedERC20EventElem event={e.deployedERC20Event} />
-          }
-          if (e.distributePayoutsEvent) {
-            elem = <DistributePayoutsElem event={e.distributePayoutsEvent} />
-          }
-          if (e.distributeReservedTokensEvent) {
-            elem = (
-              <DistributeReservedTokensEventElem
-                event={e.distributeReservedTokensEvent}
-              />
-            )
-          }
-          if (e.deployETHERC20ProjectPayerEvent) {
-            elem = (
-              <DeployETHERC20ProjectPayerEventElem
-                event={e.deployETHERC20ProjectPayerEvent}
-              />
-            )
-          }
-          if (e.configureEvent) {
-            elem = <ConfigureEventElem event={e.configureEvent} />
-          }
-          if (e.setFundAccessConstraintsEvent) {
-            elem = (
-              <SetFundAccessConstraintsEventElem
-                event={e.setFundAccessConstraintsEvent}
-              />
-            )
-          }
-
-          if (!elem) return null
-
-          return (
-            <div
-              className="mb-5 border-x-0 border-t-0 border-b border-solid border-smoke-200 pb-5 dark:border-grey-600"
-              key={e.id}
-            >
-              {elem}
-            </div>
-          )
-        }),
-      ),
-    [projectEvents, tokenSymbol],
-  )
-
-  const listStatus = useMemo(() => {
-    if (isLoading || isFetchingNextPage) {
-      return (
-        <div>
-          <Loading />
-        </div>
-      )
-    }
-
-    if (count === 0 && !isLoading) {
-      return (
-        <>
-          <Divider />
-          <div className="my-5 pb-5 text-grey-500 dark:text-grey-300">
-            <Trans>No activity yet</Trans>
-          </div>
-        </>
-      )
-    }
-
-    if (hasNextPage) {
-      return (
-        <div className="text-center">
-          <Button onClick={() => fetchNextPage()} type="text" className="px-0">
-            <Trans>Load more</Trans>
-          </Button>
-        </div>
-      )
-    }
-
-    return (
-      <div className="p-2 text-center text-grey-500 dark:text-grey-300">
-        <Trans>{count} total</Trans>
-      </div>
-    )
-  }, [isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, count])
+  const [eventFilter, setEventFilter] = useState<ProjectEventFilter>('all')
 
   return (
     <div>
@@ -148,13 +24,11 @@ export default function ProjectActivity() {
         <SectionHeader className="m-0" text={t`Activity`} />
 
         <Space direction="horizontal" align="center" size="small">
-          {count > 0 && (
-            <Button
-              type="text"
-              icon={<DownloadOutlined />}
-              onClick={() => setDownloadModalVisible(true)}
-            />
-          )}
+          <Button
+            type="text"
+            icon={<DownloadOutlined />}
+            onClick={() => setDownloadModalVisible(true)}
+          />
 
           <Select
             className="w-[200px]"
@@ -201,9 +75,7 @@ export default function ProjectActivity() {
         </Space>
       </div>
 
-      {list}
-
-      {listStatus}
+      <ActivityList pageSize={PAGE_SIZE} pv={[PV_V2]} projectId={projectId} />
 
       <V2V3DownloadActivityModal
         open={downloadModalVisible}

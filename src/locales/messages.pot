@@ -356,6 +356,9 @@ msgstr ""
 msgid "All payouts have been deleted for this recipient. Save to continue..."
 msgstr ""
 
+msgid "All time"
+msgstr ""
+
 msgid "All {0} will go to the project owner:"
 msgstr ""
 

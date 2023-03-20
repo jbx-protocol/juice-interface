@@ -1,16 +1,24 @@
 import { Trans } from '@lingui/macro'
 import { Select } from 'antd'
-import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import WalletCard from 'components/WalletCard'
+import { useLeaderboard } from 'hooks/Leaderboard'
 import { useWalletsQuery } from 'hooks/Wallets'
 import { useState } from 'react'
 
 export function Leaderboard() {
-  const [orderBy, setOrderBy] = useState<'totalPaid' | 'lastPaidTimestamp'>(
-    'totalPaid',
-  )
-  const { data: wallets, isLoading } = useWalletsQuery({ orderBy })
+  const [window, setWindow] = useState<30 | 'allTime'>(30)
+
+  const { data: allTimeWallets, isLoading } = useWalletsQuery({
+    orderBy: 'totalPaid',
+  })
+
+  const windowWallets = useLeaderboard({
+    count: 10,
+    windowDays: typeof window === 'number' ? window : null,
+  })
+
+  const wallets = window === null ? allTimeWallets : windowWallets
 
   return (
     <div className="my-0 mx-auto max-w-5xl p-5">
@@ -19,14 +27,14 @@ export function Leaderboard() {
         <div>
           <Select
             className="small w-[200px]"
-            value={orderBy}
-            onChange={val => setOrderBy(val)}
+            value={window}
+            onChange={val => setWindow(val)}
           >
-            <Select.Option value="totalPaid">
-              <Trans>Total paid</Trans>
+            <Select.Option value={30}>
+              <Trans>30 days</Trans>
             </Select.Option>
-            <Select.Option value="lastPaidTimestamp">
-              <Trans>Last paid</Trans>
+            <Select.Option value={'allTime'}>
+              <Trans>All time</Trans>
             </Select.Option>
           </Select>
         </div>
@@ -35,11 +43,11 @@ export function Leaderboard() {
       {isLoading ? (
         <Loading />
       ) : (
-        <Grid>
-          {wallets?.map(w => (
-            <WalletCard key={w.id} wallet={w} />
+        <div className="flex flex-col gap-2">
+          {wallets?.map((w, i) => (
+            <WalletCard key={w.id} wallet={w} rank={i} />
           ))}
-        </Grid>
+        </div>
       )}
     </div>
   )

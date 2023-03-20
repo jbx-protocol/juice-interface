@@ -2,16 +2,11 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
-import { ProjectTagsRow } from 'components/ProjectTagsRow'
 import { PROJECTS_PAGE } from 'constants/fathomEvents'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
-import {
-  MAX_PROJECT_TAGS,
-  ProjectTag,
-  projectTagOptions,
-} from 'models/project-tags'
+import { ProjectTag } from 'models/project-tags'
 import { ProjectCategory } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import Link from 'next/link'
@@ -140,7 +135,7 @@ function Projects() {
             />
           )}
 
-          {!searchText && (
+          {/* {!searchText && (
             <div className="mb-3">
               <ProjectTagsRow
                 tags={[...projectTagOptions].sort(a =>
@@ -171,11 +166,11 @@ function Projects() {
                 }}
               />
             </div>
-          )}
+          )} */}
 
           <div
             className="flex min-h-[52px] max-w-[100vw] flex-wrap items-center justify-between"
-            hidden={!!searchText || !!searchTags.length}
+            hidden={!!searchText}
           >
             <ProjectsTabs selectedTab={selectedTab} />
 
@@ -189,6 +184,8 @@ function Projects() {
                 setShowArchived={setShowArchived}
                 reversed={reversed}
                 setReversed={setReversed}
+                searchTags={searchTags}
+                setSearchTags={setSearchTags}
                 orderBy={orderBy}
                 setOrderBy={setOrderBy}
               />

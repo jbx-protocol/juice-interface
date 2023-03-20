@@ -16,7 +16,7 @@ export default function FilterCheckboxItem({
   return (
     <div
       className={classNames(
-        'flex h-10 cursor-pointer items-center',
+        'flex h-8 cursor-pointer items-center capitalize',
         disabled ? 'text-grey-400 dark:text-slate-200' : '',
       )}
       onClick={() => onChange(!checked)}

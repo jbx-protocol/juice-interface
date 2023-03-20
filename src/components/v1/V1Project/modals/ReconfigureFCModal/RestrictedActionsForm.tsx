@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Form, FormInstance, Space, Switch } from 'antd'
 import FormItemWarningText from 'components/FormItemWarningText'
 import {
-  OWNER_MINTING_EXPLAINATION,
+  OWNER_MINTING_EXPLANATION,
   OWNER_MINTING_RISK,
   PAUSE_PAYMENTS_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
@@ -58,7 +58,7 @@ export default function RestrictedActionsForm({
         <Form.Item
           name="ticketPrintingIsAllowed"
           label={t`Allow owner token minting`}
-          extra={OWNER_MINTING_EXPLAINATION}
+          extra={OWNER_MINTING_EXPLANATION}
           valuePropName="checked"
         >
           <Switch

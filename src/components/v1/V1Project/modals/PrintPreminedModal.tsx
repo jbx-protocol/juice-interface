@@ -14,9 +14,9 @@ import { RuleObject } from 'antd/lib/form'
 import { StoreValue } from 'antd/lib/form/interface'
 import { Callout } from 'components/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { OWNER_MINTING_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { isZeroAddress } from 'utils/address'
-import { OWNER_MINTING_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 export default function PrintPreminedModal({
   open,
@@ -106,7 +106,7 @@ export default function PrintPreminedModal({
         <Trans>
           Owner token minting can be enabled or disabled by editing your cycle.{' '}
         </Trans>
-        {OWNER_MINTING_EXPLAINATION}
+        {OWNER_MINTING_EXPLANATION}
       </Callout.Info>
 
       <Form layout="vertical" form={form} onFinish={mint}>

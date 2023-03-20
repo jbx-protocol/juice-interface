@@ -4,24 +4,24 @@ import { Button, Form, Space, Switch } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
 import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
 import {
-  CONTROLLER_CONFIG_EXPLAINATION,
-  CONTROLLER_MIGRATION_EXPLAINATION,
-  HOLD_FEES_EXPLAINATION,
+  CONTROLLER_CONFIG_EXPLANATION,
+  CONTROLLER_MIGRATION_EXPLANATION,
+  HOLD_FEES_EXPLANATION,
   PAUSE_PAYMENTS_EXPLANATION,
   PAUSE_TRANSFERS_EXPLANATION,
-  TERMINAL_CONFIG_EXPLAINATION,
-  TERMINAL_MIGRATION_EXPLAINATION,
-  USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
+  TERMINAL_CONFIG_EXPLANATION,
+  TERMINAL_MIGRATION_EXPLANATION,
+  USE_DATASOURCE_FOR_REDEEM_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import {
   ballotStrategiesFn,
   DEFAULT_BALLOT_STRATEGY,
 } from 'constants/v2v3/ballotStrategies'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
-import { useAppSelector } from 'redux/hooks/AppSelector'
 import isEqual from 'lodash/isEqual'
 import { BallotStrategy } from 'models/ballot'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import TokenMintingExtra from './TokenMintingExtra'
@@ -159,7 +159,7 @@ export default function RulesForm({
                 <Trans>Pause payments to this project</Trans>
               </div>
             </Form.Item>
-            <Form.Item name="holdfees" extra={HOLD_FEES_EXPLAINATION}>
+            <Form.Item name="holdfees" extra={HOLD_FEES_EXPLANATION}>
               <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch
                   className="mr-2"
@@ -215,7 +215,7 @@ export default function RulesForm({
             <h4 className="mb-3 font-normal uppercase text-black dark:text-slate-100">
               <Trans>Configuration rules</Trans>
             </h4>
-            <Form.Item extra={TERMINAL_CONFIG_EXPLAINATION}>
+            <Form.Item extra={TERMINAL_CONFIG_EXPLANATION}>
               <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch
                   className="mr-2"
@@ -227,7 +227,7 @@ export default function RulesForm({
                 <Trans>Allow Payment Terminal configuration</Trans>
               </div>
             </Form.Item>
-            <Form.Item extra={CONTROLLER_CONFIG_EXPLAINATION}>
+            <Form.Item extra={CONTROLLER_CONFIG_EXPLANATION}>
               <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch
                   className="mr-2"
@@ -243,7 +243,7 @@ export default function RulesForm({
             <h4 className="mb-3 font-normal uppercase text-black dark:text-slate-100">
               <Trans>Migration rules</Trans>
             </h4>
-            <Form.Item extra={TERMINAL_MIGRATION_EXPLAINATION}>
+            <Form.Item extra={TERMINAL_MIGRATION_EXPLANATION}>
               <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch
                   className="mr-2"
@@ -255,7 +255,7 @@ export default function RulesForm({
                 <Trans>Allow Payment Terminal migration</Trans>
               </div>
             </Form.Item>
-            <Form.Item extra={CONTROLLER_MIGRATION_EXPLAINATION}>
+            <Form.Item extra={CONTROLLER_MIGRATION_EXPLANATION}>
               <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch
                   className="mr-2"
@@ -275,7 +275,7 @@ export default function RulesForm({
             </h3>
             <Form.Item
               name="useDataSourceForRedeem"
-              extra={USE_DATASOURCE_FOR_REDEEM_EXPLAINATION}
+              extra={USE_DATASOURCE_FOR_REDEEM_EXPLANATION}
             >
               <div className="flex font-medium text-black dark:text-slate-100">
                 <Switch

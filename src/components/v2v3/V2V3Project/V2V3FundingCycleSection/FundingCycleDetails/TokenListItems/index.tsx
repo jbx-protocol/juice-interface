@@ -4,14 +4,14 @@ import {
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 import {
-  CONTRIBUTOR_RATE_EXPLAINATION,
+  CONTRIBUTOR_RATE_EXPLANATION,
   DISCOUNT_RATE_EXPLANATION,
   MINT_RATE_EXPLANATION,
-  OWNER_MINTING_EXPLAINATION,
+  OWNER_MINTING_EXPLANATION,
   PAUSE_TRANSFERS_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
-  RESERVED_RATE_EXPLAINATION,
-  RESERVED_TOKENS_EXPLAINATION,
+  RESERVED_RATE_EXPLANATION,
+  RESERVED_TOKENS_EXPLANATION,
 } from '../../settingExplanations'
 import { FundingCycleListItem } from '../FundingCycleListItem'
 
@@ -139,7 +139,7 @@ export function TokenListItems({
             />
           ) : undefined
         }
-        helperText={CONTRIBUTOR_RATE_EXPLAINATION}
+        helperText={CONTRIBUTOR_RATE_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Reserved rate`}
@@ -154,7 +154,7 @@ export function TokenListItems({
             <ReservedRateValue value={oldFundingCycleMetadata.reservedRate} />
           ) : undefined
         }
-        helperText={RESERVED_RATE_EXPLAINATION}
+        helperText={RESERVED_RATE_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Reserved issuance rate`}
@@ -172,7 +172,7 @@ export function TokenListItems({
             />
           ) : undefined
         }
-        helperText={RESERVED_TOKENS_EXPLAINATION}
+        helperText={RESERVED_TOKENS_EXPLANATION}
         subItem
       />
       <FundingCycleListItem
@@ -209,7 +209,7 @@ export function TokenListItems({
             />
           ) : undefined
         }
-        helperText={OWNER_MINTING_EXPLAINATION}
+        helperText={OWNER_MINTING_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Token transfers`}

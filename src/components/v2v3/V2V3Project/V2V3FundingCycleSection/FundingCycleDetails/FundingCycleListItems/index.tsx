@@ -44,7 +44,7 @@ export function FundingCycleListItems({
     ? fundingCycle.start.mul(1000).gt(BigNumber.from(Date.now()))
     : false
 
-  const formattedEndTime = fundingCycle.start
+  const formattedEndTime = showStart
     ? formatDate(fundingCycle.start?.add(fundingCycle.duration).mul(1000))
     : undefined
 

@@ -13,7 +13,6 @@ import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJB
 import { TransactorInstance } from 'hooks/Transactor'
 import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { LaunchFundingCyclesData } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
-import { JB_CONTROLLER_V_3_1 } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectController'
 import omit from 'lodash/omit'
 import {
   JB721DelegateVersion,
@@ -39,10 +38,9 @@ import {
   isValidMustStartAtOrAfter,
 } from 'utils/v2v3/fundingCycle'
 import { useV2ProjectTitle } from '../../v2v3/ProjectTitle'
-import {
-  DEFAULT_JB_721_DELEGATE_VERSION,
-  findDefaultJBTiered721DelegateStoreAddress,
-} from '../contracts/JBTiered721DelegateProjectDeployer'
+import { useJB721DelegateContractAddress } from '../contracts/JB721DelegateContractAddress'
+import { useJBTiered721DelegateProjectDeployer } from '../contracts/JBTiered721DelegateProjectDeployer'
+import { useProjectControllerJB721DelegateVersion } from '../contracts/ProjectJB721DelegateVersion'
 
 interface LaunchFundingCyclesWithNftsTxArgs {
   projectId: number
@@ -95,7 +93,6 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
   const { contracts } = useContext(V2V3ContractsContext)
   const {
     contracts: { JBController },
-    versions,
   } = useContext(V2V3ProjectContractsContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
@@ -113,6 +110,16 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
     contractName: V2V3ContractName.JBPrices,
   })
   const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
+
+  const JB721DelegateVersion = useProjectControllerJB721DelegateVersion()
+  const JBTiered721DelegateProjectDeployer =
+    useJBTiered721DelegateProjectDeployer({
+      version: JB721DelegateVersion,
+    })
+  const JBTiered721DelegateStoreAddress = useJB721DelegateContractAddress({
+    contractName: 'JBTiered721DelegateStore',
+    version: JB721DelegateVersion,
+  })
 
   return async (
     {
@@ -134,8 +141,6 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
     },
     txOpts,
   ) => {
-    const JBTiered721DelegateStoreAddress =
-      await findDefaultJBTiered721DelegateStoreAddress()
     const collectionName = collectionMetadata.name
 
     const contractsLoaded =
@@ -144,6 +149,7 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
       V3JBFundingCycleStore &&
       V3JBPrices &&
       JBTiered721DelegateStoreAddress &&
+      JBTiered721DelegateProjectDeployer &&
       defaultJBETHPaymentTerminal &&
       JBController
 
@@ -180,24 +186,27 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
     const tiers = buildJB721TierParams({
       cids: CIDs,
       rewardTiers,
-      version: DEFAULT_JB_721_DELEGATE_VERSION,
+      version: JB721DelegateVersion,
     })
 
-    const deployTiered721DelegateData = buildDeployTiered721DelegateData({
-      collectionUri: collectionMetadata.uri ?? '',
-      collectionName,
-      collectionSymbol: collectionMetadata.symbol ?? '',
-      governanceType,
-      tiers,
-      ownerAddress: projectOwnerAddress,
-      contractAddresses: {
-        JBDirectoryAddress: V3JBDirectory.address,
-        JBFundingCycleStoreAddress: V3JBFundingCycleStore.address,
-        JBPricesAddress: V3JBPrices.address,
-        JBTiered721DelegateStoreAddress,
+    const deployTiered721DelegateData = buildDeployTiered721DelegateData(
+      {
+        collectionUri: collectionMetadata.uri ?? '',
+        collectionName,
+        collectionSymbol: collectionMetadata.symbol ?? '',
+        governanceType,
+        tiers,
+        ownerAddress: projectOwnerAddress,
+        contractAddresses: {
+          JBDirectoryAddress: V3JBDirectory.address,
+          JBFundingCycleStoreAddress: V3JBFundingCycleStore.address,
+          JBPricesAddress: V3JBPrices.address,
+          JBTiered721DelegateStoreAddress,
+        },
+        flags,
       },
-      flags,
-    })
+      JB721DelegateVersion,
+    )
 
     // NFT launch tx does not accept `useDataSourceForPay` and `dataSource` (see contracts:`JBPayDataSourceFundingCycleMetadata`)
     const dataSourceFCMetadata: JBPayDataSourceFundingCycleMetadata = omit(
@@ -218,17 +227,12 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
       memo: DEFAULT_MEMO,
     }
 
-    const args = buildArgs(
-      versions.JBControllerVersion === JB_CONTROLLER_V_3_1
-        ? JB721_DELEGATE_V1_1 // use delegate v1.1 for controller v3.1
-        : JB721_DELEGATE_V1,
-      {
-        projectId,
-        deployTiered721DelegateData,
-        launchFundingCyclesData,
-        JBControllerAddress: JBController.address,
-      },
-    )
+    const args = buildArgs(JB721DelegateVersion, {
+      projectId,
+      deployTiered721DelegateData,
+      launchFundingCyclesData,
+      JBControllerAddress: JBController.address,
+    })
 
     if (!args) {
       txOpts?.onError?.(
@@ -239,7 +243,7 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
     }
 
     return transactor(
-      contracts.JBTiered721DelegateProjectDeployer,
+      JBTiered721DelegateProjectDeployer,
       'launchFundingCyclesFor',
       args,
       {

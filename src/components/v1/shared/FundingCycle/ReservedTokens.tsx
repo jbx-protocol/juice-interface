@@ -1,18 +1,18 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
+import { RESERVED_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
-import { TicketMod } from 'models/v1/mods'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
+import { TicketMod } from 'models/v1/mods'
 import { useContext, useState } from 'react'
 import { formatWad, perbicentToPercent } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import TicketModsList from '../TicketModsList'
 import DistributeTokensModal from './modals/DistributeTokensModal'
-import { RESERVED_RATE_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 export default function ReservedTokens({
   fundingCycle,
@@ -51,7 +51,7 @@ export default function ReservedTokens({
               ({perbicentToPercent(metadata?.reservedRate)}%)
             </h4>
           }
-          tip={RESERVED_RATE_EXPLAINATION}
+          tip={RESERVED_RATE_EXPLANATION}
         />
       </div>
 

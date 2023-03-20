@@ -51,27 +51,27 @@ export const MINT_RATE_EXPLANATION = (
   </Trans>
 )
 
-export const CONTRIBUTOR_RATE_EXPLAINATION = (
+export const CONTRIBUTOR_RATE_EXPLANATION = (
   <Trans>
     The number of tokens sent to someone who pays this project 1 ETH.
   </Trans>
 )
 
-export const RESERVED_RATE_EXPLAINATION = (
+export const RESERVED_RATE_EXPLANATION = (
   <Trans>
     A percentage of token issuance which is set aside for addresses and other
     projects chosen by the project owner.
   </Trans>
 )
 
-export const RESERVED_TOKENS_EXPLAINATION = (
+export const RESERVED_TOKENS_EXPLANATION = (
   <Trans>
     The number of tokens set aside for reserved token recipients when someone
     pays this project 1 ETH.
   </Trans>
 )
 
-export const OWNER_MINTING_EXPLAINATION = (
+export const OWNER_MINTING_EXPLANATION = (
   <Trans>
     While enabled, the project owner can mint any amount of project tokens.
   </Trans>
@@ -84,7 +84,7 @@ export const OWNER_MINTING_RISK = (
   </Trans>
 )
 
-export const TERMINAL_CONFIG_EXPLAINATION = (
+export const TERMINAL_CONFIG_EXPLANATION = (
   <Trans>
     While enabled, the project owner can change the project's{' '}
     <ExternalLink href={helpPagePath(`/dev/learn/glossary/payment-terminal/`)}>
@@ -94,7 +94,7 @@ export const TERMINAL_CONFIG_EXPLAINATION = (
   </Trans>
 )
 
-export const CONTROLLER_CONFIG_EXPLAINATION = (
+export const CONTROLLER_CONFIG_EXPLANATION = (
   <Trans>
     While enabled, the project owner can change the project's{' '}
     <ExternalLink
@@ -106,7 +106,7 @@ export const CONTROLLER_CONFIG_EXPLAINATION = (
   </Trans>
 )
 
-export const TERMINAL_MIGRATION_EXPLAINATION = (
+export const TERMINAL_MIGRATION_EXPLANATION = (
   <Trans>
     While enabled, the project owner can migrate the project's current{' '}
     <ExternalLink href={helpPagePath(`/dev/learn/glossary/payment-terminal/`)}>
@@ -116,7 +116,7 @@ export const TERMINAL_MIGRATION_EXPLAINATION = (
   </Trans>
 )
 
-export const CONTROLLER_MIGRATION_EXPLAINATION = (
+export const CONTROLLER_MIGRATION_EXPLANATION = (
   <Trans>
     While enabled, the project owner can migrate the project's current{' '}
     <ExternalLink
@@ -143,7 +143,7 @@ export const PAUSE_PAYMENTS_EXPLANATION = (
   </Trans>
 )
 
-export const RECONFIG_RULES_EXPLAINATION = (
+export const RECONFIG_RULES_EXPLANATION = (
   <Trans>
     <p>
       Edits to this project must be made before this deadline. This gives token
@@ -163,7 +163,7 @@ export const RECONFIG_RULES_WARN = (
   </Trans>
 )
 
-export const HOLD_FEES_EXPLAINATION = (
+export const HOLD_FEES_EXPLANATION = (
   <Trans>
     When enabled, fees are held in the project instead of being processed
     automatically.{' '}
@@ -173,14 +173,14 @@ export const HOLD_FEES_EXPLAINATION = (
   </Trans>
 )
 
-export const USE_DATASOURCE_FOR_REDEEM_EXPLAINATION = (
+export const USE_DATASOURCE_FOR_REDEEM_EXPLANATION = (
   <Trans>
     While enabled, NFTs can be redeemed to reclaim some of the ETH that isn't
     needed for payouts. While enabled, it won't be possible to redeem tokens.
   </Trans>
 )
 
-export const PREVENT_OVERSPENDING_EXPLAINATION = (
+export const PREVENT_OVERSPENDING_EXPLANATION = (
   <Trans>
     When enabled, supporters can only mint NFTs by paying their exact price.
     This ensures that they can reclaim their full payment amount if they redeem

@@ -4,9 +4,9 @@ import TooltipLabel from 'components/TooltipLabel'
 import {
   DISCOUNT_RATE_EXPLANATION,
   MINT_RATE_EXPLANATION,
-  OWNER_MINTING_EXPLAINATION,
+  OWNER_MINTING_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
-  RESERVED_RATE_EXPLAINATION,
+  RESERVED_RATE_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { ReactNode, useMemo } from 'react'
 import { formatAmount } from 'utils/format/formatAmount'
@@ -24,7 +24,7 @@ export const DefaultSettings: React.FC = () => {
       },
       [t`Reserved rate`]: {
         data: `${ProjectTokenForm.DefaultSettings.reservedTokensPercentage}%`,
-        tooltip: RESERVED_RATE_EXPLAINATION,
+        tooltip: RESERVED_RATE_EXPLANATION,
       },
       [t`Issuance reduction rate`]: {
         data: `${ProjectTokenForm.DefaultSettings.discountRate}%`,
@@ -36,7 +36,7 @@ export const DefaultSettings: React.FC = () => {
       },
       [t`Owner token minting`]: {
         data: formatBoolean(ProjectTokenForm.DefaultSettings.tokenMinting),
-        tooltip: OWNER_MINTING_EXPLAINATION,
+        tooltip: OWNER_MINTING_EXPLANATION,
       },
     }),
     [],

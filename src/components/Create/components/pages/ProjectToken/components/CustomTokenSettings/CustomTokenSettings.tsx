@@ -8,7 +8,7 @@ import NumberSlider from 'components/inputs/NumberSlider'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
 import {
   MINT_RATE_EXPLANATION,
-  OWNER_MINTING_EXPLAINATION,
+  OWNER_MINTING_EXPLANATION,
   OWNER_MINTING_RISK,
   PAUSE_TRANSFERS_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
@@ -233,7 +233,7 @@ export const CustomTokenSettings = () => {
 
       <div className="flex flex-col gap-y-5">
         <div>
-          <Form.Item extra={OWNER_MINTING_EXPLAINATION} name="tokenMinting">
+          <Form.Item extra={OWNER_MINTING_EXPLANATION} name="tokenMinting">
             <JuiceSwitch label={t`Owner token minting`} />
           </Form.Item>
           {tokenMinting && (

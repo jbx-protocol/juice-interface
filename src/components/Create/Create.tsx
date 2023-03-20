@@ -4,7 +4,7 @@ import { Callout } from 'components/Callout'
 import { CYCLE_EXPLANATION } from 'components/Explanations'
 import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
-import { RECONFIG_RULES_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { RECONFIG_RULES_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
 import Link from 'next/link'
@@ -127,7 +127,7 @@ export function Create() {
           <Wizard.Page
             name="reconfigurationRules"
             title={<Trans>Edit Deadline</Trans>}
-            description={RECONFIG_RULES_EXPLAINATION}
+            description={RECONFIG_RULES_EXPLANATION}
           >
             <ReconfigurationRulesPage />
           </Wizard.Page>

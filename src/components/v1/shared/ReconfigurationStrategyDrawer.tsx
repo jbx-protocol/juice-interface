@@ -5,8 +5,8 @@ import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/
 import { BallotStrategy } from 'models/ballot'
 import { useEffect, useState } from 'react'
 
+import { RECONFIG_RULES_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { ballotStrategies } from 'constants/v1/ballotStrategies'
-import { RECONFIG_RULES_EXPLAINATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 export default function ReconfigurationStrategyDrawer({
   className,
@@ -45,7 +45,7 @@ export default function ReconfigurationStrategyDrawer({
         <Trans>Edit deadline</Trans>
       </h1>
       <p className="text-grey-500 dark:text-grey-300">
-        {RECONFIG_RULES_EXPLAINATION}
+        {RECONFIG_RULES_EXPLANATION}
       </p>
 
       <ReconfigurationStrategySelector

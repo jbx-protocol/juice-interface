@@ -3,8 +3,8 @@ import { Form } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
 import FormItemWarningText from 'components/FormItemWarningText'
 import {
-  CONTRIBUTOR_RATE_EXPLAINATION,
-  RESERVED_TOKENS_EXPLAINATION,
+  CONTRIBUTOR_RATE_EXPLANATION,
+  RESERVED_TOKENS_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import {
   FUNDING_CYCLE_WARNING_TEXT,
@@ -79,7 +79,7 @@ export default function ProjectReserved({
               <span>
                 <TooltipLabel
                   label={t`Payer issuance rate`}
-                  tip={CONTRIBUTOR_RATE_EXPLAINATION}
+                  tip={CONTRIBUTOR_RATE_EXPLANATION}
                 />
                 :
               </span>
@@ -89,7 +89,7 @@ export default function ProjectReserved({
               <span>
                 <TooltipLabel
                   label={t`Reserved issuance rate`}
-                  tip={RESERVED_TOKENS_EXPLAINATION}
+                  tip={RESERVED_TOKENS_EXPLANATION}
                 />
                 :
               </span>

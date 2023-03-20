@@ -3,11 +3,18 @@ import { Divider, Form, Space } from 'antd'
 import { Callout } from 'components/Callout'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import NumberSlider from 'components/inputs/NumberSlider'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
+import NumberSlider from 'components/inputs/NumberSlider'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
-import { useAppSelector } from 'redux/hooks/AppSelector'
+import {
+  MINT_RATE_EXPLANATION,
+  OWNER_MINTING_EXPLANATION,
+  OWNER_MINTING_RISK,
+  PAUSE_TRANSFERS_EXPLANATION,
+  REDEMPTION_RATE_EXPLANATION,
+} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import useMobile from 'hooks/Mobile'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { inputMustExistRule } from 'utils/antdRules'
 import { formatAmount } from 'utils/format/formatAmount'
@@ -15,13 +22,6 @@ import { MAX_DISTRIBUTION_LIMIT, MAX_MINT_RATE } from 'utils/v2v3/math'
 import * as ProjectTokenForm from '../../hooks/ProjectTokenForm'
 import { ProjectTokensFormProps } from '../../hooks/ProjectTokenForm'
 import { ReservedTokenRateCallout, ReservedTokensList } from './components'
-import {
-  MINT_RATE_EXPLANATION,
-  OWNER_MINTING_EXPLAINATION,
-  OWNER_MINTING_RISK,
-  PAUSE_TRANSFERS_EXPLANATION,
-  REDEMPTION_RATE_EXPLANATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 const calculateMintRateAfterDiscount = ({
   mintRate,
@@ -233,7 +233,7 @@ export const CustomTokenSettings = () => {
 
       <div className="flex flex-col gap-y-5">
         <div>
-          <Form.Item extra={OWNER_MINTING_EXPLAINATION} name="tokenMinting">
+          <Form.Item extra={OWNER_MINTING_EXPLANATION} name="tokenMinting">
             <JuiceSwitch label={t`Owner token minting`} />
           </Form.Item>
           {tokenMinting && (

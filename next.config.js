@@ -22,7 +22,9 @@ const IMG_SRC = [
   'https://juicebox.money',
   ...INFURA_IPFS_URLS,
   'https://jbx.mypinata.cloud',
-  'https://gateway.pinata.cloud https://cdn.stamp.fyi',
+  'https://gateway.pinata.cloud',
+  'https://cdn.stamp.fyi',
+  'https://ipfs.io',
 ]
 
 const CONNECT_SRC = [

@@ -70,10 +70,10 @@ export const SEO: FC<SEOProps> = ({
           src:
             (process.env.NEXT_PUBLIC_BASE_URL
               ? process.env.NEXT_PUBLIC_BASE_URL
-              : '/') + 'assets/banana-cover.png',
-          type: 'image/svg',
-          width: '2870',
-          height: '1245',
+              : '/') + 'assets/JBM-Unfurl-banner.png',
+          type: 'image/png',
+          width: '1136',
+          height: '497',
         }}
       />
 

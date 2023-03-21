@@ -5,6 +5,7 @@ import FormattedAddress from 'components/FormattedAddress'
 import { JuiceVideoThumbnail } from 'components/NftRewards/NftVideo/JuiceVideoThumbnail'
 import TooltipLabel from 'components/TooltipLabel'
 import { useContentType } from 'hooks/ContentType'
+import { round } from 'lodash'
 import { NftRewardTier } from 'models/nftRewards'
 import { ReactNode } from 'react'
 import { isZeroAddress } from 'utils/address'
@@ -19,14 +20,8 @@ function numberUpToPrecisionFormat(
   num: number,
   precision = SIGNIFICANT_FIGURE_LIMIT,
 ) {
-  let formattedNum = num.toPrecision(precision)
-  const trailingZeroes = /\.0+$/
-  if (trailingZeroes.test(formattedNum)) {
-    const decimalIndex = formattedNum.indexOf('.')
-    formattedNum = formattedNum.slice(0, decimalIndex)
-  }
-
-  const parts = formattedNum.toString().split('.')
+  const roundedNum = round(num, precision)
+  const parts = roundedNum.toString().split('.')
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   return parts.join('.')
 }

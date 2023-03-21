@@ -1,7 +1,6 @@
 import { Contract } from '@ethersproject/contracts'
 import { TransactionResponse } from '@ethersproject/providers'
 import { t } from '@lingui/macro'
-import * as Sentry from '@sentry/browser'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
@@ -159,12 +158,6 @@ export function useTransactor(): Transactor | undefined {
         const message = (e as Error).message
 
         console.error('Transactor::error', message)
-
-        Sentry.captureException(e, {
-          tags: {
-            contract_function: functionName,
-          },
-        })
 
         let description: string
         try {

@@ -54,6 +54,9 @@
     "//": "See https://github.com/facebook/create-react-app/issues/11773",
     "react-error-overlay": "6.0.9"
   },
+  "engines": {
+    "node": ">=16.0.0 <17.0.0"
+  },
   "dependencies": {
     "@apollo/client": "3.6.9",
     "@arcxmoney/analytics": "^1.0.1",
@@ -74,8 +77,7 @@
     "@lingui/react": "^3.13.0",
     "@metamask/providers": "^10.0.0",
     "@reduxjs/toolkit": "^1.6.2",
-    "@sentry/react": "^6.18.2",
-    "@sentry/tracing": "^6.18.2",
+    "@sentry/nextjs": "^7.44.1",
     "@supabase/auth-helpers-nextjs": "^0.5.4",
     "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/supabase-js": "^2.10.0",

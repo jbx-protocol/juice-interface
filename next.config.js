@@ -136,7 +136,7 @@ const nextConfig = {
     return [
       {
         source: '/@:projectId',
-        destination: '/v2/p/:projectId',
+        destination: '/v2/p/@:projectId',
       },
     ]
   },

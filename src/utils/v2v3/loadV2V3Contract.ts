@@ -7,8 +7,6 @@ import { CV2V3 } from 'models/v2v3/cv'
 import { loadJBProjectHandlesContract } from './contractLoaders/JBProjectHandles'
 import { loadJuiceboxV2OrV3Contract } from './contractLoaders/JuiceboxV2OrV3'
 import { loadPublicResolverContract } from './contractLoaders/PublicResolver'
-import { loadVeNftDeployer } from './contractLoaders/VeNftDeployer'
-import { loadVeTokenUriResolver } from './contractLoaders/VeTokenUriResolver'
 
 export const loadV2V3Contract = async (
   contractName: V2V3ContractName,
@@ -22,10 +20,6 @@ export const loadV2V3Contract = async (
     contractJson = await loadJBProjectHandlesContract(network)
   } else if (contractName === V2V3ContractName.PublicResolver) {
     contractJson = loadPublicResolverContract(network)
-  } else if (contractName === V2V3ContractName.JBVeNftDeployer) {
-    contractJson = await loadVeNftDeployer()
-  } else if (contractName === V2V3ContractName.JBVeTokenUriResolver) {
-    contractJson = await loadVeTokenUriResolver()
   } else {
     contractJson = await loadJuiceboxV2OrV3Contract(
       version,

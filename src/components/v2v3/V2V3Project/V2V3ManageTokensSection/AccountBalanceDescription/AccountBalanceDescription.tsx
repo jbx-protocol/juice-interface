@@ -1,11 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import RichButton from 'components/buttons/RichButton'
 import ManageTokensModal from 'components/ManageTokensModal'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { VeNftContext } from 'contexts/VeNft/VeNftContext'
 import useERC20BalanceOf from 'hooks/ERC20/ERC20BalanceOf'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
 import useUserUnclaimedTokenBalance from 'hooks/v2v3/contractReader/UserUnclaimedTokenBalance'
@@ -13,30 +10,24 @@ import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2C
 import { useIsOwnerConnected } from 'hooks/v2v3/IsOwnerConnected'
 import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/TransferUnclaimedTokensTx'
-import { useVeNftSummaryStats } from 'hooks/veNft/VeNftSummaryStats'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
-import Link from 'next/link'
 import { useContext, useState } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import {
   formatPercent,
   formatWad,
   fromWad,
   parseWad,
 } from 'utils/format/formatNumber'
-import { veNftPagePath } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2V3BurnOrRedeemModal } from './V2V3BurnOrRedeemModal'
 import { V2V3ClaimTokensModal } from './V2V3ClaimTokensModal'
 import { V2V3MintModal } from './V2V3MintModal'
 
 export function AccountBalanceDescription() {
-  const { contractAddress: veNftAddress } = useContext(VeNftContext)
   const {
     tokenAddress,
     tokenSymbol,
-    handle,
     totalTokenSupply,
     fundingCycleMetadata,
     primaryTerminalCurrentOverflow,
@@ -47,7 +38,6 @@ export function AccountBalanceDescription() {
     useState<boolean>(false)
 
   const { userAddress } = useWallet()
-  const { totalLocked } = useVeNftSummaryStats()
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
   const { data: unclaimedBalance } = useUserUnclaimedTokenBalance()
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
@@ -65,7 +55,7 @@ export function AccountBalanceDescription() {
   })
 
   const totalTokenSupplyDiscrete = parseInt(fromWad(totalTokenSupply))
-  const totalBalanceWithLock = parseInt(fromWad(totalBalance)) + totalLocked
+  const totalBalanceWithLock = parseInt(fromWad(totalBalance))
   // %age of tokens the user owns.
   const userOwnershipPercentage =
     formatPercent(
@@ -76,9 +66,6 @@ export function AccountBalanceDescription() {
   const hasOverflow = Boolean(primaryTerminalCurrentOverflow?.gt(0))
   const redeemDisabled = Boolean(
     !hasOverflow || fundingCycleMetadata?.redemptionRate.eq(0),
-  )
-  const veNftEnabled = Boolean(
-    featureFlagEnabled(FEATURE_FLAGS.VENFT) && veNftAddress,
   )
 
   const tokenText = tokenSymbolText({
@@ -111,21 +98,6 @@ export function AccountBalanceDescription() {
             </>
           )}
         </div>
-        <div>
-          {veNftAddress && (
-            <div>
-              {totalLocked} {tokenText}{' '}
-              <Link
-                href={veNftPagePath('myvenfts', {
-                  projectId,
-                  handle,
-                })}
-              >
-                locked
-              </Link>
-            </div>
-          )}
-        </div>
         <div className="cursor-default text-xs text-grey-400 dark:text-slate-200">
           <Trans>{userOwnershipPercentage}% of total supply</Trans>
         </div>
@@ -151,21 +123,7 @@ export function AccountBalanceDescription() {
         RedeemModal={V2V3BurnOrRedeemModal}
         ClaimTokensModal={V2V3ClaimTokensModal}
         MintModal={V2V3MintModal}
-      >
-        {veNftEnabled && (
-          <Link href={veNftPagePath('mint', { projectId, handle })}>
-            <RichButton
-              heading={<Trans>Lock {tokenText} for Governance NFTs</Trans>}
-              description={
-                <Trans>
-                  Lock your {tokenText} to increase your voting weight and claim
-                  Governance NFTs.
-                </Trans>
-              }
-            />
-          </Link>
-        )}
-      </ManageTokensModal>
+      />
     </>
   )
 }

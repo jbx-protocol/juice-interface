@@ -18,6 +18,7 @@ import { useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { ExportSplitsButton } from './ExportSplitsButton'
 import { PaymentAddressSection } from './PaymentAddressSection'
+import { SplitsPayerSection } from './SplitsPayerSection'
 
 export function V2V3ProjectToolsDrawer({
   open,
@@ -61,6 +62,16 @@ export function V2V3ProjectToolsDrawer({
             <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
             <HeldFeesSection />
           </Space>
+        </section>
+
+        <Divider />
+
+        <section>
+          <h3 className="text-primary">
+            <Trans>Create a splits payer address</Trans>
+          </h3>
+
+          <SplitsPayerSection />
         </section>
 
         <Divider />

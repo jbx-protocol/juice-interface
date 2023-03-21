@@ -773,6 +773,12 @@ msgstr ""
 msgid "Create a project payer address for {projectTitle}"
 msgstr ""
 
+msgid "Create a splits payer address"
+msgstr ""
+
+msgid "Create a splits payer address for {projectTitle}"
+msgstr ""
+
 msgid "Create an ERC-20 token (optional)"
 msgstr ""
 
@@ -783,6 +789,9 @@ msgid "Create project"
 msgstr ""
 
 msgid "Create project payer address"
+msgstr ""
+
+msgid "Create splits payer address"
 msgstr ""
 
 msgid "Create token"
@@ -912,6 +921,9 @@ msgid "Deploy Snapshot space"
 msgstr ""
 
 msgid "Deploy a V3 Migration Token for your project."
+msgstr ""
+
+msgid "Deploy an address which forwards ETH directly to your project's payouts."
 msgstr ""
 
 msgid "Deploy an address which forwards ETH to your project. This makes it easier to pay your project with third-party tools."
@@ -3648,6 +3660,9 @@ msgid "Your legacy token balance"
 msgstr ""
 
 msgid "Your new project payer address:"
+msgstr ""
+
+msgid "Your new splits payer address:"
 msgstr ""
 
 msgid "Your project can receive payments through the juicebox.money app."

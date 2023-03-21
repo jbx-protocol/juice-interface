@@ -14,6 +14,12 @@ export const PROJECT_PAYER_ADDRESS_EXPLANATION = (
   </Trans>
 )
 
+export const SPLITS_PAYER_ADDRESS_EXPLANATION = (
+  <Trans>
+    Deploy an address which forwards ETH directly to your project's payouts.
+  </Trans>
+)
+
 export const CYCLE_EXPLANATION = (
   <Trans>
     <p>With unlocked cycles, you can edit your project's rules at any time.</p>

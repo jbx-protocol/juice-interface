@@ -55,6 +55,7 @@ const CONNECT_SRC = [
   'https://juicenews.beehiiv.com',
   'https://*.supabase.co',
   'https://api.ensideas.com',
+  'https://*.sentry.io',
 ]
 if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')

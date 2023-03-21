@@ -15,6 +15,7 @@ export enum V2V3ContractName {
   JBTokenStore = 'JBTokenStore',
   JBSingleTokenPaymentTerminalStore = 'JBSingleTokenPaymentTerminalStore',
   JBETHERC20ProjectPayerDeployer = 'JBETHERC20ProjectPayerDeployer',
+  JBETHERC20SplitsPayerDeployer = 'JBETHERC20SplitsPayerDeployer',
   JBPrices = 'JBPrices',
 
   JBProjectHandles = 'JBProjectHandles',

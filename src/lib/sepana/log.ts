@@ -32,9 +32,9 @@ export async function sepanaLog(
 
   // log the error to the console
   if (type === 'alert') {
-    console.error(`sepana::${SEPANA_ALERTS[opts.alert]}`)
+    console.error(`sepana::error::${SEPANA_ALERTS[opts.alert]}`)
   } else {
-    console.info(`sepana::${SEPANA_NOTIFS[opts.notif]}`)
+    console.info(`sepana::info::${SEPANA_NOTIFS[opts.notif]}`)
   }
 
   const bodyText = body ? `\n${body}` : ''

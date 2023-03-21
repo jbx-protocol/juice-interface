@@ -1,3 +1,9 @@
+// This file sets a custom webpack configuration to use your Next.js app
+// with Sentry.
+// https://nextjs.org/docs/api-reference/next.config.js/introduction
+// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+const { withSentryConfig } = require('@sentry/nextjs')
+
 const webpack = require('webpack')
 
 const WALLET_CONNECT_URLS = [
@@ -67,7 +73,7 @@ const ContentSecurityPolicy = `
   media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')};
 `
 
-module.exports = {
+const nextConfig = {
   staticPageGenerationTimeout: 90,
   webpack5: true,
   webpack: config => {
@@ -118,4 +124,9 @@ module.exports = {
     ]
   },
   pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
+  sentry: {
+    hideSourceMaps: true,
+  },
 }
+
+module.exports = withSentryConfig(nextConfig, { silent: true })

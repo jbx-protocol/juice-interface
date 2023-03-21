@@ -1,5 +1,4 @@
 import { Contract } from '@ethersproject/contracts'
-import * as Sentry from '@sentry/browser'
 
 /**
  * Calls the `readContract` to be read from `contracts` in `functionName`.
@@ -30,12 +29,6 @@ export async function callContractRead<T extends string>({
       { contracts },
     )
 
-    Sentry.captureException(err, {
-      tags: {
-        contract: typeof readContract === 'string' ? readContract : undefined,
-        contract_function: functionName,
-      },
-    })
     throw err
   }
 }

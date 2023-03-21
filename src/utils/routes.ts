@@ -3,7 +3,6 @@ import {
   MenuKey,
   V2V3SettingsPageKey,
 } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/V2V3ProjectSettings'
-import { V2VeNftPageKey } from 'components/veNft/VeNft'
 import { NextRouter } from 'next/router'
 
 const HELP_PAGE_HOSTNAME = 'https://docs.juicebox.money'
@@ -37,22 +36,6 @@ export const settingsPagePath = (
     projectId,
     handle,
   })}/settings?page=${settingsPage}`
-}
-
-export const veNftPagePath = (
-  settingsPage: V2VeNftPageKey,
-  {
-    projectId,
-    handle,
-  }: {
-    projectId?: BigNumberish
-    handle?: string | null
-  },
-) => {
-  return `${v2v3ProjectRoute({
-    projectId,
-    handle,
-  })}/venft?page=${settingsPage}`
 }
 
 export const pushMenuContent = (

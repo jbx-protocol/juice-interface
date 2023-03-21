@@ -20,9 +20,6 @@ export enum V2V3ContractName {
   JBProjectHandles = 'JBProjectHandles',
   PublicResolver = 'PublicResolver',
 
-  JBVeNftDeployer = 'JBVeNftDeployer',
-  JBVeTokenUriResolver = 'JBVeTokenUriResolver',
-
   DeprecatedJBSplitsStore = 'DeprecatedJBSplitsStore',
   DeprecatedJBDirectory = 'DeprecatedJBDirectory',
 }

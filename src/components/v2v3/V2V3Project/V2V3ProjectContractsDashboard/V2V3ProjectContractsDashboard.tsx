@@ -26,8 +26,6 @@ const CONTRACT_EXCLUSIONS = [
   V2V3ContractName.JBController3_1,
   V2V3ContractName.DeprecatedJBDirectory,
   V2V3ContractName.DeprecatedJBSplitsStore,
-  V2V3ContractName.JBVeNftDeployer,
-  V2V3ContractName.JBVeTokenUriResolver,
   V2V3ContractName.JBSingleTokenPaymentTerminalStore,
   V2V3ContractName.JBFundAccessConstraintsStore,
 ]

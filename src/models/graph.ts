@@ -16,8 +16,6 @@ import { InitEvent } from './subgraph-entities/v2/init'
 import { JB721DelegateToken } from './subgraph-entities/v2/jb-721-delegate-tokens'
 import { SetFundAccessConstraintsEvent } from './subgraph-entities/v2/set-fund-access-constraints-event'
 import { UseAllowanceEvent } from './subgraph-entities/v2/use-allowance-event'
-import { VeNftContract } from './subgraph-entities/v2/venft-contract'
-import { VeNftToken } from './subgraph-entities/v2/venft-token'
 import { AddToBalanceEvent } from './subgraph-entities/vX/add-to-balance-event'
 import { BurnEvent } from './subgraph-entities/vX/burn-event'
 import { DeployedERC20Event } from './subgraph-entities/vX/deployed-erc20-event'
@@ -61,8 +59,6 @@ interface SGEntities {
   useAllowanceEvent: UseAllowanceEvent
   v1ConfigureEvent: V1ConfigureEvent
   v1InitEvent: V1InitEvent
-  veNftContract: VeNftContract
-  veNftToken: VeNftToken
   wallet: Wallet
 }
 

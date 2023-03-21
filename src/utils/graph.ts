@@ -29,8 +29,6 @@ import { parseInitEventJson } from 'models/subgraph-entities/v2/init'
 import { parseJB721DelegateTokenJson } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
 import { parseSetFundAccessConstraintsEvent } from 'models/subgraph-entities/v2/set-fund-access-constraints-event'
 import { parseUseAllowanceEventJson } from 'models/subgraph-entities/v2/use-allowance-event'
-import { parseVeNftContractJson } from 'models/subgraph-entities/v2/venft-contract'
-import { parseVeNftTokenJson } from 'models/subgraph-entities/v2/venft-token'
 import { parseAddToBalanceEventJson } from 'models/subgraph-entities/vX/add-to-balance-event'
 import { parseBurnEventJson } from 'models/subgraph-entities/vX/burn-event'
 import { parseDeployedERC20EventJson } from 'models/subgraph-entities/vX/deployed-erc20-event'
@@ -237,12 +235,6 @@ export function parseSubgraphEntity<
       break
     case 'v1InitEvent':
       fn = parseV1InitEventJson
-      break
-    case 'veNftContract':
-      fn = parseVeNftContractJson
-      break
-    case 'veNftToken':
-      fn = parseVeNftTokenJson
       break
     case 'wallet':
       fn = parseWalletJson

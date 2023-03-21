@@ -52,7 +52,7 @@ export const SEO: FC<SEOProps> = ({
         title={formattedTitle}
         description={description ?? config.description}
         handle={formatTwitterHandle(twitter?.handle ?? config.twitter.handle)}
-        site={formatTwitterHandle(twitter?.site ?? config.twitter.site)}
+        site={config.twitter.site}
         creator={formatTwitterHandle(
           twitter?.creator ?? config.twitter.creator,
         )}

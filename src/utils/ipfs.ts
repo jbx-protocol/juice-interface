@@ -82,3 +82,10 @@ export function percentFromUploadProgressEvent(e: UploadProgressEvent) {
   const percent = (e.loaded / e.total) * 100
   return round(percent, 0)
 }
+
+/**
+ * Return a URL to a public IPFS gateway for the given cid
+ */
+export const ipfsPublicGatewayUrl = (cid: string | undefined): string => {
+  return `https://ipfs.io/ipfs/${cid}`
+}

@@ -7,7 +7,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // cache for a day
-  res.setHeader('Cache-Control', 's-maxage=86400')
+  res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')
 
   try {
     const { address } = req.query
@@ -16,7 +16,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).json({ error: 'address is required' })
     }
 
-    console.info('api::ens::resolve::resolving address', address)
     const name = await readProvider.lookupAddress(address as string)
 
     return res.status(200).json({ name, address })

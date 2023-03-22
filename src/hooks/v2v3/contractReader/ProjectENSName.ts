@@ -1,9 +1,8 @@
-import { V2V3ContractName } from 'models/v2v3/contracts'
-
 import { useCallback, useMemo } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 
+import { useJBProjectHandles } from 'hooks/JBProjectHandles/contracts/JBProjectHandles'
 import useV2ContractReader from './V2ContractReader'
 
 export default function useProjectENSName({
@@ -11,8 +10,10 @@ export default function useProjectENSName({
 }: {
   projectId?: number
 }) {
+  const JBProjectHandles = useJBProjectHandles()
+
   return useV2ContractReader<string>({
-    contract: V2V3ContractName.JBProjectHandles,
+    contract: JBProjectHandles,
     functionName: 'ensNamePartsOf',
     args: projectId ? [projectId] : null,
     formatter: useCallback(
@@ -25,13 +26,13 @@ export default function useProjectENSName({
         projectId
           ? [
               {
-                contract: V2V3ContractName.JBProjectHandles,
+                contract: JBProjectHandles,
                 eventName: 'SetEnsNameParts',
                 topics: [BigNumber.from(projectId).toHexString()],
               },
             ]
           : undefined,
-      [projectId],
+      [projectId, JBProjectHandles],
     ),
   })
 }

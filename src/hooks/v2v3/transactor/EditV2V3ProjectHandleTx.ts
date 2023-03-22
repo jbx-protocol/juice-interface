@@ -1,23 +1,21 @@
 import { t } from '@lingui/macro'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
-import { useContext } from 'react'
-
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
+import { useJBProjectHandles } from 'hooks/JBProjectHandles/contracts/JBProjectHandles'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useContext } from 'react'
 import { useV2ProjectTitle } from '../ProjectTitle'
 
 export function useEditV2V3ProjectHandleTx(): TransactorInstance<{
   ensName: string
 }> {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2V3ContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
-
+  const JBProjectHandles = useJBProjectHandles()
   const projectTitle = useV2ProjectTitle()
 
   return ({ ensName }, txOpts) => {
-    if (!transactor || !projectId || !contracts?.JBProjectHandles) {
+    if (!transactor || !projectId || !JBProjectHandles) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }
@@ -25,7 +23,7 @@ export function useEditV2V3ProjectHandleTx(): TransactorInstance<{
     const ensNameParts = ensName.split('.').reverse()
 
     return transactor(
-      contracts.JBProjectHandles,
+      JBProjectHandles,
       'setEnsNamePartsFor',
       [projectId, ensNameParts],
       {

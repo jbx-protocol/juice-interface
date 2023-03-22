@@ -1,15 +1,20 @@
 import { ContractInterface } from '@ethersproject/contracts'
 import { readNetwork } from 'constants/networks'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
-import { goerliPublicResolver } from 'hooks/PublicResolver/contracts/PublicResolverGoerli'
-import { mainnetPublicResolver } from 'hooks/PublicResolver/contracts/PublicResolverMainnet'
+import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
 import { useEffect, useState } from 'react'
 
-export const loadPublicResolverContract = (network: NetworkName) => {
+async function loadPublicResolverContract(network: NetworkName) {
   // ENS contracts package currently doesn't include goerli information, and ABI contains errors
-  if (network === NetworkName.mainnet) return mainnetPublicResolver
-  if (network === NetworkName.goerli) return goerliPublicResolver
+  if (network === NetworkName.mainnet)
+    return (await import(
+      'hooks/PublicResolver/contracts/PublicResolverMainnet.json'
+    )) as ContractJson
+  if (network === NetworkName.goerli)
+    return (await import(
+      'hooks/PublicResolver/contracts/PublicResolverGoerli.json'
+    )) as ContractJson
 }
 
 export function usePublicResolver() {

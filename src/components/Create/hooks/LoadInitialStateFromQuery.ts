@@ -1,6 +1,6 @@
 import { ballotStrategies as BallotStrategies } from 'constants/v2v3/ballotStrategies'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
-import { isEqual } from 'lodash'
+import isEqual from 'lodash/isEqual'
 import { CreatePage } from 'models/createPage'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { TreasurySelection } from 'models/treasurySelection'

@@ -1,5 +1,5 @@
 import { juiceAuthDbClient } from 'lib/api/supabase'
-import { template } from 'lodash'
+import template from 'lodash/template'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { v4 } from 'uuid'
 

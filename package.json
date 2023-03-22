@@ -8,6 +8,7 @@
   "scripts": {
     "prebuild": "yarn predev",
     "build": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next build",
+    "analyze": "ANALYZE=true yarn build",
     "codegen": "graphql-code-generator --config codegen.yml -r dotenv/config",
     "css:compile": "lessc ./node_modules/antd/dist/antd.less ./src/styles/antd.css --js",
     "predev": "yarn css:compile && yarn i18n:compile && yarn codegen",
@@ -133,6 +134,7 @@
     "@graphql-codegen/typescript-operations": "^2.5.2",
     "@graphql-codegen/typescript-react-apollo": "^3.3.2",
     "@graphql-codegen/typescript-resolvers": "^2.7.2",
+    "@next/bundle-analyzer": "^13.2.4",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/react-hooks": "^8.0.1",

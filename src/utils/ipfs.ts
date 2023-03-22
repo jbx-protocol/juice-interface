@@ -1,6 +1,6 @@
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { base58 } from 'ethers/lib/utils'
-import { round } from 'lodash'
+import round from 'lodash/round'
 import { UploadProgressEvent } from 'rc-upload/lib/interface'
 
 const IPFS_URL_REGEX = /ipfs:\/\/(.+)/

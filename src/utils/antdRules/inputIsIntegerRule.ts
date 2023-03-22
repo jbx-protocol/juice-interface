@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { RuleObject } from 'antd/lib/form'
-import { isInteger } from 'lodash'
+import isInteger from 'lodash/isInteger'
 
 /**
  * Rule to determine that the input is an integer.

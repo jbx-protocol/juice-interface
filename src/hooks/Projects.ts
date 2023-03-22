@@ -18,7 +18,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
 import { parseSepanaProjectJson } from 'utils/sepana'
-import { getTerminalAddress } from 'utils/v1/terminals'
 
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
@@ -71,15 +70,6 @@ const queryOpts = (
   | InfiniteSGQueryOpts<'project', SGEntityKey<'project'>>
 > => {
   const where: SGWhereArg<'project'>[] = []
-
-  const terminalAddress = getTerminalAddress(opts.terminalVersion)
-
-  if (terminalAddress) {
-    where.push({
-      key: 'terminal',
-      value: terminalAddress.toLowerCase(),
-    })
-  }
 
   if (opts.pv) {
     where.push({

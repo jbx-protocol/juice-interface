@@ -10,12 +10,20 @@ import { isEqualAddress } from 'utils/address'
 const loadTerminalAddress = (
   network: NetworkName,
   terminal: V1TerminalName | null,
-): string =>
+): string | undefined => {
   // NOTE: This require is harder to easily change in the code base as it means
   // making changes to the way the functions in the file are called.
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  require(`@jbx-protocol/contracts-v1/deployments/${network}/${terminal}.json`)
-    .address
+  if (terminal === 'TerminalV1_1') {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    return require(`@jbx-protocol/contracts-v1/deployments/${network}/TerminalV1_1.json`)
+      .address
+  }
+  if (terminal === 'TerminalV1') {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    return require(`@jbx-protocol/contracts-v1/deployments/${network}/TerminalV1.json`)
+      .address
+  }
+}
 
 export const getTerminalAddress = (
   version?: V1TerminalVersion,

@@ -107,7 +107,7 @@ export const loadJuiceboxV3Contract = async (
       }
     }
 
-    if (!contractJson) return
+    return contractJson
   } catch (_) {
     return undefined
   }

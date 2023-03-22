@@ -4,6 +4,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Checkbox, Form, Input, Modal } from 'antd'
 import { FormInstance, FormProps, useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
+import FormattedAddress from 'components/FormattedAddress'
 import Sticker from 'components/icons/Sticker'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
@@ -111,41 +112,14 @@ export const V2V3PayForm = ({
                 </div>
               </div>
 
-              <div className="flex justify-between">
+              <div className="flex items-baseline justify-between">
                 <div className="font-bold">
                   <Trans>Receive:</Trans>
                 </div>
                 <div className="text-right">
-                  {formatWad(receivedTickets, { precision: 0 })} {tokenText}
-                  {nftRewardTiers?.length ? (
-                    <div className="py-3">
-                      <NftRewardCell nftRewards={nftRewardTiers} />
-                    </div>
-                  ) : null}
-                  <div className="flex items-baseline">
-                    {customBeneficiaryEnabled ? (
-                      <Button
-                        type="text"
-                        size="small"
-                        onClick={() => setCustomBeneficiaryEnabled(false)}
-                      >
-                        Save
-                      </Button>
-                    ) : (
-                      <Button
-                        size="small"
-                        type="text"
-                        onClick={() => {
-                          form.setFieldValue('beneficiary', undefined)
-
-                          setCustomBeneficiaryEnabled(true)
-                        }}
-                      >
-                        {beneficiary ? 'Edit' : 'Choose wallet'}
-                      </Button>
-                    )}
-
+                  <div className="inline-flex items-baseline">
                     <Form.Item
+                      hidden={!customBeneficiaryEnabled}
                       className="w-full"
                       name="beneficiary"
                       rules={[
@@ -164,9 +138,41 @@ export const V2V3PayForm = ({
                         },
                       ]}
                     >
-                      <EthAddressInput disabled={!customBeneficiaryEnabled} />
+                      <EthAddressInput />
                     </Form.Item>
+
+                    <div hidden={customBeneficiaryEnabled || !beneficiary}>
+                      <FormattedAddress address={beneficiary} />
+                    </div>
+
+                    {customBeneficiaryEnabled ? (
+                      <Button
+                        className="pr-0"
+                        type="text"
+                        size="small"
+                        onClick={() => setCustomBeneficiaryEnabled(false)}
+                      >
+                        Save
+                      </Button>
+                    ) : (
+                      <Button
+                        className="pr-0"
+                        size="small"
+                        type="text"
+                        onClick={() => setCustomBeneficiaryEnabled(true)}
+                      >
+                        {beneficiary ? 'Edit' : 'Choose wallet'}
+                      </Button>
+                    )}
                   </div>
+                  <div>
+                    {formatWad(receivedTickets, { precision: 0 })} {tokenText}
+                  </div>
+                  {nftRewardTiers?.length ? (
+                    <div className="py-3">
+                      <NftRewardCell nftRewards={nftRewardTiers} />
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>

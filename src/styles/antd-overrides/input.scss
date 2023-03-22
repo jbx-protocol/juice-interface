@@ -40,7 +40,7 @@
 }
 
 .ant-input-number-lg input {
-  height: 46px; // Ant-d has different rules for number inputs. Needs to be [48-2]px to account for borders. 
+  height: 46px; // Ant-d has different rules for number inputs. Needs to be [48-2]px to account for borders.
 }
 
 .ant-form-item-explain.ant-form-item-explain-error {
@@ -234,9 +234,11 @@ textarea.ant-input::placeholder {
   background: transparent;
 }
 
-
 /* EXPLORE PAGE SEARCH BAR */
-.ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary),
+.ant-input-search
+  > .ant-input-group
+  > .ant-input-group-addon:last-child
+  .ant-input-search-button:not(.ant-btn-primary),
 .ant-input-search-button {
   border: 1px solid;
   @apply stroke-primary;

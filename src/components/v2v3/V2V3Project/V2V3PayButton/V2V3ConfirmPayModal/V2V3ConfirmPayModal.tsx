@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { useForm } from 'antd/lib/form/Form'
+import { useForm, useWatch } from 'antd/lib/form/Form'
 import CurrencySymbol from 'components/CurrencySymbol'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
 import TransactionModal from 'components/TransactionModal'
@@ -46,6 +46,8 @@ export function V2V3ConfirmPayModal({
   } = useWallet()
   const delegateMetadata = useDelegateMetadata()
   const nftRewardTiers = useNftRewardTiersToMint()
+
+  const beneficiary = useWatch('beneficiary', form)
 
   // Use the userAddress as the beneficiary by default
   useEffect(() => {
@@ -141,10 +143,10 @@ export function V2V3ConfirmPayModal({
       title={t`Pay ${projectMetadata.name}`}
       open={open}
       onOk={() => form.submit()}
+      okButtonProps={{ disabled: !beneficiary }}
       okText={
         <span>
-          <Trans>Pay</Trans>
-          <CurrencySymbol currency="ETH" />
+          <Trans>Pay</Trans> <CurrencySymbol currency="ETH" />
           {formatWad(weiAmount)}
         </span>
       }

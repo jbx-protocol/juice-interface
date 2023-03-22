@@ -35,7 +35,7 @@ export function NftRewardCell({
           >
             <ExternalLink
               className={classNames(
-                'font-medium text-black dark:text-grey-100',
+                'text-black dark:text-grey-100',
                 isLink
                   ? 'cursor-pointer text-black hover:text-bluebs-500 hover:underline dark:text-grey-100 dark:hover:text-bluebs-500'
                   : 'cursor-default',

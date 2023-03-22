@@ -18,8 +18,6 @@ export enum V2V3ContractName {
   JBETHERC20SplitsPayerDeployer = 'JBETHERC20SplitsPayerDeployer',
   JBPrices = 'JBPrices',
 
-  PublicResolver = 'PublicResolver',
-
   DeprecatedJBSplitsStore = 'DeprecatedJBSplitsStore',
   DeprecatedJBDirectory = 'DeprecatedJBDirectory',
 }

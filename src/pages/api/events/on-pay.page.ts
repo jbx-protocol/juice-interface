@@ -95,7 +95,7 @@ const findSubscribedUserEmailsForProjectId = async (
       query: ParticipantsDocument,
       variables: { where: { projectId } },
     })
-  ).data.participants.map(p => p.wallet as string)
+  ).data.participants.map(p => p.wallet.id)
 
   const orQuery = walletsToProject
     .map(wallet => `wallet.eq.${wallet}`)

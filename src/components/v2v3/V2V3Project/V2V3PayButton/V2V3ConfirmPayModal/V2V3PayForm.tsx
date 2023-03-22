@@ -141,9 +141,9 @@ export const V2V3PayForm = ({
                       <EthAddressInput />
                     </Form.Item>
 
-                    <div hidden={customBeneficiaryEnabled || !beneficiary}>
+                    {beneficiary && !customBeneficiaryEnabled && (
                       <FormattedAddress address={beneficiary} />
-                    </div>
+                    )}
 
                     {customBeneficiaryEnabled ? (
                       <Button

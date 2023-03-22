@@ -3,6 +3,7 @@
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 const { withSentryConfig } = require('@sentry/nextjs')
+const withBundleAnalyzer = require('@next/bundle-analyzer')
 
 const webpack = require('webpack')
 
@@ -130,4 +131,6 @@ const nextConfig = {
   },
 }
 
-module.exports = withSentryConfig(nextConfig, { silent: true })
+module.exports = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})(withSentryConfig(nextConfig, { silent: true }))

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { fetchProjectHandle } from 'lib/api/juicebox'
 import { useQuery } from 'react-query'
 
 export default function useProjectHandle({
@@ -13,10 +13,7 @@ export default function useProjectHandle({
         throw new Error('Project ID not specified.')
       }
 
-      const response = await axios.get<{ handle: string }>(
-        `/api/juicebox/projectHandle/${projectId}`,
-      )
-      return response.data.handle
+      return await fetchProjectHandle(projectId)
     },
     {
       enabled: !!projectId,

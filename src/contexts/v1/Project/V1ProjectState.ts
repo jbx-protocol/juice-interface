@@ -1,12 +1,12 @@
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContextType } from 'contexts/v1/Project/V1ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useProjectsQuery } from 'hooks/Projects'
 import useSymbolOfERC20 from 'hooks/ERC20/SymbolOfERC20'
+import { useProjectsQuery } from 'hooks/Projects'
+import { useV1TerminalVersion } from 'hooks/v1/contractReader/V1TerminalVersion'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useMemo } from 'react'
 import { V1CurrencyName } from 'utils/v1/currency'
-import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import useBalanceOfProject from '../../../hooks/v1/contractReader/BalanceOfProject'
 import useCurrentFundingCycleOfProject from '../../../hooks/v1/contractReader/CurrentFundingCycleOfProject'
 import useCurrentPayoutModsOfProject from '../../../hooks/v1/contractReader/CurrentPayoutModsOfProject'
@@ -28,10 +28,9 @@ export function useV1ProjectState({
 
   const owner = useOwnerOfProject(projectId)
   const terminalAddress = useTerminalOfProject(projectId)
-  const terminalVersion = getTerminalVersion(terminalAddress)
-  const terminalName = getTerminalName({
-    address: terminalAddress,
-  })
+  const { version: terminalVersion, name: terminalName } = useV1TerminalVersion(
+    { terminalAddress },
+  )
   const currentFC = useCurrentFundingCycleOfProject(projectId, terminalName)
   const queuedFC = useQueuedFundingCycleOfProject(projectId)
   const currentPayoutMods = useCurrentPayoutModsOfProject(

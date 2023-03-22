@@ -485,6 +485,9 @@ msgstr ""
 msgid "Attach a sticker"
 msgstr ""
 
+msgid "Attach an on-chain message to this payment."
+msgstr ""
+
 msgid "Automated"
 msgstr ""
 
@@ -1778,9 +1781,6 @@ msgstr ""
 msgid "Mint tokens as ERC-20"
 msgstr ""
 
-msgid "Mint tokens to a custom address."
-msgstr ""
-
 msgid "Mint {0}"
 msgstr ""
 
@@ -2099,9 +2099,6 @@ msgstr ""
 msgid "Payer issuance rate"
 msgstr ""
 
-msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. <1>{1}</1> determines any value or utility of the tokens you receive."
-msgstr ""
-
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 msgstr ""
 
@@ -2124,9 +2121,6 @@ msgid "Payment memo"
 msgstr ""
 
 msgid "Payment notice"
-msgstr ""
-
-msgid "Payment options"
 msgstr ""
 
 msgid "Payments"
@@ -2451,6 +2445,9 @@ msgid "Receive {receiveText}"
 msgstr ""
 
 msgid "Recently listed"
+msgstr ""
+
+msgid "Receive:"
 msgstr ""
 
 msgid "Recipient"
@@ -3140,9 +3137,6 @@ msgstr ""
 msgid "This project reserves most of its tokens. Supporters won't get many tokens when paying this project."
 msgstr ""
 
-msgid "This project reserves some tokens for recipients set by the project owner."
-msgstr ""
-
 msgid "This project's rules may pose risks for contributors:"
 msgstr ""
 
@@ -3237,9 +3231,6 @@ msgid "Tokens are burned when they are redeemed."
 msgstr ""
 
 msgid "Tokens cannot be claimed because the project owner has not issued an ERC-20 for this project."
-msgstr ""
-
-msgid "Tokens for you"
 msgstr ""
 
 msgid "Tokens per ETH contributed"
@@ -3678,9 +3669,6 @@ msgid "You must grant permission to migrate your V2 tokens."
 msgstr ""
 
 msgid "You must review and accept the risks."
-msgstr ""
-
-msgid "You receive these NFTs for contributing <0>{0} ETH or more</0>."
 msgstr ""
 
 msgid "You will receive <0/>"

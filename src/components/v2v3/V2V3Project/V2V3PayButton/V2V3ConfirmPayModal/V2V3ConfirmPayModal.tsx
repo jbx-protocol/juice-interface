@@ -1,22 +1,19 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
-import { Callout } from 'components/Callout'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
-import Paragraph from 'components/Paragraph'
 import TransactionModal from 'components/TransactionModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/PayETHPaymentTerminalTx'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { useDelegateMetadata } from './hooks/DelegateMetadata'
 import { useNftRewardTiersToMint } from './hooks/NftRewardTiersToMint'
-import { SummaryTable } from './SummaryTable'
 import { V2V3PayForm, V2V3PayFormType } from './V2V3PayForm'
 
 export function V2V3ConfirmPayModal({
@@ -47,6 +44,11 @@ export function V2V3ConfirmPayModal({
   } = useWallet()
   const delegateMetadata = useDelegateMetadata()
   const nftRewardTiers = useNftRewardTiersToMint()
+
+  // Use the userAddress as the beneficiary by default
+  useEffect(() => {
+    form.setFieldValue('beneficiary', userAddress)
+  }, [userAddress])
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
 
@@ -148,21 +150,11 @@ export function V2V3ConfirmPayModal({
       centered
       destroyOnClose
     >
-      <div className="flex flex-col gap-6">
-        {projectMetadata.payDisclosure && (
-          <Callout.Info className="border border-grey-200 dark:border-grey-400">
-            <strong className="block">
-              <Trans>Notice from {projectMetadata.name}</Trans>
-            </strong>
-            <Paragraph
-              className="text-sm"
-              description={projectMetadata.payDisclosure}
-            />
-          </Callout.Info>
-        )}
-        <SummaryTable weiAmount={weiAmount} />
-        <V2V3PayForm form={form} onFinish={() => executePayTx()} />
-      </div>
+      <V2V3PayForm
+        weiAmount={weiAmount}
+        form={form}
+        onFinish={() => executePayTx()}
+      />
     </TransactionModal>
   )
 }

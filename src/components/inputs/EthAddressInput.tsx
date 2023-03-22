@@ -2,7 +2,8 @@ import { CheckCircleFilled, LoadingOutlined } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
 import { isAddress } from 'ethers/lib/utils'
 import { resolveAddress } from 'lib/api/ens'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
 import { JuiceInput } from './JuiceTextInput'
 
 const isENS = (address = '') => address.endsWith('.eth')
@@ -11,10 +12,12 @@ export function EthAddressInput({
   value,
   placeholder = `juicebox.eth / ${constants.AddressZero}`,
   onChange,
+  disabled,
 }: {
   placeholder?: string
   value?: string
   onChange?: (value: string) => void
+  disabled?: boolean
 }) {
   const [input, setInput] = useState<string>(value ?? '')
 
@@ -46,7 +49,7 @@ export function EthAddressInput({
     }
   }
 
-  const onInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = async (value = '') => {
     // Clear existing
     if (ensName || addressForENSName) {
       setInput('')
@@ -55,7 +58,7 @@ export function EthAddressInput({
       triggerChange('')
     }
 
-    const input = e.target.value
+    const input = value
     setInput(input)
     triggerChange(input)
 
@@ -75,6 +78,10 @@ export function EthAddressInput({
     }
   }
 
+  useEffect(() => {
+    onInputChange(value)
+  }, [value])
+
   const extraText = ensName && addressForENSName ? addressForENSName : ''
 
   return (
@@ -86,10 +93,10 @@ export function EthAddressInput({
         placeholder={placeholder}
         value={ensName ?? value}
         suffix={loadingENSName ? <LoadingOutlined spin /> : null}
-        disabled={loadingENSName}
-        onChange={onInputChange}
+        disabled={loadingENSName || disabled}
+        onChange={e => onInputChange(e.target.value)}
       />
-      {extraText ? (
+      {extraText && !disabled ? (
         <div className="mt-1 text-xs text-grey-500 dark:text-grey-300">
           <CheckCircleFilled /> {extraText}
         </div>

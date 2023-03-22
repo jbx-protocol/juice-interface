@@ -4,7 +4,6 @@ import { NetworkName } from 'models/networkName'
 import { SignerOrProvider } from 'models/signerOrProvider'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { CV2V3 } from 'models/v2v3/cv'
-import { loadJBProjectHandlesContract } from './contractLoaders/JBProjectHandles'
 import { loadJuiceboxV2OrV3Contract } from './contractLoaders/JuiceboxV2OrV3'
 import { loadPublicResolverContract } from './contractLoaders/PublicResolver'
 
@@ -16,9 +15,7 @@ export const loadV2V3Contract = async (
 ): Promise<Contract | undefined> => {
   let contractJson: ContractJson | undefined = undefined
 
-  if (contractName === V2V3ContractName.JBProjectHandles) {
-    contractJson = await loadJBProjectHandlesContract(network)
-  } else if (contractName === V2V3ContractName.PublicResolver) {
+  if (contractName === V2V3ContractName.PublicResolver) {
     contractJson = loadPublicResolverContract(network)
   } else {
     contractJson = await loadJuiceboxV2OrV3Contract(

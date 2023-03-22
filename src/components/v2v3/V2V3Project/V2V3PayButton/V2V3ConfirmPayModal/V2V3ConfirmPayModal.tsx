@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
+import CurrencySymbol from 'components/CurrencySymbol'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
 import TransactionModal from 'components/TransactionModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -10,6 +11,7 @@ import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
+import { formatWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { useDelegateMetadata } from './hooks/DelegateMetadata'
@@ -48,7 +50,7 @@ export function V2V3ConfirmPayModal({
   // Use the userAddress as the beneficiary by default
   useEffect(() => {
     form.setFieldValue('beneficiary', userAddress)
-  }, [userAddress])
+  }, [userAddress, form])
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
 
@@ -139,7 +141,13 @@ export function V2V3ConfirmPayModal({
       title={t`Pay ${projectMetadata.name}`}
       open={open}
       onOk={() => form.submit()}
-      okText={t`Pay`}
+      okText={
+        <span>
+          <Trans>Pay</Trans>
+          <CurrencySymbol currency="ETH" />
+          {formatWad(weiAmount)}
+        </span>
+      }
       connectWalletText={t`Connect wallet to pay`}
       onCancel={() => {
         form.resetFields()

@@ -6,7 +6,7 @@ import RichNote from 'components/RichNote'
 import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import {
   V2V3FundingCycle,
-  V2V3FundingCycleMetadata,
+  V2V3FundingCycleMetadata
 } from 'models/v2v3/fundingCycle'
 
 import FundingCycleDetails from '../../V2V3FundingCycleSection/FundingCycleDetails'
@@ -21,7 +21,7 @@ export default function ConfigureEventElem({
         | 'timestamp'
         | 'mustStartAtOrAfter'
         | 'txHash'
-        | 'caller'
+        | 'from'
         | 'ballot'
         | 'dataSource'
         | 'discountRate'

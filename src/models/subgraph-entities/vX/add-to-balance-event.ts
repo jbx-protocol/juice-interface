@@ -6,7 +6,7 @@ import { Json, primitives } from '../../json'
 import { BaseEventEntity } from '../base/base-event-entity'
 import {
   BaseProjectEntity,
-  parseBaseProjectEntityJson,
+  parseBaseProjectEntityJson
 } from '../base/base-project-entity'
 import { TerminalEventEntity } from '../base/terminal-event'
 
@@ -16,7 +16,6 @@ export interface AddToBalanceEvent
     TerminalEventEntity {
   pv: PV
   fundingCycleId: BigNumber
-  caller: string
   amount: BigNumber
   amountUSD: BigNumber
   note: string

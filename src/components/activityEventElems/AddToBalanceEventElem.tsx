@@ -13,7 +13,7 @@ export default function AddToBalanceEventElem({
         AddToBalanceEvent,
         | 'amount'
         | 'timestamp'
-        | 'caller'
+        | 'from'
         | 'note'
         | 'id'
         | 'txHash'

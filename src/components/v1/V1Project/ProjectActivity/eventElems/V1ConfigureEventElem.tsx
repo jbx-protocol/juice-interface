@@ -11,7 +11,7 @@ import { useContext } from 'react'
 import {
   formatWad,
   perbicentToPercent,
-  permilleToPercent,
+  permilleToPercent
 } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
@@ -25,7 +25,7 @@ export default function V1ConfigureEventElem({
         | 'id'
         | 'timestamp'
         | 'txHash'
-        | 'caller'
+        | 'from'
         | 'ballot'
         | 'discountRate'
         | 'duration'

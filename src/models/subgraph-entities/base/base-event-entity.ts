@@ -5,5 +5,6 @@ export interface BaseEventEntity {
   id: string
   timestamp: number
   txHash: string
-  caller: string
+  from: string
+  from: string
 }

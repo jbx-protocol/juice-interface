@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import {
   ParticipantsDocument,
   ParticipantsQuery,
-  QueryParticipantsArgs,
+  QueryParticipantsArgs
 } from 'generated/graphql'
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase'
@@ -43,7 +43,7 @@ const Schema = Yup.object().shape({
   ).required(),
   memo: Yup.string(),
   metadata: Yup.string().required(),
-  caller: Yup.string().required(),
+  from: Yup.string().required(),
 })
 
 type OnPayEvent = Awaited<ReturnType<typeof Schema.validate>>

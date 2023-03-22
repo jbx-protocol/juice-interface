@@ -6,7 +6,7 @@ export const CONFIGURE_EVENT_KEY: ActivityQueryKey<'configureEvent'> = {
     'id',
     'timestamp',
     'txHash',
-    'caller',
+    'from',
     'ballot',
     'dataSource',
     'discountRate',
@@ -33,7 +33,7 @@ export const DISTRIBUTED_PAYOUTS_EVENT_KEY: ActivityQueryKey<'distributePayoutsE
       'id',
       'timestamp',
       'txHash',
-      'caller',
+      'from',
       'beneficiary',
       'beneficiaryDistributionAmount',
       'distributedAmount',
@@ -49,7 +49,7 @@ export const DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY: ActivityQueryKey<'distribute
       'id',
       'timestamp',
       'txHash',
-      'caller',
+      'from',
       'beneficiary',
       'beneficiaryTokenCount',
       'tokenCount',
@@ -59,7 +59,7 @@ export const DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY: ActivityQueryKey<'distribute
 export const DEPLOYED_PROJECT_PAYER_EVENT_KEY: ActivityQueryKey<'deployETHERC20ProjectPayerEvent'> =
   {
     entity: 'deployETHERC20ProjectPayerEvent',
-    keys: ['id', 'timestamp', 'txHash', 'caller', 'address', 'memo'],
+    keys: ['id', 'timestamp', 'txHash', 'from', 'address', 'memo'],
   }
 
 export const SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY: ActivityQueryKey<'setFundAccessConstraintsEvent'> =
@@ -69,7 +69,7 @@ export const SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY: ActivityQueryKey<'setFundAcc
       'id',
       'timestamp',
       'txHash',
-      'caller',
+      'from',
       'distributionLimit',
       'distributionLimitCurrency',
     ],

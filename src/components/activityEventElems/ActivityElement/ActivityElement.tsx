@@ -7,24 +7,24 @@ import { isEqualAddress } from 'utils/address'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import { ActivityElementEvent } from './activityElementEvent'
 
-const CallerBeneficiary = ({
-  caller,
+const FromBeneficiary = ({
+  from,
   beneficiary,
 }: {
-  caller?: string
+  from?: string
   beneficiary?: string
 }) => {
-  if (!(beneficiary || caller)) return null
+  if (!(beneficiary || from)) return null
 
-  return beneficiary && caller && !isEqualAddress(beneficiary, caller) ? (
+  return beneficiary && from && !isEqualAddress(beneficiary, from) ? (
     <div className="text-xs text-grey-500 dark:text-grey-300">
-      <FormattedAddress address={caller} title="Caller" />{' '}
+      <FormattedAddress address={from} title="From" />{' '}
       <ArrowRightOutlined />{' '}
       <FormattedAddress address={beneficiary} title="Beneficiary" />
     </div>
   ) : (
     <div className="text-sm text-grey-500 dark:text-grey-300">
-      <FormattedAddress withEnsAvatar address={caller} />
+      <FormattedAddress withEnsAvatar address={from} />
     </div>
   )
 }
@@ -110,7 +110,7 @@ export function ActivityEvent({
 
         <div className="mt-1 flex items-start justify-between">
           <Subject subject={subject} />
-          <CallerBeneficiary {...event} />
+          <FromBeneficiary {...event} />
         </div>
       </div>
 

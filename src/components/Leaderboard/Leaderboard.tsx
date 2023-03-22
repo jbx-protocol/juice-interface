@@ -6,19 +6,24 @@ import { useLeaderboard } from 'hooks/Leaderboard'
 import { useWalletsQuery } from 'hooks/Wallets'
 import { useState } from 'react'
 
+const COUNT = 10
+
 export function Leaderboard() {
-  const [window, setWindow] = useState<30 | 'allTime'>(30)
+  const [timeWindow, setTimeWindow] = useState<30 | 'allTime'>(30)
 
   const { data: allTimeWallets, isLoading } = useWalletsQuery({
     orderBy: 'totalPaid',
+    pageSize: COUNT
   })
 
   const windowWallets = useLeaderboard({
-    count: 10,
-    windowDays: typeof window === 'number' ? window : null,
+    count: COUNT,
+    windowDays: typeof timeWindow === 'number' ? timeWindow : null,
   })
 
-  const wallets = window === null ? allTimeWallets : windowWallets
+  const wallets = timeWindow === 'allTime' ? allTimeWallets : windowWallets
+
+  console.log('asdf', wallets)
 
   return (
     <div className="my-0 mx-auto max-w-5xl p-5">
@@ -27,8 +32,8 @@ export function Leaderboard() {
         <div>
           <Select
             className="small w-[200px]"
-            value={window}
-            onChange={val => setWindow(val)}
+            value={timeWindow}
+            onChange={val => setTimeWindow(val)}
           >
             <Select.Option value={30}>
               <Trans>30 days</Trans>
@@ -45,7 +50,7 @@ export function Leaderboard() {
       ) : (
         <div className="flex flex-col gap-2">
           {wallets?.map((w, i) => (
-            <WalletCard key={w.id} wallet={w} rank={i} />
+            <WalletCard key={w.id} wallet={w} rank={i + 1} />
           ))}
         </div>
       )}

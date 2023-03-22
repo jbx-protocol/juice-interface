@@ -6,7 +6,7 @@ import { Json, primitives } from '../../json'
 import { BaseEventEntity } from '../base/base-event-entity'
 import {
   BaseProjectEntity,
-  parseBaseProjectEntityJson,
+  parseBaseProjectEntityJson
 } from '../base/base-project-entity'
 import { TerminalEventEntity } from '../base/terminal-event'
 
@@ -20,7 +20,7 @@ export interface RedeemEvent
   amount: BigNumber
   returnAmount: BigNumber
   returnAmountUSD: BigNumber
-  caller: string
+  from: string
   memo: string
   metadata: string | undefined
 }

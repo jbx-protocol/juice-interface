@@ -17,7 +17,7 @@ export default function DistributeReservedTokensEventElem({
         | 'id'
         | 'timestamp'
         | 'txHash'
-        | 'caller'
+        | 'from'
         | 'beneficiary'
         | 'beneficiaryTokenCount'
         | 'tokenCount'

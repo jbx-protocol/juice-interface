@@ -12,7 +12,9 @@ export function useLeaderboard({
   windowDays: number | null
 }) {
   const [payEvents, setPayEvents] =
-    useState<Pick<PayEvent, 'amount' | 'caller'>[]>()
+    useState<Pick<PayEvent, 'amount' | 'from'>[]>()
+
+  console.log('asdf windowDays', windowDays)
 
   useEffect(() => {
     // Get all payments within window
@@ -23,7 +25,7 @@ export function useLeaderboard({
         entity: 'payEvent',
         orderBy: 'timestamp',
         orderDirection: 'desc',
-        keys: ['amount', 'caller'],
+        keys: ['amount', 'from'],
         where: [
           {
             key: 'timestamp',
@@ -46,14 +48,14 @@ export function useLeaderboard({
       payEvents?.reduce<Record<string, BigNumber>>(
         (acc, curr) => ({
           ...acc,
-          [curr.caller]: (acc[curr.caller] ?? BigNumber.from(0)).add(
-            curr.amount,
-          ),
+          [curr.from]: (acc[curr.from] ?? BigNumber.from(0)).add(curr.amount),
         }),
         {},
       ),
     [payEvents],
   )
+
+  console.log('asdf', { payEvents, walletScores })
 
   return useMemo(() => {
     if (!walletScores) return []
@@ -64,5 +66,5 @@ export function useLeaderboard({
       )
       .map(([id, totalPaid]) => ({ id, totalPaid }))
       .slice(0, count)
-  }, [count])
+  }, [count, walletScores])
 }

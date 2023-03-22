@@ -15,7 +15,7 @@ export default function BurnEventElem({
   event:
     | Pick<
         BurnEvent,
-        'amount' | 'timestamp' | 'caller' | 'id' | 'txHash' | 'projectId' | 'pv'
+        'amount' | 'timestamp' | 'from' | 'id' | 'txHash' | 'projectId' | 'pv'
       >
     | undefined
 }) {

@@ -169,7 +169,7 @@ export function AccountDashboard({
     {
       label: t`Activity`,
       key: 'activity',
-      children: <ActivityList caller={address} />,
+      children: <ActivityList from={address} />,
     },
     {
       label: t`Contributions`,

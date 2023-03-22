@@ -17,7 +17,7 @@ const DEFAULT_PAGE_SIZE = 10
 export type ProjectEventsOpts = {
   pv?: PV[]
   projectId?: number
-  caller?: string
+  from?: string
   eventFilter?: ProjectEventFilter
   pageSize?: number
 }
@@ -25,7 +25,7 @@ export type ProjectEventsOpts = {
 export function useProjectEvents({
   pv,
   projectId,
-  caller,
+  from,
   eventFilter,
   pageSize,
 }: ProjectEventsOpts) {
@@ -45,10 +45,10 @@ export function useProjectEvents({
       })
     }
 
-    if (caller) {
+    if (from) {
       _where.push({
-        key: 'caller',
-        value: caller.toLowerCase(),
+        key: 'from',
+        value: from.toLowerCase(),
       })
     }
 

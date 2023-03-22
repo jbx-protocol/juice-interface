@@ -19,7 +19,7 @@ import {
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { pinJson } from 'lib/api/ipfs'
-import { round } from 'lodash'
+import round from 'lodash/round'
 import {
   IPFSNftCollectionMetadata,
   IPFSNftRewardTier,

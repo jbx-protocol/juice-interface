@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
-import { isEqual } from 'lodash'
+import isEqual from 'lodash/isEqual'
 import { OutgoingSplit, Split } from 'models/splits'
 import { PayoutMod } from 'models/v1/mods'
 import {

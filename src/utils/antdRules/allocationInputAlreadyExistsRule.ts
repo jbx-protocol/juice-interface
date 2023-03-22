@@ -1,5 +1,5 @@
 import { RuleObject } from 'antd/lib/form'
-import { isEqual } from 'lodash'
+import isEqual from 'lodash/isEqual'
 import { projectIdToHex } from 'utils/splits'
 
 /**

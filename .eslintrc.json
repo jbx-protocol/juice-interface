@@ -62,7 +62,11 @@
         "paths": [
           {
             "name": "ethers",
-            "message": "Please import from '@ethersproject/module' directly to support tree-shaking."
+            "message": "Import from '@ethersproject/module' directly to support tree-shaking."
+          },
+          {
+            "name": "lodash",
+            "message": "Import from 'lodash/<package>' directly to support tree-shaking."
           }
         ]
       }

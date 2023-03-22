@@ -135,39 +135,6 @@ function Projects() {
             />
           )}
 
-          {/* {!searchText && (
-            <div className="mb-3">
-              <ProjectTagsRow
-                tags={[...projectTagOptions].sort(a =>
-                  searchTags.includes(a) ? -1 : 1,
-                )}
-                tagClassName="text-xs"
-                selectedTags={searchTags}
-                onClickTag={t => {
-                  let newTags: ProjectTag[] = []
-
-                  if (searchTags.includes(t)) {
-                    setSearchTags(v => {
-                      newTags = v.filter(_t => _t !== t)
-                      return newTags
-                    })
-                    router.push(
-                      `/projects?tab=all${
-                        newTags.length ? `&tags=${newTags.join(',')}` : ''
-                      }`,
-                    )
-                  } else {
-                    setSearchTags(v => {
-                      newTags = [...v, t].slice(0, MAX_PROJECT_TAGS)
-                      return newTags
-                    })
-                    router.push(`/projects?tab=all&tags=${newTags.join(',')}`)
-                  }
-                }}
-              />
-            </div>
-          )} */}
-
           <div
             className="flex min-h-[52px] max-w-[100vw] flex-wrap items-center justify-between"
             hidden={!!searchText}

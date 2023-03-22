@@ -42,12 +42,14 @@ export default function ProjectsFilterAndSort({
   orderBy: OrderByOption
   setOrderBy: (value: OrderByOption) => void
 }) {
-  const [activeKey, setActiveKey] = useState<0 | undefined>()
+  const [tagsIsOpen, setTagsIsOpen] = useState<boolean>(false)
+  const [filterIsOpen, setFilterIsOpen] = useState<boolean>(false)
 
   // Close collapse when clicking anywhere in the window except the collapse items
   useEffect(() => {
     function handleClick() {
-      setActiveKey(undefined)
+      setTagsIsOpen(false)
+      setFilterIsOpen(false)
     }
     window.addEventListener('click', handleClick)
     return () => window.removeEventListener('click', handleClick)
@@ -60,7 +62,7 @@ export default function ProjectsFilterAndSort({
           `projects-filter-collapse`,
           'my-0 mr-4 border-none bg-transparent',
         )}
-        activeKey={activeKey}
+        activeKey={tagsIsOpen ? 0 : undefined}
       >
         <CollapsePanel
           className="border-none"
@@ -70,7 +72,64 @@ export default function ProjectsFilterAndSort({
             <span
               className="text-grey-500 dark:text-grey-300"
               onClick={e => {
-                setActiveKey(activeKey === 0 ? undefined : 0)
+                setTagsIsOpen(x => !x)
+                e.stopPropagation()
+              }}
+            >
+              <label className="cursor-pointer">
+                Tags
+                {searchTags.length ? (
+                  <span className="ml-1 inline-block h-5 w-5 rounded-full bg-grey-200 text-center text-grey-600 dark:bg-grey-300 dark:text-grey-800">
+                    {searchTags.length}
+                  </span>
+                ) : null}
+              </label>
+            </span>
+          }
+        >
+          {/* onClick: Do not close collapse when clicking its items*/}
+          <div onClick={e => e.stopPropagation()}>
+            {searchTags.length > 0 && (
+              <FilterCheckboxItem
+                label={t`Deselect all`}
+                checked={null}
+                onChange={() => setSearchTags([])}
+              />
+            )}
+            {projectTagOptions.map(t => (
+              <FilterCheckboxItem
+                key={t}
+                label={t}
+                checked={searchTags.includes(t)}
+                onChange={() =>
+                  setSearchTags(
+                    searchTags.includes(t)
+                      ? searchTags.filter(_t => _t !== t)
+                      : [...searchTags, t],
+                  )
+                }
+              />
+            ))}
+          </div>
+        </CollapsePanel>
+      </Collapse>
+
+      <Collapse
+        className={classNames(
+          `projects-filter-collapse`,
+          'my-0 mr-4 border-none bg-transparent',
+        )}
+        activeKey={filterIsOpen ? 0 : undefined}
+      >
+        <CollapsePanel
+          className="border-none"
+          key={0}
+          showArrow={false}
+          header={
+            <span
+              className="text-grey-500 dark:text-grey-300"
+              onClick={e => {
+                setFilterIsOpen(x => !x)
                 e.stopPropagation()
               }}
             >
@@ -103,20 +162,6 @@ export default function ProjectsFilterAndSort({
               checked={reversed}
               onChange={setReversed}
             />
-            <div className="mt-3 font-bold">Tags</div>
-            {projectTagOptions.map(t => (
-              <FilterCheckboxItem
-                label={t}
-                checked={searchTags.includes(t)}
-                onChange={() =>
-                  setSearchTags(
-                    searchTags.includes(t)
-                      ? searchTags.filter(_t => _t !== t)
-                      : [...searchTags, t],
-                  )
-                }
-              />
-            ))}
           </div>
         </CollapsePanel>
       </Collapse>

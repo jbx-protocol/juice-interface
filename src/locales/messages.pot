@@ -968,6 +968,9 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
+msgid "Deselect all"
+msgstr ""
+
 msgid "Design how your tokens should work."
 msgstr ""
 

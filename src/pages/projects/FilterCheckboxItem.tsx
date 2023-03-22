@@ -9,24 +9,26 @@ export default function FilterCheckboxItem({
   disabled,
 }: {
   label: string
-  checked: boolean
+  checked: boolean | null
   onChange: CheckboxOnChange
   disabled?: boolean
 }) {
   return (
     <div
       className={classNames(
-        'flex h-8 cursor-pointer items-center capitalize',
+        'flex h-10 cursor-pointer items-center capitalize',
         disabled ? 'text-grey-400 dark:text-slate-200' : '',
       )}
       onClick={() => onChange(!checked)}
     >
-      <Checkbox
-        className="mr-2"
-        checked={checked}
-        onChange={() => onChange(!checked)}
-        disabled={disabled}
-      />
+      {checked !== null && (
+        <Checkbox
+          className="mr-2"
+          checked={checked}
+          onChange={() => onChange(!checked)}
+          disabled={disabled}
+        />
+      )}
       {label}
     </div>
   )

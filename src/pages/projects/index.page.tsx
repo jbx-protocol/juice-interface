@@ -152,7 +152,14 @@ function Projects() {
                 reversed={reversed}
                 setReversed={setReversed}
                 searchTags={searchTags}
-                setSearchTags={setSearchTags}
+                setSearchTags={tags => {
+                  setSearchTags(tags)
+                  router.push(
+                    `/projects?tab=all${
+                      tags.length ? `&tags=${tags.join(',')}` : ''
+                    }`,
+                  )
+                }}
                 orderBy={orderBy}
                 setOrderBy={setOrderBy}
               />

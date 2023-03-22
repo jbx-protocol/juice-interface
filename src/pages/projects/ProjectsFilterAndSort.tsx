@@ -60,7 +60,7 @@ export default function ProjectsFilterAndSort({
       <Collapse
         className={classNames(
           `projects-filter-collapse`,
-          'my-0 mr-4 border-none bg-transparent',
+          'my-0 border-none bg-transparent',
         )}
         activeKey={tagsIsOpen ? 0 : undefined}
       >
@@ -114,70 +114,78 @@ export default function ProjectsFilterAndSort({
         </CollapsePanel>
       </Collapse>
 
-      <Collapse
-        className={classNames(
-          `projects-filter-collapse`,
-          'my-0 mr-4 border-none bg-transparent',
-        )}
-        activeKey={filterIsOpen ? 0 : undefined}
-      >
-        <CollapsePanel
-          className="border-none"
-          key={0}
-          showArrow={false}
-          header={
-            <span
-              className="text-grey-500 dark:text-grey-300"
-              onClick={e => {
-                setFilterIsOpen(x => !x)
-                e.stopPropagation()
-              }}
-            >
-              <FilterOutlined />{' '}
-              <label className="cursor-pointer">Filter</label>
-            </span>
-          }
+      {searchTags.length === 0 && (
+        <Collapse
+          className={classNames(
+            `projects-filter-collapse`,
+            'my-0 ml-4 border-none bg-transparent',
+          )}
+          activeKey={filterIsOpen ? 0 : undefined}
         >
-          {/* onClick: Do not close collapse when clicking its items*/}
-          <div onClick={e => e.stopPropagation()}>
-            <FilterCheckboxItem
-              label={t`V1`}
-              checked={includeV1}
-              onChange={setIncludeV1}
-            />
-            <FilterCheckboxItem
-              label={t`V2`}
-              checked={includeV2}
-              onChange={setIncludeV2}
-            />
-            <FilterCheckboxItem
-              label={t`Archived`}
-              checked={showArchived}
-              onChange={setShowArchived}
-            />
-            <FilterCheckboxItem
-              label={t`Reverse`}
-              checked={reversed}
-              onChange={setReversed}
-            />
-          </div>
-        </CollapsePanel>
-      </Collapse>
+          <CollapsePanel
+            className="border-none"
+            key={0}
+            showArrow={false}
+            header={
+              <span
+                className="text-grey-500 dark:text-grey-300"
+                onClick={e => {
+                  setFilterIsOpen(x => !x)
+                  e.stopPropagation()
+                }}
+              >
+                <FilterOutlined />{' '}
+                <label className="cursor-pointer">Filter</label>
+              </span>
+            }
+          >
+            {/* onClick: Do not close collapse when clicking its items*/}
+            <div onClick={e => e.stopPropagation()}>
+              <FilterCheckboxItem
+                label={t`V1`}
+                checked={includeV1}
+                onChange={setIncludeV1}
+              />
+              <FilterCheckboxItem
+                label={t`V2`}
+                checked={includeV2}
+                onChange={setIncludeV2}
+              />
+              <FilterCheckboxItem
+                label={t`Archived`}
+                checked={showArchived}
+                onChange={setShowArchived}
+              />
+              <FilterCheckboxItem
+                label={t`Reverse`}
+                checked={reversed}
+                onChange={setReversed}
+              />
+            </div>
+          </CollapsePanel>
+        </Collapse>
+      )}
 
-      <Select className="my-2 w-44" value={orderBy} onChange={setOrderBy}>
-        <Select.Option value="totalPaid">
-          <Trans>Total raised</Trans>
-        </Select.Option>
-        <Select.Option value="createdAt">
-          <Trans>Date created</Trans>
-        </Select.Option>
-        <Select.Option value="currentBalance">
-          <Trans>Current balance</Trans>
-        </Select.Option>
-        <Select.Option value="paymentsCount">
-          <Trans>Payments</Trans>
-        </Select.Option>
-      </Select>
+      {searchTags.length === 0 && (
+        <Select
+          className="my-2 ml-4 w-44"
+          value={orderBy}
+          onChange={setOrderBy}
+        >
+          <Select.Option value="totalPaid">
+            <Trans>Total raised</Trans>
+          </Select.Option>
+          <Select.Option value="createdAt">
+            <Trans>Date created</Trans>
+          </Select.Option>
+          <Select.Option value="currentBalance">
+            <Trans>Current balance</Trans>
+          </Select.Option>
+          <Select.Option value="paymentsCount">
+            <Trans>Payments</Trans>
+          </Select.Option>
+        </Select>
+      )}
     </div>
   )
 }

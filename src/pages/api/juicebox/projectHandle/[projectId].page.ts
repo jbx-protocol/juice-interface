@@ -9,9 +9,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(404)
   }
 
-  // cache for a day
-  res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')
-
   try {
     const { projectId } = req.query
 
@@ -30,6 +27,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const handle = await JBProjectHandles.handleOf(projectId)
 
+    // cache for a day if project handle found
+    res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')
     return res.status(200).json({ handle, projectId })
   } catch (err) {
     console.error('api::juicebox::projectHandle::error', err)

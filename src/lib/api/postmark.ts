@@ -1,5 +1,11 @@
 import { ServerClient } from 'postmark'
 
-export const emailServerClient = new ServerClient(
-  process.env.POSTMARK_SERVER_TOKEN,
-)
+let client: ServerClient | undefined
+
+// Lazy initialization
+export const emailServerClient = () => {
+  if (!client) {
+    client = new ServerClient(process.env.POSTMARK_SERVER_TOKEN)
+  }
+  return client
+}

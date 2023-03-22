@@ -74,7 +74,7 @@ const sendEmails = async (
   { projectId, amount }: OnPayEvent,
   emails: string[],
 ) => {
-  await emailServerClient.sendEmailBatch(
+  await emailServerClient().sendEmailBatch(
     emails.map(email => ({
       From: 'lachlan@squarechainlabs.com',
       To: email,

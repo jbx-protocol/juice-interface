@@ -50,40 +50,48 @@ const Schema = Yup.object().shape({
 type OnPayEvent = Awaited<ReturnType<typeof Schema.validate>>
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== 'POST' || !JUICE_API_EVENTS_ENABLED) {
-    return res.status(404).json({ message: 'Not found.' })
+  try {
+    if (req.method !== 'POST' || !JUICE_API_EVENTS_ENABLED) {
+      return res.status(404).json({ message: 'Not found.' })
+    }
+    if (
+      JUICE_API_BEARER_TOKEN &&
+      req.headers.authorization !== `Bearer ${JUICE_API_BEARER_TOKEN}`
+    ) {
+      return res.status(401).json({ message: 'Unauthorized.' })
+    }
+    const event = await Schema.validate(req.body)
+
+    const userEmails = await findSubscribedUserEmailsForProjectId(
+      event.projectId.toNumber(),
+    )
+
+    await sendEmails(event, userEmails)
+
+    return res.status(200).json('Success!')
+  } catch (e) {
+    console.error('Unexpected error occurred', e)
+    return res
+      .status(500)
+      .json({ message: 'Unexpected server error occurred.' })
   }
-  if (
-    JUICE_API_BEARER_TOKEN &&
-    req.headers.authorization !== `Bearer ${JUICE_API_BEARER_TOKEN}`
-  ) {
-    return res.status(401).json({ message: 'Unauthorized.' })
-  }
-  const event = await Schema.validate(req.body)
-
-  const userEmails = await findSubscribedUserEmailsForProjectId(
-    event.projectId.toNumber(),
-  )
-
-  await sendEmails(event, userEmails)
-
-  return res.status(200).json('Success!')
 }
 
 const sendEmails = async (
   { projectId, amount }: OnPayEvent,
   emails: string[],
 ) => {
-  await emailServerClient().sendEmailBatch(
+  await emailServerClient().sendEmailBatchWithTemplates(
     emails.map(email => ({
-      From: 'lachlan@squarechainlabs.com',
+      From: 'noreply@juicebox.money',
       To: email,
-      Subject: `Payment received for project ${projectId}!`,
-      HtmlBody: `<strong>Hello,</strong></br>A payment has been made to your project! The amount is ${fromWad(
-        amount,
-      )}.`,
-      TextBody: 'Hello from Postmark!',
-      MessageStream: 'test-broadcast',
+      TemplateAlias: 'payment-received',
+      TemplateModel: {
+        product_url: 'https://juicebox.money',
+        amount: fromWad(amount.toString()),
+        project_id: projectId,
+      },
+      MessageStream: 'broadcast',
     })),
   )
 }

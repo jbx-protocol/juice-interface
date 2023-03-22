@@ -560,9 +560,6 @@ msgstr ""
 msgid "CSV download failed."
 msgstr ""
 
-msgid "Caller"
-msgstr ""
-
 msgid "Cancel"
 msgstr ""
 
@@ -3762,6 +3759,9 @@ msgid "called by <0/>"
 msgstr ""
 
 msgid "days"
+msgstr ""
+
+msgid "from"
 msgstr ""
 
 msgid "handle"

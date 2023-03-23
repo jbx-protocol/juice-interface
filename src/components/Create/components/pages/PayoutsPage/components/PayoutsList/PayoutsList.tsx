@@ -11,6 +11,7 @@ import { useCallback, useMemo } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { ceilIfCloseToNextInteger } from 'utils/math'
+import { totalSplitsPercent } from 'utils/splits'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { amountFromPercent } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
@@ -25,10 +26,7 @@ export const PayoutsList = (
     useEditingDistributionLimit()
 
   const totalPercent = useMemo(
-    () =>
-      props.value?.reduce((acc, allocation) => {
-        return acc + allocation.percent
-      }, 0) ?? 0,
+    () => (props.value ? totalSplitsPercent(props.value) : 0),
     [props.value],
   )
 

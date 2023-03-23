@@ -1,10 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { WeiPerEther } from '@ethersproject/constants'
 import { Contract } from '@ethersproject/contracts'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
-import { formatDiscountRate } from 'utils/v2v3/math'
 
 // Fill in gaps between first funding cycle of each configuration:
 //     - derives starts from duration and start time of the first FC of that configuration
@@ -66,7 +66,7 @@ const deriveFundingCyclesBetweenEachConfiguration = ({
           break
         }
         const nextInterimWeight = interimWeight.sub(
-          interimWeight.mul(formatDiscountRate(currentDiscountRate)).div(100),
+          interimWeight.mul(currentDiscountRate).div(WeiPerEther),
         )
         const nextInterimStart = interimStart.add(currentDuration)
         const nextInterimNumber = interimNumber.add(1)

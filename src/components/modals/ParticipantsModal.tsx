@@ -240,7 +240,7 @@ export default function ParticipantsModal({
             {tokenSymbolText({ tokenSymbol, capitalize: true })} holders
           </Trans>
         </h4>
-        <Space direction="vertical">
+        <Space direction="vertical" className="w-full">
           {tokenAddress && !isZeroAddress(tokenAddress) && (
             <div className="mb-5">
               <Trans>

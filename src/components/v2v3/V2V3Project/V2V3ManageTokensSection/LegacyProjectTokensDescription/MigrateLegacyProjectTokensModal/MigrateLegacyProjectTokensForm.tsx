@@ -1,11 +1,14 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Button, Form, FormInstance, FormProps, Space, Statistic } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { BigNumber } from '@ethersproject/bignumber'
-import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import useERC20Allowance from 'hooks/ERC20/ERC20Allowance'
 import { useApproveTokensTx } from 'hooks/JBV3Token/transactor/ApproveTokensTx'
-import { useState } from 'react'
+import { useWallet } from 'hooks/Wallet'
+import { useContext, useState } from 'react'
+import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 
 interface MigrateLegacyProjectTokensFormType {
   tokenAmount: string
@@ -19,9 +22,17 @@ export function MigrateLegacyProjectTokensForm({
   legacyTokenBalance: BigNumber | undefined
   form: FormInstance<MigrateLegacyProjectTokensFormType>
 } & FormProps) {
+  const { tokenAddress } = useContext(V2V3ProjectContext)
+  const { userAddress } = useWallet()
+
   const [loading, setLoading] = useState<boolean>(false)
 
   const approveTokensTx = useApproveTokensTx()
+  const { data: allowance } = useERC20Allowance(
+    tokenAddress,
+    userAddress,
+    userAddress,
+  )
 
   const approveTokens = async (values: MigrateLegacyProjectTokensFormType) => {
     setLoading(true)
@@ -50,8 +61,13 @@ export function MigrateLegacyProjectTokensForm({
     >
       <Space direction="vertical" size="large" className="w-full">
         <Statistic
-          title={<Trans>Your legacy token balance</Trans>}
+          title={<Trans>Your total legacy tokens</Trans>}
           value={formatWad(legacyTokenBalance)}
+        />
+
+        <Statistic
+          title={<Trans>Your migration allowance</Trans>}
+          value={formatWad(allowance)}
         />
 
         <Form.Item

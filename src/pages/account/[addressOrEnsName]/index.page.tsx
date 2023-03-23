@@ -32,7 +32,8 @@ export const getServerSideProps: GetServerSideProps<
       notFound: true,
     }
   }
-  const { address, ensName } = pair
+
+  const { address, name: ensName } = pair
 
   let profile = null
   const profileResult = await supabase

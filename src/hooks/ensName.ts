@@ -1,6 +1,7 @@
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
 import { getAddress } from 'ethers/lib/utils'
+import { resolveAddress as resolveAddressFromInfura } from 'lib/api/ens'
 import { resolveAddress } from 'lib/ensIdeas'
 import { useEffect, useState } from 'react'
 
@@ -77,8 +78,12 @@ export function useEnsName(address: string | undefined) {
       }
 
       setLoading(true)
-      const data = await resolveAddress(normalizedAddress)
-
+      let data
+      try {
+        data = await resolveAddress(normalizedAddress)
+      } catch (e) {
+        data = await resolveAddressFromInfura(address)
+      }
       const newRecord = {
         name: data.name ?? null, // set name to null to indicate no ENS name.
         expires: now + SECONDS_IN_DAY * 1000, // Expires in one day

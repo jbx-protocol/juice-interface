@@ -4,7 +4,7 @@
   "description": "Juicebox is a programmable funding platform for crypto and web3. Fund, operate, and scale your project transparently. Community DAO owned, on Ethereum.",
   "twitter": {
     "handle": "@juiceboxETH",
-    "site": "@juiceboxETH",
+    "site": "https://juicebox.money",
     "creator": "@juiceboxETH",
     "cardType": "summary_large_image",
     "image": "https://juicebox.money/assets/JBM-Unfurl-banner.png"

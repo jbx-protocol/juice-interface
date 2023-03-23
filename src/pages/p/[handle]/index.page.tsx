@@ -12,6 +12,7 @@ import { ProjectMetadataV7 } from 'models/projectMetadata'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
+import { cidFromUrl, ipfsPublicGatewayUrl } from 'utils/ipfs'
 import { getV1StaticPaths, getV1StaticProps } from './pageLoaders'
 
 export interface V1StaticProps {
@@ -34,20 +35,21 @@ export default function V1HandlePage({
   // Checks URL to see if user was just directed from project deploy
   return (
     <>
-      {metadata ? (
-        <SEO
-          title={metadata.name}
-          url={`${process.env.NEXT_PUBLIC_BASE_URL}p/${handle}`}
-          description={metadata.description}
-          twitter={{
-            card: 'summary',
-            creator: metadata.twitter,
-            handle: metadata.twitter,
-            image: metadata.logoUri,
-            site: metadata.twitter,
-          }}
-        />
-      ) : null}
+      <SEO
+        // Set known values, leave others undefined to be overridden
+        title={metadata?.name}
+        url={`${process.env.NEXT_PUBLIC_BASE_URL}p/${handle}`}
+        description={metadata?.description ? metadata.description : undefined}
+        twitter={{
+          card: 'summary',
+          creator: metadata?.twitter,
+          handle: metadata?.twitter,
+          // Swap out all gateways with ipfs.io public gateway until we can resolve our meta tag issue.
+          image: metadata?.logoUri
+            ? ipfsPublicGatewayUrl(cidFromUrl(metadata.logoUri))
+            : undefined,
+        }}
+      />
       <AppWrapper>
         {metadata ? (
           <V1UserProvider>

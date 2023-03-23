@@ -36,6 +36,7 @@ export function LegacyProjectTokensDescription() {
           <MigrateLegacyProjectTokensModal
             open={modalOpen}
             legacyTokenBalance={legacyTokenBalance}
+            onCancel={() => setModalOpen(false)}
           />
         </>
       )}

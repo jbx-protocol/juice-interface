@@ -30,6 +30,7 @@ const contentStyle: CSSProperties = {
   gap: 5,
   justifyContent: 'space-between',
   width: '10.5rem',
+  alignItems: 'flex-start',
 }
 
 export function V2V3ManageTokensSection() {

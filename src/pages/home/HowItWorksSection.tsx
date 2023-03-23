@@ -32,10 +32,10 @@ export function HowItWorksSection() {
           {!isMobile && (
             <Col className="mb-10" xs={24} sm={11}>
               <Image
-                width={486}
-                height={486}
-                src="/assets/pina.png"
-                alt="Juicebox pinepple geek artist holding a paintbrush"
+                width={750}
+                height={750}
+                src="/assets/sassy-blueberry.png"
+                alt="Sassy Juicebox Blueberry crossing arms"
                 loading="lazy"
               />
             </Col>

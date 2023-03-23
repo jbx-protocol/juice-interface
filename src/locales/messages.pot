@@ -140,6 +140,9 @@ msgstr ""
 msgid "<0>Note:</0> These properties are locked during each cycle. They can only be edited for <1>upcoming</1> cycles."
 msgstr ""
 
+msgid "<0>Owned by</0><1/>"
+msgstr ""
+
 msgid "<0>Recurring cycles</0>. Among other things, this allows you to predictably pay out ETH on weekly basis, or some other regular cadence."
 msgstr ""
 
@@ -1971,9 +1974,6 @@ msgid "Otherwise, use <0>Amounts</0>. Amounts let you pre-define the amount of E
 msgstr ""
 
 msgid "Overview"
-msgstr ""
-
-msgid "Owned by <0/>"
 msgstr ""
 
 msgid "Owner permissions"

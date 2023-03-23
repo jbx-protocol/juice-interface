@@ -106,9 +106,9 @@ export const V2V3PayForm = ({
                   <Trans>Amount:</Trans>
                 </div>
                 <div>
+                  {formatWad(weiAmount)} {V2V3CurrencyName(V2V3_CURRENCY_ETH)} (
                   {formattedNum(usdAmount)}{' '}
-                  {V2V3CurrencyName(V2V3_CURRENCY_USD)} ({formatWad(weiAmount)}{' '}
-                  {V2V3CurrencyName(V2V3_CURRENCY_ETH)})
+                  {V2V3CurrencyName(V2V3_CURRENCY_USD)})
                 </div>
               </div>
 

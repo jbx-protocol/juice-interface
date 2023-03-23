@@ -141,9 +141,9 @@ export default function ProjectCard({
           </div>
           <div className="min-w-0 flex-1 font-normal">
             {metadata ? (
-              <h4 className="m-0 overflow-hidden overflow-ellipsis text-xl leading-8 text-black dark:text-slate-100">
+              <span className="m-0 overflow-hidden overflow-ellipsis font-heading text-xl leading-8 text-black dark:text-slate-100">
                 {metadata.name}
-              </h4>
+              </span>
             ) : (
               <Skeleton paragraph={false} title={{ width: 120 }} active />
             )}

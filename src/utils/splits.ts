@@ -95,8 +95,7 @@ export const getProjectOwnerRemainderSplit = (
   projectOwnerAddress: string,
   splits: Split[],
 ): Split => {
-  const totalSplitPercentage =
-    splits?.reduce((sum, split) => sum + split.percent, 0) ?? 0
+  const totalSplitPercentage = totalSplitsPercent(splits)
   const ownerPercentage = SPLITS_TOTAL_PERCENT - totalSplitPercentage
 
   return {
@@ -182,3 +181,7 @@ export const isProjectSplit = (split: Split): boolean => {
 
 export const projectIdToHex = (projectIdString: string | undefined) =>
   BigNumber.from(projectIdString ?? 0).toHexString()
+
+// Returns the sum of each split's percent in a list of splits
+export const totalSplitsPercent = (splits: Split[]) =>
+  splits?.reduce((sum, split) => sum + split.percent, 0) ?? 0

@@ -1,5 +1,7 @@
 import { Space } from 'antd'
 import { Callout } from 'components/Callout'
+import { CV_V3 } from 'constants/cv'
+import { V2V3ContractsProvider } from 'contexts/v2v3/Contracts/V2V3ContractsProvider'
 import { useRef } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
@@ -25,23 +27,25 @@ export function UpgradeFundingCycle() {
   return (
     <>
       {localStoreRef.current && (
-        <Provider store={localStoreRef.current}>
-          <Space direction="vertical">
-            <h3 className="text-black dark:text-slate-100">
-              Launch V3 funding cycle
-            </h3>
-            <p>
-              You currently have a cycle on Juicebox V2. Use the form below to
-              relaunch your cycle on Juicebox V3.
-            </p>
+        <V2V3ContractsProvider initialCv={CV_V3}>
+          <Provider store={localStoreRef.current}>
+            <Space direction="vertical">
+              <h3 className="text-black dark:text-slate-100">
+                Launch V3 funding cycle
+              </h3>
+              <p>
+                You currently have a cycle on Juicebox V2. Use the form below to
+                relaunch your cycle on Juicebox V3.
+              </p>
 
-            <Callout.Info className="mb-6">
-              Your V2 cycle rules have been prefilled.
-            </Callout.Info>
+              <Callout.Info className="mb-6">
+                Your V2 cycle rules have been prefilled.
+              </Callout.Info>
 
-            <RelaunchV2FundingCycleForm />
-          </Space>
-        </Provider>
+              <RelaunchV2FundingCycleForm />
+            </Space>
+          </Provider>
+        </V2V3ContractsProvider>
       )}
     </>
   )

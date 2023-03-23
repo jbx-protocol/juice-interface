@@ -31,7 +31,7 @@ export default function Logo({
   if (!imgSrc) return null
 
   return (
-    <div className={twMerge('relative h-9 w-36 md:h-10 md:w-36', className)}>
+    <div className={twMerge('relative flex w-36 md:w-36', className)}>
       <Image src={imgSrc} alt="Juicebox logo" />
     </div>
   )

@@ -1,8 +1,11 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Dropdown, MenuProps } from 'antd'
+import { Badge } from 'components/Badge'
 import { TOP_NAV } from 'constants/fathomEvents'
+import { readNetwork } from 'constants/networks'
 import { trackFathomGoal } from 'lib/fathom'
+import { NetworkName } from 'models/networkName'
 import Link from 'next/link'
 import { CSSProperties } from 'react'
 import Logo from './Logo'
@@ -99,8 +102,13 @@ export const desktopMenuItems = ({
     key: 'index',
     label: (
       <Link href="/">
-        <a>
+        <a className="flex items-center gap-2">
           <Logo />
+          {readNetwork.name === NetworkName.goerli && (
+            <span>
+              <Badge variant="info">Goerli</Badge>
+            </span>
+          )}
         </a>
       </Link>
     ),

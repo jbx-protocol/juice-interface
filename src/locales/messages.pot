@@ -1298,6 +1298,9 @@ msgstr ""
 msgid "Find a project"
 msgstr ""
 
+msgid "For faster responses, join our <0>Discord server</0>."
+msgstr ""
+
 msgid "Fund and operate your thing, your way."
 msgstr ""
 
@@ -1683,9 +1686,6 @@ msgid "Memos appear on the project's activity feed when a payment is made throug
 msgstr ""
 
 msgid "Message"
-msgstr ""
-
-msgid "Message a DAO contributor for feature requests, help planning your project, or to have your questions and inquiries answered."
 msgstr ""
 
 msgid "Message sent!"

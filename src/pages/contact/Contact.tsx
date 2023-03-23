@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Form, Row, Select } from 'antd'
+import ExternalLink from 'components/ExternalLink'
 import { JuiceSelect } from 'components/inputs/JuiceSelect'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
@@ -7,7 +8,7 @@ import useMobile from 'hooks/Mobile'
 import { createContactMessage } from 'lib/api/discord'
 import Image from 'next/image'
 import { useState } from 'react'
-import apple from '/public/assets/apple-ol.webp'
+import bannywalk from '/public/assets/banny-walk-ol.webp'
 
 export default function Contact() {
   const [contactPlaceholder, setContactPlaceholder] = useState<string>(
@@ -84,8 +85,11 @@ export default function Contact() {
             </h1>
             <p>
               <Trans>
-                Message a DAO contributor for feature requests, help planning
-                your project, or to have your questions and inquiries answered.
+                For faster responses, join our{' '}
+                <ExternalLink href="https://discord.gg/juicebox">
+                  Discord server
+                </ExternalLink>
+                .
               </Trans>
             </p>
             <Form
@@ -158,8 +162,8 @@ export default function Contact() {
           {!isMobile && (
             <Col xs={24} md={10}>
               <Image
-                src={apple}
-                alt="Wise Juicebox apple smoking a cigarette, carrying paperwork, and using a walking cane"
+                src={bannywalk}
+                alt="Banny, the youthful Juicebox banana, walking and wearing headphones."
                 loading="lazy"
               />
             </Col>

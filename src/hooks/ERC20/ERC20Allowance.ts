@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { useErc20Contract } from 'hooks/ERC20/Erc20Contract'
-
 import useContractReader from 'hooks/v2v3/contractReader/V2ContractReader'
 
 export default function useERC20Allowance(

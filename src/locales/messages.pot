@@ -3656,7 +3656,7 @@ msgstr ""
 msgid "Your legacy project token holders can now migrate their tokens in the <0>Tokens</0> section on your V3 project page."
 msgstr ""
 
-msgid "Your legacy token balance"
+msgid "Your migration allowance"
 msgstr ""
 
 msgid "Your new project payer address:"
@@ -3723,6 +3723,9 @@ msgid "Your project’s first cycle will start on <0>{0} at {1}</0>. Your projec
 msgstr ""
 
 msgid "Your rules are locked during a cycle. With no duration, edits can be made at any time."
+msgstr ""
+
+msgid "Your total legacy tokens"
 msgstr ""
 
 msgid "Your total token balance for this project's legacy tokens (V1 or V2 tokens)."

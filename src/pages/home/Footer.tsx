@@ -148,6 +148,8 @@ export function Footer() {
                 {ImageButtons.map(({ name, image, link }) => (
                   <ExternalLink
                     key={name}
+                    name={name}
+                    title={name}
                     className="text-lg leading-none text-grey-300 hover:text-bluebs-500"
                     href={link}
                   >

@@ -13,7 +13,7 @@ const FourthCol = ({
   children,
 }: React.PropsWithChildren<{ header: string }>) => (
   <div>
-    <h4 className="m-0 text-black dark:text-slate-100">{header}</h4>
+    <h3 className="m-0 text-xl text-black dark:text-slate-100">{header}</h3>
     <p className="mb-0 mt-1">{children}</p>
   </div>
 )

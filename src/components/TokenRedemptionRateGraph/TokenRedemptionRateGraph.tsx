@@ -34,9 +34,13 @@ export const TokenRedemptionRateGraph = ({
 
     const dataPoints = []
     for (let i = 0; i <= supply; i++) {
+      const y =
+        _value > 0
+          ? overflow * (i / supply) * (normValue + (i - i * normValue) / supply)
+          : 0
       dataPoints.push({
         x: i,
-        y: overflow * (i / supply) * (normValue + (i - i * normValue) / supply),
+        y,
       })
     }
     return dataPoints

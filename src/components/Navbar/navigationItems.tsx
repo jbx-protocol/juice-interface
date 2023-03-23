@@ -104,11 +104,11 @@ export const desktopMenuItems = ({
       <Link href="/">
         <a className="flex items-center gap-2">
           <Logo />
-          <span>
-            {readNetwork.name === NetworkName.goerli && (
+          {readNetwork.name === NetworkName.goerli && (
+            <span>
               <Badge variant="info">Goerli</Badge>
-            )}
-          </span>
+            </span>
+          )}
         </a>
       </Link>
     ),

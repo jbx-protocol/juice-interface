@@ -22,8 +22,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
   const { disconnect } = useWallet()
 
   /**
-   * Qwestive tracker SDK and embedUI SDK registering current user's wallet
-   * address
+   * Qwestive tracker SDK registering current user's wallet address
    */
   const { qwestiveTracker } = useQwestiveSDK()
 

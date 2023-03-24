@@ -28,7 +28,7 @@ export default function FormattedAddress({
   onClick,
   withEnsAvatar,
 }: FormattedAddressProps) {
-  const ensName = useEnsName(address)
+  const { data: ensName } = useEnsName(address)
 
   if (!address) return null
 

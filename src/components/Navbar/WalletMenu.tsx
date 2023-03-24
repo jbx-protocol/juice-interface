@@ -8,6 +8,7 @@ import { Dropdown } from 'antd'
 import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
+import ExternalLink from 'components/ExternalLink'
 import FormattedAddress from 'components/FormattedAddress'
 import { useQwestiveSDK } from 'contexts/QwestiveReferral/QwestiveReferral'
 import useMobile from 'hooks/Mobile'
@@ -24,13 +25,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
    * Qwestive tracker SDK and embedUI SDK registering current user's wallet
    * address
    */
-  const { qwestiveTracker, qwestiveEmbedUI } = useQwestiveSDK()
-
-  useEffect(() => {
-    if (!userAddress || qwestiveEmbedUI.isLoading) return
-    // Send user address to log in embedUI
-    qwestiveEmbedUI?.setAlias?.({ publicKey: userAddress })
-  }, [userAddress, qwestiveEmbedUI])
+  const { qwestiveTracker } = useQwestiveSDK()
 
   useEffect(() => {
     if (!userAddress || qwestiveTracker.isLoading) return
@@ -67,9 +62,12 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
 
   const Referral = () => (
     <>
-      <span className="text-black dark:text-slate-100">
-        <Trans>Referral</Trans>
-      </span>
+      <ExternalLink
+        className="text-black dark:text-slate-100"
+        href="https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e"
+      >
+        Referral
+      </ExternalLink>
       <DollarCircleOutlined className="text-black dark:text-slate-100" />
     </>
   )
@@ -86,7 +84,6 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
     {
       key: 2,
       label: <Referral />,
-      onClick: () => qwestiveEmbedUI?.openPopup?.(),
     },
   ]
 
@@ -96,7 +93,6 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
       label: <Disconnect />,
       onClick: async () => {
         await disconnect()
-        qwestiveEmbedUI?.logout?.()
       },
     })
   }

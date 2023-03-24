@@ -7,7 +7,6 @@ import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import Logo from 'components/Navbar/Logo'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
 import { ThemeOption } from 'constants/theme/themeOption'
-import { useQwestiveSDK } from 'contexts/QwestiveReferral/QwestiveReferral'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 import { createJuicenewsSubscription } from 'lib/api/juicenews'
@@ -26,19 +25,6 @@ type LinkItem = {
   title: ReactNode
   link: string
   externalLink?: boolean
-  component?: JSX.Element
-}
-
-const JuiceboxReferralProgram = () => {
-  const { qwestiveEmbedUI } = useQwestiveSDK()
-  return (
-    <span
-      className="cursor-pointer text-slate-100 hover:text-haze-400"
-      onClick={qwestiveEmbedUI?.openPopup}
-    >
-      Referral
-    </span>
-  )
 }
 
 const LinkCols: { title: ReactNode; items: LinkItem[] }[] = [
@@ -55,8 +41,8 @@ const LinkCols: { title: ReactNode; items: LinkItem[] }[] = [
       },
       {
         title: t`Referral`,
-        link: '',
-        component: <JuiceboxReferralProgram />,
+        externalLink: true,
+        link: 'https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e',
       },
     ],
   },
@@ -269,11 +255,9 @@ const LinkColumn: React.FC<{ title: ReactNode; items: LinkItem[] }> = ({
 }) => (
   <div className="flex flex-col gap-y-3">
     <div className="text-grey-300">{title}</div>
-    {items.map(({ title, link, externalLink, component }, i) => (
+    {items.map(({ title, link, externalLink }, i) => (
       <div key={i}>
-        {component ? (
-          component
-        ) : externalLink ? (
+        {externalLink ? (
           <ExternalLink
             className="text-slate-100 hover:text-bluebs-500"
             href={link}

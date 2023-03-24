@@ -3,7 +3,6 @@ import {
   IQwestiveContext,
   SDKContext,
   TInitSDK,
-  TQwestiveEmbedUI,
   TQwestiveTracker,
 } from './QwestiveReferralContext'
 
@@ -20,14 +19,6 @@ declare global {
       loadQwestiveTracker: (callback: () => void) => void
       isInitialized: boolean
     }
-    EmbedUI: {
-      init: ({
-        apiKey,
-        projectId,
-      }: TInitSDK) => Omit<TQwestiveEmbedUI, 'isLoading'>
-      loadEmbedUI: (callback: () => void) => void
-      isInitialized: boolean
-    }
   }
 }
 
@@ -40,13 +31,9 @@ export function useQwestiveSDKProvider() {
     useState<TQwestiveTracker>({
       isLoading: true,
     })
-  const [embedUIQwestiveMethods, setEmbedUIQwestiveMethods] =
-    useState<TQwestiveEmbedUI>({
-      isLoading: true,
-    })
 
   useEffect(() => {
-    if (window.QwestiveTracker.isInitialized) return
+    if (window?.QwestiveTracker?.isInitialized) return
 
     const loadTrackerMethods = () => {
       try {
@@ -68,29 +55,6 @@ export function useQwestiveSDKProvider() {
     })
   }, [])
 
-  useEffect(() => {
-    if (window.EmbedUI.isInitialized) return
-
-    const loadEmbedUIMethods = () => {
-      try {
-        const apiMethods = window?.EmbedUI?.init({
-          apiKey: QWESTIVE_REFERRAL_API_KEY,
-          projectId: QWESTIVE_REFERRAL_PROJECT_ID,
-        })
-        setEmbedUIQwestiveMethods({ ...apiMethods, isLoading: false })
-        window.EmbedUI.isInitialized = true
-      } catch (e) {
-        console.error(
-          'Error occurred while loading QwestiveEmbedUI API methods',
-        )
-        setEmbedUIQwestiveMethods({ isLoading: false })
-      }
-    }
-    window?.EmbedUI?.loadEmbedUI(() => {
-      loadEmbedUIMethods()
-    })
-  }, [])
-
   return {
     qwestiveTracker: {
       isLoading: trackerQwestiveMethods?.isLoading,
@@ -98,14 +62,6 @@ export function useQwestiveSDKProvider() {
         trackerQwestiveMethods?.setAlias?.({ id }),
       setReferral: ({ id }: { id: string }) =>
         trackerQwestiveMethods?.setReferral?.({ id }),
-    },
-    qwestiveEmbedUI: {
-      isLoading: embedUIQwestiveMethods?.isLoading,
-      setAlias: ({ publicKey }: { publicKey: string }) =>
-        embedUIQwestiveMethods?.setAlias?.({ publicKey }),
-      openPopup: embedUIQwestiveMethods?.openPopup,
-      closePopup: embedUIQwestiveMethods?.closePopup,
-      logout: embedUIQwestiveMethods?.logout,
     },
   }
 }

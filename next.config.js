@@ -68,7 +68,6 @@ const FRAME_SRC = [
   'https://gnosis-safe.io',
   'https://app.safe.global',
   'https://qwestive-referral-prod.web.app',
-  'https://juicebox.referral.qwestive.io',
 ]
 
 const ContentSecurityPolicy = `

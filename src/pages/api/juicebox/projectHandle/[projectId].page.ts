@@ -2,7 +2,10 @@ import { Contract } from '@ethersproject/contracts'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { loadJBProjectHandlesContract } from 'hooks/JBProjectHandles/contracts/loadJBProjectHandles'
+import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
+
+const logger = getLogger('api/juicebox/projectHandle/[projectId]')
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {
@@ -29,10 +32,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // cache for a day if project handle found
     res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')
+    logger.info({ data: { handle, projectId } })
     return res.status(200).json({ handle, projectId })
   } catch (err) {
-    console.error('api::juicebox::projectHandle::error', err)
-
+    logger.error({ error: err })
     return res.status(500).json({ error: 'failed to resolve project handle' })
   }
 }

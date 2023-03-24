@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { readNetwork } from 'constants/networks'
+import { getLogger } from 'lib/logger'
 
 const SEPANA_ALERTS = {
   DB_UPDATE_ERROR: 'Error updating database',
@@ -23,6 +24,8 @@ type SepanaLogOpts =
       notif: keyof typeof SEPANA_NOTIFS
     }
 
+const logger = getLogger('lib/sepana')
+
 export async function sepanaLog(
   opts: SepanaLogOpts & {
     body?: string
@@ -32,9 +35,9 @@ export async function sepanaLog(
 
   // log the error to the console
   if (type === 'alert') {
-    console.error(`sepana::error::${SEPANA_ALERTS[opts.alert]}`)
+    logger.error({ data: { type, message: SEPANA_ALERTS[opts.alert] } })
   } else {
-    console.info(`sepana::info::${SEPANA_NOTIFS[opts.notif]}`)
+    logger.info({ data: { type, message: SEPANA_NOTIFS[opts.notif] } })
   }
 
   const bodyText = body ? `\n${body}` : ''

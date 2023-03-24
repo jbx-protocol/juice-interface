@@ -32,10 +32,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // cache for a day if project handle found
     res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')
-    logger.info({ handle, projectId })
+    logger.info({ data: { handle, projectId } })
     return res.status(200).json({ handle, projectId })
   } catch (err) {
-    logger.error(err)
+    logger.error({ error: err })
     return res.status(500).json({ error: 'failed to resolve project handle' })
   }
 }

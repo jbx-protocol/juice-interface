@@ -35,9 +35,9 @@ export async function sepanaLog(
 
   // log the error to the console
   if (type === 'alert') {
-    logger.error({ type, message: SEPANA_ALERTS[opts.alert] })
+    logger.error({ data: { type, message: SEPANA_ALERTS[opts.alert] } })
   } else {
-    logger.info({ type, message: SEPANA_NOTIFS[opts.notif] })
+    logger.info({ data: { type, message: SEPANA_NOTIFS[opts.notif] } })
   }
 
   const bodyText = body ? `\n${body}` : ''

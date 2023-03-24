@@ -46,7 +46,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.status(200).json(response)
   } catch (err) {
-    logger.error(err)
+    logger.error({ error: err })
 
     return res.status(500).json({ error: 'failed to resolve ens name' })
   }

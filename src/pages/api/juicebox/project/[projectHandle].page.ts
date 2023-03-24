@@ -32,6 +32,6 @@ export default async function handler(
 
   // cache for a day
   res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')
-  logger.info({ projectId, projectHandle })
+  logger.info({ data: { projectId, projectHandle } })
   return res.status(200).json({ projectId })
 }

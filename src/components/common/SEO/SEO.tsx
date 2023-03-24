@@ -53,7 +53,7 @@ export const SEO: FC<SEOProps> = ({
         title={formattedTitle}
         description={description ?? config.description}
         handle={formatTwitterHandle(twitter?.handle ?? config.twitter.handle)}
-        site={formatTwitterHandle(twitter?.site ?? config.twitter.site)}
+        site={config.twitter.site}
         creator={formatTwitterHandle(
           twitter?.creator ?? config.twitter.creator,
         )}
@@ -71,10 +71,10 @@ export const SEO: FC<SEOProps> = ({
           src:
             (process.env.NEXT_PUBLIC_BASE_URL
               ? process.env.NEXT_PUBLIC_BASE_URL
-              : '/') + 'assets/banana-cover.png',
-          type: 'image/svg',
-          width: '2870',
-          height: '1245',
+              : '/') + 'assets/JBM-Unfurl-banner.png',
+          type: 'image/png',
+          width: '1136',
+          height: '497',
         }}
       />
 

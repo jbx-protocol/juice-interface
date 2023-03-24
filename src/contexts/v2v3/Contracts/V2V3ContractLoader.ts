@@ -1,13 +1,11 @@
-import { useWallet } from 'hooks/Wallet'
-import { V2V3ContractName, V2V3Contracts } from 'models/v2v3/contracts'
-import { useEffect, useState } from 'react'
-
-import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
-
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
+import { useWallet } from 'hooks/Wallet'
+import { V2V3ContractName, V2V3Contracts } from 'models/v2v3/contracts'
 import { CV2V3 } from 'models/v2v3/cv'
+import { useEffect, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
+import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
 
 export function useV2V3ContractLoader({ cv }: { cv: CV2V3 | undefined }) {
   const { signer } = useWallet()

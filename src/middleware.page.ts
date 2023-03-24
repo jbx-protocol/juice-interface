@@ -1,5 +1,3 @@
-import { PV_V2 } from 'constants/pv'
-import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import { NextRequest, NextResponse } from 'next/server'
 
 // get the handle name from a URL path
@@ -21,13 +19,13 @@ export async function middleware(request: NextRequest) {
     handle: handleDecoded,
   })
 
-  let projects
+  let projectId
   try {
-    projects = await paginateDepleteProjectsQueryCall({
-      variables: {
-        where: { pv: PV_V2, handle: handleDecoded },
-      },
-    })
+    projectId = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/juicebox/project/${handleDecoded}`,
+    )
+      .then(r => r.json())
+      .then(r => r.projectId)
   } catch (e) {
     console.error('Failed to query projects', e)
     throw e
@@ -35,7 +33,7 @@ export async function middleware(request: NextRequest) {
 
   const url = request.nextUrl
 
-  if (!projects.length) {
+  if (!projectId) {
     console.info('Page not found', {
       originalPathname: request.nextUrl.pathname,
       newPathname: '/404',
@@ -45,7 +43,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.rewrite(url)
   }
 
-  const projectId = projects[0].projectId
   url.pathname = `/v2/p/${projectId}${trailingPath ? `/${trailingPath}` : ''}`
 
   console.info('Rewriting to project route', {
@@ -54,4 +51,8 @@ export async function middleware(request: NextRequest) {
     handle: handleDecoded,
   })
   return NextResponse.rewrite(url)
+}
+
+export const config = {
+  matcher: ['/@:handle*', '/@:handle*/:rest*'],
 }

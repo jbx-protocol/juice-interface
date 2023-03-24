@@ -4,6 +4,7 @@ import { DistributeToTicketModEvent } from './subgraph-entities/v1/distribute-to
 import { PrintReservesEvent } from './subgraph-entities/v1/print-reserves-event'
 import { TapEvent } from './subgraph-entities/v1/tap-event'
 import { V1ConfigureEvent } from './subgraph-entities/v1/v1-configure'
+import { V1InitEvent } from './subgraph-entities/v1/v1-init'
 import { ConfigureEvent } from './subgraph-entities/v2/configure'
 import { DeployETHERC20ProjectPayerEvent } from './subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
 import { DistributePayoutsEvent } from './subgraph-entities/v2/distribute-payouts-event'
@@ -11,11 +12,10 @@ import { DistributeReservedTokensEvent } from './subgraph-entities/v2/distribute
 import { DistributeToPayoutSplitEvent } from './subgraph-entities/v2/distribute-to-payout-split-event'
 import { DistributeToReservedTokenSplitEvent } from './subgraph-entities/v2/distribute-to-reserved-token-split-event'
 import { ETHERC20ProjectPayer } from './subgraph-entities/v2/eth-erc20-project-payer'
+import { InitEvent } from './subgraph-entities/v2/init'
 import { JB721DelegateToken } from './subgraph-entities/v2/jb-721-delegate-tokens'
 import { SetFundAccessConstraintsEvent } from './subgraph-entities/v2/set-fund-access-constraints-event'
 import { UseAllowanceEvent } from './subgraph-entities/v2/use-allowance-event'
-import { VeNftContract } from './subgraph-entities/v2/venft-contract'
-import { VeNftToken } from './subgraph-entities/v2/venft-token'
 import { AddToBalanceEvent } from './subgraph-entities/vX/add-to-balance-event'
 import { BurnEvent } from './subgraph-entities/vX/burn-event'
 import { DeployedERC20Event } from './subgraph-entities/vX/deployed-erc20-event'
@@ -42,6 +42,7 @@ interface SGEntities {
   distributeToReservedTokenSplitEvent: DistributeToReservedTokenSplitEvent
   distributeToTicketModEvent: DistributeToTicketModEvent
   etherc20ProjectPayer: ETHERC20ProjectPayer
+  initEvent: InitEvent
   jb721DelegateToken: JB721DelegateToken
   mintTokensEvent: MintTokensEvent
   payEvent: PayEvent
@@ -57,8 +58,7 @@ interface SGEntities {
   tapEvent: TapEvent
   useAllowanceEvent: UseAllowanceEvent
   v1ConfigureEvent: V1ConfigureEvent
-  veNftContract: VeNftContract
-  veNftToken: VeNftToken
+  v1InitEvent: V1InitEvent
   wallet: Wallet
 }
 

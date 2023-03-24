@@ -8,6 +8,7 @@
   "scripts": {
     "prebuild": "yarn predev",
     "build": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next build",
+    "analyze": "ANALYZE=true yarn build",
     "codegen": "graphql-code-generator --config codegen.yml -r dotenv/config",
     "css:compile": "lessc ./node_modules/antd/dist/antd.less ./src/styles/antd.css --js",
     "predev": "yarn css:compile && yarn i18n:compile && yarn codegen",
@@ -54,6 +55,9 @@
     "//": "See https://github.com/facebook/create-react-app/issues/11773",
     "react-error-overlay": "6.0.9"
   },
+  "engines": {
+    "node": ">=16.0.0 <17.0.0"
+  },
   "dependencies": {
     "@apollo/client": "3.6.9",
     "@arcxmoney/analytics": "^1.0.1",
@@ -74,8 +78,7 @@
     "@lingui/react": "^3.13.0",
     "@metamask/providers": "^10.0.0",
     "@reduxjs/toolkit": "^1.6.2",
-    "@sentry/react": "^6.18.2",
-    "@sentry/tracing": "^6.18.2",
+    "@sentry/nextjs": "^7.44.1",
     "@supabase/auth-helpers-nextjs": "^0.5.4",
     "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/supabase-js": "^2.10.0",
@@ -107,6 +110,9 @@
     "lodash": "^4.17.21",
     "next": "12.2.2",
     "object-hash": "^3.0.0",
+    "pino": "^8.11.0",
+    "pino-pretty": "^10.0.0",
+    "postmark": "^3.0.15",
     "qs": "^6.11.0",
     "react": "^17",
     "react-dom": "^17.0.1",
@@ -130,6 +136,7 @@
     "@graphql-codegen/typescript-operations": "^2.5.2",
     "@graphql-codegen/typescript-react-apollo": "^3.3.2",
     "@graphql-codegen/typescript-resolvers": "^2.7.2",
+    "@next/bundle-analyzer": "^13.2.4",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/react-hooks": "^8.0.1",

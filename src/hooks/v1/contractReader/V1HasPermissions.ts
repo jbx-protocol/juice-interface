@@ -13,7 +13,7 @@ export function useV1HasPermissions({
   account: string | undefined
   domain: number | undefined
   permissionIndexes: V1OperatorPermission[]
-}) {
+}): boolean {
   const hasOperatorPermission = useContractReader<boolean>({
     contract: V1ContractName.OperatorStore,
     functionName: 'hasPermissions',
@@ -28,5 +28,5 @@ export function useV1HasPermissions({
         : null,
   })
 
-  return hasOperatorPermission
+  return Boolean(hasOperatorPermission)
 }

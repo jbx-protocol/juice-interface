@@ -6,13 +6,13 @@ import { Selection } from 'components/Create/components/Selection'
 import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/AvailableReconfigurationStrategies'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import {
-  CONTROLLER_CONFIG_EXPLAINATION,
-  CONTROLLER_MIGRATION_EXPLAINATION,
-  HOLD_FEES_EXPLAINATION,
+  CONTROLLER_CONFIG_EXPLANATION,
+  CONTROLLER_MIGRATION_EXPLANATION,
+  HOLD_FEES_EXPLANATION,
   PAUSE_PAYMENTS_EXPLANATION,
   RECONFIG_RULES_WARN,
-  TERMINAL_CONFIG_EXPLAINATION,
-  TERMINAL_MIGRATION_EXPLAINATION,
+  TERMINAL_CONFIG_EXPLANATION,
+  TERMINAL_MIGRATION_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { readNetwork } from 'constants/networks'
@@ -77,7 +77,7 @@ export const ReconfigurationRulesPage = () => {
               <JuiceSwitch label={t`Pause payments to this project`} />
             </Form.Item>
 
-            <Form.Item name="holdFees" extra={HOLD_FEES_EXPLAINATION}>
+            <Form.Item name="holdFees" extra={HOLD_FEES_EXPLANATION}>
               <JuiceSwitch label={t`Hold fees`} />
             </Form.Item>
           </CreateCollapse.Panel>
@@ -92,13 +92,13 @@ export const ReconfigurationRulesPage = () => {
             <div className="mb-8">
               <Form.Item
                 name="allowTerminalConfiguration"
-                extra={TERMINAL_CONFIG_EXPLAINATION}
+                extra={TERMINAL_CONFIG_EXPLANATION}
               >
                 <JuiceSwitch label={t`Allow Payment Terminal configuration`} />
               </Form.Item>
               <Form.Item
                 name="allowControllerConfiguration"
-                extra={CONTROLLER_CONFIG_EXPLAINATION}
+                extra={CONTROLLER_CONFIG_EXPLANATION}
               >
                 <JuiceSwitch label={t`Allow Controller configuration`} />
               </Form.Item>
@@ -109,13 +109,13 @@ export const ReconfigurationRulesPage = () => {
             <div className="mb-8">
               <Form.Item
                 name="allowTerminalMigration"
-                extra={TERMINAL_MIGRATION_EXPLAINATION}
+                extra={TERMINAL_MIGRATION_EXPLANATION}
               >
                 <JuiceSwitch label={t`Allow Payment Terminal migration`} />
               </Form.Item>
               <Form.Item
                 name="allowControllerMigration"
-                extra={CONTROLLER_MIGRATION_EXPLAINATION}
+                extra={CONTROLLER_MIGRATION_EXPLANATION}
               >
                 <JuiceSwitch label={t`Allow Controller migration`} />
               </Form.Item>

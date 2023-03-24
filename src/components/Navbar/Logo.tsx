@@ -3,9 +3,8 @@ import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import Image from 'next/image'
 import { useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-
-const DARK_JUICE_LOGO = '/assets/juice-logo-full_white.png'
-const LIGHT_JUICE_LOGO = '/assets/juice-logo-full_black.png'
+import LIGHT_JUICE_LOGO from '/public/assets/juice-logo-full_black.svg'
+import DARK_JUICE_LOGO from '/public/assets/juice-logo-full_white.svg'
 
 export default function Logo({
   className,
@@ -32,14 +31,8 @@ export default function Logo({
   if (!imgSrc) return null
 
   return (
-    <div className={twMerge('relative h-9 w-36 md:h-10 md:w-36', className)}>
-      <Image
-        layout="fill"
-        objectFit="contain"
-        src={imgSrc}
-        alt="Juicebox logo"
-        priority
-      />
+    <div className={twMerge('relative flex w-36 md:w-36', className)}>
+      <Image src={imgSrc} alt="Juicebox logo" />
     </div>
   )
 }

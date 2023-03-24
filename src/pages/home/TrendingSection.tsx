@@ -11,10 +11,6 @@ import Payments from './Payments'
 
 const TRENDING_PROJECTS_LIMIT = 6
 
-const SmallHeader = ({ text }: { text: string | JSX.Element }) => {
-  return <h3 className="m-0 text-black dark:text-slate-100">{text}</h3>
-}
-
 export default function TrendingSection() {
   const isMobile = useMobile()
 
@@ -27,16 +23,12 @@ export default function TrendingSection() {
       <Row className="my-0 mx-auto max-w-5xl gap-y-10">
         <Col xs={24} md={12} className="px-0 md:px-10">
           <div className="flex flex-col gap-9">
-            <SmallHeader
-              text={
-                <span>
-                  <Trans>Trending projects</Trans>{' '}
-                  <Tooltip title={<RankingExplanation />} placement="bottom">
-                    <InfoCircleOutlined className="text-xl" />
-                  </Tooltip>
-                </span>
-              }
-            />
+            <h2 className="m-0 font-heading font-normal text-black dark:text-slate-100">
+              <Trans>Trending projects</Trans>{' '}
+              <Tooltip title={<RankingExplanation />} placement="bottom">
+                <InfoCircleOutlined className="text-xl" />
+              </Tooltip>
+            </h2>
 
             <Grid list gutter={12}>
               {trendingProjects?.map((p, i) => (
@@ -60,7 +52,9 @@ export default function TrendingSection() {
 
         <Col xs={24} md={12} className="px-0 md:px-10">
           <div className="flex flex-col gap-9">
-            <SmallHeader text={<Trans>Latest payments</Trans>} />
+            <h2 className="m-0 font-heading font-normal text-black dark:text-slate-100">
+              <Trans>Latest payments</Trans>
+            </h2>
             <div className="max-h-[784px] overflow-auto">
               <Payments />
             </div>

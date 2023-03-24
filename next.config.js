@@ -1,3 +1,10 @@
+// This file sets a custom webpack configuration to use your Next.js app
+// with Sentry.
+// https://nextjs.org/docs/api-reference/next.config.js/introduction
+// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+const { withSentryConfig } = require('@sentry/nextjs')
+const withBundleAnalyzer = require('@next/bundle-analyzer')
+
 const webpack = require('webpack')
 
 const WALLET_CONNECT_URLS = [
@@ -23,7 +30,9 @@ const IMG_SRC = [
   'https://juicebox.money',
   ...INFURA_IPFS_URLS,
   'https://jbx.mypinata.cloud',
-  'https://gateway.pinata.cloud https://cdn.stamp.fyi',
+  'https://gateway.pinata.cloud',
+  'https://cdn.stamp.fyi',
+  'https://ipfs.io',
 ]
 
 const CONNECT_SRC = [
@@ -47,6 +56,8 @@ const CONNECT_SRC = [
   ...WALLET_CONNECT_URLS,
   'https://juicenews.beehiiv.com',
   'https://*.supabase.co',
+  'https://api.ensideas.com',
+  'https://*.sentry.io',
 ]
 if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')
@@ -73,7 +84,7 @@ const ContentSecurityPolicy = `
   media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')};
 `
 
-module.exports = {
+const nextConfig = {
   staticPageGenerationTimeout: 90,
   webpack5: true,
   webpack: config => {
@@ -124,4 +135,11 @@ module.exports = {
     ]
   },
   pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
+  sentry: {
+    hideSourceMaps: true,
+  },
 }
+
+module.exports = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})(withSentryConfig(nextConfig, { silent: true }))

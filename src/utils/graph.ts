@@ -17,6 +17,7 @@ import { parseDistributeToTicketModEvent } from 'models/subgraph-entities/v1/dis
 import { parsePrintReservesEventJson } from 'models/subgraph-entities/v1/print-reserves-event'
 import { parseTapEventJson } from 'models/subgraph-entities/v1/tap-event'
 import { parseV1ConfigureEventJson } from 'models/subgraph-entities/v1/v1-configure'
+import { parseV1InitEventJson } from 'models/subgraph-entities/v1/v1-init'
 import { parseConfigureEventJson } from 'models/subgraph-entities/v2/configure'
 import { parseDeployETHERC20ProjectPayerEventJson } from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
 import { parseDistributePayoutsEventJson } from 'models/subgraph-entities/v2/distribute-payouts-event'
@@ -24,11 +25,10 @@ import { parseDistributeReservedTokensEventJson } from 'models/subgraph-entities
 import { parseDistributeToPayoutSplitEventJson } from 'models/subgraph-entities/v2/distribute-to-payout-split-event'
 import { parseDistributeToReservedTokenSplitEventJson } from 'models/subgraph-entities/v2/distribute-to-reserved-token-split-event'
 import { parseETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-project-payer'
+import { parseInitEventJson } from 'models/subgraph-entities/v2/init'
 import { parseJB721DelegateTokenJson } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
 import { parseSetFundAccessConstraintsEvent } from 'models/subgraph-entities/v2/set-fund-access-constraints-event'
 import { parseUseAllowanceEventJson } from 'models/subgraph-entities/v2/use-allowance-event'
-import { parseVeNftContractJson } from 'models/subgraph-entities/v2/venft-contract'
-import { parseVeNftTokenJson } from 'models/subgraph-entities/v2/venft-token'
 import { parseAddToBalanceEventJson } from 'models/subgraph-entities/vX/add-to-balance-event'
 import { parseBurnEventJson } from 'models/subgraph-entities/vX/burn-event'
 import { parseDeployedERC20EventJson } from 'models/subgraph-entities/vX/deployed-erc20-event'
@@ -182,6 +182,9 @@ export function parseSubgraphEntity<
     case 'etherc20ProjectPayer':
       fn = parseETHERC20ProjectPayer
       break
+    case 'initEvent':
+      fn = parseInitEventJson
+      break
     case 'jb721DelegateToken':
       fn = parseJB721DelegateTokenJson
       break
@@ -230,11 +233,8 @@ export function parseSubgraphEntity<
     case 'v1ConfigureEvent':
       fn = parseV1ConfigureEventJson
       break
-    case 'veNftContract':
-      fn = parseVeNftContractJson
-      break
-    case 'veNftToken':
-      fn = parseVeNftTokenJson
+    case 'v1InitEvent':
+      fn = parseV1InitEventJson
       break
     case 'wallet':
       fn = parseWalletJson

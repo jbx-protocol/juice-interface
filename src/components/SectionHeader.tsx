@@ -13,21 +13,21 @@ export default function SectionHeader({
   if (text === undefined) return null
 
   const _className = twMerge(
-    'text-xl font-medium text-grey-900 dark:text-slate-100',
+    'text-xl font-medium text-grey-900 dark:text-slate-100 font-heading',
     className,
   )
 
   if (tip !== undefined) {
     return (
-      <h3>
+      <h2 className="font-heading">
         <TooltipLabel
           className="text-sm"
           label={<span className={_className}>{text}</span>}
           tip={tip}
         />
-      </h3>
+      </h2>
     )
   } else {
-    return <h3 className={_className}>{text}</h3>
+    return <h2 className={_className}>{text}</h2>
   }
 }

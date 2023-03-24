@@ -18,9 +18,8 @@ import {
 } from 'constants/transactionDefaults'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
-import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/JB721Delegate/contracts/JBTiered721DelegateProjectDeployer'
 import { pinJson } from 'lib/api/ipfs'
-import { round } from 'lodash'
+import round from 'lodash/round'
 import {
   IPFSNftCollectionMetadata,
   IPFSNftRewardTier,
@@ -426,35 +425,38 @@ export function sumTierFloors(
   )
 }
 
-export function buildDeployTiered721DelegateData({
-  collectionUri,
-  collectionName,
-  collectionSymbol,
-  tiers,
-  ownerAddress,
-  governanceType,
-  contractAddresses: {
-    JBDirectoryAddress,
-    JBFundingCycleStoreAddress,
-    JBPricesAddress,
-    JBTiered721DelegateStoreAddress,
+export function buildDeployTiered721DelegateData(
+  {
+    collectionUri,
+    collectionName,
+    collectionSymbol,
+    tiers,
+    ownerAddress,
+    governanceType,
+    contractAddresses: {
+      JBDirectoryAddress,
+      JBFundingCycleStoreAddress,
+      JBPricesAddress,
+      JBTiered721DelegateStoreAddress,
+    },
+    flags,
+  }: {
+    collectionUri: string
+    collectionName: string
+    collectionSymbol: string
+    tiers: (JB721TierParams | JB_721_TIER_PARAMS_V1_1)[]
+    ownerAddress: string
+    governanceType: JB721GovernanceType
+    contractAddresses: {
+      JBDirectoryAddress: string
+      JBFundingCycleStoreAddress: string
+      JBPricesAddress: string
+      JBTiered721DelegateStoreAddress: string
+    }
+    flags: JBTiered721Flags
   },
-  flags,
-}: {
-  collectionUri: string
-  collectionName: string
-  collectionSymbol: string
-  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V1_1)[]
-  ownerAddress: string
-  governanceType: JB721GovernanceType
-  contractAddresses: {
-    JBDirectoryAddress: string
-    JBFundingCycleStoreAddress: string
-    JBPricesAddress: string
-    JBTiered721DelegateStoreAddress: string
-  }
-  flags: JBTiered721Flags
-}): JBDeployTiered721DelegateData | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1 {
+  version: JB721DelegateVersion,
+): JBDeployTiered721DelegateData | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1 {
   const pricing: JB721PricingParams = {
     tiers,
     currency: V2V3_CURRENCY_ETH,
@@ -478,7 +480,7 @@ export function buildDeployTiered721DelegateData({
   }
 
   // Only need to specify directory in V1
-  if (DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V1) {
+  if (version === JB721_DELEGATE_V1) {
     return {
       ...baseArgs,
       directory: JBDirectoryAddress,

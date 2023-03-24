@@ -1,6 +1,6 @@
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { base58 } from 'ethers/lib/utils'
-import { round } from 'lodash'
+import round from 'lodash/round'
 import { UploadProgressEvent } from 'rc-upload/lib/interface'
 
 const IPFS_URL_REGEX = /ipfs:\/\/(.+)/
@@ -81,4 +81,11 @@ export function isIpfsCID(cid: string) {
 export function percentFromUploadProgressEvent(e: UploadProgressEvent) {
   const percent = (e.loaded / e.total) * 100
   return round(percent, 0)
+}
+
+/**
+ * Return a URL to a public IPFS gateway for the given cid
+ */
+export const ipfsPublicGatewayUrl = (cid: string | undefined): string => {
+  return `https://ipfs.io/ipfs/${cid}`
 }

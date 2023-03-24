@@ -8,13 +8,57 @@ import { V1ContractName, V1Contracts } from 'models/v1/contracts'
 import { useEffect, useState } from 'react'
 
 const loadV1Contract = async (
-  contractName: string,
+  contractName: V1ContractName,
   network: NetworkName,
   signerOrProvider: SignerOrProvider,
-): Promise<Contract> => {
-  const contract = await import(
-    `@jbx-protocol/contracts-v1/deployments/${network}/${contractName}.json`
-  )
+): Promise<Contract | undefined> => {
+  let contract: Contract | undefined
+
+  switch (contractName) {
+    case V1ContractName.FundingCycles:
+      contract = await import(
+        `@jbx-protocol/contracts-v1/deployments/${network}/FundingCycles.json`
+      )
+      break
+    case V1ContractName.TerminalV1:
+      contract = await import(
+        `@jbx-protocol/contracts-v1/deployments/${network}/TerminalV1.json`
+      )
+      break
+    case V1ContractName.TerminalV1_1:
+      contract = await import(
+        `@jbx-protocol/contracts-v1/deployments/${network}/TerminalV1_1.json`
+      )
+      break
+    case V1ContractName.TerminalDirectory:
+      contract = await import(
+        `@jbx-protocol/contracts-v1/deployments/${network}/TerminalDirectory.json`
+      )
+      break
+    case V1ContractName.ModStore:
+      contract = await import(
+        `@jbx-protocol/contracts-v1/deployments/${network}/ModStore.json`
+      )
+      break
+    case V1ContractName.OperatorStore:
+      contract = await import(
+        `@jbx-protocol/contracts-v1/deployments/${network}/OperatorStore.json`
+      )
+      break
+    case V1ContractName.Projects:
+      contract = await import(
+        `@jbx-protocol/contracts-v1/deployments/${network}/Projects.json`
+      )
+      break
+    case V1ContractName.TicketBooth:
+      contract = await import(
+        `@jbx-protocol/contracts-v1/deployments/${network}/TicketBooth.json`
+      )
+      break
+  }
+
+  if (!contract) return
+
   return new Contract(contract.address, contract.abi, signerOrProvider)
 }
 

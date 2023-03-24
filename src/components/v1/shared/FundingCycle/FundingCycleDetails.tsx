@@ -2,10 +2,25 @@ import { parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
 import { Descriptions, Tooltip } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
+import EtherscanLink from 'components/EtherscanLink'
+import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
+import TooltipLabel from 'components/TooltipLabel'
+import {
+  CONTRIBUTOR_RATE_EXPLANATION,
+  DISCOUNT_RATE_EXPLANATION,
+  OWNER_MINTING_EXPLANATION,
+  RECONFIG_RULES_EXPLANATION,
+  REDEMPTION_RATE_EXPLANATION,
+  RESERVED_RATE_EXPLANATION,
+} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
+import { SECONDS_IN_DAY } from 'constants/numbers'
+import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext } from 'react'
+import { formatPaused } from 'utils/format/formatBoolean'
 import { formatDate, formatDateToUTC } from 'utils/format/formatDate'
 import {
   formatWad,
@@ -13,6 +28,7 @@ import {
   permilleToPercent,
 } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { V1CurrencyName } from 'utils/v1/currency'
 import {
   decodeFundingCycleMetadata,
   getUnsafeV1FundingCycleProperties,
@@ -20,22 +36,6 @@ import {
   isRecurring,
 } from 'utils/v1/fundingCycle'
 import { weightAmountPerbicent } from 'utils/v1/math'
-import { V1CurrencyName } from 'utils/v1/currency'
-import TooltipLabel from 'components/TooltipLabel'
-import EtherscanLink from 'components/EtherscanLink'
-import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
-import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
-import { SECONDS_IN_DAY } from 'constants/numbers'
-import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
-import { formatPaused } from 'utils/format/formatBoolean'
-import {
-  CONTRIBUTOR_RATE_EXPLAINATION,
-  DISCOUNT_RATE_EXPLANATION,
-  OWNER_MINTING_EXPLAINATION,
-  RECONFIG_RULES_EXPLAINATION,
-  REDEMPTION_RATE_EXPLANATION,
-  RESERVED_RATE_EXPLAINATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 
 export default function FundingCycleDetails({
   fundingCycle,
@@ -200,7 +200,7 @@ export default function FundingCycleDetails({
           label={
             <TooltipLabel
               label={<Trans>Reserved {tokenSymbolPlural}</Trans>}
-              tip={RESERVED_RATE_EXPLAINATION}
+              tip={RESERVED_RATE_EXPLANATION}
             />
           }
         >
@@ -216,7 +216,7 @@ export default function FundingCycleDetails({
           label={
             <TooltipLabel
               label={<Trans>Payer issuance rate</Trans>}
-              tip={CONTRIBUTOR_RATE_EXPLAINATION}
+              tip={CONTRIBUTOR_RATE_EXPLANATION}
             />
           }
           span={2}
@@ -230,7 +230,7 @@ export default function FundingCycleDetails({
           label={
             <TooltipLabel
               label={<Trans>Owner token minting</Trans>}
-              tip={OWNER_MINTING_EXPLAINATION}
+              tip={OWNER_MINTING_EXPLANATION}
             />
           }
         >
@@ -258,7 +258,7 @@ export default function FundingCycleDetails({
         <span className="font-medium text-grey-500 dark:text-grey-300">
           <TooltipLabel
             label={<Trans>Edit deadline</Trans>}
-            tip={RECONFIG_RULES_EXPLAINATION}
+            tip={RECONFIG_RULES_EXPLANATION}
           />
           :
         </span>{' '}

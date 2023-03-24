@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import {
   parseBigNumberKeyVals,
   subgraphEntityJsonArrayToKeyVal,
-  subgraphEntityJsonToKeyVal,
 } from 'utils/graph'
 
 import { Json, primitives } from '../../json'
@@ -13,7 +12,6 @@ import { PrintReservesEvent } from '../v1/print-reserves-event'
 import { TapEvent } from '../v1/tap-event'
 import { V1ConfigureEvent } from '../v1/v1-configure'
 import { ConfigureEvent } from '../v2/configure'
-import { VeNftContract } from '../v2/venft-contract'
 import { BurnEvent } from './burn-event'
 import { DeployedERC20Event } from './deployed-erc20-event'
 import { MintTokensEvent } from './mint-tokens-event'
@@ -51,7 +49,6 @@ export type Project = {
   distributeToTicketModEvents: DistributeToTicketModEvent[]
   deployedERC20Events: DeployedERC20Event[]
   burnEvents: BurnEvent[]
-  veNftContract: VeNftContract
   metadataUri: string
   terminal: string | null // null in v2
   metadataDomain: BigNumber | null // null in v1
@@ -117,10 +114,5 @@ export const parseProjectJson = (j: Json<Project>): Project => ({
     j.distributeToTicketModEvents,
     'distributeToTicketModEvent',
     'distributeToTicketModEvents',
-  ),
-  ...subgraphEntityJsonToKeyVal(
-    j.veNftContract,
-    'veNftContract',
-    'veNftContract',
   ),
 })

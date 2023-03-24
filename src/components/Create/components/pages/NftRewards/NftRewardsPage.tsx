@@ -1,4 +1,4 @@
-import { EyeOutlined } from '@ant-design/icons'
+import { EyeOutlined, RightOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Form, Radio, Space } from 'antd'
 import { CreateButton } from 'components/buttons/CreateButton'
@@ -11,8 +11,8 @@ import { NftPostPayModal } from 'components/NftRewards/NftPostPayModal'
 import { RadioItem } from 'components/RadioItem'
 import TooltipLabel from 'components/TooltipLabel'
 import {
-  PREVENT_OVERSPENDING_EXPLAINATION,
-  USE_DATASOURCE_FOR_REDEEM_EXPLAINATION,
+  PREVENT_OVERSPENDING_EXPLANATION,
+  USE_DATASOURCE_FOR_REDEEM_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { useModal } from 'hooks/Modal'
@@ -271,13 +271,13 @@ export const NftRewardsPage = () => {
                 >
                   <Form.Item
                     name="useDataSourceForRedeem"
-                    extra={USE_DATASOURCE_FOR_REDEEM_EXPLAINATION}
+                    extra={USE_DATASOURCE_FOR_REDEEM_EXPLANATION}
                   >
                     <JuiceSwitch label={t`Use NFTs for redemptions`} />
                   </Form.Item>
                   <Form.Item
                     name="preventOverspending"
-                    extra={PREVENT_OVERSPENDING_EXPLAINATION}
+                    extra={PREVENT_OVERSPENDING_EXPLANATION}
                   >
                     <JuiceSwitch label={t`Prevent NFT overspending`} />
                   </Form.Item>
@@ -288,6 +288,19 @@ export const NftRewardsPage = () => {
         </Space>
         <Wizard.Page.ButtonControl />
       </Form>
+
+      <div className="mt-8 text-center">
+        <Trans>Need artwork?</Trans>
+        <div>
+          <ExternalLink href="https://discord.gg/XnYFFGaXsu">
+            <a className="text-sm hover:underline">
+              <Trans>Contact WAGMI Studios</Trans>{' '}
+              <RightOutlined className="text-xs" />
+            </a>
+          </ExternalLink>
+        </div>
+      </div>
+
       {postPayModalData && (
         <NftPostPayModal
           open={postPayModal.visible}

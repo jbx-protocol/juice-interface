@@ -1,4 +1,4 @@
-import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/JB721Delegate/contracts/JBTiered721DelegateProjectDeployer'
+import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/defaultContracts/DefaultJB721Delegate'
 import { useLaunchProjectWithNftsTx } from 'hooks/JB721Delegate/transactor/LaunchProjectWithNftsTx'
 import { TransactionCallbacks } from 'models/transaction'
 import { useCallback, useMemo } from 'react'

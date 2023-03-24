@@ -28,7 +28,7 @@ export default function FormattedAddress({
   onClick,
   withEnsAvatar,
 }: FormattedAddressProps) {
-  const ensName = useEnsName(address)
+  const { data: ensName } = useEnsName(address)
 
   if (!address) return null
 
@@ -55,11 +55,7 @@ export default function FormattedAddress({
           />
         )}
         <EtherscanLink
-          className={twMerge(
-            'select-all leading-[22px]',
-            className,
-            !ensName ? 'font-mono font-medium' : undefined,
-          )}
+          className={twMerge('select-all leading-[22px]', className)}
           onClick={onClick}
           type="address"
           value={address}

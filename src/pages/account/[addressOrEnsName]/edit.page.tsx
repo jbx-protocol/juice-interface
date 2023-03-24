@@ -4,7 +4,7 @@ import {
 } from '@supabase/auth-helpers-nextjs'
 import { AccountSettingsDashboard } from 'components/AccountSettingsDashboard'
 import { AppWrapper } from 'components/common'
-import { resolveEnsNameAddressPair } from 'lib/ssr/address'
+import { resolveAddress } from 'lib/api/ens'
 import { User } from 'models/database'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { Database } from 'types/database.types'
@@ -34,7 +34,9 @@ export const getServerSideProps: GetServerSideProps<
       },
     }
   }
-  const pair = await resolveEnsNameAddressPair(context.params.addressOrEnsName)
+  const pair = await resolveAddress(context.params.addressOrEnsName).catch(
+    () => undefined,
+  )
   if (!pair) {
     return {
       redirect: {

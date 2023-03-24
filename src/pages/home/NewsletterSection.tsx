@@ -5,7 +5,7 @@ import { createJuicenewsSubscription } from 'lib/api/juicenews'
 import Image from 'next/image'
 import { useState } from 'react'
 import { SectionHeading } from './SectionHeading'
-import blueberry from '/public/assets/blueberry-ol.png'
+import stretchyPineapple from '/public/assets/stretchy-pineapple.png'
 
 export function NewsletterSection() {
   const [loading, setLoading] = useState<boolean>(false)
@@ -83,8 +83,8 @@ export function NewsletterSection() {
           {!isMobile && (
             <Col xs={24} md={10}>
               <Image
-                src={blueberry}
-                alt="Sexy Juicebox blueberry with bright pink lipstick spraying a can of spraypaint"
+                src={stretchyPineapple}
+                alt="Juicebox Pineapple stretching because Juicebox is flexible"
                 loading="lazy"
               />
             </Col>

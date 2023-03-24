@@ -12,7 +12,7 @@ import PrefixedInput from 'components/PrefixedInput'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { pinFile } from 'lib/api/ipfs'
-import { random } from 'lodash'
+import random from 'lodash/random'
 import { NftRewardTier } from 'models/nftRewards'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useState } from 'react'
@@ -215,10 +215,7 @@ export const AddEditRewardModal = ({
           label={t`Minimum Contribution`}
           extra={t`Contributors will receive this NFT when they contribute at least this amount.`}
           required
-          rules={[
-            inputMustExistRule({ label: t`Minimum Contribution` }),
-            inputNonZeroRule({ label: t`Minimum Contribution` }),
-          ]}
+          rules={[inputMustExistRule({ label: t`Minimum Contribution` })]}
         >
           <FormattedNumberInput
             className="w-1/2"

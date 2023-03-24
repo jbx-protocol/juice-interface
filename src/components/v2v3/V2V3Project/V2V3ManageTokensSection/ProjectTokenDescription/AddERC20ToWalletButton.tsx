@@ -1,10 +1,9 @@
-import { PlusCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { TextButton } from 'components/buttons/TextButton'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useMetamask, useProviderIsMetamask } from 'hooks/Wallet/Metamask'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 
 const AddERC20ToWalletButton = () => {
   const ethereum = useMetamask()
@@ -33,18 +32,9 @@ const AddERC20ToWalletButton = () => {
   }
 
   return (
-    <Button
-      className="p-0 text-sm uppercase text-grey-400 dark:text-slate-200"
-      type="text"
-      size="small"
-      onClick={addTokenToWalletRequest}
-    >
-      <Space size="small">
-        <Trans>Add to Metamask</Trans>
-
-        <PlusCircleOutlined />
-      </Space>
-    </Button>
+    <TextButton onClick={addTokenToWalletRequest}>
+      <Trans>Add to Metamask</Trans>
+    </TextButton>
   )
 }
 

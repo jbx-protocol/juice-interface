@@ -50,12 +50,13 @@ function ProjectSubheading({
             className="m-0 h-6 bg-grey-100 dark:bg-grey-900"
           />
           <div className="flex items-center font-medium">
-            <span className="mr-2">
+            <span className="mr-2 flex gap-2">
               <Trans>
-                Owned by{' '}
+                <span>Owned by</span>
                 <FormattedAddress
                   address={projectOwnerAddress}
-                  className="text-grey-500 dark:text-grey-300"
+                  className="inline-flex text-grey-500 dark:text-grey-300"
+                  withEnsAvatar
                 />
               </Trans>
             </span>

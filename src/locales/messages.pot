@@ -11,9 +11,6 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-msgid "$ve{tokenSymbolDisplayText} Received"
-msgstr ""
-
 msgid "% tokens redeemed"
 msgstr ""
 
@@ -143,6 +140,9 @@ msgstr ""
 msgid "<0>Note:</0> These properties are locked during each cycle. They can only be edited for <1>upcoming</1> cycles."
 msgstr ""
 
+msgid "<0>Owned by</0><1/>"
+msgstr ""
+
 msgid "<0>Recurring cycles</0>. Among other things, this allows you to predictably pay out ETH on weekly basis, or some other regular cadence."
 msgstr ""
 
@@ -233,9 +233,6 @@ msgstr ""
 msgid "A reserved rate of more than {RESERVED_RATE_WARNING_THRESHOLD_PERCENT}% is risky for contributors. Contributors won't receive many tokens for their contribution."
 msgstr ""
 
-msgid "A veNft can only be redeemed if the project currently has overflow."
-msgstr ""
-
 msgid "ARCHIVED"
 msgstr ""
 
@@ -251,13 +248,7 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
-msgid "Add Lock Duration Option"
-msgstr ""
-
 msgid "Add NFT"
-msgstr ""
-
-msgid "Add NFT tier"
 msgstr ""
 
 msgid "Add NFTs to cycle"
@@ -291,9 +282,6 @@ msgid "Add handle"
 msgstr ""
 
 msgid "Add image"
-msgstr ""
-
-msgid "Add lock duration option"
 msgstr ""
 
 msgid "Add new payout"
@@ -333,9 +321,6 @@ msgid "Adding an edit deadline is recommended. Projects with no deadline will ap
 msgstr ""
 
 msgid "Address"
-msgstr ""
-
-msgid "Address required"
 msgstr ""
 
 msgid "Address:"
@@ -398,9 +383,6 @@ msgstr ""
 msgid "Allow owner token minting"
 msgstr ""
 
-msgid "Allow public lock extension"
-msgstr ""
-
 msgid "Allow the <0>Juicebox NFT deployer contract</0> to edit this project's cycle."
 msgstr ""
 
@@ -408,9 +390,6 @@ msgid "Allow your legacy project token holders (<0/> or <1/>) to swap their toke
 msgstr ""
 
 msgid "Allowed"
-msgstr ""
-
-msgid "Allows anyone to extend your lock position."
 msgstr ""
 
 msgid "Amount"
@@ -452,16 +431,7 @@ msgstr ""
 msgid "Anyone who pays this project will receive {tokensLabel}. {tokensLabel} can also be burned to reclaim a portion of the ETH not needed for payouts."
 msgstr ""
 
-msgid "Approve ${symbol}"
-msgstr ""
-
-msgid "Approve ERC20"
-msgstr ""
-
 msgid "Approve migration"
-msgstr ""
-
-msgid "Approve token for transaction"
 msgstr ""
 
 msgid "Approve tokens for migration to V3"
@@ -486,9 +456,6 @@ msgid "Assets"
 msgstr ""
 
 msgid "Attach a sticker"
-msgstr ""
-
-msgid "Attach the image/video to be associated with this NFT."
 msgstr ""
 
 msgid "Automated"
@@ -528,9 +495,6 @@ msgid "Balance exceeded"
 msgstr ""
 
 msgid "Basic Token Rules"
-msgstr ""
-
-msgid "Before locking your project ERC-20 token, you must approve the veNFT contract for spending."
 msgstr ""
 
 msgid "Beneficiary"
@@ -623,9 +587,6 @@ msgstr ""
 msgid "Changes to your reserved token recipients will take effect immediately."
 msgstr ""
 
-msgid "Character"
-msgstr ""
-
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have the Juicebox protocol internally track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
@@ -707,9 +668,6 @@ msgstr ""
 msgid "Configure your project's token."
 msgstr ""
 
-msgid "Confirm Stake"
-msgstr ""
-
 msgid "Congratulations on launching your project! For help planning your next steps, share your project in the <0>JuiceboxDAO Discord</0>. Optionally, you can also:"
 msgstr ""
 
@@ -755,13 +713,13 @@ msgstr ""
 msgid "Contact JuiceboxDAO for feature requests, support, or project advice."
 msgstr ""
 
+msgid "Contact WAGMI Studios"
+msgstr ""
+
 msgid "Contact a contributor"
 msgstr ""
 
 msgid "Contract"
-msgstr ""
-
-msgid "Contract address:"
 msgstr ""
 
 msgid "Contract address: {0}"
@@ -770,13 +728,7 @@ msgstr ""
 msgid "Contract permissions"
 msgstr ""
 
-msgid "Contribution threshold"
-msgstr ""
-
 msgid "Contributions"
-msgstr ""
-
-msgid "Contributors receive the NFT when they contribute at least this amount."
 msgstr ""
 
 msgid "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
@@ -824,6 +776,12 @@ msgstr ""
 msgid "Create a project payer address for {projectTitle}"
 msgstr ""
 
+msgid "Create a splits payer address"
+msgstr ""
+
+msgid "Create a splits payer address for {projectTitle}"
+msgstr ""
+
 msgid "Create an ERC-20 token (optional)"
 msgstr ""
 
@@ -834,6 +792,9 @@ msgid "Create project"
 msgstr ""
 
 msgid "Create project payer address"
+msgstr ""
+
+msgid "Create splits payer address"
 msgstr ""
 
 msgid "Create token"
@@ -938,25 +899,13 @@ msgstr ""
 msgid "Date created"
 msgstr ""
 
-msgid "Day"
-msgstr ""
-
 msgid "Days"
-msgstr ""
-
-msgid "Days to lock tokens"
 msgstr ""
 
 msgid "Deadline"
 msgstr ""
 
 msgid "Default"
-msgstr ""
-
-msgid "Delete NFT"
-msgstr ""
-
-msgid "Delete Option"
 msgstr ""
 
 msgid "Delete payout"
@@ -975,6 +924,9 @@ msgid "Deploy Snapshot space"
 msgstr ""
 
 msgid "Deploy a V3 Migration Token for your project."
+msgstr ""
+
+msgid "Deploy an address which forwards ETH directly to your project's payouts."
 msgstr ""
 
 msgid "Deploy an address which forwards ETH to your project. This makes it easier to pay your project with third-party tools."
@@ -1127,9 +1079,6 @@ msgstr ""
 msgid "Edit NFT collection"
 msgstr ""
 
-msgid "Edit NFT tier"
-msgstr ""
-
 msgid "Edit NFTs"
 msgstr ""
 
@@ -1220,18 +1169,6 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-msgid "Enable unclaimed token spending"
-msgstr ""
-
-msgid "Enable veNFT"
-msgstr ""
-
-msgid "Enable veNFT Governance"
-msgstr ""
-
-msgid "Enable veNFT to Spend Unclaimed Tokens"
-msgstr ""
-
 msgid "Enabled"
 msgstr ""
 
@@ -1313,15 +1250,6 @@ msgstr ""
 msgid "Export this cycle's payouts to CSV."
 msgstr ""
 
-msgid "Extend Lock"
-msgstr ""
-
-msgid "Extend lock successful. Results will be indexed in a few moments."
-msgstr ""
-
-msgid "Extend veNFT lock"
-msgstr ""
-
 msgid "External link"
 msgstr ""
 
@@ -1370,6 +1298,9 @@ msgstr ""
 msgid "Find a project"
 msgstr ""
 
+msgid "For faster responses, join our <0>Discord server</0>."
+msgstr ""
+
 msgid "Fund and operate your thing, your way."
 msgstr ""
 
@@ -1407,9 +1338,6 @@ msgid "GitHub"
 msgstr ""
 
 msgid "Give permissions to {0} on project #{projectId}"
-msgstr ""
-
-msgid "Give this NFT a name."
 msgstr ""
 
 msgid "Give this NFT a voting weight to be used for on-chain governance. The number you set is only used in relation to other NFTs in this collection."
@@ -1550,9 +1478,6 @@ msgstr ""
 msgid "Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
 msgstr ""
 
-msgid "Images will be cropped to a square in thumbnail previews on the Juicebox app."
-msgstr ""
-
 msgid "Immediately"
 msgstr ""
 
@@ -1572,9 +1497,6 @@ msgid "Insufficient token balance"
 msgstr ""
 
 msgid "Invalid"
-msgstr ""
-
-msgid "Invalid address"
 msgstr ""
 
 msgid "Invalid type - contact Juicebox Support"
@@ -1664,12 +1586,6 @@ msgstr ""
 msgid "Launch cycles for {projectTitle}"
 msgstr ""
 
-msgid "Launch veNFT"
-msgstr ""
-
-msgid "Launch veNFT {symbol}"
-msgstr ""
-
 msgid "Launch {projectTitle}"
 msgstr ""
 
@@ -1709,34 +1625,7 @@ msgstr ""
 msgid "Load more"
 msgstr ""
 
-msgid "Lock ${tokenSymbolDisplayText} for Voting Power"
-msgstr ""
-
-msgid "Lock Duration"
-msgstr ""
-
-msgid "Lock Durations ({0} options)"
-msgstr ""
-
-msgid "Lock duration"
-msgstr ""
-
-msgid "Lock successful. Results will be indexed in a few moments."
-msgstr ""
-
 msgid "Lock until"
-msgstr ""
-
-msgid "Lock veNFT"
-msgstr ""
-
-msgid "Lock your {tokenText} to increase your voting weight and claim Governance NFTs."
-msgstr ""
-
-msgid "Lock {tokenName} ({tokenSymbolDisplayText}) tokens in exchange for voting weight. In return, you'll impact {projectName} governance and receive a choice governance NFT."
-msgstr ""
-
-msgid "Lock {tokenText} for Governance NFTs"
 msgstr ""
 
 msgid "Locked Cycles"
@@ -1749,9 +1638,6 @@ msgid "Locked until <0>{value}</0>"
 msgstr ""
 
 msgid "Locked until {0}"
-msgstr ""
-
-msgid "Locked {tokenSymbolDisplayText}"
 msgstr ""
 
 msgid "Locked:"
@@ -1802,9 +1688,6 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-msgid "Message a DAO contributor for feature requests, help planning your project, or to have your questions and inquiries answered."
-msgstr ""
-
 msgid "Message sent!"
 msgstr ""
 
@@ -1839,12 +1722,6 @@ msgid "Minimum Contribution"
 msgstr ""
 
 msgid "Minimum contribution"
-msgstr ""
-
-msgid "Mint NFT to a custom address"
-msgstr ""
-
-msgid "Mint VeNFT"
 msgstr ""
 
 msgid "Mint as ERC-20"
@@ -1895,9 +1772,6 @@ msgstr ""
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr ""
 
-msgid "My VeNFTs"
-msgstr ""
-
 msgid "My account"
 msgstr ""
 
@@ -1940,6 +1814,9 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+msgid "Need artwork?"
+msgstr ""
+
 msgid "Need help?"
 msgstr ""
 
@@ -1977,9 +1854,6 @@ msgid "No active cycle."
 msgstr ""
 
 msgid "No activity yet"
-msgstr ""
-
-msgid "No beneficiary selected. Is your wallet connected?"
 msgstr ""
 
 msgid "No deadline"
@@ -2100,9 +1974,6 @@ msgid "Otherwise, use <0>Amounts</0>. Amounts let you pre-define the amount of E
 msgstr ""
 
 msgid "Overview"
-msgstr ""
-
-msgid "Owned by <0/>"
 msgstr ""
 
 msgid "Owner permissions"
@@ -2501,9 +2372,6 @@ msgstr ""
 msgid "Raised on Juicebox"
 msgstr ""
 
-msgid "Range"
-msgstr ""
-
 msgid "Rankings are based on the amount of ETH a project has been paid and the number of payments to a project over the past {TRENDING_WINDOW_DAYS} days. <0>See the code</0>."
 msgstr ""
 
@@ -2549,19 +2417,10 @@ msgstr ""
 msgid "Recommended"
 msgstr ""
 
-msgid "Redeem"
-msgstr ""
-
 msgid "Redeem NFTs for ETH"
 msgstr ""
 
 msgid "Redeem for ETH"
-msgstr ""
-
-msgid "Redeem successful. Results will be indexed in a few moments."
-msgstr ""
-
-msgid "Redeem veNFT"
 msgstr ""
 
 msgid "Redeem your NFTs to reclaim a portion of the ETH that isn't needed for payouts. This cycle's <0>redemption rate</0> determines how much ETH you will receive."
@@ -2586,9 +2445,6 @@ msgid "Redeem {tokensTextLong} for ETH"
 msgstr ""
 
 msgid "Redeemed"
-msgstr ""
-
-msgid "Redeeming this NFT will burn the token, as well as the underlying project token, and you will receive token from the project overflow in return."
 msgstr ""
 
 msgid "Redemption rate"
@@ -2678,9 +2534,6 @@ msgstr ""
 msgid "Review & Deploy"
 msgstr ""
 
-msgid "Review and confirm stake"
-msgstr ""
-
 msgid "Review and deploy"
 msgstr ""
 
@@ -2714,13 +2567,7 @@ msgstr ""
 msgid "Save NFT"
 msgstr ""
 
-msgid "Save NFT tier"
-msgstr ""
-
 msgid "Save NFTs"
-msgstr ""
-
-msgid "Save Option"
 msgstr ""
 
 msgid "Save changes"
@@ -2780,9 +2627,6 @@ msgstr ""
 msgid "Search projects by handle"
 msgstr ""
 
-msgid "Second"
-msgstr ""
-
 msgid "Seconds"
 msgstr ""
 
@@ -2807,16 +2651,10 @@ msgstr ""
 msgid "Send payouts"
 msgstr ""
 
-msgid "Send redeemed token to a custom address"
-msgstr ""
-
 msgid "Send reserved {0}"
 msgstr ""
 
 msgid "Send reserved {tokenTextPlural}"
-msgstr ""
-
-msgid "Send unlocked tokens to a custom address"
 msgstr ""
 
 msgid "Send {0}"
@@ -2850,9 +2688,6 @@ msgid "Set NFT operator permissions"
 msgstr ""
 
 msgid "Set URI for {projectTitle}"
-msgstr ""
-
-msgid "Set Up veNFT Governance"
 msgstr ""
 
 msgid "Set a duration for locked cycles."
@@ -2912,15 +2747,6 @@ msgstr ""
 msgid "Set this to the sum of your payouts"
 msgstr ""
 
-msgid "Set up and launch veNFT governance for your project using custom assets and parameters. (Experimental, does not currently launch)"
-msgstr ""
-
-msgid "Set up and launch veNFT governance for your project using default veBanny assets and parameters."
-msgstr ""
-
-msgid "Set up and launch veNFT governance for your project."
-msgstr ""
-
 msgid "Set up custom rules for your project's tokens."
 msgstr ""
 
@@ -2931,9 +2757,6 @@ msgid "Set up token migration"
 msgstr ""
 
 msgid "Set up your payouts"
-msgstr ""
-
-msgid "Set veNFT operator for {projectTitle}"
 msgstr ""
 
 msgid "Setting a handle requires 2 transactions: <0>Set ENS name</0> and <1>Set text record</1>."
@@ -2981,9 +2804,6 @@ msgstr ""
 msgid "Staked balance"
 msgstr ""
 
-msgid "Staked {tokenSymbolDisplayText}"
-msgstr ""
-
 msgid "Standard"
 msgstr ""
 
@@ -3018,9 +2838,6 @@ msgid "Subject"
 msgstr ""
 
 msgid "Subscribe to Juicenews to get the latest updates from the Juicebox ecosystem."
-msgstr ""
-
-msgid "Successfully approved ERC-20 spending."
 msgstr ""
 
 msgid "Successfully subscribed to Juicenews!"
@@ -3176,9 +2993,6 @@ msgstr ""
 msgid "The total number of tokens issued when this project is paid 1 ETH. Some of these tokens may be reserved by the project, and the rest are sent to the payer."
 msgstr ""
 
-msgid "The veNFT contract is currently unable to lock project token. Contact the project owner regarding adding this permission."
-msgstr ""
-
 msgid "The wallet address that reserved NFTs will be sent to"
 msgstr ""
 
@@ -3284,16 +3098,10 @@ msgstr ""
 msgid "This will delete the payout for <0/>."
 msgstr ""
 
-msgid "This will enable your project's veNFT contract to spend unclaimed tokens in addition to project ERC-20 tokens."
-msgstr ""
-
 msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
 msgstr ""
 
 msgid "Tier-based on-chain governance"
-msgstr ""
-
-msgid "Time Remaining"
 msgstr ""
 
 msgid "Time remaining for edits to affect the next cycle:"
@@ -3356,9 +3164,6 @@ msgstr ""
 msgid "Token symbol is required"
 msgstr ""
 
-msgid "Token to Lock:"
-msgstr ""
-
 msgid "Token transfers"
 msgstr ""
 
@@ -3402,12 +3207,6 @@ msgid "Total ETH paid"
 msgstr ""
 
 msgid "Total issuance rate"
-msgstr ""
-
-msgid "Total locked period"
-msgstr ""
-
-msgid "Total locked {tokenSymbolDisplayText}"
 msgstr ""
 
 msgid "Total paid"
@@ -3530,16 +3329,10 @@ msgstr ""
 msgid "Unchanged"
 msgstr ""
 
-msgid "Unclaimed token spending enabled"
-msgstr ""
-
 msgid "Unix timestamp in seconds (for example, {0}). Leave blank to start as soon as possible."
 msgstr ""
 
 msgid "Unix timestamp in seconds. Leave blank to start immediately."
-msgstr ""
-
-msgid "Unknown Project"
 msgstr ""
 
 msgid "Unknown datasource"
@@ -3554,19 +3347,7 @@ msgstr ""
 msgid "Unlimited payouts."
 msgstr ""
 
-msgid "Unlock"
-msgstr ""
-
-msgid "Unlock successful. Results will be indexed in a few moments."
-msgstr ""
-
-msgid "Unlock veNFT"
-msgstr ""
-
 msgid "Unlocked Cycles"
-msgstr ""
-
-msgid "Unlocking this staking position will burn your NFT and return ${tokenSymbolDisplayText}."
 msgstr ""
 
 msgid "Unsaved changes"
@@ -3585,9 +3366,6 @@ msgid "Untrack token"
 msgstr ""
 
 msgid "Upcoming"
-msgstr ""
-
-msgid "Update your veNFT's lock duration."
 msgstr ""
 
 msgid "Update {projectTitle}'s NFT collection details."
@@ -3609,9 +3387,6 @@ msgid "Upload"
 msgstr ""
 
 msgid "Upload CSV"
-msgstr ""
-
-msgid "Upload a file"
 msgstr ""
 
 msgid "Uploaded to: <0>{imageUrl}</0>"
@@ -3653,22 +3428,13 @@ msgstr ""
 msgid "V3 Project ID"
 msgstr ""
 
-msgid "VeNFT contract created successfully. Results will be indexed in a few moments."
-msgstr ""
-
 msgid "Version of the terminal contract used by this project."
 msgstr ""
 
 msgid "View on Etherscan"
 msgstr ""
 
-msgid "View token ranges"
-msgstr ""
-
 msgid "Volume"
-msgstr ""
-
-msgid "VotePWR"
 msgstr ""
 
 msgid "Voting weight"
@@ -3788,9 +3554,6 @@ msgstr ""
 msgid "Yes, start over"
 msgstr ""
 
-msgid "You are agreeing to IRREVOCABLY lock your tokens for {formattedLockDuration} in exchange for {votingPower} $ve{tokenSymbolDisplayText}"
-msgstr ""
-
 msgid "You can redeem your {tokenSymbol} for ETH without claiming them. You can transfer your unclaimed {tokenSymbol} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right-hand corner of this project."
 msgstr ""
 
@@ -3800,13 +3563,7 @@ msgstr ""
 msgid "You can unarchive your project at any time."
 msgstr ""
 
-msgid "You don't have enough tokens to stake."
-msgstr ""
-
 msgid "You don't hold tokens for any Juicebox project."
-msgstr ""
-
-msgid "You don't own any veNFTs!"
 msgstr ""
 
 msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap your legacy <1>{1}</1> tokens for their current V3 tokens <2/>."
@@ -3902,10 +3659,13 @@ msgstr ""
 msgid "Your legacy project token holders can now migrate their tokens in the <0>Tokens</0> section on your V3 project page."
 msgstr ""
 
-msgid "Your legacy token balance"
+msgid "Your migration allowance"
 msgstr ""
 
 msgid "Your new project payer address:"
+msgstr ""
+
+msgid "Your new splits payer address:"
 msgstr ""
 
 msgid "Your project can receive payments through the juicebox.money app."
@@ -3968,6 +3728,9 @@ msgstr ""
 msgid "Your rules are locked during a cycle. With no duration, edits can be made at any time."
 msgstr ""
 
+msgid "Your total legacy tokens"
+msgstr ""
+
 msgid "Your total token balance for this project's legacy tokens (V1 or V2 tokens)."
 msgstr ""
 
@@ -3978,9 +3741,6 @@ msgid "Your unclaimed token balance: {0}"
 msgstr ""
 
 msgid "Your unclaimed {tokenTextLong}"
-msgstr ""
-
-msgid "Your voting power"
 msgstr ""
 
 msgid "Your {0} balance"
@@ -4002,9 +3762,6 @@ msgid "allocation"
 msgstr ""
 
 msgid "called by <0/>"
-msgstr ""
-
-msgid "day"
 msgstr ""
 
 msgid "days"
@@ -4071,18 +3828,6 @@ msgid "tokens per ETH paid"
 msgstr ""
 
 msgid "until"
-msgstr ""
-
-msgid "veNFT"
-msgstr ""
-
-msgid "veNFT Governance Enabled"
-msgstr ""
-
-msgid "veNFT Summary:"
-msgstr ""
-
-msgid "veNFT Tiers ({0} variants)"
 msgstr ""
 
 msgid "{0, plural, one {# NFT} other {# NFTs}}"
@@ -4214,15 +3959,6 @@ msgstr ""
 msgid "{label} must be numeric"
 msgstr ""
 
-msgid "{lockDurationOptionInDays} {lockDurationOptionInDays, plural, one {{0}} other {{1}}}"
-msgstr ""
-
-msgid "{lockDurationOption} {lockDurationOption, plural, one {{0}} other {{1}}}"
-msgstr ""
-
-msgid "{minTokensAllowedToStake, plural, one {You must stake at least # token.} other {You must stake at least # tokens.}}"
-msgstr ""
-
 msgid "{nftBalanceFormatted, plural, one {NFT} other {NFTs}}"
 msgstr ""
 
@@ -4244,12 +3980,6 @@ msgstr ""
 msgid "{titleCasedAllocationName} Percentage"
 msgstr ""
 
-msgid "{tokenSymbolDisplayText} range"
-msgstr ""
-
-msgid "{tokenSymbolDisplayText} to lock"
-msgstr ""
-
 msgid "{tokenSymbol} ERC-20 address"
 msgstr ""
 
@@ -4265,13 +3995,7 @@ msgstr ""
 msgid "{tokensTokenUpper} amount"
 msgstr ""
 
-msgid "{totalLockedPeriodInDays, plural, one {{0}} other {{1}}}"
-msgstr ""
-
 msgid "{unclaimedBalanceFormatted} {tokenText} claimable"
-msgstr ""
-
-msgid "{unstakedTokens} {tokenSymbolDisplayText} remaining"
 msgstr ""
 
 msgid "{userOwnershipPercentage}% of total supply"

@@ -9,12 +9,12 @@ import { useContext } from 'react'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'
 import {
-  HOLD_FEES_EXPLAINATION,
-  RECONFIG_RULES_EXPLAINATION,
-  TERMINAL_CONFIG_EXPLAINATION,
-  CONTROLLER_CONFIG_EXPLAINATION,
-  TERMINAL_MIGRATION_EXPLAINATION,
-  CONTROLLER_MIGRATION_EXPLAINATION,
+  CONTROLLER_CONFIG_EXPLANATION,
+  CONTROLLER_MIGRATION_EXPLANATION,
+  HOLD_FEES_EXPLANATION,
+  RECONFIG_RULES_EXPLANATION,
+  TERMINAL_CONFIG_EXPLANATION,
+  TERMINAL_MIGRATION_EXPLANATION,
 } from '../../settingExplanations'
 import { FundingCycleListItem } from '../FundingCycleListItem'
 import { AllowedValue } from './AllowedValue'
@@ -98,7 +98,7 @@ export function RulesListItems({
             />
           ) : undefined
         }
-        helperText={RECONFIG_RULES_EXPLAINATION}
+        helperText={RECONFIG_RULES_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Payments to this project`}
@@ -117,7 +117,7 @@ export function RulesListItems({
             <HoldFeesValue holdFees={oldFundingCycleMetadata.holdFees} />
           ) : undefined
         }
-        helperText={HOLD_FEES_EXPLAINATION}
+        helperText={HOLD_FEES_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Set payment terminals`}
@@ -133,7 +133,7 @@ export function RulesListItems({
             />
           ) : undefined
         }
-        helperText={TERMINAL_CONFIG_EXPLAINATION}
+        helperText={TERMINAL_CONFIG_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Set controller`}
@@ -149,7 +149,7 @@ export function RulesListItems({
             />
           ) : undefined
         }
-        helperText={CONTROLLER_CONFIG_EXPLAINATION}
+        helperText={CONTROLLER_CONFIG_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Migrate payment terminal`}
@@ -163,7 +163,7 @@ export function RulesListItems({
             />
           ) : undefined
         }
-        helperText={TERMINAL_MIGRATION_EXPLAINATION}
+        helperText={TERMINAL_MIGRATION_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Migrate controller`}
@@ -179,7 +179,7 @@ export function RulesListItems({
             />
           ) : undefined
         }
-        helperText={CONTROLLER_MIGRATION_EXPLAINATION}
+        helperText={CONTROLLER_MIGRATION_EXPLANATION}
       />
     </>
   )

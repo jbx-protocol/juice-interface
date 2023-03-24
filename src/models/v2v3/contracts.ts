@@ -15,18 +15,11 @@ export enum V2V3ContractName {
   JBTokenStore = 'JBTokenStore',
   JBSingleTokenPaymentTerminalStore = 'JBSingleTokenPaymentTerminalStore',
   JBETHERC20ProjectPayerDeployer = 'JBETHERC20ProjectPayerDeployer',
+  JBETHERC20SplitsPayerDeployer = 'JBETHERC20SplitsPayerDeployer',
   JBPrices = 'JBPrices',
-
-  JBProjectHandles = 'JBProjectHandles',
-  PublicResolver = 'PublicResolver',
-
-  JBVeNftDeployer = 'JBVeNftDeployer',
-  JBVeTokenUriResolver = 'JBVeTokenUriResolver',
 
   DeprecatedJBSplitsStore = 'DeprecatedJBSplitsStore',
   DeprecatedJBDirectory = 'DeprecatedJBDirectory',
-
-  JBTiered721DelegateProjectDeployer = 'JBTiered721DelegateProjectDeployer',
 }
 
 export type V2V3Contracts = Record<V2V3ContractName, Contract>

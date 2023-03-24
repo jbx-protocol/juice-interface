@@ -38,6 +38,8 @@ declare global {
       NEXT_PUBLIC_SUPABASE_URL: string
       SUPABASE_SERVICE_ROLE_KEY: string
       SUPABASE_JWT_SECRET: string
+
+      POSTMARK_SERVER_TOKEN: string
     }
   }
 }

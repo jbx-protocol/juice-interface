@@ -1,12 +1,12 @@
 import useSymbolOfERC20 from 'hooks/ERC20/SymbolOfERC20'
-import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { getTerminalName } from 'utils/v1/terminals'
 
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export default function V1ProjectTokenBalance({
@@ -22,12 +22,12 @@ export default function V1ProjectTokenBalance({
   precision?: number
   hideHandle?: boolean
 }) {
+  const { terminal } = useContext(V1ProjectContext)
+
+  const terminalName = terminal?.name
   const tokenAddress = useTokenAddressOfProject(projectId)
   const { data: tokenSymbol } = useSymbolOfERC20(tokenAddress)
-  const terminalAddress = useTerminalOfProject(projectId)
-  const terminalName = getTerminalName({
-    address: terminalAddress,
-  })
+
   const balance = useTotalBalanceOf(wallet, projectId, terminalName)
 
   return (

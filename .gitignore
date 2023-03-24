@@ -41,3 +41,8 @@ src/generated
 
 # tsc
 *.tsbuildinfo
+# Sentry
+.sentryclirc
+
+# Sentry
+next.config.original.js

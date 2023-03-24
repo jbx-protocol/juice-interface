@@ -5,10 +5,10 @@ const ENS_IDEAS_BASE_URL = 'https://api.ensideas.com'
 /**
  * Try to resolve an Eth address to an ENS name using ENS Ideas API.
  *
- * Fall back to Infura (via ethers.js).
+ * NOTE: only works on mainnet.
  */
-export async function resolveAddress(address: string) {
-  const response = await axios.get<{ name: string; address: string }>(
+export async function resolveAddressEnsIdeas(address: string) {
+  const response = await axios.get<{ name: string | null; address: string }>(
     `${ENS_IDEAS_BASE_URL}/ens/resolve/${address}`,
   )
 

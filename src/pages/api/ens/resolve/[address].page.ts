@@ -1,6 +1,9 @@
 import { readProvider } from 'constants/readProvider'
 import { isAddress } from 'ethers/lib/utils'
+import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
+
+const logger = getLogger('api/ens/resolve/[address]')
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {
@@ -39,10 +42,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // cache for a day
     res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')
+    logger.info(addressOrEnsName, response)
 
     return res.status(200).json(response)
   } catch (err) {
-    console.error('api::ens::resolve::error', err)
+    logger.error(err)
 
     return res.status(500).json({ error: 'failed to resolve ens name' })
   }

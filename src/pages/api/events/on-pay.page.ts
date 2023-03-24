@@ -7,12 +7,15 @@ import {
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase'
 import client from 'lib/apollo/client'
+import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { fromWad } from 'utils/format/formatNumber'
 import * as Yup from 'yup'
 
 const JUICE_API_BEARER_TOKEN = process.env.JUICE_API_BEARER_TOKEN
 const JUICE_API_EVENTS_ENABLED = process.env.JUICE_API_EVENTS_ENABLED === 'true'
+
+const logger = getLogger('api/events/on-pay')
 
 const BigNumberValidator = (errorMessage: string) => {
   return Yup.mixed<BigNumber>()
@@ -70,7 +73,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.status(200).json('Success!')
   } catch (e) {
-    console.error('Unexpected error occurred', e)
+    logger.error(e)
     return res
       .status(500)
       .json({ message: 'Unexpected server error occurred.' })
@@ -81,7 +84,7 @@ const sendEmails = async (
   { projectId, amount }: OnPayEvent,
   emails: string[],
 ) => {
-  await emailServerClient().sendEmailBatchWithTemplates(
+  const sendResponse = await emailServerClient().sendEmailBatchWithTemplates(
     emails.map(email => ({
       From: 'noreply@juicebox.money',
       To: email,
@@ -94,6 +97,11 @@ const sendEmails = async (
       MessageStream: 'broadcast',
     })),
   )
+
+  logger.info({
+    message: 'broadcasted payment-received email',
+    messageIds: sendResponse.map(r => r.MessageID),
+  })
 }
 
 const findSubscribedUserEmailsForProjectId = async (

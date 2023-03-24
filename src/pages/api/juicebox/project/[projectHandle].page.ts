@@ -1,6 +1,9 @@
 import { PV_V2 } from 'constants/pv'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
+import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
+
+const logger = getLogger('api/juicebox/project/[projectHandle]')
 
 /**
  * Get project data from project handle
@@ -29,5 +32,6 @@ export default async function handler(
 
   // cache for a day
   res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')
+  logger.info({ projectId, projectHandle })
   return res.status(200).json({ projectId })
 }

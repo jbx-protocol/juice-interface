@@ -1,33 +1,16 @@
 import { isAddress } from 'ethers/lib/utils'
 import { resolveAddress } from 'lib/api/ens'
-import { useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
 
 /**
  * Try to resolve an address to an ENS name.
  */
 export function useEnsName(address: string | undefined) {
-  const [ensName, setEnsName] = useState<string | null>()
-  const [loading, setLoading] = useState<boolean>(false)
+  return useQuery(['ensName', address], async () => {
+    if (!address || !isAddress(address)) return
 
-  useEffect(() => {
-    async function loadEnsName() {
-      if (!address || !isAddress(address)) return
+    const data = await resolveAddress(address)
 
-      // if a fetch is already in progress, bail
-      if (loading) {
-        return
-      }
-
-      setLoading(true)
-      const data = await resolveAddress(address)
-
-      // update state
-      setEnsName(data.name)
-      setLoading(false)
-    }
-
-    loadEnsName()
-  }, [address, loading])
-
-  return ensName
+    return data.name
+  })
 }

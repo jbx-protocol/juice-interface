@@ -58,7 +58,7 @@ export default function FormattedAddress({
           className={twMerge(
             'select-all leading-[22px]',
             className,
-            !ensName ? 'font-mono font-medium' : undefined,
+            !ensName ? 'font-medium' : undefined,
           )}
           onClick={onClick}
           type="address"

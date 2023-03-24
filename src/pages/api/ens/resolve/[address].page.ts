@@ -1,4 +1,5 @@
 import { readProvider } from 'constants/readProvider'
+import { isAddress } from 'ethers/lib/utils'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -6,19 +7,40 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(404)
   }
 
-  // cache for a day
-  res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')
-
   try {
-    const { address } = req.query
-
-    if (!address) {
+    const addressOrEnsName = req.query.address as string | undefined
+    if (!addressOrEnsName) {
       return res.status(400).json({ error: 'address is required' })
     }
 
-    const name = await readProvider.lookupAddress(address as string)
+    let response
 
-    return res.status(200).json({ name, address })
+    if (isAddress(addressOrEnsName)) {
+      const name = await readProvider.lookupAddress(addressOrEnsName)
+      response = {
+        address: addressOrEnsName,
+        name,
+      }
+    }
+
+    if (addressOrEnsName.endsWith('.eth')) {
+      const address = await readProvider.resolveName(addressOrEnsName)
+      if (!address) response = undefined
+
+      response = {
+        address,
+        name: addressOrEnsName,
+      }
+    }
+
+    if (!response) {
+      return res.status(404).json({ error: 'address or ens name not found' })
+    }
+
+    // cache for a day
+    res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')
+
+    return res.status(200).json(response)
   } catch (err) {
     console.error('api::ens::resolve::error', err)
 

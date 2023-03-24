@@ -1,7 +1,7 @@
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { AccountDashboard } from 'components/AccountDashboard'
 import { AppWrapper, SEO } from 'components/common'
-import { resolveEnsNameAddressPair } from 'lib/ssr/address'
+import { resolveAddress } from 'lib/api/ens'
 import { Profile } from 'models/database'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { Database } from 'types/database.types'
@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps<
 
   const addressOrEnsName = context.params.addressOrEnsName as string
 
-  const pair = await resolveEnsNameAddressPair(addressOrEnsName)
+  const pair = await resolveAddress(addressOrEnsName).catch(() => undefined)
   if (!pair) {
     return {
       notFound: true,

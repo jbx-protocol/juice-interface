@@ -7,7 +7,7 @@ import { useLoadMoreContent } from 'hooks/LoadMore'
 import {
   useInfiniteProjectsQuery,
   useProjectsSearch,
-  useSepanaProjectsSearch,
+  useSepanaProjectsQuery,
 } from 'hooks/Projects'
 import { PV } from 'models/pv'
 import { useEffect, useRef } from 'react'
@@ -47,7 +47,10 @@ export default function AllProjects({
   const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
 
   const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
-    useSepanaProjectsSearch(searchText, { enabled: sepanaEnabled })
+    useSepanaProjectsQuery(
+      { text: searchText, pageSize },
+      { enabled: sepanaEnabled },
+    )
 
   const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
     useProjectsSearch(searchText, { enabled: !sepanaEnabled })

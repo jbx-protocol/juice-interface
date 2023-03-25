@@ -11,7 +11,7 @@ import Modal from 'antd/lib/modal/Modal'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V2 } from 'constants/pv'
 import { useModal } from 'hooks/Modal'
-import { useProjectsSearch, useSepanaProjectsSearch } from 'hooks/Projects'
+import { useProjectsSearch, useSepanaProjectsQuery } from 'hooks/Projects'
 import { trackFathomGoal } from 'lib/fathom'
 import { SepanaProject } from 'models/sepana'
 import { useRouter } from 'next/router'
@@ -59,10 +59,10 @@ export default function QuickProjectSearch({
   const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
 
   const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
-    useSepanaProjectsSearch(searchText, {
-      pageSize: MAX_RESULTS,
-      enabled: sepanaEnabled,
-    })
+    useSepanaProjectsQuery(
+      { text: searchText, pageSize: MAX_RESULTS },
+      { enabled: sepanaEnabled },
+    )
 
   const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
     useProjectsSearch(searchText, { enabled: !sepanaEnabled })

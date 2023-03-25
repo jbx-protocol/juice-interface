@@ -1,9 +1,9 @@
-import { ProjectMetadataV7 } from 'models/projectMetadata'
+import { ProjectMetadata } from 'models/projectMetadata'
 import { GetStaticPropsResult } from 'next'
 import { getProjectMetadata } from '../metadata'
 
 export interface ProjectPageProps {
-  metadata?: ProjectMetadataV7
+  metadata?: ProjectMetadata
   projectId: number
 }
 

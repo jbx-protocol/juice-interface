@@ -94,6 +94,17 @@ function Projects() {
     return _pv.length ? _pv : [PV_V1, PV_V2]
   }, [includeV1, includeV2])
 
+  function updateRoute(
+    _searchTags: ProjectTag[],
+    _searchText: string | undefined,
+  ) {
+    router.push(
+      `/projects?tab=all${_searchText ? `&search=${_searchText}` : ''}${
+        _searchTags.length ? `&tags=${_searchTags.join(',')}` : ''
+      }`,
+    )
+  }
+
   return (
     <div className="my-0 mx-auto max-w-5xl p-5 pt-16">
       <div className="flex flex-col gap-6">
@@ -124,13 +135,9 @@ function Projects() {
             className="mb-4 flex-1"
             autoFocus
             placeholder={t`Search projects`}
-            onSearch={val => {
-              setSearchText(val)
-              router.push(
-                `/projects?tab=all${val ? `&search=${val}` : ''}${
-                  searchTags.length ? `&tags=${searchTags.join(',')}` : ''
-                }`,
-              )
+            onSearch={_searchText => {
+              setSearchText(_searchText)
+              updateRoute(searchTags, _searchText)
             }}
             defaultValue={searchText}
             key={searchText}
@@ -151,13 +158,9 @@ function Projects() {
                 reversed={reversed}
                 setReversed={setReversed}
                 searchTags={searchTags}
-                setSearchTags={tags => {
-                  setSearchTags(tags)
-                  router.push(
-                    `/projects?tab=all${
-                      tags.length ? `&tags=${tags.join(',')}` : ''
-                    }${searchText ? `&search=${searchText}` : ''}`,
-                  )
+                setSearchTags={_searchTags => {
+                  setSearchTags(_searchTags)
+                  updateRoute(_searchTags, searchText)
                 }}
                 orderBy={orderBy}
                 setOrderBy={setOrderBy}

@@ -11,11 +11,12 @@ export default function IntroProjectTags() {
         </Trans>
       </h1>
       <ProjectTagsRow tags={[...projectTagOptions]} />
-      <br />
-      <Trans>
-        You can now add tags to describe your project, and help supporters find
-        it. Anyone can search for projects by tag on the Explore page.
-      </Trans>
+      <div className="mt-2">
+        <Trans>
+          You can now add tags to describe your project, and help supporters
+          find it. Anyone can search for projects by tag on the Explore page.
+        </Trans>
+      </div>
     </div>
   )
 }

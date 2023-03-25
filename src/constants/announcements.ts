@@ -1,7 +1,6 @@
 import IntroProjectTags from 'components/announcements/IntroProjectTags'
 import IntroSepanaSearch from 'components/announcements/IntroSepanaSearch'
 import { Announcement } from 'models/announcement'
-import { NextRouter } from 'next/router'
 
 export const announcements: Announcement[] = [
   {
@@ -9,12 +8,6 @@ export const announcements: Announcement[] = [
     conditions: [({ isProjectOwner }) => isProjectOwner],
     content: IntroProjectTags,
     expire: new Date('2023-04-01T00:00:00.000Z').valueOf(),
-    cta: {
-      text: 'Set project tags',
-      fn: (router: NextRouter) => {
-        router.push(router.asPath + '/settings?page=general')
-      },
-    },
   },
   {
     id: 'introSepanaSearch',

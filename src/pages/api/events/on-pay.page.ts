@@ -53,6 +53,8 @@ const Schema = Yup.object().shape({
   memo: Yup.string(),
   metadata: Yup.string().required(),
   caller: Yup.string().required(),
+  blockHash: Yup.string().required(),
+  blockNumber: Yup.number(),
 })
 
 type OnPayEvent = Awaited<ReturnType<typeof Schema.validate>>
@@ -70,12 +72,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
     const event = await Schema.validate(req.body)
 
-    const userEmails = await findSubscribedUserEmailsForProjectId(
+    const emailEvents = await findEmailEventsForProjectId(
       event.projectId.toNumber(),
+      event.payer.toLowerCase(),
     )
-
     const emailMetadata = await compileEmailMetadata(event)
-    await sendEmails(emailMetadata, userEmails)
+
+    await sendEmails(emailMetadata, emailEvents)
 
     return res.status(200).json('Success!')
   } catch (e) {
@@ -86,6 +89,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
+enum EmailType {
+  PayEvent = 'payment-received',
+  PayReceipt = 'payment-receipt',
+}
+
+type EmailEvent = {
+  email: string
+  type: EmailType
+}
+
 type EmailMetadata = {
   amount: string
   payerName: string
@@ -93,12 +106,17 @@ type EmailMetadata = {
   timestamp: string
   projectUrl: string
   projectName: string
+  // Used in transaction receipt
+  transactionUrl: string | undefined
+  // Used in transaction receipt
+  transactionName: string | undefined
 }
 
 const compileEmailMetadata = async ({
   projectId,
   amount,
   payer,
+  blockHash,
 }: OnPayEvent): Promise<EmailMetadata> => {
   const formattedAmount = fromWad(amount.toString())
   const normalizedPayerAddress = getAddress(payer)
@@ -126,6 +144,9 @@ const compileEmailMetadata = async ({
     })
   }
 
+  const transactionName = blockHash
+  const transactionUrl = `https://etherscan.io/block/${blockHash}`
+
   return {
     amount: formattedAmount,
     payerName,
@@ -133,15 +154,20 @@ const compileEmailMetadata = async ({
     timestamp: formattedTimestamp,
     projectUrl,
     projectName,
+    transactionName,
+    transactionUrl,
   }
 }
 
-const sendEmails = async (metadata: EmailMetadata, emails: string[]) => {
+const sendEmails = async (
+  metadata: EmailMetadata,
+  emailEvents: EmailEvent[],
+) => {
   const res = await emailServerClient().sendEmailBatchWithTemplates(
-    emails.map(email => ({
+    emailEvents.map(({ email, type }) => ({
       From: 'noreply@juicebox.money',
       To: email,
-      TemplateAlias: 'payment-received',
+      TemplateAlias: type as string,
       TemplateModel: {
         product_url: 'https://juicebox.money',
         project_name: metadata.projectName,
@@ -150,6 +176,9 @@ const sendEmails = async (metadata: EmailMetadata, emails: string[]) => {
         payer_name: metadata.payerName,
         timestamp: metadata.timestamp,
         project_url: metadata.projectUrl,
+        tx_name: metadata.transactionName,
+        tx_url: metadata.transactionUrl,
+        juicebox_project_url: 'https://juicebox.money/@juicebox',
       },
       MessageStream: 'broadcast',
     })),
@@ -161,9 +190,17 @@ const sendEmails = async (metadata: EmailMetadata, emails: string[]) => {
   })
 }
 
-const findSubscribedUserEmailsForProjectId = async (
+/**
+ * Retrieves email events associated with a given project and payer's wallets.
+ * @param projectId - The ID of the project to search for.
+ * @param payer - The wallet address of the payer to search for.
+ * @returns An array of email events, each containing an associated email and email type (PayReceipt).
+ * @throws If there is an error with the database query.
+ */
+const findEmailEventsForProjectId = async (
   projectId: number,
-): Promise<string[]> => {
+  payer: string,
+): Promise<EmailEvent[]> => {
   const walletsToProject = (
     await client.query<ParticipantsQuery, QueryParticipantsArgs>({
       query: ParticipantsDocument,
@@ -171,17 +208,20 @@ const findSubscribedUserEmailsForProjectId = async (
     })
   ).data.participants.map(p => p.wallet.id.toLowerCase())
 
-  const orQuery = walletsToProject
+  const orQuery = [...walletsToProject, payer]
     .map(wallet => `wallet.eq.${wallet}`)
     .join(',')
   const usersResult = await sudoPublicDbClient
     .from('users')
-    .select('email')
+    .select('email,wallet')
     .eq('email_verified', true)
     .not('email', 'is', null)
     .or(orQuery)
   if (usersResult.error) throw usersResult.error
-  return usersResult.data.map(u => u.email) as string[]
+  return usersResult.data.map(u => ({
+    email: u.email as string,
+    type: u.wallet === payer ? EmailType.PayReceipt : EmailType.PayReceipt,
+  }))
 }
 
 export default handler

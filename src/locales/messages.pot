@@ -3998,12 +3998,6 @@ msgstr ""
 msgid "loading"
 msgstr ""
 
-msgid "matching \"{searchText}\""
-msgstr ""
-
-msgid "matching tags {0}"
-msgstr ""
-
 msgid "minutes"
 msgstr ""
 

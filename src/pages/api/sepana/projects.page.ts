@@ -1,24 +1,81 @@
-import { searchSepanaProjects } from 'lib/sepana/api'
+import { querySepanaProjects } from 'lib/sepana/api'
+import { ProjectTag } from 'models/project-tags'
+import { SepanaProjectQueryOpts } from 'models/sepana'
 import { NextApiHandler } from 'next'
 
 // Searches Juicebox projects matching text query param
 const handler: NextApiHandler = async (req, res) => {
-  const { text, pageSize } = req.query
+  const { text, tags, page, pageSize, archived, pv, orderDirection, orderBy } =
+    req.query
 
-  if (typeof text !== 'string') {
-    res.status(400).send('Query is not a string')
+  if (text && typeof text !== 'string') {
+    res.status(400).send('Text is not a string')
     return
   }
 
-  try {
-    const results = await searchSepanaProjects(
-      text,
-      typeof pageSize === 'string' && typeof parseInt(pageSize) === 'number'
-        ? parseInt(pageSize)
-        : undefined,
-    )
+  if (tags && typeof tags !== 'string') {
+    res.status(400).send('Tags is not a string')
+    return
+  }
 
+  if (pageSize && (Array.isArray(pageSize) || isNaN(parseInt(pageSize)))) {
+    res.status(400).send('PageSize is not a number')
+    return
+  }
+
+  if (page && (Array.isArray(page) || isNaN(parseInt(page)))) {
+    res.status(400).send('Page is not a number')
+    return
+  }
+
+  if (archived && archived !== 'true' && archived !== 'false') {
+    res.status(400).send('Archived is not a boolean')
+    return
+  }
+
+  if (pv && typeof pv !== 'string') {
+    res.status(400).send('Invalid PV')
+    return
+  }
+
+  if (
+    orderDirection &&
+    (Array.isArray(orderDirection) || !['asc', 'desc'].includes(orderDirection))
+  ) {
+    res.status(400).send('Invalid orderDirection')
+    return
+  }
+
+  if (orderBy && Array.isArray(orderBy)) {
+    res.status(400).send('Invalid orderBy')
+    return
+  }
+
+  const _pageSize =
+    typeof pageSize === 'string' && typeof parseInt(pageSize) === 'number'
+      ? parseInt(pageSize)
+      : 20 // default page size
+
+  const _page =
+    typeof page === 'string' && typeof parseInt(page) === 'number'
+      ? parseInt(page)
+      : undefined
+
+  try {
+    const results = await querySepanaProjects({
+      text,
+      tags: tags?.split(',') as ProjectTag[],
+      pageSize: _pageSize,
+      page: _page,
+      archived:
+        archived === 'true' ? true : archived === 'false' ? false : undefined,
+      pv: pv?.split(',') as SepanaProjectQueryOpts['pv'],
+      orderDirection:
+        orderDirection as SepanaProjectQueryOpts['orderDirection'],
+      orderBy: orderBy as SepanaProjectQueryOpts['orderBy'],
+    })
     res.status(200).json(results)
+    return
   } catch (e) {
     res.status(500).send(e)
   }

@@ -11,12 +11,22 @@ import {
 import { Json } from 'models/json'
 import { ProjectState } from 'models/projectVisibility'
 import { PV } from 'models/pv'
-import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
+import {
+  SepanaProject,
+  SepanaProjectQueryOpts,
+  SepanaQueryResponse,
+} from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useMemo, useState } from 'react'
-import { useQuery } from 'react-query'
+import {
+  useInfiniteQuery,
+  UseInfiniteQueryOptions,
+  useQuery,
+  UseQueryOptions,
+} from 'react-query'
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
+import { formatQueryParams } from 'utils/queryParams'
 import { parseSepanaProjectJson } from 'utils/sepana'
 
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
@@ -149,35 +159,80 @@ export function useProjectsSearch(
   )
 }
 
-/**
- * Search Sepana projects for query and return only a list of projects
- * @param text text to search
- * @param pageSize number of projects to return
- * @param enabled query will only run if enabled
- * @returns list of projects
- */
-export function useSepanaProjectsSearch(
-  text: string | undefined,
-  opts?: {
-    pageSize?: number
-    enabled?: boolean
-  },
+export function useSepanaProjectsQuery(
+  opts: SepanaProjectQueryOpts,
+  reactQueryOptions?: UseQueryOptions<
+    SepanaProject[],
+    Error,
+    SepanaProject[],
+    readonly [string, SepanaProjectQueryOpts]
+  >,
 ) {
-  return useQuery(
-    ['sepana-query', text, opts?.pageSize],
+  return useQuery<
+    SepanaProject[],
+    Error,
+    SepanaProject[],
+    readonly [string, SepanaProjectQueryOpts]
+  >(
+    ['sepana-tags-query', opts],
     () =>
       axios
         .get<SepanaQueryResponse<Json<SepanaProject>>>(
-          `/api/sepana/projects?text=${text}${
-            opts?.pageSize !== undefined ? `&pageSize=${opts?.pageSize}` : ''
-          }`,
+          `/api/sepana/projects?${formatQueryParams(opts)}`,
         )
         .then(res =>
           res.data.hits.hits.map(h => parseSepanaProjectJson(h._source)),
         ),
     {
       staleTime: DEFAULT_STALE_TIME,
-      enabled: opts?.enabled,
+      ...reactQueryOptions,
+    },
+  )
+}
+
+export function useSepanaProjectsInfiniteQuery(
+  opts: SepanaProjectQueryOpts,
+  reactQueryOptions?: UseInfiniteQueryOptions<
+    SepanaProject[],
+    Error,
+    SepanaProject[],
+    SepanaProject[],
+    readonly [string, SepanaProjectQueryOpts]
+  >,
+) {
+  return useInfiniteQuery(
+    ['sepana-tags-query', opts],
+    async ({
+      queryKey,
+      pageParam = 1, // page is a 1-based index
+    }) => {
+      const { pageSize, ...evaluatedOpts } = queryKey[1]
+
+      return axios
+        .get<SepanaQueryResponse<Json<SepanaProject>>>(
+          `/api/sepana/projects?${formatQueryParams({
+            ...evaluatedOpts,
+            page: pageParam,
+            pageSize,
+          })}`,
+        )
+        .then(res =>
+          res.data.hits.hits.map(h => parseSepanaProjectJson(h._source)),
+        )
+    },
+    {
+      staleTime: DEFAULT_STALE_TIME,
+      ...reactQueryOptions,
+      // Don't allow this function to be overwritten by reactQueryOptions
+      getNextPageParam: (lastPage, allPages) => {
+        // If the last page contains less than the expected page size,
+        // it's safe to assume you're at the end.
+        if (opts.pageSize && lastPage.length < opts.pageSize) {
+          return false
+        } else {
+          return allPages.length
+        }
+      },
     },
   )
 }

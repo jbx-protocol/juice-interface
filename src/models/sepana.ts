@@ -1,10 +1,31 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ProjectMetadata } from 'models/projectMetadata'
+import { ProjectTag } from './project-tags'
 
 import { PV } from './pv'
 import { Project } from './subgraph-entities/vX/project'
 
 export type SGSepanaCompareKey = Extract<keyof Project, keyof SepanaProject>
+
+/**
+ * @param text Text to use for string search
+ * @param tags Array of project tags
+ * @param archived If true, return only archived projects. Otherwise archived projects are omitted
+ * @param orderBy Property used to sort returned projects
+ * @param orderDirection `asc` ascending or `desc` descending
+ * @param page Page number (1-based index)
+ * @param pageSize Number of results to return in single page
+ */
+export type SepanaProjectQueryOpts = {
+  text?: string
+  tags?: ProjectTag[]
+  archived?: boolean
+  pv?: PV[]
+  orderBy?: 'totalPaid' | 'createdAt' | 'currentBalance' | 'paymentsCount'
+  orderDirection?: 'asc' | 'desc'
+  page?: number
+  pageSize: number
+}
 
 export type SepanaProject = {
   id: string

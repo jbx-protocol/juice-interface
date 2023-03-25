@@ -1,3 +1,4 @@
+import { getAddress } from '@ethersproject/address'
 import { BigNumber } from '@ethersproject/bignumber'
 import {
   ParticipantsDocument,
@@ -7,9 +8,13 @@ import {
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase'
 import client from 'lib/apollo/client'
+import { resolveAddressEnsIdeas } from 'lib/ensIdeas'
 import { getLogger } from 'lib/logger'
+import moment from 'moment'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { truncateEthAddress } from 'utils/format/formatAddress'
 import { fromWad } from 'utils/format/formatNumber'
+import { getProjectMetadata } from 'utils/server/metadata'
 import * as Yup from 'yup'
 
 const JUICE_API_BEARER_TOKEN = process.env.JUICE_API_BEARER_TOKEN
@@ -69,7 +74,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       event.projectId.toNumber(),
     )
 
-    await sendEmails(event, userEmails)
+    const emailMetadata = await compileEmailMetadata(event)
+    await sendEmails(emailMetadata, userEmails)
 
     return res.status(200).json('Success!')
   } catch (e) {
@@ -80,19 +86,70 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-const sendEmails = async (
-  { projectId, amount }: OnPayEvent,
-  emails: string[],
-) => {
-  const sendResponse = await emailServerClient().sendEmailBatchWithTemplates(
+type EmailMetadata = {
+  amount: string
+  payerName: string
+  payerEthscanUrl: string
+  timestamp: string
+  projectUrl: string
+  projectName: string
+}
+
+const compileEmailMetadata = async ({
+  projectId,
+  amount,
+  payer,
+}: OnPayEvent): Promise<EmailMetadata> => {
+  const formattedAmount = fromWad(amount.toString())
+  const normalizedPayerAddress = getAddress(payer)
+  const { name: payerEnsName } = await resolveAddressEnsIdeas(
+    normalizedPayerAddress,
+  )
+  const payerName =
+    payerEnsName ?? truncateEthAddress({ address: normalizedPayerAddress })
+  const payerEthscanUrl = `https://etherscan.io/address/${normalizedPayerAddress}`
+  const formattedTimestamp = moment(new Date())
+    .utc()
+    .format('YYYY-MM-DD h:mma (UTC)')
+  const projectUrl = `https://juicebox.money/v2/p/${projectId}`
+
+  let projectName = `Project ${projectId.toString()}`
+  try {
+    const projectMetadata = await getProjectMetadata(projectId.toNumber())
+    if (projectMetadata?.name) {
+      projectName = projectMetadata.name
+    }
+  } catch (e) {
+    console.error('failed to get project name', {
+      projectId: projectId.toString(),
+      e,
+    })
+  }
+
+  return {
+    amount: formattedAmount,
+    payerName,
+    payerEthscanUrl,
+    timestamp: formattedTimestamp,
+    projectUrl,
+    projectName,
+  }
+}
+
+const sendEmails = async (metadata: EmailMetadata, emails: string[]) => {
+  const res = await emailServerClient().sendEmailBatchWithTemplates(
     emails.map(email => ({
       From: 'noreply@juicebox.money',
       To: email,
       TemplateAlias: 'payment-received',
       TemplateModel: {
         product_url: 'https://juicebox.money',
-        amount: fromWad(amount.toString()),
-        project_id: projectId,
+        project_name: metadata.projectName,
+        amount: metadata.amount,
+        payer_ethscan_url: metadata.payerEthscanUrl,
+        payer_name: metadata.payerName,
+        timestamp: metadata.timestamp,
+        project_url: metadata.projectUrl,
       },
       MessageStream: 'broadcast',
     })),
@@ -100,7 +157,7 @@ const sendEmails = async (
 
   logger.info({
     message: 'broadcasted payment-received email',
-    messageIds: sendResponse.map(r => r.MessageID),
+    messageIds: res.map(r => r.MessageID),
   })
 }
 

@@ -114,78 +114,70 @@ export default function ProjectsFilterAndSort({
         </CollapsePanel>
       </Collapse>
 
-      {searchTags.length === 0 && (
-        <Collapse
-          className={classNames(
-            `projects-filter-collapse`,
-            'my-0 ml-4 border-none bg-transparent',
-          )}
-          activeKey={filterIsOpen ? 0 : undefined}
+      <Collapse
+        className={classNames(
+          `projects-filter-collapse`,
+          'my-0 ml-4 border-none bg-transparent',
+        )}
+        activeKey={filterIsOpen ? 0 : undefined}
+      >
+        <CollapsePanel
+          className="border-none"
+          key={0}
+          showArrow={false}
+          header={
+            <span
+              className="text-grey-500 dark:text-grey-300"
+              onClick={e => {
+                setFilterIsOpen(x => !x)
+                e.stopPropagation()
+              }}
+            >
+              <FilterOutlined />{' '}
+              <label className="cursor-pointer">Filter</label>
+            </span>
+          }
         >
-          <CollapsePanel
-            className="border-none"
-            key={0}
-            showArrow={false}
-            header={
-              <span
-                className="text-grey-500 dark:text-grey-300"
-                onClick={e => {
-                  setFilterIsOpen(x => !x)
-                  e.stopPropagation()
-                }}
-              >
-                <FilterOutlined />{' '}
-                <label className="cursor-pointer">Filter</label>
-              </span>
-            }
-          >
-            {/* onClick: Do not close collapse when clicking its items*/}
-            <div onClick={e => e.stopPropagation()}>
-              <FilterCheckboxItem
-                label={t`V1`}
-                checked={includeV1}
-                onChange={setIncludeV1}
-              />
-              <FilterCheckboxItem
-                label={t`V2`}
-                checked={includeV2}
-                onChange={setIncludeV2}
-              />
-              <FilterCheckboxItem
-                label={t`Archived`}
-                checked={showArchived}
-                onChange={setShowArchived}
-              />
-              <FilterCheckboxItem
-                label={t`Reverse`}
-                checked={reversed}
-                onChange={setReversed}
-              />
-            </div>
-          </CollapsePanel>
-        </Collapse>
-      )}
+          {/* onClick: Do not close collapse when clicking its items*/}
+          <div onClick={e => e.stopPropagation()}>
+            <FilterCheckboxItem
+              label={t`V1`}
+              checked={includeV1}
+              onChange={setIncludeV1}
+            />
+            <FilterCheckboxItem
+              label={t`V2`}
+              checked={includeV2}
+              onChange={setIncludeV2}
+            />
+            <FilterCheckboxItem
+              label={t`Archived`}
+              checked={showArchived}
+              onChange={setShowArchived}
+            />
+            <FilterCheckboxItem
+              label={t`Reverse`}
+              checked={reversed}
+              onChange={setReversed}
+            />
+          </div>
+        </CollapsePanel>
+      </Collapse>
 
-      {searchTags.length === 0 && (
-        <Select
-          className="my-2 ml-4 w-44"
-          value={orderBy}
-          onChange={setOrderBy}
-        >
-          <Select.Option value="totalPaid">
-            <Trans>Total raised</Trans>
-          </Select.Option>
-          <Select.Option value="createdAt">
-            <Trans>Date created</Trans>
-          </Select.Option>
-          <Select.Option value="currentBalance">
-            <Trans>Current balance</Trans>
-          </Select.Option>
-          <Select.Option value="paymentsCount">
-            <Trans>Payments</Trans>
-          </Select.Option>
-        </Select>
-      )}
+      <Select className="my-2 ml-4 w-44" value={orderBy} onChange={setOrderBy}>
+        <Select.Option value="totalPaid">
+          <Trans>Total raised</Trans>
+        </Select.Option>
+        <Select.Option value="createdAt">
+          <Trans>Date created</Trans>
+        </Select.Option>
+        <Select.Option value="currentBalance">
+          <Trans>Current balance</Trans>
+        </Select.Option>
+        <Select.Option value="paymentsCount">
+          <Trans>Payments</Trans>
+        </Select.Option>
+      </Select>
     </div>
   )
 }

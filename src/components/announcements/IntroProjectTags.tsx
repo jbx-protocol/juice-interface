@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { ProjectTagsRow } from 'components/ProjectTagsRow'
 import { projectTagOptions } from 'models/project-tags'
+import Link from 'next/link'
 
 export default function IntroProjectTags() {
   return (
@@ -13,8 +14,12 @@ export default function IntroProjectTags() {
       <ProjectTagsRow tags={[...projectTagOptions]} />
       <div className="mt-2">
         <Trans>
-          You can now add tags to describe your project, and help supporters
-          find it. Anyone can search for projects by tag on the Explore page.
+          You can now add tags in{' '}
+          <Link href={'/settings?page=general'} as={'/settings?page=general'}>
+            settings
+          </Link>{' '}
+          to describe your project, and help supporters find it. Anyone can
+          search for projects by tag on the Explore page.
         </Trans>
       </div>
     </div>

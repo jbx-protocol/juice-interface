@@ -2,8 +2,6 @@ import { NftPostPayModalConfig } from './nftRewards'
 import { ProjectTag } from './project-tags'
 import { TokenRef } from './tokenRef'
 
-export const LATEST_METADATA_VERSION = 8
-
 type ProjectMetadataV1 = Partial<{
   name: string
   description: string
@@ -59,7 +57,7 @@ type ProjectMetadataV6 = Partial<
 // add `coverImageUri`
 type ProjectMetadataV7 = Partial<
   Omit<ProjectMetadataV6, 'version'> & {
-    version: typeof LATEST_METADATA_VERSION
+    version: 7
     coverImageUri: string
   }
 >
@@ -67,7 +65,7 @@ type ProjectMetadataV7 = Partial<
 // add `tags`
 type ProjectMetadataV8 = Partial<
   Omit<ProjectMetadataV7, 'version'> & {
-    version: typeof LATEST_METADATA_VERSION
+    version: 8
     tags: ProjectTag[]
   }
 >
@@ -84,6 +82,7 @@ export type AnyProjectMetadata =
 
 // Current version
 export type ProjectMetadata = ProjectMetadataV8
+export const LATEST_METADATA_VERSION = 8
 
 // Converts metadata of any version to latest version
 export const consolidateMetadata = (

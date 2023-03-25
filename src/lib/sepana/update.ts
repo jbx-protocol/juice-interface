@@ -53,7 +53,10 @@ export async function sepanaUpdate(res: NextApiResponse, retryIpfs: boolean) {
 
     const sepanaProjectResults = resolveMetadataResults.map(r => ({
       ...r,
-      project: { ...r.project, _lastUpdated }, // add _lastUpdated to all projects
+      project: {
+        ...r.project,
+        _lastUpdated, // add _lastUpdated to all projects
+      },
     }))
 
     const ipfsErrors = sepanaProjectResults.filter(r => r.error)

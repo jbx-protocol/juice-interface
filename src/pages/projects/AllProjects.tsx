@@ -93,11 +93,7 @@ export default function AllProjects({
             )}
           >
             {concatenatedPages?.length}{' '}
-            {concatenatedPages?.length === 1 ? t`project` : t`projects`}{' '}
-            {searchText ? t`matching "${searchText}"` : ''}
-            {searchTags.length
-              ? t`matching tags ${searchTags.map(t => `"${t}"`).join(', ')}`
-              : ''}
+            {concatenatedPages?.length === 1 ? t`project` : t`projects`}
           </div>
         )
       )}

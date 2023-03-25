@@ -120,25 +120,24 @@ function Projects() {
         </div>
 
         <div>
-          {searchTags.length ? null : (
-            <Search
-              className="mb-4 flex-1"
-              autoFocus
-              placeholder={t`Search projects`}
-              onSearch={val => {
-                setSearchText(val)
-                router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
-              }}
-              defaultValue={searchText}
-              key={searchText}
-              allowClear
-            />
-          )}
+          <Search
+            className="mb-4 flex-1"
+            autoFocus
+            placeholder={t`Search projects`}
+            onSearch={val => {
+              setSearchText(val)
+              router.push(
+                `/projects?tab=all${val ? `&search=${val}` : ''}${
+                  searchTags.length ? `&tags=${searchTags.join(',')}` : ''
+                }`,
+              )
+            }}
+            defaultValue={searchText}
+            key={searchText}
+            allowClear
+          />
 
-          <div
-            className="flex min-h-[52px] max-w-[100vw] flex-wrap items-center justify-between"
-            hidden={!!searchText}
-          >
+          <div className="flex min-h-[52px] max-w-[100vw] flex-wrap items-center justify-between">
             <ProjectsTabs selectedTab={selectedTab} />
 
             {selectedTab === 'all' ? (
@@ -157,7 +156,7 @@ function Projects() {
                   router.push(
                     `/projects?tab=all${
                       tags.length ? `&tags=${tags.join(',')}` : ''
-                    }`,
+                    }${searchText ? `&search=${searchText}` : ''}`,
                   )
                 }}
                 orderBy={orderBy}

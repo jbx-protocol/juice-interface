@@ -3,7 +3,7 @@ import { ipfsGet } from 'lib/api/ipfs'
 import {
   AnyProjectMetadata,
   consolidateMetadata,
-  ProjectMetadata
+  ProjectMetadata,
 } from 'models/projectMetadata'
 
 import { GlobalInfuraScheduler } from './infuraScheduler'

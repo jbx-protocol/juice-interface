@@ -24,7 +24,7 @@ function ProjectSubheading({
   projectOwnerAddress: string | undefined
   canEditProjectHandle?: boolean
 }) {
-  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
+  const { projectId } = useContext(ProjectMetadataContext)
 
   const { data: gnosisSafe, isLoading: gnosisSafeLoading } =
     useGnosisSafe(projectOwnerAddress)
@@ -71,21 +71,6 @@ function ProjectSubheading({
           </div>
         </>
       )}
-
-      {projectMetadata?.tags?.length ? (
-        <>
-          <Divider
-            type="vertical"
-            className="m-0 h-6 bg-grey-100 dark:bg-grey-900"
-          />
-          <span className="mr-2">
-            <ProjectTagsRow
-              tags={projectMetadata.tags}
-              tagClassName="text-xs"
-            />
-          </span>
-        </>
-      ) : null}
     </div>
   )
 }
@@ -186,6 +171,13 @@ export function ProjectHeader({
               {actions ?? null}
             </div>
           </div>
+
+          {projectMetadata?.tags?.length ? (
+            <ProjectTagsRow
+              tags={projectMetadata.tags}
+              tagClassName="text-xs"
+            />
+          ) : null}
 
           {projectMetadata?.description && !hideDescription && (
             <Paragraph

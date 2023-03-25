@@ -3773,7 +3773,7 @@ msgstr ""
 msgid "Yes, start over"
 msgstr ""
 
-msgid "You can now add tags to describe your project, and help supporters find it. Anyone can search for projects by tag on the Explore page."
+msgid "You can now add tags in <0>settings</0> to describe your project, and help supporters find it. Anyone can search for projects by tag on the Explore page."
 msgstr ""
 
 msgid "You can now search for projects by their name, description, and tags, as well as their @handle."

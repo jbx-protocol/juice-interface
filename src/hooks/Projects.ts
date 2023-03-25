@@ -6,7 +6,7 @@ import {
   InfiniteSGQueryOpts,
   SGEntityKey,
   SGQueryOpts,
-  SGWhereArg
+  SGWhereArg,
 } from 'models/graph'
 import { Json } from 'models/json'
 import { ProjectState } from 'models/projectVisibility'
@@ -14,7 +14,7 @@ import { PV } from 'models/pv'
 import {
   SepanaProject,
   SepanaProjectQueryOpts,
-  SepanaQueryResponse
+  SepanaQueryResponse,
 } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
@@ -23,7 +23,7 @@ import {
   useInfiniteQuery,
   UseInfiniteQueryOptions,
   useQuery,
-  UseQueryOptions
+  UseQueryOptions,
 } from 'react-query'
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'

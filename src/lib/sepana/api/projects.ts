@@ -2,7 +2,7 @@ import { Json } from 'models/json'
 import {
   SepanaProject,
   SepanaProjectQueryOpts,
-  SepanaQueryResponse
+  SepanaQueryResponse,
 } from 'models/sepana'
 import { SEPANA_DEFAULT_SCORE_SCRIPT } from '../constants'
 

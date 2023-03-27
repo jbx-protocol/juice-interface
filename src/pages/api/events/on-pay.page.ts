@@ -12,6 +12,10 @@ import { resolveAddressEnsIdeas } from 'lib/ensIdeas'
 import { getLogger } from 'lib/logger'
 import moment from 'moment'
 import { NextApiRequest, NextApiResponse } from 'next'
+import {
+  paymentReceiptTemplate,
+  paymentReceivedTemplate,
+} from 'templates/email/payments'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 import { fromWad } from 'utils/format/formatNumber'
 import { getProjectMetadata } from 'utils/server/metadata'
@@ -163,25 +167,31 @@ const sendEmails = async (
   metadata: EmailMetadata,
   emailEvents: EmailEvent[],
 ) => {
-  const res = await emailServerClient().sendEmailBatchWithTemplates(
-    emailEvents.map(({ email, type }) => ({
-      From: 'noreply@juicebox.money',
-      To: email,
-      TemplateAlias: type as string,
-      TemplateModel: {
-        product_url: 'https://juicebox.money',
-        project_name: metadata.projectName,
-        amount: metadata.amount,
-        payer_ethscan_url: metadata.payerEthscanUrl,
-        payer_name: metadata.payerName,
-        timestamp: metadata.timestamp,
-        project_url: metadata.projectUrl,
-        tx_name: metadata.transactionName,
-        tx_url: metadata.transactionUrl,
-        juicebox_project_url: 'https://juicebox.money/@juicebox',
-      },
-      MessageStream: 'broadcast',
-    })),
+  const templateData = {
+    project_name: metadata.projectName,
+    amount: metadata.amount,
+    payer_name: metadata.payerName,
+    timestamp: metadata.timestamp,
+    project_url: metadata.projectUrl,
+    tx_url: metadata.transactionUrl,
+    tx_name: metadata.transactionName,
+    juicebox_project_url: 'https://juicebox.money/@juicebox',
+  }
+  const paymentReceiptEmail = paymentReceiptTemplate(templateData)
+  const paymentReceivedEmail = paymentReceivedTemplate(templateData)
+
+  const res = await emailServerClient().sendEmailBatch(
+    emailEvents.map(({ email, type }) => {
+      const { subject, htmlBody } =
+        type === EmailType.PayEvent ? paymentReceivedEmail : paymentReceiptEmail
+      return {
+        From: 'noreply@juicebox.money',
+        To: email,
+        Subject: subject,
+        HtmlBody: htmlBody,
+        MessageStream: 'broadcast',
+      }
+    }),
   )
 
   logger.info({

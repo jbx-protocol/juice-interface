@@ -18,18 +18,20 @@ export async function queryAll<T extends object>() {
   let total: number | undefined
 
   const query = async (page: number) => {
-    const { data } = await sepanaAxios('read').post<SepanaQueryResponse<T>>(
-      SEPANA_ENDPOINTS.search,
-      {
+    const { data } = await sepanaAxios('read')
+      .post<SepanaQueryResponse<T>>(SEPANA_ENDPOINTS.search, {
         engine_ids: [process.env.SEPANA_ENGINE_ID],
         query: {
           match_all: {},
         },
-        sort: ['_id'], // This sort is the only way we can make paging reliable.
+        sort: ['_id'], // This sort is the only way we can make paging reliable. THIS WILL FAIL IF DB IS EMPTY
         size: MAX_SEPANA_PAGE_SIZE,
         page, // Page is a 1-based index
-      },
-    )
+      })
+      .catch(() =>
+        // In case this fails due to DB being empty for some reason, we return a valid response
+        ({ data: { hits: { hits: [], total: { value: 0 } } } }),
+      )
 
     if (total === undefined) total = data.hits.total.value
 

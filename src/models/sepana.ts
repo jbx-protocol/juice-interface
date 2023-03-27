@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { AnyProjectMetadata } from 'models/projectMetadata'
+import { ProjectMetadata } from 'models/projectMetadata'
 
 import { PV } from './pv'
 import { Project } from './subgraph-entities/vX/project'
@@ -16,15 +16,20 @@ export type SepanaProject = {
   currentBalance: BigNumber
   trendingScore: BigNumber
   totalPaid: BigNumber
+  paymentsCount: number
   deployer: string | null
   terminal: string | null
-  name?: string
-  description?: string
-  logoUri?: string
-  _hasUnresolvedMetadata?: boolean // Helper property to signify if metadata has been successfully resolved from IPFS
-  _metadataRetriesLeft?: number // Helper property allowing us to only retry resolving metadata a finite number of times. Useful for invalid metadataUris or uris pointing to unpinned content
+
+  // Helper properties
+  _hasUnresolvedMetadata?: boolean // Indicates if metadata has not been successfully resolved from IPFS
+  _metadataRetriesLeft?: number // Allows us to only retry resolving metadata a finite number of times. Useful for invalid metadataUris or uris pointing to unpinned content
   _v?: string
-} & Pick<AnyProjectMetadata, 'description' | 'logoUri' | 'name'> & {
+} & Partial<
+  Pick<
+    ProjectMetadata,
+    'description' | 'logoUri' | 'name' | 'tags' | 'archived'
+  >
+> & {
     _lastUpdated: number // Millis timestamp of last updated
   }
 

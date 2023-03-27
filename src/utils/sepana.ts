@@ -1,7 +1,7 @@
 import { ipfsGet } from 'lib/api/ipfs'
 import { CURRENT_VERSION, MAX_METADATA_RETRIES } from 'lib/sepana/constants'
 import { Json } from 'models/json'
-import { AnyProjectMetadata } from 'models/projectMetadata'
+import { consolidateMetadata, ProjectMetadata } from 'models/projectMetadata'
 import { SepanaProject, SGSepanaCompareKey } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 
@@ -21,6 +21,7 @@ export const sgSepanaCompareKeys: SGSepanaCompareKey[] = [
   'trendingScore',
   'deployer',
   'terminal',
+  'paymentsCount',
 ]
 
 export const parseSepanaProjectJson = (
@@ -51,55 +52,63 @@ export function getChangedSubgraphProjects({
 
   let retryMetadataCount = 0
 
-  const changedSubgraphProjects = subgraphProjects.filter(subgraphProject => {
-    const id = subgraphProject.id
+  const changedSubgraphProjects = subgraphProjects
+    .map(p => ({
+      ...p,
+      // Adjust BigNumber values before we compare them to sepana values
+      currentBalance: padBigNumForSort(p.currentBalance),
+      totalPaid: padBigNumForSort(p.totalPaid),
+      trendingScore: padBigNumForSort(p.trendingScore),
+    }))
+    .filter(subgraphProject => {
+      const id = subgraphProject.id
 
-    const sepanaProject = sepanaProjects[subgraphProject.id]
+      const sepanaProject = sepanaProjects[subgraphProject.id]
 
-    if (!sepanaProject) {
-      idsOfNewProjects.add(id)
-      return true
-    }
-
-    if (sepanaProject._v !== CURRENT_VERSION) {
-      return true
-    }
-
-    const { _hasUnresolvedMetadata, _metadataRetriesLeft } = sepanaProject
-
-    if (
-      retryIpfs &&
-      _hasUnresolvedMetadata &&
-      (_metadataRetriesLeft || _metadataRetriesLeft === undefined)
-    ) {
-      retryMetadataCount += 1
-      return true
-    }
-
-    // Deep compare Subgraph project vs. Sepana project and find any discrepancies
-    const propertiesToUpdate = sgSepanaCompareKeys.filter(k => {
-      const oldVal = sepanaProject[k]
-      const newVal = subgraphProject[k]
-
-      // Store a record of properties that need updating
-      if (oldVal !== newVal) {
-        updatedProperties[id] = [
-          ...(updatedProperties[id] ?? []),
-          {
-            key: k,
-            oldVal: oldVal?.toString(),
-            newVal: newVal?.toString(),
-          },
-        ]
+      if (!sepanaProject) {
+        idsOfNewProjects.add(id)
         return true
       }
 
-      return false
-    })
+      if (sepanaProject._v !== CURRENT_VERSION) {
+        return true
+      }
 
-    // Return true if any properties are out of date
-    return propertiesToUpdate.length
-  })
+      const { _hasUnresolvedMetadata, _metadataRetriesLeft } = sepanaProject
+
+      if (
+        retryIpfs &&
+        _hasUnresolvedMetadata &&
+        (_metadataRetriesLeft || _metadataRetriesLeft === undefined)
+      ) {
+        retryMetadataCount += 1
+        return true
+      }
+
+      // Deep compare Subgraph project vs. Sepana project and find any discrepancies
+      const propertiesToUpdate = sgSepanaCompareKeys.filter(k => {
+        const oldVal = sepanaProject[k]
+        const newVal = subgraphProject[k]
+
+        // Store a record of properties that need updating
+        if (oldVal !== newVal) {
+          updatedProperties[id] = [
+            ...(updatedProperties[id] ?? []),
+            {
+              key: k,
+              oldVal: oldVal?.toString(),
+              newVal: newVal?.toString(),
+            },
+          ]
+          return true
+        }
+
+        return false
+      })
+
+      // Return true if any properties are out of date
+      return propertiesToUpdate.length
+    })
 
   return {
     changedSubgraphProjects,
@@ -136,11 +145,12 @@ export async function tryResolveMetadata({
   }
 
   try {
-    const {
-      data: { name, description, logoUri },
-    } = await ipfsGet<AnyProjectMetadata>(metadataUri, {
+    const { data: metadata } = await ipfsGet<ProjectMetadata>(metadataUri, {
       timeout: 30000,
     })
+
+    const { name, description, logoUri, tags, archived } =
+      consolidateMetadata(metadata)
 
     return {
       project: {
@@ -148,6 +158,8 @@ export async function tryResolveMetadata({
         name,
         description,
         logoUri,
+        tags,
+        archived,
       } as Json<SepanaProject>,
     }
   } catch (error) {
@@ -166,4 +178,9 @@ export async function tryResolveMetadata({
       } as Json<SepanaProject>,
     }
   }
+}
+
+// BigNumber values are stored as strings (sql type: keyword). To sort by these they must have an equal number of digits, so we pad them with leading 0s up to a 32 char length.
+function padBigNumForSort(bn: string) {
+  return bn.padStart(32, '0')
 }

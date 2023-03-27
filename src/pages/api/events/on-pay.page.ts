@@ -220,7 +220,7 @@ const findEmailEventsForProjectId = async (
   if (usersResult.error) throw usersResult.error
   return usersResult.data.map(u => ({
     email: u.email as string,
-    type: u.wallet === payer ? EmailType.PayReceipt : EmailType.PayReceipt,
+    type: u.wallet === payer ? EmailType.PayReceipt : EmailType.PayEvent,
   }))
 }
 

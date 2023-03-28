@@ -23,7 +23,7 @@ export function useApproveERC20Tx(): TransactorInstance<{
       invariant(transactor && senderAddress && amountWad && tokenContract)
       return transactor(tokenContract, 'approve', [senderAddress, amountWad], {
         ...txOpts,
-        title: t`Approve tokens on ERC20 contract ${tokenContract.address}}`,
+        title: t`Approve tokens on ERC20 contract ${tokenContract.address}`,
       })
     } catch {
       return handleTransactionException({

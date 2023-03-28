@@ -2,8 +2,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { ModalProps, Space, Statistic } from 'antd'
 import TransactionModal from 'components/TransactionModal'
+import { CV_V2 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useERC20Allowance from 'hooks/ERC20/ERC20Allowance'
 import { useV1ProjectId } from 'hooks/JBV3Token/contractReader/V1ProjectId'
@@ -26,6 +27,7 @@ export function MigrateLegacyProjectTokensModal({
   legacyTokenBalance,
   ...props
 }: { legacyTokenBalance: BigNumber | undefined } & ModalProps) {
+  const { cvs } = useContext(V2V3ContractsContext)
   const { tokenAddress } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
   const { value: v1ProjectId } = useV1ProjectId()
@@ -47,17 +49,18 @@ export function MigrateLegacyProjectTokensModal({
     userAddress,
   )
 
+  const hasV1Project = Boolean(
+    V1TicketBooth && v1ProjectId && !v1ProjectId.eq(0),
+  )
+  const hasV2Project = cvs?.includes(CV_V2)
+
   const hasV1Permission =
-    !V1TicketBooth ||
-    !v1ProjectId ||
-    !v1ProjectId.eq(0) ||
     useV1HasPermissions({
       operator: tokenAddress,
       account: userAddress,
       domain: v1ProjectId?.toNumber(),
       permissionIndexes: [V1OperatorPermission.Transfer],
-    }) ||
-    grantV1PermissionDone
+    }) || grantV1PermissionDone
 
   const hasV2TransferPermissionResult = useV2V3HasPermissions({
     operator: tokenAddress,
@@ -133,14 +136,15 @@ export function MigrateLegacyProjectTokensModal({
             value={formatWad(allowance)}
           />
         </div>
-        {!hasV1Permission && (
-          <V1UserProvider>
-            <GrantV1ApprovalCallout
-              onDone={() => setGrantV1PermissionDone(true)}
-            />
-          </V1UserProvider>
+
+        {hasV1Project && !hasV1Permission && (
+          <GrantV1ApprovalCallout
+            onDone={() => setGrantV1PermissionDone(true)}
+          />
         )}
-        {hasV1Permission &&
+        {/* Show the V1 callout, then V2 callout (if applicable) */}
+        {(!hasV1Project || hasV1Permission) &&
+          hasV2Project &&
           !hasV2TransferPermission &&
           !hasV2TransferPermissionResult.loading && (
             <GrantV2ApprovalCallout

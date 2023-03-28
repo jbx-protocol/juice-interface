@@ -440,6 +440,9 @@ msgstr ""
 msgid "Approve tokens for migration to V3"
 msgstr ""
 
+msgid "Approve tokens on ERC20 contract {0}}"
+msgstr ""
+
 msgid "Archive project"
 msgstr ""
 

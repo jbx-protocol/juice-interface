@@ -1,8 +1,10 @@
-import { searchSepanaProjects } from 'lib/sepana/api'
+import { createServerSupabaseClient } from '@supabase/auth-helpers-shared'
 import { NextApiHandler } from 'next'
 
 // Searches Juicebox projects matching text query param
 const handler: NextApiHandler = async (req, res) => {
+  const supabase = createServerSupabaseClient({ req, res })
+
   const { text, pageSize } = req.query
 
   if (typeof text !== 'string') {
@@ -11,12 +13,13 @@ const handler: NextApiHandler = async (req, res) => {
   }
 
   try {
-    const results = await searchSepanaProjects(
-      text,
-      typeof pageSize === 'string' && typeof parseInt(pageSize) === 'number'
-        ? parseInt(pageSize)
-        : undefined,
-    )
+    const results = await supabase
+      .from('projects')
+      .select('*')
+      .textSearch('name', text, {
+        config: 'english',
+      })
+      .limit(parseInt((pageSize as string) ?? 0)) // TODO check sql injection possibility
 
     res.status(200).json(results)
   } catch (e) {

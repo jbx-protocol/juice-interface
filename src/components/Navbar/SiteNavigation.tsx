@@ -2,7 +2,6 @@ import { Menu } from 'antd'
 import QuickProjectSearch from 'components/QuickProjectSearch'
 import useMobile from 'hooks/Mobile'
 import { CSSProperties, useEffect, useState } from 'react'
-import { BrandUpdateBanner } from './BrandUpdateBanner'
 import MobileNavigation from './Mobile/MobileNavigation'
 import { desktopMenuItems, resourcesMenuItems } from './navigationItems'
 import NavLanguageSelector from './NavLanguageSelector'
@@ -36,25 +35,22 @@ export default function SiteNavigation() {
 
   if (isMobile) return <MobileNavigation />
 
+  /* top-nav is antd override */
   return (
-    <>
-      <BrandUpdateBanner />
-      {/* top-nav is antd override */}
-      <nav className="top-nav z-[1] flex h-16 items-center justify-between bg-smoke-25 py-11 leading-[64px] dark:bg-slate-800 md:px-4 xl:px-12">
-        <Menu className="flex flex-row" items={menuItems} mode="inline" />
+    <nav className="top-nav z-[1] flex h-16 items-center justify-between bg-smoke-25 py-11 leading-[64px] dark:bg-slate-800 md:px-4 xl:px-12">
+      <Menu className="flex flex-row" items={menuItems} mode="inline" />
 
-        <div className="flex items-center gap-6">
-          <NavLanguageSelector />
+      <div className="flex items-center gap-6">
+        <NavLanguageSelector />
 
-          <ThemePicker />
+        <ThemePicker />
 
-          <TransactionsList listClassName="absolute top-[70px] right-[30px]" />
+        <TransactionsList listClassName="absolute top-[70px] right-[30px]" />
 
-          <WalletButton />
+        <WalletButton />
 
-          <QuickProjectSearch className="md:hidden xl:inline" />
-        </div>
-      </nav>
-    </>
+        <QuickProjectSearch className="md:hidden xl:inline" />
+      </div>
+    </nav>
   )
 }

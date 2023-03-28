@@ -26,9 +26,9 @@ export function GrantV2ApprovalCallout() {
         throw new Error()
       }
     } catch {
-      emitErrorNotification('Grant permission failed.')
-    } finally {
       setLoading(false)
+
+      emitErrorNotification('Grant permission failed.')
     }
   }
 

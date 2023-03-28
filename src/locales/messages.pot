@@ -431,7 +431,10 @@ msgstr ""
 msgid "Anyone who pays this project will receive {tokensLabel}. {tokensLabel} can also be burned to reclaim a portion of the ETH not needed for payouts."
 msgstr ""
 
-msgid "Approve migration"
+msgid "Approve"
+msgstr ""
+
+msgid "Approve migration for your {0} legacy tokens."
 msgstr ""
 
 msgid "Approve tokens for migration to V3"
@@ -1599,9 +1602,6 @@ msgid "Leave unchecked to have the Juicebox protocol internally track your token
 msgstr ""
 
 msgid "Legacy balance"
-msgstr ""
-
-msgid "Legacy tokens to migrate"
 msgstr ""
 
 msgid "Legal"
@@ -3170,9 +3170,6 @@ msgstr ""
 msgid "Tokens are burned when they are redeemed."
 msgstr ""
 
-msgid "Tokens are required."
-msgstr ""
-
 msgid "Tokens cannot be claimed because the project owner has not issued an ERC-20 for this project."
 msgstr ""
 
@@ -3569,6 +3566,9 @@ msgstr ""
 msgid "You have added reserved token recipients, but your reserved rate is 0%, meaning no tokens will be reserved. Consider adding a reserved rate greater than 0% or removing the recipients."
 msgstr ""
 
+msgid "You have no legacy tokens."
+msgstr ""
+
 msgid "You have set your project to pay out all of its ETH. Your other payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr ""
 
@@ -3654,9 +3654,6 @@ msgid "Your email address"
 msgstr ""
 
 msgid "Your legacy project token holders can now migrate their tokens in the <0>Tokens</0> section on your V3 project page."
-msgstr ""
-
-msgid "Your migration allowance"
 msgstr ""
 
 msgid "Your new project payer address:"

@@ -431,7 +431,10 @@ msgstr ""
 msgid "Anyone who pays this project will receive {tokensLabel}. {tokensLabel} can also be burned to reclaim a portion of the ETH not needed for payouts."
 msgstr ""
 
-msgid "Approve migration"
+msgid "Approve"
+msgstr ""
+
+msgid "Approve migration for your {0} legacy tokens."
 msgstr ""
 
 msgid "Approve tokens for migration to V3"
@@ -1541,9 +1544,6 @@ msgstr ""
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building."
 msgstr ""
 
-msgid "Juicebox has a fresh new look"
-msgstr ""
-
 msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks </2>of crypto fundraising!"
 msgstr ""
 
@@ -1601,13 +1601,7 @@ msgstr ""
 msgid "Legacy balance"
 msgstr ""
 
-msgid "Legacy tokens to migrate"
-msgstr ""
-
 msgid "Legal"
-msgstr ""
-
-msgid "Let us know what you think"
 msgstr ""
 
 msgid "Light theme"
@@ -3170,10 +3164,10 @@ msgstr ""
 msgid "Tokens"
 msgstr ""
 
-msgid "Tokens are burned when they are redeemed."
+msgid "Tokens approved for migration"
 msgstr ""
 
-msgid "Tokens are required."
+msgid "Tokens are burned when they are redeemed."
 msgstr ""
 
 msgid "Tokens cannot be claimed because the project owner has not issued an ERC-20 for this project."
@@ -3566,10 +3560,13 @@ msgstr ""
 msgid "You don't hold tokens for any Juicebox project."
 msgstr ""
 
-msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap your legacy <1>{1}</1> tokens for their current V3 tokens <2/>."
+msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap migrate legacy <1>{1}</1> tokens for their new V3 tokens <2/>."
 msgstr ""
 
 msgid "You have added reserved token recipients, but your reserved rate is 0%, meaning no tokens will be reserved. Consider adding a reserved rate greater than 0% or removing the recipients."
+msgstr ""
+
+msgid "You have no legacy tokens."
 msgstr ""
 
 msgid "You have set your project to pay out all of its ETH. Your other payouts do not sum to 100%, so the remainder will go to the project owner."
@@ -3657,9 +3654,6 @@ msgid "Your email address"
 msgstr ""
 
 msgid "Your legacy project token holders can now migrate their tokens in the <0>Tokens</0> section on your V3 project page."
-msgstr ""
-
-msgid "Your migration allowance"
 msgstr ""
 
 msgid "Your new project payer address:"

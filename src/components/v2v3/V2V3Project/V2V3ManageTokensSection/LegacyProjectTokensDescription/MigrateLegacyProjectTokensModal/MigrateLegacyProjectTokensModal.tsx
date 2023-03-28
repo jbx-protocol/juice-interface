@@ -1,9 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import { Form, ModalProps, Space } from 'antd'
+import { ModalProps, Space, Statistic } from 'antd'
 import TransactionModal from 'components/TransactionModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import useERC20Allowance from 'hooks/ERC20/ERC20Allowance'
 import { useV1ProjectId } from 'hooks/JBV3Token/contractReader/V1ProjectId'
 import { useJBOperatorStoreForV3Token } from 'hooks/JBV3Token/contracts/JBOperatorStoreForV3Token'
 import { useV1TicketBoothForV3Token } from 'hooks/JBV3Token/contracts/V1TicketBoothForV3Token'
@@ -14,9 +15,10 @@ import { useWallet } from 'hooks/Wallet'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
+import { formatWad } from 'utils/format/formatNumber'
+import { ApproveMigrationCallout } from './ApproveMigrationCallout'
 import { GrantV1ApprovalCallout } from './GrantV1ApprovalCallout'
 import { GrantV2ApprovalCallout } from './GrantV2ApprovalCallout'
-import { MigrateLegacyProjectTokensForm } from './MigrateLegacyProjectTokensForm'
 import { TokenSwapDescription } from './TokenSwapDescription'
 
 export function MigrateLegacyProjectTokensModal({
@@ -29,11 +31,20 @@ export function MigrateLegacyProjectTokensModal({
   const { userAddress } = useWallet()
 
   const [loading, setLoading] = useState<boolean>(false)
+  const [grantV1PermissionDone, setGrantV1PermissionDone] =
+    useState<boolean>(false)
+  const [grantV2PermissionDone, setGrantV2PermissionDone] =
+    useState<boolean>(false)
+  const [approveDone, setApproveDone] = useState<boolean>(false)
   const [transactionPending, setTransactionPending] = useState<boolean>(false)
-  const [form] = Form.useForm()
 
   const V2JBOperatorStore = useJBOperatorStoreForV3Token()
   const V1TicketBooth = useV1TicketBoothForV3Token()
+  const { data: allowance } = useERC20Allowance(
+    tokenAddress,
+    userAddress,
+    userAddress,
+  )
 
   const hasV1Permission =
     !V1TicketBooth ||
@@ -44,9 +55,10 @@ export function MigrateLegacyProjectTokensModal({
       account: userAddress,
       domain: v1ProjectId?.toNumber(),
       permissionIndexes: [V1OperatorPermission.Transfer],
-    })
+    }) ||
+    grantV1PermissionDone
 
-  const { data: hasV2TransferPermission } = useV2V3HasPermissions({
+  const hasV2TransferPermissionResult = useV2V3HasPermissions({
     operator: tokenAddress,
     account: userAddress,
     domain: projectId,
@@ -54,8 +66,12 @@ export function MigrateLegacyProjectTokensModal({
     JBOperatorStore: V2JBOperatorStore,
   })
 
-  const hasAllPermissions = Boolean(hasV2TransferPermission && hasV1Permission)
+  const hasV2TransferPermission =
+    grantV2PermissionDone || hasV2TransferPermissionResult.data
 
+  const hasAllPermissions = Boolean(hasV2TransferPermission && hasV1Permission)
+  const hasApprovedTokenAllowance =
+    Boolean(allowance && allowance.gt(0)) || approveDone
   const migrateTokensTx = useMigrateTokensTx()
 
   const migrateTokens = async () => {
@@ -94,23 +110,53 @@ export function MigrateLegacyProjectTokensModal({
       transactionPending={transactionPending}
       confirmLoading={loading}
       destroyOnClose
-      okButtonProps={!hasAllPermissions ? { hidden: true } : undefined}
+      okButtonProps={
+        !(hasAllPermissions && hasApprovedTokenAllowance)
+          ? { disabled: true }
+          : undefined
+      }
       {...modalOkProps}
       {...props}
     >
       <Space size="large" direction="vertical" className="w-full">
         <TokenSwapDescription />
 
-        {!hasV1Permission && <GrantV1ApprovalCallout />}
-        {hasV1Permission && !hasV2TransferPermission && (
-          <GrantV2ApprovalCallout />
-        )}
+        <div className="flex gap-6">
+          <Statistic
+            title={<Trans>Your total legacy tokens</Trans>}
+            value={formatWad(legacyTokenBalance)}
+          />
 
-        <MigrateLegacyProjectTokensForm
-          form={form}
-          legacyTokenBalance={legacyTokenBalance}
-          disabled={!hasAllPermissions}
-        />
+          <Statistic
+            title={<Trans>Tokens approved for migration</Trans>}
+            value={formatWad(allowance)}
+          />
+        </div>
+        {!hasV1Permission && (
+          <GrantV1ApprovalCallout
+            onDone={() => setGrantV1PermissionDone(true)}
+          />
+        )}
+        {hasV1Permission &&
+          !hasV2TransferPermission &&
+          !hasV2TransferPermissionResult.loading && (
+            <GrantV2ApprovalCallout
+              onDone={() => setGrantV2PermissionDone(true)}
+            />
+          )}
+
+        {hasAllPermissions && !hasApprovedTokenAllowance ? (
+          legacyTokenBalance?.gt(0) ? (
+            <ApproveMigrationCallout
+              onDone={() => setApproveDone(true)}
+              legacyTokenBalance={legacyTokenBalance}
+            />
+          ) : (
+            <span>
+              <Trans>You have no legacy tokens.</Trans>
+            </span>
+          )
+        ) : null}
       </Space>
     </TransactionModal>
   )

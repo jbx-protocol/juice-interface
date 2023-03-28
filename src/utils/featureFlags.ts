@@ -5,7 +5,7 @@ import { NetworkName } from 'models/networkName'
 /**
  * Example usage:
  *  
- * [FEATURE_FLAGS.NFT_MP4]: {
+ [FEATURE_FLAGS.NFT_MP4]: {
     mainnet: true,
     goerli: true,
   }
@@ -13,11 +13,7 @@ import { NetworkName } from 'models/networkName'
 const FEATURE_FLAG_DEFAULTS: {
   [featureFlag: string]: { [networkName in NetworkName]?: boolean }
 } = {
-  [FEATURE_FLAGS.BRAND_REFRESH_BANNER]: {
-    mainnet: true,
-    goerli: true,
-  },
-  [FEATURE_FLAGS.JB_V3_1_UPGRADE]: {
+  [FEATURE_FLAGS.V1_TOKEN_SWAP]: {
     mainnet: true,
     goerli: true,
   },

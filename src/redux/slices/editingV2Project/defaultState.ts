@@ -8,7 +8,7 @@ import {
 import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewards'
 import {
   LATEST_METADATA_VERSION,
-  ProjectMetadataV7,
+  ProjectMetadata,
 } from 'models/projectMetadata'
 import { issuanceRateFrom, redemptionRateFrom } from 'utils/v2v3/math'
 import {
@@ -80,7 +80,7 @@ export const DEFAULT_NFT_FLAGS: JBTiered721Flags = {
   preventOverspending: false,
 }
 
-const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadataV7 = {
+const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
   name: '',
   infoUri: '',
   logoUri: '',
@@ -90,6 +90,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadataV7 = {
   discord: '',
   telegram: '',
   tokens: [],
+  tags: [],
   nftPaymentSuccessModal: undefined,
   version: LATEST_METADATA_VERSION,
 }

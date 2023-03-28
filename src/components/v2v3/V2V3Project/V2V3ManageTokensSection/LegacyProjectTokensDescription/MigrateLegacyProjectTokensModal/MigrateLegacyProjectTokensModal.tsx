@@ -121,21 +121,29 @@ export function MigrateLegacyProjectTokensModal({
       <Space size="large" direction="vertical" className="w-full">
         <TokenSwapDescription />
 
-        <Statistic
-          title={<Trans>Your total legacy tokens</Trans>}
-          value={formatWad(legacyTokenBalance)}
-        />
+        <div className="flex gap-6">
+          <Statistic
+            title={<Trans>Your total legacy tokens</Trans>}
+            value={formatWad(legacyTokenBalance)}
+          />
 
+          <Statistic
+            title={<Trans>Tokens approved for migration</Trans>}
+            value={formatWad(allowance)}
+          />
+        </div>
         {!hasV1Permission && (
           <GrantV1ApprovalCallout
             onDone={() => setGrantV1PermissionDone(true)}
           />
         )}
-        {hasV1Permission && !hasV2TransferPermission && (
-          <GrantV2ApprovalCallout
-            onDone={() => setGrantV2PermissionDone(true)}
-          />
-        )}
+        {hasV1Permission &&
+          !hasV2TransferPermission &&
+          !hasV2TransferPermissionResult.loading && (
+            <GrantV2ApprovalCallout
+              onDone={() => setGrantV2PermissionDone(true)}
+            />
+          )}
 
         {hasAllPermissions && !hasApprovedTokenAllowance ? (
           legacyTokenBalance?.gt(0) ? (

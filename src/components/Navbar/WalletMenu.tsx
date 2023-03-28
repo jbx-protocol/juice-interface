@@ -1,14 +1,9 @@
-import {
-  CrownOutlined,
-  DollarCircleOutlined,
-  LogoutOutlined,
-} from '@ant-design/icons'
+import { CrownOutlined, LogoutOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Dropdown } from 'antd'
 import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
-import ExternalLink from 'components/ExternalLink'
 import FormattedAddress from 'components/FormattedAddress'
 import { useQwestiveSDK } from 'contexts/QwestiveReferral/QwestiveReferral'
 import useMobile from 'hooks/Mobile'
@@ -16,6 +11,7 @@ import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import Balance from './Balance'
+import { Referral } from './WalletMenuItems'
 
 export default function WalletMenu({ userAddress }: { userAddress: string }) {
   const isMobile = useMobile()
@@ -59,18 +55,6 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
     </>
   )
 
-  const Referral = () => (
-    <>
-      <ExternalLink
-        className="text-black dark:text-slate-100"
-        href="https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e"
-      >
-        Referral
-      </ExternalLink>
-      <DollarCircleOutlined className="text-black dark:text-slate-100" />
-    </>
-  )
-
   const items: ItemType[] = [
     {
       key: 0,
@@ -88,7 +72,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
 
   if (!isMobile) {
     items.push({
-      key: 3,
+      key: items.length,
       label: <Disconnect />,
       onClick: async () => {
         await disconnect()

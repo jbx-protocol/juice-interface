@@ -11,6 +11,7 @@ import { useV1ProjectId } from 'hooks/JBV3Token/contractReader/V1ProjectId'
 import { useJBOperatorStoreForV3Token } from 'hooks/JBV3Token/contracts/JBOperatorStoreForV3Token'
 import { useV1TicketBoothForV3Token } from 'hooks/JBV3Token/contracts/V1TicketBoothForV3Token'
 import { useMigrateTokensTx } from 'hooks/JBV3Token/transactor/MigrateTokensTx'
+import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import { useV1HasPermissions } from 'hooks/v1/contractReader/V1HasPermissions'
 import { useV2V3HasPermissions } from 'hooks/v2v3/contractReader/V2V3HasPermissions'
 import { useWallet } from 'hooks/Wallet'
@@ -32,6 +33,7 @@ export function MigrateLegacyProjectTokensModal({
   const { projectId } = useContext(ProjectMetadataContext)
   const { value: v1ProjectId } = useV1ProjectId()
   const { userAddress } = useWallet()
+  const v1TokenAddress = useTokenAddressOfProject(v1ProjectId)
 
   const [loading, setLoading] = useState<boolean>(false)
   const [grantV1PermissionDone, setGrantV1PermissionDone] =
@@ -157,6 +159,7 @@ export function MigrateLegacyProjectTokensModal({
             <ApproveMigrationCallout
               onDone={() => setApproveDone(true)}
               legacyTokenBalance={legacyTokenBalance}
+              legacyTokenContractAddress={v1TokenAddress}
             />
           ) : (
             <span>

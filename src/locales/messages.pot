@@ -3167,6 +3167,9 @@ msgstr ""
 msgid "Tokens"
 msgstr ""
 
+msgid "Tokens approved for migration"
+msgstr ""
+
 msgid "Tokens are burned when they are redeemed."
 msgstr ""
 
@@ -3560,7 +3563,7 @@ msgstr ""
 msgid "You don't hold tokens for any Juicebox project."
 msgstr ""
 
-msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap your legacy <1>{1}</1> tokens for their current V3 tokens <2/>."
+msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap migrate legacy <1>{1}</1> tokens for their new V3 tokens <2/>."
 msgstr ""
 
 msgid "You have added reserved token recipients, but your reserved rate is 0%, meaning no tokens will be reserved. Consider adding a reserved rate greater than 0% or removing the recipients."

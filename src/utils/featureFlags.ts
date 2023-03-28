@@ -1,4 +1,3 @@
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
 
@@ -12,16 +11,7 @@ import { NetworkName } from 'models/networkName'
  */
 const FEATURE_FLAG_DEFAULTS: {
   [featureFlag: string]: { [networkName in NetworkName]?: boolean }
-} = {
-  [FEATURE_FLAGS.BRAND_REFRESH_BANNER]: {
-    mainnet: true,
-    goerli: true,
-  },
-  [FEATURE_FLAGS.JB_V3_1_UPGRADE]: {
-    mainnet: true,
-    goerli: true,
-  },
-}
+} = {}
 
 const featureFlagKey = (baseKey: string) => {
   return `${baseKey}_${readNetwork.name}`

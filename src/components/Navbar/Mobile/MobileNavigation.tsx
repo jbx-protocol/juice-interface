@@ -5,7 +5,6 @@ import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
-import { BrandUpdateBanner } from '../BrandUpdateBanner'
 import Logo from '../Logo'
 import NavLanguageSelector from '../NavLanguageSelector'
 import WalletButton from '../WalletButton'
@@ -16,7 +15,6 @@ export default function MobileNavigation() {
 
   return (
     <div className="fixed z-10 w-full">
-      <BrandUpdateBanner />
       <Menu className="bg-l0 p-4" as="nav">
         <div className="flex items-center justify-between">
           <LogoHomeButton />

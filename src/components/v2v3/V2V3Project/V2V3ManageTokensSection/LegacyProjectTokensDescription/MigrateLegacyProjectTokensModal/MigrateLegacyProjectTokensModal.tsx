@@ -3,6 +3,7 @@ import { Trans } from '@lingui/macro'
 import { ModalProps, Space, Statistic } from 'antd'
 import TransactionModal from 'components/TransactionModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useERC20Allowance from 'hooks/ERC20/ERC20Allowance'
 import { useV1ProjectId } from 'hooks/JBV3Token/contractReader/V1ProjectId'
@@ -133,9 +134,11 @@ export function MigrateLegacyProjectTokensModal({
           />
         </div>
         {!hasV1Permission && (
-          <GrantV1ApprovalCallout
-            onDone={() => setGrantV1PermissionDone(true)}
-          />
+          <V1UserProvider>
+            <GrantV1ApprovalCallout
+              onDone={() => setGrantV1PermissionDone(true)}
+            />
+          </V1UserProvider>
         )}
         {hasV1Permission &&
           !hasV2TransferPermission &&

@@ -5,7 +5,7 @@ import { useV2SetTransferPermissionTx } from 'hooks/JBV3Token/transactor/V2SetTr
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 
-export function GrantV2ApprovalCallout() {
+export function GrantV2ApprovalCallout({ onDone }: { onDone?: VoidFunction }) {
   const grantPermissionTx = useV2SetTransferPermissionTx()
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -16,6 +16,7 @@ export function GrantV2ApprovalCallout() {
       const txSuccess = await grantPermissionTx(undefined, {
         onConfirmed() {
           setLoading(false)
+          onDone?.()
         },
         onError(e) {
           setLoading(false)

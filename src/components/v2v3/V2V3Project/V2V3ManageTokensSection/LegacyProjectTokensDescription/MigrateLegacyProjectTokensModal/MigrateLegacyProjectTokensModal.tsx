@@ -46,9 +46,9 @@ export function MigrateLegacyProjectTokensModal({
   const V2JBOperatorStore = useJBOperatorStoreForV3Token()
   const V1TicketBooth = useV1TicketBoothForV3Token()
   const { data: allowance } = useERC20Allowance(
+    v1TokenAddress,
+    userAddress,
     tokenAddress,
-    userAddress,
-    userAddress,
   )
 
   const hasV1Project = Boolean(

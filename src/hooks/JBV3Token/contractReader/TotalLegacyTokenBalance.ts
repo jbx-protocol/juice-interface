@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { useV1TotalBalance } from './V1TokenBalance'
 import { useV1UnclaimedBalanceForV3Token } from './V1UnclaimedBalanceForV3Token'
 import { useV2TotalBalance } from './V2TokenBalance'
-import { useV2UnclaimedBalanceForV3Token } from './V2UnclaimedBalanceForV3token'
+import { useV2UnclaimedBalanceForV3Token } from './V2UnclaimedBalanceForV3Token'
 
 export function useTotalLegacyTokenBalance({
   projectId,

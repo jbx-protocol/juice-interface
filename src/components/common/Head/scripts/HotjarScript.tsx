@@ -1,6 +1,10 @@
+import Script from 'next/script'
+
 export function HotjarScript() {
   return (
-    <script
+    <Script
+      id="hotjar-script"
+      strategy="afterInteractive"
       defer
       dangerouslySetInnerHTML={{
         __html: `
@@ -14,6 +18,6 @@ a.appendChild(r);
 })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 `,
       }}
-    ></script>
+    />
   )
 }

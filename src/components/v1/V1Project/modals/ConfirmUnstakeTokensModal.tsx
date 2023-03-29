@@ -3,10 +3,12 @@ import { Form, Modal, Space } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedAddress from 'components/FormattedAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
+import { useV1UnclaimedBalance } from 'hooks/v1/contractReader/V1UnclaimedBalance'
 import { useUnstakeTokensTx } from 'hooks/v1/transactor/UnstakeTokensTx'
-import { useContext, useLayoutEffect, useState } from 'react'
+import { useWallet } from 'hooks/Wallet'
+import { useContext, useEffect, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -20,15 +22,20 @@ export default function ConfirmUnstakeTokensModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
+  const { projectId } = useContext(ProjectMetadataContext)
+  const { tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
+
   const [loading, setLoading] = useState<boolean>()
   const [unstakeAmount, setUnstakeAmount] = useState<string>()
 
-  const { tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
+  const { userAddress } = useWallet()
+  const unclaimedBalance = useV1UnclaimedBalance({
+    projectId,
+    userAddress,
+  })
   const unstakeTokensTx = useUnstakeTokensTx()
 
-  const unclaimedBalance = useUnclaimedBalanceOfUser()
-
-  useLayoutEffect(() => {
+  useEffect(() => {
     setUnstakeAmount(fromWad(unclaimedBalance))
   }, [unclaimedBalance])
 

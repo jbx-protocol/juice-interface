@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { Contract } from '@ethersproject/contracts'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { useWallet } from 'hooks/Wallet'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'
@@ -9,18 +8,21 @@ import useContractReader from './ContractReader'
 import useShouldUpdateTokens from './ShouldUpdateTokens'
 
 /** Returns unclaimed balance of user with `userAddress`. */
-export default function useUnclaimedBalanceOfUser() {
-  const { userAddress } = useWallet()
+export function useV1UnclaimedBalance({
+  projectId,
+  userAddress,
+  TicketBooth,
+}: {
+  projectId: number | undefined
+  userAddress: string | undefined
+  TicketBooth?: Contract
+}) {
   const { terminal } = useContext(V1ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
 
   return useContractReader<BigNumber>({
-    contract: V1ContractName.TicketBooth,
+    contract: TicketBooth ?? V1ContractName.TicketBooth,
     functionName: 'stakedBalanceOf',
-    args:
-      userAddress && projectId
-        ? [userAddress, BigNumber.from(projectId).toHexString()]
-        : null,
+    args: userAddress && projectId ? [userAddress, projectId] : null,
     valueDidChange: bigNumbersDiff,
     updateOn: useShouldUpdateTokens(projectId, terminal?.name, userAddress),
   })

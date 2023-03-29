@@ -1,20 +1,22 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { useWallet } from 'hooks/Wallet'
-import { useContext } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 
+import { Contract } from '@ethersproject/contracts'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import useContractReader from './V2ContractReader'
 
 /** Returns unclaimed balance of user with `userAddress`. */
-export default function useUserUnclaimedTokenBalance() {
-  const { userAddress } = useWallet()
-  const { projectId } = useContext(ProjectMetadataContext)
-
+export function useUnclaimedTokenBalance({
+  projectId,
+  userAddress,
+  JBTokenStore,
+}: {
+  projectId: number | undefined
+  userAddress: string | undefined
+  JBTokenStore?: Contract
+}) {
   return useContractReader<BigNumber>({
-    contract: V2V3ContractName.JBTokenStore,
+    contract: JBTokenStore ?? V2V3ContractName.JBTokenStore,
     functionName: 'unclaimedBalanceOf',
     args:
       userAddress && projectId

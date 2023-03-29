@@ -52,7 +52,3 @@ export async function middleware(request: NextRequest) {
   })
   return NextResponse.rewrite(url)
 }
-
-export const config = {
-  matcher: ['/@:handle*', '/@:handle*/:rest*'],
-}

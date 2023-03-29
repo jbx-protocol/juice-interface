@@ -13,8 +13,8 @@ import useCanPrintPreminedTokens from 'hooks/v1/contractReader/CanPrintPreminedT
 import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/TotalSupplyOfProjectToken'
-import useUnclaimedBalanceOfUser from 'hooks/v1/contractReader/UnclaimedBalanceOfUser'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
+import { useV1UnclaimedBalance } from 'hooks/v1/contractReader/V1UnclaimedBalance'
 import { useTransferTokensTx } from 'hooks/v1/transactor/TransferTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { V1OperatorPermission } from 'models/v1/permissions'
@@ -46,7 +46,10 @@ export function TokensSection() {
   const fundingCycleMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
-  const unclaimedBalance = useUnclaimedBalanceOfUser()
+  const unclaimedBalance = useV1UnclaimedBalance({
+    projectId,
+    userAddress,
+  })
   const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
   const reservedTicketBalance = useReservedTokensOfProject(
     fundingCycleMetadata?.reservedRate,

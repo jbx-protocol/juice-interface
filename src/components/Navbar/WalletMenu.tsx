@@ -5,28 +5,15 @@ import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
-import { useQwestiveSDK } from 'contexts/QwestiveReferral/QwestiveReferral'
 import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
-import { useEffect } from 'react'
 import Balance from './Balance'
 import { Referral } from './WalletMenuItems'
 
 export default function WalletMenu({ userAddress }: { userAddress: string }) {
   const isMobile = useMobile()
   const { disconnect } = useWallet()
-
-  /**
-   * Qwestive tracker SDK registering current user's wallet address
-   */
-  const { qwestiveTracker } = useQwestiveSDK()
-
-  useEffect(() => {
-    if (!userAddress || qwestiveTracker.isLoading) return
-    // Send user address to track user
-    qwestiveTracker?.setAlias?.({ id: userAddress })
-  }, [userAddress, qwestiveTracker])
 
   const CopyableAddress = () => (
     <div className="text-black dark:text-slate-100">

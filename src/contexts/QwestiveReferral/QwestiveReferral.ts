@@ -1,10 +1,5 @@
-import { useContext, useEffect, useState } from 'react'
-import {
-  IQwestiveContext,
-  SDKContext,
-  TInitSDK,
-  TQwestiveTracker,
-} from './QwestiveReferralContext'
+import { useEffect, useState } from 'react'
+import { TInitSDK, TQwestiveTracker } from './QwestiveReferralContext'
 
 /**
  * Methods added on the window object by src/components/common/Head/scripts/QwestiveScripts.tsx
@@ -64,13 +59,4 @@ export function useQwestiveSDKProvider() {
         trackerQwestiveMethods?.setReferral?.({ id }),
     },
   }
-}
-
-export function useQwestiveSDK(): IQwestiveContext {
-  const context = useContext(SDKContext)
-  if (!context)
-    throw new Error(
-      'useQwestiveSDK must be called from within the corresponding ContextProvider',
-    )
-  return context
 }

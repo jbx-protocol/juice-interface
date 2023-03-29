@@ -85,7 +85,7 @@ const ContentSecurityPolicy = `
   prefetch-src 'self';
   frame-src ${FRAME_SRC.join(' ')};
   media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')};
-  frame-ancestors ${FRAME_ANCESTORS};
+  frame-ancestors ${FRAME_ANCESTORS.join(' ')};
   form-action 'self';
 `
 

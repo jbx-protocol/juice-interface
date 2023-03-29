@@ -29,23 +29,23 @@ export const AppWrapper: React.FC = ({ children }) => {
     <React.StrictMode>
       <ReactQueryProvider>
         <Provider store={store}>
-          <QwestiveSDKContextProvider>
           <LanguageProvider>
             <TxHistoryProvider>
               <ThemeProvider>
                 <EtherPriceProvider>
-                  <ArcxProvider>
-                    <AnnouncementsProvider>
-                      <AnnouncementLauncher>
-                        <_Wrapper>{children}</_Wrapper>
-                      </AnnouncementLauncher>
-                    </AnnouncementsProvider>
-                  </ArcxProvider>
+                  <QwestiveSDKContextProvider>
+                    <ArcxProvider>
+                      <AnnouncementsProvider>
+                        <AnnouncementLauncher>
+                          <_Wrapper>{children}</_Wrapper>
+                        </AnnouncementLauncher>
+                      </AnnouncementsProvider>
+                    </ArcxProvider>
+                  </QwestiveSDKContextProvider>
                 </EtherPriceProvider>
               </ThemeProvider>
             </TxHistoryProvider>
           </LanguageProvider>
-          </QwestiveSDKContextProvider>          
         </Provider>
       </ReactQueryProvider>
     </React.StrictMode>

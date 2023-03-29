@@ -19,10 +19,16 @@ const INFURA_IPFS_URLS = [
 ]
 
 const SCRIPT_SRC = [
-  'https://static.hotjar.com',
-  'https://script.hotjar.com',
   'https://*.juicebox.money',
   'https://qwestive-referral-prod.web.app',
+  'https://static.hotjar.com',
+  'https://script.hotjar.com',
+  `'sha256-kZ9E6/oLrki51Yx03/BugStfFrPlm8hjaFbaokympXo='`, // hotjar
+  `'unsafe-eval'`, // hotjar
+]
+
+const STYLE_SRC = [
+  `'unsafe-inline'`, // NextJS, hotjar
 ]
 
 const IMG_SRC = [
@@ -59,29 +65,44 @@ const CONNECT_SRC = [
   'https://api.ensideas.com',
   'https://*.sentry.io',
 ]
+
+const FRAME_ANCESTORS = ['https://*.gnosis.io', 'https://*.safe.global']
+
 if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')
 }
 
-const FRAME_SRC = [
-  'https://vars.hotjar.com/',
-  'https://gnosis-safe.io',
-  'https://app.safe.global',
-  'https://qwestive-referral-prod.web.app',
-]
+const FRAME_SRC = ['https://qwestive-referral-prod.web.app']
 
 const ContentSecurityPolicy = `
   default-src 'none';
-  script-src 'self' ${SCRIPT_SRC.join(' ')} 'unsafe-inline' 'unsafe-eval';
-  style-src 'self' 'unsafe-inline';
+  script-src 'self' ${SCRIPT_SRC.join(' ')};
+  style-src 'self' ${STYLE_SRC.join(' ')};
   font-src 'self' data:;
-  img-src 'self' ${IMG_SRC.join(' ')}  data:;
+  img-src 'self' ${IMG_SRC.join(' ')} data:;
   connect-src 'self' ${CONNECT_SRC.join(' ')};
   manifest-src 'self';
   prefetch-src 'self';
-  frame-src 'self' ${FRAME_SRC.join(' ')};
+  frame-src ${FRAME_SRC.join(' ')};
   media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')};
+  frame-ancestors ${FRAME_ANCESTORS};
+  form-action 'self';
 `
+
+const SECURITY_HEADERS = [
+  {
+    key: 'X-XSS-Protection',
+    value: '1; mode=block',
+  },
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff',
+  },
+  {
+    key: 'X-Frame-Options',
+    value: 'DENY',
+  }, // NOTE: gnosis safe is still allowed due to frame-ancestors definition
+]
 
 const nextConfig = {
   staticPageGenerationTimeout: 90,
@@ -129,6 +150,7 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
           },
+          ...SECURITY_HEADERS,
         ],
       },
     ]

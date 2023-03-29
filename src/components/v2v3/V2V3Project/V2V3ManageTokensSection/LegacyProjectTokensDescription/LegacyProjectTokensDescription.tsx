@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useTotalLegacyTokenBalance } from 'hooks/JBV3Token/contractReader/TotalLegacyTokenBalance'
 import { useContext, useState } from 'react'
@@ -33,11 +34,15 @@ export function LegacyProjectTokensDescription() {
           <Button size="small" onClick={() => setModalOpen(true)}>
             <Trans>Migrate tokens</Trans>
           </Button>
-          <MigrateLegacyProjectTokensModal
-            open={modalOpen}
-            legacyTokenBalance={legacyTokenBalance}
-            onCancel={() => setModalOpen(false)}
-          />
+          {modalOpen && (
+            <V1UserProvider>
+              <MigrateLegacyProjectTokensModal
+                open={modalOpen}
+                legacyTokenBalance={legacyTokenBalance}
+                onCancel={() => setModalOpen(false)}
+              />
+            </V1UserProvider>
+          )}
         </>
       )}
     </>

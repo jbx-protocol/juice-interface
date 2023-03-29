@@ -7,14 +7,14 @@ import { useV1ProjectId } from './V1ProjectId'
 export function useV1TokenBalance() {
   const { userAddress } = useWallet()
   const { value: v1ProjectId } = useV1ProjectId()
-  const v1TicketBookContract = useV1TicketBoothForV3Token()
+  const v1TicketBoothContract = useV1TicketBoothForV3Token()
 
   return (
     useTotalBalanceOf(
       userAddress,
       v1ProjectId,
       undefined,
-      v1TicketBookContract,
+      v1TicketBoothContract,
     ) ?? BigNumber.from(0)
   )
 }

@@ -2,13 +2,16 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { ModalProps, Space, Statistic } from 'antd'
 import TransactionModal from 'components/TransactionModal'
+import { CV_V2 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useERC20Allowance from 'hooks/ERC20/ERC20Allowance'
 import { useV1ProjectId } from 'hooks/JBV3Token/contractReader/V1ProjectId'
 import { useJBOperatorStoreForV3Token } from 'hooks/JBV3Token/contracts/JBOperatorStoreForV3Token'
 import { useV1TicketBoothForV3Token } from 'hooks/JBV3Token/contracts/V1TicketBoothForV3Token'
 import { useMigrateTokensTx } from 'hooks/JBV3Token/transactor/MigrateTokensTx'
+import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import { useV1HasPermissions } from 'hooks/v1/contractReader/V1HasPermissions'
 import { useV2V3HasPermissions } from 'hooks/v2v3/contractReader/V2V3HasPermissions'
 import { useWallet } from 'hooks/Wallet'
@@ -25,10 +28,12 @@ export function MigrateLegacyProjectTokensModal({
   legacyTokenBalance,
   ...props
 }: { legacyTokenBalance: BigNumber | undefined } & ModalProps) {
+  const { cvs } = useContext(V2V3ContractsContext)
   const { tokenAddress } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
   const { value: v1ProjectId } = useV1ProjectId()
   const { userAddress } = useWallet()
+  const v1TokenAddress = useTokenAddressOfProject(v1ProjectId)
 
   const [loading, setLoading] = useState<boolean>(false)
   const [grantV1PermissionDone, setGrantV1PermissionDone] =
@@ -41,22 +46,23 @@ export function MigrateLegacyProjectTokensModal({
   const V2JBOperatorStore = useJBOperatorStoreForV3Token()
   const V1TicketBooth = useV1TicketBoothForV3Token()
   const { data: allowance } = useERC20Allowance(
+    v1TokenAddress,
+    userAddress,
     tokenAddress,
-    userAddress,
-    userAddress,
   )
 
+  const hasV1Project = Boolean(
+    V1TicketBooth && v1ProjectId && !v1ProjectId.eq(0),
+  )
+  const hasV2Project = cvs?.includes(CV_V2)
+
   const hasV1Permission =
-    !V1TicketBooth ||
-    !v1ProjectId ||
-    !v1ProjectId.eq(0) ||
     useV1HasPermissions({
       operator: tokenAddress,
       account: userAddress,
       domain: v1ProjectId?.toNumber(),
       permissionIndexes: [V1OperatorPermission.Transfer],
-    }) ||
-    grantV1PermissionDone
+    }) || grantV1PermissionDone
 
   const hasV2TransferPermissionResult = useV2V3HasPermissions({
     operator: tokenAddress,
@@ -132,12 +138,15 @@ export function MigrateLegacyProjectTokensModal({
             value={formatWad(allowance)}
           />
         </div>
-        {!hasV1Permission && (
+
+        {hasV1Project && !hasV1Permission && (
           <GrantV1ApprovalCallout
             onDone={() => setGrantV1PermissionDone(true)}
           />
         )}
-        {hasV1Permission &&
+        {/* Show the V1 callout, then V2 callout (if applicable) */}
+        {(!hasV1Project || hasV1Permission) &&
+          hasV2Project &&
           !hasV2TransferPermission &&
           !hasV2TransferPermissionResult.loading && (
             <GrantV2ApprovalCallout
@@ -150,6 +159,7 @@ export function MigrateLegacyProjectTokensModal({
             <ApproveMigrationCallout
               onDone={() => setApproveDone(true)}
               legacyTokenBalance={legacyTokenBalance}
+              legacyTokenContractAddress={v1TokenAddress}
             />
           ) : (
             <span>

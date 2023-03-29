@@ -16,7 +16,10 @@ interface AccountPageProps {
 export const getServerSideProps: GetServerSideProps<
   AccountPageProps
 > = async context => {
-  const supabase = createServerSupabaseClient<Database>(context)
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59',
+  )
 
   if (!context.params?.addressOrEnsName) {
     return {
@@ -34,6 +37,8 @@ export const getServerSideProps: GetServerSideProps<
   }
 
   const { address, name: ensName } = pair
+
+  const supabase = createServerSupabaseClient<Database>(context)
 
   let profile = null
   const profileResult = await supabase

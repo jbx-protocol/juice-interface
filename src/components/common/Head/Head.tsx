@@ -2,8 +2,6 @@ import { VFC } from 'react'
 
 import { SEO, SEOProps } from '../SEO'
 import { FONT_PATHS } from './fonts'
-import { FathomScript } from './scripts/FathomScript'
-import { HotjarScript } from './scripts/HotjarScript'
 
 export const Head: VFC<SEOProps> = props => {
   return (
@@ -41,13 +39,6 @@ export const Head: VFC<SEOProps> = props => {
           crossOrigin="true"
         />
       ))}
-
-      {process.env.NODE_ENV === 'production' && (
-        <>
-          <FathomScript />
-          <HotjarScript />
-        </>
-      )}
     </SEO>
   )
 }

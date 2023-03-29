@@ -434,7 +434,7 @@ msgstr ""
 msgid "Approve"
 msgstr ""
 
-msgid "Approve migration for your {0} v{version} legacy tokens."
+msgid "Approve migration for your {0} v{version} legacy ERC-20 tokens."
 msgstr ""
 
 msgid "Approve tokens for migration to V3"
@@ -3216,6 +3216,9 @@ msgid "Total redemption value"
 msgstr ""
 
 msgid "Total supply"
+msgstr ""
+
+msgid "Total unclaimed and claimed V1 and V2 tokens"
 msgstr ""
 
 msgid "Total volume"

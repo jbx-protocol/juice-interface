@@ -6,6 +6,7 @@ import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvi
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import LanguageProvider from 'contexts/Language/LanguageProvider'
+import QwestiveSDKContextProvider from 'contexts/QwestiveReferral/QwestiveReferralProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
@@ -32,13 +33,15 @@ export const AppWrapper: React.FC = ({ children }) => {
             <TxHistoryProvider>
               <ThemeProvider>
                 <EtherPriceProvider>
-                  <ArcxProvider>
-                    <AnnouncementsProvider>
-                      <AnnouncementLauncher>
-                        <_Wrapper>{children}</_Wrapper>
-                      </AnnouncementLauncher>
-                    </AnnouncementsProvider>
-                  </ArcxProvider>
+                  <QwestiveSDKContextProvider>
+                    <ArcxProvider>
+                      <AnnouncementsProvider>
+                        <AnnouncementLauncher>
+                          <_Wrapper>{children}</_Wrapper>
+                        </AnnouncementLauncher>
+                      </AnnouncementsProvider>
+                    </ArcxProvider>
+                  </QwestiveSDKContextProvider>
                 </EtherPriceProvider>
               </ThemeProvider>
             </TxHistoryProvider>

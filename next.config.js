@@ -20,6 +20,7 @@ const INFURA_IPFS_URLS = [
 
 const SCRIPT_SRC = [
   'https://*.juicebox.money',
+  'https://qwestive-referral-prod.web.app',
   'https://static.hotjar.com',
   'https://script.hotjar.com',
   `'sha256-kZ9E6/oLrki51Yx03/BugStfFrPlm8hjaFbaokympXo='`, // hotjar
@@ -71,6 +72,8 @@ if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')
 }
 
+const FRAME_SRC = ['https://qwestive-referral-prod.web.app']
+
 const ContentSecurityPolicy = `
   default-src 'none';
   script-src 'self' ${SCRIPT_SRC.join(' ')};
@@ -80,8 +83,9 @@ const ContentSecurityPolicy = `
   connect-src 'self' ${CONNECT_SRC.join(' ')};
   manifest-src 'self';
   prefetch-src 'self';
+  frame-src ${FRAME_SRC.join(' ')};
   media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')};
-  frame-ancestors ${FRAME_ANCESTORS};
+  frame-ancestors ${FRAME_ANCESTORS.join(' ')};
   form-action 'self';
 `
 

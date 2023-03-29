@@ -9,10 +9,10 @@ import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
 import Link from 'next/link'
 import Balance from './Balance'
+import { Referral } from './WalletMenuItems'
 
 export default function WalletMenu({ userAddress }: { userAddress: string }) {
   const isMobile = useMobile()
-
   const { disconnect } = useWallet()
 
   const CopyableAddress = () => (
@@ -51,10 +51,15 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
       key: 1,
       label: <MyProjects />,
     },
+    {
+      key: 2,
+      label: <Referral />,
+    },
   ]
+
   if (!isMobile) {
     items.push({
-      key: 2,
+      key: items.length,
       label: <Disconnect />,
       onClick: async () => {
         await disconnect()

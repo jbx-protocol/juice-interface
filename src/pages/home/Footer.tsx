@@ -21,7 +21,11 @@ import * as Yup from 'yup'
 import orangeLadyOd from '/public/assets/orange_lady-od.png'
 import orangeLadyOl from '/public/assets/orange_lady-ol.png'
 
-type LinkItem = { title: ReactNode; link: string; externalLink?: boolean }
+type LinkItem = {
+  title: ReactNode
+  link: string
+  externalLink?: boolean
+}
 
 const LinkCols: { title: ReactNode; items: LinkItem[] }[] = [
   {
@@ -34,6 +38,11 @@ const LinkCols: { title: ReactNode; items: LinkItem[] }[] = [
       {
         title: t`Explore`,
         link: '/projects',
+      },
+      {
+        title: t`Referral`,
+        externalLink: true,
+        link: 'https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e',
       },
     ],
   },

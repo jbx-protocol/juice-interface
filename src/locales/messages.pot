@@ -2462,6 +2462,9 @@ msgstr ""
 msgid "Redemptions aren't possible when all of a project's ETH is being used for payouts."
 msgstr ""
 
+msgid "Referral"
+msgstr ""
+
 msgid "Relaunch your cycle on the new Juicebox V2 contracts."
 msgstr ""
 

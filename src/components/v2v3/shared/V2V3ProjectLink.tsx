@@ -5,6 +5,9 @@ import { twMerge } from 'tailwind-merge'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { AllocatorBadge } from './FundingCycleConfigurationDrawers/AllocatorBadge'
 
+/**
+ * Different from V2V3ProjectHandleLink in that it doesn't use the handle. This can be used outside of V2V3ContractsContext and V2V3ProjectContext.
+ */
 export default function V2V3ProjectLink({
   className,
   projectId,

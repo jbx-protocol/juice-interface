@@ -5,7 +5,7 @@ import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
-import { PV_V2 } from 'constants/pv'
+import { PV_V1, PV_V2 } from 'constants/pv'
 import useMobile from 'hooks/Mobile'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/Projects'
@@ -34,6 +34,7 @@ const SmallProjectCardMobile = ({
           ? v2v3ProjectRoute(project)
           : `/p/${project?.handle}`
       }
+      prefetch={project.pv === PV_V1}
     >
       <a className="flex w-full cursor-pointer items-center gap-2 overflow-hidden rounded-lg border border-solid border-smoke-300 bg-white py-2 px-4 text-center transition-colors hover:border-smoke-500 dark:border-slate-300 dark:bg-slate-700 dark:hover:border-slate-100">
         <div className="flex justify-center">

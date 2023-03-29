@@ -83,6 +83,7 @@ export default function TrendingProjectCard({
 
   return (
     <Link
+      prefetch={false}
       key={project.handle}
       href={
         project.pv === PV_V2

@@ -15,7 +15,8 @@ export function LegacyProjectTokensDescription() {
 
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
-  const legacyTokenBalance = useTotalLegacyTokenBalance({ projectId })
+  const { totalLegacyTokenBalance, v1ClaimedBalance } =
+    useTotalLegacyTokenBalance({ projectId })
 
   const tokenText = tokenSymbolText({
     tokenSymbol,
@@ -26,10 +27,10 @@ export function LegacyProjectTokensDescription() {
   return (
     <>
       <span>
-        {formatWad(legacyTokenBalance, { precision: 0 }) ?? 0} {tokenText}
+        {formatWad(totalLegacyTokenBalance, { precision: 0 }) ?? 0} {tokenText}
       </span>
 
-      {legacyTokenBalance?.gt(0) && (
+      {totalLegacyTokenBalance?.gt(0) && (
         <>
           <Button size="small" onClick={() => setModalOpen(true)}>
             <Trans>Migrate tokens</Trans>
@@ -38,7 +39,8 @@ export function LegacyProjectTokensDescription() {
             <V1UserProvider>
               <MigrateLegacyProjectTokensModal
                 open={modalOpen}
-                legacyTokenBalance={legacyTokenBalance}
+                legacyTokenBalance={totalLegacyTokenBalance}
+                v1ClaimedBalance={v1ClaimedBalance}
                 onCancel={() => setModalOpen(false)}
               />
             </V1UserProvider>

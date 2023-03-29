@@ -14,6 +14,8 @@ const loadV1Contract = async (
 ): Promise<Contract | undefined> => {
   let contract: Contract | undefined
 
+  if (network === NetworkName.goerli) return
+
   switch (contractName) {
     case V1ContractName.FundingCycles:
       contract = await import(

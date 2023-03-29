@@ -1,13 +1,36 @@
-import { useV1TokenBalance } from './V1TokenBalance'
-import { useV2TokenBalance } from './V2TokenBalance'
+import { BigNumber } from '@ethersproject/bignumber'
+import { useV1TotalBalance } from './V1TokenBalance'
+import { useV1UnclaimedBalanceForV3Token } from './V1UnclaimedBalanceForV3Token'
+import { useV2TotalBalance } from './V2TokenBalance'
+import { useV2UnclaimedBalanceForV3Token } from './V2UnclaimedBalanceForV3Token'
 
 export function useTotalLegacyTokenBalance({
   projectId,
 }: {
   projectId: number | undefined
 }) {
-  const v1TokenBalance = useV1TokenBalance()
-  const v2TokenBalance = useV2TokenBalance({ projectId })
+  const v1TotalBalance = useV1TotalBalance()
+  const v1UnclaimedBalance = useV1UnclaimedBalanceForV3Token()
+  const v1ClaimedBalance = v1TotalBalance?.sub(v1UnclaimedBalance)
 
-  return v1TokenBalance?.add(v2TokenBalance)
+  const { data: v2TotalBalance } = useV2TotalBalance({ projectId })
+  const { data: v2UnclaimedBalance } = useV2UnclaimedBalanceForV3Token({
+    projectId,
+  })
+  const v2ClaimedBalance =
+    v2TotalBalance?.sub(v2UnclaimedBalance ?? 0) ?? BigNumber.from(0)
+
+  const totalLegacyTokenBalance = v1TotalBalance?.add(v2TotalBalance ?? 0)
+
+  return {
+    v1TotalBalance,
+    v1UnclaimedBalance,
+    v1ClaimedBalance,
+
+    v2TotalBalance,
+    v2UnclaimedBalance,
+    v2ClaimedBalance,
+
+    totalLegacyTokenBalance,
+  }
 }

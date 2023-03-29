@@ -1,6 +1,9 @@
+import { CheckCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { ModalProps, Space, Statistic } from 'antd'
+import Loading from 'components/Loading'
+import TooltipIcon from 'components/TooltipIcon'
 import TransactionModal from 'components/TransactionModal'
 import { CV_V2 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -26,8 +29,12 @@ import { TokenSwapDescription } from './TokenSwapDescription'
 
 export function MigrateLegacyProjectTokensModal({
   legacyTokenBalance,
+  v1ClaimedBalance,
   ...props
-}: { legacyTokenBalance: BigNumber | undefined } & ModalProps) {
+}: {
+  legacyTokenBalance: BigNumber | undefined
+  v1ClaimedBalance: BigNumber | undefined
+} & ModalProps) {
   const { cvs } = useContext(V2V3ContractsContext)
   const { tokenAddress } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
@@ -45,18 +52,19 @@ export function MigrateLegacyProjectTokensModal({
 
   const V2JBOperatorStore = useJBOperatorStoreForV3Token()
   const V1TicketBooth = useV1TicketBoothForV3Token()
-  const { data: allowance } = useERC20Allowance(
+  const { data: v1Allowance } = useERC20Allowance(
     v1TokenAddress,
     userAddress,
     tokenAddress,
   )
+  const migrateTokensTx = useMigrateTokensTx()
 
   const hasV1Project = Boolean(
     V1TicketBooth && v1ProjectId && !v1ProjectId.eq(0),
   )
   const hasV2Project = cvs?.includes(CV_V2)
 
-  const hasV1Permission =
+  const hasV1TransferPermission =
     useV1HasPermissions({
       operator: tokenAddress,
       account: userAddress,
@@ -71,14 +79,35 @@ export function MigrateLegacyProjectTokensModal({
     permissions: [V2V3OperatorPermission.TRANSFER],
     JBOperatorStore: V2JBOperatorStore,
   })
-
   const hasV2TransferPermission =
     grantV2PermissionDone || hasV2TransferPermissionResult.data
 
-  const hasAllPermissions = Boolean(hasV2TransferPermission && hasV1Permission)
-  const hasApprovedTokenAllowance =
-    Boolean(allowance && allowance.gt(0)) || approveDone
-  const migrateTokensTx = useMigrateTokensTx()
+  const v1MigrationReady =
+    !hasV1Project || (hasV1Project && hasV1TransferPermission)
+  const v2MigrationReady =
+    !hasV2Project || (hasV2Project && hasV2TransferPermission)
+  const hasAllTransferPermissions = Boolean(
+    v1MigrationReady && v2MigrationReady,
+  )
+
+  // Show the V1 callout, then V2 callout (if applicable)
+  const showV1GrantPermissionCallout = !v1MigrationReady
+  const showV2GrantPermissionCallout =
+    !showV1GrantPermissionCallout && !v2MigrationReady
+
+  const hasV1ClaimedBalance = v1ClaimedBalance && v1ClaimedBalance.gt(0)
+
+  const needsV1Approval = hasV1Project && hasV1ClaimedBalance
+
+  const hasV1ApprovedTokenAllowance =
+    !needsV1Approval || v1Allowance?.gte(v1ClaimedBalance) || approveDone
+
+  const showV1ApproveCallout =
+    !showV1GrantPermissionCallout &&
+    !showV2GrantPermissionCallout &&
+    !hasV1ApprovedTokenAllowance
+
+  const canMigrate = hasAllTransferPermissions && hasV1ApprovedTokenAllowance
 
   const migrateTokens = async () => {
     setLoading(true)
@@ -116,11 +145,7 @@ export function MigrateLegacyProjectTokensModal({
       transactionPending={transactionPending}
       confirmLoading={loading}
       destroyOnClose
-      okButtonProps={
-        !(hasAllPermissions && hasApprovedTokenAllowance)
-          ? { disabled: true }
-          : undefined
-      }
+      okButtonProps={!canMigrate ? { disabled: true } : undefined}
       {...modalOkProps}
       {...props}
     >
@@ -129,44 +154,61 @@ export function MigrateLegacyProjectTokensModal({
 
         <div className="flex gap-6">
           <Statistic
-            title={<Trans>Your total legacy tokens</Trans>}
-            value={formatWad(legacyTokenBalance)}
-          />
-
-          <Statistic
-            title={<Trans>Tokens approved for migration</Trans>}
-            value={formatWad(allowance)}
+            title={
+              <>
+                <Trans>Your total legacy tokens</Trans>{' '}
+                <TooltipIcon
+                  tip={
+                    <Trans>Total unclaimed and claimed V1 and V2 tokens</Trans>
+                  }
+                />
+              </>
+            }
+            value={formatWad(legacyTokenBalance, { precision: 4 })}
           />
         </div>
 
-        {hasV1Project && !hasV1Permission && (
+        <div className="flex flex-col gap-2">
+          {hasV1Project && hasV1TransferPermission && (
+            <div>
+              <CheckCircleOutlined /> V1 Transfer permission granted.
+            </div>
+          )}
+          {hasV2Project && hasV2TransferPermission && (
+            <div>
+              <CheckCircleOutlined /> V2 Transfer permission granted.
+            </div>
+          )}
+          {hasV1Project &&
+            v1ClaimedBalance?.gt(0) &&
+            hasV1ApprovedTokenAllowance && (
+              <div>
+                <CheckCircleOutlined /> V1 ERC-20 token spend approved.
+              </div>
+            )}
+        </div>
+
+        {showV1GrantPermissionCallout && (
           <GrantV1ApprovalCallout
             onDone={() => setGrantV1PermissionDone(true)}
           />
         )}
-        {/* Show the V1 callout, then V2 callout (if applicable) */}
-        {(!hasV1Project || hasV1Permission) &&
-          hasV2Project &&
-          !hasV2TransferPermission &&
-          !hasV2TransferPermissionResult.loading && (
+        {showV2GrantPermissionCallout &&
+          (hasV2TransferPermissionResult.loading ? (
+            <Loading />
+          ) : (
             <GrantV2ApprovalCallout
               onDone={() => setGrantV2PermissionDone(true)}
             />
-          )}
-
-        {hasAllPermissions && !hasApprovedTokenAllowance ? (
-          legacyTokenBalance?.gt(0) ? (
-            <ApproveMigrationCallout
-              onDone={() => setApproveDone(true)}
-              legacyTokenBalance={legacyTokenBalance}
-              legacyTokenContractAddress={v1TokenAddress}
-            />
-          ) : (
-            <span>
-              <Trans>You have no legacy tokens.</Trans>
-            </span>
-          )
-        ) : null}
+          ))}
+        {showV1ApproveCallout && v1ClaimedBalance && (
+          <ApproveMigrationCallout
+            version="1"
+            onDone={() => setApproveDone(true)}
+            approveAmount={v1ClaimedBalance}
+            legacyTokenContractAddress={v1TokenAddress}
+          />
+        )}
       </Space>
     </TransactionModal>
   )

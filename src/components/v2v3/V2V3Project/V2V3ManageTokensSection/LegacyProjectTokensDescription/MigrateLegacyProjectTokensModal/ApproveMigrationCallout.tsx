@@ -6,7 +6,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useErc20Contract } from 'hooks/ERC20/Erc20Contract'
 import { useApproveERC20Tx } from 'hooks/ERC20/transactor/ApproveTx'
 import { useContext, useState } from 'react'
-import { fromWad } from 'utils/format/formatNumber'
+import { formatWad } from 'utils/format/formatNumber'
 
 export function ApproveMigrationCallout({
   approveAmount,
@@ -55,7 +55,8 @@ export function ApproveMigrationCallout({
     <Callout.Info>
       <p>
         <Trans>
-          Approve migration for your {fromWad(approveAmount)} v{version} legacy
+          Approve migration for your{' '}
+          {formatWad(approveAmount, { precision: 4 })} v{version} legacy ERC-20
           tokens.
         </Trans>
       </p>

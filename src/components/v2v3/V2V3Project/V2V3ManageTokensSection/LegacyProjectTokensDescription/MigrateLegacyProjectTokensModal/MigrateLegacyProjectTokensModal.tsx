@@ -3,6 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { ModalProps, Space, Statistic } from 'antd'
 import Loading from 'components/Loading'
+import TooltipIcon from 'components/TooltipIcon'
 import TransactionModal from 'components/TransactionModal'
 import { CV_V2 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -64,13 +65,12 @@ export function MigrateLegacyProjectTokensModal({
   const hasV2Project = cvs?.includes(CV_V2)
 
   const hasV1TransferPermission =
-    grantV1PermissionDone ||
     useV1HasPermissions({
       operator: tokenAddress,
       account: userAddress,
       domain: v1ProjectId?.toNumber(),
       permissionIndexes: [V1OperatorPermission.Transfer],
-    })
+    }) || grantV1PermissionDone
 
   const hasV2TransferPermissionResult = useV2V3HasPermissions({
     operator: tokenAddress,
@@ -86,7 +86,9 @@ export function MigrateLegacyProjectTokensModal({
     !hasV1Project || (hasV1Project && hasV1TransferPermission)
   const v2MigrationReady =
     !hasV2Project || (hasV2Project && hasV2TransferPermission)
-  const canMigrate = Boolean(v1MigrationReady && v2MigrationReady)
+  const hasAllTransferPermissions = Boolean(
+    v1MigrationReady && v2MigrationReady,
+  )
 
   // Show the V1 callout, then V2 callout (if applicable)
   const showV1GrantPermissionCallout = !v1MigrationReady
@@ -95,15 +97,17 @@ export function MigrateLegacyProjectTokensModal({
 
   const hasV1ClaimedBalance = v1ClaimedBalance && v1ClaimedBalance.gt(0)
 
+  const needsV1Approval = hasV1Project && hasV1ClaimedBalance
+
   const hasV1ApprovedTokenAllowance =
-    !hasV1ClaimedBalance ||
-    (hasV1Project && v1Allowance && v1Allowance.gte(v1ClaimedBalance)) ||
-    approveDone
+    !needsV1Approval || v1Allowance?.gte(v1ClaimedBalance) || approveDone
 
   const showV1ApproveCallout =
     !showV1GrantPermissionCallout &&
     !showV2GrantPermissionCallout &&
     !hasV1ApprovedTokenAllowance
+
+  const canMigrate = hasAllTransferPermissions && hasV1ApprovedTokenAllowance
 
   const migrateTokens = async () => {
     setLoading(true)
@@ -150,12 +154,21 @@ export function MigrateLegacyProjectTokensModal({
 
         <div className="flex gap-6">
           <Statistic
-            title={<Trans>Your total legacy tokens</Trans>}
+            title={
+              <>
+                <Trans>Your total legacy tokens</Trans>{' '}
+                <TooltipIcon
+                  tip={
+                    <Trans>Total unclaimed and claimed V1 and V2 tokens</Trans>
+                  }
+                />
+              </>
+            }
             value={formatWad(legacyTokenBalance, { precision: 4 })}
           />
         </div>
 
-        <div>
+        <div className="flex flex-col gap-2">
           {hasV1Project && hasV1TransferPermission && (
             <div>
               <CheckCircleOutlined /> V1 Transfer permission granted.

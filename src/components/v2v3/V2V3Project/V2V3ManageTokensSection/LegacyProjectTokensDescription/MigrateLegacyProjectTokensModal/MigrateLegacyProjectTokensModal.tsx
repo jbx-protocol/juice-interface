@@ -2,6 +2,7 @@ import { CheckCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { ModalProps, Space, Statistic } from 'antd'
+import Loading from 'components/Loading'
 import TransactionModal from 'components/TransactionModal'
 import { CV_V2 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -63,12 +64,13 @@ export function MigrateLegacyProjectTokensModal({
   const hasV2Project = cvs?.includes(CV_V2)
 
   const hasV1TransferPermission =
+    grantV1PermissionDone ||
     useV1HasPermissions({
       operator: tokenAddress,
       account: userAddress,
       domain: v1ProjectId?.toNumber(),
       permissionIndexes: [V1OperatorPermission.Transfer],
-    }) || grantV1PermissionDone
+    })
 
   const hasV2TransferPermissionResult = useV2V3HasPermissions({
     operator: tokenAddress,
@@ -90,7 +92,6 @@ export function MigrateLegacyProjectTokensModal({
   const showV1GrantPermissionCallout = !v1MigrationReady
   const showV2GrantPermissionCallout =
     !showV1GrantPermissionCallout && !v2MigrationReady
-  !hasV2TransferPermissionResult.loading
 
   const hasV1ClaimedBalance = v1ClaimedBalance && v1ClaimedBalance.gt(0)
 
@@ -179,11 +180,14 @@ export function MigrateLegacyProjectTokensModal({
             onDone={() => setGrantV1PermissionDone(true)}
           />
         )}
-        {showV2GrantPermissionCallout && (
-          <GrantV2ApprovalCallout
-            onDone={() => setGrantV2PermissionDone(true)}
-          />
-        )}
+        {showV2GrantPermissionCallout &&
+          (hasV2TransferPermissionResult.loading ? (
+            <Loading />
+          ) : (
+            <GrantV2ApprovalCallout
+              onDone={() => setGrantV2PermissionDone(true)}
+            />
+          ))}
         {showV1ApproveCallout && v1ClaimedBalance && (
           <ApproveMigrationCallout
             version="1"

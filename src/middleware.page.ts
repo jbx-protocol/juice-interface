@@ -1,9 +1,13 @@
+import { getLogger } from 'lib/logger'
 import { NextRequest, NextResponse } from 'next/server'
 
 // get the handle name from a URL path
 const HANDLE_REGEX = new RegExp(/\/@([^/]+).*/)
 
+const logger = getLogger('middleware/page')
+
 export async function middleware(request: NextRequest) {
+  logger.info('middleware request', { pathname: request.nextUrl.pathname })
   if (!request.nextUrl.pathname.startsWith('/@')) return
 
   // If request is for a handle id, add the search param with `isHandle`.
@@ -14,7 +18,7 @@ export async function middleware(request: NextRequest) {
 
   const trailingPath = request.nextUrl.pathname.split('/').slice(2).join('/')
 
-  console.info('Project middleware request', {
+  logger.info('resolving handle', {
     pathname: request.nextUrl.pathname,
     handle: handleDecoded,
   })
@@ -27,14 +31,14 @@ export async function middleware(request: NextRequest) {
       .then(r => r.json())
       .then(r => r.projectId)
   } catch (e) {
-    console.error('Failed to query projects', e)
+    logger.error('Failed to find project id for handle', handleDecoded, e)
     throw e
   }
 
   const url = request.nextUrl
 
   if (!projectId) {
-    console.info('Page not found', {
+    logger.info('Page not found', {
       originalPathname: request.nextUrl.pathname,
       newPathname: '/404',
       handle: handleDecoded,
@@ -45,7 +49,7 @@ export async function middleware(request: NextRequest) {
 
   url.pathname = `/v2/p/${projectId}${trailingPath ? `/${trailingPath}` : ''}`
 
-  console.info('Rewriting to project route', {
+  logger.info('Rewriting to project route', {
     originalPathname: request.nextUrl.pathname,
     newPathname: url.pathname,
     handle: handleDecoded,
@@ -54,5 +58,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/@:handle*', '/@:handle*/:rest*'],
+  matcher: ['/((?!api|_next/static|favicon.ico).*)'],
 }

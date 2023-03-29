@@ -126,7 +126,7 @@ export default function ProjectCard({
     metadata?.archived
 
   return (
-    <Link href={projectCardHref} as={projectCardUrl}>
+    <Link href={projectCardHref} as={projectCardUrl} prefetch={false}>
       <a>
         <div
           className={`relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-lg py-4 md:border md:border-solid md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100 ${PROJECT_CARD_BG}`}

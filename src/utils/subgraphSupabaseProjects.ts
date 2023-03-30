@@ -2,14 +2,14 @@ import { ipfsGet } from 'lib/api/ipfs'
 import { CURRENT_VERSION, MAX_METADATA_RETRIES } from 'lib/sepana/constants'
 import { Json } from 'models/json'
 import { consolidateMetadata, ProjectMetadata } from 'models/projectMetadata'
-import { SepanaProject, SGSepanaCompareKey } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
+import { SBProject, SGSBCompareKey } from 'models/supabaseProject'
 
 import { formatError } from './format/formatError'
 import { parseBigNumberKeyVals } from './graph'
 import { isIpfsCID } from './ipfs'
 
-export const sgSepanaCompareKeys: SGSepanaCompareKey[] = [
+export const sgSbCompareKeys: SGSBCompareKey[] = [
   'id',
   'projectId',
   'pv',
@@ -24,20 +24,20 @@ export const sgSepanaCompareKeys: SGSepanaCompareKey[] = [
   'paymentsCount',
 ]
 
-export const parseSepanaProjectJson = (
-  j: Json<SepanaProject>,
-): SepanaProject => ({
+export const parseSBProjectJson = (j: Json<SBProject>): SBProject => ({
   ...j,
+  tags: j.tags ?? [],
+  archived: j.archived ?? false,
   ...parseBigNumberKeyVals(j, ['currentBalance', 'totalPaid', 'trendingScore']),
 })
 
 export function getChangedSubgraphProjects({
-  subgraphProjects,
-  sepanaProjects,
+  sgProjects,
+  sbProjects,
   retryIpfs,
 }: {
-  subgraphProjects: Json<Pick<Project, SGSepanaCompareKey>>[]
-  sepanaProjects: Record<string, Json<SepanaProject>>
+  sgProjects: Json<Pick<Project, SGSBCompareKey>>[]
+  sbProjects: Record<string, Json<SBProject>>
   retryIpfs?: boolean
 }) {
   const idsOfNewProjects = new Set<string>([])
@@ -52,29 +52,29 @@ export function getChangedSubgraphProjects({
 
   let retryMetadataCount = 0
 
-  const changedSubgraphProjects = subgraphProjects
+  const changedSubgraphProjects = sgProjects
     .map(p => ({
       ...p,
-      // Adjust BigNumber values before we compare them to sepana values
+      // Adjust BigNumber values before we compare them to supabase values
       currentBalance: padBigNumForSort(p.currentBalance),
       totalPaid: padBigNumForSort(p.totalPaid),
       trendingScore: padBigNumForSort(p.trendingScore),
     }))
-    .filter(subgraphProject => {
-      const id = subgraphProject.id
+    .filter(sgProject => {
+      const id = sgProject.id
 
-      const sepanaProject = sepanaProjects[subgraphProject.id]
+      const sbProject = sbProjects[id]
 
-      if (!sepanaProject) {
+      if (!sbProject) {
         idsOfNewProjects.add(id)
         return true
       }
 
-      if (sepanaProject._v !== CURRENT_VERSION) {
+      if (sbProject._v !== CURRENT_VERSION) {
         return true
       }
 
-      const { _hasUnresolvedMetadata, _metadataRetriesLeft } = sepanaProject
+      const { _hasUnresolvedMetadata, _metadataRetriesLeft } = sbProject
 
       if (
         retryIpfs &&
@@ -85,10 +85,10 @@ export function getChangedSubgraphProjects({
         return true
       }
 
-      // Deep compare Subgraph project vs. Sepana project and find any discrepancies
-      const propertiesToUpdate = sgSepanaCompareKeys.filter(k => {
-        const oldVal = sepanaProject[k]
-        const newVal = subgraphProject[k]
+      // Deep compare Subgraph project vs. Supabase project and find any discrepancies
+      const propertiesToUpdate = sgSbCompareKeys.filter(k => {
+        const oldVal = sbProject[k]
+        const newVal = sgProject[k]
 
         // Store a record of properties that need updating
         if (oldVal !== newVal) {
@@ -119,15 +119,15 @@ export function getChangedSubgraphProjects({
 }
 
 export async function tryResolveMetadata({
-  subgraphProject,
+  sgProject,
   _metadataRetriesLeft,
   _hasUnresolvedMetadata,
 }: {
-  subgraphProject: Json<Pick<Project, SGSepanaCompareKey>>
+  sgProject: Json<Pick<Project, SGSBCompareKey>>
 } & Partial<
-  Pick<SepanaProject, '_hasUnresolvedMetadata' | '_metadataRetriesLeft'>
+  Pick<SBProject, '_hasUnresolvedMetadata' | '_metadataRetriesLeft'>
 >) {
-  const { metadataUri } = subgraphProject
+  const { metadataUri } = sgProject
 
   // if metadataUri is missing or invalid, or no retries remaining for unresolved metadata
   if (
@@ -137,10 +137,10 @@ export async function tryResolveMetadata({
   ) {
     return {
       project: {
-        ...subgraphProject,
+        ...sgProject,
         _hasUnresolvedMetadata: true,
         _metadataRetriesLeft: 0,
-      } as Json<SepanaProject>,
+      } as Json<SBProject>,
     }
   }
 
@@ -154,13 +154,13 @@ export async function tryResolveMetadata({
 
     return {
       project: {
-        ...subgraphProject,
+        ...sgProject,
         name,
         description,
         logoUri,
         tags,
         archived,
-      } as Json<SepanaProject>,
+      } as Json<SBProject>,
     }
   } catch (error) {
     // decrement metadataRetriesLeft, or set to max if previously unset
@@ -172,10 +172,10 @@ export async function tryResolveMetadata({
       error: formatError(error),
       retriesRemaining,
       project: {
-        ...subgraphProject,
+        ...sgProject,
         _hasUnresolvedMetadata: true,
         _metadataRetriesLeft: retriesRemaining,
-      } as Json<SepanaProject>,
+      } as Json<SBProject>,
     }
   }
 }

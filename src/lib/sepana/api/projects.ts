@@ -1,95 +1,38 @@
-import { Json } from 'models/json'
-import {
-  SepanaProject,
-  SepanaProjectQueryOpts,
-  SepanaQueryResponse,
-} from 'models/sepana'
-import { SEPANA_DEFAULT_SCORE_SCRIPT } from '../constants'
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { SBProjectQueryOpts } from 'models/supabaseProject'
+import { NextApiRequest, NextApiResponse } from 'next'
+import { Database } from 'types/database.types'
 
-import { SEPANA_ENDPOINTS } from './endpoints'
-import { sepanaAxios } from './http'
+export async function querySBProjects(
+  req: NextApiRequest,
+  res: NextApiResponse,
+  opts: SBProjectQueryOpts,
+) {
+  const orderBy = opts.orderBy ?? 'totalPaid'
+  const page = opts.page ?? 0
+  const pageSize = opts.pageSize ?? 20
+  // Only sort ascending if orderBy is defined and orderDirection is 'asc'
+  const ascending = opts.orderBy ? opts.orderDirection === 'asc' : false
 
-export async function querySepanaProjects(opts: SepanaProjectQueryOpts) {
-  const filter: Record<string, object>[] = []
-  const must: Record<string, object>[] = []
-  const must_not: Record<string, object>[] = []
-  const sort: Record<string, object>[] = []
+  const searchText = opts.text ? `*${opts.text}*` : undefined
 
-  if (opts.text) {
-    must.push({
-      query_string: {
-        query: `*${opts.text}*`,
-        // Match against name, handle, description
-        // Weight matches to name and handle higher than description due to relevance
-        fields: ['name^2', 'handle^2', 'description'],
-      },
-    })
-  }
+  const searchFilter = searchText
+    ? `name.fts.${searchText},handle.fts.${searchText},description.fts.${searchText}`
+    : undefined
 
-  if (opts.tags) {
-    filter.push({
-      terms: {
-        tags: opts.tags,
-      },
-    })
-  }
+  const supabase = createServerSupabaseClient<Database>({ req, res }).from(
+    'projects',
+  )
 
-  if (opts.pv) {
-    filter.push({
-      terms: {
-        pv: opts.pv,
-      },
-    })
-  }
+  let query = supabase
+    .select()
+    .is('archived', opts.archived ?? false)
+    .order(orderBy, { ascending })
+    .range(page * pageSize, (page + 1) * pageSize)
 
-  if (opts.archived) {
-    filter.push({
-      term: {
-        archived: 'true',
-      },
-    })
-  } else {
-    must_not.push({
-      query_string: {
-        query: 'archived:true',
-      },
-    })
-  }
+  if (opts.pv?.length) query = query.in('pv', opts.pv)
+  if (opts.tags?.length) query = query.overlaps('tags', opts.tags)
+  if (searchFilter) query = query.or(searchFilter)
 
-  if (opts.orderBy) {
-    sort.push({
-      [opts.orderBy]: {
-        order: opts.orderDirection ?? 'asc',
-      },
-    })
-  }
-
-  const bool = {
-    ...(filter.length ? { filter } : {}),
-    ...(must.length ? { must } : {}),
-    ...(must_not.length ? { must_not } : {}),
-  }
-
-  // Use function_score if sort isn't defined
-  const query = sort.length
-    ? {
-        bool,
-      }
-    : {
-        function_score: {
-          query: { bool },
-          script_score: { script: { source: SEPANA_DEFAULT_SCORE_SCRIPT } },
-          boost_mode: 'sum',
-        },
-      }
-
-  return sepanaAxios('read')
-    .post<SepanaQueryResponse<Json<SepanaProject>>>(SEPANA_ENDPOINTS.search, {
-      engine_ids: [process.env.SEPANA_ENGINE_ID],
-      query,
-      ...(sort.length ? { sort } : {}),
-      size: opts.pageSize, // sepana uses default 20
-      page: opts.page,
-    })
-    .then(res => res.data)
+  return query
 }

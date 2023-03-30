@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
@@ -7,7 +6,6 @@ import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { ProjectTag } from 'models/project-tags'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
@@ -40,58 +38,22 @@ function ArchivedBadge() {
   )
 }
 
-function useProjectCardData(project?: ProjectCardProject | BigNumber) {
-  // Get ProjectCardProject object if this component was passed a projectId (bigNumber)
-  const projectResponse = useSubgraphQuery(
-    BigNumber.isBigNumber(project)
-      ? {
-          entity: 'project',
-          keys: [
-            'id',
-            'handle',
-            'metadataUri',
-            'totalPaid',
-            'createdAt',
-            'terminal',
-            'projectId',
-            'pv',
-          ],
-          where: {
-            key: 'projectId',
-            value: project.toString(),
-          },
-        }
-      : null,
-  ).data
-
-  // If we were given projectId (BigNumber) and therefore projectResponse returned something,
-  // return the first item in the array.
-  if (projectResponse?.[0]) {
-    return projectResponse[0]
-  }
-
-  // Otherwise, return the given [project] argument,  which must have type ProjectCardProject.
-  return project as ProjectCardProject | undefined
-}
-
 export default function ProjectCard({
   project,
 }: {
-  project?: ProjectCardProject | BigNumber
+  project: ProjectCardProject | undefined
 }) {
-  const projectCardData = useProjectCardData(project)
-  const { data: metadata } = useProjectMetadata(projectCardData?.metadataUri)
+  const { data: metadata } = useProjectMetadata(project?.metadataUri)
   const { handleText } = useProjectHandleText({
-    handle: projectCardData?.handle,
-    projectId: projectCardData?.projectId,
+    handle: project?.handle,
+    projectId: project?.projectId,
   })
 
-  if (!projectCardData) return null
+  if (!project) return null
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =
-    projectCardData.totalPaid?.gt(0) &&
-    projectCardData.totalPaid.lt(constants.WeiPerEther)
+    project.totalPaid?.gt(0) && project.totalPaid.lt(constants.WeiPerEther)
       ? 2
       : 0
 
@@ -106,28 +68,28 @@ export default function ProjectCard({
    * https://web.dev/route-prefetching-in-nextjs/
    */
   const projectCardHref =
-    projectCardData.pv === PV_V2
+    project.pv === PV_V2
       ? v2v3ProjectRoute({
-          projectId: projectCardData.projectId,
+          projectId: project.projectId,
         })
-      : `/p/${projectCardData.handle}`
+      : `/p/${project.handle}`
 
   const projectCardUrl =
-    projectCardData.pv === PV_V2
+    project.pv === PV_V2
       ? v2v3ProjectRoute({
-          projectId: projectCardData.projectId,
-          handle: projectCardData.handle,
+          projectId: project.projectId,
+          handle: project.handle,
         })
       : projectCardHref
 
   const isArchived =
-    (projectCardData.pv === PV_V1 &&
-      V1ArchivedProjectIds.includes(projectCardData.projectId)) ||
-    (projectCardData.pv === PV_V2 &&
-      V2ArchivedProjectIds.includes(projectCardData.projectId)) ||
+    (project.pv === PV_V1 &&
+      V1ArchivedProjectIds.includes(project.projectId)) ||
+    (project.pv === PV_V2 &&
+      V2ArchivedProjectIds.includes(project.projectId)) ||
     metadata?.archived
 
-  const tags = (project as ProjectCardProject).tags
+  const tags = project.tags
 
   return (
     <Link href={projectCardHref} as={projectCardUrl} prefetch={false}>
@@ -140,7 +102,7 @@ export default function ProjectCard({
               className="h-24 w-24 md:h-28 md:w-28"
               uri={metadata?.logoUri}
               name={metadata?.name}
-              projectId={projectCardData.projectId}
+              projectId={project.projectId}
             />
           </div>
           <div className="min-w-0 flex-1 font-normal">
@@ -160,16 +122,13 @@ export default function ProjectCard({
 
             <div>
               <span className="font-medium text-black dark:text-slate-100">
-                <ETHAmount
-                  amount={projectCardData.totalPaid}
-                  precision={precision}
-                />{' '}
+                <ETHAmount amount={project.totalPaid} precision={precision} />{' '}
               </span>
 
               <span className="text-grey-500 dark:text-grey-300">
                 since{' '}
-                {!!projectCardData.createdAt &&
-                  formatDate(projectCardData.createdAt * 1000, 'yyyy-MM-DD')}
+                {!!project.createdAt &&
+                  formatDate(project.createdAt * 1000, 'yyyy-MM-DD')}
               </span>
             </div>
 

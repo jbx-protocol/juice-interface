@@ -3,16 +3,16 @@ import {
   ArrowRightOutlined,
   ArrowUpOutlined,
   EnterOutlined,
-  SearchOutlined
+  SearchOutlined,
 } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
 import { PV_V2 } from 'constants/pv'
 import { useModal } from 'hooks/Modal'
-import { useSepanaProjectsQuery } from 'hooks/Projects'
+import { useSBProjectsQuery } from 'hooks/Projects'
 import { trackFathomGoal } from 'lib/fathom'
-import { SepanaProject } from 'models/sepana'
+import { SBProject } from 'models/supabaseProject'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -53,7 +53,7 @@ export default function QuickProjectSearch({
     }
   }, [inputText])
 
-  const { data: searchResults, isLoading } = useSepanaProjectsQuery({
+  const { data: searchResults, isLoading } = useSBProjectsQuery({
     text: searchText,
     pageSize: MAX_RESULTS,
   })
@@ -202,7 +202,7 @@ export default function QuickProjectSearch({
                       <V2V3ProjectHandleLink
                         projectId={p.projectId}
                         handle={p.handle}
-                        name={(p as SepanaProject).name}
+                        name={(p as SBProject).name}
                       />
                     ) : (
                       <V1ProjectHandle

@@ -11,12 +11,8 @@ import {
 import { Json } from 'models/json'
 import { ProjectState } from 'models/projectVisibility'
 import { PV } from 'models/pv'
-import {
-  SepanaProject,
-  SepanaProjectQueryOpts,
-  SepanaQueryResponse,
-} from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
+import { SBProject, SBProjectQueryOpts } from 'models/supabaseProject'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useMemo, useState } from 'react'
 import {
@@ -27,7 +23,7 @@ import {
 } from 'react-query'
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
-import { parseSepanaProjectJson } from 'utils/sepana'
+import { parseSBProjectJson } from 'utils/subgraphSupabaseProjects'
 
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
@@ -159,69 +155,64 @@ export function useProjectsSearch(
   )
 }
 
-export function useSepanaProjectsQuery(
-  opts: SepanaProjectQueryOpts,
+export function useSBProjectsQuery(
+  opts: SBProjectQueryOpts,
   reactQueryOptions?: UseQueryOptions<
-    SepanaProject[],
+    SBProject[],
     Error,
-    SepanaProject[],
-    readonly [string, SepanaProjectQueryOpts]
+    SBProject[],
+    readonly [string, SBProjectQueryOpts]
   >,
 ) {
   return useQuery<
-    SepanaProject[],
+    SBProject[],
     Error,
-    SepanaProject[],
-    readonly [string, SepanaProjectQueryOpts]
+    SBProject[],
+    readonly [string, SBProjectQueryOpts]
   >(
-    ['sepana-tags-query', opts],
+    ['sbp-query', opts],
     () =>
       axios
-        .get<SepanaQueryResponse<Json<SepanaProject>>>(
+        .get<Json<SBProject>[]>(
           `/api/sepana/projects?${formatQueryParams(opts)}`,
         )
-        .then(res =>
-          res.data.hits.hits.map(h => parseSepanaProjectJson(h._source)),
-        ),
+        .then(res => res.data.map(p => parseSBProjectJson(p))),
     {
-      staleTime: DEFAULT_STALE_TIME,
+      staleTime: 0,
+      // staleTime: DEFAULT_STALE_TIME,
       ...reactQueryOptions,
     },
   )
 }
 
-export function useSepanaProjectsInfiniteQuery(
-  opts: SepanaProjectQueryOpts,
+export function useSBProjectsInfiniteQuery(
+  opts: SBProjectQueryOpts,
   reactQueryOptions?: UseInfiniteQueryOptions<
-    SepanaProject[],
+    SBProject[],
     Error,
-    SepanaProject[],
-    SepanaProject[],
-    readonly [string, SepanaProjectQueryOpts]
+    SBProject[],
+    SBProject[],
+    readonly [string, SBProjectQueryOpts]
   >,
 ) {
   return useInfiniteQuery(
-    ['sepana-tags-query', opts],
-    async ({
-      queryKey,
-      pageParam = 1, // page is a 1-based index
-    }) => {
+    ['sbp-infinite-query', opts],
+    async ({ queryKey, pageParam }) => {
       const { pageSize, ...evaluatedOpts } = queryKey[1]
 
       return axios
-        .get<SepanaQueryResponse<Json<SepanaProject>>>(
+        .get<Json<SBProject>[]>(
           `/api/sepana/projects?${formatQueryParams({
             ...evaluatedOpts,
             page: pageParam,
             pageSize,
           })}`,
         )
-        .then(res =>
-          res.data.hits.hits.map(h => parseSepanaProjectJson(h._source)),
-        )
+        .then(res => res.data.map(p => parseSBProjectJson(p)))
     },
     {
-      staleTime: DEFAULT_STALE_TIME,
+      staleTime: 0,
+      // staleTime: DEFAULT_STALE_TIME,
       ...reactQueryOptions,
       // Don't allow this function to be overwritten by reactQueryOptions
       getNextPageParam: (lastPage, allPages) => {

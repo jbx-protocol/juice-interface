@@ -76,32 +76,92 @@ export interface Database {
   }
   public: {
     Tables: {
-      projects: {
-        Row: {
-          id: number
-        }
-        Insert: {
-          id: number
-        }
-        Update: {
-          id?: number
-        }
-      }
       user_subscriptions: {
         Row: {
           notification_id: string
-          project_id: number
+          project_id: string
           user_id: string
         }
         Insert: {
           notification_id: string
-          project_id: number
+          project_id: string
           user_id: string
         }
         Update: {
           notification_id?: string
-          project_id?: number
+          project_id?: string
           user_id?: string
+        }
+      }
+      projects: {
+        Row: {
+          _hasUnresolvedMetadata: boolean | null
+          _lastUpdated: number | null
+          _metadataRetriesLeft: number | null
+          _v: string | null
+          archived: boolean | null
+          createdAt: number | null
+          currentBalance: string | null
+          deployer: string | null
+          description: string | null
+          handle: string | null
+          id: string
+          logoUri: string | null
+          metadataUri: string | null
+          name: string | null
+          paymentsCount: number | null
+          projectId: number | null
+          pv: string | null
+          tags: string[] | null
+          terminal: string | null
+          totalPaid: string | null
+          trendingScore: string | null
+        }
+        Insert: {
+          _hasUnresolvedMetadata?: boolean | null
+          _lastUpdated?: number | null
+          _metadataRetriesLeft?: number | null
+          _v?: string | null
+          archived?: boolean | null
+          createdAt?: number | null
+          currentBalance?: string | null
+          deployer?: string | null
+          description?: string | null
+          handle?: string | null
+          id: string
+          logoUri?: string | null
+          metadataUri?: string | null
+          name?: string | null
+          paymentsCount?: number | null
+          projectId?: number | null
+          pv?: string | null
+          tags?: string[] | null
+          terminal?: string | null
+          totalPaid?: string | null
+          trendingScore?: string | null
+        }
+        Update: {
+          _hasUnresolvedMetadata?: boolean | null
+          _lastUpdated?: number | null
+          _metadataRetriesLeft?: number | null
+          _v?: string | null
+          archived?: boolean | null
+          createdAt?: number | null
+          currentBalance?: string | null
+          deployer?: string | null
+          description?: string | null
+          handle?: string | null
+          id?: string
+          logoUri?: string | null
+          metadataUri?: string | null
+          name?: string | null
+          paymentsCount?: number | null
+          projectId?: number | null
+          pv?: string | null
+          tags?: string[] | null
+          terminal?: string | null
+          totalPaid?: string | null
+          trendingScore?: string | null
         }
       }
       users: {
@@ -169,7 +229,34 @@ export interface Database {
       }
     }
     Functions: {
-      [_ in never]: never
+      search_projects: {
+        Args: {
+          keyword: string
+        }
+        Returns: {
+          _hasUnresolvedMetadata: boolean | null
+          _lastUpdated: number | null
+          _metadataRetriesLeft: number | null
+          _v: string | null
+          archived: boolean | null
+          createdAt: number | null
+          currentBalance: string | null
+          deployer: string | null
+          description: string | null
+          handle: string | null
+          id: string
+          logoUri: string | null
+          metadataUri: string | null
+          name: string | null
+          paymentsCount: number | null
+          projectId: number | null
+          pv: string | null
+          tags: string[] | null
+          terminal: string | null
+          totalPaid: string | null
+          trendingScore: string | null
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

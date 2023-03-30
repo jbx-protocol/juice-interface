@@ -1,6 +1,6 @@
-import { querySepanaProjects } from 'lib/sepana/api'
+import { querySBProjects } from 'lib/sepana/api'
 import { ProjectTag } from 'models/project-tags'
-import { SepanaProjectQueryOpts } from 'models/sepana'
+import { SBProjectQueryOpts } from 'models/supabaseProject'
 import { NextApiHandler } from 'next'
 
 // Searches Juicebox projects matching text query param
@@ -54,7 +54,7 @@ const handler: NextApiHandler = async (req, res) => {
   const _pageSize =
     typeof pageSize === 'string' && typeof parseInt(pageSize) === 'number'
       ? parseInt(pageSize)
-      : 20 // default page size
+      : undefined
 
   const _page =
     typeof page === 'string' && typeof parseInt(page) === 'number'
@@ -62,18 +62,18 @@ const handler: NextApiHandler = async (req, res) => {
       : undefined
 
   try {
-    const results = await querySepanaProjects({
+    const { data: results } = await querySBProjects(req, res, {
       text,
       tags: tags?.split(',') as ProjectTag[],
       pageSize: _pageSize,
       page: _page,
       archived:
         archived === 'true' ? true : archived === 'false' ? false : undefined,
-      pv: pv?.split(',') as SepanaProjectQueryOpts['pv'],
-      orderDirection:
-        orderDirection as SepanaProjectQueryOpts['orderDirection'],
-      orderBy: orderBy as SepanaProjectQueryOpts['orderBy'],
+      pv: pv?.split(',') as SBProjectQueryOpts['pv'],
+      orderDirection: orderDirection as SBProjectQueryOpts['orderDirection'],
+      orderBy: orderBy as SBProjectQueryOpts['orderBy'],
     })
+
     res.status(200).json(results)
     return
   } catch (e) {

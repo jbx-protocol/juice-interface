@@ -1,30 +1,27 @@
-import { queryAll } from 'lib/sepana/api'
-import { sepanaLog } from 'lib/sepana/log'
-import { Json } from 'models/json'
-import { SepanaProject } from 'models/sepana'
+import { sbpQueryAll } from 'lib/sepana/api'
+import { sbpLog } from 'lib/sepana/log'
 import { NextApiHandler } from 'next'
 import { querySubgraphExhaustiveRaw } from 'utils/graph'
-import { sgSepanaCompareKeys } from 'utils/sepana'
+import { sgSbCompareKeys } from 'utils/subgraphSupabaseProjects'
 
-// Checks integrity of data in Sepana db against the current subgraph data
+// Checks integrity of data in Supabase db against the current subgraph data
 const handler: NextApiHandler = async (_, res) => {
-  const { hits: sepanaProjects, total: sepanaProjectsCount } = await queryAll<
-    Json<SepanaProject>
-  >()
+  const { data: sbProjects } = await sbpQueryAll()
 
-  const isEmpty = !sepanaProjectsCount
+  const sbProjectsCount = sbProjects?.length
+
+  const isEmpty = !sbProjectsCount
 
   let report = isEmpty
     ? `Database empty`
     : `Last updated at block: ${Math.max(
-        ...sepanaProjects.map(p => p._source._lastUpdated),
+        ...sbProjects.map(p => p._lastUpdated),
       )}`
 
   let shouldAlert = isEmpty
 
-  const sepanaIdErrors: string[] = []
-  const sepanaExtraProjects: string[] = []
-  const sepanaMissingProjects: string[] = []
+  const sbExtraProjects: string[] = []
+  const sbMissingProjects: string[] = []
   const mismatchedProjects: string[] = []
   const projectsMissingMetadata: string[] = []
 
@@ -32,34 +29,28 @@ const handler: NextApiHandler = async (_, res) => {
     const subgraphProjects = (
       await querySubgraphExhaustiveRaw({
         entity: 'project',
-        keys: sgSepanaCompareKeys,
+        keys: sgSbCompareKeys,
       })
     ).map(p => ({ ...p, _id: p.id }))
 
-    report += `\n\n${sepanaProjectsCount} projects in database`
+    report += `\n\n${sbProjectsCount} projects in database`
 
     // Check total project counts
-    if (subgraphProjects.length !== sepanaProjectsCount) {
-      report += `\n\nMismatched project counts. Subgraph: ${subgraphProjects.length}, Sepana: ${sepanaProjectsCount}`
+    if (subgraphProjects.length !== sbProjectsCount) {
+      report += `\n\nMismatched project counts. Subgraph: ${subgraphProjects.length}, Sepana: ${sbProjectsCount}`
 
       shouldAlert = true
     }
 
     // Check for specific mismatched projects
-    for (const sepanaProject of sepanaProjects) {
-      const { _source } = sepanaProject
+    for (const sbProject of sbProjects) {
       const {
         id,
         name,
         metadataUri,
         _hasUnresolvedMetadata,
         _metadataRetriesLeft,
-      } = _source
-
-      // Ensure that Sepana record IDs are internally consistent
-      if (sepanaProject._id !== id) {
-        sepanaIdErrors.push(`\`[${sepanaProject._id}]\` _source.id: ${id}`)
-      }
+      } = sbProject
 
       if (_hasUnresolvedMetadata && _metadataRetriesLeft) {
         projectsMissingMetadata.push(
@@ -74,18 +65,18 @@ const handler: NextApiHandler = async (_, res) => {
 
       if (!subgraphProject) {
         // Record projects that exist in sepana but not in subgraph
-        sepanaExtraProjects.push(`\`[${id}]\` Name: ${name}`)
+        sbExtraProjects.push(`\`[${id}]\` Name: ${name}`)
       } else {
         // Ensure that Sepana records accurately reflect Subgraph data
-        sgSepanaCompareKeys.forEach(k => {
+        sgSbCompareKeys.forEach(k => {
           // TODO bad types here
           if (
-            subgraphProject[k as keyof typeof subgraphProject] !== _source[k]
+            subgraphProject[k as keyof typeof subgraphProject] !== sbProject[k]
           ) {
             mismatchedProjects.push(
               `\`[${id}]\` ${name ?? '<no name>'} **${k}** Subgraph: ${
                 subgraphProject[k as keyof typeof subgraphProject]
-              }, Sepana: ${_source[k]}`,
+              }, Supabase: ${sbProject[k]}`,
             )
           }
         })
@@ -94,19 +85,12 @@ const handler: NextApiHandler = async (_, res) => {
 
     // Record projects that exist in subgraph but not in sepana
     subgraphProjects.forEach(p =>
-      sepanaMissingProjects.push(`ID: ${p.id}, Handle: ${p.handle}`),
+      sbMissingProjects.push(`ID: ${p.id}, Handle: ${p.handle}`),
     )
 
-    if (sepanaIdErrors.length) {
-      report += `\n\n${sepanaExtraProjects.length} Sepana project records with bad IDs:`
-      sepanaIdErrors.forEach(e => (report += `\n${e}`))
-
-      shouldAlert = true
-    }
-
-    if (sepanaExtraProjects.length) {
-      report += `\n\n${sepanaExtraProjects.length} Sepana projects missing from Subgraph:`
-      sepanaExtraProjects.forEach(e => (report += `\n${e}`))
+    if (sbExtraProjects.length) {
+      report += `\n\n${sbExtraProjects.length} Sepana projects missing from Subgraph:`
+      sbExtraProjects.forEach(e => (report += `\n${e}`))
 
       shouldAlert = true
     }
@@ -125,15 +109,15 @@ const handler: NextApiHandler = async (_, res) => {
       shouldAlert = true
     }
 
-    if (sepanaMissingProjects.length) {
-      report += `\n\n${sepanaMissingProjects.length} Subgraph projects missing from Sepana:`
-      sepanaMissingProjects.forEach(e => (report += `\n${e}`))
+    if (sbMissingProjects.length) {
+      report += `\n\n${sbMissingProjects.length} Subgraph projects missing from Sepana:`
+      sbMissingProjects.forEach(e => (report += `\n${e}`))
 
       shouldAlert = true
     }
   }
 
-  await sepanaLog(
+  await sbpLog(
     shouldAlert
       ? {
           type: 'alert',
@@ -150,22 +134,18 @@ const handler: NextApiHandler = async (_, res) => {
     network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
     status: shouldAlert ? 'ERROR' : 'OK',
     message: report,
-    sepanaProjectsCount,
-    sepanaIdErrors: {
-      data: sepanaIdErrors,
-      count: sepanaIdErrors.length,
+    sbProjectsCount,
+    sbExtraProjects: {
+      data: sbExtraProjects,
+      count: sbExtraProjects.length,
     },
-    sepanaExtraProjects: {
-      data: sepanaExtraProjects,
-      count: sepanaExtraProjects.length,
-    },
-    sepanaMissingProjects: {
-      data: sepanaMissingProjects,
-      count: sepanaMissingProjects.length,
+    sbMissingProjects: {
+      data: sbMissingProjects,
+      count: sbMissingProjects.length,
     },
     mismatchedProjects: {
       data: mismatchedProjects,
-      count: sepanaMissingProjects.length,
+      count: mismatchedProjects.length,
     },
     projectsMissingMetadata: {
       data: projectsMissingMetadata,

@@ -1,10 +1,11 @@
-import { SettingOutlined } from '@ant-design/icons'
+import { Cog6ToothIcon } from '@heroicons/react/24/solid'
 import { t, Trans } from '@lingui/macro'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { Button, Tabs } from 'antd'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import Grid from 'components/Grid'
+import { ButtonHeroicon } from 'components/icons/ButtonHeroicon'
 import Loading from 'components/Loading'
 import Paragraph from 'components/Paragraph'
 import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
@@ -209,7 +210,7 @@ export function AccountDashboard({
           {isOwner && (
             <Button
               loading={editProfileButtonLoading}
-              icon={<SettingOutlined />}
+              icon={<ButtonHeroicon icon={Cog6ToothIcon} />}
               onClick={onEditProfileClicked}
             >
               <span>

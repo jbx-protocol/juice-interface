@@ -5,6 +5,21 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const logger = getLogger('api/juicebox/project/[projectHandle]')
 
+export const fetchProjectIdForHandle = async (handle: string) => {
+  const projects = await paginateDepleteProjectsQueryCall({
+    variables: {
+      where: { pv: PV_V2, handle },
+    },
+  })
+
+  if (!projects.length) {
+    return
+  }
+
+  const projectId = projects[0].projectId
+  return projectId
+}
+
 /**
  * Get project data from project handle
  */
@@ -18,17 +33,11 @@ export default async function handler(
 
   const handleDecoded = decodeURI(projectHandle as string)
 
-  const projects = await paginateDepleteProjectsQueryCall({
-    variables: {
-      where: { pv: PV_V2, handle: handleDecoded },
-    },
-  })
+  const projectId = await fetchProjectIdForHandle(handleDecoded)
 
-  if (!projects.length) {
+  if (!projectId) {
     return res.status(404).json({ error: 'project not found' })
   }
-
-  const projectId = projects[0].projectId
 
   // cache for a day
   res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')

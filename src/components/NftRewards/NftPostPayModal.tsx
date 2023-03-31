@@ -29,13 +29,12 @@ export function NftPostPayModal({
         href: withHttps(config.ctaLink),
         target: '_blank',
         rel: 'noopener noreferrer',
+        className: 'overflow-hidden text-ellipsis',
       }}
       cancelButtonProps={{
         hidden: true,
       }}
-      okText={
-        <div className="overflow-hidden text-ellipsis">{config.ctaText}</div>
-      }
+      okText={config.ctaText}
       destroyOnClose
     >
       {config.content}

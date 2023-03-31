@@ -1,4 +1,3 @@
-import { Space } from 'antd'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
@@ -37,11 +36,12 @@ export function ProjectBanners() {
   const hasUpgradedJBController = contracts?.JBController !== undefined
 
   // show banner if a V2 project was launched on the bugged contracts and hasn't upgraded.
-  const showV2BugNoticeBanner =
+  const showV2BugNoticeBanner = Boolean(
     isV2Project &&
-    !projectContractsLoading?.JBControllerLoading &&
-    hasProjectOnDeprecatedContracts &&
-    !hasUpgradedJBController
+      !projectContractsLoading?.JBControllerLoading &&
+      hasProjectOnDeprecatedContracts &&
+      !hasUpgradedJBController,
+  )
 
   const showRelaunchFundingCycleBanner =
     showV2BugNoticeBanner && canReconfigureFundingCycles
@@ -51,13 +51,9 @@ export function ProjectBanners() {
   if (!hasBanners) return null
 
   return (
-    <Space
-      direction="vertical"
-      size="small"
-      className="mx-auto w-full max-w-5xl"
-    >
+    <div className="mx-auto flex w-full max-w-5xl flex-col">
       {showV2BugNoticeBanner && <V2BugNoticeBanner />}
       {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
-    </Space>
+    </div>
   )
 }

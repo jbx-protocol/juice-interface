@@ -7,6 +7,7 @@ const supportedContentTypes = [
   'image/gif',
   'image/png',
   'image/svg',
+  'image/vnd.mozilla.apng',
 ].concat(VIDEO_FILE_TYPES)
 
 export const loadAllMediaLinks = async (urlsPerLine: string[]) => {

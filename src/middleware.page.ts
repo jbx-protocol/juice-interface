@@ -1,5 +1,6 @@
 import { getLogger } from 'lib/logger'
 import { NextRequest, NextResponse } from 'next/server'
+import { fetchProjectIdForHandle } from 'pages/api/juicebox/project/[projectHandle].page'
 
 // get the handle name from a URL path
 const HANDLE_REGEX = new RegExp(/\/@([^/]+).*/)
@@ -25,11 +26,7 @@ export async function middleware(request: NextRequest) {
 
   let projectId
   try {
-    projectId = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/juicebox/project/${handleDecoded}`,
-    )
-      .then(r => r.json())
-      .then(r => r.projectId)
+    projectId = await fetchProjectIdForHandle(handleDecoded)
   } catch (e) {
     logger.error('Failed to find project id for handle', handleDecoded, e)
     throw e

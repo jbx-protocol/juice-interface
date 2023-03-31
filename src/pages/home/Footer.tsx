@@ -1,23 +1,21 @@
 import { GithubFilled, TwitterCircleFilled } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
-import { Button, InputProps } from 'antd'
+import { Trans, t } from '@lingui/macro'
+import { Button, Form } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import Logo from 'components/Navbar/Logo'
 import Discord from 'components/icons/Discord'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import Logo from 'components/Navbar/Logo'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
 import { ThemeOption } from 'constants/theme/themeOption'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik'
 import { createJuicenewsSubscription } from 'lib/api/juicenews'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ReactNode, useContext } from 'react'
+import { ReactNode, useContext, useState } from 'react'
 import {
   emitErrorNotification,
   emitInfoNotification,
 } from 'utils/notifications'
-import * as Yup from 'yup'
 import orangeLadyOd from '/public/assets/orange_lady-od.png'
 import orangeLadyOl from '/public/assets/orange_lady-ol.png'
 
@@ -174,32 +172,24 @@ export function Footer() {
   )
 }
 
-const NewsletterSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Invalid email')
-    .required(t`Required`),
-})
-
 type NewsletterFormType = {
   email: string
 }
 
 const NewsletterSection = () => {
-  const initialValues: NewsletterFormType = {
-    email: '',
-  }
+  const [form] = Form.useForm<NewsletterFormType>()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const onSubmit = async (
-    values: NewsletterFormType,
-    helpers: FormikHelpers<NewsletterFormType>,
-  ) => {
+  const onSubmit = async () => {
     try {
-      await createJuicenewsSubscription(values.email)
+      setIsLoading(true)
+      await createJuicenewsSubscription(form.getFieldValue('email'))
       emitInfoNotification(t`Successfully subscribed to Juicenews!`)
     } catch (e) {
       emitErrorNotification(t`Subcription to juicenews failed.`)
+    } finally {
+      setIsLoading(false)
     }
-    helpers.setSubmitting(false)
   }
 
   return (
@@ -216,34 +206,26 @@ const NewsletterSection = () => {
             </Trans>
           </div>
         </div>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={NewsletterSchema}
-          onSubmit={onSubmit}
+
+        <Form
+          className="flex flex-col gap-3 md:flex-row"
+          onFinish={onSubmit}
+          form={form}
         >
-          {({ isSubmitting }) => (
-            <Form className="flex flex-col gap-3 md:flex-row">
-              <div className="relative min-w-[300px] flex-1">
-                <Field
-                  type="email"
-                  name="email"
-                  placeholder={t`Your email address`}
-                  as={(props: InputProps) => (
-                    <JuiceInput {...props} className="h-10" />
-                  )}
-                />
-                <ErrorMessage
-                  className="text-error mt-2 md:absolute md:top-8"
-                  name="email"
-                  component="div"
-                />
-              </div>
-              <Button htmlType="submit" type="primary" loading={isSubmitting}>
-                Subscribe
-              </Button>
-            </Form>
-          )}
-        </Formik>
+          <div className="relative min-w-[300px] flex-1">
+            <Form.Item name="email">
+              <JuiceInput
+                type="email"
+                placeholder={t`Your email address`}
+                className="h-10"
+                required
+              />
+            </Form.Item>
+          </div>
+          <Button htmlType="submit" type="primary" loading={isLoading}>
+            <Trans>Subscribe</Trans>
+          </Button>
+        </Form>
       </div>
     </section>
   )

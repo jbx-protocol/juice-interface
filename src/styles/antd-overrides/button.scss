@@ -138,3 +138,8 @@
 .ant-upload.ant-upload-select-picture-card:hover {
   @apply stroke-action-primary;
 }
+
+a.ant-btn:not(.ant-btn-link) {
+  line-height: 30px;
+  padding-top: 4px !important;
+}

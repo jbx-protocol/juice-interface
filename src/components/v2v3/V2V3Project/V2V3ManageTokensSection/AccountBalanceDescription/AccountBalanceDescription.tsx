@@ -4,12 +4,12 @@ import ManageTokensModal from 'components/ManageTokensModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useERC20BalanceOf from 'hooks/ERC20/ERC20BalanceOf'
-import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
-import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
+import { useWallet } from 'hooks/Wallet'
 import { useIsOwnerConnected } from 'hooks/v2v3/IsOwnerConnected'
 import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
+import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
+import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/TransferUnclaimedTokensTx'
-import { useWallet } from 'hooks/Wallet'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
 import {
@@ -47,10 +47,10 @@ export function AccountBalanceDescription() {
   const hasIssuedERC20 = useProjectHasErc20()
 
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
-    precision: 0,
+    precision: 4,
   })
   const unclaimedBalanceFormatted = formatWad(unclaimedBalance ?? 0, {
-    precision: 0,
+    precision: 4,
   })
 
   const totalTokenSupplyDiscrete = parseInt(fromWad(totalTokenSupply))

@@ -23,9 +23,9 @@ export function TokenSwapDescription() {
           You have <span className="font-medium">{projectMetadata?.name}</span>{' '}
           tokens in one or more of their legacy projects. You can swap migrate
           legacy <span className="font-medium">{projectMetadata?.name}</span>{' '}
-          tokens for their new V3 tokens{' '}
-          <TooltipIcon tip={<TooltipDescription />} />.
-        </Trans>
+          tokens for their new V3 tokens.
+        </Trans>{' '}
+        <TooltipIcon tip={<TooltipDescription />} />
       </p>
     </div>
   )

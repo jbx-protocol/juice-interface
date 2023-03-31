@@ -43,13 +43,19 @@ export function UpgradeController() {
         onChange={onChange}
         items={[
           {
-            title: 'Upgrade JBController',
+            title: (
+              <span className="text-sm capitalize">Upgrade Controller</span>
+            ),
           },
           {
-            title: 'Upgrade JBETHPaymentTerminal',
+            title: (
+              <span className="text-sm capitalize">
+                Upgrade Payment Terminal
+              </span>
+            ),
           },
           {
-            title: 'Move ETH',
+            title: <span className="text-sm capitalize">Move ETH</span>,
           },
         ]}
         className="mb-5"

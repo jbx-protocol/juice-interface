@@ -47,7 +47,7 @@ export function ProjectSettingsContent() {
 
   return (
     <Layout className="bg-transparent pl-4">
-      <h2 className="mb-0 text-black dark:text-slate-100">
+      <h2 className="mb-0 font-heading text-2xl font-medium text-black dark:text-slate-100">
         {V2V3SettingsPageKeyTitleMap[activeSettingsPage]}
       </h2>
 

@@ -14,8 +14,8 @@ import {
   USE_DATASOURCE_FOR_REDEEM_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import {
-  ballotStrategiesFn,
   DEFAULT_BALLOT_STRATEGY,
+  ballotStrategiesFn,
 } from 'constants/v2v3/ballotStrategies'
 import isEqual from 'lodash/isEqual'
 import { BallotStrategy } from 'models/ballot'
@@ -212,7 +212,7 @@ export default function RulesForm({
             <h3 className="mb-5 text-black dark:text-slate-100">
               <Trans>Owner permissions</Trans>
             </h3>
-            <h4 className="mb-3 font-normal uppercase text-black dark:text-slate-100">
+            <h4 className="mb-3 font-heading text-lg font-normal text-black dark:text-slate-100">
               <Trans>Configuration rules</Trans>
             </h4>
             <Form.Item extra={TERMINAL_CONFIG_EXPLANATION}>
@@ -240,7 +240,7 @@ export default function RulesForm({
               </div>
             </Form.Item>
 
-            <h4 className="mb-3 font-normal uppercase text-black dark:text-slate-100">
+            <h4 className="mb-3 font-heading text-lg font-normal text-black dark:text-slate-100">
               <Trans>Migration rules</Trans>
             </h4>
             <Form.Item extra={TERMINAL_MIGRATION_EXPLANATION}>

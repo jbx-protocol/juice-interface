@@ -36,7 +36,7 @@ export function ProjectUpgradesPage() {
         )}
 
         {isUpgradeAvailable && (
-          <>
+          <div>
             <h3>
               <Trans>Available upgrades</Trans>
             </h3>
@@ -56,7 +56,7 @@ export function ProjectUpgradesPage() {
                 </div>
               )
             })}
-          </>
+          </div>
         )}
       </Space>
     </div>

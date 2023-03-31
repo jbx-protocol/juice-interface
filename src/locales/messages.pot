@@ -3092,7 +3092,7 @@ msgstr ""
 msgid "This transaction will move your project's ETH to the new Payment Terminal contract: <0>{terminalAddress}</0>."
 msgstr ""
 
-msgid "This transaction will set your project's Controller contract to: <0>{controllerAddress}</0>. Any reserved tokens will be sent out."
+msgid "This transaction will set your project's Controller contract to: <0>{controllerAddress}</0>. <1>Any reserved tokens will be sent out.</1>"
 msgstr ""
 
 msgid "This transaction will set your project's Payment Terminal contract to: <0>{terminalAddress}</0>."

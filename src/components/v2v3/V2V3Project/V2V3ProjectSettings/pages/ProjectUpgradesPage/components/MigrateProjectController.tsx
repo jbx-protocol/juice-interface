@@ -62,7 +62,7 @@ export function MigrateProjectController({
           <EtherscanLink type="address" value={controllerAddress}>
             {controllerAddress}
           </EtherscanLink>
-          . Any reserved tokens will be sent out.
+          . <strong>Any reserved tokens will be sent out.</strong>
         </Trans>
       </InfoCallout>
       <Button onClick={onClick} type="primary" loading={loading}>

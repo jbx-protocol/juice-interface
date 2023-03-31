@@ -1,15 +1,10 @@
 import { getAddress } from '@ethersproject/address'
 import { BigNumber } from '@ethersproject/bignumber'
-import {
-  ParticipantsDocument,
-  ParticipantsQuery,
-  QueryParticipantsArgs,
-} from 'generated/graphql'
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase'
-import client from 'lib/apollo/client'
 import { resolveAddressEnsIdeas } from 'lib/ensIdeas'
 import { getLogger } from 'lib/logger'
+import { ProjectNotification } from 'models/notifications/projectNotifications'
 import moment from 'moment'
 import { NextApiRequest, NextApiResponse } from 'next'
 import {
@@ -211,27 +206,46 @@ const findEmailEventsForProjectId = async (
   projectId: number,
   payer: string,
 ): Promise<EmailEvent[]> => {
-  const walletsToProject = (
-    await client.query<ParticipantsQuery, QueryParticipantsArgs>({
-      query: ParticipantsDocument,
-      variables: { where: { projectId } },
-    })
-  ).data.participants.map(p => p.wallet.id.toLowerCase())
-
-  const orQuery = [...walletsToProject, payer]
-    .map(wallet => `wallet.eq.${wallet}`)
-    .join(',')
   const usersResult = await sudoPublicDbClient
     .from('users')
-    .select('email,wallet')
+    .select(
+      `
+      email,
+      wallet,
+      user_subscriptions (
+        project_id,
+        notification_id
+      )
+    `,
+    )
     .eq('email_verified', true)
     .not('email', 'is', null)
-    .or(orQuery)
   if (usersResult.error) throw usersResult.error
-  return usersResult.data.map(u => ({
-    email: u.email as string,
-    type: u.wallet === payer ? EmailType.PayReceipt : EmailType.PayEvent,
-  }))
+
+  // Filter out users that are not subscribed to the project or are the payer.
+  const users = usersResult.data.filter(
+    ({ wallet, user_subscriptions: subscriptions }) => {
+      if (wallet === payer) return true
+      if (Array.isArray(subscriptions)) {
+        return subscriptions.some(
+          s =>
+            s.project_id === projectId &&
+            s.notification_id === ProjectNotification.ProjectPaid,
+        )
+      }
+      return (
+        subscriptions?.project_id === projectId &&
+        subscriptions?.notification_id === ProjectNotification.ProjectPaid
+      )
+    },
+  )
+
+  return users.map(u => {
+    return {
+      email: u.email as string,
+      type: u.wallet === payer ? EmailType.PayReceipt : EmailType.PayEvent,
+    }
+  })
 }
 
 export default handler

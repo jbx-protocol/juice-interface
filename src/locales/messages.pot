@@ -467,6 +467,9 @@ msgstr ""
 msgid "Automated"
 msgstr ""
 
+msgid "Automatically receive this project's ERC-20 tokens. Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+msgstr ""
+
 msgid "Available after fee:"
 msgstr ""
 
@@ -1596,9 +1599,6 @@ msgid "Leave this blank to make your currently connected wallet the project owne
 msgstr ""
 
 msgid "Leave this blank to start your first cycle immediately after you finish setting up your project."
-msgstr ""
-
-msgid "Leave unchecked to have the Juicebox protocol internally track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
 msgid "Legacy balance"

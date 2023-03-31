@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
-import ParticipantsModal from 'components/modals/ParticipantsModal'
 import { TextButton } from 'components/buttons/TextButton'
+import ParticipantsModal from 'components/modals/ParticipantsModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
@@ -23,7 +23,7 @@ export function TotalSupplyDescription() {
     <>
       <div>
         <div>
-          {formatWad(totalTokenSupply, { precision: 0 })} {tokenText}
+          {formatWad(totalTokenSupply, { precision: 4 })} {tokenText}
         </div>
         {totalTokenSupply?.gt(0) ? (
           <TextButton onClick={() => setParticipantsModalVisible(true)}>

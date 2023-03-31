@@ -2471,6 +2471,9 @@ msgstr ""
 msgid "Remaining ETH"
 msgstr ""
 
+msgid "Request a feature"
+msgstr ""
+
 msgid "Request a feature."
 msgstr ""
 

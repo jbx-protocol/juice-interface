@@ -2834,6 +2834,9 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
+msgid "Subscribe"
+msgstr ""
+
 msgid "Subscribe to Juicenews to get the latest updates from the Juicebox ecosystem."
 msgstr ""
 

@@ -1,8 +1,13 @@
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import {
+  Session,
+  useSession,
+  useSupabaseClient,
+} from '@supabase/auth-helpers-react'
+import { ModalContext } from 'contexts/Modal'
 import { useWallet } from 'hooks/Wallet'
 import { useWalletSignIn } from 'hooks/WalletSignIn'
 import { ProjectNotification } from 'models/notifications/projectNotifications'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { Database } from 'types/database.types'
 import { emitErrorNotification } from 'utils/notifications'
 
@@ -14,6 +19,7 @@ import { emitErrorNotification } from 'utils/notifications'
  * @example const { loading, isSubscribed, subscribe } = useSubscribeButton({ projectId: 1 })
  */
 export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
+  const subscribeModal = useContext(ModalContext)
   const [loading, setLoading] = useState<boolean>(false)
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false)
 
@@ -51,6 +57,54 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
     [supabase],
   )
 
+  const toggleSubscription = useCallback(
+    async (s?: Session) => {
+      // If the user is not connected to a wallet, don't do anything
+      if (!wallet.isConnected) return
+      const _session = s ?? session
+      if (!_session) return
+
+      try {
+        // Set the user as subscribed to the project if they are not already
+        const userId = _session.user.id
+        const notifications = await getUserNotificationsForProjectId({
+          projectId,
+          userId,
+        })
+        if (!notifications?.length) {
+          const { error } = await supabase.from('user_subscriptions').insert([
+            {
+              user_id: _session.user.id,
+              project_id: projectId,
+              notification_id: ProjectNotification.ProjectPaid,
+            },
+          ])
+          if (error) throw error
+          setIsSubscribed(true)
+        } else {
+          const { error } = await supabase
+            .from('user_subscriptions')
+            .delete()
+            .eq('user_id', userId)
+            .eq('project_id', projectId)
+            .eq('notification_id', ProjectNotification.ProjectPaid)
+          if (error) throw error
+          setIsSubscribed(false)
+        }
+      } catch (e) {
+        console.error(e)
+        emitErrorNotification('Error subscribing to project')
+      }
+    },
+    [
+      getUserNotificationsForProjectId,
+      projectId,
+      session,
+      supabase,
+      wallet.isConnected,
+    ],
+  )
+
   // Check if the user is subscribed to the project
   useEffect(() => {
     if (!session?.user.id) return
@@ -79,43 +133,26 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
 
     try {
       const session = await signIn()
-      // Set the user as subscribed to the project if they are not already
-      const userId = session.user.id
-      const notifications = await getUserNotificationsForProjectId({
-        projectId,
-        userId,
-      })
-      if (!notifications?.length) {
-        const { error } = await supabase.from('user_subscriptions').insert([
-          {
-            user_id: session.user.id,
-            project_id: projectId,
-            notification_id: ProjectNotification.ProjectPaid,
-          },
-        ])
-        if (error) throw error
-        setIsSubscribed(true)
-      } else {
-        const { error } = await supabase
-          .from('user_subscriptions')
-          .delete()
-          .eq('user_id', userId)
-          .eq('project_id', projectId)
-          .eq('notification_id', ProjectNotification.ProjectPaid)
-        if (error) throw error
-        setIsSubscribed(false)
+      // Check user has a email address
+      const { data, error } = await supabase
+        .from('users')
+        .select('email')
+        .eq('id', session.user.id)
+        .single()
+      if (error) {
+        throw new Error(error.message)
       }
+      if (!data?.email) {
+        subscribeModal.openModal()
+        return
+      }
+
+      await toggleSubscription()
     } catch (e) {
       console.error('Error occurred while subscribing', e)
       emitErrorNotification('Error occurred while subscribing')
     }
-  }, [
-    getUserNotificationsForProjectId,
-    projectId,
-    signIn,
-    supabase,
-    wallet.isConnected,
-  ])
+  }, [signIn, subscribeModal, supabase, toggleSubscription, wallet.isConnected])
 
   return {
     loading,

@@ -42,6 +42,11 @@ const LinkCols: { title: ReactNode; items: LinkItem[] }[] = [
         externalLink: true,
         link: 'https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e',
       },
+      {
+        title: t`Request a feature`,
+        externalLink: true,
+        link: 'https://juicebox.canny.io/feature-requests',
+      },
     ],
   },
   {
@@ -131,7 +136,7 @@ export function Footer() {
         <JuiceLady />
       </div>
       <NewsletterSection />
-      <div className="bg-slate-900 px-12 pt-12 text-white">
+      <div className="bg-slate-900 px-12 pt-12 text-slate-100">
         <div className="m-auto max-w-6xl">
           <div className="flex flex-col gap-y-10 md:grid md:grid-cols-6 md:items-start md:gap-x-10">
             <div className="flex flex-col gap-y-5 md:col-span-2 md:items-start">
@@ -193,7 +198,7 @@ const NewsletterSection = () => {
   }
 
   return (
-    <section className="bg-smoke-50 px-12 py-8 dark:bg-slate-600">
+    <section className="bg-smoke-100 px-12 py-8 dark:bg-slate-600">
       <div className="m-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
         <div>
           <div className="text-base font-medium">
@@ -236,7 +241,7 @@ const LinkColumn: React.FC<{ title: ReactNode; items: LinkItem[] }> = ({
   items,
 }) => (
   <div className="flex flex-col gap-y-3">
-    <div className="text-grey-300">{title}</div>
+    <div className="font-medium text-grey-300">{title}</div>
     {items.map(({ title, link, externalLink }, i) => (
       <div key={i}>
         {externalLink ? (

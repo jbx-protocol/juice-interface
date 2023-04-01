@@ -47,10 +47,10 @@ export function AccountBalanceDescription() {
   const hasIssuedERC20 = useProjectHasErc20()
 
   const claimedBalanceFormatted = formatWad(claimedBalance ?? 0, {
-    precision: 4,
+    precision: 2,
   })
   const unclaimedBalanceFormatted = formatWad(unclaimedBalance ?? 0, {
-    precision: 4,
+    precision: 2,
   })
 
   const totalTokenSupplyDiscrete = parseInt(fromWad(totalTokenSupply))

@@ -1346,6 +1346,9 @@ msgstr ""
 msgid "Get help planning or setting up my project."
 msgstr ""
 
+msgid "Get notified when a contributor supports this project"
+msgstr ""
+
 msgid "GitHub"
 msgstr ""
 
@@ -1761,6 +1764,9 @@ msgid "Minutes"
 msgstr ""
 
 msgid "More trending projects"
+msgstr ""
+
+msgid "More updates coming soon"
 msgstr ""
 
 msgid "Move ETH"
@@ -2847,6 +2853,9 @@ msgid "Subscribe for updates!"
 msgstr ""
 
 msgid "Subscribe to Juicenews to get the latest updates from the Juicebox ecosystem."
+msgstr ""
+
+msgid "Subscribe to project activity"
 msgstr ""
 
 msgid "Successfully subscribed to Juicenews!"

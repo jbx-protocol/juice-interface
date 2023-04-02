@@ -1,31 +1,9 @@
 import { GlobalOutlined, TwitterOutlined } from '@ant-design/icons'
 import { Space } from 'antd'
-import ExternalLink from 'components/ExternalLink'
 import Discord from 'components/icons/Discord'
 import Telegram from 'components/icons/Telegram'
+import { SocialButton } from 'components/SocialButton'
 import useMobile from 'hooks/Mobile'
-import { linkUrl } from 'utils/url'
-
-type SocialProps = {
-  children: React.ReactNode
-  link: string
-  name: string
-}
-
-function SocialButton(props: SocialProps) {
-  const { children, link, name } = props
-
-  return (
-    <ExternalLink
-      className="border-1 p-30 flex h-10 w-10 items-center justify-center rounded-full bg-smoke-100 hover:bg-smoke-200  dark:bg-slate-400 dark:hover:bg-slate-500 md:h-9 md:w-9"
-      href={linkUrl(link)}
-      name={name}
-      title={name}
-    >
-      {children}
-    </ExternalLink>
-  )
-}
 
 export default function SocialLinks({
   infoUri,

@@ -1,4 +1,4 @@
-import { updateSBProjects } from 'lib/sepana/update'
+import { updateSBProjects } from 'lib/api/supabase/projects'
 import { NextApiHandler } from 'next'
 
 // Synchronizes the Sepana engine with the latest Juicebox Subgraph/IPFS data

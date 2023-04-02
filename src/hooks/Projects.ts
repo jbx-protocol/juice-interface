@@ -173,9 +173,7 @@ export function useSBProjectsQuery(
     ['sbp-query', opts],
     () =>
       axios
-        .get<Json<SBProject>[]>(
-          `/api/sepana/projects?${formatQueryParams(opts)}`,
-        )
+        .get<Json<SBProject>[]>(`/api/projects?${formatQueryParams(opts)}`)
         .then(res => res.data.map(p => parseSBProjectJson(p))),
     {
       staleTime: 0,
@@ -202,7 +200,7 @@ export function useSBProjectsInfiniteQuery(
 
       return axios
         .get<Json<SBProject>[]>(
-          `/api/sepana/projects?${formatQueryParams({
+          `/api/projects?${formatQueryParams({
             ...evaluatedOpts,
             page: pageParam,
             pageSize,

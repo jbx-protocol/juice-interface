@@ -1,5 +1,4 @@
-import { sbpQueryAll } from 'lib/sepana/api'
-import { sbpLog } from 'lib/sepana/log'
+import { sbpLog, sbpQueryAll } from 'lib/api/supabase/projects'
 import { NextApiHandler } from 'next'
 import { querySubgraphExhaustiveRaw } from 'utils/graph'
 import { sgSbCompareKeys } from 'utils/subgraphSupabaseProjects'
@@ -37,7 +36,7 @@ const handler: NextApiHandler = async (_, res) => {
 
     // Check total project counts
     if (subgraphProjects.length !== sbProjectsCount) {
-      report += `\n\nMismatched project counts. Subgraph: ${subgraphProjects.length}, Sepana: ${sbProjectsCount}`
+      report += `\n\nMismatched project counts. Subgraph: ${subgraphProjects.length}, Supabase: ${sbProjectsCount}`
 
       shouldAlert = true
     }
@@ -64,10 +63,10 @@ const handler: NextApiHandler = async (_, res) => {
       )[0]
 
       if (!subgraphProject) {
-        // Record projects that exist in sepana but not in subgraph
+        // Record projects that exist in Supabase but not in Subgraph
         sbExtraProjects.push(`\`[${id}]\` Name: ${name}`)
       } else {
-        // Ensure that Sepana records accurately reflect Subgraph data
+        // Ensure that Supabase records accurately reflect Subgraph data
         sgSbCompareKeys.forEach(k => {
           // TODO bad types here
           if (
@@ -83,34 +82,34 @@ const handler: NextApiHandler = async (_, res) => {
       }
     }
 
-    // Record projects that exist in subgraph but not in sepana
+    // Record projects that exist in Subgraph but not in Supabase
     subgraphProjects.forEach(p =>
       sbMissingProjects.push(`ID: ${p.id}, Handle: ${p.handle}`),
     )
 
     if (sbExtraProjects.length) {
-      report += `\n\n${sbExtraProjects.length} Sepana projects missing from Subgraph:`
+      report += `\n\n${sbExtraProjects.length} Supabase projects missing from Subgraph:`
       sbExtraProjects.forEach(e => (report += `\n${e}`))
 
       shouldAlert = true
     }
 
     if (mismatchedProjects.length) {
-      report += `\n\n${mismatchedProjects.length} Sepana projects not matching Subgraph:`
+      report += `\n\n${mismatchedProjects.length} Supabase projects not matching Subgraph:`
       mismatchedProjects.forEach(e => (report += `\n${e}`))
 
       shouldAlert = true
     }
 
     if (projectsMissingMetadata.length) {
-      report += `\n\n${projectsMissingMetadata.length} Sepana projects missing metadata:`
+      report += `\n\n${projectsMissingMetadata.length} Supabase projects missing metadata:`
       projectsMissingMetadata.forEach(e => (report += `\n${e}`))
 
       shouldAlert = true
     }
 
     if (sbMissingProjects.length) {
-      report += `\n\n${sbMissingProjects.length} Subgraph projects missing from Sepana:`
+      report += `\n\n${sbMissingProjects.length} Subgraph projects missing from Supabase:`
       sbMissingProjects.forEach(e => (report += `\n${e}`))
 
       shouldAlert = true

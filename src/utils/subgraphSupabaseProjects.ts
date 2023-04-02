@@ -1,5 +1,8 @@
 import { ipfsGet } from 'lib/api/ipfs'
-import { CURRENT_VERSION, MAX_METADATA_RETRIES } from 'lib/sepana/constants'
+import {
+  CURRENT_VERSION,
+  MAX_METADATA_RETRIES,
+} from 'lib/api/supabase/projects'
 import { Json } from 'models/json'
 import { consolidateMetadata, ProjectMetadata } from 'models/projectMetadata'
 import { Project } from 'models/subgraph-entities/vX/project'

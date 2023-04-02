@@ -1,5 +1,5 @@
+import IntroImprovedSearch from 'components/announcements/IntroImprovedSearch'
 import IntroProjectTags from 'components/announcements/IntroProjectTags'
-import IntroSepanaSearch from 'components/announcements/IntroSepanaSearch'
 import { Announcement } from 'models/announcement'
 
 export const announcements: Announcement[] = [
@@ -10,9 +10,9 @@ export const announcements: Announcement[] = [
     expire: new Date('2023-04-01T00:00:00.000Z').valueOf(),
   },
   {
-    id: 'introSepanaSearch',
+    id: 'IntroImprovedSearch',
     conditions: [({ router }) => router.pathname.includes('projects')],
-    content: IntroSepanaSearch,
+    content: IntroImprovedSearch,
     expire: new Date('2023-04-01T00:00:00.000Z').valueOf(),
   },
 ]

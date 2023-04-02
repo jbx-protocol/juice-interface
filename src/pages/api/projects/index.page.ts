@@ -1,4 +1,4 @@
-import { querySBProjects } from 'lib/sepana/api'
+import { querySBProjects } from 'lib/api/supabase/projects'
 import { ProjectTag } from 'models/project-tags'
 import { SBProjectQueryOpts } from 'models/supabaseProject'
 import { NextApiHandler } from 'next'

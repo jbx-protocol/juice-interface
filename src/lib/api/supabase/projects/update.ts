@@ -10,8 +10,8 @@ import {
   sgSbCompareKeys,
   tryResolveMetadata,
 } from 'utils/subgraphSupabaseProjects'
-import { sbpQueryAll, writeSBProjects } from './api'
-import { sbpLog } from './log'
+import { sbpQueryAll, writeSBProjects } from '.'
+import { sbpLog } from './logger'
 
 export async function updateSBProjects(
   res: NextApiResponse,
@@ -19,7 +19,7 @@ export async function updateSBProjects(
 ) {
   try {
     // // TODO for testing
-    // await projectsBucket
+    // await sbProjects
     //   .delete({ count: 'exact' })
     //   .filter('id', 'not.eq', null)
     //   .then(res => {

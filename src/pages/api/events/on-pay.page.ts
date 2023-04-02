@@ -1,7 +1,7 @@
 import { getAddress } from '@ethersproject/address'
 import { BigNumber } from '@ethersproject/bignumber'
 import { emailServerClient } from 'lib/api/postmark'
-import { sudoPublicDbClient } from 'lib/api/supabase'
+import { sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { resolveAddressEnsIdeas } from 'lib/ensIdeas'
 import { getLogger } from 'lib/logger'
 import { ProjectNotification } from 'models/notifications/projectNotifications'
@@ -9,7 +9,7 @@ import moment from 'moment'
 import { NextApiRequest, NextApiResponse } from 'next'
 import {
   paymentReceiptTemplate,
-  paymentReceivedTemplate,
+  paymentReceivedTemplate
 } from 'templates/email/payments'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 import { fromWad } from 'utils/format/formatNumber'

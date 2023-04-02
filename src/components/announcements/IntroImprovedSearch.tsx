@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 
-export default function IntroSepanaSearch() {
+export default function IntroImprovedSearch() {
   return (
     <div>
       <h1 className="font-heading text-2xl">

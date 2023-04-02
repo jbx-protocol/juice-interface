@@ -173,6 +173,7 @@ export function AccountDashboard({
                 <SocialLinks
                   infoUri={profile?.website ?? undefined}
                   twitter={profile?.twitter ?? undefined}
+                  tooltipPlacement="bottom"
                 />
               </div>
             </div>
@@ -203,7 +204,11 @@ const EtherscanSocialButton = ({ address }: { address: string }) => {
   const isMobile = useMobile()
 
   return (
-    <SocialButton link={etherscanLink('address', address)} name="Etherscan">
+    <SocialButton
+      link={etherscanLink('address', address)}
+      tooltip="Etherscan"
+      tooltipPlacement={'bottom'}
+    >
       <Etherscan size={isMobile ? 16 : 14} />
     </SocialButton>
   )

@@ -164,6 +164,7 @@ export function ProjectHeader({
               telegram={projectMetadata?.telegram}
               twitter={projectMetadata?.twitter}
               infoUri={projectMetadata?.infoUri}
+              tooltipPlacement="bottom"
             />
             {hasSocialLinks && actions ? (
               <div className="hidden md:block">

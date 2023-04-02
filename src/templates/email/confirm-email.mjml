@@ -1,0 +1,145 @@
+<!-- This email template is used in supabase web ui. Please convert to html and replace there -->
+<!-- I am currently running this through the MJML editor online https://mjml.io/try-it-live -->
+<!-- Then run it through Mailchimp css inliner https://templates.mailchimp.com/resources/inline-css/ -->
+<!-- And post to https://app.supabase.com/project/<project_id>/auth/templates change email address -->
+
+<mjml>
+  <mj-head>
+    <mj-raw>
+      <meta name="color-scheme" content="light dark">
+      <meta name="supported-color-schemes" content="light dark">
+    </mj-raw>
+
+    <mj-style>
+      h1 {
+        font-size: 21px;
+      }
+
+      a {
+        color: black !important;
+      }
+
+      body {
+        background-color: white;
+        color: black;
+      }
+
+      p,
+      ul,
+      ol,
+      blockquote {
+        margin: 0.4em 0 1.1875em;
+        font-size: 16px;
+        line-height: 1.625;
+      }
+
+      .dark-img {
+        display: none;
+      }
+
+      .text-secondary {
+        color: #a3a3a3;
+      }
+
+      .font-sm {
+        font-size: 13px;
+      }
+
+      .stroke-tertiary {
+        border-width: 1px;
+        border-style: solid;
+        border-color: #e5e5e5 !important;
+      }
+
+      .bg-primary {
+        background-color: #5777eb;
+      }
+
+      .rounded {
+        border-radius: 4px;
+      }
+
+      .no-underline {
+        text-decoration-line: none;
+      }
+
+      :root {
+        color-scheme: light dark;
+        supported-color-schemes: light dark;
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+        body {
+          background-color: #201e29 !important;
+          color: white !important;
+        }
+
+        p,
+        a,
+        ul,
+        ol,
+        blockquote,
+        h1,
+        h2,
+        h3,
+        span,
+        table {
+          color: white !important;
+        }
+
+        .darkmode {
+          background-color: #20272D !important;
+        }
+
+        /* Used to hide light image on dark mode */
+        .light-img {
+          display: none !important;
+        }
+
+        .dark-img {
+          display: block !important;
+        }
+
+        .text-secondary {
+          color: #A29FB7 !important;
+        }
+
+        .stroke-tertiary {
+          border-color: #5F5C7A !important;
+        }
+      }
+    </mj-style>
+  </mj-head>
+
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-image css-class="light-img" width="140px" height="32px" alt="Juicebox" src="https://juicebox.money/assets/juice-logo-full_black.png" />
+        <mj-image css-class="dark-img" width="140px" height="32px" alt="Juicebox" src="https://juicebox.money/assets/juice-logo-full_white.png" />
+
+        <mj-text>
+          <p>Hey!</p>
+          <p>Please verify your email address to get started on Juicebox.</p>
+        </mj-text>
+
+        <mj-spacer height="40px" />
+        <mj-text align="center">
+          <a class="rounded bg-primary no-underline" style="margin: 40px 0; padding: 14px 30px; color: white !important" href="{{ .ConfirmationURL }}" target="_blank" rel="noopener noreferrer">Confirm</a>
+        </mj-text>
+
+      </mj-column>
+    </mj-section>
+
+    <!-- Footer -->
+    <mj-section>
+      <mj-column>
+        <mj-text align="center">
+          <p class="font-sm">© 2023 Juicebox. All rights reserved.</p>
+        </mj-text>
+      </mj-column>
+
+    </mj-section>
+  </mj-body>
+
+</mjml>`

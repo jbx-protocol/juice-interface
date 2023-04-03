@@ -24,7 +24,9 @@ export const useWalletSignIn = () => {
     }
 
     const getSessionResult = await supabase.auth.getSession()
-    if (getSessionResult.data) return
+    if (getSessionResult.data.session) {
+      return getSessionResult.data.session
+    }
 
     const challengeMessage = await AuthAPI.getChallengeMessage({
       wallet: wallet.userAddress,
@@ -35,7 +37,7 @@ export const useWalletSignIn = () => {
       signature,
       message: challengeMessage,
     })
-    const { error } = await supabase.auth.setSession({
+    const { error, data } = await supabase.auth.setSession({
       access_token: accessToken,
       refresh_token: v4(), // Set to garbage token, no long lived refresh tokens
     })
@@ -43,5 +45,10 @@ export const useWalletSignIn = () => {
       console.error(error)
       throw new Error(error.message)
     }
+    if (!data.session) {
+      console.error('No session returned')
+      throw new Error('No session returned')
+    }
+    return data.session
   }, [supabase.auth, wallet])
 }

@@ -1,10 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { ONE_BILLION } from 'constants/numbers'
+import { formatEther } from '@ethersproject/units'
 import { IPFSNftRewardTier, JB721Tier, NftRewardTier } from 'models/nftRewards'
 import { useQuery, UseQueryResult } from 'react-query'
 import { withHttps } from 'utils/externalLink'
-import { formatWad } from 'utils/format/formatNumber'
 import { decodeEncodedIpfsUri, ipfsGatewayUrl } from 'utils/ipfs'
 
 export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
@@ -31,7 +31,7 @@ async function fetchRewardTierMetadata({
     name: tierMetadata.name,
     description: tierMetadata.description,
     externalLink: withHttps(tierMetadata.externalLink),
-    contributionFloor: parseFloat(formatWad(tier.contributionFloor) ?? '0'),
+    contributionFloor: Number(formatEther(tier.contributionFloor)) ?? 0,
     maxSupply,
     remainingSupply: tier.remainingQuantity?.toNumber() ?? maxSupply,
     fileUrl: tierMetadata.image,

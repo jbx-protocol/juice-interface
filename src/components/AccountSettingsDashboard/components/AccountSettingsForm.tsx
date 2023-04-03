@@ -13,7 +13,7 @@ const InputPrefix = (
 ) => {
   if (props.prefix) {
     return (
-      <span className="stroke-secondary relative box-border inline-flex w-full min-w-0 list-none gap-0.5 text-ellipsis border border-solid bg-smoke-50 py-1 px-3 outline-0 focus-within:shadow-inputLight  dark:bg-slate-600  dark:focus-within:shadow-inputDark">
+      <span className="stroke-secondary relative box-border inline-flex w-full min-w-0 list-none gap-0.5 text-ellipsis rounded-lg border border-solid bg-smoke-50 py-1 px-3 outline-0 focus-within:shadow-inputLight  dark:bg-slate-600  dark:focus-within:shadow-inputDark">
         <span className="text-secondary">{props.prefix}</span>
         <input
           className="relative m-0 inline-block w-full border-0 bg-transparent p-0 outline-0 placeholder:text-grey-400 dark:placeholder:text-slate-300"
@@ -35,7 +35,7 @@ export const AccountSettingsForm = ({ address }: { address: string }) => (
   <Form
     id="accountSettings"
     name="accountSettings"
-    className="flex w-1/2 flex-col gap-4"
+    className="flex flex-col gap-4 md:w-1/2"
   >
     <TooltipLabel
       label={

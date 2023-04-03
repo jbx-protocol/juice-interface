@@ -509,6 +509,9 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
+msgid "Back to profile"
+msgstr ""
+
 msgid "Back to project"
 msgstr ""
 
@@ -2633,6 +2636,9 @@ msgstr ""
 msgid "Save payouts"
 msgstr ""
 
+msgid "Save profile details"
+msgstr ""
+
 msgid "Save project details"
 msgstr ""
 
@@ -2886,6 +2892,9 @@ msgid "Subscribe to Juicenews to get the latest updates from the Juicebox ecosys
 msgstr ""
 
 msgid "Subscribe to project activity"
+msgstr ""
+
+msgid "Subscriptions"
 msgstr ""
 
 msgid "Successfully subscribed to Juicenews!"

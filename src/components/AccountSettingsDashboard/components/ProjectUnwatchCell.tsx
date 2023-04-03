@@ -10,9 +10,11 @@ import { UnwatchButton } from './UnwatchButton'
 export const ProjectUnwatchCell = ({
   className,
   projectId,
+  onUnwatch,
 }: {
   className?: string
   projectId: number
+  onUnwatch?: () => void
 }) => {
   const data = useProjectUnwatchCellData({ projectId })
   const { data: metadata } = useProjectMetadata(data?.metadataUri)
@@ -60,7 +62,7 @@ export const ProjectUnwatchCell = ({
           </span>
         </a>
       </Link>
-      <UnwatchButton />
+      <UnwatchButton onClick={onUnwatch} />
     </div>
   )
 }

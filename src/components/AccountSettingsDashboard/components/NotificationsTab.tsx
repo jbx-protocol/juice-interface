@@ -1,12 +1,19 @@
 import { Trans, t } from '@lingui/macro'
 import { Badge } from 'components/Badge'
 import Loading from 'components/Loading'
-import { useUserSubscriptions } from 'hooks/useUserSubscriptions'
+import { useNotificationsTab } from '../hooks/useNotificationsTab'
 import { ProjectUnwatchCell } from './ProjectUnwatchCell'
 import { UnwatchButton } from './UnwatchButton'
 
 export const NotificationsTab = () => {
-  const { loading, notifications, error } = useUserSubscriptions()
+  const {
+    subscriptions: { loading, notifications, error },
+    onUnwatchAllClicked,
+    onUnwatchClicked: _onUnwatchClicked,
+  } = useNotificationsTab()
+
+  const onUnwatchedClicked = (projectId: number) => () =>
+    _onUnwatchClicked({ projectId })
 
   const projectsFollowedByUser = notifications
     .map(n => n.project_id)
@@ -36,6 +43,7 @@ export const NotificationsTab = () => {
             <UnwatchButton
               className="border-error-500 text-error-500 dark:border-error-500 dark:text-error-300"
               text={t`Unwatch all`}
+              onClick={onUnwatchAllClicked}
             />
           </div>
           {projectsFollowedByUser.map((projectId, i) => (
@@ -47,6 +55,7 @@ export const NotificationsTab = () => {
                   : ''
               }
               projectId={projectId}
+              onUnwatch={onUnwatchedClicked(projectId)}
             />
           ))}
         </div>

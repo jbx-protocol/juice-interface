@@ -1,18 +1,21 @@
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useModal } from 'hooks/Modal'
 import { useUserSubscriptions } from 'hooks/useUserSubscriptions'
 import { useCallback } from 'react'
 import { Database } from 'types/database.types'
 import { emitErrorNotification } from 'utils/notifications'
 
 export const useNotificationsTab = () => {
+  const confirmationModal = useModal()
   const session = useSession()
   const supabase = useSupabaseClient<Database>()
 
   const subscriptions = useUserSubscriptions()
 
-  const onUnwatchAllClicked = useCallback(async () => {
+  const onModalConfirmationClicked = useCallback(async () => {
     if (!session) {
       emitErrorNotification('You must be logged in to do that.')
+      confirmationModal.close()
       return
     }
 
@@ -23,10 +26,12 @@ export const useNotificationsTab = () => {
     if (error) {
       console.error(error)
       emitErrorNotification('An error occurred while unwatching all.')
+      confirmationModal.close()
       return
     }
     subscriptions.refetch()
-  }, [session, subscriptions, supabase])
+    confirmationModal.close()
+  }, [confirmationModal, session, subscriptions, supabase])
 
   const onUnwatchClicked = useCallback(
     async ({ projectId }: { projectId: number }) => {
@@ -51,8 +56,9 @@ export const useNotificationsTab = () => {
   )
 
   return {
+    confirmationModal,
     subscriptions,
-    onUnwatchAllClicked,
+    onModalConfirmationClicked,
     onUnwatchClicked,
   }
 }

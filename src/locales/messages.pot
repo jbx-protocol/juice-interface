@@ -470,6 +470,9 @@ msgstr ""
 msgid "Archiving your project will mean the following:"
 msgstr ""
 
+msgid "Are you sure you want to unwatch all projects? You will no longer be notified about new events."
+msgstr ""
+
 msgid "Are you sure?"
 msgstr ""
 

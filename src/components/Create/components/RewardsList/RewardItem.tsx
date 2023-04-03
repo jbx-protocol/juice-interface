@@ -45,6 +45,7 @@ export const RewardItem = ({
     maxSupply,
     externalLink,
     fileUrl,
+    payInNana,
   } = reward
 
   const { data: contentType } = useContentType(fileUrl)
@@ -97,7 +98,9 @@ export const RewardItem = ({
           <div className="grid grid-cols-2 gap-y-6 gap-x-16">
             <RewardStatLine
               title={t`Minimum contribution`}
-              stat={`${numberUpToPrecisionFormat(contributionFloor)} ETH`}
+              stat={`${numberUpToPrecisionFormat(contributionFloor)} ${
+                payInNana ? 'NANA' : 'ETH'
+              }`}
             />
             {hasLimitedSupply(maxSupply) && (
               <RewardStatLine

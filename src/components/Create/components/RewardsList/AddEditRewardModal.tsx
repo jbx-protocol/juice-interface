@@ -38,6 +38,7 @@ interface AddEditRewardModalFormProps {
   beneficiary?: string | undefined
   votingWeight?: number | undefined
   externalUrl?: string | undefined
+  payInNana?: boolean | undefined
 }
 
 const NFT_FILE_UPLOAD_EXTRA = t`Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`
@@ -61,9 +62,9 @@ export const AddEditRewardModal = ({
 }) => {
   const [form] = Form.useForm<AddEditRewardModalFormProps>()
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
-  const [payInNana, setPayInNana] = useState<boolean>(false)
   const [isReservingNfts, setIsReservingNfts] = useState<boolean>(false)
   const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState<boolean>(false)
+  const payInNana = Form.useWatch('payInNana', form) ?? false
 
   useEffect(() => {
     if (!open) return
@@ -88,6 +89,7 @@ export const AddEditRewardModal = ({
       beneficiary: editingData.beneficiary,
       nftReservedRate: editingData.reservedRate,
       votingWeight: editingData.votingWeight,
+      payInNana: !!editingData.payInNana,
     })
   }, [editingData, form, open])
 
@@ -138,6 +140,7 @@ export const AddEditRewardModal = ({
       votingWeight: fields.votingWeight
         ? parseInt(fields.votingWeight.toString())
         : undefined,
+      payInNana: fields.payInNana,
     }
     onOk(result)
     form.resetFields()
@@ -211,14 +214,8 @@ export const AddEditRewardModal = ({
         <Form.Item name="description" label={t`Description`}>
           <JuiceTextArea maxLength={10000} showCount />
         </Form.Item>
-        <Form.Item>
-          <Space className="w-full" direction="vertical" size="large">
-            <JuiceSwitch
-              value={payInNana}
-              onChange={setPayInNana}
-              label={t`Pay in NANA`}
-            />
-          </Space>
+        <Form.Item name="payInNana">
+          <JuiceSwitch label={t`Pay in NANA`} />
         </Form.Item>
         <Form.Item
           name="contributionFloor"

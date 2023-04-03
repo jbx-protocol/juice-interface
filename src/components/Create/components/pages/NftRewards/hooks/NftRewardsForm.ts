@@ -59,6 +59,7 @@ export const useNftRewardsForm = () => {
         beneficiary: t.beneficiary,
         reservedRate: t.reservedRate,
         votingWeight: t.votingWeight,
+        payInNana: t.payInNana,
       })) ?? []
 
     return {

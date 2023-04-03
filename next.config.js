@@ -23,8 +23,10 @@ const SCRIPT_SRC = [
   'https://qwestive-referral-prod.web.app',
   'https://static.hotjar.com',
   'https://script.hotjar.com',
-  `'sha256-kZ9E6/oLrki51Yx03/BugStfFrPlm8hjaFbaokympXo='`, // hotjar
+  // Not working as unsafe-eval is required for metamask
+  // `'sha256-kZ9E6/oLrki51Yx03/BugStfFrPlm8hjaFbaokympXo='`, // hotjar
   `'unsafe-eval'`, // hotjar
+  `'unsafe-inline'`, // MetaMask
 ]
 
 const STYLE_SRC = [

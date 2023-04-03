@@ -11,9 +11,9 @@ export function V2V3PayProjectForm() {
   const isPrimaryETHTerminalValid = useValidatePrimaryEthTerminal()
 
   let disabled = !hasCurrentFundingCycle || !isPrimaryETHTerminalValid
+  // TODO: change disabled
   if (projectId === 602) {
     disabled = false
   }
-  // TODO: change disabled
   return <PayProjectForm disabled={disabled} />
 }

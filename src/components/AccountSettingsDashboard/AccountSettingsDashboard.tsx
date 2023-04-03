@@ -26,7 +26,7 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
   )
 
   return (
-    <div className="mx-auto mt-20 flex max-w-5xl flex-col p-5">
+    <div className="mx-auto flex max-w-5xl flex-col p-5">
       <SettingsMenuButton className="md:hidden" onClick={toggleMinimized} />
 
       <div className="flex">

@@ -55,7 +55,9 @@ export const ProjectUnwatchCell = ({
           <span className="text-primary max-w-xs shrink overflow-hidden text-ellipsis font-medium hover:text-grey-500 dark:hover:text-slate-200">
             {cellPrimaryText}
           </span>
-          <span className="text-secondary">{cellSecondaryText}</span>
+          <span className="text-secondary hidden md:inline">
+            {cellSecondaryText}
+          </span>
         </a>
       </Link>
       <UnwatchButton />

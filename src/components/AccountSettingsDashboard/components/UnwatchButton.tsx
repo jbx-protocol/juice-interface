@@ -11,8 +11,12 @@ export const UnwatchButton = ({
   text?: string
 }) => {
   return (
-    <Button className={twMerge('h-8', className)} size="small">
-      <BellFilled /> {text}
+    <Button
+      icon={<BellFilled />}
+      className={twMerge('h-8', className)}
+      size="small"
+    >
+      <span className="hidden md:inline">{text}</span>
     </Button>
   )
 }

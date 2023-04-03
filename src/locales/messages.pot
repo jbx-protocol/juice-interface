@@ -2849,9 +2849,6 @@ msgstr ""
 msgid "Subscribe"
 msgstr ""
 
-msgid "Subscribe for updates!"
-msgstr ""
-
 msgid "Subscribe to Juicenews to get the latest updates from the Juicebox ecosystem."
 msgstr ""
 

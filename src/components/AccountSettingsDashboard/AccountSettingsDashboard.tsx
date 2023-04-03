@@ -19,7 +19,7 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
         name: t`Profile details`,
         component: <ProfileDetailsTab user={user} />,
       },
-      { name: t`Subscriptions`, component: 'Tab 2 content goes here' },
+      { name: t`Notifications`, component: 'Tab 2 content goes here' },
     ],
     [user],
   )

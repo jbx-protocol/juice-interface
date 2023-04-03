@@ -1136,9 +1136,6 @@ msgstr ""
 msgid "Edit payouts"
 msgstr ""
 
-msgid "Edit profile"
-msgstr ""
-
 msgid "Edit project"
 msgstr ""
 
@@ -1974,6 +1971,9 @@ msgid "Not set"
 msgstr ""
 
 msgid "Notice from {0}"
+msgstr ""
+
+msgid "Notifications"
 msgstr ""
 
 msgid "On-chain Governance"

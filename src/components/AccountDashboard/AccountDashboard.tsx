@@ -186,7 +186,7 @@ export function AccountDashboard({
               onClick={onEditProfileClicked}
             >
               <span className="inline-flex gap-3">
-                <Trans>Edit profile</Trans> <Badge variant="info">Beta</Badge>
+                <Trans>Settings</Trans> <Badge variant="info">Beta</Badge>
               </span>
             </Button>
           )}

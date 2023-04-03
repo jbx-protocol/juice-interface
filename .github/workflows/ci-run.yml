@@ -70,7 +70,7 @@ jobs:
           files: '**/*.po'
 
       - name: Check for modified translation source files
-        if: steps.changed-files.outputs.any_changed == 'true'
+        if: steps.changed-files.outputs.any_changed == 'true' && github.event_name == 'pull_request'
         run: |
           echo "🍎 PRs should not change .po files. Only changes to the messages.pot are allowed."
           exit 1

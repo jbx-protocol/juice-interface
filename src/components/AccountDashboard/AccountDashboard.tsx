@@ -4,11 +4,14 @@ import { Button, Tabs } from 'antd'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import Grid from 'components/Grid'
+import { Etherscan } from 'components/icons/Etherscan'
 import Loading from 'components/Loading'
 import Paragraph from 'components/Paragraph'
 import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
+import { SocialButton } from 'components/SocialButton'
+import useMobile from 'hooks/Mobile'
 import { useContributedProjectsQuery, useMyProjectsQuery } from 'hooks/Projects'
 import { useWallet } from 'hooks/Wallet'
 import { useWalletSignIn } from 'hooks/WalletSignIn'
@@ -17,7 +20,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { ensAvatarUrlForAddress } from 'utils/ens'
-import { truncateEthAddress } from 'utils/format/formatAddress'
+import { etherscanLink } from 'utils/etherscan'
 
 function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
   return (
@@ -159,15 +162,19 @@ export function AccountDashboard({
               </h1>
               {ensName && (
                 <EtherscanLink
+                  truncated
                   type="address"
-                  value={truncateEthAddress({ address })}
+                  value={address}
                   className="text-grey-500 dark:text-slate-100"
                 />
               )}
-              <SocialLinks
-                infoUri={profile?.website ?? undefined}
-                twitter={profile?.twitter ?? undefined}
-              />
+              <div className="flex gap-3">
+                <EtherscanSocialButton address={address} />
+                <SocialLinks
+                  infoUri={profile?.website ?? undefined}
+                  twitter={profile?.twitter ?? undefined}
+                />
+              </div>
             </div>
           </div>
           {isOwner && (
@@ -189,5 +196,15 @@ export function AccountDashboard({
 
       <Tabs items={items} />
     </div>
+  )
+}
+
+const EtherscanSocialButton = ({ address }: { address: string }) => {
+  const isMobile = useMobile()
+
+  return (
+    <SocialButton link={etherscanLink('address', address)} name="Etherscan">
+      <Etherscan size={isMobile ? 16 : 14} />
+    </SocialButton>
   )
 }

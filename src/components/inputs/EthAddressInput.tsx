@@ -2,6 +2,7 @@ import { CheckCircleFilled, LoadingOutlined } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
 import { readProvider } from 'constants/readProvider'
 import { isAddress } from 'ethers/lib/utils'
+import { resolveAddress } from 'lib/api/ens'
 import { useCallback, useEffect, useState } from 'react'
 
 import { JuiceInput } from './JuiceTextInput'
@@ -40,9 +41,9 @@ export function EthAddressInput({
     async (address: string) => {
       onChange?.(address)
 
-      const ensNameForAddress = await readProvider.lookupAddress(address)
-      if (ensNameForAddress) {
-        setENSName(ensNameForAddress)
+      const ensNameForAddress = await resolveAddress(address)
+      if (ensNameForAddress.name) {
+        setENSName(ensNameForAddress.name)
         setAddressForENSName(address)
       }
     },

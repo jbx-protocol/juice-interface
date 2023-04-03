@@ -1,6 +1,5 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { Button, Tabs } from 'antd'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
@@ -12,14 +11,13 @@ import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { useContributedProjectsQuery, useMyProjectsQuery } from 'hooks/Projects'
 import { useWallet } from 'hooks/Wallet'
-import { AuthAPI } from 'lib/api/auth'
+import { useWalletSignIn } from 'hooks/WalletSignIn'
 import { Profile } from 'models/database'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { ensAvatarUrlForAddress } from 'utils/ens'
 import { truncateEthAddress } from 'utils/format/formatAddress'
-import { v4 } from 'uuid'
 
 function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
   return (
@@ -112,7 +110,7 @@ export function AccountDashboard({
   profile: Profile | null
 }) {
   const wallet = useWallet()
-  const supabase = useSupabaseClient()
+  const signIn = useWalletSignIn()
   const router = useRouter()
 
   const [editProfileButtonLoading, setEditProfileButtonLoading] =
@@ -120,49 +118,15 @@ export function AccountDashboard({
 
   const onEditProfileClicked = useCallback(async () => {
     setEditProfileButtonLoading(true)
-    if (wallet.chainUnsupported) {
-      const walletChanged = await wallet.changeNetworks()
-      if (!walletChanged) {
-        console.error('Wallet did not change network')
-        setEditProfileButtonLoading(false)
-        return
-      }
-    }
-    if (!wallet.signer || !wallet.userAddress) {
-      console.error('Wallet not connected')
-      setEditProfileButtonLoading(false)
-      return
-    }
-
-    const { data } = await supabase.auth.getSession()
-    if (data.session) {
-      await router.push(`/account/${wallet.userAddress}/edit`)
-      return
-    }
-
     try {
-      const challengeMessage = await AuthAPI.getChallengeMessage({
-        wallet: wallet.userAddress,
-      })
-      const signature = await wallet.signer.signMessage(challengeMessage)
-      const accessToken = await AuthAPI.walletSignIn({
-        wallet: wallet.userAddress,
-        signature,
-        message: challengeMessage,
-      })
-      const { error } = await supabase.auth.setSession({
-        access_token: accessToken,
-        refresh_token: v4(), // Set to garbage token, no long lived tokens
-      })
-      if (error) throw error
-
+      await signIn()
       await router.push(`/account/${wallet.userAddress}/edit`)
     } catch (e) {
       console.error('Error occurred while signing in', e)
     } finally {
       setEditProfileButtonLoading(false)
     }
-  }, [router, supabase.auth, wallet])
+  }, [router, signIn, wallet.userAddress])
 
   const items = [
     {

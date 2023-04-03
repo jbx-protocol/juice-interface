@@ -25,7 +25,7 @@ jobs:
         with:
           upload_translations: false
           download_translations: true
-          create_pull_request: true
+          create_pull_request: false
           project_id: '492549'
           token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           source: 'src/locales/messages.pot'

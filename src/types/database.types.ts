@@ -76,34 +76,6 @@ export interface Database {
   }
   public: {
     Tables: {
-      notifications: {
-        Row: {
-          id: string
-        }
-        Insert: {
-          id?: string
-        }
-        Update: {
-          id?: string
-        }
-      }
-      project_subscriptions: {
-        Row: {
-          notification_id: string
-          project_id: number
-          user_id: string
-        }
-        Insert: {
-          notification_id: string
-          project_id: number
-          user_id: string
-        }
-        Update: {
-          notification_id?: string
-          project_id?: number
-          user_id?: string
-        }
-      }
       projects: {
         Row: {
           id: number
@@ -113,6 +85,23 @@ export interface Database {
         }
         Update: {
           id?: number
+        }
+      }
+      user_subscriptions: {
+        Row: {
+          notification_id: string
+          project_id: number | null
+          user_id: string
+        }
+        Insert: {
+          notification_id: string
+          project_id?: number | null
+          user_id: string
+        }
+        Update: {
+          notification_id?: string
+          project_id?: number | null
+          user_id?: string
         }
       }
       users: {

@@ -28,11 +28,13 @@ function SocialButton(props: SocialProps) {
 }
 
 export default function SocialLinks({
+  className,
   infoUri,
   twitter,
   discord,
   telegram,
 }: {
+  className?: string
   infoUri?: string
   twitter?: string
   discord?: string
@@ -43,7 +45,7 @@ export default function SocialLinks({
     'flex text-grey-500 dark:text-slate-100 text-xl md:text-base'
 
   return (
-    <Space size={12}>
+    <Space className={className} size={12}>
       {infoUri && (
         <SocialButton link={infoUri} name="Project website">
           <GlobalOutlined className={iconClasses} />

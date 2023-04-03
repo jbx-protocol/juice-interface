@@ -1,4 +1,4 @@
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { Session, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { AuthAPI } from 'lib/api/auth'
 import { useCallback } from 'react'
 import { Database } from 'types/database.types'
@@ -8,6 +8,23 @@ import { useWallet } from './Wallet'
 export const useWalletSignIn = () => {
   const wallet = useWallet()
   const supabase = useSupabaseClient<Database>()
+
+  const checkCurrentSessionUserIsCurrentWalletConnected = useCallback(
+    async (session: Session) => {
+      if (!wallet.userAddress) return false
+      const { error, data } = await supabase
+        .from('users')
+        .select('wallet')
+        .eq('id', session.user.id)
+        .single()
+      if (error) {
+        console.error(error)
+        return false
+      }
+      return data.wallet === wallet.userAddress.toLowerCase()
+    },
+    [supabase, wallet.userAddress],
+  )
 
   return useCallback(async () => {
     if (wallet.chainUnsupported) {
@@ -24,7 +41,12 @@ export const useWalletSignIn = () => {
     }
 
     const getSessionResult = await supabase.auth.getSession()
-    if (getSessionResult.data.session) {
+    if (
+      getSessionResult.data.session &&
+      (await checkCurrentSessionUserIsCurrentWalletConnected(
+        getSessionResult.data.session,
+      ))
+    ) {
       return getSessionResult.data.session
     }
 
@@ -50,5 +72,5 @@ export const useWalletSignIn = () => {
       throw new Error('No session returned')
     }
     return data.session
-  }, [supabase.auth, wallet])
+  }, [checkCurrentSessionUserIsCurrentWalletConnected, supabase.auth, wallet])
 }

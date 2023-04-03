@@ -599,6 +599,9 @@ msgstr ""
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have the Juicebox protocol internally track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
+msgid "Check your email for a confirmation link and retry subscribing."
+msgstr ""
+
 msgid "Check {0} and verify your new email address."
 msgstr ""
 
@@ -1343,6 +1346,9 @@ msgstr ""
 msgid "Get help planning or setting up my project."
 msgstr ""
 
+msgid "Get notified when a contributor supports this project"
+msgstr ""
+
 msgid "GitHub"
 msgstr ""
 
@@ -1758,6 +1764,9 @@ msgid "Minutes"
 msgstr ""
 
 msgid "More trending projects"
+msgstr ""
+
+msgid "More updates coming soon"
 msgstr ""
 
 msgid "Move ETH"
@@ -2840,7 +2849,13 @@ msgstr ""
 msgid "Subscribe"
 msgstr ""
 
+msgid "Subscribe for updates!"
+msgstr ""
+
 msgid "Subscribe to Juicenews to get the latest updates from the Juicebox ecosystem."
+msgstr ""
+
+msgid "Subscribe to project activity"
 msgstr ""
 
 msgid "Successfully subscribed to Juicenews!"

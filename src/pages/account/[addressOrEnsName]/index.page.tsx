@@ -37,6 +37,11 @@ export const getServerSideProps: GetServerSideProps<
   }
 
   const { address, name: ensName } = pair
+  if (!address) {
+    return {
+      notFound: true,
+    }
+  }
 
   const supabase = createServerSupabaseClient<Database>(context)
 

@@ -19,13 +19,14 @@ jobs:
         with:
           node-version: 16
       - name: Download from Crowdin
-        uses: crowdin/github-action@1.4.9
+        uses: crowdin/github-action@1.7.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_translations: false
           download_translations: true
-          create_pull_request: false
+          create_pull_request: true
+          pull_request_title: 'New Crowdin Translations [skip ci]'
           project_id: '492549'
           token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
           source: 'src/locales/messages.pot'

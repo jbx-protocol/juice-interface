@@ -1730,6 +1730,12 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
+msgid "Message (optional)"
+msgstr ""
+
+msgid "Message from {0}"
+msgstr ""
+
 msgid "Message sent!"
 msgstr ""
 

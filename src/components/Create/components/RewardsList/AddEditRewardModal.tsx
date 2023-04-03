@@ -61,6 +61,7 @@ export const AddEditRewardModal = ({
 }) => {
   const [form] = Form.useForm<AddEditRewardModalFormProps>()
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
+  const [payInNana, setPayInNana] = useState<boolean>(false)
   const [isReservingNfts, setIsReservingNfts] = useState<boolean>(false)
   const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState<boolean>(false)
 
@@ -210,6 +211,15 @@ export const AddEditRewardModal = ({
         <Form.Item name="description" label={t`Description`}>
           <JuiceTextArea maxLength={10000} showCount />
         </Form.Item>
+        <Form.Item>
+          <Space className="w-full" direction="vertical" size="large">
+            <JuiceSwitch
+              value={payInNana}
+              onChange={setPayInNana}
+              label={t`Pay in NANA`}
+            />
+          </Space>
+        </Form.Item>
         <Form.Item
           name="contributionFloor"
           label={t`Minimum Contribution`}
@@ -219,7 +229,9 @@ export const AddEditRewardModal = ({
         >
           <FormattedNumberInput
             className="w-1/2"
-            accessory={<InputAccessoryButton content="ETH" />}
+            accessory={
+              <InputAccessoryButton content={payInNana ? 'NANA' : 'ETH'} />
+            }
           />
         </Form.Item>
         <Form.Item>

@@ -11,12 +11,14 @@ export default function SocialLinks({
   twitter,
   discord,
   telegram,
+  tooltipPlacement,
 }: {
   className?: string
   infoUri?: string
   twitter?: string
   discord?: string
   telegram?: string
+  tooltipPlacement?: 'top' | 'bottom'
 }) {
   const isMobile = useMobile()
   const iconClasses =
@@ -25,25 +27,38 @@ export default function SocialLinks({
   return (
     <Space className={className} size={12}>
       {infoUri && (
-        <SocialButton link={infoUri} name="Project website">
+        <SocialButton
+          link={infoUri}
+          tooltip="Website"
+          tooltipPlacement={tooltipPlacement}
+        >
           <GlobalOutlined className={iconClasses} />
         </SocialButton>
       )}
       {twitter && (
         <SocialButton
           link={'https://twitter.com/' + twitter}
-          name="Project Twitter"
+          tooltip="Twitter"
+          tooltipPlacement={tooltipPlacement}
         >
           <TwitterOutlined className={iconClasses} />
         </SocialButton>
       )}
       {discord && (
-        <SocialButton link={discord} name="Project Discord">
+        <SocialButton
+          link={discord}
+          tooltip="Discord"
+          tooltipPlacement={tooltipPlacement}
+        >
           <Discord className={iconClasses} size={isMobile ? 16 : 14} />
         </SocialButton>
       )}
       {telegram && (
-        <SocialButton link={telegram} name="Project Telegram">
+        <SocialButton
+          link={telegram}
+          tooltip="Telegram"
+          tooltipPlacement={tooltipPlacement}
+        >
           <Telegram className={iconClasses} size={isMobile ? 16 : 14} />
         </SocialButton>
       )}

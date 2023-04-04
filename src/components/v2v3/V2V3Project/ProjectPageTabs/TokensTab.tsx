@@ -1,13 +1,11 @@
+import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
 import { useWallet } from 'hooks/Wallet'
 import { ManageNftsSection } from '../ManageNftsSection/ManageNftsSection'
 import { V2V3ManageTokensSection } from '../V2V3ManageTokensSection'
 
-export default function TokensTab({
-  hasNftRewards,
-}: {
-  hasNftRewards: boolean
-}) {
+export default function TokensTab() {
   const { isConnected } = useWallet()
+  const { value: hasNftRewards } = useHasNftRewards()
 
   return (
     <>

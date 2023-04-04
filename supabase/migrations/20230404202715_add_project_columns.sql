@@ -16,7 +16,6 @@ add COLUMN "logoUri" text,
 add COLUMN "metadataUri" text,
 add COLUMN "tags" text[],
 add COLUMN "archived" boolean,
-add COLUMN "_lastUpdated" bigint,
+add COLUMN "_updatedAt" bigint,
 add COLUMN "_hasUnresolvedMetadata" boolean,
-add COLUMN "_metadataRetriesLeft" int,
-add COLUMN "_v" text;
+add COLUMN "_metadataRetriesLeft" int;

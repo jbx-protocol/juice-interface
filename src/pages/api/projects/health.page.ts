@@ -13,9 +13,7 @@ const handler: NextApiHandler = async (_, res) => {
 
   let report = isEmpty
     ? `Database empty`
-    : `Last updated at block: ${Math.max(
-        ...sbProjects.map(p => p._lastUpdated),
-      )}`
+    : `Last updated at block: ${Math.max(...sbProjects.map(p => p._updatedAt))}`
 
   let shouldAlert = isEmpty
 

@@ -4,7 +4,6 @@ import { SBProject, SBProjectQueryOpts } from 'models/supabaseProject'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Database } from 'types/database.types'
 import { sbProjects } from '../clients'
-import { CURRENT_VERSION } from './constants'
 
 /**
  * Exhaustively queries all Supabase projects.
@@ -35,12 +34,11 @@ export async function writeSBProjects(records: Json<SBProject>[]) {
     )
   }
 
-  const _lastUpdated = Date.now()
+  const _updatedAt = Date.now()
 
   const queue = records.map(r => ({
     ...r,
-    _v: CURRENT_VERSION,
-    _lastUpdated,
+    _updatedAt,
 
     // hacky? fix to avoid undefined column vals
     name: r.name ?? null,

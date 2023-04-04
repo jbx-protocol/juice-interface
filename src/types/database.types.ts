@@ -96,9 +96,8 @@ export interface Database {
       projects: {
         Row: {
           _hasUnresolvedMetadata: boolean | null
-          _lastUpdated: number | null
+          _updatedAt: number | null
           _metadataRetriesLeft: number | null
-          _v: string | null
           archived: boolean | null
           createdAt: number | null
           currentBalance: string | null
@@ -119,9 +118,8 @@ export interface Database {
         }
         Insert: {
           _hasUnresolvedMetadata?: boolean | null
-          _lastUpdated?: number | null
+          _updatedAt?: number | null
           _metadataRetriesLeft?: number | null
-          _v?: string | null
           archived?: boolean | null
           createdAt?: number | null
           currentBalance?: string | null
@@ -142,9 +140,8 @@ export interface Database {
         }
         Update: {
           _hasUnresolvedMetadata?: boolean | null
-          _lastUpdated?: number | null
+          _updatedAt?: number | null
           _metadataRetriesLeft?: number | null
-          _v?: string | null
           archived?: boolean | null
           createdAt?: number | null
           currentBalance?: string | null

@@ -44,8 +44,7 @@ export type SBProject = {
   // Helper properties
   _hasUnresolvedMetadata?: boolean // Indicates if metadata has not been successfully resolved from IPFS
   _metadataRetriesLeft?: number // Allows us to only retry resolving metadata a finite number of times. Useful for invalid metadataUris or uris pointing to unpinned content
-  _lastUpdated: number // Millis timestamp of last updated
-  _v: string
+  _updatedAt: number // Millis timestamp of last updated
 } & Partial<
   Pick<
     ProjectMetadata,

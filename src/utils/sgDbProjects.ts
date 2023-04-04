@@ -35,6 +35,13 @@ export const parseDBProjectJson = (j: Json<DBProject>): DBProject => ({
   ...parseBigNumberKeyVals(j, ['currentBalance', 'totalPaid', 'trendingScore']),
 })
 
+/**
+ * Deep compare list of Subgraph projects against list of database projects and return the list of Subgraph projects that have changed.
+ *
+ * @param sgProjects List of Subgraph projects
+ * @param dbProjects List of database projects
+ * @param retryIpfs If true, any project that previously failed to resolve metadata will be marked for change, regardless of if the project has since changed in the Subgraph.
+ */
 export function getChangedSubgraphProjects({
   sgProjects,
   dbProjects,
@@ -85,7 +92,7 @@ export function getChangedSubgraphProjects({
         return true
       }
 
-      // Deep compare Subgraph project vs. Supabase project and find any discrepancies
+      // Deep compare Subgraph project vs. database project and find any discrepancies
       const propertiesToUpdate = sgDbCompareKeys.filter(k => {
         const oldVal = dbProject[k]
         const newVal = sgProject[k]
@@ -118,6 +125,9 @@ export function getChangedSubgraphProjects({
   }
 }
 
+/**
+ * Attempt to resolve metadata from IPFS for a Subgraph project, and return the project as a DBProject with metadata properties included if successful. If there's an error resolving metadata, return the error.
+ */
 export async function tryResolveMetadata({
   sgProject,
   _metadataRetriesLeft,
@@ -145,6 +155,7 @@ export async function tryResolveMetadata({
   }
 
   try {
+    // We need to use a timeout here, because if the object can't be found the request may never resolve. We use 30 seconds to stay well below the max of 60 seconds for vercel edge functions.
     const { data: metadata } = await ipfsGet<ProjectMetadata>(metadataUri, {
       timeout: 30000,
     })

@@ -26,13 +26,14 @@ export async function updateDBProjects(
     //     console.log('deleted all', { res })
     //   })
 
-    // Load all projects from Supabase, store in dict
+    // Load all database projects
     const { data, error: queryError } = await dbpQueryAll()
 
     if (queryError) {
       throw new Error('Error querying projects: ' + queryError.message)
     }
 
+    // Store database projects in a dict for more performant access
     const dbProjects = (data as Json<DBProject>[])?.reduce(
       (acc, p) => ({
         ...acc,
@@ -47,6 +48,7 @@ export async function updateDBProjects(
       keys: sgDbCompareKeys,
     })
 
+    // Determine which subgraph projects have changed from what we have stored in the database
     const {
       changedSubgraphProjects,
       retryMetadataCount,
@@ -58,6 +60,7 @@ export async function updateDBProjects(
       retryIpfs,
     })
 
+    // Attempt to re-resolve metadata for all changed projects
     const resolveMetadataResults = await Promise.all(
       changedSubgraphProjects.map(sgProject =>
         tryResolveMetadata({
@@ -75,7 +78,7 @@ export async function updateDBProjects(
     )
 
     if (error) {
-      throw new Error('Error writing projects to Supabase: ' + error.message)
+      throw new Error('Error writing projects to database: ' + error.message)
     }
 
     // Formatted message used for log reporting

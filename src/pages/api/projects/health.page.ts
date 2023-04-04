@@ -3,7 +3,7 @@ import { NextApiHandler } from 'next'
 import { querySubgraphExhaustiveRaw } from 'utils/graph'
 import { sgDbCompareKeys } from 'utils/sgDbProjects'
 
-// Checks integrity of data in Supabase db against the current subgraph data
+// Checks integrity of projects data in database against the current subgraph data
 const handler: NextApiHandler = async (_, res) => {
   const { data: dbProjects } = await dbpQueryAll()
 
@@ -34,7 +34,7 @@ const handler: NextApiHandler = async (_, res) => {
 
     // Check total project counts
     if (subgraphProjects.length !== dbProjectsCount) {
-      report += `\n\nMismatched project counts. Subgraph: ${subgraphProjects.length}, Supabase: ${dbProjectsCount}`
+      report += `\n\nMismatched project counts. Subgraph: ${subgraphProjects.length}, Database: ${dbProjectsCount}`
 
       shouldAlert = true
     }
@@ -61,10 +61,10 @@ const handler: NextApiHandler = async (_, res) => {
       )[0]
 
       if (!subgraphProject) {
-        // Record projects that exist in Supabase but not in Subgraph
+        // Record projects that exist in database but not in Subgraph
         dbExtraProjects.push(`\`[${id}]\` Name: ${name}`)
       } else {
-        // Ensure that Supabase records accurately reflect Subgraph data
+        // Ensure that database projects accurately reflect Subgraph projects
         sgDbCompareKeys.forEach(k => {
           // TODO bad types here
           if (
@@ -73,41 +73,41 @@ const handler: NextApiHandler = async (_, res) => {
             mismatchedProjects.push(
               `\`[${id}]\` ${name ?? '<no name>'} **${k}** Subgraph: ${
                 subgraphProject[k as keyof typeof subgraphProject]
-              }, Supabase: ${dbProject[k]}`,
+              }, Database: ${dbProject[k]}`,
             )
           }
         })
       }
     }
 
-    // Record projects that exist in Subgraph but not in Supabase
+    // Record projects that exist in Subgraph but not in database
     subgraphProjects.forEach(p =>
       dbMissingProjects.push(`ID: ${p.id}, Handle: ${p.handle}`),
     )
 
     if (dbExtraProjects.length) {
-      report += `\n\n${dbExtraProjects.length} Supabase projects missing from Subgraph:`
+      report += `\n\n${dbExtraProjects.length} Database projects missing from Subgraph:`
       dbExtraProjects.forEach(e => (report += `\n${e}`))
 
       shouldAlert = true
     }
 
     if (mismatchedProjects.length) {
-      report += `\n\n${mismatchedProjects.length} Supabase projects not matching Subgraph:`
+      report += `\n\n${mismatchedProjects.length} Database projects not matching Subgraph:`
       mismatchedProjects.forEach(e => (report += `\n${e}`))
 
       shouldAlert = true
     }
 
     if (projectsMissingMetadata.length) {
-      report += `\n\n${projectsMissingMetadata.length} Supabase projects missing metadata:`
+      report += `\n\n${projectsMissingMetadata.length} Database projects missing metadata:`
       projectsMissingMetadata.forEach(e => (report += `\n${e}`))
 
       shouldAlert = true
     }
 
     if (dbMissingProjects.length) {
-      report += `\n\n${dbMissingProjects.length} Subgraph projects missing from Supabase:`
+      report += `\n\n${dbMissingProjects.length} Subgraph projects missing from database:`
       dbMissingProjects.forEach(e => (report += `\n${e}`))
 
       shouldAlert = true

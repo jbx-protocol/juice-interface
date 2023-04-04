@@ -28,9 +28,6 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
   const session = useSession()
   const supabase = useSupabaseClient<Database>()
 
-  // If the user is not connected to a wallet, or the wallet is on an unsupported chain, don't show the button
-  const showSubscribeButton = wallet.isConnected && !wallet.chainUnsupported
-
   const getUserNotificationsForProjectId = useCallback(
     async ({ projectId, userId }: { projectId: number; userId: string }) => {
       const { data, error } = await supabase
@@ -130,6 +127,7 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
   const onSubscribeButtonClicked = useCallback(async () => {
     // If the user is not connected to a wallet, don't do anything
     if (!wallet.isConnected) return
+    setLoading(true)
 
     try {
       const session = await signIn()
@@ -144,6 +142,7 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
       }
       if (!data?.email) {
         subscribeModal.openModal()
+        setLoading(false)
         return
       }
 
@@ -151,6 +150,8 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
     } catch (e) {
       console.error('Error occurred while subscribing', e)
       emitErrorNotification('Error occurred while subscribing')
+    } finally {
+      setLoading(false)
     }
   }, [signIn, subscribeModal, supabase, toggleSubscription, wallet.isConnected])
 
@@ -158,6 +159,5 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
     loading,
     isSubscribed,
     onSubscribeButtonClicked,
-    showSubscribeButton,
   }
 }

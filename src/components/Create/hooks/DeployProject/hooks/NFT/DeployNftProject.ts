@@ -52,6 +52,10 @@ export const useDeployNftProject = () => {
     () => nftRewards.governanceType,
     [nftRewards.governanceType],
   )
+  const payInNana = useMemo(
+    () => nftRewards.payInNana ?? false,
+    [nftRewards.payInNana],
+  )
 
   /**
    * Deploy a project with NFT rewards.
@@ -96,6 +100,7 @@ export const useDeployNftProject = () => {
             governanceType,
             tiers,
             flags: nftFlags,
+            payInNana,
           },
           projectData: {
             owner: inputProjectOwner?.length ? inputProjectOwner : undefined,
@@ -131,6 +136,7 @@ export const useDeployNftProject = () => {
       fundingCycleMetadata,
       fundAccessConstraints,
       nftFlags,
+      payInNana,
     ],
   )
 

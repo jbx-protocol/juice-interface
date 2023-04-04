@@ -2,6 +2,7 @@ import {
   V2V3CurrencyETH,
   V2V3CurrencyOption,
   V2V3CurrencyUSD,
+  V2V3CurrencyNANA,
 } from 'models/v2v3/currencyOption'
 
 import {
@@ -16,6 +17,7 @@ import {
 export const NO_CURRENCY = 0
 export const V2V3_CURRENCY_ETH: V2V3CurrencyETH = 1
 export const V2V3_CURRENCY_USD: V2V3CurrencyUSD = 2
+export const V2V3_CURRENCY_NANA: V2V3CurrencyNANA = 10875770
 
 export const V2V3_CURRENCY_METADATA: Record<
   V2V3CurrencyOption,

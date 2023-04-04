@@ -34,7 +34,7 @@ import {
   NftRewardTier,
 } from 'models/nftRewards'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
-import { V2V3_CURRENCY_ETH } from './v2v3/currency'
+import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_NANA } from './v2v3/currency'
 
 export const MAX_NFT_REWARD_TIERS = 69
 const IJB721Delegate_INTERFACE_ID = '0xb3bcbb79'
@@ -440,6 +440,7 @@ export function buildDeployTiered721DelegateData(
       JBTiered721DelegateStoreAddress,
     },
     flags,
+    payInNana,
   }: {
     collectionUri: string
     collectionName: string
@@ -454,12 +455,13 @@ export function buildDeployTiered721DelegateData(
       JBTiered721DelegateStoreAddress: string
     }
     flags: JBTiered721Flags
+    payInNana?: boolean
   },
   version: JB721DelegateVersion,
 ): JBDeployTiered721DelegateData | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1 {
   const pricing: JB721PricingParams = {
     tiers,
-    currency: V2V3_CURRENCY_ETH,
+    currency: payInNana ? V2V3_CURRENCY_NANA : V2V3_CURRENCY_ETH,
     decimals: WAD_DECIMALS,
     prices: JBPricesAddress,
   }

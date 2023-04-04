@@ -26,7 +26,7 @@ import JBERC20PaymentTerminal3_1 from './JBERC20PaymentTerminal3_1'
 import { SummaryTable } from './SummaryTable'
 import { V2V3PayForm, V2V3PayFormType } from './V2V3PayForm'
 
-const terminalNanaAddress = '0x23f9A854Ae122d9D2579788D3C3A41244B18D903'
+export const terminalNanaAddress = '0x23f9A854Ae122d9D2579788D3C3A41244B18D903'
 const nanaAddress = '0xA5f37A587BE9c41Bd48CC1aEE025996Df23bBAB3'
 
 export function V2V3ConfirmPayModal({

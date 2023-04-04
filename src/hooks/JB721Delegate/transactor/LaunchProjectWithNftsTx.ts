@@ -1,5 +1,6 @@
 import { getAddress } from '@ethersproject/address'
 import { t } from '@lingui/macro'
+import { terminalNanaAddress } from 'components/v2v3/V2V3Project/V2V3PayButton/V2V3ConfirmPayModal'
 import {
   JB721_DELEGATE_V1,
   JB721_DELEGATE_V1_1,
@@ -44,6 +45,7 @@ interface DeployTiered721DelegateData {
   governanceType: JB721GovernanceType
   tiers: (JB721TierParams | JB_721_TIER_PARAMS_V1_1)[]
   flags: JBTiered721Flags
+  payInNana: boolean
 }
 
 interface LaunchProjectWithNftsTxArgs {
@@ -114,6 +116,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
         tiers,
         flags,
         governanceType,
+        payInNana,
       },
       projectData: {
         projectMetadataCID,
@@ -180,6 +183,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
           JBTiered721DelegateStoreAddress,
         },
         flags,
+        payInNana,
       },
       DEFAULT_JB_721_DELEGATE_VERSION,
     )
@@ -189,6 +193,14 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       fundingCycleMetadata,
       ['useDataSourceForPay', 'dataSource'],
     )
+
+    // TODO: get nana terminal from fund access constraints or from deployed contract address
+    const terminals = payInNana
+      ? [terminalNanaAddress]
+      : getTerminalsFromFundAccessConstraints(
+          fundAccessConstraints,
+          defaultJBETHPaymentTerminal?.address,
+        )
 
     const launchProjectData: JB721DelegateLaunchProjectData = {
       projectMetadata: {
@@ -200,10 +212,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       mustStartAtOrAfter,
       groupedSplits,
       fundAccessConstraints,
-      terminals: getTerminalsFromFundAccessConstraints(
-        fundAccessConstraints,
-        defaultJBETHPaymentTerminal?.address,
-      ),
+      terminals,
       memo: DEFAULT_MEMO,
     } // _launchProjectData
 

@@ -79,17 +79,17 @@ export interface Database {
       user_subscriptions: {
         Row: {
           notification_id: string
-          project_id: string
+          project_id: number
           user_id: string
         }
         Insert: {
           notification_id: string
-          project_id: string
+          project_id: number
           user_id: string
         }
         Update: {
           notification_id?: string
-          project_id?: string
+          project_id?: number
           user_id?: string
         }
       }

@@ -8,6 +8,7 @@ import { useContext, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { NANA_PROJECT_ID } from 'utils/v2v3/currency'
 import { NftPreview } from './NftPreview'
 import { QuantitySelector } from './QuantitySelector'
 
@@ -165,7 +166,7 @@ export function NftTierCard({
               >
                 <span className="text-sm text-grey-900 dark:text-slate-50">
                   {rewardTier?.contributionFloor}{' '}
-                  {projectId === 602 ? 'NANA' : 'ETH'}
+                  {projectId === NANA_PROJECT_ID ? 'NANA' : 'ETH'}
                 </span>
               </Skeleton>
               <Skeleton

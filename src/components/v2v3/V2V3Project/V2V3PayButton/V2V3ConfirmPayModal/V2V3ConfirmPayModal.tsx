@@ -20,6 +20,7 @@ import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
+import { NANA_PROJECT_ID } from 'utils/v2v3/currency'
 import { useDelegateMetadata } from './hooks/DelegateMetadata'
 import { useNftRewardTiersToMint } from './hooks/NftRewardTiersToMint'
 import JBERC20PaymentTerminal3_1 from './JBERC20PaymentTerminal3_1'
@@ -64,7 +65,7 @@ export function V2V3ConfirmPayModal({
     signer,
   } = useWallet()
 
-  if (projectId === 602) {
+  if (projectId === NANA_PROJECT_ID) {
     terminalNana = new Contract(
       terminalNanaAddress,
       JBERC20PaymentTerminal3_1.abi,
@@ -183,7 +184,7 @@ export function V2V3ConfirmPayModal({
 
     try {
       const txSuccess =
-        projectId === 602
+        projectId === NANA_PROJECT_ID
           ? await payProjectERC20Tx(paramsERC20, handlers)
           : await payProjectTx(paramsETH, handlers)
 

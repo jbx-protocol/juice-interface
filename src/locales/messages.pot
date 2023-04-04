@@ -359,6 +359,9 @@ msgstr ""
 msgid "All payouts have been deleted for this recipient. Save to continue..."
 msgstr ""
 
+msgid "All projects"
+msgstr ""
+
 msgid "All {0} will go to the project owner:"
 msgstr ""
 
@@ -1544,6 +1547,9 @@ msgstr ""
 msgid "Join <0>hundreds of projects</0> sippin' the Juice."
 msgstr ""
 
+msgid "Join our Discord"
+msgstr ""
+
 msgid "Juicebox"
 msgstr ""
 
@@ -1566,6 +1572,9 @@ msgid "Juicebox project"
 msgstr ""
 
 msgid "Juicebox projects use <0>ENS names</0> as handles. Projects with a handle have the following features:"
+msgstr ""
+
+msgid "JuiceboxDAO"
 msgstr ""
 
 msgid "LINK TO NFT"
@@ -2406,6 +2415,9 @@ msgid "Receive ERC-20 tokens"
 msgstr ""
 
 msgid "Receive {receiveText}"
+msgstr ""
+
+msgid "Recently listed"
 msgstr ""
 
 msgid "Recipient"

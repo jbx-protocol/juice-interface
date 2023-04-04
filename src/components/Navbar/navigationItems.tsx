@@ -10,78 +10,116 @@ import Link from 'next/link'
 import { CSSProperties } from 'react'
 import Logo from './Logo'
 
-type ResourceItem = {
+type DropdownItem = {
   label: JSX.Element
   key: string
 }
 
-const DesktopDropDown = ({
-  resourcesMenuProps,
-  resourcesOpen,
-  setResourcesOpen,
+export type DropdownKey = 'explore' | 'resources' | false
+
+const DesktopDropdown = ({
+  label,
+  menuProps,
+  open,
+  toggleOpen,
 }: {
-  resourcesMenuProps: MenuProps
-  resourcesOpen: boolean
-  setResourcesOpen: (resource: boolean) => void
+  label: JSX.Element | string
+  menuProps: MenuProps
+  open: boolean
+  toggleOpen: VoidFunction
 }): JSX.Element => {
   return (
-    <Dropdown
-      overlayClassName="p-0"
-      menu={{ ...resourcesMenuProps }}
-      open={resourcesOpen}
-    >
+    <Dropdown overlayClassName="p-0" menu={{ ...menuProps }} open={open}>
       <div
         className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
         onClick={e => {
-          setResourcesOpen(!resourcesOpen)
+          toggleOpen()
           e.stopPropagation()
         }}
       >
-        <Trans>Resources</Trans>
-        <span className="ml-1">
-          {resourcesOpen ? <UpOutlined /> : <DownOutlined />}
-        </span>
+        {label}
+        <span className="ml-1">{open ? <UpOutlined /> : <DownOutlined />}</span>
       </div>
     </Dropdown>
   )
 }
-export const resourcesMenuItems = (): ResourceItem[] => {
-  const linkProps = {
-    target: '_blank',
-    rel: 'noopener noreferrer',
-    className: 'text-primary',
-  }
+
+export const resourcesMenuItems = (): DropdownItem[] => {
   return [
     {
-      key: 'docs',
+      key: 'discord',
       label: (
-        <a href="https://docs.juicebox.money/" {...linkProps}>
-          <Trans>Docs</Trans>
-        </a>
+        <Link href="https://discord.gg/wFTh4QnDzk">
+          <a
+            className="flex cursor-pointer items-center text-black hover:opacity-70 dark:text-slate-100"
+            onClick={() => trackFathomGoal(TOP_NAV.DISCORD_CTA)}
+          >{t`Join our Discord`}</a>
+        </Link>
       ),
     },
     {
-      key: 'newsletter',
+      key: 'juiceboxdao',
       label: (
-        <a href="https://newsletter.juicebox.money" {...linkProps}>
-          <Trans>Newsletter</Trans>
-        </a>
+        <Link href="/@juicebox">
+          <a className="text-primary">
+            <Trans>JuiceboxDAO</Trans>
+          </a>
+        </Link>
+      ),
+    },
+    {
+      key: 'docs',
+      label: (
+        <Link href="https://docs.juicebox.money/">
+          <a className="text-primary">
+            <Trans>Docs</Trans>
+          </a>
+        </Link>
       ),
     },
     {
       key: 'podcast',
       label: (
-        <a href="https://podcast.juicebox.money/" {...linkProps}>
-          <Trans>Podcast</Trans>
-        </a>
+        <Link href="https://podcast.juicebox.money/">
+          <a className="text-primary">
+            <Trans>Podcast</Trans>
+          </a>
+        </Link>
+      ),
+    },
+  ]
+}
+
+export const exploreMenuItems = (): DropdownItem[] => {
+  return [
+    {
+      key: 'trending',
+      label: (
+        <Link href="/projects?tab=trending">
+          <a className="text-primary">
+            <Trans>Trending projects</Trans>
+          </a>
+        </Link>
       ),
     },
     {
-      key: 'contact',
+      key: 'recent',
       label: (
-        <a href="/contact" {...linkProps} target="_self">
-          <Trans>Contact</Trans>
-        </a>
+        <Link href="/projects?tab=new">
+          <a className="text-primary">
+            <Trans>Recently listed</Trans>
+          </a>
+        </Link>
+      ),
+    },
+    {
+      key: 'all',
+      label: (
+        <Link href="/projects?tab=all">
+          <a className="text-primary">
+            <Trans>All projects</Trans>
+          </a>
+        </Link>
       ),
     },
   ]
@@ -89,74 +127,78 @@ export const resourcesMenuItems = (): ResourceItem[] => {
 
 export const desktopMenuItems = ({
   resourcesMenuProps,
-  resourcesOpen,
-  setResourcesOpen,
+  exploreMenuProps,
+  dropdownOpen,
+  setDropdownOpen,
   dropdownIconStyle,
 }: {
   resourcesMenuProps: MenuProps
-  resourcesOpen: boolean
-  setResourcesOpen: (resource: boolean) => void
+  exploreMenuProps: MenuProps
+  dropdownOpen: DropdownKey
+  setDropdownOpen: (key: DropdownKey) => void
   dropdownIconStyle: CSSProperties
-}) => [
-  {
-    key: 'index',
-    label: (
-      <Link href="/">
-        <a className="flex items-center gap-2">
-          <Logo />
-          {readNetwork.name === NetworkName.goerli && (
-            <span>
-              <Badge variant="info">Goerli</Badge>
-            </span>
-          )}
-        </a>
-      </Link>
-    ),
-  },
-  {
-    key: 'projects',
-    label: (
-      <Link href="/projects">
-        <a
-          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          onClick={() => trackFathomGoal(TOP_NAV.EXPLORE_CTA)}
-        >{t`Explore`}</a>
-      </Link>
-    ),
-  },
-  {
-    key: 'discord',
-    label: (
-      <Link href="https://discord.gg/wFTh4QnDzk">
-        <a
-          className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100"
-          onClick={() => trackFathomGoal(TOP_NAV.DISCORD_CTA)}
-        >{t`Discord`}</a>
-      </Link>
-    ),
-  },
-  {
-    key: 'resources',
-    label: (
-      <DesktopDropDown
-        {...{
-          resourcesMenuProps,
-          setResourcesOpen,
-          resourcesOpen,
-          dropdownIconStyle,
-        }}
-      />
-    ),
-  },
-  {
-    key: 'create',
-    label: (
-      <Link href="/create">
-        <a
-          className="flex hidden cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100 lg:block"
-          onClick={() => trackFathomGoal(TOP_NAV.CREATE_A_PROJECT_CTA)}
-        >{t`Create a project`}</a>
-      </Link>
-    ),
-  },
-]
+}) => {
+  const toggleDropdown = (key: DropdownKey) => {
+    if (dropdownOpen === key) {
+      setDropdownOpen(false)
+    } else {
+      setDropdownOpen(key)
+    }
+  }
+  return [
+    {
+      key: 'index',
+      label: (
+        <Link href="/">
+          <a className="flex items-center gap-2">
+            <Logo />
+            {readNetwork.name === NetworkName.goerli && (
+              <span>
+                <Badge variant="info">Goerli</Badge>
+              </span>
+            )}
+          </a>
+        </Link>
+      ),
+    },
+    {
+      key: 'explore',
+      label: (
+        <DesktopDropdown
+          {...{
+            label: t`Explore`,
+            menuProps: exploreMenuProps,
+            toggleOpen: () => toggleDropdown('explore'),
+            open: dropdownOpen === 'explore',
+            dropdownIconStyle,
+          }}
+        />
+      ),
+    },
+    {
+      key: 'resources',
+      label: (
+        <DesktopDropdown
+          {...{
+            label: t`Resources`,
+            menuProps: resourcesMenuProps,
+            toggleOpen: () => toggleDropdown('resources'),
+            open: dropdownOpen === 'resources',
+            dropdownIconStyle,
+          }}
+        />
+      ),
+    },
+    {
+      key: 'create',
+      label: (
+        <Link href="/create">
+          <a
+            className="flex hidden cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100 lg:block"
+            onClick={() => trackFathomGoal(TOP_NAV.CREATE_A_PROJECT_CTA)}
+          >{t`Create a project`}</a>
+        </Link>
+      ),
+    },
+  ]
+}

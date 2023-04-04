@@ -98,7 +98,7 @@ msgstr ""
 msgid "<0><1>Peel</1> manages this website — the juicebox.money frontend interface. You can reach out to Peel through the <2>Peel Discord</2>.</0><3><4>JuiceboxDAO</4> builds and governs the Juicebox fundraising protocol and other community resources. You can reach out to JuiceboxDAO through the <5>Juicebox Discord</5>.</3>"
 msgstr ""
 
-msgid "<0>Contribution floor:</0> {0} ETH"
+msgid "<0>Contribution floor:</0> {0} {1}"
 msgstr ""
 
 msgid "<0>Description: </0><1/>"
@@ -2021,6 +2021,9 @@ msgstr ""
 msgid "Pay disclosure"
 msgstr ""
 
+msgid "Pay in NANA"
+msgstr ""
+
 msgid "Pay out ETH from your project to the Ethereum wallets or Juicebox projects of your choice. ETH which <0>isn't</0> paid out will be available for token redemptions, or for use in future cycles. Payouts reset each cycle."
 msgstr ""
 
@@ -2040,6 +2043,9 @@ msgid "Pay {0}"
 msgstr ""
 
 msgid "Pay {projectTitle}"
+msgstr ""
+
+msgid "Pay {projectTitle} with token: {erc20Address}"
 msgstr ""
 
 msgid "Payer"

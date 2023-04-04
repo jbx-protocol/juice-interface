@@ -48,10 +48,10 @@ export function V2V3ConfirmPayModal({
 
   const beneficiary = useWatch('beneficiary', form)
 
-  // Use the userAddress as the beneficiary by default
+  // Use the userAddress as the beneficiary by default, reset whenever form is opened
   useEffect(() => {
     form.setFieldValue('beneficiary', userAddress)
-  }, [userAddress, form])
+  }, [userAddress, form, open])
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
 

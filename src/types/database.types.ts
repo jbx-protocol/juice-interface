@@ -228,36 +228,6 @@ export interface Database {
         }
       }
     }
-    Functions: {
-      search_projects: {
-        Args: {
-          keyword: string
-        }
-        Returns: {
-          _hasUnresolvedMetadata: boolean | null
-          _lastUpdated: number | null
-          _metadataRetriesLeft: number | null
-          _v: string | null
-          archived: boolean | null
-          createdAt: number | null
-          currentBalance: string | null
-          deployer: string | null
-          description: string | null
-          handle: string | null
-          id: string
-          logoUri: string | null
-          metadataUri: string | null
-          name: string | null
-          paymentsCount: number | null
-          projectId: number | null
-          pv: string | null
-          tags: string[] | null
-          terminal: string | null
-          totalPaid: string | null
-          trendingScore: string | null
-        }[]
-      }
-    }
     Enums: {
       [_ in never]: never
     }

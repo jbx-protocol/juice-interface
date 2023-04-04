@@ -12,7 +12,7 @@ const DBP_NOTIFS = {
   DB_OK: 'Database is OK',
 }
 
-const SB_PROJECTS_WEBHOOK_URL = process.env.SB_PROJECTS_WEBHOOK_URL
+const DB_PROJECTS_WEBHOOK_URL = process.env.DB_PROJECTS_WEBHOOK_URL
 
 type DBPLogOpts =
   | {
@@ -53,9 +53,9 @@ export async function dbpLog(
     }) ${bodyText}`
   }
 
-  if (!SB_PROJECTS_WEBHOOK_URL) return Promise.resolve()
+  if (!DB_PROJECTS_WEBHOOK_URL) return Promise.resolve()
 
-  return await axios.post(SB_PROJECTS_WEBHOOK_URL, {
+  return await axios.post(DB_PROJECTS_WEBHOOK_URL, {
     content: discordNotificationContent.substring(0, 2000), // Max size of Discord message
   })
 }

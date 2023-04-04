@@ -11,6 +11,9 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+msgid "\"Editing\" an NFT creates a copy of it. The old version won't be available, and the new version will have a new token ID."
+msgstr ""
+
 msgid "% tokens redeemed"
 msgstr ""
 

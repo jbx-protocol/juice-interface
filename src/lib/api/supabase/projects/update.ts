@@ -1,25 +1,25 @@
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
+import { DBProject } from 'models/dbProject'
 import { Json } from 'models/json'
-import { SBProject } from 'models/supabaseProject'
 import { NextApiResponse } from 'next'
 import { formatError } from 'utils/format/formatError'
 import { formatWad } from 'utils/format/formatNumber'
 import { querySubgraphExhaustiveRaw } from 'utils/graph'
 import {
   getChangedSubgraphProjects,
-  sgSbCompareKeys,
+  sgDbCompareKeys,
   tryResolveMetadata,
-} from 'utils/subgraphSupabaseProjects'
-import { sbpQueryAll, writeSBProjects } from '.'
-import { sbpLog } from './logger'
+} from 'utils/sgDbProjects'
+import { dbpQueryAll, writeDBProjects } from '.'
+import { dbpLog } from './logger'
 
-export async function updateSBProjects(
+export async function updateDBProjects(
   res: NextApiResponse,
   retryIpfs: boolean,
 ) {
   try {
     // // TODO for testing
-    // await sbProjects
+    // await dbProjects
     //   .delete({ count: 'exact' })
     //   .filter('id', 'not.eq', null)
     //   .then(res => {
@@ -27,24 +27,24 @@ export async function updateSBProjects(
     //   })
 
     // Load all projects from Supabase, store in dict
-    const { data, error: queryError } = await sbpQueryAll()
+    const { data, error: queryError } = await dbpQueryAll()
 
     if (queryError) {
       throw new Error('Error querying projects: ' + queryError.message)
     }
 
-    const sbProjects = (data as Json<SBProject>[])?.reduce(
+    const dbProjects = (data as Json<DBProject>[])?.reduce(
       (acc, p) => ({
         ...acc,
         [p.id]: p,
       }),
-      {} as Record<string, Json<SBProject>>,
+      {} as Record<string, Json<DBProject>>,
     )
 
     // Load all projects from Subgraph
     const sgProjects = await querySubgraphExhaustiveRaw({
       entity: 'project',
-      keys: sgSbCompareKeys,
+      keys: sgDbCompareKeys,
     })
 
     const {
@@ -54,7 +54,7 @@ export async function updateSBProjects(
       idsOfNewProjects,
     } = getChangedSubgraphProjects({
       sgProjects,
-      sbProjects,
+      dbProjects,
       retryIpfs,
     })
 
@@ -62,7 +62,7 @@ export async function updateSBProjects(
       changedSubgraphProjects.map(sgProject =>
         tryResolveMetadata({
           sgProject,
-          ...sbProjects[sgProject.id],
+          ...dbProjects[sgProject.id],
         }),
       ),
     )
@@ -70,7 +70,7 @@ export async function updateSBProjects(
     const ipfsErrors = resolveMetadataResults.filter(r => r.error)
 
     // Write all updated projects (even those with missing metadata)
-    const { error, data: updatedSBProjects } = await writeSBProjects(
+    const { error, data: updatedDBProjects } = await writeDBProjects(
       resolveMetadataResults.map(r => r.project),
     )
 
@@ -109,8 +109,8 @@ export async function updateSBProjects(
       .join('\n')}`
 
     // Log if any projects were updated
-    if (updatedSBProjects.length) {
-      await sbpLog(
+    if (updatedDBProjects.length) {
+      await dbpLog(
         ipfsErrors.length
           ? {
               type: 'alert',
@@ -135,15 +135,15 @@ export async function updateSBProjects(
     res.status(200).json({
       network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
       updates: {
-        count: updatedSBProjects.length,
-        projects: updatedSBProjects,
+        count: updatedDBProjects.length,
+        projects: updatedDBProjects,
       },
       errors: { ipfsErrors, count: ipfsErrors.length },
     })
   } catch (error) {
     const _error = formatError(error)
 
-    await sbpLog({
+    await dbpLog({
       type: 'alert',
       alert: 'DB_UPDATE_ERROR',
       body: _error,

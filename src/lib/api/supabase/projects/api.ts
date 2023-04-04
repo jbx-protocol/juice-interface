@@ -1,28 +1,28 @@
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { DBProject, DBProjectQueryOpts } from 'models/dbProject'
 import { Json } from 'models/json'
-import { SBProject, SBProjectQueryOpts } from 'models/supabaseProject'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Database } from 'types/database.types'
-import { sbProjects } from '../clients'
+import { dbProjects } from '../clients'
 
 /**
- * Exhaustively queries all Supabase projects.
+ * Exhaustively queries all database projects.
  *
- * @returns Promise containing all projects from Supabase database
+ * @returns Promise containing all projects from database
  */
-export function sbpQueryAll() {
-  return sbProjects.select('*').then(
-    res => ({ data: res.data as Json<SBProject>[], error: undefined }),
-    error => ({ data: [] as Json<SBProject>[], error }),
+export function dbpQueryAll() {
+  return dbProjects.select('*').then(
+    res => ({ data: res.data as Json<DBProject>[], error: undefined }),
+    error => ({ data: [] as Json<DBProject>[], error }),
   )
 }
 
 /**
- * Writes records to Supabase db
+ * Writes records to database
  *
  * @param records Projects to write
  */
-export async function writeSBProjects(records: Json<SBProject>[]) {
+export async function writeDBProjects(records: Json<DBProject>[]) {
   // Sanity check that all IDs are defined
   const missingIds = records.filter(r => r.id === undefined || r.id === null)
 
@@ -51,13 +51,13 @@ export async function writeSBProjects(records: Json<SBProject>[]) {
     _metadataRetriesLeft: r._metadataRetriesLeft ?? null,
   }))
 
-  return sbProjects.upsert(queue).select()
+  return dbProjects.upsert(queue).select()
 }
 
-export async function querySBProjects(
+export async function queryDBProjects(
   req: NextApiRequest,
   res: NextApiResponse,
-  opts: SBProjectQueryOpts,
+  opts: DBProjectQueryOpts,
 ) {
   const orderBy = opts.orderBy ?? 'totalPaid'
   const page = opts.page ?? 0

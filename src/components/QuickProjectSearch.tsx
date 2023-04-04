@@ -10,9 +10,9 @@ import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
 import { PV_V2 } from 'constants/pv'
 import { useModal } from 'hooks/Modal'
-import { useSBProjectsQuery } from 'hooks/Projects'
+import { useDBProjectsQuery } from 'hooks/Projects'
 import { trackFathomGoal } from 'lib/fathom'
-import { SBProject } from 'models/supabaseProject'
+import { DBProject } from 'models/dbProject'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -53,7 +53,7 @@ export default function QuickProjectSearch({
     }
   }, [inputText])
 
-  const { data: searchResults, isLoading } = useSBProjectsQuery({
+  const { data: searchResults, isLoading } = useDBProjectsQuery({
     text: searchText,
     pageSize: MAX_RESULTS,
   })
@@ -202,7 +202,7 @@ export default function QuickProjectSearch({
                       <V2V3ProjectHandleLink
                         projectId={p.projectId}
                         handle={p.handle}
-                        name={(p as SBProject).name}
+                        name={(p as DBProject).name}
                       />
                     ) : (
                       <V1ProjectHandle

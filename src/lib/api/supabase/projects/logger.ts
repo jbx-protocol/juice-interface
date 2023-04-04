@@ -2,32 +2,32 @@ import axios from 'axios'
 import { readNetwork } from 'constants/networks'
 import { getLogger } from 'lib/logger'
 
-const SBP_ALERTS = {
+const DBP_ALERTS = {
   DB_UPDATE_ERROR: 'Error updating database',
   BAD_DB_HEALTH: 'Errors in database',
 }
 
-const SBP_NOTIFS = {
+const DBP_NOTIFS = {
   DB_UPDATED: 'Records updated',
   DB_OK: 'Database is OK',
 }
 
 const SB_PROJECTS_WEBHOOK_URL = process.env.SB_PROJECTS_WEBHOOK_URL
 
-type SBPLogOpts =
+type DBPLogOpts =
   | {
       type: 'alert'
-      alert: keyof typeof SBP_ALERTS
+      alert: keyof typeof DBP_ALERTS
     }
   | {
       type: 'notification'
-      notif: keyof typeof SBP_NOTIFS
+      notif: keyof typeof DBP_NOTIFS
     }
 
 const logger = getLogger('lib/sepana')
 
-export async function sbpLog(
-  opts: SBPLogOpts & {
+export async function dbpLog(
+  opts: DBPLogOpts & {
     body?: string
   },
 ) {
@@ -35,20 +35,20 @@ export async function sbpLog(
 
   // log the error to the console
   if (type === 'alert') {
-    logger.error({ data: { type, message: SBP_ALERTS[opts.alert] } })
+    logger.error({ data: { type, message: DBP_ALERTS[opts.alert] } })
   } else {
-    logger.info({ data: { type, message: SBP_NOTIFS[opts.notif] } })
+    logger.info({ data: { type, message: DBP_NOTIFS[opts.notif] } })
   }
 
   const bodyText = body ? `\n${body}` : ''
 
   let discordNotificationContent
   if (type === 'alert') {
-    discordNotificationContent = `🚨 **${SBP_ALERTS[opts.alert]}** (${
+    discordNotificationContent = `🚨 **${DBP_ALERTS[opts.alert]}** (${
       readNetwork.name
     }) <@&1064689520848674888> ${bodyText}`
   } else {
-    discordNotificationContent = `**${SBP_NOTIFS[opts.notif]}** (${
+    discordNotificationContent = `**${DBP_NOTIFS[opts.notif]}** (${
       readNetwork.name
     }) ${bodyText}`
   }

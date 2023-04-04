@@ -13,4 +13,4 @@ export const juiceAuthDbClient = createClient<Database, 'juice_auth'>(
   { db: { schema: 'juice_auth' } },
 )
 
-export const sbProjects = sudoPublicDbClient.from('projects')
+export const dbProjects = sudoPublicDbClient.from('projects')

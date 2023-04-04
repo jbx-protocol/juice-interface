@@ -2,6 +2,7 @@ import axios from 'axios'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
+import { DBProject, DBProjectQueryOpts } from 'models/dbProject'
 import {
   InfiniteSGQueryOpts,
   SGEntityKey,
@@ -12,7 +13,6 @@ import { Json } from 'models/json'
 import { ProjectState } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import { Project } from 'models/subgraph-entities/vX/project'
-import { SBProject, SBProjectQueryOpts } from 'models/supabaseProject'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useMemo, useState } from 'react'
 import {
@@ -23,7 +23,7 @@ import {
 } from 'react-query'
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
-import { parseSBProjectJson } from 'utils/subgraphSupabaseProjects'
+import { parseDBProjectJson } from 'utils/sgDbProjects'
 
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
@@ -155,26 +155,26 @@ export function useProjectsSearch(
   )
 }
 
-export function useSBProjectsQuery(
-  opts: SBProjectQueryOpts,
+export function useDBProjectsQuery(
+  opts: DBProjectQueryOpts,
   reactQueryOptions?: UseQueryOptions<
-    SBProject[],
+    DBProject[],
     Error,
-    SBProject[],
-    readonly [string, SBProjectQueryOpts]
+    DBProject[],
+    readonly [string, DBProjectQueryOpts]
   >,
 ) {
   return useQuery<
-    SBProject[],
+    DBProject[],
     Error,
-    SBProject[],
-    readonly [string, SBProjectQueryOpts]
+    DBProject[],
+    readonly [string, DBProjectQueryOpts]
   >(
-    ['sbp-query', opts],
+    ['dbp-query', opts],
     () =>
       axios
-        .get<Json<SBProject>[]>(`/api/projects?${formatQueryParams(opts)}`)
-        .then(res => res.data.map(p => parseSBProjectJson(p))),
+        .get<Json<DBProject>[]>(`/api/projects?${formatQueryParams(opts)}`)
+        .then(res => res.data.map(p => parseDBProjectJson(p))),
     {
       staleTime: 0,
       // staleTime: DEFAULT_STALE_TIME,
@@ -183,30 +183,30 @@ export function useSBProjectsQuery(
   )
 }
 
-export function useSBProjectsInfiniteQuery(
-  opts: SBProjectQueryOpts,
+export function useDBProjectsInfiniteQuery(
+  opts: DBProjectQueryOpts,
   reactQueryOptions?: UseInfiniteQueryOptions<
-    SBProject[],
+    DBProject[],
     Error,
-    SBProject[],
-    SBProject[],
-    readonly [string, SBProjectQueryOpts]
+    DBProject[],
+    DBProject[],
+    readonly [string, DBProjectQueryOpts]
   >,
 ) {
   return useInfiniteQuery(
-    ['sbp-infinite-query', opts],
+    ['dbp-infinite-query', opts],
     async ({ queryKey, pageParam }) => {
       const { pageSize, ...evaluatedOpts } = queryKey[1]
 
       return axios
-        .get<Json<SBProject>[]>(
+        .get<Json<DBProject>[]>(
           `/api/projects?${formatQueryParams({
             ...evaluatedOpts,
             page: pageParam,
             pageSize,
           })}`,
         )
-        .then(res => res.data.map(p => parseSBProjectJson(p)))
+        .then(res => res.data.map(p => parseDBProjectJson(p)))
     },
     {
       staleTime: 0,

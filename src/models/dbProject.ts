@@ -5,7 +5,7 @@ import { ProjectMetadata } from './projectMetadata'
 import { PV } from './pv'
 import { Project } from './subgraph-entities/vX/project'
 
-export type SGSBCompareKey = Extract<keyof Project, keyof SBProject>
+export type SGSBCompareKey = Extract<keyof Project, keyof DBProject>
 
 /**
  * @param text Text to use for string search
@@ -16,7 +16,7 @@ export type SGSBCompareKey = Extract<keyof Project, keyof SBProject>
  * @param page Page number
  * @param pageSize Number of results to return in single page
  */
-export type SBProjectQueryOpts = {
+export type DBProjectQueryOpts = {
   text?: string
   tags?: ProjectTag[]
   archived?: boolean
@@ -27,7 +27,7 @@ export type SBProjectQueryOpts = {
   pageSize?: number
 }
 
-export type SBProject = {
+export type DBProject = {
   id: string
   projectId: number
   createdAt: number

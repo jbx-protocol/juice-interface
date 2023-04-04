@@ -3,7 +3,7 @@ import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
 import { useLoadMoreContent } from 'hooks/LoadMore'
-import { useSBProjectsInfiniteQuery } from 'hooks/Projects'
+import { useDBProjectsInfiniteQuery } from 'hooks/Projects'
 import { ProjectTag } from 'models/project-tags'
 import { PV } from 'models/pv'
 import { useEffect, useRef } from 'react'
@@ -33,7 +33,7 @@ export default function AllProjects({
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useSBProjectsInfiniteQuery({
+  } = useDBProjectsInfiniteQuery({
     text: searchText,
     tags: searchTags,
     pv,

@@ -1,6 +1,6 @@
-import { querySBProjects } from 'lib/api/supabase/projects'
+import { queryDBProjects } from 'lib/api/supabase/projects'
+import { DBProjectQueryOpts } from 'models/dbProject'
 import { ProjectTag } from 'models/project-tags'
-import { SBProjectQueryOpts } from 'models/supabaseProject'
 import { NextApiHandler } from 'next'
 
 // Searches Juicebox projects matching text query param
@@ -62,16 +62,16 @@ const handler: NextApiHandler = async (req, res) => {
       : undefined
 
   try {
-    const { data: results } = await querySBProjects(req, res, {
+    const { data: results } = await queryDBProjects(req, res, {
       text,
       tags: tags?.split(',') as ProjectTag[],
       pageSize: _pageSize,
       page: _page,
       archived:
         archived === 'true' ? true : archived === 'false' ? false : undefined,
-      pv: pv?.split(',') as SBProjectQueryOpts['pv'],
-      orderDirection: orderDirection as SBProjectQueryOpts['orderDirection'],
-      orderBy: orderBy as SBProjectQueryOpts['orderBy'],
+      pv: pv?.split(',') as DBProjectQueryOpts['pv'],
+      orderDirection: orderDirection as DBProjectQueryOpts['orderDirection'],
+      orderBy: orderBy as DBProjectQueryOpts['orderBy'],
     })
 
     res.status(200).json(results)

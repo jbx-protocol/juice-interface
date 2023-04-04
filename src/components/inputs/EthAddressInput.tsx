@@ -1,6 +1,5 @@
 import { CheckCircleFilled, LoadingOutlined } from '@ant-design/icons'
 import * as constants from '@ethersproject/constants'
-import { readProvider } from 'constants/readProvider'
 import { isAddress } from 'ethers/lib/utils'
 import { resolveAddress } from 'lib/api/ens'
 import { useCallback, useEffect, useState } from 'react'
@@ -28,7 +27,7 @@ export function EthAddressInput({
     async (ens: string) => {
       setENSName(ens)
 
-      const addressForENSName = await readProvider.resolveName(ens)
+      const { address: addressForENSName } = await resolveAddress(ens)
       if (addressForENSName) {
         setAddressForENSName(addressForENSName)
         onChange?.(addressForENSName)

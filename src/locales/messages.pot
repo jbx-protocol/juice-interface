@@ -647,6 +647,9 @@ msgstr ""
 msgid "Choose how you would like to set up payouts."
 msgstr ""
 
+msgid "Choose wallet"
+msgstr ""
+
 msgid "Choosing 'None' will clear your payout recipients and reset other payout options."
 msgstr ""
 
@@ -1107,6 +1110,9 @@ msgid "ETH transfers to project"
 msgstr ""
 
 msgid "Each cycle, the project will issue {discountRate}% fewer tokens per ETH."
+msgstr ""
+
+msgid "Edit"
 msgstr ""
 
 msgid "Edit Cycle"

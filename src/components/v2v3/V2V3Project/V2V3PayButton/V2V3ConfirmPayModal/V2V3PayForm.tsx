@@ -25,8 +25,7 @@ import { classNames } from 'utils/classNames'
 import { formattedNum, formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
-  V2V3CurrencyName,
-  V2V3_CURRENCY_ETH,
+  V2V3CurrencyName, V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD
 } from 'utils/v2v3/currency'
 import {
@@ -62,12 +61,12 @@ export const V2V3PayForm = ({
   const [attachStickerModalVisible, setAttachStickerModalVisible] =
     useState<boolean>(false)
   const [riskModalVisible, setRiskModalVisible] = useState<boolean>()
+
   const converter = useCurrencyConverter()
 
   const usdAmount = converter.weiToUsd(weiAmount)
 
   const beneficiary = useWatch('beneficiary', form)
-
   const stickerUrls = useWatch('stickerUrls', form)
 
   const riskCount =
@@ -81,16 +80,18 @@ export const V2V3PayForm = ({
 
   const reservedRate = fundingCycleMetadata?.reservedRate?.toNumber()
 
-  const receivedTickets = weightAmountPermyriad(
+  const tokensReceived = weightAmountPermyriad(
     fundingCycle?.weight,
     reservedRate,
     weiAmount,
     'payer',
   )
 
-  const tokenText = tokenSymbolText({
+  const tokensReceivedFormatted =
+    formatWad(tokensReceived, { precision: 2 }) ?? '0'
+  const tokensText = tokenSymbolText({
     tokenSymbol,
-    plural: true,
+    plural: parseFloat(tokensReceivedFormatted) !== 1,
   })
 
   const nftRewardTiers = useNftRewardTiersToMint()
@@ -102,20 +103,20 @@ export const V2V3PayForm = ({
           <div>
           <div className="flex flex-col gap-6 w-full">
               <div className="flex justify-between">
-                <div className="font-bold">
+                <span className="font-medium">
                   <Trans>Amount:</Trans>
-                </div>
-                <div>
+                </span>
+                <span>
                   {formatWad(weiAmount)} {V2V3CurrencyName(V2V3_CURRENCY_ETH)} (
                   {formattedNum(usdAmount)}{' '}
                   {V2V3CurrencyName(V2V3_CURRENCY_USD)})
-                </div>
+                </span>
               </div>
 
               <div className="flex items-baseline justify-between">
-                <div className="font-bold">
+                <span className="font-medium">
                   <Trans>Receive:</Trans>
-                </div>
+                </span>
                 <div className="text-right">
                   <div className="inline-flex items-baseline">
                     <Form.Item
@@ -152,7 +153,7 @@ export const V2V3PayForm = ({
                         size="small"
                         onClick={() => setCustomBeneficiaryEnabled(false)}
                       >
-                        Save
+                        <Trans>Save</Trans>
                       </Button>
                     ) : (
                       <Button
@@ -161,12 +162,16 @@ export const V2V3PayForm = ({
                         type="text"
                         onClick={() => setCustomBeneficiaryEnabled(true)}
                       >
-                        {beneficiary ? 'Edit' : 'Choose wallet'}
+                        {beneficiary ? (
+                          <Trans>Edit</Trans>
+                        ) : (
+                          <Trans>Choose wallet</Trans>
+                        )}
                       </Button>
                     )}
                   </div>
                   <div>
-                    {formatWad(receivedTickets, { precision: 0 })} {tokenText}
+                    {tokensReceivedFormatted} {tokensText}
                   </div>
                   {nftRewardTiers?.length ? (
                     <div className="py-3">
@@ -216,11 +221,11 @@ export const V2V3PayForm = ({
                 autoSize
               />
             </Form.Item>
-            <div className="absolute right-2 top-2 text-sm">
+            <div className="absolute right-2 top-1.5 text-sm">
               {
                 <Sticker
                   className={classNames(
-                    'text-grey-500 dark:text-grey-300',
+                    'text-grey-500 hover:text-grey-700 dark:text-grey-300 hover:dark:text-grey-400',
                     canAddMoreStickers
                       ? 'cursor-pointer'
                       : 'cursor-not-allowed',
@@ -231,6 +236,7 @@ export const V2V3PayForm = ({
                       ? setAttachStickerModalVisible(true)
                       : undefined
                   }}
+                  role="button"
                 />
               }
             </div>

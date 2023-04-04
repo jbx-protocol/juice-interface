@@ -1424,6 +1424,9 @@ msgstr ""
 msgid "General"
 msgstr ""
 
+msgid "Get Updates"
+msgstr ""
+
 msgid "Get help planning or setting up my project."
 msgstr ""
 

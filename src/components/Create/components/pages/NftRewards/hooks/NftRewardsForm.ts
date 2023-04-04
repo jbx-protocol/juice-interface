@@ -23,6 +23,7 @@ type NftRewardsFormProps = Partial<{
   onChainGovernance: JB721GovernanceType
   useDataSourceForRedeem: boolean
   preventOverspending: boolean
+  payInNana: boolean
 }>
 
 export const useNftRewardsForm = () => {
@@ -33,6 +34,7 @@ export const useNftRewardsForm = () => {
     postPayModal,
     governanceType,
     flags,
+    payInNana,
   } = useAppSelector(state => state.editingV2Project.nftRewards)
   const { projectMetadata, fundingCycleMetadata } = useAppSelector(
     state => state.editingV2Project,
@@ -59,7 +61,6 @@ export const useNftRewardsForm = () => {
         beneficiary: t.beneficiary,
         reservedRate: t.reservedRate,
         votingWeight: t.votingWeight,
-        payInNana: t.payInNana,
       })) ?? []
 
     return {
@@ -73,6 +74,7 @@ export const useNftRewardsForm = () => {
       postPayMessage: postPayModal?.content,
       postPayButtonText: postPayModal?.ctaText,
       postPayButtonLink: withoutHttp(postPayModal?.ctaLink),
+      payInNana,
     }
   }, [
     collectionMetadata?.name,
@@ -86,6 +88,7 @@ export const useNftRewardsForm = () => {
     postPayModal?.ctaLink,
     fundingCycleMetadata.useDataSourceForRedeem,
     flags.preventOverspending,
+    payInNana,
   ])
 
   useFormDispatchWatch({
@@ -165,6 +168,14 @@ export const useNftRewardsForm = () => {
         return JB721GovernanceType.NONE
       return v
     },
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'payInNana',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setNftRewardsPayInNana,
+    formatter: v => !!v,
   })
 
   useFormDispatchWatch({

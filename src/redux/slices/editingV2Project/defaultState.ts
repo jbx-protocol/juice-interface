@@ -120,6 +120,7 @@ const DEFAULT_PROJECT_STATE: ProjectState = {
     postPayModal: undefined,
     flags: DEFAULT_NFT_FLAGS,
     governanceType: JB721GovernanceType.NONE,
+    payInNana: false,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
   inputProjectOwner: undefined,

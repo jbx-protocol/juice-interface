@@ -8,6 +8,7 @@ import { useContentType } from 'hooks/ContentType'
 import round from 'lodash/round'
 import { NftRewardTier } from 'models/nftRewards'
 import { ReactNode } from 'react'
+import { useAppSelector } from 'redux/hooks/AppSelector'
 import { isZeroAddress } from 'utils/address'
 import { fileTypeIsVideo, hasLimitedSupply } from 'utils/nftRewards'
 import { prettyUrl } from 'utils/url'
@@ -45,13 +46,16 @@ export const RewardItem = ({
     maxSupply,
     externalLink,
     fileUrl,
-    payInNana,
   } = reward
 
   const { data: contentType } = useContentType(fileUrl)
   const isVideo = fileTypeIsVideo(contentType)
 
   const hasBeneficiary = Boolean(beneficiary) && !isZeroAddress(beneficiary)
+
+  const { payInNana } = useAppSelector(
+    state => state.editingV2Project.nftRewards,
+  )
 
   return (
     <div className="flex flex-col gap-4">

@@ -29,6 +29,7 @@ export type NftRewardsData = {
   postPayModal: NftPostPayModalConfig | undefined
   flags: JBTiered721Flags
   governanceType: JB721GovernanceType
+  payInNana: boolean
 }
 
 export interface CreateState {

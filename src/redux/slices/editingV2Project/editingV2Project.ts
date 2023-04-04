@@ -200,6 +200,9 @@ const editingV2ProjectSlice = createSlice({
     ) => {
       state.nftRewards.governanceType = action.payload
     },
+    setNftRewardsPayInNana: (state, action: PayloadAction<boolean>) => {
+      state.nftRewards.payInNana = action.payload
+    },
     setNftPostPayModalConfig: (
       state,
       action: PayloadAction<NftPostPayModalConfig | undefined>,

@@ -14,7 +14,7 @@ import { classNames } from 'utils/classNames'
 export default function NftSummarySection() {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const {
-    nftRewards: { rewardTiers },
+    nftRewards: { rewardTiers, payInNana },
     fundingCycleMetadata: { dataSource: newDataSource },
   } = useAppSelector(state => state.editingV2Project)
 
@@ -54,7 +54,7 @@ export default function NftSummarySection() {
                 <p className="mb-0">
                   <Trans>
                     <span className="font-medium">Contribution floor:</span>{' '}
-                    {rewardTier.contributionFloor} ETH
+                    {rewardTier.contributionFloor} {payInNana ? 'NANA' : 'ETH'}
                   </Trans>
                 </p>
                 {rewardTier.maxSupply &&

@@ -63,6 +63,10 @@ export const NftRewardsPage = () => {
             <RewardsList allowCreate />
           </Form.Item>
 
+          <Form.Item name="payInNana">
+            <JuiceSwitch label={t`Pay in NANA`} />
+          </Form.Item>
+
           {hasNfts && (
             <Space
               className="w-full pt-3 pb-2"

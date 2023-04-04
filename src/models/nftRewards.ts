@@ -18,7 +18,6 @@ export type NftRewardTier = {
   votingWeight: number | undefined
   externalLink: string | undefined
   description: string | undefined
-  payInNana: boolean | undefined
 }
 
 export type JBTiered721Flags = {

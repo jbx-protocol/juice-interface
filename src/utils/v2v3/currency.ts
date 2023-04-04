@@ -18,7 +18,6 @@ export const NO_CURRENCY = 0
 export const V2V3_CURRENCY_ETH: V2V3CurrencyETH = 1
 export const V2V3_CURRENCY_USD: V2V3CurrencyUSD = 2
 export const V2V3_CURRENCY_NANA: V2V3CurrencyNANA = 10875770
-export const NANA_PROJECT_ID = 612
 
 export const V2V3_CURRENCY_METADATA: Record<
   V2V3CurrencyOption,

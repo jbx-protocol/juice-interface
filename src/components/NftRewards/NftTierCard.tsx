@@ -1,14 +1,14 @@
 import { t } from '@lingui/macro'
 import { Skeleton } from 'antd'
 import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
+import { terminalNanaAddress } from 'components/v2v3/V2V3Project/V2V3PayButton/V2V3ConfirmPayModal'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { NftRewardTier } from 'models/nftRewards'
 import { useContext, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
-import { NANA_PROJECT_ID } from 'utils/v2v3/currency'
 import { NftPreview } from './NftPreview'
 import { QuantitySelector } from './QuantitySelector'
 
@@ -40,7 +40,8 @@ export function NftTierCard({
   // used to return to previous state on second click if user accidentally unselected the NFT
   const [previousQuantity, setPreviousQuantity] = useState<number>(1)
 
-  const { projectId } = useContext(ProjectMetadataContext)
+  const { terminals } = useContext(V2V3ProjectContext)
+  const isNanaTerminal = terminals?.includes(terminalNanaAddress)
 
   const fileUrl = rewardTier?.fileUrl
     ? ipfsUriToGatewayUrl(rewardTier.fileUrl)
@@ -166,7 +167,7 @@ export function NftTierCard({
               >
                 <span className="text-sm text-grey-900 dark:text-slate-50">
                   {rewardTier?.contributionFloor}{' '}
-                  {projectId === NANA_PROJECT_ID ? 'NANA' : 'ETH'}
+                  {isNanaTerminal ? 'NANA' : 'ETH'}
                 </span>
               </Skeleton>
               <Skeleton

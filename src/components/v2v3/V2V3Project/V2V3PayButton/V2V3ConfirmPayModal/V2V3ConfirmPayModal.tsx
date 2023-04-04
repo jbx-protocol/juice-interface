@@ -20,7 +20,6 @@ import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
-import { NANA_PROJECT_ID } from 'utils/v2v3/currency'
 import { useDelegateMetadata } from './hooks/DelegateMetadata'
 import { useNftRewardTiersToMint } from './hooks/NftRewardTiersToMint'
 import JBERC20PaymentTerminal3_1 from './JBERC20PaymentTerminal3_1'
@@ -39,8 +38,9 @@ export function V2V3ConfirmPayModal({
   weiAmount: BigNumber | undefined
   onCancel?: VoidFunction
 }) {
-  const { fundingCycle, handle } = useContext(V2V3ProjectContext)
+  const { fundingCycle, handle, terminals } = useContext(V2V3ProjectContext)
   const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
+  const isNanaTerminal = terminals?.includes(terminalNanaAddress)
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
@@ -53,7 +53,6 @@ export function V2V3ConfirmPayModal({
 
   let amountToApprove: BigNumber | undefined
   let terminalNana: Contract | undefined
-  let allowance: { data: BigNumber | undefined }
 
   const router = useRouter()
   const {
@@ -65,13 +64,19 @@ export function V2V3ConfirmPayModal({
     signer,
   } = useWallet()
 
-  if (projectId === NANA_PROJECT_ID) {
+  // TODO: Get allowance only if needed
+  const allowance: { data: BigNumber | undefined } = useERC20Allowance(
+    nanaAddress,
+    userAddress,
+    terminalNanaAddress,
+  )
+
+  if (isNanaTerminal) {
     terminalNana = new Contract(
       terminalNanaAddress,
       JBERC20PaymentTerminal3_1.abi,
       signer,
     )
-    allowance = useERC20Allowance(nanaAddress, userAddress, terminalNanaAddress)
     amountToApprove = weiAmount?.sub(allowance.data ?? 0)
   }
 
@@ -183,10 +188,9 @@ export function V2V3ConfirmPayModal({
     }
 
     try {
-      const txSuccess =
-        projectId === NANA_PROJECT_ID
-          ? await payProjectERC20Tx(paramsERC20, handlers)
-          : await payProjectTx(paramsETH, handlers)
+      const txSuccess = isNanaTerminal
+        ? await payProjectERC20Tx(paramsERC20, handlers)
+        : await payProjectTx(paramsETH, handlers)
 
       if (!txSuccess) {
         setLoading(false)

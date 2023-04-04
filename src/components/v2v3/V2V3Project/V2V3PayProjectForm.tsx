@@ -1,20 +1,17 @@
 import { PayProjectForm } from 'components/Project/PayProjectForm'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerminal'
 import { useContext } from 'react'
-import { NANA_PROJECT_ID } from 'utils/v2v3/currency'
+import { terminalNanaAddress } from './V2V3PayButton/V2V3ConfirmPayModal'
 
 export function V2V3PayProjectForm() {
-  const { fundingCycle } = useContext(V2V3ProjectContext)
-  const { projectId } = useContext(ProjectMetadataContext)
+  const { fundingCycle, terminals } = useContext(V2V3ProjectContext)
   const hasCurrentFundingCycle = fundingCycle?.number.gt(0)
   const isPrimaryETHTerminalValid = useValidatePrimaryEthTerminal()
 
-  let disabled = !hasCurrentFundingCycle || !isPrimaryETHTerminalValid
-  // TODO: change disabled
-  if (projectId === NANA_PROJECT_ID) {
-    disabled = false
-  }
+  const disabled =
+    !hasCurrentFundingCycle ||
+    (!isPrimaryETHTerminalValid && !terminals?.includes(terminalNanaAddress))
+
   return <PayProjectForm disabled={disabled} />
 }

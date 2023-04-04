@@ -19,14 +19,17 @@ import {
 import { weightAmountPermyriad } from 'utils/v2v3/math'
 import { useNftRewardTiersToMint } from './hooks/NftRewardTiersToMint'
 import { NftRewardCell } from './NftRewardCell'
+import { terminalNanaAddress } from './V2V3ConfirmPayModal'
 
 export function SummaryTable({
   weiAmount,
 }: {
   weiAmount: BigNumber | undefined
 }) {
-  const { fundingCycle, fundingCycleMetadata, tokenSymbol } =
+  const { fundingCycle, fundingCycleMetadata, tokenSymbol, terminals } =
     useContext(V2V3ProjectContext)
+
+  const isNanaTerminal = terminals?.includes(terminalNanaAddress)
 
   const { userAddress } = useWallet()
   const converter = useCurrencyConverter()
@@ -58,8 +61,10 @@ export function SummaryTable({
   return (
     <Descriptions column={1} bordered size={isMobile ? 'small' : 'default'}>
       <Descriptions.Item label={t`Pay amount`} className="content-right">
-        {formattedNum(usdAmount)} {V2V3CurrencyName(V2V3_CURRENCY_USD)} (
-        {formatWad(weiAmount)} {V2V3CurrencyName(V2V3_CURRENCY_ETH)})
+        {isNanaTerminal
+          ? formatWad(weiAmount) + ' NANA'
+          : `${formattedNum(usdAmount)} ${V2V3CurrencyName(V2V3_CURRENCY_USD)} (
+        ${formatWad(weiAmount)} ${V2V3CurrencyName(V2V3_CURRENCY_ETH)})`}
       </Descriptions.Item>
       <Descriptions.Item
         label={<Trans>Tokens for you</Trans>}
@@ -94,7 +99,7 @@ export function SummaryTable({
       </Descriptions.Item>
       {nftRewardTiers?.length ? (
         <Descriptions.Item
-          className="py-3 px-6"
+          className="px-6 py-3"
           label={
             <TooltipLabel
               label={t`NFTs for you`}

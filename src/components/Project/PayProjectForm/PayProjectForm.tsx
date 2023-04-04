@@ -1,6 +1,8 @@
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
+import { terminalNanaAddress } from 'components/v2v3/V2V3Project/V2V3PayButton/V2V3ConfirmPayModal'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
@@ -20,6 +22,8 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
   } = useContext(NftRewardsContext)
 
   const { PayButton, form: payProjectForm } = useContext(PayProjectFormContext)
+  const { terminals } = useContext(V2V3ProjectContext)
+  const isNanaTerminal = terminals?.includes(terminalNanaAddress)
 
   const converter = useCurrencyConverter()
 
@@ -91,9 +95,13 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
             disabled={disabled}
             accessory={
               <InputAccessoryButton
-                withArrow
-                content={currencyMetadata[payInCurrency ?? ETH].name}
-                onClick={togglePayInCurrency}
+                withArrow={!isNanaTerminal}
+                content={
+                  isNanaTerminal
+                    ? 'NANA'
+                    : currencyMetadata[payInCurrency ?? ETH].name
+                }
+                onClick={isNanaTerminal ? () => null : togglePayInCurrency}
                 disabled={disabled}
                 size="large"
               />

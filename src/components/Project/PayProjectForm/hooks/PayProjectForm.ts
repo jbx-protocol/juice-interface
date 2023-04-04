@@ -1,5 +1,7 @@
 import { t } from '@lingui/macro'
+import { terminalNanaAddress } from 'components/v2v3/V2V3Project/V2V3PayButton/V2V3ConfirmPayModal'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import { useWallet } from 'hooks/Wallet'
@@ -47,6 +49,8 @@ export function usePayProjectForm(): PayProjectForm {
   const {
     currencies: { ETH },
   } = useContext(CurrencyContext)
+  const { terminals } = useContext(V2V3ProjectContext)
+  const isNanaTerminal = terminals?.includes(terminalNanaAddress)
 
   const [payAmount, setPayAmount] = useState<string>('0')
   const [payInCurrency, setPayInCurrency] = useState<CurrencyOption>(ETH)
@@ -68,7 +72,7 @@ export function usePayProjectForm(): PayProjectForm {
     const balanceToCompare =
       payInCurrency === ETH ? userBalanceWei : userBalanceUsd
 
-    if (balanceToCompare?.lte(payAmountWei)) {
+    if (balanceToCompare?.lte(payAmountWei) && !isNanaTerminal) {
       return setErrorMessage?.(
         t`Payment amount can't exceed your wallet balance.`,
       )

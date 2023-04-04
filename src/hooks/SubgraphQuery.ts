@@ -1,11 +1,11 @@
 import axios from 'axios'
 import {
+  SGQueryOpts,
   InfiniteSGQueryOpts,
   SGEntity,
   SGEntityKey,
   SGEntityName,
   SGError,
-  SGQueryOpts,
   SGResponseData,
 } from 'models/graph'
 import {
@@ -16,10 +16,10 @@ import {
 } from 'react-query'
 
 import {
-  entitiesFromSGResponse,
   formatGraphQuery,
-  parseSubgraphEntity,
   querySubgraph,
+  entitiesFromSGResponse,
+  parseSubgraphEntity,
 } from '../utils/graph'
 
 const staleTime = 60 * 1000 // 60 seconds

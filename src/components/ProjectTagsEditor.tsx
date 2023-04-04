@@ -40,14 +40,20 @@ export default function ProjectTagsEditor({
             selected
             key={t}
             tag={t}
-            onClick={() => update(v => v.filter(_t => _t !== t))}
+            onClick={() => {
+              // remove tag
+              update(v => v.filter(_t => _t !== t))
+            }}
           />
         ))}
       </div>
 
       <ProjectTagsRow
         tags={projectTagOptions.filter(t => !value.includes(t))}
-        onClickTag={t => update(v => [...v, t].slice(0, MAX_PROJECT_TAGS))}
+        onClickTag={t => {
+          // add tag, but no more than max allowed number
+          update(v => [...v, t].slice(0, MAX_PROJECT_TAGS))
+        }}
       />
     </div>
   )

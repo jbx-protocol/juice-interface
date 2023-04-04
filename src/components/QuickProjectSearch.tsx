@@ -12,7 +12,6 @@ import { PV_V2 } from 'constants/pv'
 import { useModal } from 'hooks/Modal'
 import { useDBProjectsQuery } from 'hooks/Projects'
 import { trackFathomGoal } from 'lib/fathom'
-import { DBProject } from 'models/dbProject'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -202,7 +201,7 @@ export default function QuickProjectSearch({
                       <V2V3ProjectHandleLink
                         projectId={p.projectId}
                         handle={p.handle}
-                        name={(p as DBProject).name}
+                        name={p.name}
                       />
                     ) : (
                       <V1ProjectHandle

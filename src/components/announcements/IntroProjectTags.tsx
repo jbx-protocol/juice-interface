@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro'
 import { ProjectTagsRow } from 'components/ProjectTagsRow'
-import { projectTagOptions } from 'models/project-tags'
 import Link from 'next/link'
 
 export default function IntroProjectTags() {
@@ -11,7 +10,7 @@ export default function IntroProjectTags() {
           <span className="text-juice-500">NEW:</span> Project tags
         </Trans>
       </h1>
-      <ProjectTagsRow tags={[...projectTagOptions]} />
+      <ProjectTagsRow />
       <div className="mt-2">
         <Trans>
           You can now add tags in{' '}

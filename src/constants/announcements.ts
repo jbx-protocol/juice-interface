@@ -7,13 +7,13 @@ export const announcements: Announcement[] = [
     id: 'introProjectTags',
     conditions: [({ isProjectOwner }) => isProjectOwner],
     content: IntroProjectTags,
-    expire: new Date('2023-04-01T00:00:00.000Z').valueOf(),
+    expire: new Date('2023-05-01T00:00:00.000Z').valueOf(),
   },
   {
-    id: 'IntroImprovedSearch',
+    id: 'introImprovedSearch',
     conditions: [({ router }) => router.pathname.includes('projects')],
     content: IntroImprovedSearch,
-    expire: new Date('2023-04-01T00:00:00.000Z').valueOf(),
+    expire: new Date('2023-05-01T00:00:00.000Z').valueOf(),
   },
 ]
 

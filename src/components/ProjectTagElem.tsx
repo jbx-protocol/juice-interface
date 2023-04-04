@@ -2,6 +2,9 @@ import { CloseOutlined } from '@ant-design/icons'
 import { ProjectTag } from 'models/project-tags'
 import { twMerge } from 'tailwind-merge'
 
+/**
+ * Formatted project tag.
+ */
 export function ProjectTagElem({
   tag,
   className,

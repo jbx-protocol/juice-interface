@@ -4,12 +4,15 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Checkbox, Form, Input, Modal } from 'antd'
 import { FormInstance, FormProps, useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
+import ETHAmount from 'components/currency/ETHAmount'
+import USDAmount from 'components/currency/USDAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import Sticker from 'components/icons/Sticker'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
 import Paragraph from 'components/Paragraph'
+import { Parenthesis } from 'components/Parenthesis'
 import { StickerSelection } from 'components/Project/StickerSelection'
 import ProjectRiskNotice from 'components/ProjectRiskNotice'
 import TooltipIcon from 'components/TooltipIcon'
@@ -22,12 +25,8 @@ import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useContext, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { classNames } from 'utils/classNames'
-import { formattedNum, formatWad } from 'utils/format/formatNumber'
+import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import {
-  V2V3CurrencyName, V2V3_CURRENCY_ETH,
-  V2V3_CURRENCY_USD
-} from 'utils/v2v3/currency'
 import {
   getUnsafeV2V3FundingCycleProperties,
   getV2V3FundingCycleRiskCount
@@ -86,16 +85,14 @@ export const V2V3PayForm = ({
     weiAmount,
     'payer',
   )
-
   const tokensReceivedFormatted =
     formatWad(tokensReceived, { precision: 2 }) ?? '0'
   const tokensText = tokenSymbolText({
     tokenSymbol,
-    plural: parseFloat(tokensReceivedFormatted) !== 1,
+    plural: fromWad(tokensReceived) !== '1',
   })
 
   const nftRewardTiers = useNftRewardTiersToMint()
-
   return (
     <>
       <Form form={form} layout="vertical" {...props}>
@@ -107,9 +104,10 @@ export const V2V3PayForm = ({
                   <Trans>Amount:</Trans>
                 </span>
                 <span>
-                  {formatWad(weiAmount)} {V2V3CurrencyName(V2V3_CURRENCY_ETH)} (
-                  {formattedNum(usdAmount)}{' '}
-                  {V2V3CurrencyName(V2V3_CURRENCY_USD)})
+                  <ETHAmount amount={weiAmount} />{' '}
+                  <Parenthesis>
+                    <USDAmount amount={parseWad(usdAmount)} />
+                  </Parenthesis>
                 </span>
               </div>
 

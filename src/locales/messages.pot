@@ -2075,6 +2075,9 @@ msgstr ""
 msgid "Pay"
 msgstr ""
 
+msgid "Pay <0/>"
+msgstr ""
+
 msgid "Pay amount"
 msgstr ""
 

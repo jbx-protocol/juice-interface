@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { useForm, useWatch } from 'antd/lib/form/Form'
-import CurrencySymbol from 'components/CurrencySymbol'
+import ETHAmount from 'components/currency/ETHAmount'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
 import TransactionModal from 'components/TransactionModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -11,7 +11,6 @@ import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
-import { formatWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { useDelegateMetadata } from './hooks/DelegateMetadata'
@@ -146,8 +145,9 @@ export function V2V3ConfirmPayModal({
       okButtonProps={{ disabled: !beneficiary }}
       okText={
         <span>
-          <Trans>Pay</Trans> <CurrencySymbol currency="ETH" />
-          {formatWad(weiAmount)}
+          <Trans>
+            Pay <ETHAmount amount={weiAmount} />
+          </Trans>
         </span>
       }
       connectWalletText={t`Connect wallet to pay`}

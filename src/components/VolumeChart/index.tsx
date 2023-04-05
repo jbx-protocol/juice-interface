@@ -1,6 +1,5 @@
 import { t, Trans } from '@lingui/macro'
 import { Select, Space } from 'antd'
-import CurrencySymbol from 'components/CurrencySymbol'
 
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { PV } from 'models/pv'
@@ -17,6 +16,7 @@ import {
 } from 'recharts'
 import { classNames } from 'utils/classNames'
 
+import ETHAmount from 'components/currency/ETHAmount'
 import { daysToMillis } from './daysToMillis'
 import { useDuration } from './hooks/Duration'
 import { loadBlockRefs } from './loadBlockRefs'
@@ -269,16 +269,14 @@ export default function VolumeChart({
                     </div>
                     {payload[0].payload.tapped ? (
                       <div>
-                        -<CurrencySymbol currency="ETH" />
-                        {payload[0].payload.tapped}
+                        -<ETHAmount amount={payload[0].payload.tapped} />{' '}
                         <div className="text-xs font-medium text-grey-500 dark:text-grey-300">
                           withdraw
                         </div>
                       </div>
                     ) : (
                       <div>
-                        <CurrencySymbol currency="ETH" />
-                        {payload[0].payload.value}
+                        <ETHAmount amount={payload[0].payload.value} />
                       </div>
                     )}
                   </div>

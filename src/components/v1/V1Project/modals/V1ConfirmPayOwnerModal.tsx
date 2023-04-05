@@ -4,15 +4,17 @@ import { t, Trans } from '@lingui/macro'
 import { Checkbox, Descriptions, Form, Input, Modal, Space } from 'antd'
 import { useForm, useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
+import ETHAmount from 'components/currency/ETHAmount'
+import USDAmount from 'components/currency/USDAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import Sticker from 'components/icons/Sticker'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
 import { PaymentMemoSticker } from 'components/modals/AttachStickerModal/paymentMemoSticker'
 import Paragraph from 'components/Paragraph'
+import { Parenthesis } from 'components/Parenthesis'
 import { StickerSelection } from 'components/Project/StickerSelection'
 import ProjectRiskNotice from 'components/ProjectRiskNotice'
-import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 import { ProjectPreferences } from 'constants/v1/projectPreferences'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
@@ -22,10 +24,9 @@ import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { classNames } from 'utils/classNames'
-import { formattedNum, formatWad } from 'utils/format/formatNumber'
+import { formatWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { V1CurrencyName } from 'utils/v1/currency'
 import {
   decodeFundingCycleMetadata,
   fundingCycleRiskCount,
@@ -207,8 +208,10 @@ export default function V1ConfirmPayOwnerModal({
         {renderRiskNotice()}
         <Descriptions column={1} bordered>
           <Descriptions.Item label={t`Pay amount`} className="content-right">
-            {formattedNum(usdAmount)} {V1CurrencyName(V1_CURRENCY_USD)} (
-            {formatWad(weiAmount)} {V1CurrencyName(V1_CURRENCY_ETH)})
+            <USDAmount amount={usdAmount} />{' '}
+            <Parenthesis>
+              <ETHAmount amount={weiAmount} />
+            </Parenthesis>
           </Descriptions.Item>
           <Descriptions.Item
             label={t`${tokenSymbolText({

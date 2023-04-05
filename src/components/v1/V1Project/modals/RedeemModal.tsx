@@ -1,10 +1,11 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import ETHAmount from 'components/currency/ETHAmount'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
+import ETHAmount from 'components/currency/ETHAmount'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { RedeemAMMPrices } from 'components/Project/RedeemAMMPrices'
+import { TokenAmount } from 'components/TokenAmount'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
@@ -14,12 +15,7 @@ import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/v1/transactor/RedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
-import {
-  formattedNum,
-  formatWad,
-  fromWad,
-  parseWad,
-} from 'utils/format/formatNumber'
+import { formattedNum, fromWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
@@ -158,7 +154,12 @@ export default function RedeemModal({
           <p className="flex items-baseline justify-between">
             {tokenSymbolText({ tokenSymbol, capitalize: true })} balance:{' '}
             <span>
-              {formatWad(totalBalance ?? 0, { precision: 0 })} {tokensTextShort}
+              {totalBalance ? (
+                <TokenAmount
+                  amountWad={totalBalance}
+                  tokenSymbol={tokenSymbol}
+                />
+              ) : null}
             </span>
           </p>
           <p className="flex items-baseline justify-between">
@@ -228,7 +229,7 @@ export default function RedeemModal({
               <Trans>
                 You will receive{' '}
                 {currentFC?.currency.eq(V1_CURRENCY_USD) ? 'minimum ' : ' '}
-                {formatWad(minAmount, { precision: 8 }) || '--'} ETH
+                <ETHAmount amount={rewardAmount} />
               </Trans>
             </div>
           ) : null}

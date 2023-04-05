@@ -1,13 +1,13 @@
 import { Trans, t } from '@lingui/macro'
 import { Modal, Space } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
+import { TokenAmount } from 'components/TokenAmount'
 import TicketModsList from 'components/v1/shared/TicketModsList'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/ReservedTokensOfProject'
 import { useDistributeTokensTx } from 'hooks/v1/transactor/DistributeTokensTx'
 import { useContext, useState } from 'react'
-import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 
@@ -43,22 +43,18 @@ export default function DistributeTokensModal({
     })
   }
 
-  const reservedTokensFormatted = formatWad(reservedTokens, { precision: 0 })
+  const tokensText = tokenSymbolText({
+    tokenSymbol,
+    capitalize: false,
+    plural: true,
+  })
 
   return (
     <Modal
-      title={t`Send reserved ${tokenSymbolText({
-        tokenSymbol,
-        capitalize: false,
-        plural: true,
-      })}`}
+      title={t`Send reserved ${tokensText}`}
       open={open}
       onOk={distribute}
-      okText={t`Send ${tokenSymbolText({
-        tokenSymbol,
-        capitalize: false,
-        plural: true,
-      })}`}
+      okText={t`Send ${tokensText}`}
       confirmLoading={loading}
       onCancel={onCancel}
       okButtonProps={{ disabled: !reservedTokens?.gt(0) }}
@@ -67,12 +63,15 @@ export default function DistributeTokensModal({
     >
       <Space direction="vertical" className="w-full" size="large">
         <div className="flex justify-between">
-          <Trans>Available:</Trans>{' '}
-          <div>
-            {tokenSymbol
-              ? `${reservedTokensFormatted} ${tokenSymbol}`
-              : reservedTokensFormatted}
-          </div>
+          <Trans>
+            Available:{' '}
+            {reservedTokens ? (
+              <TokenAmount
+                amountWad={reservedTokens}
+                tokenSymbol={tokenSymbol}
+              />
+            ) : null}
+          </Trans>
         </div>
         {currentTicketMods?.length ? (
           <div>
@@ -89,15 +88,7 @@ export default function DistributeTokensModal({
           </div>
         ) : (
           <p>
-            <Trans>
-              All{' '}
-              {tokenSymbolText({
-                tokenSymbol,
-                capitalize: false,
-                plural: true,
-              })}{' '}
-              will go to the project owner:
-            </Trans>{' '}
+            <Trans>All {tokensText} will go to the project owner:</Trans>{' '}
             <FormattedAddress address={owner} />
           </p>
         )}

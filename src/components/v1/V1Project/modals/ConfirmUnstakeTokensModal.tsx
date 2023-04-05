@@ -3,6 +3,7 @@ import { Form, Modal, Space } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedAddress from 'components/FormattedAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { TokenAmount } from 'components/TokenAmount'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useV1UnclaimedBalance } from 'hooks/v1/contractReader/V1UnclaimedBalance'
@@ -10,7 +11,7 @@ import { useUnstakeTokensTx } from 'hooks/v1/transactor/UnstakeTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useEffect, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
-import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export default function ConfirmUnstakeTokensModal({
@@ -109,7 +110,12 @@ export default function ConfirmUnstakeTokensModal({
           <div>
             <Trans>
               <label>Your unclaimed {tokenSymbol} tokens:</label>{' '}
-              {formatWad(unclaimedBalance, { precision: 8 })}
+              {unclaimedBalance ? (
+                <TokenAmount
+                  amountWad={unclaimedBalance}
+                  tokenSymbol={tokenSymbol}
+                />
+              ) : null}
             </Trans>
           </div>
           {ticketsIssued && (

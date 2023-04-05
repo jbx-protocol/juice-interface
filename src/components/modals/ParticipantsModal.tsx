@@ -15,10 +15,11 @@ import { SGOrderDir, SGQueryOpts } from 'models/graph'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
-import { formatPercent, formatWad } from 'utils/format/formatNumber'
+import { formatPercent } from 'utils/format/formatNumber'
 import { querySubgraph } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
+import { TokenAmount } from 'components/TokenAmount'
 import { DownloadParticipantsModal } from './DownloadParticipantsModal'
 
 const pageSize = 100
@@ -192,22 +193,18 @@ export default function ParticipantsModal({
 
               <div className="text-right">
                 <div className="leading-6">
-                  {formatWad(p.balance, { precision: 0 })}{' '}
-                  {tokenSymbolText({
-                    tokenSymbol,
-                    capitalize: false,
-                    plural: true,
-                  })}{' '}
+                  <TokenAmount
+                    amountWad={p.balance}
+                    tokenSymbol={tokenSymbol}
+                  />{' '}
                   ({formatPercent(p.balance, totalTokenSupply)}%)
                 </div>
                 <div className="text-xs text-grey-400 dark:text-slate-200">
-                  {formatWad(p.stakedBalance, { precision: 0 })}{' '}
                   <Trans>
-                    {tokenSymbolText({
-                      tokenSymbol,
-                      capitalize: false,
-                      plural: true,
-                    })}{' '}
+                    <TokenAmount
+                      amountWad={p.stakedBalance}
+                      tokenSymbol={tokenSymbol}
+                    />{' '}
                     unclaimed
                   </Trans>
                 </div>

@@ -1415,6 +1415,9 @@ msgstr ""
 msgid "Holders of this V1 project's token will be able to migrate their tokens to the V3 token you're deploying."
 msgstr ""
 
+msgid "Home"
+msgstr ""
+
 msgid "Hours"
 msgstr ""
 

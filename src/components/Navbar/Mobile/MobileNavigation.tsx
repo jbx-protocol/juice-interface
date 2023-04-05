@@ -10,6 +10,10 @@ import NavLanguageSelector from '../NavLanguageSelector'
 import WalletButton from '../WalletButton'
 import ThemePickerMobile from './ThemePickerMobile'
 
+const DropdownMenuHeadingClass =
+  'text-primary flex justify-between font-medium items-center'
+const DropdownMenuItemsContainerClass = 'flex flex-col gap-4 px-6 pt-4'
+
 export default function MobileNavigation() {
   const { isConnected, disconnect } = useWallet()
 
@@ -24,29 +28,24 @@ export default function MobileNavigation() {
           {/* Main site links */}
           <div className="flex flex-col gap-4 px-6">
             <Menu.Item>
-              <Link href="/projects">
-                <a className="text-primary">
-                  <Trans>Explore</Trans>
+              <Link href="/">
+                <a className="text-primary font-medium">
+                  <Trans>Home</Trans>
                 </a>
               </Link>
             </Menu.Item>
             <Menu.Item>
-              <Link href="/create">
-                <a className="text-primary">
-                  <Trans>Create a project</Trans>
-                </a>
-              </Link>
-            </Menu.Item>
-            <Menu.Item>
-              <ExternalLink
-                className="text-primary"
-                href="https://discord.gg/wFTh4QnDzk"
-              >
-                <Trans>Discord</Trans>
-              </ExternalLink>
+              <ExploreMenu />
             </Menu.Item>
             <Menu.Item>
               <ResourcesMenu />
+            </Menu.Item>
+            <Menu.Item>
+              <Link href="/create">
+                <a className="text-primary font-medium">
+                  <Trans>Create a project</Trans>
+                </a>
+              </Link>
             </Menu.Item>
           </div>
 
@@ -96,19 +95,68 @@ const HamburgerMenuButton = () => (
   </Menu.Button>
 )
 
+const ExploreMenu = () => {
+  return (
+    <Menu>
+      <div>
+        <Menu.Button as="div" className={DropdownMenuHeadingClass}>
+          <Trans>Explore</Trans>
+          <DownOutlined />
+        </Menu.Button>
+
+        <Menu.Items className={DropdownMenuItemsContainerClass}>
+          <Menu.Item>
+            <Link href="/projects?tab=trending">
+              <a className="text-primary">
+                <Trans>Trending projects</Trans>
+              </a>
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link href="/projects?tab=new">
+              <a className="text-primary">
+                <Trans>Recently listed</Trans>
+              </a>
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link href="/projects?tab=all">
+              <a className="text-primary">
+                <Trans>All projects</Trans>
+              </a>
+            </Link>
+          </Menu.Item>
+        </Menu.Items>
+      </div>
+    </Menu>
+  )
+}
+
 const ResourcesMenu = () => {
   return (
     <Menu>
       <div>
-        <Menu.Button
-          as="div"
-          className="text-primary flex justify-between font-medium"
-        >
+        <Menu.Button as="div" className={DropdownMenuHeadingClass}>
           <Trans>Resources</Trans>
           <DownOutlined />
         </Menu.Button>
 
-        <Menu.Items className="flex flex-col gap-4 px-6 pt-4">
+        <Menu.Items className={DropdownMenuItemsContainerClass}>
+          <Menu.Item>
+            <ExternalLink
+              className="text-primary"
+              href="https://discord.gg/wFTh4QnDzk"
+            >
+              <Trans>Join our Discord</Trans>
+            </ExternalLink>
+          </Menu.Item>
+          <Menu.Item>
+            <Link href="/@juicebox">
+              <a className="text-primary">
+                <Trans>JuiceboxDAO</Trans>
+              </a>
+            </Link>
+          </Menu.Item>
           <Menu.Item>
             <ExternalLink
               className="text-primary"
@@ -120,25 +168,10 @@ const ResourcesMenu = () => {
           <Menu.Item>
             <ExternalLink
               className="text-primary"
-              href="https://newsletter.juicebox.money/"
-            >
-              <Trans>Newsletter</Trans>
-            </ExternalLink>
-          </Menu.Item>
-          <Menu.Item>
-            <ExternalLink
-              className="text-primary"
               href="https://podcast.juicebox.money/"
             >
               <Trans>Podcast</Trans>
             </ExternalLink>
-          </Menu.Item>
-          <Menu.Item>
-            <Link href="/contact">
-              <a className="text-primary">
-                <Trans>Contact</Trans>
-              </a>
-            </Link>
           </Menu.Item>
         </Menu.Items>
       </div>

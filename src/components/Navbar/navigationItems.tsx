@@ -2,6 +2,7 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Dropdown, MenuProps } from 'antd'
 import { Badge } from 'components/Badge'
+import ExternalLink from 'components/ExternalLink'
 import { TOP_NAV } from 'constants/fathomEvents'
 import { readNetwork } from 'constants/networks'
 import { trackFathomGoal } from 'lib/fathom'
@@ -49,12 +50,12 @@ export const resourcesMenuItems = (): DropdownItem[] => {
     {
       key: 'discord',
       label: (
-        <Link href="https://discord.gg/wFTh4QnDzk">
+        <ExternalLink href="https://discord.gg/wFTh4QnDzk">
           <a
             className="flex cursor-pointer items-center text-black hover:opacity-70 dark:text-slate-100"
             onClick={() => trackFathomGoal(TOP_NAV.DISCORD_CTA)}
           >{t`Join our Discord`}</a>
-        </Link>
+        </ExternalLink>
       ),
     },
     {
@@ -70,21 +71,21 @@ export const resourcesMenuItems = (): DropdownItem[] => {
     {
       key: 'docs',
       label: (
-        <Link href="https://docs.juicebox.money/">
+        <ExternalLink href="https://docs.juicebox.money/">
           <a className="text-primary">
             <Trans>Docs</Trans>
           </a>
-        </Link>
+        </ExternalLink>
       ),
     },
     {
       key: 'podcast',
       label: (
-        <Link href="https://podcast.juicebox.money/">
+        <ExternalLink href="https://podcast.juicebox.money/">
           <a className="text-primary">
             <Trans>Podcast</Trans>
           </a>
-        </Link>
+        </ExternalLink>
       ),
     },
   ]

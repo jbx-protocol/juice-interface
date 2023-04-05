@@ -72,7 +72,7 @@ export function ProjectSafeDashboard({
 
   return (
     <div className="my-8 mx-auto max-w-5xl p-5">
-      <h1 className="mb-1 text-black dark:text-slate-100">
+      <h1 className="mb-1 text-2xl text-black dark:text-slate-100">
         <Trans>Safe transactions</Trans>
       </h1>
 

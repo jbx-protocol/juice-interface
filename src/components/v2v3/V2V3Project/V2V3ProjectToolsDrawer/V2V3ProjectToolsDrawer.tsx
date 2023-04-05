@@ -40,7 +40,7 @@ export function V2V3ProjectToolsDrawer({
       width={!isMobile ? 600 : undefined}
       drawerStyle={{ paddingBottom: '2rem' }}
     >
-      <h1 className="text-primary">
+      <h1 className="text-primary text-2xl">
         <Trans>Tools</Trans>
       </h1>
 

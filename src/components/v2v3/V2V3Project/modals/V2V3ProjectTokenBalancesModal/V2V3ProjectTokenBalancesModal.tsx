@@ -143,7 +143,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
       {...props}
     >
       <div>
-        <h2>
+        <h2 className="text-2xl">
           <Trans>Assets</Trans>
         </h2>
         <p>

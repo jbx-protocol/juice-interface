@@ -46,7 +46,7 @@ export function NftDrawer({
         {hasExistingNfts && (
           <>
             <DrawSection>
-              <h2 className="text-black dark:text-slate-100">
+              <h2 className="text-2xl text-black dark:text-slate-100">
                 <Trans>Edit NFTs</Trans>
               </h2>
               <p>
@@ -60,7 +60,7 @@ export function NftDrawer({
               </p>
             </DrawSection>
             <DrawSection>
-              <h2 className="text-black dark:text-slate-100">
+              <h2 className="text-2xl text-black dark:text-slate-100">
                 <Trans>Danger Zone</Trans>
               </h2>
               <DangerZoneSection close={onClose} />

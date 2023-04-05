@@ -18,14 +18,6 @@ export async function updateDBProjects(
   retryIpfs: boolean,
 ) {
   try {
-    // // TODO for testing
-    // await dbProjects
-    //   .delete({ count: 'exact' })
-    //   .filter('id', 'not.eq', null)
-    //   .then(res => {
-    //     console.log('deleted all', { res })
-    //   })
-
     // Load all database projects
     const { data, error: queryError } = await dbpQueryAll()
 

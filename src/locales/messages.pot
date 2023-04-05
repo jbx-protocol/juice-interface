@@ -404,6 +404,9 @@ msgstr ""
 msgid "Amount required"
 msgstr ""
 
+msgid "Amount to approve"
+msgstr ""
+
 msgid "Amount to pay out"
 msgstr ""
 

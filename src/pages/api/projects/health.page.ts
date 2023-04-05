@@ -1,7 +1,7 @@
 import { dbpLog, dbpQueryAll } from 'lib/api/supabase/projects'
 import { NextApiHandler } from 'next'
 import { querySubgraphExhaustiveRaw } from 'utils/graph'
-import { sgDbCompareKeys } from 'utils/sgDbProjects'
+import { formatSGProjectForDB, sgDbCompareKeys } from 'utils/sgDbProjects'
 
 // Checks integrity of projects data in database against the current subgraph data
 const handler: NextApiHandler = async (_, res) => {
@@ -28,7 +28,7 @@ const handler: NextApiHandler = async (_, res) => {
         entity: 'project',
         keys: sgDbCompareKeys,
       })
-    ).map(p => ({ ...p, _id: p.id }))
+    ).map(formatSGProjectForDB)
 
     report += `\n\n${dbProjectsCount} projects in database`
 

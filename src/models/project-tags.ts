@@ -9,6 +9,7 @@ export const projectTagOptions = [
   'fundraising',
   'games',
   'music',
+  'nfts',
   'social',
 ] as const
 

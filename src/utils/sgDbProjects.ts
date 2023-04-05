@@ -64,13 +64,7 @@ export function getChangedSubgraphProjects({
   let retryMetadataCount = 0
 
   const changedSubgraphProjects = sgProjects
-    .map(p => ({
-      ...p,
-      // Adjust BigNumber values before we compare them to database values
-      currentBalance: padBigNumForSort(p.currentBalance),
-      totalPaid: padBigNumForSort(p.totalPaid),
-      trendingScore: padBigNumForSort(p.trendingScore),
-    }))
+    .map(formatSGProjectForDB)
     .filter(sgProject => {
       const id = sgProject.id
 
@@ -194,4 +188,14 @@ export async function tryResolveMetadata({
 // BigNumber values are stored as strings (sql type: keyword). To sort by these they must have an equal number of digits, so we pad them with leading 0s up to a 32 char length.
 function padBigNumForSort(bn: string) {
   return bn.padStart(32, '0')
+}
+
+export function formatSGProjectForDB(p: Json<Pick<Project, SGSBCompareKey>>) {
+  return {
+    ...p,
+    // Adjust BigNumber values before we compare them to database values
+    currentBalance: padBigNumForSort(p.currentBalance),
+    totalPaid: padBigNumForSort(p.totalPaid),
+    trendingScore: padBigNumForSort(p.trendingScore),
+  }
 }

@@ -9,6 +9,7 @@ import useNameOfERC20 from 'hooks/ERC20/NameOfERC20'
 import useSymbolOfERC20 from 'hooks/ERC20/SymbolOfERC20'
 import { useProjectsQuery } from 'hooks/Projects'
 import { useBallotState } from 'hooks/v2v3/contractReader/BallotState'
+import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { usePaymentTerminalBalance } from 'hooks/v2v3/contractReader/PaymentTerminalBalance'
 import useProjectCurrentFundingCycle from 'hooks/v2v3/contractReader/ProjectCurrentFundingCycle'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistributionLimit'
@@ -122,6 +123,7 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     projectId,
   })
   const primaryETHTerminal = JBETHPaymentTerminal?.address
+  const { value: primaryETHTerminalFee } = useETHPaymentTerminalFee()
   const { data: ETHBalance, loading: ETHBalanceLoading } =
     usePaymentTerminalBalance({
       terminal: primaryETHTerminal,
@@ -191,6 +193,7 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     ETHBalance,
     primaryETHTerminal,
     primaryTerminalCurrentOverflow,
+    primaryETHTerminalFee,
 
     // distribution limit data
     distributionLimit,

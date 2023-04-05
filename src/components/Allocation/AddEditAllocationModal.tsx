@@ -6,9 +6,9 @@ import { FeeTooltipLabel } from 'components/FeeTooltipLabel'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
-import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import moment, * as Moment from 'moment'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
   allocationInputAlreadyExistsRule,
   inputIsIntegerRule,
@@ -59,6 +59,8 @@ export const AddEditAllocationModal = ({
   onOk: (split: AddEditAllocationModalEntity) => void
   onCancel: VoidFunction
 }) => {
+  const { primaryETHTerminalFee } = useContext(V2V3ProjectContext)
+
   if (availableModes.size === 0) {
     console.error('AddEditAllocationModal: no available modes')
     return null
@@ -73,7 +75,6 @@ export const AddEditAllocationModal = ({
     'walletAddress' | 'juiceboxProject' | 'projectOwner'
   >('walletAddress')
 
-  const ethPaymentTerminalFee = useETHPaymentTerminalFee()
   const amount = Form.useWatch('amount', form)
 
   const showFee = amountType === 'amount' && recipient === 'walletAddress'
@@ -293,11 +294,11 @@ export const AddEditAllocationModal = ({
             !!amount?.value &&
             !!allocationCurrency &&
             showFee &&
-            ethPaymentTerminalFee && (
+            primaryETHTerminalFee && (
               <FeeTooltipLabel
                 amountWad={parseWad(stripCommas(amount.value))}
                 currency={allocationCurrency}
-                feePerBillion={ethPaymentTerminalFee}
+                feePerBillion={primaryETHTerminalFee}
               />
             )
           }

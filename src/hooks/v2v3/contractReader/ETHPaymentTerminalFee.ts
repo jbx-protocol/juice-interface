@@ -1,20 +1,14 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
-import { useContext, useEffect, useState } from 'react'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
+import { useContractReadValue } from 'hooks/ContractReader'
+import { useContext } from 'react'
 
 export function useETHPaymentTerminalFee() {
-  const [fee, setFee] = useState<BigNumber>()
-  const { contracts } = useContext(V2V3ContractsContext)
+  const { contracts } = useContext(V2V3ProjectContractsContext)
 
-  useEffect(() => {
-    async function fetchData() {
-      const res = await contracts?.JBETHPaymentTerminal.functions.fee()
-      if (!res) return
-
-      setFee(res[0])
-    }
-    fetchData()
-  }, [contracts])
-
-  return fee
+  return useContractReadValue<string, BigNumber>({
+    contract: contracts?.JBETHPaymentTerminal,
+    functionName: 'fee',
+    args: [],
+  })
 }

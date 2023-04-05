@@ -11,12 +11,11 @@ import TransactionModal from 'components/TransactionModal'
 import SplitList from 'components/v2v3/shared/SplitList'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { useDistributePayoutsTx } from 'hooks/v2v3/transactor/DistributePayouts'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useEffect, useState } from 'react'
 import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
-import { V2V3CurrencyName, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
+import { V2V3_CURRENCY_USD, V2V3CurrencyName } from 'utils/v2v3/currency'
 import { FEES_EXPLANATION } from '../settingExplanations'
 
 export default function DistributePayoutsModal({
@@ -42,7 +41,6 @@ export default function DistributePayoutsModal({
   const [distributionAmount, setDistributionAmount] = useState<string>()
 
   const distributePayoutsTx = useDistributePayoutsTx()
-  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
   const converter = useCurrencyConverter()
 
   useEffect(() => {
@@ -94,8 +92,6 @@ export default function DistributePayoutsModal({
       setTransactionPending(false)
     }
   }
-
-  if (!ETHPaymentTerminalFee) return null
 
   const distributionCurrencyName = V2V3CurrencyName(
     distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,

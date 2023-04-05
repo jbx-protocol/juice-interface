@@ -9,11 +9,11 @@ import { ModalMode, validateEthAddress } from 'components/formItems/formHelpers'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { CurrencyName } from 'constants/currency'
-import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import findIndex from 'lodash/findIndex'
 import { Split } from 'models/splits'
 import moment, * as Moment from 'moment'
-import { useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { parseWad, stripCommas } from 'utils/format/formatNumber'
 import {
   adjustedSplitPercents,
@@ -62,6 +62,8 @@ export function DistributionSplitModal({
   currencyName: CurrencyName
   onCurrencyChange?: (currencyName: CurrencyName) => void
 }) {
+  const { primaryETHTerminalFee } = useContext(V2V3ProjectContext)
+
   const [form] = useForm<AddOrEditSplitFormFields>()
   const amount = Form.useWatch('amount', form)
 
@@ -87,8 +89,6 @@ export function DistributionSplitModal({
   const [lockedUntil, setLockedUntil] = useState<
     Moment.Moment | undefined | null
   >()
-
-  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
   useEffect(() =>
     form.setFieldsValue({
@@ -365,7 +365,7 @@ export function DistributionSplitModal({
             currencyName={currencyName}
             distributionType={distributionType}
             editingSplitType={editingSplitType}
-            fee={ETHPaymentTerminalFee}
+            fee={primaryETHTerminalFee}
             isFirstSplit={isFirstSplit}
             distributionLimit={distributionLimit}
             onCurrencyChange={onCurrencyChange}

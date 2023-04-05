@@ -1,18 +1,15 @@
 import useERC20BalanceOf from 'hooks/ERC20/ERC20BalanceOf'
 import useERC20DecimalsOf from 'hooks/ERC20/ERC20DecimalsOf'
 import useSymbolOfERC20 from 'hooks/ERC20/SymbolOfERC20'
-import { formatWad } from 'utils/format/formatNumber'
 
-import FormattedAddress from 'components/FormattedAddress'
+import { TokenAmount } from './TokenAmount'
 
 export default function ERC20TokenBalance({
   tokenAddress,
   wallet,
-  precision,
 }: {
   tokenAddress: string | undefined
   wallet: string | undefined
-  precision?: number
 }) {
   const { data: balance } = useERC20BalanceOf(tokenAddress, wallet)
   const decimals = useERC20DecimalsOf(tokenAddress)
@@ -22,11 +19,11 @@ export default function ERC20TokenBalance({
 
   return (
     <div>
-      {formatWad(balance, {
-        precision: precision ?? 0,
-        decimals,
-      })}{' '}
-      <FormattedAddress label={symbol} address={tokenAddress} />
+      <TokenAmount
+        amountWad={balance}
+        tokenSymbol={symbol}
+        decimals={decimals}
+      />
     </div>
   )
 }

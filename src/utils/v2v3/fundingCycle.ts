@@ -1,23 +1,21 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
+import { MaxUint54 } from 'constants/numbers'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
-
+import { isZeroAddress } from 'utils/address'
 import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'
-
-import { fromWad, parseWad } from '../format/formatNumber'
-
-import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
-import { MaxUint54 } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
+import { fromWad, parseWad } from '../format/formatNumber'
 import {
+  MAX_DISTRIBUTION_LIMIT,
   computeIssuanceRate,
   formatDiscountRate,
   formatIssuanceRate,
   issuanceRateFrom,
-  MAX_DISTRIBUTION_LIMIT,
 } from './math'
 import {
   SerializedV2V3FundAccessConstraint,
@@ -165,4 +163,16 @@ export const deriveNextIssuanceRate = ({
     return BigNumber.from(issuanceRateFrom(newWeightNumber.toString()))
   }
   return weight
+}
+
+/**
+ * Checks if a given funding cycle has a datasource and if it is set to use the datasource for pay.
+ */
+export function hasDataSourceForPay(
+  fundingCycleMetadata: V2V3FundingCycleMetadata | undefined,
+) {
+  return Boolean(
+    !isZeroAddress(fundingCycleMetadata?.dataSource) &&
+      fundingCycleMetadata?.useDataSourceForPay,
+  )
 }

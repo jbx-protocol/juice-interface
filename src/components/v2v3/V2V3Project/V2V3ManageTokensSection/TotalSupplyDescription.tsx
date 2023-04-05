@@ -1,10 +1,9 @@
 import { Trans } from '@lingui/macro'
+import { TokenAmount } from 'components/TokenAmount'
 import { TextButton } from 'components/buttons/TextButton'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext, useState } from 'react'
-import { formatWad } from 'utils/format/formatNumber'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function TotalSupplyDescription() {
   const { tokenSymbol, tokenAddress, totalTokenSupply } =
@@ -13,19 +12,15 @@ export function TotalSupplyDescription() {
   const [participantsModalVisible, setParticipantsModalVisible] =
     useState<boolean>(false)
 
-  const tokenText = tokenSymbolText({
-    tokenSymbol,
-    capitalize: false,
-    plural: true,
-  })
+  if (!totalTokenSupply) return null
 
   return (
     <>
       <div>
         <div>
-          {formatWad(totalTokenSupply, { precision: 4 })} {tokenText}
+          <TokenAmount amountWad={totalTokenSupply} tokenSymbol={tokenSymbol} />
         </div>
-        {totalTokenSupply?.gt(0) ? (
+        {totalTokenSupply.gt(0) ? (
           <TextButton onClick={() => setParticipantsModalVisible(true)}>
             <Trans>Holders</Trans>
           </TextButton>

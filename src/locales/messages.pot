@@ -11,6 +11,9 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+msgid "\"Editing\" an NFT creates a copy of it. The old version won't be available, and the new version will have a new token ID."
+msgstr ""
+
 msgid "% tokens redeemed"
 msgstr ""
 
@@ -77,19 +80,31 @@ msgstr ""
 msgid "<0/> Your project’s rules cannot be edited during the first cycle."
 msgstr ""
 
+msgid "<0/> claimable"
+msgstr ""
+
 msgid "<0/> contributed"
+msgstr ""
+
+msgid "<0/> for <1/>"
 msgstr ""
 
 msgid "<0/> reclaimed from project"
 msgstr ""
 
+msgid "<0/> reserved"
+msgstr ""
+
+msgid "<0/> unclaimed"
+msgstr ""
+
 msgid "<0/> will go to the project owner: <1/>"
 msgstr ""
 
-msgid "<0/>{0}{1} distributed"
+msgid "<0/>fee"
 msgstr ""
 
-msgid "<0/>{feeAmountFormatted} fee"
+msgid "<0/>{0} distributed"
 msgstr ""
 
 msgid "<0><1><2/>{grossAvailableAmount}</1></0> available to pay out"
@@ -362,7 +377,7 @@ msgstr ""
 msgid "All projects"
 msgstr ""
 
-msgid "All {0} will go to the project owner:"
+msgid "All {tokensText} will go to the project owner:"
 msgstr ""
 
 msgid "Allow Controller configuration"
@@ -479,7 +494,7 @@ msgstr ""
 msgid "Available upgrades"
 msgstr ""
 
-msgid "Available:"
+msgid "Available: {0}"
 msgstr ""
 
 msgid "Avatar"
@@ -1817,6 +1832,9 @@ msgstr ""
 msgid "NFTs detached from project."
 msgstr ""
 
+msgid "NFTs failed to load."
+msgstr ""
+
 msgid "NFTs for you"
 msgstr ""
 
@@ -2246,6 +2264,9 @@ msgstr ""
 msgid "Project Token"
 msgstr ""
 
+msgid "Project activity failed to load."
+msgstr ""
+
 msgid "Project balance"
 msgstr ""
 
@@ -2259,6 +2280,9 @@ msgid "Project created 🎉"
 msgstr ""
 
 msgid "Project description"
+msgstr ""
+
+msgid "Project details failed to load."
 msgstr ""
 
 msgid "Project handle"
@@ -2366,9 +2390,6 @@ msgstr ""
 msgid "Projects created"
 msgstr ""
 
-msgid "Projects on Juicebox"
-msgstr ""
-
 msgid "Projects that you have created."
 msgstr ""
 
@@ -2382,9 +2403,6 @@ msgid "Queued"
 msgstr ""
 
 msgid "REMAINING SUPPLY: {0}/{1}"
-msgstr ""
-
-msgid "Raised on Juicebox"
 msgstr ""
 
 msgid "Rankings are based on the amount of ETH a project has been paid and the number of payments to a project over the past {TRENDING_WINDOW_DAYS} days. <0>See the code</0>."
@@ -2678,7 +2696,7 @@ msgstr ""
 msgid "Send reserved {tokenTextPlural}"
 msgstr ""
 
-msgid "Send {0}"
+msgid "Send reserved {tokensText}"
 msgstr ""
 
 msgid "Send {projectTitle} payouts"
@@ -3641,7 +3659,7 @@ msgstr ""
 msgid "You will receive at least <0/>"
 msgstr ""
 
-msgid "You will receive {0}{1} ETH"
+msgid "You will receive {0}<0/>"
 msgstr ""
 
 msgid "You would receive <0/>"
@@ -3920,16 +3938,10 @@ msgstr ""
 msgid "{0} total"
 msgstr ""
 
-msgid "{0} unclaimed"
-msgstr ""
-
 msgid "{0} withdrawn"
 msgstr ""
 
 msgid "{0} {tokenSymbol}/ETH"
-msgstr ""
-
-msgid "{0} {tokenTextPlural} reserved"
 msgstr ""
 
 msgid "{0}%"
@@ -3963,9 +3975,6 @@ msgid "{days, plural, one {Edits to an upcoming cycle must be submitted at least
 msgstr ""
 
 msgid "{exchangeName} has no market for {tokenSymbol}."
-msgstr ""
-
-msgid "{formattedBalance} tokens for <0/>"
 msgstr ""
 
 msgid "{formattedTimeLeft} left"
@@ -4017,9 +4026,6 @@ msgid "{tokensText} reserved"
 msgstr ""
 
 msgid "{tokensTokenUpper} amount"
-msgstr ""
-
-msgid "{unclaimedBalanceFormatted} {tokenText} claimable"
 msgstr ""
 
 msgid "{userOwnershipPercentage}% of total supply"

@@ -8,7 +8,7 @@ export interface JB721DelegateContracts {
 }
 
 export interface JB721DelegateContractsLoading {
-  JB721TieredDelegateStoreLoading?: boolean
+  JB721TieredDelegateStoreLoading: boolean
 }
 
 export const JB721DelegateContractsContext = createContext<{
@@ -17,6 +17,6 @@ export const JB721DelegateContractsContext = createContext<{
   version: JB721DelegateVersion | undefined
 }>({
   contracts: {},
-  loading: {},
+  loading: { JB721TieredDelegateStoreLoading: false },
   version: undefined,
 })

@@ -8,7 +8,6 @@ import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2v3/shared/SplitList'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/ETHPaymentTerminalFee'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -17,7 +16,7 @@ import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { settingsPagePath } from 'utils/routes'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
-import { formatFee, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { MAX_DISTRIBUTION_LIMIT, formatFee } from 'utils/v2v3/math'
 import { reloadWindow } from 'utils/windowUtils'
 import DistributePayoutsModal from './modals/DistributePayoutsModal'
 
@@ -38,10 +37,9 @@ export default function PayoutSplitsCard({
     balanceInDistributionLimitCurrency,
     loading,
     handle,
+    primaryETHTerminalFee,
   } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
-
-  const ETHPaymentTerminalFee = useETHPaymentTerminalFee()
 
   const [distributePayoutsModalVisible, setDistributePayoutsModalVisible] =
     useState<boolean>()
@@ -108,8 +106,8 @@ export default function PayoutSplitsCard({
                 targetAmount={distributionLimit ?? BigNumber.from(0)}
                 distributedAmount={distributedAmount}
                 feePercentage={
-                  ETHPaymentTerminalFee
-                    ? formatFee(ETHPaymentTerminalFee)
+                  primaryETHTerminalFee
+                    ? formatFee(primaryETHTerminalFee)
                     : undefined
                 }
                 ownerAddress={projectOwnerAddress}

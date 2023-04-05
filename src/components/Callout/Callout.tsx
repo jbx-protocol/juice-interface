@@ -41,22 +41,15 @@ export const Callout: React.FC<CalloutProps> & CalloutTypes = ({
       role={collapsible ? 'button' : undefined}
     >
       {iconComponent !== null && (
-        <span>{iconComponent ?? <InfoCircleOutlined />}</span>
+        <span className="flex">{iconComponent ?? <InfoCircleOutlined />}</span>
       )}
       <div
-        // Unsure why grid works, but this stops it from being
-        className="grid min-w-0 flex-shrink flex-grow"
+        className={classNames(
+          'inline-block overflow-hidden overflow-ellipsis',
+          collapsible && !expanded ? 'whitespace-nowrap' : 'whitespace-normal',
+        )}
       >
-        <div
-          className={classNames(
-            'inline-block overflow-hidden overflow-ellipsis',
-            collapsible && !expanded
-              ? 'whitespace-nowrap'
-              : 'whitespace-normal',
-          )}
-        >
-          {children}
-        </div>
+        {children}
       </div>
       {collapsible && (
         <DownOutlined className="text-base" rotate={expanded ? 180 : 0} />

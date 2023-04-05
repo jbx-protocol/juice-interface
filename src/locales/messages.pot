@@ -1466,7 +1466,7 @@ msgstr ""
 msgid "How your project will be paid and pay out ETH."
 msgstr ""
 
-msgid "I accept this project's <0>unique risks</0>."
+msgid "I accept the <0>risks</0> associated with the Juicebox protocol."
 msgstr ""
 
 msgid "I have a media inquiry."
@@ -1482,6 +1482,9 @@ msgid "I have read and accept the <0>Terms of Service</0> and <1>the risks</1>."
 msgstr ""
 
 msgid "I understand"
+msgstr ""
+
+msgid "I understand and accept the risks associated with <0>this project</0> and the <1>Juicebox Protocol</1>."
 msgstr ""
 
 msgid "If Reserved NFTs are set, the first reserved NFT from the tier will be distributable once the tier receives its first mint."

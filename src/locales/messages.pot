@@ -1859,9 +1859,6 @@ msgstr ""
 msgid "NFTs failed to load."
 msgstr ""
 
-msgid "NFTs for you"
-msgstr ""
-
 msgid "NFTs minted for:"
 msgstr ""
 

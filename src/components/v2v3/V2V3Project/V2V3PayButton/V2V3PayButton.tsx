@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
-import PayWarningModal from 'components/PayWarningModal'
 import {
   PayButtonProps,
   PayProjectFormContext,
@@ -26,8 +25,6 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
   const { form: payProjectForm } = useContext(PayProjectFormContext)
 
   const [payModalVisible, setPayModalVisible] = useState<boolean>(false)
-  const [payWarningModalVisible, setPayWarningModalVisible] =
-    useState<boolean>(false)
 
   const { payInCurrency, payAmount } = payProjectForm ?? {}
 
@@ -61,7 +58,7 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
           type="primary"
           size="large"
           onClick={() => {
-            setPayWarningModalVisible(true)
+            setPayModalVisible(true)
             trackFathomGoal(PROJECT_PAGE.PAY_CTA)
           }}
           disabled={isPayDisabled}
@@ -78,14 +75,6 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
         </div>
       )}
 
-      <PayWarningModal
-        open={payWarningModalVisible}
-        onOk={() => {
-          setPayWarningModalVisible(false)
-          setPayModalVisible(true)
-        }}
-        onCancel={() => setPayWarningModalVisible(false)}
-      />
       <V2V3ConfirmPayModal
         open={payModalVisible}
         onCancel={() => setPayModalVisible(false)}

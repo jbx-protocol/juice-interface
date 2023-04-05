@@ -25,7 +25,7 @@ import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useContext, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { classNames } from 'utils/classNames'
-import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
+import { formatWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
   getUnsafeV2V3FundingCycleProperties,
@@ -89,7 +89,7 @@ export const V2V3PayForm = ({
     formatWad(tokensReceived, { precision: 2 }) ?? '0'
   const tokensText = tokenSymbolText({
     tokenSymbol,
-    plural: fromWad(tokensReceived) !== '1',
+    plural: parseFloat(tokensReceived) !== 1,
   })
 
   const nftRewardTiers = useNftRewardTiersToMint()
@@ -181,66 +181,68 @@ export const V2V3PayForm = ({
             </div>
           </div>
 
-          {hasIssuedTokens && (
-            <Form.Item
-              name="preferClaimedTokens"
-              valuePropName="checked"
-              className="m-0"
-              extra={
-                <Trans>Mint this project's ERC-20 tokens to your wallet.</Trans>
-              }
-            >
-              <Checkbox>
-                <Trans>Receive ERC-20 tokens</Trans>{' '}
-                <TooltipIcon
-                  tip={
-                    <Trans>
-                      Automatically receive this project's ERC-20 tokens. Leave
-                      unchecked to have Juicebox track your token balance,
-                      saving gas on this transaction. You can claim your ERC-20
-                      tokens later.
-                    </Trans>
-                  }
-                ></TooltipIcon>
-              </Checkbox>
-            </Form.Item>
-          )}
-
-          <Form.Item
-            label={t`Message (optional)`}
-            className="antd-no-number-handler mb-0"
-          >
-            <Form.Item className="mb-0" name="memo">
-              <Input.TextArea
-                placeholder={t`Attach an on-chain message to this payment.`}
-                maxLength={256}
-                onPressEnter={e => e.preventDefault()} // prevent new lines in memo
-                showCount
-                autoSize
-              />
-            </Form.Item>
-            <div className="absolute right-2 top-1.5 text-sm">
-              {
-                <Sticker
-                  className={classNames(
-                    'text-grey-500 hover:text-grey-700 dark:text-grey-300 hover:dark:text-grey-400',
-                    canAddMoreStickers
-                      ? 'cursor-pointer'
-                      : 'cursor-not-allowed',
-                  )}
-                  size={20}
-                  onClick={() => {
-                    canAddMoreStickers
-                      ? setAttachStickerModalVisible(true)
-                      : undefined
-                  }}
-                  role="button"
-                />
-              }
-            </div>
-          </Form.Item>
-
           <div>
+            {hasIssuedTokens && (
+              <Form.Item
+                name="preferClaimedTokens"
+                valuePropName="checked"
+                className="m-0"
+                extra={
+                  <Trans>
+                    Mint this project's ERC-20 tokens to your wallet.
+                  </Trans>
+                }
+              >
+                <Checkbox>
+                  <Trans>Receive ERC-20 tokens</Trans>{' '}
+                  <TooltipIcon
+                    tip={
+                      <Trans>
+                        Automatically receive this project's ERC-20 tokens.
+                        Leave unchecked to have Juicebox track your token
+                        balance, saving gas on this transaction. You can claim
+                        your ERC-20 tokens later.
+                      </Trans>
+                    }
+                  ></TooltipIcon>
+                </Checkbox>
+              </Form.Item>
+            )}
+
+            <Form.Item
+              label={t`Message (optional)`}
+              className="antd-no-number-handler mb-0"
+            >
+              <Form.Item className="mb-0" name="memo">
+                <Input.TextArea
+                  placeholder={t`Attach an on-chain message to this payment.`}
+                  maxLength={256}
+                  onPressEnter={e => e.preventDefault()} // prevent new lines in memo
+                  showCount
+                  autoSize
+                />
+              </Form.Item>
+              <div className="absolute right-2 top-1.5 text-sm">
+                {
+                  <Sticker
+                    className={classNames(
+                      'text-grey-500 hover:text-grey-700 dark:text-grey-300 hover:dark:text-grey-400',
+                      canAddMoreStickers
+                        ? 'cursor-pointer'
+                        : 'cursor-not-allowed',
+                    )}
+                    size={20}
+                    onClick={() => {
+                      canAddMoreStickers
+                        ? setAttachStickerModalVisible(true)
+                        : undefined
+                    }}
+                    role="button"
+                  />
+                }
+              </div>
+            </Form.Item>
+
             <Form.Item name="stickerUrls">
               <StickerSelection />
             </Form.Item>
@@ -265,7 +267,7 @@ export const V2V3PayForm = ({
             </Callout.Info>
           )}
 
-          {riskCount && fundingCycle ? (
+          {fundingCycle ? (
             <Form.Item
               className="mb-0"
               name="riskCheckbox"
@@ -283,18 +285,37 @@ export const V2V3PayForm = ({
             >
               <Checkbox>
                 <span className="uppercase">
-                  <Trans>
-                    I accept this project's{' '}
-                    <a
-                      onClick={e => {
-                        setRiskModalVisible(true)
-                        e.preventDefault()
-                      }}
-                    >
-                      unique risks
-                    </a>
-                    .
-                  </Trans>
+                  {riskCount ? (
+                    <Trans>
+                      I understand and accept the risks associated with{' '}
+                      <a
+                        onClick={e => {
+                          setRiskModalVisible(true)
+                          e.preventDefault()
+                        }}
+                      >
+                        this project
+                      </a>{' '}
+                      and the{' '}
+                      <a
+                        onClick={e => {
+                          setRiskModalVisible(true)
+                          e.preventDefault()
+                        }}
+                      >
+                        Juicebox Protocol
+                      </a>
+                      .
+                    </Trans>
+                  ) : (
+                    <Trans>
+                      I accept the{' '}
+                      <a href="https://docs.juicebox.money/dev/learn/risks">
+                        risks
+                      </a>{' '}
+                      associated with the Juicebox protocol.
+                    </Trans>
+                  )}
                 </span>
               </Checkbox>
             </Form.Item>

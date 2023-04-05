@@ -1,13 +1,11 @@
 import { plural, t, Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import RichNote from 'components/RichNote'
+import { TokenAmount } from 'components/TokenAmount'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext } from 'react'
-import { formatWad } from 'utils/format/formatNumber'
 import { decodeJB721DelegateRedeemMetadata } from 'utils/nftRewards'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-
 import { ActivityEvent } from './ActivityElement'
 import { primaryContentFontSize } from './styles'
 
@@ -38,13 +36,9 @@ export default function RedeemEventElem({
     ? decodeJB721DelegateRedeemMetadata(event.metadata) ?? []
     : []
 
-  const redeemedTokens = `${formatWad(event.amount, {
-    precision: 0,
-  })} ${tokenSymbolText({
-    tokenSymbol: tokenSymbol,
-    capitalize: false,
-    plural: true,
-  })}`
+  const redeemedTokens = (
+    <TokenAmount amountWad={event.amount} tokenSymbol={tokenSymbol} />
+  )
 
   return (
     <ActivityEvent

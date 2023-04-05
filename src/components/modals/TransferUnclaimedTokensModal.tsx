@@ -5,11 +5,12 @@ import { useWatch } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { TokenAmount } from 'components/TokenAmount'
 import TransactionModal from 'components/TransactionModal'
 import { isAddress } from 'ethers/lib/utils'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -111,7 +112,9 @@ export function TransferUnclaimedTokensModal({
         <p>
           <Trans>
             Your unclaimed token balance:{' '}
-            {formatWad(unclaimedBalance, { precision: 0 })}
+            {unclaimedBalance ? (
+              <TokenAmount amountWad={unclaimedBalance} />
+            ) : null}
           </Trans>
         </p>
         <Form.Item

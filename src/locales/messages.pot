@@ -80,19 +80,31 @@ msgstr ""
 msgid "<0/> Your project’s rules cannot be edited during the first cycle."
 msgstr ""
 
+msgid "<0/> claimable"
+msgstr ""
+
 msgid "<0/> contributed"
+msgstr ""
+
+msgid "<0/> for <1/>"
 msgstr ""
 
 msgid "<0/> reclaimed from project"
 msgstr ""
 
+msgid "<0/> reserved"
+msgstr ""
+
+msgid "<0/> unclaimed"
+msgstr ""
+
 msgid "<0/> will go to the project owner: <1/>"
 msgstr ""
 
-msgid "<0/>{0}{1} distributed"
+msgid "<0/>fee"
 msgstr ""
 
-msgid "<0/>{feeAmountFormatted} fee"
+msgid "<0/>{0}{1} distributed"
 msgstr ""
 
 msgid "<0><1><2/>{grossAvailableAmount}</1></0> available to pay out"
@@ -362,7 +374,7 @@ msgstr ""
 msgid "All payouts have been deleted for this recipient. Save to continue..."
 msgstr ""
 
-msgid "All {0} will go to the project owner:"
+msgid "All {tokensText} will go to the project owner:"
 msgstr ""
 
 msgid "Allow Controller configuration"
@@ -479,7 +491,7 @@ msgstr ""
 msgid "Available upgrades"
 msgstr ""
 
-msgid "Available:"
+msgid "Available: {0}"
 msgstr ""
 
 msgid "Avatar"
@@ -2678,7 +2690,7 @@ msgstr ""
 msgid "Send reserved {tokenTextPlural}"
 msgstr ""
 
-msgid "Send {0}"
+msgid "Send reserved {tokensText}"
 msgstr ""
 
 msgid "Send {projectTitle} payouts"
@@ -3641,7 +3653,7 @@ msgstr ""
 msgid "You will receive at least <0/>"
 msgstr ""
 
-msgid "You will receive {0}{1} ETH"
+msgid "You will receive {0}<0/>"
 msgstr ""
 
 msgid "You would receive <0/>"
@@ -3920,16 +3932,10 @@ msgstr ""
 msgid "{0} total"
 msgstr ""
 
-msgid "{0} unclaimed"
-msgstr ""
-
 msgid "{0} withdrawn"
 msgstr ""
 
 msgid "{0} {tokenSymbol}/ETH"
-msgstr ""
-
-msgid "{0} {tokenTextPlural} reserved"
 msgstr ""
 
 msgid "{0}%"
@@ -3963,9 +3969,6 @@ msgid "{days, plural, one {Edits to an upcoming cycle must be submitted at least
 msgstr ""
 
 msgid "{exchangeName} has no market for {tokenSymbol}."
-msgstr ""
-
-msgid "{formattedBalance} tokens for <0/>"
 msgstr ""
 
 msgid "{formattedTimeLeft} left"
@@ -4017,9 +4020,6 @@ msgid "{tokensText} reserved"
 msgstr ""
 
 msgid "{tokensTokenUpper} amount"
-msgstr ""
-
-msgid "{unclaimedBalanceFormatted} {tokenText} claimable"
 msgstr ""
 
 msgid "{userOwnershipPercentage}% of total supply"

@@ -1,9 +1,8 @@
 import useSymbolOfERC20 from 'hooks/ERC20/SymbolOfERC20'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
-import { formatWad } from 'utils/format/formatNumber'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
 
+import { TokenAmount } from 'components/TokenAmount'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useContext } from 'react'
@@ -13,13 +12,11 @@ export default function V1ProjectTokenBalance({
   className,
   projectId,
   wallet,
-  precision,
   hideHandle,
 }: {
   className?: string
   projectId: number
   wallet: string | undefined
-  precision?: number
   hideHandle?: boolean
 }) {
   const { terminal } = useContext(V1ProjectContext)
@@ -33,10 +30,9 @@ export default function V1ProjectTokenBalance({
   return (
     <div className={twMerge('flex justify-between', className)}>
       <span>
-        {tokenSymbol !== undefined ? (
+        {tokenSymbol !== undefined && balance ? (
           <>
-            {formatWad(balance, { precision: precision ?? 0 })}{' '}
-            {tokenSymbolText({ tokenSymbol, plural: true })}
+            <TokenAmount amountWad={balance} tokenSymbol={tokenSymbol} />
           </>
         ) : (
           '--'

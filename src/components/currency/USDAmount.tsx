@@ -1,13 +1,10 @@
-import { Tooltip } from 'antd'
-
 import { BigNumber } from '@ethersproject/bignumber'
-import { betweenZeroAndOne } from 'utils/bigNumbers'
-import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
-
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
-
+import { Tooltip } from 'antd'
 import { PRECISION_USD } from 'constants/currency'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { formatWad, fromWad } from 'utils/format/formatNumber'
 import CurrencySymbol from '../CurrencySymbol'
+import ETHAmount from './ETHAmount'
 
 /**
  * Render a given amount formatted as USD. Displays ETH amount in a tooltip on hover.
@@ -22,22 +19,10 @@ export default function USDAmount({
   padEnd?: boolean
 }) {
   const converter = useCurrencyConverter()
-
-  // Account for being passed a string amount or a BigNumber amount
-  const isBetweenZeroAndOne =
-    (BigNumber.isBigNumber(amount) && betweenZeroAndOne(amount)) ||
-    betweenZeroAndOne(parseWad(amount))
-
-  const precisionAdjusted = isBetweenZeroAndOne ? PRECISION_USD : precision
+  const usdAmountInEth = converter.usdToWei(fromWad(amount))
 
   const formattedUSDAmount = formatWad(amount, {
-    precision: precisionAdjusted ?? 0,
-    padEnd: padEnd ?? false,
-  })
-
-  const ETHAmount = converter.usdToWei(fromWad(amount))
-  const formattedETHAmount = formatWad(ETHAmount, {
-    precision: precisionAdjusted ?? 0,
+    precision: precision ?? PRECISION_USD,
     padEnd: padEnd ?? false,
   })
 
@@ -47,8 +32,7 @@ export default function USDAmount({
     <Tooltip
       title={
         <span>
-          <CurrencySymbol currency="ETH" />
-          {formattedETHAmount}
+          <ETHAmount amount={usdAmountInEth} />
         </span>
       }
     >

@@ -1,11 +1,13 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Form, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
-import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { RedeemAMMPrices } from 'components/Project/RedeemAMMPrices'
+import { TokenAmount } from 'components/TokenAmount'
 import TransactionModal from 'components/TransactionModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -15,7 +17,7 @@ import { useBurnTokensTx } from 'hooks/v2v3/transactor/BurnTokensTx'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/RedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
@@ -73,11 +75,6 @@ export function V2V3BurnOrRedeemModal({
     capitalize: false,
     plural: true,
     includeTokenWord: true,
-  })
-  const tokensTextShort = tokenSymbolText({
-    tokenSymbol,
-    capitalize: false,
-    plural: true,
   })
 
   let modalTitle: string
@@ -264,7 +261,10 @@ export function V2V3BurnOrRedeemModal({
               </Trans>
             }
           >
-            {formatWad(totalBalance ?? 0, { precision: 0 })} {tokensTextShort}
+            <TokenAmount
+              amountWad={totalBalance ?? BigNumber.from(0)}
+              tokenSymbol={tokenSymbol}
+            />
           </Descriptions.Item>
           <Descriptions.Item label={<Trans>Total redemption value</Trans>}>
             <ETHAmount amount={maxClaimable} />

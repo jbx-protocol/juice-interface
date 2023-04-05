@@ -5,7 +5,7 @@ import {
   EnterOutlined,
   SearchOutlined,
 } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -18,13 +18,12 @@ import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { formatWad } from 'utils/format/formatNumber'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 import { TOP_NAV } from 'constants/fathomEvents'
-import CurrencySymbol from './CurrencySymbol'
 import Loading from './Loading'
 import { ProjectVersionBadge } from './ProjectVersionBadge'
+import ETHAmount from './currency/ETHAmount'
 import V1ProjectHandle from './v1/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from './v2v3/shared/V2V3ProjectHandleLink'
 
@@ -235,8 +234,7 @@ export default function QuickProjectSearch({
                     )}
 
                     <div className="text-xs font-medium text-slate-200 dark:text-slate-200">
-                      <CurrencySymbol currency="ETH" />
-                      {formatWad(p.totalPaid, { precision: 0 })}
+                      <ETHAmount amount={p.totalPaid} precision={0} />
                     </div>
 
                     <ProjectVersionBadge

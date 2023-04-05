@@ -1811,6 +1811,9 @@ msgstr ""
 msgid "NFTs detached from project."
 msgstr ""
 
+msgid "NFTs failed to load."
+msgstr ""
+
 msgid "NFTs for you"
 msgstr ""
 
@@ -2240,6 +2243,9 @@ msgstr ""
 msgid "Project Token"
 msgstr ""
 
+msgid "Project activity failed to load."
+msgstr ""
+
 msgid "Project balance"
 msgstr ""
 
@@ -2253,6 +2259,9 @@ msgid "Project created 🎉"
 msgstr ""
 
 msgid "Project description"
+msgstr ""
+
+msgid "Project details failed to load."
 msgstr ""
 
 msgid "Project handle"

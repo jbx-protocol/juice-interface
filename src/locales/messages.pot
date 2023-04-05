@@ -101,10 +101,10 @@ msgstr ""
 msgid "<0/> will go to the project owner: <1/>"
 msgstr ""
 
-msgid "<0/>{0}{1} distributed"
+msgid "<0/>fee"
 msgstr ""
 
-msgid "<0/>{feeAmountFormatted} fee"
+msgid "<0/>{0}{1} distributed"
 msgstr ""
 
 msgid "<0><1><2/>{grossAvailableAmount}</1></0> available to pay out"

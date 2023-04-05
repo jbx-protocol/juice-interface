@@ -59,7 +59,7 @@ function ProjectSubheading({
             />
           </div>
           <div className="flex items-center font-medium">
-            <span className="mr-2 flex gap-2">
+            <span className="mr-1 flex gap-1">
               <Trans>
                 <span>Owned by</span>
                 <FormattedAddress
@@ -140,8 +140,8 @@ export function ProjectHeader({
         </div>
       )}
 
-      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-y-3 p-5 md:grid-cols-6">
-        <div className="mx-auto flex flex-col items-center md:col-span-1 md:row-span-3 md:flex-row">
+      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-y-3 py-5 px-5 md:grid-cols-6 md:px-0">
+        <div className="mx-auto flex flex-col md:col-span-1 md:row-span-3 md:flex-row">
           <ProjectLogo
             className={twMerge(
               'h-32 w-32',

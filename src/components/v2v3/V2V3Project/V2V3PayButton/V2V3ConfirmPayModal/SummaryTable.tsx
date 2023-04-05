@@ -23,8 +23,10 @@ import { terminalNanaAddress } from './V2V3ConfirmPayModal'
 
 export function SummaryTable({
   weiAmount,
+  amountToApprove,
 }: {
   weiAmount: BigNumber | undefined
+  amountToApprove?: BigNumber | undefined
 }) {
   const { fundingCycle, fundingCycleMetadata, tokenSymbol, terminals } =
     useContext(V2V3ProjectContext)
@@ -66,6 +68,14 @@ export function SummaryTable({
           : `${formattedNum(usdAmount)} ${V2V3CurrencyName(V2V3_CURRENCY_USD)} (
         ${formatWad(weiAmount)} ${V2V3CurrencyName(V2V3_CURRENCY_ETH)})`}
       </Descriptions.Item>
+      {amountToApprove?.gt(0) && (
+        <Descriptions.Item
+          label={t`Amount to approve`}
+          className="content-right"
+        >
+          {formatWad(amountToApprove)} NANA
+        </Descriptions.Item>
+      )}
       <Descriptions.Item
         label={<Trans>Tokens for you</Trans>}
         className="content-right"

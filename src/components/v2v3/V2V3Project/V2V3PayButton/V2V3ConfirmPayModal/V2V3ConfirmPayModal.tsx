@@ -233,7 +233,7 @@ export function V2V3ConfirmPayModal({
           </Callout.Info>
         )}
 
-        <SummaryTable weiAmount={weiAmount} />
+        <SummaryTable weiAmount={weiAmount} amountToApprove={amountToApprove} />
 
         <V2V3PayForm form={form} onFinish={() => executePayTx()} />
       </Space>

@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import ETHAmount from 'components/currency/ETHAmount'
+import USDAmount from 'components/currency/USDAmount'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { formattedNum } from 'utils/format/formatNumber'
 
@@ -13,11 +13,13 @@ const Stat = ({
   loading: boolean
 }) => {
   return (
-    <div className="my-0 mx-auto flex flex-col gap-2 text-center">
-      <div className="text-4xl font-medium text-juice-400 dark:text-juice-300 md:text-6xl">
+    <div className="my-0 mx-auto flex flex-col gap-4 text-center">
+      <div className="font-display text-4xl font-medium text-juice-400 dark:text-juice-300 md:text-5xl">
         {loading ? '-' : value}
       </div>
-      <div className="text-base font-medium">{label}</div>
+      <div className="font-body text-base text-grey-900 dark:text-slate-100">
+        {label}
+      </div>
     </div>
   )
 }
@@ -25,22 +27,30 @@ const Stat = ({
 export function StatsSection() {
   const { data: protocolLogs, isLoading } = useSubgraphQuery({
     entity: 'protocolLog',
-    keys: ['erc20Count', 'paymentsCount', 'projectsCount', 'volumePaid'],
+    keys: [
+      'erc20Count',
+      'paymentsCount',
+      'projectsCount',
+      'volumePaid',
+      'volumePaidUSD',
+    ],
   })
 
   const stats = protocolLogs?.[0]
 
   return (
-    <section className="bg-smoke-50 dark:bg-slate-600">
+    <section className="bg-smoke-50 dark:bg-slate-700">
       <div className="m-auto flex max-w-5xl flex-wrap justify-between gap-4 py-16 px-8">
         <Stat
-          value={stats?.projectsCount}
-          label={<Trans>Projects on Juicebox</Trans>}
+          value={formattedNum(stats?.projectsCount)}
+          label={<Trans>Projects created</Trans>}
           loading={isLoading}
         />
         <Stat
-          value={<ETHAmount amount={stats?.volumePaid} precision={0} />}
-          label={<Trans>Raised on Juicebox</Trans>}
+          value={
+            <USDAmount amount={stats?.volumePaidUSD} precision={0} symbol="$" />
+          }
+          label={<Trans>Total raised</Trans>}
           loading={isLoading}
         />
         <Stat

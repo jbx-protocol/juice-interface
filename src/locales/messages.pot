@@ -2381,9 +2381,6 @@ msgstr ""
 msgid "Projects created"
 msgstr ""
 
-msgid "Projects on Juicebox"
-msgstr ""
-
 msgid "Projects that you have created."
 msgstr ""
 
@@ -2397,9 +2394,6 @@ msgid "Queued"
 msgstr ""
 
 msgid "REMAINING SUPPLY: {0}/{1}"
-msgstr ""
-
-msgid "Raised on Juicebox"
 msgstr ""
 
 msgid "Rankings are based on the amount of ETH a project has been paid and the number of payments to a project over the past {TRENDING_WINDOW_DAYS} days. <0>See the code</0>."

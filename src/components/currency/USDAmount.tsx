@@ -13,10 +13,12 @@ export default function USDAmount({
   amount,
   precision,
   padEnd,
+  symbol,
 }: {
   amount?: BigNumber | string
   precision?: number
   padEnd?: boolean
+  symbol?: string | JSX.Element
 }) {
   const converter = useCurrencyConverter()
   const usdAmountInEth = converter.usdToWei(fromWad(amount))
@@ -36,7 +38,7 @@ export default function USDAmount({
         </span>
       }
     >
-      <CurrencySymbol currency="USD" />
+      {symbol ?? <CurrencySymbol currency="USD" />}
       {formattedUSDAmount}
     </Tooltip>
   )

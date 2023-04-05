@@ -104,7 +104,7 @@ msgstr ""
 msgid "<0/>fee"
 msgstr ""
 
-msgid "<0/>{0}{1} distributed"
+msgid "<0/>{0} distributed"
 msgstr ""
 
 msgid "<0><1><2/>{grossAvailableAmount}</1></0> available to pay out"

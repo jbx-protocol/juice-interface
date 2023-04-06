@@ -3,14 +3,20 @@ import QuickProjectSearch from 'components/QuickProjectSearch'
 import useMobile from 'hooks/Mobile'
 import { CSSProperties, useEffect, useState } from 'react'
 import MobileNavigation from './Mobile/MobileNavigation'
-import { desktopMenuItems, resourcesMenuItems } from './navigationItems'
+import {
+  desktopMenuItems,
+  DropdownKey,
+  exploreMenuItems,
+  resourcesMenuItems,
+} from './navigationItems'
 import NavLanguageSelector from './NavLanguageSelector'
 import ThemePicker from './ThemePicker'
 import { TransactionsList } from './TransactionList'
 import WalletButton from './WalletButton'
 
 export default function SiteNavigation() {
-  const [resourcesOpen, setResourcesOpen] = useState<boolean>(false)
+  const [dropdownOpen, setDropdownOpen] = useState<DropdownKey>(false)
+
   const isMobile = useMobile()
   const dropdownIconStyle: CSSProperties = {
     fontSize: 13,
@@ -20,7 +26,7 @@ export default function SiteNavigation() {
   // Close resources dropdown when clicking anywhere in the window except the dropdown items
   useEffect(() => {
     function handleClick() {
-      setResourcesOpen(false)
+      setDropdownOpen(false)
     }
     window.addEventListener('click', handleClick)
     return () => window.removeEventListener('click', handleClick)
@@ -28,8 +34,9 @@ export default function SiteNavigation() {
 
   const menuItems = desktopMenuItems({
     resourcesMenuProps: { items: resourcesMenuItems() },
-    resourcesOpen,
-    setResourcesOpen,
+    exploreMenuProps: { items: exploreMenuItems() },
+    dropdownOpen,
+    setDropdownOpen,
     dropdownIconStyle,
   })
 

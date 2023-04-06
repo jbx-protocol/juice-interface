@@ -24,14 +24,14 @@ export default function ThemePickerMobile() {
       {themeOption === ThemeOption.dark ? (
         <>
           <Sun size={16} />
-          <div className="mb-1 ml-2">
+          <div className="ml-2">
             <Trans>Light theme</Trans>
           </div>
         </>
       ) : (
         <>
           <Moon size={16} />
-          <div className="mb-1 ml-2">
+          <div className="ml-2">
             <Trans>Dark theme</Trans>
           </div>
         </>

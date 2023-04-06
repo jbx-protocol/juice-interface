@@ -76,28 +76,11 @@ export interface Database {
   }
   public: {
     Tables: {
-      user_subscriptions: {
-        Row: {
-          notification_id: string
-          project_id: number
-          user_id: string
-        }
-        Insert: {
-          notification_id: string
-          project_id: number
-          user_id: string
-        }
-        Update: {
-          notification_id?: string
-          project_id?: number
-          user_id?: string
-        }
-      }
       projects: {
         Row: {
           _hasUnresolvedMetadata: boolean | null
-          _updatedAt: number | null
           _metadataRetriesLeft: number | null
+          _updatedAt: number | null
           archived: boolean | null
           createdAt: number | null
           currentBalance: string | null
@@ -118,8 +101,8 @@ export interface Database {
         }
         Insert: {
           _hasUnresolvedMetadata?: boolean | null
-          _updatedAt?: number | null
           _metadataRetriesLeft?: number | null
+          _updatedAt?: number | null
           archived?: boolean | null
           createdAt?: number | null
           currentBalance?: string | null
@@ -140,8 +123,8 @@ export interface Database {
         }
         Update: {
           _hasUnresolvedMetadata?: boolean | null
-          _updatedAt?: number | null
           _metadataRetriesLeft?: number | null
+          _updatedAt?: number | null
           archived?: boolean | null
           createdAt?: number | null
           currentBalance?: string | null
@@ -159,6 +142,23 @@ export interface Database {
           terminal?: string | null
           totalPaid?: string | null
           trendingScore?: string | null
+        }
+      }
+      user_subscriptions: {
+        Row: {
+          notification_id: string
+          project_id: number
+          user_id: string
+        }
+        Insert: {
+          notification_id: string
+          project_id: number
+          user_id: string
+        }
+        Update: {
+          notification_id?: string
+          project_id?: number
+          user_id?: string
         }
       }
       users: {

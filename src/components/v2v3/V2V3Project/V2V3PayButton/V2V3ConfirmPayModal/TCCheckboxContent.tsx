@@ -42,7 +42,9 @@ export function TCCheckboxContent() {
         ) : (
           <Trans>
             I accept the{' '}
-            <a href="https://docs.juicebox.money/dev/learn/risks">risks</a>{' '}
+            <ExternalLink href={helpPagePath('/dev/learn/risks')}>
+              risks
+            </ExternalLink>{' '}
             associated with the Juicebox protocol.
           </Trans>
         )}

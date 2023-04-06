@@ -4,6 +4,7 @@ export type FeatureFlag =
   | 'SEPANA_SEARCH'
   | 'RECONFIGURE_SHOW_NFT_GOVERNANCE_TYPE'
   | 'ANNOUNCEMENTS'
+  | 'NEW_LANDING_PAGE'
 
 export const FEATURE_FLAGS: { [k in FeatureFlag]: string } = {
   V1_TOKEN_SWAP: 'v1TokenSwap',
@@ -11,4 +12,5 @@ export const FEATURE_FLAGS: { [k in FeatureFlag]: string } = {
   SEPANA_SEARCH: 'sepanaSearch',
   RECONFIGURE_SHOW_NFT_GOVERNANCE_TYPE: 'reconfigureShowNftGovernanceType',
   ANNOUNCEMENTS: 'announcements',
+  NEW_LANDING_PAGE: 'newLandingPage',
 }

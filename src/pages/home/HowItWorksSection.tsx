@@ -6,7 +6,7 @@ import useMobile from 'hooks/Mobile'
 import Image from 'next/image'
 import Link from 'next/link'
 import { helpPagePath } from 'utils/routes'
-import { SectionHeading } from './SectionHeading'
+import { OldSectionHeading } from './OldSectionHeading'
 
 const FourthCol = ({
   header,
@@ -23,9 +23,9 @@ export function HowItWorksSection() {
 
   return (
     <section className="my-20 p-1" id="how-it-works">
-      <SectionHeading className="mb-8">
+      <OldSectionHeading className="mb-8">
         <Trans>How Juicebox Works</Trans>
-      </SectionHeading>
+      </OldSectionHeading>
 
       <div className="my-0 mx-auto max-w-5xl p-5">
         <Row align="middle">

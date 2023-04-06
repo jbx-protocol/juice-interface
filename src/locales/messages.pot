@@ -434,6 +434,9 @@ msgstr ""
 msgid "An address is required"
 msgstr ""
 
+msgid "An all-in-one crowdfunding with powerful treasury management and redemptions."
+msgstr ""
+
 msgid "An issuance reduction rate"
 msgstr ""
 
@@ -536,7 +539,13 @@ msgstr ""
 msgid "Block number"
 msgstr ""
 
+msgid "Build and launch your NFT project right here on Juicebox with built-in redemptions."
+msgstr ""
+
 msgid "Build your project"
+msgstr ""
+
+msgid "Built for ideas like yours"
 msgstr ""
 
 msgid "Built for:"
@@ -834,6 +843,9 @@ msgid "Created a project payer address"
 msgstr ""
 
 msgid "Created project"
+msgstr ""
+
+msgid "Creators & builders"
 msgstr ""
 
 msgid "Crowdfund your project with ETH. When someone pays your project, they'll receive your project's tokens (or NFTs) — use tokens to grant governance rights, community access, or other membership perks."
@@ -1571,6 +1583,9 @@ msgstr ""
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building."
 msgstr ""
 
+msgid "Juicebox is as versatile as you are, build anything from an NFT project to a boutique crypto lawfirm and everything in between."
+msgstr ""
+
 msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks </2>of crypto fundraising!"
 msgstr ""
 
@@ -1605,6 +1620,9 @@ msgid "Launch V3 funding cycle"
 msgstr ""
 
 msgid "Launch V3 migration token"
+msgstr ""
+
+msgid "Launch a Decentralised Autonomous Organisation with governance in minutes."
 msgstr ""
 
 msgid "Launch cycle"
@@ -1800,6 +1818,9 @@ msgid "My holdings"
 msgstr ""
 
 msgid "My projects"
+msgstr ""
+
+msgid "NFT Projects"
 msgstr ""
 
 msgid "NFT mint confirmed"
@@ -3516,6 +3537,9 @@ msgid "What happens when I pay a project?"
 msgstr ""
 
 msgid "What's Juicebox?"
+msgstr ""
+
+msgid "Whatever you’re building or creating — get it launched and funded on Juicebox."
 msgstr ""
 
 msgid "When checked, payments made through this address will mint the project's ERC-20 tokens. Payments will incur slightly higher gas fees. When unchecked, the Juicebox protocol will internally track the beneficiary's tokens, and they can claim their ERC-20 tokens at any time."

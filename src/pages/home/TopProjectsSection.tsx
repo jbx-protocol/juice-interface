@@ -12,7 +12,7 @@ import { useProjectsQuery } from 'hooks/Projects'
 import Link from 'next/link'
 import { v2v3ProjectRoute } from 'utils/routes'
 
-import { SectionHeading } from './SectionHeading'
+import { OldSectionHeading } from './OldSectionHeading'
 import {
   TopProjectsHeading,
   TopProjectsSubheadingOne,
@@ -123,9 +123,9 @@ export function TopProjectsSection() {
       <div className="my-10 mx-auto max-w-5xl">
         <Space direction="vertical" className="w-full" size="large">
           <div>
-            <SectionHeading className="mx-auto max-w-[900px] leading-tight">
+            <OldSectionHeading className="mx-auto max-w-[900px] leading-tight">
               <TopProjectsHeading />
-            </SectionHeading>
+            </OldSectionHeading>
 
             <p className="mb-1 text-center text-base text-black dark:text-slate-100">
               <TopProjectsSubheadingOne />

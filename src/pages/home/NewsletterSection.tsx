@@ -4,7 +4,7 @@ import useMobile from 'hooks/Mobile'
 import { createJuicenewsSubscription } from 'lib/api/juicenews'
 import Image from 'next/image'
 import { useState } from 'react'
-import { SectionHeading } from './SectionHeading'
+import { OldSectionHeading } from './OldSectionHeading'
 import stretchyPineapple from '/public/assets/stretchy-pineapple.png'
 
 export function NewsletterSection() {
@@ -35,9 +35,9 @@ export function NewsletterSection() {
       <div className="my-0 mx-auto max-w-5xl">
         <Row align="middle" gutter={40}>
           <Col xs={24} md={14}>
-            <SectionHeading className="mb-6 text-left text-black dark:text-slate-100">
+            <OldSectionHeading className="mb-6 text-left text-black dark:text-slate-100">
               <Trans>Stay up to date.</Trans>
-            </SectionHeading>
+            </OldSectionHeading>
             <div className="text-black">
               <p className="mb-6 text-base text-black dark:text-slate-100">
                 Subscribe to Juicenews to get the latest updates from the

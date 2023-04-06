@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { useForm, useWatch } from 'antd/lib/form/Form'
+import { useForm } from 'antd/lib/form/Form'
 import ETHAmount from 'components/currency/ETHAmount'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
 import TransactionModal from 'components/TransactionModal'
@@ -33,8 +33,6 @@ export function V2V3ConfirmPayModal({
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [form] = useForm<V2V3PayFormType>()
 
-  const payProjectTx = usePayETHPaymentTerminalTx()
-
   const router = useRouter()
   const {
     userAddress,
@@ -45,8 +43,7 @@ export function V2V3ConfirmPayModal({
   } = useWallet()
   const delegateMetadata = useDelegateMetadata()
   const nftRewardTiers = useNftRewardTiersToMint()
-
-  const beneficiary = useWatch('beneficiary', form)
+  const payProjectTx = usePayETHPaymentTerminalTx()
 
   // Use the userAddress as the beneficiary by default, reset whenever form is opened
   useEffect(() => {
@@ -54,6 +51,20 @@ export function V2V3ConfirmPayModal({
   }, [userAddress, form, open])
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
+
+  const handleOkButtonClick = async () => {
+    // Prompt wallet connect if no wallet connected
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
+    }
+
+    form.submit()
+  }
 
   const handlePaySuccess = () => {
     onCancel?.()
@@ -84,16 +95,6 @@ export function V2V3ConfirmPayModal({
     } = form.getFieldsValue()
 
     const txBeneficiary = beneficiary ?? userAddress
-
-    // Prompt wallet connect if no wallet connected
-    if (chainUnsupported) {
-      await changeNetworks()
-      return
-    }
-    if (!isConnected) {
-      await connect()
-      return
-    }
 
     setLoading(true)
 
@@ -141,8 +142,7 @@ export function V2V3ConfirmPayModal({
       transactionPending={transactionPending}
       title={t`Pay ${projectMetadata.name}`}
       open={open}
-      onOk={() => form.submit()}
-      okButtonProps={{ disabled: !beneficiary }}
+      onOk={handleOkButtonClick}
       okText={
         <span>
           <Trans>

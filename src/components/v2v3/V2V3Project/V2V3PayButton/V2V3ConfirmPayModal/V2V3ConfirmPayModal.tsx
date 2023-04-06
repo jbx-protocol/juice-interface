@@ -64,7 +64,7 @@ export function V2V3ConfirmPayModal({
     signer,
   } = useWallet()
 
-  // TODO: Get allowance only if needed
+  // TODO: Get allowance only if needed (isNanaTerminal), not on every render
   const allowance: { data: BigNumber | undefined } = useERC20Allowance(
     nanaAddress,
     userAddress,

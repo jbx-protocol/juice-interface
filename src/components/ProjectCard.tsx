@@ -22,15 +22,8 @@ export const PROJECT_CARD_BG = 'bg-white dark:bg-slate-600'
 
 export type ProjectCardProject = Pick<
   Project,
-  | 'id'
-  | 'handle'
-  | 'metadataUri'
-  | 'totalPaid'
-  | 'createdAt'
-  | 'terminal'
-  | 'projectId'
-  | 'pv'
-> & { tags?: ProjectTag[] }
+  'id' | 'handle' | 'totalPaid' | 'createdAt' | 'terminal' | 'projectId' | 'pv'
+> & { tags?: ProjectTag[] | null; metadataUri: string | null }
 
 function ArchivedBadge() {
   return (

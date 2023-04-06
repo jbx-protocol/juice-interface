@@ -2,7 +2,7 @@ import { ipfsGet } from 'lib/api/ipfs'
 import { AnyProjectMetadata, consolidateMetadata } from 'models/projectMetadata'
 import { useQuery } from 'react-query'
 
-export function useProjectMetadata(uri: string | undefined) {
+export function useProjectMetadata(uri: string | null | undefined) {
   return useQuery(
     ['project-metadata', uri],
     async () => {

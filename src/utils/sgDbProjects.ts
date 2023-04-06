@@ -1,7 +1,9 @@
 import { ipfsGet } from 'lib/api/ipfs'
-import { DBProject, SGSBCompareKey } from 'models/dbProject'
+import { DBProject, DBProjectRow, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
+import { ProjectTag } from 'models/project-tags'
 import { consolidateMetadata, ProjectMetadata } from 'models/projectMetadata'
+import { PV } from 'models/pv'
 import { Project } from 'models/subgraph-entities/vX/project'
 
 import { formatError } from './format/formatError'
@@ -28,12 +30,64 @@ export const sgDbCompareKeys: SGSBCompareKey[] = [
   'paymentsCount',
 ]
 
+// Parse DB Project json, converting strings to BigNumbers
 export const parseDBProjectJson = (j: Json<DBProject>): DBProject => ({
   ...j,
   tags: j.tags ?? [],
-  archived: j.archived ?? false,
   ...parseBigNumberKeyVals(j, ['currentBalance', 'totalPaid', 'trendingScore']),
 })
+
+// Parse DB Project row, converting property names from snake_case to camelCase
+export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
+  return {
+    archived: p.archived,
+    createdAt: p.created_at,
+    currentBalance: p.current_balance,
+    deployer: p.deployer,
+    description: p.description,
+    handle: p.handle,
+    id: p.id,
+    logoUri: p.logo_uri,
+    metadataUri: p.metadata_uri,
+    name: p.name,
+    paymentsCount: p.payments_count,
+    projectId: p.project_id,
+    pv: p.pv as PV,
+    tags: p.tags as ProjectTag[],
+    terminal: p.terminal,
+    totalPaid: p.total_paid,
+    trendingScore: p.trending_score,
+    _hasUnresolvedMetadata: p._has_unresolved_metadata,
+    _metadataRetriesLeft: p._metadata_retries_left,
+    _updatedAt: p._updated_at,
+  }
+}
+
+// Format DB Project json for insertion into DB, converting property names from camelCase to snake_case
+export function formatDBProjectRow(p: Json<DBProject>): DBProjectRow {
+  return {
+    archived: p.archived,
+    created_at: p.createdAt,
+    current_balance: p.currentBalance,
+    deployer: p.deployer,
+    description: p.description,
+    handle: p.handle,
+    id: p.id,
+    logo_uri: p.logoUri,
+    metadata_uri: p.metadataUri,
+    name: p.name,
+    payments_count: p.paymentsCount,
+    project_id: p.projectId,
+    pv: p.pv,
+    tags: p.tags,
+    terminal: p.terminal,
+    total_paid: p.totalPaid,
+    trending_score: p.trendingScore,
+    _has_unresolved_metadata: p._hasUnresolvedMetadata ?? null,
+    _metadata_retries_left: p._metadataRetriesLeft ?? null,
+    _updated_at: p._updatedAt,
+  }
+}
 
 /**
  * Deep compare list of Subgraph projects against list of database projects and return the list of Subgraph projects that have changed.
@@ -144,6 +198,11 @@ export async function tryResolveMetadata({
         ...sgProject,
         _hasUnresolvedMetadata: true,
         _metadataRetriesLeft: 0,
+        name: null,
+        description: null,
+        logoUri: null,
+        tags: null,
+        archived: null,
       } as Json<DBProject>,
     }
   }
@@ -160,11 +219,11 @@ export async function tryResolveMetadata({
     return {
       project: {
         ...sgProject,
-        name,
-        description,
-        logoUri,
-        tags,
-        archived,
+        name: name ?? null,
+        description: description ?? null,
+        logoUri: logoUri ?? null,
+        tags: tags ?? null,
+        archived: archived ?? null,
       } as Json<DBProject>,
     }
   } catch (error) {
@@ -180,6 +239,11 @@ export async function tryResolveMetadata({
         ...sgProject,
         _hasUnresolvedMetadata: true,
         _metadataRetriesLeft: retriesRemaining,
+        name: null,
+        description: null,
+        logoUri: null,
+        tags: null,
+        archived: null,
       } as Json<DBProject>,
     }
   }

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
-import { DBProject, DBProjectQueryOpts } from 'models/dbProject'
+import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
 import {
   InfiniteSGQueryOpts,
   SGEntityKey,
@@ -23,7 +23,7 @@ import {
 } from 'react-query'
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
-import { parseDBProjectJson } from 'utils/sgDbProjects'
+import { parseDBProjectJson, parseDBProjectsRow } from 'utils/sgDbProjects'
 
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
@@ -173,8 +173,10 @@ export function useDBProjectsQuery(
     ['dbp-query', opts],
     () =>
       axios
-        .get<Json<DBProject>[]>(`/api/projects?${formatQueryParams(opts)}`)
-        .then(res => res.data.map(p => parseDBProjectJson(p))),
+        .get<Json<DBProjectRow>[]>(`/api/projects?${formatQueryParams(opts)}`)
+        .then(res =>
+          res.data.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
+        ),
     {
       staleTime: 0,
       // staleTime: DEFAULT_STALE_TIME,
@@ -199,14 +201,16 @@ export function useDBProjectsInfiniteQuery(
       const { pageSize, ...evaluatedOpts } = queryKey[1]
 
       return axios
-        .get<Json<DBProject>[]>(
+        .get<DBProjectRow[]>(
           `/api/projects?${formatQueryParams({
             ...evaluatedOpts,
             page: pageParam,
             pageSize,
           })}`,
         )
-        .then(res => res.data.map(p => parseDBProjectJson(p)))
+        .then(res =>
+          res.data.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
+        )
     },
     {
       staleTime: 0,

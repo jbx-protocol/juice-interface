@@ -2,16 +2,13 @@ import { FilterOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Collapse, Select } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
+import { DBProjectQueryOpts } from 'models/dbProject'
 import { ProjectTag, projectTagOptions } from 'models/project-tags'
 import { useEffect, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import FilterCheckboxItem from './FilterCheckboxItem'
 
-type OrderByOption =
-  | 'createdAt'
-  | 'totalPaid'
-  | 'currentBalance'
-  | 'paymentsCount'
+type OrderByOption = DBProjectQueryOpts['orderBy']
 
 export type CheckboxOnChange = (checked: boolean) => void
 
@@ -165,16 +162,16 @@ export default function ProjectsFilterAndSort({
       </Collapse>
 
       <Select className="my-2 ml-4 w-44" value={orderBy} onChange={setOrderBy}>
-        <Select.Option value="totalPaid">
+        <Select.Option value="total_paid">
           <Trans>Total raised</Trans>
         </Select.Option>
-        <Select.Option value="createdAt">
+        <Select.Option value="created_at">
           <Trans>Date created</Trans>
         </Select.Option>
-        <Select.Option value="currentBalance">
+        <Select.Option value="current_balance">
           <Trans>Current balance</Trans>
         </Select.Option>
-        <Select.Option value="paymentsCount">
+        <Select.Option value="payments_count">
           <Trans>Payments</Trans>
         </Select.Option>
       </Select>

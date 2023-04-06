@@ -78,70 +78,70 @@ export interface Database {
     Tables: {
       projects: {
         Row: {
-          _hasUnresolvedMetadata: boolean | null
-          _metadataRetriesLeft: number | null
-          _updatedAt: number | null
+          _has_unresolved_metadata: boolean | null
+          _metadata_retries_left: number | null
+          _updated_at: number
           archived: boolean | null
-          createdAt: number | null
-          currentBalance: string | null
+          created_at: number
+          current_balance: string
           deployer: string | null
           description: string | null
           handle: string | null
           id: string
-          logoUri: string | null
-          metadataUri: string | null
+          logo_uri: string | null
+          metadata_uri: string | null
           name: string | null
-          paymentsCount: number | null
-          projectId: number | null
-          pv: string | null
+          payments_count: number
+          project_id: number
+          pv: string
           tags: string[] | null
           terminal: string | null
-          totalPaid: string | null
-          trendingScore: string | null
+          total_paid: string
+          trending_score: string
         }
         Insert: {
-          _hasUnresolvedMetadata?: boolean | null
-          _metadataRetriesLeft?: number | null
-          _updatedAt?: number | null
+          _has_unresolved_metadata?: boolean | null
+          _metadata_retries_left?: number | null
+          _updated_at: number
           archived?: boolean | null
-          createdAt?: number | null
-          currentBalance?: string | null
+          created_at: number
+          current_balance: string
           deployer?: string | null
           description?: string | null
           handle?: string | null
           id: string
-          logoUri?: string | null
-          metadataUri?: string | null
+          logo_uri?: string | null
+          metadata_uri?: string | null
           name?: string | null
-          paymentsCount?: number | null
-          projectId?: number | null
-          pv?: string | null
+          payments_count: number
+          project_id: number
+          pv: string
           tags?: string[] | null
           terminal?: string | null
-          totalPaid?: string | null
-          trendingScore?: string | null
+          total_paid: string
+          trending_score: string
         }
         Update: {
-          _hasUnresolvedMetadata?: boolean | null
-          _metadataRetriesLeft?: number | null
-          _updatedAt?: number | null
+          _has_unresolved_metadata?: boolean | null
+          _metadata_retries_left?: number | null
+          _updated_at?: number
           archived?: boolean | null
-          createdAt?: number | null
-          currentBalance?: string | null
+          created_at?: number
+          current_balance?: string
           deployer?: string | null
           description?: string | null
           handle?: string | null
           id?: string
-          logoUri?: string | null
-          metadataUri?: string | null
+          logo_uri?: string | null
+          metadata_uri?: string | null
           name?: string | null
-          paymentsCount?: number | null
-          projectId?: number | null
-          pv?: string | null
+          payments_count?: number
+          project_id?: number
+          pv?: string
           tags?: string[] | null
           terminal?: string | null
-          totalPaid?: string | null
-          trendingScore?: string | null
+          total_paid?: string
+          trending_score?: string
         }
       }
       user_subscriptions: {

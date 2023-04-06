@@ -6,6 +6,7 @@ import { PROJECTS_PAGE } from 'constants/fathomEvents'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
+import { DBProjectQueryOpts } from 'models/dbProject'
 import { ProjectTag } from 'models/project-tags'
 import { ProjectCategory } from 'models/projectVisibility'
 import { PV } from 'models/pv'
@@ -30,11 +31,7 @@ export default function ProjectsPage() {
   )
 }
 
-type OrderByOption =
-  | 'createdAt'
-  | 'totalPaid'
-  | 'currentBalance'
-  | 'paymentsCount'
+type OrderByOption = DBProjectQueryOpts['orderBy']
 
 const defaultTab: ProjectCategory = 'trending'
 
@@ -81,7 +78,7 @@ function Projects() {
     setSearchTags(tags)
   }, [userAddress, router.query.tab, search, tags])
 
-  const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
+  const [orderBy, setOrderBy] = useState<OrderByOption>('total_paid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
   const [includeV2, setIncludeV2] = useState<boolean>(true)
   const [showArchived, setShowArchived] = useState<boolean>(false)

@@ -3,7 +3,10 @@ import { DBProjectQueryOpts } from 'models/dbProject'
 import { ProjectTag } from 'models/project-tags'
 import { NextApiHandler } from 'next'
 
-// Searches Juicebox projects matching text query param
+/**
+ * Queries database projects using sort and filter options.
+ * @returns Raw SQL query response
+ */
 const handler: NextApiHandler = async (req, res) => {
   const { text, tags, page, pageSize, archived, pv, orderDirection, orderBy } =
     req.query

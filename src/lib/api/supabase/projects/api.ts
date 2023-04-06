@@ -3,6 +3,7 @@ import { DBProject, DBProjectQueryOpts } from 'models/dbProject'
 import { Json } from 'models/json'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Database } from 'types/database.types'
+import { formatDBProjectRow, parseDBProjectsRow } from 'utils/sgDbProjects'
 import { dbProjects } from '../clients'
 
 /**
@@ -12,7 +13,7 @@ import { dbProjects } from '../clients'
  */
 export function dbpQueryAll() {
   return dbProjects.select('*').then(
-    res => ({ data: res.data as Json<DBProject>[], error: undefined }),
+    res => ({ data: res.data?.map(parseDBProjectsRow), error: undefined }),
     error => ({ data: [] as Json<DBProject>[], error }),
   )
 }
@@ -34,32 +35,29 @@ export async function writeDBProjects(records: Json<DBProject>[]) {
     )
   }
 
-  const _updatedAt = Date.now()
+  const _updated_at = Date.now()
 
   const queue = records.map(r => ({
-    ...r,
-    _updatedAt,
-
-    // hacky? fix to avoid undefined column vals
-    name: r.name ?? null,
-    description: r.description ?? null,
-    logoUri: r.logoUri ?? null,
-    metadataUri: r.metadataUri ?? null,
-    tags: r.tags || [],
-    archived: r.archived || false,
-    _hasUnresolvedMetadata: r._hasUnresolvedMetadata ?? null,
-    _metadataRetriesLeft: r._metadataRetriesLeft ?? null,
+    ...formatDBProjectRow(r),
+    _updated_at,
   }))
 
   return dbProjects.upsert(queue).select()
 }
 
+/**
+ * Queries the projects table in the database, using search, sort, and filter options.
+ * @param req Next API request
+ * @param res Next API response
+ * @param opts Search, sort, and filter options
+ * @returns Raw SQL query response
+ */
 export async function queryDBProjects(
   req: NextApiRequest,
   res: NextApiResponse,
   opts: DBProjectQueryOpts,
 ) {
-  const orderBy = opts.orderBy ?? 'totalPaid'
+  const orderBy = opts.orderBy ?? 'total_paid'
   const page = opts.page ?? 0
   const pageSize = opts.pageSize ?? 20
   // Only sort ascending if orderBy is defined and orderDirection is 'asc'
@@ -76,11 +74,12 @@ export async function queryDBProjects(
   )
 
   let query = supabase
-    .select()
-    .is('archived', opts.archived ?? false)
+    .select('*')
     .order(orderBy, { ascending })
     .range(page * pageSize, (page + 1) * pageSize)
 
+  if (opts.archived) query = query.is('archived', true)
+  else query = query.not('archived', 'is', true)
   if (opts.pv?.length) query = query.in('pv', opts.pv)
   if (opts.tags?.length) query = query.overlaps('tags', opts.tags)
   if (searchFilter) query = query.or(searchFilter)

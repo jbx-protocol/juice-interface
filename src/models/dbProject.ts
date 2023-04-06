@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { Database } from 'types/database.types'
 import { ProjectTag } from './project-tags'
-import { ProjectMetadata } from './projectMetadata'
 
 import { PV } from './pv'
 import { Project } from './subgraph-entities/vX/project'
@@ -21,7 +21,7 @@ export type DBProjectQueryOpts = {
   tags?: ProjectTag[]
   archived?: boolean
   pv?: PV[]
-  orderBy?: 'totalPaid' | 'createdAt' | 'currentBalance' | 'paymentsCount'
+  orderBy?: 'total_paid' | 'created_at' | 'current_balance' | 'payments_count'
   orderDirection?: 'asc' | 'desc'
   page?: number
   pageSize?: number
@@ -33,7 +33,7 @@ export type DBProject = {
   createdAt: number
   pv: PV
   handle: string | null
-  metadataUri: string
+  metadataUri: string | null
   currentBalance: BigNumber
   trendingScore: BigNumber
   totalPaid: BigNumber
@@ -41,13 +41,19 @@ export type DBProject = {
   deployer: string | null
   terminal: string | null
 
+  description: string | null
+  logoUri: string | null
+  name: string | null
+  tags: ProjectTag[] | null
+  archived: boolean | null
+
   // Helper properties
-  _hasUnresolvedMetadata?: boolean // Indicates if metadata has not been successfully resolved from IPFS
-  _metadataRetriesLeft?: number // Allows us to only retry resolving metadata a finite number of times. Useful for invalid metadataUris or uris pointing to unpinned content
+  _hasUnresolvedMetadata?: boolean | null // Indicates if metadata has not been successfully resolved from IPFS
+  _metadataRetriesLeft?: number | null // Allows us to only retry resolving metadata a finite number of times. Useful for invalid metadataUris or uris pointing to unpinned content
   _updatedAt: number // Millis timestamp of last updated
-} & Partial<
-  Pick<
-    ProjectMetadata,
-    'description' | 'logoUri' | 'name' | 'tags' | 'archived'
-  >
+}
+
+export type DBProjectRow = Omit<
+  Database['public']['Tables']['projects']['Row'],
+  'project_search'
 >

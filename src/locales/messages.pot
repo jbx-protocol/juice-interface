@@ -491,9 +491,6 @@ msgstr ""
 msgid "Automated"
 msgstr ""
 
-msgid "Automatically receive this project's ERC-20 tokens. Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
-msgstr ""
-
 msgid "Available after fee:"
 msgstr ""
 
@@ -1739,9 +1736,6 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-msgid "Message (optional)"
-msgstr ""
-
 msgid "Message from {0}"
 msgstr ""
 
@@ -1787,7 +1781,7 @@ msgstr ""
 msgid "Mint new {tokensLabel} into a wallet. Only a project's owner, a designated operator, or one of the terminal's delegates can mint project tokens."
 msgstr ""
 
-msgid "Mint this project's ERC-20 tokens to your wallet."
+msgid "Mint this project's ERC-20 tokens to your wallet. Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
 msgid "Mint tokens"

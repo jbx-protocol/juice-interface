@@ -2459,10 +2459,10 @@ msgstr ""
 msgid "Receive {receiveText}"
 msgstr ""
 
-msgid "Recently listed"
+msgid "Receive:"
 msgstr ""
 
-msgid "Receive:"
+msgid "Recently listed"
 msgstr ""
 
 msgid "Recipient"

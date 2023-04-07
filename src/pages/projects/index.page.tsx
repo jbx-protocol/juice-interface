@@ -12,6 +12,7 @@ import { ProjectCategory } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import qs from 'qs'
 import { useEffect, useMemo, useState } from 'react'
 
 import AllProjects from './AllProjects'
@@ -43,13 +44,9 @@ function Projects() {
   const search = Array.isArray(router.query.search)
     ? router.query.search[0]
     : router.query.search
+
   const tags = useMemo(
-    () =>
-      (Array.isArray(router.query.tags)
-        ? router.query.tags[0].split(',')
-        : router.query.tags
-        ? router.query.tags.split(',')
-        : []) as ProjectTag[],
+    () => (router.query.tags as string | undefined)?.split(',') as ProjectTag[],
     [router.query],
   )
 
@@ -96,9 +93,15 @@ function Projects() {
     _searchText: string | undefined,
   ) {
     router.push(
-      `/projects?tab=all${_searchText ? `&search=${_searchText}` : ''}${
-        _searchTags.length ? `&tags=${_searchTags.join(',')}` : ''
-      }`,
+      '/projects?' +
+        qs.stringify(
+          {
+            tab: 'all',
+            search: _searchText,
+            tags: _searchTags,
+          },
+          { arrayFormat: 'comma', encode: false },
+        ),
     )
   }
 

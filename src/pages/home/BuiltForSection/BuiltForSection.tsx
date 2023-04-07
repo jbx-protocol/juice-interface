@@ -1,12 +1,13 @@
 import { t, Trans } from '@lingui/macro'
 import { Row } from 'antd'
-import { BuildForCard } from './BuiltForCard'
-import { SectionContainerClasses } from './Landing'
-import { SectionHeading } from './SectionHeading'
+import { DEFAULT_HOMEPAGE_GUTTER } from '../Landing'
+import { SectionContainer } from '../SectionContainer'
+import { SectionHeading } from '../SectionHeading'
+import { BuiltForCard } from './BuiltForCard'
 
-export function BuiltForSection() {
+export const BuiltForSection = () => {
   return (
-    <section className={SectionContainerClasses}>
+    <SectionContainer>
       <SectionHeading
         heading={<Trans>Built for ideas like yours</Trans>}
         subheading={
@@ -16,8 +17,8 @@ export function BuiltForSection() {
           </Trans>
         }
       />
-      <Row gutter={[30, 30]}>
-        <BuildForCard
+      <Row gutter={DEFAULT_HOMEPAGE_GUTTER}>
+        <BuiltForCard
           imageSrc="/assets/built-for-daos.png"
           imageAlt="Juicy Grapes"
           heading={t`DAOs`}
@@ -28,7 +29,7 @@ export function BuiltForSection() {
             </Trans>
           }
         />
-        <BuildForCard
+        <BuiltForCard
           imageSrc="/assets/built-for-crowdfunding.png"
           imageAlt="ETH coins"
           heading={t`Crowdfunding`}
@@ -39,9 +40,9 @@ export function BuiltForSection() {
             </Trans>
           }
         />
-        <BuildForCard
+        <BuiltForCard
           imageSrc="/assets/built-for-nft-projects.png"
-          imageAlt="Beautifully framed NFT"
+          imageAlt="Framed NFT"
           heading={t`NFT Projects`}
           subheading={
             <Trans>
@@ -50,7 +51,7 @@ export function BuiltForSection() {
             </Trans>
           }
         />
-        <BuildForCard
+        <BuiltForCard
           imageSrc="/assets/built-for-creators.png"
           imageAlt="Builder hodling wrench"
           heading={t`Creators & builders`}
@@ -62,6 +63,6 @@ export function BuiltForSection() {
           }
         />
       </Row>
-    </section>
+    </SectionContainer>
   )
 }

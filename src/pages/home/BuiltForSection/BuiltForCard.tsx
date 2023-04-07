@@ -1,6 +1,7 @@
 import { Col } from 'antd'
+import Image from 'next/image'
 
-export function BuildForCard({
+export function BuiltForCard({
   imageSrc,
   imageAlt,
   heading,
@@ -14,7 +15,7 @@ export function BuildForCard({
   return (
     <Col md={6} xs={24}>
       <div className="flex flex-col items-center">
-        <img src={imageSrc} alt={imageAlt} />
+        <Image src={imageSrc} alt={imageAlt} width="180px" height="180px" />
         <h6 className="mt-4 text-2xl">{heading}</h6>
         <p className="text-center text-base">{subheading}</p>
       </div>

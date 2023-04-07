@@ -1,6 +1,8 @@
 import { Trans } from '@lingui/macro'
 import USDAmount from 'components/currency/USDAmount'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { formattedNum } from 'utils/format/formatNumber'
 
 const Stat = ({
@@ -12,9 +14,17 @@ const Stat = ({
   label: string | JSX.Element
   loading: boolean
 }) => {
+  const newLandingEnabled = featureFlagEnabled(FEATURE_FLAGS.NEW_LANDING_PAGE)
+
+  const textColorClass = newLandingEnabled
+    ? 'text-bluebs-500'
+    : 'text-juice-400 dark:text-juice-300'
+
   return (
     <div className="my-0 mx-auto flex flex-col gap-4 text-center">
-      <div className="font-display text-4xl font-medium text-juice-400 dark:text-juice-300 md:text-5xl">
+      <div
+        className={`font-display text-4xl font-medium md:text-5xl ${textColorClass}`}
+      >
         {loading ? '-' : value}
       </div>
       <div className="font-body text-base text-grey-900 dark:text-slate-100">

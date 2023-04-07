@@ -9,13 +9,13 @@ export const SectionHeading: React.FC<{
     <div className="m-auto mb-12 max-w-3xl">
       <h2
         className={twMerge(
-          'text-center text-3xl leading-tight text-black md:text-5xl',
+          'text-primary text-center text-3xl leading-tight md:text-5xl',
           className,
         )}
       >
         {heading}
       </h2>
-      <p className="mb-1 text-center text-base text-black dark:text-slate-100">
+      <p className="text-primary mb-1 text-center text-base dark:text-slate-100">
         {subheading}
       </p>
     </div>

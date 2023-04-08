@@ -44,6 +44,7 @@
 
 .ant-btn-icon-only {
   @apply px-0;
+  @apply justify-center;
   &:hover {
     @apply bg-transparent dark:bg-transparent;
   }

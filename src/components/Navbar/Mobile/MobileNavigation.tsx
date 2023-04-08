@@ -66,7 +66,11 @@ export default function MobileNavigation() {
             </Menu.Item>
             {isConnected && (
               <Menu.Item>
-                <Button onClick={disconnect} block>
+                <Button
+                  className="flex justify-center"
+                  onClick={disconnect}
+                  block
+                >
                   <Trans>Disconnect</Trans>
                 </Button>
               </Menu.Item>

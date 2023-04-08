@@ -1,3 +1,9 @@
 .anticon svg {
   height: auto;
 }
+
+.anticon {
+  // Fixes the issue where the icon is not centered vertically
+  @apply align-middle;
+  line-height: 0 !important;
+}

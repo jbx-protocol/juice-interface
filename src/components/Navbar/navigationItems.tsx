@@ -1,5 +1,5 @@
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Dropdown, MenuProps } from 'antd'
 import { Badge } from 'components/Badge'
 import ExternalLink from 'components/ExternalLink'
@@ -39,7 +39,9 @@ const DesktopDropdown = ({
         }}
       >
         {label}
-        <span className="ml-1">{open ? <UpOutlined /> : <DownOutlined />}</span>
+        <span className="ml-1 flex items-center">
+          {open ? <UpOutlined /> : <DownOutlined />}
+        </span>
       </div>
     </Dropdown>
   )
@@ -195,7 +197,7 @@ export const desktopMenuItems = ({
       label: (
         <Link href="/create">
           <a
-            className="flex hidden cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100 lg:block"
+            className="flex cursor-pointer items-center font-medium text-black hover:opacity-70 dark:text-slate-100 lg:block"
             onClick={() => trackFathomGoal(TOP_NAV.CREATE_A_PROJECT_CTA)}
           >{t`Create a project`}</a>
         </Link>

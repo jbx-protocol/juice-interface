@@ -61,9 +61,7 @@ export function V2V3Project() {
             </Row>
           )}
 
-          <div className="mt-12 text-center">
-            <ScrollToTopButton />
-          </div>
+          <ScrollToTopButton className="mt-12 justify-center" />
         </div>
       </V2V3PayProjectFormProvider>
 

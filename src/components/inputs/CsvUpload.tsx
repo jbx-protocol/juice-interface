@@ -40,7 +40,7 @@ export function CsvUpload<T>({
   return (
     <div>
       <label
-        className="cursor-pointer font-normal text-black dark:text-slate-100"
+        className="flex cursor-pointer items-center gap-1 font-normal text-black dark:text-slate-100"
         role="button"
         htmlFor="csv-upload"
       >

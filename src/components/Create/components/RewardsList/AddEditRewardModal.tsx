@@ -1,6 +1,6 @@
 import { QuestionCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Form, Modal, Space, Tooltip } from 'antd'
+import { Form, Modal, Tooltip } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { WarningCallout } from 'components/Callout/WarningCallout'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
@@ -230,7 +230,7 @@ export const AddEditRewardModal = ({
           />
         </Form.Item>
         <Form.Item>
-          <Space className="w-full" direction="vertical" size="small">
+          <div className="flex flex-col gap-2">
             <JuiceSwitch
               value={limitedSupply}
               onChange={setLimitedSupply}
@@ -248,7 +248,7 @@ export const AddEditRewardModal = ({
                 <FormattedNumberInput min={1} />
               </Form.Item>
             )}
-          </Space>
+          </div>
         </Form.Item>
         <CreateCollapse
           activeKey={advancedOptionsOpen ? ['0'] : []}

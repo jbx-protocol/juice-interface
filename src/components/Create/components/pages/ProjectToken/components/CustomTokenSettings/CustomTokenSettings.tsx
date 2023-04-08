@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Divider, Form, Space } from 'antd'
+import { Divider, Form } from 'antd'
 import { Callout } from 'components/Callout'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -159,25 +159,26 @@ export const CustomTokenSettings = () => {
             </Callout.Warning>
           ) : (
             <Callout.Info>
-              <Space direction="vertical">
-                {discountRate === 0 ? (
-                  <Trans>
-                    The issuance rate will not change unless you edit it. There
-                    will be less of an incentive to support this project early
-                    on.
-                  </Trans>
-                ) : discountRate === 100 ? (
-                  <Trans>
-                    After {formatFundingCycleDuration(duration)} (your first
-                    cycle), your project will not issue any tokens unless you
-                    edit the issuance rate.
-                  </Trans>
-                ) : (
-                  <>
+              {discountRate === 0 ? (
+                <Trans>
+                  The issuance rate will not change unless you edit it. There
+                  will be less of an incentive to support this project early on.
+                </Trans>
+              ) : discountRate === 100 ? (
+                <Trans>
+                  After {formatFundingCycleDuration(duration)} (your first
+                  cycle), your project will not issue any tokens unless you edit
+                  the issuance rate.
+                </Trans>
+              ) : (
+                <>
+                  <p>
                     <Trans>
                       Each cycle, the project will issue {discountRate}% fewer
                       tokens per ETH.{' '}
                     </Trans>
+                  </p>
+                  <p>
                     <Trans>
                       Next cycle, the project will issue{' '}
                       {formatAmount(secondFundingCycleMintRate)} tokens per 1
@@ -185,9 +186,9 @@ export const CustomTokenSettings = () => {
                       {formatAmount(thirdFundingCycleMintRate)} tokens per 1
                       ETH.
                     </Trans>
-                  </>
-                )}
-              </Space>
+                  </p>
+                </>
+              )}
             </Callout.Info>
           )}
         </div>

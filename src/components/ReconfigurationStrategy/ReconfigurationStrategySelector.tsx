@@ -1,5 +1,4 @@
 import { t, Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import FormItemWarningText from 'components/FormItemWarningText'
 import ReconfigurationStrategyOption from 'components/ReconfigurationStrategy/ReconfigurationStrategyOption'
 import { RECONFIG_RULES_WARN } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
@@ -32,7 +31,7 @@ export default function ReconfigurationStrategySelector({
   const customStrategy = createCustomStrategy(customStrategyAddress)
 
   return (
-    <Space direction="vertical">
+    <div className="flex flex-col gap-2">
       {isEqualAddress(
         ballotStrategies[selectedStrategyIndex]?.address,
         ballotStrategies[0].address,
@@ -69,6 +68,6 @@ export default function ReconfigurationStrategySelector({
         selected={selectedIsCustom}
         onSelectBallot={() => onChange(customStrategy)}
       />
-    </Space>
+    </div>
   )
 }

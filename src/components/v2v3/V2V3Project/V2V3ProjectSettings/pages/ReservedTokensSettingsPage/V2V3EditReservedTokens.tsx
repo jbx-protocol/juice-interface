@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import { AllocationSplit } from 'components/Allocation'
 import { Callout } from 'components/Callout'
 import { ReservedTokensList } from 'components/Create/components/pages/ProjectToken/components/CustomTokenSettings/components/ReservedTokensList'
@@ -43,7 +42,7 @@ export function V2V3EditReservedTokens({
           immediately.
         </Trans>
       </Callout.Info>
-      <Space className="min-h-0 w-full" direction="vertical" size="middle">
+      <div className="flex min-h-0 flex-col gap-4">
         <div className="flex justify-between">
           <Trans>Reserved token recipients</Trans>
           <CsvUpload
@@ -56,7 +55,7 @@ export function V2V3EditReservedTokens({
           onChange={onAllocationChanged}
           value={editingReservedTokensSplits.map(splitToAllocation)}
         />
-      </Space>
+      </div>
     </>
   )
 }

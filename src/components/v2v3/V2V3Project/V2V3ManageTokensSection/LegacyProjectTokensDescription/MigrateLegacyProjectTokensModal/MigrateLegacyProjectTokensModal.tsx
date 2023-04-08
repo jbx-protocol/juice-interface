@@ -1,7 +1,7 @@
 import { CheckCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import { ModalProps, Space, Statistic } from 'antd'
+import { ModalProps, Statistic } from 'antd'
 import Loading from 'components/Loading'
 import TooltipIcon from 'components/TooltipIcon'
 import TransactionModal from 'components/TransactionModal'
@@ -14,10 +14,10 @@ import { useV1ProjectId } from 'hooks/JBV3Token/contractReader/V1ProjectId'
 import { useJBOperatorStoreForV3Token } from 'hooks/JBV3Token/contracts/JBOperatorStoreForV3Token'
 import { useV1TicketBoothForV3Token } from 'hooks/JBV3Token/contracts/V1TicketBoothForV3Token'
 import { useMigrateTokensTx } from 'hooks/JBV3Token/transactor/MigrateTokensTx'
+import { useWallet } from 'hooks/Wallet'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
 import { useV1HasPermissions } from 'hooks/v1/contractReader/V1HasPermissions'
 import { useV2V3HasPermissions } from 'hooks/v2v3/contractReader/V2V3HasPermissions'
-import { useWallet } from 'hooks/Wallet'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useState } from 'react'
@@ -149,7 +149,7 @@ export function MigrateLegacyProjectTokensModal({
       {...modalOkProps}
       {...props}
     >
-      <Space size="large" direction="vertical" className="w-full">
+      <div className="flex flex-col gap-6">
         <TokenSwapDescription />
 
         <div className="flex gap-6">
@@ -209,7 +209,7 @@ export function MigrateLegacyProjectTokensModal({
             legacyTokenContractAddress={v1TokenAddress}
           />
         )}
-      </Space>
+      </div>
     </TransactionModal>
   )
 }

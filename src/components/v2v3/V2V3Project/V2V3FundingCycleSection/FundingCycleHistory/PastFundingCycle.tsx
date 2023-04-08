@@ -1,6 +1,6 @@
 import { CaretRightOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Modal, Space } from 'antd'
+import { Modal } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -52,12 +52,13 @@ export function PastFundingCycle({
   return (
     <>
       <div
-        className="flex cursor-pointer items-baseline justify-between"
+        className="flex cursor-pointer items-center justify-between"
         role="button"
         onClick={() => setModalVisible(true)}
       >
-        <Space align="baseline">
-          <h3>#{fundingCycle.number.toString()}</h3>
+        <div className="flex items-center gap-2">
+          {/* Ant fucking d.... */}
+          <h3 className="mb-0">#{fundingCycle.number.toString()}</h3>
 
           <div className="ml-2 text-sm">
             <CurrencySymbol
@@ -76,14 +77,14 @@ export function PastFundingCycle({
               </Trans>
             )}
           </div>
-        </Space>
+        </div>
 
-        <Space className="text-sm" align="baseline">
+        <div className="flex items-center gap-2 text-sm">
           {formatHistoricalDate(
             fundingCycle.start.add(fundingCycle.duration).mul(1000).toNumber(),
           )}
           <CaretRightOutlined />
-        </Space>
+        </div>
       </div>
 
       <Modal

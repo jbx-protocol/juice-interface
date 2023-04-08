@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Col, Row, Space } from 'antd'
+import { Button, Col, Row } from 'antd'
 import { HOMEPAGE } from 'constants/fathomEvents'
 import { trackFathomGoal } from 'lib/fathom'
 import Image from 'next/image'
@@ -19,10 +19,10 @@ function BuiltForList() {
         t`NFT projects`,
         t`Indie creators and builders`,
       ].map((data, i) => (
-        <Space className="pl-2" key={i} size="middle">
+        <div className="flex gap-4 pl-2" key={i}>
           <Image src={bolt} alt="Lightning bolt symbol" />
           {data}
-        </Space>
+        </div>
       ))}
     </div>
   )
@@ -70,7 +70,7 @@ export function HeroSection() {
         <Row gutter={30} align="middle">
           <Col className="flex items-center pb-6" xs={24} md={13}>
             <div>
-              <Space direction="vertical" size="large">
+              <div className="flex flex-col gap-6">
                 <h1 className="text-brand m-0 text-5xl md:text-6xl">
                   <HeroHeading />
                 </h1>
@@ -83,7 +83,7 @@ export function HeroSection() {
                 </div>
 
                 <CallToAction />
-              </Space>
+              </div>
             </div>
           </Col>
           <Col xs={24} md={11} className="hidden md:block">

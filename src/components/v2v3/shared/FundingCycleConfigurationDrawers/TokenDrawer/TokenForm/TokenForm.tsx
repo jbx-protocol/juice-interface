@@ -1,15 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import { Button, Form, Space } from 'antd'
+import { Button, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
+import FormItemWarningText from 'components/FormItemWarningText'
+import SwitchHeading from 'components/SwitchHeading'
 import { FormItems } from 'components/formItems'
 import { ItemNoInput } from 'components/formItems/ItemNoInput'
-import FormItemWarningText from 'components/FormItemWarningText'
 import NumberSlider from 'components/inputs/NumberSlider'
-import SwitchHeading from 'components/SwitchHeading'
-import ReservedTokensFormItem from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer/TokenForm/ReservedTokensFormItem'
 import { DISCOUNT_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import ReservedTokensFormItem from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer/TokenForm/ReservedTokensFormItem'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -255,7 +255,7 @@ export function TokenForm({
 
   return (
     <Form layout="vertical" onFinish={onTokenFormSaved} form={tokenForm}>
-      <Space size="middle" direction="vertical">
+      <div className="flex flex-col gap-4">
         <div>
           <MintRateFormItem
             value={weight}
@@ -355,7 +355,7 @@ export function TokenForm({
             <Trans>Save token rules</Trans>
           </Button>
         </Form.Item>
-      </Space>
+      </div>
     </Form>
   )
 }

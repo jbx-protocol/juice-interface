@@ -1,4 +1,3 @@
-import { Space } from 'antd'
 import { SPLITS_PAYER_ADDRESS_EXPLANATION } from 'components/Explanations'
 import { LaunchSplitsPayerButton } from './LaunchSplitsPayerButton'
 
@@ -12,7 +11,7 @@ export function SplitsPayerSection() {
   return (
     <>
       <p>{SPLITS_PAYER_ADDRESS_EXPLANATION}</p>
-      <Space className="flex-wrap">
+      <div className="flex flex-wrap">
         <LaunchSplitsPayerButton />
         {/* TODO: JB-161 */}
         {/* {splitsPayers && (
@@ -33,7 +32,7 @@ export function SplitsPayerSection() {
             />
           </>
         )} */}
-      </Space>
+      </div>
     </>
   )
 }

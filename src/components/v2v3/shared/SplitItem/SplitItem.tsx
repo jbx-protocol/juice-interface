@@ -28,7 +28,7 @@ export function SplitItem({ props }: { props: SplitProps }) {
   return (
     <div className="flex flex-wrap items-baseline justify-between">
       <div>
-        <div className="items-baselineleading-6 flex">
+        <div className="flex items-baseline leading-6">
           {isJuiceboxProject ? (
             <JuiceboxProjectBeneficiary
               projectOwnerAddress={props.projectOwnerAddress}

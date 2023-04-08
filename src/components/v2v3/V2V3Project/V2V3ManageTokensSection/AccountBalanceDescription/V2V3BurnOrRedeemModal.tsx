@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Descriptions, Form, Space } from 'antd'
+import { Descriptions, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { Callout } from 'components/Callout'
@@ -208,10 +208,10 @@ export function V2V3BurnOrRedeemModal({
       width={540}
       centered
     >
-      <Space direction="vertical" className="w-full" size="large">
+      <div className="flex flex-col gap-6">
         <div>
           {canRedeem ? (
-            <Space direction="vertical" size="middle">
+            <div className="flex flex-col gap-4">
               <Callout.Info>
                 <Trans>Tokens are burned when they are redeemed.</Trans>
               </Callout.Info>
@@ -222,7 +222,7 @@ export function V2V3BurnOrRedeemModal({
                   determines the amount of ETH you'll receive.
                 </Trans>
               </div>
-            </Space>
+            </div>
           ) : (
             <Callout.Info>
               {!hasOverflow && (
@@ -351,7 +351,7 @@ export function V2V3BurnOrRedeemModal({
             </div>
           ) : null}
         </div>
-      </Space>
+      </div>
     </TransactionModal>
   )
 }

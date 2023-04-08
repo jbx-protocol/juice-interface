@@ -1,33 +1,32 @@
-import { Col, ColProps, Row, Space } from 'antd'
+import { Col, ColProps, Row } from 'antd'
 import { PropsWithChildren } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { isReactNodeArray } from 'utils/isReactNodeArray'
 
 const DEFAULT_GUTTER = 20
 
 export default function Grid({
+  className,
   children,
   list,
-  gutter,
 }: PropsWithChildren<{
+  className?: string
   list?: boolean
-  gutter?: number
 }>) {
-  const _gutter = gutter ?? DEFAULT_GUTTER
+  const _gutter = DEFAULT_GUTTER
   const colProps: ColProps = {
     xs: 24,
     md: 12,
-    style: { marginBottom: _gutter },
+    style: { marginBottom: DEFAULT_GUTTER },
   }
 
   if (!children) return <></>
   if (!isReactNodeArray(children)) return <>{children}</>
 
   return list ? (
-    <Space className="w-full" direction="vertical" size={_gutter}>
-      {children}
-    </Space>
+    <div className={twMerge('flex w-full flex-col', className)}>{children}</div>
   ) : (
-    <div>
+    <div className={className}>
       {children.map(
         (child, i) =>
           i % 2 === 0 && (

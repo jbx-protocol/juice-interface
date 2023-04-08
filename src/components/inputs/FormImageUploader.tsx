@@ -1,6 +1,6 @@
 import { CloseCircleFilled, FileImageOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
-import { Button, Col, message, Row, Space, Upload } from 'antd'
+import { Trans, t } from '@lingui/macro'
+import { Button, Col, Row, Upload, message } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { pinFile } from 'lib/api/ipfs'
 import { useState } from 'react'
@@ -40,7 +40,7 @@ export const FormImageUploader = ({
   return (
     <Row className="text-grey-500 dark:text-grey-300" gutter={30}>
       <Col xs={24} md={7}>
-        <Space align="start">
+        <div className="flex gap-2">
           {imageUrl ? (
             <img
               className="max-h-[80px] max-w-[120px] rounded-sm object-cover object-center"
@@ -91,7 +91,7 @@ export const FormImageUploader = ({
               </Button>
             </Upload>
           )}
-        </Space>
+        </div>
       </Col>
 
       <Col xs={24} md={17}>

@@ -1,5 +1,5 @@
 import { plural, t, Trans } from '@lingui/macro'
-import { Modal, Space } from 'antd'
+import { Modal } from 'antd'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
@@ -41,13 +41,13 @@ export function PaymentAddressesModal({
         project. This makes it easier to pay the project from third-party tools.
       </Trans>
       {projectPayers?.length ? (
-        <Space direction="vertical" className="w-full">
+        <div className="flex flex-col gap-2">
           {projectPayers.map(p => (
             <div
               className="mb-2 border border-solid border-smoke-200 p-2 font-medium text-grey-500 dark:border-grey-600 dark:text-grey-300"
               key={p.address}
             >
-              <Space direction="vertical" className="w-full">
+              <div className="flex flex-col gap-2">
                 <div className="my-2 flex items-center text-base font-medium text-black dark:text-slate-100">
                   <span className="underline">
                     <EtherscanLink
@@ -130,10 +130,10 @@ export function PaymentAddressesModal({
                     </div>
                   </div>
                 ) : null}
-              </Space>
+              </div>
             </div>
           ))}
-        </Space>
+        </div>
       ) : null}
 
       {projectPayers ? (

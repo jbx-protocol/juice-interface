@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Form, Input, Modal, Space, Switch } from 'antd'
+import { Checkbox, Form, Input, Modal, Switch } from 'antd'
 import { FormInstance, FormProps, useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import Sticker from 'components/icons/Sticker'
@@ -68,7 +68,7 @@ export const V2V3PayForm = ({
   return (
     <>
       <Form form={form} layout="vertical" {...props}>
-        <Space direction="vertical" size="large">
+        <div className="flex flex-col gap-6">
           {hasIssuedTokens && (
             <Form.Item
               name="preferClaimedTokens"
@@ -144,7 +144,7 @@ export const V2V3PayForm = ({
             </Form.Item>
 
             <Form.Item extra={t`Mint tokens to a custom address.`}>
-              <Space>
+              <div className="flex gap-2">
                 <Switch
                   checked={customBeneficiaryEnabled}
                   onChange={enabled => {
@@ -157,7 +157,7 @@ export const V2V3PayForm = ({
                 <span className="font-medium text-black dark:text-slate-100">
                   <Trans>Custom token beneficiary</Trans>
                 </span>
-              </Space>
+              </div>
               {customBeneficiaryEnabled && (
                 <Form.Item
                   className="mt-4 mb-0"
@@ -229,7 +229,7 @@ export const V2V3PayForm = ({
               </Checkbox>
             </Form.Item>
           ) : null}
-        </Space>
+        </div>
       </Form>
       <AttachStickerModal
         open={attachStickerModalVisible}

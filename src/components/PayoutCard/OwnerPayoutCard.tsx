@@ -24,10 +24,10 @@ export const OwnerPayoutCard: React.FC<OwnerPayoutCardType> = props => {
   return (
     <Allocation.Item
       title={
-        <>
+        <span className="flex items-center gap-2">
           <Trans>Project owner</Trans>{' '}
           <CrownFilled className="text-grey-400 dark:text-slate-200" />
-        </>
+        </span>
       }
       amount={<Amount payoutsSelection={props.payoutsSelection} />}
       extra={

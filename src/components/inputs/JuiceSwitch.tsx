@@ -1,4 +1,4 @@
-import { Space, Switch } from 'antd'
+import { Switch } from 'antd'
 import { FormItemInput } from 'models/formItemInput'
 import { ReactNode } from 'react'
 import { classNames } from 'utils/classNames'
@@ -10,7 +10,7 @@ export const JuiceSwitch = ({
 }: FormItemInput<boolean> & { label?: ReactNode }) => {
   const switchId = `switch-${label}`
   return (
-    <Space className="flex items-baseline">
+    <div className="flex items-center gap-2">
       <Switch
         className={classNames(
           value ? 'bg-bluebs-500' : 'bg-smoke-200 dark:bg-slate-300',
@@ -24,6 +24,6 @@ export const JuiceSwitch = ({
           {label}
         </label>
       )}
-    </Space>
+    </div>
   )
 }

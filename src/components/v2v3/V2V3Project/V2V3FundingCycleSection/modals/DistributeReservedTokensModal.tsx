@@ -1,5 +1,4 @@
 import { t, Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import TransactionModal from 'components/TransactionModal'
 import SplitList from 'components/v2v3/shared/SplitList'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -86,7 +85,7 @@ export default function DistributeReservedTokensModal({
       width={640}
       centered={true}
     >
-      <Space direction="vertical" className="w-full" size="large">
+      <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <Trans>
             Reserved {tokenTextPlural}:{' '}
@@ -119,7 +118,7 @@ export default function DistributeReservedTokensModal({
             valueFormatProps={{ precision: 0 }}
           />
         </div>
-      </Space>
+      </div>
     </TransactionModal>
   )
 }

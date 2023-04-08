@@ -1,9 +1,9 @@
 import { GlobalOutlined, TwitterOutlined } from '@ant-design/icons'
-import { Space } from 'antd'
 import Discord from 'components/icons/Discord'
 import Telegram from 'components/icons/Telegram'
 import { SocialButton } from 'components/SocialButton'
 import useMobile from 'hooks/Mobile'
+import { twMerge } from 'tailwind-merge'
 
 export default function SocialLinks({
   className,
@@ -25,7 +25,7 @@ export default function SocialLinks({
     'flex text-grey-500 dark:text-slate-100 text-xl md:text-base'
 
   return (
-    <Space className={className} size={12}>
+    <div className={twMerge('flex gap-3', className)}>
       {infoUri && (
         <SocialButton
           link={infoUri}
@@ -62,6 +62,6 @@ export default function SocialLinks({
           <Telegram className={iconClasses} size={isMobile ? 16 : 14} />
         </SocialButton>
       )}
-    </Space>
+    </div>
   )
 }

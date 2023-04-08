@@ -14,7 +14,7 @@ export function ETHAddressBeneficiary({
   const isProjectOwner = isEqualAddress(projectOwnerAddress, beneficaryAddress)
 
   return (
-    <div className="flex items-baseline font-medium">
+    <div className="flex items-center justify-center gap-1 font-medium">
       {beneficaryAddress ? (
         <FormattedAddress address={beneficaryAddress} />
       ) : null}
@@ -22,11 +22,9 @@ export function ETHAddressBeneficiary({
         <Trans>Project owner (you)</Trans>
       ) : null}
       {isProjectOwner && (
-        <span className="text-primary ml-1">
-          <Tooltip title={<Trans>Project owner</Trans>}>
-            <CrownFilled />
-          </Tooltip>
-        </span>
+        <Tooltip title={<Trans>Project owner</Trans>}>
+          <CrownFilled />
+        </Tooltip>
       )}
       :
     </div>

@@ -1,6 +1,6 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Skeleton, Space } from 'antd'
+import { Button, Skeleton } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import { ProjectCardProject } from 'components/ProjectCard'
@@ -121,7 +121,7 @@ export function TopProjectsSection() {
   return (
     <section className="bg-smoke-50 p-8 dark:bg-slate-600">
       <div className="my-10 mx-auto max-w-5xl">
-        <Space direction="vertical" className="w-full" size="large">
+        <div className="flex w-full flex-col items-center gap-6">
           <div>
             <SectionHeading className="mx-auto max-w-[900px] leading-tight">
               <TopProjectsHeading />
@@ -137,7 +137,7 @@ export function TopProjectsSection() {
 
           <div className="mb-3">
             {previewProjects ? (
-              <div className="my-0 mx-auto flex w-4/5 flex-wrap justify-between gap-2">
+              <div className="my-0 mx-auto flex w-4/5 flex-wrap justify-between gap-2 md:w-full md:px-0">
                 {previewProjects.map(p =>
                   isMobile ? (
                     <SmallProjectCardMobile key={p.metadataUri} project={p} />
@@ -152,9 +152,9 @@ export function TopProjectsSection() {
           </div>
 
           <div className="text-center">
-            <Space direction="vertical" className="w-full" size="large">
+            <div className="flex w-full flex-col gap-6">
               <Link href="/create">
-                <a>
+                <a className="flex">
                   <Button size="large" type="primary" block={isMobile}>
                     <Trans>Create a project</Trans>
                   </Button>
@@ -162,7 +162,7 @@ export function TopProjectsSection() {
               </Link>
               <Link href="#how-it-works">
                 <a
-                  className="cursor-pointer text-sm font-normal text-grey-500 hover:underline dark:text-grey-300"
+                  className="flex cursor-pointer items-center justify-center gap-2 text-sm font-normal text-grey-500 hover:underline dark:text-grey-300"
                   role="button"
                   onClick={() => {
                     document
@@ -170,15 +170,13 @@ export function TopProjectsSection() {
                       ?.scrollIntoView({ behavior: 'smooth' })
                   }}
                 >
-                  <Space size="small">
-                    <Trans>How does it work?</Trans>
-                    <RightCircleOutlined />
-                  </Space>
+                  <Trans>How does it work?</Trans>
+                  <RightCircleOutlined />
                 </a>
               </Link>
-            </Space>
+            </div>
           </div>
-        </Space>
+        </div>
       </div>
     </section>
   )

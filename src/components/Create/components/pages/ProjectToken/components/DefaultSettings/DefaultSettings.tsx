@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { Divider, Space } from 'antd'
+import { Divider } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
 import {
   DISCOUNT_RATE_EXPLANATION,
@@ -47,9 +47,7 @@ export const DefaultSettings: React.FC = () => {
         <div key={key}>
           {i === 0 && <Divider className="m-0 mb-4" />}
           <div className="flex justify-between">
-            <Space size="small">
-              <TooltipLabel label={key} tip={tooltip} />
-            </Space>
+            <TooltipLabel label={key} tip={tooltip} />
             <span>{text}</span>
           </div>
           {i < Object.entries(data).length - 1 && <Divider className="my-4" />}

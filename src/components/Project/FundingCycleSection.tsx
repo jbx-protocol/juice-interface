@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import { Space } from 'antd'
 
 import { useState } from 'react'
 
@@ -28,7 +27,7 @@ export default function FundingCycleSection({
   )?.content
 
   return (
-    <Space direction="vertical" className="w-full">
+    <div className="flex flex-col gap-2">
       <div
         className="flex flex-wrap justify-between"
         style={{
@@ -54,7 +53,7 @@ export default function FundingCycleSection({
         {reconfigureButton}
       </div>
 
-      <Space className="mb-5 text-sm" size="large">
+      <div className="mb-5 flex gap-6 text-sm">
         {tabs.map(tab => (
           <Tab
             key={tab.key}
@@ -63,9 +62,9 @@ export default function FundingCycleSection({
             onClick={() => setSelectedTabKey(tab.key)}
           />
         ))}
-      </Space>
+      </div>
 
       {currentTabContent && <div>{currentTabContent}</div>}
-    </Space>
+    </div>
   )
 }

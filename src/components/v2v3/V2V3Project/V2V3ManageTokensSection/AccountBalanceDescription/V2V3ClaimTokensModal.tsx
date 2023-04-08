@@ -1,7 +1,7 @@
 import { WarningOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Descriptions, Form, Space } from 'antd'
+import { Descriptions, Form } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedAddress from 'components/FormattedAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -105,7 +105,7 @@ export function V2V3ClaimTokensModal({
       width={600}
       centered
     >
-      <Space direction="vertical" size="large">
+      <div className="flex flex-col gap-6">
         {!hasIssuedTokens && (
           <div className="bg-smoke-100 p-2 dark:bg-slate-600">
             <WarningOutlined />{' '}
@@ -172,7 +172,7 @@ export function V2V3ClaimTokensModal({
             />
           </Form.Item>
         </Form>
-      </Space>
+      </div>
     </TransactionModal>
   )
 }

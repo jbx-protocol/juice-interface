@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button, Form, Space } from 'antd'
+import { Button, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import Loading from 'components/Loading'
@@ -8,8 +8,8 @@ import { useNftCollectionMetadata } from 'hooks/JB721Delegate/NftCollectionMetad
 import { useReconfigureNftCollectionMetadata } from 'hooks/v2v3/transactor/ReconfigureNftCollectionMetadata'
 import { NftCollectionMetadata } from 'models/nftRewards'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { MarketplaceFormFields } from '../../../../shared/FundingCycleConfigurationDrawers/NftDrawer/shared/formFields'
 import { NftCollectionDetailsFormItems } from '../../../../shared/FundingCycleConfigurationDrawers/NftDrawer/shared/NftCollectionDetailsFormItems'
+import { MarketplaceFormFields } from '../../../../shared/FundingCycleConfigurationDrawers/NftDrawer/shared/formFields'
 
 const useCollectionDetailsForm = () => {
   const [form] = useForm<MarketplaceFormFields>()
@@ -101,7 +101,7 @@ export function EditCollectionDetailsSection() {
   if (isLoading) return <Loading />
 
   return (
-    <Space size="large" direction="vertical">
+    <div className="flex flex-col gap-6">
       <Callout.Info
         className="text-primary bg-smoke-100 dark:bg-slate-500"
         transparent
@@ -130,6 +130,6 @@ export function EditCollectionDetailsSection() {
           Save collection details
         </Button>
       </Form>
-    </Space>
+    </div>
   )
 }

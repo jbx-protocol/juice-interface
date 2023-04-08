@@ -1,5 +1,5 @@
 import { ExclamationCircleOutlined, SettingOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
 import Loading from 'components/Loading'
@@ -49,7 +49,7 @@ const TabText = ({
         </Trans>
       }
     >
-      <span>
+      <span className="flex items-center gap-1">
         {text}
         <ExclamationCircleOutlined className="ml-1 text-warning-600 dark:text-warning-300" />
       </span>

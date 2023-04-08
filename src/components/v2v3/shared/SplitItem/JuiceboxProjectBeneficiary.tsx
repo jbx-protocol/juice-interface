@@ -1,6 +1,6 @@
 import { CrownFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Space, Tooltip } from 'antd'
+import { Tooltip } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
@@ -24,10 +24,10 @@ export function JuiceboxProjectBeneficiary({
 
   return (
     <div>
-      <Space size="small">
+      <div className="flex gap-2">
         <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
         <AllocatorBadge allocator={split.allocator} />
-      </Space>
+      </div>
       {split.allocator === NULL_ALLOCATOR_ADDRESS ? (
         <div className="ml-2 text-xs text-grey-500 dark:text-grey-300">
           <TooltipLabel

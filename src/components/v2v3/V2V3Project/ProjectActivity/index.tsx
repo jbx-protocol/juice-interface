@@ -1,6 +1,6 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Divider, Select, Space } from 'antd'
+import { Button, Divider, Select } from 'antd'
 import AddToBalanceEventElem from 'components/activityEventElems/AddToBalanceEventElem'
 import BurnEventElem from 'components/activityEventElems/BurnEventElem'
 import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
@@ -147,7 +147,7 @@ export default function ProjectActivity() {
       <div className="mb-5 flex items-start justify-between">
         <SectionHeader className="m-0" text={t`Activity`} />
 
-        <Space direction="horizontal" align="center" size="small">
+        <div className="flex gap-2">
           {count > 0 && (
             <Button
               type="text"
@@ -157,7 +157,7 @@ export default function ProjectActivity() {
           )}
 
           <Select
-            className="w-[200px]"
+            className="w-[200px] text-start"
             value={eventFilter}
             onChange={val => setEventFilter(val)}
           >
@@ -198,7 +198,7 @@ export default function ProjectActivity() {
               <Trans>Created project</Trans>
             </Select.Option>
           </Select>
-        </Space>
+        </div>
       </div>
 
       {list}

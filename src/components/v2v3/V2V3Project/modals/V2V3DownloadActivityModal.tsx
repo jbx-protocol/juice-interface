@@ -1,6 +1,6 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Modal, ModalProps, Space } from 'antd'
+import { Button, Modal, ModalProps } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -50,7 +50,7 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
         className="mb-4"
       />
 
-      <Space direction="vertical" className="w-full">
+      <div className="flex flex-col gap-2">
         <Button
           block
           icon={<DownloadOutlined />}
@@ -100,7 +100,7 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
             <Trans>ETH transfers</Trans>
           </span>
         </Button>
-      </Space>
+      </div>
     </Modal>
   )
 }

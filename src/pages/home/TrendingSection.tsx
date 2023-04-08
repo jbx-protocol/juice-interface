@@ -30,7 +30,7 @@ export default function TrendingSection() {
               </Tooltip>
             </h2>
 
-            <Grid list gutter={12}>
+            <Grid className="gap-3" list>
               {trendingProjects?.map((p, i) => (
                 <TrendingProjectCard
                   project={p}

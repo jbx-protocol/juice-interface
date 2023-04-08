@@ -71,8 +71,8 @@ export default function FundingCycleDetailsCard({
         key={COLLAPSE_PANEL_KEY}
         className="border-none"
         header={
-          <div className="flex w-full cursor-pointer justify-between">
-            <div>
+          <div className="flex w-full cursor-pointer items-center justify-between">
+            <div className="flex items-center gap-2">
               {fundingCycleDurationSeconds.gt(0) ||
               (fundingCycleDurationSeconds.eq(0) &&
                 fundingCycleNumber.gt(0)) ? (
@@ -82,18 +82,16 @@ export default function FundingCycleDetailsCard({
               )}
 
               {fundingCycleRiskCount > 0 && (
-                <span className="ml-2 text-warning-600 dark:text-warning-300">
-                  <Tooltip
-                    title={
-                      <Trans>
-                        This cycle's rules may lead to unexpected behavior or
-                        other risks.
-                      </Trans>
-                    }
-                  >
-                    <ExclamationCircleOutlined />
-                  </Tooltip>
-                </span>
+                <Tooltip
+                  title={
+                    <Trans>
+                      This cycle's rules may lead to unexpected behavior or
+                      other risks.
+                    </Trans>
+                  }
+                >
+                  <ExclamationCircleOutlined className="text-warning-600 dark:text-warning-300" />
+                </Tooltip>
               )}
             </div>
 

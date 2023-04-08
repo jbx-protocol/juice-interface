@@ -1,4 +1,4 @@
-import { Space, Tooltip } from 'antd'
+import { Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 import { NftRewardTier } from 'models/nftRewards'
@@ -21,7 +21,7 @@ export function NftRewardCell({
     {},
   )
   return (
-    <Space size={'middle'} direction={'vertical'} className="w-full">
+    <div className="flex flex-col gap-4">
       {Object.keys(uniqueTiersIdsAndCounts).map((tierId, idx) => {
         const tier = nftRewards.find(_tier => _tier.id === parseInt(tierId))
         if (!tier?.id) return
@@ -64,6 +64,6 @@ export function NftRewardCell({
           </div>
         )
       })}
-    </Space>
+    </div>
   )
 }

@@ -2093,6 +2093,9 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
+msgid "OK"
+msgstr ""
+
 msgid "On-chain Governance"
 msgstr ""
 

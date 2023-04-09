@@ -28,10 +28,11 @@ export const Announcement: React.FC<JuiceModalProps> = props => {
   }, [activeId])
 
   const onOk: ModalOnOkFn = useCallback(
-    setOpen => {
+    async setOpen => {
       markCompleted()
       setActiveId(undefined)
-      props.onOk?.(setOpen)
+      // Await is required if these props use async functions
+      await props.onOk?.(setOpen)
       setOpen(false)
     },
     [markCompleted, props, setActiveId],

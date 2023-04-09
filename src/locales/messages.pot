@@ -776,6 +776,9 @@ msgstr ""
 msgid "Connected wallet not authorized"
 msgstr ""
 
+msgid "Consider completing your profile to enjoy a personalized and seamless experience on our platform."
+msgstr ""
+
 msgid "Contact"
 msgstr ""
 
@@ -1440,6 +1443,9 @@ msgid "Give this NFT a voting weight to be used for on-chain governance. The num
 msgstr ""
 
 msgid "Go to <0>{snapshotUrl}</0>"
+msgstr ""
+
+msgid "Go to profile"
 msgstr ""
 
 msgid "Go to project"

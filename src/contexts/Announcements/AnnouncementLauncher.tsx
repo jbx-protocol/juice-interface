@@ -6,12 +6,14 @@ import { Announcement } from 'models/announcement'
 import { useRouter } from 'next/router'
 import React, { useCallback, useContext, useEffect } from 'react'
 
+import { useWallet } from 'hooks/Wallet'
 import { AnnouncementsContext } from './AnnouncementsContext'
 
 /**
  * Responsible for launching announcements. This component may be instantiated in multiple places in the app component tree based on data availability.
  */
 export const AnnouncementLauncher: React.FC = ({ children }) => {
+  const wallet = useWallet()
   const { owner } = useContext(V1ProjectContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
   const isProjectOwner = useIsUserAddress(owner ?? projectOwnerAddress)
@@ -24,9 +26,9 @@ export const AnnouncementLauncher: React.FC = ({ children }) => {
       // Don't activate if expired
       if (a.expire && a.expire < Date.now().valueOf()) return false
 
-      return a.conditions.every(c => c({ router, isProjectOwner }))
+      return a.conditions.every(c => c({ router, isProjectOwner, wallet }))
     },
-    [router, isProjectOwner],
+    [router, isProjectOwner, wallet],
   )
 
   // Try activating any announcements

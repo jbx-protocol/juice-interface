@@ -3,6 +3,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import { PropsWithChildren, ReactNode, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
+import Loading from './Loading'
 import { Popup } from './Popup'
 
 type ModalSetOpenFn = (open: boolean) => void
@@ -24,6 +25,7 @@ export interface JuiceModalProps {
     | 'center'
   open: boolean
   okText?: ReactNode
+  okLoading?: boolean
   cancelText?: ReactNode
   hideCancelButton?: boolean
   setOpen: ModalSetOpenFn
@@ -37,6 +39,7 @@ export const JuiceModal = ({
   position = 'top',
   open,
   okText = t`OK`,
+  okLoading = false,
   cancelText = t`Cancel`,
   hideCancelButton,
   setOpen,
@@ -92,7 +95,9 @@ export const JuiceModal = ({
               {!hideCancelButton && (
                 <CancelButton onClick={onCancel}>{cancelText}</CancelButton>
               )}
-              <CTAButton onClick={onOk}>{okText}</CTAButton>
+              <CTAButton loading={okLoading} onClick={onOk}>
+                {okText}
+              </CTAButton>
             </div>
             <ExitButton
               className="absolute -top-2 -right-2"
@@ -107,9 +112,11 @@ export const JuiceModal = ({
 
 const CTAButton = ({
   className,
+  loading,
   onClick,
   children,
 }: PropsWithChildren<{
+  loading: boolean
   className?: string
   onClick?: VoidFunction
 }>) => (
@@ -117,11 +124,12 @@ const CTAButton = ({
     type="button"
     className={twMerge(
       'inline-flex justify-center rounded-md border border-transparent bg-bluebs-500 px-4 py-2 text-sm font-medium text-white hover:bg-bluebs-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+      loading ? 'cursor-not-allowed opacity-50' : '',
       className,
     )}
     onClick={onClick}
   >
-    {children}
+    {loading ? <Loading size="small" /> : children}
   </button>
 )
 

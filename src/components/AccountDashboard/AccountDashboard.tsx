@@ -1,6 +1,7 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tabs } from 'antd'
+import { Badge } from 'components/Badge'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import Grid from 'components/Grid'
@@ -184,8 +185,8 @@ export function AccountDashboard({
               icon={<SettingOutlined />}
               onClick={onEditProfileClicked}
             >
-              <span>
-                <Trans>Edit profile</Trans>
+              <span className="inline-flex gap-3">
+                <Trans>Edit profile</Trans> <Badge variant="info">Beta</Badge>
               </span>
             </Button>
           )}

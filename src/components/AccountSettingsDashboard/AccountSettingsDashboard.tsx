@@ -6,6 +6,7 @@ import { User } from 'models/database'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { NotificationsTab } from './components/NotificationsTab'
 import { ProfileDetailsTab } from './components/ProfileDetailsTab'
 
 export const AccountSettingsDashboard = ({ user }: { user: User }) => {
@@ -19,13 +20,13 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
         name: t`Profile details`,
         component: <ProfileDetailsTab user={user} />,
       },
-      { name: t`Notifications`, component: 'Tab 2 content goes here' },
+      { name: t`Notifications`, component: <NotificationsTab /> },
     ],
     [user],
   )
 
   return (
-    <div className="mx-auto mt-20 flex max-w-5xl flex-col p-5">
+    <div className="mx-auto flex max-w-5xl flex-col p-5">
       <SettingsMenuButton className="md:hidden" onClick={toggleMinimized} />
 
       <div className="flex">
@@ -33,7 +34,7 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
           <Tab.List
             className={twMerge(
               'absolute z-[5] flex h-full w-0 flex-col space-y-1 overflow-auto bg-white py-4 transition-all duration-200 ease-in-out dark:bg-slate-800',
-              'md:static md:flex md:w-1/4 md:min-w-[1/4] md:p-4',
+              'md:static md:flex md:w-1/4 md:min-w-[1/4] md:overflow-visible md:p-4',
               minimized ? '' : 'w-1/2 px-4',
             )}
           >

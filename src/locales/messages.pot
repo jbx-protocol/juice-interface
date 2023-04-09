@@ -1685,6 +1685,9 @@ msgstr ""
 msgid "Manage"
 msgstr ""
 
+msgid "Manage your notifications and email preferences."
+msgstr ""
+
 msgid "Manage your {0}"
 msgstr ""
 
@@ -3419,6 +3422,12 @@ msgstr ""
 msgid "Untrack token"
 msgstr ""
 
+msgid "Unwatch"
+msgstr ""
+
+msgid "Unwatch all"
+msgstr ""
+
 msgid "Upcoming"
 msgstr ""
 
@@ -3507,6 +3516,9 @@ msgid "Wallet address"
 msgstr ""
 
 msgid "Warning: Only the project owner can edit a project. If you don't have access to the address above, you will lose access to your project."
+msgstr ""
+
+msgid "Watching projects"
 msgstr ""
 
 msgid "We recommend visiting the <0>Juicebox Discord</0> for help and advice on this process."

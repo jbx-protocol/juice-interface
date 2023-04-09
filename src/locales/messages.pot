@@ -158,9 +158,6 @@ msgstr ""
 msgid "<0>NEW:</0> Improved search"
 msgstr ""
 
-msgid "<0>NEW:</0> Project tags"
-msgstr ""
-
 msgid "<0>No cycle duration.</0>You can edit your rules and start new cycles at any time."
 msgstr ""
 
@@ -1448,6 +1445,9 @@ msgstr ""
 msgid "Go to project"
 msgstr ""
 
+msgid "Go to settings"
+msgstr ""
+
 msgid "Go to your Safe"
 msgstr ""
 
@@ -1602,6 +1602,9 @@ msgid "Instead of tracking total voting power, track each address' voting power 
 msgstr ""
 
 msgid "Insufficient token balance"
+msgstr ""
+
+msgid "Introducing project tags"
 msgstr ""
 
 msgid "Invalid"

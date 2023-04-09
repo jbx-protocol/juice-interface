@@ -884,7 +884,7 @@ msgstr ""
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr ""
 
-msgid "Customize your public facing profile and add additional management information."
+msgid "Customize your public facing profile and other details."
 msgstr ""
 
 msgid "Cycle"
@@ -2892,9 +2892,6 @@ msgid "Subscribe to Juicenews to get the latest updates from the Juicebox ecosys
 msgstr ""
 
 msgid "Subscribe to project activity"
-msgstr ""
-
-msgid "Subscriptions"
 msgstr ""
 
 msgid "Successfully subscribed to Juicenews!"

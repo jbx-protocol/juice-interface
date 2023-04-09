@@ -18,10 +18,7 @@ export const ProfileDetailsTab = ({ user }: { user: User }) => {
           <Trans>Profile details</Trans> <Badge variant="info">Beta</Badge>
         </h1>
         <div className="text-secondary">
-          <Trans>
-            Customize your public facing profile and add additional management
-            information.
-          </Trans>
+          <Trans>Customize your public facing profile and other details.</Trans>
         </div>
       </div>
       <Formik

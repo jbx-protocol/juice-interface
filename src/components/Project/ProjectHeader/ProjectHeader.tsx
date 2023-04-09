@@ -146,7 +146,7 @@ export function ProjectHeader({
             className={twMerge(
               'h-32 w-32',
               hasBanner
-                ? 'mt-[-70px] border-4 border-solid border-smoke-25 dark:border-slate-800'
+                ? 'mt-[-70px] border-4 border-smoke-25 dark:border-slate-800'
                 : '',
             )}
             uri={projectMetadata?.logoUri}

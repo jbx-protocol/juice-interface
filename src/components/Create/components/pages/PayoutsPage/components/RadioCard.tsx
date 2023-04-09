@@ -11,7 +11,7 @@ export const RadioCard: React.FC<{
   return (
     <div
       className={twMerge(
-        'group flex select-none items-center justify-between rounded-lg border border-solid border-grey-200 py-3 pl-3 pr-4 transition-colors dark:border-slate-300',
+        'group flex select-none items-center justify-between rounded-lg border border-grey-200 py-3 pl-3 pr-4 transition-colors dark:border-slate-300',
         selectable
           ? 'hover:border-grey-300 dark:hover:border-slate-100'
           : undefined,

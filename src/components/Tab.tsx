@@ -17,7 +17,7 @@ export function Tab({
       className={classNames(
         'cursor-pointer pb-1 font-medium uppercase hover:text-black dark:hover:text-grey-100',
         isSelected
-          ? 'border-l-0 border-r-0 border-t-0 border-b-2 border-solid text-black dark:text-slate-100'
+          ? 'border-b-2 text-black dark:text-slate-100'
           : 'text-grey-500 dark:text-slate-200',
       )}
     >

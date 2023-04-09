@@ -263,7 +263,7 @@ export default function VolumeChart({
                 if (!active || !payload?.length) return null
 
                 return (
-                  <div className="border border-solid border-smoke-200 bg-smoke-25 p-2 text-xs dark:border-grey-600 dark:bg-slate-800">
+                  <div className="border border-smoke-200 bg-smoke-25 p-2 text-xs dark:border-grey-600 dark:bg-slate-800">
                     <div className="text-grey-400 dark:text-slate-200">
                       {dateStringForBlockTime(payload[0].payload.timestamp)}
                     </div>

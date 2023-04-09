@@ -13,7 +13,7 @@ const InputPrefix = (
 ) => {
   if (props.prefix) {
     return (
-      <span className="stroke-secondary relative box-border inline-flex w-full min-w-0 list-none gap-0.5 text-ellipsis rounded-lg border border-solid bg-smoke-50 py-1 px-3 outline-0 focus-within:shadow-inputLight  dark:bg-slate-600  dark:focus-within:shadow-inputDark">
+      <span className="stroke-secondary relative box-border inline-flex w-full min-w-0 list-none gap-0.5 text-ellipsis rounded-lg border bg-smoke-50 py-1 px-3 outline-0 focus-within:shadow-inputLight  dark:bg-slate-600  dark:focus-within:shadow-inputDark">
         <span className="text-secondary">{props.prefix}</span>
         <input
           className="relative m-0 inline-block w-full border-0 bg-transparent p-0 outline-0 placeholder:text-grey-400 dark:placeholder:text-slate-300"
@@ -25,7 +25,7 @@ const InputPrefix = (
 
   return (
     <input
-      className="stroke-secondary w-full min-w-0 list-none text-ellipsis border border-solid py-1 px-3 outline-0 placeholder:text-grey-400 focus:shadow-inputLight  dark:placeholder:text-slate-300 dark:focus:shadow-inputDark"
+      className="stroke-secondary w-full min-w-0 list-none text-ellipsis border py-1 px-3 outline-0 placeholder:text-grey-400 focus:shadow-inputLight  dark:placeholder:text-slate-300 dark:focus:shadow-inputDark"
       {...props}
     />
   )

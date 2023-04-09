@@ -96,7 +96,7 @@ export function DistributionSplitCard({
   return (
     <div
       className={classNames(
-        'flex justify-between rounded-sm border border-solid p-2 transition-colors hover:border-smoke-500 dark:hover:border-slate-100',
+        'flex justify-between rounded-sm border p-2 transition-colors hover:border-smoke-500 dark:hover:border-slate-100',
         !isLocked
           ? 'border-smoke-300 dark:border-slate-300'
           : 'border-grey-200 dark:border-grey-700',

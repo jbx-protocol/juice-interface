@@ -40,8 +40,8 @@ export const NotificationsTab = () => {
         {loading ? (
           <Loading />
         ) : (
-          <div className="stroke-secondary rounded-lg border border-solid">
-            <div className="stroke-secondary flex justify-between rounded-t-lg border border-x-0 border-t-0 border-b border-solid bg-smoke-100 py-3 px-4 dark:bg-slate-600">
+          <div className="stroke-secondary rounded-lg border">
+            <div className="stroke-secondary flex justify-between rounded-t-lg border border-b bg-smoke-100 py-3 px-4 dark:bg-slate-600">
               <span className="flex items-center gap-2 font-bold">
                 <Trans>Watching projects</Trans>{' '}
                 <Badge variant="info">{projectsFollowedByUser.length}</Badge>
@@ -60,11 +60,7 @@ export const NotificationsTab = () => {
             {projectsFollowedByUser.map((projectId, i) => (
               <ProjectUnwatchCell
                 key={projectId}
-                className={
-                  i !== 0
-                    ? 'stroke-tertiary border-x-0 border-t border-b-0 border-solid'
-                    : ''
-                }
+                className={i !== 0 ? 'stroke-tertiary border-t' : ''}
                 projectId={projectId}
                 onUnwatch={onUnwatchedClicked(projectId)}
               />

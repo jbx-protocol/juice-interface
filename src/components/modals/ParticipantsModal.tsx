@@ -176,7 +176,7 @@ export default function ParticipantsModal({
 
         {participants.map(p => (
           <div
-            className="border-b-1 mb-5 border border-l-0 border-t-0 border-r-0 border-solid border-smoke-200 pb-5 dark:border-grey-600"
+            className="border-b-1 mb-5 border border-smoke-200 pb-5 dark:border-grey-600"
             key={p.id}
           >
             <div className="flex content-between justify-between">

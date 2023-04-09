@@ -1,8 +1,8 @@
 import { CaretDownOutlined, ThunderboltOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import {
-  timestampForTxLog,
   TxHistoryContext,
+  timestampForTxLog,
 } from 'contexts/Transaction/TxHistoryContext'
 import { TxStatus } from 'models/transaction'
 import { useContext, useEffect, useMemo, useState } from 'react'
@@ -37,7 +37,7 @@ export function TransactionsList({
     <div>
       <div
         className={classNames(
-          'flex h-8 cursor-pointer select-none items-center justify-evenly rounded-full border border-solid border-smoke-300 pl-3 pr-1 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100',
+          'flex h-8 cursor-pointer select-none items-center justify-evenly rounded-full border border-smoke-300 pl-3 pr-1 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100',
         )}
         role="button"
         onClick={() => setIsExpanded(!isExpanded)}

@@ -37,7 +37,7 @@ export function JuiceVideoThumbnailOrImage({
     <div className={_className}>
       {loading ? (
         <div
-          className={`flex items-center justify-center border border-solid border-smoke-200 dark:border-grey-600 ${widthClass} ${heightClass}`}
+          className={`flex items-center justify-center border border-smoke-200 dark:border-grey-600 ${widthClass} ${heightClass}`}
         >
           <LoadingOutlined className="text-primary" />
         </div>

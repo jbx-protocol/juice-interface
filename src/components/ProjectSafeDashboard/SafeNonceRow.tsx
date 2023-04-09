@@ -22,7 +22,7 @@ export function SafeNonceRow({
   return (
     <div
       className={classNames(
-        'flex w-full justify-between border border-b border-l-0 border-r-0 border-t-0 border-solid font-normal text-black transition-colors duration-100 ease-in-out dark:text-slate-100',
+        'flex w-full justify-between border-b font-normal text-black transition-colors duration-100 ease-in-out dark:text-slate-100',
         containsSelectedTx
           ? 'border-b-bluebs-500 dark:border-b-bluebs-500'
           : 'border-b-grey-300 dark:border-b-slate-200',
@@ -41,9 +41,7 @@ export function SafeNonceRow({
         {transactions.map((tx: SafeTransactionType, idx: number) => (
           <div
             className={classNames(
-              idx !== 0
-                ? 'border border-x-0 border-t border-b-0 border-solid border-smoke-200 dark:border-grey-600'
-                : '',
+              idx !== 0 ? 'border-t border-smoke-200 dark:border-grey-600' : '',
             )}
             key={idx}
           >

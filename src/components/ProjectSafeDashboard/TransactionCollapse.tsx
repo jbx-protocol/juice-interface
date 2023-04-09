@@ -46,7 +46,7 @@ export function TransactionCollapse({
 
   return (
     <div
-      className="cursor-pointer border-t-0 border-r-0 border-l-0 text-black dark:text-slate-100"
+      className="cursor-pointer text-black dark:text-slate-100"
       id={`${transaction.safeTxHash}`}
     >
       <div

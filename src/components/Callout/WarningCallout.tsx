@@ -13,7 +13,7 @@ export const WarningCallout: React.FC<{
   return (
     <Callout
       className={twMerge(
-        'rounded-lg border border-solid border-warning-200 bg-warning-50 text-warning-800 dark:border-warning-500 dark:bg-warning-950 dark:text-warning-100',
+        'rounded-lg border border-warning-200 bg-warning-50 text-warning-800 dark:border-warning-500 dark:bg-warning-950 dark:text-warning-100',
         className,
       )}
       iconComponent={

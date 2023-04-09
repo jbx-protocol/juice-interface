@@ -1,73 +1,113 @@
-import { ArrowLeftOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
+import { LeftOutlined, UnorderedListOutlined } from '@ant-design/icons'
+import { Tab } from '@headlessui/react'
+import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
-import { Badge } from 'components/Badge'
-import { Callout } from 'components/Callout'
-import { Formik } from 'formik'
 import { User } from 'models/database'
-import { AccountSettingsForm } from './components/AccountSettingsForm'
-import { useAccountSettingsDashboard } from './hooks/useAccountSettingsDashboard'
-import { AccountSettingsSchema } from './lib/AccountSettingsSchema'
+import Link from 'next/link'
+import { useMemo, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { ProfileDetailsTab } from './components/ProfileDetailsTab'
 
 export const AccountSettingsDashboard = ({ user }: { user: User }) => {
-  const {
-    initialValues,
-    lastEmailUpdated,
-    onSubmit,
-    onEmailResendClicked,
-    onBackButtonClicked,
-  } = useAccountSettingsDashboard({ user })
+  const [minimized, setMinimized] = useState(false)
+  const toggleMinimized = () => setMinimized(!minimized)
+  const minimize = () => setMinimized(true)
+
+  const tabs = useMemo(
+    () => [
+      {
+        name: t`Profile details`,
+        component: <ProfileDetailsTab user={user} />,
+      },
+      { name: t`Notifications`, component: 'Tab 2 content goes here' },
+    ],
+    [user],
+  )
 
   return (
-    <div className="m-auto flex flex-col items-center ">
-      <div className="flex w-full flex-col gap-y-10 py-8 px-4 md:w-[800px] md:px-16">
-        <div>
-          <h1 className="text-primary text-2xl dark:text-slate-100">
-            <Trans>Profile details</Trans> <Badge variant="info">Beta</Badge>
-          </h1>
-          <div className="text-secondary">
-            <Trans>
-              Customize your public facing profile and add additional management
-              information.
-            </Trans>
-          </div>
-        </div>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={AccountSettingsSchema}
-          onSubmit={onSubmit}
-        >
-          {({ isSubmitting, dirty }) => (
-            <>
-              <AccountSettingsForm address={user.wallet} />
-              <div className="flex h-9 justify-between">
-                <Button onClick={onBackButtonClicked}>
-                  <ArrowLeftOutlined /> Back
-                </Button>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  form="accountSettings"
-                  disabled={!dirty}
-                  loading={isSubmitting}
-                >
-                  Save
-                </Button>
-              </div>
-            </>
-          )}
-        </Formik>
-        {lastEmailUpdated && (
-          <Callout.Info>
-            <Trans>
-              Please check {lastEmailUpdated} and verify your new email address.
-              <br />
-              Still no email after a couple of minutes?{' '}
-              <a onClick={onEmailResendClicked}>Click here to resend.</a>
-            </Trans>
-          </Callout.Info>
-        )}
+    <div className="mx-auto mt-20 flex max-w-5xl flex-col p-5">
+      <SettingsMenuButton className="md:hidden" onClick={toggleMinimized} />
+
+      <div className="flex">
+        <Tab.Group onChange={minimize}>
+          <Tab.List
+            className={twMerge(
+              'absolute z-[5] flex h-full w-0 flex-col space-y-1 overflow-auto bg-white py-4 transition-all duration-200 ease-in-out dark:bg-slate-800',
+              'md:static md:flex md:w-1/4 md:min-w-[1/4] md:p-4',
+              minimized ? '' : 'w-1/2 px-4',
+            )}
+          >
+            <BackToAccountButton
+              className="text-start"
+              walletAddress={user.wallet}
+            />
+            {tabs.map((tab, index) => (
+              <Tab
+                key={index}
+                className={({ selected }) =>
+                  `text-primary rounded-lg border-0 px-4 py-2 text-left transition-colors duration-200 ${
+                    selected
+                      ? 'bg-smoke-100 font-semibold dark:bg-slate-500'
+                      : 'text-gray-700 cursor-pointer bg-transparent hover:bg-smoke-100 dark:hover:bg-slate-500'
+                  }`
+                }
+              >
+                {tab.name}
+              </Tab>
+            ))}
+          </Tab.List>
+          <Tab.Panels
+            className={twMerge(
+              'w-full',
+              'md:ml-1/4',
+              minimized ? 'md:w-full' : 'md:w-3/4',
+            )}
+          >
+            {tabs.map((tab, index) => (
+              <Tab.Panel key={index} className="p-8">
+                {tab.component}
+              </Tab.Panel>
+            ))}
+          </Tab.Panels>
+        </Tab.Group>
       </div>
     </div>
   )
 }
+
+const SettingsMenuButton = ({
+  className,
+  onClick,
+}: {
+  className?: string
+  onClick: () => void
+}) => (
+  <div
+    className={twMerge(
+      'text-primary cursor-pointer px-4 py-2 text-left text-2xl leading-none',
+      className,
+    )}
+    onClick={onClick}
+  >
+    <UnorderedListOutlined />
+  </div>
+)
+
+const BackToAccountButton = ({
+  className,
+  walletAddress,
+}: {
+  className?: string
+  walletAddress: string
+}) => (
+  <Link href={`/account/${walletAddress}`}>
+    <Button
+      className={className}
+      type="link"
+      icon={<LeftOutlined />}
+      size="small"
+    >
+      <Trans>Back to profile</Trans>
+    </Button>
+  </Link>
+)

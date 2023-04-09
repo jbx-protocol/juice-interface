@@ -509,6 +509,9 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
+msgid "Back to profile"
+msgstr ""
+
 msgid "Back to project"
 msgstr ""
 
@@ -881,7 +884,7 @@ msgstr ""
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr ""
 
-msgid "Customize your public facing profile and add additional management information."
+msgid "Customize your public facing profile and other details."
 msgstr ""
 
 msgid "Cycle"
@@ -1131,9 +1134,6 @@ msgid "Edit payout"
 msgstr ""
 
 msgid "Edit payouts"
-msgstr ""
-
-msgid "Edit profile"
 msgstr ""
 
 msgid "Edit project"
@@ -1973,6 +1973,9 @@ msgstr ""
 msgid "Notice from {0}"
 msgstr ""
 
+msgid "Notifications"
+msgstr ""
+
 msgid "On-chain Governance"
 msgstr ""
 
@@ -2631,6 +2634,9 @@ msgid "Save payout"
 msgstr ""
 
 msgid "Save payouts"
+msgstr ""
+
+msgid "Save profile details"
 msgstr ""
 
 msgid "Save project details"

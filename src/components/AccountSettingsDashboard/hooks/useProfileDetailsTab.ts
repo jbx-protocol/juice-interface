@@ -2,26 +2,23 @@ import { t } from '@lingui/macro'
 import axios from 'axios'
 import { FormikHelpers } from 'formik'
 import { User } from 'models/database'
-import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
 import {
   emitErrorNotification,
   emitInfoNotification,
 } from 'utils/notifications'
 
-export type AccountSettingsFormType = {
+export type ProfileDetailsFormType = {
   bio?: string | null | undefined
   email?: string | null | undefined
   website?: string | null | undefined
   twitter?: string | null | undefined
 }
 
-export const useAccountSettingsDashboard = ({ user }: { user: User }) => {
+export const useProfileDetailsTab = ({ user }: { user: User }) => {
   const [lastEmailUpdated, setLastEmailUpdated] = useState<string>()
 
-  const router = useRouter()
-
-  const initialValues: AccountSettingsFormType = useMemo(
+  const initialValues: ProfileDetailsFormType = useMemo(
     () => ({
       bio: user.bio ?? '',
       email: user.email_verified ? user.email : '',
@@ -33,8 +30,8 @@ export const useAccountSettingsDashboard = ({ user }: { user: User }) => {
 
   const onSubmit = useCallback(
     async (
-      values: AccountSettingsFormType,
-      helpers: FormikHelpers<AccountSettingsFormType>,
+      values: ProfileDetailsFormType,
+      helpers: FormikHelpers<ProfileDetailsFormType>,
     ) => {
       const touched = determinedTouched(values, initialValues)
       const formWasTouched = Object.values(touched).reduce(
@@ -91,30 +88,25 @@ export const useAccountSettingsDashboard = ({ user }: { user: User }) => {
     )
   }, [lastEmailUpdated])
 
-  const onBackButtonClicked = useCallback(() => {
-    router.push(`/account/${user.wallet}`)
-  }, [router, user.wallet])
-
   return {
     initialValues,
     lastEmailUpdated,
     onSubmit,
     onEmailResendClicked,
-    onBackButtonClicked,
   }
 }
 
 const determinedTouched = (
-  values: AccountSettingsFormType,
-  initialValues: AccountSettingsFormType,
-): Record<keyof AccountSettingsFormType, boolean> => {
-  const touched: Record<keyof AccountSettingsFormType, boolean> = {} as Record<
-    keyof AccountSettingsFormType,
+  values: ProfileDetailsFormType,
+  initialValues: ProfileDetailsFormType,
+): Record<keyof ProfileDetailsFormType, boolean> => {
+  const touched: Record<keyof ProfileDetailsFormType, boolean> = {} as Record<
+    keyof ProfileDetailsFormType,
     boolean
   >
 
   for (const k in values) {
-    const key = k as keyof AccountSettingsFormType
+    const key = k as keyof ProfileDetailsFormType
     touched[key] = values[key] !== initialValues[key]
   }
 

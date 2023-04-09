@@ -1,6 +1,6 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Col, Divider, Row } from 'antd'
+import { Button, Col, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import useMobile from 'hooks/Mobile'
 import Image from 'next/image'
@@ -22,7 +22,7 @@ export function HowItWorksSection() {
   const isMobile = useMobile()
 
   return (
-    <section className="my-20 p-1" id="how-it-works">
+    <section className="my-12 p-8" id="how-it-works">
       <SectionHeading className="mb-8">
         <Trans>How Juicebox Works</Trans>
       </SectionHeading>
@@ -82,8 +82,6 @@ export function HowItWorksSection() {
                   </Button>
                 </a>
               </Link>
-
-              <Divider className="mx-0 my-auto w-12 min-w-[unset]" />
 
               <p>
                 <InfoCircleOutlined />{' '}

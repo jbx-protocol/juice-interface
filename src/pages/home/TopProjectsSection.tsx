@@ -137,7 +137,7 @@ export function TopProjectsSection() {
 
           <div className="mb-3">
             {previewProjects ? (
-              <div className="my-0 mx-auto flex w-4/5 flex-wrap justify-between gap-2 md:w-full md:px-0">
+              <div className="my-0 flex flex-wrap justify-between gap-2 md:w-full md:px-0">
                 {previewProjects.map(p =>
                   isMobile ? (
                     <SmallProjectCardMobile key={p.metadataUri} project={p} />

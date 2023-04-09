@@ -49,7 +49,10 @@ export const Page: React.FC<PageProps> & {
       }}
     >
       <div
-        className={twMerge('flex flex-col gap-6 md:max-w-[600px]', className)}
+        className={twMerge(
+          'flex max-w-full flex-col gap-6 md:max-w-[600px]',
+          className,
+        )}
       >
         <div>
           <div className="flex justify-between">

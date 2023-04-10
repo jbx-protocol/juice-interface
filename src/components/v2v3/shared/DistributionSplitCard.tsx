@@ -105,7 +105,7 @@ export function DistributionSplitCard({
     >
       <div
         className={classNames(
-          'flex flex-col gap-2 text-black dark:text-slate-100',
+          'flex w-full flex-col gap-2 text-black dark:text-slate-100',
           isLocked ? 'cursor-default' : 'cursor-pointer',
         )}
         onClick={!isLocked ? () => setEditSplitModalOpen(true) : undefined}

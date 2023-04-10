@@ -1,4 +1,6 @@
 import { Trans } from '@lingui/macro'
+import ExternalLink from 'components/ExternalLink'
+import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { SectionContainer } from './SectionContainer'
 
@@ -15,12 +17,18 @@ export const FindOutMoreSection = () => {
       </p>
 
       <div className="flex flex-col justify-center gap-3 md:flex-row">
-        <Button className="stroke-secondary text-primary border bg-transparent">
-          Juicebox DAO
-        </Button>
-        <Button>
-          <Trans>Join our Discord</Trans>
-        </Button>
+        <Link href="/@juicebox">
+          <a>
+            <Button className="stroke-secondary text-primary border bg-transparent">
+              Juicebox DAO
+            </Button>
+          </a>
+        </Link>
+        <ExternalLink href="https://discord.gg/wFTh4QnDzk">
+          <Button>
+            <Trans>Join our Discord</Trans>
+          </Button>
+        </ExternalLink>
       </div>
     </SectionContainer>
   )

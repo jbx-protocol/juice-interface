@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loading from 'components/Loading'
+import { TruncatedText } from 'components/TruncatedText'
 import { Contributor } from 'models/database'
 import { useEffect, useState } from 'react'
 import { Database } from 'types/database.types'
@@ -90,12 +91,12 @@ const ContributorCard: React.FC<{
       ) : (
         <div className="mx-auto mb-5 h-20 w-20 rounded-full bg-bluebs-400" />
       )}
-      <div className="text-primary mb-2 overflow-hidden text-ellipsis text-base font-medium md:text-xl">
-        {name}
-      </div>
-      <div className="text-secondary overflow-hidden text-ellipsis">
-        {title}
-      </div>
+      <TruncatedText
+        className="text-primary mb-2 text-base font-medium md:text-xl"
+        text={name}
+        placement={title ? 'top' : 'bottom'}
+      />
+      {title && <TruncatedText className="text-secondary" text={title} />}
     </div>
   )
 }

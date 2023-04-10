@@ -76,6 +76,29 @@ export interface Database {
   }
   public: {
     Tables: {
+      contributors: {
+        Row: {
+          avatar_url: string | null
+          id: string
+          is_discord_avatar: boolean | null
+          name: string
+          title: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          id: string
+          is_discord_avatar?: boolean | null
+          name: string
+          title?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          id?: string
+          is_discord_avatar?: boolean | null
+          name?: string
+          title?: string | null
+        }
+      }
       projects: {
         Row: {
           _has_unresolved_metadata: boolean | null

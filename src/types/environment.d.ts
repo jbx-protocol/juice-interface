@@ -40,6 +40,7 @@ declare global {
       SUPABASE_JWT_SECRET: string
 
       POSTMARK_SERVER_TOKEN: string
+      JUICEBOX_GUILD_ID: string
     }
   }
 }

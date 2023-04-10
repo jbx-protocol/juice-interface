@@ -41,6 +41,7 @@ const IMG_SRC = [
   'https://gateway.pinata.cloud',
   'https://cdn.stamp.fyi',
   'https://ipfs.io',
+  'https://cdn.discordapp.com',
 ]
 
 const CONNECT_SRC = [

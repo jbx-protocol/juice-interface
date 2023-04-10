@@ -20,7 +20,7 @@ export const JuiceboxDaoSection = () => {
           {[t`Submit a proposal`, t`View the treasury`, t`Something else`].map(
             item => (
               <div className="flex items-center gap-3" key={item}>
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-split-100 text-split-600">
+                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-split-100 text-split-600 dark:bg-split-600 dark:text-split-100">
                   <CheckIcon className="h-3.5 w-3.5" />
                 </div>
                 {item}

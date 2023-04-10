@@ -1,13 +1,13 @@
 import { t } from '@lingui/macro'
-import { Layout, Menu, MenuProps, Space } from 'antd'
+import { Layout, Menu, MenuProps } from 'antd'
 import Loading from 'components/Loading'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { V2V3ProjectHeaderActions } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions'
 import { ProjectSettingsContent } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsContent'
 import { CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
@@ -205,7 +205,7 @@ export function V2V3ProjectSettings() {
 
   return (
     <div className="my-0 mx-auto max-w-5xl p-5">
-      <Space direction="vertical" size={40} className="w-full">
+      <div className="flex flex-col gap-10">
         <ProjectHeader
           actions={<V2V3ProjectHeaderActions />}
           handle={handle}
@@ -222,7 +222,7 @@ export function V2V3ProjectSettings() {
             collapsed={collapsed}
             onCollapse={setCollapsed}
           >
-            <Space direction="vertical" size="middle" className="w-full">
+            <div className="flex flex-col gap-4">
               <BackToProjectButton
                 projectPageUrl={v2v3ProjectRoute({ projectId, handle })}
               />
@@ -242,12 +242,12 @@ export function V2V3ProjectSettings() {
                 items={items}
                 onSelect={handleMenuItemClick}
               />
-            </Space>
+            </div>
           </Layout.Sider>
 
           <ProjectSettingsContent />
         </Layout>
-      </Space>
+      </div>
     </div>
   )
 }

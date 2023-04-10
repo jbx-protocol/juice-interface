@@ -3,8 +3,8 @@ import {
   InfoCircleOutlined,
   RedoOutlined,
 } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
-import { Form, Space, Tooltip } from 'antd'
+import { Trans, t } from '@lingui/macro'
+import { Form, Tooltip } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
@@ -36,18 +36,20 @@ const FundingCycleCallout: React.FC = () => {
     case 'automated':
       return (
         <Callout.Warning>
-          <Space direction="vertical" size="middle">
+          <p>
             <Trans>
               Cycle #1 starts when you create your project. With locked cycles,
               if you edit your project's rules during Cycle #1, those edits will
               be <em>queued</em> for the next cycle.
             </Trans>
+          </p>
+          <p>
             <Trans>
               In other words: instead of taking effect immediately, those edits
               will take effect when the next cycle starts (Cycle #2). If you
               need more flexibility, switch to unlocked cycles.
             </Trans>
-          </Space>
+          </p>
         </Callout.Warning>
       )
     case 'manual':
@@ -104,8 +106,8 @@ export const FundingCyclesPage = () => {
       }}
       scrollToFirstError
     >
-      <Space className="w-full" direction="vertical" size="large">
-        <Space className="w-full" direction="vertical" size="large">
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
           <Form.Item noStyle name="selection">
             <Selection className="w-full" defocusOnSelect>
               <Selection.Card
@@ -224,9 +226,9 @@ export const FundingCyclesPage = () => {
               </CreateCollapse.Panel>
             </CreateCollapse>
           )}
-        </Space>
+        </div>
         <FundingCycleCallout />
-      </Space>
+      </div>
       <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
     </Form>
   )

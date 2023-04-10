@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
-import { Space } from 'antd'
 import { Allocation, AllocationSplit } from 'components/Allocation'
 import { OwnerPayoutCard } from 'components/PayoutCard'
 import { PayoutCard } from 'components/PayoutCard/PayoutCard'
@@ -92,7 +91,7 @@ export const PayoutsList = (
       setTotalAllocationAmount={setTotalAllocationAmount}
       setAllocationCurrency={setCurrency}
     >
-      <Space className="w-full" direction="vertical" size="middle">
+      <div className="flex flex-col gap-4">
         {(props.payoutsSelection === 'percentages' ||
           (distributionLimit && !distributionLimit.amount.eq(0))) &&
         ceilIfCloseToNextInteger(totalPercent) < 100 ? (
@@ -128,7 +127,7 @@ export const PayoutsList = (
             </>
           )}
         </Allocation.List>
-      </Space>
+      </div>
     </Allocation>
   )
 }

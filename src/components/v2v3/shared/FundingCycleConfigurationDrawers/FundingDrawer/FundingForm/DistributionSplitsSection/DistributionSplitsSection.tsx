@@ -1,6 +1,6 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Radio, Space } from 'antd'
+import { Button, Form, Radio } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { FormItemExt } from 'components/formItems/formItemExt'
 import TooltipIcon from 'components/TooltipIcon'
@@ -157,7 +157,7 @@ export function DistributionSplitsSection({
       {...formItemProps}
       className={classNames('mb-0 block', formItemProps?.className)}
     >
-      <Space className="min-h-0 w-full" direction="vertical" size="large">
+      <div className="flex min-h-0 flex-col gap-6">
         <Form.Item className="mb-0">
           <p className="text-black dark:text-slate-100">
             <Trans>Choose how you would like to set up payouts.</Trans>
@@ -187,7 +187,7 @@ export function DistributionSplitsSection({
             }}
             value={distributionType}
           >
-            <Space direction="vertical">
+            <div className="flex flex-col gap-2">
               <Radio value="amount">
                 <Trans>Amounts</Trans>
                 <p className="text-sm font-normal">
@@ -208,19 +208,19 @@ export function DistributionSplitsSection({
                   </Trans>
                 </p>
               </Radio>
-            </Space>
+            </div>
           </Radio.Group>
         </Form.Item>
 
-        <Space className="w-full" direction="vertical" size="small">
+        <div className="flex flex-col gap-2">
           {editableSplits.map((split, index) => renderSplitCard(split, index))}
-        </Space>
+        </div>
         {lockedSplits ? (
-          <Space className="w-full" direction="vertical" size="small">
+          <div className="flex flex-col gap-2">
             {lockedSplits.map((split, index) =>
               renderSplitCard(split, index, true),
             )}
-          </Space>
+          </div>
         ) : null}
         {totalSplitsPercentageInvalid ? (
           <span className="font-medium text-error-500 dark:text-error-400">
@@ -231,7 +231,7 @@ export function DistributionSplitsSection({
         ) : null}
         <Form.Item
           extra={
-            <Space size="small">
+            <div className="flex gap-2">
               <Trans>
                 Payouts to Ethereum addresses incur a 2.5% JBX membership fee
               </Trans>
@@ -251,7 +251,7 @@ export function DistributionSplitsSection({
                   </Trans>
                 }
               />
-            </Space>
+            </div>
           }
         >
           <Button
@@ -289,7 +289,7 @@ export function DistributionSplitsSection({
             </strong>
           </span>
         </div>
-      </Space>
+      </div>
       <DistributionSplitModal
         open={addSplitModalVisible}
         onSplitsChanged={onSplitsChanged}

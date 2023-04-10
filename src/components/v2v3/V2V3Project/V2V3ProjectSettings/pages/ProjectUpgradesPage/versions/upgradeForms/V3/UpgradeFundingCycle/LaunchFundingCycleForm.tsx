@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Divider, Form, Input, Space } from 'antd'
+import { Button, Divider, Form, Input } from 'antd'
 import RichButton from 'components/buttons/RichButton'
 import { useIsNftProject } from 'components/Create/hooks/DeployProject/hooks'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
@@ -61,7 +61,7 @@ export function LaunchFundingCycleForm() {
 
   return (
     <>
-      <Space direction="vertical" size="middle" className="w-full">
+      <div className="flex flex-col gap-4">
         <Form layout="vertical">
           <Form.Item
             extra={
@@ -155,7 +155,7 @@ export function LaunchFundingCycleForm() {
         </div>
 
         {isNftFundingCycle && !nftDeployerCanReconfigure ? (
-          <Space size="large" direction="vertical">
+          <div className="flex flex-col gap-6">
             <div className="flex items-start">
               <span className="mr-3 text-lg">1.</span>
               <SetNftOperatorPermissionsButton
@@ -177,7 +177,7 @@ export function LaunchFundingCycleForm() {
                 </span>
               </Button>
             </div>
-          </Space>
+          </div>
         ) : (
           <Button
             loading={launchFundingCycleLoading}
@@ -190,7 +190,7 @@ export function LaunchFundingCycleForm() {
             </span>
           </Button>
         )}
-      </Space>
+      </div>
 
       <FundingDrawer
         open={fundingDrawerVisible}

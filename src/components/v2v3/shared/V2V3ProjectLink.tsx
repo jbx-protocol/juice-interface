@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { v2v3ProjectRoute } from 'utils/routes'
@@ -18,7 +17,7 @@ export default function V2V3ProjectLink({
   allocator?: string
 }) {
   return (
-    <Space size="small">
+    <div className="flex gap-2">
       <Link href={v2v3ProjectRoute({ projectId })}>
         <a
           className={twMerge(
@@ -30,6 +29,6 @@ export default function V2V3ProjectLink({
         </a>
       </Link>
       {allocator && <AllocatorBadge allocator={allocator} />}
-    </Space>
+    </div>
   )
 }

@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Col, Descriptions, Form, Row, Space, Statistic } from 'antd'
+import { Col, Descriptions, Form, Row, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -135,10 +135,10 @@ export function RedeemNftsModal({
       width={540}
       centered
     >
-      <Space direction="vertical" className="w-full" size="large">
+      <div className="flex flex-col gap-6">
         <div>
           {canRedeem ? (
-            <Space direction="vertical" size="middle">
+            <div className="flex flex-col gap-4">
               <Callout.Info>
                 <Trans>NFTs are burned when they are redeemed.</Trans>
               </Callout.Info>
@@ -150,7 +150,7 @@ export function RedeemNftsModal({
                   will receive.
                 </Trans>
               </div>
-            </Space>
+            </div>
           ) : (
             <Callout.Info>
               {!hasOverflow && (
@@ -223,7 +223,7 @@ export function RedeemNftsModal({
             </Form.Item>
           </Form>
         </div>
-      </Space>
+      </div>
     </TransactionModal>
   )
 }

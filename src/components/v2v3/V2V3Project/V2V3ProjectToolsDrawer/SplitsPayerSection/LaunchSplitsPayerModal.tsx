@@ -1,6 +1,6 @@
 import { TransactionReceipt } from '@ethersproject/providers'
 import { t, Trans } from '@lingui/macro'
-import { Modal, Space } from 'antd'
+import { Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import { Callout } from 'components/Callout'
@@ -107,7 +107,7 @@ export function LaunchSplitsPayerModal({
         transactionPending={transactionPending}
         width={600}
       >
-        <Space direction="vertical" size="middle">
+        <div className="flex flex-col gap-4">
           <div>{SPLITS_PAYER_ADDRESS_EXPLANATION}</div>
           <div>
             <Trans>
@@ -124,7 +124,7 @@ export function LaunchSplitsPayerModal({
             </Trans>
           </Callout.Info>
           <AdvancedOptionsCollapse form={advancedOptionsForm} />
-        </Space>
+        </div>
       </TransactionModal>
       <Modal
         open={confirmedModalVisible}

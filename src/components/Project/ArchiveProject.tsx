@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Space, Statistic } from 'antd'
+import { Button, Statistic } from 'antd'
 import axios from 'axios'
 import { Callout } from 'components/Callout'
 import { PV_V1, PV_V2 } from 'constants/pv'
@@ -94,7 +94,7 @@ export function ArchiveProject({
 
   if (projectMetadata?.archived) {
     return (
-      <Space direction="vertical" size="middle">
+      <div className="flex flex-col gap-4">
         <Statistic
           title={<Trans>Project state</Trans>}
           valueRender={() => <Trans>Archived</Trans>}
@@ -105,18 +105,16 @@ export function ArchiveProject({
             <Trans>Unarchiving your project will mean the following:</Trans>
           </p>
 
-          <ul>
-            <Space direction="vertical">
-              <li>
-                <Trans>Your project will appear as 'active'.</Trans>
-              </li>
-              <li>
-                <Trans>
-                  Your project can receive payments through the juicebox.money
-                  app.
-                </Trans>
-              </li>
-            </Space>
+          <ul className="list-inside list-disc">
+            <li>
+              <Trans>Your project will appear as 'active'.</Trans>
+            </li>
+            <li>
+              <Trans>
+                Your project can receive payments through the juicebox.money
+                app.
+              </Trans>
+            </li>
           </ul>
         </div>
 
@@ -137,12 +135,12 @@ export function ArchiveProject({
             <Trans>Unarchive project</Trans>
           </span>
         </Button>
-      </Space>
+      </div>
     )
   }
 
   return (
-    <Space direction="vertical" size="middle">
+    <div className="flex flex-col gap-4">
       <Statistic
         title={<Trans>Project state</Trans>}
         valueRender={() => <Trans>Active</Trans>}
@@ -153,32 +151,30 @@ export function ArchiveProject({
           <Trans>Archiving your project will mean the following:</Trans>
         </p>
 
-        <ul>
-          <Space direction="vertical">
-            <li>
-              <Trans>Your project will appear as 'archived'.</Trans>
-            </li>
-            <li>
+        <ul className="list-inside list-disc">
+          <li>
+            <Trans>Your project will appear as 'archived'.</Trans>
+          </li>
+          <li>
+            <Trans>
+              Your project can't receive payments through the juicebox.money
+              app.
+            </Trans>
+          </li>
+          <li>
+            {canTakePaymentsWhenArchived ? (
               <Trans>
-                Your project can't receive payments through the juicebox.money
-                app.
+                Your project can still receive payments directly through the
+                Juicebox protocol contracts.
               </Trans>
-            </li>
-            <li>
-              {canTakePaymentsWhenArchived ? (
-                <Trans>
-                  Your project can still receive payments directly through the
-                  Juicebox protocol contracts.
-                </Trans>
-              ) : (
-                <Trans>
-                  Unless payments to this project are paused in your cycle's
-                  rules, your project can still receive payments directly
-                  through the Juicebox protocol contracts.
-                </Trans>
-              )}
-            </li>
-          </Space>
+            ) : (
+              <Trans>
+                Unless payments to this project are paused in your cycle's
+                rules, your project can still receive payments directly through
+                the Juicebox protocol contracts.
+              </Trans>
+            )}
+          </li>
         </ul>
       </div>
 
@@ -196,6 +192,7 @@ export function ArchiveProject({
       </div>
 
       <Button
+        className="max-w-fit"
         onClick={setArchived(true)}
         loading={isLoadingArchive}
         size="small"
@@ -205,6 +202,6 @@ export function ArchiveProject({
           <Trans>Archive project</Trans>
         </span>
       </Button>
-    </Space>
+    </div>
   )
 }

@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Space, Statistic } from 'antd'
+import { Statistic } from 'antd'
 import TransactorButton from 'components/buttons/TransactorButton'
 import ExternalLink from 'components/ExternalLink'
 import { useHeldFeesOf } from 'hooks/v2v3/contractReader/HeldFeesOf'
@@ -48,7 +48,7 @@ export function HeldFeesSection() {
       <h3>
         <Trans>Held fees</Trans>
       </h3>
-      <Space direction="vertical" size="small">
+      <div className="flex flex-col gap-2">
         <Statistic
           title={<Trans>Fees held</Trans>}
           valueRender={() => <span>{heldFees} ETH</span>}
@@ -79,7 +79,7 @@ export function HeldFeesSection() {
             </Trans>
           </p>
         </div>
-      </Space>
+      </div>
     </div>
   )
 }

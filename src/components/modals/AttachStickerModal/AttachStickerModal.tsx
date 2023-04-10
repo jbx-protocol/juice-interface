@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { Col, Modal, Row, Space } from 'antd'
+import { Col, Modal, Row } from 'antd'
 
 import { AttachableSticker } from './AttachableSticker'
 import { PaymentMemoSticker } from './paymentMemoSticker'
@@ -46,11 +46,7 @@ export function AttachStickerModal({
       cancelText={t`Cancel`}
       centered
     >
-      <Space
-        className="max-h-[400px] w-full overflow-y-scroll"
-        size="large"
-        direction="vertical"
-      >
+      <div className="flex max-h-[400px] flex-col gap-6 overflow-y-scroll">
         <Row className="w-full">
           {PAYMENT_MEMO_STICKERS.map((sticker, index) => (
             <Col md={8} key={index}>
@@ -64,7 +60,7 @@ export function AttachStickerModal({
             </Col>
           ))}
         </Row>
-      </Space>
+      </div>
     </Modal>
   )
 }

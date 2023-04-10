@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
 import { PROJECTS_PAGE } from 'constants/fathomEvents'
@@ -88,7 +88,7 @@ function Projects() {
 
   return (
     <div className="my-0 mx-auto max-w-5xl p-5 pt-16">
-      <Space direction="vertical" className="w-full" size="large">
+      <div className="flex flex-col gap-6">
         <div>
           <header className="flex flex-wrap items-center justify-between gap-y-4 pb-3">
             <h1 className="mb-0 text-4xl text-black dark:text-slate-100">
@@ -172,7 +172,7 @@ function Projects() {
             <LatestProjects />
           ) : null}
         </div>
-      </Space>
+      </div>
     </div>
   )
 }

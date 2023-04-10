@@ -2,6 +2,7 @@ import { TooltipProps } from 'antd'
 import { ReactNode } from 'react'
 import { classNames } from 'utils/classNames'
 
+import { twMerge } from 'tailwind-merge'
 import TooltipIcon from './TooltipIcon'
 
 export default function TooltipLabel({
@@ -18,7 +19,7 @@ export default function TooltipLabel({
   placement?: TooltipProps['placement']
 }) {
   return (
-    <span className={className}>
+    <span className={twMerge('flex items-center', className)}>
       <span className={classNames(tip ? 'mr-1' : 'mr-0')}>{label}</span>
       {tip && (
         <TooltipIcon

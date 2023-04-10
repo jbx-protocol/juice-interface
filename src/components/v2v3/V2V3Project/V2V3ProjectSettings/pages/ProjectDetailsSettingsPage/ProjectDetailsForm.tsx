@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, FormInstance, Space } from 'antd'
+import { Button, Form, FormInstance } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
@@ -46,7 +46,7 @@ export function ProjectDetailsForm({
       onFinish={onFinish}
       onValuesChange={() => onValuesChange?.()}
     >
-      <Space direction="vertical" size="large" className="w-full">
+      <div className="flex flex-col gap-6">
         <div>
           <FormItems.ProjectName
             name="name"
@@ -120,7 +120,7 @@ export function ProjectDetailsForm({
             )}
           </Form.Item>
         </div>
-      </Space>
+      </div>
     </Form>
   )
 }

@@ -1,7 +1,7 @@
 import { RightOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { ADDRESS_ZERO } from '@uniswap/v3-sdk'
-import { Col, Form, Row, Space } from 'antd'
+import { Col, Form, Row } from 'antd'
 import { Callout } from 'components/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
@@ -47,7 +47,7 @@ export const ProjectDetailsPage: React.FC = () => {
       }}
       scrollToFirstError
     >
-      <Space className="w-full" direction="vertical" size="large">
+      <div className="flex flex-col gap-6">
         <Form.Item
           name="projectName"
           label={t`Project name`}
@@ -160,7 +160,7 @@ export const ProjectDetailsPage: React.FC = () => {
             </Form.Item>
           </CreateCollapse.Panel>
         </CreateCollapse>
-      </Space>
+      </div>
 
       <Wizard.Page.ButtonControl />
 

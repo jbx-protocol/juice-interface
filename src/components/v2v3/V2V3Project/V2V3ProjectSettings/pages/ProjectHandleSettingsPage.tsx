@@ -1,6 +1,6 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Divider, Form, Space, Statistic } from 'antd'
+import { Button, Divider, Form, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import ExternalLink from 'components/ExternalLink'
@@ -14,7 +14,7 @@ import { useProjectHandleENSTextRecord } from 'hooks/v2v3/contractReader/Project
 import { useEditV2V3ProjectHandleTx } from 'hooks/v2v3/transactor/EditV2V3ProjectHandleTx'
 import { useSetENSTextRecordForHandleTx } from 'hooks/v2v3/transactor/SetENSTextRecordForHandleTx'
 import Link from 'next/link'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 export function ProjectHandleSettingsPage() {
@@ -89,7 +89,7 @@ export function ProjectHandleSettingsPage() {
 
   return (
     <>
-      <Space direction="vertical">
+      <div className="flex flex-col gap-2">
         {handle && (
           <Statistic
             title={<Trans>Current handle</Trans>}
@@ -106,26 +106,24 @@ export function ProjectHandleSettingsPage() {
             </Trans>
           </p>
           <p>
-            <ul>
-              <Space direction="vertical">
-                <li>
-                  <Trans>
-                    Included in search results on the{' '}
-                    <Link href="/projects">Projects</Link> page.
-                  </Trans>
-                </li>
-                <li>
-                  <Trans>
-                    Accessible via the URL <strong>{exampleHandleUrl}</strong>.
-                  </Trans>
-                </li>
-                <li>
-                  <Trans>
-                    The original URL <strong>{projectIdUrl}</strong> will remain
-                    active.
-                  </Trans>
-                </li>
-              </Space>
+            <ul className="list-inside list-disc">
+              <li>
+                <Trans>
+                  Included in search results on the{' '}
+                  <Link href="/projects">Projects</Link> page.
+                </Trans>
+              </li>
+              <li>
+                <Trans>
+                  Accessible via the URL <strong>{exampleHandleUrl}</strong>.
+                </Trans>
+              </li>
+              <li>
+                <Trans>
+                  The original URL <strong>{projectIdUrl}</strong> will remain
+                  active.
+                </Trans>
+              </li>
             </ul>
           </p>
 
@@ -137,7 +135,7 @@ export function ProjectHandleSettingsPage() {
             </Trans>
           </p>
         </div>
-      </Space>
+      </div>
 
       <Divider />
 
@@ -154,11 +152,9 @@ export function ProjectHandleSettingsPage() {
       </p>
 
       <MinimalCollapse className="mb-4" header={<Trans>See example</Trans>}>
-        <ul>
-          <Space direction="vertical">
-            <li>juicebox.eth = @juicebox</li>
-            <li>dao.juicebox.eth = @dao.juicebox</li>
-          </Space>
+        <ul className="list-inside list-disc">
+          <li>juicebox.eth = @juicebox</li>
+          <li>dao.juicebox.eth = @dao.juicebox</li>
         </ul>
       </MinimalCollapse>
 

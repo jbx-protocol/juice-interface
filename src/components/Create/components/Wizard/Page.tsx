@@ -1,12 +1,11 @@
 import { Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import useMobile from 'hooks/Mobile'
 import { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { PageContext } from './contexts/PageContext'
-import { usePage } from './hooks'
 import { PageButtonControl } from './PageButtonControl'
 import { Steps } from './Steps'
+import { PageContext } from './contexts/PageContext'
+import { usePage } from './hooks'
 
 export interface PageProps {
   className?: string
@@ -49,10 +48,8 @@ export const Page: React.FC<PageProps> & {
         unlockPageProgress,
       }}
     >
-      <Space
-        className={twMerge('w-full max-w-full md:max-w-[600px]', className)}
-        direction="vertical"
-        size="large"
+      <div
+        className={twMerge('flex flex-col gap-6 md:max-w-[600px]', className)}
       >
         <div>
           <div className="flex justify-between">
@@ -72,7 +69,7 @@ export const Page: React.FC<PageProps> & {
           <p>{description}</p>
         </div>
         <div>{children}</div>
-      </Space>
+      </div>
     </PageContext.Provider>
   )
 }

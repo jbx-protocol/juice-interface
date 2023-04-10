@@ -1,7 +1,7 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Form, Space, Tooltip } from 'antd'
+import { Form, Tooltip } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { Callout } from 'components/Callout'
 import ETHToUSD from 'components/currency/ETHToUSD'
@@ -129,7 +129,7 @@ export default function DistributePayoutsModal({
       connectWalletText={t`Connect wallet to send payouts`}
       width={640}
     >
-      <Space direction="vertical" size="large" className="w-full">
+      <div className="flex flex-col gap-6">
         <Callout.Info>{FEES_EXPLANATION}</Callout.Info>
 
         <Form layout="vertical">
@@ -196,11 +196,11 @@ export default function DistributePayoutsModal({
             showFees
           />
         </div>
-        <p className="text-sm">
-          <ExclamationCircleOutlined />{' '}
+        <p className="flex items-center gap-1 text-sm">
+          <ExclamationCircleOutlined />
           <Trans>Recipients will receive payouts in ETH.</Trans>
         </p>
-      </Space>
+      </div>
     </TransactionModal>
   )
 }

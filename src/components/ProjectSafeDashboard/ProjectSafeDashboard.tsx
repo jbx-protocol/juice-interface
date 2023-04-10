@@ -1,5 +1,4 @@
 import { t, Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
 import { Tab } from 'components/Tab'
@@ -91,7 +90,7 @@ export function ProjectSafeDashboard({
 
       {gnosisSafe && (
         <div className="mt-6">
-          <Space size="large">
+          <div className="flex gap-6">
             <Link href={`${projectSafeRoute}?tab=queued`}>
               <a>
                 <Tab
@@ -108,7 +107,7 @@ export function ProjectSafeDashboard({
                 />
               </a>
             </Link>
-          </Space>
+          </div>
 
           <div
             className={classNames(

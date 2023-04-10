@@ -1,5 +1,5 @@
-import { Space } from 'antd'
 import React, { CSSProperties, useCallback, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { SelectionCard } from './SelectionCard'
 
 export const SelectionContext = React.createContext<{
@@ -45,9 +45,9 @@ export const Selection: React.FC<{
         setSelection: !disableInteractivity ? setSelectionWrapper : undefined,
       }}
     >
-      <Space className={className} direction="vertical" size="middle">
+      <div className={twMerge('flex flex-col gap-4', className)}>
         {children}
-      </Space>
+      </div>
     </SelectionContext.Provider>
   )
 }

@@ -3,8 +3,8 @@ import TooltipIcon from 'components/TooltipIcon'
 
 export function LegacyProjectTokensDescriptionHeading() {
   return (
-    <span>
-      <Trans>Legacy balance</Trans>{' '}
+    <span className="flex items-center gap-1">
+      <Trans>Legacy balance</Trans>
       <TooltipIcon
         tip={
           <Trans>

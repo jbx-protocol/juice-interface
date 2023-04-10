@@ -1,11 +1,10 @@
-import { Space } from 'antd'
+import { Allocation } from 'components/Allocation'
 import { usePayoutSplitAmountPercentage } from 'components/Create/hooks/PayoutSplitAmountPercentage'
-import { formatPercent } from 'utils/format/formatPercent'
 import { Parenthesis } from 'components/Parenthesis'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { useMemo } from 'react'
+import { formatPercent } from 'utils/format/formatPercent'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
-import { Allocation } from 'components/Allocation'
 
 export const Amount = ({
   allocationId, // if undefined, assume owner
@@ -56,11 +55,11 @@ export const Amount = ({
   }, [formattedAmount, formattedPercent, payoutsSelection])
 
   return (
-    <Space size="small">
+    <div className="flex justify-end gap-2">
       {!!primaryText && primaryText}
       <span className="text-grey-400 dark:text-slate-200">
         <Parenthesis>{!!secondaryText && secondaryText}</Parenthesis>
       </span>
-    </Space>
+    </div>
   )
 }

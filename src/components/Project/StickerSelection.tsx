@@ -1,5 +1,4 @@
 import { CloseCircleFilled } from '@ant-design/icons'
-import { Space } from 'antd'
 import { IconedImage } from 'components/IconedImage'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 
@@ -20,7 +19,7 @@ export const StickerSelection = ({
   }
 
   return (
-    <Space className="pt-3" direction="horizontal" align="start">
+    <div className="flex gap-2 pt-3">
       {value?.map((url, i) => (
         <IconedImage
           key={`${i}-${url}`}
@@ -32,6 +31,6 @@ export const StickerSelection = ({
           onIconClick={() => handleImageDeletion(i)}
         />
       ))}
-    </Space>
+    </div>
   )
 }

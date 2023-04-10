@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Select, Space } from 'antd'
+import { Select } from 'antd'
 
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { PV } from 'models/pv'
@@ -145,10 +145,10 @@ export default function VolumeChart({
     <div>
       <div className="flex items-baseline justify-between">
         <div>
-          <Space size="large">
+          <div className="flex gap-6">
             {tab('volume')}
             {tab('balance')}
-          </Space>
+          </div>
         </div>
 
         <Select

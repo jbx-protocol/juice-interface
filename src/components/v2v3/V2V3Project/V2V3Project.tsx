@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Row, Space } from 'antd'
+import { Row } from 'antd'
 import { ErrorBoundaryCallout } from 'components/ErrorBoundaryCallout'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import ScrollToTopButton from 'components/buttons/ScrollToTopButton'
@@ -35,7 +35,7 @@ export function V2V3Project() {
   if (projectId === undefined) return null
 
   return (
-    <Space direction="vertical" size={GUTTER_PX} className="w-full">
+    <div className="flex flex-col gap-6">
       <ProjectBanners />
 
       <ProjectHeader
@@ -46,7 +46,8 @@ export function V2V3Project() {
       />
 
       <V2V3PayProjectFormProvider>
-        <div className="my-0 mx-auto flex max-w-5xl flex-col gap-y-5 px-5 pb-5">
+        {/* <div className="my-0 mx-auto flex max-w-5xl flex-col gap-y-5 px-5 pb-5"> */}
+        <div className="my-0 mx-auto flex w-full max-w-5xl flex-col gap-y-5 px-5 pb-5">
           {isMobile ? (
             <ProjectPageMobile />
           ) : (
@@ -70,6 +71,6 @@ export function V2V3Project() {
         open={newDeployModalVisible}
         onClose={hideNewDeployModal}
       />
-    </Space>
+    </div>
   )
 }

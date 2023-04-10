@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Space } from 'antd'
 import { Split } from 'models/splits'
 import { useMemo } from 'react'
 import { getProjectOwnerRemainderSplit, sortSplits } from 'utils/splits'
@@ -46,7 +45,7 @@ export default function SplitList({
   }
 
   return (
-    <Space direction="vertical" size={5} className="w-full">
+    <div className="flex flex-col gap-1">
       {sortSplits(splits).map(split => {
         return (
           <SplitItem
@@ -66,6 +65,6 @@ export default function SplitList({
           }}
         />
       ) : null}
-    </Space>
+    </div>
   )
 }

@@ -605,6 +605,9 @@ msgstr ""
 msgid "Change ENS name"
 msgstr ""
 
+msgid "Change network"
+msgstr ""
+
 msgid "Change networks to deploy"
 msgstr ""
 

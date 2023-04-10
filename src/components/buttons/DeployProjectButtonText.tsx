@@ -1,18 +1,28 @@
 import { Trans } from '@lingui/macro'
+import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
 
 export function DeployButtonText() {
+  const isMobile = useMobile()
   const { isConnected, chainUnsupported, chain } = useWallet()
 
   if (chainUnsupported) {
-    return <Trans>Change networks to deploy</Trans>
+    return isMobile ? (
+      <Trans>Change network</Trans>
+    ) : (
+      <Trans>Change networks to deploy</Trans>
+    )
   }
 
   if (!isConnected) {
-    return <Trans>Connect wallet to deploy</Trans>
+    return isMobile ? (
+      <Trans>Connect wallet</Trans>
+    ) : (
+      <Trans>Connect wallet to deploy</Trans>
+    )
   }
 
-  if (chain?.name) {
+  if (chain?.name && !isMobile) {
     return <Trans>Deploy project to {chain?.name}</Trans>
   }
 

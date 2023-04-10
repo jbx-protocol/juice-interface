@@ -8,7 +8,11 @@ export function ErrorBoundaryCallout({
 }: PropsWithChildren<{ message: string | JSX.Element }>) {
   return (
     <ErrorBoundary
-      fallback={<Callout.Warning iconSize="small">{message}</Callout.Warning>}
+      fallback={
+        <Callout.Warning className="max-h-14" iconSize="small">
+          {message}
+        </Callout.Warning>
+      }
     >
       {children}
     </ErrorBoundary>

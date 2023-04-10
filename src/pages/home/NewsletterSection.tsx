@@ -44,27 +44,25 @@ export function NewsletterSection() {
                 Juicebox ecosystem.
               </p>
 
-              <Form onFinish={() => onFormSubmit()} form={form}>
-                <Input.Group compact>
-                  <Form.Item name="email" className="w-full md:w-3/5">
-                    <Input
-                      type="email"
-                      size="large"
-                      placeholder={t`Your email address`}
-                    />
-                  </Form.Item>
-                  <div className="ml-0 md:ml-2">
-                    <Button
-                      size="large"
-                      type="primary"
-                      htmlType="submit"
-                      loading={loading}
-                      className="w-full md:w-auto"
-                    >
-                      Subscribe
-                    </Button>
-                  </div>
-                </Input.Group>
+              <Form layout="inline" onFinish={() => onFormSubmit()} form={form}>
+                <Form.Item name="email" className="m-0 w-full md:w-3/5">
+                  <Input
+                    type="email"
+                    size="large"
+                    placeholder={t`Your email address`}
+                  />
+                </Form.Item>
+                <div className="ml-0 md:ml-2">
+                  <Button
+                    size="large"
+                    type="primary"
+                    htmlType="submit"
+                    loading={loading}
+                    className="w-full md:w-auto"
+                  >
+                    Subscribe
+                  </Button>
+                </div>
               </Form>
 
               <p>

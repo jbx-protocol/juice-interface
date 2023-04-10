@@ -69,8 +69,10 @@ export default function ProjectsFilterAndSort({
                 e.stopPropagation()
               }}
             >
-              <FilterOutlined />{' '}
-              <label className="cursor-pointer">Filter</label>
+              <span className="flex items-center gap-1">
+                <FilterOutlined />{' '}
+                <label className="cursor-pointer">Filter</label>
+              </span>
             </span>
           }
         >

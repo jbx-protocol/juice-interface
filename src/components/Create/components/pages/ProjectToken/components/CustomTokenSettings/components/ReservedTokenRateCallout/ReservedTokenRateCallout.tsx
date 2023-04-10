@@ -27,7 +27,7 @@ export const ReservedTokenRateCallout: React.FC = () => {
   return (
     <Callout.Info noIcon collapsible={false}>
       <Trans>When someone pays your project 1 ETH:</Trans>
-      <ul className="list-inside list-disc">
+      <ul className="list-disc pl-10">
         <li>
           <Trans>
             {formattedNum(contributorTokens)} tokens will be sent to the payer.

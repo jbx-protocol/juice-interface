@@ -28,7 +28,7 @@ export function DangerZoneSection({ close }: { close?: VoidFunction }) {
       <Callout.Warning className="mb-5">
         <Trans>
           Detaching NFTs from your cycle has the following effects:
-          <ul>
+          <ul className="list-disc pl-10">
             <li>Supporters won't receive NFTs when they pay your project.</li>
             <li>Current NFT holders won't be able to redeem their NFTs.</li>
           </ul>

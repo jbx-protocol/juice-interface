@@ -106,7 +106,7 @@ export function ProjectHandleSettingsPage() {
             </Trans>
           </p>
           <p>
-            <ul className="list-inside list-disc">
+            <ul className="list-disc pl-10">
               <li>
                 <Trans>
                   Included in search results on the{' '}
@@ -152,7 +152,7 @@ export function ProjectHandleSettingsPage() {
       </p>
 
       <MinimalCollapse className="mb-4" header={<Trans>See example</Trans>}>
-        <ul className="list-inside list-disc">
+        <ul className="list-disc pl-10">
           <li>juicebox.eth = @juicebox</li>
           <li>dao.juicebox.eth = @dao.juicebox</li>
         </ul>

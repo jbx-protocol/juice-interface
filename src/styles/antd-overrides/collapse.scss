@@ -5,6 +5,7 @@
     @apply stroke-secondary;
 
     .ant-collapse-header {
+      @apply items-center;
       @apply font-medium;
       @apply text-primary;
     }

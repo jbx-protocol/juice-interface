@@ -76,7 +76,7 @@ export default function ProjectReserved({
           </p>
           <div className="w-full bg-smoke-100 p-4 dark:bg-slate-600">
             <div className="mb-1 flex w-full justify-between">
-              <span>
+              <span className="flex gap-1">
                 <TooltipLabel
                   label={t`Payer issuance rate`}
                   tip={CONTRIBUTOR_RATE_EXPLANATION}
@@ -86,7 +86,7 @@ export default function ProjectReserved({
               {formattedNum(contributorIssuanceRate)} tokens / 1 ETH
             </div>
             <div className="flex w-full justify-between">
-              <span>
+              <span className="flex gap-1">
                 <TooltipLabel
                   label={t`Reserved issuance rate`}
                   tip={RESERVED_TOKENS_EXPLANATION}

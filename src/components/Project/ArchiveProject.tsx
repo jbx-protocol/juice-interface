@@ -105,7 +105,7 @@ export function ArchiveProject({
             <Trans>Unarchiving your project will mean the following:</Trans>
           </p>
 
-          <ul className="list-inside list-disc">
+          <ul className="list-disc pl-10">
             <li>
               <Trans>Your project will appear as 'active'.</Trans>
             </li>
@@ -151,7 +151,7 @@ export function ArchiveProject({
           <Trans>Archiving your project will mean the following:</Trans>
         </p>
 
-        <ul className="list-inside list-disc">
+        <ul className="list-disc pl-10">
           <li>
             <Trans>Your project will appear as 'archived'.</Trans>
           </li>

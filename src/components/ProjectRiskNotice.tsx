@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 
 import {
-  FundingCycleRiskFlags,
   FUNDING_CYCLE_WARNING_TEXT,
+  FundingCycleRiskFlags,
 } from 'constants/fundingWarningText'
 
 export default function ProjectRiskNotice({
@@ -23,7 +23,7 @@ export default function ProjectRiskNotice({
       <p>
         <Trans>This project's rules may pose risks for contributors:</Trans>
       </p>
-      <ul>
+      <ul className="list-disc pl-10">
         {warnings.map((text, i) => (
           <li key={i} className="mb-3">
             {text}

@@ -16,13 +16,13 @@ export function Badge({
   const badgeClasses = useMemo(() => {
     switch (variant) {
       case 'warning':
-        return 'bg-warning-200 text-warning-800 dark:bg-warning-800 dark:text-warning-200 dark:border-warning-200'
+        return 'bg-warning-200 text-warning-800 dark:bg-warning-800 dark:text-warning-200'
       case 'danger':
-        return 'bg-error-200 text-error-800 dark:bg-error-800 dark:text-error-200 dark:border-error-200'
+        return 'bg-error-200 text-error-800 dark:bg-error-800 dark:text-error-200'
       case 'info':
-        return 'bg-bluebs-100 text-bluebs-500 dark:bg-bluebs-800 dark:text-bluebs-300 dark:border-bluebs-300'
+        return 'bg-bluebs-100 text-bluebs-500 dark:bg-bluebs-800 dark:text-bluebs-300'
       case 'tertiary':
-        return 'bg-smoke-100 text-smoke-500 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-200'
+        return 'bg-smoke-100 text-smoke-500 dark:bg-slate-800 dark:text-slate-200'
     }
   }, [variant])
 
@@ -30,7 +30,7 @@ export function Badge({
     <span
       className={twMerge(
         className,
-        'rounded-xl py-[0.1rem] px-2 text-xs font-normal dark:border',
+        'rounded-xl py-[0.1rem] px-2 text-xs font-normal',
         upperCase ? 'uppercase' : '',
         badgeClasses,
       )}

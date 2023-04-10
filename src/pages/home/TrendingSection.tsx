@@ -23,7 +23,7 @@ export default function TrendingSection() {
       <Row className="my-0 mx-auto max-w-5xl gap-y-10">
         <Col xs={24} md={12} className="px-0 md:px-10">
           <div className="flex flex-col gap-9">
-            <h2 className="m-0 font-heading font-normal text-black dark:text-slate-100">
+            <h2 className="m-0 font-heading text-2xl font-normal text-black dark:text-slate-100">
               <Trans>Trending projects</Trans>{' '}
               <Tooltip title={<RankingExplanation />} placement="bottom">
                 <InfoCircleOutlined className="text-xl" />
@@ -52,7 +52,7 @@ export default function TrendingSection() {
 
         <Col xs={24} md={12} className="px-0 md:px-10">
           <div className="flex flex-col gap-9">
-            <h2 className="m-0 font-heading font-normal text-black dark:text-slate-100">
+            <h2 className="m-0 font-heading text-2xl font-normal text-black dark:text-slate-100">
               <Trans>Latest payments</Trans>
             </h2>
             <div className="max-h-[784px] overflow-auto">

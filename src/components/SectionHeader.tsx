@@ -19,7 +19,7 @@ export default function SectionHeader({
 
   if (tip !== undefined) {
     return (
-      <h2 className="font-heading">
+      <h2 className="font-heading text-2xl">
         <TooltipLabel
           className="text-sm"
           label={<span className={_className}>{text}</span>}

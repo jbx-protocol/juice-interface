@@ -20,7 +20,7 @@ export default function PayWarningModal({
       cancelButtonProps={{ hidden: true }}
       width={400}
     >
-      <h2 className="font-heading">
+      <h2 className="font-heading text-2xl">
         <Trans>Heads up</Trans>
       </h2>
       <strong>

@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import FormItemWarningText from 'components/FormItemWarningText'
 import SwitchHeading from 'components/SwitchHeading'
+import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import { DurationUnitsOption } from 'constants/time'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -28,9 +28,9 @@ import { emitErrorNotification } from 'utils/notifications'
 import { helpPagePath } from 'utils/routes'
 import { sanitizeSplit } from 'utils/splits'
 import {
-  getV2V3CurrencyOption,
   V2V3CurrencyName,
   V2V3_CURRENCY_ETH,
+  getV2V3CurrencyOption,
 } from 'utils/v2v3/currency'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
@@ -341,7 +341,7 @@ export function FundingForm({
       </div>
 
       <div className="mb-2 rounded-sm bg-smoke-75 stroke-none p-8 text-black shadow-[10px_10px_0px_0px_#E7E3DC] dark:bg-slate-400 dark:text-slate-100 dark:shadow-[10px_10px_0px_0px_#2D293A]">
-        <h3 className="text-black dark:text-slate-100">
+        <h3 className="text-lg text-black dark:text-slate-100">
           <Trans>Payouts</Trans>
         </h3>
 

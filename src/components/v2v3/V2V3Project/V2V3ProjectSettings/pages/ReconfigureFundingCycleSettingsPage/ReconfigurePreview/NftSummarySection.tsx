@@ -33,7 +33,7 @@ export default function NftSummarySection() {
               className={classNames(
                 'flex w-full py-4',
                 index !== rewardTiers.length - 1
-                  ? 'border-x-0 border-t-0 border-b border-solid border-smoke-200 dark:border-grey-600'
+                  ? 'border-b border-smoke-200 dark:border-grey-600'
                   : '',
               )}
               key={index}

@@ -18,7 +18,7 @@ export default function ReconfigurationStrategyOption({
   return (
     <div
       className={classNames(
-        'flex rounded-sm border border-solid bg-white p-4 transition-colors dark:bg-slate-700',
+        'flex rounded-sm border bg-white p-4 transition-colors dark:bg-slate-700',
         selected
           ? 'border-bluebs-500'
           : 'cursor-pointer border-smoke-300 hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100',

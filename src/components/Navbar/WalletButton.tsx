@@ -28,7 +28,7 @@ export default function WalletButton() {
     <div className="flex items-center gap-2">
       {chainUnsupported && (
         <Button
-          className="border border-solid border-warning-200 bg-warning-50 text-warning-800 dark:border-warning-500 dark:bg-warning-900 dark:text-warning-100"
+          className="border border-warning-200 bg-warning-50 text-warning-800 dark:border-warning-500 dark:bg-warning-900 dark:text-warning-100"
           size="small"
           icon={<WarningOutlined className="text-warning-500" />}
           onClick={changeNetworks}

@@ -20,7 +20,7 @@ export const CheckedCircle: React.FC<{
   return (
     <div
       className={twMerge(
-        'h-5 w-5 rounded-full border border-solid',
+        'h-5 w-5 rounded-full border',
         defocused
           ? 'border-smoke-200 dark:border-slate-400'
           : 'border-smoke-300 dark:border-slate-200',

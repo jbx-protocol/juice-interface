@@ -24,7 +24,7 @@ export default function MobileNavigation() {
           <LogoHomeButton />
           <HamburgerMenuButton />
         </div>
-        <Menu.Items className="stroke-tertiary flex flex-col gap-5 border border-x-0 border-t-0 border-solid pt-8 pb-4">
+        <Menu.Items className="stroke-tertiary flex flex-col gap-5 border-b pt-8 pb-4">
           {/* Main site links */}
           <div className="flex flex-col gap-4 px-6">
             <Menu.Item>

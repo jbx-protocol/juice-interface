@@ -94,7 +94,7 @@ export default function ProjectActivity() {
 
           return (
             <div
-              className="mb-5 border-x-0 border-t-0 border-b border-solid border-smoke-200 pb-5 dark:border-grey-600"
+              className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
               key={e.id}
             >
               {elem}

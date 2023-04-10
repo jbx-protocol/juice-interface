@@ -113,7 +113,7 @@ export function ProjectSafeDashboard({
             className={classNames(
               'mt-6',
               !isLoading && uniqueNonces.length
-                ? 'border border-t border-r-0 border-b-0 border-l-0 border-solid border-grey-300 dark:border-slate-200'
+                ? 'border-t border-grey-300 dark:border-slate-200'
                 : '',
             )}
           >

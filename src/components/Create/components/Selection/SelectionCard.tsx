@@ -1,8 +1,8 @@
 import { Divider } from 'antd'
 import { ReactNode, useCallback, useContext, useMemo } from 'react'
 import { classNames } from 'utils/classNames'
-import { CheckedCircle, RadialBackgroundIcon } from './components'
 import { SelectionContext } from './Selection'
+import { CheckedCircle, RadialBackgroundIcon } from './components'
 
 const Container: React.FC<{
   isSelected: boolean
@@ -27,7 +27,7 @@ const Container: React.FC<{
   return (
     <div
       className={classNames(
-        'rounded-lg border border-solid transition-colors',
+        'rounded-lg border transition-colors',
         borderColorClassNames,
         backgroundColorClassNames,
       )}

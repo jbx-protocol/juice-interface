@@ -246,7 +246,7 @@ export const NftRewardsPage = () => {
                       <JuiceInput prefix={'https://'} />
                     </Form.Item>
                     <CreateButton
-                      className="max-w-fit border border-solid"
+                      className="max-w-fit border"
                       disabled={!postPayModalData}
                       icon={<EyeOutlined />}
                       onClick={postPayModal.open}

@@ -44,7 +44,7 @@ export function PaymentAddressesModal({
         <div className="flex flex-col gap-2">
           {projectPayers.map(p => (
             <div
-              className="mb-2 border border-solid border-smoke-200 p-2 font-medium text-grey-500 dark:border-grey-600 dark:text-grey-300"
+              className="mb-2 border border-smoke-200 p-2 font-medium text-grey-500 dark:border-grey-600 dark:text-grey-300"
               key={p.address}
             >
               <div className="flex flex-col gap-2">

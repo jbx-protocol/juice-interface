@@ -72,7 +72,7 @@ export default function FundingHistory({
             className={classNames(
               'flex cursor-pointer items-baseline justify-between',
               i < fundingCycles.length - 1
-                ? 'border-x-0 border-t-0 border-b border-solid border-grey-400 pb-5 dark:border-slate-200'
+                ? 'border-b border-grey-400 pb-5 dark:border-slate-200'
                 : '',
             )}
             key={cycle.id.toString()}

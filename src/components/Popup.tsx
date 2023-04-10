@@ -53,7 +53,7 @@ export const Popup = ({
 
 const PopupMask = ({ onClick }: { onClick?: VoidFunction }) => (
   <div
-    className="bg-l0 fixed inset-0 bg-opacity-75 transition-opacity"
+    className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
     aria-hidden="true"
     onClick={onClick}
   />

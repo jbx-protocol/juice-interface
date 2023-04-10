@@ -74,7 +74,7 @@ export const JuiceModal = ({
     <Popup open={open} setOpen={setOpen} onMaskClick={onCancel}>
       <div
         className={twMerge(
-          'bg-l2 absolute inline-block w-full max-w-md overflow-hidden rounded-lg p-6 text-left align-middle shadow-xl transition-all',
+          'absolute inline-block w-full max-w-md overflow-hidden rounded-lg bg-smoke-25 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800',
           positionClasses,
         )}
       >
@@ -94,7 +94,10 @@ export const JuiceModal = ({
               )}
               <CTAButton onClick={onOk}>{okText}</CTAButton>
             </div>
-            <ExitButton className="absolute top-2 right-2" onClick={onCancel} />
+            <ExitButton
+              className="absolute -top-2 -right-2"
+              onClick={onCancel}
+            />
           </div>
         </div>
       </div>

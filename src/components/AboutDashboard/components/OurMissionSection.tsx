@@ -54,10 +54,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     <div className={className}>
       <div className="relative mb-6">
         <div className="flex items-center gap-3">
-          <span className="text-base font-medium">$0</span>
+          <span className="text-base font-medium md:text-lg">$0</span>
 
           {/* Progress bar */}
-          <div className="relative h-3 w-full rounded-full bg-split-100">
+          <div className="relative h-3 w-full rounded-full bg-split-100 dark:bg-slate-400">
             <div
               className="h-full rounded-full bg-split-400"
               style={{ width: `${percentage}%` }}
@@ -70,13 +70,15 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
                 left: `${percentage}%`,
               }}
             >
-              <span className="text-xs text-grey-500">
+              <span className="text-secondary text-xs">
                 ${formatAmount(currentAmount)}
               </span>
             </div>
           </div>
 
-          <span className="text-base">${Math.floor(maxAmount / 1e9)}B</span>
+          <span className="text-base font-medium md:text-lg">
+            ${Math.floor(maxAmount / 1e9)}B
+          </span>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ import { WhatDoWeValueSection } from './components/WhatDoWeValueSection'
 export const AboutDashboard = () => {
   return (
     <>
-      <div className="[&>*:nth-child(even)]:bg-smoke-50 [&>*:nth-child(odd)]:bg-white">
+      <div className="[&>*:nth-child(even)]:bg-smoke-50 dark:[&>*:nth-child(even)]:bg-slate-800 [&>*:nth-child(odd)]:bg-white dark:[&>*:nth-child(odd)]:bg-slate-700">
         <HeroSection />
         <OurMissionSection />
         <AboutTheProtocolSection />

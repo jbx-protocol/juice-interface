@@ -3506,6 +3506,9 @@ msgstr ""
 msgid "Volume"
 msgstr ""
 
+msgid "Volume chart failed to load."
+msgstr ""
+
 msgid "Voting weight"
 msgstr ""
 

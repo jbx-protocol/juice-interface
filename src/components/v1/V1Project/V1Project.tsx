@@ -1,20 +1,21 @@
 import { CloseOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Col, Row, Skeleton } from 'antd'
-import ScrollToTopButton from 'components/buttons/ScrollToTopButton'
 import { Callout } from 'components/Callout'
+import { ErrorBoundaryCallout } from 'components/ErrorBoundaryCallout'
 import ExternalLink from 'components/ExternalLink'
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
+import ScrollToTopButton from 'components/buttons/ScrollToTopButton'
 import { V1PayProjectFormProvider } from 'components/v1/V1Project/V1PayProjectFormProvider'
 import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useRelaunchV1ViaV3Create } from 'hooks/v1/RelaunchV1ViaV3Create'
+import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { V1OperatorPermission } from 'models/v1/permissions'
-import { lazy, Suspense, useContext, useState } from 'react'
+import { Suspense, lazy, useContext, useState } from 'react'
 import FundingCycles from './FundingCycles'
 import ProjectActivity from './ProjectActivity'
 import { TokensSection } from './TokensSection'
@@ -122,12 +123,16 @@ export function V1Project() {
             {projectId && (
               <div className="mb-10">
                 <Suspense fallback={<LoadingOutlined />}>
-                  <VolumeChart
-                    style={{ height: 240 }}
-                    projectId={projectId}
-                    createdAt={createdAt}
-                    pv={PV_V1}
-                  />
+                  <ErrorBoundaryCallout
+                    message={<Trans>Volume chart failed to load.</Trans>}
+                  >
+                    <VolumeChart
+                      style={{ height: 240 }}
+                      projectId={projectId}
+                      createdAt={createdAt}
+                      pv={PV_V1}
+                    />
+                  </ErrorBoundaryCallout>
                 </Suspense>
               </div>
             )}

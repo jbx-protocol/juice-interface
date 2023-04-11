@@ -3,7 +3,7 @@ import {
   LockOutlined,
   PlusCircleOutlined,
 } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Button, Col, Form, Row, Space, Tooltip } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import FormattedAddress from 'components/FormattedAddress'
@@ -57,7 +57,7 @@ export default function ProjectTicketMods({
       return (
         <div
           className={classNames(
-            'flex rounded-sm border border-solid p-2 transition-colors hover:border-smoke-500 dark:hover:border-slate-100',
+            'flex rounded-sm border p-2 transition-colors hover:border-smoke-500 dark:hover:border-slate-100',
             !locked
               ? 'border-smoke-300  dark:border-slate-300'
               : 'border-grey-200 dark:border-grey-700',

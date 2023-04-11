@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { Selection } from 'components/Create/components/Selection'
@@ -51,8 +51,8 @@ export const ReconfigurationRulesPage = () => {
       }}
       scrollToFirstError
     >
-      <Space className="w-full" direction="vertical" size="large">
-        <Space className="w-full" direction="vertical" size="middle">
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
           <Form.Item noStyle name="selection">
             <Selection className="w-full" allowDeselect={false} defocusOnSelect>
               {reconfigurationStrategies.map(strategy => (
@@ -61,7 +61,7 @@ export const ReconfigurationRulesPage = () => {
               <CustomRuleCard />
             </Selection>
           </Form.Item>
-        </Space>
+        </div>
 
         {selection === 'none' && (
           <Callout.Warning>{RECONFIG_RULES_WARN}</Callout.Warning>
@@ -122,7 +122,7 @@ export const ReconfigurationRulesPage = () => {
             </div>
           </CreateCollapse.Panel>
         </CreateCollapse>
-      </Space>
+      </div>
 
       <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
     </Form>

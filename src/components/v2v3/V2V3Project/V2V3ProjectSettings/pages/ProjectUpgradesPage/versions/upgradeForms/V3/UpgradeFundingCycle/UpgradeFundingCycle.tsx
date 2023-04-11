@@ -1,4 +1,3 @@
-import { Space } from 'antd'
 import { Callout } from 'components/Callout'
 import { CV_V3 } from 'constants/cv'
 import { V2V3ContractsProvider } from 'contexts/v2v3/Contracts/V2V3ContractsProvider'
@@ -29,7 +28,7 @@ export function UpgradeFundingCycle() {
       {localStoreRef.current && (
         <V2V3ContractsProvider initialCv={CV_V3}>
           <Provider store={localStoreRef.current}>
-            <Space direction="vertical">
+            <div className="flex flex-col gap-2">
               <h3 className="text-black dark:text-slate-100">
                 Launch V3 funding cycle
               </h3>
@@ -43,7 +42,7 @@ export function UpgradeFundingCycle() {
               </Callout.Info>
 
               <RelaunchV2FundingCycleForm />
-            </Space>
+            </div>
           </Provider>
         </V2V3ContractsProvider>
       )}

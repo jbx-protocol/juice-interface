@@ -1,15 +1,15 @@
 import { EyeOutlined, RightOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
-import { Form, Radio, Space } from 'antd'
-import { CreateButton } from 'components/buttons/CreateButton'
+import { Trans, t } from '@lingui/macro'
+import { Form, Radio } from 'antd'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import ExternalLink from 'components/ExternalLink'
-import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
-import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
-import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { NftPostPayModal } from 'components/NftRewards/NftPostPayModal'
 import { RadioItem } from 'components/RadioItem'
 import TooltipLabel from 'components/TooltipLabel'
+import { CreateButton } from 'components/buttons/CreateButton'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import {
   PREVENT_OVERSPENDING_EXPLANATION,
   USE_DATASOURCE_FOR_REDEEM_EXPLANATION,
@@ -58,17 +58,13 @@ export const NftRewardsPage = () => {
         }}
         scrollToFirstError
       >
-        <Space className="w-full" direction="vertical" size="large">
+        <div className="flex flex-col gap-6">
           <Form.Item noStyle name="rewards">
             <RewardsList allowCreate />
           </Form.Item>
 
           {hasNfts && (
-            <Space
-              className="w-full pt-3 pb-2"
-              direction="vertical"
-              size="middle"
-            >
+            <div className="flex flex-col gap-4 pt-3 pb-2">
               <Form.Item
                 name="collectionName"
                 label={
@@ -190,11 +186,7 @@ export const NftRewardsPage = () => {
                   header={<OptionalHeader header={t`Payment Success Pop-up`} />}
                   hideDivider
                 >
-                  <Space
-                    className="w-full pt-3 pb-2"
-                    direction="vertical"
-                    size="middle"
-                  >
+                  <div className="flex flex-col gap-4 pt-3 pb-2">
                     <p>
                       <Trans>
                         Show your supporters a pop-up with a message and a link
@@ -254,14 +246,14 @@ export const NftRewardsPage = () => {
                       <JuiceInput prefix={'https://'} />
                     </Form.Item>
                     <CreateButton
-                      className="border border-solid"
+                      className="max-w-fit border"
                       disabled={!postPayModalData}
                       icon={<EyeOutlined />}
                       onClick={postPayModal.open}
                     >
                       Preview
                     </CreateButton>
-                  </Space>
+                  </div>
                 </CreateCollapse.Panel>
 
                 <CreateCollapse.Panel
@@ -283,9 +275,9 @@ export const NftRewardsPage = () => {
                   </Form.Item>
                 </CreateCollapse.Panel>
               </CreateCollapse>
-            </Space>
+            </div>
           )}
-        </Space>
+        </div>
         <Wizard.Page.ButtonControl />
       </Form>
 

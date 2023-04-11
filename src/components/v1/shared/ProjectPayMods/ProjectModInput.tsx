@@ -103,7 +103,7 @@ export function ProjectModInput({
   return (
     <div
       className={classNames(
-        'flex rounded-sm border border-solid p-2',
+        'flex rounded-sm border p-2',
         locked
           ? 'border-grey-200 dark:border-grey-700'
           : 'border-smoke-200 dark:border-grey-600',

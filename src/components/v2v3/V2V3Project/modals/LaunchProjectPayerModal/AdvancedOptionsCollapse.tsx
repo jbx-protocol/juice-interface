@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Form, FormInstance, Input, Space, Switch } from 'antd'
+import { Form, FormInstance, Input, Switch } from 'antd'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { MinimalCollapse } from 'components/MinimalCollapse'
@@ -35,7 +35,7 @@ export default function AdvancedOptionsCollapse({
 
   return (
     <MinimalCollapse header={<Trans>Advanced (optional)</Trans>}>
-      <Space size="middle" direction="vertical" className="w-full">
+      <div className="flex flex-col gap-4">
         <Form form={form} initialValues={defaultAdvancedOptions}>
           <div>
             <TooltipLabel
@@ -126,7 +126,7 @@ export default function AdvancedOptionsCollapse({
             />
           ) : null}
         </Form>
-      </Space>
+      </div>
     </MinimalCollapse>
   )
 }

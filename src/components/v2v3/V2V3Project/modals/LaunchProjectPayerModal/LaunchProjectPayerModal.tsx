@@ -1,11 +1,12 @@
 import { ToolOutlined } from '@ant-design/icons'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { t, Trans } from '@lingui/macro'
-import { Modal, Space } from 'antd'
+import { Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import { Callout } from 'components/Callout'
 import EtherscanLink from 'components/EtherscanLink'
+import { PROJECT_PAYER_ADDRESS_EXPLANATION } from 'components/Explanations'
 import TransactionModal from 'components/TransactionModal'
 import { readProvider } from 'constants/readProvider'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -13,7 +14,6 @@ import { DeployProjectPayerTxArgs } from 'hooks/v2v3/transactor/DeployProjectPay
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import AdvancedOptionsCollapse from './AdvancedOptionsCollapse'
-import { PROJECT_PAYER_ADDRESS_EXPLANATION } from 'components/Explanations'
 
 const DEPLOY_EVENT_IDX = 0
 
@@ -120,7 +120,7 @@ export function LaunchProjectPayerModal({
         transactionPending={transactionPending}
         width={600}
       >
-        <Space direction="vertical" size="middle">
+        <div className="flex flex-col gap-4">
           <div>{PROJECT_PAYER_ADDRESS_EXPLANATION}</div>
           <div>
             <Trans>
@@ -137,7 +137,7 @@ export function LaunchProjectPayerModal({
             </Trans>
           </Callout.Info>
           <AdvancedOptionsCollapse form={advancedOptionsForm} />
-        </Space>
+        </div>
       </TransactionModal>
       <Modal
         open={confirmedModalVisible}

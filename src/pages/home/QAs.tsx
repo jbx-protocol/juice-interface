@@ -83,7 +83,7 @@ export default function QAs(): {
       a: (
         <Trans>
           <p>To summarize:</p>
-          <ol>
+          <ol className="list-decimal pl-10">
             <li>
               When people pay a project, they receive the project's tokens. Like
               other tokens, these can be used for governance, for token-gated

@@ -11,7 +11,7 @@ export function FundingCycleExplainerCollapse() {
             locked cycle. You will also gain access to:
           </Trans>
         </p>
-        <ol className="mb-0">
+        <ol className="mb-0 list-decimal pl-10">
           <li>
             <Trans>
               <strong>Recurring cycles</strong>. Among other things, this allows

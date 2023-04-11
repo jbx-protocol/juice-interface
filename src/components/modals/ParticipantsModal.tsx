@@ -6,7 +6,7 @@ import {
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Button, Modal, Select, Space } from 'antd'
+import { Button, Modal, Select } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedAddress from 'components/FormattedAddress'
 import Loading from 'components/Loading'
@@ -176,7 +176,7 @@ export default function ParticipantsModal({
 
         {participants.map(p => (
           <div
-            className="border-b-1 mb-5 border border-l-0 border-t-0 border-r-0 border-solid border-smoke-200 pb-5 dark:border-grey-600"
+            className="border-b-1 mb-5 border border-smoke-200 pb-5 dark:border-grey-600"
             key={p.id}
           >
             <div className="flex content-between justify-between">
@@ -237,7 +237,7 @@ export default function ParticipantsModal({
             {tokenSymbolText({ tokenSymbol, capitalize: true })} holders
           </Trans>
         </h4>
-        <Space direction="vertical" className="w-full">
+        <div className="flex flex-col gap-2">
           {tokenAddress && !isZeroAddress(tokenAddress) && (
             <div className="mb-5">
               <Trans>
@@ -266,7 +266,7 @@ export default function ParticipantsModal({
               <Trans>{participants.length} total</Trans>
             </div>
           )}
-        </Space>
+        </div>
       </div>
 
       <DownloadParticipantsModal

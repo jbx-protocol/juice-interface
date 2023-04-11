@@ -34,7 +34,7 @@ export default function TrendingProjects({
         </div>
       )}
 
-      <p className="my-10 max-w-[800px]">
+      <p className="my-10 max-w-[800px] gap-1">
         <InfoCircleOutlined /> <RankingExplanation />
       </p>
     </div>

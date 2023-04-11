@@ -1,7 +1,7 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Modal, ModalProps, Space } from 'antd'
+import { Button, Form, Modal, ModalProps } from 'antd'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
 import { PV_V2 } from 'constants/pv'
 import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
@@ -143,14 +143,14 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
       {...props}
     >
       <div>
-        <h2>
+        <h2 className="text-2xl">
           <Trans>Assets</Trans>
         </h2>
         <p>
           <Trans>Other assets in this project's owner's wallet.</Trans>
         </p>
 
-        <Space className="mt-5 w-full" direction="vertical">
+        <div className="mt-5 flex flex-col gap-2">
           <V2V3ProjectTokenBalance projectId={V2V3_PROJECT_IDS.JUICEBOX_DAO} />
           {trackedTokens?.map(t =>
             t.type === 'erc20' ? (
@@ -165,7 +165,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
               />
             ),
           )}
-        </Space>
+        </div>
 
         {hasEditPermission ? (
           <EditTrackedAssetsModal

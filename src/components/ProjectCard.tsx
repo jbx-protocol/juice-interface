@@ -12,11 +12,9 @@ import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
 import { formatDate } from 'utils/format/formatDate'
 import { v2v3ProjectRoute } from 'utils/routes'
-import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
-
-export const PROJECT_CARD_BG = 'bg-white dark:bg-slate-600'
+import ETHAmount from './currency/ETHAmount'
 
 export type ProjectCardProject = Pick<
   Project,
@@ -129,7 +127,7 @@ export default function ProjectCard({
     <Link href={projectCardHref} as={projectCardUrl} prefetch={false}>
       <a>
         <div
-          className={`relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-lg py-4 md:border md:border-solid md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100 ${PROJECT_CARD_BG}`}
+          className={`relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-lg bg-white py-4 dark:bg-slate-600 md:border md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100`}
         >
           <div className="mr-5">
             <ProjectLogo
@@ -175,7 +173,6 @@ export default function ProjectCard({
               </div>
             )}
           </div>
-
           {isArchived && <ArchivedBadge />}
           {!metadata && <Loading />}
         </div>

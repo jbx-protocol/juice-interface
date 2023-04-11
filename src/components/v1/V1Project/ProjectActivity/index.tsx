@@ -283,7 +283,7 @@ export default function ProjectActivity() {
 
           return (
             <div
-              className="mb-5 border-x-0 border-t-0 border-b border-solid border-smoke-200 pb-5 dark:border-grey-600"
+              className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
               key={e.id}
             >
               {elem}
@@ -305,7 +305,7 @@ export default function ProjectActivity() {
 
     if (count === 0 && !isLoading) {
       return (
-        <div className="border-x-0 border-b-0 border-t border-solid border-smoke-200 pt-5 text-grey-500 dark:border-grey-600 dark:text-grey-300">
+        <div className="border-t border-smoke-200 pt-5 text-grey-500 dark:border-grey-600 dark:text-grey-300">
           <Trans>No activity yet</Trans>
         </div>
       )

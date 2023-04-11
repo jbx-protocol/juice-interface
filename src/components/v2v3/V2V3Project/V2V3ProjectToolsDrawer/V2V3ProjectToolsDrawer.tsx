@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Divider, Drawer, Space } from 'antd'
+import { Divider, Drawer } from 'antd'
 import { AddToProjectBalanceForm } from 'components/Project/ProjectToolsDrawer/AddToProjectBalanceForm'
 import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSection'
 import { HeldFeesSection } from 'components/Project/ProjectToolsDrawer/HeldFeesSection'
@@ -40,11 +40,11 @@ export function V2V3ProjectToolsDrawer({
       width={!isMobile ? 600 : undefined}
       drawerStyle={{ paddingBottom: '2rem' }}
     >
-      <h1 className="text-primary">
+      <h1 className="text-primary text-2xl">
         <Trans>Tools</Trans>
       </h1>
 
-      <Space direction="vertical" size="middle" className="w-full">
+      <div className="flex flex-col gap-4">
         <section>
           <h3 className="text-primary">
             <Trans>Create a project payer address</Trans>
@@ -58,10 +58,8 @@ export function V2V3ProjectToolsDrawer({
         <Divider />
 
         <section>
-          <Space direction="vertical" size="middle">
-            <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
-            <HeldFeesSection />
-          </Space>
+          <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
+          <HeldFeesSection />
         </section>
 
         <Divider />
@@ -118,7 +116,7 @@ export function V2V3ProjectToolsDrawer({
             .
           </p>
         </section>
-      </Space>
+      </div>
     </Drawer>
   )
 }

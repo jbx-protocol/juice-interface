@@ -1,11 +1,11 @@
 import { CrownFilled, DeleteOutlined, LockOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { t, Trans } from '@lingui/macro'
-import { Button, Col, Row, Space, Tooltip } from 'antd'
-import ETHAmount from 'components/currency/ETHAmount'
+import { Trans, t } from '@lingui/macro'
+import { Button, Col, Row, Tooltip } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import FormattedAddress from 'components/FormattedAddress'
 import TooltipIcon from 'components/TooltipIcon'
+import ETHAmount from 'components/currency/ETHAmount'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { CurrencyName } from 'constants/currency'
@@ -20,10 +20,10 @@ import { parseWad } from 'utils/format/formatNumber'
 import { isProjectSplit } from 'utils/splits'
 import { amountFromPercent } from 'utils/v2v3/distributions'
 import {
-  formatSplitPercent,
   MAX_DISTRIBUTION_LIMIT,
-  preciseFormatSplitPercent,
   SPLITS_TOTAL_PERCENT,
+  formatSplitPercent,
+  preciseFormatSplitPercent,
 } from 'utils/v2v3/math'
 import { AllocatorBadge } from './FundingCycleConfigurationDrawers/AllocatorBadge'
 import { DistributionSplitModal } from './FundingCycleConfigurationDrawers/DistributionSplitModal/DistributionSplitModal'
@@ -96,19 +96,18 @@ export function DistributionSplitCard({
   return (
     <div
       className={classNames(
-        'flex rounded-sm  border border-solid  p-2 transition-colors hover:border-smoke-500 dark:hover:border-slate-100',
+        'flex justify-between rounded-sm border p-2 transition-colors hover:border-smoke-500 dark:hover:border-slate-100',
         !isLocked
           ? 'border-smoke-300 dark:border-slate-300'
           : 'border-grey-200 dark:border-grey-700',
       )}
       role="button"
     >
-      <Space
+      <div
         className={classNames(
-          'w-full text-black dark:text-slate-100',
+          'flex flex-col gap-2 text-black dark:text-slate-100',
           isLocked ? 'cursor-default' : 'cursor-pointer',
         )}
-        direction="vertical"
         onClick={!isLocked ? () => setEditSplitModalOpen(true) : undefined}
       >
         {split.projectId && parseInt(split.projectId) > 0 ? (
@@ -123,10 +122,10 @@ export function DistributionSplitCard({
               </label>{' '}
             </Col>
             <Col span={dataColSpan}>
-              <Space size="small">
+              <div className="flex gap-2">
                 <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
                 <AllocatorBadge allocator={split.allocator} />
-              </Space>
+              </div>
             </Col>
           </Row>
         ) : (
@@ -202,7 +201,7 @@ export function DistributionSplitCard({
           <Col span={dataColSpan}>
             <div className="flex w-full items-center justify-between">
               <span className="mr-2 w-[100px] max-w-[100px]">
-                <Space size="small" direction="horizontal">
+                <div className="flex gap-2">
                   {!distributionLimitIsInfinite && (
                     <span>
                       {currencyName === 'ETH' ? (
@@ -221,7 +220,7 @@ export function DistributionSplitCard({
                       {formatSplitPercent(BigNumber.from(split.percent))}%
                     </Parens>
                   </span>
-                </Space>
+                </div>
               </span>
             </div>
           </Col>
@@ -243,7 +242,7 @@ export function DistributionSplitCard({
             </Col>
           </Row>
         ) : null}
-      </Space>
+      </div>
 
       {isLocked ? (
         <>

@@ -383,6 +383,9 @@ msgstr ""
 msgid "All payouts have been deleted for this recipient. Save to continue..."
 msgstr ""
 
+msgid "All projects"
+msgstr ""
+
 msgid "All {tokensText} will go to the project owner:"
 msgstr ""
 
@@ -479,6 +482,9 @@ msgstr ""
 msgid "Archiving your project will mean the following:"
 msgstr ""
 
+msgid "Are you sure you want to unwatch all projects? You will no longer be notified about new events."
+msgstr ""
+
 msgid "Are you sure?"
 msgstr ""
 
@@ -516,6 +522,9 @@ msgid "Awaiting IPFS response. This may take a while."
 msgstr ""
 
 msgid "Back"
+msgstr ""
+
+msgid "Back to profile"
 msgstr ""
 
 msgid "Back to project"
@@ -615,6 +624,9 @@ msgid "Cannot use zero address"
 msgstr ""
 
 msgid "Change ENS name"
+msgstr ""
+
+msgid "Change network"
 msgstr ""
 
 msgid "Change networks to deploy"
@@ -908,7 +920,7 @@ msgstr ""
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr ""
 
-msgid "Customize your public facing profile and add additional management information."
+msgid "Customize your public facing profile and other details."
 msgstr ""
 
 msgid "Cycle"
@@ -1158,9 +1170,6 @@ msgid "Edit payout"
 msgstr ""
 
 msgid "Edit payouts"
-msgstr ""
-
-msgid "Edit profile"
 msgstr ""
 
 msgid "Edit project"
@@ -1457,6 +1466,9 @@ msgstr ""
 msgid "Holders of this V1 project's token will be able to migrate their tokens to the V3 token you're deploying."
 msgstr ""
 
+msgid "Home"
+msgstr ""
+
 msgid "Hours"
 msgstr ""
 
@@ -1616,6 +1628,9 @@ msgstr ""
 msgid "Join <0>hundreds of projects</0> sippin' the Juice."
 msgstr ""
 
+msgid "Join our Discord"
+msgstr ""
+
 msgid "Join thousands of projects using Juicebox to fund, operate, and scale their ideas & communities transparently on Ethereum."
 msgstr ""
 
@@ -1659,6 +1674,9 @@ msgid "Juicebox project"
 msgstr ""
 
 msgid "Juicebox projects use <0>ENS names</0> as handles. Projects with a handle have the following features:"
+msgstr ""
+
+msgid "JuiceboxDAO"
 msgstr ""
 
 msgid "Juicy picks"
@@ -1758,6 +1776,9 @@ msgid "Made a mistake?"
 msgstr ""
 
 msgid "Manage"
+msgstr ""
+
+msgid "Manage your notifications and email preferences."
 msgstr ""
 
 msgid "Manage your {0}"
@@ -2049,6 +2070,9 @@ msgid "Not set"
 msgstr ""
 
 msgid "Notice from {0}"
+msgstr ""
+
+msgid "Notifications"
 msgstr ""
 
 msgid "On-chain Governance"
@@ -2531,6 +2555,9 @@ msgstr ""
 msgid "Receive {receiveText}"
 msgstr ""
 
+msgid "Recently listed"
+msgstr ""
+
 msgid "Recipient"
 msgstr ""
 
@@ -2724,6 +2751,9 @@ msgid "Save payout"
 msgstr ""
 
 msgid "Save payouts"
+msgstr ""
+
+msgid "Save profile details"
 msgstr ""
 
 msgid "Save project details"
@@ -3512,6 +3542,12 @@ msgstr ""
 msgid "Untrack token"
 msgstr ""
 
+msgid "Unwatch"
+msgstr ""
+
+msgid "Unwatch all"
+msgstr ""
+
 msgid "Upcoming"
 msgstr ""
 
@@ -3587,6 +3623,9 @@ msgstr ""
 msgid "Volume"
 msgstr ""
 
+msgid "Volume chart failed to load."
+msgstr ""
+
 msgid "Voting weight"
 msgstr ""
 
@@ -3603,6 +3642,9 @@ msgid "Wallet address"
 msgstr ""
 
 msgid "Warning: Only the project owner can edit a project. If you don't have access to the address above, you will lose access to your project."
+msgstr ""
+
+msgid "Watching projects"
 msgstr ""
 
 msgid "We recommend visiting the <0>Juicebox Discord</0> for help and advice on this process."

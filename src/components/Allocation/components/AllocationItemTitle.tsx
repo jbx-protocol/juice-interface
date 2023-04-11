@@ -1,6 +1,6 @@
 import { LockFilled } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Space, Tooltip } from 'antd'
+import { Tooltip } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { formatDate } from 'utils/format/formatDate'
@@ -13,13 +13,12 @@ export function AllocationItemTitle({
   allocation: AllocationSplit
 }) {
   return (
-    <Space>
+    <div className="flex items-center gap-2">
       {isProjectSplit(allocation) && allocation.projectId ? (
         <V2V3ProjectHandleLink projectId={parseInt(allocation.projectId)} />
       ) : (
         <FormattedAddress address={allocation.beneficiary} />
       )}
-
       {!!allocation.lockedUntil && (
         <Tooltip
           title={t`Locked until ${formatDate(
@@ -30,6 +29,6 @@ export function AllocationItemTitle({
           <LockFilled />
         </Tooltip>
       )}
-    </Space>
+    </div>
   )
 }

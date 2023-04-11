@@ -1,5 +1,5 @@
 import { plural, t, Trans } from '@lingui/macro'
-import { Button, Descriptions, Space } from 'antd'
+import { Button, Descriptions } from 'antd'
 import SectionHeader from 'components/SectionHeader'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/NftAccountBalance'
@@ -36,7 +36,7 @@ export function ManageNftsSection() {
 
   return (
     <>
-      <Space direction="vertical">
+      <div className="flex flex-col gap-2">
         <SectionHeader className="mb-0" text={<Trans>NFTs</Trans>} />
 
         <Descriptions layout="horizontal" column={1}>
@@ -67,7 +67,7 @@ export function ManageNftsSection() {
             ) : null}
           </Descriptions.Item>
         </Descriptions>
-      </Space>
+      </div>
       {nftRedeemAllowed && (
         <RedeemNftsModal
           open={redeemNftsModalVisible}

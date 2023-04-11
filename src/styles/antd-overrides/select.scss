@@ -87,3 +87,7 @@
   border: none !important;
   box-shadow: none !important;
 }
+
+.ant-select {
+  @apply flex items-center;
+}

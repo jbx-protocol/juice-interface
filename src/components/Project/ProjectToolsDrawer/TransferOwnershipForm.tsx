@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Space, Statistic } from 'antd'
+import { Button, Form, Statistic } from 'antd'
 import FormattedAddress from 'components/FormattedAddress'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { TransactorInstance } from 'hooks/Transactor'
@@ -44,7 +44,7 @@ export function TransferOwnershipForm({
 
   return (
     <Form form={transferOwnershipForm} layout="vertical">
-      <Space direction="vertical" size="large">
+      <div className="flex flex-col gap-6">
         <Statistic
           title={<Trans>Current owner</Trans>}
           valueRender={() => (
@@ -71,7 +71,7 @@ export function TransferOwnershipForm({
             </Button>
           </Form.Item>
         </div>
-      </Space>
+      </div>
     </Form>
   )
 }

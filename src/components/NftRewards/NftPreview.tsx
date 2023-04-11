@@ -68,7 +68,7 @@ export function NftPreview({
       >
         <div className="mb-5 text-center">{nftRender}</div>
 
-        <h1 className="text-slate-100">{rewardTier.name}</h1>
+        <h1 className="text-2xl text-slate-100">{rewardTier.name}</h1>
         <span className="uppercase text-slate-100">
           <Trans>{projectMetadata?.name}</Trans>
         </span>

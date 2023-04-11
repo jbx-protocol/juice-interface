@@ -11,8 +11,8 @@ import {
   sortNftsByContributionFloor,
 } from 'utils/nftRewards'
 import { AddEditRewardModal } from './AddEditRewardModal'
-import { useRewards } from './hooks'
 import { RewardItem } from './RewardItem'
+import { useRewards } from './hooks'
 
 const RewardsListContext = createContext<ReturnType<typeof useRewards>>({
   rewards: [],

@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
@@ -149,9 +148,9 @@ export function V2V3ConfirmPayModal({
       centered
       destroyOnClose
     >
-      <Space direction="vertical" size="large" className="w-full">
+      <div className="flex flex-col gap-6">
         {projectMetadata.payDisclosure && (
-          <Callout.Info className="border border-solid border-grey-200 dark:border-grey-400">
+          <Callout.Info className="border border-grey-200 dark:border-grey-400">
             <strong className="block">
               <Trans>Notice from {projectMetadata.name}</Trans>
             </strong>
@@ -161,11 +160,9 @@ export function V2V3ConfirmPayModal({
             />
           </Callout.Info>
         )}
-
         <SummaryTable weiAmount={weiAmount} />
-
         <V2V3PayForm form={form} onFinish={() => executePayTx()} />
-      </Space>
+      </div>
     </TransactionModal>
   )
 }

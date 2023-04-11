@@ -1,7 +1,7 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import { Button, Skeleton, Space, Tooltip } from 'antd'
+import { Button, Skeleton, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
 import SpendingStats from 'components/Project/SpendingStats'
 import TooltipLabel from 'components/TooltipLabel'
@@ -88,7 +88,7 @@ export default function PayoutSplitsCard({
 
   return (
     <CardSection>
-      <Space direction="vertical" size="large" className="w-full">
+      <div className="flex flex-col gap-6">
         {hideDistributeButton ? null : (
           <div className="flex flex-wrap justify-between gap-2">
             <Skeleton
@@ -119,7 +119,6 @@ export default function PayoutSplitsCard({
             </div>
           </div>
         )}
-
         <div>
           <div className="flex flex-wrap justify-between gap-2 leading-10">
             <TooltipLabel
@@ -161,7 +160,7 @@ export default function PayoutSplitsCard({
             </span>
           )}
         </div>
-      </Space>
+      </div>
 
       <DistributePayoutsModal
         open={distributePayoutsModalVisible}

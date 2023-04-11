@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import { Space } from 'antd'
 
 export function ExportSection({
   exportPayoutsButton,
@@ -13,7 +12,7 @@ export function ExportSection({
       <h3 className="text-primary">
         <Trans>Export data</Trans>
       </h3>
-      <Space direction="vertical" size="large">
+      <div className="flex flex-col gap-6">
         {exportPayoutsButton && (
           <div>
             <h4 className="text-black dark:text-slate-100">
@@ -39,7 +38,7 @@ export function ExportSection({
             {exportReservedTokensButton}
           </div>
         )}
-      </Space>
+      </div>
     </section>
   )
 }

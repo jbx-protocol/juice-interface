@@ -2,18 +2,18 @@ import { DeleteOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Button, Form, Modal } from 'antd'
+import { AllocationSplit } from 'components/Allocation'
 import { Callout } from 'components/Callout'
-import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import FormattedAddress from 'components/FormattedAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
+import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { FormItemInput } from 'models/formItemInput'
 import { useRouter } from 'next/router'
-import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { useCallback, useMemo, useState } from 'react'
 import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
-import { AllocationSplit } from 'components/Allocation'
 import { inputMustExistRule } from 'utils/antdRules'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
 interface V1MigrationCardForm {
   projectIds: { projectId: string; newProjectId: string }[]
@@ -66,7 +66,7 @@ const V1MigrationCard = ({
 
   return (
     <Form
-      className="border-solid border-smoke-200 bg-smoke-75 py-3 pl-7 pr-4 dark:border-slate-300 dark:bg-slate-400"
+      className="border-smoke-200 bg-smoke-75 py-3 pl-7 pr-4 dark:border-slate-300 dark:bg-slate-400"
       form={form}
       initialValues={initialValues}
       onFinish={handleOnFinish}

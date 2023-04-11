@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import Loading from 'components/Loading'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -54,11 +53,7 @@ export function FundingCycleHistory() {
     )
 
   return (
-    <Space
-      className="max-h-[80vh] w-full overflow-auto"
-      direction="vertical"
-      size="large"
-    >
+    <div className="flex max-h-[80vh] flex-col gap-6 overflow-auto">
       {pastFundingCycles.map(([fundingCycle, fundingCycleMetadata]) => (
         <PastFundingCycle
           key={fundingCycle.configuration.toString()}
@@ -66,6 +61,6 @@ export function FundingCycleHistory() {
           fundingCycleMetadata={fundingCycleMetadata}
         />
       ))}
-    </Space>
+    </div>
   )
 }

@@ -30,7 +30,7 @@ export function Badge({
     <span
       className={twMerge(
         className,
-        'rounded-xl py-[0.1rem] px-2 text-xs font-normal dark:border dark:border-solid',
+        'rounded-xl py-[0.1rem] px-2 text-xs font-normal dark:border',
         upperCase ? 'uppercase' : '',
         badgeClasses,
       )}

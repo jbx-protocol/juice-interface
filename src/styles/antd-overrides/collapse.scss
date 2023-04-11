@@ -5,6 +5,7 @@
     @apply stroke-secondary;
 
     .ant-collapse-header {
+      @apply items-center;
       @apply font-medium;
       @apply text-primary;
     }
@@ -136,4 +137,8 @@
 
 .ant-collapse-header-text {
   width: 100%;
+}
+
+.ant-collapse-expand-icon {
+  @apply flex;
 }

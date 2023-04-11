@@ -1,5 +1,4 @@
 import { t, Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import DiffedSplitList from 'components/v2v3/shared/DiffedSplits/DiffedSplitList'
 import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
@@ -78,10 +77,8 @@ export function ReconfigureRichPreview({
           </i>
         )}
       </div>
-      <Space
-        className="my-4 mx-6"
-        size={'middle'}
-        direction={'vertical'}
+      <div
+        className="my-4 mx-6 flex flex-col gap-4"
         onClick={e => e.stopPropagation()}
       >
         <MinimalCollapse header={t`Cycle details`} light>
@@ -96,7 +93,7 @@ export function ReconfigureRichPreview({
             showDiffs={showDiffs}
           />
         </MinimalCollapse>
-        <Space size={'middle'} direction={'vertical'} className="w-2/3">
+        <div className="flex w-2/3 flex-col gap-4">
           <MinimalCollapse header={t`Payouts`} light>
             {distributionLimit?.gt(0) ? (
               <DiffedSplitList
@@ -131,8 +128,8 @@ export function ReconfigureRichPreview({
               </span>
             )}
           </MinimalCollapse>
-        </Space>
-      </Space>
+        </div>
+      </div>
       <LinkToSafeButton transaction={transaction} />
     </div>
   )

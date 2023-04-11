@@ -151,7 +151,7 @@ export function Footer() {
             ))}
           </div>
 
-          <div className="mt-32 flex justify-between border border-b-0 border-r-0 border-l-0 border-solid border-slate-400 pb-16 pt-5">
+          <div className="mt-32 flex justify-between border-t border-slate-400 pb-16 pt-5">
             <span className="text-grey-300">© Juicebox 2023</span>
 
             <div className="flex gap-x-7">

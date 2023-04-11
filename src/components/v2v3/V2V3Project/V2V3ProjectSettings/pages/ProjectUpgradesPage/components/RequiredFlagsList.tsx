@@ -9,7 +9,7 @@ export function RequiredFlagsList() {
     <p>
       <Trans>
         You must enable the following cycle rules:
-        <ul>
+        <ul className="list-disc pl-10">
           {!fundingCycleMetadata?.allowControllerMigration ? (
             <li>Allow Controller Migrations</li>
           ) : null}

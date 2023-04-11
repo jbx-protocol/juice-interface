@@ -1,5 +1,4 @@
 import { t, Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import {
   NFT_PAYMENT_CONFIRMED_QUERY_PARAM,
   NftPostPayModal,
@@ -131,7 +130,7 @@ export function NftRewardsSection() {
     : []
 
   return (
-    <Space direction="vertical" size="large" className="w-full">
+    <div className="flex flex-col gap-6">
       <Header />
 
       {nftsLoading ? (
@@ -177,6 +176,6 @@ export function NftRewardsSection() {
           config={projectMetadata.nftPaymentSuccessModal}
         />
       )}
-    </Space>
+    </div>
   )
 }

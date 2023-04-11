@@ -17,7 +17,7 @@ export default function FundingCycleDrawer({
 }>) {
   return (
     <Drawer {...drawerStyle} open={open} onClose={onClose} destroyOnClose>
-      <h1>{title}</h1>
+      <h1 className="text-2xl">{title}</h1>
       {children}
     </Drawer>
   )

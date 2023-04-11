@@ -16,7 +16,7 @@ export const RulesReview = () => {
   } = useRulesReview()
 
   return (
-    <div className="flex flex-col gap-y-10 pt-5 pb-8 md:grid md:grid-cols-4">
+    <div className="flex flex-col gap-x-5 gap-y-10 pt-5 pb-8 md:grid md:grid-cols-4">
       <ReviewDescription
         title={t`Edit deadline`}
         desc={

@@ -19,7 +19,7 @@ export const AllocationItem = ({
   return (
     <div
       className={twMerge(
-        'select-none rounded-lg border border-solid border-smoke-200 bg-smoke-75 dark:border-slate-300 dark:bg-slate-400',
+        'select-none rounded-lg border border-smoke-200 bg-smoke-75 dark:border-slate-300 dark:bg-slate-400',
         'grid grid-cols-2 py-4 md:grid-cols-12 md:py-0',
         isClickable
           ? 'cursor-pointer transition-colors hover:border-smoke-400 dark:hover:border-slate-100'
@@ -34,8 +34,8 @@ export const AllocationItem = ({
       </div>
       <div
         className={twMerge(
-          'col-span-2 border-t border-l-0 border-r-0 border-b-0 border-solid border-smoke-200 pt-3 pr-3 pl-7',
-          'md:col-span-5 md:col-start-7 md:row-start-1 md:w-full md:justify-self-end md:border-l md:border-t-0 md:text-end',
+          'col-span-2 border-t border-smoke-200 pt-3 pr-3 pl-7',
+          'md:col-span-5 md:col-start-7 md:row-start-1 md:w-full md:justify-self-end md:border-l md:text-end',
           'dark:border-slate-300',
         )}
       >

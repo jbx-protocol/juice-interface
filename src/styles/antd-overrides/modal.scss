@@ -33,6 +33,9 @@
 }
 
 .ant-modal-footer {
+  @apply flex;
+  @apply justify-end;
+
   .ant-btn {
     max-width: 100%;
   }

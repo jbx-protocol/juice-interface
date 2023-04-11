@@ -1,8 +1,13 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
-import { IssueErc20TokenModal } from 'components/modals/IssueErc20TokenModal'
 import RichButton from 'components/buttons/RichButton'
+import {
+  ISSUE_ERC20_EXPLANATION,
+  PROJECT_PAYER_ADDRESS_EXPLANATION,
+} from 'components/Explanations'
+import ExternalLink from 'components/ExternalLink'
+import { IssueErc20TokenModal } from 'components/modals/IssueErc20TokenModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useDeployProjectPayerTx } from 'hooks/v2v3/transactor/DeployProjectPayerTx'
@@ -10,11 +15,6 @@ import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { settingsPagePath } from 'utils/routes'
 import { LaunchProjectPayerModal } from './LaunchProjectPayerModal'
-import ExternalLink from 'components/ExternalLink'
-import {
-  ISSUE_ERC20_EXPLANATION,
-  PROJECT_PAYER_ADDRESS_EXPLANATION,
-} from 'components/Explanations'
 
 export const NEW_DEPLOY_QUERY_PARAM = 'np'
 
@@ -48,7 +48,7 @@ export default function NewDeployModal({
       okText={t`Done`}
       cancelText={t`Close, I'll do these later`}
     >
-      <h2>
+      <h2 className="text-2xl">
         <Trans>Project launch successful</Trans>
       </h2>
       <p>

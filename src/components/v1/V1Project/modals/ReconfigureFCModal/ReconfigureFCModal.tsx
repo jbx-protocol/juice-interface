@@ -334,7 +334,7 @@ export default function ReconfigureFCModal({
           return (
             <div
               className={classNames(
-                'flex cursor-pointer justify-between rounded-sm border border-solid p-2',
+                'flex cursor-pointer justify-between rounded-sm border p-2',
                 active
                   ? 'border-bluebs-500 dark:border-bluebs-300'
                   : 'border-[#32c8db44] dark:border-[#e1e0e844]',

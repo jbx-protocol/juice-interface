@@ -56,7 +56,7 @@ export default function Payments() {
           {events?.map((e, i) => (
             <div
               className={classNames(
-                'mb-2 border-x-0 border-t-0 border-b border-solid border-smoke-200 pb-5 dark:border-grey-600',
+                'mb-2 border-b border-smoke-200 pb-5 dark:border-grey-600',
                 i !== 0 ? 'pt-2' : '',
               )}
               key={e.id}

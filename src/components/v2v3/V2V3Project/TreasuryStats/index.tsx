@@ -1,4 +1,4 @@
-import { Skeleton, Space } from 'antd'
+import { Skeleton } from 'antd'
 import FundingProgressBar from 'components/Project/FundingProgressBar'
 import { VolumeStatLine } from 'components/Project/VolumeStatLine'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -28,7 +28,7 @@ export default function TreasuryStats() {
   const fundingProgressBarLoading = overflowLoading || distributionLimitLoading
 
   return (
-    <Space className="flex" direction="vertical">
+    <div className="flex flex-col gap-2">
       <VolumeStatLine totalVolume={totalVolume} />
       <ProjectBalance />
       <DistributedRatio />
@@ -47,6 +47,6 @@ export default function TreasuryStats() {
         ) : null}
       </Skeleton>
       <OwnerBalance />
-    </Space>
+    </div>
   )
 }

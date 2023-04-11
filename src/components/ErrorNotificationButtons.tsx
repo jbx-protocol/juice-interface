@@ -1,6 +1,6 @@
 import { WarningOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button } from 'antd'
 import LanguageProvider from 'contexts/Language/LanguageProvider'
 import { helpPagePath } from 'utils/routes'
 import ExternalLink from './ExternalLink'
@@ -15,7 +15,7 @@ const resetSite = () => {
 export default function ErrorNotificationButtons() {
   return (
     <LanguageProvider>
-      <Space size="middle">
+      <div className="flex items-center gap-5">
         <ExternalLink
           className="text-grey-900 hover:underline dark:text-slate-100"
           href={helpPagePath('/user/resources/troubleshoot/')}
@@ -27,7 +27,7 @@ export default function ErrorNotificationButtons() {
             <Trans>Reset website</Trans>
           </span>
         </Button>
-      </Space>
+      </div>
     </LanguageProvider>
   )
 }

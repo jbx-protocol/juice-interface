@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
-import { Space } from 'antd'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
@@ -29,7 +28,7 @@ export default function FundingCycleDetails({
   mintRateZeroAsUnchanged?: boolean
 }) {
   return (
-    <Space className="w-full" direction="vertical" size="middle">
+    <div className="flex flex-col gap-4">
       <FundingCycleDetailsRow
         header={t`Cycle`}
         items={
@@ -70,6 +69,6 @@ export default function FundingCycleDetails({
           }
         />
       ) : null}
-    </Space>
+    </div>
   )
 }

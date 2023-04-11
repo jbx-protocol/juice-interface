@@ -1,6 +1,6 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Form, Space } from 'antd'
+import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import { CREATE_FLOW } from 'constants/fathomEvents'
@@ -56,7 +56,7 @@ export const ProjectTokenPage: React.FC = () => {
       }}
       scrollToFirstError
     >
-      <Space className="w-full" direction="vertical" size="large">
+      <div className="flex flex-col gap-6">
         <Form.Item noStyle name="selection">
           <Selection className="w-full" defocusOnSelect>
             <Selection.Card
@@ -95,7 +95,7 @@ export const ProjectTokenPage: React.FC = () => {
             to claim. This is optional.
           </Trans>
         </Callout.Info>
-      </Space>
+      </div>
       <Wizard.Page.ButtonControl isNextEnabled={isNextEnabled} />
     </Form>
   )

@@ -1,6 +1,6 @@
 import { WarningOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button } from 'antd'
 import { useWallet } from 'hooks/Wallet'
 
 import WalletMenu from './WalletMenu'
@@ -24,22 +24,20 @@ export default function WalletButton() {
 
   if (!userAddress) return null
 
-  if (chainUnsupported) {
-    return (
-      <Space>
+  return (
+    <div className="flex items-center gap-2">
+      {chainUnsupported && (
         <Button
-          className="border border-solid border-warning-200 bg-warning-50 text-warning-800 dark:border-warning-500 dark:bg-warning-900 dark:text-warning-100"
+          className="border border-warning-200 bg-warning-50 text-warning-800 dark:border-warning-500 dark:bg-warning-900 dark:text-warning-100"
           size="small"
           icon={<WarningOutlined className="text-warning-500" />}
           onClick={changeNetworks}
         >
           Wrong network
         </Button>
+      )}
 
-        <WalletMenu userAddress={userAddress} />
-      </Space>
-    )
-  }
-
-  return <WalletMenu userAddress={userAddress} />
+      <WalletMenu userAddress={userAddress} />
+    </div>
+  )
 }

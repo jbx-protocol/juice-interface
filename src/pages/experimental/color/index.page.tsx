@@ -20,7 +20,7 @@ const ColorGradient = ({ gradient }: { gradient: Gradient }) => {
   return (
     <>
       <div className="col-span-1 flex">
-        <h2 className="text-base">{gradient.name}</h2>
+        <h2 className="text-base text-2xl">{gradient.name}</h2>
       </div>
       <div className="col-span-11 flex flex-row gap-6">
         {gradient.colors.map(({ name, color }) => (

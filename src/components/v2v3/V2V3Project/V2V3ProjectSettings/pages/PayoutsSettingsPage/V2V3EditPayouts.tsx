@@ -1,5 +1,4 @@
 import { t, Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import { CsvUpload } from 'components/inputs/CsvUpload'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { Split } from 'models/splits'
@@ -108,7 +107,7 @@ export const V2V3EditPayouts = ({
 
   return (
     <div className="flex flex-col gap-4">
-      <Space className="mb-8 w-full" direction="vertical" size="middle">
+      <div className="mb-8 flex flex-col gap-4">
         <div>
           <Trans>
             Set payouts as percentages of the total amount being paid out.
@@ -117,7 +116,7 @@ export const V2V3EditPayouts = ({
         <Callout.Info>
           <Trans>Changes to payouts will take effect immediately.</Trans>
         </Callout.Info>
-      </Space>
+      </div>
 
       <CsvUpload
         onChange={onCsvUpload}
@@ -131,7 +130,7 @@ export const V2V3EditPayouts = ({
         allocationCurrency={distributionLimitCurrency}
         totalAllocationAmount={distributionLimit}
       >
-        <Space className="w-full" direction="vertical" size="middle">
+        <div className="flex flex-col gap-4">
           <OwnerPayoutCard payoutsSelection={payoutsSelection} />
           <Allocation.List
             allocationName={t`payout`}
@@ -167,7 +166,7 @@ export const V2V3EditPayouts = ({
               </>
             )}
           </Allocation.List>
-        </Space>
+        </div>
       </Allocation>
 
       <div

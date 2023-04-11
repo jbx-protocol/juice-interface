@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Space } from 'antd'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import DiffedSplitList from 'components/v2v3/shared/DiffedSplits/DiffedSplitList'
 import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
@@ -76,10 +75,8 @@ export function ReconfigurePreview({
   )
 
   return (
-    <Space
-      className="mx-6 mb-4 w-full"
-      size={'middle'}
-      direction={'vertical'}
+    <div
+      className="mx-6 mb-4 flex flex-col gap-4"
       onClick={e => e.stopPropagation()}
     >
       <MinimalCollapse header={t`Funding cycle details`} light>
@@ -91,44 +88,42 @@ export function ReconfigurePreview({
           showDiffs
         />
       </MinimalCollapse>
-      <Space size={'middle'} direction={'vertical'} className="w-2/3">
-        <MinimalCollapse header={t`Funding distribution`} light>
-          {distributionLimit?.gt(0) ? (
-            <DiffedSplitList
-              splits={payoutSplits}
-              diffSplits={currentPayoutSplits}
-              currency={distributionLimitCurrency}
-              totalValue={distributionLimit}
-              projectOwnerAddress={projectOwnerAddress}
-              showAmounts={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
-              valueFormatProps={{ precision: 4 }}
-              showDiffs
-            />
-          ) : (
-            <span className="text-grey-400 dark:text-slate-200">
-              <Trans>No distributions configured.</Trans>
-            </span>
-          )}
-        </MinimalCollapse>
-        <MinimalCollapse header={t`Reserved token allocation`} light>
-          {fundingCycleMetadata.reservedRate?.gt(0) ? (
-            <DiffedSplitList
-              splits={reserveSplits}
-              diffSplits={currentReserveSplits}
-              projectOwnerAddress={projectOwnerAddress}
-              totalValue={undefined}
-              reservedRate={formattedReservedRate}
-              showDiffs
-            />
-          ) : (
-            <span className="text-grey-400 dark:text-slate-200">
-              <Trans>No reserved tokens configured.</Trans>
-            </span>
-          )}
-        </MinimalCollapse>
-      </Space>
+      <MinimalCollapse className="w-2/3" header={t`Funding distribution`} light>
+        {distributionLimit?.gt(0) ? (
+          <DiffedSplitList
+            splits={payoutSplits}
+            diffSplits={currentPayoutSplits}
+            currency={distributionLimitCurrency}
+            totalValue={distributionLimit}
+            projectOwnerAddress={projectOwnerAddress}
+            showAmounts={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
+            valueFormatProps={{ precision: 4 }}
+            showDiffs
+          />
+        ) : (
+          <span className="text-grey-400 dark:text-slate-200">
+            <Trans>No distributions configured.</Trans>
+          </span>
+        )}
+      </MinimalCollapse>
+      <MinimalCollapse header={t`Reserved token allocation`} light>
+        {fundingCycleMetadata.reservedRate?.gt(0) ? (
+          <DiffedSplitList
+            splits={reserveSplits}
+            diffSplits={currentReserveSplits}
+            projectOwnerAddress={projectOwnerAddress}
+            totalValue={undefined}
+            reservedRate={formattedReservedRate}
+            showDiffs
+          />
+        ) : (
+          <span className="text-grey-400 dark:text-slate-200">
+            <Trans>No reserved tokens configured.</Trans>
+          </span>
+        )}
+      </MinimalCollapse>
 
       {nftRewards ? <NftSummarySection /> : null}
-    </Space>
+    </div>
   )
 }

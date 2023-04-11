@@ -1,5 +1,5 @@
 import { plural } from '@lingui/macro'
-import { Button, Space } from 'antd'
+import { Button } from 'antd'
 import { PROJECT_PAYER_ADDRESS_EXPLANATION } from 'components/Explanations'
 import { PaymentAddressesModal } from 'components/v2v3/V2V3Project/modals/PaymentAddressesModal'
 import { LaunchProjectPayerButton } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer/PaymentAddressSection/LaunchProjectPayerButton'
@@ -26,7 +26,7 @@ export function PaymentAddressSection({
   return (
     <>
       <p>{PROJECT_PAYER_ADDRESS_EXPLANATION}</p>
-      <Space className="flex-wrap">
+      <div className="flex flex-wrap gap-2">
         <LaunchProjectPayerButton
           useDeployProjectPayerTx={useDeployProjectPayerTx}
         />
@@ -48,7 +48,7 @@ export function PaymentAddressSection({
             />
           </>
         )}
-      </Space>
+      </div>
     </>
   )
 }

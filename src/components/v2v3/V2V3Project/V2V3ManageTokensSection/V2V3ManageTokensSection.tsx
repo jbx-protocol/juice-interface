@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Descriptions, Space } from 'antd'
+import { Descriptions } from 'antd'
 import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
 import SectionHeader from 'components/SectionHeader'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -55,7 +55,7 @@ export function V2V3ManageTokensSection() {
   })
 
   return (
-    <Space direction="vertical" size="small">
+    <div className="flex flex-col gap-2">
       <div className="flex flex-wrap justify-between gap-x-1">
         <SectionHeader
           text={<Trans>Tokens</Trans>}
@@ -109,6 +109,6 @@ export function V2V3ManageTokensSection() {
           </>
         ) : null}
       </Descriptions>
-    </Space>
+    </div>
   )
 }

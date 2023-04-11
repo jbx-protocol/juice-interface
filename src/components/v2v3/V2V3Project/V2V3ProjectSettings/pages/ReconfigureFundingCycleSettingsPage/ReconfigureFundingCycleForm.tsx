@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Divider, Form, Input, Space } from 'antd'
+import { Divider, Form, Input } from 'antd'
 import RichButton, { RichButtonProps } from 'components/buttons/RichButton'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
@@ -40,7 +40,7 @@ function ReconfigureButton({
       {...props}
       className={
         reconfigureHasChanges
-          ? 'border-2 border-solid border-bluebs-500 dark:border dark:border-bluebs-500'
+          ? 'border-2 border-bluebs-500 dark:border dark:border-bluebs-500'
           : ''
       }
     />
@@ -113,7 +113,7 @@ export function V2V3ReconfigureFundingCycleForm() {
 
   return (
     <>
-      <Space direction="vertical" size="middle" className="w-full">
+      <div className="flex flex-col gap-4">
         <V2V3ReconfigureUpcomingMessage />
 
         <ReconfigureButton
@@ -216,7 +216,7 @@ export function V2V3ReconfigureFundingCycleForm() {
         />
 
         {nftDrawerHasSavedChanges && !nftDeployerCanReconfigure ? (
-          <Space className="mt-4" size="middle" direction="vertical">
+          <div className="mt-4 flex flex-col gap-4">
             <div className="flex">
               <span className="mr-1">1.</span>
               <SetNftOperatorPermissionsButton
@@ -234,15 +234,16 @@ export function V2V3ReconfigureFundingCycleForm() {
                 }
               />
             </div>
-          </Space>
+          </div>
         ) : (
           <DeployConfigurationButton
+            className="max-w-fit"
             loading={reconfigureLoading}
             onClick={reconfigureFundingCycle}
             disabled={!fundingHasSavedChanges && !nftsWithFalseDataSourceForPay}
           />
         )}
-      </Space>
+      </div>
 
       <FundingDrawer
         open={fundingDrawerVisible}

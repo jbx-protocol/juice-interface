@@ -1,5 +1,4 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Space } from 'antd'
 import { Split } from 'models/splits'
 import { useMemo } from 'react'
 import {
@@ -61,7 +60,7 @@ export default function DiffedSplitList({
   }
 
   return (
-    <Space direction="vertical" size={5} className="w-full">
+    <div className="flex flex-col gap-1">
       {[...uniqueSplits].map(split => {
         return (
           <DiffedSplitItem
@@ -84,6 +83,6 @@ export default function DiffedSplitList({
           }}
         />
       ) : null}
-    </Space>
+    </div>
   )
 }

@@ -23,7 +23,7 @@ export default function Banner({
     warning: {
       textClasses: 'text-warning-800  dark:text-warning-200',
       backgroundClasses:
-        'bg-warning-200 dark:bg-warning-800 border border-solid border-warning-800 dark:border-warning-200',
+        'bg-warning-200 dark:bg-warning-800 border border-warning-800 dark:border-warning-200',
     },
     info: {
       textClasses: '',

@@ -41,7 +41,7 @@ export default function ReconfigurationStrategyDrawer({
       width={width}
       onClose={onClose}
     >
-      <h1>
+      <h1 className="text-2xl">
         <Trans>Edit deadline</Trans>
       </h1>
       <p className="text-grey-500 dark:text-grey-300">

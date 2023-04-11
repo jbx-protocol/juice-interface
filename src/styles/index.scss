@@ -1,5 +1,5 @@
 /* Disable for now - this causes opinionated settings by tailwind (which we want eventually) - need to update all classes before we can do this */
-/* @tailwind base; */
+@tailwind base;
 @import './fonts';
 @tailwind components;
 @tailwind utilities;

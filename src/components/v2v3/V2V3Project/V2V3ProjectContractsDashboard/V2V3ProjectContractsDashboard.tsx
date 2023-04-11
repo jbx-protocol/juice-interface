@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { Table } from 'antd'
-import { BackToProjectButton } from 'components/buttons/BackToProjectButton'
 import EtherscanLink from 'components/EtherscanLink'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
+import { BackToProjectButton } from 'components/buttons/BackToProjectButton'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -106,7 +106,7 @@ export function V2V3ProjectContractsDashboard() {
           projectPageUrl={v2v3ProjectRoute({ projectId, handle })}
         />
       </div>
-      <h2 className="text-grey-900 dark:text-slate-100">
+      <h2 className="text-2xl text-grey-900 dark:text-slate-100">
         <Trans>Project contracts</Trans>
       </h2>
       <Table dataSource={dataSource} columns={columns} pagination={false} />

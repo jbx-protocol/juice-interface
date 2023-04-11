@@ -1,4 +1,3 @@
-import { Space } from 'antd'
 import FormItemWarningText from 'components/FormItemWarningText'
 import {
   OWNER_MINTING_EXPLANATION,
@@ -11,11 +10,11 @@ export default function TokenMintingExtra({
   showMintingWarning: boolean
 }) {
   return (
-    <Space direction="vertical">
+    <div className="flex flex-col gap-2">
       {OWNER_MINTING_EXPLANATION}
       {showMintingWarning && (
         <FormItemWarningText>{OWNER_MINTING_RISK}</FormItemWarningText>
       )}
-    </Space>
+    </div>
   )
 }

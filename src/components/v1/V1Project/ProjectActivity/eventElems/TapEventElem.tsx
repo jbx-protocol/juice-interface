@@ -8,6 +8,7 @@ import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { getAddress } from 'ethers/lib/utils'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
+import { isEqualAddress } from 'utils/address'
 
 export default function TapEventElem({
   event,
@@ -69,18 +70,12 @@ export default function TapEventElem({
           {payoutEvents?.map(e => (
             <div
               key={e.id}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'baseline',
-              }}
-              className="text-sm"
+              className="flex items-baseline justify-between text-sm"
             >
-              <div style={{ fontWeight: 500 }}>
+              <div className="font-medium">
                 {e.modProjectId > 0 ? (
-                  <span>
-                    {getAddress(e.modAllocator) ===
-                    getAddress(V1_V3_ALLOCATOR_ADDRESS) ? (
+                  <span className="inline-flex">
+                    {isEqualAddress(e.modAllocator, V1_V3_ALLOCATOR_ADDRESS) ? (
                       <V2V3ProjectLink
                         projectId={e.modProjectId}
                         allocator={getAddress(e.modAllocator)}

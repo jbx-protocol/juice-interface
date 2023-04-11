@@ -1,11 +1,13 @@
+import { BellFilled, BellOutlined } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import SkeletonButton from 'antd/lib/skeleton/Button'
 import { TooltipPlacement } from 'antd/lib/tooltip'
+import { Badge } from 'components/Badge'
 import { ModalProvider } from 'contexts/Modal'
 import { twMerge } from 'tailwind-merge'
-import { useSubscribeButton } from './hooks/useSubscribeButton'
-import { SubscribeButtonIcon } from './SubscribeButtonIcon'
 import { SubscribeModal } from './SubscribeModal'
+import { useSubscribeButton } from './hooks/useSubscribeButton'
 
 interface SubscribeButtonProps {
   projectId: number
@@ -30,7 +32,7 @@ const _SubscribeButton = ({
   if (loading) return <SkeletonButton active size="small" />
 
   return (
-    <>
+    <div className="flex flex-nowrap items-center">
       <Tooltip
         placement={tooltipPlacement}
         title={
@@ -43,13 +45,16 @@ const _SubscribeButton = ({
           className={twMerge('p-0', className)}
           type="text"
           onClick={onSubscribeButtonClicked}
-        >
-          <SubscribeButtonIcon isSubscribed={isSubscribed} />
-        </Button>
+          icon={isSubscribed ? <BellFilled /> : <BellOutlined />}
+        />
       </Tooltip>
-
+      <span>
+        <Badge variant="info">
+          <Trans>New</Trans>
+        </Badge>
+      </span>
       <SubscribeModal />
-    </>
+    </div>
   )
 }
 

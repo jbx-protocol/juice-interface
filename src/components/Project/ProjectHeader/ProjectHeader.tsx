@@ -140,7 +140,7 @@ export function ProjectHeader({
         </div>
       )}
 
-      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-y-3 py-5 px-5 md:grid-cols-6 md:px-0">
+      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-y-3 gap-x-2 py-5 px-5 md:grid-cols-6 md:px-0">
         <div className="mx-auto flex flex-col md:col-span-1 md:row-span-3 md:flex-row">
           <ProjectLogo
             className={twMerge(

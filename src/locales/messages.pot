@@ -29,6 +29,9 @@ msgstr ""
 msgid "1-day deadline"
 msgstr ""
 
+msgid "1. Create your project"
+msgstr ""
+
 msgid "1. Get funded"
 msgstr ""
 
@@ -50,6 +53,9 @@ msgstr ""
 msgid "2. Deploy V3 Migration Token"
 msgstr ""
 
+msgid "2. Manage your funds"
+msgstr ""
+
 msgid "2. Set text record"
 msgstr ""
 
@@ -57,6 +63,9 @@ msgid "24 hours"
 msgstr ""
 
 msgid "3-day deadline"
+msgstr ""
+
+msgid "3. Build your community"
 msgstr ""
 
 msgid "3. Stay flexible"
@@ -437,6 +446,9 @@ msgstr ""
 msgid "An address is required"
 msgstr ""
 
+msgid "An all-in-one crowdfunding with powerful treasury management and redemptions."
+msgstr ""
+
 msgid "An issuance reduction rate"
 msgstr ""
 
@@ -530,6 +542,9 @@ msgstr ""
 msgid "Basic Token Rules"
 msgstr ""
 
+msgid "Battle tested"
+msgstr ""
+
 msgid "Beneficiary"
 msgstr ""
 
@@ -545,7 +560,13 @@ msgstr ""
 msgid "Block number"
 msgstr ""
 
+msgid "Build and launch your NFT project right here on Juicebox with built-in redemptions."
+msgstr ""
+
 msgid "Build your project"
+msgstr ""
+
+msgid "Built for ideas like yours"
 msgstr ""
 
 msgid "Built for:"
@@ -701,6 +722,9 @@ msgstr ""
 msgid "Collection symbol"
 msgstr ""
 
+msgid "Community owned"
+msgstr ""
+
 msgid "Configuration rules"
 msgstr ""
 
@@ -759,6 +783,9 @@ msgid "Contact WAGMI Studios"
 msgstr ""
 
 msgid "Contact a contributor"
+msgstr ""
+
+msgid "Contact onboarding"
 msgstr ""
 
 msgid "Contract"
@@ -849,6 +876,9 @@ msgid "Created a project payer address"
 msgstr ""
 
 msgid "Created project"
+msgstr ""
+
+msgid "Creators & builders"
 msgstr ""
 
 msgid "Crowdfund your project with ETH. When someone pays your project, they'll receive your project's tokens (or NFTs) — use tokens to grant governance rights, community access, or other membership perks."
@@ -1292,6 +1322,9 @@ msgstr ""
 msgid "Export this cycle's payouts to CSV."
 msgstr ""
 
+msgid "Extensible"
+msgstr ""
+
 msgid "External link"
 msgstr ""
 
@@ -1340,13 +1373,22 @@ msgstr ""
 msgid "Find a project"
 msgstr ""
 
+msgid "Flexible"
+msgstr ""
+
 msgid "For faster responses, join our <0>Discord server</0>."
+msgstr ""
+
+msgid "Free to launch, just pay gas."
 msgstr ""
 
 msgid "Fund and operate your thing, your way."
 msgstr ""
 
 msgid "Fund anything."
+msgstr ""
+
+msgid "Fund your thing"
 msgstr ""
 
 msgid "Funding"
@@ -1377,6 +1419,9 @@ msgid "Get help planning or setting up my project."
 msgstr ""
 
 msgid "Get notified when a contributor supports this project"
+msgstr ""
+
+msgid "Get paid in ETH, program your own payouts, token issuance, and redemptions to easily run your treasury completely on-chain — as your community grows, you can update your treasury’s rules to grow with it."
 msgstr ""
 
 msgid "GitHub"
@@ -1434,6 +1479,9 @@ msgid "Hours"
 msgstr ""
 
 msgid "How Juicebox Works"
+msgstr ""
+
+msgid "How Juicebox works"
 msgstr ""
 
 msgid "How decentralized is Juicebox?"
@@ -1571,16 +1619,28 @@ msgstr ""
 msgid "Issue as ERC-20"
 msgstr ""
 
+msgid "Issue tokens or NFTs to your supporters and use them for governance, token-gated websites, or redemptions. With flexible token issuance and redemption, your project automatically scales to meet your supporters’ demand."
+msgstr ""
+
+msgid "It's fast, powerful and easy to use. Launch your project and get funded in minutes."
+msgstr ""
+
 msgid "JB721Delegate v{version}"
 msgstr ""
 
 msgid "JBX membership fee ({0}%):"
 msgstr ""
 
+msgid "Join 1,000+ projects growing with Juicebox"
+msgstr ""
+
 msgid "Join <0>hundreds of projects</0> sippin' the Juice."
 msgstr ""
 
 msgid "Join our Discord"
+msgstr ""
+
+msgid "Join thousands of projects using Juicebox to fund, operate, and scale their ideas & communities transparently on Ethereum."
 msgstr ""
 
 msgid "Juicebox"
@@ -1593,6 +1653,24 @@ msgid "Juicebox Project ID"
 msgstr ""
 
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building."
+msgstr ""
+
+msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building. Join sippin' the Juice."
+msgstr ""
+
+msgid "Juicebox is as versatile as you are, build anything from an NFT project to a boutique crypto lawfirm and everything in between."
+msgstr ""
+
+msgid "Juicebox is non-custodial, meaning you have complete ownership over your project and its funds. Easily customize your own on-chain rules."
+msgstr ""
+
+msgid "Juicebox is owned and governed by the people — its builders, supporters, and project creators using the protocol."
+msgstr ""
+
+msgid "Juicebox is reliable, open-source, audited, and has been battle-tested by more than 1,000 projects raising over 50,000 ETH."
+msgstr ""
+
+msgid "Juicebox is the best-in-class tool for crowdfunding your project with ETH – build your supporters’ trust by transparently setting up payouts, token issuance, redemption, and other rules in advance."
 msgstr ""
 
 msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks </2>of crypto fundraising!"
@@ -1608,6 +1686,9 @@ msgid "Juicebox projects use <0>ENS names</0> as handles. Projects with a handle
 msgstr ""
 
 msgid "JuiceboxDAO"
+msgstr ""
+
+msgid "Juicy picks"
 msgstr ""
 
 msgid "LINK TO NFT"
@@ -1634,10 +1715,16 @@ msgstr ""
 msgid "Launch V3 migration token"
 msgstr ""
 
+msgid "Launch a Decentralised Autonomous Organisation with governance in minutes."
+msgstr ""
+
 msgid "Launch cycle"
 msgstr ""
 
 msgid "Launch cycles for {projectTitle}"
+msgstr ""
+
+msgid "Launch now, update later."
 msgstr ""
 
 msgid "Launch {projectTitle}"
@@ -1832,6 +1919,9 @@ msgstr ""
 msgid "My projects"
 msgstr ""
 
+msgid "NFT Projects"
+msgstr ""
+
 msgid "NFT mint confirmed"
 msgstr ""
 
@@ -2006,6 +2096,9 @@ msgstr ""
 msgid "Only use lowercase letters"
 msgstr ""
 
+msgid "Open a full-featured Ethereum treasury with programmable spending in minutes."
+msgstr ""
+
 msgid "Optional"
 msgstr ""
 
@@ -2046,6 +2139,9 @@ msgid "Owner tools"
 msgstr ""
 
 msgid "Owner wallet balance"
+msgstr ""
+
+msgid "PAYMENTS"
 msgstr ""
 
 msgid "Paid"
@@ -2213,6 +2309,9 @@ msgstr ""
 msgid "Payouts: {fundingTarget}"
 msgstr ""
 
+msgid "Peep our selection of top trending projects this month."
+msgstr ""
+
 msgid "Percent"
 msgstr ""
 
@@ -2226,6 +2325,9 @@ msgid "Percentages"
 msgstr ""
 
 msgid "Percentages must add up to 100% or less"
+msgstr ""
+
+msgid "Personalized onboarding."
 msgstr ""
 
 msgid "Please check {lastEmailUpdated} and verify your new email address.<0/>Still no email after a couple of minutes? <1>Click here to resend.</1>"
@@ -2444,6 +2546,9 @@ msgstr ""
 msgid "Read more"
 msgstr ""
 
+msgid "Read the docs"
+msgstr ""
+
 msgid "Receive ERC-20"
 msgstr ""
 
@@ -2619,6 +2724,9 @@ msgid "SOLD OUT"
 msgstr ""
 
 msgid "Safe transactions"
+msgstr ""
+
+msgid "Safe, Snapshot, or even on-chain governance: Juicebox uses simple standards and works with all of your favorite Ethereum tools."
 msgstr ""
 
 msgid "Save"
@@ -2907,6 +3015,9 @@ msgid "Subscribe to Juicenews to get the latest updates from the Juicebox ecosys
 msgstr ""
 
 msgid "Subscribe to project activity"
+msgstr ""
+
+msgid "Success stories"
 msgstr ""
 
 msgid "Successfully subscribed to Juicenews!"
@@ -3365,6 +3476,9 @@ msgstr ""
 msgid "Troubleshoot"
 msgstr ""
 
+msgid "Trust minimized"
+msgstr ""
+
 msgid "Twitter"
 msgstr ""
 
@@ -3497,6 +3611,9 @@ msgstr ""
 msgid "V3 Project ID"
 msgstr ""
 
+msgid "VOLUME"
+msgstr ""
+
 msgid "Version of the terminal contract used by this project."
 msgstr ""
 
@@ -3560,6 +3677,9 @@ msgstr ""
 msgid "What's Juicebox?"
 msgstr ""
 
+msgid "Whatever you’re building or creating — get it launched and funded on Juicebox."
+msgstr ""
+
 msgid "When checked, payments made through this address will mint the project's ERC-20 tokens. Payments will incur slightly higher gas fees. When unchecked, the Juicebox protocol will internally track the beneficiary's tokens, and they can claim their ERC-20 tokens at any time."
 msgstr ""
 
@@ -3582,6 +3702,9 @@ msgid "When someone pays your project 1 ETH:"
 msgstr ""
 
 msgid "Where to Contact You"
+msgstr ""
+
+msgid "Whether you’re building a boutique crypto law firm or the next mega-fundraiser, Juicebox is customizable to match your needs."
 msgstr ""
 
 msgid "While enabled, NFTs can be redeemed to reclaim some of the ETH that isn't needed for payouts. While enabled, it won't be possible to redeem tokens."
@@ -3609,6 +3732,9 @@ msgid "While transfers are paused, this project's tokens can't be transferred to
 msgstr ""
 
 msgid "Who is Peel? Who is JuiceboxDAO?"
+msgstr ""
+
+msgid "Why Juicebox?"
 msgstr ""
 
 msgid "Why do you need this permission?"

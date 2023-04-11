@@ -198,6 +198,7 @@ export function useTrendingProjects(count: number) {
     keys: [
       ...DEFAULT_ENTITY_KEYS,
       'trendingScore',
+      'paymentsCount',
       'trendingPaymentsCount',
       'trendingVolume',
       'createdWithinTrendingWindow',

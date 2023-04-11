@@ -48,7 +48,7 @@ export default function ProjectLogo({
     >
       {validImg ? (
         <img
-          className="max-h-full max-w-full object-cover object-center"
+          className="h-full w-full object-cover object-center"
           src={imageSrc}
           alt={name + ' logo'}
           onError={() => setSrcLoadError(true)}

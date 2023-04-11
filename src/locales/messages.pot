@@ -485,10 +485,10 @@ msgstr ""
 msgid "Attach a sticker"
 msgstr ""
 
-msgid "Automated"
+msgid "Attach an on-chain message to this payment."
 msgstr ""
 
-msgid "Automatically receive this project's ERC-20 tokens. Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
+msgid "Automated"
 msgstr ""
 
 msgid "Available after fee:"
@@ -642,6 +642,9 @@ msgid "Choose an ENS name to use as the project's handle. Subdomains are allowed
 msgstr ""
 
 msgid "Choose how you would like to set up payouts."
+msgstr ""
+
+msgid "Choose wallet"
 msgstr ""
 
 msgid "Choosing 'None' will clear your payout recipients and reset other payout options."
@@ -1106,6 +1109,9 @@ msgstr ""
 msgid "Each cycle, the project will issue {discountRate}% fewer tokens per ETH."
 msgstr ""
 
+msgid "Edit"
+msgstr ""
+
 msgid "Edit Cycle"
 msgstr ""
 
@@ -1457,7 +1463,7 @@ msgstr ""
 msgid "How your project will be paid and pay out ETH."
 msgstr ""
 
-msgid "I accept this project's <0>unique risks</0>."
+msgid "I accept the <0>risks</0> associated with the Juicebox protocol."
 msgstr ""
 
 msgid "I have a media inquiry."
@@ -1473,6 +1479,9 @@ msgid "I have read and accept the <0>Terms of Service</0> and <1>the risks</1>."
 msgstr ""
 
 msgid "I understand"
+msgstr ""
+
+msgid "I understand and accept the risks associated with <0>this project</0> and the <1>Juicebox Protocol</1>."
 msgstr ""
 
 msgid "If Reserved NFTs are set, the first reserved NFT from the tier will be distributable once the tier receives its first mint."
@@ -1727,6 +1736,9 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
+msgid "Message from {0}"
+msgstr ""
+
 msgid "Message sent!"
 msgstr ""
 
@@ -1769,16 +1781,13 @@ msgstr ""
 msgid "Mint new {tokensLabel} into a wallet. Only a project's owner, a designated operator, or one of the terminal's delegates can mint project tokens."
 msgstr ""
 
-msgid "Mint this project's ERC-20 tokens to your wallet."
+msgid "Mint this project's ERC-20 tokens to your wallet. Leave unchecked to have Juicebox track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
 msgid "Mint tokens"
 msgstr ""
 
 msgid "Mint tokens as ERC-20"
-msgstr ""
-
-msgid "Mint tokens to a custom address."
 msgstr ""
 
 msgid "Mint {0}"
@@ -1845,9 +1854,6 @@ msgid "NFTs detached from project."
 msgstr ""
 
 msgid "NFTs failed to load."
-msgstr ""
-
-msgid "NFTs for you"
 msgstr ""
 
 msgid "NFTs minted for:"
@@ -2063,6 +2069,9 @@ msgstr ""
 msgid "Pay"
 msgstr ""
 
+msgid "Pay <0/>"
+msgstr ""
+
 msgid "Pay amount"
 msgstr ""
 
@@ -2099,9 +2108,6 @@ msgstr ""
 msgid "Payer issuance rate"
 msgstr ""
 
-msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. <1>{1}</1> determines any value or utility of the tokens you receive."
-msgstr ""
-
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 msgstr ""
 
@@ -2124,9 +2130,6 @@ msgid "Payment memo"
 msgstr ""
 
 msgid "Payment notice"
-msgstr ""
-
-msgid "Payment options"
 msgstr ""
 
 msgid "Payments"
@@ -2448,6 +2451,9 @@ msgid "Receive ERC-20 tokens"
 msgstr ""
 
 msgid "Receive {receiveText}"
+msgstr ""
+
+msgid "Receive:"
 msgstr ""
 
 msgid "Recently listed"
@@ -3140,9 +3146,6 @@ msgstr ""
 msgid "This project reserves most of its tokens. Supporters won't get many tokens when paying this project."
 msgstr ""
 
-msgid "This project reserves some tokens for recipients set by the project owner."
-msgstr ""
-
 msgid "This project's rules may pose risks for contributors:"
 msgstr ""
 
@@ -3237,9 +3240,6 @@ msgid "Tokens are burned when they are redeemed."
 msgstr ""
 
 msgid "Tokens cannot be claimed because the project owner has not issued an ERC-20 for this project."
-msgstr ""
-
-msgid "Tokens for you"
 msgstr ""
 
 msgid "Tokens per ETH contributed"
@@ -3678,9 +3678,6 @@ msgid "You must grant permission to migrate your V2 tokens."
 msgstr ""
 
 msgid "You must review and accept the risks."
-msgstr ""
-
-msgid "You receive these NFTs for contributing <0>{0} ETH or more</0>."
 msgstr ""
 
 msgid "You will receive <0/>"

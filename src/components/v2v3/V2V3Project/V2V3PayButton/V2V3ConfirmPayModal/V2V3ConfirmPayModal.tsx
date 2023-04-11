@@ -1,22 +1,20 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
-import { Callout } from 'components/Callout'
+import ETHAmount from 'components/currency/ETHAmount'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
-import Paragraph from 'components/Paragraph'
 import TransactionModal from 'components/TransactionModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/PayETHPaymentTerminalTx'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { emitErrorNotification } from 'utils/notifications'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { useDelegateMetadata } from './hooks/DelegateMetadata'
 import { useNftRewardTiersToMint } from './hooks/NftRewardTiersToMint'
-import { SummaryTable } from './SummaryTable'
 import { V2V3PayForm, V2V3PayFormType } from './V2V3PayForm'
 
 export function V2V3ConfirmPayModal({
@@ -35,8 +33,6 @@ export function V2V3ConfirmPayModal({
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [form] = useForm<V2V3PayFormType>()
 
-  const payProjectTx = usePayETHPaymentTerminalTx()
-
   const router = useRouter()
   const {
     userAddress,
@@ -47,8 +43,28 @@ export function V2V3ConfirmPayModal({
   } = useWallet()
   const delegateMetadata = useDelegateMetadata()
   const nftRewardTiers = useNftRewardTiersToMint()
+  const payProjectTx = usePayETHPaymentTerminalTx()
+
+  // Use the userAddress as the beneficiary by default, reset whenever form is opened
+  useEffect(() => {
+    form.setFieldValue('beneficiary', userAddress)
+  }, [userAddress, form, open])
 
   if (!fundingCycle || !projectId || !projectMetadata) return null
+
+  const handleOkButtonClick = async () => {
+    // Prompt wallet connect if no wallet connected
+    if (chainUnsupported) {
+      await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
+      return
+    }
+
+    form.submit()
+  }
 
   const handlePaySuccess = () => {
     onCancel?.()
@@ -79,16 +95,6 @@ export function V2V3ConfirmPayModal({
     } = form.getFieldsValue()
 
     const txBeneficiary = beneficiary ?? userAddress
-
-    // Prompt wallet connect if no wallet connected
-    if (chainUnsupported) {
-      await changeNetworks()
-      return
-    }
-    if (!isConnected) {
-      await connect()
-      return
-    }
 
     setLoading(true)
 
@@ -136,8 +142,14 @@ export function V2V3ConfirmPayModal({
       transactionPending={transactionPending}
       title={t`Pay ${projectMetadata.name}`}
       open={open}
-      onOk={() => form.submit()}
-      okText={t`Pay`}
+      onOk={handleOkButtonClick}
+      okText={
+        <span>
+          <Trans>
+            Pay <ETHAmount amount={weiAmount} />
+          </Trans>
+        </span>
+      }
       connectWalletText={t`Connect wallet to pay`}
       onCancel={() => {
         form.resetFields()
@@ -148,21 +160,11 @@ export function V2V3ConfirmPayModal({
       centered
       destroyOnClose
     >
-      <div className="flex flex-col gap-6">
-        {projectMetadata.payDisclosure && (
-          <Callout.Info className="border border-grey-200 dark:border-grey-400">
-            <strong className="block">
-              <Trans>Notice from {projectMetadata.name}</Trans>
-            </strong>
-            <Paragraph
-              className="text-sm"
-              description={projectMetadata.payDisclosure}
-            />
-          </Callout.Info>
-        )}
-        <SummaryTable weiAmount={weiAmount} />
-        <V2V3PayForm form={form} onFinish={() => executePayTx()} />
-      </div>
+      <V2V3PayForm
+        weiAmount={weiAmount}
+        form={form}
+        onFinish={() => executePayTx()}
+      />
     </TransactionModal>
   )
 }

@@ -29,38 +29,38 @@ export function NftRewardCell({
         const isLink = tier.externalLink
 
         return (
-          <div className="flex items-center justify-between" key={idx}>
-            <div
-              className={`flex ${NFT_DISPLAY_HEIGHT_CLASS} items-center justify-start`}
+          <div
+            className={`flex gap-3 ${NFT_DISPLAY_HEIGHT_CLASS} items-center justify-end`}
+            key={idx}
+          >
+            <ExternalLink
+              className={classNames(
+                'text-black dark:text-grey-100',
+                isLink
+                  ? 'cursor-pointer text-black hover:text-bluebs-500 hover:underline dark:text-grey-100 dark:hover:text-bluebs-500'
+                  : 'cursor-default',
+              )}
+              href={isLink ? tier.externalLink : undefined}
             >
-              <Tooltip
-                title={tier.description}
-                open={tier.description ? undefined : false}
-                className={'pt-0'}
-              >
-                <JuiceVideoThumbnailOrImage
-                  src={ipfsUriToGatewayUrl(tier.fileUrl)}
-                  alt={tier.name}
-                  crossOrigin="anonymous"
-                  heightClass={NFT_DISPLAY_HEIGHT_CLASS}
-                  widthClass={NFT_DISPLAY_WIDTH_CLASS}
-                  playIconPosition="hidden"
-                  showPreviewOnClick
-                />
-              </Tooltip>
-              <ExternalLink
-                className={classNames(
-                  'ml-3 font-medium text-black dark:text-grey-100',
-                  isLink
-                    ? 'cursor-pointer text-black hover:text-bluebs-500 hover:underline dark:text-grey-100 dark:hover:text-bluebs-500'
-                    : 'cursor-default',
-                )}
-                href={isLink ? tier.externalLink : undefined}
-              >
-                {tier.name}
-              </ExternalLink>
-            </div>
-            <div>x {tierCount} </div>
+              {tier.name}
+            </ExternalLink>
+            <div>({tierCount})</div>
+
+            <Tooltip
+              title={tier.description}
+              open={tier.description ? undefined : false}
+              className={'pt-0'}
+            >
+              <JuiceVideoThumbnailOrImage
+                src={ipfsUriToGatewayUrl(tier.fileUrl)}
+                alt={tier.name}
+                crossOrigin="anonymous"
+                heightClass={NFT_DISPLAY_HEIGHT_CLASS}
+                widthClass={NFT_DISPLAY_WIDTH_CLASS}
+                playIconPosition="hidden"
+                showPreviewOnClick
+              />
+            </Tooltip>
           </div>
         )
       })}

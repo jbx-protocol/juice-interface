@@ -1,28 +1,37 @@
+import { CrownOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Checkbox, Form, Input, Modal, Switch } from 'antd'
+import { Button, Checkbox, Form } from 'antd'
 import { FormInstance, FormProps, useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
+import ETHAmount from 'components/currency/ETHAmount'
+import USDAmount from 'components/currency/USDAmount'
+import FormattedAddress from 'components/FormattedAddress'
 import Sticker from 'components/icons/Sticker'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
-import { MinimalCollapse } from 'components/MinimalCollapse'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
+import Paragraph from 'components/Paragraph'
+import { Parenthesis } from 'components/Parenthesis'
 import { StickerSelection } from 'components/Project/StickerSelection'
-import ProjectRiskNotice from 'components/ProjectRiskNotice'
 import TooltipIcon from 'components/TooltipIcon'
 import { ProjectPreferences } from 'constants/projectPreferences'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { isAddress } from 'ethers/lib/utils'
+import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
+import { twJoin } from 'tailwind-merge'
 import { isZeroAddress } from 'utils/address'
 import { classNames } from 'utils/classNames'
-import {
-  getUnsafeV2V3FundingCycleProperties,
-  getV2V3FundingCycleRiskCount,
-} from 'utils/v2v3/fundingCycle'
+import { formatWad, parseWad } from 'utils/format/formatNumber'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { weightAmountPermyriad } from 'utils/v2v3/math'
 import { useNftRewardTiersToMint } from './hooks/NftRewardTiersToMint'
+import { NftRewardCell } from './NftRewardCell'
+import { TCCheckboxContent } from './TCCheckboxContent'
 
 export interface V2V3PayFormType {
   memo?: string
@@ -33,93 +42,153 @@ export interface V2V3PayFormType {
 }
 
 export const V2V3PayForm = ({
+  weiAmount,
   form,
   ...props
 }: {
+  weiAmount: BigNumber | undefined
   form: FormInstance<V2V3PayFormType>
 } & FormProps) => {
-  const { fundingCycle, fundingCycleMetadata } = useContext(V2V3ProjectContext)
+  const { fundingCycle, fundingCycleMetadata, tokenSymbol } =
+    useContext(V2V3ProjectContext)
   const { projectMetadata } = useContext(ProjectMetadataContext)
 
   const [customBeneficiaryEnabled, setCustomBeneficiaryEnabled] =
     useState<boolean>(false)
   const [attachStickerModalVisible, setAttachStickerModalVisible] =
     useState<boolean>(false)
-  const [riskModalVisible, setRiskModalVisible] = useState<boolean>()
-
-  const stickerUrls = useWatch('stickerUrls', form)
-  const nftRewardTiers = useNftRewardTiersToMint()
-
-  const riskCount =
-    fundingCycle && fundingCycleMetadata
-      ? getV2V3FundingCycleRiskCount(fundingCycle, fundingCycleMetadata)
-      : undefined
 
   const hasIssuedTokens = useProjectHasErc20()
+  const nftRewardTiers = useNftRewardTiersToMint()
+  const converter = useCurrencyConverter()
+  const usdAmount = converter.weiToUsd(weiAmount)
+
+  const beneficiary = useWatch('beneficiary', form)
+  const stickerUrls = useWatch('stickerUrls', form)
+
+  const hasStickers = (stickerUrls ?? []).length > 0
   const canAddMoreStickers =
     (stickerUrls ?? []).length < ProjectPreferences.MAX_IMAGES_PAYMENT_MEMO
 
-  useEffect(
-    () => {
-      setCustomBeneficiaryEnabled(Boolean(form.getFieldValue('beneficiary')))
-    },
-    [], // eslint-disable-line react-hooks/exhaustive-deps
+  const tokensReceived = weightAmountPermyriad(
+    fundingCycle?.weight,
+    fundingCycleMetadata?.reservedRate?.toNumber(),
+    weiAmount,
+    'payer',
   )
+  const tokensReceivedFormatted =
+    formatWad(tokensReceived, { precision: 2 }) ?? '0'
+  const tokensText = tokenSymbolText({
+    tokenSymbol,
+    plural: parseFloat(tokensReceived) !== 1,
+  })
+
   return (
     <>
       <Form form={form} layout="vertical" {...props}>
-        <div className="flex flex-col gap-6">
-          {hasIssuedTokens && (
-            <Form.Item
-              name="preferClaimedTokens"
-              valuePropName="checked"
-              className="m-0"
-              extra={
-                <Trans>Mint this project's ERC-20 tokens to your wallet.</Trans>
-              }
-            >
-              <Checkbox>
-                <Trans>Receive ERC-20 tokens</Trans>{' '}
-                <TooltipIcon
-                  tip={
-                    <Trans>
-                      Automatically receive this project's ERC-20 tokens. Leave
-                      unchecked to have Juicebox track your token balance,
-                      saving gas on this transaction. You can claim your ERC-20
-                      tokens later.
-                    </Trans>
-                  }
-                ></TooltipIcon>
-              </Checkbox>
-            </Form.Item>
-          )}
+        <div className="flex flex-col gap-y-6">
+          <div className="flex flex-col gap-y-6">
+            <div className="flex justify-between">
+              <span className="font-medium">
+                <Trans>Amount:</Trans>
+              </span>
+              <span>
+                <ETHAmount amount={weiAmount} />{' '}
+                <Parenthesis>
+                  <USDAmount amount={parseWad(usdAmount)} />
+                </Parenthesis>
+              </span>
+            </div>
 
-          <MinimalCollapse
-            header={<Trans>Payment options</Trans>}
-            defaultOpen={Boolean(nftRewardTiers?.length)}
-          >
+            <div className="flex items-baseline justify-between">
+              <span className="font-medium">
+                <Trans>Receive:</Trans>
+              </span>
+              <div className="text-right">
+                <div className="inline-flex items-baseline">
+                  <Form.Item
+                    hidden={!customBeneficiaryEnabled}
+                    className="w-full"
+                    name="beneficiary"
+                    rules={[
+                      {
+                        validator: (_, value) => {
+                          if (!value || !isAddress(value)) {
+                            return Promise.reject('Address is required')
+                          }
+                          if (isZeroAddress(value)) {
+                            return Promise.reject('Cannot use zero address')
+                          }
+                          return Promise.resolve()
+                        },
+                        validateTrigger: 'onCreate',
+                        required: true,
+                      },
+                    ]}
+                  >
+                    <EthAddressInput />
+                  </Form.Item>
+
+                  {beneficiary && !customBeneficiaryEnabled && (
+                    <FormattedAddress address={beneficiary} />
+                  )}
+
+                  {customBeneficiaryEnabled ? (
+                    <Button
+                      className="pr-0"
+                      type="text"
+                      size="small"
+                      onClick={() => setCustomBeneficiaryEnabled(false)}
+                    >
+                      <Trans>Save</Trans>
+                    </Button>
+                  ) : (
+                    <Button
+                      className="pr-0"
+                      size="small"
+                      type="text"
+                      onClick={() => setCustomBeneficiaryEnabled(true)}
+                    >
+                      {beneficiary ? (
+                        <Trans>Edit</Trans>
+                      ) : (
+                        <Trans>Choose wallet</Trans>
+                      )}
+                    </Button>
+                  )}
+                </div>
+                <div>
+                  {tokensReceivedFormatted} {tokensText}
+                </div>
+                {nftRewardTiers?.length ? (
+                  <div className="py-3">
+                    <NftRewardCell nftRewards={nftRewardTiers} />
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-y-2">
             <Form.Item
-              label={t`Memo (optional)`}
-              className="antd-no-number-handler mb-0"
+              label={t`Message`}
+              className="antd-no-number-handler mb-4"
+              requiredMark="optional"
             >
-              <Form.Item
-                className="mb-0"
-                name="memo"
-                extra={t`Add an on-chain memo to this payment.`}
-              >
-                <Input.TextArea
-                  placeholder={t`WAGMI!`}
+              <Form.Item className="mb-0" name="memo">
+                <JuiceTextArea
+                  placeholder={t`Attach an on-chain message to this payment.`}
                   maxLength={256}
                   onPressEnter={e => e.preventDefault()} // prevent new lines in memo
                   showCount
                   autoSize
                 />
               </Form.Item>
-              <div className="absolute right-2 top-2 text-sm">
+              <div className="absolute right-2 top-1.5 text-sm">
                 {
                   <Sticker
                     className={classNames(
-                      'text-grey-500 dark:text-grey-300',
+                      'text-grey-500 hover:text-grey-700 dark:text-grey-300 hover:dark:text-grey-400',
                       canAddMoreStickers
                         ? 'cursor-pointer'
                         : 'cursor-not-allowed',
@@ -130,74 +199,63 @@ export const V2V3PayForm = ({
                         ? setAttachStickerModalVisible(true)
                         : undefined
                     }}
+                    role="button"
                   />
                 }
               </div>
             </Form.Item>
 
-            <Form.Item name="stickerUrls">
+            <Form.Item
+              name="stickerUrls"
+              className={twJoin('mb-0', !hasStickers ? 'hidden' : '')}
+            >
               <StickerSelection />
             </Form.Item>
 
-            <Form.Item name="uploadedImage">
+            <Form.Item name="uploadedImage" className="mb-0">
               <FormImageUploader text={t`Add image`} />
             </Form.Item>
+          </div>
 
-            <Form.Item extra={t`Mint tokens to a custom address.`}>
-              <div className="flex gap-2">
-                <Switch
-                  checked={customBeneficiaryEnabled}
-                  onChange={enabled => {
-                    if (!enabled) {
-                      form.setFieldValue('beneficiary', undefined)
-                    }
-                    setCustomBeneficiaryEnabled(enabled)
-                  }}
-                />
-                <span className="font-medium text-black dark:text-slate-100">
-                  <Trans>Custom token beneficiary</Trans>
-                </span>
-              </div>
-              {customBeneficiaryEnabled && (
-                <Form.Item
-                  className="mt-4 mb-0"
-                  name="beneficiary"
-                  rules={[
-                    {
-                      validator: (_, value) => {
-                        if (!value || !isAddress(value)) {
-                          return Promise.reject('Address is required')
-                        }
-                        if (isZeroAddress(value)) {
-                          return Promise.reject('Cannot use zero address')
-                        }
-                        return Promise.resolve()
-                      },
-                      validateTrigger: 'onCreate',
-                      required: true,
-                    },
-                  ]}
-                >
-                  <EthAddressInput />
-                </Form.Item>
-              )}
-            </Form.Item>
-          </MinimalCollapse>
-
-          {projectMetadata && (
-            <Callout.Info>
-              <Trans>
-                Paying <strong>{projectMetadata.name}</strong> is not an
-                investment — it's a way to support the project.{' '}
-                <strong>{projectMetadata.name}</strong> determines any value or
-                utility of the tokens you receive.
-              </Trans>
+          {projectMetadata?.payDisclosure && (
+            <Callout.Info
+              icon={<CrownOutlined className="text-2xl" />}
+              className="border border-solid border-grey-200 dark:border-grey-400"
+            >
+              <strong className="block">
+                <Trans>Message from {projectMetadata.name}</Trans>
+              </strong>
+              <Paragraph
+                className="text-sm"
+                description={projectMetadata.payDisclosure}
+              />
             </Callout.Info>
           )}
 
-          {riskCount && fundingCycle ? (
+          <div className="flex w-full flex-col gap-y-2">
+            {hasIssuedTokens && (
+              <Form.Item
+                name="preferClaimedTokens"
+                valuePropName="checked"
+                className="mb-0"
+              >
+                <Checkbox className="font-normal">
+                  <Trans>Receive ERC-20 tokens</Trans>{' '}
+                  <TooltipIcon
+                    tip={
+                      <Trans>
+                        Mint this project's ERC-20 tokens to your wallet. Leave
+                        unchecked to have Juicebox track your token balance,
+                        saving gas on this transaction. You can claim your
+                        ERC-20 tokens later.
+                      </Trans>
+                    }
+                  ></TooltipIcon>
+                </Checkbox>
+              </Form.Item>
+            )}
             <Form.Item
-              className="mb-0 rounded-lg border border-grey-300 p-4 dark:border-slate-200"
+              className="mb-0"
               name="riskCheckbox"
               valuePropName="checked"
               rules={[
@@ -212,25 +270,13 @@ export const V2V3PayForm = ({
               ]}
             >
               <Checkbox>
-                <span className="uppercase">
-                  <Trans>
-                    I accept this project's{' '}
-                    <a
-                      onClick={e => {
-                        setRiskModalVisible(true)
-                        e.preventDefault()
-                      }}
-                    >
-                      unique risks
-                    </a>
-                    .
-                  </Trans>
-                </span>
+                <TCCheckboxContent />
               </Checkbox>
             </Form.Item>
-          ) : null}
+          </div>
         </div>
       </Form>
+
       <AttachStickerModal
         open={attachStickerModalVisible}
         onClose={() => setAttachStickerModalVisible(false)}
@@ -250,22 +296,6 @@ export const V2V3PayForm = ({
           })
         }}
       />
-      <Modal
-        title={<Trans>Potential risks</Trans>}
-        open={riskModalVisible}
-        okButtonProps={{ hidden: true }}
-        onCancel={() => setRiskModalVisible(false)}
-        cancelText={<Trans>Close</Trans>}
-      >
-        {fundingCycle && fundingCycleMetadata && (
-          <ProjectRiskNotice
-            unsafeProperties={getUnsafeV2V3FundingCycleProperties(
-              fundingCycle,
-              fundingCycleMetadata,
-            )}
-          />
-        )}
-      </Modal>
     </>
   )
 }

@@ -1,22 +1,24 @@
 import { Trans } from '@lingui/macro'
 
 import {
-  FUNDING_CYCLE_WARNING_TEXT,
-  FundingCycleRiskFlags,
+  FundingCycleRiskFlags, FUNDING_CYCLE_WARNING_TEXT
 } from 'constants/fundingWarningText'
 
 export default function ProjectRiskNotice({
   unsafeProperties,
 }: {
-  unsafeProperties: FundingCycleRiskFlags
+  unsafeProperties: FundingCycleRiskFlags | undefined
 }) {
-  const unsafePropertyKeys = Object.keys(
-    unsafeProperties,
-  ) as (keyof FundingCycleRiskFlags)[]
+  const unsafePropertyKeys = unsafeProperties
+    ? (Object.keys(unsafeProperties) as (keyof FundingCycleRiskFlags)[])
+    : undefined
 
-  const warnings = unsafePropertyKeys
-    .filter(k => unsafeProperties[k] === true)
-    .map(k => FUNDING_CYCLE_WARNING_TEXT()[k])
+  const warnings =
+    unsafePropertyKeys && unsafeProperties
+      ? unsafePropertyKeys
+          .filter(k => unsafeProperties[k] === true)
+          .map(k => FUNDING_CYCLE_WARNING_TEXT()[k])
+      : undefined
 
   return (
     <div>
@@ -24,7 +26,7 @@ export default function ProjectRiskNotice({
         <Trans>This project's rules may pose risks for contributors:</Trans>
       </p>
       <ul className="list-disc pl-10">
-        {warnings.map((text, i) => (
+        {warnings?.map((text, i) => (
           <li key={i} className="mb-3">
             {text}
           </li>

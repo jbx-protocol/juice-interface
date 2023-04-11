@@ -27,7 +27,7 @@ export default function ProjectBalance() {
         <div className="ml-2 text-lg font-medium text-juice-400 dark:text-juice-300">
           {distributionLimitCurrency?.eq(V2V3_CURRENCY_USD) && (
             <span className="text-sm font-medium uppercase text-grey-400 dark:text-slate-200">
-              <ETHAmount amount={ETHBalance} padEnd />{' '}
+              <ETHAmount amount={ETHBalance} />
             </span>
           )}
           <V2V3CurrencyAmount

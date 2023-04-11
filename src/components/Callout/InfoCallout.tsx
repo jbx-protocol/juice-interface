@@ -6,12 +6,14 @@ import { Callout } from './Callout'
 export const InfoCallout: React.FC<{
   className?: string
   noIcon?: boolean
+  icon?: JSX.Element
   collapsible?: boolean
   transparent?: boolean
 }> = ({
   className,
   children,
   noIcon = false,
+  icon,
   transparent = false,
   collapsible,
 }) => {
@@ -25,7 +27,9 @@ export const InfoCallout: React.FC<{
         'rounded-lg',
       )}
       iconComponent={
-        !noIcon ? <InfoCircleOutlined className="flex text-2xl" /> : null
+        !noIcon
+          ? icon ?? <InfoCircleOutlined className="flex text-2xl" />
+          : null
       }
       collapsible={collapse}
     >

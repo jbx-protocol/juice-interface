@@ -46,7 +46,9 @@ function Projects() {
     : router.query.search
 
   const tags = useMemo(
-    () => (router.query.tags as string | undefined)?.split(',') as ProjectTag[],
+    () =>
+      ((router.query.tags as string | undefined)?.split(',') ??
+        []) as ProjectTag[],
     [router.query],
   )
 

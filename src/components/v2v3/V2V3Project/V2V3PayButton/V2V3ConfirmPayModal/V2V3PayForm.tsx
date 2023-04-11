@@ -86,8 +86,8 @@ export const V2V3PayForm = ({
   return (
     <>
       <Form form={form} layout="vertical" {...props}>
-        <div className="flex flex-col gap-6">
-          <div className="flex w-full flex-col gap-6">
+        <div className="flex flex-col gap-y-6">
+          <div className="flex flex-col gap-y-6">
             <div className="flex justify-between">
               <span className="font-medium">
                 <Trans>Amount:</Trans>
@@ -168,10 +168,8 @@ export const V2V3PayForm = ({
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="flex w-full flex-col gap-y-6">
-          <div>
+          <div className="flex flex-col gap-y-2">
             <Form.Item
               label={t`Message`}
               className="antd-no-number-handler mb-4"
@@ -218,64 +216,64 @@ export const V2V3PayForm = ({
               <FormImageUploader text={t`Add image`} />
             </Form.Item>
           </div>
-        </div>
 
-        {projectMetadata?.payDisclosure && (
-          <Callout.Info
-            icon={<CrownOutlined className="text-2xl" />}
-            className="border border-solid border-grey-200 dark:border-grey-400"
-          >
-            <strong className="block">
-              <Trans>Message from {projectMetadata.name}</Trans>
-            </strong>
-            <Paragraph
-              className="text-sm"
-              description={projectMetadata.payDisclosure}
-            />
-          </Callout.Info>
-        )}
-
-        <div className="flex w-full flex-col gap-y-2">
-          {hasIssuedTokens && (
-            <Form.Item
-              name="preferClaimedTokens"
-              valuePropName="checked"
-              className="mb-0"
+          {projectMetadata?.payDisclosure && (
+            <Callout.Info
+              icon={<CrownOutlined className="text-2xl" />}
+              className="border border-solid border-grey-200 dark:border-grey-400"
             >
-              <Checkbox className="font-normal">
-                <Trans>Receive ERC-20 tokens</Trans>{' '}
-                <TooltipIcon
-                  tip={
-                    <Trans>
-                      Mint this project's ERC-20 tokens to your wallet. Leave
-                      unchecked to have Juicebox track your token balance,
-                      saving gas on this transaction. You can claim your ERC-20
-                      tokens later.
-                    </Trans>
-                  }
-                ></TooltipIcon>
+              <strong className="block">
+                <Trans>Message from {projectMetadata.name}</Trans>
+              </strong>
+              <Paragraph
+                className="text-sm"
+                description={projectMetadata.payDisclosure}
+              />
+            </Callout.Info>
+          )}
+
+          <div className="flex w-full flex-col gap-y-2">
+            {hasIssuedTokens && (
+              <Form.Item
+                name="preferClaimedTokens"
+                valuePropName="checked"
+                className="mb-0"
+              >
+                <Checkbox className="font-normal">
+                  <Trans>Receive ERC-20 tokens</Trans>{' '}
+                  <TooltipIcon
+                    tip={
+                      <Trans>
+                        Mint this project's ERC-20 tokens to your wallet. Leave
+                        unchecked to have Juicebox track your token balance,
+                        saving gas on this transaction. You can claim your
+                        ERC-20 tokens later.
+                      </Trans>
+                    }
+                  ></TooltipIcon>
+                </Checkbox>
+              </Form.Item>
+            )}
+            <Form.Item
+              className="mb-0"
+              name="riskCheckbox"
+              valuePropName="checked"
+              rules={[
+                {
+                  validator: (_, value) =>
+                    value
+                      ? Promise.resolve()
+                      : Promise.reject(
+                          new Error(t`You must review and accept the risks.`),
+                        ),
+                },
+              ]}
+            >
+              <Checkbox>
+                <TCCheckboxContent />
               </Checkbox>
             </Form.Item>
-          )}
-          <Form.Item
-            className="mb-0"
-            name="riskCheckbox"
-            valuePropName="checked"
-            rules={[
-              {
-                validator: (_, value) =>
-                  value
-                    ? Promise.resolve()
-                    : Promise.reject(
-                        new Error(t`You must review and accept the risks.`),
-                      ),
-              },
-            ]}
-          >
-            <Checkbox>
-              <TCCheckboxContent />
-            </Checkbox>
-          </Form.Item>
+          </div>
         </div>
       </Form>
 

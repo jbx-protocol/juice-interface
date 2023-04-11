@@ -1,4 +1,5 @@
 import { useForm } from 'antd/lib/form/Form'
+import { ProjectTag } from 'models/project-tags'
 import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
@@ -16,6 +17,7 @@ type ProjectDetailsFormProps = Partial<{
   payButtonText: string
   payDisclosure: string
   inputProjectOwner: string
+  tags: ProjectTag[]
 }>
 
 export const useProjectDetailsForm = () => {
@@ -37,6 +39,7 @@ export const useProjectDetailsForm = () => {
       payButtonText: projectMetadata.payButton,
       payDisclosure: projectMetadata.payDisclosure,
       inputProjectOwner,
+      tags: projectMetadata.tags,
     }),
     [
       inputProjectOwner,
@@ -50,6 +53,7 @@ export const useProjectDetailsForm = () => {
       projectMetadata.payDisclosure,
       projectMetadata.twitter,
       projectMetadata.telegram,
+      projectMetadata.tags,
     ],
   )
 
@@ -66,6 +70,13 @@ export const useProjectDetailsForm = () => {
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setDescription,
     formatter: v => v ?? '',
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'tags',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setTags,
+    formatter: v => v ?? [],
   })
   useFormDispatchWatch({
     form,

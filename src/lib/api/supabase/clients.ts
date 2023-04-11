@@ -12,3 +12,5 @@ export const juiceAuthDbClient = createClient<Database, 'juice_auth'>(
   process.env.SUPABASE_SERVICE_ROLE_KEY,
   { db: { schema: 'juice_auth' } },
 )
+
+export const dbProjects = sudoPublicDbClient.from('projects')

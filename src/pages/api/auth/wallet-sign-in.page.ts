@@ -2,7 +2,7 @@ import { hashMessage } from '@ethersproject/hash'
 import { recoverAddress } from '@ethersproject/transactions'
 import { SupabaseClient } from '@supabase/supabase-js'
 import * as jsonwebtoken from 'jsonwebtoken'
-import { juiceAuthDbClient, sudoPublicDbClient } from 'lib/api/supabase'
+import { juiceAuthDbClient, sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Database } from 'types/database.types'
 

@@ -3,5 +3,15 @@
     "pages/api/ens/resolve/[address].page.ts": {
       "maxDuration": 10
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/projects/update",
+      "schedule": "*/6 * * * *"
+    },
+    {
+      "path": "/api/projects/update-retry-ipfs",
+      "schedule": "0 8,20 * * *"
+    }
+  ]
 }

@@ -13,7 +13,7 @@ export default function V2V3ProjectHandleLink({
   handle,
 }: {
   className?: string
-  name?: string
+  name?: string | null
   projectId: number
   handle?: string | null
 }) {

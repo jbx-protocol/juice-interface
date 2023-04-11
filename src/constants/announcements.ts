@@ -1,24 +1,19 @@
+import IntroImprovedSearch from 'components/announcements/IntroImprovedSearch'
 import IntroProjectTags from 'components/announcements/IntroProjectTags'
-import IntroSepanaSearch from 'components/announcements/IntroSepanaSearch'
 import { Announcement } from 'models/announcement'
-import { NextRouter } from 'next/router'
 
 export const announcements: Announcement[] = [
   {
     id: 'introProjectTags',
     conditions: [({ isProjectOwner }) => isProjectOwner],
     content: IntroProjectTags,
-    cta: {
-      text: 'Go to settings',
-      fn: (router: NextRouter) => {
-        router.push(router.asPath + '/settings?page=general')
-      },
-    },
+    expire: new Date('2023-05-01T00:00:00.000Z').valueOf(),
   },
   {
-    id: 'introSepanaSearch',
+    id: 'introImprovedSearch',
     conditions: [({ router }) => router.pathname.includes('projects')],
-    content: IntroSepanaSearch,
+    content: IntroImprovedSearch,
+    expire: new Date('2023-05-01T00:00:00.000Z').valueOf(),
   },
 ]
 

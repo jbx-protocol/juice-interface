@@ -41,11 +41,11 @@ export default async function handler(
   console.info(`[Next.js] Revalidating ${path}`)
   await res.revalidate(path)
 
-  // Update Sepana database whenever a project needs revalidating. However, Sepana will only get updated if the new project data is already available in the subgraph, which can sometimes take a couple minutes
+  // Update database projects whenever a project needs revalidating. However, database will only get updated if the new project data is already available in the subgraph, which can sometimes take a couple minutes
   await axios
-    .get('/api/sepana/update')
+    .get('/api/projects/update')
     // can throw error when env isnt set correctly
-    .catch(err => console.error('Sepana update failed', err))
+    .catch(err => console.error('Database projects update failed', err))
 
   return res.status(200).send('Success!')
 }

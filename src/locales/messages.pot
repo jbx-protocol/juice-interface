@@ -155,6 +155,12 @@ msgstr ""
 msgid "<0>Max. supply:</0> <1>{0}</1>"
 msgstr ""
 
+msgid "<0>NEW:</0> Improved search"
+msgstr ""
+
+msgid "<0>NEW:</0> Project tags"
+msgstr ""
+
 msgid "<0>No cycle duration.</0>You can edit your rules and start new cycles at any time."
 msgstr ""
 
@@ -1026,6 +1032,9 @@ msgid "Deployed a project payer address"
 msgstr ""
 
 msgid "Description"
+msgstr ""
+
+msgid "Deselect all"
 msgstr ""
 
 msgid "Design how your tokens should work."
@@ -2042,6 +2051,9 @@ msgstr ""
 msgid "No results"
 msgstr ""
 
+msgid "No tags"
+msgstr ""
+
 msgid "No transaction history"
 msgstr ""
 
@@ -2459,6 +2471,9 @@ msgstr ""
 msgid "Project state"
 msgstr ""
 
+msgid "Project tags"
+msgstr ""
+
 msgid "Project token"
 msgstr ""
 
@@ -2795,9 +2810,6 @@ msgstr ""
 msgid "Search projects"
 msgstr ""
 
-msgid "Search projects by handle"
-msgstr ""
-
 msgid "Seconds"
 msgstr ""
 
@@ -2808,6 +2820,9 @@ msgid "See example"
 msgstr ""
 
 msgid "Select NFTs to redeem"
+msgstr ""
+
+msgid "Select up to 3 tags to help supporters find your project."
 msgstr ""
 
 msgid "Send Message"
@@ -3045,6 +3060,9 @@ msgid "Switch network to {0}"
 msgstr ""
 
 msgid "Sync start time with current V2 funding cycle."
+msgstr ""
+
+msgid "Tags"
 msgstr ""
 
 msgid "Tap {projectTitle}"
@@ -3755,6 +3773,12 @@ msgstr ""
 msgid "Yes, start over"
 msgstr ""
 
+msgid "You can now add tags in <0>settings</0> to describe your project, and help supporters find it. Anyone can search for projects by tag on the Explore page."
+msgstr ""
+
+msgid "You can now search for projects by their name, description, and tags, as well as their @handle."
+msgstr ""
+
 msgid "You can redeem your {tokenSymbol} for ETH without claiming them. You can transfer your unclaimed {tokenSymbol} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right-hand corner of this project."
 msgstr ""
 
@@ -3972,9 +3996,6 @@ msgid "last {TRENDING_WINDOW_DAYS} days"
 msgstr ""
 
 msgid "loading"
-msgstr ""
-
-msgid "matching \"{searchText}\""
 msgstr ""
 
 msgid "minutes"

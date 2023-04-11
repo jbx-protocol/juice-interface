@@ -1,74 +1,84 @@
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
+import { DBProject } from 'models/dbProject'
 import { Json } from 'models/json'
-import { SepanaProject } from 'models/sepana'
 import { NextApiResponse } from 'next'
 import { formatError } from 'utils/format/formatError'
 import { formatWad } from 'utils/format/formatNumber'
 import { querySubgraphExhaustiveRaw } from 'utils/graph'
 import {
   getChangedSubgraphProjects,
-  sgSepanaCompareKeys,
+  sgDbCompareKeys,
   tryResolveMetadata,
-} from 'utils/sepana'
-import { queryAll, writeSepanaRecords } from './api'
-import { sepanaLog } from './log'
+} from 'utils/sgDbProjects'
+import { dbpQueryAll, writeDBProjects } from '.'
+import { dbpLog } from './logger'
 
-export async function sepanaUpdate(res: NextApiResponse, retryIpfs: boolean) {
+export async function updateDBProjects(
+  res: NextApiResponse,
+  retryIpfs: boolean,
+) {
   try {
-    // Load all projects from Sepana, store in dict
-    const sepanaProjects = (await queryAll<Json<SepanaProject>>()).hits.reduce(
-      (acc, curr) => ({ ...acc, [curr._source.id]: curr._source }),
-      {} as Record<string, Json<SepanaProject>>,
+    // Load all database projects
+    const { data, error: queryError } = await dbpQueryAll()
+
+    if (queryError) {
+      throw new Error('Error querying projects: ' + queryError.message)
+    }
+
+    // Store database projects in a dict for more performant access
+    const dbProjects = (data as Json<DBProject>[])?.reduce(
+      (acc, p) => ({
+        ...acc,
+        [p.id]: p,
+      }),
+      {} as Record<string, Json<DBProject>>,
     )
 
     // Load all projects from Subgraph
-    const subgraphProjects = await querySubgraphExhaustiveRaw({
+    const sgProjects = await querySubgraphExhaustiveRaw({
       entity: 'project',
-      keys: sgSepanaCompareKeys,
+      keys: sgDbCompareKeys,
     })
 
+    // Determine which subgraph projects have changed from what we have stored in the database
     const {
       changedSubgraphProjects,
       retryMetadataCount,
       updatedProperties,
       idsOfNewProjects,
     } = getChangedSubgraphProjects({
-      subgraphProjects,
-      sepanaProjects,
+      sgProjects,
+      dbProjects,
       retryIpfs,
     })
 
+    // Attempt to re-resolve metadata for all changed projects
     const resolveMetadataResults = await Promise.all(
-      changedSubgraphProjects.map(subgraphProject => {
-        const sepanaProject = sepanaProjects[subgraphProject.id]
-
-        return tryResolveMetadata({
-          subgraphProject,
-          ...sepanaProject,
-        })
-      }),
+      changedSubgraphProjects.map(sgProject =>
+        tryResolveMetadata({
+          sgProject,
+          ...dbProjects[sgProject.id],
+        }),
+      ),
     )
 
-    const _lastUpdated = Date.now()
-
-    const sepanaProjectResults = resolveMetadataResults.map(r => ({
-      ...r,
-      project: { ...r.project, _lastUpdated }, // add _lastUpdated to all projects
-    }))
-
-    const ipfsErrors = sepanaProjectResults.filter(r => r.error)
+    const ipfsErrors = resolveMetadataResults.filter(r => r.error)
 
     // Write all updated projects (even those with missing metadata)
-    const { jobs, written: updatedSepanaProjects } = await writeSepanaRecords(
-      sepanaProjectResults.map(r => r.project),
+    const { error, data: updatedDBProjects } = await writeDBProjects(
+      resolveMetadataResults.map(r => r.project),
     )
 
+    if (error) {
+      throw new Error('Error writing projects to database: ' + error.message)
+    }
+
     // Formatted message used for log reporting
-    const reportString = `Jobs: ${jobs.join(',')}${
+    const reportString = `${
       retryMetadataCount
         ? `\nRetried resolving metadata for ${retryMetadataCount}`
         : ''
-    }\n\n${sepanaProjectResults
+    }\n\n${resolveMetadataResults
       .filter(r => !r.error)
       .map(r => {
         const {
@@ -94,8 +104,8 @@ export async function sepanaUpdate(res: NextApiResponse, retryIpfs: boolean) {
       .join('\n')}`
 
     // Log if any projects were updated
-    if (updatedSepanaProjects.length) {
-      await sepanaLog(
+    if (updatedDBProjects.length) {
+      await dbpLog(
         ipfsErrors.length
           ? {
               type: 'alert',
@@ -120,16 +130,15 @@ export async function sepanaUpdate(res: NextApiResponse, retryIpfs: boolean) {
     res.status(200).json({
       network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
       updates: {
-        projects: updatedSepanaProjects,
-        count: updatedSepanaProjects.length,
-        jobs,
+        count: updatedDBProjects.length,
+        projects: updatedDBProjects,
       },
       errors: { ipfsErrors, count: ipfsErrors.length },
     })
   } catch (error) {
     const _error = formatError(error)
 
-    await sepanaLog({
+    await dbpLog({
       type: 'alert',
       alert: 'DB_UPDATE_ERROR',
       body: _error,
@@ -137,7 +146,7 @@ export async function sepanaUpdate(res: NextApiResponse, retryIpfs: boolean) {
 
     res.status(500).json({
       network: process.env.NEXT_PUBLIC_INFURA_NETWORK,
-      message: 'Error updating Sepana projects',
+      message: 'Error updating Supabase projects',
       error: _error,
     })
   }

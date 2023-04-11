@@ -2,6 +2,7 @@ import axios from 'axios'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
+import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
 import {
   InfiniteSGQueryOpts,
   SGEntityKey,
@@ -11,13 +12,18 @@ import {
 import { Json } from 'models/json'
 import { ProjectState } from 'models/projectVisibility'
 import { PV } from 'models/pv'
-import { SepanaProject, SepanaQueryResponse } from 'models/sepana'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useMemo, useState } from 'react'
-import { useQuery } from 'react-query'
+import {
+  useInfiniteQuery,
+  UseInfiniteQueryOptions,
+  useQuery,
+  UseQueryOptions,
+} from 'react-query'
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
-import { parseSepanaProjectJson } from 'utils/sepana'
+import { formatQueryParams } from 'utils/queryParams'
+import { parseDBProjectJson, parseDBProjectsRow } from 'utils/sgDbProjects'
 
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
@@ -149,35 +155,77 @@ export function useProjectsSearch(
   )
 }
 
-/**
- * Search Sepana projects for query and return only a list of projects
- * @param text text to search
- * @param pageSize number of projects to return
- * @param enabled query will only run if enabled
- * @returns list of projects
- */
-export function useSepanaProjectsSearch(
-  text: string | undefined,
-  opts?: {
-    pageSize?: number
-    enabled?: boolean
-  },
+export function useDBProjectsQuery(
+  opts: DBProjectQueryOpts,
+  reactQueryOptions?: UseQueryOptions<
+    DBProject[],
+    Error,
+    DBProject[],
+    readonly [string, DBProjectQueryOpts]
+  >,
 ) {
-  return useQuery(
-    ['sepana-query', text, opts?.pageSize],
+  return useQuery<
+    DBProject[],
+    Error,
+    DBProject[],
+    readonly [string, DBProjectQueryOpts]
+  >(
+    ['dbp-query', opts],
     () =>
       axios
-        .get<SepanaQueryResponse<Json<SepanaProject>>>(
-          `/api/sepana/projects?text=${text}${
-            opts?.pageSize !== undefined ? `&pageSize=${opts?.pageSize}` : ''
-          }`,
-        )
+        .get<Json<DBProjectRow>[]>(`/api/projects?${formatQueryParams(opts)}`)
         .then(res =>
-          res.data.hits.hits.map(h => parseSepanaProjectJson(h._source)),
+          res.data.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
         ),
     {
-      staleTime: DEFAULT_STALE_TIME,
-      enabled: opts?.enabled,
+      staleTime: 0,
+      // staleTime: DEFAULT_STALE_TIME,
+      ...reactQueryOptions,
+    },
+  )
+}
+
+export function useDBProjectsInfiniteQuery(
+  opts: DBProjectQueryOpts,
+  reactQueryOptions?: UseInfiniteQueryOptions<
+    DBProject[],
+    Error,
+    DBProject[],
+    DBProject[],
+    readonly [string, DBProjectQueryOpts]
+  >,
+) {
+  return useInfiniteQuery(
+    ['dbp-infinite-query', opts],
+    async ({ queryKey, pageParam }) => {
+      const { pageSize, ...evaluatedOpts } = queryKey[1]
+
+      return axios
+        .get<DBProjectRow[]>(
+          `/api/projects?${formatQueryParams({
+            ...evaluatedOpts,
+            page: pageParam,
+            pageSize,
+          })}`,
+        )
+        .then(res =>
+          res.data.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
+        )
+    },
+    {
+      staleTime: 0,
+      // staleTime: DEFAULT_STALE_TIME,
+      ...reactQueryOptions,
+      // Don't allow this function to be overwritten by reactQueryOptions
+      getNextPageParam: (lastPage, allPages) => {
+        // If the last page contains less than the expected page size,
+        // it's safe to assume you're at the end.
+        if (opts.pageSize && lastPage.length < opts.pageSize) {
+          return false
+        } else {
+          return allPages.length
+        }
+      },
     },
   )
 }

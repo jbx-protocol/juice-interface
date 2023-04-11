@@ -17,7 +17,7 @@ export function useProjectHandleText({
 }: {
   projectId: number | undefined
   handle?: string | null
-  name?: string
+  name?: string | null
 }) {
   if (!projectId) return {}
 

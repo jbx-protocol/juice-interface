@@ -38,6 +38,7 @@ export function ProjectDetailsSettingsPage() {
       telegram: fields.telegram,
       payButton: fields.payButton.substring(0, PROJECT_PAY_CHARACTER_LIMIT), // Enforce limit
       payDisclosure: fields.payDisclosure,
+      tags: fields.tags,
     })
 
     if (!uploadedMetadata.Hash) {
@@ -86,6 +87,7 @@ export function ProjectDetailsSettingsPage() {
       telegram: projectMetadata?.telegram ?? '',
       payButton: projectMetadata?.payButton ?? '',
       payDisclosure: projectMetadata?.payDisclosure ?? '',
+      tags: projectMetadata?.tags ?? [],
     })
   }, [
     projectMetadata?.name,
@@ -98,6 +100,7 @@ export function ProjectDetailsSettingsPage() {
     projectMetadata?.telegram,
     projectMetadata?.payDisclosure,
     projectMetadata?.payButton,
+    projectMetadata?.tags,
     projectForm,
   ])
 

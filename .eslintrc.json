@@ -25,7 +25,7 @@
   },
   "overrides": [
     {
-      "files": ["*.config.js", "*.setup.ts", "scripts/sepana/*.js"],
+      "files": ["*.config.js", "*.setup.ts"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
       }

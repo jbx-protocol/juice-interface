@@ -2,15 +2,13 @@ import { FilterOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Collapse, Select } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
+import { DBProjectQueryOpts } from 'models/dbProject'
+import { ProjectTag, projectTagOptions } from 'models/project-tags'
 import { useEffect, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import FilterCheckboxItem from './FilterCheckboxItem'
 
-type OrderByOption =
-  | 'createdAt'
-  | 'totalPaid'
-  | 'currentBalance'
-  | 'paymentsCount'
+type OrderByOption = DBProjectQueryOpts['orderBy']
 
 export type CheckboxOnChange = (checked: boolean) => void
 
@@ -21,6 +19,8 @@ export default function ProjectsFilterAndSort({
   setIncludeV2,
   showArchived,
   setShowArchived,
+  searchTags,
+  setSearchTags,
   reversed,
   setReversed,
   orderBy,
@@ -32,17 +32,21 @@ export default function ProjectsFilterAndSort({
   setIncludeV2: CheckboxOnChange
   showArchived: boolean
   setShowArchived: CheckboxOnChange
+  searchTags: ProjectTag[]
+  setSearchTags: (tags: ProjectTag[]) => void
   reversed: boolean
   setReversed: CheckboxOnChange
   orderBy: OrderByOption
   setOrderBy: (value: OrderByOption) => void
 }) {
-  const [activeKey, setActiveKey] = useState<0 | undefined>()
+  const [tagsIsOpen, setTagsIsOpen] = useState<boolean>(false)
+  const [filterIsOpen, setFilterIsOpen] = useState<boolean>(false)
 
   // Close collapse when clicking anywhere in the window except the collapse items
   useEffect(() => {
     function handleClick() {
-      setActiveKey(undefined)
+      setTagsIsOpen(false)
+      setFilterIsOpen(false)
     }
     window.addEventListener('click', handleClick)
     return () => window.removeEventListener('click', handleClick)
@@ -53,9 +57,9 @@ export default function ProjectsFilterAndSort({
       <Collapse
         className={classNames(
           `projects-filter-collapse`,
-          'my-0 mr-4 border-none bg-transparent',
+          'my-0 border-none bg-transparent',
         )}
-        activeKey={activeKey}
+        activeKey={tagsIsOpen ? 0 : undefined}
       >
         <CollapsePanel
           className="border-none"
@@ -65,14 +69,69 @@ export default function ProjectsFilterAndSort({
             <span
               className="text-grey-500 dark:text-grey-300"
               onClick={e => {
-                setActiveKey(activeKey === 0 ? undefined : 0)
+                setTagsIsOpen(x => !x)
                 e.stopPropagation()
               }}
             >
-              <span className="flex items-center gap-1">
-                <FilterOutlined />{' '}
-                <label className="cursor-pointer">Filter</label>
-              </span>
+              <label className="cursor-pointer">
+                Tags
+                {searchTags.length ? (
+                  <span className="ml-1 inline-block h-5 w-5 rounded-full bg-grey-200 text-center text-grey-600 dark:bg-grey-300 dark:text-grey-800">
+                    {searchTags.length}
+                  </span>
+                ) : null}
+              </label>
+            </span>
+          }
+        >
+          {/* onClick: Do not close collapse when clicking its items*/}
+          <div onClick={e => e.stopPropagation()}>
+            {searchTags.length > 0 && (
+              <FilterCheckboxItem
+                label={t`Deselect all`}
+                checked={null}
+                onChange={() => setSearchTags([])}
+              />
+            )}
+            {projectTagOptions.map(t => (
+              <FilterCheckboxItem
+                key={t}
+                label={t}
+                checked={searchTags.includes(t)}
+                onChange={() =>
+                  setSearchTags(
+                    searchTags.includes(t)
+                      ? searchTags.filter(_t => _t !== t)
+                      : [...searchTags, t],
+                  )
+                }
+              />
+            ))}
+          </div>
+        </CollapsePanel>
+      </Collapse>
+
+      <Collapse
+        className={classNames(
+          `projects-filter-collapse`,
+          'my-0 ml-4 border-none bg-transparent',
+        )}
+        activeKey={filterIsOpen ? 0 : undefined}
+      >
+        <CollapsePanel
+          className="border-none"
+          key={0}
+          showArrow={false}
+          header={
+            <span
+              className="text-grey-500 dark:text-grey-300"
+              onClick={e => {
+                setFilterIsOpen(x => !x)
+                e.stopPropagation()
+              }}
+            >
+              <FilterOutlined />{' '}
+              <label className="cursor-pointer">Filter</label>
             </span>
           }
         >
@@ -102,17 +161,17 @@ export default function ProjectsFilterAndSort({
         </CollapsePanel>
       </Collapse>
 
-      <Select className="my-2 w-44" value={orderBy} onChange={setOrderBy}>
-        <Select.Option value="totalPaid">
+      <Select className="my-2 ml-4 w-44" value={orderBy} onChange={setOrderBy}>
+        <Select.Option value="total_paid">
           <Trans>Total raised</Trans>
         </Select.Option>
-        <Select.Option value="createdAt">
+        <Select.Option value="created_at">
           <Trans>Date created</Trans>
         </Select.Option>
-        <Select.Option value="currentBalance">
+        <Select.Option value="current_balance">
           <Trans>Current balance</Trans>
         </Select.Option>
-        <Select.Option value="paymentsCount">
+        <Select.Option value="payments_count">
           <Trans>Payments</Trans>
         </Select.Option>
       </Select>

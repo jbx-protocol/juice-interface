@@ -1,29 +1,27 @@
 import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
-import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
+import ProjectCard from 'components/ProjectCard'
 import { useLoadMoreContent } from 'hooks/LoadMore'
-import {
-  useInfiniteProjectsQuery,
-  useProjectsSearch,
-  useSepanaProjectsSearch,
-} from 'hooks/Projects'
+import { useDBProjectsInfiniteQuery } from 'hooks/Projects'
+import { DBProjectQueryOpts } from 'models/dbProject'
+import { ProjectTag } from 'models/project-tags'
 import { PV } from 'models/pv'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
-import { featureFlagEnabled } from 'utils/featureFlags'
 
 export default function AllProjects({
   pv,
   searchText,
+  searchTags,
   orderBy,
   showArchived,
   reversed,
 }: {
   pv: PV[] | undefined
   searchText: string
-  orderBy: 'createdAt' | 'totalPaid' | 'currentBalance' | 'paymentsCount'
+  searchTags: ProjectTag[]
+  orderBy: DBProjectQueryOpts['orderBy']
   showArchived: boolean
   reversed: boolean
 }) {
@@ -31,43 +29,30 @@ export default function AllProjects({
   const pageSize = 20
 
   const {
-    data: pages,
-    isLoading: isLoadingProjects,
-    isFetchingNextPage,
+    data: projects,
+    isLoading,
     hasNextPage,
     fetchNextPage,
-  } = useInfiniteProjectsQuery({
-    orderBy,
-    pageSize,
-    orderDirection: reversed ? 'asc' : 'desc',
-    state: showArchived ? 'archived' : 'active',
+    isFetchingNextPage,
+  } = useDBProjectsInfiniteQuery({
+    text: searchText,
+    tags: searchTags,
     pv,
+    orderBy,
+    archived: showArchived,
+    orderDirection: reversed ? 'asc' : 'desc',
+    pageSize,
   })
-
-  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
-
-  const { data: sepanaSearchResults, isLoading: isLoadingSepanaSearch } =
-    useSepanaProjectsSearch(searchText, { enabled: sepanaEnabled })
-
-  const { data: graphSearchResults, isLoading: isLoadingGraphSearch } =
-    useProjectsSearch(searchText, { enabled: !sepanaEnabled })
-
-  const searchResults = sepanaEnabled ? sepanaSearchResults : graphSearchResults
-
-  const isLoadingSearch = sepanaEnabled
-    ? isLoadingSepanaSearch
-    : isLoadingGraphSearch
 
   const [scrolledToBottom] = useLoadMoreContent({
     loadMoreContainerRef,
     hasNextPage,
   })
 
-  const isLoading = isLoadingProjects || isLoadingSearch
-
-  const concatenatedPages = searchText?.length
-    ? searchResults
-    : pages?.pages?.reduce((prev, group) => [...prev, ...group], [])
+  const concatenatedPages = projects?.pages?.reduce(
+    (prev, group) => [...prev, ...group],
+    [],
+  )
 
   useEffect(() => {
     if (scrolledToBottom) {
@@ -80,10 +65,7 @@ export default function AllProjects({
       {concatenatedPages && (
         <Grid>
           {concatenatedPages.map(p => (
-            <ProjectCard
-              key={`${p.id}_${p.pv}`}
-              project={p as ProjectCardProject}
-            />
+            <ProjectCard key={p.id} project={p} />
           ))}
         </Grid>
       )}
@@ -104,8 +86,7 @@ export default function AllProjects({
           <Trans>Load more</Trans>
         </div>
       ) : (
-        !isLoadingSearch &&
-        !isLoadingProjects && (
+        !isLoading && (
           <div
             className={classNames(
               'px-5 pb-5 text-center text-grey-400 dark:text-slate-200',
@@ -113,8 +94,7 @@ export default function AllProjects({
             )}
           >
             {concatenatedPages?.length}{' '}
-            {concatenatedPages?.length === 1 ? t`project` : t`projects`}{' '}
-            {searchText ? t`matching "${searchText}"` : ''}
+            {concatenatedPages?.length === 1 ? t`project` : t`projects`}
           </div>
         )
       )}

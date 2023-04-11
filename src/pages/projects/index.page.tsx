@@ -3,16 +3,17 @@ import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { AppWrapper } from 'components/common'
 import { PROJECTS_PAGE } from 'constants/fathomEvents'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
+import { DBProjectQueryOpts } from 'models/dbProject'
+import { ProjectTag } from 'models/project-tags'
 import { ProjectCategory } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import qs from 'qs'
 import { useEffect, useMemo, useState } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 
 import AllProjects from './AllProjects'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
@@ -31,11 +32,7 @@ export default function ProjectsPage() {
   )
 }
 
-type OrderByOption =
-  | 'createdAt'
-  | 'totalPaid'
-  | 'currentBalance'
-  | 'paymentsCount'
+type OrderByOption = DBProjectQueryOpts['orderBy']
 
 const defaultTab: ProjectCategory = 'trending'
 
@@ -48,10 +45,14 @@ function Projects() {
     ? router.query.search[0]
     : router.query.search
 
+  const tags = useMemo(
+    () => (router.query.tags as string | undefined)?.split(',') as ProjectTag[],
+    [router.query],
+  )
+
   const { userAddress } = useWallet()
   const [searchText, setSearchText] = useState<typeof search>(search)
-
-  const sepanaEnabled = featureFlagEnabled(FEATURE_FLAGS.SEPANA_SEARCH)
+  const [searchTags, setSearchTags] = useState<ProjectTag[]>([])
 
   useEffect(() => {
     setSelectedTab(() => {
@@ -71,9 +72,10 @@ function Projects() {
       }
     })
     setSearchText(search)
-  }, [userAddress, router.query.tab, search])
+    setSearchTags(tags)
+  }, [userAddress, router.query.tab, search, tags])
 
-  const [orderBy, setOrderBy] = useState<OrderByOption>('totalPaid')
+  const [orderBy, setOrderBy] = useState<OrderByOption>('total_paid')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
   const [includeV2, setIncludeV2] = useState<boolean>(true)
   const [showArchived, setShowArchived] = useState<boolean>(false)
@@ -85,6 +87,23 @@ function Projects() {
     if (includeV2) _pv.push(PV_V2)
     return _pv.length ? _pv : [PV_V1, PV_V2]
   }, [includeV1, includeV2])
+
+  function updateRoute(
+    _searchTags: ProjectTag[],
+    _searchText: string | undefined,
+  ) {
+    router.push(
+      '/projects?' +
+        qs.stringify(
+          {
+            tab: 'all',
+            search: _searchText,
+            tags: _searchTags,
+          },
+          { arrayFormat: 'comma', encode: false },
+        ),
+    )
+  }
 
   return (
     <div className="my-0 mx-auto max-w-5xl p-5 pt-16">
@@ -115,22 +134,17 @@ function Projects() {
           <Search
             className="mb-4 flex-1"
             autoFocus
-            placeholder={
-              sepanaEnabled ? t`Search projects` : t`Search projects by handle`
-            }
-            onSearch={val => {
-              setSearchText(val)
-              router.push(`/projects?tab=all${val ? `&search=${val}` : ''}`)
+            placeholder={t`Search projects`}
+            onSearch={_searchText => {
+              setSearchText(_searchText)
+              updateRoute(searchTags, _searchText)
             }}
             defaultValue={searchText}
             key={searchText}
             allowClear
           />
 
-          <div
-            className="flex min-h-[52px] max-w-[100vw] flex-wrap items-center justify-between"
-            hidden={!!searchText}
-          >
+          <div className="flex min-h-[52px] max-w-[100vw] flex-wrap items-center justify-between">
             <ProjectsTabs selectedTab={selectedTab} />
 
             {selectedTab === 'all' ? (
@@ -143,6 +157,11 @@ function Projects() {
                 setShowArchived={setShowArchived}
                 reversed={reversed}
                 setReversed={setReversed}
+                searchTags={searchTags}
+                setSearchTags={_searchTags => {
+                  setSearchTags(_searchTags)
+                  updateRoute(_searchTags, searchText)
+                }}
                 orderBy={orderBy}
                 setOrderBy={setOrderBy}
               />
@@ -158,6 +177,7 @@ function Projects() {
             <AllProjects
               pv={pv}
               searchText={searchText}
+              searchTags={searchTags}
               orderBy={orderBy}
               showArchived={showArchived}
               reversed={reversed}

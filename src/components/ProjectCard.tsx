@@ -136,9 +136,9 @@ export default function ProjectCard({
               projectId={projectCardData.projectId}
             />
           </div>
-          <div className="min-w-0 flex-1 font-normal">
+          <div className="min-w-0 flex-1 overflow-hidden overflow-ellipsis font-normal">
             {metadata ? (
-              <span className="m-0 overflow-hidden overflow-ellipsis font-heading text-xl leading-8 text-black dark:text-slate-100">
+              <span className="m-0 font-heading text-xl leading-8 text-black dark:text-slate-100">
                 {metadata.name}
               </span>
             ) : (

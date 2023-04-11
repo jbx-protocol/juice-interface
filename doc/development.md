@@ -89,6 +89,8 @@ SUPABASE_JWT_SECRET=<FROM_CLI - JWT secret>
 
 Locally, you can ignore `SUPABASE_PROJECT_ID`.
 
+During local dev without a cron, the update routine endpoint /api/projects/update must be called anytime a database is restarted, or when changes to projects need to be reflected in the database.
+
 ## Usage
 
 1. Run the app in dev mode

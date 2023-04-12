@@ -29,8 +29,8 @@ export const HowJuiceboxWorksSection = () => {
           </Trans>
         }
       />
-      <div className="my-0 mx-auto max-w-5xl p-5">
-        <Row align="middle">
+      <div className="my-0 mx-auto max-w-5xl">
+        <Row align="middle" className="gap-16 pl-3 md:gap-0">
           <Col xs={24} sm={12}>
             <div className="grid gap-y-5">
               <StepItem header={t`1. Create your project`}>
@@ -69,7 +69,7 @@ export const HowJuiceboxWorksSection = () => {
             />
           </Col>
         </Row>
-        <div className="mt-5 flex flex-col flex-wrap justify-center gap-2 md:flex-row">
+        <div className="mt-5 flex flex-col flex-wrap justify-center gap-3 md:flex-row">
           <ExternalLink href="https://docs.juicebox.money/">
             <a>
               <XLButton type="default" size="large">

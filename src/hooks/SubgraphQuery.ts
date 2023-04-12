@@ -1,11 +1,11 @@
 import axios from 'axios'
 import {
-  SGQueryOpts,
   InfiniteSGQueryOpts,
   SGEntity,
   SGEntityKey,
   SGEntityName,
   SGError,
+  SGQueryOpts,
   SGResponseData,
 } from 'models/graph'
 import {
@@ -16,17 +16,17 @@ import {
 } from 'react-query'
 
 import {
-  formatGraphQuery,
-  querySubgraph,
   entitiesFromSGResponse,
+  formatGraphQuery,
   parseSubgraphEntity,
+  querySubgraph,
 } from '../utils/graph'
 
 const staleTime = 60 * 1000 // 60 seconds
 
 // This looks up the entity type and constructs an object
 // only with the keys you specified in K.
-type GraphResult<E extends SGEntityName, K extends SGEntityKey<E>> = {
+export type GraphResult<E extends SGEntityName, K extends SGEntityKey<E>> = {
   [PropertyKey in K]: SGEntity<E>[PropertyKey]
 }[]
 

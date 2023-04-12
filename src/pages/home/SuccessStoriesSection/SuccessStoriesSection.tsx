@@ -1,13 +1,11 @@
 import { t, Trans } from '@lingui/macro'
-import { Row, Space } from 'antd'
 import { XLButton } from 'components/XLButton'
 import useMobile from 'hooks/Mobile'
 import { useProjectsQuery } from 'hooks/Projects'
 import Link from 'next/link'
-import { DEFAULT_HOMEPAGE_GUTTER } from '../Landing'
+import { ProjectCarousel } from '../ProjectCarousel'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
-import { SuccessStoriesCard } from './SuccessStoriesCard'
 
 export function SuccessStoriesSection() {
   const { data: topProjects } = useProjectsQuery({
@@ -22,24 +20,23 @@ export function SuccessStoriesSection() {
         subheading={
           <Trans>
             Juicebox gives you the tools to automate web3 fundraising so you can
-            focus on building. Join{' '}
-            {/* <Link href='/projects?tab=all'>
-              <a className='underline'>
-                thousands of projects
-              </a>
-            </Link>{' '} */}
-            sippin' the Juice.
+            focus on building. Join thousands of projects sippin' the Juice.
           </Trans>
         }
       />
-      <Row gutter={DEFAULT_HOMEPAGE_GUTTER}>
-        {topProjects?.map(p => (
-          <SuccessStoriesCard project={p} key={p.metadataUri} />
-        ))}
-      </Row>
-      <div className="text-center">
-        <Space direction="vertical" className="mt-16 w-full" size="large">
-          {/* SOON WILL HAVE A LINK TO "CASE STUDIES" HERE */}
+      <ProjectCarousel
+        projects={topProjects}
+        className="justify-start md:justify-center"
+      />
+      <div className="w-full text-center">
+        <div className="mt-16 flex flex-col flex-wrap justify-center gap-3 md:flex-row">
+          <Link href="/case-studies">
+            <a>
+              <XLButton size="large" block={isMobile}>
+                <Trans>Case studies</Trans>
+              </XLButton>
+            </a>
+          </Link>
           <Link href="/create">
             <a>
               <XLButton size="large" type="primary" block={isMobile}>
@@ -47,7 +44,7 @@ export function SuccessStoriesSection() {
               </XLButton>
             </a>
           </Link>
-        </Space>
+        </div>
       </div>
     </SectionContainer>
   )

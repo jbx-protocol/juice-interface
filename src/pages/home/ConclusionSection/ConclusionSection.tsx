@@ -30,7 +30,7 @@ export function ConclusionSection() {
                   <Button
                     type="default"
                     size="large"
-                    className="md:w-unset w-full"
+                    className="w-full md:w-auto"
                   >
                     <Trans>Contact onboarding</Trans>
                   </Button>

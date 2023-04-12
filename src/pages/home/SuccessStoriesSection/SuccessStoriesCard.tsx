@@ -25,7 +25,7 @@ export function SuccessStoriesCard({
             : `/p/${project?.handle}`
         }
       >
-        <a>
+        <a className="flex justify-center">
           <div
             className={`w-60 cursor-pointer overflow-hidden rounded-lg bg-white text-center transition-colors ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
           >

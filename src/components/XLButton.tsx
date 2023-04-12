@@ -11,7 +11,7 @@ export function XLButton({
   return (
     <Button
       {...props}
-      className={classNames('md:w-unset h-12 w-full md:h-[60px]', className)}
+      className={classNames('h-12 w-full md:h-[60px] md:w-auto', className)}
     >
       {children}
     </Button>

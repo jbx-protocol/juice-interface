@@ -1,5 +1,7 @@
-import { TrendingCarousel } from '../TopSection/TrendingCarousel'
+import { useTrendingProjects } from 'hooks/Projects'
+import { ProjectCarousel } from '../ProjectCarousel'
 
 export function JuicyPicksMobile() {
-  return <TrendingCarousel />
+  const { data: trendingProjects } = useTrendingProjects(5)
+  return <ProjectCarousel projects={trendingProjects} />
 }

@@ -8,12 +8,13 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { useJBPrices } from 'hooks/JBPrices'
+import { TransactorInstance } from 'hooks/Transactor'
+import { useWallet } from 'hooks/Wallet'
 import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/defaultContracts/DefaultJB721Delegate'
 import { useDefaultJBController } from 'hooks/defaultContracts/DefaultJBController'
 import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJBETHPaymentTerminal'
-import { TransactorInstance } from 'hooks/Transactor'
 import { LaunchProjectData } from 'hooks/v2v3/transactor/LaunchProjectTx'
-import { useWallet } from 'hooks/Wallet'
 import omit from 'lodash/omit'
 import {
   JB721DelegateVersion,
@@ -104,6 +105,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
     contractName: 'JBTiered721DelegateStore',
     version: DEFAULT_JB_721_DELEGATE_VERSION,
   })
+  const JBPrices = useJBPrices()
 
   return async (
     {
@@ -135,6 +137,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       !defaultJBETHPaymentTerminal ||
       !JBTiered721DelegateProjectDeployer ||
       !JBTiered721DelegateStoreAddress ||
+      !JBPrices ||
       !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
       const missingParam = !transactor
@@ -176,7 +179,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
           JBFundingCycleStoreAddress: getAddress(
             contracts.JBFundingCycleStore.address,
           ),
-          JBPricesAddress: getAddress(contracts.JBPrices.address),
+          JBPricesAddress: getAddress(JBPrices.address),
           JBTiered721DelegateStoreAddress,
         },
         flags,

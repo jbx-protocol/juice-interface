@@ -9,8 +9,9 @@ import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
-import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJBETHPaymentTerminal'
+import { useJBPrices } from 'hooks/JBPrices'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJBETHPaymentTerminal'
 import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { LaunchFundingCyclesData } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
 import omit from 'lodash/omit'
@@ -105,10 +106,7 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
     cv: CV_V3,
     contractName: V2V3ContractName.JBFundingCycleStore,
   })
-  const V3JBPrices = useLoadV2V3Contract({
-    cv: CV_V3,
-    contractName: V2V3ContractName.JBPrices,
-  })
+  const V3JBPrices = useJBPrices({ cv: CV_V3 })
   const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
 
   const JB721DelegateVersion = useProjectControllerJB721DelegateVersion()

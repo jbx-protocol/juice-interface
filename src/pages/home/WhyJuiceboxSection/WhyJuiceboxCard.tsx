@@ -32,8 +32,8 @@ export function WhyJuiceboxCard({
             />
           </div>
         </div>
-        <h6 className="text-primary text-2xl">{heading}</h6>
-        <p className="text-primary text-sm">{content}</p>
+        <h6 className="text-primary text-2xl dark:text-grey-900">{heading}</h6>
+        <p className="text-primary text-sm dark:text-grey-900">{content}</p>
       </div>
     </Col>
   )

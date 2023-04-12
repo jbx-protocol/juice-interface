@@ -46,7 +46,9 @@ export function HomepageProjectCard({
       key={project.handle}
       href={v2v3ProjectRoute(project)}
     >
-      <a className={`h-full cursor-pointer overflow-hidden rounded-lg`}>
+      <a
+        className={`h-full w-[280px] cursor-pointer overflow-hidden rounded-lg px-[10px]`}
+      >
         <div className={`rounded-lg ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}>
           {projectLogo}
           <div className="rounded-lg p-5">

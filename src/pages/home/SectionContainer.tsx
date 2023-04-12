@@ -5,7 +5,7 @@ export function SectionContainer({
 }: PropsWithChildren<Record<never, never>>) {
   return (
     <section className="w-full py-20">
-      <div className="m-auto max-w-6xl px-10">{children}</div>
+      <div className="m-auto max-w-7xl px-10">{children}</div>
     </section>
   )
 }

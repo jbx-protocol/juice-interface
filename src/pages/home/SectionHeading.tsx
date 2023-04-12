@@ -15,7 +15,7 @@ export const SectionHeading: React.FC<{
       >
         {heading}
       </h2>
-      <p className="text-primary mb-1 text-center text-base dark:text-slate-100">
+      <p className="mb-1 text-center text-base text-grey-600 dark:text-slate-200">
         {subheading}
       </p>
     </div>

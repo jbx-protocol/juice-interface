@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Col, Row } from 'antd'
+import { Col, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { XLButton } from 'components/XLButton'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SectionContainer } from '../SectionContainer'
@@ -71,17 +72,21 @@ export const HowJuiceboxWorksSection = () => {
         <div className="mt-5 flex flex-col flex-wrap justify-center gap-2 md:flex-row">
           <ExternalLink href="https://docs.juicebox.money/">
             <a>
-              <Button type="default" size="large">
+              <XLButton type="default" size="large">
                 <Trans>Read the docs</Trans>
-              </Button>
+              </XLButton>
             </a>
           </ExternalLink>
 
           <Link href="/create">
             <a>
-              <Button type="primary" className="w-full md:w-auto" size="large">
+              <XLButton
+                type="primary"
+                className="w-full md:w-auto"
+                size="large"
+              >
                 <Trans>Create a project</Trans>
-              </Button>
+              </XLButton>
             </a>
           </Link>
         </div>

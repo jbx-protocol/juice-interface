@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Row, Space } from 'antd'
+import { Row, Space } from 'antd'
+import { XLButton } from 'components/XLButton'
 import useMobile from 'hooks/Mobile'
 import { useProjectsQuery } from 'hooks/Projects'
 import Link from 'next/link'
@@ -41,9 +42,9 @@ export function SuccessStoriesSection() {
           {/* SOON WILL HAVE A LINK TO "CASE STUDIES" HERE */}
           <Link href="/create">
             <a>
-              <Button size="large" type="primary" block={isMobile}>
+              <XLButton size="large" type="primary" block={isMobile}>
                 <Trans>Create a project</Trans>
-              </Button>
+              </XLButton>
             </a>
           </Link>
         </Space>

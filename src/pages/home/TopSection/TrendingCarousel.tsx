@@ -24,14 +24,14 @@ export function TrendingCarousel() {
   }
 
   return (
-    <div className="mt-10 w-full">
+    <div className="mt-10 flex w-full justify-center">
       {rankScrolledTo !== 0 ? (
         <ArrowIcon direction="left" onClick={decrementPosition} />
       ) : null}
       {rankScrolledTo !== TRENDING_PROJECTS_LIMIT ? (
         <ArrowIcon direction="right" onClick={incrementPosition} />
       ) : null}
-      <div className="flex w-full justify-between">
+      <div className="flex w-fit justify-between">
         {trendingProjects?.map(p => (
           <HomepageProjectCard project={p} key={`${p.id}_${p.pv}`} />
         ))}

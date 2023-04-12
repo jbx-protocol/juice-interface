@@ -1,4 +1,4 @@
-import { Progress, Steps as AntSteps } from 'antd'
+import { Steps as AntSteps, Progress } from 'antd'
 import useMobile from 'hooks/Mobile'
 import { useModal } from 'hooks/Modal'
 import { useCallback } from 'react'

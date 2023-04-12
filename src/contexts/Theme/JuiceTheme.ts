@@ -2,6 +2,7 @@ import { juiceTheme } from 'constants/theme'
 import { ThemeOption } from 'constants/theme/themeOption'
 import type { ThemeContextType } from 'contexts/Theme/ThemeContext'
 import { useLayoutEffect, useState } from 'react'
+import { useMedia } from './Media'
 
 const userPrefersDarkMode = (): boolean => {
   if (typeof window === 'undefined') {
@@ -25,6 +26,8 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
   const [currentThemeOption, setCurrentThemeOption] =
     useState<ThemeOption>(initialThemeOption)
 
+  const isMobile = useMedia('(max-width: 767px)')
+
   // Set the theme on the body element
   // This is needed for tailwind css dark theme classes to work
   useLayoutEffect(() => {
@@ -47,5 +50,6 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
       setCurrentThemeOption(themeOption)
       localStorage?.setItem(storageKey, themeOption)
     },
+    isMobile,
   }
 }

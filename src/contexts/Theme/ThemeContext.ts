@@ -10,11 +10,13 @@ export type ThemeContextType = {
   theme: SemanticTheme
   setThemeOption: (themeOption: ThemeOption) => void
   forThemeOption?: <T>(map: Record<ThemeOption, T>) => T
+  isMobile: boolean
 }
 
 export const ThemeContext = createContext<ThemeContextType>({
   themeOption: defaultThemeOption,
   theme: juiceTheme(defaultThemeOption),
+  isMobile: false,
   setThemeOption: function () {
     console.warn('setThemeOption is not implemented')
     return null

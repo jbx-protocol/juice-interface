@@ -32,11 +32,6 @@ const V2_CONTRACT_ABI_OVERRIDES: {
       [NetworkName.goerli]: '0x99dB6b517683237dE9C494bbd17861f3608F3585',
     },
   },
-  JBPrices: {
-    addresses: {
-      [NetworkName.goerli]: '0x57bF7C005B77d487074AB3b6Dcd3E5f4D420E3C1',
-    },
-  },
   JBProjects: {
     addresses: {
       [NetworkName.goerli]: '0x21263a042aFE4bAE34F08Bb318056C181bD96D3b',
@@ -169,12 +164,6 @@ export const loadJuiceboxV2Contract = async (
       case V2V3ContractName.JBETHERC20SplitsPayerDeployer: {
         contractJson = (await import(
           `@jbx-protocol/contracts-v2-latest/deployments/mainnet/JBETHERC20SplitsPayerDeployer.json`
-        )) as ContractJson
-        break
-      }
-      case V2V3ContractName.JBPrices: {
-        contractJson = (await import(
-          `@jbx-protocol/contracts-v2-latest/deployments/mainnet/JBPrices.json`
         )) as ContractJson
         break
       }

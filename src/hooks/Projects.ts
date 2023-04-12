@@ -16,10 +16,10 @@ import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useMemo, useState } from 'react'
 import {
-  useInfiniteQuery,
   UseInfiniteQueryOptions,
-  useQuery,
   UseQueryOptions,
+  useInfiniteQuery,
+  useQuery,
 } from 'react-query'
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
@@ -175,7 +175,7 @@ export function useDBProjectsQuery(
       axios
         .get<Json<DBProjectRow>[]>(`/api/projects?${formatQueryParams(opts)}`)
         .then(res =>
-          res.data.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
+          res.data?.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
         ),
     {
       staleTime: 0,
@@ -209,7 +209,7 @@ export function useDBProjectsInfiniteQuery(
           })}`,
         )
         .then(res =>
-          res.data.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
+          res.data?.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
         )
     },
     {

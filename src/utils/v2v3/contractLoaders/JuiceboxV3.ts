@@ -99,12 +99,6 @@ export const loadJuiceboxV3Contract = async (
         )) as ContractJson
         break
       }
-      case V2V3ContractName.JBPrices: {
-        contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBPrices.json`
-        )) as ContractJson
-        break
-      }
     }
 
     return contractJson

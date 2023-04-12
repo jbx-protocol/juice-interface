@@ -13,8 +13,8 @@ import { TransactorInstance } from 'hooks/Transactor'
 import omit from 'lodash/omit'
 import {
   JB721DelegateVersion,
-  JBDeployTiered721DelegateData,
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1,
+  JBDeployTiered721DelegateData,
 } from 'models/nftRewards'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import {
@@ -26,6 +26,7 @@ import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { NftRewardsData } from 'redux/slices/editingV2Project/types'
 
+import { useJBPrices } from 'hooks/JBPrices'
 import {
   buildDeployTiered721DelegateData,
   buildJB721TierParams,
@@ -98,6 +99,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
   })
   const JBTiered721DelegateProjectDeployer =
     useJBTiered721DelegateProjectDeployer({ version: JB721DelegateVersion })
+  const JBPrices = useJBPrices()
 
   const projectTitle = useV2ProjectTitle()
 
@@ -133,6 +135,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
       !projectOwnerAddress ||
       !contracts ||
       !JBController ||
+      !JBPrices ||
       !isValidMustStartAtOrAfter(
         mustStartAtOrAfter,
         fundingCycleData.duration,
@@ -164,7 +167,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
           JBFundingCycleStoreAddress: getAddress(
             contracts.JBFundingCycleStore.address,
           ),
-          JBPricesAddress: getAddress(contracts.JBPrices.address),
+          JBPricesAddress: getAddress(JBPrices.address),
           JBTiered721DelegateStoreAddress,
         },
         flags,

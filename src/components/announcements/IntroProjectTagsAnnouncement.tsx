@@ -1,5 +1,6 @@
 import { Trans, t } from '@lingui/macro'
 import { JuiceModalProps } from 'components/JuiceModal'
+import { ProjectTagsRow } from 'components/ProjectTagsRow'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
@@ -19,7 +20,10 @@ export const IntroProjectTagsAnnouncement = (
       {...props}
       title={
         <span className="font-heading text-2xl font-bold">
-          <Trans>Introducing project tags</Trans>
+          <span className="text-juice-500">
+            <Trans>NEW</Trans>
+          </span>
+          : <Trans>Project tags</Trans>
         </span>
       }
       position="topRight"
@@ -27,7 +31,8 @@ export const IntroProjectTagsAnnouncement = (
       cancelText={t`Got it`}
       onOk={onOk}
     >
-      <p>
+      <ProjectTagsRow />
+      <p className="mt-2">
         <Trans>
           You can now add tags in{' '}
           <Link href="settings?page=general" as="settings?page=general">

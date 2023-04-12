@@ -1,4 +1,4 @@
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { JuiceModalProps } from 'components/JuiceModal'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
@@ -17,7 +17,10 @@ export const IntroImprovedSearchAnnouncement = (
       {...props}
       title={
         <span className="font-heading text-2xl font-bold">
-          Search just got cooler
+          <span className="text-juice-500">
+            <Trans>NEW</Trans>
+          </span>
+          : <Trans>Improved search</Trans>
         </span>
       }
       position="topRight"
@@ -26,8 +29,10 @@ export const IntroImprovedSearchAnnouncement = (
       onOk={onOk}
     >
       <p>
-        Now you can search projects by their name, description, and tags, as
-        well as their @handle.
+        <Trans>
+          You can now search for projects by their name, description, and tags,
+          as well as their @handle.
+        </Trans>
       </p>
     </Announcement>
   )

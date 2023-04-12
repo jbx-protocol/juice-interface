@@ -33,8 +33,6 @@ export const AnnouncementLauncher: React.FC = ({ children }) => {
 
   // Try activating any announcements
   useEffect(() => {
-    if (!setActiveId) return
-
     // Activate first announcement that fits conditions
     setActiveId(Announcements.find(shouldActivateAnnouncement)?.id)
   }, [shouldActivateAnnouncement, setActiveId])

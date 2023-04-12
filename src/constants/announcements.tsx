@@ -24,6 +24,7 @@ export const Announcements: Announcement[] = [
     conditions: [
       ({ wallet }) => wallet.isConnected && !wallet.chainUnsupported,
     ],
+    expire: new Date('2023-05-10').valueOf(),
     Content: IntroProfileAnnouncement,
   },
 ]

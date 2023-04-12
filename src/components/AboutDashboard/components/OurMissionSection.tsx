@@ -63,6 +63,20 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
               style={{ width: `${percentage}%` }}
             />
 
+            {/* Tooltip bubble */}
+            <div
+              // Add a soft shadow to the tooltip bubble
+              className="absolute bottom-full mb-2 flex -translate-x-1/2 flex-col items-center"
+              style={{
+                left: `${percentage}%`,
+              }}
+            >
+              <div className="bg-l0 rounded-lg bg-white py-2 px-3 shadow-md dark:bg-slate-900">
+                <Trans>We are here</Trans>
+              </div>
+              <div className="h-0 w-0 border-4 border-b-0 border-transparent border-t-white shadow-md dark:border-t-slate-900" />
+            </div>
+
             {/* Underneath current number */}
             <div
               className="absolute top-full mt-2 -translate-x-1/2"

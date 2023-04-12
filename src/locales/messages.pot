@@ -155,9 +155,6 @@ msgstr ""
 msgid "<0>Max. supply:</0> <1>{0}</1>"
 msgstr ""
 
-msgid "<0>NEW:</0> Improved search"
-msgstr ""
-
 msgid "<0>No cycle duration.</0>You can edit your rules and start new cycles at any time."
 msgstr ""
 
@@ -1598,6 +1595,9 @@ msgstr ""
 msgid "Immediately"
 msgstr ""
 
+msgid "Improved search"
+msgstr ""
+
 msgid "In other words: instead of taking effect immediately, those edits will take effect when the next cycle starts (Cycle #2). If you need more flexibility, switch to unlocked cycles."
 msgstr ""
 
@@ -1611,9 +1611,6 @@ msgid "Instead of tracking total voting power, track each address' voting power 
 msgstr ""
 
 msgid "Insufficient token balance"
-msgstr ""
-
-msgid "Introducing project tags"
 msgstr ""
 
 msgid "Invalid"
@@ -1938,6 +1935,9 @@ msgid "My holdings"
 msgstr ""
 
 msgid "My projects"
+msgstr ""
+
+msgid "NEW"
 msgstr ""
 
 msgid "NFT Projects"

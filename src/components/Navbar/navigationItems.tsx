@@ -9,7 +9,7 @@ import { trackFathomGoal } from 'lib/fathom'
 import { NetworkName } from 'models/networkName'
 import Link from 'next/link'
 import { CSSProperties } from 'react'
-import Logo from './Logo'
+import Logo from '../Logo'
 
 type DropdownItem = {
   label: JSX.Element

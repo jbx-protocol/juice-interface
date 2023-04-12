@@ -7,7 +7,7 @@ import {
 import { TxStatus } from 'models/transaction'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { classNames } from 'utils/classNames'
-import Loading from '../../Loading'
+import Loading from '../../../Loading'
 import { TransactionItem } from './TransactionItem'
 
 export function TransactionsList({

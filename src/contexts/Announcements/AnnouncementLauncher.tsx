@@ -1,4 +1,4 @@
-import { announcements } from 'constants/announcements'
+import { Announcements } from 'constants/announcements'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useIsUserAddress } from 'hooks/IsUserAddress'
@@ -34,7 +34,7 @@ export const AnnouncementLauncher: React.FC = ({ children }) => {
     if (!setActiveId) return
 
     // Activate first announcement that fits conditions
-    setActiveId(announcements.find(shouldActivateAnnouncement)?.id)
+    setActiveId(Announcements.find(shouldActivateAnnouncement)?.id)
   }, [shouldActivateAnnouncement, setActiveId])
 
   return <>{children}</>

@@ -1,23 +1,26 @@
-import IntroImprovedSearch from 'components/announcements/IntroImprovedSearch'
-import IntroProjectTags from 'components/announcements/IntroProjectTags'
+import { IntroImprovedSearchAnnouncement } from 'components/announcements/IntroImprovedSearchAnnouncement'
+import { IntroProjectTagsAnnouncement } from 'components/announcements/IntroProjectTagsAnnouncement'
 import { Announcement } from 'models/announcement'
 
-export const announcements: Announcement[] = [
+export const Announcements: Announcement[] = [
   {
     id: 'introProjectTags',
-    conditions: [({ isProjectOwner }) => isProjectOwner],
-    content: IntroProjectTags,
+    conditions: [
+      ({ isProjectOwner, router }) =>
+        isProjectOwner && router.pathname.includes('/v2/p/'),
+    ],
+    Content: IntroProjectTagsAnnouncement,
     expire: new Date('2023-05-01T00:00:00.000Z').valueOf(),
   },
   {
     id: 'introImprovedSearch',
     conditions: [({ router }) => router.pathname.includes('projects')],
-    content: IntroImprovedSearch,
+    Content: IntroImprovedSearchAnnouncement,
     expire: new Date('2023-05-01T00:00:00.000Z').valueOf(),
   },
 ]
 
-const expired = announcements.filter(
+const expired = Announcements.filter(
   a => a.expire && a.expire < Date.now().valueOf(),
 )
 

@@ -1,11 +1,9 @@
-import { BellFilled, BellOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import SkeletonButton from 'antd/lib/skeleton/Button'
 import { TooltipPlacement } from 'antd/lib/tooltip'
-import { Badge } from 'components/Badge'
 import { ModalProvider } from 'contexts/Modal'
 import { twMerge } from 'tailwind-merge'
+import { SubscribeButtonIcon } from './SubscribeButtonIcon'
 import { SubscribeModal } from './SubscribeModal'
 import { useSubscribeButton } from './hooks/useSubscribeButton'
 
@@ -20,19 +18,11 @@ const _SubscribeButton = ({
   className,
   tooltipPlacement,
 }: SubscribeButtonProps) => {
-  const {
-    loading,
-    isSubscribed,
-    showSubscribeButton,
-    onSubscribeButtonClicked,
-  } = useSubscribeButton({ projectId })
-
-  if (!showSubscribeButton) return null
-
-  if (loading) return <SkeletonButton active size="small" />
+  const { loading, isSubscribed, onSubscribeButtonClicked } =
+    useSubscribeButton({ projectId })
 
   return (
-    <div className="flex flex-nowrap items-center">
+    <>
       <Tooltip
         placement={tooltipPlacement}
         title={
@@ -42,19 +32,23 @@ const _SubscribeButton = ({
         }
       >
         <Button
-          className={twMerge('p-0', className)}
+          className={twMerge(
+            'flex items-center justify-center gap-3',
+            className,
+          )}
           type="text"
           onClick={onSubscribeButtonClicked}
-          icon={isSubscribed ? <BellFilled /> : <BellOutlined />}
-        />
+          loading={loading}
+          icon={<SubscribeButtonIcon isSubscribed={isSubscribed} />}
+        >
+          <span className="font-base text-sm">
+            <Trans>Get Updates</Trans>
+          </span>
+        </Button>
       </Tooltip>
-      <span>
-        <Badge variant="info">
-          <Trans>New</Trans>
-        </Badge>
-      </span>
+
       <SubscribeModal />
-    </div>
+    </>
   )
 }
 

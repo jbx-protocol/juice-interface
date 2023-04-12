@@ -2,16 +2,17 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { parseEther } from '@ethersproject/units'
 import { plural, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import AMMPrices from 'components/AMMPrices'
+import Loading from 'components/Loading'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useWeiConverter from 'hooks/WeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
-import { useContext, useMemo } from 'react'
+import { lazy, Suspense, useContext, useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { formatIssuanceRate } from 'utils/v2v3/math'
 import { PayProjectFormContext } from './payProjectFormContext'
+const AMMPrices = lazy(() => import('components/AMMPrices'))
 
 /**
  * Help text shown below the Pay input field.
@@ -109,11 +110,13 @@ export default function PayInputSubText({
             or{' '}
             <Tooltip
               title={
-                <AMMPrices
-                  mode="buy"
-                  tokenSymbol={tokenSymbol}
-                  tokenAddress={tokenAddress}
-                />
+                <Suspense fallback={<Loading />}>
+                  <AMMPrices
+                    mode="buy"
+                    tokenSymbol={tokenSymbol}
+                    tokenAddress={tokenAddress}
+                  />
+                </Suspense>
               }
               placement="bottomLeft"
               overlayClassName="min-w-[300px]"

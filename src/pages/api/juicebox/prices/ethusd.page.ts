@@ -1,3 +1,4 @@
+import { CV_V3 } from 'constants/cv'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { loadJBPrices } from 'hooks/JBPrices/loadJBPrices'
 import { getLogger } from 'lib/logger'
@@ -15,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const JBPrices = await loadJBPrices()
+    const JBPrices = await loadJBPrices({ cv: CV_V3 })
     const priceRaw = await JBPrices?.priceFor(
       V2V3_CURRENCY_USD,
       V2V3_CURRENCY_ETH,

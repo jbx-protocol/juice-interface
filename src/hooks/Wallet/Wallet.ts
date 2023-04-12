@@ -1,5 +1,4 @@
 import { useConnectWallet } from '@web3-onboard/react'
-
 import {
   useChain,
   useChainUnsupported,
@@ -32,3 +31,5 @@ export function useWallet() {
     changeNetworks,
   }
 }
+
+export type Wallet = ReturnType<typeof useWallet>

@@ -13,10 +13,16 @@ export const useProjectUnwatchCellData = ({
   const res = useSubgraphQuery({
     entity: 'project',
     keys: ['id', 'handle', 'metadataUri'],
-    where: {
-      key: 'projectId',
-      value: projectId,
-    },
+    where: [
+      {
+        key: 'projectId',
+        value: projectId,
+      },
+      {
+        key: 'pv',
+        value: '2',
+      },
+    ],
   }).data
   return res?.[0]
 }

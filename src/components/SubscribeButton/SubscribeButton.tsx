@@ -33,7 +33,7 @@ const _SubscribeButton = ({
       >
         <Button
           className={twMerge(
-            'flex items-center justify-center gap-3 p-0',
+            'flex items-center justify-center gap-3',
             className,
           )}
           type="text"

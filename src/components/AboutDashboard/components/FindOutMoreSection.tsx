@@ -1,48 +1,33 @@
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
-import Link from 'next/link'
-import { twMerge } from 'tailwind-merge'
+import { AboutButton } from './Button'
 import { SectionContainer } from './SectionContainer'
 
 export const FindOutMoreSection = () => {
   return (
-    <SectionContainer className="md:py-24">
+    <SectionContainer className="mb-6 text-center md:py-24">
       <h2 className="font-header text-4xl">
         <Trans>Find out more about us</Trans>
       </h2>
-      <p>
+      <p className="text-base text-grey-700 dark:text-slate-200 md:text-lg">
         <Trans>
-          Our team is growing fast and we're always looking for smart people.
+          Still have questions or want to know more about us? Jump into our
+          Discord and come say hello.
         </Trans>
       </p>
 
-      <div className="flex flex-col justify-center gap-3 md:flex-row">
-        <Link href="/@juicebox">
-          <a>
-            <Button className="stroke-secondary text-primary border bg-transparent">
-              Juicebox DAO
-            </Button>
-          </a>
-        </Link>
+      <div className="flex w-full flex-col justify-center gap-3 md:flex-row">
+        <ExternalLink href="https://jbdao.org">
+          <AboutButton className="stroke-secondary text-primary w-full border bg-transparent">
+            Visit jbdao.org
+          </AboutButton>
+        </ExternalLink>
         <ExternalLink href="https://discord.gg/wFTh4QnDzk">
-          <Button>
+          <AboutButton className="w-full">
             <Trans>Join our Discord</Trans>
-          </Button>
+          </AboutButton>
         </ExternalLink>
       </div>
     </SectionContainer>
-  )
-}
-
-const Button: React.FC<{ className?: string }> = ({ className, children }) => {
-  return (
-    <button
-      className={twMerge(
-        'rounded-md bg-bluebs-400 px-4 py-2 text-white',
-        className,
-      )}
-    >
-      {children}
-    </button>
   )
 }

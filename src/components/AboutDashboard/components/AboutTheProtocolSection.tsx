@@ -8,23 +8,21 @@ export const AboutTheProtocolSection = () => {
   return (
     <SectionContainer className="md:flex md:items-center md:justify-between md:text-start">
       <div className="md:order-2 md:w-1/2">
-        <h2 className="font-header text-4xl">
+        <h2 className="font-header text-3xl md:text-4xl">
           <Trans>About the protocol</Trans>
         </h2>
-        <p>
+        <p className="text-base text-grey-700 dark:text-slate-200 md:text-lg">
           <Trans>
             Juicebox is an open-source protocol that is transparent,
             community-owned, and built on the Ethereum blockchain.
           </Trans>
         </p>
 
-        <div className="my-8 ml-4 flex flex-col gap-3 md:gap-5">
+        <div className="my-8 flex flex-col gap-5 md:ml-4">
           {[t`Open source`, t`Community-owned`, t`100% transparent`].map(
             item => (
               <div className="flex items-center gap-3" key={item}>
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-split-100 text-split-600 dark:bg-split-600 dark:text-split-100">
-                  <CheckIcon className="h-3.5 w-3.5" />
-                </div>
+                <CircleCheckIcon />
                 {item}
               </div>
             ),
@@ -32,7 +30,7 @@ export const AboutTheProtocolSection = () => {
         </div>
       </div>
 
-      <div className="mt mx-auto w-80 md:order-1 md:mx-0">
+      <div className="mx-auto mt-14 w-80 md:order-1 md:mx-0">
         <Image
           src={juiceHero}
           alt="Banny the chill Juicebox banana drinking juice"
@@ -42,3 +40,9 @@ export const AboutTheProtocolSection = () => {
     </SectionContainer>
   )
 }
+
+const CircleCheckIcon = () => (
+  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-bluebs-100 text-bluebs-500 dark:bg-bluebs-900 dark:text-bluebs-500">
+    <CheckIcon className="h-3.5 w-3.5" />
+  </div>
+)

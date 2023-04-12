@@ -4,47 +4,41 @@ import { SectionContainer } from './SectionContainer'
 
 export const WhatDoWeValueSection = () => {
   return (
-    <SectionContainer className="md:py-24">
-      <h2 className="font-header text-4xl">
+    <SectionContainer className="text-center md:py-24">
+      <h2 className="font-header text-3xl md:text-4xl">
         <Trans>What do we value?</Trans>
       </h2>
-      <p>
-        <Trans>
-          Open a full-featured Ethereum treasury with programmable spending in
-          minutes.
-        </Trans>
-      </p>
 
-      <div className="flex flex-wrap gap-4 md:mt-16 md:grid md:grid-cols-3 md:gap-8">
+      <div className="mt-12 flex flex-wrap gap-8 md:mt-16 md:grid md:grid-cols-3">
         <ValueBox
-          className="bg-melon-400 dark:bg-melon-600"
+          className="bg-melon-400 dark:bg-melon-500"
           title={t`Trust`}
-          description={t`Whether you have a team of 2 or 200, our shared team inboxes keep everyone on the same page and in the loop.`}
+          description={t`Everything we do is to ensure that Juicebox is trustworthy.`}
         />
         <ValueBox
-          className="bg-peel-400 dark:bg-peel-600"
+          className="bg-peel-400 dark:bg-peel-500"
           title={t`Transparency`}
-          description={t`Whether you have a team of 2 or 200, our shared team inboxes keep everyone on the same page and in the loop.`}
+          description={t`We do everything in the light, for everyone to see.`}
         />
         <ValueBox
-          className="bg-grape-400 dark:bg-grape-600"
+          className="bg-grape-400 dark:bg-grape-500"
           title={t`Reliability`}
-          description={t`Whether you have a team of 2 or 200, our shared team inboxes keep everyone on the same page and in the loop.`}
+          description={t`A platform you can rely on, 100% of the time.`}
         />
         <ValueBox
-          className="bg-crush-200 dark:bg-crush-600"
+          className="bg-crush-400 dark:bg-crush-500"
           title={t`Fun`}
-          description={t`Whether you have a team of 2 or 200, our shared team inboxes keep everyone on the same page and in the loop.`}
+          description={t`Making it fun & exciting to discover, launch and manage projects.`}
         />
         <ValueBox
-          className="bg-bluebs-400 dark:bg-bluebs-600"
+          className="bg-bluebs-400 dark:bg-bluebs-500"
           title={t`Community`}
-          description={t`Whether you have a team of 2 or 200, our shared team inboxes keep everyone on the same page and in the loop.`}
+          description={t`Juicebox is built for the people, by the people.`}
         />
         <ValueBox
-          className="bg-split-400 dark:bg-split-600"
+          className="bg-split-400 dark:bg-split-500"
           title={t`Customization`}
-          description={t`Whether you have a team of 2 or 200, our shared team inboxes keep everyone on the same page and in the loop.`}
+          description={t`A platform without limits, just the way you like it.`}
         />
       </div>
     </SectionContainer>
@@ -63,12 +57,12 @@ const ValueBox = ({
   return (
     <div
       className={twMerge(
-        'flex flex-col gap-2 rounded-lg py-4 px-3 text-center md:py-8 md:px-5',
+        'flex w-full flex-col gap-2 rounded-lg py-8 px-5 text-center text-black',
         className,
       )}
     >
       <div className="text-2xl font-medium">{title}</div>
-      <div>{description}</div>
+      <div className="text-sm">{description}</div>
     </div>
   )
 }

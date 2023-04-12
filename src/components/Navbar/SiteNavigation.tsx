@@ -3,16 +3,16 @@ import QuickProjectSearch from 'components/QuickProjectSearch'
 import useMobile from 'hooks/Mobile'
 import { CSSProperties, useEffect, useState } from 'react'
 import MobileNavigation from './Mobile/MobileNavigation'
-import {
-  desktopMenuItems,
-  DropdownKey,
-  exploreMenuItems,
-  resourcesMenuItems,
-} from './navigationItems'
 import NavLanguageSelector from './NavLanguageSelector'
 import ThemePicker from './ThemePicker'
 import { TransactionsList } from './TransactionList'
 import WalletButton from './WalletButton'
+import {
+  DropdownKey,
+  desktopMenuItems,
+  exploreMenuItems,
+  resourcesMenuItems,
+} from './navigationItems'
 
 export default function SiteNavigation() {
   const [dropdownOpen, setDropdownOpen] = useState<DropdownKey>(false)

@@ -1,10 +1,10 @@
 import useMobile from 'hooks/Mobile'
 import React, { ReactNode } from 'react'
 import { twJoin } from 'tailwind-merge'
-import { WizardContext } from './contexts'
-import { useWizard } from './hooks'
 import { Page } from './Page'
 import { Steps } from './Steps'
+import { WizardContext } from './contexts'
+import { useWizard } from './hooks'
 
 const WizardContainer: React.FC<{
   className?: string

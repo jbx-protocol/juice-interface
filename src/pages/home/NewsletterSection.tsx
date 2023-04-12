@@ -52,7 +52,7 @@ export function NewsletterSection() {
                     placeholder={t`Your email address`}
                   />
                 </Form.Item>
-                <div className="ml-0 md:ml-2">
+                <div className="ml-0 mt-2 w-full md:mt-0 md:ml-2 md:w-auto">
                   <Button
                     size="large"
                     type="primary"

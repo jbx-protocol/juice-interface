@@ -106,17 +106,16 @@ const template = `
         <mj-image css-class="dark-img" width="140px" height="32px" alt="Juicebox" src="https://juicebox.money/assets/juice-logo-full_white.png" />
 
         <mj-text>
-          <p>Hey!</p>
-          <p>Welcome to Juicebox, an open-source funding platform designed for web-3.</p>
-          <p>Juicebox gives you all the tools to configure, launch and fund your very own project, your way. It's fun, flexible and most importantly, <a href="https://juicebox.money/p/juicebox">community owned</a>.</p>
+          <p>Welcome to Juicebox!</p>
+          <p>Juicebox is an open-source web3 funding protocol.</p>
+          <p>Juicebox gives you all the tools to configure, launch and fund your very own project, your way. It's fun, flexible, most importantly, <a href="https://docs.juicebox.money/dao/">community owned</a>.</p>
           <p>Here are some useful resources:</p>
           <ul>
-            <li>Ready to launch? <a href="https://juicebox.money/create">Create a project</a></li>
-            <li>Just looking around? <a href="https://juicebox.money/projects">Explore projects</a></li>
-            <li>Connect with our community <a href="https://discord.com/invite/wFTh4QnDzk">on Discord</a></li>
-            <li>Want to learn more? <a href="https://docs.juicebox.money/">Browse our docs</a></li>
+            <li><a href="https://juicebox.money/create">Create a project</a> with our easy-to-use project builder.</li>
+            <li><a href="https://juicebox.money/projects">Explore projects</a> to see how communities are using Juicebox to fund their dreams.</li>
+            <li><a href="https://docs.juicebox.money/">Read the docs</a> to learn tips for making your project a success.</li>
           </ul>
-          <p>Questions? Hit us up on <a href="https://discord.com/invite/wFTh4QnDzk">Discord</a>.</p>
+          <p>Have questions? Connect with our community of devs and project creators <a href="https://discord.com/invite/wFTh4QnDzk">on Discord</a>.</p>
           <p>Happy funding!!</p>
           <br />
           <p>With love,</p>

@@ -1,4 +1,4 @@
-import { LinkOutlined } from '@ant-design/icons'
+import { LinkIcon } from '@heroicons/react/24/outline'
 import { MouseEventHandler } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { etherscanLink } from 'utils/etherscan'
@@ -30,7 +30,7 @@ const EtherscanLink: React.FC<{
         href={etherscanLink(type, value)}
         onClick={onClick}
       >
-        {children} <LinkOutlined />
+        {children} <LinkIcon className="inline h-3 w-3" />
       </ExternalLink>
     )
   }

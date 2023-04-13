@@ -1,4 +1,4 @@
-import { QuestionCircleOutlined } from '@ant-design/icons'
+import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
 import { Tooltip, TooltipProps } from 'antd'
 import { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -21,8 +21,11 @@ export default function TooltipIcon({
       trigger={['hover', 'click']}
       overlayClassName={className}
     >
-      <QuestionCircleOutlined
-        className={twMerge('text-black dark:text-slate-100', iconClassName)}
+      <QuestionMarkCircleIcon
+        className={twMerge(
+          'inline h-4 w-4 text-black dark:text-slate-100',
+          iconClassName,
+        )}
       />
     </Tooltip>
   )

@@ -3,6 +3,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Skeleton, Tooltip } from 'antd'
 import { CardSection } from 'components/CardSection'
+import { TokenAmount } from 'components/TokenAmount'
+import TooltipIcon from 'components/TooltipIcon'
 import TooltipLabel from 'components/TooltipLabel'
 import SplitList from 'components/v2v3/shared/SplitList'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -13,7 +15,6 @@ import { Split } from 'models/splits'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
-import { formatWad } from 'utils/format/formatNumber'
 import { settingsPagePath } from 'utils/routes'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { formatReservedRate } from 'utils/v2v3/math'
@@ -56,25 +57,23 @@ export default function ReservedTokensSplitsCard({
 
   const distributeButtonDisabled = reservedTokens?.eq(0)
 
-  function DistributeButton(): JSX.Element {
-    return (
-      <Button
-        type="ghost"
-        size="small"
-        onClick={() => setDistributeReservedTokensModalVisible(true)}
-        disabled={distributeButtonDisabled}
-      >
-        <Trans>Send {tokensText}</Trans>
-      </Button>
-    )
-  }
+  const DistributeButton = (
+    <Button
+      type="ghost"
+      size="small"
+      onClick={() => setDistributeReservedTokensModalVisible(true)}
+      disabled={distributeButtonDisabled}
+    >
+      <Trans>Send {tokensText}</Trans>
+    </Button>
+  )
 
   return (
     <CardSection>
       <div className="flex flex-col gap-6">
         {hideDistributeButton ? null : (
           <div className="flex flex-wrap justify-between gap-2">
-            <div className="mr-12 leading-10">
+            <div className="mr-12">
               <Skeleton
                 className="inline"
                 active
@@ -82,33 +81,37 @@ export default function ReservedTokensSplitsCard({
                 paragraph={{ rows: 1, width: 20 }}
                 title={false}
               >
-                <span className="text-primary text-base font-medium">
-                  {formatWad(reservedTokens, { precision: 0 })}
-                </span>
-              </Skeleton>{' '}
-              <TooltipLabel
-                className="cursor-default whitespace-nowrap text-xs font-medium text-grey-900 dark:text-slate-100"
-                label={
-                  <span className="uppercase text-grey-500 dark:text-slate-100">
-                    <Trans>{tokensText} reserved</Trans>
+                {reservedTokens ? (
+                  <span>
+                    <Trans>
+                      <TokenAmount
+                        className="text-primary text-base font-medium"
+                        amountWad={reservedTokens}
+                        tokenSymbol={tokenSymbol}
+                        precision={2}
+                      />{' '}
+                      <span className="text-xs uppercase text-grey-500 dark:text-slate-100">
+                        reserved
+                      </span>
+                    </Trans>{' '}
+                    <TooltipIcon
+                      tip={
+                        <Trans>
+                          Project tokens currently reserved for the recipients
+                          below. These tokens can be sent out at any time.
+                        </Trans>
+                      }
+                    />
                   </span>
-                }
-                tip={
-                  <Trans>
-                    Project tokens currently reserved for the recipients below.
-                    These tokens can be sent out at any time.
-                  </Trans>
-                }
-              />
+                ) : null}{' '}
+              </Skeleton>
             </div>
             {reservedTokens?.eq(0) ? (
               <Tooltip title={t`No reserved tokens to send.`}>
-                <div>
-                  <DistributeButton />
-                </div>
+                <div>{DistributeButton}</div>
               </Tooltip>
             ) : (
-              <DistributeButton />
+              DistributeButton
             )}
           </div>
         )}

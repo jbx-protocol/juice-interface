@@ -1,4 +1,4 @@
-import { DownloadOutlined } from '@ant-design/icons'
+import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Select } from 'antd'
 import AddToBalanceEventElem from 'components/activityEventElems/AddToBalanceEventElem'
@@ -128,7 +128,7 @@ export default function ProjectActivity() {
     if (hasNextPage) {
       return (
         <div className="text-center">
-          <Button onClick={() => fetchNextPage()} type="text" className="px-0">
+          <Button onClick={() => fetchNextPage()} type="link" className="px-0">
             <Trans>Load more</Trans>
           </Button>
         </div>
@@ -151,7 +151,7 @@ export default function ProjectActivity() {
           {count > 0 && (
             <Button
               type="text"
-              icon={<DownloadOutlined />}
+              icon={<ArrowDownTrayIcon className="inline h-5 w-5" />}
               onClick={() => setDownloadModalVisible(true)}
             />
           )}

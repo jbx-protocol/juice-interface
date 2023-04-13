@@ -20,10 +20,11 @@ export function ProjectTagElem({
     <div
       onClick={() => onClick?.(tag)}
       className={twMerge(
-        'cursor-pointer rounded-full py-1 px-3 uppercase',
+        'rounded-full py-1 px-3 uppercase',
         selected
           ? 'bg-smoke-300 font-medium dark:bg-slate-400'
           : 'bg-smoke-100 dark:bg-slate-600',
+        onClick ? 'cursor-pointer' : '',
         className,
       )}
     >

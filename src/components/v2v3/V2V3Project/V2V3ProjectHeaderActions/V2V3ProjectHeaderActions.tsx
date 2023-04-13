@@ -1,4 +1,5 @@
-import { SettingOutlined, ToolOutlined } from '@ant-design/icons'
+import { SettingOutlined } from '@ant-design/icons'
+import { WrenchIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Divider, Tooltip } from 'antd'
 import { SubscribeButton } from 'components/SubscribeButton'
@@ -11,7 +12,6 @@ import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { settingsPagePath } from 'utils/routes'
-import { ContractVersionSelect } from './ContractVersionSelect'
 
 export function V2V3ProjectHeaderActions() {
   const wallet = useWallet()
@@ -31,37 +31,29 @@ export function V2V3ProjectHeaderActions() {
 
   return (
     <>
-      <div className="flex items-center">
-        <div className="flex items-center gap-x-4">
-          {showSubscribeButton && (
-            <>
-              <SubscribeButton
-                projectId={projectId}
-                tooltipPlacement={'bottom'}
-              />
-              <Divider className="h-8" type="vertical" />
-            </>
-          )}
-          <ContractVersionSelect />
-          <Tooltip title={t`Project tools`} placement="bottom">
-            <Button
-              onClick={() => setToolDrawerVisible(true)}
-              icon={<ToolOutlined />}
-              type="text"
-            />
-          </Tooltip>
-          {canReconfigure && (
-            <div>
-              <Link href={settingsPagePath('general', { handle, projectId })}>
-                <Button icon={<SettingOutlined />}>
-                  <span>
-                    <Trans>Settings</Trans>
-                  </span>
-                </Button>
-              </Link>
-            </div>
-          )}
-        </div>
+      <div className="flex items-center gap-x-4">
+        {showSubscribeButton && (
+          <>
+            <SubscribeButton projectId={projectId} tooltipPlacement="bottom" />
+            <Divider className="h-8" type="vertical" />
+          </>
+        )}
+        <Tooltip title={t`Project tools`} placement="bottom">
+          <Button
+            onClick={() => setToolDrawerVisible(true)}
+            icon={<WrenchIcon className="inline h-5 w-5" />}
+            type="text"
+          />
+        </Tooltip>
+        {canReconfigure && (
+          <Link href={settingsPagePath('general', { handle, projectId })}>
+            <Button icon={<SettingOutlined />}>
+              <span>
+                <Trans>Settings</Trans>
+              </span>
+            </Button>
+          </Link>
+        )}
       </div>
 
       <V2V3ProjectToolsDrawer

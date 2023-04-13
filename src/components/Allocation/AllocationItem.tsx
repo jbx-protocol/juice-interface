@@ -34,7 +34,7 @@ export const AllocationItem = ({
       </div>
       <div
         className={twMerge(
-          'col-span-2 border-t border-smoke-200 pt-3 pr-3 pl-7',
+          'col-span-2 border-t border-smoke-200 pt-3 pr-3 pl-7 md:border-t-0',
           'md:col-span-5 md:col-start-7 md:row-start-1 md:w-full md:justify-self-end md:border-l md:text-end',
           'dark:border-slate-300',
         )}

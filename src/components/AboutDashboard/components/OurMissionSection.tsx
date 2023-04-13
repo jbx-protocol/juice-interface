@@ -80,7 +80,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
             {/* Underneath current number */}
             <div
-              className="absolute top-full mt-2 -translate-x-1/2"
+              className="absolute top-full mt-2 -translate-x-1/2 text-grey-700 dark:text-slate-200"
               style={{
                 left: `${percentage}%`,
               }}

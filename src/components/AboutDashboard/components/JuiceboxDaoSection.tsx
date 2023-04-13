@@ -12,8 +12,11 @@ export const JuiceboxDaoSection = () => {
         <h2 className="font-header text-3xl md:text-4xl">Juicebox DAO</h2>
         <p className="text-base text-grey-700 dark:text-slate-200 md:text-lg">
           <Trans>
-            Juicebox is an open-source protocol that is transparent,
-            community-owned, and built on the Ethereum blockchain.
+            JuiceboxDAO is a community of passionate builders, creators, and
+            innovators working together to push the boundaries of decentralized
+            funding. Using the Juicebox protocol, we've created a DAO to
+            coordinate thousands of JBX holders, build in the open, and govern
+            the protocol over time.
           </Trans>
         </p>
 

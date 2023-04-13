@@ -245,6 +245,12 @@ msgstr ""
 msgid "A percentage of token issuance which is set aside for addresses and other projects chosen by the project owner."
 msgstr ""
 
+msgid "A platform without limits, just the way you like it."
+msgstr ""
+
+msgid "A platform you can rely on, 100% of the time."
+msgstr ""
+
 msgid "A project name"
 msgstr ""
 
@@ -1265,9 +1271,6 @@ msgstr ""
 msgid "Enabling owner token minting isn't recommended as it allows the project owner to create unlimited tokens, which appears risky to supporters."
 msgstr ""
 
-msgid "Enabling the creators of tomorrow to launch, fund and manage the boldest projects on the internet."
-msgstr ""
-
 msgid "End"
 msgstr ""
 
@@ -1314,6 +1317,9 @@ msgid "Error uploading file"
 msgstr ""
 
 msgid "Ethereum wallet address"
+msgstr ""
+
+msgid "Everything we do is to ensure that Juicebox is trustworthy."
 msgstr ""
 
 msgid "Existing project payer addresses can be found in the Tools drawer (<0/>) on the project page."
@@ -1697,6 +1703,9 @@ msgstr ""
 msgid "Juicebox Project ID"
 msgstr ""
 
+msgid "Juicebox enables the creators of tomorrow to launch, fund and manage the boldest projects on the internet."
+msgstr ""
+
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building."
 msgstr ""
 
@@ -1707,6 +1716,9 @@ msgid "Juicebox is an open-source protocol that is transparent, community-owned,
 msgstr ""
 
 msgid "Juicebox is as versatile as you are, build anything from an NFT project to a boutique crypto lawfirm and everything in between."
+msgstr ""
+
+msgid "Juicebox is built for the people, by the people."
 msgstr ""
 
 msgid "Juicebox is non-custodial, meaning you have complete ownership over your project and its funds. Easily customize your own on-chain rules."
@@ -1734,6 +1746,9 @@ msgid "Juicebox projects use <0>ENS names</0> as handles. Projects with a handle
 msgstr ""
 
 msgid "JuiceboxDAO"
+msgstr ""
+
+msgid "JuiceboxDAO is a community of passionate builders, creators, and innovators working together to push the boundaries of decentralized funding. Using the Juicebox protocol, we've created a DAO to coordinate thousands of JBX holders, build in the open, and govern the protocol over time."
 msgstr ""
 
 msgid "Juicy picks"
@@ -1827,6 +1842,9 @@ msgid "MAX"
 msgstr ""
 
 msgid "Made a mistake?"
+msgstr ""
+
+msgid "Making it fun & exciting to discover, launch and manage projects."
 msgstr ""
 
 msgid "Manage"
@@ -2166,9 +2184,6 @@ msgid "Otherwise, use <0>Amounts</0>. Amounts let you pre-define the amount of E
 msgstr ""
 
 msgid "Our mission"
-msgstr ""
-
-msgid "Our team is growing fast and we're always looking for smart people."
 msgstr ""
 
 msgid "Overview"
@@ -2996,9 +3011,6 @@ msgstr ""
 msgid "Socials"
 msgstr ""
 
-msgid "Something else"
-msgstr ""
-
 msgid "Something has gone wrong, please contact support."
 msgstr ""
 
@@ -3041,13 +3053,13 @@ msgstr ""
 msgid "Stay up to date."
 msgstr ""
 
+msgid "Still have questions or want to know more about us? Jump into our Discord and come say hello."
+msgstr ""
+
 msgid "Subcription to juicenews failed."
 msgstr ""
 
 msgid "Subject"
-msgstr ""
-
-msgid "Submit a proposal"
 msgstr ""
 
 msgid "Subscribe"
@@ -3674,9 +3686,6 @@ msgstr ""
 msgid "View on Etherscan"
 msgstr ""
 
-msgid "View the treasury"
-msgstr ""
-
 msgid "Volume"
 msgstr ""
 
@@ -3704,7 +3713,10 @@ msgstr ""
 msgid "Watching projects"
 msgstr ""
 
-msgid "We are Juicebox"
+msgid "We are here"
+msgstr ""
+
+msgid "We do everything in the light, for everyone to see."
 msgstr ""
 
 msgid "We recommend visiting the <0>Juicebox Discord</0> for help and advice on this process."
@@ -3765,9 +3777,6 @@ msgid "When someone pays your project 1 ETH:"
 msgstr ""
 
 msgid "Where to Contact You"
-msgstr ""
-
-msgid "Whether you have a team of 2 or 200, our shared team inboxes keep everyone on the same page and in the loop."
 msgstr ""
 
 msgid "Whether you’re building a boutique crypto law firm or the next mega-fundraiser, Juicebox is customizable to match your needs."

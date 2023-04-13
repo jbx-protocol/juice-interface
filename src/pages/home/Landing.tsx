@@ -1,6 +1,6 @@
+import { Footer } from 'components/Footer/Footer'
 import { BuiltForSection } from './BuiltForSection/BuiltForSection'
 import { ConclusionSection } from './ConclusionSection/ConclusionSection'
-import { Footer } from './Footer'
 import { HowJuiceboxWorksSection } from './HowJuiceboxWorksSection/HowJuiceboxWorksSection'
 import { JuicyPicksSection } from './JuicyPicksSection/JuicyPicksSection'
 import { StatsSection } from './StatsSection'

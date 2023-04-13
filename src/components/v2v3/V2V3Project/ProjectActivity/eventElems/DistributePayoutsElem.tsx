@@ -63,14 +63,9 @@ export default function DistributePayoutsElem({
           {distributePayoutsEvents?.map(e => (
             <div
               key={e.id}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'baseline',
-              }}
-              className="text-sm"
+              className="flex items-baseline justify-between text-sm"
             >
-              <div style={{ fontWeight: 500 }}>
+              <div className="font-medium">
                 {e.splitProjectId ? (
                   <V2V3ProjectHandleLink
                     className="text-grey-900 dark:text-slate-100"
@@ -92,13 +87,7 @@ export default function DistributePayoutsElem({
           ))}
 
           {event.beneficiaryDistributionAmount?.gt(0) && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'baseline',
-              }}
-            >
+            <div className="flex items-baseline justify-between">
               <div>
                 <FormattedAddress
                   className="text-grey-900 dark:text-slate-100"

@@ -13,7 +13,7 @@ type MinimalTableProps = {
  */
 export default function MinimalTable({ sections }: MinimalTableProps) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '.75rem' }}>
+    <div className="flex flex-col gap-2">
       {sections.map(s => (
         <div key={s[0].key}>
           {s.map(r => (

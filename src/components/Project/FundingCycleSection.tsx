@@ -28,12 +28,7 @@ export default function FundingCycleSection({
 
   return (
     <div className="flex flex-col gap-2">
-      <div
-        className="flex flex-wrap justify-between"
-        style={{
-          columnGap: 5,
-        }}
-      >
+      <div className="flex flex-wrap justify-between gap-2">
         {hideTitle ? (
           <div />
         ) : (

@@ -1,8 +1,6 @@
 import { t } from '@lingui/macro'
 import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
-
 import { ActivityEvent } from './ActivityElement/ActivityElement'
-import { primaryContentFontSize } from './styles'
 
 export default function DeployedERC20EventElem({
   event,
@@ -15,9 +13,7 @@ export default function DeployedERC20EventElem({
   return (
     <ActivityEvent
       header={t`Deployed ERC20 token`}
-      subject={
-        <div style={{ fontSize: primaryContentFontSize }}>{event.symbol}</div>
-      }
+      subject={<div className="text-base">{event.symbol}</div>}
       event={{ ...event, beneficiary: undefined, caller: undefined }}
     />
   )

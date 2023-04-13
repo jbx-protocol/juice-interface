@@ -54,7 +54,7 @@ export default function ProjectPayoutMods({
     <Form.Item
       {...formItemProps}
       className={classNames('block', formItemProps?.className)}
-      style={{ ...formItemProps?.style, display: 'block' }}
+      style={{ ...formItemProps?.style }}
     >
       <Space className="min-h-0 w-full" direction="vertical" size="large">
         {lockedMods && (

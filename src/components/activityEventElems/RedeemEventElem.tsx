@@ -7,7 +7,6 @@ import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext } from 'react'
 import { decodeJB721DelegateRedeemMetadata } from 'utils/nftRewards'
 import { ActivityEvent } from './ActivityElement'
-import { primaryContentFontSize } from './styles'
 
 export default function RedeemEventElem({
   event,
@@ -45,10 +44,7 @@ export default function RedeemEventElem({
       event={event}
       header={t`Redeemed`}
       subject={
-        <div
-          style={{ fontSize: primaryContentFontSize }}
-          className="font-medium"
-        >
+        <div className="text-base font-medium">
           {redeemedTokenIds && redeemedTokenIds.length > 0 ? (
             <div>
               <div>

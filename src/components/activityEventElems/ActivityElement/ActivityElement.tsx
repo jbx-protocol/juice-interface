@@ -30,15 +30,7 @@ const CallerBeneficiary = ({
 }
 
 const ExtraContainer: React.FC = ({ children }) => {
-  return (
-    <div
-      style={{
-        marginTop: '5px',
-      }}
-    >
-      {children}
-    </div>
-  )
+  return <div className="mt-2">{children}</div>
 }
 
 function Header({ header }: { header: string | JSX.Element }) {
@@ -57,7 +49,7 @@ function TimestampVersion({
   const terminalVersion = useV2V3TerminalVersion(terminal)
 
   return (
-    <div style={{ textAlign: 'right' }}>
+    <div className="text-right">
       {timestamp && (
         <div className="text-xs text-grey-500 dark:text-grey-300">
           {formatHistoricalDate(timestamp * 1000)}{' '}

@@ -33,7 +33,7 @@ export default function WalletButton() {
           icon={<WarningOutlined className="text-warning-500" />}
           onClick={changeNetworks}
         >
-          Wrong network
+          <span className="md:hidden lg:inline">Wrong network</span>
         </Button>
       )}
 

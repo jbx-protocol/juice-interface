@@ -1,8 +1,8 @@
-import EthPrice from 'components/Navbar/EthPrice'
 import { useEthBalanceQuery } from 'hooks/EthBalance'
 import {} from 'react'
 
 import ETHAmount from 'components/currency/ETHAmount'
+import EthPrice from './EthPrice'
 
 export default function Balance({
   address,

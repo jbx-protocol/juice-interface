@@ -3,10 +3,10 @@ import QuickProjectSearch from 'components/QuickProjectSearch'
 import useMobile from 'hooks/Mobile'
 import { CSSProperties, useEffect, useState } from 'react'
 import MobileNavigation from './Mobile/MobileNavigation'
-import NavLanguageSelector from './NavLanguageSelector'
-import ThemePicker from './ThemePicker'
-import { TransactionsList } from './TransactionList'
-import WalletButton from './WalletButton'
+import NavLanguageSelector from './components/NavLanguageSelector'
+import ThemePicker from './components/ThemePicker'
+import { TransactionsList } from './components/TransactionList'
+import WalletButton from './components/Wallet/WalletButton'
 import {
   DropdownKey,
   desktopMenuItems,

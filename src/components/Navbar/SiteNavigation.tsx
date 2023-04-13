@@ -43,7 +43,11 @@ export default function SiteNavigation() {
               </Menu.Item>
             )}
             <Menu.Item>
-              <ExploreMenu />
+              <Link href="/projects">
+                <a className="text-primary font-medium">
+                  <Trans>Explore</Trans>
+                </a>
+              </Link>
             </Menu.Item>
             <Menu.Item>
               <ResourcesMenu />
@@ -92,25 +96,6 @@ export default function SiteNavigation() {
     </div>
   )
 }
-
-const exploreMenuItems = [
-  {
-    label: t`Trending projects`,
-    href: '/projects?tab=trending',
-  },
-  {
-    label: t`Recently listed`,
-    href: '/projects?tab=new',
-  },
-  {
-    label: t`All projects`,
-    href: '/projects?tab=all',
-  },
-]
-
-const ExploreMenu = () => (
-  <DropdownMenu items={exploreMenuItems} heading={t`Explore`} />
-)
 
 const resourcesMenuItems = [
   {

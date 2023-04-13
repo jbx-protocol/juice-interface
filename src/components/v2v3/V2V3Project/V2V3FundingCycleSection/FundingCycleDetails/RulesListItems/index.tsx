@@ -18,9 +18,9 @@ import {
 } from '../../settingExplanations'
 import { FundingCycleListItem } from '../FundingCycleListItem'
 import { AllowedValue } from './AllowedValue'
+import { BallotStrategyValue } from './BallotStrategyValue'
 import { HoldFeesValue } from './HoldFeesValue'
 import { PausePayValue } from './PausePayValue'
-import { ReconfigStratValue } from './ReconfigStratValue'
 
 export function RulesListItems({
   fundingCycle,
@@ -85,14 +85,14 @@ export function RulesListItems({
       <FundingCycleListItem
         name={t`Edit deadline`}
         value={
-          <ReconfigStratValue
+          <BallotStrategyValue
             ballotStrategy={ballotStrategy}
             warningText={ballotWarningText}
           />
         }
         oldValue={
           showDiffs && oldBallotStrategy && ballotHasDiff ? (
-            <ReconfigStratValue
+            <BallotStrategyValue
               ballotStrategy={oldBallotStrategy}
               warningText={undefined}
             />

@@ -36,6 +36,7 @@ module.exports = {
     },
     colors: {
       transparent: '#00000000',
+      current: 'currentColor',
       black: '#000000',
       white: '#FFFFFF',
       bluebs: {
@@ -234,7 +235,6 @@ module.exports = {
         900: '#1F3D2B',
         950: '#15281D',
       },
-      extend: {},
     },
   },
   plugins: [],

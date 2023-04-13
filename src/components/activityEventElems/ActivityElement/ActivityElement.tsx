@@ -15,13 +15,13 @@ const CallerBeneficiary = ({
   if (!(beneficiary || caller)) return null
 
   return beneficiary && caller && !isEqualAddress(beneficiary, caller) ? (
-    <div className="text-xs text-grey-500 dark:text-grey-300">
+    <div className="text-xs">
       <FormattedAddress address={caller} title="Caller" />{' '}
       <ArrowRightOutlined />{' '}
       <FormattedAddress address={beneficiary} title="Beneficiary" />
     </div>
   ) : (
-    <div className="text-sm text-grey-500 dark:text-grey-300">
+    <div className="text-sm">
       <FormattedAddress withEnsAvatar address={caller} />
     </div>
   )

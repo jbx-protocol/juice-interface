@@ -14,37 +14,27 @@ const EtherscanLink: React.FC<{
   onClick?: MouseEventHandler
 }> = ({ className, value, type, truncated, truncateTo, children, onClick }) => {
   if (!value) return null
-  let truncatedValue: string | undefined
-  // Return first and last 4 chars of ETH address only
-  if (truncated) {
-    truncatedValue = truncateEthAddress({ address: value, truncateTo })
-  }
 
-  if (type === 'tx') {
-    return (
-      <ExternalLink
-        className={twMerge(
-          'text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100',
-          className,
-        )}
-        href={etherscanLink(type, value)}
-        onClick={onClick}
-      >
-        {children} <LinkIcon className="inline h-3 w-3" />
-      </ExternalLink>
-    )
-  }
+  const renderValue = truncated
+    ? truncateEthAddress({ address: value, truncateTo })
+    : value
 
   return (
     <ExternalLink
       className={twMerge(
-        'text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100',
+        'text-current hover:text-bluebs-500 hover:underline',
         className,
       )}
       href={etherscanLink(type, value)}
       onClick={onClick}
     >
-      {children ?? truncatedValue ?? value}
+      {type === 'tx' ? (
+        <>
+          {children} <LinkIcon className="inline h-3 w-3" />
+        </>
+      ) : (
+        <> {children ?? renderValue}</>
+      )}
     </ExternalLink>
   )
 }

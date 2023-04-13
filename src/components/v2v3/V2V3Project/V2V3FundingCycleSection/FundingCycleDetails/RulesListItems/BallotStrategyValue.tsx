@@ -1,9 +1,9 @@
 import { Tooltip } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
+import EtherscanLink from 'components/EtherscanLink'
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 import { BallotStrategy } from 'models/ballot'
 
-export function ReconfigStratValue({
+export function BallotStrategyValue({
   ballotStrategy,
   warningText,
 }: {
@@ -15,8 +15,12 @@ export function ReconfigStratValue({
       showWarning={Boolean(warningText)}
       tooltipTitle={warningText}
     >
-      <Tooltip title={<FormattedAddress address={ballotStrategy.address} />}>
-        <span className="underline">{ballotStrategy.name}</span>
+      <Tooltip
+        title={<EtherscanLink type="address" value={ballotStrategy.address} />}
+      >
+        <span className="underline decoration-dashed">
+          {ballotStrategy.name}
+        </span>
       </Tooltip>
     </FundingCycleDetailWarning>
   )

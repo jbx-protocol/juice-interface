@@ -1,8 +1,6 @@
 import { ArrowRightOutlined } from '@ant-design/icons'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
-import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
-import { useV2V3TerminalVersion } from 'hooks/v2v3/V2V3TerminalVersion'
 import { isEqualAddress } from 'utils/address'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import { ActivityElementEvent } from './activityElementEvent'
@@ -41,24 +39,12 @@ function Header({ header }: { header: string | JSX.Element }) {
   )
 }
 
-function TimestampVersion({
-  timestamp,
-  txHash,
-  terminal,
-}: ActivityElementEvent) {
-  const terminalVersion = useV2V3TerminalVersion(terminal)
-
+function TimestampVersion({ timestamp, txHash }: ActivityElementEvent) {
   return (
     <div className="text-right">
       {timestamp && (
         <div className="text-xs text-grey-500 dark:text-grey-300">
           {formatHistoricalDate(timestamp * 1000)}{' '}
-          {terminalVersion && (
-            <ProjectVersionBadge
-              versionText={'V' + terminalVersion}
-              className="text-secondary bg-transparent text-xs dark:bg-transparent"
-            />
-          )}{' '}
           <EtherscanLink
             value={txHash}
             type="tx"

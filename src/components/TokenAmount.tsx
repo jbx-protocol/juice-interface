@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { PRECISION_ETH } from 'constants/currency'
+import { HTMLProps } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -7,13 +8,16 @@ export function TokenAmount({
   amountWad,
   tokenSymbol,
   decimals,
+  precision = PRECISION_ETH,
+  ...props
 }: {
   amountWad: BigNumber
   tokenSymbol?: string
   decimals?: number
-}) {
+  precision?: number
+} & HTMLProps<HTMLSpanElement>) {
   const amountFormatted = formatWad(amountWad, {
-    precision: PRECISION_ETH,
+    precision: precision,
     decimals,
   })
   const tokensText = tokenSymbolText({
@@ -22,7 +26,7 @@ export function TokenAmount({
   })
 
   return (
-    <span>
+    <span {...props}>
       {amountFormatted} {tokensText}
     </span>
   )

@@ -1,6 +1,6 @@
-import { InfoCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import { Callout } from 'components/Callout'
 
 export default function ArchivedProjectsMessage({
   hidden,
@@ -9,11 +9,10 @@ export default function ArchivedProjectsMessage({
 }) {
   if (!hidden) {
     return (
-      <p className="mb-10 mt-5 max-w-[800px]">
+      <Callout.Info className="mb-10 mt-5 max-w-[800px]">
         <Trans>
-          <InfoCircleOutlined /> Archived projects haven't been modified or
-          deleted on-chain. They can still be interacted with directly through
-          the Juicebox contracts.
+          Archived projects haven't been modified or deleted on-chain. They can
+          still be interacted with directly through the Juicebox contracts.
         </Trans>{' '}
         <Tooltip
           title={t`Project owners can archive their Juicebox projects in their project's settings page.`}
@@ -22,7 +21,7 @@ export default function ArchivedProjectsMessage({
             <Trans>How do I archive a project?</Trans>
           </span>
         </Tooltip>
-      </p>
+      </Callout.Info>
     )
   }
   return null

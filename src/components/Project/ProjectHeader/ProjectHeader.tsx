@@ -12,6 +12,7 @@ import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 
+import { ContractVersionSelect } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions/ContractVersionSelect'
 import { EditProjectHandleButton } from './EditProjectHandleButton'
 import SocialLinks from './SocialLinks'
 
@@ -46,6 +47,8 @@ function ProjectSubheading({
         ) : (
           <Trans>Project #{projectId}</Trans>
         )}
+
+        <ContractVersionSelect />
 
         {!handle && canEditProjectHandle && projectId ? (
           <EditProjectHandleButton />

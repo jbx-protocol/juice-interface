@@ -83,7 +83,7 @@ msgstr ""
 msgid "90 days"
 msgstr ""
 
-msgid "<0/> Archived projects haven't been modified or deleted on-chain. They can still be interacted with directly through the Juicebox contracts."
+msgid "<0/> <1>reserved</1>"
 msgstr ""
 
 msgid "<0/> Your project’s rules cannot be edited during the first cycle."
@@ -471,6 +471,9 @@ msgid "Archive project"
 msgstr ""
 
 msgid "Archived"
+msgstr ""
+
+msgid "Archived projects haven't been modified or deleted on-chain. They can still be interacted with directly through the Juicebox contracts."
 msgstr ""
 
 msgid "Archiving your project will mean the following:"
@@ -4200,9 +4203,6 @@ msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr ""
 
 msgid "{tokenTextSingular} recipients"
-msgstr ""
-
-msgid "{tokensText} reserved"
 msgstr ""
 
 msgid "{tokensTokenUpper} amount"

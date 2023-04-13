@@ -1,4 +1,4 @@
-import { InfoCircleOutlined } from '@ant-design/icons'
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button, Col, Row, Tooltip } from 'antd'
 import Grid from 'components/Grid'
@@ -23,10 +23,10 @@ export default function TrendingSection() {
       <Row className="my-0 mx-auto max-w-5xl gap-y-10">
         <Col xs={24} md={12} className="px-0 md:px-10">
           <div className="flex flex-col gap-9">
-            <h2 className="m-0 font-heading text-2xl font-normal text-black dark:text-slate-100">
+            <h2 className="m-0 flex items-center gap-1 font-heading text-2xl font-normal text-black dark:text-slate-100">
               <Trans>Trending projects</Trans>{' '}
               <Tooltip title={<RankingExplanation />} placement="bottom">
-                <InfoCircleOutlined className="text-xl" />
+                <InformationCircleIcon className="h-6 w-6" />
               </Tooltip>
             </h2>
 

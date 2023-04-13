@@ -7,7 +7,7 @@ export function TextButton({ className, ...props }: ButtonProps) {
     <Button
       {...props}
       className={classNames(
-        'p-0 text-sm uppercase text-grey-400 hover:text-bluebs-500',
+        'p-0 text-sm uppercase text-grey-400 hover:text-bluebs-500 dark:text-slate-200 hover:dark:text-bluebs-400',
         className,
       )}
       type="text"

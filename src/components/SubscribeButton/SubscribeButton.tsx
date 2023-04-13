@@ -2,20 +2,17 @@ import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { TooltipPlacement } from 'antd/lib/tooltip'
 import { ModalProvider } from 'contexts/Modal'
-import { twMerge } from 'tailwind-merge'
 import { SubscribeButtonIcon } from './SubscribeButtonIcon'
 import { SubscribeModal } from './SubscribeModal'
 import { useSubscribeButton } from './hooks/useSubscribeButton'
 
 interface SubscribeButtonProps {
   projectId: number
-  className?: string
   tooltipPlacement?: TooltipPlacement
 }
 
 const _SubscribeButton = ({
   projectId,
-  className,
   tooltipPlacement,
 }: SubscribeButtonProps) => {
   const { loading, isSubscribed, onSubscribeButtonClicked } =
@@ -32,10 +29,7 @@ const _SubscribeButton = ({
         }
       >
         <Button
-          className={twMerge(
-            'flex items-center justify-center gap-3',
-            className,
-          )}
+          className="flex items-center gap-x-2 p-0"
           type="text"
           onClick={onSubscribeButtonClicked}
           loading={loading}

@@ -22,12 +22,12 @@ export function ProjectTagsRow({
   const _tags = tags ?? projectTagOptions
 
   return (
-    <div className="flex select-none flex-wrap gap-1">
+    <div className="flex flex-wrap gap-1">
       {_tags.map(t => (
         <ProjectTagElem
           key={t}
           tag={t}
-          onClick={() => onClickTag?.(t)}
+          onClick={onClickTag ? () => onClickTag(t) : undefined}
           className={tagClassName}
         />
       ))}

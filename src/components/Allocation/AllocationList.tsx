@@ -245,7 +245,6 @@ export const AllocationList = ({
             icon={<PlusCircleOutlined />}
             onClick={modal.open}
           >
-            {' '}
             <Trans>Add {allocationName ? allocationName : ''}</Trans>
           </CreateButton>
         )}

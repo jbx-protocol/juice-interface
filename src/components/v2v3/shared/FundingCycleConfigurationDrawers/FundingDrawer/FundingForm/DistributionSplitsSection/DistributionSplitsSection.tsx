@@ -1,25 +1,25 @@
-import { PlusCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Form, Radio } from 'antd'
+import { Form, Radio } from 'antd'
+import { Allocation, AllocationSplit } from 'components/Allocation'
 import ExternalLink from 'components/ExternalLink'
 import { FormItemExt } from 'components/formItems/formItemExt'
+import { OwnerPayoutCard } from 'components/PayoutCard'
+import { PayoutCard } from 'components/PayoutCard/PayoutCard'
 import TooltipIcon from 'components/TooltipIcon'
 import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
-import { DistributionSplitCard } from 'components/v2v3/shared/DistributionSplitCard'
 import { CurrencyName } from 'constants/currency'
-import filter from 'lodash/filter'
-import isEqual from 'lodash/isEqual'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { PayoutsSelection } from 'models/payoutsSelection'
 import { Split } from 'models/splits'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import Link from 'next/link'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { ceilIfCloseToNextInteger } from 'utils/math'
 import { helpPagePath, v2v3ProjectRoute } from 'utils/routes'
-import {
-  adjustedSplitPercents,
-  getNewDistributionLimit,
-  getTotalSplitsPercentage,
-} from 'utils/v2v3/distributions'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
+import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2v3/math'
 import { DistributionSplitModal } from '../../../DistributionSplitModal'
 import { PayoutConfigurationExplainerCollapse } from './PayoutConfigurationExplainerCollapse'
@@ -47,6 +47,10 @@ export function DistributionSplitsSection({
   projectOwnerAddress: string | undefined
   onSplitsChanged: (splits: Split[]) => void
 } & FormItemExt) {
+  const {
+    payoutSplits: contextPayoutSplits,
+    distributionLimitCurrency: distributionLimitCurrencyBigNumber,
+  } = useContext(V2V3ProjectContext)
   const distributionLimitIsInfinite =
     !distributionLimit || parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
 
@@ -62,63 +66,28 @@ export function DistributionSplitsSection({
 
   const allSplits = lockedSplits.concat(editableSplits)
 
-  const renderSplitCard = useCallback(
-    (split: Split, index: number, isLocked?: boolean) => {
-      if (!split) return
-      const isFirstSplit =
-        editableSplits.length === 0 ||
-        (editableSplits.length === 1 && index === 0)
-      return (
-        <DistributionSplitCard
-          key={`split-${index}`}
-          split={split}
-          splits={allSplits}
-          distributionLimit={distributionLimit}
-          setDistributionLimit={setDistributionLimit}
-          onSplitsChanged={onSplitsChanged}
-          onCurrencyChange={isFirstSplit ? onCurrencyChange : undefined}
-          currencyName={currencyName}
-          isLocked={isLocked}
-          onSplitDelete={split => {
-            let adjustedSplits = allSplits
-            if (!distributionLimitIsInfinite && allSplits.length !== 1) {
-              const newDistributionLimit = getNewDistributionLimit({
-                currentDistributionLimit: distributionLimit,
-                newSplitAmount: 0,
-                editingSplitPercent: split.percent,
-              }).toString()
-              adjustedSplits = adjustedSplitPercents({
-                splits: editableSplits,
-                oldDistributionLimit: distributionLimit,
-                newDistributionLimit,
-              })
-              setDistributionLimit(newDistributionLimit)
-            }
-            if (allSplits.length === 1) setDistributionLimit('0')
-            const splitsAfterDelete = filter(
-              adjustedSplits,
-              // compare splits but ignore percent because it has been adjusted
-              s =>
-                !isEqual(
-                  { ...s, percent: undefined },
-                  { ...split, percent: undefined },
-                ),
-            )
-            onSplitsChanged(splitsAfterDelete)
-          }}
-        />
-      )
-    },
-    [
-      editableSplits,
-      allSplits,
-      distributionLimit,
-      setDistributionLimit,
-      onSplitsChanged,
-      onCurrencyChange,
-      currencyName,
-      distributionLimitIsInfinite,
-    ],
+  const payoutsSelection: PayoutsSelection = useMemo(() => {
+    // As we dont have control of amounts/percentage out of create, always use
+    // amounts, and fall back to percentages when amounts is unavailable.
+    if (
+      !distributionLimit ||
+      parseWad(distributionLimit).eq(0) ||
+      parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT)
+    ) {
+      return 'percentages'
+    }
+    return 'amounts'
+  }, [distributionLimit])
+
+  const distributionLimitCurrency = useMemo(
+    () => distributionLimitCurrencyBigNumber?.toNumber() as V2V3CurrencyOption,
+    [distributionLimitCurrencyBigNumber],
+  )
+
+  const onAllocationsChanged = useCallback(
+    (allocations: AllocationSplit[]) =>
+      onSplitsChanged(allocations.map(allocationToSplit)),
+    [onSplitsChanged],
   )
 
   useEffect(() => {
@@ -138,19 +107,25 @@ export function DistributionSplitsSection({
     } as Split
   }
 
-  const OwnerSplitCard = ownerSplit ? (
-    <DistributionSplitCard
-      split={ownerSplit}
-      splits={allSplits}
-      distributionLimit={distributionLimit}
-      setDistributionLimit={setDistributionLimit}
-      onSplitsChanged={onSplitsChanged}
-      onCurrencyChange={onCurrencyChange}
-      currencyName={currencyName}
-      isLocked
-      isProjectOwner
-    />
-  ) : null
+  const isLockedAllocation = useCallback(
+    (allocation: AllocationSplit) => {
+      const now = new Date().valueOf() / 1000
+      if (!allocation.lockedUntil || allocation.lockedUntil < now) return false
+
+      // Checks if the given split exists in the projectContext splits.
+      // If it doesn't, then it means it was just added or edited is which case
+      // we want to still be able to edit it
+      const contextMatch = contextPayoutSplits
+        ?.map(splitToAllocation)
+        .find(confirmed => confirmed.id === allocation.id)
+      if (contextMatch && contextMatch.lockedUntil) {
+        // Check to make sure that the original allocation is actually still locked
+        return contextMatch.lockedUntil > now
+      }
+      return false
+    },
+    [contextPayoutSplits],
+  )
 
   return (
     <Form.Item
@@ -212,61 +187,82 @@ export function DistributionSplitsSection({
           </Radio.Group>
         </Form.Item>
 
-        <div className="flex flex-col gap-2">
-          {editableSplits.map((split, index) => renderSplitCard(split, index))}
-        </div>
-        {lockedSplits ? (
-          <div className="flex flex-col gap-2">
-            {lockedSplits.map((split, index) =>
-              renderSplitCard(split, index, true),
-            )}
+        <Allocation
+          value={editableSplits.map(splitToAllocation)}
+          onChange={onAllocationsChanged}
+          totalAllocationAmount={parseWad(distributionLimit)}
+          allocationCurrency={distributionLimitCurrency}
+        >
+          <div className="flex flex-col gap-4">
+            {payoutsSelection === 'percentages' ||
+              (ceilIfCloseToNextInteger(totalSplitsPercentage) < 100 && (
+                <OwnerPayoutCard payoutsSelection={payoutsSelection} />
+              ))}
+            <Allocation.List
+              allocationName={t`payout`}
+              availableModes={new Set(['percentage'])}
+            >
+              {(
+                modal,
+                { allocations, removeAllocation, setSelectedAllocation },
+              ) => (
+                <>
+                  {allocations
+                    .filter(alloc => !isLockedAllocation(alloc))
+                    .map(allocation => (
+                      <PayoutCard
+                        payoutsSelection={payoutsSelection}
+                        key={allocation.id}
+                        allocation={allocation}
+                        onDeleteClick={() => removeAllocation(allocation.id)}
+                        onClick={() => {
+                          setSelectedAllocation(allocation)
+                          modal.open()
+                        }}
+                      />
+                    ))}
+
+                  {allocations.filter(isLockedAllocation).map(allocation => (
+                    <PayoutCard
+                      payoutsSelection={payoutsSelection}
+                      key={allocation.id}
+                      allocation={allocation}
+                    />
+                  ))}
+                </>
+              )}
+            </Allocation.List>
           </div>
-        ) : null}
-        {totalSplitsPercentageInvalid ? (
+        </Allocation>
+
+        {totalSplitsPercentageInvalid && (
           <span className="font-medium text-error-500 dark:text-error-400">
             <Trans>Sum of percentages cannot exceed 100%.</Trans>
           </span>
-        ) : remainingSplitsPercentage > 0 && distributionLimit !== '0' ? (
-          OwnerSplitCard
-        ) : null}
-        <Form.Item
-          extra={
-            <div className="flex gap-2">
+        )}
+
+        <p className="text-secondary text-xs">
+          <Trans>
+            Payouts to Ethereum addresses incur a 2.5% JBX membership fee
+          </Trans>{' '}
+          <TooltipIcon
+            tip={
               <Trans>
-                Payouts to Ethereum addresses incur a 2.5% JBX membership fee
+                Payouts to other Juicebox projects don't incur fees. In return
+                for fees, your project will receive JBX (the{' '}
+                <Link href={v2v3ProjectRoute({ projectId: 1 })}>
+                  JuiceboxDAO
+                </Link>{' '}
+                governance token) at the current issuance rate.{' '}
+                <ExternalLink href={helpPagePath(`/dao/reference/jbx/`)}>
+                  Learn more
+                </ExternalLink>
+                .
               </Trans>
-              <TooltipIcon
-                tip={
-                  <Trans>
-                    Payouts to other Juicebox projects don't incur fees. In
-                    return for fees, your project will receive JBX (the{' '}
-                    <Link href={v2v3ProjectRoute({ projectId: 1 })}>
-                      JuiceboxDAO
-                    </Link>{' '}
-                    governance token) at the current issuance rate.{' '}
-                    <ExternalLink href={helpPagePath(`/dao/reference/jbx/`)}>
-                      Learn more
-                    </ExternalLink>
-                    .
-                  </Trans>
-                }
-              />
-            </div>
-          }
-        >
-          <Button
-            type="dashed"
-            onClick={() => {
-              setAddSplitModalVisible(true)
-            }}
-            block
-            icon={<PlusCircleOutlined />}
-          >
-            <span>
-              <Trans>Add payout recipient</Trans>
-            </span>
-          </Button>
-        </Form.Item>
+            }
+          />
+        </p>
+
         <div className="flex justify-between">
           <span className="text-black dark:text-slate-100">
             <Trans>

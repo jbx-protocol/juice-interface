@@ -55,12 +55,6 @@ export const V2V3EditPayouts = ({
         return contextMatch.lockedUntil > now
       }
       return false
-      // const confirmedAllocIncludesAlloc =
-      //   contextPayoutSplits
-      //     ?.map(splitToAllocation)
-      //     .find(confirmed => confirmed.id === allocation.id) !== undefined
-
-      // return confirmedAllocIncludesAlloc
     },
     [contextPayoutSplits],
   )

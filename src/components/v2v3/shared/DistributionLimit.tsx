@@ -1,11 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
-import ETHAmount from 'components/currency/ETHAmount'
-import CurrencySymbol from 'components/CurrencySymbol'
 import TooltipIcon from 'components/TooltipIcon'
 import { CurrencyName } from 'constants/currency'
 import { twMerge } from 'tailwind-merge'
-import { formatWad } from 'utils/format/formatNumber'
+import { formatFundingTarget } from 'utils/format/formatFundingTarget'
+import { getV2V3CurrencyOption } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export default function DistributionLimit({
@@ -23,6 +22,9 @@ export default function DistributionLimit({
     MAX_DISTRIBUTION_LIMIT,
   )
   const distributionLimitIsZero = distributionLimit?.eq(0)
+  const distributionLimitCurrency = currencyName
+    ? getV2V3CurrencyOption(currencyName)
+    : undefined
 
   const _tooltip = showTooltip ? (
     <TooltipIcon
@@ -55,14 +57,10 @@ export default function DistributionLimit({
     <Trans>Zero (no payouts)</Trans>
   ) : (
     <>
-      {currencyName === 'ETH' ? (
-        <ETHAmount amount={distributionLimit} />
-      ) : (
-        <>
-          <CurrencySymbol currency={currencyName} />
-          {formatWad(distributionLimit)}
-        </>
-      )}
+      {formatFundingTarget({
+        distributionLimitWad: distributionLimit,
+        distributionLimitCurrency: distributionLimitCurrency,
+      })}
     </>
   )
 

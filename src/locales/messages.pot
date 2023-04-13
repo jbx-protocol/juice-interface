@@ -383,9 +383,6 @@ msgstr ""
 msgid "All payouts have been deleted for this recipient. Save to continue..."
 msgstr ""
 
-msgid "All projects"
-msgstr ""
-
 msgid "All {tokensText} will go to the project owner:"
 msgstr ""
 
@@ -1613,6 +1610,9 @@ msgstr ""
 msgid "Insufficient token balance"
 msgstr ""
 
+msgid "Introducing"
+msgstr ""
+
 msgid "Invalid"
 msgstr ""
 
@@ -1935,9 +1935,6 @@ msgid "My holdings"
 msgstr ""
 
 msgid "My projects"
-msgstr ""
-
-msgid "NEW"
 msgstr ""
 
 msgid "NFT Projects"
@@ -2589,9 +2586,6 @@ msgid "Receive {receiveText}"
 msgstr ""
 
 msgid "Receive:"
-msgstr ""
-
-msgid "Recently listed"
 msgstr ""
 
 msgid "Recipient"
@@ -3788,7 +3782,7 @@ msgstr ""
 msgid "Yes, start over"
 msgstr ""
 
-msgid "You can now add tags in <0>settings</0> to describe your project, and help supporters find it. Anyone can search for projects by tag on the Explore page."
+msgid "You can now add tags in settings to describe your project, and help supporters find it. Anyone can search for projects by tag on the Explore page."
 msgstr ""
 
 msgid "You can now search for projects by their name, description, and tags, as well as their @handle."

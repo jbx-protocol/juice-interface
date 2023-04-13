@@ -761,12 +761,6 @@ msgstr ""
 msgid "Connect wallet to transfer ETH"
 msgstr ""
 
-msgid "Connect your wallet to see your holdings."
-msgstr ""
-
-msgid "Connect your wallet to see your projects."
-msgstr ""
-
 msgid "Connected wallet not authorized"
 msgstr ""
 
@@ -1931,12 +1925,6 @@ msgstr ""
 msgid "My account"
 msgstr ""
 
-msgid "My holdings"
-msgstr ""
-
-msgid "My projects"
-msgstr ""
-
 msgid "NFT Projects"
 msgstr ""
 
@@ -2535,12 +2523,6 @@ msgid "Projects can reserve a percentage of token issuance for the recipients se
 msgstr ""
 
 msgid "Projects created"
-msgstr ""
-
-msgid "Projects that you have created."
-msgstr ""
-
-msgid "Projects that you hold tokens for."
 msgstr ""
 
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
@@ -3797,9 +3779,6 @@ msgstr ""
 msgid "You can unarchive your project at any time."
 msgstr ""
 
-msgid "You don't hold tokens for any Juicebox project."
-msgstr ""
-
 msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap migrate legacy <1>{1}</1> tokens for their new V3 tokens."
 msgstr ""
 
@@ -3816,9 +3795,6 @@ msgid "You haven't contributed to any projects yet!"
 msgstr ""
 
 msgid "You haven't created any projects yet!"
-msgstr ""
-
-msgid "You haven't created any projects yet."
 msgstr ""
 
 msgid "You haven't launched an NFT collection yet! Edit your cycle to add NFTs."

@@ -17,9 +17,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import AllProjects from './AllProjects'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
-import HoldingsProjects from './HoldingsProjects'
 import LatestProjects from './LatestProjects'
-import MyProjects from './MyProjects'
 import ProjectsFilterAndSort from './ProjectsFilterAndSort'
 import ProjectsTabs from './ProjectsTabs'
 import TrendingProjects from './TrendingProjects'
@@ -65,10 +63,6 @@ function Projects() {
           return 'all'
         case 'new':
           return 'new'
-        case 'holdings':
-          return 'holdings'
-        case 'myprojects':
-          return 'myprojects'
         default:
           return defaultTab
       }
@@ -184,10 +178,6 @@ function Projects() {
               showArchived={showArchived}
               reversed={reversed}
             />
-          ) : selectedTab === 'holdings' ? (
-            <HoldingsProjects />
-          ) : selectedTab === 'myprojects' ? (
-            <MyProjects />
           ) : selectedTab === 'trending' ? (
             <TrendingProjects count={12} />
           ) : selectedTab === 'new' ? (

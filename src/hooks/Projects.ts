@@ -279,27 +279,6 @@ export function useContributedProjectsQuery(wallet: string | undefined) {
   return useProjectsOfParticipants(where)
 }
 
-// Query all projects that a wallet holds tokens for
-export function useHoldingsProjectsQuery(wallet: string | undefined) {
-  const where = useMemo((): ProjectsOfParticipantsWhereQuery => {
-    if (!wallet) return null
-
-    return [
-      {
-        key: 'wallet',
-        value: wallet.toLowerCase(),
-      },
-      {
-        key: 'balance',
-        operator: 'gt',
-        value: 0,
-      },
-    ]
-  }, [wallet])
-
-  return useProjectsOfParticipants(where)
-}
-
 function useProjectsOfParticipants(where: ProjectsOfParticipantsWhereQuery) {
   const [loadingParticipants, setLoadingParticipants] = useState<boolean>()
   const [projectIds, setProjectIds] = useState<string[]>()

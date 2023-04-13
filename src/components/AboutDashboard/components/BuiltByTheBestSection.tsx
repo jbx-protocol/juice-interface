@@ -57,7 +57,7 @@ export const BuiltByTheBestSection = () => {
       ) : error ? (
         <div className="text-red-500">{error}</div>
       ) : (
-        <div className="mx-auto grid grid-cols-3 gap-x-8 gap-y-16 sm:grid-cols-5">
+        <div className="mx-auto grid grid-cols-2 gap-x-8 gap-y-16 sm:grid-cols-5">
           {contributors
             .sort((a, b) => a.name.localeCompare(b.name))
             .map(contributor => (

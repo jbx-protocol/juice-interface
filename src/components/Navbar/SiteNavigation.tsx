@@ -79,11 +79,7 @@ export default function SiteNavigation() {
               </Menu.Item>
               {isConnected && (
                 <Menu.Item>
-                  <Button
-                    className="flex justify-center"
-                    onClick={disconnect}
-                    block
-                  >
+                  <Button className="md:hidden" onClick={disconnect} block>
                     <Trans>Disconnect</Trans>
                   </Button>
                 </Menu.Item>

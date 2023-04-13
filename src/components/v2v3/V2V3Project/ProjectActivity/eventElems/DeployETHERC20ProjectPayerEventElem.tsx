@@ -30,7 +30,7 @@ export default function DeployETHERC20ProjectPayerEventElem({
           <Trans>
             Address: <FormattedAddress address={event.address} />
           </Trans>
-          <div style={{ marginTop: 5 }}>
+          <div className="mt-2">
             <RichNote note={event.memo} />
           </div>
         </div>

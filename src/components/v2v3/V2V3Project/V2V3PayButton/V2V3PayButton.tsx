@@ -54,7 +54,7 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
         className="block"
       >
         <Button
-          style={{ width: '100%' }}
+          className="w-full"
           type="primary"
           size="large"
           onClick={() => {

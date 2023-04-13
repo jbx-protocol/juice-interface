@@ -2,7 +2,7 @@ import { Trans, t } from '@lingui/macro'
 import { JuiceModalProps } from 'components/JuiceModal'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
-import { Announcement } from './Announcement'
+import { NewFeatureAnnouncement } from './NewFeatureAnnouncement'
 
 export const IntroImprovedSearchAnnouncement = (
   props: Pick<JuiceModalProps, 'open' | 'setOpen'>,
@@ -13,16 +13,9 @@ export const IntroImprovedSearchAnnouncement = (
   }, [router])
 
   return (
-    <Announcement
+    <NewFeatureAnnouncement
       {...props}
-      title={
-        <span className="font-heading text-2xl font-bold">
-          <span className="text-juice-500">
-            <Trans>NEW</Trans>
-          </span>
-          : <Trans>Improved search</Trans>
-        </span>
-      }
+      title={t`Improved search`}
       position="topRight"
       okText={t`Got it`}
       hideCancelButton
@@ -34,6 +27,6 @@ export const IntroImprovedSearchAnnouncement = (
           as well as their @handle.
         </Trans>
       </p>
-    </Announcement>
+    </NewFeatureAnnouncement>
   )
 }

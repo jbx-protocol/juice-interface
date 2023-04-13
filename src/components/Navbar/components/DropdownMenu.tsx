@@ -3,6 +3,7 @@ import { Menu, Transition } from '@headlessui/react'
 import ExternalLink from 'components/ExternalLink'
 import Link from 'next/link'
 import { Fragment } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export const DropdownMenu = ({
   heading,
@@ -20,8 +21,17 @@ export const DropdownMenu = ({
             'text-primary flex cursor-pointer items-center justify-between font-medium hover:text-grey-500 dark:hover:text-slate-200 md:gap-1'
           }
         >
-          {heading}
-          <DownOutlined />
+          {({ open }) => (
+            <>
+              {heading}
+              <DownOutlined
+                className={twMerge(
+                  'transition-transform duration-200',
+                  open ? 'rotate-180' : '',
+                )}
+              />
+            </>
+          )}
         </Menu.Button>
 
         <Transition

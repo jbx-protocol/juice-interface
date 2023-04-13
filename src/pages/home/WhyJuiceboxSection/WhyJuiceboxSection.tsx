@@ -1,5 +1,10 @@
 import { t, Trans } from '@lingui/macro'
 import { Col, Row } from 'antd'
+import { BoltIcon } from 'components/icons/BoltIcon'
+import { CommunityIcon } from 'components/icons/CommunityIcon'
+import { FlexibleIcon } from 'components/icons/FlexibleIcon'
+import { TrustIcon } from 'components/icons/TrustIcon'
+import { VectorsIcon } from 'components/icons/VectorsIcon'
 import { DEFAULT_HOMEPAGE_GUTTER } from '../Landing'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
@@ -13,8 +18,7 @@ function WhyJuiceboxCards() {
         <WhyJuiceboxCard
           bgClass="bg-melon-400 dark:bg-melon-500"
           iconBgClass="bg-melon-200 dark:bg-melon-800"
-          iconSrc="/assets/community-icon.png"
-          iconAlt="Community icon"
+          icon={<CommunityIcon />}
           heading={t`Community owned`}
           content={
             <Trans>
@@ -26,8 +30,7 @@ function WhyJuiceboxCards() {
         <WhyJuiceboxCard
           bgClass="bg-peel-400"
           iconBgClass="bg-peel-100 dark:bg-peel-800"
-          iconSrc="/assets/lightning-icon.png"
-          iconAlt="Lightning icon"
+          icon={<BoltIcon />}
           heading={t`Battle tested`}
           content={
             <Trans>
@@ -39,8 +42,7 @@ function WhyJuiceboxCards() {
         <WhyJuiceboxCard
           bgClass="bg-grape-400"
           iconBgClass="bg-grape-200 dark:bg-grape-800"
-          iconSrc="/assets/trust-icon.png"
-          iconAlt="Shield icon"
+          icon={<TrustIcon />}
           heading={t`Trust minimized`}
           content={
             <Trans>
@@ -56,8 +58,7 @@ function WhyJuiceboxCards() {
         <WhyJuiceboxCard
           bgClass="bg-crush-400 dark:bg-crush-400"
           iconBgClass="bg-crush-200 dark:bg-crush-800"
-          iconSrc="/assets/flexible-arrow-icon.png"
-          iconAlt="Flexible arrow"
+          icon={<FlexibleIcon />}
           heading={t`Flexible`}
           content={
             <Trans>
@@ -69,8 +70,7 @@ function WhyJuiceboxCards() {
         <WhyJuiceboxCard
           bgClass="bg-split-400"
           iconBgClass="bg-split-200 dark:bg-split-800"
-          iconSrc="/assets/cube-icon.png"
-          iconAlt="Extensible box icon"
+          icon={<VectorsIcon />}
           heading={t`Extensible`}
           content={
             <Trans>
@@ -87,7 +87,7 @@ function WhyJuiceboxCards() {
 
 export function WhyJuiceboxSection() {
   return (
-    <SectionContainer>
+    <SectionContainer maxWidthClass="max-w-6xl">
       <SectionHeading
         heading={t`Why Juicebox?`}
         subheading={

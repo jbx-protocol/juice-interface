@@ -27,6 +27,12 @@ module.exports = {
         inputDark: '0 0 0 2px #013944',
         inputLight: '0 0 0 2px #E9F9FA',
       },
+      height: {
+        70: '278px',
+      },
+      width: {
+        70: '278px',
+      },
     },
     colors: {
       transparent: '#00000000',

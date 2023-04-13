@@ -27,10 +27,9 @@ export function HomepageProjectCard({
   >
 }) {
   const { data: metadata } = useProjectMetadata(project.metadataUri)
-
   const projectLogo = (
     <ProjectLogo
-      className="h-60 w-full w-60 rounded-t-lg rounded-b-none"
+      className={`h-70 w-full w-70 rounded-t-lg rounded-b-none`}
       uri={metadata?.logoUri}
       name={metadata?.name}
       projectId={project.projectId}
@@ -47,11 +46,11 @@ export function HomepageProjectCard({
       href={v2v3ProjectRoute(project)}
     >
       <a
-        className={`h-full w-[280px] cursor-pointer overflow-hidden rounded-lg px-[10px]`}
+        className={`h-full cursor-pointer overflow-hidden rounded-lg px-[10px]`}
         style={{ flex: '0 0 auto' }}
       >
         <div
-          className={`h-full rounded-lg ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
+          className={`h-full w-[280px] rounded-lg ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
         >
           {projectLogo}
           <div className="flex flex-col justify-between gap-4 rounded-lg p-5">

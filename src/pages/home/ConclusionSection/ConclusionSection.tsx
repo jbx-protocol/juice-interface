@@ -9,8 +9,8 @@ import bannyAndCoins from '/public/assets/juice-homepage-hero.webp'
 export function ConclusionSection() {
   return (
     <SectionContainer>
-      <Row gutter={100}>
-        <Col xs={24} md={12}>
+      <Row gutter={100} className="flex-col-reverse md:flex-row">
+        <Col xs={24} md={12} className="pt-10 md:pt-0">
           <Image
             src={bannyAndCoins}
             alt={'Banny leaning on a stack of ETH coins'}
@@ -27,7 +27,11 @@ export function ConclusionSection() {
             <div className="mt-5 flex flex-col flex-wrap gap-2 md:flex-row">
               <Link href="/contact">
                 <a>
-                  <Button type="default" size="large">
+                  <Button
+                    type="default"
+                    size="large"
+                    className="w-full md:w-auto"
+                  >
                     <Trans>Contact onboarding</Trans>
                   </Button>
                 </a>

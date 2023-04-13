@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Col, Row } from 'antd'
+import { Col, Row } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { XLButton } from 'components/XLButton'
 import Image from 'next/image'
 import Link from 'next/link'
 import { SectionContainer } from '../SectionContainer'
@@ -28,10 +29,10 @@ export const HowJuiceboxWorksSection = () => {
           </Trans>
         }
       />
-      <div className="my-0 mx-auto max-w-5xl p-5">
-        <Row align="middle">
+      <div className="my-0 mx-auto max-w-5xl">
+        <Row align="middle" className="gap-16 pl-3 md:gap-0">
           <Col xs={24} sm={12}>
-            <div className="grid gap-y-5">
+            <div className="grid gap-y-12">
               <StepItem header={t`1. Create your project`}>
                 <Trans>
                   Juicebox is the best-in-class tool for crowdfunding your
@@ -68,20 +69,24 @@ export const HowJuiceboxWorksSection = () => {
             />
           </Col>
         </Row>
-        <div className="mt-5 flex flex-col flex-wrap justify-center gap-2 md:flex-row">
+        <div className="mt-5 flex flex-col flex-wrap justify-center gap-3 md:flex-row">
           <ExternalLink href="https://docs.juicebox.money/">
             <a>
-              <Button type="default" size="large">
+              <XLButton type="default" size="large">
                 <Trans>Read the docs</Trans>
-              </Button>
+              </XLButton>
             </a>
           </ExternalLink>
 
           <Link href="/create">
             <a>
-              <Button type="primary" className="w-full md:w-auto" size="large">
+              <XLButton
+                type="primary"
+                className="w-full md:w-auto"
+                size="large"
+              >
                 <Trans>Create a project</Trans>
-              </Button>
+              </XLButton>
             </a>
           </Link>
         </div>

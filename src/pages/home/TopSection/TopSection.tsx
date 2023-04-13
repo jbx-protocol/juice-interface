@@ -1,13 +1,20 @@
 import { t, Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { XLButton } from 'components/XLButton'
 import useMobile from 'hooks/Mobile'
+import { useTrendingProjects } from 'hooks/Projects'
 import Link from 'next/link'
+import { ProjectCarousel } from '../ProjectCarousel'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
-import { TrendingCarousel } from './TrendingCarousel'
+
+const TRENDING_PROJECTS_LIMIT = 8
 
 export function TopSection() {
   const isMobile = useMobile()
+
+  const { data: trendingProjects } = useTrendingProjects(
+    TRENDING_PROJECTS_LIMIT,
+  )
 
   return (
     <SectionContainer>
@@ -21,16 +28,16 @@ export function TopSection() {
         }
         className="text-5xl md:text-7xl"
       />
-      <div className="mb-10 flex w-full justify-center">
+      <div className="mb-16 flex w-full justify-center md:w-auto">
         <Link href="/create">
-          <a>
-            <Button size="large" type="primary" block={isMobile}>
+          <a className="w-full md:w-auto">
+            <XLButton size="large" type="primary" block={isMobile}>
               <Trans>Create a project</Trans>
-            </Button>
+            </XLButton>
           </a>
         </Link>
       </div>
-      <TrendingCarousel />
+      <ProjectCarousel projects={trendingProjects} />
     </SectionContainer>
   )
 }

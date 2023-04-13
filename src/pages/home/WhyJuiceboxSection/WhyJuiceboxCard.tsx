@@ -1,18 +1,15 @@
 import { Col } from 'antd'
-import Image from 'next/image'
 
 export function WhyJuiceboxCard({
   bgClass,
   iconBgClass,
-  iconSrc,
-  iconAlt,
+  icon,
   heading,
   content,
 }: {
   bgClass: string
   iconBgClass: string
-  iconSrc: string
-  iconAlt: string
+  icon: JSX.Element
   heading: string | JSX.Element
   content: string | JSX.Element
 }) {
@@ -23,17 +20,11 @@ export function WhyJuiceboxCard({
           <div
             className={`h-14 w-14 rounded-full ${iconBgClass} flex items-center justify-center`}
           >
-            <Image
-              src={iconSrc}
-              alt={iconAlt}
-              width="32px"
-              height="32px"
-              className="m-auto"
-            />
+            {icon}
           </div>
         </div>
-        <h6 className="text-primary text-2xl">{heading}</h6>
-        <p className="text-primary text-sm">{content}</p>
+        <h6 className="text-primary text-2xl dark:text-grey-900">{heading}</h6>
+        <p className="text-primary text-sm dark:text-grey-900">{content}</p>
       </div>
     </Col>
   )

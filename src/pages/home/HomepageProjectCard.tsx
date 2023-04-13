@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Col, Row, Skeleton } from 'antd'
+import { Skeleton } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import ProjectLogo from 'components/ProjectLogo'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
@@ -27,10 +27,9 @@ export function HomepageProjectCard({
   >
 }) {
   const { data: metadata } = useProjectMetadata(project.metadataUri)
-
   const projectLogo = (
     <ProjectLogo
-      className="w-full rounded-t-lg rounded-b-none md:h-60 md:w-60"
+      className={`h-70 w-full w-70 rounded-t-lg rounded-b-none`}
       uri={metadata?.logoUri}
       name={metadata?.name}
       projectId={project.projectId}
@@ -46,33 +45,38 @@ export function HomepageProjectCard({
       key={project.handle}
       href={v2v3ProjectRoute(project)}
     >
-      <a className={`h-full cursor-pointer overflow-hidden rounded-lg`}>
-        <div className={`rounded-lg ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}>
+      <a
+        className={`h-full cursor-pointer overflow-hidden rounded-lg px-[10px]`}
+        style={{ flex: '0 0 auto' }}
+      >
+        <div
+          className={`h-full w-[280px] rounded-lg ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
+        >
           {projectLogo}
-          <div className="rounded-lg p-5">
+          <div className="flex flex-col justify-between gap-4 rounded-lg p-5">
             {metadata ? (
-              <span className="m-0 overflow-hidden text-ellipsis text-lg font-medium text-black dark:text-slate-100 md:text-xl">
+              <div className="m-0 flex h-14 items-center overflow-hidden text-ellipsis text-lg font-medium text-black dark:text-slate-100 md:text-xl">
                 {metadata.name}
-              </span>
+              </div>
             ) : (
               <Skeleton paragraph={false} title={{ width: 120 }} active />
             )}
-            <Row gutter={20} className="mt-4">
-              <Col md={12}>
+            <div className="flex gap-8">
+              <div>
                 <div className={statHeadingClass}>
                   <Trans>VOLUME</Trans>
                 </div>
                 <div className={statClass}>
                   <ETHAmount amount={project.totalPaid} />
                 </div>
-              </Col>
-              <Col md={12}>
+              </div>
+              <div>
                 <div className={statHeadingClass}>
                   <Trans>PAYMENTS</Trans>
                 </div>
                 <div className={statClass}>{project.paymentsCount}</div>
-              </Col>
-            </Row>
+              </div>
+            </div>
           </div>
         </div>
       </a>

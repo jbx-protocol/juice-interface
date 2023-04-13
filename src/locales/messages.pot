@@ -620,6 +620,9 @@ msgstr ""
 msgid "Cannot use zero address"
 msgstr ""
 
+msgid "Case studies"
+msgstr ""
+
 msgid "Change ENS name"
 msgstr ""
 
@@ -1667,7 +1670,7 @@ msgstr ""
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building."
 msgstr ""
 
-msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building. Join sippin' the Juice."
+msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building. Join thousands of projects sippin' the Juice."
 msgstr ""
 
 msgid "Juicebox is as versatile as you are, build anything from an NFT project to a boutique crypto lawfirm and everything in between."

@@ -2,12 +2,11 @@ import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsConte
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import { isEqualAddress } from 'utils/address'
-import useProjectControllerAddress from '../../contractReader/ProjectControllerAddress'
 import { useLoadV2V3Contract } from '../../LoadV2V3Contract'
+import useProjectControllerAddress from '../../contractReader/ProjectControllerAddress'
 
-export type JBControllerVersion = '3' | '3.0.1' | '3.1'
+export type JBControllerVersion = '3' | '3.1'
 export const JB_CONTROLLER_V_3: JBControllerVersion = '3'
-export const JB_CONTROLLER_V_3_0_1: JBControllerVersion = '3.0.1'
 export const JB_CONTROLLER_V_3_1: JBControllerVersion = '3.1'
 
 export function useProjectController({ projectId }: { projectId: number }) {
@@ -23,8 +22,6 @@ export function useProjectController({ projectId }: { projectId: number }) {
     contracts?.JBController?.address,
   )
     ? JB_CONTROLLER_V_3
-    : isEqualAddress(controllerAddress, contracts?.JBController3_0_1?.address)
-    ? JB_CONTROLLER_V_3_0_1
     : isEqualAddress(controllerAddress, contracts?.JBController3_1?.address)
     ? JB_CONTROLLER_V_3_1
     : undefined
@@ -34,8 +31,6 @@ export function useProjectController({ projectId }: { projectId: number }) {
     contractName:
       version === JB_CONTROLLER_V_3
         ? V2V3ContractName.JBController
-        : version === JB_CONTROLLER_V_3_0_1
-        ? V2V3ContractName.JBController3_0_1
         : version === JB_CONTROLLER_V_3_1
         ? V2V3ContractName.JBController3_1
         : undefined,

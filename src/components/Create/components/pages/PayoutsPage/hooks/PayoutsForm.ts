@@ -1,5 +1,5 @@
 import { Form } from 'antd'
-import { AllocationSplit } from 'components/Allocation'
+import { AllocationSplit } from 'components/v2v3/shared/Allocation'
 import { TreasurySelection } from 'models/treasurySelection'
 import { useDebugValue, useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/AppDispatch'

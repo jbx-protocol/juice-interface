@@ -34,6 +34,7 @@ export default function FundingCycleDetails({
         items={
           <FundingCycleListItems
             fundingCycle={fundingCycle}
+            fundingCycleMetadata={fundingCycleMetadata}
             distributionLimit={distributionLimit}
             distributionLimitCurrency={distributionLimitCurrency}
             showDiffs={showDiffs}
@@ -55,7 +56,6 @@ export default function FundingCycleDetails({
         header={t`Other rules`}
         items={
           <RulesListItems
-            fundingCycle={fundingCycle}
             fundingCycleMetadata={fundingCycleMetadata}
             showDiffs={showDiffs}
           />

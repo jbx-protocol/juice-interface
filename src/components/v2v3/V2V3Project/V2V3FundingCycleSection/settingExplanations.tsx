@@ -173,13 +173,6 @@ export const HOLD_FEES_EXPLANATION = (
   </Trans>
 )
 
-export const USE_DATASOURCE_FOR_REDEEM_EXPLANATION = (
-  <Trans>
-    While enabled, NFTs can be redeemed to reclaim some of the ETH that isn't
-    needed for payouts. While enabled, it won't be possible to redeem tokens.
-  </Trans>
-)
-
 export const PREVENT_OVERSPENDING_EXPLANATION = (
   <Trans>
     When enabled, supporters can only mint NFTs by paying their exact price.
@@ -196,5 +189,49 @@ export const FEES_EXPLANATION = (
       Learn more
     </ExternalLink>
     .
+  </Trans>
+)
+
+export const DATASOURCE_EXPLANATION = (
+  <Trans>
+    A contract which defines custom behavior which can be used when somebody
+    pays this project or redeems from it.{' '}
+    <ExternalLink href={helpPagePath(`/dev/learn/glossary/data-source/`)}>
+      Learn more
+    </ExternalLink>
+  </Trans>
+)
+
+export const USE_DATASOURCE_FOR_PAY_EXPLANATION = (
+  <Trans>
+    While enabled, this project will use the custom behavior defined in the
+    contract above when somebody pays this project. Exercise caution.
+  </Trans>
+)
+
+export const USE_DATASOURCE_FOR_REDEEM_EXPLANATION = (
+  <Trans>
+    While enabled, this project will use the custom behavior defined in the
+    contract above when somebody redeems from this project. Exercise caution.
+  </Trans>
+)
+
+export const NFT_DATASOURCE_EXPLANATION = (
+  <Trans>
+    This contract manages NFT minting and redeeming for this project.
+  </Trans>
+)
+
+export const USE_NFT_DATASOURCE_FOR_REDEEM_EXPLANATION = (
+  <Trans>
+    While enabled, NFTs can be redeemed to reclaim some of the ETH that isn't
+    needed for payouts, but it won't be possible to redeem this project's
+    tokens.
+  </Trans>
+)
+
+export const USE_NFT_DATASOURCE_FOR_PAY_EXPLANATION = (
+  <Trans>
+    While enabled, NFTs can be minted when this project receives a payment.
   </Trans>
 )

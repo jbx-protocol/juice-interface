@@ -1,24 +1,36 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
+import {
+  V2V3FundingCycle,
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { formatDate, formatDateToUTC } from 'utils/format/formatDate'
+import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
-import { DISTRIBUTION_LIMIT_EXPLANATION } from '../../settingExplanations'
+import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'
+import {
+  DISTRIBUTION_LIMIT_EXPLANATION,
+  RECONFIG_RULES_EXPLANATION,
+} from '../../settingExplanations'
 import { FundingCycleListItem } from '../FundingCycleListItem'
+import { BallotStrategyValue } from '../RulesListItems/BallotStrategyValue'
 import { DistributionLimitValue } from './DistributionLimitValue'
 import { DurationValue } from './DurationValue'
 
 export function FundingCycleListItems({
   fundingCycle,
+  fundingCycleMetadata,
   distributionLimit,
   distributionLimitCurrency,
   showDiffs,
 }: {
   fundingCycle: V2V3FundingCycle
+  fundingCycleMetadata: V2V3FundingCycleMetadata
   distributionLimit: BigNumber | undefined
   distributionLimitCurrency: BigNumber | undefined
   showDiffs?: boolean
@@ -66,6 +78,25 @@ export function FundingCycleListItems({
     !distributionLimit?.eq(oldDistributionLimit) &&
     oldDistributionLimitCurrency &&
     !distributionLimitCurrency?.eq(oldDistributionLimitCurrency)
+
+  const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
+  const oldBallotStrategy = oldFundingCycle
+    ? getBallotStrategyByAddress(oldFundingCycle.ballot)
+    : undefined
+
+  const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
+  const unsafeFundingCycleProperties = getUnsafeV2V3FundingCycleProperties(
+    fundingCycle,
+    fundingCycleMetadata,
+  )
+  const ballotWarningText = unsafeFundingCycleProperties.noBallot
+    ? riskWarningText.noBallot
+    : unsafeFundingCycleProperties.customBallot
+    ? riskWarningText.customBallot
+    : undefined
+
+  const ballotHasDiff =
+    oldFundingCycle && oldFundingCycle.ballot !== fundingCycle.ballot
 
   return (
     <>
@@ -128,6 +159,24 @@ export function FundingCycleListItems({
           helperText={DISTRIBUTION_LIMIT_EXPLANATION}
         />
       )}
+      <FundingCycleListItem
+        name={t`Edit deadline`}
+        value={
+          <BallotStrategyValue
+            ballotStrategy={ballotStrategy}
+            warningText={ballotWarningText}
+          />
+        }
+        oldValue={
+          showDiffs && oldBallotStrategy && ballotHasDiff ? (
+            <BallotStrategyValue
+              ballotStrategy={oldBallotStrategy}
+              warningText={undefined}
+            />
+          ) : undefined
+        }
+        helperText={RECONFIG_RULES_EXPLANATION}
+      />
     </>
   )
 }

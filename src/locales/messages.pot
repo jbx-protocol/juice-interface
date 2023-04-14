@@ -233,6 +233,9 @@ msgstr ""
 msgid "A collection's symbol is typically a 3-4 letter acronym or abbreviation of its name. The symbol is used on NFT marketplaces (like <0>OpenSea</0>)."
 msgstr ""
 
+msgid "A contract which defines custom behavior which can be used when somebody pays this project or redeems from it. <0>Learn more</0>"
+msgstr ""
+
 msgid "A fixed amount of ETH can be paid out from your project each cycle. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token redemptions or use in future cycles."
 msgstr ""
 
@@ -959,9 +962,6 @@ msgstr ""
 msgid "Dark theme"
 msgstr ""
 
-msgid "Data source"
-msgstr ""
-
 msgid "Date"
 msgstr ""
 
@@ -1323,6 +1323,9 @@ msgid "Export this cycle's payouts to CSV."
 msgstr ""
 
 msgid "Extensible"
+msgstr ""
+
+msgid "Extension"
 msgstr ""
 
 msgid "External link"
@@ -3224,6 +3227,9 @@ msgstr ""
 msgid "This address will receive any tokens minted when this project is paid."
 msgstr ""
 
+msgid "This contract manages NFT minting and redeeming for this project."
+msgstr ""
+
 msgid "This custom deadline contract"
 msgstr ""
 
@@ -3524,7 +3530,7 @@ msgstr ""
 msgid "Unix timestamp in seconds. Leave blank to start immediately."
 msgstr ""
 
-msgid "Unknown datasource"
+msgid "Unknown extension"
 msgstr ""
 
 msgid "Unless payments to this project are paused in your cycle's rules, your project can still receive payments directly through the Juicebox protocol contracts."
@@ -3719,7 +3725,10 @@ msgstr ""
 msgid "Whether you’re building a boutique crypto law firm or the next mega-fundraiser, Juicebox is customizable to match your needs."
 msgstr ""
 
-msgid "While enabled, NFTs can be redeemed to reclaim some of the ETH that isn't needed for payouts. While enabled, it won't be possible to redeem tokens."
+msgid "While enabled, NFTs can be minted when this project receives a payment."
+msgstr ""
+
+msgid "While enabled, NFTs can be redeemed to reclaim some of the ETH that isn't needed for payouts, but it won't be possible to redeem this project's tokens."
 msgstr ""
 
 msgid "While enabled, the project owner can change the project's <0>controller</0> at any time."
@@ -3735,6 +3744,12 @@ msgid "While enabled, the project owner can migrate the project's current <0>pay
 msgstr ""
 
 msgid "While enabled, the project owner can mint any amount of project tokens."
+msgstr ""
+
+msgid "While enabled, this project will use the custom behavior defined in the contract above when somebody pays this project. Exercise caution."
+msgstr ""
+
+msgid "While enabled, this project will use the custom behavior defined in the contract above when somebody redeems from this project. Exercise caution."
 msgstr ""
 
 msgid "While payments to this project are paused, your project will not be able to receive payments. Transferring ETH to this project will still work."

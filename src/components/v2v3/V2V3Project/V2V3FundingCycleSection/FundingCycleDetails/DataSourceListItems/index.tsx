@@ -8,6 +8,14 @@ import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { formatBoolean } from 'utils/format/formatBoolean'
 import { helpPagePath } from 'utils/routes'
+import {
+  DATASOURCE_EXPLANATION,
+  NFT_DATASOURCE_EXPLANATION,
+  USE_DATASOURCE_FOR_PAY_EXPLANATION,
+  USE_DATASOURCE_FOR_REDEEM_EXPLANATION,
+  USE_NFT_DATASOURCE_FOR_PAY_EXPLANATION,
+  USE_NFT_DATASOURCE_FOR_REDEEM_EXPLANATION,
+} from '../../settingExplanations'
 import { FundingCycleListItem } from '../FundingCycleListItem'
 
 function DataSourceAddressValue({ address }: { address: string | undefined }) {
@@ -31,7 +39,7 @@ function DataSourceAddressValue({ address }: { address: string | undefined }) {
           <CheckCircleOutlined />
         </Tooltip>
       ) : (
-        <Tooltip title={<Trans>Unknown datasource</Trans>}>
+        <Tooltip title={<Trans>Unknown extension</Trans>}>
           <WarningOutlined className="text-warning-600 dark:text-warning-300" />
         </Tooltip>
       )}
@@ -44,6 +52,7 @@ export function DataSourceListItems({
 }: {
   fundingCycleMetadata: V2V3FundingCycleMetadata
 }) {
+  const { version } = useContext(JB721DelegateContractsContext)
   return (
     <>
       <FundingCycleListItem
@@ -51,14 +60,27 @@ export function DataSourceListItems({
         value={
           <DataSourceAddressValue address={fundingCycleMetadata.dataSource} />
         }
+        helperText={
+          version ? NFT_DATASOURCE_EXPLANATION : DATASOURCE_EXPLANATION
+        }
       />
       <FundingCycleListItem
         name={t`Use for payments`}
         value={formatBoolean(fundingCycleMetadata.useDataSourceForPay)}
+        helperText={
+          version
+            ? USE_NFT_DATASOURCE_FOR_PAY_EXPLANATION
+            : USE_DATASOURCE_FOR_PAY_EXPLANATION
+        }
       />
       <FundingCycleListItem
         name={t`Use for redemptions`}
         value={formatBoolean(fundingCycleMetadata.useDataSourceForRedeem)}
+        helperText={
+          version
+            ? USE_NFT_DATASOURCE_FOR_REDEEM_EXPLANATION
+            : USE_DATASOURCE_FOR_REDEEM_EXPLANATION
+        }
       />
     </>
   )

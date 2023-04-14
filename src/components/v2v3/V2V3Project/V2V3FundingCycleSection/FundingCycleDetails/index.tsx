@@ -63,7 +63,7 @@ export default function FundingCycleDetails({
       />
       {!isZeroAddress(fundingCycleMetadata.dataSource) ? (
         <FundingCycleDetailsRow
-          header={t`Data source`}
+          header={t`Extension`}
           items={
             <DataSourceListItems fundingCycleMetadata={fundingCycleMetadata} />
           }

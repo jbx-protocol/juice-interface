@@ -85,7 +85,7 @@ export default function SiteNavigation() {
                 </Menu.Item>
               )}
             </div>
-            <QuickProjectSearch className="md:hidden xl:inline" />
+            <QuickProjectSearch className="hidden xl:inline" />
           </div>
         </Menu.Items>
       </Menu>

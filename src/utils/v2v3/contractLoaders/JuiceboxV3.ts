@@ -15,12 +15,6 @@ export const loadJuiceboxV3Contract = async (
         )) as ContractJson
         break
       }
-      case V2V3ContractName.JBController3_0_1: {
-        contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBController3_0_1.json`
-        )) as ContractJson
-        break
-      }
       case V2V3ContractName.JBController3_1: {
         contractJson = (await import(
           `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBController3_1.json`

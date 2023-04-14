@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AllocationSplit } from 'components/Allocation'
 import { projectTokenSettingsToReduxFormat } from 'components/Create/utils/projectTokenSettingsToReduxFormat'
+import { AllocationSplit } from 'components/v2v3/shared/Allocation'
 import { CreatePage } from 'models/createPage'
 import {
   JB721GovernanceType,
   NftCollectionMetadata,
   NftPostPayModalConfig,
-  NftRewardTier
+  NftRewardTier,
 } from 'models/nftRewards'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { ProjectTag } from 'models/project-tags'
@@ -17,12 +17,12 @@ import { TreasurySelection } from 'models/treasurySelection'
 import {
   SerializedV2V3FundAccessConstraint,
   SerializedV2V3FundingCycleData,
-  SerializedV2V3FundingCycleMetadata
+  SerializedV2V3FundingCycleMetadata,
 } from 'utils/v2v3/serializers'
 import {
   DEFAULT_REDUX_STATE,
   EMPTY_PAYOUT_GROUPED_SPLITS,
-  EMPTY_RESERVED_TOKENS_GROUPED_SPLITS
+  EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
 } from './defaultState'
 import { NftRewardsData, ReduxState } from './types'
 import { REDUX_STORE_V2_PROJECT_VERSION } from './version'

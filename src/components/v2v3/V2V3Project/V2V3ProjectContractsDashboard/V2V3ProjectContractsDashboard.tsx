@@ -22,7 +22,6 @@ const CONTRACT_EXCLUSIONS = [
   V2V3ContractName.JBController,
   V2V3ContractName.JBETHPaymentTerminal,
   V2V3ContractName.JBETHPaymentTerminal3_1,
-  V2V3ContractName.JBController3_0_1,
   V2V3ContractName.JBController3_1,
   V2V3ContractName.DeprecatedJBDirectory,
   V2V3ContractName.DeprecatedJBSplitsStore,

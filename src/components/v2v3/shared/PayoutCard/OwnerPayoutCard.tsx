@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { Allocation } from 'components/Allocation'
+import { Allocation } from 'components/v2v3/shared/Allocation'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { Amount } from './Amount'
 

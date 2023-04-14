@@ -1,27 +1,27 @@
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { AllocationSplit } from 'components/Allocation'
-import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
+import { AllocationSplit } from 'components/v2v3/shared/Allocation'
 import { ONE_MILLION } from 'constants/numbers'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
-import { useAppSelector } from 'redux/hooks/AppSelector'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { useDebugValue, useEffect, useMemo } from 'react'
+import { useAppDispatch } from 'redux/hooks/AppDispatch'
+import { useAppSelector } from 'redux/hooks/AppSelector'
+import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 import { useEditingReservedTokensSplits } from 'redux/hooks/EditingReservedTokensSplits'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import {
+  MAX_DISTRIBUTION_LIMIT,
   discountRateFrom,
   formatDiscountRate,
   formatIssuanceRate,
   formatRedemptionRate,
   formatReservedRate,
   issuanceRateFrom,
-  MAX_DISTRIBUTION_LIMIT,
   redemptionRateFrom,
   reservedRateFrom,
 } from 'utils/v2v3/math'
 import { useFormDispatchWatch } from '../../hooks'
-import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
 
 export type ProjectTokensFormProps = Partial<{
   selection: ProjectTokensSelection

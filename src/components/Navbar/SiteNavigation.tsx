@@ -113,6 +113,10 @@ const resourcesMenuItems = [
     href: 'https://podcast.juicebox.money/',
     isExternal: true,
   },
+  {
+    label: t`Contact`,
+    href: '/contact',
+  },
 ]
 
 const ResourcesMenu = () => (

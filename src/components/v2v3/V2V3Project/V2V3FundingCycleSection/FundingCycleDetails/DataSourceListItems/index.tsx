@@ -69,8 +69,8 @@ export function DataSourceListItems({
         value={formatBoolean(fundingCycleMetadata.useDataSourceForPay)}
         helperText={
           version
-            ? USE_DATASOURCE_FOR_PAY_EXPLANATION
-            : USE_NFT_DATASOURCE_FOR_PAY_EXPLANATION
+            ? USE_NFT_DATASOURCE_FOR_PAY_EXPLANATION
+            : USE_DATASOURCE_FOR_PAY_EXPLANATION
         }
       />
       <FundingCycleListItem
@@ -78,8 +78,8 @@ export function DataSourceListItems({
         value={formatBoolean(fundingCycleMetadata.useDataSourceForRedeem)}
         helperText={
           version
-            ? USE_DATASOURCE_FOR_REDEEM_EXPLANATION
-            : USE_NFT_DATASOURCE_FOR_REDEEM_EXPLANATION
+            ? USE_NFT_DATASOURCE_FOR_REDEEM_EXPLANATION
+            : USE_DATASOURCE_FOR_REDEEM_EXPLANATION
         }
       />
     </>

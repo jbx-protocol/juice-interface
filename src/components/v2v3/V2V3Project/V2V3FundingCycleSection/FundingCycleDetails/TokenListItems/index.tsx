@@ -129,6 +129,7 @@ export function TokenListItems({
           <PayerOrReservedTokensValue
             value={payerTokens}
             tokenSymbol={tokenSymbolPlural}
+            zeroAsUnchanged={mintRateZeroAsUnchanged}
           />
         }
         oldValue={

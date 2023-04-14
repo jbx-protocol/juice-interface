@@ -49,6 +49,8 @@ const CONFIGURE_EVENT_KEY: ActivityQueryKey<'configureEvent'> = {
     'controllerMigrationAllowed',
     'setTerminalsAllowed',
     'setControllerAllowed',
+    'useDataSourceForPay',
+    'useDataSourceForRedeem',
     'memo',
   ],
 }

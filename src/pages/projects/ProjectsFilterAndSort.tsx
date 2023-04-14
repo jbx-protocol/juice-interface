@@ -2,6 +2,7 @@ import { FilterOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Collapse, Select } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
+import { useTagCounts } from 'hooks/TagCounts'
 import { DBProjectQueryOpts } from 'models/dbProject'
 import { ProjectTag, projectTagOptions } from 'models/project-tags'
 import { useEffect, useState } from 'react'
@@ -52,6 +53,8 @@ export default function ProjectsFilterAndSort({
     return () => window.removeEventListener('click', handleClick)
   }, [])
 
+  const { data: tagCounts } = useTagCounts()
+
   return (
     <div className="flex max-w-[100vw] flex-wrap items-center whitespace-pre">
       <Collapse
@@ -96,7 +99,9 @@ export default function ProjectsFilterAndSort({
             {projectTagOptions.map(t => (
               <FilterCheckboxItem
                 key={t}
-                label={t}
+                label={`${t}${
+                  tagCounts && tagCounts[t] ? ` (${tagCounts[t]})` : ''
+                }`}
                 checked={searchTags.includes(t)}
                 onChange={() =>
                   setSearchTags(

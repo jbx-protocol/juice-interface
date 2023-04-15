@@ -38,19 +38,3 @@ export const emitInfoNotification = (
     duration: opts?.duration ?? 5,
   })
 }
-
-export const emitSuccessNotification = (
-  message: string,
-  opts?: {
-    description?: string
-    duration?: number | null
-  },
-) => {
-  const key = new Date().valueOf().toString()
-  return notification.success({
-    key,
-    message,
-    ...opts,
-    duration: opts?.duration ?? 5,
-  })
-}

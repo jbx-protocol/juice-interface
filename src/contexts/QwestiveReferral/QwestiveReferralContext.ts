@@ -16,7 +16,7 @@ export type TQwestiveTracker = {
   setReferral?: ({ id }: { id: string }) => void
 }
 
-export interface IQwestiveContext {
+interface IQwestiveContext {
   qwestiveTracker: TQwestiveTracker
 }
 

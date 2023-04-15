@@ -2,17 +2,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import isEqual from 'lodash/isEqual'
 import { OutgoingSplit, Split } from 'models/splits'
-import { PayoutMod } from 'models/v1/mods'
-import {
-  percentToPermyriad,
-  permyriadToPercent,
-} from 'utils/format/formatNumber'
 
-import {
-  formatSplitPercent,
-  splitPercentFrom,
-  SPLITS_TOTAL_PERCENT,
-} from './v2v3/math'
+import { SPLITS_TOTAL_PERCENT } from './v2v3/math'
 
 //  - true if the split has been removed (exists in old but not new),
 //  - false if new (exists in new but not old)
@@ -42,36 +33,6 @@ const getRemovedSplits = (oldSplits: Split[], newSplits: Split[]) => {
   return oldSplits.filter(oldSplit => {
     return !newSplits.some(newSplit => hasEqualRecipient(oldSplit, newSplit))
   })
-}
-
-export const toSplit = (mod: PayoutMod): Split => {
-  return {
-    // mod.percent is a parts-per-ten thousand (permyriad),
-    // split.percent is a parts-per-billion
-    percent: splitPercentFrom(
-      parseFloat(permyriadToPercent(mod.percent)),
-    ).toNumber(),
-    lockedUntil: mod.lockedUntil,
-    beneficiary: mod.beneficiary,
-    projectId: mod.projectId?.toHexString(),
-    allocator: mod.allocator,
-    preferClaimed: mod.preferUnstaked,
-  }
-}
-
-export const toMod = (split: Split): PayoutMod => {
-  return {
-    // mod.percent is a parts-per-ten thousand (permyriad),
-    // split.percent is a parts-per-billion
-    percent: percentToPermyriad(
-      formatSplitPercent(BigNumber.from(split.percent)),
-    ).toNumber(),
-    lockedUntil: split.lockedUntil,
-    beneficiary: split.beneficiary,
-    projectId: split.projectId ? BigNumber.from(split.projectId) : undefined,
-    allocator: split.allocator,
-    preferUnstaked: split.preferClaimed,
-  }
 }
 
 export const sanitizeSplit = (split: Split): Split => {

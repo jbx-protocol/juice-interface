@@ -24,12 +24,12 @@ import { allocationTotalPercentDoNotExceedTotalRule } from 'utils/antdRules'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { Icons } from '../../Icons'
-import { useFundingTarget } from '../../RecallCard/hooks'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { ConvertAmountsModal, RadioCard } from './components'
 import { PayoutsList } from './components/PayoutsList'
 import { usePayoutsForm } from './hooks'
+import { useFundingTarget } from './hooks/FundingTarget'
 
 const treasuryOptions = [
   { name: t`None`, value: 'zero', icon: <StopOutlined /> },

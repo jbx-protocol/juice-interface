@@ -8,7 +8,7 @@ import {
   emitInfoNotification,
 } from 'utils/notifications'
 
-export type ProfileDetailsFormType = {
+type ProfileDetailsFormType = {
   bio?: string | null | undefined
   email?: string | null | undefined
   website?: string | null | undefined

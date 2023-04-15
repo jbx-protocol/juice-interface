@@ -13,12 +13,10 @@ import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
 import { formatDate } from 'utils/format/formatDate'
 import { v2v3ProjectRoute } from 'utils/routes'
-import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 import { ProjectTagsRow } from './ProjectTagsRow'
-
-export const PROJECT_CARD_BG = 'bg-white dark:bg-slate-600'
+import ETHAmount from './currency/ETHAmount'
 
 export type ProjectCardProject = Pick<
   Project,

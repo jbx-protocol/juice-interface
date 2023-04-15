@@ -22,10 +22,7 @@ export function createStore(key?: string) {
   })
 }
 
-export function subscribeStoreToLocalStorage(
-  store: EnhancedStore,
-  key: string,
-) {
+function subscribeStoreToLocalStorage(store: EnhancedStore, key: string) {
   if (typeof window === 'undefined' || !window.localStorage) return
 
   store.subscribe(() => {

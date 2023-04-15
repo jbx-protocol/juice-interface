@@ -37,7 +37,7 @@ const Container: React.FC<{
   )
 }
 
-export interface SelectionCardProps {
+interface SelectionCardProps {
   name: string
   title: ReactNode
   icon?: ReactNode

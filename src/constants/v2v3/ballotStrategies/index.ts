@@ -25,7 +25,7 @@ export const DEPRECATED_BALLOT_ADDRESSES: BallotOption = {
   },
 }
 
-export const V2_BALLOT_ADDRESSES: BallotOption = {
+const V2_BALLOT_ADDRESSES: BallotOption = {
   ONE_DAY: {
     // No 1 day delay contract deployed with V2
     mainnet: constants.AddressZero,

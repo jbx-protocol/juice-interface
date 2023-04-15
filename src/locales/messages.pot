@@ -347,9 +347,6 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
-msgid "Address:"
-msgstr ""
-
 msgid "Address: <0/>"
 msgstr ""
 
@@ -462,9 +459,6 @@ msgid "Approve"
 msgstr ""
 
 msgid "Approve migration for your {0} v{version} legacy ERC-20 tokens."
-msgstr ""
-
-msgid "Approve tokens for migration to V3"
 msgstr ""
 
 msgid "Approve tokens on ERC20 contract {0}"
@@ -975,9 +969,6 @@ msgid "Deadline"
 msgstr ""
 
 msgid "Default"
-msgstr ""
-
-msgid "Delete payout"
 msgstr ""
 
 msgid "Delete token allocation"
@@ -1790,9 +1781,6 @@ msgstr ""
 msgid "Locked until {0}"
 msgstr ""
 
-msgid "Locked:"
-msgstr ""
-
 msgid "Logo"
 msgstr ""
 
@@ -2276,9 +2264,6 @@ msgstr ""
 msgid "Payout amount"
 msgstr ""
 
-msgid "Payout is locked"
-msgstr ""
-
 msgid "Payout recipients"
 msgstr ""
 
@@ -2334,9 +2319,6 @@ msgid "Percent"
 msgstr ""
 
 msgid "Percentage to reserve"
-msgstr ""
-
-msgid "Percentage:"
 msgstr ""
 
 msgid "Percentages"
@@ -2520,9 +2502,6 @@ msgid "Project upgrades"
 msgstr ""
 
 msgid "Project {projectId} not found"
-msgstr ""
-
-msgid "Project:"
 msgstr ""
 
 msgid "Projects can reserve a percentage of token issuance for the recipients set by the project owner."
@@ -3801,9 +3780,6 @@ msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You c
 msgstr ""
 
 msgid "You have added reserved token recipients, but your reserved rate is 0%, meaning no tokens will be reserved. Consider adding a reserved rate greater than 0% or removing the recipients."
-msgstr ""
-
-msgid "You have set your project to pay out all of its ETH. Your other payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr ""
 
 msgid "You have unsaved changes. Are you sure you want to discard them?"

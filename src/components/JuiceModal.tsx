@@ -78,33 +78,31 @@ export const JuiceModal = ({
 
   return (
     <Popup open={open} setOpen={setOpen} onMaskClick={onCancel}>
-      <div className={isMobile ? 'relative h-full w-full' : undefined}>
-        <div
-          className={twMerge(
-            'mx-auto mt-10 w-full max-w-md overflow-hidden rounded-lg bg-smoke-25 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800 md:absolute',
-            positionClasses,
-          )}
-        >
-          <div className="relative">
-            <Dialog.Title as="h3" className="text-lg font-medium leading-6">
-              {title}
-            </Dialog.Title>
-            <div className="mt-4">{children}</div>
+      <div
+        className={twMerge(
+          'relative mx-auto mt-10 w-full max-w-md overflow-hidden rounded-lg bg-smoke-25 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800 md:absolute',
+          positionClasses,
+        )}
+      >
+        <div className="relative">
+          <Dialog.Title as="h3" className="text-lg font-medium leading-6">
+            {title}
+          </Dialog.Title>
+          <div className="mt-4">{children}</div>
 
-            <div className="mt-4">
-              <div className="flex w-full items-center justify-end gap-2">
-                {!hideCancelButton && (
-                  <CancelButton onClick={onCancel}>{cancelText}</CancelButton>
-                )}
-                <CTAButton loading={okLoading} onClick={onOk}>
-                  {okText}
-                </CTAButton>
-              </div>
-              <ExitButton
-                className="absolute -top-2 -right-2"
-                onClick={onCancel}
-              />
+          <div className="mt-4">
+            <div className="flex w-full items-center justify-end gap-2">
+              {!hideCancelButton && (
+                <CancelButton onClick={onCancel}>{cancelText}</CancelButton>
+              )}
+              <CTAButton loading={okLoading} onClick={onOk}>
+                {okText}
+              </CTAButton>
             </div>
+            <ExitButton
+              className="absolute -top-2 -right-2"
+              onClick={onCancel}
+            />
           </div>
         </div>
       </div>

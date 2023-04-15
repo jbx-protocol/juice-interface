@@ -17,7 +17,6 @@ import { V2V3ProjectHeaderActions } from './V2V3ProjectHeaderActions/V2V3Project
 import { ProjectBanners } from './banners/ProjectBanners'
 import NewDeployModal, { NEW_DEPLOY_QUERY_PARAM } from './modals/NewDeployModal'
 
-export const GUTTER_PX = 24
 export const COL_SIZE_MD = 12
 
 export function V2V3Project() {

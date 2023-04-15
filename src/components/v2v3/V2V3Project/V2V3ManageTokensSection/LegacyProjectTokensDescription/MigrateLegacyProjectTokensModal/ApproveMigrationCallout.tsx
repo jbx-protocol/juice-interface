@@ -23,7 +23,6 @@ export function ApproveMigrationCallout({
 
   const [loading, setLoading] = useState<boolean>(false)
 
-  // const approveTokensTx = useApproveTokensTx()
   const approveErc20Tx = useApproveERC20Tx()
   const legacyTokenContract = useErc20Contract(legacyTokenContractAddress)
 

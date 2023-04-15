@@ -26,7 +26,7 @@ export function JB721DelegatePackageVersion(version: JB721DelegateVersion) {
     : undefined
 }
 
-export async function loadJB721DelegateJson(
+async function loadJB721DelegateJson(
   contractName: JB721DelegateContractName,
   version: JB721DelegateVersion,
 ): Promise<ContractJson | undefined> {

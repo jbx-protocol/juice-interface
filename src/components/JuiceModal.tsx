@@ -1,6 +1,7 @@
 import { Dialog } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
+import useMobile from 'hooks/Mobile'
 import { PropsWithChildren, ReactNode, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Loading from './Loading'
@@ -46,11 +47,13 @@ export const JuiceModal = ({
   onOk: _onOk,
   onCancel: _onCancel,
 }: PropsWithChildren<JuiceModalProps>) => {
+  const isMobile = useMobile()
   const closeModal = () => setOpen(false)
   const onOk = _onOk ? () => _onOk(setOpen) : closeModal
   const onCancel = _onCancel ? () => _onCancel(setOpen) : closeModal
 
   const positionClasses = useMemo(() => {
+    if (isMobile) return undefined // Mobile position doesn't use absolute positioning
     switch (position) {
       case 'top':
         return 'top-8 -translate-x-1/2 left-1/2'
@@ -71,38 +74,37 @@ export const JuiceModal = ({
       case 'center':
         return 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
     }
-  }, [position])
+  }, [isMobile, position])
 
   return (
     <Popup open={open} setOpen={setOpen} onMaskClick={onCancel}>
-      <div
-        className={twMerge(
-          'absolute inline-block w-full max-w-md overflow-hidden rounded-lg bg-smoke-25 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800',
-          positionClasses,
-        )}
-      >
-        <div className="relative">
-          <Dialog.Title
-            as="h3"
-            className="text-gray-900 text-lg font-medium leading-6"
-          >
-            {title}
-          </Dialog.Title>
-          <div className="mt-4">{children}</div>
+      <div className={isMobile ? 'relative h-full w-full' : undefined}>
+        <div
+          className={twMerge(
+            'mx-auto mt-10 w-full max-w-md overflow-hidden rounded-lg bg-smoke-25 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800 md:absolute',
+            positionClasses,
+          )}
+        >
+          <div className="relative">
+            <Dialog.Title as="h3" className="text-lg font-medium leading-6">
+              {title}
+            </Dialog.Title>
+            <div className="mt-4">{children}</div>
 
-          <div className="mt-4">
-            <div className="flex w-full items-center justify-end gap-2">
-              {!hideCancelButton && (
-                <CancelButton onClick={onCancel}>{cancelText}</CancelButton>
-              )}
-              <CTAButton loading={okLoading} onClick={onOk}>
-                {okText}
-              </CTAButton>
+            <div className="mt-4">
+              <div className="flex w-full items-center justify-end gap-2">
+                {!hideCancelButton && (
+                  <CancelButton onClick={onCancel}>{cancelText}</CancelButton>
+                )}
+                <CTAButton loading={okLoading} onClick={onOk}>
+                  {okText}
+                </CTAButton>
+              </div>
+              <ExitButton
+                className="absolute -top-2 -right-2"
+                onClick={onCancel}
+              />
             </div>
-            <ExitButton
-              className="absolute -top-2 -right-2"
-              onClick={onCancel}
-            />
           </div>
         </div>
       </div>

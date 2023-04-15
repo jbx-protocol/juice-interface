@@ -31,7 +31,7 @@ export const Popup = ({
         className="fixed inset-0 z-10 overflow-y-auto"
         onClose={onClose}
       >
-        <div className="relative min-h-screen items-end justify-end px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div className="relative min-h-screen items-end justify-end px-4 pt-4 pb-20 text-center sm:block">
           <PopupMask onClick={onMaskClick} />
 
           <Transition.Child

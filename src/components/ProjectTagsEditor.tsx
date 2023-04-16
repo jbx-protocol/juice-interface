@@ -34,7 +34,7 @@ export default function ProjectTagsEditor({
 
   return (
     <div>
-      <div className="mb-3 flex select-none flex-wrap gap-1">
+      <div className="mb-5 flex select-none flex-wrap gap-1">
         {value.map(t => (
           <ProjectTagElem
             selected
@@ -54,6 +54,7 @@ export default function ProjectTagsEditor({
           // add tag, but no more than max allowed number
           update(v => [...v, t].slice(0, MAX_PROJECT_TAGS))
         }}
+        disabled={value.length === MAX_PROJECT_TAGS}
       />
     </div>
   )

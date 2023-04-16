@@ -1,4 +1,4 @@
-import { CloseOutlined } from '@ant-design/icons'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 import { ProjectTag } from 'models/project-tags'
 import { twMerge } from 'tailwind-merge'
 
@@ -10,25 +10,33 @@ export function ProjectTagElem({
   className,
   selected,
   onClick,
+  disabled,
 }: {
   tag: ProjectTag
   className?: string
   selected?: boolean
   onClick?: (tag: ProjectTag) => void
+  disabled?: boolean
 }) {
+  const isClickable = Boolean(!disabled && onClick)
+
   return (
     <div
-      onClick={() => onClick?.(tag)}
+      onClick={isClickable ? () => onClick?.(tag) : undefined}
       className={twMerge(
-        'rounded-full py-1 px-3 uppercase',
+        'flex items-center gap-1 rounded-full py-1 px-3 uppercase',
         selected
           ? 'bg-smoke-300 font-medium dark:bg-slate-400'
           : 'bg-smoke-100 dark:bg-slate-600',
-        onClick ? 'cursor-pointer' : '',
+        disabled ? 'cursor-not-allowed text-smoke-500 dark:text-slate-200' : '',
+        isClickable
+          ? 'cursor-pointer hover:bg-smoke-200 dark:hover:bg-slate-500'
+          : '',
         className,
       )}
+      role="button"
     >
-      {selected ? <CloseOutlined className="mr-2" /> : null}
+      {selected ? <XMarkIcon className="h-4 w-4" /> : null}
       {tag}
     </div>
   )

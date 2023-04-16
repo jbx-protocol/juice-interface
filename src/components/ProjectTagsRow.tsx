@@ -13,22 +13,25 @@ export function ProjectTagsRow({
   tags,
   onClickTag,
   tagClassName,
+  disabled,
 }: {
   tags?: ProjectTag[] | undefined
   onClickTag?: (tag: ProjectTag) => void
   tagClassName?: string
+  disabled?: boolean
 }) {
   // If tags are undefined, show all tags
   const _tags = tags ?? projectTagOptions
 
   return (
-    <div className="flex flex-wrap gap-1">
+    <div className="flex flex-wrap gap-y-2 gap-x-1">
       {_tags.map(t => (
         <ProjectTagElem
           key={t}
           tag={t}
           onClick={onClickTag ? () => onClickTag(t) : undefined}
           className={tagClassName}
+          disabled={disabled}
         />
       ))}
     </div>

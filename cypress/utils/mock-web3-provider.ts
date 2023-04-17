@@ -187,6 +187,10 @@ export class MockProvider implements IMockProvider {
     return this.stubs[method]?.callCount || 0
   }
 
+  getResponse(method: RequestMethod, call = 0): any {
+    return this.stubs[method]?.responses[call]
+  }
+
   setCustomResponse(method: RequestMethod, response: any, times = 1) {
     for (let i = 0; i < times; i++) {
       this.stubMethod(method, response)

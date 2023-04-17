@@ -37,20 +37,13 @@ yarn test
 
 ### End-to-end tests
 
-#### Configuration
-
-Setup your .env file with the `E2E_` prefixed variables.
-
-- `E2E_SECRET_WORDS`: 12 word Mnemonic. Generate this here: https://iancoleman.io/bip39/. **Important**: wrap mnemonic in quotes (`"`).
-- `E2E_PASSWORD`: Any random password with at least 8 characters. Cypress will use this to create the fake MetaMask account.
-- `E2E_NETWORK`: Set this to `rinkeby` (unless you have a reason not to).
-
 #### Running Cypress
 
-1. Start the app in a seperate terminal:
+1. Start the app in a separate terminal:
 
    ```bash
-   yarn start
+   yarn build && yarn start
+   # Alternatively, you can use `yarn dev` for testing
    ```
 
 1. Open Cypress.

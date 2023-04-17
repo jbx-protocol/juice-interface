@@ -51,7 +51,7 @@ export function Create() {
       <div className="wizard-create">
         <Wizard className="pb-28" doneText={<DeployButtonText />}>
           {isMigration && (
-            <Callout.Info className="w-full md:w-[800px]">
+            <Callout.Info className="md:w-3xl w-full">
               <strong>
                 <Trans>Re-launch on V3</Trans>
               </strong>
@@ -132,7 +132,7 @@ export function Create() {
             <ReconfigurationRulesPage />
           </Wizard.Page>
           <Wizard.Page
-            className="max-w-full md:w-full md:max-w-[800px]"
+            className="max-w-full md:w-full md:max-w-3xl"
             name="reviewDeploy"
             title={t`Review & Deploy`}
             description={

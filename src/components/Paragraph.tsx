@@ -30,7 +30,7 @@ export default function Paragraph({
   return (
     <>
       <RichNote
-        className={twMerge('inline max-w-[700px] ', className)} // good line length for reading
+        className={twMerge('inline max-w-2xl ', className)} // good line length for reading
         note={
           !expanded && CHARACTER_LIMIT_EXCEEDED ? shortDescription : description
         }

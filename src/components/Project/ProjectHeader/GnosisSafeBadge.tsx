@@ -83,7 +83,7 @@ function BadgeMightHaveNotice({
   }
   return (
     <Tooltip
-      overlayClassName="w-[700px]"
+      overlayClassName="w-2xl"
       placement="bottom"
       title={
         <>

@@ -8,20 +8,20 @@ import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { useProjectHandleText } from 'hooks/ProjectHandleText'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
-import { ProjectTag } from 'models/project-tags'
+import { ProjectTagName } from 'models/project-tags'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
 import { formatDate } from 'utils/format/formatDate'
 import { v2v3ProjectRoute } from 'utils/routes'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
-import { ProjectTagsRow } from './ProjectTagsRow'
+import { ProjectTagsList } from './ProjectTags/ProjectTagsList'
 import ETHAmount from './currency/ETHAmount'
 
 export type ProjectCardProject = Pick<
   Project,
   'id' | 'handle' | 'totalPaid' | 'createdAt' | 'terminal' | 'projectId' | 'pv'
-> & { tags?: ProjectTag[] | null; metadataUri: string | null }
+> & { tags?: ProjectTagName[] | null; metadataUri: string | null }
 
 function ArchivedBadge() {
   return (
@@ -166,7 +166,7 @@ export default function ProjectCard({
 
             {tags?.length ? (
               <div className="mt-1">
-                <ProjectTagsRow
+                <ProjectTagsList
                   tagClassName="text-xs text-grey-400 dark:text-slate-200 border-solid border border-grey-400 dark:border-slate-200 bg-transparent"
                   tags={tags}
                 />

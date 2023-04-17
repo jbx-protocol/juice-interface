@@ -1,5 +1,5 @@
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
-import { ProjectTag, projectTagOptions } from 'models/project-tags'
+import { ProjectTagName, projectTagOptions } from 'models/project-tags'
 import { NextApiHandler } from 'next'
 import { Database } from 'types/database.types'
 
@@ -9,7 +9,7 @@ import { Database } from 'types/database.types'
  * @returns An object containing project counts for all tag options.
  */
 const handler: NextApiHandler = async (req, res) => {
-  const counts: Partial<Record<ProjectTag, number>> = {}
+  const counts: Partial<Record<ProjectTagName, number>> = {}
 
   try {
     for (const tag of projectTagOptions) {

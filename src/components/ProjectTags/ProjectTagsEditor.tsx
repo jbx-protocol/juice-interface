@@ -1,28 +1,27 @@
 import {
   MAX_PROJECT_TAGS,
-  ProjectTag,
+  ProjectTagName,
   projectTagOptions,
 } from 'models/project-tags'
 import { useCallback, useEffect, useState } from 'react'
-
-import { ProjectTagElem } from './ProjectTagElem'
-import { ProjectTagsRow } from './ProjectTagsRow'
+import { ProjectTag } from './ProjectTag'
+import { ProjectTagsList } from './ProjectTagsList'
 
 export default function ProjectTagsEditor({
   initialValue,
   onChange,
 }: {
-  initialValue?: ProjectTag[]
-  onChange?: (tags: ProjectTag[]) => void
+  initialValue?: ProjectTagName[]
+  onChange?: (tags: ProjectTagName[]) => void
 }) {
-  const [value, setValue] = useState<ProjectTag[]>([])
+  const [value, setValue] = useState<ProjectTagName[]>([])
 
   useEffect(() => {
     if (initialValue) setValue(initialValue)
   }, [initialValue])
 
   const update = useCallback(
-    (fn: (v: ProjectTag[]) => ProjectTag[]) => {
+    (fn: (v: ProjectTagName[]) => ProjectTagName[]) => {
       setValue(v => {
         const newValue = fn(v)
         onChange?.(newValue)
@@ -36,7 +35,7 @@ export default function ProjectTagsEditor({
     <div>
       <div className="mb-5 flex select-none flex-wrap gap-1">
         {value.map(t => (
-          <ProjectTagElem
+          <ProjectTag
             selected
             key={t}
             tag={t}
@@ -48,7 +47,7 @@ export default function ProjectTagsEditor({
         ))}
       </div>
 
-      <ProjectTagsRow
+      <ProjectTagsList
         tags={projectTagOptions.filter(t => !value.includes(t))}
         onClickTag={t => {
           // add tag, but no more than max allowed number

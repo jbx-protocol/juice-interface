@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Database } from 'types/database.types'
-import { ProjectTag } from './project-tags'
 
+import { ProjectTagName } from './project-tags'
 import { PV } from './pv'
 import { Project } from './subgraph-entities/vX/project'
 
@@ -18,7 +18,7 @@ export type SGSBCompareKey = Extract<keyof Project, keyof DBProject>
  */
 export type DBProjectQueryOpts = {
   text?: string
-  tags?: ProjectTag[]
+  tags?: ProjectTagName[]
   archived?: boolean
   pv?: PV[]
   orderBy?: 'total_paid' | 'created_at' | 'current_balance' | 'payments_count'
@@ -44,7 +44,7 @@ export type DBProject = {
   description: string | null
   logoUri: string | null
   name: string | null
-  tags: ProjectTag[] | null
+  tags: ProjectTagName[] | null
   archived: boolean | null
 
   // Helper properties

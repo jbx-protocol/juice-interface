@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { Form } from 'antd'
-import ProjectTagsEditor from 'components/ProjectTagsEditor'
-import { ProjectTag } from 'models/project-tags'
+import ProjectTagsEditor from 'components/ProjectTags/ProjectTagsEditor'
+import { ProjectTagName } from 'models/project-tags'
 
 import { FormItemExt } from './formItemExt'
 
@@ -12,8 +12,8 @@ export default function ProjectTagsFormItem({
   initialTags,
   onChange,
 }: {
-  initialTags: ProjectTag[]
-  onChange?: (tags: ProjectTag[]) => void
+  initialTags: ProjectTagName[]
+  onChange?: (tags: ProjectTagName[]) => void
 } & FormItemExt) {
   return (
     <Form.Item

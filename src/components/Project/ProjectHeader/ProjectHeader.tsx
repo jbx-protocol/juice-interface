@@ -5,14 +5,13 @@ import FormattedAddress from 'components/FormattedAddress'
 import Paragraph from 'components/Paragraph'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
 import ProjectLogo from 'components/ProjectLogo'
-import { ProjectTagsRow } from 'components/ProjectTagsRow'
+import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
+import { ContractVersionSelect } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions/ContractVersionSelect'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useGnosisSafe } from 'hooks/safe/GnosisSafe'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
-
-import { ContractVersionSelect } from 'components/v2v3/V2V3Project/V2V3ProjectHeaderActions/ContractVersionSelect'
 import { EditProjectHandleButton } from './EditProjectHandleButton'
 import SocialLinks from './SocialLinks'
 
@@ -87,7 +86,7 @@ function ProjectSubheading({
                 type="vertical"
                 className="m-0 h-6 bg-grey-100 dark:bg-grey-900"
               />
-              <ProjectTagsRow
+              <ProjectTagsList
                 tags={projectMetadata.tags}
                 tagClassName="text-xs"
               />

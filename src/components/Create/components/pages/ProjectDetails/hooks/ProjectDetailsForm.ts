@@ -1,5 +1,5 @@
 import { useForm } from 'antd/lib/form/Form'
-import { ProjectTag } from 'models/project-tags'
+import { ProjectTagName } from 'models/project-tags'
 import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
@@ -17,7 +17,7 @@ type ProjectDetailsFormProps = Partial<{
   payButtonText: string
   payDisclosure: string
   inputProjectOwner: string
-  tags: ProjectTag[]
+  tags: ProjectTagName[]
 }>
 
 export const useProjectDetailsForm = () => {

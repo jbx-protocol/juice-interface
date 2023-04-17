@@ -1,11 +1,11 @@
 import { ipfsGet } from 'lib/api/ipfs'
 import { DBProject, DBProjectRow, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
-import { ProjectTag } from 'models/project-tags'
-import { consolidateMetadata, ProjectMetadata } from 'models/projectMetadata'
+import { ProjectMetadata, consolidateMetadata } from 'models/projectMetadata'
 import { PV } from 'models/pv'
 import { Project } from 'models/subgraph-entities/vX/project'
 
+import { ProjectTagName } from 'models/project-tags'
 import { formatError } from './format/formatError'
 import { parseBigNumberKeyVals } from './graph'
 import { isIpfsCID } from './ipfs'
@@ -53,7 +53,7 @@ export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
     paymentsCount: p.payments_count,
     projectId: p.project_id,
     pv: p.pv as PV,
-    tags: p.tags as ProjectTag[],
+    tags: p.tags as ProjectTagName[],
     terminal: p.terminal,
     totalPaid: p.total_paid,
     trendingScore: p.trending_score,

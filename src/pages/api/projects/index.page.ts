@@ -1,6 +1,6 @@
 import { queryDBProjects } from 'lib/api/supabase/projects'
 import { DBProjectQueryOpts } from 'models/dbProject'
-import { ProjectTag } from 'models/project-tags'
+import { ProjectTagName } from 'models/project-tags'
 import { NextApiHandler } from 'next'
 
 /**
@@ -67,7 +67,7 @@ const handler: NextApiHandler = async (req, res) => {
   try {
     const { data: results } = await queryDBProjects(req, res, {
       text,
-      tags: tags?.split(',') as ProjectTag[],
+      tags: tags?.split(',') as ProjectTagName[],
       pageSize: _pageSize,
       page: _page,
       archived:

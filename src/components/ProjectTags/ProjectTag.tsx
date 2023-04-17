@@ -1,21 +1,21 @@
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import { ProjectTag } from 'models/project-tags'
+import { ProjectTagName } from 'models/project-tags'
 import { twMerge } from 'tailwind-merge'
 
 /**
  * Formatted project tag.
  */
-export function ProjectTagElem({
+export function ProjectTag({
   tag,
   className,
   selected,
   onClick,
   disabled,
 }: {
-  tag: ProjectTag
+  tag: ProjectTagName
   className?: string
   selected?: boolean
-  onClick?: (tag: ProjectTag) => void
+  onClick?: (tag: ProjectTagName) => void
   disabled?: boolean
 }) {
   const isClickable = Boolean(!disabled && onClick)
@@ -34,7 +34,7 @@ export function ProjectTagElem({
           : '',
         className,
       )}
-      role="button"
+      role={onClick ? 'button' : undefined}
     >
       {selected ? <XMarkIcon className="h-4 w-4" /> : null}
       {tag}

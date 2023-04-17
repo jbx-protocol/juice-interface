@@ -5,7 +5,7 @@ import ProjectCard from 'components/ProjectCard'
 import { useLoadMoreContent } from 'hooks/LoadMore'
 import { useDBProjectsInfiniteQuery } from 'hooks/Projects'
 import { DBProjectQueryOpts } from 'models/dbProject'
-import { ProjectTag } from 'models/project-tags'
+import { ProjectTagName } from 'models/project-tags'
 import { PV } from 'models/pv'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
@@ -20,7 +20,7 @@ export default function AllProjects({
 }: {
   pv: PV[] | undefined
   searchText: string
-  searchTags: ProjectTag[]
+  searchTags: ProjectTagName[]
   orderBy: DBProjectQueryOpts['orderBy']
   showArchived: boolean
   reversed: boolean

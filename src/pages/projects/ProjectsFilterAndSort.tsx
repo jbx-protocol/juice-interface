@@ -4,7 +4,7 @@ import { Collapse, Select } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { useTagCounts } from 'hooks/TagCounts'
 import { DBProjectQueryOpts } from 'models/dbProject'
-import { ProjectTag, projectTagOptions } from 'models/project-tags'
+import { ProjectTagName, projectTagOptions } from 'models/project-tags'
 import { useEffect, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import FilterCheckboxItem from './FilterCheckboxItem'
@@ -33,8 +33,8 @@ export default function ProjectsFilterAndSort({
   setIncludeV2: CheckboxOnChange
   showArchived: boolean
   setShowArchived: CheckboxOnChange
-  searchTags: ProjectTag[]
-  setSearchTags: (tags: ProjectTag[]) => void
+  searchTags: ProjectTagName[]
+  setSearchTags: (tags: ProjectTagName[]) => void
   reversed: boolean
   setReversed: CheckboxOnChange
   orderBy: OrderByOption

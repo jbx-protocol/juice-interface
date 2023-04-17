@@ -1,6 +1,9 @@
-import { DownOutlined, InfoCircleOutlined } from '@ant-design/icons'
+import {
+  ChevronDownIcon,
+  InformationCircleIcon,
+} from '@heroicons/react/24/solid'
 import { PropsWithChildren, useCallback, useState } from 'react'
-import { twMerge } from 'tailwind-merge'
+import { twJoin, twMerge } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 import { InfoCallout } from './InfoCallout'
 import { WarningCallout } from './WarningCallout'
@@ -41,7 +44,9 @@ export const Callout: React.FC<CalloutProps> & CalloutTypes = ({
       role={collapsible ? 'button' : undefined}
     >
       {iconComponent !== null && (
-        <span className="flex">{iconComponent ?? <InfoCircleOutlined />}</span>
+        <span className="flex">
+          {iconComponent ?? <InformationCircleIcon className="h-7 w-7" />}
+        </span>
       )}
       <div
         className={classNames(
@@ -52,7 +57,11 @@ export const Callout: React.FC<CalloutProps> & CalloutTypes = ({
         {children}
       </div>
       {collapsible && (
-        <DownOutlined className="text-base" rotate={expanded ? 180 : 0} />
+        <div>
+          <ChevronDownIcon
+            className={twJoin('h-5 w-5', expanded ? 'rotate-180' : '')}
+          />
+        </div>
       )}
     </div>
   )

@@ -284,11 +284,12 @@ export const NftRewardsPage = () => {
       <div className="mt-8 text-center">
         <Trans>Need artwork?</Trans>
         <div>
-          <ExternalLink href="https://discord.gg/XnYFFGaXsu">
-            <a className="text-sm hover:underline">
-              <Trans>Contact WAGMI Studios</Trans>{' '}
-              <RightOutlined className="text-xs" />
-            </a>
+          <ExternalLink
+            href="https://discord.gg/XnYFFGaXsu"
+            className="text-sm hover:underline"
+          >
+            <Trans>Contact WAGMI Studios</Trans>{' '}
+            <RightOutlined className="text-xs" />
           </ExternalLink>
         </div>
       </div>

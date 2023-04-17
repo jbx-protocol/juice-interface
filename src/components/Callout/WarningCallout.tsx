@@ -1,4 +1,4 @@
-import { WarningOutlined } from '@ant-design/icons'
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import useMobile from 'hooks/Mobile'
 import { twJoin, twMerge } from 'tailwind-merge'
 import { Callout } from './Callout'
@@ -17,10 +17,10 @@ export const WarningCallout: React.FC<{
         className,
       )}
       iconComponent={
-        <WarningOutlined
+        <ExclamationTriangleIcon
           className={twJoin(
             'flex text-warning-500',
-            iconSize === 'small' ? 'text-lg' : 'text-2xl',
+            iconSize === 'small' ? 'h-4 w-4' : 'h-6 w-6',
           )}
         />
       }

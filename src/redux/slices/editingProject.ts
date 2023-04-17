@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
-import { ProjectTag } from 'models/project-tags'
+import { ProjectTagName } from 'models/project-tags'
 import {
   LATEST_METADATA_VERSION,
   ProjectMetadata,
@@ -118,7 +118,7 @@ const editingProjectSlice = createSlice({
     setPayDisclosure: (state, action: PayloadAction<string>) => {
       state.info.metadata.payDisclosure = action.payload
     },
-    setTags: (state, action: PayloadAction<ProjectTag[]>) => {
+    setTags: (state, action: PayloadAction<ProjectTagName[]>) => {
       state.info.metadata.tags = action.payload
     },
     setHandle: (state, action: PayloadAction<string>) => {

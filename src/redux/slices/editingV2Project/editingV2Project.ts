@@ -9,7 +9,7 @@ import {
   NftRewardTier,
 } from 'models/nftRewards'
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { ProjectTag } from 'models/project-tags'
+import { ProjectTagName } from 'models/project-tags'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import { Split } from 'models/splits'
@@ -70,7 +70,7 @@ const editingV2ProjectSlice = createSlice({
     setDescription: (state, action: PayloadAction<string>) => {
       state.projectMetadata.description = action.payload
     },
-    setTags: (state, action: PayloadAction<ProjectTag[]>) => {
+    setTags: (state, action: PayloadAction<ProjectTagName[]>) => {
       state.projectMetadata.tags = action.payload
     },
     setFundingCycleData: (

@@ -1,6 +1,6 @@
 import { Trans, t } from '@lingui/macro'
 import { JuiceModalProps } from 'components/JuiceModal'
-import { ProjectTagsRow } from 'components/ProjectTagsRow'
+import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { NewFeatureAnnouncement } from './NewFeatureAnnouncement'
@@ -30,7 +30,7 @@ export const IntroProjectTagsAnnouncement = (
           Explore page.
         </Trans>
       </p>
-      <ProjectTagsRow />
+      <ProjectTagsList />
     </NewFeatureAnnouncement>
   )
 }

@@ -7,7 +7,6 @@ import { PV_V1, PV_V2 } from 'constants/pv'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import { DBProjectQueryOpts } from 'models/dbProject'
-import { ProjectTag } from 'models/project-tags'
 import { ProjectCategory } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import Link from 'next/link'
@@ -15,6 +14,7 @@ import { useRouter } from 'next/router'
 import qs from 'qs'
 import { useEffect, useMemo, useState } from 'react'
 
+import { ProjectTagName } from 'models/project-tags'
 import AllProjects from './AllProjects'
 import ArchivedProjectsMessage from './ArchivedProjectsMessage'
 import LatestProjects from './LatestProjects'
@@ -46,13 +46,13 @@ function Projects() {
   const tags = useMemo(
     () =>
       ((router.query.tags as string | undefined)?.split(',') ??
-        []) as ProjectTag[],
+        []) as ProjectTagName[],
     [router.query],
   )
 
   const { userAddress } = useWallet()
   const [searchText, setSearchText] = useState<typeof search>(search)
-  const [searchTags, setSearchTags] = useState<ProjectTag[]>([])
+  const [searchTags, setSearchTags] = useState<ProjectTagName[]>([])
 
   useEffect(() => {
     setSelectedTab(() => {
@@ -85,7 +85,7 @@ function Projects() {
   }, [includeV1, includeV2])
 
   function updateRoute(
-    _searchTags: ProjectTag[],
+    _searchTags: ProjectTagName[],
     _searchText: string | undefined,
   ) {
     router.push(

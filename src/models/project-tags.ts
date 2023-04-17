@@ -13,7 +13,7 @@ export const projectTagOptions = [
   'social',
 ] as const
 
-export type ProjectTag = typeof projectTagOptions extends Readonly<
+export type ProjectTagName = typeof projectTagOptions extends Readonly<
   Array<infer T>
 >
   ? T

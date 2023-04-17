@@ -1,5 +1,5 @@
 import { NftPostPayModalConfig } from './nftRewards'
-import { ProjectTag } from './project-tags'
+import { ProjectTagName } from './project-tags'
 import { TokenRef } from './tokenRef'
 
 type ProjectMetadataV1 = Partial<{
@@ -66,7 +66,7 @@ type ProjectMetadataV7 = Partial<
 type ProjectMetadataV8 = Partial<
   Omit<ProjectMetadataV7, 'version'> & {
     version: 8
-    tags: ProjectTag[]
+    tags: ProjectTagName[]
   }
 >
 

@@ -4,7 +4,7 @@ import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { MinimalCollapse } from 'components/MinimalCollapse'
-import { ProjectTag } from 'models/project-tags'
+import { ProjectTagName } from 'models/project-tags'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
 export type ProjectDetailsFormFields = {
@@ -19,7 +19,7 @@ export type ProjectDetailsFormFields = {
   discord: string
   payButton: string
   payDisclosure: string
-  tags: ProjectTag[]
+  tags: ProjectTagName[]
 }
 
 export function ProjectDetailsForm({

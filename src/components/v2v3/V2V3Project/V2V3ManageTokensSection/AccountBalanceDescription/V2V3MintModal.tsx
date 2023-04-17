@@ -1,8 +1,8 @@
 import { isAddress } from '@ethersproject/address'
-import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 import { Form, Input, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -116,7 +116,7 @@ export function V2V3MintModal({
             },
           ]}
         >
-          <Input placeholder={constants.AddressZero} />
+          <EthAddressInput />
         </Form.Item>
         <Form.Item
           name="amount"

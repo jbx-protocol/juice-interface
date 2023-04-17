@@ -13,7 +13,7 @@ import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-const DEFAULT_USE_RESERVED_RATE = true
+const DEFAULT_USE_RESERVED_RATE = false
 
 export function useMintTokensTx(): TransactorInstance<{
   value: BigNumber

@@ -37,7 +37,7 @@ export function FundingCycleListItem({
           <div className="flex font-medium">
             <div
               className={classNames(
-                'underline decoration-grey-500 decoration-dashed dark:decoration-slate-200',
+                'underline decoration-smoke-500 decoration-dotted dark:decoration-slate-200',
                 subItem ? 'h-4' : '',
               )}
             >

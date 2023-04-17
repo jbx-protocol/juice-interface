@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.6.9",
-    "@arcxmoney/analytics": "^1.0.1",
+    "@arcxmoney/analytics": "1.6.1",
     "@headlessui/react": "^1.7.10",
     "@heroicons/react": "^2.0.17",
     "@jbx-protocol/contracts-v1": "2.0.0",

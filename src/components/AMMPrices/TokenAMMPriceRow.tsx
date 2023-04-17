@@ -27,11 +27,6 @@ type Props = {
   loading?: boolean
 }
 
-const fontStyle = {
-  fontSize: '0.75rem',
-  fontWeight: 400,
-}
-
 export default function TokenAMMPriceRow({
   className,
   exchangeName,
@@ -48,7 +43,7 @@ export default function TokenAMMPriceRow({
       : ''
 
     return (
-      <Tooltip title={tooltip} overlayInnerStyle={{ ...fontStyle }}>
+      <Tooltip title={tooltip}>
         <span className="cursor-default">
           {!WETHPrice ? <Trans>Unavailable</Trans> : null}
           <TooltipIcon iconClassName="ml-1" />
@@ -84,7 +79,6 @@ export default function TokenAMMPriceRow({
         (WETHPrice ? (
           <Tooltip
             title={t`${tokenSymbol}/ETH exchange rate on ${exchangeName}.`}
-            overlayInnerStyle={{ ...fontStyle }}
           >
             <ExternalLink className="font-normal" href={exchangeLink}>
               {`${formatPrice(WETHPrice)} ${tokenSymbol}/1 ETH`}

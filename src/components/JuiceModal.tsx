@@ -14,6 +14,7 @@ export type ModalOnOkFn = (setOpen: ModalSetOpenFn) => void
 export type ModalOnCancelFn = (setOpen: ModalSetOpenFn) => void
 
 export interface JuiceModalProps {
+  id?: string
   title?: ReactNode
   position?:
     | 'top'
@@ -36,6 +37,7 @@ export interface JuiceModalProps {
 }
 
 export const JuiceModal = ({
+  id,
   children,
   title,
   position = 'top',
@@ -78,7 +80,7 @@ export const JuiceModal = ({
   }, [isMobile, position])
 
   return (
-    <Popup open={open} setOpen={setOpen} onMaskClick={onCancel}>
+    <Popup id={id} open={open} setOpen={setOpen} onMaskClick={onCancel}>
       <div
         className={twMerge(
           'relative mx-auto mt-10 w-full max-w-md overflow-hidden rounded-lg bg-smoke-25 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800 md:absolute',
@@ -155,6 +157,7 @@ const ExitButton = ({
   onClick?: VoidFunction
 }) => (
   <button
+    id="modal-exit-button"
     type="button"
     className={twMerge(
       'inline-flex cursor-pointer items-center justify-center rounded-full border-none bg-transparent p-1 hover:bg-smoke-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',

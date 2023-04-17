@@ -161,6 +161,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
               />
             ) : (
               <V2V3ProjectTokenBalance
+                key={t.value}
                 projectId={BigNumber.from(t.value).toNumber()}
               />
             ),

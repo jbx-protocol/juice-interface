@@ -18,7 +18,7 @@ export function BallotStrategyValue({
       <Tooltip
         title={<EtherscanLink type="address" value={ballotStrategy.address} />}
       >
-        <span className="underline decoration-dashed">
+        <span className="underline decoration-smoke-500 decoration-dotted dark:decoration-slate-200">
           {ballotStrategy.name}
         </span>
       </Tooltip>

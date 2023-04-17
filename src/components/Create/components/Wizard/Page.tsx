@@ -50,7 +50,7 @@ export const Page: React.FC<PageProps> & {
     >
       <div
         className={twMerge(
-          'flex max-w-full flex-col gap-6 md:max-w-[600px]',
+          'flex w-full max-w-full flex-col gap-6 md:max-w-xl',
           className,
         )}
       >

@@ -4692,7 +4692,7 @@
     "@babel/runtime" "^7.11.2"
     "@lingui/core" "^3.13.0"
 
-"@metamask/eth-sig-util@^4.0.0":
+"@metamask/eth-sig-util@^4.0.0", "@metamask/eth-sig-util@^4.0.1":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@metamask/eth-sig-util/-/eth-sig-util-4.0.1.tgz#3ad61f6ea9ad73ba5b19db780d40d9aae5157088"
   integrity sha512-tghyZKLHZjcdlDqCA3gNZmLeR0XvOE9U1qoQO9ohyAZT6Pya+H9vkBPcsyXytmYLNgVoin7CKCmweo/R43V+tQ==
@@ -4985,6 +4985,13 @@
     "@types/estree" "^1.0.0"
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
+
+"@rsksmart/mock-web3-provider@^1.0.2-beta1":
+  version "1.0.2-beta1"
+  resolved "https://registry.yarnpkg.com/@rsksmart/mock-web3-provider/-/mock-web3-provider-1.0.2-beta1.tgz#d1d3ddd3982cc5f9ec2794e4208eba6622bcda40"
+  integrity sha512-jdeKs7L2TOrIvIsRgQfMA5dqZ0o0Ug+bVts7+A+F5sId3Onr6nxh9qn6c4cvnyCb684i1AsMap0qQzhJ6zP/Xg==
+  dependencies:
+    "@metamask/eth-sig-util" "^4.0.1"
 
 "@rushstack/eslint-patch@^1.1.0":
   version "1.1.4"
@@ -5662,11 +5669,6 @@
   integrity sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==
   dependencies:
     "@types/node" "*"
-
-"@types/cross-zip@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@types/cross-zip/-/cross-zip-4.0.0.tgz#322953492dcadc67bcf3991c1d51a56fd499ed9f"
-  integrity sha512-jZRaaM3aib7qgVhCWeo76vVNJW+8+ujJzP/JHPPA4WUp5YBNMsqiyu5uYWg2eS05+jgSfb5NN8eqrAG72Ab2kA==
 
 "@types/d3-array@^3.0.3":
   version "3.0.4"
@@ -9209,11 +9211,6 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-cross-zip@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/cross-zip/-/cross-zip-4.0.0.tgz#c29bfb2c001659a6d480ae9596f3bee83b48a230"
-  integrity sha512-MEzGfZo0rqE10O/B+AEcCSJLZsrWuRUvmqJTqHNqBtALhaJc3E3ixLGLJNTRzEA2K34wbmOHC4fwYs9sVsdcCA==
-
 crypto-addr-codec@^0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/crypto-addr-codec/-/crypto-addr-codec-0.1.7.tgz#e16cea892730178fe25a38f6d15b680cab3124ae"
@@ -9300,6 +9297,15 @@ csstype@^3.0.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.2.tgz#1d4bf9d572f11c14031f0436e1c10bc1f571f50b"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
+
+cypress-dotenv@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/cypress-dotenv/-/cypress-dotenv-2.0.0.tgz#ed77f232de7473c0c29f997fa8ff8b00faa5be2f"
+  integrity sha512-MHCkWuTU51n/Q6LT2FgjNVZx/OmnrP3Jve7TUGZvSbjgGOpBOVZTbm3tomjvn+2S6HhloRXSAOmT5fY9pvWkpQ==
+  dependencies:
+    camelcase "^6.2.0"
+    dotenv-parse-variables "^2.0.0"
+    lodash.clonedeep "^4.5.0"
 
 cypress@^9.5.4:
   version "9.7.0"
@@ -9958,6 +9964,14 @@ dot-case@^3.0.4:
   dependencies:
     no-case "^3.0.4"
     tslib "^2.0.3"
+
+dotenv-parse-variables@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv-parse-variables/-/dotenv-parse-variables-2.0.0.tgz#8bfd83842acdc9013c12d46b340df27ac6046a26"
+  integrity sha512-/Tezlx6xpDqR6zKg1V4vLCeQtHWiELhWoBz5A/E0+A1lXN9iIkNbbfc4THSymS0LQUo8F1PMiIwVG8ai/HrnSA==
+  dependencies:
+    debug "^4.3.1"
+    is-string-and-not-blank "^0.0.2"
 
 dotenv@^10.0.0:
   version "10.0.0"
@@ -13470,6 +13484,18 @@ is-stream@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/is-stream/-/is-stream-3.0.0.tgz#e6bfd7aa6bef69f4f472ce9bb681e3e57b4319ac"
   integrity sha512-LnQR4bZ9IADDRSkvpqMGvt/tEJWclzklNgSw48V5EAaAeDd6qGvN8ei6k5p0tvxSR171VmGyHuTiAOfxAbr8kA==
+
+is-string-and-not-blank@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/is-string-and-not-blank/-/is-string-and-not-blank-0.0.2.tgz#cd19eded2ca4a514f79ca528915f1fb28e5dd38a"
+  integrity sha512-FyPGAbNVyZpTeDCTXnzuwbu9/WpNXbCfbHXLpCRpN4GANhS00eEIP5Ef+k5HYSNIzIhdN9zRDoBj6unscECvtQ==
+  dependencies:
+    is-string-blank "^1.0.1"
+
+is-string-blank@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/is-string-blank/-/is-string-blank-1.0.1.tgz#866dca066d41d2894ebdfd2d8fe93e586e583a03"
+  integrity sha512-9H+ZBCVs3L9OYqv8nuUAzpcT9OTgMD1yAWrG7ihlnibdkbtB850heAmYWxHuXc4CHy4lKeK69tN+ny1K7gBIrw==
 
 is-string@^1.0.5, is-string@^1.0.7:
   version "1.0.7"

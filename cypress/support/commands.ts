@@ -2,20 +2,24 @@
 
 import '@testing-library/cypress/add-commands'
 
-// Commands
+// Custom commands go here
 
-Cypress.Commands.add('setupMetaMask', () => {
-  return cy.task('setupMetaMask')
+Cypress.Commands.add('clickIfExist', (selector, options = {}) => {
+  const { timeout = 10000 } = options
+  cy.get('body').then($body => {
+    if ($body.find(selector).length > 0) {
+      cy.get(selector, { timeout }).click()
+    }
+  })
 })
 
-Cypress.Commands.add('acceptMetaMaskAccess', () => {
-  return cy.task('acceptMetaMaskAccess')
-})
-
-Cypress.Commands.add('confirmMetaMaskTransaction', () => {
-  return cy.task('confirmMetaMaskTransaction')
-})
-
-Cypress.Commands.add('lockMetaMask', () => {
-  return cy.task('lockMetaMask')
+Cypress.Commands.add('connectWallet', () => {
+  cy.findByRole('button', { name: /connect/i }).click()
+  cy.get('onboard-v2')
+    .shadow()
+    .findByRole('button', { name: /metamask/i })
+    .click()
+    .then(() => {
+      cy.clickIfExist('#modal-exit-button')
+    })
 })

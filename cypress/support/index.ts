@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 // ***********************************************************
 // This example support/index.js is processed and
 // loaded automatically before your test files.
@@ -21,10 +22,8 @@ import './commands'
 declare global {
   namespace Cypress {
     interface Chainable {
-      setupMetaMask()
-      acceptMetaMaskAccess()
-      confirmMetaMaskTransaction()
-      lockMetaMask()
+      connectWallet()
+      clickIfExist(selector: string, options?: { timeout?: number })
     }
   }
 }

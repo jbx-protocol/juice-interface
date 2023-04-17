@@ -1,4 +1,4 @@
-import { CopyOutlined } from '@ant-design/icons'
+import { ClipboardDocumentIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { useState } from 'react'
@@ -41,7 +41,7 @@ export default function CopyTextButton({
         }}
         role="button"
       >
-        {button ?? <CopyOutlined />}
+        {button ?? <ClipboardDocumentIcon className="inline h-4 w-4" />}
       </span>
     </Tooltip>
   )

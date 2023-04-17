@@ -21,34 +21,36 @@ export function PaymentAddressSection({
   const [projectPayersModalIsVisible, setProjectPayersModalIsVisible] =
     useState<boolean>()
 
-  const { data: projectPayers } = useProjectPayers(projectId)
+  const { data: projectPayers, isLoading } = useProjectPayers(projectId)
 
   return (
     <>
       <p>{PROJECT_PAYER_ADDRESS_EXPLANATION}</p>
-      <div className="flex flex-wrap gap-2">
-        <LaunchProjectPayerButton
-          useDeployProjectPayerTx={useDeployProjectPayerTx}
+
+      <p>
+        <Button
+          onClick={() => setProjectPayersModalIsVisible(true)}
+          size="small"
+          type="link"
+          className="p-0"
+          loading={isLoading}
+          disabled={!projectPayers || projectPayers.length === 0}
+        >
+          {plural(projectPayers?.length ?? 0, {
+            one: 'View deployed project payer address',
+            other: 'View deployed project payer addresses',
+          })}
+        </Button>
+        <PaymentAddressesModal
+          open={projectPayersModalIsVisible}
+          onCancel={() => setProjectPayersModalIsVisible(false)}
+          projectPayers={projectPayers}
         />
-        {projectPayers && (
-          <>
-            <Button
-              onClick={() => setProjectPayersModalIsVisible(true)}
-              size="small"
-            >
-              {plural(projectPayers.length, {
-                one: 'View deployed project payer address',
-                other: 'View deployed project payer addresses',
-              })}
-            </Button>
-            <PaymentAddressesModal
-              open={projectPayersModalIsVisible}
-              onCancel={() => setProjectPayersModalIsVisible(false)}
-              projectPayers={projectPayers}
-            />
-          </>
-        )}
-      </div>
+      </p>
+
+      <LaunchProjectPayerButton
+        useDeployProjectPayerTx={useDeployProjectPayerTx}
+      />
     </>
   )
 }

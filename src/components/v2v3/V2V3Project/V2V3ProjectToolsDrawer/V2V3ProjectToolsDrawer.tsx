@@ -46,8 +46,15 @@ export function V2V3ProjectToolsDrawer({
 
       <div className="flex flex-col gap-4">
         <section>
+          <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
+          <HeldFeesSection />
+        </section>
+
+        <Divider />
+
+        <section>
           <h3 className="text-primary">
-            <Trans>Create a project payer address</Trans>
+            <Trans>Project payer addresses</Trans>
           </h3>
 
           <PaymentAddressSection
@@ -58,15 +65,8 @@ export function V2V3ProjectToolsDrawer({
         <Divider />
 
         <section>
-          <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
-          <HeldFeesSection />
-        </section>
-
-        <Divider />
-
-        <section>
           <h3 className="text-primary">
-            <Trans>Create a splits payer address</Trans>
+            <Trans>Splits payer addresses</Trans>
           </h3>
 
           <SplitsPayerSection />

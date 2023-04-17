@@ -1895,9 +1895,6 @@ msgstr ""
 msgid "Mints tokens as ERC-20:"
 msgstr ""
 
-msgid "Mints tokens:"
-msgstr ""
-
 msgid "Minutes"
 msgstr ""
 
@@ -2210,6 +2207,9 @@ msgstr ""
 msgid "Payer issuance rate"
 msgstr ""
 
+msgid "Payer's address"
+msgstr ""
+
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 msgstr ""
 
@@ -2238,12 +2238,6 @@ msgid "Payments"
 msgstr ""
 
 msgid "Payments made"
-msgstr ""
-
-msgid "Payments made through this address will mint this project's tokens."
-msgstr ""
-
-msgid "Payments made through this address won't mint this project's tokens."
 msgstr ""
 
 msgid "Payments to this project"
@@ -2961,6 +2955,9 @@ msgid "Something went wrong."
 msgstr ""
 
 msgid "Spaces are not allowed"
+msgstr ""
+
+msgid "Splits payer addresses"
 msgstr ""
 
 msgid "Staked balance"

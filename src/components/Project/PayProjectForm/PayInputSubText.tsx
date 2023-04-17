@@ -119,7 +119,7 @@ export default function PayInputSubText({
                 </Suspense>
               }
               placement="bottomLeft"
-              overlayClassName="min-w-[300px]"
+              overlayClassName="min-w-xs"
               overlayInnerStyle={{ padding: '1rem' }}
             >
               <span className="cursor-default border-0 border-b border-dashed border-b-grey-300 pt-2 dark:border-b-slate-200">

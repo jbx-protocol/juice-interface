@@ -18,7 +18,7 @@ export const RedeemAMMPrices = ({
       <Trans>
         or{' '}
         <Tooltip
-          overlayClassName="min-w-[300px]"
+          overlayClassName="min-w-xs"
           title={
             <Suspense fallback={<Loading />}>
               <AMMPrices

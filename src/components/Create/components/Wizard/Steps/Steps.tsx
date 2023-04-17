@@ -74,7 +74,7 @@ export const Steps = () => {
   }
 
   return (
-    <div className="max-w-[840px]">
+    <div className="max-w-4xl">
       <AntSteps
         current={current.index}
         progressDot

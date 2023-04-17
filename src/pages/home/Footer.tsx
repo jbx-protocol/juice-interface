@@ -217,7 +217,7 @@ const NewsletterSection = () => {
           onFinish={onSubmit}
           form={form}
         >
-          <div className="relative min-w-[300px] flex-1">
+          <div className="min-w-xs relative flex-1">
             <Form.Item name="email">
               <JuiceInput
                 type="email"

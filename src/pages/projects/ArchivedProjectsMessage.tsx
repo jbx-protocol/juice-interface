@@ -9,7 +9,7 @@ export default function ArchivedProjectsMessage({
 }) {
   if (!hidden) {
     return (
-      <Callout.Info className="mb-10 mt-5 max-w-[800px]">
+      <Callout.Info className="mb-10 mt-5 max-w-3xl">
         <Trans>
           Archived projects haven't been modified or deleted on-chain. They can
           still be interacted with directly through the Juicebox contracts.

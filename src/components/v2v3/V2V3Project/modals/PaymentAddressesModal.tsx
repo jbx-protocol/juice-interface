@@ -125,7 +125,7 @@ export function PaymentAddressesModal({
                       />
                       :
                     </span>
-                    <div className="max-w-[75%] text-right md:max-w-[385px]">
+                    <div className="max-w-[75%] text-right md:max-w-sm">
                       "{p.memo}"
                     </div>
                   </div>

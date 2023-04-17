@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
-import { useInfiniteProjectsQuery } from 'hooks/Projects'
+import { useDBProjectsInfiniteQuery } from 'hooks/Projects'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
 import { useLoadMoreContent } from '../../hooks/LoadMore'
@@ -16,11 +16,12 @@ export default function LatestProjects() {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
-  } = useInfiniteProjectsQuery({
-    orderBy: 'createdAt',
+  } = useDBProjectsInfiniteQuery({
+    orderBy: 'created_at',
     pageSize,
     orderDirection: 'desc',
   })
+
   const loadMoreContainerRef = useRef<HTMLDivElement>(null)
 
   const [scrolledToBottom] = useLoadMoreContent({

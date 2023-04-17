@@ -269,6 +269,23 @@ export function useTrendingProjects(count: number) {
   })
 }
 
+export function useParticipantContributions(wallet: string | undefined) {
+  return useSubgraphQuery(
+    wallet
+      ? {
+          entity: 'participant',
+          where: {
+            key: 'wallet',
+            value: wallet.toLowerCase(),
+          },
+          keys: ['projectId', 'pv', 'totalPaid', 'lastPaidTimestamp'],
+          orderBy: 'lastPaidTimestamp',
+          orderDirection: 'desc',
+        }
+      : null,
+  )
+}
+
 // Query all projects that a wallet has previously made payments to
 export function useContributedProjectsQuery(wallet: string | undefined) {
   const where = useMemo((): ProjectsOfParticipantsWhereQuery => {

@@ -1,17 +1,10 @@
 import { Trans, t } from '@lingui/macro'
 import { JuiceModalProps } from 'components/JuiceModal'
-import { useRouter } from 'next/router'
-import { useCallback } from 'react'
 import { NewFeatureAnnouncement } from './NewFeatureAnnouncement'
 
 export const IntroImprovedSearchAnnouncement = (
   props: Pick<JuiceModalProps, 'open' | 'setOpen'>,
 ) => {
-  const router = useRouter()
-  const onOk = useCallback(() => {
-    router.push(router.asPath + '/settings?page=general')
-  }, [router])
-
   return (
     <NewFeatureAnnouncement
       {...props}
@@ -19,7 +12,6 @@ export const IntroImprovedSearchAnnouncement = (
       position="topRight"
       okText={t`Got it`}
       hideCancelButton
-      onOk={onOk}
     >
       <p>
         <Trans>

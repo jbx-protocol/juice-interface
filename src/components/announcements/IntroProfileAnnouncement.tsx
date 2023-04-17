@@ -1,4 +1,3 @@
-import { CheckIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { JuiceModalProps } from 'components/JuiceModal'
 import { useWallet } from 'hooks/Wallet'
@@ -38,18 +37,13 @@ export const IntroProfileAnnouncement = (
         </span>
       }
       position="topRight"
-      okText={
-        <span className="flex gap-2">
-          <CheckIcon className="h-4 w-4" />
-          <Trans>Go to profile</Trans>
-        </span>
-      }
-      hideCancelButton
+      okText={<Trans>Edit profile</Trans>}
+      cancelText={<Trans>Close</Trans>}
       onOk={onOk}
     >
       <p>
         <Trans>
-          Consider completing your profile to enjoy a personalized and seamless
+          Complete your Juicebox profile to enjoy a personalized and seamless
           experience on our platform.
         </Trans>
       </p>

@@ -1,6 +1,7 @@
 import { Dialog } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
+import { Button } from 'antd'
 import useMobile from 'hooks/Mobile'
 import { PropsWithChildren, ReactNode, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -141,17 +142,9 @@ const CancelButton = ({
   className?: string
   onClick?: VoidFunction
 }>) => (
-  <button
-    type="button"
-    className={twMerge(
-      'stroke-secondary inline-flex cursor-pointer justify-center rounded-md border border-solid bg-transparent px-4 py-2 text-sm font-medium outline-none focus:outline-none',
-      'hover:border-bluebs-500 hover:bg-bluebs-500/20 hover:text-bluebs-500 dark:hover:border-bluebs-500 dark:hover:bg-bluebs-500/20',
-      className,
-    )}
-    onClick={onClick}
-  >
+  <Button className={className} onClick={onClick}>
     {children}
-  </button>
+  </Button>
 )
 
 const ExitButton = ({
@@ -164,7 +157,7 @@ const ExitButton = ({
   <button
     type="button"
     className={twMerge(
-      'inline-flex cursor-pointer items-center justify-center rounded-full border-none bg-transparent p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+      'inline-flex cursor-pointer items-center justify-center rounded-full border-none bg-transparent p-1 hover:bg-smoke-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
       className,
     )}
     onClick={onClick}

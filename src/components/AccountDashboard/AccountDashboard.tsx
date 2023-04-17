@@ -1,6 +1,9 @@
 import { SettingOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Button, Tabs } from 'antd'
+import { Button, Skeleton, Tabs } from 'antd'
+import ETHAmount from 'components/currency/ETHAmount'
 import EthereumAddress from 'components/EthereumAddress'
 import Grid from 'components/Grid'
 import { Etherscan } from 'components/icons/Etherscan'
@@ -10,20 +13,28 @@ import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { SocialButton } from 'components/SocialButton'
+import { PV_V1, PV_V2 } from 'constants/pv'
+import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
+import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import useMobile from 'hooks/useMobile'
+import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import {
-  useContributedProjectsQuery,
   useMyProjectsQuery,
+  useParticipantContributions,
+  useProjectsQuery,
 } from 'hooks/useProjects'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useWallet } from 'hooks/Wallet'
 import { Profile } from 'models/database'
+import { ProjectMetadata } from 'models/projectMetadata'
+import { PV } from 'models/pv'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { isEqualAddress } from 'utils/address'
 import { ensAvatarUrlForAddress } from 'utils/ens'
 import { etherscanLink } from 'utils/etherscan'
+import { formatDate } from 'utils/format/formatDate'
 
 function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
   return (
@@ -35,15 +46,131 @@ function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
   )
 }
 
+function ArchivedBadge() {
+  return (
+    <div className="absolute top-0 right-0 bg-smoke-100 py-0.5 px-1 text-xs font-medium text-grey-400 dark:bg-slate-600 dark:text-slate-200">
+      <Trans>ARCHIVED</Trans>
+    </div>
+  )
+}
+
+export type Contribution = {
+  totalPaid: BigNumber
+  projectId: number
+  pv: PV
+  lastPaidTimestamp: number
+}
+
+function ParticipantContribution({
+  projectId,
+  totalPaid,
+  lastPaidTimestamp,
+  metadata,
+  pv,
+}: {
+  projectId: number
+  totalPaid: BigNumber
+  lastPaidTimestamp: number
+  metadata: ProjectMetadata | undefined
+  pv: PV
+}) {
+  const isArchived =
+    (pv === PV_V1 && V1ArchivedProjectIds.includes(projectId)) ||
+    (pv === PV_V2 && V2ArchivedProjectIds.includes(projectId)) ||
+    metadata?.archived
+
+  // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
+  const precision =
+    totalPaid?.gt(0) && totalPaid.lt(constants.WeiPerEther) ? 2 : 0
+
+  return (
+    <div className="relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-lg bg-white py-4 dark:bg-slate-600 md:border md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
+      <div className="mr-5">
+        <ProjectLogo
+          className="h-20 w-20 md:h-24 md:w-24"
+          uri={metadata?.logoUri}
+          name={metadata?.name}
+          projectId={projectId}
+        />
+      </div>
+      <div className="min-w-0 flex-1 overflow-hidden overflow-ellipsis font-normal">
+        {metadata ? (
+          <span className="m-0 font-heading text-xl leading-8 text-black dark:text-slate-100">
+            {metadata.name}
+          </span>
+        ) : (
+          <Skeleton paragraph={false} title={{ width: 120 }} active />
+        )}
+
+        <div className="font-medium text-black dark:text-slate-100">
+          <ETHAmount amount={totalPaid} precision={precision} />
+        </div>
+
+        <div className="text-black dark:text-slate-100">
+          Last paid {formatDate(lastPaidTimestamp * 1000)}
+        </div>
+      </div>
+      {isArchived && <ArchivedBadge />}
+      {!metadata && <Loading />}
+    </div>
+  )
+}
+
+function V1ParticipantContribution({
+  contribution,
+}: {
+  contribution: Contribution
+}) {
+  const { data } = useProjectsQuery({
+    projectId: contribution?.projectId,
+    pv: [PV_V1],
+  })
+
+  const { data: metadata } = useProjectMetadata(data?.[0].metadataUri)
+
+  return (
+    <ParticipantContribution
+      metadata={metadata}
+      totalPaid={contribution.totalPaid}
+      lastPaidTimestamp={contribution.lastPaidTimestamp}
+      projectId={contribution.projectId}
+      pv={contribution.pv}
+    />
+  )
+}
+
+function V2V3ParticipantContribution({
+  contribution,
+}: {
+  contribution: Contribution
+}) {
+  const { data: projects } = useProjectsQuery({
+    projectId: contribution?.projectId,
+    pv: [PV_V2],
+  })
+
+  const { data: metadata } = useProjectMetadata(projects?.[0].metadataUri)
+
+  return (
+    <ParticipantContribution
+      metadata={metadata}
+      totalPaid={contribution.totalPaid}
+      lastPaidTimestamp={contribution.lastPaidTimestamp}
+      projectId={contribution.projectId}
+      pv={contribution.pv}
+    />
+  )
+}
+
 function ContributedList({ address }: { address: string }) {
-  const { data: contributedProjects, isLoading: myProjectsLoading } =
-    useContributedProjectsQuery(address)
+  const { data: contributions, isLoading: myProjectsLoading } =
+    useParticipantContributions(address)
 
   const { userAddress } = useWallet()
 
   if (myProjectsLoading) return <Loading />
 
-  if (!contributedProjects || contributedProjects.length === 0)
+  if (!contributions || contributions.length === 0)
     return (
       <span>
         {address === userAddress ? (
@@ -67,7 +194,17 @@ function ContributedList({ address }: { address: string }) {
       </span>
     )
 
-  return <ProjectsList projects={contributedProjects} />
+  return (
+    <Grid>
+      {contributions?.map(c =>
+        c.pv === PV_V2 ? (
+          <V2V3ParticipantContribution contribution={c} />
+        ) : (
+          <V1ParticipantContribution contribution={c} />
+        ),
+      )}
+    </Grid>
+  )
 }
 
 function MyProjectsList({ address }: { address: string }) {

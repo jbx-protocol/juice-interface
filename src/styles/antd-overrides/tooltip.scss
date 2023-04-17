@@ -18,3 +18,7 @@
 .ant-tooltip-disabled-compatible-wrapper.block {
   display: block !important;
 }
+
+.ant-tooltip-content a {
+  @apply text-bluebs-300 dark:text-bluebs-600 hover:text-bluebs-400 dark:hover:text-bluebs-500 hover:underline;
+}

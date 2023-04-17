@@ -66,17 +66,15 @@ export function AddToProjectBalanceForm({
           accessory={<InputAccessoryButton content="ETH" />}
         />
       </Form.Item>
-      <Form.Item>
-        <TransactorButton
-          onClick={() => addToBalance()}
-          loading={loadingAddToBalance}
-          size="small"
-          type="primary"
-          text={<Trans>Transfer ETH to project</Trans>}
-          disabled={!userAddress}
-          connectWalletText={<Trans>Connect wallet to transfer ETH</Trans>}
-        />
-      </Form.Item>
+      <TransactorButton
+        onClick={() => addToBalance()}
+        loading={loadingAddToBalance}
+        size="small"
+        type="primary"
+        text={<Trans>Transfer ETH to project</Trans>}
+        disabled={!userAddress}
+        connectWalletText={<Trans>Connect wallet to transfer ETH</Trans>}
+      />
     </Form>
   )
 }

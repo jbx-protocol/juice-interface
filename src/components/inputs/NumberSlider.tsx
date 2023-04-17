@@ -55,7 +55,6 @@ export default function NumberSlider({
         <Slider
           className="mr-5 flex-1"
           {...inputConfig}
-          tooltipVisible={false}
           value={_value}
           onChange={(val: number) => updateValue(val)}
           defaultValue={defaultValue}

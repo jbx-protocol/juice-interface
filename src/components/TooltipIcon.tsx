@@ -22,10 +22,7 @@ export default function TooltipIcon({
       overlayClassName={className}
     >
       <QuestionMarkCircleIcon
-        className={twMerge(
-          'inline h-4 w-4 text-black dark:text-slate-100',
-          iconClassName,
-        )}
+        className={twMerge('inline h-4 w-4 text-current', iconClassName)}
       />
     </Tooltip>
   )

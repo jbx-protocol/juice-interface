@@ -2,6 +2,7 @@ import { getAddress } from '@ethersproject/address'
 import { BigNumber } from '@ethersproject/bignumber'
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
+import { authCheck } from 'lib/auth'
 import { resolveAddressEnsIdeas } from 'lib/ensIdeas'
 import { getLogger } from 'lib/logger'
 import { ProjectNotification } from 'models/notifications/projectNotifications'
@@ -9,14 +10,13 @@ import moment from 'moment'
 import { NextApiRequest, NextApiResponse } from 'next'
 import {
   paymentReceiptTemplate,
-  paymentReceivedTemplate
+  paymentReceivedTemplate,
 } from 'templates/email/payments'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 import { fromWad } from 'utils/format/formatNumber'
 import { getProjectMetadata } from 'utils/server/metadata'
 import * as Yup from 'yup'
 
-const JUICE_API_BEARER_TOKEN = process.env.JUICE_API_BEARER_TOKEN
 const JUICE_API_EVENTS_ENABLED = process.env.JUICE_API_EVENTS_ENABLED === 'true'
 
 const logger = getLogger('api/events/on-pay')
@@ -63,12 +63,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'POST' || !JUICE_API_EVENTS_ENABLED) {
       return res.status(404).json({ message: 'Not found.' })
     }
-    if (
-      JUICE_API_BEARER_TOKEN &&
-      req.headers.authorization !== `Bearer ${JUICE_API_BEARER_TOKEN}`
-    ) {
-      return res.status(401).json({ message: 'Unauthorized.' })
-    }
+    if (!authCheck(req, res)) return
+
     const event = await Schema.validate(req.body)
 
     const emailEvents = await findEmailEventsForProjectId(

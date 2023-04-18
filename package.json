@@ -33,6 +33,7 @@
     "supabase:restart": "yarn supabase:stop && yarn supabase:start",
     "supabase:login": "supabase login",
     "supabase:pushdb": "supabase db push",
+    "supabase:diffdb": "supabase db diff",
     "supabase:generate:local": "supabase gen types typescript --local > src/types/database.types.ts"
   },
   "lint-staged": {
@@ -101,6 +102,7 @@
     "autolinker": "^3.14.3",
     "axios": "0.27.2",
     "bottleneck": "^2.19.5",
+    "discord.js": "^14.9.0",
     "erc-20-abi": "^1.0.0",
     "ethereum-block-by-date": "1.4.6",
     "ethers": "^5.7.0",

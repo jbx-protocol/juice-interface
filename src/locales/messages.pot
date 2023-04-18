@@ -3344,7 +3344,7 @@ msgstr ""
 msgid "Time remaining for edits to affect the next cycle:"
 msgstr ""
 
-msgid "To connect 1,000,000 creators to 100,000,000 contributors to raise $1,000,000,000, whilst putting Juicebox into the hands of our community - sharing our success with the people that matter."
+msgid "To connect 1,000,000 creators to 100,000,000 contributors to raise ${0}, whilst putting Juicebox into the hands of our community - sharing our success with the people that matter."
 msgstr ""
 
 msgid "To do so, you need to give your legacy token holders the ability to exchange their tokens for V3 tokens. Select <0>Set up token migration</0> below to get started."

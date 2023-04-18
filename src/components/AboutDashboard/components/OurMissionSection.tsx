@@ -1,11 +1,17 @@
 import { Trans } from '@lingui/macro'
+import { ONE_BILLION } from 'constants/numbers'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
+import { fromWad } from 'utils/format/formatNumber'
+import { useOurMissionSession } from '../hooks/useOurMissionSection'
 import { SectionContainer } from './SectionContainer'
 import juiceHero from '/public/assets/juice-homepage-hero.webp'
 
+const PROGRESS_MAX_AMOUNT = ONE_BILLION
+
 export const OurMissionSection = () => {
+  const { volumePaidUSD } = useOurMissionSession()
   return (
     <SectionContainer className="sm:gap-24 md:flex md:justify-between md:gap-32">
       <div className="md:w-1/2">
@@ -14,16 +20,17 @@ export const OurMissionSection = () => {
         </h2>
         <p className="text-base text-grey-700 dark:text-slate-200 md:text-lg">
           <Trans>
-            To connect 1,000,000 creators to 100,000,000 contributors to raise
-            $1,000,000,000, whilst putting Juicebox into the hands of our
-            community - sharing our success with the people that matter.
+            To connect 1,000,000 creators to 100,000,000 contributors to raise $
+            {formatAmount(PROGRESS_MAX_AMOUNT)}, whilst putting Juicebox into
+            the hands of our community - sharing our success with the people
+            that matter.
           </Trans>
         </p>
 
         <ProgressBar
           className="my-20"
-          currentAmount={500687764}
-          maxAmount={1000000000}
+          currentAmount={volumePaidUSD ? Number(fromWad(volumePaidUSD)) : 0}
+          maxAmount={PROGRESS_MAX_AMOUNT}
         />
       </div>
 

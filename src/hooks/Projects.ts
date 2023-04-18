@@ -189,8 +189,7 @@ export function useDBProjectsQuery(
           res.data?.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
         ),
     {
-      staleTime: 0,
-      // staleTime: DEFAULT_STALE_TIME,
+      staleTime: DEFAULT_STALE_TIME,
       ...reactQueryOptions,
     },
   )
@@ -224,8 +223,7 @@ export function useDBProjectsInfiniteQuery(
         )
     },
     {
-      staleTime: 0,
-      // staleTime: DEFAULT_STALE_TIME,
+      staleTime: DEFAULT_STALE_TIME,
       ...reactQueryOptions,
       // Don't allow this function to be overwritten by reactQueryOptions
       getNextPageParam: (lastPage, allPages) => {

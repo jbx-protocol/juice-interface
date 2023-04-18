@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { JoinOurDiscordButton } from './JoinOurDiscordButton'
 import { SectionContainer } from './SectionContainer'
 
 export const FindOutMoreSection = () => {
@@ -22,11 +23,7 @@ export const FindOutMoreSection = () => {
             <Trans>Visit jbdao.org</Trans>
           </Button>
         </ExternalLink>
-        <ExternalLink href="https://discord.gg/wFTh4QnDzk">
-          <Button type="primary" size="large">
-            <Trans>Join our Discord</Trans>
-          </Button>
-        </ExternalLink>
+        <JoinOurDiscordButton className="w-full" />
       </div>
     </SectionContainer>
   )

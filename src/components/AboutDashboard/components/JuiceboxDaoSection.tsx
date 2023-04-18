@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
-import ExternalLink from 'components/ExternalLink'
 import Image from 'next/image'
+import { JoinOurDiscordButton } from './JoinOurDiscordButton'
 import { SectionContainer } from './SectionContainer'
 
 export const JuiceboxDaoSection = () => {
@@ -19,11 +18,7 @@ export const JuiceboxDaoSection = () => {
           </Trans>
         </p>
 
-        <ExternalLink href="https://discord.gg/wFTh4QnDzk">
-          <Button type="primary" size="large">
-            <Trans>Join our Discord</Trans>
-          </Button>
-        </ExternalLink>
+        <JoinOurDiscordButton />
       </div>
 
       <div className="mx-auto mt-14 w-full max-w-sm md:order-1 md:mx-0 md:mt-0">

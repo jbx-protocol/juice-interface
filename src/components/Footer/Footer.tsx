@@ -26,6 +26,10 @@ const LinkCols: { title: ReactNode; items: LinkItem[] }[] = [
         link: '/projects',
       },
       {
+        title: t`About`,
+        link: '/about',
+      },
+      {
         title: t`Referral`,
         externalLink: true,
         link: 'https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e',

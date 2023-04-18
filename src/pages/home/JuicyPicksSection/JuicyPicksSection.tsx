@@ -1,12 +1,32 @@
 import { t, Trans } from '@lingui/macro'
-import useMobile from 'hooks/Mobile'
+import { DEFAULT_ENTITY_KEYS } from 'hooks/Projects'
+import useSubgraphQuery, { GraphResult } from 'hooks/SubgraphQuery'
+import { Project } from 'models/subgraph-entities/vX/project'
+import { UseQueryResult } from 'react-query'
+import { ProjectCarousel } from '../ProjectCarousel'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
-import { JuicyPicks } from './JuicyPicks'
-import { JuicyPicksMobile } from './JuicyPicksMobile'
+import { JUICY_PICKS_IDS } from './juicyPicksData'
+
+function useFetchJuicyPicks(
+  projectIds: number[],
+): UseQueryResult<GraphResult<'project', keyof Project>> {
+  return useSubgraphQuery({
+    entity: 'project',
+    keys: [...DEFAULT_ENTITY_KEYS],
+    where: [
+      {
+        key: 'id',
+        value: projectIds,
+        operator: 'in',
+      },
+    ],
+  })
+}
 
 export function JuicyPicksSection() {
-  const isMobile = useMobile()
+  const { data: juicyPicks } = useFetchJuicyPicks(JUICY_PICKS_IDS)
+
   return (
     <SectionContainer>
       <SectionHeading
@@ -15,7 +35,12 @@ export function JuicyPicksSection() {
           <Trans>Peep our selection of top trending projects this month.</Trans>
         }
       />
-      {isMobile ? <JuicyPicksMobile /> : <JuicyPicks />}
+      {/* DESKTOP */}
+      <div className="hidden md:flex"></div>
+      {/* MOBILE */}
+      <div className="flex md:hidden">
+        <ProjectCarousel projects={juicyPicks} />
+      </div>
     </SectionContainer>
   )
 }

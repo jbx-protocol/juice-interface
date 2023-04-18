@@ -16,10 +16,10 @@ import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useEffect, useMemo, useState } from 'react'
 import {
-  UseInfiniteQueryOptions,
-  UseQueryOptions,
   useInfiniteQuery,
+  UseInfiniteQueryOptions,
   useQuery,
+  UseQueryOptions,
 } from 'react-query'
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
@@ -44,7 +44,7 @@ type ProjectsOfParticipantsWhereQuery =
   | null
 
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
-const DEFAULT_ENTITY_KEYS: (keyof Project)[] = [
+export const DEFAULT_ENTITY_KEYS: (keyof Project)[] = [
   'id',
   'projectId',
   'handle',

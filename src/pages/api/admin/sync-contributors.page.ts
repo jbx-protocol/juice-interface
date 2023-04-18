@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { Client, GatewayIntentBits, GuildMember, Snowflake } from 'discord.js'
+import { authCheck } from 'lib/auth'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Database } from 'types/database.types'
 
@@ -71,6 +72,7 @@ const handler = async (
     res.status(405).json({ message: 'Method Not Allowed' })
     return
   }
+  if (!authCheck(req, res)) return
 
   try {
     await client.login(DISCORD_BOT_TOKEN)

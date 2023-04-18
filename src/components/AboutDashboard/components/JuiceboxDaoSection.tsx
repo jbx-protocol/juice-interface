@@ -28,11 +28,10 @@ export const JuiceboxDaoSection = () => {
 
       <div className="mx-auto mt-14 w-full max-w-sm md:order-1 md:mx-0 md:mt-0">
         <Image
-          src={'/assets/about/illustration3.svg'}
+          src={'/assets/about/illustration3.png'}
           alt="Banny and the crew gettin' lit in the Juicebox DAO band"
           width={380}
           height={380}
-          layout="responsive"
         />
       </div>
     </SectionContainer>

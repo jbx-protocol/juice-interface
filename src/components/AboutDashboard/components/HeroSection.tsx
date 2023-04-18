@@ -8,11 +8,10 @@ export const HeroSection = () => {
     <SectionContainer className="flex flex-col gap-5 text-center md:text-5xl">
       <div className="mx-auto w-full max-w-3xl">
         <Image
-          src="/assets/about/hero.svg"
+          src="/assets/about/hero.png"
           alt="Banny and lil' Blueberry chillin out next to the juicebox and a hamper of fruit"
           width={780}
           height={438.5}
-          layout="responsive"
           priority
         />
       </div>

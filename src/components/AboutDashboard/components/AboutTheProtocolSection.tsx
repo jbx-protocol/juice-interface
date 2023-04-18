@@ -31,7 +31,7 @@ export const AboutTheProtocolSection = () => {
 
       <div className="mx-auto mt-14 w-full max-w-sm md:order-1 md:mx-0 md:mt-0">
         <Image
-          src={'/assets/about/illustration2.png'}
+          src={'/assets/images/about/illustration2.png'}
           alt="Strawberry mixin' some juicy ethereum juice"
           width={380}
           height={380}

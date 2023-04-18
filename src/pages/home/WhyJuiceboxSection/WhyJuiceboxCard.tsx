@@ -1,31 +1,37 @@
-import { Col } from 'antd'
+import { twJoin } from 'tailwind-merge'
 
 export function WhyJuiceboxCard({
-  bgClass,
-  iconBgClass,
+  className,
+  iconWrapperClassName,
   icon,
   heading,
   content,
 }: {
-  bgClass: string
-  iconBgClass: string
+  className: string
+  iconWrapperClassName: string
   icon: JSX.Element
   heading: string | JSX.Element
   content: string | JSX.Element
 }) {
   return (
-    <Col md={8} xs={24} className="h-full">
-      <div className={`${bgClass} h-full rounded-lg p-6 text-center`}>
-        <div className="flex w-full justify-center py-4">
-          <div
-            className={`h-14 w-14 rounded-full ${iconBgClass} flex items-center justify-center`}
-          >
-            {icon}
-          </div>
+    <div
+      className={twJoin(
+        'max-w-xs flex-shrink-0 rounded-lg p-6 text-center',
+        className,
+      )}
+    >
+      <div className="flex w-full justify-center py-4">
+        <div
+          className={twJoin(
+            'flex h-14 w-14 items-center justify-center rounded-full',
+            iconWrapperClassName,
+          )}
+        >
+          {icon}
         </div>
-        <h3 className="text-2xl text-grey-900">{heading}</h3>
-        <p className="text-sm text-grey-900">{content}</p>
       </div>
-    </Col>
+      <h3 className="text-2xl text-grey-900">{heading}</h3>
+      <p className="text-sm text-grey-900">{content}</p>
+    </div>
   )
 }

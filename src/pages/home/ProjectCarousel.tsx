@@ -27,7 +27,7 @@ export function ProjectCarousel({
   return (
     <div
       className={classNames(
-        'mt-10 flex w-full flex-nowrap justify-start overflow-x-auto pb-2 [&>*:first-child]:pl-0 [&>*:last-child]:pr-0',
+        'mt-10 flex w-full flex-nowrap justify-start gap-x-8 overflow-x-auto pb-6 [&>*:first-child]:pl-0 [&>*:last-child]:pr-0',
         className,
       )}
     >

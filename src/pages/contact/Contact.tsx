@@ -8,7 +8,7 @@ import useMobile from 'hooks/Mobile'
 import { createContactMessage } from 'lib/api/discord'
 import Image from 'next/image'
 import { useState } from 'react'
-import bannywalk from '/public/assets/banny-walk-ol.webp'
+import bannywalk from '/public/assets/images/banny-walk-ol.webp'
 
 export default function Contact() {
   const [contactPlaceholder, setContactPlaceholder] = useState<string>(

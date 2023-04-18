@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { SectionContainer } from '../SectionContainer'
 import { TickIconList } from './TickIconList'
-import bannyAndCoins from '/public/assets/juice-homepage-hero.webp'
+import bannyAndCoins from '/public/assets/images/juice-homepage-hero.webp'
 
 export function ConclusionSection() {
   return (

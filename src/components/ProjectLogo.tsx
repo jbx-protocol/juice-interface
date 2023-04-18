@@ -4,7 +4,7 @@ import { cidFromUrl, ipfsGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
 
 // Override some project logos.
 const IMAGE_URI_OVERRIDES: { [k: number]: string } = {
-  1: '/assets/juiceboxdao_logo.webp', // the on-chain logo's filesize is too large. This is a smaller version.
+  1: '/assets/images/juiceboxdao_logo.webp', // the on-chain logo's filesize is too large. This is a smaller version.
 }
 
 export default function ProjectLogo({

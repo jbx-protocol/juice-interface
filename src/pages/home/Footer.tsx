@@ -16,8 +16,8 @@ import {
   emitErrorNotification,
   emitInfoNotification,
 } from 'utils/notifications'
-import orangeLadyOd from '/public/assets/orange_lady-od.png'
-import orangeLadyOl from '/public/assets/orange_lady-ol.png'
+import orangeLadyOd from '/public/assets/images/orange_lady-od.png'
+import orangeLadyOl from '/public/assets/images/orange_lady-ol.png'
 
 type LinkItem = {
   title: ReactNode

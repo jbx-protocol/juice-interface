@@ -1,13 +1,11 @@
 import { t, Trans } from '@lingui/macro'
-import { Row } from 'antd'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useContext } from 'react'
-import { DEFAULT_HOMEPAGE_GUTTER } from '../Landing'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
 import { BuiltForCard } from './BuiltForCard'
 
-export const BuiltForSection = () => {
+export function BuiltForSection() {
   const { forThemeOption } = useContext(ThemeContext)
   return (
     <SectionContainer>
@@ -20,39 +18,39 @@ export const BuiltForSection = () => {
           </Trans>
         }
       />
-      <Row gutter={DEFAULT_HOMEPAGE_GUTTER}>
+      <div className="flex flex-wrap gap-8">
         <BuiltForCard
           imageSrc={forThemeOption?.({
-            dark: '/assets/homepageBuiltForSection/dao_od.png',
-            light: '/assets/homepageBuiltForSection/dao_ol.png',
+            dark: '/assets/images/dao_od.png',
+            light: '/assets/images/dao_ol.png',
           })}
           imageAlt="Juicy Grapes"
           heading={t`DAOs`}
           subheading={
             <Trans>
-              Launch a Decentralised Autonomous Organisation with governance in
+              Launch a Decentralized Autonomous Organisation with governance in
               minutes.
             </Trans>
           }
         />
         <BuiltForCard
           imageSrc={forThemeOption?.({
-            dark: '/assets/homepageBuiltForSection/crowdfunding_od.png',
-            light: '/assets/homepageBuiltForSection/crowdfunding_ol.png',
+            dark: '/assets/images/crowdfunding_od.png',
+            light: '/assets/images/crowdfunding_ol.png',
           })}
           imageAlt="ETH coins"
           heading={t`Crowdfunding`}
           subheading={
             <Trans>
-              An all-in-one crowdfunding with powerful treasury management and
+              All-in-one crowdfunding with powerful treasury management and
               redemptions.
             </Trans>
           }
         />
         <BuiltForCard
           imageSrc={forThemeOption?.({
-            dark: '/assets/homepageBuiltForSection/nft_od.png',
-            light: '/assets/homepageBuiltForSection/nft_ol.png',
+            dark: '/assets/images/nft_od.png',
+            light: '/assets/images/nft_ol.png',
           })}
           imageAlt="Framed NFT"
           heading={t`NFT Projects`}
@@ -65,8 +63,8 @@ export const BuiltForSection = () => {
         />
         <BuiltForCard
           imageSrc={forThemeOption?.({
-            dark: '/assets/homepageBuiltForSection/builders_od.png',
-            light: '/assets/homepageBuiltForSection/builders_ol.png',
+            dark: '/assets/images/builders_od.png',
+            light: '/assets/images/builders_ol.png',
           })}
           imageAlt="Builder hodling wrench"
           heading={t`Creators & builders`}
@@ -77,7 +75,7 @@ export const BuiltForSection = () => {
             </Trans>
           }
         />
-      </Row>
+      </div>
     </SectionContainer>
   )
 }

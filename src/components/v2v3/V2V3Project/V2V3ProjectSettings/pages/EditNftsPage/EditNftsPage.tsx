@@ -10,7 +10,7 @@ import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'
 import { EditCollectionDetailsSection } from './EditCollectionDetailsSection'
 import { EditNftsSection } from './EditNftsSection'
-import blueberry from '/public/assets/blueberry-ol.png'
+import blueberry from '/public/assets/images/blueberry-ol.png'
 
 export function EditNftsPage() {
   const { value: hasExistingNfts, loading: hasNftsLoading } = useHasNftRewards()

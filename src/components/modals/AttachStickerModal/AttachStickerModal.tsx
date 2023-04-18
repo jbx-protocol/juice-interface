@@ -6,26 +6,41 @@ import { PaymentMemoSticker } from './paymentMemoSticker'
 
 const PAYMENT_MEMO_STICKERS: PaymentMemoSticker[] = [
   {
-    filepath: '/assets/stickers/banny_blockchain.png',
+    filepath: '/assets/images/stickers/banny_blockchain.png',
     alt: 'Blockchain Banny',
   },
   {
-    filepath: '/assets/stickers/banny_coder.png',
+    filepath: '/assets/images/stickers/banny_coder.png',
     alt: 'Banny at computer smoking a blunt',
   },
-  { filepath: '/assets/stickers/banny_dao.png', alt: 'Banny holding DAO sign' },
-  { filepath: '/assets/stickers/banny_lfg.png', alt: 'Banny LFG' },
-  { filepath: '/assets/stickers/banny_love.png', alt: 'Banny in love' },
-  { filepath: '/assets/stickers/banny_party_2.png', alt: 'Banny celebrating' },
-  { filepath: '/assets/stickers/banny_party.png', alt: 'Banny celebrating' },
   {
-    filepath: '/assets/stickers/banny_popcorn.png',
+    filepath: '/assets/images/stickers/banny_dao.png',
+    alt: 'Banny holding DAO sign',
+  },
+  { filepath: '/assets/images/stickers/banny_lfg.png', alt: 'Banny LFG' },
+  { filepath: '/assets/images/stickers/banny_love.png', alt: 'Banny in love' },
+  {
+    filepath: '/assets/images/stickers/banny_party_2.png',
+    alt: 'Banny celebrating',
+  },
+  {
+    filepath: '/assets/images/stickers/banny_party.png',
+    alt: 'Banny celebrating',
+  },
+  {
+    filepath: '/assets/images/stickers/banny_popcorn.png',
     alt: 'Banny eating popcorn',
   },
-  { filepath: '/assets/stickers/banny_shoes.png', alt: 'Banny with shoes' },
-  { filepath: '/assets/stickers/banny_stoned.png', alt: 'Stoned banny' },
-  { filepath: '/assets/stickers/banny_yes.png', alt: 'Stoned screaming "yes"' },
-  { filepath: '/assets/quint.gif', alt: 'Quint' },
+  {
+    filepath: '/assets/images/stickers/banny_shoes.png',
+    alt: 'Banny with shoes',
+  },
+  { filepath: '/assets/images/stickers/banny_stoned.png', alt: 'Stoned banny' },
+  {
+    filepath: '/assets/images/stickers/banny_yes.png',
+    alt: 'Stoned screaming "yes"',
+  },
+  { filepath: '/assets/images/quint.gif', alt: 'Quint' },
 ]
 
 export function AttachStickerModal({

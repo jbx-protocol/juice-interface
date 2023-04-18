@@ -1,5 +1,5 @@
-import { TwitterOutlined, ShareAltOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { ShareAltOutlined, TwitterOutlined } from '@ant-design/icons'
+import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDeployModal'
@@ -48,7 +48,7 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
 
   return (
     <div className="mt-4 flex flex-col items-center justify-center text-center">
-      <Image src="/assets/dancing.gif" width={218} height={218} />
+      <Image src="/assets/images/dancing.gif" width={218} height={218} />
       <div className="pt-8 text-4xl font-medium">Congratulations!</div>
       <div className="mt-6 text-xl font-normal">{deployGreeting}</div>
       <div className="flex flex-col gap-2 py-12">

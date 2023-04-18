@@ -2144,9 +2144,6 @@ msgstr ""
 msgid "Owner wallet balance"
 msgstr ""
 
-msgid "PAYMENTS"
-msgstr ""
-
 msgid "Paid"
 msgstr ""
 
@@ -3605,9 +3602,6 @@ msgstr ""
 msgid "V3 Project ID"
 msgstr ""
 
-msgid "VOLUME"
-msgstr ""
-
 msgid "Version of the terminal contract used by this project."
 msgstr ""
 
@@ -4140,6 +4134,9 @@ msgid "{label} must be greater than zero"
 msgstr ""
 
 msgid "{label} must be numeric"
+msgstr ""
+
+msgid "{name}"
 msgstr ""
 
 msgid "{nftBalanceFormatted, plural, one {NFT} other {NFTs}}"

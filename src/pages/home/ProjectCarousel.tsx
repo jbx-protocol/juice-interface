@@ -27,7 +27,7 @@ export function ProjectCarousel({
   return (
     <div
       className={classNames(
-        'mt-10 flex w-full flex-nowrap justify-start overflow-x-auto [&>*:first-child]:pl-0 [&>*:last-child]:pr-0',
+        'mt-10 flex w-full flex-nowrap justify-start overflow-x-auto pb-2 [&>*:first-child]:pl-0 [&>*:last-child]:pr-0',
         className,
       )}
     >
@@ -38,8 +38,11 @@ export function ProjectCarousel({
         <ArrowIcon direction="right" onClick={incrementPosition} />
       ) : null} */}
       {/* <div className="flex justify-between flex-nowrap"> */}
-      {projects?.map(p => (
-        <HomepageProjectCard project={p} key={`${p.id}_${p.pv}`} />
+      {projects?.map(project => (
+        <HomepageProjectCard
+          project={project}
+          key={`${project.id}_${project.pv}`}
+        />
       ))}
       {/* </div> */}
     </div>

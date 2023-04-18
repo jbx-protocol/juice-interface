@@ -1,9 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import axios from 'axios'
-import { PV_V2 } from 'constants/pv'
-import { GraphResult } from 'hooks/SubgraphQuery'
-import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import {
   SGEntity,
   SGEntityKey,
@@ -38,7 +35,7 @@ import { parseDeployedERC20EventJson } from 'models/subgraph-entities/vX/deploye
 import { parseMintTokensEventJson } from 'models/subgraph-entities/vX/mint-tokens-event'
 import { parseParticipantJson } from 'models/subgraph-entities/vX/participant'
 import { parsePayEventJson } from 'models/subgraph-entities/vX/pay-event'
-import { parseProjectJson, Project } from 'models/subgraph-entities/vX/project'
+import { parseProjectJson } from 'models/subgraph-entities/vX/project'
 import { parseProjectCreateEventJson } from 'models/subgraph-entities/vX/project-create-event'
 import { parseProjectEventJson } from 'models/subgraph-entities/vX/project-event'
 import { parseProtocolLogJson } from 'models/subgraph-entities/vX/protocol-log'
@@ -494,25 +491,3 @@ export const subgraphEntityJsonArrayToKeyVal = <
         ),
       }
     : {}) as Record<K, SGEntity<E>[]>
-
-export const fetchGraphProjectForProjectId: GraphResult<
-  'project',
-  keyof Project
-> = async (projectId: number) => {
-  const projects = await paginateDepleteProjectsQueryCall({
-    variables: {
-      where: { pv: PV_V2, projectId },
-    },
-  })
-
-  if (!projects.length) {
-    return
-  }
-
-  const project = projects[0]
-  return project
-}
-
-export const fetchGraphProjectsForProjectIds = async (projectIds: number[]) => {
-  return await Promise.all(projectIds.map(fetchGraphProjectForProjectId))
-}

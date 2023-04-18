@@ -119,10 +119,10 @@ export function Footer() {
   const gitCommit = process.env.NEXT_PUBLIC_VERSION
 
   return (
-    <div className="bg-slate-900 px-12 pt-12 text-slate-100">
+    <div className="bg-slate-900 px-12 pt-12 text-sm text-slate-100">
       <div className="m-auto max-w-6xl">
         <div className="flex flex-col gap-y-10 md:grid md:grid-cols-6 md:items-start md:gap-x-10">
-          <div className="flex flex-col gap-y-5 md:col-span-2 md:items-start">
+          <div className="flex flex-col gap-y-5 text-slate-200 md:col-span-2 md:items-start">
             <Logo themeOverride="dark" />
             <Trans>
               Big ups to the Ethereum community for crafting the infrastructure
@@ -135,7 +135,7 @@ export function Footer() {
         </div>
 
         <div className="mt-32 flex justify-between border-t border-slate-400 pb-16 pt-5">
-          <span className="text-grey-300">© Juicebox 2023</span>
+          <span className="text-slate-200">© Juicebox 2023</span>
 
           <div className="flex gap-x-7">
             {gitCommit && <AppVersion gitCommit={gitCommit} />}
@@ -145,7 +145,7 @@ export function Footer() {
                   key={name}
                   name={name}
                   title={name}
-                  className="text-lg leading-none text-grey-300 hover:text-bluebs-500"
+                  className="text-lg leading-none text-slate-200 hover:text-bluebs-500"
                   href={link}
                 >
                   {image}
@@ -164,19 +164,19 @@ const LinkColumn: React.FC<{ title: ReactNode; items: LinkItem[] }> = ({
   items,
 }) => (
   <div className="flex flex-col gap-y-3">
-    <div className="font-medium text-grey-300">{title}</div>
+    <div className="font-semibold text-slate-200">{title}</div>
     {items.map(({ title, link, externalLink }, i) => (
       <div key={i}>
         {externalLink ? (
           <ExternalLink
-            className="text-slate-100 hover:text-bluebs-500"
+            className="text-white hover:text-bluebs-500"
             href={link}
           >
             {title}
           </ExternalLink>
         ) : (
           <Link href={link}>
-            <a className="text-slate-100 hover:text-bluebs-500">{title}</a>
+            <a className="text-white hover:text-bluebs-500">{title}</a>
           </Link>
         )}
       </div>
@@ -187,11 +187,11 @@ const LinkColumn: React.FC<{ title: ReactNode; items: LinkItem[] }> = ({
 const AppVersion = ({ gitCommit }: { gitCommit: string }) => {
   const gitCommitLink = `https://github.com/jbx-protocol/juice-interface/commit/${gitCommit}`
   return (
-    <div className="text-grey-300">
+    <div className="text-slate-200">
       Version:{' '}
       <ExternalLink
         href={gitCommitLink}
-        className="text-grey-300 underline hover:text-bluebs-500"
+        className="text-slate-200 underline hover:text-bluebs-500"
       >
         #{gitCommit}
       </ExternalLink>

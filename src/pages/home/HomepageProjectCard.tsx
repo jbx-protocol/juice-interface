@@ -11,6 +11,25 @@ export const PROJECT_CARD_BORDER =
   'border border-solid border-smoke-300 hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100'
 export const PROJECT_CARD_BG = 'dark:bg-slate-700'
 
+function Statistic({
+  name,
+  value,
+}: {
+  name: string | JSX.Element
+  value: string | number | JSX.Element
+}) {
+  return (
+    <div>
+      <div className="text-tertiary mb-1 text-xs uppercase">
+        <Trans>{name}</Trans>
+      </div>
+      <div className="text-primary font-heading text-xl font-medium">
+        {value}
+      </div>
+    </div>
+  )
+}
+
 // Used in Trending Projects Caroursel and Juicy Picks section
 export function HomepageProjectCard({
   project,
@@ -26,18 +45,7 @@ export function HomepageProjectCard({
     | 'projectId'
   >
 }) {
-  const { data: metadata } = useProjectMetadata(project.metadataUri)
-  const projectLogo = (
-    <ProjectLogo
-      className={`h-70 w-full w-70 rounded-t-lg rounded-b-none`}
-      uri={metadata?.logoUri}
-      name={metadata?.name}
-      projectId={project.projectId}
-    />
-  )
-
-  const statHeadingClass = 'text-xs text-tertiary'
-  const statClass = 'text-xl font-medium mt-2 text-primary'
+  const { data: metadata, isLoading } = useProjectMetadata(project.metadataUri)
 
   return (
     <Link
@@ -45,37 +53,35 @@ export function HomepageProjectCard({
       key={project.handle}
       href={v2v3ProjectRoute(project)}
     >
-      <a
-        className={`h-full cursor-pointer overflow-hidden rounded-lg px-[10px]`}
-        style={{ flex: '0 0 auto' }}
-      >
+      <a className="h-full flex-shrink-0 overflow-hidden rounded-lg px-3">
         <div
-          className={`h-full w-[280px] rounded-lg ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
+          className={`h-full w-[270px] overflow-hidden rounded-lg ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
         >
-          {projectLogo}
+          <ProjectLogo
+            className="h-[270px] w-full rounded-none object-cover"
+            uri={metadata?.logoUri}
+            name={metadata?.name}
+            projectId={project.projectId}
+          />
+
           <div className="flex flex-col justify-between gap-4 rounded-lg p-5">
-            {metadata ? (
-              <div className="m-0 flex h-14 items-center overflow-hidden text-ellipsis text-lg font-medium text-black dark:text-slate-100 md:text-xl">
+            {metadata && !isLoading ? (
+              <div className="max-h-8 truncate font-heading text-lg font-medium text-black dark:text-slate-100 md:text-xl">
                 {metadata.name}
               </div>
             ) : (
               <Skeleton paragraph={false} title={{ width: 120 }} active />
             )}
+
             <div className="flex gap-8">
-              <div>
-                <div className={statHeadingClass}>
-                  <Trans>VOLUME</Trans>
-                </div>
-                <div className={statClass}>
-                  <ETHAmount amount={project.totalPaid} />
-                </div>
-              </div>
-              <div>
-                <div className={statHeadingClass}>
-                  <Trans>PAYMENTS</Trans>
-                </div>
-                <div className={statClass}>{project.paymentsCount}</div>
-              </div>
+              <Statistic
+                name={<Trans>Volume</Trans>}
+                value={<ETHAmount amount={project.totalPaid} precision={2} />}
+              />
+              <Statistic
+                name={<Trans>Payments</Trans>}
+                value={project.paymentsCount}
+              />
             </div>
           </div>
         </div>

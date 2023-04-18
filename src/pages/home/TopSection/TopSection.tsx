@@ -1,4 +1,4 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { XLButton } from 'components/XLButton'
 import useMobile from 'hooks/Mobile'
 import { useTrendingProjects } from 'hooks/Projects'
@@ -19,7 +19,7 @@ export function TopSection() {
   return (
     <SectionContainer>
       <SectionHeading
-        heading={t`Fund your thing`}
+        heading={<Trans>Fund your thing</Trans>}
         subheading={
           <Trans>
             Join thousands of projects using Juicebox to fund, operate, and

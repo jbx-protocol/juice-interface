@@ -1,21 +1,22 @@
-import { t, Trans } from '@lingui/macro'
-import useMobile from 'hooks/Mobile'
+import { Trans } from '@lingui/macro'
+import { ProjectCarousel } from '../ProjectCarousel'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
-import { JuicyPicks } from './JuicyPicks'
-import { JuicyPicksMobile } from './JuicyPicksMobile'
+import { useFetchJuicyPicks } from './hooks/JuicyPicks'
 
 export function JuicyPicksSection() {
-  const isMobile = useMobile()
+  const { data: juicyPicks } = useFetchJuicyPicks()
+
   return (
     <SectionContainer>
       <SectionHeading
-        heading={t`Juicy picks`}
+        heading={<Trans>Juicy picks</Trans>}
         subheading={
           <Trans>Peep our selection of top trending projects this month.</Trans>
         }
       />
-      {isMobile ? <JuicyPicksMobile /> : <JuicyPicks />}
+
+      <ProjectCarousel projects={juicyPicks} />
     </SectionContainer>
   )
 }

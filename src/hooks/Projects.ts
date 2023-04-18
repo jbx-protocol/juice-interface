@@ -24,12 +24,12 @@ import {
 import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
 import { parseDBProjectJson, parseDBProjectsRow } from 'utils/sgDbProjects'
-
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
 
 interface ProjectsOptions {
   pageNumber?: number
   projectId?: number
+  projectIds?: number[]
   orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid' | 'paymentsCount'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
@@ -44,7 +44,7 @@ type ProjectsOfParticipantsWhereQuery =
   | null
 
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
-const DEFAULT_ENTITY_KEYS: (keyof Project)[] = [
+export const DEFAULT_PROJECT_ENTITY_KEYS: (keyof Project)[] = [
   'id',
   'projectId',
   'handle',
@@ -69,7 +69,7 @@ const ARCHIVED_SUBGRAPH_IDS = [
   ...V2_ARCHIVED_SUBGRAPH_IDS,
 ]
 
-const queryOpts = (
+const buildProjectQueryOpts = (
   opts: ProjectsOptions,
 ): Partial<
   | SGQueryOpts<'project', SGEntityKey<'project'>>
@@ -81,6 +81,14 @@ const queryOpts = (
     where.push({
       key: 'pv',
       value: opts.pv,
+      operator: 'in',
+    })
+  }
+
+  if (opts.projectIds) {
+    where.push({
+      key: 'projectId',
+      value: opts.projectIds,
       operator: 'in',
     })
   }
@@ -106,7 +114,7 @@ const queryOpts = (
 
   return {
     entity: 'project',
-    keys: opts.keys ?? DEFAULT_ENTITY_KEYS,
+    keys: opts.keys ?? DEFAULT_PROJECT_ENTITY_KEYS,
     orderDirection: opts.orderDirection ?? 'desc',
     orderBy: opts.orderBy ?? 'totalPaid',
     pageSize: opts.pageSize,
@@ -117,7 +125,10 @@ const queryOpts = (
 export function useProjectsQuery(opts: ProjectsOptions) {
   return useSubgraphQuery(
     {
-      ...(queryOpts(opts) as SGQueryOpts<'project', SGEntityKey<'project'>>),
+      ...(buildProjectQueryOpts(opts) as SGQueryOpts<
+        'project',
+        SGEntityKey<'project'>
+      >),
       first: opts.pageSize,
       skip:
         opts.pageNumber && opts.pageSize
@@ -145,7 +156,7 @@ export function useProjectsSearch(
       ? {
           text: `${handle}:*`,
           entity: 'projectSearch',
-          keys: DEFAULT_ENTITY_KEYS,
+          keys: DEFAULT_PROJECT_ENTITY_KEYS,
         }
       : null,
     {
@@ -244,7 +255,7 @@ export function useTrendingProjects(count: number) {
   return useSubgraphQuery({
     entity: 'project',
     keys: [
-      ...DEFAULT_ENTITY_KEYS,
+      ...DEFAULT_PROJECT_ENTITY_KEYS,
       'trendingScore',
       'paymentsCount',
       'trendingPaymentsCount',
@@ -332,7 +343,7 @@ function useProjectsOfParticipants(where: ProjectsOfParticipantsWhereQuery) {
     projectIds
       ? {
           entity: 'project',
-          keys: DEFAULT_ENTITY_KEYS,
+          keys: DEFAULT_PROJECT_ENTITY_KEYS,
           where: {
             key: 'id',
             operator: 'in',
@@ -353,7 +364,7 @@ export function useMyProjectsQuery(wallet: string | undefined) {
     wallet
       ? {
           entity: 'project',
-          keys: DEFAULT_ENTITY_KEYS,
+          keys: DEFAULT_PROJECT_ENTITY_KEYS,
           where: {
             key: 'owner',
             operator: 'in',
@@ -372,7 +383,10 @@ export function useMyProjectsQuery(wallet: string | undefined) {
 
 export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
   return useInfiniteSubgraphQuery(
-    queryOpts(opts) as InfiniteSGQueryOpts<'project', SGEntityKey<'project'>>,
+    buildProjectQueryOpts(opts) as InfiniteSGQueryOpts<
+      'project',
+      SGEntityKey<'project'>
+    >,
     { staleTime: DEFAULT_STALE_TIME },
   )
 }

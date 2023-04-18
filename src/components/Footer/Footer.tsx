@@ -25,6 +25,10 @@ const LinkCols: { title: ReactNode; items: LinkItem[] }[] = [
         title: t`Explore`,
         link: '/projects',
       },
+      {
+        title: t`Activity`,
+        link: '/activity',
+      },
       // Comment out till launch
       // {
       //   title: t`About`,

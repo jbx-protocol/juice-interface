@@ -87,7 +87,7 @@ function WhyJuiceboxCards() {
 
 export function WhyJuiceboxSection() {
   return (
-    <SectionContainer maxWidthClass="max-w-6xl">
+    <SectionContainer>
       <SectionHeading
         heading={t`Why Juicebox?`}
         subheading={

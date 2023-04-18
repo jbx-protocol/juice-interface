@@ -17,7 +17,7 @@ const StepItem = ({
   </div>
 )
 
-export const HowJuiceboxWorksSection = () => {
+export function HowJuiceboxWorksSection() {
   return (
     <SectionContainer>
       <SectionHeading

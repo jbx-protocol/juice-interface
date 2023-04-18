@@ -1,13 +1,11 @@
 import { t, Trans } from '@lingui/macro'
-import { Row } from 'antd'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useContext } from 'react'
-import { DEFAULT_HOMEPAGE_GUTTER } from '../Landing'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
 import { BuiltForCard } from './BuiltForCard'
 
-export const BuiltForSection = () => {
+export function BuiltForSection() {
   const { forThemeOption } = useContext(ThemeContext)
   return (
     <SectionContainer>
@@ -20,7 +18,7 @@ export const BuiltForSection = () => {
           </Trans>
         }
       />
-      <Row gutter={DEFAULT_HOMEPAGE_GUTTER}>
+      <div className="flex flex-wrap gap-8">
         <BuiltForCard
           imageSrc={forThemeOption?.({
             dark: '/assets/homepageBuiltForSection/dao_od.png',
@@ -30,7 +28,7 @@ export const BuiltForSection = () => {
           heading={t`DAOs`}
           subheading={
             <Trans>
-              Launch a Decentralised Autonomous Organisation with governance in
+              Launch a Decentralized Autonomous Organisation with governance in
               minutes.
             </Trans>
           }
@@ -44,7 +42,7 @@ export const BuiltForSection = () => {
           heading={t`Crowdfunding`}
           subheading={
             <Trans>
-              An all-in-one crowdfunding with powerful treasury management and
+              All-in-one crowdfunding with powerful treasury management and
               redemptions.
             </Trans>
           }
@@ -77,7 +75,7 @@ export const BuiltForSection = () => {
             </Trans>
           }
         />
-      </Row>
+      </div>
     </SectionContainer>
   )
 }

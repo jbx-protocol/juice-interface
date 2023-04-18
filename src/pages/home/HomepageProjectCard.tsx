@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 export const PROJECT_CARD_BORDER =
-  'border border-solid border-smoke-300 hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100'
+  'border shadow-sm border-solid border-grey-200 hover:border-grey-400 dark:border-slate-500 dark:hover:border-slate-400'
 export const PROJECT_CARD_BG = 'dark:bg-slate-700'
 
 function Statistic({
@@ -53,36 +53,34 @@ export function HomepageProjectCard({
       key={project.handle}
       href={v2v3ProjectRoute(project)}
     >
-      <a className="h-full flex-shrink-0 overflow-hidden rounded-lg px-3">
-        <div
-          className={`h-full w-[270px] overflow-hidden rounded-lg ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
-        >
-          <ProjectLogo
-            className="h-[270px] w-full rounded-none object-cover"
-            uri={metadata?.logoUri}
-            name={metadata?.name}
-            projectId={project.projectId}
-          />
+      <a
+        className={`block w-[275px] flex-shrink-0 overflow-hidden rounded-lg ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
+      >
+        <ProjectLogo
+          className="h-[275px] w-full rounded-none object-cover"
+          uri={metadata?.logoUri}
+          name={metadata?.name}
+          projectId={project.projectId}
+        />
 
-          <div className="flex flex-col justify-between gap-4 rounded-lg p-5">
-            {metadata && !isLoading ? (
-              <div className="max-h-8 truncate font-heading text-lg font-medium text-black dark:text-slate-100 md:text-xl">
-                {metadata.name}
-              </div>
-            ) : (
-              <Skeleton paragraph={false} title={{ width: 120 }} active />
-            )}
-
-            <div className="flex gap-8">
-              <Statistic
-                name={<Trans>Volume</Trans>}
-                value={<ETHAmount amount={project.totalPaid} precision={2} />}
-              />
-              <Statistic
-                name={<Trans>Payments</Trans>}
-                value={project.paymentsCount}
-              />
+        <div className="flex flex-col justify-between gap-4 rounded-lg p-5">
+          {metadata && !isLoading ? (
+            <div className="max-h-8 truncate font-heading text-lg font-medium text-black dark:text-slate-100 md:text-xl">
+              {metadata.name}
             </div>
+          ) : (
+            <Skeleton paragraph={false} title={{ width: 120 }} active />
+          )}
+
+          <div className="flex gap-8">
+            <Statistic
+              name={<Trans>Volume</Trans>}
+              value={<ETHAmount amount={project.totalPaid} precision={2} />}
+            />
+            <Statistic
+              name={<Trans>Payments</Trans>}
+              value={project.paymentsCount}
+            />
           </div>
         </div>
       </a>

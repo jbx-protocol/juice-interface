@@ -11,6 +11,7 @@ export function SuccessStoriesSection() {
   const { data: topProjects } = useProjectsQuery({
     pageSize: 4,
   })
+
   const isMobile = useMobile()
 
   return (
@@ -24,10 +25,7 @@ export function SuccessStoriesSection() {
           </Trans>
         }
       />
-      <ProjectCarousel
-        projects={topProjects}
-        className="justify-start md:justify-center"
-      />
+      <ProjectCarousel projects={topProjects} />
       <div className="w-full text-center">
         <div className="mt-16 flex flex-col flex-wrap justify-center gap-3 md:flex-row">
           <Link href="/case-studies">

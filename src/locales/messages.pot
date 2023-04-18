@@ -383,6 +383,9 @@ msgstr ""
 msgid "All {tokensText} will go to the project owner:"
 msgstr ""
 
+msgid "All-in-one crowdfunding with powerful treasury management and redemptions."
+msgstr ""
+
 msgid "Allow Controller configuration"
 msgstr ""
 
@@ -438,9 +441,6 @@ msgid "An address"
 msgstr ""
 
 msgid "An address is required"
-msgstr ""
-
-msgid "An all-in-one crowdfunding with powerful treasury management and redemptions."
 msgstr ""
 
 msgid "An issuance reduction rate"
@@ -1724,7 +1724,7 @@ msgstr ""
 msgid "Launch V3 migration token"
 msgstr ""
 
-msgid "Launch a Decentralised Autonomous Organisation with governance in minutes."
+msgid "Launch a Decentralized Autonomous Organisation with governance in minutes."
 msgstr ""
 
 msgid "Launch cycle"

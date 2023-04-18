@@ -1,3 +1,4 @@
+import { BoltIcon } from '@heroicons/react/24/solid'
 import { t, Trans } from '@lingui/macro'
 import { Button, Col, Row } from 'antd'
 import { HOMEPAGE } from 'constants/fathomEvents'
@@ -5,7 +6,6 @@ import { trackFathomGoal } from 'lib/fathom'
 import Image from 'next/image'
 import Link from 'next/link'
 import { HeroHeading, HeroSubheading } from './strings'
-import bolt from '/public/assets/icons/bolt.svg'
 import juiceHero from '/public/assets/images/juice-homepage-hero.webp'
 
 function BuiltForList() {
@@ -21,7 +21,7 @@ function BuiltForList() {
         t`Indie creators and builders`,
       ].map((data, i) => (
         <div className="flex gap-4 pl-2" key={i}>
-          <Image src={bolt} alt="Lightning bolt symbol" />
+          <BoltIcon className="h-5 w-5 text-juice-400" />
           {data}
         </div>
       ))}

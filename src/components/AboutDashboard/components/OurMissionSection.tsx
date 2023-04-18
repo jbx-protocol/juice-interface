@@ -40,7 +40,6 @@ export const OurMissionSection = () => {
           width={380}
           height={380}
           layout="responsive"
-          priority
         />
       </div>
     </SectionContainer>

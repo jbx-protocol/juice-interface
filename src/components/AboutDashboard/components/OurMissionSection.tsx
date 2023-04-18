@@ -35,11 +35,10 @@ export const OurMissionSection = () => {
 
       <div className="mx-auto w-full max-w-sm md:mx-0">
         <Image
-          src={'/assets/about/illustration1.svg'}
+          src={'/assets/about/illustration1.png'}
           alt="Red grape passing go, collect Ξ200"
           width={380}
           height={380}
-          layout="responsive"
         />
       </div>
     </SectionContainer>

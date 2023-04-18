@@ -96,7 +96,13 @@ const ContributorCard: React.FC<{
         text={name}
         placement={title ? 'top' : 'bottom'}
       />
-      {title && <TruncatedText className="text-secondary" text={title} />}
+      {title && (
+        <TruncatedText
+          className="text-secondary"
+          text={title}
+          placement="bottom"
+        />
+      )}
     </div>
   )
 }

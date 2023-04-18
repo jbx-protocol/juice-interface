@@ -21,8 +21,8 @@ export function BuiltForSection() {
       <div className="flex flex-wrap gap-8">
         <BuiltForCard
           imageSrc={forThemeOption?.({
-            dark: '/assets/homepageBuiltForSection/dao_od.png',
-            light: '/assets/homepageBuiltForSection/dao_ol.png',
+            dark: '/assets/images/dao_od.png',
+            light: '/assets/images/dao_ol.png',
           })}
           imageAlt="Juicy Grapes"
           heading={t`DAOs`}
@@ -35,8 +35,8 @@ export function BuiltForSection() {
         />
         <BuiltForCard
           imageSrc={forThemeOption?.({
-            dark: '/assets/homepageBuiltForSection/crowdfunding_od.png',
-            light: '/assets/homepageBuiltForSection/crowdfunding_ol.png',
+            dark: '/assets/images/crowdfunding_od.png',
+            light: '/assets/images/crowdfunding_ol.png',
           })}
           imageAlt="ETH coins"
           heading={t`Crowdfunding`}
@@ -49,8 +49,8 @@ export function BuiltForSection() {
         />
         <BuiltForCard
           imageSrc={forThemeOption?.({
-            dark: '/assets/homepageBuiltForSection/nft_od.png',
-            light: '/assets/homepageBuiltForSection/nft_ol.png',
+            dark: '/assets/images/nft_od.png',
+            light: '/assets/images/nft_ol.png',
           })}
           imageAlt="Framed NFT"
           heading={t`NFT Projects`}
@@ -63,8 +63,8 @@ export function BuiltForSection() {
         />
         <BuiltForCard
           imageSrc={forThemeOption?.({
-            dark: '/assets/homepageBuiltForSection/builders_od.png',
-            light: '/assets/homepageBuiltForSection/builders_ol.png',
+            dark: '/assets/images/builders_od.png',
+            light: '/assets/images/builders_ol.png',
           })}
           imageAlt="Builder hodling wrench"
           heading={t`Creators & builders`}

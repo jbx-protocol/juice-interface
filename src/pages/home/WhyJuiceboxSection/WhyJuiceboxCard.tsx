@@ -23,8 +23,8 @@ export function WhyJuiceboxCard({
             {icon}
           </div>
         </div>
-        <h6 className="text-primary text-2xl dark:text-grey-900">{heading}</h6>
-        <p className="text-primary text-sm dark:text-grey-900">{content}</p>
+        <h3 className="text-2xl text-grey-900">{heading}</h3>
+        <p className="text-sm text-grey-900">{content}</p>
       </div>
     </Col>
   )

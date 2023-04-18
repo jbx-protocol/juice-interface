@@ -6,7 +6,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { HeroHeading, HeroSubheading } from './strings'
 import bolt from '/public/assets/icons/bolt.svg'
-import juiceHero from '/public/assets/juice-homepage-hero.webp'
+import juiceHero from '/public/assets/images/juice-homepage-hero.webp'
+
 function BuiltForList() {
   return (
     <div className="grid grid-flow-row gap-y-2 text-base font-medium">

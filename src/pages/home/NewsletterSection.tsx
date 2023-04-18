@@ -5,7 +5,7 @@ import { createJuicenewsSubscription } from 'lib/api/juicenews'
 import Image from 'next/image'
 import { useState } from 'react'
 import { OldSectionHeading } from './OldSectionHeading'
-import stretchyPineapple from '/public/assets/stretchy-pineapple.png'
+import stretchyPineapple from '/public/assets/images/stretchy-pineapple.png'
 
 export function NewsletterSection() {
   const [loading, setLoading] = useState<boolean>(false)

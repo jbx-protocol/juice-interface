@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/macro'
+import ETHAmount from 'components/currency/ETHAmount'
 import USDAmount from 'components/currency/USDAmount'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
@@ -58,7 +59,12 @@ export function StatsSection() {
         />
         <Stat
           value={
-            <USDAmount amount={stats?.volumePaidUSD} precision={0} symbol="$" />
+            <USDAmount
+              amount={stats?.volumePaidUSD}
+              precision={0}
+              symbol="$"
+              tooltipContent={<ETHAmount amount={stats?.volumePaid} />}
+            />
           }
           label={<Trans>Total raised</Trans>}
           loading={isLoading}

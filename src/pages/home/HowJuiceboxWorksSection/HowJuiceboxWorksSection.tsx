@@ -63,7 +63,7 @@ export function HowJuiceboxWorksSection() {
             <Image
               width={750}
               height={750}
-              src="/assets/sassy-blueberry.png"
+              src="/assets/images/sassy-blueberry.png"
               alt="Sassy Juicebox Blueberry crossing arms"
               loading="lazy"
             />

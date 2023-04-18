@@ -638,9 +638,6 @@ msgstr ""
 msgid "Cannot use zero address"
 msgstr ""
 
-msgid "Case studies"
-msgstr ""
-
 msgid "Change ENS name"
 msgstr ""
 
@@ -3681,6 +3678,9 @@ msgid "V3 Project ID"
 msgstr ""
 
 msgid "Version of the terminal contract used by this project."
+msgstr ""
+
+msgid "View all of the latest project activity made on Juicebox."
 msgstr ""
 
 msgid "View on Etherscan"

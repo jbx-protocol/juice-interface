@@ -28,13 +28,13 @@ export function SuccessStoriesSection() {
       <ProjectCarousel projects={topProjects} />
       <div className="w-full text-center">
         <div className="mt-16 flex flex-col flex-wrap justify-center gap-3 md:flex-row">
-          <Link href="/case-studies">
+          {/* <Link href="/case-studies">
             <a>
               <XLButton size="large" block={isMobile}>
                 <Trans>Case studies</Trans>
               </XLButton>
             </a>
-          </Link>
+          </Link> */}
           <Link href="/create">
             <a>
               <XLButton size="large" type="primary" block={isMobile}>

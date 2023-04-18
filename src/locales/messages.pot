@@ -41,6 +41,9 @@ msgstr ""
 msgid "1. Set ENS name"
 msgstr ""
 
+msgid "100% transparent"
+msgstr ""
+
 msgid "1400px x 256px image size recommended."
 msgstr ""
 
@@ -242,6 +245,12 @@ msgstr ""
 msgid "A percentage of token issuance which is set aside for addresses and other projects chosen by the project owner."
 msgstr ""
 
+msgid "A platform without limits, just the way you like it."
+msgstr ""
+
+msgid "A platform you can rely on, 100% of the time."
+msgstr ""
+
 msgid "A project name"
 msgstr ""
 
@@ -264,6 +273,15 @@ msgid "ARCHIVED"
 msgstr ""
 
 msgid "AVAILABLE"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "About Juicebox"
+msgstr ""
+
+msgid "About the protocol"
 msgstr ""
 
 msgid "Accessible via the URL <0>{exampleHandleUrl}</0>."
@@ -560,6 +578,9 @@ msgstr ""
 msgid "Build your project"
 msgstr ""
 
+msgid "Built by the best"
+msgstr ""
+
 msgid "Built for ideas like yours"
 msgstr ""
 
@@ -719,7 +740,13 @@ msgstr ""
 msgid "Collection symbol"
 msgstr ""
 
+msgid "Community"
+msgstr ""
+
 msgid "Community owned"
+msgstr ""
+
+msgid "Community-owned"
 msgstr ""
 
 msgid "Complete your Juicebox profile to enjoy a personalized and seamless experience on our platform."
@@ -912,6 +939,9 @@ msgid "Custom strategy"
 msgstr ""
 
 msgid "Custom token beneficiary"
+msgstr ""
+
+msgid "Customization"
 msgstr ""
 
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
@@ -1289,6 +1319,9 @@ msgstr ""
 msgid "Ethereum wallet address"
 msgstr ""
 
+msgid "Everything we do is to ensure that Juicebox is trustworthy."
+msgstr ""
+
 msgid "Existing project payer addresses can be found in the Tools drawer (<0/>) on the project page."
 msgstr ""
 
@@ -1370,6 +1403,9 @@ msgstr ""
 msgid "Find a project"
 msgstr ""
 
+msgid "Find out more about us"
+msgstr ""
+
 msgid "Flexible"
 msgstr ""
 
@@ -1377,6 +1413,9 @@ msgid "For faster responses, join our <0>Discord server</0>."
 msgstr ""
 
 msgid "Free to launch, just pay gas."
+msgstr ""
+
+msgid "Fun"
 msgstr ""
 
 msgid "Fund and operate your thing, your way."
@@ -1512,6 +1551,9 @@ msgid "How should I set up my project?"
 msgstr ""
 
 msgid "How your project will be paid and pay out ETH."
+msgstr ""
+
+msgid "Huge shoutout to the epic team of people that help build Juicebox and keep the dream alive."
 msgstr ""
 
 msgid "I accept the <0>risks</0> associated with the Juicebox protocol."
@@ -1661,13 +1703,22 @@ msgstr ""
 msgid "Juicebox Project ID"
 msgstr ""
 
+msgid "Juicebox enables the creators of tomorrow to launch, fund and manage the boldest projects on the internet."
+msgstr ""
+
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building."
 msgstr ""
 
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building. Join thousands of projects sippin' the Juice."
 msgstr ""
 
+msgid "Juicebox is an open-source protocol that is transparent, community-owned, and built on the Ethereum blockchain."
+msgstr ""
+
 msgid "Juicebox is as versatile as you are, build anything from an NFT project to a boutique crypto lawfirm and everything in between."
+msgstr ""
+
+msgid "Juicebox is built for the people, by the people."
 msgstr ""
 
 msgid "Juicebox is non-custodial, meaning you have complete ownership over your project and its funds. Easily customize your own on-chain rules."
@@ -1695,6 +1746,9 @@ msgid "Juicebox projects use <0>ENS names</0> as handles. Projects with a handle
 msgstr ""
 
 msgid "JuiceboxDAO"
+msgstr ""
+
+msgid "JuiceboxDAO is a community of passionate builders, creators, and innovators working together to push the boundaries of decentralized funding. Using the Juicebox protocol, we've created a DAO to coordinate thousands of JBX holders, build in the open, and govern the protocol over time."
 msgstr ""
 
 msgid "Juicy picks"
@@ -1788,6 +1842,9 @@ msgid "MAX"
 msgstr ""
 
 msgid "Made a mistake?"
+msgstr ""
+
+msgid "Making it fun & exciting to discover, launch and manage projects."
 msgstr ""
 
 msgid "Manage"
@@ -2102,6 +2159,9 @@ msgstr ""
 msgid "Open a full-featured Ethereum treasury with programmable spending in minutes."
 msgstr ""
 
+msgid "Open source"
+msgstr ""
+
 msgid "Optional"
 msgstr ""
 
@@ -2121,6 +2181,9 @@ msgid "Other."
 msgstr ""
 
 msgid "Otherwise, use <0>Amounts</0>. Amounts let you pre-define the amount of ETH you can pay out from the project each cycle. The leftover ETH can be used for future cycles, or token redemptions if you enable them."
+msgstr ""
+
+msgid "Our mission"
 msgstr ""
 
 msgid "Overview"
@@ -2615,6 +2678,9 @@ msgstr ""
 msgid "Relaunch your cycle on the new Juicebox V2 contracts."
 msgstr ""
 
+msgid "Reliability"
+msgstr ""
+
 msgid "Remaining ETH"
 msgstr ""
 
@@ -2987,6 +3053,9 @@ msgstr ""
 msgid "Stay up to date."
 msgstr ""
 
+msgid "Still have questions or want to know more about us? Jump into our Discord and come say hello."
+msgstr ""
+
 msgid "Subcription to juicenews failed."
 msgstr ""
 
@@ -3275,6 +3344,9 @@ msgstr ""
 msgid "Time remaining for edits to affect the next cycle:"
 msgstr ""
 
+msgid "To connect 1,000,000 creators to 100,000,000 contributors to raise $1,000,000,000, whilst putting Juicebox into the hands of our community - sharing our success with the people that matter."
+msgstr ""
+
 msgid "To do so, you need to give your legacy token holders the ability to exchange their tokens for V3 tokens. Select <0>Set up token migration</0> below to get started."
 msgstr ""
 
@@ -3455,6 +3527,9 @@ msgstr ""
 msgid "Transferred ETH to project"
 msgstr ""
 
+msgid "Transparency"
+msgstr ""
+
 msgid "Transparently set your terms ahead of time, or take control when you need to. Juicebox lets you define elegant token issuance & redemption, payouts, and other rules in advance, acting as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
 msgstr ""
 
@@ -3465,6 +3540,9 @@ msgid "Trending projects"
 msgstr ""
 
 msgid "Troubleshoot"
+msgstr ""
+
+msgid "Trust"
 msgstr ""
 
 msgid "Trust minimized"
@@ -3635,6 +3713,12 @@ msgstr ""
 msgid "Watching projects"
 msgstr ""
 
+msgid "We are here"
+msgstr ""
+
+msgid "We do everything in the light, for everyone to see."
+msgstr ""
+
 msgid "We recommend visiting the <0>Juicebox Discord</0> for help and advice on this process."
 msgstr ""
 
@@ -3651,6 +3735,9 @@ msgid "Website"
 msgstr ""
 
 msgid "What are locked cycles?"
+msgstr ""
+
+msgid "What do we value?"
 msgstr ""
 
 msgid "What does Juicebox actually do?"

@@ -3,7 +3,6 @@ import ExternalLink from 'components/ExternalLink'
 import Image from 'next/image'
 import { AboutButton } from './Button'
 import { SectionContainer } from './SectionContainer'
-import juiceHero from '/public/assets/juice-homepage-hero.webp'
 
 export const JuiceboxDaoSection = () => {
   return (
@@ -27,11 +26,13 @@ export const JuiceboxDaoSection = () => {
         </ExternalLink>
       </div>
 
-      <div className="mx-auto mt-14 w-80 max-w-xs md:mx-0">
+      <div className="mx-auto mt-14 w-full max-w-sm md:order-1 md:mx-0 md:mt-0">
         <Image
-          src={juiceHero}
-          alt="Banny the chill Juicebox banana drinking juice"
-          priority
+          src={'/assets/about/illustration3.svg'}
+          alt="Banny and the crew gettin' lit in the Juicebox DAO band"
+          width={380}
+          height={380}
+          layout="responsive"
         />
       </div>
     </SectionContainer>

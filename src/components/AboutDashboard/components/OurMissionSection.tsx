@@ -6,14 +6,13 @@ import { formatAmount } from 'utils/format/formatAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import { useOurMissionSession } from '../hooks/useOurMissionSection'
 import { SectionContainer } from './SectionContainer'
-import juiceHero from '/public/assets/juice-homepage-hero.webp'
 
 const PROGRESS_MAX_AMOUNT = ONE_BILLION
 
 export const OurMissionSection = () => {
   const { volumePaidUSD } = useOurMissionSession()
   return (
-    <SectionContainer className="sm:gap-24 md:flex md:justify-between md:gap-32">
+    <SectionContainer className="sm:gap-24 md:flex md:items-center md:justify-between md:gap-32">
       <div className="md:w-1/2">
         <h2 className="font-header text-3xl md:text-4xl">
           <Trans>Our mission</Trans>
@@ -28,17 +27,19 @@ export const OurMissionSection = () => {
         </p>
 
         <ProgressBar
-          className="my-20"
+          className="my-20 md:mb-0"
           currentAmount={volumePaidUSD ? Number(fromWad(volumePaidUSD)) : 0}
           maxAmount={PROGRESS_MAX_AMOUNT}
         />
       </div>
 
-      <div className="mx-auto w-80 max-w-xs md:mx-0">
+      <div className="mx-auto w-full max-w-sm md:mx-0">
         <Image
-          src={juiceHero}
-          alt="Banny the chill Juicebox banana drinking juice"
-          priority
+          src={'/assets/about/illustration1.svg'}
+          alt="Red grape passing go, collect Ξ200"
+          width={380}
+          height={380}
+          layout="responsive"
         />
       </div>
     </SectionContainer>

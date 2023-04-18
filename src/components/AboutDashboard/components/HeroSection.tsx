@@ -2,21 +2,23 @@ import { Trans } from '@lingui/macro'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { SectionContainer } from './SectionContainer'
-import juiceHero from '/public/assets/juice-homepage-hero.webp'
 
 export const HeroSection = () => {
   return (
     <SectionContainer className="flex flex-col gap-5 text-center md:text-5xl">
-      <div className="mx-auto w-80">
+      <div className="mx-auto w-full max-w-3xl">
         <Image
-          src={juiceHero}
-          alt="Banny the chill Juicebox banana drinking juice"
+          src="/assets/about/hero.svg"
+          alt="Banny and lil' Blueberry chillin out next to the juicebox and a hamper of fruit"
+          width={780}
+          height={438.5}
+          layout="responsive"
           priority
         />
       </div>
       <h1
         className={twMerge(
-          'text-primary font-heading text-2xl font-bold',
+          'text-primary font-header text-2xl font-bold',
           'md:text-5xl',
         )}
       >

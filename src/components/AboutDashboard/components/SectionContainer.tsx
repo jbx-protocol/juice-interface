@@ -8,7 +8,7 @@ export const SectionContainer: React.FC<{ className?: string }> = ({
     <section className="w-full">
       <div
         className={twMerge(
-          'mx-auto w-full max-w-5xl px-5 pt-14 pb-16 md:px-10 md:pt-16 md:pb-20',
+          'mx-auto w-full max-w-5xl px-8 pt-14 pb-16 md:px-10 md:pt-16 md:pb-20',
           className,
         )}
       >

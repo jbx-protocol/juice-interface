@@ -1,9 +1,11 @@
-import { UserGroupIcon } from '@heroicons/react/24/outline'
-import { t, Trans } from '@lingui/macro'
-import { BoltIcon } from 'components/icons/BoltIcon'
-import { FlexibleIcon } from 'components/icons/FlexibleIcon'
-import { TrustIcon } from 'components/icons/TrustIcon'
-import { VectorsIcon } from 'components/icons/VectorsIcon'
+import {
+  ArrowTrendingUpIcon,
+  BoltIcon,
+  CubeTransparentIcon,
+  ShieldCheckIcon,
+  UserGroupIcon,
+} from '@heroicons/react/24/outline'
+import { Trans, t } from '@lingui/macro'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
 import { WhyJuiceboxCard } from './WhyJuiceboxCard'
@@ -39,7 +41,9 @@ export function WhyJuiceboxSection() {
         <WhyJuiceboxCard
           className="bg-peel-400"
           iconWrapperClassName="bg-peel-100 dark:bg-peel-800"
-          icon={<BoltIcon />}
+          icon={
+            <BoltIcon className="h-8 w-8 text-peel-500 dark:text-peel-400" />
+          }
           heading={t`Battle tested`}
           content={
             <Trans>
@@ -51,7 +55,9 @@ export function WhyJuiceboxSection() {
         <WhyJuiceboxCard
           className="bg-grape-400"
           iconWrapperClassName="bg-grape-200 dark:bg-grape-800"
-          icon={<TrustIcon />}
+          icon={
+            <ShieldCheckIcon className="h-8 w-8 text-grape-600 dark:text-grape-400" />
+          }
           heading={t`Trust minimized`}
           content={
             <Trans>
@@ -65,7 +71,9 @@ export function WhyJuiceboxSection() {
         <WhyJuiceboxCard
           className="bg-crush-400 dark:bg-crush-400"
           iconWrapperClassName="bg-crush-200 dark:bg-crush-800"
-          icon={<FlexibleIcon />}
+          icon={
+            <ArrowTrendingUpIcon className="h-8 w-8 text-crush-700 dark:text-crush-400" />
+          }
           heading={t`Flexible`}
           content={
             <Trans>
@@ -77,7 +85,9 @@ export function WhyJuiceboxSection() {
         <WhyJuiceboxCard
           className="bg-split-400"
           iconWrapperClassName="bg-split-200 dark:bg-split-800"
-          icon={<VectorsIcon />}
+          icon={
+            <CubeTransparentIcon className="h-8 w-8 text-split-700 dark:text-split-400" />
+          }
           heading={t`Extensible`}
           content={
             <Trans>

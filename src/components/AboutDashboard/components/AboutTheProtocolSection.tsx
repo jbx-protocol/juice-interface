@@ -2,7 +2,6 @@ import { CheckIcon } from '@heroicons/react/24/solid'
 import { Trans, t } from '@lingui/macro'
 import Image from 'next/image'
 import { SectionContainer } from './SectionContainer'
-import juiceHero from '/public/assets/juice-homepage-hero.webp'
 
 export const AboutTheProtocolSection = () => {
   return (
@@ -30,10 +29,13 @@ export const AboutTheProtocolSection = () => {
         </div>
       </div>
 
-      <div className="mx-auto mt-14 w-80 md:order-1 md:mx-0">
+      <div className="mx-auto mt-14 w-full max-w-sm md:order-1 md:mx-0 md:mt-0">
         <Image
-          src={juiceHero}
-          alt="Banny the chill Juicebox banana drinking juice"
+          src={'/assets/about/illustration2.svg'}
+          alt="Strawberry mixin' some juicy ethereum juice"
+          width={380}
+          height={380}
+          layout="responsive"
           priority
         />
       </div>

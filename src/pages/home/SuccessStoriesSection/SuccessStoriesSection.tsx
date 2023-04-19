@@ -25,7 +25,9 @@ export function SuccessStoriesSection() {
           </Trans>
         }
       />
-      <ProjectCarousel projects={topProjects} />
+      <div className="flex justify-center">
+        <ProjectCarousel projects={topProjects} />
+      </div>
       <div className="w-full text-center">
         <div className="mt-16 flex flex-col flex-wrap justify-center gap-3 md:flex-row">
           {/* <Link href="/case-studies">

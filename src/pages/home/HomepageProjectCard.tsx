@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 export const PROJECT_CARD_BORDER =
-  'border shadow-sm border-solid border-grey-200 hover:border-grey-400 dark:border-slate-500 dark:hover:border-slate-400'
+  'border shadow-sm border-solid border-grey-200 hover:border-grey-400 dark:border-slate-500 dark:hover:border-slate-400 transition-colors'
 export const PROJECT_CARD_BG = 'dark:bg-slate-700'
 
 function Statistic({
@@ -20,7 +20,7 @@ function Statistic({
 }) {
   return (
     <div>
-      <div className="text-tertiary mb-1 text-xs uppercase">
+      <div className="text-tertiary mb-1 text-xs font-medium uppercase">
         <Trans>{name}</Trans>
       </div>
       <div className="text-primary font-heading text-xl font-medium">
@@ -65,7 +65,7 @@ export function HomepageProjectCard({
 
         <div className="flex flex-col justify-between gap-4 rounded-lg p-5">
           {metadata && !isLoading ? (
-            <div className="max-h-8 truncate font-heading text-lg font-medium text-black dark:text-slate-100 md:text-xl">
+            <div className="max-h-8 truncate font-heading text-lg font-medium text-grey-900 dark:text-slate-100 md:text-xl">
               {metadata.name}
             </div>
           ) : (

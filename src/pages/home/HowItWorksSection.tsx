@@ -28,12 +28,12 @@ export function HowItWorksSection() {
       </OldSectionHeading>
 
       <div className="my-0 mx-auto max-w-5xl p-5">
-        <Row align="middle">
+        <Row align="middle" className="justify-center">
           {!isMobile && (
             <Col className="mb-10" xs={24} sm={11}>
               <Image
-                width={750}
-                height={750}
+                width={292}
+                height={564}
                 src="/assets/images/sassy-blueberry.png"
                 alt="Sassy Juicebox Blueberry crossing arms"
                 loading="lazy"

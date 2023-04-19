@@ -94,3 +94,34 @@
 .dark .input-focus {
   box-shadow: 0 0 0 2px theme('colors.bluebs.800');
 }
+
+
+.dotted-line {
+  @apply relative;
+}
+
+.dotted-line::before {
+  content: "";
+  @apply absolute top-0 left-0 h-full bg-gradient-to-b;
+  width: 2px;
+  background-image: radial-gradient(circle closest-side, currentColor 99%, transparent 100%);
+  background-size: 100% 6px;
+  color: currentColor;
+}
+
+.gradient-animation {
+  background-size: 600% 100%;
+  animation: gradient 3s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

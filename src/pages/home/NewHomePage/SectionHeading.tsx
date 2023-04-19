@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 export const SectionHeading: React.FC<{
   className?: string
   heading: string | JSX.Element
-  subheading: string | JSX.Element
+  subheading?: string | JSX.Element
 }> = ({ className, heading, subheading }) => {
   return (
     <div className="mx-auto mb-8 max-w-3xl">

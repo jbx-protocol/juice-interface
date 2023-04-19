@@ -20,12 +20,6 @@ const JBDiscordLink = ({ children }: { children: ReactNode }) => (
 export default function QAs(): {
   q: JSX.Element
   a?: JSX.Element
-  img?: {
-    src: string
-    alt: string
-    width: number
-    height: number
-  }
 }[] {
   return [
     {

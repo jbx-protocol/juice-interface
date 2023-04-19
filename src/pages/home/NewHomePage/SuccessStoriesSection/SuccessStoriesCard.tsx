@@ -1,7 +1,7 @@
 import { Col, Skeleton } from 'antd'
-import ETHAmount from 'components/currency/ETHAmount'
 import { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
+import ETHAmount from 'components/currency/ETHAmount'
 import { PV_V2 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import Link from 'next/link'

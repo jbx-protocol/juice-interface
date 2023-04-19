@@ -238,7 +238,7 @@ export function useParticipantContributions(wallet: string | undefined) {
             key: 'wallet',
             value: wallet.toLowerCase(),
           },
-          keys: ['projectId', 'pv', 'totalPaid', 'lastPaidTimestamp'],
+          keys: ['projectId', 'pv', 'volume', 'lastPaidTimestamp'],
           orderBy: 'lastPaidTimestamp',
           orderDirection: 'desc',
         }

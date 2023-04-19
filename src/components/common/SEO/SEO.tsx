@@ -15,6 +15,7 @@ import {
 export interface SEOProps {
   url?: string
   title?: string
+  overrideFormattedTitle?: boolean
   description?: string
   twitter?: Omit<TwitterMetaTagsProps, 'title' | 'description'>
   robots?: string
@@ -24,6 +25,7 @@ export interface SEOProps {
 export const SEO: FC<SEOProps> = ({
   url,
   title,
+  overrideFormattedTitle,
   description,
   twitter,
   robots,
@@ -31,9 +33,15 @@ export const SEO: FC<SEOProps> = ({
 }) => {
   const formatTwitterHandle = (handle: string | undefined) =>
     handle ? (handle.startsWith('@') ? handle : '@' + handle) : undefined
-  const formattedTitle = title
-    ? `${config.titleTemplate.replace(/%s/g, title)}`
-    : config.title
+
+  let formattedTitle = config.title
+  if (title) {
+    formattedTitle = config.titleTemplate.replace(/%s/g, title)
+  }
+  if (overrideFormattedTitle) {
+    formattedTitle = title ?? config.title
+  }
+
   return (
     <>
       <Head>

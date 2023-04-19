@@ -16,12 +16,12 @@ export const WhatDoWeValueSection = () => {
           description={t`Everything we do is to ensure that Juicebox is trustworthy.`}
         />
         <ValueBox
-          className="bg-peel-400 dark:bg-peel-500"
+          className="bg-peel-400"
           title={t`Transparency`}
           description={t`We do everything in the light, for everyone to see.`}
         />
         <ValueBox
-          className="bg-grape-400 dark:bg-grape-500"
+          className="bg-grape-400"
           title={t`Reliability`}
           description={t`A platform you can rely on, 100% of the time.`}
         />
@@ -31,12 +31,12 @@ export const WhatDoWeValueSection = () => {
           description={t`Making it fun & exciting to discover, launch and manage projects.`}
         />
         <ValueBox
-          className="bg-bluebs-400 dark:bg-bluebs-500"
+          className="bg-bluebs-400"
           title={t`Community`}
           description={t`Juicebox is built for the people, by the people.`}
         />
         <ValueBox
-          className="bg-split-400 dark:bg-split-500"
+          className="bg-split-400"
           title={t`Customization`}
           description={t`A platform without limits, just the way you like it.`}
         />

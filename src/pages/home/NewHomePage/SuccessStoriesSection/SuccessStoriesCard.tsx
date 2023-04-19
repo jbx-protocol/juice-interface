@@ -9,8 +9,10 @@ import { PROJECT_CARD_BG, PROJECT_CARD_BORDER } from '../HomepageProjectCard'
 
 export function SuccessStoriesCard({
   project,
+  tags,
 }: {
   project: ProjectCardProject
+  tags: string[]
 }) {
   const { data: metadata } = useProjectMetadata(project?.metadataUri)
 
@@ -20,9 +22,19 @@ export function SuccessStoriesCard({
       href={`/success-stories/${project.handle}`}
     >
       <a
-        className={`overflow-hidden rounded-lg bg-white text-center transition-colors ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
+        className={`flex-shrink-0 overflow-hidden rounded-lg bg-white text-center transition-colors ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
       >
-        <div className="flex justify-center">
+        <div className="relative flex justify-center">
+          <div className="absolute top-3 left-3 flex gap-1">
+            {tags.map(tag => (
+              <span
+                className="flex items-center rounded-full bg-bluebs-100 px-2 py-0.5 text-xs font-medium text-bluebs-500"
+                key={tag}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
           <ProjectLogo
             className="h-60 w-64 rounded-b-none"
             uri={metadata?.logoUri}

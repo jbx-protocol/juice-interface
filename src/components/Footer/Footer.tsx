@@ -173,7 +173,7 @@ const LinkColumn: React.FC<{ title: ReactNode; items: LinkItem[] }> = ({
   items,
 }) => (
   <div className="flex flex-col gap-y-3">
-    <div className="font-semibold text-slate-200">{title}</div>
+    <div className="font-medium text-slate-200">{title}</div>
     {items.map(({ title, link, externalLink }, i) => (
       <div key={i}>
         {externalLink ? (

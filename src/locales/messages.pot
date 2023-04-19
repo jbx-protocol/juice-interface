@@ -1409,9 +1409,6 @@ msgstr ""
 msgid "For faster responses, join our <0>Discord server</0>."
 msgstr ""
 
-msgid "Fork the Repo"
-msgstr ""
-
 msgid "Free to launch, just pay gas."
 msgstr ""
 

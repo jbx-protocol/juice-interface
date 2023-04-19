@@ -25,7 +25,7 @@ export function SnapshotSettingsSection() {
   const [launchLoading, setLaunchLoading] = useState<boolean>(false)
   const [snapshotLaunched, setSnapshotLaunched] = useState<boolean>(false)
 
-  const setENSTextRecordForHandleTx = useSetENSTextRecordForHandleTx()
+  const setENSTextRecordForHandleTx = useSetENSTextRecordForHandleTx(handle)
 
   const launchSnapshot = async () => {
     if (

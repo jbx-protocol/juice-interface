@@ -1,30 +1,33 @@
-import { namehash } from 'ethers/lib/utils'
-import { useContext } from 'react'
-
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { usePublicResolver } from 'hooks/PublicResolver/contracts/PublicResolver'
+import { namehash } from 'ethers/lib/utils'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useContext } from 'react'
 
-export function useSetENSTextRecordForHandleTx(): TransactorInstance<{
+import { useResolverForENS } from '../ENSResolver'
+
+export function useSetENSTextRecordForHandleTx(
+  ensName: string | undefined,
+): TransactorInstance<{
   ensName: string
   key: string
   value: string
 }> {
   const { transactor } = useContext(TransactionContext)
   const { projectId } = useContext(ProjectMetadataContext)
-  const PublicResolver = usePublicResolver()
+
+  const Resolver = useResolverForENS(ensName)
 
   return ({ ensName, key, value }, txOpts) => {
-    if (!transactor || !projectId || !PublicResolver) {
+    if (!transactor || !projectId || !Resolver) {
       txOpts?.onDone?.()
       return Promise.resolve(false)
     }
 
     const node = namehash(ensName + (ensName.endsWith('.eth') ? '' : '.eth'))
 
-    return transactor(PublicResolver, 'setText', [node, key, value], {
+    return transactor(Resolver, 'setText', [node, key, value], {
       ...txOpts,
       title: t`Set ENS text record for ${ensName}`,
     })

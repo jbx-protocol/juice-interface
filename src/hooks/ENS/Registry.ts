@@ -5,25 +5,22 @@ import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
 import { useEffect, useState } from 'react'
 
-async function loadPublicResolverContract(network: NetworkName) {
-  // ENS contracts package currently doesn't include goerli information, and ABI contains errors
+async function loadENSRegistryContract(
+  network: NetworkName,
+): Promise<ContractJson | undefined> {
   if (network === NetworkName.mainnet)
-    return (await import(
-      'hooks/PublicResolver/contracts/PublicResolverMainnet.json'
-    )) as ContractJson
+    return await import('hooks/ENS/contracts/ENSRegistryMainnet.json')
   if (network === NetworkName.goerli)
-    return (await import(
-      'hooks/PublicResolver/contracts/PublicResolverGoerli.json'
-    )) as ContractJson
+    return await import('hooks/ENS/contracts/ENSRegistryGoerli.json')
 }
 
-export function usePublicResolver() {
+export function useENSRegistry() {
   const [abi, setAbi] = useState<ContractInterface | undefined>(undefined)
   const [address, setAddress] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     async function load() {
-      const json = await loadPublicResolverContract(readNetwork.name)
+      const json = await loadENSRegistryContract(readNetwork.name)
       setAbi(json?.abi)
       setAddress(json?.address)
     }

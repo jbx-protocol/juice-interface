@@ -5,13 +5,13 @@ import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
 import { useEffect, useState } from 'react'
 
-async function loadENSRegistryContract(
-  network: NetworkName,
-): Promise<ContractJson | undefined> {
-  if (network === NetworkName.mainnet)
-    return await import('hooks/ENS/contracts/ENSRegistryMainnet.json')
-  if (network === NetworkName.goerli)
-    return await import('hooks/ENS/contracts/ENSRegistryGoerli.json')
+async function loadENSRegistryContract(): Promise<ContractJson | undefined> {
+  const { name } = readNetwork
+
+  if (name === NetworkName.mainnet || name === NetworkName.goerli) {
+    // Registry address is the same for both mainnet + goerli
+    return await import('hooks/ENS/contracts/ENSRegistry.json')
+  }
 }
 
 export function useENSRegistry() {
@@ -20,7 +20,7 @@ export function useENSRegistry() {
 
   useEffect(() => {
     async function load() {
-      const json = await loadENSRegistryContract(readNetwork.name)
+      const json = await loadENSRegistryContract()
       setAbi(json?.abi)
       setAddress(json?.address)
     }

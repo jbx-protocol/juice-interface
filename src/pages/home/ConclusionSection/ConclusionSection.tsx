@@ -18,9 +18,9 @@ export function ConclusionSection() {
         </Col>
         <Col xs={24} md={12}>
           <div className="flex h-full flex-col justify-center">
-            <h3 className="text-4xl">
+            <h2 className="text-4xl">
               <Trans>Join 1,000+ projects growing with Juicebox</Trans>
-            </h3>
+            </h2>
 
             <TickIconList />
 

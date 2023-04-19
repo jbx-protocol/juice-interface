@@ -55,7 +55,7 @@ function ArchivedBadge() {
 }
 
 export type Contribution = {
-  totalPaid: BigNumber
+  volume: BigNumber
   projectId: number
   pv: PV
   lastPaidTimestamp: number
@@ -63,13 +63,13 @@ export type Contribution = {
 
 function ParticipantContribution({
   projectId,
-  totalPaid,
+  volume,
   lastPaidTimestamp,
   metadata,
   pv,
 }: {
   projectId: number
-  totalPaid: BigNumber
+  volume: BigNumber
   lastPaidTimestamp: number
   metadata: ProjectMetadata | undefined
   pv: PV
@@ -80,8 +80,7 @@ function ParticipantContribution({
     metadata?.archived
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
-  const precision =
-    totalPaid?.gt(0) && totalPaid.lt(constants.WeiPerEther) ? 2 : 0
+  const precision = volume?.gt(0) && volume.lt(constants.WeiPerEther) ? 2 : 0
 
   return (
     <div className="relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-lg bg-white py-4 dark:bg-slate-600 md:border md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
@@ -103,7 +102,7 @@ function ParticipantContribution({
         )}
 
         <div className="font-medium text-black dark:text-slate-100">
-          <ETHAmount amount={totalPaid} precision={precision} />
+          <ETHAmount amount={volume} precision={precision} />
         </div>
 
         <div className="text-black dark:text-slate-100">
@@ -131,7 +130,7 @@ function V1ParticipantContribution({
   return (
     <ParticipantContribution
       metadata={metadata}
-      totalPaid={contribution.totalPaid}
+      volume={contribution.volume}
       lastPaidTimestamp={contribution.lastPaidTimestamp}
       projectId={contribution.projectId}
       pv={contribution.pv}
@@ -154,7 +153,7 @@ function V2V3ParticipantContribution({
   return (
     <ParticipantContribution
       metadata={metadata}
-      totalPaid={contribution.totalPaid}
+      volume={contribution.volume}
       lastPaidTimestamp={contribution.lastPaidTimestamp}
       projectId={contribution.projectId}
       pv={contribution.pv}

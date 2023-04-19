@@ -3,6 +3,7 @@ import ETHAmount from 'components/currency/ETHAmount'
 import USDAmount from 'components/currency/USDAmount'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
+import Link from 'next/link'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { formattedNum } from 'utils/format/formatNumber'
 
@@ -59,12 +60,17 @@ export function StatsSection() {
         />
         <Stat
           value={
-            <USDAmount
-              amount={stats?.volumePaidUSD}
-              precision={0}
-              symbol="$"
-              tooltipContent={<ETHAmount amount={stats?.volumePaid} />}
-            />
+            <Link href="/activity">
+              <a className="text-current">
+                <USDAmount
+                  amount={stats?.volumePaidUSD}
+                  precision={0}
+                  symbol="$"
+                  tooltipContent={<ETHAmount amount={stats?.volumePaid} />}
+                  className="gradient-animation bg-gradient-to-r from-bluebs-500 via-grape-400 to-juice-500 bg-clip-text font-display transition-colors hover:text-transparent"
+                />
+              </a>
+            </Link>
           }
           label={<Trans>Total raised</Trans>}
           loading={isLoading}

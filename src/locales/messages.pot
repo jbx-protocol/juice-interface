@@ -3686,6 +3686,9 @@ msgstr ""
 msgid "View on Etherscan"
 msgstr ""
 
+msgid "Visit jbdao.org"
+msgstr ""
+
 msgid "Volume"
 msgstr ""
 

@@ -14,7 +14,7 @@ export const OurMissionSection = () => {
   return (
     <SectionContainer className="sm:gap-24 md:flex md:items-center md:justify-between md:gap-32">
       <div className="md:w-1/2">
-        <h2 className="font-header text-3xl md:text-4xl">
+        <h2 className="text-3xl md:text-4xl">
           <Trans>Our mission</Trans>
         </h2>
         <p className="text-base text-grey-700 dark:text-slate-200 md:text-lg">

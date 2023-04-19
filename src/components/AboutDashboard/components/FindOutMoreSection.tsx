@@ -1,12 +1,12 @@
 import { Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { AboutButton } from './Button'
 import { SectionContainer } from './SectionContainer'
 
 export const FindOutMoreSection = () => {
   return (
     <SectionContainer className="mb-6 text-center md:py-24">
-      <h2 className="font-header text-4xl">
+      <h2 className="text-4xl">
         <Trans>Find out more about us</Trans>
       </h2>
       <p className="mx-auto max-w-2xl text-base text-grey-700 dark:text-slate-200 md:text-lg">
@@ -18,14 +18,14 @@ export const FindOutMoreSection = () => {
 
       <div className="flex w-full flex-col justify-center gap-3 md:flex-row">
         <ExternalLink href="https://jbdao.org">
-          <AboutButton className="stroke-secondary text-primary w-full border bg-transparent">
-            Visit jbdao.org
-          </AboutButton>
+          <Button size="large">
+            <Trans>Visit jbdao.org</Trans>
+          </Button>
         </ExternalLink>
         <ExternalLink href="https://discord.gg/wFTh4QnDzk">
-          <AboutButton className="w-full">
+          <Button type="primary" size="large">
             <Trans>Join our Discord</Trans>
-          </AboutButton>
+          </Button>
         </ExternalLink>
       </div>
     </SectionContainer>

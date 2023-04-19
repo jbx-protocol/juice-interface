@@ -48,7 +48,7 @@ export const AccountSettingsDashboard = ({ user }: { user: User }) => {
                 className={({ selected }) =>
                   `text-primary rounded-lg border-0 px-4 py-2 text-left transition-colors duration-200 ${
                     selected
-                      ? 'bg-smoke-100 font-semibold dark:bg-slate-500'
+                      ? 'bg-smoke-100 font-medium dark:bg-slate-500'
                       : 'text-gray-700 cursor-pointer bg-transparent hover:bg-smoke-100 dark:hover:bg-slate-500'
                   }`
                 }

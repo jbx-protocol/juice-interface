@@ -1,14 +1,14 @@
 import { Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Image from 'next/image'
-import { AboutButton } from './Button'
 import { SectionContainer } from './SectionContainer'
 
 export const JuiceboxDaoSection = () => {
   return (
     <SectionContainer className="md:flex md:items-center md:justify-between md:text-start">
       <div className="md:w-1/2">
-        <h2 className="font-header text-3xl md:text-4xl">Juicebox DAO</h2>
+        <h2 className="text-3xl md:text-4xl">Juicebox DAO</h2>
         <p className="text-base text-grey-700 dark:text-slate-200 md:text-lg">
           <Trans>
             JuiceboxDAO is a community of passionate builders, creators, and
@@ -20,9 +20,9 @@ export const JuiceboxDaoSection = () => {
         </p>
 
         <ExternalLink href="https://discord.gg/wFTh4QnDzk">
-          <AboutButton>
+          <Button type="primary" size="large">
             <Trans>Join our Discord</Trans>
-          </AboutButton>
+          </Button>
         </ExternalLink>
       </div>
 

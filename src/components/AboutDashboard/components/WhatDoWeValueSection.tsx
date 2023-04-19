@@ -5,7 +5,7 @@ import { SectionContainer } from './SectionContainer'
 export const WhatDoWeValueSection = () => {
   return (
     <SectionContainer className="text-center md:py-24">
-      <h2 className="font-header text-3xl md:text-4xl">
+      <h2 className="text-3xl md:text-4xl">
         <Trans>What do we value?</Trans>
       </h2>
 

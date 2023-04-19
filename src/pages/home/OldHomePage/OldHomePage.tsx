@@ -113,7 +113,7 @@ export function OldHomePage() {
       <section>
         <div id="faq" className="my-0 mx-auto max-w-5xl py-20 px-7">
           <OldSectionHeading className="mb-10 text-left">
-            <Trans>FAQ</Trans>
+            <Trans>FAQs</Trans>
           </OldSectionHeading>
           <FaqList />
         </div>

@@ -13,26 +13,27 @@ export const DEFAULT_HOMEPAGE_GUTTER: [number, number] = [32, 32]
 
 export function NewHomePage() {
   return (
-    <div className="[&>*:nth-child(even)]:bg-smoke-50 dark:[&>*:nth-child(even)]:bg-slate-700">
-      <TopSection />
+    <>
+      <div className="[&>*:nth-child(even)]:bg-smoke-50 dark:[&>*:nth-child(even)]:bg-slate-700">
+        <TopSection />
 
-      <StatsSection />
+        <StatsSection />
 
-      <BuiltForSection />
+        <BuiltForSection />
 
-      <SuccessStoriesSection />
+        <SuccessStoriesSection />
 
-      <HowJuiceboxWorksSection />
+        <HowJuiceboxWorksSection />
 
-      <WhyJuiceboxSection />
+        <WhyJuiceboxSection />
 
-      <JuicyPicksSection />
+        <JuicyPicksSection />
 
-      <FaqSection />
+        <FaqSection />
 
-      <ConclusionSection />
-
+        <ConclusionSection />
+      </div>
       <Footer />
-    </div>
+    </>
   )
 }

@@ -35,7 +35,8 @@ export function ProjectHandleSettingsPage() {
   const { data: projectEnsName } = useProjectENSName({ projectId })
 
   const editV2V3ProjectHandleTx = useEditV2V3ProjectHandleTx()
-  const setENSTextRecordForHandleTx = useSetENSTextRecordForHandleTx()
+  const setENSTextRecordForHandleTx =
+    useSetENSTextRecordForHandleTx(projectEnsName)
 
   function onSetENSNameFormSaved() {
     setLoadingSetENSName(true)

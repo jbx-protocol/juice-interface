@@ -1355,7 +1355,7 @@ msgstr ""
 msgid "External link"
 msgstr ""
 
-msgid "FAQ"
+msgid "FAQs"
 msgstr ""
 
 msgid "Failed to create ERC20 token. Check transaction and try again."

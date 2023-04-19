@@ -105,11 +105,9 @@ export function HowJuiceboxWorksSection() {
 
         <div className="mt-5 flex flex-col flex-wrap justify-center gap-3 md:flex-row">
           <ExternalLink href="https://docs.juicebox.money/">
-            <a>
-              <XLButton type="default" size="large">
-                <Trans>Read the docs</Trans>
-              </XLButton>
-            </a>
+            <XLButton type="default" size="large">
+              <Trans>Read the docs</Trans>
+            </XLButton>
           </ExternalLink>
 
           <Link href="/create">

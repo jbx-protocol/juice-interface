@@ -1,9 +1,9 @@
 import { GithubFilled } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
+import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { TickIconListItem } from 'components/TickIconListItem'
 import Image from 'next/image'
-import { AboutButton } from './Button'
 import { SectionContainer } from './SectionContainer'
 
 export const AboutTheProtocolSection = () => {
@@ -29,10 +29,14 @@ export const AboutTheProtocolSection = () => {
         </ul>
 
         <ExternalLink href="https://github.com/jbx-protocol/juice-interface">
-          <AboutButton className="flex items-center gap-2">
-            <GithubFilled />
-            <Trans>Fork the Repo</Trans>
-          </AboutButton>
+          <Button
+            className="flex items-center gap-2 leading-none text-white"
+            type="primary"
+            size="large"
+            icon={<GithubFilled />}
+          >
+            <Trans>See the code</Trans>
+          </Button>
         </ExternalLink>
       </div>
 

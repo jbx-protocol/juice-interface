@@ -43,7 +43,7 @@ export const BuiltByTheBestSection = () => {
 
   return (
     <SectionContainer className="text-center md:py-24">
-      <h2 className="font-header text-4xl">
+      <h2 className="text-4xl">
         <Trans>Built by the best</Trans>
       </h2>
       <p className="mx-auto mb-16 max-w-3xl text-lg text-grey-700 dark:text-slate-200 md:text-xl">

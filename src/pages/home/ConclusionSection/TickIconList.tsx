@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { TickIconListItem } from './TickIconListItem'
+import { TickIconListItem } from '../../../components/TickIconListItem'
 
 export function TickIconList() {
   return (

@@ -17,7 +17,7 @@ export const HeroSection = () => {
       </div>
       <h1
         className={twMerge(
-          'text-primary font-header text-2xl font-bold',
+          'text-primary mx-auto max-w-4xl text-2xl font-bold leading-loose',
           'md:text-5xl',
         )}
       >

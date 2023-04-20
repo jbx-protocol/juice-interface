@@ -1,39 +1,58 @@
 import { PropsWithChildren, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-export type BadgeVariant = 'warning' | 'danger' | 'info' | 'tertiary'
+export type BadgeVariant = 'warning' | 'danger' | 'success' | 'info' | 'default'
 
 export function Badge({
   className,
   upperCase,
   children,
   variant,
+  fill,
+  clickable,
+  ...props
 }: PropsWithChildren<{
   className?: string
   variant: BadgeVariant
   upperCase?: boolean
-}>) {
+  fill?: boolean
+  clickable?: boolean
+}> &
+  React.HTMLAttributes<HTMLSpanElement>) {
   const badgeClasses = useMemo(() => {
+    // TODO add fills for other variants
     switch (variant) {
       case 'warning':
         return 'bg-warning-200 text-warning-800 dark:bg-warning-800 dark:text-warning-200'
       case 'danger':
-        return 'bg-error-200 text-error-800 dark:bg-error-800 dark:text-error-200'
+        return 'bg-split-200 text-split-800 dark:bg-split-800 dark:text-split-200'
       case 'info':
         return 'bg-bluebs-100 text-bluebs-500 dark:bg-bluebs-800 dark:text-bluebs-300'
-      case 'tertiary':
-        return 'bg-smoke-100 text-smoke-500 dark:bg-slate-800 dark:text-slate-200'
+      case 'success':
+        return 'bg-melon-50 text-melon-700 dark:bg-melon-950 dark:text-melon-600'
+      case 'default':
+        return twMerge(
+          'border-smoke-200 dark:border-slate-400 border border-solid',
+          fill
+            ? 'bg-smoke-200 text-smoke-800 dark:bg-slate-600 dark:text-slate-100'
+            : 'bg-white dark:bg-slate-900 text-smoke-600 dark:text-slate-200',
+          props.onClick || clickable
+            ? 'hover:bg-smoke-50 dark:hover:bg-slate-700'
+            : '',
+        )
     }
-  }, [variant])
+  }, [variant, fill, props.onClick, clickable])
 
   return (
     <span
       className={twMerge(
-        className,
-        'rounded-xl py-[0.1rem] px-2 text-xs font-normal',
+        'flex items-center gap-1 rounded-full py-0.5 px-3 text-sm font-medium transition-colors',
         upperCase ? 'uppercase' : '',
         badgeClasses,
+        className,
       )}
+      role={props.onClick ? 'button' : undefined}
+      {...props}
     >
       {children}
     </span>

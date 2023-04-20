@@ -20,6 +20,12 @@ msgstr ""
 msgid "({realTokenAllocationPercent}% of total token issuance)."
 msgstr ""
 
+msgid "+{percentageGain}%"
+msgstr ""
+
+msgid "+∞"
+msgstr ""
+
 msgid "0% fee"
 msgstr ""
 
@@ -1749,6 +1755,9 @@ msgid "Juicy picks"
 msgstr ""
 
 msgid "LINK TO NFT"
+msgstr ""
+
+msgid "Last 7 days"
 msgstr ""
 
 msgid "Last paid"
@@ -4112,6 +4121,9 @@ msgstr ""
 msgid "{0, plural, one {# NFT} other {# NFTs}}"
 msgstr ""
 
+msgid "{0, plural, one {# payment} other {# payments}}"
+msgstr ""
+
 msgid "{0, plural, one {# project payer address} other {# project payer addresses}}"
 msgstr ""
 
@@ -4242,9 +4254,6 @@ msgid "{payerRate} (+ {reservedRate} reserved) {tokenSymbolPlural}/ETH"
 msgstr ""
 
 msgid "{payerRate} {tokenSymbolPlural}/ETH"
-msgstr ""
-
-msgid "{paymentCount, plural, one {# payment} other {# payments}}"
 msgstr ""
 
 msgid "{titleCasedAllocationName} Amount"

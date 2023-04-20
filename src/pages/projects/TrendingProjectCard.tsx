@@ -1,4 +1,3 @@
-import * as constants from '@ethersproject/constants'
 import { Plural, t, Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -6,9 +5,9 @@ import Loading from 'components/Loading'
 import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
+import { useProjectTrendingPercentageIncrease } from 'hooks/Projects'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
-import { useMemo } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
 
@@ -34,42 +33,15 @@ export default function TrendingProjectCard({
 }) {
   const { data: metadata } = useProjectMetadata(project.metadataUri)
 
-  // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
-  const precision =
-    project.trendingVolume?.gt(0) &&
-    project.trendingVolume.lt(constants.WeiPerEther)
-      ? 2
-      : 0
-
-  const percentGainText = useMemo(() => {
-    if (project.createdWithinTrendingWindow) return t`New`
-
-    const preTrendingVolume = project.totalPaid?.sub(project.trendingVolume)
-
-    if (!preTrendingVolume?.gt(0)) return '+∞'
-
-    const percentGain = project.trendingVolume
-      .mul(10000)
-      .div(preTrendingVolume)
-      .toNumber()
-
-    let percentRounded: number
-
-    // If percentGain > 1, round to int
-    if (percentGain >= 100) {
-      percentRounded = Math.round(percentGain / 100)
-      // If 0.1 <= percentGain < 1, round to 1dp
-    } else if (percentGain >= 10) {
-      percentRounded = Math.round(percentGain / 10) / 10
-      // If percentGain < 0.1, round to 2dp
-    } else {
-      percentRounded = percentGain / 100
-    }
-
-    return `+${percentRounded}%`
-  }, [project])
-
-  const paymentCount = project.trendingPaymentsCount
+  const percentageGain = useProjectTrendingPercentageIncrease({
+    trendingVolume: project.trendingVolume,
+    totalPaid: project.totalPaid,
+  })
+  const percentGainText = project.createdWithinTrendingWindow
+    ? t`New`
+    : percentageGain === Infinity
+    ? t`+∞`
+    : t`+${percentageGain}%`
 
   const projectLogo = (
     <ProjectLogo
@@ -120,10 +92,7 @@ export default function TrendingProjectCard({
             <div className="flex w-full flex-wrap text-black dark:text-slate-100">
               <span className="flex flex-wrap items-baseline">
                 <span className="mt-1 font-medium">
-                  <ETHAmount
-                    amount={project.trendingVolume}
-                    precision={precision}
-                  />{' '}
+                  <ETHAmount amount={project.trendingVolume} />{' '}
                 </span>
                 <span className="font-medium text-grey-500 dark:text-grey-300">
                   <Trans>last {TRENDING_WINDOW_DAYS} days</Trans>{' '}
@@ -135,7 +104,11 @@ export default function TrendingProjectCard({
             </div>
 
             <div className="mt-0.5 text-sm font-normal text-grey-500 dark:text-grey-300">
-              <Plural value={paymentCount} one="# payment" other="# payments" />
+              <Plural
+                value={project.trendingPaymentsCount}
+                one="# payment"
+                other="# payments"
+              />
             </div>
           </div>
 

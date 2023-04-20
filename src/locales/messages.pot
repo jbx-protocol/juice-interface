@@ -2849,9 +2849,6 @@ msgstr ""
 msgid "See example"
 msgstr ""
 
-msgid "See the code"
-msgstr ""
-
 msgid "Select NFTs to redeem"
 msgstr ""
 

@@ -48,14 +48,9 @@ export const DEFAULT_PROJECT_ENTITY_KEYS: (keyof Project)[] = [
   'id',
   'projectId',
   'handle',
-  'owner',
   'createdAt',
   'metadataUri',
-  'metadataDomain',
-  'currentBalance',
   'totalPaid',
-  'totalRedeemed',
-  'terminal',
   'pv',
 ]
 const V1_ARCHIVED_SUBGRAPH_IDS = V1ArchivedProjectIds.map(projectId =>

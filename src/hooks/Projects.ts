@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
@@ -382,4 +383,40 @@ export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
     >,
     { staleTime: DEFAULT_STALE_TIME },
   )
+}
+
+export function useProjectTrendingPercentageIncrease({
+  totalPaid,
+  trendingVolume,
+}: {
+  totalPaid: BigNumber
+  trendingVolume: BigNumber
+}): number {
+  const percentageGain = useMemo(() => {
+    const preTrendingVolume = totalPaid?.sub(trendingVolume)
+
+    if (!preTrendingVolume?.gt(0)) return Infinity
+
+    const percentGain = trendingVolume
+      .mul(10000)
+      .div(preTrendingVolume)
+      .toNumber()
+
+    let percentRounded: number
+
+    // If percentGain > 1, round to int
+    if (percentGain >= 100) {
+      percentRounded = Math.round(percentGain / 100)
+      // If 0.1 <= percentGain < 1, round to 1dp
+    } else if (percentGain >= 10) {
+      percentRounded = Math.round(percentGain / 10) / 10
+      // If percentGain < 0.1, round to 2dp
+    } else {
+      percentRounded = percentGain / 100
+    }
+
+    return percentRounded
+  }, [totalPaid, trendingVolume])
+
+  return percentageGain
 }

@@ -8,8 +8,10 @@ import Link from 'next/link'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 export const PROJECT_CARD_BORDER =
-  'border shadow-sm border-solid border-grey-200 hover:border-grey-400 dark:border-slate-500 dark:hover:border-slate-400 transition-colors'
-export const PROJECT_CARD_BG = 'dark:bg-slate-700'
+  'rounded-lg border shadow-sm border-solid border-grey-200  dark:border-slate-500  transition-colors'
+export const PROJECT_CARD_BORDER_HOVER =
+  'hover:border-grey-400 dark:hover:border-slate-400'
+export const PROJECT_CARD_BG = 'bg-white dark:bg-slate-700 overflow-hidden'
 
 function Statistic({
   name,
@@ -54,10 +56,10 @@ export function HomepageProjectCard({
       href={v2v3ProjectRoute(project)}
     >
       <a
-        className={`block w-[275px] flex-shrink-0 overflow-hidden rounded-lg ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
+        className={`block w-[275px] flex-shrink-0 ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BORDER_HOVER} ${PROJECT_CARD_BG}`}
       >
         <ProjectLogo
-          className="h-[275px] w-full rounded-none object-cover"
+          className="h-[240px] w-full rounded-none object-cover"
           uri={metadata?.logoUri}
           name={metadata?.name}
           projectId={project.projectId}

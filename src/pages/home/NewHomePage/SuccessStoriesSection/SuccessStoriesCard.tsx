@@ -7,7 +7,11 @@ import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { ProjectTagName } from 'models/project-tags'
 import Link from 'next/link'
 import { twJoin } from 'tailwind-merge'
-import { PROJECT_CARD_BG, PROJECT_CARD_BORDER } from '../HomepageProjectCard'
+import {
+  PROJECT_CARD_BG,
+  PROJECT_CARD_BORDER,
+  PROJECT_CARD_BORDER_HOVER,
+} from '../HomepageProjectCard'
 
 function SuccessStoriesCardTag({ tag }: { tag: ProjectTagName }) {
   const className =
@@ -45,7 +49,7 @@ export function SuccessStoriesCard({
       href={`/success-stories/${project.handle}`}
     >
       <a
-        className={`flex-shrink-0 overflow-hidden rounded-lg bg-white text-center transition-colors ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
+        className={`flex-shrink-0 overflow-hidden rounded-lg bg-white text-center transition-colors ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BORDER_HOVER} ${PROJECT_CARD_BG}`}
       >
         <div className="relative flex justify-center">
           <ul className="absolute top-3 left-3 flex gap-1">

@@ -503,6 +503,9 @@ msgstr ""
 msgid "Are you sure?"
 msgstr ""
 
+msgid "Art"
+msgstr ""
+
 msgid "As your community grows, scale your project with it: Juicebox lets you update your payouts, token issuance & redemption, and other rules over time to meet your community's evolving needs. Run your community how you want to, with our pre-built integrations for <0>Safe</0>, <1>Snapshot</1>, and the other tools you already use."
 msgstr ""
 
@@ -614,6 +617,9 @@ msgstr ""
 msgid "Burned"
 msgstr ""
 
+msgid "Business"
+msgstr ""
+
 msgid "Button label"
 msgstr ""
 
@@ -660,6 +666,9 @@ msgid "Changes to your collection details may not be reflected in some marketpla
 msgstr ""
 
 msgid "Changes to your reserved token recipients will take effect immediately."
+msgstr ""
+
+msgid "Charity"
 msgstr ""
 
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have the Juicebox protocol internally track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
@@ -977,6 +986,9 @@ msgstr ""
 msgid "Cycles & Payouts"
 msgstr ""
 
+msgid "DAO"
+msgstr ""
+
 msgid "DAOs"
 msgstr ""
 
@@ -993,6 +1005,9 @@ msgid "Date created"
 msgstr ""
 
 msgid "Days"
+msgstr ""
+
+msgid "DeFi"
 msgstr ""
 
 msgid "Deadline"
@@ -1259,6 +1274,9 @@ msgstr ""
 msgid "Edits to upcoming cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner."
 msgstr ""
 
+msgid "Education"
+msgstr ""
+
 msgid "Email"
 msgstr ""
 
@@ -1317,6 +1335,9 @@ msgid "Error uploading file"
 msgstr ""
 
 msgid "Ethereum wallet address"
+msgstr ""
+
+msgid "Events"
 msgstr ""
 
 msgid "Everything we do is to ensure that Juicebox is trustworthy."
@@ -1446,6 +1467,12 @@ msgid "Funding rules"
 msgstr ""
 
 msgid "Funding target"
+msgstr ""
+
+msgid "Fundraising"
+msgstr ""
+
+msgid "Games"
 msgstr ""
 
 msgid "General"
@@ -1976,7 +2003,13 @@ msgstr ""
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr ""
 
+msgid "Music"
+msgstr ""
+
 msgid "My account"
+msgstr ""
+
+msgid "NFT"
 msgstr ""
 
 msgid "NFT Projects"
@@ -3015,6 +3048,9 @@ msgid "Skipped"
 msgstr ""
 
 msgid "Snapshot voting"
+msgstr ""
+
+msgid "Social"
 msgstr ""
 
 msgid "Socials"

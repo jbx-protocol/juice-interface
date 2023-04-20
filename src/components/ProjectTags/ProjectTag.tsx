@@ -1,5 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import { ProjectTagName } from 'models/project-tags'
+import { ProjectTagName, projectTagText } from 'models/project-tags'
 import { twMerge } from 'tailwind-merge'
 
 /**
@@ -26,7 +26,7 @@ export function ProjectTag({
     <div
       onClick={isClickable ? () => onClick?.(tag) : undefined}
       className={twMerge(
-        'flex items-center gap-1 rounded-full border border-solid border-smoke-200 py-1 px-3 text-sm font-medium uppercase text-smoke-600 transition-colors dark:border-slate-400 dark:text-slate-200',
+        'flex items-center gap-1 rounded-full border border-solid border-smoke-200 py-1 px-3 text-sm font-medium text-smoke-600 transition-colors dark:border-slate-400 dark:text-slate-200',
         selected
           ? 'bg-smoke-200 font-medium text-smoke-800 dark:bg-slate-600 dark:text-slate-100'
           : 'bg-white dark:bg-slate-900',
@@ -39,7 +39,7 @@ export function ProjectTag({
       role={onClick ? 'button' : undefined}
     >
       {selected ? <XMarkIcon className="h-4 w-4" /> : null}
-      {tag}
+      {projectTagText[tag]()}
     </div>
   )
 }

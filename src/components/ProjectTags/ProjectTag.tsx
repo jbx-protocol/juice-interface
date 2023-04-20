@@ -10,27 +10,29 @@ export function ProjectTag({
   className,
   selected,
   onClick,
+  clickable,
   disabled,
 }: {
   tag: ProjectTagName
   className?: string
   selected?: boolean
   onClick?: (tag: ProjectTagName) => void
+  clickable?: boolean
   disabled?: boolean
 }) {
-  const isClickable = Boolean(!disabled && onClick)
+  const isClickable = Boolean(!disabled && onClick) || clickable
 
   return (
     <div
       onClick={isClickable ? () => onClick?.(tag) : undefined}
       className={twMerge(
-        'flex items-center gap-1 rounded-full py-1 px-3 uppercase',
+        'flex items-center gap-1 rounded-full border border-solid border-smoke-200 py-1 px-3 text-sm font-medium uppercase text-smoke-600 transition-colors dark:border-slate-400 dark:text-slate-200',
         selected
-          ? 'bg-smoke-300 font-medium dark:bg-slate-400'
-          : 'bg-smoke-100 dark:bg-slate-600',
+          ? 'bg-smoke-200 font-medium text-smoke-800 dark:bg-slate-600 dark:text-slate-100'
+          : 'bg-white dark:bg-slate-900',
         disabled ? 'cursor-not-allowed text-smoke-500 dark:text-slate-200' : '',
         isClickable
-          ? 'cursor-pointer hover:bg-smoke-200 dark:hover:bg-slate-500'
+          ? 'cursor-pointer hover:bg-smoke-50 dark:hover:bg-slate-700'
           : '',
         className,
       )}

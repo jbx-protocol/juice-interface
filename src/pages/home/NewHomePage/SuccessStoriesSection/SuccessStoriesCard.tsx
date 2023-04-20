@@ -1,12 +1,12 @@
 import { Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
+import { Badge } from 'components/Badge'
 import { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { ProjectTagName } from 'models/project-tags'
+import { ProjectTagName, projectTagText } from 'models/project-tags'
 import Link from 'next/link'
-import { twJoin } from 'tailwind-merge'
 import {
   PROJECT_CARD_BG,
   PROJECT_CARD_BORDER,
@@ -14,23 +14,14 @@ import {
 } from '../HomepageProjectCard'
 
 function SuccessStoriesCardTag({ tag }: { tag: ProjectTagName }) {
-  const className =
-    tag === 'dao'
-      ? 'bg-split-50 text-split-800 dark:bg-split-950 dark:text-split-600'
-      : tag === 'fundraising'
-      ? 'bg-melon-50 text-melon-700 dark:bg-melon-950 dark:text-melon-600'
-      : 'bg-grape-50 text-grape-700 dark:bg-grape-950 dark:text-grape-300'
+  const text = projectTagText[tag]()
+  const badgeVariant =
+    tag === 'dao' ? 'danger' : tag === 'fundraising' ? 'success' : 'info'
 
   return (
-    <span
-      className={twJoin(
-        'flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium uppercase',
-        className,
-      )}
-      key={tag}
-    >
-      {tag}
-    </span>
+    <Badge variant={badgeVariant} className="text-xs">
+      {text}
+    </Badge>
   )
 }
 

@@ -1,6 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
-import { Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
@@ -13,6 +12,7 @@ import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
 import { formatDate } from 'utils/format/formatDate'
 import { v2v3ProjectRoute } from 'utils/routes'
+import { ArchivedBadge } from './ArchivedBadge'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 import { ProjectTagsList } from './ProjectTags/ProjectTagsList'
@@ -22,14 +22,6 @@ export type ProjectCardProject = Pick<
   Project,
   'id' | 'handle' | 'volume' | 'createdAt' | 'terminal' | 'projectId' | 'pv'
 > & { tags?: ProjectTagName[] | null; metadataUri: string | null }
-
-function ArchivedBadge() {
-  return (
-    <div className="absolute top-0 right-0 bg-smoke-100 py-0.5 px-1 text-xs font-medium text-grey-400 dark:bg-slate-600 dark:text-slate-200">
-      <Trans>ARCHIVED</Trans>
-    </div>
-  )
-}
 
 function useProjectCardData(project?: ProjectCardProject | BigNumber) {
   // Get ProjectCardProject object if this component was passed a projectId (bigNumber)

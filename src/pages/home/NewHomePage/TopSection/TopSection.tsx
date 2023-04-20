@@ -1,7 +1,8 @@
+import { ArrowSmallRightIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
+import { Badge } from 'components/Badge'
 import { ProjectTag } from 'components/ProjectTags/ProjectTag'
 import { XLButton } from 'components/XLButton'
-import useMobile from 'hooks/Mobile'
 import { useTrendingProjects } from 'hooks/Projects'
 import { ProjectTagName } from 'models/project-tags'
 import Link from 'next/link'
@@ -20,8 +21,6 @@ const HEADER_TAGS: ProjectTagName[] = [
 ]
 
 export function TopSection() {
-  const isMobile = useMobile()
-
   const { data: trendingProjects } = useTrendingProjects(
     TRENDING_PROJECTS_LIMIT,
   )
@@ -39,6 +38,16 @@ export function TopSection() {
               </Link>
             </li>
           ))}
+          <li>
+            <Link href="/projects">
+              <a>
+                <Badge variant="default" clickable>
+                  <Trans>All</Trans>
+                  <ArrowSmallRightIcon className="inline h-4 w-4" />
+                </Badge>
+              </a>
+            </Link>
+          </li>
         </ul>
       </div>
       <SectionHeading
@@ -54,7 +63,7 @@ export function TopSection() {
       <div className="mb-16 flex w-full justify-center md:w-auto">
         <Link href="/create">
           <a className="w-full md:w-auto">
-            <XLButton size="large" type="primary" block={isMobile}>
+            <XLButton size="large" type="primary" className="w-full md:w-auto">
               <Trans>Create a project</Trans>
             </XLButton>
           </a>

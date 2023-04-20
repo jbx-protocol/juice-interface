@@ -9,12 +9,14 @@ export function Badge({
   children,
   variant,
   fill,
+  clickable,
   ...props
 }: PropsWithChildren<{
   className?: string
   variant: BadgeVariant
   upperCase?: boolean
   fill?: boolean
+  clickable?: boolean
 }> &
   React.HTMLAttributes<HTMLSpanElement>) {
   const badgeClasses = useMemo(() => {
@@ -34,10 +36,12 @@ export function Badge({
           fill
             ? 'bg-smoke-200 text-smoke-800 dark:bg-slate-600 dark:text-slate-100'
             : 'bg-white dark:bg-slate-900 text-smoke-600 dark:text-slate-200',
-          props.onClick ? 'hover:bg-smoke-50 dark:hover:bg-slate-700' : '',
+          props.onClick || clickable
+            ? 'hover:bg-smoke-50 dark:hover:bg-slate-700'
+            : '',
         )
     }
-  }, [variant, fill, props.onClick])
+  }, [variant, fill, props.onClick, clickable])
 
   return (
     <span

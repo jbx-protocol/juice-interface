@@ -2,32 +2,38 @@ import { Trans } from '@lingui/macro'
 import { XLButton } from 'components/XLButton'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { useProjectsQuery } from 'hooks/Projects'
+import { ProjectTagName } from 'models/project-tags'
+import { PV } from 'models/pv'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
 import { SuccessStoriesCard } from './SuccessStoriesCard'
 
-const CASE_STUDY_PROJECTS = [
+const CASE_STUDY_PROJECTS: {
+  pv: PV
+  id: number
+  tags: ProjectTagName[]
+}[] = [
   {
     pv: PV_V1,
     id: 36, // cdao
-    tags: ['Fundraiser', 'DAO'],
+    tags: ['fundraising', 'dao'],
   },
   {
     pv: PV_V1,
     id: 199, // moondao
-    tags: ['Fundraiser', 'DAO'],
+    tags: ['fundraising', 'dao'],
   },
   {
     pv: PV_V1,
     id: 7, // sharkdao
-    tags: ['DAO'],
+    tags: ['dao'],
   },
   {
     pv: PV_V2,
     id: 311, // studiodao
-    tags: ['NFT', 'DAO'],
+    tags: ['nfts', 'dao'],
   },
 ]
 
@@ -41,7 +47,7 @@ export function SuccessStoriesSection() {
     tags: p.tags,
   })) as {
     project: Project | undefined
-    tags: string[]
+    tags: ProjectTagName[]
   }[]
 
   return (

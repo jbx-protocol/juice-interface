@@ -2,7 +2,8 @@ import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Button, Skeleton, Tabs } from 'antd'
+import { Button, Select, Skeleton, Tabs } from 'antd'
+import { ArchivedBadge } from 'components/ArchivedBadge'
 import ETHAmount from 'components/currency/ETHAmount'
 import EthereumAddress from 'components/EthereumAddress'
 import Grid from 'components/Grid'
@@ -16,17 +17,19 @@ import { SocialButton } from 'components/SocialButton'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
+import {
+  OrderDirection,
+  Participant_OrderBy,
+  useWalletContributionsQuery,
+  WalletContributionsQuery,
+} from 'generated/graphql'
 import useMobile from 'hooks/useMobile'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
-import {
-  useMyProjectsQuery,
-  useParticipantContributions,
-  useProjectsQuery,
-} from 'hooks/useProjects'
+import { useMyProjectsQuery } from 'hooks/useProjects'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useWallet } from 'hooks/Wallet'
+import client from 'lib/apollo/client'
 import { Profile } from 'models/database'
-import { ProjectMetadata } from 'models/projectMetadata'
 import { PV } from 'models/pv'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -46,34 +49,20 @@ function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
   )
 }
 
-function ArchivedBadge() {
-  return (
-    <div className="absolute top-0 right-0 bg-smoke-100 py-0.5 px-1 text-xs font-medium text-grey-400 dark:bg-slate-600 dark:text-slate-200">
-      <Trans>ARCHIVED</Trans>
-    </div>
-  )
-}
-
-export type Contribution = {
+export type WalletContribution = WalletContributionsQuery['participants'][0] & {
   volume: BigNumber
-  projectId: number
   pv: PV
-  lastPaidTimestamp: number
 }
 
 function ParticipantContribution({
-  projectId,
-  volume,
-  lastPaidTimestamp,
-  metadata,
-  pv,
+  contribution,
 }: {
-  projectId: number
-  volume: BigNumber
-  lastPaidTimestamp: number
-  metadata: ProjectMetadata | undefined
-  pv: PV
+  contribution: WalletContribution
 }) {
+  const { pv, projectId, project, volume, lastPaidTimestamp } = contribution
+
+  const { data: metadata } = useProjectMetadata(project.metadataUri)
+
   const isArchived =
     (pv === PV_V1 && V1ArchivedProjectIds.includes(projectId)) ||
     (pv === PV_V2 && V2ArchivedProjectIds.includes(projectId)) ||
@@ -106,7 +95,7 @@ function ParticipantContribution({
         </div>
 
         <div className="text-black dark:text-slate-100">
-          Last paid {formatDate(lastPaidTimestamp * 1000)}
+          Last paid {formatDate(lastPaidTimestamp * 1000, 'YYYY-MM-DD')}
         </div>
       </div>
       {isArchived && <ArchivedBadge />}
@@ -115,59 +104,29 @@ function ParticipantContribution({
   )
 }
 
-function V1ParticipantContribution({
-  contribution,
-}: {
-  contribution: Contribution
-}) {
-  const { data } = useProjectsQuery({
-    projectId: contribution?.projectId,
-    pv: [PV_V1],
-  })
-
-  const { data: metadata } = useProjectMetadata(data?.[0].metadataUri)
-
-  return (
-    <ParticipantContribution
-      metadata={metadata}
-      volume={contribution.volume}
-      lastPaidTimestamp={contribution.lastPaidTimestamp}
-      projectId={contribution.projectId}
-      pv={contribution.pv}
-    />
-  )
-}
-
-function V2V3ParticipantContribution({
-  contribution,
-}: {
-  contribution: Contribution
-}) {
-  const { data: projects } = useProjectsQuery({
-    projectId: contribution?.projectId,
-    pv: [PV_V2],
-  })
-
-  const { data: metadata } = useProjectMetadata(projects?.[0].metadataUri)
-
-  return (
-    <ParticipantContribution
-      metadata={metadata}
-      volume={contribution.volume}
-      lastPaidTimestamp={contribution.lastPaidTimestamp}
-      projectId={contribution.projectId}
-      pv={contribution.pv}
-    />
-  )
-}
-
 function ContributedList({ address }: { address: string }) {
-  const { data: contributions, isLoading: myProjectsLoading } =
-    useParticipantContributions(address)
+  const [orderBy, setOrderBy] = useState<Participant_OrderBy>(
+    Participant_OrderBy.volume,
+  )
+
+  const { data, loading: contributionsLoading } = useWalletContributionsQuery({
+    client,
+    variables: {
+      wallet: address.toLowerCase(),
+      orderBy,
+      orderDirection: OrderDirection.desc,
+    },
+  })
+
+  const contributions = data?.participants.map(p => ({
+    ...p,
+    volume: BigNumber.from(p.volume),
+    pv: p.pv as PV,
+  }))
 
   const { userAddress } = useWallet()
 
-  if (myProjectsLoading) return <Loading />
+  if (contributionsLoading) return <Loading />
 
   if (!contributions || contributions.length === 0)
     return (
@@ -194,15 +153,22 @@ function ContributedList({ address }: { address: string }) {
     )
 
   return (
-    <Grid>
-      {contributions?.map(c =>
-        c.pv === PV_V2 ? (
-          <V2V3ParticipantContribution contribution={c} />
-        ) : (
-          <V1ParticipantContribution contribution={c} />
-        ),
-      )}
-    </Grid>
+    <div>
+      <Select className="mb-6 w-44" value={orderBy} onChange={setOrderBy}>
+        <Select.Option value={Participant_OrderBy.volume}>
+          <Trans>Highest paid</Trans>
+        </Select.Option>
+        <Select.Option value={Participant_OrderBy.lastPaidTimestamp}>
+          <Trans>Recent</Trans>
+        </Select.Option>
+      </Select>
+
+      <Grid>
+        {contributions?.map(c => (
+          <ParticipantContribution contribution={c} key={c.project.id} />
+        ))}
+      </Grid>
+    </div>
   )
 }
 

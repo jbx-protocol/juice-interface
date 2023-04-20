@@ -31,3 +31,29 @@ query Participants($where: Participant_filter, $first: Int, $skip: Int) {
     projectId
   }
 }
+
+query WalletContributions(
+  $wallet: String
+  $orderBy: Participant_orderBy
+  $orderDirection: OrderDirection
+  $first: Int
+  $skip: Int
+) {
+  participants(
+    where: { wallet: $wallet, volume_gt: 0 }
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    first: $first
+    skip: $skip
+  ) {
+    projectId
+    pv
+    volume
+    lastPaidTimestamp
+    project {
+      id
+      metadataUri
+      handle
+    }
+  }
+}

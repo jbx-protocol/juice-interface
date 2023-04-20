@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
+import CurrencySymbol from 'components/CurrencySymbol'
 import { PRECISION_ETH } from 'constants/currency'
 import { betweenZeroAndOne } from 'utils/bigNumbers'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
-import CurrencySymbol from '../CurrencySymbol'
 import ETHToUSD from './ETHToUSD'
 
 const MIN_ETH_PRECISION = 5
@@ -24,14 +24,11 @@ export default function ETHAmount({
   fallback?: string
   hideTooltip?: boolean
 }) {
+  const symbol = <CurrencySymbol currency="ETH" />
   if (amount === undefined) return fallback ? <span>{fallback}</span> : null
 
   if (amount?.isZero()) {
-    return (
-      <>
-        <CurrencySymbol currency="ETH" />0
-      </>
-    )
+    return <>{symbol}0</>
   }
 
   const decimalsCount = fromWad(amount).split('.')[1]?.length ?? 0
@@ -51,14 +48,14 @@ export default function ETHAmount({
       <Tooltip
         title={
           <span>
-            <CurrencySymbol currency="ETH" />
+            {symbol}
             {formatWad(amount)}
           </span>
         }
         open={hideTooltip ? !hideTooltip : undefined}
       >
         {formattedETHAmount === '0' ? '~' : null}
-        <CurrencySymbol currency="ETH" />
+        {symbol}
         {formattedETHAmount}
       </Tooltip>
     )
@@ -69,9 +66,11 @@ export default function ETHAmount({
       title={<ETHToUSD ethAmount={amount} />}
       open={hideTooltip ? !hideTooltip : undefined}
     >
-      {formattedETHAmount === '0' ? '~' : null}
-      <CurrencySymbol currency="ETH" />
-      {formattedETHAmount}
+      <span className="inline-flex items-center">
+        {formattedETHAmount === '0' ? '~' : null}
+        {symbol}
+        <span>{formattedETHAmount}</span>
+      </span>
     </Tooltip>
   )
 }

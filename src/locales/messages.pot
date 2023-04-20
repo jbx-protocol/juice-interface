@@ -1565,6 +1565,9 @@ msgstr ""
 msgid "Held fees"
 msgstr ""
 
+msgid "Highest paid"
+msgstr ""
+
 msgid "History"
 msgstr ""
 
@@ -2724,6 +2727,9 @@ msgid "Receive {receiveText}"
 msgstr ""
 
 msgid "Receive:"
+msgstr ""
+
+msgid "Recent"
 msgstr ""
 
 msgid "Recipient"

@@ -20,7 +20,7 @@ export default function SiteNavigation() {
   return (
     <div className="fixed z-10 w-full md:static md:px-4 xl:px-12">
       <Menu
-        className="bg-l0 p-4 md:flex md:items-center md:gap-10 md:px-0 md:py-6"
+        className="bg-l0 p-4 md:flex md:items-center md:gap-10 md:px-0 md:py-5"
         as="nav"
       >
         <div className="flex items-center justify-between md:inline-flex">

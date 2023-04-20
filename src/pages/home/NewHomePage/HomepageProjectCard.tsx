@@ -56,16 +56,16 @@ export function HomepageProjectCard({
       href={v2v3ProjectRoute(project)}
     >
       <a
-        className={`block w-[275px] flex-shrink-0 ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BORDER_HOVER} ${PROJECT_CARD_BG}`}
+        className={`block w-[220px] flex-shrink-0 ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BORDER_HOVER} ${PROJECT_CARD_BG}`}
       >
         <ProjectLogo
-          className="h-[240px] w-full rounded-none object-cover"
+          className="h-[192px] w-full rounded-none object-cover"
           uri={metadata?.logoUri}
           name={metadata?.name}
           projectId={project.projectId}
         />
 
-        <div className="flex flex-col justify-between gap-4 rounded-lg p-5">
+        <div className="flex flex-col justify-between gap-4 rounded-lg p-4">
           {metadata && !isLoading ? (
             <div className="max-h-8 truncate font-heading text-lg font-medium text-grey-900 dark:text-slate-100 md:text-xl">
               {metadata.name}

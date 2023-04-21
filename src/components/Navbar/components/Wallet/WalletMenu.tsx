@@ -92,7 +92,8 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
           <FormattedAddress
             address={userAddress}
             tooltipDisabled
-            className="text-sm font-medium text-bluebs-700 dark:text-bluebs-300"
+            linkDisabled
+            className="select-none text-sm font-medium text-bluebs-700 dark:text-bluebs-300"
           />
         </div>
       }

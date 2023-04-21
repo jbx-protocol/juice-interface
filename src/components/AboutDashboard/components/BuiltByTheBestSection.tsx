@@ -1,5 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { Button } from 'antd'
+import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
 import { TruncatedText } from 'components/TruncatedText'
 import { Contributor } from 'models/database'
@@ -71,6 +73,21 @@ export const BuiltByTheBestSection = () => {
             ))}
         </div>
       )}
+
+      <div className="mx-auto mt-24 max-w-xl">
+        <h3 className="font-header text-primary text-xl font-medium">
+          <Trans>Interested in becoming a JuiceboxDAO contributor?</Trans>
+        </h3>
+        <p className="m-0">
+          <Trans>
+            We're always looking for talented people to join the DAO and help
+            build Juicebox. Hit the button below to find out more.
+          </Trans>
+        </p>
+        <ExternalLink href="https://docs.juicebox.money/dao/contribute/">
+          <Button className="mt-8">Become a contributor</Button>
+        </ExternalLink>
+      </div>
     </SectionContainer>
   )
 }

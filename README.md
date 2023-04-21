@@ -25,35 +25,6 @@ Mention `@Peel` in [Discord](https://discord.gg/6jXrJSyDFf) and someone from our
 
 Read the [development guidelines](doc/development.md) for instructions on running the app in development.
 
-## Testing
-
-### Unit tests
-
-Run the jest test suite using the following command:
-
-```bash
-yarn test
-```
-
-### End-to-end tests
-
-#### Running Cypress
-
-1. Start the app in a separate terminal:
-
-   ```bash
-   yarn build && yarn start
-   # Alternatively, you can use `yarn dev` for testing
-   ```
-
-1. Open Cypress.
-
-   ```bash
-   yarn cy:open
-   ```
-
-1. Run tests.
-
 ## Contributing
 
 Anyone can contribute! [Start here](CONTRIBUTING.md).

@@ -23,7 +23,10 @@ export function WhyJuiceboxSection() {
         }
       />
 
-      <div className="mx-auto flex max-w-5xl flex-wrap justify-center gap-8">
+      <div
+        className="mx-auto flex max-w-5xl flex-wrap justify-center gap-8"
+        style={{ perspective: 1000 }}
+      >
         <WhyJuiceboxCard
           className="bg-melon-400 dark:bg-melon-500"
           iconWrapperClassName="bg-melon-200 dark:bg-melon-800"

@@ -1712,6 +1712,9 @@ msgstr ""
 msgid "Insufficient token balance"
 msgstr ""
 
+msgid "Interested in becoming a JuiceboxDAO contributor?"
+msgstr ""
+
 msgid "Introducing"
 msgstr ""
 
@@ -3879,6 +3882,9 @@ msgid "We recommend you <0>contact us</0> or visit the <1>Juicebox Discord</1> f
 msgstr ""
 
 msgid "We'll need this permission to change your project's token to your V3 Migration Token in the next step."
+msgstr ""
+
+msgid "We're always looking for talented people to join the DAO and help build Juicebox. Hit the button below to find out more."
 msgstr ""
 
 msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."

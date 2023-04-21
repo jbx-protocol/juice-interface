@@ -1,41 +1,13 @@
 import { Trans } from '@lingui/macro'
 import { XLButton } from 'components/XLButton'
-import { PV_V1, PV_V2 } from 'constants/pv'
+import { CASE_STUDY_PROJECTS } from 'constants/successStoryProjects'
 import { useProjectsQuery } from 'hooks/Projects'
 import { ProjectTagName } from 'models/project-tags'
-import { PV } from 'models/pv'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
 import { SuccessStoriesCard } from './SuccessStoriesCard'
-
-const CASE_STUDY_PROJECTS: {
-  pv: PV
-  id: number
-  tags: ProjectTagName[]
-}[] = [
-  {
-    pv: PV_V1,
-    id: 36, // cdao
-    tags: ['fundraising', 'dao'],
-  },
-  {
-    pv: PV_V1,
-    id: 199, // moondao
-    tags: ['fundraising', 'dao'],
-  },
-  {
-    pv: PV_V1,
-    id: 7, // sharkdao
-    tags: ['dao'],
-  },
-  {
-    pv: PV_V2,
-    id: 311, // studiodao
-    tags: ['nfts', 'dao'],
-  },
-]
 
 export function SuccessStoriesSection() {
   const { data } = useProjectsQuery({
@@ -76,16 +48,16 @@ export function SuccessStoriesSection() {
       </div>
       <div className="w-full text-center">
         <div className="mt-16 flex flex-col flex-wrap justify-center gap-3 md:flex-row">
-          {/* <Link href="/case-studies">
+          <Link href="/success-stories/constitutiondao">
             <a>
-              <XLButton size="large" block={isMobile}>
+              <XLButton>
                 <Trans>Case studies</Trans>
               </XLButton>
             </a>
-          </Link> */}
+          </Link>
           <Link href="/create">
             <a>
-              <XLButton size="large" type="primary">
+              <XLButton type="primary">
                 <Trans>Create a project</Trans>
               </XLButton>
             </a>

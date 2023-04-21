@@ -626,6 +626,9 @@ msgstr ""
 msgid "CSV download failed."
 msgstr ""
 
+msgid "CYCLE #{cycleNumber}"
+msgstr ""
+
 msgid "Caller"
 msgstr ""
 
@@ -633,6 +636,12 @@ msgid "Cancel"
 msgstr ""
 
 msgid "Cannot use zero address"
+msgstr ""
+
+msgid "Case studies"
+msgstr ""
+
+msgid "Case study"
 msgstr ""
 
 msgid "Change ENS name"
@@ -746,6 +755,9 @@ msgstr ""
 msgid "Complete your Juicebox profile to enjoy a personalized and seamless experience on our platform."
 msgstr ""
 
+msgid "Conclusion"
+msgstr ""
+
 msgid "Configuration rules"
 msgstr ""
 
@@ -786,6 +798,12 @@ msgid "Connect wallet to transfer ETH"
 msgstr ""
 
 msgid "Connected wallet not authorized"
+msgstr ""
+
+msgid "ConstitutionDAO raised over $46 million in less than a week with over 19,000 payments made to the project. They were the second highest bidder on Sotheby’s Lot 1787 and were unfortunately outbid by hedge fund billionaire Ken Griffin. Shortly following the auction, the core team set the Redemption Rate to 100% to allow all supporters to redeem their tokens and get their money back."
+msgstr ""
+
+msgid "ConstitutionDAO was a single purpose acquisition DAO that raised over $40M in an attempt to buy one of the last thirteen remaining copies of the U.S. Constitution at Sotheby’s on November 18th, 2021. What started as a joke in a group chat became a viral internet sensation. Thousands were onboarded into crypto as a result and the fundraiser gave the world a glimpse of the power of blockchain technology, decentralization, and new forms of governance."
 msgstr ""
 
 msgid "Contact"
@@ -971,6 +989,9 @@ msgstr ""
 msgid "Cycles & Payouts"
 msgstr ""
 
+msgid "Cycles:"
+msgstr ""
+
 msgid "DAOs"
 msgstr ""
 
@@ -1124,6 +1145,9 @@ msgstr ""
 msgid "Duration (seconds)"
 msgstr ""
 
+msgid "Duration:"
+msgstr ""
+
 msgid "ENS Name"
 msgstr ""
 
@@ -1176,6 +1200,9 @@ msgid "Edit cycle"
 msgstr ""
 
 msgid "Edit deadline"
+msgstr ""
+
+msgid "Edit deadline:"
 msgstr ""
 
 msgid "Edit details of {projectTitle}"
@@ -1311,6 +1338,9 @@ msgid "Error uploading file"
 msgstr ""
 
 msgid "Ethereum wallet address"
+msgstr ""
+
+msgid "Even though ConstitutionDAO lost the auction, they onboarded thousands to crypto with a powerful vision of collectively owning an important piece of U.S. history. This historical document meant different things to different people, but using Juicebox they were able to pool resources and work together towards a common goal. To learn more about the ConstitutionDAO story, listen to episode 15, 16, and 17 of the Juicebox podcast: <0>https://podcast.juicebox.money</0>."
 msgstr ""
 
 msgid "Everything we do is to ensure that Juicebox is trustworthy."
@@ -1520,6 +1550,18 @@ msgstr ""
 msgid "How Juicebox works"
 msgstr ""
 
+msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
+msgstr ""
+
+msgid "How StudioDAO is building the first million person movie studio on Juicebox."
+msgstr ""
+
+msgid "How a community of space enthusiasts raised $8.3 million to send a DAO member to space on a Blue Origin rocket"
+msgstr ""
+
+msgid "How a group of friends on the internet raised over $46 million to buy the U.S. Constitution"
+msgstr ""
+
 msgid "How decentralized is Juicebox?"
 msgstr ""
 
@@ -1656,6 +1698,9 @@ msgid "Is not greater than zero"
 msgstr ""
 
 msgid "Issuance reduction rate"
+msgstr ""
+
+msgid "Issuance reduction rate:"
 msgstr ""
 
 msgid "Issue ${symbol}"
@@ -1808,6 +1853,12 @@ msgstr ""
 msgid "Limited"
 msgstr ""
 
+msgid "Limited (1,050 ETH)"
+msgstr ""
+
+msgid "Limited (100 ETH)"
+msgstr ""
+
 msgid "Limited supply"
 msgstr ""
 
@@ -1818,6 +1869,12 @@ msgid "Load more"
 msgstr ""
 
 msgid "Lock until"
+msgstr ""
+
+msgid "Locked"
+msgstr ""
+
+msgid "Locked (28 days)"
 msgstr ""
 
 msgid "Locked Cycles"
@@ -1950,6 +2007,9 @@ msgid "Mints tokens as ERC-20:"
 msgstr ""
 
 msgid "Minutes"
+msgstr ""
+
+msgid "MoonDAO is a worldwide collective united by the mission of decentralizing access to space research and exploration. With privatized space exploration on the rise, MoonDAO is uniting space enthusiasts from around the globe to help make it more accessible while continuing to push research forward. In 2021, they launched a campaign to buy two tickets on a Blue Origin rocket and raised over $8 million on Juicebox. A year later, they sent Coby Cotton from viral YouTube channel Dude Perfect to space as their first astronaut."
 msgstr ""
 
 msgid "More trending projects"
@@ -2198,6 +2258,9 @@ msgstr ""
 msgid "Owner token minting is not available for V1.0 projects. Owner token minting can be enabled by editing the project's cycle."
 msgstr ""
 
+msgid "Owner token minting:"
+msgstr ""
+
 msgid "Owner tools"
 msgstr ""
 
@@ -2360,6 +2423,9 @@ msgstr ""
 msgid "Payouts will be sent to:"
 msgstr ""
 
+msgid "Payouts:"
+msgstr ""
+
 msgid "Payouts: {fundingTarget}"
 msgstr ""
 
@@ -2439,6 +2505,9 @@ msgid "Project activity failed to load."
 msgstr ""
 
 msgid "Project balance"
+msgstr ""
+
+msgid "Project configuration"
 msgstr ""
 
 msgid "Project contracts"
@@ -2591,6 +2660,9 @@ msgstr ""
 msgid "Read more"
 msgstr ""
 
+msgid "Read more case studies"
+msgstr ""
+
 msgid "Read the docs"
 msgstr ""
 
@@ -2706,6 +2778,9 @@ msgid "Reserved issuance rate"
 msgstr ""
 
 msgid "Reserved rate"
+msgstr ""
+
+msgid "Reserved rate:"
 msgstr ""
 
 msgid "Reserved token allocation"
@@ -2993,6 +3068,9 @@ msgstr ""
 msgid "Share to JuiceboxDAO"
 msgstr ""
 
+msgid "SharkDAO is a sub-DAO of Nouns DAO raising funds to participate in the Nouns ecosystem. Nouns is an on-chain generative NFT project with a daily auction of a 32x32 pixel character with heads that represent a noun like “moose,” “pylon,” or “banana.” SharkDAO brings together Nouns enthusiasts priced out of buying their own Noun with the shared goal of acquiring Nouns and contributing to the Nouns ecosystem. Since their launch in August 2021 SharkDAO has acquired 6 Nouns, put forward several successful proposals in Nouns DAO governance, and brought together over 900 nounish DAO members."
+msgstr ""
+
 msgid "Show a disclosure, a message, or a warning to supporters before they pay your project"
 msgstr ""
 
@@ -3056,6 +3134,9 @@ msgstr ""
 msgid "Still have questions or want to know more about us? Jump into our Discord and come say hello."
 msgstr ""
 
+msgid "StudioDAO is a decentralized movie studio flipping the script on how films get funded. By combining the power of collective action with NFTs tied to programmable treasuries, StudioDAO gives audiences a platform to vote on which films they want to fund and watch while giving filmmakers new opportunities to get their projects funded."
+msgstr ""
+
 msgid "Subcription to juicenews failed."
 msgstr ""
 
@@ -3071,6 +3152,9 @@ msgstr ""
 msgid "Subscribe to project activity"
 msgstr ""
 
+msgid "Success"
+msgstr ""
+
 msgid "Success stories"
 msgstr ""
 
@@ -3081,6 +3165,9 @@ msgid "Sum of percentages cannot exceed 100%"
 msgstr ""
 
 msgid "Sum of percentages cannot exceed 100%."
+msgstr ""
+
+msgid "Summary"
 msgstr ""
 
 msgid "Supply"
@@ -3377,6 +3464,9 @@ msgstr ""
 msgid "Token holders <0>cannot redeem their tokens</0> for ETH when the redemption rate is 0%."
 msgstr ""
 
+msgid "Token issuance rate:"
+msgstr ""
+
 msgid "Token migration"
 msgstr ""
 
@@ -3444,6 +3534,9 @@ msgid "Total issuance rate"
 msgstr ""
 
 msgid "Total paid"
+msgstr ""
+
+msgid "Total payments"
 msgstr ""
 
 msgid "Total payouts: {0}"
@@ -3593,6 +3686,9 @@ msgstr ""
 msgid "Unlimited payouts."
 msgstr ""
 
+msgid "Unlocked"
+msgstr ""
+
 msgid "Unlocked Cycles"
 msgstr ""
 
@@ -3687,6 +3783,9 @@ msgid "View all of the latest project activity made on Juicebox."
 msgstr ""
 
 msgid "View on Etherscan"
+msgstr ""
+
+msgid "View project"
 msgstr ""
 
 msgid "Visit jbdao.org"
@@ -3831,6 +3930,9 @@ msgid "Why do you need this permission?"
 msgstr ""
 
 msgid "Will be rounded to <0/>{0}"
+msgstr ""
+
+msgid "With an auction estimate of $10-15 million at Sotheby’s, ConstitutionDAO wanted to raise as much as possible and decided to set Payouts to Unlimited. In order to build trust with potential supporters, the campaign set up a 9/13 multisig with core team members and well-known figures in web3. Reserved Rate was also set to 0 to guarantee that everyone had equal access to PEOPLE tokens which would govern the document if they won the auction."
 msgstr ""
 
 msgid "With unlocked cycles, the project's owner can edit the project's rules and start a new cycle (Cycle #2) at any time. <0>Learn more.</0>"

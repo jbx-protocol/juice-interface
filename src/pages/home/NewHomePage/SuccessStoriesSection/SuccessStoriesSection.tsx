@@ -20,14 +20,20 @@ export function SuccessStoriesSection() {
 
   if (!data) return null
 
-  const topProjects = CASE_STUDY_PROJECTS.map(p => ({
-    project: data.find(
+  const topProjects = CASE_STUDY_PROJECTS.map(p => {
+    const project = data.find(
       proj => proj.projectId === p.id && proj.pv === p.pv,
-    ) as Project,
-    tags: p.tags,
-  })) as {
+    ) as Project
+
+    return {
+      project,
+      tags: p.tags,
+      nameOverride: p.nameOverride,
+    }
+  }) as {
     project: Project
     tags: ProjectTagName[]
+    nameOverride?: string
   }[]
 
   const cards = topProjects.map(project => (
@@ -35,6 +41,7 @@ export function SuccessStoriesSection() {
       key={project.project?.projectId}
       project={project.project}
       tags={project.tags}
+      name={project.nameOverride}
     />
   ))
 

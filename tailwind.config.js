@@ -33,6 +33,20 @@ module.exports = {
       width: {
         70: '278px',
       },
+      keyframes: {
+        rise: {
+          '0%': { transform: 'translate(-50%, 100%)', opacity: 0 },
+          '100%': { transform: 'translate(0%, 0%)', opacity: 1 },
+        },
+        set: {
+          '0%': { transform: 'translate(0%, 0%)', opacity: 1 },
+          '100%': { transform: 'translate(50%, 100%)', opacity: 0 },
+        },
+      },
+      animation: {
+        rise: 'rise 0.6s ease-in-out forwards',
+        set: 'set 0.6s ease-in-out forwards',
+      },
     },
     colors: {
       transparent: '#00000000',
@@ -41,7 +55,7 @@ module.exports = {
       white: '#FFFFFF',
       bluebs: {
         25: '#EEF1FD',
-        50: '#DEE5FC',
+        50: '#E3E9FF',
         100: '#CFD9FA',
         200: '#BBC8F6',
         300: '#9AAEF5',

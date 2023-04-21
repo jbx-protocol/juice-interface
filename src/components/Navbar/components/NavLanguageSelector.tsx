@@ -1,82 +1,49 @@
-import { GlobalOutlined } from '@ant-design/icons'
-import { Select } from 'antd'
+import { LanguageIcon } from '@heroicons/react/24/solid'
+import { Trans } from '@lingui/macro'
 import { SUPPORTED_LANGUAGES } from 'constants/locale'
-import { useEffect, useState } from 'react'
+import { useCallback, useMemo } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { reloadWindow } from 'utils/windowUtils'
+import { DropdownMenu } from './DropdownMenu'
 
 // Language select tool seen in top nav
 export default function NavLanguageSelector({
-  disableLang,
-  mobile,
+  className,
 }: {
-  disableLang?: string
-  mobile?: boolean
+  className?: string
 }) {
-  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
-
-  // Renders Select Option for each language available on Juicebox
-  const renderLanguageOption = (lang: string) => {
-    if (disableLang === lang) {
-      return null
-    }
-    return (
-      <Select.Option key={lang} value={lang}>
-        <div>
-          {mobile
-            ? SUPPORTED_LANGUAGES[lang].long
-            : SUPPORTED_LANGUAGES[lang].short}
-        </div>
-      </Select.Option>
-    )
-  }
-
-  let currentSelectedLanguage =
-    (localStorage && localStorage.getItem('lang')) || 'en'
-
   // Sets the new language with localStorage and reloads the page
-  const setLanguage = (newLanguage: string) => {
-    if (localStorage) {
-      currentSelectedLanguage = newLanguage
-      localStorage.setItem('lang', newLanguage)
-      reloadWindow()
-    }
-  }
-
-  const selectHeader = mobile
-    ? SUPPORTED_LANGUAGES[currentSelectedLanguage].long
-    : SUPPORTED_LANGUAGES[currentSelectedLanguage].short
-
-  // Close dropdown when clicking anywhere in the window except the collapse items
-  useEffect(() => {
-    function handleClick() {
-      setDropdownOpen(false)
-    }
-    window.addEventListener('click', handleClick)
-    return () => window.removeEventListener('click', handleClick)
+  const setLanguage = useCallback((newLanguage: string) => {
+    localStorage.setItem('lang', newLanguage)
+    reloadWindow()
   }, [])
 
+  const currentLanguage = useMemo(
+    () => localStorage.getItem('lang') ?? 'en',
+    [],
+  )
+
   return (
-    <div
-      // language-selector is antd override
-      className="language-selector flex w-full cursor-pointer items-center"
-      onClick={e => {
-        e.stopPropagation()
-        setDropdownOpen(!dropdownOpen)
-      }}
-    >
-      <GlobalOutlined className="mb-0.5" />
-      <Select
-        className="flex cursor-pointer items-center justify-evenly font-medium"
-        popupClassName={!mobile ? 'mr-5' : ''}
-        open={dropdownOpen}
-        value={selectHeader ?? 'EN'}
-        onChange={newLanguage => {
-          setLanguage(newLanguage)
-        }}
-        dropdownMatchSelectWidth={false}
-      >
-        {Object.keys(SUPPORTED_LANGUAGES).map(renderLanguageOption)}
-      </Select>
-    </div>
+    <DropdownMenu
+      className={className}
+      dropdownClassName={twMerge('md:w-24')}
+      disableHover
+      hideArrow
+      heading={
+        <div className="flex items-center gap-4">
+          <LanguageIcon className="h-6 w-6" />
+          <span className="font-medium md:hidden">
+            <Trans>{SUPPORTED_LANGUAGES[currentLanguage].short}</Trans>
+          </span>
+        </div>
+      }
+      items={Object.values(SUPPORTED_LANGUAGES).map(lang => ({
+        id: lang.code,
+        label: lang.long,
+        onClick: () => {
+          setLanguage(lang.code)
+        },
+      }))}
+    />
   )
 }

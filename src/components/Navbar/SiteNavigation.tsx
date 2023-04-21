@@ -10,7 +10,6 @@ import { HamburgerMenuButton } from './components/HamburgerMenuButton'
 import { LogoHomeButton } from './components/LogoHomeButton'
 import NavLanguageSelector from './components/NavLanguageSelector'
 import ThemePicker from './components/ThemePicker'
-import ThemePickerMobile from './components/ThemePickerMobile'
 import WalletButton from './components/Wallet/WalletButton'
 
 export default function SiteNavigation() {
@@ -61,9 +60,9 @@ export default function SiteNavigation() {
 
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6">
             <div className="flex flex-col gap-4 px-6 md:flex-row md:items-center md:gap-6 md:px-0">
-              <QuickProjectSearch className="hidden md:inline" />
-              <NavLanguageSelector />
-              {isMobile ? <ThemePickerMobile /> : <ThemePicker />}
+              <NavLanguageSelector className="md:order-2" />
+              <ThemePicker className="md:order-3" />
+              <QuickProjectSearch className="md:order-1" />
             </div>
 
             <WalletButton />
@@ -81,25 +80,30 @@ export default function SiteNavigation() {
 
 const resourcesMenuItems = [
   {
+    id: 'join-discord',
     label: t`Join our Discord`,
     href: 'https://discord.gg/wFTh4QnDzk',
     isExternal: true,
   },
   {
+    id: 'dao',
     label: t`JuiceboxDAO`,
     href: '/@juicebox',
   },
   {
+    id: 'docs',
     label: t`Docs`,
     href: 'https://docs.juicebox.money/',
     isExternal: true,
   },
   {
+    id: 'podcast',
     label: t`Podcast`,
     href: 'https://podcast.juicebox.money/',
     isExternal: true,
   },
   {
+    id: 'contact',
     label: t`Contact`,
     href: '/contact',
   },

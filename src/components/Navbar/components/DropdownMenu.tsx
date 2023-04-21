@@ -2,74 +2,154 @@ import { DownOutlined } from '@ant-design/icons'
 import { Menu, Transition } from '@headlessui/react'
 import PatchedExternalLink from 'components/fixes/PatchedExternalLink'
 import PatchedNextLink from 'components/fixes/PatchedNextLink'
-import { Fragment } from 'react'
+import useMobile from 'hooks/Mobile'
+import { Fragment, MouseEventHandler, ReactNode, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
+type ComponentItem = {
+  id: string
+  component: ReactNode
+}
+
+type LinkItem = {
+  id: string
+  label: ReactNode
+  href: string
+  isExternal?: boolean
+}
+
+type ButtonItem = {
+  id: string
+  label: ReactNode
+  onClick: MouseEventHandler
+}
+
+export type DropdownMenuItem = LinkItem | ButtonItem | ComponentItem
+
+function isLinkItem(item: DropdownMenuItem): item is LinkItem {
+  return (item as LinkItem).href !== undefined
+}
+
+function isButtonItem(item: DropdownMenuItem): item is ButtonItem {
+  return (item as ButtonItem).onClick !== undefined
+}
+
 export const DropdownMenu = ({
+  className,
+  dropdownClassName,
   heading,
   items,
+  hideArrow = false,
+  disableHover = false,
 }: {
-  heading: string
-  items: { label: string; href: string; isExternal?: boolean }[]
+  className?: string
+  dropdownClassName?: string
+  heading: ReactNode
+  items: DropdownMenuItem[]
+  hideArrow?: boolean
+  disableHover?: boolean
 }) => {
-  return (
-    <Menu as="div" className="md:relative">
-      <Menu.Button
-        as="div"
-        className={
-          'text-primary flex cursor-pointer items-center justify-between font-medium hover:text-grey-500 dark:hover:text-slate-200 md:gap-1'
-        }
-      >
-        {({ open }) => (
-          <>
-            <div className="text-primary flex items-center gap-1 text-sm font-medium hover:text-bluebs-500 dark:hover:text-bluebs-300">
-              {heading}
-              <DownOutlined
-                className={twMerge(
-                  'transition-transform duration-200',
-                  open ? 'rotate-180' : '',
-                )}
-              />
-            </div>
-          </>
-        )}
-      </Menu.Button>
+  const isMobile = useMobile()
+  const [hovering, setHovering] = useState(false)
+  const timeoutDuration = 200
+  let timeout: ReturnType<typeof setTimeout>
 
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-200"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-150"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items
-          className={
-            'flex flex-col gap-4 px-6 pt-4 dark:bg-slate-800 md:absolute md:left-0 md:z-10 md:mt-2 md:gap-5 md:rounded-lg md:border md:border-grey-300 md:bg-white md:px-2.5 md:py-4 md:dark:border-slate-300'
-          }
-        >
-          {items.map(item => (
-            <Menu.Item key={item.href}>
-              {item.isExternal ? (
-                <PatchedExternalLink
-                  className="text-primary md:whitespace-nowrap md:font-medium"
-                  href={item.href}
-                >
-                  {item.label}
-                </PatchedExternalLink>
-              ) : (
-                <PatchedNextLink
-                  className="text-primary md:whitespace-nowrap md:font-medium"
-                  href={item.href}
-                >
-                  {item.label}
-                </PatchedNextLink>
+  const onMouseEnter = () => {
+    clearTimeout(timeout)
+    setHovering(true)
+  }
+
+  const onMouseLeave = () => {
+    timeout = setTimeout(() => {
+      setHovering(false)
+    }, timeoutDuration)
+  }
+
+  return (
+    <Menu
+      as="div"
+      className={twMerge('w-full md:relative md:w-fit', className)}
+    >
+      {({ open }) => (
+        <>
+          <Menu.Button
+            as="div"
+            className={
+              'text-primary flex w-full cursor-pointer items-center justify-between font-medium dark:hover:text-slate-200 md:gap-1'
+            }
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+          >
+            {({ open }) => (
+              <>
+                <div className="text-primary flex w-full items-center gap-1 text-sm font-medium hover:text-bluebs-500 dark:hover:text-bluebs-300">
+                  {heading}
+                  {!hideArrow && (
+                    <DownOutlined
+                      className={twMerge(
+                        'transition-transform duration-200',
+                        open ? 'rotate-180' : '',
+                      )}
+                    />
+                  )}
+                </div>
+              </>
+            )}
+          </Menu.Button>
+
+          <Transition
+            show={open || (!disableHover && hovering && !isMobile)}
+            as={Fragment}
+            enter="transition ease-out duration-200"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-150"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
+              className={twMerge(
+                'flex flex-col gap-4 pt-4 dark:bg-slate-800',
+                'md:absolute md:left-0 md:z-10 md:mt-2 md:w-52 md:gap-0 md:rounded-lg md:border md:border-grey-300 md:bg-white md:pt-0 md:dark:border-slate-300',
+                dropdownClassName,
               )}
-            </Menu.Item>
-          ))}
-        </Menu.Items>
-      </Transition>
+            >
+              {items.map(item => (
+                <Menu.Item key={item.id}>
+                  {isLinkItem(item) ? (
+                    item.isExternal ? (
+                      <PatchedExternalLink
+                        className="text-primary rounded-lg px-6 hover:bg-grey-100 dark:hover:bg-slate-600 md:whitespace-nowrap md:py-2.5 md:font-medium md:first:pt-3.5 md:last:pb-3.5"
+                        href={item.href}
+                      >
+                        {item.label}
+                      </PatchedExternalLink>
+                    ) : (
+                      <PatchedNextLink
+                        className="text-primary rounded-lg px-6 hover:bg-grey-100 dark:hover:bg-slate-600 md:whitespace-nowrap md:py-2.5 md:font-medium md:first:pt-3.5 md:last:pb-3.5"
+                        href={item.href}
+                      >
+                        {item.label}
+                      </PatchedNextLink>
+                    )
+                  ) : isButtonItem(item) ? (
+                    <div
+                      className="text-primary cursor-pointer rounded-lg px-6 hover:bg-grey-100 hover:text-bluebs-500 dark:hover:bg-slate-600 md:whitespace-nowrap md:py-2.5 md:font-medium md:first:pt-3.5 md:last:pb-3.5"
+                      onClick={item.onClick}
+                    >
+                      {item.label}
+                    </div>
+                  ) : (
+                    item.component
+                  )}
+                </Menu.Item>
+              ))}
+            </Menu.Items>
+          </Transition>
+        </>
+      )}
     </Menu>
   )
 }

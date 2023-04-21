@@ -3,9 +3,9 @@ import {
   ArrowRightOutlined,
   ArrowUpOutlined,
   EnterOutlined,
-  SearchOutlined,
 } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import { Trans, t } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
 import { PV_V2 } from 'constants/pv'
@@ -18,9 +18,9 @@ import { twMerge } from 'tailwind-merge'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 import { TOP_NAV } from 'constants/fathomEvents'
-import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import { ProjectVersionBadge } from './ProjectVersionBadge'
+import ETHAmount from './currency/ETHAmount'
 import V1ProjectHandle from './v1/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from './v2v3/shared/V2V3ProjectHandleLink'
 
@@ -143,16 +143,24 @@ export default function QuickProjectSearch({
 
   return (
     <>
-      <SearchOutlined
-        className={twMerge(
-          'mt-1 text-2xl leading-none transition-colors hover:text-bluebs-500',
-          className,
-        )}
+      <div
+        className="flex cursor-pointer items-center gap-4"
         onClick={() => {
           modal.open()
           trackFathomGoal(TOP_NAV.SEARCH_CTA)
         }}
-      />
+      >
+        <MagnifyingGlassIcon
+          className={twMerge(
+            'h-6 w-6 transition-colors hover:text-bluebs-300',
+            className,
+          )}
+        />
+
+        <span className="font-medium md:hidden">
+          <Trans>Search</Trans>
+        </span>
+      </div>
       <Modal
         closable={false}
         className="top-16"
@@ -169,7 +177,7 @@ export default function QuickProjectSearch({
           <div className="flex items-center gap-5 rounded-lg px-5 pb-2 pt-8">
             <Input
               prefix={
-                <SearchOutlined className="mt-1 mr-2 text-2xl leading-none" />
+                <MagnifyingGlassIcon className="mt-1 mr-2 h-6 w-6 text-2xl leading-none" />
               }
               allowClear
               className="border-smoke-300 text-black dark:border-slate-300 dark:text-slate-100 dark:placeholder:text-slate-300"

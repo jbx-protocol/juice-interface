@@ -1016,9 +1016,6 @@ msgstr ""
 msgid "Danger Zone"
 msgstr ""
 
-msgid "Dark theme"
-msgstr ""
-
 msgid "Date"
 msgstr ""
 
@@ -1884,9 +1881,6 @@ msgid "Legacy balance"
 msgstr ""
 
 msgid "Legal"
-msgstr ""
-
-msgid "Light theme"
 msgstr ""
 
 msgid "Limited"
@@ -2955,6 +2949,9 @@ msgid "Schedule launch"
 msgstr ""
 
 msgid "Scheduled launch time"
+msgstr ""
+
+msgid "Search"
 msgstr ""
 
 msgid "Search projects"

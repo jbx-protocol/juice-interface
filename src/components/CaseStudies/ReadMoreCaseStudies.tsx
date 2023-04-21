@@ -33,7 +33,7 @@ export function ReadMoreCaseStudies({
       <h4 className="text-2xl">
         <Trans>Read more case studies</Trans>
       </h4>
-      <div className="flex gap-10 pt-8">
+      <div className="flex flex-col gap-10 pt-8 md:flex-row">
         {readMoreProjects.map(project =>
           project.project ? (
             <SuccessStoriesCard

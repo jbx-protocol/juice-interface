@@ -6,7 +6,6 @@ import {
 } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import FormattedAddress from 'components/FormattedAddress'
-import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
 import { ReactNode, useCallback, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
@@ -26,7 +25,6 @@ const WalletItemContainer = ({
 )
 
 export default function WalletMenu({ userAddress }: { userAddress: string }) {
-  const isMobile = useMobile()
   const { disconnect } = useWallet()
   const [copied, setCopied] = useState<boolean>(false)
 
@@ -74,10 +72,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
       href: 'https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e',
       isExternal: true,
     },
-  ]
-
-  if (!isMobile) {
-    items.push({
+    {
       id: 'disconnect',
       label: (
         <WalletItemContainer
@@ -86,8 +81,8 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
         />
       ),
       onClick: async () => await disconnect(),
-    })
-  }
+    },
+  ]
 
   return (
     <DropdownMenu

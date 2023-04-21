@@ -82,7 +82,7 @@ export const DropdownMenu = ({
           >
             {({ open }) => (
               <>
-                <div className="text-primary flex w-full items-center gap-1 text-sm font-medium hover:text-bluebs-500 dark:hover:text-bluebs-300">
+                <div className="text-primary flex w-full items-center justify-between gap-1 font-medium hover:text-bluebs-500 dark:hover:text-bluebs-300 md:justify-start md:text-sm">
                   {heading}
                   {!hideArrow && (
                     <DownOutlined
@@ -111,7 +111,7 @@ export const DropdownMenu = ({
               onMouseEnter={onMouseEnter}
               onMouseLeave={onMouseLeave}
               className={twMerge(
-                'flex flex-col gap-4 pt-4 dark:bg-slate-800',
+                'flex flex-col gap-4 pt-4 outline-none dark:bg-slate-800',
                 'md:absolute md:left-0 md:z-10 md:mt-2 md:w-52 md:gap-0 md:rounded-lg md:border md:border-grey-300 md:bg-white md:pt-0 md:dark:border-slate-300',
                 dropdownClassName,
               )}

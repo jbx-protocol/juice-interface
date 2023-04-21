@@ -83,7 +83,7 @@ export const DropdownMenu = ({
             {({ open }) => (
               <>
                 <div className="text-primary flex w-full items-center justify-between gap-1 font-medium hover:text-bluebs-500 dark:hover:text-bluebs-300 md:justify-start md:text-sm">
-                  <span>{heading}</span>
+                  {heading}
                   {!hideArrow && (
                     <ChevronDownIcon
                       className={twMerge(

@@ -20,7 +20,7 @@ export const AboutTheProtocolSection = () => {
           </Trans>
         </p>
 
-        <ul className="flex flex-col font-medium md:ml-4">
+        <ul className="flex flex-col md:ml-4">
           {[t`Open source`, t`Community-owned`, t`100% transparent`].map(
             item => (
               <TickIconListItem text={item} key={item} />

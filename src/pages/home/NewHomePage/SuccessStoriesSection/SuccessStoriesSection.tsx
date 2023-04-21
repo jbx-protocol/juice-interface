@@ -62,7 +62,7 @@ export function SuccessStoriesSection() {
         }
       />
       <div className="flex justify-center">
-        <div className="flex gap-8 overflow-x-auto">
+        <div className="flex gap-8">
           {topProjects.map(project =>
             project.project ? (
               <SuccessStoriesCard

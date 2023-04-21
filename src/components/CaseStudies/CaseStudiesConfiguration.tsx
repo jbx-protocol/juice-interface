@@ -30,7 +30,7 @@ export function CaseStudiesConfiguration({
 }: CaseStudiesConfigurationProps) {
   return (
     <div>
-      <div className="mb-4 font-bold">{t`CYCLE #${cycleNumber}`}</div>
+      <div className="mb-4 font-medium">{t`CYCLE #${cycleNumber}`}</div>
       <ConfigStat label={t`Cycles:`} stat={cycles} />
       {duration ? <ConfigStat label={t`Duration:`} stat={duration} /> : null}
       <ConfigStat label={t`Payouts:`} stat={payouts} />

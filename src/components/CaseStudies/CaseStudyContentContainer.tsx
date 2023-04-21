@@ -16,14 +16,16 @@ export function CaseStudyContentContainer({
   }
 }) {
   return (
-    <div>
-      <div
+    <>
+      <section
         className={`m-auto flex max-w-xl flex-col gap-8 ${CASE_STUDY_BODY_TEXT_COLOR} pt-8 pb-20 ${className}`}
       >
         {children}
-      </div>
-      <ReadMoreCaseStudies currentProject={currentProject} />
+      </section>
+      <section>
+        <ReadMoreCaseStudies currentProject={currentProject} />
+      </section>
       <Footer />
-    </div>
+    </>
   )
 }

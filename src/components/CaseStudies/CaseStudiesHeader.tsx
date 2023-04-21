@@ -1,15 +1,16 @@
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import SectionHeader from 'components/SectionHeader'
 import Image from 'next/image'
 import Link from 'next/link'
-import { classNames } from 'utils/classNames'
 import { formattedNum, parseWad } from 'utils/format/formatNumber'
 import ETHAmount from '../currency/ETHAmount'
+import { BigStat } from './BigStat'
 import {
   CaseStudiesConfiguration,
   CaseStudiesConfigurationProps,
 } from './CaseStudiesConfiguration'
+import { MinorHeading } from './MinorHeading'
 
 interface CaseStudyHeaderProps {
   header: string
@@ -34,11 +35,8 @@ export function CaseStudiesHeader({
   projectUrl,
   fundingConfig,
 }: CaseStudyHeaderProps) {
-  const minorHeadingClasses = `text-sm uppercase ${CASE_STUDY_BODY_TEXT_COLOR}`
-  const bigStatsContainer = 'flex flex-col items-start'
-  const bigStats = 'text-4xl font-display'
   return (
-    <div>
+    <section>
       <Image
         src={header}
         alt="header image"
@@ -47,28 +45,22 @@ export function CaseStudiesHeader({
         height={256}
       />
       <div className="m-auto max-w-xl">
-        <h5 className={classNames(minorHeadingClasses, 'pt-10 pb-3')}>
+        <MinorHeading className="pt-10 pb-3">
           <Trans>Case study</Trans>
-        </h5>
-        <h2 className="font-heading text-4xl font-normal">{title}</h2>
+        </MinorHeading>
+        <h1 className="font-heading text-4xl font-normal">{title}</h1>
         <p className={`${CASE_STUDY_BODY_TEXT_COLOR} text-base`}>{subtitle}</p>
-        <div className="mt-1 flex gap-20">
-          <div className={bigStatsContainer}>
-            <h6 className={classNames(minorHeadingClasses, 'pt-4 pb-1')}>
-              <Trans>Total raised</Trans>
-            </h6>
-            <div className={bigStats}>
-              <ETHAmount amount={parseWad(totalRaised)} />
-            </div>
-          </div>
-          <div className={bigStatsContainer}>
-            <h6 className={classNames(minorHeadingClasses, 'pt-4 pb-1')}>
-              <Trans>Total payments</Trans>
-            </h6>
-            <p className={bigStats}>{formattedNum(totalPayments)}</p>
-          </div>
+        <div className="mt-1 flex gap-20 pb-12">
+          <BigStat
+            label={<Trans>Total raised</Trans>}
+            value={<ETHAmount amount={parseWad(totalRaised)} />}
+          />
+          <BigStat
+            label={<Trans>Total payments</Trans>}
+            value={formattedNum(totalPayments) ?? '--'}
+          />
         </div>
-        <SectionHeader className="mt-2" text={t`Summary`} />
+        <SectionHeader className="mt-2" text={<Trans>Summary</Trans>} />
         <p className={`mt-2 ${CASE_STUDY_BODY_TEXT_COLOR}`}>{summary}</p>
         <Link href={projectUrl}>
           <a>
@@ -78,9 +70,12 @@ export function CaseStudiesHeader({
           </a>
         </Link>
 
-        <SectionHeader className="mt-10 mb-6" text={t`Project configuration`} />
+        <SectionHeader
+          className="mt-10 mb-6"
+          text={<Trans>Project configuration</Trans>}
+        />
         <CaseStudiesConfiguration {...fundingConfig} />
       </div>
-    </div>
+    </section>
   )
 }

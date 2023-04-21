@@ -20,7 +20,7 @@ export const AboutTheProtocolSection = () => {
           </Trans>
         </p>
 
-        <ul className="flex flex-col md:ml-4">
+        <ul className="mb-8 flex flex-col md:ml-4">
           {[t`Open source`, t`Community-owned`, t`100% transparent`].map(
             item => (
               <TickIconListItem text={item} key={item} />
@@ -28,7 +28,10 @@ export const AboutTheProtocolSection = () => {
           )}
         </ul>
 
-        <ExternalLink href="https://github.com/jbx-protocol/juice-interface">
+        <ExternalLink
+          className="block w-min"
+          href="https://github.com/jbx-protocol/juice-interface"
+        >
           <Button
             className="flex items-center gap-2 leading-none text-white"
             type="primary"

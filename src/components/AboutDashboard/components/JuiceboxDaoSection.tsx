@@ -8,7 +8,7 @@ export const JuiceboxDaoSection = () => {
     <SectionContainer className="md:flex md:items-center md:justify-between md:text-start">
       <div className="md:w-1/2">
         <h2 className="text-3xl md:text-4xl">Juicebox DAO</h2>
-        <p className="text-base text-grey-700 dark:text-slate-200 md:text-lg">
+        <p className="m-0 text-base text-grey-700 dark:text-slate-200 md:text-lg">
           <Trans>
             JuiceboxDAO is a community of passionate builders, creators, and
             innovators working together to push the boundaries of decentralized
@@ -18,7 +18,10 @@ export const JuiceboxDaoSection = () => {
           </Trans>
         </p>
 
-        <JoinOurDiscordButton />
+        {/* Hack to get around antd bullshit where element a extends past button */}
+        <div className="block w-min">
+          <JoinOurDiscordButton className="mt-8" />
+        </div>
       </div>
 
       <div className="mx-auto mt-14 w-full max-w-sm md:order-1 md:mx-0 md:mt-0">

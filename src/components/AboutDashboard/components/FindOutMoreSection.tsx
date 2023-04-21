@@ -17,13 +17,13 @@ export const FindOutMoreSection = () => {
         </Trans>
       </p>
 
-      <div className="flex w-full flex-col justify-center gap-3 md:flex-row">
+      <div className="mt-8 flex w-full flex-col justify-center gap-3 md:flex-row">
         <ExternalLink href="https://jbdao.org">
-          <Button size="large">
+          <Button className="w-full" size="large">
             <Trans>Visit jbdao.org</Trans>
           </Button>
         </ExternalLink>
-        <JoinOurDiscordButton className="w-full" />
+        <JoinOurDiscordButton className="w-full justify-center" />
       </div>
     </SectionContainer>
   )

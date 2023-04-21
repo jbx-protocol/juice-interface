@@ -3,7 +3,7 @@ import { Badge } from 'components/Badge'
 
 export const DefaultBadge = () => {
   return (
-    <Badge variant="info" upperCase>
+    <Badge variant="info" upperCase className="text-xs">
       <Trans>Default</Trans>
     </Badge>
   )

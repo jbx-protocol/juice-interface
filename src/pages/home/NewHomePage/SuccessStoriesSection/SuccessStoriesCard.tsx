@@ -1,32 +1,27 @@
 import { Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
+import { Badge } from 'components/Badge'
 import { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { ProjectTagName } from 'models/project-tags'
+import { ProjectTagName, projectTagText } from 'models/project-tags'
 import Link from 'next/link'
-import { twJoin } from 'tailwind-merge'
-import { PROJECT_CARD_BG, PROJECT_CARD_BORDER } from '../HomepageProjectCard'
+import {
+  PROJECT_CARD_BG,
+  PROJECT_CARD_BORDER,
+  PROJECT_CARD_BORDER_HOVER,
+} from '../HomepageProjectCard'
 
 function SuccessStoriesCardTag({ tag }: { tag: ProjectTagName }) {
-  const className =
-    tag === 'dao'
-      ? 'bg-split-50 text-split-800 dark:bg-split-950 dark:text-split-600'
-      : tag === 'fundraising'
-      ? 'bg-melon-50 text-melon-700 dark:bg-melon-950 dark:text-melon-600'
-      : 'bg-grape-50 text-grape-700 dark:bg-grape-950 dark:text-grape-300'
+  const text = projectTagText[tag]()
+  const badgeVariant =
+    tag === 'dao' ? 'danger' : tag === 'fundraising' ? 'success' : 'info'
 
   return (
-    <span
-      className={twJoin(
-        'flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium uppercase',
-        className,
-      )}
-      key={tag}
-    >
-      {tag}
-    </span>
+    <Badge variant={badgeVariant} className="text-xs">
+      {text}
+    </Badge>
   )
 }
 
@@ -45,7 +40,7 @@ export function SuccessStoriesCard({
       href={`/success-stories/${project.handle}`}
     >
       <a
-        className={`flex-shrink-0 overflow-hidden rounded-lg bg-white text-center transition-colors ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
+        className={`flex-shrink-0 overflow-hidden rounded-lg bg-white text-center transition-colors ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BORDER_HOVER} ${PROJECT_CARD_BG}`}
       >
         <div className="relative flex justify-center">
           <ul className="absolute top-3 left-3 flex gap-1">
@@ -56,7 +51,7 @@ export function SuccessStoriesCard({
             ))}
           </ul>
           <ProjectLogo
-            className="h-60 w-64 rounded-b-none"
+            className="h-60 w-64 rounded-none"
             uri={metadata?.logoUri}
             name={metadata?.name}
             projectId={project.projectId}

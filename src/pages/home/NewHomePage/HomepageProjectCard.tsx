@@ -8,8 +8,10 @@ import Link from 'next/link'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 export const PROJECT_CARD_BORDER =
-  'border shadow-sm border-solid border-grey-200 hover:border-grey-400 dark:border-slate-500 dark:hover:border-slate-400 transition-colors'
-export const PROJECT_CARD_BG = 'dark:bg-slate-700'
+  'rounded-lg border drop-shadow-[0_4px_14px_rgba(0,0,0,0.03)] border-solid border-grey-200 dark:border-slate-500'
+export const PROJECT_CARD_BORDER_HOVER =
+  'hover:border-grey-300 dark:hover:border-slate-400 hover:-translate-y-1 transition-shadow hover:drop-shadow-[0_6px_16px_rgba(0,0,0,0.06)] transition-transform transition-colors'
+export const PROJECT_CARD_BG = 'bg-white dark:bg-slate-700 overflow-hidden'
 
 function Statistic({
   name,
@@ -54,16 +56,16 @@ export function HomepageProjectCard({
       href={v2v3ProjectRoute(project)}
     >
       <a
-        className={`block w-[275px] flex-shrink-0 overflow-hidden rounded-lg ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BG}`}
+        className={`block w-[220px] flex-shrink-0 ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BORDER_HOVER} ${PROJECT_CARD_BG}`}
       >
         <ProjectLogo
-          className="h-[275px] w-full rounded-none object-cover"
+          className="h-[192px] w-full rounded-none object-cover"
           uri={metadata?.logoUri}
           name={metadata?.name}
           projectId={project.projectId}
         />
 
-        <div className="flex flex-col justify-between gap-4 rounded-lg p-5">
+        <div className="flex flex-col justify-between gap-4 rounded-lg p-4">
           {metadata && !isLoading ? (
             <div className="max-h-8 truncate font-heading text-lg font-medium text-grey-900 dark:text-slate-100 md:text-xl">
               {metadata.name}

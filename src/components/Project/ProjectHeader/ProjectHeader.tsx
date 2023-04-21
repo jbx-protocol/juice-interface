@@ -86,10 +86,7 @@ function ProjectSubheading({
                 type="vertical"
                 className="m-0 h-6 bg-grey-100 dark:bg-grey-900"
               />
-              <ProjectTagsList
-                tags={projectMetadata.tags}
-                tagClassName="text-xs"
-              />
+              <ProjectTagsList tags={projectMetadata.tags} />
             </>
           ) : null}
         </>

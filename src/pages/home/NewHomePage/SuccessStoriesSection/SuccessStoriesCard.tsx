@@ -28,9 +28,11 @@ function SuccessStoriesCardTag({ tag }: { tag: ProjectTagName }) {
 export function SuccessStoriesCard({
   project,
   tags,
+  name,
 }: {
   project: ProjectCardProject
   tags: ProjectTagName[]
+  name?: string
 }) {
   const { data: metadata } = useProjectMetadata(project?.metadataUri)
 
@@ -64,7 +66,7 @@ export function SuccessStoriesCard({
               className="mb-3 block overflow-hidden text-ellipsis whitespace-nowrap text-base font-medium text-black dark:text-slate-100"
               title={metadata.name}
             >
-              {metadata.name}
+              {name ?? metadata.name}
             </div>
           ) : (
             <Skeleton paragraph={false} title={{ width: 120 }} active />

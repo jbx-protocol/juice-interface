@@ -14,6 +14,7 @@ export const CASE_STUDY_PROJECTS: {
   pv: PV
   id: number
   tags: ProjectTagName[]
+  nameOverride?: string
 }[] = [
   {
     pv: PV_V1,
@@ -34,6 +35,7 @@ export const CASE_STUDY_PROJECTS: {
     pv: PV_V2,
     id: 311, // studiodao
     tags: ['nfts', 'dao'],
+    nameOverride: 'StudioDAO',
   },
 ]
 

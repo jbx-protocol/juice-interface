@@ -3056,6 +3056,9 @@ msgstr ""
 msgid "Socials"
 msgstr ""
 
+msgid "Software"
+msgstr ""
+
 msgid "Something has gone wrong, please contact support."
 msgstr ""
 

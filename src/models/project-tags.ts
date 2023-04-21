@@ -13,6 +13,7 @@ export const projectTagOptions = [
   'music',
   'nfts',
   'social',
+  'software',
 ] as const
 
 export const projectTagText: {
@@ -30,6 +31,7 @@ export const projectTagText: {
   music: () => t`Music`,
   nfts: () => t`NFT`,
   social: () => t`Social`,
+  software: () => t`Software`,
 }
 
 export type ProjectTagName = typeof projectTagOptions extends Readonly<

@@ -152,6 +152,7 @@
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^12.1.10",
     "@types/ethereum-block-by-date": "1.4.1",
+    "@types/form-data": "^2.5.0",
     "@types/formidable": "^2.0.5",
     "@types/he": "^1.2.0",
     "@types/jest": "^26.0.15",

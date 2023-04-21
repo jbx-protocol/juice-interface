@@ -8,7 +8,7 @@ export function MinorHeading({
   return (
     <div
       className={classNames(
-        'text-sm uppercase',
+        'text-sm font-medium uppercase',
         'text-grey-500 dark:text-slate-300',
         className,
       )}

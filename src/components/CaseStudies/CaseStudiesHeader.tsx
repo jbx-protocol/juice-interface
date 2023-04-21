@@ -44,12 +44,12 @@ export function CaseStudiesHeader({
         width={1440}
         height={256}
       />
-      <div className="m-auto max-w-xl">
+      <div className="m-auto max-w-xl text-base">
         <MinorHeading className="pt-10 pb-3">
           <Trans>Case study</Trans>
         </MinorHeading>
         <h1 className="font-heading text-4xl font-normal">{title}</h1>
-        <p className={`${CASE_STUDY_BODY_TEXT_COLOR} text-base`}>{subtitle}</p>
+        <p className={CASE_STUDY_BODY_TEXT_COLOR}>{subtitle}</p>
         <div className="mt-1 flex gap-20 pb-12">
           <BigStat
             label={<Trans>Total raised</Trans>}

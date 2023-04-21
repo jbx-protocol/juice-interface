@@ -1,5 +1,5 @@
-import { DownOutlined } from '@ant-design/icons'
 import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import PatchedExternalLink from 'components/fixes/PatchedExternalLink'
 import PatchedNextLink from 'components/fixes/PatchedNextLink'
 import useMobile from 'hooks/Mobile'
@@ -83,11 +83,11 @@ export const DropdownMenu = ({
             {({ open }) => (
               <>
                 <div className="text-primary flex w-full items-center justify-between gap-1 font-medium hover:text-bluebs-500 dark:hover:text-bluebs-300 md:justify-start md:text-sm">
-                  {heading}
+                  <span>{heading}</span>
                   {!hideArrow && (
-                    <DownOutlined
+                    <ChevronDownIcon
                       className={twMerge(
-                        'transition-transform duration-200',
+                        'h-5 w-5 transition-transform duration-200',
                         open ? 'rotate-180' : '',
                       )}
                     />

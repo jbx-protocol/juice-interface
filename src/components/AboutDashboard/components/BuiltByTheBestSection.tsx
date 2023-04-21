@@ -109,7 +109,7 @@ const ContributorCard: React.FC<{
         <div className="mx-auto mb-5 h-20 w-20 rounded-full bg-bluebs-400" />
       )}
       <TruncatedText
-        className="text-primary mb-2 text-base font-medium md:text-xl"
+        className="text-primary mb-2 font-heading text-base font-medium md:text-xl"
         text={name}
         placement={title ? 'top' : 'bottom'}
       />

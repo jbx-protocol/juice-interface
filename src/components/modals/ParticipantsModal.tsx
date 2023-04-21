@@ -75,7 +75,7 @@ export default function ParticipantsModal({
     querySubgraph({
       entity: 'participant',
       keys: [
-        'wallet',
+        'wallet { id }',
         'totalPaid',
         'lastPaidTimestamp',
         'balance',
@@ -176,13 +176,13 @@ export default function ParticipantsModal({
 
         {participants.map(p => (
           <div
-            className="border-b-1 mb-5 border border-smoke-200 pb-5 dark:border-grey-600"
+            className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
             key={p.id}
           >
             <div className="flex content-between justify-between">
               <div>
                 <div className="mr-2 leading-6">
-                  <FormattedAddress address={p.wallet} />
+                  <FormattedAddress address={p.wallet.id} />
                 </div>
                 <div className="text-xs text-grey-400 dark:text-slate-200">
                   <Trans>

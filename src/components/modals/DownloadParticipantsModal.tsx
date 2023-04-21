@@ -59,7 +59,7 @@ export function DownloadParticipantsModal({
       const participants = await querySubgraphExhaustive({
         entity: 'participant',
         keys: [
-          'wallet',
+          'wallet { id }',
           'totalPaid',
           'balance',
           'stakedBalance',
@@ -91,7 +91,7 @@ export function DownloadParticipantsModal({
         if (date.includes(',')) date = date.split(',')[1]
 
         rows.push([
-          p.wallet ?? '--',
+          p.wallet.id ?? '--',
           fromWad(p.balance),
           fromWad(p.stakedBalance),
           fromWad(p.erc20Balance),

@@ -120,6 +120,7 @@ export interface SGQueryOpts<E extends SGEntityName, K extends SGEntityKey<E>> {
   // `keys` can be a mix of the entity's keys or an entity specifier with its own keys
   keys: (
     | K
+    | `${string} { ${string} }`
     | {
         entity: K
         keys: string[] // hard to type accurate nested keys. All bets are off when this is used.

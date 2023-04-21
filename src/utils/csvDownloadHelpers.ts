@@ -29,7 +29,7 @@ export async function downloadParticipants(
       entity: 'participant',
       keys: [
         'lastPaidTimestamp',
-        'wallet',
+        'wallet { id }',
         'totalPaid',
         'totalPaidUSD',
         'balance',
@@ -65,7 +65,7 @@ export async function downloadParticipants(
 
       rows.push([
         date,
-        p.wallet,
+        p.wallet.id,
         fromWad(p.totalPaid),
         fromWad(p.totalPaidUSD),
         fromWad(p.balance),

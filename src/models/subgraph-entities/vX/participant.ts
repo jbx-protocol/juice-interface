@@ -1,16 +1,20 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { PV } from 'models/pv'
-import { parseBigNumberKeyVals } from 'utils/graph'
+import {
+  parseBigNumberKeyVals,
+  parseSubgraphEntitiesFromJson,
+} from 'utils/graph'
 
 import { Json, primitives } from '../../json'
 import {
   BaseProjectEntity,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
+import { Wallet } from './wallet'
 
 export interface Participant extends BaseProjectEntity {
   pv: PV
-  wallet: string
+  wallet: Wallet
   totalPaid: BigNumber
   totalPaidUSD: BigNumber
   balance: BigNumber
@@ -22,6 +26,7 @@ export interface Participant extends BaseProjectEntity {
 export const parseParticipantJson = (j: Json<Participant>): Participant => ({
   ...primitives(j),
   ...parseBaseProjectEntityJson(j),
+  ...parseSubgraphEntitiesFromJson(j, ['wallet']),
   ...parseBigNumberKeyVals(j, [
     'totalPaid',
     'totalPaidUSD',

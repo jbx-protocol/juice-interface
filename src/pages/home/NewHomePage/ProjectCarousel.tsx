@@ -1,50 +1,85 @@
-import { GraphResult } from 'hooks/SubgraphQuery'
-import { Project } from 'models/subgraph-entities/vX/project'
-import { classNames } from 'utils/classNames'
-import { HomepageProjectCard } from './HomepageProjectCard'
+import { A11y, Navigation } from 'swiper'
 
-export function ProjectCarousel({
-  projects,
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import { useState } from 'react'
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
+import { twJoin } from 'tailwind-merge'
+
+function PageButton({
   className,
+  iconComponent,
+  direction,
 }: {
-  projects: GraphResult<'project', keyof Project> | undefined
-  className?: string
+  className: string
+  iconComponent: JSX.Element
+  direction: 'prev' | 'next'
 }) {
-  // const [rankScrolledTo, setRankScrolledTo] = useState<number>(0)
+  const swiper = useSwiper()
 
-  // const decrementPosition = () => {
-  //   //scrollTo
-  //   setRankScrolledTo(rankScrolledTo - 1)
-  // }
-
-  // const incrementPosition = () => {
-  //   //scrollTo
-  //   setRankScrolledTo(rankScrolledTo + 1)
-  // }
-
-  if (!projects) return null
+  if (
+    (!swiper.allowSlideNext && direction === 'next') ||
+    (!swiper.allowSlidePrev && direction === 'prev')
+  )
+    return null
 
   return (
-    <div
-      className={classNames(
-        'mt-10 flex flex-nowrap justify-start gap-x-6 pb-6 [&>*:first-child]:pl-0 [&>*:last-child]:pr-0',
+    <button
+      className={twJoin(
+        'absolute top-1/3  z-10 flex h-14 w-14 items-center justify-center rounded-full border border-grey-300 bg-white text-grey-700 shadow-lg transition-transform hover:scale-105',
         className,
       )}
+      onClick={() =>
+        direction === 'next' ? swiper.slideNext() : swiper.slidePrev()
+      }
     >
-      {/* {rankScrolledTo !== 0 ? (
-        <ArrowIcon direction="left" onClick={decrementPosition} />
-      ) : null}
-      {rankScrolledTo !== TRENDING_PROJECTS_LIMIT ? (
-        <ArrowIcon direction="right" onClick={incrementPosition} />
-      ) : null} */}
-      {/* <div className="flex justify-between flex-nowrap"> */}
-      {projects?.map(project => (
-        <HomepageProjectCard
-          project={project}
-          key={`${project.id}_${project.pv}`}
+      {iconComponent}
+    </button>
+  )
+}
+
+export function ProjectCarousel({ items }: { items: JSX.Element[] }) {
+  const [canSwipePrev, setCanSwipePrev] = useState(false)
+  const [canSwipeNext, setCanSwipeNext] = useState(true)
+
+  return (
+    <Swiper
+      // install Swiper modules
+      modules={[Navigation, A11y]}
+      spaceBetween={32}
+      slidesPerView="auto"
+      freeMode
+      onProgress={(_, progress) => {
+        if (progress === 0) {
+          setCanSwipePrev(false)
+        } else {
+          setCanSwipePrev(true)
+        }
+
+        if (progress === 1) {
+          setCanSwipeNext(false)
+        } else {
+          setCanSwipeNext(true)
+        }
+      }}
+    >
+      {canSwipePrev && (
+        <PageButton
+          className="left-0"
+          iconComponent={<ChevronLeftIcon className="h-6 w-6" />}
+          direction="prev"
         />
+      )}
+      {canSwipeNext && (
+        <PageButton
+          className="right-0"
+          iconComponent={<ChevronRightIcon className="h-6 w-6" />}
+          direction="next"
+        />
+      )}
+
+      {items?.map((item, idx) => (
+        <SwiperSlide key={idx}>{item}</SwiperSlide>
       ))}
-      {/* </div> */}
-    </div>
+    </Swiper>
   )
 }

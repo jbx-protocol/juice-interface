@@ -51,7 +51,7 @@ export function SuccessStoriesCard({
             ))}
           </ul>
           <ProjectLogo
-            className="h-60 w-64 rounded-none"
+            className="h-60 w-[280px] rounded-none"
             uri={metadata?.logoUri}
             name={metadata?.name}
             projectId={project.projectId}

@@ -28,11 +28,11 @@ export function JuicyPicksSection() {
       {isXlBreakpoint ? (
         <ProjectCarousel projects={projects} />
       ) : (
-        <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-8 px-7">
+        <div className="mx-auto flex max-w-5xl flex-wrap justify-between gap-8 px-7 md:px-0">
           <div className="mx-auto flex-1">
             <SpotlightProjectCard project={projects[0]} />
           </div>
-          <div className="grid grid-cols-2 grid-rows-2 gap-8">
+          <div className="grid flex-1 grid-cols-2 grid-rows-2 gap-8">
             {projects.slice(1).map(project => (
               <HomepageProjectCard key={project.projectId} project={project} />
             ))}

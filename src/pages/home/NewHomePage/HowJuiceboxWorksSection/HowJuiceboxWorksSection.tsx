@@ -53,8 +53,8 @@ export function HowJuiceboxWorksSection() {
           </Trans>
         }
       />
-      <div className="my-0 mx-auto max-w-[1160px]">
-        <div className="justify-between gap-x-24 lg:flex">
+      <div className="my-0 mx-auto max-w-5xl">
+        <div className="justify-between gap-x-24 pb-16 lg:flex">
           <div className="flex flex-col gap-y-12">
             <StepItem
               header={t`1. Create your project`}

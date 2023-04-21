@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
+import Paragraph from 'components/Paragraph'
 import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
@@ -48,7 +49,7 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
         {metadata?.coverImageUri ? (
           <img
             src={ipfsUriToGatewayUrl(metadata.coverImageUri)}
-            className="h-72 w-full object-cover"
+            className="h-64 w-full object-cover"
             crossOrigin="anonymous"
             alt={`Cover image for ${metadata?.name ?? 'project'}`}
           />
@@ -59,9 +60,9 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
       <ProjectLogo
         uri={metadata?.logoUri}
         name={metadata?.name}
-        className="relative mx-5 mt-[-70px] h-44 w-44 border-4 border-solid border-white dark:border-slate-900"
+        className="relative mx-5 mt-[-86px] h-44 w-44 border-4 border-solid border-white dark:border-slate-900"
       />
-      <div className="p-5">
+      <div className="px-8 pb-8 pt-4">
         <div className="mb-5 font-heading text-3xl">{metadata?.name}</div>
         <div className="mb-5 flex gap-8">
           <Statistic
@@ -77,10 +78,15 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
             value={<span className="text-melon-600">{percentGainText}</span>}
           />
         </div>
-        <p className="mb-8 text-sm text-grey-600 dark:text-slate-200">
-          {metadata?.description}
+        <p className="mb-6 text-sm text-grey-600 dark:text-slate-200">
+          {metadata?.description ? (
+            <Paragraph
+              description={metadata.description}
+              characterLimit={200}
+            />
+          ) : null}
         </p>
-        <Button type="primary">
+        <Button>
           <Trans>Go to project</Trans>
           <ArrowRightIcon className="ml-2 inline h-4 w-4" />
         </Button>

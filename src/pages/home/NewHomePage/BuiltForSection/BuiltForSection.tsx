@@ -18,7 +18,7 @@ export function BuiltForSection() {
           </Trans>
         }
       />
-      <div className="flex flex-wrap gap-8">
+      <div className="flex flex-wrap justify-center gap-8">
         <BuiltForCard
           imageSrc={forThemeOption?.({
             dark: '/assets/images/dao_od.png',

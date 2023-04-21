@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
+import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectTrendingPercentageIncrease } from 'hooks/Projects'
@@ -47,7 +48,7 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
         {metadata?.coverImageUri ? (
           <img
             src={ipfsUriToGatewayUrl(metadata.coverImageUri)}
-            className="h-64 w-full object-cover"
+            className="h-72 w-full object-cover"
             crossOrigin="anonymous"
             alt={`Cover image for ${metadata?.name ?? 'project'}`}
           />
@@ -55,6 +56,11 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
           <div className="h-64 w-full bg-grey-200 dark:bg-slate-800" />
         )}
       </div>
+      <ProjectLogo
+        uri={metadata?.logoUri}
+        name={metadata?.name}
+        className="relative mx-5 mt-[-70px] h-44 w-44 border-4 border-solid border-white dark:border-slate-900"
+      />
       <div className="p-5">
         <div className="mb-5 font-heading text-3xl">{metadata?.name}</div>
         <div className="mb-5 flex gap-8">

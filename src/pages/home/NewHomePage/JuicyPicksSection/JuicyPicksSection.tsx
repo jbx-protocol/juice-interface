@@ -28,7 +28,7 @@ export function JuicyPicksSection() {
       {isXlBreakpoint ? (
         <ProjectCarousel projects={projects} />
       ) : (
-        <div className="mx-auto flex max-w-7xl flex-wrap gap-8 px-7">
+        <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-8 px-7">
           <div className="mx-auto flex-1">
             <SpotlightProjectCard project={projects[0]} />
           </div>

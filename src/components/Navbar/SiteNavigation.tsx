@@ -39,7 +39,7 @@ export default function SiteNavigation() {
             >
               <Popover.Panel
                 static={!isMobile}
-                className="stroke-tertiar flex flex-col border-b shadow-lg outline-none md:inline-flex md:max-h-full md:w-full md:min-w-0 md:flex-row md:items-center md:justify-between md:gap-6 md:overflow-y-visible md:border-b-0 md:shadow-none"
+                className="stroke-tertiar flex flex-col shadow-lg outline-none md:inline-flex md:max-h-full md:w-full md:min-w-0 md:flex-row md:items-center md:justify-between md:gap-6 md:overflow-y-visible md:border-b-0 md:shadow-none"
                 style={{
                   maxHeight: isMobile ? 'calc(100vh - 5rem)' : 'initial',
                   overflowY: isMobile ? 'auto' : 'visible',

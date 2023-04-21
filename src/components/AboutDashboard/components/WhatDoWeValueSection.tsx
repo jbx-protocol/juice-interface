@@ -61,7 +61,7 @@ const ValueBox = ({
         className,
       )}
     >
-      <div className="text-2xl font-medium">{title}</div>
+      <div className="font-heading text-2xl font-medium">{title}</div>
       <div className="text-sm">{description}</div>
     </div>
   )

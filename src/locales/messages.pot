@@ -818,7 +818,7 @@ msgstr ""
 msgid "ConstitutionDAO raised over $46 million in less than a week with over 19,000 payments made to the project. They were the second highest bidder on Sotheby’s Lot 1787 and were unfortunately outbid by hedge fund billionaire Ken Griffin. Shortly following the auction, the core team set the Redemption Rate to 100% to allow all supporters to redeem their tokens and get their money back."
 msgstr ""
 
-msgid "ConstitutionDAO was a single purpose acquisition DAO that raised over $40M in an attempt to buy one of the last thirteen remaining copies of the U.S. Constitution at Sotheby’s on November 18th, 2021. What started as a joke in a group chat became a viral internet sensation. Thousands were onboarded into crypto as a result and the fundraiser gave the world a glimpse of the power of blockchain technology, decentralization, and new forms of governance."
+msgid "ConstitutionDAO was a single purpose acquisition DAO that raised over $46 million in an attempt to buy one of the thirteen remaining copies of the U.S. Constitution at Sotheby’s on November 18th, 2021. What started as a joke in a group chat soon became a viral sensation with tens of thousands joining the Discord and contributing ETH to the project. Through their campaign, ConstitutionDAO gave the world a glimpse of the power of blockchains, decentralization, and community ownership."
 msgstr ""
 
 msgid "Contact"

@@ -31,13 +31,13 @@ export default function ConstitutionDAOPage() {
           summary={
             <Trans>
               ConstitutionDAO was a single purpose acquisition DAO that raised
-              over $40M in an attempt to buy one of the last thirteen remaining
-              copies of the U.S. Constitution at Sotheby’s on November 18th,
-              2021. What started as a joke in a group chat became a viral
-              internet sensation. Thousands were onboarded into crypto as a
-              result and the fundraiser gave the world a glimpse of the power of
-              blockchain technology, decentralization, and new forms of
-              governance.
+              over $46 million in an attempt to buy one of the thirteen
+              remaining copies of the U.S. Constitution at Sotheby’s on November
+              18th, 2021. What started as a joke in a group chat soon became a
+              viral sensation with tens of thousands joining the Discord and
+              contributing ETH to the project. Through their campaign,
+              ConstitutionDAO gave the world a glimpse of the power of
+              blockchains, decentralization, and community ownership.
             </Trans>
           }
           projectUrl="/p/constitutiondao"

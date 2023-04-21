@@ -26,7 +26,11 @@ export function JuicyPicksSection() {
       />
 
       {isXlBreakpoint ? (
-        <ProjectCarousel projects={projects} />
+        <ProjectCarousel
+          items={projects.map(p => (
+            <HomepageProjectCard key={p.projectId} project={p} />
+          ))}
+        />
       ) : (
         <div className="mx-auto flex max-w-5xl flex-wrap justify-between gap-8 px-7 md:px-0">
           <div className="mx-auto flex-1">

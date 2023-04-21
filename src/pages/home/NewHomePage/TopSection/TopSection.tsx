@@ -6,6 +6,7 @@ import { XLButton } from 'components/XLButton'
 import { useTrendingProjects } from 'hooks/Projects'
 import { ProjectTagName } from 'models/project-tags'
 import Link from 'next/link'
+import { HomepageProjectCard } from '../HomepageProjectCard'
 import { ProjectCarousel } from '../ProjectCarousel'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
@@ -69,7 +70,13 @@ export function TopSection() {
           </a>
         </Link>
       </div>
-      <ProjectCarousel projects={trendingProjects} />
+      {trendingProjects ? (
+        <ProjectCarousel
+          items={trendingProjects?.map(p => (
+            <HomepageProjectCard project={p} key={p.id} />
+          ))}
+        />
+      ) : null}
     </SectionContainer>
   )
 }

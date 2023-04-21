@@ -12,9 +12,9 @@ export function BuiltForCard({
   subheading: string | JSX.Element
 }) {
   return (
-    <div className="flex w-[280px] flex-col items-center">
+    <div className="flex flex-col items-center">
       <Image src={imageSrc ?? ''} alt={imageAlt} width={180} height={180} />
-      <h3 className="text-primary mt-4 text-2xl">{heading}</h3>
+      <h3 className="text-primary mt-4 text-center text-2xl">{heading}</h3>
       <p className="text-center text-base text-grey-700 dark:text-slate-200">
         {subheading}
       </p>

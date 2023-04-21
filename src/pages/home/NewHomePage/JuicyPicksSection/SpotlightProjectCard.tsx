@@ -78,14 +78,15 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
             value={<span className="text-melon-600">{percentGainText}</span>}
           />
         </div>
-        <p className="mb-6 text-sm text-grey-600 dark:text-slate-200">
+        <div className="mb-6">
           {metadata?.description ? (
             <Paragraph
               description={metadata.description}
               characterLimit={200}
+              className="text-sm text-grey-600 dark:text-slate-200"
             />
           ) : null}
-        </p>
+        </div>
         <Button>
           <Trans>Go to project</Trans>
           <ArrowRightIcon className="ml-2 inline h-4 w-4" />

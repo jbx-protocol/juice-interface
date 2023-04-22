@@ -92,7 +92,7 @@ export function HowJuiceboxWorksSection() {
               </Trans>
             </StepItem>
           </div>
-          <div className="text-center lg:min-w-[50%]">
+          <div className="mx-auto mt-20 w-full max-w-xs text-center lg:mt-0">
             <Image
               width={292}
               height={564}

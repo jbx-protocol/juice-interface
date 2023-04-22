@@ -22,13 +22,15 @@ export const DropdownMenu = ({
       >
         {({ open }) => (
           <>
-            {heading}
-            <DownOutlined
-              className={twMerge(
-                'transition-transform duration-200',
-                open ? 'rotate-180' : '',
-              )}
-            />
+            <div className="text-primary flex items-center gap-1 text-sm font-medium hover:text-bluebs-500 dark:hover:text-bluebs-300">
+              {heading}
+              <DownOutlined
+                className={twMerge(
+                  'transition-transform duration-200',
+                  open ? 'rotate-180' : '',
+                )}
+              />
+            </div>
           </>
         )}
       </Menu.Button>

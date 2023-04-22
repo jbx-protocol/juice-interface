@@ -18,9 +18,9 @@ export default function SiteNavigation() {
   const { isConnected, disconnect } = useWallet()
 
   return (
-    <div className="fixed z-10 w-full md:static md:px-4 xl:px-12">
+    <div className="fixed z-10 w-full md:static md:px-20">
       <Menu
-        className="bg-l0 p-4 md:flex md:items-center md:gap-10 md:px-0 md:py-5"
+        className="bg-l0 p-4 md:flex md:items-center md:gap-10 md:px-0 md:py-6"
         as="nav"
       >
         <div className="flex items-center justify-between md:inline-flex">
@@ -32,7 +32,7 @@ export default function SiteNavigation() {
           className="stroke-tertiary flex flex-col gap-5 border-b pt-8 pb-4 md:inline-flex md:w-full md:min-w-0 md:flex-row md:items-center md:justify-between md:border-b-0 md:p-0"
         >
           {/* Main site links */}
-          <div className="flex flex-col gap-4 px-6 md:min-w-0 md:flex-shrink md:flex-row md:gap-10 md:px-0">
+          <div className="flex flex-col gap-4 px-6 md:min-w-0 md:flex-shrink md:flex-row md:gap-8 md:px-0">
             {isMobile && (
               <Menu.Item>
                 <PatchedNextLink className="text-primary font-medium" href="/">
@@ -42,7 +42,7 @@ export default function SiteNavigation() {
             )}
             <Menu.Item>
               <PatchedNextLink
-                className="text-primary font-medium"
+                className="text-primary font-medium md:text-sm"
                 href="/projects"
               >
                 <Trans>Explore</Trans>
@@ -51,7 +51,7 @@ export default function SiteNavigation() {
             <ResourcesMenu />
             <Menu.Item>
               <PatchedNextLink
-                className="text-primary font-medium md:min-w-0 md:max-w-xs md:truncate"
+                className="text-primary font-medium md:min-w-0 md:max-w-xs md:truncate md:text-sm"
                 href="/create"
               >
                 <Trans>Create a project</Trans>
@@ -60,22 +60,18 @@ export default function SiteNavigation() {
           </div>
 
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6">
-            {/* Selectors and toggles */}
             <div className="flex flex-col gap-4 px-6 md:flex-row md:items-center md:gap-6 md:px-0">
+              <QuickProjectSearch className="hidden md:inline" />
               <NavLanguageSelector />
               {isMobile ? <ThemePickerMobile /> : <ThemePicker />}
             </div>
 
-            {/* Wallet interaction */}
-            <div className="flex flex-col gap-2 md:items-center">
-              <WalletButton />
-              {isConnected && (
-                <Button className="md:hidden" onClick={disconnect} block>
-                  <Trans>Disconnect</Trans>
-                </Button>
-              )}
-            </div>
-            <QuickProjectSearch className="hidden xl:inline" />
+            <WalletButton />
+            {isConnected && (
+              <Button className="md:hidden" onClick={disconnect} block>
+                <Trans>Disconnect</Trans>
+              </Button>
+            )}
           </div>
         </Menu.Items>
       </Menu>

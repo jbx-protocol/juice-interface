@@ -2,9 +2,9 @@ import { Menu } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import QuickProjectSearch from 'components/QuickProjectSearch'
+import PatchedNextLink from 'components/fixes/PatchedNextLink'
 import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
-import Link from 'next/link'
 import { DropdownMenu } from './components/DropdownMenu'
 import { HamburgerMenuButton } from './components/HamburgerMenuButton'
 import { LogoHomeButton } from './components/LogoHomeButton'
@@ -35,54 +35,44 @@ export default function SiteNavigation() {
           <div className="flex flex-col gap-4 px-6 md:min-w-0 md:flex-shrink md:flex-row md:gap-10 md:px-0">
             {isMobile && (
               <Menu.Item>
-                <Link href="/">
-                  <a className="text-primary font-medium">
-                    <Trans>Home</Trans>
-                  </a>
-                </Link>
+                <PatchedNextLink className="text-primary font-medium" href="/">
+                  <Trans>Home</Trans>
+                </PatchedNextLink>
               </Menu.Item>
             )}
             <Menu.Item>
-              <Link href="/projects">
-                <a className="text-primary font-medium">
-                  <Trans>Explore</Trans>
-                </a>
-              </Link>
+              <PatchedNextLink
+                className="text-primary font-medium"
+                href="/projects"
+              >
+                <Trans>Explore</Trans>
+              </PatchedNextLink>
             </Menu.Item>
+            <ResourcesMenu />
             <Menu.Item>
-              <ResourcesMenu />
-            </Menu.Item>
-            <Menu.Item>
-              <Link href="/create">
-                <a className="text-primary font-medium md:min-w-0 md:max-w-xs md:truncate">
-                  <Trans>Create a project</Trans>
-                </a>
-              </Link>
+              <PatchedNextLink
+                className="text-primary font-medium md:min-w-0 md:max-w-xs md:truncate"
+                href="/create"
+              >
+                <Trans>Create a project</Trans>
+              </PatchedNextLink>
             </Menu.Item>
           </div>
 
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6">
             {/* Selectors and toggles */}
             <div className="flex flex-col gap-4 px-6 md:flex-row md:items-center md:gap-6 md:px-0">
-              <Menu.Item>
-                <NavLanguageSelector />
-              </Menu.Item>
-              <Menu.Item>
-                {isMobile ? <ThemePickerMobile /> : <ThemePicker />}
-              </Menu.Item>
+              <NavLanguageSelector />
+              {isMobile ? <ThemePickerMobile /> : <ThemePicker />}
             </div>
 
             {/* Wallet interaction */}
             <div className="flex flex-col gap-2 md:items-center">
-              <Menu.Item>
-                <WalletButton />
-              </Menu.Item>
+              <WalletButton />
               {isConnected && (
-                <Menu.Item>
-                  <Button className="md:hidden" onClick={disconnect} block>
-                    <Trans>Disconnect</Trans>
-                  </Button>
-                </Menu.Item>
+                <Button className="md:hidden" onClick={disconnect} block>
+                  <Trans>Disconnect</Trans>
+                </Button>
               )}
             </div>
             <QuickProjectSearch className="hidden xl:inline" />

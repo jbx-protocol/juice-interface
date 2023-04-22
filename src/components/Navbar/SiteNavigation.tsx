@@ -1,10 +1,8 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
-import { Button } from 'antd'
 import QuickProjectSearch from 'components/QuickProjectSearch'
 import PatchedNextLink from 'components/fixes/PatchedNextLink'
 import useMobile from 'hooks/Mobile'
-import { useWallet } from 'hooks/Wallet'
 import { Fragment } from 'react'
 import { DropdownMenu } from './components/DropdownMenu'
 import { MobileMenuButton } from './components/HamburgerMenuButton'
@@ -15,17 +13,16 @@ import WalletButton from './components/Wallet/WalletButton'
 
 export default function SiteNavigation() {
   const isMobile = useMobile()
-  const { isConnected, disconnect } = useWallet()
 
   return (
     <div className="fixed z-10 w-full md:static md:px-20">
       <Menu
-        className="bg-l0 p-4 md:flex md:items-center md:gap-10 md:px-0 md:py-6"
+        className="bg-l0 md:flex md:items-center md:gap-12 md:px-0 md:py-6"
         as="nav"
       >
         {({ open }) => (
           <>
-            <div className="flex items-center justify-between md:inline-flex">
+            <div className="flex items-center justify-between py-6 px-5 md:inline-flex md:py-0">
               <LogoHomeButton />
               <MobileMenuButton className="md:hidden" open={open} />
             </div>
@@ -42,52 +39,51 @@ export default function SiteNavigation() {
             >
               <Menu.Items
                 static={!isMobile}
-                className="stroke-tertiary flex flex-col gap-5 border-b pt-8 pb-4 md:inline-flex md:w-full md:min-w-0 md:flex-row md:items-center md:justify-between md:border-b-0 md:p-0"
+                className="stroke-tertiary flex flex-col border-b shadow-lg outline-none md:inline-flex md:w-full md:min-w-0 md:flex-row md:items-center md:justify-between md:gap-6 md:border-b-0 md:shadow-none"
               >
-                {/* Main site links */}
-                <div className="flex flex-col gap-4 px-6 md:min-w-0 md:flex-shrink md:flex-row md:gap-8 md:px-0">
-                  {isMobile && (
+                <div className="stroke-secondary flex flex-col gap-8 border-y py-9 md:w-full md:flex-shrink md:flex-row md:justify-between md:border-y-0 md:py-0">
+                  {/* Main site links */}
+                  <div className="flex flex-col gap-8 px-4 md:min-w-0 md:flex-shrink md:flex-row md:gap-8 md:px-0">
+                    {isMobile && (
+                      <Menu.Item>
+                        <PatchedNextLink
+                          className="text-primary text-base font-medium md:text-sm"
+                          href="/"
+                        >
+                          <Trans>Home</Trans>
+                        </PatchedNextLink>
+                      </Menu.Item>
+                    )}
                     <Menu.Item>
                       <PatchedNextLink
-                        className="text-primary font-medium"
-                        href="/"
+                        className="text-primary text-base font-medium md:text-sm"
+                        href="/projects"
                       >
-                        <Trans>Home</Trans>
+                        <Trans>Explore</Trans>
                       </PatchedNextLink>
                     </Menu.Item>
-                  )}
-                  <Menu.Item>
-                    <PatchedNextLink
-                      className="text-primary font-medium md:text-sm"
-                      href="/projects"
-                    >
-                      <Trans>Explore</Trans>
-                    </PatchedNextLink>
-                  </Menu.Item>
-                  <ResourcesMenu />
-                  <Menu.Item>
-                    <PatchedNextLink
-                      className="text-primary font-medium md:min-w-0 md:max-w-xs md:truncate md:text-sm"
-                      href="/create"
-                    >
-                      <Trans>Create a project</Trans>
-                    </PatchedNextLink>
-                  </Menu.Item>
-                </div>
-
-                <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6">
-                  <div className="flex flex-col gap-4 px-6 md:flex-row md:items-center md:gap-6 md:px-0">
-                    <NavLanguageSelector className="md:order-2" />
-                    <ThemePicker className="md:order-3" />
-                    <QuickProjectSearch className="md:order-1" />
+                    <ResourcesMenu />
+                    <Menu.Item>
+                      <PatchedNextLink
+                        className="text-primary text-base font-medium md:min-w-0 md:max-w-xs md:truncate md:text-sm"
+                        href="/create"
+                      >
+                        <Trans>Create a project</Trans>
+                      </PatchedNextLink>
+                    </Menu.Item>
                   </div>
 
+                  <div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-6">
+                    <div className="flex flex-col gap-8 px-6 md:flex-row md:items-center md:gap-6 md:px-0">
+                      <NavLanguageSelector className="md:order-2" />
+                      <ThemePicker className="md:order-3" />
+                      <QuickProjectSearch className="md:order-1" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="py-6 px-5 md:p-0">
                   <WalletButton />
-                  {isConnected && (
-                    <Button className="md:hidden" onClick={disconnect} block>
-                      <Trans>Disconnect</Trans>
-                    </Button>
-                  )}
                 </div>
               </Menu.Items>
             </Transition>
@@ -130,5 +126,9 @@ const resourcesMenuItems = [
 ]
 
 const ResourcesMenu = () => (
-  <DropdownMenu items={resourcesMenuItems} heading={t`Resources`} />
+  <DropdownMenu
+    className="text-base md:text-sm"
+    items={resourcesMenuItems}
+    heading={t`Resources`}
+  />
 )

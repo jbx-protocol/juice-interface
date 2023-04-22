@@ -39,7 +39,7 @@ export function FaqSection() {
                   <Disclosure.Button
                     className={twMerge(
                       'text-primary flex w-full items-center justify-between gap-6 text-start text-lg font-medium outline-none',
-                      isOpen ? 'pb-2 pt-8' : 'py-8',
+                      isOpen ? 'pb-4 pt-8' : 'py-8',
                     )}
                     onClick={toggleDisclosure(id)}
                   >

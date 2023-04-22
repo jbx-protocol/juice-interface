@@ -4,17 +4,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { SectionContainer } from '../SectionContainer'
 import { TickIconList } from './TickIconList'
-import bannyAndCoins from '/public/assets/images/juice-homepage-hero.webp'
 
 export function ConclusionSection() {
   return (
-    <SectionContainer>
+    <SectionContainer className="max-w-7xl">
       <Row gutter={100} className="flex-col-reverse md:flex-row">
         <Col xs={24} md={12} className="pt-10 md:pt-0">
-          <Image
-            src={bannyAndCoins}
-            alt={'Banny leaning on a stack of ETH coins'}
-          />
+          <div className="mx-auto w-full max-w-sm">
+            <Image
+              src={'/assets/images/juice-homepage-hero.webp'}
+              alt={'Banny leaning on a stack of ETH coins'}
+              width={558}
+              height={496}
+            />
+          </div>
         </Col>
         <Col xs={24} md={12}>
           <div className="flex h-full flex-col justify-center">

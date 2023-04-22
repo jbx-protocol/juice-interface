@@ -80,7 +80,7 @@ export function WhyJuiceboxSection() {
           heading={t`Flexible`}
           content={
             <Trans>
-              Whether you’re building a boutique crypto law firm or the next
+              Whether you're building a boutique crypto law firm or the next
               mega-fundraiser, Juicebox is customizable to match your needs.
             </Trans>
           }

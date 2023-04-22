@@ -45,7 +45,7 @@ export default function StudioDAOPage() {
           currentProject={studioDAOSuccessStoryProject}
         >
           <p>
-            StudioDAO’s project settings are designed to maximize trust with
+            StudioDAO's project settings are designed to maximize trust with
             locked 28-day cycles, limited payouts, and a 3-day edit deadline.
             20% of newly minted tokens are reserved for the DAO wallet and
             issuance will decrease by 5% each cycle. StudioDAO also leverages
@@ -68,7 +68,7 @@ export default function StudioDAOPage() {
               ETH and is gearing up to launch their first film *Ticket to
               Space*, the first DAO documentary about MoonDAO sending DAO member
               Yan Kejun to space on a Blue Origin rocket. MoonDAO has recently
-              voted to donate $100,000 to help fund the film’s production. To
+              voted to donate $100,000 to help fund the film's production. To
               learn more about the Ticket to Space documentary, listen to
               episode 22 of the Juicebox podcast featuring a roundtable
               discussion with director Fernando Urdapilleta, producer Susie
@@ -93,7 +93,7 @@ export default function StudioDAOPage() {
               market currently valued at two trillion dollars, StudioDAO founder
               Kenny Miller can see a “clear scenario for a decentralized studio
               to do one billion dollars of production 2-3 years from now.” To
-              learn more about Kenny’s vision for StudioDAO, listen to episode 9
+              learn more about Kenny's vision for StudioDAO, listen to episode 9
               of the Juicecast:{' '}
               <ExternalLink href="https://podcast.juicebox.money">
                 https://podcast.juicebox.money

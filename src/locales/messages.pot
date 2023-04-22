@@ -95,7 +95,7 @@ msgstr ""
 msgid "<0/> <1>reserved</1>"
 msgstr ""
 
-msgid "<0/> Your project’s rules cannot be edited during the first cycle."
+msgid "<0/> Your project's rules cannot be edited during the first cycle."
 msgstr ""
 
 msgid "<0/> claimable"
@@ -815,10 +815,10 @@ msgstr ""
 msgid "Connected wallet not authorized"
 msgstr ""
 
-msgid "ConstitutionDAO raised over $46 million in less than a week with over 19,000 payments made to the project. They were the second highest bidder on Sotheby’s Lot 1787 and were unfortunately outbid by hedge fund billionaire Ken Griffin. Shortly following the auction, the core team set the Redemption Rate to 100% to allow all supporters to redeem their tokens and get their money back."
+msgid "ConstitutionDAO raised over $46 million in less than a week with over 19,000 payments made to the project. They were the second highest bidder on Sotheby's Lot 1787 and were unfortunately outbid by hedge fund billionaire Ken Griffin. Shortly following the auction, the core team set the Redemption Rate to 100% to allow all supporters to redeem their tokens and get their money back."
 msgstr ""
 
-msgid "ConstitutionDAO was a single purpose acquisition DAO that raised over $46 million in an attempt to buy one of the thirteen remaining copies of the U.S. Constitution at Sotheby’s on November 18th, 2021. What started as a joke in a group chat soon became a viral sensation with tens of thousands joining the Discord and contributing ETH to the project. Through their campaign, ConstitutionDAO gave the world a glimpse of the power of blockchains, decentralization, and community ownership."
+msgid "ConstitutionDAO was a single purpose acquisition DAO that raised over $46 million in an attempt to buy one of the thirteen remaining copies of the U.S. Constitution at Sotheby's on November 18th, 2021. What started as a joke in a group chat soon became a viral sensation with tens of thousands joining the Discord and contributing ETH to the project. Through their campaign, ConstitutionDAO gave the world a glimpse of the power of blockchains, decentralization, and community ownership."
 msgstr ""
 
 msgid "Contact"
@@ -1514,7 +1514,7 @@ msgstr ""
 msgid "Get notified when a contributor supports this project"
 msgstr ""
 
-msgid "Get paid in ETH, program your own payouts, token issuance, and redemptions to easily run your treasury completely on-chain — as your community grows, you can update your treasury’s rules to grow with it."
+msgid "Get paid in ETH, program your own payouts, token issuance, and redemptions to easily run your treasury completely on-chain — as your community grows, you can update your treasury's rules to grow with it."
 msgstr ""
 
 msgid "GitHub"
@@ -1742,7 +1742,7 @@ msgstr ""
 msgid "Issue as ERC-20"
 msgstr ""
 
-msgid "Issue tokens or NFTs to your supporters and use them for governance, token-gated websites, or redemptions. With flexible token issuance and redemption, your project automatically scales to meet your supporters’ demand."
+msgid "Issue tokens or NFTs to your supporters and use them for governance, token-gated websites, or redemptions. With flexible token issuance and redemption, your project automatically scales to meet your supporters' demand."
 msgstr ""
 
 msgid "It's fast, powerful and easy to use. Launch your project and get funded in minutes."
@@ -1802,7 +1802,7 @@ msgstr ""
 msgid "Juicebox is reliable, open-source, audited, and has been battle-tested by more than 1,000 projects raising over 50,000 ETH."
 msgstr ""
 
-msgid "Juicebox is the best-in-class tool for crowdfunding your project with ETH – build your supporters’ trust by transparently setting up payouts, token issuance, redemption, and other rules in advance."
+msgid "Juicebox is the best-in-class tool for crowdfunding your project with ETH – build your supporters' trust by transparently setting up payouts, token issuance, redemption, and other rules in advance."
 msgstr ""
 
 msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks </2>of crypto fundraising!"
@@ -3332,7 +3332,7 @@ msgstr ""
 msgid "The project is using an unknown contract for its edit deadline."
 msgstr ""
 
-msgid "The project owner can edit the next cycle’s rules at any time."
+msgid "The project owner can edit the next cycle's rules at any time."
 msgstr ""
 
 msgid "The project owner can edit this project's rules and start new cycles at any time."
@@ -3347,7 +3347,7 @@ msgstr ""
 msgid "The project owner is the only reserved token recipient. Any reserved tokens sent out this cycle will go to them."
 msgstr ""
 
-msgid "The project’s owner can edit the project's rules and start new cycles at any time."
+msgid "The project's owner can edit the project's rules and start new cycles at any time."
 msgstr ""
 
 msgid "The redemption rate determines how token holders can burn their tokens to reclaim a portion of the ETH not needed for payouts."
@@ -3908,7 +3908,7 @@ msgstr ""
 msgid "What's Juicebox?"
 msgstr ""
 
-msgid "Whatever you’re building or creating — get it launched and funded on Juicebox."
+msgid "Whatever you're building or creating — get it launched and funded on Juicebox."
 msgstr ""
 
 msgid "When checked, payments made through this address will mint the project's ERC-20 tokens. Payments will incur slightly higher gas fees. When unchecked, the Juicebox protocol will internally track the beneficiary's tokens, and they can claim their ERC-20 tokens at any time."
@@ -3935,7 +3935,7 @@ msgstr ""
 msgid "Where to Contact You"
 msgstr ""
 
-msgid "Whether you’re building a boutique crypto law firm or the next mega-fundraiser, Juicebox is customizable to match your needs."
+msgid "Whether you're building a boutique crypto law firm or the next mega-fundraiser, Juicebox is customizable to match your needs."
 msgstr ""
 
 msgid "While enabled, NFTs can be minted when this project receives a payment."
@@ -3983,7 +3983,7 @@ msgstr ""
 msgid "Will be rounded to <0/>{0}"
 msgstr ""
 
-msgid "With an auction estimate of $10-15 million at Sotheby’s, ConstitutionDAO wanted to raise as much as possible and decided to set Payouts to Unlimited. In order to build trust with potential supporters, the campaign set up a 9/13 multisig with core team members and well-known figures in web3. Reserved Rate was also set to 0 to guarantee that everyone had equal access to PEOPLE tokens which would govern the document if they won the auction."
+msgid "With an auction estimate of $10-15 million at Sotheby's, ConstitutionDAO wanted to raise as much as possible and decided to set Payouts to Unlimited. In order to build trust with potential supporters, the campaign set up a 9/13 multisig with core team members and well-known figures in web3. Reserved Rate was also set to 0 to guarantee that everyone had equal access to PEOPLE tokens which would govern the document if they won the auction."
 msgstr ""
 
 msgid "With unlocked cycles, the project's owner can edit the project's rules and start a new cycle (Cycle #2) at any time. <0>Learn more.</0>"
@@ -4145,6 +4145,9 @@ msgstr ""
 msgid "Your project's current cycle has no duration. Edits you make below will take effect immediately."
 msgstr ""
 
+msgid "Your project's first cycle will start on <0>{0} at {1}</0>. Your project will be visible on <1>juicebox.money</1> once you finish setting your project up, but supporters won't be able to pay or interact with it until the first cycle begins."
+msgstr ""
+
 msgid "Your project's rules are locked in place for the duration of each locked cycle. You will also gain access to:"
 msgstr ""
 
@@ -4155,9 +4158,6 @@ msgid "Your project's tokens are not ERC-20 tokens by default. After you create 
 msgstr ""
 
 msgid "Your project's tokens will become <0>{discountRatePercent}%</0> more expensive each cycle."
-msgstr ""
-
-msgid "Your project’s first cycle will start on <0>{0} at {1}</0>. Your project will be visible on <1>juicebox.money</1> once you finish setting your project up, but supporters won't be able to pay or interact with it until the first cycle begins."
 msgstr ""
 
 msgid "Your rules are locked during a cycle. With no duration, edits can be made at any time."

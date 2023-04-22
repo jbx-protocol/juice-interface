@@ -63,7 +63,7 @@ export function HowJuiceboxWorksSection() {
             >
               <Trans>
                 Juicebox is the best-in-class tool for crowdfunding your project
-                with ETH – build your supporters’ trust by transparently setting
+                with ETH – build your supporters' trust by transparently setting
                 up payouts, token issuance, redemption, and other rules in
                 advance.
               </Trans>
@@ -76,7 +76,7 @@ export function HowJuiceboxWorksSection() {
               <Trans>
                 Get paid in ETH, program your own payouts, token issuance, and
                 redemptions to easily run your treasury completely on-chain — as
-                your community grows, you can update your treasury’s rules to
+                your community grows, you can update your treasury's rules to
                 grow with it.
               </Trans>
             </StepItem>
@@ -88,7 +88,7 @@ export function HowJuiceboxWorksSection() {
                 Issue tokens or NFTs to your supporters and use them for
                 governance, token-gated websites, or redemptions. With flexible
                 token issuance and redemption, your project automatically scales
-                to meet your supporters’ demand.
+                to meet your supporters' demand.
               </Trans>
             </StepItem>
           </div>

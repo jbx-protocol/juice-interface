@@ -46,13 +46,13 @@ function PrivacyPolicy() {
       </p>
       <h2 className="text-2xl">Hotjar</h2>
       <p>
-        We use Hotjar in order to better understand our users’ needs and to
+        We use Hotjar in order to better understand our users' needs and to
         optimize this service and experience. Hotjar is a technology service
-        that helps us better understand our users’ experience (e.g. how much
+        that helps us better understand our users' experience (e.g. how much
         time they spend on which pages, which links they choose to click, what
-        users do and don’t like, etc.) and this enables us to build and maintain
+        users do and don't like, etc.) and this enables us to build and maintain
         our service with user feedback. Hotjar uses cookies and other
-        technologies to collect data on our users’ behavior and their devices.
+        technologies to collect data on our users' behavior and their devices.
         This includes a device's IP address (processed during your session and
         stored in a de-identified form), device screen size, device type (unique
         device identifiers), browser information, geographic location (country

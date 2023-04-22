@@ -70,7 +70,7 @@ export function BuiltForSection() {
           heading={t`Creators & builders`}
           subheading={
             <Trans>
-              Whatever you’re building or creating — get it launched and funded
+              Whatever you're building or creating — get it launched and funded
               on Juicebox.
             </Trans>
           }

@@ -49,7 +49,12 @@ export const Announcement: React.FC<JuiceModalProps> = props => {
   )
 
   return (
-    <JuiceModal {...props} onOk={onOk} onCancel={onCancel}>
+    <JuiceModal
+      {...props}
+      id={props.id ?? 'announcement-modal'}
+      onOk={onOk}
+      onCancel={onCancel}
+    >
       {props.children}
     </JuiceModal>
   )

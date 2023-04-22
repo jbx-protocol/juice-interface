@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { INFURA_IPFS_API_BASE_URL } from 'constants/ipfs'
-import FormData from 'form-data'
 import fs from 'fs'
+
+const FormData = require('form-data')
 
 export type InfuraPinResponse = {
   Hash: string

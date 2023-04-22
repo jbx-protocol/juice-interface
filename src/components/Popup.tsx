@@ -13,11 +13,13 @@ import { Fragment, PropsWithChildren } from 'react'
  * @returns {ReactElement} The rendered Popup component.
  */
 export const Popup = ({
+  id,
   children,
   open,
   setOpen,
   onMaskClick: _onMaskClick,
 }: PropsWithChildren<{
+  id?: string
   open: boolean
   setOpen: (open: boolean) => void
   onMaskClick?: (setOpen: (open: boolean) => void) => void
@@ -27,6 +29,7 @@ export const Popup = ({
   return (
     <Transition show={open} as={Fragment}>
       <Dialog
+        id={id}
         as="div"
         className="fixed inset-0 z-10 overflow-y-auto"
         onClose={onClose}

@@ -11,11 +11,11 @@
 
 ## Links
 
-| Name                      | Link                                                                                                                                |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Mainnet              | https://juicebox.money                                                                                                              |
-| Goerli                    | https://goerli.juicebox.money                                                                                                       |
-| Subgraph                  | [https://thegraph.com/explorer/subgraph...](https://thegraph.com/explorer/subgraph?id=FVmuv3TndQDNd2BWARV8Y27yuKKukryKXPzvAS5E7htC) |
+| Name     | Link                                                                                                                                |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Mainnet  | https://juicebox.money                                                                                                              |
+| Goerli   | https://goerli.juicebox.money                                                                                                       |
+| Subgraph | [https://thegraph.com/explorer/subgraph...](https://thegraph.com/explorer/subgraph?id=FVmuv3TndQDNd2BWARV8Y27yuKKukryKXPzvAS5E7htC) |
 
 ## Report a bug
 

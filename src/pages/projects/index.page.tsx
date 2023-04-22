@@ -41,7 +41,7 @@ function Projects() {
   const router = useRouter()
   const search = Array.isArray(router.query.search)
     ? router.query.search[0]
-    : router.query.search
+    : router.query.search ?? ''
 
   const tags = useMemo(
     () =>

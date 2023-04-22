@@ -56,7 +56,7 @@ export function HomepageProjectCard({
       href={v2v3ProjectRoute(project)}
     >
       <a
-        className={`block w-[220px] flex-shrink-0 ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BORDER_HOVER} ${PROJECT_CARD_BG}`}
+        className={`block w-[220px] flex-shrink-0 select-none ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BORDER_HOVER} ${PROJECT_CARD_BG}`}
       >
         <ProjectLogo
           className="h-[192px] w-full rounded-none object-cover"

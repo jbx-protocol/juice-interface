@@ -1,86 +1,107 @@
-import { CrownOutlined, LogoutOutlined } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
-import { Dropdown } from 'antd'
-import { ItemType } from 'antd/lib/menu/hooks/useItems'
-import EtherscanLink from 'components/EtherscanLink'
+import {
+  ArrowRightOnRectangleIcon,
+  ClipboardDocumentIcon,
+  CurrencyDollarIcon,
+  UserIcon,
+} from '@heroicons/react/24/outline'
+import { t } from '@lingui/macro'
 import FormattedAddress from 'components/FormattedAddress'
-import CopyTextButton from 'components/buttons/CopyTextButton'
 import useMobile from 'hooks/Mobile'
 import { useWallet } from 'hooks/Wallet'
-import Link from 'next/link'
-import Balance from './Balance'
-import { Referral } from './WalletMenuItems'
+import { ReactNode, useCallback, useState } from 'react'
+import { stopPropagation } from 'react-stop-propagation'
+import { DropdownMenu, DropdownMenuItem } from '../DropdownMenu'
+
+const WalletItemContainer = ({
+  icon,
+  label,
+}: {
+  icon: ReactNode
+  label: ReactNode
+}) => (
+  <div className="flex items-center gap-2">
+    <span className="h-5 w-5">{icon}</span>
+    <span>{label}</span>
+  </div>
+)
 
 export default function WalletMenu({ userAddress }: { userAddress: string }) {
   const isMobile = useMobile()
   const { disconnect } = useWallet()
+  const [copied, setCopied] = useState<boolean>(false)
 
-  const CopyableAddress = () => (
-    <div className="text-black dark:text-slate-100">
-      <EtherscanLink value={userAddress} type="address" truncated />{' '}
-      <CopyTextButton value={userAddress} className="z-10" />
-    </div>
-  )
+  const onCopyAddressClicked = useCallback(() => {
+    navigator.clipboard.writeText(userAddress)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 3000)
+  }, [userAddress])
 
-  const MyProjects = () => (
-    <>
-      <Link href={`/account/${userAddress}`}>
-        <a className="font-base text-black dark:text-slate-100">
-          <Trans>My account</Trans>
-        </a>
-      </Link>
-      <CrownOutlined className="text-black dark:text-slate-100" />
-    </>
-  )
-
-  const Disconnect = () => (
-    <>
-      <span className="text-black dark:text-slate-100">
-        <Trans>Disconnect</Trans>
-      </span>
-      <LogoutOutlined className="text-black dark:text-slate-100" rotate={-90} />
-    </>
-  )
-
-  const items: ItemType[] = [
+  const items: DropdownMenuItem[] = [
     {
-      key: 0,
-      label: <CopyableAddress />,
+      id: 'copyable-address',
+      label: (
+        <WalletItemContainer
+          icon={<ClipboardDocumentIcon />}
+          label={
+            copied ? (
+              t`Copied!`
+            ) : (
+              <FormattedAddress
+                tooltipDisabled
+                linkDisabled
+                address={userAddress}
+                truncateTo={4}
+              />
+            )
+          }
+        />
+      ),
+      onClick: stopPropagation(onCopyAddressClicked),
     },
     {
-      key: 1,
-      label: <MyProjects />,
+      id: 'my-account',
+      label: <WalletItemContainer icon={<UserIcon />} label={t`My account`} />,
+      href: `/account/${userAddress}`,
     },
     {
-      key: 2,
-      label: <Referral />,
+      id: 'referral',
+      label: (
+        <WalletItemContainer
+          icon={<CurrencyDollarIcon />}
+          label={t`Referral`}
+        />
+      ),
+      href: 'https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e',
+      isExternal: true,
     },
   ]
 
   if (!isMobile) {
     items.push({
-      key: items.length,
-      label: <Disconnect />,
-      onClick: async () => {
-        await disconnect()
-      },
+      id: 'disconnect',
+      label: (
+        <WalletItemContainer
+          icon={<ArrowRightOnRectangleIcon />}
+          label={t`Disconnect`}
+        />
+      ),
+      onClick: async () => await disconnect(),
     })
   }
 
   return (
-    <Dropdown
-      menu={{ items }}
-      placement={!isMobile ? 'bottomRight' : 'top'}
-      overlayClassName="p-0"
-    >
-      <div className="flex h-11 w-full cursor-default select-all flex-col items-center rounded-lg bg-smoke-75 px-5 pt-1 pb-2 dark:bg-slate-400">
-        <FormattedAddress
-          address={userAddress}
-          tooltipDisabled
-          className="font-normal"
-        />
-        <Balance address={userAddress} hideTooltip />
-      </div>
-    </Dropdown>
+    <DropdownMenu
+      hideArrow
+      heading={
+        <div className="flex w-full cursor-pointer select-none items-center justify-center rounded-lg bg-bluebs-50 px-4 py-2.5 dark:bg-slate-400">
+          <FormattedAddress
+            address={userAddress}
+            tooltipDisabled
+            className="text-sm font-medium text-bluebs-700 dark:text-bluebs-300"
+          />
+        </div>
+      }
+      items={items}
+    />
   )
 }

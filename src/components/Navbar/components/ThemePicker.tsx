@@ -1,50 +1,67 @@
-import Moon from 'components/icons/Moon'
-import Sun from 'components/icons/Sun'
-
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { useContext } from 'react'
-
+import { MoonIcon, SunIcon } from '@heroicons/react/24/outline'
 import { ThemeOption } from 'constants/theme/themeOption'
-import { classNames } from 'utils/classNames'
+import { ThemeContext } from 'contexts/Theme/ThemeContext'
+import { useContext, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
-export default function ThemePicker() {
+type AnimationState = {
+  moon?: string
+  sun?: string
+}
+
+export default function ThemePicker({ className }: { className?: string }) {
   const { themeOption, setThemeOption } = useContext(ThemeContext)
+  const [animation, setAnimation] = useState<AnimationState>({
+    moon: themeOption === ThemeOption.light ? 'animate-rise' : 'animate-set',
+    sun: themeOption === ThemeOption.dark ? 'animate-rise' : 'animate-set',
+  })
+  const [hasClicked, setHasClicked] = useState(false)
 
-  const iconSize = 18
+  const onThemeChange = () => {
+    setHasClicked(true)
+    setThemeOption(
+      themeOption === ThemeOption.dark ? ThemeOption.light : ThemeOption.dark,
+    )
+    setAnimation({
+      moon: themeOption === ThemeOption.dark ? 'animate-rise' : 'animate-set',
+      sun: themeOption === ThemeOption.light ? 'animate-rise' : 'animate-set',
+    })
+  }
 
   return (
     <div
-      className="flex h-8 w-16 min-w-[64px] cursor-pointer items-center justify-evenly rounded-full border border-smoke-300 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100"
-      role="switch"
-      aria-label="Toggle website theme"
-      aria-checked={themeOption === ThemeOption.dark}
-      onClick={() =>
-        setThemeOption(
-          themeOption === ThemeOption.dark
-            ? ThemeOption.light
-            : ThemeOption.dark,
-        )
-      }
+      className={twMerge(
+        'cursor-pointer hover:text-bluebs-500 hover:dark:text-bluebs-300',
+        className,
+      )}
+      onClick={onThemeChange}
     >
-      <div
-        className={classNames(
-          'flex items-center justify-center py-2',
-          themeOption === ThemeOption.light
-            ? 'text-black dark:text-slate-100'
-            : 'text-grey-400 dark:text-slate-200',
-        )}
-      >
-        <Sun size={iconSize} />
-      </div>
-      <div
-        className={classNames(
-          'flex items-center justify-center py-2',
-          themeOption === ThemeOption.dark
-            ? 'text-black dark:text-slate-100'
-            : 'text-grey-400 dark:text-slate-200',
-        )}
-      >
-        <Moon size={iconSize} />
+      <div className="flex items-center gap-4">
+        <div className="relative h-6 w-6">
+          <MoonIcon
+            className={twMerge(
+              'absolute top-0 left-0 h-6 w-6',
+              hasClicked
+                ? animation.moon
+                : themeOption === ThemeOption.dark
+                ? 'hidden'
+                : '',
+            )}
+          />
+          <SunIcon
+            className={twMerge(
+              'absolute top-0 left-0 h-6 w-6',
+              hasClicked
+                ? animation.sun
+                : themeOption === ThemeOption.light
+                ? 'hidden'
+                : '',
+            )}
+          />
+        </div>
+        <span className="font-medium md:hidden">
+          {themeOption === ThemeOption.dark ? 'Dark' : 'Light'} Theme
+        </span>
       </div>
     </div>
   )

@@ -13,6 +13,7 @@ interface FormattedAddressProps {
   title?: string
   label?: string
   tooltipDisabled?: boolean
+  linkDisabled?: boolean
   truncateTo?: number
   onClick?: MouseEventHandler
   withEnsAvatar?: boolean
@@ -23,7 +24,8 @@ export default function FormattedAddress({
   address,
   title,
   label,
-  tooltipDisabled,
+  tooltipDisabled = false,
+  linkDisabled = false,
   truncateTo,
   onClick,
   withEnsAvatar,
@@ -54,14 +56,20 @@ export default function FormattedAddress({
             loading="lazy"
           />
         )}
-        <EtherscanLink
-          className={twMerge('select-all leading-[22px]', className)}
-          onClick={onClick}
-          type="address"
-          value={address}
-        >
-          {formatted}
-        </EtherscanLink>
+        {linkDisabled ? (
+          <span className={twMerge('select-all leading-[22px]', className)}>
+            {formatted}
+          </span>
+        ) : (
+          <EtherscanLink
+            className={twMerge('select-all leading-[22px]', className)}
+            onClick={onClick}
+            type="address"
+            value={address}
+          >
+            {formatted}
+          </EtherscanLink>
+        )}
       </span>
     </Tooltip>
   )

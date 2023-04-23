@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
-import ETHAmount from 'components/currency/ETHAmount'
 import ProjectLogo from 'components/ProjectLogo'
+import ETHAmount from 'components/currency/ETHAmount'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { Project } from 'models/subgraph-entities/vX/project'
-import Link from 'next/link'
 import { v2v3ProjectRoute } from 'utils/routes'
+import { HomepageCard } from './HomepageCard'
 
 export const PROJECT_CARD_BORDER =
   'rounded-lg border drop-shadow-[0_4px_14px_rgba(0,0,0,0.03)] border-solid border-grey-200 dark:border-slate-500'
@@ -50,42 +50,42 @@ export function HomepageProjectCard({
   const { data: metadata, isLoading } = useProjectMetadata(project.metadataUri)
 
   return (
-    <Link
-      prefetch={false}
-      key={project.handle}
+    <HomepageCard
       href={v2v3ProjectRoute(project)}
-    >
-      <a
-        className={`block w-56 flex-shrink-0 select-none ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BORDER_HOVER} ${PROJECT_CARD_BG}`}
-      >
+      img={
         <ProjectLogo
           className="h-[192px] w-full rounded-none object-cover"
           uri={metadata?.logoUri}
           name={metadata?.name}
           projectId={project.projectId}
         />
-
-        <div className="flex flex-col justify-between gap-4 rounded-lg p-4">
-          {metadata && !isLoading ? (
-            <div className="max-h-8 truncate font-heading text-lg font-medium text-grey-900 dark:text-slate-100 md:text-xl">
-              {metadata.name}
-            </div>
-          ) : (
-            <Skeleton paragraph={false} title={{ width: 120 }} active />
-          )}
-
-          <div className="flex gap-8">
-            <Statistic
-              name={<Trans>Volume</Trans>}
-              value={<ETHAmount amount={project.totalPaid} precision={2} />}
-            />
-            <Statistic
-              name={<Trans>Payments</Trans>}
-              value={project.paymentsCount}
-            />
+      }
+      title={
+        metadata && !isLoading ? (
+          <div className="max-h-8 truncate font-heading text-lg font-medium text-grey-900 dark:text-slate-100 md:text-xl">
+            {metadata.name}
           </div>
+        ) : (
+          <Skeleton.Input
+            className="h-6 w-full"
+            active
+            size="small"
+            style={{ width: '100%' }}
+          />
+        )
+      }
+      description={
+        <div className="flex gap-8">
+          <Statistic
+            name={<Trans>Volume</Trans>}
+            value={<ETHAmount amount={project.totalPaid} precision={2} />}
+          />
+          <Statistic
+            name={<Trans>Payments</Trans>}
+            value={project.paymentsCount}
+          />
         </div>
-      </a>
-    </Link>
+      }
+    />
   )
 }

@@ -1379,6 +1379,9 @@ msgstr ""
 msgid "Explore Projects"
 msgstr ""
 
+msgid "Explore categories"
+msgstr ""
+
 msgid "Explore projects"
 msgstr ""
 
@@ -3933,6 +3936,9 @@ msgid "When someone pays your project 1 ETH:"
 msgstr ""
 
 msgid "Where to Contact You"
+msgstr ""
+
+msgid "Whether it's a fundraiser or NFT project, we've got you covered."
 msgstr ""
 
 msgid "Whether you're building a boutique crypto law firm or the next mega-fundraiser, Juicebox is customizable to match your needs."

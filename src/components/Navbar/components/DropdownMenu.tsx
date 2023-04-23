@@ -121,14 +121,14 @@ export const DropdownMenu = ({
                   {isLinkItem(item) ? (
                     item.isExternal ? (
                       <PatchedExternalLink
-                        className="text-primary px-6 first:rounded-t-lg last:rounded-b-lg hover:bg-grey-100 dark:hover:bg-slate-600 md:whitespace-nowrap md:py-2.5 md:font-medium md:first:pt-3.5 md:last:pb-3.5"
+                        className="text-primary px-4 first:rounded-t-lg last:rounded-b-lg hover:bg-grey-100 dark:hover:bg-slate-600 md:whitespace-nowrap md:py-2.5 md:font-medium md:first:pt-3.5 md:last:pb-3.5"
                         href={item.href}
                       >
                         {item.label}
                       </PatchedExternalLink>
                     ) : (
                       <PatchedNextLink
-                        className="text-primary px-6 first:rounded-t-lg last:rounded-b-lg hover:bg-grey-100 dark:hover:bg-slate-600 md:whitespace-nowrap md:py-2.5 md:font-medium md:first:pt-3.5 md:last:pb-3.5"
+                        className="text-primary px-4 first:rounded-t-lg last:rounded-b-lg hover:bg-grey-100 dark:hover:bg-slate-600 md:whitespace-nowrap md:py-2.5 md:font-medium md:first:pt-3.5 md:last:pb-3.5"
                         href={item.href}
                       >
                         {item.label}
@@ -136,7 +136,7 @@ export const DropdownMenu = ({
                     )
                   ) : isButtonItem(item) ? (
                     <div
-                      className="text-primary cursor-pointer  px-6 first:rounded-t-lg last:rounded-b-lg hover:bg-grey-100 hover:text-bluebs-500 dark:hover:bg-slate-600 md:whitespace-nowrap md:py-2.5 md:font-medium md:first:pt-3.5 md:last:pb-3.5"
+                      className="text-primary cursor-pointer  px-4 first:rounded-t-lg last:rounded-b-lg hover:bg-grey-100 hover:text-bluebs-500 dark:hover:bg-slate-600 md:whitespace-nowrap md:py-2.5 md:font-medium md:first:pt-3.5 md:last:pb-3.5"
                       onClick={item.onClick}
                     >
                       {item.label}

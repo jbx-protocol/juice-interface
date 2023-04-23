@@ -29,24 +29,16 @@ export function ConclusionSection() {
 
             <div className="mt-5 flex flex-col flex-wrap gap-2 md:flex-row">
               <Link href="/contact">
-                <a>
-                  <Button
-                    type="default"
-                    size="large"
-                    className="w-full md:w-auto"
-                  >
+                <a className="w-full lg:w-auto">
+                  <Button type="default" size="large" className="w-full">
                     <Trans>Contact onboarding</Trans>
                   </Button>
                 </a>
               </Link>
 
               <Link href="/create">
-                <a>
-                  <Button
-                    className={'w-full md:w-auto'}
-                    size="large"
-                    type="primary"
-                  >
+                <a className="w-full lg:w-auto">
+                  <Button className="w-full" size="large" type="primary">
                     <Trans>Create a project</Trans>
                   </Button>
                 </a>

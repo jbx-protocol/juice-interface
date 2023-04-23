@@ -1,4 +1,6 @@
 import { Footer } from 'components/Footer/Footer'
+import { readNetwork } from 'constants/networks'
+import { NetworkName } from 'models/networkName'
 import { StatsSection } from '../StatsSection'
 import { BuiltForSection } from './BuiltForSection/BuiltForSection'
 import { ConclusionSection } from './ConclusionSection/ConclusionSection'
@@ -21,7 +23,7 @@ export function NewHomePage() {
 
         <BuiltForSection />
 
-        <SuccessStoriesSection />
+        {readNetwork.name === NetworkName.mainnet && <SuccessStoriesSection />}
 
         <HowJuiceboxWorksSection />
 

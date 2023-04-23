@@ -3,7 +3,6 @@ import { XLButton } from 'components/XLButton'
 import { CASE_STUDY_PROJECTS } from 'constants/successStoryProjects'
 import { useMedia } from 'contexts/Theme/Media'
 import { useProjectsQuery } from 'hooks/Projects'
-import { ProjectTagName } from 'models/project-tags'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
 import { ProjectCarousel } from '../ProjectCarousel'
@@ -23,18 +22,15 @@ export function SuccessStoriesSection() {
   const topProjects = CASE_STUDY_PROJECTS.map(p => {
     const project = data.find(
       proj => proj.projectId === p.id && proj.pv === p.pv,
-    ) as Project
+    ) as Project | undefined
+    if (!project) return
 
     return {
       project,
       tags: p.tags,
       nameOverride: p.nameOverride,
     }
-  }) as {
-    project: Project
-    tags: ProjectTagName[]
-    nameOverride?: string
-  }[]
+  }).filter((p): p is NonNullable<typeof p> => !!p)
 
   const cards = topProjects.map(project => (
     <SuccessStoriesCard

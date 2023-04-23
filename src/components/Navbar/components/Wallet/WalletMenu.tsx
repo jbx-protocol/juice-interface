@@ -47,6 +47,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
               <FormattedAddress
                 tooltipDisabled
                 linkDisabled
+                showEns={false}
                 address={userAddress}
                 truncateTo={4}
               />
@@ -88,12 +89,12 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
     <DropdownMenu
       hideArrow
       heading={
-        <div className="flex w-full cursor-pointer select-none items-center justify-center rounded-lg bg-bluebs-50 px-4 py-2.5 dark:bg-slate-400">
+        <div className="flex w-full cursor-pointer select-none items-center justify-center rounded-lg bg-bluebs-50 px-4 py-2.5 dark:bg-bluebs-900">
           <FormattedAddress
             address={userAddress}
             tooltipDisabled
             linkDisabled
-            className="select-none text-sm font-medium text-bluebs-700 dark:text-bluebs-300"
+            className="select-none text-sm font-medium text-bluebs-900 dark:text-bluebs-100"
           />
         </div>
       }

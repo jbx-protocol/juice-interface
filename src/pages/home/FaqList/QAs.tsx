@@ -18,11 +18,13 @@ const JBDiscordLink = ({ children }: { children: ReactNode }) => (
 // Take-away: If you're storing a list of <Trans>` strings in a list,
 // make sure you're not rendering it from the same file.
 export default function QAs(): {
+  id: string
   q: JSX.Element
   a?: JSX.Element
 }[] {
   return [
     {
+      id: 'how-it-works',
       q: <Trans>How do I use this website?</Trans>,
       a: (
         <Trans>
@@ -37,6 +39,7 @@ export default function QAs(): {
       ),
     },
     {
+      id: 'what-is-juicebox',
       q: <Trans>What's Juicebox?</Trans>,
       a: (
         <Trans>
@@ -50,6 +53,7 @@ export default function QAs(): {
       ),
     },
     {
+      id: 'what-is-juicebox-fee',
       q: <Trans>What happens when I pay a project?</Trans>,
       a: (
         <Trans>
@@ -73,6 +77,7 @@ export default function QAs(): {
       ),
     },
     {
+      id: 'what-does-juicebox-do',
       q: <Trans>What does Juicebox actually do?</Trans>,
       a: (
         <Trans>
@@ -118,6 +123,7 @@ export default function QAs(): {
       ),
     },
     {
+      id: 'how-decentralized-is-juicebox',
       q: <Trans>How decentralized is Juicebox?</Trans>,
       a: (
         <Trans>
@@ -143,6 +149,7 @@ export default function QAs(): {
       ),
     },
     {
+      id: 'has-juicebox-been-audited',
       q: <Trans>Has Juicebox been audited? What are the risks?</Trans>,
       a: (
         <Trans>
@@ -173,6 +180,7 @@ export default function QAs(): {
       ),
     },
     {
+      id: 'what-does-juicebox-cost',
       q: <Trans>What does Juicebox cost?</Trans>,
       a: (
         <Trans>
@@ -197,6 +205,7 @@ export default function QAs(): {
       ),
     },
     {
+      id: 'who-is-peel-who-is-juiceboxdao',
       q: <Trans>Who is Peel? Who is JuiceboxDAO?</Trans>,
       a: (
         <Trans>
@@ -219,6 +228,7 @@ export default function QAs(): {
       ),
     },
     {
+      id: 'how-do-i-set-up-my-project',
       q: <Trans>How should I set up my project?</Trans>,
       a: (
         <Trans>
@@ -237,6 +247,7 @@ export default function QAs(): {
       ),
     },
     {
+      id: 'i-have-another-question',
       q: <Trans>I have another question!</Trans>,
       a: (
         <Trans>

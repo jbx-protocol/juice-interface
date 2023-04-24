@@ -8,7 +8,7 @@ import { SectionHeading } from './SectionHeading'
 
 export function FaqSection() {
   const qa = QAs()
-  const [openId, setOpenId] = useState<string | null>(qa[0].id)
+  const [openId, setOpenId] = useState<string | null>()
 
   const toggleDisclosure = (id: string) => () => {
     setOpenId(openId === id ? null : id)

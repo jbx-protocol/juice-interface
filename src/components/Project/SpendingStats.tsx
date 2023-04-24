@@ -1,10 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import TooltipLabel from 'components/TooltipLabel'
 import { CurrencyName } from 'constants/currency'
+import { formatWad } from 'utils/format/formatNumber'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 
 export default function SpendingStats({
   currency,
@@ -22,6 +24,10 @@ export default function SpendingStats({
   feePercentage: string | undefined
   hasFundingTarget: boolean | undefined
 }) {
+  const formattedDistributionLimit = isInfiniteDistributionLimit(targetAmount)
+    ? t`NO LIMIT`
+    : formatWad(targetAmount, { precision: 4 })
+
   return (
     <div>
       <div className="mb-1">
@@ -56,9 +62,7 @@ export default function SpendingStats({
         <Trans>
           <AmountInCurrency amount={distributedAmount} currency={currency} />
           {hasFundingTarget ? (
-            <span>
-              /<AmountInCurrency amount={targetAmount} currency={currency} />{' '}
-            </span>
+            <span>/{formattedDistributionLimit}</span>
           ) : null}{' '}
           distributed
         </Trans>

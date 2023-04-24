@@ -86,11 +86,11 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
    */
   const { data: projects } = useProjectsQuery({
     projectId,
-    keys: ['createdAt', 'totalPaid'],
+    keys: ['createdAt', 'volume'],
     pv: [PV_V2],
   })
   const createdAt = first(projects)?.createdAt
-  const totalVolume = first(projects)?.totalPaid
+  const totalVolume = first(projects)?.volume
 
   /**
    * Load funding cycle data

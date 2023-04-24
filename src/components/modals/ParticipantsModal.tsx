@@ -44,7 +44,7 @@ export default function ParticipantsModal({
     Pick<
       Participant,
       | 'wallet'
-      | 'totalPaid'
+      | 'volume'
       | 'lastPaidTimestamp'
       | 'balance'
       | 'stakedBalance'
@@ -76,7 +76,7 @@ export default function ParticipantsModal({
       entity: 'participant',
       keys: [
         'wallet { id }',
-        'totalPaid',
+        'volume',
         'lastPaidTimestamp',
         'balance',
         'stakedBalance',
@@ -144,7 +144,7 @@ export default function ParticipantsModal({
                 balance
               </Trans>
             </Select.Option>
-            <Select.Option value="totalPaid">
+            <Select.Option value="volume">
               <Trans>Total paid</Trans>
             </Select.Option>
             <Select.Option value="lastPaidTimestamp">
@@ -186,7 +186,7 @@ export default function ParticipantsModal({
                 </div>
                 <div className="text-xs text-grey-400 dark:text-slate-200">
                   <Trans>
-                    <ETHAmount amount={p.totalPaid} /> contributed
+                    <ETHAmount amount={p.volume} /> contributed
                   </Trans>
                 </div>
               </div>

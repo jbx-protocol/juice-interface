@@ -6,7 +6,7 @@ import { ActivityEvent } from './ActivityElement'
 export default function ProjectCreateEventElem({
   event,
 }: {
-  event: Pick<ProjectCreateEvent, 'id' | 'caller' | 'timestamp' | 'txHash'>
+  event: Pick<ProjectCreateEvent, 'id' | 'from' | 'timestamp' | 'txHash'>
 }) {
   return (
     <ActivityEvent

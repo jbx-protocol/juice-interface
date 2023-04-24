@@ -9,15 +9,15 @@ import { Participant } from './participant'
 
 export interface Wallet {
   id: string
-  totalPaid: BigNumber
-  totalPaidUSD: BigNumber
+  volume: BigNumber
+  volumeUSD: BigNumber
   lastPaidTimestamp: number
   participants: Participant[]
 }
 
 export const parseWalletJson = (j: Json<Wallet>): Wallet => ({
   ...primitives(j),
-  ...parseBigNumberKeyVals(j, ['totalPaid', 'totalPaidUSD']),
+  ...parseBigNumberKeyVals(j, ['volume', 'volumeUSD']),
   ...subgraphEntityJsonArrayToKeyVal(
     j.participants,
     'participant',

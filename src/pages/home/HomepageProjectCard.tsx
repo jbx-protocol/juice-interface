@@ -44,7 +44,7 @@ export function HomepageProjectCard({
     Project,
     | 'terminal'
     | 'metadataUri'
-    | 'totalPaid'
+    | 'volume'
     | 'paymentsCount'
     | 'handle'
     | 'pv'
@@ -84,7 +84,7 @@ export function HomepageProjectCard({
         <div className="flex gap-8">
           <Statistic
             name={<Trans>Volume</Trans>}
-            value={<ETHAmount amount={project.totalPaid} precision={2} />}
+            value={<ETHAmount amount={project.volume} precision={2} />}
           />
           <Statistic
             name={<Trans>Payments</Trans>}

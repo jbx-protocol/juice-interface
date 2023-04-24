@@ -11,13 +11,7 @@ export default function AddToBalanceEventElem({
   event:
     | Pick<
         AddToBalanceEvent,
-        | 'amount'
-        | 'timestamp'
-        | 'caller'
-        | 'note'
-        | 'id'
-        | 'txHash'
-        | 'terminal'
+        'amount' | 'timestamp' | 'from' | 'note' | 'id' | 'txHash' | 'terminal'
       >
     | undefined
 }) {

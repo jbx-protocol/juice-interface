@@ -22,7 +22,7 @@ export const sgDbCompareKeys: SGSBCompareKey[] = [
   'handle',
   'metadataUri',
   'currentBalance',
-  'totalPaid',
+  'volume',
   'createdAt',
   'trendingScore',
   'deployer',
@@ -34,7 +34,7 @@ export const sgDbCompareKeys: SGSBCompareKey[] = [
 export const parseDBProjectJson = (j: Json<DBProject>): DBProject => ({
   ...j,
   tags: j.tags ?? [],
-  ...parseBigNumberKeyVals(j, ['currentBalance', 'totalPaid', 'trendingScore']),
+  ...parseBigNumberKeyVals(j, ['currentBalance', 'volume', 'trendingScore']),
 })
 
 // Parse DB Project row, converting property names from snake_case to camelCase
@@ -55,7 +55,7 @@ export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
     pv: p.pv as PV,
     tags: p.tags as ProjectTagName[],
     terminal: p.terminal,
-    totalPaid: p.total_paid,
+    volume: p.total_paid,
     trendingScore: p.trending_score,
     _hasUnresolvedMetadata: p._has_unresolved_metadata,
     _metadataRetriesLeft: p._metadata_retries_left,
@@ -81,7 +81,7 @@ export function formatDBProjectRow(p: Json<DBProject>): DBProjectRow {
     pv: p.pv,
     tags: p.tags,
     terminal: p.terminal,
-    total_paid: p.totalPaid,
+    total_paid: p.volume,
     trending_score: p.trendingScore,
     _has_unresolved_metadata: p._hasUnresolvedMetadata ?? null,
     _metadata_retries_left: p._metadataRetriesLeft ?? null,
@@ -259,7 +259,7 @@ export function formatSGProjectForDB(p: Json<Pick<Project, SGSBCompareKey>>) {
     ...p,
     // Adjust BigNumber values before we compare them to database values
     currentBalance: padBigNumForSort(p.currentBalance),
-    totalPaid: padBigNumForSort(p.totalPaid),
+    volume: padBigNumForSort(p.volume),
     trendingScore: padBigNumForSort(p.trendingScore),
   }
 }

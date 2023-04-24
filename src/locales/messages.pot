@@ -566,9 +566,6 @@ msgstr ""
 msgid "Battle tested"
 msgstr ""
 
-msgid "Beneficiary"
-msgstr ""
-
 msgid "Beneficiary address"
 msgstr ""
 
@@ -1016,9 +1013,6 @@ msgstr ""
 msgid "Danger Zone"
 msgstr ""
 
-msgid "Date"
-msgstr ""
-
 msgid "Date created"
 msgstr ""
 
@@ -1178,15 +1172,6 @@ msgstr ""
 msgid "ETH currently available to send to the payout recipients below (before the {feePercentage}% JBX fee). These payouts won't roll over to next cycle, so they must be sent out before then."
 msgstr ""
 
-msgid "ETH paid"
-msgstr ""
-
-msgid "ETH received"
-msgstr ""
-
-msgid "ETH transferred"
-msgstr ""
-
 msgid "ETH transfers"
 msgstr ""
 
@@ -1319,37 +1304,7 @@ msgstr ""
 msgid "Enter your project's details. You can edit your project's details at any time after you deploy your project, but the transaction will cost gas."
 msgstr ""
 
-msgid "Error downloading ETH transfers to project, try again."
-msgstr ""
-
-msgid "Error downloading participants, try again."
-msgstr ""
-
-msgid "Error downloading payments, try again."
-msgstr ""
-
-msgid "Error downloading payouts, try again."
-msgstr ""
-
-msgid "Error downloading redemptions, try again."
-msgstr ""
-
-msgid "Error loading ETH transfers to project"
-msgstr ""
-
 msgid "Error loading holders"
-msgstr ""
-
-msgid "Error loading participants"
-msgstr ""
-
-msgid "Error loading payments"
-msgstr ""
-
-msgid "Error loading payouts"
-msgstr ""
-
-msgid "Error loading redemptions"
 msgstr ""
 
 msgid "Error reading transaction data"
@@ -1467,9 +1422,6 @@ msgid "For faster responses, join our <0>Discord server</0>."
 msgstr ""
 
 msgid "Free to launch, just pay gas."
-msgstr ""
-
-msgid "From"
 msgstr ""
 
 msgid "Fun"
@@ -2372,9 +2324,6 @@ msgstr ""
 msgid "Pay {projectTitle}"
 msgstr ""
 
-msgid "Payer"
-msgstr ""
-
 msgid "Payer issuance rate"
 msgstr ""
 
@@ -3164,9 +3113,6 @@ msgstr ""
 msgid "Splits payer addresses"
 msgstr ""
 
-msgid "Staked balance"
-msgstr ""
-
 msgid "Standard"
 msgstr ""
 
@@ -3575,9 +3521,6 @@ msgstr ""
 msgid "Tokens receiver"
 msgstr ""
 
-msgid "Tokens redeemed"
-msgstr ""
-
 msgid "Tokens to burn"
 msgstr ""
 
@@ -3588,9 +3531,6 @@ msgid "Tokens:"
 msgstr ""
 
 msgid "Tools"
-msgstr ""
-
-msgid "Total ETH paid"
 msgstr ""
 
 msgid "Total issuance rate"
@@ -3636,9 +3576,6 @@ msgid "Track the total voting power of each address over time. <0>Learn more.</0
 msgstr ""
 
 msgid "Transaction failed"
-msgstr ""
-
-msgid "Transaction hash"
 msgstr ""
 
 msgid "Transaction pending..."
@@ -3710,15 +3647,6 @@ msgstr ""
 msgid "Twitter handle"
 msgstr ""
 
-msgid "USD value of ETH paid"
-msgstr ""
-
-msgid "USD value of ETH received"
-msgstr ""
-
-msgid "USD value of ETH transferred"
-msgstr ""
-
 msgid "Unarchive project"
 msgstr ""
 
@@ -3759,9 +3687,6 @@ msgid "Unsaved changes"
 msgstr ""
 
 msgid "Unstake {0}"
-msgstr ""
-
-msgid "Unstaked balance"
 msgstr ""
 
 msgid "Untitled project"
@@ -3864,9 +3789,6 @@ msgid "Voting weight"
 msgstr ""
 
 msgid "WAGMI!"
-msgstr ""
-
-msgid "Wallet"
 msgstr ""
 
 msgid "Wallet Address"

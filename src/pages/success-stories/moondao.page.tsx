@@ -47,8 +47,8 @@ export default function MoonDAOPage() {
         <CaseStudyContentContainer currentProject={moonDAOSuccessStoryProject}>
           <p>
             Following the launch of their token $MOONEY, the next goal on
-            MoonDAO’s roadmap was to buy two tickets to space on a Blue Origin
-            rocket. They set the project’s Payouts to Infinite in order to raise
+            MoonDAO's roadmap was to buy two tickets to space on a Blue Origin
+            rocket. They set the project's Payouts to Infinite in order to raise
             as much as possible during their campaign and be able to distribute
             all of the funds. Using a reserved rate of 50%, the MoonDAO
             multi-sig received half of all newly minted tokens to build up a

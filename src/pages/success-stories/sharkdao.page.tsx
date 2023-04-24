@@ -48,7 +48,7 @@ export default function SharkDAOPage() {
         <CaseStudyContentContainer currentProject={sharkDAOSuccessStoryProject}>
           <p>
             With highly competitive auctions happening every 24 hours,
-            SharkDAO’s success was made possible through the flexibility of
+            SharkDAO's success was made possible through the flexibility of
             their Juicebox project settings. From cycle to cycle, SharkDAO
             enabled or disabled payments and adjusted $SHARK tokenomics (total
             issuance rate, reserved rate, and issuance reduction rate). With
@@ -96,7 +96,7 @@ export default function SharkDAOPage() {
               <ExternalLink href="https://twitter.com/iamDelPiero">
                 Del Piero
               </ExternalLink>
-              ’s son’s leukemia treatment.
+              's son's leukemia treatment.
             </p>
           </div>
           <div>

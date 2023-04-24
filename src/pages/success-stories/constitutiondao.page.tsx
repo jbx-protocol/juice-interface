@@ -32,7 +32,7 @@ export default function ConstitutionDAOPage() {
             <Trans>
               ConstitutionDAO was a single purpose acquisition DAO that raised
               over $46 million in an attempt to buy one of the thirteen
-              remaining copies of the U.S. Constitution at Sotheby’s on November
+              remaining copies of the U.S. Constitution at Sotheby's on November
               18th, 2021. What started as a joke in a group chat soon became a
               viral sensation with tens of thousands joining the Discord and
               contributing ETH to the project. Through their campaign,
@@ -48,7 +48,7 @@ export default function ConstitutionDAOPage() {
         >
           <p>
             <Trans>
-              With an auction estimate of $10-15 million at Sotheby’s,
+              With an auction estimate of $10-15 million at Sotheby's,
               ConstitutionDAO wanted to raise as much as possible and decided to
               set Payouts to Unlimited. In order to build trust with potential
               supporters, the campaign set up a 9/13 multisig with core team
@@ -71,7 +71,7 @@ export default function ConstitutionDAOPage() {
               <Trans>
                 ConstitutionDAO raised over $46 million in less than a week with
                 over 19,000 payments made to the project. They were the second
-                highest bidder on Sotheby’s Lot 1787 and were unfortunately
+                highest bidder on Sotheby's Lot 1787 and were unfortunately
                 outbid by hedge fund billionaire Ken Griffin. Shortly following
                 the auction, the core team set the Redemption Rate to 100% to
                 allow all supporters to redeem their tokens and get their money

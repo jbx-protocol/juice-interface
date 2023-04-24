@@ -142,7 +142,7 @@ export const FundingCyclesPage = () => {
                   label={t`Cycle duration`}
                   extra={
                     <Trans>
-                      <InfoCircleOutlined /> Your project’s rules cannot be
+                      <InfoCircleOutlined /> Your project's rules cannot be
                       edited during the first cycle.
                     </Trans>
                   }
@@ -156,7 +156,7 @@ export const FundingCyclesPage = () => {
               <Selection.Card
                 name="manual"
                 title={t`Unlocked Cycles`}
-                description={t`The project’s owner can edit the project's rules and start new cycles at any time.`}
+                description={t`The project's owner can edit the project's rules and start new cycles at any time.`}
                 icon={<Icons.ManualSettings />}
               />
             </Selection>
@@ -187,7 +187,7 @@ export const FundingCyclesPage = () => {
                   extra={
                     launchDate ? (
                       <Trans>
-                        Your project’s first cycle will start on{' '}
+                        Your project's first cycle will start on{' '}
                         <Tooltip
                           title={
                             launchDate.clone().format('YYYY-MM-DD') +

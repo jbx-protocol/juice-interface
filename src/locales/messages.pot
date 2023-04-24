@@ -644,9 +644,6 @@ msgstr ""
 msgid "CYCLE #{cycleNumber}"
 msgstr ""
 
-msgid "Caller"
-msgstr ""
-
 msgid "Cancel"
 msgstr ""
 

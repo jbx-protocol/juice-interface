@@ -43,8 +43,8 @@ export function StatsSection() {
       'erc20Count',
       'paymentsCount',
       'projectsCount',
-      'volumePaid',
-      'volumePaidUSD',
+      'volume',
+      'volumeUSD',
     ],
   })
 
@@ -63,11 +63,11 @@ export function StatsSection() {
             <Link href="/activity">
               <a className="text-current">
                 <USDAmount
-                  amount={stats?.volumePaidUSD}
+                  amount={stats?.volumeUSD}
                   precision={0}
                   symbol="$"
                   tooltipContent={
-                    <ETHAmount amount={stats?.volumePaid} hideTooltip />
+                    <ETHAmount amount={stats?.volume} hideTooltip />
                   }
                   className="gradient-animation bg-gradient-to-r from-bluebs-500 via-grape-400 to-juice-500 bg-clip-text font-display transition-colors hover:text-transparent"
                 />

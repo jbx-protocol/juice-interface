@@ -10,7 +10,7 @@ import { SectionContainer } from './SectionContainer'
 const PROGRESS_MAX_AMOUNT = ONE_BILLION
 
 export const OurMissionSection = () => {
-  const { volumePaidUSD } = useOurMissionSession()
+  const { volumeUSD } = useOurMissionSession()
   return (
     <SectionContainer className="sm:gap-24 md:flex md:items-center md:justify-between md:gap-32">
       <div className="md:w-1/2">
@@ -28,7 +28,7 @@ export const OurMissionSection = () => {
 
         <ProgressBar
           className="my-20 md:mb-0"
-          currentAmount={volumePaidUSD ? Number(fromWad(volumePaidUSD)) : 0}
+          currentAmount={volumeUSD ? Number(fromWad(volumeUSD)) : 0}
           maxAmount={PROGRESS_MAX_AMOUNT}
         />
       </div>

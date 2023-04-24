@@ -28,6 +28,8 @@ const PendingTransactionModalBody = () => {
         <Image
           src="/assets/images/quint.gif"
           alt={t`Juicebox loading animation`}
+          width={150}
+          height={150}
         />
         <h2 className="mt-4 text-2xl text-black dark:text-slate-100">
           <Trans>Transaction pending...</Trans>

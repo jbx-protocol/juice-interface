@@ -176,3 +176,7 @@ export function hasDataSourceForPay(
       fundingCycleMetadata?.useDataSourceForPay,
   )
 }
+
+export function isInfiniteDistributionLimit(distributionLimit: BigNumber) {
+  return distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)
+}

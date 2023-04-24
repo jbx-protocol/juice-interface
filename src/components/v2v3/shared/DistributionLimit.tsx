@@ -5,7 +5,7 @@ import { CurrencyName } from 'constants/currency'
 import { twMerge } from 'tailwind-merge'
 import { formatFundingTarget } from 'utils/format/formatFundingTarget'
 import { getV2V3CurrencyOption } from 'utils/v2v3/currency'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 
 export default function DistributionLimit({
   className,
@@ -18,9 +18,8 @@ export default function DistributionLimit({
   currencyName: CurrencyName | undefined
   showTooltip?: boolean
 }) {
-  const distributionLimitIsInfinite = distributionLimit?.eq(
-    MAX_DISTRIBUTION_LIMIT,
-  )
+  const distributionLimitIsInfinite =
+    distributionLimit && isInfiniteDistributionLimit(distributionLimit)
   const distributionLimitIsZero = distributionLimit?.eq(0)
   const distributionLimitCurrency = currencyName
     ? getV2V3CurrencyOption(currencyName)

@@ -25,7 +25,7 @@ export default function V1ConfigureEventElem({
         | 'id'
         | 'timestamp'
         | 'txHash'
-        | 'caller'
+        | 'from'
         | 'ballot'
         | 'discountRate'
         | 'duration'

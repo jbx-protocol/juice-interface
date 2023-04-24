@@ -92,7 +92,7 @@ export function SuccessStoriesCard({
 
           <div className="mt-2">
             <span className="text-4xl font-medium text-black dark:text-slate-100">
-              <ETHAmount amount={project?.totalPaid} precision={0} />
+              <ETHAmount amount={project?.volume} precision={0} />
             </span>
           </div>
         </div>

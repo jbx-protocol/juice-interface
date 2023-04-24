@@ -21,7 +21,7 @@ export default function TrendingProjectCard({
     | 'terminal'
     | 'trendingVolume'
     | 'metadataUri'
-    | 'totalPaid'
+    | 'volume'
     | 'trendingPaymentsCount'
     | 'createdWithinTrendingWindow'
     | 'handle'
@@ -35,7 +35,7 @@ export default function TrendingProjectCard({
 
   const percentageGain = useProjectTrendingPercentageIncrease({
     trendingVolume: project.trendingVolume,
-    totalPaid: project.totalPaid,
+    volume: project.volume,
   })
   const percentGainText = project.createdWithinTrendingWindow
     ? t`New`

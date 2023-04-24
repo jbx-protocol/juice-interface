@@ -219,7 +219,7 @@ export default function QuickProjectSearch({
                     )}
 
                     <div className="text-xs font-medium text-slate-200 dark:text-slate-200">
-                      <ETHAmount amount={p.totalPaid} precision={0} />
+                      <ETHAmount amount={p.volume} precision={0} />
                     </div>
 
                     <ProjectVersionBadge

@@ -15,7 +15,7 @@ export default function DistributePayoutsElem({
         | 'id'
         | 'timestamp'
         | 'txHash'
-        | 'caller'
+        | 'from'
         | 'beneficiary'
         | 'beneficiaryDistributionAmount'
         | 'distributedAmount'

@@ -9,7 +9,7 @@ export default function BurnEventElem({
   tokenSymbol,
 }: {
   event:
-    | Pick<BurnEvent, 'amount' | 'timestamp' | 'caller' | 'id' | 'txHash'>
+    | Pick<BurnEvent, 'amount' | 'timestamp' | 'from' | 'id' | 'txHash'>
     | undefined
   tokenSymbol: string | undefined
 }) {

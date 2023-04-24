@@ -56,7 +56,7 @@ const SmallProjectCardMobile = ({
           )}
 
           <div className="font-medium text-black dark:text-slate-100">
-            <ETHAmount amount={project?.totalPaid} precision={0} /> raised
+            <ETHAmount amount={project?.volume} precision={0} /> raised
           </div>
         </div>
       </a>
@@ -101,7 +101,7 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
 
             <div>
               <span className="text-base font-medium text-black dark:text-slate-100">
-                <ETHAmount amount={project?.totalPaid} precision={0} /> raised
+                <ETHAmount amount={project?.volume} precision={0} /> raised
               </span>
             </div>
           </div>

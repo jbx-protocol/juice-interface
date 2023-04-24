@@ -21,7 +21,7 @@ export default function ConfigureEventElem({
         | 'timestamp'
         | 'mustStartAtOrAfter'
         | 'txHash'
-        | 'caller'
+        | 'from'
         | 'ballot'
         | 'dataSource'
         | 'discountRate'

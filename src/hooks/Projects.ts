@@ -31,7 +31,7 @@ interface ProjectsOptions {
   pageNumber?: number
   projectId?: number
   projectIds?: number[]
-  orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid' | 'paymentsCount'
+  orderBy?: 'createdAt' | 'currentBalance' | 'volume' | 'paymentsCount'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
   state?: ProjectState
@@ -51,7 +51,7 @@ export const DEFAULT_PROJECT_ENTITY_KEYS: (keyof Project)[] = [
   'handle',
   'createdAt',
   'metadataUri',
-  'totalPaid',
+  'volume',
   'pv',
 ]
 const V1_ARCHIVED_SUBGRAPH_IDS = V1ArchivedProjectIds.map(projectId =>
@@ -112,7 +112,7 @@ const buildProjectQueryOpts = (
     entity: 'project',
     keys: opts.keys ?? DEFAULT_PROJECT_ENTITY_KEYS,
     orderDirection: opts.orderDirection ?? 'desc',
-    orderBy: opts.orderBy ?? 'totalPaid',
+    orderBy: opts.orderBy ?? 'volume',
     pageSize: opts.pageSize,
     where,
   }
@@ -280,7 +280,7 @@ export function useContributedProjectsQuery(wallet: string | undefined) {
         value: wallet.toLowerCase(),
       },
       {
-        key: 'totalPaid',
+        key: 'volume',
         operator: 'gt',
         value: 0,
       },
@@ -392,14 +392,14 @@ export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
 }
 
 export function useProjectTrendingPercentageIncrease({
-  totalPaid,
+  volume,
   trendingVolume,
 }: {
-  totalPaid: BigNumber
+  volume: BigNumber
   trendingVolume: BigNumber
 }): number {
   const percentageGain = useMemo(() => {
-    const preTrendingVolume = totalPaid?.sub(trendingVolume)
+    const preTrendingVolume = volume?.sub(trendingVolume)
 
     if (!preTrendingVolume?.gt(0)) return Infinity
 
@@ -422,7 +422,7 @@ export function useProjectTrendingPercentageIncrease({
     }
 
     return percentRounded
-  }, [totalPaid, trendingVolume])
+  }, [volume, trendingVolume])
 
   return percentageGain
 }

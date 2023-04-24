@@ -20,7 +20,7 @@ import ETHAmount from './currency/ETHAmount'
 
 export type ProjectCardProject = Pick<
   Project,
-  'id' | 'handle' | 'totalPaid' | 'createdAt' | 'terminal' | 'projectId' | 'pv'
+  'id' | 'handle' | 'volume' | 'createdAt' | 'terminal' | 'projectId' | 'pv'
 > & { tags?: ProjectTagName[] | null; metadataUri: string | null }
 
 function ArchivedBadge() {
@@ -41,7 +41,7 @@ function useProjectCardData(project?: ProjectCardProject | BigNumber) {
             'id',
             'handle',
             'metadataUri',
-            'totalPaid',
+            'volume',
             'createdAt',
             'terminal',
             'projectId',
@@ -81,8 +81,8 @@ export default function ProjectCard({
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision =
-    projectCardData.totalPaid?.gt(0) &&
-    projectCardData.totalPaid.lt(constants.WeiPerEther)
+    projectCardData.volume?.gt(0) &&
+    projectCardData.volume.lt(constants.WeiPerEther)
       ? 2
       : 0
 
@@ -152,7 +152,7 @@ export default function ProjectCard({
             <div>
               <span className="font-medium text-black dark:text-slate-100">
                 <ETHAmount
-                  amount={projectCardData.totalPaid}
+                  amount={projectCardData.volume}
                   precision={precision}
                 />{' '}
               </span>

@@ -17,7 +17,7 @@ const PAY_EVENT_KEY: ActivityQueryKey<'payEvent'> = {
   keys: [
     'amount',
     'timestamp',
-    'caller',
+    'from',
     'beneficiary',
     'note',
     'id',
@@ -33,7 +33,7 @@ const CONFIGURE_EVENT_KEY: ActivityQueryKey<'configureEvent'> = {
     'id',
     'timestamp',
     'txHash',
-    'caller',
+    'from',
     'ballot',
     'dataSource',
     'discountRate',
@@ -57,24 +57,24 @@ const CONFIGURE_EVENT_KEY: ActivityQueryKey<'configureEvent'> = {
 
 const BURN_EVENT_KEY: ActivityQueryKey<'burnEvent'> = {
   entity: 'burnEvent',
-  keys: ['id', 'timestamp', 'txHash', 'caller', 'holder', 'amount'],
+  keys: ['id', 'timestamp', 'txHash', 'from', 'holder', 'amount'],
 }
 
 const ADD_TO_BALANCE_EVENT_KEY: ActivityQueryKey<'addToBalanceEvent'> = {
   entity: 'addToBalanceEvent',
-  keys: ['amount', 'timestamp', 'caller', 'note', 'id', 'txHash', 'terminal'],
+  keys: ['amount', 'timestamp', 'from', 'note', 'id', 'txHash', 'terminal'],
 }
 
 const DEPLOYED_ERC20_EVENT_KEY: ActivityQueryKey<'deployedERC20Event'> = {
   entity: 'deployedERC20Event',
-  keys: ['symbol', 'txHash', 'timestamp', 'id', 'caller'],
+  keys: ['symbol', 'txHash', 'timestamp', 'id', 'from'],
 }
 
 const REDEEM_EVENT_KEY: ActivityQueryKey<'redeemEvent'> = {
   entity: 'redeemEvent',
   keys: [
     'id',
-    'caller',
+    'from',
     'amount',
     'beneficiary',
     'txHash',
@@ -88,7 +88,7 @@ const REDEEM_EVENT_KEY: ActivityQueryKey<'redeemEvent'> = {
 
 const PROJECT_CREATE_EVENT_KEY: ActivityQueryKey<'projectCreateEvent'> = {
   entity: 'projectCreateEvent',
-  keys: ['id', 'txHash', 'timestamp', 'caller'],
+  keys: ['id', 'txHash', 'timestamp', 'from'],
 }
 
 const DISTRIBUTED_PAYOUTS_EVENT_KEY: ActivityQueryKey<'distributePayoutsEvent'> =
@@ -98,7 +98,7 @@ const DISTRIBUTED_PAYOUTS_EVENT_KEY: ActivityQueryKey<'distributePayoutsEvent'> 
       'id',
       'timestamp',
       'txHash',
-      'caller',
+      'from',
       'beneficiary',
       'beneficiaryDistributionAmount',
       'distributedAmount',
@@ -114,7 +114,7 @@ const DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY: ActivityQueryKey<'distributeReserve
       'id',
       'timestamp',
       'txHash',
-      'caller',
+      'from',
       'beneficiary',
       'beneficiaryTokenCount',
       'tokenCount',
@@ -124,7 +124,7 @@ const DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY: ActivityQueryKey<'distributeReserve
 const DEPLOYED_PROJECT_PAYER_EVENT_KEY: ActivityQueryKey<'deployETHERC20ProjectPayerEvent'> =
   {
     entity: 'deployETHERC20ProjectPayerEvent',
-    keys: ['id', 'timestamp', 'txHash', 'caller', 'address', 'memo'],
+    keys: ['id', 'timestamp', 'txHash', 'from', 'address', 'memo'],
   }
 
 const SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY: ActivityQueryKey<'setFundAccessConstraintsEvent'> =
@@ -134,7 +134,7 @@ const SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY: ActivityQueryKey<'setFundAccessCons
       'id',
       'timestamp',
       'txHash',
-      'caller',
+      'from',
       'distributionLimit',
       'distributionLimitCurrency',
     ],

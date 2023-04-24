@@ -146,11 +146,11 @@ export default function ProjectActivity() {
       },
       {
         entity: 'burnEvent',
-        keys: ['id', 'timestamp', 'txHash', 'caller', 'holder', 'amount'],
+        keys: ['id', 'timestamp', 'txHash', 'from', 'holder', 'amount'],
       },
       {
         entity: 'addToBalanceEvent',
-        keys: ['amount', 'timestamp', 'caller', 'id', 'txHash'],
+        keys: ['amount', 'timestamp', 'from', 'id', 'txHash'],
       },
       {
         entity: 'deployedERC20Event',
@@ -162,7 +162,7 @@ export default function ProjectActivity() {
           'id',
           'timestamp',
           'txHash',
-          'caller',
+          'from',
           'beneficiary',
           'beneficiaryTransferAmount',
           'netTransferAmount',
@@ -174,7 +174,7 @@ export default function ProjectActivity() {
           'id',
           'timestamp',
           'txHash',
-          'caller',
+          'from',
           'beneficiary',
           'beneficiaryTicketAmount',
           'count',
@@ -194,7 +194,7 @@ export default function ProjectActivity() {
       },
       {
         entity: 'projectCreateEvent',
-        keys: ['id', 'txHash', 'timestamp', 'caller'],
+        keys: ['id', 'txHash', 'timestamp', 'from'],
       },
       {
         entity: 'v1ConfigureEvent',
@@ -202,7 +202,7 @@ export default function ProjectActivity() {
           'id',
           'timestamp',
           'txHash',
-          'caller',
+          'from',
           'ballot',
           'discountRate',
           'duration',

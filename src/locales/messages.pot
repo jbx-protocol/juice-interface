@@ -281,6 +281,9 @@ msgstr ""
 msgid "AVAILABLE"
 msgstr ""
 
+msgid "About"
+msgstr ""
+
 msgid "About Juicebox | Launch, fund & manage your project"
 msgstr ""
 

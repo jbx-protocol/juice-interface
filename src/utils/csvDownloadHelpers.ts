@@ -472,7 +472,7 @@ export async function downloadAdditionsToBalance(
       t`Date`,
       t`ETH transferred`,
       t`USD value of ETH transferred`,
-      t`Caller`,
+      t`From`,
       t`Transaction hash`,
     ], // CSV header row
   ]

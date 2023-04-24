@@ -27,7 +27,7 @@ export function TopSection() {
   )
 
   return (
-    <SectionContainer className="md:px-0">
+    <SectionContainer className="pt-10 pb-24 md:px-0">
       <div className="flex justify-center">
         <ul className="mb-8 flex gap-2 overflow-y-auto">
           {HEADER_TAGS.map(tag => (
@@ -52,6 +52,8 @@ export function TopSection() {
         </ul>
       </div>
       <SectionHeading
+        className="mb-8"
+        headingClassName="text-5xl md:text-7xl"
         heading={<Trans>Fund your thing</Trans>}
         subheading={
           <Trans>
@@ -59,7 +61,6 @@ export function TopSection() {
             scale their ideas & communities transparently on Ethereum.
           </Trans>
         }
-        className="text-5xl md:text-7xl"
       />
       <div className="mb-16 flex w-full justify-center md:w-auto">
         <Link href="/create">

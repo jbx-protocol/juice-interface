@@ -2,15 +2,16 @@ import { twMerge } from 'tailwind-merge'
 
 export const SectionHeading: React.FC<{
   className?: string
+  headingClassName?: string
   heading: string | JSX.Element
   subheading?: string | JSX.Element
-}> = ({ className, heading, subheading }) => {
+}> = ({ className, headingClassName, heading, subheading }) => {
   return (
-    <div className="mx-auto mb-8 max-w-3xl">
+    <div className={twMerge('mx-auto mb-16 max-w-3xl', className)}>
       <h2
         className={twMerge(
-          'text-primary mb-6 text-center text-3xl leading-tight md:text-5xl',
-          className,
+          'text-primary mb-0 pb-6 text-center text-3xl leading-tight md:text-5xl',
+          headingClassName,
         )}
       >
         {heading}

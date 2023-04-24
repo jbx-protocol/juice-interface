@@ -1445,6 +1445,9 @@ msgstr ""
 msgid "Free to launch, just pay gas."
 msgstr ""
 
+msgid "From"
+msgstr ""
+
 msgid "Fun"
 msgstr ""
 

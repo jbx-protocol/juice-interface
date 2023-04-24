@@ -394,7 +394,7 @@ export async function downloadRedemptions(
       t`Tokens redeemed`,
       t`ETH received`,
       t`USD value of ETH received`,
-      t`Caller`,
+      t`From`,
       t`Beneficiary`,
       t`Transaction hash`,
     ], // CSV header row

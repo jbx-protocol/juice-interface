@@ -33,10 +33,12 @@ const StepItem = ({
       )}
     </div>
     <div className="mt-3">
-      <h3 className="m-0 text-xl text-grey-900 dark:text-slate-100">
+      <h3 className="m-0 text-2xl text-grey-900 dark:text-slate-100">
         {header}
       </h3>
-      <p className="mb-0 mt-1 text-grey-700 dark:text-slate-200">{children}</p>
+      <p className="mb-0 mt-1 text-base text-grey-700 dark:text-slate-200">
+        {children}
+      </p>
     </div>
   </div>
 )
@@ -54,8 +56,8 @@ export function HowJuiceboxWorksSection() {
         }
       />
       <div className="my-0 mx-auto max-w-5xl">
-        <div className="justify-between gap-x-24 pb-16 lg:flex">
-          <div className="flex flex-col gap-y-12">
+        <div className="justify-between pb-16 lg:flex lg:items-center">
+          <div className="flex max-w-xl flex-col gap-y-12">
             <StepItem
               header={t`1. Create your project`}
               icon={<WrenchScrewdriverIcon className="h-6 w-6" />}
@@ -63,7 +65,7 @@ export function HowJuiceboxWorksSection() {
             >
               <Trans>
                 Juicebox is the best-in-class tool for crowdfunding your project
-                with ETH – build your supporters' trust by transparently setting
+                with ETH - build your supporters' trust by transparently setting
                 up payouts, token issuance, redemption, and other rules in
                 advance.
               </Trans>
@@ -92,7 +94,7 @@ export function HowJuiceboxWorksSection() {
               </Trans>
             </StepItem>
           </div>
-          <div className="mx-auto mt-20 w-full max-w-xs text-center lg:mt-0">
+          <div className="mx-auto mt-20 w-full max-w-xs text-center lg:mx-24 lg:mt-0">
             <Image
               width={292}
               height={564}

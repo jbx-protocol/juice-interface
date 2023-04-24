@@ -62,14 +62,14 @@ export function SuccessStoriesSection() {
         <div className="mt-16 flex flex-col flex-wrap justify-center gap-3 md:flex-row">
           <Link href="/success-stories/constitutiondao">
             <a>
-              <XLButton>
+              <XLButton type="default" size="large">
                 <Trans>Case studies</Trans>
               </XLButton>
             </a>
           </Link>
           <Link href="/create">
             <a>
-              <XLButton type="primary">
+              <XLButton type="primary" size="large">
                 <Trans>Create a project</Trans>
               </XLButton>
             </a>

@@ -9,7 +9,7 @@ export default function AboutPage() {
         title={t`About Juicebox | Launch, fund & manage your project`}
         overrideFormattedTitle
         url={process.env.NEXT_PUBLIC_BASE_URL + '/about'}
-        description={t`Learn more about Juicebox – the communities #1 choice to launch, get funding and grow their web3 project. Open-source on the Ethereum Blockchain.`}
+        description={t`Learn more about Juicebox - the communities #1 choice to launch, get funding and grow their web3 project. Open-source on the Ethereum Blockchain.`}
       />
 
       <AppWrapper>

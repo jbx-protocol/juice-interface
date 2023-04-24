@@ -35,7 +35,7 @@ export default function TrendingProjectCard({
 
   const percentageGain = useProjectTrendingPercentageIncrease({
     trendingVolume: project.trendingVolume,
-    volume: project.volume,
+    totalVolume: project.volume,
   })
   const percentGainText = project.createdWithinTrendingWindow
     ? t`New`

@@ -392,14 +392,14 @@ export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
 }
 
 export function useProjectTrendingPercentageIncrease({
-  volume,
+  totalVolume,
   trendingVolume,
 }: {
-  volume: BigNumber
+  totalVolume: BigNumber
   trendingVolume: BigNumber
 }): number {
   const percentageGain = useMemo(() => {
-    const preTrendingVolume = volume?.sub(trendingVolume)
+    const preTrendingVolume = totalVolume?.sub(trendingVolume)
 
     if (!preTrendingVolume?.gt(0)) return Infinity
 
@@ -422,7 +422,7 @@ export function useProjectTrendingPercentageIncrease({
     }
 
     return percentRounded
-  }, [volume, trendingVolume])
+  }, [totalVolume, trendingVolume])
 
   return percentageGain
 }

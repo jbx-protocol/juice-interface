@@ -45,9 +45,9 @@ export default function SiteNavigation() {
                   overflowY: isMobile ? 'auto' : 'visible',
                 }}
               >
-                <div className="stroke-secondary flex flex-col gap-8 border-y py-9 md:w-full md:flex-shrink md:flex-row md:justify-between md:border-y-0 md:py-0">
+                <div className="stroke-secondary flex flex-col gap-8 border-y py-9 md:w-full md:flex-shrink md:flex-row md:items-center md:justify-between md:border-y-0 md:py-0">
                   {/* Main site links */}
-                  <div className="flex flex-col gap-8 px-4 md:min-w-0 md:flex-shrink md:flex-row md:gap-8 md:px-0">
+                  <div className="flex flex-col gap-8 px-4 md:min-w-0 md:flex-shrink md:flex-row md:items-center md:gap-8 md:px-0">
                     {isMobile && (
                       <PatchedNextLink
                         className="text-primary text-base font-medium md:text-sm"

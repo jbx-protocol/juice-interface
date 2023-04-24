@@ -22,7 +22,7 @@ export default function DeployETHERC20ProjectPayerEventElem({
       header={t`Deployed a project payer address`}
       subject={
         <Trans>
-          called by <FormattedAddress address={event.from} />
+          from <FormattedAddress address={event.from} />
         </Trans>
       }
       extra={

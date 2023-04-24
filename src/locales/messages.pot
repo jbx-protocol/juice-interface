@@ -4115,10 +4115,10 @@ msgstr ""
 msgid "allocation"
 msgstr ""
 
-msgid "called by <0/>"
+msgid "days"
 msgstr ""
 
-msgid "days"
+msgid "from <0/>"
 msgstr ""
 
 msgid "handle"

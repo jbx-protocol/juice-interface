@@ -21,7 +21,7 @@ export function HomepageCard(props: {
       <Link prefetch={false} href={href}>
         <a
           className={twMerge(
-            'block w-[220px] flex-shrink-0 cursor-pointer select-none',
+            'block w-56 flex-shrink-0 cursor-pointer select-none',
             PROJECT_CARD_BORDER,
             PROJECT_CARD_BORDER_HOVER,
             PROJECT_CARD_BG,
@@ -36,7 +36,7 @@ export function HomepageCard(props: {
   return (
     <div
       className={twMerge(
-        'block w-[220px] flex-shrink-0 select-none',
+        'block w-56 flex-shrink-0 select-none',
         PROJECT_CARD_BORDER,
         PROJECT_CARD_BORDER_HOVER,
         PROJECT_CARD_BG,

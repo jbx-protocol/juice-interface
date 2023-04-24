@@ -11,7 +11,7 @@ import { ProjectCarousel } from '../ProjectCarousel'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
 
-const TRENDING_PROJECTS_LIMIT = 8
+const TRENDING_PROJECTS_LIMIT = 10
 
 const HEADER_TAGS: ProjectTagName[] = [
   'dao',

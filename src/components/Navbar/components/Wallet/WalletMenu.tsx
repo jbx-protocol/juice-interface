@@ -94,7 +94,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
             address={userAddress}
             tooltipDisabled
             linkDisabled
-            className="select-none text-sm font-medium text-bluebs-900 dark:text-bluebs-100"
+            className="select-none text-sm font-medium text-bluebs-700 dark:text-bluebs-100"
           />
         </div>
       }

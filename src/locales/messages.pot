@@ -1805,7 +1805,7 @@ msgstr ""
 msgid "Juicebox is reliable, open-source, audited, and has been battle-tested by more than 1,000 projects raising over 50,000 ETH."
 msgstr ""
 
-msgid "Juicebox is the best-in-class tool for crowdfunding your project with ETH – build your supporters' trust by transparently setting up payouts, token issuance, redemption, and other rules in advance."
+msgid "Juicebox is the best-in-class tool for crowdfunding your project with ETH - build your supporters' trust by transparently setting up payouts, token issuance, redemption, and other rules in advance."
 msgstr ""
 
 msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks </2>of crypto fundraising!"
@@ -1871,7 +1871,7 @@ msgstr ""
 msgid "Launch {projectTitle}"
 msgstr ""
 
-msgid "Learn more about Juicebox – the communities #1 choice to launch, get funding and grow their web3 project. Open-source on the Ethereum Blockchain."
+msgid "Learn more about Juicebox - the communities #1 choice to launch, get funding and grow their web3 project. Open-source on the Ethereum Blockchain."
 msgstr ""
 
 msgid "Leave this blank to make your currently connected wallet the project owner. Fill this out with an Ethereum address to make that address this project's owner."

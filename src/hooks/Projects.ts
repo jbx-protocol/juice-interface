@@ -236,7 +236,13 @@ export function useDBProjectsInfiniteQuery(
 }
 
 export function useTrendingProjects(count: number) {
-  const whereQuery: SGWhereArg<'project'>[] = []
+  const whereQuery: SGWhereArg<'project'>[] = [
+    {
+      key: 'trendingScore',
+      operator: 'gt',
+      value: 0,
+    },
+  ]
 
   if (ARCHIVED_SUBGRAPH_IDS.length) {
     whereQuery.push({

@@ -17,7 +17,7 @@ export function JuicyPicksSection() {
   }
 
   return (
-    <SectionContainer>
+    <SectionContainer className="md:px-0">
       <SectionHeading
         heading={<Trans>Juicy picks</Trans>}
         subheading={

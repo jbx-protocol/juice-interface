@@ -27,7 +27,7 @@ export function TopSection() {
   )
 
   return (
-    <SectionContainer>
+    <SectionContainer className="md:px-0">
       <div className="flex justify-center">
         <ul className="mb-8 flex gap-2 overflow-y-auto">
           {HEADER_TAGS.map(tag => (

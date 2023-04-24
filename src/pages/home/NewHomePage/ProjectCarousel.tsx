@@ -45,7 +45,7 @@ export function ProjectCarousel({ items }: { items: JSX.Element[] }) {
     <Swiper
       // install Swiper modules
       modules={[Navigation, A11y]}
-      spaceBetween={32}
+      spaceBetween={24}
       slidesPerView="auto"
       freeMode
       onProgress={(_, progress) => {

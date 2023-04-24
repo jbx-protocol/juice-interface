@@ -52,7 +52,7 @@ export function StatsSection() {
 
   return (
     <section className="bg-smoke-50 dark:bg-slate-700">
-      <div className="m-auto flex max-w-5xl flex-wrap justify-between gap-8 py-16 px-8 md:gap-4">
+      <div className="m-auto flex max-w-5xl flex-wrap justify-between gap-8 py-10 px-8 md:gap-4">
         <Stat
           value={formattedNum(stats?.projectsCount)}
           label={<Trans>Projects created</Trans>}

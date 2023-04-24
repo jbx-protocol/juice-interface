@@ -6,8 +6,10 @@ export function SectionContainer({
   className,
 }: PropsWithChildren<{ className?: string }>) {
   return (
-    <section className="w-full overflow-x-hidden py-20">
-      <div className={twJoin('container m-auto px-5 md:px-10', className)}>
+    <section className="w-full overflow-x-hidden">
+      <div
+        className={twJoin('container m-auto py-24 px-5 md:px-10', className)}
+      >
         {children}
       </div>
     </section>

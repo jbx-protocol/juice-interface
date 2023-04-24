@@ -34,8 +34,8 @@ export type Project = {
   createdWithinTrendingWindow: boolean
   volume: BigNumber
   volumeUSD: BigNumber
-  totalRedeemed: BigNumber
-  totalRedeemedUSD: BigNumber
+  redeemVolume: BigNumber
+  redeemVolumeUSD: BigNumber
   currentBalance: BigNumber
   participants: Participant[]
   payEvents: PayEvent[]
@@ -61,8 +61,8 @@ export const parseProjectJson = (j: Json<Project>): Project => ({
     'currentBalance',
     'volume',
     'volumeUSD',
-    'totalRedeemed',
-    'totalRedeemedUSD',
+    'redeemVolume',
+    'redeemVolumeUSD',
     'trendingScore',
     'trendingVolume',
     'metadataDomain',

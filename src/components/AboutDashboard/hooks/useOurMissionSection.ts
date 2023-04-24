@@ -3,13 +3,13 @@ import useSubgraphQuery from 'hooks/SubgraphQuery'
 export const useOurMissionSession = () => {
   const { data: protocolLogs, isLoading } = useSubgraphQuery({
     entity: 'protocolLog',
-    keys: ['volumePaidUSD'],
+    keys: ['volumeUSD'],
   })
 
-  const volumePaidUSD = protocolLogs?.[0]?.volumePaidUSD
+  const volumeUSD = protocolLogs?.[0]?.volumeUSD
 
   return {
-    volumePaidUSD,
+    volumeUSD,
     isLoading,
   }
 }

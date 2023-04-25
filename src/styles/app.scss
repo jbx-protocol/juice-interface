@@ -4,7 +4,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   @apply text-grey-900;
-  @apply bg-smoke-25;
+  @apply bg-white;
 }
 
 body.dark {
@@ -57,7 +57,8 @@ h6 {
   @apply text-primary;
 }
 
-h1, h2 {
+h1,
+h2 {
   @apply font-display;
   @apply font-bold;
 }
@@ -94,5 +95,3 @@ body,
 div {
   transition: background-color, border 100ms linear;
 }
-
-

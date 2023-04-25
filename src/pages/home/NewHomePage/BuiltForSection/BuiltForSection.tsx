@@ -1,12 +1,9 @@
 import { t, Trans } from '@lingui/macro'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { useContext } from 'react'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
 import { BuiltForCard } from './BuiltForCard'
 
 export function BuiltForSection() {
-  const { forThemeOption } = useContext(ThemeContext)
   return (
     <SectionContainer>
       <SectionHeading
@@ -20,11 +17,7 @@ export function BuiltForSection() {
       />
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
         <BuiltForCard
-          imageSrc={forThemeOption?.({
-            dark: '/assets/images/dao_od.png',
-            light: '/assets/images/dao_ol.png',
-          })}
-          imageAlt="Juicy Grapes"
+          card="daos"
           heading={t`DAOs`}
           subheading={
             <Trans>
@@ -34,11 +27,7 @@ export function BuiltForSection() {
           }
         />
         <BuiltForCard
-          imageSrc={forThemeOption?.({
-            dark: '/assets/images/crowdfunding_od.png',
-            light: '/assets/images/crowdfunding_ol.png',
-          })}
-          imageAlt="ETH coins"
+          card="crowdfunding"
           heading={t`Crowdfunding`}
           subheading={
             <Trans>
@@ -48,11 +37,7 @@ export function BuiltForSection() {
           }
         />
         <BuiltForCard
-          imageSrc={forThemeOption?.({
-            dark: '/assets/images/nft_od.png',
-            light: '/assets/images/nft_ol.png',
-          })}
-          imageAlt="Framed NFT"
+          card="nfts"
           heading={t`NFT Projects`}
           subheading={
             <Trans>
@@ -62,11 +47,7 @@ export function BuiltForSection() {
           }
         />
         <BuiltForCard
-          imageSrc={forThemeOption?.({
-            dark: '/assets/images/builders_od.png',
-            light: '/assets/images/builders_ol.png',
-          })}
-          imageAlt="Builder hodling wrench"
+          card="builders"
           heading={t`Creators & builders`}
           subheading={
             <Trans>

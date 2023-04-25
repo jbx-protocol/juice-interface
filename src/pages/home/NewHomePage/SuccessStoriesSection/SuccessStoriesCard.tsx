@@ -28,13 +28,17 @@ function SuccessStoriesCardTag({ tag }: { tag: ProjectTagName }) {
 export function SuccessStoriesCard({
   project,
   tags,
-  name,
+  nameOverride,
+  imageOverride,
 }: {
   project: ProjectCardProject
   tags: ProjectTagName[]
-  name?: string
+  nameOverride?: string
+  imageOverride?: string
 }) {
   const { data: metadata } = useProjectMetadata(project?.metadataUri)
+
+  const _name = nameOverride ?? metadata?.name
 
   return (
     <Link
@@ -52,12 +56,23 @@ export function SuccessStoriesCard({
               </li>
             ))}
           </ul>
-          <ProjectLogo
-            className="h-60 w-[280px] rounded-none"
-            uri={metadata?.logoUri}
-            name={metadata?.name}
-            projectId={project.projectId}
-          />
+          {imageOverride ? (
+            <img
+              className="h-full h-60 w-full w-[280px] rounded-none object-cover object-top"
+              src={imageOverride}
+              alt={_name + ' logo'}
+              loading="lazy"
+              crossOrigin="anonymous"
+              title={_name}
+            />
+          ) : (
+            <ProjectLogo
+              className="h-60 w-[280px] rounded-none"
+              uri={metadata?.logoUri}
+              name={metadata?.name}
+              projectId={project.projectId}
+            />
+          )}
         </div>
 
         <div className="px-4 pt-4 pb-6 text-left font-normal">
@@ -66,7 +81,7 @@ export function SuccessStoriesCard({
               className="mb-3 block overflow-hidden text-ellipsis whitespace-nowrap text-base font-medium text-black dark:text-slate-100"
               title={metadata.name}
             >
-              {name ?? metadata.name}
+              {_name}
             </div>
           ) : (
             <Skeleton paragraph={false} title={{ width: 120 }} active />

@@ -20,7 +20,7 @@ export function CaseStudyContentContainer({
     <>
       <section
         className={classNames(
-          `m-auto flex max-w-xl flex-col gap-8 pt-8 pb-20 text-base`,
+          `m-auto flex max-w-xl flex-col gap-8 px-4 pt-8 pb-20 text-base md:px-0`,
           CASE_STUDY_BODY_TEXT_COLOR,
           className,
         )}

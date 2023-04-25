@@ -15,11 +15,13 @@ export const CASE_STUDY_PROJECTS: {
   id: number
   tags: ProjectTagName[]
   nameOverride?: string
+  imageOverride?: string
 }[] = [
   {
     pv: PV_V1,
     id: 36, // cdao
     tags: ['fundraising', 'dao'],
+    imageOverride: '/assets/images/cdao.jpg',
   },
   {
     pv: PV_V1,

@@ -94,6 +94,11 @@ export default function SiteNavigation() {
 
 const resourcesMenuItems = [
   {
+    id: 'about',
+    label: t`About`,
+    href: '/about',
+  },
+  {
     id: 'join-discord',
     label: t`Join our Discord`,
     href: 'https://discord.gg/wFTh4QnDzk',

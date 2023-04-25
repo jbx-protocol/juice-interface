@@ -1379,6 +1379,9 @@ msgstr ""
 msgid "Explore Projects"
 msgstr ""
 
+msgid "Explore all projects"
+msgstr ""
+
 msgid "Explore categories"
 msgstr ""
 

@@ -9,8 +9,9 @@ import { useExploreCategories } from '../hooks/useExploreCategories'
 export const ExploreCategories = () => {
   const { tags, isLoading, error } = useExploreCategories()
   return (
-    <>
+    <div>
       <SectionHeading
+        className="mb-12"
         heading={<Trans>Explore categories</Trans>}
         subheading={
           <Trans>
@@ -41,7 +42,7 @@ export const ExploreCategories = () => {
           ))}
         />
       )}
-    </>
+    </div>
   )
 }
 

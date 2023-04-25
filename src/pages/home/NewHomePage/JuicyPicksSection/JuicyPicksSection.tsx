@@ -1,5 +1,8 @@
+import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
+import { XLButton } from 'components/XLButton'
 import { useMedia } from 'contexts/Theme/Media'
+import Link from 'next/link'
 import { HomepageProjectCard } from '../HomepageProjectCard'
 import { ProjectCarousel } from '../ProjectCarousel'
 import { SectionContainer } from '../SectionContainer'
@@ -53,8 +56,17 @@ export function JuicyPicksSection() {
         )}
       </div>
 
-      <div>
+      <div className="flex flex-col gap-16">
         <ExploreCategories />
+
+        <Link href="/projects">
+          <a className="mx-auto w-fit">
+            <XLButton size="large" className="flex items-center gap-3.5">
+              <Trans>Explore all projects</Trans>
+              <ArrowRightIcon className="h-6 w-6" />
+            </XLButton>
+          </a>
+        </Link>
       </div>
     </SectionContainer>
   )

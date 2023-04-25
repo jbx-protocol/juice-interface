@@ -19,30 +19,32 @@ export function HomepageCard(props: {
   if (href) {
     return (
       <Link prefetch={false} href={href}>
-        <a
-          className={twMerge(
-            'block w-56 flex-shrink-0 cursor-pointer select-none',
-            PROJECT_CARD_BORDER,
-            PROJECT_CARD_BORDER_HOVER,
-            PROJECT_CARD_BG,
-          )}
-        >
-          <InteralCardObject {...rest} />
-        </a>
+        <div className={PROJECT_CARD_BORDER_HOVER}>
+          <a
+            className={twMerge(
+              'block w-56 flex-shrink-0 cursor-pointer select-none',
+              PROJECT_CARD_BORDER,
+              PROJECT_CARD_BG,
+            )}
+          >
+            <InteralCardObject {...rest} />
+          </a>
+        </div>
       </Link>
     )
   }
 
   return (
-    <div
-      className={twMerge(
-        'block w-56 flex-shrink-0 select-none',
-        PROJECT_CARD_BORDER,
-        PROJECT_CARD_BORDER_HOVER,
-        PROJECT_CARD_BG,
-      )}
-    >
-      <InteralCardObject {...rest} />
+    <div className={PROJECT_CARD_BORDER_HOVER}>
+      <div
+        className={twMerge(
+          'block w-56 flex-shrink-0 select-none',
+          PROJECT_CARD_BORDER,
+          PROJECT_CARD_BG,
+        )}
+      >
+        <InteralCardObject {...rest} />
+      </div>
     </div>
   )
 }
@@ -56,7 +58,7 @@ const InteralCardObject = ({
   description?: ReactNode
   img: ReactNode
 }) => (
-  <>
+  <div>
     <div className="h-[192px] w-full overflow-hidden rounded-none object-cover">
       {img}
     </div>
@@ -68,5 +70,5 @@ const InteralCardObject = ({
 
       {description}
     </div>
-  </>
+  </div>
 )

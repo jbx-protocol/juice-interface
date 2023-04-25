@@ -82,6 +82,7 @@ export function TopSection() {
       </div>
       {trendingProjects ? (
         <ProjectCarousel
+          autoPlay
           items={trendingProjects?.map(p => (
             <HomepageProjectCard project={p} key={p.id} />
           ))}

@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import useMobile from 'hooks/Mobile'
 import { useState } from 'react'
-import { A11y, Navigation } from 'swiper'
+import { A11y, Autoplay, Navigation } from 'swiper'
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 import { twJoin } from 'tailwind-merge'
 
@@ -38,7 +38,13 @@ function PageButton({
   )
 }
 
-export function ProjectCarousel({ items }: { items: JSX.Element[] }) {
+export function ProjectCarousel({
+  items,
+  autoPlay,
+}: {
+  items: JSX.Element[]
+  autoPlay?: boolean
+}) {
   const [canSwipePrev, setCanSwipePrev] = useState(false)
   const [canSwipeNext, setCanSwipeNext] = useState(true)
 
@@ -47,7 +53,15 @@ export function ProjectCarousel({ items }: { items: JSX.Element[] }) {
   return (
     <Swiper
       // install Swiper modules
-      modules={[Navigation, A11y]}
+      modules={[Navigation, A11y, Autoplay]}
+      autoplay={
+        autoPlay
+          ? {
+              delay: 2500,
+              disableOnInteraction: true,
+            }
+          : false
+      }
       spaceBetween={24}
       slidesPerView="auto"
       freeMode

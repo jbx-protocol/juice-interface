@@ -29,6 +29,7 @@ export function SuccessStoriesSection() {
       project,
       tags: p.tags,
       nameOverride: p.nameOverride,
+      imageOverride: p.imageOverride,
     }
   }).filter((p): p is NonNullable<typeof p> => !!p)
 
@@ -37,7 +38,8 @@ export function SuccessStoriesSection() {
       key={project.project?.projectId}
       project={project.project}
       tags={project.tags}
-      name={project.nameOverride}
+      nameOverride={project.nameOverride}
+      imageOverride={project.imageOverride}
     />
   ))
 

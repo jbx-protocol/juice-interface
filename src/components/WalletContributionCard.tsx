@@ -1,4 +1,4 @@
-import { constants } from '@ethersproject/bignumber'
+import { WeiPerEther } from '@ethersproject/constants'
 import { Skeleton } from 'antd'
 import { PV_V2 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
@@ -7,10 +7,11 @@ import Link from 'next/link'
 import { isHardArchived } from 'utils/archived'
 import { formatDate } from 'utils/format/formatDate'
 import { v2v3ProjectRoute } from 'utils/routes'
+
 import { ArchivedBadge } from './ArchivedBadge'
+import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
-import ETHAmount from './currency/ETHAmount'
 
 export default function WalletContributionCard({
   contribution,
@@ -24,7 +25,7 @@ export default function WalletContributionCard({
   const isArchived = isHardArchived({ pv, projectId }) || metadata?.archived
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
-  const precision = volume?.gt(0) && volume.lt(constants.WeiPerEther) ? 2 : 0
+  const precision = volume?.gt(0) && volume.lt(WeiPerEther) ? 2 : 0
 
   const projectCardHref =
     pv === PV_V2

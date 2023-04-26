@@ -3,6 +3,7 @@ import { CASE_STUDY_PROJECTS } from 'constants/successStoryProjects'
 import { useProjectsQuery } from 'hooks/Projects'
 import { PV } from 'models/pv'
 import { Project } from 'models/subgraph-entities/vX/project'
+import { ProjectCarousel } from 'pages/home/NewHomePage/ProjectCarousel'
 import { SuccessStoriesCard } from 'pages/home/NewHomePage/SuccessStoriesSection/SuccessStoriesCard'
 
 export function ReadMoreCaseStudies({
@@ -42,7 +43,7 @@ export function ReadMoreCaseStudies({
       <h4 className="text-2xl">
         <Trans>Read more case studies</Trans>
       </h4>
-      <div className="flex flex-col gap-10 pt-8 md:flex-row">
+      <div className="hidden flex-col gap-10 pt-8 md:flex md:flex-row">
         {readMoreProjects.map(project =>
           project.project ? (
             <SuccessStoriesCard
@@ -54,6 +55,23 @@ export function ReadMoreCaseStudies({
             />
           ) : null,
         )}
+      </div>
+      <div className="block w-full px-4 pt-8 md:hidden">
+        <ProjectCarousel
+          items={readMoreProjects.map(project =>
+            project.project ? (
+              <SuccessStoriesCard
+                key={project.project.projectId}
+                project={project.project}
+                tags={project.tags}
+                nameOverride={project.nameOverride}
+                imageOverride={project.imageOverride}
+              />
+            ) : (
+              <></>
+            ),
+          )}
+        />
       </div>
     </div>
   )

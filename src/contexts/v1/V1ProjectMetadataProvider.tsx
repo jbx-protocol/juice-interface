@@ -1,9 +1,9 @@
 import { PV_V1 } from 'constants/pv'
-import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import useProjectIdForHandle from 'hooks/v1/contractReader/useProjectIdForHandle'
 import { ProjectMetadata } from 'models/projectMetadata'
 import { PropsWithChildren } from 'react'
+import { isHardArchived } from 'utils/archived'
 
 export function V1ProjectMetadataProvider({
   handle,
@@ -15,9 +15,11 @@ export function V1ProjectMetadataProvider({
 }>) {
   const { data: projectId } = useProjectIdForHandle(handle)
 
-  const isArchived = projectId
-    ? V1ArchivedProjectIds.includes(projectId.toNumber()) || metadata?.archived
-    : false
+  const isArchived =
+    ((projectId &&
+      isHardArchived({ pv: PV_V1, projectId: projectId.toNumber() })) ||
+      metadata?.archived) ??
+    false
 
   return (
     <ProjectMetadataContext.Provider

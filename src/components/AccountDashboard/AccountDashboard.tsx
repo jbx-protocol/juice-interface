@@ -1,11 +1,8 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { Button, Select, Skeleton, Tabs } from 'antd'
-import { ArchivedBadge } from 'components/ArchivedBadge'
+import { Button, Select, Tabs } from 'antd'
 import { Badge } from 'components/Badge'
-import ETHAmount from 'components/currency/ETHAmount'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import Grid from 'components/Grid'
@@ -16,17 +13,13 @@ import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { SocialButton } from 'components/SocialButton'
-import { PV_V1, PV_V2 } from 'constants/pv'
-import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
-import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
+import WalletContributionCard from 'components/WalletContributionCard'
 import {
   OrderDirection,
   Participant_OrderBy,
   useWalletContributionsQuery,
-  WalletContributionsQuery,
 } from 'generated/graphql'
 import useMobile from 'hooks/Mobile'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useMyProjectsQuery } from 'hooks/Projects'
 import { useWallet } from 'hooks/Wallet'
 import { useWalletSignIn } from 'hooks/WalletSignIn'
@@ -38,7 +31,6 @@ import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { ensAvatarUrlForAddress } from 'utils/ens'
 import { etherscanLink } from 'utils/etherscan'
-import { formatDate } from 'utils/format/formatDate'
 
 function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
   return (
@@ -47,61 +39,6 @@ function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
         <ProjectCard project={p} key={p.id} />
       ))}
     </Grid>
-  )
-}
-
-export type WalletContribution = WalletContributionsQuery['participants'][0] & {
-  volume: BigNumber
-  pv: PV
-}
-
-function ParticipantContribution({
-  contribution,
-}: {
-  contribution: WalletContribution
-}) {
-  const { pv, projectId, project, volume, lastPaidTimestamp } = contribution
-
-  const { data: metadata } = useProjectMetadata(project.metadataUri)
-
-  const isArchived =
-    (pv === PV_V1 && V1ArchivedProjectIds.includes(projectId)) ||
-    (pv === PV_V2 && V2ArchivedProjectIds.includes(projectId)) ||
-    metadata?.archived
-
-  // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
-  const precision = volume?.gt(0) && volume.lt(constants.WeiPerEther) ? 2 : 0
-
-  return (
-    <div className="relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-lg bg-white py-4 dark:bg-slate-600 md:border md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
-      <div className="mr-5">
-        <ProjectLogo
-          className="h-20 w-20 md:h-24 md:w-24"
-          uri={metadata?.logoUri}
-          name={metadata?.name}
-          projectId={projectId}
-        />
-      </div>
-      <div className="min-w-0 flex-1 overflow-hidden overflow-ellipsis font-normal">
-        {metadata ? (
-          <span className="m-0 font-heading text-xl leading-8 text-black dark:text-slate-100">
-            {metadata.name}
-          </span>
-        ) : (
-          <Skeleton paragraph={false} title={{ width: 120 }} active />
-        )}
-
-        <div className="font-medium text-black dark:text-slate-100">
-          <ETHAmount amount={volume} precision={precision} />
-        </div>
-
-        <div className="text-black dark:text-slate-100">
-          Last paid {formatDate(lastPaidTimestamp * 1000, 'YYYY-MM-DD')}
-        </div>
-      </div>
-      {isArchived && <ArchivedBadge />}
-      {!metadata && <Loading />}
-    </div>
   )
 }
 
@@ -166,7 +103,7 @@ function ContributedList({ address }: { address: string }) {
 
       <Grid>
         {contributions?.map(c => (
-          <ParticipantContribution contribution={c} key={c.project.id} />
+          <WalletContributionCard contribution={c} key={c.project.id} />
         ))}
       </Grid>
     </div>

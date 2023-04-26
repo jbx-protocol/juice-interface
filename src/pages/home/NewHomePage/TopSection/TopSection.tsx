@@ -32,7 +32,7 @@ export function TopSection() {
         <ul className="mb-8 flex gap-2 overflow-y-auto">
           {HEADER_TAGS.map(tag => (
             <li key={tag}>
-              <Link href={`/projects?tags=${tag}`}>
+              <Link href={`/projects?tab=all&tags=${tag}`}>
                 <a>
                   <ProjectTag tag={tag} clickable />
                 </a>

@@ -38,7 +38,7 @@ export function WhyJuiceboxCard({
       onMouseMove={!isMobile ? handleMouseMove : undefined}
       onMouseLeave={!isMobile ? handleMouseLeave : undefined}
       className={twJoin(
-        'max-w-xs flex-shrink-0 rounded-lg px-5 py-8 text-center shadow-sm transition-transform',
+        'max-w-xs flex-shrink-0 rounded-lg px-5 py-8 text-center shadow-sm',
         className,
       )}
       style={{

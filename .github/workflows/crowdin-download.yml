@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 16
       - name: Download from Crowdin
-        uses: crowdin/github-action@1.7.1
+        uses: crowdin/github-action@1.8.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

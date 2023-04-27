@@ -8,10 +8,9 @@ const QwestiveSDKContextProvider: React.FC = ({ children }) => {
   const scriptContext = useQwestiveSDKProvider()
 
   useEffect(() => {
-    if (!userAddress) return
-
-    scriptContext.qwestiveTracker?.setAlias?.({
-      id: userAddress,
+    if (!userAddress || scriptContext.qwestiveTracker.isLoading) return
+    scriptContext.qwestiveTracker?.setReferral?.({
+      publicKey: userAddress,
     })
   }, [userAddress, scriptContext.qwestiveTracker])
 

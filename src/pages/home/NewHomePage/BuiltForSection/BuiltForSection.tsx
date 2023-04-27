@@ -7,6 +7,7 @@ import { BuiltForCard } from './BuiltForCard'
 
 const PARALAX_WEIGHT = 0.05
 const PARALAX_DEBOUNCE_MS = 10
+const PARALAX_OFFSET = 650 // TODO will break if anything above the homepage changes
 
 export function BuiltForSection() {
   const [cardImageTranslateY, setCardImageTranslateY] = useState<number>(0)
@@ -19,7 +20,7 @@ export function BuiltForSection() {
 
     const handleScroll = debounce(() => {
       const newCardImageTranslateY =
-        (window.scrollY + containerTop * 2) * PARALAX_WEIGHT
+        (window.scrollY + PARALAX_OFFSET) * PARALAX_WEIGHT
       setCardImageTranslateY(newCardImageTranslateY)
     }, PARALAX_DEBOUNCE_MS)
 

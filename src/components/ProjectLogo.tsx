@@ -12,11 +12,13 @@ export default function ProjectLogo({
   uri,
   name,
   projectId,
+  lazyLoad,
 }: {
   className?: string
   uri: string | undefined
   name: string | undefined
   projectId?: number | undefined
+  lazyLoad?: boolean
 }) {
   const [srcLoadError, setSrcLoadError] = useState(false)
   const validImg = uri && !srcLoadError
@@ -52,7 +54,7 @@ export default function ProjectLogo({
           src={imageSrc}
           alt={name + ' logo'}
           onError={() => setSrcLoadError(true)}
-          loading="lazy"
+          loading={lazyLoad ? 'lazy' : undefined}
           crossOrigin="anonymous"
           title={name}
         />

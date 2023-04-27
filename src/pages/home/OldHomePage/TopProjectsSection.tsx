@@ -43,6 +43,7 @@ const SmallProjectCardMobile = ({
             uri={metadata?.logoUri}
             name={metadata?.name}
             projectId={project.projectId}
+            lazyLoad
           />
         </div>
 
@@ -84,6 +85,7 @@ const SmallProjectCard = ({ project }: { project: ProjectCardProject }) => {
               uri={metadata?.logoUri}
               name={metadata?.name}
               projectId={project.projectId}
+              lazyLoad
             />
           </div>
 

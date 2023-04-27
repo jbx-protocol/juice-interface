@@ -58,7 +58,7 @@ export function SuccessStoriesCard({
           </ul>
           {imageOverride ? (
             <img
-              className="h-full h-60 w-full w-[280px] rounded-none object-cover object-top"
+              className="h-60 w-[280px] rounded-none object-cover object-top"
               src={imageOverride}
               alt={_name + ' logo'}
               loading="lazy"
@@ -71,6 +71,7 @@ export function SuccessStoriesCard({
               uri={metadata?.logoUri}
               name={metadata?.name}
               projectId={project.projectId}
+              lazyLoad
             />
           )}
         </div>

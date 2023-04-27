@@ -36,7 +36,7 @@ export function JuicyPicksSection() {
         {isCarouselBreakpoint ? (
           <ProjectCarousel
             items={projects.map(p => (
-              <HomepageProjectCard key={p.projectId} project={p} />
+              <HomepageProjectCard key={p.projectId} project={p} lazyLoad />
             ))}
           />
         ) : (
@@ -49,6 +49,7 @@ export function JuicyPicksSection() {
                 <HomepageProjectCard
                   key={project.projectId}
                   project={project}
+                  lazyLoad
                 />
               ))}
             </div>

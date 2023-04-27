@@ -132,6 +132,7 @@ export default function ProjectCard({
               uri={metadata?.logoUri}
               name={metadata?.name}
               projectId={projectCardData.projectId}
+              lazyLoad
             />
           </div>
           <div className="min-w-0 flex-1 overflow-hidden overflow-ellipsis font-normal">

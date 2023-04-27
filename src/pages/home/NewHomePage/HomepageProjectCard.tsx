@@ -35,6 +35,7 @@ function Statistic({
 // Used in Trending Projects Caroursel and Juicy Picks section
 export function HomepageProjectCard({
   project,
+  lazyLoad,
 }: {
   project: Pick<
     Project,
@@ -46,6 +47,7 @@ export function HomepageProjectCard({
     | 'pv'
     | 'projectId'
   >
+  lazyLoad?: boolean
 }) {
   const { data: metadata, isLoading } = useProjectMetadata(project.metadataUri)
 
@@ -58,6 +60,7 @@ export function HomepageProjectCard({
           uri={metadata?.logoUri}
           name={metadata?.name}
           projectId={project.projectId}
+          lazyLoad={lazyLoad}
         />
       }
       title={

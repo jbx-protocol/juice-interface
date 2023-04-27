@@ -49,6 +49,7 @@ export default function TrendingProjectCard({
       uri={metadata?.logoUri}
       name={metadata?.name}
       projectId={project.projectId}
+      lazyLoad
     />
   )
 

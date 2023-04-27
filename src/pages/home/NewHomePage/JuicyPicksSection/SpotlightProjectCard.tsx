@@ -61,6 +61,7 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
         uri={metadata?.logoUri}
         name={metadata?.name}
         className="relative mx-5 mt-[-86px] h-44 w-44 border-4 border-solid border-white dark:border-slate-900"
+        lazyLoad
       />
       <div className="px-8 pb-8 pt-4">
         <div className="mb-5 font-heading text-3xl">{metadata?.name}</div>

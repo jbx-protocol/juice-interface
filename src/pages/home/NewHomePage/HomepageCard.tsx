@@ -18,8 +18,8 @@ export function HomepageCard(props: {
   const { href, ...rest } = props
   if (href) {
     return (
-      <Link prefetch={false} href={href}>
-        <div className={PROJECT_CARD_BORDER_HOVER}>
+      <div className={PROJECT_CARD_BORDER_HOVER}>
+        <Link prefetch={false} href={href}>
           <a
             className={twMerge(
               'block w-56 flex-shrink-0 cursor-pointer select-none',
@@ -29,8 +29,8 @@ export function HomepageCard(props: {
           >
             <InteralCardObject {...rest} />
           </a>
-        </div>
-      </Link>
+        </Link>
+      </div>
     )
   }
 

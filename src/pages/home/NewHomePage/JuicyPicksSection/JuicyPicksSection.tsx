@@ -24,7 +24,7 @@ export function JuicyPicksSection() {
     <SectionContainer className="flex flex-col gap-24 md:px-0">
       <div>
         <SectionHeading
-          className="mb-12"
+          className="mb-6"
           heading={<Trans>Juicy picks</Trans>}
           subheading={
             <Trans>

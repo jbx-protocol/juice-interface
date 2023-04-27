@@ -83,7 +83,7 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
           {metadata?.description ? (
             <Paragraph
               description={metadata.description}
-              characterLimit={200}
+              characterLimit={150}
               className="text-sm text-grey-600 dark:text-slate-200"
             />
           ) : null}

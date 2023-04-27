@@ -5,8 +5,8 @@ import { useContext } from 'react'
 
 export function BuiltForBlobAndImage({
   card,
-  imageTranslateY,
-}: {
+}: // imageTranslateY,
+{
   card: 'daos' | 'crowdfunding' | 'nfts' | 'builders'
   imageTranslateY?: number
 }) {
@@ -23,7 +23,8 @@ export function BuiltForBlobAndImage({
 
   // Parallax style
   const transformStyle = {
-    transform: `translateY(calc(-50% + ${imageTranslateY}px))`,
+    // TODO re-enable the below line when 'return to homepage' bug is fixed
+    // transform: `translateY(calc(-50% + ${imageTranslateY}px))`,
     transformOrigin: 'center',
   }
 

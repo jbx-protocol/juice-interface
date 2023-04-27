@@ -18,7 +18,7 @@ export default function StudioDAOPage() {
     <AppWrapper>
       <CaseStudyPageWrapper>
         <CaseStudiesHeader
-          header="/assets/studiodao-casestudy-banner.png"
+          header="/assets/images/case-studies/studiodao-casestudy-banner.png"
           title="StudioDAO"
           subtitle={
             <Trans>
@@ -55,7 +55,7 @@ export default function StudioDAOPage() {
           </p>
 
           <Image
-            src="/assets/studiodao-casestudy-banner2.png"
+            src="/assets/images/case-studies/studiodao-casestudy-banner2.png"
             alt="StudioDAO Banner 2"
             width={592}
             height={592}

@@ -18,7 +18,7 @@ export default function ConstitutionDAOPage() {
     <AppWrapper>
       <CaseStudyPageWrapper>
         <CaseStudiesHeader
-          header="/assets/constitution-casestudy-banner.png"
+          header="/assets/images/case-studies/constitution-casestudy-banner.png"
           title="ConstitutionDAO"
           subtitle={
             <Trans>
@@ -59,7 +59,7 @@ export default function ConstitutionDAOPage() {
           </p>
 
           <Image
-            src="/assets/constitution-casestudy-banner2.png"
+            src="/assets/images/case-studies/constitution-casestudy-banner2.png"
             alt="The Gang Buys the Constitution"
             width={592}
             height={256}

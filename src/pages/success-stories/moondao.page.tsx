@@ -18,7 +18,7 @@ export default function MoonDAOPage() {
     <AppWrapper>
       <CaseStudyPageWrapper>
         <CaseStudiesHeader
-          header="/assets/moondao-casestudy-banner.png"
+          header="/assets/images/case-studies/moondao-casestudy-banner.png"
           title="MoonDAO"
           subtitle={
             <Trans>
@@ -57,7 +57,7 @@ export default function MoonDAOPage() {
           </p>
 
           <Image
-            src="/assets/moondao-casestudy-banner2.png"
+            src="/assets/images/case-studies/moondao-casestudy-banner2.png"
             alt="MoonDAO one small step"
             width={592}
             height={256}

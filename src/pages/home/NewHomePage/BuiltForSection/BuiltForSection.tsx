@@ -1,12 +1,34 @@
 import { t, Trans } from '@lingui/macro'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { useContext } from 'react'
+import debounce from 'lodash/debounce'
+import { useEffect, useRef, useState } from 'react'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
 import { BuiltForCard } from './BuiltForCard'
 
+const PARALAX_WEIGHT = 0.05
+const PARALAX_DEBOUNCE_MS = 10
+
 export function BuiltForSection() {
-  const { forThemeOption } = useContext(ThemeContext)
+  const [cardImageTranslateY, setCardImageTranslateY] = useState<number>(0)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Handle parallax effect on scroll
+  useEffect(() => {
+    const containerTop = containerRef?.current?.getBoundingClientRect()?.top
+    if (!containerTop) return
+
+    const handleScroll = debounce(() => {
+      const newCardImageTranslateY =
+        (window.scrollY + containerTop * 2) * PARALAX_WEIGHT
+      setCardImageTranslateY(newCardImageTranslateY)
+    }, PARALAX_DEBOUNCE_MS)
+
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   return (
     <SectionContainer>
       <SectionHeading
@@ -18,14 +40,14 @@ export function BuiltForSection() {
           </Trans>
         }
       />
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+      <div
+        className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4"
+        ref={containerRef}
+      >
         <BuiltForCard
-          imageSrc={forThemeOption?.({
-            dark: '/assets/images/dao_od.png',
-            light: '/assets/images/dao_ol.png',
-          })}
-          imageAlt="Juicy Grapes"
+          card="daos"
           heading={t`DAOs`}
+          imageTranslateY={cardImageTranslateY}
           subheading={
             <Trans>
               Launch a Decentralized Autonomous Organisation with governance in
@@ -34,12 +56,9 @@ export function BuiltForSection() {
           }
         />
         <BuiltForCard
-          imageSrc={forThemeOption?.({
-            dark: '/assets/images/crowdfunding_od.png',
-            light: '/assets/images/crowdfunding_ol.png',
-          })}
-          imageAlt="ETH coins"
+          card="crowdfunding"
           heading={t`Crowdfunding`}
+          imageTranslateY={cardImageTranslateY}
           subheading={
             <Trans>
               All-in-one crowdfunding with powerful treasury management and
@@ -48,12 +67,9 @@ export function BuiltForSection() {
           }
         />
         <BuiltForCard
-          imageSrc={forThemeOption?.({
-            dark: '/assets/images/nft_od.png',
-            light: '/assets/images/nft_ol.png',
-          })}
-          imageAlt="Framed NFT"
+          card="nfts"
           heading={t`NFT Projects`}
+          imageTranslateY={cardImageTranslateY}
           subheading={
             <Trans>
               Build and launch your NFT project right here on Juicebox with
@@ -62,12 +78,9 @@ export function BuiltForSection() {
           }
         />
         <BuiltForCard
-          imageSrc={forThemeOption?.({
-            dark: '/assets/images/builders_od.png',
-            light: '/assets/images/builders_ol.png',
-          })}
-          imageAlt="Builder hodling wrench"
+          card="builders"
           heading={t`Creators & builders`}
+          imageTranslateY={cardImageTranslateY}
           subheading={
             <Trans>
               Whatever you're building or creating — get it launched and funded

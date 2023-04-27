@@ -18,7 +18,7 @@ export default function SharkDAOPage() {
     <AppWrapper>
       <CaseStudyPageWrapper>
         <CaseStudiesHeader
-          header="/assets/sharkdao-casestudy-banner.png"
+          header="/assets/images/case-studies/sharkdao-casestudy-banner.png"
           title="SharkDAO"
           subtitle={
             <Trans>
@@ -57,7 +57,7 @@ export default function SharkDAOPage() {
           </p>
 
           <Image
-            src="/assets/sharkdao-casestudy-banner2.png"
+            src="/assets/images/case-studies/sharkdao-casestudy-banner2.png"
             alt="SharkDAO Banner 2"
             width={592}
             height={311}

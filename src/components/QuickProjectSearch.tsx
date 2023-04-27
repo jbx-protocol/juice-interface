@@ -52,10 +52,15 @@ export default function QuickProjectSearch({
     }
   }, [inputText])
 
-  const { data: searchResults, isLoading } = useDBProjectsQuery({
-    text: searchText,
-    pageSize: MAX_RESULTS,
-  })
+  const { data: searchResults, isLoading } = useDBProjectsQuery(
+    {
+      text: searchText,
+      pageSize: MAX_RESULTS,
+    },
+    {
+      enabled: modal.visible,
+    },
+  )
 
   const goToProject = useCallback(() => {
     if (highlightIndex === undefined || !searchResults?.length) return

@@ -44,7 +44,7 @@ export function CaseStudiesHeader({
           alt={`Cover image for ${title}`}
         />
       </div>
-      <div className="m-auto max-w-xl px-4 text-base md:px-0">
+      <div className="m-auto max-w-prose px-4 text-base md:px-0">
         <MinorHeading className="pt-10 pb-3">
           <Trans>Case study</Trans>
         </MinorHeading>

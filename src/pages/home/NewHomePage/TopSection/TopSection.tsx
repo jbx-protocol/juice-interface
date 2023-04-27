@@ -3,7 +3,9 @@ import { Trans } from '@lingui/macro'
 import { Badge } from 'components/Badge'
 import { ProjectTag } from 'components/ProjectTags/ProjectTag'
 import { XLButton } from 'components/XLButton'
+import { HOMEPAGE } from 'constants/fathomEvents'
 import { useTrendingProjects } from 'hooks/Projects'
+import { trackFathomGoal } from 'lib/fathom'
 import { ProjectTagName } from 'models/project-tags'
 import Link from 'next/link'
 import { HomepageProjectCard } from '../HomepageProjectCard'
@@ -65,7 +67,14 @@ export function TopSection() {
       <div className="mb-16 flex w-full justify-center md:w-auto">
         <Link href="/create">
           <a className="w-full md:w-auto">
-            <XLButton size="large" type="primary" className="w-full md:w-auto">
+            <XLButton
+              size="large"
+              type="primary"
+              className="w-full md:w-auto"
+              onClick={() => {
+                trackFathomGoal(HOMEPAGE.CREATE_A_PROJECT_CTA_NEW)
+              }}
+            >
               <Trans>Create a project</Trans>
             </XLButton>
           </a>

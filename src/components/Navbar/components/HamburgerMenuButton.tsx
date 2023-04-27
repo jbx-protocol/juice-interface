@@ -8,7 +8,12 @@ export const MobileMenuButton = ({
   className?: string
   open: boolean
 }) => (
-  <Popover.Button className={className} as="div">
+  <Popover.Button
+    className={className}
+    as="div"
+    role="button"
+    aria-label="menu button"
+  >
     <div>
       {open ? (
         <XMarkIcon

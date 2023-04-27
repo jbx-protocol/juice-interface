@@ -1,4 +1,4 @@
-import { CurrencyName, CURRENCY_METADATA } from 'constants/currency'
+import { CURRENCY_METADATA, CurrencyName } from 'constants/currency'
 
 export default function CurrencySymbol({
   currency,
@@ -9,9 +9,5 @@ export default function CurrencySymbol({
 
   const metadata = CURRENCY_METADATA[currency]
 
-  return (
-    <span className={currency === 'ETH' ? 'font-sans' : ''}>
-      {metadata.symbol}
-    </span>
-  )
+  return <>{metadata.symbol}</>
 }

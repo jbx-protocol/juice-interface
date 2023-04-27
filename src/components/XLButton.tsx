@@ -1,5 +1,5 @@
 import { Button } from 'antd'
-import { BaseButtonProps } from 'antd/lib/button/button'
+import { ButtonProps } from 'antd/lib/button/button'
 import { PropsWithChildren } from 'react'
 import { classNames } from 'utils/classNames'
 
@@ -7,7 +7,7 @@ export function XLButton({
   children,
   className,
   ...props
-}: PropsWithChildren<{ className?: string } & BaseButtonProps>) {
+}: PropsWithChildren<{ className?: string } & ButtonProps>) {
   return (
     <Button
       {...props}

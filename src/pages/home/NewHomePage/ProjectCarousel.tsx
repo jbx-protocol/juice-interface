@@ -24,6 +24,7 @@ function PageButton({
 
   return (
     <button
+      aria-label="carousel navigation button"
       className={twJoin(
         'absolute top-1/3  z-10 flex h-14 w-14 items-center justify-center rounded-full border border-grey-300 bg-white text-grey-700 shadow-lg transition-transform hover:scale-105',
         className,

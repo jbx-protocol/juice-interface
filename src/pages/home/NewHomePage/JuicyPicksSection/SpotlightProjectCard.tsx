@@ -7,8 +7,10 @@ import ETHAmount from 'components/currency/ETHAmount'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectTrendingPercentageIncrease } from 'hooks/Projects'
 import { Project } from 'models/subgraph-entities/vX/project'
+import Link from 'next/link'
 import { twJoin } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { v2v3ProjectRoute } from 'utils/routes'
 import { PROJECT_CARD_BG, PROJECT_CARD_BORDER } from '../HomepageProjectCard'
 
 function Statistic({
@@ -20,7 +22,7 @@ function Statistic({
 }) {
   return (
     <div>
-      <div className="text-tertiary mb-1 text-sm font-medium uppercase">
+      <div className="text-secondary mb-1 text-sm font-medium uppercase">
         <Trans>{name}</Trans>
       </div>
       <div className="text-primary font-heading text-2xl font-medium">
@@ -88,10 +90,19 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
             />
           ) : null}
         </div>
-        <Button>
-          <Trans>Go to project</Trans>
-          <ArrowRightIcon className="ml-2 inline h-4 w-4" />
-        </Button>
+        <Link
+          href={v2v3ProjectRoute({
+            projectId: project.projectId,
+            handle: project.handle,
+          })}
+        >
+          <a>
+            <Button>
+              <Trans>Go to project</Trans>
+              <ArrowRightIcon className="ml-2 inline h-4 w-4" />
+            </Button>
+          </a>
+        </Link>
       </div>
     </div>
   )

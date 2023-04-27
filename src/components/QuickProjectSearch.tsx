@@ -52,10 +52,15 @@ export default function QuickProjectSearch({
     }
   }, [inputText])
 
-  const { data: searchResults, isLoading } = useDBProjectsQuery({
-    text: searchText,
-    pageSize: MAX_RESULTS,
-  })
+  const { data: searchResults, isLoading } = useDBProjectsQuery(
+    {
+      text: searchText,
+      pageSize: MAX_RESULTS,
+    },
+    {
+      enabled: modal.visible,
+    },
+  )
 
   const goToProject = useCallback(() => {
     if (highlightIndex === undefined || !searchResults?.length) return
@@ -223,7 +228,7 @@ export default function QuickProjectSearch({
                     </div>
 
                     <ProjectVersionBadge
-                      className="text-slate-200 dark:text-slate-300"
+                      className="text-secondary"
                       transparent
                       size="small"
                       versionText={`V${p.pv}`}

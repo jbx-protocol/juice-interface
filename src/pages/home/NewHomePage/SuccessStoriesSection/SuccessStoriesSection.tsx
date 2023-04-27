@@ -65,7 +65,7 @@ export function SuccessStoriesSection() {
           <Link href="/success-stories/constitutiondao">
             <a>
               <XLButton type="default" size="large">
-                <Trans>Case studies</Trans>
+                <Trans>Read case studies</Trans>
               </XLButton>
             </a>
           </Link>

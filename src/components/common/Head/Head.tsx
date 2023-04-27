@@ -7,8 +7,8 @@ export const Head: VFC<SEOProps> = props => {
   return (
     <SEO {...props}>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="theme-color" content="#f5a312" />
-      <meta name="msapplication-TileColor" content="#f5a312" />
+      <meta name="theme-color" content="#5777EB" />
+      <meta name="msapplication-TileColor" content="#5777EB" />
 
       <link
         rel="apple-touch-icon"
@@ -28,7 +28,7 @@ export const Head: VFC<SEOProps> = props => {
         href="/favicon-16x16.png"
       />
       <link rel="manifest" href="/manifest.json" />
-      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#f5a312" />
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5777EB" />
       {FONT_PATHS.map(path => (
         <link
           key={path}

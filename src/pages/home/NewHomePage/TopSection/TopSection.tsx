@@ -27,9 +27,9 @@ export function TopSection() {
   )
 
   return (
-    <SectionContainer className="pt-10 pb-24 md:px-0">
+    <SectionContainer className="pt-6 pb-24 md:px-0 md:pt-10">
       <div className="flex justify-center">
-        <ul className="mb-8 flex gap-2 overflow-y-auto">
+        <ul className="mb-5 flex gap-2 overflow-y-auto py-4">
           {HEADER_TAGS.map(tag => (
             <li key={tag}>
               <Link href={`/projects?tab=all&tags=${tag}`}>

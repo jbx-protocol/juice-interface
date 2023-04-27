@@ -1,7 +1,7 @@
-import { A11y, Navigation } from 'swiper'
-
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import useMobile from 'hooks/Mobile'
 import { useState } from 'react'
+import { A11y, Navigation } from 'swiper'
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 import { twJoin } from 'tailwind-merge'
 
@@ -24,7 +24,6 @@ function PageButton({
 
   return (
     <button
-      aria-label="project carousel navigation button"
       className={twJoin(
         'absolute top-1/3  z-10 flex h-14 w-14 items-center justify-center rounded-full border border-grey-300 bg-white text-grey-700 shadow-lg transition-transform hover:scale-105',
         className,
@@ -41,6 +40,8 @@ function PageButton({
 export function ProjectCarousel({ items }: { items: JSX.Element[] }) {
   const [canSwipePrev, setCanSwipePrev] = useState(false)
   const [canSwipeNext, setCanSwipeNext] = useState(true)
+
+  const isMobile = useMobile()
 
   return (
     <Swiper
@@ -63,20 +64,24 @@ export function ProjectCarousel({ items }: { items: JSX.Element[] }) {
         }
       }}
     >
-      {canSwipePrev && (
-        <PageButton
-          className="left-0"
-          iconComponent={<ChevronLeftIcon className="h-6 w-6" />}
-          direction="prev"
-        />
-      )}
-      {canSwipeNext && (
-        <PageButton
-          className="right-0"
-          iconComponent={<ChevronRightIcon className="h-6 w-6" />}
-          direction="next"
-        />
-      )}
+      {!isMobile ? (
+        <>
+          {canSwipePrev && (
+            <PageButton
+              className="left-0"
+              iconComponent={<ChevronLeftIcon className="h-6 w-6" />}
+              direction="prev"
+            />
+          )}
+          {canSwipeNext && (
+            <PageButton
+              className="right-0"
+              iconComponent={<ChevronRightIcon className="h-6 w-6" />}
+              direction="next"
+            />
+          )}
+        </>
+      ) : null}
 
       {items?.map((item, idx) => (
         <SwiperSlide key={idx}>{item}</SwiperSlide>

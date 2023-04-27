@@ -6,6 +6,7 @@ import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { ProjectTagName, projectTagText } from 'models/project-tags'
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   PROJECT_CARD_BG,
@@ -57,13 +58,15 @@ export function SuccessStoriesCard({
             ))}
           </ul>
           {imageOverride ? (
-            <img
+            <Image
               className="h-60 w-[280px] rounded-none object-cover object-top"
               src={imageOverride}
               alt={_name + ' logo'}
               loading="lazy"
               crossOrigin="anonymous"
               title={_name}
+              height={240}
+              width={280}
             />
           ) : (
             <ProjectLogo

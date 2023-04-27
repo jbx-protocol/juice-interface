@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { PaymentMemoSticker } from './paymentMemoSticker'
 
 export const AttachableSticker = ({
@@ -13,7 +14,7 @@ export const AttachableSticker = ({
       role="button"
       onClick={onClick}
     >
-      <img src={sticker.filepath} alt={sticker.alt} height="75px" />
+      <Image src={sticker.filepath} alt={sticker.alt} height={75} width={75} />
     </div>
   )
 }

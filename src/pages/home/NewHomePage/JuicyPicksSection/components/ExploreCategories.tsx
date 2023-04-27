@@ -1,6 +1,8 @@
 import { Trans } from '@lingui/macro'
 import Loading from 'components/Loading'
 import template from 'lodash/template'
+import { projectTagText } from 'models/project-tags'
+import Image from 'next/image'
 import { HomepageCard } from '../../HomepageCard'
 import { ProjectCarousel } from '../../ProjectCarousel'
 import { SectionHeading } from '../../SectionHeading'
@@ -29,12 +31,15 @@ export const ExploreCategories = () => {
           items={tags.map(tag => (
             <HomepageCard
               key={tag}
-              title={tag.charAt(0).toUpperCase() + tag.slice(1)}
+              title={projectTagText[tag]()}
               img={
-                <img
+                <Image
                   className="h-full w-full object-cover object-center"
                   src={CategoryImagePath({ tag })}
                   alt={tag}
+                  loading="lazy"
+                  height={240}
+                  width={280}
                 />
               }
               href={CategoryLink({ tag })}

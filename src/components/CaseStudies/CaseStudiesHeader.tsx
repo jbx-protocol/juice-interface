@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import SectionHeader from 'components/SectionHeader'
-import Image from 'next/image'
 import Link from 'next/link'
 import { formattedNum, parseWad } from 'utils/format/formatNumber'
 import ETHAmount from '../currency/ETHAmount'
@@ -38,7 +37,7 @@ export function CaseStudiesHeader({
   return (
     <section>
       <div className="w-full">
-        <Image
+        <img
           src={header}
           className="h-64 w-full object-cover"
           crossOrigin="anonymous"

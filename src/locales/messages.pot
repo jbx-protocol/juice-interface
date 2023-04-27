@@ -653,9 +653,6 @@ msgstr ""
 msgid "Cannot use zero address"
 msgstr ""
 
-msgid "Case studies"
-msgstr ""
-
 msgid "Case study"
 msgstr ""
 
@@ -2700,6 +2697,9 @@ msgid "Re-launch project"
 msgstr ""
 
 msgid "Re-launch your Juicebox project using the v3 contracts."
+msgstr ""
+
+msgid "Read case studies"
 msgstr ""
 
 msgid "Read less"

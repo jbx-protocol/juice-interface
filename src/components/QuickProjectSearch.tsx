@@ -223,7 +223,7 @@ export default function QuickProjectSearch({
                     </div>
 
                     <ProjectVersionBadge
-                      className="text-slate-200 dark:text-slate-300"
+                      className="text-secondary"
                       transparent
                       size="small"
                       versionText={`V${p.pv}`}

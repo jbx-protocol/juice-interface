@@ -90,7 +90,7 @@ export function SuccessStoriesCard({
           ) : (
             <Skeleton paragraph={false} title={{ width: 120 }} active />
           )}
-          <div className="text-tertiary text-xs font-medium uppercase">
+          <div className="text-secondary text-xs font-medium uppercase">
             <Trans>Total raised</Trans>
           </div>
 

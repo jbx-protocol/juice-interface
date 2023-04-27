@@ -20,7 +20,7 @@ function Statistic({
 }) {
   return (
     <div>
-      <div className="text-tertiary mb-1 text-sm font-medium uppercase">
+      <div className="text-secondary mb-1 text-sm font-medium uppercase">
         <Trans>{name}</Trans>
       </div>
       <div className="text-primary font-heading text-2xl font-medium">

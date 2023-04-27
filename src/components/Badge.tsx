@@ -35,7 +35,7 @@ export function Badge({
           'border-smoke-200 dark:border-slate-400 border border-solid',
           fill
             ? 'bg-smoke-200 text-smoke-800 dark:bg-slate-600 dark:text-slate-100'
-            : 'bg-white dark:bg-slate-900 text-smoke-600 dark:text-slate-200',
+            : 'bg-white dark:bg-slate-900 text-smoke-700 dark:text-slate-200',
           props.onClick || clickable
             ? 'hover:bg-smoke-50 dark:hover:bg-slate-700'
             : '',
@@ -46,7 +46,7 @@ export function Badge({
   return (
     <span
       className={twMerge(
-        'flex items-center gap-1 rounded-full py-0.5 px-3 text-sm font-medium transition-colors',
+        'flex items-center gap-1 rounded-full py-0.5 px-3 text-sm font-normal transition-colors',
         upperCase ? 'uppercase' : '',
         badgeClasses,
         className,

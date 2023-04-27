@@ -50,7 +50,7 @@ export function SuccessStoriesCard({
         className={`block overflow-hidden rounded-lg bg-white text-center transition-colors ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BORDER_HOVER} ${PROJECT_CARD_BG}`}
       >
         <div className="relative flex justify-center">
-          <ul className="absolute top-3 left-3 flex gap-1">
+          <ul className="absolute top-3 left-3 z-10 flex gap-1">
             {tags.map(tag => (
               <li key={tag}>
                 <SuccessStoriesCardTag tag={tag} />

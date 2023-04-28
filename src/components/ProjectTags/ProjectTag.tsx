@@ -1,29 +1,27 @@
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { Badge } from 'components/Badge'
 import { ProjectTagName, projectTagText } from 'models/project-tags'
+import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
-/**
- * Formatted project tag.
- */
 export function ProjectTag({
   tag,
   className,
   selected,
   onClick,
-  clickable,
+  isLink,
   disabled,
 }: {
   tag: ProjectTagName
   className?: string
   selected?: boolean
   onClick?: (tag: ProjectTagName) => void
-  clickable?: boolean
+  isLink?: boolean
   disabled?: boolean
 }) {
-  const isClickable = Boolean(!disabled && onClick) || clickable
+  const isClickable = Boolean(!disabled && onClick) || Boolean(isLink)
 
-  return (
+  const baseTag = (
     <Badge
       variant="default"
       fill={selected}
@@ -37,4 +35,14 @@ export function ProjectTag({
       {projectTagText[tag]()}
     </Badge>
   )
+
+  if (isLink) {
+    return (
+      <Link href={`/projects?tab=all&tags=${tag}`}>
+        <a>{baseTag}</a>
+      </Link>
+    )
+  }
+
+  return baseTag
 }

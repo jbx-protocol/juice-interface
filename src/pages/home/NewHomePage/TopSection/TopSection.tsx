@@ -37,11 +37,7 @@ export function TopSection() {
         <ul className="mb-5 flex gap-2 overflow-y-auto py-4">
           {HEADER_TAGS.map(tag => (
             <li key={tag}>
-              <Link href={`/projects?tab=all&tags=${tag}`}>
-                <a>
-                  <ProjectTag tag={tag} clickable />
-                </a>
-              </Link>
+              <ProjectTag tag={tag} isLink />
             </li>
           ))}
           <li>

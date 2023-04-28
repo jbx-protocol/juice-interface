@@ -183,8 +183,8 @@ export const PREVENT_OVERSPENDING_EXPLANATION = (
 
 export const FEES_EXPLANATION = (
   <Trans>
-    Payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to
-    other Juicebox projects don't incur fees.{' '}
+    Payouts to other Juicebox projects don't incur fees. A 2.5% fee is taken out
+    of all other payouts. You will receive JBX when you pay fees.{' '}
     <ExternalLink href={helpPagePath(`/dao/reference/jbx/`)}>
       Learn more
     </ExternalLink>

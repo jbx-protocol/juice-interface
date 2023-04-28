@@ -2450,13 +2450,10 @@ msgstr ""
 msgid "Payouts to Ethereum addresses incur a 2.5% JBX membership fee"
 msgstr ""
 
-msgid "Payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to other Juicebox projects don't incur fees. <0>Learn more</0>."
-msgstr ""
-
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return. <0>Learn more</0>."
 msgstr ""
 
-msgid "Payouts to other Juicebox projects don't incur fees. In return for fees, your project will receive JBX (the <0>JuiceboxDAO</0> governance token) at the current issuance rate. <1>Learn more</1>."
+msgid "Payouts to other Juicebox projects don't incur fees. A 2.5% fee is taken out of all other payouts. You will receive JBX when you pay fees. <0>Learn more</0>."
 msgstr ""
 
 msgid "Payouts to other Juicebox projects won't incur fees."

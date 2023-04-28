@@ -6,6 +6,23 @@ query Projects($where: Project_filter, $first: Int, $skip: Int) {
   }
 }
 
+query TrendingProjects($where: Project_filter, $first: Int, $skip: Int, $orderBy: Project_orderBy, $orderDirection: OrderDirection) {
+  projects(where: $where, first: $first, skip: $skip, orderBy: $orderBy, orderDirection: desc) {
+    id
+    projectId
+    handle
+    createdAt
+    metadataUri
+    totalPaid
+    pv
+    trendingScore
+    paymentsCount
+    trendingPaymentsCount
+    trendingVolume
+    createdWithinTrendingWindow
+  }
+}
+
 query Participants($where: Participant_filter, $first: Int, $skip: Int) {
   participants(where: $where, first: $first, skip: $skip) {
     wallet {

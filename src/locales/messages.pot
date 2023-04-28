@@ -2684,7 +2684,7 @@ msgstr ""
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr ""
 
-msgid "Rankings are based on the amount of ETH a project has been paid and the number of payments to a project over the past {TRENDING_WINDOW_DAYS} days. <0>See the code</0>."
+msgid "Rankings are based on the amount of ETH a project has been paid and the number of payments to a project over the past {TRENDING_WINDOW_DAYS} days."
 msgstr ""
 
 msgid "Re-launch a project"

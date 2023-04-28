@@ -6,6 +6,7 @@ import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
 import {
   InfiniteSGQueryOpts,
+  SGEntity,
   SGEntityKey,
   SGQueryOpts,
   SGWhereArg,
@@ -22,7 +23,11 @@ import {
   useInfiniteQuery,
   useQuery,
 } from 'react-query'
-import { getSubgraphIdForProject, querySubgraphExhaustive } from 'utils/graph'
+import {
+  getSubgraphIdForProject,
+  parseSubgraphEntity,
+  querySubgraphExhaustive,
+} from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
 import { parseDBProjectJson, parseDBProjectsRow } from 'utils/sgDbProjects'
 import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
@@ -236,36 +241,16 @@ export function useDBProjectsInfiniteQuery(
 }
 
 export function useTrendingProjects(count: number) {
-  const whereQuery: SGWhereArg<'project'>[] = [
-    {
-      key: 'trendingScore',
-      operator: 'gt',
-      value: 0,
-    },
-  ]
+  return useQuery(['trending-projects', count], async () => {
+    const res = await axios.get<{
+      projects: Json<SGEntity<'project', keyof Project>>[]
+    }>('/api/projects/trending?count=' + count)
 
-  if (ARCHIVED_SUBGRAPH_IDS.length) {
-    whereQuery.push({
-      key: 'id',
-      value: ARCHIVED_SUBGRAPH_IDS,
-      operator: 'not_in',
-    })
-  }
+    const projects = res.data.projects.map(p =>
+      parseSubgraphEntity('project', p),
+    )
 
-  return useSubgraphQuery({
-    entity: 'project',
-    keys: [
-      ...DEFAULT_PROJECT_ENTITY_KEYS,
-      'trendingScore',
-      'paymentsCount',
-      'trendingPaymentsCount',
-      'trendingVolume',
-      'createdWithinTrendingWindow',
-    ],
-    first: count,
-    orderBy: 'trendingScore',
-    orderDirection: 'desc',
-    where: whereQuery,
+    return projects
   })
 }
 

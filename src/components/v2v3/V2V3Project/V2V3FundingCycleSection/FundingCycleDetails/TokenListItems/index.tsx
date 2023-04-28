@@ -113,12 +113,16 @@ export function TokenListItems({
         value={
           <MintRateValue
             value={fundingCycle.weight}
+            tokenSymbol={tokenSymbolPlural}
             zeroAsUnchanged={mintRateZeroAsUnchanged}
           />
         }
         oldValue={
           showDiffs && mintRateHasDiff ? (
-            <MintRateValue value={oldFundingCycle.weight} />
+            <MintRateValue
+              value={oldFundingCycle.weight}
+              tokenSymbol={tokenSymbolPlural}
+            />
           ) : undefined
         }
         helperText={MINT_RATE_EXPLANATION}

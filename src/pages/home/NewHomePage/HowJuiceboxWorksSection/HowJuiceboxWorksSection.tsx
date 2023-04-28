@@ -10,6 +10,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
+import sassyBlueberry from '/public/assets/images/sassy-blueberry.webp'
 
 const StepItem = ({
   header,
@@ -96,9 +97,7 @@ export function HowJuiceboxWorksSection() {
           </div>
           <div className="mx-auto mt-20 w-full max-w-xs text-center lg:mx-24 lg:mt-0">
             <Image
-              width={292}
-              height={564}
-              src="/assets/images/sassy-blueberry.png"
+              src={sassyBlueberry}
               alt="Sassy Juicebox Blueberry crossing arms"
               loading="lazy"
             />

@@ -36,7 +36,8 @@
     "supabase:diffdb": "supabase db diff",
     "supabase:generate:local": "supabase gen types typescript --local > src/types/database.types.ts",
     "cy:run": "cypress run",
-    "cy:open": "CYPRESS_REMOTE_DEBUGGING_PORT=9222 cypress open"
+    "cy:open": "CYPRESS_REMOTE_DEBUGGING_PORT=9222 cypress open",
+    "webp": "./scripts/webp.sh"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css}": [

@@ -13,11 +13,13 @@ export function ProjectTagsList({
   onClickTag,
   tagClassName,
   disabled,
+  withLinks,
 }: {
   tags?: ProjectTagName[] | undefined
   onClickTag?: (tag: ProjectTagName) => void
   tagClassName?: string
   disabled?: boolean
+  withLinks?: boolean
 }) {
   // If tags are undefined, show all tags
   const _tags = tags ?? projectTagOptions
@@ -31,6 +33,7 @@ export function ProjectTagsList({
             onClick={onClickTag ? () => onClickTag(t) : undefined}
             className={tagClassName}
             disabled={disabled}
+            isLink={withLinks}
           />
         </li>
       ))}

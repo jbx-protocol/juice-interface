@@ -191,7 +191,7 @@ export function ProjectHeader({
           <div className="mx-auto md:col-span-5 md:w-full md:text-start">
             {projectMetadata?.tags?.length ? (
               <div className="mb-3 flex justify-center md:justify-start">
-                <ProjectTagsList tags={projectMetadata.tags} />
+                <ProjectTagsList tags={projectMetadata.tags} withLinks />
               </div>
             ) : null}
             <Paragraph

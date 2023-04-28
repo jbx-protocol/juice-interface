@@ -66,6 +66,15 @@ export function DistributionSplitsSection({
 
   const allSplits = lockedSplits.concat(editableSplits)
 
+  const availableModes: Set<'amount' | 'percentage'> = useMemo(() => {
+    switch (distributionType) {
+      case 'amount':
+        return new Set(['amount', 'percentage'])
+      case 'percent':
+        return new Set(['percentage'])
+    }
+  }, [distributionType])
+
   const payoutsSelection: PayoutsSelection = useMemo(() => {
     // As we dont have control of amounts/percentage out of create, always use
     // amounts, and fall back to percentages when amounts is unavailable.
@@ -200,7 +209,7 @@ export function DistributionSplitsSection({
               ))}
             <Allocation.List
               allocationName={t`payout`}
-              availableModes={new Set(['percentage'])}
+              availableModes={availableModes}
             >
               {(
                 modal,

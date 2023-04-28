@@ -26,7 +26,7 @@ function PageButton({
     <button
       aria-label="carousel navigation button"
       className={twJoin(
-        'absolute top-1/3  z-10 flex h-14 w-14 items-center justify-center rounded-full border border-grey-300 bg-white text-grey-700 shadow-lg transition-transform hover:scale-105',
+        'absolute top-1/2 z-10  flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-grey-300 bg-white text-grey-700 shadow-lg transition-transform hover:scale-105',
         className,
       )}
       onClick={() =>
@@ -46,6 +46,7 @@ export function ProjectCarousel({ items }: { items: JSX.Element[] }) {
 
   return (
     <Swiper
+      className="md: mx-auto md:mx-8 md:max-w-[1464px]"
       // install Swiper modules
       modules={[Navigation, A11y]}
       spaceBetween={24}
@@ -69,14 +70,14 @@ export function ProjectCarousel({ items }: { items: JSX.Element[] }) {
         <>
           {canSwipePrev && (
             <PageButton
-              className="left-0"
+              className="left-0 -translate-x-1/2"
               iconComponent={<ChevronLeftIcon className="h-6 w-6" />}
               direction="prev"
             />
           )}
           {canSwipeNext && (
             <PageButton
-              className="right-0"
+              className="right-0 translate-x-1/2"
               iconComponent={<ChevronRightIcon className="h-6 w-6" />}
               direction="next"
             />

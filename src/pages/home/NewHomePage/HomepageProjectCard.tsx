@@ -32,6 +32,15 @@ function Statistic({
   )
 }
 
+export function HomepageProjectCardSkeleton() {
+  return (
+    <HomepageCard
+      img={<Skeleton.Input className="h-[192px] w-full" active size="small" />}
+      title={<Skeleton.Input className="h-6 w-full" active size="small" />}
+    />
+  )
+}
+
 // Used in Trending Projects Caroursel and Juicy Picks section
 export function HomepageProjectCard({
   project,

@@ -8,7 +8,10 @@ import { useTrendingProjects } from 'hooks/Projects'
 import { trackFathomGoal } from 'lib/fathom'
 import { ProjectTagName } from 'models/project-tags'
 import Link from 'next/link'
-import { HomepageProjectCard } from '../HomepageProjectCard'
+import {
+  HomepageProjectCard,
+  HomepageProjectCardSkeleton,
+} from '../HomepageProjectCard'
 import { ProjectCarousel } from '../ProjectCarousel'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
@@ -24,7 +27,7 @@ const HEADER_TAGS: ProjectTagName[] = [
 ]
 
 export function TopSection() {
-  const { data: trendingProjects } = useTrendingProjects(
+  const { data: trendingProjects, isLoading } = useTrendingProjects(
     TRENDING_PROJECTS_LIMIT,
   )
 
@@ -80,13 +83,21 @@ export function TopSection() {
           </a>
         </Link>
       </div>
-      {trendingProjects ? (
+      {!isLoading && trendingProjects ? (
         <ProjectCarousel
           items={trendingProjects?.map(p => (
             <HomepageProjectCard project={p} key={p.id} />
           ))}
         />
-      ) : null}
+      ) : (
+        <ProjectCarousel
+          items={Array(8)
+            .fill(0)
+            ?.map((_, idx) => (
+              <HomepageProjectCardSkeleton key={`loading-${idx}`} />
+            ))}
+        />
+      )}
     </SectionContainer>
   )
 }

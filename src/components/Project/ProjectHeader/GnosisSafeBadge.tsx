@@ -14,7 +14,7 @@ import {
 function SafeIcon({ href }: { href: string }) {
   return (
     <Link href={href}>
-      <a className="text-grey-900 dark:text-slate-100">
+      <a className="text-current hover:text-bluebs-500">
         <svg
           viewBox="0 0 661.62 661.47"
           xmlns="http://www.w3.org/2000/svg"

@@ -54,6 +54,7 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
             className="h-64 w-full object-cover"
             crossOrigin="anonymous"
             alt={`Cover image for ${metadata?.name ?? 'project'}`}
+            loading="lazy"
           />
         ) : (
           <div className="h-64 w-full bg-grey-200 dark:bg-slate-800" />

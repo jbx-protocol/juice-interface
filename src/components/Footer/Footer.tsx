@@ -29,11 +29,10 @@ const LinkCols: { title: ReactNode; items: LinkItem[] }[] = [
         title: t`Activity`,
         link: '/activity',
       },
-      // Comment out till launch
-      // {
-      //   title: t`About`,
-      //   link: '/about',
-      // },
+      {
+        title: t`About`,
+        link: '/about',
+      },
       {
         title: t`Referral`,
         externalLink: true,

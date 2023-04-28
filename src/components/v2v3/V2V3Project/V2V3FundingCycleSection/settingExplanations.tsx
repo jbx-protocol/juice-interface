@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
-import { helpPagePath } from 'utils/routes'
+import Link from 'next/link'
+import { helpPagePath, v2v3ProjectRoute } from 'utils/routes'
 
 export const DISTRIBUTION_LIMIT_EXPLANATION = (
   <Trans>
@@ -183,8 +184,12 @@ export const PREVENT_OVERSPENDING_EXPLANATION = (
 
 export const FEES_EXPLANATION = (
   <Trans>
-    Payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to
-    other Juicebox projects don't incur fees.{' '}
+    Payouts to other Juicebox projects don't incur fees. A 2.5% fee is taken out
+    of all other payouts. You will receive the
+    <Link href={v2v3ProjectRoute({ projectId: 1 })}>
+      JuiceboxDAO governance token
+    </Link>
+    when you pay fees.{' '}
     <ExternalLink href={helpPagePath(`/dao/reference/jbx/`)}>
       Learn more
     </ExternalLink>

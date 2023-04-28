@@ -4,7 +4,11 @@ import { Collapse, Select } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
 import { useTagCounts } from 'hooks/TagCounts'
 import { DBProjectQueryOpts } from 'models/dbProject'
-import { ProjectTagName, projectTagOptions } from 'models/project-tags'
+import {
+  ProjectTagName,
+  projectTagOptions,
+  projectTagText,
+} from 'models/project-tags'
 import { useEffect, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import FilterCheckboxItem from './FilterCheckboxItem'
@@ -76,10 +80,10 @@ export default function ProjectsFilterAndSort({
                 e.stopPropagation()
               }}
             >
-              <label className="cursor-pointer">
-                Tags
+              <label className="flex cursor-pointer items-center">
+                <Trans>Tags</Trans>
                 {searchTags.length ? (
-                  <span className="ml-1 inline-block h-5 w-5 rounded-full bg-grey-200 text-center text-grey-600 dark:bg-grey-300 dark:text-grey-800">
+                  <span className="ml-1 flex h-5 w-5 items-center justify-center rounded-full bg-smoke-200 text-center text-xs font-normal text-smoke-800 dark:bg-slate-600 dark:text-slate-100">
                     {searchTags.length}
                   </span>
                 ) : null}
@@ -99,7 +103,7 @@ export default function ProjectsFilterAndSort({
             {projectTagOptions.map(t => (
               <FilterCheckboxItem
                 key={t}
-                label={`${t}${
+                label={`${projectTagText[t]()}${
                   tagCounts && tagCounts[t] ? ` (${tagCounts[t]})` : ''
                 }`}
                 checked={searchTags.includes(t)}

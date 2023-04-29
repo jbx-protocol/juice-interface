@@ -23,6 +23,7 @@ export type MenuKey = V2V3SettingsPageKey
 export type V2V3SettingsPageKey =
   | 'general'
   | 'projecthandle'
+  | 'ownernft'
   | 'reconfigurefc'
   | 'nfts'
   | 'payouts'
@@ -40,6 +41,7 @@ export const V2V3SettingsPageKeyTitleMap: {
 } = {
   general: t`General`,
   projecthandle: t`Project handle`,
+  ownernft: t`Owner NFT`,
   reconfigurefc: t`Edit Cycle`,
   payouts: t`Payouts`,
   reservedtokens: t`Reserved token recipients`,
@@ -112,6 +114,13 @@ export function V2V3ProjectSettings() {
           menuItem(
             'Project handle',
             'projecthandle',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          ),
+          menuItem(
+            'Owner NFT',
+            'ownernft',
             undefined,
             undefined,
             'menu-item-sider',

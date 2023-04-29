@@ -1,0 +1,299 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "contract IJBOperatorStore",
+          "name": "_operatorStore",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IJBDirectory",
+          "name": "_directory",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IJBController",
+          "name": "_controller",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IJBController3_1",
+          "name": "_controller3_1",
+          "type": "address"
+        },
+        {
+          "internalType": "contract IJBProjectHandles",
+          "name": "_projectHandles",
+          "type": "address"
+        },
+        {
+          "internalType": "contract ITypeface",
+          "name": "_capsulesTypeface",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        { "internalType": "bytes1", "name": "_character", "type": "bytes1" }
+      ],
+      "name": "INVALID_HEX_CHARACTER",
+      "type": "error"
+    },
+    { "inputs": [], "name": "INVALID_HEX_STRING", "type": "error" },
+    { "inputs": [], "name": "UNAUTHORIZED", "type": "error" },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "ThemeReset",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "Color",
+          "name": "textColor",
+          "type": "bytes3"
+        },
+        {
+          "indexed": false,
+          "internalType": "Color",
+          "name": "bgColor",
+          "type": "bytes3"
+        },
+        {
+          "indexed": false,
+          "internalType": "Color",
+          "name": "bgColorAlt",
+          "type": "bytes3"
+        }
+      ],
+      "name": "ThemeSet",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "capsulesTypeface",
+      "outputs": [
+        { "internalType": "contract ITypeface", "name": "", "type": "address" }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "controller",
+      "outputs": [
+        {
+          "internalType": "contract IJBController",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "controller3_1",
+      "outputs": [
+        {
+          "internalType": "contract IJBController3_1",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "directory",
+      "outputs": [
+        {
+          "internalType": "contract IJBDirectory",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "fundingCycleStore",
+      "outputs": [
+        {
+          "internalType": "contract IJBFundingCycleStore",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "uint256", "name": "id", "type": "uint256" }
+      ],
+      "name": "getTheme",
+      "outputs": [
+        {
+          "components": [
+            { "internalType": "bool", "name": "customTheme", "type": "bool" },
+            { "internalType": "Color", "name": "textColor", "type": "bytes3" },
+            { "internalType": "Color", "name": "bgColor", "type": "bytes3" },
+            { "internalType": "Color", "name": "bgColorAlt", "type": "bytes3" }
+          ],
+          "internalType": "struct Theme",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "uint256", "name": "_projectId", "type": "uint256" }
+      ],
+      "name": "getUri",
+      "outputs": [
+        { "internalType": "string", "name": "tokenUri", "type": "string" }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "operatorStore",
+      "outputs": [
+        {
+          "internalType": "contract IJBOperatorStore",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "projectHandles",
+      "outputs": [
+        {
+          "internalType": "contract IJBProjectHandles",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "projects",
+      "outputs": [
+        {
+          "internalType": "contract IJBProjects",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "uint256", "name": "_projectId", "type": "uint256" }
+      ],
+      "name": "resetTheme",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "string", "name": "_textColor", "type": "string" },
+        { "internalType": "string", "name": "_bgColor", "type": "string" },
+        { "internalType": "string", "name": "_bgColorAlt", "type": "string" }
+      ],
+      "name": "setDefaultTheme",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "uint256", "name": "_projectId", "type": "uint256" },
+        { "internalType": "string", "name": "_textColor", "type": "string" },
+        { "internalType": "string", "name": "_bgColor", "type": "string" },
+        { "internalType": "string", "name": "_bgColorAlt", "type": "string" }
+      ],
+      "name": "setTheme",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "address", "name": "newOwner", "type": "address" }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ]
+}

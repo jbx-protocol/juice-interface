@@ -89,6 +89,9 @@ msgstr ""
 msgid "7-day deadline"
 msgstr ""
 
+msgid "76FFAA"
+msgstr ""
+
 msgid "90 days"
 msgstr ""
 
@@ -552,6 +555,12 @@ msgid "Back to project"
 msgstr ""
 
 msgid "Back to top"
+msgstr ""
+
+msgid "Background color"
+msgstr ""
+
+msgid "Background gradient color"
 msgstr ""
 
 msgid "Balance"
@@ -2291,6 +2300,9 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
+msgid "Owner NFT"
+msgstr ""
+
 msgid "Owner permissions"
 msgstr ""
 
@@ -3065,6 +3077,9 @@ msgstr ""
 msgid "Set operator for {projectTitle}"
 msgstr ""
 
+msgid "Set owner NFT theme"
+msgstr ""
+
 msgid "Set payment terminals"
 msgstr ""
 
@@ -3084,6 +3099,9 @@ msgid "Set splits for {projectTitle}"
 msgstr ""
 
 msgid "Set text record for {0}"
+msgstr ""
+
+msgid "Set theme for {projectTitle}\\'s NFT"
 msgstr ""
 
 msgid "Set this to the sum of your payouts"
@@ -3261,6 +3279,9 @@ msgid "Terminal migration"
 msgstr ""
 
 msgid "Terms of Service"
+msgstr ""
+
+msgid "Text color"
 msgstr ""
 
 msgid "Text record is set"

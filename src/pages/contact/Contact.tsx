@@ -77,7 +77,7 @@ export default function Contact() {
 
   return (
     <>
-      <div className="mx-auto max-w-5xl px-10">
+      <div className="mx-auto mb-10 max-w-5xl">
         <Row align="middle" gutter={40}>
           <Col xs={24} md={14}>
             <h1 className="m-0 my-4 font-display text-4xl">

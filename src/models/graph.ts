@@ -102,7 +102,7 @@ export type SGWhereArg<E extends SGEntityName> = {
   nested?: boolean
 }
 
-export type SGBlockConfig = {
+type SGBlockConfig = {
   number?: number
   number_gte?: number
   hash?: string

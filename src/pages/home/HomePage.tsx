@@ -11,8 +11,6 @@ import { SuccessStoriesSection } from './SuccessStoriesSection/SuccessStoriesSec
 import { TopSection } from './TopSection/TopSection'
 import { WhyJuiceboxSection } from './WhyJuiceboxSection'
 
-export const DEFAULT_HOMEPAGE_GUTTER: [number, number] = [32, 32]
-
 export function HomePage() {
   return (
     <>

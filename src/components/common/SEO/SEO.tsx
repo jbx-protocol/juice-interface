@@ -4,7 +4,6 @@ import { FC, ReactNode } from 'react'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { FathomScript } from '../Head/scripts/FathomScript'
 import { HotjarScript } from '../Head/scripts/HotjarScript'
-import { QwestiveScript } from '../Head/scripts/QwestiveScripts'
 import { OpenGraphMetaTags } from './OpenGraphMetaTags'
 import {
   TwitterCardType,
@@ -96,7 +95,6 @@ export const SEO: FC<SEOProps> = ({
         <>
           <FathomScript />
           <HotjarScript />
-          <QwestiveScript />
         </>
       )}
     </>

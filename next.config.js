@@ -62,7 +62,6 @@ const CONNECT_SRC = [
   'https://*.snapshot.org',
   'https://*.wallet.coinbase.com',
   ...WALLET_CONNECT_URLS,
-  'https://juicenews.beehiiv.com',
   'https://*.supabase.co',
   'https://api.ensideas.com',
   'https://*.sentry.io',

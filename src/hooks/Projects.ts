@@ -30,7 +30,7 @@ import {
 } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
 import { parseDBProjectJson, parseDBProjectsRow } from 'utils/sgDbProjects'
-import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
+import useSubgraphQuery from './SubgraphQuery'
 
 interface ProjectsOptions {
   pageNumber?: number
@@ -138,31 +138,6 @@ export function useProjectsQuery(opts: ProjectsOptions) {
     },
     {
       staleTime: DEFAULT_STALE_TIME,
-    },
-  )
-}
-
-/**
- * Search Subgraph projects by handle and return only a list of projects
- * @param handle handle tosearch
- * @param enabled query will only run if enabled
- * @returns list of projects
- */
-export function useProjectsSearch(
-  handle: string | undefined,
-  opts?: { enabled?: boolean },
-) {
-  return useSubgraphQuery(
-    handle
-      ? {
-          text: `${handle}:*`,
-          entity: 'projectSearch',
-          keys: DEFAULT_PROJECT_ENTITY_KEYS,
-        }
-      : null,
-    {
-      staleTime: DEFAULT_STALE_TIME,
-      enabled: opts?.enabled,
     },
   )
 }
@@ -364,16 +339,6 @@ export function useMyProjectsQuery(wallet: string | undefined) {
   return {
     ...projectsQuery,
   }
-}
-
-export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
-  return useInfiniteSubgraphQuery(
-    buildProjectQueryOpts(opts) as InfiniteSGQueryOpts<
-      'project',
-      SGEntityKey<'project'>
-    >,
-    { staleTime: DEFAULT_STALE_TIME },
-  )
 }
 
 export function useProjectTrendingPercentageIncrease({

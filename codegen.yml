@@ -8,9 +8,13 @@ generates:
       - 'typescript-operations'
       - 'typescript-resolvers'
       - 'typescript-react-apollo'
+      - add:
+          content: "import { BigNumber } from '@ethersproject/bignumber'"
   ./graphql.schema.json:
     plugins:
       - 'introspection'
 config:
   namingConvention:
     enumValues: keep
+  scalars:
+    BigInt: BigNumber

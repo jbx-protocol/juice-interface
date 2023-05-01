@@ -1,1 +1,0 @@
-export { NewHomePage } from './NewHomePage'

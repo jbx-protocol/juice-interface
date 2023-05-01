@@ -2,7 +2,7 @@ import { Disclosure, Transition } from '@headlessui/react'
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { Trans } from '@lingui/macro'
 import { Fragment, useState } from 'react'
-import QAs from '../FaqList/QAs'
+import QAs from './FaqList/QAs'
 import { SectionContainer } from './SectionContainer'
 import { SectionHeading } from './SectionHeading'
 

@@ -38,9 +38,6 @@ msgstr ""
 msgid "1. Create your project"
 msgstr ""
 
-msgid "1. Get funded"
-msgstr ""
-
 msgid "1. Grant permission"
 msgstr ""
 
@@ -54,9 +51,6 @@ msgid "1400px x 256px image size recommended."
 msgstr ""
 
 msgid "1400x256 recommended."
-msgstr ""
-
-msgid "2. Build trust"
 msgstr ""
 
 msgid "2. Deploy V3 Migration Token"
@@ -75,9 +69,6 @@ msgid "3-day deadline"
 msgstr ""
 
 msgid "3. Build your community"
-msgstr ""
-
-msgid "3. Stay flexible"
 msgstr ""
 
 msgid "30 days"
@@ -506,9 +497,6 @@ msgstr ""
 msgid "Art"
 msgstr ""
 
-msgid "As your community grows, scale your project with it: Juicebox lets you update your payouts, token issuance & redemption, and other rules over time to meet your community's evolving needs. Run your community how you want to, with our pre-built integrations for <0>Safe</0>, <1>Snapshot</1>, and the other tools you already use."
-msgstr ""
-
 msgid "Assets"
 msgstr ""
 
@@ -581,16 +569,10 @@ msgstr ""
 msgid "Build and launch your NFT project right here on Juicebox with built-in redemptions."
 msgstr ""
 
-msgid "Build your project"
-msgstr ""
-
 msgid "Built by the best"
 msgstr ""
 
 msgid "Built for ideas like yours"
-msgstr ""
-
-msgid "Built for:"
 msgstr ""
 
 msgid "Burn NFTs"
@@ -924,9 +906,6 @@ msgid "Created project"
 msgstr ""
 
 msgid "Creators & builders"
-msgstr ""
-
-msgid "Crowdfund your project with ETH. When someone pays your project, they'll receive your project's tokens (or NFTs) — use tokens to grant governance rights, community access, or other membership perks."
 msgstr ""
 
 msgid "Crowdfunding"
@@ -1469,12 +1448,6 @@ msgstr ""
 msgid "Fun"
 msgstr ""
 
-msgid "Fund and operate your thing, your way."
-msgstr ""
-
-msgid "Fund anything."
-msgstr ""
-
 msgid "Fund your thing"
 msgstr ""
 
@@ -1577,9 +1550,6 @@ msgstr ""
 msgid "Hours"
 msgstr ""
 
-msgid "How Juicebox Works"
-msgstr ""
-
 msgid "How Juicebox works"
 msgstr ""
 
@@ -1608,9 +1578,6 @@ msgid "How do I set the redemption rate?"
 msgstr ""
 
 msgid "How do I use this website?"
-msgstr ""
-
-msgid "How does it work?"
 msgstr ""
 
 msgid "How long one cycle will last. Your project's rules are locked during each cycle. Edits you make to your project's rules during a cycle will only take effect at the start of the next cycle."
@@ -1703,9 +1670,6 @@ msgstr ""
 msgid "Included in search results on the <0>Projects</0> page."
 msgstr ""
 
-msgid "Indie creators and builders"
-msgstr ""
-
 msgid "Instead of tracking total voting power, track each address' voting power within each tier over time. This can be useful for running multiple voting processes out of one treasury, or for complex on-chain governance.<0>Learn more.</0>"
 msgstr ""
 
@@ -1760,9 +1724,6 @@ msgstr ""
 msgid "Join 1,000+ projects growing with Juicebox"
 msgstr ""
 
-msgid "Join <0>hundreds of projects</0> sippin' the Juice."
-msgstr ""
-
 msgid "Join our Discord"
 msgstr ""
 
@@ -1779,9 +1740,6 @@ msgid "Juicebox Project ID"
 msgstr ""
 
 msgid "Juicebox enables the creators of tomorrow to launch, fund and manage the boldest projects on the internet."
-msgstr ""
-
-msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building."
 msgstr ""
 
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building. Join thousands of projects sippin' the Juice."
@@ -1806,9 +1764,6 @@ msgid "Juicebox is reliable, open-source, audited, and has been battle-tested by
 msgstr ""
 
 msgid "Juicebox is the best-in-class tool for crowdfunding your project with ETH - build your supporters' trust by transparently setting up payouts, token issuance, redemption, and other rules in advance."
-msgstr ""
-
-msgid "Juicebox isn't guaranteed to be free of bugs or exploits. Before spending money, do your own research. <0>Ask questions</0>, check out the <1>code</1>, and understand the <2>risks </2>of crypto fundraising!"
 msgstr ""
 
 msgid "Juicebox loading animation"
@@ -1842,9 +1797,6 @@ msgid "Later"
 msgstr ""
 
 msgid "Latest"
-msgstr ""
-
-msgid "Latest payments"
 msgstr ""
 
 msgid "Launch V3 cycle"
@@ -2045,9 +1997,6 @@ msgstr ""
 msgid "MoonDAO is a worldwide collective united by the mission of decentralizing access to space research and exploration. With privatized space exploration on the rise, MoonDAO is uniting space enthusiasts from around the globe to help make it more accessible while continuing to push research forward. In 2021, they launched a campaign to buy two tickets on a Blue Origin rocket and raised over $8 million on Juicebox. A year later, they sent Coby Cotton from viral YouTube channel Dude Perfect to space as their first astronaut."
 msgstr ""
 
-msgid "More trending projects"
-msgstr ""
-
 msgid "More updates coming soon"
 msgstr ""
 
@@ -2073,9 +2022,6 @@ msgid "NFT Projects"
 msgstr ""
 
 msgid "NFT mint confirmed"
-msgstr ""
-
-msgid "NFT projects"
 msgstr ""
 
 msgid "NFT rules"
@@ -3173,28 +3119,13 @@ msgstr ""
 msgid "Starting over will erase all currently saved progress."
 msgstr ""
 
-msgid "Stay up to date 🧃"
-msgstr ""
-
-msgid "Stay up to date."
-msgstr ""
-
 msgid "Still have questions or want to know more about us? Jump into our Discord and come say hello."
 msgstr ""
 
 msgid "StudioDAO is a decentralized movie studio flipping the script on how films get funded. By combining the power of collective action with NFTs tied to programmable treasuries, StudioDAO gives audiences a platform to vote on which films they want to fund and watch while giving filmmakers new opportunities to get their projects funded."
 msgstr ""
 
-msgid "Subcription to juicenews failed."
-msgstr ""
-
 msgid "Subject"
-msgstr ""
-
-msgid "Subscribe"
-msgstr ""
-
-msgid "Subscribe to Juicenews to get the latest updates from the Juicebox ecosystem."
 msgstr ""
 
 msgid "Subscribe to project activity"
@@ -3204,9 +3135,6 @@ msgid "Success"
 msgstr ""
 
 msgid "Success stories"
-msgstr ""
-
-msgid "Successfully subscribed to Juicenews!"
 msgstr ""
 
 msgid "Sum of percentages cannot exceed 100%"
@@ -3324,9 +3252,6 @@ msgid "The original URL <0>{projectIdUrl}</0> will remain active."
 msgstr ""
 
 msgid "The portion this recipient will receive out of the {reservedRate}% of the project's reserved token issuance."
-msgstr ""
-
-msgid "The programmable crypto fundraising protocol for builders and creators. Light enough for a group of friends, powerful enough for a global network of anons. <0>Community-owned</0>, on Ethereum."
 msgstr ""
 
 msgid "The project is using an unknown contract for its edit deadline."
@@ -3671,13 +3596,7 @@ msgstr ""
 msgid "Transparency"
 msgstr ""
 
-msgid "Transparently set your terms ahead of time, or take control when you need to. Juicebox lets you define elegant token issuance & redemption, payouts, and other rules in advance, acting as a safeguard against rug pulls. Your supporters don't have to trust you — even though they already do."
-msgstr ""
-
 msgid "Trending"
-msgstr ""
-
-msgid "Trending projects"
 msgstr ""
 
 msgid "Troubleshoot"
@@ -4092,9 +4011,6 @@ msgid "Your cycle rules have been pre-populated using the rules you originally l
 msgstr ""
 
 msgid "Your edits will take effect in <0>cycle #{0}</0>. The current cycle (#{currentFCNumber}) won't be altered."
-msgstr ""
-
-msgid "Your email address"
 msgstr ""
 
 msgid "Your legacy project token holders can now migrate their tokens in the <0>Tokens</0> section on your V3 project page."

@@ -17,10 +17,6 @@ const FEATURE_FLAG_DEFAULTS: {
     mainnet: true,
     goerli: true,
   },
-  [FEATURE_FLAGS.NEW_LANDING_PAGE]: {
-    mainnet: true,
-    goerli: true,
-  },
 }
 
 const featureFlagKey = (baseKey: string) => {

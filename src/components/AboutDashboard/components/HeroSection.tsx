@@ -2,16 +2,15 @@ import { Trans } from '@lingui/macro'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { SectionContainer } from './SectionContainer'
+import illustration from '/public/assets/images/about/hero.webp'
 
 export const HeroSection = () => {
   return (
     <SectionContainer className="flex flex-col gap-5 text-center md:text-5xl">
       <div className="mx-auto w-full max-w-3xl">
         <Image
-          src="/assets/images/about/hero.png"
+          src={illustration}
           alt="Banny and lil' Blueberry chillin out next to the juicebox and a hamper of fruit"
-          width={780}
-          height={438.5}
           priority
         />
       </div>

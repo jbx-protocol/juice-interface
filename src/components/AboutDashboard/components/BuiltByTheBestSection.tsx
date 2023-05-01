@@ -58,7 +58,7 @@ export const BuiltByTheBestSection = () => {
       {loading ? (
         <Loading size="large" />
       ) : error ? (
-        <div className="text-red-500">{error}</div>
+        <></>
       ) : (
         <div className="mx-auto grid grid-cols-2 gap-x-8 gap-y-16 sm:grid-cols-5">
           {contributors

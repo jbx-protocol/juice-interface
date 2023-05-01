@@ -5,6 +5,7 @@ import ExternalLink from 'components/ExternalLink'
 import { TickIconListItem } from 'components/TickIconListItem'
 import Image from 'next/image'
 import { SectionContainer } from './SectionContainer'
+import illustration from '/public/assets/images/about/illustration2.webp'
 
 export const AboutTheProtocolSection = () => {
   return (
@@ -45,10 +46,8 @@ export const AboutTheProtocolSection = () => {
 
       <div className="mx-auto mt-14 w-full max-w-sm md:order-1 md:mx-0 md:mt-0">
         <Image
-          src={'/assets/images/about/illustration2.png'}
+          src={illustration}
           alt="Strawberry mixin' some juicy ethereum juice"
-          width={380}
-          height={380}
         />
       </div>
     </SectionContainer>

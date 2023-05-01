@@ -1,7 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import useMobile from 'hooks/Mobile'
 import { useState } from 'react'
-import { A11y, Navigation } from 'swiper'
+import { A11y, Mousewheel, Navigation } from 'swiper'
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 import { twJoin } from 'tailwind-merge'
 
@@ -48,7 +48,8 @@ export function ProjectCarousel({ items }: { items: JSX.Element[] }) {
     <Swiper
       className="md: mx-auto md:mx-8 md:max-w-[1464px]"
       // install Swiper modules
-      modules={[Navigation, A11y]}
+      modules={[Navigation, A11y, Mousewheel]}
+      mousewheel={{ forceToAxis: true }}
       spaceBetween={24}
       slidesPerView="auto"
       freeMode

@@ -21,7 +21,7 @@ export const CASE_STUDY_PROJECTS: {
     pv: PV_V1,
     id: 36, // cdao
     tags: ['fundraising', 'dao'],
-    imageOverride: '/assets/images/cdao.jpg',
+    imageOverride: '/assets/images/case-studies/cdao.webp',
   },
   {
     pv: PV_V1,

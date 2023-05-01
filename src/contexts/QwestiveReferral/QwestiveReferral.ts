@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react'
 import { TQwestiveTracker } from './QwestiveReferralContext'
 
 // Juicebox-referral campaign: https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e
-const QWESTIVE_REFERRAL_PROJECT_ID = 'ma6zYcqmv0hInMskIQf1'
-const QWESTIVE_REFERRAL_API_KEY = 'xgXZwdZMAAY71tcLAdexo2VM091EitpEL1ScpoP/Z4A='
+const QWESTIVE_REFERRAL_PROJECT_ID =
+  process.env.NEXT_PUBLIC_QWESTIVE_REFERRAL_PROJECT_ID
+const QWESTIVE_REFERRAL_API_KEY =
+  process.env.NEXT_PUBLIC_QWESTIVE_REFERRAL_API_KEY
 
 export function useQwestiveSDKProvider() {
   const [trackerQwestiveMethods, setTrackerQwestiveMethods] =
@@ -14,6 +16,10 @@ export function useQwestiveSDKProvider() {
 
   useEffect(() => {
     async function initializeClientSDK() {
+      if (!QWESTIVE_REFERRAL_PROJECT_ID || !QWESTIVE_REFERRAL_API_KEY) {
+        console.warn('Qwestive referral project id or api key is not defined')
+        return
+      }
       try {
         const qwestiveClient = new QwestiveClientSDK(
           QWESTIVE_REFERRAL_PROJECT_ID,

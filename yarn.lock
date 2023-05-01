@@ -17420,7 +17420,7 @@ quick-lru@^5.1.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
-qwestive-client-sdk@^0.1.11:
+qwestive-client-sdk@0.1.11:
   version "0.1.11"
   resolved "https://registry.yarnpkg.com/qwestive-client-sdk/-/qwestive-client-sdk-0.1.11.tgz#dcd7a667becb7bbafbc4783f6475587795a0d91f"
   integrity sha512-/Tl7DXYNnoZeOeHUTQZ9ZeMLbOFM4QDKy0MlwHyIIr96VqtXG+xWC2fz2MuY/muuIIml3+f69FP4QCiPq9UkIQ==

@@ -284,9 +284,6 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-msgid "About Juicebox | Launch, fund & manage your project"
-msgstr ""
-
 msgid "About the protocol"
 msgstr ""
 
@@ -1872,9 +1869,6 @@ msgid "Launch now, update later."
 msgstr ""
 
 msgid "Launch {projectTitle}"
-msgstr ""
-
-msgid "Learn more about Juicebox - the communities #1 choice to launch, get funding and grow their web3 project. Open-source on the Ethereum Blockchain."
 msgstr ""
 
 msgid "Leave this blank to make your currently connected wallet the project owner. Fill this out with an Ethereum address to make that address this project's owner."

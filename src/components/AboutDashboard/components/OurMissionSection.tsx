@@ -6,6 +6,7 @@ import { formatAmount } from 'utils/format/formatAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import { useOurMissionSession } from '../hooks/useOurMissionSection'
 import { SectionContainer } from './SectionContainer'
+import illustration from '/public/assets/images/about/illustration1.webp'
 
 const PROGRESS_MAX_AMOUNT = ONE_BILLION
 
@@ -34,12 +35,7 @@ export const OurMissionSection = () => {
       </div>
 
       <div className="mx-auto w-full max-w-sm md:mx-0">
-        <Image
-          src={'/assets/images/about/illustration1.png'}
-          alt="Red grape passing go, collect Ξ200"
-          width={380}
-          height={380}
-        />
+        <Image src={illustration} alt="Red grape passing go, collect Ξ200" />
       </div>
     </SectionContainer>
   )

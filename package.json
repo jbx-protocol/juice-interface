@@ -60,6 +60,7 @@
   "dependencies": {
     "@apollo/client": "3.6.9",
     "@arcxmoney/analytics": "1.6.1",
+    "@graphql-codegen/add": "^4.0.1",
     "@headlessui/react": "^1.7.10",
     "@heroicons/react": "^2.0.17",
     "@jbx-protocol/contracts-v1": "2.0.0",
@@ -97,6 +98,7 @@
     "@web3-onboard/trezor": "2.2.1",
     "@web3-onboard/walletconnect": "2.1.1",
     "antd": "^4.24.0",
+    "apollo-link-scalars": "^4.0.2",
     "autolinker": "^3.14.3",
     "axios": "0.27.2",
     "bottleneck": "^2.19.5",

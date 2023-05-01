@@ -1,5 +1,4 @@
 import { SettingOutlined } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Select, Tabs } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
@@ -57,7 +56,6 @@ function ContributedList({ address }: { address: string }) {
 
   const contributions = data?.participants.map(p => ({
     ...p,
-    volume: BigNumber.from(p.volume),
     pv: p.pv as PV,
   }))
 

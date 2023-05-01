@@ -2,7 +2,6 @@ import { t, Trans } from '@lingui/macro'
 import { Descriptions } from 'antd'
 import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
 import SectionHeader from 'components/SectionHeader'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useHasJBV3Token } from 'hooks/JBV3Token/contractReader/HasJBV3Token'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/V2ConnectedWalletHasPermission'
@@ -10,7 +9,6 @@ import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { CSSProperties, useContext } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { reloadWindow } from 'utils/windowUtils'
 import { AccountBalanceDescription } from './AccountBalanceDescription'
@@ -44,8 +42,7 @@ export function V2V3ManageTokensSection() {
   const showIssueErc20TokenButton = !hasIssuedERC20 && hasIssueTicketsPermission
   const hasLegacyTokens = useHasJBV3Token()
 
-  const v1TokenSwapEnabled = featureFlagEnabled(FEATURE_FLAGS.V1_TOKEN_SWAP)
-  const showLegacyProjectTokensSection = v1TokenSwapEnabled && hasLegacyTokens
+  const showLegacyProjectTokensSection = hasLegacyTokens
 
   const tokenText = tokenSymbolText({
     tokenSymbol,

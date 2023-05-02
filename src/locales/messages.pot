@@ -1439,9 +1439,6 @@ msgstr ""
 msgid "Flexible"
 msgstr ""
 
-msgid "For faster responses, join our <0>Discord server</0>."
-msgstr ""
-
 msgid "Free to launch, just pay gas."
 msgstr ""
 
@@ -1512,6 +1509,9 @@ msgid "Go to settings"
 msgstr ""
 
 msgid "Go to your Safe"
+msgstr ""
+
+msgid "Got a question or need help creating your project? Fill out the form below and we’ll get back to you as soon as possible. You can also reach out to us on <0>Discord</0> for a faster response."
 msgstr ""
 
 msgid "Got it"

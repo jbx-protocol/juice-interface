@@ -2,6 +2,7 @@ import axios from 'axios'
 import { AccountDashboard } from 'components/AccountDashboard'
 import Loading from 'components/Loading'
 import { AppWrapper, SEO } from 'components/common'
+import { isAddress } from 'ethers/lib/utils'
 import { resolveAddress } from 'lib/api/ens'
 import { Profile } from 'models/database'
 import { useRouter } from 'next/router'
@@ -33,9 +34,9 @@ function _AccountPage({ addressOrEnsName }: { addressOrEnsName: string }) {
     useEnsNamePair(addressOrEnsName)
   const { name: ensName, address } = ensNamePair ?? {}
 
-  const { data: profile, isLoading: accountLoading } = useAccount({ address })
+  const { data: profile } = useAccount({ address })
 
-  if (ensLoading || accountLoading) return <Loading />
+  if (ensLoading) return <Loading />
   if (!address) return null
 
   return (
@@ -49,11 +50,15 @@ function _AccountPage({ addressOrEnsName }: { addressOrEnsName: string }) {
 export default function AccountPage() {
   const router = useRouter()
   const { addressOrEnsName } = router.query as { addressOrEnsName: string }
-  if (!addressOrEnsName) return null
 
   return (
     <AppWrapper>
-      <_AccountPage addressOrEnsName={addressOrEnsName as string} />
+      {addressOrEnsName &&
+      (isAddress(addressOrEnsName) || addressOrEnsName.endsWith('eth')) ? (
+        <_AccountPage addressOrEnsName={addressOrEnsName as string} />
+      ) : (
+        <div className="text-center">Not found</div>
+      )}
     </AppWrapper>
   )
 }

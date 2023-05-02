@@ -20,6 +20,7 @@ import { Profile } from 'models/database'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
+import { isEqualAddress } from 'utils/address'
 import { ensAvatarUrlForAddress } from 'utils/ens'
 import { etherscanLink } from 'utils/etherscan'
 
@@ -110,8 +111,8 @@ export function AccountDashboard({
   profile,
 }: {
   address: string
-  ensName: string | null
-  profile: Profile | null
+  ensName: string | null | undefined
+  profile: Profile | null | undefined
 }) {
   const wallet = useWallet()
   const signIn = useWalletSignIn()
@@ -145,7 +146,7 @@ export function AccountDashboard({
     },
   ]
 
-  const isOwner = wallet.userAddress?.toLowerCase() === address.toLowerCase()
+  const isOwner = isEqualAddress(wallet.userAddress, address.toLowerCase())
 
   return (
     <div className="my-0 mx-auto max-w-5xl p-5">

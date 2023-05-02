@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge'
 const PROJECT_CARD_BORDER =
   'rounded-lg border drop-shadow-[0_4px_14px_rgba(0,0,0,0.03)] border-solid border-grey-200 dark:border-slate-500'
 const PROJECT_CARD_BORDER_HOVER =
-  'hover:border-grey-300 dark:hover:border-slate-400 hover:-translate-y-1 transition-shadow hover:drop-shadow-[0_6px_16px_rgba(0,0,0,0.06)] transition-transform transition-colors'
+  'hover:border-grey-300 dark:hover:border-slate-400 hover:-translate-y-1 hover:drop-shadow-[0_6px_16px_rgba(0,0,0,0.06)] transition-all'
 const PROJECT_CARD_BG = 'bg-white dark:bg-slate-700 overflow-hidden'
 
 // Used in Trending Projects Caroursel and Juicy Picks section

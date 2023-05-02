@@ -2,11 +2,11 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-const PROJECT_CARD_BORDER =
+export const HOMEPAGE_CARD_BORDER =
   'rounded-lg border drop-shadow-[0_4px_14px_rgba(0,0,0,0.03)] border-solid border-grey-200 dark:border-slate-500'
-const PROJECT_CARD_BORDER_HOVER =
-  'hover:border-grey-300 dark:hover:border-slate-400 hover:-translate-y-1 transition-shadow hover:drop-shadow-[0_6px_16px_rgba(0,0,0,0.06)] transition-transform transition-colors'
-const PROJECT_CARD_BG = 'bg-white dark:bg-slate-700 overflow-hidden'
+export const HOMEPAGE_CARD_BORDER_HOVER =
+  'hover:border-grey-300 dark:hover:border-slate-400 hover:-translate-y-1 hover:drop-shadow-[0_6px_16px_rgba(0,0,0,0.06)] transition-all'
+export const HOMEPAGE_CARD_BG = 'bg-white dark:bg-slate-700 overflow-hidden'
 
 // Used in Trending Projects Caroursel and Juicy Picks section
 export function HomepageCard(props: {
@@ -18,13 +18,13 @@ export function HomepageCard(props: {
   const { href, ...rest } = props
   if (href) {
     return (
-      <div className={PROJECT_CARD_BORDER_HOVER}>
+      <div className={HOMEPAGE_CARD_BORDER_HOVER}>
         <Link prefetch={false} href={href}>
           <a
             className={twMerge(
               'block w-56 flex-shrink-0 cursor-pointer select-none',
-              PROJECT_CARD_BORDER,
-              PROJECT_CARD_BG,
+              HOMEPAGE_CARD_BORDER,
+              HOMEPAGE_CARD_BG,
             )}
           >
             <InteralCardObject {...rest} />
@@ -35,12 +35,12 @@ export function HomepageCard(props: {
   }
 
   return (
-    <div className={PROJECT_CARD_BORDER_HOVER}>
+    <div className={HOMEPAGE_CARD_BORDER_HOVER}>
       <div
         className={twMerge(
           'block w-56 flex-shrink-0 select-none',
-          PROJECT_CARD_BORDER,
-          PROJECT_CARD_BG,
+          HOMEPAGE_CARD_BORDER,
+          HOMEPAGE_CARD_BG,
         )}
       >
         <InteralCardObject {...rest} />

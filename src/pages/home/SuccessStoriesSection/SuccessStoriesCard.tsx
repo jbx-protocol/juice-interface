@@ -9,10 +9,10 @@ import { ProjectTagName, projectTagText } from 'models/project-tags'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
-  PROJECT_CARD_BG,
-  PROJECT_CARD_BORDER,
-  PROJECT_CARD_BORDER_HOVER,
-} from '../HomepageProjectCard'
+  HOMEPAGE_CARD_BG,
+  HOMEPAGE_CARD_BORDER,
+  HOMEPAGE_CARD_BORDER_HOVER,
+} from '../HomepageCard'
 
 function SuccessStoriesCardTag({ tag }: { tag: ProjectTagName }) {
   const text = projectTagText[tag]()
@@ -47,7 +47,7 @@ export function SuccessStoriesCard({
       href={`/success-stories/${project.handle}`}
     >
       <a
-        className={`block overflow-hidden rounded-lg bg-white text-center transition-colors ${PROJECT_CARD_BORDER} ${PROJECT_CARD_BORDER_HOVER} ${PROJECT_CARD_BG}`}
+        className={`block overflow-hidden rounded-lg bg-white text-center ${HOMEPAGE_CARD_BORDER} ${HOMEPAGE_CARD_BORDER_HOVER} ${HOMEPAGE_CARD_BG}`}
       >
         <div className="relative flex justify-center">
           <ul className="absolute top-3 left-3 z-10 flex gap-1">

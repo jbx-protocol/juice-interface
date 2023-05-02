@@ -11,7 +11,7 @@ import Link from 'next/link'
 import { twJoin } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { v2v3ProjectRoute } from 'utils/routes'
-import { PROJECT_CARD_BG, PROJECT_CARD_BORDER } from '../HomepageProjectCard'
+import { HOMEPAGE_CARD_BG, HOMEPAGE_CARD_BORDER } from '../HomepageCard'
 
 function Statistic({
   name,
@@ -46,7 +46,7 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
     : `+${percentageGain}%`
 
   return (
-    <div className={twJoin(PROJECT_CARD_BORDER, PROJECT_CARD_BG)}>
+    <div className={twJoin(HOMEPAGE_CARD_BORDER, HOMEPAGE_CARD_BG)}>
       <div className="w-full">
         {metadata?.coverImageUri ? (
           <img

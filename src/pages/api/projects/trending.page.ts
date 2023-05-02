@@ -33,7 +33,7 @@ const handler: NextApiHandler = async (req, res) => {
       query: TrendingProjectsDocument,
       variables: {
         where: {
-          trendingScore_gt: '0',
+          // trendingScore_gt: '0', // Turned off because there wasn't sufficient number of projects to fulfill `first`.
           id_not_in: ARCHIVED_SUBGRAPH_IDS,
         },
         first,

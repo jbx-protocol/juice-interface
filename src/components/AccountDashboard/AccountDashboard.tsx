@@ -158,7 +158,7 @@ export function AccountDashboard({
               className="mr-5 h-32 w-32 rounded-full"
             />
             <div className="flex flex-col gap-2">
-              <h1 className="mb-0 font-heading text-4xl text-black dark:text-slate-100">
+              <h1 className="mb-0 font-heading text-4xl font-medium text-black dark:text-slate-100">
                 {ensName ?? <FormattedAddress address={address} />}
               </h1>
               {ensName && (

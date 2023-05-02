@@ -13,7 +13,7 @@ query TrendingProjects($where: Project_filter, $first: Int, $skip: Int, $orderBy
     handle
     createdAt
     metadataUri
-    totalPaid
+    volume
     pv
     trendingScore
     paymentsCount

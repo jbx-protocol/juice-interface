@@ -60,7 +60,7 @@ export function DownloadParticipantsModal({
         entity: 'participant',
         keys: [
           'wallet { id }',
-          'totalPaid',
+          'volume',
           'balance',
           'stakedBalance',
           'erc20Balance',
@@ -95,7 +95,7 @@ export function DownloadParticipantsModal({
           fromWad(p.balance),
           fromWad(p.stakedBalance),
           fromWad(p.erc20Balance),
-          fromWad(p.totalPaid),
+          fromWad(p.volume),
           date,
         ])
       })

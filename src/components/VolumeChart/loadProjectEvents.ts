@@ -26,7 +26,7 @@ export const loadProjectEvents = async ({
 
   switch (showGraph) {
     case 'volume':
-      queryKeys = ['totalPaid']
+      queryKeys = ['volume']
       break
     case 'balance':
       queryKeys = ['currentBalance']
@@ -64,9 +64,7 @@ export const loadProjectEvents = async ({
         projects.forEach(project => {
           switch (showGraph) {
             case 'volume':
-              value = parseFloat(
-                parseFloat(fromWad(project.totalPaid)).toFixed(4),
-              )
+              value = parseFloat(parseFloat(fromWad(project.volume)).toFixed(4))
               break
             case 'balance':
               value = parseFloat(

@@ -32,10 +32,10 @@ export type Project = {
   trendingScore: BigNumber
   trendingVolume: BigNumber
   createdWithinTrendingWindow: boolean
-  totalPaid: BigNumber
-  totalPaidUSD: BigNumber
-  totalRedeemed: BigNumber
-  totalRedeemedUSD: BigNumber
+  volume: BigNumber
+  volumeUSD: BigNumber
+  redeemVolume: BigNumber
+  redeemVolumeUSD: BigNumber
   currentBalance: BigNumber
   participants: Participant[]
   payEvents: PayEvent[]
@@ -59,10 +59,10 @@ export const parseProjectJson = (j: Json<Project>): Project => ({
   ...primitives(j),
   ...parseBigNumberKeyVals(j, [
     'currentBalance',
-    'totalPaid',
-    'totalPaidUSD',
-    'totalRedeemed',
-    'totalRedeemedUSD',
+    'volume',
+    'volumeUSD',
+    'redeemVolume',
+    'redeemVolumeUSD',
     'trendingScore',
     'trendingVolume',
     'metadataDomain',

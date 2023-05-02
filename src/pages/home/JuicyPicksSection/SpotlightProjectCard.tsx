@@ -37,7 +37,7 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
 
   const percentageGain = useProjectTrendingPercentageIncrease({
     trendingVolume: project.trendingVolume,
-    totalPaid: project.totalPaid,
+    totalVolume: project.volume,
   })
   const percentGainText = project.createdWithinTrendingWindow
     ? t`New`
@@ -71,7 +71,7 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
         <div className="mb-5 flex gap-8">
           <Statistic
             name={<Trans>Volume</Trans>}
-            value={<ETHAmount amount={project.totalPaid} precision={2} />}
+            value={<ETHAmount amount={project.volume} precision={2} />}
           />
           <Statistic
             name={<Trans>Payments</Trans>}

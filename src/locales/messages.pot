@@ -623,9 +623,6 @@ msgstr ""
 msgid "CYCLE #{cycleNumber}"
 msgstr ""
 
-msgid "Caller"
-msgstr ""
-
 msgid "Cancel"
 msgstr ""
 
@@ -1445,6 +1442,9 @@ msgstr ""
 msgid "Free to launch, just pay gas."
 msgstr ""
 
+msgid "From"
+msgstr ""
+
 msgid "Fun"
 msgstr ""
 
@@ -1578,6 +1578,9 @@ msgid "How do I set the redemption rate?"
 msgstr ""
 
 msgid "How do I use this website?"
+msgstr ""
+
+msgid "How does it work?"
 msgstr ""
 
 msgid "How long one cycle will last. Your project's rules are locked during each cycle. Edits you make to your project's rules during a cycle will only take effect at the start of the next cycle."
@@ -4115,10 +4118,10 @@ msgstr ""
 msgid "allocation"
 msgstr ""
 
-msgid "called by <0/>"
+msgid "days"
 msgstr ""
 
-msgid "days"
+msgid "from <0/>"
 msgstr ""
 
 msgid "handle"

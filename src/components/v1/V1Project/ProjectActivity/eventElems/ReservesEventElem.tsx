@@ -17,7 +17,7 @@ export default function ReservesEventElem({
         | 'id'
         | 'timestamp'
         | 'txHash'
-        | 'caller'
+        | 'from'
         | 'beneficiary'
         | 'beneficiaryTicketAmount'
         | 'count'

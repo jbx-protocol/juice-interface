@@ -1,7 +1,6 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tabs } from 'antd'
-import { Badge } from 'components/Badge'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import Grid from 'components/Grid'
@@ -159,7 +158,7 @@ export function AccountDashboard({
               className="mr-5 h-32 w-32 rounded-full"
             />
             <div className="flex flex-col gap-2">
-              <h1 className="mb-0 text-4xl text-black dark:text-slate-100">
+              <h1 className="mb-0 font-heading text-4xl text-black dark:text-slate-100">
                 {ensName ?? <FormattedAddress address={address} />}
               </h1>
               {ensName && (
@@ -187,7 +186,7 @@ export function AccountDashboard({
               onClick={onEditProfileClicked}
             >
               <span className="inline-flex gap-3">
-                <Trans>Settings</Trans> <Badge variant="info">Beta</Badge>
+                <Trans>Settings</Trans>
               </span>
             </Button>
           )}

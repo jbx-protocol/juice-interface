@@ -17,7 +17,7 @@ import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1Con
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { Suspense, lazy, useContext, useState } from 'react'
 import FundingCycles from './FundingCycles'
-import ProjectActivity from './ProjectActivity'
+import { V1ProjectActivity } from './ProjectActivity'
 import { TokensSection } from './TokensSection'
 import { TreasuryStatsSection } from './TreasuryStatsSection'
 import V1ProjectHeaderActions from './V1ProjectHeaderActions'
@@ -144,7 +144,7 @@ export function V1Project() {
             <FundingCycles />
           </Col>
           <Col className="mt-10" xs={24} md={12}>
-            <ProjectActivity />
+            <V1ProjectActivity />
           </Col>
         </Row>
 

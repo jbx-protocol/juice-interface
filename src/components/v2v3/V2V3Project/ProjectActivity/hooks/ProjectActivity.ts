@@ -1,9 +1,8 @@
 import { PV_V2 } from 'constants/pv'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { SGEntityKey, SGEntityName, SGWhereArg } from 'models/graph'
 import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 
 const PAGE_SIZE = 10
 
@@ -140,6 +139,20 @@ const SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY: ActivityQueryKey<'setFundAccessCons
     ],
   }
 
+const PROJECT_ACTIVITY_EVENT_KEYS = [
+  DEPLOYED_ERC20_EVENT_KEY,
+  PAY_EVENT_KEY,
+  BURN_EVENT_KEY,
+  ADD_TO_BALANCE_EVENT_KEY,
+  PROJECT_CREATE_EVENT_KEY,
+  REDEEM_EVENT_KEY,
+  DISTRIBUTED_PAYOUTS_EVENT_KEY,
+  DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY,
+  DEPLOYED_PROJECT_PAYER_EVENT_KEY,
+  CONFIGURE_EVENT_KEY,
+  SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY,
+]
+
 export type EventFilter =
   | 'all'
   | 'pay'
@@ -156,13 +169,13 @@ export type EventFilter =
   | 'configure'
   | 'setFundAccessConstraints'
 
-export function useProjectActivity({
+export function useV2V3ProjectActivity({
   eventFilter,
+  projectId,
 }: {
   eventFilter?: EventFilter
+  projectId?: number
 }) {
-  const { projectId } = useContext(ProjectMetadataContext)
-
   const where: SGWhereArg<'projectEvent'>[] = useMemo(() => {
     const _where: SGWhereArg<'projectEvent'>[] = [
       {
@@ -289,19 +302,7 @@ export function useProjectActivity({
     if (key) return [key]
 
     // if no filter, fetch all
-    return [
-      DEPLOYED_ERC20_EVENT_KEY,
-      PAY_EVENT_KEY,
-      BURN_EVENT_KEY,
-      ADD_TO_BALANCE_EVENT_KEY,
-      PROJECT_CREATE_EVENT_KEY,
-      REDEEM_EVENT_KEY,
-      DISTRIBUTED_PAYOUTS_EVENT_KEY,
-      DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY,
-      DEPLOYED_PROJECT_PAYER_EVENT_KEY,
-      CONFIGURE_EVENT_KEY,
-      SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY,
-    ]
+    return PROJECT_ACTIVITY_EVENT_KEYS
   }, [eventFilter])
 
   return useInfiniteSubgraphQuery({

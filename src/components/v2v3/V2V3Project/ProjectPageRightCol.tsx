@@ -1,10 +1,9 @@
-import { Col } from 'antd'
-import { NftRewardsSection } from 'components/NftRewards/NftRewardsSection'
-
 import { Trans } from '@lingui/macro'
+import { Col } from 'antd'
 import { ErrorBoundaryCallout } from 'components/ErrorBoundaryCallout'
+import { NftRewardsSection } from 'components/NftRewards/NftRewardsSection'
 import { useNftRewardsEnabledForPay } from 'hooks/JB721Delegate/NftRewardsEnabledForPay'
-import ProjectActivity from './ProjectActivity'
+import { V2V3ProjectActivity } from './ProjectActivity'
 import { V2V3PayProjectForm } from './V2V3PayProjectForm'
 import { COL_SIZE_MD } from './V2V3Project'
 
@@ -29,7 +28,7 @@ export function ProjectPageRightCol() {
           <ErrorBoundaryCallout
             message={<Trans>Project activity failed to load.</Trans>}
           >
-            <ProjectActivity />
+            <V2V3ProjectActivity />
           </ErrorBoundaryCallout>
         </section>
       </div>

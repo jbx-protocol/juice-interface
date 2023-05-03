@@ -30,7 +30,7 @@ export default function SpendingStats({
 
   return (
     <div>
-      <div className="mb-1">
+      <div className="mb-1 flex gap-x-1">
         <Tooltip
           title={
             currency === 'ETH' && distributableAmount?.gt(0) ? (
@@ -38,7 +38,7 @@ export default function SpendingStats({
             ) : undefined
           }
         >
-          <span className="text-primary font-medium">
+          <span className="text-base font-medium">
             <AmountInCurrency
               amount={distributableAmount}
               currency={currency}

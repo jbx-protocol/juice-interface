@@ -6,7 +6,7 @@ import { useForm, useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import USDAmount from 'components/currency/USDAmount'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import Sticker from 'components/icons/Sticker'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { AttachStickerModal } from 'components/modals/AttachStickerModal'
@@ -225,7 +225,7 @@ export default function V1ConfirmPayOwnerModal({
             <div>
               {userAddress ? (
                 <Trans>
-                  To: <FormattedAddress address={userAddress} />
+                  To: <EthereumAddress address={userAddress} />
                 </Trans>
               ) : null}
             </div>

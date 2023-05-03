@@ -1,4 +1,5 @@
 import { t } from '@lingui/macro'
+import { Footer } from 'components/Footer'
 import { AppWrapper, Head } from 'components/common'
 import Contact from './Contact'
 
@@ -13,6 +14,7 @@ export default function ContactPage() {
 
       <AppWrapper>
         <Contact />
+        <Footer />
       </AppWrapper>
     </>
   )

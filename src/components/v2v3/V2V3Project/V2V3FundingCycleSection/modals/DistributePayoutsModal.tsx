@@ -1,11 +1,10 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
-import { Form, Tooltip } from 'antd'
+import { Form, Statistic } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { Callout } from 'components/Callout'
-import ETHToUSD from 'components/currency/ETHToUSD'
-import CurrencySymbol from 'components/CurrencySymbol'
+import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import SplitList from 'components/v2v3/shared/SplitList'
@@ -14,7 +13,7 @@ import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { useDistributePayoutsTx } from 'hooks/v2v3/transactor/DistributePayouts'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useEffect, useState } from 'react'
-import { formatWad, fromWad, parseWad } from 'utils/format/formatNumber'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_USD, V2V3CurrencyName } from 'utils/v2v3/currency'
 import { FEES_EXPLANATION } from '../settingExplanations'
 
@@ -104,13 +103,6 @@ export default function DistributePayoutsModal({
     ? unusedFunds
     : balanceInDistributionLimitCurrency
 
-  const grossAvailableAmount = formatWad(distributable, { precision: 4 })
-
-  const tooltipTitle =
-    distributionCurrencyName === 'ETH' && distributable?.gt(0) ? (
-      <ETHToUSD ethAmount={distributable} />
-    ) : undefined
-
   return (
     <TransactionModal
       title={<Trans>Send payouts</Trans>}
@@ -132,24 +124,18 @@ export default function DistributePayoutsModal({
       <div className="flex flex-col gap-6">
         <Callout.Info>{FEES_EXPLANATION}</Callout.Info>
 
+        <Statistic
+          title={<>Available to pay out</>}
+          valueRender={() => (
+            <AmountInCurrency
+              currency={distributionCurrencyName}
+              amount={distributable}
+            />
+          )}
+        />
+
         <Form layout="vertical">
-          <Form.Item
-            className="mb-0"
-            label={<Trans>Amount to pay out</Trans>}
-            extra={
-              <div className="mb-2 text-black dark:text-slate-100">
-                <Trans>
-                  <span className="font-medium">
-                    <Tooltip title={tooltipTitle}>
-                      <CurrencySymbol currency={distributionCurrencyName} />
-                      {grossAvailableAmount}
-                    </Tooltip>
-                  </span>{' '}
-                  available to pay out
-                </Trans>
-              </div>
-            }
-          >
+          <Form.Item className="mb-0" label={<Trans>Amount to pay out</Trans>}>
             <FormattedNumberInput
               placeholder="0"
               value={distributionAmount}
@@ -187,14 +173,16 @@ export default function DistributePayoutsModal({
             </Callout.Info>
           ) : null}
 
-          <SplitList
-            totalValue={parseWad(distributionAmount)}
-            currency={distributionLimitCurrency}
-            splits={payoutSplits ?? []}
-            projectOwnerAddress={projectOwnerAddress}
-            showAmounts
-            showFees
-          />
+          <div className="max-h-[50vh] overflow-y-auto">
+            <SplitList
+              totalValue={parseWad(distributionAmount)}
+              currency={distributionLimitCurrency}
+              splits={payoutSplits ?? []}
+              projectOwnerAddress={projectOwnerAddress}
+              showAmounts
+              showFees
+            />
+          </div>
         </div>
         <p className="flex items-center gap-1 text-sm">
           <ExclamationCircleOutlined />

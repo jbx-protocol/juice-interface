@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import ETHAmount from 'components/currency/ETHAmount'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2V3ProjectLink from 'components/v2v3/shared/V2V3ProjectLink'
 import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
@@ -19,7 +19,7 @@ export default function TapEventElem({
         | 'id'
         | 'timestamp'
         | 'txHash'
-        | 'caller'
+        | 'from'
         | 'beneficiary'
         | 'beneficiaryTransferAmount'
         | 'netTransferAmount'
@@ -85,7 +85,7 @@ export default function TapEventElem({
                     )}
                   </span>
                 ) : (
-                  <FormattedAddress address={e.modBeneficiary} />
+                  <EthereumAddress address={e.modBeneficiary} />
                 )}
                 :
               </div>
@@ -106,7 +106,7 @@ export default function TapEventElem({
               className="text-sm"
             >
               <div className="font-medium">
-                <FormattedAddress address={event.beneficiary} />:
+                <EthereumAddress address={event.beneficiary} />:
               </div>
               <div>
                 <ETHAmount amount={event.beneficiaryTransferAmount} />

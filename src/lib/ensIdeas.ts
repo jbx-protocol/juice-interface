@@ -7,9 +7,9 @@ const ENS_IDEAS_BASE_URL = 'https://api.ensideas.com'
  *
  * NOTE: only works on mainnet.
  */
-export async function resolveAddressEnsIdeas(address: string) {
+export async function resolveAddressEnsIdeas(addressOrEnsName: string) {
   const response = await axios.get<{ name: string | null; address: string }>(
-    `${ENS_IDEAS_BASE_URL}/ens/resolve/${address}`,
+    `${ENS_IDEAS_BASE_URL}/ens/resolve/${addressOrEnsName}`,
   )
 
   return response.data

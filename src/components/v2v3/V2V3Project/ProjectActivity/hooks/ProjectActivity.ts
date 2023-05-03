@@ -1,9 +1,8 @@
 import { PV_V2 } from 'constants/pv'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useInfiniteSubgraphQuery } from 'hooks/SubgraphQuery'
 import { SGEntityKey, SGEntityName, SGWhereArg } from 'models/graph'
 import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 
 const PAGE_SIZE = 10
 
@@ -17,7 +16,7 @@ const PAY_EVENT_KEY: ActivityQueryKey<'payEvent'> = {
   keys: [
     'amount',
     'timestamp',
-    'caller',
+    'from',
     'beneficiary',
     'note',
     'id',
@@ -33,7 +32,7 @@ const CONFIGURE_EVENT_KEY: ActivityQueryKey<'configureEvent'> = {
     'id',
     'timestamp',
     'txHash',
-    'caller',
+    'from',
     'ballot',
     'dataSource',
     'discountRate',
@@ -57,24 +56,24 @@ const CONFIGURE_EVENT_KEY: ActivityQueryKey<'configureEvent'> = {
 
 const BURN_EVENT_KEY: ActivityQueryKey<'burnEvent'> = {
   entity: 'burnEvent',
-  keys: ['id', 'timestamp', 'txHash', 'caller', 'holder', 'amount'],
+  keys: ['id', 'timestamp', 'txHash', 'from', 'holder', 'amount'],
 }
 
 const ADD_TO_BALANCE_EVENT_KEY: ActivityQueryKey<'addToBalanceEvent'> = {
   entity: 'addToBalanceEvent',
-  keys: ['amount', 'timestamp', 'caller', 'note', 'id', 'txHash', 'terminal'],
+  keys: ['amount', 'timestamp', 'from', 'note', 'id', 'txHash', 'terminal'],
 }
 
 const DEPLOYED_ERC20_EVENT_KEY: ActivityQueryKey<'deployedERC20Event'> = {
   entity: 'deployedERC20Event',
-  keys: ['symbol', 'txHash', 'timestamp', 'id', 'caller'],
+  keys: ['symbol', 'txHash', 'timestamp', 'id', 'from'],
 }
 
 const REDEEM_EVENT_KEY: ActivityQueryKey<'redeemEvent'> = {
   entity: 'redeemEvent',
   keys: [
     'id',
-    'caller',
+    'from',
     'amount',
     'beneficiary',
     'txHash',
@@ -88,7 +87,7 @@ const REDEEM_EVENT_KEY: ActivityQueryKey<'redeemEvent'> = {
 
 const PROJECT_CREATE_EVENT_KEY: ActivityQueryKey<'projectCreateEvent'> = {
   entity: 'projectCreateEvent',
-  keys: ['id', 'txHash', 'timestamp', 'caller'],
+  keys: ['id', 'txHash', 'timestamp', 'from'],
 }
 
 const DISTRIBUTED_PAYOUTS_EVENT_KEY: ActivityQueryKey<'distributePayoutsEvent'> =
@@ -98,7 +97,7 @@ const DISTRIBUTED_PAYOUTS_EVENT_KEY: ActivityQueryKey<'distributePayoutsEvent'> 
       'id',
       'timestamp',
       'txHash',
-      'caller',
+      'from',
       'beneficiary',
       'beneficiaryDistributionAmount',
       'distributedAmount',
@@ -114,7 +113,7 @@ const DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY: ActivityQueryKey<'distributeReserve
       'id',
       'timestamp',
       'txHash',
-      'caller',
+      'from',
       'beneficiary',
       'beneficiaryTokenCount',
       'tokenCount',
@@ -124,7 +123,7 @@ const DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY: ActivityQueryKey<'distributeReserve
 const DEPLOYED_PROJECT_PAYER_EVENT_KEY: ActivityQueryKey<'deployETHERC20ProjectPayerEvent'> =
   {
     entity: 'deployETHERC20ProjectPayerEvent',
-    keys: ['id', 'timestamp', 'txHash', 'caller', 'address', 'memo'],
+    keys: ['id', 'timestamp', 'txHash', 'from', 'address', 'memo'],
   }
 
 const SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY: ActivityQueryKey<'setFundAccessConstraintsEvent'> =
@@ -134,11 +133,25 @@ const SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY: ActivityQueryKey<'setFundAccessCons
       'id',
       'timestamp',
       'txHash',
-      'caller',
+      'from',
       'distributionLimit',
       'distributionLimitCurrency',
     ],
   }
+
+const PROJECT_ACTIVITY_EVENT_KEYS = [
+  DEPLOYED_ERC20_EVENT_KEY,
+  PAY_EVENT_KEY,
+  BURN_EVENT_KEY,
+  ADD_TO_BALANCE_EVENT_KEY,
+  PROJECT_CREATE_EVENT_KEY,
+  REDEEM_EVENT_KEY,
+  DISTRIBUTED_PAYOUTS_EVENT_KEY,
+  DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY,
+  DEPLOYED_PROJECT_PAYER_EVENT_KEY,
+  CONFIGURE_EVENT_KEY,
+  SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY,
+]
 
 export type EventFilter =
   | 'all'
@@ -156,13 +169,13 @@ export type EventFilter =
   | 'configure'
   | 'setFundAccessConstraints'
 
-export function useProjectActivity({
+export function useV2V3ProjectActivity({
   eventFilter,
+  projectId,
 }: {
   eventFilter?: EventFilter
+  projectId?: number
 }) {
-  const { projectId } = useContext(ProjectMetadataContext)
-
   const where: SGWhereArg<'projectEvent'>[] = useMemo(() => {
     const _where: SGWhereArg<'projectEvent'>[] = [
       {
@@ -289,19 +302,7 @@ export function useProjectActivity({
     if (key) return [key]
 
     // if no filter, fetch all
-    return [
-      DEPLOYED_ERC20_EVENT_KEY,
-      PAY_EVENT_KEY,
-      BURN_EVENT_KEY,
-      ADD_TO_BALANCE_EVENT_KEY,
-      PROJECT_CREATE_EVENT_KEY,
-      REDEEM_EVENT_KEY,
-      DISTRIBUTED_PAYOUTS_EVENT_KEY,
-      DISTRIBUTED_RESERVED_TOKENS_EVENT_KEY,
-      DEPLOYED_PROJECT_PAYER_EVENT_KEY,
-      CONFIGURE_EVENT_KEY,
-      SET_FUND_ACCESS_CONSTRAINTS_EVENT_KEY,
-    ]
+    return PROJECT_ACTIVITY_EVENT_KEYS
   }, [eventFilter])
 
   return useInfiniteSubgraphQuery({

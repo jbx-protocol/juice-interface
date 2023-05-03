@@ -6,7 +6,7 @@ import {
 import { Trans, t } from '@lingui/macro'
 import { Button, Col, Form, Row, Space, Tooltip } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import {
   validateEthAddress,
   validatePercentage,
@@ -93,7 +93,7 @@ export default function ProjectTicketMods({
               <Col span={17}>
                 <div className="flex items-center justify-between">
                   <span className="cursor-pointer">
-                    <FormattedAddress address={mod.beneficiary} />
+                    <EthereumAddress address={mod.beneficiary} />
                   </span>
                 </div>
               </Col>
@@ -246,11 +246,7 @@ export default function ProjectTicketMods({
             <div>
               <Trans>
                 {(100 - total).toFixed(2)}% to{' '}
-                {owner ? (
-                  <FormattedAddress address={owner} />
-                ) : (
-                  t`project owner`
-                )}
+                {owner ? <EthereumAddress address={owner} /> : t`project owner`}
               </Trans>
             </div>
           ) : null}

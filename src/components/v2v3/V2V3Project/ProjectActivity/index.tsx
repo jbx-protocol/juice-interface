@@ -9,6 +9,7 @@ import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateE
 import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext, useMemo, useState } from 'react'
 import V2V3DownloadActivityModal from '../modals/V2V3DownloadActivityModal'
@@ -17,9 +18,10 @@ import DeployETHERC20ProjectPayerEventElem from './eventElems/DeployETHERC20Proj
 import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
 import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
 import SetFundAccessConstraintsEventElem from './eventElems/SetFundAccessConstraintsEventElem'
-import { EventFilter, useProjectActivity } from './hooks/ProjectActivity'
+import { EventFilter, useV2V3ProjectActivity } from './hooks/ProjectActivity'
 
-export default function ProjectActivity() {
+export function V2V3ProjectActivity() {
+  const { projectId } = useContext(ProjectMetadataContext)
   const { tokenSymbol } = useContext(V2V3ProjectContext)
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
@@ -31,7 +33,7 @@ export default function ProjectActivity() {
     hasNextPage,
     isLoading,
     isFetchingNextPage,
-  } = useProjectActivity({ eventFilter })
+  } = useV2V3ProjectActivity({ eventFilter, projectId })
 
   const count =
     projectEvents?.pages?.reduce((prev, cur) => prev + cur.length, 0) ?? 0

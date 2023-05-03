@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import Image from 'next/image'
 import { JoinOurDiscordButton } from './JoinOurDiscordButton'
 import { SectionContainer } from './SectionContainer'
+import illustration from '/public/assets/images/about/illustration3.webp'
 
 export const JuiceboxDaoSection = () => {
   return (
@@ -26,10 +27,8 @@ export const JuiceboxDaoSection = () => {
 
       <div className="mx-auto mt-14 w-full max-w-sm md:order-1 md:mx-0 md:mt-0">
         <Image
-          src={'/assets/images/about/illustration3.png'}
+          src={illustration}
           alt="Banny and the crew gettin' lit in the Juicebox DAO band"
-          width={380}
-          height={380}
         />
       </div>
     </SectionContainer>

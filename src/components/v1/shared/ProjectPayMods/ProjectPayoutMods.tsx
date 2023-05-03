@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Space } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { FormItemExt } from 'components/formItems/formItemExt'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useContext, useState } from 'react'
@@ -106,7 +106,7 @@ export default function ProjectPayoutMods({
             {owner ? (
               <Trans>
                 {(100 - total).toFixed(2)}% to{' '}
-                <FormattedAddress address={owner} />
+                <EthereumAddress address={owner} />
               </Trans>
             ) : null}
           </div>

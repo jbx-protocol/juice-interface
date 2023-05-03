@@ -5,7 +5,7 @@ import {
   UserIcon,
 } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { useWallet } from 'hooks/Wallet'
 import { ReactNode, useCallback, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
@@ -44,12 +44,11 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
             copied ? (
               t`Copied!`
             ) : (
-              <FormattedAddress
+              <EthereumAddress
                 tooltipDisabled
                 linkDisabled
-                showEns={false}
+                ensDisabled
                 address={userAddress}
-                truncateTo={4}
               />
             )
           }
@@ -90,7 +89,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
       hideArrow
       heading={
         <div className="flex w-full cursor-pointer select-none items-center justify-center rounded-lg bg-bluebs-50 px-4 py-2.5 dark:bg-bluebs-900">
-          <FormattedAddress
+          <EthereumAddress
             address={userAddress}
             tooltipDisabled
             linkDisabled

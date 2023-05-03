@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-04-27 22:01\n"
+"PO-Revision-Date: 2023-04-30 00:30\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -2408,7 +2408,7 @@ msgid "Payments"
 msgstr "支付"
 
 msgid "Payments made"
-msgstr "已付款"
+msgstr "付款次数"
 
 msgid "Payments to this project"
 msgstr "向这个项目支付的款项"
@@ -2455,14 +2455,11 @@ msgstr "支出不能超过支付的总金额。"
 msgid "Payouts to Ethereum addresses incur a 2.5% JBX membership fee"
 msgstr "向以太坊地址付款会产生 2.5% Juicebox 成员费用"
 
-msgid "Payouts to Ethereum addresses incur a 2.5% JBX membership fee. Payouts to other Juicebox projects don't incur fees. <0>Learn more</0>."
-msgstr "支出给以太坊地址会产生 2.5% 的 JBX 成员费用。支出给其他 Juicebox 项目则不产生费用。<0>了解更多</0>。"
-
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return. <0>Learn more</0>."
 msgstr "支出给以太坊地址会产生一个 {feePercentage}% 的费用。你的项目会相应获得 JBX 代币。<0>了解更多</0>。"
 
-msgid "Payouts to other Juicebox projects don't incur fees. In return for fees, your project will receive JBX (the <0>JuiceboxDAO</0> governance token) at the current issuance rate. <1>Learn more</1>."
-msgstr "支出给其他 Juicebox 项目不会产生费用。作为缴纳费用的回报，你的项目将按当前的发行比率获得 JBX 代币（<0>JuiceboxDAO</0> 的治理代币）。<1>了解更多</1>。"
+msgid "Payouts to other Juicebox projects don't incur fees. A 2.5% fee is taken out of all other payouts. You will receive the<0>JuiceboxDAO governance token</0>when you pay fees. <1>Learn more</1>."
+msgstr ""
 
 msgid "Payouts to other Juicebox projects won't incur fees."
 msgstr "支出到其他 Juicebox 项目不会产生费用。"
@@ -2689,8 +2686,8 @@ msgstr "已提交交易"
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr "剩余供应量： {0}/{1}"
 
-msgid "Rankings are based on the amount of ETH a project has been paid and the number of payments to a project over the past {TRENDING_WINDOW_DAYS} days. <0>See the code</0>."
-msgstr "排序基于项目过去 {TRENDING_WINDOW_DAYS} 天收到的 ETH 金额及收款的次数来决定。<0>查看代码</0>。"
+msgid "Rankings are based on the amount of ETH a project has been paid and the number of payments to a project over the past {TRENDING_WINDOW_DAYS} days."
+msgstr "排名基于项目在过去 {TRENDING_WINDOW_DAYS} 天内收到的 ETH 金额及付款次数。"
 
 msgid "Re-launch a project"
 msgstr "重新启动一个项目"
@@ -4341,9 +4338,6 @@ msgstr "将会保留 {0} 个代币。"
 
 msgid "{0} tokens will be sent to the payer."
 msgstr "{0} 个代币将会发送给付款人。"
-
-msgid "{0} tokens/ETH"
-msgstr "{0} 代币/ETH"
 
 msgid "{0} total"
 msgstr "{0} 总共"

@@ -1,8 +1,7 @@
 import { CrownFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
-import TooltipLabel from 'components/TooltipLabel'
+import EthereumAddress from 'components/EthereumAddress'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { Split } from 'models/splits'
 import { isEqualAddress } from 'utils/address'
@@ -29,16 +28,19 @@ export function JuiceboxProjectBeneficiary({
         <AllocatorBadge allocator={split.allocator} />
       </div>
       {split.allocator === NULL_ALLOCATOR_ADDRESS ? (
-        <div className="ml-2 text-xs text-grey-500 dark:text-grey-300">
-          <TooltipLabel
-            label={<Trans>Tokens:</Trans>}
-            tip={
+        <div className="ml-2 flex items-center gap-x-1 text-xs text-grey-500 dark:text-grey-300">
+          <Tooltip
+            title={
               <Trans>
                 This address receives the tokens minted by this payout.
               </Trans>
             }
-          />{' '}
-          {value ?? <FormattedAddress address={split.beneficiary} />}{' '}
+          >
+            <span className="underline decoration-smoke-500 decoration-dotted dark:decoration-slate-200">
+              <Trans>Tokens:</Trans>
+            </span>
+          </Tooltip>
+          {value ?? <EthereumAddress address={split.beneficiary} />}{' '}
           {isProjectOwner && (
             <Tooltip title={<Trans>Project owner</Trans>}>
               <CrownFilled />

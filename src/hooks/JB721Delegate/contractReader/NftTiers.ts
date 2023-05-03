@@ -2,7 +2,6 @@ import {
   JB721_DELEGATE_V1,
   JB721_DELEGATE_V1_1,
 } from 'constants/delegateVersions'
-import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { JB721DelegateVersion, JB721Tier } from 'models/nftRewards'
 import { useContext } from 'react'
@@ -26,7 +25,7 @@ function buildArgs(
     case JB721_DELEGATE_V1_1:
       return [
         dataSourceAddress,
-        DEFAULT_JB_721_TIER_CATEGORY, // _category
+        0, // _category, should eventually be DEFAULT_JB_721_TIER_CATEGORY pending contract crew bug fix
         0, // _startingId
         limit ?? MAX_NFT_REWARD_TIERS,
       ]

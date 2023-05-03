@@ -16,7 +16,6 @@ export interface AddToBalanceEvent
     TerminalEventEntity {
   pv: PV
   fundingCycleId: BigNumber
-  caller: string
   amount: BigNumber
   amountUSD: BigNumber
   note: string

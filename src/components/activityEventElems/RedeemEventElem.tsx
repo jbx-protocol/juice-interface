@@ -17,7 +17,7 @@ export default function RedeemEventElem({
         | 'id'
         | 'amount'
         | 'beneficiary'
-        | 'caller'
+        | 'from'
         | 'txHash'
         | 'timestamp'
         | 'returnAmount'

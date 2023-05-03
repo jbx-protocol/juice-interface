@@ -3,8 +3,8 @@ import { plural, t, Trans } from '@lingui/macro'
 import { Modal, Tooltip } from 'antd'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import { Callout } from 'components/Callout'
+import EthereumAddress from 'components/EthereumAddress'
 import EtherscanLink from 'components/EtherscanLink'
-import FormattedAddress from 'components/FormattedAddress'
 import TooltipLabel from 'components/TooltipLabel'
 import useMobile from 'hooks/Mobile'
 import { ETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-project-payer'
@@ -78,9 +78,8 @@ export function PaymentAddressesModal({
                           </Trans>
                         }
                         label={
-                          <FormattedAddress
+                          <EthereumAddress
                             address={p.beneficiary}
-                            truncateTo={3}
                             className="font-medium"
                           />
                         }

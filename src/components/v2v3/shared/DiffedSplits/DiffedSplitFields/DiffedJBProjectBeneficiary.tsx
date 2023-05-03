@@ -1,4 +1,4 @@
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { Split } from 'models/splits'
 import { DiffedItem } from '../../DiffedItem'
 import { JuiceboxProjectBeneficiary } from '../../SplitItem/JuiceboxProjectBeneficiary'
@@ -22,11 +22,11 @@ export function DiffedJBProjectBeneficiary({
         hasDiff ? (
           <div className="flex">
             <DiffedItem
-              value={<FormattedAddress address={oldSplit.beneficiary} />}
+              value={<EthereumAddress address={oldSplit.beneficiary} />}
               diffStatus="old"
             />
             <DiffedItem
-              value={<FormattedAddress address={split.beneficiary} />}
+              value={<EthereumAddress address={split.beneficiary} />}
               diffStatus="new"
             />
           </div>

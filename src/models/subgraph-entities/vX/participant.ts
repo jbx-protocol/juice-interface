@@ -15,8 +15,8 @@ import { Wallet } from './wallet'
 export interface Participant extends BaseProjectEntity {
   pv: PV
   wallet: Wallet
-  totalPaid: BigNumber
-  totalPaidUSD: BigNumber
+  volume: BigNumber
+  volumeUSD: BigNumber
   balance: BigNumber
   stakedBalance: BigNumber
   erc20Balance: BigNumber
@@ -28,8 +28,8 @@ export const parseParticipantJson = (j: Json<Participant>): Participant => ({
   ...parseBaseProjectEntityJson(j),
   ...parseSubgraphEntitiesFromJson(j, ['wallet']),
   ...parseBigNumberKeyVals(j, [
-    'totalPaid',
-    'totalPaidUSD',
+    'volume',
+    'volumeUSD',
     'balance',
     'stakedBalance',
     'erc20Balance',

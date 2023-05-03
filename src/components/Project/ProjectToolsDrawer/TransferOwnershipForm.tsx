@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Form, Statistic } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useState } from 'react'
@@ -49,7 +49,7 @@ export function TransferOwnershipForm({
           title={<Trans>Current owner</Trans>}
           valueRender={() => (
             <span>
-              <FormattedAddress address={ownerAddress} />
+              <EthereumAddress address={ownerAddress} />
             </span>
           )}
         />

@@ -1,10 +1,8 @@
 import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import USDAmount from 'components/currency/USDAmount'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import Link from 'next/link'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { formattedNum } from 'utils/format/formatNumber'
 
 const Stat = ({
@@ -16,17 +14,9 @@ const Stat = ({
   label: string | JSX.Element
   loading: boolean
 }) => {
-  const newLandingEnabled = featureFlagEnabled(FEATURE_FLAGS.NEW_LANDING_PAGE)
-
-  const textColorClass = newLandingEnabled
-    ? 'text-bluebs-500'
-    : 'text-juice-400 dark:text-juice-300'
-
   return (
     <div className="my-0 mx-auto flex flex-col gap-4 text-center">
-      <div
-        className={`font-display text-4xl font-medium md:text-5xl ${textColorClass}`}
-      >
+      <div className="font-display text-4xl font-medium text-bluebs-500 md:text-5xl">
         {loading ? '-' : value}
       </div>
       <div className="font-body text-base text-grey-900 dark:text-slate-100">
@@ -43,8 +33,8 @@ export function StatsSection() {
       'erc20Count',
       'paymentsCount',
       'projectsCount',
-      'volumePaid',
-      'volumePaidUSD',
+      'volume',
+      'volumeUSD',
     ],
   })
 
@@ -63,11 +53,11 @@ export function StatsSection() {
             <Link href="/activity">
               <a className="text-current">
                 <USDAmount
-                  amount={stats?.volumePaidUSD}
+                  amount={stats?.volumeUSD}
                   precision={0}
                   symbol="$"
                   tooltipContent={
-                    <ETHAmount amount={stats?.volumePaid} hideTooltip />
+                    <ETHAmount amount={stats?.volume} hideTooltip />
                   }
                   className="gradient-animation bg-gradient-to-r from-bluebs-500 via-grape-400 to-juice-500 bg-clip-text font-display transition-colors hover:text-transparent"
                 />

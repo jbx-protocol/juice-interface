@@ -6,7 +6,7 @@ import { FormInstance, FormProps, useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import USDAmount from 'components/currency/USDAmount'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import Sticker from 'components/icons/Sticker'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
@@ -130,7 +130,7 @@ export const V2V3PayForm = ({
                   </Form.Item>
 
                   {beneficiary && !customBeneficiaryEnabled && (
-                    <FormattedAddress address={beneficiary} />
+                    <EthereumAddress address={beneficiary} />
                   )}
 
                   {customBeneficiaryEnabled ? (

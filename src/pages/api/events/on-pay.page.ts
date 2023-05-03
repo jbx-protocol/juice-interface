@@ -51,7 +51,7 @@ const Schema = Yup.object().shape({
   ).required(),
   memo: Yup.string(),
   metadata: Yup.string().required(),
-  caller: Yup.string().required(),
+  from: Yup.string().required(),
   blockHash: Yup.string().required(),
   blockNumber: Yup.number(),
 })

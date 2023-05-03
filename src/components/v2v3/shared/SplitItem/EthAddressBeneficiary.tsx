@@ -1,7 +1,7 @@
 import { CrownFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
+import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
 import { isEqualAddress } from 'utils/address'
 
 export function ETHAddressBeneficiary({
@@ -16,7 +16,7 @@ export function ETHAddressBeneficiary({
   return (
     <div className="flex items-center justify-center gap-1 font-medium">
       {beneficaryAddress ? (
-        <FormattedAddress address={beneficaryAddress} />
+        <JuiceboxAccountLink address={beneficaryAddress} />
       ) : null}
       {!beneficaryAddress && isProjectOwner ? (
         <Trans>Project owner (you)</Trans>

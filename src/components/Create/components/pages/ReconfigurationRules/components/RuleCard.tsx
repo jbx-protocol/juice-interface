@@ -1,15 +1,13 @@
 import { CreateBadge } from 'components/Create/components/CreateBadge'
 import { Selection } from 'components/Create/components/Selection'
 import { AvailableReconfigurationStrategy } from 'components/Create/hooks/AvailableReconfigurationStrategies'
-import FormattedAddress from 'components/FormattedAddress'
-import useMobile from 'hooks/Mobile'
+import EthereumAddress from 'components/EthereumAddress'
 
 export const RuleCard = ({
   strategy,
 }: {
   strategy: AvailableReconfigurationStrategy
 }) => {
-  const isMobile = useMobile()
   return (
     <Selection.Card
       key={strategy.id}
@@ -31,8 +29,7 @@ export const RuleCard = ({
           {strategy.description}
           <div className="overflow-hidden text-grey-400 dark:text-slate-200">
             Contract address:{' '}
-            <FormattedAddress
-              truncateTo={isMobile ? 8 : 16}
+            <EthereumAddress
               address={strategy.address}
               onClick={e => e.stopPropagation()}
             />

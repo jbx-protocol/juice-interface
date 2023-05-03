@@ -6,8 +6,8 @@ import { Json } from '../../json'
 export type ProtocolLog = {
   id: '1' // Only one entity exists
   projectsCount: number
-  volumePaid: BigNumber
-  volumePaidUSD: BigNumber
+  volume: BigNumber
+  volumeUSD: BigNumber
   volumeRedeemed: BigNumber
   volumeRedeemedUSD: BigNumber
   paymentsCount: number
@@ -24,9 +24,9 @@ export const parseProtocolLogJson = (j: Json<ProtocolLog>): ProtocolLog => ({
   ...j,
   id: '1',
   ...parseBigNumberKeyVals(j, [
-    'volumePaid',
+    'volume',
     'volumeRedeemed',
-    'volumePaidUSD',
+    'volumeUSD',
     'volumeRedeemedUSD',
   ]),
   ...subgraphEntityJsonToKeyVal(j.v1, 'protocolLog', 'v1'),

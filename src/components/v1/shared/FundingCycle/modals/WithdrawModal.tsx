@@ -1,9 +1,9 @@
 import { t, Trans } from '@lingui/macro'
 import { Space } from 'antd'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import ETHAmount from 'components/currency/ETHAmount'
 import CurrencySymbol from 'components/CurrencySymbol'
-import FormattedAddress from 'components/FormattedAddress'
-import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
+import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/TransactionModal'
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
@@ -208,7 +208,7 @@ export default function WithdrawModal({
           <p>
             <Trans>
               <ETHAmount amount={convertedAmountSubFee} /> will go to the
-              project owner: <FormattedAddress address={owner} />
+              project owner: <EthereumAddress address={owner} />
             </Trans>
           </p>
         )}

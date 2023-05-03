@@ -9,10 +9,10 @@ import {
   SGResponseData,
 } from 'models/graph'
 import {
-  useInfiniteQuery,
   UseInfiniteQueryOptions,
-  useQuery,
   UseQueryOptions,
+  useInfiniteQuery,
+  useQuery,
 } from 'react-query'
 
 import {
@@ -26,7 +26,7 @@ const staleTime = 60 * 1000 // 60 seconds
 
 // This looks up the entity type and constructs an object
 // only with the keys you specified in K.
-export type GraphResult<E extends SGEntityName, K extends SGEntityKey<E>> = {
+type GraphResult<E extends SGEntityName, K extends SGEntityKey<E>> = {
   [PropertyKey in K]: SGEntity<E>[PropertyKey]
 }[]
 

@@ -30,13 +30,13 @@ import {
 } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
 import { parseDBProjectJson, parseDBProjectsRow } from 'utils/sgDbProjects'
-import useSubgraphQuery, { useInfiniteSubgraphQuery } from './SubgraphQuery'
+import useSubgraphQuery from './SubgraphQuery'
 
 interface ProjectsOptions {
   pageNumber?: number
   projectId?: number
   projectIds?: number[]
-  orderBy?: 'createdAt' | 'currentBalance' | 'totalPaid' | 'paymentsCount'
+  orderBy?: 'createdAt' | 'currentBalance' | 'volume' | 'paymentsCount'
   orderDirection?: 'asc' | 'desc'
   pageSize?: number
   state?: ProjectState
@@ -56,7 +56,7 @@ export const DEFAULT_PROJECT_ENTITY_KEYS: (keyof Project)[] = [
   'handle',
   'createdAt',
   'metadataUri',
-  'totalPaid',
+  'volume',
   'pv',
 ]
 const V1_ARCHIVED_SUBGRAPH_IDS = V1ArchivedProjectIds.map(projectId =>
@@ -117,7 +117,7 @@ const buildProjectQueryOpts = (
     entity: 'project',
     keys: opts.keys ?? DEFAULT_PROJECT_ENTITY_KEYS,
     orderDirection: opts.orderDirection ?? 'desc',
-    orderBy: opts.orderBy ?? 'totalPaid',
+    orderBy: opts.orderBy ?? 'volume',
     pageSize: opts.pageSize,
     where,
   }
@@ -138,31 +138,6 @@ export function useProjectsQuery(opts: ProjectsOptions) {
     },
     {
       staleTime: DEFAULT_STALE_TIME,
-    },
-  )
-}
-
-/**
- * Search Subgraph projects by handle and return only a list of projects
- * @param handle handle tosearch
- * @param enabled query will only run if enabled
- * @returns list of projects
- */
-export function useProjectsSearch(
-  handle: string | undefined,
-  opts?: { enabled?: boolean },
-) {
-  return useSubgraphQuery(
-    handle
-      ? {
-          text: `${handle}:*`,
-          entity: 'projectSearch',
-          keys: DEFAULT_PROJECT_ENTITY_KEYS,
-        }
-      : null,
-    {
-      staleTime: DEFAULT_STALE_TIME,
-      enabled: opts?.enabled,
     },
   )
 }
@@ -265,7 +240,7 @@ export function useContributedProjectsQuery(wallet: string | undefined) {
         value: wallet.toLowerCase(),
       },
       {
-        key: 'totalPaid',
+        key: 'volume',
         operator: 'gt',
         value: 0,
       },
@@ -366,25 +341,15 @@ export function useMyProjectsQuery(wallet: string | undefined) {
   }
 }
 
-export function useInfiniteProjectsQuery(opts: ProjectsOptions) {
-  return useInfiniteSubgraphQuery(
-    buildProjectQueryOpts(opts) as InfiniteSGQueryOpts<
-      'project',
-      SGEntityKey<'project'>
-    >,
-    { staleTime: DEFAULT_STALE_TIME },
-  )
-}
-
 export function useProjectTrendingPercentageIncrease({
-  totalPaid,
+  totalVolume,
   trendingVolume,
 }: {
-  totalPaid: BigNumber
+  totalVolume: BigNumber
   trendingVolume: BigNumber
 }): number {
   const percentageGain = useMemo(() => {
-    const preTrendingVolume = totalPaid?.sub(trendingVolume)
+    const preTrendingVolume = totalVolume?.sub(trendingVolume)
 
     if (!preTrendingVolume?.gt(0)) return Infinity
 
@@ -407,7 +372,7 @@ export function useProjectTrendingPercentageIncrease({
     }
 
     return percentRounded
-  }, [totalPaid, trendingVolume])
+  }, [totalVolume, trendingVolume])
 
   return percentageGain
 }

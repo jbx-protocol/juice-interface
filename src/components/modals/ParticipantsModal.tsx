@@ -8,7 +8,7 @@ import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Select } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { SGOrderDir, SGQueryOpts } from 'models/graph'
@@ -44,7 +44,7 @@ export default function ParticipantsModal({
     Pick<
       Participant,
       | 'wallet'
-      | 'totalPaid'
+      | 'volume'
       | 'lastPaidTimestamp'
       | 'balance'
       | 'stakedBalance'
@@ -76,7 +76,7 @@ export default function ParticipantsModal({
       entity: 'participant',
       keys: [
         'wallet { id }',
-        'totalPaid',
+        'volume',
         'lastPaidTimestamp',
         'balance',
         'stakedBalance',
@@ -144,7 +144,7 @@ export default function ParticipantsModal({
                 balance
               </Trans>
             </Select.Option>
-            <Select.Option value="totalPaid">
+            <Select.Option value="volume">
               <Trans>Total paid</Trans>
             </Select.Option>
             <Select.Option value="lastPaidTimestamp">
@@ -182,11 +182,11 @@ export default function ParticipantsModal({
             <div className="flex content-between justify-between">
               <div>
                 <div className="mr-2 leading-6">
-                  <FormattedAddress address={p.wallet.id} />
+                  <EthereumAddress address={p.wallet.id} />
                 </div>
                 <div className="text-xs text-grey-400 dark:text-slate-200">
                   <Trans>
-                    <ETHAmount amount={p.totalPaid} /> contributed
+                    <ETHAmount amount={p.volume} /> contributed
                   </Trans>
                 </div>
               </div>
@@ -241,7 +241,7 @@ export default function ParticipantsModal({
           {tokenAddress && !isZeroAddress(tokenAddress) && (
             <div className="mb-5">
               <Trans>
-                Token address: <FormattedAddress address={tokenAddress} />
+                Token address: <EthereumAddress address={tokenAddress} />
               </Trans>
             </div>
           )}

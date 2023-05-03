@@ -1,6 +1,6 @@
-import { AppWrapper, SEO } from 'components/common'
 import Loading from 'components/Loading'
 import Project404 from 'components/Project404'
+import { AppWrapper, SEO } from 'components/common'
 import { V1Project } from 'components/v1/V1Project'
 import { AnnouncementLauncher } from 'contexts/Announcements/AnnouncementLauncher'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -12,6 +12,8 @@ import { ProjectMetadata } from 'models/projectMetadata'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
+import { Provider } from 'react-redux'
+import store from 'redux/store'
 import { cidFromUrl, ipfsPublicGatewayUrl } from 'utils/ipfs'
 import { getV1StaticPaths, getV1StaticProps } from './pageLoaders'
 
@@ -51,21 +53,23 @@ export default function V1HandlePage({
         }}
       />
       <AppWrapper>
-        {metadata ? (
-          <V1UserProvider>
-            <V1ProjectMetadataProvider handle={handle} metadata={metadata}>
-              <V1ProjectProvider handle={handle}>
-                <V1CurrencyProvider>
-                  <AnnouncementLauncher>
-                    <V1Dashboard />
-                  </AnnouncementLauncher>
-                </V1CurrencyProvider>
-              </V1ProjectProvider>
-            </V1ProjectMetadataProvider>
-          </V1UserProvider>
-        ) : (
-          <Loading />
-        )}
+        <Provider store={store}>
+          {metadata ? (
+            <V1UserProvider>
+              <V1ProjectMetadataProvider handle={handle} metadata={metadata}>
+                <V1ProjectProvider handle={handle}>
+                  <V1CurrencyProvider>
+                    <AnnouncementLauncher>
+                      <V1Dashboard />
+                    </AnnouncementLauncher>
+                  </V1CurrencyProvider>
+                </V1ProjectProvider>
+              </V1ProjectMetadataProvider>
+            </V1UserProvider>
+          ) : (
+            <Loading />
+          )}
+        </Provider>
       </AppWrapper>
     </>
   )

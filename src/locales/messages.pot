@@ -116,9 +116,6 @@ msgstr ""
 msgid "<0/>{0} distributed"
 msgstr ""
 
-msgid "<0><1><2/>{grossAvailableAmount}</1></0> available to pay out"
-msgstr ""
-
 msgid "<0><1>Peel</1> manages this website — the juicebox.money frontend interface. You can reach out to Peel through the <2>Peel Discord</2>.</0><3><4>JuiceboxDAO</4> builds and governs the Juicebox fundraising protocol and other community resources. You can reach out to JuiceboxDAO through the <5>Juicebox Discord</5>.</3>"
 msgstr ""
 

@@ -1,7 +1,6 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tabs } from 'antd'
-import { Badge } from 'components/Badge'
 import EtherscanLink from 'components/EtherscanLink'
 import FormattedAddress from 'components/FormattedAddress'
 import Grid from 'components/Grid'
@@ -20,6 +19,7 @@ import { Profile } from 'models/database'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
+import { isEqualAddress } from 'utils/address'
 import { ensAvatarUrlForAddress } from 'utils/ens'
 import { etherscanLink } from 'utils/etherscan'
 
@@ -110,8 +110,8 @@ export function AccountDashboard({
   profile,
 }: {
   address: string
-  ensName: string | null
-  profile: Profile | null
+  ensName: string | null | undefined
+  profile: Profile | null | undefined
 }) {
   const wallet = useWallet()
   const signIn = useWalletSignIn()
@@ -145,7 +145,7 @@ export function AccountDashboard({
     },
   ]
 
-  const isOwner = wallet.userAddress?.toLowerCase() === address.toLowerCase()
+  const isOwner = isEqualAddress(wallet.userAddress, address.toLowerCase())
 
   return (
     <div className="my-0 mx-auto max-w-5xl p-5">
@@ -158,7 +158,7 @@ export function AccountDashboard({
               className="mr-5 h-32 w-32 rounded-full"
             />
             <div className="flex flex-col gap-2">
-              <h1 className="mb-0 text-4xl text-black dark:text-slate-100">
+              <h1 className="mb-0 font-heading text-4xl font-medium text-black dark:text-slate-100">
                 {ensName ?? <FormattedAddress address={address} />}
               </h1>
               {ensName && (
@@ -186,7 +186,7 @@ export function AccountDashboard({
               onClick={onEditProfileClicked}
             >
               <span className="inline-flex gap-3">
-                <Trans>Settings</Trans> <Badge variant="info">Beta</Badge>
+                <Trans>Settings</Trans>
               </span>
             </Button>
           )}

@@ -36,7 +36,7 @@ export type DBProject = {
   metadataUri: string | null
   currentBalance: BigNumber
   trendingScore: BigNumber
-  totalPaid: BigNumber
+  volume: BigNumber
   paymentsCount: number
   deployer: string | null
   terminal: string | null

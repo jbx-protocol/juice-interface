@@ -67,11 +67,11 @@ export function useV1ProjectState({
 
   const { data: projects } = useProjectsQuery({
     projectId: projectId,
-    keys: ['createdAt', 'totalPaid'],
+    keys: ['createdAt', 'volume'],
   })
 
   const createdAt = projects?.[0]?.createdAt
-  const earned = projects?.[0]?.totalPaid
+  const earned = projects?.[0]?.volume
 
   const project = useMemo<V1ProjectContextType>((): V1ProjectContextType => {
     const projectType = 'standard'

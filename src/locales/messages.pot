@@ -623,9 +623,6 @@ msgstr ""
 msgid "CYCLE #{cycleNumber}"
 msgstr ""
 
-msgid "Caller"
-msgstr ""
-
 msgid "Cancel"
 msgstr ""
 
@@ -1440,6 +1437,9 @@ msgid "Flexible"
 msgstr ""
 
 msgid "Free to launch, just pay gas."
+msgstr ""
+
+msgid "From"
 msgstr ""
 
 msgid "Fun"
@@ -4115,10 +4115,10 @@ msgstr ""
 msgid "allocation"
 msgstr ""
 
-msgid "called by <0/>"
+msgid "days"
 msgstr ""
 
-msgid "days"
+msgid "from <0/>"
 msgstr ""
 
 msgid "handle"

@@ -30,8 +30,8 @@ export async function downloadParticipants(
       keys: [
         'lastPaidTimestamp',
         'wallet { id }',
-        'totalPaid',
-        'totalPaidUSD',
+        'volume',
+        'volumeUSD',
         'balance',
         'stakedBalance',
         'erc20Balance',
@@ -66,8 +66,8 @@ export async function downloadParticipants(
       rows.push([
         date,
         p.wallet.id,
-        fromWad(p.totalPaid),
-        fromWad(p.totalPaidUSD),
+        fromWad(p.volume),
+        fromWad(p.volumeUSD),
         fromWad(p.balance),
         fromWad(p.stakedBalance),
         fromWad(p.erc20Balance),
@@ -333,7 +333,7 @@ export async function downloadPayments(
         'timestamp',
         'amount',
         'amountUSD',
-        'caller',
+        'from',
         'beneficiary',
         'txHash',
       ],
@@ -368,7 +368,7 @@ export async function downloadPayments(
         date,
         fromWad(p.amount),
         fromWad(p.amountUSD),
-        p.caller,
+        p.from,
         p.beneficiary,
         p.txHash,
       ])
@@ -394,7 +394,7 @@ export async function downloadRedemptions(
       t`Tokens redeemed`,
       t`ETH received`,
       t`USD value of ETH received`,
-      t`Caller`,
+      t`From`,
       t`Beneficiary`,
       t`Transaction hash`,
     ], // CSV header row
@@ -408,7 +408,7 @@ export async function downloadRedemptions(
         'amount',
         'returnAmount',
         'returnAmountUSD',
-        'caller',
+        'from',
         'beneficiary',
         'txHash',
       ],
@@ -444,7 +444,7 @@ export async function downloadRedemptions(
         fromWad(r.amount),
         fromWad(r.returnAmount),
         fromWad(r.returnAmountUSD),
-        r.caller,
+        r.from,
         r.beneficiary,
         r.txHash,
       ])
@@ -472,7 +472,7 @@ export async function downloadAdditionsToBalance(
       t`Date`,
       t`ETH transferred`,
       t`USD value of ETH transferred`,
-      t`Caller`,
+      t`From`,
       t`Transaction hash`,
     ], // CSV header row
   ]
@@ -480,7 +480,7 @@ export async function downloadAdditionsToBalance(
   try {
     const additions = await querySubgraphExhaustive({
       entity: 'addToBalanceEvent',
-      keys: ['timestamp', 'amount', 'amountUSD', 'caller', 'txHash'],
+      keys: ['timestamp', 'amount', 'amountUSD', 'from', 'txHash'],
       orderBy: 'timestamp',
       orderDirection: 'desc',
       block: {
@@ -512,7 +512,7 @@ export async function downloadAdditionsToBalance(
         date,
         fromWad(a.amount),
         fromWad(a.amountUSD),
-        a.caller,
+        a.from,
         a.txHash,
       ])
     })

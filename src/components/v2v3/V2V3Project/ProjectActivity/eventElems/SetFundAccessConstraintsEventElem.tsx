@@ -14,7 +14,7 @@ export default function SetFundAccessConstraintsEventElem({
         | 'id'
         | 'timestamp'
         | 'txHash'
-        | 'caller'
+        | 'from'
         | 'distributionLimit'
         | 'distributionLimitCurrency'
       >

@@ -19,7 +19,7 @@ export default function TapEventElem({
         | 'id'
         | 'timestamp'
         | 'txHash'
-        | 'caller'
+        | 'from'
         | 'beneficiary'
         | 'beneficiaryTransferAmount'
         | 'netTransferAmount'

@@ -10,7 +10,7 @@ export default function DeployETHERC20ProjectPayerEventElem({
   event:
     | Pick<
         DeployETHERC20ProjectPayerEvent,
-        'id' | 'timestamp' | 'txHash' | 'caller' | 'address' | 'memo'
+        'id' | 'timestamp' | 'txHash' | 'from' | 'address' | 'memo'
       >
     | undefined
 }) {
@@ -22,7 +22,7 @@ export default function DeployETHERC20ProjectPayerEventElem({
       header={t`Deployed a project payer address`}
       subject={
         <Trans>
-          called by <FormattedAddress address={event.caller} />
+          from <FormattedAddress address={event.from} />
         </Trans>
       }
       extra={

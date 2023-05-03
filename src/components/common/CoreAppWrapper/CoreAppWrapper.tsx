@@ -1,5 +1,6 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
+import { useInitWallet } from 'components/Navbar/InitWallet'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
@@ -8,8 +9,9 @@ import LanguageProvider from 'contexts/Language/LanguageProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
+import { installJuiceboxWindowObject } from 'lib/juicebox'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { redirectTo } from 'utils/windowUtils'
 
 /**
@@ -44,6 +46,13 @@ export const AppWrapper: React.FC = ({ children }) => {
 
 const _Wrapper: React.FC = ({ children }) => {
   const router = useRouter()
+  useInitWallet()
+
+  // run on initial mount
+  useEffect(() => {
+    installJuiceboxWindowObject()
+  }, [])
+
   if (router.asPath.match(/^\/#\//)) {
     redirectTo(router.asPath.replace('/#/', ''))
   }

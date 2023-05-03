@@ -1,4 +1,3 @@
-import { t } from '@lingui/macro'
 import { AppWrapper, Head } from 'components/common'
 import { Create } from 'components/Create'
 import { CV_V3 } from 'constants/cv'
@@ -12,9 +11,9 @@ export default function V2CreatePage() {
   return (
     <>
       <Head
-        title={t`Create your project`}
+        title="Create your project"
         url={process.env.NEXT_PUBLIC_BASE_URL + '/create'}
-        description={t`Launch a project on Juicebox`}
+        description="Launch a project on Juicebox"
       />
 
       <AppWrapper>

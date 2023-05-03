@@ -15,10 +15,10 @@ import {
   useLoadWalletFromLocalStorage,
   useStoreWalletsInLocalStorage,
 } from 'hooks/Network'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
 
-function initWeb3Onboard(): OnboardAPI {
+export function initWeb3Onboard(): OnboardAPI {
   console.info('Initializing Web3Onboard...')
 
   const injected = injectedModule()
@@ -57,8 +57,6 @@ function initWeb3Onboard(): OnboardAPI {
 }
 
 export function useInitWallet() {
-  const [web3Onboard] = useState<OnboardAPI | null>(() => initWeb3Onboard())
-
   const updateAccountCenter = useAccountCenter()
   const loadWalletFromLocalStorage = useLoadWalletFromLocalStorage()
   const storeWalletsInLocalStorage = useStoreWalletsInLocalStorage()
@@ -67,28 +65,21 @@ export function useInitWallet() {
 
   // If possible, load Safe wallets
   useEffect(() => {
-    if (!web3Onboard) return
     loadSafeWallet()
-  }, [loadSafeWallet, web3Onboard])
+  }, [loadSafeWallet])
 
   // Load any previously connected wallets
   useEffect(() => {
-    if (!web3Onboard) return
-
     loadWalletFromLocalStorage()
-  }, [loadWalletFromLocalStorage, web3Onboard])
+  }, [loadWalletFromLocalStorage])
 
   // store any wallets
   useEffect(() => {
-    if (!web3Onboard) return
-
     storeWalletsInLocalStorage(connectedWallets)
-  }, [storeWalletsInLocalStorage, connectedWallets, web3Onboard])
+  }, [storeWalletsInLocalStorage, connectedWallets])
 
   // disable account center in web3-onboard
   useEffect(() => {
-    if (!web3Onboard) return
-
     updateAccountCenter({ enabled: false })
-  }, [updateAccountCenter, web3Onboard])
+  }, [updateAccountCenter])
 }

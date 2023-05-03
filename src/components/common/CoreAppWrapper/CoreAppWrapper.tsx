@@ -1,6 +1,5 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import { useInitWallet } from 'components/Navbar/InitWallet'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
@@ -46,7 +45,6 @@ export const AppWrapper: React.FC = ({ children }) => {
 
 const _Wrapper: React.FC = ({ children }) => {
   const router = useRouter()
-  useInitWallet()
 
   // run on initial mount
   useEffect(() => {

@@ -3,7 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Button, Form, Modal } from 'antd'
 import { Callout } from 'components/Callout'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import { AllocationSplit } from 'components/v2v3/shared/Allocation'
@@ -73,7 +73,7 @@ const V1MigrationCard = ({
     >
       <div className="mb-4 flex items-center gap-2 text-lg font-medium">
         <span>Beneficiary:</span>
-        <FormattedAddress address={beneficiary} />
+        <EthereumAddress address={beneficiary} />
       </div>
       <Form.List name="projectIds">
         {(fields, { remove }) => (

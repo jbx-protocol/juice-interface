@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import RichNote from 'components/RichNote'
 import { DeployETHERC20ProjectPayerEvent } from 'models/subgraph-entities/v2/deploy-eth-erc20-project-payer-event'
 
@@ -22,13 +22,13 @@ export default function DeployETHERC20ProjectPayerEventElem({
       header={t`Deployed a project payer address`}
       subject={
         <Trans>
-          from <FormattedAddress address={event.from} />
+          from <EthereumAddress address={event.from} />
         </Trans>
       }
       extra={
         <div>
           <Trans>
-            Address: <FormattedAddress address={event.address} />
+            Address: <EthereumAddress address={event.address} />
           </Trans>
           <div className="mt-2">
             <RichNote note={event.memo} />

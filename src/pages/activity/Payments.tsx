@@ -1,5 +1,5 @@
 import ETHAmount from 'components/currency/ETHAmount'
-import FormattedAddress from 'components/FormattedAddress'
+import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
@@ -73,7 +73,7 @@ export function PaymentsFeed() {
                   <ETHAmount amount={e.amount} precision={2} />
                 </span>
                 <span>
-                  <FormattedAddress address={e.beneficiary} withEnsAvatar />
+                  <JuiceboxAccountLink address={e.beneficiary} />
                 </span>
               </div>
               <div>

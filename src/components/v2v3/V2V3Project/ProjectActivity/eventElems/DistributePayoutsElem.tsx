@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import ETHAmount from 'components/currency/ETHAmount'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import useSubgraphQuery from 'hooks/SubgraphQuery'
 import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
@@ -72,7 +72,7 @@ export default function DistributePayoutsElem({
                     projectId={e.splitProjectId}
                   />
                 ) : (
-                  <FormattedAddress
+                  <EthereumAddress
                     className="text-grey-900 dark:text-slate-100"
                     address={e.beneficiary}
                   />
@@ -89,7 +89,7 @@ export default function DistributePayoutsElem({
           {event.beneficiaryDistributionAmount?.gt(0) && (
             <div className="flex items-baseline justify-between">
               <div>
-                <FormattedAddress
+                <EthereumAddress
                   className="text-grey-900 dark:text-slate-100"
                   address={event.beneficiary}
                 />

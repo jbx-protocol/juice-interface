@@ -16,7 +16,6 @@ export function truncateEthAddress({
   truncateTo?: number
 }) {
   const frontTruncate = truncateTo + 2 // account for 0x
-
   return (
     address.substring(0, frontTruncate) +
     '...' +

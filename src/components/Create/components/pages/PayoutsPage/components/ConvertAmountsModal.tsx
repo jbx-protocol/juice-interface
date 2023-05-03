@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Divider, Modal } from 'antd'
 import CurrencySwitch from 'components/CurrencySwitch'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { Parenthesis } from 'components/Parenthesis'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
@@ -142,7 +142,7 @@ export const ConvertAmountsModal = ({
                       projectId={parseInt(allocation.projectId)}
                     />
                   ) : (
-                    <FormattedAddress address={allocation.beneficiary} />
+                    <EthereumAddress address={allocation.beneficiary} />
                   )}
                 </>
               }

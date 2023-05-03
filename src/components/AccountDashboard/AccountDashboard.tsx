@@ -1,8 +1,7 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tabs } from 'antd'
-import EtherscanLink from 'components/EtherscanLink'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import Grid from 'components/Grid'
 import { Etherscan } from 'components/icons/Etherscan'
 import Loading from 'components/Loading'
@@ -159,13 +158,12 @@ export function AccountDashboard({
             />
             <div className="flex flex-col gap-2">
               <h1 className="mb-0 font-heading text-4xl font-medium text-black dark:text-slate-100">
-                {ensName ?? <FormattedAddress address={address} />}
+                {ensName ?? <EthereumAddress address={address} />}
               </h1>
               {ensName && (
-                <EtherscanLink
-                  truncated
-                  type="address"
-                  value={address}
+                <EthereumAddress
+                  ensDisabled
+                  address={address}
                   className="text-grey-500 dark:text-slate-100"
                 />
               )}

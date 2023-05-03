@@ -1,6 +1,6 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
 import { Allocation, AllocationSplit } from 'components/v2v3/shared/Allocation'
 import { AllocationItemTitle } from 'components/v2v3/shared/Allocation/components/AllocationItemTitle'
@@ -57,7 +57,7 @@ export const PayoutCard = ({
         body={
           <Trans>
             This will delete the payout for{' '}
-            <FormattedAddress address={allocation.beneficiary} />.
+            <EthereumAddress address={allocation.beneficiary} />.
           </Trans>
         }
       />

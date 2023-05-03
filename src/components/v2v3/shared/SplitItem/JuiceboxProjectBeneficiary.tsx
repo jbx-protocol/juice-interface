@@ -1,7 +1,7 @@
 import { CrownFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { Split } from 'models/splits'
 import { isEqualAddress } from 'utils/address'
@@ -40,7 +40,7 @@ export function JuiceboxProjectBeneficiary({
               <Trans>Tokens:</Trans>
             </span>
           </Tooltip>
-          {value ?? <FormattedAddress address={split.beneficiary} />}{' '}
+          {value ?? <EthereumAddress address={split.beneficiary} />}{' '}
           {isProjectOwner && (
             <Tooltip title={<Trans>Project owner</Trans>}>
               <CrownFilled />

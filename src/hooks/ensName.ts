@@ -5,12 +5,21 @@ import { useQuery } from 'react-query'
 /**
  * Try to resolve an address to an ENS name.
  */
-export function useEnsName(address: string | undefined) {
-  return useQuery(['ensName', address], async () => {
-    if (!address || !isAddress(address)) return
+export function useEnsName(
+  address: string | undefined,
+  { enabled }: { enabled?: boolean } = {},
+) {
+  return useQuery(
+    ['ensName', address],
+    async () => {
+      if (!address || !isAddress(address)) return
 
-    const data = await resolveAddress(address)
+      const data = await resolveAddress(address)
 
-    return data.name
-  })
+      return data.name
+    },
+    {
+      enabled,
+    },
+  )
 }

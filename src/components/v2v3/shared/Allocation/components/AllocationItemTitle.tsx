@@ -1,7 +1,7 @@
 import { LockFilled } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { formatDate } from 'utils/format/formatDate'
 import { isProjectSplit } from 'utils/splits'
@@ -17,7 +17,7 @@ export function AllocationItemTitle({
       {isProjectSplit(allocation) && allocation.projectId ? (
         <V2V3ProjectHandleLink projectId={parseInt(allocation.projectId)} />
       ) : (
-        <FormattedAddress address={allocation.beneficiary} />
+        <EthereumAddress address={allocation.beneficiary} />
       )}
       {!!allocation.lockedUntil && (
         <Tooltip

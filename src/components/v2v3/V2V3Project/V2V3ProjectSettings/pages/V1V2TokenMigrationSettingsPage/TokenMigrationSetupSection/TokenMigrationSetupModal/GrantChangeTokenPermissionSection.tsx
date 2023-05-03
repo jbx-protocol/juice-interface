@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -63,7 +63,7 @@ export function GrantChangeTokenPermissionSection({
     >
       <p>
         Grant the Token Deployer contract (
-        <FormattedAddress address={deployer?.address} />) permission to change
+        <EthereumAddress address={deployer?.address} />) permission to change
         your project's token.
       </p>
       <MinimalCollapse

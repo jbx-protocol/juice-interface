@@ -3,7 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Descriptions, Form } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { TokenAmount } from 'components/TokenAmount'
 import TransactionModal from 'components/TransactionModal'
@@ -149,7 +149,7 @@ export function V2V3ClaimTokensModal({
             <Descriptions.Item
               label={<Trans>{tokenSymbol} ERC-20 address</Trans>}
             >
-              <FormattedAddress address={tokenAddress} />
+              <EthereumAddress address={tokenAddress} />
             </Descriptions.Item>
           )}
         </Descriptions>

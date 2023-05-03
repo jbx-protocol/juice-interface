@@ -245,12 +245,14 @@ export function ProjectNftSettingsPage() {
           />
         </Form.Item>
 
-        <Button htmlType="submit" loading={loadingSetTheme} type="primary">
-          <Trans>Update NFT theme</Trans>
-        </Button>
-        <Button type="ghost" onClick={updatePreview} className="ml-2">
-          <Trans>Update preview</Trans>
-        </Button>
+        <div className="flex flex-row gap-2">
+          <Button htmlType="submit" loading={loadingSetTheme} type="primary">
+            <Trans>Update NFT theme</Trans>
+          </Button>
+          <Button type="ghost" onClick={updatePreview}>
+            <Trans>Update preview</Trans>
+          </Button>
+        </div>
       </Form>
 
       <h3 className="mt-6">

@@ -854,9 +854,6 @@ msgstr ""
 msgid "Create a project"
 msgstr ""
 
-msgid "Create a project on Juicebox"
-msgstr ""
-
 msgid "Create a project payer address"
 msgstr ""
 

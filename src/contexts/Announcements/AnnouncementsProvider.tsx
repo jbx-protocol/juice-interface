@@ -1,12 +1,23 @@
-import { Announcements } from 'constants/announcements'
-import { useMemo, useState } from 'react'
-
 import { getCompleted } from 'components/announcements/Announcement'
+import { Announcements } from 'constants/announcements'
+import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { useIsUserAddress } from 'hooks/IsUserAddress'
+import { useWallet } from 'hooks/Wallet'
+import { Announcement } from 'models/announcement'
+import { useRouter } from 'next/router'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { AnnouncementsContext } from './AnnouncementsContext'
 
 export const AnnouncementsProvider: React.FC = ({ children }) => {
   const [activeId, setActiveId] = useState<string>()
   const [modalOpen, setModalOpen] = useState<boolean>(false)
+
+  const wallet = useWallet()
+  const { owner } = useContext(V1ProjectContext)
+  const { projectOwnerAddress } = useContext(V2V3ProjectContext)
+  const isProjectOwner = useIsUserAddress(owner ?? projectOwnerAddress)
+  const router = useRouter()
 
   const activeAnnouncement = useMemo(
     () => Announcements.find(a => a.id === activeId),
@@ -23,6 +34,22 @@ export const AnnouncementsProvider: React.FC = ({ children }) => {
     setActiveId(id)
     setModalOpen(true)
   }
+
+  const shouldActivateAnnouncement = useCallback(
+    (a: Announcement) => {
+      // Don't activate if expired
+      if (a.expire && a.expire < Date.now().valueOf()) return false
+
+      return a.conditions.every(c => c({ router, isProjectOwner, wallet }))
+    },
+    [router, isProjectOwner, wallet],
+  )
+
+  // Try activating any announcements
+  useEffect(() => {
+    // Activate first announcement that fits conditions
+    setActiveId(Announcements.find(shouldActivateAnnouncement)?.id)
+  }, [shouldActivateAnnouncement, setActiveId])
 
   return (
     <AnnouncementsContext.Provider

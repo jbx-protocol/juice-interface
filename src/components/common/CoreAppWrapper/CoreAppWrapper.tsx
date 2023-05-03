@@ -1,19 +1,16 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
-import { AnnouncementLauncher } from 'contexts/Announcements/AnnouncementLauncher'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import LanguageProvider from 'contexts/Language/LanguageProvider'
-import QwestiveSDKContextProvider from 'contexts/QwestiveReferral/QwestiveReferralProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
+import { installJuiceboxWindowObject } from 'lib/juicebox'
 import { useRouter } from 'next/router'
-import React from 'react'
-import { Provider } from 'react-redux'
-import store from 'redux/store'
+import React, { useEffect } from 'react'
 import { redirectTo } from 'utils/windowUtils'
 
 /**
@@ -28,25 +25,19 @@ export const AppWrapper: React.FC = ({ children }) => {
   return (
     <React.StrictMode>
       <ReactQueryProvider>
-        <Provider store={store}>
-          <LanguageProvider>
-            <TxHistoryProvider>
-              <ThemeProvider>
-                <EtherPriceProvider>
-                  <QwestiveSDKContextProvider>
-                    <ArcxProvider>
-                      <AnnouncementsProvider>
-                        <AnnouncementLauncher>
-                          <_Wrapper>{children}</_Wrapper>
-                        </AnnouncementLauncher>
-                      </AnnouncementsProvider>
-                    </ArcxProvider>
-                  </QwestiveSDKContextProvider>
-                </EtherPriceProvider>
-              </ThemeProvider>
-            </TxHistoryProvider>
-          </LanguageProvider>
-        </Provider>
+        <LanguageProvider>
+          <TxHistoryProvider>
+            <ThemeProvider>
+              <EtherPriceProvider>
+                <ArcxProvider>
+                  <AnnouncementsProvider>
+                    <_Wrapper>{children}</_Wrapper>
+                  </AnnouncementsProvider>
+                </ArcxProvider>
+              </EtherPriceProvider>
+            </ThemeProvider>
+          </TxHistoryProvider>
+        </LanguageProvider>
       </ReactQueryProvider>
     </React.StrictMode>
   )
@@ -54,6 +45,12 @@ export const AppWrapper: React.FC = ({ children }) => {
 
 const _Wrapper: React.FC = ({ children }) => {
   const router = useRouter()
+
+  // run on initial mount
+  useEffect(() => {
+    installJuiceboxWindowObject()
+  }, [])
+
   if (router.asPath.match(/^\/#\//)) {
     redirectTo(router.asPath.replace('/#/', ''))
   }

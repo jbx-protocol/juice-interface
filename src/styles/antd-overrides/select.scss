@@ -13,6 +13,10 @@
   }
 }
 
+.ant-select-selector {
+  height: 100% !important;
+}
+
 .ant-select-color-secondary {
   .ant-select-selector,
   .ant-select-arrow {
@@ -90,4 +94,12 @@
 
 .ant-select {
   @apply flex items-center;
+}
+
+.ant-select-lg {
+  @apply h-11;
+}
+
+.ant-select-selection-item {
+  margin: auto;
 }

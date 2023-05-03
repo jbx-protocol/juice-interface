@@ -1,8 +1,8 @@
 import { CrownFilled, LockOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Space, Tooltip } from 'antd'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import TooltipLabel from 'components/TooltipLabel'
 import V2V3ProjectLink from 'components/v2v3/shared/V2V3ProjectLink'
 import {
@@ -61,7 +61,7 @@ export default function Mod({
                     label={t`Tokens` + ':'}
                     tip={t`This address will receive any tokens minted when the recipient project gets paid.`}
                   />{' '}
-                  <FormattedAddress address={mod.beneficiary} />{' '}
+                  <EthereumAddress address={mod.beneficiary} />{' '}
                   {owner === mod.beneficiary && (
                     <Tooltip title={t`Project owner`}>
                       <CrownFilled />
@@ -72,7 +72,7 @@ export default function Mod({
             </div>
           ) : (
             <div className="flex items-baseline font-medium">
-              <FormattedAddress address={mod.beneficiary} />
+              <EthereumAddress address={mod.beneficiary} />
               {owner === mod.beneficiary && (
                 <span className="ml-1">
                   <Tooltip title={t`Project owner`}>

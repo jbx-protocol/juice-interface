@@ -1,7 +1,7 @@
 import { DeleteOutlined, EditOutlined, LinkOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
+import EthereumAddress from 'components/EthereumAddress'
 import ExternalLink from 'components/ExternalLink'
-import FormattedAddress from 'components/FormattedAddress'
 import { JuiceVideoThumbnail } from 'components/NftRewards/NftVideo/JuiceVideoThumbnail'
 import TooltipLabel from 'components/TooltipLabel'
 import { useContentType } from 'hooks/ContentType'
@@ -119,7 +119,7 @@ export const RewardItem = ({
                     tip={t`The wallet address that reserved NFTs will be sent to`}
                   />
                 }
-                stat={<FormattedAddress address={beneficiary} />}
+                stat={<EthereumAddress address={beneficiary} />}
               />
             )}
             {!!votingWeight && (

@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Divider, Tooltip } from 'antd'
 import { Badge } from 'components/Badge'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import Paragraph from 'components/Paragraph'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
 import ProjectLogo from 'components/ProjectLogo'
@@ -66,7 +66,7 @@ function ProjectSubheading({
             <span className="mr-1 flex gap-1">
               <Trans>
                 <span>Owned by</span>
-                <FormattedAddress
+                <EthereumAddress
                   address={projectOwnerAddress}
                   className="inline-flex text-grey-500 dark:text-grey-300"
                 />

@@ -1,6 +1,7 @@
 import { ArrowRightOutlined } from '@ant-design/icons'
+import EthereumAddress from 'components/EthereumAddress'
 import EtherscanLink from 'components/EtherscanLink'
-import FormattedAddress from 'components/FormattedAddress'
+import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
 import { isEqualAddress } from 'utils/address'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import { ActivityElementEvent } from './activityElementEvent'
@@ -16,12 +17,12 @@ const FromBeneficiary = ({
 
   return beneficiary && from && !isEqualAddress(beneficiary, from) ? (
     <div className="text-xs">
-      <FormattedAddress address={from} title="From" /> <ArrowRightOutlined />{' '}
-      <FormattedAddress address={beneficiary} title="Beneficiary" />
+      <EthereumAddress address={from} /> <ArrowRightOutlined />{' '}
+      <EthereumAddress address={beneficiary} />
     </div>
   ) : (
     <div className="text-sm">
-      <FormattedAddress withEnsAvatar address={from} />
+      <JuiceboxAccountLink address={from} />
     </div>
   )
 }

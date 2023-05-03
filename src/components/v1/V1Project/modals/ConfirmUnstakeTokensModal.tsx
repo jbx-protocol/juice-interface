@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Space } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { TokenAmount } from 'components/TokenAmount'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -122,7 +122,7 @@ export default function ConfirmUnstakeTokensModal({
             <div>
               <Trans>
                 <label>{tokenSymbol} ERC-20 address:</label>{' '}
-                <FormattedAddress address={tokenAddress} />
+                <EthereumAddress address={tokenAddress} />
               </Trans>
             </div>
           )}

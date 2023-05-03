@@ -2,7 +2,7 @@ import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Col, Row, Space } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import { AllocatorBadge } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/AllocatorBadge'
 import {
   NULL_ALLOCATOR_ADDRESS,
@@ -131,12 +131,12 @@ export function ProjectModInput({
           </FormattedRow>
         ) : (
           <FormattedRow label={'Address'}>
-            <FormattedAddress address={mod.beneficiary} />
+            <EthereumAddress address={mod.beneficiary} />
           </FormattedRow>
         )}
         {mod.projectId?.gt(0) && mod.allocator === NULL_ALLOCATOR_ADDRESS && (
           <FormattedRow label="Beneficiary">
-            <FormattedAddress address={mod.beneficiary} />
+            <EthereumAddress address={mod.beneficiary} />
           </FormattedRow>
         )}
         <FormattedRow label="Percentage">

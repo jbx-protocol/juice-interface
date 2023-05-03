@@ -1,8 +1,8 @@
 import { CheckCircleOutlined, WarningOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import EthereumAddress from 'components/EthereumAddress'
 import ExternalLink from 'components/ExternalLink'
-import FormattedAddress from 'components/FormattedAddress'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
@@ -23,7 +23,7 @@ function DataSourceAddressValue({ address }: { address: string | undefined }) {
 
   return (
     <span>
-      <FormattedAddress address={address} />{' '}
+      <EthereumAddress address={address} />{' '}
       {version ? (
         <Tooltip
           title={

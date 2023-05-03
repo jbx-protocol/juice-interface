@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import CurrencySymbol from 'components/CurrencySymbol'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import MinimalTable from 'components/MinimalTable'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
@@ -44,7 +44,7 @@ export default function V1ConfigureEventElem({
 
   function BallotStrategyElem(ballot: string) {
     const strategy = getBallotStrategyByAddress(ballot)
-    if (strategy.unknown) return <FormattedAddress address={ballot} />
+    if (strategy.unknown) return <EthereumAddress address={ballot} />
     else return strategy.name
   }
 

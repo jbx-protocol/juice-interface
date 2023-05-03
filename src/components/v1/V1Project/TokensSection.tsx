@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Descriptions, Space, Statistic } from 'antd'
 import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
-import FormattedAddress from 'components/FormattedAddress'
+import EthereumAddress from 'components/EthereumAddress'
 import ManageTokensModal from 'components/ManageTokensModal'
 import ParticipantsModal from 'components/modals/ParticipantsModal'
 import SectionHeader from 'components/SectionHeader'
@@ -107,7 +107,7 @@ export function TokensSection() {
               {ticketsIssued && (
                 <Descriptions.Item label={t`Address`} labelStyle={labelStyle}>
                   <div className="w-full">
-                    <FormattedAddress address={tokenAddress} />
+                    <EthereumAddress address={tokenAddress} />
                   </div>
                 </Descriptions.Item>
               )}

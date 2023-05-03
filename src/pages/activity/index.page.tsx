@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { AppWrapper } from 'components/common'
-import Payments from 'pages/activity/Payments'
+import { PaymentsFeed } from 'pages/activity/Payments'
 
 export default function ActivityPage() {
   return (
@@ -10,12 +10,10 @@ export default function ActivityPage() {
           <Trans>Activity</Trans>
         </h1>
         <p className="mb-10 text-grey-600 dark:text-slate-100">
-          <Trans>
-            View all of the latest project activity and payments on Juicebox.
-          </Trans>
+          <Trans>View all of the latest payments on Juicebox.</Trans>
         </p>
 
-        <Payments />
+        <PaymentsFeed />
       </div>
     </AppWrapper>
   )

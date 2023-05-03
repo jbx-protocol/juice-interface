@@ -17,9 +17,9 @@ import DeployETHERC20ProjectPayerEventElem from './eventElems/DeployETHERC20Proj
 import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
 import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
 import SetFundAccessConstraintsEventElem from './eventElems/SetFundAccessConstraintsEventElem'
-import { EventFilter, useProjectActivity } from './hooks/ProjectActivity'
+import { EventFilter, useV2V3ProjectActivity } from './hooks/ProjectActivity'
 
-export default function ProjectActivity() {
+export function V2V3ProjectActivity({ projectId }: { projectId?: number }) {
   const { tokenSymbol } = useContext(V2V3ProjectContext)
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
@@ -31,7 +31,7 @@ export default function ProjectActivity() {
     hasNextPage,
     isLoading,
     isFetchingNextPage,
-  } = useProjectActivity({ eventFilter })
+  } = useV2V3ProjectActivity({ eventFilter, projectId })
 
   const count =
     projectEvents?.pages?.reduce((prev, cur) => prev + cur.length, 0) ?? 0

@@ -3746,7 +3746,7 @@ msgstr ""
 msgid "Version of the terminal contract used by this project."
 msgstr ""
 
-msgid "View all of the latest project activity and payments on Juicebox."
+msgid "View all of the latest payments on Juicebox."
 msgstr ""
 
 msgid "View on Etherscan"

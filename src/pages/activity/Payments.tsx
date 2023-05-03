@@ -10,7 +10,30 @@ import { Project } from 'models/subgraph-entities/vX/project'
 import { classNames } from 'utils/classNames'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 
-export default function Payments() {
+const ProjectHandle = ({ project }: { project: Partial<Project> }) => {
+  if (!project?.projectId) return null
+
+  return (
+    <div className="font-medium text-bluebs-500 dark:text-bluebs-300">
+      {project.pv === PV_V1 ? (
+        <V1ProjectHandle
+          projectId={project.projectId}
+          handle={project.handle}
+        />
+      ) : (
+        <div className="flex items-baseline">
+          <V2V3ProjectHandleLink
+            className="mr-2"
+            projectId={project.projectId}
+            handle={project.handle}
+          />
+        </div>
+      )}
+    </div>
+  )
+}
+
+export function PaymentsFeed() {
   const { data: events, isLoading } = useSubgraphQuery({
     entity: 'payEvent',
     keys: [
@@ -25,29 +48,6 @@ export default function Payments() {
     orderDirection: 'desc',
     orderBy: 'timestamp',
   })
-
-  const ProjectHandle = ({ project }: { project: Partial<Project> }) => {
-    if (!project?.projectId) return null
-
-    return (
-      <div className="font-medium text-bluebs-500 dark:text-bluebs-300">
-        {project.pv === PV_V1 ? (
-          <V1ProjectHandle
-            projectId={project.projectId}
-            handle={project.handle}
-          />
-        ) : (
-          <div className="flex items-baseline">
-            <V2V3ProjectHandleLink
-              className="mr-2"
-              projectId={project.projectId}
-              handle={project.handle}
-            />
-          </div>
-        )}
-      </div>
-    )
-  }
 
   return (
     <div>

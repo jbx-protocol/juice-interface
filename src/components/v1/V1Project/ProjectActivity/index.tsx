@@ -44,7 +44,7 @@ type EventFilter =
 
 const PAGE_SIZE = 10
 
-export default function ProjectActivity() {
+export function V1ProjectActivity() {
   const { projectId } = useContext(ProjectMetadataContext)
   const { tokenSymbol } = useContext(V1ProjectContext)
 

@@ -78,7 +78,7 @@ export default function PayoutSplitsCard({
           type="ghost"
           size="small"
           onClick={() => setDistributePayoutsModalVisible(true)}
-          disabled={distributeButtonDisabled}
+          // disabled={distributeButtonDisabled}
         >
           <Trans>Send payouts</Trans>
         </Button>

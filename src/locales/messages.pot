@@ -83,13 +83,16 @@ msgstr ""
 msgid "30 days"
 msgstr ""
 
+msgid "3A0F0C"
+msgstr ""
+
+msgid "44190F"
+msgstr ""
+
 msgid "7 days"
 msgstr ""
 
 msgid "7-day deadline"
-msgstr ""
-
-msgid "76FFAA"
 msgstr ""
 
 msgid "90 days"
@@ -971,6 +974,15 @@ msgstr ""
 msgid "Custom deadline contract"
 msgstr ""
 
+msgid "Custom metadata resolver contract"
+msgstr ""
+
+msgid "Custom metadata resolvers replace the default metadata above. They must conform to the <0>IJBTokenUriResolver</0> interface."
+msgstr ""
+
+msgid "Custom resolver address"
+msgstr ""
+
 msgid "Custom strategy"
 msgstr ""
 
@@ -978,6 +990,9 @@ msgid "Custom token beneficiary"
 msgstr ""
 
 msgid "Customization"
+msgstr ""
+
+msgid "Customize theme"
 msgstr ""
 
 msgid "Customize your project's \"pay\" button. Leave blank to use the default."
@@ -1205,6 +1220,9 @@ msgstr ""
 msgid "Each cycle, the project will issue {discountRate}% fewer tokens per ETH."
 msgstr ""
 
+msgid "Each field is required."
+msgstr ""
+
 msgid "Edit"
 msgstr ""
 
@@ -1325,6 +1343,12 @@ msgstr ""
 msgid "End"
 msgstr ""
 
+msgid "Enter a valid Ethereum address"
+msgstr ""
+
+msgid "Enter a valid color hex code."
+msgstr ""
+
 msgid "Enter your project's details. You can edit your project's details at any time after you deploy your project, but the transaction will cost gas."
 msgstr ""
 
@@ -1422,6 +1446,9 @@ msgid "External link"
 msgstr ""
 
 msgid "FAQs"
+msgstr ""
+
+msgid "FF9213"
 msgstr ""
 
 msgid "Failed to create ERC20 token. Check transaction and try again."
@@ -2057,6 +2084,9 @@ msgstr ""
 msgid "Minutes"
 msgstr ""
 
+msgid "Modify the colors of your Juicebox Project NFT. This NFT represents ownership over your project."
+msgstr ""
+
 msgid "MoonDAO is a worldwide collective united by the mission of decentralizing access to space research and exploration. With privatized space exploration on the rise, MoonDAO is uniting space enthusiasts from around the globe to help make it more accessible while continuing to push research forward. In 2021, they launched a campaign to buy two tickets on a Blue Origin rocket and raised over $8 million on Juicebox. A year later, they sent Coby Cotton from viral YouTube channel Dude Perfect to space as their first astronaut."
 msgstr ""
 
@@ -2300,9 +2330,6 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
-msgid "Owner NFT"
-msgstr ""
-
 msgid "Owner permissions"
 msgstr ""
 
@@ -2513,6 +2540,9 @@ msgstr ""
 msgid "Prevent NFT overspending"
 msgstr ""
 
+msgid "Preview"
+msgstr ""
+
 msgid "Previous V1 Project ID:"
 msgstr ""
 
@@ -2547,6 +2577,9 @@ msgid "Project ID must be a number."
 msgstr ""
 
 msgid "Project ID: {projectId}"
+msgstr ""
+
+msgid "Project NFT theme"
 msgstr ""
 
 msgid "Project Owner"
@@ -3068,16 +3101,19 @@ msgstr ""
 msgid "Set controller"
 msgstr ""
 
+msgid "Set custom resolver"
+msgstr ""
+
 msgid "Set cycle duration"
 msgstr ""
 
 msgid "Set handle @{handle}"
 msgstr ""
 
-msgid "Set operator for {projectTitle}"
+msgid "Set metadata resolver for {projectTitle}\\'s project NFT"
 msgstr ""
 
-msgid "Set owner NFT theme"
+msgid "Set operator for {projectTitle}"
 msgstr ""
 
 msgid "Set payment terminals"
@@ -3101,7 +3137,7 @@ msgstr ""
 msgid "Set text record for {0}"
 msgstr ""
 
-msgid "Set theme for {projectTitle}\\'s NFT"
+msgid "Set theme for {projectTitle}\\'s project NFT"
 msgstr ""
 
 msgid "Set this to the sum of your payouts"
@@ -3789,6 +3825,12 @@ msgid "Unwatch all"
 msgstr ""
 
 msgid "Upcoming"
+msgstr ""
+
+msgid "Update NFT theme"
+msgstr ""
+
+msgid "Update preview"
 msgstr ""
 
 msgid "Update {projectTitle}'s NFT collection details."

@@ -1,0 +1,8 @@
+/* eslint-disable */
+
+@font-face {
+  font-family: 'Capsules-500';
+  src: url('/assets/fonts/Capsules-500.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}

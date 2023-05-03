@@ -1,22 +1,19 @@
-import { readNetwork } from 'constants/networks'
 import { Contract } from '@ethersproject/contracts'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
 import DefaultTokenUriResolverJson from './DefaultTokenUriResolver.json'
+import { useContractReadValue } from 'hooks/ContractReader'
+import { useTokenUriResolver } from 'hooks/TokenUriResolver/contracts/TokenUriResolver'
 
-// async function loadDefaultTokenUriResolverDeployment(network: NetworkName) {
-//   const deployment = (await import (
-//     `juice-token-resolver/broadcast/${network.charAt(0).toUpperCase() + network.substring(1)}_Deploy_DefaultResolverOnly.s.sol/${readNetwork.chainId}/run-latest.json`
-//   )) as ForgeDeploy
-//
-//   return deployment
-// }
-
+// Using hard-coded addresses because `juice-token-resolver` is not published on NPM and has irregular naming patterns.
 export function useDefaultTokenUriResolver(): Contract | undefined {
+  const { value } = useContractReadValue<string, string>({
+    contract: useTokenUriResolver(),
+    functionName: 'defaultTokenUriResolver',
+    args: [],
+  })
+
   return useLoadContractFromAddress({
-    address:
-      readNetwork.chainId == 1
-        ? '0x9D63AFc505C6b2c9387ad837A1Acf23e1e4fa520'
-        : '0x9d7a1a7296fd2debd5fd9f48c15830d0aac3c092',
+    address: value,
     abi: DefaultTokenUriResolverJson.abi,
   })
 }

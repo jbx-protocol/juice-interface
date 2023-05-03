@@ -26,7 +26,7 @@ export function useSetThemeTx(): TransactorInstance<{
       DefaultTokenUriResolver,
       'setTheme',
       [projectId, textColor, bgColor, altBgColor],
-      { ...txOpts, title: t`Set theme for ${projectTitle}\'s NFT` },
+      { ...txOpts, title: t`Set theme for ${projectTitle}\'s project NFT` },
     )
   }
 }

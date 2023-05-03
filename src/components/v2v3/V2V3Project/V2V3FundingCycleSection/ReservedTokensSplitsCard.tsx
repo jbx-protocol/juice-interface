@@ -90,11 +90,12 @@ export default function ReservedTokensSplitsCard({
                         tokenSymbol={tokenSymbol}
                         precision={2}
                       />{' '}
-                      <span className="text-xs uppercase text-grey-500 dark:text-slate-100">
+                      <span className="text-xs font-medium uppercase text-grey-500 dark:text-slate-100">
                         reserved
                       </span>
                     </Trans>{' '}
                     <TooltipIcon
+                      iconClassName="text-grey-500 dark:text-slate-100"
                       tip={
                         <Trans>
                           Project tokens currently reserved for the recipients

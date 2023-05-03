@@ -9,6 +9,7 @@ import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateE
 import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext, useMemo, useState } from 'react'
 import V2V3DownloadActivityModal from '../modals/V2V3DownloadActivityModal'
@@ -19,7 +20,8 @@ import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTo
 import SetFundAccessConstraintsEventElem from './eventElems/SetFundAccessConstraintsEventElem'
 import { EventFilter, useV2V3ProjectActivity } from './hooks/ProjectActivity'
 
-export function V2V3ProjectActivity({ projectId }: { projectId?: number }) {
+export function V2V3ProjectActivity() {
+  const { projectId } = useContext(ProjectMetadataContext)
   const { tokenSymbol } = useContext(V2V3ProjectContext)
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()

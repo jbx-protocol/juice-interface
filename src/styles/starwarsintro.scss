@@ -1,17 +1,3 @@
-// .crawl-content {
-//   // transform-origin: 50% 100%;
-//   // perspective: 500px;
-//   animation: crawl 20s linear forwards;
-// }
-
-// .perspective-container {
-//   @apply absolute;
-//   @apply w-full;
-//   @apply h-full;
-//   perspective: 100vh;
-//   @apply max-w-6xl;
-// }
-
 .star-wars-header {
   font-family: 'Jedise', sans-serif;
 }
@@ -21,19 +7,10 @@
   animation-delay: 9s;
 }
 
-// @keyframes crawl {
-//   0% {
-//     /* The element starts below the screen */
-//     top: 0;
-//     /* Rotate the text 20 degrees but keep it close to the viewer */
-//     transform: rotateX(20deg) translateZ(0);
-//   }
-//   100% {
-//     /* This is a magic number, but using a big one to make sure the text is fully off the screen at the end */
-//     top: -6000px;
-//     transform: rotateX(25deg) translateZ(-2500px);
-//   }
-// }
+.final-animation {
+  animation: final 10s linear forwards;
+  animation-delay: 85s;
+}
 
 .fade-in-out-animation {
   animation: fade-in-out 8s ease-in-out normal forwards;
@@ -61,6 +38,15 @@
   100% {
     opacity: 0;
     transform: translateY(-50%) scale(0.1);
+  }
+}
+
+@keyframes final {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
   }
 }
 
@@ -116,8 +102,15 @@
     top: 50vh;
     transform: rotateX(20deg) translateZ(0);
   }
+  80% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+  }
   100% {
     top: -7000px;
     transform: rotateX(25deg) translateZ(-2500px);
+    opacity: 0;
   }
 }

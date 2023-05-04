@@ -30,10 +30,17 @@ export default function SiteNavigation() {
           {({ open }) => (
             <>
               <div className="flex items-center justify-between py-6 px-5 md:inline-flex md:py-0 md:px-0">
-                <div className="flex gap-1">
+                <div className="flex gap-2">
                   <LogoHomeButton />
-                  <Button type="link" onClick={onYodaClicked}>
-                    Foo
+                  <Button
+                    className="relative flex h-8 w-8 p-0"
+                    type="link"
+                    onClick={onYodaClicked}
+                  >
+                    <img
+                      className="transition-all duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
+                      src="/assets/images/star-wars/yoda.png"
+                    />
                   </Button>
                 </div>
                 <MobileMenuButton className="md:hidden" open={open} />

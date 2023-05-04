@@ -22,7 +22,6 @@ import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useWallet } from 'hooks/Wallet'
 import client from 'lib/apollo/client'
 import { Profile } from 'models/database'
-import { PV } from 'models/pv'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
@@ -54,10 +53,7 @@ function ContributedList({ address }: { address: string }) {
     },
   })
 
-  const contributions = data?.participants.map(p => ({
-    ...p,
-    pv: p.pv as PV,
-  }))
+  const contributions = data?.participants
 
   const { userAddress } = useWallet()
 

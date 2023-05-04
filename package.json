@@ -9,7 +9,7 @@
     "prebuild": "yarn predev",
     "build": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next build",
     "analyze": "ANALYZE=true yarn build",
-    "codegen": "graphql-code-generator --config codegen.yml -r dotenv/config",
+    "codegen": "graphql-code-generator --config codegen.yml -r dotenv/config && node ./scripts/graphql-codegen-override-pv.js",
     "css:compile": "lessc ./node_modules/antd/dist/antd.less ./src/styles/antd.css --js",
     "predev": "yarn css:compile && yarn i18n:compile && yarn codegen",
     "dev": "next dev",

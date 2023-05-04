@@ -92,46 +92,48 @@ export default function SiteNavigation() {
   )
 }
 
-const resourcesMenuItems = [
-  {
-    id: 'about',
-    label: t`About`,
-    href: '/about',
-  },
-  {
-    id: 'join-discord',
-    label: t`Join our Discord`,
-    href: 'https://discord.gg/wFTh4QnDzk',
-    isExternal: true,
-  },
-  {
-    id: 'dao',
-    label: t`JuiceboxDAO`,
-    href: '/@juicebox',
-  },
-  {
-    id: 'docs',
-    label: t`Docs`,
-    href: 'https://docs.juicebox.money/',
-    isExternal: true,
-  },
-  {
-    id: 'podcast',
-    label: t`Podcast`,
-    href: 'https://podcast.juicebox.money/',
-    isExternal: true,
-  },
-  {
-    id: 'contact',
-    label: t`Contact`,
-    href: '/contact',
-  },
-]
+const ResourcesMenu = () => {
+  const resourcesMenuItems = [
+    {
+      id: 'about',
+      label: t`About`,
+      href: '/about',
+    },
+    {
+      id: 'join-discord',
+      label: t`Join our Discord`,
+      href: 'https://discord.gg/wFTh4QnDzk',
+      isExternal: true,
+    },
+    {
+      id: 'dao',
+      label: t`JuiceboxDAO`,
+      href: '/@juicebox',
+    },
+    {
+      id: 'docs',
+      label: t`Docs`,
+      href: 'https://docs.juicebox.money/',
+      isExternal: true,
+    },
+    {
+      id: 'podcast',
+      label: t`Podcast`,
+      href: 'https://podcast.juicebox.money/',
+      isExternal: true,
+    },
+    {
+      id: 'contact',
+      label: t`Contact`,
+      href: '/contact',
+    },
+  ]
 
-const ResourcesMenu = () => (
-  <DropdownMenu
-    className="text-base md:text-sm"
-    items={resourcesMenuItems}
-    heading={t`Resources`}
-  />
-)
+  return (
+    <DropdownMenu
+      className="text-base md:text-sm"
+      items={resourcesMenuItems}
+      heading={t`Resources`}
+    />
+  )
+}

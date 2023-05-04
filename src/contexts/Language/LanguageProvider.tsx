@@ -7,11 +7,13 @@ import {
 } from '@lingui/detect-locale'
 import { I18nProvider } from '@lingui/react'
 import defaultLocale from 'locales/en/messages'
-import { ReactNode, useEffect } from 'react'
+import { ReactNode } from 'react'
 
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from 'constants/locale'
 
 const getLocale = (): string => {
+  if (typeof window === 'undefined') return DEFAULT_LOCALE
+
   let locale =
     detect(fromUrl('lang'), fromStorage('lang'), fromNavigator()) ??
     DEFAULT_LOCALE
@@ -42,23 +44,17 @@ const dynamicActivate = async (locale: string) => {
   }
 }
 
-// TODO eventually we need to uncomment the below line.
-// https://github.com/jbx-protocol/juice-interface/issues/2391
-// activateDefaultLocale()
+const locale = getLocale()
+if (locale === DEFAULT_LOCALE) {
+  activateDefaultLocale()
+} else {
+  dynamicActivate(locale)
+}
 
 export default function LanguageProvider({
   children,
 }: {
   children: ReactNode
 }) {
-  useEffect(() => {
-    const locale = getLocale()
-    if (locale === DEFAULT_LOCALE) {
-      return activateDefaultLocale()
-    }
-
-    dynamicActivate(locale)
-  }, [])
-
   return <I18nProvider i18n={i18n}>{children}</I18nProvider>
 }

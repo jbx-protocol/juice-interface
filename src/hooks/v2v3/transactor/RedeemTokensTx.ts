@@ -1,5 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 import { DEFAULT_METADATA } from 'constants/transactionDefaults'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -7,6 +5,9 @@ import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
+import { constants } from 'ethers'
+
+import { BigNumber } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,

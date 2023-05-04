@@ -1,8 +1,8 @@
-import { ContractInterface } from '@ethersproject/contracts'
 import {
   JB721_DELEGATE_V1,
   JB721_DELEGATE_V1_1,
 } from 'constants/delegateVersions'
+import { ContractInterface } from 'ethers'
 import { ContractJson } from 'models/contracts'
 import { JB721DelegateVersion } from 'models/nftRewards'
 import { useEffect, useState } from 'react'

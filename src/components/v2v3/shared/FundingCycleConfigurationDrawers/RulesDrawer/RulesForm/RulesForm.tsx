@@ -1,4 +1,3 @@
-import { isAddress } from '@ethersproject/address'
 import { Trans } from '@lingui/macro'
 import { Button, Form, Switch } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
@@ -17,6 +16,7 @@ import {
   DEFAULT_BALLOT_STRATEGY,
   ballotStrategiesFn,
 } from 'constants/v2v3/ballotStrategies'
+import { isAddress } from 'ethers/lib/utils'
 import isEqual from 'lodash/isEqual'
 import { BallotStrategy } from 'models/ballot'
 import { useCallback, useEffect, useMemo, useState } from 'react'

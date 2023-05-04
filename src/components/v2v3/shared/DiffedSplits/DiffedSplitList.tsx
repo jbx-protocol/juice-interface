@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 import { useMemo } from 'react'
 import {

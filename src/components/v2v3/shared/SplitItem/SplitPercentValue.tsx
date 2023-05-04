@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { formatSplitPercent } from 'utils/v2v3/math'
 
 export function SplitPercentValue({ percent }: { percent: number }) {

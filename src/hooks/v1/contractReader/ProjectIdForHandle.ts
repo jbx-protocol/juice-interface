@@ -1,6 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { formatBytes32String } from '@ethersproject/strings'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
+import { BigNumber, utils } from 'ethers'
 import { useContractReader } from 'hooks/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext } from 'react'
@@ -13,6 +12,6 @@ export default function useProjectIdForHandle(handle: string | undefined) {
     contracts,
     contract: V1ContractName.Projects,
     functionName: 'projectFor',
-    args: handle ? [formatBytes32String(normalizeHandle(handle))] : null,
+    args: handle ? [utils.formatBytes32String(normalizeHandle(handle))] : null,
   })
 }

@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Progress, Tooltip } from 'antd'
+import { BigNumber } from 'ethers'
 
 import { t } from '@lingui/macro'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'

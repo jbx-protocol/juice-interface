@@ -1,4 +1,4 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 
 export enum V1ContractName {
   FundingCycles = 'FundingCycles',

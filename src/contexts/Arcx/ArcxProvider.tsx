@@ -1,13 +1,13 @@
 import { ArcxAnalyticsSdk } from '@arcxmoney/analytics'
 import { readNetwork } from 'constants/networks'
-import { useUserAddress } from 'hooks/Wallet/hooks'
+import { useWallet } from 'hooks/Wallet'
 import { getArcxClient } from 'lib/arcx'
 import { useEffect, useRef } from 'react'
 import { ArcxContext } from './ArcxContext'
 
 export const ArcxProvider: React.FC = ({ children }) => {
   const arcx = useRef<ArcxAnalyticsSdk | undefined>()
-  const userAddress = useUserAddress()
+  const { userAddress } = useWallet()
 
   useEffect(() => {
     getArcxClient().then(arcxClient => {

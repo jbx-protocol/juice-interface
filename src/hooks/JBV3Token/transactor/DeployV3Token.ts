@@ -2,13 +2,14 @@ import { t } from '@lingui/macro'
 import { CV_V2 } from 'constants/cv'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
-import * as constants from '@ethersproject/constants'
+import { constants } from 'ethers'
+
+import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useLoadV2V3Contract } from 'hooks/v2v3/LoadV2V3Contract'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import { useJBV3TokenDeployer } from '../contracts/JBV3TokenDeployer'
-import { BigNumber } from '@ethersproject/bignumber'
 
 export function useDeployV3TokenTx(): TransactorInstance<{
   tokenName: string

@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import coinbaseWalletModule from '@web3-onboard/coinbase'
 import { OnboardAPI } from '@web3-onboard/core'
 import gnosisModule from '@web3-onboard/gnosis'
@@ -10,6 +9,7 @@ import trezorModule from '@web3-onboard/trezor'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import config from 'config/seo_meta.json'
 import { NETWORKS } from 'constants/networks'
+import { BigNumber } from 'ethers'
 import { useEffect } from 'react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
 import {

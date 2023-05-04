@@ -1,5 +1,5 @@
-import { Contract } from '@ethersproject/contracts'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { Contract } from 'ethers'
 import { useContractReadValue } from 'hooks/ContractReader'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import { useContext } from 'react'

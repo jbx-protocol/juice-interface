@@ -1,9 +1,9 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { PV_V2 } from 'constants/pv'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
+import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useNameOfERC20 from 'hooks/ERC20/NameOfERC20'
 import useSymbolOfERC20 from 'hooks/ERC20/SymbolOfERC20'

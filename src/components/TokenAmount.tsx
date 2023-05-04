@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { PRECISION_ETH } from 'constants/currency'
+import { BigNumber } from 'ethers'
 import { HTMLProps } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'

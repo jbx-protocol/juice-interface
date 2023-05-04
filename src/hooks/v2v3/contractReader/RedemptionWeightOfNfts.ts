@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
+import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 import useV2ContractReader from './V2ContractReader'
 

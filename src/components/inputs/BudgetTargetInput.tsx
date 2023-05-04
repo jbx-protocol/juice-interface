@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { useEffect, useState } from 'react'
 import { perbicentToPercent } from 'utils/format/formatNumber'
 

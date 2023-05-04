@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
+import { BigNumber } from 'ethers'
 import {
   JB_CONTROLLER_V_3,
   JB_CONTROLLER_V_3_1,

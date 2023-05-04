@@ -1,4 +1,4 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { useContractReadValue } from './ContractReadValue'
 import { ContractConfig, ContractUpdateOn } from './types'

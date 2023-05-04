@@ -1,4 +1,4 @@
-import { AddressZero } from '@ethersproject/constants'
+import { constants } from 'ethers'
 import { getAddress } from 'ethers/lib/utils'
 
 export function safeGetAddress(
@@ -28,5 +28,5 @@ export function isEqualAddress(
 }
 
 export function isZeroAddress(address: string | undefined): boolean {
-  return isEqualAddress(address, AddressZero)
+  return isEqualAddress(address, constants.AddressZero)
 }

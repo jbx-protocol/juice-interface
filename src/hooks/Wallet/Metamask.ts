@@ -1,11 +1,11 @@
-import { ExternalProvider } from '@ethersproject/providers'
 import type { MetaMaskInpageProvider } from '@metamask/providers'
+import { providers } from 'ethers'
 import { useWallet } from 'hooks/Wallet/Wallet'
 import { useMemo } from 'react'
 
 declare global {
   interface Window {
-    ethereum?: ExternalProvider
+    ethereum?: providers.ExternalProvider
   }
 }
 

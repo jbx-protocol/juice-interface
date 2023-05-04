@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { FundingTargetType } from 'models/fundingTargetType'
 import { useMemo } from 'react'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'

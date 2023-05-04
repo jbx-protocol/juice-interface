@@ -1,8 +1,8 @@
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import {
   MenuKey,
   V2V3SettingsPageKey,
 } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/V2V3ProjectSettings'
+import { BigNumber, BigNumberish } from 'ethers'
 import { NextRouter } from 'next/router'
 
 const HELP_PAGE_HOSTNAME = 'https://docs.juicebox.money'

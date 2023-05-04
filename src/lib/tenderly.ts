@@ -1,6 +1,6 @@
-import { Contract } from '@ethersproject/contracts'
 import axios from 'axios'
 import { readNetwork } from 'constants/networks'
+import { Contract } from 'ethers'
 
 const API_KEY = process.env.NEXT_PUBLIC_TENDERLY_API_KEY
 const ACCOUNT = process.env.NEXT_PUBLIC_TENDERLY_ACCOUNT

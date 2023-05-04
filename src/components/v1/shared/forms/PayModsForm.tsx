@@ -1,10 +1,10 @@
 import { t, Trans } from '@lingui/macro'
 
-import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Form, Input, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { PayoutMod } from 'models/v1/mods'
+import { BigNumber } from 'ethers'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
+import { PayoutMod } from 'models/v1/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { fromWad, perbicentToPercent } from 'utils/format/formatNumber'
 
@@ -12,8 +12,9 @@ import { getTotalPercentage } from 'components/formItems/formHelpers'
 import ProjectPayoutMods from 'components/v1/shared/ProjectPayMods/ProjectPayoutMods'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 
-import * as constants from '@ethersproject/constants'
 import { CsvUpload } from 'components/inputs/CsvUpload'
+import { constants } from 'ethers'
+
 import { parseV1PayoutModsCsv } from 'utils/csv'
 
 export default function PayModsForm({

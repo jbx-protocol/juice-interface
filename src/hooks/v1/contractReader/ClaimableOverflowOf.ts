@@ -1,6 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'

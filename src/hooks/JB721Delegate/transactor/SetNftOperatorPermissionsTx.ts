@@ -1,4 +1,4 @@
-import { getAddress } from '@ethersproject/address'
+import { getAddress } from 'ethers/lib/utils'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useSetOperatorTx } from 'hooks/v2v3/transactor/SetOperatorTx'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'

@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import {
   DEFAULT_MEMO,
@@ -6,9 +5,10 @@ import {
   DEFAULT_MIN_RETURNED_TOKENS,
 } from 'constants/transactionDefaults'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
+import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/Transactor'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext } from 'react'

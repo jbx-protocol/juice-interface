@@ -1,6 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import axios from 'axios'
+import { BigNumber } from 'ethers'
 import {
   SGEntity,
   SGEntityKey,
@@ -41,6 +40,7 @@ import { parseProjectEventJson } from 'models/subgraph-entities/vX/project-event
 import { parseProtocolLogJson } from 'models/subgraph-entities/vX/protocol-log'
 import { parseRedeemEventJson } from 'models/subgraph-entities/vX/redeem-event'
 import { parseWalletJson } from 'models/subgraph-entities/vX/wallet'
+import { isBigNumberish } from './bigNumbers'
 
 const PLURAL_ENTITY_EXCLUSIONS: SGEntityName[] = ['projectSearch']
 

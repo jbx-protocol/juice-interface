@@ -1,5 +1,5 @@
-import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
+import { constants } from 'ethers'
 
 import { BallotStrategy } from 'models/ballot'
 

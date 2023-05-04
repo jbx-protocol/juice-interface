@@ -1,6 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
+import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
+import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
 import { useV1TicketBoothForV3Token } from '../contracts/V1TicketBoothForV3Token'
 import { useV1ProjectId } from './V1ProjectId'
 

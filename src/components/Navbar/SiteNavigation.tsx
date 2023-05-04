@@ -39,7 +39,7 @@ export default function SiteNavigation() {
                   >
                     <img
                       className="transition-all duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
-                      src="/assets/images/star-wars/yoda.png"
+                      src="/assets/images/star-wars/yoda.webp"
                     />
                   </Button>
                 </div>

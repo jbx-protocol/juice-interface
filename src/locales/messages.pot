@@ -332,9 +332,6 @@ msgstr ""
 msgid "Add recipient"
 msgstr ""
 
-msgid "Add to Metamask"
-msgstr ""
-
 msgid "Add token"
 msgstr ""
 

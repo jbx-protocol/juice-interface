@@ -5,14 +5,16 @@ import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useEditingCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { WizardContext } from '../contexts'
 
-const stepNames: Record<string, string> = {
-  projectDetails: t`Details`,
-  fundingCycles: t`Cycles`,
-  payouts: t`Payouts`,
-  projectToken: t`Token`,
-  nftRewards: t`NFTs`,
-  reconfigurationRules: t`Deadline`,
-  reviewDeploy: t`Deploy`,
+const stepNames = (): Record<string, string> => {
+  return {
+    projectDetails: t`Details`,
+    fundingCycles: t`Cycles`,
+    payouts: t`Payouts`,
+    projectToken: t`Token`,
+    nftRewards: t`NFTs`,
+    reconfigurationRules: t`Deadline`,
+    reviewDeploy: t`Deploy`,
+  }
 }
 
 export const useSteps = () => {
@@ -23,7 +25,7 @@ export const useSteps = () => {
   )
 
   const firstIndexOfLockedPage = useMemo(() => {
-    const index = Object.keys(stepNames).findIndex(stepName =>
+    const index = Object.keys(stepNames()).findIndex(stepName =>
       softLockedPageQueue?.includes(stepName as CreatePage),
     )
     return index === -1 ? undefined : index
@@ -31,7 +33,7 @@ export const useSteps = () => {
 
   const furthertStepIndex = useMemo(() => {
     if (firstIndexOfLockedPage !== undefined) return firstIndexOfLockedPage
-    return Object.keys(stepNames).indexOf(furthestPageReached)
+    return Object.keys(stepNames()).indexOf(furthestPageReached)
   }, [firstIndexOfLockedPage, furthestPageReached])
 
   if (!pages?.length || !currentPage) {
@@ -45,7 +47,7 @@ export const useSteps = () => {
     () =>
       pages?.map((p, i) => ({
         id: p.name,
-        title: stepNames[p.name],
+        title: stepNames()[p.name],
         disabled: i > furthertStepIndex,
       })),
     [furthertStepIndex, pages],

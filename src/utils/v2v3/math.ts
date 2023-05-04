@@ -1,11 +1,12 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import {
   MaxUint232,
   MaxUint88,
   ONE_BILLION,
   TEN_THOUSAND,
 } from 'constants/numbers'
+import { constants } from 'ethers'
+
+import { BigNumber } from 'ethers'
 import { parseEther } from 'ethers/lib/utils'
 import { JBFee } from 'models/v2v3/fee'
 import {

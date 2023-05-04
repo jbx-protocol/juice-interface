@@ -1,15 +1,16 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
+import { constants } from 'ethers'
+
+import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/Transactor'
-import { PayoutMod, TicketMod } from 'models/v1/mods'
 import {
   V1FundingCycleMetadata,
   V1FundingCycleProperties,
 } from 'models/v1/fundingCycle'
+import { PayoutMod, TicketMod } from 'models/v1/mods'
 import { useContext } from 'react'
 
 import { useV1ProjectTitle } from '../ProjectTitle'

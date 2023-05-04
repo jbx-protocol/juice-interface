@@ -1,8 +1,8 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import RichNote from 'components/RichNote'
+import { BigNumber } from 'ethers'
 import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import {
   V2V3FundingCycle,

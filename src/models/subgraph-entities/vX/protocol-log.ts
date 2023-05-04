@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { parseBigNumberKeyVals, subgraphEntityJsonToKeyVal } from 'utils/graph'
 
 import { Json } from '../../json'

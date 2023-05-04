@@ -1,6 +1,7 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 
-import * as constants from '@ethersproject/constants'
+import { constants } from 'ethers'
+
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 import { perbicentToPercent } from 'utils/format/formatNumber'
 import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'

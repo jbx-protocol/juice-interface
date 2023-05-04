@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { JB721GovernanceType } from 'models/nftRewards'
 import {
   parseBigNumberKeyVals,

@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { useErc20Contract } from 'hooks/ERC20/Erc20Contract'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 

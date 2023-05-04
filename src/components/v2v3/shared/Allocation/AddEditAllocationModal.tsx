@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Radio } from 'antd'
 import { LOCKED_PAYOUT_EXPLANATION } from 'components/Explanations'
@@ -7,6 +6,7 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { BigNumber } from 'ethers'
 import moment, * as Moment from 'moment'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {

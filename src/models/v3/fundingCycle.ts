@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import {
   BaseV2V3FundingCycleMetadata,
   BaseV2V3FundingCycleMetadataGlobal,

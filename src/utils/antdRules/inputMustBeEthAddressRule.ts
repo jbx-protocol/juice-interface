@@ -1,6 +1,6 @@
-import { isAddress } from '@ethersproject/address'
 import { t } from '@lingui/macro'
 import { RuleObject } from 'antd/lib/form'
+import { utils } from 'ethers'
 import { isZeroAddress } from 'utils/address'
 
 /**
@@ -21,7 +21,7 @@ export const inputMustBeEthAddressRule = (props?: {
 
     if (value === '') return Promise.resolve()
 
-    if (!isAddress(value)) {
+    if (!utils.isAddress(value)) {
       return Promise.reject(t`${label} is not a valid ETH Address`)
     }
     if (isZeroAddress(value)) {

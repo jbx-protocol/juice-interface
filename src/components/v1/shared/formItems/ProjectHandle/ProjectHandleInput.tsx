@@ -1,10 +1,8 @@
+import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { t } from '@lingui/macro'
 import { Input } from 'antd'
-
-import { BigNumber } from '@ethersproject/bignumber'
-import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
-import { parseBytes32String } from '@ethersproject/strings'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
+import { BigNumber, utils } from 'ethers'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
@@ -52,7 +50,7 @@ export function ProjectHandleInput({
       contracts?.Projects.functions
         .handleOf(BigNumber.from(initialValue).toHexString())
         .then(res => {
-          const handle = parseBytes32String(res[0])
+          const handle = utils.parseBytes32String(res[0])
           setInputContents(handle)
           triggerChange(handle)
         })

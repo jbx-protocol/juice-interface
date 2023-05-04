@@ -1,5 +1,5 @@
-import { ContractInterface } from '@ethersproject/contracts'
 import { readNetwork } from 'constants/networks'
+import { ContractInterface } from 'ethers'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
 import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'

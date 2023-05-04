@@ -1,10 +1,11 @@
-import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Button, Divider, Form, Space, Switch } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { FormItems } from 'components/formItems'
 import FormItemWarningText from 'components/FormItemWarningText'
+import { FormItems } from 'components/formItems'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { constants } from 'ethers'
+
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
@@ -13,16 +14,16 @@ import { useEditingV1FundingCycleSelector } from 'redux/hooks/AppSelector'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { helpPagePath } from 'utils/routes'
-import { getV1CurrencyOption, V1CurrencyName } from 'utils/v1/currency'
+import { V1CurrencyName, getV1CurrencyOption } from 'utils/v1/currency'
 import { hasFundingTarget, isRecurring } from 'utils/v1/fundingCycle'
 import {
   targetSubFeeToTargetFormatted,
   targetToTargetSubFeeFormatted,
 } from 'utils/v1/payouts'
 
-import { CurrencyName } from 'constants/currency'
 import { CYCLE_EXPLANATION } from 'components/Explanations'
 import { DISTRIBUTION_LIMIT_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { CurrencyName } from 'constants/currency'
 
 const DEFAULT_TARGET_AFTER_FEE = '10000'
 

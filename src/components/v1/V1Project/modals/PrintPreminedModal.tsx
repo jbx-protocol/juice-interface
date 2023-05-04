@@ -2,10 +2,11 @@ import { Form, Input, Modal, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 
-import { isAddress } from '@ethersproject/address'
-import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { constants } from 'ethers'
+
+import { isAddress } from 'ethers/lib/utils'
 import { usePrintTokensTx } from 'hooks/v1/transactor/PrintTokensTx'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'

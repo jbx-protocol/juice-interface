@@ -1,10 +1,11 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import { ONE_MILLION } from 'constants/numbers'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
+import { constants } from 'ethers'
+
+import { BigNumber } from 'ethers'
 import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewards'
 import {
   LATEST_METADATA_VERSION,

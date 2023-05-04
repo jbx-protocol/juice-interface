@@ -1,5 +1,5 @@
-import { Contract } from '@ethersproject/contracts'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { Contract } from 'ethers'
 import { CV2V3 } from 'models/v2v3/cv'
 import { useContext, useEffect, useState } from 'react'
 import { loadJBPrices } from './loadJBPrices'

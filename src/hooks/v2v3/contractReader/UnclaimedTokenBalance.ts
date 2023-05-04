@@ -1,7 +1,7 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 import useContractReader from './V2ContractReader'
 

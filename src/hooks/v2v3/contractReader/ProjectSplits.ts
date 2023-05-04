@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import isEqual from 'lodash/isEqual'
 import { Split, SplitGroup } from 'models/splits'
 import { V2V3ContractName } from 'models/v2v3/contracts'

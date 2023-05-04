@@ -1,7 +1,7 @@
-import TooltipIcon from 'components/TooltipIcon'
-import { BigNumber } from '@ethersproject/bignumber'
-import { formatSplitPercent } from 'utils/v2v3/math'
 import { Trans } from '@lingui/macro'
+import TooltipIcon from 'components/TooltipIcon'
+import { BigNumber } from 'ethers'
+import { formatSplitPercent } from 'utils/v2v3/math'
 
 export function ReservedTokensValue({
   splitPercent,

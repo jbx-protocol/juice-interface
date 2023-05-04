@@ -1,6 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { WeiPerEther } from '@ethersproject/constants'
-import { Contract } from '@ethersproject/contracts'
+import { BigNumber, Contract, constants } from 'ethers'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
@@ -66,7 +64,7 @@ const deriveFundingCyclesBetweenEachConfiguration = ({
           break
         }
         const nextInterimWeight = interimWeight.sub(
-          interimWeight.mul(currentDiscountRate).div(WeiPerEther),
+          interimWeight.mul(currentDiscountRate).div(constants.WeiPerEther),
         )
         const nextInterimStart = interimStart.add(currentDuration)
         const nextInterimNumber = interimNumber.add(1)

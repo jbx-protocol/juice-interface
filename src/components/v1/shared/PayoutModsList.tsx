@@ -5,14 +5,15 @@ import CurrencySymbol from 'components/CurrencySymbol'
 import { getTotalPercentage } from 'components/formItems/formHelpers'
 import Mod from 'components/v1/shared/Mod'
 
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { constants } from 'ethers'
+
+import { BigNumber } from 'ethers'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useSetPayoutModsTx } from 'hooks/v1/transactor/SetPayoutModsTx'
-import { PayoutMod } from 'models/v1/mods'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
+import { PayoutMod } from 'models/v1/mods'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import {
   useCallback,

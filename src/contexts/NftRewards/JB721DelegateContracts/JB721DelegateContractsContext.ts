@@ -1,4 +1,4 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { JB721DelegateVersion } from 'models/nftRewards'
 import { createContext } from 'react'
 

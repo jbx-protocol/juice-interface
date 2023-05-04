@@ -1,4 +1,4 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
 import { SignerOrProvider } from 'models/signerOrProvider'

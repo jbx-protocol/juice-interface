@@ -1,6 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
+import { BigNumber } from 'ethers'
 import { useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'

@@ -1,4 +1,4 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { ContractConfig } from '../types'
 
 export function getContract<T extends string>(

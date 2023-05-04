@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { useV1TotalBalance } from './V1TokenBalance'
 import { useV1UnclaimedBalanceForV3Token } from './V1UnclaimedBalanceForV3Token'
 import { useV2TotalBalance } from './V2TokenBalance'

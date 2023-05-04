@@ -1,4 +1,4 @@
-build
+ebuild
 node_modules
 .eslintrc.json
 .vscode

@@ -1,12 +1,11 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { Contract } from '@ethersproject/contracts'
 import { Token } from '@uniswap/sdk-core'
 import IUniswapV3FactoryABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
 import IUniswapV3PoolABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
 import {
-  FACTORY_ADDRESS as UNISWAP_V3_FACTORY_ADDRESS,
   Pool,
+  FACTORY_ADDRESS as UNISWAP_V3_FACTORY_ADDRESS,
 } from '@uniswap/v3-sdk'
+import { BigNumber, Contract } from 'ethers'
 import { useQuery } from 'react-query'
 
 import { WETH } from 'constants/contracts/tokens'

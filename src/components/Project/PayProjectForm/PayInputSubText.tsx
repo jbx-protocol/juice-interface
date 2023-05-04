@@ -1,9 +1,8 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { parseEther } from '@ethersproject/units'
 import { plural, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import Loading from 'components/Loading'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
+import { BigNumber, utils } from 'ethers'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import useWeiConverter from 'hooks/WeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
@@ -75,8 +74,9 @@ export default function PayInputSubText({
     }
 
     const receivedTickets = formatReceivedTickets(
-      (payInCurrency === ETH ? parseEther('1') : converter.usdToWei('1')) ??
-        BigNumber.from(0),
+      (payInCurrency === ETH
+        ? utils.parseEther('1')
+        : converter.usdToWei('1')) ?? BigNumber.from(0),
     )
 
     const tokenReceiveText = tokenSymbolText({

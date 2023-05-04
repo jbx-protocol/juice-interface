@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { CurrencyOption } from './currencyOption'
 
 export type JB721DELEGATE_V1 = '1'

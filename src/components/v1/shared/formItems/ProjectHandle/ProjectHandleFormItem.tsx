@@ -1,9 +1,8 @@
 import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
-import { formatBytes32String } from '@ethersproject/strings'
 import { t } from '@lingui/macro'
 import { Form } from 'antd'
 import { FormItemExt } from 'components/formItems/formItemExt'
+import { BigNumber, utils } from 'ethers'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -49,7 +48,7 @@ export default function ProjectHandleFormItem({
     if (!inputContents) return
 
     try {
-      return formatBytes32String(normalizeHandle(inputContents))
+      return utils.formatBytes32String(normalizeHandle(inputContents))
     } catch (e) {
       console.error('Error formatting handle', inputContents, e)
     }

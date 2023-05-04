@@ -1,9 +1,9 @@
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { Contract } from 'ethers'
 import { useContractReadValue } from 'hooks/ContractReader'
-import { useContext } from 'react'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
+import { useContext } from 'react'
 import { useJBTokenStoreForV3Token } from './JBTokenStoreForV3Token'
-import { Contract } from '@ethersproject/contracts'
 
 export function useJBOperatorStoreForV3Token(): Contract | undefined {
   const { contracts } = useContext(V2V3ContractsContext)

@@ -1,8 +1,8 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
+import { BigNumber } from 'ethers'
 import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
 import {
   InfiniteSGQueryOpts,

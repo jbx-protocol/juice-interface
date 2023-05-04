@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { PV } from 'models/pv'
 import { parseBigNumberKeyVals } from 'utils/graph'
 

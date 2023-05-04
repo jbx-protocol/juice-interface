@@ -1,5 +1,5 @@
-import { Contract, ContractInterface } from '@ethersproject/contracts'
 import { readProvider } from 'constants/readProvider'
+import { Contract, ContractInterface } from 'ethers'
 import { isAddress } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
 import { isZeroAddress } from 'utils/address'

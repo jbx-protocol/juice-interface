@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Form, InputNumber, Radio } from 'antd'
 import { FormItems } from 'components/formItems'
@@ -6,6 +5,7 @@ import {
   NULL_ALLOCATOR_ADDRESS,
   V1_V3_ALLOCATOR_ADDRESS,
 } from 'constants/contracts/mainnet/Allocators'
+import { BigNumber } from 'ethers'
 import { useState } from 'react'
 
 export function ProjectPayoutFormItem({

@@ -1,10 +1,8 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
-import { NftFileType } from 'components/inputs/UploadNoStyle'
 import {
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
 } from 'components/Project/PayProjectForm/hooks/PayProjectForm'
+import { NftFileType } from 'components/inputs/UploadNoStyle'
 import {
   JB721_DELEGATE_V1,
   JB721_DELEGATE_V1_1,
@@ -17,6 +15,9 @@ import {
   DEFAULT_JB_721_TIER_CATEGORY,
 } from 'constants/transactionDefaults'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
+import { constants } from 'ethers'
+
+import { BigNumber } from 'ethers'
 import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
 import { pinJson } from 'lib/api/ipfs'
 import round from 'lodash/round'

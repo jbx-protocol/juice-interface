@@ -1,6 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import axios from 'axios'
+import { BigNumber } from 'ethers'
 import {
   SGEntity,
   SGEntityKey,

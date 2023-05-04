@@ -1,8 +1,8 @@
-import { formatBytes32String } from '@ethersproject/strings'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
+import { formatBytes32String } from 'ethers/lib/utils'
 import { useContext } from 'react'
 
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'

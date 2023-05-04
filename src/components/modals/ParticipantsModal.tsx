@@ -3,14 +3,15 @@ import {
   SortAscendingOutlined,
   SortDescendingOutlined,
 } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Button, Modal, Select } from 'antd'
-import ETHAmount from 'components/currency/ETHAmount'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
+import ETHAmount from 'components/currency/ETHAmount'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { constants } from 'ethers'
+
+import { BigNumber } from 'ethers'
 import { SGOrderDir, SGQueryOpts } from 'models/graph'
 import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'

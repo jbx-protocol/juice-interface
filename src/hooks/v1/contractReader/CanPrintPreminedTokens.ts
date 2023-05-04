@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { BigNumber } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext } from 'react'
 import useContractReader from './ContractReader'

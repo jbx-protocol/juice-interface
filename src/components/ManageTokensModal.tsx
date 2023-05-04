@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'

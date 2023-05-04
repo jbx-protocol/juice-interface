@@ -1,4 +1,4 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { JBControllerVersion } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectController'
 import { JBETHPaymentTerminalVersion } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectPrimaryEthTerminal'
 import { createContext } from 'react'

@@ -10,13 +10,13 @@ import trezorModule from '@web3-onboard/trezor'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import config from 'config/seo_meta.json'
 import { NETWORKS } from 'constants/networks'
+import { useEffect } from 'react'
+import { unpadLeadingZerosString } from 'utils/bigNumbers'
 import {
   useLoadSafeWallet,
   useLoadWalletFromLocalStorage,
   useStoreWalletsInLocalStorage,
-} from 'hooks/Network'
-import { useEffect } from 'react'
-import { unpadLeadingZerosString } from 'utils/bigNumbers'
+} from './hooks'
 
 export function initWeb3Onboard(): OnboardAPI {
   console.info('Initializing Web3Onboard...')

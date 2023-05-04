@@ -1,8 +1,8 @@
 import { WeiPerEther } from '@ethersproject/constants'
 import { Skeleton } from 'antd'
 import { PV_V2 } from 'constants/pv'
+import { WalletContributionsQuery } from 'generated/graphql'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { WalletContribution } from 'models/walletContribution'
 import Link from 'next/link'
 import { isHardArchived } from 'utils/archived'
 import { formatDate } from 'utils/format/formatDate'
@@ -16,7 +16,7 @@ import ProjectLogo from './ProjectLogo'
 export default function WalletContributionCard({
   contribution,
 }: {
-  contribution: WalletContribution
+  contribution: WalletContributionsQuery['participants'][0]
 }) {
   const { pv, projectId, project, volume, lastPaidTimestamp } = contribution
 

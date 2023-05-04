@@ -1,7 +1,7 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Callout } from 'components/Callout'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 
 import { detailedTimeString, secondsUntil } from 'utils/format/formatTime'

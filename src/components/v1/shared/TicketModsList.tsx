@@ -1,14 +1,14 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Space } from 'antd'
 import { CsvUpload } from 'components/inputs/CsvUpload'
 import Mod from 'components/v1/shared/Mod'
 import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { BigNumber } from 'ethers'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
 import { useSetTicketModsTx } from 'hooks/v1/transactor/SetTicketModsTx'
-import { TicketMod } from 'models/v1/mods'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
+import { TicketMod } from 'models/v1/mods'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import {
   useCallback,

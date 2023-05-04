@@ -1,4 +1,3 @@
-import { getAddress } from '@ethersproject/address'
 import { t } from '@lingui/macro'
 import {
   JB721_DELEGATE_V1,
@@ -8,6 +7,7 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { getAddress } from 'ethers/lib/utils'
 import { useJBPrices } from 'hooks/JBPrices'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'

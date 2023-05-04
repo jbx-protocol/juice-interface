@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { createContext } from 'react'
 import { WeightFunction } from 'utils/math'
 import { PayProjectForm } from './hooks/PayProjectForm'

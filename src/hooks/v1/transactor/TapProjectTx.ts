@@ -1,6 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
+import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 
 import { V1CurrencyOption } from 'models/v1/currencyOption'

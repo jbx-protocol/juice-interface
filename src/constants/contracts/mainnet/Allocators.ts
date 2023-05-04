@@ -1,4 +1,4 @@
-import * as constants from '@ethersproject/constants'
+import { constants } from 'ethers'
 
 export const V2_V3_ALLOCATOR_ADDRESS =
   '0x6aaF7afeF64c6852EE507876f9D25F92bd9A1aE7'

@@ -1,7 +1,7 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import { PRECISION_ETH } from 'constants/currency'
+import { BigNumber } from 'ethers'
 import { betweenZeroAndOne } from 'utils/bigNumbers'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import ETHToUSD from './ETHToUSD'

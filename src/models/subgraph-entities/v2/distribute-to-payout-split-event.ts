@@ -1,13 +1,13 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 
+import { parseBigNumberKeyVals } from 'utils/graph'
+import { Json, primitives } from '../../json'
 import { BaseEventEntity } from '../base/base-event-entity'
 import {
   BaseProjectEntity,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
-import { Json, primitives } from '../../json'
 import { TerminalEventEntity } from '../base/terminal-event'
-import { parseBigNumberKeyVals } from 'utils/graph'
 
 export interface DistributeToPayoutSplitEvent
   extends BaseEventEntity,

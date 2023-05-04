@@ -3,11 +3,12 @@ import {
   DeleteOutlined,
   PlusCircleOutlined,
 } from '@ant-design/icons'
-import * as constants from '@ethersproject/constants'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Button, Col, Form, Input, Row, Tooltip } from 'antd'
 import { FormInstance } from 'antd/lib/form/Form'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { constants } from 'ethers'
+
 import { useContext, useState } from 'react'
 import { EditTrackedAssetsForm } from './V2V3ProjectTokenBalancesModal'
 

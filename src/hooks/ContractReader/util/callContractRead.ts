@@ -1,4 +1,4 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 
 /**
  * Calls the `readContract` to be read from `contracts` in `functionName`.

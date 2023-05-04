@@ -1,6 +1,4 @@
 import { CaretRightFilled } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { Drawer, DrawerProps, Modal, Space, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -23,6 +21,9 @@ import TicketingForm, {
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { constants } from 'ethers'
+
+import { BigNumber } from 'ethers'
 import { useTerminalFee } from 'hooks/v1/TerminalFee'
 import { useConfigureProjectTx } from 'hooks/v1/transactor/ConfigureProjectTx'
 import { BallotStrategy } from 'models/ballot'

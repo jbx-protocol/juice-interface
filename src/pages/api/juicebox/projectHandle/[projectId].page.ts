@@ -1,6 +1,6 @@
-import { Contract } from '@ethersproject/contracts'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
+import { Contract } from 'ethers'
 import { loadJBProjectHandlesContract } from 'hooks/JBProjectHandles/contracts/loadJBProjectHandles'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'

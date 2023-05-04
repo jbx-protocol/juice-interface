@@ -1,10 +1,10 @@
+import V1TicketBoothJson from '@jbx-protocol/contracts-v1/deployments/mainnet/TicketBooth.json'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { Contract } from 'ethers'
 import { useContractReadValue } from 'hooks/ContractReader'
+import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
 import { useContext } from 'react'
 import { useJBV3Token } from '../contracts/JBV3Token'
-import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
-import { Contract } from '@ethersproject/contracts'
-import V1TicketBoothJson from '@jbx-protocol/contracts-v1/deployments/mainnet/TicketBooth.json'
 
 export function useV1TicketBoothForV3Token(): Contract | undefined {
   const { tokenAddress } = useContext(V2V3ProjectContext)

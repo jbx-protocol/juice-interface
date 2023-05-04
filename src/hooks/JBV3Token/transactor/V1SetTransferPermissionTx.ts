@@ -1,10 +1,10 @@
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/Transactor'
+import { useV1SetOperatorTx } from 'hooks/v1/transactor/V1SetOperatorTx'
+import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext } from 'react'
 import { useJBV3Token } from '../contracts/JBV3Token'
-import { V1OperatorPermission } from 'models/v1/permissions'
-import { useV1SetOperatorTx } from 'hooks/v1/transactor/V1SetOperatorTx'
-import { BigNumber } from '@ethersproject/bignumber'
 
 export function useV1SetTransferPermissionTx(): TransactorInstance<{
   v1ProjectId: BigNumber | undefined

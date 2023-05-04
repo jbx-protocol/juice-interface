@@ -1,4 +1,4 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 
 export enum V2V3ContractName {
   JBController = 'JBController',

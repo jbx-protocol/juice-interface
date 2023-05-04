@@ -1,8 +1,6 @@
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { formatUnits, parseUnits } from '@ethersproject/units'
-import round from 'lodash/round'
-
 import { WAD_DECIMALS } from 'constants/numbers'
+import { BigNumber, BigNumberish, utils } from 'ethers'
+import round from 'lodash/round'
 
 type FormatConfig = {
   empty?: string
@@ -29,7 +27,7 @@ const thousandsSeparator = ','
  *
  */
 export const parseWad = (value?: BigNumberish) =>
-  parseUnits(value?.toString() || '0', WAD_DECIMALS)
+  utils.parseUnits(value?.toString() || '0', WAD_DECIMALS)
 
 /**
  * Returns a string representation of a given [wadValue]
@@ -44,7 +42,7 @@ export const parseWad = (value?: BigNumberish) =>
  *
  */
 export const fromWad = (wadValue?: BigNumberish) => {
-  const result = formatUnits(wadValue ?? '0')
+  const result = utils.formatUnits(wadValue ?? '0')
   return result.substring(result.length - 2) === '.0'
     ? result.substring(0, result.length - 2)
     : result

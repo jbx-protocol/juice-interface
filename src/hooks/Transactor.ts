@@ -1,9 +1,8 @@
-import { Contract } from '@ethersproject/contracts'
-import { TransactionResponse } from '@ethersproject/providers'
 import { t } from '@lingui/macro'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { Contract, providers } from 'ethers'
 import { simulateTransaction } from 'lib/tenderly'
 import { TransactionOptions } from 'models/transaction'
 import { CV2V3 } from 'models/v2v3/cv'
@@ -124,7 +123,7 @@ export function useTransactor(): Transactor | undefined {
 
       try {
         const tx = prepareTransaction({ functionName, contract, args, options })
-        const result: TransactionResponse = await tx
+        const result: providers.TransactionResponse = await tx
 
         console.info('✅ Transactor::submitted', result)
 
@@ -133,7 +132,7 @@ export function useTransactor(): Transactor | undefined {
 
         // add transaction to the history UI
         const txTitle = options?.title ?? functionName
-        addTransaction?.(txTitle, result as TransactionResponse, {
+        addTransaction?.(txTitle, result as providers.TransactionResponse, {
           onConfirmed: options?.onConfirmed,
           onCancelled: options?.onCancelled,
         })

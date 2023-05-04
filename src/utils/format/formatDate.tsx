@@ -1,5 +1,5 @@
-import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
+import { BigNumber, BigNumberish } from 'ethers'
 
 import { Tooltip } from 'antd'
 

@@ -1,11 +1,11 @@
-import { isAddress } from '@ethersproject/address'
 import { t } from '@lingui/macro'
 import { Form, Input, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import TransactionModal from 'components/TransactionModal'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import TransactionModal from 'components/TransactionModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { utils } from 'ethers'
 import { useProjectHasErc20 } from 'hooks/v2v3/ProjectHasErc20'
 import { useMintTokensTx } from 'hooks/v2v3/transactor/MintTokensTx'
 import { useContext, useState } from 'react'
@@ -39,7 +39,7 @@ export function V2V3MintModal({
     const amount = form.getFieldValue('amount') ?? '0'
     const beneficiary = form.getFieldValue('beneficary')
 
-    if (amount === '0' || !isAddress(beneficiary)) return
+    if (amount === '0' || !utils.isAddress(beneficiary)) return
 
     setLoading(true)
 
@@ -109,7 +109,7 @@ export function V2V3MintModal({
               required: true,
               validateTrigger: 'onCreate',
               validator: (rule, value) => {
-                if (!value || !isAddress(value))
+                if (!value || !utils.isAddress(value))
                   return Promise.reject('Not a valid ETH address')
                 else return Promise.resolve()
               },

@@ -1,6 +1,6 @@
-import { Contract } from '@ethersproject/contracts'
 import JBV3TokenDeployerJson from '@jbx-protocol/juice-v3-migration/out/JBV3TokenDeployer.sol/JBV3TokenDeployer.json'
 import { readNetwork } from 'constants/networks'
+import { Contract } from 'ethers'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
 import { ForgeDeploy } from 'models/contracts'
 import { useEffect, useState } from 'react'

@@ -1,6 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { BigNumber } from 'ethers'
 import { V2BallotState } from 'models/ballot'
 import { useContext } from 'react'
 import { parseWad } from 'utils/format/formatNumber'

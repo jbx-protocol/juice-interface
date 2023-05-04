@@ -1,4 +1,4 @@
-import { JsonRpcProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
 import { Signer } from 'ethers/lib/ethers'
 
-export type SignerOrProvider = Signer | JsonRpcProvider
+export type SignerOrProvider = Signer | providers.JsonRpcProvider

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 
 import { useJBProjectHandles } from 'hooks/JBProjectHandles/contracts/JBProjectHandles'
 import useV2ContractReader from './V2ContractReader'

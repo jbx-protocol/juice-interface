@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
+import { BigNumber } from 'ethers'
 import { formattedNum } from 'utils/format/formatNumber'
 import { formatIssuanceRate } from 'utils/v2v3/math'
 

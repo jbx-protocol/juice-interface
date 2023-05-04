@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { useSetChain } from '@web3-onboard/react'
+import { BigNumber } from 'ethers'
 import { useCallback } from 'react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
 

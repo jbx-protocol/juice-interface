@@ -1,6 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
 import { MaxUint54 } from 'constants/numbers'
+import { BigNumber } from 'ethers'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycle,

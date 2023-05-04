@@ -1,6 +1,6 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
+import { BigNumber } from 'ethers'
 import { useModal } from 'hooks/Modal'
 import { ReactNode, useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'

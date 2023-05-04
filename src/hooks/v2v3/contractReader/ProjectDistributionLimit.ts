@@ -1,6 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
+import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 import useV2ContractReader from './V2ContractReader'
 

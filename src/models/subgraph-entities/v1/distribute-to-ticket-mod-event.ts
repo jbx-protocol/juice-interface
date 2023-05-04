@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { Project } from 'models/subgraph-entities/vX/project'
 import {
   parseBigNumberKeyVals,

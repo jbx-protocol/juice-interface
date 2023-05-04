@@ -1,8 +1,8 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { BigNumber } from 'ethers'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import {
   V2V3FundingCycle,

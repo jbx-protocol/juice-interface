@@ -1,10 +1,10 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import TooltipLabel from 'components/TooltipLabel'
 import { CurrencyName } from 'constants/currency'
+import { BigNumber } from 'ethers'
 import { formatWad } from 'utils/format/formatNumber'
 import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 

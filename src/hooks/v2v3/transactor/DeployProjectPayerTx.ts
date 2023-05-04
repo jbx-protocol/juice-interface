@@ -1,9 +1,10 @@
-import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { constants } from 'ethers'
+
 import { TransactorInstance } from 'hooks/Transactor'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'

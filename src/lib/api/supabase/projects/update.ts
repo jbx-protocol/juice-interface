@@ -1,7 +1,7 @@
-import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { DBProject } from 'models/dbProject'
 import { Json } from 'models/json'
 import { NextApiResponse } from 'next'
+import { isBigNumberish } from 'utils/bigNumbers'
 import { formatError } from 'utils/format/formatError'
 import { formatWad } from 'utils/format/formatNumber'
 import { querySubgraphExhaustiveRaw } from 'utils/graph'

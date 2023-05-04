@@ -1,6 +1,3 @@
-import { getAddress } from '@ethersproject/address'
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
 import { DatePicker, Form, Modal, Radio } from 'antd'
 import { useForm, useWatch } from 'antd/lib/form/Form'
@@ -10,6 +7,7 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { CurrencyName } from 'constants/currency'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { BigNumber, constants, utils } from 'ethers'
 import findIndex from 'lodash/findIndex'
 import { Split } from 'models/splits'
 import moment, * as Moment from 'moment'
@@ -172,7 +170,7 @@ export function DistributionSplitModal({
       : undefined
 
     const allocator = form.getFieldValue('allocator')
-      ? getAddress(form.getFieldValue('allocator'))
+      ? utils.getAddress(form.getFieldValue('allocator'))
       : undefined
 
     // if allocator specified, set beneficiary to zero address. Otherwise, set beneficiary to specified address.
@@ -182,7 +180,7 @@ export function DistributionSplitModal({
         : form.getFieldValue('beneficiary')
 
     const newSplit = {
-      beneficiary: getAddress(beneficiary),
+      beneficiary: utils.getAddress(beneficiary),
       percent: splitPercentFrom(form.getFieldValue('percent')).toNumber(),
       lockedUntil: roundedLockedUntil,
       preferClaimed: true,

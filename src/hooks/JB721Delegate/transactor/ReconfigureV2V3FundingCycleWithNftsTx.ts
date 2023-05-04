@@ -1,20 +1,20 @@
-import { getAddress } from '@ethersproject/address'
 import { t } from '@lingui/macro'
 import {
   JB721_DELEGATE_V1,
   JB721_DELEGATE_V1_1,
 } from 'constants/delegateVersions'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
+import { getAddress } from 'ethers/lib/utils'
 import { TransactorInstance } from 'hooks/Transactor'
 import omit from 'lodash/omit'
 import {
   JB721DelegateVersion,
-  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1,
   JBDeployTiered721DelegateData,
+  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1,
 } from 'models/nftRewards'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import {

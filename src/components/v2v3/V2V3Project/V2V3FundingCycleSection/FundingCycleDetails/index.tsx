@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
+import { BigNumber } from 'ethers'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,

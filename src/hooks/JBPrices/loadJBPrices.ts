@@ -1,7 +1,7 @@
-import { Contract } from '@ethersproject/contracts'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
+import { Contract } from 'ethers'
 import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
 import { CV2V3 } from 'models/v2v3/cv'

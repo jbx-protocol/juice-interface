@@ -1,6 +1,5 @@
-import { hashMessage } from '@ethersproject/hash'
-import { recoverAddress } from '@ethersproject/transactions'
 import { SupabaseClient } from '@supabase/supabase-js'
+import { utils } from 'ethers'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { juiceAuthDbClient, sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -40,10 +39,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(401).json({ message: 'Unauthorized.' })
     }
 
-    const walletAddressUsedForRequestSign = recoverAddress(
-      hashMessage(signingRequestResult.data.challenge_message),
-      signature,
-    ).toLowerCase()
+    const walletAddressUsedForRequestSign = utils
+      .recoverAddress(
+        utils.hashMessage(signingRequestResult.data.challenge_message),
+        signature,
+      )
+      .toLowerCase()
     if (walletAddressUsedForRequestSign !== walletAddressNormalized) {
       console.warn(
         'Wallet signed with address that is foreign to the request',

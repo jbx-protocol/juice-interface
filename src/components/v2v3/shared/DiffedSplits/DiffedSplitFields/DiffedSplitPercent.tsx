@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { DiffedItem } from 'components/v2v3/shared/DiffedItem'
+import { BigNumber } from 'ethers'
 import { formatSplitPercent } from 'utils/v2v3/math'
 
 export function DiffedSplitPercent({

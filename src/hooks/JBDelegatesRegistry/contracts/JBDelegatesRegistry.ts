@@ -1,5 +1,5 @@
-import { Contract } from '@ethersproject/contracts'
 import { readNetwork } from 'constants/networks'
+import { Contract } from 'ethers'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
 import { ForgeDeploy } from 'models/contracts'
 import { useEffect, useState } from 'react'

@@ -130,7 +130,7 @@ const StarWarsIntro: React.FC<{ onClick: VoidFunction }> = ({ onClick }) => {
               </div>
             </section>
           </div>
-          <div className="absolute bottom-48 flex w-full items-center justify-center text-center text-4xl text-white">
+          <div className="absolute bottom-48 hidden w-full items-center justify-center text-center text-4xl text-white">
             <img
               className="w-full max-w-3xl "
               src="/assets/images/star-wars/may-4th.png"

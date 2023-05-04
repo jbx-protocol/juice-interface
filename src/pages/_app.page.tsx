@@ -3,6 +3,7 @@ import SupabaseSessionProvider from 'contexts/SupabaseSession/SupabaseSessionPro
 import { initWeb3Onboard, useInitWallet } from 'hooks/Wallet'
 import type { AppProps } from 'next/app'
 import '../styles/index.scss'
+import '../styles/starwarsintro.scss'
 
 /**
  * Init Web3 Onboard

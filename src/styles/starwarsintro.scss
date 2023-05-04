@@ -1,0 +1,123 @@
+// .crawl-content {
+//   // transform-origin: 50% 100%;
+//   // perspective: 500px;
+//   animation: crawl 20s linear forwards;
+// }
+
+// .perspective-container {
+//   @apply absolute;
+//   @apply w-full;
+//   @apply h-full;
+//   perspective: 100vh;
+//   @apply max-w-6xl;
+// }
+
+.star-wars-header {
+  font-family: 'Jedise', sans-serif;
+}
+
+.star-wars-logo-animation {
+  animation: logo 12s linear 5s forwards;
+  animation-delay: 9s;
+}
+
+// @keyframes crawl {
+//   0% {
+//     /* The element starts below the screen */
+//     top: 0;
+//     /* Rotate the text 20 degrees but keep it close to the viewer */
+//     transform: rotateX(20deg) translateZ(0);
+//   }
+//   100% {
+//     /* This is a magic number, but using a big one to make sure the text is fully off the screen at the end */
+//     top: -6000px;
+//     transform: rotateX(25deg) translateZ(-2500px);
+//   }
+// }
+
+.fade-in-out-animation {
+  animation: fade-in-out 8s ease-in-out normal forwards;
+}
+
+@keyframes fade-in-out {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  25%,
+  75% {
+    opacity: 1;
+  }
+}
+
+@keyframes logo {
+  0% {
+    opacity: 1;
+    transform: translateY(0%) scale(1);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.1);
+  }
+}
+
+// -------
+
+.fade {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  top: -25px;
+  background-image: linear-gradient(0deg, transparent, black 75%);
+  z-index: 1;
+}
+
+.star-wars {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 800px;
+  color: #feda4a;
+  font-family: 'Pathway Gothic One', sans-serif;
+  font-size: 500%;
+  font-weight: 600;
+  letter-spacing: 6px;
+  line-height: 150%;
+  perspective: 400px;
+  text-align: justify;
+}
+
+.crawl-new {
+  position: relative;
+  top: 99999px;
+  transform-origin: 50% 100%;
+}
+
+.crawl-new-animation {
+  animation: crawl-new 90s linear;
+}
+
+.crawl-new > .title {
+  font-size: 90%;
+  text-align: center;
+}
+
+.crawl-new > .title h1 {
+  margin: 0 0 100px;
+  color: #feda4a;
+  text-transform: uppercase;
+}
+
+@keyframes crawl-new {
+  0% {
+    top: 50vh;
+    transform: rotateX(20deg) translateZ(0);
+  }
+  100% {
+    top: -7000px;
+    transform: rotateX(25deg) translateZ(-2500px);
+  }
+}

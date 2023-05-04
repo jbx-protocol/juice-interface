@@ -43,7 +43,7 @@ export default function SharkDAOPage() {
             </Trans>
           }
           projectUrl="/p/sharkdao"
-          fundingConfig={SHARKDAO_FUNDING_CONFIG}
+          fundingConfig={SHARKDAO_FUNDING_CONFIG()}
         />
         <CaseStudyContentContainer currentProject={sharkDAOSuccessStoryProject}>
           <p>

@@ -42,7 +42,7 @@ export default function MoonDAOPage() {
             </Trans>
           }
           projectUrl="/p/moondao"
-          fundingConfig={MOONDAO_FUNDING_CONFIG}
+          fundingConfig={MOONDAO_FUNDING_CONFIG()}
         />
         <CaseStudyContentContainer currentProject={moonDAOSuccessStoryProject}>
           <p>

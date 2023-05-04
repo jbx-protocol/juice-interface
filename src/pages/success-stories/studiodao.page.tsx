@@ -39,7 +39,7 @@ export default function StudioDAOPage() {
             </Trans>
           }
           projectUrl="/@studiodao"
-          fundingConfig={STUDIODAO_FUNDING_CONFIG}
+          fundingConfig={STUDIODAO_FUNDING_CONFIG()}
         />
         <CaseStudyContentContainer
           currentProject={studioDAOSuccessStoryProject}

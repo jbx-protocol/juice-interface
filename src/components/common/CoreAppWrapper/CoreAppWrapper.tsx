@@ -4,14 +4,21 @@ import SiteNavigation from 'components/Navbar/SiteNavigation'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
-import LanguageProvider from 'contexts/Language/LanguageProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { redirectTo } from 'utils/windowUtils'
+
+const LanguageProvider = dynamic(
+  () => import('contexts/Language/LanguageProvider'),
+  {
+    ssr: false,
+  },
+)
 
 /**
  * Contains all the core app providers used by each page.

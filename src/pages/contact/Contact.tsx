@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Col, Form, Row, Select } from 'antd'
+import { Button, Form, Select } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { JuiceSelect } from 'components/inputs/JuiceSelect'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
@@ -79,9 +79,9 @@ export default function Contact() {
 
   return (
     <>
-      <div className="mx-auto mt-5 mb-10 max-w-5xl">
-        <Row align="middle" gutter={60}>
-          <Col xs={24} md={13}>
+      <div className="mx-auto mt-5 mb-36 max-w-5xl px-4 lg:px-0">
+        <div className="flex gap-14">
+          <div className="w-full lg:w-7/12">
             <h1 className="m-0 my-4 font-display text-4xl">
               <Trans>Contact</Trans>
             </h1>
@@ -175,20 +175,24 @@ export default function Contact() {
                 </span>
               )}
             </p>
-          </Col>
+          </div>
 
-          <Col xs={24} md={11} className="hidden md:flex">
-            <Image
-              src={
-                forThemeOption?.({
-                  light: contactHeroLight,
-                  dark: contactHeroDark,
-                }) ?? ''
-              }
-              alt="Banny making a phone call"
-            />
-          </Col>
-        </Row>
+          <div className="hidden items-center lg:flex lg:w-5/12">
+            <div>
+              <Image
+                src={
+                  forThemeOption?.({
+                    light: contactHeroLight,
+                    dark: contactHeroDark,
+                  }) ?? ''
+                }
+                alt="Banny making a phone call"
+                height={546}
+                width={437}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )

@@ -49,7 +49,7 @@ const V1MigrationCard = ({
   )
 
   const handleOnFinish = useCallback(
-    values => {
+    (values: V1MigrationCardForm) => {
       onSaveClick?.({
         beneficiary,
         projectIds: values.projectIds.map(

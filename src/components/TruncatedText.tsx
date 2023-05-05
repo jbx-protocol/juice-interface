@@ -15,11 +15,9 @@ interface TruncatedTextProps {
     | 'topLeft'
 }
 
-export const TruncatedText: React.FC<TruncatedTextProps> = ({
-  text,
-  className,
-  placement,
-}) => {
+export const TruncatedText: React.FC<
+  React.PropsWithChildren<TruncatedTextProps>
+> = ({ text, className, placement }) => {
   const [show, setShow] = useState(false)
   const textRef = useRef<HTMLDivElement>(null)
   const [isTruncated, setIsTruncated] = useState(false)

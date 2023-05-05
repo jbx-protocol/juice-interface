@@ -2,9 +2,11 @@ import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3
 import { useV2V3ProjectContracts } from 'hooks/v2v3/V2V3ProjectContracts'
 import { useLoadV2V3ProjectCvs } from 'hooks/v2v3/V2V3ProjectCvs'
 
-export const V2V3ProjectContractsProvider: React.FC<{
-  projectId: number
-}> = ({ children, projectId }) => {
+export const V2V3ProjectContractsProvider: React.FC<
+  React.PropsWithChildren<{
+    projectId: number
+  }>
+> = ({ children, projectId }) => {
   const {
     data: contracts,
     loading: projectContractsLoading,

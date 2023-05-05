@@ -9,7 +9,9 @@ import { useRouter } from 'next/router'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { AnnouncementsContext } from './AnnouncementsContext'
 
-export const AnnouncementsProvider: React.FC = ({ children }) => {
+export const AnnouncementsProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const [activeId, setActiveId] = useState<string>()
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 

@@ -1,7 +1,7 @@
 import { Collapse, CollapsePanelProps, Divider } from 'antd'
 
 export const CreateCollapsePanel: React.FC<
-  CollapsePanelProps & { hideDivider?: boolean }
+  React.PropsWithChildren<CollapsePanelProps & { hideDivider?: boolean }>
 > = ({ hideDivider, ...props }) => {
   return (
     <Collapse.Panel {...props}>

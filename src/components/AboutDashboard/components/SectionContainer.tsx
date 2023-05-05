@@ -1,9 +1,8 @@
 import { twMerge } from 'tailwind-merge'
 
-export const SectionContainer: React.FC<{ className?: string }> = ({
-  className,
-  children,
-}) => {
+export const SectionContainer: React.FC<
+  React.PropsWithChildren<{ className?: string }>
+> = ({ className, children }) => {
   return (
     <section className="w-full">
       <div

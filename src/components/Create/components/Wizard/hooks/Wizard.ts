@@ -1,11 +1,11 @@
 import { CreatePage } from 'models/createPage'
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAppSelector } from 'redux/hooks/AppSelector'
 import { useEditingCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
 import { PageProps } from '../Page'
 
-const isPage = (element: ReactNode): element is PageProps => {
-  return (element as PageProps)?.name !== undefined
+const isPage = (element: PageProps | undefined) => {
+  return element?.name !== undefined
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -2,7 +2,9 @@ import { Trans } from '@lingui/macro'
 import { JuiceModalProps } from 'components/JuiceModal'
 import { Announcement } from './Announcement'
 
-export const NewFeatureAnnouncement: React.FC<JuiceModalProps> = props => {
+export const NewFeatureAnnouncement: React.FC<
+  React.PropsWithChildren<JuiceModalProps>
+> = props => {
   return (
     <Announcement
       {...props}

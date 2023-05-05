@@ -21,7 +21,7 @@ export interface SEOProps {
   children?: ReactNode
 }
 
-export const SEO: FC<SEOProps> = ({
+export const SEO: FC<React.PropsWithChildren<SEOProps>> = ({
   url,
   title,
   overrideFormattedTitle,

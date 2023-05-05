@@ -5,7 +5,9 @@ import { getArcxClient } from 'lib/arcx'
 import { useEffect, useRef } from 'react'
 import { ArcxContext } from './ArcxContext'
 
-export const ArcxProvider: React.FC = ({ children }) => {
+export const ArcxProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const arcx = useRef<ArcxAnalyticsSdk | undefined>()
   const { userAddress } = useWallet()
 

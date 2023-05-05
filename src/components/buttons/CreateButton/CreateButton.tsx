@@ -1,7 +1,9 @@
 import { Button, ButtonProps } from 'antd'
 import { classNames } from 'utils/classNames'
 
-export const CreateButton: React.FC<ButtonProps> = props => {
+export const CreateButton: React.FC<
+  React.PropsWithChildren<ButtonProps>
+> = props => {
   return (
     <Button
       {...props}

@@ -2,7 +2,9 @@ import Icon from '@ant-design/icons'
 import { Property } from 'csstype'
 import { SVGAttributes } from 'react'
 
-const _SVG: React.FC<SVGAttributes<SVGSVGElement>> = props => (
+const _SVG: React.FC<
+  React.PropsWithChildren<SVGAttributes<SVGSVGElement>>
+> = props => (
   <svg
     width="1em"
     height="1em"

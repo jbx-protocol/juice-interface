@@ -1,4 +1,4 @@
-import { BigNumber, BigNumberish, utils } from 'ethers'
+import { BigNumber, BigNumberish, BytesLike, utils } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { useCallback } from 'react'
 
@@ -12,7 +12,7 @@ export default function useHandleForProjectId(
     contract: V1ContractName.Projects,
     functionName: 'handleOf',
     args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
-    formatter: useCallback(val => {
+    formatter: useCallback((val: BytesLike) => {
       if (val === undefined || val === null) {
         return undefined
       }

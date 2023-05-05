@@ -15,7 +15,9 @@ import { PageContext } from '../../Wizard/contexts/PageContext'
 import { CustomTokenSettings, DefaultSettings } from './components'
 import { useProjectTokensForm } from './hooks/ProjectTokenForm'
 
-export const ProjectTokenPage: React.FC = () => {
+export const ProjectTokenPage: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   useSetCreateFurthestPageReached('projectToken')
   const { goToNextPage, lockPageProgress, unlockPageProgress } =
     useContext(PageContext)

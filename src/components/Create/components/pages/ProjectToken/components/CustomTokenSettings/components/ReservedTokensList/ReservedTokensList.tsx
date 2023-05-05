@@ -10,7 +10,9 @@ import { ceilIfCloseToNextInteger } from 'utils/math'
 import { totalSplitsPercent } from 'utils/splits'
 
 export const ReservedTokensList: React.FC<
-  FormItemInput<AllocationSplit[]> & { isEditable?: boolean }
+  React.PropsWithChildren<
+    FormItemInput<AllocationSplit[]> & { isEditable?: boolean }
+  >
 > = ({ isEditable, value, onChange }) => {
   const totalPercent = useMemo(
     () => (value ? totalSplitsPercent(value) : 0),

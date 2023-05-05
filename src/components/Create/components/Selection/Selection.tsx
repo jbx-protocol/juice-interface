@@ -8,15 +8,17 @@ export const SelectionContext = React.createContext<{
   setSelection?: (selection: string | undefined) => void
 }>({})
 
-export const Selection: React.FC<{
-  value?: string
-  defocusOnSelect?: boolean
-  disableInteractivity?: boolean
-  allowDeselect?: boolean
-  className?: string
-  style?: CSSProperties
-  onChange?: (value: string | undefined) => void
-}> & { Card: typeof SelectionCard } = ({
+export const Selection: React.FC<
+  React.PropsWithChildren<{
+    value?: string
+    defocusOnSelect?: boolean
+    disableInteractivity?: boolean
+    allowDeselect?: boolean
+    className?: string
+    style?: CSSProperties
+    onChange?: (value: string | undefined) => void
+  }>
+> & { Card: typeof SelectionCard } = ({
   defocusOnSelect,
   disableInteractivity,
   allowDeselect = true,

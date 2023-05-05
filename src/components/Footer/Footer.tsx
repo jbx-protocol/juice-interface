@@ -167,10 +167,9 @@ export function Footer() {
   )
 }
 
-const LinkColumn: React.FC<{ title: ReactNode; items: LinkItem[] }> = ({
-  title,
-  items,
-}) => (
+const LinkColumn: React.FC<
+  React.PropsWithChildren<{ title: ReactNode; items: LinkItem[] }>
+> = ({ title, items }) => (
   <div className="flex flex-col gap-y-3">
     <div className="font-medium text-slate-200">{title}</div>
     {items.map(({ title, link, externalLink }, i) => (

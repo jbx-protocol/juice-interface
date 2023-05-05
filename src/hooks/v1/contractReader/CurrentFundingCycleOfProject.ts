@@ -16,7 +16,11 @@ export default function useCurrentFundingCycleOfProject(
     contract: V1ContractName.FundingCycles,
     functionName: 'currentOf',
     args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
-    valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
+    valueDidChange: useCallback(
+      (a: V1FundingCycle | undefined, b: V1FundingCycle | undefined) =>
+        !deepEqFundingCycles(a, b),
+      [],
+    ),
     updateOn: useMemo(
       () =>
         projectId

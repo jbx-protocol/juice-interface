@@ -92,11 +92,13 @@ export const BuiltByTheBestSection = () => {
   )
 }
 
-const ContributorCard: React.FC<{
-  name: string
-  title: string | undefined
-  avatarUrl: string | undefined
-}> = ({ name, title, avatarUrl }) => {
+const ContributorCard: React.FC<
+  React.PropsWithChildren<{
+    name: string
+    title: string | undefined
+    avatarUrl: string | undefined
+  }>
+> = ({ name, title, avatarUrl }) => {
   return (
     <div className="max-w-[216px] overflow-hidden">
       {avatarUrl ? (

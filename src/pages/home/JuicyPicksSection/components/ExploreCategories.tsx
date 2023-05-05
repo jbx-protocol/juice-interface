@@ -9,7 +9,7 @@ import { SectionHeading } from '../../SectionHeading'
 import { useExploreCategories } from '../hooks/useExploreCategories'
 
 export const ExploreCategories = () => {
-  const { tags, isLoading, error } = useExploreCategories()
+  const { tags, isLoading } = useExploreCategories()
   return (
     <div>
       <SectionHeading
@@ -24,8 +24,6 @@ export const ExploreCategories = () => {
 
       {isLoading ? (
         <Loading size="large" />
-      ) : error ? (
-        <div className="text-error">{error}</div>
       ) : (
         <ProjectCarousel
           items={tags.map(tag => (

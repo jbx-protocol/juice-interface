@@ -11,7 +11,9 @@ const V2_CURRENCY_CONTEXT = {
   currencies: { ETH: V2V3_CURRENCY_ETH, USD: V2V3_CURRENCY_USD },
 }
 
-export const V2V3CurrencyProvider: React.FC = ({ children }) => {
+export const V2V3CurrencyProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   return (
     <CurrencyContext.Provider value={V2_CURRENCY_CONTEXT}>
       {children}

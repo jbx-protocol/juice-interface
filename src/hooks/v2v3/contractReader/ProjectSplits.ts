@@ -46,11 +46,14 @@ export default function useProjectSplits({
       : V2V3ContractName.JBSplitsStore,
     functionName: 'splitsOf',
     args: projectId && domain ? [projectId, domain, splitGroup] : null,
-    formatter: useCallback((value): Split[] => {
+    formatter: useCallback((value: unknown): Split[] => {
       return formatSplitResult((value ?? []) as SplitResult[])
     }, []),
-    valueDidChange: useCallback((oldValue, newValue) => {
-      return !isEqual(oldValue, newValue)
-    }, []),
+    valueDidChange: useCallback(
+      (oldValue: Split[] | undefined, newValue: Split[] | undefined) => {
+        return !isEqual(oldValue, newValue)
+      },
+      [],
+    ),
   })
 }

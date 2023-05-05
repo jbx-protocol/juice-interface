@@ -2,10 +2,12 @@ import { DownOutlined } from '@ant-design/icons'
 import { Collapse } from 'antd'
 import { CreateCollapsePanel } from './CreateCollapsePanel'
 
-export const CreateCollapse: React.FC<{
-  activeKey?: string | number | (string | number)[]
-  onChange?: (key: string | string[]) => void
-}> & {
+export const CreateCollapse: React.FC<
+  React.PropsWithChildren<{
+    activeKey?: string | number | (string | number)[]
+    onChange?: (key: string | string[]) => void
+  }>
+> & {
   Panel: typeof CreateCollapsePanel
 } = ({ activeKey, onChange, children }) => {
   return (

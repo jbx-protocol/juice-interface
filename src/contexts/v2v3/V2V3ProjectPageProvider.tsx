@@ -10,11 +10,9 @@ import V2V3ProjectMetadataProvider from './V2V3ProjectMetadataProvider'
 /**
  * Provide all the necessary contexts to render a V2V3 Project.
  */
-export const V2V3ProjectPageProvider: React.FC<ProjectPageProps> = ({
-  projectId,
-  metadata,
-  children,
-}) => {
+export const V2V3ProjectPageProvider: React.FC<
+  React.PropsWithChildren<ProjectPageProps>
+> = ({ projectId, metadata, children }) => {
   return (
     <V2V3ContractsProvider initialCv={CV_V3}>
       <V2V3ProjectContractsProvider projectId={projectId}>

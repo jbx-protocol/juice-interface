@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import isEqual from 'lodash/isEqual'
 import { Split, SplitGroup } from 'models/splits'
 import { V2V3ContractName } from 'models/v2v3/contracts'
@@ -46,11 +46,14 @@ export default function useProjectSplits({
       : V2V3ContractName.JBSplitsStore,
     functionName: 'splitsOf',
     args: projectId && domain ? [projectId, domain, splitGroup] : null,
-    formatter: useCallback((value): Split[] => {
+    formatter: useCallback((value: unknown): Split[] => {
       return formatSplitResult((value ?? []) as SplitResult[])
     }, []),
-    valueDidChange: useCallback((oldValue, newValue) => {
-      return !isEqual(oldValue, newValue)
-    }, []),
+    valueDidChange: useCallback(
+      (oldValue: Split[] | undefined, newValue: Split[] | undefined) => {
+        return !isEqual(oldValue, newValue)
+      },
+      [],
+    ),
   })
 }

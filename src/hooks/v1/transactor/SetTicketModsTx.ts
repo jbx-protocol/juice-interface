@@ -1,8 +1,9 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
+import { constants } from 'ethers'
+
+import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { TicketMod } from 'models/v1/mods'
 import { useContext } from 'react'

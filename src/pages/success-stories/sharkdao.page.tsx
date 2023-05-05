@@ -43,17 +43,20 @@ export default function SharkDAOPage() {
             </Trans>
           }
           projectUrl="/p/sharkdao"
-          fundingConfig={SHARKDAO_FUNDING_CONFIG}
+          fundingConfig={SHARKDAO_FUNDING_CONFIG()}
         />
         <CaseStudyContentContainer currentProject={sharkDAOSuccessStoryProject}>
           <p>
-            With highly competitive auctions happening every 24 hours,
-            SharkDAO's success was made possible through the flexibility of
-            their Juicebox project settings. From cycle to cycle, SharkDAO
-            enabled or disabled payments and adjusted $SHARK tokenomics (total
-            issuance rate, reserved rate, and issuance reduction rate). With
-            unlocked cycles and no edit deadline, they were able to make changes
-            to their project quickly in response to upcoming Nouns auctions.
+            <Trans>
+              With highly competitive auctions happening every 24 hours,
+              SharkDAO's success was made possible through the flexibility of
+              their Juicebox project settings. From cycle to cycle, SharkDAO
+              enabled or disabled payments and adjusted $SHARK tokenomics (total
+              issuance rate, reserved rate, and issuance reduction rate). With
+              unlocked cycles and no edit deadline, they were able to make
+              changes to their project quickly in response to upcoming Nouns
+              auctions.
+            </Trans>
           </p>
 
           <Image
@@ -66,52 +69,57 @@ export default function SharkDAOPage() {
           <div>
             <SectionHeader text={<Trans>Success</Trans>} />
             <p>
-              Since their launch in August 2021, SharkDAO has raised over 1000
-              ETH on Juicebox, acquired six Nouns, and brought together over 900
-              members. They remain active nearly two years later collaborating
-              with artists for NFT drops and working on governance in the Nouns
-              ecosystem. NounsDAO has passed several SharkDAO proposals
-              including{' '}
-              <ExternalLink href="https://nouns.wtf/vote/20">
-                Nouns-based short films
-              </ExternalLink>{' '}
-              and{' '}
-              <ExternalLink href="https://nouns.wtf/vote/8">
-                FOMO Nouns
-              </ExternalLink>
-              . SharkDAO has also{' '}
-              <ExternalLink href="https://nouns.wtf/vote/104">
-                helped provide eye exams and glasses to thousands of kids in
-                need
-              </ExternalLink>
-              , donated 5 ETH to the{' '}
-              <ExternalLink href="https://www.coralrestoration.org/crypto-donations/">
-                Coral Restoration Foundation
-              </ExternalLink>
-              , and started a{' '}
-              <ExternalLink href="https://juicebox.money/#/p/sharkfrens">
-                Juicebox project
-              </ExternalLink>{' '}
-              which raised 60+ ETH for co-founder{' '}
-              <ExternalLink href="https://twitter.com/iamDelPiero">
-                Del Piero
-              </ExternalLink>
-              's son's leukemia treatment.
+              <Trans>
+                Since their launch in August 2021, SharkDAO has raised over 1000
+                ETH on Juicebox, acquired six Nouns, and brought together over
+                900 members. They remain active nearly two years later
+                collaborating with artists for NFT drops and working on
+                governance in the Nouns ecosystem. NounsDAO has passed several
+                SharkDAO proposals including{' '}
+                <ExternalLink href="https://nouns.wtf/vote/20">
+                  Nouns-based short films
+                </ExternalLink>{' '}
+                and{' '}
+                <ExternalLink href="https://nouns.wtf/vote/8">
+                  FOMO Nouns
+                </ExternalLink>
+                . SharkDAO has also{' '}
+                <ExternalLink href="https://nouns.wtf/vote/104">
+                  helped provide eye exams and glasses to thousands of kids in
+                  need
+                </ExternalLink>
+                , donated 5 ETH to the{' '}
+                <ExternalLink href="https://www.coralrestoration.org/crypto-donations/">
+                  Coral Restoration Foundation
+                </ExternalLink>
+                , and started a{' '}
+                <ExternalLink href="https://juicebox.money/#/p/sharkfrens">
+                  Juicebox project
+                </ExternalLink>{' '}
+                which raised 60+ ETH for co-founder{' '}
+                <ExternalLink href="https://twitter.com/iamDelPiero">
+                  Del Piero
+                </ExternalLink>
+                's son's leukemia treatment.
+              </Trans>
             </p>
           </div>
           <div>
             <SectionHeader text={<Trans>Conclusion</Trans>} />
             <p>
-              Through community ownership and pooling resources, SharkDAO
-              offered a way for members to participate in the Nouns ecosystem
-              despite the high barrier to entry. SharkDAO members can own as
-              little as one $SHARK token and become an active voice in Nouns DAO
-              governance through the sub-DAO. To learn more about the story of
-              SharkDAO, listen to Dropnerd on episode 5 of the Juicebox podcast:{' '}
-              <ExternalLink href="https://podcast.juicebox.money">
-                https://podcast.juicebox.money
-              </ExternalLink>
-              .
+              <Trans>
+                Through community ownership and pooling resources, SharkDAO
+                offered a way for members to participate in the Nouns ecosystem
+                despite the high barrier to entry. SharkDAO members can own as
+                little as one $SHARK token and become an active voice in Nouns
+                DAO governance through the sub-DAO. To learn more about the
+                story of SharkDAO, listen to Dropnerd on episode 5 of the
+                Juicebox podcast:{' '}
+                <ExternalLink href="https://podcast.juicebox.money">
+                  https://podcast.juicebox.money
+                </ExternalLink>
+                .
+              </Trans>
             </p>
           </div>
         </CaseStudyContentContainer>

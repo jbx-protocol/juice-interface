@@ -47,7 +47,7 @@ interface ProgressBarProps {
   maxAmount: number
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({
+const ProgressBar: React.FC<React.PropsWithChildren<ProgressBarProps>> = ({
   className,
   currentAmount,
   maxAmount,

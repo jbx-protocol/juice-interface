@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { V1TerminalName } from 'models/v1/terminals'
@@ -16,7 +16,11 @@ export default function useCurrentFundingCycleOfProject(
     contract: V1ContractName.FundingCycles,
     functionName: 'currentOf',
     args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
-    valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
+    valueDidChange: useCallback(
+      (a: V1FundingCycle | undefined, b: V1FundingCycle | undefined) =>
+        !deepEqFundingCycles(a, b),
+      [],
+    ),
     updateOn: useMemo(
       () =>
         projectId

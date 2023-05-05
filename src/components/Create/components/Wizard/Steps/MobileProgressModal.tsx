@@ -3,14 +3,16 @@ import { Modal } from 'antd'
 import { useRouter } from 'next/router'
 import { MobileStep } from './MobileStep'
 
-export const MobileProgressModal: React.FC<{
-  steps: { id: string; title: string; disabled: boolean }[]
-  furthestStepIndex: number
-  currentStepIndex: number
-  open?: boolean
-  onStepClicked?: (index: number) => void
-  onCancel?: VoidFunction
-}> = ({
+export const MobileProgressModal: React.FC<
+  React.PropsWithChildren<{
+    steps: { id: string; title: string; disabled: boolean }[]
+    furthestStepIndex: number
+    currentStepIndex: number
+    open?: boolean
+    onStepClicked?: (index: number) => void
+    onCancel?: VoidFunction
+  }>
+> = ({
   steps,
   furthestStepIndex,
   currentStepIndex,

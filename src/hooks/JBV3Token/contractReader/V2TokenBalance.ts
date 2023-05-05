@@ -1,6 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
+import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
+import useTotalBalanceOf from 'hooks/v2v3/contractReader/TotalBalanceOf'
 import { useJBTokenStoreForV3Token } from '../contracts/JBTokenStoreForV3Token'
 
 export function useV2TotalBalance({

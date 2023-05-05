@@ -1,17 +1,16 @@
-
 /* FONT FACES */
 
 /* body */
 @font-face {
   font-family: 'Beatrice';
-  src: url('/assets/fonts/Beatrice-Regular.woff2') format("woff2");
+  src: url('/assets/fonts/Beatrice-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Beatrice';
-  src: url('/assets/fonts/Beatrice-Medium.woff2') format("woff2");
+  src: url('/assets/fonts/Beatrice-Medium.woff2') format('woff2');
   font-weight: 500;
   font-display: swap;
 }
@@ -19,7 +18,7 @@
 /* heading */
 @font-face {
   font-family: 'Agrandir';
-  src: url('/assets/fonts/PPAgrandir-Medium.woff2') format("woff2");
+  src: url('/assets/fonts/PPAgrandir-Medium.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -28,13 +27,20 @@
 /* display */
 @font-face {
   font-family: 'Agrandir-Wide';
-  src: url('/assets/fonts/PPAgrandir-WideMedium.woff2') format("woff2");
+  src: url('/assets/fonts/PPAgrandir-WideMedium.woff2') format('woff2');
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: 'Agrandir-Wide';
-  src: url('/assets/fonts/PPAgrandir-WideBold.woff2') format("woff2");
+  src: url('/assets/fonts/PPAgrandir-WideBold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jedise';
+  src: url('/assets/fonts/Starjhol.ttf');
   font-weight: 700;
   font-display: swap;
 }

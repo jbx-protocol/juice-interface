@@ -27,7 +27,9 @@ const FromBeneficiary = ({
   )
 }
 
-const ExtraContainer: React.FC = ({ children }) => {
+const ExtraContainer: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   return <div className="mt-2">{children}</div>
 }
 

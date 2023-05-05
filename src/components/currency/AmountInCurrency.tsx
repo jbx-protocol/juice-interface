@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { CurrencyName } from 'constants/currency'
+import { BigNumber } from 'ethers'
 import ETHAmount from './ETHAmount'
 import USDAmount from './USDAmount'
 

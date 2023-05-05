@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
+import { BigNumber } from 'ethers'
 import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJBETHPaymentTerminal'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useMemo } from 'react'

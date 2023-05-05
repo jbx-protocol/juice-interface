@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -6,6 +5,7 @@ import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPost
 import TransactionModal from 'components/TransactionModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { BigNumber } from 'ethers'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/PayETHPaymentTerminalTx'
 import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'

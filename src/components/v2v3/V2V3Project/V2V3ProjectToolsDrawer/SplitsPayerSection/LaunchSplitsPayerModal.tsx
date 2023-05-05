@@ -1,4 +1,3 @@
-import { TransactionReceipt } from '@ethersproject/providers'
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -8,6 +7,7 @@ import EtherscanLink from 'components/EtherscanLink'
 import { SPLITS_PAYER_ADDRESS_EXPLANATION } from 'components/Explanations'
 import TransactionModal from 'components/TransactionModal'
 import { readProvider } from 'constants/readProvider'
+import { providers } from 'ethers'
 import { useDeploySplitsPayerTx } from 'hooks/v2v3/transactor/DeploySplitsPayerTx'
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
@@ -21,7 +21,7 @@ const DEPLOY_EVENT_IDX = 0
  * @param txReceipt receipt of `deploySplitsPayer` transaction
  */
 const getSplitsPayerAddressFromReceipt = (
-  txReceipt: TransactionReceipt,
+  txReceipt: providers.TransactionReceipt,
 ): string => {
   const newSplitsPayerAddress = txReceipt?.logs[DEPLOY_EVENT_IDX]?.address
   return newSplitsPayerAddress

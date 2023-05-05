@@ -87,7 +87,9 @@ const ContentSecurityPolicy = `
   manifest-src 'self';
   prefetch-src 'self';
   frame-src ${FRAME_SRC.join(' ')};
-  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')};
+  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(
+    ' ',
+  )} https://s.cdpn.io;
   frame-ancestors ${FRAME_ANCESTORS.join(' ')};
   form-action 'self';
 `

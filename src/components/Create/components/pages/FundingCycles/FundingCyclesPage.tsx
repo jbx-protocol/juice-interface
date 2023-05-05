@@ -26,7 +26,7 @@ import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { FundingCyclesFormProps, useFundingCyclesForm } from './hooks'
 
-const FundingCycleCallout: React.FC = () => {
+const FundingCycleCallout: React.FC<React.PropsWithChildren<unknown>> = () => {
   const form = Form.useFormInstance<FundingCyclesFormProps>()
   const selection = useWatch('selection', form)
 

@@ -2,11 +2,13 @@ import { CheckedCircle } from 'components/Create/components/Selection/components
 import { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-export const RadioCard: React.FC<{
-  icon?: ReactNode
-  title: ReactNode
-  checked?: boolean
-}> = ({ icon, title, checked }) => {
+export const RadioCard: React.FC<
+  React.PropsWithChildren<{
+    icon?: ReactNode
+    title: ReactNode
+    checked?: boolean
+  }>
+> = ({ icon, title, checked }) => {
   const selectable = !checked
   return (
     <div

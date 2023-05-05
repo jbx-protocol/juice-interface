@@ -1,4 +1,4 @@
-import { Contract, EventFilter } from '@ethersproject/contracts'
+import { Contract, EventFilter } from 'ethers'
 
 export type ContractConfig<ContractName extends string> =
   | ContractName

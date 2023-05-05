@@ -6,7 +6,9 @@ import { useContext } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { JB721DelegateContractsContext } from './JB721DelegateContractsContext'
 
-export const JB721DelegateContractsProvider: React.FC = ({ children }) => {
+export const JB721DelegateContractsProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
 
   const dataSourceAddress = fundingCycleMetadata?.dataSource

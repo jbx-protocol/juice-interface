@@ -1,8 +1,8 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
+import { BigNumber } from 'ethers'
 import {
   AnyProjectMetadata,
   consolidateMetadata,

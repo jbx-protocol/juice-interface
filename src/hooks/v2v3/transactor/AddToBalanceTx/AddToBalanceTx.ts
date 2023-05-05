@@ -1,17 +1,17 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
+import { BigNumber } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/Transactor'
 import {
-  JBETHPaymentTerminalVersion,
   JB_ETH_PAYMENT_TERMINAL_V_3,
   JB_ETH_PAYMENT_TERMINAL_V_3_1,
+  JBETHPaymentTerminalVersion,
 } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectPrimaryEthTerminal'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'

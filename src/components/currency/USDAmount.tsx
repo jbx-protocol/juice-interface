@@ -1,6 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
 import { PRECISION_USD } from 'constants/currency'
+import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/CurrencyConverter'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import CurrencySymbol from '../CurrencySymbol'

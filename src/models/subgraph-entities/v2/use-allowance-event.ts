@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { parseBigNumberKeyVals } from 'utils/graph'
 
 import { Json, primitives } from '../../json'

@@ -1,5 +1,5 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { AllocationSplit } from 'components/v2v3/shared/Allocation'
+import { BigNumber } from 'ethers'
 import { useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { useFundingTargetType } from './FundingTargetType'

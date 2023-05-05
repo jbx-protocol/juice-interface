@@ -1,20 +1,24 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
-import { AnnouncementLauncher } from 'contexts/Announcements/AnnouncementLauncher'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
-import LanguageProvider from 'contexts/Language/LanguageProvider'
-import QwestiveSDKContextProvider from 'contexts/QwestiveReferral/QwestiveReferralProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
+import { installJuiceboxWindowObject } from 'lib/juicebox'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import React from 'react'
-import { Provider } from 'react-redux'
-import store from 'redux/store'
+import React, { useEffect } from 'react'
 import { redirectTo } from 'utils/windowUtils'
+
+const LanguageProvider = dynamic(
+  () => import('contexts/Language/LanguageProvider'),
+  {
+    ssr: false,
+  },
+)
 
 /**
  * Contains all the core app providers used by each page.
@@ -24,36 +28,38 @@ import { redirectTo } from 'utils/windowUtils'
  * is still an issue, but the current structure allows opengraph and twitter
  * meta tags to be setup correctly.
  */
-export const AppWrapper: React.FC = ({ children }) => {
+export const AppWrapper: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   return (
     <React.StrictMode>
       <ReactQueryProvider>
-        <Provider store={store}>
-          <LanguageProvider>
-            <TxHistoryProvider>
-              <ThemeProvider>
-                <EtherPriceProvider>
-                  <QwestiveSDKContextProvider>
-                    <ArcxProvider>
-                      <AnnouncementsProvider>
-                        <AnnouncementLauncher>
-                          <_Wrapper>{children}</_Wrapper>
-                        </AnnouncementLauncher>
-                      </AnnouncementsProvider>
-                    </ArcxProvider>
-                  </QwestiveSDKContextProvider>
-                </EtherPriceProvider>
-              </ThemeProvider>
-            </TxHistoryProvider>
-          </LanguageProvider>
-        </Provider>
+        <LanguageProvider>
+          <TxHistoryProvider>
+            <ThemeProvider>
+              <EtherPriceProvider>
+                <ArcxProvider>
+                  <AnnouncementsProvider>
+                    <_Wrapper>{children}</_Wrapper>
+                  </AnnouncementsProvider>
+                </ArcxProvider>
+              </EtherPriceProvider>
+            </ThemeProvider>
+          </TxHistoryProvider>
+        </LanguageProvider>
       </ReactQueryProvider>
     </React.StrictMode>
   )
 }
 
-const _Wrapper: React.FC = ({ children }) => {
+const _Wrapper: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const router = useRouter()
+
+  // run on initial mount
+  useEffect(() => {
+    installJuiceboxWindowObject()
+  }, [])
+
   if (router.asPath.match(/^\/#\//)) {
     redirectTo(router.asPath.replace('/#/', ''))
   }

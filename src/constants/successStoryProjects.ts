@@ -35,20 +35,21 @@ export const CASE_STUDY_PROJECTS: {
   },
 ]
 
-export const CONSTITUTION_FUNDING_CONFIG: CaseStudiesConfigurationProps = {
-  cycleNumber: 1,
-  cycles: t`Unlocked`,
-  payouts: t`Unlimited`,
-  tokenName: 'PEOPLE',
-  tokenIssuanceRate: '1,000,000',
-  reservedRate: 0,
-  issuanceReductionRate: 0,
-  redemptionRate: 100,
-  ownerTokenMinting: false,
-  editDeadline: t`No deadline`,
-}
+export const CONSTITUTION_FUNDING_CONFIG =
+  (): CaseStudiesConfigurationProps => ({
+    cycleNumber: 1,
+    cycles: t`Unlocked`,
+    payouts: t`Unlimited`,
+    tokenName: 'PEOPLE',
+    tokenIssuanceRate: '1,000,000',
+    reservedRate: 0,
+    issuanceReductionRate: 0,
+    redemptionRate: 100,
+    ownerTokenMinting: false,
+    editDeadline: t`No deadline`,
+  })
 
-export const MOONDAO_FUNDING_CONFIG: CaseStudiesConfigurationProps = {
+export const MOONDAO_FUNDING_CONFIG = (): CaseStudiesConfigurationProps => ({
   cycleNumber: 1,
   cycles: t`Locked`,
   duration: t`30 days`,
@@ -60,9 +61,9 @@ export const MOONDAO_FUNDING_CONFIG: CaseStudiesConfigurationProps = {
   redemptionRate: 100,
   ownerTokenMinting: false,
   editDeadline: t`No deadline`,
-}
+})
 
-export const SHARKDAO_FUNDING_CONFIG: CaseStudiesConfigurationProps = {
+export const SHARKDAO_FUNDING_CONFIG = (): CaseStudiesConfigurationProps => ({
   cycleNumber: 1,
   cycles: t`Unlocked`,
   payouts: t`Limited (1,050 ETH)`,
@@ -73,9 +74,9 @@ export const SHARKDAO_FUNDING_CONFIG: CaseStudiesConfigurationProps = {
   redemptionRate: 100,
   ownerTokenMinting: false,
   editDeadline: t`No deadline`,
-}
+})
 
-export const STUDIODAO_FUNDING_CONFIG: CaseStudiesConfigurationProps = {
+export const STUDIODAO_FUNDING_CONFIG = (): CaseStudiesConfigurationProps => ({
   cycleNumber: 1,
   cycles: t`Locked (28 days)`,
   duration: t`30 days`,
@@ -87,4 +88,4 @@ export const STUDIODAO_FUNDING_CONFIG: CaseStudiesConfigurationProps = {
   redemptionRate: 100,
   ownerTokenMinting: false,
   editDeadline: t`3-day deadline`,
-}
+})

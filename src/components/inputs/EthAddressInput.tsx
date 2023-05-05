@@ -1,5 +1,6 @@
 import { CheckCircleFilled, LoadingOutlined } from '@ant-design/icons'
-import * as constants from '@ethersproject/constants'
+import { constants } from 'ethers'
+
 import { isAddress } from 'ethers/lib/utils'
 import { resolveAddress } from 'lib/api/ens'
 import { useCallback, useEffect, useState } from 'react'

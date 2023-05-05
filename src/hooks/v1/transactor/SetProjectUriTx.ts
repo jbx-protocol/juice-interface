@@ -1,7 +1,7 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
+import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/Transactor'
 import { useContext } from 'react'
 import { useV1ProjectTitle } from '../ProjectTitle'

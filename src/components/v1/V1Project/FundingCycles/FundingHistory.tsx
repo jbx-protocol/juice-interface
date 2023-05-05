@@ -1,11 +1,11 @@
 import { CaretRightOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 
-import { BigNumber } from '@ethersproject/bignumber'
 import { Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import CurrencySymbol from 'components/CurrencySymbol'
 import Loading from 'components/Loading'
+import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/v1/contractReader/ContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
@@ -43,9 +43,13 @@ export default function FundingHistory({
     contract: V1ContractName.FundingCycles,
     functionName: 'get',
     args: cycleNumber ? [cycleNumber] : null,
-    valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
+    valueDidChange: useCallback(
+      (a: V1FundingCycle | undefined, b: V1FundingCycle | undefined) =>
+        !deepEqFundingCycles(a, b),
+      [],
+    ),
     callback: useCallback(
-      cycle => {
+      (cycle: V1FundingCycle | undefined) => {
         if (
           !cycle ||
           !cycleNumber ||

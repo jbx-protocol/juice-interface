@@ -23,7 +23,9 @@ import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useProjectDetailsForm } from './hooks/ProjectDetailsForm'
 
-export const ProjectDetailsPage: React.FC = () => {
+export const ProjectDetailsPage: React.FC<
+  React.PropsWithChildren<unknown>
+> = () => {
   useSetCreateFurthestPageReached('projectDetails')
 
   const { goToNextPage } = useContext(PageContext)

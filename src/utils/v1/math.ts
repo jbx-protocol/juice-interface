@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { fromWad, percentToPerbicent } from 'utils/format/formatNumber'
 import { WeightFunction } from 'utils/math'
 

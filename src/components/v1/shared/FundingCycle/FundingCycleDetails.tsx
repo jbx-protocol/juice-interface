@@ -1,4 +1,3 @@
-import { parseEther } from '@ethersproject/units'
 import { Trans } from '@lingui/macro'
 import { Descriptions, Tooltip } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
@@ -17,6 +16,7 @@ import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { utils } from 'ethers'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { useContext } from 'react'
@@ -70,7 +70,7 @@ export default function FundingCycleDetails({
       weightAmountPerbicent(
         fundingCycle?.weight,
         fcReservedRate,
-        parseEther('1'),
+        utils.parseEther('1'),
         'payer',
       ),
       {
@@ -82,7 +82,7 @@ export default function FundingCycleDetails({
       weightAmountPerbicent(
         fundingCycle?.weight,
         fcReservedRate,
-        parseEther('1'),
+        utils.parseEther('1'),
         'reserved',
       ),
       {

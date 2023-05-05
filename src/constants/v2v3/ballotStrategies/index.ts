@@ -1,7 +1,8 @@
-import * as constants from '@ethersproject/constants'
 import { plural, t } from '@lingui/macro'
 import { readNetwork } from 'constants/networks'
 import { SECONDS_IN_DAY } from 'constants/numbers'
+import { constants } from 'ethers'
+
 import { NetworkName } from 'models/networkName'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 

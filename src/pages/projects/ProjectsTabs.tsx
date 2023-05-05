@@ -3,11 +3,11 @@ import { Tab } from 'components/Tab'
 import { ProjectCategory } from 'models/projectVisibility'
 import Link from 'next/link'
 
-const TAB_TYPE_NAMES: { [k in ProjectCategory]: string } = {
+const TAB_TYPE_NAMES = (): { [k in ProjectCategory]: string } => ({
   all: t`All`,
   new: t`New`,
   trending: t`Trending`,
-}
+})
 
 const TABS: ProjectCategory[] = ['all', 'trending', 'new']
 
@@ -21,7 +21,7 @@ const ProjectTab = ({
   return (
     <Link href={`/projects?tab=${type}`}>
       <a>
-        <Tab name={TAB_TYPE_NAMES[type]} isSelected={isSelected} />
+        <Tab name={TAB_TYPE_NAMES()[type]} isSelected={isSelected} />
       </a>
     </Link>
   )

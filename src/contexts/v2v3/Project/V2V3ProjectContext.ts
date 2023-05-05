@@ -1,4 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { V2BallotState } from 'models/ballot'
 import { Split } from 'models/splits'
 import {

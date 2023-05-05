@@ -1,7 +1,9 @@
 import { ShareAltOutlined, TwitterOutlined } from '@ant-design/icons'
+import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { XLButton } from 'components/XLButton'
 import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDeployModal'
 import { readNetwork } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
@@ -9,6 +11,7 @@ import { NetworkName } from 'models/networkName'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
+import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'
 
 export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   console.info('Deploy: SUCCESS', projectId)
@@ -48,30 +51,46 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
 
   return (
     <div className="mt-4 flex flex-col items-center justify-center text-center">
-      <Image src="/assets/images/dancing.gif" width={218} height={218} />
-      <div className="pt-8 text-4xl font-medium">Congratulations!</div>
-      <div className="mt-6 text-xl font-normal">{deployGreeting}</div>
-      <div className="flex flex-col gap-2 py-12">
-        <Button
-          type="primary"
-          onClick={handleGoToProject}
-          loading={gotoProjectClicked}
-        >
-          <span>
-            <Trans>Go to project</Trans>
-          </span>
-        </Button>
+      <Image src={DeploySuccessHero} width={380} height={379} />
+      <div className="pt-8 font-display text-5xl font-bold">
+        <Trans>Congratulations!</Trans>
+      </div>
+      <div className="mt-4 text-lg font-normal text-grey-600 dark:text-slate-200">
+        {deployGreeting}
+      </div>
+      <XLButton
+        type="primary"
+        onClick={handleGoToProject}
+        loading={gotoProjectClicked}
+        className="mt-8 flex w-auto items-center gap-3 text-white"
+      >
+        <span className="text-base">
+          <Trans>Go to project</Trans>
+        </span>
+        <span>
+          <ArrowRightIcon className="h-6 w-6" />
+        </span>
+      </XLButton>
+      <div className="mt-6 flex justify-between">
         <ExternalLink href={twitterShareUrl}>
-          <Button icon={<TwitterOutlined />}>
+          <Button
+            icon={<TwitterOutlined />}
+            type="text"
+            className="text-bluebs-500 hover:text-bluebs-400"
+          >
             <span>
-              <Trans> Share on Twitter</Trans>
+              <Trans>Share on Twitter</Trans>
             </span>
           </Button>
         </ExternalLink>
         <ExternalLink href="https://discord.gg/juicebox">
-          <Button icon={<ShareAltOutlined />}>
+          <Button
+            icon={<ShareAltOutlined />}
+            type="text"
+            className="text-bluebs-500 hover:text-bluebs-400"
+          >
             <span>
-              <Trans> Share to JuiceboxDAO</Trans>
+              <Trans>Share to JuiceboxDAO</Trans>
             </span>
           </Button>
         </ExternalLink>

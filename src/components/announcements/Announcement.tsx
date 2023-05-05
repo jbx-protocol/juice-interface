@@ -15,7 +15,9 @@ export function getCompleted() {
   return (content ? JSON.parse(content) : {}) as { [k: string]: true }
 }
 
-export const Announcement: React.FC<JuiceModalProps> = props => {
+export const Announcement: React.FC<
+  React.PropsWithChildren<JuiceModalProps>
+> = props => {
   const { activeId, setActiveId } = useContext(AnnouncementsContext)
 
   const markCompleted = useCallback(() => {

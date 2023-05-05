@@ -1,4 +1,4 @@
-import { ContractInterface } from '@ethersproject/contracts'
+import { ContractInterface } from 'ethers'
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
 import { ContractJson } from 'models/contracts'
 import { useEffect, useState } from 'react'

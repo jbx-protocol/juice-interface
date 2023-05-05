@@ -1,5 +1,5 @@
-import { Contract } from '@ethersproject/contracts'
 import { CurrencyAmount, Pair, Route, Token, WETH9 } from '@sushiswap/sdk'
+import { Contract } from 'ethers'
 
 import IUniswapV2PairABI from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 

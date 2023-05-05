@@ -1,12 +1,12 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 
+import { parseBigNumberKeyVal } from 'utils/graph'
+import { Json, primitives } from '../../json'
 import { BaseEventEntity } from '../base/base-event-entity'
 import {
   BaseProjectEntity,
   parseBaseProjectEntityJson,
 } from '../base/base-project-entity'
-import { Json, primitives } from '../../json'
-import { parseBigNumberKeyVal } from 'utils/graph'
 
 export interface DistributeToReservedTokenSplitEvent
   extends BaseEventEntity,

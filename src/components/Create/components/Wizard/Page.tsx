@@ -14,7 +14,7 @@ export interface PageProps {
   description?: ReactNode
 }
 
-export const Page: React.FC<PageProps> & {
+export const Page: React.FC<React.PropsWithChildren<PageProps>> & {
   ButtonControl: typeof PageButtonControl
 } = ({ className, name, title, description, children }) => {
   const isMobile = useMobile()

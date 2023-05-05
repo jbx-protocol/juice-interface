@@ -6,7 +6,9 @@ import { useContext } from 'react'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
 import { weightAmountPerbicent } from 'utils/v1/math'
 
-export const V1PayProjectFormProvider: React.FC = ({ children }) => {
+export const V1PayProjectFormProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const { currentFC, tokenSymbol, tokenAddress } = useContext(V1ProjectContext)
 
   const payProjectForm = usePayProjectForm()

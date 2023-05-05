@@ -42,18 +42,20 @@ export default function MoonDAOPage() {
             </Trans>
           }
           projectUrl="/p/moondao"
-          fundingConfig={MOONDAO_FUNDING_CONFIG}
+          fundingConfig={MOONDAO_FUNDING_CONFIG()}
         />
         <CaseStudyContentContainer currentProject={moonDAOSuccessStoryProject}>
           <p>
-            Following the launch of their token $MOONEY, the next goal on
-            MoonDAO's roadmap was to buy two tickets to space on a Blue Origin
-            rocket. They set the project's Payouts to Infinite in order to raise
-            as much as possible during their campaign and be able to distribute
-            all of the funds. Using a reserved rate of 50%, the MoonDAO
-            multi-sig received half of all newly minted tokens to build up a
-            treasury of both ETH and $MOONEY that could later be used for
-            bounties and compensation.
+            <Trans>
+              Following the launch of their token $MOONEY, the next goal on
+              MoonDAO's roadmap was to buy two tickets to space on a Blue Origin
+              rocket. They set the project's Payouts to Infinite in order to
+              raise as much as possible during their campaign and be able to
+              distribute all of the funds. Using a reserved rate of 50%, the
+              MoonDAO multi-sig received half of all newly minted tokens to
+              build up a treasury of both ETH and $MOONEY that could later be
+              used for bounties and compensation.
+            </Trans>
           </p>
 
           <Image
@@ -66,33 +68,39 @@ export default function MoonDAOPage() {
           <div>
             <SectionHeader text={<Trans>Success</Trans>} />
             <p>
-              MoonDAO has built an enthusiastic community of over 10,000
-              members, successfully sent their first astronaut to space, and is
-              currently coordinating the spaceflight for their second astronaut.
-              Their ambitious long-term roadmap goals include building a
-              settlement on the Moon by 2030. In collaboration with StudioDAO, a
-              decentralized movie studio running on Juicebox, MoonDAO has
-              donated $100,000 to help fund the production of Ticket To Space,
-              the first DAO documentary. The film will cover the story of Yan, a
-              MoonDAO member from China, who will be sent to space on an
-              upcoming Blue Origin flight after minting a free NFT.
+              <Trans>
+                MoonDAO has built an enthusiastic community of over 10,000
+                members, successfully sent their first astronaut to space, and
+                is currently coordinating the spaceflight for their second
+                astronaut. Their ambitious long-term roadmap goals include
+                building a settlement on the Moon by 2030. In collaboration with
+                StudioDAO, a decentralized movie studio running on Juicebox,
+                MoonDAO has donated $100,000 to help fund the production of
+                Ticket To Space, the first DAO documentary. The film will cover
+                the story of Yan, a MoonDAO member from China, who will be sent
+                to space on an upcoming Blue Origin flight after minting a free
+                NFT.
+              </Trans>
             </p>
           </div>
           <div>
             <SectionHeader text={<Trans>Conclusion</Trans>} />
             <p>
-              Bringing together members from around the world with the help of
-              blockchain technology and decentralized governance, MoonDAO has
-              demonstrated that sometimes setting ambitious and even outlandish
-              goals can pay off when they resonate with your audience. Their
-              unique mission goes beyond memes, though, and taps into a deeper
-              human curiosity about what might exist beyond planet Earth. To
-              learn more about the story of MoonDAO, listen to co-founders Pablo
-              and Kori on episode 7 of the Juicebox podcast:{' '}
-              <ExternalLink href="https://podcast.juicebox.money">
-                https://podcast.juicebox.money
-              </ExternalLink>
-              .
+              <Trans>
+                Bringing together members from around the world with the help of
+                blockchain technology and decentralized governance, MoonDAO has
+                demonstrated that sometimes setting ambitious and even
+                outlandish goals can pay off when they resonate with your
+                audience. Their unique mission goes beyond memes, though, and
+                taps into a deeper human curiosity about what might exist beyond
+                planet Earth. To learn more about the story of MoonDAO, listen
+                to co-founders Pablo and Kori on episode 7 of the Juicebox
+                podcast:{' '}
+                <ExternalLink href="https://podcast.juicebox.money">
+                  https://podcast.juicebox.money
+                </ExternalLink>
+                .
+              </Trans>
             </p>
           </div>
         </CaseStudyContentContainer>

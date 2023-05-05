@@ -1,5 +1,5 @@
-import { Contract } from '@ethersproject/contracts'
 import JBV3TokenJson from '@jbx-protocol/juice-v3-migration/out/JBV3Token.sol/JBV3Token.json'
+import { Contract } from 'ethers'
 
 import { useLoadContractFromAddress } from 'hooks/LoadContractFromAddress'
 

@@ -40,7 +40,7 @@ interface RewardsListChildrenExports {
   useRewardsInstance: typeof useRewardsInstance
 }
 
-export const RewardsList: React.FC<RewardsListProps> &
+export const RewardsList: React.FC<React.PropsWithChildren<RewardsListProps>> &
   RewardsListChildrenExports = ({
   allowCreate = false,
   value,

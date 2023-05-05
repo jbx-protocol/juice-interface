@@ -13,98 +13,6 @@ type LinkItem = {
   externalLink?: boolean
 }
 
-const LinkCols: { title: ReactNode; items: LinkItem[] }[] = [
-  {
-    title: t`Juicebox`,
-    items: [
-      {
-        title: t`Create project`,
-        link: '/create',
-      },
-      {
-        title: t`Explore`,
-        link: '/projects',
-      },
-      {
-        title: t`Activity`,
-        link: '/activity',
-      },
-      {
-        title: t`About`,
-        link: '/about',
-      },
-      {
-        title: t`Referral`,
-        externalLink: true,
-        link: 'https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e',
-      },
-      {
-        title: t`Request a feature`,
-        externalLink: true,
-        link: 'https://juicebox.canny.io/feature-requests',
-      },
-    ],
-  },
-  {
-    title: t`Resources`,
-    items: [
-      {
-        title: t`Docs`,
-        externalLink: true,
-        link: 'https://docs.juicebox.money',
-      },
-      {
-        title: t`Newsletter`,
-        externalLink: true,
-        link: 'https://juicenews.beehiiv.com',
-      },
-      {
-        title: t`Podcast`,
-        externalLink: true,
-        link: 'https://podcasters.spotify.com/pod/show/thejuicecast',
-      },
-      {
-        title: t`Contact`,
-        link: '/contact',
-      },
-    ],
-  },
-  {
-    title: t`Socials`,
-    items: [
-      {
-        title: t`Discord`,
-        externalLink: true,
-        link: 'https://discord.com/invite/wFTh4QnDzk',
-      },
-      {
-        title: t`GitHub`,
-        externalLink: true,
-        link: 'https://github.com/jbx-protocol',
-      },
-      {
-        title: t`Twitter`,
-        externalLink: true,
-        link: 'https://twitter.com/juiceboxETH',
-      },
-    ],
-  },
-  {
-    title: t`Legal`,
-    items: [
-      {
-        title: t`Privacy Policy`,
-        link: '/privacy',
-      },
-      {
-        title: t`Terms of Service`,
-        externalLink: true,
-        link: TERMS_OF_SERVICE_URL,
-      },
-    ],
-  },
-]
-
 const ImageButtons = [
   {
     name: 'github',
@@ -124,6 +32,98 @@ const ImageButtons = [
 ]
 
 export function Footer() {
+  const LinkCols: { title: ReactNode; items: LinkItem[] }[] = [
+    {
+      title: t`Juicebox`,
+      items: [
+        {
+          title: t`Create project`,
+          link: '/create',
+        },
+        {
+          title: t`Explore`,
+          link: '/projects',
+        },
+        {
+          title: t`Activity`,
+          link: '/activity',
+        },
+        {
+          title: t`About`,
+          link: '/about',
+        },
+        {
+          title: t`Referral`,
+          externalLink: true,
+          link: 'https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e',
+        },
+        {
+          title: t`Request a feature`,
+          externalLink: true,
+          link: 'https://juicebox.canny.io/feature-requests',
+        },
+      ],
+    },
+    {
+      title: t`Resources`,
+      items: [
+        {
+          title: t`Docs`,
+          externalLink: true,
+          link: 'https://docs.juicebox.money',
+        },
+        {
+          title: t`Newsletter`,
+          externalLink: true,
+          link: 'https://juicenews.beehiiv.com',
+        },
+        {
+          title: t`Podcast`,
+          externalLink: true,
+          link: 'https://podcasters.spotify.com/pod/show/thejuicecast',
+        },
+        {
+          title: t`Contact`,
+          link: '/contact',
+        },
+      ],
+    },
+    {
+      title: t`Socials`,
+      items: [
+        {
+          title: t`Discord`,
+          externalLink: true,
+          link: 'https://discord.com/invite/wFTh4QnDzk',
+        },
+        {
+          title: t`GitHub`,
+          externalLink: true,
+          link: 'https://github.com/jbx-protocol',
+        },
+        {
+          title: t`Twitter`,
+          externalLink: true,
+          link: 'https://twitter.com/juiceboxETH',
+        },
+      ],
+    },
+    {
+      title: t`Legal`,
+      items: [
+        {
+          title: t`Privacy Policy`,
+          link: '/privacy',
+        },
+        {
+          title: t`Terms of Service`,
+          externalLink: true,
+          link: TERMS_OF_SERVICE_URL,
+        },
+      ],
+    },
+  ]
+
   const gitCommit = process.env.NEXT_PUBLIC_VERSION
 
   return (
@@ -167,10 +167,9 @@ export function Footer() {
   )
 }
 
-const LinkColumn: React.FC<{ title: ReactNode; items: LinkItem[] }> = ({
-  title,
-  items,
-}) => (
+const LinkColumn: React.FC<
+  React.PropsWithChildren<{ title: ReactNode; items: LinkItem[] }>
+> = ({ title, items }) => (
   <div className="flex flex-col gap-y-3">
     <div className="font-medium text-slate-200">{title}</div>
     {items.map(({ title, link, externalLink }, i) => (

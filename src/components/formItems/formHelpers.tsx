@@ -1,4 +1,4 @@
-import { isAddress } from '@ethersproject/address'
+import { isAddress } from 'ethers/lib/utils'
 import { PayoutMod } from 'models/v1/mods'
 import { permyriadToPercent } from 'utils/format/formatNumber'
 

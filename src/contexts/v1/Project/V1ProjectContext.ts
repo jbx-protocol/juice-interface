@@ -1,6 +1,6 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { PayoutMod, TicketMod } from 'models/v1/mods'
+import { BigNumber } from 'ethers'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
+import { PayoutMod, TicketMod } from 'models/v1/mods'
 import { V1TerminalName, V1TerminalVersion } from 'models/v1/terminals'
 import { createContext } from 'react'
 

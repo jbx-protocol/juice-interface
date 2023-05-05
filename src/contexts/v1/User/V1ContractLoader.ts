@@ -1,6 +1,6 @@
-import { Contract } from '@ethersproject/contracts'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
+import { Contract } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { NetworkName } from 'models/networkName'
 import { SignerOrProvider } from 'models/signerOrProvider'

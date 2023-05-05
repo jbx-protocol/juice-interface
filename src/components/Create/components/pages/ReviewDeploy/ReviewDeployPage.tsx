@@ -36,7 +36,7 @@ enum ReviewDeployKey {
   Rules = 4,
 }
 
-const Header: React.FC<{ skipped?: boolean }> = ({
+const Header: React.FC<React.PropsWithChildren<{ skipped?: boolean }>> = ({
   children,
   skipped = false,
 }) => {

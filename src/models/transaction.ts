@@ -1,7 +1,4 @@
-import { Signer } from '@ethersproject/abstract-signer'
-import { BigNumberish } from '@ethersproject/bignumber'
-import { TransactionResponse } from '@ethersproject/providers'
-import { Transaction } from '@ethersproject/transactions'
+import { BigNumberish, Signer, Transaction, providers } from 'ethers'
 
 export enum TxStatus {
   pending = 'PENDING',
@@ -37,6 +34,6 @@ export type TransactionLog = {
   | {
       // Once mined, tx will be a TransactionResponse
       status: TxStatus.success | TxStatus.failed
-      tx: TransactionResponse | null
+      tx: providers.TransactionResponse | null
     }
 )

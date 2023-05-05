@@ -1,4 +1,4 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { useContractReadValue } from 'hooks/ContractReader'
 import { JB721DelegateVersion } from 'models/nftRewards'
 import { useJB721TieredDelegateStore } from './JB721TieredDelegateStore'

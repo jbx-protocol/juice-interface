@@ -134,6 +134,9 @@ msgstr ""
 msgid "Add NFT"
 msgstr ""
 
+msgid "Since their launch in August 2021, SharkDAO has raised over 1000 ETH on Juicebox, acquired six Nouns, and brought together over 900 members. They remain active nearly two years later collaborating with artists for NFT drops and working on governance in the Nouns ecosystem. NounsDAO has passed several SharkDAO proposals including <0>Nouns-based short films</0> and <1>FOMO Nouns</1>. SharkDAO has also <2>helped provide eye exams and glasses to thousands of kids in need</2>, donated 5 ETH to the <3>Coral Restoration Foundation</3>, and started a <4>Juicebox project</4> which raised 60+ ETH for co-founder <5>Del Piero</5>'s son's leukemia treatment."
+msgstr ""
+
 msgid "Payouts to Ethereum addresses incur a 2.5% JBX membership fee"
 msgstr ""
 
@@ -878,6 +881,9 @@ msgstr ""
 msgid "Set payment terminals"
 msgstr ""
 
+msgid "Using crowdfunding platforms for films has been around for a while, but Juicebox adds an extra layer of transparency to the process, allowing fans to see where funds are going. Unlike traditional models where money is controlled behind the scenes, StudioDAO members source, vote, fund, and distribute movies transparently using the treasury while creators retain 100% of their creative control and ownership. With the entertainment market currently valued at two trillion dollars, StudioDAO founder Kenny Miller can see a “clear scenario for a decentralized studio to do one billion dollars of production 2-3 years from now.” To learn more about Kenny's vision for StudioDAO, listen to episode 9 of the Juicecast: <0>https://podcast.juicebox.money</0>."
+msgstr ""
+
 msgid "Funding cycle required."
 msgstr ""
 
@@ -927,6 +933,9 @@ msgid "Manual"
 msgstr ""
 
 msgid "Your project will appear as 'archived'."
+msgstr ""
+
+msgid "Bringing together members from around the world with the help of blockchain technology and decentralized governance, MoonDAO has demonstrated that sometimes setting ambitious and even outlandish goals can pay off when they resonate with your audience. Their unique mission goes beyond memes, though, and taps into a deeper human curiosity about what might exist beyond planet Earth. To learn more about the story of MoonDAO, listen to co-founders Pablo and Kori on episode 7 of the Juicebox podcast: <0>https://podcast.juicebox.money</0>."
 msgstr ""
 
 msgid "A fixed amount of ETH can be paid out from your project each cycle. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token redemptions or use in future cycles."
@@ -1850,6 +1859,9 @@ msgstr ""
 msgid "Token migration"
 msgstr ""
 
+msgid "With highly competitive auctions happening every 24 hours, SharkDAO's success was made possible through the flexibility of their Juicebox project settings. From cycle to cycle, SharkDAO enabled or disabled payments and adjusted $SHARK tokenomics (total issuance rate, reserved rate, and issuance reduction rate). With unlocked cycles and no edit deadline, they were able to make changes to their project quickly in response to upcoming Nouns auctions."
+msgstr ""
+
 msgid "Edits to an upcoming cycle must be submitted at least 3 days before that cycle starts."
 msgstr ""
 
@@ -2319,6 +2331,9 @@ msgid "{nftCount, plural, one {+ # NFT} other {+ # NFTs}}"
 msgstr ""
 
 msgid "Controller configuration"
+msgstr ""
+
+msgid "Since launching in November 2022 StudioDAO has raised nearly 50 ETH and is gearing up to launch their first film *Ticket to Space*, the first DAO documentary about MoonDAO sending DAO member Yan Kejun to space on a Blue Origin rocket. MoonDAO has recently voted to donate $100,000 to help fund the film's production. To learn more about the Ticket to Space documentary, listen to episode 22 of the Juicebox podcast featuring a roundtable discussion with director Fernando Urdapilleta, producer Susie Conley, MoonDAO co-founder Pablo Moncada-Larrotiz, and StudioDAO co-founders Kenny Miller and Rachel Leventhal: <0>https://podcast.juicebox.money</0>."
 msgstr ""
 
 msgid "24 hours"
@@ -3188,6 +3203,9 @@ msgstr ""
 msgid "This project has redemptions turned off."
 msgstr ""
 
+msgid "Through community ownership and pooling resources, SharkDAO offered a way for members to participate in the Nouns ecosystem despite the high barrier to entry. SharkDAO members can own as little as one $SHARK token and become an active voice in Nouns DAO governance through the sub-DAO. To learn more about the story of SharkDAO, listen to Dropnerd on episode 5 of the Juicebox podcast: <0>https://podcast.juicebox.money</0>."
+msgstr ""
+
 msgid "Upcoming"
 msgstr ""
 
@@ -3626,6 +3644,9 @@ msgstr ""
 msgid "Your project's first cycle will start on <0>{0} at {1}</0>. Your project will be visible on <1>juicebox.money</1> once you finish setting your project up, but supporters won't be able to pay or interact with it until the first cycle begins."
 msgstr ""
 
+msgid "MoonDAO has built an enthusiastic community of over 10,000 members, successfully sent their first astronaut to space, and is currently coordinating the spaceflight for their second astronaut. Their ambitious long-term roadmap goals include building a settlement on the Moon by 2030. In collaboration with StudioDAO, a decentralized movie studio running on Juicebox, MoonDAO has donated $100,000 to help fund the production of Ticket To Space, the first DAO documentary. The film will cover the story of Yan, a MoonDAO member from China, who will be sent to space on an upcoming Blue Origin flight after minting a free NFT."
+msgstr ""
+
 msgid "All events"
 msgstr ""
 
@@ -3992,6 +4013,9 @@ msgstr ""
 msgid "Open source"
 msgstr ""
 
+msgid "Following the launch of their token $MOONEY, the next goal on MoonDAO's roadmap was to buy two tickets to space on a Blue Origin rocket. They set the project's Payouts to Infinite in order to raise as much as possible during their campaign and be able to distribute all of the funds. Using a reserved rate of 50%, the MoonDAO multi-sig received half of all newly minted tokens to build up a treasury of both ETH and $MOONEY that could later be used for bounties and compensation."
+msgstr ""
+
 msgid "Paid"
 msgstr ""
 
@@ -4191,6 +4215,9 @@ msgid "Edit payout"
 msgstr ""
 
 msgid "Re-launch your Juicebox project using the v3 contracts."
+msgstr ""
+
+msgid "StudioDAO's project settings are designed to maximize trust with locked 28-day cycles, limited payouts, and a 3-day edit deadline. 20% of newly minted tokens are reserved for the DAO wallet and issuance will decrease by 5% each cycle. StudioDAO also leverages tiered NFT rewards to create incentives for supporters with benefits like private screenings, governance votes to decide which new films to fund, and screen credits."
 msgstr ""
 
 msgid "Load more"

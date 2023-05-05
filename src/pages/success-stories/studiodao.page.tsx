@@ -45,13 +45,15 @@ export default function StudioDAOPage() {
           currentProject={studioDAOSuccessStoryProject}
         >
           <p>
-            StudioDAO's project settings are designed to maximize trust with
-            locked 28-day cycles, limited payouts, and a 3-day edit deadline.
-            20% of newly minted tokens are reserved for the DAO wallet and
-            issuance will decrease by 5% each cycle. StudioDAO also leverages
-            tiered NFT rewards to create incentives for supporters with benefits
-            like private screenings, governance votes to decide which new films
-            to fund, and screen credits.
+            <Trans>
+              StudioDAO's project settings are designed to maximize trust with
+              locked 28-day cycles, limited payouts, and a 3-day edit deadline.
+              20% of newly minted tokens are reserved for the DAO wallet and
+              issuance will decrease by 5% each cycle. StudioDAO also leverages
+              tiered NFT rewards to create incentives for supporters with
+              benefits like private screenings, governance votes to decide which
+              new films to fund, and screen credits.
+            </Trans>
           </p>
 
           <Image
@@ -64,41 +66,46 @@ export default function StudioDAOPage() {
           <div>
             <SectionHeader text={<Trans>Success</Trans>} />
             <p>
-              Since launching in November 2022 StudioDAO has raised nearly 50
-              ETH and is gearing up to launch their first film *Ticket to
-              Space*, the first DAO documentary about MoonDAO sending DAO member
-              Yan Kejun to space on a Blue Origin rocket. MoonDAO has recently
-              voted to donate $100,000 to help fund the film's production. To
-              learn more about the Ticket to Space documentary, listen to
-              episode 22 of the Juicebox podcast featuring a roundtable
-              discussion with director Fernando Urdapilleta, producer Susie
-              Conley, MoonDAO co-founder Pablo Moncada-Larrotiz, and StudioDAO
-              co-founders Kenny Miller and Rachel Leventhal:{' '}
-              <ExternalLink href="https://podcast.juicebox.money">
-                https://podcast.juicebox.money
-              </ExternalLink>
-              .
+              <Trans>
+                Since launching in November 2022 StudioDAO has raised nearly 50
+                ETH and is gearing up to launch their first film *Ticket to
+                Space*, the first DAO documentary about MoonDAO sending DAO
+                member Yan Kejun to space on a Blue Origin rocket. MoonDAO has
+                recently voted to donate $100,000 to help fund the film's
+                production. To learn more about the Ticket to Space documentary,
+                listen to episode 22 of the Juicebox podcast featuring a
+                roundtable discussion with director Fernando Urdapilleta,
+                producer Susie Conley, MoonDAO co-founder Pablo
+                Moncada-Larrotiz, and StudioDAO co-founders Kenny Miller and
+                Rachel Leventhal:{' '}
+                <ExternalLink href="https://podcast.juicebox.money">
+                  https://podcast.juicebox.money
+                </ExternalLink>
+                .
+              </Trans>
             </p>
           </div>
           <div>
             <SectionHeader text={<Trans>Conclusion</Trans>} />
             <p>
-              Using crowdfunding platforms for films has been around for a
-              while, but Juicebox adds an extra layer of transparency to the
-              process, allowing fans to see where funds are going. Unlike
-              traditional models where money is controlled behind the scenes,
-              StudioDAO members source, vote, fund, and distribute movies
-              transparently using the treasury while creators retain 100% of
-              their creative control and ownership. With the entertainment
-              market currently valued at two trillion dollars, StudioDAO founder
-              Kenny Miller can see a “clear scenario for a decentralized studio
-              to do one billion dollars of production 2-3 years from now.” To
-              learn more about Kenny's vision for StudioDAO, listen to episode 9
-              of the Juicecast:{' '}
-              <ExternalLink href="https://podcast.juicebox.money">
-                https://podcast.juicebox.money
-              </ExternalLink>
-              .
+              <Trans>
+                Using crowdfunding platforms for films has been around for a
+                while, but Juicebox adds an extra layer of transparency to the
+                process, allowing fans to see where funds are going. Unlike
+                traditional models where money is controlled behind the scenes,
+                StudioDAO members source, vote, fund, and distribute movies
+                transparently using the treasury while creators retain 100% of
+                their creative control and ownership. With the entertainment
+                market currently valued at two trillion dollars, StudioDAO
+                founder Kenny Miller can see a “clear scenario for a
+                decentralized studio to do one billion dollars of production 2-3
+                years from now.” To learn more about Kenny's vision for
+                StudioDAO, listen to episode 9 of the Juicecast:{' '}
+                <ExternalLink href="https://podcast.juicebox.money">
+                  https://podcast.juicebox.money
+                </ExternalLink>
+                .
+              </Trans>
             </p>
           </div>
         </CaseStudyContentContainer>

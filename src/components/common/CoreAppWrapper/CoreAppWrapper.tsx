@@ -1,6 +1,11 @@
+import { LedgerConnector } from '@wagmi/connectors/ledger'
+import { InjectedConnector } from '@wagmi/core'
+import { CoinbaseWalletConnector } from '@wagmi/core/connectors/coinbaseWallet'
+import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
+import { ConnectKitProvider } from 'connectkit'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
@@ -12,6 +17,10 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { redirectTo } from 'utils/windowUtils'
+import { WagmiConfig, configureChains, createClient } from 'wagmi'
+import { goerli, mainnet } from 'wagmi/chains'
+import { SafeConnector } from 'wagmi/connectors/safe'
+import { infuraProvider } from 'wagmi/providers/infura'
 
 const LanguageProvider = dynamic(
   () => import('contexts/Language/LanguageProvider'),
@@ -19,6 +28,30 @@ const LanguageProvider = dynamic(
     ssr: false,
   },
 )
+
+const { chains, provider } = configureChains(
+  [mainnet, goerli],
+  [infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_ID })],
+)
+
+const client = createClient({
+  provider,
+  connectors: [
+    new InjectedConnector(),
+    new MetaMaskConnector(),
+    new SafeConnector({
+      options: {
+        debug: process.env.NODE_ENV === 'development',
+      },
+    }),
+    new CoinbaseWalletConnector({
+      options: { appName: 'Juicebox' },
+    }),
+    new LedgerConnector({
+      chains,
+    }),
+  ],
+})
 
 /**
  * Contains all the core app providers used by each page.
@@ -35,17 +68,21 @@ export const AppWrapper: React.FC<React.PropsWithChildren<unknown>> = ({
     <React.StrictMode>
       <ReactQueryProvider>
         <LanguageProvider>
-          <TxHistoryProvider>
-            <ThemeProvider>
-              <EtherPriceProvider>
-                <ArcxProvider>
-                  <AnnouncementsProvider>
-                    <_Wrapper>{children}</_Wrapper>
-                  </AnnouncementsProvider>
-                </ArcxProvider>
-              </EtherPriceProvider>
-            </ThemeProvider>
-          </TxHistoryProvider>
+          <WagmiConfig client={client}>
+            <ConnectKitProvider>
+              <TxHistoryProvider>
+                <ThemeProvider>
+                  <EtherPriceProvider>
+                    <ArcxProvider>
+                      <AnnouncementsProvider>
+                        <_Wrapper>{children}</_Wrapper>
+                      </AnnouncementsProvider>
+                    </ArcxProvider>
+                  </EtherPriceProvider>
+                </ThemeProvider>
+              </TxHistoryProvider>
+            </ConnectKitProvider>
+          </WagmiConfig>
         </LanguageProvider>
       </ReactQueryProvider>
     </React.StrictMode>

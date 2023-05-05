@@ -59,7 +59,7 @@ export default function ProjectHandleFormItem({
     functionName: 'projectFor',
     args: handleHex && requireState ? [handleHex] : null,
     callback: useCallback(
-      id => {
+      (id: BigNumber | undefined) => {
         setHandleLoading(false)
 
         if (returnValue === 'id') {

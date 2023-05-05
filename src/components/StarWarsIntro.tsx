@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-const StarWarsIntro: React.FC<{ onClick: VoidFunction }> = ({ onClick }) => {
+const StarWarsIntro: React.FC<
+  React.PropsWithChildren<{ onClick: VoidFunction }>
+> = ({ onClick }) => {
   useEffect(() => {
     // get element by id
     const galaxyFarAwayContainer = document.getElementById('galaxy-far-away')

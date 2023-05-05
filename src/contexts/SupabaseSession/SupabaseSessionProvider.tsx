@@ -5,10 +5,9 @@ import {
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { useState } from 'react'
 
-const SupabaseSessionProvider: React.FC<{ initialSession: Session }> = ({
-  children,
-  initialSession,
-}) => {
+const SupabaseSessionProvider: React.FC<
+  React.PropsWithChildren<{ initialSession: Session }>
+> = ({ children, initialSession }) => {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient())
 
   return (

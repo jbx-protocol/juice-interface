@@ -10,10 +10,12 @@ export interface DurationInputValue {
   unit: DurationUnitsOption
 }
 
-export const DurationInput: React.FC<{
-  value?: DurationInputValue
-  onChange?: (value: DurationInputValue | undefined) => void
-}> = ({ value, onChange }) => {
+export const DurationInput: React.FC<
+  React.PropsWithChildren<{
+    value?: DurationInputValue
+    onChange?: (value: DurationInputValue | undefined) => void
+  }>
+> = ({ value, onChange }) => {
   const handleChange = (incoming: DurationInputValue) => {
     onChange?.(incoming)
   }

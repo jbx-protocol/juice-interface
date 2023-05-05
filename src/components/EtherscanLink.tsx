@@ -5,14 +5,16 @@ import { etherscanLink } from 'utils/etherscan'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 import ExternalLink from './ExternalLink'
 
-const EtherscanLink: React.FC<{
-  className?: string
-  value: string | undefined
-  type: 'tx' | 'address'
-  truncated?: boolean
-  truncateTo?: number
-  onClick?: MouseEventHandler
-}> = ({ className, value, type, truncated, truncateTo, children, onClick }) => {
+const EtherscanLink: React.FC<
+  React.PropsWithChildren<{
+    className?: string
+    value: string | undefined
+    type: 'tx' | 'address'
+    truncated?: boolean
+    truncateTo?: number
+    onClick?: MouseEventHandler
+  }>
+> = ({ className, value, type, truncated, truncateTo, children, onClick }) => {
   if (!value) return null
 
   const renderValue = truncated

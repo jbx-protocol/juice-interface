@@ -36,7 +36,6 @@ export const Head: VFC<SEOProps> = props => {
           href={path}
           as="font"
           type="font/woff2"
-          crossOrigin="true"
         />
       ))}
       <link
@@ -45,7 +44,6 @@ export const Head: VFC<SEOProps> = props => {
         href={'/assets/fonts/Starjhol.ttf'}
         as="font"
         type="font/ttf"
-        crossOrigin="true"
       />
     </SEO>
   )

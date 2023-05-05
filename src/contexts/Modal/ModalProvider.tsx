@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { ModalContext } from './ModalContext'
 
-export const ModalProvider: React.FC = ({ children }) => {
+export const ModalProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const [open, setOpen] = useState<boolean>(false)
 
   const openModal = () => {

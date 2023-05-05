@@ -56,7 +56,7 @@ interface AllocationProps {
 }
 
 export const Allocation: React.FC<
-  AllocationProps & FormItemInput<AllocationSplit[]>
+  React.PropsWithChildren<AllocationProps & FormItemInput<AllocationSplit[]>>
 > & {
   List: typeof AllocationList
   Item: typeof AllocationItem

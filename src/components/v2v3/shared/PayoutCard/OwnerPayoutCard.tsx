@@ -20,7 +20,9 @@ type OwnerPayoutCardType =
       onDelete: VoidFunction
     }
 
-export const OwnerPayoutCard: React.FC<OwnerPayoutCardType> = props => {
+export const OwnerPayoutCard: React.FC<
+  React.PropsWithChildren<OwnerPayoutCardType>
+> = props => {
   return (
     <Allocation.Item
       title={

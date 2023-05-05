@@ -10,7 +10,9 @@ import { MouseEventHandler } from 'react'
 import { helpPagePath } from 'utils/routes'
 
 export const CustomStrategyInput: React.FC<
-  FormItemInput<string> & { onClick?: MouseEventHandler }
+  React.PropsWithChildren<
+    FormItemInput<string> & { onClick?: MouseEventHandler }
+  >
 > = ({ value, onChange, onClick }) => {
   const { chain } = useWallet()
   return (

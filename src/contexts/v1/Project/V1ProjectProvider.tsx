@@ -1,9 +1,11 @@
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useV1ProjectState } from 'contexts/v1/Project/V1ProjectState'
 
-export const V1ProjectProvider: React.FC<{
-  handle: string
-}> = ({ children, handle }) => {
+export const V1ProjectProvider: React.FC<
+  React.PropsWithChildren<{
+    handle: string
+  }>
+> = ({ children, handle }) => {
   const project = useV1ProjectState({ handle })
 
   return (

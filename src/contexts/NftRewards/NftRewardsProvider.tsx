@@ -14,7 +14,9 @@ import {
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { JB721DelegateContractsContext } from './JB721DelegateContracts/JB721DelegateContractsContext'
 
-export const NftRewardsProvider: React.FC = ({ children }) => {
+export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const { projectMetadata, projectId } = useContext(ProjectMetadataContext)
   const { version: JB721DelegateVersion } = useContext(

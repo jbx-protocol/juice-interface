@@ -15,5 +15,7 @@ export type Announcement = {
   id: string
   conditions: AnnouncementCondition[]
   expire?: number // millis timestamp
-  Content: React.FC<Pick<JuiceModalProps, 'open' | 'setOpen'>>
+  Content: React.FC<
+    React.PropsWithChildren<Pick<JuiceModalProps, 'open' | 'setOpen'>>
+  >
 }

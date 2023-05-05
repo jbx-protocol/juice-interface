@@ -3,13 +3,15 @@ import useMobile from 'hooks/Mobile'
 import { twMerge } from 'tailwind-merge'
 import { Callout } from './Callout'
 
-export const InfoCallout: React.FC<{
-  className?: string
-  noIcon?: boolean
-  icon?: JSX.Element
-  collapsible?: boolean
-  transparent?: boolean
-}> = ({
+export const InfoCallout: React.FC<
+  React.PropsWithChildren<{
+    className?: string
+    noIcon?: boolean
+    icon?: JSX.Element
+    collapsible?: boolean
+    transparent?: boolean
+  }>
+> = ({
   className,
   children,
   noIcon = false,

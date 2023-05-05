@@ -43,9 +43,13 @@ export default function FundingHistory({
     contract: V1ContractName.FundingCycles,
     functionName: 'get',
     args: cycleNumber ? [cycleNumber] : null,
-    valueDidChange: useCallback((a, b) => !deepEqFundingCycles(a, b), []),
+    valueDidChange: useCallback(
+      (a: V1FundingCycle | undefined, b: V1FundingCycle | undefined) =>
+        !deepEqFundingCycles(a, b),
+      [],
+    ),
     callback: useCallback(
-      cycle => {
+      (cycle: V1FundingCycle | undefined) => {
         if (
           !cycle ||
           !cycleNumber ||

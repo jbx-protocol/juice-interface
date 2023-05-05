@@ -1,11 +1,13 @@
 import { twMerge } from 'tailwind-merge'
 
-export const SectionHeading: React.FC<{
-  className?: string
-  headingClassName?: string
-  heading: string | JSX.Element
-  subheading?: string | JSX.Element
-}> = ({ className, headingClassName, heading, subheading }) => {
+export const SectionHeading: React.FC<
+  React.PropsWithChildren<{
+    className?: string
+    headingClassName?: string
+    heading: string | JSX.Element
+    subheading?: string | JSX.Element
+  }>
+> = ({ className, headingClassName, heading, subheading }) => {
   return (
     <div className={twMerge('mx-auto mb-16 max-w-3xl', className)}>
       <h2

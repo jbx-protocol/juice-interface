@@ -3,11 +3,13 @@ import useMobile from 'hooks/Mobile'
 import { twJoin, twMerge } from 'tailwind-merge'
 import { Callout } from './Callout'
 
-export const WarningCallout: React.FC<{
-  className?: string
-  collapsible?: boolean
-  iconSize?: 'small' | 'large'
-}> = ({ className, collapsible, children, iconSize }) => {
+export const WarningCallout: React.FC<
+  React.PropsWithChildren<{
+    className?: string
+    collapsible?: boolean
+    iconSize?: 'small' | 'large'
+  }>
+> = ({ className, collapsible, children, iconSize }) => {
   const isMobile = useMobile()
   const collapse = collapsible ?? isMobile
   return (

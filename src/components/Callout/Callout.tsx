@@ -19,7 +19,8 @@ interface CalloutTypes {
   Warning: typeof WarningCallout
 }
 
-export const Callout: React.FC<CalloutProps> & CalloutTypes = ({
+export const Callout: React.FC<React.PropsWithChildren<CalloutProps>> &
+  CalloutTypes = ({
   className,
   children,
   iconComponent,

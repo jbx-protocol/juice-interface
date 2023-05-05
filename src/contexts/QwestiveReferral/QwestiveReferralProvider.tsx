@@ -3,7 +3,9 @@ import { useEffect } from 'react'
 import { useQwestiveSDKProvider } from './QwestiveReferral'
 import { SDKContext } from './QwestiveReferralContext'
 
-const QwestiveSDKContextProvider: React.FC = ({ children }) => {
+const QwestiveSDKContextProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const { userAddress } = useWallet()
   const scriptContext = useQwestiveSDKProvider()
 

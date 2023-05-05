@@ -4,11 +4,13 @@ import { classNames } from 'utils/classNames'
 import { SelectionContext } from './Selection'
 import { CheckedCircle, RadialBackgroundIcon } from './components'
 
-const Container: React.FC<{
-  isSelected: boolean
-  isDefocused: boolean
-  isDisabled: boolean
-}> = ({ isDefocused, isSelected, isDisabled, children }) => {
+const Container: React.FC<
+  React.PropsWithChildren<{
+    isSelected: boolean
+    isDefocused: boolean
+    isDisabled: boolean
+  }>
+> = ({ isDefocused, isSelected, isDisabled, children }) => {
   const borderColorClassNames = useMemo(() => {
     if (isSelected) return 'border-bluebs-500'
     return classNames(
@@ -48,7 +50,9 @@ interface SelectionCardProps {
   checkPosition?: 'left' | 'right'
 }
 
-export const SelectionCard: React.FC<SelectionCardProps> = ({
+export const SelectionCard: React.FC<
+  React.PropsWithChildren<SelectionCardProps>
+> = ({
   name,
   title,
   icon,

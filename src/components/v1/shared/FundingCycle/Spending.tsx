@@ -53,17 +53,13 @@ export default function Spending({
             ownerAddress={owner}
           />
 
-          {projectId !== 1 ? (
-            <Button
-              type="ghost"
-              size="small"
-              onClick={() => setWithdrawModalVisible(true)}
-            >
-              <Trans>Send payouts</Trans>
-            </Button>
-          ) : (
-            <></>
-          )}
+          <Button
+            type="ghost"
+            size="small"
+            onClick={() => setWithdrawModalVisible(true)}
+          >
+            <Trans>Send payouts</Trans>
+          </Button>
         </div>
 
         {currentFC.target.gt(0) && (

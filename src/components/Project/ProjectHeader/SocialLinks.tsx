@@ -2,7 +2,7 @@ import { GlobalOutlined, TwitterOutlined } from '@ant-design/icons'
 import Discord from 'components/icons/Discord'
 import Telegram from 'components/icons/Telegram'
 import { SocialButton } from 'components/SocialButton'
-import useMobile from 'hooks/Mobile'
+import useMobile from 'hooks/useMobile'
 import { twMerge } from 'tailwind-merge'
 
 export default function SocialLinks({

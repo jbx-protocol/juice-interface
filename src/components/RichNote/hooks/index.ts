@@ -1,1 +1,1 @@
-export * from './ProcessedRichNote'
+export * from './useProcessedRichNote'

@@ -1,11 +1,11 @@
 import { CheckCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Button, Form, Tooltip } from 'antd'
-import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import Loading from 'components/Loading'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { useDeployV3TokenTx } from 'hooks/JBV3Token/transactor/DeployV3Token'
-import useProjectIdForHandle from 'hooks/v1/contractReader/ProjectIdForHandle'
+import { useDeployV3TokenTx } from 'hooks/JBV3Token/transactor/useDeployV3Token'
+import useProjectIdForHandle from 'hooks/v1/contractReader/useProjectIdForHandle'
 import debounce from 'lodash/debounce'
 import {
   ChangeEventHandler,

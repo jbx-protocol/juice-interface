@@ -1,4 +1,4 @@
-import useMobile from 'hooks/Mobile'
+import useMobile from 'hooks/useMobile'
 import React, { ReactNode } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { Page } from './Page'

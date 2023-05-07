@@ -1,5 +1,5 @@
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import useMobile from 'hooks/Mobile'
+import useMobile from 'hooks/useMobile'
 import Image from 'next/image'
 import { useContext } from 'react'
 import buildersImage from '/public/assets/images/home/why-juicebox/builders.webp'

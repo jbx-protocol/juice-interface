@@ -1,4 +1,4 @@
-import { useTagCounts } from 'hooks/TagCounts'
+import { useTagCounts } from 'hooks/useTagCounts'
 import { ProjectTagName } from 'models/project-tags'
 
 export const useExploreCategories = () => {

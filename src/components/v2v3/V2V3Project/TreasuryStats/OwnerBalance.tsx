@@ -3,7 +3,7 @@ import ETHAmount from 'components/currency/ETHAmount'
 import EtherscanLink from 'components/EtherscanLink'
 import StatLine from 'components/Project/StatLine'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useEthBalanceQuery } from 'hooks/EthBalance'
+import { useEthBalanceQuery } from 'hooks/useEthBalance'
 import { useContext } from 'react'
 
 export default function OwnerBalance() {

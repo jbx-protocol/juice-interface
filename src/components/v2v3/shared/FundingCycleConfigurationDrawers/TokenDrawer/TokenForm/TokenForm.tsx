@@ -13,8 +13,8 @@ import { BigNumber } from 'ethers'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
-import { useAppSelector } from 'redux/hooks/AppSelector'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   DEFAULT_FUNDING_CYCLE_DATA,
   DEFAULT_FUNDING_CYCLE_METADATA,

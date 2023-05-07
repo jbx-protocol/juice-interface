@@ -1,6 +1,6 @@
-import useERC20BalanceOf from 'hooks/ERC20/ERC20BalanceOf'
-import useERC20DecimalsOf from 'hooks/ERC20/ERC20DecimalsOf'
-import useSymbolOfERC20 from 'hooks/ERC20/SymbolOfERC20'
+import useERC20BalanceOf from 'hooks/ERC20/useERC20BalanceOf'
+import useERC20DecimalsOf from 'hooks/ERC20/useERC20DecimalsOf'
+import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'
 
 import { TokenAmount } from './TokenAmount'
 

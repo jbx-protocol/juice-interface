@@ -7,7 +7,7 @@ import CurrentFundingCycle from 'components/v1/shared/FundingCycle/CurrentFundin
 import QueuedFundingCycle from 'components/v1/shared/FundingCycle/QueuedFundingCycle'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/V1ConnectedWalletHasPermission'
+import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/useV1ConnectedWalletHasPermission'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext } from 'react'

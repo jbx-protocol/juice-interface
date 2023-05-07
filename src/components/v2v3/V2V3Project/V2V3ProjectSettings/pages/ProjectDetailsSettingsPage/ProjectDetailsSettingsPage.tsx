@@ -6,7 +6,7 @@ import {
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/EditProjectDetailsTx'
+import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/useEditProjectDetailsTx'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
 import { useCallback, useContext, useEffect, useState } from 'react'

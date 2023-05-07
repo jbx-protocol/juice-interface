@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useSetProjectSplits } from 'hooks/v2v3/transactor/SetProjectSplitsTx'
+import { useSetProjectSplits } from 'hooks/v2v3/transactor/useSetProjectSplitsTx'
 import { Split } from 'models/splits'
 import { useCallback, useContext, useMemo, useState } from 'react'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'

@@ -1,7 +1,7 @@
 import {
   JB721DELAGATE_V1_1_PAY_METADATA,
   JB721DELAGATE_V1_PAY_METADATA,
-} from 'components/Project/PayProjectForm/hooks/PayProjectForm'
+} from 'components/Project/PayProjectForm/hooks/usePayProjectForm'
 import { NftFileType } from 'components/inputs/UploadNoStyle'
 import {
   JB721_DELEGATE_V1,

@@ -1,3 +1,3 @@
-export * from './callContractRead'
-export * from './convertUpdateOnArrayToSubscriptions'
 export * from './getContract'
+export * from './useCallContractRead'
+export * from './useConvertUpdateOnArrayToSubscriptions'

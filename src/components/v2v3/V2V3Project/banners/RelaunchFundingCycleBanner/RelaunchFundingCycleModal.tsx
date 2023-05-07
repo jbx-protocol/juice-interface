@@ -14,12 +14,12 @@ import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
-import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/DefaultJBETHPaymentTerminal'
-import useProjectCurrentFundingCycle from 'hooks/v2v3/contractReader/ProjectCurrentFundingCycle'
-import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistributionLimit'
-import useProjectSplits from 'hooks/v2v3/contractReader/ProjectSplits'
-import useProjectTerminals from 'hooks/v2v3/contractReader/ProjectTerminals'
-import { useLaunchFundingCyclesTx } from 'hooks/v2v3/transactor/LaunchFundingCyclesTx'
+import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
+import useProjectCurrentFundingCycle from 'hooks/v2v3/contractReader/useProjectCurrentFundingCycle'
+import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
+import useProjectSplits from 'hooks/v2v3/contractReader/useProjectSplits'
+import useProjectTerminals from 'hooks/v2v3/contractReader/useProjectTerminals'
+import { useLaunchFundingCyclesTx } from 'hooks/v2v3/transactor/useLaunchFundingCyclesTx'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,

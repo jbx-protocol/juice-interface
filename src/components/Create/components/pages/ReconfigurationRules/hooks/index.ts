@@ -1,1 +1,1 @@
-export * from './ReconfigurationRulesForm'
+export * from './useReconfigurationRulesForm'

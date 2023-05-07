@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { XLButton } from 'components/XLButton'
-import { useMedia } from 'contexts/Theme/Media'
+import { useMedia } from 'contexts/Theme/useMedia'
 import Link from 'next/link'
 import { HomepageProjectCard } from '../HomepageProjectCard'
 import { ProjectCarousel } from '../ProjectCarousel'
@@ -9,7 +9,7 @@ import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
 import { SpotlightProjectCard } from './SpotlightProjectCard'
 import { ExploreCategories } from './components/ExploreCategories'
-import { useFetchJuicyPicks } from './hooks/JuicyPicks'
+import { useFetchJuicyPicks } from './hooks/useJuicyPicks'
 
 export function JuicyPicksSection() {
   const { data: projects } = useFetchJuicyPicks()

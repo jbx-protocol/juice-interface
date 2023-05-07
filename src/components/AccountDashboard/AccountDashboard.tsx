@@ -10,10 +10,13 @@ import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { SocialButton } from 'components/SocialButton'
-import useMobile from 'hooks/Mobile'
-import { useContributedProjectsQuery, useMyProjectsQuery } from 'hooks/Projects'
+import useMobile from 'hooks/useMobile'
+import {
+  useContributedProjectsQuery,
+  useMyProjectsQuery,
+} from 'hooks/useProjects'
+import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useWallet } from 'hooks/Wallet'
-import { useWalletSignIn } from 'hooks/WalletSignIn'
 import { Profile } from 'models/database'
 import Link from 'next/link'
 import { useRouter } from 'next/router'

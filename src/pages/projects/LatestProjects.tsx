@@ -2,10 +2,10 @@ import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
-import { useDBProjectsInfiniteQuery } from 'hooks/Projects'
+import { useDBProjectsInfiniteQuery } from 'hooks/useProjects'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
-import { useLoadMoreContent } from '../../hooks/LoadMore'
+import { useLoadMoreContent } from '../../hooks/useLoadMore'
 
 export default function LatestProjects() {
   const pageSize = 20

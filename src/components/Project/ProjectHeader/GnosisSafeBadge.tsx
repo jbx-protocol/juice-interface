@@ -1,7 +1,7 @@
 import Icon from '@ant-design/icons'
 import { plural, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { useQueuedSafeTransactions } from 'hooks/safe/QueuedSafeTransactions'
+import { useQueuedSafeTransactions } from 'hooks/safe/useQueuedSafeTransactions'
 import { useWallet } from 'hooks/Wallet'
 import { GnosisSafe } from 'models/safe'
 import Link from 'next/link'

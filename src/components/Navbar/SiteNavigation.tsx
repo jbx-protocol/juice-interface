@@ -1,11 +1,9 @@
 import { Popover, Transition } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
-import { Button } from 'antd'
 import QuickProjectSearch from 'components/QuickProjectSearch'
-import StarWarsIntro from 'components/StarWarsIntro'
 import PatchedNextLink from 'components/fixes/PatchedNextLink'
 import useMobile from 'hooks/useMobile'
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { DropdownMenu } from './components/DropdownMenu'
 import { MobileMenuButton } from './components/HamburgerMenuButton'
 import { LogoHomeButton } from './components/LogoHomeButton'
@@ -16,12 +14,8 @@ import WalletButton from './components/Wallet/WalletButton'
 export default function SiteNavigation() {
   const isMobile = useMobile()
 
-  const [swOpen, setSwOpen] = useState(false)
-  const onYodaClicked = () => setSwOpen(true)
-
   return (
     <>
-      {swOpen && <StarWarsIntro onClick={() => setSwOpen(false)} />}
       <div className="fixed z-10 w-full md:static md:px-20">
         <Popover
           className="bg-white dark:bg-slate-900 md:flex md:items-center md:gap-12 md:px-0 md:py-6"
@@ -32,16 +26,6 @@ export default function SiteNavigation() {
               <div className="flex items-center justify-between py-6 px-5 md:inline-flex md:py-0 md:px-0">
                 <div className="flex gap-2">
                   <LogoHomeButton />
-                  <Button
-                    className="relative flex h-8 w-8 p-0"
-                    type="link"
-                    onClick={onYodaClicked}
-                  >
-                    <img
-                      className="transition-all duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
-                      src="/assets/images/star-wars/yoda.webp"
-                    />
-                  </Button>
                 </div>
                 <MobileMenuButton className="md:hidden" open={open} />
               </div>

@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import useMobile from 'hooks/Mobile'
+import useMobile from 'hooks/useMobile'
 import { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { PageButtonControl } from './PageButtonControl'

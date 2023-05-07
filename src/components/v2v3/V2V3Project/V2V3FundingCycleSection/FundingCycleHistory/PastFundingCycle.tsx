@@ -4,8 +4,8 @@ import { Modal } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import useProjectDistributionLimit from 'hooks/v2v3/contractReader/ProjectDistributionLimit'
-import useUsedDistributionLimit from 'hooks/v2v3/contractReader/UsedDistributionLimit'
+import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
+import useUsedDistributionLimit from 'hooks/v2v3/contractReader/useUsedDistributionLimit'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import {
   V2V3FundingCycle,

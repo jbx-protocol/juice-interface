@@ -1,7 +1,7 @@
 import { Tooltip } from 'antd'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
-import { useEnsName } from 'hooks/ensName'
+import { useEnsName } from 'hooks/useEnsName'
 import Link from 'next/link'
 import { MouseEventHandler, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'

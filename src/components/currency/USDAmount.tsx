@@ -1,7 +1,7 @@
 import { Tooltip } from 'antd'
 import { PRECISION_USD } from 'constants/currency'
 import { BigNumber } from 'ethers'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import CurrencySymbol from '../CurrencySymbol'
 import ETHAmount from './ETHAmount'

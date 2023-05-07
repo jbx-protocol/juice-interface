@@ -18,7 +18,7 @@ import DeployETHERC20ProjectPayerEventElem from './eventElems/DeployETHERC20Proj
 import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
 import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
 import SetFundAccessConstraintsEventElem from './eventElems/SetFundAccessConstraintsEventElem'
-import { EventFilter, useV2V3ProjectActivity } from './hooks/ProjectActivity'
+import { EventFilter, useV2V3ProjectActivity } from './hooks/useProjectActivity'
 
 export function V2V3ProjectActivity() {
   const { projectId } = useContext(ProjectMetadataContext)

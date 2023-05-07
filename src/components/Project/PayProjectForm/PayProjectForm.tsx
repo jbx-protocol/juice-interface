@@ -1,7 +1,7 @@
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { getHighestAffordableNft, getNftRewardOfFloor } from 'utils/nftRewards'

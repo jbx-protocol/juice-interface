@@ -1,5 +1,5 @@
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { useTransactor } from 'hooks/Transactor'
+import { useTransactor } from 'hooks/useTransactor'
 
 export const TransactionProvider: React.FC<
   React.PropsWithChildren<unknown>

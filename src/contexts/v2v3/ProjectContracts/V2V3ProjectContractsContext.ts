@@ -1,6 +1,6 @@
 import { Contract } from 'ethers'
-import { JBControllerVersion } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectController'
-import { JBETHPaymentTerminalVersion } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/ProjectPrimaryEthTerminal'
+import { JBControllerVersion } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectController'
+import { JBETHPaymentTerminalVersion } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminal'
 import { createContext } from 'react'
 
 export interface V2V3ProjectContracts {

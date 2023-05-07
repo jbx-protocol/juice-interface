@@ -22,7 +22,7 @@ import { PayoutsPage } from './components/pages/PayoutsPage'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { PayoutsMigrationModal } from './components/PayoutsMigrationModal'
 import { Wizard } from './components/Wizard'
-import { useLoadingInitialStateFromQuery } from './hooks/LoadInitialStateFromQuery'
+import { useLoadingInitialStateFromQuery } from './hooks/useLoadInitialStateFromQuery'
 
 export function Create() {
   const router = useRouter()

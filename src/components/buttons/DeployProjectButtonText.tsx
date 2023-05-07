@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import useMobile from 'hooks/Mobile'
+import useMobile from 'hooks/useMobile'
 import { useWallet } from 'hooks/Wallet'
 
 export function DeployButtonText() {

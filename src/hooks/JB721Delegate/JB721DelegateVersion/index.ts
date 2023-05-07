@@ -1,1 +1,1 @@
-export { useJB721DelegateVersion } from './JB721DelegateVersion'
+export { useJB721DelegateVersion } from './useJB721DelegateVersion'

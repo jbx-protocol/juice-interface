@@ -5,7 +5,7 @@ import {
 } from '@supabase/auth-helpers-react'
 import { ModalContext } from 'contexts/Modal'
 import { useWallet } from 'hooks/Wallet'
-import { useWalletSignIn } from 'hooks/WalletSignIn'
+import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { ProjectNotification } from 'models/notifications/projectNotifications'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { Database } from 'types/database.types'

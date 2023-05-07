@@ -3,11 +3,11 @@ import { Button, Empty } from 'antd'
 import { Callout } from 'components/Callout'
 import { RewardsList } from 'components/Create/components/RewardsList'
 import Loading from 'components/Loading'
-import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/UpdateCurrentCollection'
-import { useHasNftRewards } from 'hooks/JB721Delegate/HasNftRewards'
+import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/useUpdateCurrentCollection'
+import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 
 import { useCallback, useState } from 'react'
-import { useEditingNfts } from './hooks/EditingNfts'
+import { useEditingNfts } from './hooks/useEditingNfts.tsx'
 
 export function EditNftsSection() {
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)

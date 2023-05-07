@@ -9,11 +9,11 @@ import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { useCurrencyConverter } from 'hooks/CurrencyConverter'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { sortNftsByContributionFloor, sumTierFloors } from 'utils/nftRewards'
-import { useModalFromUrlQuery } from '../modals/hooks/ModalFromUrlQuery'
+import { useModalFromUrlQuery } from '../modals/hooks/useModalFromUrlQuery'
 import { NftTierCard } from './NftTierCard'
 
 function RewardTiersLoadingSkeleton() {

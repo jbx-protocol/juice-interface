@@ -1,5 +1,5 @@
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
-import { useModal } from 'hooks/Modal'
+import { useModal } from 'hooks/useModal'
 import { useUserSubscriptions } from 'hooks/useUserSubscriptions'
 import { useCallback } from 'react'
 import { Database } from 'types/database.types'

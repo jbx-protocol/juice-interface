@@ -1,1 +1,1 @@
-export * from './Rewards'
+export * from './useRewards'

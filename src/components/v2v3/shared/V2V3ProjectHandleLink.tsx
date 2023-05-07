@@ -1,4 +1,4 @@
-import { useProjectHandleText } from 'hooks/ProjectHandleText'
+import { useProjectHandleText } from 'hooks/useProjectHandleText'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { v2v3ProjectRoute } from 'utils/routes'

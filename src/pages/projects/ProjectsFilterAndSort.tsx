@@ -2,7 +2,7 @@ import { FilterOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Collapse, Select } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-import { useTagCounts } from 'hooks/TagCounts'
+import { useTagCounts } from 'hooks/useTagCounts'
 import { DBProjectQueryOpts } from 'models/dbProject'
 import {
   ProjectTagName,

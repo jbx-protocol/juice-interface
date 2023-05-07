@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import PatchedExternalLink from 'components/fixes/PatchedExternalLink'
 import PatchedNextLink from 'components/fixes/PatchedNextLink'
-import useMobile from 'hooks/Mobile'
+import useMobile from 'hooks/useMobile'
 import { Fragment, MouseEventHandler, ReactNode, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 

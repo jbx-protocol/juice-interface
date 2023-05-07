@@ -1,1 +1,1 @@
-export * from './DeployProject'
+export * from './useDeployProject'

@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { CASE_STUDY_PROJECTS } from 'constants/successStoryProjects'
-import { useProjectsQuery } from 'hooks/Projects'
+import { useProjectsQuery } from 'hooks/useProjects'
 import { PV } from 'models/pv'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { ProjectCarousel } from 'pages/home/ProjectCarousel'

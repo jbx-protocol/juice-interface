@@ -10,7 +10,7 @@ import { formatOutgoingSplits } from 'utils/splits'
 import { deriveNextIssuanceRate } from 'utils/v2v3/fundingCycle'
 import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { LinkToSafeButton } from '../../LinkToSafeButton'
-import { useTransactionJBController } from './hooks/TransactionJBController'
+import { useTransactionJBController } from './hooks/useTransactionJBController'
 
 // Currently only supports V2V3 reconfig transactions
 export function ReconfigureRichPreview({

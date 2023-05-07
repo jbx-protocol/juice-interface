@@ -4,7 +4,7 @@ import { V2V3ContractsProvider } from 'contexts/v2v3/Contracts/V2V3ContractsProv
 import { useRef } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
-import { useInitialEditingData } from '../../../../../ReconfigureFundingCycleSettingsPage/hooks/initialEditingData'
+import { useInitialEditingData } from '../../../../../ReconfigureFundingCycleSettingsPage/hooks/useInitialEditingData'
 import { LaunchFundingCycleForm } from './LaunchFundingCycleForm'
 
 /**

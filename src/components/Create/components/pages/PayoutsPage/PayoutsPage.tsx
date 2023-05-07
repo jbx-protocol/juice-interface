@@ -7,18 +7,18 @@ import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationMod
 import TooltipLabel from 'components/TooltipLabel'
 import { FEES_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { BigNumber } from 'ethers'
-import { useModal } from 'hooks/Modal'
+import { useModal } from 'hooks/useModal'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { TreasurySelection } from 'models/treasurySelection'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
-import { useAppSelector } from 'redux/hooks/AppSelector'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import {
   ReduxDistributionLimit,
   useEditingDistributionLimit,
-} from 'redux/hooks/EditingDistributionLimit'
-import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
+} from 'redux/hooks/useEditingDistributionLimit'
+import { useEditingPayoutSplits } from 'redux/hooks/useEditingPayoutSplits'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { allocationTotalPercentDoNotExceedTotalRule } from 'utils/antdRules'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
@@ -29,7 +29,7 @@ import { PageContext } from '../../Wizard/contexts/PageContext'
 import { ConvertAmountsModal, RadioCard } from './components'
 import { PayoutsList } from './components/PayoutsList'
 import { usePayoutsForm } from './hooks'
-import { useFundingTarget } from './hooks/FundingTarget'
+import { useFundingTarget } from './hooks/useFundingTarget'
 
 const treasuryOptions = [
   { name: t`None`, value: 'zero', icon: <StopOutlined /> },

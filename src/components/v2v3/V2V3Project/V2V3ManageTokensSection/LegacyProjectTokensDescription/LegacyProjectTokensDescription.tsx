@@ -4,7 +4,7 @@ import { TokenAmount } from 'components/TokenAmount'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useTotalLegacyTokenBalance } from 'hooks/JBV3Token/contractReader/TotalLegacyTokenBalance'
+import { useTotalLegacyTokenBalance } from 'hooks/JBV3Token/contractReader/useTotalLegacyTokenBalance'
 import { useContext, useState } from 'react'
 import { MigrateLegacyProjectTokensModal } from './MigrateLegacyProjectTokensModal'
 

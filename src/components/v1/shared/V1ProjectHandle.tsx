@@ -1,5 +1,5 @@
 import { BigNumberish } from 'ethers'
-import useHandleForProjectId from 'hooks/v1/contractReader/HandleForProjectId'
+import useHandleForProjectId from 'hooks/v1/contractReader/useHandleForProjectId'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 

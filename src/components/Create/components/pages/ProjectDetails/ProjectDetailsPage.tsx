@@ -15,13 +15,13 @@ import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
 import { useContext } from 'react'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/EditingCreateFurthestPageReached'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import { useProjectDetailsForm } from './hooks/ProjectDetailsForm'
+import { useProjectDetailsForm } from './hooks/useProjectDetailsForm'
 
 export const ProjectDetailsPage: React.FC<
   React.PropsWithChildren<unknown>

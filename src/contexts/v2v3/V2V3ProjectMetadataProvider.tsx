@@ -1,8 +1,8 @@
 import { PV_V2 } from 'constants/pv'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import useProjectMetadataContent from 'hooks/v2v3/contractReader/ProjectMetadataContent'
+import { useProjectMetadata } from 'hooks/useProjectMetadata'
+import useProjectMetadataContent from 'hooks/v2v3/contractReader/useProjectMetadataContent'
 import { ProjectMetadata } from 'models/projectMetadata'
 import { PropsWithChildren } from 'react'
 

@@ -10,15 +10,15 @@ import { RulesDrawer } from 'components/v2v3/shared/FundingCycleConfigurationDra
 import { TokenDrawer } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useNftDeployerCanReconfigure } from 'hooks/JB721Delegate/contractReader/NftDeployerCanReconfigure'
+import { useNftDeployerCanReconfigure } from 'hooks/JB721Delegate/contractReader/useNftDeployerCanReconfigure'
 import { useContext, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { formatDate } from 'utils/format/formatDate'
-import { useEditingFundingCycleConfig } from '../../../../../ReconfigureFundingCycleSettingsPage/hooks/editingFundingCycleConfig'
+import { useEditingFundingCycleConfig } from '../../../../../ReconfigureFundingCycleSettingsPage/hooks/useEditingFundingCycleConfig'
 import { ReconfigurePreview } from '../../../../../ReconfigureFundingCycleSettingsPage/ReconfigurePreview'
 import { SetNftOperatorPermissionsButton } from '../../../../../ReconfigureFundingCycleSettingsPage/SetNftOperatorPermissionsButton'
-import { useLaunchFundingCycles } from './hooks/LaunchFundingCycles'
+import { useLaunchFundingCycles } from './hooks/useLaunchFundingCycles'
 
 export function LaunchFundingCycleForm() {
   const { projectOwnerAddress, fundingCycle } = useContext(V2V3ProjectContext)

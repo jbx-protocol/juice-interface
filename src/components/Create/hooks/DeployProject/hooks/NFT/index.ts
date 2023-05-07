@@ -1,3 +1,3 @@
-export * from './DeployNftProject'
-export * from './IsNftProject'
-export * from './UploadNftRewards'
+export * from './useDeployNftProject'
+export * from './useIsNftProject'
+export * from './useUploadNftRewards'

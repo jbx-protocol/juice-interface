@@ -16,7 +16,7 @@ import {
 } from 'recharts'
 import { classNames } from 'utils/classNames'
 import { daysToMillis } from './daysToMillis'
-import { useDuration } from './hooks/Duration'
+import { useDuration } from './hooks/useDuration'
 import { loadBlockRefs } from './loadBlockRefs'
 import { loadDomain } from './loadDomain'
 import { loadProjectEvents } from './loadProjectEvents'

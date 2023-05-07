@@ -1,6 +1,6 @@
 import { CreateBadge } from 'components/Create/components/CreateBadge'
 import { Selection } from 'components/Create/components/Selection'
-import { AvailableReconfigurationStrategy } from 'components/Create/hooks/AvailableReconfigurationStrategies'
+import { AvailableReconfigurationStrategy } from 'components/Create/hooks/useAvailableReconfigurationStrategies'
 import EthereumAddress from 'components/EthereumAddress'
 
 export const RuleCard = ({

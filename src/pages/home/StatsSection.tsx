@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import USDAmount from 'components/currency/USDAmount'
-import useSubgraphQuery from 'hooks/SubgraphQuery'
+import useSubgraphQuery from 'hooks/useSubgraphQuery'
 import Link from 'next/link'
 import { formattedNum } from 'utils/format/formatNumber'
 

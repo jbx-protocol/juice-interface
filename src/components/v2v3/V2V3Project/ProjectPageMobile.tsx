@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { ErrorBoundaryCallout } from 'components/ErrorBoundaryCallout'
 import { NftRewardsSection } from 'components/NftRewards/NftRewardsSection'
-import { useNftRewardsEnabledForPay } from 'hooks/JB721Delegate/NftRewardsEnabledForPay'
+import { useNftRewardsEnabledForPay } from 'hooks/JB721Delegate/useNftRewardsEnabledForPay'
 import { V2V3ProjectActivity } from './ProjectActivity'
 import { ProjectPageTabs } from './ProjectPageTabs'
 import { V2V3PayProjectForm } from './V2V3PayProjectForm'

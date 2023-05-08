@@ -1,18 +1,11 @@
-import { Trans } from '@lingui/macro'
-import { Form, Select } from 'antd'
+import { Trans, t } from '@lingui/macro'
+import { Form } from 'antd'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 
-import {
-  DurationUnitsOption,
-  durationUnitText,
-  DURATION_UNIT_OPTIONS,
-} from 'constants/time'
+import { DurationUnitsOption } from 'constants/time'
 
-export default function DurationInputAndSelect({
-  defaultDurationUnit,
-}: {
-  defaultDurationUnit: DurationUnitsOption | undefined
-}) {
+export default function DurationInputAndSelect() {
   return (
     <div className="flex">
       <Form.Item
@@ -24,17 +17,24 @@ export default function DurationInputAndSelect({
         <FormattedNumberInput className="pr-4" placeholder="30" min={1} />
       </Form.Item>
       <Form.Item name="durationUnit" label={<span></span>}>
-        <Select
-          className="medium h-8 min-w-[125px]"
-          defaultValue={defaultDurationUnit}
-        >
-          {DURATION_UNIT_OPTIONS.map(value => (
-            <Select.Option key={value} value={value}>
-              {durationUnitText(value)}
-            </Select.Option>
-          ))}
-        </Select>
+        <JuiceListbox
+          className="h-8 min-w-[125px]"
+          buttonClassName="py-1.5"
+          options={DURATION_UNIT_OPTIONS_FC}
+        />
       </Form.Item>
     </div>
   )
 }
+
+interface DurationUnitOptionFC {
+  value: DurationUnitsOption
+  label: string
+}
+
+export const DURATION_UNIT_OPTIONS_FC: DurationUnitOptionFC[] = [
+  { value: 'days', label: t`Days` },
+  { value: 'hours', label: t`Hours` },
+  { value: 'minutes', label: t`Minutes` },
+  { value: 'seconds', label: t`Seconds` },
+]

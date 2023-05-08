@@ -4,7 +4,7 @@ import {
   HttpLink,
   InMemoryCache,
 } from '@apollo/client'
-import { BigNumber } from '@ethersproject/bignumber'
+import { BigNumber } from 'ethers'
 import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
 import { FunctionsMap, withScalars } from 'apollo-link-scalars'
 import { IntrospectionQuery, buildClientSchema } from 'graphql'

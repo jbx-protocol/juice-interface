@@ -48,7 +48,7 @@ export function initWeb3Onboard() {
       label: n.label,
     })),
     appMetadata: {
-      icon: '/assets/juice-logo-full_black.svg',
+      logo: '/assets/juice-logo-full_black.svg',
       name: config.title,
       description: config.description,
     },

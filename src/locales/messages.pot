@@ -1460,9 +1460,6 @@ msgstr ""
 msgid "V2"
 msgstr ""
 
-msgid "{0} balance"
-msgstr ""
-
 msgid "NO LIMIT"
 msgstr ""
 
@@ -1518,6 +1515,9 @@ msgid "JuiceboxDAO is a community of passionate builders, creators, and innovato
 msgstr ""
 
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
+msgstr ""
+
+msgid "{tokenText} balance"
 msgstr ""
 
 msgid "Token name is required"

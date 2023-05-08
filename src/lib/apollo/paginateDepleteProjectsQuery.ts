@@ -3,8 +3,7 @@ import {
   ProjectsQuery,
   QueryProjectsArgs,
 } from 'generated/graphql'
-
-import client from './client'
+import { serverClient } from './serverClient'
 
 /**
  * Loads all pages for the query.
@@ -19,7 +18,7 @@ export async function paginateDepleteProjectsQueryCall({
   const first = variables.first ?? 1000
   const skip = variables.skip
 
-  const { data } = await client.query<ProjectsQuery, QueryProjectsArgs>({
+  const { data } = await serverClient.query<ProjectsQuery, QueryProjectsArgs>({
     query: ProjectsDocument,
     variables: { ...variables, first, skip },
   })

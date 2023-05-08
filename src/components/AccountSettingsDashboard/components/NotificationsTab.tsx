@@ -28,7 +28,7 @@ export const NotificationsTab = () => {
     <>
       <div className="flex flex-col gap-y-10">
         <div>
-          <h1 className="text-primary text-2xl">
+          <h1 className="text-primary flex items-center gap-2 text-2xl">
             <Trans>Notifications</Trans> <Badge variant="info">Beta</Badge>
           </h1>
           <div className="text-secondary">

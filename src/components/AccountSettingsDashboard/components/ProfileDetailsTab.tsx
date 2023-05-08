@@ -14,7 +14,7 @@ export const ProfileDetailsTab = ({ user }: { user: User }) => {
   return (
     <div className="flex flex-col gap-y-10">
       <div>
-        <h1 className="text-primary text-2xl dark:text-slate-100">
+        <h1 className="text-primary flex items-center gap-2 text-2xl dark:text-slate-100">
           <Trans>Profile details</Trans> <Badge variant="info">Beta</Badge>
         </h1>
         <div className="text-secondary">

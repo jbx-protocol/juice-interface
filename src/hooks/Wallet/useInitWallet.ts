@@ -1,5 +1,4 @@
 import coinbaseWalletModule from '@web3-onboard/coinbase'
-import { OnboardAPI } from '@web3-onboard/core'
 import gnosisModule from '@web3-onboard/gnosis'
 import injectedModule from '@web3-onboard/injected-wallets'
 import keystoneModule from '@web3-onboard/keystone'
@@ -18,7 +17,7 @@ import {
   useStoreWalletsInLocalStorage,
 } from './hooks'
 
-export function initWeb3Onboard(): OnboardAPI {
+export function initWeb3Onboard() {
   console.info('Initializing Web3Onboard...')
 
   const injected = injectedModule()

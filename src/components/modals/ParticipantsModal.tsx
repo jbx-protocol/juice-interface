@@ -4,7 +4,7 @@ import {
   SortDescendingOutlined,
 } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
-import { Button, Modal, Select } from 'antd'
+import { Button, Modal } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -21,6 +21,7 @@ import { querySubgraph } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { TokenAmount } from 'components/TokenAmount'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import { DownloadParticipantsModal } from './DownloadParticipantsModal'
 
 const pageSize = 100
@@ -58,6 +59,17 @@ export default function ParticipantsModal({
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [sortPayerReportsDirection, setSortPayerReportsDirection] =
     useState<SGOrderDir>('desc')
+
+  const pOptions = participantOptions(
+    tokenSymbolText({
+      tokenSymbol,
+      capitalize: true,
+    }),
+  )
+
+  const participantOption = pOptions.find(
+    option => option.value === sortPayerReports,
+  )
 
   useEffect(() => {
     setLoading(true)
@@ -128,30 +140,16 @@ export default function ParticipantsModal({
     return (
       <div>
         <div className="mb-5 flex w-full items-center justify-between">
-          <Select
+          <JuiceListbox
             className="flex-1"
-            onChange={(val: keyof Participant) => {
+            buttonClassName="py-1"
+            options={pOptions}
+            value={participantOption}
+            onChange={v => {
               setParticipants([])
-              setSortPayerReports(val)
+              setSortPayerReports(v.value)
             }}
-            value={sortPayerReports}
-          >
-            <Select.Option value="balance">
-              <Trans>
-                {tokenSymbolText({
-                  tokenSymbol,
-                  capitalize: true,
-                })}{' '}
-                balance
-              </Trans>
-            </Select.Option>
-            <Select.Option value="volume">
-              <Trans>Total paid</Trans>
-            </Select.Option>
-            <Select.Option value="lastPaidTimestamp">
-              <Trans>Last paid</Trans>
-            </Select.Option>
-          </Select>
+          />
           <div
             className="cursor-pointer p-2"
             onClick={() => {
@@ -216,10 +214,10 @@ export default function ParticipantsModal({
       </div>
     )
   }, [
-    sortPayerReports,
+    pOptions,
+    participantOption,
     tokenSymbol,
     sortPayerReportsDirection,
-    setDownloadModalVisible,
     participants,
     totalTokenSupply,
   ])
@@ -278,3 +276,23 @@ export default function ParticipantsModal({
     </Modal>
   )
 }
+
+interface ParticipantOption {
+  label: string
+  value: keyof Pick<Participant, 'balance' | 'volume' | 'lastPaidTimestamp'>
+}
+
+const participantOptions = (tokenText: string): ParticipantOption[] => [
+  {
+    label: t`${tokenText} balance`,
+    value: 'balance',
+  },
+  {
+    label: t`Total paid`,
+    value: 'volume',
+  },
+  {
+    label: t`Last paid`,
+    value: 'lastPaidTimestamp',
+  },
+]

@@ -1,6 +1,6 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Select, Space } from 'antd'
+import { Button, Space } from 'antd'
 import AddToBalanceEventElem from 'components/activityEventElems/AddToBalanceEventElem'
 import BurnEventElem from 'components/activityEventElems/BurnEventElem'
 import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
@@ -25,6 +25,7 @@ import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
 import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
 import { useContext, useMemo, useState } from 'react'
 
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import ReservesEventElem from './eventElems/ReservesEventElem'
 import TapEventElem from './eventElems/TapEventElem'
 import V1ConfigureEventElem from './eventElems/V1ConfigureEventElem'
@@ -50,6 +51,11 @@ export function V1ProjectActivity() {
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [eventFilter, setEventFilter] = useState<EventFilter>('all')
+
+  const eventFilterOption = useMemo(
+    () => activityOptions.find(o => o.value === eventFilter),
+    [eventFilter],
+  )
 
   const where: SGWhereArg<'projectEvent'>[] = useMemo(() => {
     const _where: SGWhereArg<'projectEvent'>[] = [
@@ -342,42 +348,12 @@ export function V1ProjectActivity() {
             />
           )}
 
-          <Select
-            className="small w-48"
-            value={eventFilter}
-            onChange={val => setEventFilter(val)}
-          >
-            <Select.Option value="all">
-              <Trans>All events</Trans>
-            </Select.Option>
-            <Select.Option value="pay">
-              <Trans>Paid</Trans>
-            </Select.Option>
-            <Select.Option value="redeem">
-              <Trans>Redeemed</Trans>
-            </Select.Option>
-            <Select.Option value="burn">
-              <Trans>Burned</Trans>
-            </Select.Option>
-            <Select.Option value="withdraw">
-              <Trans>Sent payouts</Trans>
-            </Select.Option>
-            <Select.Option value="printReserves">
-              <Trans>Sent reserved tokens</Trans>
-            </Select.Option>
-            <Select.Option value="configure">
-              <Trans>Edited cycle</Trans>
-            </Select.Option>
-            <Select.Option value="deployERC20">
-              <Trans>Deployed ERC20</Trans>
-            </Select.Option>
-            <Select.Option value="projectCreate">
-              <Trans>Created project</Trans>
-            </Select.Option>
-            <Select.Option value="addToBalance">
-              <Trans>Transferred ETH to project</Trans>
-            </Select.Option>
-          </Select>
+          <JuiceListbox
+            className="w-48"
+            options={activityOptions}
+            value={eventFilterOption}
+            onChange={v => setEventFilter(v.value)}
+          />
         </Space>
       </div>
 
@@ -392,3 +368,21 @@ export function V1ProjectActivity() {
     </div>
   )
 }
+
+interface ActivityOption {
+  label: string
+  value: EventFilter
+}
+
+const activityOptions: ActivityOption[] = [
+  { label: t`All events`, value: 'all' },
+  { label: t`Paid`, value: 'pay' },
+  { label: t`Redeemed`, value: 'redeem' },
+  { label: t`Burned`, value: 'burn' },
+  { label: t`Sent payouts`, value: 'withdraw' },
+  { label: t`Sent reserved tokens`, value: 'printReserves' },
+  { label: t`Edited cycle`, value: 'configure' },
+  { label: t`Deployed ERC20`, value: 'deployERC20' },
+  { label: t`Created project`, value: 'projectCreate' },
+  { label: t`Transferred ETH to project`, value: 'addToBalance' },
+]

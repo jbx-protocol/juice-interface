@@ -1,5 +1,5 @@
 import { PV_V1 } from 'constants/pv'
-import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
+import { paginateDepleteProjectsQueryCall } from 'lib/apollo/paginateDepleteProjectsQuery'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { findProjectMetadata } from 'utils/server'
 import { V1StaticProps } from './index.page'

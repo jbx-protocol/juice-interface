@@ -1,6 +1,5 @@
-import { Select } from 'antd'
-import { BaseOptionType } from 'antd/lib/select'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { CV2V3 } from 'models/v2v3/cv'
@@ -33,11 +32,15 @@ export function ContractVersionSelect() {
     )
   }
 
-  const SELECT_OPTIONS: BaseOptionType[] =
+  const SELECT_OPTIONS: ContractVersionOption[] =
     cvs?.map(cv => ({
       label: CV_LABELS[cv],
       value: cv,
     })) ?? []
+
+  const contractVersionOption = SELECT_OPTIONS.find(
+    option => option.value === cv,
+  )
 
   if (!cv) return null
 
@@ -51,15 +54,19 @@ export function ContractVersionSelect() {
   }
 
   return (
-    <Select
-      defaultValue={cv}
-      bordered={false}
-      className="ant-select-color-secondary"
-      onSelect={(value: CV2V3) => {
-        setCv?.(value)
-        updateRoute(value)
-      }}
+    <JuiceListbox
+      buttonClassName="border-0 bg-transparent dark:bg-transparent font-normal py-0"
       options={SELECT_OPTIONS}
+      value={contractVersionOption}
+      onChange={v => {
+        setCv?.(v.value)
+        updateRoute(v.value)
+      }}
     />
   )
+}
+
+interface ContractVersionOption {
+  label: string
+  value: CV2V3
 }

@@ -41,9 +41,6 @@ msgstr ""
 msgid "Disconnect"
 msgstr ""
 
-msgid "1 year"
-msgstr ""
-
 msgid "Art"
 msgstr ""
 
@@ -2336,9 +2333,6 @@ msgstr ""
 msgid "Since launching in November 2022 StudioDAO has raised nearly 50 ETH and is gearing up to launch their first film *Ticket to Space*, the first DAO documentary about MoonDAO sending DAO member Yan Kejun to space on a Blue Origin rocket. MoonDAO has recently voted to donate $100,000 to help fund the film's production. To learn more about the Ticket to Space documentary, listen to episode 22 of the Juicebox podcast featuring a roundtable discussion with director Fernando Urdapilleta, producer Susie Conley, MoonDAO co-founder Pablo Moncada-Larrotiz, and StudioDAO co-founders Kenny Miller and Rachel Leventhal: <0>https://podcast.juicebox.money</0>."
 msgstr ""
 
-msgid "24 hours"
-msgstr ""
-
 msgid "You would receive at least <0/>"
 msgstr ""
 
@@ -3089,9 +3083,6 @@ msgstr ""
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no ETH, or is using all of its ETH for payouts."
 msgstr ""
 
-msgid "90 days"
-msgstr ""
-
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr ""
 
@@ -3714,9 +3705,6 @@ msgid "Pay amount"
 msgstr ""
 
 msgid "CSV download failed."
-msgstr ""
-
-msgid "7 days"
 msgstr ""
 
 msgid "Enabling owner token minting isn't recommended as it allows the project owner to create unlimited tokens, which appears risky to supporters."

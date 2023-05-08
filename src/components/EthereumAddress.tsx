@@ -81,7 +81,8 @@ export default function EthereumAddress({
             className={twMerge('select-all leading-[22px]', className)}
             onClick={onClick}
             type="address"
-            value={formattedAddress}
+            value={address}
+            truncated
           />
         )}
       </span>

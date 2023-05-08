@@ -1,9 +1,8 @@
-import { Trans } from '@lingui/macro'
-import { Select } from 'antd'
-import { JuiceSelect } from 'components/inputs/JuiceSelect'
+import { t } from '@lingui/macro'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { DurationUnitsOption } from 'constants/time'
 import { ChangeEvent } from 'react'
+import { JuiceListbox } from './JuiceListbox'
 
 export interface DurationInputValue {
   duration: number | undefined
@@ -37,6 +36,14 @@ export const DurationInput: React.FC<
     handleChange({ duration: duration, unit })
   }
 
+  const handleListboxChange = (option: DurationOption) => {
+    handleChange({ duration: value?.duration ?? 0, unit: option.value })
+  }
+
+  const listboxValue =
+    durationOptions.find(option => option.value === value?.unit) ??
+    durationOptions[0]
+
   return (
     <div className="flex gap-2">
       <JuiceInput
@@ -44,30 +51,25 @@ export const DurationInput: React.FC<
         value={value?.duration ?? ''}
         onChange={handleInputChange}
       />
-      <JuiceSelect
+
+      <JuiceListbox
         className="min-w-[6.75rem] flex-1"
-        defaultValue="days"
-        value={value?.unit}
-        onChange={unit =>
-          handleChange({
-            duration: value?.duration ?? 0,
-            unit: unit as DurationUnitsOption,
-          })
-        }
-      >
-        <Select.Option value="days">
-          <Trans>Days</Trans>
-        </Select.Option>
-        <Select.Option value="hours">
-          <Trans>Hours</Trans>
-        </Select.Option>
-        <Select.Option value="minutes">
-          <Trans>Minutes</Trans>
-        </Select.Option>
-        <Select.Option value="seconds">
-          <Trans>Seconds</Trans>
-        </Select.Option>
-      </JuiceSelect>
+        options={durationOptions}
+        value={listboxValue}
+        onChange={handleListboxChange}
+      />
     </div>
   )
 }
+
+interface DurationOption {
+  label: string
+  value: DurationUnitsOption
+}
+
+const durationOptions: DurationOption[] = [
+  { label: t`Days`, value: 'days' },
+  { label: t`Hours`, value: 'hours' },
+  { label: t`Minutes`, value: 'minutes' },
+  { label: t`Seconds`, value: 'seconds' },
+]

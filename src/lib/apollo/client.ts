@@ -5,7 +5,7 @@ import {
   InMemoryCache,
 } from '@apollo/client'
 import { BigNumber } from 'ethers'
-import { isBigNumberish } from '@ethersproject/bignumber/lib/bignumber'
+import { isBigNumberish } from 'utils/bignumber'
 import { FunctionsMap, withScalars } from 'apollo-link-scalars'
 import { IntrospectionQuery, buildClientSchema } from 'graphql'
 import { isBrowser } from 'utils/isBrowser'

@@ -1,10 +1,10 @@
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { useDefaultTokenUriResolver } from 'hooks/DefaultTokenUriResolver/contracts/DefaultTokenUriResolver'
-import { TransactorInstance } from 'hooks/Transactor'
+import { useDefaultTokenUriResolver } from 'hooks/DefaultTokenUriResolver/contracts/useDefaultTokenUriResolver'
+import { TransactorInstance } from 'hooks/useTransactor'
 import { useContext } from 'react'
-import { useV2ProjectTitle } from '../ProjectTitle'
+import { useV2ProjectTitle } from '../useProjectTitle'
 
 export function useSetThemeTx(): TransactorInstance<{
   textColor: string

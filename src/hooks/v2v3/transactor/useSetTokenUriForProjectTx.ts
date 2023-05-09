@@ -1,10 +1,10 @@
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { useTokenUriResolver } from 'hooks/TokenUriResolver/contracts/TokenUriResolver'
-import { TransactorInstance } from 'hooks/Transactor'
 import { useContext } from 'react'
 import { t } from '@lingui/macro'
-import { useV2ProjectTitle } from '../ProjectTitle'
+import { TransactorInstance } from 'hooks/useTransactor'
+import { useV2ProjectTitle } from '../useProjectTitle'
+import { useTokenUriResolver } from 'hooks/TokenUriResolver/contracts/useTokenUriResolver'
 
 export function useSetTokenUriResolverForProjectTx(): TransactorInstance<{
   resolver: string

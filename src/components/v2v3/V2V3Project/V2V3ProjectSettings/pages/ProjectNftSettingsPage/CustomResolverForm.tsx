@@ -2,7 +2,7 @@ import { Trans, t } from '@lingui/macro'
 import { Button, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import { useSetTokenUriResolverForProjectTx } from 'hooks/v2v3/transactor/SetTokenUriForProjectTx'
+import { useSetTokenUriResolverForProjectTx } from 'hooks/v2v3/transactor/useSetTokenUriForProjectTx'
 import { useState } from 'react'
 import { isAddress } from 'ethers/lib/utils'
 

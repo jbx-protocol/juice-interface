@@ -11,7 +11,7 @@ import { NetworkName } from 'models/networkName'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
-import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'
+import DeploySuccessHero from '/public/assets/images/create-success-hero.gif'
 
 export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   console.info('Deploy: SUCCESS', projectId)
@@ -51,8 +51,8 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
 
   return (
     <div className="mt-4 flex flex-col items-center justify-center text-center">
-      <Image src={DeploySuccessHero} width={380} height={379} />
-      <div className="pt-8 font-display text-5xl font-bold">
+      <Image src={DeploySuccessHero} width={380} height={380} />
+      <div className="pt-4 font-display text-5xl font-bold">
         <Trans>Congratulations!</Trans>
       </div>
       <div className="mt-4 text-lg font-normal text-grey-600 dark:text-slate-200">

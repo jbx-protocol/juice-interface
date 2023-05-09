@@ -1,14 +1,14 @@
 import { AppWrapper, SEO } from 'components/common'
 import { PV_V2 } from 'constants/pv'
-import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
-import { paginateDepleteProjectsQueryCall } from 'lib/apollo/paginateDepleteProjectsQuery'
+import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
-import { cidFromUrl, ipfsPublicGatewayUrl } from 'utils/ipfs'
+import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
 import {
-  ProjectPageProps,
   getProjectStaticProps,
+  ProjectPageProps,
 } from 'utils/server/pages/props'
 import { V2V3Dashboard } from './components/V2V3Dashboard'
+import { cidFromUrl, ipfsPublicGatewayUrl } from 'utils/ipfs'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V2_PROJECTS === 'true') {

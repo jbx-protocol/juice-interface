@@ -8,7 +8,7 @@ import {
   QueryProjectsArgs,
   TrendingProjectsDocument,
 } from 'generated/graphql'
-import { client } from 'lib/apollo/client'
+import client from 'lib/apollo/client'
 import { NextApiHandler } from 'next'
 import { getSubgraphIdForProject } from 'utils/graph'
 

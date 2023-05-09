@@ -1,5 +1,5 @@
 import { PV_V2 } from 'constants/pv'
-import { paginateDepleteProjectsQueryCall } from 'lib/apollo/paginateDepleteProjectsQuery'
+import { paginateDepleteProjectsQueryCall } from 'lib/apollo'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
 

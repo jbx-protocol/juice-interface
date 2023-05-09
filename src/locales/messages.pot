@@ -986,6 +986,9 @@ msgstr ""
 msgid "This cycle's rules may lead to unexpected behavior or other risks."
 msgstr ""
 
+msgid "Recent"
+msgstr ""
+
 msgid "Project description"
 msgstr ""
 
@@ -1962,6 +1965,9 @@ msgid "Percentages"
 msgstr ""
 
 msgid "If enabled, project tokens will be minted to a custom beneficiary address. By default, project tokens will be minted to the wallet that pays this address."
+msgstr ""
+
+msgid "Highest paid"
 msgstr ""
 
 msgid "Community owned"

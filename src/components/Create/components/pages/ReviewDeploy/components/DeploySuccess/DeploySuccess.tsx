@@ -52,7 +52,7 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   return (
     <div className="mt-4 flex flex-col items-center justify-center text-center">
       <Image src={DeploySuccessHero} width={380} height={380} />
-      <div className="pt-8 font-display text-5xl font-bold">
+      <div className="pt-4 font-display text-5xl font-bold">
         <Trans>Congratulations!</Trans>
       </div>
       <div className="mt-4 text-lg font-normal text-grey-600 dark:text-slate-200">

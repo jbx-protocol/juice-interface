@@ -1,6 +1,6 @@
-import useSymbolOfERC20 from 'hooks/ERC20/SymbolOfERC20'
-import useTokenAddressOfProject from 'hooks/v1/contractReader/TokenAddressOfProject'
-import useTotalBalanceOf from 'hooks/v1/contractReader/TotalBalanceOf'
+import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'
+import useTokenAddressOfProject from 'hooks/v1/contractReader/useTokenAddressOfProject'
+import useTotalBalanceOf from 'hooks/v1/contractReader/useTotalBalanceOf'
 
 import { TokenAmount } from 'components/TokenAmount'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'

@@ -6,7 +6,7 @@ import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2V3ProjectLink from 'components/v2v3/shared/V2V3ProjectLink'
 import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { getAddress } from 'ethers/lib/utils'
-import useSubgraphQuery from 'hooks/SubgraphQuery'
+import useSubgraphQuery from 'hooks/useSubgraphQuery'
 import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
 import { isEqualAddress } from 'utils/address'
 

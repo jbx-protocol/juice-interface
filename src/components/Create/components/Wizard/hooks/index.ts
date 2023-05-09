@@ -1,2 +1,2 @@
-export * from './Page'
-export * from './Wizard'
+export * from './usePage'
+export * from './useWizard'

@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Form, Statistic } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import { TransactorInstance } from 'hooks/Transactor'
+import { TransactorInstance } from 'hooks/useTransactor'
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 

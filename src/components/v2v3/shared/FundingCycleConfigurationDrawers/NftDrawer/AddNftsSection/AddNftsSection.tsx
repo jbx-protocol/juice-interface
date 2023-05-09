@@ -4,10 +4,10 @@ import { RewardsList } from 'components/Create/components/RewardsList'
 
 import { useCallback, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
-import { useFundingCycleDrawer } from '../../hooks/FundingCycleDrawer'
+import { useFundingCycleDrawer } from '../../hooks/useFundingCycleDrawer'
 import { NftCollectionDetailsFormItems } from '../shared/NftCollectionDetailsFormItems'
-import { useAddNfts } from './hooks/AddNfts'
-import { useSaveNewCollection } from './hooks/SaveNewCollection'
+import { useAddNfts } from './hooks/useAddNfts'
+import { useSaveNewCollection } from './hooks/useSaveNewCollection'
 
 export function AddNftsSection({ onClose }: { onClose: VoidFunction }) {
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)

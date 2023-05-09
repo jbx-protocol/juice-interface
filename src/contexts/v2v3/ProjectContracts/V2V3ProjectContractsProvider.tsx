@@ -1,6 +1,6 @@
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
-import { useV2V3ProjectContracts } from 'hooks/v2v3/V2V3ProjectContracts'
-import { useLoadV2V3ProjectCvs } from 'hooks/v2v3/V2V3ProjectCvs'
+import { useLoadV2V3ProjectCvs } from 'hooks/v2v3/useV2V3ProjectCvs'
+import { useV2V3ProjectContracts } from './useV2V3ProjectContracts'
 
 export const V2V3ProjectContractsProvider: React.FC<
   React.PropsWithChildren<{

@@ -1,7 +1,7 @@
 import { CloseOutlined } from '@ant-design/icons'
 import { Image, ImageProps } from 'antd'
 import { JuiceVideoPreview } from 'components/NftRewards/NftVideo/JuiceVideoPreview'
-import { useContentType } from 'hooks/ContentType'
+import { useContentType } from 'hooks/useContentType'
 import { stopPropagation } from 'react-stop-propagation'
 import { fileTypeIsVideo } from 'utils/nftRewards'
 

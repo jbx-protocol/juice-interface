@@ -1,4 +1,4 @@
-import useSubgraphQuery from 'hooks/SubgraphQuery'
+import useSubgraphQuery from 'hooks/useSubgraphQuery'
 
 /**
  * Fetches project data from the subgraph, using the project id as a key.

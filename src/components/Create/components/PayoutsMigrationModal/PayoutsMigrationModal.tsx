@@ -11,7 +11,7 @@ import { BigNumber } from 'ethers'
 import { FormItemInput } from 'models/formItemInput'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
-import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
+import { useEditingPayoutSplits } from 'redux/hooks/useEditingPayoutSplits'
 import { inputMustExistRule } from 'utils/antdRules'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 

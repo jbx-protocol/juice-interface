@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { JuiceModalProps } from 'components/JuiceModal'
 import { useWallet } from 'hooks/Wallet'
-import { useWalletSignIn } from 'hooks/WalletSignIn'
+import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { Announcement } from './Announcement'

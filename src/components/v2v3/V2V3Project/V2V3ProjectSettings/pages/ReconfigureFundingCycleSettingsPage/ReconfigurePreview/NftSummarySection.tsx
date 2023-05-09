@@ -7,7 +7,7 @@ import Paragraph from 'components/Paragraph'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
-import { useAppSelector } from 'redux/hooks/AppSelector'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { isZeroAddress } from 'utils/address'
 import { classNames } from 'utils/classNames'
 

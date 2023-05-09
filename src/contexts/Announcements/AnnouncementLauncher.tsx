@@ -1,7 +1,7 @@
 import { Announcements } from 'constants/announcements'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useIsUserAddress } from 'hooks/IsUserAddress'
+import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { Announcement } from 'models/announcement'
 import { useRouter } from 'next/router'
 import React, { useCallback, useContext, useEffect } from 'react'

@@ -1,7 +1,7 @@
 import { useWallet } from 'hooks/Wallet'
 import { useEffect } from 'react'
-import { useQwestiveSDKProvider } from './QwestiveReferral'
 import { SDKContext } from './QwestiveReferralContext'
+import { useQwestiveSDKProvider } from './useQwestiveReferral'
 
 const QwestiveSDKContextProvider: React.FC<
   React.PropsWithChildren<unknown>

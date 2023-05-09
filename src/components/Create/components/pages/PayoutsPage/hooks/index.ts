@@ -1,1 +1,1 @@
-export * from './PayoutsForm'
+export * from './usePayoutsForm'

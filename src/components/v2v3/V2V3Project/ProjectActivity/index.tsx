@@ -1,12 +1,13 @@
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { t, Trans } from '@lingui/macro'
-import { Button, Divider, Select } from 'antd'
+import { Button, Divider } from 'antd'
 import AddToBalanceEventElem from 'components/activityEventElems/AddToBalanceEventElem'
 import BurnEventElem from 'components/activityEventElems/BurnEventElem'
 import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
 import PayEventElem from 'components/activityEventElems/PayEventElem'
 import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateEventElem'
 import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -18,7 +19,7 @@ import DeployETHERC20ProjectPayerEventElem from './eventElems/DeployETHERC20Proj
 import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
 import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
 import SetFundAccessConstraintsEventElem from './eventElems/SetFundAccessConstraintsEventElem'
-import { EventFilter, useV2V3ProjectActivity } from './hooks/ProjectActivity'
+import { EventFilter, useV2V3ProjectActivity } from './hooks/useProjectActivity'
 
 export function V2V3ProjectActivity() {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -34,6 +35,8 @@ export function V2V3ProjectActivity() {
     isLoading,
     isFetchingNextPage,
   } = useV2V3ProjectActivity({ eventFilter, projectId })
+
+  const activityOption = activityOptions.find(o => o.value === eventFilter)
 
   const count =
     projectEvents?.pages?.reduce((prev, cur) => prev + cur.length, 0) ?? 0
@@ -158,48 +161,12 @@ export function V2V3ProjectActivity() {
             />
           )}
 
-          <Select
-            className="w-[200px] text-start"
-            value={eventFilter}
-            onChange={val => setEventFilter(val)}
-          >
-            <Select.Option value="all">
-              <Trans>All events</Trans>
-            </Select.Option>
-            <Select.Option value="pay">
-              <Trans>Paid</Trans>
-            </Select.Option>
-            <Select.Option value="redeem">
-              <Trans>Redeemed</Trans>
-            </Select.Option>
-            <Select.Option value="burn">
-              <Trans>Burned</Trans>
-            </Select.Option>
-            <Select.Option value="distributePayouts">
-              <Trans>Sent payouts</Trans>
-            </Select.Option>
-            <Select.Option value="distributeTokens">
-              <Trans>Sent reserved tokens</Trans>
-            </Select.Option>
-            <Select.Option value="configure">
-              <Trans>Edited cycle</Trans>
-            </Select.Option>
-            <Select.Option value="setFundAccessConstraints">
-              <Trans>Edited payout</Trans>
-            </Select.Option>
-            <Select.Option value="addToBalance">
-              <Trans>Transferred ETH to project</Trans>
-            </Select.Option>
-            <Select.Option value="deployERC20">
-              <Trans>Deployed ERC20</Trans>
-            </Select.Option>
-            <Select.Option value="deployETHERC20ProjectPayer">
-              <Trans>Created a project payer address</Trans>
-            </Select.Option>
-            <Select.Option value="projectCreate">
-              <Trans>Created project</Trans>
-            </Select.Option>
-          </Select>
+          <JuiceListbox
+            className="w-[200px]"
+            options={activityOptions}
+            value={activityOption}
+            onChange={v => setEventFilter(v.value)}
+          />
         </div>
       </div>
 
@@ -214,3 +181,26 @@ export function V2V3ProjectActivity() {
     </div>
   )
 }
+
+interface ActivityOption {
+  label: string
+  value: EventFilter
+}
+
+const activityOptions: ActivityOption[] = [
+  { label: t`All events`, value: 'all' },
+  { label: t`Paid`, value: 'pay' },
+  { label: t`Redeemed`, value: 'redeem' },
+  { label: t`Burned`, value: 'burn' },
+  { label: t`Sent payouts`, value: 'distributePayouts' },
+  { label: t`Sent reserved tokens`, value: 'distributeTokens' },
+  { label: t`Edited cycle`, value: 'configure' },
+  { label: t`Edited payout`, value: 'setFundAccessConstraints' },
+  { label: t`Transferred ETH to project`, value: 'addToBalance' },
+  { label: t`Deployed ERC20`, value: 'deployERC20' },
+  {
+    label: t`Created a project payer address`,
+    value: 'deployETHERC20ProjectPayer',
+  },
+  { label: t`Created project`, value: 'projectCreate' },
+]

@@ -1,8 +1,8 @@
 import { Steps as AntSteps, Progress } from 'antd'
-import useMobile from 'hooks/Mobile'
-import { useModal } from 'hooks/Modal'
+import useMobile from 'hooks/useMobile'
+import { useModal } from 'hooks/useModal'
 import { useCallback } from 'react'
-import { useSteps } from '../hooks/Steps'
+import { useSteps } from '../hooks/useSteps'
 import { MobileProgressModal } from './MobileProgressModal'
 
 export const Steps = () => {

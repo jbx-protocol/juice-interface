@@ -1,6 +1,6 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { ImageProps } from 'antd'
-import { useContentType } from 'hooks/ContentType'
+import { useContentType } from 'hooks/useContentType'
 import { useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'

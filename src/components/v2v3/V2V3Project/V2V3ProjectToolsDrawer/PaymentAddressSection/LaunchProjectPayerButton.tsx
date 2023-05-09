@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { TransactorInstance } from 'hooks/Transactor'
-import { DeployProjectPayerTxArgs } from 'hooks/v2v3/transactor/DeployProjectPayerTx'
+import { TransactorInstance } from 'hooks/useTransactor'
+import { DeployProjectPayerTxArgs } from 'hooks/v2v3/transactor/useDeployProjectPayerTx'
 import { useState } from 'react'
 import { LaunchProjectPayerModal } from '../../modals/LaunchProjectPayerModal'
 

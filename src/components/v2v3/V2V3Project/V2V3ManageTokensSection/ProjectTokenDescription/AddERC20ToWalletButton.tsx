@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { TextButton } from 'components/buttons/TextButton'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useMetamask, useProviderIsMetamask } from 'hooks/Wallet/Metamask'
+import { useMetamask, useProviderIsMetamask } from 'hooks/Wallet/useMetamask'
 import { useContext } from 'react'
 
 const AddERC20ToWalletButton = () => {

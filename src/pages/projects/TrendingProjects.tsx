@@ -1,7 +1,7 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
-import { useTrendingProjects } from 'hooks/Projects'
+import { useTrendingProjects } from 'hooks/useProjects'
 
 import RankingExplanation from './RankingExplanation'
 import TrendingProjectCard from './TrendingProjectCard'

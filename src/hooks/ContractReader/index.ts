@@ -1,2 +1,2 @@
-export * from './ContractReader'
-export * from './ContractReadValue'
+export * from './useContractReadValue'
+export * from './useContractReader'

@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
-import { Button, Col, Form, Row, Select } from 'antd'
+import { Button, Form } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { JuiceSelect } from 'components/inputs/JuiceSelect'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
@@ -19,23 +19,26 @@ export default function Contact() {
   const [loading, setLoading] = useState<boolean>(false)
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
+  const [contactType, setContactType] = useState<ListboxOption>(
+    contactTypeOptions[0],
+  )
 
-  const [form] = Form.useForm()
+  const [form] = Form.useForm<FormValues>()
 
-  const onFormSubmit = async () => {
+  const onFormSubmit = async (values: FormValues) => {
     setError(false)
     setSuccess(false)
 
     try {
       const metadata = {
-        name: form.getFieldValue('name'),
-        contact: form.getFieldValue('contact'),
-        contactPlatform: form.getFieldValue('contactPlatform'),
-        subject: form.getFieldValue('subject'),
+        name: values.name,
+        contact: values.contact,
+        contactPlatform: values.contactPlatform,
+        subject: values.subject.value,
       }
 
       setLoading(true)
-      await createContactMessage(form.getFieldValue('message'), metadata)
+      await createContactMessage(values.message, metadata)
 
       setSuccess(true)
     } catch (e) {
@@ -46,7 +49,7 @@ export default function Contact() {
     }
   }
 
-  const handleSelect = (option: string) => {
+  const handleSelect = (option: ListboxOption) => {
     const examples = new Map<string, string>([
       ['email', 'banny@juicebox.money'],
       ['discord', 'banny#4200'],
@@ -54,34 +57,25 @@ export default function Contact() {
       ['telegram', '@banny'],
     ])
 
-    setContactPlaceholder(examples.get(option) ?? 'Your contact')
+    setContactType(option)
+    setContactPlaceholder(examples.get(option.value) ?? 'Your contact')
   }
 
   const contactTypes = (
-    <Form.Item
-      name="contactPlatform"
-      initialValue="email"
-      className="mb-0 h-full rounded-lg"
-    >
-      <Select
-        className={`min-w-[9em] border-smoke-300 bg-smoke-50 dark:border-slate-300 dark:bg-slate-600`}
-        onSelect={handleSelect}
-        options={[
-          { value: 'email', label: t`Email` },
-          { value: 'discord', label: t`Discord` },
-          { value: 'twitter', label: t`Twitter` },
-          { value: 'telegram', label: t`Telegram` },
-        ]}
-        size="large"
-      />
-    </Form.Item>
+    <JuiceListbox
+      className="min-w-[9em]"
+      buttonClassName="py-2.5"
+      options={contactTypeOptions}
+      value={contactType}
+      onChange={handleSelect}
+    />
   )
 
   return (
     <>
-      <div className="mx-auto mt-5 mb-10 max-w-5xl">
-        <Row align="middle" gutter={60}>
-          <Col xs={24} md={13}>
+      <div className="mx-auto mt-5 mb-36 max-w-5xl px-4 lg:px-0">
+        <div className="flex gap-14">
+          <div className="w-full lg:w-7/12">
             <h1 className="m-0 my-4 font-display text-4xl">
               <Trans>Contact</Trans>
             </h1>
@@ -117,23 +111,11 @@ export default function Contact() {
               <Form.Item
                 name="subject"
                 label={t`Subject`}
-                initialValue="project help"
+                initialValue={subjectOptions[0]}
               >
-                <JuiceSelect
-                  options={[
-                    {
-                      value: 'project help',
-                      label: t`Get help planning or setting up my project.`,
-                    },
-                    { value: 'feature request', label: t`Request a feature.` },
-                    {
-                      value: 'media inquiry',
-                      label: t`I have a media inquiry.`,
-                    },
-                    { value: 'general question', label: t`I have a question.` },
-                    { value: 'other', label: t`Other.` },
-                  ]}
-                  size="large"
+                <JuiceListbox
+                  buttonClassName="py-2.5"
+                  options={subjectOptions}
                 />
               </Form.Item>
               <Form.Item
@@ -175,21 +157,55 @@ export default function Contact() {
                 </span>
               )}
             </p>
-          </Col>
+          </div>
 
-          <Col xs={24} md={11} className="hidden md:flex">
-            <Image
-              src={
-                forThemeOption?.({
-                  light: contactHeroLight,
-                  dark: contactHeroDark,
-                }) ?? ''
-              }
-              alt="Banny making a phone call"
-            />
-          </Col>
-        </Row>
+          <div className="hidden items-center lg:flex lg:w-5/12">
+            <div>
+              <Image
+                src={
+                  forThemeOption?.({
+                    light: contactHeroLight,
+                    dark: contactHeroDark,
+                  }) ?? ''
+                }
+                alt="Banny making a phone call"
+                height={546}
+                width={437}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )
 }
+
+interface FormValues {
+  name: string
+  contact: string
+  contactPlatform: string
+  subject: ListboxOption
+  message: string
+}
+
+interface ListboxOption {
+  value: string
+  label: string
+}
+const contactTypeOptions: ListboxOption[] = [
+  { value: 'email', label: t`Email` },
+  { value: 'discord', label: t`Discord` },
+  { value: 'twitter', label: t`Twitter` },
+  { value: 'telegram', label: t`Telegram` },
+]
+
+const subjectOptions: ListboxOption[] = [
+  {
+    value: 'project help',
+    label: t`Get help planning or setting up my project.`,
+  },
+  { value: 'feature request', label: t`Request a feature.` },
+  { value: 'media inquiry', label: t`I have a media inquiry.` },
+  { value: 'general question', label: t`I have a question.` },
+  { value: 'other', label: t`Other.` },
+]

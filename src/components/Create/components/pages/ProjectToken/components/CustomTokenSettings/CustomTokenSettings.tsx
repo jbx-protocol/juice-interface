@@ -13,14 +13,14 @@ import {
   PAUSE_TRANSFERS_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
-import useMobile from 'hooks/Mobile'
-import { useAppSelector } from 'redux/hooks/AppSelector'
-import { useEditingDistributionLimit } from 'redux/hooks/EditingDistributionLimit'
+import useMobile from 'hooks/useMobile'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
 import { inputMustExistRule } from 'utils/antdRules'
 import { formatAmount } from 'utils/format/formatAmount'
 import { MAX_DISTRIBUTION_LIMIT, MAX_MINT_RATE } from 'utils/v2v3/math'
-import * as ProjectTokenForm from '../../hooks/ProjectTokenForm'
-import { ProjectTokensFormProps } from '../../hooks/ProjectTokenForm'
+import * as ProjectTokenForm from '../../hooks/useProjectTokenForm'
+import { ProjectTokensFormProps } from '../../hooks/useProjectTokenForm'
 import { ReservedTokenRateCallout, ReservedTokensList } from './components'
 
 const calculateMintRateAfterDiscount = ({

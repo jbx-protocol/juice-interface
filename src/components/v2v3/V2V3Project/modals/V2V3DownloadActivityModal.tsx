@@ -4,7 +4,7 @@ import { Button, Modal, ModalProps } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { useBlockNumber } from 'hooks/BlockNumber'
+import { useBlockNumber } from 'hooks/useBlockNumber'
 import { useContext, useEffect, useState } from 'react'
 import {
   downloadAdditionsToBalance,

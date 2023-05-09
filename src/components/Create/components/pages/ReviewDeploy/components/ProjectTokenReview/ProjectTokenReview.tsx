@@ -7,9 +7,9 @@ import {
   formatReservedRate,
 } from 'utils/v2v3/math'
 import { ReservedTokensList } from '../../../ProjectToken/components/CustomTokenSettings/components'
-import * as ProjectTokenForm from '../../../ProjectToken/hooks/ProjectTokenForm'
+import * as ProjectTokenForm from '../../../ProjectToken/hooks/useProjectTokenForm'
 import { ReviewDescription } from '../ReviewDescription'
-import { useProjectTokenReview } from './hooks/ProjectTokenReview'
+import { useProjectTokenReview } from './hooks/useProjectTokenReview'
 
 export const ProjectTokenReview = () => {
   const {

@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
-import { Select } from 'antd'
 import CurrencySymbol from 'components/CurrencySymbol'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { PV } from 'models/pv'
 import moment from 'moment'
@@ -16,12 +16,12 @@ import {
 } from 'recharts'
 import { classNames } from 'utils/classNames'
 import { daysToMillis } from './daysToMillis'
-import { useDuration } from './hooks/Duration'
+import { useDuration } from './hooks/useDuration'
 import { loadBlockRefs } from './loadBlockRefs'
 import { loadDomain } from './loadDomain'
 import { loadProjectEvents } from './loadProjectEvents'
 import { loadTapEvents } from './loadTapEvents'
-import { EventRef, ShowGraph } from './types'
+import { Duration, EventRef, ShowGraph } from './types'
 
 const now = moment.now() - 5 * 60 * 1000 // 5 min ago
 
@@ -90,6 +90,12 @@ export default function VolumeChart({
     // loadEvents(blockRefs)
   }, [pv, duration, projectId, showGraph])
 
+  const durationSelection: DurationOption = useMemo(() => {
+    return (
+      durationOptions?.find(o => o.value === duration) ?? durationOptions[0]
+    )
+  }, [duration])
+
   const axisStyle: SVGProps<SVGTextElement> = {
     fontSize: 11,
     fill: colors.text.tertiary,
@@ -150,27 +156,13 @@ export default function VolumeChart({
           </div>
         </div>
 
-        <Select
-          className="small w-24 text-xs uppercase"
-          value={duration}
-          onChange={val => setDuration(val)}
-        >
-          <Select.Option value={1}>
-            <Trans>24 hours</Trans>
-          </Select.Option>
-          <Select.Option value={7}>
-            <Trans>7 days</Trans>
-          </Select.Option>
-          <Select.Option value={30}>
-            <Trans>30 days</Trans>
-          </Select.Option>
-          <Select.Option value={90}>
-            <Trans>90 days</Trans>
-          </Select.Option>
-          <Select.Option value={365}>
-            <Trans>1 year</Trans>
-          </Select.Option>
-        </Select>
+        <JuiceListbox
+          className="w-24"
+          buttonClassName="uppercase bg-transparent dark:bg-transparent text-secondary py-1.5 pr-0 text-xs dark:text-slate-200 font-medium dark:border-slate-400"
+          options={durationOptions}
+          value={durationSelection}
+          onChange={d => setDuration(d.value)}
+        />
       </div>
       <div className="relative">
         <ResponsiveContainer width={'100%'} height={height}>
@@ -299,3 +291,16 @@ export default function VolumeChart({
     </div>
   )
 }
+
+interface DurationOption {
+  label: string
+  value: Duration
+}
+
+const durationOptions: DurationOption[] = [
+  { label: '24 hours', value: 1 },
+  { label: '7 days', value: 7 },
+  { label: '30 days', value: 30 },
+  { label: '90 days', value: 90 },
+  { label: '1 year', value: 365 },
+]

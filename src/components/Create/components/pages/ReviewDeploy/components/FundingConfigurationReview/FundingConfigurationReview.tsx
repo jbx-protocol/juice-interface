@@ -3,7 +3,7 @@ import { Tooltip } from 'antd'
 import { twMerge } from 'tailwind-merge'
 import { PayoutsList } from '../../../PayoutsPage/components/PayoutsList'
 import { ReviewDescription } from '../ReviewDescription'
-import { useFundingConfigurationReview } from './hooks/FundingConfigurationReview'
+import { useFundingConfigurationReview } from './hooks/useFundingConfigurationReview'
 
 export const FundingConfigurationReview = () => {
   const {

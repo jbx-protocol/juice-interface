@@ -1,36 +1,27 @@
-import { Trans } from '@lingui/macro'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { Skeleton } from 'antd'
-import { PV_V1, PV_V2 } from 'constants/pv'
-import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
-import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
-import { constants } from 'ethers'
-
-import { BigNumber } from 'ethers'
-import { useProjectHandleText } from 'hooks/ProjectHandleText'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import useSubgraphQuery from 'hooks/SubgraphQuery'
+import { PV_V2 } from 'constants/pv'
+import { useProjectHandleText } from 'hooks/useProjectHandleText'
+import { useProjectMetadata } from 'hooks/useProjectMetadata'
+import useSubgraphQuery from 'hooks/useSubgraphQuery'
 import { ProjectTagName } from 'models/project-tags'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
+import { isHardArchived } from 'utils/archived'
 import { formatDate } from 'utils/format/formatDate'
 import { v2v3ProjectRoute } from 'utils/routes'
+
+import { ArchivedBadge } from './ArchivedBadge'
+import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 import { ProjectTagsList } from './ProjectTags/ProjectTagsList'
-import ETHAmount from './currency/ETHAmount'
 
 export type ProjectCardProject = Pick<
   Project,
   'id' | 'handle' | 'volume' | 'createdAt' | 'terminal' | 'projectId' | 'pv'
 > & { tags?: ProjectTagName[] | null; metadataUri: string | null }
-
-function ArchivedBadge() {
-  return (
-    <div className="absolute top-0 right-0 bg-smoke-100 py-0.5 px-1 text-xs font-medium text-grey-400 dark:bg-slate-600 dark:text-slate-200">
-      <Trans>ARCHIVED</Trans>
-    </div>
-  )
-}
 
 function useProjectCardData(project?: ProjectCardProject | BigNumber) {
   // Get ProjectCardProject object if this component was passed a projectId (bigNumber)
@@ -113,11 +104,7 @@ export default function ProjectCard({
       : projectCardHref
 
   const isArchived =
-    (projectCardData.pv === PV_V1 &&
-      V1ArchivedProjectIds.includes(projectCardData.projectId)) ||
-    (projectCardData.pv === PV_V2 &&
-      V2ArchivedProjectIds.includes(projectCardData.projectId)) ||
-    metadata?.archived
+    isHardArchived({ ...projectCardData }) || metadata?.archived
 
   const tags = (project as ProjectCardProject).tags
 

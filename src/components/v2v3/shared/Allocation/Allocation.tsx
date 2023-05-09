@@ -5,7 +5,7 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { createContext, useContext } from 'react'
 import { AllocationItem } from './AllocationItem'
 import { AllocationList } from './AllocationList'
-import { useAllocation } from './hooks/Allocation'
+import { useAllocation } from './hooks/useAllocation'
 
 export type AllocationSplit = Split & { id: string }
 

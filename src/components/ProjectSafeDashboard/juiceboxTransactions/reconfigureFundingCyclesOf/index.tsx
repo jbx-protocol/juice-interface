@@ -1,8 +1,8 @@
 import { t } from '@lingui/macro'
-import { useTransactionVersion } from './hooks/TransactionVersion'
 import { SafeTransactionComponentProps } from '../../SafeTransaction'
 import { TransactionCollapse } from '../../TransactionCollapse'
 import { ReconfigureRichPreview } from './ReconfigurationRichPreview'
+import { useTransactionVersion } from './hooks/useTransactionVersion'
 
 export function ReconfigureFundingCyclesOfTransaction({
   transaction,

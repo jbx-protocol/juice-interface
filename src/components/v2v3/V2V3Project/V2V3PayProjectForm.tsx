@@ -1,6 +1,6 @@
 import { PayProjectForm } from 'components/Project/PayProjectForm'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/ValidatePrimaryEthTerminal'
+import { useValidatePrimaryEthTerminal } from 'hooks/v2v3/useValidatePrimaryEthTerminal'
 import { useContext } from 'react'
 
 export function V2V3PayProjectForm() {

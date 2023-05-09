@@ -4,8 +4,8 @@ import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2 } from 'constants/pv'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
-import { useProjectTrendingPercentageIncrease } from 'hooks/Projects'
+import { useProjectMetadata } from 'hooks/useProjectMetadata'
+import { useProjectTrendingPercentageIncrease } from 'hooks/useProjects'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
 import { v2v3ProjectRoute } from 'utils/routes'
@@ -37,6 +37,7 @@ export default function TrendingProjectCard({
     trendingVolume: project.trendingVolume,
     totalVolume: project.volume,
   })
+
   const percentGainText = project.createdWithinTrendingWindow
     ? t`New`
     : percentageGain === Infinity

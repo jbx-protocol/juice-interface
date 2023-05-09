@@ -1,8 +1,9 @@
 import { FilterOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Collapse, Select } from 'antd'
+import { Collapse } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-import { useTagCounts } from 'hooks/TagCounts'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
+import { useTagCounts } from 'hooks/useTagCounts'
 import { DBProjectQueryOpts } from 'models/dbProject'
 import {
   ProjectTagName,
@@ -46,6 +47,10 @@ export default function ProjectsFilterAndSort({
 }) {
   const [tagsIsOpen, setTagsIsOpen] = useState<boolean>(false)
   const [filterIsOpen, setFilterIsOpen] = useState<boolean>(false)
+
+  const projectFilterOption = projectFilterOptions.find(
+    option => option.value === orderBy,
+  )
 
   // Close collapse when clicking anywhere in the window except the collapse items
   useEffect(() => {
@@ -170,20 +175,24 @@ export default function ProjectsFilterAndSort({
         </CollapsePanel>
       </Collapse>
 
-      <Select className="my-2 ml-4 w-44" value={orderBy} onChange={setOrderBy}>
-        <Select.Option value="total_paid">
-          <Trans>Total raised</Trans>
-        </Select.Option>
-        <Select.Option value="created_at">
-          <Trans>Date created</Trans>
-        </Select.Option>
-        <Select.Option value="current_balance">
-          <Trans>Current balance</Trans>
-        </Select.Option>
-        <Select.Option value="payments_count">
-          <Trans>Payments</Trans>
-        </Select.Option>
-      </Select>
+      <JuiceListbox
+        options={projectFilterOptions}
+        value={projectFilterOption}
+        onChange={v => setOrderBy(v.value)}
+        className="my-2 ml-4 w-44"
+      />
     </div>
   )
 }
+
+interface ProjectFilterOption {
+  label: string
+  value: OrderByOption
+}
+
+const projectFilterOptions: ProjectFilterOption[] = [
+  { label: t`Total raised`, value: 'total_paid' },
+  { label: t`Date created`, value: 'created_at' },
+  { label: t`Current balance`, value: 'current_balance' },
+  { label: t`Payments`, value: 'payments_count' },
+]

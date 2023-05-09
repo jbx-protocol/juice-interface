@@ -1,7 +1,7 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { BigNumber } from 'ethers'
-import { useModal } from 'hooks/Modal'
+import { useModal } from 'hooks/useModal'
 import { ReactNode, useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { fromWad, parseWad } from 'utils/format/formatNumber'

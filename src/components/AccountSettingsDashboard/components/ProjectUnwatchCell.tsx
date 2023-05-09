@@ -1,5 +1,5 @@
-import { useProjectHandleText } from 'hooks/ProjectHandleText'
-import { useProjectMetadata } from 'hooks/ProjectMetadata'
+import { useProjectHandleText } from 'hooks/useProjectHandleText'
+import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'

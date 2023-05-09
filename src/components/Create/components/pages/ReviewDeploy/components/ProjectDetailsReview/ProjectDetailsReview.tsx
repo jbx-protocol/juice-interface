@@ -2,7 +2,7 @@ import { t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
-import { useAppSelector } from 'redux/hooks/AppSelector'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { ReviewDescription } from '../ReviewDescription'
 
 export const ProjectDetailsReview = () => {

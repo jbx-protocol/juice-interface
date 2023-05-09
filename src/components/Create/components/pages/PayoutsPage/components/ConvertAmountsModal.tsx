@@ -10,8 +10,8 @@ import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import {
   ReduxDistributionLimit,
   useEditingDistributionLimit,
-} from 'redux/hooks/EditingDistributionLimit'
-import { useEditingPayoutSplits } from 'redux/hooks/EditingPayoutSplits'
+} from 'redux/hooks/useEditingDistributionLimit'
+import { useEditingPayoutSplits } from 'redux/hooks/useEditingPayoutSplits'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'

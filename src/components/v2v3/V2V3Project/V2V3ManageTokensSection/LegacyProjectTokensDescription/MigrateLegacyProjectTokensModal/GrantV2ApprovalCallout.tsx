@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { Callout } from 'components/Callout'
-import { useV2SetTransferPermissionTx } from 'hooks/JBV3Token/transactor/V2SetTransferPermissionTx'
+import { useV2SetTransferPermissionTx } from 'hooks/JBV3Token/transactor/useV2SetTransferPermissionTx'
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 

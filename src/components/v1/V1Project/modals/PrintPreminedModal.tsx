@@ -7,7 +7,7 @@ import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { constants } from 'ethers'
 
 import { isAddress } from 'ethers/lib/utils'
-import { usePrintTokensTx } from 'hooks/v1/transactor/PrintTokensTx'
+import { usePrintTokensTx } from 'hooks/v1/transactor/usePrintTokensTx'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
 

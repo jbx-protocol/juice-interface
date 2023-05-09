@@ -4,9 +4,9 @@ import { PROJECT_PAYER_ADDRESS_EXPLANATION } from 'components/Explanations'
 import { PaymentAddressesModal } from 'components/v2v3/V2V3Project/modals/PaymentAddressesModal'
 import { LaunchProjectPayerButton } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer/PaymentAddressSection/LaunchProjectPayerButton'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { useProjectPayers } from 'hooks/ProjectPayers'
-import { TransactorInstance } from 'hooks/Transactor'
-import { DeployProjectPayerTxArgs } from 'hooks/v2v3/transactor/DeployProjectPayerTx'
+import { useProjectPayers } from 'hooks/useProjectPayers'
+import { TransactorInstance } from 'hooks/useTransactor'
+import { DeployProjectPayerTxArgs } from 'hooks/v2v3/transactor/useDeployProjectPayerTx'
 import { useContext, useState } from 'react'
 
 export function PaymentAddressSection({

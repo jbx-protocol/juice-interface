@@ -1,4 +1,4 @@
-import useSubgraphQuery from 'hooks/SubgraphQuery'
+import useSubgraphQuery from 'hooks/useSubgraphQuery'
 
 export const useOurMissionSession = () => {
   const { data: protocolLogs, isLoading } = useSubgraphQuery({

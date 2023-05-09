@@ -1,1 +1,1 @@
-export { useAddToBalanceTx } from './AddToBalanceTx'
+export { useAddToBalanceTx } from './useAddToBalanceTx'

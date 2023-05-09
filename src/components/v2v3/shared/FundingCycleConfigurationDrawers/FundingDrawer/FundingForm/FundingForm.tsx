@@ -12,8 +12,8 @@ import isEqual from 'lodash/isEqual'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { useAppDispatch } from 'redux/hooks/AppDispatch'
-import { useAppSelector } from 'redux/hooks/AppSelector'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   DEFAULT_FUNDING_CYCLE_METADATA,
   editingV2ProjectActions,
@@ -37,12 +37,14 @@ import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { SerializedV2V3FundAccessConstraint } from 'utils/v2v3/serializers'
 import { DistributionSplitsSection } from './DistributionSplitsSection'
-import DurationInputAndSelect from './DurationInputAndSelect'
+import DurationInputAndSelect, {
+  DURATION_UNIT_OPTIONS_FC,
+} from './DurationInputAndSelect'
 import { FundingCycleExplainerCollapse } from './FundingCycleExplainerCollapse'
 
 type FundingFormFields = {
   duration?: string
-  durationUnit?: DurationUnitsOption
+  durationUnit?: { label: string; value: DurationUnitsOption }
   durationEnabled?: boolean
   totalSplitsPercentage?: number
 }
@@ -156,7 +158,9 @@ export function FundingForm({
     const durationUnit = deriveDurationUnit(durationSeconds)
 
     fundingForm.setFieldsValue({
-      durationUnit: durationUnit,
+      durationUnit: DURATION_UNIT_OPTIONS_FC.find(
+        v => v.value === durationUnit,
+      ),
       duration: secondsToOtherUnit({
         duration: durationSeconds,
         unit: durationUnit,
@@ -193,11 +197,11 @@ export function FundingForm({
       }
 
       const duration = fields?.duration ? parseInt(fields?.duration) : 0
-      const durationUnit = fields?.durationUnit ?? 'days'
+      const durationUnit = fields?.durationUnit ?? DURATION_UNIT_OPTIONS_FC[0]
 
       const durationInSeconds = otherUnitToSeconds({
         duration: duration,
-        unit: durationUnit,
+        unit: durationUnit.value,
       }).toString()
 
       dispatch(
@@ -329,11 +333,7 @@ export function FundingForm({
           </FormItemWarningText>
         ) : null}
 
-        {durationEnabled && (
-          <DurationInputAndSelect
-            defaultDurationUnit={fundingForm.getFieldValue('durationUnit')}
-          />
-        )}
+        {durationEnabled && <DurationInputAndSelect />}
 
         <div>
           <FundingCycleExplainerCollapse />

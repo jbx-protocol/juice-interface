@@ -1,5 +1,5 @@
-import { useEtherPrice } from 'contexts/EtherPrice/EtherPrice'
 import { EtherPriceContext } from 'contexts/EtherPrice/EtherPriceContext'
+import { useEtherPrice } from 'contexts/EtherPrice/useEtherPrice'
 
 export const EtherPriceProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,

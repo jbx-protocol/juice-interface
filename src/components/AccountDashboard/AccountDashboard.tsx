@@ -1,6 +1,6 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Select, Tabs } from 'antd'
+import { Button, Tabs } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Grid from 'components/Grid'
 import { Etherscan } from 'components/icons/Etherscan'
@@ -10,17 +10,13 @@ import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
 import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { SocialButton } from 'components/SocialButton'
-import WalletContributionCard from 'components/WalletContributionCard'
-import {
-  OrderDirection,
-  Participant_OrderBy,
-  useWalletContributionsQuery,
-} from 'generated/graphql'
 import useMobile from 'hooks/useMobile'
-import { useMyProjectsQuery } from 'hooks/useProjects'
+import {
+  useContributedProjectsQuery,
+  useMyProjectsQuery,
+} from 'hooks/useProjects'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useWallet } from 'hooks/Wallet'
-import { client } from 'lib/apollo/client'
 import { Profile } from 'models/database'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -40,26 +36,14 @@ function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
 }
 
 function ContributedList({ address }: { address: string }) {
-  const [orderBy, setOrderBy] = useState<Participant_OrderBy>(
-    Participant_OrderBy.volume,
-  )
-
-  const { data, loading: contributionsLoading } = useWalletContributionsQuery({
-    client,
-    variables: {
-      wallet: address.toLowerCase(),
-      orderBy,
-      orderDirection: OrderDirection.desc,
-    },
-  })
-
-  const contributions = data?.participants
+  const { data: contributedProjects, isLoading: myProjectsLoading } =
+    useContributedProjectsQuery(address)
 
   const { userAddress } = useWallet()
 
-  if (contributionsLoading) return <Loading />
+  if (myProjectsLoading) return <Loading />
 
-  if (!contributions || contributions.length === 0)
+  if (!contributedProjects || contributedProjects.length === 0)
     return (
       <span>
         {address === userAddress ? (
@@ -83,24 +67,7 @@ function ContributedList({ address }: { address: string }) {
       </span>
     )
 
-  return (
-    <div>
-      <Select className="mb-6 w-44" value={orderBy} onChange={setOrderBy}>
-        <Select.Option value={Participant_OrderBy.volume}>
-          <Trans>Highest paid</Trans>
-        </Select.Option>
-        <Select.Option value={Participant_OrderBy.lastPaidTimestamp}>
-          <Trans>Recent</Trans>
-        </Select.Option>
-      </Select>
-
-      <Grid>
-        {contributions?.map(c => (
-          <WalletContributionCard contribution={c} key={c.project.id} />
-        ))}
-      </Grid>
-    </div>
-  )
+  return <ProjectsList projects={contributedProjects} />
 }
 
 function MyProjectsList({ address }: { address: string }) {

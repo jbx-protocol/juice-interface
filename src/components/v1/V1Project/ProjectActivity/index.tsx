@@ -53,7 +53,7 @@ export function V1ProjectActivity() {
   const [eventFilter, setEventFilter] = useState<EventFilter>('all')
 
   const eventFilterOption = useMemo(
-    () => activityOptions.find(o => o.value === eventFilter),
+    () => activityOptions().find(o => o.value === eventFilter),
     [eventFilter],
   )
 
@@ -350,7 +350,7 @@ export function V1ProjectActivity() {
 
           <JuiceListbox
             className="w-48"
-            options={activityOptions}
+            options={activityOptions()}
             value={eventFilterOption}
             onChange={v => setEventFilter(v.value)}
           />
@@ -374,7 +374,7 @@ interface ActivityOption {
   value: EventFilter
 }
 
-const activityOptions: ActivityOption[] = [
+const activityOptions = (): ActivityOption[] => [
   { label: t`All events`, value: 'all' },
   { label: t`Paid`, value: 'pay' },
   { label: t`Redeemed`, value: 'redeem' },

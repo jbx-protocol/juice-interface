@@ -36,7 +36,7 @@ export function V2V3ProjectActivity() {
     isFetchingNextPage,
   } = useV2V3ProjectActivity({ eventFilter, projectId })
 
-  const activityOption = activityOptions.find(o => o.value === eventFilter)
+  const activityOption = activityOptions().find(o => o.value === eventFilter)
 
   const count =
     projectEvents?.pages?.reduce((prev, cur) => prev + cur.length, 0) ?? 0
@@ -163,7 +163,7 @@ export function V2V3ProjectActivity() {
 
           <JuiceListbox
             className="w-[200px]"
-            options={activityOptions}
+            options={activityOptions()}
             value={activityOption}
             onChange={v => setEventFilter(v.value)}
           />
@@ -187,7 +187,7 @@ interface ActivityOption {
   value: EventFilter
 }
 
-const activityOptions: ActivityOption[] = [
+const activityOptions = (): ActivityOption[] => [
   { label: t`All events`, value: 'all' },
   { label: t`Paid`, value: 'pay' },
   { label: t`Redeemed`, value: 'redeem' },

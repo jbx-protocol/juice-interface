@@ -65,8 +65,9 @@ export async function queryDBProjects(
 
   const searchText = opts.text ? `*${opts.text}*` : undefined
 
+  // We prefix match for name and handle but not for description. In practice, prefix-matching description produces too many poor results
   const searchFilter = searchText
-    ? `name.fts.${searchText},handle.fts.${searchText},description.fts.${searchText}`
+    ? `name.fts.${searchText}:*,handle.fts.${searchText}:*,description.fts.${searchText}`
     : undefined
 
   const supabase = createServerSupabaseClient<Database>({ req, res }).from(

@@ -63,7 +63,7 @@ export function V1ProjectActivity() {
       )
     }
 
-    if (count === 0 && !isLoading) {
+    if (count === 0 && !loading) {
       return (
         <div className="border-t border-smoke-200 pt-5 text-grey-500 dark:border-grey-600 dark:text-grey-300">
           <Trans>No activity yet</Trans>

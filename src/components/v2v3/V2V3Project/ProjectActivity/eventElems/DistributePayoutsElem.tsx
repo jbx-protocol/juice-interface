@@ -3,26 +3,13 @@ import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import ETHAmount from 'components/currency/ETHAmount'
 import EthereumAddress from 'components/EthereumAddress'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
+import { ProjectEventsQuery } from 'generated/graphql'
 import useSubgraphQuery from 'hooks/useSubgraphQuery'
-import { DistributePayoutsEvent } from 'models/subgraph-entities/v2/distribute-payouts-event'
 
 export default function DistributePayoutsElem({
   event,
 }: {
-  event:
-    | Pick<
-        DistributePayoutsEvent,
-        | 'id'
-        | 'timestamp'
-        | 'txHash'
-        | 'from'
-        | 'beneficiary'
-        | 'beneficiaryDistributionAmount'
-        | 'distributedAmount'
-        | 'memo'
-        | 'terminal'
-      >
-    | undefined
+  event: ProjectEventsQuery['projectEvents'][0]['distributePayoutsEvent']
 }) {
   // Load individual DistributeToPayoutSplit events, emitted by internal transactions of the DistributeReservedPayouts transaction
   const { data: distributePayoutsEvents } = useSubgraphQuery({

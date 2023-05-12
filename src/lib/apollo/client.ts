@@ -34,7 +34,20 @@ const scalarsLink = withScalars({ schema, typesMap })
 const httpLink = new HttpLink({ uri: subgraphUri() })
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          projectEvents: {
+            keyArgs: [],
+            merge(existing = [], incoming) {
+              return [...existing, ...incoming]
+            },
+          },
+        },
+      },
+    },
+  }),
   link: ApolloLink.from([scalarsLink, httpLink]),
 })
 

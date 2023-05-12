@@ -1,24 +1,15 @@
 import { t } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
-import { SetFundAccessConstraintsEvent } from 'models/subgraph-entities/v2/set-fund-access-constraints-event'
+import { ProjectEventsQuery } from 'generated/graphql'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export default function SetFundAccessConstraintsEventElem({
   event,
 }: {
-  event:
-    | Pick<
-        SetFundAccessConstraintsEvent,
-        | 'id'
-        | 'timestamp'
-        | 'txHash'
-        | 'from'
-        | 'distributionLimit'
-        | 'distributionLimitCurrency'
-      >
-    | undefined
+  event: ProjectEventsQuery['projectEvents'][0]['setFundAccessConstraintsEvent']
 }) {
   if (!event) return null
 
@@ -33,7 +24,9 @@ export default function SetFundAccessConstraintsEventElem({
           ) : (
             <AmountInCurrency
               amount={event.distributionLimit}
-              currency={V2V3CurrencyName(event.distributionLimitCurrency)}
+              currency={V2V3CurrencyName(
+                event.distributionLimitCurrency as V2V3CurrencyOption,
+              )}
             />
           )}
         </div>

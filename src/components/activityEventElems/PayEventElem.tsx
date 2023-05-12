@@ -2,29 +2,17 @@ import { t, Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import RichNote from 'components/RichNote'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
-import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
 
+import { ProjectEventsQuery } from 'generated/graphql'
 import { ActivityEvent } from './ActivityElement'
 
 export default function PayEventElem({
   event,
 }: {
-  event:
-    | Pick<
-        PayEvent,
-        | 'amount'
-        | 'timestamp'
-        | 'from'
-        | 'beneficiary'
-        | 'note'
-        | 'id'
-        | 'txHash'
-        | 'feeFromV2Project'
-        | 'terminal'
-      >
-    | undefined
+  event: ProjectEventsQuery['projectEvents'][0]['payEvent']
 }) {
   if (!event) return null
+
   return (
     <ActivityEvent
       event={event}

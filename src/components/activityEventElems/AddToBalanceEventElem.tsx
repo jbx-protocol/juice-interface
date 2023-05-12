@@ -1,19 +1,14 @@
 import { t } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import RichNote from 'components/RichNote'
-import { AddToBalanceEvent } from 'models/subgraph-entities/vX/add-to-balance-event'
 
+import { ProjectEventsQuery } from 'generated/graphql'
 import { ActivityEvent } from './ActivityElement'
 
 export default function AddToBalanceEventElem({
   event,
 }: {
-  event:
-    | Pick<
-        AddToBalanceEvent,
-        'amount' | 'timestamp' | 'from' | 'note' | 'id' | 'txHash' | 'terminal'
-      >
-    | undefined
+  event: ProjectEventsQuery['projectEvents'][0]['addToBalanceEvent']
 }) {
   if (!event) return null
 

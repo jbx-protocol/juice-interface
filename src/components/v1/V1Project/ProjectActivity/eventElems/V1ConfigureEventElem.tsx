@@ -6,7 +6,7 @@ import MinimalTable from 'components/MinimalTable'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { V1ConfigureEvent } from 'models/subgraph-entities/v1/v1-configure'
+import { ProjectEventsQuery } from 'generated/graphql'
 import { useContext } from 'react'
 import {
   formatWad,
@@ -19,24 +19,7 @@ import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 export default function V1ConfigureEventElem({
   event,
 }: {
-  event:
-    | Pick<
-        V1ConfigureEvent,
-        | 'id'
-        | 'timestamp'
-        | 'txHash'
-        | 'from'
-        | 'ballot'
-        | 'discountRate'
-        | 'duration'
-        | 'target'
-        | 'bondingCurveRate'
-        | 'reservedRate'
-        | 'currency'
-        | 'payIsPaused'
-        | 'ticketPrintingIsAllowed'
-      >
-    | undefined
+  event: ProjectEventsQuery['projectEvents'][0]['v1ConfigureEvent']
 }) {
   const { terminal } = useContext(V1ProjectContext)
 
@@ -106,11 +89,11 @@ export default function V1ConfigureEventElem({
                   [
                     {
                       key: t`Owner token minting`,
-                      value: event.ticketPrintingIsAllowed,
+                      value: !!event.ticketPrintingIsAllowed,
                     },
                     {
                       key: t`Payments to this project paused`,
-                      value: event.payIsPaused,
+                      value: !!event.payIsPaused,
                     },
                   ],
                 ]

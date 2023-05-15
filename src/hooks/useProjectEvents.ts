@@ -49,13 +49,17 @@ export function useProjectEvents({
     variables: {
       first,
       skip,
+
+      // Always order by timestamp descending
       orderBy: ProjectEvent_OrderBy.timestamp,
       orderDirection: OrderDirection.desc,
+
       where: {
-        ...(projectId ? { projectId } : {}),
         ...(pv ? { pv } : {}),
+        ...(projectId ? { projectId } : {}),
         ...(wallet ? { wallet } : {}),
-        // Always filter out projectEvents where these properties are not-null. We have no cases for showing them in the UI and don't want them to pollute the query result
+
+        // Always filter out projectEvents where these properties are not null. We have no cases for showing them in the UI and don't want them to pollute the query result
         mintTokensEvent: null,
         useAllowanceEvent: null,
         distributeToTicketModEvent: null,
@@ -64,16 +68,14 @@ export function useProjectEvents({
         distributeToPayoutSplitEvent: null,
         distributeToReservedTokenSplitEvent: null,
         initEvent: null,
-        ...eventFilter(filter),
+
+        // ProjectEvents have exactly one non-null Event field. We can use `<filter>_not: null` to return only projectEvents where the matching Event field is defined
+        ...(!filter || filter === 'all'
+          ? {}
+          : {
+              [filter + '_not']: null,
+            }),
       },
     },
   })
-}
-
-function eventFilter(filter?: ProjectEventFilter) {
-  if (!filter || filter === 'all') return {}
-
-  return {
-    [filter + '_not']: null,
-  }
 }

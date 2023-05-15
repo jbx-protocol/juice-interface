@@ -1,10 +1,11 @@
 import { t } from '@lingui/macro'
-import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import ETHAmount from 'components/currency/ETHAmount'
 import EthereumAddress from 'components/EthereumAddress'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { ProjectEventsQuery } from 'generated/graphql'
 import useSubgraphQuery from 'hooks/useSubgraphQuery'
+
+import { ActivityEvent } from '../ActivityElement'
 
 export default function DistributePayoutsElem({
   event,

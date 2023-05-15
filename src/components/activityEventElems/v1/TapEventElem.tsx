@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro'
-import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import ETHAmount from 'components/currency/ETHAmount'
 import EthereumAddress from 'components/EthereumAddress'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
@@ -9,6 +8,8 @@ import { getAddress } from 'ethers/lib/utils'
 import { ProjectEventsQuery } from 'generated/graphql'
 import useSubgraphQuery from 'hooks/useSubgraphQuery'
 import { isEqualAddress } from 'utils/address'
+
+import { ActivityEvent } from '../ActivityElement'
 
 export default function TapEventElem({
   event,

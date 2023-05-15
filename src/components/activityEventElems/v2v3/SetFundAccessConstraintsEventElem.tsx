@@ -1,10 +1,11 @@
 import { t } from '@lingui/macro'
-import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { ProjectEventsQuery } from 'generated/graphql'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+
+import { ActivityEvent } from '../ActivityElement'
 
 export default function SetFundAccessConstraintsEventElem({
   event,

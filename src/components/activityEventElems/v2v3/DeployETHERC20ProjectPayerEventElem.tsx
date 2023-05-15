@@ -1,8 +1,9 @@
 import { t, Trans } from '@lingui/macro'
-import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import EthereumAddress from 'components/EthereumAddress'
 import RichNote from 'components/RichNote'
 import { ProjectEventsQuery } from 'generated/graphql'
+
+import { ActivityEvent } from '../ActivityElement'
 
 export default function DeployETHERC20ProjectPayerEventElem({
   event,

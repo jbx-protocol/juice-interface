@@ -1,12 +1,7 @@
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { t, Trans } from '@lingui/macro'
 import { Button, Divider } from 'antd'
-import AddToBalanceEventElem from 'components/activityEventElems/AddToBalanceEventElem'
-import BurnEventElem from 'components/activityEventElems/BurnEventElem'
-import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
-import PayEventElem from 'components/activityEventElems/PayEventElem'
-import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateEventElem'
-import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
+import { AnyProjectEvent } from 'components/activityEventElems'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
@@ -17,17 +12,13 @@ import { ProjectEventFilter, useProjectEvents } from 'hooks/useProjectEvents'
 import { useContext, useMemo, useState } from 'react'
 
 import V2V3DownloadActivityModal from '../modals/V2V3DownloadActivityModal'
-import ConfigureEventElem from './eventElems/ConfigureEventElem'
-import DeployETHERC20ProjectPayerEventElem from './eventElems/DeployETHERC20ProjectPayerEventElem'
-import DistributePayoutsElem from './eventElems/DistributePayoutsElem'
-import DistributeReservedTokensEventElem from './eventElems/DistributeReservedTokensElem'
-import SetFundAccessConstraintsEventElem from './eventElems/SetFundAccessConstraintsEventElem'
 
 const PAGE_SIZE = 10
 
 export function V2V3ProjectActivity() {
   const { projectId } = useContext(ProjectMetadataContext)
   const { tokenSymbol } = useContext(V2V3ProjectContext)
+  const [isFetchingMore, setIsFetchingMore] = useState<boolean>()
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [eventFilter, setEventFilter] = useState<ProjectEventFilter>('all')
@@ -40,6 +31,8 @@ export function V2V3ProjectActivity() {
     skip: 0,
   })
 
+  const isLoading = loading || isFetchingMore
+
   const projectEvents = data?.projectEvents
 
   const activityOption = activityOptions().find(o => o.value === eventFilter)
@@ -48,71 +41,19 @@ export function V2V3ProjectActivity() {
 
   const list = useMemo(
     () =>
-      projectEvents?.map(e => {
-        let elem: JSX.Element | undefined = undefined
-
-        if (e.payEvent) {
-          elem = <PayEventElem event={e.payEvent} />
-        }
-        if (e.burnEvent) {
-          elem = <BurnEventElem event={e.burnEvent} tokenSymbol={tokenSymbol} />
-        }
-        if (e.addToBalanceEvent) {
-          elem = <AddToBalanceEventElem event={e.addToBalanceEvent} />
-        }
-        if (e.redeemEvent) {
-          elem = <RedeemEventElem event={e.redeemEvent} />
-        }
-        if (e.projectCreateEvent) {
-          elem = <ProjectCreateEventElem event={e.projectCreateEvent} />
-        }
-        if (e.deployedERC20Event) {
-          elem = <DeployedERC20EventElem event={e.deployedERC20Event} />
-        }
-        if (e.distributePayoutsEvent) {
-          elem = <DistributePayoutsElem event={e.distributePayoutsEvent} />
-        }
-        if (e.distributeReservedTokensEvent) {
-          elem = (
-            <DistributeReservedTokensEventElem
-              event={e.distributeReservedTokensEvent}
-            />
-          )
-        }
-        if (e.deployETHERC20ProjectPayerEvent) {
-          elem = (
-            <DeployETHERC20ProjectPayerEventElem
-              event={e.deployETHERC20ProjectPayerEvent}
-            />
-          )
-        }
-        if (e.configureEvent) {
-          elem = <ConfigureEventElem event={e.configureEvent} />
-        }
-        if (e.setFundAccessConstraintsEvent) {
-          elem = (
-            <SetFundAccessConstraintsEventElem
-              event={e.setFundAccessConstraintsEvent}
-            />
-          )
-        }
-
-        if (!elem) return null
-
-        return (
-          <div
-            className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
-            key={e.id}
-          >
-            {elem}
-          </div>
-        )
-      }),
+      projectEvents?.map(e => (
+        <div
+          className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
+          key={e.id}
+        >
+          <AnyProjectEvent event={e} tokenSymbol={tokenSymbol} />
+        </div>
+      )),
     [projectEvents, tokenSymbol],
   )
 
   const listStatus = useMemo(() => {
-    if (loading) {
+    if (isLoading) {
       return (
         <div>
           <Loading />
@@ -120,7 +61,7 @@ export function V2V3ProjectActivity() {
       )
     }
 
-    if (count === 0 && !loading) {
+    if (count === 0 && !isLoading) {
       return (
         <>
           <Divider />
@@ -135,13 +76,14 @@ export function V2V3ProjectActivity() {
       return (
         <div className="text-center">
           <Button
-            onClick={() =>
+            onClick={() => {
+              setIsFetchingMore(true)
               fetchMore({
                 variables: {
                   skip: count,
                 },
-              })
-            }
+              }).finally(() => setIsFetchingMore(false))
+            }}
             type="link"
             className="px-0"
           >
@@ -156,7 +98,7 @@ export function V2V3ProjectActivity() {
         <Trans>{count} total</Trans>
       </div>
     )
-  }, [loading, fetchMore, count])
+  }, [isLoading, fetchMore, count])
 
   return (
     <div>

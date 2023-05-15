@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro'
-import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import CurrencySymbol from 'components/CurrencySymbol'
 import EthereumAddress from 'components/EthereumAddress'
 import MinimalTable from 'components/MinimalTable'
@@ -15,6 +14,8 @@ import {
 } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
+
+import { ActivityEvent } from '../ActivityElement'
 
 export default function V1ConfigureEventElem({
   event,

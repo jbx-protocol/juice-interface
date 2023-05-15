@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import EthereumAddress from 'components/EthereumAddress'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { ProjectEventsQuery } from 'generated/graphql'
@@ -7,36 +6,29 @@ import useSubgraphQuery from 'hooks/useSubgraphQuery'
 import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { ActivityEvent } from '../ActivityElement'
 
-export default function DistributeReservedTokensEventElem({
+export default function ReservesEventElem({
   event,
 }: {
-  event: ProjectEventsQuery['projectEvents'][0]['distributeReservedTokensEvent']
+  event: ProjectEventsQuery['projectEvents'][0]['printReservesEvent']
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
 
-  // Load individual DistributeToReservedTokenSplit events, emitted by internal transactions of the DistributeReservedTokens transaction
+  // Load individual DistributeToTicketMod events, emitted by internal transactions of the PrintReserves transaction
   const { data: distributeEvents } = useSubgraphQuery(
-    {
-      entity: 'distributeToReservedTokenSplitEvent',
-      keys: [
-        'id',
-        'timestamp',
-        'txHash',
-        'beneficiary',
-        'tokenCount',
-        'projectId',
-      ],
-      orderDirection: 'desc',
-      orderBy: 'tokenCount',
-      where: event?.id
-        ? {
-            key: 'distributeReservedTokensEvent',
+    event?.id
+      ? {
+          entity: 'distributeToTicketModEvent',
+          keys: ['id', 'timestamp', 'txHash', 'modBeneficiary', 'modCut'],
+          orderDirection: 'desc',
+          orderBy: 'modCut',
+          where: {
+            key: 'printReservesEvent',
             value: event.id,
-          }
-        : undefined,
-    },
-    {},
+          },
+        }
+      : null,
   )
 
   if (!event) return null
@@ -55,29 +47,36 @@ export default function DistributeReservedTokensEventElem({
         </Trans>
       }
       subject={
-        <div className="text-base font-medium">
-          {formatWad(event.tokenCount, { precision: 0 })}{' '}
+        <div className="text-base font-medium text-grey-900 dark:text-slate-100">
+          {formatWad(event.count, { precision: 0 })}{' '}
           {tokenSymbolText({
             tokenSymbol,
             capitalize: false,
-            plural: parseInt(fromWad(event.tokenCount) || '0') !== 1,
+            plural: parseInt(fromWad(event.count) || '0') !== 1,
           })}
         </div>
       }
       extra={
         <div>
           {distributeEvents?.map(e => (
-            <div key={e.id} className="flex items-baseline justify-between">
+            <div
+              key={e.id}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+              }}
+              className="text-sm"
+            >
               <div>
                 <EthereumAddress
                   className="text-grey-900 dark:text-slate-100"
-                  address={e.beneficiary}
+                  address={e.modBeneficiary}
                 />
                 :
               </div>
-
-              <div className="text-sm text-grey-500 dark:text-grey-300">
-                {formatWad(e.tokenCount, { precision: 0 })}{' '}
+              <div className="text-grey-500 dark:text-grey-300">
+                {formatWad(e.modCut, { precision: 0 })}{' '}
                 {tokenSymbolText({
                   tokenSymbol,
                   capitalize: false,
@@ -87,8 +86,15 @@ export default function DistributeReservedTokensEventElem({
             </div>
           ))}
 
-          {event.beneficiaryTokenCount?.gt(0) && (
-            <div className="flex items-baseline justify-between">
+          {event.beneficiaryTicketAmount?.gt(0) && (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'baseline',
+              }}
+              className="text-sm"
+            >
               <div>
                 <EthereumAddress
                   className="text-grey-900 dark:text-slate-100"
@@ -96,9 +102,14 @@ export default function DistributeReservedTokensEventElem({
                 />
                 :
               </div>
-              <div className="text-sm text-grey-500 dark:text-grey-300">
-                {formatWad(event.beneficiaryTokenCount, {
+              <div className="text-grey-500 dark:text-grey-300">
+                {formatWad(event.beneficiaryTicketAmount, {
                   precision: 0,
+                })}{' '}
+                {tokenSymbolText({
+                  tokenSymbol,
+                  capitalize: false,
+                  plural: true,
                 })}
               </div>
             </div>

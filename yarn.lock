@@ -2900,7 +2900,7 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/contracts-v2/-/contracts-v2-8.0.4.tgz#ceb72c01f56d528691d048d488fef2566961bb88"
   integrity sha512-AXEMkQzBOlllI0QNUadH1O+vkNnXCxfVXxff1OYWkx3qEqWNyPKifAv9ISECvEiFeN025dutivk3jNWjvbs+tQ==
 
-"@jbx-protocol/juice-721-delegate-v1-1@npm:@jbx-protocol/juice-721-delegate@5.0.2":
+"@jbx-protocol/juice-721-delegate-v3-1@npm:@jbx-protocol/juice-721-delegate@5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-721-delegate/-/juice-721-delegate-5.0.2.tgz#d2d1cce2e5dfba52aab901dc9a068ab392ee4ac0"
   integrity sha512-YrzrWeWQG9S6kT282nxyg/ikwN653mNEQ2Ju9t+wk5EtZEy9qCcMt8EkN+WXKDdXcWHaH/IjJK5qZQ5HGDpLDQ==
@@ -2911,7 +2911,7 @@
     "@paulrberg/contracts" "^3.7.0"
     prb-math "^2.4.3"
 
-"@jbx-protocol/juice-721-delegate-v1@npm:@jbx-protocol/juice-721-delegate@3.0.0":
+"@jbx-protocol/juice-721-delegate-v3@npm:@jbx-protocol/juice-721-delegate@3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-721-delegate/-/juice-721-delegate-3.0.0.tgz#9a53e8fb6cbffba7889de7cc766791b124c0d2b4"
   integrity sha512-vr18ip7ueGixg6DPFo3cxnTpnUSya6Z5tkigUJ3/6QK/H8efLYlKU634OOyv0n3Bf2+gX+VXBiDJo4bRJJiL3A==
@@ -4867,10 +4867,6 @@
   dependencies:
     "@types/node" "*"
 
-"@typescript-eslint/eslint-plugin@^5.35.1", "@typescript-eslint/eslint-plugin@^5.5.0":
-  version "5.59.2"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.59.2.tgz#684a2ce7182f3b4dac342eef7caa1c2bae476abd"
-  integrity sha512-yVrXupeHjRxLDcPKL10sGQ/QlVrA8J5IYOEWVqk0lJaSZP7X5DfnP7Ns3cc74/blmbipQ1htFNVGsHX6wsYm0A==
 "@types/zen-observable@0.8.3":
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.8.3.tgz#781d360c282436494b32fe7d9f7f8e64b3118aa3"
@@ -4880,6 +4876,22 @@
   version "5.58.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.58.0.tgz#b1d4b0ad20243269d020ef9bbb036a40b0849829"
   integrity sha512-vxHvLhH0qgBd3/tW6/VccptSfc8FxPQIkmNTVLWcCOVqSBvqpnKkBTYrhcGlXfSnd78azwe+PsjYFj0X34/njA==
+  dependencies:
+    "@eslint-community/regexpp" "^4.4.0"
+    "@typescript-eslint/scope-manager" "5.58.0"
+    "@typescript-eslint/type-utils" "5.58.0"
+    "@typescript-eslint/utils" "5.58.0"
+    debug "^4.3.4"
+    grapheme-splitter "^1.0.4"
+    ignore "^5.2.0"
+    natural-compare-lite "^1.4.0"
+    semver "^7.3.7"
+    tsutils "^3.21.0"
+
+"@typescript-eslint/eslint-plugin@^5.5.0":
+  version "5.59.2"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.59.2.tgz#684a2ce7182f3b4dac342eef7caa1c2bae476abd"
+  integrity sha512-yVrXupeHjRxLDcPKL10sGQ/QlVrA8J5IYOEWVqk0lJaSZP7X5DfnP7Ns3cc74/blmbipQ1htFNVGsHX6wsYm0A==
   dependencies:
     "@eslint-community/regexpp" "^4.4.0"
     "@typescript-eslint/scope-manager" "5.59.2"

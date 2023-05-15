@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import {
-  JB721_DELEGATE_V1,
-  JB721_DELEGATE_V1_1,
+  JB721_DELEGATE_V3,
+  JB721_DELEGATE_V3_1,
 } from 'constants/delegateVersions'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -14,7 +14,7 @@ import omit from 'lodash/omit'
 import {
   JB721DelegateVersion,
   JBDeployTiered721DelegateData,
-  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1,
+  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import {
@@ -65,7 +65,7 @@ function buildArgs(
     JBControllerAddress: string
     deployTiered721DelegateData:
       | JBDeployTiered721DelegateData
-      | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1
+      | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1
     reconfigureFundingCyclesData: JB721DelegateReconfigureFundingCycleData
   },
 ) {
@@ -75,10 +75,10 @@ function buildArgs(
     reconfigureFundingCyclesData, // _reconfigureFundingCyclesData
   ]
 
-  if (version === JB721_DELEGATE_V1) {
+  if (version === JB721_DELEGATE_V3) {
     return baseArgs
   }
-  if (version === JB721_DELEGATE_V1_1) {
+  if (version === JB721_DELEGATE_V3_1) {
     return [...baseArgs, JBControllerAddress] // v1.1 requires us to pass the controller address in
   }
 }

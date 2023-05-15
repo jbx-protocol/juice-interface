@@ -11,7 +11,7 @@ import { NetworkName } from 'models/networkName'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
-import DeploySuccessHero from '/public/assets/images/create-success-hero.gif'
+import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'
 
 export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   console.info('Deploy: SUCCESS', projectId)

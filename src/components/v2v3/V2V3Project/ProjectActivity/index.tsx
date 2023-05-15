@@ -61,7 +61,7 @@ export function V2V3ProjectActivity() {
       )
     }
 
-    if (count === 0 && !loading) {
+    if (count === 0 && !isLoading) {
       return (
         <>
           <Divider />

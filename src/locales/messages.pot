@@ -1028,9 +1028,6 @@ msgstr ""
 msgid "Limited (1,050 ETH)"
 msgstr ""
 
-msgid "Tier-based on-chain governance"
-msgstr ""
-
 msgid "Your total legacy tokens"
 msgstr ""
 
@@ -2048,9 +2045,6 @@ msgstr ""
 msgid "Migrate controller"
 msgstr ""
 
-msgid "Instead of tracking total voting power, track each address' voting power within each tier over time. This can be useful for running multiple voting processes out of one treasury, or for complex on-chain governance.<0>Learn more.</0>"
-msgstr ""
-
 msgid "Sent reserved tokens"
 msgstr ""
 
@@ -2151,9 +2145,6 @@ msgid "Percent"
 msgstr ""
 
 msgid "When enabled, fees are held in the project instead of being processed automatically. <0>Learn more.</0>"
-msgstr ""
-
-msgid "Track the historical voting weight of each token holder within each tier of NFTs. <0>Learn more.</0>"
 msgstr ""
 
 msgid "No, keep"

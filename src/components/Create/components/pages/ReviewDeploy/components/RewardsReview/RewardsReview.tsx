@@ -68,10 +68,8 @@ export const RewardsReview = () => {
 
   const onChainGovernance = useMemo(() => {
     switch (governanceType) {
-      case JB721GovernanceType.GLOBAL:
+      case JB721GovernanceType.ONCHAIN:
         return t`Standard`
-      case JB721GovernanceType.TIERED:
-        return `Tier-based`
       case JB721GovernanceType.NONE:
       default:
         return t`None`

@@ -3,7 +3,11 @@ import { CurrencyOption } from './currencyOption'
 
 export type JB721DELEGATE_V3 = '3'
 export type JB721DELEGATE_V3_1 = '3-1'
-export type JB721DelegateVersion = JB721DELEGATE_V3 | JB721DELEGATE_V3_1
+export type JB721DELEGATE_V3_2 = '3-2'
+export type JB721DelegateVersion =
+  | JB721DELEGATE_V3
+  | JB721DELEGATE_V3_1
+  | JB721DELEGATE_V3_2
 
 // How we store reward tiers for use around the app
 export type NftRewardTier = {
@@ -106,15 +110,14 @@ export type NftPostPayModalConfig = {
 
 export enum JB721GovernanceType {
   NONE,
-  TIERED,
-  GLOBAL,
+  ONCHAIN,
 }
 
 export interface JB721PricingParams {
   tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1)[]
   currency: CurrencyOption
   decimals: number
-  prices: string
+  prices: string // address
 }
 
 export interface JBDeployTiered721DelegateData {

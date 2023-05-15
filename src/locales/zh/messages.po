@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-07 00:29\n"
+"PO-Revision-Date: 2023-05-14 00:30\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -45,9 +45,6 @@ msgstr "<0>Juicebox 项目向外部钱包（如 “vitalik.eth\"）分配支出�
 
 msgid "Disconnect"
 msgstr "断开连接"
-
-msgid "1 year"
-msgstr "1 年"
 
 msgid "Art"
 msgstr "艺术"
@@ -140,7 +137,7 @@ msgid "Add NFT"
 msgstr "添加 NFT"
 
 msgid "Since their launch in August 2021, SharkDAO has raised over 1000 ETH on Juicebox, acquired six Nouns, and brought together over 900 members. They remain active nearly two years later collaborating with artists for NFT drops and working on governance in the Nouns ecosystem. NounsDAO has passed several SharkDAO proposals including <0>Nouns-based short films</0> and <1>FOMO Nouns</1>. SharkDAO has also <2>helped provide eye exams and glasses to thousands of kids in need</2>, donated 5 ETH to the <3>Coral Restoration Foundation</3>, and started a <4>Juicebox project</4> which raised 60+ ETH for co-founder <5>Del Piero</5>'s son's leukemia treatment."
-msgstr ""
+msgstr "自 2021 年 8 月启动以来，SharkDAO 已在 Juicebox 上筹集超过 1000 ETH，购得6个 Nouns，并聚集了 900 多名成员。在接近两年的时间里，他们一直积极与艺术家合作推出新的 NFT，并参与 Nouns 生态系统内的治理工作。 NounsDAO 通过了 SharkDAO 提出的包括 <0>以 Nouns 为主题的电影短片</0> 及<1> FOMO Nouns </1>等多个提案。 SharkDAO 还 <2>为成千上万需要帮助的儿童提供了眼部检查和眼镜</2>， 向 <3>珊瑚恢复基金会</3>捐款了 5 ETH， 并创建了一个 <4> Juicebox 项目</4> 为共同创始人<5> Del Piero </5> 儿子的白血病治疗筹集了 60 多 个ETH。"
 
 msgid "Payouts to Ethereum addresses incur a 2.5% JBX membership fee"
 msgstr "向以太坊地址付款会产生 2.5% Juicebox 成员费用"
@@ -746,7 +743,7 @@ msgid "ETH transferred"
 msgstr "转让的 ETH"
 
 msgid "Got a question or need help creating your project? Fill out the form below and we’ll get back to you as soon as possible. You can also reach out to us on <0>Discord</0> for a faster response."
-msgstr ""
+msgstr "有疑问或需要帮助创建项目？请填写以下表格，我们将会尽快与你联系。你也可以在<0>Discord</0>联系我们，以便更快获得回复。"
 
 msgid "Edit cycle"
 msgstr "编辑周期"
@@ -887,7 +884,7 @@ msgid "Set payment terminals"
 msgstr "设定支付终端"
 
 msgid "Using crowdfunding platforms for films has been around for a while, but Juicebox adds an extra layer of transparency to the process, allowing fans to see where funds are going. Unlike traditional models where money is controlled behind the scenes, StudioDAO members source, vote, fund, and distribute movies transparently using the treasury while creators retain 100% of their creative control and ownership. With the entertainment market currently valued at two trillion dollars, StudioDAO founder Kenny Miller can see a “clear scenario for a decentralized studio to do one billion dollars of production 2-3 years from now.” To learn more about Kenny's vision for StudioDAO, listen to episode 9 of the Juicecast: <0>https://podcast.juicebox.money</0>."
-msgstr ""
+msgstr "使用众筹平台上为电影募资这一做法已经存在一段时间了，但 Juicebox 允许粉丝们掌握资金的去向，更加提高了整个流程的透明度。与传统的后台管理资金模式不同，StudioDAO 通过使用金库公开地发掘、票选、资助及发行电影，同时创作者得以保留其 100% 的创意自主权和电影所有权。当前娱乐市场的总估值在 2 万亿美元左右，StudioDAO 的创始人 Kenny Miller 预计 ”两至三年后去中心化工作室实现 10 亿美元的电影制作这个前景是清晰可见的“。要了解更多 Kenny 对 StudioDAO 的展望，欢迎收听 Juicecast 的第 9 期节目：<0>https://podcast.juicebox.money</0> 。"
 
 msgid "Funding cycle required."
 msgstr "需要筹款周期"
@@ -941,7 +938,7 @@ msgid "Your project will appear as 'archived'."
 msgstr "你的项目将出现在“归档项目”。"
 
 msgid "Bringing together members from around the world with the help of blockchain technology and decentralized governance, MoonDAO has demonstrated that sometimes setting ambitious and even outlandish goals can pay off when they resonate with your audience. Their unique mission goes beyond memes, though, and taps into a deeper human curiosity about what might exist beyond planet Earth. To learn more about the story of MoonDAO, listen to co-founders Pablo and Kori on episode 7 of the Juicebox podcast: <0>https://podcast.juicebox.money</0>."
-msgstr ""
+msgstr "通过区块链技术及去中心化治理，MoonDAO 集聚了来自全世界的成员，他们通过实践证明，只要能够在受众中得到共鸣，雄心勃勃甚至天马行空的目标都不是遥不可及的。他们独特的使命不仅为了吸引眼球，而是更深层次地触及到人类对地球以外事物的好奇心。要了解更多关于 MoonDAO 的故事，欢迎收听 Juicecast 播客第 7 期节目对两位创始人 Pablo 及 Kori 的访谈： <0>https://podcast.juicebox.money</0>。"
 
 msgid "A fixed amount of ETH can be paid out from your project each cycle. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token redemptions or use in future cycles."
 msgstr "每个周期可以从你的项目支出固定金额的 ETH。你可以把特定的 ETH 数量（或以美元价值折算的 ETH 数量）发送给一个或多个接收人。所有剩余的 ETH 将留在项目内供代币赎回或以后周期使用。"
@@ -993,6 +990,9 @@ msgstr "建议1400x256。"
 
 msgid "This cycle's rules may lead to unexpected behavior or other risks."
 msgstr "本周期的规则可能会导致意外行为或其他风险。"
+
+msgid "Recent"
+msgstr "最近"
 
 msgid "Project description"
 msgstr "项目说明"
@@ -1465,9 +1465,6 @@ msgstr "NFT 已从项目剥离。"
 msgid "V2"
 msgstr "V2"
 
-msgid "{0} balance"
-msgstr "{0} 余额"
-
 msgid "NO LIMIT"
 msgstr "无限额"
 
@@ -1524,6 +1521,9 @@ msgstr "Juicebox 是一个由充满激情的建设者、创造者和创新者们
 
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr "此地址是一个未识别的策略合约。请确保这个地址是对的。"
+
+msgid "{tokenText} balance"
+msgstr "{tokenText} 余额"
 
 msgid "Token name is required"
 msgstr "请填写代币名称"
@@ -1865,7 +1865,7 @@ msgid "Token migration"
 msgstr "代币迁移"
 
 msgid "With highly competitive auctions happening every 24 hours, SharkDAO's success was made possible through the flexibility of their Juicebox project settings. From cycle to cycle, SharkDAO enabled or disabled payments and adjusted $SHARK tokenomics (total issuance rate, reserved rate, and issuance reduction rate). With unlocked cycles and no edit deadline, they were able to make changes to their project quickly in response to upcoming Nouns auctions."
-msgstr ""
+msgstr "竞争激烈的拍卖活动每 24 小时进行一次，SharkDAO 的成功得益于他们 Juicebox 项目的灵活配置。 SharkDAO 在不同的周期开放或暂停接受捐款，并调整 $SHARK 的代币经济模型（总发行比率、保留比率及发行减少率）。 周期不锁定且没有编辑期限，他们得以快速调整项目设置来应对后续的 Nouns 拍卖。"
 
 msgid "Edits to an upcoming cycle must be submitted at least 3 days before that cycle starts."
 msgstr "对下一周期的编辑必须在该周期开始前至少 3 天提交。"
@@ -1919,7 +1919,7 @@ msgid "How a group of friends on the internet raised over $46 million to buy the
 msgstr "互联网上的一群人如何募集 4600 万美元去购买美国的宪法副本"
 
 msgid "from <0/>"
-msgstr ""
+msgstr "从 <0/>"
 
 msgid "Yes, delete"
 msgstr "是，删除"
@@ -1971,6 +1971,9 @@ msgstr "百分比"
 
 msgid "If enabled, project tokens will be minted to a custom beneficiary address. By default, project tokens will be minted to the wallet that pays this address."
 msgstr "打开此选项，将向一个指定的受益人地址铸造项目代币。默认情况下，项目代币将铸造给向此地址付款的钱包。"
+
+msgid "Highest paid"
+msgstr "最高付款"
 
 msgid "Community owned"
 msgstr "社区共有"
@@ -2339,10 +2342,7 @@ msgid "Controller configuration"
 msgstr "控制器配置"
 
 msgid "Since launching in November 2022 StudioDAO has raised nearly 50 ETH and is gearing up to launch their first film *Ticket to Space*, the first DAO documentary about MoonDAO sending DAO member Yan Kejun to space on a Blue Origin rocket. MoonDAO has recently voted to donate $100,000 to help fund the film's production. To learn more about the Ticket to Space documentary, listen to episode 22 of the Juicebox podcast featuring a roundtable discussion with director Fernando Urdapilleta, producer Susie Conley, MoonDAO co-founder Pablo Moncada-Larrotiz, and StudioDAO co-founders Kenny Miller and Rachel Leventhal: <0>https://podcast.juicebox.money</0>."
-msgstr ""
-
-msgid "24 hours"
-msgstr "24 小时"
+msgstr "自从 2022 年 11 月成立以来，StudioDAO 已募集近 50 ETH，并准备推出他们的第一部电影《Ticket to Space》。这是首部 DAO 相关的纪录片，讲述 MoonDAO 如何把 DAO 成员 Yan Kejun 送上蓝色起源飞船进入太空的故事。MoonDAO 最近投票决定捐款 10 万美元来资助这部电影的制作。要了解更多有关《Ticket to Space》纪录片，请收听 Juicebox 播客第 22 期节目，这是一次由导演 Fernando Urdapilleta、制片人 Susie Conley、MoonDAO 创始人之一 Pablo Moncada-Larrotiz 及 StudioDAO 联合创始人 Kenny Miller 及 Rachel Leventhal 共同参与的圆桌讨论： <0>https://podcast.juicebox.money</0>。"
 
 msgid "You would receive at least <0/>"
 msgstr "你将最少收到 <0/>"
@@ -2369,7 +2369,7 @@ msgid "Unarchive project"
 msgstr "取消项目的存档状态"
 
 msgid "View all of the latest payments on Juicebox."
-msgstr ""
+msgstr "查看 Juicebox 协议上最近所有的付款。"
 
 msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
 msgstr "CSV 数据暂不能导出。请稍后再试。"
@@ -2951,7 +2951,7 @@ msgid "No previous cycles"
 msgstr "无过往周期"
 
 msgid "From"
-msgstr ""
+msgstr "从"
 
 msgid "Migration rules"
 msgstr "迁移规则"
@@ -3094,9 +3094,6 @@ msgstr "需要的金额"
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no ETH, or is using all of its ETH for payouts."
 msgstr "销毁你的 {tokensLabel} 代币。因为本项目没有 ETH，或将所有的 ETH 用于支出，所以你不会相应获得 ETH。"
 
-msgid "90 days"
-msgstr "90 天"
-
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr "依托于以太坊社区精心打造的基础设施和经济生态，Juicebox 才得以实现。"
 
@@ -3209,7 +3206,7 @@ msgid "This project has redemptions turned off."
 msgstr "本项目的赎回已关闭。"
 
 msgid "Through community ownership and pooling resources, SharkDAO offered a way for members to participate in the Nouns ecosystem despite the high barrier to entry. SharkDAO members can own as little as one $SHARK token and become an active voice in Nouns DAO governance through the sub-DAO. To learn more about the story of SharkDAO, listen to Dropnerd on episode 5 of the Juicebox podcast: <0>https://podcast.juicebox.money</0>."
-msgstr ""
+msgstr "通过社区所有权和资源整合，SharkDAO 为其社区成员提供一个低门槛参与 Nouns 生态活动的机会。SharkDAO 成员仅需持有 1 个 $SHARK 代币就可以通过子 DAO 在 Nouns DAO 的治理中发出积极的声音。要了解更多有关 SharkDAO 的故事，欢迎收听 Juicebox 播客第 5 期节目中来自 Dropnerd 的讲述：<0>https://podcast.juicebox.money</0>。"
 
 msgid "Upcoming"
 msgstr "未来"
@@ -3521,7 +3518,7 @@ msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It he
 msgstr "<0>Juicebox 是 Web3 的一个可编程加密货币筹款平台。 它帮助人们用以太坊，一种可编程的加密货币，来资助、运营及扩展他们的项目。</0><1>Juicebox 由它的社区资助并拥有。</1>"
 
 msgid "Payouts to other Juicebox projects don't incur fees. A 2.5% fee is taken out of all other payouts. You will receive the <0>JuiceboxDAO governance token</0> when you pay fees. <1>Learn more</1>."
-msgstr ""
+msgstr "向其他 Juicebox 项目付款不会产生费用。 其余所有的付款将会收取 2.5% 的费用。 缴交费用时，你将会获得<0> JuiceboxDAO 的治理代币</0>。 <1>了解更多</1>。"
 
 msgid "Reserved issuance rate"
 msgstr "保留代币发行率"
@@ -3650,7 +3647,7 @@ msgid "Your project's first cycle will start on <0>{0} at {1}</0>. Your project 
 msgstr "你项目的第一个周期将于 <0>{0} 的 {1}</0>开始。 你完成设置后，项目将会在<1>juicebox.money</1>页面可见， 但支持者要等到第一个周期开始后才能向项目付款或与其互动。"
 
 msgid "MoonDAO has built an enthusiastic community of over 10,000 members, successfully sent their first astronaut to space, and is currently coordinating the spaceflight for their second astronaut. Their ambitious long-term roadmap goals include building a settlement on the Moon by 2030. In collaboration with StudioDAO, a decentralized movie studio running on Juicebox, MoonDAO has donated $100,000 to help fund the production of Ticket To Space, the first DAO documentary. The film will cover the story of Yan, a MoonDAO member from China, who will be sent to space on an upcoming Blue Origin flight after minting a free NFT."
-msgstr ""
+msgstr "MoonDAO 打造了一个拥有超过一万名成员充满激情的社区，并成功把他们的第一名宇航员送进太空，目前他们正在协调第二名宇航员的天空之旅。他们的远期路线图目标富有野心，其中就包括了 2030 年前在月球上建设一个定居点的计划。与在 Juicebox 上运营的去中心化电影工作室 StudioDAO 合作，MoonDAO 捐赠了 10 万美元来资助第一部 DAO 纪录片 Ticket To Space 的制作。这部影片将讲述一位来自中国的 MoonDAO 成员 Yan 的故事，他通过铸造免费 NFT 赢得了登上 蓝色起源号飞船进入太空的机会。"
 
 msgid "All events"
 msgstr "所有活动"
@@ -3721,9 +3718,6 @@ msgstr "支付金额"
 msgid "CSV download failed."
 msgstr "CSV 下载失败。"
 
-msgid "7 days"
-msgstr "7 天"
-
 msgid "Enabling owner token minting isn't recommended as it allows the project owner to create unlimited tokens, which appears risky to supporters."
 msgstr "不建议打开代币铸造选项，因为这样允许项目方无限铸造代币，会让支持者们感到有风险。"
 
@@ -3776,7 +3770,7 @@ msgid "Edit funding cycle"
 msgstr "编辑筹款周期"
 
 msgid "Congratulations!"
-msgstr ""
+msgstr "恭喜！"
 
 msgid "Resources"
 msgstr "相关资料"
@@ -4019,7 +4013,7 @@ msgid "Open source"
 msgstr "开源"
 
 msgid "Following the launch of their token $MOONEY, the next goal on MoonDAO's roadmap was to buy two tickets to space on a Blue Origin rocket. They set the project's Payouts to Infinite in order to raise as much as possible during their campaign and be able to distribute all of the funds. Using a reserved rate of 50%, the MoonDAO multi-sig received half of all newly minted tokens to build up a treasury of both ETH and $MOONEY that could later be used for bounties and compensation."
-msgstr ""
+msgstr "签发了他们的 $MOONEY 代币后，MoonDAO 路线图的下一个目标是购买两张蓝色起源号飞船进入太空的船票。他们把项目的支出上限设置为无限，以便在筹款活动中尽可能募集更多的资金并将所有资金分发出去。他们把保留代币比率设置为 50%，MoonDAO 的多签收到了一半的新铸造代币来建立一个 ETH 和 $MOONEY 的双资产金库，并将其用于后期的赏金及补偿。"
 
 msgid "Paid"
 msgstr "支付"
@@ -4223,7 +4217,7 @@ msgid "Re-launch your Juicebox project using the v3 contracts."
 msgstr "使用 V3 合约来重新启动你的 Juicebox 项目。"
 
 msgid "StudioDAO's project settings are designed to maximize trust with locked 28-day cycles, limited payouts, and a 3-day edit deadline. 20% of newly minted tokens are reserved for the DAO wallet and issuance will decrease by 5% each cycle. StudioDAO also leverages tiered NFT rewards to create incentives for supporters with benefits like private screenings, governance votes to decide which new films to fund, and screen credits."
-msgstr ""
+msgstr "StudioDAO 的项目设定中包括 28 天的锁定周期、支出限额及 3 天的编辑期限，这一设计的目的是为了实现信任的最大化。20% 的新铸造代币将保留给 DAO 的钱包，同时代币的发行比率每周期会下降 5%。StudioDAO 还利用分级 NFT 来给予支持者诸如私人观影、参与治理投票决定资助的新电影及观影积分等激励。"
 
 msgid "Load more"
 msgstr "加载更多"

@@ -2783,6 +2783,9 @@ msgstr ""
 msgid "Twitter handle"
 msgstr ""
 
+msgid "<0/> fee"
+msgstr ""
+
 msgid "Payments to this project are paused in this cycle."
 msgstr ""
 
@@ -3153,9 +3156,6 @@ msgid "You will receive <0/>"
 msgstr ""
 
 msgid "Start over"
-msgstr ""
-
-msgid "<0/>fee"
 msgstr ""
 
 msgid "Notifications"

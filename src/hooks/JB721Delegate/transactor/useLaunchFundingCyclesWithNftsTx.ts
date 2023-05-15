@@ -1,8 +1,8 @@
 import { t } from '@lingui/macro'
 import { CV_V3 } from 'constants/cv'
 import {
-  JB721_DELEGATE_V1,
-  JB721_DELEGATE_V1_1,
+  JB721_DELEGATE_V3,
+  JB721_DELEGATE_V3_1,
 } from 'constants/delegateVersions'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
@@ -18,7 +18,7 @@ import omit from 'lodash/omit'
 import {
   JB721DelegateVersion,
   JBDeployTiered721DelegateData,
-  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1,
+  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import { V2V3ContractName } from 'models/v2v3/contracts'
@@ -71,7 +71,7 @@ function buildArgs(
     JBControllerAddress: string
     deployTiered721DelegateData:
       | JBDeployTiered721DelegateData
-      | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1
+      | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1
     launchFundingCyclesData: JB721DelegateLaunchFundingCycleData
   },
 ) {
@@ -81,10 +81,10 @@ function buildArgs(
     launchFundingCyclesData, // _launchFundingCyclesData
   ]
 
-  if (version === JB721_DELEGATE_V1) {
+  if (version === JB721_DELEGATE_V3) {
     return baseArgs
   }
-  if (version === JB721_DELEGATE_V1_1) {
+  if (version === JB721_DELEGATE_V3_1) {
     return [...baseArgs, JBControllerAddress] // v1.1 requires us to pass the controller address in
   }
 }

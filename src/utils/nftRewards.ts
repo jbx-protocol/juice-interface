@@ -1,11 +1,11 @@
 import {
-  JB721DELAGATE_V1_1_PAY_METADATA,
-  JB721DELAGATE_V1_PAY_METADATA,
+  JB721DELAGATE_V3_1_PAY_METADATA,
+  JB721DELAGATE_V3_PAY_METADATA,
 } from 'components/Project/PayProjectForm/hooks/usePayProjectForm'
 import { NftFileType } from 'components/inputs/UploadNoStyle'
 import {
-  JB721_DELEGATE_V1,
-  JB721_DELEGATE_V1_1,
+  JB721_DELEGATE_V3,
+  JB721_DELEGATE_V3_1,
 } from 'constants/delegateVersions'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
@@ -30,8 +30,8 @@ import {
   JB721TierParams,
   JBDeployTiered721DelegateData,
   JBTiered721Flags,
-  JB_721_TIER_PARAMS_V1_1,
-  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1,
+  JB_721_TIER_PARAMS_V3_1,
+  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
   NftRewardTier,
 } from 'models/nftRewards'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
@@ -213,7 +213,7 @@ export function tiersEqual({
   )
 }
 
-function nftRewardTierToJB721TierParams(
+function nftRewardTierToJB721TierParamsV3(
   rewardTier: NftRewardTier,
   cid: string,
 ): JB721TierParams {
@@ -247,10 +247,10 @@ function nftRewardTierToJB721TierParams(
   }
 }
 
-function nftRewardTierToJB721TierParamsV1_1(
+function nftRewardTierToJB721TierParamsV3_1(
   rewardTier: NftRewardTier,
   cid: string,
-): JB_721_TIER_PARAMS_V1_1 {
+): JB_721_TIER_PARAMS_V3_1 {
   const contributionFloorWei = parseEther(
     rewardTier.contributionFloor.toString(),
   )
@@ -293,19 +293,19 @@ export function buildJB721TierParams({
   cids: string[]
   rewardTiers: NftRewardTier[]
   version: JB721DelegateVersion
-}): (JB721TierParams | JB_721_TIER_PARAMS_V1_1)[] {
+}): (JB721TierParams | JB_721_TIER_PARAMS_V3_1)[] {
   const sortedRewardTiers = sortNftsByContributionFloor(rewardTiers)
 
   // `cids` are ordered the same as `rewardTiers` so can get corresponding values from same index
   return cids
-    .map((cid, index): JB721TierParams | JB_721_TIER_PARAMS_V1_1 => {
+    .map((cid, index): JB721TierParams | JB_721_TIER_PARAMS_V3_1 => {
       const rewardTier = sortedRewardTiers[index]
-      if (version === JB721_DELEGATE_V1_1) {
-        return nftRewardTierToJB721TierParamsV1_1(rewardTier, cid)
+      if (version === JB721_DELEGATE_V3_1) {
+        return nftRewardTierToJB721TierParamsV3_1(rewardTier, cid)
       }
 
       // default return v1 params
-      return nftRewardTierToJB721TierParams(rewardTier, cid)
+      return nftRewardTierToJB721TierParamsV3(rewardTier, cid)
     })
     .slice() // clone object
     .sort((a, b) => {
@@ -316,8 +316,8 @@ export function buildJB721TierParams({
     })
 }
 
-export function encodeJB721DelegateV1PayMetadata(
-  metadata: JB721DELAGATE_V1_PAY_METADATA | undefined,
+export function encodeJB721DelegateV3PayMetadata(
+  metadata: JB721DELAGATE_V3_PAY_METADATA | undefined,
 ) {
   if (!metadata) return undefined
 
@@ -339,8 +339,8 @@ export function encodeJB721DelegateV1PayMetadata(
   return encoded
 }
 
-export function encodeJB721DelegateV1_1PayMetadata(
-  metadata: JB721DELAGATE_V1_1_PAY_METADATA | undefined,
+export function encodeJB721DelegateV3_1PayMetadata(
+  metadata: JB721DELAGATE_V3_1_PAY_METADATA | undefined,
 ) {
   if (!metadata) return undefined
 
@@ -445,7 +445,7 @@ export function buildDeployTiered721DelegateData(
     collectionUri: string
     collectionName: string
     collectionSymbol: string
-    tiers: (JB721TierParams | JB_721_TIER_PARAMS_V1_1)[]
+    tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1)[]
     ownerAddress: string
     governanceType: JB721GovernanceType
     contractAddresses: {
@@ -457,7 +457,7 @@ export function buildDeployTiered721DelegateData(
     flags: JBTiered721Flags
   },
   version: JB721DelegateVersion,
-): JBDeployTiered721DelegateData | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1 {
+): JBDeployTiered721DelegateData | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1 {
   const pricing: JB721PricingParams = {
     tiers,
     currency: V2V3_CURRENCY_ETH,
@@ -481,7 +481,7 @@ export function buildDeployTiered721DelegateData(
   }
 
   // Only need to specify directory in V1
-  if (version === JB721_DELEGATE_V1) {
+  if (version === JB721_DELEGATE_V3) {
     return {
       ...baseArgs,
       directory: JBDirectoryAddress,

@@ -2,7 +2,7 @@ import { useContractReadValue } from 'hooks/ContractReader'
 import { useJBDelegatesRegistry } from 'hooks/JBDelegatesRegistry/contracts/useJBDelegatesRegistry'
 import { isZeroAddress } from 'utils/address'
 
-export function useIsJB721DelegateV1_1({
+export function useIsJB721DelegateV3_1({
   dataSourceAddress,
 }: {
   dataSourceAddress: string | undefined
@@ -17,8 +17,8 @@ export function useIsJB721DelegateV1_1({
     args: dataSourceAddress ? [dataSourceAddress] : null,
   })
 
-  const isJB721DelegateV1_1 =
+  const isJB721DelegateV3_1 =
     Boolean(deployerAddress) && !isZeroAddress(deployerAddress)
 
-  return { value: isJB721DelegateV1_1, loading }
+  return { value: isJB721DelegateV3_1, loading }
 }

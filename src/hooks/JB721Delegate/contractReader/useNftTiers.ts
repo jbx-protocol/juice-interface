@@ -1,6 +1,6 @@
 import {
-  JB721_DELEGATE_V1,
-  JB721_DELEGATE_V1_1,
+  JB721_DELEGATE_V3,
+  JB721_DELEGATE_V3_1,
 } from 'constants/delegateVersions'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { JB721DelegateVersion, JB721Tier } from 'models/nftRewards'
@@ -16,13 +16,13 @@ function buildArgs(
   }: { dataSourceAddress: string | undefined; limit?: number },
 ) {
   switch (version) {
-    case JB721_DELEGATE_V1:
+    case JB721_DELEGATE_V3:
       return [
         dataSourceAddress,
         0, // _startingId
         limit ?? MAX_NFT_REWARD_TIERS,
       ]
-    case JB721_DELEGATE_V1_1:
+    case JB721_DELEGATE_V3_1:
       return [
         dataSourceAddress,
         0, // _category, should eventually be DEFAULT_JB_721_TIER_CATEGORY pending contract crew bug fix

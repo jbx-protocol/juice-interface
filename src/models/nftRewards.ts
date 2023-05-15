@@ -1,9 +1,9 @@
 import { BigNumber } from 'ethers'
 import { CurrencyOption } from './currencyOption'
 
-export type JB721DELEGATE_V1 = '1'
-export type JB721DELEGATE_V1_1 = '1.1'
-export type JB721DelegateVersion = JB721DELEGATE_V1 | JB721DELEGATE_V1_1
+export type JB721DELEGATE_V3 = '3'
+export type JB721DELEGATE_V3_1 = '3-1'
+export type JB721DelegateVersion = JB721DELEGATE_V3 | JB721DELEGATE_V3_1
 
 // How we store reward tiers for use around the app
 export type NftRewardTier = {
@@ -41,7 +41,7 @@ export interface JB721TierParams {
   transfersPausable: boolean
 }
 
-export type JB_721_TIER_PARAMS_V1_1 = Omit<
+export type JB_721_TIER_PARAMS_V3_1 = Omit<
   JB721TierParams,
   'shouldUseBeneficiaryAsDefault'
 > & {
@@ -111,7 +111,7 @@ export enum JB721GovernanceType {
 }
 
 export interface JB721PricingParams {
-  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V1_1)[]
+  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1)[]
   currency: CurrencyOption
   decimals: number
   prices: string
@@ -133,7 +133,7 @@ export interface JBDeployTiered721DelegateData {
   governanceType: JB721GovernanceType
 }
 
-export type JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1 = Omit<
+export type JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1 = Omit<
   JBDeployTiered721DelegateData,
   'directory'
 >

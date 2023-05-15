@@ -81,7 +81,6 @@ export const useProjectDetailsForm = () => {
   useFormDispatchWatch({
     form,
     fieldName: 'logo',
-    ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setLogoUri,
     formatter: v => v ?? '',
   })

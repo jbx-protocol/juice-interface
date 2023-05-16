@@ -116,7 +116,3 @@ export function ballotStrategiesFn(network?: NetworkName): BallotStrategy[] {
     },
   ]
 }
-
-export const ballotStrategies = ballotStrategiesFn()
-
-export const DEFAULT_BALLOT_STRATEGY = ballotStrategiesFn()[0]

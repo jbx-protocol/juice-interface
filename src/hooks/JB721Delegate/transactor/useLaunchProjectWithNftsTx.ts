@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import {
   JB721_DELEGATE_V3,
   JB721_DELEGATE_V3_1,
+  JB721_DELEGATE_V3_2,
 } from 'constants/delegateVersions'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
@@ -85,7 +86,7 @@ function buildArgs(
   if (version === JB721_DELEGATE_V3) {
     return baseArgs
   }
-  if (version === JB721_DELEGATE_V3_1) {
+  if (version === JB721_DELEGATE_V3_1 || version === JB721_DELEGATE_V3_2) {
     return [...baseArgs, JBControllerAddress] // v1.1 requires us to pass the controller address in
   }
 }

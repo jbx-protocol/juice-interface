@@ -8,6 +8,7 @@ import {
 } from 'models/v2v3/fundingCycle'
 
 import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
+import { PV_V2 } from 'constants/pv'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { ProjectEventsQuery } from 'generated/graphql'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
@@ -16,8 +17,10 @@ import { ActivityEvent } from '../ActivityElement'
 
 export default function ConfigureEventElem({
   event,
+  withProjectLink,
 }: {
   event: ProjectEventsQuery['projectEvents'][0]['configureEvent']
+  withProjectLink?: boolean
 }) {
   if (!event) return null
 
@@ -65,6 +68,8 @@ export default function ConfigureEventElem({
     <ActivityEvent
       event={event}
       header={t`Edited cycle`}
+      withProjectLink={withProjectLink}
+      pv={PV_V2}
       subject={
         <MinimalCollapse
           header={

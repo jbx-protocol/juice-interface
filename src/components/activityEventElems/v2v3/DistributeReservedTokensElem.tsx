@@ -7,12 +7,15 @@ import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
+import { PV_V2 } from 'constants/pv'
 import { ActivityEvent } from '../ActivityElement'
 
 export default function DistributeReservedTokensEventElem({
   event,
+  withProjectLink,
 }: {
   event: ProjectEventsQuery['projectEvents'][0]['distributeReservedTokensEvent']
+  withProjectLink?: boolean
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
 
@@ -45,6 +48,8 @@ export default function DistributeReservedTokensEventElem({
   return (
     <ActivityEvent
       event={event}
+      withProjectLink={withProjectLink}
+      pv={PV_V2}
       header={
         <Trans>
           Sent reserved{' '}

@@ -1427,6 +1427,9 @@ msgstr ""
 msgid "<0/> unclaimed"
 msgstr ""
 
+msgid "Sent payouts (v1)"
+msgstr ""
+
 msgid "Edit tracked assets"
 msgstr ""
 
@@ -1779,6 +1782,9 @@ msgid "Available after fee:"
 msgstr ""
 
 msgid "Recipient address is required."
+msgstr ""
+
+msgid "Edited cycle (v1)"
 msgstr ""
 
 msgid "Project #{projectId}"
@@ -2825,6 +2831,9 @@ msgstr ""
 msgid "Get help planning or setting up my project."
 msgstr ""
 
+msgid "All activity"
+msgstr ""
+
 msgid "Community"
 msgstr ""
 
@@ -3668,9 +3677,6 @@ msgstr ""
 msgid "MoonDAO has built an enthusiastic community of over 10,000 members, successfully sent their first astronaut to space, and is currently coordinating the spaceflight for their second astronaut. Their ambitious long-term roadmap goals include building a settlement on the Moon by 2030. In collaboration with StudioDAO, a decentralized movie studio running on Juicebox, MoonDAO has donated $100,000 to help fund the production of Ticket To Space, the first DAO documentary. The film will cover the story of Yan, a MoonDAO member from China, who will be sent to space on an upcoming Blue Origin flight after minting a free NFT."
 msgstr ""
 
-msgid "All events"
-msgstr ""
-
 msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
 msgstr ""
 
@@ -4059,6 +4065,9 @@ msgid "Build and launch your NFT project right here on Juicebox with built-in re
 msgstr ""
 
 msgid "No reserved tokens configured."
+msgstr ""
+
+msgid "Sent reserved tokens (v1)"
 msgstr ""
 
 msgid "Spaces are not allowed"

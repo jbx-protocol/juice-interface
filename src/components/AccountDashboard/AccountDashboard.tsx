@@ -1,6 +1,7 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Select, Tabs } from 'antd'
+import ActivityList from 'components/ActivityList'
 import EthereumAddress from 'components/EthereumAddress'
 import Grid from 'components/Grid'
 import { Etherscan } from 'components/icons/Etherscan'
@@ -168,6 +169,11 @@ export function AccountDashboard({
   }, [router, signIn, wallet.userAddress])
 
   const items = [
+    {
+      label: t`Activity`,
+      key: 'activity',
+      children: <ActivityList from={address} />,
+    },
     {
       label: t`Contributions`,
       key: 'holding',

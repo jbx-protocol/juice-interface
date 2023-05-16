@@ -23,6 +23,7 @@ import {
   JBDeployTiered721DelegateData,
   JBTiered721Flags,
   JB_721_TIER_PARAMS_V3_1,
+  JB_721_TIER_PARAMS_V3_2,
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
@@ -43,7 +44,7 @@ interface DeployTiered721DelegateData {
   collectionName: string
   collectionSymbol: string
   governanceType: JB721GovernanceType
-  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1)[]
+  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2)[]
   flags: JBTiered721Flags
 }
 

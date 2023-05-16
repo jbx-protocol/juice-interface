@@ -2,11 +2,19 @@ import { t } from '@lingui/macro'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { TransactorInstance } from 'hooks/useTransactor'
-import { JB721TierParams, JB_721_TIER_PARAMS_V3_1 } from 'models/nftRewards'
+import {
+  JB721TierParams,
+  JB_721_TIER_PARAMS_V3_1,
+  JB_721_TIER_PARAMS_V3_2,
+} from 'models/nftRewards'
 import { useContext } from 'react'
 
 export function useAdjustTiersTx(): TransactorInstance<{
-  newTiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1)[]
+  newTiers: (
+    | JB721TierParams
+    | JB_721_TIER_PARAMS_V3_1
+    | JB_721_TIER_PARAMS_V3_2
+  )[]
   tierIdsChanged: number[]
 }> {
   const { transactor } = useContext(TransactionContext)

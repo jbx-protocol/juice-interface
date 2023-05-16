@@ -1,11 +1,13 @@
 import { t } from '@lingui/macro'
 import { Skeleton } from 'antd'
 import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
+import ETHAmount from 'components/currency/ETHAmount'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { NftRewardTier } from 'models/nftRewards'
 import { useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'
+import { parseWad } from 'utils/format/formatNumber'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
 import { QuantitySelector } from './QuantitySelector'
@@ -153,17 +155,21 @@ export function NftTierCard({
           </Skeleton>
           {!hideAttributes ? (
             <>
-              <Skeleton
-                className="mt-1"
-                loading={loading}
-                active
-                title={false}
-                paragraph={{ rows: 1, width: ['50%'] }}
-              >
-                <span className="text-sm text-grey-900 dark:text-slate-50">
-                  {rewardTier?.contributionFloor} ETH
-                </span>
-              </Skeleton>
+              {rewardTier?.contributionFloor ? (
+                <Skeleton
+                  className="mt-1"
+                  loading={loading}
+                  active
+                  title={false}
+                  paragraph={{ rows: 1, width: ['50%'] }}
+                >
+                  <span className="text-sm text-grey-900 dark:text-slate-50">
+                    <ETHAmount
+                      amount={parseWad(rewardTier.contributionFloor)}
+                    />
+                  </span>
+                </Skeleton>
+              ) : null}
               <Skeleton
                 className="pt-5"
                 loading={loading}

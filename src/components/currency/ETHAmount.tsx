@@ -43,31 +43,24 @@ export default function ETHAmount({
     padEnd,
   })
 
-  if (isBelowZero) {
-    return (
-      <Tooltip
-        title={
+  const isApproximatelyZero = formattedETHAmount === '0'
+
+  return (
+    <Tooltip
+      title={
+        isApproximatelyZero ? (
           <span>
             {symbol}
             {formatWad(amount)}
           </span>
-        }
-        open={hideTooltip ? !hideTooltip : undefined}
-      >
-        {formattedETHAmount === '0' ? '~' : null}
-        {symbol}
-        {formattedETHAmount}
-      </Tooltip>
-    )
-  }
-
-  return (
-    <Tooltip
-      title={<ETHToUSD ethAmount={amount} />}
+        ) : (
+          <ETHToUSD ethAmount={amount} />
+        )
+      }
       open={hideTooltip ? !hideTooltip : undefined}
     >
       <span className="inline-flex items-center">
-        {formattedETHAmount === '0' ? '~' : null}
+        {isApproximatelyZero ? '~' : null}
         {symbol}
         <span>{formattedETHAmount}</span>
       </span>

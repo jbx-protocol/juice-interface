@@ -33,7 +33,7 @@ export const InfoCallout: React.FC<
       }
       collapsible={collapse}
     >
-      {children}
+      <div className="mt-0.5">{children}</div>
     </Callout>
   )
 }

@@ -4,7 +4,7 @@ import round from 'lodash/round'
 import { useCallback, useMemo, useState } from 'react'
 import { formatWad, stripCommas } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
-import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
+import { isFiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import { Allocation } from '../Allocation'
 import { AmountPercentageInput } from '../types'
 
@@ -26,10 +26,7 @@ export const PercentageInput = ({
     Allocation.useAllocationInstance()
 
   const hasTotalAllocationAmount = useMemo(
-    () =>
-      totalAllocationAmount &&
-      !totalAllocationAmount.eq(0) &&
-      !isInfiniteDistributionLimit(totalAllocationAmount),
+    () => isFiniteDistributionLimit(totalAllocationAmount),
     [totalAllocationAmount],
   )
 

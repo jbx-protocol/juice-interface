@@ -4,7 +4,7 @@ import round from 'lodash/round'
 import { useCallback, useMemo, useState } from 'react'
 import { formatWad, stripCommas } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import { Allocation } from '../Allocation'
 import { AmountPercentageInput } from '../types'
 
@@ -25,10 +25,11 @@ export const PercentageInput = ({
   const { totalAllocationAmount, allocationCurrency } =
     Allocation.useAllocationInstance()
 
-  const totalAllocationAmountIsInfinite = useMemo(
+  const hasTotalAllocationAmount = useMemo(
     () =>
-      !totalAllocationAmount ||
-      totalAllocationAmount.eq(MAX_DISTRIBUTION_LIMIT),
+      totalAllocationAmount &&
+      !totalAllocationAmount.eq(0) &&
+      !isInfiniteDistributionLimit(totalAllocationAmount),
     [totalAllocationAmount],
   )
 
@@ -69,7 +70,7 @@ export const PercentageInput = ({
         />
       </div>
       {/* Read-only amount if distribution limit is not infinite  */}
-      {!totalAllocationAmountIsInfinite ? (
+      {hasTotalAllocationAmount ? (
         <div className="ml-3">
           <CurrencySymbol currency={currencyName} />
           {roundedAmount}

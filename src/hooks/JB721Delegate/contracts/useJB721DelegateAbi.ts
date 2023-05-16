@@ -9,7 +9,7 @@ type JB721DelegateContractName =
   | 'IJBTiered721Delegate'
   | 'IJBTiered721DelegateProjectDeployer'
 
-async function loadJB721DelegateJson(
+export async function loadJB721DelegateJson(
   contractName: JB721DelegateContractName,
   version: JB721DelegateVersion,
 ): Promise<ContractJson | undefined> {

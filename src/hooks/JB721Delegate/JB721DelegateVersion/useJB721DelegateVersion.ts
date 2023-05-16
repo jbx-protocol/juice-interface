@@ -1,28 +1,24 @@
-import {
-  JB721_DELEGATE_V3,
-  JB721_DELEGATE_V3_1,
-  JB721_DELEGATE_V3_2,
-} from 'constants/delegateVersions'
+import axios from 'axios'
 import { JB721DelegateVersion } from 'models/nftRewards'
-import { useIsJB721DelegateV3 } from './useIsJB721DelegateV3'
-import { useIsJB721DelegateV3_1 } from './useIsJB721DelegateV3_1'
+import { useQuery } from 'react-query'
+import { isZeroAddress } from 'utils/address'
 
 export function useJB721DelegateVersion({
   dataSourceAddress,
 }: {
   dataSourceAddress: string | undefined
-}): JB721DelegateVersion | undefined {
-  const { value: isV3 } = useIsJB721DelegateV3({ dataSourceAddress })
-  const { value: isV3_1 } = useIsJB721DelegateV3_1({
-    dataSourceAddress: isV3 === false ? dataSourceAddress : undefined, // only check v1_1 if v1 is false
-  })
-  const isV3_2 = false // TODO implement
+}) {
+  return useQuery(
+    ['JB721DelegateVersion', dataSourceAddress],
+    async () => {
+      const res = await axios.get<{ version: JB721DelegateVersion }>(
+        `/api/juicebox/jb-721-delegate/${dataSourceAddress}`,
+      )
 
-  if (!dataSourceAddress) return
-
-  if (isV3) return JB721_DELEGATE_V3
-  if (isV3_1) return JB721_DELEGATE_V3_1
-  if (isV3_2) return JB721_DELEGATE_V3_2
-
-  return // not a JB721Delegate
+      return res.data.version
+    },
+    {
+      enabled: !!dataSourceAddress && !isZeroAddress(dataSourceAddress),
+    },
+  )
 }

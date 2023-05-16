@@ -6,6 +6,7 @@ import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
 import { ConnectKitProvider } from 'connectkit'
+import { readNetwork } from 'constants/networks'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
@@ -13,6 +14,7 @@ import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
+import { NetworkName } from 'models/networkName'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
@@ -29,28 +31,33 @@ const LanguageProvider = dynamic(
   },
 )
 
+const chain = readNetwork.name === NetworkName.mainnet ? mainnet : goerli
+
 const { chains, provider } = configureChains(
-  [mainnet, goerli],
+  [chain],
   [infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_ID })],
 )
 
 const client = createClient({
   provider,
   connectors: [
-    new InjectedConnector(),
-    new MetaMaskConnector(),
+    new InjectedConnector({ chains }),
+    new MetaMaskConnector({ chains }),
     new SafeConnector({
       options: {
         debug: process.env.NODE_ENV === 'development',
       },
+      chains,
     }),
     new CoinbaseWalletConnector({
       options: { appName: 'Juicebox' },
+      chains,
     }),
     new LedgerConnector({
       chains,
     }),
   ],
+  autoConnect: true,
 })
 
 /**

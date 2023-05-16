@@ -1,3 +1,4 @@
+import { readNetwork } from 'constants/networks'
 import { useConnect } from 'wagmi'
 import {
   useChain,
@@ -9,6 +10,8 @@ import {
   useUserAddress,
 } from './hooks'
 
+const chainId = readNetwork.chainId
+
 export function useWallet() {
   const { data: signer } = useSigner()
   const userAddress = useUserAddress()
@@ -16,7 +19,9 @@ export function useWallet() {
   const chain = useChain()
   const chainUnsupported = useChainUnsupported()
 
-  const { connect } = useConnect()
+  const { connect } = useConnect({
+    chainId,
+  })
   const disconnect = useDisconnect()
   const changeNetworks = useChangeNetworks()
 

@@ -3473,9 +3473,6 @@ msgstr ""
 msgid "Limited supply"
 msgstr ""
 
-msgid "Contact JuiceboxDAO for feature requests, support, or project advice."
-msgstr ""
-
 msgid "How long one cycle will last. Your project's rules are locked during each cycle. Edits you make to your project's rules during a cycle will only take effect at the start of the next cycle."
 msgstr ""
 

@@ -17,10 +17,10 @@ interface ActivityOption {
   value: ProjectEventFilter
 }
 
-const ALL_OPT: ActivityOption = { label: t`All activity`, value: 'all' }
+const ALL_OPT = (): ActivityOption => ({ label: t`All activity`, value: 'all' })
 
-const PV1_OPTS: ActivityOption[] = [
-  ALL_OPT,
+const PV1_OPTS = (): ActivityOption[] => [
+  ALL_OPT(),
   { label: t`Paid`, value: 'payEvent' },
   { label: t`Redeemed`, value: 'redeemEvent' },
   { label: t`Burned`, value: 'burnEvent' },
@@ -32,8 +32,8 @@ const PV1_OPTS: ActivityOption[] = [
   { label: t`Created project`, value: 'projectCreateEvent' },
 ]
 
-const PV2_OPTS: ActivityOption[] = [
-  ALL_OPT,
+const PV2_OPTS = (): ActivityOption[] => [
+  ALL_OPT(),
   { label: t`Paid`, value: 'payEvent' },
   { label: t`Redeemed`, value: 'redeemEvent' },
   { label: t`Burned`, value: 'burnEvent' },
@@ -53,8 +53,8 @@ const PV2_OPTS: ActivityOption[] = [
   { label: t`Created project`, value: 'projectCreateEvent' },
 ]
 
-const SHARED_OPTS: ActivityOption[] = [
-  ALL_OPT,
+const SHARED_OPTS = (): ActivityOption[] => [
+  ALL_OPT(),
   { label: t`Paid`, value: 'payEvent' },
   { label: t`Redeemed`, value: 'redeemEvent' },
   { label: t`Burned`, value: 'burnEvent' },
@@ -101,11 +101,11 @@ export default function ActivityList({
   const activityOptions = useMemo((): ActivityOption[] => {
     switch (pv) {
       case PV_V1:
-        return PV1_OPTS
+        return PV1_OPTS()
       case PV_V2:
-        return PV2_OPTS
+        return PV2_OPTS()
       default:
-        return SHARED_OPTS
+        return SHARED_OPTS()
     }
   }, [pv])
 

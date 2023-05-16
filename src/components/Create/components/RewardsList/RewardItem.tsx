@@ -123,10 +123,7 @@ export const RewardItem = ({
               />
             )}
             {!!votingWeight && (
-              <RewardStatLine
-                title={t`Voting weight`}
-                stat={numberUpToPrecisionFormat(votingWeight)}
-              />
+              <RewardStatLine title={t`Voting weight`} stat={votingWeight} />
             )}
           </div>
         </div>

@@ -45,7 +45,7 @@ async function fetchRewardTierMetadata({
     fileUrl: tierMetadata.image,
     beneficiary: tier.reservedTokenBeneficiary,
     reservedRate: tier.reservedRate.toNumber(),
-    votingWeight: tier.votingUnits.toNumber(),
+    votingWeight: tier.votingUnits.toString(),
   }
 }
 

@@ -19,7 +19,7 @@ export type NftRewardTier = {
   id: number
   reservedRate: number | undefined
   beneficiary: string | undefined
-  votingWeight: number | undefined
+  votingWeight: string | undefined
   externalLink: string | undefined
   description: string | undefined
 }

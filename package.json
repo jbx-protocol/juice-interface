@@ -57,6 +57,14 @@
   "engines": {
     "node": ">=16.0.0 <17.0.0"
   },
+  "resolutions": {
+    "@walletconnect/core": "^2.7.4",
+    "@walletconnect/sign-client": "^2.7.4",
+    "@walletconnect/ethereum-provider": "^2.7.4",
+    "@walletconnect/types": "^2.7.4",
+    "@walletconnect/universal-provider": "^2.7.4",
+    "@walletconnect/utils": "^2.7.4"
+  },
   "dependencies": {
     "@apollo/client": "3.6.9",
     "@arcxmoney/analytics": "1.6.1",

@@ -299,9 +299,6 @@ msgstr ""
 msgid "Transferred ETH to project"
 msgstr ""
 
-msgid "Add to Metamask"
-msgstr ""
-
 msgid "You must grant permission to migrate your V1 tokens."
 msgstr ""
 

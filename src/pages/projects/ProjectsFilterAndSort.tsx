@@ -48,7 +48,7 @@ export default function ProjectsFilterAndSort({
   const [tagsIsOpen, setTagsIsOpen] = useState<boolean>(false)
   const [filterIsOpen, setFilterIsOpen] = useState<boolean>(false)
 
-  const projectFilterOption = projectFilterOptions.find(
+  const projectFilterOption = projectFilterOptions().find(
     option => option.value === orderBy,
   )
 
@@ -176,7 +176,7 @@ export default function ProjectsFilterAndSort({
       </Collapse>
 
       <JuiceListbox
-        options={projectFilterOptions}
+        options={projectFilterOptions()}
         value={projectFilterOption}
         onChange={v => setOrderBy(v.value)}
         className="my-2 ml-4 w-44"
@@ -190,7 +190,7 @@ interface ProjectFilterOption {
   value: OrderByOption
 }
 
-const projectFilterOptions: ProjectFilterOption[] = [
+const projectFilterOptions = (): ProjectFilterOption[] => [
   { label: t`Total raised`, value: 'total_paid' },
   { label: t`Date created`, value: 'created_at' },
   { label: t`Current balance`, value: 'current_balance' },

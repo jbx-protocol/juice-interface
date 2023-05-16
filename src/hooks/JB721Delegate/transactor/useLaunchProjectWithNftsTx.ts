@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import {
   JB721_DELEGATE_V3,
   JB721_DELEGATE_V3_1,
+  JB721_DELEGATE_V3_2,
 } from 'constants/delegateVersions'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
@@ -23,6 +24,7 @@ import {
   JBDeployTiered721DelegateData,
   JBTiered721Flags,
   JB_721_TIER_PARAMS_V3_1,
+  JB_721_TIER_PARAMS_V3_2,
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
@@ -43,7 +45,7 @@ interface DeployTiered721DelegateData {
   collectionName: string
   collectionSymbol: string
   governanceType: JB721GovernanceType
-  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1)[]
+  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2)[]
   flags: JBTiered721Flags
 }
 
@@ -84,7 +86,7 @@ function buildArgs(
   if (version === JB721_DELEGATE_V3) {
     return baseArgs
   }
-  if (version === JB721_DELEGATE_V3_1) {
+  if (version === JB721_DELEGATE_V3_1 || version === JB721_DELEGATE_V3_2) {
     return [...baseArgs, JBControllerAddress] // v1.1 requires us to pass the controller address in
   }
 }

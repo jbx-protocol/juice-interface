@@ -1,7 +1,12 @@
 import axios from 'axios'
 import { ONE_BILLION } from 'constants/numbers'
 import { BigNumber } from 'ethers'
-import { IPFSNftRewardTier, JB721Tier, NftRewardTier } from 'models/nftRewards'
+import {
+  IPFSNftRewardTier,
+  JB721TierV3,
+  JB_721_TIER_V3_2,
+  NftRewardTier,
+} from 'models/nftRewards'
 import { UseQueryResult, useQuery } from 'react-query'
 import { withHttps } from 'utils/externalLink'
 import { formatWad } from 'utils/format/formatNumber'
@@ -12,7 +17,7 @@ export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 async function fetchRewardTierMetadata({
   tier,
 }: {
-  tier: JB721Tier
+  tier: JB721TierV3 | JB_721_TIER_V3_2
 }): Promise<NftRewardTier> {
   const tierCid = decodeEncodedIpfsUri(tier.encodedIPFSUri)
   const url = ipfsGatewayUrl(tierCid)
@@ -26,25 +31,28 @@ async function fetchRewardTierMetadata({
     ? DEFAULT_NFT_MAX_SUPPLY
     : tier.initialQuantity.toNumber()
 
+  const rawContributionFloor =
+    (tier as JB_721_TIER_V3_2).price ?? (tier as JB721TierV3).contributionFloor
+
   return {
     id: tier.id.toNumber(),
     name: tierMetadata.name,
     description: tierMetadata.description,
     externalLink: withHttps(tierMetadata.externalLink),
-    contributionFloor: parseFloat(formatWad(tier.contributionFloor) ?? '0'),
+    contributionFloor: parseFloat(formatWad(rawContributionFloor) ?? '0'),
     maxSupply,
     remainingSupply: tier.remainingQuantity?.toNumber() ?? maxSupply,
     fileUrl: tierMetadata.image,
     beneficiary: tier.reservedTokenBeneficiary,
     reservedRate: tier.reservedRate.toNumber(),
-    votingWeight: tier.votingUnits.toNumber(),
+    votingWeight: tier.votingUnits.toString(),
   }
 }
 
 // Retreives each NftRewardTier from IPFS given an array of CIDs (IpfsHashes)
 // Returns an array of NftRewardTiers
 export default function useNftRewards(
-  tiers: JB721Tier[],
+  tiers: JB721TierV3[] | JB_721_TIER_V3_2[],
   projectId: number | undefined,
   dataSourceAddress: string | undefined,
 ): UseQueryResult<NftRewardTier[]> {

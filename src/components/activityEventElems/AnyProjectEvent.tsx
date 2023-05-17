@@ -41,7 +41,10 @@ export function AnyProjectEvent({
     return (
       <BurnEventElem
         event={event.burnEvent}
-        tokenSymbol={tokenSymbol}
+        tokenSymbol={
+          // TODO tokenSymbol is currently obtained via Context. However the context will vary depending on project version, and will not be present if rendering BurnEventElem outside a project dashboard. We should find another option for cacheing tokenSymbols so the component can do a lookup itself without needing an on-chain call. This will avoid parent components needing to pass down tokenSymbol to this component just to properly render BurnEventElems
+          tokenSymbol
+        }
         withProjectLink={withProjectLink}
       />
     )
@@ -137,7 +140,7 @@ export function AnyProjectEvent({
     )
   }
 
-  console.error('Unhandled project event element', event)
+  console.error('AnyProjectEvent: Unhandled project event', event)
 
   return null
 }

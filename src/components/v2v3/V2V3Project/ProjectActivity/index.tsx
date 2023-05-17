@@ -15,18 +15,18 @@ export function V2V3ProjectActivity() {
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
 
   return (
-    <ActivityList
-      projectId={projectId}
-      pv={PV_V2}
-      header={<SectionHeader className="m-0" text={t`Activity`} />}
-      tokenSymbol={tokenSymbol}
-      setDownloadModalVisible={setDownloadModalVisible}
-      downloadComponent={
-        <V2V3DownloadActivityModal
-          open={downloadModalVisible}
-          onCancel={() => setDownloadModalVisible(false)}
-        />
-      }
-    />
+    <>
+      <ActivityList
+        projectId={projectId}
+        pv={PV_V2}
+        header={<SectionHeader className="m-0" text={t`Activity`} />}
+        tokenSymbol={tokenSymbol}
+        onClickDownload={() => setDownloadModalVisible(true)}
+      />
+      <V2V3DownloadActivityModal
+        open={downloadModalVisible}
+        onCancel={() => setDownloadModalVisible(false)}
+      />
+    </>
   )
 }

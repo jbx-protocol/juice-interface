@@ -80,6 +80,17 @@ const SHARED_OPTS = (): ActivityOption[] => [
   { label: t`Created project`, value: 'projectCreateEvent' },
 ]
 
+/**
+ * An infinite-paging list of projectEvents that can be filtered by the user.
+ * @param projectId Restrict to events with a specific projectId value.
+ * @param pv Restrict to events with a specific pv value.
+ * @param from Restrict to events with a specific from value.
+ * @param pageSize Number of events returned in a single page. Default `10`.
+ * @param tokenSymbol Passed to `AnyProjectEvent` component to render in some projectEvent components. Only provide this if also providing projectId.
+ * @param header Header component to be rendered above the list.
+ * @param onClickDownload Callback when download icon is clicked. If not provided, download icon will not be rendered.
+ * @param downloadComponent Callback when download icon is clicked. If not provided, download icon will not be rendered.
+ */
 export default function ActivityList({
   projectId,
   pv,
@@ -87,28 +98,14 @@ export default function ActivityList({
   pageSize,
   tokenSymbol,
   header,
-  setDownloadModalVisible,
-  downloadComponent,
+  onClickDownload,
 }: Pick<ProjectEventsQueryArgs, 'projectId' | 'pv' | 'from'> & {
   pageSize?: number
   tokenSymbol?: string
   header?: JSX.Element | null
-  setDownloadModalVisible?: (visible: boolean) => void
-  downloadComponent?: JSX.Element | null
+  onClickDownload?: VoidCallback
 }) {
   const [eventFilter, setEventFilter] = useState<ProjectEventFilter>('all')
-
-  const activityOptions = useMemo((): ActivityOption[] => {
-    switch (pv) {
-      case PV_V1:
-        return PV1_OPTS()
-      case PV_V2:
-        return PV2_OPTS()
-      default:
-        return SHARED_OPTS()
-    }
-  }, [pv])
-
   const [isFetchingMore, setIsFetchingMore] = useState<boolean>()
 
   const _pageSize = pageSize ?? 10
@@ -121,15 +118,26 @@ export default function ActivityList({
     first: _pageSize,
   })
 
-  const isLoading = loading || isFetchingMore
+  const activityOptions = useMemo((): ActivityOption[] => {
+    switch (pv) {
+      case PV_V1:
+        return PV1_OPTS()
+      case PV_V2:
+        return PV2_OPTS()
+      default:
+        return SHARED_OPTS()
+    }
+  }, [pv])
 
-  const projectEvents = data?.projectEvents
+  const isLoading = loading || isFetchingMore
 
   const activityOption = activityOptions.find(o => o.value === eventFilter)
 
+  const projectEvents = data?.projectEvents
+
   const count = projectEvents?.length || 0
 
-  const hasDownload = count > 0 && downloadComponent && setDownloadModalVisible
+  const hasDownload = count > 0 && onClickDownload
 
   const list = useMemo(
     () =>
@@ -140,7 +148,10 @@ export default function ActivityList({
         >
           <AnyProjectEvent
             event={e}
-            tokenSymbol={tokenSymbol}
+            tokenSymbol={
+              // tokenSymbol should only be provided if projectEvents are restricted to a specific projectId
+              projectId === undefined ? tokenSymbol : undefined
+            }
             withProjectLink={!projectId}
           />
         </div>
@@ -206,7 +217,7 @@ export default function ActivityList({
             <Button
               type="text"
               icon={<ArrowDownTrayIcon className="inline h-5 w-5" />}
-              onClick={() => setDownloadModalVisible(true)}
+              onClick={onClickDownload}
             />
           )}
 
@@ -222,8 +233,6 @@ export default function ActivityList({
       {list}
 
       {listStatus}
-
-      {downloadComponent}
     </div>
   )
 }

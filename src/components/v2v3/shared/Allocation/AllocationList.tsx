@@ -17,7 +17,7 @@ import { Allocation, AllocationSplit } from './Allocation'
 
 type AddButtonSize = 'small' | 'large'
 
-const allocationId = (
+export const allocationId = (
   beneficiary: string,
   projectIdHex: string | undefined,
 ) => {
@@ -157,12 +157,10 @@ export const AllocationList = ({
           const originalTotal = parseFloat(
             fromWad(totalAllocationAmount ?? BigNumber.from(0)),
           )
-          const id = allocationId(
-            result.beneficiary!,
-            projectIdToHex(result.projectId),
-          )
+
+          // checks original ID
           const existingAllocation = isEditing
-            ? allocations.find(a => a.id === id)
+            ? allocations.find(a => a.id === result.previousId)
             : undefined
 
           let totalAmount = originalTotal

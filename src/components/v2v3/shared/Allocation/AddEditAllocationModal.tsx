@@ -17,7 +17,9 @@ import {
 } from 'utils/antdRules'
 import { hexToInt, parseWad, stripCommas } from 'utils/format/formatNumber'
 import { ceilIfCloseToNextInteger } from 'utils/math'
+import { projectIdToHex } from 'utils/splits'
 import { Allocation } from './Allocation'
+import { allocationId } from './AllocationList'
 import { AmountInput } from './components/AmountInput'
 import { PercentageInput } from './components/PercentageInput'
 import { AmountPercentageInput } from './types'
@@ -36,6 +38,7 @@ export type AddEditAllocationModalEntity =
       projectId: string | undefined
       amount: AmountPercentageInput
       lockedUntil: number | undefined
+      previousId?: string
     }
   | {
       projectOwner: true
@@ -130,6 +133,7 @@ export const AddEditAllocationModal = ({
     if (recipient === 'projectOwner') {
       result = { projectOwner: true, amount: fields.amount.value }
     } else {
+      const hasEditingBeneficiary = editingData && !editingData?.projectOwner
       result = {
         projectOwner: false,
         beneficiary: fields.address,
@@ -138,11 +142,17 @@ export const AddEditAllocationModal = ({
         lockedUntil: fields.lockedUntil
           ? Math.round(fields.lockedUntil.valueOf() / 1000)
           : undefined,
+        previousId: hasEditingBeneficiary
+          ? allocationId(
+              editingData?.beneficiary ?? '',
+              projectIdToHex(fields.juiceboxProjectId),
+            )
+          : undefined,
       }
     }
     onOk(result)
     form.resetFields()
-  }, [form, onOk, recipient])
+  }, [form, onOk, recipient, editingData])
 
   const onModalCancel = useCallback(() => {
     onCancel()

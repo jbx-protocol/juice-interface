@@ -44,11 +44,11 @@ function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
 function ContributedList({ address }: { address: string }) {
   const orderByOpts = (): { label: string; value: Participant_OrderBy }[] => [
     {
-      label: 'Highest paid',
+      label: t`Highest paid`,
       value: Participant_OrderBy.volume,
     },
     {
-      label: 'Recent',
+      label: t`Recent`,
       value: Participant_OrderBy.lastPaidTimestamp,
     },
   ]

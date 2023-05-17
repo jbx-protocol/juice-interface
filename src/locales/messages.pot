@@ -986,6 +986,9 @@ msgstr ""
 msgid "This cycle's rules may lead to unexpected behavior or other risks."
 msgstr ""
 
+msgid "Deployed project payer"
+msgstr ""
+
 msgid "Recent"
 msgstr ""
 

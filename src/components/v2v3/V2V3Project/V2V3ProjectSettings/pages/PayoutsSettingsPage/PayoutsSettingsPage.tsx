@@ -12,7 +12,7 @@ import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/splits'
 import { V2V3EditPayouts } from './V2V3EditPayouts'
 
 export function PayoutsSettingsPage() {
-  const { fundingCycle } = useContext(V2V3ProjectContext)
+  const { fundingCycle, distributionLimit } = useContext(V2V3ProjectContext)
   const [loading, setLoading] = useState(false)
   const [editingSplits, setEditingSplits] = useState<Split[]>([])
   const totalSplitsPercentage = useMemo(
@@ -49,24 +49,29 @@ export function PayoutsSettingsPage() {
     [setProjectSplits, totalSplitsPercentageInvalid],
   )
 
+  const cannotEditPayouts = !distributionLimit || distributionLimit.eq(0)
+
   return (
     <>
       <V2V3EditPayouts
         editingSplits={editingSplits}
         setEditingSplits={setEditingSplits}
+        disabled={cannotEditPayouts}
       />
-      <Button
-        loading={loading}
-        onClick={() => onSplitsConfirmed(editingSplits)}
-        disabled={totalSplitsPercentageInvalid}
-        type="primary"
-        size="large"
-        className="mt-6"
-      >
-        <span>
-          <Trans>Save payouts</Trans>
-        </span>
-      </Button>
+      {cannotEditPayouts ? null : (
+        <Button
+          loading={loading}
+          onClick={() => onSplitsConfirmed(editingSplits)}
+          disabled={totalSplitsPercentageInvalid}
+          type="primary"
+          size="large"
+          className="mt-6"
+        >
+          <span>
+            <Trans>Save payouts</Trans>
+          </span>
+        </Button>
+      )}
     </>
   )
 }

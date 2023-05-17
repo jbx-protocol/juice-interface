@@ -2636,6 +2636,9 @@ msgstr ""
 msgid "Transfer unclaimed {0}"
 msgstr ""
 
+msgid "Cannot set payouts because your <0>Total payouts</0> is Zero."
+msgstr ""
+
 msgid "The onchain memo for each payment made through this address. The project's payment feed will include the memo alongside the payment."
 msgstr ""
 

@@ -180,3 +180,14 @@ export function hasDataSourceForPay(
 export function isInfiniteDistributionLimit(distributionLimit: BigNumber) {
   return distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)
 }
+
+// Not zero and not infinite
+export const isFiniteDistributionLimit = (
+  distributionLimit: BigNumber | undefined,
+): boolean => {
+  return Boolean(
+    distributionLimit &&
+      !distributionLimit.eq(0) &&
+      !isInfiniteDistributionLimit(distributionLimit),
+  )
+}

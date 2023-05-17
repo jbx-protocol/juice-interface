@@ -18,6 +18,7 @@ import {
 import { hexToInt, parseWad, stripCommas } from 'utils/format/formatNumber'
 import { ceilIfCloseToNextInteger } from 'utils/math'
 import { projectIdToHex } from 'utils/splits'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import { Allocation } from './Allocation'
 import { allocationId } from './AllocationList'
 import { AmountInput } from './components/AmountInput'
@@ -71,9 +72,7 @@ export const AddEditAllocationModal = ({
   const { totalAllocationAmount, allocations, allocationCurrency } =
     Allocation.useAllocationInstance()
   const [form] = Form.useForm<AddEditAllocationModalFormProps>()
-  const [amountType, setAmountType] = useState<'amount' | 'percentage'>(
-    () => [...availableModes][0],
-  )
+  const [amountType, setAmountType] = useState<'amount' | 'percentage'>()
   const [recipient, setRecipient] = useState<
     'walletAddress' | 'juiceboxProject' | 'projectOwner'
   >('walletAddress')
@@ -94,11 +93,25 @@ export const AddEditAllocationModal = ({
     .map(a => a.percent)
     .reduce((acc, curr) => acc + curr, 0)
 
+  const hasInfiniteTotalAllocationAmount: boolean = useMemo(
+    () =>
+      Boolean(
+        totalAllocationAmount &&
+          isInfiniteDistributionLimit(totalAllocationAmount),
+      ),
+    [totalAllocationAmount],
+  )
+
   const isEditing = !!editingData
 
   useEffect(() => {
-    setAmountType(() => [...availableModes][0])
-  }, [availableModes])
+    setAmountType(() => {
+      if (availableModes.has('amount') && !hasInfiniteTotalAllocationAmount) {
+        return 'amount'
+      }
+      return 'percentage'
+    })
+  }, [availableModes, hasInfiniteTotalAllocationAmount])
 
   useEffect(() => {
     if (!open) return

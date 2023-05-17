@@ -20,16 +20,18 @@ import { formatFundingTarget } from 'utils/format/formatFundingTarget'
 import { formatPercent } from 'utils/format/formatPercent'
 import { settingsPagePath } from 'utils/routes'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 
 export const V2V3EditPayouts = ({
   editingSplits,
   setEditingSplits,
   open,
+  disabled,
 }: {
   editingSplits: Split[]
   setEditingSplits: (splits: Split[]) => void
   open?: boolean
+  disabled?: boolean
 }) => {
   const {
     payoutSplits: contextPayoutSplits,
@@ -68,11 +70,7 @@ export const V2V3EditPayouts = ({
   const payoutsSelection: PayoutsSelection = useMemo(() => {
     // As we dont have control of amounts/percentage out of create, always use
     // amounts, and fall back to percentages when amounts is unavailable.
-    if (
-      !distributionLimit ||
-      distributionLimit.eq(0) ||
-      distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)
-    ) {
+    if (distributionLimit && isInfiniteDistributionLimit(distributionLimit)) {
       return 'percentages'
     }
     return 'amounts'
@@ -98,6 +96,30 @@ export const V2V3EditPayouts = ({
       setEditingSplits(newAllocations.map(allocationToSplit)),
     [setEditingSplits],
   )
+
+  const mustEditCycleText = (
+    <Trans>
+      You must{' '}
+      <Link href={settingsPagePath('reconfigurefc', { projectId, handle })}>
+        Edit your Cycle
+      </Link>{' '}
+      to change your total payout amount.
+    </Trans>
+  )
+
+  if (disabled) {
+    return (
+      <div className="flex flex-col gap-4">
+        <div>
+          <Trans>
+            Cannot set payouts because your <strong>Total payouts</strong> is
+            Zero.
+          </Trans>
+        </div>
+        <div>{mustEditCycleText}</div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -128,7 +150,11 @@ export const V2V3EditPayouts = ({
           <OwnerPayoutCard payoutsSelection={payoutsSelection} />
           <Allocation.List
             allocationName={t`payout`}
-            availableModes={new Set(['percentage'])}
+            availableModes={
+              new Set([
+                payoutsSelection === 'amounts' ? 'amount' : 'percentage',
+              ])
+            }
           >
             {(
               modal,
@@ -178,20 +204,7 @@ export const V2V3EditPayouts = ({
             distributionLimitCurrency,
           })}
         </Trans>
-        <TooltipIcon
-          iconClassName="ml-2"
-          tip={
-            <Trans>
-              You must{' '}
-              <Link
-                href={settingsPagePath('reconfigurefc', { projectId, handle })}
-              >
-                Edit your Cycle
-              </Link>{' '}
-              to change your total payout amount.
-            </Trans>
-          }
-        />
+        <TooltipIcon iconClassName="ml-2" tip={mustEditCycleText} />
       </div>
 
       {totalSplitsPercentageInvalid && (

@@ -1,6 +1,12 @@
+import { LedgerConnector } from '@wagmi/connectors/ledger'
+import { InjectedConnector } from '@wagmi/core'
+import { CoinbaseWalletConnector } from '@wagmi/core/connectors/coinbaseWallet'
+import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
+import { ConnectKitProvider } from 'connectkit'
+import { readNetwork } from 'constants/networks'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
@@ -8,10 +14,15 @@ import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
+import { NetworkName } from 'models/networkName'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { redirectTo } from 'utils/windowUtils'
+import { WagmiConfig, configureChains, createClient } from 'wagmi'
+import { goerli, mainnet } from 'wagmi/chains'
+import { SafeConnector } from 'wagmi/connectors/safe'
+import { infuraProvider } from 'wagmi/providers/infura'
 
 const LanguageProvider = dynamic(
   () => import('contexts/Language/LanguageProvider'),
@@ -19,6 +30,35 @@ const LanguageProvider = dynamic(
     ssr: false,
   },
 )
+
+const chain = readNetwork.name === NetworkName.mainnet ? mainnet : goerli
+
+const { chains, provider } = configureChains(
+  [chain],
+  [infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_ID })],
+)
+
+const client = createClient({
+  provider,
+  connectors: [
+    new InjectedConnector({ chains }),
+    new MetaMaskConnector({ chains }),
+    new SafeConnector({
+      options: {
+        debug: process.env.NODE_ENV === 'development',
+      },
+      chains,
+    }),
+    new CoinbaseWalletConnector({
+      options: { appName: 'Juicebox' },
+      chains,
+    }),
+    new LedgerConnector({
+      chains,
+    }),
+  ],
+  autoConnect: true,
+})
 
 /**
  * Contains all the core app providers used by each page.
@@ -35,17 +75,21 @@ export const AppWrapper: React.FC<React.PropsWithChildren<unknown>> = ({
     <React.StrictMode>
       <ReactQueryProvider>
         <LanguageProvider>
-          <TxHistoryProvider>
-            <ThemeProvider>
-              <EtherPriceProvider>
-                <ArcxProvider>
-                  <AnnouncementsProvider>
-                    <_Wrapper>{children}</_Wrapper>
-                  </AnnouncementsProvider>
-                </ArcxProvider>
-              </EtherPriceProvider>
-            </ThemeProvider>
-          </TxHistoryProvider>
+          <WagmiConfig client={client}>
+            <ConnectKitProvider>
+              <TxHistoryProvider>
+                <ThemeProvider>
+                  <EtherPriceProvider>
+                    <ArcxProvider>
+                      <AnnouncementsProvider>
+                        <_Wrapper>{children}</_Wrapper>
+                      </AnnouncementsProvider>
+                    </ArcxProvider>
+                  </EtherPriceProvider>
+                </ThemeProvider>
+              </TxHistoryProvider>
+            </ConnectKitProvider>
+          </WagmiConfig>
         </LanguageProvider>
       </ReactQueryProvider>
     </React.StrictMode>

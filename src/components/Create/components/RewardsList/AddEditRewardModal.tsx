@@ -37,7 +37,7 @@ interface AddEditRewardModalFormProps {
   maxSupply?: string | undefined
   nftReservedRate?: number | undefined
   beneficiary?: string | undefined
-  votingWeight?: number | undefined
+  votingWeight?: string | undefined
   externalUrl?: string | undefined
 }
 
@@ -136,7 +136,7 @@ export const AddEditRewardModal = ({
       beneficiary: fields.beneficiary,
       reservedRate: fields.nftReservedRate,
       votingWeight: fields.votingWeight
-        ? parseInt(fields.votingWeight.toString())
+        ? fields.votingWeight.toString()
         : undefined,
     }
     onOk(result)

@@ -1,6 +1,7 @@
+import { CURRENCY_METADATA } from 'constants/currency'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { formatAmount } from './format/formatAmount'
-import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from './v2v3/currency'
+import { V2V3CurrencyName, V2V3_CURRENCY_ETH } from './v2v3/currency'
 
 /**
  * Format the input amount with the currency.
@@ -16,9 +17,11 @@ export const formatCurrencyAmount = ({
   amount: number | undefined
   currency: V2V3CurrencyOption | undefined
 }) => {
-  const currencyPrefix = currency === V2V3_CURRENCY_USD ? '$' : ''
-  const currencySuffix = currency === V2V3_CURRENCY_USD ? 'USD' : 'ETH'
-  return `${currencyPrefix}${
-    amount !== undefined ? formatAmount(amount) : '0'
-  } ${currencySuffix}`
+  const currencyName = V2V3CurrencyName(currency)
+  if (!currencyName) return
+
+  const currencyMetadata = CURRENCY_METADATA[currencyName]
+  const formattedAmount = amount !== undefined ? formatAmount(amount) : '0'
+
+  return `${currencyMetadata.symbol}${formattedAmount}`
 }

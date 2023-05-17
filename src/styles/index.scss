@@ -1,4 +1,3 @@
-/* Disable for now - this causes opinionated settings by tailwind (which we want eventually) - need to update all classes before we can do this */
 @tailwind base;
 @import './fonts';
 @tailwind components;
@@ -7,7 +6,6 @@
 @import './utilities';
 @import './app';
 @import './antd-overrides/index.scss';
-@import './web3-onboard-overrides/index.scss';
 @import 'create/index.scss';
 @import './next-overrides';
 @import './swiper.scss'

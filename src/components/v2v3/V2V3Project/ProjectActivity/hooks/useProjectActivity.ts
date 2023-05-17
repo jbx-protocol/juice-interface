@@ -51,6 +51,8 @@ const CONFIGURE_EVENT_KEY: ActivityQueryKey<'configureEvent'> = {
     'useDataSourceForPay',
     'useDataSourceForRedeem',
     'memo',
+    'configuration',
+    'projectId',
   ],
 }
 

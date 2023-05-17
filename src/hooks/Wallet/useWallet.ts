@@ -1,4 +1,5 @@
-import { useConnectWallet } from '@web3-onboard/react'
+import { readNetwork } from 'constants/networks'
+import { useConnect } from 'wagmi'
 import {
   useChain,
   useChainUnsupported,
@@ -9,14 +10,18 @@ import {
   useUserAddress,
 } from './hooks'
 
+const chainId = readNetwork.chainId
+
 export function useWallet() {
-  const signer = useSigner()
+  const { data: signer } = useSigner()
   const userAddress = useUserAddress()
   const isConnected = useIsConnected()
   const chain = useChain()
   const chainUnsupported = useChainUnsupported()
 
-  const [, connect] = useConnectWallet()
+  const { connect } = useConnect({
+    chainId,
+  })
   const disconnect = useDisconnect()
   const changeNetworks = useChangeNetworks()
 

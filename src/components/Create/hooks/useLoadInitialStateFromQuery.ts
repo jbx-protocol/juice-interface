@@ -1,4 +1,4 @@
-import { ballotStrategies as BallotStrategies } from 'constants/v2v3/ballotStrategies'
+import { ballotStrategiesFn } from 'constants/v2v3/ballotStrategies'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import isEqual from 'lodash/isEqual'
@@ -73,7 +73,7 @@ const parseCreateFlowStateFromInitialState = (
   }
 
   const reconfigurationRuleSelection =
-    BallotStrategies.find(s =>
+    ballotStrategiesFn().find(s =>
       isEqualAddress(s.address, initialState.fundingCycleData.ballot),
     )?.id ?? 'threeDay'
 

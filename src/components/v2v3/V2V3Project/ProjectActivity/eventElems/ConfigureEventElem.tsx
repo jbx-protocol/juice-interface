@@ -9,6 +9,9 @@ import {
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
+import { useContext } from 'react'
 import FundingCycleDetails from '../../V2V3FundingCycleSection/FundingCycleDetails'
 
 export default function ConfigureEventElem({
@@ -46,10 +49,20 @@ export default function ConfigureEventElem({
         | 'useDataSourceForRedeem'
         | 'useTotalOverflowForRedemptions'
         | 'memo'
+        | 'configuration'
+        | 'projectId'
       >
     | undefined
 }) {
   if (!event) return null
+
+  const { primaryETHTerminal } = useContext(V2V3ProjectContext)
+
+  const { data: distributionLimit } = useProjectDistributionLimit({
+    projectId: event.projectId,
+    terminal: primaryETHTerminal,
+    configuration: event.configuration?.toString(),
+  })
 
   const fundingCycle: Partial<V2V3FundingCycle> = {
     duration: BigNumber.from(event.duration),
@@ -100,8 +113,8 @@ export default function ConfigureEventElem({
             fundingCycleMetadata={
               fundingCycleMetadata as V2V3FundingCycleMetadata
             }
-            distributionLimit={undefined}
-            distributionLimitCurrency={undefined}
+            distributionLimit={distributionLimit?.[0]}
+            distributionLimitCurrency={distributionLimit?.[1]}
             mintRateZeroAsUnchanged
           />
           {event.memo ? <RichNote className="mt-3" note={event.memo} /> : null}

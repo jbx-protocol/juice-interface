@@ -12,10 +12,7 @@ import {
   TERMINAL_MIGRATION_EXPLANATION,
   USE_DATASOURCE_FOR_REDEEM_EXPLANATION,
 } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
-import {
-  DEFAULT_BALLOT_STRATEGY,
-  ballotStrategiesFn,
-} from 'constants/v2v3/ballotStrategies'
+import { ballotStrategiesFn } from 'constants/v2v3/ballotStrategies'
 import { isAddress } from 'ethers/lib/utils'
 import isEqual from 'lodash/isEqual'
 import { BallotStrategy } from 'models/ballot'
@@ -44,7 +41,7 @@ export default function RulesForm({
       pausePay: fundingCycleMetadata.pausePay,
       allowMinting: fundingCycleMetadata.allowMinting,
       ballotStrategy: getBallotStrategyByAddress(
-        fundingCycleData.ballot ?? DEFAULT_BALLOT_STRATEGY.address,
+        fundingCycleData.ballot ?? ballotStrategiesFn()[0].address,
       ),
       allowSetTerminals: fundingCycleMetadata.global.allowSetTerminals,
       allowSetController: fundingCycleMetadata.global.allowSetController,

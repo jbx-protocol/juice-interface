@@ -19,7 +19,7 @@ export type NftRewardTier = {
   id: number
   reservedRate: number | undefined
   beneficiary: string | undefined
-  votingWeight: number | undefined
+  votingWeight: string | undefined
   externalLink: string | undefined
   description: string | undefined
 }
@@ -56,10 +56,30 @@ export type JB_721_TIER_PARAMS_V3_1 = Omit<
   category: number // 1
 }
 
+export type JB_721_TIER_PARAMS_V3_2 = Omit<
+  JB_721_TIER_PARAMS_V3_1,
+  | 'royaltyRate'
+  | 'royaltyBeneficiary'
+  | 'shouldUseRoyaltyBeneficiaryAsDefault'
+  | 'contributionFloor'
+  | 'lockedUntil'
+> & {
+  price: BigNumber
+  useVotingUnits: boolean
+}
+
 // Tiers as they are stored on-chain.
-export type JB721Tier = JB721TierParams & {
+export type JB721TierV3 = JB721TierParams & {
   id: BigNumber
   remainingQuantity?: BigNumber
+}
+
+export type JB_721_TIER_V3_2 = Omit<
+  JB721TierV3,
+  'royaltyRate' | 'royaltyBeneficiary' | 'contributionFloor' | 'lockedUntil'
+> & {
+  price: BigNumber
+  resolvedUri: string
 }
 
 type OpenSeaAttribute = {
@@ -114,7 +134,7 @@ export enum JB721GovernanceType {
 }
 
 export interface JB721PricingParams {
-  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1)[]
+  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2)[]
   currency: CurrencyOption
   decimals: number
   prices: string // address

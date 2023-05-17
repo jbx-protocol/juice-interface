@@ -11,6 +11,7 @@ const WALLET_CONNECT_URLS = [
   'https://*.walletconnect.com',
   'https://*.walletconnect.org',
   'wss://*.walletconnect.org',
+  'wss://www.walletlink.org/rpc',
 ]
 
 const INFURA_IPFS_URLS = [

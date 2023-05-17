@@ -36,15 +36,9 @@ export const Head: VFC<SEOProps> = props => {
           href={path}
           as="font"
           type="font/woff2"
+          crossOrigin="anonymous"
         />
       ))}
-      <link
-        key="/assets/fonts/Starjhol.ttf"
-        rel="preload"
-        href={'/assets/fonts/Starjhol.ttf'}
-        as="font"
-        type="font/ttf"
-      />
     </SEO>
   )
 }

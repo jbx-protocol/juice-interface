@@ -74,7 +74,7 @@ const SHARED_OPTS = (): ActivityOption[] => [
   { label: t`Transferred ETH to project`, value: 'addToBalanceEvent' },
   { label: t`Deployed ERC20`, value: 'deployedERC20Event' },
   {
-    label: t`Created a project payer address`,
+    label: t`Deployed project payer`,
     value: 'deployETHERC20ProjectPayerEvent',
   },
   { label: t`Created project`, value: 'projectCreateEvent' },
@@ -128,6 +128,8 @@ export default function ActivityList({
   const activityOption = activityOptions.find(o => o.value === eventFilter)
 
   const count = projectEvents?.length || 0
+
+  const hasDownload = count > 0 && downloadComponent && setDownloadModalVisible
 
   const list = useMemo(
     () =>
@@ -200,7 +202,7 @@ export default function ActivityList({
         {header}
 
         <div className="flex gap-2">
-          {count > 0 && downloadComponent && setDownloadModalVisible && (
+          {hasDownload && (
             <Button
               type="text"
               icon={<ArrowDownTrayIcon className="inline h-5 w-5" />}
@@ -209,7 +211,7 @@ export default function ActivityList({
           )}
 
           <JuiceListbox
-            className="w-[200px]"
+            className={hasDownload ? 'w-[200px]' : 'w-[240px]'}
             options={activityOptions}
             value={activityOption}
             onChange={v => setEventFilter(v.value)}

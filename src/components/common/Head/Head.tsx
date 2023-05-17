@@ -1,9 +1,7 @@
-import { VFC } from 'react'
-
 import { SEO, SEOProps } from '../SEO'
 import { FONT_PATHS } from './fonts'
 
-export const Head: VFC<SEOProps> = props => {
+export const Head: React.FC<SEOProps> = props => {
   return (
     <SEO {...props}>
       <meta name="viewport" content="width=device-width, initial-scale=1" />

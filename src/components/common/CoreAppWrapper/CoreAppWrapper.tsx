@@ -22,6 +22,7 @@ import { redirectTo } from 'utils/windowUtils'
 import { WagmiConfig, configureChains, createClient } from 'wagmi'
 import { goerli, mainnet } from 'wagmi/chains'
 import { SafeConnector } from 'wagmi/connectors/safe'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { infuraProvider } from 'wagmi/providers/infura'
 
 const LanguageProvider = dynamic(
@@ -54,6 +55,13 @@ const client = createClient({
       chains,
     }),
     new LedgerConnector({
+      chains,
+    }),
+    new WalletConnectConnector({
+      options: {
+        projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ?? '',
+        showQrModal: false,
+      },
       chains,
     }),
   ],

@@ -11,7 +11,7 @@ const WALLET_CONNECT_URLS = [
   'https://*.walletconnect.com',
   'https://*.walletconnect.org',
   'wss://*.walletconnect.org',
-  'wss://www.walletlink.org/rpc',
+  'wss://*.walletconnect.com',
 ]
 
 const INFURA_IPFS_URLS = [
@@ -23,6 +23,7 @@ const SCRIPT_SRC = [
   'https://*.juicebox.money',
   'https://static.hotjar.com',
   'https://script.hotjar.com',
+  'https://cdn.jsdelivr.net/npm/@ledgerhq/connect-kit@1',
   // Not working as unsafe-eval is required for metamask
   // `'sha256-kZ9E6/oLrki51Yx03/BugStfFrPlm8hjaFbaokympXo='`, // hotjar
   `'unsafe-eval'`, // hotjar
@@ -62,6 +63,7 @@ const CONNECT_SRC = [
   'https://*.safe.global',
   'https://*.snapshot.org',
   'https://*.wallet.coinbase.com',
+  'wss://www.walletlink.org/rpc',
   ...WALLET_CONNECT_URLS,
   'https://*.supabase.co',
   'https://api.ensideas.com',
@@ -76,7 +78,7 @@ if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')
 }
 
-const FRAME_SRC = []
+const FRAME_SRC = ['https://verify.walletconnect.com/']
 
 const ContentSecurityPolicy = `
   default-src 'none';
@@ -86,11 +88,8 @@ const ContentSecurityPolicy = `
   img-src 'self' ${IMG_SRC.join(' ')} data:;
   connect-src 'self' ${CONNECT_SRC.join(' ')};
   manifest-src 'self';
-  prefetch-src 'self';
   frame-src ${FRAME_SRC.join(' ')};
-  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(
-    ' ',
-  )} https://s.cdpn.io;
+  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')};
   frame-ancestors ${FRAME_ANCESTORS.join(' ')};
   form-action 'self';
 `

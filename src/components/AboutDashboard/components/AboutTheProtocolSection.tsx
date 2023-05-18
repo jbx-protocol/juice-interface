@@ -3,7 +3,7 @@ import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { TickIconListItem } from 'components/TickIconListItem'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import { SectionContainer } from './SectionContainer'
 import illustration from '/public/assets/images/about/illustration2.webp'
 

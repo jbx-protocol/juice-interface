@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { ONE_BILLION } from 'constants/numbers'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
 import { fromWad } from 'utils/format/formatNumber'

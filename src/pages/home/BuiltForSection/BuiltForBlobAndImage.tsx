@@ -1,6 +1,6 @@
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import useMobile from 'hooks/useMobile'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import { useContext } from 'react'
 import buildersImage from '/public/assets/images/home/why-juicebox/builders.webp'
 import crowdfundingImage from '/public/assets/images/home/why-juicebox/crowdfunding.webp'

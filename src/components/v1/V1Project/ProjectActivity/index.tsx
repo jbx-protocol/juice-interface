@@ -1,307 +1,61 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Space } from 'antd'
-import AddToBalanceEventElem from 'components/activityEventElems/AddToBalanceEventElem'
-import BurnEventElem from 'components/activityEventElems/BurnEventElem'
-import DeployedERC20EventElem from 'components/activityEventElems/DeployedERC20EventElem'
-import PayEventElem from 'components/activityEventElems/PayEventElem'
-import ProjectCreateEventElem from 'components/activityEventElems/ProjectCreateEventElem'
-import RedeemEventElem from 'components/activityEventElems/RedeemEventElem'
+import { AnyProjectEvent } from 'components/activityEventElems'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import SectionHeader from 'components/SectionHeader'
 import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { useInfiniteSubgraphQuery } from 'hooks/useSubgraphQuery'
-import { SGWhereArg } from 'models/graph'
-import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
-import { TapEvent } from 'models/subgraph-entities/v1/tap-event'
-import { V1ConfigureEvent } from 'models/subgraph-entities/v1/v1-configure'
-import { AddToBalanceEvent } from 'models/subgraph-entities/vX/add-to-balance-event'
-import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
-import { PayEvent } from 'models/subgraph-entities/vX/pay-event'
-import { ProjectCreateEvent } from 'models/subgraph-entities/vX/project-create-event'
-import { ProjectEvent } from 'models/subgraph-entities/vX/project-event'
-import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
+import { ProjectEventFilter, useProjectEvents } from 'hooks/useProjectEvents'
 import { useContext, useMemo, useState } from 'react'
 
-import { JuiceListbox } from 'components/inputs/JuiceListbox'
-import ReservesEventElem from './eventElems/ReservesEventElem'
-import TapEventElem from './eventElems/TapEventElem'
-import V1ConfigureEventElem from './eventElems/V1ConfigureEventElem'
 import { V1DownloadActivityModal } from './V1DownloadActivityModal'
-
-type EventFilter =
-  | 'all'
-  | 'pay'
-  | 'burn'
-  | 'addToBalance'
-  | 'redeem'
-  | 'withdraw'
-  | 'printReserves'
-  | 'deployERC20'
-  | 'projectCreate'
-  | 'configure'
 
 const PAGE_SIZE = 10
 
 export function V1ProjectActivity() {
   const { projectId } = useContext(ProjectMetadataContext)
   const { tokenSymbol } = useContext(V1ProjectContext)
+  const [isFetchingMore, setIsFetchingMore] = useState<boolean>()
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
-  const [eventFilter, setEventFilter] = useState<EventFilter>('all')
+  const [eventFilter, setEventFilter] = useState<ProjectEventFilter>('all')
 
   const eventFilterOption = useMemo(
     () => activityOptions().find(o => o.value === eventFilter),
     [eventFilter],
   )
 
-  const where: SGWhereArg<'projectEvent'>[] = useMemo(() => {
-    const _where: SGWhereArg<'projectEvent'>[] = [
-      {
-        key: 'pv',
-        value: PV_V1,
-      },
-      {
-        key: 'mintTokensEvent',
-        value: null, // Exclude all mintTokensEvents. One of these events is created for every Pay event, and showing both event types may lead to confusion
-      },
-      {
-        key: 'useAllowanceEvent',
-        value: null, // Exclude all useAllowanceEvents, no UI support yet
-      },
-      {
-        key: 'distributeToTicketModEvent',
-        value: null, // Exclude all distributeToTicketModEvent, no UI support
-      },
-      {
-        key: 'distributeToPayoutModEvent',
-        value: null, // Exclude all distributeToPayoutModEvent, no UI support
-      },
-      {
-        key: 'v1InitEvent',
-        value: null, // Exclude all v1InitEvents, no UI support
-      },
-    ]
-
-    if (projectId) {
-      _where.push({
-        key: 'projectId',
-        value: projectId,
-      })
-    }
-
-    let key: keyof ProjectEvent | undefined = undefined
-
-    switch (eventFilter) {
-      case 'deployERC20':
-        key = 'deployedERC20Event'
-        break
-      case 'pay':
-        key = 'payEvent'
-        break
-      case 'burn':
-        key = 'burnEvent'
-        break
-      case 'addToBalance':
-        key = 'addToBalanceEvent'
-        break
-      case 'printReserves':
-        key = 'printReservesEvent'
-        break
-      case 'projectCreate':
-        key = 'projectCreateEvent'
-        break
-      case 'redeem':
-        key = 'redeemEvent'
-        break
-      case 'withdraw':
-        key = 'tapEvent'
-        break
-      case 'configure':
-        key = 'v1ConfigureEvent'
-        break
-    }
-
-    if (key) {
-      _where.push({
-        key,
-        operator: 'not',
-        value: null,
-      })
-    }
-
-    return _where
-  }, [projectId, eventFilter])
-
-  const {
-    data: projectEvents,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-    isFetchingNextPage,
-  } = useInfiniteSubgraphQuery({
-    pageSize: PAGE_SIZE,
-    entity: 'projectEvent',
-    keys: [
-      'id',
-      {
-        entity: 'payEvent',
-        keys: ['amount', 'timestamp', 'beneficiary', 'note', 'id', 'txHash'],
-      },
-      {
-        entity: 'burnEvent',
-        keys: ['id', 'timestamp', 'txHash', 'from', 'holder', 'amount'],
-      },
-      {
-        entity: 'addToBalanceEvent',
-        keys: ['amount', 'timestamp', 'from', 'id', 'txHash'],
-      },
-      {
-        entity: 'deployedERC20Event',
-        keys: ['symbol', 'txHash', 'timestamp', 'id'],
-      },
-      {
-        entity: 'tapEvent',
-        keys: [
-          'id',
-          'timestamp',
-          'txHash',
-          'from',
-          'beneficiary',
-          'beneficiaryTransferAmount',
-          'netTransferAmount',
-        ],
-      },
-      {
-        entity: 'printReservesEvent',
-        keys: [
-          'id',
-          'timestamp',
-          'txHash',
-          'from',
-          'beneficiary',
-          'beneficiaryTicketAmount',
-          'count',
-        ],
-      },
-      {
-        entity: 'redeemEvent',
-        keys: [
-          'id',
-          'amount',
-          'beneficiary',
-          'txHash',
-          'timestamp',
-          'returnAmount',
-          'metadata',
-        ],
-      },
-      {
-        entity: 'projectCreateEvent',
-        keys: ['id', 'txHash', 'timestamp', 'from'],
-      },
-      {
-        entity: 'v1ConfigureEvent',
-        keys: [
-          'id',
-          'timestamp',
-          'txHash',
-          'from',
-          'ballot',
-          'discountRate',
-          'duration',
-          'target',
-          'bondingCurveRate',
-          'reservedRate',
-          'currency',
-          'ticketPrintingIsAllowed',
-          'payIsPaused',
-        ],
-      },
-    ],
-    orderDirection: 'desc',
-    orderBy: 'timestamp',
-    where,
+  const { data, fetchMore, loading } = useProjectEvents({
+    pv: PV_V1,
+    projectId,
+    filter: eventFilter,
+    first: PAGE_SIZE,
   })
 
-  const count =
-    projectEvents?.pages?.reduce((prev, cur) => prev + cur.length, 0) ?? 0
+  const isLoading = loading || isFetchingMore
+
+  const projectEvents = data?.projectEvents
+
+  const count = projectEvents?.length || 0
 
   const list = useMemo(
     () =>
-      projectEvents?.pages.map(group =>
-        group.map(e => {
-          let elem: JSX.Element | undefined = undefined
-
-          if (e.payEvent) {
-            elem = <PayEventElem event={e.payEvent as PayEvent} />
-          }
-          if (e.burnEvent) {
-            elem = (
-              <BurnEventElem event={e.burnEvent} tokenSymbol={tokenSymbol} />
-            )
-          }
-          if (e.addToBalanceEvent) {
-            elem = (
-              <AddToBalanceEventElem
-                event={e.addToBalanceEvent as AddToBalanceEvent}
-              />
-            )
-          }
-          if (e.tapEvent) {
-            elem = <TapEventElem event={e.tapEvent as TapEvent} />
-          }
-          if (e.redeemEvent) {
-            elem = <RedeemEventElem event={e.redeemEvent as RedeemEvent} />
-          }
-          if (e.printReservesEvent) {
-            elem = (
-              <ReservesEventElem
-                event={e.printReservesEvent as PrintReservesEvent}
-              />
-            )
-          }
-          if (e.projectCreateEvent) {
-            elem = (
-              <ProjectCreateEventElem
-                event={e.projectCreateEvent as ProjectCreateEvent}
-              />
-            )
-          }
-          if (e.deployedERC20Event) {
-            elem = (
-              <DeployedERC20EventElem
-                event={e.deployedERC20Event as DeployedERC20Event}
-              />
-            )
-          }
-          if (e.v1ConfigureEvent) {
-            elem = (
-              <V1ConfigureEventElem
-                event={e.v1ConfigureEvent as V1ConfigureEvent}
-              />
-            )
-          }
-
-          if (!elem) return null
-
-          return (
-            <div
-              className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
-              key={e.id}
-            >
-              {elem}
-            </div>
-          )
-        }),
-      ),
+      projectEvents?.map(e => (
+        <div
+          className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
+          key={e.id}
+        >
+          <AnyProjectEvent event={e} tokenSymbol={tokenSymbol} />
+        </div>
+      )),
     [projectEvents, tokenSymbol],
   )
 
   const listStatus = useMemo(() => {
-    if (isLoading || isFetchingNextPage) {
+    if (isLoading) {
       return (
         <div>
           <Loading />
@@ -317,11 +71,18 @@ export function V1ProjectActivity() {
       )
     }
 
-    if (hasNextPage) {
+    if (count % PAGE_SIZE === 0) {
       return (
         <div
           className="cursor-pointer text-center text-grey-500 dark:text-grey-300"
-          onClick={() => fetchNextPage()}
+          onClick={() => {
+            setIsFetchingMore(true)
+            fetchMore({
+              variables: {
+                skip: count,
+              },
+            }).finally(() => setIsFetchingMore(false))
+          }}
         >
           <Trans>Load more</Trans>
         </div>
@@ -333,7 +94,7 @@ export function V1ProjectActivity() {
         <Trans>{count} total</Trans>
       </div>
     )
-  }, [isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, count])
+  }, [isLoading, fetchMore, count])
 
   return (
     <div>
@@ -371,18 +132,18 @@ export function V1ProjectActivity() {
 
 interface ActivityOption {
   label: string
-  value: EventFilter
+  value: ProjectEventFilter
 }
 
 const activityOptions = (): ActivityOption[] => [
   { label: t`All events`, value: 'all' },
-  { label: t`Paid`, value: 'pay' },
-  { label: t`Redeemed`, value: 'redeem' },
-  { label: t`Burned`, value: 'burn' },
-  { label: t`Sent payouts`, value: 'withdraw' },
-  { label: t`Sent reserved tokens`, value: 'printReserves' },
-  { label: t`Edited cycle`, value: 'configure' },
-  { label: t`Deployed ERC20`, value: 'deployERC20' },
-  { label: t`Created project`, value: 'projectCreate' },
-  { label: t`Transferred ETH to project`, value: 'addToBalance' },
+  { label: t`Paid`, value: 'payEvent' },
+  { label: t`Redeemed`, value: 'redeemEvent' },
+  { label: t`Burned`, value: 'burnEvent' },
+  { label: t`Sent payouts`, value: 'tapEvent' },
+  { label: t`Sent reserved tokens`, value: 'printReservesEvent' },
+  { label: t`Edited cycle`, value: 'v1ConfigureEvent' },
+  { label: t`Deployed ERC20`, value: 'deployedERC20Event' },
+  { label: t`Created project`, value: 'projectCreateEvent' },
+  { label: t`Transferred ETH to project`, value: 'addToBalanceEvent' },
 ]

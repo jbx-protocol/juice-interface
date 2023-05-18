@@ -3,7 +3,7 @@ import ETHAmount from 'components/currency/ETHAmount'
 import RichNote from 'components/RichNote'
 import { TokenAmount } from 'components/TokenAmount'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { RedeemEvent } from 'models/subgraph-entities/vX/redeem-event'
+import { ProjectEventsQuery } from 'generated/graphql'
 import { useContext } from 'react'
 import { decodeJB721DelegateRedeemMetadata } from 'utils/nftRewards'
 import { ActivityEvent } from './ActivityElement'
@@ -11,21 +11,7 @@ import { ActivityEvent } from './ActivityElement'
 export default function RedeemEventElem({
   event,
 }: {
-  event:
-    | Pick<
-        RedeemEvent,
-        | 'id'
-        | 'amount'
-        | 'beneficiary'
-        | 'from'
-        | 'txHash'
-        | 'timestamp'
-        | 'returnAmount'
-        | 'terminal'
-        | 'metadata'
-        | 'memo'
-      >
-    | undefined
+  event: ProjectEventsQuery['projectEvents'][0]['redeemEvent']
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
 

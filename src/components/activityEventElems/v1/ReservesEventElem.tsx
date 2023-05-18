@@ -1,28 +1,17 @@
 import { Trans } from '@lingui/macro'
-import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import EthereumAddress from 'components/EthereumAddress'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { ProjectEventsQuery } from 'generated/graphql'
 import useSubgraphQuery from 'hooks/useSubgraphQuery'
-import { PrintReservesEvent } from 'models/subgraph-entities/v1/print-reserves-event'
 import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { ActivityEvent } from '../ActivityElement'
 
 export default function ReservesEventElem({
   event,
 }: {
-  event:
-    | Pick<
-        PrintReservesEvent,
-        | 'id'
-        | 'timestamp'
-        | 'txHash'
-        | 'from'
-        | 'beneficiary'
-        | 'beneficiaryTicketAmount'
-        | 'count'
-      >
-    | undefined
+  event: ProjectEventsQuery['projectEvents'][0]['printReservesEvent']
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
 

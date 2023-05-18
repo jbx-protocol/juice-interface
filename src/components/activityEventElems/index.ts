@@ -1,4 +1,7 @@
+export * from './AnyProjectEvent'
 export * from './DeployedERC20EventElem'
 export * from './PayEventElem'
 export * from './ProjectCreateEventElem'
 export * from './RedeemEventElem'
+export * from './v1'
+export * from './v2v3'

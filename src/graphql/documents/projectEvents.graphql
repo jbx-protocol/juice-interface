@@ -1,0 +1,170 @@
+query ProjectEvents(
+  $where: ProjectEvent_filter
+  $orderBy: ProjectEvent_orderBy
+  $orderDirection: OrderDirection
+  $first: Int
+  $skip: Int
+) {
+  projectEvents(
+    where: $where
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    first: $first
+    skip: $skip
+  ) {
+    id
+    addToBalanceEvent {
+      id
+      timestamp
+      txHash
+      from
+      amount
+      note
+      terminal
+    }
+    burnEvent {
+      id
+      timestamp
+      txHash
+      from
+      holder
+      amount
+    }
+    configureEvent {
+      id
+      timestamp
+      txHash
+      from
+      ballot
+      dataSource
+      discountRate
+      duration
+      configuration
+      projectId
+      mintingAllowed
+      pausePay
+      redeemPaused
+      redemptionRate
+      reservedRate
+      weight
+      shouldHoldFees
+      terminalMigrationAllowed
+      controllerMigrationAllowed
+      setTerminalsAllowed
+      setControllerAllowed
+      useDataSourceForPay
+      useDataSourceForRedeem
+      memo
+      mustStartAtOrAfter
+      transfersPaused
+      burnPaused
+      distributionsPaused
+      useTotalOverflowForRedemptions
+    }
+    deployedERC20Event {
+      id
+      timestamp
+      txHash
+      from
+      symbol
+    }
+    deployETHERC20ProjectPayerEvent {
+      id
+      timestamp
+      txHash
+      from
+      address
+      memo
+    }
+    distributePayoutsEvent {
+      id
+      timestamp
+      txHash
+      from
+      beneficiary
+      beneficiaryDistributionAmount
+      distributedAmount
+      memo
+      terminal
+    }
+    distributeReservedTokensEvent {
+      id
+      timestamp
+      txHash
+      from
+      beneficiary
+      beneficiaryTokenCount
+      tokenCount
+    }
+    payEvent {
+      id
+      timestamp
+      txHash
+      from
+      amount
+      beneficiary
+      note
+      feeFromV2Project
+      terminal
+    }
+    printReservesEvent {
+      id
+      timestamp
+      txHash
+      from
+      beneficiary
+      beneficiaryTicketAmount
+      count
+    }
+    projectCreateEvent {
+      id
+      timestamp
+      txHash
+      from
+    }
+    redeemEvent {
+      id
+      timestamp
+      txHash
+      from
+      amount
+      beneficiary
+      returnAmount
+      terminal
+      metadata
+      memo
+    }
+    setFundAccessConstraintsEvent {
+      id
+      timestamp
+      txHash
+      from
+      distributionLimit
+      distributionLimitCurrency
+    }
+    tapEvent {
+      id
+      timestamp
+      txHash
+      from
+      beneficiary
+      beneficiaryTransferAmount
+      netTransferAmount
+    }
+    v1ConfigureEvent {
+      id
+      timestamp
+      txHash
+      from
+      ballot
+      discountRate
+      duration
+      target
+      bondingCurveRate
+      reservedRate
+      currency
+      ticketPrintingIsAllowed
+      payIsPaused
+    }
+  }
+}

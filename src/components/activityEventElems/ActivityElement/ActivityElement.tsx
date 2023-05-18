@@ -77,9 +77,11 @@ export function ActivityEvent({
 }: {
   header: string | JSX.Element
   subject: string | JSX.Element | null
-  event: ActivityElementEvent
+  event: ActivityElementEvent | null | undefined
   extra?: string | JSX.Element | null
 }) {
+  if (!event) return null
+
   return (
     <>
       <div>

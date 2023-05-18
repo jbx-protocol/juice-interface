@@ -33,6 +33,7 @@ const useRewardsInstance = () => {
 
 type RewardsListProps = FormItemInput<NftRewardTier[]> & {
   allowCreate?: boolean
+  withEditWarning?: boolean
 }
 
 interface RewardsListChildrenExports {
@@ -45,6 +46,7 @@ export const RewardsList: React.FC<React.PropsWithChildren<RewardsListProps>> &
   allowCreate = false,
   value,
   onChange,
+  withEditWarning,
 }: RewardsListProps) => {
   const rewardsHook = useRewards({ value, onChange })
   const [selectedReward, setSelectedReward] = useState<NftRewardTier>()
@@ -112,6 +114,7 @@ export const RewardsList: React.FC<React.PropsWithChildren<RewardsListProps>> &
         editingData={selectedReward}
         onOk={onModalOk}
         onCancel={onModalCancel}
+        withEditWarning={withEditWarning}
       />
     </RewardsListContext.Provider>
   )

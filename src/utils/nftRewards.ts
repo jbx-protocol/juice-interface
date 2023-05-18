@@ -305,7 +305,7 @@ function nftRewardTierToJB721TierParamsV3_2(
     rewardTier.beneficiary ?? constants.AddressZero
   const votingUnits = rewardTier.votingWeight
     ? BigNumber.from(rewardTier.votingWeight)
-    : BigNumber.from(0)
+    : BigNumber.from(0) // should default to 0, with useVotingUnits `true`, to save gas
 
   return {
     price,
@@ -318,7 +318,7 @@ function nftRewardTierToJB721TierParamsV3_2(
     transfersPausable: false,
     shouldUseReservedTokenBeneficiaryAsDefault: false,
     category: DEFAULT_JB_721_TIER_CATEGORY,
-    useVotingUnits: false,
+    useVotingUnits: true,
   }
 }
 

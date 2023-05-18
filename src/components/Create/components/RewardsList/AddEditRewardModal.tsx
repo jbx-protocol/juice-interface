@@ -53,12 +53,14 @@ export const AddEditRewardModal = ({
   open,
   onOk,
   onCancel,
+  withEditWarning = false,
 }: {
   className?: string
   editingData?: NftRewardTier | undefined
   open?: boolean
   onOk: (reward: NftRewardTier) => void
   onCancel: VoidFunction
+  withEditWarning?: boolean
 }) => {
   const [form] = Form.useForm<AddEditRewardModalFormProps>()
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
@@ -185,12 +187,15 @@ export const AddEditRewardModal = ({
       onCancel={onModalCancel}
       destroyOnClose
     >
-      <WarningCallout className="mb-4">
-        <Trans>
-          "Editing" an NFT creates a copy of it. The old version won't be
-          available, and the new version will have a new token ID.
-        </Trans>
-      </WarningCallout>
+      {withEditWarning ? (
+        <WarningCallout className="mb-4">
+          <Trans>
+            "Editing" an NFT creates a copy of it. The old version won't be
+            available, and the new version will have a new token ID.
+          </Trans>
+        </WarningCallout>
+      ) : null}
+
       <Form form={form} preserve={false} colon={false} layout="vertical">
         <Form.Item
           name="fileUrl"

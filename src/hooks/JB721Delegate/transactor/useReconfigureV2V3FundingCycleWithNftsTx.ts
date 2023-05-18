@@ -1,8 +1,5 @@
 import { t } from '@lingui/macro'
-import {
-  JB721_DELEGATE_V3,
-  JB721_DELEGATE_V3_1,
-} from 'constants/delegateVersions'
+import { JB721_DELEGATE_V3 } from 'constants/delegateVersions'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
@@ -78,9 +75,8 @@ function buildArgs(
   if (version === JB721_DELEGATE_V3) {
     return baseArgs
   }
-  if (version === JB721_DELEGATE_V3_1) {
-    return [...baseArgs, JBControllerAddress] // v1.1 requires us to pass the controller address in
-  }
+
+  return [...baseArgs, JBControllerAddress] // v3.1, 3.2 requires us to pass the controller address in
 }
 
 export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<ReconfigureWithNftsTxArgs> {

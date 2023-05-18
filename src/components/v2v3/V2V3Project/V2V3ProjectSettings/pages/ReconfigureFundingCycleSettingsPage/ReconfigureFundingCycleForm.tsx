@@ -69,6 +69,7 @@ export function V2V3ReconfigureFundingCycleForm() {
     useState<boolean>(false)
   const [nftOperatorConfirmed, setNftOperatorConfirmed] = useState<boolean>()
 
+  const dispatch = useAppDispatch()
   const { initialEditingData } = useInitialEditingData({ visible: true })
   const editingFundingCycleConfig = useEditingFundingCycleConfig()
   const {
@@ -81,7 +82,10 @@ export function V2V3ReconfigureFundingCycleForm() {
     editingFundingCycleConfig,
     initialEditingData,
   })
-  const dispatch = useAppDispatch()
+  const nftDeployerCanReconfigure = useNftDeployerCanReconfigure({
+    projectId,
+    projectOwnerAddress,
+  })
 
   const { reconfigureLoading, reconfigureFundingCycle } =
     useReconfigureFundingCycle({
@@ -108,11 +112,6 @@ export function V2V3ReconfigureFundingCycleForm() {
   )
 
   const isV3 = cv === CV_V3
-
-  const nftDeployerCanReconfigure = useNftDeployerCanReconfigure({
-    projectId,
-    projectOwnerAddress,
-  })
 
   return (
     <>

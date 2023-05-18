@@ -7,18 +7,34 @@ import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
 import TooltipLabel from 'components/TooltipLabel'
 import TransactionModal from 'components/TransactionModal'
 import { REDEMPTION_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { IJB721Delegate_V3_INTERFACE_ID } from 'constants/nftRewards'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber } from 'ethers'
+import { BigNumber, constants } from 'ethers'
+import { defaultAbiCoder } from 'ethers/lib/utils.js'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/useNftAccountBalance'
 import { useETHReceivedFromNftRedeem } from 'hooks/v2v3/contractReader/useETHReceivedFromNftRedeem'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/useRedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { JB721DelegateToken } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
 import { useContext, useState } from 'react'
-import { encodeJB721DelegateRedeemMetadata } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatRedemptionRate } from 'utils/v2v3/math'
 import { RedeemNftCard } from './RedeemNftCard'
+
+function encodeJB721DelegateRedeemMetadata(tokenIdsToRedeem: string[]) {
+  const args = [
+    constants.HashZero,
+    IJB721Delegate_V3_INTERFACE_ID,
+    tokenIdsToRedeem,
+  ]
+
+  const encoded = defaultAbiCoder.encode(
+    ['bytes32', 'bytes4', 'uint256[]'],
+    args,
+  )
+
+  return encoded
+}
 
 export function RedeemNftsModal({
   open,

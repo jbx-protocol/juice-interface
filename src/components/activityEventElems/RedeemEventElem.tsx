@@ -3,10 +3,26 @@ import ETHAmount from 'components/currency/ETHAmount'
 import RichNote from 'components/RichNote'
 import { TokenAmount } from 'components/TokenAmount'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { BigNumber } from 'ethers'
+import { defaultAbiCoder } from 'ethers/lib/utils.js'
 import { ProjectEventsQuery } from 'generated/graphql'
 import { useContext } from 'react'
-import { decodeJB721DelegateRedeemMetadata } from 'utils/nftRewards'
 import { ActivityEvent } from './ActivityElement'
+
+function decodeJB721DelegateRedeemMetadata(
+  metadata: string,
+): [string, string, BigNumber[]] | undefined {
+  try {
+    const decoded = defaultAbiCoder.decode(
+      ['bytes32', 'bytes4', 'uint256[]'],
+      metadata,
+    ) as [string, string, BigNumber[]]
+
+    return decoded
+  } catch (e) {
+    return undefined
+  }
+}
 
 export default function RedeemEventElem({
   event,

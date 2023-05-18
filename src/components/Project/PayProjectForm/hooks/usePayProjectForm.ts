@@ -19,6 +19,8 @@ export interface JB721DELAGATE_V3_1_PAY_METADATA {
   allowOverspending?: boolean
 }
 
+export type JB721DELAGATE_V3_2_PAY_METADATA = JB721DELAGATE_V3_1_PAY_METADATA
+
 type PayMetadata =
   | JB721DELAGATE_V3_PAY_METADATA
   | JB721DELAGATE_V3_1_PAY_METADATA // in future, maybe more

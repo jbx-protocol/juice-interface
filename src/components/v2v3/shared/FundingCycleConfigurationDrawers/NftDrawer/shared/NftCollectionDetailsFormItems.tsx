@@ -63,12 +63,14 @@ export function NftCollectionDetailsFormItems({
                 <RadioItem
                   value={JB721GovernanceType.NONE}
                   title={
-                    <>
+                    <div className="flex gap-2">
                       <Trans>No on-chain governance</Trans>{' '}
-                      <Badge variant="info" upperCase>
-                        <Trans>Default</Trans>
-                      </Badge>
-                    </>
+                      <span>
+                        <Badge variant="info" upperCase>
+                          <Trans>Default</Trans>
+                        </Badge>
+                      </span>
+                    </div>
                   }
                   description={t`Your project's NFTs will not have on-chain governance capabilities.`}
                 />

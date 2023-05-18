@@ -836,6 +836,9 @@ msgstr ""
 msgid "Receive:"
 msgstr ""
 
+msgid "Grant NFT permissions"
+msgstr ""
+
 msgid "Custom token beneficiary"
 msgstr ""
 
@@ -1248,9 +1251,6 @@ msgid "Payments"
 msgstr ""
 
 msgid "Juicebox Project"
-msgstr ""
-
-msgid "Set NFT operator permissions"
 msgstr ""
 
 msgid "Is not a valid number"
@@ -2756,6 +2756,9 @@ msgstr ""
 msgid "How your project will be paid and pay out ETH."
 msgstr ""
 
+msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle <1/>"
+msgstr ""
+
 msgid "Mint tokens as ERC-20"
 msgstr ""
 
@@ -3578,6 +3581,9 @@ msgstr ""
 msgid "Payment amount can't exceed your wallet balance."
 msgstr ""
 
+msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before launching cycles."
+msgstr ""
+
 msgid "Last paid"
 msgstr ""
 
@@ -3714,9 +3720,6 @@ msgid "View on Etherscan"
 msgstr ""
 
 msgid "Token amount"
-msgstr ""
-
-msgid "Allow the <0>Juicebox NFT deployer contract</0> to edit this project's cycle."
 msgstr ""
 
 msgid "Fun"

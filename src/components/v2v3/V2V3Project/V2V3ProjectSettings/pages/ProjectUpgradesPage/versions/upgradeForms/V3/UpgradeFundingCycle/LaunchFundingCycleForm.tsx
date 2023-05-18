@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Form, Input } from 'antd'
 import RichButton from 'components/buttons/RichButton'
+import { Callout } from 'components/Callout'
 import { useIsNftProject } from 'components/Create/hooks/DeployProject/hooks'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
@@ -155,16 +156,19 @@ export function LaunchFundingCycleForm() {
         </div>
 
         {isNftFundingCycle && !nftDeployerCanReconfigure ? (
-          <div className="flex flex-col gap-6">
-            <div className="flex items-start">
-              <span className="mr-3 text-lg">1.</span>
+          <div>
+            <Callout.Info>
+              <Trans>
+                You're about to add NFTs to your cycle. You'll need to{' '}
+                <strong>grant NFT permissions</strong> before launching cycles.
+              </Trans>
+            </Callout.Info>
+            <div className="flex flex-col gap-6">
               <SetNftOperatorPermissionsButton
                 onConfirmed={() => setNftOperatorConfirmed(true)}
                 size="large"
               />
-            </div>
-            <div className="flex items-start">
-              <span className="mr-3 text-lg">2.</span>
+
               <Button
                 loading={launchFundingCycleLoading}
                 onClick={launchFundingCycle}

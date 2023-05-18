@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { SectionContainer } from './SectionContainer'
 import illustration from '/public/assets/images/about/hero.webp'
@@ -12,6 +12,10 @@ export const HeroSection = () => {
           src={illustration}
           alt="Banny and lil' Blueberry chillin out next to the juicebox and a hamper of fruit"
           priority
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
         />
       </div>
       <h1

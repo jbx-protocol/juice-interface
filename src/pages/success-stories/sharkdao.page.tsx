@@ -9,7 +9,7 @@ import {
   CASE_STUDY_PROJECTS,
   SHARKDAO_FUNDING_CONFIG,
 } from 'constants/successStoryProjects'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 
 export default function SharkDAOPage() {
   const sharkDAOSuccessStoryProject = CASE_STUDY_PROJECTS[2]
@@ -65,6 +65,10 @@ export default function SharkDAOPage() {
             width={592}
             height={311}
             className="pb-5"
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
           />
           <div>
             <SectionHeader text={<Trans>Success</Trans>} />

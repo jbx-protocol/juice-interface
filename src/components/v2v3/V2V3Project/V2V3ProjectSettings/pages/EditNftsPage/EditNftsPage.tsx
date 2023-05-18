@@ -4,7 +4,7 @@ import Loading from 'components/Loading'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'
@@ -41,6 +41,10 @@ export function EditNftsPage() {
                 src={blueberry}
                 alt="Sexy Juicebox blueberry with bright pink lipstick spraying a can of spraypaint"
                 loading="lazy"
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
               />
             </div>
           }

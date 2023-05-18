@@ -6,7 +6,7 @@ import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { createContactMessage } from 'lib/api/discord'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { useContext, useState } from 'react'
 import contactHeroDark from '/public/assets/images/contact-hero-od.webp'
 import contactHeroLight from '/public/assets/images/contact-hero-ol.webp'
@@ -171,6 +171,10 @@ export default function Contact() {
                 alt="Banny making a phone call"
                 height={546}
                 width={437}
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
               />
             </div>
           </div>

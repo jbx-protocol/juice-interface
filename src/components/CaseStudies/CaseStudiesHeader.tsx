@@ -63,11 +63,9 @@ export function CaseStudiesHeader({
         <SectionHeader className="mt-2" text={<Trans>Summary</Trans>} />
         <p className={`mt-2 ${CASE_STUDY_BODY_TEXT_COLOR}`}>{summary}</p>
         <Link href={projectUrl}>
-          <a>
-            <Button size="middle" type="default" className="mt-2">
-              <Trans>View project</Trans>
-            </Button>
-          </a>
+          <Button size="middle" type="default" className="mt-2">
+            <Trans>View project</Trans>
+          </Button>
         </Link>
 
         <SectionHeader

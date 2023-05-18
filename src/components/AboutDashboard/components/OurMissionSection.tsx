@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { ONE_BILLION } from 'constants/numbers'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
 import { fromWad } from 'utils/format/formatNumber'
@@ -35,7 +35,14 @@ export const OurMissionSection = () => {
       </div>
 
       <div className="mx-auto w-full max-w-sm md:mx-0">
-        <Image src={illustration} alt="Red grape passing go, collect Ξ200" />
+        <Image
+          src={illustration}
+          alt="Red grape passing go, collect Ξ200"
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
+        />
       </div>
     </SectionContainer>
   )

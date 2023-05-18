@@ -1,9 +1,6 @@
 import { t } from '@lingui/macro'
 import { CV_V3 } from 'constants/cv'
-import {
-  JB721_DELEGATE_V3,
-  JB721_DELEGATE_V3_1,
-} from 'constants/delegateVersions'
+import { JB721_DELEGATE_V3 } from 'constants/delegateVersions'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
@@ -84,9 +81,7 @@ function buildArgs(
   if (version === JB721_DELEGATE_V3) {
     return baseArgs
   }
-  if (version === JB721_DELEGATE_V3_1) {
-    return [...baseArgs, JBControllerAddress] // v1.1 requires us to pass the controller address in
-  }
+  return [...baseArgs, JBControllerAddress] // v3.1/3.2 requires us to pass the controller address in
 }
 
 export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFundingCyclesWithNftsTxArgs> {

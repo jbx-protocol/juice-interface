@@ -6,6 +6,7 @@ import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProj
 import {
   JB721_DELEGATE_V3,
   JB721_DELEGATE_V3_1,
+  JB721_DELEGATE_V3_2,
 } from 'constants/delegateVersions'
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
@@ -26,7 +27,8 @@ export function useDelegateMetadata() {
     ? encodeJB721DelegateV3PayMetadata({
         ...(payProjectForm?.payMetadata as JB721DELAGATE_V3_PAY_METADATA),
       })
-    : JB721DelegateVersion === JB721_DELEGATE_V3_1
+    : JB721DelegateVersion === JB721_DELEGATE_V3_1 ||
+      JB721DelegateVersion === JB721_DELEGATE_V3_2
     ? encodeJB721DelegateV3_1PayMetadata({
         ...(payProjectForm?.payMetadata as JB721DELAGATE_V3_1_PAY_METADATA),
         allowOverspending: DEFAULT_ALLOW_OVERSPENDING,

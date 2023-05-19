@@ -2,14 +2,12 @@ import { PlusCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Divider } from 'antd'
 import { CreateButton } from 'components/buttons/CreateButton'
+import { MAX_NFT_REWARD_TIERS } from 'constants/nftRewards'
 import { useModal } from 'hooks/useModal'
 import { FormItemInput } from 'models/formItemInput'
 import { NftRewardTier } from 'models/nftRewards'
 import { createContext, useCallback, useContext, useState } from 'react'
-import {
-  MAX_NFT_REWARD_TIERS,
-  sortNftsByContributionFloor,
-} from 'utils/nftRewards'
+import { sortNftsByContributionFloor } from 'utils/nftRewards'
 import { AddEditRewardModal } from './AddEditRewardModal'
 import { RewardItem } from './RewardItem'
 import { useRewards } from './hooks'

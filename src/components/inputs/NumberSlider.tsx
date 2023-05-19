@@ -57,7 +57,6 @@ export default function NumberSlider({
           {...inputConfig}
           value={_value}
           onChange={(val: number) => updateValue(val)}
-          defaultValue={defaultValue}
           disabled={disabled}
         />
         <Form.Item
@@ -86,7 +85,6 @@ export default function NumberSlider({
                 (typeof val === 'string' ? parseFloat(val) : val) ?? undefined
               updateValue(newVal)
             }}
-            defaultValue={defaultValue}
           />
         </Form.Item>
       </div>

@@ -153,7 +153,7 @@ export default function PayoutSplitsCard({
               </Link>
             )}
           </div>
-          {payoutSplits ? (
+          {payoutSplits && distributionLimit?.gt(0) ? (
             <SplitList
               splits={payoutSplits}
               currency={distributionLimitCurrency}

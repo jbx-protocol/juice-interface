@@ -223,21 +223,21 @@ export function V2V3ReconfigureFundingCycleForm() {
               <Trans>
                 You're about to add NFTs to your cycle. You'll need to{' '}
                 <strong>grant NFT permissions</strong> before deploying the new
-                cycle{' '}
-                <TooltipIcon
-                  tip={
-                    <Trans>
-                      Allow the{' '}
-                      <ExternalLink
-                        href={`https://github.com/jbx-protocol/juice-721-delegate/blob/main/contracts/JBTiered721DelegateDeployer.sol`}
-                      >
-                        Juicebox NFT deployer contract
-                      </ExternalLink>{' '}
-                      to edit this project's cycle.
-                    </Trans>
-                  }
-                />
-              </Trans>
+                cycle
+              </Trans>{' '}
+              <TooltipIcon
+                tip={
+                  <Trans>
+                    Allow the{' '}
+                    <ExternalLink
+                      href={`https://github.com/jbx-protocol/juice-721-delegate/blob/main/contracts/JBTiered721DelegateDeployer.sol`}
+                    >
+                      Juicebox NFT deployer contract
+                    </ExternalLink>{' '}
+                    to edit this project's cycle.
+                  </Trans>
+                }
+              />
             </Callout.Info>
             <div>
               <SetNftOperatorPermissionsButton

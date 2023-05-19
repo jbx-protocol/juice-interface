@@ -1,7 +1,3 @@
-import {
-  JB721DELAGATE_V3_1_PAY_METADATA,
-  JB721DELAGATE_V3_PAY_METADATA,
-} from 'components/Project/PayProjectForm/hooks/usePayProjectForm'
 import { NftFileType } from 'components/inputs/UploadNoStyle'
 import {
   JB721_DELEGATE_V3,
@@ -11,15 +7,9 @@ import {
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { WAD_DECIMALS } from 'constants/numbers'
-import {
-  DEFAULT_ALLOW_OVERSPENDING,
-  DEFAULT_JB_721_TIER_CATEGORY,
-} from 'constants/transactionDefaults'
+import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
-import { constants } from 'ethers'
-
-import { BigNumber } from 'ethers'
-import { defaultAbiCoder, parseEther } from 'ethers/lib/utils'
+import { BigNumber, constants, utils } from 'ethers'
 import { pinJson } from 'lib/api/ipfs'
 import round from 'lodash/round'
 import {
@@ -40,9 +30,6 @@ import {
 } from 'models/nftRewards'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
 import { V2V3_CURRENCY_ETH } from './v2v3/currency'
-
-export const MAX_NFT_REWARD_TIERS = 69
-const IJB721Delegate_INTERFACE_ID = '0xb3bcbb79'
 
 export function sortNftsByContributionFloor(
   rewardTiers: NftRewardTier[],
@@ -221,7 +208,7 @@ function nftRewardTierToJB721TierParamsV3(
   rewardTier: NftRewardTier,
   cid: string,
 ): JB721TierParams {
-  const contributionFloorWei = parseEther(
+  const contributionFloorWei = utils.parseEther(
     rewardTier.contributionFloor.toString(),
   )
   const maxSupply = rewardTier.maxSupply
@@ -255,7 +242,7 @@ function nftRewardTierToJB721TierParamsV3_1(
   rewardTier: NftRewardTier,
   cid: string,
 ): JB_721_TIER_PARAMS_V3_1 {
-  const contributionFloorWei = parseEther(
+  const contributionFloorWei = utils.parseEther(
     rewardTier.contributionFloor.toString(),
   )
   const maxSupply = rewardTier.maxSupply
@@ -293,7 +280,7 @@ function nftRewardTierToJB721TierParamsV3_2(
   rewardTier: NftRewardTier,
   cid: string,
 ): JB_721_TIER_PARAMS_V3_2 {
-  const price = parseEther(rewardTier.contributionFloor.toString())
+  const price = utils.parseEther(rewardTier.contributionFloor.toString())
   const maxSupply = rewardTier.maxSupply
   const initialQuantity = BigNumber.from(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
   const encodedIPFSUri = encodeIpfsUri(cid)
@@ -388,80 +375,6 @@ export function buildJB721TierParams({
         return -1
       return 0
     })
-}
-
-export function encodeJB721DelegateV3PayMetadata(
-  metadata: JB721DELAGATE_V3_PAY_METADATA | undefined,
-) {
-  if (!metadata) return undefined
-
-  const args = [
-    constants.HashZero,
-    constants.HashZero,
-    IJB721Delegate_INTERFACE_ID,
-    metadata.dontMint ?? false,
-    metadata.expectMintFromExtraFunds ?? false,
-    metadata.dontOverspend ?? false,
-    metadata.tierIdsToMint,
-  ]
-
-  const encoded = defaultAbiCoder.encode(
-    ['bytes32', 'bytes32', 'bytes4', 'bool', 'bool', 'bool', 'uint16[]'],
-    args,
-  )
-
-  return encoded
-}
-
-export function encodeJB721DelegateV3_1PayMetadata(
-  metadata: JB721DELAGATE_V3_1_PAY_METADATA | undefined,
-) {
-  if (!metadata) return undefined
-
-  const args = [
-    constants.HashZero,
-    constants.HashZero,
-    IJB721Delegate_INTERFACE_ID,
-    metadata.allowOverspending ?? DEFAULT_ALLOW_OVERSPENDING,
-    metadata.tierIdsToMint,
-  ]
-
-  const encoded = defaultAbiCoder.encode(
-    ['bytes32', 'bytes32', 'bytes4', 'bool', 'uint16[]'],
-    args,
-  )
-
-  return encoded
-}
-
-export function encodeJB721DelegateRedeemMetadata(tokenIdsToRedeem: string[]) {
-  const args = [
-    constants.HashZero,
-    IJB721Delegate_INTERFACE_ID,
-    tokenIdsToRedeem,
-  ]
-
-  const encoded = defaultAbiCoder.encode(
-    ['bytes32', 'bytes4', 'uint256[]'],
-    args,
-  )
-
-  return encoded
-}
-
-export function decodeJB721DelegateRedeemMetadata(
-  metadata: string,
-): [string, string, BigNumber[]] | undefined {
-  try {
-    const decoded = defaultAbiCoder.decode(
-      ['bytes32', 'bytes4', 'uint256[]'],
-      metadata,
-    ) as [string, string, BigNumber[]]
-
-    return decoded
-  } catch (e) {
-    return undefined
-  }
 }
 
 // returns an array of NftRewardTiers corresponding to a given list of tier IDs

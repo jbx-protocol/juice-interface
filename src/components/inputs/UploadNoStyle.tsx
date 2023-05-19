@@ -42,7 +42,7 @@ interface UploadNoStyleProps
   }) => ReactNode
 }
 
-export const UploadNoStyle = (props: UploadNoStyleProps) => {
+export const UploadNoStyle = ({ value, ...props }: UploadNoStyleProps) => {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
@@ -51,7 +51,7 @@ export const UploadNoStyle = (props: UploadNoStyleProps) => {
   const [isUploading, setIsUploading] = useState<boolean>(false)
   const [percent, setPercent] = useState<number | undefined>(undefined)
 
-  const uploadUrl = props.value ?? _uploadUrl
+  const uploadUrl = value ?? _uploadUrl
   const setUploadUrl = props.onChange ?? _setUploadUrl
 
   const undo = useCallback(() => setUploadUrl(undefined), [setUploadUrl])

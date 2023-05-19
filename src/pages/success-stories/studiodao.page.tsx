@@ -62,6 +62,10 @@ export default function StudioDAOPage() {
             width={592}
             height={592}
             className="pb-5"
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
           />
           <div>
             <SectionHeader text={<Trans>Success</Trans>} />

@@ -63,60 +63,57 @@ export default function TrendingProjectCard({
           ? v2v3ProjectRoute(project)
           : `/p/${project.handle}`
       }
+      className={`cursor-pointer overflow-hidden rounded-lg bg-white dark:bg-slate-600`}
     >
-      <a
-        className={`cursor-pointer overflow-hidden rounded-lg bg-white dark:bg-slate-600`}
-      >
-        <div className="flex h-full items-center overflow-hidden whitespace-pre rounded-lg py-4 transition-colors md:border md:border-smoke-300 md:px-5 md:py-6 md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
-          <div className="relative mr-5 h-20 w-20 md:hidden">
-            <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-br bg-white text-xl font-normal text-black dark:bg-slate-800 dark:text-slate-100">
-              {rank}
-            </div>
-            {projectLogo}
+      <div className="flex h-full items-center overflow-hidden whitespace-pre rounded-lg py-4 transition-colors md:border md:border-smoke-300 md:px-5 md:py-6 md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
+        <div className="relative mr-5 h-20 w-20 md:hidden">
+          <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-br bg-white text-xl font-normal text-black dark:bg-slate-800 dark:text-slate-100">
+            {rank}
           </div>
-
-          <div className="mr-5 hidden items-center md:flex">
-            <div className="mr-4 w-6 text-center text-xl font-normal text-black dark:text-slate-100">
-              {rank}
-            </div>
-            {projectLogo}
-          </div>
-
-          <div className="min-w-0 flex-1 font-normal">
-            {metadata ? (
-              <span className="m-0 overflow-hidden text-ellipsis font-heading text-base text-black dark:text-slate-100 md:text-xl">
-                {metadata.name}
-              </span>
-            ) : (
-              <Skeleton paragraph={false} title={{ width: 120 }} active />
-            )}
-
-            <div className="flex w-full flex-wrap text-black dark:text-slate-100">
-              <span className="flex flex-wrap items-baseline">
-                <span className="mt-1 font-medium">
-                  <ETHAmount amount={project.trendingVolume} />{' '}
-                </span>
-                <span className="font-medium text-grey-500 dark:text-grey-300">
-                  <Trans>last {TRENDING_WINDOW_DAYS} days</Trans>{' '}
-                </span>
-                <span className="font-medium text-juice-400 dark:text-juice-300">
-                  {percentGainText && <>{percentGainText}</>}
-                </span>
-              </span>
-            </div>
-
-            <div className="mt-0.5 text-sm font-normal text-grey-500 dark:text-grey-300">
-              <Plural
-                value={project.trendingPaymentsCount}
-                one="# payment"
-                other="# payments"
-              />
-            </div>
-          </div>
-
-          {!metadata && <Loading />}
+          {projectLogo}
         </div>
-      </a>
+
+        <div className="mr-5 hidden items-center md:flex">
+          <div className="mr-4 w-6 text-center text-xl font-normal text-black dark:text-slate-100">
+            {rank}
+          </div>
+          {projectLogo}
+        </div>
+
+        <div className="min-w-0 flex-1 font-normal">
+          {metadata ? (
+            <span className="m-0 overflow-hidden text-ellipsis font-heading text-base text-black dark:text-slate-100 md:text-xl">
+              {metadata.name}
+            </span>
+          ) : (
+            <Skeleton paragraph={false} title={{ width: 120 }} active />
+          )}
+
+          <div className="flex w-full flex-wrap text-black dark:text-slate-100">
+            <span className="flex flex-wrap items-baseline">
+              <span className="mt-1 font-medium">
+                <ETHAmount amount={project.trendingVolume} />{' '}
+              </span>
+              <span className="font-medium text-grey-500 dark:text-grey-300">
+                <Trans>last {TRENDING_WINDOW_DAYS} days</Trans>{' '}
+              </span>
+              <span className="font-medium text-juice-400 dark:text-juice-300">
+                {percentGainText && <>{percentGainText}</>}
+              </span>
+            </span>
+          </div>
+
+          <div className="mt-0.5 text-sm font-normal text-grey-500 dark:text-grey-300">
+            <Plural
+              value={project.trendingPaymentsCount}
+              one="# payment"
+              other="# payments"
+            />
+          </div>
+        </div>
+
+        {!metadata && <Loading />}
+      </div>
     </Link>
   )
 }

@@ -65,6 +65,10 @@ export default function SharkDAOPage() {
             width={592}
             height={311}
             className="pb-5"
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
           />
           <div>
             <SectionHeader text={<Trans>Success</Trans>} />

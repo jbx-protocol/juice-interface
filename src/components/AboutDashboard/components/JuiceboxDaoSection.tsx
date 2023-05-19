@@ -29,6 +29,10 @@ export const JuiceboxDaoSection = () => {
         <Image
           src={illustration}
           alt="Banny and the crew gettin' lit in the Juicebox DAO band"
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
         />
       </div>
     </SectionContainer>

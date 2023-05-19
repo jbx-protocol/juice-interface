@@ -31,6 +31,10 @@ const PendingTransactionModalBody = () => {
           alt={t`Juicebox loading animation`}
           width={150}
           height={150}
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
         />
         <h2 className="mt-4 font-heading text-2xl font-medium text-black dark:text-slate-100">
           <Trans>Transaction pending...</Trans>

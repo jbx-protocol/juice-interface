@@ -53,6 +53,7 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
     <div className="mt-4 flex flex-col items-center justify-center text-center">
       <Image
         src={DeploySuccessHero}
+        alt="Deploy Success"
         width={380}
         height={380}
         style={{

@@ -41,6 +41,10 @@ export function EditNftsPage() {
                 src={blueberry}
                 alt="Sexy Juicebox blueberry with bright pink lipstick spraying a can of spraypaint"
                 loading="lazy"
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
               />
             </div>
           }

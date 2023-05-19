@@ -110,63 +110,61 @@ export default function ProjectCard({
 
   return (
     <Link href={projectCardHref} as={projectCardUrl} prefetch={false}>
-      <a>
-        <div
-          className={`relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-lg bg-white py-4 dark:bg-slate-600 md:border md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100`}
-        >
-          <div className="mr-5">
-            <ProjectLogo
-              className="h-24 w-24 md:h-28 md:w-28"
-              uri={metadata?.logoUri}
-              name={metadata?.name}
-              projectId={projectCardData.projectId}
-              lazyLoad
-            />
-          </div>
-          <div className="min-w-0 flex-1 overflow-hidden overflow-ellipsis font-normal">
-            {metadata ? (
-              <span className="m-0 font-heading text-xl leading-8 text-black dark:text-slate-100">
-                {metadata.name}
-              </span>
-            ) : (
-              <Skeleton paragraph={false} title={{ width: 120 }} active />
-            )}
-
-            <div>
-              <span className="font-medium text-black dark:text-slate-100">
-                {handleText}
-              </span>
-            </div>
-
-            <div>
-              <span className="font-medium text-black dark:text-slate-100">
-                <ETHAmount
-                  amount={projectCardData.volume}
-                  precision={precision}
-                />{' '}
-              </span>
-
-              <span className="text-grey-500 dark:text-grey-300">
-                since{' '}
-                {!!projectCardData.createdAt &&
-                  formatDate(projectCardData.createdAt * 1000, 'yyyy-MM-DD')}
-              </span>
-            </div>
-
-            {tags?.length ? (
-              <div className="mt-1">
-                <ProjectTagsList tagClassName="text-xs" tags={tags} />
-              </div>
-            ) : metadata?.description ? (
-              <div className="max-h-5 overflow-hidden overflow-ellipsis text-grey-400 dark:text-slate-200">
-                {metadata.description}
-              </div>
-            ) : null}
-          </div>
-          {isArchived && <ArchivedBadge />}
-          {!metadata && <Loading />}
+      <div
+        className={`relative flex cursor-pointer items-center overflow-hidden whitespace-pre rounded-lg bg-white py-4 dark:bg-slate-600 md:border md:border-smoke-300 md:py-6 md:px-5 md:transition-colors md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100`}
+      >
+        <div className="mr-5">
+          <ProjectLogo
+            className="h-24 w-24 md:h-28 md:w-28"
+            uri={metadata?.logoUri}
+            name={metadata?.name}
+            projectId={projectCardData.projectId}
+            lazyLoad
+          />
         </div>
-      </a>
+        <div className="min-w-0 flex-1 overflow-hidden overflow-ellipsis font-normal">
+          {metadata ? (
+            <span className="m-0 font-heading text-xl leading-8 text-black dark:text-slate-100">
+              {metadata.name}
+            </span>
+          ) : (
+            <Skeleton paragraph={false} title={{ width: 120 }} active />
+          )}
+
+          <div>
+            <span className="font-medium text-black dark:text-slate-100">
+              {handleText}
+            </span>
+          </div>
+
+          <div>
+            <span className="font-medium text-black dark:text-slate-100">
+              <ETHAmount
+                amount={projectCardData.volume}
+                precision={precision}
+              />{' '}
+            </span>
+
+            <span className="text-grey-500 dark:text-grey-300">
+              since{' '}
+              {!!projectCardData.createdAt &&
+                formatDate(projectCardData.createdAt * 1000, 'yyyy-MM-DD')}
+            </span>
+          </div>
+
+          {tags?.length ? (
+            <div className="mt-1">
+              <ProjectTagsList tagClassName="text-xs" tags={tags} />
+            </div>
+          ) : metadata?.description ? (
+            <div className="max-h-5 overflow-hidden overflow-ellipsis text-grey-400 dark:text-slate-200">
+              {metadata.description}
+            </div>
+          ) : null}
+        </div>
+        {isArchived && <ArchivedBadge />}
+        {!metadata && <Loading />}
+      </div>
     </Link>
   )
 }

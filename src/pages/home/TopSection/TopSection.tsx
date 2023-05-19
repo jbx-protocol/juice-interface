@@ -42,12 +42,10 @@ export function TopSection() {
           ))}
           <li>
             <Link href="/projects">
-              <a>
-                <Badge variant="default" clickable>
-                  <Trans>All</Trans>
-                  <ArrowSmallRightIcon className="inline h-4 w-4" />
-                </Badge>
-              </a>
+              <Badge variant="default" clickable>
+                <Trans>All</Trans>
+                <ArrowSmallRightIcon className="inline h-4 w-4" />
+              </Badge>
             </Link>
           </li>
         </ul>
@@ -64,19 +62,17 @@ export function TopSection() {
         }
       />
       <div className="mb-16 flex w-full justify-center md:w-auto">
-        <Link href="/create">
-          <a className="w-full md:w-auto">
-            <XLButton
-              size="large"
-              type="primary"
-              className="w-full md:w-auto"
-              onClick={() => {
-                trackFathomGoal(HOMEPAGE.CREATE_A_PROJECT_CTA_NEW)
-              }}
-            >
-              <Trans>Create a project</Trans>
-            </XLButton>
-          </a>
+        <Link href="/create" className="w-full md:w-auto">
+          <XLButton
+            size="large"
+            type="primary"
+            className="w-full md:w-auto"
+            onClick={() => {
+              trackFathomGoal(HOMEPAGE.CREATE_A_PROJECT_CTA_NEW)
+            }}
+          >
+            <Trans>Create a project</Trans>
+          </XLButton>
         </Link>
       </div>
       {!isLoading && trendingProjects ? (

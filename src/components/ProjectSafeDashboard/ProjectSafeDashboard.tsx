@@ -92,20 +92,16 @@ export function ProjectSafeDashboard({
         <div className="mt-6">
           <div className="flex gap-6">
             <Link href={`${projectSafeRoute}?tab=queued`}>
-              <a>
-                <Tab
-                  name={TAB_NAMES.queued}
-                  isSelected={selectedTab === SAFE_TX_QUEUED_KEY}
-                />
-              </a>
+              <Tab
+                name={TAB_NAMES.queued}
+                isSelected={selectedTab === SAFE_TX_QUEUED_KEY}
+              />
             </Link>
             <Link href={`${projectSafeRoute}?tab=history`}>
-              <a>
-                <Tab
-                  name={TAB_NAMES.history}
-                  isSelected={selectedTab === SAFE_TX_HISTORY_KEY}
-                />
-              </a>
+              <Tab
+                name={TAB_NAMES.history}
+                isSelected={selectedTab === SAFE_TX_HISTORY_KEY}
+              />
             </Link>
           </div>
 

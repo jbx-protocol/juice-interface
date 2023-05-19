@@ -40,14 +40,33 @@ export function BuiltForBlobAndImage({
   }
 
   return (
-    <div className="relative h-[180px] w-[180px]">
-      <div className="absolute inset-5">
-        {blobSrc ? (
-          <Image src={blobSrc} alt={`${card}-blob`} width={144} height={144} />
-        ) : null}
+    <div className="relative grid h-[180px] w-[180px] grid-cols-1">
+      <div
+        className="z-[1] col-span-1 col-start-1 row-span-1 row-start-1"
+        style={!isMobile ? transformStyle : undefined}
+      >
+        <Image
+          src={images[card]}
+          alt={card}
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
+        />
       </div>
-      <div style={!isMobile ? transformStyle : undefined}>
-        <Image src={images[card]} alt={card} />
+      <div className="col-span-1 col-start-1 row-span-1 row-start-1 flex items-center justify-center">
+        {blobSrc ? (
+          <Image
+            src={blobSrc}
+            alt={`${card}-blob`}
+            width={144}
+            height={144}
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
+          />
+        ) : null}
       </div>
     </div>
   )

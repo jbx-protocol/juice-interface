@@ -8,7 +8,7 @@ import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDe
 import { readNetwork } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
 import { NetworkName } from 'models/networkName'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
 import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'
@@ -51,7 +51,15 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
 
   return (
     <div className="mt-4 flex flex-col items-center justify-center text-center">
-      <Image src={DeploySuccessHero} width={380} height={380} />
+      <Image
+        src={DeploySuccessHero}
+        width={380}
+        height={380}
+        style={{
+          maxWidth: '100%',
+          height: 'auto',
+        }}
+      />
       <div className="pt-4 font-display text-5xl font-bold">
         <Trans>Congratulations!</Trans>
       </div>

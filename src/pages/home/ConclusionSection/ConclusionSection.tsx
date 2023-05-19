@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import Link from 'next/link'
 import { SectionContainer } from '../SectionContainer'
 import { TickIconList } from './TickIconList'
@@ -15,6 +15,10 @@ export function ConclusionSection() {
             alt={'Banny leaning on a stack of ETH coins'}
             width={480}
             height={480}
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
           />
         </div>
         <div>
@@ -26,20 +30,16 @@ export function ConclusionSection() {
             <TickIconList />
 
             <div className="mt-5 flex flex-col flex-wrap gap-2 md:flex-row">
-              <Link href="/contact">
-                <a className="w-full lg:w-auto">
-                  <Button type="default" size="large" className="w-full">
-                    <Trans>Contact onboarding</Trans>
-                  </Button>
-                </a>
+              <Link href="/contact" className="w-full lg:w-auto">
+                <Button type="default" size="large" className="w-full">
+                  <Trans>Contact onboarding</Trans>
+                </Button>
               </Link>
 
-              <Link href="/create">
-                <a className="w-full lg:w-auto">
-                  <Button className="w-full" size="large" type="primary">
-                    <Trans>Create a project</Trans>
-                  </Button>
-                </a>
+              <Link href="/create" className="w-full lg:w-auto">
+                <Button className="w-full" size="large" type="primary">
+                  <Trans>Create a project</Trans>
+                </Button>
               </Link>
             </div>
           </div>

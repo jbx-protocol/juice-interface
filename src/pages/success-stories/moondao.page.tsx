@@ -9,7 +9,7 @@ import {
   CASE_STUDY_PROJECTS,
   MOONDAO_FUNDING_CONFIG,
 } from 'constants/successStoryProjects'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 
 export default function MoonDAOPage() {
   const moonDAOSuccessStoryProject = CASE_STUDY_PROJECTS[1]
@@ -64,6 +64,10 @@ export default function MoonDAOPage() {
             width={592}
             height={256}
             className="pb-5"
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
           />
           <div>
             <SectionHeader text={<Trans>Success</Trans>} />

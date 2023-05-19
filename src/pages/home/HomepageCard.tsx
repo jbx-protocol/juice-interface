@@ -19,16 +19,16 @@ export function HomepageCard(props: {
   if (href) {
     return (
       <div className={HOMEPAGE_CARD_BORDER_HOVER}>
-        <Link prefetch={false} href={href}>
-          <a
-            className={twMerge(
-              'block w-56 flex-shrink-0 cursor-pointer select-none',
-              HOMEPAGE_CARD_BORDER,
-              HOMEPAGE_CARD_BG,
-            )}
-          >
-            <InteralCardObject {...rest} />
-          </a>
+        <Link
+          prefetch={false}
+          href={href}
+          className={twMerge(
+            'block w-56 flex-shrink-0 cursor-pointer select-none',
+            HOMEPAGE_CARD_BORDER,
+            HOMEPAGE_CARD_BG,
+          )}
+        >
+          <InteralCardObject {...rest} />
         </Link>
       </div>
     )

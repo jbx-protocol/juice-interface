@@ -7,7 +7,12 @@ import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
 import TooltipLabel from 'components/TooltipLabel'
 import TransactionModal from 'components/TransactionModal'
 import { REDEMPTION_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
-import { IJB721Delegate_V3_INTERFACE_ID } from 'constants/nftRewards'
+import { JB721_DELEGATE_V3_2 } from 'constants/delegateVersions'
+import {
+  IJB721Delegate_V3_2_INTERFACE_ID,
+  IJB721Delegate_V3_INTERFACE_ID,
+} from 'constants/nftRewards'
+import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber, constants } from 'ethers'
 import { defaultAbiCoder } from 'ethers/lib/utils.js'
@@ -21,10 +26,25 @@ import { emitErrorNotification } from 'utils/notifications'
 import { formatRedemptionRate } from 'utils/v2v3/math'
 import { RedeemNftCard } from './RedeemNftCard'
 
-function encodeJB721DelegateRedeemMetadata(tokenIdsToRedeem: string[]) {
+function encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem: string[]) {
   const args = [
     constants.HashZero,
     IJB721Delegate_V3_INTERFACE_ID,
+    tokenIdsToRedeem,
+  ]
+
+  const encoded = defaultAbiCoder.encode(
+    ['bytes32', 'bytes4', 'uint256[]'],
+    args,
+  )
+
+  return encoded
+}
+
+function encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem: string[]) {
+  const args = [
+    constants.HashZero,
+    IJB721Delegate_V3_2_INTERFACE_ID,
     tokenIdsToRedeem,
   ]
 
@@ -47,6 +67,9 @@ export function RedeemNftsModal({
 }) {
   const { fundingCycle, primaryTerminalCurrentOverflow, fundingCycleMetadata } =
     useContext(V2V3ProjectContext)
+  const { version: JB721DelegateVersion } = useContext(
+    JB721DelegateContractsContext,
+  )
 
   const [tokenIdsToRedeem, setTokenIdsToRedeem] = useState<string[]>([])
   const [loading, setLoading] = useState<boolean>()
@@ -91,7 +114,10 @@ export function RedeemNftsModal({
         redeemAmount: BigNumber.from(0),
         minReturnedTokens: BigNumber.from(0),
         memo,
-        metadata: encodeJB721DelegateRedeemMetadata(tokenIdsToRedeem),
+        metadata:
+          JB721DelegateVersion === JB721_DELEGATE_V3_2
+            ? encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem)
+            : encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem),
       },
       {
         // step 1

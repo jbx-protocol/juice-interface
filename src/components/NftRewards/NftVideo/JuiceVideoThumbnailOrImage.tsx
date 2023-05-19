@@ -1,6 +1,6 @@
 import { LoadingOutlined } from '@ant-design/icons'
-import { ImageProps } from 'antd'
 import { useContentType } from 'hooks/useContentType'
+import { ImageProps } from 'next/image'
 import { useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'
@@ -19,6 +19,7 @@ export function JuiceVideoThumbnailOrImage({
   heightClass?: string
   widthClass?: string
   src: string
+  alt?: string
   showPreviewOnClick?: boolean
 }) {
   const [loading, setLoading] = useState<boolean>(true)

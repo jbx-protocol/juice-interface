@@ -100,10 +100,6 @@ export function HowJuiceboxWorksSection() {
               src={sassyBlueberry}
               alt="Sassy Juicebox Blueberry crossing arms"
               loading="lazy"
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-              }}
             />
           </div>
         </div>
@@ -116,9 +112,15 @@ export function HowJuiceboxWorksSection() {
           </ExternalLink>
 
           <Link href="/create">
-            <XLButton type="primary" className="w-full md:w-auto" size="large">
-              <Trans>Create a project</Trans>
-            </XLButton>
+            <a>
+              <XLButton
+                type="primary"
+                className="w-full md:w-auto"
+                size="large"
+              >
+                <Trans>Create a project</Trans>
+              </XLButton>
+            </a>
           </Link>
         </div>
       </div>

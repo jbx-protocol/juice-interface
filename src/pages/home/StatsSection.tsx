@@ -50,16 +50,18 @@ export function StatsSection() {
         />
         <Stat
           value={
-            <Link href="/activity" className="text-current">
-              <USDAmount
-                amount={stats?.volumeUSD}
-                precision={0}
-                symbol="$"
-                tooltipContent={
-                  <ETHAmount amount={stats?.volume} hideTooltip />
-                }
-                className="gradient-animation bg-gradient-to-r from-bluebs-500 via-grape-400 to-juice-500 bg-clip-text font-display transition-colors hover:text-transparent"
-              />
+            <Link href="/activity">
+              <a className="text-current">
+                <USDAmount
+                  amount={stats?.volumeUSD}
+                  precision={0}
+                  symbol="$"
+                  tooltipContent={
+                    <ETHAmount amount={stats?.volume} hideTooltip />
+                  }
+                  className="gradient-animation bg-gradient-to-r from-bluebs-500 via-grape-400 to-juice-500 bg-clip-text font-display transition-colors hover:text-transparent"
+                />
+              </a>
             </Link>
           }
           label={<Trans>Total raised</Trans>}

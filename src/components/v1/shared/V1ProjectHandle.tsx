@@ -16,14 +16,15 @@ export default function V1ProjectHandle({
   const handleToRender = handle ?? _handle
 
   return (
-    <Link
-      href={`/p/${handleToRender}`}
-      className={twMerge(
-        'select-all leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100',
-        className,
-      )}
-    >
-      @{handleToRender}
+    <Link href={`/p/${handleToRender}`}>
+      <a
+        className={twMerge(
+          'select-all leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100',
+          className,
+        )}
+      >
+        @{handleToRender}
+      </a>
     </Link>
   )
 }

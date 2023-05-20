@@ -60,11 +60,13 @@ export function JuicyPicksSection() {
       <div className="flex flex-col gap-16">
         <ExploreCategories />
 
-        <Link href="/projects" className="mx-auto w-fit">
-          <XLButton size="large" className="flex items-center gap-3.5">
-            <Trans>Explore all projects</Trans>
-            <ArrowRightIcon className="h-6 w-6" />
-          </XLButton>
+        <Link href="/projects">
+          <a className="mx-auto w-fit">
+            <XLButton size="large" className="flex items-center gap-3.5">
+              <Trans>Explore all projects</Trans>
+              <ArrowRightIcon className="h-6 w-6" />
+            </XLButton>
+          </a>
         </Link>
       </div>
     </SectionContainer>

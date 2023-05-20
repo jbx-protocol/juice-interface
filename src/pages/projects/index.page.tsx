@@ -112,15 +112,17 @@ function Projects() {
               </h1>
 
               <Link href="/create">
-                <Button
-                  type="primary"
-                  size="large"
-                  onClick={() => {
-                    trackFathomGoal(PROJECTS_PAGE.CREATE_A_PROJECT_CTA)
-                  }}
-                >
-                  <Trans>Create project</Trans>
-                </Button>
+                <a>
+                  <Button
+                    type="primary"
+                    size="large"
+                    onClick={() => {
+                      trackFathomGoal(PROJECTS_PAGE.CREATE_A_PROJECT_CTA)
+                    }}
+                  >
+                    <Trans>Create project</Trans>
+                  </Button>
+                </a>
               </Link>
             </header>
           </div>

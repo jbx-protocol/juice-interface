@@ -12,10 +12,6 @@ export const HeroSection = () => {
           src={illustration}
           alt="Banny and lil' Blueberry chillin out next to the juicebox and a hamper of fruit"
           priority
-          style={{
-            maxWidth: '100%',
-            height: 'auto',
-          }}
         />
       </div>
       <h1

@@ -52,16 +52,15 @@ export const ProjectUnwatchCell = ({
         className,
       )}
     >
-      <Link
-        href={v2v3ProjectRoute({ projectId })}
-        className="flex gap-2 overflow-hidden whitespace-nowrap"
-      >
-        <span className="text-primary max-w-xs shrink overflow-hidden text-ellipsis font-medium hover:text-grey-500 dark:hover:text-slate-200">
-          {cellPrimaryText}
-        </span>
-        <span className="text-secondary hidden md:inline">
-          {cellSecondaryText}
-        </span>
+      <Link href={v2v3ProjectRoute({ projectId })}>
+        <a className="flex gap-2 overflow-hidden whitespace-nowrap">
+          <span className="text-primary max-w-xs shrink overflow-hidden text-ellipsis font-medium hover:text-grey-500 dark:hover:text-slate-200">
+            {cellPrimaryText}
+          </span>
+          <span className="text-secondary hidden md:inline">
+            {cellSecondaryText}
+          </span>
+        </a>
       </Link>
       <UnwatchButton onClick={onUnwatch} />
     </div>

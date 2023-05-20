@@ -64,10 +64,6 @@ export default function ConstitutionDAOPage() {
             width={592}
             height={256}
             className="pb-5"
-            style={{
-              maxWidth: '100%',
-              height: 'auto',
-            }}
           />
           <div>
             <SectionHeader text={<Trans>Success</Trans>} />

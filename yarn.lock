@@ -2690,10 +2690,10 @@
     "@paulrberg/contracts" "^3.7.0"
     prb-math "^2.4.3"
 
-"@jbx-protocol/juice-721-delegate-v3-2@npm:@jbx-protocol/juice-721-delegate@6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-721-delegate/-/juice-721-delegate-6.0.1.tgz#db23a37fc03aa9714429d324c61a5361894813fb"
-  integrity sha512-B2JdArjiWjbYxFuN+NCvXoP7O9wyylF0YkLYZvH8rXsEetbaMNZY7i+23VdOJmoB0aVpSEJXWBnMIIWRn2T6MA==
+"@jbx-protocol/juice-721-delegate-v3-2@npm:@jbx-protocol/juice-721-delegate@6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-721-delegate/-/juice-721-delegate-6.0.2.tgz#d525ee09ad4c66acf4ea670a710ec484c42b8d6b"
+  integrity sha512-ho0uNA+fJHBFaHpJ4og6n78u893t1sUOdkNOIJOjYTDuK+kZtW6NCJ1yTgBBQirvx5EmgE5I8k+qoLEj7YnmwA==
   dependencies:
     "@jbx-protocol/juice-contracts-v3" "^2.0.4"
     "@jbx-protocol/juice-delegates-registry" "^1.0.0"

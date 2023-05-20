@@ -63,14 +63,18 @@ export function SuccessStoriesSection() {
       <div className="w-full text-center">
         <div className="mt-16 flex flex-col flex-wrap justify-center gap-3 md:flex-row">
           <Link href="/success-stories/constitutiondao">
-            <XLButton type="default" size="large">
-              <Trans>Read case studies</Trans>
-            </XLButton>
+            <a>
+              <XLButton type="default" size="large">
+                <Trans>Read case studies</Trans>
+              </XLButton>
+            </a>
           </Link>
           <Link href="/create">
-            <XLButton type="primary" size="large">
-              <Trans>Create a project</Trans>
-            </XLButton>
+            <a>
+              <XLButton type="primary" size="large">
+                <Trans>Create a project</Trans>
+              </XLButton>
+            </a>
           </Link>
         </div>
       </div>

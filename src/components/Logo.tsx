@@ -32,14 +32,7 @@ export default function Logo({
 
   return (
     <div className={twMerge('relative flex w-36 md:w-36', className)}>
-      <Image
-        src={imgSrc}
-        alt="Juicebox logo"
-        style={{
-          maxWidth: '100%',
-          height: 'auto',
-        }}
-      />
+      <Image src={imgSrc} alt="Juicebox logo" />
     </div>
   )
 }

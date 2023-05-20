@@ -20,7 +20,9 @@ const ProjectTab = ({
 }) => {
   return (
     <Link href={`/projects?tab=${type}`}>
-      <Tab name={TAB_TYPE_NAMES()[type]} isSelected={isSelected} />
+      <a>
+        <Tab name={TAB_TYPE_NAMES()[type]} isSelected={isSelected} />
+      </a>
     </Link>
   )
 }

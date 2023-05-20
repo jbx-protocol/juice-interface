@@ -13,8 +13,10 @@ const PatchedNextLink: ForwardRefRenderFunction<
 > = (props, ref) => {
   const { href, children, className, ...rest } = props
   return (
-    <Link href={href} className={className} ref={ref} {...rest}>
-      {children}
+    <Link href={href}>
+      <a className={className} ref={ref} {...rest}>
+        {children}
+      </a>
     </Link>
   )
 }

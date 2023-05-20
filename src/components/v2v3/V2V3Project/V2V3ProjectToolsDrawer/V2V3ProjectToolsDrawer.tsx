@@ -111,7 +111,7 @@ export function V2V3ProjectToolsDrawer({
           <p>
             Browse the project's smart contract addresses.{' '}
             <Link href={`${v2v3ProjectRoute({ projectId, handle })}/contracts`}>
-              Go to contracts directory
+              <a>Go to contracts directory</a>
             </Link>
             .
           </p>

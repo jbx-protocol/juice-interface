@@ -62,11 +62,10 @@ export function TransactionCollapse({
           )}
         >
           <div className="flex items-center">
-            <Link
-              href={`#${transaction.safeTxHash}`}
-              className="text-black hover:text-bluebs-500 hover:underline dark:text-grey-100 dark:hover:text-bluebs-500"
-            >
-              {transactionTitle}
+            <Link href={`#${transaction.safeTxHash}`}>
+              <a className="text-black hover:text-bluebs-500 hover:underline dark:text-grey-100 dark:hover:text-bluebs-500">
+                {transactionTitle}
+              </a>
             </Link>
             {versionText ? (
               <ProjectVersionBadge className="ml-3" versionText={versionText} />

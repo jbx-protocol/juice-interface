@@ -14,16 +14,7 @@ export const AttachableSticker = ({
       role="button"
       onClick={onClick}
     >
-      <Image
-        src={sticker.filepath}
-        alt={sticker.alt}
-        height={75}
-        width={75}
-        style={{
-          maxWidth: '100%',
-          height: 'auto',
-        }}
-      />
+      <Image src={sticker.filepath} alt={sticker.alt} height={75} width={75} />
     </div>
   )
 }

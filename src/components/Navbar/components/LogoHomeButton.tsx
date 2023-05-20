@@ -3,6 +3,8 @@ import Link from 'next/link'
 
 export const LogoHomeButton = () => (
   <Link href="/">
-    <Logo />
+    <a>
+      <Logo />
+    </a>
   </Link>
 )

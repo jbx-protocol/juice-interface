@@ -1,8 +1,7 @@
 import { Trans } from '@lingui/macro'
 
 import {
-  FUNDING_CYCLE_WARNING_TEXT,
-  FundingCycleRiskFlags,
+  FundingCycleRiskFlags, FUNDING_CYCLE_WARNING_TEXT
 } from 'constants/fundingWarningText'
 
 export default function ProjectRiskNotice({

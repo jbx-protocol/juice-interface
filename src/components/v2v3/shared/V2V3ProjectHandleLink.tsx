@@ -28,12 +28,15 @@ export default function V2V3ProjectHandleLink({
       prefetch={false}
       href={v2v3ProjectRoute({ projectId })}
       as={v2v3ProjectRoute({ projectId, handle: resolvedHandle })}
-      className={twMerge(
-        'select-all font-medium leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100',
-        className,
-      )}
     >
-      {handleText}
+      <a
+        className={twMerge(
+          'select-all font-medium leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100',
+          className,
+        )}
+      >
+        {handleText}
+      </a>
     </Link>
   )
 }

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-14 00:30\n"
+"PO-Revision-Date: 2023-05-21 00:31\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -133,6 +133,9 @@ msgstr "设置一个会出现在项目的 URL 里面的独一无二的句柄，�
 msgid "Determines whether tokens will be minted by payments made through this address."
 msgstr "决定了通过这个地址付款是否会铸造代币。"
 
+msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
+msgstr ""
+
 msgid "Add NFT"
 msgstr "添加 NFT"
 
@@ -235,9 +238,6 @@ msgstr "取消"
 msgid "How do I decide?"
 msgstr "我应该怎样决定？"
 
-msgid "Go to settings"
-msgstr "前往设置"
-
 msgid "<0>Issuance reduction rate</0>. This allows you to predictably reduce your project token's issuance rate (tokens per ETH) over time without needing to manually edit your cycle."
 msgstr "<0>发行减少率</0>。 这个比率允许你有计划地逐步降低项目代币的发行率（每 ETH 发行代币数量），而不需要手动变更你的周期参数。"
 
@@ -303,9 +303,6 @@ msgstr "在 Safe 页面查看交易记录"
 
 msgid "Transferred ETH to project"
 msgstr "已发送 ETH 到项目"
-
-msgid "Add to Metamask"
-msgstr "添加至 Metamask 钱包"
 
 msgid "You must grant permission to migrate your V1 tokens."
 msgstr "你必须授权迁移你的 V1 代币。"
@@ -643,9 +640,6 @@ msgstr "转让暂停时，本项目的代币不能转移至其他地址。项目
 msgid "Project token"
 msgstr "项目代币"
 
-msgid "Got it"
-msgstr "收到"
-
 msgid "Setup new NFTs for {projectTitle}"
 msgstr "为 {projectTitle} 设置新的 NFT"
 
@@ -808,9 +802,6 @@ msgstr "跳过"
 msgid "Set operator for {projectTitle}"
 msgstr "为 {projectTitle} 设置操作员"
 
-msgid "Edit profile"
-msgstr "编辑个人资料"
-
 msgid "Payouts will be sent to:"
 msgstr "支出将发送至："
 
@@ -852,6 +843,9 @@ msgstr "缓缴费用"
 
 msgid "Receive:"
 msgstr "收到："
+
+msgid "Grant NFT permissions"
+msgstr ""
 
 msgid "Custom token beneficiary"
 msgstr "自定义代币受益人"
@@ -968,7 +962,7 @@ msgid "I understand and accept the risks associated with <0>this project</0> and
 msgstr "我理解及接受与 <0>这个项目</0> 及 <1>Juicebox 协议</1>相关的风险。"
 
 msgid "Payouts"
-msgstr "支出对象"
+msgstr "支出金额"
 
 msgid "Profile details were updated"
 msgstr "个人资料详情已更新"
@@ -1032,9 +1026,6 @@ msgstr "支付按钮文本"
 
 msgid "Limited (1,050 ETH)"
 msgstr "有限额（1050 ETH）"
-
-msgid "Tier-based on-chain governance"
-msgstr "分级链上治理"
 
 msgid "Your total legacy tokens"
 msgstr "你的原有代币余额"
@@ -1269,9 +1260,6 @@ msgstr "支付"
 
 msgid "Juicebox Project"
 msgstr "Juicebox 项目"
-
-msgid "Set NFT operator permissions"
-msgstr "设置 NFT 操作员权限"
 
 msgid "Is not a valid number"
 msgstr "不是一个有效数字"
@@ -2053,9 +2041,6 @@ msgstr "已达到供应量上限"
 msgid "Migrate controller"
 msgstr "迁移控制器"
 
-msgid "Instead of tracking total voting power, track each address' voting power within each tier over time. This can be useful for running multiple voting processes out of one treasury, or for complex on-chain governance.<0>Learn more.</0>"
-msgstr "并不会跟踪总的投票权重，而是一直跟踪每个等级内所有地址的投票权重。这个对于在同一个金库内运行多个投票流程或者复杂的链上治理会非常有用。<0>了解更多。</0>"
-
 msgid "Sent reserved tokens"
 msgstr "已发送保留代币"
 
@@ -2157,9 +2142,6 @@ msgstr "百分比"
 
 msgid "When enabled, fees are held in the project instead of being processed automatically. <0>Learn more.</0>"
 msgstr "启用选项，平台费用将保留在项目内，不会自动进行处理。<0>了解更多。</0>"
-
-msgid "Track the historical voting weight of each token holder within each tier of NFTs. <0>Learn more.</0>"
-msgstr "追踪每个等级 NFT 内所有代币持有人的历史投票权重。<0>了解更多。</0>"
 
 msgid "No, keep"
 msgstr "否，保留"
@@ -2662,6 +2644,9 @@ msgstr "常见问题"
 msgid "Transfer unclaimed {0}"
 msgstr "转移未领取的 {0} 代币"
 
+msgid "Cannot set payouts because your <0>Total payouts</0> is Zero."
+msgstr ""
+
 msgid "The onchain memo for each payment made through this address. The project's payment feed will include the memo alongside the payment."
 msgstr "通过这个地址支付的每笔付款的链上备忘录。项目的支付提要除付款信息外还会包括这个备忘录。"
 
@@ -2734,9 +2719,6 @@ msgstr "你的项目不能通过 juicebox.money 应用来接收付款。"
 msgid "Mint {tokensTokenLower}"
 msgstr "铸造 {tokensTokenLower}"
 
-msgid "You can now search for projects by their name, description, and tags, as well as their @handle."
-msgstr "你现在可以按项目的名称、详情、标签及句柄来搜索各种项目。"
-
 msgid "<0>Note:</0> These properties are locked during each cycle. They can only be edited for <1>upcoming</1> cycles."
 msgstr "<0>注意</0> 这些属性在每个周期期间会被锁定。 只能变更 <1>将来的</1> 周期的属性。"
 
@@ -2796,6 +2778,9 @@ msgstr "项目的周期没有设置时长时禁用。"
 
 msgid "Twitter handle"
 msgstr "推特名"
+
+msgid "<0/> fee"
+msgstr ""
 
 msgid "Payments to this project are paused in this cycle."
 msgstr "本周期向项目付款已暂停。"
@@ -3103,9 +3088,6 @@ msgstr "上传 CSV 文件"
 msgid "{tokenTextSingular} recipients"
 msgstr "{tokenTextSingular} 接收人"
 
-msgid "You can now add tags in settings to describe your project, and help supporters find it. Anyone can search for projects by tag on the Explore page."
-msgstr "你现在可以在设置里添加标签来介绍你的项目，让支持者更容易找到它。任何人都可以在探索页面按标签来搜索项目。"
-
 msgid "Will be rounded to <0/>{0}"
 msgstr "会被四舍五入成 <0/>{0}"
 
@@ -3168,9 +3150,6 @@ msgstr "你将收到 <0/>"
 
 msgid "Start over"
 msgstr "重新配置"
-
-msgid "<0/>fee"
-msgstr "<0/>费用"
 
 msgid "Notifications"
 msgstr "通知"
@@ -3490,9 +3469,6 @@ msgstr "项目未找到"
 msgid "Limited supply"
 msgstr "限定供应量"
 
-msgid "Contact JuiceboxDAO for feature requests, support, or project advice."
-msgstr "联系 JuiceboxDAO 以提出功能请求、获取支持或提出项目建议。"
-
 msgid "How long one cycle will last. Your project's rules are locked during each cycle. Edits you make to your project's rules during a cycle will only take effect at the start of the next cycle."
 msgstr "一个周期时间有多长。你项目的规则在每个周期期间锁定。你对你项目规则所作的修改只能在下一周期开始时生效。"
 
@@ -3609,6 +3585,9 @@ msgstr "基本代币规则"
 
 msgid "Payment amount can't exceed your wallet balance."
 msgstr "付款金额不能超过你的钱包余额。"
+
+msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before launching cycles."
+msgstr ""
 
 msgid "Last paid"
 msgstr "上次支付"
@@ -3749,10 +3728,7 @@ msgid "Token amount"
 msgstr "代币数量"
 
 msgid "Allow the <0>Juicebox NFT deployer contract</0> to edit this project's cycle."
-msgstr "允许 <0>Juicebox NFT 部署合约</0> 编辑本项目的周期。"
-
-msgid "Complete your Juicebox profile to enjoy a personalized and seamless experience on our platform."
-msgstr "完善你的 Juicebox 个人资料，尽享平台的个性化无缝体验。"
+msgstr ""
 
 msgid "Fun"
 msgstr "好玩"
@@ -3936,9 +3912,6 @@ msgstr "创建日期"
 
 msgid "What happens when I pay a project?"
 msgstr "我向一个项目付款会发生什么？"
-
-msgid "Improved search"
-msgstr "增强的搜索功能"
 
 msgid "Redemption rate:"
 msgstr "赎回比率："

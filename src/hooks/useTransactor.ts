@@ -78,7 +78,7 @@ export function useTransactor(): Transactor | undefined {
   const { addTransaction } = useContext(TxHistoryContext)
 
   const { chain, signer, userAddress } = useWallet()
-  const { chainUnsupported, changeNetworks } = useWallet()
+  const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
   const arcx = useArcx()
 
   return useCallback(
@@ -90,6 +90,11 @@ export function useTransactor(): Transactor | undefined {
     ) => {
       if (chainUnsupported) {
         await changeNetworks()
+        options?.onDone?.()
+        return false
+      }
+      if (!isConnected) {
+        await connect()
         options?.onDone?.()
         return false
       }
@@ -173,9 +178,11 @@ export function useTransactor(): Transactor | undefined {
     [
       arcx,
       chainUnsupported,
+      isConnected,
       signer,
       chain,
       changeNetworks,
+      connect,
       addTransaction,
       userAddress,
     ],

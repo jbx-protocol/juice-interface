@@ -5,6 +5,7 @@ import { useModal } from 'hooks/useModal'
 import { ReactNode, useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { roundIfCloseToNextInteger } from 'utils/math'
 import { projectIdToHex } from 'utils/splits'
 import { amountFromPercent } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
@@ -82,7 +83,9 @@ export const AllocationList = ({
       const totalAmount = parseFloat(fromWad(totalAllocationAmount))
       const removedAmount = (allocation.percent / 100) * totalAmount
 
-      const totalAmountAfterRemoval = totalAmount - removedAmount
+      const totalAmountAfterRemoval = roundIfCloseToNextInteger(
+        totalAmount - removedAmount,
+      )
 
       const adjustedAllocations = allocations
         .filter(a => a.id !== allocation.id)

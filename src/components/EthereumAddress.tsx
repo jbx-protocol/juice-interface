@@ -82,8 +82,9 @@ export default function EthereumAddress({
             onClick={onClick}
             type="address"
             value={address}
-            truncated
-          />
+          >
+            {formattedAddress}
+          </EtherscanLink>
         )}
       </span>
     </Tooltip>

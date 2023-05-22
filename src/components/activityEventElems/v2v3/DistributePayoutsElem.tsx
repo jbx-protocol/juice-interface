@@ -1,10 +1,10 @@
 import { t } from '@lingui/macro'
-import ETHAmount from 'components/currency/ETHAmount'
 import EthereumAddress from 'components/EthereumAddress'
+import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
+import ETHAmount from 'components/currency/ETHAmount'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { ProjectEventsQuery } from 'generated/graphql'
 import useSubgraphQuery from 'hooks/useSubgraphQuery'
-
 import { ActivityEvent } from '../ActivityElement'
 
 export default function DistributePayoutsElem({
@@ -60,7 +60,7 @@ export default function DistributePayoutsElem({
                     projectId={e.splitProjectId}
                   />
                 ) : (
-                  <EthereumAddress
+                  <JuiceboxAccountLink
                     className="text-grey-900 dark:text-slate-100"
                     address={e.beneficiary}
                   />

@@ -12,8 +12,10 @@ import { NetworkName } from 'models/networkName'
  */
 export function resolveAddress(addressOrEnsName: string) {
   try {
-    if (readNetwork.name !== NetworkName.mainnet)
+    if (readNetwork.name !== NetworkName.mainnet) {
       throw new Error('Not mainnet, skipping to resolver fallback.')
+    }
+
     return resolveAddressEnsIdeas(addressOrEnsName)
   } catch (e) {
     return axios

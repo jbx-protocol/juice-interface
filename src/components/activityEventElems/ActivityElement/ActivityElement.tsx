@@ -22,7 +22,7 @@ const FromBeneficiary = ({
     </div>
   ) : (
     <div className="text-sm">
-      <JuiceboxAccountLink address={from} />
+      <JuiceboxAccountLink address={from} withEnsAvatar />
     </div>
   )
 }

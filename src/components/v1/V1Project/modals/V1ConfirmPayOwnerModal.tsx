@@ -13,7 +13,6 @@ import Paragraph from 'components/Paragraph'
 import { Parenthesis } from 'components/Parenthesis'
 import { StickerSelection } from 'components/Project/StickerSelection'
 import ProjectRiskNotice from 'components/ProjectRiskNotice'
-import { ConnectKitButton } from 'connectkit'
 import { ProjectPreferences } from 'constants/v1/projectPreferences'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
@@ -67,8 +66,13 @@ export default function V1ConfirmPayOwnerModal({
 
   const stickerUrls = useWatch('stickerUrls', form)
 
-  const { userAddress, chainUnsupported, isConnected, changeNetworks } =
-    useWallet()
+  const {
+    userAddress,
+    chainUnsupported,
+    isConnected,
+    changeNetworks,
+    connect,
+  } = useWallet()
   const converter = useCurrencyConverter()
   const payProjectTx = usePayV1ProjectTx()
 
@@ -91,6 +95,10 @@ export default function V1ConfirmPayOwnerModal({
     // Prompt wallet connect if no wallet connected
     if (chainUnsupported) {
       await changeNetworks()
+      return
+    }
+    if (!isConnected) {
+      await connect()
       return
     }
     setLoading(true)
@@ -169,154 +177,144 @@ export default function V1ConfirmPayOwnerModal({
   }
 
   return (
-    <ConnectKitButton.Custom>
-      {({ show }) => {
-        return (
-          <Modal
-            title={t`Pay ${projectMetadata.name}`}
-            open={open}
-            onOk={isConnected ? pay : show}
-            okText={userAddress ? payButtonText : t`Connect wallet to pay`}
-            onCancel={onCancel}
-            confirmLoading={loading}
-            width={640}
-            centered={true}
-            zIndex={1}
+    <Modal
+      title={t`Pay ${projectMetadata.name}`}
+      open={open}
+      onOk={pay}
+      okText={userAddress ? payButtonText : t`Connect wallet to pay`}
+      onCancel={onCancel}
+      confirmLoading={loading}
+      width={640}
+      centered={true}
+      zIndex={1}
+    >
+      <Space direction="vertical" size="large" className="w-full">
+        <p>
+          <Trans>
+            Paying <span className="font-medium">{projectMetadata.name}</span>{' '}
+            is not an investment — it's a way to support the project. Any value
+            or utility of the tokens you receive is determined by{' '}
+            {projectMetadata.name}.
+          </Trans>
+        </p>
+
+        {projectMetadata.payDisclosure && (
+          <div>
+            <h4>
+              <Trans>Notice from {projectMetadata.name}</Trans>
+            </h4>
+            <Paragraph description={projectMetadata.payDisclosure} />
+          </div>
+        )}
+        {renderRiskNotice()}
+        <Descriptions column={1} bordered>
+          <Descriptions.Item label={t`Pay amount`} className="content-right">
+            <USDAmount amount={usdAmount} />{' '}
+            <Parenthesis>
+              <ETHAmount amount={weiAmount} />
+            </Parenthesis>
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={t`${tokenSymbolText({
+              tokenSymbol,
+              capitalize: true,
+              plural: true,
+            })} for you`}
+            className="content-right"
           >
-            <Space direction="vertical" size="large" className="w-full">
-              <p>
+            <div>{formatWad(receivedTickets, { precision: 0 })}</div>
+            <div>
+              {userAddress ? (
                 <Trans>
-                  Paying{' '}
-                  <span className="font-medium">{projectMetadata.name}</span> is
-                  not an investment — it's a way to support the project. Any
-                  value or utility of the tokens you receive is determined by{' '}
-                  {projectMetadata.name}.
+                  To: <EthereumAddress address={userAddress} />
                 </Trans>
-              </p>
-
-              {projectMetadata.payDisclosure && (
-                <div>
-                  <h4>
-                    <Trans>Notice from {projectMetadata.name}</Trans>
-                  </h4>
-                  <Paragraph description={projectMetadata.payDisclosure} />
-                </div>
-              )}
-              {renderRiskNotice()}
-              <Descriptions column={1} bordered>
-                <Descriptions.Item
-                  label={t`Pay amount`}
-                  className="content-right"
-                >
-                  <USDAmount amount={usdAmount} />{' '}
-                  <Parenthesis>
-                    <ETHAmount amount={weiAmount} />
-                  </Parenthesis>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={t`${tokenSymbolText({
-                    tokenSymbol,
-                    capitalize: true,
-                    plural: true,
-                  })} for you`}
-                  className="content-right"
-                >
-                  <div>{formatWad(receivedTickets, { precision: 0 })}</div>
-                  <div>
-                    {userAddress ? (
-                      <Trans>
-                        To: <EthereumAddress address={userAddress} />
-                      </Trans>
-                    ) : null}
-                  </div>
-                </Descriptions.Item>
-                <Descriptions.Item
-                  label={t`${tokenSymbolText({
-                    tokenSymbol,
-                    capitalize: true,
-                    plural: true,
-                  })} reserved`}
-                  className="content-right"
-                >
-                  {formatWad(ownerTickets, { precision: 0 })}
-                </Descriptions.Item>
-              </Descriptions>
-              <Form form={form} layout="vertical">
-                <div className="relative">
-                  <Form.Item
-                    name="memo"
-                    label={t`Memo (optional)`}
-                    className="antd-no-number-handler mb-0"
-                    extra={t`Add an on-chain memo to this payment.`}
-                  >
-                    <Input.TextArea
-                      placeholder={t`WAGMI!`}
-                      maxLength={256}
-                      onPressEnter={e => e.preventDefault()} // prevent new lines in memo
-                      showCount
-                      autoSize
-                    />
-                  </Form.Item>
-                  {/* Sticker select icon (right side of memo input) */}
-                  <div className="absolute right-2 top-9 text-sm">
-                    {
-                      <Sticker
-                        className={classNames(
-                          'text-grey-500 dark:text-grey-300',
-                          canAddMoreStickers
-                            ? 'cursor-pointer'
-                            : 'cursor-not-allowed',
-                        )}
-                        size={20}
-                        onClick={() => {
-                          canAddMoreStickers
-                            ? setAttachStickerModalVisible(true)
-                            : undefined
-                        }}
-                      />
-                    }
-                  </div>
-                </div>
-                <Form.Item name="stickerUrls">
-                  <StickerSelection />
-                </Form.Item>
-
-                <Form.Item name="uploadedImage">
-                  <FormImageUploader text={t`Add image`} />
-                </Form.Item>
-                {hasIssuedTokens && (
-                  <Form.Item
-                    name="preferUnstaked"
-                    valuePropName="checked"
-                    extra={
-                      <Trans>
-                        Check this to mint {tokenSymbol} ERC-20 to your wallet.
-                        Leave unchecked to have the Juicebox protocol internally
-                        track your token balance, saving gas on this
-                        transaction. You can claim your ERC-20 tokens later.
-                      </Trans>
-                    }
-                  >
-                    <Checkbox>
-                      <Trans>Receive ERC-20</Trans>
-                    </Checkbox>
-                  </Form.Item>
-                )}
-              </Form>
-              <AttachStickerModal
-                open={attachStickerModalVisible}
-                onClose={() => setAttachStickerModalVisible(false)}
-                onSelect={sticker => {
-                  if (typeof window === 'undefined') {
-                    return
-                  }
-                  handleStickerSelect(sticker)
-                }}
+              ) : null}
+            </div>
+          </Descriptions.Item>
+          <Descriptions.Item
+            label={t`${tokenSymbolText({
+              tokenSymbol,
+              capitalize: true,
+              plural: true,
+            })} reserved`}
+            className="content-right"
+          >
+            {formatWad(ownerTickets, { precision: 0 })}
+          </Descriptions.Item>
+        </Descriptions>
+        <Form form={form} layout="vertical">
+          <div className="relative">
+            <Form.Item
+              name="memo"
+              label={t`Memo (optional)`}
+              className="antd-no-number-handler mb-0"
+              extra={t`Add an on-chain memo to this payment.`}
+            >
+              <Input.TextArea
+                placeholder={t`WAGMI!`}
+                maxLength={256}
+                onPressEnter={e => e.preventDefault()} // prevent new lines in memo
+                showCount
+                autoSize
               />
-            </Space>
-          </Modal>
-        )
-      }}
-    </ConnectKitButton.Custom>
+            </Form.Item>
+            {/* Sticker select icon (right side of memo input) */}
+            <div className="absolute right-2 top-9 text-sm">
+              {
+                <Sticker
+                  className={classNames(
+                    'text-grey-500 dark:text-grey-300',
+                    canAddMoreStickers
+                      ? 'cursor-pointer'
+                      : 'cursor-not-allowed',
+                  )}
+                  size={20}
+                  onClick={() => {
+                    canAddMoreStickers
+                      ? setAttachStickerModalVisible(true)
+                      : undefined
+                  }}
+                />
+              }
+            </div>
+          </div>
+          <Form.Item name="stickerUrls">
+            <StickerSelection />
+          </Form.Item>
+
+          <Form.Item name="uploadedImage">
+            <FormImageUploader text={t`Add image`} />
+          </Form.Item>
+          {hasIssuedTokens && (
+            <Form.Item
+              name="preferUnstaked"
+              valuePropName="checked"
+              extra={
+                <Trans>
+                  Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave
+                  unchecked to have the Juicebox protocol internally track your
+                  token balance, saving gas on this transaction. You can claim
+                  your ERC-20 tokens later.
+                </Trans>
+              }
+            >
+              <Checkbox>
+                <Trans>Receive ERC-20</Trans>
+              </Checkbox>
+            </Form.Item>
+          )}
+        </Form>
+        <AttachStickerModal
+          open={attachStickerModalVisible}
+          onClose={() => setAttachStickerModalVisible(false)}
+          onSelect={sticker => {
+            if (typeof window === 'undefined') {
+              return
+            }
+            handleStickerSelect(sticker)
+          }}
+        />
+      </Space>
+    </Modal>
   )
 }

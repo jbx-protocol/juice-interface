@@ -1,11 +1,11 @@
-import { readNetwork } from 'constants/networks'
+import { useSetChain } from '@web3-onboard/react'
 import { BigNumber } from 'ethers'
 import { useMemo } from 'react'
-import { useNetwork } from 'wagmi'
+
+import { readNetwork } from 'constants/networks'
 
 export function useChainUnsupported() {
-  const { chain: connectedChain } = useNetwork()
-
+  const [{ connectedChain }] = useSetChain()
   const chainUnsupported = useMemo(() => {
     if (!connectedChain) return false
     return !BigNumber.from(connectedChain.id).eq(readNetwork.chainId)

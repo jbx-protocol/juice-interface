@@ -48,6 +48,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
                 tooltipDisabled
                 linkDisabled
                 ensDisabled
+                truncateTo={4}
                 address={userAddress}
               />
             )
@@ -97,6 +98,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
           />
         </div>
       }
+      dropdownClassName="md:w-44"
       items={items}
     />
   )

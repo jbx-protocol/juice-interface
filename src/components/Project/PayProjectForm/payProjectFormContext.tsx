@@ -8,7 +8,7 @@ export interface PayButtonProps {
   wrapperClassName?: string
 }
 
-interface PayProjectFormContextType {
+export interface PayProjectFormContextType {
   PayButton: undefined | ((props: PayButtonProps) => JSX.Element | null)
   reservedRate: number | undefined
   weight: BigNumber | undefined

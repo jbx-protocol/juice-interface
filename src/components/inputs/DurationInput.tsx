@@ -41,8 +41,8 @@ export const DurationInput: React.FC<
   }
 
   const listboxValue =
-    durationOptions.find(option => option.value === value?.unit) ??
-    durationOptions[0]
+    durationOptions().find(option => option.value === value?.unit) ??
+    durationOptions()[0]
 
   return (
     <div className="flex gap-2">
@@ -54,7 +54,7 @@ export const DurationInput: React.FC<
 
       <JuiceListbox
         className="min-w-[6.75rem] flex-1"
-        options={durationOptions}
+        options={durationOptions()}
         value={listboxValue}
         onChange={handleListboxChange}
       />
@@ -67,7 +67,7 @@ interface DurationOption {
   value: DurationUnitsOption
 }
 
-const durationOptions: DurationOption[] = [
+const durationOptions = (): DurationOption[] => [
   { label: t`Days`, value: 'days' },
   { label: t`Hours`, value: 'hours' },
   { label: t`Minutes`, value: 'minutes' },

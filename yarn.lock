@@ -2911,10 +2911,10 @@
     "@paulrberg/contracts" "^3.7.0"
     prb-math "^2.4.3"
 
-"@jbx-protocol/juice-721-delegate-v3-2@npm:@jbx-protocol/juice-721-delegate@6.0.2":
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-721-delegate/-/juice-721-delegate-6.0.2.tgz#d525ee09ad4c66acf4ea670a710ec484c42b8d6b"
-  integrity sha512-ho0uNA+fJHBFaHpJ4og6n78u893t1sUOdkNOIJOjYTDuK+kZtW6NCJ1yTgBBQirvx5EmgE5I8k+qoLEj7YnmwA==
+"@jbx-protocol/juice-721-delegate-v3-2@npm:@jbx-protocol/juice-721-delegate@6.0.3":
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-721-delegate/-/juice-721-delegate-6.0.3.tgz#ad93a7d186fbd67353f03a598ad7b575070bccdd"
+  integrity sha512-WzkBkDU+0qJbA14gIyglChT1u1s4Li5+Cnj6KsVmB9JVqsh3JnquURRadri+mQZXKgz7GDc6blH+0cv/zuWWYg==
   dependencies:
     "@jbx-protocol/juice-contracts-v3" "^2.0.4"
     "@jbx-protocol/juice-delegates-registry" "^1.0.0"
@@ -2962,8 +2962,8 @@
     "@paulrberg/contracts" "^3.7.0"
 
 "@jbx-protocol/juice-ownable@git+https://github.com/jbx-protocol/juice-ownable.git":
-  version "0.0.1"
-  resolved "git+https://github.com/jbx-protocol/juice-ownable.git#2e512e4590bc1aac59cf25db32ebbdf7a7627c4e"
+  version "0.0.2"
+  resolved "git+https://github.com/jbx-protocol/juice-ownable.git#b2f98133c7bea013db967e8a204ce0d9cc06d21f"
   dependencies:
     "@jbx-protocol/juice-contracts-v3" "^2.0.2"
     "@openzeppelin/contracts" "^4.8.0"

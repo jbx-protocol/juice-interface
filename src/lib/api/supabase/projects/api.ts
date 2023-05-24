@@ -63,12 +63,7 @@ export async function queryDBProjects(
   // Only sort ascending if orderBy is defined and orderDirection is 'asc'
   const ascending = opts.orderBy ? opts.orderDirection === 'asc' : false
 
-  const searchText = opts.text ? `*${opts.text}*` : undefined
-
-  // We prefix match for name and handle but not for description. In practice, prefix-matching description produces too many poor results
-  const searchFilter = searchText
-    ? `name.fts.${searchText}:*,handle.fts.${searchText}:*,description.fts.${searchText}`
-    : undefined
+  const searchFilter = createSearchFilter(opts.text)
 
   const supabase = createServerSupabaseClient<Database>({ req, res }).from(
     'projects',
@@ -86,4 +81,20 @@ export async function queryDBProjects(
   if (searchFilter) query = query.or(searchFilter)
 
   return query
+}
+
+/**
+ * Creates a search filter for the database query.
+ * @param searchText Search text to filter by (name, handle, or project_id).
+ * @returns Search filter string
+ */
+const createSearchFilter = (searchText: string | undefined) => {
+  if (!searchText) return undefined
+  const name = `name.ilike.%${searchText}%`
+  const handle = `handle.ilike.%${searchText}%`
+  if (!isNaN(Number(searchText))) {
+    const project_id = `project_id.eq.${searchText}`
+    return `${name},${handle},${project_id}`
+  }
+  return `${name},${handle}`
 }

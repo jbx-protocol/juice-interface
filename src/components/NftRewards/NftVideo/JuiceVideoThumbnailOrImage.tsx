@@ -1,6 +1,6 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { useContentType } from 'hooks/useContentType'
-import { ImageProps } from 'next/image'
+import { ImageProps } from 'next/legacy/image'
 import { useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'

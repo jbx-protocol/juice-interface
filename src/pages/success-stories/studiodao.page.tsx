@@ -9,7 +9,7 @@ import {
   CASE_STUDY_PROJECTS,
   STUDIODAO_FUNDING_CONFIG,
 } from 'constants/successStoryProjects'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 
 export default function StudioDAOPage() {
   const studioDAOSuccessStoryProject = CASE_STUDY_PROJECTS[3]

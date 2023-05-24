@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import { twMerge } from 'tailwind-merge'
 import { SectionContainer } from './SectionContainer'
 import illustration from '/public/assets/images/about/hero.webp'

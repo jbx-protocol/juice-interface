@@ -1,4 +1,4 @@
-import { ImageProps } from 'next/image'
+import { ImageProps } from 'next/legacy/image'
 import { stopPropagation } from 'react-stop-propagation'
 import { classNames } from 'utils/classNames'
 

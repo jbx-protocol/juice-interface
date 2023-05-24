@@ -8,7 +8,7 @@ import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDe
 import { readNetwork } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
 import { NetworkName } from 'models/networkName'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
 import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'

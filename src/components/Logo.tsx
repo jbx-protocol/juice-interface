@@ -1,6 +1,6 @@
 import { ThemeOption } from 'constants/theme/themeOption'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import { useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import LIGHT_JUICE_LOGO from '/public/assets/juice-logo-full_black.svg'

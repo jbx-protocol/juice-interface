@@ -6,7 +6,7 @@ import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { ProjectTagName, projectTagText } from 'models/project-tags'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import Link from 'next/link'
 import {
   HOMEPAGE_CARD_BG,
@@ -67,6 +67,10 @@ export function SuccessStoriesCard({
               title={_name}
               height={240}
               width={280}
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
             />
           ) : (
             <ProjectLogo

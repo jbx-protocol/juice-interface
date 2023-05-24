@@ -1,6 +1,6 @@
 import { ThemeOption } from 'constants/theme/themeOption'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import LIGHT_JUICE_LOGO from '/public/assets/juice-logo-full_black.svg'
@@ -32,7 +32,14 @@ export default function Logo({
 
   return (
     <div className={twMerge('relative flex w-36 md:w-36', className)}>
-      <Image src={imgSrc} alt="Juicebox logo" />
+      <Image
+        src={imgSrc}
+        alt="Juicebox logo"
+        style={{
+          maxWidth: '100%',
+          height: 'auto',
+        }}
+      />
     </div>
   )
 }

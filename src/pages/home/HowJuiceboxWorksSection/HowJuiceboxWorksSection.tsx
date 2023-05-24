@@ -6,7 +6,7 @@ import {
 import { Trans, t } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import { XLButton } from 'components/XLButton'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import Link from 'next/link'
 import { SectionContainer } from '../SectionContainer'
 import { SectionHeading } from '../SectionHeading'
@@ -100,6 +100,10 @@ export function HowJuiceboxWorksSection() {
               src={sassyBlueberry}
               alt="Sassy Juicebox Blueberry crossing arms"
               loading="lazy"
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
             />
           </div>
         </div>

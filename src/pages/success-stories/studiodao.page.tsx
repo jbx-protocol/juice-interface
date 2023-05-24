@@ -9,7 +9,7 @@ import {
   CASE_STUDY_PROJECTS,
   STUDIODAO_FUNDING_CONFIG,
 } from 'constants/successStoryProjects'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 
 export default function StudioDAOPage() {
   const studioDAOSuccessStoryProject = CASE_STUDY_PROJECTS[3]
@@ -62,6 +62,10 @@ export default function StudioDAOPage() {
             width={592}
             height={592}
             className="pb-5"
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
           />
           <div>
             <SectionHeader text={<Trans>Success</Trans>} />

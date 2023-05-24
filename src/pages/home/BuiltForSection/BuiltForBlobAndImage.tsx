@@ -1,6 +1,6 @@
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import useMobile from 'hooks/useMobile'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { useContext } from 'react'
 import buildersImage from '/public/assets/images/home/why-juicebox/builders.webp'
 import crowdfundingImage from '/public/assets/images/home/why-juicebox/crowdfunding.webp'
@@ -43,11 +43,27 @@ export function BuiltForBlobAndImage({
     <div className="relative h-[180px] w-[180px]">
       <div className="absolute inset-5">
         {blobSrc ? (
-          <Image src={blobSrc} alt={`${card}-blob`} width={144} height={144} />
+          <Image
+            src={blobSrc}
+            alt={`${card}-blob`}
+            width={144}
+            height={144}
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
+          />
         ) : null}
       </div>
       <div style={!isMobile ? transformStyle : undefined}>
-        <Image src={images[card]} alt={card} />
+        <Image
+          src={images[card]}
+          alt={card}
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
+        />
       </div>
     </div>
   )

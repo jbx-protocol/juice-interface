@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import Loading from 'components/Loading'
 import template from 'lodash/template'
 import { projectTagText } from 'models/project-tags'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { HomepageCard } from '../../HomepageCard'
 import { ProjectCarousel } from '../../ProjectCarousel'
 import { SectionHeading } from '../../SectionHeading'
@@ -38,6 +38,10 @@ export const ExploreCategories = () => {
                   loading="lazy"
                   height={240}
                   width={280}
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                  }}
                 />
               }
               href={CategoryLink({ tag })}

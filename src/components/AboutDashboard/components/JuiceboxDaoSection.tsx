@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { JoinOurDiscordButton } from './JoinOurDiscordButton'
 import { SectionContainer } from './SectionContainer'
 import illustration from '/public/assets/images/about/illustration3.webp'
@@ -29,6 +29,10 @@ export const JuiceboxDaoSection = () => {
         <Image
           src={illustration}
           alt="Banny and the crew gettin' lit in the Juicebox DAO band"
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
         />
       </div>
     </SectionContainer>

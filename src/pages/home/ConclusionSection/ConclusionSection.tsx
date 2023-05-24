@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import Link from 'next/link'
 import { SectionContainer } from '../SectionContainer'
 import { TickIconList } from './TickIconList'
@@ -15,6 +15,10 @@ export function ConclusionSection() {
             alt={'Banny leaning on a stack of ETH coins'}
             width={480}
             height={480}
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
           />
         </div>
         <div>

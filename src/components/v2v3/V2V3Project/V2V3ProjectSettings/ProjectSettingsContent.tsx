@@ -8,6 +8,7 @@ import { useMemo } from 'react'
 import { ArchiveProjectSettingsPage } from './pages/ArchiveProjectSettingsPage'
 import { EditNftsPage } from './pages/EditNftsPage'
 import { GovernanceSettingsPage } from './pages/GovernanceSettingsPage'
+import { ProjectNftSettingsPage } from './pages/ProjectNftSettingsPage'
 import { PayoutsSettingsPage } from './pages/PayoutsSettingsPage'
 import { ProjectDetailsSettingsPage } from './pages/ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
 import { ProjectHandleSettingsPage } from './pages/ProjectHandleSettingsPage'
@@ -31,6 +32,7 @@ const SettingsPageComponents: {
   archiveproject: ArchiveProjectSettingsPage,
   governance: GovernanceSettingsPage,
   upgrades: ProjectUpgradesPage,
+  projectnft: ProjectNftSettingsPage,
 }
 
 const DEFAULT_SETTINGS_PAGE = 'general'

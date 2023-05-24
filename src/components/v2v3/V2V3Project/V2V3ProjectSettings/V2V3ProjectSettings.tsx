@@ -30,6 +30,7 @@ export type V2V3SettingsPageKey =
   | 'governance'
   | 'tokenmigration'
   | 'upgrades'
+  | 'projectnft'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -47,6 +48,7 @@ export const V2V3SettingsPageKeyTitleMap: {
   archiveproject: t`Archive project`,
   governance: t`Governance`,
   upgrades: t`Project upgrades`,
+  projectnft: t`Project NFT theme`,
 }
 
 function menuItem(
@@ -175,6 +177,13 @@ export function V2V3ProjectSettings() {
           menuItem(
             'Project upgrades',
             'upgrades',
+            undefined,
+            undefined,
+            'menu-item-sider',
+          ),
+          menuItem(
+            'Project NFT theme',
+            'projectnft',
             undefined,
             undefined,
             'menu-item-sider',

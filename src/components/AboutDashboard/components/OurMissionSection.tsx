@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { ONE_BILLION } from 'constants/numbers'
+import { ONE_TRILLION } from 'constants/numbers'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
@@ -8,7 +8,7 @@ import { useOurMissionSession } from '../hooks/useOurMissionSection'
 import { SectionContainer } from './SectionContainer'
 import illustration from '/public/assets/images/about/illustration1.webp'
 
-const PROGRESS_MAX_AMOUNT = ONE_BILLION
+const PROGRESS_MAX_AMOUNT = ONE_TRILLION
 
 export const OurMissionSection = () => {
   const { volumeUSD } = useOurMissionSession()
@@ -20,10 +20,10 @@ export const OurMissionSection = () => {
         </h2>
         <p className="text-base text-grey-700 dark:text-slate-200 md:text-lg">
           <Trans>
-            To connect 1,000,000 creators to 100,000,000 contributors to raise $
-            {formatAmount(PROGRESS_MAX_AMOUNT)}, whilst putting Juicebox into
-            the hands of our community - sharing our success with the people
-            that matter.
+            To connect 10,000,000 creators to 1,000,000,000 contributors to
+            raise ${formatAmount(PROGRESS_MAX_AMOUNT)}, whilst putting Juicebox
+            into the hands of our community - sharing our success with the
+            people that matter.
           </Trans>
         </p>
 

@@ -98,6 +98,9 @@ msgstr ""
 msgid "Free to launch, just pay gas."
 msgstr ""
 
+msgid "To connect 10,000,000 creators to 1,000,000,000 contributors to raise ${0}, whilst putting Juicebox into the hands of our community - sharing our success with the people that matter."
+msgstr ""
+
 msgid "Project handle must be unique."
 msgstr ""
 
@@ -2736,9 +2739,6 @@ msgid "Edit {projectTitle}'s rules"
 msgstr ""
 
 msgid "Software"
-msgstr ""
-
-msgid "To connect 1,000,000 creators to 100,000,000 contributors to raise ${0}, whilst putting Juicebox into the hands of our community - sharing our success with the people that matter."
 msgstr ""
 
 msgid "Paying this project is currently disabled."

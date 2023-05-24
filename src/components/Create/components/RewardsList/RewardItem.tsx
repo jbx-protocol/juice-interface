@@ -2,16 +2,14 @@ import { DeleteOutlined, EditOutlined, LinkOutlined } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import ExternalLink from 'components/ExternalLink'
-import { JuiceVideoThumbnail } from 'components/NftRewards/NftVideo/JuiceVideoThumbnail'
+import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
 import TooltipLabel from 'components/TooltipLabel'
-import { useContentType } from 'hooks/useContentType'
 import round from 'lodash/round'
 import { NftRewardTier } from 'models/nftRewards'
 import { ReactNode } from 'react'
 import { isZeroAddress } from 'utils/address'
-import { fileTypeIsVideo, hasLimitedSupply } from 'utils/nftRewards'
+import { hasLimitedSupply } from 'utils/nftRewards'
 import { prettyUrl } from 'utils/url'
-import { RewardImage } from '../RewardImage'
 import { RewardItemButton } from './RewardItemButton'
 
 const SIGNIFICANT_FIGURE_LIMIT = 6
@@ -47,9 +45,6 @@ export const RewardItem = ({
     fileUrl,
   } = reward
 
-  const { data: contentType } = useContentType(fileUrl)
-  const isVideo = fileTypeIsVideo(contentType)
-
   const hasBeneficiary = Boolean(beneficiary) && !isZeroAddress(beneficiary)
 
   return (
@@ -71,13 +66,13 @@ export const RewardItem = ({
 
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex flex-col gap-3">
-          {isVideo ? (
-            <div className="relative h-44 w-44">
-              <JuiceVideoThumbnail src={fileUrl.toString()} />
-            </div>
-          ) : (
-            <RewardImage className="h-44 w-44" src={fileUrl.toString()} />
-          )}
+          <JuiceVideoThumbnailOrImage
+            src={fileUrl.toString() ?? '/assets/banana-od.webp'}
+            alt={name}
+            showPreviewOnClick
+            heightClass="h-44"
+            widthClass="w-44"
+          />
 
           {externalLink && (
             <div className="flex max-w-[11rem] items-center gap-2 overflow-hidden overflow-ellipsis whitespace-nowrap text-xs font-normal">

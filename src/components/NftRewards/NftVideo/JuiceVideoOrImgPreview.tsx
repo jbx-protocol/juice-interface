@@ -1,7 +1,7 @@
 import { CloseOutlined } from '@ant-design/icons'
-import { Image, ImageProps } from 'antd'
 import { JuiceVideoPreview } from 'components/NftRewards/NftVideo/JuiceVideoPreview'
 import { useContentType } from 'hooks/useContentType'
+import { ImageProps } from 'next/image'
 import { stopPropagation } from 'react-stop-propagation'
 import { fileTypeIsVideo } from 'utils/nftRewards'
 
@@ -15,6 +15,7 @@ export function JuiceVideoOrImgPreview({
   onClose,
   ...props
 }: ImageProps & {
+  src: string
   visible: boolean
   onClose: VoidFunction
 }) {
@@ -35,13 +36,12 @@ export function JuiceVideoOrImgPreview({
         {isVideo ? (
           <JuiceVideoPreview src={src} />
         ) : (
-          <Image
+          <img
             className="max-h-[50vh] md:max-h-[60vh]"
             alt={alt}
             src={src}
             onClick={e => e.stopPropagation()}
             crossOrigin="anonymous"
-            preview={false}
             {...props}
           />
         )}

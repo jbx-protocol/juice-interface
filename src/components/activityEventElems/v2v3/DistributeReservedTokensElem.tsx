@@ -1,28 +1,18 @@
 import { Trans } from '@lingui/macro'
-import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import EthereumAddress from 'components/EthereumAddress'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
+import { ProjectEventsQuery } from 'generated/graphql'
 import useSubgraphQuery from 'hooks/useSubgraphQuery'
-import { DistributeReservedTokensEvent } from 'models/subgraph-entities/v2/distribute-reserved-tokens-event'
 import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
+import { ActivityEvent } from '../ActivityElement'
+
 export default function DistributeReservedTokensEventElem({
   event,
 }: {
-  event:
-    | Pick<
-        DistributeReservedTokensEvent,
-        | 'id'
-        | 'timestamp'
-        | 'txHash'
-        | 'from'
-        | 'beneficiary'
-        | 'beneficiaryTokenCount'
-        | 'tokenCount'
-      >
-    | undefined
+  event: ProjectEventsQuery['projectEvents'][0]['distributeReservedTokensEvent']
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
 

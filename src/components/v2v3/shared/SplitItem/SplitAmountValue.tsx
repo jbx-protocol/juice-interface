@@ -68,7 +68,7 @@ export function SplitAmountValue({ props }: { props: SplitProps }) {
         <Tooltip
           title={
             <Trans>
-              <AmountInCurrency amount={feeAmount} currency={currencyName} />
+              <AmountInCurrency amount={feeAmount} currency={currencyName} />{' '}
               fee
             </Trans>
           }

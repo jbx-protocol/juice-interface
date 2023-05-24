@@ -5,6 +5,7 @@ import { useModal } from 'hooks/useModal'
 import { ReactNode, useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { roundIfCloseToNextInteger } from 'utils/math'
 import { projectIdToHex } from 'utils/splits'
 import { amountFromPercent } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
@@ -17,7 +18,7 @@ import { Allocation, AllocationSplit } from './Allocation'
 
 type AddButtonSize = 'small' | 'large'
 
-const allocationId = (
+export const allocationId = (
   beneficiary: string,
   projectIdHex: string | undefined,
 ) => {
@@ -82,7 +83,9 @@ export const AllocationList = ({
       const totalAmount = parseFloat(fromWad(totalAllocationAmount))
       const removedAmount = (allocation.percent / 100) * totalAmount
 
-      const totalAmountAfterRemoval = totalAmount - removedAmount
+      const totalAmountAfterRemoval = roundIfCloseToNextInteger(
+        totalAmount - removedAmount,
+      )
 
       const adjustedAllocations = allocations
         .filter(a => a.id !== allocation.id)
@@ -148,7 +151,7 @@ export const AllocationList = ({
           const allocation = entityToAllocation(result, undefined)
           upsertAllocation(allocation)
         } else {
-          if (!setTotalAllocationAmount) {
+          if (!totalAllocationAmount) {
             throw new Error(
               'Allocation amount passed but AllocationList has no totalAllocationAmount set',
             )
@@ -157,12 +160,10 @@ export const AllocationList = ({
           const originalTotal = parseFloat(
             fromWad(totalAllocationAmount ?? BigNumber.from(0)),
           )
-          const id = allocationId(
-            result.beneficiary!,
-            projectIdToHex(result.projectId),
-          )
+
+          // checks original ID
           const existingAllocation = isEditing
-            ? allocations.find(a => a.id === id)
+            ? allocations.find(a => a.id === result.previousId)
             : undefined
 
           let totalAmount = originalTotal
@@ -173,7 +174,13 @@ export const AllocationList = ({
             totalAmount = Math.max(0, totalAmount - existingAmount)
           }
           const allocationAmount = parseWad(result.amount.value)
-          const newTotal = parseWad(totalAmount).add(allocationAmount)
+
+          // Only set new total if setTotalAllocationAmount available
+          //   e.g. Edit payouts does not allow setting new total
+          const newTotal = setTotalAllocationAmount
+            ? parseWad(totalAmount).add(allocationAmount)
+            : parseWad(originalTotal)
+
           const newOrEditedAllocation = entityToAllocation(result, newTotal)
 
           let newAllocationInserted = false
@@ -203,7 +210,7 @@ export const AllocationList = ({
             // Only insert new if it wasn't added previously
             ...(newAllocationInserted ? [] : [newOrEditedAllocation]),
           ])
-          setTotalAllocationAmount(newTotal)
+          setTotalAllocationAmount?.(newTotal)
         }
       }
 
@@ -221,7 +228,6 @@ export const AllocationList = ({
       upsertAllocation,
     ],
   )
-
   const onModalCancel = useCallback(() => {
     modal.close()
     setSelectedAllocation(undefined)

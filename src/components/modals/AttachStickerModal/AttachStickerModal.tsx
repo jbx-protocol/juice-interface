@@ -40,7 +40,7 @@ const PAYMENT_MEMO_STICKERS: PaymentMemoSticker[] = [
     filepath: '/assets/images/stickers/banny_yes.png',
     alt: 'Stoned screaming "yes"',
   },
-  { filepath: '/assets/images/quint.gif', alt: 'Quint' },
+  { filepath: '/assets/images/quint.webp', alt: 'Quint' },
 ]
 
 export function AttachStickerModal({

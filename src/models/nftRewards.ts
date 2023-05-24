@@ -1,9 +1,13 @@
 import { BigNumber } from 'ethers'
 import { CurrencyOption } from './currencyOption'
 
-export type JB721DELEGATE_V1 = '1'
-export type JB721DELEGATE_V1_1 = '1.1'
-export type JB721DelegateVersion = JB721DELEGATE_V1 | JB721DELEGATE_V1_1
+export type JB721DELEGATE_V3 = '3'
+export type JB721DELEGATE_V3_1 = '3-1'
+export type JB721DELEGATE_V3_2 = '3-2'
+export type JB721DelegateVersion =
+  | JB721DELEGATE_V3
+  | JB721DELEGATE_V3_1
+  | JB721DELEGATE_V3_2
 
 // How we store reward tiers for use around the app
 export type NftRewardTier = {
@@ -15,7 +19,7 @@ export type NftRewardTier = {
   id: number
   reservedRate: number | undefined
   beneficiary: string | undefined
-  votingWeight: number | undefined
+  votingWeight: string | undefined
   externalLink: string | undefined
   description: string | undefined
 }
@@ -41,7 +45,7 @@ export interface JB721TierParams {
   transfersPausable: boolean
 }
 
-export type JB_721_TIER_PARAMS_V1_1 = Omit<
+export type JB_721_TIER_PARAMS_V3_1 = Omit<
   JB721TierParams,
   'shouldUseBeneficiaryAsDefault'
 > & {
@@ -52,10 +56,30 @@ export type JB_721_TIER_PARAMS_V1_1 = Omit<
   category: number // 1
 }
 
+export type JB_721_TIER_PARAMS_V3_2 = Omit<
+  JB_721_TIER_PARAMS_V3_1,
+  | 'royaltyRate'
+  | 'royaltyBeneficiary'
+  | 'shouldUseRoyaltyBeneficiaryAsDefault'
+  | 'contributionFloor'
+  | 'lockedUntil'
+> & {
+  price: BigNumber
+  useVotingUnits: boolean
+}
+
 // Tiers as they are stored on-chain.
-export type JB721Tier = JB721TierParams & {
+export type JB721TierV3 = JB721TierParams & {
   id: BigNumber
   remainingQuantity?: BigNumber
+}
+
+export type JB_721_TIER_V3_2 = Omit<
+  JB721TierV3,
+  'royaltyRate' | 'royaltyBeneficiary' | 'contributionFloor' | 'lockedUntil'
+> & {
+  price: BigNumber
+  resolvedUri: string
 }
 
 type OpenSeaAttribute = {
@@ -106,15 +130,14 @@ export type NftPostPayModalConfig = {
 
 export enum JB721GovernanceType {
   NONE,
-  TIERED,
-  GLOBAL,
+  ONCHAIN,
 }
 
 export interface JB721PricingParams {
-  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V1_1)[]
+  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2)[]
   currency: CurrencyOption
   decimals: number
-  prices: string
+  prices: string // address
 }
 
 export interface JBDeployTiered721DelegateData {
@@ -133,7 +156,7 @@ export interface JBDeployTiered721DelegateData {
   governanceType: JB721GovernanceType
 }
 
-export type JB_DEPLOY_TIERED_721_DELEGATE_DATA_V1_1 = Omit<
+export type JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1 = Omit<
   JBDeployTiered721DelegateData,
   'directory'
 >

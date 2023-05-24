@@ -14,7 +14,7 @@ export const JB721DelegateContractsProvider: React.FC<
   const dataSourceAddress = fundingCycleMetadata?.dataSource
   const hasDataSource = !isZeroAddress(dataSourceAddress)
 
-  const contractVersion = useJB721DelegateVersion({
+  const { data: contractVersion } = useJB721DelegateVersion({
     dataSourceAddress: hasDataSource ? dataSourceAddress : undefined, // only check if there's a non-zero datasource addr.
   })
 

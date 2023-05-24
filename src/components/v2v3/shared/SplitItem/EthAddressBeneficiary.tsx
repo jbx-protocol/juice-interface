@@ -16,7 +16,7 @@ export function ETHAddressBeneficiary({
   return (
     <div className="flex items-center justify-center gap-1 font-medium">
       {beneficaryAddress ? (
-        <JuiceboxAccountLink address={beneficaryAddress} />
+        <JuiceboxAccountLink address={beneficaryAddress} withEnsAvatar />
       ) : null}
       {!beneficaryAddress && isProjectOwner ? (
         <Trans>Project owner (you)</Trans>

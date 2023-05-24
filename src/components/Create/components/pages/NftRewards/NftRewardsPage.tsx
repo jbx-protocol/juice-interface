@@ -142,32 +142,12 @@ export const NftRewardsPage = () => {
                         description={t`Your project's NFTs will not have on-chain governance capabilities. Select this option if you don't want governance, or if you plan to use an off-chain voting client (like Snapshot).`}
                       />
                       <RadioItem
-                        value={JB721GovernanceType.GLOBAL}
+                        value={JB721GovernanceType.ONCHAIN}
                         title={t`Standard on-chain governance`}
                         description={
                           <Trans>
                             Track the total voting power of each address over
                             time.{' '}
-                            <ExternalLink
-                              href={helpPagePath(
-                                '/user/configuration/#on-chain-governance',
-                              )}
-                            >
-                              Learn more.
-                            </ExternalLink>
-                          </Trans>
-                        }
-                      />
-                      <RadioItem
-                        value={JB721GovernanceType.TIERED}
-                        title={t`Tier-based on-chain governance`}
-                        description={
-                          <Trans>
-                            Instead of tracking total voting power, track each
-                            address' voting power within each tier over time.
-                            This can be useful for running multiple voting
-                            processes out of one treasury, or for complex
-                            on-chain governance.
                             <ExternalLink
                               href={helpPagePath(
                                 '/user/configuration/#on-chain-governance',

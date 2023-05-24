@@ -421,7 +421,12 @@ export const parseBigNumberKeyVal = <K extends string | number | symbol>(
   let output
 
   try {
-    if (isBigNumberish(val)) output = { [key]: BigNumber.from(val) }
+    if ((val as { type: 'BigNumber'; hex: string }).type === 'BigNumber') {
+      // Patch to allow this to work with responses already parsed by the Apollo client. Eventually this parsing layer should be removed entirely in favor of using just the Apollo client.
+      output = { [key]: BigNumber.from((val as { hex: string }).hex) }
+    } else if (isBigNumberish(val)) {
+      output = { [key]: BigNumber.from(val) }
+    }
   } catch (e) {
     output = {}
   }

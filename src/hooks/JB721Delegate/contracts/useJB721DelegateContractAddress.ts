@@ -2,15 +2,26 @@ import { readNetwork } from 'constants/networks'
 import { ForgeDeploy } from 'models/contracts'
 import { JB721DelegateVersion } from 'models/nftRewards'
 import { useEffect, useState } from 'react'
-import { JB721DelegatePackageVersion } from './useJB721DelegateAbi'
 
-async function loadJB721DelegateDeployment(version: JB721DelegateVersion) {
-  const versionString = JB721DelegatePackageVersion(version)
-  if (!versionString) return
-
+export async function loadJB721DelegateDeployment(
+  version: JB721DelegateVersion,
+) {
   return (await import(
-    `@jbx-protocol/juice-721-delegate-${versionString}/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
+    `@jbx-protocol/juice-721-delegate-v${version}/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
   )) as ForgeDeploy
+}
+
+export async function loadJB721DelegateAddress(
+  contractName: string,
+  version: JB721DelegateVersion,
+) {
+  const deployment = await loadJB721DelegateDeployment(version)
+
+  const address = deployment?.transactions.find(
+    tx => tx.contractName === contractName,
+  )?.contractAddress
+
+  return address!
 }
 
 export function useJB721DelegateContractAddress({
@@ -20,30 +31,19 @@ export function useJB721DelegateContractAddress({
   contractName: string
   version: JB721DelegateVersion | undefined
 }): string | undefined {
-  const [deployment, setDeployment] = useState<ForgeDeploy | undefined>(
-    undefined,
-  )
   const [address, setAddress] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     async function load() {
       if (!version) return
 
-      if (!deployment) {
-        const d = await loadJB721DelegateDeployment(version)
-        setDeployment(d)
-        return
-      }
+      const address = await loadJB721DelegateAddress(contractName, version)
 
-      const addr = deployment?.transactions.find(
-        tx => tx.contractName === contractName,
-      )?.contractAddress
-
-      setAddress(addr)
+      setAddress(address)
     }
 
     load()
-  }, [deployment, contractName, version])
+  }, [contractName, version])
 
   return address
 }

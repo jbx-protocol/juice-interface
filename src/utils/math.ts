@@ -35,3 +35,13 @@ export const ceilIfCloseToNextInteger = (
   }
   return num
 }
+
+export const roundIfCloseToNextInteger = (
+  num: number,
+  precision = 0.01,
+): number => {
+  if (Math.abs(num - Math.round(num)) < precision) {
+    return Math.round(num)
+  }
+  return num
+}

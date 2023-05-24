@@ -22,7 +22,7 @@ const FromBeneficiary = ({
     </div>
   ) : (
     <div className="text-sm">
-      <JuiceboxAccountLink address={from} />
+      <JuiceboxAccountLink address={from} withEnsAvatar />
     </div>
   )
 }
@@ -77,9 +77,11 @@ export function ActivityEvent({
 }: {
   header: string | JSX.Element
   subject: string | JSX.Element | null
-  event: ActivityElementEvent
+  event: ActivityElementEvent | null | undefined
   extra?: string | JSX.Element | null
 }) {
+  if (!event) return null
+
   return (
     <>
       <div>

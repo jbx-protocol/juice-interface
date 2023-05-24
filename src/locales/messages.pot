@@ -128,6 +128,9 @@ msgstr ""
 msgid "Determines whether tokens will be minted by payments made through this address."
 msgstr ""
 
+msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
+msgstr ""
+
 msgid "Add NFT"
 msgstr ""
 
@@ -230,9 +233,6 @@ msgstr ""
 msgid "How do I decide?"
 msgstr ""
 
-msgid "Go to settings"
-msgstr ""
-
 msgid "<0>Issuance reduction rate</0>. This allows you to predictably reduce your project token's issuance rate (tokens per ETH) over time without needing to manually edit your cycle."
 msgstr ""
 
@@ -297,9 +297,6 @@ msgid "See Tx on Safe"
 msgstr ""
 
 msgid "Transferred ETH to project"
-msgstr ""
-
-msgid "Add to Metamask"
 msgstr ""
 
 msgid "You must grant permission to migrate your V1 tokens."
@@ -641,9 +638,6 @@ msgstr ""
 msgid "Project token"
 msgstr ""
 
-msgid "Got it"
-msgstr ""
-
 msgid "Setup new NFTs for {projectTitle}"
 msgstr ""
 
@@ -806,9 +800,6 @@ msgstr ""
 msgid "Set operator for {projectTitle}"
 msgstr ""
 
-msgid "Edit profile"
-msgstr ""
-
 msgid "Payouts will be sent to:"
 msgstr ""
 
@@ -849,6 +840,9 @@ msgid "Hold fees"
 msgstr ""
 
 msgid "Receive:"
+msgstr ""
+
+msgid "Grant NFT permissions"
 msgstr ""
 
 msgid "Custom token beneficiary"
@@ -1032,9 +1026,6 @@ msgid "Pay button text"
 msgstr ""
 
 msgid "Limited (1,050 ETH)"
-msgstr ""
-
-msgid "Tier-based on-chain governance"
 msgstr ""
 
 msgid "Your total legacy tokens"
@@ -1275,9 +1266,6 @@ msgid "Payments"
 msgstr ""
 
 msgid "Juicebox Project"
-msgstr ""
-
-msgid "Set NFT operator permissions"
 msgstr ""
 
 msgid "Is not a valid number"
@@ -2075,9 +2063,6 @@ msgstr ""
 msgid "Migrate controller"
 msgstr ""
 
-msgid "Instead of tracking total voting power, track each address' voting power within each tier over time. This can be useful for running multiple voting processes out of one treasury, or for complex on-chain governance.<0>Learn more.</0>"
-msgstr ""
-
 msgid "Sent reserved tokens"
 msgstr ""
 
@@ -2178,9 +2163,6 @@ msgid "Percent"
 msgstr ""
 
 msgid "When enabled, fees are held in the project instead of being processed automatically. <0>Learn more.</0>"
-msgstr ""
-
-msgid "Track the historical voting weight of each token holder within each tier of NFTs. <0>Learn more.</0>"
 msgstr ""
 
 msgid "No, keep"
@@ -2693,6 +2675,9 @@ msgstr ""
 msgid "Transfer unclaimed {0}"
 msgstr ""
 
+msgid "Cannot set payouts because your <0>Total payouts</0> is Zero."
+msgstr ""
+
 msgid "The onchain memo for each payment made through this address. The project's payment feed will include the memo alongside the payment."
 msgstr ""
 
@@ -2765,9 +2750,6 @@ msgstr ""
 msgid "Mint {tokensTokenLower}"
 msgstr ""
 
-msgid "You can now search for projects by their name, description, and tags, as well as their @handle."
-msgstr ""
-
 msgid "<0>Note:</0> These properties are locked during each cycle. They can only be edited for <1>upcoming</1> cycles."
 msgstr ""
 
@@ -2826,6 +2808,9 @@ msgid "Disabled when your project's cycle has no duration."
 msgstr ""
 
 msgid "Twitter handle"
+msgstr ""
+
+msgid "<0/> fee"
 msgstr ""
 
 msgid "Payments to this project are paused in this cycle."
@@ -3134,9 +3119,6 @@ msgstr ""
 msgid "{tokenTextSingular} recipients"
 msgstr ""
 
-msgid "You can now add tags in settings to describe your project, and help supporters find it. Anyone can search for projects by tag on the Explore page."
-msgstr ""
-
 msgid "Will be rounded to <0/>{0}"
 msgstr ""
 
@@ -3201,9 +3183,6 @@ msgid "You will receive <0/>"
 msgstr ""
 
 msgid "Start over"
-msgstr ""
-
-msgid "<0/>fee"
 msgstr ""
 
 msgid "Notifications"
@@ -3527,9 +3506,6 @@ msgstr ""
 msgid "Limited supply"
 msgstr ""
 
-msgid "Contact JuiceboxDAO for feature requests, support, or project advice."
-msgstr ""
-
 msgid "How long one cycle will last. Your project's rules are locked during each cycle. Edits you make to your project's rules during a cycle will only take effect at the start of the next cycle."
 msgstr ""
 
@@ -3648,6 +3624,9 @@ msgid "Basic Token Rules"
 msgstr ""
 
 msgid "Payment amount can't exceed your wallet balance."
+msgstr ""
+
+msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before launching cycles."
 msgstr ""
 
 msgid "Last paid"
@@ -3798,9 +3777,6 @@ msgid "Custom resolver address"
 msgstr ""
 
 msgid "Allow the <0>Juicebox NFT deployer contract</0> to edit this project's cycle."
-msgstr ""
-
-msgid "Complete your Juicebox profile to enjoy a personalized and seamless experience on our platform."
 msgstr ""
 
 msgid "Fun"
@@ -3984,9 +3960,6 @@ msgid "Date created"
 msgstr ""
 
 msgid "What happens when I pay a project?"
-msgstr ""
-
-msgid "Improved search"
 msgstr ""
 
 msgid "Redemption rate:"

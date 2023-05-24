@@ -13,6 +13,7 @@ import { useCallback, useContext, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { WEIGHT_UNCHANGED, WEIGHT_ZERO } from 'utils/v2v3/fundingCycle'
+import { reloadWindow } from 'utils/windowUtils'
 import { EditingFundingCycleConfig } from './useEditingFundingCycleConfig'
 
 /**
@@ -123,6 +124,7 @@ export const useReconfigureFundingCycle = ({
           })
         }
         setReconfigureTxLoading(false)
+        reloadWindow()
       },
     }
 

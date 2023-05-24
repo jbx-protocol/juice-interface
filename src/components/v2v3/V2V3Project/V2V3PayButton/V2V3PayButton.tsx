@@ -54,7 +54,10 @@ export function V2V3PayButton({ disabled, wrapperClassName }: PayButtonProps) {
         className="block"
       >
         <Button
-          className="w-full"
+          // Need inline style here because AntD Button overrides className when disabled
+          style={{
+            width: '100%',
+          }}
           type="primary"
           size="large"
           onClick={() => {

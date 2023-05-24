@@ -41,6 +41,7 @@ export function EditNftsSection() {
             value={rewardTiers}
             onChange={setRewardTiers}
             allowCreate
+            withEditWarning
           />
         )}
 

@@ -68,14 +68,12 @@ export const useDeployNftProject = () => {
       onDone,
       onConfirmed,
       onCancelled,
+      onError,
     }: {
       metadataCid: string
       rewardTierCids: string[]
       nftCollectionMetadataUri: string
-    } & Pick<
-      TransactionCallbacks,
-      'onCancelled' | 'onConfirmed' | 'onDone'
-    >) => {
+    } & TransactionCallbacks) => {
       if (!collectionName) throw new Error('No collection name or project name')
       if (!(rewardTierCids.length && nftRewards.rewardTiers))
         throw new Error('No NFTs')
@@ -114,6 +112,7 @@ export const useDeployNftProject = () => {
           onDone,
           onConfirmed,
           onCancelled,
+          onError,
         },
       )
     },

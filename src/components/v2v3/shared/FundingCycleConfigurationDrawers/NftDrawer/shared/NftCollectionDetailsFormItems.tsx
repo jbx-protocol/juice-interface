@@ -63,39 +63,24 @@ export function NftCollectionDetailsFormItems({
                 <RadioItem
                   value={JB721GovernanceType.NONE}
                   title={
-                    <>
+                    <div className="flex gap-2">
                       <Trans>No on-chain governance</Trans>{' '}
-                      <Badge variant="info" upperCase>
-                        <Trans>Default</Trans>
-                      </Badge>
-                    </>
+                      <span>
+                        <Badge variant="info" upperCase>
+                          <Trans>Default</Trans>
+                        </Badge>
+                      </span>
+                    </div>
                   }
                   description={t`Your project's NFTs will not have on-chain governance capabilities.`}
                 />
                 <RadioItem
-                  value={JB721GovernanceType.GLOBAL}
+                  value={JB721GovernanceType.ONCHAIN}
                   title={t`Standard on-chain governance`}
                   description={
                     <Trans>
                       Track the historical voting weight of each token holder
                       across all tiers of NFTs.{' '}
-                      <ExternalLink
-                        href={helpPagePath(
-                          '/user/configuration/#on-chain-governance',
-                        )}
-                      >
-                        Learn more.
-                      </ExternalLink>
-                    </Trans>
-                  }
-                />
-                <RadioItem
-                  value={JB721GovernanceType.TIERED}
-                  title={t`Tier-based on-chain governance`}
-                  description={
-                    <Trans>
-                      Track the historical voting weight of each token holder
-                      within each tier of NFTs.{' '}
                       <ExternalLink
                         href={helpPagePath(
                           '/user/configuration/#on-chain-governance',

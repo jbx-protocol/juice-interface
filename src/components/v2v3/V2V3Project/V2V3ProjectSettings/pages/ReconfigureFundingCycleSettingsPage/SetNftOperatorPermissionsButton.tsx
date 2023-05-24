@@ -1,7 +1,6 @@
 import { CheckCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, ButtonProps } from 'antd'
-import ExternalLink from 'components/ExternalLink'
 import { useSetNftOperatorPermissionsTx } from 'hooks/JB721Delegate/transactor/useSetNftOperatorPermissionsTx'
 import { useState } from 'react'
 
@@ -28,30 +27,18 @@ export function SetNftOperatorPermissionsButton({
   }
 
   return (
-    <div>
-      <Button
-        loading={loading}
-        onClick={setPermissions}
-        type="primary"
-        disabled={txExecuted}
-        {...props}
-      >
-        <span>
-          <Trans>Set NFT operator permissions</Trans>
-        </span>
-        {txExecuted ? <CheckCircleOutlined /> : null}
-      </Button>
-      <div className="mt-1 text-xs text-grey-500 dark:text-grey-300">
-        <Trans>
-          Allow the{' '}
-          <ExternalLink
-            href={`https://github.com/jbx-protocol/juice-721-delegate/blob/main/contracts/JBTiered721DelegateDeployer.sol`}
-          >
-            Juicebox NFT deployer contract
-          </ExternalLink>{' '}
-          to edit this project's cycle.
-        </Trans>
-      </div>
-    </div>
+    <Button
+      loading={loading}
+      onClick={setPermissions}
+      type="primary"
+      disabled={txExecuted}
+      size="large"
+      {...props}
+    >
+      <span>
+        <Trans>Grant NFT permissions</Trans>
+      </span>
+      {txExecuted ? <CheckCircleOutlined /> : null}
+    </Button>
   )
 }

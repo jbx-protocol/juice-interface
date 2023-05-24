@@ -1,16 +1,14 @@
 import { t } from '@lingui/macro'
-import { BurnEvent } from 'models/subgraph-entities/vX/burn-event'
 
 import { TokenAmount } from 'components/TokenAmount'
+import { ProjectEventsQuery } from 'generated/graphql'
 import { ActivityEvent } from './ActivityElement'
 
 export default function BurnEventElem({
   event,
   tokenSymbol,
 }: {
-  event:
-    | Pick<BurnEvent, 'amount' | 'timestamp' | 'from' | 'id' | 'txHash'>
-    | undefined
+  event: ProjectEventsQuery['projectEvents'][0]['burnEvent']
   tokenSymbol: string | undefined
 }) {
   if (!event) return null

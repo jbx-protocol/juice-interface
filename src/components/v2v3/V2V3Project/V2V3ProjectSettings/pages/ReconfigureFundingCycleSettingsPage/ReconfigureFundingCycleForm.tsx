@@ -1,8 +1,11 @@
 import { t, Trans } from '@lingui/macro'
 import { Divider, Form, Input } from 'antd'
 import RichButton, { RichButtonProps } from 'components/buttons/RichButton'
+import { Callout } from 'components/Callout'
+import ExternalLink from 'components/ExternalLink'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
+import TooltipIcon from 'components/TooltipIcon'
 import { FundingDrawer } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/FundingDrawer'
 import { NftDrawer } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/NftDrawer'
 import { RulesDrawer } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/RulesDrawer'
@@ -66,6 +69,7 @@ export function V2V3ReconfigureFundingCycleForm() {
     useState<boolean>(false)
   const [nftOperatorConfirmed, setNftOperatorConfirmed] = useState<boolean>()
 
+  const dispatch = useAppDispatch()
   const { initialEditingData } = useInitialEditingData({ visible: true })
   const editingFundingCycleConfig = useEditingFundingCycleConfig()
   const {
@@ -78,7 +82,10 @@ export function V2V3ReconfigureFundingCycleForm() {
     editingFundingCycleConfig,
     initialEditingData,
   })
-  const dispatch = useAppDispatch()
+  const nftDeployerCanReconfigure = useNftDeployerCanReconfigure({
+    projectId,
+    projectOwnerAddress,
+  })
 
   const { reconfigureLoading, reconfigureFundingCycle } =
     useReconfigureFundingCycle({
@@ -105,11 +112,6 @@ export function V2V3ReconfigureFundingCycleForm() {
   )
 
   const isV3 = cv === CV_V3
-
-  const nftDeployerCanReconfigure = useNftDeployerCanReconfigure({
-    projectId,
-    projectOwnerAddress,
-  })
 
   return (
     <>
@@ -217,14 +219,32 @@ export function V2V3ReconfigureFundingCycleForm() {
 
         {nftDrawerHasSavedChanges && !nftDeployerCanReconfigure ? (
           <div className="mt-4 flex flex-col gap-4">
-            <div className="flex">
-              <span className="mr-1">1.</span>
+            <Callout.Info>
+              <Trans>
+                You're about to add NFTs to your cycle. You'll need to{' '}
+                <strong>grant NFT permissions</strong> before deploying the new
+                cycle
+              </Trans>{' '}
+              <TooltipIcon
+                tip={
+                  <Trans>
+                    Allow the{' '}
+                    <ExternalLink
+                      href={`https://github.com/jbx-protocol/juice-721-delegate/blob/main/contracts/JBTiered721DelegateDeployer.sol`}
+                    >
+                      Juicebox NFT deployer contract
+                    </ExternalLink>{' '}
+                    to edit this project's cycle.
+                  </Trans>
+                }
+              />
+            </Callout.Info>
+            <div>
               <SetNftOperatorPermissionsButton
                 onConfirmed={() => setNftOperatorConfirmed(true)}
               />
             </div>
-            <div className="flex">
-              <span className="mr-1">2.</span>
+            <div>
               <DeployConfigurationButton
                 loading={reconfigureLoading}
                 onClick={reconfigureFundingCycle}

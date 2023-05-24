@@ -7,7 +7,8 @@ export function useLoadWalletFromLocalStorage() {
 
   const ethereumWebProvider = useMemo(() => {
     if (typeof window === 'undefined') return
-    const { ethereum } = window
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { ethereum } = window as any
     if (typeof ethereum === 'undefined') return
 
     return new providers.Web3Provider(ethereum)

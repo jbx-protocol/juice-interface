@@ -33,6 +33,7 @@ export const simulateTransaction = async ({
     input: unsignedTx.data,
     value: 0,
     save_if_fails: true,
+    save: true,
   }
 
   const headers = {
@@ -54,4 +55,6 @@ export const simulateTransaction = async ({
 
     throw new Error('Transaction is going to fail')
   }
+
+  console.info(`View simulation on Tenderly: ${simulationUrl}`, resp.data)
 }

@@ -1,4 +1,7 @@
-import { JB721_DELEGATE_V1_1 } from 'constants/delegateVersions'
+import {
+  JB721_DELEGATE_V3_1,
+  JB721_DELEGATE_V3_2,
+} from 'constants/delegateVersions'
 import { readProvider } from 'constants/readProvider'
 import { BigNumber, providers } from 'ethers'
 import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/defaultContracts/useDefaultJB721Delegate'
@@ -22,8 +25,8 @@ import {
 } from './hooks'
 
 const CREATE_EVENT_IDX = 2
-const NFT_CREATE_EVENT_IDX_V1 = 2
-const NFT_CREATE_EVENT_IDX_V1_1 = 3 // v1.1's log is a different index.
+const NFT_CREATE_EVENT_IDX_V3 = 2
+const NFT_CREATE_EVENT_IDX_V3_1 = 3 // JB721Delegate v3.1's log is a different index.
 const PROJECT_ID_TOPIC_IDX = 1
 
 /**
@@ -35,9 +38,10 @@ const getProjectIdFromNftLaunchReceipt = (
 ): number => {
   const projectIdHex: unknown | undefined =
     txReceipt?.logs[
-      DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V1_1
-        ? NFT_CREATE_EVENT_IDX_V1_1
-        : NFT_CREATE_EVENT_IDX_V1
+      DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V3_1 ||
+      DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V3_2
+        ? NFT_CREATE_EVENT_IDX_V3_1
+        : NFT_CREATE_EVENT_IDX_V3
     ]?.topics?.[PROJECT_ID_TOPIC_IDX]
   const projectId = BigNumber.from(projectIdHex).toNumber()
 
@@ -147,7 +151,10 @@ export const useDeployProject = () => {
         dispatch(editingV2ProjectActions.resetState())
         onProjectDeployed?.(projectId)
       },
-      onError: error => console.error(error),
+      onError: error => {
+        console.error(error)
+        emitErrorNotification(`Error deploying project: ${error}`)
+      },
       onCancelled: () => {
         setIsDeploying(false)
         setTransactionPending(false)

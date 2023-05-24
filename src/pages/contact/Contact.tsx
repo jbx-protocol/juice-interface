@@ -20,7 +20,7 @@ export default function Contact() {
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const [contactType, setContactType] = useState<ListboxOption>(
-    contactTypeOptions[0],
+    contactTypeOptions()[0],
   )
 
   const [form] = Form.useForm<FormValues>()
@@ -65,7 +65,7 @@ export default function Contact() {
     <JuiceListbox
       className="min-w-[9em]"
       buttonClassName="py-2.5"
-      options={contactTypeOptions}
+      options={contactTypeOptions()}
       value={contactType}
       onChange={handleSelect}
     />
@@ -111,11 +111,11 @@ export default function Contact() {
               <Form.Item
                 name="subject"
                 label={t`Subject`}
-                initialValue={subjectOptions[0]}
+                initialValue={subjectOptions()[0]}
               >
                 <JuiceListbox
                   buttonClassName="py-2.5"
-                  options={subjectOptions}
+                  options={subjectOptions()}
                 />
               </Form.Item>
               <Form.Item
@@ -192,14 +192,14 @@ interface ListboxOption {
   value: string
   label: string
 }
-const contactTypeOptions: ListboxOption[] = [
+const contactTypeOptions = (): ListboxOption[] => [
   { value: 'email', label: t`Email` },
   { value: 'discord', label: t`Discord` },
   { value: 'twitter', label: t`Twitter` },
   { value: 'telegram', label: t`Telegram` },
 ]
 
-const subjectOptions: ListboxOption[] = [
+const subjectOptions = (): ListboxOption[] => [
   {
     value: 'project help',
     label: t`Get help planning or setting up my project.`,

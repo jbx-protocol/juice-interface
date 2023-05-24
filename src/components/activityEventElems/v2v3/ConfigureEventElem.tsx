@@ -1,55 +1,33 @@
 import { t, Trans } from '@lingui/macro'
-import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import RichNote from 'components/RichNote'
 import { BigNumber } from 'ethers'
-import { ConfigureEvent } from 'models/subgraph-entities/v2/configure'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 
-import FundingCycleDetails from '../../V2V3FundingCycleSection/FundingCycleDetails'
+import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { ProjectEventsQuery } from 'generated/graphql'
+import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
+import { useContext } from 'react'
+import { ActivityEvent } from '../ActivityElement'
 
 export default function ConfigureEventElem({
   event,
 }: {
-  event:
-    | Pick<
-        ConfigureEvent,
-        | 'id'
-        | 'timestamp'
-        | 'mustStartAtOrAfter'
-        | 'txHash'
-        | 'from'
-        | 'ballot'
-        | 'dataSource'
-        | 'discountRate'
-        | 'duration'
-        | 'mintingAllowed'
-        | 'pausePay'
-        | 'redeemPaused'
-        | 'burnPaused'
-        | 'transfersPaused'
-        | 'distributionsPaused'
-        | 'redemptionRate'
-        | 'ballotRedemptionRate'
-        | 'reservedRate'
-        | 'weight'
-        | 'shouldHoldFees'
-        | 'setTerminalsAllowed'
-        | 'setControllerAllowed'
-        | 'controllerMigrationAllowed'
-        | 'terminalMigrationAllowed'
-        | 'transfersPaused'
-        | 'useDataSourceForPay'
-        | 'useDataSourceForRedeem'
-        | 'useTotalOverflowForRedemptions'
-        | 'memo'
-      >
-    | undefined
+  event: ProjectEventsQuery['projectEvents'][0]['configureEvent']
 }) {
   if (!event) return null
+
+  const { primaryETHTerminal } = useContext(V2V3ProjectContext)
+
+  const { data: distributionLimit } = useProjectDistributionLimit({
+    projectId: event.projectId,
+    terminal: primaryETHTerminal,
+    configuration: event.configuration?.toString(),
+  })
 
   const fundingCycle: Partial<V2V3FundingCycle> = {
     duration: BigNumber.from(event.duration),
@@ -100,8 +78,8 @@ export default function ConfigureEventElem({
             fundingCycleMetadata={
               fundingCycleMetadata as V2V3FundingCycleMetadata
             }
-            distributionLimit={undefined}
-            distributionLimitCurrency={undefined}
+            distributionLimit={distributionLimit?.[0]}
+            distributionLimitCurrency={distributionLimit?.[1]}
             mintRateZeroAsUnchanged
           />
           {event.memo ? <RichNote className="mt-3" note={event.memo} /> : null}

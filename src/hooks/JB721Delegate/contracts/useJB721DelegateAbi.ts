@@ -1,7 +1,3 @@
-import {
-  JB721_DELEGATE_V1,
-  JB721_DELEGATE_V1_1,
-} from 'constants/delegateVersions'
 import { ContractInterface } from 'ethers'
 import { ContractJson } from 'models/contracts'
 import { JB721DelegateVersion } from 'models/nftRewards'
@@ -13,53 +9,34 @@ type JB721DelegateContractName =
   | 'IJBTiered721Delegate'
   | 'IJBTiered721DelegateProjectDeployer'
 
-/**
- * Get the NPM package "version string" for a given JB721Delegate version.
- * The version string is used to determine which npm package to import.
- * Inspect the package.json to learn more.
- */
-export function JB721DelegatePackageVersion(version: JB721DelegateVersion) {
-  return version === JB721_DELEGATE_V1
-    ? 'v1'
-    : version === JB721_DELEGATE_V1_1
-    ? 'v1-1'
-    : undefined
-}
-
-async function loadJB721DelegateJson(
+export async function loadJB721DelegateJson(
   contractName: JB721DelegateContractName,
   version: JB721DelegateVersion,
 ): Promise<ContractJson | undefined> {
-  const versionString = JB721DelegatePackageVersion(version)
-  if (!versionString) return
-  console.info(
-    'Loading JB721Delegate contract json',
-    versionString,
-    contractName,
-  )
+  console.info('Loading JB721Delegate contract json', version, contractName)
 
   // NOTE: imports are specified explicitly to avoid Webpack causing V8 to run out of memory and crash during compilation.
   if (contractName === 'JB721TieredGovernance') {
     return await import(
-      `@jbx-protocol/juice-721-delegate-${versionString}/out/JB721TieredGovernance.sol/JB721TieredGovernance.json`
+      `@jbx-protocol/juice-721-delegate-v${version}/out/JB721TieredGovernance.sol/JB721TieredGovernance.json`
     )
   }
 
   if (contractName === 'IJBTiered721DelegateStore') {
     return await import(
-      `@jbx-protocol/juice-721-delegate-${versionString}/out/IJBTiered721DelegateStore.sol/IJBTiered721DelegateStore.json`
+      `@jbx-protocol/juice-721-delegate-v${version}/out/IJBTiered721DelegateStore.sol/IJBTiered721DelegateStore.json`
     )
   }
 
   if (contractName === 'IJBTiered721Delegate') {
     return await import(
-      `@jbx-protocol/juice-721-delegate-${versionString}/out/IJBTiered721Delegate.sol/IJBTiered721Delegate.json`
+      `@jbx-protocol/juice-721-delegate-v${version}/out/IJBTiered721Delegate.sol/IJBTiered721Delegate.json`
     )
   }
 
   if (contractName === 'IJBTiered721DelegateProjectDeployer') {
     return await import(
-      `@jbx-protocol/juice-721-delegate-${versionString}/out/IJBTiered721DelegateProjectDeployer.sol/IJBTiered721DelegateProjectDeployer.json`
+      `@jbx-protocol/juice-721-delegate-v${version}/out/IJBTiered721DelegateProjectDeployer.sol/IJBTiered721DelegateProjectDeployer.json`
     )
   }
 }

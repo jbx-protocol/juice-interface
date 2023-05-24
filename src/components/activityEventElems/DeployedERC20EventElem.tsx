@@ -1,16 +1,11 @@
 import { t } from '@lingui/macro'
-import { DeployedERC20Event } from 'models/subgraph-entities/vX/deployed-erc20-event'
+import { ProjectEventsQuery } from 'generated/graphql'
 import { ActivityEvent } from './ActivityElement/ActivityElement'
 
 export default function DeployedERC20EventElem({
   event,
 }: {
-  event:
-    | Pick<
-        DeployedERC20Event,
-        'symbol' | 'id' | 'timestamp' | 'txHash' | 'from'
-      >
-    | undefined
+  event: ProjectEventsQuery['projectEvents'][0]['deployedERC20Event']
 }) {
   if (!event) return null
   return (

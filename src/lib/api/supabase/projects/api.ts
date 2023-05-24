@@ -71,7 +71,6 @@ export async function queryDBProjects(
 
   let query = supabase
     .select('*')
-    .order('pv', { ascending: false })
     .order(orderBy, { ascending })
     .range(page * pageSize, (page + 1) * pageSize)
 

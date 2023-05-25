@@ -15,6 +15,7 @@ import Paragraph from 'components/Paragraph'
 import { Parenthesis } from 'components/Parenthesis'
 import { StickerSelection } from 'components/Project/StickerSelection'
 import TooltipIcon from 'components/TooltipIcon'
+import { ProjectPreferences } from 'constants/projectPreferences.jsx'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
@@ -31,8 +32,6 @@ import { weightAmountPermyriad } from 'utils/v2v3/math'
 import { useNftRewardTiersToMint } from './hooks/useNftRewardTiersToMint.tsx'
 import { NftRewardCell } from './NftRewardCell'
 import { TCCheckboxContent } from './TCCheckboxContent'
-
-const MAX_IMAGES_PAYMENT_MEMO = 3
 
 export interface V2V3PayFormType {
   memo?: string
@@ -69,7 +68,7 @@ export const V2V3PayForm = ({
 
   const hasStickers = (stickerUrls ?? []).length > 0
   const canAddMoreStickers =
-    (stickerUrls ?? []).length < MAX_IMAGES_PAYMENT_MEMO
+    (stickerUrls ?? []).length < ProjectPreferences.MAX_IMAGES_PAYMENT_MEMO
 
   const tokensReceived = weightAmountPermyriad(
     fundingCycle?.weight,

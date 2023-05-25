@@ -128,6 +128,9 @@ msgstr ""
 msgid "Determines whether tokens will be minted by payments made through this address."
 msgstr ""
 
+msgid "Receive {0} tokens/1 ETH"
+msgstr ""
+
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
 msgstr ""
 
@@ -216,6 +219,9 @@ msgid "Staked balance"
 msgstr ""
 
 msgid "While enabled, the project owner can mint any amount of project tokens."
+msgstr ""
+
+msgid "Add payment"
 msgstr ""
 
 msgid "Create ERC-20"
@@ -3741,6 +3747,9 @@ msgid "Pay amount"
 msgstr ""
 
 msgid "CSV download failed."
+msgstr ""
+
+msgid "Pay Project"
 msgstr ""
 
 msgid "Enabling owner token minting isn't recommended as it allows the project owner to create unlimited tokens, which appears risky to supporters."

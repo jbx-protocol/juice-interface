@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/formItems/ProjectRedemptionRate'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { useCallback, useContext, useMemo } from 'react'
+import { JUICE_ORANGE } from 'constants/theme/colors'
+import { useCallback, useMemo } from 'react'
 import { CartesianGrid, Label, Line, LineChart, XAxis, YAxis } from 'recharts'
 
 const NUM_POINTS = 10
@@ -14,13 +14,8 @@ export const TokenRedemptionRateGraph = ({
   graphSize: number
   graphPad: number
 }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const axisProps = {
     domain: [0, 10],
-    stroke: colors.stroke.secondary,
     tick: false,
   }
 
@@ -60,13 +55,7 @@ export const TokenRedemptionRateGraph = ({
         <XAxis
           {...axisProps}
           dataKey="x"
-          label={
-            <Label
-              className="text-sm"
-              value={t`% tokens redeemed`}
-              fill={colors.text.primary}
-            />
-          }
+          label={<Label className="text-sm" value={t`% tokens redeemed`} />}
         />
         <YAxis
           {...axisProps}
@@ -77,7 +66,6 @@ export const TokenRedemptionRateGraph = ({
               transform="rotate(-90)"
               value={t`Token redeem value`}
               angle={-90}
-              fill={colors.text.primary}
             />
           }
         />
@@ -85,14 +73,14 @@ export const TokenRedemptionRateGraph = ({
           type="monotone"
           data={initialDataPoints}
           dataKey="y"
-          stroke={colors.stroke.secondary}
           strokeWidth={2}
+          stroke="#A3A3A3" // grey-400
           dot={false}
         />
         <Line
           type="monotone"
           dataKey="y"
-          stroke={colors.text.brand.primary}
+          stroke={JUICE_ORANGE}
           strokeWidth={3}
           dot={false}
         />

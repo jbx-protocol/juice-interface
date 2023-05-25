@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { Form, Input } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { ISSUE_ERC20_EXPLANATION } from 'components/Explanations'
+import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
 import { CV_V2, CV_V3 } from 'constants/cv'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/useTransactor'
@@ -12,7 +12,7 @@ import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 
 import { IssueErc20TokenTxArgs } from '../buttons/IssueErc20TokenButton'
-import TransactionModal from '../TransactionModal'
+import TransactionModal from './TransactionModal'
 
 /**
  * Return the appropriate issue erc20 token hook for the given project version [pv].

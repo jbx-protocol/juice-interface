@@ -5,7 +5,7 @@ import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/
 import { BallotStrategy } from 'models/ballot'
 import { useEffect, useState } from 'react'
 
-import { RECONFIG_RULES_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { RECONFIG_RULES_EXPLANATION } from 'components/strings'
 import { ballotStrategies } from 'constants/v1/ballotStrategies'
 
 export default function ReconfigurationStrategyDrawer({

@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
-import PayWarningModal from 'components/PayWarningModal'
+import PayWarningModal from 'components/modals/PayWarningModal'
 import {
   PayButtonProps,
   PayProjectFormContext,

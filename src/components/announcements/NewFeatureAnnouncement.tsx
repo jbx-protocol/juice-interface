@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { JuiceModalProps } from 'components/JuiceModal'
+import { JuiceModalProps } from 'components/modals/JuiceModal'
 import { Announcement } from './Announcement'
 
 export const NewFeatureAnnouncement: React.FC<

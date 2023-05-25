@@ -1,4 +1,4 @@
-import { JuiceModalProps } from 'components/JuiceModal'
+import { JuiceModalProps } from 'components/modals/JuiceModal'
 import { Wallet } from 'hooks/Wallet'
 import { NextRouter } from 'next/router'
 

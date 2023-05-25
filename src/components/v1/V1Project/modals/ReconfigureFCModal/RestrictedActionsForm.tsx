@@ -5,7 +5,7 @@ import {
   OWNER_MINTING_EXPLANATION,
   OWNER_MINTING_RISK,
   PAUSE_PAYMENTS_EXPLANATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+} from 'components/strings'
 import { useEffect, useState } from 'react'
 
 export type RestrictedActionsFormFields = {

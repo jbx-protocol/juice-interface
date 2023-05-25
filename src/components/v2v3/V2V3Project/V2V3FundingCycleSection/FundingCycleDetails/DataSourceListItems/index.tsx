@@ -3,11 +3,6 @@ import { Trans, t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import ExternalLink from 'components/ExternalLink'
-import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
-import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
-import { useContext } from 'react'
-import { formatBoolean } from 'utils/format/formatBoolean'
-import { helpPagePath } from 'utils/routes'
 import {
   DATASOURCE_EXPLANATION,
   NFT_DATASOURCE_EXPLANATION,
@@ -15,7 +10,12 @@ import {
   USE_DATASOURCE_FOR_REDEEM_EXPLANATION,
   USE_NFT_DATASOURCE_FOR_PAY_EXPLANATION,
   USE_NFT_DATASOURCE_FOR_REDEEM_EXPLANATION,
-} from '../../settingExplanations'
+} from 'components/strings'
+import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
+import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
+import { useContext } from 'react'
+import { formatBoolean } from 'utils/format/formatBoolean'
+import { helpPagePath } from 'utils/routes'
 import { FundingCycleListItem } from '../FundingCycleListItem'
 
 function DataSourceAddressValue({ address }: { address: string | undefined }) {

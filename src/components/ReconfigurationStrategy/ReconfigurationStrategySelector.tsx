@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import FormItemWarningText from 'components/FormItemWarningText'
 import ReconfigurationStrategyOption from 'components/ReconfigurationStrategy/ReconfigurationStrategyOption'
-import { RECONFIG_RULES_WARN } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { RECONFIG_RULES_WARN } from 'components/strings'
 import { BallotStrategy } from 'models/ballot'
 import { useState } from 'react'
 import { isEqualAddress } from 'utils/address'

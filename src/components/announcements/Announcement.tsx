@@ -3,7 +3,7 @@ import {
   JuiceModalProps,
   ModalOnCancelFn,
   ModalOnOkFn,
-} from 'components/JuiceModal'
+} from 'components/modals/JuiceModal'
 import { readNetwork } from 'constants/networks'
 import { AnnouncementsContext } from 'contexts/Announcements/AnnouncementsContext'
 import { useCallback, useContext } from 'react'

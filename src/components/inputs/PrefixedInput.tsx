@@ -1,4 +1,4 @@
-import { JuiceInput } from './inputs/JuiceTextInput'
+import { JuiceInput } from './JuiceTextInput'
 
 export default function PrefixedInput({
   prefix,

@@ -3,10 +3,10 @@ import { Col, Descriptions, Form, Row, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
+import TransactionModal from 'components/modals/TransactionModal'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
+import { REDEMPTION_RATE_EXPLANATION } from 'components/strings'
 import TooltipLabel from 'components/TooltipLabel'
-import TransactionModal from 'components/TransactionModal'
-import { REDEMPTION_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { JB721_DELEGATE_V3_2 } from 'constants/delegateVersions'
 import {
   IJB721Delegate_V3_2_INTERFACE_ID,

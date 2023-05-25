@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { ErrorBoundaryCallout } from 'components/ErrorBoundaryCallout'
+import { ErrorBoundaryCallout } from 'components/Callout/ErrorBoundaryCallout'
 import VolumeChart from 'components/VolumeChart'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'

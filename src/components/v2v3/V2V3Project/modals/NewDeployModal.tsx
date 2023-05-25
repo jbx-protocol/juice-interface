@@ -2,12 +2,12 @@ import { CheckCircleFilled } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import RichButton from 'components/buttons/RichButton'
+import ExternalLink from 'components/ExternalLink'
+import { IssueErc20TokenModal } from 'components/modals/IssueErc20TokenModal'
 import {
   ISSUE_ERC20_EXPLANATION,
   PROJECT_PAYER_ADDRESS_EXPLANATION,
-} from 'components/Explanations'
-import ExternalLink from 'components/ExternalLink'
-import { IssueErc20TokenModal } from 'components/modals/IssueErc20TokenModal'
+} from 'components/strings'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useDeployProjectPayerTx } from 'hooks/v2v3/transactor/useDeployProjectPayerTx'

@@ -1,5 +1,5 @@
 import { Tooltip } from 'antd'
-import CurrencySymbol from 'components/CurrencySymbol'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
 import { PRECISION_ETH } from 'constants/currency'
 import { BigNumber } from 'ethers'
 import { betweenZeroAndOne } from 'utils/bigNumbers'

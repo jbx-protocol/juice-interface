@@ -1,4 +1,4 @@
-import { SPLITS_PAYER_ADDRESS_EXPLANATION } from 'components/Explanations'
+import { SPLITS_PAYER_ADDRESS_EXPLANATION } from 'components/strings'
 import { LaunchSplitsPayerButton } from './LaunchSplitsPayerButton'
 
 export function SplitsPayerSection() {

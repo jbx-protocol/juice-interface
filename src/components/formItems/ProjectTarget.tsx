@@ -4,7 +4,7 @@ import { BigNumber } from 'ethers'
 
 import { Trans } from '@lingui/macro'
 
-import { DISTRIBUTION_LIMIT_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { DISTRIBUTION_LIMIT_EXPLANATION } from 'components/strings'
 import { CurrencyName } from 'constants/currency'
 import BudgetTargetInput from '../inputs/BudgetTargetInput'
 import { FormItemExt } from './formItemExt'

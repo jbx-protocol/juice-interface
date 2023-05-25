@@ -1,6 +1,6 @@
 import { plural } from '@lingui/macro'
 import { Button } from 'antd'
-import { PROJECT_PAYER_ADDRESS_EXPLANATION } from 'components/Explanations'
+import { PROJECT_PAYER_ADDRESS_EXPLANATION } from 'components/strings'
 import { PaymentAddressesModal } from 'components/v2v3/V2V3Project/modals/PaymentAddressesModal'
 import { LaunchProjectPayerButton } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer/PaymentAddressSection/LaunchProjectPayerButton'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'

@@ -5,9 +5,9 @@ import { formatWad } from 'utils/format/formatNumber'
 import { helpPagePath } from 'utils/routes'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { amountSubFee, formatFee } from 'utils/v2v3/math'
-import CurrencySymbol from './CurrencySymbol'
 import ExternalLink from './ExternalLink'
 import TooltipLabel from './TooltipLabel'
+import CurrencySymbol from './currency/CurrencySymbol'
 import ETHAmount from './currency/ETHAmount'
 
 export const FeeTooltipLabel = ({

@@ -5,10 +5,10 @@ import FormItemLabel from 'components/FormItemLabel'
 import FormItemWarningText from 'components/FormItemWarningText'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
-import { REDEMPTION_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { REDEMPTION_RATE_EXPLANATION } from 'components/strings'
 import { useState } from 'react'
-import NumberSlider from '../inputs/NumberSlider'
 import SwitchHeading from '../SwitchHeading'
+import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 
 export const DEFAULT_BONDING_CURVE_RATE_PERCENTAGE = 100
@@ -24,8 +24,8 @@ function BondingCurveRateExtra({
     <Space className="text-sm" direction="vertical" size="large">
       <p className="m-0">
         <Trans>
-          The redemption rate determines how token holders can burn their
-          tokens to reclaim a portion of the ETH not needed for payouts.
+          The redemption rate determines how token holders can burn their tokens
+          to reclaim a portion of the ETH not needed for payouts.
         </Trans>
       </p>
 

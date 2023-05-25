@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { formatWad } from 'utils/format/formatNumber'
 
-import CurrencySymbol from '../CurrencySymbol'
+import CurrencySymbol from './CurrencySymbol'
 
 // Takes an ETH amount and returns equiv in USD
 export default function ETHToUSD({

@@ -5,7 +5,7 @@ import { perbicentToPercent } from 'utils/format/formatNumber'
 import { Trans } from '@lingui/macro'
 
 import { CurrencyName } from 'constants/currency'
-import CurrencySwitch from '../CurrencySwitch'
+import CurrencySwitch from '../currency/CurrencySwitch'
 import FormattedNumberInput from './FormattedNumberInput'
 
 export default function BudgetTargetInput({

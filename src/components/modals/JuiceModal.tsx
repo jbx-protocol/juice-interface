@@ -5,8 +5,8 @@ import { Button } from 'antd'
 import useMobile from 'hooks/useMobile'
 import { PropsWithChildren, ReactNode, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import Loading from './Loading'
-import { Popup } from './Popup'
+import Loading from '../Loading'
+import { Popup } from '../Popup'
 
 type ModalSetOpenFn = (open: boolean) => void
 

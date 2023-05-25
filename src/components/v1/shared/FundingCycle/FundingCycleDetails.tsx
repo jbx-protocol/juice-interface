@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
 import { Descriptions, Tooltip } from 'antd'
-import CurrencySymbol from 'components/CurrencySymbol'
 import EtherscanLink from 'components/EtherscanLink'
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 import TooltipLabel from 'components/TooltipLabel'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
 import {
   CONTRIBUTOR_RATE_EXPLANATION,
   DISCOUNT_RATE_EXPLANATION,
@@ -11,7 +11,7 @@ import {
   RECONFIG_RULES_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
   RESERVED_RATE_EXPLANATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+} from 'components/strings'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'

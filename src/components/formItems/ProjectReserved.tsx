@@ -5,7 +5,7 @@ import FormItemWarningText from 'components/FormItemWarningText'
 import {
   CONTRIBUTOR_RATE_EXPLANATION,
   RESERVED_TOKENS_EXPLANATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+} from 'components/strings'
 import {
   FUNDING_CYCLE_WARNING_TEXT,
   RESERVED_RATE_WARNING_THRESHOLD_PERCENT,

@@ -5,14 +5,14 @@ import { formatFundingCycleDuration } from 'components/Create/utils/formatFundin
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import NumberSlider from 'components/inputs/NumberSlider'
-import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
 import {
   MINT_RATE_EXPLANATION,
   OWNER_MINTING_EXPLANATION,
   OWNER_MINTING_RISK,
   PAUSE_TRANSFERS_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+} from 'components/strings'
+import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
 import useMobile from 'hooks/useMobile'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'

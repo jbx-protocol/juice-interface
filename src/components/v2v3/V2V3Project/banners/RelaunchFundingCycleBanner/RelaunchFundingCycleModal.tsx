@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Form, Input, ModalProps } from 'antd'
-import TransactionModal from 'components/TransactionModal'
+import TransactionModal from 'components/modals/TransactionModal'
 import { readNetwork } from 'constants/networks'
 import {
   ETH_PAYOUT_SPLIT_GROUP,

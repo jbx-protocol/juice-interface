@@ -1,14 +1,14 @@
 import { t } from '@lingui/macro'
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
-import { useContext } from 'react'
 import {
   CONTROLLER_CONFIG_EXPLANATION,
   CONTROLLER_MIGRATION_EXPLANATION,
   HOLD_FEES_EXPLANATION,
   TERMINAL_CONFIG_EXPLANATION,
   TERMINAL_MIGRATION_EXPLANATION,
-} from '../../settingExplanations'
+} from 'components/strings'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
+import { useContext } from 'react'
 import { FundingCycleListItem } from '../FundingCycleListItem'
 import { AllowedValue } from './AllowedValue'
 import { HoldFeesValue } from './HoldFeesValue'

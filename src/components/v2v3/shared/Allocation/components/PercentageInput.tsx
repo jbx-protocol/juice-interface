@@ -1,4 +1,4 @@
-import CurrencySymbol from 'components/CurrencySymbol'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
 import NumberSlider from 'components/inputs/NumberSlider'
 import round from 'lodash/round'
 import { useCallback, useMemo, useState } from 'react'

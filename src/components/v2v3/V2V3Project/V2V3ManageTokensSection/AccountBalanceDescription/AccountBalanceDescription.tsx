@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import ManageTokensModal from 'components/ManageTokensModal'
 import { TokenAmount } from 'components/TokenAmount'
+import ManageTokensModal from 'components/modals/ManageTokensModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useERC20BalanceOf from 'hooks/ERC20/useERC20BalanceOf'

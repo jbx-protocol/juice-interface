@@ -1,4 +1,4 @@
-import { ProjectDashboard } from 'ProjectDashboard'
+import { ProjectDashboard } from 'components/ProjectDashboard'
 import { AppWrapper, SEO } from 'components/common'
 import { PV_V2 } from 'constants/pv'
 import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'

@@ -30,6 +30,7 @@ import {
 } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
 import { parseDBProjectJson, parseDBProjectsRow } from 'utils/sgDbProjects'
+
 import useSubgraphQuery from './useSubgraphQuery'
 
 interface ProjectsOptions {
@@ -316,28 +317,6 @@ function useProjectsOfParticipants(where: ProjectsOfParticipantsWhereQuery) {
   return {
     ...projectsQuery,
     isLoading: projectsQuery.isLoading || loadingParticipants,
-  }
-}
-
-export function useMyProjectsQuery(wallet: string | undefined) {
-  const projectsQuery = useSubgraphQuery(
-    wallet
-      ? {
-          entity: 'project',
-          keys: DEFAULT_PROJECT_ENTITY_KEYS,
-          where: {
-            key: 'owner',
-            operator: 'in',
-            value: [wallet],
-          },
-          orderBy: 'createdAt',
-          orderDirection: 'desc',
-        }
-      : null,
-  )
-
-  return {
-    ...projectsQuery,
   }
 }
 

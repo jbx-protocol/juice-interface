@@ -191,7 +191,7 @@ interface ProjectFilterOption {
 }
 
 const projectFilterOptions = (): ProjectFilterOption[] => [
-  { label: t`Total raised`, value: 'total_paid' },
+  { label: t`Total raised`, value: 'volume' },
   { label: t`Date created`, value: 'created_at' },
   { label: t`Current balance`, value: 'current_balance' },
   { label: t`Payments`, value: 'payments_count' },

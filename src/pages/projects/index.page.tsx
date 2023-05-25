@@ -71,7 +71,7 @@ function Projects() {
     setSearchTags(tags)
   }, [userAddress, router.query.tab, search, tags])
 
-  const [orderBy, setOrderBy] = useState<OrderByOption>('total_paid')
+  const [orderBy, setOrderBy] = useState<OrderByOption>('volume')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
   const [includeV2, setIncludeV2] = useState<boolean>(true)
   const [showArchived, setShowArchived] = useState<boolean>(false)

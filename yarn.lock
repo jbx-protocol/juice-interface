@@ -2961,9 +2961,9 @@
     "@openzeppelin/contracts" "^4.8.0"
     "@paulrberg/contracts" "^3.7.0"
 
-"@jbx-protocol/juice-ownable@git+https://github.com/jbx-protocol/juice-ownable.git":
+"@jbx-protocol/juice-ownable@https://github.com/jbx-protocol/juice-ownable":
   version "0.0.2"
-  resolved "git+https://github.com/jbx-protocol/juice-ownable.git#b2f98133c7bea013db967e8a204ce0d9cc06d21f"
+  resolved "https://github.com/jbx-protocol/juice-ownable#b2f98133c7bea013db967e8a204ce0d9cc06d21f"
   dependencies:
     "@jbx-protocol/juice-contracts-v3" "^2.0.2"
     "@openzeppelin/contracts" "^4.8.0"

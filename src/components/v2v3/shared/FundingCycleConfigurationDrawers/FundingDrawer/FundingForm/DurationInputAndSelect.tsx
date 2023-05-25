@@ -3,7 +3,7 @@ import { Form } from 'antd'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 
-import { DurationUnitsOption } from 'constants/time'
+import { DurationUnitsOption } from 'models/time'
 
 export default function DurationInputAndSelect() {
   return (

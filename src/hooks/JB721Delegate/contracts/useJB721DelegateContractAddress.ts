@@ -3,9 +3,7 @@ import { ForgeDeploy } from 'models/contracts'
 import { JB721DelegateVersion } from 'models/nftRewards'
 import { useEffect, useState } from 'react'
 
-export async function loadJB721DelegateDeployment(
-  version: JB721DelegateVersion,
-) {
+async function loadJB721DelegateDeployment(version: JB721DelegateVersion) {
   return (await import(
     `@jbx-protocol/juice-721-delegate-v${version}/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
   )) as ForgeDeploy

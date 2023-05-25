@@ -1,1 +1,1 @@
-export * from './TopSection'
+export { TopSection } from './TopSection'

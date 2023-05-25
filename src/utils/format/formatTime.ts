@@ -2,7 +2,7 @@ import { t } from '@lingui/macro'
 import { BigNumber, BigNumberish } from 'ethers'
 
 import { SECONDS_IN_DAY, SECONDS_IN_HOUR } from 'constants/numbers'
-import { DurationUnitsOption } from 'constants/time'
+import { DurationUnitsOption } from 'models/time'
 
 export function detailedTimeString({
   timeSeconds,

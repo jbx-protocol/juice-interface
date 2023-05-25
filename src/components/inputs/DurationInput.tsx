@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import { DurationUnitsOption } from 'constants/time'
+import { DurationUnitsOption } from 'models/time'
 import { ChangeEvent } from 'react'
 import { JuiceListbox } from './JuiceListbox'
 

@@ -18,7 +18,7 @@ import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721Delegate
 import { constants, utils } from 'ethers'
 import { useContext } from 'react'
 
-export function encodeJB721DelegateV3PayMetadata(
+function encodeJB721DelegateV3PayMetadata(
   metadata: JB721DELAGATE_V3_PAY_METADATA | undefined,
 ) {
   if (!metadata) return undefined
@@ -41,7 +41,7 @@ export function encodeJB721DelegateV3PayMetadata(
   return encoded
 }
 
-export function encodeJB721DelegateV3_1PayMetadata(
+function encodeJB721DelegateV3_1PayMetadata(
   metadata: JB721DELAGATE_V3_1_PAY_METADATA | undefined,
 ) {
   if (!metadata) return undefined
@@ -62,7 +62,7 @@ export function encodeJB721DelegateV3_1PayMetadata(
   return encoded
 }
 
-export function encodeJB721DelegateV3_2PayMetadata(
+function encodeJB721DelegateV3_2PayMetadata(
   metadata: JB721DELAGATE_V3_2_PAY_METADATA | undefined,
 ) {
   if (!metadata) return undefined

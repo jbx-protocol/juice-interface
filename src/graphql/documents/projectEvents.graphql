@@ -21,6 +21,11 @@ query ProjectEvents(
       amount
       note
       terminal
+      projectId
+      pv
+      project {
+        handle
+      }
     }
     burnEvent {
       id
@@ -29,6 +34,11 @@ query ProjectEvents(
       from
       holder
       amount
+      projectId
+      pv
+      project {
+        handle
+      }
     }
     configureEvent {
       id
@@ -60,6 +70,10 @@ query ProjectEvents(
       burnPaused
       distributionsPaused
       useTotalOverflowForRedemptions
+      projectId
+      project {
+        handle
+      }
     }
     deployedERC20Event {
       id
@@ -67,6 +81,11 @@ query ProjectEvents(
       txHash
       from
       symbol
+      projectId
+      pv
+      project {
+        handle
+      }
     }
     deployETHERC20ProjectPayerEvent {
       id
@@ -75,6 +94,10 @@ query ProjectEvents(
       from
       address
       memo
+      projectId
+      project {
+        handle
+      }
     }
     distributePayoutsEvent {
       id
@@ -86,6 +109,10 @@ query ProjectEvents(
       distributedAmount
       memo
       terminal
+      projectId
+      project {
+        handle
+      }
     }
     distributeReservedTokensEvent {
       id
@@ -95,6 +122,10 @@ query ProjectEvents(
       beneficiary
       beneficiaryTokenCount
       tokenCount
+      projectId
+      project {
+        handle
+      }
     }
     payEvent {
       id
@@ -106,6 +137,11 @@ query ProjectEvents(
       note
       feeFromV2Project
       terminal
+      projectId
+      pv
+      project {
+        handle
+      }
     }
     printReservesEvent {
       id
@@ -115,12 +151,21 @@ query ProjectEvents(
       beneficiary
       beneficiaryTicketAmount
       count
+      projectId
+      project {
+        handle
+      }
     }
     projectCreateEvent {
       id
       timestamp
       txHash
       from
+      projectId
+      pv
+      project {
+        handle
+      }
     }
     redeemEvent {
       id
@@ -133,6 +178,11 @@ query ProjectEvents(
       terminal
       metadata
       memo
+      projectId
+      pv
+      project {
+        handle
+      }
     }
     setFundAccessConstraintsEvent {
       id
@@ -141,6 +191,10 @@ query ProjectEvents(
       from
       distributionLimit
       distributionLimitCurrency
+      projectId
+      project {
+        handle
+      }
     }
     tapEvent {
       id
@@ -150,6 +204,10 @@ query ProjectEvents(
       beneficiary
       beneficiaryTransferAmount
       netTransferAmount
+      projectId
+      project {
+        handle
+      }
     }
     v1ConfigureEvent {
       id
@@ -165,6 +223,10 @@ query ProjectEvents(
       currency
       ticketPrintingIsAllowed
       payIsPaused
+      projectId
+      project {
+        handle
+      }
     }
   }
 }

@@ -26,8 +26,10 @@ function decodeJB721DelegateRedeemMetadata(
 
 export default function RedeemEventElem({
   event,
+  withProjectLink,
 }: {
   event: ProjectEventsQuery['projectEvents'][0]['redeemEvent']
+  withProjectLink?: boolean
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
 
@@ -45,6 +47,7 @@ export default function RedeemEventElem({
     <ActivityEvent
       event={event}
       header={t`Redeemed`}
+      withProjectLink={withProjectLink}
       subject={
         <div className="text-base font-medium">
           {redeemedTokenIds && redeemedTokenIds.length > 0 ? (

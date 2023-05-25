@@ -7,14 +7,17 @@ import { ActivityEvent } from './ActivityElement'
 
 export default function AddToBalanceEventElem({
   event,
+  withProjectLink,
 }: {
   event: ProjectEventsQuery['projectEvents'][0]['addToBalanceEvent']
+  withProjectLink?: boolean
 }) {
   if (!event) return null
 
   return (
     <ActivityEvent
       event={event}
+      withProjectLink={withProjectLink}
       header={t`Transferred ETH to project`}
       subject={
         <span className="text-base font-medium">

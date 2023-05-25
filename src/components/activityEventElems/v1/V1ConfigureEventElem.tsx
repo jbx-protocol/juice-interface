@@ -15,12 +15,15 @@ import {
 import { detailedTimeString } from 'utils/format/formatTime'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 
+import { PV_V1 } from 'constants/pv'
 import { ActivityEvent } from '../ActivityElement'
 
 export default function V1ConfigureEventElem({
   event,
+  withProjectLink,
 }: {
   event: ProjectEventsQuery['projectEvents'][0]['v1ConfigureEvent']
+  withProjectLink?: boolean
 }) {
   const { terminal } = useContext(V1ProjectContext)
 
@@ -35,6 +38,8 @@ export default function V1ConfigureEventElem({
   return (
     <ActivityEvent
       event={event}
+      withProjectLink={withProjectLink}
+      pv={PV_V1}
       header={t`Edited cycle`}
       subject={null}
       extra={

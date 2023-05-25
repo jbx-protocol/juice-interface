@@ -27,10 +27,10 @@ export type ProjectEventFilter =
       | 'v1ConfigureEvent'
     >
 
-type ProjectEventsQueryArgs = {
+export type ProjectEventsQueryArgs = {
   filter?: ProjectEventFilter
   pv?: PV
-  wallet?: string
+  from?: string
   projectId?: number
   skip?: number
   first?: number
@@ -40,7 +40,7 @@ export function useProjectEvents({
   filter,
   pv,
   projectId,
-  wallet,
+  from,
   first,
   skip,
 }: ProjectEventsQueryArgs) {
@@ -57,7 +57,12 @@ export function useProjectEvents({
       where: {
         ...(pv ? { pv } : {}),
         ...(projectId ? { projectId } : {}),
-        ...(wallet ? { wallet } : {}),
+        ...(from
+          ? {
+              // subgraph needs addresses to be lowercased
+              from: from.toLowerCase(),
+            }
+          : {}),
 
         // Always filter out projectEvents where these properties are not null. We have no cases for showing them in the UI and don't want them to pollute the query result
         mintTokensEvent: null,

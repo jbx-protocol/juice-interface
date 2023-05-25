@@ -1,9 +1,11 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { Button, Select, Tabs } from 'antd'
+import { Button, Tabs } from 'antd'
+import ActivityList from 'components/ActivityList'
 import EthereumAddress from 'components/EthereumAddress'
 import Grid from 'components/Grid'
 import { Etherscan } from 'components/icons/Etherscan'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import Paragraph from 'components/Paragraph'
 import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
@@ -40,8 +42,19 @@ function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
 }
 
 function ContributedList({ address }: { address: string }) {
+  const orderByOpts = (): { label: string; value: Participant_OrderBy }[] => [
+    {
+      label: t`Highest paid`,
+      value: Participant_OrderBy.volume,
+    },
+    {
+      label: t`Recent`,
+      value: Participant_OrderBy.lastPaidTimestamp,
+    },
+  ]
+
   const [orderBy, setOrderBy] = useState<Participant_OrderBy>(
-    Participant_OrderBy.volume,
+    orderByOpts()[0].value,
   )
 
   const { data, loading: contributionsLoading } = useWalletContributionsQuery({
@@ -85,14 +98,12 @@ function ContributedList({ address }: { address: string }) {
 
   return (
     <div>
-      <Select className="mb-6 w-44" value={orderBy} onChange={setOrderBy}>
-        <Select.Option value={Participant_OrderBy.volume}>
-          <Trans>Highest paid</Trans>
-        </Select.Option>
-        <Select.Option value={Participant_OrderBy.lastPaidTimestamp}>
-          <Trans>Recent</Trans>
-        </Select.Option>
-      </Select>
+      <JuiceListbox
+        className="mb-6 w-[240px]"
+        options={orderByOpts()}
+        value={orderByOpts().find(o => o.value === orderBy)}
+        onChange={v => setOrderBy(v.value)}
+      />
 
       <Grid>
         {contributions?.map(c => (
@@ -168,6 +179,11 @@ export function AccountDashboard({
   }, [router, signIn, wallet.userAddress])
 
   const items = [
+    {
+      label: t`Activity`,
+      key: 'activity',
+      children: <ActivityList from={address} />,
+    },
     {
       label: t`Contributions`,
       key: 'holding',

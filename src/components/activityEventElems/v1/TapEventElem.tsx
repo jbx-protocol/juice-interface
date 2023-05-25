@@ -9,12 +9,15 @@ import { ProjectEventsQuery } from 'generated/graphql'
 import useSubgraphQuery from 'hooks/useSubgraphQuery'
 import { isEqualAddress } from 'utils/address'
 
+import { PV_V1 } from 'constants/pv'
 import { ActivityEvent } from '../ActivityElement'
 
 export default function TapEventElem({
   event,
+  withProjectLink,
 }: {
   event: ProjectEventsQuery['projectEvents'][0]['tapEvent']
+  withProjectLink?: boolean
 }) {
   // Load individual DistributeToPayoutMod events, emitted by internal transactions of the Tap transaction
   const { data: payoutEvents } = useSubgraphQuery(
@@ -55,6 +58,8 @@ export default function TapEventElem({
           <ETHAmount amount={event.netTransferAmount} />
         </span>
       }
+      withProjectLink={withProjectLink}
+      pv={PV_V1}
       extra={
         <div>
           {payoutEvents?.map(e => (

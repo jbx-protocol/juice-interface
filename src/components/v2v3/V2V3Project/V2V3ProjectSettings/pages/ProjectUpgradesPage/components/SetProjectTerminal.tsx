@@ -42,7 +42,7 @@ export function SetProjectTerminal({
         <InfoCallout className="mb-5">
           <RequiredFlagsList />
           <Link
-            href={settingsPagePath('reconfigurefc', { projectId, handle })}
+            href={settingsPagePath('cycle', { projectId, handle })}
             legacyBehavior
           >
             <Button type="primary">

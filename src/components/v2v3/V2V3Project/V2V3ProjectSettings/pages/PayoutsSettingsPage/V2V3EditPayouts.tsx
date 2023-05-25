@@ -100,7 +100,7 @@ export const V2V3EditPayouts = ({
   const mustEditCycleText = (
     <Trans>
       You must{' '}
-      <Link href={settingsPagePath('reconfigurefc', { projectId, handle })}>
+      <Link href={settingsPagePath('cycle', { projectId, handle })}>
         Edit your Cycle
       </Link>{' '}
       to change your total payout amount.

@@ -1,17 +1,22 @@
+import { ChevronRightIcon } from '@heroicons/react/24/outline'
+import { Trans } from '@lingui/macro'
 import { Divider, Layout } from 'antd'
 import {
   V2V3SettingsPageKey,
   V2V3SettingsPageKeyTitleMap,
-} from 'components/v2v3/V2V3Project/V2V3ProjectSettings/V2V3ProjectSettings'
-import { useRouter } from 'next/router'
+} from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
+import Link from 'next/link'
 import { useMemo } from 'react'
+import { twJoin } from 'tailwind-merge'
+import { ProjectSettingsLayout } from './ProjectSettingsLayout'
+import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { ArchiveProjectSettingsPage } from './pages/ArchiveProjectSettingsPage'
 import { EditNftsPage } from './pages/EditNftsPage'
 import { GovernanceSettingsPage } from './pages/GovernanceSettingsPage'
-import { ProjectNftSettingsPage } from './pages/ProjectNftSettingsPage'
 import { PayoutsSettingsPage } from './pages/PayoutsSettingsPage'
 import { ProjectDetailsSettingsPage } from './pages/ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
 import { ProjectHandleSettingsPage } from './pages/ProjectHandleSettingsPage'
+import { ProjectNftSettingsPage } from './pages/ProjectNftSettingsPage'
 import { ProjectUpgradesPage } from './pages/ProjectUpgradesPage'
 import { ReconfigureFundingCycleSettingsPage } from './pages/ReconfigureFundingCycleSettingsPage'
 import { ReservedTokensSettingsPage } from './pages/ReservedTokensSettingsPage'
@@ -22,8 +27,8 @@ const SettingsPageComponents: {
   [k in V2V3SettingsPageKey]: () => JSX.Element | null
 } = {
   general: ProjectDetailsSettingsPage,
-  projecthandle: ProjectHandleSettingsPage,
-  reconfigurefc: ReconfigureFundingCycleSettingsPage,
+  handle: ProjectHandleSettingsPage,
+  cycle: ReconfigureFundingCycleSettingsPage,
   nfts: EditNftsPage,
   payouts: PayoutsSettingsPage,
   reservedtokens: ReservedTokensSettingsPage,
@@ -35,22 +40,61 @@ const SettingsPageComponents: {
   projectnft: ProjectNftSettingsPage,
 }
 
-const DEFAULT_SETTINGS_PAGE = 'general'
+function Breadcrumbs({
+  pageTitle,
+  settingsPageKey,
+  className,
+}: {
+  pageTitle: string
+  settingsPageKey: V2V3SettingsPageKey
+  className: string
+}) {
+  return (
+    <ul className={twJoin('flex items-center gap-2 text-sm', className)}>
+      <li>
+        <Link
+          href={useSettingsPagePath()}
+          className="text-secondary font-medium"
+        >
+          <Trans>Manage</Trans>
+        </Link>
+      </li>
 
-export function ProjectSettingsContent() {
-  const router = useRouter()
+      <ChevronRightIcon className="text-secondary h-3 w-3" />
 
-  const activeSettingsPage =
-    (router.query.page as V2V3SettingsPageKey) ?? DEFAULT_SETTINGS_PAGE
+      <li>
+        <Link
+          href={useSettingsPagePath(settingsPageKey)}
+          className="font-medium"
+        >
+          <Trans>{pageTitle}</Trans>
+        </Link>
+      </li>
+    </ul>
+  )
+}
+
+export function ProjectSettingsContent({
+  settingsPageKey,
+}: {
+  settingsPageKey: V2V3SettingsPageKey
+}) {
   const ActiveSettingsPage = useMemo(
-    () => SettingsPageComponents[activeSettingsPage],
-    [activeSettingsPage],
+    () => SettingsPageComponents[settingsPageKey],
+    [settingsPageKey],
   )
 
+  const pageTitle = V2V3SettingsPageKeyTitleMap[settingsPageKey]
+
   return (
-    <Layout className="bg-transparent pl-4">
+    <ProjectSettingsLayout>
+      <Breadcrumbs
+        pageTitle={pageTitle}
+        className="mb-6"
+        settingsPageKey={settingsPageKey}
+      />
       <h2 className="mb-0 font-heading text-2xl font-medium text-black dark:text-slate-100">
-        {V2V3SettingsPageKeyTitleMap[activeSettingsPage]}
+        {pageTitle}
       </h2>
 
       <Divider className="mt-3" />
@@ -58,6 +102,6 @@ export function ProjectSettingsContent() {
       <Layout.Content className="my-0">
         <ActiveSettingsPage />
       </Layout.Content>
-    </Layout>
+    </ProjectSettingsLayout>
   )
 }

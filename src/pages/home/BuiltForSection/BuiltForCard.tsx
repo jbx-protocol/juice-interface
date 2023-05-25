@@ -4,16 +4,14 @@ export function BuiltForCard({
   card,
   heading,
   subheading,
-  imageTranslateY,
 }: {
   card: 'daos' | 'crowdfunding' | 'nfts' | 'builders'
   heading: string | JSX.Element
   subheading: string | JSX.Element
-  imageTranslateY?: number
 }) {
   return (
     <div className="flex flex-col items-center">
-      <BuiltForBlobAndImage card={card} imageTranslateY={imageTranslateY} />
+      <BuiltForBlobAndImage card={card} />
       <h3 className="text-primary mt-5 whitespace-nowrap text-center text-2xl">
         {heading}
       </h3>

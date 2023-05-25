@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { useForm } from 'antd/lib/form/Form'
 import ETHAmount from 'components/currency/ETHAmount'
-import TransactionModal from 'components/modals/TransactionModal.jsx'
+import TransactionModal from 'components/modals/TransactionModal'
 import { NFT_PAYMENT_CONFIRMED_QUERY_PARAM } from 'components/NftRewards/NftPostPayModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'

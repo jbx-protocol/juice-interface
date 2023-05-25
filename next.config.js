@@ -108,7 +108,6 @@ const SECURITY_HEADERS = [
 
 const nextConfig = {
   staticPageGenerationTimeout: 90,
-  webpack5: true,
   webpack: config => {
     config.resolve.fallback = { fs: false, module: false }
     // Adds __DEV__ to the build to fix bug in apollo client `__DEV__ is not defined`.

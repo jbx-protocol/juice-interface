@@ -30,20 +30,16 @@ export function ConclusionSection() {
             <TickIconList />
 
             <div className="mt-5 flex flex-col flex-wrap gap-2 md:flex-row">
-              <Link href="/contact">
-                <a className="w-full lg:w-auto">
-                  <Button type="default" size="large" className="w-full">
-                    <Trans>Contact onboarding</Trans>
-                  </Button>
-                </a>
+              <Link href="/contact" className="w-full lg:w-auto">
+                <Button type="default" size="large" className="w-full">
+                  <Trans>Contact onboarding</Trans>
+                </Button>
               </Link>
 
-              <Link href="/create">
-                <a className="w-full lg:w-auto">
-                  <Button className="w-full" size="large" type="primary">
-                    <Trans>Create a project</Trans>
-                  </Button>
-                </a>
+              <Link href="/create" className="w-full lg:w-auto">
+                <Button className="w-full" size="large" type="primary">
+                  <Trans>Create a project</Trans>
+                </Button>
               </Link>
             </div>
           </div>

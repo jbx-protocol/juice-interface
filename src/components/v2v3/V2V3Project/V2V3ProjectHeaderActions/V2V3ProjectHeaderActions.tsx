@@ -46,7 +46,10 @@ export function V2V3ProjectHeaderActions() {
           />
         </Tooltip>
         {canReconfigure && (
-          <Link href={settingsPagePath('general', { handle, projectId })}>
+          <Link
+            href={settingsPagePath('general', { handle, projectId })}
+            legacyBehavior
+          >
             <Button icon={<SettingOutlined />}>
               <span>
                 <Trans>Settings</Trans>

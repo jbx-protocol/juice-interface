@@ -81,11 +81,9 @@ function ContributedList({ address }: { address: string }) {
               <Trans>You haven't contributed to any projects yet!</Trans>
             </p>
             <Link href="/projects">
-              <a>
-                <Button type="primary">
-                  <Trans>Explore projects</Trans>
-                </Button>
-              </a>
+              <Button type="primary">
+                <Trans>Explore projects</Trans>
+              </Button>
             </Link>
           </div>
         ) : (
@@ -132,11 +130,9 @@ function MyProjectsList({ address }: { address: string }) {
             </p>
 
             <Link href="/create">
-              <a>
-                <Button type="primary">
-                  <Trans>Create project</Trans>
-                </Button>
-              </a>
+              <Button type="primary">
+                <Trans>Create project</Trans>
+              </Button>
             </Link>
           </div>
         ) : (

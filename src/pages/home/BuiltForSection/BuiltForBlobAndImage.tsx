@@ -1,5 +1,4 @@
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import useMobile from 'hooks/useMobile'
 import Image from 'next/image'
 import { useContext } from 'react'
 import buildersImage from '/public/assets/images/home/why-juicebox/builders.webp'
@@ -25,19 +24,10 @@ export function BuiltForBlobAndImage({
 }) {
   const { forThemeOption } = useContext(ThemeContext)
 
-  const isMobile = useMobile()
-
   const blobSrc = forThemeOption?.({
     light: `/assets/images/home/why-juicebox/blobs-light/blob-${card}.png`,
     dark: `/assets/images/home/why-juicebox/blobs-dark/blob-${card}.png`,
   })
-
-  // Parallax style
-  const transformStyle = {
-    // TODO re-enable the below line when 'return to homepage' bug is fixed
-    // transform: `translateY(calc(-50% + ${imageTranslateY}px))`,
-    transformOrigin: 'center',
-  }
 
   return (
     <div className="relative h-[180px] w-[180px]">
@@ -55,13 +45,14 @@ export function BuiltForBlobAndImage({
           />
         ) : null}
       </div>
-      <div style={!isMobile ? transformStyle : undefined}>
+      <div>
         <Image
           src={images[card]}
           alt={card}
           style={{
             maxWidth: '100%',
             height: 'auto',
+            position: 'relative',
           }}
         />
       </div>

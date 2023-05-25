@@ -58,6 +58,7 @@ export function EditNftsPage() {
               </p>
               <Link
                 href={settingsPagePath('reconfigurefc', { projectId, handle })}
+                legacyBehavior
               >
                 <Button type="primary">
                   <Trans>Add NFTs to cycle</Trans>

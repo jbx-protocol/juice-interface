@@ -74,6 +74,7 @@ export function JuiceVideoThumbnailOrImage({
         )}
       </div>
       <JuiceVideoOrImgPreview
+        alt="NFT media"
         visible={previewVisible}
         src={props.src}
         onClose={() => setPreviewVisible(false)}

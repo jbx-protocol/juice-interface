@@ -101,7 +101,7 @@ const BackToAccountButton = ({
   className?: string
   walletAddress: string
 }) => (
-  <Link href={`/account/${walletAddress}`}>
+  <Link href={`/account/${walletAddress}`} legacyBehavior>
     <Button
       className={className}
       type="link"

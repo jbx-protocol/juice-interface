@@ -116,15 +116,9 @@ export function HowJuiceboxWorksSection() {
           </ExternalLink>
 
           <Link href="/create">
-            <a>
-              <XLButton
-                type="primary"
-                className="w-full md:w-auto"
-                size="large"
-              >
-                <Trans>Create a project</Trans>
-              </XLButton>
-            </a>
+            <XLButton type="primary" className="w-full md:w-auto" size="large">
+              <Trans>Create a project</Trans>
+            </XLButton>
           </Link>
         </div>
       </div>

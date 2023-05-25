@@ -13,7 +13,7 @@ import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import useMobile from 'hooks/useMobile'
 import { useRouter } from 'next/router'
 import { useContext, useMemo, useState } from 'react'
-import { pushMenuContent, v2v3ProjectRoute } from 'utils/routes'
+import { settingsPagePath, v2v3ProjectRoute } from 'utils/routes'
 import { BackToProjectButton } from '../../../buttons/BackToProjectButton'
 
 export type MenuKey = V2V3SettingsPageKey
@@ -87,7 +87,9 @@ export function V2V3ProjectSettings() {
     const key = item?.key as V2V3SettingsPageKey | undefined
     if (!key) return
 
-    pushMenuContent(router, key)
+    router.push(settingsPagePath(key, { projectId, handle }), undefined, {
+      scroll: false,
+    })
 
     if (isMobile) {
       setCollapsed(true)

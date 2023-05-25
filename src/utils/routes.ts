@@ -1,9 +1,5 @@
-import {
-  MenuKey,
-  V2V3SettingsPageKey,
-} from 'components/v2v3/V2V3Project/V2V3ProjectSettings/V2V3ProjectSettings'
+import { V2V3SettingsPageKey } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/V2V3ProjectSettings'
 import { BigNumber, BigNumberish } from 'ethers'
-import { NextRouter } from 'next/router'
 
 const HELP_PAGE_HOSTNAME = 'https://docs.juicebox.money'
 
@@ -36,25 +32,4 @@ export const settingsPagePath = (
     projectId,
     handle,
   })}/settings?page=${settingsPage}`
-}
-
-export const pushMenuContent = (
-  router: NextRouter,
-  contentKey: MenuKey,
-  options: { shallow?: boolean; scroll?: boolean } = {
-    shallow: true,
-    scroll: false,
-  },
-) => {
-  const { shallow, scroll } = options
-  router.push(
-    {
-      pathname: window.location.pathname,
-      query: {
-        page: contentKey,
-      },
-    },
-    undefined,
-    { shallow, scroll },
-  )
 }

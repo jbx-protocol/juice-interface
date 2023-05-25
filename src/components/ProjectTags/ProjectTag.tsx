@@ -37,11 +37,7 @@ export function ProjectTag({
   )
 
   if (isLink) {
-    return (
-      <Link href={`/projects?tab=all&tags=${tag}`}>
-        <a>{baseTag}</a>
-      </Link>
-    )
+    return <Link href={`/projects?tab=all&tags=${tag}`}>{baseTag}</Link>
   }
 
   return baseTag

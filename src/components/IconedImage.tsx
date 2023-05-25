@@ -1,27 +1,30 @@
+import { ImageProps } from 'next/image'
 import { ReactNode } from 'react'
-import { JuiceVideoThumbnailOrImage } from './NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
+import { JuiceVideoThumbnailOrImage } from './JuiceVideo/JuiceVideoThumbnailOrImage'
 
 /**
  * Shows an {@link Image} with a small icon in the top left.
  */
 export const IconedImage = ({
-  url,
+  src,
   widthClass,
   onIconClick,
   icon,
+  ...props
 }: {
-  url: string
+  src: string
   widthClass: string
   icon: ReactNode
   onIconClick?: VoidFunction
-}) => {
+} & ImageProps) => {
   return (
     <div className="relative py-4">
       <JuiceVideoThumbnailOrImage
-        src={url}
+        src={src}
         widthClass={widthClass}
         playIconPosition="hidden"
         showPreviewOnClick
+        {...props}
       />
       <div
         className="absolute top-0 right-0 cursor-pointer"

@@ -1064,6 +1064,9 @@ msgstr ""
 msgid "Start the V3 cycle as soon as the current V2 cycle ends <0>({0})</0>."
 msgstr ""
 
+msgid "until Cycle #{0}"
+msgstr ""
+
 msgid "Collection Name"
 msgstr ""
 
@@ -3678,6 +3681,9 @@ msgid "Default"
 msgstr ""
 
 msgid "WAGMI!"
+msgstr ""
+
+msgid "Current Cycle: #{currentCycleNumber}"
 msgstr ""
 
 msgid "Basic Token Rules"

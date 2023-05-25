@@ -16,7 +16,7 @@ export const ProjectDashboard = () => {
           <div className="mt-10 flex w-full gap-6">
             <PayProjectCard className="flex-1" />
             <NftRewardsCard />
-            <CurrentCycleCard className="flex-1" />
+            <CurrentCycleCard />
           </div>
           <ProjectTabs className="mt-16" />
         </div>

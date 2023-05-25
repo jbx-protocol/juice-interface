@@ -1,9 +1,15 @@
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { EthereumIcon } from 'components/icons/Ethereum'
+import { twMerge } from 'tailwind-merge'
 
-export const PayInput = () => {
+export const PayInput = ({ className }: { className?: string }) => {
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3">
+    <div
+      className={twMerge(
+        'flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3',
+        className,
+      )}
+    >
       <EthereumIcon />
       {/* // TODO: Remove placeholder with formik */}
       <input placeholder="0" className="flex-1 bg-transparent" />

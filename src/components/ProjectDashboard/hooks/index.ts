@@ -1,4 +1,5 @@
 export * from './useCoverPhoto'
+export * from './useCurrentCycleCard'
 export * from './usePayProjectCard'
 export * from './useProjectHeader'
 export * from './useProjectMetadata'

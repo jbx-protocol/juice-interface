@@ -1,0 +1,18 @@
+query PayoutModDistributionsForTapEvent($tapEvent: String) {
+  distributeToPayoutModEvents(
+    where: { tapEvent: $tapEvent }
+    orderBy: modCut
+    orderDirection: desc
+  ) {
+    id
+    timestamp
+    txHash
+    modProjectId
+    modBeneficiary
+    modCut
+    modAllocator
+    tapEvent {
+      id
+    }
+  }
+}

@@ -1,0 +1,8 @@
+query Participants($where: Participant_filter, $first: Int, $skip: Int) {
+  participants(where: $where, first: $first, skip: $skip) {
+    wallet {
+      id
+    }
+    projectId
+  }
+}

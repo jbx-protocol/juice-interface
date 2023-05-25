@@ -1,0 +1,16 @@
+query SplitDistributionsForDistributePayoutsEvent(
+  $distributePayoutsEvent: String
+) {
+  distributeToPayoutSplitEvents(
+    where: { distributePayoutsEvent: $distributePayoutsEvent }
+    orderBy: amount
+    orderDirection: desc
+  ) {
+    id
+    timestamp
+    txHash
+    amount
+    beneficiary
+    splitProjectId
+  }
+}

@@ -1,7 +1,8 @@
 import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import USDAmount from 'components/currency/USDAmount'
-import useSubgraphQuery from 'hooks/useSubgraphQuery'
+import { useProtocolLogQuery } from 'generated/graphql'
+import { client } from 'lib/apollo/client'
 import Link from 'next/link'
 import { formattedNum } from 'utils/format/formatNumber'
 
@@ -27,18 +28,11 @@ const Stat = ({
 }
 
 export function StatsSection() {
-  const { data: protocolLogs, isLoading } = useSubgraphQuery({
-    entity: 'protocolLog',
-    keys: [
-      'erc20Count',
-      'paymentsCount',
-      'projectsCount',
-      'volume',
-      'volumeUSD',
-    ],
+  const { data, loading } = useProtocolLogQuery({
+    client,
   })
 
-  const stats = protocolLogs?.[0]
+  const stats = data?.protocolLog
 
   return (
     <section className="bg-smoke-50 dark:bg-slate-700">
@@ -46,7 +40,7 @@ export function StatsSection() {
         <Stat
           value={formattedNum(stats?.projectsCount)}
           label={<Trans>Projects created</Trans>}
-          loading={isLoading}
+          loading={loading}
         />
         <Stat
           value={
@@ -63,12 +57,12 @@ export function StatsSection() {
             </Link>
           }
           label={<Trans>Total raised</Trans>}
-          loading={isLoading}
+          loading={loading}
         />
         <Stat
           value={formattedNum(stats?.paymentsCount)}
           label={<Trans>Payments made</Trans>}
-          loading={isLoading}
+          loading={loading}
         />
       </div>
     </section>

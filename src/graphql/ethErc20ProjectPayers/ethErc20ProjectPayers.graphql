@@ -1,0 +1,11 @@
+query ETHERC20ProjectPayers($where: ETHERC20ProjectPayer_filter) {
+  etherc20ProjectPayers(where: $where) {
+    address
+    beneficiary
+    directory
+    memo
+    metadata
+    preferAddToBalance
+    preferClaimedTokens
+  }
+}

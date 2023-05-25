@@ -4,12 +4,15 @@ import EthereumAddress from 'components/EthereumAddress'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2V3ProjectLink from 'components/v2v3/shared/V2V3ProjectLink'
 import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
+import { PV_V1 } from 'constants/pv'
 import { getAddress } from 'ethers/lib/utils'
-import { ProjectEventsQuery } from 'generated/graphql'
-import useSubgraphQuery from 'hooks/useSubgraphQuery'
+import {
+  ProjectEventsQuery,
+  usePayoutModDistributionsForTapEventQuery,
+} from 'generated/graphql'
 import { isEqualAddress } from 'utils/address'
 
-import { PV_V1 } from 'constants/pv'
+import { client } from 'lib/apollo/client'
 import { ActivityEvent } from '../ActivityElement'
 
 export default function TapEventElem({
@@ -20,32 +23,12 @@ export default function TapEventElem({
   withProjectLink?: boolean
 }) {
   // Load individual DistributeToPayoutMod events, emitted by internal transactions of the Tap transaction
-  const { data: payoutEvents } = useSubgraphQuery(
-    event?.id
-      ? {
-          entity: 'distributeToPayoutModEvent',
-          keys: [
-            'id',
-            'timestamp',
-            'txHash',
-            'modProjectId',
-            'modBeneficiary',
-            'modCut',
-            'modAllocator',
-            {
-              entity: 'tapEvent',
-              keys: ['id'],
-            },
-          ],
-          orderDirection: 'desc',
-          orderBy: 'modCut',
-          where: {
-            key: 'tapEvent',
-            value: event.id,
-          },
-        }
-      : null,
-  )
+  const { data } = usePayoutModDistributionsForTapEventQuery({
+    client,
+    variables: {
+      tapEvent: event?.id ?? null,
+    },
+  })
 
   if (!event) return null
 
@@ -62,7 +45,7 @@ export default function TapEventElem({
       pv={PV_V1}
       extra={
         <div>
-          {payoutEvents?.map(e => (
+          {data?.distributeToPayoutModEvents.map(e => (
             <div
               key={e.id}
               className="flex items-baseline justify-between text-sm"

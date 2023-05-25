@@ -67,7 +67,7 @@ interface DurationOption {
   value: DurationUnitsOption
 }
 
-const durationOptions = (): DurationOption[] => [
+export const durationOptions = (): DurationOption[] => [
   { label: t`Days`, value: 'days' },
   { label: t`Hours`, value: 'hours' },
   { label: t`Minutes`, value: 'minutes' },

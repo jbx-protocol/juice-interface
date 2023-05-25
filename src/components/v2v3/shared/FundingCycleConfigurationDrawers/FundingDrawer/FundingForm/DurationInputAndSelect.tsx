@@ -1,9 +1,8 @@
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
+import { durationOptions } from 'components/inputs/DurationInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
-
-import { DurationUnitsOption } from 'models/time'
 
 export default function DurationInputAndSelect() {
   return (
@@ -20,21 +19,9 @@ export default function DurationInputAndSelect() {
         <JuiceListbox
           className="h-8 min-w-[125px]"
           buttonClassName="py-1.5"
-          options={DURATION_UNIT_OPTIONS_FC}
+          options={durationOptions()}
         />
       </Form.Item>
     </div>
   )
 }
-
-interface DurationUnitOptionFC {
-  value: DurationUnitsOption
-  label: string
-}
-
-export const DURATION_UNIT_OPTIONS_FC: DurationUnitOptionFC[] = [
-  { value: 'days', label: t`Days` },
-  { value: 'hours', label: t`Hours` },
-  { value: 'minutes', label: t`Minutes` },
-  { value: 'seconds', label: t`Seconds` },
-]

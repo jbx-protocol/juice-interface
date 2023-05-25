@@ -78,7 +78,7 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
             value={project.paymentsCount}
           />
           <Statistic
-            name={<Trans>Last 7 days</Trans>}
+            name={<Trans>Last 30 days</Trans>}
             value={<span className="text-melon-600">{percentGainText}</span>}
           />
         </div>

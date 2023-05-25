@@ -2849,9 +2849,6 @@ msgstr ""
 msgid "Cycle duration"
 msgstr ""
 
-msgid "Last 7 days"
-msgstr ""
-
 msgid "Export payouts CSV"
 msgstr ""
 
@@ -4020,6 +4017,9 @@ msgid "ETH currently available to send to the payout recipients below (before th
 msgstr ""
 
 msgid "You will receive {0}<0/>"
+msgstr ""
+
+msgid "Last 30 days"
 msgstr ""
 
 msgid "Your project's NFTs."

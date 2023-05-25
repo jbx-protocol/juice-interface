@@ -46,7 +46,6 @@ export const ProjectHeader = () => {
           <HeaderStat title={t`Last 7 days`} stat={`${last7DaysPercent}%`} />
         </div>
       </div>
-      <div></div>
     </div>
   )
 }

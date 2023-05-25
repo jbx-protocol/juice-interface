@@ -1,4 +1,3 @@
-import { juiceTheme } from 'constants/theme'
 import { ThemeOption } from 'constants/theme/themeOption'
 import type { ThemeContextType } from 'contexts/Theme/ThemeContext'
 import { useLayoutEffect, useState } from 'react'
@@ -44,7 +43,6 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
 
   return {
     themeOption: currentThemeOption,
-    theme: juiceTheme(currentThemeOption),
     forThemeOption: map => map[currentThemeOption],
     setThemeOption: (themeOption: ThemeOption) => {
       setCurrentThemeOption(themeOption)

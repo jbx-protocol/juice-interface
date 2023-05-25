@@ -1,12 +1,11 @@
 import { t, Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/CurrencySymbol'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
+import { JUICE_ORANGE } from 'constants/theme/colors'
 import { PV } from 'models/pv'
 import moment from 'moment'
-import { SVGProps, useContext, useEffect, useMemo, useState } from 'react'
+import { SVGProps, useEffect, useMemo, useState } from 'react'
 import {
-  CartesianGrid,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -36,10 +35,6 @@ export default function VolumeChart({
   projectId: number | undefined
   pv: PV
 }) {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [events, setEvents] = useState<EventRef[]>([])
   // const [blockRefs, setBlockRefs] = useState<BlockRef[]>([])
   const [loading, setLoading] = useState<boolean>()
@@ -97,8 +92,8 @@ export default function VolumeChart({
   }, [duration])
 
   const axisStyle: SVGProps<SVGTextElement> = {
-    fontSize: 11,
-    fill: colors.text.tertiary,
+    fontSize: '0.75rem',
+    fill: '#A3A3A3', // grey-400
     visibility: events?.length ? 'visible' : 'hidden',
   }
 
@@ -170,11 +165,6 @@ export default function VolumeChart({
             className={classNames(loading ? 'opacity-50' : '')}
             data={events}
           >
-            <CartesianGrid
-              className="pl-48"
-              stroke={colors.stroke.tertiary}
-              strokeDasharray="4 2"
-            />
             {showGraph === 'balance' && (
               <Line
                 dot={props => {
@@ -192,7 +182,6 @@ export default function VolumeChart({
                         x2="0"
                         y2={height - 35 + 'px'}
                         strokeWidth={4}
-                        stroke={colors.stroke.secondary}
                       />
                     </g>
                   ) : (
@@ -200,7 +189,6 @@ export default function VolumeChart({
                   )
                 }}
                 activeDot={false}
-                stroke={colors.stroke.primary}
                 strokeWidth={0}
                 dataKey="previousBalance"
               />
@@ -208,7 +196,7 @@ export default function VolumeChart({
             <Line
               dot={false}
               connectNulls
-              stroke={colors.text.brand.primary}
+              stroke={JUICE_ORANGE}
               strokeWidth={2}
               type="monotone"
               dataKey="value"
@@ -216,7 +204,7 @@ export default function VolumeChart({
             />
             <YAxis
               axisLine={false}
-              stroke={colors.stroke.tertiary}
+              stroke="#CFD9FA" // grey-400
               type="number"
               dataKey="value"
               domain={domain}
@@ -229,7 +217,7 @@ export default function VolumeChart({
             <XAxis
               axisLine={false}
               tickSize={4}
-              stroke={colors.stroke.tertiary}
+              stroke="#CFD9FA" // grey-400
               ticks={xTicks}
               tickCount={xTicks.length}
               tick={props => {
@@ -249,7 +237,6 @@ export default function VolumeChart({
               interval={2}
             />
             <Tooltip
-              cursor={{ stroke: colors.stroke.secondary }}
               content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
 

@@ -6,11 +6,10 @@ import { RewardImage } from 'components/Create/components/RewardImage'
 import { JuiceVideoPreview } from 'components/JuiceVideo/JuiceVideoPreview'
 import Loading from 'components/Loading'
 import { CreateButton } from 'components/buttons/CreateButton'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useContentType } from 'hooks/useContentType'
 import { FormItemInput } from 'models/formItemInput'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
-import { ReactNode, useCallback, useContext, useState } from 'react'
+import { ReactNode, useCallback, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { percentFromUploadProgressEvent } from 'utils/ipfs'
 import { fileTypeIsVideo } from 'utils/nftRewards'
@@ -43,10 +42,6 @@ interface UploadNoStyleProps
 }
 
 export const UploadNoStyle = ({ value, ...props }: UploadNoStyleProps) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
-
   const [_uploadUrl, _setUploadUrl] = useState<string>()
   const [isUploading, setIsUploading] = useState<boolean>(false)
   const [percent, setPercent] = useState<number | undefined>(undefined)
@@ -126,7 +121,7 @@ export const UploadNoStyle = ({ value, ...props }: UploadNoStyleProps) => {
       <div className="margin-auto">
         <Progress
           width={48}
-          strokeColor={colors.background.action.primary}
+          strokeColor="#748EED" // bluebs-400
           type="circle"
           percent={percent}
           format={percent => (

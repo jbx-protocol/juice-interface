@@ -1,9 +1,8 @@
-import { Progress, Tooltip } from 'antd'
-import { BigNumber } from 'ethers'
-
 import { t } from '@lingui/macro'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { useContext, useMemo, useState } from 'react'
+import { Progress, Tooltip } from 'antd'
+import { JUICE_ORANGE } from 'constants/theme/colors'
+import { BigNumber } from 'ethers'
+import { useMemo, useState } from 'react'
 import { fracDiv } from 'utils/format/formatNumber'
 
 const TargetIndicatorLine = () => (
@@ -16,9 +15,7 @@ const ProgressWithOverflow = ({
   percentOverflow: number
 }) => {
   const [showTooltips, setShowTooltips] = useState(false)
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
+
   return (
     <div
       className="flex items-center pb-2"
@@ -38,7 +35,7 @@ const ProgressWithOverflow = ({
           }}
           percent={100}
           showInfo={false}
-          strokeColor={colors.text.brand.primary}
+          strokeColor={JUICE_ORANGE}
         />
       </Tooltip>
 
@@ -56,7 +53,7 @@ const ProgressWithOverflow = ({
           }}
           percent={100}
           showInfo={false}
-          strokeColor={colors.text.brand.primary}
+          strokeColor={JUICE_ORANGE}
         />
       </Tooltip>
     </div>
@@ -64,14 +61,11 @@ const ProgressWithOverflow = ({
 }
 
 const ProgressNoOverflow = ({ percentPaid }: { percentPaid: number }) => {
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   return (
     <Progress
       percent={percentPaid ? Math.max(percentPaid, 1) : 0}
       showInfo={false}
-      strokeColor={colors.text.brand.primary}
+      strokeColor={JUICE_ORANGE}
     />
   )
 }

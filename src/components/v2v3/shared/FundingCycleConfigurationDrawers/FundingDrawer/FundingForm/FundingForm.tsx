@@ -4,6 +4,7 @@ import ExternalLink from 'components/ExternalLink'
 import FormItemWarningText from 'components/FormItemWarningText'
 import SwitchHeading from 'components/SwitchHeading'
 import { ItemNoInput } from 'components/formItems/ItemNoInput'
+import { durationOptions } from 'components/inputs/DurationInput'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
@@ -37,9 +38,7 @@ import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { SerializedV2V3FundAccessConstraint } from 'utils/v2v3/serializers'
 import { DistributionSplitsSection } from './DistributionSplitsSection'
-import DurationInputAndSelect, {
-  DURATION_UNIT_OPTIONS_FC,
-} from './DurationInputAndSelect'
+import DurationInputAndSelect from './DurationInputAndSelect'
 import { FundingCycleExplainerCollapse } from './FundingCycleExplainerCollapse'
 
 type FundingFormFields = {
@@ -158,9 +157,7 @@ export function FundingForm({
     const durationUnit = deriveDurationUnit(durationSeconds)
 
     fundingForm.setFieldsValue({
-      durationUnit: DURATION_UNIT_OPTIONS_FC.find(
-        v => v.value === durationUnit,
-      ),
+      durationUnit: durationOptions().find(v => v.value === durationUnit),
       duration: secondsToOtherUnit({
         duration: durationSeconds,
         unit: durationUnit,
@@ -197,7 +194,7 @@ export function FundingForm({
       }
 
       const duration = fields?.duration ? parseInt(fields?.duration) : 0
-      const durationUnit = fields?.durationUnit ?? DURATION_UNIT_OPTIONS_FC[0]
+      const durationUnit = fields?.durationUnit ?? durationOptions()[0]
 
       const durationInSeconds = otherUnitToSeconds({
         duration: duration,

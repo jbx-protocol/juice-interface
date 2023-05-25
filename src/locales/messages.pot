@@ -1631,6 +1631,9 @@ msgstr ""
 msgid "{0} for you"
 msgstr ""
 
+msgid "You don't own any projects."
+msgstr ""
+
 msgid "While enabled, NFTs can be minted when this project receives a payment."
 msgstr ""
 
@@ -2094,6 +2097,9 @@ msgid "Are you sure you want to unwatch all projects? You will no longer be noti
 msgstr ""
 
 msgid "Project token beneficiary address"
+msgstr ""
+
+msgid "This account doesn't own any projects yet."
 msgstr ""
 
 msgid "Leave this blank to make your currently connected wallet the project owner. Fill this out with an Ethereum address to make that address this project's owner."
@@ -3183,6 +3189,9 @@ msgid "All {tokensText} will go to the project owner:"
 msgstr ""
 
 msgid "Customize your public facing profile and other details."
+msgstr ""
+
+msgid "Projects owned"
 msgstr ""
 
 msgid "Transfer {tokenTextShort}"

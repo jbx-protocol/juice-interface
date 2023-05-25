@@ -29,7 +29,7 @@ export const ProjectHeader = () => {
       </div>
 
       <div>
-        <h1 className="mb-0 text-4xl font-medium">{title}</h1>
+        <h1 className="mb-0 font-heading text-4xl font-medium">{title}</h1>
       </div>
       <div className="flex justify-between">
         <div className="flex flex-col gap-7">

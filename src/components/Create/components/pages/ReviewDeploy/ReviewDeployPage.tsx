@@ -5,7 +5,6 @@ import { Callout } from 'components/Callout'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/TransactionModal'
-import { ConnectKitButton } from 'connectkit'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
 import useMobile from 'hooks/useMobile'
 import { useModal } from 'hooks/useModal'
@@ -59,7 +58,7 @@ export const ReviewDeployPage = () => {
   useSetCreateFurthestPageReached('reviewDeploy')
   const { goToPage } = useContext(WizardContext)
   const isMobile = useMobile()
-  const { chainUnsupported, changeNetworks, isConnected } = useWallet()
+  const { chainUnsupported, changeNetworks, isConnected, connect } = useWallet()
   const router = useRouter()
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
   const termsAccepted = Form.useWatch('termsAccepted', form)
@@ -89,6 +88,10 @@ export const ReviewDeployPage = () => {
       await changeNetworks()
       return
     }
+    if (!isConnected) {
+      await connect()
+      return
+    }
 
     await deployProject({
       onProjectDeployed: deployedProjectId =>
@@ -96,7 +99,14 @@ export const ReviewDeployPage = () => {
           shallow: true,
         }),
     })
-  }, [chainUnsupported, changeNetworks, deployProject, router])
+  }, [
+    chainUnsupported,
+    changeNetworks,
+    connect,
+    deployProject,
+    isConnected,
+    router,
+  ])
 
   const [activeKey, setActiveKey] = useState<ReviewDeployKey[]>(
     !isMobile ? [ReviewDeployKey.ProjectDetails] : [],
@@ -175,47 +185,37 @@ export const ReviewDeployPage = () => {
           <RulesReview />
         </CreateCollapse.Panel>
       </CreateCollapse>
-      <ConnectKitButton.Custom>
-        {({ show }) => {
-          return (
-            <Form
-              form={form}
-              initialValues={{ termsAccepted: false }}
-              onFinish={isConnected ? onFinish : show}
-              className="mt-8 flex flex-col"
-            >
-              <Callout.Info noIcon collapsible={false}>
-                <div className="flex gap-4">
-                  <Form.Item
-                    noStyle
-                    name="termsAccepted"
-                    valuePropName="checked"
-                  >
-                    <Checkbox />
-                  </Form.Item>
-                  <div>
-                    <Trans>
-                      I have read and accept the{' '}
-                      <ExternalLink href={TERMS_OF_SERVICE_URL}>
-                        Terms of Service
-                      </ExternalLink>{' '}
-                      and{' '}
-                      <ExternalLink href={helpPagePath(`/dev/learn/risks`)}>
-                        the risks
-                      </ExternalLink>
-                      .
-                    </Trans>
-                  </div>
-                </div>
-              </Callout.Info>
-              <Wizard.Page.ButtonControl
-                isNextLoading={isDeploying}
-                isNextEnabled={isNextEnabled}
-              />
-            </Form>
-          )
-        }}
-      </ConnectKitButton.Custom>
+      <Form
+        form={form}
+        initialValues={{ termsAccepted: false }}
+        onFinish={onFinish}
+        className="mt-8 flex flex-col"
+      >
+        <Callout.Info noIcon collapsible={false}>
+          <div className="flex gap-4">
+            <Form.Item noStyle name="termsAccepted" valuePropName="checked">
+              <Checkbox />
+            </Form.Item>
+            <div>
+              <Trans>
+                I have read and accept the{' '}
+                <ExternalLink href={TERMS_OF_SERVICE_URL}>
+                  Terms of Service
+                </ExternalLink>{' '}
+                and{' '}
+                <ExternalLink href={helpPagePath(`/dev/learn/risks`)}>
+                  the risks
+                </ExternalLink>
+                .
+              </Trans>
+            </div>
+          </div>
+        </Callout.Info>
+        <Wizard.Page.ButtonControl
+          isNextLoading={isDeploying}
+          isNextEnabled={isNextEnabled}
+        />
+      </Form>
 
       <div className="flex flex-col gap-4 pt-20 text-grey-400 dark:text-slate-200">
         <div>

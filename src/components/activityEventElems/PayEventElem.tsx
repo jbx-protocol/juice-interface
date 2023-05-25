@@ -8,14 +8,17 @@ import { ActivityEvent } from './ActivityElement'
 
 export default function PayEventElem({
   event,
+  withProjectLink,
 }: {
   event: ProjectEventsQuery['projectEvents'][0]['payEvent']
+  withProjectLink?: boolean
 }) {
   if (!event) return null
 
   return (
     <ActivityEvent
       event={event}
+      withProjectLink={withProjectLink}
       header={t`Paid`}
       subject={
         <span className="text-base font-medium">

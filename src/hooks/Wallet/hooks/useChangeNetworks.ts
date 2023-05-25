@@ -1,20 +1,24 @@
-import { readNetwork } from 'constants/networks'
+import { useSetChain } from '@web3-onboard/react'
 import { BigNumber } from 'ethers'
 import { useCallback } from 'react'
-import { useSwitchNetwork } from 'wagmi'
+import { unpadLeadingZerosString } from 'utils/bigNumbers'
+
+import { readNetwork } from 'constants/networks'
 
 export function useChangeNetworks() {
-  const { chains, switchNetwork } = useSwitchNetwork()
+  const [{ chains }, setChain] = useSetChain()
 
   const changeNetworks = useCallback(async () => {
     const chain = chains.find(c => BigNumber.from(c.id).eq(readNetwork.chainId))
-
     if (!chain) {
       console.error('FATAL: Chain not found')
       throw new Error('FATAL: Chain not found')
     }
-    return switchNetwork?.(chain.id)
-  }, [chains, switchNetwork])
+    return await setChain({
+      chainId: unpadLeadingZerosString(chain.id),
+      chainNamespace: chain.namespace,
+    })
+  }, [chains, setChain])
 
   return changeNetworks
 }

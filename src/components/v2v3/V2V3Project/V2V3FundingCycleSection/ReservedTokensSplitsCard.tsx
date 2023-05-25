@@ -139,6 +139,7 @@ export default function ReservedTokensSplitsCard({
                   projectId,
                   handle,
                 })}
+                legacyBehavior
               >
                 <Button
                   className="mb-4"

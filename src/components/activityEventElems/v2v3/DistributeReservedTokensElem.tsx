@@ -1,18 +1,21 @@
 import { Trans } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
+import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
+import { PV_V2 } from 'constants/pv'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { ProjectEventsQuery } from 'generated/graphql'
 import useSubgraphQuery from 'hooks/useSubgraphQuery'
 import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-
 import { ActivityEvent } from '../ActivityElement'
 
 export default function DistributeReservedTokensEventElem({
   event,
+  withProjectLink,
 }: {
   event: ProjectEventsQuery['projectEvents'][0]['distributeReservedTokensEvent']
+  withProjectLink?: boolean
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
 
@@ -45,6 +48,8 @@ export default function DistributeReservedTokensEventElem({
   return (
     <ActivityEvent
       event={event}
+      withProjectLink={withProjectLink}
+      pv={PV_V2}
       header={
         <Trans>
           Sent reserved{' '}
@@ -70,11 +75,10 @@ export default function DistributeReservedTokensEventElem({
           {distributeEvents?.map(e => (
             <div key={e.id} className="flex items-baseline justify-between">
               <div>
-                <EthereumAddress
+                <JuiceboxAccountLink
                   className="text-grey-900 dark:text-slate-100"
                   address={e.beneficiary}
                 />
-                :
               </div>
 
               <div className="text-sm text-grey-500 dark:text-grey-300">

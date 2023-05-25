@@ -10,8 +10,8 @@ import {
   JB721_DELEGATE_V3_2,
 } from 'constants/delegateVersions'
 import {
-  IJB721Delegate_V3_2_INTERFACE_ID,
   IJB721Delegate_V3_INTERFACE_ID,
+  IJBTiered721Delegate_V3_2_INTERFACE_ID,
 } from 'constants/nftRewards'
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
@@ -70,7 +70,7 @@ export function encodeJB721DelegateV3_2PayMetadata(
   const args = [
     constants.HashZero,
     constants.HashZero,
-    IJB721Delegate_V3_2_INTERFACE_ID,
+    IJBTiered721Delegate_V3_2_INTERFACE_ID,
     metadata.allowOverspending ?? DEFAULT_ALLOW_OVERSPENDING,
     metadata.tierIdsToMint,
   ]

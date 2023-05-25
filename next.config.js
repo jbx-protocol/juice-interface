@@ -11,7 +11,6 @@ const WALLET_CONNECT_URLS = [
   'https://*.walletconnect.com',
   'https://*.walletconnect.org',
   'wss://*.walletconnect.org',
-  'wss://*.walletconnect.com',
 ]
 
 const INFURA_IPFS_URLS = [
@@ -23,7 +22,6 @@ const SCRIPT_SRC = [
   'https://*.juicebox.money',
   'https://static.hotjar.com',
   'https://script.hotjar.com',
-  'https://cdn.jsdelivr.net/npm/@ledgerhq/connect-kit@1',
   // Not working as unsafe-eval is required for metamask
   // `'sha256-kZ9E6/oLrki51Yx03/BugStfFrPlm8hjaFbaokympXo='`, // hotjar
   `'unsafe-eval'`, // hotjar
@@ -63,7 +61,6 @@ const CONNECT_SRC = [
   'https://*.safe.global',
   'https://*.snapshot.org',
   'https://*.wallet.coinbase.com',
-  'wss://www.walletlink.org/rpc',
   ...WALLET_CONNECT_URLS,
   'https://*.supabase.co',
   'https://api.ensideas.com',
@@ -78,7 +75,7 @@ if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')
 }
 
-const FRAME_SRC = ['https://verify.walletconnect.com/']
+const FRAME_SRC = []
 
 const ContentSecurityPolicy = `
   default-src 'none';
@@ -111,7 +108,6 @@ const SECURITY_HEADERS = [
 
 const nextConfig = {
   staticPageGenerationTimeout: 90,
-  webpack5: true,
   webpack: config => {
     config.resolve.fallback = { fs: false, module: false }
     // Adds __DEV__ to the build to fix bug in apollo client `__DEV__ is not defined`.

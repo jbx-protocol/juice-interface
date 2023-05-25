@@ -9,6 +9,7 @@ import { PayoutCard } from 'components/v2v3/shared/PayoutCard/PayoutCard'
 import { FEES_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
 import { CurrencyName } from 'constants/currency'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { BigNumber } from 'ethers'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -17,6 +18,7 @@ import { classNames } from 'utils/classNames'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { ceilIfCloseToNextInteger } from 'utils/math'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2v3/math'
 import { DistributionSplitModal } from '../../../DistributionSplitModal'
@@ -86,15 +88,23 @@ export function DistributionSplitsSection({
     return 'amounts'
   }, [distributionLimit])
 
-  const distributionLimitCurrency = useMemo(
-    () => distributionLimitCurrencyBigNumber?.toNumber() as V2V3CurrencyOption,
-    [distributionLimitCurrencyBigNumber],
-  )
+  const distributionLimitCurrency: V2V3CurrencyOption = useMemo(() => {
+    const currency = distributionLimitCurrencyBigNumber?.toNumber()
+    if (!currency || currency === 0) return V2V3_CURRENCY_ETH
+    return currency as V2V3CurrencyOption
+  }, [distributionLimitCurrencyBigNumber])
 
   const onAllocationsChanged = useCallback(
     (allocations: AllocationSplit[]) =>
       onSplitsChanged(allocations.map(allocationToSplit)),
     [onSplitsChanged],
+  )
+
+  const setTotalAllocationAmount = useCallback(
+    (amount: BigNumber) => {
+      setDistributionLimit(fromWad(amount))
+    },
+    [setDistributionLimit],
   )
 
   useEffect(() => {
@@ -198,6 +208,7 @@ export function DistributionSplitsSection({
           value={editableSplits.map(splitToAllocation)}
           onChange={onAllocationsChanged}
           totalAllocationAmount={parseWad(distributionLimit)}
+          setTotalAllocationAmount={setTotalAllocationAmount}
           allocationCurrency={distributionLimitCurrency}
         >
           <div className="flex flex-col gap-4">

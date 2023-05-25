@@ -73,7 +73,7 @@ export function PaymentsFeed() {
                   <ETHAmount amount={e.amount} precision={2} />
                 </span>
                 <span>
-                  <JuiceboxAccountLink address={e.beneficiary} />
+                  <JuiceboxAccountLink address={e.beneficiary} withEnsAvatar />
                 </span>
               </div>
               <div>

@@ -41,7 +41,10 @@ export function SetProjectTerminal({
       <div>
         <InfoCallout className="mb-5">
           <RequiredFlagsList />
-          <Link href={settingsPagePath('reconfigurefc', { projectId, handle })}>
+          <Link
+            href={settingsPagePath('reconfigurefc', { projectId, handle })}
+            legacyBehavior
+          >
             <Button type="primary">
               <Trans>Edit funding cycle</Trans>
             </Button>

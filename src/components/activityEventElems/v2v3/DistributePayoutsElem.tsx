@@ -1,16 +1,20 @@
 import { t } from '@lingui/macro'
-import ETHAmount from 'components/currency/ETHAmount'
 import EthereumAddress from 'components/EthereumAddress'
+import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
+import ETHAmount from 'components/currency/ETHAmount'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { ProjectEventsQuery } from 'generated/graphql'
 import useSubgraphQuery from 'hooks/useSubgraphQuery'
 
+import { PV_V2 } from 'constants/pv'
 import { ActivityEvent } from '../ActivityElement'
 
 export default function DistributePayoutsElem({
   event,
+  withProjectLink,
 }: {
   event: ProjectEventsQuery['projectEvents'][0]['distributePayoutsEvent']
+  withProjectLink?: boolean
 }) {
   // Load individual DistributeToPayoutSplit events, emitted by internal transactions of the DistributeReservedPayouts transaction
   const { data: distributePayoutsEvents } = useSubgraphQuery({
@@ -39,6 +43,8 @@ export default function DistributePayoutsElem({
     <ActivityEvent
       event={event}
       header={t`Sent payouts`}
+      withProjectLink={withProjectLink}
+      pv={PV_V2}
       subject={
         distributePayoutsEvents?.length ? (
           <span className="text-base font-medium">
@@ -60,7 +66,7 @@ export default function DistributePayoutsElem({
                     projectId={e.splitProjectId}
                   />
                 ) : (
-                  <EthereumAddress
+                  <JuiceboxAccountLink
                     className="text-grey-900 dark:text-slate-100"
                     address={e.beneficiary}
                   />

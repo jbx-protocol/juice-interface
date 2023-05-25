@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { Skeleton } from 'antd'
-import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
+import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
 import ETHAmount from 'components/currency/ETHAmount'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { NftRewardTier } from 'models/nftRewards'

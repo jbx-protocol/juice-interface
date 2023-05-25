@@ -4,3 +4,4 @@ node_modules
 .vscode
 public/vendor
 src/generated
+src/components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ProjectNftSettingsPage/Capsules.module.css

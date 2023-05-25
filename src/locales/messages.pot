@@ -305,6 +305,9 @@ msgstr ""
 msgid "Add an on-chain memo to this payment."
 msgstr ""
 
+msgid "Background gradient color"
+msgstr ""
+
 msgid "+{percentageGain}%"
 msgstr ""
 
@@ -890,6 +893,9 @@ msgstr ""
 msgid "You haven't contributed to any projects yet!"
 msgstr ""
 
+msgid "44190F"
+msgstr ""
+
 msgid "{0} withdrawn"
 msgstr ""
 
@@ -978,6 +984,9 @@ msgid "1400x256 recommended."
 msgstr ""
 
 msgid "This cycle's rules may lead to unexpected behavior or other risks."
+msgstr ""
+
+msgid "Deployed project payer"
 msgstr ""
 
 msgid "Recent"
@@ -1103,6 +1112,9 @@ msgstr ""
 msgid "Project tokens will be minted to the address that made the payment."
 msgstr ""
 
+msgid "Custom metadata resolver contract"
+msgstr ""
+
 msgid "Migrate legacy tokens"
 msgstr ""
 
@@ -1221,6 +1233,9 @@ msgid "Contact WAGMI Studios"
 msgstr ""
 
 msgid "Deploy"
+msgstr ""
+
+msgid "FF9213"
 msgstr ""
 
 msgid "Use NFTs for redemptions"
@@ -1415,6 +1430,9 @@ msgstr ""
 msgid "<0/> unclaimed"
 msgstr ""
 
+msgid "Sent payouts (v1)"
+msgstr ""
+
 msgid "Edit tracked assets"
 msgstr ""
 
@@ -1437,6 +1455,9 @@ msgid "A project's rules are locked for the duration of each cycle. If the cycle
 msgstr ""
 
 msgid "Balance exceeded"
+msgstr ""
+
+msgid "3A0F0C"
 msgstr ""
 
 msgid "Set aside a percentage of freshly minted NFTs."
@@ -1523,6 +1544,9 @@ msgstr ""
 msgid "<0>This website interacts with the Ethereum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Ethereum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
 msgstr ""
 
+msgid "Each field is required."
+msgstr ""
+
 msgid "Set up token migration"
 msgstr ""
 
@@ -1589,6 +1613,12 @@ msgstr ""
 msgid "Migrate tokens"
 msgstr ""
 
+msgid "Update NFT theme"
+msgstr ""
+
+msgid "Background color"
+msgstr ""
+
 msgid "Link minters of this NFT to your project's website, Discord, etc."
 msgstr ""
 
@@ -1605,6 +1635,9 @@ msgid "Not set"
 msgstr ""
 
 msgid "Recipient address"
+msgstr ""
+
+msgid "Text color"
 msgstr ""
 
 msgid "{0} is required"
@@ -1752,6 +1785,9 @@ msgid "Available after fee:"
 msgstr ""
 
 msgid "Recipient address is required."
+msgstr ""
+
+msgid "Edited cycle (v1)"
 msgstr ""
 
 msgid "Project #{projectId}"
@@ -2219,6 +2255,9 @@ msgstr ""
 msgid "Watching projects"
 msgstr ""
 
+msgid "Set theme for {projectTitle}\\'s project NFT"
+msgstr ""
+
 msgid "Check {0} and verify your new email address."
 msgstr ""
 
@@ -2381,6 +2420,9 @@ msgstr ""
 msgid "Recommended"
 msgstr ""
 
+msgid "Enter a valid color hex code."
+msgstr ""
+
 msgid "Total unclaimed and claimed V1 and V2 tokens"
 msgstr ""
 
@@ -2511,6 +2553,9 @@ msgid "Edit Deadline"
 msgstr ""
 
 msgid "We do everything in the light, for everyone to see."
+msgstr ""
+
+msgid "Modify the colors of your Juicebox Project NFT. This NFT represents ownership over your project."
 msgstr ""
 
 msgid "Set aside a percentage of token issuance for the wallets and Juicebox projects of your choosing."
@@ -2789,6 +2834,9 @@ msgstr ""
 msgid "Get help planning or setting up my project."
 msgstr ""
 
+msgid "All activity"
+msgstr ""
+
 msgid "Community"
 msgstr ""
 
@@ -2799,9 +2847,6 @@ msgid "Download project activity CSVs"
 msgstr ""
 
 msgid "Cycle duration"
-msgstr ""
-
-msgid "Last 7 days"
 msgstr ""
 
 msgid "Export payouts CSV"
@@ -3111,6 +3156,9 @@ msgid "Amount"
 msgstr ""
 
 msgid "Memos appear on the project's activity feed when a payment is made through this address."
+msgstr ""
+
+msgid "Customize theme"
 msgstr ""
 
 msgid "Sum of percentages cannot exceed 100%."
@@ -3440,6 +3488,9 @@ msgstr ""
 msgid "No payouts scheduled for this cycle."
 msgstr ""
 
+msgid "Set metadata resolver for {projectTitle}\\'s project NFT"
+msgstr ""
+
 msgid "Made a mistake?"
 msgstr ""
 
@@ -3557,6 +3608,9 @@ msgstr ""
 msgid "Edit recipient"
 msgstr ""
 
+msgid "Update preview"
+msgstr ""
+
 msgid "Tokens per ETH contributed"
 msgstr ""
 
@@ -3623,9 +3677,6 @@ msgstr ""
 msgid "MoonDAO has built an enthusiastic community of over 10,000 members, successfully sent their first astronaut to space, and is currently coordinating the spaceflight for their second astronaut. Their ambitious long-term roadmap goals include building a settlement on the Moon by 2030. In collaboration with StudioDAO, a decentralized movie studio running on Juicebox, MoonDAO has donated $100,000 to help fund the production of Ticket To Space, the first DAO documentary. The film will cover the story of Yan, a MoonDAO member from China, who will be sent to space on an upcoming Blue Origin flight after minting a free NFT."
 msgstr ""
 
-msgid "All events"
-msgstr ""
-
 msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
 msgstr ""
 
@@ -3660,6 +3711,9 @@ msgid "Change network"
 msgstr ""
 
 msgid "{0}{1}"
+msgstr ""
+
+msgid "Project NFT theme"
 msgstr ""
 
 msgid "Project activity failed to load."
@@ -3719,7 +3773,13 @@ msgstr ""
 msgid "View on Etherscan"
 msgstr ""
 
+msgid "Preview"
+msgstr ""
+
 msgid "Token amount"
+msgstr ""
+
+msgid "Custom resolver address"
 msgstr ""
 
 msgid "Allow the <0>Juicebox NFT deployer contract</0> to edit this project's cycle."
@@ -3959,6 +4019,9 @@ msgstr ""
 msgid "You will receive {0}<0/>"
 msgstr ""
 
+msgid "Last 30 days"
+msgstr ""
+
 msgid "Your project's NFTs."
 msgstr ""
 
@@ -4007,6 +4070,9 @@ msgstr ""
 msgid "No reserved tokens configured."
 msgstr ""
 
+msgid "Sent reserved tokens (v1)"
+msgstr ""
+
 msgid "Spaces are not allowed"
 msgstr ""
 
@@ -4053,6 +4119,9 @@ msgid "Zero"
 msgstr ""
 
 msgid "Latest"
+msgstr ""
+
+msgid "Custom metadata resolvers replace the default metadata above. They must conform to the <0>IJBTokenUriResolver</0> interface."
 msgstr ""
 
 msgid "REMAINING SUPPLY: {0}/{1}"
@@ -4157,6 +4226,9 @@ msgstr ""
 msgid "Reserved tokens"
 msgstr ""
 
+msgid "Set custom resolver"
+msgstr ""
+
 msgid "Project token recipient"
 msgstr ""
 
@@ -4242,6 +4314,9 @@ msgid "A collection's symbol is typically a 3-4 letter acronym or abbreviation o
 msgstr ""
 
 msgid "{0}% of supply"
+msgstr ""
+
+msgid "Enter a valid Ethereum address"
 msgstr ""
 
 msgid "Project contracts directory"

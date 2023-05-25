@@ -5,18 +5,23 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
+import { PV_V2 } from 'constants/pv'
 import { ActivityEvent } from '../ActivityElement'
 
 export default function SetFundAccessConstraintsEventElem({
   event,
+  withProjectLink,
 }: {
   event: ProjectEventsQuery['projectEvents'][0]['setFundAccessConstraintsEvent']
+  withProjectLink?: boolean
 }) {
   if (!event) return null
 
   return (
     <ActivityEvent
       event={event}
+      withProjectLink={withProjectLink}
+      pv={PV_V2}
       header={t`Edited payout`}
       subject={
         <div>

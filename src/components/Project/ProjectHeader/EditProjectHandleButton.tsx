@@ -22,6 +22,7 @@ export function EditProjectHandleButton() {
             projectId,
             handle,
           })}
+          legacyBehavior
         >
           <Button type="link" icon={<EditOutlined />}>
             <span>

@@ -7,15 +7,18 @@ import { ActivityEvent } from './ActivityElement'
 export default function BurnEventElem({
   event,
   tokenSymbol,
+  withProjectLink,
 }: {
   event: ProjectEventsQuery['projectEvents'][0]['burnEvent']
   tokenSymbol: string | undefined
+  withProjectLink?: boolean
 }) {
   if (!event) return null
 
   return (
     <ActivityEvent
       event={event}
+      withProjectLink={withProjectLink}
       header={t`Burned`}
       subject={
         <span className="text-base font-medium">

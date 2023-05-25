@@ -1,6 +1,5 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
-import { ConnectKitButton } from 'connectkit'
 import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
@@ -31,6 +30,10 @@ const PendingTransactionModalBody = () => {
           alt={t`Juicebox loading animation`}
           width={150}
           height={150}
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+          }}
         />
         <h2 className="mt-4 font-heading text-2xl font-medium text-black dark:text-slate-100">
           <Trans>Transaction pending...</Trans>
@@ -90,18 +93,12 @@ export default function TransactionModal(props: TransactionModalProps) {
   }
 
   return (
-    <ConnectKitButton.Custom>
-      {({ show }) => {
-        return (
-          <Modal {...modalProps} onOk={isConnected ? props.onOk : show}>
-            {props.transactionPending ? (
-              <PendingTransactionModalBody />
-            ) : (
-              props.children
-            )}
-          </Modal>
-        )
-      }}
-    </ConnectKitButton.Custom>
+    <Modal {...modalProps}>
+      {props.transactionPending ? (
+        <PendingTransactionModalBody />
+      ) : (
+        props.children
+      )}
+    </Modal>
   )
 }

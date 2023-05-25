@@ -1,7 +1,7 @@
 import { CloseOutlined, LinkOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
-import { JuiceVideoPreview } from 'components/NftRewards/NftVideo/JuiceVideoPreview'
+import { JuiceVideoPreview } from 'components/JuiceVideo/JuiceVideoPreview'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useContentType } from 'hooks/useContentType'
@@ -9,7 +9,7 @@ import { NftRewardTier } from 'models/nftRewards'
 import { useContext } from 'react'
 import { classNames } from 'utils/classNames'
 import { fileTypeIsVideo } from 'utils/nftRewards'
-import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from './NftVideo/JuiceVideoOrImgPreview'
+import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from '../JuiceVideo/JuiceVideoOrImgPreview'
 
 export const IMAGE_OR_VIDEO_PREVIEW_CLASSES =
   'max-h-[50vh] max-w-[90vw] md:max-h-[60vh] md:max-w-xl'

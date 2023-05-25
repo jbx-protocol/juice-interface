@@ -181,11 +181,9 @@ export const ProjectDetailsPage: React.FC<
       <div className="mt-12 text-center">
         <Trans>Need help?</Trans>
         <div>
-          <Link href="/contact">
-            <a className="text-sm hover:underline">
-              <Trans>Contact a contributor</Trans>{' '}
-              <RightOutlined className="text-xs" />
-            </a>
+          <Link href="/contact" className="text-sm hover:underline">
+            <Trans>Contact a contributor</Trans>{' '}
+            <RightOutlined className="text-xs" />
           </Link>
         </div>
       </div>

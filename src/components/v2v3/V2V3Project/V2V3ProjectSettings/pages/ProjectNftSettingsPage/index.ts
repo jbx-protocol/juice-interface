@@ -1,0 +1,1 @@
+export { ProjectNftSettingsPage } from './ProjectNftSettingsPage'

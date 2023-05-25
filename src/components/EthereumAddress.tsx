@@ -18,6 +18,7 @@ interface EthereumAddressProps {
   onClick?: MouseEventHandler
   withEnsAvatar?: boolean
   href?: string
+  truncateTo?: number
 }
 
 export default function EthereumAddress({
@@ -30,6 +31,7 @@ export default function EthereumAddress({
   linkDisabled = false,
   ensDisabled = false,
   withEnsAvatar = false,
+  truncateTo,
 }: EthereumAddressProps) {
   const { data: ensName } = useEnsName(address, { enabled: !ensDisabled })
 
@@ -38,8 +40,8 @@ export default function EthereumAddress({
     if (!ensDisabled && ensName) return ensName
     if (!address) return null
 
-    return truncateEthAddress({ address })
-  }, [address, ensName, label, ensDisabled])
+    return truncateEthAddress({ address, truncateTo })
+  }, [address, ensName, label, ensDisabled, truncateTo])
 
   if (!formattedAddress) return null
 
@@ -66,15 +68,14 @@ export default function EthereumAddress({
             {formattedAddress}
           </span>
         ) : href ? (
-          <Link href={href}>
-            <a
-              className={twMerge(
-                'select-all leading-[22px] text-current hover:text-bluebs-500 hover:underline',
-                className,
-              )}
-            >
-              {formattedAddress}
-            </a>
+          <Link
+            href={href}
+            className={twMerge(
+              'select-all leading-[22px] text-current hover:text-bluebs-500 hover:underline',
+              className,
+            )}
+          >
+            {formattedAddress}
           </Link>
         ) : (
           <EtherscanLink
@@ -82,8 +83,9 @@ export default function EthereumAddress({
             onClick={onClick}
             type="address"
             value={address}
-            truncated
-          />
+          >
+            {formattedAddress}
+          </EtherscanLink>
         )}
       </span>
     </Tooltip>

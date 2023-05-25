@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
+import { PV_V1 } from 'constants/pv'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { ProjectEventsQuery } from 'generated/graphql'
 import useSubgraphQuery from 'hooks/useSubgraphQuery'
@@ -10,8 +11,10 @@ import { ActivityEvent } from '../ActivityElement'
 
 export default function ReservesEventElem({
   event,
+  withProjectLink,
 }: {
   event: ProjectEventsQuery['projectEvents'][0]['printReservesEvent']
+  withProjectLink?: boolean
 }) {
   const { tokenSymbol } = useContext(V1ProjectContext)
 
@@ -36,6 +39,8 @@ export default function ReservesEventElem({
   return (
     <ActivityEvent
       event={event}
+      withProjectLink={withProjectLink}
+      pv={PV_V1}
       header={
         <Trans>
           Sent reserved{' '}

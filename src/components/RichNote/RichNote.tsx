@@ -1,5 +1,5 @@
 import Autolinker from 'autolinker'
-import { JuiceVideoThumbnailOrImage } from 'components/NftRewards/NftVideo/JuiceVideoThumbnailOrImage'
+import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
 import { twMerge } from 'tailwind-merge'
 import { useProcessedRichNote } from './hooks'
 
@@ -44,6 +44,7 @@ export default function RichNote({
         <div className="mt-2 flex flex-wrap gap-x-4">
           {formattedMediaLinks.map((link, i) => (
             <JuiceVideoThumbnailOrImage
+              alt="User uploaded image"
               key={i}
               className={twMerge('cursor-pointer', className)}
               heightClass="h-24"

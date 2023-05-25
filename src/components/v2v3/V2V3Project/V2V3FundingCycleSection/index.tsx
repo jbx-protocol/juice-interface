@@ -110,7 +110,10 @@ export default function V2V3FundingCycleSection() {
       tabs={tabs}
       reconfigureButton={
         canReconfigure ? (
-          <Link href={settingsPagePath('reconfigurefc', { projectId, handle })}>
+          <Link
+            href={settingsPagePath('reconfigurefc', { projectId, handle })}
+            legacyBehavior
+          >
             <Button size="small" icon={<SettingOutlined />}>
               <span>{reconfigureButtonText}</span>
             </Button>

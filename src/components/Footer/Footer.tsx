@@ -182,8 +182,8 @@ const LinkColumn: React.FC<
             {title}
           </ExternalLink>
         ) : (
-          <Link href={link}>
-            <a className="text-white hover:text-bluebs-500">{title}</a>
+          <Link href={link} className="text-white hover:text-bluebs-500">
+            {title}
           </Link>
         )}
       </div>

@@ -97,12 +97,10 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
             handle: project.handle,
           })}
         >
-          <a>
-            <Button>
-              <Trans>Go to project</Trans>
-              <ArrowRightIcon className="ml-2 inline h-4 w-4" />
-            </Button>
-          </a>
+          <Button>
+            <Trans>Go to project</Trans>
+            <ArrowRightIcon className="ml-2 inline h-4 w-4" />
+          </Button>
         </Link>
       </div>
     </div>

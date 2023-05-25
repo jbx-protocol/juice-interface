@@ -140,7 +140,10 @@ export default function PayoutSplitsCard({
               }
             />
             {canEditPayouts && (
-              <Link href={settingsPagePath('payouts', { projectId, handle })}>
+              <Link
+                href={settingsPagePath('payouts', { projectId, handle })}
+                legacyBehavior
+              >
                 <Button
                   className="mb-4"
                   size="small"

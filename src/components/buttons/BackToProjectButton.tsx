@@ -10,7 +10,7 @@ export function BackToProjectButton({
   projectPageUrl: string
 }) {
   return (
-    <Link href={projectPageUrl}>
+    <Link href={projectPageUrl} legacyBehavior>
       <Button
         href={projectPageUrl}
         type="link"

@@ -1,11 +1,11 @@
 import { CloseCircleFilled, UploadOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Progress, Upload, UploadProps } from 'antd'
 import { RcFile } from 'antd/lib/upload'
-import { CreateButton } from 'components/buttons/CreateButton'
 import { RewardImage } from 'components/Create/components/RewardImage'
+import { JuiceVideoPreview } from 'components/JuiceVideo/JuiceVideoPreview'
 import Loading from 'components/Loading'
-import { JuiceVideoPreview } from 'components/NftRewards/NftVideo/JuiceVideoPreview'
+import { CreateButton } from 'components/buttons/CreateButton'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useContentType } from 'hooks/useContentType'
 import { FormItemInput } from 'models/formItemInput'
@@ -178,7 +178,11 @@ const UploadedImage = ({
   return (
     <div className="flex justify-center bg-smoke-200 py-2 dark:bg-slate-600">
       <div className="relative">
-        <RewardImage className="h-[11.5rem] w-[11.5rem]" src={imageUrl} />
+        <RewardImage
+          alt="Uploaded NFT media"
+          className="h-[11.5rem] w-[11.5rem]"
+          src={imageUrl}
+        />
         <CloseCircleFilled
           className="absolute top-0 right-0 cursor-pointer text-2xl text-bluebs-500"
           // TODO: We require @tailwind base to do this in className, so use style for now

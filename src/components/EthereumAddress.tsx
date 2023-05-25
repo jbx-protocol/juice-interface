@@ -68,15 +68,14 @@ export default function EthereumAddress({
             {formattedAddress}
           </span>
         ) : href ? (
-          <Link href={href}>
-            <a
-              className={twMerge(
-                'select-all leading-[22px] text-current hover:text-bluebs-500 hover:underline',
-                className,
-              )}
-            >
-              {formattedAddress}
-            </a>
+          <Link
+            href={href}
+            className={twMerge(
+              'select-all leading-[22px] text-current hover:text-bluebs-500 hover:underline',
+              className,
+            )}
+          >
+            {formattedAddress}
           </Link>
         ) : (
           <EtherscanLink

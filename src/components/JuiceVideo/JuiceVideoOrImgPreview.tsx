@@ -1,5 +1,5 @@
 import { CloseOutlined } from '@ant-design/icons'
-import { JuiceVideoPreview } from 'components/NftRewards/NftVideo/JuiceVideoPreview'
+import { JuiceVideoPreview } from 'components/JuiceVideo/JuiceVideoPreview'
 import { useContentType } from 'hooks/useContentType'
 import { ImageProps } from 'next/image'
 import { stopPropagation } from 'react-stop-propagation'

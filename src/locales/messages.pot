@@ -446,6 +446,9 @@ msgstr ""
 msgid "Amount of ERC-20 tokens to claim"
 msgstr ""
 
+msgid "NFTs & Rewards"
+msgstr ""
+
 msgid "Project owner address"
 msgstr ""
 

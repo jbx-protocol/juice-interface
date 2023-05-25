@@ -33,6 +33,9 @@ module.exports = {
       width: {
         70: '278px',
       },
+      borderWidth: {
+        6: '6px',
+      },
       keyframes: {
         rise: {
           '0%': { transform: 'translate(-50%, 100%)', opacity: 0 },

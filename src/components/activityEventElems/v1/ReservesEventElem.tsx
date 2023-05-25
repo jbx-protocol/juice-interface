@@ -26,7 +26,7 @@ export default function ReservesEventElem({
   const { data } = useTicketModDistributionsForPrintReservesEventQuery({
     client,
     variables: {
-      printReservesEvent: event?.id ?? null,
+      printReservesEvent: event?.id,
     },
   })
 

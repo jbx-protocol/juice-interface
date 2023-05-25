@@ -23,7 +23,7 @@ export default function DistributePayoutsElem({
   const { data } = useSplitDistributionsForDistributePayoutsEventQuery({
     client,
     variables: {
-      distributePayoutsEvent: event?.id ?? null,
+      distributePayoutsEvent: event?.id,
     },
   })
 

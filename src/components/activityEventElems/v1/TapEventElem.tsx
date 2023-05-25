@@ -26,7 +26,7 @@ export default function TapEventElem({
   const { data } = usePayoutModDistributionsForTapEventQuery({
     client,
     variables: {
-      tapEvent: event?.id ?? null,
+      tapEvent: event?.id,
     },
   })
 

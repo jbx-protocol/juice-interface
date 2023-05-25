@@ -26,7 +26,7 @@ export default function DistributeReservedTokensEventElem({
   const { data } = useSplitDistributionsForDistributeReservedTokensEventQuery({
     client,
     variables: {
-      distributeReservedTokensEvent: event?.id ?? null,
+      distributeReservedTokensEvent: event?.id,
     },
   })
 

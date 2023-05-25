@@ -26,7 +26,7 @@ export function PaymentAddressSection({
     client,
     variables: {
       where: {
-        projectId: projectId ?? null,
+        projectId,
       },
     },
   })

@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 
-export const TRENDING_WINDOW_DAYS = 7
+export const TRENDING_WINDOW_DAYS = 30
 
 // Explains how trending projects rankings are calculated
 export default function RankingExplanation() {

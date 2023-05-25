@@ -1,5 +1,9 @@
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import {
+  DISTRIBUTION_LIMIT_EXPLANATION,
+  RECONFIG_RULES_EXPLANATION,
+} from 'components/strings'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
@@ -13,10 +17,6 @@ import { formatDate, formatDateToUTC } from 'utils/format/formatDate'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'
-import {
-  DISTRIBUTION_LIMIT_EXPLANATION,
-  RECONFIG_RULES_EXPLANATION,
-} from '../../settingExplanations'
 import { FundingCycleListItem } from '../FundingCycleListItem'
 import { BallotStrategyValue } from '../RulesListItems/BallotStrategyValue'
 import { DistributionLimitValue } from './DistributionLimitValue'

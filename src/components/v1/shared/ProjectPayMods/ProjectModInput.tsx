@@ -1,7 +1,7 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
 import { Button, Col, Row, Space } from 'antd'
-import CurrencySymbol from 'components/CurrencySymbol'
 import EthereumAddress from 'components/EthereumAddress'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
 import { AllocatorBadge } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/AllocatorBadge'
 import {
   NULL_ALLOCATOR_ADDRESS,

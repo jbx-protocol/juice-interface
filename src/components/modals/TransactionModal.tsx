@@ -6,7 +6,7 @@ import { useWallet } from 'hooks/Wallet'
 import { TxStatus } from 'models/transaction'
 import Image from 'next/image'
 import { PropsWithChildren, useContext, useMemo } from 'react'
-import EtherscanLink from './EtherscanLink'
+import EtherscanLink from '../EtherscanLink'
 
 type TransactionModalProps = PropsWithChildren<
   ModalProps & {

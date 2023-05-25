@@ -1,9 +1,5 @@
 import { t } from '@lingui/macro'
 import {
-  V2V3FundingCycle,
-  V2V3FundingCycleMetadata,
-} from 'models/v2v3/fundingCycle'
-import {
   CONTRIBUTOR_RATE_EXPLANATION,
   DISCOUNT_RATE_EXPLANATION,
   MINT_RATE_EXPLANATION,
@@ -12,7 +8,11 @@ import {
   REDEMPTION_RATE_EXPLANATION,
   RESERVED_RATE_EXPLANATION,
   RESERVED_TOKENS_EXPLANATION,
-} from '../../settingExplanations'
+} from 'components/strings'
+import {
+  V2V3FundingCycle,
+  V2V3FundingCycleMetadata,
+} from 'models/v2v3/fundingCycle'
 import { FundingCycleListItem } from '../FundingCycleListItem'
 
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'

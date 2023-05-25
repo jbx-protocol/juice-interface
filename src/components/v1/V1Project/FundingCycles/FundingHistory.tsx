@@ -3,7 +3,7 @@ import { t, Trans } from '@lingui/macro'
 
 import { Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
-import CurrencySymbol from 'components/CurrencySymbol'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
 import Loading from 'components/Loading'
 import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/v1/contractReader/useContractReader'

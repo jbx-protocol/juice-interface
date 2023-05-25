@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import CurrencySymbol from 'components/CurrencySymbol'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import { JUICE_ORANGE } from 'constants/theme/colors'
 import { PV } from 'models/pv'

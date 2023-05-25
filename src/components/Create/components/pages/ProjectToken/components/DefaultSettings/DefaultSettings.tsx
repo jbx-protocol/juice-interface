@@ -7,7 +7,7 @@ import {
   OWNER_MINTING_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
   RESERVED_RATE_EXPLANATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+} from 'components/strings'
 import { ReactNode, useMemo } from 'react'
 import { formatAmount } from 'utils/format/formatAmount'
 import { formatBoolean } from 'utils/format/formatBoolean'

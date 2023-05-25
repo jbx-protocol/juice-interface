@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import CurrencySymbol from 'components/CurrencySymbol'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
 import EthereumAddress from 'components/EthereumAddress'
 import MinimalTable from 'components/MinimalTable'
 import { SECONDS_IN_DAY } from 'constants/numbers'

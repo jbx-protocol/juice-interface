@@ -8,7 +8,7 @@ import { PropsWithChildren, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { reloadWindow } from 'utils/windowUtils'
-import { TransferUnclaimedTokensModal } from './modals/TransferUnclaimedTokensModal'
+import { TransferUnclaimedTokensModal } from './TransferUnclaimedTokensModal'
 
 type RedeemDisabledReason = 'redemptionRateZero' | 'overflowZero'
 

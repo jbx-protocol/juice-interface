@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Row } from 'antd'
-import { ErrorBoundaryCallout } from 'components/ErrorBoundaryCallout'
+import { ErrorBoundaryCallout } from 'components/Callout/ErrorBoundaryCallout'
 import { ProjectHeader } from 'components/Project/ProjectHeader'
 import ScrollToTopButton from 'components/buttons/ScrollToTopButton'
 import { useModalFromUrlQuery } from 'components/modals/hooks/useModalFromUrlQuery'

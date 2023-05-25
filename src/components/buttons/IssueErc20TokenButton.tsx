@@ -1,7 +1,7 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { ISSUE_ERC20_EXPLANATION } from 'components/Explanations'
+import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
 
 import { useRouter } from 'next/router'
 import { useState } from 'react'

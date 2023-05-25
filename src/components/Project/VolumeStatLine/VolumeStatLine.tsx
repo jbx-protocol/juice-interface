@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import CurrencySymbol from 'components/CurrencySymbol'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
 import ETHAmount from 'components/currency/ETHAmount'
 import { CurrencyName } from 'constants/currency'
 import { BigNumber } from 'ethers'

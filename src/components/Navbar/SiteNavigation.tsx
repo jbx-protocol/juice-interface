@@ -1,6 +1,6 @@
 import { Popover, Transition } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
-import QuickProjectSearch from 'components/QuickProjectSearch'
+import QuickProjectSearch from 'components/Navbar/components/QuickProjectSearch'
 import PatchedNextLink from 'components/fixes/PatchedNextLink'
 import useMobile from 'hooks/useMobile'
 import { Fragment } from 'react'

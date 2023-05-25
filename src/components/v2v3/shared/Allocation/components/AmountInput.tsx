@@ -1,4 +1,4 @@
-import CurrencySwitch from 'components/CurrencySwitch'
+import CurrencySwitch from 'components/currency/CurrencySwitch'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { useCallback, useState } from 'react'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'

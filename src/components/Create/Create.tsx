@@ -1,10 +1,12 @@
 import { t, Trans } from '@lingui/macro'
 import { DeployButtonText } from 'components/buttons/DeployProjectButtonText'
 import { Callout } from 'components/Callout'
-import { CYCLE_EXPLANATION } from 'components/Explanations'
 import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
-import { RECONFIG_RULES_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import {
+  CYCLE_EXPLANATION,
+  RECONFIG_RULES_EXPLANATION,
+} from 'components/strings'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
 import Link from 'next/link'

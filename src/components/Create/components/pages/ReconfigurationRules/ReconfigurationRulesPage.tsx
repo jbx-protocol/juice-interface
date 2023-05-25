@@ -13,7 +13,7 @@ import {
   RECONFIG_RULES_WARN,
   TERMINAL_CONFIG_EXPLANATION,
   TERMINAL_MIGRATION_EXPLANATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+} from 'components/strings'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { readNetwork } from 'constants/networks'
 import { trackFathomGoal } from 'lib/fathom'

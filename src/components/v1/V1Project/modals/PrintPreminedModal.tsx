@@ -15,7 +15,7 @@ import { RuleObject } from 'antd/lib/form'
 import { StoreValue } from 'antd/lib/form/interface'
 import { Callout } from 'components/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { OWNER_MINTING_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import { OWNER_MINTING_EXPLANATION } from 'components/strings'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'
 import { isZeroAddress } from 'utils/address'
 

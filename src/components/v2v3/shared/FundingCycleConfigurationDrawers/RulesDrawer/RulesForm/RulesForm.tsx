@@ -11,7 +11,7 @@ import {
   TERMINAL_CONFIG_EXPLANATION,
   TERMINAL_MIGRATION_EXPLANATION,
   USE_DATASOURCE_FOR_REDEEM_EXPLANATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+} from 'components/strings'
 import { ballotStrategiesFn } from 'constants/v2v3/ballotStrategies'
 import { isAddress } from 'ethers/lib/utils'
 import isEqual from 'lodash/isEqual'

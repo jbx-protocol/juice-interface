@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TooltipLabel from 'components/TooltipLabel'
-import { MINT_RATE_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { MINT_RATE_EXPLANATION } from 'components/strings'
 import { MAX_MINT_RATE } from 'utils/v2v3/math'
 
 export default function MintRateFormItem({

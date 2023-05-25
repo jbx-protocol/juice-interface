@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import StatLine from 'components/Project/StatLine'
 import TooltipLabel from 'components/TooltipLabel'
+import { DISTRIBUTION_LIMIT_EXPLANATION } from 'components/strings'
 import V2V3CurrencyAmount from 'components/v2v3/shared/V2V3CurrencyAmount'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
-import { DISTRIBUTION_LIMIT_EXPLANATION } from '../V2V3FundingCycleSection/settingExplanations'
 
 export default function DistributedRatio() {
   const {

@@ -2,8 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { DatePicker, Form, Modal, Select } from 'antd'
 import { useForm, useWatch } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
-import CurrencySymbol from 'components/CurrencySymbol'
-import { LOCKED_PAYOUT_EXPLANATION } from 'components/Explanations'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
 import { FormItems } from 'components/formItems'
 import {
   countDecimalPlaces,
@@ -15,6 +14,7 @@ import {
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import NumberSlider from 'components/inputs/NumberSlider'
+import { LOCKED_PAYOUT_EXPLANATION } from 'components/strings'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { CurrencyName } from 'constants/currency'
 import { constants } from 'ethers'

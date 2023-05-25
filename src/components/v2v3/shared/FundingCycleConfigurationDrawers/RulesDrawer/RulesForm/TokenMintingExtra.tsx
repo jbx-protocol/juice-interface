@@ -2,7 +2,7 @@ import FormItemWarningText from 'components/FormItemWarningText'
 import {
   OWNER_MINTING_EXPLANATION,
   OWNER_MINTING_RISK,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+} from 'components/strings'
 
 export default function TokenMintingExtra({
   showMintingWarning,

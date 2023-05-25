@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import TransactionModal from 'components/TransactionModal'
+import TransactionModal from 'components/modals/TransactionModal'
 import SplitList from 'components/v2v3/shared/SplitList'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'

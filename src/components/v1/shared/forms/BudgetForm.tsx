@@ -21,8 +21,10 @@ import {
   targetToTargetSubFeeFormatted,
 } from 'utils/v1/payouts'
 
-import { CYCLE_EXPLANATION } from 'components/Explanations'
-import { DISTRIBUTION_LIMIT_EXPLANATION } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+import {
+  CYCLE_EXPLANATION,
+  DISTRIBUTION_LIMIT_EXPLANATION,
+} from 'components/strings'
 import { CurrencyName } from 'constants/currency'
 
 const DEFAULT_TARGET_AFTER_FEE = '10000'

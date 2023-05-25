@@ -4,16 +4,16 @@ import { Form, Radio } from 'antd'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import ExternalLink from 'components/ExternalLink'
 import { NftPostPayModal } from 'components/NftRewards/NftPostPayModal'
-import { RadioItem } from 'components/RadioItem'
 import TooltipLabel from 'components/TooltipLabel'
 import { CreateButton } from 'components/buttons/CreateButton'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
+import { RadioItem } from 'components/inputs/RadioItem'
 import {
   PREVENT_OVERSPENDING_EXPLANATION,
   USE_DATASOURCE_FOR_REDEEM_EXPLANATION,
-} from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/settingExplanations'
+} from 'components/strings'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { useModal } from 'hooks/useModal'
 import { trackFathomGoal } from 'lib/fathom'

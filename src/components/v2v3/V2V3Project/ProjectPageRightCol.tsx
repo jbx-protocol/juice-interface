@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Col } from 'antd'
-import { ErrorBoundaryCallout } from 'components/ErrorBoundaryCallout'
+import { ErrorBoundaryCallout } from 'components/Callout/ErrorBoundaryCallout'
 import { NftRewardsSection } from 'components/NftRewards/NftRewardsSection'
 import { useNftRewardsEnabledForPay } from 'hooks/JB721Delegate/useNftRewardsEnabledForPay'
 import { V2V3ProjectActivity } from './ProjectActivity'

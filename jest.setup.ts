@@ -1,4 +1,5 @@
 require('dotenv').config()
+require('@testing-library/jest-dom')
 const { i18n } = require('@lingui/core')
 const { messages } = require('./src/locales/en/messages.js')
 i18n.load('en', messages)

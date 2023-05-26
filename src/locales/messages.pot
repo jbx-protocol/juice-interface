@@ -1796,6 +1796,9 @@ msgstr ""
 msgid "Project rules"
 msgstr ""
 
+msgid "Failed to launch Snapshot. Try again."
+msgstr ""
+
 msgid "Choose how you would like to set up payouts."
 msgstr ""
 

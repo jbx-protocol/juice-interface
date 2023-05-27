@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { readNetwork } from 'constants/networks'
@@ -24,8 +24,16 @@ export function SnapshotSettingsSection() {
 
   const [launchLoading, setLaunchLoading] = useState<boolean>(false)
   const [snapshotLaunched, setSnapshotLaunched] = useState<boolean>(false)
+  const [launchError, setLaunchError] = useState<boolean>(false)
 
   const setENSTextRecordForHandleTx = useSetENSTextRecordForHandleTx(handle)
+
+  const defaultErrorText = t`Failed to launch Snapshot. Try again.`
+  const handleError = () => {
+    setLaunchError(true)
+    setLaunchLoading(false)
+    emitErrorNotification(defaultErrorText)
+  }
 
   const launchSnapshot = async () => {
     if (
@@ -65,7 +73,11 @@ export function SnapshotSettingsSection() {
         {
           onConfirmed: async () => {
             // 3. Poke Snapshot. This makes the snapshot URL live.
-            await pokeSnapshot(handle)
+            const result = await pokeSnapshot(handle)
+            if (result.data === false) {
+              handleError()
+              return
+            }
 
             setSnapshotLaunched(true)
             setLaunchLoading(false)
@@ -73,16 +85,17 @@ export function SnapshotSettingsSection() {
           onCancelled: () => setLaunchLoading(false),
           onError(e) {
             console.error(e)
-            emitErrorNotification('Failed to launch Snapshot. Try again.')
+            handleError()
           },
         },
       )
     } catch (e) {
       console.error(e)
-
-      emitErrorNotification('Failed to launch Snapshot. Try again.')
+      handleError()
     } finally {
-      setLaunchLoading(false)
+      if (snapshotLaunched || launchError) {
+        setLaunchLoading(false)
+      }
     }
   }
 
@@ -135,7 +148,14 @@ export function SnapshotSettingsSection() {
           </Trans>
         </span>
       ) : (
-        launchButtonElement
+        <>
+          <div>{launchButtonElement}</div>
+          {launchError ? (
+            <div className="mt-2 text-xs text-error-500">
+              {defaultErrorText}
+            </div>
+          ) : null}
+        </>
       )}
     </section>
   )

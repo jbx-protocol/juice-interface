@@ -9,8 +9,8 @@ import { ProjectTabs } from './components/ProjectTabs'
 export const ProjectDashboard = () => {
   return (
     <>
-      {/* // TODO: Remove pb-24, just there for testing */}
-      <div className="flex w-full flex-col items-center pb-24">
+      {/* // TODO: Remove pb-48, just there for testing */}
+      <div className="flex w-full flex-col items-center pb-48">
         <CoverPhoto />
         <div className="flex w-full justify-center px-6">
           <div className="flex w-full max-w-7xl flex-col">

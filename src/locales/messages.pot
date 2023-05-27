@@ -3224,6 +3224,9 @@ msgstr ""
 msgid "Send reserved {tokenTextPlural}"
 msgstr ""
 
+msgid "Total to pay"
+msgstr ""
+
 msgid "Warning: Only the project owner can edit a project. If you don't have access to the address above, you will lose access to your project."
 msgstr ""
 
@@ -4128,6 +4131,9 @@ msgid "Something has gone wrong, please contact support."
 msgstr ""
 
 msgid "Build and launch your NFT project right here on Juicebox with built-in redemptions."
+msgstr ""
+
+msgid "Pay project"
 msgstr ""
 
 msgid "No reserved tokens configured."

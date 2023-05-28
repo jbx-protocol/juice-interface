@@ -6,7 +6,7 @@ export const CyclesTab = ({ name }: { name: string }) => (
     {({ selected }) => (
       <div
         className={twMerge(
-          'rounded-2xl bg-smoke-50 py-0.5 px-3 text-smoke-600',
+          'rounded-2xl bg-smoke-50 py-0.5 px-3 font-medium text-smoke-600',
           selected && 'bg-smoke-700 text-grey-25',
         )}
       >

@@ -3,6 +3,7 @@ import { Trans, t } from '@lingui/macro'
 import { useMemo } from 'react'
 import { DisplayCard } from '../../ui'
 import { useCurrentUpcomingSubPanel } from '../hooks/useCurrentUpcomingSubPanel'
+import { PayoutsSubPanel } from './PayoutsSubPanel'
 
 export const CurrentUpcomingSubPanel = ({
   id,
@@ -91,8 +92,7 @@ export const CurrentUpcomingSubPanel = ({
           </div>
         </DisplayCard>
       </div>
-      {/* Payouts */}
-      <div></div>
+      <PayoutsSubPanel className="mt-12" />
     </div>
   )
 }

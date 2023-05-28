@@ -31,7 +31,7 @@ export const CyclesPayoutsPanel = () => {
       </div>
       <Tab.Panels>
         {tabs.map(tab => (
-          <Tab.Panel key={tab.id}>
+          <Tab.Panel key={tab.id} className="outline-none">
             {tab.id === 'history' ? (
               <HistorySubPanel />
             ) : (

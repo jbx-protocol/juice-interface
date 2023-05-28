@@ -93,9 +93,7 @@ exports[`CyclesPayoutsPanel renders 1`] = `
                   Cycle #
                   <div
                     class="font-heading text-2xl font-medium"
-                  >
-                    21
-                  </div>
+                  />
                 </div>
               </div>
               <div
@@ -121,9 +119,7 @@ exports[`CyclesPayoutsPanel renders 1`] = `
                   Remaining time
                   <div
                     class="font-heading text-2xl font-medium"
-                  >
-                    23d 23h 59m 59s
-                  </div>
+                  />
                 </div>
               </div>
             </div>
@@ -253,7 +249,7 @@ exports[`CyclesPayoutsPanel renders 1`] = `
                     <tr
                       class="flex items-center justify-between gap-3 border-b border-grey-200 py-3"
                     >
-                      <div
+                      <td
                         class="flex items-center gap-3"
                       >
                         <div
@@ -264,8 +260,8 @@ exports[`CyclesPayoutsPanel renders 1`] = `
                         >
                           aeolian.eth
                         </span>
-                      </div>
-                      <div
+                      </td>
+                      <td
                         class="flex items-center gap-3"
                       >
                         <span>
@@ -274,12 +270,12 @@ exports[`CyclesPayoutsPanel renders 1`] = `
                         <span>
                           33%
                         </span>
-                      </div>
+                      </td>
                     </tr>
                     <tr
                       class="flex items-center justify-between gap-3 border-b border-grey-200 py-3"
                     >
-                      <div
+                      <td
                         class="flex items-center gap-3"
                       >
                         <div
@@ -290,8 +286,8 @@ exports[`CyclesPayoutsPanel renders 1`] = `
                         >
                           wraeth.eth
                         </span>
-                      </div>
-                      <div
+                      </td>
+                      <td
                         class="flex items-center gap-3"
                       >
                         <span>
@@ -300,12 +296,12 @@ exports[`CyclesPayoutsPanel renders 1`] = `
                         <span>
                           33%
                         </span>
-                      </div>
+                      </td>
                     </tr>
                     <tr
                       class="flex items-center justify-between gap-3 border-b border-grey-200 py-3"
                     >
-                      <div
+                      <td
                         class="flex items-center gap-3"
                       >
                         <div
@@ -316,8 +312,8 @@ exports[`CyclesPayoutsPanel renders 1`] = `
                         >
                           chris.eth
                         </span>
-                      </div>
-                      <div
+                      </td>
+                      <td
                         class="flex items-center gap-3"
                       >
                         <span>
@@ -326,7 +322,7 @@ exports[`CyclesPayoutsPanel renders 1`] = `
                         <span>
                           33%
                         </span>
-                      </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

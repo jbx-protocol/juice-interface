@@ -19,7 +19,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
             <div
               class="font-heading text-2xl font-medium"
             >
-              21
+              1
             </div>
           </div>
         </div>
@@ -33,7 +33,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
             <div
               class="font-heading text-2xl font-medium"
             >
-              Locked
+              Active
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
             <div
               class="font-heading text-2xl font-medium"
             >
-              23d 23h 59m 59s
+              1 day
             </div>
           </div>
         </div>
@@ -178,7 +178,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
               <tr
                 class="flex items-center justify-between gap-3 border-b border-grey-200 py-3"
               >
-                <div
+                <td
                   class="flex items-center gap-3"
                 >
                   <div
@@ -189,8 +189,8 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
                   >
                     aeolian.eth
                   </span>
-                </div>
-                <div
+                </td>
+                <td
                   class="flex items-center gap-3"
                 >
                   <span>
@@ -199,12 +199,12 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
                   <span>
                     33%
                   </span>
-                </div>
+                </td>
               </tr>
               <tr
                 class="flex items-center justify-between gap-3 border-b border-grey-200 py-3"
               >
-                <div
+                <td
                   class="flex items-center gap-3"
                 >
                   <div
@@ -215,8 +215,8 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
                   >
                     wraeth.eth
                   </span>
-                </div>
-                <div
+                </td>
+                <td
                   class="flex items-center gap-3"
                 >
                   <span>
@@ -225,12 +225,12 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
                   <span>
                     33%
                   </span>
-                </div>
+                </td>
               </tr>
               <tr
                 class="flex items-center justify-between gap-3 border-b border-grey-200 py-3"
               >
-                <div
+                <td
                   class="flex items-center gap-3"
                 >
                   <div
@@ -241,8 +241,8 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
                   >
                     chris.eth
                   </span>
-                </div>
-                <div
+                </td>
+                <td
                   class="flex items-center gap-3"
                 >
                   <span>
@@ -251,7 +251,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
                   <span>
                     33%
                   </span>
-                </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -302,7 +302,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
             <div
               class="font-heading text-2xl font-medium"
             >
-              22
+              1
             </div>
           </div>
         </div>
@@ -316,7 +316,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
             <div
               class="font-heading text-2xl font-medium"
             >
-              Locked
+              Active
             </div>
           </div>
         </div>
@@ -326,11 +326,11 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600"
           >
-            Cycle length
+            Remaining time
             <div
               class="font-heading text-2xl font-medium"
             >
-              30 days
+              1 day
             </div>
           </div>
         </div>
@@ -344,7 +344,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600"
           >
-            Upcoming cycle
+            Current cycle
             <div
               class="font-heading text-2xl font-medium"
             >
@@ -461,7 +461,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
               <tr
                 class="flex items-center justify-between gap-3 border-b border-grey-200 py-3"
               >
-                <div
+                <td
                   class="flex items-center gap-3"
                 >
                   <div
@@ -472,8 +472,8 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
                   >
                     aeolian.eth
                   </span>
-                </div>
-                <div
+                </td>
+                <td
                   class="flex items-center gap-3"
                 >
                   <span>
@@ -482,12 +482,12 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
                   <span>
                     33%
                   </span>
-                </div>
+                </td>
               </tr>
               <tr
                 class="flex items-center justify-between gap-3 border-b border-grey-200 py-3"
               >
-                <div
+                <td
                   class="flex items-center gap-3"
                 >
                   <div
@@ -498,8 +498,8 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
                   >
                     wraeth.eth
                   </span>
-                </div>
-                <div
+                </td>
+                <td
                   class="flex items-center gap-3"
                 >
                   <span>
@@ -508,12 +508,12 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
                   <span>
                     33%
                   </span>
-                </div>
+                </td>
               </tr>
               <tr
                 class="flex items-center justify-between gap-3 border-b border-grey-200 py-3"
               >
-                <div
+                <td
                   class="flex items-center gap-3"
                 >
                   <div
@@ -524,8 +524,8 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
                   >
                     chris.eth
                   </span>
-                </div>
-                <div
+                </td>
+                <td
                   class="flex items-center gap-3"
                 >
                   <span>
@@ -534,7 +534,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
                   <span>
                     33%
                   </span>
-                </div>
+                </td>
               </tr>
             </tbody>
           </table>

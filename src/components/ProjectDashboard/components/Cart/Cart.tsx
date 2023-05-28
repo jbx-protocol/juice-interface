@@ -13,13 +13,13 @@ export const Cart = ({ className }: { className?: string }) => {
     <div
       data-testid="cart"
       className={twMerge(
-        'fixed inset-x-0 bottom-0 z-20 flex h-full cursor-pointer items-center justify-center border-t border-grey-200 bg-white transition-all',
+        'fixed inset-x-0 bottom-0 z-20 flex h-full cursor-pointer items-center justify-center border-t border-grey-200 bg-white drop-shadow transition-all',
         expanded ? 'max-h-[435px]' : 'max-h-20',
         className,
       )}
       onClick={toggleExpanded}
     >
-      <div className="flex h-full w-full translate-x-16 items-center">
+      <div className="flex h-full w-full max-w-7xl items-center">
         {expanded ? <SummaryOpenView /> : <SummaryClosedView />}
         <ChevronUpIcon
           role="button"
@@ -37,7 +37,7 @@ const SummaryOpenView = () => {
   return (
     <div
       data-testid="cart-summary-open-view"
-      className="flex h-full w-full max-w-7xl justify-between px-8 pt-12 pb-14"
+      className="flex h-full w-full justify-between px-8 pt-12 pb-14"
     >
       <div
         data-testid="cart-summary-open-view-summary"
@@ -95,7 +95,7 @@ const SummaryNftRewardItem = ({ className }: { className?: string }) => {
 
 const SummaryClosedView = () => {
   return (
-    <div className="flex w-full max-w-7xl items-center justify-between px-8 py-6">
+    <div className="flex w-full items-center justify-between px-8 py-6">
       <div
         data-testid="cart-summary-closed-view-summary"
         className="flex cursor-auto items-center gap-4"

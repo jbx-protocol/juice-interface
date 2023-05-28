@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
+<div>
+  <div>
+    <div
+      class="flex flex-col gap-4"
+    >
+      <div
+        class="flex gap-4"
+      >
+        <div
+          class="rounded-lg bg-smoke-50 py-5 px-6 w-full max-w-[127px]"
+        >
+          <div
+            class="flex flex-col gap-2 text-sm font-medium text-grey-600"
+          >
+            Cycle #
+            <div
+              class="font-heading text-2xl font-medium"
+            >
+              21
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-lg bg-smoke-50 py-5 px-6 w-full max-w-[142px]"
+        >
+          <div
+            class="flex flex-col gap-2 text-sm font-medium text-grey-600"
+          >
+            Status
+            <div
+              class="font-heading text-2xl font-medium"
+            >
+              Locked
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-lg bg-smoke-50 py-5 px-6 flex-1"
+        >
+          <div
+            class="flex flex-col gap-2 text-sm font-medium text-grey-600"
+          >
+            Remaining time
+            <div
+              class="font-heading text-2xl font-medium"
+            >
+              23d 23h 59m 59s
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="rounded-lg bg-smoke-50 py-5 px-6"
+      >
+        <div
+          class="flex items-center justify-between"
+        >
+          <div
+            class="flex flex-col gap-2 text-sm font-medium text-grey-600"
+          >
+            Current cycle
+            <div
+              class="font-heading text-2xl font-medium"
+            >
+              Configuration
+            </div>
+          </div>
+          <svg
+            aria-hidden="true"
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div />
+  </div>
+</div>
+`;
+
+exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
+<div>
+  <div>
+    <div
+      class="flex flex-col gap-4"
+    >
+      <div
+        class="flex gap-4"
+      >
+        <div
+          class="rounded-lg bg-smoke-50 py-5 px-6 w-full max-w-[127px]"
+        >
+          <div
+            class="flex flex-col gap-2 text-sm font-medium text-grey-600"
+          >
+            Cycle #
+            <div
+              class="font-heading text-2xl font-medium"
+            >
+              22
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-lg bg-smoke-50 py-5 px-6 w-full max-w-[142px]"
+        >
+          <div
+            class="flex flex-col gap-2 text-sm font-medium text-grey-600"
+          >
+            Status
+            <div
+              class="font-heading text-2xl font-medium"
+            >
+              Locked
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-lg bg-smoke-50 py-5 px-6 flex-1"
+        >
+          <div
+            class="flex flex-col gap-2 text-sm font-medium text-grey-600"
+          >
+            Cycle length
+            <div
+              class="font-heading text-2xl font-medium"
+            >
+              30 days
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="rounded-lg bg-smoke-50 py-5 px-6"
+      >
+        <div
+          class="flex items-center justify-between"
+        >
+          <div
+            class="flex flex-col gap-2 text-sm font-medium text-grey-600"
+          >
+            Upcoming cycle
+            <div
+              class="font-heading text-2xl font-medium"
+            >
+              Configuration
+            </div>
+          </div>
+          <svg
+            aria-hidden="true"
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div />
+  </div>
+</div>
+`;

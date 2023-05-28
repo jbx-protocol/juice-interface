@@ -3,14 +3,14 @@
 exports[`Cart renders 1`] = `
 <div>
   <div
-    class="fixed inset-x-0 bottom-0 z-20 flex h-full cursor-pointer items-center justify-center border-t border-grey-200 bg-white transition-all max-h-20"
+    class="fixed inset-x-0 bottom-0 z-20 flex h-full cursor-pointer items-center justify-center border-t border-grey-200 bg-white drop-shadow transition-all max-h-20"
     data-testid="cart"
   >
     <div
-      class="flex h-full w-full translate-x-16 items-center"
+      class="flex h-full w-full max-w-7xl items-center"
     >
       <div
-        class="flex w-full max-w-7xl items-center justify-between px-8 py-6"
+        class="flex w-full items-center justify-between px-8 py-6"
       >
         <div
           class="flex cursor-auto items-center gap-4"

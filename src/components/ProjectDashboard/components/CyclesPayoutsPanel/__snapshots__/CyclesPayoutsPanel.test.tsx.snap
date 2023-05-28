@@ -93,7 +93,11 @@ exports[`CyclesPayoutsPanel renders 1`] = `
                   Cycle #
                   <div
                     class="font-heading text-2xl font-medium"
-                  />
+                  >
+                    <div
+                      class="h-8 w-12 rounded-lg bg-smoke-200"
+                    />
+                  </div>
                 </div>
               </div>
               <div

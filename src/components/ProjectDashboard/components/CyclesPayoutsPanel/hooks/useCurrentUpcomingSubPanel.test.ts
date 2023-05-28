@@ -9,7 +9,6 @@ import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/usePro
 import { act } from 'react-dom/test-utils'
 import { useCurrentUpcomingSubPanel } from './useCurrentUpcomingSubPanel'
 
-// jest.mock('react')
 jest.mock('components/ProjectDashboard/hooks')
 jest.mock('hooks/v2v3/contractReader/useProjectUpcomingFundingCycle')
 

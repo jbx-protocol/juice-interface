@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-21 00:31\n"
+"PO-Revision-Date: 2023-05-28 00:31\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -309,6 +309,9 @@ msgstr "你必须授权迁移你的 V1 代币。"
 
 msgid "Add an on-chain memo to this payment."
 msgstr "给这笔付款添加一个链上备注"
+
+msgid "Background gradient color"
+msgstr ""
 
 msgid "+{percentageGain}%"
 msgstr "+{percentageGain}%"
@@ -895,6 +898,9 @@ msgstr "筹款周期详情"
 msgid "You haven't contributed to any projects yet!"
 msgstr "你尚未向任何项目捐款！"
 
+msgid "44190F"
+msgstr ""
+
 msgid "{0} withdrawn"
 msgstr "已提取 {0}"
 
@@ -984,6 +990,9 @@ msgstr "建议1400x256。"
 
 msgid "This cycle's rules may lead to unexpected behavior or other risks."
 msgstr "本周期的规则可能会导致意外行为或其他风险。"
+
+msgid "Deployed project payer"
+msgstr ""
 
 msgid "Recent"
 msgstr "最近"
@@ -1108,6 +1117,9 @@ msgstr "否则，将使用<0>金额</0>。金额允许你提前设定每个周�
 msgid "Project tokens will be minted to the address that made the payment."
 msgstr "项目代币会铸造给付款的地址。"
 
+msgid "Custom metadata resolver contract"
+msgstr ""
+
 msgid "Migrate legacy tokens"
 msgstr "迁移原代币"
 
@@ -1227,6 +1239,9 @@ msgstr "联系 WAGMI 工作室"
 
 msgid "Deploy"
 msgstr "部署"
+
+msgid "FF9213"
+msgstr ""
 
 msgid "Use NFTs for redemptions"
 msgstr "将 NFT 用于赎回"
@@ -1420,6 +1435,9 @@ msgstr "{0} 总共"
 msgid "<0/> unclaimed"
 msgstr "<0/> 未领取"
 
+msgid "Sent payouts (v1)"
+msgstr ""
+
 msgid "Edit tracked assets"
 msgstr "编辑监测的资产"
 
@@ -1443,6 +1461,9 @@ msgstr "项目的规则在每个周期的持续期间内是锁定的。如果周
 
 msgid "Balance exceeded"
 msgstr "超出余额"
+
+msgid "3A0F0C"
+msgstr ""
 
 msgid "Set aside a percentage of freshly minted NFTs."
 msgstr "保留某个比例的新铸造 NFT。"
@@ -1528,6 +1549,9 @@ msgstr "本周期的支出"
 msgid "<0>This website interacts with the Ethereum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Ethereum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
 msgstr "<0>本网站与以太坊区块链交互 — 要使用它，你将需要一个钱包及一些 ETH (ETH 是以太坊上的主要货币)。 你可以在 <1>MetaMask.io</1>获得一个免费钱包， 并使用信用卡在钱包内购买 ETH。</0>"
 
+msgid "Each field is required."
+msgstr ""
+
 msgid "Set up token migration"
 msgstr "设置代币迁移"
 
@@ -1594,6 +1618,12 @@ msgstr "项目"
 msgid "Migrate tokens"
 msgstr "迁移代币"
 
+msgid "Update NFT theme"
+msgstr ""
+
+msgid "Background color"
+msgstr ""
+
 msgid "Link minters of this NFT to your project's website, Discord, etc."
 msgstr "向 NFT 的铸造者提供你项目的网址、Discord 链接，等等。"
 
@@ -1611,6 +1641,9 @@ msgstr "未设定"
 
 msgid "Recipient address"
 msgstr "接收人地址"
+
+msgid "Text color"
+msgstr ""
 
 msgid "{0} is required"
 msgstr "请输入 {0}"
@@ -1759,11 +1792,17 @@ msgstr "扣除手续费后可用"
 msgid "Recipient address is required."
 msgstr "必须填写接收人地址。"
 
+msgid "Edited cycle (v1)"
+msgstr ""
+
 msgid "Project #{projectId}"
 msgstr "项目 #{projectId}"
 
 msgid "Project rules"
 msgstr "项目规则"
+
+msgid "Failed to launch Snapshot. Try again."
+msgstr ""
 
 msgid "Choose how you would like to set up payouts."
 msgstr "选择你设置支出的方式。"
@@ -2224,6 +2263,9 @@ msgstr "标识"
 msgid "Watching projects"
 msgstr "正在关注的项目"
 
+msgid "Set theme for {projectTitle}\\'s project NFT"
+msgstr ""
+
 msgid "Check {0} and verify your new email address."
 msgstr "检查 {0} 及确认你新的邮件地址。"
 
@@ -2386,6 +2428,9 @@ msgstr "启动周期"
 msgid "Recommended"
 msgstr "建议的"
 
+msgid "Enter a valid color hex code."
+msgstr ""
+
 msgid "Total unclaimed and claimed V1 and V2 tokens"
 msgstr "总计未提取及已提取 V1 和 V2 代币"
 
@@ -2517,6 +2562,9 @@ msgstr "编辑截止期限"
 
 msgid "We do everything in the light, for everyone to see."
 msgstr "我们一切都是公开透明的。"
+
+msgid "Modify the colors of your Juicebox Project NFT. This NFT represents ownership over your project."
+msgstr ""
 
 msgid "Set aside a percentage of token issuance for the wallets and Juicebox projects of your choosing."
 msgstr "为你选择的钱包地址及其他 Juicebox 项目预留某个比例的发行代币。"
@@ -2794,6 +2842,9 @@ msgstr "向另一个 Juicebox 项目或会铸造出该项目的代币。请选�
 msgid "Get help planning or setting up my project."
 msgstr "寻求帮助来策划或设置我的项目。"
 
+msgid "All activity"
+msgstr ""
+
 msgid "Community"
 msgstr "社区"
 
@@ -2805,9 +2856,6 @@ msgstr "下载项目活动记录的 CSV 文件"
 
 msgid "Cycle duration"
 msgstr "周期时长"
-
-msgid "Last 7 days"
-msgstr "过去 7 天"
 
 msgid "Export payouts CSV"
 msgstr "导出支出列表到 CSV"
@@ -3117,6 +3165,9 @@ msgstr "数量"
 
 msgid "Memos appear on the project's activity feed when a payment is made through this address."
 msgstr "通过这个地址进行付款时，付款备忘录会出现在项目的活动记录里。"
+
+msgid "Customize theme"
+msgstr ""
 
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "百分比合计不能超过 100%."
@@ -3445,6 +3496,9 @@ msgstr "查看本月社区精选项目。"
 msgid "No payouts scheduled for this cycle."
 msgstr "本周期未安排支出。"
 
+msgid "Set metadata resolver for {projectTitle}\\'s project NFT"
+msgstr ""
+
 msgid "Made a mistake?"
 msgstr "是否出现失误？"
 
@@ -3562,6 +3616,9 @@ msgstr "无链上治理"
 msgid "Edit recipient"
 msgstr "编辑接收人"
 
+msgid "Update preview"
+msgstr ""
+
 msgid "Tokens per ETH contributed"
 msgstr "每捐赠 1 ETH 获得的代币"
 
@@ -3628,9 +3685,6 @@ msgstr "你项目的第一个周期将于 <0>{0} 的 {1}</0>开始。 你完成�
 msgid "MoonDAO has built an enthusiastic community of over 10,000 members, successfully sent their first astronaut to space, and is currently coordinating the spaceflight for their second astronaut. Their ambitious long-term roadmap goals include building a settlement on the Moon by 2030. In collaboration with StudioDAO, a decentralized movie studio running on Juicebox, MoonDAO has donated $100,000 to help fund the production of Ticket To Space, the first DAO documentary. The film will cover the story of Yan, a MoonDAO member from China, who will be sent to space on an upcoming Blue Origin flight after minting a free NFT."
 msgstr "MoonDAO 打造了一个拥有超过一万名成员充满激情的社区，并成功把他们的第一名宇航员送进太空，目前他们正在协调第二名宇航员的天空之旅。他们的远期路线图目标富有野心，其中就包括了 2030 年前在月球上建设一个定居点的计划。与在 Juicebox 上运营的去中心化电影工作室 StudioDAO 合作，MoonDAO 捐赠了 10 万美元来资助第一部 DAO 纪录片 Ticket To Space 的制作。这部影片将讲述一位来自中国的 MoonDAO 成员 Yan 的故事，他通过铸造免费 NFT 赢得了登上 蓝色起源号飞船进入太空的机会。"
 
-msgid "All events"
-msgstr "所有活动"
-
 msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
 msgstr "这样 <0/> or <1/> 项目的代币持有人就可以把他们的代币迁移到 <2/>。"
 
@@ -3666,6 +3720,9 @@ msgstr "切换网络"
 
 msgid "{0}{1}"
 msgstr "{0}{1}"
+
+msgid "Project NFT theme"
+msgstr ""
 
 msgid "Project activity failed to load."
 msgstr "项目活动记录加载失败。"
@@ -3724,8 +3781,14 @@ msgstr "{payerRate} (+ {reservedRate} 保留) {tokenSymbolPlural}/ETH"
 msgid "View on Etherscan"
 msgstr "在 Etherscan 上查看"
 
+msgid "Preview"
+msgstr ""
+
 msgid "Token amount"
 msgstr "代币数量"
+
+msgid "Custom resolver address"
+msgstr ""
 
 msgid "Allow the <0>Juicebox NFT deployer contract</0> to edit this project's cycle."
 msgstr ""
@@ -3964,6 +4027,9 @@ msgstr "当前可供发送给以下支出接收人的 ETH 数量（未扣除 {fe
 msgid "You will receive {0}<0/>"
 msgstr "你将收到 {0}<0/>"
 
+msgid "Last 30 days"
+msgstr ""
+
 msgid "Your project's NFTs."
 msgstr "你项目的 NFT。"
 
@@ -4012,6 +4078,9 @@ msgstr "在 Juicebox 创建及启动内置赎回功能的 NFT 项目。"
 msgid "No reserved tokens configured."
 msgstr "未配置保留代币。"
 
+msgid "Sent reserved tokens (v1)"
+msgstr ""
+
 msgid "Spaces are not allowed"
 msgstr "不允许有空格"
 
@@ -4059,6 +4128,9 @@ msgstr "0"
 
 msgid "Latest"
 msgstr "最近"
+
+msgid "Custom metadata resolvers replace the default metadata above. They must conform to the <0>IJBTokenUriResolver</0> interface."
+msgstr ""
 
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr "剩余供应量： {0}/{1}"
@@ -4162,6 +4234,9 @@ msgstr "金额："
 msgid "Reserved tokens"
 msgstr "保留代币"
 
+msgid "Set custom resolver"
+msgstr ""
+
 msgid "Project token recipient"
 msgstr "项目代币接收人"
 
@@ -4248,6 +4323,9 @@ msgstr "系列符号通常是它名称的首字母缩写或者简称。系列符
 
 msgid "{0}% of supply"
 msgstr "占比 {0}%"
+
+msgid "Enter a valid Ethereum address"
+msgstr ""
 
 msgid "Project contracts directory"
 msgstr "项目合约目录"

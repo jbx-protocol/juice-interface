@@ -3,5 +3,8 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
-  "scss.lint.unknownAtRules": "ignore"
+  "scss.lint.unknownAtRules": "ignore",
+  "files.exclude": {
+    "**/__snapshots__/**": true
+  }
 }

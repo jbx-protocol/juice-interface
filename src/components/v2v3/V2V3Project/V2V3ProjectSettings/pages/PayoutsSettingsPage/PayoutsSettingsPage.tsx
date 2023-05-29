@@ -9,10 +9,15 @@ import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/splits'
 
+import Loading from 'components/Loading'
 import { V2V3EditPayouts } from './V2V3EditPayouts'
 
 export function PayoutsSettingsPage() {
-  const { fundingCycle, distributionLimit } = useContext(V2V3ProjectContext)
+  const {
+    fundingCycle,
+    distributionLimit,
+    loading: { distributionLimitLoading },
+  } = useContext(V2V3ProjectContext)
   const [loading, setLoading] = useState(false)
   const [editingSplits, setEditingSplits] = useState<Split[]>([])
   const totalSplitsPercentage = useMemo(
@@ -49,9 +54,11 @@ export function PayoutsSettingsPage() {
     [setProjectSplits, totalSplitsPercentageInvalid],
   )
 
-  const cannotEditPayouts = !distributionLimit || distributionLimit.eq(0)
+  const cannotEditPayouts = !distributionLimit || distributionLimit?.eq(0)
 
-  return (
+  return !distributionLimit || distributionLimitLoading ? (
+    <Loading />
+  ) : (
     <>
       <V2V3EditPayouts
         editingSplits={editingSplits}

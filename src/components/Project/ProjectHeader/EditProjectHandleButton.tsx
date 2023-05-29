@@ -18,7 +18,7 @@ export function EditProjectHandleButton() {
     >
       <div>
         <Link
-          href={settingsPagePath('projecthandle', {
+          href={settingsPagePath('handle', {
             projectId,
             handle,
           })}

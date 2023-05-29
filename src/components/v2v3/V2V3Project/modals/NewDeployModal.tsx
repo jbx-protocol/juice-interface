@@ -63,7 +63,7 @@ export default function NewDeployModal({
       </p>
       <div>
         <Link
-          href={settingsPagePath('projecthandle', { handle, projectId })}
+          href={settingsPagePath('handle', { handle, projectId })}
           legacyBehavior
         >
           <RichButton

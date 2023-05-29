@@ -1,1 +1,1 @@
-export { V2V3ProjectSettings } from './V2V3ProjectSettings'
+export { ProjectSettingsDashboard } from './ProjectSettingsDashboard'

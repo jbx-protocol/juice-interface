@@ -113,7 +113,7 @@ export function SnapshotSettingsSection() {
         ) : (
           <Trans>
             Project handle required.{' '}
-            <Link href={`/v2/p/${projectId}/settings?page=projecthandle`}>
+            <Link href={`/v2/p/${projectId}/settings?page=handle`}>
               Set project handle.
             </Link>
           </Trans>

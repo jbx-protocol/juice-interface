@@ -11,6 +11,7 @@ import { installJuiceboxWindowObject } from 'lib/juicebox'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
+import { twJoin } from 'tailwind-merge'
 import { redirectTo } from 'utils/windowUtils'
 
 const LanguageProvider = dynamic(
@@ -28,9 +29,9 @@ const LanguageProvider = dynamic(
  * is still an issue, but the current structure allows opengraph and twitter
  * meta tags to be setup correctly.
  */
-export const AppWrapper: React.FC<React.PropsWithChildren<unknown>> = ({
-  children,
-}) => {
+export const AppWrapper: React.FC<
+  React.PropsWithChildren<{ hideNav?: boolean }>
+> = ({ children, hideNav }) => {
   return (
     <React.StrictMode>
       <ReactQueryProvider>
@@ -40,7 +41,7 @@ export const AppWrapper: React.FC<React.PropsWithChildren<unknown>> = ({
               <EtherPriceProvider>
                 <ArcxProvider>
                   <AnnouncementsProvider>
-                    <_Wrapper>{children}</_Wrapper>
+                    <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
                   </AnnouncementsProvider>
                 </ArcxProvider>
               </EtherPriceProvider>
@@ -52,7 +53,10 @@ export const AppWrapper: React.FC<React.PropsWithChildren<unknown>> = ({
   )
 }
 
-const _Wrapper: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
+  children,
+  hideNav,
+}) => {
   const router = useRouter()
 
   // run on initial mount
@@ -66,8 +70,10 @@ const _Wrapper: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
 
   return (
     <Layout className="flex h-screen flex-col bg-transparent">
-      <SiteNavigation />
-      <Content className="pt-20 md:p-0">{children}</Content>
+      {hideNav ? null : <SiteNavigation />}
+      <Content className={twJoin(!hideNav ? 'pt-20' : '', 'md:p-0')}>
+        {children}
+      </Content>
     </Layout>
   )
 }

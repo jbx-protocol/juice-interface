@@ -218,6 +218,9 @@ msgstr ""
 msgid "While enabled, the project owner can mint any amount of project tokens."
 msgstr ""
 
+msgid "Extended functionality for project owners"
+msgstr ""
+
 msgid "Create ERC-20"
 msgstr ""
 
@@ -365,7 +368,13 @@ msgstr ""
 msgid "Reserved NFTs"
 msgstr ""
 
+msgid "Basic details"
+msgstr ""
+
 msgid "Your project can receive payments through the juicebox.money app."
+msgstr ""
+
+msgid "Cycle configuration"
 msgstr ""
 
 msgid "How do I archive a project?"
@@ -446,6 +455,9 @@ msgstr ""
 msgid "Amount of ERC-20 tokens to claim"
 msgstr ""
 
+msgid "NFTs & Rewards"
+msgstr ""
+
 msgid "Project owner address"
 msgstr ""
 
@@ -471,6 +483,9 @@ msgid "JuiceboxDAO"
 msgstr ""
 
 msgid "The issuance rate is reduced by this amount each cycle (unless the owner changes the issuance rate)."
+msgstr ""
+
+msgid "Manage project"
 msgstr ""
 
 msgid "1-day deadline"
@@ -890,6 +905,9 @@ msgstr ""
 msgid "Funding cycle details"
 msgstr ""
 
+msgid "Archive"
+msgstr ""
+
 msgid "You haven't contributed to any projects yet!"
 msgstr ""
 
@@ -993,6 +1011,9 @@ msgid "Recent"
 msgstr ""
 
 msgid "Project description"
+msgstr ""
+
+msgid "Edit next cycle"
 msgstr ""
 
 msgid "Change ENS name"
@@ -2288,6 +2309,9 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
+msgid "{pageTitle}"
+msgstr ""
+
 msgid "Paused"
 msgstr ""
 
@@ -2432,6 +2456,9 @@ msgstr ""
 msgid "Read case studies"
 msgstr ""
 
+msgid "Current payout"
+msgstr ""
+
 msgid "tokens"
 msgstr ""
 
@@ -2457,6 +2484,9 @@ msgid "What are locked cycles?"
 msgstr ""
 
 msgid "Save deadline"
+msgstr ""
+
+msgid "Update basic project details"
 msgstr ""
 
 msgid "Available: {0}"
@@ -2487,6 +2517,9 @@ msgid "One or more reserved token recipients"
 msgstr ""
 
 msgid "<0>To summarize:</0><1><2>When people pay a project, they receive the project's tokens. Like other tokens, these can be used for governance, for token-gated websites, and other purposes.</2><3>Projects can pay out ETH to the wallets or Juicebox projects of their choosing. These payouts can be pre-defined, and they can also be changed over time.</3><4>If people are unhappy with the direction a project is headed, they can redeem their tokens to claim a share of the ETH held in the project.</4></1><5>Project creators have powerful controls over each one of these mechanics. They can change token issuance rates, redemption rates, payouts, and other rules over time, leading to powerful and elegant tokenomics. They can also lock their project's rules in place for pre-determined amounts of time (called <6>cycles</6>), guaranteeing that they can't rugpull the community. Juicebox lets projects take control if they need to, but it also lets them give up control to build trust.</5><7>Importantly, Juicebox's crypto fundraising platform is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no way to access a project's ETH or change its rules.</7><8>To learn more, visit <9>our docs</9>.</8>"
+msgstr ""
+
+msgid "Owned by: <0/>"
 msgstr ""
 
 msgid "Close, I'll do these later"
@@ -3281,6 +3314,9 @@ msgstr ""
 msgid "Send reserved {0}"
 msgstr ""
 
+msgid "Project settings"
+msgstr ""
+
 msgid "Unix timestamp in seconds (for example, {0}). Leave blank to start as soon as possible."
 msgstr ""
 
@@ -3372,6 +3408,9 @@ msgid "Download CSV"
 msgstr ""
 
 msgid "Contract"
+msgstr ""
+
+msgid "Upgrade"
 msgstr ""
 
 msgid "After {0} (your first cycle), your project will not issue any tokens unless you edit the issuance rate."
@@ -3998,6 +4037,9 @@ msgstr ""
 msgid "I have another question!"
 msgstr ""
 
+msgid "Manage your project's state and ownership"
+msgstr ""
+
 msgid "Set text record for {0}"
 msgstr ""
 
@@ -4163,6 +4205,9 @@ msgstr ""
 msgid "Project handle"
 msgstr ""
 
+msgid "Manage your project's NFTs and rewards"
+msgstr ""
+
 msgid "Advanced options"
 msgstr ""
 
@@ -4221,6 +4266,9 @@ msgid "Payment notice"
 msgstr ""
 
 msgid "{userOwnershipPercentage}% of total supply"
+msgstr ""
+
+msgid "Make changes to your cycle settings and rules"
 msgstr ""
 
 msgid "Amount:"

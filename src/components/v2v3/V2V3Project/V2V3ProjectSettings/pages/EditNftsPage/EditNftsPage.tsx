@@ -57,7 +57,7 @@ export function EditNftsPage() {
                 </Trans>
               </p>
               <Link
-                href={settingsPagePath('reconfigurefc', { projectId, handle })}
+                href={settingsPagePath('cycle', { projectId, handle })}
                 legacyBehavior
               >
                 <Button type="primary">

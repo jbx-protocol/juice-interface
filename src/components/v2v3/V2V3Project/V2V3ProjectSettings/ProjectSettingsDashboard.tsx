@@ -148,11 +148,11 @@ export function ProjectSettingsDashboard() {
       </section>
 
       <section>
-        <h2 className="mb-8 font-heading text-2xl font-medium">
+        <h2 className="mb-5 font-heading text-xl font-medium">
           <Trans>Project settings</Trans>
         </h2>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           <SettingsGroupCard
             title={<Trans>General</Trans>}
             subtitle={<Trans>Update basic project details</Trans>}

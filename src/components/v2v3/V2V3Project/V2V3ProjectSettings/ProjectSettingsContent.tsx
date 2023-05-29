@@ -1,4 +1,4 @@
-import { ChevronRightIcon } from '@heroicons/react/24/outline'
+import { ArrowLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { Trans } from '@lingui/macro'
 import { Divider, Layout } from 'antd'
 import {
@@ -54,13 +54,14 @@ function Breadcrumbs({
       <li>
         <Link
           href={useSettingsPagePath()}
-          className="text-secondary font-medium"
+          className="text-secondary flex items-center gap-2 font-medium"
         >
+          <ArrowLeftIcon className="text-secondary h-4 w-4" />
           <Trans>Manage</Trans>
         </Link>
       </li>
 
-      <ChevronRightIcon className="text-secondary h-3 w-3" />
+      <ChevronRightIcon className="text-secondary h-5 w-5" />
 
       <li>
         <Link

@@ -14,9 +14,9 @@ export const ProjectSettingsLayout: React.FC<React.PropsWithChildren> = ({
 
   return (
     <>
-      <div className="mb-8 border-b border-solid border-b-grey-100 dark:border-b-slate-400">
+      <header className="sticky top-0 right-0 mb-8 border-b border-solid border-b-grey-100 bg-white dark:border-b-slate-500 dark:bg-slate-900">
         <div className="mx-auto flex max-w-5xl items-center justify-between p-5">
-          <h1 className="m-0 flex items-center gap-2 font-heading text-2xl font-medium">
+          <h1 className="m-0 flex items-center gap-2 font-heading text-xl font-medium">
             <Cog6ToothIcon className="h-6 w-6" />
             <Trans>Manage project</Trans>
           </h1>
@@ -28,9 +28,9 @@ export const ProjectSettingsLayout: React.FC<React.PropsWithChildren> = ({
             <XMarkIcon className="h-6 w-6" />
           </Link>
         </div>
-      </div>
+      </header>
 
-      <div className="my-0 mx-auto max-w-5xl p-5">{children}</div>
+      <div className="mx-auto max-w-5xl px-5 pb-24 pt-5">{children}</div>
     </>
   )
 }

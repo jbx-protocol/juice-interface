@@ -24,12 +24,12 @@ const PendingTransactionModalBody = () => {
 
   return (
     <div className="my-8 mx-0 flex h-full w-full items-center justify-center">
-      <div className="text-center font-normal">
+      <div className="flex flex-col items-center text-center font-normal">
         <Image
           src="/assets/images/quint.webp"
           alt={t`Juicebox loading animation`}
-          width={150}
-          height={150}
+          width={140}
+          height={140}
           style={{
             maxWidth: '100%',
             height: 'auto',

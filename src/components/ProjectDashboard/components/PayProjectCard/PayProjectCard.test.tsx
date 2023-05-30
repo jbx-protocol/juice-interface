@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import { PayProjectCard } from './PayProjectCard'
 
 describe('PayProjectCard', () => {
@@ -15,7 +15,6 @@ describe('PayProjectCard', () => {
     const input = getByTestId('pay-input-input')
     const tokensPerPay = getByTestId('pay-project-card-tokens-per-pay')
     expect(input).toHaveValue('')
-    screen.debug()
     expect(tokensPerPay).toHaveTextContent('Receive 0 tokens/1 ETH')
     fireEvent.change(input, { target: { value: '1' } })
     expect(input).toHaveValue('1')

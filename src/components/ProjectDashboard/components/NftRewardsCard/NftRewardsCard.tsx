@@ -10,7 +10,7 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
         <Trans>NFTs & Rewards</Trans>
       </div>
       <div className="flex items-center gap-3">
-        <div className="relative flex">
+        <div className="relative z-0 flex">
           <PlaceholderSquare className="z-20 bg-bluebs-400" />
           <PlaceholderSquare className="z-10 -ml-[18px] bg-juice-400" />
           <PlaceholderSquare className="-ml-[18px] bg-melon-600" />

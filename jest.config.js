@@ -3,5 +3,5 @@ module.exports = {
   moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
   moduleDirectories: ['node_modules', 'src'],
   verbose: true,
-  setupFiles: ['../jest.setup.ts'],
+  setupFilesAfterEnv: ['../jest.setup.ts'],
 }

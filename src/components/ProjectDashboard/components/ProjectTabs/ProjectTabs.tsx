@@ -1,10 +1,10 @@
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
-import { useMemo } from 'react'
+import { Fragment, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { AboutPanel } from '../AboutPanel'
 import { ActivityPanel } from '../ActivityPanel'
-import { CyclesPanel } from '../CyclesPayoutsPanel'
+import { CyclesPayoutsPanel } from '../CyclesPayoutsPanel'
 import { NftRewardsPanel } from '../NftRewardsPanel'
 import { TokensPanel } from '../TokensPanel'
 import { ProjectTab } from '../ui'
@@ -21,7 +21,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
       {
         id: 'cycle_payouts',
         name: t`Cycles & Payouts`,
-        panel: <CyclesPanel />,
+        panel: <CyclesPayoutsPanel />,
       },
       { id: 'tokens', name: t`Tokens`, panel: <TokensPanel /> },
       { id: 'activity', name: t`Activity`, panel: <ActivityPanel /> },
@@ -31,7 +31,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
 
   return (
     <div className={twMerge('flex flex-col items-center gap-12', className)}>
-      <Tab.Group>
+      <Tab.Group as={Fragment}>
         <div className="flex w-full justify-center border-b border-grey-200">
           <Tab.List className="flex gap-8">
             {tabs.map(tab => (
@@ -39,9 +39,11 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
             ))}
           </Tab.List>
         </div>
-        <Tab.Panels>
+        <Tab.Panels as={Fragment}>
           {tabs.map(tab => (
-            <Tab.Panel key={tab.id}>{tab.panel}</Tab.Panel>
+            <Tab.Panel as={Fragment} key={tab.id}>
+              {tab.panel}
+            </Tab.Panel>
           ))}
         </Tab.Panels>
       </Tab.Group>

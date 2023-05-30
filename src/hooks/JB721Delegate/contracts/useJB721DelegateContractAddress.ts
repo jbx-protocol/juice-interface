@@ -1,5 +1,5 @@
 import { readNetwork } from 'constants/networks'
-import { ForgeDeploy } from 'models/contracts'
+import { ForgeDeploy, addressFor } from 'forge-run-parser'
 import { JB721DelegateVersion } from 'models/nftRewards'
 import { useEffect, useState } from 'react'
 
@@ -15,10 +15,7 @@ export async function loadJB721DelegateAddress(
 ) {
   const deployment = await loadJB721DelegateDeployment(version)
 
-  const address = deployment?.transactions.find(
-    tx => tx.contractName === contractName,
-  )?.contractAddress
-
+  const address = addressFor(contractName, deployment)
   return address!
 }
 

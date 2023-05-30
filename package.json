@@ -108,6 +108,7 @@
     "eslint-config-next": "^13.4.3",
     "ethereum-block-by-date": "1.4.6",
     "ethers": "^5.7.0",
+    "forge-run-parser": "^1.0.2",
     "formidable": "^2.0.1",
     "formik": "^2.2.9",
     "graphql": "^16.5.0",

@@ -9718,6 +9718,11 @@ forever-agent@~0.6.1:
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha512-j0KLYPhm6zeac4lz3oJ3o65qvgQCcPubiyotZrXqEaG4hNagNYO8qdlUrX5vwqv9ohqeT/Z3j6+yW067yWWdUw==
 
+forge-run-parser@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/forge-run-parser/-/forge-run-parser-1.0.2.tgz#f23dd92a334b9c000abdfc8fce2c59662698f543"
+  integrity sha512-BGQiS9Gp7q2rd3XUNHt5iJmLS7s/udGhRRWvyiqIxMUcnO62fzfHLkQ4+/jRLBCAQ7p5fXQUntJ0P9MxAPrwYA==
+
 form-data-encoder@1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/form-data-encoder/-/form-data-encoder-1.7.1.tgz#ac80660e4f87ee0d3d3c3638b7da8278ddb8ec96"

@@ -25,37 +25,35 @@ const payouts = [
   },
 ]
 
-export const PayoutsSubPanel = ({ className }: { className?: string }) => {
+export const ReservedTokensSubPanel = ({
+  className,
+}: {
+  className?: string
+}) => {
   return (
     <div className={twMerge(className)}>
       <h2 className="mb-0 font-heading text-2xl font-medium">
-        <Trans>Treasury & Payouts</Trans>
+        <Trans>Reserved tokens</Trans>
       </h2>
       <div className="mt-5 flex flex-col items-center gap-4">
         <div className="flex w-full items-center gap-4">
           <DisplayCard className="flex w-full flex-col gap-2">
             <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium">
-              <Trans>Treasury balance</Trans>
+              <Trans>Reserved tokens</Trans>
             </h3>
-            <span className="font-heading text-xl font-medium">210 ETH</span>
+            <span className="font-heading text-xl font-medium">800,000</span>
           </DisplayCard>
           <DisplayCard className="flex w-full flex-col gap-2">
             <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium">
-              <Trans>Overflow</Trans>
+              <Trans>Reserved rate</Trans>
             </h3>
-            <span className="font-heading text-xl font-medium">210 ETH</span>
-          </DisplayCard>
-          <DisplayCard className="flex w-full flex-col gap-2">
-            <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium">
-              <Trans>Available to pay out</Trans>
-            </h3>
-            <span className="font-heading text-xl font-medium">210 ETH</span>
+            <span className="font-heading text-xl font-medium">15%</span>
           </DisplayCard>
         </div>
         <DisplayCard className="flex w-full flex-col pb-8">
           <div className="flex items-center justify-between gap-3">
             <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium">
-              <Trans>Payouts</Trans>
+              <Trans>Reserved tokens list</Trans>
             </h3>
             <EllipsisVerticalIcon role="button" className="h-6 w-6" />
           </div>
@@ -84,7 +82,7 @@ export const PayoutsSubPanel = ({ className }: { className?: string }) => {
             type="primary"
             className="mt-6 flex w-fit items-center gap-3 self-end"
           >
-            <Trans>Send payouts</Trans>
+            <Trans>Send reserved tokens</Trans>
             <ArrowUpCircleIcon className="h-5 w-5" />
           </Button>
         </DisplayCard>

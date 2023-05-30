@@ -1,8 +1,9 @@
-import { ChevronDownIcon } from '@heroicons/react/24/outline'
-import { Trans, t } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import { useMemo } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { DisplayCard } from '../../ui'
 import { useCurrentUpcomingSubPanel } from '../hooks/useCurrentUpcomingSubPanel'
+import { ConfigurationDisplayCard } from './ConfigurationDisplayCard'
 import { PayoutsSubPanel } from './PayoutsSubPanel'
 
 export const CurrentUpcomingSubPanel = ({
@@ -43,23 +44,16 @@ export const CurrentUpcomingSubPanel = ({
     info.status,
     info.type,
   ])
-  const bottomPanelTitle = useMemo(() => {
-    if (info.type === 'current') {
-      return t`Current cycle`
-    }
-    return t`Upcoming cycle`
-  }, [info.type])
 
   return (
     <div>
-      {/* Cycle info */}
       <div className="flex flex-col gap-4">
         <div className="flex gap-4">
           <DisplayCard className="w-full max-w-[127px]">
             <div className="flex flex-col gap-2 text-sm font-medium text-grey-600">
               {topPanelsInfo[0].title}
               <div className="font-heading text-2xl font-medium">
-                {topPanelsInfo[0].value}
+                {topPanelsInfo[0].value ?? <Skeleton />}
               </div>
             </div>
           </DisplayCard>
@@ -67,7 +61,7 @@ export const CurrentUpcomingSubPanel = ({
             <div className="flex flex-col gap-2 text-sm font-medium text-grey-600">
               {topPanelsInfo[1].title}
               <div className="font-heading text-2xl font-medium">
-                {topPanelsInfo[1].value}
+                {topPanelsInfo[1].value ?? <Skeleton className="w-22" />}
               </div>
             </div>
           </DisplayCard>
@@ -75,24 +69,20 @@ export const CurrentUpcomingSubPanel = ({
             <div className="flex flex-col gap-2 text-sm font-medium text-grey-600">
               {topPanelsInfo[2].title}
               <div className="font-heading text-2xl font-medium">
-                {topPanelsInfo[2].value}
+                {topPanelsInfo[2].value ?? <Skeleton className="w-40" />}
               </div>
             </div>
           </DisplayCard>
         </div>
-        <DisplayCard>
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600">
-              {bottomPanelTitle}
-              <div className="font-heading text-2xl font-medium">
-                <Trans>Configuration</Trans>
-              </div>
-            </div>
-            <ChevronDownIcon className="h-6 w-6" />
-          </div>
-        </DisplayCard>
+        <ConfigurationDisplayCard type={info.type} />
       </div>
+      {/* )} */}
+
       <PayoutsSubPanel className="mt-12" />
     </div>
   )
 }
+
+const Skeleton = ({ className }: { className?: string }) => (
+  <div className={twMerge('h-8 w-12 rounded-lg bg-smoke-200', className)} />
+)

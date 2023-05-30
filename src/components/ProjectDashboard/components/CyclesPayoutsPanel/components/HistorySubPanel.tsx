@@ -1,70 +1,15 @@
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
+import { useHistorySubPanel } from '../hooks/useHistorySubPanel'
 
-const cycles = [
-  {
-    cycleNumber: '#22',
-    Withdrawn: '$23,000',
-    date: 'a month ago',
-  },
-  {
-    cycleNumber: '#21',
-    Withdrawn: '$20,000',
-    date: '2 months ago',
-  },
-  {
-    cycleNumber: '#20',
-    Withdrawn: '$18,000',
-    date: '3 months ago',
-  },
-  {
-    cycleNumber: '#19',
-    Withdrawn: '$16,000',
-    date: '4 months ago',
-  },
-  {
-    cycleNumber: '#18',
-    Withdrawn: '$15,000',
-    date: '5 months ago',
-  },
-  {
-    cycleNumber: '#17',
-    Withdrawn: '$14,000',
-    date: '6 months ago',
-  },
-  {
-    cycleNumber: '#16',
-    Withdrawn: '$12,000',
-    date: '7 months ago',
-  },
-  {
-    cycleNumber: '#15',
-    Withdrawn: '$10,000',
-    date: '8 months ago',
-  },
-  {
-    cycleNumber: '#14',
-    Withdrawn: '$8,000',
-    date: '9 months ago',
-  },
-  {
-    cycleNumber: '#13',
-    Withdrawn: '$6,000',
-    date: '10 months ago',
-  },
-  {
-    cycleNumber: '#12',
-    Withdrawn: '$4,000',
-    date: '11 months ago',
-  },
-  {
-    cycleNumber: '#11',
-    Withdrawn: '$2,000',
-    date: '12 months ago',
-  },
-]
+export type HistoryData = {
+  cycleNumber: string
+  withdrawn: string
+  date: string
+}[]
 
 export const HistorySubPanel = () => {
+  const { loading, data, error } = useHistorySubPanel()
   const tableHeaders = [t`Cycle #`, t`Withdrawn`, t`Date`]
 
   return (
@@ -86,23 +31,50 @@ export const HistorySubPanel = () => {
         </tr>
       </thead>
       <tbody className="divide-y divide-grey-200">
-        {cycles.map(cycle => (
-          <tr key={cycle.date}>
-            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium">
-              {cycle.cycleNumber}
-            </td>
-            <td className="whitespace-nowrap px-4 py-4 text-sm font-medium">
-              {cycle.Withdrawn}
-            </td>
-            <td className="whitespace-nowrap px-4 py-4 text-sm text-grey-500">
-              {cycle.date}
-            </td>
-            <td className="text-gray-500 whitespace-nowrap px-3 py-4 text-sm">
-              <ChevronDownIcon />
-            </td>
-          </tr>
-        ))}
+        {loading ? (
+          <>
+            <SkeletonRow />
+            <SkeletonRow />
+            <SkeletonRow />
+            <SkeletonRow />
+          </>
+        ) : error ? (
+          <div className="text-error-400">{error}</div>
+        ) : (
+          <>
+            {data.map(cycle => (
+              <tr key={cycle.cycleNumber}>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium">
+                  {cycle.cycleNumber}
+                </td>
+                <td className="whitespace-nowrap px-4 py-4 text-sm font-medium">
+                  {cycle.withdrawn}
+                </td>
+                <td className="whitespace-nowrap px-4 py-4 text-sm text-grey-500">
+                  {cycle.date}
+                </td>
+                <td className="text-gray-500 whitespace-nowrap px-3 py-4 text-sm">
+                  <ChevronDownIcon />
+                </td>
+              </tr>
+            ))}
+          </>
+        )}
       </tbody>
     </table>
   )
 }
+
+const SkeletonRow = () => (
+  <tr className="animate-pulse bg-white">
+    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium">
+      <div className="h-4 w-3/4 rounded bg-grey-200"></div>
+    </td>
+    <td className="whitespace-nowrap px-4 py-4 text-sm font-medium">
+      <div className="h-4 rounded bg-grey-200"></div>
+    </td>
+    <td className="whitespace-nowrap px-4 py-4 text-sm text-grey-500">
+      <div className="h-4 w-5/6 rounded bg-grey-200"></div>
+    </td>
+  </tr>
+)

@@ -65,14 +65,14 @@ export const ReservedTokensSubPanel = ({
                   key={payout.name}
                   className="flex items-center justify-between gap-3 border-b border-grey-200 py-3"
                 >
-                  <div className="flex items-center gap-3">
+                  <td className="flex items-center gap-3">
                     <div className="h-8 w-8 rounded-full bg-juice-400" />
                     <span className="font-medium">{payout.name}</span>
-                  </div>
-                  <div className="flex items-center gap-3">
+                  </td>
+                  <td className="flex items-center gap-3">
                     <span>{payout.amount}</span>
                     <span>{payout.percent}</span>
-                  </div>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -46,6 +46,7 @@ export type DBProject = {
   trendingVolume: BigNumber
 
   paymentsCount: number
+  trendingPaymentsCount: number
   contributorsCount: number
   nftsMintedCount: number
   redeemCount: number

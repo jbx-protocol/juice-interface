@@ -37,6 +37,7 @@ export const sgDbCompareKeys: SGSBCompareKey[] = [
   'deployer',
   'terminal',
   'paymentsCount',
+  'trendingPaymentsCount',
 ]
 
 // Parse DB Project json, converting strings to BigNumbers
@@ -81,6 +82,7 @@ export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
     terminal: p.terminal,
     volume: p.volume,
     volumeUSD: p.volume_usd,
+    trendingPaymentsCount: p.trending_payments_count,
     trendingScore: p.trending_score,
     trendingVolume: p.trending_volume,
     _hasUnresolvedMetadata: p._has_unresolved_metadata,
@@ -114,6 +116,7 @@ export function formatDBProjectRow(p: Json<DBProject>): DBProjectRow {
     redeem_voume_usd: p.redeemVolumeUSD,
     tags: p.tags,
     terminal: p.terminal,
+    trending_payments_count: p.trendingPaymentsCount,
     trending_score: p.trendingScore,
     trending_volume: p.trendingVolume,
     volume: p.volume,

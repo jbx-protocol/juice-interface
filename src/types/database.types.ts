@@ -126,6 +126,7 @@ export interface Database {
           redeem_voume_usd: string
           tags: string[] | null
           terminal: string | null
+          trending_payments_count: number
           trending_score: string
           trending_volume: string
           volume: string
@@ -157,6 +158,7 @@ export interface Database {
           redeem_voume_usd: string
           tags?: string[] | null
           terminal?: string | null
+          trending_payments_count: number
           trending_score: string
           trending_volume: string
           volume: string
@@ -188,6 +190,7 @@ export interface Database {
           redeem_voume_usd?: string
           tags?: string[] | null
           terminal?: string | null
+          trending_payments_count?: number
           trending_score?: string
           trending_volume?: string
           volume?: string

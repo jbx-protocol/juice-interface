@@ -5,9 +5,7 @@ import { render } from '@testing-library/react'
 import { CyclesPayoutsPanel } from './CyclesPayoutsPanel'
 
 jest.mock('./components/CurrentUpcomingSubPanel', () => ({
-  CurrentUpcomingSubPanel: jest
-    .fn()
-    .mockReturnValue(<div>CurrentUpcomingSubPanel</div>),
+  CurrentUpcomingSubPanel: jest.fn(() => <div>CurrentUpcomingSubPanel</div>),
 }))
 
 describe('CyclesPayoutsPanel', () => {

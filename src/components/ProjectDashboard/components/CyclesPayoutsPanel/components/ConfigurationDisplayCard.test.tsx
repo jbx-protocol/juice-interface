@@ -11,11 +11,9 @@ jest.mock('../hooks/useConfigurationDisplayCard', () => ({
 }))
 
 jest.mock('./ConfigurationPanel', () => ({
-  ConfigurationPanel: jest
-    .fn()
-    .mockReturnValue(
-      <div data-testid="ConfigurationPanel">ConfigurationPanel</div>,
-    ),
+  ConfigurationPanel: jest.fn(() => (
+    <div data-testid="ConfigurationPanel">ConfigurationPanel</div>
+  )),
 }))
 
 describe('ConfigurationDisplayCard', () => {

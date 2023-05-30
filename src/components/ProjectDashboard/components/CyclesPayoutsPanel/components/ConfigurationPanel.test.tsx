@@ -10,11 +10,9 @@ jest.mock('../hooks/useConfigurationPanel', () => ({
 }))
 
 jest.mock('./ConfigurationTable', () => ({
-  ConfigurationTable: jest
-    .fn()
-    .mockReturnValue(
-      <div data-testid="ConfigurationTable">ConfigurationTable</div>,
-    ),
+  ConfigurationTable: jest.fn(() => (
+    <div data-testid="ConfigurationTable">ConfigurationTable</div>
+  )),
 }))
 
 const DefaultResponse = {

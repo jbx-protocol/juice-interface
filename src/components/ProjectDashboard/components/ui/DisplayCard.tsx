@@ -1,13 +1,27 @@
+import { AriaRole, MouseEventHandler } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 type Props = {
   className?: string
   children?: React.ReactNode
+  onClick?: MouseEventHandler<HTMLDivElement>
+  role?: AriaRole
+  as?: React.ElementType
 }
-export const DisplayCard: React.FC<Props> = ({ className, children }) => {
+export const DisplayCard: React.FC<Props> = ({
+  className,
+  children,
+  onClick,
+  role,
+  as: Component = 'div',
+}) => {
   return (
-    <div className={twMerge('rounded-lg bg-smoke-50 py-5 px-6', className)}>
+    <Component
+      className={twMerge('rounded-lg bg-smoke-50 py-5 px-6', className)}
+      role={role}
+      onClick={onClick}
+    >
       {children}
-    </div>
+    </Component>
   )
 }

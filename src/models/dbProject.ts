@@ -43,6 +43,7 @@ export type DBProject = {
   volumeUSD: BigNumber
   redeemVolume: BigNumber
   redeemVolumeUSD: BigNumber
+  trendingVolume: BigNumber
 
   paymentsCount: number
   contributorsCount: number

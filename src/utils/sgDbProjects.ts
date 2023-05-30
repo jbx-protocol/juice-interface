@@ -33,6 +33,7 @@ export const sgDbCompareKeys: SGSBCompareKey[] = [
   'nftsMintedCount',
   'createdAt',
   'trendingScore',
+  'trendingVolume',
   'deployer',
   'terminal',
   'paymentsCount',
@@ -47,6 +48,7 @@ export const parseDBProjectJson = (j: Json<DBProject>): DBProject => ({
     'volume',
     'volumeUSD',
     'trendingScore',
+    'trendingVolume',
     'redeemVolume',
     'redeemVolumeUSD',
   ]),
@@ -80,6 +82,7 @@ export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
     volume: p.volume,
     volumeUSD: p.volume_usd,
     trendingScore: p.trending_score,
+    trendingVolume: p.trending_volume,
     _hasUnresolvedMetadata: p._has_unresolved_metadata,
     _metadataRetriesLeft: p._metadata_retries_left,
     _updatedAt: p._updated_at,
@@ -112,6 +115,7 @@ export function formatDBProjectRow(p: Json<DBProject>): DBProjectRow {
     tags: p.tags,
     terminal: p.terminal,
     trending_score: p.trendingScore,
+    trending_volume: p.trendingVolume,
     volume: p.volume,
     volume_usd: p.volumeUSD,
     _has_unresolved_metadata: p._hasUnresolvedMetadata ?? null,
@@ -285,7 +289,9 @@ function padBigNumForSort(bn: string) {
   return bn.padStart(32, '0')
 }
 
-export function formatSGProjectForDB(p: Json<Pick<Project, SGSBCompareKey>>) {
+export function formatSGProjectForDB(
+  p: Json<Pick<Project, SGSBCompareKey>>,
+): Json<Pick<Project, SGSBCompareKey>> {
   return {
     ...p,
     // Adjust BigNumber values before we compare them to database values
@@ -293,6 +299,7 @@ export function formatSGProjectForDB(p: Json<Pick<Project, SGSBCompareKey>>) {
     redeemVolume: padBigNumForSort(p.redeemVolume),
     redeemVolumeUSD: padBigNumForSort(p.redeemVolumeUSD),
     trendingScore: padBigNumForSort(p.trendingScore),
+    trendingVolume: padBigNumForSort(p.trendingVolume),
     volume: padBigNumForSort(p.volume),
     volumeUSD: padBigNumForSort(p.volumeUSD),
   }

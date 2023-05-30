@@ -127,6 +127,7 @@ export interface Database {
           tags: string[] | null
           terminal: string | null
           trending_score: string
+          trending_volume: string
           volume: string
           volume_usd: string
         }
@@ -157,6 +158,7 @@ export interface Database {
           tags?: string[] | null
           terminal?: string | null
           trending_score: string
+          trending_volume: string
           volume: string
           volume_usd: string
         }
@@ -187,6 +189,7 @@ export interface Database {
           tags?: string[] | null
           terminal?: string | null
           trending_score?: string
+          trending_volume?: string
           volume?: string
           volume_usd?: string
         }

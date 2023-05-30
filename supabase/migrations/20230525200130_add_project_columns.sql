@@ -6,6 +6,7 @@ add COLUMN "redeem_count" int not null,
 drop column "total_paid",
 add column "volume" char(32) not null,
 add COLUMN "volume_usd" char(32) not null,
+add COLUMN "trending_volume" char(32) not null,
 add COLUMN "redeem_volume" char(32) not null,
 add COLUMN "redeem_voume_usd" char(32) not null,
 add COLUMN "nfts_minted_count" bigint not null;

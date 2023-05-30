@@ -107,6 +107,7 @@ export interface Database {
           archived: boolean | null
           contributors_count: number
           created_at: number
+          created_within_trending_window: boolean
           creator: string
           current_balance: string
           deployer: string | null
@@ -139,6 +140,7 @@ export interface Database {
           archived?: boolean | null
           contributors_count: number
           created_at: number
+          created_within_trending_window: boolean
           creator: string
           current_balance: string
           deployer?: string | null
@@ -171,6 +173,7 @@ export interface Database {
           archived?: boolean | null
           contributors_count?: number
           created_at?: number
+          created_within_trending_window?: boolean
           creator?: string
           current_balance?: string
           deployer?: string | null

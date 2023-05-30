@@ -38,6 +38,7 @@ export const sgDbCompareKeys: SGSBCompareKey[] = [
   'terminal',
   'paymentsCount',
   'trendingPaymentsCount',
+  'createdWithinTrendingWindow',
 ]
 
 // Parse DB Project json, converting strings to BigNumbers
@@ -61,6 +62,7 @@ export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
     archived: p.archived,
     contributorsCount: p.contributors_count,
     createdAt: p.created_at,
+    createdWithinTrendingWindow: p.created_within_trending_window,
     creator: p.creator,
     currentBalance: p.current_balance,
     deployer: p.deployer,
@@ -97,6 +99,7 @@ export function formatDBProjectRow(p: Json<DBProject>): DBProjectRow {
     archived: p.archived,
     contributors_count: p.contributorsCount,
     created_at: p.createdAt,
+    created_within_trending_window: p.createdWithinTrendingWindow,
     creator: p.creator,
     current_balance: p.currentBalance,
     deployer: p.deployer,

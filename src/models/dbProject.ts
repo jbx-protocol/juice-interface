@@ -50,6 +50,7 @@ export type DBProject = {
   contributorsCount: number
   nftsMintedCount: number
   redeemCount: number
+  createdWithinTrendingWindow: boolean
 
   owner: string
   creator: string

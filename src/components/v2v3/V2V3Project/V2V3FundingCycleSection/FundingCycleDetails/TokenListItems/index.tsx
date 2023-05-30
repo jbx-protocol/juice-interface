@@ -16,9 +16,13 @@ import {
 import { FundingCycleListItem } from '../FundingCycleListItem'
 
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { getUnsafeV2V3FundingCycleProperties } from 'utils/v2v3/fundingCycle'
+import {
+  deriveNextIssuanceRate,
+  getUnsafeV2V3FundingCycleProperties,
+} from 'utils/v2v3/fundingCycle'
 import {
   computeIssuanceRate,
   formatDiscountRate,
@@ -79,15 +83,27 @@ export function TokenListItems({
         )
       : undefined
 
+  // Diffs in token issuance are only due to discount rate. i.e. A new token issuance was not set => NO DIFF
+  const onlyDiscountRateApplied =
+    oldFundingCycle &&
+    fundingCycle.weight.eq(
+      deriveNextIssuanceRate({
+        weight: BigNumber.from(0),
+        previousFC: oldFundingCycle,
+      }),
+    )
+
   const mintRateHasDiff =
-    oldFundingCycle && !fundingCycle.weight.eq(oldFundingCycle.weight)
+    oldFundingCycle &&
+    !fundingCycle.weight.eq(oldFundingCycle.weight) &&
+    !onlyDiscountRateApplied
   const reservedRateHasDiff =
     oldFundingCycleMetadata &&
     !fundingCycleMetadata.reservedRate.eq(oldFundingCycleMetadata.reservedRate)
 
-  const payerTokensHasDiff = oldPayerTokens && !(payerTokens === oldPayerTokens)
-  const reservedTokensHasDiff =
-    oldReservedTokens && !(reservedTokens === oldReservedTokens)
+  const payerTokensHasDiff =
+    oldPayerTokens && (mintRateHasDiff || reservedRateHasDiff)
+  const reservedTokensHasDiff = oldReservedTokens && payerTokensHasDiff
 
   const discountRateHasDiff =
     oldFundingCycle &&
@@ -137,7 +153,7 @@ export function TokenListItems({
           />
         }
         oldValue={
-          showDiffs && payerTokensHasDiff ? (
+          showDiffs && payerTokensHasDiff && oldPayerTokens ? (
             <PayerOrReservedTokensValue
               value={oldPayerTokens}
               tokenSymbol={tokenSymbolPlural}

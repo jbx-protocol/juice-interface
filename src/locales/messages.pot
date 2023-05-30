@@ -236,6 +236,9 @@ msgstr ""
 msgid "Set a future date & time to start your project's first cycle."
 msgstr ""
 
+msgid "Open"
+msgstr ""
+
 msgid "No"
 msgstr ""
 

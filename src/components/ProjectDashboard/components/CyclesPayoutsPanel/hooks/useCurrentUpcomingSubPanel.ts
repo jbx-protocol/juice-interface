@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro'
 import {
   useProjectContext,
   useProjectMetadata,
@@ -52,9 +53,14 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   }, [upcomingFundingCycle])
 
   const status = useMemo(() => {
-    // TODO: replace with real data
-    return 'Locked'
-  }, [])
+    const duration =
+      type === 'current'
+        ? fundingCycle?.duration
+        : upcomingFundingCycle?.duration
+    if (!duration) return
+    if (duration.isZero()) return t`Open`
+    return t`Locked`
+  }, [fundingCycle?.duration, type, upcomingFundingCycle?.duration])
 
   // Short circuit current for faster loading
   if (type === 'current') {
@@ -65,8 +71,6 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
       cycleNumber,
       status,
       remainingTime,
-      // TODO: replace with real data
-      cycleConfiguration: {},
     }
   }
 
@@ -82,6 +86,5 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     cycleNumber,
     status,
     cycleLength: upcomingCycleLength,
-    cycleConfiguration: {},
   }
 }

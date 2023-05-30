@@ -1,9 +1,9 @@
-import { ChevronDownIcon } from '@heroicons/react/24/outline'
-import { Trans, t } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { DisplayCard } from '../../ui'
 import { useCurrentUpcomingSubPanel } from '../hooks/useCurrentUpcomingSubPanel'
+import { ConfigurationDisplayCard } from './ConfigurationDisplayCard'
 import { PayoutsSubPanel } from './PayoutsSubPanel'
 
 export const CurrentUpcomingSubPanel = ({
@@ -44,12 +44,6 @@ export const CurrentUpcomingSubPanel = ({
     info.status,
     info.type,
   ])
-  const bottomPanelTitle = useMemo(() => {
-    if (info.type === 'current') {
-      return t`Current cycle`
-    }
-    return t`Upcoming cycle`
-  }, [info.type])
 
   return (
     <div>
@@ -80,17 +74,7 @@ export const CurrentUpcomingSubPanel = ({
             </div>
           </DisplayCard>
         </div>
-        <DisplayCard>
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600">
-              {bottomPanelTitle}
-              <div className="font-heading text-2xl font-medium">
-                <Trans>Configuration</Trans>
-              </div>
-            </div>
-            <ChevronDownIcon className="h-6 w-6" />
-          </div>
-        </DisplayCard>
+        <ConfigurationDisplayCard type={info.type} />
       </div>
       {/* )} */}
 

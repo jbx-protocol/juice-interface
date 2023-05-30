@@ -121,6 +121,22 @@ describe('useCurrentUpcomingSubPanel', () => {
     },
   )
 
+  test('status is open when duration is 0', () => {
+    mockUseProjectContext.mockImplementation(
+      () =>
+        ({
+          fundingCycle: {
+            duration: BigNumber.from(0),
+            number: BigNumber.from(1),
+            start: BigNumber.from(1),
+          },
+          loading: { fundingCycleLoading: false },
+        } as any),
+    )
+    const { result } = renderHook(() => useCurrentUpcomingSubPanel('current'))
+    expect(result.current.status).toEqual('Open')
+  })
+
   test('current type doesnt wait for upcoming funding cycle', () => {
     mockUseProjectContext.mockImplementation(
       () =>

@@ -5,6 +5,10 @@ import { render } from '@testing-library/react'
 import { useCurrentUpcomingSubPanel } from '../hooks/useCurrentUpcomingSubPanel'
 import { CurrentUpcomingSubPanel } from './CurrentUpcomingSubPanel'
 
+jest.mock('./ConfigurationDisplayCard', () => ({
+  ConfigurationDisplayCard: jest.fn().mockReturnValue(<div>Configuration</div>),
+}))
+
 jest.mock('../hooks/useCurrentUpcomingSubPanel', () => ({
   useCurrentUpcomingSubPanel: jest.fn(),
 }))

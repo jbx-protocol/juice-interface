@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfigurationDisplayCard renders 1`] = `
+<div>
+  <div
+    class="rounded-lg bg-smoke-50 py-5 px-6"
+    data-headlessui-state=""
+  >
+    <button
+      aria-expanded="false"
+      class="w-full outline-none"
+      data-headlessui-state=""
+      id="headlessui-disclosure-button-:r0:"
+      type="button"
+    >
+      <div
+        class="flex w-full items-center justify-between text-start"
+      >
+        <div
+          class="flex flex-col gap-2 text-sm font-medium text-grey-600"
+        >
+          Current
+          <div
+            class="font-heading text-2xl font-medium"
+          >
+            Configuration
+          </div>
+        </div>
+        <svg
+          aria-hidden="true"
+          class="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+    </button>
+  </div>
+</div>
+`;

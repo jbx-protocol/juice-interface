@@ -52,4 +52,30 @@ describe('timeSecondsToDateString', () => {
       expect(actual).toEqual(expected)
     },
   )
+
+  test.each([
+    [0, '0 seconds'],
+    [1, '1 second'],
+    [59, '59 seconds'],
+    [60, '1 minute'],
+    [61, '1 minute'],
+    [3599, '59 minutes'],
+    [3600, '1 hour'],
+    [3601, '1 hour'],
+    [86399, '23 hours'],
+    [86400, '1 day'],
+    [86401, '1 day'],
+    [172799, '1 day'],
+    [172800, '2 days'],
+    [172801, '2 days'],
+    [259199, '2 days'],
+    [259200, '3 days'],
+    [259201, '3 days'],
+  ])(
+    'timeSecondsToDateString(%i, short, lower) returns %s',
+    (timeInSeconds, expected) => {
+      const actual = timeSecondsToDateString(timeInSeconds, 'short', 'lower')
+      expect(actual).toEqual(expected)
+    },
+  )
 })

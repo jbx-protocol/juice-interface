@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfigurationPanel renders 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-8"
+  >
+    <div
+      data-testid="ConfigurationTable"
+    >
+      ConfigurationTable
+    </div>
+    <div
+      data-testid="ConfigurationTable"
+    >
+      ConfigurationTable
+    </div>
+    <div
+      data-testid="ConfigurationTable"
+    >
+      ConfigurationTable
+    </div>
+  </div>
+</div>
+`;

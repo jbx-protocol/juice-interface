@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CyclesPayoutsPanel renders 1`] = `
+<div>
+  <div
+    class="flex w-full max-w-xl flex-col gap-5"
+  >
+    <div
+      class="flex items-center justify-between"
+    >
+      <h2
+        class="font-heading text-2xl font-medium"
+      >
+        Cycle
+      </h2>
+      <div
+        aria-orientation="horizontal"
+        class="flex gap-2"
+        role="tablist"
+      >
+        <button
+          aria-controls="headlessui-tabs-panel-:r3:"
+          aria-selected="true"
+          class="outline-none"
+          data-headlessui-state="selected"
+          id="headlessui-tabs-tab-:r0:"
+          role="tab"
+          tabindex="0"
+          type="button"
+        >
+          <div
+            class="rounded-2xl py-0.5 px-3 font-medium bg-smoke-700 text-grey-25"
+          >
+            Current
+          </div>
+        </button>
+        <button
+          aria-controls="headlessui-tabs-panel-:r4:"
+          aria-selected="false"
+          class="outline-none"
+          data-headlessui-state=""
+          id="headlessui-tabs-tab-:r1:"
+          role="tab"
+          tabindex="-1"
+          type="button"
+        >
+          <div
+            class="rounded-2xl bg-smoke-50 py-0.5 px-3 font-medium text-smoke-600"
+          >
+            Upcoming
+          </div>
+        </button>
+        <button
+          aria-controls="headlessui-tabs-panel-:r5:"
+          aria-selected="false"
+          class="outline-none"
+          data-headlessui-state=""
+          id="headlessui-tabs-tab-:r2:"
+          role="tab"
+          tabindex="-1"
+          type="button"
+        >
+          <div
+            class="rounded-2xl bg-smoke-50 py-0.5 px-3 font-medium text-smoke-600"
+          >
+            History
+          </div>
+        </button>
+      </div>
+    </div>
+    <div>
+      <div
+        aria-labelledby="headlessui-tabs-tab-:r0:"
+        class="outline-none"
+        data-headlessui-state="selected"
+        id="headlessui-tabs-panel-:r3:"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <div>
+          CurrentUpcomingSubPanel
+        </div>
+      </div>
+      <span
+        aria-labelledby="headlessui-tabs-tab-:r1:"
+        id="headlessui-tabs-panel-:r4:"
+        role="tabpanel"
+        style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px;"
+        tabindex="-1"
+      />
+      <span
+        aria-labelledby="headlessui-tabs-tab-:r2:"
+        id="headlessui-tabs-panel-:r5:"
+        role="tabpanel"
+        style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px;"
+        tabindex="-1"
+      />
+    </div>
+  </div>
+</div>
+`;

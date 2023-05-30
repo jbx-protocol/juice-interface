@@ -128,6 +128,9 @@ msgstr ""
 msgid "Determines whether tokens will be minted by payments made through this address."
 msgstr ""
 
+msgid "Receive {0} tokens/1 ETH"
+msgstr ""
+
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
 msgstr ""
 
@@ -218,6 +221,9 @@ msgstr ""
 msgid "While enabled, the project owner can mint any amount of project tokens."
 msgstr ""
 
+msgid "Add payment"
+msgstr ""
+
 msgid "Extended functionality for project owners"
 msgstr ""
 
@@ -228,6 +234,9 @@ msgid "Error downloading participants, try again."
 msgstr ""
 
 msgid "Set a future date & time to start your project's first cycle."
+msgstr ""
+
+msgid "Open"
 msgstr ""
 
 msgid "No"
@@ -585,6 +594,9 @@ msgid "Send reserved {tokensText}"
 msgstr ""
 
 msgid "<0>This project has a redemptions turned off</0>. You won't receive any ETH for burning your tokens."
+msgstr ""
+
+msgid "Current cycle"
 msgstr ""
 
 msgid "You must grant permission to migrate your V2 tokens."
@@ -1040,6 +1052,9 @@ msgstr ""
 msgid "Create a splits payer address"
 msgstr ""
 
+msgid "Cycle length"
+msgstr ""
+
 msgid "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
 msgstr ""
 
@@ -1056,6 +1071,9 @@ msgid "Your total legacy tokens"
 msgstr ""
 
 msgid "Start the V3 cycle as soon as the current V2 cycle ends <0>({0})</0>."
+msgstr ""
+
+msgid "until Cycle #{0}"
 msgstr ""
 
 msgid "Collection Name"
@@ -1376,7 +1394,13 @@ msgstr ""
 msgid "JB721Delegate v{version}"
 msgstr ""
 
+msgid "Upcoming cycle"
+msgstr ""
+
 msgid "Starting over will erase all currently saved progress."
+msgstr ""
+
+msgid "Treasury & Payouts"
 msgstr ""
 
 msgid "Error loading holders"
@@ -1644,6 +1668,9 @@ msgid "Link minters of this NFT to your project's website, Discord, etc."
 msgstr ""
 
 msgid "Cycle #1 starts when you create your project. With unlocked cycles, you can edit your project's rules at any time. This gives you more flexibility, but may appear risky to supporters. Switching to locked cycles will help you build supporter confidence."
+msgstr ""
+
+msgid "Treasury balance"
 msgstr ""
 
 msgid "DAO"
@@ -2090,10 +2117,16 @@ msgstr ""
 msgid "Project balance"
 msgstr ""
 
+msgid "Available to pay out"
+msgstr ""
+
 msgid "Max. supply reached"
 msgstr ""
 
 msgid "Migrate controller"
+msgstr ""
+
+msgid "Send reserved tokens"
 msgstr ""
 
 msgid "Sent reserved tokens"
@@ -2466,6 +2499,9 @@ msgid "Find out more about us"
 msgstr ""
 
 msgid "No payouts"
+msgstr ""
+
+msgid "Withdrawn"
 msgstr ""
 
 msgid "Changes to your reserved token recipients will take effect immediately."
@@ -2885,6 +2921,9 @@ msgstr ""
 msgid "Cycle duration"
 msgstr ""
 
+msgid "Last 7 days"
+msgstr ""
+
 msgid "Export payouts CSV"
 msgstr ""
 
@@ -2961,6 +3000,9 @@ msgid "Error loading ETH transfers to project"
 msgstr ""
 
 msgid "ETH transfers"
+msgstr ""
+
+msgid "Remaining time"
 msgstr ""
 
 msgid "Total issuance rate"
@@ -3066,6 +3108,9 @@ msgid "<0>You won't receive ETH because this project has no ETH, or is using all
 msgstr ""
 
 msgid "Connect wallet to deploy"
+msgstr ""
+
+msgid "View token holders"
 msgstr ""
 
 msgid "How a community of space enthusiasts raised $8.3 million to send a DAO member to space on a Blue Origin rocket"
@@ -3210,6 +3255,9 @@ msgid "Set controller"
 msgstr ""
 
 msgid "Send reserved {tokenTextPlural}"
+msgstr ""
+
+msgid "Total to pay"
 msgstr ""
 
 msgid "Warning: Only the project owner can edit a project. If you don't have access to the address above, you will lose access to your project."
@@ -3590,6 +3638,9 @@ msgstr ""
 msgid "Edits to upcoming cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner."
 msgstr ""
 
+msgid "Reserved tokens list"
+msgstr ""
+
 msgid "Custom Token Rules"
 msgstr ""
 
@@ -3669,6 +3720,9 @@ msgid "Default"
 msgstr ""
 
 msgid "WAGMI!"
+msgstr ""
+
+msgid "Current Cycle: #{currentCycleNumber}"
 msgstr ""
 
 msgid "Basic Token Rules"
@@ -3786,6 +3840,9 @@ msgid "Pay amount"
 msgstr ""
 
 msgid "CSV download failed."
+msgstr ""
+
+msgid "Pay Project"
 msgstr ""
 
 msgid "Enabling owner token minting isn't recommended as it allows the project owner to create unlimited tokens, which appears risky to supporters."
@@ -4010,6 +4067,9 @@ msgstr ""
 msgid "What happens when I pay a project?"
 msgstr ""
 
+msgid "Status"
+msgstr ""
+
 msgid "Redemption rate:"
 msgstr ""
 
@@ -4076,6 +4136,9 @@ msgstr ""
 msgid "Allow Controller migration"
 msgstr ""
 
+msgid "Cycle #"
+msgstr ""
+
 msgid "About"
 msgstr ""
 
@@ -4110,6 +4173,9 @@ msgid "Something has gone wrong, please contact support."
 msgstr ""
 
 msgid "Build and launch your NFT project right here on Juicebox with built-in redemptions."
+msgstr ""
+
+msgid "Pay project"
 msgstr ""
 
 msgid "No reserved tokens configured."
@@ -4352,6 +4418,9 @@ msgstr ""
 msgid "project"
 msgstr ""
 
+msgid "Configuration"
+msgstr ""
+
 msgid "Reserved {0}"
 msgstr ""
 
@@ -4368,6 +4437,9 @@ msgid "{0}% of supply"
 msgstr ""
 
 msgid "Enter a valid Ethereum address"
+msgstr ""
+
+msgid "Overflow"
 msgstr ""
 
 msgid "Project contracts directory"

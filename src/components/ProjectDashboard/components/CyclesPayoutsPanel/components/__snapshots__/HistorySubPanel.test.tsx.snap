@@ -1,0 +1,148 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HistorySubPanel renders 1`] = `
+<div>
+  <table
+    class="min-w-full divide-y divide-grey-200"
+  >
+    <thead>
+      <tr
+        class="bg-smoke-50"
+      >
+        <th
+          class="py-3 pl-4 pr-3 text-start text-sm font-semibold"
+          scope="col"
+        >
+          Cycle #
+        </th>
+        <th
+          class="py-3 pl-4 pr-3 text-start text-sm font-semibold"
+          scope="col"
+        >
+          Withdrawn
+        </th>
+        <th
+          class="py-3 pl-4 pr-3 text-start text-sm font-semibold"
+          scope="col"
+        >
+          Date
+        </th>
+        <th
+          class="relative py-3 pl-4 pr-3"
+          scope="col"
+        >
+          <span
+            class="sr-only"
+          >
+            Edit
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody
+      class="divide-y divide-grey-200"
+    >
+      <tr
+        class="animate-pulse bg-white"
+      >
+        <td
+          class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium"
+        >
+          <div
+            class="h-4 w-3/4 rounded bg-grey-200"
+          />
+        </td>
+        <td
+          class="whitespace-nowrap px-4 py-4 text-sm font-medium"
+        >
+          <div
+            class="h-4 rounded bg-grey-200"
+          />
+        </td>
+        <td
+          class="whitespace-nowrap px-4 py-4 text-sm text-grey-500"
+        >
+          <div
+            class="h-4 w-5/6 rounded bg-grey-200"
+          />
+        </td>
+      </tr>
+      <tr
+        class="animate-pulse bg-white"
+      >
+        <td
+          class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium"
+        >
+          <div
+            class="h-4 w-3/4 rounded bg-grey-200"
+          />
+        </td>
+        <td
+          class="whitespace-nowrap px-4 py-4 text-sm font-medium"
+        >
+          <div
+            class="h-4 rounded bg-grey-200"
+          />
+        </td>
+        <td
+          class="whitespace-nowrap px-4 py-4 text-sm text-grey-500"
+        >
+          <div
+            class="h-4 w-5/6 rounded bg-grey-200"
+          />
+        </td>
+      </tr>
+      <tr
+        class="animate-pulse bg-white"
+      >
+        <td
+          class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium"
+        >
+          <div
+            class="h-4 w-3/4 rounded bg-grey-200"
+          />
+        </td>
+        <td
+          class="whitespace-nowrap px-4 py-4 text-sm font-medium"
+        >
+          <div
+            class="h-4 rounded bg-grey-200"
+          />
+        </td>
+        <td
+          class="whitespace-nowrap px-4 py-4 text-sm text-grey-500"
+        >
+          <div
+            class="h-4 w-5/6 rounded bg-grey-200"
+          />
+        </td>
+      </tr>
+      <tr
+        class="animate-pulse bg-white"
+      >
+        <td
+          class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium"
+        >
+          <div
+            class="h-4 w-3/4 rounded bg-grey-200"
+          />
+        </td>
+        <td
+          class="whitespace-nowrap px-4 py-4 text-sm font-medium"
+        >
+          <div
+            class="h-4 rounded bg-grey-200"
+          />
+        </td>
+        <td
+          class="whitespace-nowrap px-4 py-4 text-sm text-grey-500"
+        >
+          <div
+            class="h-4 w-5/6 rounded bg-grey-200"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

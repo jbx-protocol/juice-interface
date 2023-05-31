@@ -6,10 +6,10 @@ import {
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { Contract } from 'ethers'
+import { ForgeDeploy, addressFor } from 'forge-run-parser'
 import { loadJB721DelegateJson } from 'hooks/JB721Delegate/contracts/useJB721DelegateAbi'
 import { loadJB721DelegateAddress } from 'hooks/JB721Delegate/contracts/useJB721DelegateContractAddress'
 import { getLogger } from 'lib/logger'
-import { ForgeDeploy } from 'models/contracts'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { isEqualAddress, isZeroAddress } from 'utils/address'
 import JBDelegatesRegistryJson from './IJBDelegatesRegistry.json'
@@ -29,9 +29,7 @@ async function loadJBDelegatesRegistryDeployments() {
 async function loadJBDelegatesRegistryAddress() {
   const deployments = await loadJBDelegatesRegistryDeployments()
 
-  const address = deployments.transactions.find(
-    tx => tx.contractName === 'JBDelegatesRegistry',
-  )?.contractAddress
+  const address = addressFor('JBDelegatesRegistry', deployments)
 
   return address!
 }

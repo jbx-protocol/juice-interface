@@ -8,37 +8,47 @@ import { fileTypeIsVideo } from 'utils/nftRewards'
 import { JuiceVideoOrImgPreview } from './JuiceVideoOrImgPreview'
 import { JuiceVideoThumbnail, PlayIconPosition } from './JuiceVideoThumbnail'
 
-export function JuiceVideoThumbnailOrImage({
-  playIconPosition,
-  heightClass,
-  widthClass,
-  showPreviewOnClick,
-  ...props
-}: ImageProps & {
+type JuiceVideoThumbnailOrImageProps = {
   playIconPosition?: PlayIconPosition
   heightClass?: string
   widthClass?: string
   src: string
   alt?: string
   showPreviewOnClick?: boolean
-}) {
+  containerClass?: string
+}
+
+export function JuiceVideoThumbnailOrImage({
+  playIconPosition,
+  heightClass,
+  widthClass,
+  showPreviewOnClick,
+  containerClass,
+  ...props
+}: ImageProps & JuiceVideoThumbnailOrImageProps) {
   const [loading, setLoading] = useState<boolean>(true)
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
 
   const { data: contentType } = useContentType(props.src)
   const isVideo = fileTypeIsVideo(contentType)
-  const _className = classNames(
+  const _containerClass = classNames(
     widthClass ?? 'w-full',
     heightClass ?? 'h-full',
     showPreviewOnClick ? 'cursor-pointer' : '',
     'rounded-lg overflow-hidden',
+    containerClass,
   )
 
   return (
-    <div className={_className}>
+    <div className={_containerClass}>
       {loading ? (
         <div
-          className={`flex items-center justify-center border border-smoke-200 dark:border-grey-600 ${widthClass} ${heightClass}`}
+          className={classNames(
+            `flex items-center justify-center border border-smoke-200 dark:border-grey-600`,
+            props.className,
+            widthClass,
+            heightClass,
+          )}
         >
           <LoadingOutlined className="text-primary" />
         </div>

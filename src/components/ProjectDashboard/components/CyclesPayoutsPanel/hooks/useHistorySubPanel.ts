@@ -145,6 +145,10 @@ export const useHistorySubPanel = () => {
             date: `${moment(
               d[0].start.add(d[0].duration).mul(1000).toNumber(),
             ).fromNow(true)} ago`,
+            _metadata: {
+              fundingCycle: d[0],
+              metadata: d[1],
+            },
           })),
         )
 

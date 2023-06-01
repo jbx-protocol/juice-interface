@@ -7,6 +7,7 @@ import { useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { ConfigurationPanelDatum } from '../../components/ConfigurationPanel'
 import { pairToDatum } from '../../utils/pairToDatum'
 
@@ -30,43 +31,44 @@ export const useFormatConfigurationCyclesSection = ({
   } | null
 }) => {
   const durationDatum: ConfigurationPanelDatum = useMemo(() => {
-    const currentDuration = fundingCycle?.duration
-      ? timeSecondsToDateString(
-          fundingCycle.duration.toNumber(),
-          'short',
-          'lower',
-        )
-      : undefined
+    const formatDuration = (duration: BigNumber | undefined) => {
+      if (duration === undefined) return undefined
+      if (duration.eq(0)) return t`Not set`
+      return timeSecondsToDateString(duration.toNumber(), 'short', 'lower')
+    }
+    const currentDuration = formatDuration(fundingCycle?.duration)
     if (upcomingFundingCycle === null) {
       return pairToDatum(t`Duration`, currentDuration, null)
     }
-    const upcomingDuration =
-      upcomingFundingCycle?.duration !== undefined
-        ? timeSecondsToDateString(
-            upcomingFundingCycle.duration.toNumber(),
-            'short',
-            'lower',
-          )
-        : undefined
+    const upcomingDuration = formatDuration(upcomingFundingCycle?.duration)
 
     return pairToDatum(t`Duration`, currentDuration, upcomingDuration)
   }, [fundingCycle?.duration, upcomingFundingCycle])
 
   const payoutsDatum: ConfigurationPanelDatum = useMemo(() => {
+    const formatCurrency = (currency: BigNumber | undefined) => {
+      if (currency === undefined) return undefined
+      return currency.toNumber() as V2V3CurrencyOption
+    }
+    const formatAmountWad = (
+      amountWad: BigNumber | undefined,
+      currency: V2V3CurrencyOption | undefined,
+    ) => {
+      if (amountWad === undefined) return undefined
+      if (amountWad.eq(MAX_DISTRIBUTION_LIMIT)) return t`Unlimited`
+      if (amountWad.eq(0)) return t`Zero (no payouts)`
+      return formatCurrencyAmount({
+        amount: Number(fromWad(amountWad)),
+        currency,
+      })
+    }
     const { distributionLimit, currency } =
       distributionLimitAmountCurrency ?? {}
-    const currentCurrency = currency
-      ? (currency?.toNumber() as V2V3CurrencyOption)
-      : undefined
-    const currentAmount = distributionLimit
-      ? fromWad(distributionLimit)
-      : undefined
-    const currentPayout = currentAmount
-      ? formatCurrencyAmount({
-          amount: Number(currentAmount),
-          currency: currentCurrency,
-        })
-      : undefined
+    const currentPayout = formatAmountWad(
+      distributionLimit,
+      formatCurrency(currency),
+    )
+
     if (upcomingDistributionLimitAmountCurrency === null) {
       return pairToDatum(t`Payouts`, currentPayout, null)
     }
@@ -79,18 +81,10 @@ export const useFormatConfigurationCyclesSection = ({
       upcomingDistributionLimitAmountCurrency?.currency !== undefined
         ? upcomingDistributionLimitAmountCurrency.currency
         : undefined
-    const upcomingCurrency = upcomingDistributionLimitCurrency
-      ? (upcomingDistributionLimitCurrency.toNumber() as V2V3CurrencyOption)
-      : undefined
-    const upcomingAmount = upcomingDistributionLimit
-      ? fromWad(upcomingDistributionLimit)
-      : undefined
-    const upcomingPayout = upcomingAmount
-      ? formatCurrencyAmount({
-          amount: Number(upcomingAmount),
-          currency: upcomingCurrency,
-        })
-      : undefined
+    const upcomingPayout = formatAmountWad(
+      upcomingDistributionLimit,
+      formatCurrency(upcomingDistributionLimitCurrency),
+    )
 
     return pairToDatum(t`Payouts`, currentPayout, upcomingPayout)
   }, [distributionLimitAmountCurrency, upcomingDistributionLimitAmountCurrency])

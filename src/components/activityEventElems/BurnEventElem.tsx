@@ -21,7 +21,7 @@ export default function BurnEventElem({
       withProjectLink={withProjectLink}
       header={t`Burned`}
       subject={
-        <span className="text-base font-medium">
+        <span className="font-heading text-lg font-medium">
           <TokenAmount amountWad={event.amount} tokenSymbol={tokenSymbol} />
         </span>
       }

@@ -1,23 +1,27 @@
 import { SafeTransactionType } from 'models/safe'
 import { useMemo } from 'react'
-import { ReconfigureFundingCyclesOfTransaction } from './juiceboxTransactions/reconfigureFundingCyclesOf'
 import { LinkToSafeButton } from './LinkToSafeButton'
 import { TransactionCollapse } from './TransactionCollapse'
+import { ReconfigureFundingCyclesOfTransaction } from './juiceboxTransactions/reconfigureFundingCyclesOf'
+import { ReconfigureV1Transaction } from './juiceboxTransactions/reconfigureFundingCyclesOf/ReconfigureV1Transaction'
 
 export type SafeTransactionComponentProps = {
   transaction: SafeTransactionType
   selected: boolean
+  title?: string
   isPastTransaction?: boolean
 }
 
-const GenericSafeTransaction = ({
+export const GenericSafeTransaction = ({
   transaction,
   selected,
+  title,
   isPastTransaction,
 }: SafeTransactionComponentProps) => {
   return (
     <TransactionCollapse
       transaction={transaction}
+      title={title}
       selected={selected}
       isPastTransaction={isPastTransaction}
       expandedContent={
@@ -31,6 +35,7 @@ const TRANSACTION_METHOD_COMPONENTS_MAP: {
   [k: string]: (props: SafeTransactionComponentProps) => JSX.Element | null
 } = {
   reconfigureFundingCyclesOf: ReconfigureFundingCyclesOfTransaction,
+  configure: ReconfigureV1Transaction,
 }
 
 export function SafeTransaction({

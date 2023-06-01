@@ -19,10 +19,10 @@ type SafeTxCategory = 'queued' | 'history'
 const SAFE_TX_QUEUED_KEY: SafeTxCategory = 'queued'
 const SAFE_TX_HISTORY_KEY: SafeTxCategory = 'history'
 const DEFAULT_TAB: SafeTxCategory = SAFE_TX_QUEUED_KEY
-const TAB_NAMES: { [k in SafeTxCategory]: string } = {
+const TAB_NAMES = (): { [k in SafeTxCategory]: string } => ({
   queued: t`Queued`,
   history: t`History`,
-}
+})
 
 export function ProjectSafeDashboard({
   projectPageUrl,
@@ -93,13 +93,13 @@ export function ProjectSafeDashboard({
           <div className="flex gap-6">
             <Link href={`${projectSafeRoute}?tab=queued`}>
               <Tab
-                name={TAB_NAMES.queued}
+                name={TAB_NAMES().queued}
                 isSelected={selectedTab === SAFE_TX_QUEUED_KEY}
               />
             </Link>
             <Link href={`${projectSafeRoute}?tab=history`}>
               <Tab
-                name={TAB_NAMES.history}
+                name={TAB_NAMES().history}
                 isSelected={selectedTab === SAFE_TX_HISTORY_KEY}
               />
             </Link>

@@ -3,7 +3,7 @@
 exports[`PayProjectCard renders 1`] = `
 <div>
   <div
-    class="rounded-lg bg-smoke-50 py-5 px-6 flex flex-col gap-2 pr-9"
+    class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex flex-col gap-2 pr-9"
   >
     <div
       class="font-medium"
@@ -14,10 +14,10 @@ exports[`PayProjectCard renders 1`] = `
       class="flex gap-2"
     >
       <div
-        class="flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3 flex-1"
+        class="dark:slate-900 flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3 dark:border-slate-500 dark:bg-slate-950 flex-1"
       >
         <div
-          class="rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500"
+          class="rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950"
           data-testid="pay-input-currency-icon"
         >
           <svg
@@ -43,7 +43,7 @@ exports[`PayProjectCard renders 1`] = `
           value=""
         />
         <div
-          class="flex select-none items-center gap-0.5 rounded-lg py-1.5 pl-2 pr-3 text-xs font-medium transition-colors bg-bluebs-50 text-bluebs-600"
+          class="flex select-none items-center gap-0.5 rounded-lg py-1.5 pl-2 pr-3 text-xs font-medium transition-colors bg-bluebs-50 text-bluebs-600 dark:bg-bluebs-500 dark:text-bluebs-950"
           data-testid="pay-input-currency-button"
           role="button"
         >
@@ -73,7 +73,7 @@ exports[`PayProjectCard renders 1`] = `
       </button>
     </div>
     <div
-      class="text-xs text-smoke-500"
+      class="text-xs text-smoke-500 dark:text-slate-200"
       data-testid="pay-project-card-tokens-per-pay"
     >
       Receive 0 tokens/1 ETH

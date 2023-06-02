@@ -3,7 +3,7 @@
 exports[`Cart renders 1`] = `
 <div>
   <div
-    class="fixed inset-x-0 bottom-0 z-20 flex h-full cursor-pointer items-center justify-center border-t border-grey-200 bg-white drop-shadow transition-all max-h-20"
+    class="fixed inset-x-0 bottom-0 z-20 flex h-full cursor-pointer items-center justify-center border-t border-grey-200 bg-white drop-shadow transition-all dark:border-slate-500 dark:bg-slate-900 max-h-20"
     data-testid="cart"
   >
     <div
@@ -25,13 +25,13 @@ exports[`Cart renders 1`] = `
             class="relative flex"
           >
             <div
-              class="h-12 w-12 rounded-lg border-4 border-white z-20 bg-bluebs-400"
+              class="h-12 w-12 rounded-lg border-4 border-white dark:border-slate-950 z-20 bg-bluebs-400"
             />
             <div
-              class="h-12 w-12 rounded-lg border-4 border-white z-10 -ml-[18px] bg-juice-400"
+              class="h-12 w-12 rounded-lg border-4 border-white dark:border-slate-950 z-10 -ml-[18px] bg-juice-400"
             />
             <div
-              class="h-12 w-12 rounded-lg border-4 border-white -ml-[18px] bg-melon-600"
+              class="h-12 w-12 rounded-lg border-4 border-white dark:border-slate-950 -ml-[18px] bg-melon-600"
             />
           </div>
         </div>
@@ -43,7 +43,7 @@ exports[`Cart renders 1`] = `
             class="flex items-center gap-4"
           >
             <span
-              class="text-sm text-grey-500"
+              class="text-sm text-grey-500 dark:text-slate-200"
             >
               Total to pay
             </span>
@@ -54,7 +54,7 @@ exports[`Cart renders 1`] = `
             </span>
             <svg
               aria-hidden="true"
-              class="h-5 w-5 text-grey-400"
+              class="h-5 w-5 text-grey-400 dark:text-slate-300"
               fill="none"
               stroke="currentColor"
               stroke-width="1.5"

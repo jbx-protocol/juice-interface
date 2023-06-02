@@ -38,13 +38,13 @@ export const ReservedTokensSubPanel = ({
       <div className="mt-5 flex flex-col items-center gap-4">
         <div className="flex w-full items-center gap-4">
           <DisplayCard className="flex w-full flex-col gap-2">
-            <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium">
+            <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium dark:text-slate-200">
               <Trans>Reserved tokens</Trans>
             </h3>
             <span className="font-heading text-xl font-medium">800,000</span>
           </DisplayCard>
           <DisplayCard className="flex w-full flex-col gap-2">
-            <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium">
+            <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium dark:text-slate-200">
               <Trans>Reserved rate</Trans>
             </h3>
             <span className="font-heading text-xl font-medium">15%</span>
@@ -52,7 +52,7 @@ export const ReservedTokensSubPanel = ({
         </div>
         <DisplayCard className="flex w-full flex-col pb-8">
           <div className="flex items-center justify-between gap-3">
-            <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium">
+            <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
               <Trans>Reserved tokens list</Trans>
             </h3>
             <EllipsisVerticalIcon role="button" className="h-6 w-6" />
@@ -63,13 +63,15 @@ export const ReservedTokensSubPanel = ({
               {payouts.map(payout => (
                 <tr
                   key={payout.name}
-                  className="flex items-center justify-between gap-3 border-b border-grey-200 py-3"
+                  className="flex items-center justify-between gap-3 border-b border-grey-200 py-3 dark:border-slate-500"
                 >
                   <td className="flex items-center gap-3">
                     <div className="h-8 w-8 rounded-full bg-juice-400" />
-                    <span className="font-medium">{payout.name}</span>
+                    <span className="font-medium dark:text-slate-50">
+                      {payout.name}
+                    </span>
                   </td>
-                  <td className="flex items-center gap-3">
+                  <td className="flex items-center gap-3 dark:text-slate-200">
                     <span>{payout.amount}</span>
                     <span>{payout.percent}</span>
                   </td>

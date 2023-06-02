@@ -28,7 +28,7 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
         </div>
         <div
           data-testid="pay-project-card-tokens-per-pay"
-          className="text-xs text-smoke-500"
+          className="text-xs text-smoke-500 dark:text-slate-200"
         >
           <Trans>Receive {formatAmount(tokensPerPay)} tokens/1 ETH</Trans>
         </div>

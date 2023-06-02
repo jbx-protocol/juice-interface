@@ -29,7 +29,7 @@ exports[`CyclesPayoutsPanel renders 1`] = `
           type="button"
         >
           <div
-            class="rounded-2xl py-0.5 px-3 font-medium bg-smoke-700 text-grey-25"
+            class="rounded-2xl py-0.5 px-3 font-medium bg-smoke-700 text-grey-25 dark:bg-slate-400 dark:text-slate-50"
           >
             Current
           </div>
@@ -45,7 +45,7 @@ exports[`CyclesPayoutsPanel renders 1`] = `
           type="button"
         >
           <div
-            class="rounded-2xl bg-smoke-50 py-0.5 px-3 font-medium text-smoke-600"
+            class="rounded-2xl bg-smoke-50 py-0.5 px-3 font-medium text-smoke-600 dark:bg-slate-700 dark:text-slate-200"
           >
             Upcoming
           </div>
@@ -61,7 +61,7 @@ exports[`CyclesPayoutsPanel renders 1`] = `
           type="button"
         >
           <div
-            class="rounded-2xl bg-smoke-50 py-0.5 px-3 font-medium text-smoke-600"
+            class="rounded-2xl bg-smoke-50 py-0.5 px-3 font-medium text-smoke-600 dark:bg-slate-700 dark:text-slate-200"
           >
             History
           </div>

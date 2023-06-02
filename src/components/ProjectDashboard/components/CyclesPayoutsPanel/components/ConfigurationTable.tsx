@@ -53,26 +53,6 @@ export const ConfigurationTable = ({
           </div>
         </div>
       </div>
-
-      {/* <div>
-        <table className="w-full">
-          <thead>
-            <tr>
-              <th className="text-start text-base font-semibold">{title}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map(row => (
-              <ConfigurationTableRow
-                key={row.id}
-                name={row.name}
-                value={row.value}
-                loading={row.loading}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div> */}
     </>
   )
 }
@@ -86,13 +66,13 @@ const ConfigurationTableRow = ({
   value: ReactNode
   loading: boolean | undefined
 }) => (
-  <div className="flex justify-between gap-10 border-b border-grey-200 py-3">
+  <div className="flex justify-between gap-10 border-b border-grey-200 py-3 dark:border-slate-500">
     <div className="flex justify-between gap-3">{name}</div>
     {!loading ? (
       <div className="truncate text-end">{value}</div>
     ) : (
       <div className="text-end">
-        <div className="h-4 w-20 animate-pulse rounded bg-grey-200" />
+        <div className="h-4 w-20 animate-pulse rounded bg-grey-200 dark:bg-slate-200" />
       </div>
     )}
   </div>
@@ -100,11 +80,11 @@ const ConfigurationTableRow = ({
 
 const Diff: React.FC<{ old?: ReactNode; new: ReactNode }> = props => (
   <div className="flex flex-col items-center gap-2">
-    <div className="flex w-full items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700">
+    <div className="flex w-full items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950">
       <MinusCircleIcon className="inline-block h-5 w-5" />
       <span>{props.old}</span>
     </div>
-    <div className="flex w-full items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700">
+    <div className="flex w-full items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950">
       <PlusCircleIcon className="inline-block h-5 w-5" />
       <span>{props.new}</span>
     </div>

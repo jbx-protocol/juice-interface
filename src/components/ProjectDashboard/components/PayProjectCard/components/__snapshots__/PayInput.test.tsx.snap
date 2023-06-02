@@ -3,10 +3,10 @@
 exports[`PayInput renders 1`] = `
 <div>
   <div
-    class="flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3"
+    class="dark:slate-900 flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3 dark:border-slate-500 dark:bg-slate-950"
   >
     <div
-      class="rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500"
+      class="rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950"
       data-testid="pay-input-currency-icon"
     >
       <svg
@@ -31,7 +31,7 @@ exports[`PayInput renders 1`] = `
       value=""
     />
     <div
-      class="flex select-none items-center gap-0.5 rounded-lg py-1.5 pl-2 pr-3 text-xs font-medium transition-colors bg-bluebs-50 text-bluebs-600"
+      class="flex select-none items-center gap-0.5 rounded-lg py-1.5 pl-2 pr-3 text-xs font-medium transition-colors bg-bluebs-50 text-bluebs-600 dark:bg-bluebs-500 dark:text-bluebs-950"
       data-testid="pay-input-currency-button"
       role="button"
     >
@@ -59,10 +59,10 @@ exports[`PayInput renders 1`] = `
 exports[`PayInput renders with placeholder 1`] = `
 <div>
   <div
-    class="flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3"
+    class="dark:slate-900 flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3 dark:border-slate-500 dark:bg-slate-950"
   >
     <div
-      class="rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500"
+      class="rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950"
       data-testid="pay-input-currency-icon"
     >
       <svg
@@ -88,7 +88,7 @@ exports[`PayInput renders with placeholder 1`] = `
       value=""
     />
     <div
-      class="flex select-none items-center gap-0.5 rounded-lg py-1.5 pl-2 pr-3 text-xs font-medium transition-colors bg-bluebs-50 text-bluebs-600"
+      class="flex select-none items-center gap-0.5 rounded-lg py-1.5 pl-2 pr-3 text-xs font-medium transition-colors bg-bluebs-50 text-bluebs-600 dark:bg-bluebs-500 dark:text-bluebs-950"
       data-testid="pay-input-currency-button"
       role="button"
     >
@@ -116,10 +116,10 @@ exports[`PayInput renders with placeholder 1`] = `
 exports[`PayInput renders with value 1`] = `
 <div>
   <div
-    class="flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3"
+    class="dark:slate-900 flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3 dark:border-slate-500 dark:bg-slate-950"
   >
     <div
-      class="rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500"
+      class="rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950"
       data-testid="pay-input-currency-icon"
     >
       <svg
@@ -144,7 +144,7 @@ exports[`PayInput renders with value 1`] = `
       value="1"
     />
     <div
-      class="flex select-none items-center gap-0.5 rounded-lg py-1.5 pl-2 pr-3 text-xs font-medium transition-colors bg-bluebs-50 text-bluebs-600"
+      class="flex select-none items-center gap-0.5 rounded-lg py-1.5 pl-2 pr-3 text-xs font-medium transition-colors bg-bluebs-50 text-bluebs-600 dark:bg-bluebs-500 dark:text-bluebs-950"
       data-testid="pay-input-currency-button"
       role="button"
     >

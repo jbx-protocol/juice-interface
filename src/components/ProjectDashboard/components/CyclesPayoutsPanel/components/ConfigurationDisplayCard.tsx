@@ -37,9 +37,10 @@ export const ConfigurationDisplayCard = ({
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
             enterFrom="max-h-0 overflow-hidden opacity-0"
-            enterTo="max-h-[1000px] overflow-hidden opacity-100"
+            // Max height is set to a large value to allow the transition to work.
+            enterTo="max-h-[3000px] overflow-hidden opacity-100"
             leave="transition-all ease-in-out duration-300"
-            leaveFrom="max-h-[1000px] overflow-hidden opacity-100"
+            leaveFrom="max-h-[3000px] overflow-hidden opacity-100"
             leaveTo="max-h-0 overflow-hidden opacity-0"
           >
             <Disclosure.Panel className="mt-4">

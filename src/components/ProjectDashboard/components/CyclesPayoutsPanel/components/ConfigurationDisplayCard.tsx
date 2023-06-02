@@ -4,7 +4,7 @@ import { Trans } from '@lingui/macro'
 import { Fragment } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useConfigurationDisplayCard } from '../hooks/useConfigurationDisplayCard'
-import { ConfigurationPanel } from './ConfigurationPanel'
+import { CurrentUpcomingConfigurationPanel } from './CurrentUpcomingConfigurationPanel'
 
 export const ConfigurationDisplayCard = ({
   type,
@@ -43,7 +43,7 @@ export const ConfigurationDisplayCard = ({
             leaveTo="max-h-0 overflow-hidden opacity-0"
           >
             <Disclosure.Panel className="mt-4">
-              <ConfigurationPanel type={type} />
+              <CurrentUpcomingConfigurationPanel type={type} />
             </Disclosure.Panel>
           </Transition>
         </Disclosure.Button>

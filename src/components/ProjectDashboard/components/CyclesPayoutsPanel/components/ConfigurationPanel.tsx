@@ -1,6 +1,5 @@
 import { t } from '@lingui/macro'
-import { ReactNode } from 'react'
-import { useConfigurationPanel } from '../hooks/useConfigurationPanel'
+import React, { ReactNode } from 'react'
 import { ConfigurationTable } from './ConfigurationTable'
 
 export type ConfigurationPanelDatum = {
@@ -13,12 +12,17 @@ export type ConfigurationPanelTableData = {
   [key: string]: ConfigurationPanelDatum
 }
 
-export const ConfigurationPanel = ({
-  type,
-}: {
-  type: 'current' | 'upcoming'
+type ConfigurationPanelProps = {
+  cycle: ConfigurationPanelTableData
+  token: ConfigurationPanelTableData
+  otherRules: ConfigurationPanelTableData
+}
+
+export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
+  cycle,
+  token,
+  otherRules,
 }) => {
-  const { cycle, token, otherRules } = useConfigurationPanel(type)
   return (
     <div className="flex flex-col gap-8">
       <ConfigurationTable title={t`Cycle`} data={cycle} />

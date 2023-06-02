@@ -1,1 +1,1 @@
-export * from './useConfigurationPanel'
+export * from './useCurrentUpcomingConfigurationPanel'

@@ -21,7 +21,9 @@ export type DBProjectQueryOpts = {
   tags?: ProjectTagName[]
   archived?: boolean
   pv?: PV[]
-  orderBy?: 'total_paid' | 'created_at' | 'current_balance' | 'payments_count'
+  owner?: string
+  creator?: string
+  orderBy?: 'volume' | 'created_at' | 'current_balance' | 'payments_count'
   orderDirection?: 'asc' | 'desc'
   page?: number
   pageSize?: number
@@ -34,10 +36,24 @@ export type DBProject = {
   pv: PV
   handle: string | null
   metadataUri: string | null
+
   currentBalance: BigNumber
   trendingScore: BigNumber
   volume: BigNumber
+  volumeUSD: BigNumber
+  redeemVolume: BigNumber
+  redeemVolumeUSD: BigNumber
+  trendingVolume: BigNumber
+
   paymentsCount: number
+  trendingPaymentsCount: number
+  contributorsCount: number
+  nftsMintedCount: number
+  redeemCount: number
+  createdWithinTrendingWindow: boolean
+
+  owner: string
+  creator: string
   deployer: string | null
   terminal: string | null
 

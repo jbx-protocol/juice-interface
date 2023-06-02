@@ -24,6 +24,9 @@ export type Project = {
   projectId: number
   pv: PV
   owner: string
+  creator: string
+  contributorsCount: number
+  nftsMintedCount: number
   deployer: string | null
   createdAt: number
   paymentsCount: number

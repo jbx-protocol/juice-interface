@@ -105,7 +105,10 @@ export interface Database {
           _metadata_retries_left: number | null
           _updated_at: number
           archived: boolean | null
+          contributors_count: number
           created_at: number
+          created_within_trending_window: boolean
+          creator: string
           current_balance: string
           deployer: string | null
           description: string | null
@@ -114,20 +117,31 @@ export interface Database {
           logo_uri: string | null
           metadata_uri: string | null
           name: string | null
+          nfts_minted_count: number
+          owner: string
           payments_count: number
           project_id: number
           pv: string
+          redeem_count: number
+          redeem_volume: string
+          redeem_voume_usd: string
           tags: string[] | null
           terminal: string | null
-          total_paid: string
+          trending_payments_count: number
           trending_score: string
+          trending_volume: string
+          volume: string
+          volume_usd: string
         }
         Insert: {
           _has_unresolved_metadata?: boolean | null
           _metadata_retries_left?: number | null
           _updated_at: number
           archived?: boolean | null
+          contributors_count: number
           created_at: number
+          created_within_trending_window: boolean
+          creator: string
           current_balance: string
           deployer?: string | null
           description?: string | null
@@ -136,20 +150,31 @@ export interface Database {
           logo_uri?: string | null
           metadata_uri?: string | null
           name?: string | null
+          nfts_minted_count: number
+          owner: string
           payments_count: number
           project_id: number
           pv: string
+          redeem_count: number
+          redeem_volume: string
+          redeem_voume_usd: string
           tags?: string[] | null
           terminal?: string | null
-          total_paid: string
+          trending_payments_count: number
           trending_score: string
+          trending_volume: string
+          volume: string
+          volume_usd: string
         }
         Update: {
           _has_unresolved_metadata?: boolean | null
           _metadata_retries_left?: number | null
           _updated_at?: number
           archived?: boolean | null
+          contributors_count?: number
           created_at?: number
+          created_within_trending_window?: boolean
+          creator?: string
           current_balance?: string
           deployer?: string | null
           description?: string | null
@@ -158,13 +183,21 @@ export interface Database {
           logo_uri?: string | null
           metadata_uri?: string | null
           name?: string | null
+          nfts_minted_count?: number
+          owner?: string
           payments_count?: number
           project_id?: number
           pv?: string
+          redeem_count?: number
+          redeem_volume?: string
+          redeem_voume_usd?: string
           tags?: string[] | null
           terminal?: string | null
-          total_paid?: string
+          trending_payments_count?: number
           trending_score?: string
+          trending_volume?: string
+          volume?: string
+          volume_usd?: string
         }
       }
       user_subscriptions: {

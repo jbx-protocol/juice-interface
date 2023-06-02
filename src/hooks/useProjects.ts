@@ -16,20 +16,17 @@ import { ProjectState } from 'models/projectVisibility'
 import { PV } from 'models/pv'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { V1TerminalVersion } from 'models/v1/terminals'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import {
   UseInfiniteQueryOptions,
   UseQueryOptions,
   useInfiniteQuery,
   useQuery,
 } from 'react-query'
-import {
-  getSubgraphIdForProject,
-  parseSubgraphEntity,
-  querySubgraphExhaustive,
-} from 'utils/graph'
+import { getSubgraphIdForProject, parseSubgraphEntity } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
 import { parseDBProjectJson, parseDBProjectsRow } from 'utils/sgDbProjects'
+
 import useSubgraphQuery from './useSubgraphQuery'
 
 interface ProjectsOptions {
@@ -44,10 +41,6 @@ interface ProjectsOptions {
   terminalVersion?: V1TerminalVersion
   pv?: PV[]
 }
-
-type ProjectsOfParticipantsWhereQuery =
-  | SGQueryOpts<'participant', SGEntityKey<'participant'>>['where']
-  | null
 
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
 export const DEFAULT_PROJECT_ENTITY_KEYS: (keyof Project)[] = [
@@ -227,118 +220,6 @@ export function useTrendingProjects(count: number) {
 
     return projects
   })
-}
-
-// Query all projects that a wallet has previously made payments to
-export function useContributedProjectsQuery(wallet: string | undefined) {
-  const where = useMemo((): ProjectsOfParticipantsWhereQuery => {
-    if (!wallet) return null
-
-    return [
-      {
-        key: 'wallet',
-        value: wallet.toLowerCase(),
-      },
-      {
-        key: 'volume',
-        operator: 'gt',
-        value: 0,
-      },
-    ]
-  }, [wallet])
-
-  return useProjectsOfParticipants(where)
-}
-
-function useProjectsOfParticipants(where: ProjectsOfParticipantsWhereQuery) {
-  const [loadingParticipants, setLoadingParticipants] = useState<boolean>()
-  const [projectIds, setProjectIds] = useState<string[]>()
-
-  useEffect(() => {
-    // Get all participant entities for wallet
-    const loadParticipants = async () => {
-      setLoadingParticipants(true)
-
-      const participants = await querySubgraphExhaustive(
-        where
-          ? {
-              entity: 'participant',
-              orderBy: 'balance',
-              orderDirection: 'desc',
-              keys: [
-                {
-                  entity: 'project',
-                  keys: ['id'],
-                },
-              ],
-              where,
-            }
-          : null,
-      )
-
-      if (!participants) {
-        setProjectIds(undefined)
-        return
-      }
-
-      // Reduce list of paid project ids
-      setProjectIds(
-        participants?.reduce((acc, curr) => {
-          const projectId = curr?.project.id
-
-          return [
-            ...acc,
-            ...(projectId ? (acc.includes(projectId) ? [] : [projectId]) : []),
-          ]
-        }, [] as string[]),
-      )
-
-      setLoadingParticipants(false)
-    }
-
-    loadParticipants()
-  }, [where])
-
-  const projectsQuery = useSubgraphQuery(
-    projectIds
-      ? {
-          entity: 'project',
-          keys: DEFAULT_PROJECT_ENTITY_KEYS,
-          where: {
-            key: 'id',
-            operator: 'in',
-            value: projectIds,
-          },
-        }
-      : null,
-  )
-
-  return {
-    ...projectsQuery,
-    isLoading: projectsQuery.isLoading || loadingParticipants,
-  }
-}
-
-export function useMyProjectsQuery(wallet: string | undefined) {
-  const projectsQuery = useSubgraphQuery(
-    wallet
-      ? {
-          entity: 'project',
-          keys: DEFAULT_PROJECT_ENTITY_KEYS,
-          where: {
-            key: 'owner',
-            operator: 'in',
-            value: [wallet],
-          },
-          orderBy: 'createdAt',
-          orderDirection: 'desc',
-        }
-      : null,
-  )
-
-  return {
-    ...projectsQuery,
-  }
 }
 
 export function useProjectTrendingPercentageIncrease({

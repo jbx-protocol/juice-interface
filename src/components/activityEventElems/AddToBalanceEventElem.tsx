@@ -20,7 +20,7 @@ export default function AddToBalanceEventElem({
       withProjectLink={withProjectLink}
       header={t`Transferred ETH to project`}
       subject={
-        <span className="text-base font-medium">
+        <span className="font-heading text-lg font-medium">
           <ETHAmount amount={event.amount} />
         </span>
       }

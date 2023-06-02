@@ -258,7 +258,7 @@ export default function ParticipantsModal({
               className="cursor-pointer text-center text-grey-500 dark:text-grey-300"
               onClick={() => setPageNumber(pageNumber + 1)}
             >
-              <Trans>Load more</Trans>
+              <Trans>Load more...</Trans>
             </div>
           ) : loading ? null : (
             <div className="p-2 text-center text-grey-500 dark:text-grey-300">

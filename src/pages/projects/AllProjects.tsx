@@ -83,7 +83,7 @@ export default function AllProjects({
           role="button"
           onClick={() => fetchNextPage()}
         >
-          <Trans>Load more</Trans>
+          <Trans>Load more...</Trans>
         </div>
       ) : (
         !isLoading && (

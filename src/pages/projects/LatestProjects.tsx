@@ -65,7 +65,7 @@ export default function LatestProjects() {
           role="button"
           onClick={() => fetchNextPage()}
         >
-          <Trans>Load more</Trans>
+          <Trans>Load more...</Trans>
         </div>
       ) : (
         !isLoading && (

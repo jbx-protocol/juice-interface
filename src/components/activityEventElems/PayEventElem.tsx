@@ -21,7 +21,7 @@ export default function PayEventElem({
       withProjectLink={withProjectLink}
       header={t`Paid`}
       subject={
-        <span className="text-base font-medium">
+        <span className="font-heading text-lg">
           <ETHAmount amount={event.amount} />
         </span>
       }

@@ -57,8 +57,8 @@ export default function EthereumAddress({
       <span className="inline-flex items-center">
         {withEnsAvatar && ensName && address && (
           <img
-            src={ensAvatarUrlForAddress(address, { size: 40 })}
-            className="mr-1.5 h-5 w-5 rounded-full"
+            src={ensAvatarUrlForAddress(address, { size: 72 })}
+            className="mr-2 h-9 w-9 rounded-full"
             alt={`Avatar for ${ensName}`}
             loading="lazy"
           />

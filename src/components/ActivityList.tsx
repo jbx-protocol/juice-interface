@@ -194,7 +194,7 @@ export default function ActivityList({
             type="link"
             className="px-0"
           >
-            <Trans>Load more</Trans>
+            <Trans>Load more...</Trans>
           </Button>
         </div>
       )

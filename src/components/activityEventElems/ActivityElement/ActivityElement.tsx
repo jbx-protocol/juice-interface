@@ -26,7 +26,7 @@ const FromBeneficiary = ({
       <EthereumAddress address={beneficiary} />
     </div>
   ) : (
-    <div className="flex items-center text-sm">
+    <div className="flex items-center self-start text-sm">
       <JuiceboxAccountLink address={from} withEnsAvatar />
     </div>
   )

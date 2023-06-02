@@ -26,7 +26,7 @@ export const HistorySubPanel = () => {
 
   return (
     <div className="grid min-w-full grid-cols-1">
-      <div className="grid grid-cols-6 rounded-t-lg bg-smoke-50">
+      <div className="grid grid-cols-6 rounded-t-lg bg-smoke-50 dark:bg-slate-700">
         {tableHeaders.map((header, i) => (
           <div
             key={header}
@@ -43,7 +43,7 @@ export const HistorySubPanel = () => {
         </div>
       </div>
 
-      <div className="divide-y divide-grey-200">
+      <div className="divide-y divide-grey-200 dark:divide-slate-500">
         {loading ? (
           <>
             <SkeletonRow />
@@ -66,7 +66,7 @@ export const HistorySubPanel = () => {
                     <div className="grid grid-cols-6 whitespace-nowrap text-sm font-medium">
                       <div>{cycle.cycleNumber}</div>
                       <div className="col-start-3 px-4">{cycle.withdrawn}</div>
-                      <div className="col-start-5 px-4 text-grey-500">
+                      <div className="col-start-5 px-4 text-grey-500 dark:text-slate-200">
                         {cycle.date}
                       </div>
                       <div className="text-gray-500 col-start-6 flex items-center justify-end whitespace-nowrap px-3 text-sm">
@@ -101,15 +101,15 @@ export const HistorySubPanel = () => {
 }
 
 const SkeletonRow = () => (
-  <div className="grid animate-pulse grid-cols-6 bg-white">
+  <div className="grid animate-pulse grid-cols-6 bg-white dark:bg-slate-950">
     <div className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium">
-      <div className="h-4 w-14 rounded bg-grey-200"></div>
+      <div className="h-4 w-14 rounded bg-grey-200 dark:bg-slate-500"></div>
     </div>
     <div className="col-start-3 whitespace-nowrap px-4 py-4 text-sm font-medium">
-      <div className="h-4 w-24 rounded bg-grey-200"></div>
+      <div className="h-4 w-24 rounded bg-grey-200 dark:bg-slate-500"></div>
     </div>
     <div className="col-start-5 whitespace-nowrap px-4 py-4 text-sm text-grey-500">
-      <div className="h-4 w-20 rounded bg-grey-200"></div>
+      <div className="h-4 w-20 rounded bg-grey-200 dark:bg-slate-500"></div>
     </div>
   </div>
 )

@@ -50,25 +50,25 @@ export const CurrentUpcomingSubPanel = ({
       <div className="flex flex-col gap-4">
         <div className="flex gap-4">
           <DisplayCard className="w-full max-w-[127px]">
-            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600">
+            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
               {topPanelsInfo[0].title}
-              <div className="font-heading text-2xl font-medium">
+              <div className="font-heading text-2xl font-medium dark:text-slate-50">
                 {topPanelsInfo[0].value ?? <Skeleton />}
               </div>
             </div>
           </DisplayCard>
           <DisplayCard className="w-full max-w-[142px]">
-            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600">
+            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
               {topPanelsInfo[1].title}
-              <div className="font-heading text-2xl font-medium">
+              <div className="font-heading text-2xl font-medium dark:text-slate-50">
                 {topPanelsInfo[1].value ?? <Skeleton className="w-22" />}
               </div>
             </div>
           </DisplayCard>
           <DisplayCard className="flex-1">
-            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600">
+            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
               {topPanelsInfo[2].title}
-              <div className="font-heading text-2xl font-medium">
+              <div className="font-heading text-2xl font-medium dark:text-slate-50">
                 {topPanelsInfo[2].value ?? <Skeleton className="w-40" />}
               </div>
             </div>
@@ -76,7 +76,6 @@ export const CurrentUpcomingSubPanel = ({
         </div>
         <ConfigurationDisplayCard type={info.type} />
       </div>
-      {/* )} */}
 
       <PayoutsSubPanel className="mt-12" />
     </div>
@@ -84,5 +83,10 @@ export const CurrentUpcomingSubPanel = ({
 }
 
 const Skeleton = ({ className }: { className?: string }) => (
-  <div className={twMerge('h-8 w-12 rounded-lg bg-smoke-200', className)} />
+  <div
+    className={twMerge(
+      'h-8 w-12 animate-pulse rounded-lg bg-smoke-200 dark:bg-slate-500',
+      className,
+    )}
+  />
 )

@@ -16,7 +16,7 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
           <PlaceholderSquare className="-ml-[18px] bg-melon-600" />
         </div>
         <div>
-          <button className="flex items-center rounded-2xl bg-grey-100 py-1 pl-3 pr-2.5 text-sm text-grey-700">
+          <button className="flex items-center rounded-2xl bg-grey-100 py-1 pl-3 pr-2.5 text-sm text-grey-700 dark:bg-slate-500 dark:text-slate-100">
             View all <ArrowRightIcon className="h-3 w-3" />
           </button>
         </div>
@@ -29,7 +29,7 @@ const PlaceholderSquare = ({ className }: { className?: string }) => {
   return (
     <div
       className={twMerge(
-        'h-14 w-14 rounded-lg border-4 border-white bg-grey-400',
+        'h-14 w-14 rounded-lg border-4 border-white bg-grey-400 dark:border-slate-600',
         className,
       )}
     ></div>

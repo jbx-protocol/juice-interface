@@ -17,7 +17,10 @@ export const DisplayCard: React.FC<Props> = ({
 }) => {
   return (
     <Component
-      className={twMerge('rounded-lg bg-smoke-50 py-5 px-6', className)}
+      className={twMerge(
+        'rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700',
+        className,
+      )}
       role={role}
       onClick={onClick}
     >

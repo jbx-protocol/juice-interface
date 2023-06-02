@@ -34,19 +34,19 @@ export const PayoutsSubPanel = ({ className }: { className?: string }) => {
       <div className="mt-5 flex flex-col items-center gap-4">
         <div className="flex w-full items-center gap-4">
           <DisplayCard className="flex w-full flex-col gap-2">
-            <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium">
+            <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium dark:text-slate-200">
               <Trans>Treasury balance</Trans>
             </h3>
             <span className="font-heading text-xl font-medium">210 ETH</span>
           </DisplayCard>
           <DisplayCard className="flex w-full flex-col gap-2">
-            <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium">
+            <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium dark:text-slate-200">
               <Trans>Overflow</Trans>
             </h3>
             <span className="font-heading text-xl font-medium">210 ETH</span>
           </DisplayCard>
           <DisplayCard className="flex w-full flex-col gap-2">
-            <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium">
+            <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
               <Trans>Available to pay out</Trans>
             </h3>
             <span className="font-heading text-xl font-medium">210 ETH</span>
@@ -54,7 +54,7 @@ export const PayoutsSubPanel = ({ className }: { className?: string }) => {
         </div>
         <DisplayCard className="flex w-full flex-col pb-8">
           <div className="flex items-center justify-between gap-3">
-            <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium">
+            <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
               <Trans>Payouts</Trans>
             </h3>
             <EllipsisVerticalIcon role="button" className="h-6 w-6" />
@@ -65,7 +65,7 @@ export const PayoutsSubPanel = ({ className }: { className?: string }) => {
               {payouts.map(payout => (
                 <tr
                   key={payout.name}
-                  className="flex items-center justify-between gap-3 border-b border-grey-200 py-3"
+                  className="flex items-center justify-between gap-3 border-b border-grey-200 py-3 dark:border-slate-500"
                 >
                   <td className="flex items-center gap-3">
                     <div className="h-8 w-8 rounded-full bg-juice-400" />

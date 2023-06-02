@@ -13,7 +13,7 @@ export const Cart = ({ className }: { className?: string }) => {
     <div
       data-testid="cart"
       className={twMerge(
-        'fixed inset-x-0 bottom-0 z-20 flex h-full cursor-pointer items-center justify-center border-t border-grey-200 bg-white drop-shadow transition-all',
+        'fixed inset-x-0 bottom-0 z-20 flex h-full cursor-pointer items-center justify-center border-t border-grey-200 bg-white drop-shadow transition-all dark:border-slate-500 dark:bg-slate-900',
         expanded ? 'max-h-[435px]' : 'max-h-20',
         className,
       )}
@@ -54,11 +54,11 @@ const SummaryOpenView = () => {
       </div>
       <div
         data-testid="cart-summary-open-view-total"
-        className="flex cursor-auto items-center gap-8 self-end rounded-lg border border-grey-200 p-8"
+        className="flex cursor-auto items-center gap-8 self-end rounded-lg border border-grey-200 p-8 dark:border-slate-500 dark:bg-slate-700"
         onClick={e => e.stopPropagation()}
       >
         <div className="flex flex-col items-center gap-2 whitespace-nowrap">
-          <span className="text-sm text-grey-500">
+          <span className="text-sm text-grey-500 dark:text-slate-200">
             <Trans>Total to pay</Trans>
           </span>
           <span className="text-2xl font-medium">1.2 ETH</span>
@@ -75,19 +75,21 @@ const SummaryNftRewardItem = ({ className }: { className?: string }) => {
   return (
     <div
       className={twMerge(
-        'flex items-center justify-between border-b border-grey-200 py-5',
+        'flex items-center justify-between border-b border-grey-200 py-5 dark:border-slate-500',
         className,
       )}
     >
       <div className="flex items-center">
         <PlaceholderSquare className="h-14 w-14" />
-        <span className="ml-3">Coffee Man</span>
-        <span className="ml-2 rounded-2xl bg-grey-100 py-0.5 px-2">NFT</span>
+        <span className="ml-3 dark:text-slate-50">Coffee Man</span>
+        <span className="ml-2 rounded-2xl bg-grey-100 py-0.5 px-2 dark:bg-slate-500 dark:text-slate-100">
+          NFT
+        </span>
       </div>
       <div className="flex items-center">
         <span className="mr-8 text-sm">1</span>
         <span className="mr-4 text-sm font-medium">1.2 ETH</span>
-        <TrashIcon className="inline h-4 w-4 text-grey-400" />
+        <TrashIcon className="inline h-4 w-4 text-grey-400 dark:text-slate-300" />
       </div>
     </div>
   )
@@ -116,11 +118,11 @@ const SummaryClosedView = () => {
         onClick={e => e.stopPropagation()}
       >
         <div className="flex items-center gap-4">
-          <span className="text-sm text-grey-500">
+          <span className="text-sm text-grey-500 dark:text-slate-200">
             <Trans>Total to pay</Trans>
           </span>
           <span className="text-2xl font-medium">1.2 ETH</span>
-          <TrashIcon className="h-5 w-5 text-grey-400" />
+          <TrashIcon className="h-5 w-5 text-grey-400 dark:text-slate-300" />
         </div>
         <Button type="primary">
           <Trans>Pay project</Trans>
@@ -134,7 +136,7 @@ const PlaceholderSquare = ({ className }: { className?: string }) => {
   return (
     <div
       className={twMerge(
-        'h-12 w-12 rounded-lg border-4 border-white bg-grey-400',
+        'h-12 w-12 rounded-lg border-4 border-white bg-grey-400 dark:border-slate-950',
         className,
       )}
     ></div>

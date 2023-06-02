@@ -1,0 +1,16 @@
+query SplitDistributionsForDistributeReservedTokensEvent(
+  $distributeReservedTokensEvent: String
+) {
+  distributeToReservedTokenSplitEvents(
+    where: { distributeReservedTokensEvent: $distributeReservedTokensEvent }
+    orderBy: tokenCount
+    orderDirection: desc
+  ) {
+    id
+    timestamp
+    txHash
+    beneficiary
+    tokenCount
+    projectId
+  }
+}

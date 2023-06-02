@@ -3,10 +3,13 @@ import EthereumAddress from 'components/EthereumAddress'
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
 import ETHAmount from 'components/currency/ETHAmount'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
-import { ProjectEventsQuery } from 'generated/graphql'
-import useSubgraphQuery from 'hooks/useSubgraphQuery'
-
 import { PV_V2 } from 'constants/pv'
+import {
+  ProjectEventsQuery,
+  useSplitDistributionsForDistributePayoutsEventQuery,
+} from 'generated/graphql'
+import { client } from 'lib/apollo/client'
+
 import { ActivityEvent } from '../ActivityElement'
 
 export default function DistributePayoutsElem({
@@ -17,24 +20,11 @@ export default function DistributePayoutsElem({
   withProjectLink?: boolean
 }) {
   // Load individual DistributeToPayoutSplit events, emitted by internal transactions of the DistributeReservedPayouts transaction
-  const { data: distributePayoutsEvents } = useSubgraphQuery({
-    entity: 'distributeToPayoutSplitEvent',
-    keys: [
-      'id',
-      'timestamp',
-      'txHash',
-      'amount',
-      'beneficiary',
-      'splitProjectId',
-    ],
-    orderDirection: 'desc',
-    orderBy: 'amount',
-    where: event?.id
-      ? {
-          key: 'distributePayoutsEvent',
-          value: event.id,
-        }
-      : undefined,
+  const { data } = useSplitDistributionsForDistributePayoutsEventQuery({
+    client,
+    variables: {
+      distributePayoutsEvent: event?.id,
+    },
   })
 
   if (!event) return null
@@ -46,7 +36,7 @@ export default function DistributePayoutsElem({
       withProjectLink={withProjectLink}
       pv={PV_V2}
       subject={
-        distributePayoutsEvents?.length ? (
+        data?.distributeToPayoutSplitEvents.length ? (
           <span className="text-base font-medium">
             <ETHAmount amount={event.distributedAmount} />
           </span>
@@ -54,7 +44,7 @@ export default function DistributePayoutsElem({
       }
       extra={
         <div>
-          {distributePayoutsEvents?.map(e => (
+          {data?.distributeToPayoutSplitEvents.map(e => (
             <div
               key={e.id}
               className="flex items-baseline justify-between text-sm"

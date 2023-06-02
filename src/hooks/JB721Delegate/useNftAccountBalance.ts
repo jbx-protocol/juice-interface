@@ -1,4 +1,5 @@
-import useSubgraphQuery from 'hooks/useSubgraphQuery'
+import { useJb721DelegateTokensQuery } from 'generated/graphql'
+import { client } from 'lib/apollo/client'
 
 /**
  * Return all the project's NFTs that are owned by the given account.
@@ -10,23 +11,13 @@ export function useNftAccountBalance({
   dataSourceAddress: string | undefined
   accountAddress: string | undefined
 }) {
-  return useSubgraphQuery(
-    dataSourceAddress && accountAddress
-      ? {
-          entity: 'jb721DelegateToken',
-          keys: ['tokenId', 'address', 'tokenUri'],
-          where: [
-            {
-              key: 'address',
-              value: dataSourceAddress ?? '',
-            },
-            {
-              key: 'owner',
-              value: `{ wallet: "${accountAddress ?? ''}" }`,
-              nested: true,
-            },
-          ],
-        }
-      : null,
-  )
+  return useJb721DelegateTokensQuery({
+    client,
+    variables: {
+      where: {
+        ...(dataSourceAddress ? { address: dataSourceAddress } : {}),
+        ...(accountAddress ? { owner: accountAddress } : {}),
+      },
+    },
+  })
 }

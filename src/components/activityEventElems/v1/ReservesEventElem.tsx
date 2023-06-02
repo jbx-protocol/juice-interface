@@ -2,11 +2,15 @@ import { Trans } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import { PV_V1 } from 'constants/pv'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { ProjectEventsQuery } from 'generated/graphql'
-import useSubgraphQuery from 'hooks/useSubgraphQuery'
+import {
+  ProjectEventsQuery,
+  useTicketModDistributionsForPrintReservesEventQuery,
+} from 'generated/graphql'
+import { client } from 'lib/apollo/client'
 import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+
 import { ActivityEvent } from '../ActivityElement'
 
 export default function ReservesEventElem({
@@ -19,20 +23,12 @@ export default function ReservesEventElem({
   const { tokenSymbol } = useContext(V1ProjectContext)
 
   // Load individual DistributeToTicketMod events, emitted by internal transactions of the PrintReserves transaction
-  const { data: distributeEvents } = useSubgraphQuery(
-    event?.id
-      ? {
-          entity: 'distributeToTicketModEvent',
-          keys: ['id', 'timestamp', 'txHash', 'modBeneficiary', 'modCut'],
-          orderDirection: 'desc',
-          orderBy: 'modCut',
-          where: {
-            key: 'printReservesEvent',
-            value: event.id,
-          },
-        }
-      : null,
-  )
+  const { data } = useTicketModDistributionsForPrintReservesEventQuery({
+    client,
+    variables: {
+      printReservesEvent: event?.id,
+    },
+  })
 
   if (!event) return null
 
@@ -63,7 +59,7 @@ export default function ReservesEventElem({
       }
       extra={
         <div>
-          {distributeEvents?.map(e => (
+          {data?.distributeToTicketModEvents.map(e => (
             <div
               key={e.id}
               style={{

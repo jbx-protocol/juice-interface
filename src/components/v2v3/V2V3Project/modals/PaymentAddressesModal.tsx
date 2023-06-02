@@ -6,8 +6,8 @@ import { Callout } from 'components/Callout'
 import EthereumAddress from 'components/EthereumAddress'
 import EtherscanLink from 'components/EtherscanLink'
 import TooltipLabel from 'components/TooltipLabel'
+import { Etherc20ProjectPayersQuery } from 'generated/graphql'
 import useMobile from 'hooks/useMobile'
-import { ETHERC20ProjectPayer } from 'models/subgraph-entities/v2/eth-erc20-project-payer'
 import { isZeroAddress } from 'utils/address'
 import { formatBoolean } from 'utils/format/formatBoolean'
 
@@ -18,16 +18,7 @@ export function PaymentAddressesModal({
 }: {
   open: boolean | undefined
   onCancel: VoidFunction | undefined
-  projectPayers:
-    | Pick<
-        ETHERC20ProjectPayer,
-        | 'address'
-        | 'beneficiary'
-        | 'memo'
-        | 'preferAddToBalance'
-        | 'preferClaimedTokens'
-      >[]
-    | undefined
+  projectPayers: Etherc20ProjectPayersQuery['etherc20ProjectPayers'] | undefined
 }) {
   const isMobile = useMobile()
 

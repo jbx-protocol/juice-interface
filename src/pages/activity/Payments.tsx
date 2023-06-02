@@ -5,7 +5,8 @@ import RichNote from 'components/RichNote'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { PV_V1 } from 'constants/pv'
-import useSubgraphQuery from 'hooks/useSubgraphQuery'
+import { usePayEventsQuery } from 'generated/graphql'
+import { client } from 'lib/apollo/client'
 import { Project } from 'models/subgraph-entities/vX/project'
 import { classNames } from 'utils/classNames'
 import { formatHistoricalDate } from 'utils/format/formatDate'
@@ -34,24 +35,18 @@ const ProjectHandle = ({ project }: { project: Partial<Project> }) => {
 }
 
 export function PaymentsFeed() {
-  const { data: events, isLoading } = useSubgraphQuery({
-    entity: 'payEvent',
-    keys: [
-      'amount',
-      'beneficiary',
-      'note',
-      'timestamp',
-      'id',
-      { entity: 'project', keys: ['id', 'projectId', 'handle', 'pv'] },
-    ],
-    first: 20,
-    orderDirection: 'desc',
-    orderBy: 'timestamp',
+  const { data, loading } = usePayEventsQuery({
+    client,
+    variables: {
+      first: 20,
+    },
   })
+
+  const events = data?.payEvents
 
   return (
     <div>
-      {events || !isLoading ? (
+      {events || !loading ? (
         <div>
           {events?.map((e, i) => (
             <div

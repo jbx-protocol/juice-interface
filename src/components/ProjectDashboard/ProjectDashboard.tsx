@@ -5,6 +5,7 @@ import { CoverPhoto } from './components/CoverPhoto'
 import { CurrentCycleCard } from './components/CurrentCycleCard'
 import { NftRewardsCard } from './components/NftRewardsCard'
 import { PayProjectCard } from './components/PayProjectCard'
+import { ProjectCartProvider } from './components/ProjectCartProvider'
 import { ProjectHeader } from './components/ProjectHeader'
 import { ProjectTabs } from './components/ProjectTabs'
 
@@ -13,7 +14,7 @@ export const ProjectDashboard = () => {
     nftRewards: { CIDs },
   } = useContext(NftRewardsContext)
   return (
-    <>
+    <ProjectCartProvider>
       {/* // TODO: Remove pb-48, just there for testing */}
       <div className="flex w-full flex-col items-center pb-48">
         <CoverPhoto />
@@ -30,6 +31,6 @@ export const ProjectDashboard = () => {
         </div>
       </div>
       <Cart />
-    </>
+    </ProjectCartProvider>
   )
 }

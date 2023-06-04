@@ -6,11 +6,11 @@ exports[`PayInput renders 1`] = `
     class="dark:slate-900 flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3 dark:border-slate-500 dark:bg-slate-950"
   >
     <div
-      class="rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950"
+      class="flex items-center justify-center rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950 h-7 w-7"
       data-testid="pay-input-currency-icon"
     >
       <svg
-        class="h-5 w-5"
+        class="h-full w-full"
         fill="none"
         height="1em"
         viewBox="0 0 24 24"
@@ -62,11 +62,11 @@ exports[`PayInput renders with placeholder 1`] = `
     class="dark:slate-900 flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3 dark:border-slate-500 dark:bg-slate-950"
   >
     <div
-      class="rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950"
+      class="flex items-center justify-center rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950 h-7 w-7"
       data-testid="pay-input-currency-icon"
     >
       <svg
-        class="h-5 w-5"
+        class="h-full w-full"
         fill="none"
         height="1em"
         viewBox="0 0 24 24"
@@ -119,11 +119,11 @@ exports[`PayInput renders with value 1`] = `
     class="dark:slate-900 flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3 dark:border-slate-500 dark:bg-slate-950"
   >
     <div
-      class="rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950"
+      class="flex items-center justify-center rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950 h-7 w-7"
       data-testid="pay-input-currency-icon"
     >
       <svg
-        class="h-5 w-5"
+        class="h-full w-full"
         fill="none"
         height="1em"
         viewBox="0 0 24 24"

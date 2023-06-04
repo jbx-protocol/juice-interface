@@ -1,31 +1,38 @@
 import { ChevronUpIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { useState } from 'react'
+import { useProjectCart } from 'components/ProjectDashboard/hooks'
+import { CSSProperties, useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
+import { CurrencyIcon } from '../ui/CurrencyIcon'
+import StackedComponents from '../ui/StackedComponents'
+import { PaymentCartItem } from './components/CartItem/PaymentCartItem'
+import { ProjectTokensCartItem } from './components/CartItem/ProjectTokensCartItem'
 
 export const Cart = ({ className }: { className?: string }) => {
-  const [expanded, setExpanded] = useState<boolean>(false)
-
-  const toggleExpanded = () => setExpanded(prev => !prev)
+  const cart = useProjectCart()
+  const toggleExpanded = () => cart.dispatch({ type: 'toggleExpanded' })
 
   return (
     <div
       data-testid="cart"
       className={twMerge(
-        'fixed inset-x-0 bottom-0 z-20 flex h-full cursor-pointer items-center justify-center border-t border-grey-200 bg-white drop-shadow transition-all dark:border-slate-500 dark:bg-slate-900',
-        expanded ? 'max-h-[435px]' : 'max-h-20',
+        'fixed inset-x-0 bottom-0 z-20 h-full cursor-pointer items-center justify-center border-t border-grey-200 bg-white drop-shadow transition-all dark:border-slate-500 dark:bg-slate-900',
+        cart.expanded ? 'max-h-[435px]' : 'max-h-20',
+        cart.visible ? 'flex' : 'hidden',
         className,
       )}
       onClick={toggleExpanded}
     >
       <div className="flex h-full w-full max-w-6xl items-center">
-        {expanded ? <SummaryOpenView /> : <SummaryClosedView />}
+        {cart.expanded ? <SummaryOpenView /> : <SummaryClosedView />}
         <ChevronUpIcon
           role="button"
           className={twMerge(
             'h-8 w-8',
-            expanded && 'mt-12 rotate-180 self-start',
+            cart.expanded && 'mt-12 rotate-180 self-start',
           )}
         />
       </div>
@@ -34,6 +41,11 @@ export const Cart = ({ className }: { className?: string }) => {
 }
 
 const SummaryOpenView = () => {
+  const cart = useProjectCart()
+  const amountText = cart.payAmount
+    ? formatCurrencyAmount(cart.payAmount)
+    : undefined
+
   return (
     <div
       data-testid="cart-summary-open-view"
@@ -48,8 +60,8 @@ const SummaryOpenView = () => {
           <Trans>Summary</Trans>
         </span>
         <div>
-          <SummaryNftRewardItem />
-          <SummaryNftRewardItem />
+          <PaymentCartItem />
+          <ProjectTokensCartItem />
         </div>
       </div>
       <div
@@ -61,9 +73,9 @@ const SummaryOpenView = () => {
           <span className="text-sm text-grey-500 dark:text-slate-200">
             <Trans>Total to pay</Trans>
           </span>
-          <span className="text-2xl font-medium">1.2 ETH</span>
+          <span className="text-2xl font-medium">{amountText}</span>
         </div>
-        <Button type="primary">
+        <Button role="button" type="primary">
           <Trans>Pay project</Trans>
         </Button>
       </div>
@@ -71,31 +83,16 @@ const SummaryOpenView = () => {
   )
 }
 
-const SummaryNftRewardItem = ({ className }: { className?: string }) => {
-  return (
-    <div
-      className={twMerge(
-        'flex items-center justify-between border-b border-grey-200 py-5 dark:border-slate-500',
-        className,
-      )}
-    >
-      <div className="flex items-center">
-        <PlaceholderSquare className="h-14 w-14" />
-        <span className="ml-3 dark:text-slate-50">Coffee Man</span>
-        <span className="ml-2 rounded-2xl bg-grey-100 py-0.5 px-2 dark:bg-slate-500 dark:text-slate-100">
-          NFT
-        </span>
-      </div>
-      <div className="flex items-center">
-        <span className="mr-8 text-sm">1</span>
-        <span className="mr-4 text-sm font-medium">1.2 ETH</span>
-        <TrashIcon className="inline h-4 w-4 text-grey-400 dark:text-slate-300" />
-      </div>
-    </div>
-  )
-}
-
 const SummaryClosedView = () => {
+  const cart = useProjectCart()
+  const amountText = cart.payAmount
+    ? formatCurrencyAmount(cart.payAmount)
+    : undefined
+
+  const removePay = useCallback(() => {
+    cart.dispatch({ type: 'removePayment' })
+  }, [cart])
+
   return (
     <div className="flex w-full items-center justify-between px-8 py-6">
       <div
@@ -106,11 +103,27 @@ const SummaryClosedView = () => {
         <span className="font-heading text-2xl font-medium">
           <Trans>Summary</Trans>
         </span>
-        <div className="relative flex">
-          <PlaceholderSquare className="z-20 bg-bluebs-400" />
-          <PlaceholderSquare className="z-10 -ml-[18px] bg-juice-400" />
-          <PlaceholderSquare className="-ml-[18px] bg-melon-600" />
-        </div>
+        <StackedComponents
+          components={[
+            {
+              Component: PlaceholderSquare,
+              props: { className: 'bg-bluebs-400' },
+            },
+            {
+              Component: PlaceholderSquare,
+              props: { className: 'bg-juice-400' },
+            },
+            {
+              Component: CurrencyIcon,
+              props: {
+                className:
+                  'h-full w-full border-4 border-white dark:border-slate-950',
+                currency: cart.payAmount?.currency ?? V2V3_CURRENCY_ETH,
+              },
+            },
+          ]}
+          size="48px"
+        />
       </div>
       <div
         data-testid="cart-summary-closed-view-total"
@@ -121,8 +134,12 @@ const SummaryClosedView = () => {
           <span className="text-sm text-grey-500 dark:text-slate-200">
             <Trans>Total to pay</Trans>
           </span>
-          <span className="text-2xl font-medium">1.2 ETH</span>
-          <TrashIcon className="h-5 w-5 text-grey-400 dark:text-slate-300" />
+          <span className="text-2xl font-medium">{amountText}</span>
+          <TrashIcon
+            role="button"
+            className="h-5 w-5 text-grey-400 dark:text-slate-300"
+            onClick={removePay}
+          />
         </div>
         <Button type="primary">
           <Trans>Pay project</Trans>
@@ -132,11 +149,18 @@ const SummaryClosedView = () => {
   )
 }
 
-const PlaceholderSquare = ({ className }: { className?: string }) => {
+const PlaceholderSquare = ({
+  className,
+  style,
+}: {
+  className?: string
+  style?: CSSProperties
+}) => {
   return (
     <div
+      style={style}
       className={twMerge(
-        'h-12 w-12 rounded-lg border-4 border-white bg-grey-400 dark:border-slate-950',
+        'h-full w-full rounded-lg border-4 border-white bg-grey-400 dark:border-slate-950',
         className,
       )}
     ></div>

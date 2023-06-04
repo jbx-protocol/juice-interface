@@ -4,6 +4,7 @@ import { BigNumber, utils } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import useWeiConverter from 'hooks/useWeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useContext, useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -11,16 +12,14 @@ import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { formatIssuanceRate, weightAmountPermyriad } from 'utils/v2v3/math'
 
 export function useTokensPerEth(
-  currencyAmount: { amount: string; currency: 'eth' | 'usd' } | undefined,
+  currencyAmount: { amount: number; currency: V2V3CurrencyOption } | undefined,
 ) {
   const amount =
-    currencyAmount &&
-    currencyAmount.amount.length &&
-    !isNaN(+currencyAmount.amount)
+    currencyAmount && currencyAmount.amount && !isNaN(currencyAmount.amount)
       ? currencyAmount.amount
       : undefined
   const currency = currencyAmount
-    ? currencyAmount?.currency === 'usd'
+    ? currencyAmount?.currency === V2V3_CURRENCY_USD
       ? V2V3_CURRENCY_USD
       : V2V3_CURRENCY_ETH
     : undefined
@@ -36,7 +35,7 @@ export function useTokensPerEth(
 
   const weiPayAmt = useWeiConverter<CurrencyOption>({
     currency,
-    amount,
+    amount: amount?.toString(),
   })
 
   const formatReceivedTickets = useCallback(

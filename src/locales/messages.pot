@@ -128,9 +128,6 @@ msgstr ""
 msgid "Determines whether tokens will be minted by payments made through this address."
 msgstr ""
 
-msgid "Receive {0} tokens/1 ETH"
-msgstr ""
-
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
 msgstr ""
 
@@ -2253,6 +2250,9 @@ msgid "Deploy an address which forwards ETH to your project. This makes it easie
 msgstr ""
 
 msgid "Ethereum wallet address"
+msgstr ""
+
+msgid "Receive {receivedTickets} {receivedTokenSymbolText}/1 {currencyText}"
 msgstr ""
 
 msgid "Juicebox enables the creators of tomorrow to launch, fund and manage the boldest projects on the internet."

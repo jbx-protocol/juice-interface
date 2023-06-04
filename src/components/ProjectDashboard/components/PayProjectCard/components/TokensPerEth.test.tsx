@@ -2,10 +2,11 @@
  * @jest-environment jsdom
  */
 import { render, screen } from '@testing-library/react'
-import { useTokensPerEth } from '../hooks/useTokensPerEth'
+import { useTokensPerEth } from 'components/ProjectDashboard/hooks/useTokensPerEth'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { TokensPerEth } from './TokensPerEth'
 
-jest.mock('../hooks/useTokensPerEth', () => ({
+jest.mock('components/ProjectDashboard/hooks/useTokensPerEth', () => ({
   useTokensPerEth: jest.fn(),
 }))
 
@@ -24,8 +25,8 @@ describe('TokensPerEth', () => {
     const { container } = render(
       <TokensPerEth
         currencyAmount={{
-          amount: '1',
-          currency: 'eth',
+          amount: 1,
+          currency: V2V3_CURRENCY_ETH,
         }}
       />,
     )
@@ -37,14 +38,14 @@ describe('TokensPerEth', () => {
     render(
       <TokensPerEth
         currencyAmount={{
-          amount: '1',
-          currency: 'eth',
+          amount: 1,
+          currency: V2V3_CURRENCY_ETH,
         }}
       />,
     )
     expect(useTokensPerEth).toHaveBeenCalledWith({
-      amount: '1',
-      currency: 'eth',
+      amount: 1,
+      currency: V2V3_CURRENCY_ETH,
     })
   })
 })

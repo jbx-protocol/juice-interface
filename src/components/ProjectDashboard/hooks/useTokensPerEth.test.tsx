@@ -11,6 +11,7 @@ import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import useWeiConverter from 'hooks/useWeiConverter'
 import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { weightAmountPermyriad } from 'utils/v2v3/math'
 import { useTokensPerEth } from './useTokensPerEth'
 
@@ -58,7 +59,7 @@ describe('useTokensPerEth', () => {
 
   it('returns expected data for valid eth amount', () => {
     const { result } = renderHook(
-      () => useTokensPerEth({ amount: '1', currency: 'eth' }),
+      () => useTokensPerEth({ amount: 1, currency: V2V3_CURRENCY_ETH }),
       { wrapper },
     )
 
@@ -69,7 +70,7 @@ describe('useTokensPerEth', () => {
 
   it('returns expected data for valid usd amount', () => {
     const { result } = renderHook(
-      () => useTokensPerEth({ amount: '1', currency: 'usd' }),
+      () => useTokensPerEth({ amount: 1, currency: V2V3_CURRENCY_USD }),
       { wrapper },
     )
 
@@ -83,7 +84,7 @@ describe('useTokensPerEth', () => {
   it('returns default when wei is 0', () => {
     ;(useWeiConverter as jest.Mock).mockReturnValue(BigNumber.from('0'))
     const { result } = renderHook(
-      () => useTokensPerEth({ amount: 'not a number', currency: 'usd' }),
+      () => useTokensPerEth({ amount: 0, currency: V2V3_CURRENCY_USD }),
       { wrapper },
     )
 

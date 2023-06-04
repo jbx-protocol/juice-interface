@@ -1,13 +1,14 @@
 import { Trans } from '@lingui/macro'
-import { useTokensPerEth } from '../hooks/useTokensPerEth'
+import { useTokensPerEth } from 'components/ProjectDashboard/hooks/useTokensPerEth'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 
 export const TokensPerEth = ({
   currencyAmount,
 }: {
   currencyAmount:
     | {
-        amount: string
-        currency: 'eth' | 'usd'
+        amount: number
+        currency: V2V3CurrencyOption
       }
     | undefined
 }) => {

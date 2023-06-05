@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
-import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
+import ProjectCard from 'components/ProjectCard'
 import { useDBProjectsInfiniteQuery } from 'hooks/useProjects'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
@@ -44,10 +44,7 @@ export default function LatestProjects() {
       {concatenatedPages && (
         <Grid>
           {concatenatedPages.map(p => (
-            <ProjectCard
-              key={`${p.id}_${p.pv}`}
-              project={p as ProjectCardProject}
-            />
+            <ProjectCard key={`${p.id}_${p.pv}`} project={p} />
           ))}
         </Grid>
       )}

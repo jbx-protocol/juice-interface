@@ -19,6 +19,8 @@ const handler: NextApiHandler = async (req, res) => {
     orderBy,
     owner,
     creator,
+    projectId,
+    ids,
   } = req.query
 
   // https://vercel.com/guides/how-to-enable-cors#enabling-cors-in-a-next.js-app
@@ -55,6 +57,11 @@ const handler: NextApiHandler = async (req, res) => {
     return
   }
 
+  if (projectId && (Array.isArray(projectId) || isNaN(parseInt(projectId)))) {
+    res.status(400).send('ProjectId is not a number')
+    return
+  }
+
   if (page && (Array.isArray(page) || isNaN(parseInt(page)))) {
     res.status(400).send('Page is not a number')
     return
@@ -67,6 +74,11 @@ const handler: NextApiHandler = async (req, res) => {
 
   if (pv && typeof pv !== 'string') {
     res.status(400).send('Invalid PV')
+    return
+  }
+
+  if (ids && typeof ids !== 'string') {
+    res.status(400).send('Invalid ids')
     return
   }
 
@@ -83,15 +95,11 @@ const handler: NextApiHandler = async (req, res) => {
     return
   }
 
-  const _pageSize =
-    typeof pageSize === 'string' && typeof parseInt(pageSize) === 'number'
-      ? parseInt(pageSize)
-      : undefined
+  const _pageSize = pageSize ? parseInt(pageSize) : undefined
 
-  const _page =
-    typeof page === 'string' && typeof parseInt(page) === 'number'
-      ? parseInt(page)
-      : undefined
+  const _page = page ? parseInt(page) : undefined
+
+  const _projectId = projectId ? parseInt(projectId) : undefined
 
   try {
     const { data: results } = await queryDBProjects(req, res, {
@@ -106,6 +114,8 @@ const handler: NextApiHandler = async (req, res) => {
       orderBy: orderBy as DBProjectQueryOpts['orderBy'],
       owner,
       creator,
+      projectId: _projectId,
+      ids: ids?.split(','),
     })
 
     res.status(200).json(results)

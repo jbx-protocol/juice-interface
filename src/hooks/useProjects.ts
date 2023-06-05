@@ -1,21 +1,7 @@
 import axios from 'axios'
-import { PV_V1, PV_V2 } from 'constants/pv'
-import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
-import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import { BigNumber } from 'ethers'
 import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
-import {
-  InfiniteSGQueryOpts,
-  SGEntity,
-  SGEntityKey,
-  SGQueryOpts,
-  SGWhereArg,
-} from 'models/graph'
 import { Json } from 'models/json'
-import { ProjectState } from 'models/projectVisibility'
-import { PV } from 'models/pv'
-import { Project } from 'models/subgraph-entities/vX/project'
-import { V1TerminalVersion } from 'models/v1/terminals'
 import { useMemo } from 'react'
 import {
   UseInfiniteQueryOptions,
@@ -23,117 +9,10 @@ import {
   useInfiniteQuery,
   useQuery,
 } from 'react-query'
-import { getSubgraphIdForProject, parseSubgraphEntity } from 'utils/graph'
 import { formatQueryParams } from 'utils/queryParams'
-import { parseDBProjectJson, parseDBProjectsRow } from 'utils/sgDbProjects'
-
-import useSubgraphQuery from './useSubgraphQuery'
-
-interface ProjectsOptions {
-  pageNumber?: number
-  projectId?: number
-  projectIds?: number[]
-  orderBy?: 'createdAt' | 'currentBalance' | 'volume' | 'paymentsCount'
-  orderDirection?: 'asc' | 'desc'
-  pageSize?: number
-  state?: ProjectState
-  keys?: (keyof Project)[]
-  terminalVersion?: V1TerminalVersion
-  pv?: PV[]
-}
+import { parseDBProject } from 'utils/sgDbProjects'
 
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
-export const DEFAULT_PROJECT_ENTITY_KEYS: (keyof Project)[] = [
-  'id',
-  'projectId',
-  'handle',
-  'createdAt',
-  'metadataUri',
-  'volume',
-  'pv',
-]
-const V1_ARCHIVED_SUBGRAPH_IDS = V1ArchivedProjectIds.map(projectId =>
-  getSubgraphIdForProject(PV_V1, projectId),
-)
-const V2_ARCHIVED_SUBGRAPH_IDS = V2ArchivedProjectIds.map(projectId =>
-  getSubgraphIdForProject(PV_V2, projectId),
-)
-const ARCHIVED_SUBGRAPH_IDS = [
-  ...V1_ARCHIVED_SUBGRAPH_IDS,
-  ...V2_ARCHIVED_SUBGRAPH_IDS,
-]
-
-const buildProjectQueryOpts = (
-  opts: ProjectsOptions,
-): Partial<
-  | SGQueryOpts<'project', SGEntityKey<'project'>>
-  | InfiniteSGQueryOpts<'project', SGEntityKey<'project'>>
-> => {
-  const where: SGWhereArg<'project'>[] = []
-
-  if (opts.pv) {
-    where.push({
-      key: 'pv',
-      value: opts.pv,
-      operator: 'in',
-    })
-  }
-
-  if (opts.projectIds) {
-    where.push({
-      key: 'projectId',
-      value: opts.projectIds,
-      operator: 'in',
-    })
-  }
-
-  if (opts.projectId) {
-    where.push({
-      key: 'projectId',
-      value: opts.projectId,
-    })
-  } else if (opts.state === 'archived') {
-    where.push({
-      key: 'id',
-      value: ARCHIVED_SUBGRAPH_IDS,
-      operator: 'in',
-    })
-  } else if (ARCHIVED_SUBGRAPH_IDS.length) {
-    where.push({
-      key: 'id',
-      value: ARCHIVED_SUBGRAPH_IDS,
-      operator: 'not_in',
-    })
-  }
-
-  return {
-    entity: 'project',
-    keys: opts.keys ?? DEFAULT_PROJECT_ENTITY_KEYS,
-    orderDirection: opts.orderDirection ?? 'desc',
-    orderBy: opts.orderBy ?? 'volume',
-    pageSize: opts.pageSize,
-    where,
-  }
-}
-
-export function useProjectsQuery(opts: ProjectsOptions) {
-  return useSubgraphQuery(
-    {
-      ...(buildProjectQueryOpts(opts) as SGQueryOpts<
-        'project',
-        SGEntityKey<'project'>
-      >),
-      first: opts.pageSize,
-      skip:
-        opts.pageNumber && opts.pageSize
-          ? opts.pageNumber * opts.pageSize
-          : undefined,
-    },
-    {
-      staleTime: DEFAULT_STALE_TIME,
-    },
-  )
-}
 
 export function useDBProjectsQuery(
   opts: DBProjectQueryOpts,
@@ -154,9 +33,7 @@ export function useDBProjectsQuery(
     () =>
       axios
         .get<Json<DBProjectRow>[]>(`/api/projects?${formatQueryParams(opts)}`)
-        .then(res =>
-          res.data?.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
-        ),
+        .then(res => res.data?.map(parseDBProject)),
     {
       staleTime: DEFAULT_STALE_TIME,
       ...reactQueryOptions,
@@ -187,9 +64,7 @@ export function useDBProjectsInfiniteQuery(
             pageSize,
           })}`,
         )
-        .then(res =>
-          res.data?.map(p => parseDBProjectJson(parseDBProjectsRow(p))),
-        )
+        .then(res => res.data?.map(parseDBProject))
     },
     {
       staleTime: DEFAULT_STALE_TIME,
@@ -210,15 +85,11 @@ export function useDBProjectsInfiniteQuery(
 
 export function useTrendingProjects(count: number) {
   return useQuery(['trending-projects', count], async () => {
-    const res = await axios.get<{
-      projects: Json<SGEntity<'project', keyof Project>>[]
-    }>('/api/projects/trending?count=' + count)
-
-    const projects = res.data.projects.map(p =>
-      parseSubgraphEntity('project', p),
+    const res = await axios.get<DBProjectRow[]>(
+      '/api/projects/trending?count=' + count,
     )
 
-    return projects
+    return res.data.map(parseDBProject)
   })
 }
 

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { NftTierCard } from 'components/NftRewards/NftTierCard'
+import { Jb721DelegateToken } from 'generated/graphql'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/nftRewards'
-import { JB721DelegateToken } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
 import { UseQueryResult, useQuery } from 'react-query'
 import { cidFromIpfsUri, ipfsGatewayUrl } from 'utils/ipfs'
 
@@ -31,7 +31,7 @@ export function RedeemNftCard({
   onRemove,
   loading,
 }: {
-  nft: Pick<JB721DelegateToken, 'address' | 'tokenId' | 'tokenUri'>
+  nft: Pick<Jb721DelegateToken, 'address' | 'tokenUri'> & { tokenId: string }
   isSelected: boolean
   onClick: VoidFunction
   onRemove: VoidFunction

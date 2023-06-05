@@ -12,16 +12,21 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { constants } from 'ethers'
 
 import { BigNumber } from 'ethers'
-import { SGOrderDir, SGQueryOpts } from 'models/graph'
-import { Participant } from 'models/subgraph-entities/vX/participant'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { formatPercent } from 'utils/format/formatNumber'
-import { querySubgraph } from 'utils/graph'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { TokenAmount } from 'components/TokenAmount'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
+import {
+  OrderDirection,
+  Participant_OrderBy,
+  ParticipantsDocument,
+  ParticipantsQuery,
+  QueryParticipantsArgs,
+} from 'generated/graphql'
+import { client } from 'lib/apollo/client'
 import { DownloadParticipantsModal } from './DownloadParticipantsModal'
 
 const pageSize = 100
@@ -43,22 +48,15 @@ export default function ParticipantsModal({
 
   const [loading, setLoading] = useState<boolean>()
   const [participants, setParticipants] = useState<
-    Pick<
-      Participant,
-      | 'wallet'
-      | 'volume'
-      | 'lastPaidTimestamp'
-      | 'balance'
-      | 'stakedBalance'
-      | 'id'
-    >[]
+    ParticipantsQuery['participants']
   >([])
-  const [sortPayerReports, setSortPayerReports] =
-    useState<keyof Participant>('balance')
+  const [sortPayerReports, setSortPayerReports] = useState<Participant_OrderBy>(
+    Participant_OrderBy.balance,
+  )
   const [pageNumber, setPageNumber] = useState<number>(0)
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const [sortPayerReportsDirection, setSortPayerReportsDirection] =
-    useState<SGOrderDir>('desc')
+    useState<OrderDirection>(OrderDirection.desc)
 
   const pOptions = participantOptions(
     tokenSymbolText({
@@ -79,54 +77,28 @@ export default function ParticipantsModal({
       return
     }
 
-    // Projects that migrate between 1 & 1.1 may change their PV without the PV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
-    const pvOpt: SGQueryOpts<'participant', keyof Participant>['where'] = {
-      key: 'pv',
-      value: pv,
-    }
-
-    querySubgraph({
-      entity: 'participant',
-      keys: [
-        'wallet { id }',
-        'volume',
-        'lastPaidTimestamp',
-        'balance',
-        'stakedBalance',
-        'id',
-      ],
-      first: pageSize,
-      skip: pageNumber * pageSize,
-      orderBy: sortPayerReports,
-      orderDirection: sortPayerReportsDirection,
-      where:
-        projectId && pv
-          ? [
-              {
-                key: 'projectId',
-                value: projectId,
-              },
-              pvOpt,
-              {
-                key: 'balance',
-                value: 0,
-                operator: 'gt',
-              },
-              {
-                key: 'wallet',
-                value: constants.AddressZero,
-                operator: 'not',
-              },
-            ]
-          : undefined,
-    }).then(res => {
-      setParticipants(curr => {
-        const newParticipants = [...curr]
-        newParticipants.push(...res)
-        return newParticipants
+    client
+      .query<ParticipantsQuery, QueryParticipantsArgs>({
+        query: ParticipantsDocument,
+        variables: {
+          orderBy: sortPayerReports,
+          orderDirection: sortPayerReportsDirection,
+          where: {
+            projectId,
+            pv,
+            balance_gt: BigNumber.from(0),
+            wallet_not: constants.AddressZero,
+          },
+        },
       })
-      setLoading(false)
-    })
+      .then(res => {
+        setParticipants(curr => {
+          const newParticipants = [...curr]
+          newParticipants.push(...res.data.participants)
+          return newParticipants
+        })
+        setLoading(false)
+      })
   }, [
     pageNumber,
     projectId,
@@ -155,11 +127,13 @@ export default function ParticipantsModal({
             onClick={() => {
               setParticipants([])
               setSortPayerReportsDirection(
-                sortPayerReportsDirection === 'asc' ? 'desc' : 'asc',
+                sortPayerReportsDirection === OrderDirection.asc
+                  ? OrderDirection.desc
+                  : OrderDirection.asc,
               )
             }}
           >
-            {sortPayerReportsDirection === 'asc' ? (
+            {sortPayerReportsDirection === OrderDirection.asc ? (
               <SortAscendingOutlined />
             ) : (
               <SortDescendingOutlined />
@@ -173,7 +147,7 @@ export default function ParticipantsModal({
           />
         </div>
 
-        {participants.map(p => (
+        {participants?.map(p => (
           <div
             className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
             key={p.id}
@@ -279,20 +253,20 @@ export default function ParticipantsModal({
 
 interface ParticipantOption {
   label: string
-  value: keyof Pick<Participant, 'balance' | 'volume' | 'lastPaidTimestamp'>
+  value: Participant_OrderBy
 }
 
 const participantOptions = (tokenText: string): ParticipantOption[] => [
   {
     label: t`${tokenText} balance`,
-    value: 'balance',
+    value: Participant_OrderBy.balance,
   },
   {
     label: t`Total paid`,
-    value: 'volume',
+    value: Participant_OrderBy.volume,
   },
   {
     label: t`Last paid`,
-    value: 'lastPaidTimestamp',
+    value: Participant_OrderBy.lastPaidTimestamp,
   },
 ]

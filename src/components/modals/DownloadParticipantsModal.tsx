@@ -3,13 +3,17 @@ import { Modal } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import {
+  ParticipantsDownloadDocument,
+  ParticipantsDownloadQuery,
+  QueryParticipantsArgs,
+} from 'generated/graphql'
 import { useBlockNumber } from 'hooks/useBlockNumber'
-import { SGQueryOpts } from 'models/graph'
-import { Participant } from 'models/subgraph-entities/vX/participant'
+import { client } from 'lib/apollo/client'
+import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { fromWad } from 'utils/format/formatNumber'
-import { querySubgraphExhaustive } from 'utils/graph'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -37,12 +41,6 @@ export function DownloadParticipantsModal({
   const download = useCallback(async () => {
     if (blockNumber === undefined || !projectId || !pv) return
 
-    // Projects that migrate between 1 & 1.1 may change their PV without the PV of their participants being updated. This should be fixed by better subgraph infrastructure, but this fix will make sure the UI works for now.
-    const pvOpt: SGQueryOpts<'participant', keyof Participant>['where'] = {
-      key: 'pv',
-      value: pv,
-    }
-
     const rows = [
       [
         'Wallet address',
@@ -56,28 +54,21 @@ export function DownloadParticipantsModal({
 
     setLoading(true)
     try {
-      const participants = await querySubgraphExhaustive({
-        entity: 'participant',
-        keys: [
-          'wallet { id }',
-          'volume',
-          'balance',
-          'stakedBalance',
-          'erc20Balance',
-          'lastPaidTimestamp',
-        ],
-        orderBy: 'balance',
-        orderDirection: 'desc',
-        block: {
-          number: blockNumber,
-        },
-        where: [
-          {
-            key: 'projectId',
-            value: projectId,
+      const participants = await paginateDepleteQuery<
+        ParticipantsDownloadQuery,
+        QueryParticipantsArgs
+      >({
+        client,
+        document: ParticipantsDownloadDocument,
+        variables: {
+          where: {
+            projectId,
+            pv,
           },
-          pvOpt,
-        ],
+          block: {
+            number: blockNumber,
+          },
+        },
       })
 
       if (!participants) {

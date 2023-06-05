@@ -3,6 +3,8 @@ import {
   ProjectsQuery,
   QueryProjectsArgs,
 } from 'generated/graphql'
+
+import { paginateDepleteQuery } from './paginateDepleteQuery'
 import { serverClient } from './serverClient'
 
 /**
@@ -15,25 +17,9 @@ export async function paginateDepleteProjectsQueryCall({
 }: {
   variables: QueryProjectsArgs
 }) {
-  const first = variables.first ?? 1000
-  const skip = variables.skip
-
-  const { data } = await serverClient.query<ProjectsQuery, QueryProjectsArgs>({
-    query: ProjectsDocument,
-    variables: { ...variables, first, skip },
+  return paginateDepleteQuery<ProjectsQuery, QueryProjectsArgs>({
+    client: serverClient,
+    document: ProjectsDocument,
+    variables,
   })
-  let projects = data.projects
-
-  if (projects.length) {
-    const _projects = await paginateDepleteProjectsQueryCall({
-      variables: {
-        ...variables,
-        first,
-        skip: first + (skip ?? 0),
-      },
-    })
-    projects = projects.concat(_projects)
-  }
-
-  return projects
 }

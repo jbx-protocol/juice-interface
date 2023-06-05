@@ -1,0 +1,23 @@
+query RedeemEventsDownload(
+  $where: RedeemEvent_filter
+  $first: Int
+  $skip: Int
+  $block: Block_height
+) {
+  redeemEvents(
+    where: $where
+    block: $block
+    first: $first
+    skip: $skip
+    orderBy: timestamp
+    orderDirection: desc
+  ) {
+    timestamp
+    amount
+    returnAmount
+    returnAmountUSD
+    from
+    beneficiary
+    txHash
+  }
+}

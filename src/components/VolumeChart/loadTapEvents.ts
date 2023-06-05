@@ -1,8 +1,14 @@
 import { fromWad } from 'utils/format/formatNumber'
-import { querySubgraph } from 'utils/graph'
 
 import { daysToMillis } from './daysToMillis'
 
+import {
+  QueryTapEventsArgs,
+  TapEventsProjectTlDocument,
+  TapEventsProjectTlQuery,
+} from 'generated/graphql'
+import { client } from 'lib/apollo/client'
+import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { Duration } from './types'
 
 export const loadTapEvents = async ({
@@ -14,22 +20,18 @@ export const loadTapEvents = async ({
   duration: Duration
   now: number
 }) => {
-  const tapEvents = await querySubgraph({
-    entity: 'tapEvent',
-    keys: ['netTransferAmount', 'timestamp'],
-    where: projectId
-      ? [
-          {
-            key: 'project',
-            value: projectId.toString(),
-          },
-          {
-            key: 'timestamp',
-            value: Math.round((now - daysToMillis(duration)) / 1000),
-            operator: 'gte',
-          },
-        ]
-      : undefined,
+  const tapEvents = await paginateDepleteQuery<
+    TapEventsProjectTlQuery,
+    QueryTapEventsArgs
+  >({
+    client,
+    document: TapEventsProjectTlDocument,
+    variables: {
+      where: {
+        projectId,
+        timestamp_gte: Math.round((now - daysToMillis(duration)) / 1000),
+      },
+    },
   })
 
   return tapEvents.map(event => ({

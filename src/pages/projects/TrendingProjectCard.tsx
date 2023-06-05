@@ -6,7 +6,7 @@ import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjects'
-import { Project } from 'models/subgraph-entities/vX/project'
+import { DBProject } from 'models/dbProject'
 import Link from 'next/link'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
@@ -17,7 +17,7 @@ export default function TrendingProjectCard({
   size = 'sm',
 }: {
   project: Pick<
-    Project,
+    DBProject,
     | 'terminal'
     | 'trendingVolume'
     | 'metadataUri'

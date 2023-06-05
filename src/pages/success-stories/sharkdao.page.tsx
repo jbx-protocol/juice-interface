@@ -45,7 +45,9 @@ export default function SharkDAOPage() {
           projectUrl="/p/sharkdao"
           fundingConfig={SHARKDAO_FUNDING_CONFIG()}
         />
-        <CaseStudyContentContainer currentProject={sharkDAOSuccessStoryProject}>
+        <CaseStudyContentContainer
+          currentProject={sharkDAOSuccessStoryProject.id}
+        >
           <p>
             <Trans>
               With highly competitive auctions happening every 24 hours,

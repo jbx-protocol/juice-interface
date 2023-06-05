@@ -1,0 +1,27 @@
+query DBProjects($first: Int, $skip: Int) {
+  projects(first: $first, skip: $skip) {
+    id
+    projectId
+    pv
+    handle
+    metadataUri
+    currentBalance
+    volume
+    volumeUSD
+    redeemVolume
+    redeemVolumeUSD
+    redeemCount
+    creator
+    owner
+    contributorsCount
+    nftsMintedCount
+    createdAt
+    trendingScore
+    trendingVolume
+    deployer
+    terminal
+    paymentsCount
+    trendingPaymentsCount
+    createdWithinTrendingWindow
+  }
+}

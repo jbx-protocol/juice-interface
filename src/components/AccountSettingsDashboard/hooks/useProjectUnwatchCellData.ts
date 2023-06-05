@@ -1,4 +1,5 @@
-import useSubgraphQuery from 'hooks/useSubgraphQuery'
+import { PV_V2 } from 'constants/pv'
+import { useDBProjectsQuery } from 'hooks/useProjects'
 
 /**
  * Fetches project data from the subgraph, using the project id as a key.
@@ -10,19 +11,10 @@ export const useProjectUnwatchCellData = ({
 }: {
   projectId: number
 }) => {
-  const res = useSubgraphQuery({
-    entity: 'project',
-    keys: ['id', 'handle', 'metadataUri'],
-    where: [
-      {
-        key: 'projectId',
-        value: projectId,
-      },
-      {
-        key: 'pv',
-        value: '2',
-      },
-    ],
-  }).data
-  return res?.[0]
+  const { data } = useDBProjectsQuery({
+    projectId,
+    pv: [PV_V2],
+  })
+
+  return data?.[0]
 }

@@ -42,7 +42,7 @@ export default function StudioDAOPage() {
           fundingConfig={STUDIODAO_FUNDING_CONFIG()}
         />
         <CaseStudyContentContainer
-          currentProject={studioDAOSuccessStoryProject}
+          currentProject={studioDAOSuccessStoryProject.id}
         >
           <p>
             <Trans>

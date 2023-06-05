@@ -1,8 +1,35 @@
 import { t } from '@lingui/macro'
+import {
+  AddToBalanceEventsDownloadDocument,
+  AddToBalanceEventsDownloadQuery,
+  DistributePayoutsEventsDownloadDocument,
+  DistributePayoutsEventsDownloadQuery,
+  DistributeToPayoutModEventsDownloadDocument,
+  DistributeToPayoutModEventsDownloadQuery,
+  DistributeToPayoutSplitEventsDownloadDocument,
+  DistributeToPayoutSplitEventsDownloadQuery,
+  ParticipantsDownloadDocument,
+  ParticipantsDownloadQuery,
+  PayEventsDownloadDocument,
+  PayEventsDownloadQuery,
+  QueryAddToBalanceEventsArgs,
+  QueryDistributePayoutsEventsArgs,
+  QueryDistributeToPayoutModEventsArgs,
+  QueryDistributeToPayoutSplitEventsArgs,
+  QueryParticipantsArgs,
+  QueryPayEventsArgs,
+  QueryRedeemEventsArgs,
+  QueryTapEventsArgs,
+  RedeemEventsDownloadDocument,
+  RedeemEventsDownloadQuery,
+  TapEventsDownloadDocument,
+  TapEventsDownloadQuery,
+} from 'generated/graphql'
+import { client } from 'lib/apollo/client'
+import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { PV } from 'models/pv'
 import { downloadCsvFile } from 'utils/csv'
 import { fromWad } from 'utils/format/formatNumber'
-import { querySubgraphExhaustive } from 'utils/graph'
 import { emitErrorNotification } from 'utils/notifications'
 
 export async function downloadParticipants(
@@ -25,32 +52,21 @@ export async function downloadParticipants(
   ]
 
   try {
-    const participants = await querySubgraphExhaustive({
-      entity: 'participant',
-      keys: [
-        'lastPaidTimestamp',
-        'wallet { id }',
-        'volume',
-        'volumeUSD',
-        'balance',
-        'stakedBalance',
-        'erc20Balance',
-      ],
-      orderBy: 'balance',
-      orderDirection: 'desc',
-      block: {
-        number: blockNumber,
+    const participants = await paginateDepleteQuery<
+      ParticipantsDownloadQuery,
+      QueryParticipantsArgs
+    >({
+      client,
+      document: ParticipantsDownloadDocument,
+      variables: {
+        where: {
+          projectId,
+          pv,
+        },
+        block: {
+          number: blockNumber,
+        },
       },
-      where: [
-        {
-          key: 'projectId',
-          value: projectId,
-        },
-        {
-          key: 'pv',
-          value: pv,
-        },
-      ],
     })
 
     if (!participants) {
@@ -101,49 +117,32 @@ export async function downloadV2V3Payouts(
   ]
 
   try {
-    const payouts = await querySubgraphExhaustive({
-      entity: 'distributeToPayoutSplitEvent',
-      keys: [
-        'timestamp',
-        'amount',
-        'amountUSD',
-        'splitProjectId',
-        'beneficiary',
-        'txHash',
-      ],
-      orderBy: 'timestamp',
-      orderDirection: 'desc',
-      block: {
-        number: blockNumber,
-      },
-      where: [
-        {
-          key: 'projectId',
-          value: projectId,
+    const payouts = await paginateDepleteQuery<
+      DistributeToPayoutSplitEventsDownloadQuery,
+      QueryDistributeToPayoutSplitEventsArgs
+    >({
+      client,
+      document: DistributeToPayoutSplitEventsDownloadDocument,
+      variables: {
+        where: { projectId },
+        block: {
+          number: blockNumber,
         },
-      ],
+      },
     })
 
-    const distributions = await querySubgraphExhaustive({
-      entity: 'distributePayoutsEvent',
-      keys: [
-        'timestamp',
-        'beneficiaryDistributionAmount',
-        'beneficiaryDistributionAmountUSD',
-        'beneficiary',
-        'txHash',
-      ],
-      orderBy: 'timestamp',
-      orderDirection: 'desc',
-      block: {
-        number: blockNumber,
-      },
-      where: [
-        {
-          key: 'projectId',
-          value: projectId,
+    const distributions = await paginateDepleteQuery<
+      DistributePayoutsEventsDownloadQuery,
+      QueryDistributePayoutsEventsArgs
+    >({
+      client,
+      document: DistributePayoutsEventsDownloadDocument,
+      variables: {
+        where: { projectId },
+        block: {
+          number: blockNumber,
         },
-      ],
+      },
     })
 
     if (!payouts && !distributions) {
@@ -183,7 +182,7 @@ export async function downloadV2V3Payouts(
       rows.push([
         date,
         fromWad(p.amount),
-        fromWad(p.amountUSD),
+        p.amountUSD ? fromWad(p.amountUSD) : 'n/a',
         beneficiary,
         p.txHash,
       ])
@@ -213,49 +212,36 @@ export async function downloadV1Payouts(
   ]
 
   try {
-    const payouts = await querySubgraphExhaustive({
-      entity: 'distributeToPayoutModEvent',
-      keys: [
-        'timestamp',
-        'modCut',
-        'modCutUSD',
-        'modProjectId',
-        'modBeneficiary',
-        'txHash',
-      ],
-      orderBy: 'timestamp',
-      orderDirection: 'desc',
-      block: {
-        number: blockNumber,
-      },
-      where: [
-        {
-          key: 'projectId',
-          value: projectId,
+    const payouts = await paginateDepleteQuery<
+      DistributeToPayoutModEventsDownloadQuery,
+      QueryDistributeToPayoutModEventsArgs
+    >({
+      client,
+      document: DistributeToPayoutModEventsDownloadDocument,
+      variables: {
+        where: {
+          projectId,
         },
-      ],
+        block: {
+          number: blockNumber,
+        },
+      },
     })
 
-    const taps = await querySubgraphExhaustive({
-      entity: 'tapEvent',
-      keys: [
-        'timestamp',
-        'beneficiaryTransferAmount',
-        'beneficiaryTransferAmountUSD',
-        'beneficiary',
-        'txHash',
-      ],
-      orderBy: 'timestamp',
-      orderDirection: 'desc',
-      block: {
-        number: blockNumber,
-      },
-      where: [
-        {
-          key: 'projectId',
-          value: projectId,
+    const taps = await paginateDepleteQuery<
+      TapEventsDownloadQuery,
+      QueryTapEventsArgs
+    >({
+      client,
+      document: TapEventsDownloadDocument,
+      variables: {
+        where: {
+          projectId,
         },
-      ],
+        block: {
+          number: blockNumber,
+        },
+      },
     })
 
     if (!payouts && !taps) {
@@ -295,7 +281,7 @@ export async function downloadV1Payouts(
       rows.push([
         date,
         fromWad(p.modCut),
-        fromWad(p.modCutUSD),
+        p.modCutUSD ? fromWad(p.modCutUSD) : 'n/a',
         beneficiary,
         p.txHash,
       ])
@@ -327,31 +313,21 @@ export async function downloadPayments(
   ]
 
   try {
-    const payments = await querySubgraphExhaustive({
-      entity: 'payEvent',
-      keys: [
-        'timestamp',
-        'amount',
-        'amountUSD',
-        'from',
-        'beneficiary',
-        'txHash',
-      ],
-      orderBy: 'timestamp',
-      orderDirection: 'desc',
-      block: {
-        number: blockNumber,
+    const payments = await paginateDepleteQuery<
+      PayEventsDownloadQuery,
+      QueryPayEventsArgs
+    >({
+      client,
+      document: PayEventsDownloadDocument,
+      variables: {
+        block: {
+          number: blockNumber,
+        },
+        where: {
+          projectId,
+          pv,
+        },
       },
-      where: [
-        {
-          key: 'projectId',
-          value: projectId,
-        },
-        {
-          key: 'pv',
-          value: pv,
-        },
-      ],
     })
 
     if (!payments) {
@@ -367,7 +343,7 @@ export async function downloadPayments(
       rows.push([
         date,
         fromWad(p.amount),
-        fromWad(p.amountUSD),
+        p.amountUSD ? fromWad(p.amountUSD) : 'n/a',
         p.from,
         p.beneficiary,
         p.txHash,
@@ -401,32 +377,21 @@ export async function downloadRedemptions(
   ]
 
   try {
-    const redemptions = await querySubgraphExhaustive({
-      entity: 'redeemEvent',
-      keys: [
-        'timestamp',
-        'amount',
-        'returnAmount',
-        'returnAmountUSD',
-        'from',
-        'beneficiary',
-        'txHash',
-      ],
-      orderBy: 'timestamp',
-      orderDirection: 'desc',
-      block: {
-        number: blockNumber,
+    const redemptions = await paginateDepleteQuery<
+      RedeemEventsDownloadQuery,
+      QueryRedeemEventsArgs
+    >({
+      client,
+      document: RedeemEventsDownloadDocument,
+      variables: {
+        block: {
+          number: blockNumber,
+        },
+        where: {
+          projectId,
+          pv,
+        },
       },
-      where: [
-        {
-          key: 'projectId',
-          value: projectId,
-        },
-        {
-          key: 'pv',
-          value: pv,
-        },
-      ],
     })
 
     if (!redemptions) {
@@ -443,7 +408,7 @@ export async function downloadRedemptions(
         date,
         fromWad(r.amount),
         fromWad(r.returnAmount),
-        fromWad(r.returnAmountUSD),
+        r.returnAmountUSD ? fromWad(r.returnAmountUSD) : 'n/a',
         r.from,
         r.beneficiary,
         r.txHash,
@@ -478,24 +443,21 @@ export async function downloadAdditionsToBalance(
   ]
 
   try {
-    const additions = await querySubgraphExhaustive({
-      entity: 'addToBalanceEvent',
-      keys: ['timestamp', 'amount', 'amountUSD', 'from', 'txHash'],
-      orderBy: 'timestamp',
-      orderDirection: 'desc',
-      block: {
-        number: blockNumber,
+    const additions = await paginateDepleteQuery<
+      AddToBalanceEventsDownloadQuery,
+      QueryAddToBalanceEventsArgs
+    >({
+      client,
+      document: AddToBalanceEventsDownloadDocument,
+      variables: {
+        block: {
+          number: blockNumber,
+        },
+        where: {
+          projectId,
+          pv,
+        },
       },
-      where: [
-        {
-          key: 'projectId',
-          value: projectId,
-        },
-        {
-          key: 'pv',
-          value: pv,
-        },
-      ],
     })
 
     if (!additions) {
@@ -511,7 +473,7 @@ export async function downloadAdditionsToBalance(
       rows.push([
         date,
         fromWad(a.amount),
-        fromWad(a.amountUSD),
+        a.amountUSD ? fromWad(a.amountUSD) : 'n/a',
         a.from,
         a.txHash,
       ])

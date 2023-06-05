@@ -1,0 +1,22 @@
+query DistributeToPayoutSplitEventsDownload(
+  $where: DistributeToPayoutSplitEvent_filter
+  $first: Int
+  $skip: Int
+  $block: Block_height
+) {
+  distributeToPayoutSplitEvents(
+    where: $where
+    block: $block
+    first: $first
+    skip: $skip
+    orderBy: timestamp
+    orderDirection: desc
+  ) {
+    timestamp
+    amount
+    amountUSD
+    splitProjectId
+    beneficiary
+    txHash
+  }
+}

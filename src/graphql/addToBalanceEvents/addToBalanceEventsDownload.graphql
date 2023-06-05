@@ -1,0 +1,21 @@
+query AddToBalanceEventsDownload(
+  $where: AddToBalanceEvent_filter
+  $first: Int
+  $skip: Int
+  $block: Block_height
+) {
+  addToBalanceEvents(
+    where: $where
+    block: $block
+    first: $first
+    skip: $skip
+    orderBy: timestamp
+    orderDirection: desc
+  ) {
+    timestamp
+    amount
+    amountUSD
+    from
+    txHash
+  }
+}

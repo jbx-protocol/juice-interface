@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-05-28 00:31\n"
+"PO-Revision-Date: 2023-06-04 00:37\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -133,8 +133,11 @@ msgstr "设置一个会出现在项目的 URL 里面的独一无二的句柄，�
 msgid "Determines whether tokens will be minted by payments made through this address."
 msgstr "决定了通过这个地址付款是否会铸造代币。"
 
-msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
+msgid "Receive {0} tokens/1 ETH"
 msgstr ""
+
+msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
+msgstr "你即将添加 NFT 功能到项目的周期。 在部署新的周期前，你将需要 <0>授予 NFT 权限</0>。"
 
 msgid "Add NFT"
 msgstr "添加 NFT"
@@ -223,6 +226,12 @@ msgstr "托管余额"
 msgid "While enabled, the project owner can mint any amount of project tokens."
 msgstr "启用此选项，项目方就可以铸造任意数量的项目代币。"
 
+msgid "Add payment"
+msgstr ""
+
+msgid "Extended functionality for project owners"
+msgstr ""
+
 msgid "Create ERC-20"
 msgstr "创建 ERC-20"
 
@@ -231,6 +240,9 @@ msgstr "下载参与者记录错误，请重试。"
 
 msgid "Set a future date & time to start your project's first cycle."
 msgstr "设置一个以后的日期及时间来开始项目的第一个周期。"
+
+msgid "Open"
+msgstr ""
 
 msgid "No"
 msgstr "取消"
@@ -311,7 +323,7 @@ msgid "Add an on-chain memo to this payment."
 msgstr "给这笔付款添加一个链上备注"
 
 msgid "Background gradient color"
-msgstr ""
+msgstr "背景梯度色彩"
 
 msgid "+{percentageGain}%"
 msgstr "+{percentageGain}%"
@@ -370,8 +382,14 @@ msgstr "此项留空，则设置完成你的项目后第一个周期就会马上
 msgid "Reserved NFTs"
 msgstr "保留 NFT"
 
+msgid "Basic details"
+msgstr ""
+
 msgid "Your project can receive payments through the juicebox.money app."
 msgstr "你的项目可以通过 juicebox.money 应用来接收付款。"
+
+msgid "Cycle configuration"
+msgstr ""
 
 msgid "How do I archive a project?"
 msgstr "怎样才能把一个项目存档呢？"
@@ -451,6 +469,9 @@ msgstr "我们做的一切都是为了保证 Juicebox 的可信度。"
 msgid "Amount of ERC-20 tokens to claim"
 msgstr "可领取的 ERC-20 代币数量"
 
+msgid "NFTs & Rewards"
+msgstr ""
+
 msgid "Project owner address"
 msgstr "项目方地址"
 
@@ -477,6 +498,9 @@ msgstr "JuiceboxDAO"
 
 msgid "The issuance rate is reduced by this amount each cycle (unless the owner changes the issuance rate)."
 msgstr "发行比率每个周期按这个金额降低（除非项目方更改发行比率）。"
+
+msgid "Manage project"
+msgstr ""
 
 msgid "1-day deadline"
 msgstr "1 天期限"
@@ -576,6 +600,9 @@ msgstr "发送保留的 {tokensText} 代币"
 
 msgid "<0>This project has a redemptions turned off</0>. You won't receive any ETH for burning your tokens."
 msgstr "<0>本项目的赎回已关闭</0>。 销毁代币将不会获得任何 ETH。"
+
+msgid "Current cycle"
+msgstr ""
 
 msgid "You must grant permission to migrate your V2 tokens."
 msgstr "你必须授权迁移你的 V2 代币。"
@@ -848,7 +875,7 @@ msgid "Receive:"
 msgstr "收到："
 
 msgid "Grant NFT permissions"
-msgstr ""
+msgstr "授予 NFT 权限"
 
 msgid "Custom token beneficiary"
 msgstr "自定义代币受益人"
@@ -895,11 +922,14 @@ msgstr "铸造 {tokensLabel}"
 msgid "Funding cycle details"
 msgstr "筹款周期详情"
 
+msgid "Archive"
+msgstr ""
+
 msgid "You haven't contributed to any projects yet!"
 msgstr "你尚未向任何项目捐款！"
 
 msgid "44190F"
-msgstr ""
+msgstr "44190F"
 
 msgid "{0} withdrawn"
 msgstr "已提取 {0}"
@@ -992,13 +1022,16 @@ msgid "This cycle's rules may lead to unexpected behavior or other risks."
 msgstr "本周期的规则可能会导致意外行为或其他风险。"
 
 msgid "Deployed project payer"
-msgstr ""
+msgstr "已部署的项目支付地址"
 
 msgid "Recent"
 msgstr "最近"
 
 msgid "Project description"
 msgstr "项目说明"
+
+msgid "Edit next cycle"
+msgstr ""
 
 msgid "Change ENS name"
 msgstr "更改 ENS 名称"
@@ -1024,6 +1057,9 @@ msgstr "交易哈希"
 msgid "Create a splits payer address"
 msgstr "创建一个分账支付地址"
 
+msgid "Cycle length"
+msgstr ""
+
 msgid "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
 msgstr "捐款人通过托管式服务平台（如 Coinbase) 向这个地址付款<0>将不会获得项目代币</0>。"
 
@@ -1041,6 +1077,9 @@ msgstr "你的原有代币余额"
 
 msgid "Start the V3 cycle as soon as the current V2 cycle ends <0>({0})</0>."
 msgstr "当前 V2 周期 <0>({0})</0> 终止的同时开始 V3 周期。"
+
+msgid "until Cycle #{0}"
+msgstr ""
 
 msgid "Collection Name"
 msgstr "系列名称"
@@ -1118,7 +1157,7 @@ msgid "Project tokens will be minted to the address that made the payment."
 msgstr "项目代币会铸造给付款的地址。"
 
 msgid "Custom metadata resolver contract"
-msgstr ""
+msgstr "自定义元数据解析器合约"
 
 msgid "Migrate legacy tokens"
 msgstr "迁移原代币"
@@ -1241,7 +1280,7 @@ msgid "Deploy"
 msgstr "部署"
 
 msgid "FF9213"
-msgstr ""
+msgstr "FF9213"
 
 msgid "Use NFTs for redemptions"
 msgstr "将 NFT 用于赎回"
@@ -1360,8 +1399,14 @@ msgstr "编辑接收人"
 msgid "JB721Delegate v{version}"
 msgstr "JB721Delegate v{version}"
 
+msgid "Upcoming cycle"
+msgstr ""
+
 msgid "Starting over will erase all currently saved progress."
 msgstr "重新开始将清除当前所有的保存进度。"
+
+msgid "Treasury & Payouts"
+msgstr ""
 
 msgid "Error loading holders"
 msgstr "加载持有人错误"
@@ -1436,7 +1481,7 @@ msgid "<0/> unclaimed"
 msgstr "<0/> 未领取"
 
 msgid "Sent payouts (v1)"
-msgstr ""
+msgstr "已发送支出（V1）"
 
 msgid "Edit tracked assets"
 msgstr "编辑监测的资产"
@@ -1463,7 +1508,7 @@ msgid "Balance exceeded"
 msgstr "超出余额"
 
 msgid "3A0F0C"
-msgstr ""
+msgstr "3A0F0C"
 
 msgid "Set aside a percentage of freshly minted NFTs."
 msgstr "保留某个比例的新铸造 NFT。"
@@ -1550,7 +1595,7 @@ msgid "<0>This website interacts with the Ethereum blockchain — to use it, you
 msgstr "<0>本网站与以太坊区块链交互 — 要使用它，你将需要一个钱包及一些 ETH (ETH 是以太坊上的主要货币)。 你可以在 <1>MetaMask.io</1>获得一个免费钱包， 并使用信用卡在钱包内购买 ETH。</0>"
 
 msgid "Each field is required."
-msgstr ""
+msgstr "每个字段都需要填写"
 
 msgid "Set up token migration"
 msgstr "设置代币迁移"
@@ -1591,6 +1636,9 @@ msgstr "设置文本记录前，请选择一个 ENS 名称"
 msgid "{0} for you"
 msgstr "给到你的 {0}"
 
+msgid "You don't own any projects."
+msgstr ""
+
 msgid "While enabled, NFTs can be minted when this project receives a payment."
 msgstr "打开此选项，项目收到付款时可以铸造新的 NFT。"
 
@@ -1619,16 +1667,19 @@ msgid "Migrate tokens"
 msgstr "迁移代币"
 
 msgid "Update NFT theme"
-msgstr ""
+msgstr "更新 NFT 主题"
 
 msgid "Background color"
-msgstr ""
+msgstr "背景颜色"
 
 msgid "Link minters of this NFT to your project's website, Discord, etc."
 msgstr "向 NFT 的铸造者提供你项目的网址、Discord 链接，等等。"
 
 msgid "Cycle #1 starts when you create your project. With unlocked cycles, you can edit your project's rules at any time. This gives you more flexibility, but may appear risky to supporters. Switching to locked cycles will help you build supporter confidence."
 msgstr "创建项目后第一个周期就会开始。在周期不锁定的情况下，你可以随时编辑项目的各个规则。这样做会给予你更多的灵活性，但可能会让你的支持者们感到有风险。切换到锁定周期将有助于与支持者建立信任。"
+
+msgid "Treasury balance"
+msgstr ""
 
 msgid "DAO"
 msgstr "DAO"
@@ -1643,7 +1694,7 @@ msgid "Recipient address"
 msgstr "接收人地址"
 
 msgid "Text color"
-msgstr ""
+msgstr "文本颜色"
 
 msgid "{0} is required"
 msgstr "请输入 {0}"
@@ -1793,7 +1844,7 @@ msgid "Recipient address is required."
 msgstr "必须填写接收人地址。"
 
 msgid "Edited cycle (v1)"
-msgstr ""
+msgstr "已编辑的周期（V1）"
 
 msgid "Project #{projectId}"
 msgstr "项目 #{projectId}"
@@ -1802,7 +1853,7 @@ msgid "Project rules"
 msgstr "项目规则"
 
 msgid "Failed to launch Snapshot. Try again."
-msgstr ""
+msgstr "启动 Snapshot 失败。请重新尝试。"
 
 msgid "Choose how you would like to set up payouts."
 msgstr "选择你设置支出的方式。"
@@ -2053,6 +2104,9 @@ msgstr "你确定想要取消关注所有项目？你将不会再收到新事件
 msgid "Project token beneficiary address"
 msgstr "项目代币受益人地址"
 
+msgid "This account doesn't own any projects yet."
+msgstr ""
+
 msgid "Leave this blank to make your currently connected wallet the project owner. Fill this out with an Ethereum address to make that address this project's owner."
 msgstr "此项留空，则当前连接的钱包会成为项目方。可以填写一个以太坊地址来指定为项目的拥有者。"
 
@@ -2074,11 +2128,17 @@ msgstr "有限额（100 ETH）"
 msgid "Project balance"
 msgstr "项目余额"
 
+msgid "Available to pay out"
+msgstr ""
+
 msgid "Max. supply reached"
 msgstr "已达到供应量上限"
 
 msgid "Migrate controller"
 msgstr "迁移控制器"
+
+msgid "Send reserved tokens"
+msgstr ""
 
 msgid "Sent reserved tokens"
 msgstr "已发送保留代币"
@@ -2264,7 +2324,7 @@ msgid "Watching projects"
 msgstr "正在关注的项目"
 
 msgid "Set theme for {projectTitle}\\'s project NFT"
-msgstr ""
+msgstr "为 {projectTitle} 的项目 NFT 设定主题"
 
 msgid "Check {0} and verify your new email address."
 msgstr "检查 {0} 及确认你新的邮件地址。"
@@ -2292,6 +2352,9 @@ msgstr "收取 JBX 费用之后 {0}"
 
 msgid "Subject"
 msgstr "主题"
+
+msgid "{pageTitle}"
+msgstr ""
 
 msgid "Paused"
 msgstr "已暂停"
@@ -2429,13 +2492,16 @@ msgid "Recommended"
 msgstr "建议的"
 
 msgid "Enter a valid color hex code."
-msgstr ""
+msgstr "请输入有效的十六进制颜色代码"
 
 msgid "Total unclaimed and claimed V1 and V2 tokens"
 msgstr "总计未提取及已提取 V1 和 V2 代币"
 
 msgid "Read case studies"
 msgstr "阅读案例分析"
+
+msgid "Current payout"
+msgstr ""
 
 msgid "tokens"
 msgstr "代币"
@@ -2445,6 +2511,9 @@ msgstr "了解更多关于我们"
 
 msgid "No payouts"
 msgstr "无支出"
+
+msgid "Withdrawn"
+msgstr ""
 
 msgid "Changes to your reserved token recipients will take effect immediately."
 msgstr "对保留代币接收人所做的变更将立即生效。"
@@ -2463,6 +2532,9 @@ msgstr "什么是锁定周期？"
 
 msgid "Save deadline"
 msgstr "保存截止期限"
+
+msgid "Update basic project details"
+msgstr ""
 
 msgid "Available: {0}"
 msgstr "可用： {0}"
@@ -2493,6 +2565,9 @@ msgstr "一个或多个保留代币接收人"
 
 msgid "<0>To summarize:</0><1><2>When people pay a project, they receive the project's tokens. Like other tokens, these can be used for governance, for token-gated websites, and other purposes.</2><3>Projects can pay out ETH to the wallets or Juicebox projects of their choosing. These payouts can be pre-defined, and they can also be changed over time.</3><4>If people are unhappy with the direction a project is headed, they can redeem their tokens to claim a share of the ETH held in the project.</4></1><5>Project creators have powerful controls over each one of these mechanics. They can change token issuance rates, redemption rates, payouts, and other rules over time, leading to powerful and elegant tokenomics. They can also lock their project's rules in place for pre-determined amounts of time (called <6>cycles</6>), guaranteeing that they can't rugpull the community. Juicebox lets projects take control if they need to, but it also lets them give up control to build trust.</5><7>Importantly, Juicebox's crypto fundraising platform is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no way to access a project's ETH or change its rules.</7><8>To learn more, visit <9>our docs</9>.</8>"
 msgstr "<0>总结如下：</0><1><2>人们向一个项目付款将会获得该项目的代币。与其他代币类似，这些代币可用于治理、设置网站访问限制和其他的用途。</2><3>项目可以向他们选择的钱包地址或其他 Juicebox 项目支付 ETH。支出方案可以提前设定，也可以日后进行调整。</3><4>如果人们对项目的发展方向感到不满，可以赎回他们的代币来获取项目持有的部分 ETH 资金。</4></1><5>项目创建人对这些每一个机制都拥有很高的控制权。他们可以更改代币发行比率、赎回比率、支出及其他的项目设置，形成既强大又优雅的代币经济模型。他们还可以锁定项目规则一段预设的时间（称为 <6>周期</6>)，保证他们不会丢下社区跑路。Juicebox 让项目有需要时拥有控制权，但也允许他们放弃控制权来建立信任。</5><7>重要的是，Juicebox 是链上及非托管的。项目创建人真正拥有他们的项目，JuiceboxDAO 无法动用其他项目的 ETH或更改其规则。</7><8>了解更多，请参阅 <9>文档</9>。</8>"
+
+msgid "Owned by: <0/>"
+msgstr ""
 
 msgid "Close, I'll do these later"
 msgstr "关闭，我晚点再做这些"
@@ -2564,7 +2639,7 @@ msgid "We do everything in the light, for everyone to see."
 msgstr "我们一切都是公开透明的。"
 
 msgid "Modify the colors of your Juicebox Project NFT. This NFT represents ownership over your project."
-msgstr ""
+msgstr "修改你的 Juicebox 项目 NFT 的颜色。这个 NFT 代表了对项目的所有权。"
 
 msgid "Set aside a percentage of token issuance for the wallets and Juicebox projects of your choosing."
 msgstr "为你选择的钱包地址及其他 Juicebox 项目预留某个比例的发行代币。"
@@ -2665,6 +2740,9 @@ msgstr "已部署的 ERC20 标准代币"
 msgid "Notice from {0}"
 msgstr "通知自 {0}"
 
+msgid "V1 Edit Cycle"
+msgstr ""
+
 msgid "Payout total"
 msgstr "支出合计"
 
@@ -2693,7 +2771,7 @@ msgid "Transfer unclaimed {0}"
 msgstr "转移未领取的 {0} 代币"
 
 msgid "Cannot set payouts because your <0>Total payouts</0> is Zero."
-msgstr ""
+msgstr "不能设置支出对象，因为你的 <0>支出总额</0> 为零。"
 
 msgid "The onchain memo for each payment made through this address. The project's payment feed will include the memo alongside the payment."
 msgstr "通过这个地址支付的每笔付款的链上备忘录。项目的支付提要除付款信息外还会包括这个备忘录。"
@@ -2828,7 +2906,7 @@ msgid "Twitter handle"
 msgstr "推特名"
 
 msgid "<0/> fee"
-msgstr ""
+msgstr "<0/>费用"
 
 msgid "Payments to this project are paused in this cycle."
 msgstr "本周期向项目付款已暂停。"
@@ -2843,7 +2921,7 @@ msgid "Get help planning or setting up my project."
 msgstr "寻求帮助来策划或设置我的项目。"
 
 msgid "All activity"
-msgstr ""
+msgstr "所有活动"
 
 msgid "Community"
 msgstr "社区"
@@ -2856,6 +2934,9 @@ msgstr "下载项目活动记录的 CSV 文件"
 
 msgid "Cycle duration"
 msgstr "周期时长"
+
+msgid "Last 7 days"
+msgstr ""
 
 msgid "Export payouts CSV"
 msgstr "导出支出列表到 CSV"
@@ -2934,6 +3015,9 @@ msgstr "加载 ETH 转入项目记录出错"
 
 msgid "ETH transfers"
 msgstr "ETH 转入"
+
+msgid "Remaining time"
+msgstr ""
 
 msgid "Total issuance rate"
 msgstr "总发行比率"
@@ -3040,11 +3124,17 @@ msgstr "<0>你将不会获得 ETH，因为本项目没有 ETH，或把所有的 
 msgid "Connect wallet to deploy"
 msgstr "连接钱包以部署"
 
+msgid "View token holders"
+msgstr ""
+
 msgid "How a community of space enthusiasts raised $8.3 million to send a DAO member to space on a Blue Origin rocket"
 msgstr "一个太空爱好者社区如何筹集 830 万美元来送一位 DAO 成员乘坐蓝色起源号飞船进入太空。"
 
 msgid "Set ENS text record for {ensName}"
 msgstr "为 {ensName} 设置 ENS 文本记录"
+
+msgid "Load more..."
+msgstr ""
 
 msgid "Sum of percentages cannot exceed 100%"
 msgstr "百分比合计不能超过 100%"
@@ -3105,6 +3195,9 @@ msgstr "所有 {tokensText} 代币将归项目方所有："
 
 msgid "Customize your public facing profile and other details."
 msgstr "自定义你的公开个人资料及其他详情。"
+
+msgid "Projects owned"
+msgstr ""
 
 msgid "Transfer {tokenTextShort}"
 msgstr "转移 {tokenTextShort}"
@@ -3167,7 +3260,7 @@ msgid "Memos appear on the project's activity feed when a payment is made throug
 msgstr "通过这个地址进行付款时，付款备忘录会出现在项目的活动记录里。"
 
 msgid "Customize theme"
-msgstr ""
+msgstr "自定义主题"
 
 msgid "Sum of percentages cannot exceed 100%."
 msgstr "百分比合计不能超过 100%."
@@ -3183,6 +3276,9 @@ msgstr "设定控制器"
 
 msgid "Send reserved {tokenTextPlural}"
 msgstr "发送保留的 {tokenTextPlural} 代币"
+
+msgid "Total to pay"
+msgstr ""
 
 msgid "Warning: Only the project owner can edit a project. If you don't have access to the address above, you will lose access to your project."
 msgstr "警告：只有项目方可以编辑项目。如果你没有控制以上的地址，你将失去项目的管理权限。"
@@ -3286,6 +3382,9 @@ msgstr "你项目的 NFT 将不能用于链上治理。"
 msgid "Send reserved {0}"
 msgstr "发送保留的 {0} 代币"
 
+msgid "Project settings"
+msgstr ""
+
 msgid "Unix timestamp in seconds (for example, {0}). Leave blank to start as soon as possible."
 msgstr "Unix 时间戳秒数（例如， {0}）。 此项留空则为尽快开始。"
 
@@ -3378,6 +3477,9 @@ msgstr "下载 CSV"
 
 msgid "Contract"
 msgstr "合约"
+
+msgid "Upgrade"
+msgstr ""
 
 msgid "After {0} (your first cycle), your project will not issue any tokens unless you edit the issuance rate."
 msgstr "{0} （你的首个周期）之后， 除非你调整发行比率，否则项目将不会发行任何代币。"
@@ -3497,7 +3599,7 @@ msgid "No payouts scheduled for this cycle."
 msgstr "本周期未安排支出。"
 
 msgid "Set metadata resolver for {projectTitle}\\'s project NFT"
-msgstr ""
+msgstr "为 {projectTitle} 的项目 NFT 设置元数据解析器"
 
 msgid "Made a mistake?"
 msgstr "是否出现失误？"
@@ -3555,6 +3657,9 @@ msgstr "保留代币发行率"
 
 msgid "Edits to upcoming cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner."
 msgstr "对后续周期的编辑将在当前周期结束时生效。没有编辑截止期限的项目容易出现项目方突然更改的情况。"
+
+msgid "Reserved tokens list"
+msgstr ""
 
 msgid "Custom Token Rules"
 msgstr "自定义代币规则"
@@ -3617,7 +3722,7 @@ msgid "Edit recipient"
 msgstr "编辑接收人"
 
 msgid "Update preview"
-msgstr ""
+msgstr "更新预览"
 
 msgid "Tokens per ETH contributed"
 msgstr "每捐赠 1 ETH 获得的代币"
@@ -3637,6 +3742,9 @@ msgstr "默认"
 msgid "WAGMI!"
 msgstr "WAGMI！"
 
+msgid "Current Cycle: #{currentCycleNumber}"
+msgstr ""
+
 msgid "Basic Token Rules"
 msgstr "基本代币规则"
 
@@ -3644,7 +3752,7 @@ msgid "Payment amount can't exceed your wallet balance."
 msgstr "付款金额不能超过你的钱包余额。"
 
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before launching cycles."
-msgstr ""
+msgstr "你即将添加 NFT 功能到项目的周期。 在启动新的周期之前，你将需要 <0>授予 NFT 权限</0>。"
 
 msgid "Last paid"
 msgstr "上次支付"
@@ -3722,7 +3830,7 @@ msgid "{0}{1}"
 msgstr "{0}{1}"
 
 msgid "Project NFT theme"
-msgstr ""
+msgstr "项目 NFT 的主题"
 
 msgid "Project activity failed to load."
 msgstr "项目活动记录加载失败。"
@@ -3754,6 +3862,9 @@ msgstr "支付金额"
 msgid "CSV download failed."
 msgstr "CSV 下载失败。"
 
+msgid "Pay Project"
+msgstr ""
+
 msgid "Enabling owner token minting isn't recommended as it allows the project owner to create unlimited tokens, which appears risky to supporters."
 msgstr "不建议打开代币铸造选项，因为这样允许项目方无限铸造代币，会让支持者们感到有风险。"
 
@@ -3782,16 +3893,16 @@ msgid "View on Etherscan"
 msgstr "在 Etherscan 上查看"
 
 msgid "Preview"
-msgstr ""
+msgstr "预览"
 
 msgid "Token amount"
 msgstr "代币数量"
 
 msgid "Custom resolver address"
-msgstr ""
+msgstr "自定义解析器地址"
 
 msgid "Allow the <0>Juicebox NFT deployer contract</0> to edit this project's cycle."
-msgstr ""
+msgstr "允许 <0>Juicebox NFT 部署合约</0> 编辑本项目的周期。"
 
 msgid "Fun"
 msgstr "好玩"
@@ -3976,6 +4087,9 @@ msgstr "创建日期"
 msgid "What happens when I pay a project?"
 msgstr "我向一个项目付款会发生什么？"
 
+msgid "Status"
+msgstr ""
+
 msgid "Redemption rate:"
 msgstr "赎回比率："
 
@@ -4003,6 +4117,9 @@ msgstr "不支持你项目的 NFT 合约版本。"
 msgid "I have another question!"
 msgstr "我还有一个问题！"
 
+msgid "Manage your project's state and ownership"
+msgstr ""
+
 msgid "Set text record for {0}"
 msgstr "为 {0} 设置文本记录"
 
@@ -4028,7 +4145,7 @@ msgid "You will receive {0}<0/>"
 msgstr "你将收到 {0}<0/>"
 
 msgid "Last 30 days"
-msgstr ""
+msgstr "过去 30 天"
 
 msgid "Your project's NFTs."
 msgstr "你项目的 NFT。"
@@ -4038,6 +4155,9 @@ msgstr "访问 jbdao.org"
 
 msgid "Allow Controller migration"
 msgstr "允许控制器迁移"
+
+msgid "Cycle #"
+msgstr ""
 
 msgid "About"
 msgstr "关于"
@@ -4075,11 +4195,14 @@ msgstr "出了点问题，请联系支持人员。"
 msgid "Build and launch your NFT project right here on Juicebox with built-in redemptions."
 msgstr "在 Juicebox 创建及启动内置赎回功能的 NFT 项目。"
 
+msgid "Pay project"
+msgstr ""
+
 msgid "No reserved tokens configured."
 msgstr "未配置保留代币。"
 
 msgid "Sent reserved tokens (v1)"
-msgstr ""
+msgstr "已发送的保留代币 （V1）"
 
 msgid "Spaces are not allowed"
 msgstr "不允许有空格"
@@ -4130,7 +4253,7 @@ msgid "Latest"
 msgstr "最近"
 
 msgid "Custom metadata resolvers replace the default metadata above. They must conform to the <0>IJBTokenUriResolver</0> interface."
-msgstr ""
+msgstr "自定义的元数据解析器将替换以上的默认元数据。 解析器须符合 <0>IJBTokenUriResolver</0> 接口要求。"
 
 msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr "剩余供应量： {0}/{1}"
@@ -4167,6 +4290,9 @@ msgstr "剩余 {formattedTimeLeft}"
 
 msgid "Project handle"
 msgstr "项目标识"
+
+msgid "Manage your project's NFTs and rewards"
+msgstr ""
 
 msgid "Advanced options"
 msgstr "高级选项"
@@ -4228,6 +4354,9 @@ msgstr "付款提示"
 msgid "{userOwnershipPercentage}% of total supply"
 msgstr "总供应量的 {userOwnershipPercentage}%"
 
+msgid "Make changes to your cycle settings and rules"
+msgstr ""
+
 msgid "Amount:"
 msgstr "金额："
 
@@ -4235,7 +4364,7 @@ msgid "Reserved tokens"
 msgstr "保留代币"
 
 msgid "Set custom resolver"
-msgstr ""
+msgstr "设置自定义解析器"
 
 msgid "Project token recipient"
 msgstr "项目代币接收人"
@@ -4266,9 +4395,6 @@ msgstr "使用 V3 合约来重新启动你的 Juicebox 项目。"
 
 msgid "StudioDAO's project settings are designed to maximize trust with locked 28-day cycles, limited payouts, and a 3-day edit deadline. 20% of newly minted tokens are reserved for the DAO wallet and issuance will decrease by 5% each cycle. StudioDAO also leverages tiered NFT rewards to create incentives for supporters with benefits like private screenings, governance votes to decide which new films to fund, and screen credits."
 msgstr "StudioDAO 的项目设定中包括 28 天的锁定周期、支出限额及 3 天的编辑期限，这一设计的目的是为了实现信任的最大化。20% 的新铸造代币将保留给 DAO 的钱包，同时代币的发行比率每周期会下降 5%。StudioDAO 还利用分级 NFT 来给予支持者诸如私人观影、参与治理投票决定资助的新电影及观影积分等激励。"
-
-msgid "Load more"
-msgstr "加载更多"
 
 msgid "Juicy picks"
 msgstr "社区精选"
@@ -4309,6 +4435,9 @@ msgstr "复核及启动周期"
 msgid "project"
 msgstr "项目"
 
+msgid "Configuration"
+msgstr ""
+
 msgid "Reserved {0}"
 msgstr "已保留 {0}"
 
@@ -4325,6 +4454,9 @@ msgid "{0}% of supply"
 msgstr "占比 {0}%"
 
 msgid "Enter a valid Ethereum address"
+msgstr "请输入一个有效的以太坊地址"
+
+msgid "Overflow"
 msgstr ""
 
 msgid "Project contracts directory"

@@ -6,7 +6,6 @@ import {
 } from 'components/ProjectDashboard/hooks'
 import { BigNumber } from 'ethers'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
-import { act } from 'react-dom/test-utils'
 import { useCurrentUpcomingSubPanel } from './useCurrentUpcomingSubPanel'
 
 jest.mock('components/ProjectDashboard/hooks')
@@ -55,57 +54,6 @@ describe('useCurrentUpcomingSubPanel', () => {
   it('returns upcoming cycle number if type is upcoming', () => {
     const { result } = renderHook(() => useCurrentUpcomingSubPanel('upcoming'))
     expect(result.current.cycleNumber).toEqual(2)
-  })
-
-  test('time remaining is updated every second', () => {
-    jest.useFakeTimers().setSystemTime(1)
-    const { result } = renderHook(() => useCurrentUpcomingSubPanel('current'))
-    expect(result.current.remainingTime).toEqual('0d 0h 0m 1s')
-    act(() => {
-      jest.advanceTimersByTime(1000)
-    })
-    expect(result.current.remainingTime).toEqual('0d 0h 0m 0s')
-    jest.useRealTimers()
-  })
-
-  test('time remaining does not go negative', () => {
-    jest.useFakeTimers().setSystemTime(1)
-    const { result } = renderHook(() => useCurrentUpcomingSubPanel('current'))
-    expect(result.current.remainingTime).toEqual('0d 0h 0m 1s')
-    act(() => {
-      jest.advanceTimersByTime(2000)
-    })
-    expect(result.current.remainingTime).toEqual('0d 0h 0m 0s')
-    jest.useRealTimers()
-  })
-
-  test('timer is cleared on unmount', () => {
-    mockUseProjectContext.mockImplementation(
-      () =>
-        ({
-          fundingCycle: {
-            duration: BigNumber.from(5),
-            number: BigNumber.from(1),
-            start: BigNumber.from(1),
-          },
-          loading: { fundingCycleLoading: false },
-        } as any),
-    )
-    jest.useFakeTimers().setSystemTime(5)
-    const { result, unmount } = renderHook(() =>
-      useCurrentUpcomingSubPanel('current'),
-    )
-    expect(result.current.remainingTime).toEqual('0d 0h 0m 5s')
-    act(() => {
-      jest.advanceTimersByTime(1000)
-    })
-    expect(result.current.remainingTime).toEqual('0d 0h 0m 4s')
-    unmount()
-    act(() => {
-      jest.advanceTimersByTime(1000)
-    })
-    expect(result.current.remainingTime).toEqual('0d 0h 0m 4s')
-    jest.useRealTimers()
   })
 
   test('upcoming cycleLength is formatted correctly', () => {

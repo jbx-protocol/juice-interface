@@ -89,11 +89,19 @@ export function useDBProjectsInfiniteQuery(
 
 export function useTrendingProjects(count: number) {
   return useQuery(['trending-projects', count], async () => {
+<<<<<<< HEAD
     const res = await axios.get<Json<DBProject>[]>(
       '/api/projects/trending?count=' + count,
     )
 
     return res.data.map(parseDBProjectJson)
+=======
+    const res = await axios.get<DBProjectRow[]>(
+      '/api/projects/trending?count=' + count,
+    )
+
+    return res.data.map(parseDBProject)
+>>>>>>> 82b865427 (server project queries use dbProjects. projectCards use dbProject arg)
   })
 }
 

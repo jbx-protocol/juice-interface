@@ -3,9 +3,10 @@ import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext, useReducer } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { sumTierFloors } from 'utils/nftRewards'
+import { ACTIONS, nftPayMetadataReducer } from './nftPayMetadataReducer'
 
 export const useNftRewards = () => {
   const {
@@ -16,9 +17,7 @@ export const useNftRewards = () => {
   const {
     currencies: { ETH },
   } = useContext(CurrencyContext)
-
   const converter = useCurrencyConverter()
-
   const {
     payAmount,
     payMetadata,
@@ -32,25 +31,26 @@ export const useNftRewards = () => {
   const payAmountETH =
     payInCurrency === ETH ? payAmount : fromWad(converter.usdToWei(payAmount))
 
+  const [state, dispatch] = useReducer(nftPayMetadataReducer, {
+    tierIdsToMint: payMetadata?.tierIdsToMint ?? [],
+  })
+
   const handleTierSelect = useCallback(
     (
       tierId: number | undefined,
       quantity: number, // quantity to select
     ) => {
       if (!tierId || !rewardTiers) return
-
-      const newSelectedTierIds = (payMetadata?.tierIdsToMint ?? []).concat(
-        Array(quantity).fill(tierId),
-      )
+      dispatch({ type: ACTIONS.SELECT_TIER, tierId, quantity })
 
       setPayMetadata?.({
-        tierIdsToMint: newSelectedTierIds,
+        tierIdsToMint: state.tierIdsToMint,
         allowOverspending: DEFAULT_ALLOW_OVERSPENDING,
       })
 
       setPayInCurrency?.(ETH)
 
-      const sumSelectedTiers = sumTierFloors(rewardTiers, newSelectedTierIds)
+      const sumSelectedTiers = sumTierFloors(rewardTiers, state.tierIdsToMint)
       if (sumSelectedTiers > parseFloat(payAmountETH ?? '0')) {
         const newPayAmount = sumSelectedTiers.toString()
         setPayAmount?.(newPayAmount)
@@ -59,7 +59,7 @@ export const useNftRewards = () => {
     },
     [
       rewardTiers,
-      payMetadata,
+      state.tierIdsToMint,
       payAmountETH,
       ETH,
       setPayAmount,
@@ -72,37 +72,31 @@ export const useNftRewards = () => {
   const handleNftDeselect = useCallback(
     (
       tierId: number | undefined,
-      quantity: number, // quantity to deselect. Remove all instances of tierId if quantity=0
+      quantity: number, // quantity to select
     ) => {
       if (tierId === undefined || !rewardTiers || !payMetadata) return
 
-      let count = 0
-      const newSelectedTierIds = (payMetadata?.tierIdsToMint ?? []).filter(
-        id => {
-          if (!quantity) {
-            return id !== tierId
-          }
-          if (count < quantity && id === tierId) {
-            count += 1
-            return false
-          }
-          return true
-        },
-      )
+      dispatch({ type: ACTIONS.DESELECT_TIER, tierId, quantity })
 
       setPayMetadata?.({
-        tierIdsToMint: newSelectedTierIds,
+        tierIdsToMint: state.tierIdsToMint,
       })
 
       const newPayAmount = sumTierFloors(
         rewardTiers,
-        newSelectedTierIds,
+        state.tierIdsToMint,
       ).toString()
-
       setPayAmount?.(newPayAmount)
       validatePayAmount?.(newPayAmount)
     },
-    [rewardTiers, payMetadata, setPayAmount, setPayMetadata, validatePayAmount],
+    [
+      rewardTiers,
+      state.tierIdsToMint,
+      payMetadata,
+      setPayAmount,
+      setPayMetadata,
+      validatePayAmount,
+    ],
   )
 
   return {

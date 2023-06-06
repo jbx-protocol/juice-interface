@@ -66,10 +66,14 @@ export function useV1ProjectState({
   )
   const overflow = useOverflowOfProject(projectId, terminalName)
 
-  const { data: projects } = useDBProjectsQuery({
-    projectId,
-    pv: [PV_V1],
-  })
+  const { data: projects } = useDBProjectsQuery(
+    projectId
+      ? {
+          projectId,
+          pv: [PV_V1],
+        }
+      : null,
+  )
 
   const createdAt = projects?.[0]?.createdAt
   const earned = projects?.[0]?.volume

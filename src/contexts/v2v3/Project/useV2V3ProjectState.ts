@@ -84,10 +84,14 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   /**
    * Load project stats
    */
-  const { data: projects } = useDBProjectsQuery({
-    projectId,
-    pv: [PV_V2],
-  })
+  const { data: projects } = useDBProjectsQuery(
+    projectId
+      ? {
+          projectId,
+          pv: [PV_V2],
+        }
+      : null,
+  )
   const createdAt = first(projects)?.createdAt
   const totalVolume = first(projects)?.volume
 

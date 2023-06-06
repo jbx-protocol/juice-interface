@@ -15,25 +15,29 @@ import { parseDBProject, parseDBProjectJson } from 'utils/sgDbProjects'
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
 
 export function useDBProjectsQuery(
-  opts: DBProjectQueryOpts,
+  opts: DBProjectQueryOpts | null,
   reactQueryOptions?: UseQueryOptions<
     DBProject[],
     Error,
     DBProject[],
-    readonly [string, DBProjectQueryOpts]
+    readonly [string, DBProjectQueryOpts | null]
   >,
 ) {
   return useQuery<
     DBProject[],
     Error,
     DBProject[],
-    readonly [string, DBProjectQueryOpts]
+    readonly [string, DBProjectQueryOpts | null]
   >(
     ['dbp-query', opts],
     () =>
-      axios
-        .get<Json<DBProjectRow>[]>(`/api/projects?${formatQueryParams(opts)}`)
-        .then(res => res.data?.map(parseDBProject)),
+      opts
+        ? axios
+            .get<Json<DBProjectRow>[]>(
+              `/api/projects?${formatQueryParams(opts)}`,
+            )
+            .then(res => res.data?.map(parseDBProject))
+        : Promise.resolve([] as DBProject[]),
     {
       staleTime: DEFAULT_STALE_TIME,
       ...reactQueryOptions,

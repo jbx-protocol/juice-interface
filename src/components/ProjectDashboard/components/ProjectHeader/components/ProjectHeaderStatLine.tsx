@@ -8,11 +8,11 @@ export const HeaderStat = ({
   stat: ReactNode
 }) => {
   return (
-    <div className="flex flex-col gap-1  text-end">
-      <span className="text-sm uppercase text-grey-500 dark:text-slate-200">
+    <div className="flex flex-col gap-1 text-end">
+      <span className="text-sm font-medium uppercase text-grey-500 dark:text-slate-200">
         {title}
       </span>
-      <span className="text-medium font-heading text-4xl dark:text-slate-50">
+      <span className="text-medium font-display text-4xl dark:text-slate-50">
         {stat}
       </span>
     </div>

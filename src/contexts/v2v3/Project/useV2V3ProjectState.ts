@@ -92,8 +92,13 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
         }
       : null,
   )
-  const createdAt = first(projects)?.createdAt
-  const totalVolume = first(projects)?.volume
+  const projectStatsData = first(projects)
+  const {
+    createdAt,
+    volume: totalVolume,
+    trendingVolume,
+    paymentsCount,
+  } = projectStatsData ?? {}
 
   /**
    * Load funding cycle data
@@ -181,6 +186,8 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     // stats
     createdAt,
     totalVolume,
+    trendingVolume,
+    paymentsCount,
 
     // funding cycle data
     fundingCycle,

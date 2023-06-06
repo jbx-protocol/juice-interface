@@ -1,3 +1,5 @@
+import { t } from '@lingui/macro'
+import { Tooltip } from 'antd'
 import { useProjectHandleText } from 'hooks/useProjectHandleText'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
@@ -22,18 +24,21 @@ export default function V2V3ProjectHandleLink({
     handle,
     name,
   })
+  const tooltipText = handle ? t`Project #${projectId}` : undefined
 
   return (
-    <Link
-      prefetch={false}
-      href={v2v3ProjectRoute({ projectId })}
-      as={v2v3ProjectRoute({ projectId, handle: resolvedHandle })}
-      className={twMerge(
-        'select-all font-medium leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100',
-        className,
-      )}
-    >
-      {handleText}
-    </Link>
+    <Tooltip title={tooltipText} open={tooltipText ? undefined : false}>
+      <Link
+        prefetch={false}
+        href={v2v3ProjectRoute({ projectId })}
+        as={v2v3ProjectRoute({ projectId, handle: resolvedHandle })}
+        className={twMerge(
+          'select-all font-medium leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100',
+          className,
+        )}
+      >
+        {handleText}
+      </Link>
+    </Tooltip>
   )
 }

@@ -4,7 +4,18 @@ import { useProjectTrendingPercentageIncrease } from 'hooks/useProjects'
 import { useContext } from 'react'
 import { useProjectMetadata } from './useProjectMetadata'
 
-export const useProjectHeader = () => {
+export interface ProjectHeaderData {
+  title: string | undefined
+  subtitle: string | undefined
+  handle: string | undefined
+  projectId: number | undefined
+  owner: string | undefined
+  payments: number | undefined
+  totalVolume: BigNumber | undefined
+  last7DaysPercent: number
+}
+
+export const useProjectHeader = (): ProjectHeaderData => {
   const { projectMetadata, projectId } = useProjectMetadata()
   const {
     handle,

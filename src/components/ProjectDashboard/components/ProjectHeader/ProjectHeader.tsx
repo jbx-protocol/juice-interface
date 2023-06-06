@@ -3,28 +3,16 @@ import {
   BookmarkIcon,
   EllipsisVerticalIcon,
 } from '@heroicons/react/24/outline'
-import { Trans, t } from '@lingui/macro'
 import { Divider } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Paragraph from 'components/Paragraph'
 import { useProjectHeader } from 'components/ProjectDashboard/hooks'
-import ETHAmount from 'components/currency/ETHAmount'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
-import { TRENDING_WINDOW_DAYS } from 'pages/projects/RankingExplanation'
 import { ProjectHeaderLogo } from './components/ProjectHeaderLogo'
-import { HeaderStat } from './components/ProjectHeaderStatLine'
+import { ProjectHeaderStats } from './components/ProjectHeaderStats'
 
 export const ProjectHeader = () => {
-  const {
-    title,
-    subtitle,
-    projectId,
-    handle,
-    owner,
-    payments,
-    totalVolume,
-    last7DaysPercent,
-  } = useProjectHeader()
+  const { title, subtitle, projectId, handle, owner } = useProjectHeader()
 
   return (
     <div className="relative mt-6 flex w-full flex-col gap-4">
@@ -40,7 +28,8 @@ export const ProjectHeader = () => {
           {title}
         </h1>
       </div>
-      <div className="flex flex-col justify-between gap-8  md:flex-row md:gap-12">
+
+      <div className="flex flex-col justify-between gap-8 md:flex-row md:gap-12">
         <div className="flex flex-col gap-7">
           <div className="text-lg text-grey-700 dark:text-slate-50">
             {subtitle ? (
@@ -62,19 +51,7 @@ export const ProjectHeader = () => {
           </div>
         </div>
 
-        <div className="flex shrink-0 gap-12">
-          <HeaderStat title={t`Payments`} stat={payments} />
-          <HeaderStat
-            title={t`Total volume`}
-            stat={<ETHAmount amount={totalVolume} precision={2} />}
-          />
-          {last7DaysPercent !== 0 && last7DaysPercent !== Infinity ? (
-            <HeaderStat
-              title={<Trans>last {TRENDING_WINDOW_DAYS} days</Trans>}
-              stat={`+${last7DaysPercent}%`}
-            />
-          ) : null}
-        </div>
+        <ProjectHeaderStats />
       </div>
     </div>
   )

@@ -10,7 +10,7 @@ import {
   useQuery,
 } from 'react-query'
 import { formatQueryParams } from 'utils/queryParams'
-import { parseDBProject } from 'utils/sgDbProjects'
+import { parseDBProject, parseDBProjectJson } from 'utils/sgDbProjects'
 
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
 
@@ -85,11 +85,11 @@ export function useDBProjectsInfiniteQuery(
 
 export function useTrendingProjects(count: number) {
   return useQuery(['trending-projects', count], async () => {
-    const res = await axios.get<DBProjectRow[]>(
+    const res = await axios.get<Json<DBProject>[]>(
       '/api/projects/trending?count=' + count,
     )
 
-    return res.data.map(parseDBProject)
+    return res.data.map(parseDBProjectJson)
   })
 }
 

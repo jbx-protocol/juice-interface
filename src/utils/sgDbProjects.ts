@@ -226,17 +226,19 @@ export async function formatWithMetadata({
   dbProject,
 }: {
   sgProject: Json<Pick<Project, SGSBCompareKey>>
-  dbProject: Pick<
-    DBProject,
-    | '_hasUnresolvedMetadata'
-    | '_metadataRetriesLeft'
-    | 'metadataUri'
-    | 'archived'
-    | 'description'
-    | 'logoUri'
-    | 'name'
-    | 'tags'
-  >
+  dbProject:
+    | Pick<
+        DBProject,
+        | '_hasUnresolvedMetadata'
+        | '_metadataRetriesLeft'
+        | 'metadataUri'
+        | 'archived'
+        | 'description'
+        | 'logoUri'
+        | 'name'
+        | 'tags'
+      >
+    | undefined
 }): Promise<{
   project: Json<Omit<DBProject, '_updatedAt'>>
   error?: string
@@ -244,13 +246,11 @@ export async function formatWithMetadata({
 }> {
   const { metadataUri } = sgProject
 
-  const { _hasUnresolvedMetadata, _metadataRetriesLeft } = dbProject
-
   // if metadataUri is missing or invalid, or no retries remaining for unresolved metadata
   if (
     !metadataUri ||
     !isIpfsCID(metadataUri) ||
-    (_hasUnresolvedMetadata && _metadataRetriesLeft === 0)
+    (dbProject?._hasUnresolvedMetadata && dbProject?._metadataRetriesLeft === 0)
   ) {
     return {
       project: {
@@ -267,7 +267,7 @@ export async function formatWithMetadata({
   }
 
   // If metadataUri has not changed, we don't need to resolve new metadata and can simply append existing dbProject metadata properties
-  if (sgProject.metadataUri === dbProject.metadataUri) {
+  if (sgProject.metadataUri === dbProject?.metadataUri) {
     const { archived, description, logoUri, name, tags } = dbProject
 
     return {
@@ -303,8 +303,8 @@ export async function formatWithMetadata({
     }
   } catch (error) {
     // decrement metadataRetriesLeft, or set to max if previously unset
-    const retriesRemaining = _metadataRetriesLeft
-      ? _metadataRetriesLeft - 1
+    const retriesRemaining = dbProject?._metadataRetriesLeft
+      ? dbProject._metadataRetriesLeft - 1
       : MAX_METADATA_RETRIES
 
     return {

@@ -20,15 +20,6 @@ export type SplitParams = {
   allocator: string | undefined
 }
 
-export const defaultSplit = {
-  beneficiary: undefined,
-  percent: 0,
-  preferClaimed: undefined,
-  lockedUntil: undefined,
-  projectId: undefined,
-  allocator: undefined,
-}
-
 export type ETHPayoutSplitGroup = 1
 export type ReservedTokensSplitGroup = 2
 export type SplitGroup = ETHPayoutSplitGroup | ReservedTokensSplitGroup
@@ -41,3 +32,12 @@ export interface GroupedSplits<G> {
 export type ETHPayoutGroupedSplits = GroupedSplits<ETHPayoutSplitGroup>
 export type ReservedTokensGroupedSplits =
   GroupedSplits<ReservedTokensSplitGroup>
+
+export const defaultSplit = {
+  beneficiary: undefined,
+  percent: 0,
+  preferClaimed: undefined,
+  lockedUntil: undefined,
+  projectId: undefined,
+  allocator: undefined,
+}

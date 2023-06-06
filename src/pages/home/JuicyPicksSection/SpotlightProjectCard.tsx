@@ -8,6 +8,7 @@ import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjects'
 import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
+import { TRENDING_WINDOW_DAYS } from 'pages/projects/RankingExplanation'
 import { twJoin } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { v2v3ProjectRoute } from 'utils/routes'
@@ -78,7 +79,7 @@ export function SpotlightProjectCard({ project }: { project: Project }) {
             value={project.paymentsCount}
           />
           <Statistic
-            name={<Trans>Last 30 days</Trans>}
+            name={<Trans>Last {TRENDING_WINDOW_DAYS} days</Trans>}
             value={<span className="text-melon-600">{percentGainText}</span>}
           />
         </div>

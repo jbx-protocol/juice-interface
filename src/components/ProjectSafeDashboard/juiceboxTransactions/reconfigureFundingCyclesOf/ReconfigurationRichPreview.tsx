@@ -6,7 +6,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { OutgoingProjectData } from 'models/outgoingProject'
 import { SafeTransactionType } from 'models/safe'
 import { useContext } from 'react'
-import { formatOutgoingSplits } from 'utils/splits'
+import { toSplit } from 'utils/splits'
 import { deriveNextIssuanceRate } from 'utils/v2v3/fundingCycle'
 import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { LinkToSafeButton } from '../../LinkToSafeButton'
@@ -97,7 +97,7 @@ export function ReconfigureRichPreview({
           <MinimalCollapse header={t`Payouts`} light>
             {distributionLimit?.gt(0) ? (
               <DiffedSplitList
-                splits={formatOutgoingSplits(payoutSplits)}
+                splits={toSplit(payoutSplits)}
                 diffSplits={diffPayoutSplits}
                 currency={distributionLimitCurrency}
                 totalValue={distributionLimit}
@@ -115,7 +115,7 @@ export function ReconfigureRichPreview({
           <MinimalCollapse header={t`Reserved token recipients`} light>
             {reservedRate?.gt(0) ? (
               <DiffedSplitList
-                splits={formatOutgoingSplits(reservedTokensSplits)}
+                splits={toSplit(reservedTokensSplits)}
                 diffSplits={diffReservedSplits}
                 projectOwnerAddress={projectOwnerAddress}
                 totalValue={undefined}

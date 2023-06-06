@@ -3,9 +3,10 @@ import {
   BookmarkIcon,
   EllipsisVerticalIcon,
 } from '@heroicons/react/24/outline'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Divider } from 'antd'
 import { useProjectHeader } from 'components/ProjectDashboard/hooks'
+import { TRENDING_WINDOW_DAYS } from 'pages/projects/RankingExplanation'
 import { ProjectHeaderLogo } from './components/ProjectHeaderLogo'
 import { HeaderStat } from './components/ProjectHeaderStatLine'
 
@@ -47,7 +48,10 @@ export const ProjectHeader = () => {
         <div className="flex gap-12">
           <HeaderStat title={t`Payments`} stat={payments} />
           <HeaderStat title={t`Total volume`} stat={`Ξ${totalVolume}`} />
-          <HeaderStat title={t`Last 7 days`} stat={`${last7DaysPercent}%`} />
+          <HeaderStat
+            title={<Trans>Last {TRENDING_WINDOW_DAYS} days</Trans>}
+            stat={`${last7DaysPercent}%`}
+          />
         </div>
       </div>
     </div>

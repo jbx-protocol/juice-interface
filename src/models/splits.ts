@@ -11,7 +11,7 @@ export type Split = {
 
 // Splits as they are given to transactions such as reconfigureFundingCyclesOf
 // Used when interpreting data from Gnosis Safe transactions
-export type OutgoingSplit = {
+export type SplitParams = {
   beneficiary: string | undefined // address
   percent: BigNumber
   preferClaimed: boolean | undefined

@@ -1,10 +1,10 @@
 import { BigNumber } from 'ethers'
-import { OutgoingSplit } from './splits'
+import { SplitParams } from './splits'
 import { V2FundingCycleMetadata } from './v2/fundingCycle'
 import { V2V3FundAccessConstraint, V2V3FundingCycle } from './v2v3/fundingCycle'
 
 type OutgoingGroupedSplit = {
-  splits: OutgoingSplit[]
+  splits: SplitParams[]
 }
 // Data pertaining to a project object that is sent in a reconfig tx
 // Used to intepret data from Gnosis Safe transactions

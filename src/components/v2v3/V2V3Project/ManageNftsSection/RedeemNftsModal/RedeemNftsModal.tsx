@@ -82,12 +82,12 @@ export function RedeemNftsModal({
 
   const { userAddress } = useWallet()
   const redeemTokensTx = useRedeemTokensTx()
-  const { data: nfts, isLoading } = useNftAccountBalance({
+  const { data, loading: balanceLoading } = useNftAccountBalance({
     dataSourceAddress: fundingCycleMetadata?.dataSource,
     accountAddress: userAddress,
   })
 
-  if (!fundingCycle || !fundingCycleMetadata || isLoading) return null
+  if (!fundingCycle || !fundingCycleMetadata || balanceLoading) return null
 
   const handleTierSelect = (
     nft: Pick<JB721DelegateToken, 'address' | 'tokenId' | 'tokenUri'>,
@@ -144,6 +144,10 @@ export function RedeemNftsModal({
     }
   }
 
+  const nfts = data?.jb721DelegateTokens.map(t => ({
+    ...t,
+    tokenId: t.tokenId.toHexString(),
+  }))
   const nftBalanceFormatted = nfts?.length ?? 0
   const hasOverflow = primaryTerminalCurrentOverflow?.gt(0)
   const hasRedemptionRate = fundingCycleMetadata.redemptionRate.gt(0)

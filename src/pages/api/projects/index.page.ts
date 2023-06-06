@@ -8,8 +8,18 @@ import { NextApiHandler } from 'next'
  * @returns Raw SQL query response
  */
 const handler: NextApiHandler = async (req, res) => {
-  const { text, tags, page, pageSize, archived, pv, orderDirection, orderBy } =
-    req.query
+  const {
+    text,
+    tags,
+    page,
+    pageSize,
+    archived,
+    pv,
+    orderDirection,
+    orderBy,
+    owner,
+    creator,
+  } = req.query
 
   // https://vercel.com/guides/how-to-enable-cors#enabling-cors-in-a-next.js-app
   res.setHeader('Access-Control-Allow-Credentials', 'true')
@@ -22,6 +32,16 @@ const handler: NextApiHandler = async (req, res) => {
 
   if (text && typeof text !== 'string') {
     res.status(400).send('Text is not a string')
+    return
+  }
+
+  if (owner && typeof owner !== 'string') {
+    res.status(400).send('Owner is not a string')
+    return
+  }
+
+  if (creator && typeof creator !== 'string') {
+    res.status(400).send('Creator is not a string')
     return
   }
 
@@ -84,6 +104,8 @@ const handler: NextApiHandler = async (req, res) => {
       pv: pv?.split(',') as DBProjectQueryOpts['pv'],
       orderDirection: orderDirection as DBProjectQueryOpts['orderDirection'],
       orderBy: orderBy as DBProjectQueryOpts['orderBy'],
+      owner,
+      creator,
     })
 
     res.status(200).json(results)

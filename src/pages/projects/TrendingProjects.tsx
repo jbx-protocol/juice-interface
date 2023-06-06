@@ -28,7 +28,7 @@ export default function TrendingProjects({
         </Grid>
       )}
 
-      {(!projects?.length || isLoading) && (
+      {isLoading && (
         <div className="mt-10">
           <Loading />
         </div>

@@ -19,7 +19,7 @@ import {
   useWalletContributionsQuery,
 } from 'generated/graphql'
 import useMobile from 'hooks/useMobile'
-import { useMyProjectsQuery } from 'hooks/useProjects'
+import { useDBProjectsQuery } from 'hooks/useProjects'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useWallet } from 'hooks/Wallet'
 import { client } from 'lib/apollo/client'
@@ -112,15 +112,55 @@ function ContributedList({ address }: { address: string }) {
   )
 }
 
-function MyProjectsList({ address }: { address: string }) {
-  const { data: myProjects, isLoading: myProjectsLoading } =
-    useMyProjectsQuery(address)
+function OwnedProjectsList({ address }: { address: string }) {
+  const { data: projects, isLoading } = useDBProjectsQuery({
+    owner: address,
+    orderBy: 'created_at',
+    orderDirection: 'desc',
+  })
 
   const { userAddress } = useWallet()
 
-  if (myProjectsLoading) return <Loading />
+  if (isLoading) return <Loading />
 
-  if (!myProjects || myProjects.length === 0)
+  if (!projects || projects.length === 0)
+    return (
+      <span>
+        {address === userAddress ? (
+          <div>
+            <p className="mb-5 dark:text-slate-100">
+              <Trans>You don't own any projects.</Trans>
+            </p>
+
+            <Link href="/create">
+              <Button type="primary">
+                <Trans>Create project</Trans>
+              </Button>
+            </Link>
+          </div>
+        ) : (
+          <p className="dark:text-slate-100">
+            <Trans>This account doesn't own any projects yet.</Trans>
+          </p>
+        )}
+      </span>
+    )
+
+  return <ProjectsList projects={projects} />
+}
+
+function CreatedProjectsList({ address }: { address: string }) {
+  const { data: projects, isLoading } = useDBProjectsQuery({
+    creator: address,
+    orderBy: 'created_at',
+    orderDirection: 'desc',
+  })
+
+  const { userAddress } = useWallet()
+
+  if (isLoading) return <Loading />
+
+  if (!projects || projects.length === 0)
     return (
       <span>
         {address === userAddress ? (
@@ -143,7 +183,7 @@ function MyProjectsList({ address }: { address: string }) {
       </span>
     )
 
-  return <ProjectsList projects={myProjects} />
+  return <ProjectsList projects={projects} />
 }
 
 export function AccountDashboard({
@@ -186,9 +226,14 @@ export function AccountDashboard({
       children: <ContributedList address={address} />,
     },
     {
+      label: t`Projects owned`,
+      key: 'owned',
+      children: <OwnedProjectsList address={address} />,
+    },
+    {
       label: t`Projects created`,
       key: 'created',
-      children: <MyProjectsList address={address} />,
+      children: <CreatedProjectsList address={address} />,
     },
   ]
 

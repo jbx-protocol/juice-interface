@@ -1,17 +1,24 @@
 import { Trans } from '@lingui/macro'
 import { ONE_BILLION } from 'constants/numbers'
+import { useProtocolLogQuery } from 'generated/graphql'
+import { client } from 'lib/apollo/client'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
 import { fromWad } from 'utils/format/formatNumber'
-import { useOurMissionSession } from '../hooks/useOurMissionSection'
+
 import { SectionContainer } from './SectionContainer'
 import illustration from '/public/assets/images/about/illustration1.webp'
 
 const PROGRESS_MAX_AMOUNT = ONE_BILLION
 
 export const OurMissionSection = () => {
-  const { volumeUSD } = useOurMissionSession()
+  const { data } = useProtocolLogQuery({
+    client,
+  })
+
+  const volumeUSD = data?.protocolLog?.volumeUSD
+
   return (
     <SectionContainer className="sm:gap-24 md:flex md:items-center md:justify-between md:gap-32">
       <div className="md:w-1/2">

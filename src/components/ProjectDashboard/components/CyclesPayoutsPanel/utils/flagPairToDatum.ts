@@ -4,9 +4,8 @@ import { pairToDatum } from './pairToDatum'
 
 export const flagPairToDatum = (
   name: string,
-  type: 'current' | 'upcoming',
   currentFlag: boolean | undefined,
-  upcomingFlag: boolean | undefined,
+  upcomingFlag: boolean | undefined | null,
 ): ConfigurationPanelDatum => {
   const current =
     currentFlag !== undefined
@@ -15,10 +14,12 @@ export const flagPairToDatum = (
         : t`Disabled`
       : undefined
   const upcoming =
-    upcomingFlag !== undefined
-      ? upcomingFlag === true
-        ? t`Enabled`
-        : t`Disabled`
-      : undefined
-  return pairToDatum(name, type, current, upcoming)
+    upcomingFlag !== null
+      ? upcomingFlag !== undefined
+        ? upcomingFlag === true
+          ? t`Enabled`
+          : t`Disabled`
+        : undefined
+      : null
+  return pairToDatum(name, current, upcoming)
 }

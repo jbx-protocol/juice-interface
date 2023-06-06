@@ -13,7 +13,7 @@ exports[`src/components/ProjectDashboard/components/CyclesPayoutsPanel/component
       type="button"
     >
       <div
-        class="rounded-2xl py-0.5 px-3 font-medium bg-smoke-700 text-grey-25"
+        class="rounded-2xl py-0.5 px-3 font-medium bg-smoke-700 text-grey-25 dark:bg-slate-400 dark:text-slate-50"
       >
         name
       </div>

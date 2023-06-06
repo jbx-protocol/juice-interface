@@ -23,25 +23,47 @@ export const sgDbCompareKeys: SGSBCompareKey[] = [
   'metadataUri',
   'currentBalance',
   'volume',
+  'volumeUSD',
+  'redeemVolume',
+  'redeemVolumeUSD',
+  'redeemCount',
+  'creator',
+  'owner',
+  'contributorsCount',
+  'nftsMintedCount',
   'createdAt',
   'trendingScore',
+  'trendingVolume',
   'deployer',
   'terminal',
   'paymentsCount',
+  'trendingPaymentsCount',
+  'createdWithinTrendingWindow',
 ]
 
 // Parse DB Project json, converting strings to BigNumbers
 export const parseDBProjectJson = (j: Json<DBProject>): DBProject => ({
   ...j,
   tags: j.tags ?? [],
-  ...parseBigNumberKeyVals(j, ['currentBalance', 'volume', 'trendingScore']),
+  ...parseBigNumberKeyVals(j, [
+    'currentBalance',
+    'volume',
+    'volumeUSD',
+    'trendingScore',
+    'trendingVolume',
+    'redeemVolume',
+    'redeemVolumeUSD',
+  ]),
 })
 
 // Parse DB Project row, converting property names from snake_case to camelCase
 export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
   return {
     archived: p.archived,
+    contributorsCount: p.contributors_count,
     createdAt: p.created_at,
+    createdWithinTrendingWindow: p.created_within_trending_window,
+    creator: p.creator,
     currentBalance: p.current_balance,
     deployer: p.deployer,
     description: p.description,
@@ -50,13 +72,21 @@ export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
     logoUri: p.logo_uri,
     metadataUri: p.metadata_uri,
     name: p.name,
+    nftsMintedCount: p.nfts_minted_count,
+    owner: p.owner,
     paymentsCount: p.payments_count,
     projectId: p.project_id,
     pv: p.pv as PV,
+    redeemCount: p.redeem_count,
+    redeemVolume: p.redeem_volume,
+    redeemVolumeUSD: p.redeem_voume_usd,
     tags: p.tags as ProjectTagName[],
     terminal: p.terminal,
-    volume: p.total_paid,
+    volume: p.volume,
+    volumeUSD: p.volume_usd,
+    trendingPaymentsCount: p.trending_payments_count,
     trendingScore: p.trending_score,
+    trendingVolume: p.trending_volume,
     _hasUnresolvedMetadata: p._has_unresolved_metadata,
     _metadataRetriesLeft: p._metadata_retries_left,
     _updatedAt: p._updated_at,
@@ -67,7 +97,10 @@ export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
 export function formatDBProjectRow(p: Json<DBProject>): DBProjectRow {
   return {
     archived: p.archived,
+    contributors_count: p.contributorsCount,
     created_at: p.createdAt,
+    created_within_trending_window: p.createdWithinTrendingWindow,
+    creator: p.creator,
     current_balance: p.currentBalance,
     deployer: p.deployer,
     description: p.description,
@@ -76,13 +109,21 @@ export function formatDBProjectRow(p: Json<DBProject>): DBProjectRow {
     logo_uri: p.logoUri,
     metadata_uri: p.metadataUri,
     name: p.name,
+    nfts_minted_count: p.nftsMintedCount,
+    owner: p.owner,
     payments_count: p.paymentsCount,
     project_id: p.projectId,
     pv: p.pv,
+    redeem_count: p.redeemCount,
+    redeem_volume: p.redeemVolume,
+    redeem_voume_usd: p.redeemVolumeUSD,
     tags: p.tags,
     terminal: p.terminal,
-    total_paid: p.volume,
+    trending_payments_count: p.trendingPaymentsCount,
     trending_score: p.trendingScore,
+    trending_volume: p.trendingVolume,
+    volume: p.volume,
+    volume_usd: p.volumeUSD,
     _has_unresolved_metadata: p._hasUnresolvedMetadata ?? null,
     _metadata_retries_left: p._metadataRetriesLeft ?? null,
     _updated_at: p._updatedAt,
@@ -249,17 +290,23 @@ export async function tryResolveMetadata({
   }
 }
 
-// BigNumber values are stored as strings (sql type: keyword). To sort by these they must have an equal number of digits, so we pad them with leading 0s up to a 32 char length.
+// BigNumber values are stored as strings. To sort by these they must have an equal number of digits, so we pad them with leading 0s up to a 32 char length.
 function padBigNumForSort(bn: string) {
   return bn.padStart(32, '0')
 }
 
-export function formatSGProjectForDB(p: Json<Pick<Project, SGSBCompareKey>>) {
+export function formatSGProjectForDB(
+  p: Json<Pick<Project, SGSBCompareKey>>,
+): Json<Pick<Project, SGSBCompareKey>> {
   return {
     ...p,
     // Adjust BigNumber values before we compare them to database values
     currentBalance: padBigNumForSort(p.currentBalance),
-    volume: padBigNumForSort(p.volume),
+    redeemVolume: padBigNumForSort(p.redeemVolume),
+    redeemVolumeUSD: padBigNumForSort(p.redeemVolumeUSD),
     trendingScore: padBigNumForSort(p.trendingScore),
+    trendingVolume: padBigNumForSort(p.trendingVolume),
+    volume: padBigNumForSort(p.volume),
+    volumeUSD: padBigNumForSort(p.volumeUSD),
   }
 }

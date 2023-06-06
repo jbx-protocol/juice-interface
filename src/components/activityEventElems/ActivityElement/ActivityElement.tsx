@@ -26,7 +26,7 @@ const FromBeneficiary = ({
       <EthereumAddress address={beneficiary} />
     </div>
   ) : (
-    <div className="text-sm">
+    <div className="flex items-center self-start text-sm">
       <JuiceboxAccountLink address={from} withEnsAvatar />
     </div>
   )
@@ -132,7 +132,7 @@ export function ActivityEvent({
           <TimestampVersion {...event} />
         </div>
 
-        <div className="mt-1 flex items-start justify-between">
+        <div className="mt-1 flex items-center justify-between">
           <Subject subject={subject} />
           <FromBeneficiary {...event} />
         </div>

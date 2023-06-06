@@ -32,7 +32,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
   return (
     <div className={twMerge('flex flex-col items-center gap-12', className)}>
       <Tab.Group as={Fragment}>
-        <div className="flex w-full justify-center border-b border-grey-200">
+        <div className="flex w-full justify-center border-b border-grey-200 dark:border-slate-600">
           <Tab.List className="flex gap-8">
             {tabs.map(tab => (
               <ProjectTab key={tab.id} name={tab.name} />

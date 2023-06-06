@@ -1,0 +1,13 @@
+query TicketModDistributionsForPrintReservesEvent($printReservesEvent: String) {
+  distributeToTicketModEvents(
+    where: { printReservesEvent: $printReservesEvent }
+    orderBy: modCut
+    orderDirection: desc
+  ) {
+    id
+    timestamp
+    txHash
+    modBeneficiary
+    modCut
+  }
+}

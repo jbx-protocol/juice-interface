@@ -3,8 +3,11 @@ import EthereumAddress from 'components/EthereumAddress'
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
 import { PV_V2 } from 'constants/pv'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { ProjectEventsQuery } from 'generated/graphql'
-import useSubgraphQuery from 'hooks/useSubgraphQuery'
+import {
+  ProjectEventsQuery,
+  useSplitDistributionsForDistributeReservedTokensEventQuery,
+} from 'generated/graphql'
+import { client } from 'lib/apollo/client'
 import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -20,28 +23,12 @@ export default function DistributeReservedTokensEventElem({
   const { tokenSymbol } = useContext(V1ProjectContext)
 
   // Load individual DistributeToReservedTokenSplit events, emitted by internal transactions of the DistributeReservedTokens transaction
-  const { data: distributeEvents } = useSubgraphQuery(
-    {
-      entity: 'distributeToReservedTokenSplitEvent',
-      keys: [
-        'id',
-        'timestamp',
-        'txHash',
-        'beneficiary',
-        'tokenCount',
-        'projectId',
-      ],
-      orderDirection: 'desc',
-      orderBy: 'tokenCount',
-      where: event?.id
-        ? {
-            key: 'distributeReservedTokensEvent',
-            value: event.id,
-          }
-        : undefined,
+  const { data } = useSplitDistributionsForDistributeReservedTokensEventQuery({
+    client,
+    variables: {
+      distributeReservedTokensEvent: event?.id,
     },
-    {},
-  )
+  })
 
   if (!event) return null
 
@@ -72,7 +59,7 @@ export default function DistributeReservedTokensEventElem({
       }
       extra={
         <div>
-          {distributeEvents?.map(e => (
+          {data?.distributeToReservedTokenSplitEvents.map(e => (
             <div key={e.id} className="flex items-baseline justify-between">
               <div>
                 <JuiceboxAccountLink

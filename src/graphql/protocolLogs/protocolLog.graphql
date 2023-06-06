@@ -1,0 +1,13 @@
+query ProtocolLog {
+  protocolLog(id: "1") {
+    projectsCount
+    volume
+    volumeUSD
+    volumeRedeemed
+    volumeRedeemedUSD
+    paymentsCount
+    redeemCount
+    erc20Count
+    trendingLastUpdatedTimestamp
+  }
+}

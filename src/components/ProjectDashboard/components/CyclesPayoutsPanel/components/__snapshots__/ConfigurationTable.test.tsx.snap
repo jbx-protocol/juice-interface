@@ -3,35 +3,31 @@
 exports[`ConfigurationTable renders 1`] = `
 <div>
   <div>
-    <table
+    <div
       class="w-full"
     >
-      <thead>
-        <tr>
-          <th
-            class="text-start text-base font-semibold"
-          >
-            title
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          class="flex justify-between border-b border-grey-200 py-3"
+      <div
+        class="text-start text-base font-semibold"
+      >
+        title
+      </div>
+      <div>
+        <div
+          class="flex justify-between gap-10 border-b border-grey-200 py-3 dark:border-slate-500"
         >
-          <td
+          <div
             class="flex justify-between gap-3"
           >
             foo
-          </td>
-          <td
-            class="text-end"
+          </div>
+          <div
+            class="truncate text-end"
           >
             <div
               class="flex flex-col items-center gap-2"
             >
               <div
-                class="flex w-full items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700"
+                class="flex w-full items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
               >
                 <svg
                   aria-hidden="true"
@@ -53,7 +49,7 @@ exports[`ConfigurationTable renders 1`] = `
                 </span>
               </div>
               <div
-                class="flex w-full items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700"
+                class="flex w-full items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
               >
                 <svg
                   aria-hidden="true"
@@ -75,38 +71,38 @@ exports[`ConfigurationTable renders 1`] = `
                 </span>
               </div>
             </div>
-          </td>
-        </tr>
-        <tr
-          class="flex justify-between border-b border-grey-200 py-3"
+          </div>
+        </div>
+        <div
+          class="flex justify-between gap-10 border-b border-grey-200 py-3 dark:border-slate-500"
         >
-          <td
+          <div
             class="flex justify-between gap-3"
           >
             bar
-          </td>
-          <td
-            class="text-end"
+          </div>
+          <div
+            class="truncate text-end"
           >
             new
-          </td>
-        </tr>
-        <tr
-          class="flex justify-between border-b border-grey-200 py-3"
+          </div>
+        </div>
+        <div
+          class="flex justify-between gap-10 border-b border-grey-200 py-3 dark:border-slate-500"
         >
-          <td
+          <div
             class="flex justify-between gap-3"
           >
             baz
-          </td>
-          <td
-            class="text-end"
+          </div>
+          <div
+            class="truncate text-end"
           >
             <div
               class="flex flex-col items-center gap-2"
             >
               <div
-                class="flex w-full items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700"
+                class="flex w-full items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
               >
                 <svg
                   aria-hidden="true"
@@ -128,7 +124,7 @@ exports[`ConfigurationTable renders 1`] = `
                 </span>
               </div>
               <div
-                class="flex w-full items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700"
+                class="flex w-full items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
               >
                 <svg
                   aria-hidden="true"
@@ -150,10 +146,10 @@ exports[`ConfigurationTable renders 1`] = `
                 </span>
               </div>
             </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;

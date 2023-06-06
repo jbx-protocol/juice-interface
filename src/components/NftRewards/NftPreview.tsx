@@ -39,34 +39,51 @@ export function NftPreview({
     useContentType(fileUrl)
   const isVideo = fileTypeIsVideo(contentType)
 
-  const nftRender = contentTypeLoading ? (
-    <div className="flex h-[50vh] w-96 items-center justify-center">
-      <LoadingOutlined className="text-5xl" />
+  const nftRender = (
+    <div onClick={e => e.stopPropagation()}>
+      {contentTypeLoading ? (
+        <div className="flex h-[50vh] w-96 items-center justify-center">
+          <LoadingOutlined className="text-5xl" />
+        </div>
+      ) : isVideo && fileUrl ? (
+        <JuiceVideoPreview src={fileUrl} />
+      ) : (
+        <img
+          className={IMAGE_OR_VIDEO_PREVIEW_CLASSES}
+          alt={rewardTier.name}
+          src={fileUrl}
+          onClick={e => e.stopPropagation()}
+          crossOrigin="anonymous"
+        />
+      )}
     </div>
-  ) : isVideo && fileUrl ? (
-    <JuiceVideoPreview src={fileUrl} />
-  ) : (
-    <img
-      className={IMAGE_OR_VIDEO_PREVIEW_CLASSES}
-      alt={rewardTier.name}
-      src={fileUrl}
-      onClick={e => e.stopPropagation()}
-      crossOrigin="anonymous"
-    />
   )
 
+  const _onClose = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    onClose()
+  }
+
   return (
-    <div className={JUICE_IMG_PREVIEW_CONTAINER_CLASS} onClick={onClose}>
+    <div
+      className={`${JUICE_IMG_PREVIEW_CONTAINER_CLASS} cursor-default`}
+      onClick={_onClose}
+    >
       <CloseOutlined
-        className="absolute top-10 right-10 text-2xl text-slate-100"
-        onClick={onClose}
+        className="absolute top-10 right-10 cursor-pointer text-2xl text-slate-100"
+        onClick={_onClose}
       />
 
       <div
-        className="max-w-prose pt-24 md:pt-0"
+        className="max-w-prose cursor-text select-text pt-24 md:pt-0"
         onClick={e => e.stopPropagation()}
       >
-        <div className="mb-5 text-center">{nftRender}</div>
+        <div
+          className="mb-5 flex w-full cursor-default justify-center"
+          onClick={_onClose}
+        >
+          {nftRender}
+        </div>
 
         <h1 className="text-2xl text-slate-100">{rewardTier.name}</h1>
         <span className="uppercase text-slate-100">

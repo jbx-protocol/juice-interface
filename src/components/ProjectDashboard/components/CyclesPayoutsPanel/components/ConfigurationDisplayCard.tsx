@@ -4,7 +4,7 @@ import { Trans } from '@lingui/macro'
 import { Fragment } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useConfigurationDisplayCard } from '../hooks/useConfigurationDisplayCard'
-import { ConfigurationPanel } from './ConfigurationPanel'
+import { CurrentUpcomingConfigurationPanel } from './CurrentUpcomingConfigurationPanel'
 
 export const ConfigurationDisplayCard = ({
   type,
@@ -16,14 +16,14 @@ export const ConfigurationDisplayCard = ({
   return (
     <Disclosure
       as="div"
-      className={twMerge('rounded-lg bg-smoke-50 py-5 px-6')}
+      className={twMerge('rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700')}
     >
       {({ open }) => (
         <Disclosure.Button className="w-full outline-none">
           <div className="flex w-full items-center justify-between text-start">
-            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600">
+            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
               {title}
-              <div className="font-heading text-2xl font-medium">
+              <div className="font-heading text-2xl font-medium dark:text-slate-50">
                 <Trans>Configuration</Trans>
               </div>
             </div>
@@ -43,7 +43,7 @@ export const ConfigurationDisplayCard = ({
             leaveTo="max-h-0 overflow-hidden opacity-0"
           >
             <Disclosure.Panel className="mt-4">
-              <ConfigurationPanel type={type} />
+              <CurrentUpcomingConfigurationPanel type={type} />
             </Disclosure.Panel>
           </Transition>
         </Disclosure.Button>

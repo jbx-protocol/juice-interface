@@ -38,8 +38,8 @@ export const PayInput = ({
         className={twMerge(
           'rounded-full bg-bluebs-50 p-1 transition-colors',
           currency === 'eth'
-            ? 'bg-bluebs-50 text-bluebs-500'
-            : 'bg-melon-50 text-melon-600',
+            ? 'bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950'
+            : 'bg-melon-50 text-melon-600 dark:bg-melon-500 dark:text-melon-950',
         )}
       >
         {currency === 'eth' ? (
@@ -54,7 +54,7 @@ export const PayInput = ({
   return (
     <div
       className={twMerge(
-        'flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3',
+        'dark:slate-900 flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3 dark:border-slate-500 dark:bg-slate-950',
         className,
       )}
     >
@@ -72,8 +72,8 @@ export const PayInput = ({
         className={twMerge(
           'flex select-none items-center gap-0.5 rounded-lg py-1.5 pl-2 pr-3 text-xs font-medium transition-colors',
           currency === 'eth'
-            ? 'bg-bluebs-50 text-bluebs-600'
-            : 'bg-melon-50 text-melon-600',
+            ? 'bg-bluebs-50 text-bluebs-600 dark:bg-bluebs-500 dark:text-bluebs-950'
+            : 'bg-melon-50 text-melon-600 dark:bg-melon-500 dark:text-melon-950',
         )}
         onClick={onCurrencyChange}
       >

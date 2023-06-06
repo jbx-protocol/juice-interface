@@ -57,7 +57,7 @@ export async function queryDBProjects(
   res: NextApiResponse,
   opts: DBProjectQueryOpts,
 ) {
-  const orderBy = opts.orderBy ?? 'total_paid'
+  const orderBy = opts.orderBy ?? 'volume'
   const page = opts.page ?? 0
   const pageSize = opts.pageSize ?? 20
   // Only sort ascending if orderBy is defined and orderDirection is 'asc'
@@ -77,6 +77,8 @@ export async function queryDBProjects(
   if (opts.archived) query = query.is('archived', true)
   else query = query.not('archived', 'is', true)
   if (opts.pv?.length) query = query.in('pv', opts.pv)
+  if (opts.owner) query = query.ilike('owner', opts.owner)
+  if (opts.creator) query = query.ilike('creator', opts.creator)
   if (opts.tags?.length) query = query.overlaps('tags', opts.tags)
   if (searchFilter) query = query.or(searchFilter)
 

@@ -20,9 +20,9 @@ export const CurrentCycleCard = ({ className }: { className?: string }) => {
       </div>
       <div className="mt-6 flex items-center gap-1">
         <span className="text-2xl font-medium">{timeRemainingText}</span>
-        <LockClosedIcon className="h-4 w-4 text-smoke-400" />
+        <LockClosedIcon className="h-4 w-4 text-smoke-400 dark:text-slate-300" />
       </div>
-      <div className="mt-3 text-smoke-500">
+      <div className="mt-3 text-smoke-500 dark:text-slate-200">
         <Trans>until Cycle #{currentCycleNumber + 1}</Trans>
       </div>
     </DisplayCard>

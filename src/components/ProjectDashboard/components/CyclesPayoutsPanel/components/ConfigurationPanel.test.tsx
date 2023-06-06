@@ -1,50 +1,56 @@
 /**
  * @jest-environment jsdom
  */
-import { render } from '@testing-library/react'
-import { useConfigurationPanel } from '../hooks/useConfigurationPanel'
-import { ConfigurationPanel } from './ConfigurationPanel'
 
-jest.mock('../hooks/useConfigurationPanel', () => ({
-  useConfigurationPanel: jest.fn(),
-}))
+import { render, screen } from '@testing-library/react'
+import {
+  ConfigurationPanel,
+  ConfigurationPanelTableData,
+} from './ConfigurationPanel'
 
-jest.mock('./ConfigurationTable', () => ({
-  ConfigurationTable: jest.fn(() => (
-    <div data-testid="ConfigurationTable">ConfigurationTable</div>
-  )),
-}))
-
-const DefaultResponse = {
-  cycle: {
-    foo: 'foo',
-  },
-  token: {
-    bar: 'bar',
-  },
-  otherRules: {
-    baz: 'baz',
-  },
-}
-
-const mockUseConfigurationPanel = useConfigurationPanel as jest.Mock
+// Mock ConfigurationTable to test if it's receiving correct props
+jest.mock('./ConfigurationTable', () => {
+  return {
+    __esModule: true,
+    ConfigurationTable: jest.fn().mockImplementation(({ title, data }) => (
+      <div title={title} data-testid={title}>
+        {JSON.stringify(data)}
+      </div>
+    )),
+  }
+})
 
 describe('ConfigurationPanel', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-    mockUseConfigurationPanel.mockImplementation(() => DefaultResponse)
+  const mockData: ConfigurationPanelTableData = {
+    key1: { name: 'test name', old: 'test old', new: 'test new' },
+  }
+
+  it('renders without crashing', () => {
+    render(
+      <ConfigurationPanel
+        cycle={mockData}
+        token={mockData}
+        otherRules={mockData}
+      />,
+    )
   })
 
-  it('renders', () => {
-    const { container } = render(<ConfigurationPanel type={'current'} />)
-    expect(container).toMatchSnapshot()
-  })
+  it('passes correct props to ConfigurationTable', () => {
+    render(
+      <ConfigurationPanel
+        cycle={mockData}
+        token={mockData}
+        otherRules={mockData}
+      />,
+    )
 
-  it.each(['current', 'upcoming'] as const)(
-    'calls useConfigurationPanel with type %p',
-    type => {
-      render(<ConfigurationPanel type={type} />)
-      expect(mockUseConfigurationPanel).toHaveBeenCalledWith(type)
-    },
-  )
+    const cycleElement = screen.getByTestId('Cycle')
+    expect(cycleElement).toHaveTextContent(JSON.stringify(mockData))
+
+    const tokenElement = screen.getByTestId('Token')
+    expect(tokenElement).toHaveTextContent(JSON.stringify(mockData))
+
+    const otherRulesElement = screen.getByTestId('Other rules')
+    expect(otherRulesElement).toHaveTextContent(JSON.stringify(mockData))
+  })
 })

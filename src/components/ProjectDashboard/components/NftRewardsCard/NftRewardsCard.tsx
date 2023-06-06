@@ -35,7 +35,7 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
           />
         </div>
         <div>
-          <button className="flex items-center rounded-2xl bg-grey-100 py-1 pl-3 pr-2.5 text-sm text-grey-700">
+          <button className="flex items-center rounded-2xl bg-grey-100 py-1 pl-3 pr-2.5 text-sm text-grey-700 dark:bg-slate-500 dark:text-slate-100">
             View all <ArrowRightIcon className="h-3 w-3" />
           </button>
         </div>

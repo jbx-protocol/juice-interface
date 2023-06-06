@@ -2,17 +2,11 @@ import { ConfigurationPanelDatum } from '../components/ConfigurationPanel'
 
 export const pairToDatum = (
   name: string,
-  type: 'current' | 'upcoming',
   current: string | undefined,
-  upcoming: string | undefined,
+  upcoming: string | undefined | null,
 ): ConfigurationPanelDatum => {
   return {
     name,
-    ...(type === 'current'
-      ? { new: current }
-      : {
-          old: current,
-          new: upcoming,
-        }),
+    ...(upcoming === null ? { new: current } : { old: current, new: upcoming }),
   }
 }

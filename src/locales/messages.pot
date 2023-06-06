@@ -1631,6 +1631,9 @@ msgstr ""
 msgid "{0} for you"
 msgstr ""
 
+msgid "You don't own any projects."
+msgstr ""
+
 msgid "While enabled, NFTs can be minted when this project receives a payment."
 msgstr ""
 
@@ -2094,6 +2097,9 @@ msgid "Are you sure you want to unwatch all projects? You will no longer be noti
 msgstr ""
 
 msgid "Project token beneficiary address"
+msgstr ""
+
+msgid "This account doesn't own any projects yet."
 msgstr ""
 
 msgid "Leave this blank to make your currently connected wallet the project owner. Fill this out with an Ethereum address to make that address this project's owner."
@@ -3122,6 +3128,9 @@ msgstr ""
 msgid "Set ENS text record for {ensName}"
 msgstr ""
 
+msgid "Load more..."
+msgstr ""
+
 msgid "Sum of percentages cannot exceed 100%"
 msgstr ""
 
@@ -3180,6 +3189,9 @@ msgid "All {tokensText} will go to the project owner:"
 msgstr ""
 
 msgid "Customize your public facing profile and other details."
+msgstr ""
+
+msgid "Projects owned"
 msgstr ""
 
 msgid "Transfer {tokenTextShort}"
@@ -4377,9 +4389,6 @@ msgid "Re-launch your Juicebox project using the v3 contracts."
 msgstr ""
 
 msgid "StudioDAO's project settings are designed to maximize trust with locked 28-day cycles, limited payouts, and a 3-day edit deadline. 20% of newly minted tokens are reserved for the DAO wallet and issuance will decrease by 5% each cycle. StudioDAO also leverages tiered NFT rewards to create incentives for supporters with benefits like private screenings, governance votes to decide which new films to fund, and screen credits."
-msgstr ""
-
-msgid "Load more"
 msgstr ""
 
 msgid "Juicy picks"

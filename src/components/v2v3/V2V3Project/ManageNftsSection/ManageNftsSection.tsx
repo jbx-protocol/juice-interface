@@ -23,16 +23,16 @@ export function ManageNftsSection() {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const [redeemNftsModalVisible, setRedeemNftsModalVisible] =
     useState<boolean>(false)
-  const { data: nfts, isLoading } = useNftAccountBalance({
+  const { data, loading } = useNftAccountBalance({
     accountAddress: userAddress,
     dataSourceAddress: fundingCycleMetadata?.dataSource,
   })
 
-  const nftBalanceFormatted = nfts?.length ?? 0
+  const nftBalanceFormatted = data?.jb721DelegateTokens.length ?? 0
   const nftRedeemAllowed =
     fundingCycleMetadata?.useDataSourceForRedeem && nftBalanceFormatted > 0
 
-  if (isLoading) return null
+  if (loading) return null
 
   return (
     <>

@@ -1,8 +1,6 @@
-import { constants } from 'ethers'
-
-import { BigNumber } from 'ethers'
+import { BigNumber, constants } from 'ethers'
 import isEqual from 'lodash/isEqual'
-import { OutgoingSplit, Split } from 'models/splits'
+import { Split, SplitParams } from 'models/splits'
 
 import { SPLITS_TOTAL_PERCENT } from './v2v3/math'
 
@@ -74,10 +72,10 @@ export const getProjectOwnerRemainderSplit = (
  * Converts array of splits from transaction data (e.g. outgoing reconfig tx) to array of native Split objects
  * (Outgoing Split objects have percent and lockedUntil as BigNumbers)
  */
-export const formatOutgoingSplits = (splits: OutgoingSplit[]): Split[] => {
+export const toSplit = (splits: SplitParams[]): Split[] => {
   return (
     splits?.map(
-      (split: OutgoingSplit) =>
+      (split: SplitParams) =>
         ({ ...split, percent: split.percent.toNumber() } as Split),
     ) ?? []
   )

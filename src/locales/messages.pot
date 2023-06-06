@@ -2930,9 +2930,6 @@ msgstr ""
 msgid "Cycle duration"
 msgstr ""
 
-msgid "Last 7 days"
-msgstr ""
-
 msgid "Export payouts CSV"
 msgstr ""
 
@@ -4139,9 +4136,6 @@ msgstr ""
 msgid "You will receive {0}<0/>"
 msgstr ""
 
-msgid "Last 30 days"
-msgstr ""
-
 msgid "Your project's NFTs."
 msgstr ""
 
@@ -4326,6 +4320,9 @@ msgid "What's Juicebox?"
 msgstr ""
 
 msgid "Current 3rd Party Exchange Rates"
+msgstr ""
+
+msgid "Last {TRENDING_WINDOW_DAYS} days"
 msgstr ""
 
 msgid "Tools"

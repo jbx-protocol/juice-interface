@@ -20,6 +20,7 @@ import {
 } from 'generated/graphql'
 import useMobile from 'hooks/useMobile'
 import { useDBProjectsQuery } from 'hooks/useProjects'
+import { useWalletBookmarkedProjects } from 'hooks/useWalletBookmarkedProjects'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useWallet } from 'hooks/Wallet'
 import { client } from 'lib/apollo/client'
@@ -150,6 +151,33 @@ function OwnedProjectsList({ address }: { address: string }) {
   return <ProjectsList projects={projects} />
 }
 
+function SavedProjectsList({ address }: { address: string }) {
+  const { projects, isLoading } = useWalletBookmarkedProjects({
+    wallet: address,
+  })
+
+  const { userAddress } = useWallet()
+
+  if (isLoading) return <Loading />
+
+  if (!projects || projects.length === 0)
+    return (
+      <span>
+        {address === userAddress ? (
+          <p className="mb-5 dark:text-slate-100">
+            <Trans>You haven't saved any projects.</Trans>
+          </p>
+        ) : (
+          <p className="dark:text-slate-100">
+            <Trans>This account hasn't saved any projects yet.</Trans>
+          </p>
+        )}
+      </span>
+    )
+
+  return <ProjectsList projects={projects} />
+}
+
 function CreatedProjectsList({ address }: { address: string }) {
   const { data: projects, isLoading } = useDBProjectsQuery({
     creator: address,
@@ -225,6 +253,11 @@ export function AccountDashboard({
       label: t`Contributions`,
       key: 'holding',
       children: <ContributedList address={address} />,
+    },
+    {
+      label: t`Saved projects`,
+      key: 'saved',
+      children: <SavedProjectsList address={address} />,
     },
     {
       label: t`Projects owned`,

@@ -200,6 +200,26 @@ export interface Database {
           volume_usd?: string
         }
       }
+      user_bookmarks: {
+        Row: {
+          created_at: string
+          project: string
+          user_id: string
+          wallet: string
+        }
+        Insert: {
+          created_at?: string
+          project: string
+          user_id: string
+          wallet: string
+        }
+        Update: {
+          created_at?: string
+          project?: string
+          user_id?: string
+          wallet?: string
+        }
+      }
       user_subscriptions: {
         Row: {
           notification_id: string

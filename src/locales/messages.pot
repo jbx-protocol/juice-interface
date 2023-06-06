@@ -746,6 +746,9 @@ msgstr ""
 msgid "Advanced (optional)"
 msgstr ""
 
+msgid "Saved projects"
+msgstr ""
+
 msgid "The redemption rate determines how token holders can burn their tokens to reclaim a portion of the ETH not needed for payouts."
 msgstr ""
 
@@ -927,6 +930,9 @@ msgid "Funding cycle details"
 msgstr ""
 
 msgid "Archive"
+msgstr ""
+
+msgid "You haven't saved any projects."
 msgstr ""
 
 msgid "You haven't contributed to any projects yet!"
@@ -3924,6 +3930,9 @@ msgid "View on Etherscan"
 msgstr ""
 
 msgid "Preview"
+msgstr ""
+
+msgid "This account hasn't saved any projects yet."
 msgstr ""
 
 msgid "Token amount"

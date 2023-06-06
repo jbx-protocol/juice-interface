@@ -1,3 +1,5 @@
+import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
+import { useContext } from 'react'
 import { Cart } from './components/Cart'
 import { CoverPhoto } from './components/CoverPhoto'
 import { CurrentCycleCard } from './components/CurrentCycleCard'
@@ -7,6 +9,9 @@ import { ProjectHeader } from './components/ProjectHeader'
 import { ProjectTabs } from './components/ProjectTabs'
 
 export const ProjectDashboard = () => {
+  const {
+    nftRewards: { CIDs },
+  } = useContext(NftRewardsContext)
   return (
     <>
       {/* // TODO: Remove pb-48, just there for testing */}
@@ -17,7 +22,7 @@ export const ProjectDashboard = () => {
             <ProjectHeader />
             <div className="mt-10 flex w-full gap-6">
               <PayProjectCard className="flex-1" />
-              <NftRewardsCard />
+              {CIDs?.length ? <NftRewardsCard /> : null}
               <CurrentCycleCard />
             </div>
             <ProjectTabs className="mt-16" />

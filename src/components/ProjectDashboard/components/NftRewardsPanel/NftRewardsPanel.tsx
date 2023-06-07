@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { NftReward } from './NftReward'
+import { RedeemNftsSection } from './RedeemNftsSection'
 import { useNftRewards } from './hooks/useNftRewards'
 
 export const NftRewardsPanel = () => {
@@ -14,6 +15,7 @@ export const NftRewardsPanel = () => {
       <h2 className="font-heading text-2xl font-medium">
         <Trans>NFTs</Trans>
       </h2>
+      <RedeemNftsSection />
       <div className="grid grid-cols-3 gap-4">
         {rewardTiers?.map((tier, i) => (
           <NftReward

@@ -5,9 +5,9 @@ import { JB721DelegateToken } from 'models/subgraph-entities/v2/jb-721-delegate-
 import { UseQueryResult, useQuery } from 'react-query'
 import { cidFromIpfsUri, ipfsGatewayUrl } from 'utils/ipfs'
 
-const NFT_METADATA_CONTRIBUTION_FLOOR_ATTRIBUTES_INDEX = 0
+export const NFT_METADATA_CONTRIBUTION_FLOOR_ATTRIBUTES_INDEX = 0
 
-function useJB721DelegateTokenMetadata(
+export function useJB721DelegateTokenMetadata(
   tokenUri: string | undefined,
 ): UseQueryResult<IPFSNftRewardTier> {
   return useQuery(

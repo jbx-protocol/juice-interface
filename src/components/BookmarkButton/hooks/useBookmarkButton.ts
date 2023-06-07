@@ -77,7 +77,6 @@ export const useBookmarkButton = ({
           {
             user_id: userId,
             project,
-            wallet: wallet.userAddress.toLowerCase(),
             created_at: new Date().toISOString(),
           },
         ])

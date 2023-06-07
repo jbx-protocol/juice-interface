@@ -152,7 +152,7 @@ function OwnedProjectsList({ address }: { address: string }) {
 }
 
 function SavedProjectsList({ address }: { address: string }) {
-  const { projects, isLoading } = useWalletBookmarkedProjects({
+  const { data: projects, isLoading } = useWalletBookmarkedProjects({
     wallet: address,
   })
 

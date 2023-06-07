@@ -205,19 +205,16 @@ export interface Database {
           created_at: string
           project: string
           user_id: string
-          wallet: string
         }
         Insert: {
           created_at?: string
           project: string
           user_id: string
-          wallet: string
         }
         Update: {
           created_at?: string
           project?: string
           user_id?: string
-          wallet?: string
         }
       }
       user_subscriptions: {

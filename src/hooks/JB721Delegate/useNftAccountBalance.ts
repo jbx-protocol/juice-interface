@@ -16,7 +16,7 @@ export function useNftAccountBalance({
     variables: {
       where: {
         ...(dataSourceAddress ? { address: dataSourceAddress } : {}),
-        ...(accountAddress ? { owner: accountAddress } : {}),
+        ...(accountAddress ? { owner_: { wallet: accountAddress } } : {}),
       },
     },
   })

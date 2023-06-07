@@ -10,6 +10,7 @@ import { truncateEthAddress } from 'utils/format/formatAddress'
 
 interface EthereumAddressProps {
   className?: string
+  avatarClassName?: string
   address: string | undefined
   label?: string
   tooltipDisabled?: boolean
@@ -23,6 +24,7 @@ interface EthereumAddressProps {
 
 export default function EthereumAddress({
   className,
+  avatarClassName,
   address,
   label,
   href,
@@ -55,11 +57,11 @@ export default function EthereumAddress({
       open={tooltipDisabled ? false : undefined}
     >
       <span className="inline-flex items-center">
-        {withEnsAvatar && ensName && address && (
+        {withEnsAvatar && address && (
           <img
             src={ensAvatarUrlForAddress(address, { size: 72 })}
-            className="mr-2 h-9 w-9 rounded-full"
-            alt={`Avatar for ${ensName}`}
+            className={twMerge('mr-2 h-9 w-9 rounded-full', avatarClassName)}
+            alt={`Avatar for ${ensName ?? address}`}
             loading="lazy"
           />
         )}

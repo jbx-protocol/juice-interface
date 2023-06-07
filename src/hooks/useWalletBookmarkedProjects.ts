@@ -5,6 +5,10 @@ import { useQuery } from 'react-query'
 import { Database } from 'types/database.types'
 import { parseDBProject } from 'utils/sgDbProjects'
 
+/**
+ * Get a list of all projects saved by a user with matching wallet address.
+ * @param wallet Wallet address of user.
+ */
 export function useWalletBookmarkedProjects({
   wallet,
 }: {
@@ -27,6 +31,10 @@ export function useWalletBookmarkedProjects({
   )
 }
 
+/**
+ * Get a list of ids of all projects saved by a user with matching wallet address.
+ * @param wallet Wallet address of user.
+ */
 export function useWalletBookmarkedIds({
   wallet,
 }: {
@@ -36,11 +44,13 @@ export function useWalletBookmarkedIds({
     wallet,
   })
 
+  const ids = useMemo(
+    () => new Set(bookmarkedProjects?.map(p => p.id)),
+    [bookmarkedProjects],
+  )
+
   return {
     isLoading,
-    ids: useMemo(
-      () => new Set(bookmarkedProjects?.map(p => p.id)),
-      [bookmarkedProjects],
-    ),
+    ids,
   }
 }

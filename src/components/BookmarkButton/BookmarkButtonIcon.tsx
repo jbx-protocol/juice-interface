@@ -6,9 +6,11 @@ export const BookmarkButtonIcon = ({
 }: {
   isBookmarked: boolean
 }) => {
+  const className = 'inline h-5 w-5'
+
   return isBookmarked ? (
-    <BookmarkIconSolid className="inline h-5 w-5" />
+    <BookmarkIconSolid className={className} />
   ) : (
-    <BookmarkIconOutline className="inline h-5 w-5" />
+    <BookmarkIconOutline className={className} />
   )
 }

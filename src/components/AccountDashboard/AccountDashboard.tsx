@@ -9,7 +9,7 @@ import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import Paragraph from 'components/Paragraph'
 import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
-import ProjectCard, { ProjectCardProject } from 'components/ProjectCard'
+import ProjectCard from 'components/ProjectCard'
 import ProjectLogo from 'components/ProjectLogo'
 import { SocialButton } from 'components/SocialButton'
 import WalletContributionCard from 'components/WalletContributionCard'
@@ -24,6 +24,7 @@ import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useWallet } from 'hooks/Wallet'
 import { client } from 'lib/apollo/client'
 import { Profile } from 'models/database'
+import { DBProject } from 'models/dbProject'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
@@ -31,7 +32,7 @@ import { isEqualAddress } from 'utils/address'
 import { ensAvatarUrlForAddress } from 'utils/ens'
 import { etherscanLink } from 'utils/etherscan'
 
-function ProjectsList({ projects }: { projects: ProjectCardProject[] }) {
+function ProjectsList({ projects }: { projects: DBProject[] }) {
   return (
     <Grid>
       {projects?.map(p => (

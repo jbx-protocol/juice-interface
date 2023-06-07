@@ -1,9 +1,9 @@
 import { BigNumber } from 'ethers'
 import { Database } from 'types/database.types'
 
+import { Project } from 'generated/graphql'
 import { ProjectTagName } from './project-tags'
 import { PV } from './pv'
-import { Project } from './subgraph-entities/vX/project'
 
 export type SGSBCompareKey = Extract<keyof Project, keyof DBProject>
 
@@ -20,6 +20,8 @@ export type DBProjectQueryOpts = {
   text?: string
   tags?: ProjectTagName[]
   archived?: boolean
+  projectId?: number
+  ids?: string[]
   pv?: PV[]
   owner?: string
   creator?: string

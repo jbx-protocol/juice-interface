@@ -1,8 +1,9 @@
+import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContextType } from 'contexts/v1/Project/V1ProjectContext'
 import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useProjectsQuery } from 'hooks/useProjects'
+import { useDBProjectsQuery } from 'hooks/useProjects'
 import useBalanceOfProject from 'hooks/v1/contractReader/useBalanceOfProject'
 import useCurrentFundingCycleOfProject from 'hooks/v1/contractReader/useCurrentFundingCycleOfProject'
 import useCurrentPayoutModsOfProject from 'hooks/v1/contractReader/useCurrentPayoutModsOfProject'
@@ -65,10 +66,14 @@ export function useV1ProjectState({
   )
   const overflow = useOverflowOfProject(projectId, terminalName)
 
-  const { data: projects } = useProjectsQuery({
-    projectId: projectId,
-    keys: ['createdAt', 'volume'],
-  })
+  const { data: projects } = useDBProjectsQuery(
+    projectId
+      ? {
+          projectId,
+          pv: [PV_V1],
+        }
+      : null,
+  )
 
   const createdAt = projects?.[0]?.createdAt
   const earned = projects?.[0]?.volume

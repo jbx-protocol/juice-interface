@@ -1,11 +1,11 @@
 import { ipfsGet } from 'lib/api/ipfs'
 import { DBProject, DBProjectRow, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
+import { ProjectTagName } from 'models/project-tags'
 import { ProjectMetadata, consolidateMetadata } from 'models/projectMetadata'
 import { PV } from 'models/pv'
-import { Project } from 'models/subgraph-entities/vX/project'
 
-import { ProjectTagName } from 'models/project-tags'
+import { Project } from 'generated/graphql'
 import { formatError } from './format/formatError'
 import { parseBigNumberKeyVals } from './graph'
 import { isIpfsCID } from './ipfs'
@@ -40,6 +40,9 @@ export const sgDbCompareKeys: SGSBCompareKey[] = [
   'trendingPaymentsCount',
   'createdWithinTrendingWindow',
 ]
+
+export const parseDBProject = (r: DBProjectRow): DBProject =>
+  parseDBProjectJson(parseDBProjectsRow(r))
 
 // Parse DB Project json, converting strings to BigNumbers
 export const parseDBProjectJson = (j: Json<DBProject>): DBProject => ({
@@ -94,7 +97,9 @@ export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
 }
 
 // Format DB Project json for insertion into DB, converting property names from camelCase to snake_case
-export function formatDBProjectRow(p: Json<DBProject>): DBProjectRow {
+export function formatDBProjectRow(
+  p: Json<Omit<DBProject, '_updatedAt'>>,
+): Omit<DBProjectRow, '_updated_at'> {
   return {
     archived: p.archived,
     contributors_count: p.contributorsCount,
@@ -126,7 +131,6 @@ export function formatDBProjectRow(p: Json<DBProject>): DBProjectRow {
     volume_usd: p.volumeUSD,
     _has_unresolved_metadata: p._hasUnresolvedMetadata ?? null,
     _metadata_retries_left: p._metadataRetriesLeft ?? null,
-    _updated_at: p._updatedAt,
   }
 }
 
@@ -217,22 +221,36 @@ export function getChangedSubgraphProjects({
 /**
  * Attempt to resolve metadata from IPFS for a Subgraph project, and return the project as a DBProject with metadata properties included if successful. If there's an error resolving metadata, return the error.
  */
-export async function tryResolveMetadata({
+export async function formatWithMetadata({
   sgProject,
-  _metadataRetriesLeft,
-  _hasUnresolvedMetadata,
+  dbProject,
 }: {
   sgProject: Json<Pick<Project, SGSBCompareKey>>
-} & Partial<
-  Pick<DBProject, '_hasUnresolvedMetadata' | '_metadataRetriesLeft'>
->) {
+  dbProject:
+    | Pick<
+        DBProject,
+        | '_hasUnresolvedMetadata'
+        | '_metadataRetriesLeft'
+        | 'metadataUri'
+        | 'archived'
+        | 'description'
+        | 'logoUri'
+        | 'name'
+        | 'tags'
+      >
+    | undefined
+}): Promise<{
+  project: Json<Omit<DBProject, '_updatedAt'>>
+  error?: string
+  retriesRemaining?: number
+}> {
   const { metadataUri } = sgProject
 
   // if metadataUri is missing or invalid, or no retries remaining for unresolved metadata
   if (
     !metadataUri ||
     !isIpfsCID(metadataUri) ||
-    (_hasUnresolvedMetadata && _metadataRetriesLeft === 0)
+    (dbProject?._hasUnresolvedMetadata && dbProject?._metadataRetriesLeft === 0)
   ) {
     return {
       project: {
@@ -244,7 +262,23 @@ export async function tryResolveMetadata({
         logoUri: null,
         tags: null,
         archived: null,
-      } as Json<DBProject>,
+      },
+    }
+  }
+
+  // If metadataUri has not changed, we don't need to resolve new metadata and can simply append existing dbProject metadata properties
+  if (sgProject.metadataUri === dbProject?.metadataUri) {
+    const { archived, description, logoUri, name, tags } = dbProject
+
+    return {
+      project: {
+        ...sgProject,
+        archived,
+        description,
+        logoUri,
+        name,
+        tags,
+      },
     }
   }
 
@@ -265,12 +299,12 @@ export async function tryResolveMetadata({
         logoUri: logoUri ?? null,
         tags: tags ?? null,
         archived: archived ?? null,
-      } as Json<DBProject>,
+      },
     }
   } catch (error) {
     // decrement metadataRetriesLeft, or set to max if previously unset
-    const retriesRemaining = _metadataRetriesLeft
-      ? _metadataRetriesLeft - 1
+    const retriesRemaining = dbProject?._metadataRetriesLeft
+      ? dbProject._metadataRetriesLeft - 1
       : MAX_METADATA_RETRIES
 
     return {
@@ -285,7 +319,7 @@ export async function tryResolveMetadata({
         logoUri: null,
         tags: null,
         archived: null,
-      } as Json<DBProject>,
+      },
     }
   }
 }

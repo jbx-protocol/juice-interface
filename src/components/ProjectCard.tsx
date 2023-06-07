@@ -1,82 +1,33 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import * as constants from '@ethersproject/constants'
 import { Skeleton } from 'antd'
 import { PV_V2 } from 'constants/pv'
 import { useProjectHandleText } from 'hooks/useProjectHandleText'
-import { useProjectMetadata } from 'hooks/useProjectMetadata'
-import useSubgraphQuery from 'hooks/useSubgraphQuery'
-import { ProjectTagName } from 'models/project-tags'
-import { Project } from 'models/subgraph-entities/vX/project'
 import Link from 'next/link'
 import { isHardArchived } from 'utils/archived'
 import { formatDate } from 'utils/format/formatDate'
 import { v2v3ProjectRoute } from 'utils/routes'
 
+import { useProjectMetadata } from 'hooks/useProjectMetadata'
+import { DBProject } from 'models/dbProject'
 import { ArchivedBadge } from './ArchivedBadge'
-import ETHAmount from './currency/ETHAmount'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
 import { ProjectTagsList } from './ProjectTags/ProjectTagsList'
+import ETHAmount from './currency/ETHAmount'
 
-export type ProjectCardProject = Pick<
-  Project,
-  'id' | 'handle' | 'volume' | 'createdAt' | 'terminal' | 'projectId' | 'pv'
-> & { tags?: ProjectTagName[] | null; metadataUri: string | null }
-
-function useProjectCardData(project?: ProjectCardProject | BigNumber) {
-  // Get ProjectCardProject object if this component was passed a projectId (bigNumber)
-  const projectResponse = useSubgraphQuery(
-    BigNumber.isBigNumber(project)
-      ? {
-          entity: 'project',
-          keys: [
-            'id',
-            'handle',
-            'metadataUri',
-            'volume',
-            'createdAt',
-            'terminal',
-            'projectId',
-            'pv',
-          ],
-          where: {
-            key: 'projectId',
-            value: project.toString(),
-          },
-        }
-      : null,
-  ).data
-
-  // If we were given projectId (BigNumber) and therefore projectResponse returned something,
-  // return the first item in the array.
-  if (projectResponse?.[0]) {
-    return projectResponse[0]
-  }
-
-  // Otherwise, return the given [project] argument,  which must have type ProjectCardProject.
-  return project as ProjectCardProject | undefined
-}
-
-export default function ProjectCard({
-  project,
-}: {
-  project?: ProjectCardProject | BigNumber
-}) {
-  const projectCardData = useProjectCardData(project)
-  const { data: metadata } = useProjectMetadata(projectCardData?.metadataUri)
+export default function ProjectCard({ project }: { project?: DBProject }) {
+  const { data: metadata } = useProjectMetadata(project?.metadataUri)
   const { handleText } = useProjectHandleText({
-    handle: projectCardData?.handle,
-    projectId: projectCardData?.projectId,
+    handle: project?.handle,
+    projectId: project?.projectId,
   })
 
-  if (!projectCardData) return null
+  if (!project) return null
+
+  const { volume, pv, handle, projectId, tags, createdAt } = project
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
-  const precision =
-    projectCardData.volume?.gt(0) &&
-    projectCardData.volume.lt(constants.WeiPerEther)
-      ? 2
-      : 0
+  const precision = volume?.gt(0) && volume.lt(constants.WeiPerEther) ? 2 : 0
 
   /**
    * We need to set the `as` prop for V2V3 projects
@@ -89,24 +40,21 @@ export default function ProjectCard({
    * https://web.dev/route-prefetching-in-nextjs/
    */
   const projectCardHref =
-    projectCardData.pv === PV_V2
+    pv === PV_V2
       ? v2v3ProjectRoute({
-          projectId: projectCardData.projectId,
+          projectId,
         })
-      : `/p/${projectCardData.handle}`
+      : `/p/${handle}`
 
   const projectCardUrl =
-    projectCardData.pv === PV_V2
+    pv === PV_V2
       ? v2v3ProjectRoute({
-          projectId: projectCardData.projectId,
-          handle: projectCardData.handle,
+          projectId,
+          handle,
         })
       : projectCardHref
 
-  const isArchived =
-    isHardArchived({ ...projectCardData }) || metadata?.archived
-
-  const tags = (project as ProjectCardProject).tags
+  const isArchived = isHardArchived({ ...project }) || metadata?.archived
 
   return (
     <Link href={projectCardHref} as={projectCardUrl} prefetch={false}>
@@ -118,7 +66,7 @@ export default function ProjectCard({
             className="h-24 w-24 md:h-28 md:w-28"
             uri={metadata?.logoUri}
             name={metadata?.name}
-            projectId={projectCardData.projectId}
+            projectId={projectId}
             lazyLoad
           />
         </div>
@@ -139,16 +87,11 @@ export default function ProjectCard({
 
           <div>
             <span className="font-medium text-black dark:text-slate-100">
-              <ETHAmount
-                amount={projectCardData.volume}
-                precision={precision}
-              />{' '}
+              <ETHAmount amount={volume} precision={precision} />
             </span>
 
             <span className="text-grey-500 dark:text-grey-300">
-              since{' '}
-              {!!projectCardData.createdAt &&
-                formatDate(projectCardData.createdAt * 1000, 'yyyy-MM-DD')}
+              since {!!createdAt && formatDate(createdAt * 1000, 'yyyy-MM-DD')}
             </span>
           </div>
 

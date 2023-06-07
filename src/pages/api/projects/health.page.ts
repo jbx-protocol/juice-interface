@@ -1,6 +1,10 @@
+import { DbProjectsDocument, DbProjectsQuery, Project } from 'generated/graphql'
 import { dbpLog, dbpQueryAll } from 'lib/api/supabase/projects'
+import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
+import { serverClient } from 'lib/apollo/serverClient'
+import { SGSBCompareKey } from 'models/dbProject'
+import { Json } from 'models/json'
 import { NextApiHandler } from 'next'
-import { querySubgraphExhaustiveRaw } from 'utils/graph'
 import { formatSGProjectForDB, sgDbCompareKeys } from 'utils/sgDbProjects'
 
 // Checks integrity of projects data in database against the current subgraph data
@@ -24,10 +28,10 @@ const handler: NextApiHandler = async (_, res) => {
 
   if (!isEmpty) {
     const subgraphProjects = (
-      await querySubgraphExhaustiveRaw({
-        entity: 'project',
-        keys: sgDbCompareKeys,
-      })
+      (await paginateDepleteQuery<DbProjectsQuery>({
+        client: serverClient,
+        document: DbProjectsDocument,
+      })) as unknown as Json<Pick<Project, SGSBCompareKey>>[]
     ).map(formatSGProjectForDB)
 
     report += `\n\n${dbProjectsCount} projects in database`

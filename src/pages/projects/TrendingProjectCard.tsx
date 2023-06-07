@@ -1,3 +1,4 @@
+import { BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
 import { Plural, t, Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -15,6 +16,7 @@ export default function TrendingProjectCard({
   project,
   rank,
   size = 'sm',
+  bookmarked,
 }: {
   project: Pick<
     DBProject,
@@ -30,6 +32,7 @@ export default function TrendingProjectCard({
   >
   rank: number
   size?: 'sm' | 'lg'
+  bookmarked?: boolean
 }) {
   const { data: metadata } = useProjectMetadata(project.metadataUri)
 
@@ -84,6 +87,7 @@ export default function TrendingProjectCard({
           {metadata ? (
             <span className="m-0 overflow-hidden text-ellipsis font-heading text-base text-black dark:text-slate-100 md:text-xl">
               {metadata.name}
+              {bookmarked && <BookmarkIconSolid className="ml-2 inline h-4" />}
             </span>
           ) : (
             <Skeleton paragraph={false} title={{ width: 120 }} active />

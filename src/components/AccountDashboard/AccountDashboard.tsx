@@ -20,7 +20,10 @@ import {
 } from 'generated/graphql'
 import useMobile from 'hooks/useMobile'
 import { useDBProjectsQuery } from 'hooks/useProjects'
-import { useWalletBookmarkedProjects } from 'hooks/useWalletBookmarkedProjects'
+import {
+  useWalletBookmarkedIds,
+  useWalletBookmarkedProjects,
+} from 'hooks/useWalletBookmarkedProjects'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useWallet } from 'hooks/Wallet'
 import { client } from 'lib/apollo/client'
@@ -34,10 +37,20 @@ import { ensAvatarUrlForAddress } from 'utils/ens'
 import { etherscanLink } from 'utils/etherscan'
 
 function ProjectsList({ projects }: { projects: DBProject[] }) {
+  const { userAddress } = useWallet()
+
+  const { ids: bookmarkedProjectIds } = useWalletBookmarkedIds({
+    wallet: userAddress,
+  })
+
   return (
     <Grid>
       {projects?.map(p => (
-        <ProjectCard project={p} key={p.id} />
+        <ProjectCard
+          project={p}
+          key={p.id}
+          bookmarked={bookmarkedProjectIds.has(p.id)}
+        />
       ))}
     </Grid>
   )

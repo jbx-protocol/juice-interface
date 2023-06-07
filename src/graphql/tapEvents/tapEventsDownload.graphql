@@ -1,0 +1,21 @@
+query TapEventsDownload(
+  $where: TapEvent_filter
+  $first: Int
+  $skip: Int
+  $block: Block_height
+) {
+  tapEvents(
+    where: $where
+    first: $first
+    skip: $skip
+    block: $block
+    orderBy: timestamp
+    orderDirection: desc
+  ) {
+    timestamp
+    beneficiaryTransferAmount
+    beneficiaryTransferAmountUSD
+    beneficiary
+    txHash
+  }
+}

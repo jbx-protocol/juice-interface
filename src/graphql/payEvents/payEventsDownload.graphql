@@ -1,0 +1,22 @@
+query PayEventsDownload(
+  $where: PayEvent_filter
+  $first: Int
+  $skip: Int
+  $block: Block_height
+) {
+  payEvents(
+    where: $where
+    block: $block
+    first: $first
+    skip: $skip
+    orderBy: timestamp
+    orderDirection: desc
+  ) {
+    timestamp
+    amount
+    amountUSD
+    from
+    beneficiary
+    txHash
+  }
+}

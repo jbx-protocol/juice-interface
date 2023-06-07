@@ -1,0 +1,22 @@
+query DistributeToPayoutModEventsDownload(
+  $where: DistributeToPayoutModEvent_filter
+  $first: Int
+  $skip: Int
+  $block: Block_height
+) {
+  distributeToPayoutModEvents(
+    where: $where
+    block: $block
+    first: $first
+    skip: $skip
+    orderBy: timestamp
+    orderDirection: desc
+  ) {
+    timestamp
+    modCut
+    modCutUSD
+    modProjectId
+    modBeneficiary
+    txHash
+  }
+}

@@ -16,11 +16,11 @@ import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721Delegate
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber, constants } from 'ethers'
 import { defaultAbiCoder } from 'ethers/lib/utils.js'
+import { Jb721DelegateToken } from 'generated/graphql'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/useNftAccountBalance'
 import { useETHReceivedFromNftRedeem } from 'hooks/v2v3/contractReader/useETHReceivedFromNftRedeem'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/useRedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
-import { JB721DelegateToken } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
 import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatRedemptionRate } from 'utils/v2v3/math'
@@ -90,13 +90,13 @@ export function RedeemNftsModal({
   if (!fundingCycle || !fundingCycleMetadata || balanceLoading) return null
 
   const handleTierSelect = (
-    nft: Pick<JB721DelegateToken, 'address' | 'tokenId' | 'tokenUri'>,
+    nft: Pick<Jb721DelegateToken, 'address' | 'tokenUri'> & { tokenId: string },
   ) => {
     setTokenIdsToRedeem([...(tokenIdsToRedeem ?? []), nft.tokenId])
   }
 
   const handleTierDeselect = (
-    nft: Pick<JB721DelegateToken, 'address' | 'tokenId' | 'tokenUri'>,
+    nft: Pick<Jb721DelegateToken, 'address' | 'tokenUri'> & { tokenId: string },
   ) => {
     const idxToRemove = tokenIdsToRedeem.indexOf(nft.tokenId)
     const newSelectedTierIds = tokenIdsToRedeem
@@ -144,11 +144,11 @@ export function RedeemNftsModal({
     }
   }
 
-  const nfts = data?.jb721DelegateTokens.map(t => ({
+  const jb721DelegateTokens = data?.jb721DelegateTokens.map(t => ({
     ...t,
     tokenId: t.tokenId.toHexString(),
   }))
-  const nftBalanceFormatted = nfts?.length ?? 0
+  const nftBalanceFormatted = jb721DelegateTokens?.length ?? 0
   const hasOverflow = primaryTerminalCurrentOverflow?.gt(0)
   const hasRedemptionRate = fundingCycleMetadata.redemptionRate.gt(0)
   const canRedeem = hasOverflow && hasRedemptionRate
@@ -242,7 +242,7 @@ export function RedeemNftsModal({
           <Form form={form} layout="vertical">
             <Form.Item label={t`Select NFTs to redeem`}>
               <Row gutter={[20, 20]}>
-                {nfts?.map(nft => {
+                {jb721DelegateTokens?.map(nft => {
                   const isSelected = tokenIdsToRedeem.includes(nft.tokenId)
                   return (
                     <Col span={8} key={nft.tokenId}>

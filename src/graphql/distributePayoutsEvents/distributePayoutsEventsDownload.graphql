@@ -1,0 +1,21 @@
+query DistributePayoutsEventsDownload(
+  $where: DistributePayoutsEvent_filter
+  $first: Int
+  $skip: Int
+  $block: Block_height
+) {
+  distributePayoutsEvents(
+    where: $where
+    block: $block
+    first: $first
+    skip: $skip
+    orderBy: timestamp
+    orderDirection: desc
+  ) {
+    timestamp
+    beneficiaryDistributionAmount
+    beneficiaryDistributionAmountUSD
+    beneficiary
+    txHash
+  }
+}

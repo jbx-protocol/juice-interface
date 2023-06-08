@@ -102,7 +102,7 @@ export function ArchiveProject({
 
         <div>
           <p>
-            <Trans>Unarchiving your project will mean the following:</Trans>
+            <Trans>Unarchiving your project has the following effects:</Trans>
           </p>
 
           <ul className="list-disc pl-10">
@@ -124,17 +124,17 @@ export function ArchiveProject({
             list on the Projects page.
           </Trans>
         </p>
-
-        <Button
-          onClick={setArchived(false)}
-          loading={isLoadingArchive}
-          size="small"
-          type="primary"
-        >
-          <span>
-            <Trans>Unarchive project</Trans>
-          </span>
-        </Button>
+        <div>
+          <Button
+            onClick={setArchived(false)}
+            loading={isLoadingArchive}
+            type="primary"
+          >
+            <span>
+              <Trans>Unarchive project</Trans>
+            </span>
+          </Button>
+        </div>
       </div>
     )
   }
@@ -148,7 +148,7 @@ export function ArchiveProject({
 
       <div>
         <p>
-          <Trans>Archiving your project will mean the following:</Trans>
+          <Trans>Archiving your project has the following effects:</Trans>
         </p>
 
         <ul className="list-disc pl-10">
@@ -191,17 +191,17 @@ export function ArchiveProject({
         </Callout.Info>
       </div>
 
-      <Button
-        className="max-w-fit"
-        onClick={setArchived(true)}
-        loading={isLoadingArchive}
-        size="small"
-        type="primary"
-      >
-        <span>
-          <Trans>Archive project</Trans>
-        </span>
-      </Button>
+      <div>
+        <Button
+          onClick={setArchived(true)}
+          loading={isLoadingArchive}
+          type="primary"
+        >
+          <span>
+            <Trans>Archive project</Trans>
+          </span>
+        </Button>
+      </div>
     </div>
   )
 }

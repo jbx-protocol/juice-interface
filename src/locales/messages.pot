@@ -1754,9 +1754,6 @@ msgstr ""
 msgid "Set this to the sum of your payouts"
 msgstr ""
 
-msgid "Unarchiving your project will mean the following:"
-msgstr ""
-
 msgid "Your transaction has been submitted and is awaiting confirmation."
 msgstr ""
 
@@ -2780,6 +2777,9 @@ msgstr ""
 msgid "Save token rules"
 msgstr ""
 
+msgid "Archiving your project has the following effects:"
+msgstr ""
+
 msgid "Minutes"
 msgstr ""
 
@@ -2811,6 +2811,9 @@ msgid "Save recipient"
 msgstr ""
 
 msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
+msgstr ""
+
+msgid "Unarchiving your project has the following effects:"
 msgstr ""
 
 msgid "None of your project's ETH can be paid out. All ETH will stay in your project for token redemptions or use in future cycles."
@@ -3405,9 +3408,6 @@ msgid "Volume chart failed to load."
 msgstr ""
 
 msgid "The amount of ETH which can be paid out from this project during the cycle. Payouts reset each cycle."
-msgstr ""
-
-msgid "Archiving your project will mean the following:"
 msgstr ""
 
 msgid "Safe, Snapshot, or even on-chain governance: Juicebox uses simple standards and works with all of your favorite Ethereum tools."

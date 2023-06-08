@@ -18,7 +18,7 @@ export const ProjectDashboard = () => {
       <div className="flex w-full flex-col items-center pb-48">
         <CoverPhoto />
         <div className="flex w-full justify-center px-6">
-          <div className="flex w-full max-w-7xl flex-col">
+          <div className="flex w-full max-w-6xl flex-col">
             <ProjectHeader />
             <div className="mt-10 flex w-full gap-6">
               <PayProjectCard className="flex-1" />

@@ -7,7 +7,7 @@ exports[`Cart renders 1`] = `
     data-testid="cart"
   >
     <div
-      class="flex h-full w-full max-w-7xl items-center"
+      class="flex h-full w-full max-w-6xl items-center"
     >
       <div
         class="flex w-full items-center justify-between px-8 py-6"

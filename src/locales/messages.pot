@@ -1880,9 +1880,6 @@ msgstr ""
 msgid "Project tokens will be minted to this beneficiary address. The address that made the payment <0>won't receive any project tokens.</0>"
 msgstr ""
 
-msgid "Get Updates"
-msgstr ""
-
 msgid "Discord"
 msgstr ""
 

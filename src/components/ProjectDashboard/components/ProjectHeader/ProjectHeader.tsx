@@ -3,23 +3,17 @@ import {
   BookmarkIcon,
   EllipsisVerticalIcon,
 } from '@heroicons/react/24/outline'
-import { Trans, t } from '@lingui/macro'
 import { Divider } from 'antd'
+import EthereumAddress from 'components/EthereumAddress'
+import Paragraph from 'components/Paragraph'
 import { useProjectHeader } from 'components/ProjectDashboard/hooks'
-import { TRENDING_WINDOW_DAYS } from 'pages/projects/RankingExplanation'
+import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { ProjectHeaderLogo } from './components/ProjectHeaderLogo'
-import { HeaderStat } from './components/ProjectHeaderStatLine'
+import { ProjectHeaderStats } from './components/ProjectHeaderStats'
 
 export const ProjectHeader = () => {
-  const {
-    title,
-    subtitle,
-    handle,
-    owner,
-    payments,
-    totalVolume,
-    last7DaysPercent,
-  } = useProjectHeader()
+  const { title, subtitle, projectId, handle, owner } = useProjectHeader()
+
   return (
     <div className="relative mt-6 flex w-full flex-col gap-4">
       <ProjectHeaderLogo className="absolute left-0 -top-[146px] border-6 border-white dark:border-slate-900" />
@@ -34,25 +28,30 @@ export const ProjectHeader = () => {
           {title}
         </h1>
       </div>
-      <div className="flex justify-between">
+
+      <div className="flex flex-col justify-between gap-8 md:flex-row md:gap-12">
         <div className="flex flex-col gap-7">
           <div className="text-lg text-grey-700 dark:text-slate-50">
-            {subtitle}
+            {subtitle ? (
+              <Paragraph description={subtitle} characterLimit={100} />
+            ) : null}
           </div>
           <div className="text-grey-500 dark:text-slate-200">
-            <span>{handle}</span>
+            {projectId ? (
+              <V2V3ProjectHandleLink
+                className="font-normal text-grey-500 dark:text-slate-200"
+                handle={handle}
+                projectId={projectId}
+              />
+            ) : null}
             <Divider className="mx-4" type="vertical" />
-            <span>Owned by: {owner}</span>
+            <span>
+              Owned by: <EthereumAddress address={owner} />
+            </span>
           </div>
         </div>
-        <div className="flex gap-12">
-          <HeaderStat title={t`Payments`} stat={payments} />
-          <HeaderStat title={t`Total volume`} stat={`Ξ${totalVolume}`} />
-          <HeaderStat
-            title={<Trans>Last {TRENDING_WINDOW_DAYS} days</Trans>}
-            stat={`${last7DaysPercent}%`}
-          />
-        </div>
+
+        <ProjectHeaderStats />
       </div>
     </div>
   )

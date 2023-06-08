@@ -68,7 +68,7 @@ export default function TrendingProjectCard({
       }
       className={`cursor-pointer overflow-hidden rounded-lg bg-white dark:bg-slate-600`}
     >
-      <div className="flex h-full items-center overflow-hidden whitespace-pre rounded-lg py-4 transition-colors md:border md:border-smoke-300 md:px-5 md:py-6 md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
+      <div className="relative flex h-full items-center overflow-hidden whitespace-pre rounded-lg py-4 transition-colors md:border md:border-smoke-300 md:px-5 md:py-6 md:hover:border-smoke-500 md:dark:border-slate-300 md:dark:hover:border-slate-100">
         <div className="relative mr-5 h-20 w-20 md:hidden">
           <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-br bg-white text-xl font-normal text-black dark:bg-slate-800 dark:text-slate-100">
             {rank}
@@ -87,7 +87,6 @@ export default function TrendingProjectCard({
           {metadata ? (
             <span className="m-0 overflow-hidden text-ellipsis font-heading text-base text-black dark:text-slate-100 md:text-xl">
               {metadata.name}
-              {bookmarked && <BookmarkIconSolid className="ml-2 inline h-4" />}
             </span>
           ) : (
             <Skeleton paragraph={false} title={{ width: 120 }} active />
@@ -116,6 +115,9 @@ export default function TrendingProjectCard({
           </div>
         </div>
 
+        {bookmarked && (
+          <BookmarkIconSolid className="absolute top-4 right-4 h-4 text-black dark:text-slate-100" />
+        )}
         {!metadata && <Loading />}
       </div>
     </Link>

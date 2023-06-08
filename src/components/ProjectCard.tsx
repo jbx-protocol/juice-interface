@@ -81,7 +81,6 @@ export default function ProjectCard({
           {metadata ? (
             <span className="m-0 font-heading text-xl leading-8 text-black dark:text-slate-100">
               {metadata.name}
-              {bookmarked && <BookmarkIconSolid className="ml-2 inline h-4" />}
             </span>
           ) : (
             <Skeleton paragraph={false} title={{ width: 120 }} active />
@@ -113,6 +112,9 @@ export default function ProjectCard({
             </div>
           ) : null}
         </div>
+        {bookmarked && (
+          <BookmarkIconSolid className="absolute top-4 right-4 h-4 text-black dark:text-slate-100" />
+        )}
         {isArchived && <ArchivedBadge />}
         {!metadata && <Loading />}
       </div>

@@ -1043,6 +1043,9 @@ msgstr ""
 msgid "Your cycle rules have been pre-populated using the rules you originally launched with. If you need to customize them, <0>contact us</0>."
 msgstr ""
 
+msgid "No overflow"
+msgstr ""
+
 msgid "Transaction hash"
 msgstr ""
 

@@ -1,12 +1,8 @@
-import {
-  BellIcon,
-  BookmarkIcon,
-  EllipsisVerticalIcon,
-} from '@heroicons/react/24/outline'
 import { Divider } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Paragraph from 'components/Paragraph'
 import { useProjectHeader } from 'components/ProjectDashboard/hooks'
+import { SubscribeButton } from 'components/SubscribeButton'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { ProjectHeaderLogo } from './components/ProjectHeaderLogo'
 import { ProjectHeaderStats } from './components/ProjectHeaderStats'
@@ -18,9 +14,10 @@ export const ProjectHeader = () => {
     <div className="relative mt-6 flex w-full flex-col gap-4">
       <ProjectHeaderLogo className="absolute left-0 -top-[146px] border-6 border-white dark:border-slate-900" />
       <div className="flex justify-end gap-4">
-        <BellIcon className="h-6 w-6" />
-        <BookmarkIcon className="h-6 w-6" />
-        <EllipsisVerticalIcon className="h-6 w-6" />
+        {projectId ? <SubscribeButton projectId={projectId} /> : null}
+
+        {/* <BookmarkIcon className="h-6 w-6" /> */}
+        {/* <EllipsisVerticalIcon className="h-6 w-6" /> */}
       </div>
 
       <div>

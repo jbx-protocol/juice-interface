@@ -7,8 +7,8 @@ export const SubscribeButtonIcon = ({
   isSubscribed: boolean
 }) => {
   return isSubscribed ? (
-    <BellIconSolid className="inline h-5 w-5" />
+    <BellIconSolid className="inline h-6 w-6" />
   ) : (
-    <BellIconOutline className="inline h-5 w-5" />
+    <BellIconOutline className="inline h-6 w-6" />
   )
 }

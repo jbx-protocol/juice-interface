@@ -91,11 +91,10 @@ export async function queryDBProjects(
 
   const searchFilter = createSearchFilter(opts.text)
 
-  const supabase = createServerSupabaseClient<Database>({ req, res }).from(
-    'projects',
-  )
+  const supabase = createServerSupabaseClient<Database>({ req, res })
 
   let query = supabase
+    .from('projects')
     .select('*')
     .order(orderBy, { ascending })
     .range(page * pageSize, (page + 1) * pageSize)
@@ -105,7 +104,7 @@ export async function queryDBProjects(
   if (opts.pv?.length) query = query.in('pv', opts.pv)
   if (opts.owner) query = query.ilike('owner', opts.owner)
   if (opts.creator) query = query.ilike('creator', opts.creator)
-  if (opts.projectId) query = query.eq('projectId', opts.projectId)
+  if (opts.projectId) query = query.eq('project_id', opts.projectId)
   if (opts.ids) query = query.in('id', opts.ids)
   if (opts.tags?.length) query = query.overlaps('tags', opts.tags)
   if (searchFilter) query = query.or(searchFilter)

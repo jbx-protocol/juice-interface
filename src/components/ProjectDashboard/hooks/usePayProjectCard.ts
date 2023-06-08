@@ -29,7 +29,7 @@ export const usePayProjectCard = () => {
       dispatch({
         type: 'addPayment',
         payload: {
-          amount: values.payAmount.amount,
+          amount: Number(values.payAmount.amount),
           currency: values.payAmount.currency,
         },
       })

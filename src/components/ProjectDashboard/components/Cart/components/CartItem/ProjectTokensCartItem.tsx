@@ -1,20 +1,11 @@
 import { ProjectHeaderLogo } from 'components/ProjectDashboard/components/ProjectHeader/components/ProjectHeaderLogo'
-import {
-  useProjectCart,
-  useTokensPerEth,
-} from 'components/ProjectDashboard/hooks'
-import { useCallback } from 'react'
+import { useProjectTokensCartItem } from '../../hooks/useProjectTokensCartItem'
 import { CartItem } from './CartItem'
 import { CartItemBadge } from './CartItemBadge'
 
 export const ProjectTokensCartItem = () => {
-  const { payAmount, userIsReceivingTokens, dispatch } = useProjectCart()
-  const { receivedTickets } = useTokensPerEth(payAmount)
-
-  const removeTokens = useCallback(
-    () => dispatch({ type: 'removeTokens' }),
-    [dispatch],
-  )
+  const { receivedTickets, userIsReceivingTokens, removeTokens } =
+    useProjectTokensCartItem()
 
   if (!userIsReceivingTokens) {
     return null

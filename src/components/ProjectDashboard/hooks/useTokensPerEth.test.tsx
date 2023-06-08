@@ -9,10 +9,8 @@ import { V2V3CurrencyProvider } from 'contexts/v2v3/V2V3CurrencyProvider'
 import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import useWeiConverter from 'hooks/useWeiConverter'
-import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import { weightAmountPermyriad } from 'utils/v2v3/math'
 import { useTokensPerEth } from './useTokensPerEth'
 
 jest.mock('components/ProjectDashboard/hooks')
@@ -20,15 +18,6 @@ jest.mock('components/ProjectDashboard/hooks')
 jest.mock('hooks/useCurrencyConverter')
 
 jest.mock('hooks/useWeiConverter')
-
-jest.mock('utils/v2v3/math', () => ({
-  formatIssuanceRate: jest.fn(),
-  weightAmountPermyriad: jest.fn(),
-}))
-
-jest.mock('utils/format/formatNumber', () => ({
-  formattedNum: jest.fn(),
-}))
 
 jest.mock('utils/tokenSymbolText', () => ({
   tokenSymbolText: jest.fn(),
@@ -40,17 +29,17 @@ const wrapper = ({ children }: { children: React.ReactNode }) => {
 
 describe('useTokensPerEth', () => {
   const mockUseProjectContext = {
-    fundingCycle: { weight: BigNumber.from(1000000000000000) },
-    fundingCycleMetadata: { reservedRate: BigNumber.from('1') },
+    fundingCycle: { weight: BigNumber.from('347164525722847206831050') },
+    fundingCycleMetadata: { reservedRate: BigNumber.from('5000') },
     tokenSymbol: 'mockTokenSymbol',
   }
 
   beforeEach(() => {
     jest.clearAllMocks()
     ;(useProjectContext as jest.Mock).mockReturnValue(mockUseProjectContext)
-    ;(useWeiConverter as jest.Mock).mockReturnValue(BigNumber.from('100000000'))
-    ;(weightAmountPermyriad as jest.Mock).mockReturnValue(BigNumber.from('100'))
-    ;(formattedNum as jest.Mock).mockReturnValue('100')
+    ;(useWeiConverter as jest.Mock).mockReturnValue(
+      BigNumber.from('1000000000000000000'),
+    )
     ;(tokenSymbolText as jest.Mock).mockReturnValue('mockTokenSymbol')
     ;(useCurrencyConverter as jest.Mock).mockReturnValue({
       usdToWei: jest.fn().mockReturnValue(BigNumber.from('1000000')),
@@ -75,7 +64,7 @@ describe('useTokensPerEth', () => {
     )
 
     expect(result.current).toEqual({
-      receivedTickets: '100',
+      receivedTickets: '173,582',
       receivedTokenSymbolText: 'mockTokenSymbol',
       currencyText: 'USD',
     })
@@ -89,7 +78,7 @@ describe('useTokensPerEth', () => {
     )
 
     expect(result.current).toEqual({
-      receivedTickets: '100',
+      receivedTickets: '0',
       receivedTokenSymbolText: 'mockTokenSymbol',
       currencyText: 'USD',
     })

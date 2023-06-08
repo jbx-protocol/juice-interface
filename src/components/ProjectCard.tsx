@@ -113,7 +113,7 @@ export default function ProjectCard({
           ) : null}
         </div>
         {bookmarked && (
-          <BookmarkIconSolid className="absolute top-4 right-4 h-4 text-black dark:text-slate-100" />
+          <BookmarkIconSolid className="absolute top-4 right-0 h-4 text-black dark:text-slate-100 md:right-4" />
         )}
         {isArchived && <ArchivedBadge />}
         {!metadata && <Loading />}

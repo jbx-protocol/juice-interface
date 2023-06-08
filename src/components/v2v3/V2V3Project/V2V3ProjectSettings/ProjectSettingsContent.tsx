@@ -1,10 +1,7 @@
 import { ArrowLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Divider, Layout } from 'antd'
-import {
-  V2V3SettingsPageKey,
-  V2V3SettingsPageKeyTitleMap,
-} from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
+import { V2V3SettingsPageKey } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { twJoin } from 'tailwind-merge'
@@ -39,6 +36,23 @@ const SettingsPageComponents: {
   upgrades: ProjectUpgradesPage,
   projectnft: ProjectNftSettingsPage,
 }
+
+const V2V3SettingsPageKeyTitleMap = (): {
+  [k in V2V3SettingsPageKey]: string
+} => ({
+  general: t`General`,
+  handle: t`Project handle`,
+  cycle: t`Edit Cycle`,
+  payouts: t`Payouts`,
+  reservedtokens: t`Reserved token recipients`,
+  nfts: t`Edit NFT collection`,
+  tokenmigration: t`Token migration`,
+  transferownership: t`Transfer ownership`,
+  archiveproject: t`Archive project`,
+  governance: t`Governance`,
+  upgrades: t`Project upgrades`,
+  projectnft: t`Project NFT theme`,
+})
 
 function Breadcrumbs({
   pageTitle,
@@ -85,7 +99,7 @@ export function ProjectSettingsContent({
     [settingsPageKey],
   )
 
-  const pageTitle = V2V3SettingsPageKeyTitleMap[settingsPageKey]
+  const pageTitle = V2V3SettingsPageKeyTitleMap()[settingsPageKey]
 
   return (
     <ProjectSettingsLayout>

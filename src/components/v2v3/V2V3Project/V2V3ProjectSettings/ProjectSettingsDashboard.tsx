@@ -1,4 +1,4 @@
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
@@ -28,23 +28,6 @@ export type V2V3SettingsPageKey =
   | 'tokenmigration'
   | 'upgrades'
   | 'projectnft'
-
-export const V2V3SettingsPageKeyTitleMap: {
-  [k in V2V3SettingsPageKey]: string
-} = {
-  general: t`General`,
-  handle: t`Project handle`,
-  cycle: t`Edit Cycle`,
-  payouts: t`Payouts`,
-  reservedtokens: t`Reserved token recipients`,
-  nfts: t`Edit NFT collection`,
-  tokenmigration: t`Token migration`,
-  transferownership: t`Transfer ownership`,
-  archiveproject: t`Archive project`,
-  governance: t`Governance`,
-  upgrades: t`Project upgrades`,
-  projectnft: t`Project NFT theme`,
-}
 
 function SettingsCard({ children }: { children: React.ReactNode }) {
   return (

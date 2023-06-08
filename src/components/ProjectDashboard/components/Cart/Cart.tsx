@@ -19,7 +19,7 @@ export const Cart = ({ className }: { className?: string }) => {
       )}
       onClick={toggleExpanded}
     >
-      <div className="flex h-full w-full max-w-7xl items-center">
+      <div className="flex h-full w-full max-w-6xl items-center">
         {expanded ? <SummaryOpenView /> : <SummaryClosedView />}
         <ChevronUpIcon
           role="button"

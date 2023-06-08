@@ -15,10 +15,12 @@ describe('SummaryCollapsedView', () => {
     currency: V2V3_CURRENCY_ETH,
     nftRewards: [],
     removePay: jest.fn(),
+    payProject: jest.fn(),
   }
   beforeEach(() => {
     ;(useCartSummary as jest.Mock).mockReturnValue(DefaultUseCartSummary)
     DefaultUseCartSummary.removePay.mockClear()
+    DefaultUseCartSummary.payProject.mockClear()
   })
 
   it('should render correctly', () => {
@@ -31,5 +33,12 @@ describe('SummaryCollapsedView', () => {
     const trashIcon = getByTestId('cart-summary-closed-view-trash-icon')
     fireEvent.click(trashIcon)
     expect(DefaultUseCartSummary.removePay).toHaveBeenCalled()
+  })
+
+  test('clicking pay project calls payProject', () => {
+    const { getByRole } = render(<SummaryCollapsedView />)
+    const payProjectButton = getByRole('button')
+    fireEvent.click(payProjectButton)
+    expect(DefaultUseCartSummary.payProject).toHaveBeenCalled()
   })
 })

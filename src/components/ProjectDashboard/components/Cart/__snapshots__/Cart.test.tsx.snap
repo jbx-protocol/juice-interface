@@ -30,5 +30,8 @@ exports[`Cart renders 1`] = `
       </svg>
     </div>
   </div>
+  <div>
+    PayProjectModal
+  </div>
 </div>
 `;

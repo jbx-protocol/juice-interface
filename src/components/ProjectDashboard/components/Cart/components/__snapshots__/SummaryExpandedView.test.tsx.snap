@@ -37,7 +37,6 @@ exports[`SummaryExpandedView should render correctly 1`] = `
       </div>
       <button
         class="ant-btn ant-btn-primary"
-        role="button"
         type="button"
       >
         Pay project

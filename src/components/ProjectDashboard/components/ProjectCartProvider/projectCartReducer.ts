@@ -45,12 +45,25 @@ export type ProjectCartAction =
         id: number
       }
     }
+  | {
+      type: 'setPayModal'
+      payload: {
+        open: boolean
+      }
+    }
+  | {
+      type: 'openPayModal'
+    }
+  | {
+      type: 'closePayModal'
+    }
 
 export type ProjectCartState = {
   payAmount: ProjectCartCurrencyAmount | undefined
   nftRewards: ProjectCartNftReward[]
   expanded: boolean
   userIsReceivingTokens: boolean
+  payModalOpen: boolean
 }
 
 export const projectCartReducer = (
@@ -150,6 +163,23 @@ export const projectCartReducer = (
         nftRewards: newNftRewards,
       }
     }
+    case 'setPayModal': {
+      const { open } = action.payload
+      return {
+        ...state,
+        payModalOpen: open,
+      }
+    }
+    case 'openPayModal':
+      return {
+        ...state,
+        payModalOpen: true,
+      }
+    case 'closePayModal':
+      return {
+        ...state,
+        payModalOpen: false,
+      }
     default:
       return state
   }

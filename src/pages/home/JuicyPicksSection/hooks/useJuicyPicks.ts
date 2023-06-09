@@ -1,16 +1,14 @@
 import { PV_V2 } from 'constants/pv'
-import {
-  DEFAULT_PROJECT_ENTITY_KEYS,
-  useProjectsQuery,
-} from 'hooks/useProjects'
-import { Project } from 'models/subgraph-entities/vX/project'
+import { useDBProjectsQuery } from 'hooks/useProjects'
+import { DBProject } from 'models/dbProject'
+import { getSubgraphIdForProject } from 'utils/graph'
 import { JUICY_PICKS_PROJECT_IDS } from '../constants'
 
 export function useFetchJuicyPicks() {
-  const res = useProjectsQuery({
-    keys: [...DEFAULT_PROJECT_ENTITY_KEYS, 'paymentsCount', 'trendingVolume'],
-    projectIds: JUICY_PICKS_PROJECT_IDS,
-    pv: [PV_V2],
+  const res = useDBProjectsQuery({
+    ids: JUICY_PICKS_PROJECT_IDS.map(projectId =>
+      getSubgraphIdForProject(PV_V2, projectId),
+    ),
   })
 
   if (!res.data) {
@@ -20,9 +18,9 @@ export function useFetchJuicyPicks() {
   // ensure list sorted by JUICY_PICKS_PROJECT_IDS array order
   const sortedPicks = JUICY_PICKS_PROJECT_IDS.map(projectId => {
     return res.data?.find(project => project.projectId === projectId) as
-      | Project
+      | DBProject
       | undefined
-  }).filter((p): p is Project => !!p)
+  }).filter((p): p is DBProject => !!p)
 
   return {
     ...res,

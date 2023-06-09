@@ -7,11 +7,15 @@ import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { PV_V1 } from 'constants/pv'
 import { usePayEventsQuery } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
-import { Project } from 'models/subgraph-entities/vX/project'
+import { DBProject } from 'models/dbProject'
 import { classNames } from 'utils/classNames'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 
-const ProjectHandle = ({ project }: { project: Partial<Project> }) => {
+const ProjectHandle = ({
+  project,
+}: {
+  project: Pick<DBProject, 'id' | 'projectId' | 'handle' | 'pv'>
+}) => {
   if (!project?.projectId) return null
 
   return (

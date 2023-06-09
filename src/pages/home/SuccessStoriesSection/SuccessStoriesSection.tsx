@@ -2,8 +2,7 @@ import { Trans } from '@lingui/macro'
 import { XLButton } from 'components/XLButton'
 import { CASE_STUDY_PROJECTS } from 'constants/successStoryProjects'
 import { useMedia } from 'contexts/Theme/useMedia'
-import { useProjectsQuery } from 'hooks/useProjects'
-import { Project } from 'models/subgraph-entities/vX/project'
+import { useDBProjectsQuery } from 'hooks/useProjects'
 import Link from 'next/link'
 import { ProjectCarousel } from '../ProjectCarousel'
 import { SectionContainer } from '../SectionContainer'
@@ -11,8 +10,8 @@ import { SectionHeading } from '../SectionHeading'
 import { SuccessStoriesCard } from './SuccessStoriesCard'
 
 export function SuccessStoriesSection() {
-  const { data } = useProjectsQuery({
-    projectIds: CASE_STUDY_PROJECTS.map(p => p.id),
+  const { data } = useDBProjectsQuery({
+    ids: CASE_STUDY_PROJECTS.map(p => p.id),
   })
 
   const isXl = useMedia('(min-width: 1280px)')
@@ -20,9 +19,7 @@ export function SuccessStoriesSection() {
   if (!data) return null
 
   const topProjects = CASE_STUDY_PROJECTS.map(p => {
-    const project = data.find(
-      proj => proj.projectId === p.id && proj.pv === p.pv,
-    ) as Project | undefined
+    const project = data.find(proj => proj.id === p.id)
     if (!project) return
 
     return {

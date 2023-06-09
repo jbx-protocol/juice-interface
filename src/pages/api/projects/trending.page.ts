@@ -4,11 +4,11 @@ import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import {
   OrderDirection,
   Project_OrderBy,
-  ProjectsQuery,
   QueryProjectsArgs,
   TrendingProjectsDocument,
+  TrendingProjectsQuery,
 } from 'generated/graphql'
-import { client } from 'lib/apollo/client'
+import { serverClient } from 'lib/apollo/serverClient'
 import { NextApiHandler } from 'next'
 import { getSubgraphIdForProject } from 'utils/graph'
 
@@ -29,7 +29,10 @@ const handler: NextApiHandler = async (req, res) => {
   const rawFirst = req.query.count // TODO probably can use Yup for this
   const first = typeof rawFirst === 'string' ? parseInt(rawFirst) : undefined
   try {
-    const projectsRes = await client.query<ProjectsQuery, QueryProjectsArgs>({
+    const projectsRes = await serverClient.query<
+      TrendingProjectsQuery,
+      QueryProjectsArgs
+    >({
       query: TrendingProjectsDocument,
       variables: {
         where: {
@@ -46,7 +49,7 @@ const handler: NextApiHandler = async (req, res) => {
       'Cache-Control',
       `s-maxage=${CACHE_MAXAGE}, stale-while-revalidate`,
     )
-    return res.status(200).json(projectsRes.data)
+    return res.status(200).json(projectsRes.data.projects)
   } catch (e) {
     console.error(e)
     return res.status(500).json({ error: 'Something went wrong' })

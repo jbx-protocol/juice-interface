@@ -5,27 +5,13 @@ import {
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { twMerge } from 'tailwind-merge'
+import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
 import { DisplayCard } from '../../ui'
-
-const payouts = [
-  {
-    name: 'aeolian.eth',
-    amount: '210 ETH',
-    percent: '33%',
-  },
-  {
-    name: 'wraeth.eth',
-    amount: '210 ETH',
-    percent: '33%',
-  },
-  {
-    name: 'chris.eth',
-    amount: '210 ETH',
-    percent: '33%',
-  },
-]
+import { usePayoutsSubPanel } from '../hooks/usePayoutsSubPanel'
 
 export const PayoutsSubPanel = ({ className }: { className?: string }) => {
+  const { payouts, treasuryBalance, availableToPayout, overflow } =
+    usePayoutsSubPanel()
   return (
     <div className={twMerge(className)}>
       <h2 className="mb-0 font-heading text-2xl font-medium">
@@ -37,19 +23,23 @@ export const PayoutsSubPanel = ({ className }: { className?: string }) => {
             <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium dark:text-slate-200">
               <Trans>Treasury balance</Trans>
             </h3>
-            <span className="font-heading text-xl font-medium">210 ETH</span>
+            <span className="font-heading text-xl font-medium">
+              {treasuryBalance}
+            </span>
           </DisplayCard>
           <DisplayCard className="flex w-full flex-col gap-2">
             <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium dark:text-slate-200">
               <Trans>Overflow</Trans>
             </h3>
-            <span className="font-heading text-xl font-medium">210 ETH</span>
+            <span className="font-heading text-xl font-medium">{overflow}</span>
           </DisplayCard>
           <DisplayCard className="flex w-full flex-col gap-2">
             <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
               <Trans>Available to pay out</Trans>
             </h3>
-            <span className="font-heading text-xl font-medium">210 ETH</span>
+            <span className="font-heading text-xl font-medium">
+              {availableToPayout}
+            </span>
           </DisplayCard>
         </div>
         <DisplayCard className="flex w-full flex-col pb-8">
@@ -60,25 +50,13 @@ export const PayoutsSubPanel = ({ className }: { className?: string }) => {
             <EllipsisVerticalIcon role="button" className="h-6 w-6" />
           </div>
 
-          <table className="mt-4 w-full">
-            <tbody>
-              {payouts.map(payout => (
-                <tr
-                  key={payout.name}
-                  className="flex items-center justify-between gap-3 border-b border-grey-200 py-3 dark:border-slate-500"
-                >
-                  <td className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-full bg-juice-400" />
-                    <span className="font-medium">{payout.name}</span>
-                  </td>
-                  <td className="flex items-center gap-3">
-                    <span>{payout.amount}</span>
-                    <span>{payout.percent}</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="mt-4 w-full">
+            {payouts
+              ? payouts.map(payout => (
+                  <ProjectAllocationRow key={payout.address} {...payout} />
+                ))
+              : null}
+          </div>
 
           <Button
             type="primary"

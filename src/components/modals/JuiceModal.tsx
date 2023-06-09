@@ -14,6 +14,7 @@ export type ModalOnOkFn = (setOpen: ModalSetOpenFn) => void
 export type ModalOnCancelFn = (setOpen: ModalSetOpenFn) => void
 
 export interface JuiceModalProps {
+  className?: string
   id?: string
   title?: ReactNode
   position?:
@@ -26,6 +27,7 @@ export interface JuiceModalProps {
     | 'left'
     | 'topLeft'
     | 'center'
+  buttonPosition?: 'right' | 'stretch'
   open: boolean
   okText?: ReactNode
   okLoading?: boolean
@@ -37,10 +39,12 @@ export interface JuiceModalProps {
 }
 
 export const JuiceModal = ({
+  className,
   id,
   children,
   title,
   position = 'top',
+  buttonPosition = 'right',
   open,
   okText = t`OK`,
   okLoading = false,
@@ -79,12 +83,22 @@ export const JuiceModal = ({
     }
   }, [isMobile, position])
 
+  const buttonPositionClasses = useMemo(() => {
+    switch (buttonPosition) {
+      case 'right':
+        return { container: 'justify-end', self: '' }
+      case 'stretch':
+        return { container: '', self: 'w-full' }
+    }
+  }, [buttonPosition])
+
   return (
     <Popup id={id} open={open} setOpen={setOpen} onMaskClick={onCancel}>
       <div
         className={twMerge(
           'relative mx-auto mt-10 w-full max-w-md overflow-hidden rounded-lg bg-smoke-25 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800 md:absolute',
           positionClasses,
+          className,
         )}
       >
         <div className="relative">
@@ -94,11 +108,25 @@ export const JuiceModal = ({
           <div className="mt-4">{children}</div>
 
           <div className="mt-4">
-            <div className="flex w-full items-center justify-end gap-2">
-              {!hideCancelButton && (
-                <CancelButton onClick={onCancel}>{cancelText}</CancelButton>
+            <div
+              className={twMerge(
+                'flex w-full items-center gap-2',
+                buttonPositionClasses.container,
               )}
-              <CTAButton loading={okLoading} onClick={onOk}>
+            >
+              {!hideCancelButton && (
+                <CancelButton
+                  className={buttonPositionClasses.self}
+                  onClick={onCancel}
+                >
+                  {cancelText}
+                </CancelButton>
+              )}
+              <CTAButton
+                className={buttonPositionClasses.self}
+                loading={okLoading}
+                onClick={onOk}
+              >
                 {okText}
               </CTAButton>
             </div>

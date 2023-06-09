@@ -61,7 +61,7 @@ export default function DiffedSplitList({
 
   return (
     <div className="flex flex-col gap-1">
-      {[...uniqueSplits].map(split => {
+      {uniqueSplits.map(split => {
         return (
           <DiffedSplitItem
             props={{

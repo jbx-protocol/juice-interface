@@ -4,13 +4,11 @@ import { NextApiResponse } from 'next'
 import { isBigNumberish } from 'utils/bigNumbers'
 import { formatError } from 'utils/format/formatError'
 import { formatWad } from 'utils/format/formatNumber'
-import { querySubgraphExhaustiveRaw } from 'utils/graph'
 import {
+  formatWithMetadata,
   getChangedSubgraphProjects,
-  sgDbCompareKeys,
-  tryResolveMetadata,
 } from 'utils/sgDbProjects'
-import { dbpQueryAll, writeDBProjects } from '.'
+import { dbpQueryAll, queryAllSGProjectsForServer, writeDBProjects } from '.'
 import { dbpLog } from './logger'
 
 export async function updateDBProjects(
@@ -35,10 +33,7 @@ export async function updateDBProjects(
     )
 
     // Load all projects from Subgraph
-    const sgProjects = await querySubgraphExhaustiveRaw({
-      entity: 'project',
-      keys: sgDbCompareKeys,
-    })
+    const sgProjects = await queryAllSGProjectsForServer()
 
     // Determine which subgraph projects have changed from what we have stored in the database
     const {
@@ -52,12 +47,12 @@ export async function updateDBProjects(
       retryIpfs,
     })
 
-    // Attempt to re-resolve metadata for all changed projects
+    // Append metadata props to all changed subgraph projects, and re-resolve metadata where needed
     const resolveMetadataResults = await Promise.all(
       changedSubgraphProjects.map(sgProject =>
-        tryResolveMetadata({
+        formatWithMetadata({
           sgProject,
-          ...dbProjects[sgProject.id],
+          dbProject: dbProjects[sgProject.id],
         }),
       ),
     )

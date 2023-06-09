@@ -1,7 +1,7 @@
 import { Split } from 'models/splits'
-import { DiffedSplitPercent } from './DiffedSplitPercent'
 import { SplitProps } from '../../SplitItem'
 import { SplitAmountValue } from '../../SplitItem/SplitAmountValue'
+import { DiffedSplitPercent } from './DiffedSplitPercent'
 
 export function DiffedSplitValue({
   splitProps,

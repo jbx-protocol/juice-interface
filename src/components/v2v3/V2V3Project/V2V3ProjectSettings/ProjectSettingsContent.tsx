@@ -1,10 +1,8 @@
-import { ArrowLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
-import { Trans } from '@lingui/macro'
-import { Divider, Layout } from 'antd'
-import {
-  V2V3SettingsPageKey,
-  V2V3SettingsPageKeyTitleMap,
-} from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
+import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { Trans, t } from '@lingui/macro'
+import { Button, Layout } from 'antd'
+import { V2V3SettingsPageKey } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { twJoin } from 'tailwind-merge'
@@ -40,6 +38,23 @@ const SettingsPageComponents: {
   projectnft: ProjectNftSettingsPage,
 }
 
+const V2V3SettingsPageKeyTitleMap = (): {
+  [k in V2V3SettingsPageKey]: string
+} => ({
+  general: t`General`,
+  handle: t`Project handle`,
+  cycle: t`Edit Cycle`,
+  payouts: t`Payouts`,
+  reservedtokens: t`Reserved token recipients`,
+  nfts: t`Edit NFT collection`,
+  tokenmigration: t`Token migration`,
+  transferownership: t`Transfer ownership`,
+  archiveproject: t`Archive project`,
+  governance: t`Governance`,
+  upgrades: t`Project upgrades`,
+  projectnft: t`Project NFT theme`,
+})
+
 function Breadcrumbs({
   pageTitle,
   settingsPageKey,
@@ -56,12 +71,11 @@ function Breadcrumbs({
           href={useSettingsPagePath()}
           className="text-secondary flex items-center gap-2 font-medium"
         >
-          <ArrowLeftIcon className="text-secondary h-4 w-4" />
           <Trans>Manage</Trans>
         </Link>
       </li>
 
-      <ChevronRightIcon className="text-secondary h-5 w-5" />
+      <ChevronRightIcon className="text-tertiary h-5 w-5" />
 
       <li>
         <Link
@@ -85,20 +99,24 @@ export function ProjectSettingsContent({
     [settingsPageKey],
   )
 
-  const pageTitle = V2V3SettingsPageKeyTitleMap[settingsPageKey]
+  const pageTitle = V2V3SettingsPageKeyTitleMap()[settingsPageKey]
 
   return (
     <ProjectSettingsLayout>
       <Breadcrumbs
         pageTitle={pageTitle}
-        className="mb-6"
+        className="mb-7"
         settingsPageKey={settingsPageKey}
       />
-      <h2 className="mb-0 font-heading text-2xl font-medium text-black dark:text-slate-100">
+      <Link href={useSettingsPagePath()}>
+        <Button type="default" className="mb-7 px-3" size="small">
+          <ArrowLeftIcon className="h-4 w-4" />
+        </Button>
+      </Link>
+
+      <h2 className="mb-4 font-heading text-2xl font-medium text-black dark:text-slate-100">
         {pageTitle}
       </h2>
-
-      <Divider className="mt-3" />
 
       <Layout.Content className="my-0">
         <ActiveSettingsPage />

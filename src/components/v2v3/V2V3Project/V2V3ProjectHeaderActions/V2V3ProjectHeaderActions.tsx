@@ -41,7 +41,7 @@ export function V2V3ProjectHeaderActions() {
         <Tooltip title={t`Project tools`} placement="bottom">
           <Button
             onClick={() => setToolDrawerVisible(true)}
-            icon={<WrenchIcon className="inline h-5 w-5" />}
+            icon={<WrenchIcon className="inline h-6 w-6" />}
             type="text"
           />
         </Tooltip>

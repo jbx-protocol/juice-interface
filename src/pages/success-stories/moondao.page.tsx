@@ -44,7 +44,9 @@ export default function MoonDAOPage() {
           projectUrl="/p/moondao"
           fundingConfig={MOONDAO_FUNDING_CONFIG()}
         />
-        <CaseStudyContentContainer currentProject={moonDAOSuccessStoryProject}>
+        <CaseStudyContentContainer
+          currentProject={moonDAOSuccessStoryProject.id}
+        >
           <p>
             <Trans>
               Following the launch of their token $MOONEY, the next goal on

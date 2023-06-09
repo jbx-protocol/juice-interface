@@ -44,7 +44,7 @@ export default function ConstitutionDAOPage() {
           fundingConfig={CONSTITUTION_FUNDING_CONFIG()}
         />
         <CaseStudyContentContainer
-          currentProject={constitutionSuccessStoryProject}
+          currentProject={constitutionSuccessStoryProject.id}
         >
           <p>
             <Trans>

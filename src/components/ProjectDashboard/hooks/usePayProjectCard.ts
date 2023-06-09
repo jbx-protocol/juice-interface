@@ -1,26 +1,49 @@
-import { useMemo, useState } from 'react'
+import { FormikHelpers } from 'formik'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import { useCallback } from 'react'
+import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
+import * as Yup from 'yup'
+import { useProjectCart } from './useProjectCart'
+
+export const PayProjectCardSchema = Yup.object().shape({
+  payAmount: Yup.object()
+    .shape({
+      amount: Yup.number()
+        .typeError('Amount is invalid')
+        .required('Amount is required'),
+      currency: Yup.number<V2V3CurrencyOption>()
+        .oneOf([V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD] as const)
+        .required(),
+    })
+    .required(),
+})
+type PayProjectCardValues = Yup.InferType<typeof PayProjectCardSchema>
 
 export const usePayProjectCard = () => {
-  const [userInputAmount, setUserInputAmount] = useState({
-    amount: '',
-    currency: 'eth' as 'eth' | 'usd',
-  })
-
-  const tokensPerPay = useMemo(() => {
-    // TODO: Calculate tokens per pay
-    const tokens = Number(userInputAmount.amount)
-    if (Number.isNaN(tokens)) {
-      return 0
-    }
-    return tokens
-  }, [userInputAmount.amount])
-
-  return {
-    tokensPerPay,
-    userInputAmount,
-    setUserInputAmount,
-    formOnSubmit: () => {
-      console.info('formOnSubmit')
+  const { dispatch } = useProjectCart()
+  const addPay = useCallback(
+    (
+      values: PayProjectCardValues,
+      formikHelpers: FormikHelpers<PayProjectCardValues>,
+    ) => {
+      dispatch({
+        type: 'addPayment',
+        payload: {
+          amount: Number(values.payAmount.amount),
+          currency: values.payAmount.currency,
+        },
+      })
+      formikHelpers.resetForm({
+        values: {
+          payAmount: {
+            amount: undefined as unknown as number,
+            currency: values.payAmount.currency,
+          },
+        },
+      })
     },
-  }
+    [dispatch],
+  )
+
+  return { addPay, validationSchema: PayProjectCardSchema }
 }

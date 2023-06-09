@@ -7,7 +7,7 @@ import { BigNumber } from 'ethers'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useProjectsQuery } from 'hooks/useProjects'
+import { useDBProjectsQuery } from 'hooks/useProjects'
 import { useBallotState } from 'hooks/v2v3/contractReader/useBallotState'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/useETHPaymentTerminalFee'
 import { usePaymentTerminalBalance } from 'hooks/v2v3/contractReader/usePaymentTerminalBalance'
@@ -84,13 +84,21 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   /**
    * Load project stats
    */
-  const { data: projects } = useProjectsQuery({
-    projectId,
-    keys: ['createdAt', 'volume'],
-    pv: [PV_V2],
-  })
-  const createdAt = first(projects)?.createdAt
-  const totalVolume = first(projects)?.volume
+  const { data: projects } = useDBProjectsQuery(
+    projectId
+      ? {
+          projectId,
+          pv: [PV_V2],
+        }
+      : null,
+  )
+  const projectStatsData = first(projects)
+  const {
+    createdAt,
+    volume: totalVolume,
+    trendingVolume,
+    paymentsCount,
+  } = projectStatsData ?? {}
 
   /**
    * Load funding cycle data
@@ -178,6 +186,8 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     // stats
     createdAt,
     totalVolume,
+    trendingVolume,
+    paymentsCount,
 
     // funding cycle data
     fundingCycle,

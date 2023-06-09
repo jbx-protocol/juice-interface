@@ -1,13 +1,14 @@
 import { Trans } from '@lingui/macro'
 import { Skeleton } from 'antd'
 import { Badge } from 'components/Badge'
-import { ProjectCardProject } from 'components/ProjectCard'
-import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
+import ProjectLogo from 'components/ProjectLogo'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
+import { DBProject } from 'models/dbProject'
 import { ProjectTagName, projectTagText } from 'models/project-tags'
 import Image from 'next/image'
 import Link from 'next/link'
+
 import {
   HOMEPAGE_CARD_BG,
   HOMEPAGE_CARD_BORDER,
@@ -32,7 +33,7 @@ export function SuccessStoriesCard({
   nameOverride,
   imageOverride,
 }: {
-  project: ProjectCardProject
+  project: DBProject
   tags: ProjectTagName[]
   nameOverride?: string
   imageOverride?: string

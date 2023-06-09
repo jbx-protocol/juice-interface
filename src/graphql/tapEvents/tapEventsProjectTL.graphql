@@ -1,0 +1,6 @@
+query TapEventsProjectTL($where: TapEvent_filter, $first: Int, $skip: Int) {
+  tapEvents(where: $where, first: $first, skip: $skip) {
+    timestamp
+    netTransferAmount
+  }
+}

@@ -8,9 +8,7 @@ export function AddNftButton({ onClick }: { onClick: VoidFunction }) {
   return (
     <div
       className={classNames(
-        'absolute bottom-0 h-12 w-full bg-bluebs-500 text-base font-medium text-white',
-        'flex items-center justify-center opacity-0 group-hover:opacity-100',
-        'rounded-b-lg transition-opacity duration-200 ease-in-out',
+        'absolute bottom-0 flex h-12 w-full items-center justify-center rounded-b-lg bg-bluebs-500 text-base font-medium text-white opacity-0 transition-all duration-200 ease-in-out hover:bg-bluebs-600 group-hover:opacity-100',
       )}
       onClick={stopPropagation(onClick)}
     >

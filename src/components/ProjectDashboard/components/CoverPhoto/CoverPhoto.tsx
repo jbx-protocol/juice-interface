@@ -4,7 +4,7 @@ export const CoverPhoto = () => {
   const { coverImageUrl, coverImageAltText } = useCoverPhoto()
 
   return (
-    <div className="to-juice-30 relative h-70 w-full bg-gradient-to-br from-tangerine-400 to-juice-300">
+    <div className="relative h-70 w-full bg-split-200 dark:bg-slate-600">
       {coverImageUrl && (
         <img
           src={coverImageUrl}

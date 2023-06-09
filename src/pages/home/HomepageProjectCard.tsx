@@ -3,7 +3,7 @@ import { Skeleton } from 'antd'
 import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
-import { Project } from 'models/subgraph-entities/vX/project'
+import { DBProject } from 'models/dbProject'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { HomepageCard } from './HomepageCard'
 
@@ -41,7 +41,7 @@ export function HomepageProjectCard({
   lazyLoad,
 }: {
   project: Pick<
-    Project,
+    DBProject,
     | 'terminal'
     | 'metadataUri'
     | 'volume'

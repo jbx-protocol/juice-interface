@@ -1,4 +1,4 @@
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
@@ -6,6 +6,7 @@ import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHAmount from 'components/currency/ETHAmount'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { BigNumber } from 'ethers'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import Link from 'next/link'
 import { useContext } from 'react'
@@ -28,23 +29,6 @@ export type V2V3SettingsPageKey =
   | 'tokenmigration'
   | 'upgrades'
   | 'projectnft'
-
-export const V2V3SettingsPageKeyTitleMap: {
-  [k in V2V3SettingsPageKey]: string
-} = {
-  general: t`General`,
-  handle: t`Project handle`,
-  cycle: t`Edit Cycle`,
-  payouts: t`Payouts`,
-  reservedtokens: t`Reserved token recipients`,
-  nfts: t`Edit NFT collection`,
-  tokenmigration: t`Token migration`,
-  transferownership: t`Transfer ownership`,
-  archiveproject: t`Archive project`,
-  governance: t`Governance`,
-  upgrades: t`Project upgrades`,
-  projectnft: t`Project NFT theme`,
-}
 
 function SettingsCard({ children }: { children: React.ReactNode }) {
   return (
@@ -88,15 +72,15 @@ export function ProjectSettingsDashboard() {
       <section className="mb-12 grid grid-cols-1 gap-5 md:grid-cols-2">
         <SettingsCard>
           {projectMetadata ? (
-            <div className="flex justify-between">
+            <div className="flex justify-between gap-8">
               <div>
-                <div className="mb-1 flex items-center gap-2">
-                  <span className="text-xl font-medium">
+                <div className="mb-1">
+                  <div className="text-xl font-medium">
                     {projectMetadata.name}
-                  </span>{' '}
-                  <span className="text-tertiary">
+                  </div>
+                  <div className="text-tertiary">
                     {handle ? `@${handle}` : `#${projectId}`}
-                  </span>
+                  </div>
                 </div>
 
                 <span className="text-secondary">
@@ -105,12 +89,12 @@ export function ProjectSettingsDashboard() {
                   </Trans>
                 </span>
               </div>
-              <div>
+              <div className="shrink-0">
                 <div className="mb-1  font-medium">
                   <Trans>Project balance</Trans>
                 </div>
                 <div className="text-xl">
-                  <ETHAmount amount={ETHBalance} />
+                  <ETHAmount amount={ETHBalance ?? BigNumber.from(0)} />
                 </div>
               </div>
             </div>

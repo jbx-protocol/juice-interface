@@ -1,9 +1,9 @@
 import { t } from '@lingui/macro'
 import { NftPreview } from 'components/NftRewards/NftPreview'
-import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
+import { useProjectCart } from 'components/ProjectDashboard/hooks'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { NftRewardTier } from 'models/nftRewards'
-import { useContext, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { classNames } from 'utils/classNames'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { AddNftButton } from './AddNftButton'
@@ -25,15 +25,14 @@ export function NftReward({
   onSelect,
   hideAttributes,
 }: NftRewardProps) {
-  const { form: payProjectForm } = useContext(PayProjectFormContext)
-
+  // TODO: Move all state into a hook
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
+  const cart = useProjectCart()
 
-  const { payMetadata } = payProjectForm ?? {}
-
-  const quantitySelected =
-    payMetadata?.tierIdsToMint.filter(id => id === rewardTier?.id ?? -1)
-      .length ?? 0
+  const quantitySelected = useMemo(
+    () => cart.nftRewards.find(nft => nft.id === rewardTier?.id)?.quantity ?? 0,
+    [cart.nftRewards, rewardTier?.id],
+  )
 
   const fileUrl = rewardTier?.fileUrl
     ? ipfsUriToGatewayUrl(rewardTier.fileUrl)

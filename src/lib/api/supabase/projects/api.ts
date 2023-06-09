@@ -1,10 +1,33 @@
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
-import { DBProject, DBProjectQueryOpts } from 'models/dbProject'
+import { DbProjectsDocument, DbProjectsQuery, Project } from 'generated/graphql'
+import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
+import { serverClient } from 'lib/apollo/serverClient'
+import { DBProject, DBProjectQueryOpts, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Database } from 'types/database.types'
-import { formatDBProjectRow, parseDBProjectsRow } from 'utils/sgDbProjects'
+import { isHardArchived } from 'utils/archived'
+import {
+  formatDBProjectRow,
+  formatSGProjectForDB,
+  parseDBProjectsRow,
+} from 'utils/sgDbProjects'
 import { dbProjects } from '../clients'
+
+/**
+ * Query all projects from subgraph using apollo serverClient which is safe to use in edge runtime.
+ */
+export async function queryAllSGProjectsForServer() {
+  const res = await paginateDepleteQuery<DbProjectsQuery>({
+    client: serverClient,
+    document: DbProjectsDocument,
+  })
+
+  // Response must be retyped with Json<>, because the serverClient does not perform the parsing expected by generated types
+  const _res = res as unknown as Json<Pick<Project, SGSBCompareKey>>[]
+
+  return _res.map(formatSGProjectForDB)
+}
 
 /**
  * Exhaustively queries all database projects.
@@ -23,7 +46,9 @@ export function dbpQueryAll() {
  *
  * @param records Projects to write
  */
-export async function writeDBProjects(records: Json<DBProject>[]) {
+export async function writeDBProjects(
+  records: Json<Omit<DBProject, '_updatedAt'>>[],
+) {
   // Sanity check that all IDs are defined
   const missingIds = records.filter(r => r.id === undefined || r.id === null)
 
@@ -39,6 +64,7 @@ export async function writeDBProjects(records: Json<DBProject>[]) {
 
   const queue = records.map(r => ({
     ...formatDBProjectRow(r),
+    archived: r.archived || isHardArchived(r), // store a project's hard archived state in the db
     _updated_at,
   }))
 
@@ -65,11 +91,10 @@ export async function queryDBProjects(
 
   const searchFilter = createSearchFilter(opts.text)
 
-  const supabase = createServerSupabaseClient<Database>({ req, res }).from(
-    'projects',
-  )
+  const supabase = createServerSupabaseClient<Database>({ req, res })
 
   let query = supabase
+    .from('projects')
     .select('*')
     .order(orderBy, { ascending })
     .range(page * pageSize, (page + 1) * pageSize)
@@ -79,6 +104,8 @@ export async function queryDBProjects(
   if (opts.pv?.length) query = query.in('pv', opts.pv)
   if (opts.owner) query = query.ilike('owner', opts.owner)
   if (opts.creator) query = query.ilike('creator', opts.creator)
+  if (opts.projectId) query = query.eq('project_id', opts.projectId)
+  if (opts.ids) query = query.in('id', opts.ids)
   if (opts.tags?.length) query = query.overlaps('tags', opts.tags)
   if (searchFilter) query = query.or(searchFilter)
 

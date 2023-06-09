@@ -1,0 +1,25 @@
+query ParticipantsDownload(
+  $where: Participant_filter
+  $first: Int
+  $skip: Int
+  $block: Block_height
+) {
+  participants(
+    where: $where
+    first: $first
+    skip: $skip
+    block: $block
+    orderBy: balance
+    orderDirection: desc
+  ) {
+    wallet {
+      id
+    }
+    volume
+    volumeUSD
+    balance
+    stakedBalance
+    erc20Balance
+    lastPaidTimestamp
+  }
+}

@@ -1,14 +1,15 @@
 import { Trans } from '@lingui/macro'
 import { NftReward } from './NftReward'
 import { RedeemNftsSection } from './RedeemNftsSection'
-import { useNftRewards } from './hooks/useNftRewards'
+
+import { useNftRewardsPanel } from './hooks/useNftRewardsPanel'
 
 export const NftRewardsPanel = () => {
   const {
     rewardTiers,
     handleTierSelect,
     loading: nftsLoading,
-  } = useNftRewards()
+  } = useNftRewardsPanel()
 
   return (
     <div className="flex w-full max-w-2xl flex-col gap-5">

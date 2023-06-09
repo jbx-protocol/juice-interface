@@ -44,6 +44,9 @@ msgstr ""
 msgid "Art"
 msgstr ""
 
+msgid "Pay 2.4 ETH"
+msgstr ""
+
 msgid "How should I set up my project?"
 msgstr ""
 
@@ -126,9 +129,6 @@ msgid "Set a unique handle that will be visible in your project's URL, and that 
 msgstr ""
 
 msgid "Determines whether tokens will be minted by payments made through this address."
-msgstr ""
-
-msgid "Receive {0} tokens/1 ETH"
 msgstr ""
 
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
@@ -1046,6 +1046,9 @@ msgstr ""
 msgid "Your cycle rules have been pre-populated using the rules you originally launched with. If you need to customize them, <0>contact us</0>."
 msgstr ""
 
+msgid "No overflow"
+msgstr ""
+
 msgid "Transaction hash"
 msgstr ""
 
@@ -1077,6 +1080,9 @@ msgid "until Cycle #{0}"
 msgstr ""
 
 msgid "Collection Name"
+msgstr ""
+
+msgid "Pay PyroDAO"
 msgstr ""
 
 msgid "No active cycle."
@@ -1514,6 +1520,9 @@ msgstr ""
 msgid "V2"
 msgstr ""
 
+msgid "{userTokenBalance} tokens"
+msgstr ""
+
 msgid "NO LIMIT"
 msgstr ""
 
@@ -1590,6 +1599,9 @@ msgid "<0>This website interacts with the Ethereum blockchain — to use it, you
 msgstr ""
 
 msgid "Each field is required."
+msgstr ""
+
+msgid "Message from PyroDAO"
 msgstr ""
 
 msgid "Set up token migration"
@@ -1754,9 +1766,6 @@ msgstr ""
 msgid "Set this to the sum of your payouts"
 msgstr ""
 
-msgid "Unarchiving your project will mean the following:"
-msgstr ""
-
 msgid "Your transaction has been submitted and is awaiting confirmation."
 msgstr ""
 
@@ -1878,9 +1887,6 @@ msgid "Juicebox is the best-in-class tool for crowdfunding your project with ETH
 msgstr ""
 
 msgid "Project tokens will be minted to this beneficiary address. The address that made the payment <0>won't receive any project tokens.</0>"
-msgstr ""
-
-msgid "Get Updates"
 msgstr ""
 
 msgid "Discord"
@@ -2261,6 +2267,9 @@ msgstr ""
 msgid "Ethereum wallet address"
 msgstr ""
 
+msgid "Receive {receivedTickets} {receivedTokenSymbolText}/1 {currencyText}"
+msgstr ""
+
 msgid "Juicebox enables the creators of tomorrow to launch, fund and manage the boldest projects on the internet."
 msgstr ""
 
@@ -2397,6 +2406,9 @@ msgid "{0}/{1} withdrawn"
 msgstr ""
 
 msgid "Extension"
+msgstr ""
+
+msgid "Total amount"
 msgstr ""
 
 msgid "Explore categories"
@@ -2786,6 +2798,9 @@ msgstr ""
 msgid "Save token rules"
 msgstr ""
 
+msgid "Archiving your project has the following effects:"
+msgstr ""
+
 msgid "Minutes"
 msgstr ""
 
@@ -2817,6 +2832,9 @@ msgid "Save recipient"
 msgstr ""
 
 msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
+msgstr ""
+
+msgid "Unarchiving your project has the following effects:"
 msgstr ""
 
 msgid "None of your project's ETH can be paid out. All ETH will stay in your project for token redemptions or use in future cycles."
@@ -3131,6 +3149,9 @@ msgstr ""
 msgid "Load more..."
 msgstr ""
 
+msgid "Message (optional)"
+msgstr ""
+
 msgid "Sum of percentages cannot exceed 100%"
 msgstr ""
 
@@ -3413,9 +3434,6 @@ msgstr ""
 msgid "The amount of ETH which can be paid out from this project during the cycle. Payouts reset each cycle."
 msgstr ""
 
-msgid "Archiving your project will mean the following:"
-msgstr ""
-
 msgid "Safe, Snapshot, or even on-chain governance: Juicebox uses simple standards and works with all of your favorite Ethereum tools."
 msgstr ""
 
@@ -3447,6 +3465,9 @@ msgid "Detach NFTs from cycle"
 msgstr ""
 
 msgid "Mint tokens"
+msgstr ""
+
+msgid "NFTs, tokens and rewards will be sent to <0/>"
 msgstr ""
 
 msgid "See the code"
@@ -3492,6 +3513,9 @@ msgid "Failed to deploy migration token. Check the development console and conta
 msgstr ""
 
 msgid "This cycle's rules may lead to unexpected behavior. Before paying this project, know and understand its rules."
+msgstr ""
+
+msgid "Receive"
 msgstr ""
 
 msgid "Battle tested"

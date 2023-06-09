@@ -26,7 +26,11 @@ export type V2V3ProjectContextType = {
   primaryETHTerminal: string | undefined
   primaryETHTerminalFee: BigNumber | undefined
   ETHBalance: BigNumber | undefined
+
   totalVolume: BigNumber | undefined
+  trendingVolume: BigNumber | undefined
+  paymentsCount: number | undefined
+
   projectOwnerAddress: string | undefined
   balanceInDistributionLimitCurrency: BigNumber | undefined
   usedDistributionLimit: BigNumber | undefined // how much has been distributed
@@ -57,7 +61,11 @@ export const V2V3ProjectContext = createContext<V2V3ProjectContextType>({
   primaryETHTerminal: undefined,
   primaryETHTerminalFee: undefined,
   ETHBalance: undefined,
+
   totalVolume: undefined,
+  trendingVolume: undefined,
+  paymentsCount: undefined,
+
   projectOwnerAddress: undefined,
   balanceInDistributionLimitCurrency: undefined,
   usedDistributionLimit: undefined,

@@ -1,4 +1,3 @@
-import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { TooltipPlacement } from 'antd/lib/tooltip'
 import { ModalProvider } from 'contexts/Modal'
@@ -34,11 +33,7 @@ const _SubscribeButton = ({
           onClick={onSubscribeButtonClicked}
           loading={loading}
           icon={<SubscribeButtonIcon isSubscribed={isSubscribed} />}
-        >
-          <span className="font-base text-sm">
-            <Trans>Get Updates</Trans>
-          </span>
-        </Button>
+        />
       </Tooltip>
 
       <SubscribeModal />

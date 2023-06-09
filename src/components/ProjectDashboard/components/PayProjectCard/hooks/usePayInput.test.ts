@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { act, renderHook } from '@testing-library/react-hooks'
+import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { usePayInput } from './usePayInput'
 
 describe('usePayInput', () => {
@@ -7,14 +8,14 @@ describe('usePayInput', () => {
     const { result } = renderHook(usePayInput)
     expect(result.current.value).toEqual({
       amount: '',
-      currency: 'eth',
+      currency: V2V3_CURRENCY_ETH,
     })
     act(() => {
       result.current.onInputChange({ target: { value: '1' } } as any)
     })
     expect(result.current.value).toEqual({
       amount: '1',
-      currency: 'eth',
+      currency: V2V3_CURRENCY_ETH,
     })
   })
 
@@ -22,14 +23,14 @@ describe('usePayInput', () => {
     const { result } = renderHook(usePayInput)
     expect(result.current.value).toEqual({
       amount: '',
-      currency: 'eth',
+      currency: V2V3_CURRENCY_ETH,
     })
     act(() => {
       result.current.onCurrencyChange()
     })
     expect(result.current.value).toEqual({
       amount: '',
-      currency: 'usd',
+      currency: V2V3_CURRENCY_USD,
     })
   })
 })

@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import { fireEvent, render, screen } from '@testing-library/react'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { PayInput } from './PayInput'
 
 describe('PayInput', () => {
@@ -17,7 +18,7 @@ describe('PayInput', () => {
 
   it('renders with value', () => {
     const { container } = render(
-      <PayInput value={{ amount: '1', currency: 'eth' }} />,
+      <PayInput value={{ amount: '1', currency: V2V3_CURRENCY_ETH }} />,
     )
     expect(container).toMatchSnapshot()
   })

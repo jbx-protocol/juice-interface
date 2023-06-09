@@ -5,31 +5,17 @@ import {
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { twMerge } from 'tailwind-merge'
+import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
 import { DisplayCard } from '../../ui'
-
-const payouts = [
-  {
-    name: 'aeolian.eth',
-    amount: '210 ETH',
-    percent: '33%',
-  },
-  {
-    name: 'wraeth.eth',
-    amount: '210 ETH',
-    percent: '33%',
-  },
-  {
-    name: 'chris.eth',
-    amount: '210 ETH',
-    percent: '33%',
-  },
-]
+import { useReservedTokensSubPanel } from '../hooks/useReservedTokensSubPanel'
 
 export const ReservedTokensSubPanel = ({
   className,
 }: {
   className?: string
 }) => {
+  const { reservedList, reservedTokens, reservedRate } =
+    useReservedTokensSubPanel()
   return (
     <div className={twMerge(className)}>
       <h2 className="mb-0 font-heading text-2xl font-medium">
@@ -41,13 +27,23 @@ export const ReservedTokensSubPanel = ({
             <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium dark:text-slate-200">
               <Trans>Reserved tokens</Trans>
             </h3>
-            <span className="font-heading text-xl font-medium">800,000</span>
+            {reservedTokens !== undefined ? (
+              <span className="font-heading text-xl font-medium">
+                {reservedTokens}
+              </span>
+            ) : (
+              <div>
+                <div className="h-7 w-24 animate-pulse rounded bg-grey-200 dark:bg-slate-200" />
+              </div>
+            )}
           </DisplayCard>
           <DisplayCard className="flex w-full flex-col gap-2">
             <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium dark:text-slate-200">
               <Trans>Reserved rate</Trans>
             </h3>
-            <span className="font-heading text-xl font-medium">15%</span>
+            <span className="font-heading text-xl font-medium">
+              {reservedRate}
+            </span>
           </DisplayCard>
         </div>
         <DisplayCard className="flex w-full flex-col pb-8">
@@ -58,27 +54,13 @@ export const ReservedTokensSubPanel = ({
             <EllipsisVerticalIcon role="button" className="h-6 w-6" />
           </div>
 
-          <table className="mt-4 w-full">
-            <tbody>
-              {payouts.map(payout => (
-                <tr
-                  key={payout.name}
-                  className="flex items-center justify-between gap-3 border-b border-grey-200 py-3 dark:border-slate-500"
-                >
-                  <td className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-full bg-juice-400" />
-                    <span className="font-medium dark:text-slate-50">
-                      {payout.name}
-                    </span>
-                  </td>
-                  <td className="flex items-center gap-3 dark:text-slate-200">
-                    <span>{payout.amount}</span>
-                    <span>{payout.percent}</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500">
+            {reservedList
+              ? reservedList.map(props => (
+                  <ProjectAllocationRow key={props.address} {...props} />
+                ))
+              : null}
+          </div>
 
           <Button
             type="primary"

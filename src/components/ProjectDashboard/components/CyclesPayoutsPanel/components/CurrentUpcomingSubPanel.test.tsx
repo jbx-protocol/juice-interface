@@ -13,6 +13,10 @@ jest.mock('../hooks/useCurrentUpcomingSubPanel', () => ({
   useCurrentUpcomingSubPanel: jest.fn(),
 }))
 
+jest.mock('./PayoutsSubPanel', () => ({
+  PayoutsSubPanel: jest.fn(() => <div>Payouts</div>),
+}))
+
 const DefaultResponse = {
   loading: false,
   cycleNumber: 1,

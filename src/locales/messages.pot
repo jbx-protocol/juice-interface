@@ -1511,6 +1511,9 @@ msgstr ""
 msgid "V2"
 msgstr ""
 
+msgid "{userTokenBalance} tokens"
+msgstr ""
+
 msgid "NO LIMIT"
 msgstr ""
 

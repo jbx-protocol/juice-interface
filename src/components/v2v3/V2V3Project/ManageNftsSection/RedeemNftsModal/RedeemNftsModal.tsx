@@ -5,6 +5,7 @@ import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import TransactionModal from 'components/modals/TransactionModal'
 import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
+import { RedeemingNft } from 'components/ProjectDashboard/components/NftRewardsPanel/hooks/useJB721DelegateTokenToNftReward'
 import { REDEMPTION_RATE_EXPLANATION } from 'components/strings'
 import TooltipLabel from 'components/TooltipLabel'
 import { JB721_DELEGATE_V3_2 } from 'constants/delegateVersions'
@@ -16,7 +17,6 @@ import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721Delegate
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber, constants } from 'ethers'
 import { defaultAbiCoder } from 'ethers/lib/utils.js'
-import { Jb721DelegateToken } from 'generated/graphql'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/useNftAccountBalance'
 import { useETHReceivedFromNftRedeem } from 'hooks/v2v3/contractReader/useETHReceivedFromNftRedeem'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/useRedeemTokensTx'
@@ -89,15 +89,11 @@ export function RedeemNftsModal({
 
   if (!fundingCycle || !fundingCycleMetadata || balanceLoading) return null
 
-  const handleTierSelect = (
-    nft: Pick<Jb721DelegateToken, 'address' | 'tokenUri'> & { tokenId: string },
-  ) => {
+  const handleTierSelect = (nft: RedeemingNft) => {
     setTokenIdsToRedeem([...(tokenIdsToRedeem ?? []), nft.tokenId])
   }
 
-  const handleTierDeselect = (
-    nft: Pick<Jb721DelegateToken, 'address' | 'tokenUri'> & { tokenId: string },
-  ) => {
+  const handleTierDeselect = (nft: RedeemingNft) => {
     const idxToRemove = tokenIdsToRedeem.indexOf(nft.tokenId)
     const newSelectedTierIds = tokenIdsToRedeem
     newSelectedTierIds.splice(idxToRemove, 1)

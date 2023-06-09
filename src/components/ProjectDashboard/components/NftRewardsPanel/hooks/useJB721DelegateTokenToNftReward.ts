@@ -2,12 +2,16 @@ import {
   NFT_METADATA_CONTRIBUTION_FLOOR_ATTRIBUTES_INDEX,
   useJB721DelegateTokenMetadata,
 } from 'components/v2v3/V2V3Project/ManageNftsSection/RedeemNftsModal/RedeemNftCard'
+import { Jb721DelegateToken } from 'generated/graphql'
 import { NftRewardTier } from 'models/nftRewards'
-import { JB721DelegateToken } from 'models/subgraph-entities/v2/jb-721-delegate-tokens'
 import { UseQueryResult } from 'react-query'
 
+export type RedeemingNft = Pick<Jb721DelegateToken, 'address' | 'tokenUri'> & {
+  tokenId: string
+}
+
 export function useJB721DelegateTokenToNftReward(
-  nft: Pick<JB721DelegateToken, 'address' | 'tokenId' | 'tokenUri'>,
+  nft: RedeemingNft,
 ): UseQueryResult<NftRewardTier> {
   const { data: tierData } = useJB721DelegateTokenMetadata(nft.tokenUri)
   const contributionFloor =

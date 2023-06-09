@@ -6,7 +6,7 @@ import { stopPropagation } from 'react-stop-propagation'
 import { fileTypeIsVideo } from 'utils/nftRewards'
 
 export const JUICE_IMG_PREVIEW_CONTAINER_CLASS =
-  'fixed top-0 left-0 z-[10000] flex h-full w-full items-center justify-center overflow-auto bg-[rgba(0,0,0,0.8)] p-5'
+  'fixed top-0 left-0 z-[10000] flex h-full w-full items-center justify-center overflow-auto bg-[rgba(0,0,0,0.8)] p-5 cursor-default'
 
 export function JuiceVideoOrImgPreview({
   src,

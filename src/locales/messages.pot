@@ -2300,6 +2300,9 @@ msgstr ""
 msgid "We are here"
 msgstr ""
 
+msgid "Redeem NFTs"
+msgstr ""
+
 msgid "Set up payouts"
 msgstr ""
 

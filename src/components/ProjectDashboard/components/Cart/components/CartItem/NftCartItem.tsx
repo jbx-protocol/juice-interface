@@ -1,6 +1,6 @@
 import { SmallNftSquare } from 'components/ProjectDashboard/components/NftRewardsCard/SmallNftSquare'
 import { ProjectCartNftReward } from 'components/ProjectDashboard/components/ProjectCartProvider'
-import { useNftCartItem } from '../../hooks/useNftCartItem'
+import { useNftCartItem } from 'components/ProjectDashboard/hooks/useNftCartItem'
 import { CartItem } from './CartItem'
 import { CartItemBadge } from './CartItemBadge'
 
@@ -27,6 +27,7 @@ export const NftCartItem: React.FC<ProjectCartNftReward> = reward => {
       price={price}
       icon={
         <SmallNftSquare
+          border
           className="h-14 w-14"
           nftReward={{
             fileUrl: fileUrl ?? '',

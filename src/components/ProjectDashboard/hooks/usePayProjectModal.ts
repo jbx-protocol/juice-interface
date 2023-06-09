@@ -7,7 +7,7 @@ import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { useProjectCart } from './useProjectCart'
 
 export const usePayProjectModal = () => {
-  const { dispatch, payModalOpen, totalAmount } = useProjectCart()
+  const { dispatch, payModalOpen, totalAmount, nftRewards } = useProjectCart()
   const { userAddress } = useWallet()
   const converter = useCurrencyConverter()
 
@@ -45,6 +45,7 @@ export const usePayProjectModal = () => {
     primaryAmount,
     secondaryAmount,
     userAddress,
+    nftRewards,
     setOpen,
   }
 }

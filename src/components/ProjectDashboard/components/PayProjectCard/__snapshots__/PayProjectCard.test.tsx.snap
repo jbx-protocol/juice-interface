@@ -18,7 +18,7 @@ exports[`PayProjectCard renders 1`] = `
       >
         <input
           class="flex-1"
-          data-testid="mock-pay-input"
+          data-testid="pay-input"
           name="payAmount"
           placeholder="0"
           value=""

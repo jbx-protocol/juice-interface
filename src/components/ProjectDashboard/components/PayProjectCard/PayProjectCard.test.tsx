@@ -22,7 +22,7 @@ describe('PayProjectCard', () => {
     await waitFor(() => expect(container).toMatchSnapshot())
   })
 
-  test.only('entering text into input updates token value', async () => {
+  test('entering text into input updates token value', async () => {
     const { getByTestId, getByRole } = render(<PayProjectCard />)
     const input = getByRole('textbox')
     const tokensPerEth = getByTestId('tokens-per-eth')

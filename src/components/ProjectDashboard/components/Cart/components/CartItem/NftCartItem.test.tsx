@@ -2,11 +2,11 @@
  * @jest-environment jsdom
  */
 import { render } from '@testing-library/react'
+import { useNftCartItem } from 'components/ProjectDashboard/hooks/useNftCartItem'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
-import { useNftCartItem } from '../../hooks/useNftCartItem'
 import { NftCartItem } from './NftCartItem'
 
-jest.mock('../../hooks/useNftCartItem')
+jest.mock('components/ProjectDashboard/hooks/useNftCartItem')
 jest.mock(
   'components/ProjectDashboard/components/NftRewardsCard/SmallNftSquare',
   () => ({

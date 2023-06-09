@@ -7,7 +7,7 @@ import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { useProjectCart } from './useProjectCart'
 
 export const usePayProjectModal = () => {
-  const { dispatch, payModalOpen, payAmount } = useProjectCart()
+  const { dispatch, payModalOpen, totalAmount } = useProjectCart()
   const { userAddress } = useWallet()
   const converter = useCurrencyConverter()
 
@@ -20,25 +20,25 @@ export const usePayProjectModal = () => {
   )
 
   const primaryAmount = useMemo(() => {
-    if (!payAmount)
+    if (!totalAmount)
       return formatCurrencyAmount({ amount: 0, currency: V2V3_CURRENCY_ETH })
-    return formatCurrencyAmount(payAmount)
-  }, [payAmount])
+    return formatCurrencyAmount(totalAmount)
+  }, [totalAmount])
 
   const secondaryAmount = useMemo(() => {
-    if (!payAmount) return undefined
-    if (payAmount.currency === V2V3_CURRENCY_ETH) {
-      const amount = Number(converter.weiToUsd(parseWad(payAmount.amount)))
+    if (!totalAmount) return undefined
+    if (totalAmount.currency === V2V3_CURRENCY_ETH) {
+      const amount = Number(converter.weiToUsd(parseWad(totalAmount.amount)))
       return formatCurrencyAmount({
         amount,
         currency: V2V3_CURRENCY_USD,
       })
     }
     return formatCurrencyAmount({
-      amount: fromWad(converter.usdToWei(payAmount.amount)),
+      amount: fromWad(converter.usdToWei(totalAmount.amount)),
       currency: V2V3_CURRENCY_ETH,
     })
-  }, [converter, payAmount])
+  }, [converter, totalAmount])
 
   return {
     open,

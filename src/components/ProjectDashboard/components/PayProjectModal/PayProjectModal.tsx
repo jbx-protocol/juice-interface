@@ -11,13 +11,8 @@ import { twMerge } from 'tailwind-merge'
 import { CartItemBadge } from '../Cart/components/CartItem/CartItemBadge'
 
 export const PayProjectModal: React.FC = () => {
-  const {
-    open,
-    primaryAmount: totalAmountEth,
-    secondaryAmount: totalAmountUsd,
-    userAddress,
-    setOpen,
-  } = usePayProjectModal()
+  const { open, primaryAmount, secondaryAmount, userAddress, setOpen } =
+    usePayProjectModal()
   return (
     <JuiceModal
       className="w-full max-w-xl"
@@ -34,10 +29,10 @@ export const PayProjectModal: React.FC = () => {
             <Trans>Total amount</Trans>
           </span>
           <div>
-            <span>{totalAmountEth}</span>{' '}
-            {totalAmountUsd && (
+            <span>{primaryAmount}</span>{' '}
+            {secondaryAmount && (
               <span className="text-grey-500 dark:text-slate-200">
-                ({totalAmountUsd})
+                ({secondaryAmount})
               </span>
             )}
           </div>

@@ -17,7 +17,7 @@ describe('usePayProjectModal', () => {
   const DefaultuseProjectCart = {
     dispatch: jest.fn(),
     payModalOpen: false,
-    payAmount: {
+    totalAmount: {
       amount: 0,
       currency: V2V3_CURRENCY_ETH,
     },
@@ -59,16 +59,16 @@ describe('usePayProjectModal', () => {
   })
 
   test.each`
-    payAmount                                        | expectedPrimaryAmount | expectedSecondaryAmount
+    totalAmount                                      | expectedPrimaryAmount | expectedSecondaryAmount
     ${{ amount: 0, currency: V2V3_CURRENCY_ETH }}    | ${'Ξ0'}               | ${'US$0'}
     ${{ amount: 1, currency: V2V3_CURRENCY_ETH }}    | ${'Ξ1'}               | ${'US$2,000'}
     ${{ amount: 2000, currency: V2V3_CURRENCY_USD }} | ${'US$2,000'}         | ${`Ξ1`}
   `(
-    `returns primaryAmount=$expectedPrimaryAmount and secondaryAmount=$expectedSecondaryAmount when payAmount=$payAmount`,
-    ({ payAmount, expectedPrimaryAmount, expectedSecondaryAmount }) => {
+    `returns primaryAmount=$expectedPrimaryAmount and secondaryAmount=$expectedSecondaryAmount when totalAmount=$totalAmount`,
+    ({ totalAmount, expectedPrimaryAmount, expectedSecondaryAmount }) => {
       ;(useProjectCart as jest.Mock).mockReturnValue({
         ...DefaultuseProjectCart,
-        payAmount,
+        totalAmount,
       })
       const { result } = renderHook(usePayProjectModal)
       expect(result.current.primaryAmount).toBe(expectedPrimaryAmount)

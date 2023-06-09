@@ -14,7 +14,7 @@ export const formatCurrencyAmount = ({
   amount,
   currency = V2V3_CURRENCY_ETH,
 }: {
-  amount: number | undefined
+  amount: number | string | undefined
   currency: V2V3CurrencyOption | undefined
 }) => {
   const currencyName = V2V3CurrencyName(currency)

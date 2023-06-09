@@ -1,10 +1,15 @@
 import { useWallet } from 'hooks/Wallet'
-import { useCallback } from 'react'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { useCallback, useMemo } from 'react'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { useProjectCart } from './useProjectCart'
 
 export const usePayProjectModal = () => {
-  const { dispatch, payModalOpen } = useProjectCart()
+  const { dispatch, payModalOpen, payAmount } = useProjectCart()
   const { userAddress } = useWallet()
+  const converter = useCurrencyConverter()
 
   const open = payModalOpen
   const setOpen = useCallback(
@@ -14,7 +19,32 @@ export const usePayProjectModal = () => {
     [dispatch],
   )
 
-  const totalAmount = '2.4 ETH (US$4,326)'
+  const primaryAmount = useMemo(() => {
+    if (!payAmount)
+      return formatCurrencyAmount({ amount: 0, currency: V2V3_CURRENCY_ETH })
+    return formatCurrencyAmount(payAmount)
+  }, [payAmount])
 
-  return { open, totalAmount, userAddress, setOpen }
+  const secondaryAmount = useMemo(() => {
+    if (!payAmount) return undefined
+    if (payAmount.currency === V2V3_CURRENCY_ETH) {
+      const amount = Number(converter.weiToUsd(parseWad(payAmount.amount)))
+      return formatCurrencyAmount({
+        amount,
+        currency: V2V3_CURRENCY_USD,
+      })
+    }
+    return formatCurrencyAmount({
+      amount: fromWad(converter.usdToWei(payAmount.amount)),
+      currency: V2V3_CURRENCY_ETH,
+    })
+  }, [converter, payAmount])
+
+  return {
+    open,
+    primaryAmount,
+    secondaryAmount,
+    userAddress,
+    setOpen,
+  }
 }

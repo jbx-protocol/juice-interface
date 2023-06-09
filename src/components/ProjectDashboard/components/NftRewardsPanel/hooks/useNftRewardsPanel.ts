@@ -7,7 +7,7 @@ import { useCallback, useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { sumTierFloors } from 'utils/nftRewards'
 
-export const useNftRewards = () => {
+export const useNftRewardsPanel = () => {
   const {
     nftRewards: { rewardTiers },
     loading,

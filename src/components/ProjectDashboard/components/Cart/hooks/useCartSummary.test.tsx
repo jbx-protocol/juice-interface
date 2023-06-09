@@ -49,6 +49,7 @@ describe('useCartSummary', () => {
   }
   beforeEach(() => {
     ;(useProjectCart as jest.Mock).mockReturnValue(DefaultUseProjectCartMock)
+    DefaultUseProjectCartMock.dispatch.mockClear()
   })
 
   it('should return amountText', () => {
@@ -78,6 +79,14 @@ describe('useCartSummary', () => {
     result.current.removePay()
     expect(DefaultUseProjectCartMock.dispatch).toHaveBeenCalledWith({
       type: 'removePayment',
+    })
+  })
+
+  test('payProject method should call dispatch', () => {
+    const { result } = renderUseCartSummaryHook()
+    result.current.payProject()
+    expect(DefaultUseProjectCartMock.dispatch).toHaveBeenCalledWith({
+      type: 'openPayModal',
     })
   })
 })

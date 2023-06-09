@@ -44,6 +44,9 @@ msgstr ""
 msgid "Art"
 msgstr ""
 
+msgid "Pay 2.4 ETH"
+msgstr ""
+
 msgid "How should I set up my project?"
 msgstr ""
 
@@ -1079,6 +1082,9 @@ msgstr ""
 msgid "Collection Name"
 msgstr ""
 
+msgid "Pay PyroDAO"
+msgstr ""
+
 msgid "No active cycle."
 msgstr ""
 
@@ -1593,6 +1599,9 @@ msgid "<0>This website interacts with the Ethereum blockchain — to use it, you
 msgstr ""
 
 msgid "Each field is required."
+msgstr ""
+
+msgid "Message from PyroDAO"
 msgstr ""
 
 msgid "Set up token migration"
@@ -2396,6 +2405,9 @@ msgstr ""
 msgid "Extension"
 msgstr ""
 
+msgid "Total amount"
+msgstr ""
+
 msgid "Explore categories"
 msgstr ""
 
@@ -3134,6 +3146,9 @@ msgstr ""
 msgid "Load more..."
 msgstr ""
 
+msgid "Message (optional)"
+msgstr ""
+
 msgid "Sum of percentages cannot exceed 100%"
 msgstr ""
 
@@ -3449,6 +3464,9 @@ msgstr ""
 msgid "Mint tokens"
 msgstr ""
 
+msgid "NFTs, tokens and rewards will be sent to <0/>"
+msgstr ""
+
 msgid "See the code"
 msgstr ""
 
@@ -3492,6 +3510,9 @@ msgid "Failed to deploy migration token. Check the development console and conta
 msgstr ""
 
 msgid "This cycle's rules may lead to unexpected behavior. Before paying this project, know and understand its rules."
+msgstr ""
+
+msgid "Receive"
 msgstr ""
 
 msgid "Battle tested"

@@ -12,6 +12,10 @@ jest.mock('./components', () => ({
   SummaryExpandedView: () => <div>SummaryExpandedView</div>,
 }))
 
+jest.mock('../PayProjectModal', () => ({
+  PayProjectModal: () => <div>PayProjectModal</div>,
+}))
+
 describe('Cart', () => {
   const DefaultUseProjectCartMock = {
     dispatch: jest.fn(),

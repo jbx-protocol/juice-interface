@@ -21,6 +21,7 @@ type ProjectCartContextType = {
   nftRewards: ProjectCartNftReward[]
   visible: boolean
   expanded: boolean
+  payModalOpen: boolean
   userIsReceivingTokens: boolean
 }
 
@@ -33,6 +34,7 @@ export const ProjectCartContext = createContext<ProjectCartContextType>({
   nftRewards: [],
   visible: false,
   expanded: false,
+  payModalOpen: false,
   userIsReceivingTokens: false,
 })
 
@@ -46,6 +48,7 @@ export const ProjectCartProvider = ({
     nftRewards: [],
     expanded: false,
     userIsReceivingTokens: true,
+    payModalOpen: false,
   })
   const nftRewards = useContext(NftRewardsContext).nftRewards
   const rewardTiers = useMemo(

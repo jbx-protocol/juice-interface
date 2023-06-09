@@ -4,6 +4,7 @@ import { ProjectCartState, projectCartReducer } from './projectCartReducer'
 describe('projectCartReducer', () => {
   const DefaultState: ProjectCartState = {
     payAmount: undefined,
+    payModalOpen: false,
     expanded: false,
     userIsReceivingTokens: true,
     nftRewards: [
@@ -310,6 +311,51 @@ describe('projectCartReducer', () => {
     expect(projectCartReducer(state, action)).toEqual({
       ...state,
       nftRewards: [],
+    })
+  })
+
+  test('setPayModal will set the pay modal', () => {
+    const state = {
+      ...DefaultState,
+      payModal: false,
+    }
+    const action = {
+      type: 'setPayModal' as const,
+      payload: {
+        open: true,
+      },
+    }
+    expect(projectCartReducer(state, action)).toEqual({
+      ...state,
+      payModalOpen: true,
+    })
+  })
+
+  test('openPayModal will open the pay modal', () => {
+    const state = {
+      ...DefaultState,
+      payModal: false,
+    }
+    const action = {
+      type: 'openPayModal' as const,
+    }
+    expect(projectCartReducer(state, action)).toEqual({
+      ...state,
+      payModalOpen: true,
+    })
+  })
+
+  test('closePayModal will close the pay modal', () => {
+    const state = {
+      ...DefaultState,
+      payModal: true,
+    }
+    const action = {
+      type: 'closePayModal' as const,
+    }
+    expect(projectCartReducer(state, action)).toEqual({
+      ...state,
+      payModalOpen: false,
     })
   })
 })

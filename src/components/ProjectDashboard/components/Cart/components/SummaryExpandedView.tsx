@@ -5,7 +5,7 @@ import { NftCartItem, PaymentCartItem } from './CartItem'
 import { ProjectTokensCartItem } from './CartItem/ProjectTokensCartItem'
 
 export const SummaryExpandedView = () => {
-  const { amountText, nftRewards } = useCartSummary()
+  const { amountText, nftRewards, payProject } = useCartSummary()
 
   return (
     <div
@@ -39,7 +39,7 @@ export const SummaryExpandedView = () => {
           </span>
           <span className="text-2xl font-medium">{amountText}</span>
         </div>
-        <Button role="button" type="primary">
+        <Button type="primary" onClick={payProject}>
           <Trans>Pay project</Trans>
         </Button>
       </div>

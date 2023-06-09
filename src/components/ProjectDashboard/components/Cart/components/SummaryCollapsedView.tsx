@@ -8,7 +8,8 @@ import StackedComponents from '../../ui/StackedComponents'
 import { useCartSummary } from '../hooks/useCartSummary'
 
 export const SummaryCollapsedView = () => {
-  const { amountText, currency, nftRewards, removePay } = useCartSummary()
+  const { amountText, currency, nftRewards, removePay, payProject } =
+    useCartSummary()
 
   return (
     <div className="flex w-full items-center justify-between px-8 py-6">
@@ -55,7 +56,7 @@ export const SummaryCollapsedView = () => {
             onClick={removePay}
           />
         </div>
-        <Button type="primary">
+        <Button type="primary" onClick={payProject}>
           <Trans>Pay project</Trans>
         </Button>
       </div>

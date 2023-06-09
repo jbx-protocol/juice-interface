@@ -30,10 +30,15 @@ export const useCartSummary = () => {
     cart.dispatch({ type: 'removePayment' })
   }, [cart])
 
+  const payProject = useCallback(() => {
+    cart.dispatch({ type: 'openPayModal' })
+  }, [cart])
+
   return {
     amountText,
     currency: cart.totalAmount?.currency,
     nftRewards,
     removePay,
+    payProject,
   }
 }

@@ -4,7 +4,7 @@ import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { DisplayCard } from '../ui'
-import { SmallNftSquare } from './SmallNftCard'
+import { SmallNftSquare } from './SmallNftSquare'
 
 export const NftRewardsCard = ({ className }: { className?: string }) => {
   const {
@@ -21,17 +21,17 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
           <SmallNftSquare
             nftReward={rewardTiers?.[0]}
             loading={nftsLoading}
-            className="z-20 bg-bluebs-400"
+            className="z-20 h-14 w-14 bg-bluebs-400"
           />
           <SmallNftSquare
             nftReward={rewardTiers?.[1]}
             loading={nftsLoading}
-            className="z-10 -ml-[18px] bg-juice-400"
+            className="z-10 -ml-[18px] h-14 w-14 bg-juice-400"
           />
           <SmallNftSquare
             nftReward={rewardTiers?.[2]}
             loading={nftsLoading}
-            className="-ml-[18px] bg-melon-600"
+            className="-ml-[18px] h-14 w-14 bg-melon-600"
           />
         </div>
         <div>

@@ -7,7 +7,7 @@ export const SmallNftSquare = ({
   className,
   loading,
 }: {
-  nftReward: NftRewardTier | undefined
+  nftReward: Pick<NftRewardTier, 'fileUrl' | 'name'> | undefined
   className?: string
   loading?: boolean
 }) => {
@@ -25,8 +25,6 @@ export const SmallNftSquare = ({
       src={nftReward.fileUrl}
       alt={nftReward.name}
       playIconPosition="hidden"
-      heightClass="h-14"
-      widthClass="w-14"
       containerClass={_className}
     />
   )

@@ -6,6 +6,12 @@ describe('projectCartReducer', () => {
     payAmount: undefined,
     expanded: false,
     userIsReceivingTokens: true,
+    nftRewards: [
+      {
+        id: 1,
+        quantity: 1,
+      },
+    ],
   }
 
   test('addPayment will change payAmount to payload', () => {
@@ -70,6 +76,240 @@ describe('projectCartReducer', () => {
     expect(projectCartReducer(state, action)).toEqual({
       ...state,
       expanded: !state.expanded,
+    })
+  })
+
+  test('upsertNftReward will add a new reward if it does not exist', () => {
+    const state = {
+      ...DefaultState,
+      nftRewards: [],
+    }
+    const action = {
+      type: 'upsertNftReward' as const,
+      payload: {
+        nftReward: {
+          id: 1,
+          quantity: 1,
+        },
+      },
+    }
+    expect(projectCartReducer(state, action)).toEqual({
+      ...state,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+      ],
+    })
+  })
+
+  test('upsertNftReward will update an existing reward if it exists', () => {
+    const state = {
+      ...DefaultState,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+      ],
+    }
+    const action = {
+      type: 'upsertNftReward' as const,
+      payload: {
+        nftReward: {
+          id: 1,
+          quantity: 2,
+        },
+      },
+    }
+    expect(projectCartReducer(state, action)).toEqual({
+      ...state,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 2,
+        },
+      ],
+    })
+  })
+
+  test('removeNftReward will remove a reward if it exists', () => {
+    const state = {
+      ...DefaultState,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+      ],
+    }
+    const action = {
+      type: 'removeNftReward' as const,
+      payload: {
+        id: 1,
+      },
+    }
+    expect(projectCartReducer(state, action)).toEqual({
+      ...state,
+      nftRewards: [],
+    })
+  })
+
+  test('removeNftReward will do nothing if the reward does not exist', () => {
+    const state = {
+      ...DefaultState,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+      ],
+    }
+    const action = {
+      type: 'removeNftReward' as const,
+      payload: {
+        id: 2,
+      },
+    }
+    expect(projectCartReducer(state, action)).toEqual({
+      ...state,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+      ],
+    })
+  })
+
+  test('increaseNftRewardQuantity will increase the quantity of a reward if it exists', () => {
+    const state = {
+      ...DefaultState,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+      ],
+    }
+    const action = {
+      type: 'increaseNftRewardQuantity' as const,
+      payload: {
+        id: 1,
+      },
+    }
+    expect(projectCartReducer(state, action)).toEqual({
+      ...state,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 2,
+        },
+      ],
+    })
+  })
+
+  test('increaseNftRewardQuantity will do nothing if the reward does not exist', () => {
+    const state = {
+      ...DefaultState,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+      ],
+    }
+    const action = {
+      type: 'increaseNftRewardQuantity' as const,
+      payload: {
+        id: 2,
+      },
+    }
+    expect(projectCartReducer(state, action)).toEqual({
+      ...state,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+      ],
+    })
+  })
+
+  test('decreaseNftRewardQuantity will decrease the quantity of a reward if it exists', () => {
+    const state = {
+      ...DefaultState,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 2,
+        },
+      ],
+    }
+    const action = {
+      type: 'decreaseNftRewardQuantity' as const,
+      payload: {
+        id: 1,
+      },
+    }
+    expect(projectCartReducer(state, action)).toEqual({
+      ...state,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+      ],
+    })
+  })
+
+  test('decreaseNftRewardQuantity will do nothing if the reward does not exist', () => {
+    const state = {
+      ...DefaultState,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+      ],
+    }
+    const action = {
+      type: 'decreaseNftRewardQuantity' as const,
+      payload: {
+        id: 2,
+      },
+    }
+    expect(projectCartReducer(state, action)).toEqual({
+      ...state,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+      ],
+    })
+  })
+
+  test('decreaseNftRewardQuantity will remove the reward if the quantity is 1', () => {
+    const state = {
+      ...DefaultState,
+      nftRewards: [
+        {
+          id: 1,
+          quantity: 1,
+        },
+      ],
+    }
+    const action = {
+      type: 'decreaseNftRewardQuantity' as const,
+      payload: {
+        id: 1,
+      },
+    }
+    expect(projectCartReducer(state, action)).toEqual({
+      ...state,
+      nftRewards: [],
     })
   })
 })

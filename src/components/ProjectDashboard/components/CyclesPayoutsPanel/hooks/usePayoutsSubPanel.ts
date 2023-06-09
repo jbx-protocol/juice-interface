@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro'
 import assert from 'assert'
 import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { BigNumber } from 'ethers'
@@ -7,6 +8,7 @@ import { useCallback, useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import {
   MAX_DISTRIBUTION_LIMIT,
   SPLITS_TOTAL_PERCENT,
@@ -20,6 +22,8 @@ export const usePayoutsSubPanel = () => {
     distributionLimit,
     distributionLimitCurrency,
     primaryETHTerminalFee,
+    balanceInDistributionLimitCurrency,
+    usedDistributionLimit,
   } = useProjectContext()
 
   const showAmountOnPayout = useMemo(() => {
@@ -74,7 +78,59 @@ export const usePayoutsSubPanel = () => {
       .sort((a, b) => Number(b.percent) - Number(a.percent))
       .map(transformSplit)
   }, [payoutSplits, transformSplit])
+
+  const treasuryBalance = useMemo(() => {
+    if (!balanceInDistributionLimitCurrency) return undefined
+    return formatCurrencyAmount({
+      amount: Number(fromWad(balanceInDistributionLimitCurrency)),
+      currency: distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
+    })
+  }, [balanceInDistributionLimitCurrency, distributionLimitCurrency])
+
+  const overflow = useMemo(() => {
+    if (!distributionLimit) return undefined
+    if (isInfiniteDistributionLimit(distributionLimit)) return t`No overflow`
+    if (!balanceInDistributionLimitCurrency) return undefined
+    let amount = 0
+    if (balanceInDistributionLimitCurrency.gt(distributionLimit ?? 0)) {
+      const amountWad = balanceInDistributionLimitCurrency.sub(
+        distributionLimit ?? 0,
+      )
+      amount = Number(fromWad(amountWad))
+    }
+    return formatCurrencyAmount({
+      amount,
+      currency: distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
+    })
+  }, [
+    balanceInDistributionLimitCurrency,
+    distributionLimit,
+    distributionLimitCurrency,
+  ])
+
+  const availableToPayout = useMemo(() => {
+    if (!usedDistributionLimit || !balanceInDistributionLimitCurrency)
+      return undefined
+    const availableToPayoutWad = usedDistributionLimit.gt(
+      balanceInDistributionLimitCurrency,
+    )
+      ? balanceInDistributionLimitCurrency
+      : usedDistributionLimit
+
+    return formatCurrencyAmount({
+      amount: Number(fromWad(availableToPayoutWad)),
+      currency: distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
+    })
+  }, [
+    balanceInDistributionLimitCurrency,
+    distributionLimitCurrency,
+    usedDistributionLimit,
+  ])
+
   return {
     payouts,
+    treasuryBalance,
+    availableToPayout,
+    overflow,
   }
 }

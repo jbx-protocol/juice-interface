@@ -1241,6 +1241,9 @@ msgstr ""
 msgid "Edit your project's NFTs."
 msgstr ""
 
+msgid "{receivedTokenSymbolText} Token"
+msgstr ""
+
 msgid "Issuance reduction rate:"
 msgstr ""
 

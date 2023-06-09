@@ -2,17 +2,15 @@ import { EnvelopeIcon, PhotoIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import { Callout } from 'components/Callout'
-import EthereumAddress from 'components/EthereumAddress'
 import ExternalLink from 'components/ExternalLink'
 import { usePayProjectModal } from 'components/ProjectDashboard/hooks/usePayProjectModal'
 import Sticker from 'components/icons/Sticker'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { twMerge } from 'tailwind-merge'
-import { CartItemBadge } from '../Cart/components/CartItem/CartItemBadge'
+import { ReceiveSection } from './components/ReceiveSection'
 
 export const PayProjectModal: React.FC = () => {
-  const { open, primaryAmount, secondaryAmount, userAddress, setOpen } =
-    usePayProjectModal()
+  const { open, primaryAmount, secondaryAmount, setOpen } = usePayProjectModal()
   return (
     <JuiceModal
       className="w-full max-w-xl"
@@ -38,37 +36,7 @@ export const PayProjectModal: React.FC = () => {
           </div>
         </div>
 
-        <div className="py-6">
-          <span className="font-medium">
-            <Trans>Receive</Trans>
-          </span>
-          <div className="mt-2 flex justify-between gap-3">
-            <span className="text-grey-500 dark:text-slate-200">
-              <Trans>
-                NFTs, tokens and rewards will be sent to{' '}
-                <EthereumAddress
-                  className="text-grey-900 dark:text-slate-100"
-                  address={userAddress}
-                />
-              </Trans>
-            </span>
-            <a role="button">
-              <Trans>Edit</Trans>
-            </a>
-          </div>
-          <div className="mt-5 flex flex-col gap-4">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center">
-                <div className="h-12 w-12 rounded-full bg-grey-300" />
-                <span className="ml-3">PYRO Token</span>
-                <CartItemBadge className="ml-2">
-                  <Trans>Token</Trans>
-                </CartItemBadge>
-              </div>
-              <div>1,200,000</div>
-            </div>
-          </div>
-        </div>
+        <ReceiveSection />
 
         <div className="py-6">
           <span className="font-medium">

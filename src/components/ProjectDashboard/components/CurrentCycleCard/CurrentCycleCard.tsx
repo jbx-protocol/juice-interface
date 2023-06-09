@@ -1,17 +1,11 @@
 import { LockClosedIcon } from '@heroicons/react/24/solid'
 import { Trans } from '@lingui/macro'
 import { useCurrentCycleCard } from 'components/ProjectDashboard/hooks'
-import { timeSecondsToDateString } from 'components/ProjectDashboard/utils/timeSecondsToDateString'
-import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { DisplayCard } from '../ui'
 
 export const CurrentCycleCard = ({ className }: { className?: string }) => {
-  const { currentCycleNumber, timeLeftInCycle } = useCurrentCycleCard()
-  const timeRemainingText = useMemo(
-    () => timeSecondsToDateString(timeLeftInCycle),
-    [timeLeftInCycle],
-  )
+  const { currentCycleNumber, timeRemainingText } = useCurrentCycleCard()
 
   return (
     <DisplayCard className={twMerge('pr-9', className)}>

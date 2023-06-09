@@ -1,6 +1,9 @@
+import { useFundingCycleCountdown } from './useFundingCycleCountdown'
+
 export const useCurrentCycleCard = () => {
+  const { timeRemainingText } = useFundingCycleCountdown()
   return {
     currentCycleNumber: 21,
-    timeLeftInCycle: 1947385,
+    timeRemainingText,
   }
 }

@@ -3,9 +3,10 @@ import {
   useProjectContext,
   useProjectMetadata,
 } from 'components/ProjectDashboard/hooks'
+import { useFundingCycleCountdown } from 'components/ProjectDashboard/hooks/useFundingCycleCountdown'
 import { timeSecondsToDateString } from 'components/ProjectDashboard/utils/timeSecondsToDateString'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   const { projectId } = useProjectMetadata()
@@ -18,7 +19,7 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     loading: upcomingFundingCycleLoading,
   } = useProjectUpcomingFundingCycle({ projectId })
   const [upcomingFundingCycle] = upcomingFundingCycleData ?? []
-  const [remainingTime, setRemainingTime] = useState<string>('')
+  const { timeRemainingText: remainingTime } = useFundingCycleCountdown()
 
   const cycleNumber = useMemo(() => {
     if (type === 'current') {
@@ -26,23 +27,6 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     }
     return fundingCycle?.number ? fundingCycle.number.toNumber() + 1 : undefined
   }, [fundingCycle?.number, type])
-
-  /**
-   * Update the remaining time every second.
-   */
-  useEffect(() => {
-    if (!fundingCycle || type !== 'current') return
-    const fn = () => {
-      if (!fundingCycle) return
-      const now = Date.now() / 1000
-      const end = fundingCycle.start.add(fundingCycle.duration).toNumber()
-      const remaining = end - now > 0 ? end - now : 0
-      setRemainingTime(timeSecondsToDateString(remaining))
-    }
-    fn()
-    const timer = setInterval(fn, 1000)
-    return () => clearInterval(timer)
-  }, [fundingCycle, type])
 
   const upcomingCycleLength = useMemo(() => {
     if (!upcomingFundingCycle) return

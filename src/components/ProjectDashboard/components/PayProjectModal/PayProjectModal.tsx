@@ -13,7 +13,10 @@ export const PayProjectModal: React.FC = () => {
   return (
     <Formik
       initialValues={{
-        message: '',
+        message: {
+          messageString: '',
+          attachedUrl: undefined,
+        },
         userAcceptsTerms: false,
       }}
       validationSchema={validationSchema}
@@ -31,6 +34,11 @@ export const PayProjectModal: React.FC = () => {
             open={open}
             setOpen={setOpen}
             onSubmit={props.handleSubmit}
+            onCancel={setOpen => {
+              setOpen(false)
+              // Small timeout to allow the modal to close before resetting the form
+              setTimeout(() => props.resetForm(), 300)
+            }}
           >
             <div className="flex flex-col divide-y divide-grey-200 dark:divide-slate-500">
               <div className="flex justify-between gap-3 py-3">

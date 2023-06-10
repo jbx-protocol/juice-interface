@@ -5,7 +5,13 @@ import { ipfsGatewayUrl, percentFromUploadProgressEvent } from 'utils/ipfs'
 import useFilePicker from '../useFilePicker'
 import { ipfsFilePickerReducer } from './ipfsFilePickerReducer'
 
-export function useIpfsFilePicker({ accept }: { accept: string }) {
+export function useIpfsFilePicker({
+  accept,
+  onFileUrlChange,
+}: {
+  accept: string
+  onFileUrlChange?: (url: string | undefined) => void
+}) {
   const [state, dispatch] = useReducer(ipfsFilePickerReducer, {
     isUploading: false,
     uploadedUrl: null,
@@ -38,10 +44,12 @@ export function useIpfsFilePicker({ accept }: { accept: string }) {
       try {
         const uploadedUrl = await uploadFile(selectedFile)
         dispatch({ type: 'uploaded', url: uploadedUrl })
+        onFileUrlChange?.(uploadedUrl)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         if (e.name === 'CanceledError' || e.name === 'AbortError') {
           dispatch({ type: 'cancel' })
+          onFileUrlChange?.(undefined)
           console.info('Upload canceled')
           return
         }
@@ -49,7 +57,7 @@ export function useIpfsFilePicker({ accept }: { accept: string }) {
         dispatch({ type: 'error', error: e.message })
       }
     },
-    [uploadFile],
+    [onFileUrlChange, uploadFile],
   )
 
   const {
@@ -62,7 +70,8 @@ export function useIpfsFilePicker({ accept }: { accept: string }) {
   const removeFile = useCallback(() => {
     fpRemoveFile()
     dispatch({ type: 'cancel' })
-  }, [fpRemoveFile])
+    onFileUrlChange?.(undefined)
+  }, [fpRemoveFile, onFileUrlChange])
 
   const cancelUpload = useCallback(() => {
     abortController.current.abort()

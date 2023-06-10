@@ -9,7 +9,10 @@ import { useProjectCart } from './useProjectCart'
 import { useProjectMetadata } from './useProjectMetadata'
 
 const ValidationSchema = Yup.object().shape({
-  message: Yup.string().max(256, 'Message is too long'),
+  message: Yup.object().shape({
+    messageString: Yup.string().max(256, 'Message is too long'),
+    attachedUrl: Yup.string().url('Invalid URL'),
+  }),
   userAcceptsTerms: Yup.boolean().oneOf(
     [true],
     'You must accept the terms and conditions',

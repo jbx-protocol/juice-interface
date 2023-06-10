@@ -14,6 +14,7 @@ jest.mock('lib/api/ipfs')
 jest.mock('../useFilePicker')
 
 describe('useIpfsFilePicker', () => {
+  const onFileUrlChangeMock = jest.fn()
   let concreteOnFileChange: (file: File | null) => Promise<void>
   const consoleError = console.error
   const file = new File([''], 'filename')
@@ -33,6 +34,7 @@ describe('useIpfsFilePicker', () => {
         }
       },
     )
+    onFileUrlChangeMock.mockClear()
     // mock console.error to avoid seeing error messages in the console
     console.error = jest.fn()
   })
@@ -76,7 +78,10 @@ describe('useIpfsFilePicker', () => {
 
   it('should return the correct initial state', () => {
     const { result } = renderHook(() =>
-      useIpfsFilePicker({ accept: 'image/*' }),
+      useIpfsFilePicker({
+        accept: 'image/*',
+        onFileUrlChange: onFileUrlChangeMock,
+      }),
     )
     expect(result.current.selectedFile).toBeNull()
     expect(result.current.isUploading).toBe(false)
@@ -86,7 +91,12 @@ describe('useIpfsFilePicker', () => {
   })
 
   it('should call useFilePicker with the correct arguments', () => {
-    renderHook(() => useIpfsFilePicker({ accept: 'image/*' }))
+    renderHook(() =>
+      useIpfsFilePicker({
+        accept: 'image/*',
+        onFileUrlChange: onFileUrlChangeMock,
+      }),
+    )
     expect(useFilePicker).toHaveBeenCalledWith({
       accept: 'image/*',
       onFileChange: expect.any(Function),
@@ -95,7 +105,10 @@ describe('useIpfsFilePicker', () => {
 
   it('should call pinFile with the correct arguments', async () => {
     const { result } = renderHook(() =>
-      useIpfsFilePicker({ accept: 'image/*' }),
+      useIpfsFilePicker({
+        accept: 'image/*',
+        onFileUrlChange: onFileUrlChangeMock,
+      }),
     )
     const file = new File([''], 'filename')
     await act(async () => {
@@ -121,7 +134,10 @@ describe('useIpfsFilePicker', () => {
         message: errorMessage,
       })
       const { result } = renderHook(() =>
-        useIpfsFilePicker({ accept: 'image/*' }),
+        useIpfsFilePicker({
+          accept: 'image/*',
+          onFileUrlChange: onFileUrlChangeMock,
+        }),
       )
 
       await testFileAction(concreteOnFileChange)
@@ -145,7 +161,10 @@ describe('useIpfsFilePicker', () => {
           message: errorMessage,
         })
         const { result } = renderHook(() =>
-          useIpfsFilePicker({ accept: 'image/*' }),
+          useIpfsFilePicker({
+            accept: 'image/*',
+            onFileUrlChange: onFileUrlChangeMock,
+          }),
         )
 
         await testFileAction(concreteOnFileChange)
@@ -166,4 +185,43 @@ describe('useIpfsFilePicker', () => {
       })
     })
   })
+
+  it('should call onFileUrlChange when file changes', async () => {
+    const { result } = renderHook(() =>
+      useIpfsFilePicker({
+        accept: 'image/*',
+        onFileUrlChange: onFileUrlChangeMock,
+      }),
+    )
+    await testFileAction(concreteOnFileChange)
+    expect(onFileUrlChangeMock).toHaveBeenCalledWith(
+      'https://jbm.infura-ipfs.io/ipfs/hash',
+    )
+    testCurrentState(result.current, {
+      isUploading: false,
+      uploadedUrl: 'https://jbm.infura-ipfs.io/ipfs/hash',
+      uploadError: null,
+      uploadProgress: null,
+    })
+    expect(onFileUrlChangeMock).toHaveBeenCalledTimes(1)
+    expect(onFileUrlChangeMock).toHaveBeenCalledWith(
+      'https://jbm.infura-ipfs.io/ipfs/hash',
+    )
+  })
+
+  it.each(actionCases)(
+    `should call onFileUrlChange when file is %s`,
+    async action => {
+      const { result } = renderHook(() =>
+        useIpfsFilePicker({
+          accept: 'image/*',
+          onFileUrlChange: onFileUrlChangeMock,
+        }),
+      )
+
+      await testFileAction((result.current as any)[action])
+      expect(onFileUrlChangeMock).toHaveBeenCalledTimes(1)
+      expect(onFileUrlChangeMock).toHaveBeenCalledWith(undefined)
+    },
+  )
 })

@@ -272,6 +272,9 @@ msgstr ""
 msgid "Contributions"
 msgstr ""
 
+msgid "Attach an image"
+msgstr ""
+
 msgid "Choose wallet"
 msgstr ""
 
@@ -396,6 +399,9 @@ msgid "Podcast"
 msgstr ""
 
 msgid "Add {0}"
+msgstr ""
+
+msgid "Uploaded to: <0/>"
 msgstr ""
 
 msgid "You've completed this step."
@@ -1604,9 +1610,6 @@ msgstr ""
 msgid "Each field is required."
 msgstr ""
 
-msgid "Message from PyroDAO"
-msgstr ""
-
 msgid "Set up token migration"
 msgstr ""
 
@@ -2382,6 +2385,9 @@ msgid "<0>View transactions.</0>"
 msgstr ""
 
 msgid "Use a simple term like 'Pay' or 'Donate'."
+msgstr ""
+
+msgid "Message from {projectName}"
 msgstr ""
 
 msgid "to close"

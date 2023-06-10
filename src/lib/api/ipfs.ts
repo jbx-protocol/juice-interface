@@ -47,6 +47,7 @@ export const ipfsGet = async <T>(
 export const pinFile = async (
   image: File | Blob | string,
   onProgress?: (e: UploadProgressEvent) => void,
+  options?: { signal?: AbortSignal },
 ) => {
   const formData = new FormData()
   formData.append('file', image)
@@ -55,6 +56,7 @@ export const pinFile = async (
     'https://api.juicebox.money/api/ipfs/file',
     formData,
     {
+      signal: options?.signal,
       headers: {
         'Content-Type': 'multipart/form-data',
       },

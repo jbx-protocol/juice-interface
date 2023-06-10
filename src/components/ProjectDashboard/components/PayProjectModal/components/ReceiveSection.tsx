@@ -5,7 +5,7 @@ import { useProjectPaymentTokens } from 'components/ProjectDashboard/hooks/usePr
 import { ReceiveNftItem } from './ReceiveNftItem'
 import { ReceiveTokensItem } from './ReceiveTokensItem'
 
-export const ReceiveSection = () => {
+export const ReceiveSection = ({ className }: { className?: string }) => {
   const { userAddress, nftRewards } = usePayProjectModal()
   const { receivedTickets } = useProjectPaymentTokens()
 
@@ -14,7 +14,7 @@ export const ReceiveSection = () => {
   }
 
   return (
-    <div className="py-6">
+    <div className={className}>
       <span className="font-medium">
         <Trans>Receive</Trans>
       </span>

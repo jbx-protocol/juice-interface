@@ -344,35 +344,45 @@ export function buildJB721TierParams({
     )
     .slice() // clone object
     .sort((a, b) => {
+      // Tiers MUST BE in ascending order when sent to contract.
+
       // bit bongy, sorry!
       if (version === JB721_DELEGATE_V3_2) {
         if (
           (a as JB_721_TIER_PARAMS_V3_2).price.gt(
             (b as JB_721_TIER_PARAMS_V3_2).price,
           )
-        )
+        ) {
           return 1
+        }
+
         if (
           (a as JB_721_TIER_PARAMS_V3_2).price.lt(
             (b as JB_721_TIER_PARAMS_V3_2).price,
           )
-        )
+        ) {
           return -1
+        }
+
+        return 0
       }
 
-      // Tiers MUST BE in ascending order when sent to contract.
       if (
         (a as JB_721_TIER_PARAMS_V3_1).contributionFloor.gt(
           (b as JB_721_TIER_PARAMS_V3_1).contributionFloor,
         )
-      )
+      ) {
         return 1
+      }
+
       if (
         (a as JB_721_TIER_PARAMS_V3_1).contributionFloor.lt(
           (b as JB_721_TIER_PARAMS_V3_1).contributionFloor,
         )
-      )
+      ) {
         return -1
+      }
+
       return 0
     })
 }

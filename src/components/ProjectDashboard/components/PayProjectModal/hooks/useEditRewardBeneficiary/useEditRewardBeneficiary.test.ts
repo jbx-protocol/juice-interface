@@ -12,7 +12,9 @@ jest.mock('hooks/Wallet', () => ({
 
 describe('useEditRewardBeneficiary', () => {
   it('should return the correct values', () => {
-    const { result } = renderHook(() => useEditRewardBeneficiary())
+    const { result } = renderHook(() =>
+      useEditRewardBeneficiary(undefined, undefined),
+    )
     expect(result.current).toEqual({
       isEditing: false,
       isLoading: false,
@@ -24,7 +26,9 @@ describe('useEditRewardBeneficiary', () => {
   })
 
   it('should call dispatch with the correct value when editClicked is called', () => {
-    const { result } = renderHook(() => useEditRewardBeneficiary())
+    const { result } = renderHook(() =>
+      useEditRewardBeneficiary(undefined, undefined),
+    )
     act(() => {
       result.current.editClicked()
     })

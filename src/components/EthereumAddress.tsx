@@ -8,7 +8,7 @@ import { twMerge } from 'tailwind-merge'
 import { ensAvatarUrlForAddress } from 'utils/ens'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 
-interface EthereumAddressProps {
+export interface EthereumAddressProps {
   className?: string
   avatarClassName?: string
   address: string | undefined
@@ -20,6 +20,7 @@ interface EthereumAddressProps {
   withEnsAvatar?: boolean
   href?: string
   truncateTo?: number
+  showEnsLoading?: boolean
 }
 
 export default function EthereumAddress({
@@ -34,8 +35,11 @@ export default function EthereumAddress({
   ensDisabled = false,
   withEnsAvatar = false,
   truncateTo,
+  showEnsLoading = false,
 }: EthereumAddressProps) {
-  const { data: ensName } = useEnsName(address, { enabled: !ensDisabled })
+  const { data: ensName, isLoading } = useEnsName(address, {
+    enabled: !ensDisabled,
+  })
 
   const formattedAddress = useMemo(() => {
     if (label) return label
@@ -56,7 +60,12 @@ export default function EthereumAddress({
       }
       open={tooltipDisabled ? false : undefined}
     >
-      <span className="inline-flex items-center">
+      <span
+        className={twMerge(
+          'inline-flex items-center',
+          showEnsLoading && isLoading ? 'animate-pulse' : null,
+        )}
+      >
         {withEnsAvatar && address && (
           <img
             src={ensAvatarUrlForAddress(address, { size: 72 })}

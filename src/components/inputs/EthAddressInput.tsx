@@ -5,18 +5,25 @@ import { isAddress } from 'ethers/lib/utils'
 import { resolveAddress } from 'lib/api/ens'
 import { useCallback, useEffect, useState } from 'react'
 
+import { InputRef } from 'antd'
 import { JuiceInput } from './JuiceTextInput'
 
 const isENS = (address = '') => address.endsWith('.eth')
 
 export function EthAddressInput({
+  className,
   value,
   placeholder = `juicebox.eth / ${constants.AddressZero}`,
   onChange,
+  onBlur,
+  ref,
 }: {
+  className?: string
   value?: string
   placeholder?: string
   onChange?: (value: string) => void
+  onBlur?: VoidFunction
+  ref?: React.Ref<InputRef>
 }) {
   const [input, setInput] = useState<string>()
 
@@ -94,6 +101,8 @@ export function EthAddressInput({
   return (
     <div className="w-full">
       <JuiceInput
+        className={className}
+        ref={ref}
         allowClear={true}
         type="text"
         spellCheck={false}
@@ -102,6 +111,7 @@ export function EthAddressInput({
         suffix={loadingENSName ? <LoadingOutlined spin /> : null}
         disabled={loadingENSName}
         onChange={e => onInputChange(e.target.value)}
+        onBlur={onBlur}
       />
       {extraText ? (
         <div className="mt-1 text-xs text-grey-500 dark:text-grey-300">

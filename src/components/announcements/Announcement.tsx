@@ -33,8 +33,11 @@ export const Announcement: React.FC<
     async setOpen => {
       markCompleted()
       setActiveId(undefined)
-      // Await is required if these props use async functions
-      await props.onOk?.(setOpen)
+      if ('onOk' in props) {
+        // Await is required if these props use async functions
+        await props.onOk?.(setOpen)
+      }
+
       setOpen(false)
     },
     [markCompleted, props, setActiveId],

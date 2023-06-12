@@ -7,6 +7,7 @@ import { act } from '@testing-library/react'
 import { renderHook } from '@testing-library/react-hooks'
 import useFilePicker from 'hooks/useFilePicker'
 import { pinFile } from 'lib/api/ipfs'
+import { ipfsGatewayUrl } from 'utils/ipfs'
 import { IpfsFilePickerState } from './ipfsFilePickerReducer'
 import { useIpfsFilePicker } from './useIpfsFilePicker'
 
@@ -120,9 +121,7 @@ describe('useIpfsFilePicker', () => {
       expect.anything(),
     )
     expect(result.current.isUploading).toBe(false)
-    expect(result.current.uploadedUrl).toBe(
-      'https://jbm.infura-ipfs.io/ipfs/hash',
-    )
+    expect(result.current.uploadedUrl).toBe(ipfsGatewayUrl('hash'))
     expect(result.current.uploadError).toBeNull()
     expect(result.current.uploadProgress).toBeNull()
   })
@@ -194,19 +193,15 @@ describe('useIpfsFilePicker', () => {
       }),
     )
     await testFileAction(concreteOnFileChange)
-    expect(onFileUrlChangeMock).toHaveBeenCalledWith(
-      'https://jbm.infura-ipfs.io/ipfs/hash',
-    )
+    expect(onFileUrlChangeMock).toHaveBeenCalledWith(ipfsGatewayUrl('hash'))
     testCurrentState(result.current, {
       isUploading: false,
-      uploadedUrl: 'https://jbm.infura-ipfs.io/ipfs/hash',
+      uploadedUrl: ipfsGatewayUrl('hash'),
       uploadError: null,
       uploadProgress: null,
     })
     expect(onFileUrlChangeMock).toHaveBeenCalledTimes(1)
-    expect(onFileUrlChangeMock).toHaveBeenCalledWith(
-      'https://jbm.infura-ipfs.io/ipfs/hash',
-    )
+    expect(onFileUrlChangeMock).toHaveBeenCalledWith(ipfsGatewayUrl('hash'))
   })
 
   it.each(actionCases)(

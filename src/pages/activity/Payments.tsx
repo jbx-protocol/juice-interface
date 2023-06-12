@@ -23,22 +23,19 @@ const ProjectHandle = ({
   if (!project?.projectId) return null
 
   return (
-    <div className="font-medium text-bluebs-500 dark:text-bluebs-300">
+    <span className="text-sm font-medium">
       {project.pv === PV_V1 ? (
         <V1ProjectHandle
           projectId={project.projectId}
           handle={project.handle}
         />
       ) : (
-        <div className="flex items-baseline">
-          <V2V3ProjectHandleLink
-            className="mr-2"
-            projectId={project.projectId}
-            handle={project.handle}
-          />
-        </div>
+        <V2V3ProjectHandleLink
+          projectId={project.projectId}
+          handle={project.handle}
+        />
       )}
-    </div>
+    </span>
   )
 }
 
@@ -71,11 +68,7 @@ export function PaymentsFeed() {
           <ActivityEvent
             event={event}
             withProjectLink={false}
-            header={
-              <span className="text-sm font-medium text-grey-900">
-                <ProjectHandle project={event.project} />
-              </span>
-            }
+            header={<ProjectHandle project={event.project} />}
             subject={
               <span className="font-heading text-lg">
                 <ETHAmount amount={event.amount} />

@@ -2,6 +2,7 @@ import {
   JB721_DELEGATE_V3,
   JB721_DELEGATE_V3_1,
   JB721_DELEGATE_V3_2,
+  JB721_DELEGATE_V3_3,
 } from 'constants/delegateVersions'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
@@ -95,17 +96,32 @@ async function isJB721DelegateV3_2(deployerAddress: string) {
   )
 }
 
+async function isJB721DelegateV3_3(deployerAddress: string) {
+  const deployerV3_2Address = await loadJB721DelegateAddress(
+    'JBTiered721DelegateDeployer',
+    JB721_DELEGATE_V3_3,
+  )
+
+  return (
+    Boolean(deployerAddress) &&
+    !isZeroAddress(deployerAddress) &&
+    isEqualAddress(deployerV3_2Address, deployerAddress)
+  )
+}
+
 async function fetchJB721DelegateVersion(dataSourceAddress: string) {
   const isV3 = await isJB721DelegateV3(dataSourceAddress)
   if (isV3) return JB721_DELEGATE_V3
 
   const deployerAddress = await fetchDeployerOf(dataSourceAddress)
-  const [isV3_1, isV3_2] = await Promise.all([
+  const [isV3_1, isV3_2, isV3_3] = await Promise.all([
     isJB721DelegateV3_1(deployerAddress),
     isJB721DelegateV3_2(deployerAddress),
+    isJB721DelegateV3_3(deployerAddress),
   ])
   if (isV3_1) return JB721_DELEGATE_V3_1
   if (isV3_2) return JB721_DELEGATE_V3_2
+  if (isV3_3) return JB721_DELEGATE_V3_3
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

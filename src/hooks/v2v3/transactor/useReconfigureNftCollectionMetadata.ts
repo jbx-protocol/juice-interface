@@ -1,5 +1,8 @@
 import { t } from '@lingui/macro'
-import { JB721_DELEGATE_V3_2 } from 'constants/delegateVersions'
+import {
+  JB721_DELEGATE_V3_2,
+  JB721_DELEGATE_V3_3,
+} from 'constants/delegateVersions'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -48,7 +51,9 @@ export function useReconfigureNftCollectionMetadata(): TransactorInstance<NftCol
 
     return transactor(
       JB721TieredDelegate,
-      version === JB721_DELEGATE_V3_2 ? 'setMetadata' : 'setContractUri',
+      version === JB721_DELEGATE_V3_2 || version === JB721_DELEGATE_V3_3
+        ? 'setMetadata'
+        : 'setContractUri',
       buildArgs(version, { contractUri: ipfsUri(uri) }),
       {
         ...txOpts,

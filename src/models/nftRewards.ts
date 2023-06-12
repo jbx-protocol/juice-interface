@@ -4,10 +4,12 @@ import { CurrencyOption } from './currencyOption'
 export type JB721DELEGATE_V3 = '3'
 export type JB721DELEGATE_V3_1 = '3-1'
 export type JB721DELEGATE_V3_2 = '3-2'
+export type JB721DELEGATE_V3_3 = '3-3'
 export type JB721DelegateVersion =
   | JB721DELEGATE_V3
   | JB721DELEGATE_V3_1
   | JB721DELEGATE_V3_2
+  | JB721DELEGATE_V3_3
 
 // How we store reward tiers for use around the app
 export type NftRewardTier = {

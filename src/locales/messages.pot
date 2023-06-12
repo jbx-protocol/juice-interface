@@ -122,6 +122,9 @@ msgstr ""
 msgid "Volume"
 msgstr ""
 
+msgid "Uploading"
+msgstr ""
+
 msgid "Token issuance rate:"
 msgstr ""
 

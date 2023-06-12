@@ -3,6 +3,8 @@ import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
 import { useDBProjectsInfiniteQuery } from 'hooks/useProjects'
+import { useWalletBookmarkedIds } from 'hooks/useWalletBookmarkedProjects'
+import { useWallet } from 'hooks/Wallet'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
 import { useLoadMoreContent } from '../../hooks/useLoadMore'
@@ -33,6 +35,12 @@ export default function LatestProjects() {
     [],
   )
 
+  const { userAddress } = useWallet()
+
+  const { ids: bookmarkedProjectIds } = useWalletBookmarkedIds({
+    wallet: userAddress,
+  })
+
   useEffect(() => {
     if (scrolledToBottom) {
       fetchNextPage()
@@ -44,7 +52,11 @@ export default function LatestProjects() {
       {concatenatedPages && (
         <Grid>
           {concatenatedPages.map(p => (
-            <ProjectCard key={`${p.id}_${p.pv}`} project={p} />
+            <ProjectCard
+              key={`${p.id}_${p.pv}`}
+              project={p}
+              bookmarked={bookmarkedProjectIds.has(p.id)}
+            />
           ))}
         </Grid>
       )}

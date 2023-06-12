@@ -1,13 +1,15 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { WrenchIcon } from '@heroicons/react/24/outline'
-import { Trans, t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Tooltip } from 'antd'
+import BookmarkButton from 'components/BookmarkButton/BookmarkButton'
 import { SubscribeButton } from 'components/SubscribeButton'
 import { V2V3ProjectToolsDrawer } from 'components/v2v3/V2V3Project/V2V3ProjectToolsDrawer'
+import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useWallet } from 'hooks/Wallet'
 import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/useV2ConnectedWalletHasPermission'
+import { useWallet } from 'hooks/Wallet'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
@@ -24,17 +26,22 @@ export function V2V3ProjectHeaderActions() {
 
   const { projectId } = useContext(ProjectMetadataContext)
 
-  // If the user is not connected to a wallet, or the wallet is on an unsupported chain, don't show the button
-  const showSubscribeButton = wallet.isConnected && !wallet.chainUnsupported
+  // If the user is not connected to a wallet, or the wallet is on an unsupported chain, don't show the buttons
+  const showWalletButtons = wallet.isConnected && !wallet.chainUnsupported
 
   if (projectId === undefined) return null
 
   return (
     <>
       <div className="flex items-center gap-x-4">
-        {showSubscribeButton && (
+        {showWalletButtons && (
           <>
             <SubscribeButton projectId={projectId} tooltipPlacement="bottom" />
+            <BookmarkButton
+              projectId={projectId}
+              pv={PV_V2}
+              tooltipPlacement="bottom"
+            />
             <Divider className="h-8" type="vertical" />
           </>
         )}

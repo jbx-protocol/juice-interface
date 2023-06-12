@@ -1,9 +1,11 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
+import { useWallet } from 'hooks/Wallet'
 import { useLoadMoreContent } from 'hooks/useLoadMore'
 import { useDBProjectsInfiniteQuery } from 'hooks/useProjects'
+import { useWalletBookmarkedIds } from 'hooks/useWalletBookmarkedProjects'
 import { DBProjectQueryOpts } from 'models/dbProject'
 import { ProjectTagName } from 'models/project-tags'
 import { PV } from 'models/pv'
@@ -49,6 +51,12 @@ export default function AllProjects({
     hasNextPage,
   })
 
+  const { userAddress } = useWallet()
+
+  const { ids: bookmarkedProjectIds } = useWalletBookmarkedIds({
+    wallet: userAddress,
+  })
+
   const concatenatedPages = projects?.pages?.reduce(
     (prev, group) => [...prev, ...group],
     [],
@@ -65,7 +73,11 @@ export default function AllProjects({
       {concatenatedPages && (
         <Grid>
           {concatenatedPages.map(p => (
-            <ProjectCard key={p.id} project={p} />
+            <ProjectCard
+              key={p.id}
+              project={p}
+              bookmarked={bookmarkedProjectIds?.has(p.id)}
+            />
           ))}
         </Grid>
       )}

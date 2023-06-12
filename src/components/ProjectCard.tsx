@@ -1,4 +1,5 @@
 import * as constants from '@ethersproject/constants'
+import { BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
 import { Skeleton } from 'antd'
 import { PV_V2 } from 'constants/pv'
 import { useProjectHandleText } from 'hooks/useProjectHandleText'
@@ -15,7 +16,13 @@ import ProjectLogo from './ProjectLogo'
 import { ProjectTagsList } from './ProjectTags/ProjectTagsList'
 import ETHAmount from './currency/ETHAmount'
 
-export default function ProjectCard({ project }: { project?: DBProject }) {
+export default function ProjectCard({
+  project,
+  bookmarked,
+}: {
+  project?: DBProject
+  bookmarked?: boolean
+}) {
   const { data: metadata } = useProjectMetadata(project?.metadataUri)
   const { handleText } = useProjectHandleText({
     handle: project?.handle,
@@ -105,6 +112,9 @@ export default function ProjectCard({ project }: { project?: DBProject }) {
             </div>
           ) : null}
         </div>
+        {bookmarked && (
+          <BookmarkIconSolid className="absolute top-4 right-0 h-4 text-black dark:text-slate-100 md:right-4" />
+        )}
         {isArchived && <ArchivedBadge />}
         {!metadata && <Loading />}
       </div>

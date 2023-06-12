@@ -1,121 +1,92 @@
-import { EnvelopeIcon, PhotoIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
-import { Button } from 'antd'
-import { Callout } from 'components/Callout'
 import ExternalLink from 'components/ExternalLink'
 import { usePayProjectModal } from 'components/ProjectDashboard/hooks/usePayProjectModal'
-import Sticker from 'components/icons/Sticker'
 import { JuiceModal } from 'components/modals/JuiceModal'
+import { Formik } from 'formik'
 import { twMerge } from 'tailwind-merge'
+import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
 
 export const PayProjectModal: React.FC = () => {
-  const { open, primaryAmount, secondaryAmount, setOpen } = usePayProjectModal()
+  const { open, primaryAmount, secondaryAmount, validationSchema, setOpen } =
+    usePayProjectModal()
   return (
-    <JuiceModal
-      className="w-full max-w-xl"
-      buttonPosition="stretch"
-      title={t`Pay PyroDAO`}
-      position="top"
-      okText={t`Pay 2.4 ETH`}
-      open={open}
-      setOpen={setOpen}
+    <Formik
+      initialValues={{
+        message: '',
+        userAcceptsTerms: false,
+      }}
+      validationSchema={validationSchema}
+      onSubmit={values => console.info('submit foo', JSON.stringify(values))}
     >
-      <div className="flex flex-col divide-y divide-grey-200 dark:divide-slate-500">
-        <div className="flex justify-between gap-3 py-3">
-          <span className="font-medium">
-            <Trans>Total amount</Trans>
-          </span>
-          <div>
-            <span>{primaryAmount}</span>{' '}
-            {secondaryAmount && (
-              <span className="text-grey-500 dark:text-slate-200">
-                ({secondaryAmount})
-              </span>
-            )}
-          </div>
-        </div>
-
-        <ReceiveSection />
-
-        <div className="py-6">
-          <span className="font-medium">
-            <Trans>Message (optional)</Trans>
-          </span>
-          <div>
-            <Input
-              className="mt-1.5"
-              placeholder="Attach an on-chain message to this payment"
-            />
-          </div>
-          <Button
-            className="mt-3 flex items-center gap-2"
-            type="dashed"
-            icon={<PhotoIcon className="h-5 w-5" />}
+      {props => (
+        <form name="PayProjectModalForm" onSubmit={props.handleSubmit}>
+          <JuiceModal
+            className="w-full max-w-xl"
+            buttonPosition="stretch"
+            title={t`Pay PyroDAO`}
+            position="top"
+            okButtonForm="PayProjectModalForm"
+            okText={t`Pay 2.4 ETH`}
+            open={open}
+            setOpen={setOpen}
+            onSubmit={props.handleSubmit}
           >
-            <Trans>Add image</Trans>
-          </Button>
-          <Callout
-            collapsible
-            className="mt-6 border border-bluebs-100 bg-bluebs-25 text-bluebs-700 dark:border-bluebs-800 dark:bg-bluebs-950 dark:text-bluebs-400"
-            iconComponent={<EnvelopeIcon className="h-6 w-6" />}
-          >
-            <div>
-              <div className="font-medium text-bluebs-700 dark:text-bluebs-300">
-                <Trans>Message from PyroDAO</Trans>
+            <div className="flex flex-col divide-y divide-grey-200 dark:divide-slate-500">
+              <div className="flex justify-between gap-3 py-3">
+                <span className="font-medium">
+                  <Trans>Total amount</Trans>
+                </span>
+                <div>
+                  <span>{primaryAmount}</span>{' '}
+                  {secondaryAmount && (
+                    <span className="text-grey-500 dark:text-slate-200">
+                      ({secondaryAmount})
+                    </span>
+                  )}
+                </div>
               </div>
-              <p className="mt-2">
-                Lorem ipsum dolor sit amet consectetur. Aliquam vitae turpis sit
-                consequat ultricies facilisis phasellus tempor dignissim.
-                Blandit pellentesque sit a duis gravida molestie scelerisque at
-                tempor. Sit nunc volutpat pharetra in. Vitae viverra pretium
-                amet odio egestas nibh lectus consectetur sem. Dictum eget
-                imperdiet tortor nisi neque. Quis nibh sodales nec consectetur
-                at.
-              </p>
-            </div>
-          </Callout>
-          <div className="mt-6 flex gap-2">
-            <input type="checkbox" />
-            <span>
-              <Trans>
-                I accept the{' '}
-                <ExternalLink href="https://docs.juicebox.money/dev/learn/risks">
-                  risks
-                </ExternalLink>{' '}
-                associated with the Juicebox protocol.
-              </Trans>
-            </span>
-          </div>
-        </div>
-      </div>
-    </JuiceModal>
-  )
-}
 
-const Input: React.FC<
-  React.DetailedHTMLProps<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  >
-> = ({ className, ...props }) => {
-  return (
-    <div
-      className={twMerge(
-        'flex items-center justify-between rounded-lg border border-grey-300 px-3 py-2 shadow-sm dark:border-slate-600',
-        className,
+              <ReceiveSection className="py-6" />
+
+              <div className="py-6">
+                <MessageSection />
+
+                <div className="mt-6 flex gap-2">
+                  <input
+                    id="userAcceptsTerms"
+                    name="userAcceptsTerms"
+                    type="checkbox"
+                    checked={props.values.userAcceptsTerms}
+                    onChange={() =>
+                      props.setFieldValue(
+                        'userAcceptsTerms',
+                        !props.values.userAcceptsTerms,
+                      )
+                    }
+                  />
+                  <label
+                    htmlFor="userAcceptsTerms"
+                    className={twMerge(
+                      props.errors.userAcceptsTerms &&
+                        props.submitCount > 0 &&
+                        'font-medium text-error-500 transition-colors',
+                    )}
+                  >
+                    <Trans>
+                      I accept the{' '}
+                      <ExternalLink href="https://docs.juicebox.money/dev/learn/risks">
+                        risks
+                      </ExternalLink>{' '}
+                      associated with the Juicebox protocol.
+                    </Trans>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </JuiceModal>
+        </form>
       )}
-    >
-      <input
-        {...props}
-        className={twMerge(
-          'flex-1 bg-transparent outline-none dark:placeholder:text-slate-300',
-        )}
-      />
-      <Sticker
-        role="button"
-        className="h-4 w-4 text-grey-400 dark:text-slate-200"
-      />
-    </div>
+    </Formik>
   )
 }

@@ -13,7 +13,7 @@ type ModalSetOpenFn = (open: boolean) => void
 export type ModalOnOkFn = (setOpen: ModalSetOpenFn) => void
 export type ModalOnCancelFn = (setOpen: ModalSetOpenFn) => void
 
-export interface JuiceModalProps {
+export type JuiceModalProps = {
   className?: string
   id?: string
   title?: ReactNode
@@ -29,14 +29,21 @@ export interface JuiceModalProps {
     | 'center'
   buttonPosition?: 'right' | 'stretch'
   open: boolean
+  okButtonForm?: string
   okText?: ReactNode
   okLoading?: boolean
   cancelText?: ReactNode
   hideCancelButton?: boolean
   setOpen: ModalSetOpenFn
-  onOk?: ModalOnOkFn
   onCancel?: ModalOnCancelFn
-}
+} & (
+  | {
+      onOk?: ModalOnOkFn
+    }
+  | {
+      onSubmit?: VoidFunction
+    }
+)
 
 export const JuiceModal = ({
   className,
@@ -46,17 +53,28 @@ export const JuiceModal = ({
   position = 'top',
   buttonPosition = 'right',
   open,
+  okButtonForm,
   okText = t`OK`,
   okLoading = false,
   cancelText = t`Cancel`,
   hideCancelButton,
   setOpen,
-  onOk: _onOk,
   onCancel: _onCancel,
+  ...rest
 }: PropsWithChildren<JuiceModalProps>) => {
   const isMobile = useMobile()
   const closeModal = () => setOpen(false)
-  const onOk = _onOk ? () => _onOk(setOpen) : closeModal
+  let onOk: VoidFunction | undefined
+  let onSubmit: VoidFunction | undefined
+  if ('onSubmit' in rest && rest.onSubmit) {
+    onSubmit = rest.onSubmit
+    onOk = undefined
+  } else if ('onOk' in rest && rest.onOk) {
+    onOk = () => rest.onOk!(setOpen)
+  } else {
+    onOk = closeModal
+  }
+
   const onCancel = _onCancel ? () => _onCancel(setOpen) : closeModal
 
   const positionClasses = useMemo(() => {
@@ -94,7 +112,8 @@ export const JuiceModal = ({
 
   return (
     <Popup id={id} open={open} setOpen={setOpen} onMaskClick={onCancel}>
-      <div
+      <form
+        onSubmit={onSubmit}
         className={twMerge(
           'relative mx-auto mt-10 w-full max-w-md overflow-hidden rounded-lg bg-smoke-25 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800 md:absolute',
           positionClasses,
@@ -123,6 +142,7 @@ export const JuiceModal = ({
                 </CancelButton>
               )}
               <CTAButton
+                form={okButtonForm}
                 className={buttonPositionClasses.self}
                 loading={okLoading}
                 onClick={onOk}
@@ -136,7 +156,7 @@ export const JuiceModal = ({
             />
           </div>
         </div>
-      </div>
+      </form>
     </Popup>
   )
 }
@@ -144,15 +164,17 @@ export const JuiceModal = ({
 const CTAButton = ({
   className,
   loading,
+  form,
   onClick,
   children,
 }: PropsWithChildren<{
   loading: boolean
   className?: string
+  form?: string
   onClick?: VoidFunction
 }>) => (
   <button
-    type="button"
+    type={form ? 'submit' : 'button'}
     className={twMerge(
       'inline-flex justify-center rounded-md border border-transparent bg-bluebs-500 px-4 py-2 text-sm font-medium text-white hover:bg-bluebs-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
       loading ? 'cursor-not-allowed opacity-50' : '',

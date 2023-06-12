@@ -58,7 +58,7 @@ export const Callout: React.FC<React.PropsWithChildren<CalloutProps>> &
         {children}
       </div>
       {collapsible && (
-        <div>
+        <div className="ml-auto">
           <ChevronDownIcon
             className={twJoin('h-5 w-5', expanded ? 'rotate-180' : '')}
           />

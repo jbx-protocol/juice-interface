@@ -6,12 +6,12 @@ import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { CurrencyUtils } from 'utils/format/formatCurrency'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
+import { useProjectCart } from '../useProjectCart'
 import { usePayProjectModal } from './usePayProjectModal'
-import { useProjectCart } from './useProjectCart'
 
 jest.mock('hooks/Wallet')
 jest.mock('hooks/useCurrencyConverter')
-jest.mock('./useProjectCart')
+jest.mock('../useProjectCart')
 
 describe('usePayProjectModal', () => {
   const DefaultuseProjectCart = {

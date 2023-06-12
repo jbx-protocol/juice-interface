@@ -1715,6 +1715,9 @@ msgstr ""
 msgid "{0} is required"
 msgstr ""
 
+msgid "View the latest payments on Juicebox."
+msgstr ""
+
 msgid "0% fee"
 msgstr ""
 
@@ -2475,9 +2478,6 @@ msgid "Project Owner"
 msgstr ""
 
 msgid "Unarchive project"
-msgstr ""
-
-msgid "View all of the latest payments on Juicebox."
 msgstr ""
 
 msgid "CSV data wasn't ready for export. Wait a few seconds and try again."

@@ -1,5 +1,6 @@
+import { Trans } from '@lingui/macro'
+import { ActivityEvent } from 'components/activityEventElems/ActivityElement'
 import ETHAmount from 'components/currency/ETHAmount'
-import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
@@ -13,7 +14,6 @@ import {
 import { client } from 'lib/apollo/client'
 import { DBProject } from 'models/dbProject'
 import { classNames } from 'utils/classNames'
-import { formatHistoricalDate } from 'utils/format/formatDate'
 
 const ProjectHandle = ({
   project,
@@ -54,45 +54,51 @@ export function PaymentsFeed() {
 
   const events = data?.payEvents
 
+  if (loading) {
+    return <Loading />
+  }
+
   return (
     <div>
-      {events || !loading ? (
-        <div>
-          {events?.map((e, i) => (
-            <div
-              className={classNames(
-                'mb-2 border-b border-smoke-200 pb-5 dark:border-grey-600',
-                i !== 0 ? 'pt-2' : '',
-              )}
-              key={e.id}
-            >
-              <div className="flex items-baseline justify-between">
-                <ProjectHandle project={e.project} />
-
-                <div className="text-xs text-grey-500 dark:text-grey-300">
-                  {e.timestamp && formatHistoricalDate(e.timestamp * 1000)}
-                </div>
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="text-base font-medium">
-                  <ETHAmount amount={e.amount} precision={2} />
-                </span>
-                <span>
-                  <JuiceboxAccountLink address={e.beneficiary} withEnsAvatar />
-                </span>
-              </div>
-              <div>
+      {events?.map((event, idx) => (
+        <div
+          className={classNames(
+            'mb-2 border-b border-smoke-200 pb-5 dark:border-grey-600',
+            idx !== 0 ? 'pt-2' : '',
+          )}
+          key={event.id}
+        >
+          <ActivityEvent
+            event={event}
+            withProjectLink={false}
+            header={
+              <span className="text-sm font-medium text-grey-900">
+                <ProjectHandle project={event.project} />
+              </span>
+            }
+            subject={
+              <span className="font-heading text-lg">
+                <ETHAmount amount={event.amount} />
+              </span>
+            }
+            extra={
+              event.feeFromV2Project ? (
+                <Trans>
+                  Fee from{' '}
+                  <span>
+                    <V2V3ProjectHandleLink projectId={event.feeFromV2Project} />
+                  </span>
+                </Trans>
+              ) : (
                 <RichNote
                   className="text-grey-900 dark:text-slate-100"
-                  note={e.note}
+                  note={event.note ?? ''}
                 />
-              </div>
-            </div>
-          ))}
+              )
+            }
+          />
         </div>
-      ) : (
-        <Loading />
-      )}
+      ))}
     </div>
   )
 }

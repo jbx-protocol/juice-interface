@@ -17,6 +17,9 @@ query PayEvents(
     beneficiary
     note
     timestamp
+    feeFromV2Project
+    from
+    txHash
     project {
       id
       projectId

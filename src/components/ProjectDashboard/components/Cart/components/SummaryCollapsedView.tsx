@@ -25,7 +25,11 @@ export const SummaryCollapsedView = () => {
           components={[
             ...nftRewards.map(nft => ({
               Component: SmallNftSquare,
-              props: { nftReward: nft, className: 'h-full w-full' },
+              props: {
+                border: true,
+                nftReward: nft,
+                className: 'h-full w-full',
+              },
             })),
             {
               Component: CurrencyIcon,

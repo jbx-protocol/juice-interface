@@ -19,16 +19,19 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
       <div className="flex items-center gap-3">
         <div className="relative z-0 flex">
           <SmallNftSquare
+            border
             nftReward={rewardTiers?.[0]}
             loading={nftsLoading}
             className="z-20 h-14 w-14 bg-bluebs-400"
           />
           <SmallNftSquare
+            border
             nftReward={rewardTiers?.[1]}
             loading={nftsLoading}
             className="z-10 -ml-[18px] h-14 w-14 bg-juice-400"
           />
           <SmallNftSquare
+            border
             nftReward={rewardTiers?.[2]}
             loading={nftsLoading}
             className="-ml-[18px] h-14 w-14 bg-melon-600"

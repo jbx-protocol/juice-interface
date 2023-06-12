@@ -4,13 +4,14 @@ import {
 } from 'components/ProjectDashboard/hooks'
 import { useCallback } from 'react'
 
-export const useProjectTokensCartItem = () => {
+export const useProjectPaymentTokens = () => {
   const {
     totalAmount: payAmount,
     userIsReceivingTokens,
     dispatch,
   } = useProjectCart()
-  const { receivedTickets } = useTokensPerEth(payAmount)
+  const { receivedTickets, receivedTokenSymbolText } =
+    useTokensPerEth(payAmount)
 
   const removeTokens = useCallback(
     () => dispatch({ type: 'removeTokens' }),
@@ -19,6 +20,10 @@ export const useProjectTokensCartItem = () => {
   return {
     userIsReceivingTokens,
     receivedTickets,
+    receivedTokenSymbolText:
+      receivedTokenSymbolText === 'tokens'
+        ? 'Project'
+        : receivedTokenSymbolText,
     removeTokens,
   }
 }

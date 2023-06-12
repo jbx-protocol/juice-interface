@@ -1,11 +1,11 @@
 import { ProjectHeaderLogo } from 'components/ProjectDashboard/components/ProjectHeader/components/ProjectHeaderLogo'
-import { useProjectTokensCartItem } from '../../hooks/useProjectTokensCartItem'
+import { useProjectPaymentTokens } from 'components/ProjectDashboard/hooks/useProjectPaymentTokens'
 import { CartItem } from './CartItem'
 import { CartItemBadge } from './CartItemBadge'
 
 export const ProjectTokensCartItem = () => {
   const { receivedTickets, userIsReceivingTokens, removeTokens } =
-    useProjectTokensCartItem()
+    useProjectPaymentTokens()
 
   if (!userIsReceivingTokens) {
     return null

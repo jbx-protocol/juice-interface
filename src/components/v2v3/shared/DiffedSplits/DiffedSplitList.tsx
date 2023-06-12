@@ -8,23 +8,12 @@ import {
 import { SplitProps } from '../SplitItem'
 import { DiffedSplitItem } from './DiffedSplitItem'
 
-export default function DiffedSplitList({
-  splits,
-  diffSplits,
-  showAmounts = false,
-  showFees = false,
-  currency,
-  totalValue,
-  projectOwnerAddress,
-  valueSuffix,
-  valueFormatProps,
-  reservedRate,
-  showDiffs,
-}: {
+type DiffedSplitListProps = {
   splits: Split[]
   diffSplits?: Split[]
   currency?: BigNumber
   totalValue: BigNumber | undefined
+  previousTotalValue?: BigNumber
   projectOwnerAddress: string | undefined
   showAmounts?: boolean
   showFees?: boolean
@@ -32,7 +21,22 @@ export default function DiffedSplitList({
   valueFormatProps?: { precision?: number }
   reservedRate?: number
   showDiffs?: boolean
-}) {
+}
+
+export default function DiffedSplitList({
+  splits,
+  diffSplits,
+  showAmounts = false,
+  showFees = false,
+  currency,
+  totalValue,
+  previousTotalValue,
+  projectOwnerAddress,
+  valueSuffix,
+  valueFormatProps,
+  reservedRate,
+  showDiffs,
+}: DiffedSplitListProps) {
   const ownerSplit = useMemo(() => {
     if (!projectOwnerAddress) return
     return getProjectOwnerRemainderSplit(projectOwnerAddress, splits)
@@ -44,6 +48,7 @@ export default function DiffedSplitList({
   }, [projectOwnerAddress, diffSplits, showDiffs])
 
   const uniqueSplits = processUniqueSplits({
+    oldTotalValue: previousTotalValue,
     oldSplits: showDiffs ? diffSplits : undefined,
     newSplits: splits,
   })

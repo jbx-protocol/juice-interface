@@ -22,8 +22,9 @@ export function ReconfigureRichPreview({
 }) {
   const {
     projectOwnerAddress,
-    fundingCycle: currentFC,
+    fundingCycle: previousFC,
     payoutSplits: diffPayoutSplits,
+    distributionLimit: previousDistributionLimit,
     reservedTokensSplits: diffReservedSplits,
   } = useContext(V2V3ProjectContext)
 
@@ -61,7 +62,7 @@ export function ReconfigureRichPreview({
 
   const weight = deriveNextIssuanceRate({
     weight: decodedData._data.weight,
-    previousFC: currentFC,
+    previousFC: previousFC,
   })
 
   const showDiffs = !isPastTransaction
@@ -101,6 +102,7 @@ export function ReconfigureRichPreview({
                 diffSplits={diffPayoutSplits}
                 currency={distributionLimitCurrency}
                 totalValue={distributionLimit}
+                previousTotalValue={previousDistributionLimit}
                 projectOwnerAddress={projectOwnerAddress}
                 showAmounts={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
                 valueFormatProps={{ precision: 4 }}

@@ -51,7 +51,7 @@ export function SplitAmountValue({ props }: { props: SplitProps }) {
           createTooltipTitle(currencyName, splitValue.sub(feeAmount))
         }
       >
-        <span>
+        <span className="pl-1">
           {valueAfterFees ? (
             <Parenthesis>
               <AmountInCurrency

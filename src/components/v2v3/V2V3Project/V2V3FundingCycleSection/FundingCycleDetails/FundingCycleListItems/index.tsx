@@ -74,10 +74,9 @@ export function FundingCycleListItems({
   const durationHasDiff =
     oldFundingCycle && !fundingCycle.duration.eq(oldFundingCycle.duration)
   const distributionLimitHasDiff =
-    oldDistributionLimit &&
-    !distributionLimit?.eq(oldDistributionLimit) &&
-    oldDistributionLimitCurrency &&
-    !distributionLimitCurrency?.eq(oldDistributionLimitCurrency)
+    (oldDistributionLimit && !distributionLimit?.eq(oldDistributionLimit)) ||
+    (oldDistributionLimitCurrency &&
+      !distributionLimitCurrency?.eq(oldDistributionLimitCurrency))
 
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
   const oldBallotStrategy = oldFundingCycle

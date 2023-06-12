@@ -1,8 +1,14 @@
 import { Tab } from '@headlessui/react'
 import { twMerge } from 'tailwind-merge'
 
-export const ProjectTab = ({ name }: { name: string }) => (
-  <Tab as="button" className="outline-none">
+export const ProjectTab = ({
+  name,
+  onClick,
+}: {
+  name: string
+  onClick: VoidFunction
+}) => (
+  <Tab as="button" className="outline-none" onClick={onClick}>
     {({ selected }) => (
       <div
         className={twMerge(

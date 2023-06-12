@@ -1,20 +1,18 @@
-import {
-  EnvelopeIcon,
-  PhotoIcon,
-  QuestionMarkCircleIcon,
-} from '@heroicons/react/24/outline'
+import { EnvelopeIcon, PhotoIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
-import { Button, Tooltip } from 'antd'
+import { Button } from 'antd'
 import { Callout } from 'components/Callout'
 import EthereumAddress from 'components/EthereumAddress'
 import ExternalLink from 'components/ExternalLink'
 import { usePayProjectModal } from 'components/ProjectDashboard/hooks/usePayProjectModal'
+import Sticker from 'components/icons/Sticker'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { twMerge } from 'tailwind-merge'
 import { CartItemBadge } from '../Cart/components/CartItem/CartItemBadge'
 
 export const PayProjectModal: React.FC = () => {
-  const { open, totalAmount, userAddress, setOpen } = usePayProjectModal()
+  const { open, primaryAmount, secondaryAmount, userAddress, setOpen } =
+    usePayProjectModal()
   return (
     <JuiceModal
       className="w-full max-w-xl"
@@ -30,7 +28,14 @@ export const PayProjectModal: React.FC = () => {
           <span className="font-medium">
             <Trans>Total amount</Trans>
           </span>
-          <span>{totalAmount}</span>
+          <div>
+            <span>{primaryAmount}</span>{' '}
+            {secondaryAmount && (
+              <span className="text-grey-500 dark:text-slate-200">
+                ({secondaryAmount})
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="py-6">
@@ -139,9 +144,10 @@ const Input: React.FC<
           'flex-1 bg-transparent outline-none dark:placeholder:text-slate-300',
         )}
       />
-      <Tooltip title="TODO">
-        <QuestionMarkCircleIcon className="h-4 w-4 text-grey-400 dark:text-slate-200" />
-      </Tooltip>
+      <Sticker
+        role="button"
+        className="h-4 w-4 text-grey-400 dark:text-slate-200"
+      />
     </div>
   )
 }

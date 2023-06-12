@@ -34,9 +34,9 @@ export const useBookmarkButton = ({
 
   const getIsBookmarked = useCallback(
     async ({ project, userId }: { project: string; userId: string }) => {
-      const { data, error } = await supabase
+      const { error, count } = await supabase
         .from('user_bookmarks')
-        .select('*')
+        .select('*', { count: 'exact', head: true })
         .eq('user_id', userId)
         .eq('project', project)
 
@@ -45,7 +45,7 @@ export const useBookmarkButton = ({
         return
       }
 
-      return data.length > 0
+      return !!count
     },
     [supabase],
   )

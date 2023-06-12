@@ -5,7 +5,11 @@ import RichNote from 'components/RichNote'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { PV_V1 } from 'constants/pv'
-import { usePayEventsQuery } from 'generated/graphql'
+import {
+  OrderDirection,
+  PayEvent_OrderBy,
+  usePayEventsQuery,
+} from 'generated/graphql'
 import { client } from 'lib/apollo/client'
 import { DBProject } from 'models/dbProject'
 import { classNames } from 'utils/classNames'
@@ -43,6 +47,8 @@ export function PaymentsFeed() {
     client,
     variables: {
       first: 20,
+      orderBy: PayEvent_OrderBy.timestamp,
+      orderDirection: OrderDirection.desc,
     },
   })
 

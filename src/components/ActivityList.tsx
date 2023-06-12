@@ -89,7 +89,6 @@ const SHARED_OPTS = (): ActivityOption[] => [
  * @param tokenSymbol Passed to `AnyProjectEvent` component to render in some projectEvent components. Only provide this if also providing projectId.
  * @param header Header component to be rendered above the list.
  * @param onClickDownload Callback when download icon is clicked. If not provided, download icon will not be rendered.
- * @param downloadComponent Callback when download icon is clicked. If not provided, download icon will not be rendered.
  */
 export default function ActivityList({
   projectId,

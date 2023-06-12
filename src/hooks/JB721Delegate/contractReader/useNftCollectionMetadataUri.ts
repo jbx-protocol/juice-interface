@@ -33,5 +33,7 @@ export function useNftCollectionMetadataUri(
       version === JB721_DELEGATE_V3_2 || JB721_DELEGATE_V3_3 ? undefined : null,
   })
 
-  return version === JB721_DELEGATE_V3_2 ? v3_2_response : v3response
+  return version === JB721_DELEGATE_V3_2 || version === JB721_DELEGATE_V3_3
+    ? v3_2_response
+    : v3response
 }

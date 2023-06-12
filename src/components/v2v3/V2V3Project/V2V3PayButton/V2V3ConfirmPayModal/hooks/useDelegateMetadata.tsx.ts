@@ -8,6 +8,7 @@ import {
   JB721_DELEGATE_V3,
   JB721_DELEGATE_V3_1,
   JB721_DELEGATE_V3_2,
+  JB721_DELEGATE_V3_3,
 } from 'constants/delegateVersions'
 import {
   IJB721Delegate_V3_INTERFACE_ID,
@@ -99,7 +100,8 @@ export function useDelegateMetadata() {
         ...(payProjectForm?.payMetadata as JB721DELAGATE_V3_1_PAY_METADATA),
         allowOverspending: DEFAULT_ALLOW_OVERSPENDING,
       })
-    : JB721DelegateVersion === JB721_DELEGATE_V3_2
+    : JB721DelegateVersion === JB721_DELEGATE_V3_2 ||
+      JB721DelegateVersion === JB721_DELEGATE_V3_3
     ? encodeJB721DelegateV3_2PayMetadata({
         ...(payProjectForm?.payMetadata as JB721DELAGATE_V3_2_PAY_METADATA),
         allowOverspending: DEFAULT_ALLOW_OVERSPENDING,

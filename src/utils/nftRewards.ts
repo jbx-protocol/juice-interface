@@ -3,6 +3,7 @@ import {
   JB721_DELEGATE_V3,
   JB721_DELEGATE_V3_1,
   JB721_DELEGATE_V3_2,
+  JB721_DELEGATE_V3_3,
 } from 'constants/delegateVersions'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
@@ -334,7 +335,10 @@ export function buildJB721TierParams({
         if (version === JB721_DELEGATE_V3_1) {
           return nftRewardTierToJB721TierParamsV3_1(rewardTier, cid)
         }
-        if (version === JB721_DELEGATE_V3_2) {
+        if (
+          version === JB721_DELEGATE_V3_2 ||
+          version === JB721_DELEGATE_V3_3
+        ) {
           return nftRewardTierToJB721TierParamsV3_2(rewardTier, cid)
         }
 
@@ -347,7 +351,7 @@ export function buildJB721TierParams({
       // Tiers MUST BE in ascending order when sent to contract.
 
       // bit bongy, sorry!
-      if (version === JB721_DELEGATE_V3_2) {
+      if (version === JB721_DELEGATE_V3_2 || version === JB721_DELEGATE_V3_3) {
         if (
           (a as JB_721_TIER_PARAMS_V3_2).price.gt(
             (b as JB_721_TIER_PARAMS_V3_2).price,

@@ -8,7 +8,10 @@ import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
 import { RedeemingNft } from 'components/ProjectDashboard/components/NftRewardsPanel/hooks/useJB721DelegateTokenToNftReward'
 import { REDEMPTION_RATE_EXPLANATION } from 'components/strings'
 import TooltipLabel from 'components/TooltipLabel'
-import { JB721_DELEGATE_V3_2 } from 'constants/delegateVersions'
+import {
+  JB721_DELEGATE_V3_2,
+  JB721_DELEGATE_V3_3,
+} from 'constants/delegateVersions'
 import {
   IJB721Delegate_V3_2_INTERFACE_ID,
   IJB721Delegate_V3_INTERFACE_ID,
@@ -111,7 +114,8 @@ export function RedeemNftsModal({
         minReturnedTokens: BigNumber.from(0),
         memo,
         metadata:
-          JB721DelegateVersion === JB721_DELEGATE_V3_2
+          JB721DelegateVersion === JB721_DELEGATE_V3_2 ||
+          JB721DelegateVersion === JB721_DELEGATE_V3_3
             ? encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem)
             : encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem),
       },

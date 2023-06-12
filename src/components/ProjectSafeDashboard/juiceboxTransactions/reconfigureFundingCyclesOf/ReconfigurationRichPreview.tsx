@@ -94,7 +94,7 @@ export function ReconfigureRichPreview({
             showDiffs={showDiffs}
           />
         </MinimalCollapse>
-        <div className="flex w-2/3 flex-col gap-4">
+        <div className="flex w-full flex-col gap-4 md:w-2/3">
           <MinimalCollapse header={t`Payouts`} light>
             {distributionLimit?.gt(0) ? (
               <DiffedSplitList

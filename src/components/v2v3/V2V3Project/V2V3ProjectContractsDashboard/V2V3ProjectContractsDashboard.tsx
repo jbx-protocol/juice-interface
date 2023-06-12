@@ -68,7 +68,7 @@ export function V2V3ProjectContractsDashboard() {
       })
       .filter(
         c =>
-          c.address !== undefined && c.name !== 'JBFundAccessConstraintsStore',
+          c?.address !== undefined && c.name !== 'JBFundAccessConstraintsStore',
       ),
     ...Object.keys(contracts)
       .map(k => {
@@ -80,7 +80,7 @@ export function V2V3ProjectContractsDashboard() {
       })
       .filter(
         c =>
-          c.address !== undefined &&
+          c?.address !== undefined &&
           !CONTRACT_EXCLUSIONS.includes(c.name as V2V3ContractName),
       ),
     {
@@ -88,7 +88,7 @@ export function V2V3ProjectContractsDashboard() {
       name: 'JBFundAccessConstraintsStore',
       address:
         projectContracts.JBFundAccessConstraintsStore?.address ||
-        contracts.JBFundAccessConstraintsStore.address,
+        contracts.JBFundAccessConstraintsStore?.address,
     },
   ].sort((a, b) => a.name.localeCompare(b.name))
 

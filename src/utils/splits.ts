@@ -89,9 +89,11 @@ export const sortSplits = (splits: Split[]) => {
 // returns all unique splits (projectIds or addresses), sorted by their new `percent`
 // and assigns each split an additional property `oldSplit` (OldSplit)
 export const processUniqueSplits = ({
+  oldTotalValue,
   oldSplits,
   newSplits,
 }: {
+  oldTotalValue?: BigNumber
   oldSplits: Split[] | undefined
   newSplits: Split[]
 }): SplitWithDiff[] => {
@@ -106,10 +108,13 @@ export const processUniqueSplits = ({
     const splitsEqual = isEqual(split, oldSplit)
 
     if (oldSplit && !splitsEqual) {
-      // adds diffed splits (exists in new and old and there is no diff)
+      // adds diffed splits (exists in new and old and there is diff)
       uniqueSplitsByProjectIdOrAddress.push({
         ...split,
-        oldSplit,
+        oldSplit: {
+          ...oldSplit,
+          totalValue: oldTotalValue,
+        },
       })
     } else if (oldSplit && splitsEqual) {
       // adds undiffed splits (exists in new and old and there is no diff)
@@ -118,13 +123,14 @@ export const processUniqueSplits = ({
         oldSplit: undefined,
       })
     } else {
-      // add the new splits (exists in new but not old)
+      // adds the new splits (exists in new but not old)
       uniqueSplitsByProjectIdOrAddress.push({
         ...split,
         oldSplit: false,
       })
     }
   })
+  // adds the old splits (exists in old but not new)
   const removedSplits = getRemovedSplits(oldSplits, newSplits)
   removedSplits.map(split => {
     uniqueSplitsByProjectIdOrAddress.push({

@@ -36,9 +36,11 @@ export function DiffMinus() {
 export function DiffedItem({
   value,
   diffStatus,
+  hideIcon,
 }: {
   value: string | JSX.Element
   diffStatus: DiffStatus | undefined
+  hideIcon?: boolean
 }) {
   const highlight =
     diffStatus === 'old'
@@ -54,12 +56,15 @@ export function DiffedItem({
         highlight,
       )}
     >
-      {diffStatus === 'new' ? (
-        <DiffPlus />
-      ) : diffStatus === 'old' ? (
-        <DiffMinus />
-      ) : null}
-
+      {hideIcon ? null : (
+        <>
+          {diffStatus === 'new' ? (
+            <DiffPlus />
+          ) : diffStatus === 'old' ? (
+            <DiffMinus />
+          ) : null}
+        </>
+      )}
       {value}
     </div>
   )

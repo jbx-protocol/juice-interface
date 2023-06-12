@@ -31,6 +31,7 @@ export const PayProjectModal: React.FC = () => {
           attachedUrl: undefined,
         },
         userAcceptsTerms: false,
+        beneficiaryAddress: undefined,
       }}
       validationSchema={validationSchema}
       onSubmit={onPaySubmit}
@@ -42,9 +43,9 @@ export const PayProjectModal: React.FC = () => {
             buttonPosition="stretch"
             title={t`Pay PyroDAO`}
             position="top"
-            okLoading={props.isSubmitting}
+            okLoading={props.isSubmitting || isTransactionPending}
             okButtonForm="PayProjectModalForm"
-            okText={t`Pay 2.4 ETH`}
+            okText={t`Pay ${primaryAmount}`}
             cancelText={
               isTransactionPending || isTransactionConfirmed
                 ? t`Close`

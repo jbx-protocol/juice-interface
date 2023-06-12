@@ -6,10 +6,14 @@
  * @param amount - The number to format.
  */
 export const formatAmount = (amount: number | string) => {
-  let a = amount
-  if (typeof amount === 'string') {
-    a = parseFloat(amount)
+  const a = typeof amount === 'string' ? parseFloat(amount) : amount
+
+  if (a < 0.0001 && a !== 0) {
+    return a.toExponential(2)
+  } else if (a < 0.01) {
+    return a.toLocaleString(undefined, { maximumFractionDigits: 4 })
   }
+
   return a.toLocaleString(undefined, { maximumFractionDigits: 2 })
 }
 

@@ -44,9 +44,6 @@ msgstr ""
 msgid "Art"
 msgstr ""
 
-msgid "Pay 2.4 ETH"
-msgstr ""
-
 msgid "How should I set up my project?"
 msgstr ""
 
@@ -1221,6 +1218,9 @@ msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKe
 msgstr ""
 
 msgid "Issue as ERC-20"
+msgstr ""
+
+msgid "Pay {primaryAmount}"
 msgstr ""
 
 msgid "Active"

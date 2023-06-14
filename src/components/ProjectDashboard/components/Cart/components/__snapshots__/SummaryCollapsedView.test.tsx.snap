@@ -15,7 +15,7 @@ exports[`SummaryCollapsedView should render correctly 1`] = `
         Summary
       </span>
       <div
-        class="relative flex"
+        class="relative z-0 flex"
       >
         <div
           style="width: 48px; height: 48px; z-index: 0;"

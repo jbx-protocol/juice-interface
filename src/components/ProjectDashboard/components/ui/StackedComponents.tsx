@@ -19,7 +19,7 @@ const StackedComponents: React.FC<StackedComponentsProps> = ({
   offset = '20px',
 }) => {
   return (
-    <div className="relative flex">
+    <div className="relative z-0 flex">
       {components.map((item, index) => (
         <div
           style={{

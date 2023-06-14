@@ -107,7 +107,7 @@ export default function TimelineChart({
 
             const formattedValue = value.toFixed(value >= 10 ? 0 : 1)
 
-            // <rect/> serves as a mask to prevent CartesianGrid lines overlapping tick text
+            // <rect> serves as a mask to prevent CartesianGrid lines overlapping tick text
             return (
               <g>
                 <rect

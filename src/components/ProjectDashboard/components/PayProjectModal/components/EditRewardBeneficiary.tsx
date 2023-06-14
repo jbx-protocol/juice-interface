@@ -9,8 +9,12 @@ import { useEditRewardBeneficiary } from '../hooks/useEditRewardBeneficiary'
 
 export const EditRewardBeneficiary = ({
   className,
+  value,
+  onChange,
 }: {
   className?: string
+  value?: string
+  onChange?: (value: string) => void
 }) => {
   const {
     address,
@@ -20,7 +24,7 @@ export const EditRewardBeneficiary = ({
     editClicked,
     handleInputChanged,
     handleInputBlur,
-  } = useEditRewardBeneficiary()
+  } = useEditRewardBeneficiary(value, onChange)
 
   const inputRef = useRef<HTMLInputElement>(null)
 

@@ -2,9 +2,11 @@
  * @jest-environment jsdom
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { render, screen } from '@testing-library/react'
 import { usePayProjectModal } from 'components/ProjectDashboard/hooks/usePayProjectModal'
 import { useProjectPaymentTokens } from 'components/ProjectDashboard/hooks/useProjectPaymentTokens'
+import { Formik } from 'formik'
 import { ReceiveSection } from './ReceiveSection'
 
 jest.mock('components/ProjectDashboard/hooks/usePayProjectModal')
@@ -27,6 +29,15 @@ describe('ReceiveSection', () => {
   const DefaultUseProjectPaymentTokens = {
     receivedTickets: '1',
   }
+
+  const TestWrapper = ({ children }: any) => {
+    return (
+      <Formik initialValues={{ message: '' }} onSubmit={() => {}}>
+        {children}
+      </Formik>
+    )
+  }
+
   beforeEach(() => {
     ;(usePayProjectModal as jest.Mock).mockReturnValue(
       DefaultUsePayProjectModal,
@@ -45,7 +56,11 @@ describe('ReceiveSection', () => {
       ...DefaultUseProjectPaymentTokens,
       receivedTickets: '0',
     })
-    render(<ReceiveSection />)
+    render(
+      <TestWrapper>
+        <ReceiveSection />
+      </TestWrapper>,
+    )
     expect(screen.queryByText('Receive')).not.toBeInTheDocument()
     expect(
       screen.queryByText('NFTs, tokens and rewards will be sent to'),
@@ -66,7 +81,11 @@ describe('ReceiveSection', () => {
       ...DefaultUseProjectPaymentTokens,
       receivedTickets,
     })
-    render(<ReceiveSection />)
+    render(
+      <TestWrapper>
+        <ReceiveSection />
+      </TestWrapper>,
+    )
     expect(screen.getByText('Receive')).toBeInTheDocument()
 
     if (nftRewards.length !== 0) {

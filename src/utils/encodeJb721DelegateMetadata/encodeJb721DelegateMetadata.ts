@@ -2,6 +2,7 @@ import {
   JB721_DELEGATE_V3,
   JB721_DELEGATE_V3_1,
   JB721_DELEGATE_V3_2,
+  JB721_DELEGATE_V3_3,
 } from 'constants/delegateVersions'
 import {
   IJB721Delegate_V3_INTERFACE_ID,
@@ -45,6 +46,7 @@ export function encodeJb721DelegateMetadata(
         metadata as JB721DELAGATE_V3_1_PAY_METADATA,
       )
     case JB721_DELEGATE_V3_2:
+    case JB721_DELEGATE_V3_3:
       return encodeJB721DelegateV3_2PayMetadata(
         metadata as JB721DELAGATE_V3_2_PAY_METADATA,
       )

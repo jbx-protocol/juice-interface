@@ -11,6 +11,7 @@ import { encodeJb721DelegateMetadata } from 'utils/encodeJb721DelegateMetadata/e
 import { parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { useProjectCart } from '../useProjectCart'
+import { ProjectPayReceipt } from '../useProjectPageQueries'
 import { PayProjectModalFormValues } from './usePayProjectModal'
 
 export const usePayProjectTx = ({
@@ -22,6 +23,7 @@ export const usePayProjectTx = ({
     formikHelpers: FormikHelpers<PayProjectModalFormValues>,
   ) => void
   onTransactionConfirmed: (
+    payReceipt: ProjectPayReceipt,
     formikHelpers: FormikHelpers<PayProjectModalFormValues>,
   ) => void
   onTransactionError: (
@@ -39,6 +41,19 @@ export const usePayProjectTx = ({
   } = useContext(NftRewardsContext)
   const converter = useCurrencyConverter()
   const payProjectTx = usePayETHPaymentTerminalTx()
+
+  const buildPayReceipt = useCallback((): ProjectPayReceipt => {
+    return {
+      totalAmount: totalAmount ?? {
+        amount: 0,
+        currency: V2V3_CURRENCY_ETH,
+      },
+      nfts: nftRewards ?? [],
+      timestamp: new Date(),
+      fromAddress: userAddress ?? '',
+      tokensReceived: '', // TODO
+    }
+  }, [nftRewards, totalAmount, userAddress])
 
   return useCallback(
     async (
@@ -93,7 +108,7 @@ export const usePayProjectTx = ({
           },
           {
             onConfirmed() {
-              onTransactionConfirmedCallback(formikHelpers)
+              onTransactionConfirmedCallback(buildPayReceipt(), formikHelpers)
             },
             onError(error) {
               onTransactionErrorCallback(error, formikHelpers)
@@ -109,6 +124,7 @@ export const usePayProjectTx = ({
     },
     [
       JB721DelegateVersion,
+      buildPayReceipt,
       converter,
       nftRewards,
       onTransactionConfirmedCallback,

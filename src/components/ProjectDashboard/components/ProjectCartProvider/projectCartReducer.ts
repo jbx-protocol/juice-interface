@@ -16,6 +16,9 @@ export type ProjectCartAction =
       type: 'removePayment'
     }
   | {
+      type: 'payProject'
+    }
+  | {
       type: 'removeTokens'
     }
   | {
@@ -85,6 +88,14 @@ export const projectCartReducer = (
         payAmount: undefined,
         // reset userIsReceivingTokens to true when removing payment
         userIsReceivingTokens: true,
+      }
+    case 'payProject':
+      return {
+        ...state,
+        userIsReceivingTokens: true,
+        payAmount: undefined,
+        nftRewards: [],
+        expanded: false,
       }
     case 'removeTokens':
       return {

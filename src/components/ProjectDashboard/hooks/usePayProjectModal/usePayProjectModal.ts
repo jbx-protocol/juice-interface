@@ -8,6 +8,7 @@ import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import * as Yup from 'yup'
 import { useProjectCart } from '../useProjectCart'
 import { useProjectMetadata } from '../useProjectMetadata'
+import { useProjectPageQueries } from '../useProjectPageQueries'
 import { payProjectModalReducer } from './payProjectModalReducer'
 import { usePayProjectTx } from './usePayProjectTx'
 
@@ -40,6 +41,7 @@ export const usePayProjectModal = () => {
     isTransactionConfirmed: false,
     transactionError: undefined,
   })
+  const { setProjectPayReceipt } = useProjectPageQueries()
 
   const open = payModalOpen
   const setOpen = useCallback(
@@ -53,8 +55,10 @@ export const usePayProjectModal = () => {
     onTransactionPending: () => {
       modalDispatch({ type: 'transactionPending' })
     },
-    onTransactionConfirmed: formikHelpers => {
+    onTransactionConfirmed: (payReceipt, formikHelpers) => {
+      setProjectPayReceipt(payReceipt)
       setOpen(false)
+      cartDispatch({ type: 'payProject' })
       setTimeout(() => {
         formikHelpers.setSubmitting(false)
         formikHelpers.resetForm()

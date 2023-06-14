@@ -1,6 +1,6 @@
-import { LinkIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
+import EtherscanLink from 'components/EtherscanLink'
 import { useProjectMetadata } from 'components/ProjectDashboard/hooks'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
 import moment from 'moment'
@@ -49,9 +49,14 @@ export const SuccessPayCard = ({ className }: { className?: string }) => {
           <span className="text-xs text-grey-500 dark:text-slate-200">
             {transactionDateString}
           </span>
-          <LinkIcon className="h-4 w-4 text-black dark:text-slate-50" />
+          <EtherscanLink
+            linkClassName="text-black dark:text-slate-50"
+            type="tx"
+            value={projectPayReceipt.transactionHash}
+          />
         </div>
         <EthereumAddress
+          tooltipDisabled
           address={projectPayReceipt.fromAddress}
           withEnsAvatar
         />

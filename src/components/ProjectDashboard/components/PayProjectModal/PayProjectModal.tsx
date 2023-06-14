@@ -1,4 +1,5 @@
 import { Trans, t } from '@lingui/macro'
+import EtherscanLink from 'components/EtherscanLink'
 import ExternalLink from 'components/ExternalLink'
 import {
   PayProjectModalFormValues,
@@ -19,6 +20,7 @@ export const PayProjectModal: React.FC = () => {
     validationSchema,
     isTransactionPending,
     isTransactionConfirmed,
+    pendingTransactionHash,
     setOpen,
     onPaySubmit,
   } = usePayProjectModal()
@@ -81,6 +83,13 @@ export const PayProjectModal: React.FC = () => {
                     confirmation.
                   </Trans>
                 </p>
+                {pendingTransactionHash ? (
+                  <p>
+                    <EtherscanLink value={pendingTransactionHash} type="tx">
+                      <Trans>View on Etherscan</Trans>
+                    </EtherscanLink>
+                  </p>
+                ) : null}
               </div>
             ) : (
               <>

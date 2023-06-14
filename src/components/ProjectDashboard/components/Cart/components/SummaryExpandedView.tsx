@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
 import { useCartSummary } from '../hooks/useCartSummary'
 import { NftCartItem, PaymentCartItem } from './CartItem'
 import { ProjectTokensCartItem } from './CartItem/ProjectTokensCartItem'
+import { SummaryPayButton } from './SummaryPayButton'
 
 export const SummaryExpandedView = () => {
-  const { amountText, nftRewards, payProject } = useCartSummary()
+  const { amountText, nftRewards } = useCartSummary()
 
   return (
     <div
@@ -39,9 +39,7 @@ export const SummaryExpandedView = () => {
           </span>
           <span className="text-2xl font-medium">{amountText}</span>
         </div>
-        <Button type="primary" onClick={payProject}>
-          <Trans>Pay project</Trans>
-        </Button>
+        <SummaryPayButton />
       </div>
     </div>
   )

@@ -4247,9 +4247,6 @@ msgstr ""
 msgid "A message from {name}"
 msgstr ""
 
-msgid "Pay project"
-msgstr ""
-
 msgid "No reserved tokens configured."
 msgstr ""
 

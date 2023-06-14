@@ -1,15 +1,14 @@
 import { TrashIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { SmallNftSquare } from '../../NftRewardsCard/SmallNftSquare'
 import { CurrencyIcon } from '../../ui/CurrencyIcon'
 import StackedComponents from '../../ui/StackedComponents'
 import { useCartSummary } from '../hooks/useCartSummary'
+import { SummaryPayButton } from './SummaryPayButton'
 
 export const SummaryCollapsedView = () => {
-  const { amountText, currency, nftRewards, removePay, payProject } =
-    useCartSummary()
+  const { amountText, currency, nftRewards, removePay } = useCartSummary()
 
   return (
     <div className="flex w-full items-center justify-between px-8 py-6">
@@ -60,9 +59,7 @@ export const SummaryCollapsedView = () => {
             onClick={removePay}
           />
         </div>
-        <Button type="primary" onClick={payProject}>
-          <Trans>Pay project</Trans>
-        </Button>
+        <SummaryPayButton />
       </div>
     </div>
   )

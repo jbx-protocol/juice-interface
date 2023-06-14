@@ -82,7 +82,9 @@ exports[`SummaryCollapsedView should render correctly 1`] = `
         class="ant-btn ant-btn-primary"
         type="button"
       >
-        Pay project
+        <span>
+          Connect wallet
+        </span>
       </button>
     </div>
   </div>

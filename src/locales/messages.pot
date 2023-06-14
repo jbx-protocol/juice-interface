@@ -41,6 +41,9 @@ msgstr ""
 msgid "Disconnect"
 msgstr ""
 
+msgid "1 year"
+msgstr ""
+
 msgid "Art"
 msgstr ""
 
@@ -908,6 +911,9 @@ msgstr ""
 msgid "{0, plural, one {# transaction needs your signature} other {# transactions need your signature}}"
 msgstr ""
 
+msgid "In Juicebox"
+msgstr ""
+
 msgid "Set payment terminals"
 msgstr ""
 
@@ -945,9 +951,6 @@ msgid "Claim {tokenTextPlural}"
 msgstr ""
 
 msgid "Trust minimized"
-msgstr ""
-
-msgid "loading"
 msgstr ""
 
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
@@ -2588,6 +2591,9 @@ msgstr ""
 msgid "Burn NFTs"
 msgstr ""
 
+msgid "Current #1 trending"
+msgstr ""
+
 msgid "Attach a sticker"
 msgstr ""
 
@@ -3911,6 +3917,9 @@ msgstr ""
 msgid "Pay Project"
 msgstr ""
 
+msgid "7 days"
+msgstr ""
+
 msgid "Enabling owner token minting isn't recommended as it allows the project owner to create unlimited tokens, which appears risky to supporters."
 msgstr ""
 
@@ -4370,6 +4379,9 @@ msgstr ""
 msgid "If you have <0/> or <1/> legacy Juicebox projects, we recommend you migrate to <2/> exclusively."
 msgstr ""
 
+msgid "Unable to load charts"
+msgstr ""
+
 msgid "Message sent!"
 msgstr ""
 
@@ -4443,6 +4455,9 @@ msgid "Re-launch your Juicebox project using the v3 contracts."
 msgstr ""
 
 msgid "StudioDAO's project settings are designed to maximize trust with locked 28-day cycles, limited payouts, and a 3-day edit deadline. 20% of newly minted tokens are reserved for the DAO wallet and issuance will decrease by 5% each cycle. StudioDAO also leverages tiered NFT rewards to create incentives for supporters with benefits like private screenings, governance votes to decide which new films to fund, and screen credits."
+msgstr ""
+
+msgid "Loading"
 msgstr ""
 
 msgid "Juicy picks"

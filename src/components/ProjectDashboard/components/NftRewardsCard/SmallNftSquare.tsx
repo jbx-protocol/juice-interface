@@ -16,7 +16,7 @@ export const SmallNftSquare = ({
 }) => {
   const _loading = !nftReward || loading
   const _className = twMerge(
-    'rounded-lg bg-grey-400',
+    'rounded-lg bg-smoke-50',
     border && 'border-4 border-smoke-50 dark:border-slate-900',
     className,
   )

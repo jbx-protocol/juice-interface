@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
+import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -12,6 +13,7 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
     nftRewards: { rewardTiers },
     loading: nftsLoading,
   } = useContext(NftRewardsContext)
+  const { setProjectPageTab } = useProjectPageQueries()
 
   const NftComponents = useMemo(() => {
     return (rewardTiers ?? []).map(nft => ({
@@ -32,7 +34,10 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
       <div className="flex items-center gap-3">
         <StackedComponents components={NftComponents} size="56px" />
         <div>
-          <button className="flex items-center rounded-2xl bg-grey-100 py-1 pl-3 pr-2.5 text-sm text-grey-700 dark:bg-slate-500 dark:text-slate-100">
+          <button
+            className="flex items-center rounded-2xl bg-grey-100 py-1 pl-3 pr-2.5 text-sm text-grey-700 dark:bg-slate-500 dark:text-slate-100"
+            onClick={() => setProjectPageTab('nft_rewards')}
+          >
             View all <ArrowRightIcon className="h-3 w-3" />
           </button>
         </div>

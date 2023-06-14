@@ -3,11 +3,11 @@ import { useRouter } from 'next/router'
 import { useCallback, useMemo } from 'react'
 
 type ProjectPageTab =
+  | 'activity'
   | 'about'
   | 'nft_rewards'
   | 'cycle_payouts'
   | 'tokens'
-  | 'activity'
 
 export type ProjectPayReceipt = {
   totalAmount: {
@@ -26,7 +26,7 @@ export type ProjectPayReceipt = {
 export const useProjectPageQueries = () => {
   const router = useRouter()
 
-  const projectPageTab = (router.query.tabid as ProjectPageTab) || 'about'
+  const projectPageTab = (router.query.tabid as ProjectPageTab) || 'activity'
   const projectPayReceiptString = router.query.payReceipt as string | undefined
 
   const projectPayReceipt = useMemo(() => {

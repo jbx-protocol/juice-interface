@@ -15,6 +15,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
 
   const tabs = useMemo(
     () => [
+      { id: 'activity', name: t`Activity`, panel: <ActivityPanel /> },
       { id: 'about', name: t`About`, panel: <AboutPanel /> },
       {
         id: 'nft_rewards',
@@ -27,7 +28,6 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         panel: <CyclesPayoutsPanel />,
       },
       { id: 'tokens', name: t`Tokens`, panel: <TokensPanel /> },
-      { id: 'activity', name: t`Activity`, panel: <ActivityPanel /> },
     ],
     [],
   )

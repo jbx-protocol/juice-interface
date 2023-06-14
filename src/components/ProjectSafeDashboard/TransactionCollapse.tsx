@@ -90,7 +90,9 @@ export function TransactionCollapse({
           {expanded ? <UpOutlined /> : <DownOutlined />}
         </div>
       </div>
-      {expanded ? <div className="pb-4">{expandedContent}</div> : null}
+      {expanded ? (
+        <div className="-ml-14 pb-4 md:ml-0">{expandedContent}</div>
+      ) : null}
     </div>
   )
 }

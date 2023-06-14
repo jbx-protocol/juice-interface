@@ -1,5 +1,6 @@
 import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
+import { classNames } from 'utils/classNames'
 import { formatSplitPercent } from 'utils/v2v3/math'
 import { SplitProps } from '../../SplitItem'
 import { DiffedSplitAmount } from './DiffedSplitAmount'
@@ -24,20 +25,26 @@ export function DiffedSplitValue({
   const splitIsZero =
     formatSplitPercent(BigNumber.from(splitProps.split.percent)) === '0'
 
+  const showAmounts =
+    splitProps.showAmount && splitProps.totalValue?.gt(0) && !splitIsZero
+
   return (
-    <div className="flex-end grid grid-rows-2">
+    <div
+      className={classNames(
+        'flex-end',
+        showAmounts ? 'grid grid-rows-2' : undefined,
+      )}
+    >
       <DiffedSplitPercent
         percent={splitProps.split.percent}
         oldPercent={diffSplit?.percent}
       />
-      {splitProps.showAmount &&
-        splitProps.totalValue?.gt(0) &&
-        !splitIsZero && (
-          <DiffedSplitAmount
-            newSplitProps={splitProps}
-            oldSplitProps={diffSplitProps}
-          />
-        )}
+      {showAmounts && (
+        <DiffedSplitAmount
+          newSplitProps={splitProps}
+          oldSplitProps={diffSplitProps}
+        />
+      )}
     </div>
   )
 }

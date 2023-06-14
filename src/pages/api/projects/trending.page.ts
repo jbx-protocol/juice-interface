@@ -37,7 +37,9 @@ const handler: NextApiHandler = async (req, res) => {
       variables: {
         where: {
           // trendingScore_gt: '0', // Turned off because there wasn't sufficient number of projects to fulfill `first`.
-          id_not_in: ARCHIVED_SUBGRAPH_IDS,
+          ...(ARCHIVED_SUBGRAPH_IDS.length
+            ? { id_not_in: ARCHIVED_SUBGRAPH_IDS }
+            : {}), // `id_not_in: <empty-array>` will return 0 results
         },
         first,
         orderBy: Project_OrderBy.trendingScore,

@@ -41,7 +41,7 @@ export default function TimelineChart({
   const defaultYDomain = useTimelineYDomain(points?.map(p => p[view]))
 
   const { data: trendingProjects } = useTrendingProjects(1)
-  const highTrendingScore = trendingProjects
+  const highTrendingScore = trendingProjects?.length
     ? floatFromWad(trendingProjects[0].trendingScore)
     : undefined
 
@@ -173,7 +173,6 @@ export default function TimelineChart({
         {points?.length && (
           <Line
             dot={false}
-            strokeLinecap="round"
             stroke={colors.juice[400]}
             strokeWidth={4}
             type="monotone"

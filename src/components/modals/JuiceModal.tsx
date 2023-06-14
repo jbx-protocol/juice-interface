@@ -1,3 +1,4 @@
+import { LoadingOutlined } from '@ant-design/icons'
 import { Dialog } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
@@ -5,7 +6,6 @@ import { Button } from 'antd'
 import useMobile from 'hooks/useMobile'
 import { PropsWithChildren, ReactNode, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import Loading from '../Loading'
 import { Popup } from '../Popup'
 
 type ModalSetOpenFn = (open: boolean) => void
@@ -182,7 +182,12 @@ const CTAButton = ({
     )}
     onClick={onClick}
   >
-    {loading ? <Loading size="small" /> : children}
+    {loading && (
+      <span className="animation mr-2 animate-spin">
+        <LoadingOutlined />
+      </span>
+    )}
+    {children}
   </button>
 )
 

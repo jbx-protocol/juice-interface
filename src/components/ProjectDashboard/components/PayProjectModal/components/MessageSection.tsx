@@ -4,7 +4,7 @@ import { Callout } from 'components/Callout'
 import {
   PayProjectModalFormValues,
   usePayProjectModal,
-} from 'components/ProjectDashboard/hooks/usePayProjectModal'
+} from 'components/ProjectDashboard/hooks/usePayProjectModal/usePayProjectModal'
 import { useFormikContext } from 'formik'
 import { MessageInput } from './MessageInput'
 

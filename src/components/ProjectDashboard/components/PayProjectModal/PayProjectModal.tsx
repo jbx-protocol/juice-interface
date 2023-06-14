@@ -1,17 +1,30 @@
 import { Trans, t } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
-import { usePayProjectModal } from 'components/ProjectDashboard/hooks/usePayProjectModal'
+import {
+  PayProjectModalFormValues,
+  usePayProjectModal,
+} from 'components/ProjectDashboard/hooks/usePayProjectModal/usePayProjectModal'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { Formik } from 'formik'
+import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
 
 export const PayProjectModal: React.FC = () => {
-  const { open, primaryAmount, secondaryAmount, validationSchema, setOpen } =
-    usePayProjectModal()
+  const {
+    open,
+    primaryAmount,
+    secondaryAmount,
+    validationSchema,
+    isTransactionPending,
+    isTransactionConfirmed,
+    setOpen,
+    onPaySubmit,
+  } = usePayProjectModal()
+
   return (
-    <Formik
+    <Formik<PayProjectModalFormValues>
       initialValues={{
         message: {
           messageString: '',
@@ -20,7 +33,7 @@ export const PayProjectModal: React.FC = () => {
         userAcceptsTerms: false,
       }}
       validationSchema={validationSchema}
-      onSubmit={values => console.info('submit foo', JSON.stringify(values))}
+      onSubmit={onPaySubmit}
     >
       {props => (
         <form name="PayProjectModalForm" onSubmit={props.handleSubmit}>
@@ -29,8 +42,14 @@ export const PayProjectModal: React.FC = () => {
             buttonPosition="stretch"
             title={t`Pay PyroDAO`}
             position="top"
+            okLoading={props.isSubmitting}
             okButtonForm="PayProjectModalForm"
             okText={t`Pay 2.4 ETH`}
+            cancelText={
+              isTransactionPending || isTransactionConfirmed
+                ? t`Close`
+                : t`Cancel`
+            }
             open={open}
             setOpen={setOpen}
             onSubmit={props.handleSubmit}
@@ -40,58 +59,84 @@ export const PayProjectModal: React.FC = () => {
               setTimeout(() => props.resetForm(), 300)
             }}
           >
-            <div className="flex flex-col divide-y divide-grey-200 dark:divide-slate-500">
-              <div className="flex justify-between gap-3 py-3">
-                <span className="font-medium">
-                  <Trans>Total amount</Trans>
-                </span>
-                <div>
-                  <span>{primaryAmount}</span>{' '}
-                  {secondaryAmount && (
-                    <span className="text-grey-500 dark:text-slate-200">
-                      ({secondaryAmount})
+            {isTransactionPending ? (
+              <div className="flex h-full w-full flex-col items-center justify-center">
+                <Image
+                  src="/assets/images/quint.webp"
+                  alt={t`Juicebox loading animation`}
+                  width={140}
+                  height={140}
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                  }}
+                />
+                <h2 className="mt-4 font-heading text-2xl font-medium text-black dark:text-slate-100">
+                  <Trans>Transaction pending...</Trans>
+                </h2>
+                <p>
+                  <Trans>
+                    Your transaction has been submitted and is awaiting
+                    confirmation.
+                  </Trans>
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="flex flex-col divide-y divide-grey-200 dark:divide-slate-500">
+                  <div className="flex justify-between gap-3 py-3">
+                    <span className="font-medium">
+                      <Trans>Total amount</Trans>
                     </span>
-                  )}
+                    <div>
+                      <span>{primaryAmount}</span>{' '}
+                      {secondaryAmount && (
+                        <span className="text-grey-500 dark:text-slate-200">
+                          ({secondaryAmount})
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <ReceiveSection className="py-6" />
+
+                  <div className="py-6">
+                    <MessageSection />
+
+                    <div className="mt-6 flex gap-2">
+                      <input
+                        id="userAcceptsTerms"
+                        name="userAcceptsTerms"
+                        type="checkbox"
+                        checked={props.values.userAcceptsTerms}
+                        onChange={() =>
+                          props.setFieldValue(
+                            'userAcceptsTerms',
+                            !props.values.userAcceptsTerms,
+                          )
+                        }
+                      />
+                      <label
+                        htmlFor="userAcceptsTerms"
+                        className={twMerge(
+                          props.errors.userAcceptsTerms &&
+                            props.submitCount > 0 &&
+                            'font-medium text-error-500 transition-colors',
+                        )}
+                      >
+                        <Trans>
+                          I accept the{' '}
+                          <ExternalLink href="https://docs.juicebox.money/dev/learn/risks">
+                            risks
+                          </ExternalLink>{' '}
+                          associated with the Juicebox protocol.
+                        </Trans>
+                      </label>
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              <ReceiveSection className="py-6" />
-
-              <div className="py-6">
-                <MessageSection />
-
-                <div className="mt-6 flex gap-2">
-                  <input
-                    id="userAcceptsTerms"
-                    name="userAcceptsTerms"
-                    type="checkbox"
-                    checked={props.values.userAcceptsTerms}
-                    onChange={() =>
-                      props.setFieldValue(
-                        'userAcceptsTerms',
-                        !props.values.userAcceptsTerms,
-                      )
-                    }
-                  />
-                  <label
-                    htmlFor="userAcceptsTerms"
-                    className={twMerge(
-                      props.errors.userAcceptsTerms &&
-                        props.submitCount > 0 &&
-                        'font-medium text-error-500 transition-colors',
-                    )}
-                  >
-                    <Trans>
-                      I accept the{' '}
-                      <ExternalLink href="https://docs.juicebox.money/dev/learn/risks">
-                        risks
-                      </ExternalLink>{' '}
-                      associated with the Juicebox protocol.
-                    </Trans>
-                  </label>
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </JuiceModal>
         </form>
       )}

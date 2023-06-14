@@ -61,7 +61,19 @@ export function TopSection() {
           </Trans>
         }
       />
-      <div className="mb-16 flex w-full justify-center md:w-auto">
+      <div className="mb-16 flex w-full flex-col-reverse justify-center gap-4 md:w-auto md:flex-row">
+        <Link href="/projects" className="w-full md:w-auto">
+          <XLButton
+            size="large"
+            type="default"
+            className="w-full md:w-auto"
+            onClick={() => {
+              trackFathomGoal(HOMEPAGE.EXPLORE_PROJECTS_CTA)
+            }}
+          >
+            <Trans>Explore projects</Trans>
+          </XLButton>
+        </Link>
         <Link href="/create" className="w-full md:w-auto">
           <XLButton
             size="large"

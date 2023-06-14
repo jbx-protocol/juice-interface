@@ -7,11 +7,13 @@ import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { CurrencyUtils } from 'utils/format/formatCurrency'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { useProjectCart } from '../useProjectCart'
+import { useProjectPageQueries } from '../useProjectPageQueries'
 import { usePayProjectModal } from './usePayProjectModal'
 
 jest.mock('hooks/Wallet')
 jest.mock('hooks/useCurrencyConverter')
 jest.mock('../useProjectCart')
+jest.mock('../useProjectPageQueries')
 
 describe('usePayProjectModal', () => {
   const DefaultuseProjectCart = {
@@ -22,15 +24,22 @@ describe('usePayProjectModal', () => {
       currency: V2V3_CURRENCY_ETH,
     },
   }
+  const DefaultUseProjectPageQueries = {
+    setProjectPayReceipt: jest.fn(),
+  }
   const DefaultUseWallet = {
     userAddress: '0x1234567890',
   }
   const mockCurrencyUtils = new CurrencyUtils(2000)
   beforeEach(() => {
     DefaultuseProjectCart.dispatch.mockClear()
+    DefaultUseProjectPageQueries.setProjectPayReceipt.mockClear()
     ;(useProjectCart as jest.Mock).mockReturnValue(DefaultuseProjectCart)
     ;(useWallet as jest.Mock).mockReturnValue(DefaultUseWallet)
     ;(useCurrencyConverter as jest.Mock).mockReturnValue(mockCurrencyUtils)
+    ;(useProjectPageQueries as jest.Mock).mockReturnValue(
+      DefaultUseProjectPageQueries,
+    )
   })
 
   it.each`
@@ -57,7 +66,7 @@ describe('usePayProjectModal', () => {
       payload: { open: true },
     })
   })
-
+  //
   test.each`
     totalAmount                                      | expectedPrimaryAmount | expectedSecondaryAmount
     ${{ amount: 0, currency: V2V3_CURRENCY_ETH }}    | ${'Ξ0'}               | ${'US$0'}

@@ -314,6 +314,9 @@ msgstr ""
 msgid "Transferred ETH to project"
 msgstr ""
 
+msgid "Project tokens"
+msgstr ""
+
 msgid "You must grant permission to migrate your V1 tokens."
 msgstr ""
 
@@ -1148,6 +1151,9 @@ msgstr ""
 msgid "Profile details"
 msgstr ""
 
+msgid "Return to project"
+msgstr ""
+
 msgid "Address"
 msgstr ""
 
@@ -1578,6 +1584,9 @@ msgid "Explore Projects"
 msgstr ""
 
 msgid "Total volume"
+msgstr ""
+
+msgid "Your NFTs & Rewards"
 msgstr ""
 
 msgid "Send a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
@@ -2490,6 +2499,9 @@ msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
 msgstr ""
 
 msgid "Terminal migration"
+msgstr ""
+
+msgid "Subscribe to updates"
 msgstr ""
 
 msgid "Configure your project's token."
@@ -4232,6 +4244,9 @@ msgstr ""
 msgid "Build and launch your NFT project right here on Juicebox with built-in redemptions."
 msgstr ""
 
+msgid "A message from {name}"
+msgstr ""
+
 msgid "Pay project"
 msgstr ""
 
@@ -4488,6 +4503,9 @@ msgid "Close"
 msgstr ""
 
 msgid "A collection's symbol is typically a 3-4 letter acronym or abbreviation of its name. The symbol is used on NFT marketplaces (like <0>OpenSea</0>)."
+msgstr ""
+
+msgid "Thank you, your payment was successful."
 msgstr ""
 
 msgid "{0}% of supply"

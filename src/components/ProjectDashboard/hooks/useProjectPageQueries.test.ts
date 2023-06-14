@@ -11,14 +11,17 @@ jest.mock('next/router', () => ({
 
 describe('useProjectPageQueries', () => {
   const pushMock = jest.fn()
+  const replaceMock = jest.fn()
 
   beforeEach(() => {
     pushMock.mockReset()
+    replaceMock.mockReset()
     ;(useRouter as jest.Mock).mockReturnValue({
       query: {
         tabid: 'tabid',
       },
       push: pushMock,
+      replace: replaceMock,
     })
   })
 
@@ -32,8 +35,8 @@ describe('useProjectPageQueries', () => {
     act(() => {
       result.current.setProjectPageTab('foobar')
     })
-    expect(pushMock).toHaveBeenCalled()
-    expect(pushMock).toHaveBeenCalledWith(
+    expect(replaceMock).toHaveBeenCalled()
+    expect(replaceMock).toHaveBeenCalledWith(
       { pathname: undefined, query: { tabid: 'foobar', projectId: undefined } },
       undefined,
       { shallow: true },

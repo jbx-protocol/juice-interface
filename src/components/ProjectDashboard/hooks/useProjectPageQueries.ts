@@ -1,5 +1,6 @@
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useMemo } from 'react'
 
 type ProjectPageTab =
   | 'about'
@@ -8,32 +9,77 @@ type ProjectPageTab =
   | 'tokens'
   | 'activity'
 
+export type ProjectPayReceipt = {
+  totalAmount: {
+    amount: number
+    currency: V2V3CurrencyOption
+  }
+  tokensReceived: string
+  timestamp: Date
+  fromAddress: string
+  nfts: {
+    id: number
+  }[]
+}
+
 export const useProjectPageQueries = () => {
   const router = useRouter()
-  const { projectId } = router.query
 
   const projectPageTab = (router.query.tabid as ProjectPageTab) || 'about'
+  const projectPayReceiptString = router.query.payReceipt as string | undefined
+
+  const projectPayReceipt = useMemo(() => {
+    if (!projectPayReceiptString) {
+      return undefined
+    }
+
+    try {
+      const parsed = JSON.parse(projectPayReceiptString) as ProjectPayReceipt
+      return {
+        ...parsed,
+        timestamp: new Date(parsed.timestamp),
+      }
+    } catch (error) {
+      console.error('Failed to parse projectPayReceipt', error)
+      return undefined
+    }
+  }, [projectPayReceiptString])
 
   const setProjectPageTab = useCallback(
     (tabId: string) => {
-      router.push(
-        { pathname: router.pathname, query: { tabid: tabId, projectId } },
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: { ...router.query, tabid: tabId },
+        },
         undefined,
         { shallow: true },
       )
     },
-    [projectId, router],
+    [router],
   )
 
-  useEffect(() => {
-    const tabId = router.query.tabid as ProjectPageTab
-    if (tabId && tabId !== projectPageTab) {
-      setProjectPageTab(tabId)
-    }
-  }, [projectPageTab, router.query.tabid, setProjectPageTab])
+  const setProjectPayReceipt = useCallback(
+    (payReceipt: ProjectPayReceipt | undefined) => {
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: {
+            ...router.query,
+            payReceipt: payReceipt ? JSON.stringify(payReceipt) : undefined,
+          },
+        },
+        undefined,
+        { shallow: true },
+      )
+    },
+    [router],
+  )
 
   return {
     projectPageTab,
     setProjectPageTab,
+    projectPayReceipt,
+    setProjectPayReceipt,
   }
 }

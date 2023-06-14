@@ -16,6 +16,7 @@ export type ProjectPayReceipt = {
   }
   tokensReceived: string
   timestamp: Date
+  transactionHash: string | undefined
   fromAddress: string
   nfts: {
     id: number

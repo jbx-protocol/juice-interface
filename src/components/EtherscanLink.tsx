@@ -8,13 +8,23 @@ import ExternalLink from './ExternalLink'
 const EtherscanLink: React.FC<
   React.PropsWithChildren<{
     className?: string
+    linkClassName?: string
     value: string | undefined
     type: 'tx' | 'address'
     truncated?: boolean
     truncateTo?: number
     onClick?: MouseEventHandler
   }>
-> = ({ className, value, type, truncated, truncateTo, children, onClick }) => {
+> = ({
+  className,
+  linkClassName,
+  value,
+  type,
+  truncated,
+  truncateTo,
+  children,
+  onClick,
+}) => {
   if (!value) return null
 
   const renderValue = truncated
@@ -33,7 +43,12 @@ const EtherscanLink: React.FC<
       {type === 'tx' ? (
         <>
           {children}{' '}
-          <LinkIcon className="inline h-4 w-4 text-grey-600 dark:text-slate-200" />
+          <LinkIcon
+            className={twMerge(
+              'inline h-4 w-4 text-grey-600 dark:text-slate-200',
+              linkClassName,
+            )}
+          />
         </>
       ) : (
         <> {children ?? renderValue}</>

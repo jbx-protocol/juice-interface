@@ -1,6 +1,8 @@
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useCallback, useMemo, useReducer } from 'react'
+import { TxStatus } from 'models/transaction'
+import { useCallback, useContext, useMemo, useReducer } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { emitErrorNotification } from 'utils/notifications'
@@ -42,6 +44,7 @@ export const usePayProjectModal = () => {
     transactionError: undefined,
   })
   const { setProjectPayReceipt } = useProjectPageQueries()
+  const { transactions } = useContext(TxHistoryContext)
 
   const open = payModalOpen
   const setOpen = useCallback(
@@ -93,6 +96,13 @@ export const usePayProjectModal = () => {
     })
   }, [converter, totalAmount])
 
+  const pendingTransactionHash = useMemo(() => {
+    const pendingTransaction = transactions?.find(
+      tx => tx.status === TxStatus.pending,
+    )
+    return pendingTransaction?.tx?.hash
+  }, [transactions])
+
   return {
     open,
     primaryAmount,
@@ -102,6 +112,7 @@ export const usePayProjectModal = () => {
     validationSchema: ValidationSchema,
     projectName: name,
     projectPayDisclosure: payDisclosure,
+    pendingTransactionHash,
     ...modalState,
     setOpen,
     onPaySubmit,

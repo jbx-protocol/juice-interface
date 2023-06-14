@@ -93,7 +93,7 @@ export default function ProjectCard({
           </div>
 
           <div>
-            <span className="font-medium text-black dark:text-slate-100">
+            <span className="mr-1 font-medium text-black dark:text-slate-100">
               <ETHAmount amount={volume} precision={precision} />
             </span>
 

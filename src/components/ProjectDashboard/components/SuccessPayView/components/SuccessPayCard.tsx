@@ -36,7 +36,10 @@ export const SuccessPayCard = ({ className }: { className?: string }) => {
           </span>
           <span className="truncate text-sm font-medium">{name}</span>
           <span className="font-heading text-2xl font-medium">
-            {formatCurrencyAmount(projectPayReceipt.totalAmount)}
+            {formatCurrencyAmount({
+              ...projectPayReceipt.totalAmount,
+              withScale: true,
+            })}
           </span>
         </div>
       </div>

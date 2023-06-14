@@ -19,13 +19,13 @@ export default function OverviewTab() {
           <AllAssetsButton />
         </div>
       </section>
-      {pv ? (
+      {pv && projectId ? (
         <section className="mt-10">
           <ErrorBoundaryCallout
             message={<Trans>Volume chart failed to load.</Trans>}
           >
             <VolumeChart
-              style={{ height: 240 }}
+              height={240}
               createdAt={createdAt}
               projectId={projectId}
               pv={pv}

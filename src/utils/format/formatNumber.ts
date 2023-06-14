@@ -75,6 +75,18 @@ export const formatWad = (
 }
 
 /**
+ * Returns a float representation of a given [wadValue]
+ *
+ * @example
+ * // returns 1.23
+ * fromWad(1230000000000000000);
+ *
+ */
+export const floatFromWad = (wadValue?: BigNumberish) => {
+  return parseFloat(fromWad(wadValue))
+}
+
+/**
  * Scale a given [percentValue] to the permyriad unit by multiplying it by 100.
  *
  * Permyriad: x/10000

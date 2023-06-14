@@ -1,4 +1,5 @@
 const detect = () => 'en',
   fromUrl = () => null,
-  fromNavigator = () => null
-export { detect, fromUrl, fromNavigator }
+  fromNavigator = () => null,
+  fromStorage = () => null
+export { detect, fromNavigator, fromStorage, fromUrl }

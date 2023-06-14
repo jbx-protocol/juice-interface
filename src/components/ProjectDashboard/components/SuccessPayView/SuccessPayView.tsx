@@ -1,6 +1,7 @@
-import { ArrowUturnLeftIcon, BellIcon } from '@heroicons/react/24/outline'
+import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { useSuccessPayView } from 'components/ProjectDashboard/hooks/useSuccessPayView'
+import { SubscribeButton } from 'components/SubscribeButton'
 import confettiAnimationJuicebox from 'data/lottie/confetti-animation-juicebox.json'
 import Lottie from 'lottie-react'
 import {
@@ -12,6 +13,7 @@ import {
 
 export const SuccessPayView = () => {
   const {
+    projectId,
     confettiVisible,
     name,
     projectPayReceipt,
@@ -39,10 +41,16 @@ export const SuccessPayView = () => {
           <SuccessPayCard className="mt-6" />
 
           <div className="mt-8 flex justify-center gap-1">
-            <SuccessButton
-              icon={<BellIcon className="h-5 w-5" />}
-              text={<Trans>Subscribe to updates</Trans>}
-            />
+            {projectId && (
+              <SubscribeButton
+                disableTooltip
+                className="flex items-center gap-2 py-2 px-3.5 font-medium text-bluebs-500 hover:text-bluebs-300 dark:text-bluebs-300 dark:hover:text-bluebs-500"
+                iconClassName="h-5 w-5"
+                projectId={projectId}
+              >
+                <Trans>Subscribe to updates</Trans>
+              </SubscribeButton>
+            )}
             {/* // TODO: Hidden for now */}
             {/* <SuccessButton
               icon={<TwitterOutlined className="h-5 w-5 text-xl" />}

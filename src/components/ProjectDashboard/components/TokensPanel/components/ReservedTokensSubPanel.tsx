@@ -56,7 +56,10 @@ export const ReservedTokensSubPanel = ({
               <div className="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500">
                 {reservedList
                   ? reservedList.map(props => (
-                      <ProjectAllocationRow key={props.address} {...props} />
+                      <ProjectAllocationRow
+                        key={`${props.address}${props.projectId}`}
+                        {...props}
+                      />
                     ))
                   : null}
               </div>

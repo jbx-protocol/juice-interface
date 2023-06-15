@@ -2,8 +2,8 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import { useTokensPanel } from 'components/ProjectDashboard/hooks/useTokensPanel'
-import { ReservedTokensSubPanel } from '../CyclesPayoutsPanel/components/ReservedTokensSubPanel'
 import { DisplayCard } from '../ui'
+import { ReservedTokensSubPanel } from './components/ReservedTokensSubPanel'
 
 export const TokensPanel = () => {
   const {

@@ -1,11 +1,9 @@
 import { EditingFundingCycleConfig } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/hooks/useEditingFundingCycleConfig'
-import { CV_V3 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
+import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import { LaunchFundingCyclesData } from 'hooks/v2v3/transactor/useLaunchFundingCyclesTx'
-import { useLoadV2V3Contract } from 'hooks/v2v3/useLoadV2V3Contract'
-import { V2V3ContractName } from 'models/v2v3/contracts'
 import { V3FundingCycleMetadata } from 'models/v3/fundingCycle'
 import { useContext } from 'react'
 
@@ -52,10 +50,7 @@ export function useLaunchFundingCyclesData({
 }) {
   const { fundingCycle } = useContext(V2V3ProjectContext)
   const { projectId, pv } = useContext(ProjectMetadataContext)
-  const V3JBETHPaymentTerminal = useLoadV2V3Contract({
-    cv: CV_V3,
-    contractName: V2V3ContractName.JBETHPaymentTerminal,
-  })
+  const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
 
   const {
     editingPayoutGroupedSplits,
@@ -74,7 +69,7 @@ export function useLaunchFundingCyclesData({
       editingFundAccessConstraints &&
       projectId &&
       pv &&
-      V3JBETHPaymentTerminal
+      defaultJBETHPaymentTerminal
     )
   ) {
     return
@@ -101,7 +96,7 @@ export function useLaunchFundingCyclesData({
 
   const launchData = transformLaunchDataForV3(
     initialLaunchData,
-    V3JBETHPaymentTerminal.address,
+    defaultJBETHPaymentTerminal.address,
   )
 
   return launchData

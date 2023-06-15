@@ -83,7 +83,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
   const {
-    contracts: { JBController },
+    contracts: { JBController: projectJBController },
   } = useContext(V2V3ProjectContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
@@ -130,7 +130,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
       !JBTiered721DelegateStoreAddress ||
       !projectOwnerAddress ||
       !contracts ||
-      !JBController ||
+      !projectJBController ||
       !JBPrices ||
       !isValidMustStartAtOrAfter(
         mustStartAtOrAfter,
@@ -191,7 +191,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
       projectId,
       deployTiered721DelegateData,
       reconfigureFundingCyclesData,
-      JBControllerAddress: JBController.address,
+      JBControllerAddress: projectJBController.address,
     })
 
     if (!args) {

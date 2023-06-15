@@ -99,7 +99,7 @@ function buildArgs(
 export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWithNftsTxArgs> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
-  const JBController = useDefaultJBController()
+  const defaultJBController = useDefaultJBController()
 
   const { userAddress } = useWallet()
   const projectTitle = useV2ProjectTitle()
@@ -140,7 +140,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       !transactor ||
       !userAddress ||
       !contracts ||
-      !JBController ||
+      !defaultJBController ||
       !defaultJBETHPaymentTerminal ||
       !JBTiered721DelegateProjectDeployer ||
       !JBTiered721DelegateStoreAddress ||
@@ -153,8 +153,8 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
         ? 'userAddress'
         : !contracts
         ? 'contracts'
-        : !JBController
-        ? 'JBController'
+        : !defaultJBController
+        ? 'defaultJBController'
         : !JBTiered721DelegateStoreAddress
         ? 'JBTiered721DelegateStoreAddress'
         : !JBTiered721DelegateProjectDeployer
@@ -221,7 +221,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       owner: _owner,
       deployTiered721DelegateData,
       launchProjectData,
-      JBControllerAddress: JBController.address,
+      JBControllerAddress: defaultJBController.address,
     })
 
     if (!args) {

@@ -18,13 +18,13 @@ export const useLaunchFundingCycles = ({
 
   const [launchFundingCycleTxLoading, setLaunchFundingCycleTxLoading] =
     useState<boolean>(false)
+
   const launchStandardFundingCycles = useLaunchStandardFundingCycles(
     editingFundingCycleConfig,
   )
   const launchNftFundingCycles = useLaunchNftFundingCycles(
     editingFundingCycleConfig,
   )
-
   const isNftFundingCycle = useIsNftProject()
 
   const launchFundingCycle = useCallback(async () => {

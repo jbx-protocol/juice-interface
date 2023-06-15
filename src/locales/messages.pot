@@ -488,9 +488,6 @@ msgstr ""
 msgid "Pay"
 msgstr ""
 
-msgid "Relaunch your cycle on the new Juicebox V2 contracts."
-msgstr ""
-
 msgid "If locked, this percentage can't be edited or removed until the lock expires or the cycle is edited."
 msgstr ""
 
@@ -582,9 +579,6 @@ msgid "Overview"
 msgstr ""
 
 msgid "last {TRENDING_WINDOW_DAYS} days"
-msgstr ""
-
-msgid "Your Juicebox project has no active cycle. Launch a cycle to re-enable payments to your project."
 msgstr ""
 
 msgid "Changes to payouts will take effect immediately."
@@ -920,9 +914,6 @@ msgstr ""
 msgid "Using crowdfunding platforms for films has been around for a while, but Juicebox adds an extra layer of transparency to the process, allowing fans to see where funds are going. Unlike traditional models where money is controlled behind the scenes, StudioDAO members source, vote, fund, and distribute movies transparently using the treasury while creators retain 100% of their creative control and ownership. With the entertainment market currently valued at two trillion dollars, StudioDAO founder Kenny Miller can see a “clear scenario for a decentralized studio to do one billion dollars of production 2-3 years from now.” To learn more about Kenny's vision for StudioDAO, listen to episode 9 of the Juicecast: <0>https://podcast.juicebox.money</0>."
 msgstr ""
 
-msgid "Funding cycle required."
-msgstr ""
-
 msgid "Contributors will receive this NFT when they contribute at least this amount."
 msgstr ""
 
@@ -945,9 +936,6 @@ msgid "44190F"
 msgstr ""
 
 msgid "{0} withdrawn"
-msgstr ""
-
-msgid "Cycle preview"
 msgstr ""
 
 msgid "Share on Twitter"
@@ -1059,9 +1047,6 @@ msgid "1. Set ENS name"
 msgstr ""
 
 msgid "Legacy balance"
-msgstr ""
-
-msgid "Your cycle rules have been pre-populated using the rules you originally launched with. If you need to customize them, <0>contact us</0>."
 msgstr ""
 
 msgid "No overflow"
@@ -2537,9 +2522,6 @@ msgstr ""
 msgid "We'll need this permission to change your project's token to your V3 Migration Token in the next step."
 msgstr ""
 
-msgid "Launch cycle"
-msgstr ""
-
 msgid "Recommended"
 msgstr ""
 
@@ -3623,9 +3605,6 @@ msgstr ""
 msgid "Your project's rules are locked in place for the duration of each locked cycle. You will also gain access to:"
 msgstr ""
 
-msgid "Duration (seconds)"
-msgstr ""
-
 msgid "Set up your payouts"
 msgstr ""
 
@@ -4497,9 +4476,6 @@ msgid "MoonDAO is a worldwide collective united by the mission of decentralizing
 msgstr ""
 
 msgid "V3"
-msgstr ""
-
-msgid "Review and launch cycle"
 msgstr ""
 
 msgid "project"

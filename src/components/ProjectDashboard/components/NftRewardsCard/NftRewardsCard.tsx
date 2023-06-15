@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
+import { Tooltip } from 'antd'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -24,10 +25,17 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
       },
     }))
   }, [nftsLoading, rewardTiers])
+  const tooltipText = (
+    <Trans>See the NFTs and rewards offered by this project.</Trans>
+  )
   return (
     <DisplayCard className={twMerge('flex flex-col gap-2', className)}>
       <div className="font-medium">
-        <Trans>NFTs & Rewards</Trans>
+        <Tooltip title={tooltipText}>
+          <span>
+            <Trans>NFTs & Rewards</Trans>
+          </span>
+        </Tooltip>
       </div>
       <div className="flex items-center gap-3">
         <StackedComponents components={NftComponents} size="56px" />

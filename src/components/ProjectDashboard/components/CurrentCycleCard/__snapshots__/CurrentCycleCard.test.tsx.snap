@@ -5,37 +5,39 @@ exports[`CurrentCycleCard renders 1`] = `
   <div
     class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 pr-9"
   >
-    <div
-      class="font-medium"
-    >
-      Current Cycle: #1
-    </div>
-    <div
-      class="mt-6 flex items-center gap-1"
-    >
-      <span
-        class="text-2xl font-medium"
+    <div>
+      <div
+        class="font-medium"
       >
-        1 day
-      </span>
-      <svg
-        aria-hidden="true"
-        class="h-4 w-4 text-smoke-400 dark:text-slate-300"
-        fill="currentColor"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
+        Current Cycle: #1
+      </div>
+      <div
+        class="mt-6 flex items-center gap-1"
       >
-        <path
-          clip-rule="evenodd"
-          d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z"
-          fill-rule="evenodd"
-        />
-      </svg>
-    </div>
-    <div
-      class="mt-3 text-smoke-500 dark:text-slate-200"
-    >
-      until Cycle #2
+        <span
+          class="text-2xl font-medium"
+        >
+          1 day
+        </span>
+        <svg
+          aria-hidden="true"
+          class="h-4 w-4 text-smoke-400 dark:text-slate-300"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </div>
+      <div
+        class="mt-3 text-smoke-500 dark:text-slate-200"
+      >
+        until Cycle #2
+      </div>
     </div>
   </div>
 </div>

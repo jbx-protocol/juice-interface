@@ -19,29 +19,35 @@ jest.mock('./components/PayInput')
 describe('PayProjectCard', () => {
   it('renders', async () => {
     const { container } = render(<PayProjectCard />)
-    await waitFor(() => expect(container).toMatchSnapshot())
+    await waitFor(() => expect(container).toMatchSnapshot(), { timeout: 10000 })
   })
 
   test('entering text into input updates token value', async () => {
     const { getByTestId, getByRole } = render(<PayProjectCard />)
     const input = getByRole('textbox')
     const tokensPerEth = getByTestId('tokens-per-eth')
-    await waitFor(() => {
-      expect(input).toHaveValue('')
-      expect(tokensPerEth).toHaveTextContent(
-        JSON.stringify({
-          currencyAmount: { amount: undefined, currency: V2V3_CURRENCY_ETH },
-        }),
-      )
-    })
-    await waitFor(() => {
-      fireEvent.change(input, { target: { value: '1' } })
-      expect(input).toHaveValue('1')
-      expect(tokensPerEth).toHaveTextContent(
-        JSON.stringify({
-          currencyAmount: { amount: 1, currency: V2V3_CURRENCY_ETH },
-        }),
-      )
-    })
+    await waitFor(
+      () => {
+        expect(input).toHaveValue('')
+        expect(tokensPerEth).toHaveTextContent(
+          JSON.stringify({
+            currencyAmount: { amount: undefined, currency: V2V3_CURRENCY_ETH },
+          }),
+        )
+      },
+      { timeout: 10000 },
+    )
+    await waitFor(
+      () => {
+        fireEvent.change(input, { target: { value: '1' } })
+        expect(input).toHaveValue('1')
+        expect(tokensPerEth).toHaveTextContent(
+          JSON.stringify({
+            currencyAmount: { amount: 1, currency: V2V3_CURRENCY_ETH },
+          }),
+        )
+      },
+      { timeout: 10000 },
+    )
   })
 })

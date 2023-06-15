@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, Tooltip } from 'antd'
 import { usePayProjectCard } from 'components/ProjectDashboard/hooks'
 import { Formik } from 'formik'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -14,7 +14,11 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
   return (
     <DisplayCard className={twMerge('flex flex-col gap-2 pr-9', className)}>
       <div className="font-medium">
-        <Trans>Pay Project</Trans>
+        <Tooltip title={<Trans>Send ETH payments to this project.</Trans>}>
+          <span>
+            <Trans>Pay Project</Trans>
+          </span>
+        </Tooltip>
       </div>
       <Formik
         initialValues={{

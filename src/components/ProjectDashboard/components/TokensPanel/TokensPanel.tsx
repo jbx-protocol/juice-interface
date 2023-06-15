@@ -16,7 +16,9 @@ export const TokensPanel = () => {
   return (
     <div className="flex w-full max-w-xl flex-col gap-5">
       <div className="flex items-center justify-between">
-        <h2 className="font-heading text-2xl font-medium">Tokens</h2>
+        <h2 className="font-heading text-2xl font-medium">
+          <Trans>Tokens</Trans>
+        </h2>
       </div>
       <div>
         {!userTokenBalanceLoading && userTokenBalance && (

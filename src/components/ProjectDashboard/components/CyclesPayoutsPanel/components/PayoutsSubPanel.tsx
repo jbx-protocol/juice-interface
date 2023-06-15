@@ -8,10 +8,16 @@ import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
 import { DisplayCard } from '../../ui'
 import { usePayoutsSubPanel } from '../hooks/usePayoutsSubPanel'
+import { TreasuryStats } from './TreasuryStats'
 
-export const PayoutsSubPanel = ({ className }: { className?: string }) => {
-  const { payouts, treasuryBalance, availableToPayout, overflow } =
-    usePayoutsSubPanel()
+export const PayoutsSubPanel = ({
+  className,
+  type,
+}: {
+  className?: string
+  type: 'current' | 'upcoming'
+}) => {
+  const { payouts, loading } = usePayoutsSubPanel(type)
   return (
     <div className={twMerge(className)}>
       <h2 className="mb-0 font-heading text-2xl font-medium">
@@ -19,32 +25,7 @@ export const PayoutsSubPanel = ({ className }: { className?: string }) => {
       </h2>
       {payouts?.length ? (
         <div className="mt-5 flex flex-col items-center gap-4">
-          <div className="flex w-full items-center gap-4">
-            <DisplayCard className="flex w-full flex-col gap-2">
-              <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium dark:text-slate-200">
-                <Trans>Treasury balance</Trans>
-              </h3>
-              <span className="font-heading text-xl font-medium">
-                {treasuryBalance}
-              </span>
-            </DisplayCard>
-            <DisplayCard className="flex w-full flex-col gap-2">
-              <h3 className="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium dark:text-slate-200">
-                <Trans>Overflow</Trans>
-              </h3>
-              <span className="font-heading text-xl font-medium">
-                {overflow}
-              </span>
-            </DisplayCard>
-            <DisplayCard className="flex w-full flex-col gap-2">
-              <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
-                <Trans>Available to pay out</Trans>
-              </h3>
-              <span className="font-heading text-xl font-medium">
-                {availableToPayout}
-              </span>
-            </DisplayCard>
-          </div>
+          {type === 'current' && <TreasuryStats />}
           <DisplayCard className="flex w-full flex-col pb-8">
             <div className="flex items-center justify-between gap-3">
               <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
@@ -54,20 +35,26 @@ export const PayoutsSubPanel = ({ className }: { className?: string }) => {
             </div>
 
             <div className="mt-4 w-full">
-              {payouts
-                ? payouts.map(payout => (
-                    <ProjectAllocationRow key={payout.address} {...payout} />
-                  ))
-                : null}
+              {!loading
+                ? payouts
+                  ? payouts.map(payout => (
+                      <ProjectAllocationRow key={payout.address} {...payout} />
+                    ))
+                  : null
+                : Array.from({ length: 5 }).map((_, i) => (
+                    <ProjectAllocationSkeleton key={i} />
+                  ))}
             </div>
 
-            <Button
-              type="primary"
-              className="mt-6 flex w-fit items-center gap-3 self-end"
-            >
-              <Trans>Send payouts</Trans>
-              <ArrowUpCircleIcon className="h-5 w-5" />
-            </Button>
+            {type === 'current' && (
+              <Button
+                type="primary"
+                className="mt-6 flex w-fit items-center gap-3 self-end"
+              >
+                <Trans>Send payouts</Trans>
+                <ArrowUpCircleIcon className="h-5 w-5" />
+              </Button>
+            )}
           </DisplayCard>
         </div>
       ) : (
@@ -78,3 +65,17 @@ export const PayoutsSubPanel = ({ className }: { className?: string }) => {
     </div>
   )
 }
+
+const ProjectAllocationSkeleton = () => (
+  <div className="flex animate-pulse items-center justify-between gap-3 py-3">
+    <div className="flex items-center gap-3">
+      <span className="flex items-center gap-3 font-medium dark:text-slate-50">
+        <span className="h-8 w-8 rounded-full bg-smoke-200 dark:bg-slate-500" />
+        <span className="h-[22px] w-20 rounded-lg bg-smoke-200 dark:bg-slate-500" />
+      </span>
+    </div>
+    <div className="flex items-center gap-3 dark:text-slate-200">
+      <span className="h-[22px] w-28 rounded-lg bg-smoke-200 dark:bg-slate-500" />
+    </div>
+  </div>
+)

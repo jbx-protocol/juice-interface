@@ -77,7 +77,7 @@ export const CurrentUpcomingSubPanel = ({
         <ConfigurationDisplayCard type={info.type} />
       </div>
 
-      <PayoutsSubPanel className="mt-12" />
+      <PayoutsSubPanel className="mt-12" type={id} />
     </div>
   )
 }

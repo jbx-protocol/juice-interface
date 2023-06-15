@@ -1,6 +1,7 @@
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
+import { Transaction } from 'ethers'
 import { FormikHelpers } from 'formik'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
@@ -42,18 +43,22 @@ export const usePayProjectTx = ({
   const converter = useCurrencyConverter()
   const payProjectTx = usePayETHPaymentTerminalTx()
 
-  const buildPayReceipt = useCallback((): ProjectPayReceipt => {
-    return {
-      totalAmount: totalAmount ?? {
-        amount: 0,
-        currency: V2V3_CURRENCY_ETH,
-      },
-      nfts: nftRewards ?? [],
-      timestamp: new Date(),
-      fromAddress: userAddress ?? '',
-      tokensReceived: '', // TODO
-    }
-  }, [nftRewards, totalAmount, userAddress])
+  const buildPayReceipt = useCallback(
+    (e: Transaction | undefined): ProjectPayReceipt => {
+      return {
+        totalAmount: totalAmount ?? {
+          amount: 0,
+          currency: V2V3_CURRENCY_ETH,
+        },
+        nfts: nftRewards ?? [],
+        timestamp: new Date(),
+        transactionHash: e?.hash,
+        fromAddress: userAddress ?? '',
+        tokensReceived: '', // TODO
+      }
+    },
+    [nftRewards, totalAmount, userAddress],
+  )
 
   return useCallback(
     async (
@@ -107,8 +112,8 @@ export const usePayProjectTx = ({
             preferClaimedTokens: false,
           },
           {
-            onConfirmed() {
-              onTransactionConfirmedCallback(buildPayReceipt(), formikHelpers)
+            onConfirmed(e) {
+              onTransactionConfirmedCallback(buildPayReceipt(e), formikHelpers)
             },
             onError(error) {
               onTransactionErrorCallback(error, formikHelpers)

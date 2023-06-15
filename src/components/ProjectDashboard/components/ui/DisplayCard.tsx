@@ -4,16 +4,19 @@ import { twMerge } from 'tailwind-merge'
 type Props = {
   className?: string
   children?: React.ReactNode
-  onClick?: MouseEventHandler<HTMLDivElement>
   role?: AriaRole
   as?: React.ElementType
+  onMouseEnter?: MouseEventHandler<HTMLDivElement>
+  onMouseLeave?: MouseEventHandler<HTMLDivElement>
+  onFocus?: MouseEventHandler<HTMLDivElement>
+  onClick?: MouseEventHandler<HTMLDivElement>
 }
 export const DisplayCard: React.FC<Props> = ({
   className,
   children,
-  onClick,
   role,
   as: Component = 'div',
+  ...rest
 }) => {
   return (
     <Component
@@ -22,7 +25,7 @@ export const DisplayCard: React.FC<Props> = ({
         className,
       )}
       role={role}
-      onClick={onClick}
+      {...rest}
     >
       {children}
     </Component>

@@ -20,7 +20,7 @@ export const PayoutsSubPanel = ({
       <h2 className="mb-0 font-heading text-2xl font-medium">
         <Trans>Treasury & Payouts</Trans>
       </h2>
-      {payouts?.length ? (
+      {payouts?.length || loading ? (
         <div className="mt-5 flex flex-col items-center gap-4">
           {type === 'current' && <TreasuryStats />}
           <DisplayCard className="flex w-full flex-col pb-8">
@@ -58,7 +58,7 @@ export const PayoutsSubPanel = ({
 }
 
 const ProjectAllocationSkeleton = () => (
-  <div className="flex animate-pulse items-center justify-between gap-3 py-3">
+  <div className="flex items-center justify-between gap-3 py-3">
     <div className="flex items-center gap-3">
       <span className="flex items-center gap-3 font-medium dark:text-slate-50">
         <span className="h-8 w-8 rounded-full bg-smoke-200 dark:bg-slate-500" />

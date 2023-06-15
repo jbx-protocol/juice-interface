@@ -53,11 +53,12 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   } = useProjectUpcomingFundingCycle({ projectId })
   const [upcomingFundingCycle] = upcomingFundingCycleData ?? []
 
-  const { data: upcomingPayoutSplits } = useProjectSplits({
-    projectId,
-    splitGroup: ETH_PAYOUT_SPLIT_GROUP,
-    domain: upcomingFundingCycle?.configuration?.toString(),
-  })
+  const { data: upcomingPayoutSplits, loading: upcomingProjectSplitsLoading } =
+    useProjectSplits({
+      projectId,
+      splitGroup: ETH_PAYOUT_SPLIT_GROUP,
+      domain: upcomingFundingCycle?.configuration?.toString(),
+    })
 
   const showAmountOnPayout = useMemo(() => {
     if (currentDistributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)) return false
@@ -117,7 +118,10 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
     }
   }, [currentPayoutSplits, transformSplit, type, upcomingPayoutSplits])
 
-  if (type === 'upcoming' && upcomingFundingCycleLoading) {
+  if (
+    type === 'upcoming' &&
+    (upcomingFundingCycleLoading || upcomingProjectSplitsLoading)
+  ) {
     return {
       loading: true,
     }

@@ -1,5 +1,5 @@
-import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
+import { PayoutsPopupMenu } from 'components/ProjectDashboard/components/CyclesPayoutsPanel/components/PayoutsPopupMenu'
 import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
 import { DisplayCard } from '../../ui'
@@ -28,7 +28,7 @@ export const PayoutsSubPanel = ({
               <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
                 <Trans>Payouts</Trans>
               </h3>
-              <EllipsisVerticalIcon role="button" className="h-6 w-6" />
+              <PayoutsPopupMenu type={type} />
             </div>
 
             <div className="mt-4 w-full">
@@ -44,7 +44,7 @@ export const PayoutsSubPanel = ({
             </div>
 
             {type === 'current' && (
-              <SendPayoutsButton className="mt-6 self-end" />
+              <SendPayoutsButton className="z-0 mt-6 self-end" />
             )}
           </DisplayCard>
         </div>

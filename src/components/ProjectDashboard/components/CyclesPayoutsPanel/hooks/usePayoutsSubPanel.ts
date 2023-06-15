@@ -1,12 +1,6 @@
 import assert from 'assert'
-import {
-  useProjectContext,
-  useProjectMetadata,
-} from 'components/ProjectDashboard/hooks'
-import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/splits'
+import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { BigNumber } from 'ethers'
-import useProjectSplits from 'hooks/v2v3/contractReader/useProjectSplits'
-import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useMemo } from 'react'
@@ -19,6 +13,7 @@ import {
   feeForAmount,
   formatSplitPercent,
 } from 'utils/v2v3/math'
+import { useCurrentUpcomingPayoutSplits } from './useCurrentUpcomingPayoutSplits'
 
 const splitHasFee = (split: Split) => {
   return !isJuiceboxProjectSplit(split)
@@ -39,26 +34,12 @@ const calculateSplitAmountWad = (
 }
 
 export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
-  const { projectId } = useProjectMetadata()
+  const { splits, loading } = useCurrentUpcomingPayoutSplits(type)
   const {
-    payoutSplits: currentPayoutSplits,
     distributionLimit: currentDistributionLimit,
     distributionLimitCurrency: currentDistributionLimitCurrency,
     primaryETHTerminalFee,
   } = useProjectContext()
-
-  const {
-    data: upcomingFundingCycleData,
-    loading: upcomingFundingCycleLoading,
-  } = useProjectUpcomingFundingCycle({ projectId })
-  const [upcomingFundingCycle] = upcomingFundingCycleData ?? []
-
-  const { data: upcomingPayoutSplits, loading: upcomingProjectSplitsLoading } =
-    useProjectSplits({
-      projectId,
-      splitGroup: ETH_PAYOUT_SPLIT_GROUP,
-      domain: upcomingFundingCycle?.configuration?.toString(),
-    })
 
   const showAmountOnPayout = useMemo(() => {
     if (currentDistributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)) return false
@@ -104,31 +85,15 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   )
 
   const payouts = useMemo(() => {
-    if (type === 'current') {
-      if (!currentPayoutSplits) return undefined
-      return currentPayoutSplits
-        .sort((a, b) => Number(b.percent) - Number(a.percent))
-        .map(transformSplit)
-    }
-    if (type === 'upcoming') {
-      if (!upcomingPayoutSplits) return undefined
-      return upcomingPayoutSplits
-        .sort((a, b) => Number(b.percent) - Number(a.percent))
-        .map(transformSplit)
-    }
-  }, [currentPayoutSplits, transformSplit, type, upcomingPayoutSplits])
+    if (loading || !splits) return
 
-  if (
-    type === 'upcoming' &&
-    (upcomingFundingCycleLoading || upcomingProjectSplitsLoading)
-  ) {
-    return {
-      loading: true,
-    }
-  }
+    return splits
+      .sort((a, b) => Number(b.percent) - Number(a.percent))
+      .map(transformSplit)
+  }, [loading, splits, transformSplit])
 
   return {
-    loading: false,
+    loading,
     payouts,
   }
 }

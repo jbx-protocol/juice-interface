@@ -5,10 +5,12 @@
 import { renderHook } from '@testing-library/react'
 import { useProjectCart } from 'components/ProjectDashboard/hooks'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
+import { useWallet } from 'hooks/Wallet'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { useCartSummary } from './useCartSummary'
 
 jest.mock('components/ProjectDashboard/hooks')
+jest.mock('hooks/Wallet')
 
 const DefaultNftRewardsContextMock = {
   nftRewards: {
@@ -47,9 +49,15 @@ describe('useCartSummary', () => {
     },
     dispatch: jest.fn(),
   }
+  const DefaultUseWalletMock = {
+    isConnected: true,
+    connect: jest.fn(),
+  }
   beforeEach(() => {
     ;(useProjectCart as jest.Mock).mockReturnValue(DefaultUseProjectCartMock)
+    ;(useWallet as jest.Mock).mockReturnValue(DefaultUseWalletMock)
     DefaultUseProjectCartMock.dispatch.mockClear()
+    DefaultUseWalletMock.connect.mockClear()
   })
 
   it('should return amountText', () => {
@@ -88,5 +96,16 @@ describe('useCartSummary', () => {
     expect(DefaultUseProjectCartMock.dispatch).toHaveBeenCalledWith({
       type: 'openPayModal',
     })
+  })
+
+  test('payProject method calls connect if wallet is not connected', () => {
+    ;(useWallet as jest.Mock).mockReturnValue({
+      ...DefaultUseWalletMock,
+      isConnected: false,
+    })
+    const { result } = renderUseCartSummaryHook()
+    result.current.payProject()
+    expect(DefaultUseWalletMock.connect).toHaveBeenCalled()
+    expect(DefaultUseProjectCartMock.dispatch).not.toHaveBeenCalled()
   })
 })

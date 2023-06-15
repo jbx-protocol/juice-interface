@@ -2750,6 +2750,9 @@ msgstr ""
 msgid "How decentralized is Juicebox?"
 msgstr ""
 
+msgid "Unable to load chart"
+msgstr ""
+
 msgid "Send {projectTitle} payouts"
 msgstr ""
 
@@ -4377,9 +4380,6 @@ msgid "Migrate project's Controller"
 msgstr ""
 
 msgid "If you have <0/> or <1/> legacy Juicebox projects, we recommend you migrate to <2/> exclusively."
-msgstr ""
-
-msgid "Unable to load charts"
 msgstr ""
 
 msgid "Message sent!"

@@ -7,7 +7,7 @@ import TimelineChart from './components/TimelineChart'
 import TimelineViewSelector from './components/TimelineViewSelector'
 import { useProjectTimeline } from './hooks/useProjectTimeline'
 import { useTimelineRange } from './hooks/useTimelineRange'
-import { ProjectTLView } from './types'
+import { ProjectTimelineView } from './types'
 
 export default function VolumeChart({
   height,
@@ -20,7 +20,8 @@ export default function VolumeChart({
   projectId: number
   pv: PV
 }) {
-  const [timelineView, setTimelineView] = useState<ProjectTLView>('volume')
+  const [timelineView, setTimelineView] =
+    useState<ProjectTimelineView>('volume')
 
   const [range, setRange] = useTimelineRange({ createdAt })
 

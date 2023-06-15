@@ -1,16 +1,18 @@
 import { t } from '@lingui/macro'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import React from 'react'
-import { ProjectTLRange } from '../types'
+import { ProjectTimelineRange } from '../types'
 
 export default function RangeSelector({
   range,
   setRange,
 }: {
-  range: ProjectTLRange
-  setRange: React.Dispatch<React.SetStateAction<ProjectTLRange>> | undefined
+  range: ProjectTimelineRange
+  setRange:
+    | React.Dispatch<React.SetStateAction<ProjectTimelineRange>>
+    | undefined
 }) {
-  const opts = (): { label: string; value: ProjectTLRange }[] => [
+  const opts = (): { label: string; value: ProjectTimelineRange }[] => [
     {
       label: t`7 days`,
       value: 7,

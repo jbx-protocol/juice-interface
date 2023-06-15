@@ -82,7 +82,7 @@ export const formatWad = (
  * fromWad(1230000000000000000);
  *
  */
-export const floatFromWad = (wadValue?: BigNumberish) => {
+export const wadToFloat = (wadValue?: BigNumberish) => {
   return parseFloat(fromWad(wadValue))
 }
 

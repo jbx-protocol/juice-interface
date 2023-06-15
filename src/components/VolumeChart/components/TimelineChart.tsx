@@ -12,13 +12,17 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { ProjectTLPoint, ProjectTLRange, ProjectTLView } from '../types'
+import {
+  ProjectTimelinePoint,
+  ProjectTimelineRange,
+  ProjectTimelineView,
+} from '../types'
 
 import { t } from '@lingui/macro'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useTrendingProjects } from 'hooks/useProjects'
 import tailwind from 'lib/tailwind'
-import { floatFromWad } from 'utils/format/formatNumber'
+import { wadToFloat } from 'utils/format/formatNumber'
 import { daysToMS } from 'utils/units'
 import { useTicks } from '../hooks/useTicks'
 import { useTimelineYDomain } from '../hooks/useTimelineYDomain'
@@ -31,9 +35,9 @@ export default function TimelineChart({
   range,
   height,
 }: {
-  points: ProjectTLPoint[] | undefined
-  view: ProjectTLView
-  range: ProjectTLRange
+  points: ProjectTimelinePoint[] | undefined
+  view: ProjectTimelineView
+  range: ProjectTimelineRange
   height: CSSProperties['height']
 }) {
   const { themeOption } = useContext(ThemeContext)
@@ -42,7 +46,7 @@ export default function TimelineChart({
 
   const { data: trendingProjects } = useTrendingProjects(1)
   const highTrendingScore = trendingProjects?.length
-    ? floatFromWad(trendingProjects[0].trendingScore)
+    ? wadToFloat(trendingProjects[0].trendingScore)
     : undefined
 
   const highTrendingPoint =
@@ -75,7 +79,7 @@ export default function TimelineChart({
   const stroke = themeOption === 'dark' ? colors.slate[300] : colors.grey[400]
   const color = themeOption === 'dark' ? colors.slate[200] : colors.grey[400]
   const bg = themeOption === 'dark' ? colors.slate[900] : 'white'
-  const fontSize = '0.7rem'
+  const fontSize = '0.75rem'
 
   const xTicks = useTicks({ range: xDomain, resolution: 7, offset: 0.5 })
 

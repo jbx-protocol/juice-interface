@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { daysToMS, minutesToMS, secondsToMS } from 'utils/units'
-import { ProjectTLRange } from '../types'
+import { ProjectTimelineRange } from '../types'
 
 /**
  * Calculate default range based on how old a project is.
@@ -10,8 +10,11 @@ export const useTimelineRange = ({
   createdAt,
 }: {
   createdAt: number | undefined
-}): [ProjectTLRange, React.Dispatch<React.SetStateAction<ProjectTLRange>>] => {
-  const [range, setRange] = useState<ProjectTLRange>(7)
+}): [
+  ProjectTimelineRange,
+  React.Dispatch<React.SetStateAction<ProjectTimelineRange>>,
+] => {
+  const [range, setRange] = useState<ProjectTimelineRange>(7)
 
   useEffect(() => {
     if (!createdAt) return

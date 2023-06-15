@@ -5,10 +5,10 @@ import { client } from 'lib/apollo/client'
 import { PV } from 'models/pv'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
-import { floatFromWad } from 'utils/format/formatNumber'
+import { wadToFloat } from 'utils/format/formatNumber'
 import { getSubgraphIdForProject } from 'utils/graph'
 import { daysToMS, minutesToMS } from 'utils/units'
-import { ProjectTLPoint, ProjectTLRange } from '../types'
+import { ProjectTimelinePoint, ProjectTimelineRange } from '../types'
 
 const COUNT = 30
 
@@ -19,7 +19,7 @@ export function useProjectTimeline({
 }: {
   projectId: number
   pv: PV
-  range: ProjectTLRange
+  range: ProjectTimelineRange
 }) {
   const { data: blockData, isLoading: isLoadingBlockNumbers } = useQuery(
     ['block-numbers', range],
@@ -80,7 +80,7 @@ export function useProjectTimeline({
   const points = useMemo(() => {
     if (!queryResult || !timestamps) return
 
-    const points: ProjectTLPoint[] = []
+    const points: ProjectTimelinePoint[] = []
 
     for (let i = 0; i < COUNT; i++) {
       const point = queryResult[`p${i}` as keyof typeof queryResult]
@@ -89,9 +89,9 @@ export function useProjectTimeline({
 
       points.push({
         timestamp: timestamps[i],
-        trendingScore: floatFromWad(point.trendingScore),
-        balance: floatFromWad(point.currentBalance),
-        volume: floatFromWad(point.volume),
+        trendingScore: wadToFloat(point.trendingScore),
+        balance: wadToFloat(point.currentBalance),
+        volume: wadToFloat(point.volume),
       })
     }
 

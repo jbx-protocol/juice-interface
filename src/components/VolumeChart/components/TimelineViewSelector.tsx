@@ -1,16 +1,16 @@
 import { t } from '@lingui/macro'
 import React from 'react'
 import { classNames } from 'utils/classNames'
-import { ProjectTLView } from '../types'
+import { ProjectTimelineView } from '../types'
 
 export default function TimelineViewSelector({
   timelineView,
   setTimelineView,
 }: {
-  timelineView: ProjectTLView
-  setTimelineView: React.Dispatch<React.SetStateAction<ProjectTLView>>
+  timelineView: ProjectTimelineView
+  setTimelineView: React.Dispatch<React.SetStateAction<ProjectTimelineView>>
 }) {
-  const tab = (view: ProjectTLView) => {
+  const tab = (view: ProjectTimelineView) => {
     const selected = view === timelineView
 
     let text: string

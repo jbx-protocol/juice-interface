@@ -1,9 +1,9 @@
-export type ProjectTLRange = 7 | 30 | 365 // days
+export type ProjectTimelineRange = 7 | 30 | 365 // days
 
-export type ProjectTLView = 'trendingScore' | 'balance' | 'volume'
+export type ProjectTimelineView = 'trendingScore' | 'balance' | 'volume'
 
-export type ProjectTLPoint = {
+export type ProjectTimelinePoint = {
   timestamp: number
 } & {
-  [k in ProjectTLView]: number
+  [k in ProjectTimelineView]: number
 }

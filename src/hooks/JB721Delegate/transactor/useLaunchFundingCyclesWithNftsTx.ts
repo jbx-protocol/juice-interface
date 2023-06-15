@@ -5,8 +5,8 @@ import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { useJBPrices } from 'hooks/JBPrices'
+import { useDefaultJBController } from 'hooks/defaultContracts/useDefaultJBController'
 import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { LaunchFundingCyclesData } from 'hooks/v2v3/transactor/useLaunchFundingCyclesTx'
@@ -87,11 +87,9 @@ function buildArgs(
 export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFundingCyclesWithNftsTxArgs> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
-  const {
-    contracts: { JBController },
-  } = useContext(V2V3ProjectContractsContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
 
+  const defaultJBController = useDefaultJBController()
   const projectTitle = useV2ProjectTitle()
   const V3JBDirectory = useLoadV2V3Contract({
     cv: CV_V3,
@@ -144,7 +142,7 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
       JBTiered721DelegateStoreAddress &&
       JBTiered721DelegateProjectDeployer &&
       defaultJBETHPaymentTerminal &&
-      JBController
+      defaultJBController
 
     if (
       !transactor ||
@@ -224,7 +222,7 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
       projectId,
       deployTiered721DelegateData,
       launchFundingCyclesData,
-      JBControllerAddress: JBController.address,
+      JBControllerAddress: defaultJBController.address,
     })
 
     if (!args) {

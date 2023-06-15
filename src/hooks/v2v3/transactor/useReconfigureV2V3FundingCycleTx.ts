@@ -19,7 +19,9 @@ export type ReconfigureFundingCycleTxParams = Omit<
 
 export function useReconfigureV2V3FundingCycleTx(): TransactorInstance<ReconfigureFundingCycleTxParams> {
   const { transactor } = useContext(TransactionContext)
-  const { contracts } = useContext(V2V3ProjectContractsContext)
+  const {
+    contracts: { JBController: projectJBController },
+  } = useContext(V2V3ProjectContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
   const projectTitle = useV2ProjectTitle()
@@ -38,7 +40,7 @@ export function useReconfigureV2V3FundingCycleTx(): TransactorInstance<Reconfigu
     if (
       !transactor ||
       !projectId ||
-      !contracts?.JBController ||
+      !projectJBController ||
       !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
     ) {
       txOpts?.onDone?.()
@@ -46,7 +48,7 @@ export function useReconfigureV2V3FundingCycleTx(): TransactorInstance<Reconfigu
     }
 
     return transactor(
-      contracts.JBController,
+      projectJBController,
       'reconfigureFundingCyclesOf',
       [
         projectId,

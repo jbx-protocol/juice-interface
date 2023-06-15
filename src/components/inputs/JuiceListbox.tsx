@@ -28,7 +28,7 @@ export function JuiceListbox<T>(props: JuiceListboxProps<T>) {
           )}
         >
           <span className="block truncate">{value?.label}</span>
-          <span className="pointer-events-none flex items-center justify-end pr-2">
+          <span className="pointer-events-none flex items-center justify-end">
             <ChevronDownIcon
               className="text-gray-400 h-4 w-4"
               aria-hidden="true"

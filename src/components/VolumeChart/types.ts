@@ -1,12 +1,9 @@
-export type Duration = 1 | 7 | 30 | 90 | 365
+export type ProjectTimelineRange = 7 | 30 | 365 // days
 
-export type EventRef = {
+export type ProjectTimelineView = 'trendingScore' | 'balance' | 'volume'
+
+export type ProjectTimelinePoint = {
   timestamp: number
-  value?: number
-  tapped?: number
-  previousBalance?: number
+} & {
+  [k in ProjectTimelineView]: number
 }
-
-export type BlockRef = { block: number | null; timestamp: number }
-
-export type ShowGraph = 'volume' | 'balance'

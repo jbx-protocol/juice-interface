@@ -1412,6 +1412,9 @@ msgstr ""
 msgid "Recipient"
 msgstr ""
 
+msgid "The amount of ETH in this project’s treasury."
+msgstr ""
+
 msgid "Percentages must add up to 100% or less"
 msgstr ""
 
@@ -2288,6 +2291,9 @@ msgstr ""
 msgid "Receive ERC-20"
 msgstr ""
 
+msgid "The amount of ETH this project can pay out of its treasury each Cycle."
+msgstr ""
+
 msgid "No limit (all available ETH)"
 msgstr ""
 
@@ -2433,6 +2439,9 @@ msgid "Error downloading redemptions, try again."
 msgstr ""
 
 msgid "Review reconfiguration"
+msgstr ""
+
+msgid "A Juicebox cycle is a predefined period of time during which a project’s settings and payout cannot be changed."
 msgstr ""
 
 msgid "Seconds"
@@ -2597,6 +2606,9 @@ msgstr ""
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 msgstr ""
 
+msgid "Locked cycles means... //waiting on Filip"
+msgstr ""
+
 msgid "Error downloading payments, try again."
 msgstr ""
 
@@ -2652,6 +2664,9 @@ msgid "No NFTs"
 msgstr ""
 
 msgid "NFT rules"
+msgstr ""
+
+msgid "See the NFTs and rewards offered by this project."
 msgstr ""
 
 msgid "Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
@@ -2745,6 +2760,9 @@ msgid "Text record is set"
 msgstr ""
 
 msgid "Tokens cannot be claimed because the project owner has not issued an ERC-20 for this project."
+msgstr ""
+
+msgid "The amount of time remaining until this project’s next Cycle."
 msgstr ""
 
 msgid "Give permissions to {0} on project #{projectId}"
@@ -3039,6 +3057,9 @@ msgid "Payer's address"
 msgstr ""
 
 msgid "Setting a handle requires 2 transactions: <0>Set ENS name</0> and <1>Set text record</1>."
+msgstr ""
+
+msgid "{reservedRate} of token issuance is set aside for the recipients below."
 msgstr ""
 
 msgid "Your new project payer address:"
@@ -3378,6 +3399,9 @@ msgid "Beneficiary address"
 msgstr ""
 
 msgid "Claim {tokenTextShort} as ERC-20 tokens"
+msgstr ""
+
+msgid "Overflow means... //waiting on Filip"
 msgstr ""
 
 msgid "Back to profile"
@@ -3947,6 +3971,9 @@ msgstr ""
 msgid "Pay out specific amounts of ETH to addresses and projects each cycle. Any remaining ETH will stay in the project for future cycles."
 msgstr ""
 
+msgid "Send ETH payments to this project."
+msgstr ""
+
 msgid "Launch {projectTitle}"
 msgstr ""
 
@@ -4188,6 +4215,9 @@ msgid "I have another question!"
 msgstr ""
 
 msgid "Manage your project's state and ownership"
+msgstr ""
+
+msgid "The amount of reserved tokens currently available to be distributed to the recipients below."
 msgstr ""
 
 msgid "Set text record for {0}"

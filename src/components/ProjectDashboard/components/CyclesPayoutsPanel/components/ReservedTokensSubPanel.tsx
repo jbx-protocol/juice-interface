@@ -1,13 +1,10 @@
-import {
-  ArrowUpCircleIcon,
-  EllipsisVerticalIcon,
-} from '@heroicons/react/24/outline'
+import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
 import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
 import { DisplayCard } from '../../ui'
 import { useReservedTokensSubPanel } from '../hooks/useReservedTokensSubPanel'
+import { SendReservedTokensButton } from './SendReservedTokensButton'
 
 export const ReservedTokensSubPanel = ({
   className,
@@ -66,13 +63,7 @@ export const ReservedTokensSubPanel = ({
                   : null}
               </div>
 
-              <Button
-                type="primary"
-                className="mt-6 flex w-fit items-center gap-3 self-end"
-              >
-                <Trans>Send reserved tokens</Trans>
-                <ArrowUpCircleIcon className="h-5 w-5" />
-              </Button>
+              <SendReservedTokensButton className="mt-6 self-end" />
             </>
           ) : (
             <div className="mt-5">

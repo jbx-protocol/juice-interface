@@ -1,8 +1,10 @@
+import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useProjectMetadata } from './useProjectMetadata'
 import { useProjectPageQueries } from './useProjectPageQueries'
 
 export const useSuccessPayView = () => {
+  const router = useRouter()
   const { name, nftPaymentSuccessModal } =
     useProjectMetadata().projectMetadata ?? {}
   const { projectPayReceipt, setProjectPayReceipt } = useProjectPageQueries()
@@ -11,6 +13,14 @@ export const useSuccessPayView = () => {
     [projectPayReceipt?.nfts.length],
   )
   const [confettiVisible, setConfettiVisible] = useState(true)
+
+  const projectId = useMemo(() => {
+    if (!router.isReady) return
+    if (router.query.projectId === undefined) return
+    const projectId = parseInt(router.query.projectId as string)
+    if (isNaN(projectId)) return
+    return projectId
+  }, [router.isReady, router.query.projectId])
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -24,6 +34,7 @@ export const useSuccessPayView = () => {
   }, [setProjectPayReceipt])
 
   return {
+    projectId,
     name,
     projectPayReceipt,
     nftPaymentSuccessModal,

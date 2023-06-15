@@ -1604,6 +1604,9 @@ msgstr ""
 msgid "V1"
 msgstr ""
 
+msgid "Export payout CSV"
+msgstr ""
+
 msgid "JuiceboxDAO is a community of passionate builders, creators, and innovators working together to push the boundaries of decentralized funding. Using the Juicebox protocol, we've created a DAO to coordinate thousands of JBX holders, build in the open, and govern the protocol over time."
 msgstr ""
 

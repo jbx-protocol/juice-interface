@@ -6,6 +6,6 @@ import { PayoutsSubPanel } from './PayoutsSubPanel'
 
 describe('PayoutsSubPanel', () => {
   it('renders', () => {
-    render(<PayoutsSubPanel />)
+    render(<PayoutsSubPanel type="current" />)
   })
 })

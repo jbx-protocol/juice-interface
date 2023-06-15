@@ -437,6 +437,9 @@ msgstr ""
 msgid "Locked (28 days)"
 msgstr ""
 
+msgid "No payouts for the cycle."
+msgstr ""
+
 msgid "Rules"
 msgstr ""
 
@@ -3537,6 +3540,9 @@ msgid "Yes"
 msgstr ""
 
 msgid "Mint as ERC-20"
+msgstr ""
+
+msgid "No previous cycles."
 msgstr ""
 
 msgid "Failed to deploy migration token. Check the development console and contact our team in the JuiceboxDAO Discord."

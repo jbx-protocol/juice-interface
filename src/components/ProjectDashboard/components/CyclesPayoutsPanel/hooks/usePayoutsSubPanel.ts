@@ -1,14 +1,18 @@
-import { t } from '@lingui/macro'
 import assert from 'assert'
-import { useProjectContext } from 'components/ProjectDashboard/hooks'
+import {
+  useProjectContext,
+  useProjectMetadata,
+} from 'components/ProjectDashboard/hooks'
+import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/splits'
 import { BigNumber } from 'ethers'
+import useProjectSplits from 'hooks/v2v3/contractReader/useProjectSplits'
+import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
-import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import {
   MAX_DISTRIBUTION_LIMIT,
   SPLITS_TOTAL_PERCENT,
@@ -16,48 +20,69 @@ import {
   formatSplitPercent,
 } from 'utils/v2v3/math'
 
-export const usePayoutsSubPanel = () => {
+const splitHasFee = (split: Split) => {
+  return !isJuiceboxProjectSplit(split)
+}
+
+const calculateSplitAmountWad = (
+  split: Split,
+  distributionLimit: BigNumber | undefined,
+  primaryETHTerminalFee: BigNumber | undefined,
+) => {
+  const splitValue = distributionLimit
+    ?.mul(split.percent)
+    .div(SPLITS_TOTAL_PERCENT)
+  const feeAmount = splitHasFee(split)
+    ? feeForAmount(splitValue, primaryETHTerminalFee) ?? BigNumber.from(0)
+    : BigNumber.from(0)
+  return splitValue?.sub(feeAmount)
+}
+
+export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
+  const { projectId } = useProjectMetadata()
   const {
-    payoutSplits,
-    distributionLimit,
-    distributionLimitCurrency,
+    payoutSplits: currentPayoutSplits,
+    distributionLimit: currentDistributionLimit,
+    distributionLimitCurrency: currentDistributionLimitCurrency,
     primaryETHTerminalFee,
-    balanceInDistributionLimitCurrency,
-    usedDistributionLimit,
   } = useProjectContext()
 
+  const {
+    data: upcomingFundingCycleData,
+    loading: upcomingFundingCycleLoading,
+  } = useProjectUpcomingFundingCycle({ projectId })
+  const [upcomingFundingCycle] = upcomingFundingCycleData ?? []
+
+  const { data: upcomingPayoutSplits } = useProjectSplits({
+    projectId,
+    splitGroup: ETH_PAYOUT_SPLIT_GROUP,
+    domain: upcomingFundingCycle?.configuration?.toString(),
+  })
+
   const showAmountOnPayout = useMemo(() => {
-    if (distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)) return false
-    if (distributionLimit?.eq(0)) return false
+    if (currentDistributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)) return false
+    if (currentDistributionLimit?.eq(0)) return false
     return true
-  }, [distributionLimit])
-
-  const splitHasFee = useCallback((split: Split) => {
-    return !isJuiceboxProjectSplit(split)
-  }, [])
-
-  const calculateSplitAmountWad = useCallback(
-    (split: Split) => {
-      const splitValue = distributionLimit
-        ?.mul(split.percent)
-        .div(SPLITS_TOTAL_PERCENT)
-      const feeAmount = splitHasFee(split)
-        ? feeForAmount(splitValue, primaryETHTerminalFee) ?? BigNumber.from(0)
-        : BigNumber.from(0)
-      return splitValue?.sub(feeAmount)
-    },
-    [distributionLimit, primaryETHTerminalFee, splitHasFee],
-  )
+  }, [currentDistributionLimit])
 
   const transformSplit = useCallback(
     (split: Split) => {
       assert(split.beneficiary, 'Beneficiary must be defined')
       let amount = undefined
-      const splitAmountWad = calculateSplitAmountWad(split)
-      if (showAmountOnPayout && splitAmountWad && distributionLimitCurrency) {
+      const splitAmountWad = calculateSplitAmountWad(
+        split,
+        currentDistributionLimit,
+        primaryETHTerminalFee,
+      )
+      if (
+        showAmountOnPayout &&
+        splitAmountWad &&
+        currentDistributionLimitCurrency
+      ) {
         amount = formatCurrencyAmount({
           amount: Number(fromWad(splitAmountWad)),
-          currency: distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+          currency:
+            currentDistributionLimitCurrency.toNumber() as V2V3CurrencyOption,
         })
       }
       return {
@@ -69,68 +94,37 @@ export const usePayoutsSubPanel = () => {
         amount,
       }
     },
-    [calculateSplitAmountWad, distributionLimitCurrency, showAmountOnPayout],
+    [
+      currentDistributionLimit,
+      currentDistributionLimitCurrency,
+      primaryETHTerminalFee,
+      showAmountOnPayout,
+    ],
   )
 
   const payouts = useMemo(() => {
-    if (!payoutSplits) return undefined
-    return payoutSplits
-      .sort((a, b) => Number(b.percent) - Number(a.percent))
-      .map(transformSplit)
-  }, [payoutSplits, transformSplit])
-
-  const treasuryBalance = useMemo(() => {
-    if (!balanceInDistributionLimitCurrency) return undefined
-    return formatCurrencyAmount({
-      amount: Number(fromWad(balanceInDistributionLimitCurrency)),
-      currency: distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
-    })
-  }, [balanceInDistributionLimitCurrency, distributionLimitCurrency])
-
-  const overflow = useMemo(() => {
-    if (!distributionLimit) return undefined
-    if (isInfiniteDistributionLimit(distributionLimit)) return t`No overflow`
-    if (!balanceInDistributionLimitCurrency) return undefined
-    let amount = 0
-    if (balanceInDistributionLimitCurrency.gt(distributionLimit ?? 0)) {
-      const amountWad = balanceInDistributionLimitCurrency.sub(
-        distributionLimit ?? 0,
-      )
-      amount = Number(fromWad(amountWad))
+    if (type === 'current') {
+      if (!currentPayoutSplits) return undefined
+      return currentPayoutSplits
+        .sort((a, b) => Number(b.percent) - Number(a.percent))
+        .map(transformSplit)
     }
-    return formatCurrencyAmount({
-      amount,
-      currency: distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
-    })
-  }, [
-    balanceInDistributionLimitCurrency,
-    distributionLimit,
-    distributionLimitCurrency,
-  ])
+    if (type === 'upcoming') {
+      if (!upcomingPayoutSplits) return undefined
+      return upcomingPayoutSplits
+        .sort((a, b) => Number(b.percent) - Number(a.percent))
+        .map(transformSplit)
+    }
+  }, [currentPayoutSplits, transformSplit, type, upcomingPayoutSplits])
 
-  const availableToPayout = useMemo(() => {
-    if (!usedDistributionLimit || !balanceInDistributionLimitCurrency)
-      return undefined
-    const availableToPayoutWad = usedDistributionLimit.gt(
-      balanceInDistributionLimitCurrency,
-    )
-      ? balanceInDistributionLimitCurrency
-      : usedDistributionLimit
-
-    return formatCurrencyAmount({
-      amount: Number(fromWad(availableToPayoutWad)),
-      currency: distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
-    })
-  }, [
-    balanceInDistributionLimitCurrency,
-    distributionLimitCurrency,
-    usedDistributionLimit,
-  ])
+  if (type === 'upcoming' && upcomingFundingCycleLoading) {
+    return {
+      loading: true,
+    }
+  }
 
   return {
+    loading: false,
     payouts,
-    treasuryBalance,
-    availableToPayout,
-    overflow,
   }
 }

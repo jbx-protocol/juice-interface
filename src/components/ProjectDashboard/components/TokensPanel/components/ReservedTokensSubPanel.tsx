@@ -1,9 +1,9 @@
-import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
 import { DisplayCard } from '../../ui'
 import { useReservedTokensSubPanel } from '../hooks/useReservedTokensSubPanel'
+import { ReservedTokensPopupMenu } from './ReservedTokensPopupMenu'
 import { SendReservedTokensButton } from './SendReservedTokensButton'
 
 export const ReservedTokensSubPanel = ({
@@ -48,9 +48,7 @@ export const ReservedTokensSubPanel = ({
             <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
               <Trans>Reserved tokens list</Trans>
             </h3>
-            {!!reservedList?.length && (
-              <EllipsisVerticalIcon role="button" className="h-6 w-6" />
-            )}
+            {!!reservedList?.length && <ReservedTokensPopupMenu />}
           </div>
 
           {reservedList?.length ? (

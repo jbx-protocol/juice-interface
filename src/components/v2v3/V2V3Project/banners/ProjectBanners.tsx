@@ -2,11 +2,8 @@ import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import useProjectControllerAddress from 'hooks/v2v3/contractReader/useProjectControllerAddress'
-import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/useV2ConnectedWalletHasPermission'
-import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext } from 'react'
 import { isZeroAddress } from 'utils/address'
-import { RelaunchFundingCycleBanner } from './RelaunchFundingCycleBanner'
 import { V2BugNoticeBanner } from './V2BugNoticeBanner'
 
 export function ProjectBanners() {
@@ -15,10 +12,6 @@ export function ProjectBanners() {
     contracts,
     loading: { projectContractsLoading },
   } = useContext(V2V3ProjectContractsContext)
-
-  const canReconfigureFundingCycles = useV2ConnectedWalletHasPermission(
-    V2V3OperatorPermission.RECONFIGURE,
-  )
 
   // get the projects controller address on the deprecated JBDirectory (the bugged version)
   const { data: controllerAddress } = useProjectControllerAddress({
@@ -43,17 +36,13 @@ export function ProjectBanners() {
       !hasUpgradedJBController,
   )
 
-  const showRelaunchFundingCycleBanner =
-    showV2BugNoticeBanner && canReconfigureFundingCycles
-
-  const hasBanners = showV2BugNoticeBanner || showRelaunchFundingCycleBanner
+  const hasBanners = showV2BugNoticeBanner
 
   if (!hasBanners) return null
 
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col">
       {showV2BugNoticeBanner && <V2BugNoticeBanner />}
-      {showRelaunchFundingCycleBanner && <RelaunchFundingCycleBanner />}
     </div>
   )
 }

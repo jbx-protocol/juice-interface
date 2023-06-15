@@ -7,9 +7,11 @@ import { BigNumber } from 'ethers'
 import { parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { useDistributableAmount } from './useDistributableAmount'
 import { useTreasuryStats } from './useTreasuryStats'
 
 jest.mock('components/ProjectDashboard/hooks')
+jest.mock('./useDistributableAmount')
 
 describe('useTreasuryStats', () => {
   const DefaultProjectContext = {
@@ -17,8 +19,14 @@ describe('useTreasuryStats', () => {
     distributionLimitCurrency: BigNumber.from(V2V3_CURRENCY_ETH),
     balanceInDistributionLimitCurrency: parseWad('100'),
   }
+  const DefaultUseDistributableAmount = {
+    distributableAmount: parseWad('100'),
+  }
   beforeEach(() => {
     ;(useProjectContext as jest.Mock).mockReturnValue(DefaultProjectContext)
+    ;(useDistributableAmount as jest.Mock).mockReturnValue(
+      DefaultUseDistributableAmount,
+    )
   })
 
   it('returns undefined treasuryBalance if balanceInDistributionLimitCurrency is undefined', () => {
@@ -84,29 +92,8 @@ describe('useTreasuryStats', () => {
     },
   )
 
-  it.each`
-    usedDistributionLimit | balanceInDistributionLimitCurrency | expected
-    ${0}                  | ${0}                               | ${'Ξ0'}
-    ${10}                 | ${100}                             | ${'Ξ10'}
-    ${10}                 | ${0}                               | ${'Ξ0'}
-    ${10}                 | ${10}                              | ${'Ξ10'}
-    ${10}                 | ${11}                              | ${'Ξ10'}
-  `(
-    'returns availableToPayout = $expected',
-    ({
-      usedDistributionLimit,
-      balanceInDistributionLimitCurrency,
-      expected,
-    }) => {
-      ;(useProjectContext as jest.Mock).mockReturnValue({
-        ...DefaultProjectContext,
-        usedDistributionLimit: parseWad(usedDistributionLimit),
-        balanceInDistributionLimitCurrency: parseWad(
-          balanceInDistributionLimitCurrency,
-        ),
-      })
-      const { result } = renderHook(useTreasuryStats)
-      expect(result.current.availableToPayout).toEqual(expected)
-    },
-  )
+  it('returns availableToPayout = distributableAmount', () => {
+    const { result } = renderHook(useTreasuryStats)
+    expect(result.current.availableToPayout).toEqual('Ξ100')
+  })
 })

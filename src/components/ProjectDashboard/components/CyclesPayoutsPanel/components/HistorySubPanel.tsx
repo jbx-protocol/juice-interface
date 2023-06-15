@@ -24,7 +24,7 @@ export const HistorySubPanel = () => {
   const { loading, data, error } = useHistorySubPanel()
   const tableHeaders = [t`Cycle #`, t`Withdrawn`, t`Date`]
 
-  return data.length ? (
+  return data.length || loading ? (
     <div className="grid min-w-full grid-cols-1">
       <div className="grid grid-cols-6 rounded-t-lg bg-smoke-50 dark:bg-slate-700">
         {tableHeaders.map((header, i) => (

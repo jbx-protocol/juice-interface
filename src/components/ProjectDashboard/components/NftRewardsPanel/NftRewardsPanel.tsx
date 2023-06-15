@@ -17,16 +17,22 @@ export const NftRewardsPanel = () => {
         <Trans>NFTs</Trans>
       </h2>
       <RedeemNftsSection />
-      <div className="grid grid-cols-3 gap-4">
-        {rewardTiers?.map((tier, i) => (
-          <NftReward
-            key={i}
-            rewardTier={tier}
-            loading={nftsLoading}
-            onSelect={(quantity = 1) => handleTierSelect(tier.id, quantity)}
-          />
-        ))}
-      </div>
+      {!nftsLoading && rewardTiers?.length ? (
+        <div className="grid grid-cols-3 gap-4">
+          {rewardTiers?.map((tier, i) => (
+            <NftReward
+              key={i}
+              rewardTier={tier}
+              loading={nftsLoading}
+              onSelect={(quantity = 1) => handleTierSelect(tier.id, quantity)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="text-grey-500 dark:text-slate-200">
+          <Trans>No NFTs have been configured for this project.</Trans>
+        </div>
+      )}
     </div>
   )
 }

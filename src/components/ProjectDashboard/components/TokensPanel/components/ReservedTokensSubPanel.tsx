@@ -1,14 +1,12 @@
-import {
-  ArrowUpCircleIcon,
-  EllipsisVerticalIcon,
-} from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { Button, Tooltip } from 'antd'
+import { Tooltip } from 'antd'
 import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
 import { reservedTokensTooltip } from '../../TokensPanel/TokensPanelTooltips'
 import { DisplayCard } from '../../ui'
 import { useReservedTokensSubPanel } from '../hooks/useReservedTokensSubPanel'
+import { ReservedTokensPopupMenu } from './ReservedTokensPopupMenu'
+import { SendReservedTokensButton } from './SendReservedTokensButton'
 
 export const ReservedTokensSubPanel = ({
   className,
@@ -63,24 +61,29 @@ export const ReservedTokensSubPanel = ({
             <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
               <Trans>Reserved tokens list</Trans>
             </h3>
-            <EllipsisVerticalIcon role="button" className="h-6 w-6" />
+            {!!reservedList?.length && <ReservedTokensPopupMenu />}
           </div>
 
-          <div className="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500">
-            {reservedList
-              ? reservedList.map(props => (
-                  <ProjectAllocationRow key={props.address} {...props} />
-                ))
-              : null}
-          </div>
+          {reservedList?.length ? (
+            <>
+              <div className="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500">
+                {reservedList
+                  ? reservedList.map(props => (
+                      <ProjectAllocationRow key={props.address} {...props} />
+                    ))
+                  : null}
+              </div>
 
-          <Button
-            type="primary"
-            className="mt-6 flex w-fit items-center gap-3 self-end"
-          >
-            <Trans>Send reserved tokens</Trans>
-            <ArrowUpCircleIcon className="h-5 w-5" />
-          </Button>
+              <SendReservedTokensButton className="mt-6 self-end" />
+            </>
+          ) : (
+            <div className="mt-5">
+              <Trans>
+                No distributable reserved tokens have been configured for this
+                project.
+              </Trans>
+            </div>
+          )}
         </DisplayCard>
       </div>
     </div>

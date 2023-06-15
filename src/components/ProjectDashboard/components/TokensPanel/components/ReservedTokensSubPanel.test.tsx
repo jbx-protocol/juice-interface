@@ -9,6 +9,11 @@ jest.mock('../hooks/useReservedTokensSubPanel')
 jest.mock('../../ProjectAllocationRow/ProjectAllocationRow', () => ({
   ProjectAllocationRow: (props: unknown) => <div>{JSON.stringify(props)}</div>,
 }))
+jest.mock('./SendReservedTokensButton', () => ({
+  SendReservedTokensButton: (props: unknown) => (
+    <div>{JSON.stringify(props)}</div>
+  ),
+}))
 
 describe('ReservedTokensSubPanel', () => {
   const DefaultUseReservedTokensSubPanel = {

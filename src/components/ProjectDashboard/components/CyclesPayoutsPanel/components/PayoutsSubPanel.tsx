@@ -1,13 +1,10 @@
-import {
-  ArrowUpCircleIcon,
-  EllipsisVerticalIcon,
-} from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { PayoutsPopupMenu } from 'components/ProjectDashboard/components/CyclesPayoutsPanel/components/PayoutsPopupMenu'
 import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
 import { DisplayCard } from '../../ui'
 import { usePayoutsSubPanel } from '../hooks/usePayoutsSubPanel'
+import { SendPayoutsButton } from './SendPayoutsButton'
 import { TreasuryStats } from './TreasuryStats'
 
 export const PayoutsSubPanel = ({
@@ -23,7 +20,7 @@ export const PayoutsSubPanel = ({
       <h2 className="mb-0 font-heading text-2xl font-medium">
         <Trans>Treasury & Payouts</Trans>
       </h2>
-      {payouts?.length ? (
+      {payouts?.length || loading ? (
         <div className="mt-5 flex flex-col items-center gap-4">
           {type === 'current' && <TreasuryStats />}
           <DisplayCard className="flex w-full flex-col pb-8">
@@ -31,7 +28,7 @@ export const PayoutsSubPanel = ({
               <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
                 <Trans>Payouts</Trans>
               </h3>
-              <EllipsisVerticalIcon role="button" className="h-6 w-6" />
+              <PayoutsPopupMenu type={type} />
             </div>
 
             <div className="mt-4 w-full">
@@ -47,13 +44,7 @@ export const PayoutsSubPanel = ({
             </div>
 
             {type === 'current' && (
-              <Button
-                type="primary"
-                className="mt-6 flex w-fit items-center gap-3 self-end"
-              >
-                <Trans>Send payouts</Trans>
-                <ArrowUpCircleIcon className="h-5 w-5" />
-              </Button>
+              <SendPayoutsButton className="z-0 mt-6 self-end" />
             )}
           </DisplayCard>
         </div>
@@ -67,7 +58,7 @@ export const PayoutsSubPanel = ({
 }
 
 const ProjectAllocationSkeleton = () => (
-  <div className="flex animate-pulse items-center justify-between gap-3 py-3">
+  <div className="flex items-center justify-between gap-3 py-3">
     <div className="flex items-center gap-3">
       <span className="flex items-center gap-3 font-medium dark:text-slate-50">
         <span className="h-8 w-8 rounded-full bg-smoke-200 dark:bg-slate-500" />

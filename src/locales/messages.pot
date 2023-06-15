@@ -1067,6 +1067,9 @@ msgstr ""
 msgid "No overflow"
 msgstr ""
 
+msgid "Export tokens CSV"
+msgstr ""
+
 msgid "Transaction hash"
 msgstr ""
 
@@ -1605,6 +1608,9 @@ msgid "Set up custom rules for your project's tokens."
 msgstr ""
 
 msgid "V1"
+msgstr ""
+
+msgid "Export payout CSV"
 msgstr ""
 
 msgid "JuiceboxDAO is a community of passionate builders, creators, and innovators working together to push the boundaries of decentralized funding. Using the Juicebox protocol, we've created a DAO to coordinate thousands of JBX holders, build in the open, and govern the protocol over time."
@@ -2528,6 +2534,9 @@ msgstr ""
 msgid "Add a collection name"
 msgstr ""
 
+msgid "No NFTs have been configured for this project."
+msgstr ""
+
 msgid "No transaction history"
 msgstr ""
 
@@ -2619,6 +2628,9 @@ msgid "One or more reserved token recipients"
 msgstr ""
 
 msgid "<0>To summarize:</0><1><2>When people pay a project, they receive the project's tokens. Like other tokens, these can be used for governance, for token-gated websites, and other purposes.</2><3>Projects can pay out ETH to the wallets or Juicebox projects of their choosing. These payouts can be pre-defined, and they can also be changed over time.</3><4>If people are unhappy with the direction a project is headed, they can redeem their tokens to claim a share of the ETH held in the project.</4></1><5>Project creators have powerful controls over each one of these mechanics. They can change token issuance rates, redemption rates, payouts, and other rules over time, leading to powerful and elegant tokenomics. They can also lock their project's rules in place for pre-determined amounts of time (called <6>cycles</6>), guaranteeing that they can't rugpull the community. Juicebox lets projects take control if they need to, but it also lets them give up control to build trust.</5><7>Importantly, Juicebox's crypto fundraising platform is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no way to access a project's ETH or change its rules.</7><8>To learn more, visit <9>our docs</9>.</8>"
+msgstr ""
+
+msgid "No distributable reserved tokens have been configured for this project."
 msgstr ""
 
 msgid "Owned by: <0/>"

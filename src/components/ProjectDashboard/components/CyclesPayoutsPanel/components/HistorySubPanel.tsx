@@ -1,6 +1,6 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
@@ -24,7 +24,7 @@ export const HistorySubPanel = () => {
   const { loading, data, error } = useHistorySubPanel()
   const tableHeaders = [t`Cycle #`, t`Withdrawn`, t`Date`]
 
-  return (
+  return data.length ? (
     <div className="grid min-w-full grid-cols-1">
       <div className="grid grid-cols-6 rounded-t-lg bg-smoke-50 dark:bg-slate-700">
         {tableHeaders.map((header, i) => (
@@ -96,6 +96,10 @@ export const HistorySubPanel = () => {
           </>
         )}
       </div>
+    </div>
+  ) : (
+    <div className="text-grey-500 dark:text-slate-200">
+      <Trans>No previous cycles.</Trans>
     </div>
   )
 }

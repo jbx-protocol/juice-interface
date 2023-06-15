@@ -56,22 +56,6 @@ exports[`ReservedTokensSubPanel renders 1`] = `
           >
             Reserved tokens list
           </h3>
-          <svg
-            aria-hidden="true"
-            class="h-6 w-6"
-            fill="none"
-            role="button"
-            stroke="currentColor"
-            stroke-width="1.5"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
         </div>
         <div
           class="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500"

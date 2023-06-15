@@ -6,7 +6,7 @@ import { useTokensPanel } from 'components/ProjectDashboard/hooks/useTokensPanel
 import { TokensPanel } from './TokensPanel'
 
 jest.mock('components/ProjectDashboard/hooks/useTokensPanel')
-jest.mock('../CyclesPayoutsPanel/components/ReservedTokensSubPanel', () => ({
+jest.mock('./components/ReservedTokensSubPanel', () => ({
   ReservedTokensSubPanel: jest
     .fn()
     .mockImplementation(() => <div>ReservedTokensSubPanel</div>),

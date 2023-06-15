@@ -5,14 +5,15 @@ import { useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
+import { useDistributableAmount } from './useDistributableAmount'
 
 export const useTreasuryStats = () => {
   const {
     distributionLimit,
     distributionLimitCurrency,
     balanceInDistributionLimitCurrency,
-    usedDistributionLimit,
   } = useProjectContext()
+  const { distributableAmount } = useDistributableAmount()
 
   const treasuryBalance = useMemo(() => {
     if (!balanceInDistributionLimitCurrency) return undefined
@@ -44,23 +45,11 @@ export const useTreasuryStats = () => {
   ])
 
   const availableToPayout = useMemo(() => {
-    if (!usedDistributionLimit || !balanceInDistributionLimitCurrency)
-      return undefined
-    const availableToPayoutWad = usedDistributionLimit.gt(
-      balanceInDistributionLimitCurrency,
-    )
-      ? balanceInDistributionLimitCurrency
-      : usedDistributionLimit
-
     return formatCurrencyAmount({
-      amount: Number(fromWad(availableToPayoutWad)),
+      amount: Number(fromWad(distributableAmount)),
       currency: distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
     })
-  }, [
-    balanceInDistributionLimitCurrency,
-    distributionLimitCurrency,
-    usedDistributionLimit,
-  ])
+  }, [distributableAmount, distributionLimitCurrency])
   return {
     treasuryBalance,
     availableToPayout,

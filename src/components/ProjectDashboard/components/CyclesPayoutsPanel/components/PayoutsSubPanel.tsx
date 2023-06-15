@@ -1,13 +1,10 @@
-import {
-  ArrowUpCircleIcon,
-  EllipsisVerticalIcon,
-} from '@heroicons/react/24/outline'
+import { EllipsisVerticalIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
 import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
 import { DisplayCard } from '../../ui'
 import { usePayoutsSubPanel } from '../hooks/usePayoutsSubPanel'
+import { SendPayoutsButton } from './SendPayoutsButton'
 import { TreasuryStats } from './TreasuryStats'
 
 export const PayoutsSubPanel = ({
@@ -47,13 +44,7 @@ export const PayoutsSubPanel = ({
             </div>
 
             {type === 'current' && (
-              <Button
-                type="primary"
-                className="mt-6 flex w-fit items-center gap-3 self-end"
-              >
-                <Trans>Send payouts</Trans>
-                <ArrowUpCircleIcon className="h-5 w-5" />
-              </Button>
+              <SendPayoutsButton className="mt-6 self-end" />
             )}
           </DisplayCard>
         </div>

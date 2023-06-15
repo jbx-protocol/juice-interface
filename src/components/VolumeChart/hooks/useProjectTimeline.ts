@@ -26,7 +26,7 @@ export function useProjectTimeline({
     async () => {
       const dater = new EthDater(readProvider)
 
-      const now = Date.now().valueOf() - minutesToMS(10)
+      const now = Date.now().valueOf() - minutesToMS(5)
       const startMS = now - daysToMS(range)
 
       return Promise.all([
@@ -38,6 +38,9 @@ export function useProjectTimeline({
           { block: number; timestamp: number },
         ]
       >
+    },
+    {
+      staleTime: minutesToMS(5),
     },
   )
 

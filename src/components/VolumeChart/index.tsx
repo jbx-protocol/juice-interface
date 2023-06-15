@@ -57,7 +57,7 @@ export default function VolumeChart({
                 </span>
               ) : (
                 <span>
-                  <Trans>Unable to load charts</Trans>
+                  <Trans>Unable to load chart</Trans>
                 </span>
               )}
             </div>

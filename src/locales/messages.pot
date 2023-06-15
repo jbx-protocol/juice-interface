@@ -98,6 +98,9 @@ msgstr ""
 msgid "Free to launch, just pay gas."
 msgstr ""
 
+msgid "Legal Services"
+msgstr ""
+
 msgid "Project handle must be unique."
 msgstr ""
 
@@ -509,6 +512,9 @@ msgstr ""
 msgid "1-day deadline"
 msgstr ""
 
+msgid "None of the information, services, or materials offered on juicebox.money (the \"Site\") constitute, or are intended to constitute, legal, financial, tax, investment, or other advice, and you should not act or refrain from acting based on any information, services, or materials provided on the Site. All content on our Site is information of a general nature and does not address the unique circumstances of any particular user. You are strongly urged to consult with your own legal, financial, tax, investment, and other advisors regarding all legal, financial, tax, and investment-related questions or concerns you have."
+msgstr ""
+
 msgid "Save payout"
 msgstr ""
 
@@ -654,6 +660,9 @@ msgid "Deploy an address which forwards ETH directly to your project's payouts."
 msgstr ""
 
 msgid "Heads up"
+msgstr ""
+
+msgid "<0>JuiceboxDAO</0> and juicebox.money cannot provide legal services or advice to project creators – when using the protocol, compliance is your responsibility."
 msgstr ""
 
 msgid "No deadline"
@@ -995,6 +1004,9 @@ msgstr ""
 msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr ""
 
+msgid "Use these resources to get familiar with the legal concerns facing web3 projects and common solutions."
+msgstr ""
+
 msgid "I understand and accept the risks associated with <0>this project</0> and the <1>Juicebox Protocol</1>."
 msgstr ""
 
@@ -1128,6 +1140,9 @@ msgid "Total:"
 msgstr ""
 
 msgid "Allow Controller configuration"
+msgstr ""
+
+msgid "Legal Experts"
 msgstr ""
 
 msgid "Subscribe to project activity"
@@ -1350,6 +1365,9 @@ msgid "Need help?"
 msgstr ""
 
 msgid "Custom strategy"
+msgstr ""
+
+msgid "<0>OpenLaw</0> is a framework for legal contracts which can interact with smart contracts. Visit their <1>library</1> for a massive collection of open-source legal documents for web3 projects."
 msgstr ""
 
 msgid "If you use the default governance option (no governance), the voting weight will still be accessible on the blockchain for use in Snapshot strategies or any other desired purpose."
@@ -1589,6 +1607,9 @@ msgstr ""
 msgid "Set up custom rules for your project's tokens."
 msgstr ""
 
+msgid "Legal Resources"
+msgstr ""
+
 msgid "V1"
 msgstr ""
 
@@ -1812,6 +1833,9 @@ msgid "Built for ideas like yours"
 msgstr ""
 
 msgid "The <0>Juicebox protocol</0> could be vulnerable to bugs or hacks. All of the ETH moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses."
+msgstr ""
+
+msgid "<0>Opolis</0> helps individuals set up single-member U.S. companies to manage payroll, benefits, and taxes. This is a great option for independent DAO contributors."
 msgstr ""
 
 msgid "Failed to create ERC20 token. Check transaction and try again."
@@ -2159,6 +2183,9 @@ msgstr ""
 msgid "Migrate controller"
 msgstr ""
 
+msgid "To begin learning about the trade-offs between different legal entities for DAOs and other web3 projects, review Paradigm's <0>DAO Legal Entity Matrix</0>."
+msgstr ""
+
 msgid "Send reserved tokens"
 msgstr ""
 
@@ -2204,6 +2231,9 @@ msgstr ""
 msgid "Transfer ETH from your wallet to this project without minting tokens."
 msgstr ""
 
+msgid "You can form an onchain LLC, non-profit, or charter entity by using <0>wrappr.wtf</0>. Wrappr lets you mint NFTs which serve as limited liability \"legal wrappers\" for DAOs, wallets, or projects. This public good service is provided free-of-charge – you only have to pay for gas."
+msgstr ""
+
 msgid "Check {lastEmailUpdated} and verify your new email address."
 msgstr ""
 
@@ -2232,6 +2262,9 @@ msgid "Unwatch all"
 msgstr ""
 
 msgid "No, keep editing"
+msgstr ""
+
+msgid "Alternatively, a16z's <0>Legal Frameworks for DAOs series</0> provides a pragmatic overview of legal entity selection for DAOs within the United States."
 msgstr ""
 
 msgid "While enabled, the project owner can migrate the project's current <0>controller</0> to another version of the contract."
@@ -2720,6 +2753,9 @@ msgstr ""
 msgid "Manage {tokenText}"
 msgstr ""
 
+msgid "For further information, please see our <0>Terms of Service</0>."
+msgstr ""
+
 msgid "Download project activity CSV"
 msgstr ""
 
@@ -2748,6 +2784,9 @@ msgid "Send {projectTitle} payouts"
 msgstr ""
 
 msgid "<0/> contributed"
+msgstr ""
+
+msgid "You can use these services to form legal entities for yourself or your project."
 msgstr ""
 
 msgid "Error loading participants"
@@ -2805,6 +2844,9 @@ msgid "FAQs"
 msgstr ""
 
 msgid "Transfer unclaimed {0}"
+msgstr ""
+
+msgid "If you need help assessing your project's needs, finding a legal expert, and getting incorporated, start with the resources below:"
 msgstr ""
 
 msgid "Cannot set payouts because your <0>Total payouts</0> is Zero."
@@ -2889,6 +2931,9 @@ msgid "Mint {tokensTokenLower}"
 msgstr ""
 
 msgid "<0>Note:</0> These properties are locked during each cycle. They can only be edited for <1>upcoming</1> cycles."
+msgstr ""
+
+msgid "The <0>0x Legal Guide</0> provides an overview of securities and commodities regulations as they pertain to cryptocurrency within the United States."
 msgstr ""
 
 msgid "1. Grant permission"
@@ -3042,6 +3087,9 @@ msgid "Included in search results on the <0>Projects</0> page."
 msgstr ""
 
 msgid "If you don't raise this amount, your payout recipients will receive their percentage of the available ETH."
+msgstr ""
+
+msgid "If you're looking to adopt a robust legal entity for your DAO, <0>MIDAO</0> can help your project incorporate as a for-profit or non-profit Marshall Islands DAO LLC."
 msgstr ""
 
 msgid "Upgrade to {0}"
@@ -3224,6 +3272,9 @@ msgstr ""
 msgid "Prevent NFT overspending"
 msgstr ""
 
+msgid "Recommended Reading"
+msgstr ""
+
 msgid "Pay this project to receive NFTs."
 msgstr ""
 
@@ -3261,6 +3312,9 @@ msgid "Amount required"
 msgstr ""
 
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no ETH, or is using all of its ETH for payouts."
+msgstr ""
+
+msgid "Once you have a general understanding of your project's legal needs, reach out to a legal expert for help addressing them."
 msgstr ""
 
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
@@ -3368,6 +3422,9 @@ msgstr ""
 msgid "Connect"
 msgstr ""
 
+msgid "Templates"
+msgstr ""
+
 msgid "Contract permissions"
 msgstr ""
 
@@ -3402,6 +3459,9 @@ msgid "New"
 msgstr ""
 
 msgid "Select NFTs to redeem"
+msgstr ""
+
+msgid "If you're looking for something else or have questions, send us a message in the <0>Juicebox Discord server</0> or on the <1>Contact page</1>."
 msgstr ""
 
 msgid "A contract which defines custom behavior which can be used when somebody pays this project or redeems from it. <0>Learn more</0>"
@@ -3480,6 +3540,9 @@ msgid "seconds"
 msgstr ""
 
 msgid "This Safe has no past transactions."
+msgstr ""
+
+msgid "Legal templates can be a helpful starting point. Always review with a legal expert before using a template."
 msgstr ""
 
 msgid "The amount of tokens to mint to the receiver."
@@ -3581,10 +3644,16 @@ msgstr ""
 msgid "Supporters will be sent to this page if they click the button on your pop-up. You can preview this below."
 msgstr ""
 
+msgid "To begin reasoning about which legal services you'll need, you can review and fill out the <0>Crypto Legal Risk Checklist</0>. When you reach out to a legal expert, you can send them this document."
+msgstr ""
+
 msgid "Add a payout"
 msgstr ""
 
 msgid "Any ETH sent to these project payer addresses will be forwarded to the project. This makes it easier to pay the project from third-party tools."
+msgstr ""
+
+msgid "<0>Open Esquire</0> is a group of legal engineers helping Ethereum (and Juicebox) projects incorporate and maintain U.S. compliance."
 msgstr ""
 
 msgid "Deployed ERC20"
@@ -3713,6 +3782,9 @@ msgstr ""
 msgid "Edit {projectTitle}"
 msgstr ""
 
+msgid "The <0>LexPunk Army</0> community provides numerous templates and resources for free on their <1>GitHub</1> and their <2>forum</2>."
+msgstr ""
+
 msgid "7-day deadline"
 msgstr ""
 
@@ -3828,6 +3900,9 @@ msgid "While enabled, this project will use the custom behavior defined in the c
 msgstr ""
 
 msgid "Pay out ETH to Ethereum wallets or Juicebox projects. You can use this to pay your contributors, charities, projects you depend on, or anyone else."
+msgstr ""
+
+msgid "If you're looking to find another lawyer, join <0>LexDAO</0>'s <1>Discord server</1> and inquire in the <2>find-a-lawyer</2> channel. LexDAO also provides helpful legal templates on <3>GitHub</3>."
 msgstr ""
 
 msgid "Deploy project to {0}"
@@ -4238,6 +4313,9 @@ msgstr ""
 msgid "Something has gone wrong, please contact support."
 msgstr ""
 
+msgid "You may have success using an AI chatbot to draft simple agreements and other legal documents. <0>nani.ooo</0> is an Ethereum-specific AI wallet assistant, and <1>ChatGPT</1> can also work well – as always, review any documents that you alter or create with a legal expert before using them."
+msgstr ""
+
 msgid "Build and launch your NFT project right here on Juicebox with built-in redemptions."
 msgstr ""
 
@@ -4566,6 +4644,9 @@ msgid "OK"
 msgstr ""
 
 msgid "You will receive at least <0/>"
+msgstr ""
+
+msgid "To quickly form a U.S. entity, you can use <0>Doola</0>. To form an entity in another jurisdiction, you can use <1>Otonomos</1>."
 msgstr ""
 
 msgid "Redemption value"

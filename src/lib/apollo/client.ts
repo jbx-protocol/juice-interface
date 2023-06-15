@@ -14,7 +14,7 @@ import { subgraphUri } from './subgraphUri'
 const typesMap: FunctionsMap = {
   BigInt: {
     serialize: (parsed: unknown): string | null => {
-      return BigNumber.isBigNumber(parsed) ? parsed.toHexString() : null
+      return BigNumber.isBigNumber(parsed) ? parsed.toString() : null
     },
     parseValue: (raw: unknown): BigNumber | null => {
       if (raw === undefined || raw === null) return null

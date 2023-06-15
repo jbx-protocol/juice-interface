@@ -164,7 +164,7 @@ function Projects() {
             </div>
           </div>
 
-          <div>
+          <div className="md:min-h-[50vh]">
             <ArchivedProjectsMessage
               hidden={!showArchived || selectedTab !== 'all'}
             />

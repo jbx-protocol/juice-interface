@@ -10,6 +10,7 @@ export function Badge({
   variant,
   fill,
   clickable,
+  size = 'small',
   ...props
 }: PropsWithChildren<{
   className?: string
@@ -17,6 +18,7 @@ export function Badge({
   upperCase?: boolean
   fill?: boolean
   clickable?: boolean
+  size?: 'small' | 'middle'
 }> &
   React.HTMLAttributes<HTMLSpanElement>) {
   const badgeClasses = useMemo(() => {
@@ -43,12 +45,22 @@ export function Badge({
     }
   }, [variant, fill, props.onClick, clickable])
 
+  const sizeClasses = useMemo(() => {
+    switch (size) {
+      case 'small':
+        return 'py-0.5 px-2 text-xs leading-tight'
+      default:
+        return 'py-0.5 px-3 text-sm'
+    }
+  }, [size])
+
   return (
     <span
       className={twMerge(
-        'flex items-center gap-1 rounded-full py-0.5 px-3 text-sm font-normal transition-colors',
+        'flex items-center justify-center gap-1 rounded-full font-normal transition-colors',
         upperCase ? 'uppercase' : '',
         badgeClasses,
+        sizeClasses,
         className,
       )}
       role={props.onClick ? 'button' : undefined}

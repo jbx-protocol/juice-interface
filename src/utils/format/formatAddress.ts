@@ -1,4 +1,4 @@
-const DEFAULT_TRUNCATE_TO = 6
+const DEFAULT_TRUNCATE_TO = 4
 
 /**
  * Truncates an ETH address to a given [truncateTo] length.

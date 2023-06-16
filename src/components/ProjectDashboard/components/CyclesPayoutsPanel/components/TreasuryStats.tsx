@@ -4,12 +4,20 @@ import { DisplayCard } from '../../ui'
 import { useTreasuryStats } from '../hooks/useTreasuryStats'
 import {
   availableToPayOutTooltip,
-  overflowTooltip,
   treasuryBalanceTooltip,
 } from './CyclesPanelTooltips'
 
 export const TreasuryStats = () => {
-  const { availableToPayout, overflow, treasuryBalance } = useTreasuryStats()
+  const { availableToPayout, overflow, treasuryBalance, redemptionRate } =
+    useTreasuryStats()
+
+  const overflowTooltip = redemptionRate?.gt(0) ? (
+    <Trans>
+      {overflow} is available for token redemptions or future payouts.
+    </Trans>
+  ) : (
+    <Trans>{overflow} is available for future payouts.</Trans>
+  )
 
   return (
     <div className="flex w-full items-center gap-4">

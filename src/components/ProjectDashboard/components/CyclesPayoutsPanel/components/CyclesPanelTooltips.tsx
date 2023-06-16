@@ -1,9 +1,5 @@
 import { Trans } from '@lingui/macro'
 
-export const cycleStatusTooltip = (
-  <Trans>Locked cycles means... //waiting on Filip</Trans>
-)
-
 export const cycleTooltip = (
   <Trans>
     A Juicebox cycle is a predefined period of time during which a project’s
@@ -17,10 +13,6 @@ export const currentCycleRemainingLengthTooltip = (
 
 export const treasuryBalanceTooltip = (
   <Trans>The amount of ETH in this project’s treasury.</Trans>
-)
-
-export const overflowTooltip = (
-  <Trans>Overflow means... //waiting on Filip</Trans>
 )
 
 export const availableToPayOutTooltip = (

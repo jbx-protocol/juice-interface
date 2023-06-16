@@ -12,6 +12,7 @@ export const useTreasuryStats = () => {
     distributionLimit,
     distributionLimitCurrency,
     balanceInDistributionLimitCurrency,
+    fundingCycleMetadata,
   } = useProjectContext()
   const { distributableAmount } = useDistributableAmount()
 
@@ -54,5 +55,6 @@ export const useTreasuryStats = () => {
     treasuryBalance,
     availableToPayout,
     overflow,
+    redemptionRate: fundingCycleMetadata?.redemptionRate,
   }
 }

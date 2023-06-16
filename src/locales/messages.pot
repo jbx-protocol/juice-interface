@@ -1049,6 +1049,9 @@ msgstr ""
 msgid "Change ENS name"
 msgstr ""
 
+msgid "{overflow} is available for future payouts."
+msgstr ""
+
 msgid "Holders"
 msgstr ""
 
@@ -1299,6 +1302,9 @@ msgid "Locked"
 msgstr ""
 
 msgid "Locked Cycles"
+msgstr ""
+
+msgid "{overflow} is available for token redemptions or future payouts."
 msgstr ""
 
 msgid "Contact onboarding"
@@ -2606,9 +2612,6 @@ msgstr ""
 msgid "Paying <0>{0}</0> is not an investment — it's a way to support the project. Any value or utility of the tokens you receive is determined by {1}."
 msgstr ""
 
-msgid "Locked cycles means... //waiting on Filip"
-msgstr ""
-
 msgid "Error downloading payments, try again."
 msgstr ""
 
@@ -2730,6 +2733,9 @@ msgid "Archive project"
 msgstr ""
 
 msgid "Allow a few days for your project to appear in the \"archived\" projects list on the Projects page."
+msgstr ""
+
+msgid "This project's rules will be locked in place for {cycleStatusValue} days."
 msgstr ""
 
 msgid "Your edits will take effect in <0>cycle #{0}</0>. The current cycle (#{currentFCNumber}) won't be altered."
@@ -3399,9 +3405,6 @@ msgid "Beneficiary address"
 msgstr ""
 
 msgid "Claim {tokenTextShort} as ERC-20 tokens"
-msgstr ""
-
-msgid "Overflow means... //waiting on Filip"
 msgstr ""
 
 msgid "Back to profile"

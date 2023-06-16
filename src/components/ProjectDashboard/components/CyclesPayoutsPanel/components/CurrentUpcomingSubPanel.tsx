@@ -1,14 +1,11 @@
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { DisplayCard } from '../../ui'
 import { useCurrentUpcomingSubPanel } from '../hooks/useCurrentUpcomingSubPanel'
 import { ConfigurationDisplayCard } from './ConfigurationDisplayCard'
-import {
-  currentCycleRemainingLengthTooltip,
-  cycleStatusTooltip,
-} from './CyclesPanelTooltips'
+import { currentCycleRemainingLengthTooltip } from './CyclesPanelTooltips'
 import { PayoutsSubPanel } from './PayoutsSubPanel'
 
 const CYCLE_NUMBER_INDEX = 0
@@ -57,6 +54,14 @@ export const CurrentUpcomingSubPanel = ({
   const cycleLengthTooltip =
     info.type === 'current' ? currentCycleRemainingLengthTooltip : undefined
 
+  const cycleStatusValue = topPanelsInfo[STATUS_INDEX].value
+
+  const cycleStatusTooltip = (
+    <Trans>
+      This project's rules will be locked in place for {cycleStatusValue} days.
+    </Trans>
+  )
+
   return (
     <div>
       <div className="flex flex-col gap-4">
@@ -74,9 +79,7 @@ export const CurrentUpcomingSubPanel = ({
               <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
                 {topPanelsInfo[STATUS_INDEX].title}
                 <div className="font-heading text-2xl font-medium dark:text-slate-50">
-                  {topPanelsInfo[STATUS_INDEX].value ?? (
-                    <Skeleton className="w-22" />
-                  )}
+                  {cycleStatusValue ?? <Skeleton className="w-22" />}
                 </div>
               </div>
             </Tooltip>

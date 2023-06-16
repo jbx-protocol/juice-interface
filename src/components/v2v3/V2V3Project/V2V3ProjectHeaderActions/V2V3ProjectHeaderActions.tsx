@@ -1,5 +1,4 @@
-import { SettingOutlined } from '@ant-design/icons'
-import { WrenchIcon } from '@heroicons/react/24/outline'
+import { Cog6ToothIcon, WrenchIcon } from '@heroicons/react/24/outline'
 import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Tooltip } from 'antd'
 import BookmarkButton from 'components/BookmarkButton/BookmarkButton'
@@ -57,9 +56,10 @@ export function V2V3ProjectHeaderActions() {
             href={settingsPagePath(undefined, { handle, projectId })}
             legacyBehavior
           >
-            <Button icon={<SettingOutlined />}>
+            <Button size="small">
               <span>
-                <Trans>Settings</Trans>
+                <Cog6ToothIcon className="mr-2 inline h-4 w-4" />
+                <Trans>Manage project</Trans>
               </span>
             </Button>
           </Link>

@@ -37,7 +37,7 @@ export default function DistributePayoutsElem({
       pv={PV_V2}
       subject={
         data?.distributeToPayoutSplitEvents.length ? (
-          <span className="text-base font-medium">
+          <span className="font-heading text-lg">
             <ETHAmount amount={event.distributedAmount} />
           </span>
         ) : null

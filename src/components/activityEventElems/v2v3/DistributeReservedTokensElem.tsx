@@ -48,7 +48,7 @@ export default function DistributeReservedTokensEventElem({
         </Trans>
       }
       subject={
-        <div className="text-base font-medium">
+        <div className="font-heading text-lg">
           {formatWad(event.tokenCount, { precision: 0 })}{' '}
           {tokenSymbolText({
             tokenSymbol,

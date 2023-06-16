@@ -8,7 +8,9 @@ exports[`PayProjectCard renders 1`] = `
     <div
       class="font-medium"
     >
-      Pay Project
+      <span>
+        Pay Project
+      </span>
     </div>
     <form
       class="flex flex-col gap-2"

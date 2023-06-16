@@ -1040,6 +1040,9 @@ msgstr ""
 msgid "Change ENS name"
 msgstr ""
 
+msgid "{overflow} is available for future payouts."
+msgstr ""
+
 msgid "Holders"
 msgstr ""
 
@@ -1289,6 +1292,9 @@ msgstr ""
 msgid "Locked Cycles"
 msgstr ""
 
+msgid "{overflow} is available for token redemptions or future payouts."
+msgstr ""
+
 msgid "Contact onboarding"
 msgstr ""
 
@@ -1398,6 +1404,9 @@ msgid "Contact a contributor"
 msgstr ""
 
 msgid "Recipient"
+msgstr ""
+
+msgid "The amount of ETH in this project’s treasury."
 msgstr ""
 
 msgid "Percentages must add up to 100% or less"
@@ -2276,6 +2285,9 @@ msgstr ""
 msgid "Receive ERC-20"
 msgstr ""
 
+msgid "The amount of ETH this project can pay out of its treasury each Cycle."
+msgstr ""
+
 msgid "No limit (all available ETH)"
 msgstr ""
 
@@ -2421,6 +2433,9 @@ msgid "Error downloading redemptions, try again."
 msgstr ""
 
 msgid "Review reconfiguration"
+msgstr ""
+
+msgid "A Juicebox cycle is a predefined period of time during which a project’s settings and payout cannot be changed."
 msgstr ""
 
 msgid "Seconds"
@@ -2642,6 +2657,9 @@ msgstr ""
 msgid "NFT rules"
 msgstr ""
 
+msgid "See the NFTs and rewards offered by this project."
+msgstr ""
+
 msgid "Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
 msgstr ""
 
@@ -2705,6 +2723,9 @@ msgstr ""
 msgid "Allow a few days for your project to appear in the \"archived\" projects list on the Projects page."
 msgstr ""
 
+msgid "This project's rules will be locked in place for {cycleStatusValue} days."
+msgstr ""
+
 msgid "Your edits will take effect in <0>cycle #{0}</0>. The current cycle (#{currentFCNumber}) won't be altered."
 msgstr ""
 
@@ -2733,6 +2754,9 @@ msgid "Text record is set"
 msgstr ""
 
 msgid "Tokens cannot be claimed because the project owner has not issued an ERC-20 for this project."
+msgstr ""
+
+msgid "The amount of time remaining until this project’s next Cycle."
 msgstr ""
 
 msgid "Give permissions to {0} on project #{projectId}"
@@ -3030,6 +3054,9 @@ msgid "Payer's address"
 msgstr ""
 
 msgid "Setting a handle requires 2 transactions: <0>Set ENS name</0> and <1>Set text record</1>."
+msgstr ""
+
+msgid "{reservedRate} of token issuance is set aside for the recipients below."
 msgstr ""
 
 msgid "Your new project payer address:"
@@ -3938,6 +3965,9 @@ msgstr ""
 msgid "Pay out specific amounts of ETH to addresses and projects each cycle. Any remaining ETH will stay in the project for future cycles."
 msgstr ""
 
+msgid "Send ETH payments to this project."
+msgstr ""
+
 msgid "Launch {projectTitle}"
 msgstr ""
 
@@ -4179,6 +4209,9 @@ msgid "I have another question!"
 msgstr ""
 
 msgid "Manage your project's state and ownership"
+msgstr ""
+
+msgid "The amount of reserved tokens currently available to be distributed to the recipients below."
 msgstr ""
 
 msgid "Set text record for {0}"

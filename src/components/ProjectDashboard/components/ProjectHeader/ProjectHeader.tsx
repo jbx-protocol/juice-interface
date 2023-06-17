@@ -12,7 +12,7 @@ export const ProjectHeader = () => {
 
   return (
     <div className="relative mt-6 flex w-full flex-col gap-4">
-      <ProjectHeaderLogo className="absolute left-0 -top-[146px] border-6 border-white dark:border-slate-900" />
+      <ProjectHeaderLogo className="absolute left-0 -top-[146px] rounded-[0.85rem] border-6 border-white dark:border-slate-900" />
       <div className="flex justify-end gap-4">
         {projectId ? <SubscribeButton projectId={projectId} /> : null}
 

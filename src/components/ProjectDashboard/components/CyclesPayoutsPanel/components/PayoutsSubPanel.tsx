@@ -35,7 +35,10 @@ export const PayoutsSubPanel = ({
               {!loading
                 ? payouts
                   ? payouts.map(payout => (
-                      <ProjectAllocationRow key={payout.address} {...payout} />
+                      <ProjectAllocationRow
+                        key={`${payout.address}${payout.projectId}`}
+                        {...payout}
+                      />
                     ))
                   : null
                 : Array.from({ length: 5 }).map((_, i) => (

@@ -1,6 +1,8 @@
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
 import { NftRewardTier } from 'models/nftRewards'
+import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 
 // TODO: Rename to NftSquare or NftLogo or something
 export const SmallNftSquare = ({
@@ -24,9 +26,14 @@ export const SmallNftSquare = ({
   if (_loading) {
     return <div className={`${_className}`}></div>
   }
+  const fileUrl = useMemo(
+    () => ipfsUriToGatewayUrl(nftReward.fileUrl),
+    [nftReward.fileUrl],
+  )
+
   return (
     <JuiceVideoThumbnailOrImage
-      src={nftReward.fileUrl}
+      src={fileUrl}
       alt={nftReward.name}
       playIconPosition="hidden"
       containerClass={_className}

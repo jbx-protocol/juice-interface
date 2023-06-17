@@ -53,7 +53,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         selectedIndex={selectedTabIndex}
         defaultIndex={0}
       >
-        <div className="flex w-full snap-x overflow-x-scroll border-b border-grey-200 dark:border-slate-600 sm:justify-center md:justify-center">
+        <div className="sticky top-0 z-10 flex w-full snap-x overflow-x-scroll border-b border-grey-200 bg-white pt-8 dark:border-slate-600 dark:bg-slate-900 sm:justify-center md:justify-center">
           <Tab.List className="flex gap-8">
             {tabs.map(tab => (
               <ProjectTab

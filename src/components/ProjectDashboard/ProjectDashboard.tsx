@@ -39,7 +39,7 @@ export const ProjectDashboard = () => {
                         {CIDs?.length ? <NftRewardsCard /> : null}
                         <CurrentCycleCard />
                       </div>
-                      <ProjectTabs className="mt-16" />
+                      <ProjectTabs className="mt-8" />
                     </div>
                   </div>
                 </>

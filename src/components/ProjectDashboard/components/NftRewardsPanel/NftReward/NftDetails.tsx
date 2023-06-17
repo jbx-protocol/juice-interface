@@ -1,7 +1,8 @@
 import { Skeleton } from 'antd'
+import { TruncatedText } from 'components/TruncatedText'
 import ETHAmount from 'components/currency/ETHAmount'
 import { NftRewardTier } from 'models/nftRewards'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 import { parseWad } from 'utils/format/formatNumber'
 
 export function NftDetails({
@@ -17,9 +18,9 @@ export function NftDetails({
 }) {
   return (
     <div
-      className={classNames(
-        'flex h-full w-full flex-col justify-between rounded-b-lg bg-white pr-3.5 pl-3 pb-2.5',
-        !loading ? 'pt-3.5' : 'pt-1',
+      className={twMerge(
+        'flex h-full w-full flex-col justify-between rounded-b-lg bg-white p-4 dark:bg-slate-700',
+        !loading ? 'pt-4' : 'pt-1',
       )}
     >
       <Skeleton
@@ -28,19 +29,13 @@ export function NftDetails({
         title={false}
         paragraph={{ rows: 1, width: ['100%'] }}
       >
-        <span
-          className={classNames(
-            'text-base font-medium',
-            'text-ellipsis',
-            'overflow-hidden',
-            'text-black dark:text-slate-100',
-          )}
-        >
-          {rewardTier?.name}
-        </span>
+        <TruncatedText
+          className="text-base font-medium text-black dark:text-slate-50"
+          text={rewardTier?.name ?? ''}
+        />
       </Skeleton>
       {!hideAttributes ? (
-        <div className="mt-2 flex items-center justify-between">
+        <div className="mt-3 flex items-center justify-between">
           {rewardTier?.contributionFloor ? (
             <Skeleton
               className="mt-1"
@@ -49,7 +44,7 @@ export function NftDetails({
               title={false}
               paragraph={{ rows: 1, width: ['50%'] }}
             >
-              <span className="text-lg font-medium text-grey-900 dark:text-slate-50">
+              <span className="text-lg font-medium text-grey-900 dark:text-slate-100">
                 <ETHAmount amount={parseWad(rewardTier.contributionFloor)} />
               </span>
             </Skeleton>
@@ -61,7 +56,7 @@ export function NftDetails({
             title={false}
             paragraph={{ rows: 1, width: ['50%'] }}
           >
-            <span className="text-xs text-grey-400 dark:text-slate-200">
+            <span className="text-xs text-grey-400 dark:text-slate-300">
               {remainingSupplyText}
             </span>
           </Skeleton>

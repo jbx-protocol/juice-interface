@@ -1,13 +1,37 @@
 import { ChevronUpIcon } from '@heroicons/react/24/outline'
 import { useProjectCart } from 'components/ProjectDashboard/hooks'
+import { useCallback, useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { PayProjectModal } from '../PayProjectModal'
 import { SummaryCollapsedView, SummaryExpandedView } from './components'
 
 export const Cart = ({ className }: { className?: string }) => {
   const cart = useProjectCart()
+  const cartRef = useRef<HTMLDivElement>(null)
 
-  const toggleExpanded = () => cart.dispatch({ type: 'toggleExpanded' })
+  const toggleExpanded = useCallback(
+    () => cart.dispatch({ type: 'toggleExpanded' }),
+    [cart],
+  )
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        cartRef.current &&
+        event.target &&
+        !cartRef.current.contains(event.target as Node)
+      ) {
+        if (cart.expanded) {
+          toggleExpanded()
+        }
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [cart, toggleExpanded])
 
   return (
     <>
@@ -19,6 +43,7 @@ export const Cart = ({ className }: { className?: string }) => {
           cart.visible ? 'flex' : 'hidden',
           className,
         )}
+        ref={cartRef}
         onClick={toggleExpanded}
       >
         <div className="flex h-full w-full max-w-6xl items-center">

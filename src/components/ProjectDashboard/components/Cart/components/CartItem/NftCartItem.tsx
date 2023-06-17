@@ -27,7 +27,6 @@ export const NftCartItem: React.FC<ProjectCartNftReward> = reward => {
       price={price}
       icon={
         <SmallNftSquare
-          border
           className="h-14 w-14"
           nftReward={{
             fileUrl: fileUrl ?? '',

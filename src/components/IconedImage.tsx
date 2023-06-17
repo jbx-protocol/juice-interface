@@ -6,14 +6,14 @@ import { JuiceVideoThumbnailOrImage } from './JuiceVideo/JuiceVideoThumbnailOrIm
  * Shows an {@link Image} with a small icon in the top left.
  */
 export const IconedImage = ({
+  imageClassName,
   src,
-  widthClass,
   onIconClick,
   icon,
   ...props
 }: {
+  imageClassName?: string
   src: string
-  widthClass: string
   icon: ReactNode
   onIconClick?: VoidFunction
 } & ImageProps) => {
@@ -21,7 +21,7 @@ export const IconedImage = ({
     <div className="relative py-4">
       <JuiceVideoThumbnailOrImage
         src={src}
-        widthClass={widthClass}
+        className={imageClassName}
         playIconPosition="hidden"
         showPreviewOnClick
         {...props}

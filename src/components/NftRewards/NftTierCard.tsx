@@ -6,13 +6,12 @@ import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { NftRewardTier } from 'models/nftRewards'
 import { useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
+import { twMerge } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 import { parseWad } from 'utils/format/formatNumber'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { NftPreview } from './NftPreview'
 import { QuantitySelector } from './QuantitySelector'
-
-const NFT_DISPLAY_HEIGHT_CLASS = 'h-36' // rem height
 
 // The clickable cards on the project page
 export function NftTierCard({
@@ -92,8 +91,8 @@ export function NftTierCard({
       >
         {/* Image/video container */}
         <div
-          className={classNames(
-            `relative flex w-full items-center justify-center rounded-t-lg ${NFT_DISPLAY_HEIGHT_CLASS}`,
+          className={twMerge(
+            `relative flex h-36 w-full items-center justify-center rounded-t-lg`,
             _isSelected
               ? 'bg-smoke-25 dark:bg-slate-800'
               : 'bg-smoke-100 dark:bg-slate-600',
@@ -103,8 +102,7 @@ export function NftTierCard({
             <JuiceVideoThumbnailOrImage
               src={fileUrl}
               alt={rewardTier?.name ?? 'Juicebox NFT reward'}
-              className="absolute w-full rounded-t-lg"
-              heightClass={NFT_DISPLAY_HEIGHT_CLASS}
+              className="absolute h-36 w-full rounded-t-lg"
             />
           ) : null}
           {showQuantitySelector ? (

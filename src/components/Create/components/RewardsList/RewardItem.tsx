@@ -67,11 +67,10 @@ export const RewardItem = ({
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex flex-col gap-3">
           <JuiceVideoThumbnailOrImage
+            className="h-44 w-44"
             src={fileUrl.toString() ?? '/assets/banana-od.webp'}
             alt={name}
             showPreviewOnClick
-            heightClass="h-44"
-            widthClass="w-44"
           />
 
           {externalLink && (

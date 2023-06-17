@@ -3,15 +3,13 @@ import { useContentType } from 'hooks/useContentType'
 import { ImageProps } from 'next/image'
 import { useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 import { fileTypeIsVideo } from 'utils/nftRewards'
 import { JuiceVideoOrImgPreview } from './JuiceVideoOrImgPreview'
 import { JuiceVideoThumbnail, PlayIconPosition } from './JuiceVideoThumbnail'
 
 type JuiceVideoThumbnailOrImageProps = {
   playIconPosition?: PlayIconPosition
-  heightClass?: string
-  widthClass?: string
   src: string
   alt?: string
   showPreviewOnClick?: boolean
@@ -20,8 +18,6 @@ type JuiceVideoThumbnailOrImageProps = {
 
 export function JuiceVideoThumbnailOrImage({
   playIconPosition,
-  heightClass,
-  widthClass,
   showPreviewOnClick,
   containerClass,
   ...props
@@ -31,9 +27,8 @@ export function JuiceVideoThumbnailOrImage({
 
   const { data: contentType } = useContentType(props.src)
   const isVideo = fileTypeIsVideo(contentType)
-  const _containerClass = classNames(
-    widthClass ?? 'w-full',
-    heightClass ?? 'h-full',
+  const _containerClass = twMerge(
+    'w-full h-full',
     showPreviewOnClick ? 'cursor-pointer' : '',
     'rounded-lg overflow-hidden',
     containerClass,
@@ -43,11 +38,9 @@ export function JuiceVideoThumbnailOrImage({
     <div className={_containerClass}>
       {loading ? (
         <div
-          className={classNames(
+          className={twMerge(
             `flex items-center justify-center border border-smoke-200 dark:border-grey-600`,
             props.className,
-            widthClass,
-            heightClass,
           )}
         >
           <LoadingOutlined className="text-primary" />
@@ -64,9 +57,7 @@ export function JuiceVideoThumbnailOrImage({
         {isVideo ? (
           <JuiceVideoThumbnail
             src={props.src}
-            className={props.className}
-            widthClass={widthClass}
-            heightClass={heightClass}
+            videoClassName={props.className}
             onLoaded={() => setLoading(false)}
             playIconPosition={playIconPosition}
           />

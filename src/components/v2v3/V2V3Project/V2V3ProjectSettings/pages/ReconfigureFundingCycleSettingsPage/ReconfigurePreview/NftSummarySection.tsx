@@ -41,10 +41,9 @@ export default function NftSummarySection() {
             >
               <Col md={4} className="flex items-center justify-center">
                 <JuiceVideoThumbnailOrImage
+                  className="h-24 w-24"
                   src={rewardTier.fileUrl ?? '/assets/banana-od.webp'}
                   alt={rewardTier.name}
-                  heightClass="h-24"
-                  widthClass="w-24"
                 />
               </Col>
               <Col className="flex flex-col justify-center" md={8}>

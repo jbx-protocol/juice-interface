@@ -1,10 +1,10 @@
 import { Button } from 'antd'
 import { useCartSummary } from '../hooks/useCartSummary'
 
-export const SummaryPayButton = () => {
+export const SummaryPayButton = ({ className }: { className?: string }) => {
   const { payProject, walletConnected } = useCartSummary()
   return (
-    <Button type="primary" onClick={payProject}>
+    <Button className={className} type="primary" onClick={payProject}>
       {walletConnected ? 'Pay project' : 'Connect wallet'}
     </Button>
   )

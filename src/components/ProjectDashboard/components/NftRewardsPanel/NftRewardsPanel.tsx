@@ -18,7 +18,7 @@ export const NftRewardsPanel = () => {
       </h2>
       <RedeemNftsSection />
       {!nftsLoading && rewardTiers?.length ? (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {rewardTiers?.map((tier, i) => (
             <NftReward
               key={i}

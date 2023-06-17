@@ -44,7 +44,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         selectedIndex={selectedTabIndex}
         defaultIndex={0}
       >
-        <div className="flex w-full justify-center border-b border-grey-200 dark:border-slate-600">
+        <div className="flex w-full snap-x overflow-x-scroll border-b border-grey-200 dark:border-slate-600 sm:justify-center md:justify-center">
           <Tab.List className="flex gap-8">
             {tabs.map(tab => (
               <ProjectTab
@@ -55,13 +55,15 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
             ))}
           </Tab.List>
         </div>
-        <Tab.Panels as={Fragment}>
-          {tabs.map(tab => (
-            <Tab.Panel as={Fragment} key={tab.id}>
-              {tab.panel}
-            </Tab.Panel>
-          ))}
-        </Tab.Panels>
+        <div className="flex w-full justify-center px-4 md:px-0">
+          <Tab.Panels as={Fragment}>
+            {tabs.map(tab => (
+              <Tab.Panel as={Fragment} key={tab.id}>
+                {tab.panel}
+              </Tab.Panel>
+            ))}
+          </Tab.Panels>
+        </div>
       </Tab.Group>
     </div>
   )

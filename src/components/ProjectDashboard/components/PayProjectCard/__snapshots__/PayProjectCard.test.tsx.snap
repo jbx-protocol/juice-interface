@@ -16,10 +16,10 @@ exports[`PayProjectCard renders 1`] = `
       class="flex flex-col gap-2"
     >
       <div
-        class="flex gap-2"
+        class="flex flex-col gap-2 md:flex-row"
       >
         <input
-          class="flex-1"
+          class="md:flex-1"
           data-testid="pay-input"
           name="payAmount"
           placeholder="0"

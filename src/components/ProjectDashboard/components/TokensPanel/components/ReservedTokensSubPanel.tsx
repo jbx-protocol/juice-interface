@@ -77,7 +77,10 @@ export const ReservedTokensSubPanel = ({
                   : null}
               </div>
 
-              <SendReservedTokensButton className="mt-6 self-end" />
+              <SendReservedTokensButton
+                className="z-0 mt-6 w-full justify-center md:w-auto"
+                containerClassName="md:self-end"
+              />
             </>
           ) : (
             <div className="mt-5">

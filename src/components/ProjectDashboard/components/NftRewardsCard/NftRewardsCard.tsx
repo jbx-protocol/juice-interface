@@ -17,7 +17,7 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
   const { setProjectPageTab } = useProjectPageQueries()
 
   const NftComponents = useMemo(() => {
-    return (rewardTiers ?? []).map(nft => ({
+    return (rewardTiers ?? []).slice(0, 3).map(nft => ({
       Component: SmallNftSquare,
       props: {
         border: true,
@@ -43,7 +43,7 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
         <StackedComponents components={NftComponents} size="56px" />
         <div>
           <button
-            className="flex items-center rounded-2xl bg-grey-100 py-1 pl-3 pr-2.5 text-sm text-grey-700 dark:bg-slate-500 dark:text-slate-100"
+            className="flex items-center whitespace-nowrap rounded-2xl bg-grey-100 py-1 pl-3 pr-2.5 text-sm text-grey-700 dark:bg-slate-500 dark:text-slate-100"
             onClick={() => setProjectPageTab('nft_rewards')}
           >
             View all <ArrowRightIcon className="h-3 w-3" />

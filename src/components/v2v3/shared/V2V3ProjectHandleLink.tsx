@@ -11,12 +11,14 @@ import { v2v3ProjectRoute } from 'utils/routes'
  */
 export default function V2V3ProjectHandleLink({
   className,
+  containerClassName,
   name,
   projectId,
   handle,
   withProjectAvatar = false,
 }: {
   className?: string
+  containerClassName?: string
   name?: string | null
   projectId: number
   handle?: string | null
@@ -38,7 +40,7 @@ export default function V2V3ProjectHandleLink({
 
   return (
     <Tooltip
-      className="inline-flex items-center gap-3"
+      className={twMerge('inline-flex items-center gap-3', containerClassName)}
       title={tooltipText}
       open={tooltipText ? undefined : false}
     >

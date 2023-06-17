@@ -16,8 +16,7 @@ export const SummaryCollapsedView = () => {
     <div className="flex w-full items-center justify-between px-8 py-6">
       <div
         data-testid="cart-summary-closed-view-summary"
-        className="flex cursor-auto items-center gap-4"
-        onClick={e => e.stopPropagation()}
+        className="flex items-center gap-4"
       >
         <span className="font-heading text-xl font-medium md:text-2xl">
           <Trans>Summary</Trans>

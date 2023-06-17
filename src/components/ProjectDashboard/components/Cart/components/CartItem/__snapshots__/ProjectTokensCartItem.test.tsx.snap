@@ -3,16 +3,16 @@
 exports[`ProjectTokensCartItem renders 1`] = `
 <div>
   <div
-    class="flex items-center justify-between border-b border-grey-200 py-5 dark:border-slate-500"
+    class="flex min-w-0 items-center justify-between gap-4 border-b border-grey-200 py-5 dark:border-slate-500"
   >
     <div
-      class="flex items-center"
+      class="flex min-w-0 items-center"
     >
       <div>
         ProjectHeaderLogo
       </div>
       <span
-        class="ml-3 dark:text-slate-50"
+        class="ml-3 min-w-0 dark:text-slate-50"
       >
         <div
           class="flex flex-col gap-1"

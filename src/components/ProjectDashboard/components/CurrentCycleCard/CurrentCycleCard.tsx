@@ -1,13 +1,25 @@
-import { LockClosedIcon } from '@heroicons/react/24/solid'
-import { Trans } from '@lingui/macro'
+import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid'
+import { Trans, t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { useCurrentCycleCard } from 'components/ProjectDashboard/hooks'
+import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { cycleTooltip } from '../CyclesPayoutsPanel/components/CyclesPanelTooltips'
 import { DisplayCard } from '../ui'
 
 export const CurrentCycleCard = ({ className }: { className?: string }) => {
-  const { currentCycleNumber, timeRemainingText } = useCurrentCycleCard()
+  const { currentCycleNumber, timeRemainingText, isUnlocked } =
+    useCurrentCycleCard()
+
+  const LockIcon = useMemo(
+    () => (isUnlocked ? LockOpenIcon : LockClosedIcon),
+    [isUnlocked],
+  )
+
+  const text = useMemo(
+    () => (isUnlocked ? t`Unlocked` : timeRemainingText),
+    [isUnlocked, timeRemainingText],
+  )
 
   return (
     <DisplayCard className={twMerge('hidden pr-9 lg:block', className)}>
@@ -15,11 +27,11 @@ export const CurrentCycleCard = ({ className }: { className?: string }) => {
         <div className="font-medium">
           <Trans>Current Cycle: #{currentCycleNumber}</Trans>
         </div>
-        <div className="mt-6 flex items-center gap-1">
+        <div className="mt-6 flex items-center gap-2">
           <span className="text-2xl font-medium xl:whitespace-nowrap">
-            {timeRemainingText}
+            {text}
           </span>
-          <LockClosedIcon className="h-4 w-4 text-smoke-400 dark:text-slate-300" />
+          <LockIcon className="h-4 w-4 text-smoke-400 dark:text-slate-300" />
         </div>
         <div className="mt-3 text-smoke-500 dark:text-slate-200">
           <Trans>until Cycle #{currentCycleNumber + 1}</Trans>

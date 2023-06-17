@@ -74,14 +74,12 @@ export const CurrentUpcomingSubPanel = ({
               </div>
             </div>
           </DisplayCard>
-          <DisplayCard className="w-full md:max-w-[142px]">
+          <DisplayCard className="w-full md:w-fit">
             <Tooltip title={cycleStatusTooltip} placement="bottom">
               <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
-                {topPanelsInfo[STATUS_INDEX].title}
+                {topPanelsInfo[1].title}
                 <div className="font-heading text-2xl font-medium dark:text-slate-50">
-                  {topPanelsInfo[STATUS_INDEX].value ?? (
-                    <Skeleton className="w-22" />
-                  )}
+                  {topPanelsInfo[1].value ?? <Skeleton className="w-22" />}
                 </div>
               </div>
             </Tooltip>

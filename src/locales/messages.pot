@@ -239,9 +239,6 @@ msgstr ""
 msgid "Set a future date & time to start your project's first cycle."
 msgstr ""
 
-msgid "Open"
-msgstr ""
-
 msgid "No"
 msgstr ""
 
@@ -2112,6 +2109,9 @@ msgid "Your project can still receive payments directly through the Juicebox pro
 msgstr ""
 
 msgid "Deploy cycle"
+msgstr ""
+
+msgid "Juicebox native"
 msgstr ""
 
 msgid "LINK TO NFT"

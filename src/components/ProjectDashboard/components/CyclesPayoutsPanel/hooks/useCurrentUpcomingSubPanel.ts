@@ -19,7 +19,7 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     loading: upcomingFundingCycleLoading,
   } = useProjectUpcomingFundingCycle({ projectId })
   const [upcomingFundingCycle] = upcomingFundingCycleData ?? []
-  const { timeRemainingText: remainingTime } = useFundingCycleCountdown()
+  const { timeRemainingText } = useFundingCycleCountdown()
 
   const cycleNumber = useMemo(() => {
     if (type === 'current') {
@@ -28,23 +28,31 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     return fundingCycle?.number ? fundingCycle.number.toNumber() + 1 : undefined
   }, [fundingCycle?.number, type])
 
+  const cycleUnlocked = useMemo(() => {
+    if (type === 'current') {
+      return fundingCycle?.duration?.isZero() ?? true
+    }
+    return upcomingFundingCycle?.duration?.isZero() ?? true
+  }, [fundingCycle?.duration, type, upcomingFundingCycle?.duration])
+
   const upcomingCycleLength = useMemo(() => {
     if (!upcomingFundingCycle) return
+    if (cycleUnlocked) return '-'
     return timeSecondsToDateString(
       upcomingFundingCycle.duration.toNumber(),
       'short',
     )
-  }, [upcomingFundingCycle])
+  }, [cycleUnlocked, upcomingFundingCycle])
 
   const status = useMemo(() => {
-    const duration =
-      type === 'current'
-        ? fundingCycle?.duration
-        : upcomingFundingCycle?.duration
-    if (!duration) return
-    if (duration.isZero()) return t`Open`
+    if (cycleUnlocked) return t`Unlocked`
     return t`Locked`
-  }, [fundingCycle?.duration, type, upcomingFundingCycle?.duration])
+  }, [cycleUnlocked])
+
+  const remainingTime = useMemo(() => {
+    if (cycleUnlocked) return '-'
+    return timeRemainingText
+  }, [cycleUnlocked, timeRemainingText])
 
   // Short circuit current for faster loading
   if (type === 'current') {

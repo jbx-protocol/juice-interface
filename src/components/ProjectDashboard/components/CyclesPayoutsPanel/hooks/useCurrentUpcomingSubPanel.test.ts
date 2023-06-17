@@ -82,7 +82,7 @@ describe('useCurrentUpcomingSubPanel', () => {
         } as any),
     )
     const { result } = renderHook(() => useCurrentUpcomingSubPanel('current'))
-    expect(result.current.status).toEqual('Open')
+    expect(result.current.status).toEqual('Unlocked')
   })
 
   test('current type doesnt wait for upcoming funding cycle', () => {

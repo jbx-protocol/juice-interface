@@ -5,9 +5,6 @@ import { NftRewardTier } from 'models/nftRewards'
 import { classNames } from 'utils/classNames'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 
-const NFT_DISPLAY_HEIGHT_CLASS = 'h-12' //rem height
-const NFT_DISPLAY_WIDTH_CLASS = 'w-12'
-
 export function NftRewardCell({
   nftRewards,
 }: {
@@ -29,10 +26,7 @@ export function NftRewardCell({
         const isLink = tier.externalLink
 
         return (
-          <div
-            className={`flex gap-3 ${NFT_DISPLAY_HEIGHT_CLASS} items-center justify-end`}
-            key={idx}
-          >
+          <div className="flex h-12 items-center justify-end gap-3" key={idx}>
             <ExternalLink
               className={classNames(
                 'text-black dark:text-grey-100',
@@ -55,8 +49,7 @@ export function NftRewardCell({
                 src={ipfsUriToGatewayUrl(tier.fileUrl)}
                 alt={tier.name}
                 crossOrigin="anonymous"
-                heightClass={NFT_DISPLAY_HEIGHT_CLASS}
-                widthClass={NFT_DISPLAY_WIDTH_CLASS}
+                className="h-12 w-12"
                 playIconPosition="hidden"
                 showPreviewOnClick
               />

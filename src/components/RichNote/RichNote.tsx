@@ -46,9 +46,7 @@ export default function RichNote({
             <JuiceVideoThumbnailOrImage
               alt="User uploaded image"
               key={i}
-              className={twMerge('cursor-pointer', className)}
-              heightClass="h-24"
-              widthClass="w-24"
+              className={twMerge('h-24 w-24 cursor-pointer', className)}
               src={link}
               showPreviewOnClick
             />

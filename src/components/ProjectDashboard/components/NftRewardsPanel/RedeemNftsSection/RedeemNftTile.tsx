@@ -14,9 +14,7 @@ export function RedeemNftTile({
     <Tooltip title={_name} placement="bottom">
       <div>
         <JuiceVideoThumbnailOrImage
-          className="rounded-lg"
-          heightClass="h-14"
-          widthClass="w-14"
+          className="h-14 w-14 rounded-lg"
           src={rewardTier?.fileUrl ?? ''}
           alt={_name}
           playIconPosition="hidden"

@@ -4,7 +4,7 @@ import { useProjectCart } from 'components/ProjectDashboard/hooks'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
 import { NftRewardTier } from 'models/nftRewards'
 import { useMemo, useState } from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { AddNftButton } from './AddNftButton'
 import { NftDetails } from './NftDetails'
@@ -57,9 +57,9 @@ export function NftReward({
 
   return (
     <div
-      className={classNames(
-        'group relative flex h-full w-full cursor-pointer select-none flex-col rounded-lg border border-grey-200',
-        isSelected ? 'border-2 border-bluebs-500' : '',
+      className={twMerge(
+        'group relative flex h-full w-full cursor-pointer select-none flex-col rounded-lg border border-grey-200 dark:border-slate-500',
+        isSelected ? 'border-2 border-bluebs-500 dark:border-bluebs-500' : '',
       )}
       onClick={openPreview}
     >

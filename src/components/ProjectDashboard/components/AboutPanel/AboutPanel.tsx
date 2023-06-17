@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { useAboutPanel } from 'components/ProjectDashboard/hooks/useAboutPanel'
 import RichNote from 'components/RichNote/RichNote'
 import { SocialLinkButton } from '../ui'
@@ -12,7 +13,13 @@ export const AboutPanel = () => {
         <SocialLinkButton type="telegram" href="#" />
         <SocialLinkButton type="website" href="#" />
       </div>
-      <RichNote note={description} />
+      {description ? (
+        <RichNote note={description} />
+      ) : (
+        <div className="text-grey-500 dark:text-slate-200">
+          <Trans>This project has no description.</Trans>
+        </div>
+      )}
     </div>
   )
 }

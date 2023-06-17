@@ -4313,6 +4313,9 @@ msgstr ""
 msgid "Set payouts as percentages of the total amount being paid out."
 msgstr ""
 
+msgid "This project has no description."
+msgstr ""
+
 msgid "Add {allocationName}"
 msgstr ""
 

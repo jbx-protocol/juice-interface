@@ -31,8 +31,10 @@ export type JuiceModalProps = {
   open: boolean
   okButtonForm?: string
   okText?: ReactNode
+  okButtonClassName?: string
   okLoading?: boolean
   cancelText?: ReactNode
+  cancelButtonClassName?: string
   hideCancelButton?: boolean
   setOpen: ModalSetOpenFn
   onCancel?: ModalOnCancelFn
@@ -56,7 +58,9 @@ export const JuiceModal = ({
   okButtonForm,
   okText = t`OK`,
   okLoading = false,
+  okButtonClassName,
   cancelText = t`Cancel`,
+  cancelButtonClassName,
   hideCancelButton,
   setOpen,
   onCancel: _onCancel,
@@ -135,7 +139,10 @@ export const JuiceModal = ({
             >
               {!hideCancelButton && (
                 <CancelButton
-                  className={buttonPositionClasses.self}
+                  className={twMerge(
+                    buttonPositionClasses.self,
+                    cancelButtonClassName,
+                  )}
                   onClick={onCancel}
                 >
                   {cancelText}
@@ -143,7 +150,10 @@ export const JuiceModal = ({
               )}
               <CTAButton
                 form={okButtonForm}
-                className={buttonPositionClasses.self}
+                className={twMerge(
+                  buttonPositionClasses.self,
+                  okButtonClassName,
+                )}
                 loading={okLoading}
                 onClick={onOk}
               >

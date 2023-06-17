@@ -28,11 +28,11 @@ export const TokensPanel = () => {
 
   return (
     <>
-      <div className="flex w-full max-w-xl flex-col gap-5">
-        <div className="flex items-center justify-between">
+      <div className="flex w-full max-w-[596px] flex-col items-stretch gap-5">
+        <div className="flex w-full flex-1 items-center justify-between">
           <h2 className="font-heading text-2xl font-medium">Tokens</h2>
         </div>
-        <div>
+        <div className="flex-grow">
           {!userTokenBalanceLoading && userTokenBalance && (
             <DisplayCard>
               <div className="flex items-center justify-between gap-3">
@@ -47,7 +47,7 @@ export const TokensPanel = () => {
             </DisplayCard>
           )}
           <div className="mt-4 flex flex-col gap-4">
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-4 md:flex-row">
               <DisplayCard className="w-full">
                 <div className="flex flex-col gap-2">
                   <div className="text-sm font-medium text-grey-600 dark:text-slate-200">
@@ -57,7 +57,7 @@ export const TokensPanel = () => {
                     <span className="font-heading text-xl font-medium dark:text-slate-50">
                       {projectToken}
                     </span>
-                    <span className="rounded-2xl bg-grey-100 py-1 px-2 text-grey-700 dark:bg-slate-500 dark:text-slate-100">
+                    <span className="whitespace-nowrap rounded-2xl bg-grey-100 py-1 px-2 text-grey-700 dark:bg-slate-500 dark:text-slate-100">
                       ERC-20
                     </span>
                     <span className="text-grey-500 dark:text-slate-200">
@@ -81,7 +81,7 @@ export const TokensPanel = () => {
             <a
               role="button"
               href="#"
-              className="self-end"
+              className="md:self-end"
               onClick={openTokenHolderModal}
             >
               <Trans>View token holders</Trans>

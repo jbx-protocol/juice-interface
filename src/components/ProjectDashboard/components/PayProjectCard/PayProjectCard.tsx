@@ -32,9 +32,9 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
       >
         {props => (
           <form className="flex flex-col gap-2" onSubmit={props.handleSubmit}>
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2 md:flex-row">
               <PayInput
-                className="flex-1"
+                className="md:flex-1"
                 placeholder="0"
                 value={{
                   amount: props.values.payAmount.amount?.toString() ?? '',

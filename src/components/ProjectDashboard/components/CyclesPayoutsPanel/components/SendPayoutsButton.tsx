@@ -3,9 +3,16 @@ import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import DistributePayoutsModal from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/modals/DistributePayoutsModal'
 import { useCallback, useMemo, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { useDistributableAmount } from '../hooks/useDistributableAmount'
 
-export const SendPayoutsButton = ({ className }: { className?: string }) => {
+export const SendPayoutsButton = ({
+  className,
+  containerClassName,
+}: {
+  className?: string
+  containerClassName?: string
+}) => {
   const { distributableAmount } = useDistributableAmount()
   const [open, setOpen] = useState(false)
   const openModal = useCallback(() => setOpen(true), [])
@@ -19,11 +26,11 @@ export const SendPayoutsButton = ({ className }: { className?: string }) => {
     <Tooltip
       title={<Trans>No payouts remaining for this cycle.</Trans>}
       open={distributeButtonDisabled ? undefined : false}
-      className={className}
+      className={containerClassName}
     >
       <Button
         type="primary"
-        className="flex w-fit items-center gap-3"
+        className={twMerge('flex w-fit items-center gap-3', className)}
         onClick={openModal}
         disabled={distributeButtonDisabled}
       >

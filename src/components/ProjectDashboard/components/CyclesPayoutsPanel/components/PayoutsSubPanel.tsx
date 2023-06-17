@@ -47,7 +47,10 @@ export const PayoutsSubPanel = ({
             </div>
 
             {type === 'current' && (
-              <SendPayoutsButton className="z-0 mt-6 self-end" />
+              <SendPayoutsButton
+                className="z-0 mt-6 w-full justify-center md:w-auto"
+                containerClassName="md:self-end"
+              />
             )}
           </DisplayCard>
         </div>

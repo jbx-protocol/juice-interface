@@ -20,7 +20,7 @@ export const TreasuryStats = () => {
   )
 
   return (
-    <div className="flex w-full items-center gap-4">
+    <div className="grid w-full grid-cols-2 gap-4 md:flex md:items-center">
       <DisplayCard className="flex w-full flex-col gap-2">
         <Tooltip title={treasuryBalanceTooltip}>
           <h3 className="text-grey-60 font-body0 mb-0 max-w-min whitespace-nowrap text-sm font-medium dark:text-slate-200">
@@ -39,9 +39,9 @@ export const TreasuryStats = () => {
         </Tooltip>
         <span className="font-heading text-xl font-medium">{overflow}</span>
       </DisplayCard>
-      <DisplayCard className="flex w-full flex-col gap-2">
+      <DisplayCard className="col-span-2 flex w-full flex-col gap-2">
         <Tooltip title={availableToPayOutTooltip}>
-          <h3 className="mb-0 max-w-min whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
+          <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
             <Trans>Available to pay out</Trans>
           </h3>
         </Tooltip>

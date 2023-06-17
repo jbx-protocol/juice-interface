@@ -3,19 +3,41 @@
 exports[`SummaryExpandedView should render correctly 1`] = `
 <div>
   <div
-    class="flex h-full w-full justify-between px-8 pt-12 pb-14"
+    class="flex h-full w-full flex-col justify-between px-8 pt-6 pb-14 md:flex-row md:pt-12"
     data-testid="cart-summary-open-view"
   >
     <div
-      class="flex w-full max-w-xl cursor-auto flex-col gap-4"
+      class="flex min-h-0 w-full max-w-xl flex-shrink cursor-auto flex-col gap-4"
       data-testid="cart-summary-open-view-summary"
     >
-      <span
-        class="font-heading text-2xl font-medium"
+      <div
+        class="flex justify-between gap-5"
       >
-        Summary
-      </span>
-      <div />
+        <span
+          class="font-heading text-xl font-medium md:text-2xl"
+        >
+          Summary
+        </span>
+        <svg
+          aria-hidden="true"
+          class="h-8 w-8 rotate-180"
+          fill="none"
+          role="button"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4.5 15.75l7.5-7.5 7.5 7.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+      <div
+        class="flex w-full flex-shrink flex-col overflow-y-scroll md:block md:w-auto"
+      />
     </div>
     <div
       class="flex cursor-auto items-center gap-8 self-end rounded-lg border border-grey-200 p-8 dark:border-slate-500 dark:bg-slate-700"
@@ -30,7 +52,7 @@ exports[`SummaryExpandedView should render correctly 1`] = `
           Total to pay
         </span>
         <span
-          class="text-2xl font-medium"
+          class="font-heading text-2xl font-medium"
         >
           0.0000 ETH
         </span>

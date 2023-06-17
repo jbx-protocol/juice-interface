@@ -6,7 +6,7 @@ exports[`PayInput renders 1`] = `
     class="dark:slate-900 flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3 dark:border-slate-500 dark:bg-slate-950"
   >
     <div
-      class="flex items-center justify-center rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950 h-7 w-7"
+      class="flex items-center justify-center rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950 flex-0 h-7 w-7"
       data-testid="pay-input-currency-icon"
     >
       <svg
@@ -26,7 +26,7 @@ exports[`PayInput renders 1`] = `
       </svg>
     </div>
     <input
-      class="flex-1 bg-transparent outline-none"
+      class="min-w-0 flex-1 bg-transparent outline-none"
       data-testid="pay-input-input"
       value=""
     />
@@ -62,7 +62,7 @@ exports[`PayInput renders with placeholder 1`] = `
     class="dark:slate-900 flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3 dark:border-slate-500 dark:bg-slate-950"
   >
     <div
-      class="flex items-center justify-center rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950 h-7 w-7"
+      class="flex items-center justify-center rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950 flex-0 h-7 w-7"
       data-testid="pay-input-currency-icon"
     >
       <svg
@@ -82,7 +82,7 @@ exports[`PayInput renders with placeholder 1`] = `
       </svg>
     </div>
     <input
-      class="flex-1 bg-transparent outline-none"
+      class="min-w-0 flex-1 bg-transparent outline-none"
       data-testid="pay-input-input"
       placeholder="placeholder"
       value=""
@@ -119,7 +119,7 @@ exports[`PayInput renders with value 1`] = `
     class="dark:slate-900 flex items-center gap-2 rounded-lg border border-grey-300 bg-white p-2 pl-3 dark:border-slate-500 dark:bg-slate-950"
   >
     <div
-      class="flex items-center justify-center rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950 h-7 w-7"
+      class="flex items-center justify-center rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950 flex-0 h-7 w-7"
       data-testid="pay-input-currency-icon"
     >
       <svg
@@ -139,7 +139,7 @@ exports[`PayInput renders with value 1`] = `
       </svg>
     </div>
     <input
-      class="flex-1 bg-transparent outline-none"
+      class="min-w-0 flex-1 bg-transparent outline-none"
       data-testid="pay-input-input"
       value="1"
     />

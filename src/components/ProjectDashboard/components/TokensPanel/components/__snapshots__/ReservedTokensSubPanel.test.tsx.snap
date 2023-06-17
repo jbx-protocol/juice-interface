@@ -68,7 +68,7 @@ exports[`ReservedTokensSubPanel renders 1`] = `
           </div>
         </div>
         <div>
-          {"className":"mt-6 self-end"}
+          {"className":"z-0 mt-6 w-full justify-center md:w-auto","containerClassName":"md:self-end"}
         </div>
       </div>
     </div>

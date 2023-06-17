@@ -7,10 +7,10 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
       class="flex flex-col gap-4"
     >
       <div
-        class="flex gap-4"
+        class="grid grid-cols-2 gap-4 md:flex"
       >
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full max-w-[127px]"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
@@ -24,7 +24,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
           </div>
         </div>
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full max-w-[142px]"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[142px]"
         >
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
@@ -38,7 +38,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
           </div>
         </div>
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex-1"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
@@ -70,10 +70,10 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
       class="flex flex-col gap-4"
     >
       <div
-        class="flex gap-4"
+        class="grid grid-cols-2 gap-4 md:flex"
       >
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full max-w-[127px]"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
@@ -87,7 +87,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
           </div>
         </div>
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full max-w-[142px]"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[142px]"
         >
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
@@ -101,7 +101,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
           </div>
         </div>
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex-1"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
@@ -133,10 +133,10 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
       class="flex flex-col gap-4"
     >
       <div
-        class="flex gap-4"
+        class="grid grid-cols-2 gap-4 md:flex"
       >
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full max-w-[127px]"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
@@ -150,7 +150,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
           </div>
         </div>
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full max-w-[142px]"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[142px]"
         >
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
@@ -164,7 +164,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
           </div>
         </div>
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex-1"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
@@ -196,10 +196,10 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
       class="flex flex-col gap-4"
     >
       <div
-        class="flex gap-4"
+        class="grid grid-cols-2 gap-4 md:flex"
       >
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full max-w-[127px]"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
@@ -213,7 +213,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
           </div>
         </div>
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full max-w-[142px]"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[142px]"
         >
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
@@ -227,7 +227,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
           </div>
         </div>
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex-1"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
           <div
             class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"

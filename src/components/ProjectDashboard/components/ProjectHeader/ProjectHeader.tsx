@@ -4,14 +4,15 @@ import Paragraph from 'components/Paragraph'
 import { useProjectHeader } from 'components/ProjectDashboard/hooks'
 import { SubscribeButton } from 'components/SubscribeButton'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
+import { twMerge } from 'tailwind-merge'
 import { ProjectHeaderLogo } from './components/ProjectHeaderLogo'
 import { ProjectHeaderStats } from './components/ProjectHeaderStats'
 
-export const ProjectHeader = () => {
+export const ProjectHeader = ({ className }: { className?: string }) => {
   const { title, subtitle, projectId, handle, owner } = useProjectHeader()
 
   return (
-    <div className="relative mt-6 flex w-full flex-col gap-4">
+    <div className={twMerge('relative flex w-full flex-col gap-4', className)}>
       <ProjectHeaderLogo className="absolute left-0 -top-[146px] rounded-[0.85rem] border-6 border-white dark:border-slate-900" />
       <div className="flex justify-end gap-4">
         {projectId ? <SubscribeButton projectId={projectId} /> : null}

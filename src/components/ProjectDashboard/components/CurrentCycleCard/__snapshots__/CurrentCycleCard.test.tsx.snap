@@ -3,9 +3,9 @@
 exports[`CurrentCycleCard renders 1`] = `
 <div>
   <div
-    class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 pr-9"
+    class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 hidden pr-9 lg:block"
   >
-    <div>
+    <span>
       <div
         class="font-medium"
       >
@@ -15,7 +15,7 @@ exports[`CurrentCycleCard renders 1`] = `
         class="mt-6 flex items-center gap-1"
       >
         <span
-          class="text-2xl font-medium"
+          class="text-2xl font-medium xl:whitespace-nowrap"
         >
           1 day
         </span>
@@ -38,7 +38,7 @@ exports[`CurrentCycleCard renders 1`] = `
       >
         until Cycle #2
       </div>
-    </div>
+    </span>
   </div>
 </div>
 `;

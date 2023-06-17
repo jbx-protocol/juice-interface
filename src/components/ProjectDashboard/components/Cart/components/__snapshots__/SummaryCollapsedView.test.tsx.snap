@@ -10,7 +10,7 @@ exports[`SummaryCollapsedView should render correctly 1`] = `
       data-testid="cart-summary-closed-view-summary"
     >
       <span
-        class="font-heading text-2xl font-medium"
+        class="font-heading text-xl font-medium md:text-2xl"
       >
         Summary
       </span>

@@ -1,3 +1,4 @@
+import { constants } from 'ethers'
 import { useMemo } from 'react'
 import { formatAmountWithScale } from 'utils/format/formatAmount'
 import { fromWad } from 'utils/format/formatNumber'
@@ -23,11 +24,17 @@ export const useTokensPanel = () => {
     return formatAmountWithScale(fromWad(totalTokenSupply))
   }, [totalTokenSupply])
 
+  const projectHasErc20Token = useMemo(
+    () => tokenAddress !== undefined && tokenAddress !== constants.AddressZero,
+    [tokenAddress],
+  )
+
   return {
     userTokenBalance,
     userTokenBalanceLoading,
     projectToken,
     projectTokenAddress: tokenAddress,
     totalSupply,
+    projectHasErc20Token,
   }
 }

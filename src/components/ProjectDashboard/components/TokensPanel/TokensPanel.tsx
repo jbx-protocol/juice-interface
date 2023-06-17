@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import { useTokensPanel } from 'components/ProjectDashboard/hooks/useTokensPanel'
@@ -12,7 +12,6 @@ export const TokensPanel = () => {
     userTokenBalance,
     userTokenBalanceLoading,
     projectToken,
-    projectTokenAddress,
     totalSupply,
   } = useTokensPanel()
 
@@ -48,27 +47,7 @@ export const TokensPanel = () => {
           )}
           <div className="mt-4 flex flex-col gap-4">
             <div className="flex flex-col gap-4 md:flex-row">
-              <DisplayCard className="w-full">
-                <div className="flex flex-col gap-2">
-                  <div className="text-sm font-medium text-grey-600 dark:text-slate-200">
-                    <Trans>Project token</Trans>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs">
-                    <span className="font-heading text-xl font-medium dark:text-slate-50">
-                      {projectToken}
-                    </span>
-                    <span className="whitespace-nowrap rounded-2xl bg-grey-100 py-1 px-2 text-grey-700 dark:bg-slate-500 dark:text-slate-100">
-                      ERC-20
-                    </span>
-                    <span className="text-grey-500 dark:text-slate-200">
-                      <EthereumAddress
-                        address={projectTokenAddress}
-                        truncateTo={4}
-                      />
-                    </span>
-                  </div>
-                </div>
-              </DisplayCard>
+              <ProjectTokenCard />
               <DisplayCard className="w-full">
                 <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
                   Total supply
@@ -95,5 +74,32 @@ export const TokensPanel = () => {
         onClose={closeTokenHolderModal}
       />
     </>
+  )
+}
+
+const ProjectTokenCard = () => {
+  const { projectToken, projectTokenAddress, projectHasErc20Token } =
+    useTokensPanel()
+  return (
+    <DisplayCard className="w-full">
+      <div className="flex flex-col gap-2">
+        <div className="text-sm font-medium text-grey-600 dark:text-slate-200">
+          <Trans>Project token</Trans>
+        </div>
+        <div className="flex items-center gap-2 text-xs">
+          <span className="font-heading text-xl font-medium dark:text-slate-50">
+            {projectHasErc20Token ? projectToken : t`Token`}
+          </span>
+          <span className="whitespace-nowrap rounded-2xl bg-grey-100 py-1 px-2 text-grey-700 dark:bg-slate-500 dark:text-slate-100">
+            {projectHasErc20Token ? 'ERC-20' : t`Juicebox native`}
+          </span>
+          {projectHasErc20Token && (
+            <span className="text-grey-500 dark:text-slate-200">
+              <EthereumAddress address={projectTokenAddress} truncateTo={4} />
+            </span>
+          )}
+        </div>
+      </div>
+    </DisplayCard>
   )
 }

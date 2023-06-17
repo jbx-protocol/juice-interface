@@ -25,7 +25,7 @@ exports[`CartItem renders 1`] = `
       </span>
       <svg
         aria-hidden="true"
-        class="inline h-4 w-4 text-grey-400 dark:text-slate-300"
+        class="inline h-6 w-6 text-grey-400 dark:text-slate-300 md:h-4 md:w-4"
         data-testid="cart-item-remove-button"
         fill="none"
         role="button"
@@ -64,7 +64,7 @@ exports[`CartItem renders price as dash when price is null 1`] = `
       class="flex items-center"
     >
       <span
-        class="mr-8 flex gap-3 rounded-lg border border-grey-200 p-1 text-sm"
+        class="mr-8 flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm"
       >
         <button
           data-testid="cart-item-decrease-button"
@@ -113,7 +113,7 @@ exports[`CartItem renders price as dash when price is null 1`] = `
       </span>
       <svg
         aria-hidden="true"
-        class="inline h-4 w-4 text-grey-400 dark:text-slate-300"
+        class="inline h-6 w-6 text-grey-400 dark:text-slate-300 md:h-4 md:w-4"
         data-testid="cart-item-remove-button"
         fill="none"
         role="button"
@@ -152,7 +152,7 @@ exports[`CartItem renders with quantity 1`] = `
       class="flex items-center"
     >
       <span
-        class="mr-8 flex gap-3 rounded-lg border border-grey-200 p-1 text-sm"
+        class="mr-8 flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm"
       >
         <button
           data-testid="cart-item-decrease-button"
@@ -201,7 +201,7 @@ exports[`CartItem renders with quantity 1`] = `
       </span>
       <svg
         aria-hidden="true"
-        class="inline h-4 w-4 text-grey-400 dark:text-slate-300"
+        class="inline h-6 w-6 text-grey-400 dark:text-slate-300 md:h-4 md:w-4"
         data-testid="cart-item-remove-button"
         fill="none"
         role="button"

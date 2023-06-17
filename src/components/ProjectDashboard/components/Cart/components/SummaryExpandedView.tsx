@@ -17,14 +17,16 @@ export const SummaryExpandedView = () => {
     >
       <div
         data-testid="cart-summary-open-view-summary"
-        className="flex min-h-0 w-full max-w-xl flex-shrink cursor-auto flex-col gap-4"
+        className="flex min-h-0 w-full flex-shrink cursor-auto flex-col gap-4 pb-5 md:max-w-xl md:pb-0"
         onClick={e => e.stopPropagation()}
       >
         <div className="flex justify-between gap-5">
           <span className="font-heading text-xl font-medium md:text-2xl">
             <Trans>Summary</Trans>
           </span>
-          <ChevronUpIcon role="button" className="h-8 w-8 rotate-180" />
+          {isMobile && (
+            <ChevronUpIcon role="button" className="h-8 w-8 rotate-180" />
+          )}
         </div>
         <div className="flex w-full flex-shrink flex-col overflow-y-scroll md:block md:w-auto">
           <PaymentCartItem />

@@ -98,13 +98,13 @@ const QuantityControl: React.FC<{
   onDecrease: () => void
 }> = ({ quantity, onIncrease, onDecrease }) => {
   return (
-    <span className="mr-8 flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm">
+    <span className="mr-8 flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm dark:border-slate-600">
       <button data-testid="cart-item-decrease-button" onClick={onDecrease}>
-        <MinusIcon className="h-4 w-4 text-grey-500" />
+        <MinusIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
       </button>
       {quantity}
       <button data-testid="cart-item-increase-button" onClick={onIncrease}>
-        <PlusIcon className="h-4 w-4 text-grey-500" />
+        <PlusIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
       </button>
     </span>
   )

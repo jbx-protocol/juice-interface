@@ -1,7 +1,8 @@
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
-import { Fragment, useMemo } from 'react'
+import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
+import { Fragment, useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { AboutPanel } from '../AboutPanel'
 import { ActivityPanel } from '../ActivityPanel'
@@ -12,6 +13,13 @@ import { ProjectTab } from '../ui'
 
 export const ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
+  const {
+    nftRewards: { CIDs },
+  } = useContext(NftRewardsContext)
+
+  const showNftRewards = useMemo(() => {
+    return (CIDs ?? []).length > 0
+  }, [CIDs])
 
   const tabs = useMemo(
     () => [
@@ -21,6 +29,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         id: 'nft_rewards',
         name: t`NFTs & Rewards`,
         panel: <NftRewardsPanel />,
+        hideTab: !showNftRewards,
       },
       {
         id: 'cycle_payouts',
@@ -29,7 +38,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
       },
       { id: 'tokens', name: t`Tokens`, panel: <TokensPanel /> },
     ],
-    [],
+    [showNftRewards],
   )
 
   const selectedTabIndex = useMemo(() => {
@@ -48,6 +57,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
           <Tab.List className="flex gap-8">
             {tabs.map(tab => (
               <ProjectTab
+                className={twMerge(tab.hideTab && 'hidden')}
                 key={tab.id}
                 name={tab.name}
                 onClick={() => setProjectPageTab(tab.id)}

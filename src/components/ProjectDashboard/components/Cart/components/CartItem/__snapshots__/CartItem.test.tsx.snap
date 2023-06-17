@@ -3,14 +3,14 @@
 exports[`CartItem renders 1`] = `
 <div>
   <div
-    class="flex items-center justify-between border-b border-grey-200 py-5 dark:border-slate-500"
+    class="flex min-w-0 items-center justify-between gap-4 border-b border-grey-200 py-5 dark:border-slate-500"
   >
     <div
-      class="flex items-center"
+      class="flex min-w-0 items-center"
     >
       icon
       <span
-        class="ml-3 dark:text-slate-50"
+        class="ml-3 min-w-0 dark:text-slate-50"
       >
         title
       </span>
@@ -48,14 +48,14 @@ exports[`CartItem renders 1`] = `
 exports[`CartItem renders price as dash when price is null 1`] = `
 <div>
   <div
-    class="flex items-center justify-between border-b border-grey-200 py-5 dark:border-slate-500"
+    class="flex min-w-0 items-center justify-between gap-4 border-b border-grey-200 py-5 dark:border-slate-500"
   >
     <div
-      class="flex items-center"
+      class="flex min-w-0 items-center"
     >
       icon
       <span
-        class="ml-3 dark:text-slate-50"
+        class="ml-3 min-w-0 dark:text-slate-50"
       >
         title
       </span>
@@ -136,14 +136,14 @@ exports[`CartItem renders price as dash when price is null 1`] = `
 exports[`CartItem renders with quantity 1`] = `
 <div>
   <div
-    class="flex items-center justify-between border-b border-grey-200 py-5 dark:border-slate-500"
+    class="flex min-w-0 items-center justify-between gap-4 border-b border-grey-200 py-5 dark:border-slate-500"
   >
     <div
-      class="flex items-center"
+      class="flex min-w-0 items-center"
     >
       icon
       <span
-        class="ml-3 dark:text-slate-50"
+        class="ml-3 min-w-0 dark:text-slate-50"
       >
         title
       </span>

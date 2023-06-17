@@ -14,7 +14,7 @@ exports[`Cart renders 1`] = `
       </div>
       <svg
         aria-hidden="true"
-        class="mr-4 h-8 w-8 md:mr-0"
+        class="mr-4 h-8 w-8 flex-shrink-0"
         fill="none"
         role="button"
         stroke="currentColor"

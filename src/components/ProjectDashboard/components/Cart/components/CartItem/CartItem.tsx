@@ -66,13 +66,13 @@ export const CartItem: React.FC<CartItemProps> = ({
   return (
     <div
       className={twMerge(
-        'flex items-center justify-between border-b border-grey-200 py-5 dark:border-slate-500',
+        'flex min-w-0 items-center justify-between gap-4 border-b border-grey-200 py-5 dark:border-slate-500',
         className,
       )}
     >
-      <div className="flex items-center">
+      <div className="flex min-w-0 items-center">
         {icon}
-        <span className="ml-3 dark:text-slate-50">{title}</span>
+        <span className="ml-3 min-w-0 dark:text-slate-50">{title}</span>
       </div>
       <div className="flex items-center">
         {'quantity' in quantityProps && <QuantityControl {...quantityProps} />}

@@ -6,7 +6,7 @@ exports[`SummaryCollapsedView should render correctly 1`] = `
     class="flex w-full items-center justify-between px-8 py-6"
   >
     <div
-      class="flex cursor-auto items-center gap-4"
+      class="flex items-center gap-4"
       data-testid="cart-summary-closed-view-summary"
     >
       <span

@@ -1,5 +1,6 @@
 import { TrashIcon } from '@heroicons/react/24/outline'
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
+import { handleConfirmationDeletion } from 'components/ProjectDashboard/utils/modals'
 import useMobile from 'hooks/useMobile'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { SmallNftSquare } from '../../NftRewardsCard/SmallNftSquare'
@@ -9,7 +10,7 @@ import { useCartSummary } from '../hooks/useCartSummary'
 import { SummaryPayButton } from './SummaryPayButton'
 
 export const SummaryCollapsedView = () => {
-  const { amountText, currency, nftRewards, removePay } = useCartSummary()
+  const { amountText, currency, nftRewards, resetCart } = useCartSummary()
   const isMobile = useMobile()
 
   return (
@@ -60,7 +61,11 @@ export const SummaryCollapsedView = () => {
               data-testid="cart-summary-closed-view-trash-icon"
               role="button"
               className="h-5 w-5 text-grey-400 dark:text-slate-300"
-              onClick={removePay}
+              onClick={handleConfirmationDeletion({
+                type: t`payment`,
+                description: t`Removing the payment will remove all the items from the cart. Are you sure you want to remove the payment?`,
+                onConfirm: resetCart,
+              })}
             />
           </div>
           <SummaryPayButton />

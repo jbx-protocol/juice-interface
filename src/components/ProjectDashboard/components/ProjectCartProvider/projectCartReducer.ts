@@ -22,6 +22,9 @@ export type ProjectCartAction =
       type: 'removeTokens'
     }
   | {
+      type: 'reset'
+    }
+  | {
       type: 'toggleExpanded'
     }
   | {
@@ -89,6 +92,7 @@ export const projectCartReducer = (
         // reset userIsReceivingTokens to true when removing payment
         userIsReceivingTokens: true,
       }
+    case 'reset':
     case 'payProject':
       return {
         ...state,

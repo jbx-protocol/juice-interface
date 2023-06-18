@@ -7,6 +7,7 @@ import { useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { DisplayCard } from '../ui'
 import StackedComponents from '../ui/StackedComponents'
+import { HoverPreview } from './HoverPreview'
 import { SmallNftSquare } from './SmallNftSquare'
 
 export const NftRewardsCard = ({ className }: { className?: string }) => {
@@ -40,7 +41,11 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
         </Tooltip>
       </div>
       <div className="flex items-center gap-3">
-        <StackedComponents components={NftComponents} size="56px" />
+        <HoverPreview>
+          <div>
+            <StackedComponents components={NftComponents} size="56px" />
+          </div>
+        </HoverPreview>
         <div>
           <button
             className="flex items-center whitespace-nowrap rounded-2xl bg-grey-100 py-1 pl-3 pr-2.5 text-sm text-grey-700 dark:bg-slate-500 dark:text-slate-100"

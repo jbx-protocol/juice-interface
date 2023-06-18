@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-06-11 00:36\n"
+"PO-Revision-Date: 2023-06-18 00:35\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -46,11 +46,11 @@ msgstr "<0>Juicebox 项目向外部钱包（如 “vitalik.eth\"）分配支出�
 msgid "Disconnect"
 msgstr "断开连接"
 
+msgid "1 year"
+msgstr ""
+
 msgid "Art"
 msgstr "艺术"
-
-msgid "Pay 2.4 ETH"
-msgstr ""
 
 msgid "How should I set up my project?"
 msgstr "我应该如何设立我的项目？"
@@ -126,6 +126,9 @@ msgstr "人们向你的项目付款会获得项目的代币。项目代币可用
 
 msgid "Volume"
 msgstr "总收入"
+
+msgid "Uploading"
+msgstr ""
 
 msgid "Token issuance rate:"
 msgstr "代币发行比率："
@@ -241,9 +244,6 @@ msgstr "下载参与者记录错误，请重试。"
 msgid "Set a future date & time to start your project's first cycle."
 msgstr "设置一个以后的日期及时间来开始项目的第一个周期。"
 
-msgid "Open"
-msgstr ""
-
 msgid "No"
 msgstr "取消"
 
@@ -276,6 +276,9 @@ msgstr "部署 Snapshot 空间"
 
 msgid "Contributions"
 msgstr "捐款次数"
+
+msgid "Attach an image"
+msgstr ""
 
 msgid "Choose wallet"
 msgstr "选择钱包"
@@ -315,6 +318,9 @@ msgstr "在 Safe 页面查看交易记录"
 
 msgid "Transferred ETH to project"
 msgstr "已发送 ETH 到项目"
+
+msgid "Project tokens"
+msgstr ""
 
 msgid "You must grant permission to migrate your V1 tokens."
 msgstr "你必须授权迁移你的 V1 代币。"
@@ -403,6 +409,9 @@ msgstr "播客"
 msgid "Add {0}"
 msgstr "添加 {0}"
 
+msgid "Uploaded to: <0/>"
+msgstr ""
+
 msgid "You've completed this step."
 msgstr "这个步骤已完成。"
 
@@ -432,6 +441,9 @@ msgstr "DAO"
 
 msgid "Locked (28 days)"
 msgstr "锁定（28天）"
+
+msgid "No payouts for the cycle."
+msgstr ""
 
 msgid "Rules"
 msgstr "规则"
@@ -480,9 +492,6 @@ msgstr "支出不能超过 100%。 总共： {0}"
 
 msgid "Pay"
 msgstr "支付"
-
-msgid "Relaunch your cycle on the new Juicebox V2 contracts."
-msgstr "在新的 Juicebox V2 合约上重新启动你的周期。"
 
 msgid "If locked, this percentage can't be edited or removed until the lock expires or the cycle is edited."
 msgstr "如果锁定，则此百分比将不能编辑或删除，直至锁定期满或周期被编辑。"
@@ -576,9 +585,6 @@ msgstr "概览"
 
 msgid "last {TRENDING_WINDOW_DAYS} days"
 msgstr "过去 {TRENDING_WINDOW_DAYS} 天"
-
-msgid "Your Juicebox project has no active cycle. Launch a cycle to re-enable payments to your project."
-msgstr "你的 Juicebox 项目没有活跃的周期。启动一个周期以重新允许向项目付款。"
 
 msgid "Changes to payouts will take effect immediately."
 msgstr "对支出的更改将立即生效"
@@ -742,6 +748,9 @@ msgstr "快速启动一个带治理机制的去中心化自治组织"
 msgid "Advanced (optional)"
 msgstr "高级选项（可选）"
 
+msgid "Saved projects"
+msgstr ""
+
 msgid "The redemption rate determines how token holders can burn their tokens to reclaim a portion of the ETH not needed for payouts."
 msgstr "赎回比率决定了代币持有人销毁代币可以获得支出费用以外的 ETH 数量。"
 
@@ -904,14 +913,14 @@ msgstr "邮件地址"
 msgid "{0, plural, one {# transaction needs your signature} other {# transactions need your signature}}"
 msgstr "{0, plural, one {# 个交易需要你的签名} other {# 个交易需要你的签名}}"
 
+msgid "In Juicebox"
+msgstr ""
+
 msgid "Set payment terminals"
 msgstr "设定支付终端"
 
 msgid "Using crowdfunding platforms for films has been around for a while, but Juicebox adds an extra layer of transparency to the process, allowing fans to see where funds are going. Unlike traditional models where money is controlled behind the scenes, StudioDAO members source, vote, fund, and distribute movies transparently using the treasury while creators retain 100% of their creative control and ownership. With the entertainment market currently valued at two trillion dollars, StudioDAO founder Kenny Miller can see a “clear scenario for a decentralized studio to do one billion dollars of production 2-3 years from now.” To learn more about Kenny's vision for StudioDAO, listen to episode 9 of the Juicecast: <0>https://podcast.juicebox.money</0>."
 msgstr "使用众筹平台上为电影募资这一做法已经存在一段时间了，但 Juicebox 允许粉丝们掌握资金的去向，更加提高了整个流程的透明度。与传统的后台管理资金模式不同，StudioDAO 通过使用金库公开地发掘、票选、资助及发行电影，同时创作者得以保留其 100% 的创意自主权和电影所有权。当前娱乐市场的总估值在 2 万亿美元左右，StudioDAO 的创始人 Kenny Miller 预计 ”两至三年后去中心化工作室实现 10 亿美元的电影制作这个前景是清晰可见的“。要了解更多 Kenny 对 StudioDAO 的展望，欢迎收听 Juicecast 的第 9 期节目：<0>https://podcast.juicebox.money</0> 。"
-
-msgid "Funding cycle required."
-msgstr "需要筹款周期"
 
 msgid "Contributors will receive this NFT when they contribute at least this amount."
 msgstr "捐款人捐赠达到这个金额就会获得这个 NFT。"
@@ -925,6 +934,9 @@ msgstr "筹款周期详情"
 msgid "Archive"
 msgstr ""
 
+msgid "You haven't saved any projects."
+msgstr ""
+
 msgid "You haven't contributed to any projects yet!"
 msgstr "你尚未向任何项目捐款！"
 
@@ -934,9 +946,6 @@ msgstr "44190F"
 msgid "{0} withdrawn"
 msgstr "已提取 {0}"
 
-msgid "Cycle preview"
-msgstr "周期预览"
-
 msgid "Share on Twitter"
 msgstr "分享至推特"
 
@@ -945,9 +954,6 @@ msgstr "领取 {tokenTextPlural}"
 
 msgid "Trust minimized"
 msgstr "最小信任"
-
-msgid "loading"
-msgstr "加载中"
 
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "最高 {MAX_DESCRIPTION_LENGTH} 个字符"
@@ -1036,6 +1042,9 @@ msgstr ""
 msgid "Change ENS name"
 msgstr "更改 ENS 名称"
 
+msgid "{overflow} is available for future payouts."
+msgstr ""
+
 msgid "Holders"
 msgstr "持有者"
 
@@ -1048,10 +1057,10 @@ msgstr "1. 设置 ENS 名称"
 msgid "Legacy balance"
 msgstr "待迁移代币余额"
 
-msgid "Your cycle rules have been pre-populated using the rules you originally launched with. If you need to customize them, <0>contact us</0>."
-msgstr "你的周期规则已按最初创建时的规则进行预填。如果你需要自定义这些规则，<0>联系我们</0>。"
-
 msgid "No overflow"
+msgstr ""
+
+msgid "Export tokens CSV"
 msgstr ""
 
 msgid "Transaction hash"
@@ -1141,6 +1150,9 @@ msgstr "移动 ETH"
 msgid "Profile details"
 msgstr "个人资料详情"
 
+msgid "Return to project"
+msgstr ""
+
 msgid "Address"
 msgstr "地址"
 
@@ -1213,6 +1225,9 @@ msgstr "为 {0} 设置一个文本记录，键值为 <0>\"{projectHandleENSTextR
 msgid "Issue as ERC-20"
 msgstr "按 ERC-20 来签发"
 
+msgid "Pay {primaryAmount}"
+msgstr ""
+
 msgid "Active"
 msgstr "活跃"
 
@@ -1246,6 +1261,9 @@ msgstr "完全公开透明"
 msgid "Edit your project's NFTs."
 msgstr "编辑项目的 NFT。"
 
+msgid "{receivedTokenSymbolText} Token"
+msgstr ""
+
 msgid "Issuance reduction rate:"
 msgstr "发行减少率:"
 
@@ -1275,6 +1293,9 @@ msgstr "锁定"
 
 msgid "Locked Cycles"
 msgstr "锁定的周期"
+
+msgid "{overflow} is available for token redemptions or future payouts."
+msgstr ""
 
 msgid "Contact onboarding"
 msgstr "联络用户引导人员"
@@ -1386,6 +1407,9 @@ msgstr "联系一位贡献者"
 
 msgid "Recipient"
 msgstr "收款人"
+
+msgid "The amount of ETH in this project’s treasury."
+msgstr ""
 
 msgid "Percentages must add up to 100% or less"
 msgstr "百分比总数相加必须少于或等于100%"
@@ -1567,6 +1591,9 @@ msgstr "探索项目"
 msgid "Total volume"
 msgstr "总金额"
 
+msgid "Your NFTs & Rewards"
+msgstr ""
+
 msgid "Send a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr "把你项目的一部分保留代币发送给其他以太坊钱包或其他 Juicebox 项目。"
 
@@ -1578,6 +1605,9 @@ msgstr "为你项目的代币设置自定义规则。"
 
 msgid "V1"
 msgstr "V1"
+
+msgid "Export payout CSV"
+msgstr ""
 
 msgid "JuiceboxDAO is a community of passionate builders, creators, and innovators working together to push the boundaries of decentralized funding. Using the Juicebox protocol, we've created a DAO to coordinate thousands of JBX holders, build in the open, and govern the protocol over time."
 msgstr "Juicebox 是一个由充满激情的建设者、创造者和创新者们组成的社区，大家共同努力来拓宽去中心化融资的边界。我们已利用 Juicebox 协议打造了一个 DAO 来协调数以千计的 JBX 持有人，公开构建及逐步开展协议的治理。"
@@ -1605,9 +1635,6 @@ msgstr "<0>本网站与以太坊区块链交互 — 要使用它，你将需要�
 
 msgid "Each field is required."
 msgstr "每个字段都需要填写"
-
-msgid "Message from PyroDAO"
-msgstr ""
 
 msgid "Set up token migration"
 msgstr "设置代币迁移"
@@ -1710,6 +1737,9 @@ msgstr "文本颜色"
 
 msgid "{0} is required"
 msgstr "请输入 {0}"
+
+msgid "View the latest payments on Juicebox."
+msgstr ""
 
 msgid "0% fee"
 msgstr "0% 费率"
@@ -2086,6 +2116,9 @@ msgstr "项目仍能通过 Juicebox 协议的合约直接收到付款。"
 msgid "Deploy cycle"
 msgstr "部署周期"
 
+msgid "Juicebox native"
+msgstr ""
+
 msgid "LINK TO NFT"
 msgstr "链接至 NFT"
 
@@ -2257,6 +2290,9 @@ msgstr "最低捐赠金额"
 msgid "Receive ERC-20"
 msgstr "接收 ERC-20 标准代币"
 
+msgid "The amount of ETH this project can pay out of its treasury each Cycle."
+msgstr ""
+
 msgid "No limit (all available ETH)"
 msgstr "无限额（所有 ETH 可支配）"
 
@@ -2386,6 +2422,9 @@ msgstr "<0>查看交易。</0>"
 msgid "Use a simple term like 'Pay' or 'Donate'."
 msgstr "使用简单的说法，类似 “支付” 或者 “捐赠” 。"
 
+msgid "Message from {projectName}"
+msgstr ""
+
 msgid "to close"
 msgstr "关闭"
 
@@ -2400,6 +2439,9 @@ msgstr "下载赎回记录错误，请重试。"
 
 msgid "Review reconfiguration"
 msgstr "复核重新配置"
+
+msgid "A Juicebox cycle is a predefined period of time during which a project’s settings and payout cannot be changed."
+msgstr ""
 
 msgid "Seconds"
 msgstr "秒"
@@ -2470,14 +2512,14 @@ msgstr "项目方"
 msgid "Unarchive project"
 msgstr "取消项目的存档状态"
 
-msgid "View all of the latest payments on Juicebox."
-msgstr "查看 Juicebox 协议上最近所有的付款。"
-
 msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
 msgstr "CSV 数据暂不能导出。请稍后再试。"
 
 msgid "Terminal migration"
 msgstr "终端迁移"
+
+msgid "Subscribe to updates"
+msgstr ""
 
 msgid "Configure your project's token."
 msgstr "配置你项目的代币。"
@@ -2491,6 +2533,9 @@ msgstr "启用此选项，项目方可以随时变更项目的<0>控制器</0>�
 msgid "Add a collection name"
 msgstr "添加一个系列名称"
 
+msgid "No NFTs have been configured for this project."
+msgstr ""
+
 msgid "No transaction history"
 msgstr "无交易历史"
 
@@ -2499,9 +2544,6 @@ msgstr "已提取总额"
 
 msgid "We'll need this permission to change your project's token to your V3 Migration Token in the next step."
 msgstr "我们需要这个授权在下个步骤将你项目的代币变更为 V3 迁移代币。"
-
-msgid "Launch cycle"
-msgstr "启动周期"
 
 msgid "Recommended"
 msgstr "建议的"
@@ -2569,6 +2611,9 @@ msgstr "创建项目支付地址"
 msgid "Burn NFTs"
 msgstr "销毁 NFT"
 
+msgid "Current #1 trending"
+msgstr ""
+
 msgid "Attach a sticker"
 msgstr "上传一张贴图"
 
@@ -2580,6 +2625,9 @@ msgstr "一个或多个保留代币接收人"
 
 msgid "<0>To summarize:</0><1><2>When people pay a project, they receive the project's tokens. Like other tokens, these can be used for governance, for token-gated websites, and other purposes.</2><3>Projects can pay out ETH to the wallets or Juicebox projects of their choosing. These payouts can be pre-defined, and they can also be changed over time.</3><4>If people are unhappy with the direction a project is headed, they can redeem their tokens to claim a share of the ETH held in the project.</4></1><5>Project creators have powerful controls over each one of these mechanics. They can change token issuance rates, redemption rates, payouts, and other rules over time, leading to powerful and elegant tokenomics. They can also lock their project's rules in place for pre-determined amounts of time (called <6>cycles</6>), guaranteeing that they can't rugpull the community. Juicebox lets projects take control if they need to, but it also lets them give up control to build trust.</5><7>Importantly, Juicebox's crypto fundraising platform is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no way to access a project's ETH or change its rules.</7><8>To learn more, visit <9>our docs</9>.</8>"
 msgstr "<0>总结如下：</0><1><2>人们向一个项目付款将会获得该项目的代币。与其他代币类似，这些代币可用于治理、设置网站访问限制和其他的用途。</2><3>项目可以向他们选择的钱包地址或其他 Juicebox 项目支付 ETH。支出方案可以提前设定，也可以日后进行调整。</3><4>如果人们对项目的发展方向感到不满，可以赎回他们的代币来获取项目持有的部分 ETH 资金。</4></1><5>项目创建人对这些每一个机制都拥有很高的控制权。他们可以更改代币发行比率、赎回比率、支出及其他的项目设置，形成既强大又优雅的代币经济模型。他们还可以锁定项目规则一段预设的时间（称为 <6>周期</6>)，保证他们不会丢下社区跑路。Juicebox 让项目有需要时拥有控制权，但也允许他们放弃控制权来建立信任。</5><7>重要的是，Juicebox 是链上及非托管的。项目创建人真正拥有他们的项目，JuiceboxDAO 无法动用其他项目的 ETH或更改其规则。</7><8>了解更多，请参阅 <9>文档</9>。</8>"
+
+msgid "No distributable reserved tokens have been configured for this project."
+msgstr ""
 
 msgid "Owned by: <0/>"
 msgstr ""
@@ -2613,6 +2661,9 @@ msgstr "没有 NFT"
 
 msgid "NFT rules"
 msgstr "NFT 规则"
+
+msgid "See the NFTs and rewards offered by this project."
+msgstr ""
 
 msgid "Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
 msgstr "在 Juicebox 应用的缩略图预览中，图片将被裁剪成 1:1 的正方形。"
@@ -2677,6 +2728,9 @@ msgstr "存档项目"
 msgid "Allow a few days for your project to appear in the \"archived\" projects list on the Projects page."
 msgstr "可能要等待数天你的项目才会出现在项目页的“归档项目”列表内。"
 
+msgid "This project's rules will be locked in place for {cycleStatusValue} days."
+msgstr ""
+
 msgid "Your edits will take effect in <0>cycle #{0}</0>. The current cycle (#{currentFCNumber}) won't be altered."
 msgstr "你的变更将会在 <0>周期 #{0}</0>生效。目前的 (#{currentFCNumber}) 周期将不会受到影响。"
 
@@ -2707,6 +2761,9 @@ msgstr "文本记录已设置"
 msgid "Tokens cannot be claimed because the project owner has not issued an ERC-20 for this project."
 msgstr "代币无法领取，因为项目方还没有为项目签发 ERC-20 代币。"
 
+msgid "The amount of time remaining until this project’s next Cycle."
+msgstr ""
+
 msgid "Give permissions to {0} on project #{projectId}"
 msgstr "授予 {0} 在项目 #{projectId} 的权限"
 
@@ -2721,6 +2778,9 @@ msgstr "<0>Juicebox 已进行过 <1>多次安全审计</1>， 并已通过其协
 
 msgid "How decentralized is Juicebox?"
 msgstr "Juicebox 的去中心化程度如何？"
+
+msgid "Unable to load chart"
+msgstr ""
 
 msgid "Send {projectTitle} payouts"
 msgstr "发送 {projectTitle} 的支出"
@@ -3000,6 +3060,9 @@ msgstr "支付方地址"
 
 msgid "Setting a handle requires 2 transactions: <0>Set ENS name</0> and <1>Set text record</1>."
 msgstr "设置句柄需要进行 2 个交易： <0>设置 ENS 名称</0> 及 <1>设置文本记录</1>。"
+
+msgid "{reservedRate} of token issuance is set aside for the recipients below."
+msgstr ""
 
 msgid "Your new project payer address:"
 msgstr "你的新项目支付地址："
@@ -3514,6 +3577,9 @@ msgstr "确定"
 msgid "Mint as ERC-20"
 msgstr "铸造成 ERC-20 标准的代币"
 
+msgid "No previous cycles."
+msgstr ""
+
 msgid "Failed to deploy migration token. Check the development console and contact our team in the JuiceboxDAO Discord."
 msgstr "部署迁移代币失败。请检查开发控制台并到 JuiceboxDAO 的 Discord 联系我们的团队。"
 
@@ -3579,9 +3645,6 @@ msgstr "当时苏富比拍卖行的估价为 1000 至 1500 万美元，因此 Co
 
 msgid "Your project's rules are locked in place for the duration of each locked cycle. You will also gain access to:"
 msgstr "你项目的规则在每个锁定周期期间不能变动。你还可以使用："
-
-msgid "Duration (seconds)"
-msgstr "时长（秒）"
 
 msgid "Set up your payouts"
 msgstr "设置你的支出"
@@ -3889,6 +3952,9 @@ msgstr "CSV 下载失败。"
 msgid "Pay Project"
 msgstr ""
 
+msgid "7 days"
+msgstr ""
+
 msgid "Enabling owner token minting isn't recommended as it allows the project owner to create unlimited tokens, which appears risky to supporters."
 msgstr "不建议打开代币铸造选项，因为这样允许项目方无限铸造代币，会让支持者们感到有风险。"
 
@@ -3904,6 +3970,9 @@ msgstr "<0/> 可领取"
 msgid "Pay out specific amounts of ETH to addresses and projects each cycle. Any remaining ETH will stay in the project for future cycles."
 msgstr "每个周期向钱包地址或项目支付具体的 ETH 金额。所有剩余的 ETH 将保留在项目内供以后的周期使用。"
 
+msgid "Send ETH payments to this project."
+msgstr ""
+
 msgid "Launch {projectTitle}"
 msgstr "启动 {projectTitle}"
 
@@ -3918,6 +3987,9 @@ msgstr "在 Etherscan 上查看"
 
 msgid "Preview"
 msgstr "预览"
+
+msgid "This account hasn't saved any projects yet."
+msgstr ""
 
 msgid "Token amount"
 msgstr "代币数量"
@@ -4144,6 +4216,9 @@ msgstr "我还有一个问题！"
 msgid "Manage your project's state and ownership"
 msgstr ""
 
+msgid "The amount of reserved tokens currently available to be distributed to the recipients below."
+msgstr ""
+
 msgid "Set text record for {0}"
 msgstr "为 {0} 设置文本记录"
 
@@ -4216,7 +4291,7 @@ msgstr "出了点问题，请联系支持人员。"
 msgid "Build and launch your NFT project right here on Juicebox with built-in redemptions."
 msgstr "在 Juicebox 创建及启动内置赎回功能的 NFT 项目。"
 
-msgid "Pay project"
+msgid "A message from {name}"
 msgstr ""
 
 msgid "No reserved tokens configured."
@@ -4242,6 +4317,9 @@ msgstr "一切就绪！"
 
 msgid "Set payouts as percentages of the total amount being paid out."
 msgstr "将支出设置为支付总额的百分比。"
+
+msgid "This project has no description."
+msgstr ""
 
 msgid "Add {allocationName}"
 msgstr "添加 {allocationName}"
@@ -4420,6 +4498,9 @@ msgstr "使用 V3 合约来重新启动你的 Juicebox 项目。"
 msgid "StudioDAO's project settings are designed to maximize trust with locked 28-day cycles, limited payouts, and a 3-day edit deadline. 20% of newly minted tokens are reserved for the DAO wallet and issuance will decrease by 5% each cycle. StudioDAO also leverages tiered NFT rewards to create incentives for supporters with benefits like private screenings, governance votes to decide which new films to fund, and screen credits."
 msgstr "StudioDAO 的项目设定中包括 28 天的锁定周期、支出限额及 3 天的编辑期限，这一设计的目的是为了实现信任的最大化。20% 的新铸造代币将保留给 DAO 的钱包，同时代币的发行比率每周期会下降 5%。StudioDAO 还利用分级 NFT 来给予支持者诸如私人观影、参与治理投票决定资助的新电影及观影积分等激励。"
 
+msgid "Loading"
+msgstr ""
+
 msgid "Juicy picks"
 msgstr "社区精选"
 
@@ -4453,9 +4534,6 @@ msgstr "MoonDAO 是一个世界性的集体组织，他们的使命是去中心�
 msgid "V3"
 msgstr "V3"
 
-msgid "Review and launch cycle"
-msgstr "复核及启动周期"
-
 msgid "project"
 msgstr "项目"
 
@@ -4473,6 +4551,9 @@ msgstr "关闭"
 
 msgid "A collection's symbol is typically a 3-4 letter acronym or abbreviation of its name. The symbol is used on NFT marketplaces (like <0>OpenSea</0>)."
 msgstr "系列符号通常是它名称的首字母缩写或者简称。系列符号用于 NFT 市场（如 <0>OpenSea</0>）上。"
+
+msgid "Thank you, your payment was successful."
+msgstr ""
 
 msgid "{0}% of supply"
 msgstr "占比 {0}%"

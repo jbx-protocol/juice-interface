@@ -10,7 +10,13 @@ import { useCartSummary } from '../hooks/useCartSummary'
 import { SummaryPayButton } from './SummaryPayButton'
 
 export const SummaryCollapsedView = () => {
-  const { amountText, currency, nftRewards, resetCart } = useCartSummary()
+  const {
+    amountText,
+    currency,
+    nftRewards,
+    showCurrencyOnCollapse,
+    resetCart,
+  } = useCartSummary()
   const isMobile = useMobile()
 
   return (
@@ -32,14 +38,18 @@ export const SummaryCollapsedView = () => {
                 className: 'h-full w-full',
               },
             })),
-            {
-              Component: CurrencyIcon,
-              props: {
-                className:
-                  'h-full w-full border-4 border-white dark:border-slate-950',
-                currency: currency ?? V2V3_CURRENCY_ETH,
-              },
-            },
+            ...(showCurrencyOnCollapse
+              ? [
+                  {
+                    Component: CurrencyIcon,
+                    props: {
+                      className:
+                        'h-full w-full border-4 border-white dark:border-slate-950',
+                      currency: currency ?? V2V3_CURRENCY_ETH,
+                    },
+                  },
+                ]
+              : []),
           ]}
           size="48px"
         />

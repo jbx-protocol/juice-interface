@@ -137,20 +137,10 @@ export const JuiceModal = ({
                 buttonPositionClasses.container,
               )}
             >
-              {!hideCancelButton && (
-                <CancelButton
-                  className={twMerge(
-                    buttonPositionClasses.self,
-                    cancelButtonClassName,
-                  )}
-                  onClick={onCancel}
-                >
-                  {cancelText}
-                </CancelButton>
-              )}
               <CTAButton
                 form={okButtonForm}
                 className={twMerge(
+                  'order-2',
                   buttonPositionClasses.self,
                   okButtonClassName,
                 )}
@@ -159,6 +149,18 @@ export const JuiceModal = ({
               >
                 {okText}
               </CTAButton>
+              {!hideCancelButton && (
+                <CancelButton
+                  className={twMerge(
+                    'order-1',
+                    buttonPositionClasses.self,
+                    cancelButtonClassName,
+                  )}
+                  onClick={onCancel}
+                >
+                  {cancelText}
+                </CancelButton>
+              )}
             </div>
             <ExitButton
               className="absolute -top-2 -right-2"

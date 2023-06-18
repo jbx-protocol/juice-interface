@@ -16,6 +16,11 @@ export const Cart = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      // Ignore clicks on popup events
+      if ((event.target as Element).closest('#headlessui-portal-root')) {
+        return
+      }
+
       if (
         cartRef.current &&
         event.target &&

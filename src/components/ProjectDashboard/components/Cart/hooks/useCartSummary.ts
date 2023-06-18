@@ -28,8 +28,8 @@ export const useCartSummary = () => {
     ? formatCurrencyAmount(cart.totalAmount)
     : undefined
 
-  const removePay = useCallback(() => {
-    cart.dispatch({ type: 'removePayment' })
+  const resetCart = useCallback(() => {
+    cart.dispatch({ type: 'reset' })
   }, [cart])
 
   const payProject = useCallback(() => {
@@ -45,7 +45,7 @@ export const useCartSummary = () => {
     currency: cart.totalAmount?.currency,
     nftRewards,
     walletConnected: isConnected,
-    removePay,
+    resetCart,
     payProject,
   }
 }

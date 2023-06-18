@@ -854,6 +854,9 @@ msgstr ""
 msgid "Create a project payer address for {projectTitle}"
 msgstr ""
 
+msgid "Removing the payment will remove all the items from the cart. Are you sure you want to remove the payment?"
+msgstr ""
+
 msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
 msgstr ""
 
@@ -1251,6 +1254,9 @@ msgid "Remaining ETH"
 msgstr ""
 
 msgid "100% transparent"
+msgstr ""
+
+msgid "Are you sure you want to remove {type}?"
 msgstr ""
 
 msgid "Edit your project's NFTs."
@@ -3876,6 +3882,9 @@ msgid "MoonDAO has built an enthusiastic community of over 10,000 members, succe
 msgstr ""
 
 msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
+msgstr ""
+
+msgid "payment"
 msgstr ""
 
 msgid "Create a splits payer address for {projectTitle}"

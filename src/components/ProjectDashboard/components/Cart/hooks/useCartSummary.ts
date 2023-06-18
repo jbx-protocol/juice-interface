@@ -40,11 +40,16 @@ export const useCartSummary = () => {
     cart.dispatch({ type: 'openPayModal' })
   }, [cart, connect, isConnected])
 
+  const showCurrencyOnCollapse = useMemo(() => {
+    return cart.payAmount?.amount ? cart.payAmount.amount > 0 : false
+  }, [cart.payAmount])
+
   return {
     amountText,
     currency: cart.totalAmount?.currency,
     nftRewards,
     walletConnected: isConnected,
+    showCurrencyOnCollapse,
     resetCart,
     payProject,
   }

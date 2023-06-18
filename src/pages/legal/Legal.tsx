@@ -20,35 +20,36 @@ export default function Legal() {
         <p>
           <Trans>
             If you need help assessing your project's needs, finding a legal
-            expert, and getting incorporated, start with the resources below:
+            expert, or legally incorporating your project, start with the
+            resources below:
           </Trans>
         </p>
 
-        <h2 className="mt-6 mb-4 text-2xl">
+        <h2 className="mt-6 mb-4 font-display text-2xl">
           <Trans>Recommended Reading</Trans>
         </h2>
         <p>
           <Trans>
-            Use these resources to get familiar with the legal concerns facing
-            web3 projects and common solutions.
+            Use these resources to familiarize yourself with the legal concerns
+            facing web3 projects and some common solutions.
           </Trans>
         </p>
         <ul className="list-disc">
           <li>
             <Trans>
-              To begin reasoning about which legal services you'll need, you can
-              review and fill out the{' '}
+              Projects based in the United States can begin reasoning through
+              their project's legal concerns with the{' '}
               <ExternalLink href="https://docs.google.com/document/d/1AfPJAj7qfCY88Ke7wHmsT_AFF0LyU8am9fM3j_fCur8/">
                 Crypto Legal Risk Checklist
               </ExternalLink>
               . When you reach out to a legal expert, you can send them this
-              document.
+              document to help them understand the nature of your project.
             </Trans>
           </li>
           <li>
             <Trans>
-              To begin learning about the trade-offs between different legal
-              entities for DAOs and other web3 projects, review Paradigm's{' '}
+              To learn about the trade-offs between different legal entities for
+              DAOs and other projects, review Paradigm's{' '}
               <ExternalLink href="https://daos.paradigm.xyz/">
                 DAO Legal Entity Matrix
               </ExternalLink>
@@ -83,7 +84,8 @@ export default function Legal() {
         <p>
           <Trans>
             Once you have a general understanding of your project's legal needs,
-            reach out to a legal expert for help addressing them.
+            you are <strong>strongly encouraged</strong> to reach out to a legal
+            expert for help addressing them.
           </Trans>
         </p>
         <ul className="list-disc">
@@ -93,7 +95,8 @@ export default function Legal() {
                 Open Esquire
               </ExternalLink>{' '}
               is a group of legal engineers helping Ethereum (and Juicebox)
-              projects incorporate and maintain U.S. compliance.
+              projects incorporate and maintain compliance within the United
+              States.
             </Trans>
           </li>
           <li>
@@ -116,7 +119,7 @@ export default function Legal() {
           </li>
         </ul>
 
-        <h2 className="mt-6 mb-4 text-2xl">
+        <h2 className="mt-6 mb-4 font-display text-2xl">
           <Trans>Legal Services</Trans>
         </h2>
         <p>
@@ -128,11 +131,13 @@ export default function Legal() {
         <ul className="list-disc">
           <li>
             <Trans>
-              To quickly form a U.S. entity, you can use{' '}
+              To quickly form a legal entity within the United States, you can
+              use{' '}
               <ExternalLink href="https://www.doola.com/">Doola</ExternalLink>.
               To form an entity in another jurisdiction, you can use{' '}
               <ExternalLink href="https://otonomos.com/">Otonomos</ExternalLink>
-              .
+              . Alternatively, you can register for incorporation with the
+              corresponding government directly.
             </Trans>
           </li>
           <li>
@@ -158,20 +163,21 @@ export default function Legal() {
           <li>
             <Trans>
               <ExternalLink href="https://opolis.co/">Opolis</ExternalLink>{' '}
-              helps individuals set up single-member U.S. companies to manage
-              payroll, benefits, and taxes. This is a great option for
-              independent DAO contributors.
+              helps individuals within the United States set up single-member
+              companies to manage payroll, benefits, and taxes. This can be a
+              great option for independent DAO contributors.
             </Trans>
           </li>
         </ul>
 
-        <h2 className="mt-6 mb-4 text-2xl">
+        <h2 className="mt-6 mb-4 font-display text-2xl">
           <Trans>Templates</Trans>
         </h2>
         <p>
           <Trans>
-            Legal templates can be a helpful starting point. Always review with
-            a legal expert before using a template.
+            Templates can be a helpful starting point when working with a legal
+            expert – be sure to review any documents with a lawyer before using
+            them.
           </Trans>
         </p>
         <ul className="list-disc">
@@ -185,7 +191,7 @@ export default function Legal() {
               <ExternalLink href="https://lib.openlaw.io/">
                 library
               </ExternalLink>{' '}
-              for a massive collection of open-source legal documents for web3
+              for a large collection of open-source legal documents for web3
               projects.
             </Trans>
           </li>
@@ -195,12 +201,11 @@ export default function Legal() {
               <ExternalLink href="https://www.lexpunk.army/">
                 LexPunk Army
               </ExternalLink>{' '}
-              community provides numerous templates and resources for free on
-              their{' '}
+              community provides free templates and resources for on{' '}
               <ExternalLink href="https://github.com/LeXpunK-Army">
                 GitHub
               </ExternalLink>{' '}
-              and their{' '}
+              and on their{' '}
               <ExternalLink href="https://forum.lexpunk.army/">
                 forum
               </ExternalLink>
@@ -209,25 +214,29 @@ export default function Legal() {
           </li>
           <li>
             <Trans>
-              You may have success using an AI chatbot to draft simple
-              agreements and other legal documents.{' '}
+              For common legal documents, you may have success using AI chatbots
+              to create preliminary drafts which you can then improve with a
+              lawyer's help.{' '}
               <ExternalLink href="https://www.nani.ooo/">nani.ooo</ExternalLink>{' '}
-              is an Ethereum-specific AI wallet assistant, and{' '}
+              is an Ethereum-specific AI wallet assistant worth experimenting
+              with. Popular LLMs like{' '}
               <ExternalLink href="https://chat.openai.com/">
                 ChatGPT
               </ExternalLink>{' '}
-              can also work well – as always, review any documents that you
-              alter or create with a legal expert before using them.
+              and{' '}
+              <ExternalLink href="https://bard.google.com/">Bard</ExternalLink>{' '}
+              can be surprisingly effective. As always, don't use any documents
+              until you have reviewed them with a legal expert.
             </Trans>
           </li>
         </ul>
 
         <p>
           <Trans>
-            If you're looking for something else or have questions, send us a
+            If you're looking for further resources or have questions, send us a
             message in the{' '}
             <ExternalLink href="https://discord.gg/juicebox">
-              Juicebox Discord server
+              JuiceboxDAO Discord server
             </ExternalLink>{' '}
             or on the <Link href="/contact">Contact page</Link>.
           </Trans>
@@ -235,7 +244,7 @@ export default function Legal() {
 
         <Divider />
 
-        <p>
+        <p className="grey-500 dark:grey-300 text-sm">
           <em>
             <Trans>
               None of the information, services, or materials offered on
@@ -254,7 +263,7 @@ export default function Legal() {
         <p>
           <em>
             <Trans>
-              For further information, please see our{' '}
+              For further information, see our{' '}
               <ExternalLink href="https://docs.juicebox.money/tos">
                 Terms of Service
               </ExternalLink>

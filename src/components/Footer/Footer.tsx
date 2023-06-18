@@ -112,6 +112,10 @@ export function Footer() {
       title: t`Legal`,
       items: [
         {
+          title: t`Legal Resources`,
+          link: '/legal',
+        },
+        {
           title: t`Privacy Policy`,
           link: '/privacy',
         },

@@ -1,4 +1,4 @@
-import { Footer } from 'antd/lib/layout/layout'
+import { Footer } from 'components/Footer/Footer'
 import { AppWrapper, Head } from 'components/common'
 import Legal from './Legal'
 

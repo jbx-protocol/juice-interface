@@ -10,7 +10,7 @@ export function Badge({
   variant,
   fill,
   clickable,
-  size = 'small',
+  size = 'middle',
   ...props
 }: PropsWithChildren<{
   className?: string

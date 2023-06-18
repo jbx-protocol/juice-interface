@@ -1,12 +1,18 @@
+import { t } from '@lingui/macro'
 import { ModalOnCancelFn, ModalOnOkFn } from 'components/modals/JuiceModal'
+import { ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ConfirmationDeletionModal } from '../components/ui/ConfirmationDeletionModal'
 
-export const emitConfirmationDeletionModal = (
-  deletionTypeName: string,
-  deletionDescription: string,
-  onConfirm: () => void,
-) => {
+export const emitConfirmationDeletionModal = ({
+  type,
+  description,
+  onConfirm,
+}: {
+  type: string
+  description?: ReactNode
+  onConfirm: () => void
+}) => {
   const modalRoot = document.createElement('div')
   const root = createRoot(modalRoot)
   document.body.appendChild(modalRoot)
@@ -28,13 +34,23 @@ export const emitConfirmationDeletionModal = (
     }, 500)
   }
 
+  const title = t`Are you sure you want to remove ${type}?`
+
   root.render(
     <ConfirmationDeletionModal
       initialOpenState={true}
-      title={deletionTypeName}
-      description={deletionDescription}
+      title={title}
+      description={description}
       onOk={handleOk}
       onCancel={handleCancel}
     />,
   )
 }
+
+/**
+ * Curried function that emits a confirmation deletion modal.
+ */
+export const handleConfirmationDeletion =
+  (props: { type: string; description?: ReactNode; onConfirm: () => void }) =>
+  () =>
+    emitConfirmationDeletionModal(props)

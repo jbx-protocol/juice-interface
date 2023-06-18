@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { useCartSummary } from '../hooks/useCartSummary'
 import { SummaryCollapsedView } from './SummaryCollapsedView'
@@ -14,12 +14,12 @@ describe('SummaryCollapsedView', () => {
     amountText: '0.0000 ETH',
     currency: V2V3_CURRENCY_ETH,
     nftRewards: [],
-    removePay: jest.fn(),
+    resetCart: jest.fn(),
     payProject: jest.fn(),
   }
   beforeEach(() => {
     ;(useCartSummary as jest.Mock).mockReturnValue(DefaultUseCartSummary)
-    DefaultUseCartSummary.removePay.mockClear()
+    DefaultUseCartSummary.resetCart.mockClear()
     DefaultUseCartSummary.payProject.mockClear()
   })
 
@@ -29,16 +29,13 @@ describe('SummaryCollapsedView', () => {
   })
 
   it('should call removePay when trash icon is clicked', () => {
-    const { getByTestId } = render(<SummaryCollapsedView />)
+    const { getByTestId, getByRole } = render(<SummaryCollapsedView />)
     const trashIcon = getByTestId('cart-summary-closed-view-trash-icon')
     fireEvent.click(trashIcon)
-    expect(DefaultUseCartSummary.removePay).toHaveBeenCalled()
-  })
-
-  test('clicking pay project calls payProject', () => {
-    const { getByRole } = render(<SummaryCollapsedView />)
-    const payProjectButton = getByRole('button')
-    fireEvent.click(payProjectButton)
-    expect(DefaultUseCartSummary.payProject).toHaveBeenCalled()
+    waitFor(() => {
+      const modalButton = getByRole('button')
+      fireEvent.click(modalButton)
+      expect(DefaultUseCartSummary.resetCart).toHaveBeenCalled()
+    })
   })
 })

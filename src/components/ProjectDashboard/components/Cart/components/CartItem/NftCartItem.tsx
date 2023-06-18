@@ -1,6 +1,7 @@
 import { SmallNftSquare } from 'components/ProjectDashboard/components/NftRewardsCard/SmallNftSquare'
 import { ProjectCartNftReward } from 'components/ProjectDashboard/components/ProjectCartProvider'
 import { useNftCartItem } from 'components/ProjectDashboard/hooks/useNftCartItem'
+import { handleConfirmationDeletion } from 'components/ProjectDashboard/utils/modals'
 import { TruncatedText } from 'components/TruncatedText'
 import { CartItem } from './CartItem'
 import { CartItemBadge } from './CartItemBadge'
@@ -35,7 +36,10 @@ export const NftCartItem: React.FC<ProjectCartNftReward> = reward => {
           }}
         />
       }
-      onRemove={removeNft}
+      onRemove={handleConfirmationDeletion({
+        type: 'NFT',
+        onConfirm: removeNft,
+      })}
       onIncrease={increaseQuantity}
       onDecrease={decreaseQuantity}
     />

@@ -44,9 +44,6 @@ msgstr ""
 msgid "Art"
 msgstr ""
 
-msgid "To quickly form a legal entity within the United States, you can use <0>Doola</0>. To form an entity in another jurisdiction, you can use <1>Otonomos</1>. Alternatively, you can register for incorporation with the corresponding government directly."
-msgstr ""
-
 msgid "How should I set up my project?"
 msgstr ""
 
@@ -278,6 +275,9 @@ msgstr ""
 msgid "Contributions"
 msgstr ""
 
+msgid "To learn about the tradeoffs between different legal entities for web3 projects, review Paradigm's <0>DAO Legal Entity Matrix</0>."
+msgstr ""
+
 msgid "Attach an image"
 msgstr ""
 
@@ -462,6 +462,9 @@ msgid "Due to your <0>{0}</0> contract, edits you make will not take effect unti
 msgstr ""
 
 msgid "Payer issuance rate"
+msgstr ""
+
+msgid "<0>JuiceboxDAO</0> and juicebox.money do not provide legal services or advice to project creators – when using Juicebox, compliance is your responsibility."
 msgstr ""
 
 msgid "Project Details"
@@ -665,9 +668,6 @@ msgstr ""
 msgid "Heads up"
 msgstr ""
 
-msgid "<0>JuiceboxDAO</0> and juicebox.money cannot provide legal services or advice to project creators – when using the protocol, compliance is your responsibility."
-msgstr ""
-
 msgid "No deadline"
 msgstr ""
 
@@ -812,9 +812,6 @@ msgstr ""
 msgid "Add token recipient"
 msgstr ""
 
-msgid "<0>OpenLaw</0> is a framework for legal contracts which can interact with smart contracts. Visit their <1>library</1> for a large collection of open-source legal documents for web3 projects."
-msgstr ""
-
 msgid "Scheduled launch time"
 msgstr ""
 
@@ -884,6 +881,9 @@ msgstr ""
 msgid "Explore projects"
 msgstr ""
 
+msgid "For common legal documents, you may have success using AI chatbots to create preliminary drafts which you can then improve with a lawyer's help. <0>nani.ooo</0> is an Ethereum-specific AI wallet assistant worth experimenting with. Popular chatbots like <1>ChatGPT</1> and <2>Bard</2> can also be effective. As always, don't use any documents until you have reviewed them with a legal expert."
+msgstr ""
+
 msgid "Add a banner to the top of your project's page."
 msgstr ""
 
@@ -939,9 +939,6 @@ msgid "Mint {tokensLabel}"
 msgstr ""
 
 msgid "Funding cycle details"
-msgstr ""
-
-msgid "For common legal documents, you may have success using AI chatbots to create preliminary drafts which you can then improve with a lawyer's help. <0>nani.ooo</0> is an Ethereum-specific AI wallet assistant worth experimenting with. Popular LLMs like <1>ChatGPT</1> and <2>Bard</2> can be surprisingly effective. As always, don't use any documents until you have reviewed them with a legal expert."
 msgstr ""
 
 msgid "Archive"
@@ -1130,9 +1127,6 @@ msgstr ""
 msgid "This cycle doesn't reserve any tokens."
 msgstr ""
 
-msgid "To learn about the trade-offs between different legal entities for DAOs and other projects, review Paradigm's <0>DAO Legal Entity Matrix</0>."
-msgstr ""
-
 msgid "Juicebox projects use <0>ENS names</0> as handles. Projects with a handle have the following features:"
 msgstr ""
 
@@ -1193,6 +1187,9 @@ msgstr ""
 msgid "Project tokens will be minted to the address that made the payment."
 msgstr ""
 
+msgid "To quickly form a legal entity within the United States, you can use <0>Doola</0>. To form an entity in another jurisdiction, you can use <1>Otonomos</1>. Alternatively, you can register for incorporation directly with the relevant government."
+msgstr ""
+
 msgid "Custom metadata resolver contract"
 msgstr ""
 
@@ -1236,6 +1233,9 @@ msgid "No results"
 msgstr ""
 
 msgid "ETH transfers to project"
+msgstr ""
+
+msgid "<0>OpenLaw</0> is a framework for legal contracts which can interact with smart contracts. Visit their <1>library</1> for a large collection of open-source legal documents made for web3 projects."
 msgstr ""
 
 msgid "Set a text record for {0} with the key <0>\"{projectHandleENSTextRecordKey}\"</0> and the value <1>\"{projectId}\"</1> (this project's ID). You can do this on the <2>ENS app</2>, or use the button below (as long as your connected wallet owns or controls that ENS name)."
@@ -1377,6 +1377,9 @@ msgid "Need help?"
 msgstr ""
 
 msgid "Custom strategy"
+msgstr ""
+
+msgid "Use these resources to familiarize yourself with some of the legal concerns facing web3 projects and some common solutions."
 msgstr ""
 
 msgid "If you use the default governance option (no governance), the voting weight will still be accessible on the blockchain for use in Snapshot strategies or any other desired purpose."
@@ -1635,9 +1638,6 @@ msgid "{tokenText} balance"
 msgstr ""
 
 msgid "Token name is required"
-msgstr ""
-
-msgid "Use these resources to familiarize yourself with the legal concerns facing web3 projects and some common solutions."
 msgstr ""
 
 msgid "Total: {0}%"
@@ -2240,9 +2240,6 @@ msgstr ""
 msgid "Transfer ETH from your wallet to this project without minting tokens."
 msgstr ""
 
-msgid "You can form an onchain LLC, non-profit, or charter entity by using <0>wrappr.wtf</0>. Wrappr lets you mint NFTs which serve as limited liability \"legal wrappers\" for DAOs, wallets, or projects. This public good service is provided free-of-charge – you only have to pay for gas."
-msgstr ""
-
 msgid "Check {lastEmailUpdated} and verify your new email address."
 msgstr ""
 
@@ -2696,6 +2693,9 @@ msgstr ""
 msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ERC-20 tokens and mint them to your wallet."
 msgstr ""
 
+msgid "Projects based in the United States can begin reasoning through their project's legal needs with the <0>Crypto Legal Risk Checklist</0>. When you reach out to a legal expert, you can send them the completed document to help them understand your project."
+msgstr ""
+
 msgid "Edit project"
 msgstr ""
 
@@ -2903,6 +2903,9 @@ msgstr ""
 msgid "On-chain governance type"
 msgstr ""
 
+msgid "<0>MIDAO</0> can help your project incorporate as a for-profit or non-profit Marshall Islands DAO LLC."
+msgstr ""
+
 msgid "Use for redemptions"
 msgstr ""
 
@@ -3011,9 +3014,6 @@ msgstr ""
 msgid "Redemption rate"
 msgstr ""
 
-msgid "Projects based in the United States can begin reasoning through their project's legal concerns with the <0>Crypto Legal Risk Checklist</0>. When you reach out to a legal expert, you can send them this document to help them understand the nature of your project."
-msgstr ""
-
 msgid "Paying another Juicebox project may mint its tokens. Select an address to receive these tokens."
 msgstr ""
 
@@ -3074,9 +3074,6 @@ msgstr ""
 msgid "When enabled, {tokenSymbol} ERC-20 tokens are issued. When disabled, unclaimed {tokenSymbol} tokens will be issued, which the receiver can claim later as ERC-20."
 msgstr ""
 
-msgid "<0>Open Esquire</0> is a group of legal engineers helping Ethereum (and Juicebox) projects incorporate and maintain compliance within the United States."
-msgstr ""
-
 msgid "Payer's address"
 msgstr ""
 
@@ -3104,10 +3101,10 @@ msgstr ""
 msgid "If you don't raise this amount, your payout recipients will receive their percentage of the available ETH."
 msgstr ""
 
-msgid "If you're looking to adopt a robust legal entity for your DAO, <0>MIDAO</0> can help your project incorporate as a for-profit or non-profit Marshall Islands DAO LLC."
+msgid "Upgrade to {0}"
 msgstr ""
 
-msgid "Upgrade to {0}"
+msgid "<0>KaliDAO</0> has made several useful legal documents available on <1>GitHub</1>."
 msgstr ""
 
 msgid "Edit details of {projectTitle}"
@@ -3138,6 +3135,9 @@ msgid "Edit deadline"
 msgstr ""
 
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building. Join thousands of projects sippin' the Juice."
+msgstr ""
+
+msgid "You can form an onchain LLC, non-profit, or charter entity by using <0>wrappr.wtf</0>. Wrappr lets you mint NFTs which serve as limited liability \"legal wrappers\" for DAOs, wallets, or projects by using <1>KaliDAO's agreements</1>. This public good service is provided free-of-charge – you only have to pay for gas."
 msgstr ""
 
 msgid "Edit"
@@ -3567,6 +3567,9 @@ msgid "Mint tokens"
 msgstr ""
 
 msgid "NFTs, tokens and rewards will be sent to <0/>"
+msgstr ""
+
+msgid "<0>Open Esquire</0> is a group of legal engineers helping Ethereum (and Juicebox) projects incorporate and maintain compliance within the United States. Get in touch on <1>their website</1>."
 msgstr ""
 
 msgid "See the code"
@@ -4019,9 +4022,6 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-msgid "Once you have a general understanding of your project's legal needs, you are <0>strongly encouraged</0> to reach out to a legal expert for help addressing them."
-msgstr ""
-
 msgid "This account hasn't saved any projects yet."
 msgstr ""
 
@@ -4305,6 +4305,9 @@ msgid "Paid"
 msgstr ""
 
 msgid "You can redeem your {tokenSymbol} for ETH without claiming them. You can transfer your unclaimed {tokenSymbol} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right-hand corner of this project."
+msgstr ""
+
+msgid "Once you have a general understanding of your project's legal needs, you are <0>strongly encouraged</0> to reach out to a legal expert for help addressing them and identifying any further legal requirements."
 msgstr ""
 
 msgid "Project page customizations"

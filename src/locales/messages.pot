@@ -4112,6 +4112,9 @@ msgstr ""
 msgid "Percentage to reserve"
 msgstr ""
 
+msgid "Remove"
+msgstr ""
+
 msgid "All assets"
 msgstr ""
 

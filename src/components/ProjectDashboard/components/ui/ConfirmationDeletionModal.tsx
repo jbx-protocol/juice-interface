@@ -1,0 +1,42 @@
+import { t } from '@lingui/macro'
+import {
+  JuiceModal,
+  ModalOnCancelFn,
+  ModalOnOkFn,
+} from 'components/modals/JuiceModal'
+import { ReactNode, useState } from 'react'
+
+export const ConfirmationDeletionModal = ({
+  initialOpenState = false,
+  title,
+  description,
+  onOk,
+  onCancel,
+}: {
+  initialOpenState?: boolean
+  title: ReactNode
+  description?: ReactNode
+  onOk?: ModalOnOkFn
+  onCancel?: ModalOnCancelFn
+}) => {
+  const [open, setOpen] = useState(initialOpenState)
+  return (
+    <JuiceModal
+      position="top"
+      title={title}
+      className="max-w-sm"
+      buttonPosition="stretch"
+      okText={t`Remove`}
+      okButtonClassName="bg-error-600 hover:bg-error-700"
+      cancelButtonClassName="border-grey-300 text-grey-700 hover:border-grey-400"
+      open={open}
+      setOpen={setOpen}
+      onOk={onOk}
+      onCancel={onCancel}
+    >
+      <span className="text-sm text-grey-500 dark:text-slate-200">
+        {description}
+      </span>
+    </JuiceModal>
+  )
+}

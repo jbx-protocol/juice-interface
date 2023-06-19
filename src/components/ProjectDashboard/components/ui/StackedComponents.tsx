@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 
-interface ComponentItem {
+export interface StackComponentItem {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Component: FunctionComponent<any>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -8,7 +8,7 @@ interface ComponentItem {
 }
 
 interface StackedComponentsProps {
-  components: ComponentItem[]
+  components: StackComponentItem[]
   size: string
   offset?: string
 }
@@ -19,7 +19,7 @@ const StackedComponents: React.FC<StackedComponentsProps> = ({
   offset = '20px',
 }) => {
   return (
-    <div className="relative z-0 flex">
+    <div className="relative z-0 flex min-w-0 items-center">
       {components.map((item, index) => (
         <div
           style={{
@@ -28,6 +28,7 @@ const StackedComponents: React.FC<StackedComponentsProps> = ({
             zIndex: -index,
             marginLeft: index !== 0 ? `-${offset}` : undefined,
           }}
+          className="flex-shrink-0"
           key={index}
         >
           <item.Component {...item.props} />

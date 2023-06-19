@@ -19,6 +19,11 @@ jest.mock('../TokenHoldersModal', () => ({
     .fn()
     .mockImplementation(() => <div>TokenHoldersModal</div>),
 }))
+jest.mock('./components/RedeemTokensButton', () => ({
+  RedeemTokensButton: jest
+    .fn()
+    .mockImplementation(() => <div>RedeemTokensButton</div>),
+}))
 
 describe('TokensPanel', () => {
   const DefaultUseTokensPanelResult = {

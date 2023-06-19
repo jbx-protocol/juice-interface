@@ -1,10 +1,10 @@
 import { Trans, t } from '@lingui/macro'
-import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import { useTokensPanel } from 'components/ProjectDashboard/hooks/useTokensPanel'
 import { useCallback, useState } from 'react'
 import { TokenHoldersModal } from '../TokenHoldersModal'
 import { DisplayCard } from '../ui'
+import { RedeemTokensButton } from './components/RedeemTokensButton'
 import { ReservedTokensSubPanel } from './components/ReservedTokensSubPanel'
 
 export const TokensPanel = () => {
@@ -41,7 +41,7 @@ export const TokensPanel = () => {
                     <Trans>{userTokenBalance} tokens</Trans>
                   </div>
                 </div>
-                <Button type="primary">Redeem tokens</Button>
+                <RedeemTokensButton />
               </div>
             </DisplayCard>
           )}

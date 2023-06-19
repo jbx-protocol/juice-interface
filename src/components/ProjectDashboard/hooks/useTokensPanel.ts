@@ -1,10 +1,10 @@
 import { constants } from 'ethers'
 import { useMemo } from 'react'
-import { formatAmountWithScale } from 'utils/format/formatAmount'
+import { formatAmount, formatAmountWithScale } from 'utils/format/formatAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useProjectContext } from './useProjectContext'
-import { useUserTokenBalance } from './useUserTokenBalance'
+import { useUserTokenBalanceWad } from './useUserTokenBalanceWad'
 
 export const useTokensPanel = () => {
   const {
@@ -17,8 +17,13 @@ export const useTokensPanel = () => {
     capitalize: false,
     plural: true,
   })
-  const { data: userTokenBalance, loading: userTokenBalanceLoading } =
-    useUserTokenBalance()
+  const { data: userTokenBalanceWad, loading: userTokenBalanceLoading } =
+    useUserTokenBalanceWad()
+
+  const userTokenBalance = useMemo(() => {
+    if (!userTokenBalanceWad) return undefined
+    return formatAmount(fromWad(userTokenBalanceWad))
+  }, [userTokenBalanceWad])
 
   const totalSupply = useMemo(() => {
     return formatAmountWithScale(fromWad(totalTokenSupply))

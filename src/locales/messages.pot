@@ -2717,6 +2717,9 @@ msgstr ""
 msgid "Redemptions aren't possible when all of a project's ETH is being used for payouts."
 msgstr ""
 
+msgid "Redeem tokens"
+msgstr ""
+
 msgid "Display ERC-20 and other Juicebox project tokens that this project owner holds."
 msgstr ""
 
@@ -3453,6 +3456,9 @@ msgid "If you don't raise the sum of your payouts (<0/>{distributionLimit}), thi
 msgstr ""
 
 msgid "Burn {0} {tokensTextShort}"
+msgstr ""
+
+msgid "No tokens to redeem."
 msgstr ""
 
 msgid "Your unclaimed {tokenTextLong}"

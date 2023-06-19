@@ -6,7 +6,7 @@ exports[`SummaryCollapsedView should render correctly 1`] = `
     class="flex w-full items-center justify-between px-8 py-6"
   >
     <div
-      class="flex items-center gap-4"
+      class="flex min-w-0 items-center gap-4"
       data-testid="cart-summary-closed-view-summary"
     >
       <span
@@ -15,7 +15,7 @@ exports[`SummaryCollapsedView should render correctly 1`] = `
         Summary
       </span>
       <div
-        class="relative z-0 flex"
+        class="relative z-0 flex min-w-0 items-center"
       />
     </div>
     <div
@@ -26,7 +26,7 @@ exports[`SummaryCollapsedView should render correctly 1`] = `
         class="flex items-center gap-4"
       >
         <span
-          class="text-sm text-grey-500 dark:text-slate-200"
+          class="whitespace-nowrap text-sm text-grey-500 dark:text-slate-200"
         >
           Total to pay
         </span>

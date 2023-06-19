@@ -18,6 +18,8 @@ const STACK_COMPONENT_SIZE = '48px'
 const STACK_COMPONENT_OFFSET = '20px'
 const SUMMARY_GAP = '16px'
 
+const CART_MAX_LIMIT = 10
+
 export const SummaryCollapsedView = () => {
   const {
     amountText,
@@ -43,10 +45,14 @@ export const SummaryCollapsedView = () => {
       summaryGap -
       (32 + 16) * 2 // Chevron padding
 
-    return Math.max(
+    const maxItemsBasedOnWidthAvailable = Math.max(
       Math.floor(workableWidth / (stackComponentSize - stackComponentOffset)),
       0,
     )
+
+    const maxItems = Math.min(maxItemsBasedOnWidthAvailable, CART_MAX_LIMIT)
+
+    return maxItems
   }, [containerWidth, internalSummaryWidth, totalToPayWidth])
 
   const CurrencyIconComponent = useMemo(() => {

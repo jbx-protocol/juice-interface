@@ -69,7 +69,7 @@ export const CurrentUpcomingSubPanel = ({
           <DisplayCard className="w-full md:max-w-[127px]">
             <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
               {topPanelsInfo[CYCLE_NUMBER_INDEX].title}
-              <div className="font-heading text-2xl font-medium dark:text-slate-50">
+              <div className="font-heading text-xl font-medium text-grey-900 dark:text-slate-50">
                 {topPanelsInfo[CYCLE_NUMBER_INDEX].value ?? <Skeleton />}
               </div>
             </div>
@@ -78,7 +78,7 @@ export const CurrentUpcomingSubPanel = ({
             <Tooltip title={cycleStatusTooltip} placement="bottom">
               <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
                 {topPanelsInfo[1].title}
-                <div className="font-heading text-2xl font-medium dark:text-slate-50">
+                <div className="font-heading text-xl font-medium text-grey-900 dark:text-slate-50">
                   {topPanelsInfo[1].value ?? <Skeleton className="w-22" />}
                 </div>
               </div>
@@ -88,7 +88,7 @@ export const CurrentUpcomingSubPanel = ({
             <Tooltip title={cycleLengthTooltip}>
               <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
                 {topPanelsInfo[CYCLE_LENGTH_INDEX].title}
-                <div className="font-heading text-2xl font-medium dark:text-slate-50">
+                <div className="font-heading text-xl font-medium text-grey-900 dark:text-slate-50">
                   {topPanelsInfo[CYCLE_LENGTH_INDEX].value ?? (
                     <Skeleton className="w-40" />
                   )}

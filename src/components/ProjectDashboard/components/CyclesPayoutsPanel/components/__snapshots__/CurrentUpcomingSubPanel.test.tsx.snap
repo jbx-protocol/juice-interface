@@ -17,7 +17,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
           >
             Cycle #
             <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+              class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
             >
               1
             </div>
@@ -31,7 +31,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
           >
             Status
             <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+              class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
             >
               Active
             </div>
@@ -45,7 +45,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
           >
             Remaining time
             <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+              class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
             >
               1 day
             </div>
@@ -80,7 +80,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
           >
             Cycle #
             <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+              class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
             >
               1
             </div>
@@ -94,7 +94,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
           >
             Status
             <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+              class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
             >
               Active
             </div>
@@ -108,7 +108,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
           >
             Cycle length
             <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+              class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
             >
               1 day
             </div>
@@ -143,7 +143,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
           >
             Cycle #
             <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+              class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
             >
               1
             </div>
@@ -157,7 +157,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
           >
             Status
             <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+              class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
             >
               Active
             </div>
@@ -171,7 +171,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
           >
             Remaining time
             <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+              class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
             >
               1 day
             </div>
@@ -206,7 +206,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
           >
             Cycle #
             <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+              class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
             >
               1
             </div>
@@ -220,7 +220,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
           >
             Status
             <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+              class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
             >
               Active
             </div>
@@ -234,7 +234,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
           >
             Cycle length
             <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+              class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
             >
               1 day
             </div>

@@ -102,7 +102,7 @@ export function NftTierCard({
             <JuiceVideoThumbnailOrImage
               src={fileUrl}
               alt={rewardTier?.name ?? 'Juicebox NFT reward'}
-              className="absolute h-36 w-full rounded-t-lg"
+              className="h-36 w-full rounded-b-none rounded-t-lg"
             />
           ) : null}
           {showQuantitySelector ? (

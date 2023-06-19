@@ -17,14 +17,18 @@ export const SmallNftSquare = ({
   border?: boolean
 }) => {
   const _loading = !nftReward || loading
-  const _className = twMerge(
-    'rounded-lg bg-smoke-50',
-    border && 'border-4 border-smoke-50 dark:border-slate-900',
-    className,
-  )
 
   if (_loading) {
-    return <div className={`${_className}`}></div>
+    return (
+      <div
+        className={twMerge(
+          'rounded-lg bg-smoke-50',
+          border &&
+            'border-4 border-solid border-smoke-50 dark:border-slate-900',
+          className,
+        )}
+      />
+    )
   }
   const fileUrl = useMemo(
     () => ipfsUriToGatewayUrl(nftReward.fileUrl),
@@ -36,7 +40,11 @@ export const SmallNftSquare = ({
       src={fileUrl}
       alt={nftReward.name}
       playIconPosition="hidden"
-      containerClass={_className}
+      className={twMerge(
+        'rounded-lg bg-smoke-50',
+        border && 'border-4 border-solid border-smoke-50 dark:border-slate-900',
+        className,
+      )}
     />
   )
 }

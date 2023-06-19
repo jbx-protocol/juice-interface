@@ -10,7 +10,7 @@ import {
 } from 'contexts/Transaction/TxHistoryContext'
 import { TxStatus } from 'models/transaction'
 import { useContext, useEffect, useMemo, useState } from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 import { etherscanLink } from 'utils/etherscan'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import TxStatusIcon from './TxStatusIcon'
@@ -57,7 +57,7 @@ export function TransactionsList({
             )
           }
           className="cursor-pointer hover:text-bluebs-400"
-          badgeCount={transactions?.length}
+          badgeNumber={transactions?.length}
         />
         <span className="ml-4 text-sm font-medium md:hidden">
           <Trans>Transactions</Trans>
@@ -66,7 +66,7 @@ export function TransactionsList({
 
       {isExpanded && (
         <div
-          className={classNames(
+          className={twMerge(
             'z-10 rounded-lg border border-smoke-300 bg-white pt-5 shadow-lg ring-1 ring-black ring-opacity-5 dark:border-slate-300 dark:bg-slate-800',
             listClassName,
           )}

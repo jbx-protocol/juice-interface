@@ -4,7 +4,7 @@ import {
 } from '@heroicons/react/24/outline'
 import Loading from 'components/Loading'
 import { TxStatus } from 'models/transaction'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 
 export default function TxStatusIcon({ status }: { status: TxStatus }) {
   const containerClassName =
@@ -18,7 +18,7 @@ export default function TxStatusIcon({ status }: { status: TxStatus }) {
     case TxStatus.success:
       return (
         <div
-          className={classNames(
+          className={twMerge(
             containerClassName,
             'bg-success-100 text-success-700 dark:bg-success-900 dark:text-success-300',
           )}
@@ -29,7 +29,7 @@ export default function TxStatusIcon({ status }: { status: TxStatus }) {
     case TxStatus.failed:
       return (
         <div
-          className={classNames(
+          className={twMerge(
             containerClassName,
             'bg-error-100 text-error-700 dark:bg-error-900 dark:text-error-300',
           )}

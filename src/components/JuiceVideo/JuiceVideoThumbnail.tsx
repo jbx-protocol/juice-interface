@@ -10,18 +10,23 @@ export function JuiceVideoThumbnail({
   src,
   playIconPosition = 'default',
   onLoaded,
+  onClick,
 }: {
   className?: string
   videoClassName?: string
   src: string
   playIconPosition?: PlayIconPosition
   onLoaded?: VoidFunction
+  onClick?: VoidFunction
 }) {
   const [loading, setLoading] = useState<boolean>(true)
 
   const playIconContainerClassName = 'bottom-3 right-2'
   return (
-    <div className={twMerge('relative top-0 h-full w-full', className)}>
+    <div
+      className={twMerge('relative top-0 h-full w-full', className)}
+      onClick={onClick}
+    >
       {!loading && playIconPosition !== 'hidden' ? (
         <div className={`absolute z-[1] ${playIconContainerClassName}`}>
           <JuicePlayIcon />

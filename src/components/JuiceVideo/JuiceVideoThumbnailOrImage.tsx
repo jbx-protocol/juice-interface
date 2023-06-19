@@ -1,8 +1,7 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { useContentType } from 'hooks/useContentType'
 import { ImageProps } from 'next/image'
-import { useState } from 'react'
-import { stopPropagation } from 'react-stop-propagation'
+import { useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { fileTypeIsVideo } from 'utils/nftRewards'
 import { JuiceVideoOrImgPreview } from './JuiceVideoOrImgPreview'
@@ -13,30 +12,28 @@ type JuiceVideoThumbnailOrImageProps = {
   src: string
   alt?: string
   showPreviewOnClick?: boolean
-  containerClass?: string
 }
 
 export function JuiceVideoThumbnailOrImage({
   playIconPosition,
   showPreviewOnClick,
-  containerClass,
   ...props
-}: ImageProps & JuiceVideoThumbnailOrImageProps) {
+}: Omit<ImageProps, 'onClick'> & JuiceVideoThumbnailOrImageProps) {
   const [loading, setLoading] = useState<boolean>(true)
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
 
   const { data: contentType } = useContentType(props.src)
   const isVideo = fileTypeIsVideo(contentType)
-  const _containerClass = twMerge(
-    'w-full h-full',
-    showPreviewOnClick ? 'cursor-pointer' : '',
-    'rounded-lg overflow-hidden',
-    containerClass,
-  )
+
+  const handleClick = useCallback(() => {
+    if (showPreviewOnClick) {
+      setPreviewVisible(true)
+    }
+  }, [showPreviewOnClick])
 
   return (
-    <div className={_containerClass}>
-      {loading ? (
+    <>
+      {loading && (
         <div
           className={twMerge(
             `flex items-center justify-center border border-smoke-200 dark:border-grey-600`,
@@ -45,41 +42,43 @@ export function JuiceVideoThumbnailOrImage({
         >
           <LoadingOutlined className="text-primary" />
         </div>
-      ) : null}
-      <div
-        onClick={
-          showPreviewOnClick
-            ? stopPropagation(() => setPreviewVisible(true))
-            : undefined
-        }
-        className="h-full w-full"
-      >
-        {isVideo ? (
-          <JuiceVideoThumbnail
-            src={props.src}
-            videoClassName={props.className}
-            onLoaded={() => setLoading(false)}
-            playIconPosition={playIconPosition}
-          />
-        ) : (
-          <img
-            className={`${
-              props.className ?? ''
-            } top-0 h-full w-full object-cover`}
-            src={props.src}
-            onClick={props.onClick}
-            crossOrigin="anonymous"
-            onLoad={() => setLoading(false)}
-            alt="Enlarged media preview"
-          />
-        )}
-      </div>
+      )}
+      {isVideo ? (
+        <JuiceVideoThumbnail
+          src={props.src}
+          className={twMerge(
+            'overflow-hidden rounded-lg',
+            showPreviewOnClick ? 'cursor-pointer' : '',
+            loading && 'hidden',
+            props.className,
+          )}
+          videoClassName={props.className}
+          onLoaded={() => setLoading(false)}
+          playIconPosition={playIconPosition}
+          onClick={handleClick}
+        />
+      ) : (
+        <img
+          className={twMerge(
+            loading && 'hidden',
+            'overflow-hidden rounded-lg',
+            'top-0 h-full w-full object-cover',
+            showPreviewOnClick ? 'cursor-pointer' : '',
+            props.className,
+          )}
+          src={props.src}
+          onClick={handleClick}
+          crossOrigin="anonymous"
+          onLoad={() => setLoading(false)}
+          alt="Enlarged media preview"
+        />
+      )}
       <JuiceVideoOrImgPreview
         alt="NFT media"
         visible={previewVisible}
         src={props.src}
         onClose={() => setPreviewVisible(false)}
       />
-    </div>
+    </>
   )
 }

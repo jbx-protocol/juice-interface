@@ -24,8 +24,7 @@ export function NftThumbnail({
         <JuiceVideoThumbnailOrImage
           src={fileUrl}
           alt={rewardTier?.name ?? 'Juicebox NFT reward'}
-          containerClass="rounded-none"
-          className="h-60 w-full rounded-t-lg"
+          className="h-60 w-full rounded-t-lg rounded-b-none"
         />
       ) : null}
     </div>

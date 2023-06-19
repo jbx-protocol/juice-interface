@@ -73,7 +73,7 @@ export const PopupMenu = ({ className, items }: PopupMenuProps) => {
                     )
                   ) : isButtonItem(item) ? (
                     <button
-                      className="flex gap-2 rounded-lg p-4 hover:bg-smoke-100 dark:hover:bg-slate-600"
+                      className="flex w-full gap-2 rounded-lg p-4 hover:bg-smoke-100 dark:hover:bg-slate-600"
                       onClick={item.onClick}
                     >
                       {item.label}

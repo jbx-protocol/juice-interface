@@ -1,12 +1,12 @@
 import { Divider } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
-import Paragraph from 'components/Paragraph'
 import { useProjectHeader } from 'components/ProjectDashboard/hooks'
 import { SubscribeButton } from 'components/SubscribeButton'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { twMerge } from 'tailwind-merge'
 import { ProjectHeaderLogo } from './components/ProjectHeaderLogo'
 import { ProjectHeaderStats } from './components/ProjectHeaderStats'
+import { Subtitle } from './components/Subtitle'
 
 export const ProjectHeader = ({ className }: { className?: string }) => {
   const { title, subtitle, projectId, handle, owner } = useProjectHeader()
@@ -28,12 +28,8 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
       </div>
 
       <div className="flex flex-col justify-between gap-8 md:flex-row md:gap-12">
-        <div className="flex flex-col gap-7">
-          <div className="text-lg text-grey-700 dark:text-slate-50">
-            {subtitle ? (
-              <Paragraph description={subtitle} characterLimit={100} />
-            ) : null}
-          </div>
+        <div className="flex min-w-0 flex-col gap-7">
+          {subtitle && <Subtitle subtitle={subtitle} />}
           <div className="text-grey-500 dark:text-slate-200">
             {projectId ? (
               <V2V3ProjectHandleLink

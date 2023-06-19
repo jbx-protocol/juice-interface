@@ -2756,6 +2756,9 @@ msgstr ""
 msgid "Manage {tokenText}"
 msgstr ""
 
+msgid "Bookmark project"
+msgstr ""
+
 msgid "Download project activity CSV"
 msgstr ""
 

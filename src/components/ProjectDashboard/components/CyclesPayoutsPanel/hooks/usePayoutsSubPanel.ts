@@ -80,9 +80,10 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   )
 
   const totalPayoutAmount = useMemo(() => {
+    if (!distributionLimit || !distributionLimitCurrency) return
     return formatCurrencyAmount({
       amount: fromWad(distributionLimit),
-      currency: distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
+      currency: distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
     })
   }, [distributionLimit, distributionLimitCurrency])
 

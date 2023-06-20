@@ -437,9 +437,6 @@ msgstr ""
 msgid "Locked (28 days)"
 msgstr ""
 
-msgid "No payouts for the cycle."
-msgstr ""
-
 msgid "Rules"
 msgstr ""
 

@@ -32,15 +32,15 @@ export const SuccessPayView = () => {
       <h1 className="mb-0 font-heading text-5xl font-bold">
         <Trans>Success</Trans>
       </h1>
-      <h2 className="mt-3 mb-0 font-body text-lg font-normal text-grey-600 dark:text-slate-200">
+      <h2 className="mx-14 mt-3 mb-0 font-body text-lg font-normal text-grey-600 dark:text-slate-200 md:px-0">
         <Trans>Thank you, your payment was successful.</Trans>
       </h2>
 
-      <div className="flex flex-col divide-y divide-grey-200 dark:divide-slate-600">
+      <div className="flex flex-col divide-y divide-grey-200 px-4 dark:divide-slate-600 md:px-0">
         <div className="pb-10">
           <SuccessPayCard className="mt-6" />
 
-          <div className="mt-8 flex justify-center gap-1">
+          <div className="mt-8 flex flex-col items-center justify-center gap-1 md:flex-row">
             {projectId && (
               <SubscribeButton
                 disableTooltip
@@ -69,16 +69,7 @@ export const SuccessPayView = () => {
             <h3 className="mb-0 font-heading text-xl font-medium">
               <Trans>A message from {name}</Trans>
             </h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur. In felis velit vitae
-              pulvinar id sollicitudin nisl. Eu id gravida viverra nisl ipsum
-              venenatis feugiat mi ut. Arcu duis quis lectus vitae nunc elit in.
-              Tristique aliquam platea sollicitudin nisl amet. At nisl lacus
-              ornare nibh aliquam adipiscing tristique. Arcu etiam tempor
-              sagittis amet. Consectetur eget quis malesuada sollicitudin
-              gravida nisi in. Morbi aliquet faucibus viverra sed nulla. Sed
-              libero amet proin donec. Neque interdum sit cras.
-            </p>
+            <p>{nftPaymentSuccessModal.content}</p>
           </div>
         )}
 

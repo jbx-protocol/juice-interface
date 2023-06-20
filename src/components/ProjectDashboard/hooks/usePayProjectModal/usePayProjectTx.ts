@@ -102,8 +102,9 @@ export const usePayProjectTx = ({
         JB721DelegateVersion,
       )
 
+      let onError = undefined
       try {
-        await payProjectTx(
+        const success = await payProjectTx(
           {
             memo,
             beneficiary,
@@ -116,13 +117,23 @@ export const usePayProjectTx = ({
               onTransactionConfirmedCallback(buildPayReceipt(e), formikHelpers)
             },
             onError(error) {
-              onTransactionErrorCallback(error, formikHelpers)
+              // This is required as the below !success check will throw a
+              // second error. The below is necessary as a user rejection does
+              // not come through here
+              // ¯\_(ツ)_/¯
+              onError = error
             },
             onDone() {
               onTransactionPendingCallback(formikHelpers)
             },
           },
         )
+        if (!success) {
+          onTransactionErrorCallback(
+            onError ?? new Error('Transaction failed'),
+            formikHelpers,
+          )
+        }
       } catch (e) {
         onTransactionErrorCallback(e as Error, formikHelpers)
       }

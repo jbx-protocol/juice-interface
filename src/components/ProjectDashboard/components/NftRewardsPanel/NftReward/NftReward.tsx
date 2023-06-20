@@ -62,11 +62,11 @@ export function NftReward({
   return (
     <div
       className={twMerge(
-        'group relative flex h-full w-[252px] cursor-pointer select-none flex-col rounded-nft border border-grey-200 shadow-nftCard dark:border-slate-500',
+        'group relative flex h-full w-[252px] cursor-pointer select-none flex-col rounded-[10px] border border-grey-200 dark:border-slate-500',
+        'shadow-[0_4px_14px_rgba(0,0,0,0.0392156862745098)]', // box-shadow: 0px 4px 14px 0px #0000000A
         isSelected ? 'border-2 border-bluebs-500 dark:border-bluebs-500' : '',
         className,
       )}
-      style={{ boxShadow: '0px 4px 14px 0px #0000000A' }}
       onClick={openPreview}
     >
       <NftThumbnail

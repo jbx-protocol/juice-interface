@@ -1,3 +1,4 @@
+import { Footer } from 'components/Footer'
 import { AnnouncementLauncher } from 'contexts/Announcements/AnnouncementLauncher'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
@@ -24,8 +25,7 @@ export const ProjectDashboard = () => {
       <AnnouncementLauncher>
         <FundingCycleCountdownProvider>
           <ProjectCartProvider>
-            {/* // TODO: Remove pb-48, just there for testing */}
-            <div className="flex w-full flex-col items-center pb-48">
+            <div className="flex w-full flex-col items-center pb-12">
               {projectPayReceipt !== undefined ? (
                 <SuccessPayView />
               ) : (
@@ -45,6 +45,7 @@ export const ProjectDashboard = () => {
                 </>
               )}
             </div>
+            <Footer />
             <Cart />
           </ProjectCartProvider>
         </FundingCycleCountdownProvider>

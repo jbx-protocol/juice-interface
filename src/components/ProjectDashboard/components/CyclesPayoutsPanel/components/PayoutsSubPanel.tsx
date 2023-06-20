@@ -14,7 +14,7 @@ export const PayoutsSubPanel = ({
   className?: string
   type: 'current' | 'upcoming'
 }) => {
-  const { payouts, loading } = usePayoutsSubPanel(type)
+  const { payouts, loading, totalPayoutAmount } = usePayoutsSubPanel(type)
   return (
     <div className={twMerge(className)}>
       <h2 className="mb-0 font-heading text-2xl font-medium">
@@ -30,7 +30,11 @@ export const PayoutsSubPanel = ({
               </h3>
               <PayoutsPopupMenu type={type} />
             </div>
-
+            {totalPayoutAmount && (
+              <div className="mt-2 font-heading text-xl font-medium dark:text-slate-50">
+                {totalPayoutAmount}
+              </div>
+            )}
             <div className="mt-4 w-full">
               {!loading
                 ? payouts
@@ -45,7 +49,6 @@ export const PayoutsSubPanel = ({
                     <ProjectAllocationSkeleton key={i} />
                   ))}
             </div>
-
             {type === 'current' && (
               <SendPayoutsButton
                 className="z-0 mt-6 w-full justify-center md:w-auto"

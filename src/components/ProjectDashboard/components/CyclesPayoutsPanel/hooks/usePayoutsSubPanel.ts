@@ -36,16 +36,16 @@ const calculateSplitAmountWad = (
 export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { splits, loading } = useCurrentUpcomingPayoutSplits(type)
   const {
-    distributionLimit: currentDistributionLimit,
-    distributionLimitCurrency: currentDistributionLimitCurrency,
+    distributionLimit,
+    distributionLimitCurrency,
     primaryETHTerminalFee,
   } = useProjectContext()
 
   const showAmountOnPayout = useMemo(() => {
-    if (currentDistributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)) return false
-    if (currentDistributionLimit?.eq(0)) return false
+    if (distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)) return false
+    if (distributionLimit?.eq(0)) return false
     return true
-  }, [currentDistributionLimit])
+  }, [distributionLimit])
 
   const transformSplit = useCallback(
     (split: Split) => {
@@ -53,18 +53,13 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
       let amount = undefined
       const splitAmountWad = calculateSplitAmountWad(
         split,
-        currentDistributionLimit,
+        distributionLimit,
         primaryETHTerminalFee,
       )
-      if (
-        showAmountOnPayout &&
-        splitAmountWad &&
-        currentDistributionLimitCurrency
-      ) {
+      if (showAmountOnPayout && splitAmountWad && distributionLimitCurrency) {
         amount = formatCurrencyAmount({
           amount: Number(fromWad(splitAmountWad)),
-          currency:
-            currentDistributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+          currency: distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
         })
       }
       return {
@@ -77,12 +72,19 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
       }
     },
     [
-      currentDistributionLimit,
-      currentDistributionLimitCurrency,
+      distributionLimit,
+      distributionLimitCurrency,
       primaryETHTerminalFee,
       showAmountOnPayout,
     ],
   )
+
+  const totalPayoutAmount = useMemo(() => {
+    return formatCurrencyAmount({
+      amount: fromWad(distributionLimit),
+      currency: distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
+    })
+  }, [distributionLimit, distributionLimitCurrency])
 
   const payouts = useMemo(() => {
     if (loading || !splits) return
@@ -95,5 +97,6 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   return {
     loading,
     payouts,
+    totalPayoutAmount,
   }
 }

@@ -9,7 +9,7 @@ import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { AddNftButton } from './AddNftButton'
 import { NftDetails } from './NftDetails'
 import { NftThumbnail } from './NftThumbnail'
-import { PreviewAddNftButton } from './PreviewAddNftButton'
+import { PreviewAddRemoveNftButton } from './PreviewAddRemoveNftButton'
 import { RemoveNftButton } from './RemoveNftButton'
 
 type NftRewardProps = {
@@ -67,7 +67,6 @@ export function NftReward({
         isSelected ? 'border-2 border-bluebs-500 dark:border-bluebs-500' : '',
         className,
       )}
-      style={{ boxShadow: '0px 4px 14px 0px #0000000A' }}
       onClick={openPreview}
     >
       <NftThumbnail
@@ -92,7 +91,13 @@ export function NftReward({
           rewardTier={rewardTier}
           onClose={closePreview}
           fileUrl={fileUrl}
-          actionButton={<PreviewAddNftButton onClick={() => onSelect(1)} />}
+          actionButton={
+            <PreviewAddRemoveNftButton
+              onSelect={() => onSelect(1)}
+              onDeselect={onDeselect}
+              isSelected={isSelected}
+            />
+          }
         />
       ) : null}
     </div>

@@ -6,7 +6,7 @@ import { SocialLinkButton } from '../ui'
 export const AboutPanel = () => {
   const { description } = useAboutPanel()
   return (
-    <div className="flex min-h-[384px] flex-col gap-8 md:max-w-4xl">
+    <div className="flex min-h-[384px] flex-col gap-8 md:max-w-[596px]">
       <div className="flex flex-wrap gap-y-3 gap-x-10">
         <SocialLinkButton type="twitter" href="#" />
         <SocialLinkButton type="discord" href="#" />

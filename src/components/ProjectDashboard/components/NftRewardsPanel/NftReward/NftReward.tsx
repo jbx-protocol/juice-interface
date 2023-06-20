@@ -12,6 +12,7 @@ import { NftThumbnail } from './NftThumbnail'
 import { RemoveNftButton } from './RemoveNftButton'
 
 type NftRewardProps = {
+  className?: string
   rewardTier?: NftRewardTier
   loading?: boolean
   onSelect: (quantity?: number) => void
@@ -21,6 +22,7 @@ type NftRewardProps = {
 }
 
 export function NftReward({
+  className,
   loading,
   rewardTier,
   previewDisabled,
@@ -28,7 +30,6 @@ export function NftReward({
   onDeselect,
   hideAttributes,
 }: NftRewardProps) {
-  // TODO: Move all state into a hook
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
   const cart = useProjectCart()
 
@@ -61,8 +62,9 @@ export function NftReward({
   return (
     <div
       className={twMerge(
-        'group relative flex h-full w-full cursor-pointer select-none flex-col rounded-nft border border-grey-200 shadow-nftCard dark:border-slate-500',
+        'group relative flex h-full w-[252px] cursor-pointer select-none flex-col rounded-nft border border-grey-200 shadow-nftCard dark:border-slate-500',
         isSelected ? 'border-2 border-bluebs-500 dark:border-bluebs-500' : '',
+        className,
       )}
       style={{ boxShadow: '0px 4px 14px 0px #0000000A' }}
       onClick={openPreview}

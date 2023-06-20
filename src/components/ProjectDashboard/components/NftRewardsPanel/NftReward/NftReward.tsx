@@ -25,7 +25,6 @@ export function NftReward({
   onSelect,
   hideAttributes,
 }: NftRewardProps) {
-  // TODO: Move all state into a hook
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
   const cart = useProjectCart()
 
@@ -58,7 +57,7 @@ export function NftReward({
   return (
     <div
       className={twMerge(
-        'group relative flex h-full w-full cursor-pointer select-none flex-col rounded-lg border border-grey-200 dark:border-slate-500',
+        'group relative flex h-full w-[252px] cursor-pointer select-none flex-col rounded-lg border border-grey-200 dark:border-slate-500',
         isSelected ? 'border-2 border-bluebs-500 dark:border-bluebs-500' : '',
       )}
       onClick={openPreview}

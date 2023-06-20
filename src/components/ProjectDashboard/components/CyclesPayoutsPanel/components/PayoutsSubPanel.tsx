@@ -25,7 +25,7 @@ export const PayoutsSubPanel = ({
           {type === 'current' && <TreasuryStats />}
           <DisplayCard className="flex w-full flex-col pb-8">
             <div className="flex items-center justify-between gap-3">
-              <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
+              <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200">
                 <Trans>Payouts</Trans>
               </h3>
               <PayoutsPopupMenu type={type} />

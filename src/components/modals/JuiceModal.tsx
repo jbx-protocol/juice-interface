@@ -1,4 +1,3 @@
-import { LoadingOutlined } from '@ant-design/icons'
 import { Dialog } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
@@ -185,22 +184,18 @@ const CTAButton = ({
   form?: string
   onClick?: VoidFunction
 }>) => (
-  <button
-    type={form ? 'submit' : 'button'}
+  <Button
+    type="primary"
+    htmlType={form ? 'submit' : 'button'}
+    loading={loading}
     className={twMerge(
-      'inline-flex justify-center rounded-md border border-transparent bg-bluebs-500 px-4 py-2 text-sm font-medium text-white hover:bg-bluebs-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
       loading ? 'cursor-not-allowed opacity-50' : '',
       className,
     )}
     onClick={onClick}
   >
-    {loading && (
-      <span className="animation mr-2 animate-spin">
-        <LoadingOutlined />
-      </span>
-    )}
     {children}
-  </button>
+  </Button>
 )
 
 const CancelButton = ({

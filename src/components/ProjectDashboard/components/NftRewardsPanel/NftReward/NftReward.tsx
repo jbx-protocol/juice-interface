@@ -11,6 +11,7 @@ import { NftDetails } from './NftDetails'
 import { NftThumbnail } from './NftThumbnail'
 
 type NftRewardProps = {
+  className?: string
   rewardTier?: NftRewardTier
   loading?: boolean
   onSelect: (quantity?: number) => void
@@ -19,6 +20,7 @@ type NftRewardProps = {
 }
 
 export function NftReward({
+  className,
   loading,
   rewardTier,
   previewDisabled,
@@ -59,6 +61,7 @@ export function NftReward({
       className={twMerge(
         'group relative flex h-full w-[252px] cursor-pointer select-none flex-col rounded-lg border border-grey-200 dark:border-slate-500',
         isSelected ? 'border-2 border-bluebs-500 dark:border-bluebs-500' : '',
+        className,
       )}
       onClick={openPreview}
     >

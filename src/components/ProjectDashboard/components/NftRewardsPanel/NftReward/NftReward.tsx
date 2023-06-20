@@ -9,6 +9,7 @@ import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { AddNftButton } from './AddNftButton'
 import { NftDetails } from './NftDetails'
 import { NftThumbnail } from './NftThumbnail'
+import { PreviewAddNftButton } from './PreviewAddNftButton'
 
 type NftRewardProps = {
   className?: string
@@ -83,6 +84,7 @@ export function NftReward({
           rewardTier={rewardTier}
           onClose={closePreview}
           fileUrl={fileUrl}
+          actionButton={<PreviewAddNftButton onClick={() => onSelect(1)} />}
         />
       ) : null}
     </div>

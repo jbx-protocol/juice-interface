@@ -110,6 +110,9 @@ msgstr ""
 msgid "Your Name"
 msgstr ""
 
+msgid "REMAINING SUPPLY: Unlimited"
+msgstr ""
+
 msgid "project owner"
 msgstr ""
 

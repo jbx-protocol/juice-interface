@@ -7,7 +7,7 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useContentType } from 'hooks/useContentType'
 import { NftRewardTier } from 'models/nftRewards'
 import { useContext } from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 import { fileTypeIsVideo } from 'utils/nftRewards'
 import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from '../JuiceVideo/JuiceVideoOrImgPreview'
 
@@ -19,11 +19,13 @@ export function NftPreview({
   rewardTier,
   onClose,
   fileUrl,
+  actionButton,
 }: {
   open: boolean
   rewardTier: NftRewardTier
   onClose: VoidFunction
   fileUrl: string | undefined
+  actionButton?: JSX.Element
 }) {
   const { projectMetadata } = useContext(ProjectMetadataContext)
 
@@ -64,49 +66,51 @@ export function NftPreview({
     onClose()
   }
 
+  const remainingSupplyText = hasLimitedSupply ? (
+    <Trans>
+      REMAINING SUPPLY: {rewardTier.remainingSupply}/{rewardTier.maxSupply}
+    </Trans>
+  ) : (
+    <Trans>REMAINING SUPPLY: Unlimited</Trans>
+  )
+
   return (
     <div
       className={`${JUICE_IMG_PREVIEW_CONTAINER_CLASS} cursor-default`}
       onClick={_onClose}
     >
-      <CloseOutlined
-        className="absolute top-10 right-10 cursor-pointer text-2xl text-slate-100"
-        onClick={_onClose}
-      />
-
       <div
-        className="max-w-prose cursor-text select-text pt-24 md:pt-0"
+        className="relative max-w-lg cursor-text select-text pt-24 md:pt-0"
         onClick={e => e.stopPropagation()}
       >
+        <CloseOutlined
+          className="absolute -top-5 -right-5 cursor-pointer text-2xl text-slate-100"
+          onClick={_onClose}
+        />
         <div
           className="mb-5 flex w-full cursor-default justify-center"
           onClick={_onClose}
         >
           {nftRender}
         </div>
+        <div className="px-7">
+          <h1 className="text-2xl text-slate-100">{rewardTier.name}</h1>
+          <div className="flex items-center justify-between">
+            <span className="uppercase text-slate-100">
+              <Trans>{projectMetadata?.name}</Trans>
+            </span>
+            {actionButton ? actionButton : null}
+          </div>
 
-        <h1 className="text-2xl text-slate-100">{rewardTier.name}</h1>
-        <span className="uppercase text-slate-100">
-          <Trans>{projectMetadata?.name}</Trans>
-        </span>
-
-        <p className="mt-2 max-w-prose text-slate-100">
-          {rewardTier.description}
-        </p>
-        {hasLimitedSupply || rewardTier.externalLink ? (
+          <p className="mt-2 max-w-prose text-slate-100">
+            {rewardTier.description}
+          </p>
           <div className="mt-5 flex text-xs text-slate-100">
-            {hasLimitedSupply ? (
-              <div>
-                <Trans>
-                  REMAINING SUPPLY: {rewardTier.remainingSupply}/
-                  {rewardTier.maxSupply}
-                </Trans>
-              </div>
-            ) : null}
+            {remainingSupplyText}
             {rewardTier.externalLink ? (
               <ExternalLink
                 href={rewardTier.externalLink}
-                className={classNames(
+                className={twMerge(
                   'flex cursor-pointer items-center text-slate-100',
                   hasLimitedSupply ? 'ml-6' : undefined,
                 )}
@@ -118,7 +122,7 @@ export function NftPreview({
               </ExternalLink>
             ) : null}
           </div>
-        ) : null}
+        </div>
       </div>
     </div>
   )

@@ -25,7 +25,7 @@ export const ProjectDashboard = () => {
       <AnnouncementLauncher>
         <FundingCycleCountdownProvider>
           <ProjectCartProvider>
-            <div className="flex w-full flex-col items-center pb-12">
+            <div className="flex w-full flex-col items-center pb-48">
               {projectPayReceipt !== undefined ? (
                 <SuccessPayView />
               ) : (

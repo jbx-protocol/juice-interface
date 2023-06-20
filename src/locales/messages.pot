@@ -3908,6 +3908,9 @@ msgstr ""
 msgid "Save project details"
 msgstr ""
 
+msgid "Remove NFT"
+msgstr ""
+
 msgid "Token holders"
 msgstr ""
 

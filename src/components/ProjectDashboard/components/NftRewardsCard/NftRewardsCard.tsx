@@ -25,9 +25,10 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
         nftReward: nft,
         loading: nftsLoading,
         className: 'h-full w-full',
+        onClick: () => setProjectPageTab('nft_rewards'),
       },
     }))
-  }, [nftsLoading, rewardTiers])
+  }, [nftsLoading, rewardTiers, setProjectPageTab])
   const tooltipText = (
     <Trans>See the NFTs and rewards offered by this project.</Trans>
   )

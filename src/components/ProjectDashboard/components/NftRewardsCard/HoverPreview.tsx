@@ -1,4 +1,5 @@
 import { Transition } from '@headlessui/react'
+import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useHasTouch } from 'hooks/useHasTouch'
 import {
@@ -14,6 +15,7 @@ import {
 import { SmallNftSquare } from './SmallNftSquare'
 
 export const HoverPreview: React.FC<PropsWithChildren> = ({ children }) => {
+  const { setProjectPageTab } = useProjectPageQueries()
   const hasTouch = useHasTouch()
   const [hovering, setHovering] = useState(false)
   const tooltipRef = useRef<HTMLDivElement | null>(null)
@@ -107,11 +109,19 @@ export const HoverPreview: React.FC<PropsWithChildren> = ({ children }) => {
 
   if (!NftComponents.length) return <>{children}</>
 
+  const handleMouseEnter = () => {
+    !hasTouch && setHovering(true)
+  }
+
+  const handleMouseLeave = () => {
+    !hasTouch && setHovering(false)
+  }
+
   return (
     <div className="relative inline-block" ref={wrapperRef}>
       <div
-        onMouseEnter={() => !hasTouch && setHovering(true)}
-        onMouseLeave={() => !hasTouch && setHovering(false)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         {...handleToggle}
       >
         {children}
@@ -127,8 +137,11 @@ export const HoverPreview: React.FC<PropsWithChildren> = ({ children }) => {
         leaveTo="opacity-0"
       >
         <div
-          className="absolute top-full left-1/2 z-20 -translate-x-1/2 transform"
+          className="top-[calc(100% - 1px)] absolute left-1/2 z-20 -translate-x-1/2 transform cursor-pointer"
           ref={tooltipRef}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onClick={() => setProjectPageTab('nft_rewards')}
         >
           <div className="z-10 mx-auto h-0 w-0 border-l-[20px] border-b-[24px] border-r-[20px] border-white border-l-transparent border-r-transparent dark:border-slate-950 dark:border-l-transparent dark:border-r-transparent" />
           <div className="grid min-w-max grid-cols-2 gap-4 rounded-lg bg-white p-5 shadow-lg dark:bg-slate-950">

@@ -9,11 +9,13 @@ import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { AddNftButton } from './AddNftButton'
 import { NftDetails } from './NftDetails'
 import { NftThumbnail } from './NftThumbnail'
+import { RemoveNftButton } from './RemoveNftButton'
 
 type NftRewardProps = {
   rewardTier?: NftRewardTier
   loading?: boolean
   onSelect: (quantity?: number) => void
+  onDeselect: VoidFunction
   previewDisabled?: boolean
   hideAttributes?: boolean
 }
@@ -23,6 +25,7 @@ export function NftReward({
   rewardTier,
   previewDisabled,
   onSelect,
+  onDeselect,
   hideAttributes,
 }: NftRewardProps) {
   // TODO: Move all state into a hook
@@ -58,9 +61,10 @@ export function NftReward({
   return (
     <div
       className={twMerge(
-        'group relative flex h-full w-full cursor-pointer select-none flex-col rounded-lg border border-grey-200 dark:border-slate-500',
+        'group relative flex h-full w-full cursor-pointer select-none flex-col rounded-nft border border-grey-200 shadow-nftCard dark:border-slate-500',
         isSelected ? 'border-2 border-bluebs-500 dark:border-bluebs-500' : '',
       )}
+      style={{ boxShadow: '0px 4px 14px 0px #0000000A' }}
       onClick={openPreview}
     >
       <NftThumbnail
@@ -74,7 +78,11 @@ export function NftReward({
         hideAttributes={hideAttributes}
         remainingSupplyText={remainingSupplyText}
       />
-      <AddNftButton onClick={() => onSelect(1)} />
+      {isSelected ? (
+        <RemoveNftButton onClick={() => onDeselect()} />
+      ) : (
+        <AddNftButton onClick={() => onSelect(1)} />
+      )}
       {rewardTier && !previewDisabled && previewVisible ? (
         <NftPreview
           open={previewVisible}

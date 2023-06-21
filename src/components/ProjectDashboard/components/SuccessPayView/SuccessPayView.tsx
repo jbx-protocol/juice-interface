@@ -29,8 +29,8 @@ export const SuccessPayView = () => {
           animationData={confettiAnimationJuicebox}
         />
       )}
-      <h1 className="mb-0 font-heading text-5xl font-bold">
-        <Trans>Success</Trans>
+      <h1 className="mb-0 font-display text-5xl font-bold">
+        <Trans>Success!</Trans>
       </h1>
       <h2 className="mx-14 mt-3 mb-0 font-body text-lg font-normal text-grey-600 dark:text-slate-200 md:px-0">
         <Trans>Thank you, your payment was successful.</Trans>

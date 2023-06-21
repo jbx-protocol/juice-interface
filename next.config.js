@@ -65,8 +65,6 @@ const CONNECT_SRC = [
   'https://*.supabase.co',
   'https://api.ensideas.com',
   'https://*.sentry.io',
-  // QWESTIVE REFERRAL
-  'https://us-central1-qwestive-referral-prod.cloudfunctions.net/',
 ]
 
 const FRAME_ANCESTORS = ['https://*.gnosis.io', 'https://*.safe.global']

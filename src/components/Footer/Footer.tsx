@@ -53,11 +53,6 @@ export function Footer() {
           link: '/about',
         },
         {
-          title: t`Referral`,
-          externalLink: true,
-          link: 'https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e',
-        },
-        {
           title: t`Request a feature`,
           externalLink: true,
           link: 'https://juicebox.canny.io/feature-requests',

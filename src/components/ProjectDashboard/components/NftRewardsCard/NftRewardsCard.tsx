@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
-import { useContext, useMemo } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { DisplayCard } from '../ui'
 import StackedComponents from '../ui/StackedComponents'
@@ -17,6 +17,11 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
   } = useContext(NftRewardsContext)
   const { setProjectPageTab } = useProjectPageQueries()
 
+  const openNftRewardsTab = useCallback(
+    () => setProjectPageTab('nft_rewards'),
+    [setProjectPageTab],
+  )
+
   const NftComponents = useMemo(() => {
     return (rewardTiers ?? []).slice(0, 3).map(nft => ({
       Component: SmallNftSquare,
@@ -25,10 +30,9 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
         nftReward: nft,
         loading: nftsLoading,
         className: 'h-full w-full',
-        onClick: () => setProjectPageTab('nft_rewards'),
       },
     }))
-  }, [nftsLoading, rewardTiers, setProjectPageTab])
+  }, [nftsLoading, rewardTiers])
   const tooltipText = (
     <Trans>See the NFTs and rewards offered by this project.</Trans>
   )
@@ -43,14 +47,17 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
       </div>
       <div className="flex items-center gap-3">
         <HoverPreview>
-          <div>
-            <StackedComponents components={NftComponents} size="56px" />
-          </div>
+          <StackedComponents
+            className="cursor-pointer"
+            components={NftComponents}
+            size="56px"
+            onClick={openNftRewardsTab}
+          />
         </HoverPreview>
         <div>
           <button
             className="flex items-center whitespace-nowrap rounded-2xl bg-grey-100 py-1 pl-3 pr-2.5 text-sm text-grey-700 dark:bg-slate-500 dark:text-slate-100"
-            onClick={() => setProjectPageTab('nft_rewards')}
+            onClick={openNftRewardsTab}
           >
             View all <ArrowRightIcon className="h-3 w-3" />
           </button>

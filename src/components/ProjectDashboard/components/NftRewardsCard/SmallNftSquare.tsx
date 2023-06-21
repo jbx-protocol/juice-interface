@@ -10,13 +10,11 @@ export const SmallNftSquare = ({
   className,
   loading,
   border = false,
-  onClick,
 }: {
   nftReward: Pick<NftRewardTier, 'fileUrl' | 'name'> | undefined
   className?: string
   loading?: boolean
   border?: boolean
-  onClick?: VoidFunction
 }) => {
   const _loading = !nftReward || loading
 
@@ -38,18 +36,15 @@ export const SmallNftSquare = ({
   )
 
   return (
-    <div onClick={onClick} className="cursor-pointer">
-      <JuiceVideoThumbnailOrImage
-        src={fileUrl}
-        alt={nftReward.name}
-        playIconPosition="hidden"
-        className={twMerge(
-          'rounded-lg bg-smoke-50',
-          border &&
-            'border-4 border-solid border-smoke-50 dark:border-slate-700',
-          className,
-        )}
-      />
-    </div>
+    <JuiceVideoThumbnailOrImage
+      src={fileUrl}
+      alt={nftReward.name}
+      playIconPosition="hidden"
+      className={twMerge(
+        'rounded-lg bg-smoke-50',
+        border && 'border-4 border-solid border-smoke-50 dark:border-slate-700',
+        className,
+      )}
+    />
   )
 }

@@ -6,7 +6,7 @@ import { useContext } from 'react'
 import { isEqualAddress } from 'utils/address'
 import { useV2V3HasPermissions } from './useV2V3HasPermissions'
 
-export function useV2ConnectedWalletHasPermission(
+export function useV2V3WalletHasPermission(
   permission: V2V3OperatorPermission | V2V3OperatorPermission[],
 ): boolean {
   const { userAddress } = useWallet()

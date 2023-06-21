@@ -3,7 +3,7 @@ import { Statistic } from 'antd'
 import TransactorButton from 'components/buttons/TransactorButton'
 import ExternalLink from 'components/ExternalLink'
 import { useHeldFeesOf } from 'hooks/v2v3/contractReader/useHeldFeesOf'
-import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/useV2ConnectedWalletHasPermission'
+import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
 import { useProcessHeldFeesTx } from 'hooks/v2v3/transactor/useProcessHeldFeesTx'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
@@ -17,7 +17,7 @@ export function HeldFeesSection() {
   const heldFees = useHeldFeesOf()
   const processHeldFeesTx = useProcessHeldFeesTx()
 
-  const canProcessHeldFees = useV2ConnectedWalletHasPermission(
+  const canProcessHeldFees = useV2V3WalletHasPermission(
     V2V3OperatorPermission.PROCESS_FEES,
   )
 

@@ -44,7 +44,11 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
                 onBlur={props.handleBlur}
                 name="payAmount"
               />
-              <Button htmlType="submit" className="h-full" type="primary">
+              <Button
+                htmlType="submit"
+                className="h-full text-base"
+                type="primary"
+              >
                 <Trans>Add payment</Trans>
               </Button>
             </div>

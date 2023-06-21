@@ -26,7 +26,7 @@ exports[`PayInput renders 1`] = `
       </svg>
     </div>
     <input
-      class="min-w-0 flex-1 bg-transparent outline-none"
+      class="min-w-0 flex-1 bg-transparent text-base outline-none"
       data-testid="pay-input-input"
       value=""
     />
@@ -82,7 +82,7 @@ exports[`PayInput renders with placeholder 1`] = `
       </svg>
     </div>
     <input
-      class="min-w-0 flex-1 bg-transparent outline-none"
+      class="min-w-0 flex-1 bg-transparent text-base outline-none"
       data-testid="pay-input-input"
       placeholder="placeholder"
       value=""
@@ -139,7 +139,7 @@ exports[`PayInput renders with value 1`] = `
       </svg>
     </div>
     <input
-      class="min-w-0 flex-1 bg-transparent outline-none"
+      class="min-w-0 flex-1 bg-transparent text-base outline-none"
       data-testid="pay-input-input"
       value="1"
     />

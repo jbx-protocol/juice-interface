@@ -32,7 +32,7 @@ export const TitleDescriptionDisplayCard = ({
             {title}
           </span>
         </Tooltip>
-        <span className="font-heading text-xl font-medium dark:text-slate-50">
+        <span className="truncate font-heading text-xl font-medium dark:text-slate-50">
           {description}
         </span>
       </div>

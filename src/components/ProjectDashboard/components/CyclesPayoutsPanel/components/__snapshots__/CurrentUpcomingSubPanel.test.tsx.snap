@@ -21,7 +21,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
               Cycle #
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1
             </span>
@@ -39,7 +39,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
               Status
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               Active
             </span>
@@ -57,7 +57,7 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
               Remaining time
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1 day
             </span>
@@ -96,7 +96,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
               Cycle #
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1
             </span>
@@ -114,7 +114,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
               Status
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               Active
             </span>
@@ -132,7 +132,7 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
               Cycle length
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1 day
             </span>
@@ -171,7 +171,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
               Cycle #
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1
             </span>
@@ -189,7 +189,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
               Status
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               Active
             </span>
@@ -207,7 +207,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
               Remaining time
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1 day
             </span>
@@ -246,7 +246,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
               Cycle #
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1
             </span>
@@ -264,7 +264,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
               Status
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               Active
             </span>
@@ -282,7 +282,7 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
               Cycle length
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1 day
             </span>

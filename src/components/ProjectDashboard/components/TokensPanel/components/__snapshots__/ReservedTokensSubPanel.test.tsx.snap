@@ -28,7 +28,7 @@ exports[`ReservedTokensSubPanel renders 1`] = `
               Reserved tokens
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               21%
             </span>
@@ -46,7 +46,7 @@ exports[`ReservedTokensSubPanel renders 1`] = `
               Reserved rate
             </span>
             <span
-              class="font-heading text-xl font-medium dark:text-slate-50"
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               82%
             </span>

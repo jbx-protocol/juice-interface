@@ -47,22 +47,14 @@ describe('ProjectCartProvider', () => {
 
   it('provides the initial state correctly', () => {
     const TestComponent = () => {
-      const {
-        payAmount,
-        totalAmount,
-        visible,
-        expanded,
-        userIsReceivingTokens,
-      } = useContext(ProjectCartContext)
+      const { payAmount, totalAmount, visible, expanded } =
+        useContext(ProjectCartContext)
       return (
         <div>
           <div data-testid="payAmount">{JSON.stringify(payAmount)}</div>
           <div data-testid="totalAmount">{JSON.stringify(totalAmount)}</div>
           <div data-testid="visible">{String(visible)}</div>
           <div data-testid="expanded">{String(expanded)}</div>
-          <div data-testid="userIsReceivingTokens">
-            {String(userIsReceivingTokens)}
-          </div>
         </div>
       )
     }
@@ -78,9 +70,6 @@ describe('ProjectCartProvider', () => {
     expect(screen.getByTestId('payAmount')).toHaveTextContent('')
     expect(screen.getByTestId('visible')).toHaveTextContent('false')
     expect(screen.getByTestId('expanded')).toHaveTextContent('false')
-    expect(screen.getByTestId('userIsReceivingTokens')).toHaveTextContent(
-      'true',
-    )
   })
 
   it('shows total amount of nft quantity and pay amount when pay and nft added', () => {

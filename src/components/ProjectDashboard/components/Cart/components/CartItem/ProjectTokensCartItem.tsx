@@ -7,11 +7,7 @@ import { CartItem } from './CartItem'
 import { CartItemBadge } from './CartItemBadge'
 
 export const ProjectTokensCartItem = () => {
-  const { receivedTickets, userIsReceivingTokens } = useProjectPaymentTokens()
-
-  if (!userIsReceivingTokens) {
-    return null
-  }
+  const { receivedTickets } = useProjectPaymentTokens()
 
   return (
     <CartItem

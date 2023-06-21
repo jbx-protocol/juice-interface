@@ -62,5 +62,3 @@ exports[`ProjectTokensCartItem renders 1`] = `
   </div>
 </div>
 `;
-
-exports[`ProjectTokensCartItem returns null if user is not receiving tokens 1`] = `<div />`;

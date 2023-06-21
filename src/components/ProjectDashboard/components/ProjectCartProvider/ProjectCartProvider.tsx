@@ -24,7 +24,6 @@ type ProjectCartContextType = {
   visible: boolean
   expanded: boolean
   payModalOpen: boolean
-  userIsReceivingTokens: boolean
 }
 
 export const ProjectCartContext = createContext<ProjectCartContextType>({
@@ -37,7 +36,6 @@ export const ProjectCartContext = createContext<ProjectCartContextType>({
   visible: false,
   expanded: false,
   payModalOpen: false,
-  userIsReceivingTokens: false,
 })
 
 export const ProjectCartProvider = ({
@@ -49,7 +47,6 @@ export const ProjectCartProvider = ({
     payAmount: undefined,
     nftRewards: [],
     expanded: false,
-    userIsReceivingTokens: true,
     payModalOpen: false,
   })
   const converter = useCurrencyConverter()

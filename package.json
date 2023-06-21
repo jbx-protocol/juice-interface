@@ -127,7 +127,6 @@
     "postcss": "^8.4.23",
     "postmark": "^3.0.15",
     "qs": "^6.11.0",
-    "qwestive-client-sdk": "0.1.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.33.2",

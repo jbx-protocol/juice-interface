@@ -1,7 +1,6 @@
 import {
   ArrowRightOnRectangleIcon,
   ClipboardDocumentIcon,
-  CurrencyDollarIcon,
   UserIcon,
 } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
@@ -61,17 +60,6 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
       id: 'my-account',
       label: <WalletItemContainer icon={<UserIcon />} label={t`My account`} />,
       href: `/account/${userAddress}`,
-    },
-    {
-      id: 'referral',
-      label: (
-        <WalletItemContainer
-          icon={<CurrencyDollarIcon />}
-          label={t`Referral`}
-        />
-      ),
-      href: 'https://juicebox.referral.qwestive.io/referral/hJCUZVJIodVP6Ki6MP6e',
-      isExternal: true,
     },
     {
       id: 'disconnect',

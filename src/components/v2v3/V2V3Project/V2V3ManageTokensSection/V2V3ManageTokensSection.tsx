@@ -4,7 +4,7 @@ import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
 import SectionHeader from 'components/SectionHeader'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useHasJBV3Token } from 'hooks/JBV3Token/contractReader/useHasJBV3Token'
-import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/useV2ConnectedWalletHasPermission'
+import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
 import { useProjectHasErc20 } from 'hooks/v2v3/useProjectHasErc20'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
@@ -34,7 +34,7 @@ const contentStyle: CSSProperties = {
 export function V2V3ManageTokensSection() {
   const { tokenSymbol } = useContext(V2V3ProjectContext)
   const { userAddress } = useWallet()
-  const hasIssueTicketsPermission = useV2ConnectedWalletHasPermission(
+  const hasIssueTicketsPermission = useV2V3WalletHasPermission(
     V2V3OperatorPermission.ISSUE,
   )
 

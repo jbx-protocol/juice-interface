@@ -7,7 +7,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useERC20BalanceOf from 'hooks/ERC20/useERC20BalanceOf'
 import { useWallet } from 'hooks/Wallet'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/useTotalBalanceOf'
-import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/useV2ConnectedWalletHasPermission'
+import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/useTransferUnclaimedTokensTx'
 import { useIsOwnerConnected } from 'hooks/v2v3/useIsOwnerConnected'
 import { useProjectHasErc20 } from 'hooks/v2v3/useProjectHasErc20'
@@ -36,7 +36,7 @@ export function AccountBalanceDescription() {
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
   const unclaimedBalance = totalBalance?.sub(claimedBalance ?? 0)
-  const userHasMintPermission = useV2ConnectedWalletHasPermission(
+  const userHasMintPermission = useV2V3WalletHasPermission(
     V2V3OperatorPermission.MINT,
   )
   const ownerIsConnected = useIsOwnerConnected()

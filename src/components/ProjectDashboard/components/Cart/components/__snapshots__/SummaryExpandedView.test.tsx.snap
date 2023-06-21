@@ -24,8 +24,17 @@ exports[`SummaryExpandedView should render correctly 1`] = `
       data-testid="cart-summary-open-view-summary"
     >
       <div
-        class="flex min-h-0 w-full min-w-0 flex-shrink flex-col gap-4 pb-5 md:max-w-xl md:pb-0"
+        class="relative flex min-h-0 w-full min-w-0 flex-shrink flex-col gap-4 pb-5 md:max-w-xl md:pb-0"
       >
+        <div
+          class="absolute -top-10 right-0"
+        >
+          <a
+            role="button"
+          >
+            Clear all
+          </a>
+        </div>
         <div
           class="flex w-full flex-shrink flex-col overflow-y-scroll md:block md:w-auto"
         >

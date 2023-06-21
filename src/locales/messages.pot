@@ -4541,6 +4541,9 @@ msgstr ""
 msgid "Hours"
 msgstr ""
 
+msgid "Clear all"
+msgstr ""
+
 msgid "{titleCasedAllocationName} Percentage"
 msgstr ""
 

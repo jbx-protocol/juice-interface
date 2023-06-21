@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { fireEvent, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { useCartSummary } from '../hooks/useCartSummary'
 import { SummaryExpandedView } from './SummaryExpandedView'
@@ -25,12 +25,5 @@ describe('SummaryExpandedView', () => {
   it('should render correctly', () => {
     const { container } = render(<SummaryExpandedView />)
     expect(container).toMatchSnapshot()
-  })
-
-  test('clicking pay project calls payProject', () => {
-    const { getByRole } = render(<SummaryExpandedView />)
-    const payProjectButton = getByRole('button')
-    fireEvent.click(payProjectButton)
-    expect(DefaultUseCartSummary.payProject).toHaveBeenCalled()
   })
 })

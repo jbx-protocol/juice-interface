@@ -3944,6 +3944,9 @@ msgstr ""
 msgid "payout"
 msgstr ""
 
+msgid "Payments to Juicebox projects automatically mint tokens"
+msgstr ""
+
 msgid "Cycle"
 msgstr ""
 

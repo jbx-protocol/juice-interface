@@ -19,7 +19,7 @@ export function V2V3ProjectActivity() {
       <ActivityList
         projectId={projectId}
         pv={PV_V2}
-        header={<SectionHeader className="m-0" text={t`Activity`} />}
+        header={<SectionHeader className="m-0 text-2xl" text={t`Activity`} />}
         tokenSymbol={tokenSymbol}
         onClickDownload={() => setDownloadModalVisible(true)}
       />

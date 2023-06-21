@@ -22,6 +22,7 @@ export const PayoutsSubPanel = ({
       </h2>
       <div className="mt-5 flex flex-col items-center gap-4">
         {type === 'current' && <TreasuryStats />}
+
         <DisplayCard className="flex w-full flex-col pb-8">
           <div className="flex items-center justify-between gap-3">
             <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200">

@@ -18,15 +18,16 @@ export function NftPreview({
   open,
   rewardTier,
   onClose,
-  fileUrl,
+  fileUrl: _fileUrl,
   actionButton,
 }: {
   open: boolean
   rewardTier: NftRewardTier
   onClose: VoidFunction
-  fileUrl: string | undefined
+  fileUrl?: string | undefined
   actionButton?: JSX.Element
 }) {
+  const fileUrl = _fileUrl ?? rewardTier.fileUrl
   const { projectMetadata } = useContext(ProjectMetadataContext)
 
   if (!open) return null

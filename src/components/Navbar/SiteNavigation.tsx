@@ -18,7 +18,7 @@ export default function SiteNavigation() {
     <>
       <div className="fixed z-10 w-full md:static md:px-20">
         <Popover
-          className="bg-white dark:bg-slate-900 md:flex md:items-center md:gap-12 md:px-0 md:py-6"
+          className="bg-white dark:bg-slate-900 md:flex md:items-center md:gap-12 md:px-0 md:py-4"
           as="nav"
         >
           {({ open }) => (

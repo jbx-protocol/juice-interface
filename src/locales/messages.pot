@@ -2219,6 +2219,9 @@ msgstr ""
 msgid "Transfer ETH from your wallet to this project without minting tokens."
 msgstr ""
 
+msgid "Peep our selection of the juiciest projects right now."
+msgstr ""
+
 msgid "Check {lastEmailUpdated} and verify your new email address."
 msgstr ""
 
@@ -3684,9 +3687,6 @@ msgid "Redeem {tokensLabel} for ETH"
 msgstr ""
 
 msgid "Projects can reserve a percentage of token issuance for the recipients set by the project owner."
-msgstr ""
-
-msgid "Peep our selection of top trending projects this month."
 msgstr ""
 
 msgid "No payouts scheduled for this cycle."

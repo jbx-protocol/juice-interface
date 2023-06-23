@@ -6,6 +6,7 @@ import { useCurrentUpcomingSubPanel } from '../hooks/useCurrentUpcomingSubPanel'
 import { ConfigurationDisplayCard } from './ConfigurationDisplayCard'
 import { currentCycleRemainingLengthTooltip } from './CyclesPanelTooltips'
 import { PayoutsSubPanel } from './PayoutsSubPanel'
+import { UpcomingCycleChangesCallout } from './UpcomingCycleChangesCallout'
 
 const CYCLE_NUMBER_INDEX = 0
 const STATUS_INDEX = 1
@@ -64,6 +65,8 @@ export const CurrentUpcomingSubPanel = ({
   return (
     <div>
       <div className="flex flex-col gap-4">
+        {id === 'upcoming' && <UpcomingCycleChangesCallout />}
+
         <div className="grid grid-cols-2 gap-4 md:flex">
           <TitleDescriptionDisplayCard
             className="w-full md:max-w-[127px]"

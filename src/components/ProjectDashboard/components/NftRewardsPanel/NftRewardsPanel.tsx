@@ -7,6 +7,7 @@ export const NftRewardsPanel = () => {
   const {
     rewardTiers,
     handleTierSelect,
+    handleTierDeselect,
     loading: nftsLoading,
   } = useNftRewardsPanel()
 
@@ -25,6 +26,7 @@ export const NftRewardsPanel = () => {
                 rewardTier={tier}
                 loading={nftsLoading}
                 onSelect={(quantity = 1) => handleTierSelect(tier.id, quantity)}
+                onDeselect={() => handleTierDeselect(tier.id)}
               />
             </div>
           ))}

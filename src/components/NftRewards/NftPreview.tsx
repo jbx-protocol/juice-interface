@@ -7,33 +7,35 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useContentType } from 'hooks/useContentType'
 import { NftRewardTier } from 'models/nftRewards'
 import { useContext } from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 import { fileTypeIsVideo } from 'utils/nftRewards'
 import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from '../JuiceVideo/JuiceVideoOrImgPreview'
 
 export const IMAGE_OR_VIDEO_PREVIEW_CLASSES =
-  'max-h-[50vh] max-w-[90vw] md:max-h-[60vh] md:max-w-xl'
+  'max-h-[50vh] md:max-h-[60vh] max-w-[458px]'
 
 export function NftPreview({
   open,
   rewardTier,
   onClose,
   fileUrl,
+  actionButton,
 }: {
   open: boolean
   rewardTier: NftRewardTier
   onClose: VoidFunction
   fileUrl: string | undefined
+  actionButton?: JSX.Element
 }) {
   const { projectMetadata } = useContext(ProjectMetadataContext)
 
   if (!open) return null
 
-  const hasLimitedSupply = Boolean(
-    rewardTier.remainingSupply &&
-      rewardTier.maxSupply &&
-      rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY,
+  const hasUnlimitedSupply = Boolean(
+    !rewardTier.maxSupply || rewardTier.maxSupply === DEFAULT_NFT_MAX_SUPPLY,
   )
+
+  const isSoldOut = Boolean(!rewardTier.remainingSupply)
 
   const { data: contentType, isLoading: contentTypeLoading } =
     useContentType(fileUrl)
@@ -64,61 +66,61 @@ export function NftPreview({
     onClose()
   }
 
+  const remainingSupplyText = hasUnlimitedSupply ? (
+    <Trans>REMAINING SUPPLY: Unlimited</Trans>
+  ) : isSoldOut ? (
+    <Trans>REMAINING SUPPLY: Sold out</Trans>
+  ) : (
+    <Trans>
+      REMAINING SUPPLY: {rewardTier.remainingSupply}/{rewardTier.maxSupply}
+    </Trans>
+  )
+
   return (
     <div
       className={`${JUICE_IMG_PREVIEW_CONTAINER_CLASS} cursor-default`}
       onClick={_onClose}
     >
-      <CloseOutlined
-        className="absolute top-10 right-10 cursor-pointer text-2xl text-slate-100"
-        onClick={_onClose}
-      />
-
       <div
-        className="max-w-prose cursor-text select-text pt-24 md:pt-0"
+        className="relative max-w-[458px] cursor-text select-text pt-24 md:pt-0"
         onClick={e => e.stopPropagation()}
       >
+        <CloseOutlined
+          className="absolute top-4 -right-10 cursor-pointer text-2xl text-slate-100 md:-top-2"
+          onClick={_onClose}
+        />
         <div
           className="mb-5 flex w-full cursor-default justify-center"
           onClick={_onClose}
         >
           {nftRender}
         </div>
-
-        <h1 className="text-2xl text-slate-100">{rewardTier.name}</h1>
+        <div className="mb-4 flex items-center justify-between gap-6">
+          <h1 className="mb-0 text-2xl text-slate-100">{rewardTier.name}</h1>
+          {actionButton ? actionButton : null}
+        </div>
         <span className="uppercase text-slate-100">
           <Trans>{projectMetadata?.name}</Trans>
         </span>
-
         <p className="mt-2 max-w-prose text-slate-100">
           {rewardTier.description}
         </p>
-        {hasLimitedSupply || rewardTier.externalLink ? (
-          <div className="mt-5 flex text-xs text-slate-100">
-            {hasLimitedSupply ? (
-              <div>
-                <Trans>
-                  REMAINING SUPPLY: {rewardTier.remainingSupply}/
-                  {rewardTier.maxSupply}
-                </Trans>
-              </div>
-            ) : null}
-            {rewardTier.externalLink ? (
-              <ExternalLink
-                href={rewardTier.externalLink}
-                className={classNames(
-                  'flex cursor-pointer items-center text-slate-100',
-                  hasLimitedSupply ? 'ml-6' : undefined,
-                )}
-              >
-                <LinkOutlined className="text-lg" />
-                <span className="ml-1 underline">
-                  <Trans>LINK TO NFT</Trans>
-                </span>
-              </ExternalLink>
-            ) : null}
-          </div>
-        ) : null}
+        <div className="mt-5 flex text-xs text-slate-100">
+          {remainingSupplyText}
+          {rewardTier.externalLink ? (
+            <ExternalLink
+              href={rewardTier.externalLink}
+              className={twMerge(
+                'ml-6 flex cursor-pointer items-center text-slate-100',
+              )}
+            >
+              <LinkOutlined className="text-lg" />
+              <span className="ml-1 underline">
+                <Trans>LINK TO NFT</Trans>
+              </span>
+            </ExternalLink>
+          ) : null}
+        </div>
       </div>
     </div>
   )

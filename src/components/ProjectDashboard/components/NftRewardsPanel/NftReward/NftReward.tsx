@@ -9,12 +9,15 @@ import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { AddNftButton } from './AddNftButton'
 import { NftDetails } from './NftDetails'
 import { NftThumbnail } from './NftThumbnail'
+import { PreviewAddRemoveNftButton } from './PreviewAddRemoveNftButton'
+import { RemoveNftButton } from './RemoveNftButton'
 
 type NftRewardProps = {
   className?: string
   rewardTier?: NftRewardTier
   loading?: boolean
   onSelect: (quantity?: number) => void
+  onDeselect: VoidFunction
   previewDisabled?: boolean
   hideAttributes?: boolean
 }
@@ -25,6 +28,7 @@ export function NftReward({
   rewardTier,
   previewDisabled,
   onSelect,
+  onDeselect,
   hideAttributes,
 }: NftRewardProps) {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
@@ -59,7 +63,8 @@ export function NftReward({
   return (
     <div
       className={twMerge(
-        'group relative flex h-full w-[252px] cursor-pointer select-none flex-col rounded-lg border border-grey-200 dark:border-slate-500',
+        'group relative flex h-full w-[252px] cursor-pointer select-none flex-col rounded-[10px] border border-grey-200 dark:border-slate-500',
+        'shadow-[0_4px_14px_rgba(0,0,0,0.0392156862745098)]', // box-shadow: 0px 4px 14px 0px #0000000A
         isSelected ? 'border-2 border-bluebs-500 dark:border-bluebs-500' : '',
         className,
       )}
@@ -76,13 +81,24 @@ export function NftReward({
         hideAttributes={hideAttributes}
         remainingSupplyText={remainingSupplyText}
       />
-      <AddNftButton onClick={() => onSelect(1)} />
+      {isSelected ? (
+        <RemoveNftButton onClick={() => onDeselect()} />
+      ) : (
+        <AddNftButton onClick={() => onSelect(1)} />
+      )}
       {rewardTier && !previewDisabled && previewVisible ? (
         <NftPreview
           open={previewVisible}
           rewardTier={rewardTier}
           onClose={closePreview}
           fileUrl={fileUrl}
+          actionButton={
+            <PreviewAddRemoveNftButton
+              onSelect={() => onSelect(1)}
+              onDeselect={onDeselect}
+              isSelected={isSelected}
+            />
+          }
         />
       ) : null}
     </div>

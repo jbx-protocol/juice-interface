@@ -110,6 +110,9 @@ msgstr ""
 msgid "Your Name"
 msgstr ""
 
+msgid "REMAINING SUPPLY: Unlimited"
+msgstr ""
+
 msgid "project owner"
 msgstr ""
 
@@ -3902,6 +3905,9 @@ msgstr ""
 msgid "Save project details"
 msgstr ""
 
+msgid "Remove NFT"
+msgstr ""
+
 msgid "Token holders"
 msgstr ""
 
@@ -4362,6 +4368,9 @@ msgid "Latest"
 msgstr ""
 
 msgid "Custom metadata resolvers replace the default metadata above. They must conform to the <0>IJBTokenUriResolver</0> interface."
+msgstr ""
+
+msgid "REMAINING SUPPLY: Sold out"
 msgstr ""
 
 msgid "REMAINING SUPPLY: {0}/{1}"

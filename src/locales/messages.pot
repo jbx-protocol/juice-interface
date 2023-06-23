@@ -2144,9 +2144,6 @@ msgstr ""
 msgid "File must be in a format of {0}"
 msgstr ""
 
-msgid "Track the historical voting weight of each token holder across all tiers of NFTs. <0>Learn more.</0>"
-msgstr ""
-
 msgid "Cycle #{0}"
 msgstr ""
 
@@ -3489,9 +3486,6 @@ msgid "Your unclaimed {tokenTextLong}"
 msgstr ""
 
 msgid "Mint new {tokensLabel} into a wallet. Only a project's owner, a designated operator, or one of the terminal's delegates can mint project tokens."
-msgstr ""
-
-msgid "Your project's NFTs will not have on-chain governance capabilities."
 msgstr ""
 
 msgid "Send reserved {0}"

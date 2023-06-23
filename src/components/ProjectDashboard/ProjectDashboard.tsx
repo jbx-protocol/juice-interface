@@ -37,7 +37,7 @@ export const ProjectDashboard = () => {
                       <div className="mt-10 flex w-full flex-col gap-6 px-4 md:flex-row md:px-0">
                         <PayProjectCard className="flex-1" />
                         {CIDs?.length ? <NftRewardsCard /> : null}
-                        <CurrentCycleCard />
+                        <CurrentCycleCard className="w-full max-w-sm" />
                       </div>
                       <ProjectTabs className="mt-8" />
                     </div>

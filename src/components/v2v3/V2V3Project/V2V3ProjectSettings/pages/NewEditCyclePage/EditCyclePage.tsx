@@ -1,8 +1,37 @@
 import { Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { helpPagePath } from 'utils/routes'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import Link from 'next/link'
+import { useContext } from 'react'
+import { helpPagePath, settingsPagePath } from 'utils/routes'
+
+function EditCycleSection({
+  title,
+  description,
+  children,
+}: {
+  title: JSX.Element
+  description: JSX.Element
+  children: React.ReactNode
+}) {
+  return (
+    <section className="grid gap-4 py-5 md:grid-cols-[300px_1fr]">
+      <div className="text-sm font-medium">
+        <div className="mb-2 font-medium">{title}</div>
+        <div className="text-secondary">{description}</div>
+      </div>
+
+      {children}
+    </section>
+  )
+}
 
 export function EditCyclePage() {
+  const { projectId } = useContext(ProjectMetadataContext)
+  const { handle } = useContext(V2V3ProjectContext)
+
   return (
     <div>
       <p>
@@ -16,60 +45,57 @@ export function EditCyclePage() {
 
       {/* Details */}
       <div className="divide-y divide-solid divide-slate-400">
-        <div className="grid gap-4 py-5 md:grid-cols-[300px_1fr]">
-          <div className="text-sm font-medium">
-            <div className="mb-2 font-medium">
-              <Trans>Details</Trans>
-            </div>
-            <div className="text-secondary">
-              <Trans>
-                Set up your top-level project configuration details.
-              </Trans>
-            </div>
-          </div>
-          <div>TODO</div>
-        </div>
+        <EditCycleSection
+          title={<Trans>Details</Trans>}
+          description={
+            <Trans>Set up your top-level project configuration details.</Trans>
+          }
+        >
+          <div>Todo</div>
+        </EditCycleSection>
 
-        {/* Payouts */}
-        <div className="grid gap-4 py-5 md:grid-cols-[300px_1fr]">
-          <div className="text-sm font-medium">
-            <div className="mb-2 font-medium">
-              <Trans>Payouts</Trans>
-            </div>
-            <div className="text-secondary">
-              <Trans>How your project will be paid and pay out in ETH.</Trans>
-            </div>
-          </div>
-          <div>TODO</div>
-        </div>
+        <EditCycleSection
+          title={<Trans>Payouts</Trans>}
+          description={
+            <Trans>How your project will be paid and pay out in ETH.</Trans>
+          }
+        >
+          <div>Todo</div>
+        </EditCycleSection>
 
-        {/* Tokens */}
-        <div className="grid gap-4 py-5 md:grid-cols-[300px_1fr]">
-          <div className="text-sm font-medium">
-            <div className="mb-2 font-medium">
-              <Trans>Tokens</Trans>
-            </div>
-            <div className="text-secondary">
-              <Trans>Manage how your projects tokens should work.</Trans>
-            </div>
-          </div>
-          <div>TODO</div>
-        </div>
+        <EditCycleSection
+          title={<Trans>Tokens</Trans>}
+          description={
+            <Trans>Manage how your projects tokens should work.</Trans>
+          }
+        >
+          <div>Todo</div>
+        </EditCycleSection>
 
-        {/* NFTs */}
-        <div className="grid gap-4 py-5 md:grid-cols-[300px_1fr]">
-          <div className="text-sm font-medium">
-            <div className="mb-2 font-medium">
-              <Trans>NFTs</Trans>
-            </div>
-            <div className="text-secondary">
-              <Trans>
-                Manage how you reward supporters when they support your project.
-              </Trans>
-            </div>
-          </div>
-          <div>TODO</div>
-        </div>
+        <EditCycleSection
+          title={<Trans>NFTs</Trans>}
+          description={
+            <Trans>
+              Manage how you reward supporters when they support your project.
+            </Trans>
+          }
+        >
+          <div>Todo</div>
+        </EditCycleSection>
+      </div>
+
+      <div className="flex items-center justify-end gap-4">
+        {projectId && handle ? (
+          <Link href={settingsPagePath(undefined, { projectId, handle })}>
+            <Button>
+              <Trans>Cancel</Trans>
+            </Button>
+          </Link>
+        ) : null}
+
+        <Button type="primary">
+          <Trans>Save changes</Trans>
+        </Button>
       </div>
     </div>
   )

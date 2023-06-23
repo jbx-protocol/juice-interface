@@ -27,6 +27,7 @@ export const useRewardEligibilityCallout = () => {
     if (!rewardTiers || !payAmount || weiPayAmount.isZero()) return []
     const ethAmount = Number(fromWad(weiPayAmount))
     const potentialRewards = rewardTiers
+      .filter(tier => (tier.remainingSupply ?? Infinity) > 0)
       .filter(tier => tier.contributionFloor <= ethAmount)
       .filter(tier => !nftRewards.find(nft => nft.id === tier.id))
       .sort((a, b) => b.contributionFloor - a.contributionFloor)

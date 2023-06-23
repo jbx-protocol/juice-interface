@@ -31,7 +31,7 @@ export const PayoutsSubPanel = ({
             <PayoutsPopupMenu type={type} />
           </div>
           {totalPayoutAmount && (
-            <div className="mt-2 font-heading text-xl font-medium dark:text-slate-50">
+            <div className="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50">
               {totalPayoutAmount}
             </div>
           )}

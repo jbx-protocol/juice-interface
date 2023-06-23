@@ -48,9 +48,9 @@ export default function Legal() {
           within the United States.
         </li>
         <li>
-          The{' '}
-          <ExternalLink href="https://0x.org/docs/developer-resources/0x-legal-guide">
-            0x Legal Guide
+          The SEC's{' '}
+          <ExternalLink href="https://www.sec.gov/files/dlt-framework.pdf">
+            Framework for "Investment Contract" Analysis of Digital Assets
           </ExternalLink>{' '}
           provides an overview of securities and commodities regulations as they
           pertain to cryptocurrency within the United States.
@@ -66,9 +66,8 @@ export default function Legal() {
       <ul className="list-disc">
         <li>
           <ExternalLink href="https://openesq.tech/">Open Esquire</ExternalLink>{' '}
-          is a group of legal engineers helping Ethereum (and Juicebox) projects
-          incorporate and maintain compliance within the United States. Get in
-          touch on{' '}
+          is a group of legal engineers helping projects incorporate and
+          maintain compliance within the United States. Get in touch on{' '}
           <ExternalLink href="https://openesq.tech/">
             their website
           </ExternalLink>
@@ -87,7 +86,7 @@ export default function Legal() {
         </li>
       </ul>
 
-      <h2 className="mt-6 mb-4 font-display text-2xl">Legal Services</h2>
+      <h2 className="mt-6 mb-4 font-display text-2xl">Service Providers</h2>
       <p>
         You can use these services to form legal entities for yourself or your
         project.
@@ -100,17 +99,6 @@ export default function Legal() {
           <ExternalLink href="https://otonomos.com/">Otonomos</ExternalLink>.
           Alternatively, you can register for incorporation directly with the
           relevant government.
-        </li>
-        <li>
-          You can form an onchain LLC, non-profit, or charter entity by using{' '}
-          <ExternalLink href="https://www.wrappr.wtf">wrappr.wtf</ExternalLink>.
-          Wrappr lets you mint NFTs which serve as limited liability "legal
-          wrappers" for DAOs, wallets, or projects by using{' '}
-          <ExternalLink href="https://github.com/kalidao/kali-legal">
-            KaliDAO's agreements
-          </ExternalLink>
-          . This public good service is provided free-of-charge – you only have
-          to pay for gas.
         </li>
         <li>
           <ExternalLink href="https://www.midao.org/">MIDAO</ExternalLink> can
@@ -151,14 +139,6 @@ export default function Legal() {
           </ExternalLink>{' '}
           and on their{' '}
           <ExternalLink href="https://forum.lexpunk.army/">forum</ExternalLink>.
-        </li>
-        <li>
-          <ExternalLink href="https://kali.gg/">KaliDAO</ExternalLink> has made
-          several useful legal documents available on{' '}
-          <ExternalLink href="https://github.com/kalidao/kali-legal">
-            GitHub
-          </ExternalLink>
-          .
         </li>
         <li>
           For common legal documents, you may have success using AI chatbots to

@@ -76,7 +76,7 @@ export const SummaryExpandedView = () => {
             className="flex cursor-auto items-center gap-8 self-end rounded-lg border border-grey-200 p-8 dark:border-slate-500 dark:bg-slate-700"
             onClick={e => e.stopPropagation()}
           >
-            <div className="flex flex-col items-center gap-2 whitespace-nowrap">
+            <div className="flex flex-col gap-2 whitespace-nowrap">
               <span className="text-sm text-grey-500 dark:text-slate-200">
                 <Trans>Total to pay</Trans>
               </span>

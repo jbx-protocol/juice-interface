@@ -109,7 +109,7 @@ exports[`SummaryExpandedView should render correctly 1`] = `
         data-testid="cart-summary-open-view-total"
       >
         <div
-          class="flex flex-col items-center gap-2 whitespace-nowrap"
+          class="flex flex-col gap-2 whitespace-nowrap"
         >
           <span
             class="text-sm text-grey-500 dark:text-slate-200"

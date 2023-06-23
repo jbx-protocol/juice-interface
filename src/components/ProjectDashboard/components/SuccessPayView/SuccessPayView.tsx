@@ -19,6 +19,7 @@ export const SuccessPayView = () => {
     projectPayReceipt,
     nftPaymentSuccessModal,
     nftsPurchased,
+    tokensReceivedDuringTx,
     returnToProject,
   } = useSuccessPayView()
   return (
@@ -73,7 +74,7 @@ export const SuccessPayView = () => {
           </div>
         )}
 
-        {nftsPurchased && (
+        {(nftsPurchased || tokensReceivedDuringTx) && (
           <div className="flex flex-col gap-4 py-10 text-start">
             <h3 className="mb-0 font-heading text-xl font-medium">
               <Trans>Your NFTs & Rewards</Trans>

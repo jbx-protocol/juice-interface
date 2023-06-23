@@ -13,6 +13,7 @@ import { parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { useProjectCart } from '../useProjectCart'
 import { ProjectPayReceipt } from '../useProjectPageQueries'
+import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
 import { PayProjectModalFormValues } from './usePayProjectModal'
 
 export const usePayProjectTx = ({
@@ -42,6 +43,7 @@ export const usePayProjectTx = ({
   } = useContext(NftRewardsContext)
   const converter = useCurrencyConverter()
   const payProjectTx = usePayETHPaymentTerminalTx()
+  const { receivedTickets } = useProjectPaymentTokens()
 
   const buildPayReceipt = useCallback(
     (e: Transaction | undefined): ProjectPayReceipt => {
@@ -54,10 +56,10 @@ export const usePayProjectTx = ({
         timestamp: new Date(),
         transactionHash: e?.hash,
         fromAddress: userAddress ?? '',
-        tokensReceived: '', // TODO
+        tokensReceived: receivedTickets ?? '',
       }
     },
-    [nftRewards, totalAmount, userAddress],
+    [nftRewards, receivedTickets, totalAmount, userAddress],
   )
 
   return useCallback(

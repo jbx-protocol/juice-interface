@@ -12,6 +12,15 @@ export const useSuccessPayView = () => {
     () => !!projectPayReceipt?.nfts.length,
     [projectPayReceipt?.nfts.length],
   )
+  const tokensReceivedDuringTx = useMemo(
+    () =>
+      projectPayReceipt
+        ? projectPayReceipt.tokensReceived.length &&
+          projectPayReceipt.tokensReceived !== '0'
+        : false,
+    [projectPayReceipt],
+  )
+
   const [confettiVisible, setConfettiVisible] = useState(true)
 
   const projectId = useMemo(() => {
@@ -39,6 +48,7 @@ export const useSuccessPayView = () => {
     projectPayReceipt,
     nftPaymentSuccessModal,
     nftsPurchased,
+    tokensReceivedDuringTx,
     confettiVisible,
     returnToProject,
   }

@@ -3,14 +3,17 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Layout } from 'antd'
 import { V2V3SettingsPageKey } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { twJoin } from 'tailwind-merge'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { ArchiveProjectSettingsPage } from './pages/ArchiveProjectSettingsPage'
 import { EditNftsPage } from './pages/EditNftsPage'
 import { GovernanceSettingsPage } from './pages/GovernanceSettingsPage'
+import { EditCyclePage } from './pages/NewEditCyclePage/EditCyclePage'
 import { PayoutsSettingsPage } from './pages/PayoutsSettingsPage'
 import { ProjectDetailsSettingsPage } from './pages/ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
 import { ProjectHandleSettingsPage } from './pages/ProjectHandleSettingsPage'
@@ -26,7 +29,9 @@ const SettingsPageComponents: {
 } = {
   general: ProjectDetailsSettingsPage,
   handle: ProjectHandleSettingsPage,
-  cycle: ReconfigureFundingCycleSettingsPage,
+  cycle: featureFlagEnabled(FEATURE_FLAGS.NEW_CYCLE_CONFIG_PAGE)
+    ? EditCyclePage
+    : ReconfigureFundingCycleSettingsPage,
   nfts: EditNftsPage,
   payouts: PayoutsSettingsPage,
   reservedtokens: ReservedTokensSettingsPage,
@@ -43,7 +48,7 @@ const V2V3SettingsPageKeyTitleMap = (): {
 } => ({
   general: t`General`,
   handle: t`Project handle`,
-  cycle: t`Edit Cycle`,
+  cycle: t`Cycle configuration`,
   payouts: t`Payouts`,
   reservedtokens: t`Reserved token recipients`,
   nfts: t`Edit NFT collection`,

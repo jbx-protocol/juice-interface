@@ -344,6 +344,9 @@ msgstr ""
 msgid "{0} remaining"
 msgstr ""
 
+msgid "How your project will be paid and pay out in ETH."
+msgstr ""
+
 msgid "Save payouts"
 msgstr ""
 
@@ -642,6 +645,9 @@ msgid "Name"
 msgstr ""
 
 msgid "Interested in becoming a JuiceboxDAO contributor?"
+msgstr ""
+
+msgid "Configure your cycle for transparent treasury and campaign management. Any adjustments made will be published on Ethereum to inform contributors."
 msgstr ""
 
 msgid "Save tracked assets"
@@ -2975,6 +2981,9 @@ msgstr ""
 msgid "Fees held"
 msgstr ""
 
+msgid "Manage how you reward supporters when they support your project."
+msgstr ""
+
 msgid "Issuance reduction rate"
 msgstr ""
 
@@ -4175,6 +4184,9 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
+msgid "Manage how your projects tokens should work."
+msgstr ""
+
 msgid "File empty or corrupt. Try again."
 msgstr ""
 
@@ -4406,9 +4418,6 @@ msgstr ""
 msgid "Token rules"
 msgstr ""
 
-msgid "Edit Cycle"
-msgstr ""
-
 msgid "Potential risks"
 msgstr ""
 
@@ -4518,6 +4527,9 @@ msgid "Save edits"
 msgstr ""
 
 msgid "Creators & builders"
+msgstr ""
+
+msgid "Set up your top-level project configuration details."
 msgstr ""
 
 msgid "Do not include .eth"

@@ -129,9 +129,10 @@ export const PayProjectModal: React.FC = () => {
                       <label
                         htmlFor="userAcceptsTerms"
                         className={twMerge(
+                          'font-normal',
                           props.errors.userAcceptsTerms &&
                             props.submitCount > 0 &&
-                            'font-medium text-error-500 transition-colors',
+                            'text-error-500 transition-colors',
                         )}
                       >
                         <Trans>

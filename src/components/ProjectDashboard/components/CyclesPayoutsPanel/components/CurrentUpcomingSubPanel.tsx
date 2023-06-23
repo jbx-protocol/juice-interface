@@ -1,8 +1,7 @@
 import { Trans, t } from '@lingui/macro'
-import { Tooltip } from 'antd'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { DisplayCard } from '../../ui'
+import { TitleDescriptionDisplayCard } from '../../ui/TitleDescriptionDisplayCard'
 import { useCurrentUpcomingSubPanel } from '../hooks/useCurrentUpcomingSubPanel'
 import { ConfigurationDisplayCard } from './ConfigurationDisplayCard'
 import { currentCycleRemainingLengthTooltip } from './CyclesPanelTooltips'
@@ -66,36 +65,31 @@ export const CurrentUpcomingSubPanel = ({
     <div>
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-2 gap-4 md:flex">
-          <DisplayCard className="w-full md:max-w-[127px]">
-            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
-              {topPanelsInfo[CYCLE_NUMBER_INDEX].title}
-              <div className="font-heading text-xl font-medium text-grey-900 dark:text-slate-50">
-                {topPanelsInfo[CYCLE_NUMBER_INDEX].value ?? <Skeleton />}
-              </div>
-            </div>
-          </DisplayCard>
-          <DisplayCard className="w-full md:w-fit">
-            <Tooltip title={cycleStatusTooltip} placement="bottom">
-              <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
-                {topPanelsInfo[1].title}
-                <div className="font-heading text-xl font-medium text-grey-900 dark:text-slate-50">
-                  {topPanelsInfo[1].value ?? <Skeleton className="w-22" />}
-                </div>
-              </div>
-            </Tooltip>
-          </DisplayCard>
-          <DisplayCard className="col-span-2 md:flex-1">
-            <Tooltip title={cycleLengthTooltip}>
-              <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
-                {topPanelsInfo[CYCLE_LENGTH_INDEX].title}
-                <div className="font-heading text-xl font-medium text-grey-900 dark:text-slate-50">
-                  {topPanelsInfo[CYCLE_LENGTH_INDEX].value ?? (
-                    <Skeleton className="w-40" />
-                  )}
-                </div>
-              </div>
-            </Tooltip>
-          </DisplayCard>
+          <TitleDescriptionDisplayCard
+            className="w-full md:max-w-[127px]"
+            title={topPanelsInfo[CYCLE_NUMBER_INDEX].title}
+            description={
+              topPanelsInfo[CYCLE_NUMBER_INDEX].value ?? <Skeleton />
+            }
+          />
+          <TitleDescriptionDisplayCard
+            className="w-full md:w-fit"
+            title={topPanelsInfo[STATUS_INDEX].title}
+            description={
+              topPanelsInfo[STATUS_INDEX].value ?? <Skeleton className="w-22" />
+            }
+            tooltip={cycleStatusTooltip}
+          />
+          <TitleDescriptionDisplayCard
+            className="col-span-2 md:flex-1"
+            title={topPanelsInfo[CYCLE_LENGTH_INDEX].title}
+            description={
+              topPanelsInfo[CYCLE_LENGTH_INDEX].value ?? (
+                <Skeleton className="w-40" />
+              )
+            }
+            tooltip={cycleLengthTooltip}
+          />
         </div>
         <ConfigurationDisplayCard type={info.type} />
       </div>

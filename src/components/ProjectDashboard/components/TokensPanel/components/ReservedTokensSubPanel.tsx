@@ -1,9 +1,9 @@
-import { Trans } from '@lingui/macro'
-import { Tooltip } from 'antd'
+import { Trans, t } from '@lingui/macro'
 import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
 import { reservedTokensTooltip } from '../../TokensPanel/TokensPanelTooltips'
 import { DisplayCard } from '../../ui'
+import { TitleDescriptionDisplayCard } from '../../ui/TitleDescriptionDisplayCard'
 import { useReservedTokensSubPanel } from '../hooks/useReservedTokensSubPanel'
 import { ReservedTokensPopupMenu } from './ReservedTokensPopupMenu'
 import { SendReservedTokensButton } from './SendReservedTokensButton'
@@ -29,32 +29,24 @@ export const ReservedTokensSubPanel = ({
       </h2>
       <div className="mt-5 flex flex-col items-center gap-4">
         <div className="flex w-full items-center gap-4">
-          <DisplayCard className="flex w-full flex-col gap-2">
-            <Tooltip title={reservedTokensTooltip}>
-              <h3 className="text-grey-60 font-body0 mb-0 max-w-min whitespace-nowrap text-sm font-medium dark:text-slate-200">
-                <Trans>Reserved tokens</Trans>
-              </h3>
-            </Tooltip>
-            {reservedTokens !== undefined ? (
-              <span className="font-heading text-xl font-medium">
-                {reservedTokens}
-              </span>
-            ) : (
-              <div>
+          <TitleDescriptionDisplayCard
+            className="w-full"
+            title={t`Reserved tokens`}
+            description={
+              reservedTokens ? (
+                <>{reservedTokens}</>
+              ) : (
                 <div className="h-7 w-24 animate-pulse rounded bg-grey-200 dark:bg-slate-200" />
-              </div>
-            )}
-          </DisplayCard>
-          <DisplayCard className="flex w-full flex-col gap-2">
-            <Tooltip title={reservedRateTooltip}>
-              <h3 className="text-grey-60 font-body0 mb-0 max-w-min whitespace-nowrap text-sm font-medium dark:text-slate-200">
-                <Trans>Reserved rate</Trans>
-              </h3>
-            </Tooltip>
-            <span className="font-heading text-xl font-medium">
-              {reservedRate}
-            </span>
-          </DisplayCard>
+              )
+            }
+            tooltip={reservedTokensTooltip}
+          />
+          <TitleDescriptionDisplayCard
+            className="w-full"
+            title={t`Reserved rate`}
+            description={reservedRate}
+            tooltip={reservedRateTooltip}
+          />
         </div>
         <DisplayCard className="flex w-full flex-col pb-8">
           <div className="flex items-center justify-between gap-3">

@@ -31,11 +31,11 @@ export function NftPreview({
 
   if (!open) return null
 
-  const hasLimitedSupply = Boolean(
-    rewardTier.remainingSupply &&
-      rewardTier.maxSupply &&
-      rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY,
+  const hasUnlimitedSupply = Boolean(
+    !rewardTier.maxSupply || rewardTier.maxSupply === DEFAULT_NFT_MAX_SUPPLY,
   )
+
+  const isSoldOut = Boolean(!rewardTier.remainingSupply)
 
   const { data: contentType, isLoading: contentTypeLoading } =
     useContentType(fileUrl)
@@ -66,12 +66,14 @@ export function NftPreview({
     onClose()
   }
 
-  const remainingSupplyText = hasLimitedSupply ? (
+  const remainingSupplyText = hasUnlimitedSupply ? (
+    <Trans>REMAINING SUPPLY: Unlimited</Trans>
+  ) : isSoldOut ? (
+    <Trans>REMAINING SUPPLY: Sold out</Trans>
+  ) : (
     <Trans>
       REMAINING SUPPLY: {rewardTier.remainingSupply}/{rewardTier.maxSupply}
     </Trans>
-  ) : (
-    <Trans>REMAINING SUPPLY: Unlimited</Trans>
   )
 
   return (
@@ -109,8 +111,7 @@ export function NftPreview({
             <ExternalLink
               href={rewardTier.externalLink}
               className={twMerge(
-                'flex cursor-pointer items-center text-slate-100',
-                hasLimitedSupply ? 'ml-6' : undefined,
+                'ml-6 flex cursor-pointer items-center text-slate-100',
               )}
             >
               <LinkOutlined className="text-lg" />

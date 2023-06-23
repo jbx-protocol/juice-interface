@@ -3785,6 +3785,9 @@ msgstr ""
 msgid "Minimum contribution"
 msgstr ""
 
+msgid "Success!"
+msgstr ""
+
 msgid "Error loading payouts"
 msgstr ""
 

@@ -20,6 +20,9 @@ msgstr ""
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr ""
 
+msgid "Add <0/>"
+msgstr ""
+
 msgid "Redeemed"
 msgstr ""
 
@@ -240,6 +243,9 @@ msgid "Error downloading participants, try again."
 msgstr ""
 
 msgid "Set a future date & time to start your project's first cycle."
+msgstr ""
+
+msgid "Dismiss"
 msgstr ""
 
 msgid "No"
@@ -855,6 +861,9 @@ msgid "Create a project payer address for {projectTitle}"
 msgstr ""
 
 msgid "Removing the payment will remove all the items from the cart. Are you sure you want to remove the payment?"
+msgstr ""
+
+msgid "You are eligible for {0} <0/> (NFT)"
 msgstr ""
 
 msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
@@ -1800,6 +1809,9 @@ msgid "Optionally, you can create an ERC-20 token once your project has been dep
 msgstr ""
 
 msgid "Set this to the sum of your payouts"
+msgstr ""
+
+msgid "{rewardCount, plural, one {reward} other {rewards}}"
 msgstr ""
 
 msgid "Your transaction has been submitted and is awaiting confirmation."

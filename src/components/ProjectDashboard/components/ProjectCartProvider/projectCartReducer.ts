@@ -49,6 +49,9 @@ export type ProjectCartAction =
       }
     }
   | {
+      type: 'dismissNftRewardEligibility'
+    }
+  | {
       type: 'setPayModal'
       payload: {
         open: boolean
@@ -64,6 +67,7 @@ export type ProjectCartAction =
 export type ProjectCartState = {
   payAmount: ProjectCartCurrencyAmount | undefined
   nftRewards: ProjectCartNftReward[]
+  nftRewardEligibilityDismissed: boolean
   expanded: boolean
   payModalOpen: boolean
 }
@@ -80,11 +84,13 @@ export const projectCartReducer = (
           amount: action.payload.amount,
           currency: action.payload.currency,
         },
+        nftRewardEligibilityDismissed: false,
       }
     case 'removePayment':
       return {
         ...state,
         payAmount: undefined,
+        nftRewardEligibilityDismissed: false,
       }
     case 'reset':
     case 'payProject':
@@ -92,6 +98,7 @@ export const projectCartReducer = (
         ...state,
         payAmount: undefined,
         nftRewards: [],
+        nftRewardEligibilityDismissed: false,
         expanded: false,
       }
     case 'toggleExpanded':
@@ -166,6 +173,11 @@ export const projectCartReducer = (
         nftRewards: newNftRewards,
       }
     }
+    case 'dismissNftRewardEligibility':
+      return {
+        ...state,
+        nftRewardEligibilityDismissed: true,
+      }
     case 'setPayModal': {
       const { open } = action.payload
       return {

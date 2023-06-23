@@ -11,7 +11,7 @@ export const PaymentCartItem = () => {
     dispatch({ type: 'removePayment' })
   }, [dispatch])
 
-  if (!payAmount) {
+  if (!payAmount || payAmount.amount === 0) {
     return null
   }
 

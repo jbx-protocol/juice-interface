@@ -557,6 +557,9 @@ msgstr ""
 msgid "I understand"
 msgstr ""
 
+msgid "This cycle has upcoming changes"
+msgstr ""
+
 msgid "While enabled, the project owner can change the project's <0>payment terminals</0> at any time."
 msgstr ""
 
@@ -2931,6 +2934,9 @@ msgid "Set cycle duration"
 msgstr ""
 
 msgid "Edit {projectTitle}'s rules"
+msgstr ""
+
+msgid "This cycle has no upcoming changes"
 msgstr ""
 
 msgid "Software"

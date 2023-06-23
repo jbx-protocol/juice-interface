@@ -44,7 +44,7 @@ export const PayInput = ({
       <CurrencyIcon className="flex-0 h-7 w-7" currency={currency} />
       <input
         data-testid="pay-input-input"
-        className="min-w-0 flex-1 bg-transparent outline-none"
+        className="min-w-0 flex-1 bg-transparent text-base outline-none"
         placeholder={placeholder}
         value={amount}
         onChange={onInputChange}

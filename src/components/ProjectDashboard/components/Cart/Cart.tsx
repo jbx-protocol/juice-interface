@@ -68,7 +68,7 @@ export const Cart = ({ className }: { className?: string }) => {
           <ChevronUpIcon
             role="button"
             className={twMerge(
-              'absolute right-8 h-8 w-8 flex-shrink-0',
+              'absolute right-4 h-8 w-8 flex-shrink-0',
               cart.expanded && 'top-6 rotate-180 md:top-12',
             )}
           />

@@ -6,7 +6,6 @@ describe('projectCartReducer', () => {
     payAmount: undefined,
     payModalOpen: false,
     expanded: false,
-    userIsReceivingTokens: true,
     nftRewards: [
       {
         id: 1,
@@ -33,10 +32,9 @@ describe('projectCartReducer', () => {
     })
   })
 
-  test('removePayment will set payAmount to undefined and userIsReceivingTokens to true', () => {
+  test('removePayment will set payAmount to undefined', () => {
     const state = {
       ...DefaultState,
-      userIsReceivingTokens: false,
       payAmount: {
         amount: 100,
         currency: V2V3_CURRENCY_ETH,
@@ -48,21 +46,6 @@ describe('projectCartReducer', () => {
     expect(projectCartReducer(state, action)).toEqual({
       ...state,
       payAmount: undefined,
-      userIsReceivingTokens: true,
-    })
-  })
-
-  test('removeTokens will set userIsReceivingTokens to false', () => {
-    const state = {
-      ...DefaultState,
-      userIsReceivingTokens: true,
-    }
-    const action = {
-      type: 'removeTokens' as const,
-    }
-    expect(projectCartReducer(state, action)).toEqual({
-      ...state,
-      userIsReceivingTokens: false,
     })
   })
 

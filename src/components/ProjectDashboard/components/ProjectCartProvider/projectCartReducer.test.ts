@@ -5,6 +5,7 @@ describe('projectCartReducer', () => {
   const DefaultState: ProjectCartState = {
     payAmount: undefined,
     payModalOpen: false,
+    nftRewardEligibilityDismissed: false,
     expanded: false,
     nftRewards: [
       {

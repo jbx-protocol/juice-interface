@@ -5,6 +5,7 @@ import { stopPropagation } from 'react-stop-propagation'
 import { useCartSummary } from '../hooks/useCartSummary'
 import { NftCartItem, PaymentCartItem } from './CartItem'
 import { ProjectTokensCartItem } from './CartItem/ProjectTokensCartItem'
+import { RewardEligibilityCallout } from './CartItem/RewardEligibilityCallout'
 import { SummaryPayButton } from './SummaryPayButton'
 
 export const SummaryExpandedView = () => {
@@ -53,6 +54,8 @@ export const SummaryExpandedView = () => {
             ))}
             <ProjectTokensCartItem />
           </div>
+
+          <RewardEligibilityCallout />
         </div>
 
         {isMobile ? (

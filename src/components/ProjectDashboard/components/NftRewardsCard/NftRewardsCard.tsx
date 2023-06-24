@@ -50,7 +50,7 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
       </div>
       <div className="flex items-center gap-3">
         <HoverPreview>
-          <StackedComponents components={NftComponents} size="56px" />
+          <StackedComponents components={NftComponents} size="60px" />
         </HoverPreview>
         <div>
           <button className="flex items-center gap-1 whitespace-nowrap rounded-2xl bg-smoke-100 py-1 pl-3 pr-2.5 text-sm text-smoke-700 dark:bg-slate-500 dark:text-slate-100">

@@ -27,6 +27,7 @@ export const useAboutPanel = () => {
   return {
     description,
     socialLinks,
+    projectName: projectMetadata?.name,
   }
 }
 

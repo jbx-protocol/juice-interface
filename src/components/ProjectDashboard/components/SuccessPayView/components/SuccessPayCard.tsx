@@ -26,7 +26,7 @@ export const SuccessPayCard = ({ className }: { className?: string }) => {
   return (
     <div
       className={twMerge(
-        'mx-auto flex w-full max-w-xl flex-col justify-between divide-y divide-grey-200 rounded-lg border border-grey-200 p-6 shadow dark:divide-slate-500 dark:border-slate-500 dark:bg-slate-700 md:flex-row',
+        'mx-auto flex w-full max-w-xl flex-col justify-between divide-y divide-grey-200 rounded-lg border border-grey-200 p-6 shadow-[0_4px_14px_0_rgba(0,0,0,0.03)] dark:divide-slate-500 dark:border-slate-500 dark:bg-slate-700 md:flex-row',
         className,
       )}
     >

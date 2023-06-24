@@ -479,6 +479,9 @@ msgstr ""
 msgid "Add payout"
 msgstr ""
 
+msgid "This project has no description"
+msgstr ""
+
 msgid "Everything we do is to ensure that Juicebox is trustworthy."
 msgstr ""
 
@@ -591,6 +594,9 @@ msgid "Overview"
 msgstr ""
 
 msgid "last {TRENDING_WINDOW_DAYS} days"
+msgstr ""
+
+msgid "This project has no NFTs"
 msgstr ""
 
 msgid "Changes to payouts will take effect immediately."
@@ -2558,9 +2564,6 @@ msgstr ""
 msgid "Add a collection name"
 msgstr ""
 
-msgid "No NFTs have been configured for this project."
-msgstr ""
-
 msgid "No transaction history"
 msgstr ""
 
@@ -4175,6 +4178,9 @@ msgstr ""
 msgid "The amount of ETH this project has received since it was created."
 msgstr ""
 
+msgid "There's nothing here"
+msgstr ""
+
 msgid "Locked cycles"
 msgstr ""
 
@@ -4365,9 +4371,6 @@ msgid "You're all set!"
 msgstr ""
 
 msgid "Set payouts as percentages of the total amount being paid out."
-msgstr ""
-
-msgid "This project has no description."
 msgstr ""
 
 msgid "Add {allocationName}"

@@ -39,7 +39,7 @@ exports[`ProjectTokensCartItem renders 1`] = `
               />
             </svg>
             <span
-              class="whitespace-nowrap rounded-2xl bg-grey-100 py-0.5 px-2 dark:bg-slate-500 dark:text-slate-100"
+              class="whitespace-nowrap rounded-2xl bg-grey-100 py-0.5 px-2 text-xs dark:bg-slate-500 dark:text-slate-100"
             >
               Token
             </span>

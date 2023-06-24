@@ -1,5 +1,6 @@
 import { TwitterOutlined } from '@ant-design/icons'
 import { GlobeAltIcon } from '@heroicons/react/24/outline'
+import ExternalLink from 'components/ExternalLink'
 import Discord from 'components/icons/Discord'
 import Telegram from 'components/icons/Telegram'
 import { useMemo } from 'react'
@@ -34,9 +35,9 @@ export const SocialLinkButton = ({
   }, [type])
 
   return (
-    <a className="flex items-center gap-2" href={href}>
+    <ExternalLink className="flex items-center gap-2 font-medium" href={href}>
       <Icon className="h-4 w-4 text-lg text-bluebs-500" />
       <span className="text-sm">{text}</span>
-    </a>
+    </ExternalLink>
   )
 }

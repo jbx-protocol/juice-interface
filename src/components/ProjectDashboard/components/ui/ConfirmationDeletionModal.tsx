@@ -22,7 +22,7 @@ export const ConfirmationDeletionModal = ({
   const [open, setOpen] = useState(initialOpenState)
   return (
     <JuiceModal
-      position="top"
+      position="center"
       title={title}
       className="max-w-sm"
       buttonPosition="stretch"

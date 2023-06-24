@@ -1,9 +1,9 @@
-import assert from 'assert'
 import { useProjectCart } from 'components/ProjectDashboard/hooks'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import useWeiConverter from 'hooks/useWeiConverter'
 import { useCallback, useContext, useMemo } from 'react'
+import assert from 'utils/assert'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { roundIfCloseToNextInteger } from 'utils/math'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
@@ -62,7 +62,7 @@ export const useRewardEligibilityCallout = () => {
       newPayAmount = converter.weiToUsd(parseWad(newPayAmount))!.toNumber()
     }
     assert(
-      newPayAmount >= 0,
+      newPayAmount >= Infinity,
       `newPayAmount (${newPayAmount}) should be greater than 0`,
     )
     eligibleRewards.forEach(reward =>

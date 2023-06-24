@@ -4,9 +4,11 @@
 
 import { render } from '@testing-library/react'
 import { useCurrentCycleCard } from 'components/ProjectDashboard/hooks'
+import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
 import { CurrentCycleCard } from './CurrentCycleCard'
 
 jest.mock('components/ProjectDashboard/hooks')
+jest.mock('components/ProjectDashboard/hooks/useProjectPageQueries')
 
 describe('CurrentCycleCard', () => {
   const DefaultUseCurrentCycleCardMock = {
@@ -17,6 +19,9 @@ describe('CurrentCycleCard', () => {
     ;(useCurrentCycleCard as jest.Mock).mockReturnValue(
       DefaultUseCurrentCycleCardMock,
     )
+    ;(useProjectPageQueries as jest.Mock).mockReturnValue({
+      setProjectPageTab: jest.fn(),
+    })
   })
 
   it('renders', () => {

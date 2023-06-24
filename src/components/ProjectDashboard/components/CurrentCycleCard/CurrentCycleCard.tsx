@@ -2,7 +2,8 @@ import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/solid'
 import { Trans, t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { useCurrentCycleCard } from 'components/ProjectDashboard/hooks'
-import { useMemo } from 'react'
+import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
+import { useCallback, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { cycleTooltip } from '../CyclesPayoutsPanel/components/CyclesPanelTooltips'
 import { DisplayCard } from '../ui'
@@ -10,6 +11,12 @@ import { DisplayCard } from '../ui'
 export const CurrentCycleCard = ({ className }: { className?: string }) => {
   const { currentCycleNumber, timeRemainingText, isUnlocked } =
     useCurrentCycleCard()
+  const { setProjectPageTab } = useProjectPageQueries()
+
+  const openCyclePayoutsTab = useCallback(
+    () => setProjectPageTab('cycle_payouts'),
+    [setProjectPageTab],
+  )
 
   const LockIcon = useMemo(
     () => (isUnlocked ? LockOpenIcon : LockClosedIcon),
@@ -22,7 +29,10 @@ export const CurrentCycleCard = ({ className }: { className?: string }) => {
   )
 
   return (
-    <DisplayCard className={twMerge('hidden pr-9 lg:block', className)}>
+    <DisplayCard
+      className={twMerge('hidden cursor-pointer pr-9 lg:block', className)}
+      onClick={openCyclePayoutsTab}
+    >
       <Tooltip title={cycleTooltip}>
         <div className="font-medium">
           <Trans>Current Cycle: #{currentCycleNumber}</Trans>

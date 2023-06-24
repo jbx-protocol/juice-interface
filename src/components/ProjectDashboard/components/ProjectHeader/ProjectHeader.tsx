@@ -26,7 +26,7 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
   )
 
   return (
-    <div className={twMerge('relative flex w-full flex-col gap-2', className)}>
+    <div className={twMerge('relative flex w-full flex-col', className)}>
       <ProjectHeaderLogo className="absolute left-0 -top-[146px] rounded-[0.85rem] border-6 border-white dark:border-slate-900" />
 
       <div className="flex justify-end gap-4">

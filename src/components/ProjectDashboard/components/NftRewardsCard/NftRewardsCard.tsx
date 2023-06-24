@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from '@heroicons/react/24/outline'
+import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
@@ -56,10 +56,11 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
         </HoverPreview>
         <div>
           <button
-            className="flex items-center whitespace-nowrap rounded-2xl bg-grey-100 py-1 pl-3 pr-2.5 text-sm text-grey-700 dark:bg-slate-500 dark:text-slate-100"
+            className="flex items-center gap-1 whitespace-nowrap rounded-2xl bg-smoke-100 py-1 pl-3 pr-2.5 text-sm text-smoke-700 dark:bg-slate-500 dark:text-slate-100"
             onClick={openNftRewardsTab}
           >
-            View all <ArrowRightIcon className="h-3 w-3" />
+            View all{' '}
+            <ArrowRightIcon className="h-3 w-3 flex-shrink-0 stroke-2" />
           </button>
         </div>
       </div>

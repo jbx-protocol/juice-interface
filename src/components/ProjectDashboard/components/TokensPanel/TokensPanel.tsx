@@ -59,7 +59,7 @@ export const TokensPanel = () => {
             </div>
             <a
               role="button"
-              className="md:self-end"
+              className="font-medium md:self-end"
               onClick={openTokenHolderModal}
             >
               <Trans>View token holders</Trans>

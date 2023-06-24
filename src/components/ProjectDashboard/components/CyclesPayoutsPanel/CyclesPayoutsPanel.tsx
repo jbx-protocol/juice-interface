@@ -25,7 +25,7 @@ export const CyclesPayoutsPanel = () => {
       className="mx-auto flex w-full max-w-[596px] flex-col gap-5"
     >
       <div className="flex flex-col justify-between md:flex-row md:items-center">
-        <h2 className="font-heading text-2xl font-medium">Cycle</h2>
+        <h2 className="mb-0 font-heading text-2xl font-medium">Cycle</h2>
         <Tab.List className="flex gap-2">
           {tabs.map(tab => (
             <CyclesTab key={tab.id} name={tab.name} />

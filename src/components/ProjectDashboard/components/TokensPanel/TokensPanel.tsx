@@ -101,7 +101,7 @@ const ProjectTokenCard = () => {
 const ProjectTokenBadge = () => {
   const { projectHasErc20Token } = useTokensPanel()
   return (
-    <span className="whitespace-nowrap rounded-2xl bg-grey-100 py-1 px-2 text-xs font-normal text-grey-700 dark:bg-slate-500 dark:text-slate-100">
+    <span className="whitespace-nowrap rounded-2xl bg-smoke-100 py-1 px-2 text-xs font-normal text-smoke-700 dark:bg-slate-500 dark:text-slate-100">
       {projectHasErc20Token ? 'ERC-20' : t`Juicebox native`}
     </span>
   )

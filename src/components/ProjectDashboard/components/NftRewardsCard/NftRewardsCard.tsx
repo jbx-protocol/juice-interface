@@ -37,7 +37,10 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
     <Trans>See the NFTs and rewards offered by this project.</Trans>
   )
   return (
-    <DisplayCard className={twMerge('flex flex-col gap-2', className)}>
+    <DisplayCard
+      className={twMerge('flex cursor-pointer flex-col gap-2', className)}
+      onClick={openNftRewardsTab}
+    >
       <div className="font-medium">
         <Tooltip title={tooltipText}>
           <span>
@@ -47,18 +50,10 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
       </div>
       <div className="flex items-center gap-3">
         <HoverPreview>
-          <StackedComponents
-            className="cursor-pointer"
-            components={NftComponents}
-            size="56px"
-            onClick={openNftRewardsTab}
-          />
+          <StackedComponents components={NftComponents} size="56px" />
         </HoverPreview>
         <div>
-          <button
-            className="flex items-center gap-1 whitespace-nowrap rounded-2xl bg-smoke-100 py-1 pl-3 pr-2.5 text-sm text-smoke-700 dark:bg-slate-500 dark:text-slate-100"
-            onClick={openNftRewardsTab}
-          >
+          <button className="flex items-center gap-1 whitespace-nowrap rounded-2xl bg-smoke-100 py-1 pl-3 pr-2.5 text-sm text-smoke-700 dark:bg-slate-500 dark:text-slate-100">
             View all{' '}
             <ArrowRightIcon className="h-3 w-3 flex-shrink-0 stroke-2" />
           </button>

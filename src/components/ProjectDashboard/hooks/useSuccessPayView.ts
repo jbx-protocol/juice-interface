@@ -34,7 +34,7 @@ export const useSuccessPayView = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setConfettiVisible(false)
-    }, 2000)
+    }, 4000)
     return () => clearTimeout(timer)
   })
 

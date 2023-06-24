@@ -731,6 +731,9 @@ msgstr ""
 msgid "Telegram link"
 msgstr ""
 
+msgid "This cycle has token redemptions {0}"
+msgstr ""
+
 msgid "No past cycles"
 msgstr ""
 

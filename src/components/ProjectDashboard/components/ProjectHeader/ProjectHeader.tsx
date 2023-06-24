@@ -65,7 +65,7 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
         </h1>
 
         <div className="flex flex-col justify-between gap-8 md:flex-row md:gap-12">
-          <div className="flex min-w-0 flex-col gap-4">
+          <div className="flex min-w-0 flex-col gap-3">
             {subtitle && <Subtitle subtitle={subtitle} />}
             <div className="text-grey-500 dark:text-slate-200">
               {projectId ? (

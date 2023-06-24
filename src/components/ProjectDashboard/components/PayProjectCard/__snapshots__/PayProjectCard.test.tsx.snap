@@ -19,14 +19,14 @@ exports[`PayProjectCard renders 1`] = `
         class="flex flex-col gap-2 md:flex-row"
       >
         <input
-          class="md:flex-1"
+          class="h-12 md:flex-1"
           data-testid="pay-input"
           name="payAmount"
           placeholder="0"
           value=""
         />
         <button
-          class="ant-btn ant-btn-primary h-full text-base"
+          class="ant-btn ant-btn-primary h-12 text-base"
           type="submit"
         >
           Add payment

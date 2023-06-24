@@ -34,7 +34,7 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
           <form className="flex flex-col gap-2" onSubmit={props.handleSubmit}>
             <div className="flex flex-col gap-2 md:flex-row">
               <PayInput
-                className="md:flex-1"
+                className="h-12 md:flex-1"
                 placeholder="0"
                 value={{
                   amount: props.values.payAmount.amount?.toString() ?? '',
@@ -46,7 +46,7 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
               />
               <Button
                 htmlType="submit"
-                className="h-full text-base"
+                className="h-12 text-base"
                 type="primary"
               >
                 <Trans>Add payment</Trans>

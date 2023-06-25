@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { usePayProjectCard } from 'components/ProjectDashboard/hooks'
 import { Formik } from 'formik'
@@ -10,7 +10,7 @@ import { PayInput } from './components/PayInput'
 import { TokensPerEth } from './components/TokensPerEth'
 
 export const PayProjectCard = ({ className }: { className?: string }) => {
-  const { validationSchema, addPay } = usePayProjectCard()
+  const { validationSchema, paymentsPaused, addPay } = usePayProjectCard()
   return (
     <DisplayCard className={twMerge('flex flex-col gap-2 pr-9', className)}>
       <div className="font-medium">
@@ -44,13 +44,22 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
                 onBlur={props.handleBlur}
                 name="payAmount"
               />
-              <Button
-                htmlType="submit"
-                className="h-12 text-base"
-                type="primary"
+              <Tooltip
+                title={t`Payments to this project are paused in this cycle.`}
+                open={paymentsPaused ? undefined : false}
+                className="h-12"
               >
-                <Trans>Add payment</Trans>
-              </Button>
+                <Button
+                  loading={paymentsPaused === undefined}
+                  disabled={paymentsPaused}
+                  htmlType="submit"
+                  className="h-12 text-base"
+                  style={{ height: '48px' }}
+                  type="primary"
+                >
+                  <Trans>Add payment</Trans>
+                </Button>
+              </Tooltip>
             </div>
             <div
               data-testid="pay-project-card-tokens-per-pay"

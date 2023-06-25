@@ -3,6 +3,7 @@ import { AnnouncementLauncher } from 'contexts/Announcements/AnnouncementLaunche
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { useContext } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { Cart } from './components/Cart'
 import { CoverPhoto } from './components/CoverPhoto'
 import { CurrentCycleCard } from './components/CurrentCycleCard'
@@ -20,6 +21,7 @@ export const ProjectDashboard = () => {
     nftRewards: { CIDs },
   } = useContext(NftRewardsContext)
   const { projectPayReceipt } = useProjectPageQueries()
+  const projectHasNfts = !!CIDs?.length
   return (
     <TransactionProvider>
       <AnnouncementLauncher>
@@ -36,8 +38,13 @@ export const ProjectDashboard = () => {
                       <ProjectHeader className="mt-4 px-4 md:px-0" />
                       <div className="mt-10 flex w-full flex-col gap-6 px-4 md:flex-row md:px-0">
                         <PayProjectCard className="flex-1" />
-                        {CIDs?.length ? <NftRewardsCard /> : null}
-                        <CurrentCycleCard className="w-full max-w-sm" />
+                        {projectHasNfts ? <NftRewardsCard /> : null}
+                        <CurrentCycleCard
+                          className={twMerge(
+                            'hidden w-full md:max-w-sm',
+                            projectHasNfts ? 'lg:block' : 'md:block',
+                          )}
+                        />
                       </div>
                       <ProjectTabs className="mt-8" />
                     </div>

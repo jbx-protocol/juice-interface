@@ -6,6 +6,7 @@ import { TokenHoldersModal } from '../TokenHoldersModal'
 import { TitleDescriptionDisplayCard } from '../ui/TitleDescriptionDisplayCard'
 import { RedeemTokensButton } from './components/RedeemTokensButton'
 import { ReservedTokensSubPanel } from './components/ReservedTokensSubPanel'
+import { TokenRedemptionCallout } from './components/TokenRedemptionCallout'
 
 export const TokensPanel = () => {
   const {
@@ -31,6 +32,7 @@ export const TokensPanel = () => {
         <div className="flex w-full flex-1 items-center justify-between">
           <h2 className="font-heading text-2xl font-medium">Tokens</h2>
         </div>
+        <TokenRedemptionCallout />
         <div className="flex-grow">
           {!userTokenBalanceLoading && userTokenBalance && (
             <TitleDescriptionDisplayCard

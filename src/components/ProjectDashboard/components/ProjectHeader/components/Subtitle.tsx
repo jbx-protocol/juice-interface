@@ -32,7 +32,8 @@ export const Subtitle = ({ subtitle }: { subtitle: string }) => {
     <div className="flex min-w-0 items-center">
       <div
         ref={ref}
-        className="inline min-w-0 truncate whitespace-nowrap text-lg text-grey-700 dark:text-slate-50"
+        // max width of 480px is roughly 50 characters
+        className="inline min-w-0 max-w-[480px] truncate whitespace-nowrap text-lg text-grey-700 dark:text-slate-50"
       >
         {subtitle}
       </div>

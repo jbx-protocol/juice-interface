@@ -1,5 +1,6 @@
 import { XCircleIcon } from '@heroicons/react/24/outline'
 import { PencilSquareIcon } from '@heroicons/react/24/solid'
+import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
@@ -75,7 +76,7 @@ export const EditRewardBeneficiary = ({
                   showEnsLoading
                 />
               ) : (
-                'Owner wallet'
+                <Trans>Owner wallet</Trans>
               )}
             </span>
           </Tooltip>

@@ -1826,6 +1826,9 @@ msgstr ""
 msgid "All"
 msgstr ""
 
+msgid "View all"
+msgstr ""
+
 msgid "Optionally, you can create an ERC-20 token once your project has been deployed. Until then, the Juicebox protocol will track token balances internally, allowing your supporters to receive tokens and redeem them for ETH."
 msgstr ""
 
@@ -3161,6 +3164,9 @@ msgstr ""
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building. Join thousands of projects sippin' the Juice."
 msgstr ""
 
+msgid "Owner wallet"
+msgstr ""
+
 msgid "Edit"
 msgstr ""
 
@@ -3534,6 +3540,9 @@ msgid "Allowed"
 msgstr ""
 
 msgid "to select"
+msgstr ""
+
+msgid "View"
 msgstr ""
 
 msgid "Unavailable"
@@ -4353,6 +4362,9 @@ msgid "Build and launch your NFT project right here on Juicebox with built-in re
 msgstr ""
 
 msgid "A message from {name}"
+msgstr ""
+
+msgid "Pay project"
 msgstr ""
 
 msgid "No reserved tokens configured."

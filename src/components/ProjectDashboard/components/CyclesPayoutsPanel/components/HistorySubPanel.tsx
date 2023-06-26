@@ -39,7 +39,9 @@ export const HistorySubPanel = () => {
           </div>
         ))}
         <div className="relative py-3 pl-4 pr-3">
-          <span className="sr-only">View</span>
+          <span className="sr-only">
+            <Trans>View</Trans>
+          </span>
         </div>
       </div>
 

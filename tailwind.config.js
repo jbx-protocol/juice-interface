@@ -26,7 +26,6 @@ module.exports = {
       boxShadow: {
         inputDark: '0 0 0 2px #013944',
         inputLight: '0 0 0 2px #E9F9FA',
-        nftCard: '0px 4px 14px 0px #0000000A',
       },
       height: {
         70: '278px',
@@ -36,9 +35,6 @@ module.exports = {
       },
       borderWidth: {
         6: '6px',
-      },
-      borderRadius: {
-        nft: '0.625rem', // 10px, in between rounded-lg and rounded-xl
       },
       keyframes: {
         rise: {

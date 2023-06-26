@@ -23,7 +23,8 @@ export const PayoutsPopupMenu = ({
     'payouts',
     fcNumber,
   )
-  if (!payoutSplits) return null
+  if (!payoutSplits?.length) return null
+
   return (
     <PopupMenu
       items={[

@@ -60,14 +60,18 @@ export function NftReward({
     ? t`Unlimited`
     : t`${rewardTier?.remainingSupply} remaining`
 
+  const disabled = !hasRemainingSupply
+
   return (
     <div
       className={twMerge(
-        'group relative flex h-full w-[252px] cursor-pointer select-none flex-col rounded-nft border border-grey-200 shadow-nftCard dark:border-slate-500',
+        'relative flex h-full w-[252px] select-none flex-col rounded-[10px] border border-grey-200 dark:border-slate-500',
+        'shadow-[0_4px_14px_rgba(0,0,0,0.0392156862745098)]', // box-shadow: 0px 4px 14px 0px #0000000A
         isSelected ? 'border-2 border-bluebs-500 dark:border-bluebs-500' : '',
+        !disabled ? 'group cursor-pointer' : 'cursor-not-allowed opacity-50',
         className,
       )}
-      onClick={openPreview}
+      onClick={!disabled ? openPreview : undefined}
     >
       <NftThumbnail
         fileUrl={fileUrl}
@@ -80,11 +84,12 @@ export function NftReward({
         hideAttributes={hideAttributes}
         remainingSupplyText={remainingSupplyText}
       />
-      {isSelected ? (
-        <RemoveNftButton onClick={() => onDeselect()} />
-      ) : (
-        <AddNftButton onClick={() => onSelect(1)} />
-      )}
+      {!disabled &&
+        (isSelected ? (
+          <RemoveNftButton onClick={() => onDeselect()} />
+        ) : (
+          <AddNftButton onClick={() => onSelect(1)} />
+        ))}
       {rewardTier && !previewDisabled && previewVisible ? (
         <NftPreview
           open={previewVisible}

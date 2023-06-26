@@ -5,10 +5,9 @@ import { CartItemBadge } from '../../Cart/components/CartItem/CartItemBadge'
 import { ProjectHeaderLogo } from '../../ProjectHeader/components/ProjectHeaderLogo'
 
 export const ReceiveTokensItem = ({ className }: { className?: string }) => {
-  const { userIsReceivingTokens, receivedTickets, receivedTokenSymbolText } =
-    useProjectPaymentTokens()
+  const { receivedTickets, receivedTokenSymbolText } = useProjectPaymentTokens()
 
-  if (!userIsReceivingTokens || receivedTickets === '0') {
+  if (receivedTickets === '0') {
     return null
   }
 

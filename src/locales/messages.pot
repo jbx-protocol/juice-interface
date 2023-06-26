@@ -20,6 +20,9 @@ msgstr ""
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr ""
 
+msgid "Add <0/>"
+msgstr ""
+
 msgid "Redeemed"
 msgstr ""
 
@@ -242,6 +245,9 @@ msgstr ""
 msgid "Set a future date & time to start your project's first cycle."
 msgstr ""
 
+msgid "Dismiss"
+msgstr ""
+
 msgid "No"
 msgstr ""
 
@@ -336,6 +342,9 @@ msgid "Charity"
 msgstr ""
 
 msgid "{0} remaining"
+msgstr ""
+
+msgid "How your project will be paid and pay out in ETH."
 msgstr ""
 
 msgid "Save payouts"
@@ -440,9 +449,6 @@ msgstr ""
 msgid "Locked (28 days)"
 msgstr ""
 
-msgid "No payouts for the cycle."
-msgstr ""
-
 msgid "Rules"
 msgstr ""
 
@@ -471,6 +477,9 @@ msgid "{0, plural, one {# payment} other {# payments}}"
 msgstr ""
 
 msgid "Add payout"
+msgstr ""
+
+msgid "This project has no description"
 msgstr ""
 
 msgid "Everything we do is to ensure that Juicebox is trustworthy."
@@ -554,6 +563,9 @@ msgstr ""
 msgid "I understand"
 msgstr ""
 
+msgid "This cycle has upcoming changes"
+msgstr ""
+
 msgid "While enabled, the project owner can change the project's <0>payment terminals</0> at any time."
 msgstr ""
 
@@ -582,6 +594,9 @@ msgid "Overview"
 msgstr ""
 
 msgid "last {TRENDING_WINDOW_DAYS} days"
+msgstr ""
+
+msgid "This project has no NFTs"
 msgstr ""
 
 msgid "Changes to payouts will take effect immediately."
@@ -636,6 +651,9 @@ msgid "Name"
 msgstr ""
 
 msgid "Interested in becoming a JuiceboxDAO contributor?"
+msgstr ""
+
+msgid "Configure your cycle for transparent treasury and campaign management. Any adjustments made will be published on Ethereum to inform contributors."
 msgstr ""
 
 msgid "Save tracked assets"
@@ -711,6 +729,9 @@ msgid "Current handle"
 msgstr ""
 
 msgid "Telegram link"
+msgstr ""
+
+msgid "This cycle has token redemptions {0}"
 msgstr ""
 
 msgid "No past cycles"
@@ -858,6 +879,9 @@ msgid "Create a project payer address for {projectTitle}"
 msgstr ""
 
 msgid "Removing the payment will remove all the items from the cart. Are you sure you want to remove the payment?"
+msgstr ""
+
+msgid "You are eligible for {0} <0/> (NFT)"
 msgstr ""
 
 msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
@@ -1427,6 +1451,9 @@ msgstr ""
 msgid "A percentage of token issuance which is set aside for addresses and other projects chosen by the project owner."
 msgstr ""
 
+msgid "About {projectName}"
+msgstr ""
+
 msgid "Edit recipients"
 msgstr ""
 
@@ -1808,6 +1835,9 @@ msgstr ""
 msgid "Set this to the sum of your payouts"
 msgstr ""
 
+msgid "{rewardCount, plural, one {reward} other {rewards}}"
+msgstr ""
+
 msgid "Your transaction has been submitted and is awaiting confirmation."
 msgstr ""
 
@@ -2135,9 +2165,6 @@ msgstr ""
 msgid "File must be in a format of {0}"
 msgstr ""
 
-msgid "Track the historical voting weight of each token holder across all tiers of NFTs. <0>Learn more.</0>"
-msgstr ""
-
 msgid "Cycle #{0}"
 msgstr ""
 
@@ -2226,6 +2253,9 @@ msgid "Save NFTs"
 msgstr ""
 
 msgid "Transfer ETH from your wallet to this project without minting tokens."
+msgstr ""
+
+msgid "Peep our selection of the juiciest projects right now."
 msgstr ""
 
 msgid "Check {lastEmailUpdated} and verify your new email address."
@@ -2540,9 +2570,6 @@ msgstr ""
 msgid "Add a collection name"
 msgstr ""
 
-msgid "No NFTs have been configured for this project."
-msgstr ""
-
 msgid "No transaction history"
 msgstr ""
 
@@ -2718,9 +2745,6 @@ msgid "Set aside a percentage of token issuance for the wallets and Juicebox pro
 msgstr ""
 
 msgid "It's fast, powerful and easy to use. Launch your project and get funded in minutes."
-msgstr ""
-
-msgid "Total supply <0>{totalSupply} {projectToken}</0>"
 msgstr ""
 
 msgid "Redemptions aren't possible when all of a project's ETH is being used for payouts."
@@ -2927,6 +2951,9 @@ msgstr ""
 msgid "Edit {projectTitle}'s rules"
 msgstr ""
 
+msgid "This cycle has no upcoming changes"
+msgstr ""
+
 msgid "Software"
 msgstr ""
 
@@ -2964,6 +2991,9 @@ msgid "Request a feature."
 msgstr ""
 
 msgid "Fees held"
+msgstr ""
+
+msgid "Manage how you reward supporters when they support your project."
 msgstr ""
 
 msgid "Issuance reduction rate"
@@ -3482,9 +3512,6 @@ msgstr ""
 msgid "Mint new {tokensLabel} into a wallet. Only a project's owner, a designated operator, or one of the terminal's delegates can mint project tokens."
 msgstr ""
 
-msgid "Your project's NFTs will not have on-chain governance capabilities."
-msgstr ""
-
 msgid "Send reserved {0}"
 msgstr ""
 
@@ -3704,9 +3731,6 @@ msgstr ""
 msgid "Projects can reserve a percentage of token issuance for the recipients set by the project owner."
 msgstr ""
 
-msgid "Peep our selection of top trending projects this month."
-msgstr ""
-
 msgid "No payouts scheduled for this cycle."
 msgstr ""
 
@@ -3798,6 +3822,9 @@ msgid "Your project's token."
 msgstr ""
 
 msgid "Minimum contribution"
+msgstr ""
+
+msgid "Success!"
 msgstr ""
 
 msgid "Error loading payouts"
@@ -3954,6 +3981,9 @@ msgid "Project activity failed to load."
 msgstr ""
 
 msgid "payout"
+msgstr ""
+
+msgid "Payments to Juicebox projects automatically mint tokens"
 msgstr ""
 
 msgid "Cycle"
@@ -4160,6 +4190,9 @@ msgstr ""
 msgid "The amount of ETH this project has received since it was created."
 msgstr ""
 
+msgid "There's nothing here"
+msgstr ""
+
 msgid "Locked cycles"
 msgstr ""
 
@@ -4170,6 +4203,9 @@ msgid "Message from {0}"
 msgstr ""
 
 msgid "Start"
+msgstr ""
+
+msgid "Manage how your projects tokens should work."
 msgstr ""
 
 msgid "File empty or corrupt. Try again."
@@ -4340,9 +4376,6 @@ msgstr ""
 msgid "Spaces are not allowed"
 msgstr ""
 
-msgid "Referral"
-msgstr ""
-
 msgid "Legal"
 msgstr ""
 
@@ -4353,9 +4386,6 @@ msgid "You're all set!"
 msgstr ""
 
 msgid "Set payouts as percentages of the total amount being paid out."
-msgstr ""
-
-msgid "This project has no description."
 msgstr ""
 
 msgid "Add {allocationName}"
@@ -4407,9 +4437,6 @@ msgid "Manage"
 msgstr ""
 
 msgid "Token rules"
-msgstr ""
-
-msgid "Edit Cycle"
 msgstr ""
 
 msgid "Potential risks"
@@ -4523,6 +4550,9 @@ msgstr ""
 msgid "Creators & builders"
 msgstr ""
 
+msgid "Set up your top-level project configuration details."
+msgstr ""
+
 msgid "Do not include .eth"
 msgstr ""
 
@@ -4554,6 +4584,9 @@ msgid "Error loading redemptions"
 msgstr ""
 
 msgid "Hours"
+msgstr ""
+
+msgid "Clear all"
 msgstr ""
 
 msgid "{titleCasedAllocationName} Percentage"

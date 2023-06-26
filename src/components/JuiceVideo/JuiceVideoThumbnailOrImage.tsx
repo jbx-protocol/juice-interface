@@ -52,7 +52,6 @@ export function JuiceVideoThumbnailOrImage({
             loading && 'hidden',
             props.className,
           )}
-          videoClassName={props.className}
           onLoaded={() => setLoading(false)}
           playIconPosition={playIconPosition}
           onClick={handleClick}

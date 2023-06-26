@@ -3,9 +3,10 @@ import EthereumAddress from 'components/EthereumAddress'
 import { useTokensPanel } from 'components/ProjectDashboard/hooks/useTokensPanel'
 import { useCallback, useState } from 'react'
 import { TokenHoldersModal } from '../TokenHoldersModal'
-import { DisplayCard } from '../ui'
+import { TitleDescriptionDisplayCard } from '../ui/TitleDescriptionDisplayCard'
 import { RedeemTokensButton } from './components/RedeemTokensButton'
 import { ReservedTokensSubPanel } from './components/ReservedTokensSubPanel'
+import { TokenRedemptionCallout } from './components/TokenRedemptionCallout'
 
 export const TokensPanel = () => {
   const {
@@ -31,38 +32,36 @@ export const TokensPanel = () => {
         <div className="flex w-full flex-1 items-center justify-between">
           <h2 className="font-heading text-2xl font-medium">Tokens</h2>
         </div>
+        <TokenRedemptionCallout />
         <div className="flex-grow">
           {!userTokenBalanceLoading && userTokenBalance && (
-            <DisplayCard>
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
-                  <Trans>Your balance</Trans>
-                  <div className="font-heading text-2xl font-medium dark:text-slate-50">
-                    <Trans>{userTokenBalance} tokens</Trans>
-                  </div>
-                </div>
-                <RedeemTokensButton />
-              </div>
-            </DisplayCard>
+            <TitleDescriptionDisplayCard
+              className="flex flex-col items-center gap-5 md:flex-row"
+              title={t`Your balance`}
+              description={t`${userTokenBalance} tokens`}
+            >
+              <RedeemTokensButton
+                containerClassName="w-full md:w-fit"
+                className="h-12 w-full md:h-10"
+              />
+            </TitleDescriptionDisplayCard>
           )}
           <div className="mt-4 flex flex-col gap-4">
             <div className="flex flex-col gap-4 md:flex-row">
               <ProjectTokenCard />
-              <DisplayCard className="w-full">
-                <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
-                  <Trans>
-                    Total supply{' '}
-                    <div className="font-heading text-2xl font-medium dark:text-slate-50">
-                      {totalSupply} {projectToken}
-                    </div>
-                  </Trans>
-                </div>
-              </DisplayCard>
+              <TitleDescriptionDisplayCard
+                className="w-full"
+                title={t`Total supply`}
+                description={
+                  <span>
+                    {totalSupply} {projectToken}
+                  </span>
+                }
+              />
             </div>
             <a
               role="button"
-              href="#"
-              className="md:self-end"
+              className="font-medium md:self-end"
               onClick={openTokenHolderModal}
             >
               <Trans>View token holders</Trans>
@@ -83,25 +82,29 @@ const ProjectTokenCard = () => {
   const { projectToken, projectTokenAddress, projectHasErc20Token } =
     useTokensPanel()
   return (
-    <DisplayCard className="w-full">
-      <div className="flex flex-col gap-2">
-        <div className="text-sm font-medium text-grey-600 dark:text-slate-200">
-          <Trans>Project token</Trans>
-        </div>
-        <div className="flex items-center gap-2 text-xs">
-          <span className="font-heading text-xl font-medium dark:text-slate-50">
-            {projectHasErc20Token ? projectToken : t`Token`}
-          </span>
-          <span className="whitespace-nowrap rounded-2xl bg-grey-100 py-1 px-2 text-grey-700 dark:bg-slate-500 dark:text-slate-100">
-            {projectHasErc20Token ? 'ERC-20' : t`Juicebox native`}
-          </span>
+    <TitleDescriptionDisplayCard
+      className="w-full"
+      title={t`Project token`}
+      description={
+        <div className="flex items-center gap-2">
+          <span>{projectHasErc20Token ? projectToken : t`Token`}</span>
+          <ProjectTokenBadge />
           {projectHasErc20Token && (
-            <span className="text-grey-500 dark:text-slate-200">
+            <span className="text-xs font-normal text-grey-500 dark:text-slate-200">
               <EthereumAddress address={projectTokenAddress} truncateTo={4} />
             </span>
           )}
         </div>
-      </div>
-    </DisplayCard>
+      }
+    />
+  )
+}
+
+const ProjectTokenBadge = () => {
+  const { projectHasErc20Token } = useTokensPanel()
+  return (
+    <span className="whitespace-nowrap rounded-2xl bg-smoke-100 py-1 px-2 text-xs font-normal text-smoke-700 dark:bg-slate-500 dark:text-slate-100">
+      {projectHasErc20Token ? 'ERC-20' : t`Juicebox native`}
+    </span>
   )
 }

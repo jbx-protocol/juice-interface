@@ -7,7 +7,7 @@ import { V2V3_PROJECT_IDS } from 'constants/v2v3/projectIds'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
-import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/useV2ConnectedWalletHasPermission'
+import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/useEditProjectDetailsTx'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
@@ -104,7 +104,7 @@ export function V2V3ProjectTokenBalancesModal(props: ModalProps) {
 
   const [editModalVisible, setEditModalVisible] = useState<boolean>()
 
-  const hasEditPermission = useV2ConnectedWalletHasPermission(
+  const hasEditPermission = useV2V3WalletHasPermission(
     V2V3OperatorPermission.RECONFIGURE,
   )
 

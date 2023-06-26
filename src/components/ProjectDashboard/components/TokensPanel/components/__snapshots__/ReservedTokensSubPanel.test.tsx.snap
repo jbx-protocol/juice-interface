@@ -17,32 +17,40 @@ exports[`ReservedTokensSubPanel renders 1`] = `
         class="flex w-full items-center gap-4"
       >
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex w-full flex-col gap-2"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full"
         >
-          <h3
-            class="text-grey-60 font-body0 mb-0 max-w-min whitespace-nowrap text-sm font-medium dark:text-slate-200"
+          <div
+            class="flex w-full flex-col gap-2"
           >
-            Reserved tokens
-          </h3>
-          <span
-            class="font-heading text-xl font-medium"
-          >
-            21%
-          </span>
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Reserved tokens
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            >
+              21%
+            </span>
+          </div>
         </div>
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex w-full flex-col gap-2"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full"
         >
-          <h3
-            class="text-grey-60 font-body0 mb-0 max-w-min whitespace-nowrap text-sm font-medium dark:text-slate-200"
+          <div
+            class="flex w-full flex-col gap-2"
           >
-            Reserved rate
-          </h3>
-          <span
-            class="font-heading text-xl font-medium"
-          >
-            82%
-          </span>
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Reserved rate
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            >
+              82%
+            </span>
+          </div>
         </div>
       </div>
       <div

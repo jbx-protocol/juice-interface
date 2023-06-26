@@ -9,7 +9,7 @@ exports[`CyclesPayoutsPanel renders 1`] = `
       class="flex flex-col justify-between md:flex-row md:items-center"
     >
       <h2
-        class="font-heading text-2xl font-medium"
+        class="mb-0 font-heading text-2xl font-medium"
       >
         Cycle
       </h2>

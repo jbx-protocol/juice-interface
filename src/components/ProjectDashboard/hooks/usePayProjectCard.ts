@@ -4,6 +4,7 @@ import { useCallback } from 'react'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import * as Yup from 'yup'
 import { useProjectCart } from './useProjectCart'
+import { useProjectContext } from './useProjectContext'
 
 export const PayProjectCardSchema = Yup.object().shape({
   payAmount: Yup.object()
@@ -20,6 +21,7 @@ export const PayProjectCardSchema = Yup.object().shape({
 type PayProjectCardValues = Yup.InferType<typeof PayProjectCardSchema>
 
 export const usePayProjectCard = () => {
+  const { fundingCycleMetadata } = useProjectContext()
   const { dispatch } = useProjectCart()
   const addPay = useCallback(
     (
@@ -45,5 +47,9 @@ export const usePayProjectCard = () => {
     [dispatch],
   )
 
-  return { addPay, validationSchema: PayProjectCardSchema }
+  return {
+    addPay,
+    validationSchema: PayProjectCardSchema,
+    paymentsPaused: fundingCycleMetadata?.pausePay,
+  }
 }

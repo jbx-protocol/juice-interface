@@ -6,13 +6,21 @@ import {
   ProjectHeaderData,
   useProjectHeader,
 } from 'components/ProjectDashboard/hooks'
+import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
 import { BigNumber } from 'ethers'
 import { ProjectHeaderStats } from './ProjectHeaderStats'
 
 jest.mock('components/ProjectDashboard/hooks')
+jest.mock('components/ProjectDashboard/hooks/useProjectPageQueries')
 
 function mockUseProjectHeader(data: ProjectHeaderData) {
   ;(useProjectHeader as jest.Mock).mockReturnValue(data)
+}
+
+function mockUseProjectPageQueries() {
+  ;(useProjectPageQueries as jest.Mock).mockReturnValue({
+    setProjectPageTab: jest.fn(),
+  })
 }
 
 const MOCK_PROJECT_HEADER_DATA: ProjectHeaderData = {
@@ -27,6 +35,9 @@ const MOCK_PROJECT_HEADER_DATA: ProjectHeaderData = {
 }
 
 describe('ProjectHeaderStats', () => {
+  beforeEach(() => {
+    mockUseProjectPageQueries()
+  })
   it.each`
     last7DaysPercent | shouldRender
     ${0}             | ${false}

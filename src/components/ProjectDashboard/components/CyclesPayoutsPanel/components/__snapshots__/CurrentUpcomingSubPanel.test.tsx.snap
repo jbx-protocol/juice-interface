@@ -13,42 +13,54 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
           <div
-            class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
+            class="flex w-full flex-col gap-2"
           >
-            Cycle #
-            <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Cycle #
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1
-            </div>
+            </span>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:w-fit"
         >
           <div
-            class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
+            class="flex w-full flex-col gap-2"
           >
-            Status
-            <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Status
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               Active
-            </div>
+            </span>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
           <div
-            class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
+            class="flex w-full flex-col gap-2"
           >
-            Remaining time
-            <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Remaining time
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1 day
-            </div>
+            </span>
           </div>
         </div>
       </div>
@@ -76,42 +88,54 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
           <div
-            class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
+            class="flex w-full flex-col gap-2"
           >
-            Cycle #
-            <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Cycle #
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1
-            </div>
+            </span>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:w-fit"
         >
           <div
-            class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
+            class="flex w-full flex-col gap-2"
           >
-            Status
-            <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Status
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               Active
-            </div>
+            </span>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
           <div
-            class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
+            class="flex w-full flex-col gap-2"
           >
-            Cycle length
-            <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Cycle length
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1 day
-            </div>
+            </span>
           </div>
         </div>
       </div>
@@ -139,42 +163,54 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
           <div
-            class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
+            class="flex w-full flex-col gap-2"
           >
-            Cycle #
-            <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Cycle #
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1
-            </div>
+            </span>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:w-fit"
         >
           <div
-            class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
+            class="flex w-full flex-col gap-2"
           >
-            Status
-            <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Status
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               Active
-            </div>
+            </span>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
           <div
-            class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
+            class="flex w-full flex-col gap-2"
           >
-            Remaining time
-            <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Remaining time
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1 day
-            </div>
+            </span>
           </div>
         </div>
       </div>
@@ -202,42 +238,54 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
           <div
-            class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
+            class="flex w-full flex-col gap-2"
           >
-            Cycle #
-            <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Cycle #
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1
-            </div>
+            </span>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:w-fit"
         >
           <div
-            class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
+            class="flex w-full flex-col gap-2"
           >
-            Status
-            <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Status
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               Active
-            </div>
+            </span>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
           <div
-            class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
+            class="flex w-full flex-col gap-2"
           >
-            Cycle length
-            <div
-              class="font-heading text-2xl font-medium dark:text-slate-50"
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Cycle length
+            </span>
+            <span
+              class="truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1 day
-            </div>
+            </span>
           </div>
         </div>
       </div>

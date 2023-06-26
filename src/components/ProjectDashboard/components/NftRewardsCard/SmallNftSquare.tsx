@@ -24,7 +24,7 @@ export const SmallNftSquare = ({
         className={twMerge(
           'rounded-lg bg-smoke-50',
           border &&
-            'border-4 border-solid border-smoke-50 dark:border-slate-900',
+            'border-4 border-solid border-smoke-50 dark:border-slate-700',
           className,
         )}
       />
@@ -42,7 +42,7 @@ export const SmallNftSquare = ({
       playIconPosition="hidden"
       className={twMerge(
         'rounded-lg bg-smoke-50',
-        border && 'border-4 border-solid border-smoke-50 dark:border-slate-900',
+        border && 'border-4 border-solid border-smoke-50 dark:border-slate-700',
         className,
       )}
     />

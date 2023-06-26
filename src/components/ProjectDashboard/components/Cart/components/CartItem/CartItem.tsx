@@ -10,7 +10,7 @@ export type CartItemProps = {
   title: ReactNode
   price: { amount: number; currency: V2V3CurrencyOption } | null
   icon: ReactNode
-  onRemove: () => void
+  onRemove?: () => void
 } & (
   | {
       quantity: number
@@ -57,7 +57,7 @@ export const CartItem: React.FC<CartItemProps> = ({
 
         <div className="mt-4 flex gap-4">
           <span className="mr-4 text-sm font-medium">{priceText}</span>
-          <RemoveIcon onClick={onRemove} />
+          {onRemove && <RemoveIcon onClick={onRemove} />}
         </div>
       </div>
     )
@@ -77,7 +77,7 @@ export const CartItem: React.FC<CartItemProps> = ({
       <div className="flex items-center">
         {'quantity' in quantityProps && <QuantityControl {...quantityProps} />}
         <span className="mr-4 text-sm font-medium">{priceText}</span>
-        <RemoveIcon onClick={onRemove} />
+        {onRemove && <RemoveIcon onClick={onRemove} />}
       </div>
     </div>
   )

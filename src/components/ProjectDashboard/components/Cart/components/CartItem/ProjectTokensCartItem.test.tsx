@@ -26,7 +26,6 @@ describe('ProjectTokensCartItem', () => {
     },
     expanded: false,
     visible: true,
-    userIsReceivingTokens: true,
   }
 
   const UseTokensPerEthMock = {
@@ -38,17 +37,6 @@ describe('ProjectTokensCartItem', () => {
   })
 
   it('renders', () => {
-    const { container } = render(<ProjectTokensCartItem />)
-    expect(container).toMatchSnapshot()
-  })
-
-  it('returns null if user is not receiving tokens', () => {
-    const UseProjectCartMock = {
-      ...DefaultUseProjectCartMock,
-      userIsReceivingTokens: false,
-    }
-    ;(useProjectCart as jest.Mock).mockReturnValue(UseProjectCartMock)
-
     const { container } = render(<ProjectTokensCartItem />)
     expect(container).toMatchSnapshot()
   })

@@ -3,7 +3,7 @@
 exports[`CurrentCycleCard renders 1`] = `
 <div>
   <div
-    class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 hidden pr-9 lg:block"
+    class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 hidden cursor-pointer pr-9 lg:block"
   >
     <span>
       <div

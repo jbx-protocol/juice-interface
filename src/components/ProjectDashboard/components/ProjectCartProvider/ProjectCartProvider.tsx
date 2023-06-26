@@ -21,10 +21,10 @@ type ProjectCartContextType = {
   payAmount: ProjectCartCurrencyAmount | undefined
   totalAmount: ProjectCartCurrencyAmount | undefined
   nftRewards: ProjectCartNftReward[]
+  nftRewardEligibilityDismissed: boolean
   visible: boolean
   expanded: boolean
   payModalOpen: boolean
-  userIsReceivingTokens: boolean
 }
 
 export const ProjectCartContext = createContext<ProjectCartContextType>({
@@ -34,10 +34,10 @@ export const ProjectCartContext = createContext<ProjectCartContextType>({
   payAmount: undefined,
   totalAmount: undefined,
   nftRewards: [],
+  nftRewardEligibilityDismissed: false,
   visible: false,
   expanded: false,
   payModalOpen: false,
-  userIsReceivingTokens: false,
 })
 
 export const ProjectCartProvider = ({
@@ -48,8 +48,8 @@ export const ProjectCartProvider = ({
   const [state, dispatch] = useReducer(projectCartReducer, {
     payAmount: undefined,
     nftRewards: [],
+    nftRewardEligibilityDismissed: false,
     expanded: false,
-    userIsReceivingTokens: true,
     payModalOpen: false,
   })
   const converter = useCurrencyConverter()

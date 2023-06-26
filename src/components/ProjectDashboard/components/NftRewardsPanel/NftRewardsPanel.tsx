@@ -1,4 +1,5 @@
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
+import { EmptyScreen } from '../EmptyScreen'
 import { NftReward } from './NftReward'
 import { RedeemNftsSection } from './RedeemNftsSection'
 import { useNftRewardsPanel } from './hooks/useNftRewardsPanel'
@@ -32,9 +33,7 @@ export const NftRewardsPanel = () => {
           ))}
         </div>
       ) : (
-        <div className="text-grey-500 dark:text-slate-200">
-          <Trans>No NFTs have been configured for this project.</Trans>
-        </div>
+        <EmptyScreen subtitle={t`This project has no NFTs`} />
       )}
     </div>
   )

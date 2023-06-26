@@ -28,7 +28,7 @@ export function JuicyPicksSection() {
           heading={<Trans>Juicy picks</Trans>}
           subheading={
             <Trans>
-              Peep our selection of top trending projects this month.
+              Peep our selection of the juiciest projects right now.
             </Trans>
           }
         />

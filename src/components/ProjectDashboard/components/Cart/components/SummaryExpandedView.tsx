@@ -1,12 +1,15 @@
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
+import { handleConfirmationDeletion } from 'components/ProjectDashboard/utils/modals'
 import useMobile from 'hooks/useMobile'
+import { stopPropagation } from 'react-stop-propagation'
 import { useCartSummary } from '../hooks/useCartSummary'
 import { NftCartItem, PaymentCartItem } from './CartItem'
 import { ProjectTokensCartItem } from './CartItem/ProjectTokensCartItem'
+import { RewardEligibilityCallout } from './CartItem/RewardEligibilityCallout'
 import { SummaryPayButton } from './SummaryPayButton'
 
 export const SummaryExpandedView = () => {
-  const { amountText, nftRewards } = useCartSummary()
+  const { amountText, nftRewards, resetCart } = useCartSummary()
   const isMobile = useMobile()
 
   return (
@@ -27,7 +30,23 @@ export const SummaryExpandedView = () => {
         className="flex h-full min-h-0 cursor-auto flex-col justify-between gap-4 px-8 pb-14 md:flex-row"
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex min-h-0 w-full min-w-0 flex-shrink flex-col gap-4 pb-5 md:max-w-xl md:pb-0">
+        <div className="relative flex min-h-0 w-full min-w-0 flex-shrink flex-col gap-4 pb-5 md:max-w-xl md:pb-0">
+          {!isMobile && (
+            <div className="absolute -top-10 right-0">
+              <a
+                role="button"
+                onClick={stopPropagation(
+                  handleConfirmationDeletion({
+                    type: t`payment`,
+                    description: t`Removing the payment will remove all the items from the cart. Are you sure you want to remove the payment?`,
+                    onConfirm: resetCart,
+                  }),
+                )}
+              >
+                <Trans>Clear all</Trans>
+              </a>
+            </div>
+          )}
           <div className="flex w-full flex-shrink flex-col overflow-y-scroll md:block md:w-auto">
             <PaymentCartItem />
             {nftRewards.map(nft => (
@@ -35,6 +54,8 @@ export const SummaryExpandedView = () => {
             ))}
             <ProjectTokensCartItem />
           </div>
+
+          <RewardEligibilityCallout />
         </div>
 
         {isMobile ? (
@@ -55,7 +76,7 @@ export const SummaryExpandedView = () => {
             className="flex cursor-auto items-center gap-8 self-end rounded-lg border border-grey-200 p-8 dark:border-slate-500 dark:bg-slate-700"
             onClick={e => e.stopPropagation()}
           >
-            <div className="flex flex-col items-center gap-2 whitespace-nowrap">
+            <div className="flex flex-col gap-2 whitespace-nowrap">
               <span className="text-sm text-grey-500 dark:text-slate-200">
                 <Trans>Total to pay</Trans>
               </span>

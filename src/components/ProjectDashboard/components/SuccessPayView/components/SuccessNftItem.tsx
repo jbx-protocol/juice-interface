@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useContext, useMemo } from 'react'
 import { CartItemBadge } from '../../Cart/components/CartItem/CartItemBadge'
@@ -28,7 +29,9 @@ export const SuccessNftItem = ({ id }: { id: number }) => {
         }}
       />
       <span className="ml-3 text-sm font-medium">{name}</span>
-      <CartItemBadge className="ml-2">NFT</CartItemBadge>
+      <CartItemBadge className="ml-2">
+        <Trans>NFT</Trans>
+      </CartItemBadge>
     </div>
   )
 }

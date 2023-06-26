@@ -51,7 +51,7 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
             className="flex items-center whitespace-nowrap rounded-2xl bg-grey-100 py-1 pl-3 pr-2.5 text-sm text-grey-700 dark:bg-slate-500 dark:text-slate-100"
             onClick={() => setProjectPageTab('nft_rewards')}
           >
-            View all <ArrowRightIcon className="h-3 w-3" />
+            <Trans>View all</Trans> <ArrowRightIcon className="h-3 w-3" />
           </button>
         </div>
       </div>

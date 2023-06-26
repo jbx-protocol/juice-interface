@@ -50,10 +50,12 @@ export const TokensPanel = () => {
               <ProjectTokenCard />
               <DisplayCard className="w-full">
                 <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
-                  Total supply
-                  <div className="font-heading text-2xl font-medium dark:text-slate-50">
-                    {totalSupply} {projectToken}
-                  </div>
+                  <Trans>
+                    Total supply{' '}
+                    <div className="font-heading text-2xl font-medium dark:text-slate-50">
+                      {totalSupply} {projectToken}
+                    </div>
+                  </Trans>
                 </div>
               </DisplayCard>
             </div>

@@ -7,7 +7,7 @@ import { init, useAccountCenter, useWallets } from '@web3-onboard/react'
 import trezorModule from '@web3-onboard/trezor'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import config from 'config/seo_meta.json'
-import { NETWORKS } from 'constants/networks'
+import { NETWORKS, readNetwork } from 'constants/networks'
 import { BigNumber } from 'ethers'
 import { useEffect } from 'react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
@@ -28,7 +28,11 @@ export function initWeb3Onboard() {
     email: 'me.jango@protonmail.com',
   })
   const keystone = keystoneModule()
-  const walletConnect = walletConnectModule()
+  const walletConnect = walletConnectModule({
+    version: 2,
+    projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID!,
+    requiredChains: [readNetwork.chainId],
+  })
   const coinbaseWalletSdk = coinbaseWalletModule()
 
   return init({

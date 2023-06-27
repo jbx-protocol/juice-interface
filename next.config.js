@@ -11,6 +11,7 @@ const WALLET_CONNECT_URLS = [
   'https://*.walletconnect.com',
   'https://*.walletconnect.org',
   'wss://*.walletconnect.org',
+  'wss://*.walletconnect.com',
 ]
 
 const INFURA_IPFS_URLS = [
@@ -41,6 +42,7 @@ const IMG_SRC = [
   'https://cdn.stamp.fyi',
   'https://ipfs.io',
   'https://cdn.discordapp.com',
+  '*.walletconnect.com',
 ]
 
 const CONNECT_SRC = [
@@ -73,7 +75,7 @@ if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')
 }
 
-const FRAME_SRC = []
+const FRAME_SRC = ['https://verify.walletconnect.com/']
 
 const ContentSecurityPolicy = `
   default-src 'none';

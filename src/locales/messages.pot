@@ -2156,9 +2156,6 @@ msgstr ""
 msgid "Juicebox native"
 msgstr ""
 
-msgid "LINK TO NFT"
-msgstr ""
-
 msgid "To edit your current NFT collection, go to the <0>Edit NFTs</0> page."
 msgstr ""
 

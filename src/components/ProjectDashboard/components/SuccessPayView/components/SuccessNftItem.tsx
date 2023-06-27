@@ -12,7 +12,6 @@ export const SuccessNftItem = ({ id }: { id: number }) => {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
 
   const openPreview = () => setPreviewVisible(true)
-  const closePreview = () => setPreviewVisible(false)
 
   const rewardTier = useMemo(() => {
     if (!rewardTiers) return undefined
@@ -40,7 +39,7 @@ export const SuccessNftItem = ({ id }: { id: number }) => {
       {rewardTier && (
         <NftPreview
           open={previewVisible}
-          onClose={closePreview}
+          setOpen={setPreviewVisible}
           rewardTier={rewardTier}
         />
       )}

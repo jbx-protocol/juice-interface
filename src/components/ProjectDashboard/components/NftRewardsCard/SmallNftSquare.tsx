@@ -16,9 +16,9 @@ export const SmallNftSquare = ({
   loading?: boolean
   border?: boolean
 }) => {
-  const _loading = !nftReward || loading
+  const showLoadingState = !nftReward || loading
 
-  if (_loading) {
+  if (showLoadingState) {
     return (
       <div
         className={twMerge(
@@ -30,6 +30,7 @@ export const SmallNftSquare = ({
       />
     )
   }
+
   const fileUrl = useMemo(
     () => ipfsUriToGatewayUrl(nftReward.fileUrl),
     [nftReward.fileUrl],

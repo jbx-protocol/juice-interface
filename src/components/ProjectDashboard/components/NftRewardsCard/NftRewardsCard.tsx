@@ -10,6 +10,8 @@ import StackedComponents from '../ui/StackedComponents'
 import { HoverPreview } from './HoverPreview'
 import { SmallNftSquare } from './SmallNftSquare'
 
+const PREVIEW_CARDS_COUNT = 3
+
 export const NftRewardsCard = ({ className }: { className?: string }) => {
   const {
     nftRewards: { rewardTiers },
@@ -23,19 +25,34 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
   )
 
   const NftComponents = useMemo(() => {
-    return (rewardTiers ?? []).slice(0, 3).map(nft => ({
+    // skeletons for loading state
+    if (nftsLoading || !rewardTiers) {
+      return Array(PREVIEW_CARDS_COUNT)
+        .fill(0)
+        .map(() => ({
+          Component: SmallNftSquare,
+          props: {
+            border: true,
+            loading: true,
+            className: 'h-full w-full bg-grey-100 dark:bg-slate-500',
+          },
+        }))
+    }
+
+    return rewardTiers.slice(0, PREVIEW_CARDS_COUNT).map(nftReward => ({
       Component: SmallNftSquare,
       props: {
         border: true,
-        nftReward: nft,
-        loading: nftsLoading,
+        nftReward,
         className: 'h-full w-full',
       },
     }))
   }, [nftsLoading, rewardTiers])
+
   const tooltipText = (
     <Trans>See the NFTs and rewards offered by this project.</Trans>
   )
+
   return (
     <DisplayCard
       className={twMerge('flex cursor-pointer flex-col gap-2', className)}
@@ -50,7 +67,11 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
       </div>
       <div className="flex items-center gap-3">
         <HoverPreview>
-          <StackedComponents components={NftComponents} size="60px" />
+          <StackedComponents
+            components={NftComponents}
+            size="60px"
+            className={nftsLoading ? 'animate-pulse' : ''}
+          />
         </HoverPreview>
         <div>
           <button className="flex items-center gap-1 whitespace-nowrap rounded-2xl bg-smoke-100 py-1 pl-3 pr-2.5 text-sm text-smoke-700 dark:bg-slate-500 dark:text-slate-100">

@@ -20,7 +20,7 @@ export const ConfigurationDisplayCard = ({
     >
       {({ open }) => (
         <Disclosure.Button className="w-full outline-none">
-          <div className="mb-8 flex w-full items-center justify-between text-start">
+          <div className="flex w-full items-center justify-between text-start">
             <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
               {title}
               <div className="font-heading text-xl font-medium text-grey-900 dark:text-slate-50">
@@ -43,7 +43,7 @@ export const ConfigurationDisplayCard = ({
             leaveFrom="max-h-[3000px] overflow-hidden opacity-100"
             leaveTo="max-h-0 overflow-hidden opacity-0"
           >
-            <Disclosure.Panel className="mt-4">
+            <Disclosure.Panel className="mt-8">
               <CurrentUpcomingConfigurationPanel type={type} />
             </Disclosure.Panel>
           </Transition>

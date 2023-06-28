@@ -6,7 +6,7 @@ exports[`PayProjectCard renders 1`] = `
     class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex flex-col gap-2 pr-9"
   >
     <div
-      class="font-medium"
+      class="text-base font-medium"
     >
       <span>
         Pay Project

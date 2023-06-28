@@ -28,7 +28,7 @@ export const AboutPanel = () => {
             <h3 className="mb-0 font-heading text-2xl font-medium">
               <Trans>About {projectName}</Trans>
             </h3>
-            <RichNote className="mt-0" note={description} />
+            <RichNote className="mt-0 text-base" note={description} />
           </>
         ) : (
           <EmptyScreen subtitle={t`This project has no description`} />

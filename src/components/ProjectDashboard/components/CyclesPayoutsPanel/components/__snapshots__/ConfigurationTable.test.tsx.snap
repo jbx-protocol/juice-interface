@@ -7,7 +7,7 @@ exports[`ConfigurationTable renders 1`] = `
       class="w-full"
     >
       <div
-        class="text-start text-base font-semibold uppercase"
+        class="text-start text-base font-medium uppercase"
       >
         title
       </div>

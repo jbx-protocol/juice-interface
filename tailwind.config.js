@@ -23,6 +23,9 @@ module.exports = {
       ],
     },
     extend: {
+      gridTemplateColumns: {
+        'config-table': 'repeat(3, 1fr) auto',
+      },
       boxShadow: {
         inputDark: '0 0 0 2px #013944',
         inputLight: '0 0 0 2px #E9F9FA',

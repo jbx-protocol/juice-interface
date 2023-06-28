@@ -6,6 +6,7 @@ import { useCallback, useMemo } from 'react'
 import assert from 'utils/assert'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { getProjectOwnerRemainderSplit } from 'utils/splits'
 import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
 import {
   MAX_DISTRIBUTION_LIMIT,
@@ -36,6 +37,7 @@ const calculateSplitAmountWad = (
 export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { splits, loading } = useCurrentUpcomingPayoutSplits(type)
   const {
+    projectOwnerAddress,
     distributionLimit,
     distributionLimitCurrency,
     primaryETHTerminalFee,
@@ -95,10 +97,17 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const payouts = useMemo(() => {
     if (loading || !splits) return
 
-    return splits
+    const ownerPayout = projectOwnerAddress
+      ? getProjectOwnerRemainderSplit(projectOwnerAddress, splits)
+      : undefined
+
+    return [
+      ...splits,
+      ...(ownerPayout && ownerPayout.percent > 0 ? [ownerPayout] : []),
+    ]
       .sort((a, b) => Number(b.percent) - Number(a.percent))
       .map(transformSplit)
-  }, [loading, splits, transformSplit])
+  }, [loading, projectOwnerAddress, splits, transformSplit])
 
   return {
     loading,

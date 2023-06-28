@@ -21,6 +21,7 @@ export const PayProjectModal: React.FC = () => {
     isTransactionPending,
     isTransactionConfirmed,
     pendingTransactionHash,
+    projectName,
     setOpen,
     onPaySubmit,
   } = usePayProjectModal()
@@ -43,7 +44,7 @@ export const PayProjectModal: React.FC = () => {
           <JuiceModal
             className="w-full max-w-xl"
             buttonPosition="stretch"
-            title={t`Pay PyroDAO`}
+            title={t`Pay ${projectName}`}
             position="top"
             okLoading={props.isSubmitting || isTransactionPending}
             okButtonForm="PayProjectModalForm"

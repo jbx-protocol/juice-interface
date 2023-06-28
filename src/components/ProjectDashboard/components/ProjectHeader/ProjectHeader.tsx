@@ -79,7 +79,9 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
               <Divider className="mx-4" type="vertical" />
 
               <span>
-                Owned by: <EthereumAddress address={owner} />
+                <Trans>
+                  Owned by: <EthereumAddress address={owner} />
+                </Trans>
               </span>
             </div>
           </div>

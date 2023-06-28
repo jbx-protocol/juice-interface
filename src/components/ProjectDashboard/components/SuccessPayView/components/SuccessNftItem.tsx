@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/macro'
 import { NftPreview } from 'components/NftRewards/NftPreview'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useContext, useMemo, useState } from 'react'
@@ -32,7 +33,9 @@ export const SuccessNftItem = ({ id }: { id: number }) => {
         <span className="ml-3 text-sm font-medium">
           {rewardTier?.name ?? ''}
         </span>
-        <CartItemBadge className="ml-2">NFT</CartItemBadge>
+        <CartItemBadge className="ml-2">
+          <Trans>NFT</Trans>
+        </CartItemBadge>
       </div>
       {rewardTier && (
         <NftPreview

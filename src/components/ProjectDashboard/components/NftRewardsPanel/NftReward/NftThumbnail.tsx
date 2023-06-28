@@ -14,7 +14,7 @@ export function NftThumbnail({
   return (
     <div
       className={twMerge(
-        'relative flex h-60 w-full items-center justify-center rounded-t-lg',
+        'relative flex h-40 w-full items-center justify-center rounded-t-lg md:h-60',
         isSelected
           ? 'bg-white dark:bg-slate-800'
           : 'bg-white dark:bg-slate-600',
@@ -24,7 +24,7 @@ export function NftThumbnail({
         <JuiceVideoThumbnailOrImage
           src={fileUrl}
           alt={rewardTier?.name ?? 'Juicebox NFT reward'}
-          className="h-60 w-full rounded-t-lg rounded-b-none"
+          className="h-40 w-full rounded-t-lg rounded-b-none md:h-60"
         />
       ) : null}
     </div>

@@ -19,7 +19,7 @@ export function NftDetails({
   return (
     <div
       className={twMerge(
-        'flex h-full w-full flex-col justify-between rounded-b-lg bg-white p-4 dark:bg-slate-700',
+        'flex w-full flex-col justify-between rounded-b-lg bg-white p-4 dark:bg-slate-700 md:h-full',
         !loading ? 'pt-4' : 'pt-1',
       )}
     >
@@ -30,12 +30,12 @@ export function NftDetails({
         paragraph={{ rows: 1, width: ['100%'] }}
       >
         <TruncatedText
-          className="text-base font-medium text-black dark:text-slate-50"
+          className="text-sm font-medium text-black dark:text-slate-50 md:text-base"
           text={rewardTier?.name ?? ''}
         />
       </Skeleton>
       {!hideAttributes ? (
-        <div className="mt-3 flex items-center justify-between">
+        <div className="mt-1 flex flex-col justify-between gap-1.5 md:mt-3 md:flex-row md:items-center">
           {rewardTier?.contributionFloor ? (
             <Skeleton
               className="mt-1"
@@ -44,7 +44,7 @@ export function NftDetails({
               title={false}
               paragraph={{ rows: 1, width: ['50%'] }}
             >
-              <span className="text-lg font-medium text-grey-900 dark:text-slate-100">
+              <span className="text-base font-medium text-grey-900 dark:text-slate-100 md:text-lg">
                 <ETHAmount amount={parseWad(rewardTier.contributionFloor)} />
               </span>
             </Skeleton>

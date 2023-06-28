@@ -14,7 +14,7 @@ exports[`ConfigurationDisplayCard renders 1`] = `
       type="button"
     >
       <div
-        class="mb-8 flex w-full items-center justify-between text-start"
+        class="flex w-full items-center justify-between text-start"
       >
         <div
           class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"

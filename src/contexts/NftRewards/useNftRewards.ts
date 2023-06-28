@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ONE_BILLION } from 'constants/numbers'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { BigNumber } from 'ethers'
 import {
   IPFSNftRewardTier,
@@ -11,8 +11,6 @@ import { UseQueryResult, useQuery } from 'react-query'
 import { withHttps } from 'utils/externalLink'
 import { formatWad } from 'utils/format/formatNumber'
 import { decodeEncodedIpfsUri, ipfsGatewayUrl } from 'utils/ipfs'
-
-export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 
 async function fetchRewardTierMetadata({
   tier,

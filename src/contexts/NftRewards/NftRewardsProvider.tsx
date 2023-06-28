@@ -1,5 +1,5 @@
-import useNftRewards from 'contexts/NftRewards/NftRewards'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
+import useNftRewards from 'contexts/NftRewards/useNftRewards'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/useNftCollectionMetadataUri'
@@ -49,16 +49,12 @@ export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   const { data: collectionMetadataUri, loading: collectionUriLoading } =
     useNftCollectionMetadataUri(dataSourceAddress)
 
-  const { data: flags, loading: flagsLoading } =
-    useNftFlagsOf(dataSourceAddress)
+  const { data: flags } = useNftFlagsOf(dataSourceAddress)
 
   const CIDs = CIDsOfNftRewardTiersResponse(tierData)
 
   const loading = Boolean(
-    nftRewardTiersLoading ||
-      nftRewardsCIDsLoading ||
-      collectionUriLoading ||
-      flagsLoading,
+    nftRewardTiersLoading || nftRewardsCIDsLoading || collectionUriLoading,
   )
 
   const contextData = {

@@ -60,7 +60,7 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
       </div>
 
       <div className="flex flex-col gap-3">
-        <h1 className="mb-0 font-heading text-4xl font-medium dark:text-slate-50">
+        <h1 className="mb-0 font-heading text-3xl font-medium dark:text-slate-50 md:text-4xl">
           {title}
         </h1>
 

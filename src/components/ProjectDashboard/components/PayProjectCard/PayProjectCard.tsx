@@ -13,7 +13,7 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
   const { validationSchema, paymentsPaused, addPay } = usePayProjectCard()
   return (
     <DisplayCard className={twMerge('flex flex-col gap-2 pr-9', className)}>
-      <div className="font-medium">
+      <div className="text-base font-medium">
         <Tooltip title={<Trans>Send ETH payments to this project.</Trans>}>
           <span>
             <Trans>Pay Project</Trans>

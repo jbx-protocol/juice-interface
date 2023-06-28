@@ -58,7 +58,7 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
       className={twMerge('flex cursor-pointer flex-col gap-2', className)}
       onClick={openNftRewardsTab}
     >
-      <div className="font-medium">
+      <div className="text-base font-medium">
         <Tooltip title={tooltipText}>
           <span>
             <Trans>NFTs & Rewards</Trans>
@@ -74,7 +74,7 @@ export const NftRewardsCard = ({ className }: { className?: string }) => {
           />
         </HoverPreview>
         <div>
-          <button className="flex items-center gap-1 whitespace-nowrap rounded-2xl bg-smoke-100 py-1 pl-3 pr-2.5 text-sm text-smoke-700 dark:bg-slate-500 dark:text-slate-100">
+          <button className="flex items-center gap-1 whitespace-nowrap rounded-2xl bg-smoke-100 py-1 pl-3 pr-2.5 text-sm text-smoke-700 transition-colors hover:bg-smoke-200 dark:bg-slate-500 dark:text-slate-100 hover:dark:bg-slate-400">
             <Trans>View all</Trans>{' '}
             <ArrowRightIcon className="h-3 w-3 flex-shrink-0 stroke-2" />
           </button>

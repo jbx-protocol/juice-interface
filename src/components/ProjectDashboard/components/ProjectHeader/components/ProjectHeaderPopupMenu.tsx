@@ -17,6 +17,7 @@ export function ProjectHeaderPopupMenu({ projectId }: { projectId: number }) {
 
   return (
     <PopupMenu
+      menuButtonIconClassName="h-8 w-8"
       items={[
         {
           id: 'bookmark',

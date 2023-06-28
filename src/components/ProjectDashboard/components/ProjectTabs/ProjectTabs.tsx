@@ -1,8 +1,8 @@
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
-import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
-import { Fragment, useContext, useMemo } from 'react'
+import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
+import { Fragment, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { AboutPanel } from '../AboutPanel'
 import { ActivityPanel } from '../ActivityPanel'
@@ -13,13 +13,8 @@ import { ProjectTab } from '../ui'
 
 export const ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
-  const {
-    nftRewards: { CIDs },
-  } = useContext(NftRewardsContext)
 
-  const showNftRewards = useMemo(() => {
-    return (CIDs ?? []).length > 0
-  }, [CIDs])
+  const { value: showNftRewards } = useHasNftRewards()
 
   const tabs = useMemo(
     () => [

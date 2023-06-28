@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { NftPreview } from 'components/NftRewards/NftPreview'
 import { useProjectCart } from 'components/ProjectDashboard/hooks'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { NftRewardTier } from 'models/nftRewards'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'

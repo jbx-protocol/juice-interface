@@ -14,14 +14,14 @@ exports[`ConfigurationDisplayCard renders 1`] = `
       type="button"
     >
       <div
-        class="flex w-full items-center justify-between text-start"
+        class="mb-8 flex w-full items-center justify-between text-start"
       >
         <div
           class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
         >
           Current
           <div
-            class="font-heading text-2xl font-medium dark:text-slate-50"
+            class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
           >
             Configuration
           </div>

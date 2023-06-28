@@ -6,12 +6,12 @@ exports[`CurrentCycleCard renders 1`] = `
     class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 min-w-0 cursor-pointer pr-9"
   >
     <div
-      class="truncate whitespace-nowrap font-medium"
+      class="truncate whitespace-nowrap text-base font-medium"
     >
       Current Cycle: #1
     </div>
     <div
-      class="mt-6 flex min-w-0 items-center gap-2"
+      class="mt-4 flex min-w-0 items-center gap-2"
     >
       <div
         aria-label=""
@@ -35,7 +35,7 @@ exports[`CurrentCycleCard renders 1`] = `
     </div>
     <div
       aria-label=""
-      class="truncate mt-3 text-smoke-500 dark:text-slate-200"
+      class="truncate mt-2 text-smoke-500 dark:text-slate-200"
     >
       until Cycle #2
     </div>

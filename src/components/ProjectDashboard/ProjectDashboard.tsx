@@ -35,7 +35,7 @@ export const ProjectDashboard = () => {
                   <div className="flex w-full justify-center md:px-6">
                     <div className="flex w-full max-w-6xl flex-col">
                       <ProjectHeader className="mt-4 px-4 md:px-0" />
-                      <div className="mt-10 flex w-full flex-col gap-6 px-4 md:flex-row md:px-0">
+                      <div className="mt-10 flex w-full flex-col gap-4 px-4 md:flex-row md:px-0">
                         <PayProjectCard className="flex-1" />
                         {shouldShowNftCard ? <NftRewardsCard /> : null}
                         <CurrentCycleCard

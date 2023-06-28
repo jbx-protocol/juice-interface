@@ -23,6 +23,7 @@ const SCRIPT_SRC = [
   'https://*.juicebox.money',
   'https://static.hotjar.com',
   'https://script.hotjar.com',
+  'https://cdn.usefathom.com',
   // Not working as unsafe-eval is required for metamask
   // `'sha256-kZ9E6/oLrki51Yx03/BugStfFrPlm8hjaFbaokympXo='`, // hotjar
   `'unsafe-eval'`, // hotjar

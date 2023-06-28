@@ -12,7 +12,7 @@ export const useGnosisSafe = (address?: string) => {
 
       try {
         const response = await axios.get(
-          `https://safe-transaction.gnosis.io/api/v1/safes/${address}`,
+          `https://safe-transaction-mainnet.safe.global/api/v1/safes/${address}`,
         )
         if (response.data) {
           return response.data as GnosisSafe

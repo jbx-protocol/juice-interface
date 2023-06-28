@@ -60,7 +60,6 @@ const CONNECT_SRC = [
   'https://*.hotjar.com',
   'https://*.hotjar.io',
   'wss://*.hotjar.com',
-  'https://*.gnosis.io',
   'https://*.safe.global',
   'https://*.snapshot.org',
   'https://*.wallet.coinbase.com',

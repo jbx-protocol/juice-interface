@@ -20,7 +20,7 @@ export const ConfigurationDisplayCard = ({
     >
       {({ open }) => (
         <Disclosure.Button className="w-full outline-none">
-          <div className="flex w-full items-center justify-between text-start">
+          <div className="mb-8 flex w-full items-center justify-between text-start">
             <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
               {title}
               <div className="font-heading text-xl font-medium text-grey-900 dark:text-slate-50">

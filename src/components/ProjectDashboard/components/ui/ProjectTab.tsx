@@ -23,7 +23,7 @@ export const ProjectTab = ({
         className={twMerge(
           'whitespace-nowrap px-1 pb-5 text-base dark:text-slate-200',
           selected &&
-            'border-b-2 border-black font-semibold dark:border-slate-50 dark:text-slate-50',
+            'border-b-2 border-black font-medium dark:border-slate-50 dark:text-slate-50',
         )}
       >
         {name}

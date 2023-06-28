@@ -42,7 +42,7 @@ export const NotificationsTab = () => {
         ) : (
           <div className="stroke-secondary rounded-lg border">
             <div className="stroke-secondary flex justify-between rounded-t-lg border border-b bg-smoke-100 py-3 px-4 dark:bg-slate-600">
-              <span className="flex items-center gap-2 font-bold">
+              <span className="flex items-center gap-2 font-medium">
                 <Trans>Watching projects</Trans>{' '}
                 <Badge variant="info">{projectsFollowedByUser.length}</Badge>
               </span>

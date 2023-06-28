@@ -31,7 +31,7 @@ export const HistorySubPanel = () => {
           <div
             key={header}
             className={twMerge(
-              'py-3 pl-4 pr-3 text-start text-sm font-semibold',
+              'py-3 pl-4 pr-3 text-start text-sm font-medium',
               `col-start-${2 * i + 1}`,
             )}
           >

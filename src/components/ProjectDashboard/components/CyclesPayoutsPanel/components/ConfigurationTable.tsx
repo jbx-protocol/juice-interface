@@ -40,7 +40,7 @@ export const ConfigurationTable = ({
     <>
       <div>
         <div className="w-full">
-          <div className="text-start text-base font-semibold uppercase">
+          <div className="text-start text-base font-medium uppercase">
             {title}
           </div>
           <div>

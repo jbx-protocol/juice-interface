@@ -28,9 +28,7 @@ export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   // don't fetch stuff if there's no datasource in the first place.
   const hasNftRewards = Boolean(JB721DelegateVersion)
 
-  /**
-   * Load NFT Rewards data
-   */
+  // fetch NFT tier data from the contract
   const { data: nftRewardTiersResponse, loading: nftRewardsCIDsLoading } =
     useNftTiers({
       dataSourceAddress,
@@ -39,23 +37,20 @@ export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
 
   // catchall to ensure nfts are never loaded if hasNftRewards is false (there's no datasource).
   const tierData = hasNftRewards ? nftRewardTiersResponse ?? [] : []
+  const CIDs = CIDsOfNftRewardTiersResponse(tierData)
 
+  // fetch NFT metadata (its image, name etc.) from ipfs
   const { data: rewardTiers, isLoading: nftRewardTiersLoading } = useNftRewards(
     tierData,
     projectId,
     dataSourceAddress,
   )
+  const nftsLoading = Boolean(nftRewardTiersLoading || nftRewardsCIDsLoading)
 
-  const { data: collectionMetadataUri, loading: collectionUriLoading } =
+  // fetch some other related stuff
+  const { data: collectionMetadataUri } =
     useNftCollectionMetadataUri(dataSourceAddress)
-
   const { data: flags } = useNftFlagsOf(dataSourceAddress)
-
-  const CIDs = CIDsOfNftRewardTiersResponse(tierData)
-
-  const loading = Boolean(
-    nftRewardTiersLoading || nftRewardsCIDsLoading || collectionUriLoading,
-  )
 
   const contextData = {
     nftRewards: {
@@ -70,7 +65,7 @@ export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
       postPayModal: projectMetadata?.nftPaymentSuccessModal,
       flags: flags ?? DEFAULT_NFT_FLAGS,
     },
-    loading,
+    loading: nftsLoading,
   }
 
   return (

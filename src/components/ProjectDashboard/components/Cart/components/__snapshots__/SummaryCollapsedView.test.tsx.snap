@@ -3,7 +3,7 @@
 exports[`SummaryCollapsedView should render correctly 1`] = `
 <div>
   <div
-    class="flex w-full items-center justify-between px-8 py-6"
+    class="flex w-full items-center justify-between gap-1 px-8 py-6"
   >
     <div
       class="flex min-w-0 items-center gap-4"

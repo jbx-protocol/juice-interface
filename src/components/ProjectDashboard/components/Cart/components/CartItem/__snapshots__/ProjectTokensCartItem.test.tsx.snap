@@ -12,7 +12,7 @@ exports[`ProjectTokensCartItem renders 1`] = `
         ProjectHeaderLogo
       </div>
       <span
-        class="ml-3 min-w-0 dark:text-slate-50"
+        class="ml-3 min-w-0 font-medium dark:text-slate-50"
       >
         <div
           class="flex flex-col gap-1"

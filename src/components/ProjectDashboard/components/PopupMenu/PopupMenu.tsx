@@ -27,6 +27,7 @@ type PopupMenuItem = ComponentItem | LinkItem | ButtonItem
 
 type PopupMenuProps = {
   className?: string
+  menuButtonIconClassName?: string
   items: PopupMenuItem[]
 }
 
@@ -38,7 +39,11 @@ function isButtonItem(item: PopupMenuItem): item is ButtonItem {
   return (item as ButtonItem).onClick !== undefined
 }
 
-export const PopupMenu = ({ className, items }: PopupMenuProps) => {
+export const PopupMenu = ({
+  className,
+  items,
+  menuButtonIconClassName,
+}: PopupMenuProps) => {
   return (
     <>
       <Menu as="div" className={twMerge('relative', className)}>
@@ -49,7 +54,9 @@ export const PopupMenu = ({ className, items }: PopupMenuProps) => {
                 open && 'rounded-lg bg-smoke-100 dark:bg-slate-600',
               )}
             >
-              <EllipsisVerticalIcon className="h-6 w-6" />
+              <EllipsisVerticalIcon
+                className={twMerge('h-6 w-6', menuButtonIconClassName)}
+              />
             </Menu.Button>
 
             <Menu.Items

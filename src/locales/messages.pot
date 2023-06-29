@@ -3536,9 +3536,6 @@ msgstr ""
 msgid "to select"
 msgstr ""
 
-msgid "View"
-msgstr ""
-
 msgid "Unavailable"
 msgstr ""
 

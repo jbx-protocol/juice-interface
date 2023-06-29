@@ -56,7 +56,7 @@ describe('HistorySubPanel', () => {
 
   it('displays correct cycle data', () => {
     render(<HistorySubPanel />)
-    expect(screen.getByText(mockData[0].cycleNumber)).toBeInTheDocument()
+    expect(screen.getByText(`#${mockData[0].cycleNumber}`)).toBeInTheDocument()
     expect(screen.getByText(mockData[0].withdrawn)).toBeInTheDocument()
     expect(screen.getByText(mockData[0].date)).toBeInTheDocument()
   })

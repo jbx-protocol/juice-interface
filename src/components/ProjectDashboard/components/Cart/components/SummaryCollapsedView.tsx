@@ -43,7 +43,8 @@ export const SummaryCollapsedView = () => {
       internalSummaryWidth -
       totalToPayWidth -
       summaryGap -
-      (32 + 16) * 2 // Chevron padding
+      (32 + 16) - // Chevron padding
+      4
 
     const maxItemsBasedOnWidthAvailable = Math.max(
       Math.floor(workableWidth / (stackComponentSize - stackComponentOffset)),
@@ -96,7 +97,7 @@ export const SummaryCollapsedView = () => {
 
   return (
     <div
-      className="flex w-full items-center justify-between px-8 py-6"
+      className="flex w-full items-center justify-between gap-1 px-8 py-6"
       ref={containerRef}
     >
       <div

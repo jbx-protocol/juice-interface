@@ -14,6 +14,7 @@ import {
   feeForAmount,
   formatSplitPercent,
 } from 'utils/v2v3/math'
+import { useCurrentUpcomingDistributionLimit } from './useCurrentUpcomingDistributionLimit'
 import { useCurrentUpcomingPayoutSplits } from './useCurrentUpcomingPayoutSplits'
 
 const splitHasFee = (split: Split) => {
@@ -36,12 +37,10 @@ const calculateSplitAmountWad = (
 
 export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { splits, loading } = useCurrentUpcomingPayoutSplits(type)
-  const {
-    projectOwnerAddress,
-    distributionLimit,
-    distributionLimitCurrency,
-    primaryETHTerminalFee,
-  } = useProjectContext()
+  const { projectOwnerAddress, primaryETHTerminalFee } = useProjectContext()
+
+  const { distributionLimit, distributionLimitCurrency } =
+    useCurrentUpcomingDistributionLimit(type)
 
   const showAmountOnPayout = useMemo(() => {
     if (distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)) return false

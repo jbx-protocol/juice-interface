@@ -32,7 +32,12 @@ export function ProjectHeaderPopupMenu({ projectId }: { projectId: number }) {
               </span>
             </>
           ),
-          onClick: onBookmarkButtonClicked,
+          onClick(ev) {
+            ev.preventDefault()
+            ev.stopPropagation()
+
+            onBookmarkButtonClicked()
+          },
         },
         {
           id: 'subscribe',

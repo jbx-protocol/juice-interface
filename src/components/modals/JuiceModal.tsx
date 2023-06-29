@@ -84,23 +84,23 @@ export const JuiceModal = ({
     if (isMobile) return undefined // Mobile position doesn't use absolute positioning
     switch (position) {
       case 'top':
-        return 'top-8 -translate-x-1/2 left-1/2'
+        return 'md:top-8 md:-translate-x-1/2 md:left-1/2'
       case 'topRight':
-        return 'top-8 right-8'
+        return 'md:top-8 md:right-8'
       case 'right':
-        return 'top-1/2 right-8 -translate-y-1/2'
+        return 'md:top-1/2 md:right-8 md:-translate-y-1/2'
       case 'bottomRight':
-        return 'bottom-8 right-8'
+        return 'md:bottom-8 md:right-8'
       case 'bottom':
-        return 'bottom-8 -translate-x-1/2 left-1/2'
+        return 'md:bottom-8 md:-translate-x-1/2 md:left-1/2'
       case 'bottomLeft':
-        return 'bottom-8 left-8'
+        return 'md:bottom-8 md:left-8'
       case 'left':
-        return 'top-1/2 left-8 -translate-y-1/2'
+        return 'md:top-1/2 md:left-8 md:-translate-y-1/2'
       case 'topLeft':
-        return 'top-8 left-8'
+        return 'md:top-8 md:left-8'
       case 'center':
-        return 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+        return 'md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2'
     }
   }, [isMobile, position])
 
@@ -119,7 +119,7 @@ export const JuiceModal = ({
         onSubmit={onSubmit}
         className={twMerge(
           'relative mx-auto mt-10 w-full max-w-md overflow-hidden rounded-lg bg-smoke-25 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800 md:absolute',
-          positionClasses,
+          positionClasses ? positionClasses : '',
           className,
         )}
       >

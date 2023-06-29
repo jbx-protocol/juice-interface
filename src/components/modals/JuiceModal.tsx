@@ -118,7 +118,7 @@ export const JuiceModal = ({
       <form
         onSubmit={onSubmit}
         className={twMerge(
-          'relative mx-auto mt-10 w-full max-w-md overflow-hidden rounded-lg bg-smoke-25 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800 md:absolute',
+          'absolute mx-auto mt-10 w-full max-w-md overflow-hidden rounded-lg bg-smoke-25 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800',
           positionClasses,
           className,
         )}

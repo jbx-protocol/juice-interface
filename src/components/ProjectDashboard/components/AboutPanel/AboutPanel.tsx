@@ -10,7 +10,7 @@ import { SocialLinkButton } from '../ui'
 export const AboutPanel = () => {
   const { description, socialLinks, projectName } = useAboutPanel()
   return (
-    <div className="flex min-h-[384px] flex-col gap-8 md:max-w-[596px] md:gap-10">
+    <div className="flex min-h-[384px] w-full flex-col gap-8 md:max-w-[596px] md:gap-10">
       <div className="flex flex-wrap gap-y-3 gap-x-10">
         {Object.entries(socialLinks)
           .filter(([, href]) => !!href)

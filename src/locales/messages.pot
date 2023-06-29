@@ -3131,6 +3131,9 @@ msgstr ""
 msgid "Edit details of {projectTitle}"
 msgstr ""
 
+msgid "Your legacy balance"
+msgstr ""
+
 msgid "Error loading ETH transfers to project"
 msgstr ""
 

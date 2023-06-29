@@ -16,7 +16,7 @@ export function ProjectHeaderStats() {
   )
 
   return (
-    <div className="flex shrink-0 gap-12">
+    <div className="flex min-w-0 gap-12 md:shrink-0">
       <a role="button" onClick={openActivityTab}>
         <ProjectHeaderStat label={t`Payments`} stat={payments} />
       </a>

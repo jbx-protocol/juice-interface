@@ -48,7 +48,7 @@ export const CartItem: React.FC<CartItemProps> = ({
         <div className="flex min-w-0 gap-3">
           {icon}
           <div className="flex min-w-0 flex-col gap-3">
-            <span className="mt-3">{title}</span>
+            <span className="mt-3 font-medium">{title}</span>
             {'quantity' in quantityProps && (
               <QuantityControl {...quantityProps} />
             )}
@@ -72,7 +72,9 @@ export const CartItem: React.FC<CartItemProps> = ({
     >
       <div className="flex min-w-0 items-center">
         {icon}
-        <span className="ml-3 min-w-0 dark:text-slate-50">{title}</span>
+        <span className="ml-3 min-w-0 font-medium dark:text-slate-50">
+          {title}
+        </span>
       </div>
       <div className="flex items-center">
         {'quantity' in quantityProps && <QuantityControl {...quantityProps} />}

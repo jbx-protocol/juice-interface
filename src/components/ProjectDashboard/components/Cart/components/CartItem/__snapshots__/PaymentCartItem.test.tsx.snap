@@ -29,7 +29,7 @@ exports[`PaymentCartItem renders 1`] = `
         </svg>
       </div>
       <span
-        class="ml-3 min-w-0 dark:text-slate-50"
+        class="ml-3 min-w-0 font-medium dark:text-slate-50"
       >
         <span
           class="flex items-center gap-2"

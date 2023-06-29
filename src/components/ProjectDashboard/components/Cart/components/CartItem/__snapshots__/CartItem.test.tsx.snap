@@ -10,7 +10,7 @@ exports[`CartItem renders 1`] = `
     >
       icon
       <span
-        class="ml-3 min-w-0 dark:text-slate-50"
+        class="ml-3 min-w-0 font-medium dark:text-slate-50"
       >
         title
       </span>
@@ -55,7 +55,7 @@ exports[`CartItem renders price as dash when price is null 1`] = `
     >
       icon
       <span
-        class="ml-3 min-w-0 dark:text-slate-50"
+        class="ml-3 min-w-0 font-medium dark:text-slate-50"
       >
         title
       </span>
@@ -143,7 +143,7 @@ exports[`CartItem renders with quantity 1`] = `
     >
       icon
       <span
-        class="ml-3 min-w-0 dark:text-slate-50"
+        class="ml-3 min-w-0 font-medium dark:text-slate-50"
       >
         title
       </span>

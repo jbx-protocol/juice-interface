@@ -1121,9 +1121,6 @@ msgstr ""
 msgid "Collection Name"
 msgstr ""
 
-msgid "Pay PyroDAO"
-msgstr ""
-
 msgid "No active cycle."
 msgstr ""
 
@@ -4455,6 +4452,9 @@ msgid "Project handle"
 msgstr ""
 
 msgid "Manage your project's NFTs and rewards"
+msgstr ""
+
+msgid "Pay {projectName}"
 msgstr ""
 
 msgid "Advanced options"

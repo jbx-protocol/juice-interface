@@ -12,7 +12,9 @@ import { TokensPerEth } from './components/TokensPerEth'
 export const PayProjectCard = ({ className }: { className?: string }) => {
   const { validationSchema, paymentsPaused, addPay } = usePayProjectCard()
   return (
-    <DisplayCard className={twMerge('flex flex-col gap-2 pr-9', className)}>
+    <DisplayCard
+      className={twMerge('flex flex-col gap-2 px-4 md:pr-9 md:pl-6', className)}
+    >
       <div className="text-base font-medium">
         <Tooltip title={<Trans>Send ETH payments to this project.</Trans>}>
           <span>

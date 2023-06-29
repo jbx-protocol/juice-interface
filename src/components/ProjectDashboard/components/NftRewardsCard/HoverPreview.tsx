@@ -2,6 +2,7 @@ import { Transition } from '@headlessui/react'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useHasTouch } from 'hooks/useHasTouch'
+import useMobile from 'hooks/useMobile'
 import {
   Fragment,
   PropsWithChildren,
@@ -15,6 +16,7 @@ import {
 import { SmallNftSquare } from './SmallNftSquare'
 
 export const HoverPreview: React.FC<PropsWithChildren> = ({ children }) => {
+  const isMobile = useMobile()
   const { setProjectPageTab } = useProjectPageQueries()
   const hasTouch = useHasTouch()
   const [hovering, setHovering] = useState(false)
@@ -25,9 +27,11 @@ export const HoverPreview: React.FC<PropsWithChildren> = ({ children }) => {
     setHovering(hovering => !hovering)
   }, [])
 
-  const handleToggle = hasTouch
-    ? { onTouchStart: toggleHover }
-    : { onClick: toggleHover }
+  const handleToggle = !isMobile
+    ? hasTouch
+      ? { onTouchStart: toggleHover }
+      : { onClick: toggleHover }
+    : {}
 
   const {
     nftRewards: { rewardTiers },
@@ -120,8 +124,8 @@ export const HoverPreview: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="relative inline-block" ref={wrapperRef}>
       <div
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={!isMobile ? handleMouseEnter : undefined}
+        onMouseLeave={!isMobile ? handleMouseLeave : undefined}
         {...handleToggle}
       >
         {children}
@@ -139,8 +143,8 @@ export const HoverPreview: React.FC<PropsWithChildren> = ({ children }) => {
         <div
           className="top-[calc(100% - 1px)] absolute left-1/2 z-20 -translate-x-1/2 transform cursor-pointer"
           ref={tooltipRef}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={!isMobile ? handleMouseEnter : undefined}
+          onMouseLeave={!isMobile ? handleMouseLeave : undefined}
           onClick={() => setProjectPageTab('nft_rewards')}
         >
           <div className="z-10 mx-auto h-0 w-0 border-l-[20px] border-b-[24px] border-r-[20px] border-white border-l-transparent border-r-transparent dark:border-slate-950 dark:border-l-transparent dark:border-r-transparent" />

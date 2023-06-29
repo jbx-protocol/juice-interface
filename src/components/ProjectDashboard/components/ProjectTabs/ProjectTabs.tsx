@@ -2,7 +2,8 @@ import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
-import { Fragment, useMemo } from 'react'
+import { useOnScreen } from 'hooks/useOnScreen'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { AboutPanel } from '../AboutPanel'
 import { ActivityPanel } from '../ActivityPanel'
@@ -15,6 +16,29 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
 
   const { value: showNftRewards } = useHasNftRewards()
+
+  const containerRef = useRef<HTMLDivElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const isPanelVisible = useOnScreen(panelRef)
+  const [firstRender, setFirstRender] = useState(true)
+
+  useEffect(() => {
+    if (firstRender) {
+      setFirstRender(false)
+      return
+    }
+    if (
+      containerRef.current &&
+      !isPanelVisible &&
+      projectPageTab !== undefined
+    ) {
+      containerRef.current.scrollIntoView(true)
+    }
+
+    // Intentionally only set - isPanelVisible updates should not cause a
+    // re-render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectPageTab])
 
   const tabs = useMemo(
     () => [
@@ -42,7 +66,10 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
   }, [projectPageTab, tabs])
 
   return (
-    <div className={twMerge('flex flex-col items-center gap-12', className)}>
+    <div
+      ref={containerRef}
+      className={twMerge('flex flex-col items-center gap-12', className)}
+    >
       <Tab.Group
         as={Fragment}
         selectedIndex={selectedTabIndex}
@@ -60,7 +87,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
             ))}
           </Tab.List>
         </div>
-        <div className="flex w-full justify-center px-4 md:px-0">
+        <div ref={panelRef} className="flex w-full justify-center px-4 md:px-0">
           <Tab.Panels as={Fragment}>
             {tabs.map(tab => (
               <Tab.Panel as={Fragment} key={tab.id}>

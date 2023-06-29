@@ -26,7 +26,7 @@ export type ProjectPayReceipt = {
 export const useProjectPageQueries = () => {
   const router = useRouter()
 
-  const projectPageTab = (router.query.tabid as ProjectPageTab) || 'activity'
+  const projectPageTab = router.query.tabid as ProjectPageTab | undefined
   const projectPayReceiptString = router.query.payReceipt as string | undefined
 
   const projectPayReceipt = useMemo(() => {

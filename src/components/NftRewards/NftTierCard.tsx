@@ -186,8 +186,8 @@ export function NftTierCard({
       {rewardTier && !previewDisabled ? (
         <NftPreview
           open={previewVisible}
+          setOpen={setPreviewVisible}
           rewardTier={rewardTier}
-          onClose={() => setPreviewVisible(false)}
           fileUrl={fileUrl}
         />
       ) : null}

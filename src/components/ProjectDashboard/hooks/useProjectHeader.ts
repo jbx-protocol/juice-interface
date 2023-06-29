@@ -1,6 +1,8 @@
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
+import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjects'
+import { GnosisSafe } from 'models/safe'
 import { useContext } from 'react'
 import { useProjectMetadata } from './useProjectMetadata'
 
@@ -13,6 +15,7 @@ export interface ProjectHeaderData {
   payments: number | undefined
   totalVolume: BigNumber | undefined
   last7DaysPercent: number
+  gnosisSafe: GnosisSafe | undefined | null
 }
 
 export const useProjectHeader = (): ProjectHeaderData => {
@@ -28,6 +31,7 @@ export const useProjectHeader = (): ProjectHeaderData => {
     totalVolume: totalVolume ?? BigNumber.from(0),
     trendingVolume: trendingVolume ?? BigNumber.from(0),
   })
+  const { data: gnosisSafe } = useGnosisSafe(projectOwnerAddress)
 
   return {
     title: projectMetadata?.name,
@@ -38,5 +42,6 @@ export const useProjectHeader = (): ProjectHeaderData => {
     payments: paymentsCount,
     totalVolume,
     last7DaysPercent,
+    gnosisSafe,
   }
 }

@@ -3,6 +3,7 @@ import { Trans } from '@lingui/macro'
 import { Button, Divider } from 'antd'
 import BookmarkButton from 'components/BookmarkButton/BookmarkButton'
 import EthereumAddress from 'components/EthereumAddress'
+import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
 import { useProjectHeader } from 'components/ProjectDashboard/hooks'
 import { SubscribeButton } from 'components/SubscribeButton'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
@@ -19,7 +20,8 @@ import { ProjectHeaderStats } from './components/ProjectHeaderStats'
 import { Subtitle } from './components/Subtitle'
 
 export const ProjectHeader = ({ className }: { className?: string }) => {
-  const { title, subtitle, projectId, handle, owner } = useProjectHeader()
+  const { title, subtitle, projectId, handle, owner, gnosisSafe } =
+    useProjectHeader()
   const isMobile = useMobile()
   const canReconfigure = useV2V3WalletHasPermission(
     V2V3OperatorPermission.RECONFIGURE,
@@ -78,10 +80,16 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
 
               <Divider className="mx-4" type="vertical" />
 
-              <span>
+              <span className="inline-flex items-center gap-1">
                 <Trans>
                   Owned by: <EthereumAddress address={owner} />
                 </Trans>
+                {gnosisSafe && (
+                  <GnosisSafeBadge
+                    safe={gnosisSafe}
+                    href={`${window.location.href}/safe`}
+                  />
+                )}
               </span>
             </div>
           </div>

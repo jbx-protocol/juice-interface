@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import { NftPreview } from 'components/NftRewards/NftPreview'
 import { useProjectCart } from 'components/ProjectDashboard/hooks'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
+import { useNftRewardsEnabledForPay } from 'hooks/JB721Delegate/useNftRewardsEnabledForPay'
 import { NftRewardTier } from 'models/nftRewards'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -33,6 +34,7 @@ export function NftReward({
 }: NftRewardProps) {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
   const cart = useProjectCart()
+  const nftsEnabledForPay = useNftRewardsEnabledForPay()
 
   const quantitySelected = useMemo(
     () => cart.nftRewards.find(nft => nft.id === rewardTier?.id)?.quantity ?? 0,
@@ -57,7 +59,7 @@ export function NftReward({
     ? t`Unlimited`
     : t`${rewardTier?.remainingSupply} remaining`
 
-  const disabled = !hasRemainingSupply
+  const disabled = !hasRemainingSupply || !nftsEnabledForPay
 
   return (
     <>

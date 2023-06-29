@@ -62,7 +62,7 @@ export default function EthereumAddress({
     >
       <span
         className={twMerge(
-          'inline-flex items-center',
+          'inline-flex items-center font-medium',
           showEnsLoading && isLoading ? 'animate-pulse' : null,
         )}
       >

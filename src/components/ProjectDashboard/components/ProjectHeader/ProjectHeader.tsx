@@ -72,7 +72,7 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
             <div className="text-grey-500 dark:text-slate-200">
               {projectId ? (
                 <V2V3ProjectHandleLink
-                  className="font-normal text-grey-500 dark:text-slate-200"
+                  className="text-grey-500 dark:text-slate-200"
                   handle={handle}
                   projectId={projectId}
                 />

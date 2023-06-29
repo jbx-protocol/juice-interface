@@ -1,5 +1,5 @@
 :root {
-  --onboard-modal-z-index: 20;
+  --onboard-modal-z-index: 100; // Ensure greater than other modal indices of 20 
 
   --onboard-connect-sidebar-background: theme(colors.smoke.100);
   --onboard-connect-sidebar-color: theme(colors.black);

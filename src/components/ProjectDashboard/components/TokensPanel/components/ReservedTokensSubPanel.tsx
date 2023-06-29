@@ -28,9 +28,9 @@ export const ReservedTokensSubPanel = ({
         <Trans>Reserved tokens</Trans>
       </h2>
       <div className="mt-5 flex flex-col items-center gap-4">
-        <div className="flex w-full items-center gap-4">
+        <div className="flex w-full flex-wrap items-center gap-4">
           <TitleDescriptionDisplayCard
-            className="w-full"
+            className="w-full min-w-min flex-[1_0_0]"
             title={t`Reserved tokens`}
             description={
               reservedTokens ? (
@@ -42,7 +42,7 @@ export const ReservedTokensSubPanel = ({
             tooltip={reservedTokensTooltip}
           />
           <TitleDescriptionDisplayCard
-            className="w-full"
+            className="w-full min-w-min flex-[1_0_0]"
             title={t`Reserved rate`}
             description={reservedRate}
             tooltip={reservedRateTooltip}

@@ -1,9 +1,11 @@
 import { Trans, t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import { useTokensPanel } from 'components/ProjectDashboard/hooks/useTokensPanel'
+import { TokenAmount } from 'components/TokenAmount'
 import { useCallback, useState } from 'react'
 import { TokenHoldersModal } from '../TokenHoldersModal'
 import { TitleDescriptionDisplayCard } from '../ui/TitleDescriptionDisplayCard'
+import { MigrateTokensButton } from './components/MigrateTokensButton'
 import { RedeemTokensButton } from './components/RedeemTokensButton'
 import { ReservedTokensSubPanel } from './components/ReservedTokensSubPanel'
 import { TokenRedemptionCallout } from './components/TokenRedemptionCallout'
@@ -12,6 +14,8 @@ export const TokensPanel = () => {
   const {
     userTokenBalance,
     userTokenBalanceLoading,
+    userLegacyTokenBalance,
+    userV1ClaimedBalance,
     projectToken,
     totalSupply,
   } = useTokensPanel()
@@ -32,7 +36,9 @@ export const TokensPanel = () => {
         <div className="flex w-full flex-1 items-center justify-between">
           <h2 className="font-heading text-2xl font-medium">Tokens</h2>
         </div>
+
         <TokenRedemptionCallout />
+
         <div className="flex-grow">
           {!userTokenBalanceLoading && userTokenBalance && (
             <TitleDescriptionDisplayCard
@@ -46,6 +52,21 @@ export const TokensPanel = () => {
               />
             </TitleDescriptionDisplayCard>
           )}
+
+          {userLegacyTokenBalance?.gt(0) ? (
+            <TitleDescriptionDisplayCard
+              className="mt-4 flex flex-col items-center gap-5 md:flex-row"
+              title={t`Your legacy balance`}
+              description={<TokenAmount amountWad={userLegacyTokenBalance} />}
+            >
+              <MigrateTokensButton
+                totalLegacyTokenBalance={userLegacyTokenBalance}
+                v1ClaimedBalance={userV1ClaimedBalance}
+                className="h-12 w-full md:h-10 md:w-fit"
+              />
+            </TitleDescriptionDisplayCard>
+          ) : null}
+
           <div className="mt-4 flex flex-col gap-4">
             <div className="flex flex-col gap-4 md:flex-row">
               <ProjectTokenCard />
@@ -67,6 +88,7 @@ export const TokensPanel = () => {
               <Trans>View token holders</Trans>
             </a>
           </div>
+
           <ReservedTokensSubPanel className="mt-12" />
         </div>
       </div>

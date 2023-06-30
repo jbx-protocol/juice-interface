@@ -2,10 +2,9 @@ import { Trans, t } from '@lingui/macro'
 import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
 import { reservedTokensTooltip } from '../../TokensPanel/TokensPanelTooltips'
-import { DisplayCard } from '../../ui'
 import { TitleDescriptionDisplayCard } from '../../ui/TitleDescriptionDisplayCard'
 import { useReservedTokensSubPanel } from '../hooks/useReservedTokensSubPanel'
-import { ReservedTokensPopupMenu } from './ReservedTokensPopupMenu'
+import { ExportTokensCsvItem } from './ExportTokensCsvItem'
 import { SendReservedTokensButton } from './SendReservedTokensButton'
 
 export const ReservedTokensSubPanel = ({
@@ -48,14 +47,13 @@ export const ReservedTokensSubPanel = ({
             tooltip={reservedRateTooltip}
           />
         </div>
-        <DisplayCard className="flex w-full flex-col pb-8">
-          <div className="flex items-center justify-between gap-3">
-            <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
-              <Trans>Reserved tokens list</Trans>
-            </h3>
-            {!!reservedList?.length && <ReservedTokensPopupMenu />}
-          </div>
-
+        <TitleDescriptionDisplayCard
+          className="w-full"
+          title={t`Reserved tokens list`}
+          kebabMenu={{
+            items: kebabMenuItems,
+          }}
+        >
           {reservedList?.length ? (
             <>
               <div className="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500">
@@ -82,8 +80,15 @@ export const ReservedTokensSubPanel = ({
               </Trans>
             </div>
           )}
-        </DisplayCard>
+        </TitleDescriptionDisplayCard>
       </div>
     </div>
   )
 }
+
+const kebabMenuItems = [
+  {
+    id: 'export',
+    component: <ExportTokensCsvItem />,
+  },
+]

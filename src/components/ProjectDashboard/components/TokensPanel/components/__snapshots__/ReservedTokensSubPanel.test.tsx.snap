@@ -23,9 +23,13 @@ exports[`ReservedTokensSubPanel renders 1`] = `
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Reserved tokens
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Reserved tokens
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -41,9 +45,13 @@ exports[`ReservedTokensSubPanel renders 1`] = `
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Reserved rate
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Reserved rate
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -54,16 +62,49 @@ exports[`ReservedTokensSubPanel renders 1`] = `
         </div>
       </div>
       <div
-        class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex w-full flex-col pb-8"
+        class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full"
       >
         <div
-          class="flex items-center justify-between gap-3"
+          class="flex w-full flex-col gap-2"
         >
-          <h3
-            class="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200"
+          <span
+            class="flex items-center justify-between gap-3"
           >
-            Reserved tokens list
-          </h3>
+            <span
+              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              Reserved tokens list
+            </span>
+            <div
+              class="relative"
+              data-headlessui-state=""
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                class=""
+                data-headlessui-state=""
+                id="headlessui-menu-button-:r0:"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </span>
         </div>
         <div
           class="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500"

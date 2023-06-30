@@ -25,7 +25,7 @@ type ButtonItem = {
 
 type PopupMenuItem = ComponentItem | LinkItem | ButtonItem
 
-type PopupMenuProps = {
+export type PopupMenuProps = {
   className?: string
   menuButtonIconClassName?: string
   items: PopupMenuItem[]
@@ -86,9 +86,11 @@ export const PopupMenu = ({
                       {item.label}
                     </button>
                   ) : (
-                    <div className="flex gap-2 p-4 hover:bg-smoke-100 dark:hover:bg-slate-600">
-                      {item.component}
-                    </div>
+                    item.component && (
+                      <div className="hover:bg-smoke-100 dark:hover:bg-slate-600">
+                        {item.component}
+                      </div>
+                    )
                   )}
                 </Menu.Item>
               ))}

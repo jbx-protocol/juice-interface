@@ -23,7 +23,7 @@ type ButtonItem = {
   onClick: MouseEventHandler
 }
 
-type PopupMenuItem = ComponentItem | LinkItem | ButtonItem
+export type PopupMenuItem = ComponentItem | LinkItem | ButtonItem
 
 export type PopupMenuProps = {
   className?: string

@@ -1,14 +1,20 @@
 import { Trans, t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import { useTokensPanel } from 'components/ProjectDashboard/hooks/useTokensPanel'
+import { useYourBalanceMenuItems } from 'components/ProjectDashboard/hooks/useYourBalanceMenuItems'
 import { TokenAmount } from 'components/TokenAmount'
+import { V2V3BurnOrRedeemModal } from 'components/v2v3/V2V3Project/V2V3ManageTokensSection/AccountBalanceDescription/V2V3BurnOrRedeemModal'
+import { V2V3ClaimTokensModal } from 'components/v2v3/V2V3Project/V2V3ManageTokensSection/AccountBalanceDescription/V2V3ClaimTokensModal'
+import { V2V3MintModal } from 'components/v2v3/V2V3Project/V2V3ManageTokensSection/AccountBalanceDescription/V2V3MintModal'
 import { useCallback, useState } from 'react'
+import { reloadWindow } from 'utils/windowUtils'
 import { TokenHoldersModal } from '../TokenHoldersModal'
 import { TitleDescriptionDisplayCard } from '../ui/TitleDescriptionDisplayCard'
 import { MigrateTokensButton } from './components/MigrateTokensButton'
 import { RedeemTokensButton } from './components/RedeemTokensButton'
 import { ReservedTokensSubPanel } from './components/ReservedTokensSubPanel'
 import { TokenRedemptionCallout } from './components/TokenRedemptionCallout'
+import { TransferUnclaimedTokensModalWrapper } from './components/TransferUnclaimedTokensModalWrapper'
 
 export const TokensPanel = () => {
   const {
@@ -30,6 +36,18 @@ export const TokensPanel = () => {
     [],
   )
 
+  const {
+    items,
+    redeemModalVisible,
+    setRedeemModalVisible,
+    claimTokensModalVisible,
+    setClaimTokensModalVisible,
+    mintModalVisible,
+    setMintModalVisible,
+    transferUnclaimedTokensModalVisible,
+    setTransferUnclaimedTokensModalVisible,
+  } = useYourBalanceMenuItems()
+
   return (
     <>
       <div className="flex w-full max-w-[596px] flex-col items-stretch gap-5">
@@ -42,15 +60,20 @@ export const TokensPanel = () => {
         <div className="flex-grow">
           {!userTokenBalanceLoading && userTokenBalance && (
             <TitleDescriptionDisplayCard
-              className="flex flex-col items-center gap-5 md:flex-row"
               title={t`Your balance`}
-              description={t`${userTokenBalance} tokens`}
-            >
-              <RedeemTokensButton
-                containerClassName="w-full md:w-fit"
-                className="h-12 w-full md:h-10"
-              />
-            </TitleDescriptionDisplayCard>
+              description={
+                <span className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
+                  <Trans>{userTokenBalance} tokens</Trans>
+                  <RedeemTokensButton
+                    containerClassName="w-full md:w-fit"
+                    className="h-12 w-full md:h-10"
+                  />
+                </span>
+              }
+              kebabMenu={{
+                items,
+              }}
+            />
           )}
 
           {userLegacyTokenBalance?.gt(0) ? (
@@ -95,6 +118,26 @@ export const TokensPanel = () => {
       <TokenHoldersModal
         open={tokenHolderModalOpen}
         onClose={closeTokenHolderModal}
+      />
+      <V2V3BurnOrRedeemModal
+        open={redeemModalVisible}
+        onCancel={() => setRedeemModalVisible(false)}
+        onConfirmed={reloadWindow}
+      />
+      <V2V3ClaimTokensModal
+        open={claimTokensModalVisible}
+        onCancel={() => setClaimTokensModalVisible(false)}
+        onConfirmed={reloadWindow}
+      />
+      <V2V3MintModal
+        open={mintModalVisible}
+        onCancel={() => setMintModalVisible(false)}
+        onConfirmed={reloadWindow}
+      />
+      <TransferUnclaimedTokensModalWrapper
+        open={transferUnclaimedTokensModalVisible}
+        onCancel={() => setTransferUnclaimedTokensModalVisible(false)}
+        onConfirmed={reloadWindow}
       />
     </>
   )

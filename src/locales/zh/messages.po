@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-06-25 00:39\n"
+"PO-Revision-Date: 2023-07-02 00:38\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -1126,9 +1126,6 @@ msgstr "直至 #{0} 周期"
 msgid "Collection Name"
 msgstr "系列名称"
 
-msgid "Pay PyroDAO"
-msgstr "向 PyroDAO 付款"
-
 msgid "No active cycle."
 msgstr "无活动的周期。"
 
@@ -1831,6 +1828,9 @@ msgstr "默认情况下，所有支出都会发送至项目方钱包。"
 msgid "All"
 msgstr "全部"
 
+msgid "View all"
+msgstr ""
+
 msgid "Optionally, you can create an ERC-20 token once your project has been deployed. Until then, the Juicebox protocol will track token balances internally, allowing your supporters to receive tokens and redeem them for ETH."
 msgstr "或者，你可以部署项目后创建一个 ERC-20 标准代币。在此之前，Juicebox 协议将在内部代币跟踪代币余额，允许你的支持者们接受代币及用代币来赎回 ETH。"
 
@@ -2157,9 +2157,6 @@ msgstr "部署周期"
 
 msgid "Juicebox native"
 msgstr "Juicebox 原生"
-
-msgid "LINK TO NFT"
-msgstr "链接至 NFT"
 
 msgid "To edit your current NFT collection, go to the <0>Edit NFTs</0> page."
 msgstr "如需编辑你当前的 NFT 系列，请去到 <0>编辑 NFT</0> 页面。"
@@ -3139,6 +3136,9 @@ msgstr "升级至 {0}"
 msgid "Edit details of {projectTitle}"
 msgstr "编辑 {projectTitle} 的详细信息"
 
+msgid "Your legacy balance"
+msgstr ""
+
 msgid "Error loading ETH transfers to project"
 msgstr "加载 ETH 转入项目记录出错"
 
@@ -3165,6 +3165,9 @@ msgstr "编辑截止期限"
 
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building. Join thousands of projects sippin' the Juice."
 msgstr "Juicebox 提供自动化 Web3 筹款的工具，让你可以专注建设。加入使用 Juicebox 的数千个项目。"
+
+msgid "Owner wallet"
+msgstr ""
 
 msgid "Edit"
 msgstr "编辑"
@@ -4360,6 +4363,9 @@ msgstr "在 Juicebox 创建及启动内置赎回功能的 NFT 项目。"
 msgid "A message from {name}"
 msgstr "来自 {name} 的一条消息"
 
+msgid "Pay project"
+msgstr ""
+
 msgid "No reserved tokens configured."
 msgstr "未配置保留代币。"
 
@@ -4452,6 +4458,9 @@ msgstr "项目标识"
 
 msgid "Manage your project's NFTs and rewards"
 msgstr "管理项目的 NFT 及奖励"
+
+msgid "Pay {projectName}"
+msgstr ""
 
 msgid "Advanced options"
 msgstr "高级选项"

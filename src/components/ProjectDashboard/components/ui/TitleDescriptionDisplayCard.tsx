@@ -37,7 +37,7 @@ export const TitleDescriptionDisplayCard = ({
           <span className="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200">
             {title}
           </span>
-          {kebabMenu && <PopupMenu {...kebabMenu} />}
+          {!!kebabMenu?.items.length && <PopupMenu {...kebabMenu} />}
         </Tooltip>
         {description && (
           <span className="truncate font-heading text-xl font-medium dark:text-slate-50">

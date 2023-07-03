@@ -419,6 +419,9 @@ msgstr ""
 msgid "Uploaded to: <0/>"
 msgstr ""
 
+msgid "Transfer unclaimed tokens"
+msgstr ""
+
 msgid "You've completed this step."
 msgstr ""
 
@@ -1692,6 +1695,9 @@ msgid "Deploy a V3 Migration Token for your project."
 msgstr ""
 
 msgid "Privacy Policy"
+msgstr ""
+
+msgid "Claim tokens as ERC-20"
 msgstr ""
 
 msgid "Pay <0/>"
@@ -3540,6 +3546,9 @@ msgid "to select"
 msgstr ""
 
 msgid "Unavailable"
+msgstr ""
+
+msgid "Burn token"
 msgstr ""
 
 msgid "Volume chart failed to load."

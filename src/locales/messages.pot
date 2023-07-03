@@ -140,6 +140,9 @@ msgstr ""
 msgid "Determines whether tokens will be minted by payments made through this address."
 msgstr ""
 
+msgid "Data from current cycle"
+msgstr ""
+
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
 msgstr ""
 
@@ -4314,6 +4317,9 @@ msgid "ETH currently available to send to the payout recipients below (before th
 msgstr ""
 
 msgid "You will receive {0}<0/>"
+msgstr ""
+
+msgid "Data from upcoming cycle"
 msgstr ""
 
 msgid "Your project's NFTs."

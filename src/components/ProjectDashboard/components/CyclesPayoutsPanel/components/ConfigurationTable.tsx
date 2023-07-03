@@ -1,4 +1,6 @@
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
+import { t } from '@lingui/macro'
+import { Tooltip } from 'antd'
 import { ReactNode, useMemo } from 'react'
 import { ConfigurationPanelTableData } from './ConfigurationPanel'
 
@@ -82,13 +84,19 @@ const ConfigurationTableRow = ({
 
 const Diff: React.FC<{ old?: ReactNode; new: ReactNode }> = props => (
   <div className="flex flex-col items-center gap-2">
-    <div className="flex w-full items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950">
+    <Tooltip
+      className="flex flex-1 items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
+      title={t`Data from current cycle`}
+    >
       <MinusCircleIcon className="inline-block h-5 w-5" />
       <span>{props.old}</span>
-    </div>
-    <div className="flex w-full items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950">
+    </Tooltip>
+    <Tooltip
+      className="flex flex-1 items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
+      title={t`Data from upcoming cycle`}
+    >
       <PlusCircleIcon className="inline-block h-5 w-5" />
       <span>{props.new}</span>
-    </div>
+    </Tooltip>
   </div>
 )

@@ -12,67 +12,101 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
-          <div
-            class="flex w-full flex-col gap-2"
-          >
-            <span
-              class="flex items-center justify-between gap-3"
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
             >
               <span
-                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
               >
-                Cycle #
+                <span>
+                  Cycle #
+                </span>
               </span>
-            </span>
-            <span
-              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1
-            </span>
+            </div>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:w-fit"
         >
-          <div
-            class="flex w-full flex-col gap-2"
-          >
-            <span
-              class="flex items-center justify-between gap-3"
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
             >
               <span
-                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
               >
-                Status
+                <span
+                  class="leading-none"
+                >
+                  Status
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="h-4 w-4 text-grey-500 dark:text-slate-200"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </span>
-            </span>
-            <span
-              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               Active
-            </span>
+            </div>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
-          <div
-            class="flex w-full flex-col gap-2"
-          >
-            <span
-              class="flex items-center justify-between gap-3"
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
             >
               <span
-                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
               >
-                Remaining time
+                <span
+                  class="leading-none"
+                >
+                  Remaining time
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="h-4 w-4 text-grey-500 dark:text-slate-200"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </span>
-            </span>
-            <span
-              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1 day
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -99,67 +133,84 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
-          <div
-            class="flex w-full flex-col gap-2"
-          >
-            <span
-              class="flex items-center justify-between gap-3"
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
             >
               <span
-                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
               >
-                Cycle #
+                <span>
+                  Cycle #
+                </span>
               </span>
-            </span>
-            <span
-              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1
-            </span>
+            </div>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:w-fit"
         >
-          <div
-            class="flex w-full flex-col gap-2"
-          >
-            <span
-              class="flex items-center justify-between gap-3"
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
             >
               <span
-                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
               >
-                Status
+                <span
+                  class="leading-none"
+                >
+                  Status
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="h-4 w-4 text-grey-500 dark:text-slate-200"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </span>
-            </span>
-            <span
-              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               Active
-            </span>
+            </div>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
-          <div
-            class="flex w-full flex-col gap-2"
-          >
-            <span
-              class="flex items-center justify-between gap-3"
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
             >
               <span
-                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
               >
-                Cycle length
+                <span>
+                  Cycle length
+                </span>
               </span>
-            </span>
-            <span
-              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1 day
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -186,67 +237,101 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
-          <div
-            class="flex w-full flex-col gap-2"
-          >
-            <span
-              class="flex items-center justify-between gap-3"
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
             >
               <span
-                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
               >
-                Cycle #
+                <span>
+                  Cycle #
+                </span>
               </span>
-            </span>
-            <span
-              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1
-            </span>
+            </div>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:w-fit"
         >
-          <div
-            class="flex w-full flex-col gap-2"
-          >
-            <span
-              class="flex items-center justify-between gap-3"
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
             >
               <span
-                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
               >
-                Status
+                <span
+                  class="leading-none"
+                >
+                  Status
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="h-4 w-4 text-grey-500 dark:text-slate-200"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </span>
-            </span>
-            <span
-              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               Active
-            </span>
+            </div>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
-          <div
-            class="flex w-full flex-col gap-2"
-          >
-            <span
-              class="flex items-center justify-between gap-3"
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
             >
               <span
-                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
               >
-                Remaining time
+                <span
+                  class="leading-none"
+                >
+                  Remaining time
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="h-4 w-4 text-grey-500 dark:text-slate-200"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </span>
-            </span>
-            <span
-              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1 day
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -273,67 +358,84 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
-          <div
-            class="flex w-full flex-col gap-2"
-          >
-            <span
-              class="flex items-center justify-between gap-3"
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
             >
               <span
-                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
               >
-                Cycle #
+                <span>
+                  Cycle #
+                </span>
               </span>
-            </span>
-            <span
-              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1
-            </span>
+            </div>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:w-fit"
         >
-          <div
-            class="flex w-full flex-col gap-2"
-          >
-            <span
-              class="flex items-center justify-between gap-3"
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
             >
               <span
-                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
               >
-                Status
+                <span
+                  class="leading-none"
+                >
+                  Status
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="h-4 w-4 text-grey-500 dark:text-slate-200"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </span>
-            </span>
-            <span
-              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               Active
-            </span>
+            </div>
           </div>
         </div>
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
-          <div
-            class="flex w-full flex-col gap-2"
-          >
-            <span
-              class="flex items-center justify-between gap-3"
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
             >
               <span
-                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
               >
-                Cycle length
+                <span>
+                  Cycle length
+                </span>
               </span>
-            </span>
-            <span
-              class="truncate font-heading text-xl font-medium dark:text-slate-50"
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
             >
               1 day
-            </span>
+            </div>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { usePayProjectCard } from 'components/ProjectDashboard/hooks'
@@ -16,10 +17,14 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
       className={twMerge('flex flex-col gap-2 px-4 md:pr-9 md:pl-6', className)}
     >
       <div className="text-base font-medium">
-        <Tooltip title={<Trans>Send ETH payments to this project.</Trans>}>
+        <Tooltip
+          className="inline-flex items-center gap-1"
+          title={<Trans>Send ETH payments to this project.</Trans>}
+        >
           <span>
             <Trans>Pay Project</Trans>
           </span>
+          <QuestionMarkCircleIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
         </Tooltip>
       </div>
       <Formik

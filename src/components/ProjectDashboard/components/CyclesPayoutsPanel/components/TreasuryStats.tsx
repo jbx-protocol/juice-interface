@@ -24,21 +24,21 @@ export const TreasuryStats = () => {
   )
 
   return (
-    <div className="grid w-full grid-cols-2 gap-4 md:flex md:items-center">
+    <div className="flex w-full flex-wrap items-center gap-4">
       <TitleDescriptionDisplayCard
-        className="flex w-full"
+        className="flex flex-1"
         title={t`Treasury balance`}
         description={treasuryBalance}
         tooltip={treasuryBalanceTooltip}
       />
       <TitleDescriptionDisplayCard
-        className="flex w-full"
+        className="flex flex-1"
         title={t`Overflow`}
         description={overflow}
         tooltip={overflowTooltip}
       />
       <TitleDescriptionDisplayCard
-        className="col-span-2 flex w-full"
+        className="flex flex-1"
         title={t`Available to pay out`}
         description={availableToPayout}
         tooltip={availableToPayOutTooltip}

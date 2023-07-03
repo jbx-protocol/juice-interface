@@ -16,9 +16,13 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Cycle #
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Cycle #
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -34,9 +38,13 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Status
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Status
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -52,9 +60,13 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Remaining time
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Remaining time
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -91,9 +103,13 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Cycle #
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Cycle #
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -109,9 +125,13 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Status
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Status
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -127,9 +147,13 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Cycle length
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Cycle length
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -166,9 +190,13 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Cycle #
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Cycle #
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -184,9 +212,13 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Status
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Status
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -202,9 +234,13 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Remaining time
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Remaining time
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -241,9 +277,13 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Cycle #
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Cycle #
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -259,9 +299,13 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Status
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Status
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"
@@ -277,9 +321,13 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
             class="flex w-full flex-col gap-2"
           >
             <span
-              class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              class="flex items-center justify-between gap-3"
             >
-              Cycle length
+              <span
+                class="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                Cycle length
+              </span>
             </span>
             <span
               class="truncate font-heading text-xl font-medium dark:text-slate-50"

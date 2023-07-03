@@ -1,9 +1,9 @@
-import { Trans } from '@lingui/macro'
-import { PayoutsPopupMenu } from 'components/ProjectDashboard/components/CyclesPayoutsPanel/components/PayoutsPopupMenu'
+import { Trans, t } from '@lingui/macro'
 import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
-import { DisplayCard } from '../../ui'
+import { TitleDescriptionDisplayCard } from '../../ui/TitleDescriptionDisplayCard'
 import { usePayoutsSubPanel } from '../hooks/usePayoutsSubPanel'
+import { ExportPayoutsCsvItem } from './ExportPayoutsCsvItem'
 import { SendPayoutsButton } from './SendPayoutsButton'
 import { TreasuryStats } from './TreasuryStats'
 
@@ -23,18 +23,19 @@ export const PayoutsSubPanel = ({
       <div className="mt-5 flex flex-col items-center gap-4">
         {type === 'current' && <TreasuryStats />}
 
-        <DisplayCard className="flex w-full flex-col pb-8">
-          <div className="flex items-center justify-between gap-3">
-            <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200">
-              <Trans>Payouts</Trans>
-            </h3>
-            <PayoutsPopupMenu type={type} />
-          </div>
-          {totalPayoutAmount && (
-            <div className="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50">
-              {totalPayoutAmount}
-            </div>
-          )}
+        <TitleDescriptionDisplayCard
+          className="w-full"
+          title={t`Payouts`}
+          description={totalPayoutAmount}
+          kebabMenu={{
+            items: [
+              {
+                id: 'export',
+                component: <ExportPayoutsCsvItem type={type} />,
+              },
+            ],
+          }}
+        >
           <div className="mt-4 w-full">
             {loading ? (
               Array.from({ length: 5 }).map((_, i) => (
@@ -59,7 +60,7 @@ export const PayoutsSubPanel = ({
               containerClassName="md:self-end"
             />
           )}
-        </DisplayCard>
+        </TitleDescriptionDisplayCard>
       </div>
     </div>
   )

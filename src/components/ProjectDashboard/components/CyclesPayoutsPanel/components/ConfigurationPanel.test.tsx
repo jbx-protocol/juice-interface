@@ -31,6 +31,7 @@ describe('ConfigurationPanel', () => {
         cycle={mockData}
         token={mockData}
         otherRules={mockData}
+        extension={mockData}
       />,
     )
   })
@@ -41,6 +42,7 @@ describe('ConfigurationPanel', () => {
         cycle={mockData}
         token={mockData}
         otherRules={mockData}
+        extension={mockData}
       />,
     )
 

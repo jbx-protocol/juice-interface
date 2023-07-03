@@ -8,6 +8,7 @@ import {
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 import { useFormatConfigurationCyclesSection } from './useFormatConfigurationCyclesSection'
+import { useFormatConfigurationExtensionSection } from './useFormatConfigurationExtensionSection'
 import { useFormatConfigurationOtherRulesSection } from './useFormatConfigurationOtherRulesSection'
 import { useFormatConfigurationTokenSection } from './useFormatConfigurationTokenSection'
 
@@ -49,9 +50,15 @@ export const useHistoricalConfigurationPanel = ({
     upcomingFundingCycleMetadata: null,
   })
 
+  const extension = useFormatConfigurationExtensionSection({
+    fundingCycleMetadata: metadata,
+    upcomingFundingCycleMetadata: null,
+  })
+
   return {
     cycle,
     token,
     otherRules,
+    extension,
   }
 }

@@ -10,7 +10,7 @@ export const UpcomingCycleChangesCallout = () => {
   const loading = useMemo(
     () =>
       Object.values(data).some(value =>
-        Object.values(value).some(v => v.new === undefined),
+        Object.values(value ?? {}).some(v => v.new === undefined),
       ),
     [data],
   )
@@ -18,7 +18,7 @@ export const UpcomingCycleChangesCallout = () => {
   const hasChanges = useMemo(
     () =>
       Object.values(data).some(value => {
-        return Object.values(value).some(v => v.old !== v.new)
+        return Object.values(value ?? {}).some(v => v.old !== v.new)
       }),
     [data],
   )

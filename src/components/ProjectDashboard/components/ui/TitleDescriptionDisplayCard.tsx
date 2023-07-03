@@ -1,3 +1,4 @@
+import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
 import { Tooltip } from 'antd'
 import { AriaRole, MouseEventHandler, ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -27,22 +28,27 @@ export const TitleDescriptionDisplayCard = ({
   children,
   ...rest
 }: Props) => {
+  const hasKebabMenu = !!kebabMenu?.items.length
   return (
     <DisplayCard className={twMerge(className)} {...rest}>
-      <div className="flex w-full flex-col gap-2">
-        <Tooltip
-          className="flex items-center justify-between gap-3"
-          title={tooltip}
-        >
-          <span className="max-w-min whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200">
-            {title}
-          </span>
-          {!!kebabMenu?.items.length && <PopupMenu {...kebabMenu} />}
-        </Tooltip>
+      <div>
+        <div className="flex flex-1 items-center justify-between">
+          <Tooltip title={tooltip}>
+            <span className="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200">
+              <span className={tooltip ? 'leading-none' : undefined}>
+                {title}
+              </span>
+              {!!tooltip && (
+                <QuestionMarkCircleIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
+              )}
+            </span>
+          </Tooltip>
+          {hasKebabMenu && <PopupMenu {...kebabMenu} />}
+        </div>
         {description && (
-          <span className="truncate font-heading text-xl font-medium dark:text-slate-50">
+          <div className="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50">
             {description}
-          </span>
+          </div>
         )}
       </div>
       {children}

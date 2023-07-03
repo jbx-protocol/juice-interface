@@ -47,6 +47,7 @@ const IMG_SRC = [
 ]
 
 const CONNECT_SRC = [
+  'https://subgraph.satsuma-prod.com',
   'https://*.juicebox.money',
   'https://juicebox.money',
   'https://*.infura.io',

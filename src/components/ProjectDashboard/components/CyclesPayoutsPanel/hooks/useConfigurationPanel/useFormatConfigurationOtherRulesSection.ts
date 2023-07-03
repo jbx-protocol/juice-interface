@@ -22,7 +22,7 @@ export const useFormatConfigurationOtherRulesSection = ({
 
     if (upcomingFundingCycleMetadata === null) {
       return flagPairToDatum(
-        t`Total issuance rate`,
+        t`Payments to this project`,
         currentPaymentsToThisProject,
         null,
       )

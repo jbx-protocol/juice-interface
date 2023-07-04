@@ -11,6 +11,11 @@ export const JB_ETH_PAYMENT_TERMINAL_V_3_1: JBETHPaymentTerminalVersion = '3.1'
 export const JB_ETH_PAYMENT_TERMINAL_V_3_1_1: JBETHPaymentTerminalVersion =
   '3.1.1'
 
+/**
+ * Load and return the primary ETH payment terminal contract for a project.
+ *
+ * @dev not every project uses the same payment terminal contract.
+ */
 export function useProjectPrimaryEthTerminal({
   projectId,
 }: {

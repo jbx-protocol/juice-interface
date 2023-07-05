@@ -13,7 +13,7 @@ export default function Legal() {
       </p>
       <p>
         If you need help assessing your project's needs, finding a legal expert,
-        or legally incorporating your project, start with the resources below:
+        or legally incorporating your project, consider the following resources:
       </p>
 
       <h2 className="mt-6 mb-4 font-display text-2xl">Recommended Reading</h2>

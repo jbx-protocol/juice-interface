@@ -1,4 +1,3 @@
-import { LoadingOutlined } from '@ant-design/icons'
 import { Dialog } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
@@ -31,8 +30,10 @@ export type JuiceModalProps = {
   open: boolean
   okButtonForm?: string
   okText?: ReactNode
+  okButtonClassName?: string
   okLoading?: boolean
   cancelText?: ReactNode
+  cancelButtonClassName?: string
   hideCancelButton?: boolean
   setOpen: ModalSetOpenFn
   onCancel?: ModalOnCancelFn
@@ -56,7 +57,9 @@ export const JuiceModal = ({
   okButtonForm,
   okText = t`OK`,
   okLoading = false,
+  okButtonClassName,
   cancelText = t`Cancel`,
+  cancelButtonClassName,
   hideCancelButton,
   setOpen,
   onCancel: _onCancel,
@@ -81,23 +84,23 @@ export const JuiceModal = ({
     if (isMobile) return undefined // Mobile position doesn't use absolute positioning
     switch (position) {
       case 'top':
-        return 'top-8 -translate-x-1/2 left-1/2'
+        return 'md:top-8 md:-translate-x-1/2 md:left-1/2'
       case 'topRight':
-        return 'top-8 right-8'
+        return 'md:top-8 md:right-8'
       case 'right':
-        return 'top-1/2 right-8 -translate-y-1/2'
+        return 'md:top-1/2 md:right-8 md:-translate-y-1/2'
       case 'bottomRight':
-        return 'bottom-8 right-8'
+        return 'md:bottom-8 md:right-8'
       case 'bottom':
-        return 'bottom-8 -translate-x-1/2 left-1/2'
+        return 'md:bottom-8 md:-translate-x-1/2 md:left-1/2'
       case 'bottomLeft':
-        return 'bottom-8 left-8'
+        return 'md:bottom-8 md:left-8'
       case 'left':
-        return 'top-1/2 left-8 -translate-y-1/2'
+        return 'md:top-1/2 md:left-8 md:-translate-y-1/2'
       case 'topLeft':
-        return 'top-8 left-8'
+        return 'md:top-8 md:left-8'
       case 'center':
-        return 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
+        return 'md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2'
     }
   }, [isMobile, position])
 
@@ -116,7 +119,7 @@ export const JuiceModal = ({
         onSubmit={onSubmit}
         className={twMerge(
           'relative mx-auto mt-10 w-full max-w-md overflow-hidden rounded-lg bg-smoke-25 p-6 text-left align-middle shadow-xl transition-all dark:bg-slate-800 md:absolute',
-          positionClasses,
+          positionClasses ? positionClasses : '',
           className,
         )}
       >
@@ -133,22 +136,30 @@ export const JuiceModal = ({
                 buttonPositionClasses.container,
               )}
             >
-              {!hideCancelButton && (
-                <CancelButton
-                  className={buttonPositionClasses.self}
-                  onClick={onCancel}
-                >
-                  {cancelText}
-                </CancelButton>
-              )}
               <CTAButton
                 form={okButtonForm}
-                className={buttonPositionClasses.self}
+                className={twMerge(
+                  'order-2',
+                  buttonPositionClasses.self,
+                  okButtonClassName,
+                )}
                 loading={okLoading}
                 onClick={onOk}
               >
                 {okText}
               </CTAButton>
+              {!hideCancelButton && (
+                <CancelButton
+                  className={twMerge(
+                    'order-1',
+                    buttonPositionClasses.self,
+                    cancelButtonClassName,
+                  )}
+                  onClick={onCancel}
+                >
+                  {cancelText}
+                </CancelButton>
+              )}
             </div>
             <ExitButton
               className="absolute -top-2 -right-2"
@@ -173,22 +184,18 @@ const CTAButton = ({
   form?: string
   onClick?: VoidFunction
 }>) => (
-  <button
-    type={form ? 'submit' : 'button'}
+  <Button
+    type="primary"
+    htmlType={form ? 'submit' : 'button'}
+    loading={loading}
     className={twMerge(
-      'inline-flex justify-center rounded-md border border-transparent bg-bluebs-500 px-4 py-2 text-sm font-medium text-white hover:bg-bluebs-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
       loading ? 'cursor-not-allowed opacity-50' : '',
       className,
     )}
     onClick={onClick}
   >
-    {loading && (
-      <span className="animation mr-2 animate-spin">
-        <LoadingOutlined />
-      </span>
-    )}
     {children}
-  </button>
+  </Button>
 )
 
 const CancelButton = ({

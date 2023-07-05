@@ -10,7 +10,7 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
-import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/useV2ConnectedWalletHasPermission'
+import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
 import { Split } from 'models/splits'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
@@ -45,7 +45,7 @@ export default function ReservedTokensSplitsCard({
       projectId,
       reservedRate: reservedRate,
     })
-  const canEditTokens = useV2ConnectedWalletHasPermission(
+  const canEditTokens = useV2V3WalletHasPermission(
     V2V3OperatorPermission.SET_SPLITS,
   )
 

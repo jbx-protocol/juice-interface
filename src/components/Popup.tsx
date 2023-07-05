@@ -1,5 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, PropsWithChildren } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 /**
  * Popup component that renders a modal window with a mask, transitions, and user-provided content.
@@ -14,11 +15,17 @@ import { Fragment, PropsWithChildren } from 'react'
  */
 export const Popup = ({
   id,
+  as,
   children,
   open,
   setOpen,
   onMaskClick: _onMaskClick,
+  className,
+  maskClassName,
 }: PropsWithChildren<{
+  as?: React.ElementType
+  className?: string
+  maskClassName?: string
   id?: string
   open: boolean
   setOpen: (open: boolean) => void
@@ -34,11 +41,16 @@ export const Popup = ({
         className="fixed inset-0 z-50 overflow-y-auto"
         onClose={onClose}
       >
-        <div className="relative min-h-screen items-end justify-end px-4 pt-4 pb-20 text-center sm:block">
-          <PopupMask onClick={onMaskClick} />
+        <div
+          className={twMerge(
+            'relative min-h-screen px-4 pt-4 pb-20 text-center sm:block',
+            className,
+          )}
+        >
+          <PopupMask className={maskClassName} onClick={onMaskClick} />
 
           <Transition.Child
-            as={Fragment}
+            as={as ?? Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0 scale-95"
             enterTo="opacity-100 scale-100"
@@ -54,9 +66,18 @@ export const Popup = ({
   )
 }
 
-const PopupMask = ({ onClick }: { onClick?: VoidFunction }) => (
+const PopupMask = ({
+  className,
+  onClick,
+}: {
+  className?: string
+  onClick?: VoidFunction
+}) => (
   <div
-    className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+    className={twMerge(
+      'fixed inset-0 bg-black bg-opacity-50 transition-opacity',
+      className,
+    )}
     aria-hidden="true"
     onClick={onClick}
   />

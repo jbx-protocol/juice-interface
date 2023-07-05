@@ -1,8 +1,6 @@
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
 import { NftRewardTier } from 'models/nftRewards'
-import { classNames } from 'utils/classNames'
-
-const NFT_DISPLAY_HEIGHT_CLASS = 'h-36' // rem height
+import { twMerge } from 'tailwind-merge'
 
 export function NftThumbnail({
   fileUrl,
@@ -15,20 +13,18 @@ export function NftThumbnail({
 }) {
   return (
     <div
-      className={classNames(
-        `relative flex w-full items-center justify-center rounded-t-lg ${NFT_DISPLAY_HEIGHT_CLASS}`,
+      className={twMerge(
+        'relative flex h-40 w-full items-center justify-center rounded-t-lg md:h-60',
         isSelected
           ? 'bg-white dark:bg-slate-800'
           : 'bg-white dark:bg-slate-600',
       )}
-      style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}
     >
       {fileUrl ? (
         <JuiceVideoThumbnailOrImage
           src={fileUrl}
           alt={rewardTier?.name ?? 'Juicebox NFT reward'}
-          className="absolute w-full rounded-t-lg"
-          heightClass={NFT_DISPLAY_HEIGHT_CLASS}
+          className="h-40 w-full rounded-t-lg rounded-b-none md:h-60"
         />
       ) : null}
     </div>

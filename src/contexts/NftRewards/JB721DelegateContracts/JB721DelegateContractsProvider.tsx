@@ -14,17 +14,21 @@ export const JB721DelegateContractsProvider: React.FC<
   const dataSourceAddress = fundingCycleMetadata?.dataSource
   const hasDataSource = !isZeroAddress(dataSourceAddress)
 
-  const { data: contractVersion } = useJB721DelegateVersion({
-    dataSourceAddress: hasDataSource ? dataSourceAddress : undefined, // only check if there's a non-zero datasource addr.
-  })
+  // Fetch the version of the delegate contract
+  const { data: contractVersion, isLoading: versionLoading } =
+    useJB721DelegateVersion({
+      dataSourceAddress: hasDataSource ? dataSourceAddress : undefined, // only check if there's a non-zero datasource addr.
+    })
 
   const isDataSourceJB721Delegate = Boolean(contractVersion)
 
+  // Load the delegate contract
   const JB721TieredDelegate = useJB721TieredDelegate({
     address: isDataSourceJB721Delegate ? dataSourceAddress : undefined, // only load if its a JB721Delegate
     version: contractVersion,
   })
 
+  // Load the delegate's store contract
   const {
     value: JB721TieredDelegateStore,
     loading: JB721TieredDelegateStoreLoading,
@@ -40,6 +44,7 @@ export const JB721DelegateContractsProvider: React.FC<
     },
     loading: {
       JB721TieredDelegateStoreLoading,
+      versionLoading,
     },
     version: contractVersion,
   }

@@ -4,7 +4,7 @@ import ExternalLink from 'components/ExternalLink'
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import Paragraph from 'components/Paragraph'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -41,10 +41,9 @@ export default function NftSummarySection() {
             >
               <Col md={4} className="flex items-center justify-center">
                 <JuiceVideoThumbnailOrImage
+                  className="h-24 w-24"
                   src={rewardTier.fileUrl ?? '/assets/banana-od.webp'}
                   alt={rewardTier.name}
-                  heightClass="h-24"
-                  widthClass="w-24"
                 />
               </Col>
               <Col className="flex flex-col justify-center" md={8}>

@@ -5,7 +5,7 @@ export function FathomScript() {
     <Script
       id="fathom-script"
       strategy="afterInteractive"
-      src="https://learned-hearty.juicebox.money/script.js"
+      src="https://cdn.usefathom.com/script.js"
       data-site="ERYRRJSV"
       defer
     />

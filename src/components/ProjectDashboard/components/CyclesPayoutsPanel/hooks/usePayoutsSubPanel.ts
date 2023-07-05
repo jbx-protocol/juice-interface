@@ -1,11 +1,12 @@
-import assert from 'assert'
 import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useMemo } from 'react'
+import assert from 'utils/assert'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { getProjectOwnerRemainderSplit } from 'utils/splits'
 import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
 import {
   MAX_DISTRIBUTION_LIMIT,
@@ -13,6 +14,7 @@ import {
   feeForAmount,
   formatSplitPercent,
 } from 'utils/v2v3/math'
+import { useCurrentUpcomingDistributionLimit } from './useCurrentUpcomingDistributionLimit'
 import { useCurrentUpcomingPayoutSplits } from './useCurrentUpcomingPayoutSplits'
 
 const splitHasFee = (split: Split) => {
@@ -35,17 +37,16 @@ const calculateSplitAmountWad = (
 
 export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { splits, loading } = useCurrentUpcomingPayoutSplits(type)
-  const {
-    distributionLimit: currentDistributionLimit,
-    distributionLimitCurrency: currentDistributionLimitCurrency,
-    primaryETHTerminalFee,
-  } = useProjectContext()
+  const { projectOwnerAddress, primaryETHTerminalFee } = useProjectContext()
+
+  const { distributionLimit, distributionLimitCurrency } =
+    useCurrentUpcomingDistributionLimit(type)
 
   const showAmountOnPayout = useMemo(() => {
-    if (currentDistributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)) return false
-    if (currentDistributionLimit?.eq(0)) return false
+    if (distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)) return false
+    if (distributionLimit?.eq(0)) return false
     return true
-  }, [currentDistributionLimit])
+  }, [distributionLimit])
 
   const transformSplit = useCallback(
     (split: Split) => {
@@ -53,18 +54,13 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
       let amount = undefined
       const splitAmountWad = calculateSplitAmountWad(
         split,
-        currentDistributionLimit,
+        distributionLimit,
         primaryETHTerminalFee,
       )
-      if (
-        showAmountOnPayout &&
-        splitAmountWad &&
-        currentDistributionLimitCurrency
-      ) {
+      if (showAmountOnPayout && splitAmountWad && distributionLimitCurrency) {
         amount = formatCurrencyAmount({
           amount: Number(fromWad(splitAmountWad)),
-          currency:
-            currentDistributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+          currency: distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
         })
       }
       return {
@@ -77,23 +73,44 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
       }
     },
     [
-      currentDistributionLimit,
-      currentDistributionLimitCurrency,
+      distributionLimit,
+      distributionLimitCurrency,
       primaryETHTerminalFee,
       showAmountOnPayout,
     ],
   )
 
+  const totalPayoutAmount = useMemo(() => {
+    if (!distributionLimit || !distributionLimitCurrency) return
+    if (
+      distributionLimit.eq(MAX_DISTRIBUTION_LIMIT) ||
+      distributionLimit.isZero()
+    )
+      return
+    return formatCurrencyAmount({
+      amount: fromWad(distributionLimit),
+      currency: distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+    })
+  }, [distributionLimit, distributionLimitCurrency])
+
   const payouts = useMemo(() => {
     if (loading || !splits) return
 
-    return splits
+    const ownerPayout = projectOwnerAddress
+      ? getProjectOwnerRemainderSplit(projectOwnerAddress, splits)
+      : undefined
+
+    return [
+      ...splits,
+      ...(ownerPayout && ownerPayout.percent > 0 ? [ownerPayout] : []),
+    ]
       .sort((a, b) => Number(b.percent) - Number(a.percent))
       .map(transformSplit)
-  }, [loading, splits, transformSplit])
+  }, [loading, projectOwnerAddress, splits, transformSplit])
 
   return {
     loading,
     payouts,
+    totalPayoutAmount,
   }
 }

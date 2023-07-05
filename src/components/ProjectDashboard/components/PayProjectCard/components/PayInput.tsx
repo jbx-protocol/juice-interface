@@ -41,10 +41,10 @@ export const PayInput = ({
         className,
       )}
     >
-      <CurrencyIcon className="h-7 w-7" currency={currency} />
+      <CurrencyIcon className="flex-0 h-7 w-7" currency={currency} />
       <input
         data-testid="pay-input-input"
-        className="flex-1 bg-transparent outline-none"
+        className="min-w-0 flex-1 bg-transparent text-base outline-none"
         placeholder={placeholder}
         value={amount}
         onChange={onInputChange}
@@ -55,7 +55,7 @@ export const PayInput = ({
         role="button"
         data-testid="pay-input-currency-button"
         className={twMerge(
-          'flex select-none items-center gap-0.5 rounded-lg py-1.5 pl-2 pr-3 text-xs font-medium transition-colors',
+          'flex select-none items-center gap-0.5 rounded py-1.5 pl-2 pr-3 text-xs font-medium transition-colors',
           currency === V2V3_CURRENCY_ETH
             ? 'bg-bluebs-50 text-bluebs-600 dark:bg-bluebs-500 dark:text-bluebs-950'
             : 'bg-melon-50 text-melon-600 dark:bg-melon-500 dark:text-melon-950',

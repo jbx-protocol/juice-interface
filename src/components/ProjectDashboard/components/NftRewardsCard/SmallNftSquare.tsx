@@ -1,6 +1,8 @@
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
 import { NftRewardTier } from 'models/nftRewards'
+import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 
 // TODO: Rename to NftSquare or NftLogo or something
 export const SmallNftSquare = ({
@@ -14,22 +16,36 @@ export const SmallNftSquare = ({
   loading?: boolean
   border?: boolean
 }) => {
-  const _loading = !nftReward || loading
-  const _className = twMerge(
-    'rounded-lg bg-smoke-50',
-    border && 'border-4 border-smoke-50 dark:border-slate-900',
-    className,
+  const showLoadingState = !nftReward || loading
+
+  if (showLoadingState) {
+    return (
+      <div
+        className={twMerge(
+          'rounded-lg bg-smoke-50',
+          border &&
+            'border-4 border-solid border-smoke-50 dark:border-slate-700',
+          className,
+        )}
+      />
+    )
+  }
+
+  const fileUrl = useMemo(
+    () => ipfsUriToGatewayUrl(nftReward.fileUrl),
+    [nftReward.fileUrl],
   )
 
-  if (_loading) {
-    return <div className={`${_className}`}></div>
-  }
   return (
     <JuiceVideoThumbnailOrImage
-      src={nftReward.fileUrl}
+      src={fileUrl}
       alt={nftReward.name}
       playIconPosition="hidden"
-      containerClass={_className}
+      className={twMerge(
+        'rounded-lg bg-smoke-50',
+        border && 'border-4 border-solid border-smoke-50 dark:border-slate-700',
+        className,
+      )}
     />
   )
 }

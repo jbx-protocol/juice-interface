@@ -26,20 +26,19 @@ export const HistorySubPanel = () => {
 
   return data.length || loading ? (
     <div className="grid min-w-full grid-cols-1">
-      <div className="grid grid-cols-6 rounded-t-lg bg-smoke-50 dark:bg-slate-700">
-        {tableHeaders.map((header, i) => (
-          <div
-            key={header}
-            className={twMerge(
-              'py-3 pl-4 pr-3 text-start text-sm font-semibold',
-              `col-start-${2 * i + 1}`,
-            )}
-          >
-            {header}
+      <div className="rounded-t-lg bg-smoke-50 p-4 pr-2 dark:bg-slate-700">
+        <div className="grid grid-cols-config-table gap-3">
+          {tableHeaders.map(header => (
+            <div
+              key={header}
+              className={twMerge('text-start text-sm font-semibold')}
+            >
+              {header}
+            </div>
+          ))}
+          <div className="relative w-6 min-w-[24px] py-2.5">
+            <span className="sr-only">View</span>
           </div>
-        ))}
-        <div className="relative py-3 pl-4 pr-3">
-          <span className="sr-only">View</span>
         </div>
       </div>
 
@@ -61,17 +60,17 @@ export const HistorySubPanel = () => {
                   <Disclosure.Button
                     data-testid={`disclosure-button-${cycle.cycleNumber}`}
                     as="div"
-                    className="cursor-pointer py-4 pl-4 pr-3"
+                    className="cursor-pointer p-4 pr-2"
                   >
-                    <div className="grid grid-cols-6 whitespace-nowrap text-sm font-medium">
-                      <div>{cycle.cycleNumber}</div>
-                      <div className="col-start-3 px-4">{cycle.withdrawn}</div>
-                      <div className="col-start-5 px-4 text-grey-500 dark:text-slate-200">
+                    <div className="grid grid-cols-config-table gap-3 whitespace-nowrap text-sm font-medium">
+                      <div>#{cycle.cycleNumber}</div>
+                      <div>{cycle.withdrawn}</div>
+                      <div className="text-grey-500 dark:text-slate-200">
                         {cycle.date}
                       </div>
-                      <div className="text-gray-500 col-start-6 flex items-center justify-end whitespace-nowrap px-3 text-sm">
+                      <div className="text-gray-500 flex items-center justify-end whitespace-nowrap text-sm">
                         <ChevronDownIcon
-                          className={twMerge(open && 'rotate-180', 'h-6 w-6')}
+                          className={twMerge(open && 'rotate-180', 'h-5 w-5')}
                         />
                       </div>
                     </div>
@@ -105,15 +104,18 @@ export const HistorySubPanel = () => {
 }
 
 const SkeletonRow = () => (
-  <div className="grid animate-pulse grid-cols-6 bg-white dark:bg-slate-950">
-    <div className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium">
-      <div className="h-4 w-14 rounded bg-grey-200 dark:bg-slate-500"></div>
-    </div>
-    <div className="col-start-3 whitespace-nowrap px-4 py-4 text-sm font-medium">
-      <div className="h-4 w-24 rounded bg-grey-200 dark:bg-slate-500"></div>
-    </div>
-    <div className="col-start-5 whitespace-nowrap px-4 py-4 text-sm text-grey-500">
-      <div className="h-4 w-20 rounded bg-grey-200 dark:bg-slate-500"></div>
+  <div className="p-4 pr-2">
+    <div className="grid animate-pulse grid-cols-config-table bg-white dark:bg-slate-950">
+      <div className="whitespace-nowrap text-sm font-medium">
+        <div className="h-4 w-14 rounded bg-grey-200 dark:bg-slate-500"></div>
+      </div>
+      <div className="whitespace-nowrap text-sm font-medium">
+        <div className="h-4 w-24 rounded bg-grey-200 dark:bg-slate-500"></div>
+      </div>
+      <div className="whitespace-nowrap text-sm text-grey-500">
+        <div className="h-4 w-20 rounded bg-grey-200 dark:bg-slate-500"></div>
+      </div>
+      <div className="relative w-6 min-w-[24px] py-2.5"></div>
     </div>
   </div>
 )

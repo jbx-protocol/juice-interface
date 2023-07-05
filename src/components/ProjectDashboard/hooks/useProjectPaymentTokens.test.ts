@@ -17,7 +17,6 @@ describe('useProjectPaymentTokens', () => {
       amount: 100,
       currency: V2V3_CURRENCY_ETH,
     },
-    userIsReceivingTokens: true,
     dispatch: jest.fn(),
   }
   const DefaultUseTokensPerEth = {
@@ -29,22 +28,8 @@ describe('useProjectPaymentTokens', () => {
     DefaultUseProjectCart.dispatch.mockClear()
   })
 
-  it('should return userIsReceivingTokens', () => {
-    const { result } = renderHook(() => useProjectPaymentTokens())
-    expect(result.current.userIsReceivingTokens).toEqual(true)
-  })
-
   it('should return receivedTickets', () => {
     const { result } = renderHook(() => useProjectPaymentTokens())
     expect(result.current.receivedTickets).toEqual(100)
-  })
-
-  test('removeTokens should call dispatch', () => {
-    const { result } = renderHook(() => useProjectPaymentTokens())
-    result.current.removeTokens()
-    expect(DefaultUseProjectCart.dispatch).toHaveBeenCalled()
-    expect(DefaultUseProjectCart.dispatch).toHaveBeenCalledWith({
-      type: 'removeTokens',
-    })
   })
 })

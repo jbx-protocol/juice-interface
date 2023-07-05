@@ -1,9 +1,9 @@
-import { Trans } from '@lingui/macro'
-import { PayoutsPopupMenu } from 'components/ProjectDashboard/components/CyclesPayoutsPanel/components/PayoutsPopupMenu'
+import { Trans, t } from '@lingui/macro'
 import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
-import { DisplayCard } from '../../ui'
+import { TitleDescriptionDisplayCard } from '../../ui/TitleDescriptionDisplayCard'
 import { usePayoutsSubPanel } from '../hooks/usePayoutsSubPanel'
+import { ExportPayoutsCsvItem } from './ExportPayoutsCsvItem'
 import { SendPayoutsButton } from './SendPayoutsButton'
 import { TreasuryStats } from './TreasuryStats'
 
@@ -14,45 +14,54 @@ export const PayoutsSubPanel = ({
   className?: string
   type: 'current' | 'upcoming'
 }) => {
-  const { payouts, loading } = usePayoutsSubPanel(type)
+  const { payouts, loading, totalPayoutAmount } = usePayoutsSubPanel(type)
   return (
     <div className={twMerge(className)}>
       <h2 className="mb-0 font-heading text-2xl font-medium">
         <Trans>Treasury & Payouts</Trans>
       </h2>
-      {payouts?.length || loading ? (
-        <div className="mt-5 flex flex-col items-center gap-4">
-          {type === 'current' && <TreasuryStats />}
-          <DisplayCard className="flex w-full flex-col pb-8">
-            <div className="flex items-center justify-between gap-3">
-              <h3 className="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200">
-                <Trans>Payouts</Trans>
-              </h3>
-              <PayoutsPopupMenu type={type} />
-            </div>
+      <div className="mt-5 flex flex-col items-center gap-4">
+        {type === 'current' && <TreasuryStats />}
 
-            <div className="mt-4 w-full">
-              {!loading
-                ? payouts
-                  ? payouts.map(payout => (
-                      <ProjectAllocationRow key={payout.address} {...payout} />
-                    ))
-                  : null
-                : Array.from({ length: 5 }).map((_, i) => (
-                    <ProjectAllocationSkeleton key={i} />
-                  ))}
-            </div>
-
-            {type === 'current' && (
-              <SendPayoutsButton className="z-0 mt-6 self-end" />
+        <TitleDescriptionDisplayCard
+          className="w-full"
+          title={t`Payouts`}
+          description={totalPayoutAmount}
+          kebabMenu={{
+            items: [
+              {
+                id: 'export',
+                component: <ExportPayoutsCsvItem type={type} />,
+              },
+            ],
+          }}
+        >
+          <div className="mt-4 w-full">
+            {loading ? (
+              Array.from({ length: 5 }).map((_, i) => (
+                <ProjectAllocationSkeleton key={i} />
+              ))
+            ) : payouts?.length ? (
+              payouts.map(payout => (
+                <ProjectAllocationRow
+                  key={`${payout.address}${payout.projectId}`}
+                  {...payout}
+                />
+              ))
+            ) : (
+              <span className="font-heading text-xl font-medium dark:text-slate-50">
+                <Trans>None</Trans>
+              </span>
             )}
-          </DisplayCard>
-        </div>
-      ) : (
-        <div className="mt-5 text-grey-500 dark:text-slate-200">
-          <Trans>No payouts for the cycle.</Trans>
-        </div>
-      )}
+          </div>
+          {!!payouts?.length && type === 'current' && (
+            <SendPayoutsButton
+              className="z-0 mt-6 w-full justify-center md:w-auto"
+              containerClassName="md:self-end"
+            />
+          )}
+        </TitleDescriptionDisplayCard>
+      </div>
     </div>
   )
 }

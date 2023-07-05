@@ -3,10 +3,10 @@
 exports[`PaymentCartItem renders 1`] = `
 <div>
   <div
-    class="flex items-center justify-between border-b border-grey-200 py-5 dark:border-slate-500"
+    class="flex min-w-0 items-center justify-between gap-4 border-b border-grey-200 py-5 dark:border-slate-500"
   >
     <div
-      class="flex items-center"
+      class="flex min-w-0 items-center"
     >
       <div
         class="flex items-center justify-center rounded-full p-1 transition-colors bg-bluebs-50 text-bluebs-500 dark:bg-bluebs-500 dark:text-bluebs-950 h-14 w-14"
@@ -29,7 +29,7 @@ exports[`PaymentCartItem renders 1`] = `
         </svg>
       </div>
       <span
-        class="ml-3 dark:text-slate-50"
+        class="ml-3 min-w-0 font-medium dark:text-slate-50"
       >
         <span
           class="flex items-center gap-2"
@@ -50,7 +50,7 @@ exports[`PaymentCartItem renders 1`] = `
       </span>
       <svg
         aria-hidden="true"
-        class="inline h-4 w-4 text-grey-400 dark:text-slate-300"
+        class="inline h-6 w-6 text-grey-400 dark:text-slate-300 md:h-4 md:w-4"
         data-testid="cart-item-remove-button"
         fill="none"
         role="button"

@@ -11,6 +11,7 @@ const WALLET_CONNECT_URLS = [
   'https://*.walletconnect.com',
   'https://*.walletconnect.org',
   'wss://*.walletconnect.org',
+  'wss://*.walletconnect.com',
 ]
 
 const INFURA_IPFS_URLS = [
@@ -22,6 +23,7 @@ const SCRIPT_SRC = [
   'https://*.juicebox.money',
   'https://static.hotjar.com',
   'https://script.hotjar.com',
+  'https://cdn.usefathom.com',
   // Not working as unsafe-eval is required for metamask
   // `'sha256-kZ9E6/oLrki51Yx03/BugStfFrPlm8hjaFbaokympXo='`, // hotjar
   `'unsafe-eval'`, // hotjar
@@ -41,9 +43,11 @@ const IMG_SRC = [
   'https://cdn.stamp.fyi',
   'https://ipfs.io',
   'https://cdn.discordapp.com',
+  '*.walletconnect.com',
 ]
 
 const CONNECT_SRC = [
+  'https://subgraph.satsuma-prod.com',
   'https://*.juicebox.money',
   'https://juicebox.money',
   'https://*.infura.io',
@@ -57,7 +61,6 @@ const CONNECT_SRC = [
   'https://*.hotjar.com',
   'https://*.hotjar.io',
   'wss://*.hotjar.com',
-  'https://*.gnosis.io',
   'https://*.safe.global',
   'https://*.snapshot.org',
   'https://*.wallet.coinbase.com',
@@ -65,8 +68,6 @@ const CONNECT_SRC = [
   'https://*.supabase.co',
   'https://api.ensideas.com',
   'https://*.sentry.io',
-  // QWESTIVE REFERRAL
-  'https://us-central1-qwestive-referral-prod.cloudfunctions.net/',
 ]
 
 const FRAME_ANCESTORS = ['https://*.gnosis.io', 'https://*.safe.global']
@@ -75,7 +76,7 @@ if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')
 }
 
-const FRAME_SRC = []
+const FRAME_SRC = ['https://verify.walletconnect.com/']
 
 const ContentSecurityPolicy = `
   default-src 'none';

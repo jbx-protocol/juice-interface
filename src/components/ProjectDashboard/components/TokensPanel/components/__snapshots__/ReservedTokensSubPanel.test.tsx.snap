@@ -14,48 +14,131 @@ exports[`ReservedTokensSubPanel renders 1`] = `
       class="mt-5 flex flex-col items-center gap-4"
     >
       <div
-        class="flex w-full items-center gap-4"
+        class="flex w-full flex-wrap items-center gap-4"
       >
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex w-full flex-col gap-2"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full min-w-min flex-[1_0_0]"
         >
-          <h3
-            class="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium dark:text-slate-200"
-          >
-            Reserved tokens
-          </h3>
-          <span
-            class="font-heading text-xl font-medium"
-          >
-            21%
-          </span>
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
+            >
+              <span
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                <span
+                  class="leading-none"
+                >
+                  Reserved tokens
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="h-4 w-4 text-grey-500 dark:text-slate-200"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
+            >
+              21%
+            </div>
+          </div>
         </div>
         <div
-          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex w-full flex-col gap-2"
+          class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full min-w-min flex-[1_0_0]"
         >
-          <h3
-            class="text-grey-60 font-body0 mb-0 whitespace-nowrap text-sm font-medium dark:text-slate-200"
-          >
-            Reserved rate
-          </h3>
-          <span
-            class="font-heading text-xl font-medium"
-          >
-            82%
-          </span>
+          <div>
+            <div
+              class="flex flex-1 items-center justify-between"
+            >
+              <span
+                class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+              >
+                <span
+                  class="leading-none"
+                >
+                  Reserved rate
+                </span>
+                <svg
+                  aria-hidden="true"
+                  class="h-4 w-4 text-grey-500 dark:text-slate-200"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="mt-2 truncate font-heading text-xl font-medium dark:text-slate-50"
+            >
+              82%
+            </div>
+          </div>
         </div>
       </div>
       <div
-        class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex w-full flex-col pb-8"
+        class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full"
       >
-        <div
-          class="flex items-center justify-between gap-3"
-        >
-          <h3
-            class="mb-0 whitespace-nowrap font-body text-sm font-medium dark:text-slate-200"
+        <div>
+          <div
+            class="flex flex-1 items-center justify-between"
           >
-            Reserved tokens list
-          </h3>
+            <span
+              class="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200"
+            >
+              <span>
+                Reserved tokens list
+              </span>
+            </span>
+            <div
+              class="relative"
+              data-headlessui-state=""
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                class=""
+                data-headlessui-state=""
+                id="headlessui-menu-button-:r0:"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
         <div
           class="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500"
@@ -68,7 +151,7 @@ exports[`ReservedTokensSubPanel renders 1`] = `
           </div>
         </div>
         <div>
-          {"className":"mt-6 self-end"}
+          {"className":"z-0 mt-6 w-full justify-center md:w-auto","containerClassName":"md:self-end"}
         </div>
       </div>
     </div>

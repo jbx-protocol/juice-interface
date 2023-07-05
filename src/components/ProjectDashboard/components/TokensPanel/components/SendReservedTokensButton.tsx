@@ -9,12 +9,15 @@ import DistributeReservedTokensModal from 'components/v2v3/V2V3Project/V2V3Fundi
 import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useCallback, useMemo, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { reloadWindow } from 'utils/windowUtils'
 
 export const SendReservedTokensButton = ({
   className,
+  containerClassName,
 }: {
   className?: string
+  containerClassName?: string
 }) => {
   const { projectId } = useProjectMetadata()
   const { reservedRate } = useProjectContext().fundingCycleMetadata ?? {}
@@ -35,11 +38,11 @@ export const SendReservedTokensButton = ({
     <Tooltip
       title={<Trans>No reserved tokens to send.</Trans>}
       open={distributeButtonDisabled ? undefined : false}
-      className={className}
+      className={containerClassName}
     >
       <Button
         type="primary"
-        className="flex w-fit items-center gap-3"
+        className={twMerge('flex w-fit items-center gap-3', className)}
         loading={loadingReservedTokens}
         onClick={openModal}
         disabled={distributeButtonDisabled}

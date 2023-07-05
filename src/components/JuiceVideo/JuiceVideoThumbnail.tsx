@@ -1,30 +1,32 @@
 import { useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { JuicePlayIcon } from './JuicePlayIcon'
 
 export type PlayIconPosition = 'hidden' | 'default' | 'center'
 
 export function JuiceVideoThumbnail({
+  className,
+  videoClassName,
   src,
-  widthClass,
-  heightClass,
   playIconPosition = 'default',
-  className = '',
   onLoaded,
+  onClick,
 }: {
-  src: string
-  widthClass?: string | number // rem width
-  heightClass?: string | number // rem height
-  playIconPosition?: PlayIconPosition
   className?: string
+  videoClassName?: string
+  src: string
+  playIconPosition?: PlayIconPosition
   onLoaded?: VoidFunction
+  onClick?: VoidFunction
 }) {
   const [loading, setLoading] = useState<boolean>(true)
-  const _width = widthClass ?? 'w-full'
-  const _height = heightClass ?? 'h-full'
 
   const playIconContainerClassName = 'bottom-3 right-2'
   return (
-    <div className={`relative top-0 ${_width} ${_height}`}>
+    <div
+      className={twMerge('relative top-0 h-full w-full', className)}
+      onClick={onClick}
+    >
       {!loading && playIconPosition !== 'hidden' ? (
         <div className={`absolute z-[1] ${playIconContainerClassName}`}>
           <JuicePlayIcon />
@@ -32,7 +34,7 @@ export function JuiceVideoThumbnail({
       ) : null}
       <video
         muted
-        className={`h-full w-full ${className}`}
+        className={twMerge('h-full w-full', videoClassName)}
         onLoadedData={() => {
           setLoading(false)
           onLoaded?.()

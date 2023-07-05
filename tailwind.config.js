@@ -23,6 +23,9 @@ module.exports = {
       ],
     },
     extend: {
+      gridTemplateColumns: {
+        'config-table': 'repeat(3, 1fr) auto',
+      },
       boxShadow: {
         inputDark: '0 0 0 2px #013944',
         inputLight: '0 0 0 2px #E9F9FA',
@@ -254,5 +257,18 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.hide-scrollbar::-webkit-scrollbar': {
+          display: 'none',
+        },
+        '.hide-scrollbar': {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+        },
+      }
+      addUtilities(newUtilities)
+    },
+  ],
 }

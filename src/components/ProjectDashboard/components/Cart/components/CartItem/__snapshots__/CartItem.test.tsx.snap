@@ -3,14 +3,14 @@
 exports[`CartItem renders 1`] = `
 <div>
   <div
-    class="flex items-center justify-between border-b border-grey-200 py-5 dark:border-slate-500"
+    class="flex min-w-0 items-center justify-between gap-4 border-b border-grey-200 py-5 dark:border-slate-500"
   >
     <div
-      class="flex items-center"
+      class="flex min-w-0 items-center"
     >
       icon
       <span
-        class="ml-3 dark:text-slate-50"
+        class="ml-3 min-w-0 font-medium dark:text-slate-50"
       >
         title
       </span>
@@ -25,7 +25,7 @@ exports[`CartItem renders 1`] = `
       </span>
       <svg
         aria-hidden="true"
-        class="inline h-4 w-4 text-grey-400 dark:text-slate-300"
+        class="inline h-6 w-6 text-grey-400 dark:text-slate-300 md:h-4 md:w-4"
         data-testid="cart-item-remove-button"
         fill="none"
         role="button"
@@ -48,14 +48,14 @@ exports[`CartItem renders 1`] = `
 exports[`CartItem renders price as dash when price is null 1`] = `
 <div>
   <div
-    class="flex items-center justify-between border-b border-grey-200 py-5 dark:border-slate-500"
+    class="flex min-w-0 items-center justify-between gap-4 border-b border-grey-200 py-5 dark:border-slate-500"
   >
     <div
-      class="flex items-center"
+      class="flex min-w-0 items-center"
     >
       icon
       <span
-        class="ml-3 dark:text-slate-50"
+        class="ml-3 min-w-0 font-medium dark:text-slate-50"
       >
         title
       </span>
@@ -64,14 +64,14 @@ exports[`CartItem renders price as dash when price is null 1`] = `
       class="flex items-center"
     >
       <span
-        class="mr-8 flex gap-3 rounded-lg border border-grey-200 p-1 text-sm"
+        class="mr-8 flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm dark:border-slate-600"
       >
         <button
           data-testid="cart-item-decrease-button"
         >
           <svg
             aria-hidden="true"
-            class="h-4 w-4 text-grey-500"
+            class="h-4 w-4 text-grey-500 dark:text-slate-200"
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"
@@ -91,7 +91,7 @@ exports[`CartItem renders price as dash when price is null 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="h-4 w-4 text-grey-500"
+            class="h-4 w-4 text-grey-500 dark:text-slate-200"
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"
@@ -113,7 +113,7 @@ exports[`CartItem renders price as dash when price is null 1`] = `
       </span>
       <svg
         aria-hidden="true"
-        class="inline h-4 w-4 text-grey-400 dark:text-slate-300"
+        class="inline h-6 w-6 text-grey-400 dark:text-slate-300 md:h-4 md:w-4"
         data-testid="cart-item-remove-button"
         fill="none"
         role="button"
@@ -136,14 +136,14 @@ exports[`CartItem renders price as dash when price is null 1`] = `
 exports[`CartItem renders with quantity 1`] = `
 <div>
   <div
-    class="flex items-center justify-between border-b border-grey-200 py-5 dark:border-slate-500"
+    class="flex min-w-0 items-center justify-between gap-4 border-b border-grey-200 py-5 dark:border-slate-500"
   >
     <div
-      class="flex items-center"
+      class="flex min-w-0 items-center"
     >
       icon
       <span
-        class="ml-3 dark:text-slate-50"
+        class="ml-3 min-w-0 font-medium dark:text-slate-50"
       >
         title
       </span>
@@ -152,14 +152,14 @@ exports[`CartItem renders with quantity 1`] = `
       class="flex items-center"
     >
       <span
-        class="mr-8 flex gap-3 rounded-lg border border-grey-200 p-1 text-sm"
+        class="mr-8 flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm dark:border-slate-600"
       >
         <button
           data-testid="cart-item-decrease-button"
         >
           <svg
             aria-hidden="true"
-            class="h-4 w-4 text-grey-500"
+            class="h-4 w-4 text-grey-500 dark:text-slate-200"
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"
@@ -179,7 +179,7 @@ exports[`CartItem renders with quantity 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="h-4 w-4 text-grey-500"
+            class="h-4 w-4 text-grey-500 dark:text-slate-200"
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"
@@ -201,7 +201,7 @@ exports[`CartItem renders with quantity 1`] = `
       </span>
       <svg
         aria-hidden="true"
-        class="inline h-4 w-4 text-grey-400 dark:text-slate-300"
+        class="inline h-6 w-6 text-grey-400 dark:text-slate-300 md:h-4 md:w-4"
         data-testid="cart-item-remove-button"
         fill="none"
         role="button"

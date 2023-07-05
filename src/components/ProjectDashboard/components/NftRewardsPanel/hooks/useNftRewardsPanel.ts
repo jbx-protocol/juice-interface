@@ -24,9 +24,22 @@ export const useNftRewardsPanel = () => {
     [cart],
   )
 
+  const handleTierDeselect = useCallback(
+    (tierId: number) => {
+      cart.dispatch({
+        type: 'removeNftReward',
+        payload: {
+          id: tierId,
+        },
+      })
+    },
+    [cart],
+  )
+
   return {
     rewardTiers,
     loading,
     handleTierSelect,
+    handleTierDeselect,
   }
 }

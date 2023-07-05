@@ -23,10 +23,11 @@ type ButtonItem = {
   onClick: MouseEventHandler
 }
 
-type PopupMenuItem = ComponentItem | LinkItem | ButtonItem
+export type PopupMenuItem = ComponentItem | LinkItem | ButtonItem
 
-type PopupMenuProps = {
+export type PopupMenuProps = {
   className?: string
+  menuButtonIconClassName?: string
   items: PopupMenuItem[]
 }
 
@@ -38,7 +39,11 @@ function isButtonItem(item: PopupMenuItem): item is ButtonItem {
   return (item as ButtonItem).onClick !== undefined
 }
 
-export const PopupMenu = ({ className, items }: PopupMenuProps) => {
+export const PopupMenu = ({
+  className,
+  items,
+  menuButtonIconClassName,
+}: PopupMenuProps) => {
   return (
     <>
       <Menu as="div" className={twMerge('relative', className)}>
@@ -49,23 +54,25 @@ export const PopupMenu = ({ className, items }: PopupMenuProps) => {
                 open && 'rounded-lg bg-smoke-100 dark:bg-slate-600',
               )}
             >
-              <EllipsisVerticalIcon className="h-6 w-6" />
+              <EllipsisVerticalIcon
+                className={twMerge('h-6 w-6', menuButtonIconClassName)}
+              />
             </Menu.Button>
 
             <Menu.Items
               as="div"
-              className="absolute top-7 right-0 z-10 rounded-lg border border-grey-200 bg-white shadow-md dark:border-slate-500 dark:bg-slate-900"
+              className="absolute top-7 right-0 z-10 overflow-hidden rounded-lg border border-grey-200 bg-white shadow-md dark:border-slate-500 dark:bg-slate-900"
             >
               {items.map(item => (
                 <Menu.Item key={item.id}>
                   {isLinkItem(item) ? (
                     item.isExternal ? (
-                      <PatchedExternalLink className="flex gap-2 rounded-lg p-4 hover:bg-smoke-100 dark:hover:bg-slate-600">
+                      <PatchedExternalLink className="flex gap-2 p-4 hover:bg-smoke-100 dark:hover:bg-slate-600">
                         {item.label}
                       </PatchedExternalLink>
                     ) : (
                       <PatchedNextLink
-                        className="flex gap-2 rounded-lg p-4 hover:bg-smoke-100 dark:hover:bg-slate-600"
+                        className="flex gap-2 p-4 hover:bg-smoke-100 dark:hover:bg-slate-600"
                         href={item.href}
                       >
                         {item.label}
@@ -73,15 +80,17 @@ export const PopupMenu = ({ className, items }: PopupMenuProps) => {
                     )
                   ) : isButtonItem(item) ? (
                     <button
-                      className="flex gap-2 rounded-lg p-4 hover:bg-smoke-100 dark:hover:bg-slate-600"
+                      className="flex w-full gap-2 p-4 hover:bg-smoke-100 dark:hover:bg-slate-600"
                       onClick={item.onClick}
                     >
                       {item.label}
                     </button>
                   ) : (
-                    <div className="flex gap-2 rounded-lg p-4 hover:bg-smoke-100 dark:hover:bg-slate-600">
-                      {item.component}
-                    </div>
+                    item.component && (
+                      <div className="hover:bg-smoke-100 dark:hover:bg-slate-600">
+                        {item.component}
+                      </div>
+                    )
                   )}
                 </Menu.Item>
               ))}

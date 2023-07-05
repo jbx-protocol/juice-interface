@@ -6,7 +6,7 @@ export const CartItemBadge: React.FC<
 > = ({ children, className }) => (
   <span
     className={twMerge(
-      'rounded-2xl bg-grey-100 py-0.5 px-2 dark:bg-slate-500 dark:text-slate-100',
+      'whitespace-nowrap rounded-2xl bg-grey-100 py-0.5 px-2 text-xs dark:bg-slate-500 dark:text-slate-100',
       className,
     )}
   >

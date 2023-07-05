@@ -17,11 +17,11 @@ export function RedeemNftsSection() {
   })
   const hasRedeemableNfts = (data?.jb721DelegateTokens?.length ?? 0) > 0
 
-  if (loading || !hasRedeemableNfts) return null
+  if (loading || !hasRedeemableNfts || !userAddress) return null
 
   return (
-    <div className="h-32 w-full rounded-lg bg-smoke-50 p-4">
-      <div className="text-sm font-medium text-grey-600">
+    <div className="h-32 w-full rounded-lg bg-smoke-50 p-5 dark:bg-slate-700">
+      <div className="text-sm font-medium text-grey-600 dark:text-slate-50">
         <Trans>Your NFTs</Trans>
       </div>
 

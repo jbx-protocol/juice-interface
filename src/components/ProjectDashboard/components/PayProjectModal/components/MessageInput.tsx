@@ -108,8 +108,8 @@ export const MessageInput: React.FC<Props> = ({
         selectedFile && (
           <div className="mt-4 flex">
             <JuiceVideoThumbnailOrImage
+              className="h-12 w-12 rounded-md"
               playIconPosition="hidden"
-              containerClass="h-12 w-12 rounded-md"
               src={uploadedUrl}
               alt={selectedFile.name}
             />
@@ -121,7 +121,6 @@ export const MessageInput: React.FC<Props> = ({
             >
               <XCircleIcon className="ml-2 h-5 w-5 flex-none text-grey-400" />
             </button>
-
             <span className="ml-8 max-w-xs truncate text-xs text-grey-500">
               <Trans>
                 Uploaded to: <ExternalLink href={uploadedUrl} />

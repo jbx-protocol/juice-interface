@@ -3,30 +3,75 @@
 exports[`PayProjectCard renders 1`] = `
 <div>
   <div
-    class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 flex flex-col gap-2 pr-9"
+    class="rounded-lg bg-smoke-50 py-5 dark:bg-slate-700 flex flex-col gap-2 px-4 md:pr-9 md:pl-6"
   >
     <div
-      class="font-medium"
+      class="text-base font-medium"
     >
-      Pay Project
+      <span
+        class="inline-flex items-center gap-1"
+      >
+        <span>
+          Pay Project
+        </span>
+        <svg
+          aria-hidden="true"
+          class="h-4 w-4 text-grey-500 dark:text-slate-200"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
     </div>
     <form
       class="flex flex-col gap-2"
     >
       <div
-        class="flex gap-2"
+        class="flex flex-col gap-2 md:flex-row"
       >
         <input
-          class="flex-1"
+          class="h-12 md:flex-1"
           data-testid="pay-input"
           name="payAmount"
           placeholder="0"
           value=""
         />
         <button
-          class="ant-btn ant-btn-primary h-full"
+          class="ant-btn ant-btn-primary ant-btn-loading h-12 text-base h-12"
+          style="height: 48px;"
           type="submit"
         >
+          <span
+            class="ant-btn-loading-icon"
+          >
+            <span
+              aria-label="loading"
+              class="anticon anticon-loading anticon-spin"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="loading"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="0 0 1024 1024"
+                width="1em"
+              >
+                <path
+                  d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z"
+                />
+              </svg>
+            </span>
+          </span>
           Add payment
         </button>
       </div>

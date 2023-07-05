@@ -97,7 +97,7 @@ export async function queryDBProjects(
     .from('projects')
     .select('*')
     .order(orderBy, { ascending })
-    .range(page * pageSize, (page + 1) * pageSize)
+    .range(page * pageSize, (page + 1) * pageSize - 1)
 
   if (opts.archived) query = query.is('archived', true)
   else query = query.not('archived', 'is', true)

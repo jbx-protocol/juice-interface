@@ -15,7 +15,7 @@ export function useJB721DelegateVersion({
         `/api/juicebox/jb-721-delegate/${dataSourceAddress}`,
       )
 
-      return res.data.version
+      return res.data?.version
     },
     {
       enabled: !!dataSourceAddress && !isZeroAddress(dataSourceAddress),

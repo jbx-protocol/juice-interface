@@ -21,7 +21,7 @@ exports[`ConfigurationDisplayCard renders 1`] = `
         >
           Current
           <div
-            class="font-heading text-2xl font-medium dark:text-slate-50"
+            class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
           >
             Configuration
           </div>

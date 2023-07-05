@@ -15,8 +15,9 @@ const ProjectVersionBadge = ({
     <span
       className={twMerge(
         'cursor-default text-grey-900 dark:text-slate-100',
-        !transparent ? 'bg-smoke-75 dark:bg-slate-400' : '',
-        size === 'small' ? 'py-0 px-1 text-xs' : 'py-0.5 px-1 text-sm',
+        !transparent ? 'bg-smoke-100 dark:bg-slate-400' : '',
+        size === 'small' ? 'py-0 px-2 text-xs' : 'py-0.5 px-2 text-sm',
+        'rounded-full font-normal',
         className,
       )}
     >

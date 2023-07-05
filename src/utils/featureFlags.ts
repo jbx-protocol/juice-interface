@@ -1,3 +1,4 @@
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
 
@@ -11,7 +12,13 @@ import { NetworkName } from 'models/networkName'
  */
 const FEATURE_FLAG_DEFAULTS: {
   [featureFlag: string]: { [networkName in NetworkName]?: boolean }
-} = {}
+} = {
+  [FEATURE_FLAGS.NEW_PROJECT_PAGE]: {
+    mainnet: true,
+    goerli: true,
+    localhost: true,
+  },
+}
 
 const featureFlagKey = (baseKey: string) => {
   return `${baseKey}_${readNetwork.name}`

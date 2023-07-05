@@ -1,10 +1,16 @@
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { DisplayCard } from '../../ui'
+import { TitleDescriptionDisplayCard } from '../../ui/TitleDescriptionDisplayCard'
 import { useCurrentUpcomingSubPanel } from '../hooks/useCurrentUpcomingSubPanel'
 import { ConfigurationDisplayCard } from './ConfigurationDisplayCard'
+import { currentCycleRemainingLengthTooltip } from './CyclesPanelTooltips'
 import { PayoutsSubPanel } from './PayoutsSubPanel'
+import { UpcomingCycleChangesCallout } from './UpcomingCycleChangesCallout'
+
+const CYCLE_NUMBER_INDEX = 0
+const STATUS_INDEX = 1
+const CYCLE_LENGTH_INDEX = 2
 
 export const CurrentUpcomingSubPanel = ({
   id,
@@ -45,34 +51,48 @@ export const CurrentUpcomingSubPanel = ({
     info.type,
   ])
 
+  const cycleLengthTooltip =
+    info.type === 'current' ? currentCycleRemainingLengthTooltip : undefined
+
+  const cycleStatusValue = topPanelsInfo[STATUS_INDEX].value
+
+  const cycleStatusTooltip = (
+    <Trans>
+      This project's rules will be locked in place for {cycleStatusValue} days.
+    </Trans>
+  )
+
   return (
     <div>
       <div className="flex flex-col gap-4">
-        <div className="flex gap-4">
-          <DisplayCard className="w-full max-w-[127px]">
-            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
-              {topPanelsInfo[0].title}
-              <div className="font-heading text-2xl font-medium dark:text-slate-50">
-                {topPanelsInfo[0].value ?? <Skeleton />}
-              </div>
-            </div>
-          </DisplayCard>
-          <DisplayCard className="w-full max-w-[142px]">
-            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
-              {topPanelsInfo[1].title}
-              <div className="font-heading text-2xl font-medium dark:text-slate-50">
-                {topPanelsInfo[1].value ?? <Skeleton className="w-22" />}
-              </div>
-            </div>
-          </DisplayCard>
-          <DisplayCard className="flex-1">
-            <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
-              {topPanelsInfo[2].title}
-              <div className="font-heading text-2xl font-medium dark:text-slate-50">
-                {topPanelsInfo[2].value ?? <Skeleton className="w-40" />}
-              </div>
-            </div>
-          </DisplayCard>
+        {id === 'upcoming' && <UpcomingCycleChangesCallout />}
+
+        <div className="grid grid-cols-2 gap-4 md:flex">
+          <TitleDescriptionDisplayCard
+            className="w-full md:max-w-[127px]"
+            title={topPanelsInfo[CYCLE_NUMBER_INDEX].title}
+            description={
+              topPanelsInfo[CYCLE_NUMBER_INDEX].value ?? <Skeleton />
+            }
+          />
+          <TitleDescriptionDisplayCard
+            className="w-full md:w-fit"
+            title={topPanelsInfo[STATUS_INDEX].title}
+            description={
+              topPanelsInfo[STATUS_INDEX].value ?? <Skeleton className="w-22" />
+            }
+            tooltip={cycleStatusTooltip}
+          />
+          <TitleDescriptionDisplayCard
+            className="col-span-2 md:flex-1"
+            title={topPanelsInfo[CYCLE_LENGTH_INDEX].title}
+            description={
+              topPanelsInfo[CYCLE_LENGTH_INDEX].value ?? (
+                <Skeleton className="w-40" />
+              )
+            }
+            tooltip={cycleLengthTooltip}
+          />
         </div>
         <ConfigurationDisplayCard type={info.type} />
       </div>

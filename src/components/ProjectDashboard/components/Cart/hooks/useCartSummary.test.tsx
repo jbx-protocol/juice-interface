@@ -84,9 +84,9 @@ describe('useCartSummary', () => {
 
   test('removePay method should call dispatch', () => {
     const { result } = renderUseCartSummaryHook()
-    result.current.removePay()
+    result.current.resetCart()
     expect(DefaultUseProjectCartMock.dispatch).toHaveBeenCalledWith({
-      type: 'removePayment',
+      type: 'reset',
     })
   })
 

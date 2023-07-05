@@ -1,17 +1,17 @@
 import { CurrencyIcon } from 'components/ProjectDashboard/components/ui/CurrencyIcon'
 import { useProjectCart } from 'components/ProjectDashboard/hooks'
+import { handleConfirmationDeletion } from 'components/ProjectDashboard/utils/modals'
 import { useCallback } from 'react'
 import { CartItem } from './CartItem'
 
 export const PaymentCartItem = () => {
   const { payAmount, dispatch } = useProjectCart()
 
-  const removePayment = useCallback(
-    () => dispatch({ type: 'removePayment' }),
-    [dispatch],
-  )
+  const removePayment = useCallback(() => {
+    dispatch({ type: 'removePayment' })
+  }, [dispatch])
 
-  if (!payAmount) {
+  if (!payAmount || payAmount.amount === 0) {
     return null
   }
 
@@ -30,7 +30,10 @@ export const PaymentCartItem = () => {
         />
       }
       price={payAmount}
-      onRemove={removePayment}
+      onRemove={handleConfirmationDeletion({
+        type: 'payment',
+        onConfirm: removePayment,
+      })}
     />
   )
 }

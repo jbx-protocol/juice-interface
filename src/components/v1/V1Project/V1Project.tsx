@@ -127,7 +127,7 @@ export function V1Project() {
                     message={<Trans>Volume chart failed to load.</Trans>}
                   >
                     <VolumeChart
-                      style={{ height: 240 }}
+                      height={240}
                       projectId={projectId}
                       createdAt={createdAt}
                       pv={PV_V1}

@@ -3,13 +3,13 @@
 exports[`CyclesPayoutsPanel renders 1`] = `
 <div>
   <div
-    class="flex w-full max-w-xl flex-col gap-5"
+    class="mx-auto flex w-full max-w-[596px] flex-col gap-5"
   >
     <div
-      class="flex items-center justify-between"
+      class="flex flex-col justify-between gap-4 md:flex-row md:items-center"
     >
       <h2
-        class="font-heading text-2xl font-medium"
+        class="mb-0 font-heading text-2xl font-medium"
       >
         Cycle
       </h2>

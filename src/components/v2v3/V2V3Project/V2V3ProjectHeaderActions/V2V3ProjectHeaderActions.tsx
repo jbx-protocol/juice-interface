@@ -1,5 +1,4 @@
-import { SettingOutlined } from '@ant-design/icons'
-import { WrenchIcon } from '@heroicons/react/24/outline'
+import { Cog6ToothIcon, WrenchIcon } from '@heroicons/react/24/outline'
 import { t, Trans } from '@lingui/macro'
 import { Button, Divider, Tooltip } from 'antd'
 import BookmarkButton from 'components/BookmarkButton/BookmarkButton'
@@ -8,7 +7,7 @@ import { V2V3ProjectToolsDrawer } from 'components/v2v3/V2V3Project/V2V3ProjectT
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useV2ConnectedWalletHasPermission } from 'hooks/v2v3/contractReader/useV2ConnectedWalletHasPermission'
+import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
@@ -20,7 +19,7 @@ export function V2V3ProjectHeaderActions() {
   const { handle } = useContext(V2V3ProjectContext)
 
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
-  const canReconfigure = useV2ConnectedWalletHasPermission(
+  const canReconfigure = useV2V3WalletHasPermission(
     V2V3OperatorPermission.RECONFIGURE,
   )
 
@@ -57,9 +56,10 @@ export function V2V3ProjectHeaderActions() {
             href={settingsPagePath(undefined, { handle, projectId })}
             legacyBehavior
           >
-            <Button icon={<SettingOutlined />}>
+            <Button size="small">
               <span>
-                <Trans>Settings</Trans>
+                <Cog6ToothIcon className="mr-2 inline h-4 w-4" />
+                <Trans>Manage project</Trans>
               </span>
             </Button>
           </Link>

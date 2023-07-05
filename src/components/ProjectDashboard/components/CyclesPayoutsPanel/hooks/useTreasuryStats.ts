@@ -4,22 +4,31 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import { useDistributableAmount } from './useDistributableAmount'
 
 export const useTreasuryStats = () => {
   const {
     distributionLimit,
-    distributionLimitCurrency,
+    distributionLimitCurrency: distributionLimitCurrencyRaw,
     balanceInDistributionLimitCurrency,
+    fundingCycleMetadata,
   } = useProjectContext()
   const { distributableAmount } = useDistributableAmount()
+
+  const distributionLimitCurrency: V2V3CurrencyOption | undefined =
+    useMemo(() => {
+      if (!distributionLimitCurrencyRaw) return undefined
+      if (distributionLimitCurrencyRaw.eq(0)) return V2V3_CURRENCY_ETH // treat as eth
+      return distributionLimitCurrencyRaw.toNumber() as V2V3CurrencyOption
+    }, [distributionLimitCurrencyRaw])
 
   const treasuryBalance = useMemo(() => {
     if (!balanceInDistributionLimitCurrency) return undefined
     return formatCurrencyAmount({
       amount: Number(fromWad(balanceInDistributionLimitCurrency)),
-      currency: distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
+      currency: distributionLimitCurrency,
     })
   }, [balanceInDistributionLimitCurrency, distributionLimitCurrency])
 
@@ -36,7 +45,7 @@ export const useTreasuryStats = () => {
     }
     return formatCurrencyAmount({
       amount,
-      currency: distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
+      currency: distributionLimitCurrency,
     })
   }, [
     balanceInDistributionLimitCurrency,
@@ -47,12 +56,13 @@ export const useTreasuryStats = () => {
   const availableToPayout = useMemo(() => {
     return formatCurrencyAmount({
       amount: Number(fromWad(distributableAmount)),
-      currency: distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
+      currency: distributionLimitCurrency,
     })
   }, [distributableAmount, distributionLimitCurrency])
   return {
     treasuryBalance,
     availableToPayout,
     overflow,
+    redemptionRate: fundingCycleMetadata?.redemptionRate,
   }
 }

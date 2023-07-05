@@ -10,7 +10,6 @@ jest.mock('components/ProjectDashboard/hooks/useProjectPaymentTokens')
 
 describe('ReceiveTokensItem', () => {
   const DefaultUseProjectPaymentTokens = {
-    userIsReceivingTokens: true,
     receivedTickets: '1',
     receivedTokenSymbolText: 'Symbol',
   }
@@ -20,14 +19,6 @@ describe('ReceiveTokensItem', () => {
     )
   })
 
-  it('renders null if user is not receiving tokens', () => {
-    ;(useProjectPaymentTokens as jest.Mock).mockReturnValue({
-      ...DefaultUseProjectPaymentTokens,
-      userIsReceivingTokens: false,
-    })
-    render(<ReceiveTokensItem />)
-    expect(screen.queryByText('Symbol Token')).not.toBeInTheDocument()
-  })
   it('renders null if user is receiving tokens but has 0 received tickets', () => {
     ;(useProjectPaymentTokens as jest.Mock).mockReturnValue({
       ...DefaultUseProjectPaymentTokens,

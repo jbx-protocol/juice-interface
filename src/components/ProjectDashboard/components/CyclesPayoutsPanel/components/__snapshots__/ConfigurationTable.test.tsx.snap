@@ -7,7 +7,7 @@ exports[`ConfigurationTable renders 1`] = `
       class="w-full"
     >
       <div
-        class="text-start text-base font-semibold"
+        class="text-start text-base font-medium uppercase"
       >
         title
       </div>
@@ -16,7 +16,7 @@ exports[`ConfigurationTable renders 1`] = `
           class="flex justify-between gap-10 border-b border-grey-200 py-3 dark:border-slate-500"
         >
           <div
-            class="flex justify-between gap-3"
+            class="flex justify-between gap-3 font-medium"
           >
             foo
           </div>
@@ -26,8 +26,8 @@ exports[`ConfigurationTable renders 1`] = `
             <div
               class="flex flex-col items-center gap-2"
             >
-              <div
-                class="flex w-full items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
+              <span
+                class="flex flex-1 items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
               >
                 <svg
                   aria-hidden="true"
@@ -47,9 +47,9 @@ exports[`ConfigurationTable renders 1`] = `
                 <span>
                   old
                 </span>
-              </div>
-              <div
-                class="flex w-full items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
+              </span>
+              <span
+                class="flex flex-1 items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
               >
                 <svg
                   aria-hidden="true"
@@ -69,7 +69,7 @@ exports[`ConfigurationTable renders 1`] = `
                 <span>
                   new
                 </span>
-              </div>
+              </span>
             </div>
           </div>
         </div>
@@ -77,7 +77,7 @@ exports[`ConfigurationTable renders 1`] = `
           class="flex justify-between gap-10 border-b border-grey-200 py-3 dark:border-slate-500"
         >
           <div
-            class="flex justify-between gap-3"
+            class="flex justify-between gap-3 font-medium"
           >
             bar
           </div>
@@ -91,7 +91,7 @@ exports[`ConfigurationTable renders 1`] = `
           class="flex justify-between gap-10 border-b border-grey-200 py-3 dark:border-slate-500"
         >
           <div
-            class="flex justify-between gap-3"
+            class="flex justify-between gap-3 font-medium"
           >
             baz
           </div>
@@ -101,8 +101,8 @@ exports[`ConfigurationTable renders 1`] = `
             <div
               class="flex flex-col items-center gap-2"
             >
-              <div
-                class="flex w-full items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
+              <span
+                class="flex flex-1 items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
               >
                 <svg
                   aria-hidden="true"
@@ -122,9 +122,9 @@ exports[`ConfigurationTable renders 1`] = `
                 <span>
                   old
                 </span>
-              </div>
-              <div
-                class="flex w-full items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
+              </span>
+              <span
+                class="flex flex-1 items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
               >
                 <svg
                   aria-hidden="true"
@@ -144,7 +144,7 @@ exports[`ConfigurationTable renders 1`] = `
                 <span>
                   new
                 </span>
-              </div>
+              </span>
             </div>
           </div>
         </div>

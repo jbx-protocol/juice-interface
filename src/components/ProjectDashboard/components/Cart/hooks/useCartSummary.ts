@@ -28,8 +28,8 @@ export const useCartSummary = () => {
     ? formatCurrencyAmount(cart.totalAmount)
     : undefined
 
-  const removePay = useCallback(() => {
-    cart.dispatch({ type: 'removePayment' })
+  const resetCart = useCallback(() => {
+    cart.dispatch({ type: 'reset' })
   }, [cart])
 
   const payProject = useCallback(() => {
@@ -40,12 +40,17 @@ export const useCartSummary = () => {
     cart.dispatch({ type: 'openPayModal' })
   }, [cart, connect, isConnected])
 
+  const showCurrencyOnCollapse = useMemo(() => {
+    return cart.payAmount?.amount ? cart.payAmount.amount > 0 : false
+  }, [cart.payAmount])
+
   return {
     amountText,
     currency: cart.totalAmount?.currency,
     nftRewards,
     walletConnected: isConnected,
-    removePay,
+    showCurrencyOnCollapse,
+    resetCart,
     payProject,
   }
 }

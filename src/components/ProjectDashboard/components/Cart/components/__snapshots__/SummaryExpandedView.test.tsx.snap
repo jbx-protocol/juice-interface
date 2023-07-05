@@ -3,46 +3,134 @@
 exports[`SummaryExpandedView should render correctly 1`] = `
 <div>
   <div
-    class="flex h-full w-full justify-between px-8 pt-12 pb-14"
+    class="flex h-full w-full min-w-0 flex-col justify-between gap-5"
     data-testid="cart-summary-open-view"
   >
     <div
-      class="flex w-full max-w-xl cursor-auto flex-col gap-4"
-      data-testid="cart-summary-open-view-summary"
-    >
-      <span
-        class="font-heading text-2xl font-medium"
-      >
-        Summary
-      </span>
-      <div />
-    </div>
-    <div
-      class="flex cursor-auto items-center gap-8 self-end rounded-lg border border-grey-200 p-8 dark:border-slate-500 dark:bg-slate-700"
-      data-testid="cart-summary-open-view-total"
+      class="relative px-8 pt-6 md:pt-12"
     >
       <div
-        class="flex flex-col items-center gap-2 whitespace-nowrap"
+        class="flex justify-between gap-5"
       >
         <span
-          class="text-sm text-grey-500 dark:text-slate-200"
+          class="font-heading text-xl font-medium md:text-2xl"
         >
-          Total to pay
-        </span>
-        <span
-          class="text-2xl font-medium"
-        >
-          0.0000 ETH
+          Summary
         </span>
       </div>
-      <button
-        class="ant-btn ant-btn-primary"
-        type="button"
+    </div>
+    <div
+      class="flex h-full min-h-0 cursor-auto flex-col justify-between gap-4 px-8 pb-14 md:flex-row"
+      data-testid="cart-summary-open-view-summary"
+    >
+      <div
+        class="relative flex min-h-0 w-full min-w-0 flex-shrink flex-col gap-4 pb-5 md:max-w-xl md:pb-0"
       >
-        <span>
-          Connect wallet
-        </span>
-      </button>
+        <div
+          class="absolute -top-10 right-0"
+        >
+          <a
+            role="button"
+          >
+            Clear all
+          </a>
+        </div>
+        <div
+          class="flex w-full flex-shrink flex-col overflow-y-scroll md:block md:w-auto"
+        >
+          <div
+            class="flex min-w-0 items-center justify-between gap-4 border-b border-grey-200 py-5 dark:border-slate-500"
+          >
+            <div
+              class="flex min-w-0 items-center"
+            >
+              <div
+                class="flex items-center justify-center overflow-hidden bg-smoke-100 dark:bg-slate-700 h-14 w-14 rounded-full"
+              >
+                <div
+                  class="text-4xl"
+                >
+                  🧃
+                </div>
+              </div>
+              <span
+                class="ml-3 min-w-0 font-medium dark:text-slate-50"
+              >
+                <div
+                  class="flex flex-col gap-1"
+                >
+                  <span
+                    class="flex items-center gap-2"
+                  >
+                    <span>
+                      Project tokens
+                    </span>
+                    <svg
+                      aria-hidden="true"
+                      class="h-4 w-4 text-grey-400 dark:text-slate-200"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    <span
+                      class="whitespace-nowrap rounded-2xl bg-grey-100 py-0.5 px-2 text-xs dark:bg-slate-500 dark:text-slate-100"
+                    >
+                      Token
+                    </span>
+                  </span>
+                  <span>
+                    0
+                  </span>
+                </div>
+              </span>
+            </div>
+            <div
+              class="flex items-center"
+            >
+              <span
+                class="mr-4 text-sm font-medium"
+              >
+                -
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex cursor-auto items-center gap-8 self-end rounded-lg border border-grey-200 p-8 dark:border-slate-500 dark:bg-slate-700"
+        data-testid="cart-summary-open-view-total"
+      >
+        <div
+          class="flex flex-col gap-2 whitespace-nowrap"
+        >
+          <span
+            class="text-sm text-grey-500 dark:text-slate-200"
+          >
+            Total to pay
+          </span>
+          <span
+            class="font-heading text-2xl font-medium"
+          >
+            0.0000 ETH
+          </span>
+        </div>
+        <button
+          class="ant-btn ant-btn-primary"
+          type="button"
+        >
+          <span>
+            Connect wallet
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -22,10 +22,10 @@ export const StickerSelection = ({
     <div className="flex gap-2 pt-3">
       {value?.map((url, i) => (
         <IconedImage
+          imageClassName="w-14"
           alt="Sticker image"
           key={`${i}-${url}`}
           src={ipfsUriToGatewayUrl(url)}
-          widthClass="w-14"
           icon={
             <CloseCircleFilled className="text-base text-black dark:text-slate-100" />
           }

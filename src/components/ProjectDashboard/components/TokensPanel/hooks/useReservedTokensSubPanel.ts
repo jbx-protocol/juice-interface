@@ -1,4 +1,3 @@
-import assert from 'assert'
 import {
   useProjectContext,
   useProjectMetadata,
@@ -6,6 +5,7 @@ import {
 import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useMemo } from 'react'
+import assert from 'utils/assert'
 import { formatAmount } from 'utils/format/formatAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatReservedRate, formatSplitPercent } from 'utils/v2v3/math'

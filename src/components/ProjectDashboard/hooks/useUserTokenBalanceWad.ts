@@ -1,11 +1,9 @@
 import { useWallet } from 'hooks/Wallet'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/useTotalBalanceOf'
 import { useMemo } from 'react'
-import { formatAmount } from 'utils/format/formatAmount'
-import { fromWad } from 'utils/format/formatNumber'
 import { useProjectMetadata } from './useProjectMetadata'
 
-export const useUserTokenBalance = () => {
+export const useUserTokenBalanceWad = () => {
   const { userAddress } = useWallet()
   const { projectId } = useProjectMetadata()
 
@@ -14,15 +12,15 @@ export const useUserTokenBalance = () => {
     projectId,
   )
 
-  const userTokenBalance = useMemo(() => {
+  const userTokenBalanceWad = useMemo(() => {
     if (!userAddress) return undefined
-    return formatAmount(fromWad(totalBalance))
+    return totalBalance
   }, [totalBalance, userAddress])
 
   const userTokenBalanceLoading = !!userAddress && loading
 
   return {
-    data: userTokenBalance,
+    data: userTokenBalanceWad,
     loading: userTokenBalanceLoading,
   }
 }

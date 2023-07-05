@@ -1,7 +1,8 @@
+import { Footer } from 'components/Footer'
 import { AnnouncementLauncher } from 'contexts/Announcements/AnnouncementLauncher'
-import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
-import { useContext } from 'react'
+import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
+import { twMerge } from 'tailwind-merge'
 import { Cart } from './components/Cart'
 import { CoverPhoto } from './components/CoverPhoto'
 import { CurrentCycleCard } from './components/CurrentCycleCard'
@@ -15,36 +16,42 @@ import { SuccessPayView } from './components/SuccessPayView'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 
 export const ProjectDashboard = () => {
-  const {
-    nftRewards: { CIDs },
-  } = useContext(NftRewardsContext)
   const { projectPayReceipt } = useProjectPageQueries()
+
+  const { value: hasNftRewards } = useHasNftRewards()
+  const shouldShowNftCard = hasNftRewards
+
   return (
     <TransactionProvider>
       <AnnouncementLauncher>
         <FundingCycleCountdownProvider>
           <ProjectCartProvider>
-            {/* // TODO: Remove pb-48, just there for testing */}
             <div className="flex w-full flex-col items-center pb-48">
               {projectPayReceipt !== undefined ? (
                 <SuccessPayView />
               ) : (
                 <>
                   <CoverPhoto />
-                  <div className="flex w-full justify-center px-6">
+                  <div className="flex w-full justify-center md:px-6">
                     <div className="flex w-full max-w-6xl flex-col">
-                      <ProjectHeader />
-                      <div className="mt-10 flex w-full gap-6">
+                      <ProjectHeader className="mt-4 px-4 md:px-0" />
+                      <div className="mt-10 flex w-full flex-col gap-4 px-4 md:flex-row md:px-0">
                         <PayProjectCard className="flex-1" />
-                        {CIDs?.length ? <NftRewardsCard /> : null}
-                        <CurrentCycleCard />
+                        {shouldShowNftCard ? <NftRewardsCard /> : null}
+                        <CurrentCycleCard
+                          className={twMerge(
+                            'hidden w-full md:max-w-sm',
+                            shouldShowNftCard ? 'lg:block' : 'md:block',
+                          )}
+                        />
                       </div>
-                      <ProjectTabs className="mt-16" />
+                      <ProjectTabs className="mt-8" />
                     </div>
                   </div>
                 </>
               )}
             </div>
+            <Footer />
             <Cart />
           </ProjectCartProvider>
         </FundingCycleCountdownProvider>

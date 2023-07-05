@@ -1,125 +1,105 @@
-import { CloseOutlined, LinkOutlined, LoadingOutlined } from '@ant-design/icons'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import ExternalLink from 'components/ExternalLink'
-import { JuiceVideoPreview } from 'components/JuiceVideo/JuiceVideoPreview'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'contexts/NftRewards/NftRewards'
+import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
+import { Popup } from 'components/Popup'
+import { TruncatedText } from 'components/TruncatedText'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { useContentType } from 'hooks/useContentType'
+import useMobile from 'hooks/useMobile'
 import { NftRewardTier } from 'models/nftRewards'
 import { useContext } from 'react'
-import { classNames } from 'utils/classNames'
-import { fileTypeIsVideo } from 'utils/nftRewards'
-import { JUICE_IMG_PREVIEW_CONTAINER_CLASS } from '../JuiceVideo/JuiceVideoOrImgPreview'
-
-export const IMAGE_OR_VIDEO_PREVIEW_CLASSES =
-  'max-h-[50vh] max-w-[90vw] md:max-h-[60vh] md:max-w-xl'
 
 export function NftPreview({
   open,
+  setOpen,
   rewardTier,
-  onClose,
-  fileUrl,
+  fileUrl: _fileUrl,
+  actionButton,
 }: {
   open: boolean
+  setOpen: (open: boolean) => void
   rewardTier: NftRewardTier
-  onClose: VoidFunction
-  fileUrl: string | undefined
+  fileUrl?: string | undefined
+  actionButton?: JSX.Element
 }) {
+  const isMobile = useMobile()
+  const fileUrl = _fileUrl ?? rewardTier.fileUrl
   const { projectMetadata } = useContext(ProjectMetadataContext)
 
   if (!open) return null
 
-  const hasLimitedSupply = Boolean(
-    rewardTier.remainingSupply &&
-      rewardTier.maxSupply &&
-      rewardTier.maxSupply !== DEFAULT_NFT_MAX_SUPPLY,
+  const hasUnlimitedSupply = Boolean(
+    !rewardTier.maxSupply || rewardTier.maxSupply === DEFAULT_NFT_MAX_SUPPLY,
   )
 
-  const { data: contentType, isLoading: contentTypeLoading } =
-    useContentType(fileUrl)
-  const isVideo = fileTypeIsVideo(contentType)
+  const isSoldOut = Boolean(!rewardTier.remainingSupply)
 
-  const nftRender = (
-    <div onClick={e => e.stopPropagation()}>
-      {contentTypeLoading ? (
-        <div className="flex h-[50vh] w-96 items-center justify-center">
-          <LoadingOutlined className="text-5xl" />
-        </div>
-      ) : isVideo && fileUrl ? (
-        <JuiceVideoPreview src={fileUrl} />
-      ) : (
-        <img
-          className={IMAGE_OR_VIDEO_PREVIEW_CLASSES}
-          alt={rewardTier.name}
-          src={fileUrl}
-          onClick={e => e.stopPropagation()}
-          crossOrigin="anonymous"
-        />
-      )}
-    </div>
-  )
-
-  const _onClose = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    onClose()
+  const handleClose = () => {
+    setOpen(false)
   }
 
+  const remainingSupplyText = hasUnlimitedSupply ? (
+    <Trans>REMAINING SUPPLY: Unlimited</Trans>
+  ) : isSoldOut ? (
+    <Trans>REMAINING SUPPLY: Sold out</Trans>
+  ) : (
+    <Trans>
+      REMAINING SUPPLY: {rewardTier.remainingSupply}/{rewardTier.maxSupply}
+    </Trans>
+  )
+
   return (
-    <div
-      className={`${JUICE_IMG_PREVIEW_CONTAINER_CLASS} cursor-default`}
-      onClick={_onClose}
+    <Popup
+      className="flex"
+      maskClassName="bg-opacity-[0.85]"
+      open={open}
+      setOpen={setOpen}
+      onMaskClick={setOpen => {
+        setOpen(false)
+      }}
     >
-      <CloseOutlined
-        className="absolute top-10 right-10 cursor-pointer text-2xl text-slate-100"
-        onClick={_onClose}
-      />
-
-      <div
-        className="max-w-prose cursor-text select-text pt-24 md:pt-0"
-        onClick={e => e.stopPropagation()}
-      >
-        <div
-          className="mb-5 flex w-full cursor-default justify-center"
-          onClick={_onClose}
-        >
-          {nftRender}
-        </div>
-
-        <h1 className="text-2xl text-slate-100">{rewardTier.name}</h1>
-        <span className="uppercase text-slate-100">
-          <Trans>{projectMetadata?.name}</Trans>
-        </span>
-
-        <p className="mt-2 max-w-prose text-slate-100">
-          {rewardTier.description}
-        </p>
-        {hasLimitedSupply || rewardTier.externalLink ? (
-          <div className="mt-5 flex text-xs text-slate-100">
-            {hasLimitedSupply ? (
-              <div>
-                <Trans>
-                  REMAINING SUPPLY: {rewardTier.remainingSupply}/
-                  {rewardTier.maxSupply}
-                </Trans>
-              </div>
-            ) : null}
-            {rewardTier.externalLink ? (
-              <ExternalLink
-                href={rewardTier.externalLink}
-                className={classNames(
-                  'flex cursor-pointer items-center text-slate-100',
-                  hasLimitedSupply ? 'ml-6' : undefined,
-                )}
-              >
-                <LinkOutlined className="text-lg" />
-                <span className="ml-1 underline">
-                  <Trans>LINK TO NFT</Trans>
+      <div className="relative top-0 mx-auto mt-14 flex max-h-screen w-fit min-w-0">
+        <div className="flex w-full max-w-[640px] justify-between gap-6">
+          <div className="mt-14 min-w-0 max-w-[560px]">
+            <JuiceVideoThumbnailOrImage
+              className="h-auto min-h-0 w-auto min-w-0 rounded-none"
+              src={fileUrl}
+              alt={rewardTier.name}
+            />
+            <div className="mt-6 flex flex-col gap-2 text-start">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <span className="min-w-0 flex-grow-[99999] font-heading text-2xl md:text-3xl">
+                  {rewardTier.name}
                 </span>
-              </ExternalLink>
-            ) : null}
+                {actionButton && !isMobile ? actionButton : null}
+              </div>
+              {projectMetadata?.name && (
+                <TruncatedText
+                  className="text-base uppercase text-grey-400"
+                  text={projectMetadata.name}
+                />
+              )}
+              {rewardTier.description && (
+                <span className="max-w-prose text-slate-100">
+                  {rewardTier.description}
+                </span>
+              )}
+              <div className="flex text-xs text-grey-400 md:mt-1">
+                {remainingSupplyText}
+              </div>
+
+              {actionButton && isMobile ? (
+                <div className="mt-3">{actionButton}</div>
+              ) : null}
+            </div>
           </div>
-        ) : null}
+          <XMarkIcon
+            role="button"
+            className="h-8 w-8 flex-shrink-0"
+            onClick={handleClose}
+          />
+        </div>
       </div>
-    </div>
+    </Popup>
   )
 }

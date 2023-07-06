@@ -18,10 +18,12 @@ function logTx({
   functionName,
   contract,
   args,
+  options,
 }: {
   functionName: string
   contract: Contract
   args: unknown[]
+  options: TransactionOptions | undefined
 }) {
   const reportArgs = Object.values(contract.interface.functions)
     .find(f => f.name === functionName)
@@ -30,7 +32,9 @@ function logTx({
         ...acc,
         [input.name]: args[i],
       }),
-      {},
+      {
+        value: options?.value,
+      },
     )
 
   const log = [
@@ -103,7 +107,7 @@ export function useTransactor(): Transactor | undefined {
         return false
       }
 
-      logTx({ functionName, contract, args })
+      logTx({ functionName, contract, args, options })
 
       if (
         process.env.NODE_ENV === 'development' ||

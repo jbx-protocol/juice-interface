@@ -119,6 +119,7 @@ export function useTransactor(): Transactor | undefined {
             functionName,
             args,
             userAddress,
+            options,
           })
         } catch (e) {
           console.warn('Simulation failed', e)

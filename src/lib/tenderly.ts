@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { readNetwork } from 'constants/networks'
 import { Contract } from 'ethers'
+import { TransactionOptions } from 'models/transaction'
 
 const API_KEY = process.env.NEXT_PUBLIC_TENDERLY_API_KEY
 const ACCOUNT = process.env.NEXT_PUBLIC_TENDERLY_ACCOUNT
@@ -11,11 +12,13 @@ export const simulateTransaction = async ({
   functionName,
   args,
   userAddress,
+  options,
 }: {
   contract: Contract
   functionName: string
   args: unknown[]
   userAddress: string | undefined
+  options?: TransactionOptions | undefined
 }) => {
   if (!(API_KEY && PROJECT && ACCOUNT)) {
     console.warn(
@@ -24,14 +27,19 @@ export const simulateTransaction = async ({
     return
   }
 
-  const unsignedTx = await contract.populateTransaction[functionName](...args)
+  const unsignedTx =
+    options?.value !== undefined
+      ? await contract.populateTransaction[functionName](...args, {
+          value: options.value,
+        })
+      : await contract.populateTransaction[functionName](...args)
 
   const body = {
     network_id: readNetwork.chainId,
     from: userAddress,
     to: contract.address,
     input: unsignedTx.data,
-    value: 0,
+    value: options?.value?.toString() ?? 0,
     save_if_fails: true,
     save: true,
   }

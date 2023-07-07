@@ -2222,9 +2222,6 @@ msgstr ""
 msgid "Sent reserved tokens"
 msgstr ""
 
-msgid "GitHub"
-msgstr ""
-
 msgid "{nftBalanceFormatted, plural, one {NFT} other {NFTs}}"
 msgstr ""
 

@@ -4,14 +4,7 @@ import ExternalLink from 'components/ExternalLink'
 import Logo from 'components/Logo'
 import Discord from 'components/icons/Discord'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
-import Link from 'next/link'
-import { ReactNode } from 'react'
-
-type LinkItem = {
-  title: ReactNode
-  link: string
-  externalLink?: boolean
-}
+import { LinkColProps, LinkColumn } from './LinkColumn'
 
 const ImageButtons = [
   {
@@ -32,7 +25,7 @@ const ImageButtons = [
 ]
 
 export function Footer() {
-  const LinkCols: { title: ReactNode; items: LinkItem[] }[] = [
+  const LinkCols: LinkColProps[] = [
     {
       title: t`Juicebox`,
       items: [
@@ -80,6 +73,39 @@ export function Footer() {
         {
           title: t`Contact`,
           link: '/contact',
+        },
+      ],
+    },
+    {
+      title: t`Use cases`,
+      items: [
+        {
+          title: t`For fundraising`,
+          externalLink: true,
+          link: 'https://docs.juicebox.money/blog/jb-for-fundraising/',
+        },
+        {
+          title: t`For charities`,
+          externalLink: true,
+          link: 'https://docs.juicebox.money/blog/jb-for-charity/',
+        },
+      ],
+      title2: t`Compare`,
+      items2: [
+        {
+          title: t`JB vs. Kickstarter`,
+          externalLink: true,
+          link: 'https://docs.juicebox.money/blog/kickstarter-vs-juicebox/',
+        },
+        {
+          title: t`JB vs. Gofundme`,
+          externalLink: true,
+          link: 'https://docs.juicebox.money/blog/gofundme-vs-juicebox/',
+        },
+        {
+          title: t`JB vs. Indiegogo`,
+          externalLink: true,
+          link: 'https://docs.juicebox.money/blog/indiegogo-vs-juicebox/',
         },
       ],
     },
@@ -161,30 +187,6 @@ export function Footer() {
     </footer>
   )
 }
-
-const LinkColumn: React.FC<
-  React.PropsWithChildren<{ title: ReactNode; items: LinkItem[] }>
-> = ({ title, items }) => (
-  <div className="flex flex-col gap-y-3">
-    <div className="font-medium text-slate-200">{title}</div>
-    {items.map(({ title, link, externalLink }, i) => (
-      <div key={i}>
-        {externalLink ? (
-          <ExternalLink
-            className="text-white hover:text-bluebs-500"
-            href={link}
-          >
-            {title}
-          </ExternalLink>
-        ) : (
-          <Link href={link} className="text-white hover:text-bluebs-500">
-            {title}
-          </Link>
-        )}
-      </div>
-    ))}
-  </div>
-)
 
 const AppVersion = ({ gitCommit }: { gitCommit: string }) => {
   const gitCommitLink = `https://github.com/jbx-protocol/juice-interface/commit/${gitCommit}`

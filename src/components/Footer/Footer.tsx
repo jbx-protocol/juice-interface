@@ -110,26 +110,6 @@ export function Footer() {
       ],
     },
     {
-      title: t`Socials`,
-      items: [
-        {
-          title: t`Discord`,
-          externalLink: true,
-          link: 'https://discord.com/invite/wFTh4QnDzk',
-        },
-        {
-          title: t`GitHub`,
-          externalLink: true,
-          link: 'https://github.com/jbx-protocol',
-        },
-        {
-          title: t`Twitter`,
-          externalLink: true,
-          link: 'https://twitter.com/juiceboxETH',
-        },
-      ],
-    },
-    {
       title: t`Legal`,
       items: [
         {

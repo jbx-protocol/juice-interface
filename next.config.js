@@ -7,6 +7,11 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')
 
 const webpack = require('webpack')
 
+const removeImports = require('next-remove-imports')({
+  test: /node_modules([\s\S]*?)\.(tsx|ts|js|mjs|jsx)$/,
+  matchImports: '\\.(less|css|scss|sass|styl)$',
+})
+
 const WALLET_CONNECT_URLS = [
   'https://*.walletconnect.com',
   'https://*.walletconnect.org',
@@ -107,7 +112,8 @@ const SECURITY_HEADERS = [
   }, // NOTE: gnosis safe is still allowed due to frame-ancestors definition
 ]
 
-const nextConfig = {
+const nextConfig = removeImports({
+  experimental: { esmExternals: true },
   staticPageGenerationTimeout: 90,
   webpack: config => {
     config.resolve.fallback = { fs: false, module: false }
@@ -161,7 +167,7 @@ const nextConfig = {
   sentry: {
     hideSourceMaps: true,
   },
-}
+})
 
 module.exports = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',

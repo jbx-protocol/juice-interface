@@ -6,6 +6,8 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { helpPagePath, settingsPagePath } from 'utils/routes'
+import { DetailsSection } from './DetailsSection/DetailsSection'
+import { EditCycleHeading } from './EditCycleHeader'
 
 function EditCycleSection({
   title,
@@ -18,11 +20,7 @@ function EditCycleSection({
 }) {
   return (
     <section className="grid gap-4 py-5 md:grid-cols-[300px_1fr]">
-      <div className="text-sm font-medium">
-        <div className="mb-2 font-medium">{title}</div>
-        <div className="text-secondary">{description}</div>
-      </div>
-
+      <EditCycleHeading title={title} description={description} />
       {children}
     </section>
   )
@@ -51,7 +49,7 @@ export function EditCyclePage() {
             <Trans>Set up your top-level project configuration details.</Trans>
           }
         >
-          <div>Todo</div>
+          <DetailsSection />
         </EditCycleSection>
 
         <EditCycleSection

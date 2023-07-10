@@ -1,37 +1,22 @@
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, Form } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import Loading from 'components/Loading'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { helpPagePath, settingsPagePath } from 'utils/routes'
-
-function EditCycleSection({
-  title,
-  description,
-  children,
-}: {
-  title: JSX.Element
-  description: JSX.Element
-  children: React.ReactNode
-}) {
-  return (
-    <section className="grid gap-4 py-5 md:grid-cols-[300px_1fr]">
-      <div className="text-sm font-medium">
-        <div className="mb-2 font-medium">{title}</div>
-        <div className="text-secondary">{description}</div>
-      </div>
-
-      {children}
-    </section>
-  )
-}
+import { DetailsSection } from './DetailsSection/DetailsSection'
+import { useEditCycleForm } from './EditCycleFormContext'
+import { EditCycleFormSection } from './EditCycleFormSection'
 
 export function EditCyclePage() {
   const { projectId } = useContext(ProjectMetadataContext)
   const { handle } = useContext(V2V3ProjectContext)
 
+  const { editCycleForm, initialFormData } = useEditCycleForm()
+  if (!initialFormData) return <Loading className="h-24" />
   return (
     <div>
       <p>
@@ -45,43 +30,52 @@ export function EditCyclePage() {
 
       {/* Details */}
       <div className="divide-y divide-solid divide-slate-400">
-        <EditCycleSection
-          title={<Trans>Details</Trans>}
-          description={
-            <Trans>Set up your top-level project configuration details.</Trans>
-          }
+        <Form
+          form={editCycleForm}
+          layout="vertical"
+          initialValues={initialFormData}
         >
-          <div>Todo</div>
-        </EditCycleSection>
+          <EditCycleFormSection
+            title={<Trans>Details</Trans>}
+            description={
+              <Trans>
+                Set up your top-level project configuration details.
+              </Trans>
+            }
+          >
+            <DetailsSection />
+          </EditCycleFormSection>
 
-        <EditCycleSection
-          title={<Trans>Payouts</Trans>}
-          description={
-            <Trans>How your project will be paid and pay out in ETH.</Trans>
-          }
-        >
-          <div>Todo</div>
-        </EditCycleSection>
+          <EditCycleFormSection
+            title={<Trans>Payouts</Trans>}
+            description={
+              <Trans>How your project will be paid and pay out in ETH.</Trans>
+            }
+          >
+            <div>Todo</div>
+          </EditCycleFormSection>
 
-        <EditCycleSection
-          title={<Trans>Tokens</Trans>}
-          description={
-            <Trans>Manage how your projects tokens should work.</Trans>
-          }
-        >
-          <div>Todo</div>
-        </EditCycleSection>
+          <EditCycleFormSection
+            title={<Trans>Tokens</Trans>}
+            description={
+              <Trans>Manage how your projects tokens should work.</Trans>
+            }
+          >
+            <div>Todo</div>
+          </EditCycleFormSection>
 
-        <EditCycleSection
-          title={<Trans>NFTs</Trans>}
-          description={
-            <Trans>
-              Manage how you reward supporters when they support your project.
-            </Trans>
-          }
-        >
-          <div>Todo</div>
-        </EditCycleSection>
+          <EditCycleFormSection
+            title={<Trans>NFTs</Trans>}
+            description={
+              <Trans>
+                Manage how you reward supporters when they support your project.
+              </Trans>
+            }
+            className="border-b-0"
+          >
+            <div>Todo</div>
+          </EditCycleFormSection>
+        </Form>
       </div>
 
       <div className="flex items-center justify-end gap-4">
@@ -93,7 +87,13 @@ export function EditCyclePage() {
           </Link>
         ) : null}
 
-        <Button type="primary">
+        <Button
+          type="primary"
+          onClick={
+            () => null
+            // TODO: make it open modal which will then call hooks/SaveEditCycleForm.tsx
+          }
+        >
           <Trans>Save changes</Trans>
         </Button>
       </div>

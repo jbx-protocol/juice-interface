@@ -102,14 +102,14 @@ export function ballotStrategiesFn(network?: NetworkName): BallotStrategy[] {
     // v2, hacky, sorry
     {
       id: 'threeDayV2',
-      name: t`3-day deadline`,
+      name: t`V2 3-day deadline`,
       description: durationBallotStrategyDescription(3),
       address: V2_BALLOT_ADDRESSES.THREE_DAY[network ?? readNetwork.name]!,
       durationSeconds: SECONDS_IN_DAY * 3,
     },
     {
       id: 'sevenDayV2',
-      name: t`7-day deadline`,
+      name: t`V2 7-day deadline V2`,
       description: durationBallotStrategyDescription(7),
       address: V2_BALLOT_ADDRESSES.SEVEN_DAY[network ?? readNetwork.name]!,
       durationSeconds: SECONDS_IN_DAY * 7,

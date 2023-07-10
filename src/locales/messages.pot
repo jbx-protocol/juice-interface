@@ -1652,6 +1652,9 @@ msgstr ""
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
 msgstr ""
 
+msgid "NFTs are not enabled for pay"
+msgstr ""
+
 msgid "{tokenText} balance"
 msgstr ""
 
@@ -1749,6 +1752,9 @@ msgid "Update NFT theme"
 msgstr ""
 
 msgid "Background color"
+msgstr ""
+
+msgid "Payments are paused"
 msgstr ""
 
 msgid "Link minters of this NFT to your project's website, Discord, etc."
@@ -3684,6 +3690,9 @@ msgid "We're always looking for talented people to join the DAO and help build J
 msgstr ""
 
 msgid "Payouts to other Juicebox projects won't incur fees."
+msgstr ""
+
+msgid "Sold out"
 msgstr ""
 
 msgid "Burn {tokensTextLong}"

@@ -2810,6 +2810,9 @@ msgstr ""
 msgid "Bookmark project"
 msgstr ""
 
+msgid "Attach files by dragging & dropping, or pasting from the clipboard."
+msgstr ""
+
 msgid "Download project activity CSV"
 msgstr ""
 

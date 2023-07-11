@@ -10,12 +10,11 @@ import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/inputs/PrefixedInput'
+import { MarkdownEditor } from 'components/MarkdownEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
@@ -27,15 +26,9 @@ import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useProjectDetailsForm } from './hooks/useProjectDetailsForm'
 
-const MDEditor = dynamic(
-  () => import('@uiw/react-md-editor').then(mod => mod.default),
-  { ssr: false },
-)
-
 export const ProjectDetailsPage: React.FC<
   React.PropsWithChildren<unknown>
 > = () => {
-  const { themeOption } = useContext(ThemeContext)
   useSetCreateFurthestPageReached('projectDetails')
 
   const { goToNextPage } = useContext(PageContext)
@@ -78,7 +71,7 @@ export const ProjectDetailsPage: React.FC<
 
         {richProjectDescriptionEnabled ? (
           <Form.Item name="projectDescription" label={t`Project description`}>
-            <MDEditor data-color-mode={themeOption} height={200} />
+            <MarkdownEditor />
           </Form.Item>
         ) : (
           <Form.Item name="projectDescription" label={t`Project description`}>

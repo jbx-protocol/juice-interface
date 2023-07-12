@@ -465,6 +465,12 @@ body[data-color-mode*='light'] {
   color: var(--color-fg-muted);
   border-left: 0.25em solid var(--color-border-default);
 }
+.wmde-markdown ul {
+  @apply list-disc;
+}
+.wmde-markdown ol {
+  @apply list-decimal;
+}
 .wmde-markdown ul,
 .wmde-markdown ol {
   margin-top: 0;

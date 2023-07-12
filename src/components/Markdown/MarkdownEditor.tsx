@@ -10,9 +10,10 @@ import {
   useContext,
   useReducer,
 } from 'react'
+import rehypeSanitize from 'rehype-sanitize'
 import { markdownReducer, processFile } from './utils'
 
-const MDEditor = dynamic(
+const MDEditor = dynamic<MDEditorProps>(
   () => import('@uiw/react-md-editor').then(mod => mod.default),
   { ssr: false },
 )
@@ -76,6 +77,9 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
         data-color-mode={themeOption}
         height={200}
         {...props}
+        previewOptions={{
+          rehypePlugins: [rehypeSanitize],
+        }}
       />
       {!state.uploading ? (
         <div className="py-3 text-xs text-grey-500 dark:text-slate-200">

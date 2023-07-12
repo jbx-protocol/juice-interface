@@ -1,9 +1,9 @@
 import { Trans, t } from '@lingui/macro'
+import { MarkdownPreview } from 'components/Markdown'
 import {
   SocialLink,
   useAboutPanel,
 } from 'components/ProjectDashboard/hooks/useAboutPanel'
-import RichNote from 'components/RichNote/RichNote'
 import { EmptyScreen } from '../EmptyScreen'
 import { SocialLinkButton } from '../ui'
 
@@ -28,7 +28,7 @@ export const AboutPanel = () => {
             <h3 className="mb-0 font-heading text-2xl font-medium">
               <Trans>About {projectName}</Trans>
             </h3>
-            <RichNote className="mt-0 text-base" note={description} />
+            <MarkdownPreview source={description} />
           </>
         ) : (
           <EmptyScreen subtitle={t`This project has no description`} />

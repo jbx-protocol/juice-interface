@@ -3,6 +3,7 @@ import { Button, Form, FormInstance } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
+import { MarkdownEditor } from 'components/Markdown'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { ProjectTagName } from 'models/project-tags'
 import { normalizeHandle } from 'utils/format/formatHandle'
@@ -73,7 +74,9 @@ export function ProjectDetailsForm({
               required
             />
           )}
-          <FormItems.ProjectDescription name="description" />
+          <Form.Item name="description" label={t`Project description`}>
+            <MarkdownEditor />
+          </Form.Item>
 
           <Form.Item name={'logoUri'} label={t`Logo`}>
             <FormImageUploader

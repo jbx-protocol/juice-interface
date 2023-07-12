@@ -3521,6 +3521,9 @@ msgstr ""
 msgid "Burn {0} {tokensTextShort}"
 msgstr ""
 
+msgid "This project has disabled payments"
+msgstr ""
+
 msgid "No tokens to redeem."
 msgstr ""
 
@@ -4620,6 +4623,9 @@ msgid "Clear all"
 msgstr ""
 
 msgid "{titleCasedAllocationName} Percentage"
+msgstr ""
+
+msgid "Tokens cannot be issued while payments are disabled."
 msgstr ""
 
 msgid "Owner wallet balance"

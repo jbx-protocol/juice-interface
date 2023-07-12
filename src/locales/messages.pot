@@ -923,6 +923,9 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+msgid "Your project has no updates"
+msgstr ""
+
 msgid "Please check {lastEmailUpdated} and verify your new email address.<0/>Still no email after a couple of minutes? <1>Click here to resend.</1>"
 msgstr ""
 
@@ -1776,6 +1779,9 @@ msgid "Send {tokensText}"
 msgstr ""
 
 msgid "Not set"
+msgstr ""
+
+msgid "Add project update"
 msgstr ""
 
 msgid "Recipient address"
@@ -3998,6 +4004,9 @@ msgstr ""
 msgid "JB vs. Indiegogo"
 msgstr ""
 
+msgid "Updates"
+msgstr ""
+
 msgid "Allow a few days for your project to appear in the \"active\" projects list on the Projects page."
 msgstr ""
 
@@ -4038,6 +4047,9 @@ msgid "Customization"
 msgstr ""
 
 msgid "Block number"
+msgstr ""
+
+msgid "This project has no updates"
 msgstr ""
 
 msgid "{titleCasedAllocationName} Amount"

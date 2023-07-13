@@ -119,9 +119,21 @@ export const AddProjectUpdateModal = ({
                 </label>
                 <div
                   className={twMerge(
-                    'mt-1.5 flex items-center justify-between rounded-lg border border-grey-300 px-3 py-2 shadow-sm dark:border-slate-600',
+                    'relative mt-1.5 flex items-center justify-between rounded-lg border border-grey-300 px-3 py-2 shadow-sm dark:border-slate-600',
                   )}
                 >
+                  <span
+                    className={twMerge(
+                      'absolute -bottom-2 right-2 flex translate-y-full items-center pl-3 text-xs',
+                      props.values.message.length < 2950
+                        ? 'text-grey-400 dark:text-slate-200'
+                        : props.values.message.length < 3000
+                        ? 'text-warning-400 dark:text-warning-400'
+                        : 'text-error-500 dark:text-error-500',
+                    )}
+                  >
+                    {props.values.message.length}/3000
+                  </span>
                   <textarea
                     id="message"
                     className={twMerge(
@@ -132,7 +144,6 @@ export const AddProjectUpdateModal = ({
                       props.setFieldValue('message', e.currentTarget.value)
                     }
                     rows={4}
-                    maxLength={3000}
                   />
                 </div>
                 <div>

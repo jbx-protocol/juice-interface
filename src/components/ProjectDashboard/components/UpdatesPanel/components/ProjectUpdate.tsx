@@ -1,4 +1,4 @@
-import { MinusIcon } from '@heroicons/react/24/outline'
+import { TrashIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import axios from 'axios'
 import EthereumAddress from 'components/EthereumAddress'
@@ -72,7 +72,7 @@ export const ProjectUpdate = ({
                 id: 'delete-update',
                 label: (
                   <>
-                    <MinusIcon className="h-5 w-5 text-error-500" />
+                    <TrashIcon className="h-5 w-5 text-error-500" />
                     <span className="whitespace-nowrap text-error-500">
                       <Trans>Delete project update</Trans>
                     </span>

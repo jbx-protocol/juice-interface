@@ -1,22 +1,23 @@
 import { PhotoIcon, XCircleIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
+import axios from 'axios'
 import ExternalLink from 'components/ExternalLink'
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
+import Loading from 'components/Loading'
+import { useProjectMetadata } from 'components/ProjectDashboard/hooks'
 import { JuiceModal } from 'components/modals/JuiceModal'
+import { PV_V2 } from 'constants/pv'
 import { Formik } from 'formik'
 import { useIpfsFilePicker } from 'hooks/useIpfsFilePicker/useIpfsFilePicker'
 import { twMerge } from 'tailwind-merge'
+import { getSubgraphIdForProject } from 'utils/graph'
 import * as Yup from 'yup'
 
 const ValidationSchema = Yup.object().shape({
-  title: Yup.string()
-    .required(t`Title is required`)
-    .max(100, t`Too long`),
-  message: Yup.string()
-    .required(t`Message is required`)
-    .max(3000, t`Too long`),
-  imageUrl: Yup.string().url(t`Invalid URL`),
+  title: Yup.string().required('Title is required').max(100, 'Too long'),
+  message: Yup.string().required('Message is required').max(3000, 'Too long'),
+  imageUrl: Yup.string().url('Invalid URL'),
 })
 type AddProjectUpdateFormValues = Yup.InferType<typeof ValidationSchema>
 
@@ -27,6 +28,13 @@ export const AddProjectUpdateModal = ({
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
+  const { projectId } = useProjectMetadata()
+  const project = projectId
+    ? getSubgraphIdForProject(PV_V2, projectId)
+    : undefined
+
+  if (!project) return <Loading />
+
   return (
     <Formik<AddProjectUpdateFormValues>
       validationSchema={ValidationSchema}
@@ -34,7 +42,13 @@ export const AddProjectUpdateModal = ({
         title: '',
         message: '',
       }}
-      onSubmit={(values, helper) => {
+      onSubmit={async (values, helper) => {
+        const { title, message, imageUrl } = values
+        await axios.post(`/api/projects/${project}/updates`, {
+          title,
+          message,
+          imageUrl,
+        })
         setOpen(false)
         setTimeout(() => {
           helper.setSubmitting(false)

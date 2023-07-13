@@ -99,6 +99,35 @@ export interface Database {
           title?: string | null
         }
       }
+      project_updates: {
+        Row: {
+          created_at: string | null
+          id: string
+          image_url: string | null
+          message: string
+          poster_user_id: string
+          project: string
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          message: string
+          poster_user_id: string
+          project: string
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          message?: string
+          poster_user_id?: string
+          project?: string
+          title?: string
+        }
+      }
       projects: {
         Row: {
           _has_unresolved_metadata: boolean | null

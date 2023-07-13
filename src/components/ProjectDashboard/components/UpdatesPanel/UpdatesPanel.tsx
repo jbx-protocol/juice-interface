@@ -1,6 +1,7 @@
 import { PlusIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
+import { useEffect } from 'react'
 import { AddProjectUpdateModal } from '../AddProjectUpdateModal'
 import { EmptyScreen } from '../EmptyScreen'
 import { PopupMenu } from '../PopupMenu/PopupMenu'
@@ -11,8 +12,20 @@ import {
 import { useUpdatesPanel } from './hooks/useUpdatesPanel'
 
 export const UpdatesPanel = () => {
-  const { loading, projectUpdates, error, open, isProjectOwner, setOpen } =
-    useUpdatesPanel()
+  const {
+    loading,
+    projectUpdates,
+    error,
+    open,
+    isProjectOwner,
+    setOpen,
+    handleAddProjectUpdateClicked,
+    loadProjectUpdates,
+  } = useUpdatesPanel()
+
+  useEffect(() => {
+    loadProjectUpdates()
+  }, [loadProjectUpdates])
 
   const containerClassName =
     'flex w-full flex-col items-center gap-6 md:max-w-[596px]'
@@ -60,7 +73,7 @@ export const UpdatesPanel = () => {
                       </span>
                     </>
                   ),
-                  onClick: () => setOpen(true),
+                  onClick: handleAddProjectUpdateClicked,
                 },
               ]}
             />

@@ -30,6 +30,7 @@ export const useUpdatesPanel = () => {
     loading: projectUpdates.loading,
     error: projectUpdates.error,
     projectUpdates: projectUpdates.projectUpdates,
+    loadProjectUpdates: projectUpdates.loadProjectUpdates,
     open,
     isProjectOwner,
     addProjectUpdateButtonLoading,

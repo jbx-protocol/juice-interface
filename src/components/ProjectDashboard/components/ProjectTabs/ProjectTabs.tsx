@@ -6,18 +6,27 @@ import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { useOnScreen } from 'hooks/useOnScreen'
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  Fragment,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { twMerge } from 'tailwind-merge'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { AboutPanel } from '../AboutPanel'
 import { ActivityPanel } from '../ActivityPanel'
 import { CyclesPayoutsPanel } from '../CyclesPayoutsPanel'
 import { NftRewardsPanel } from '../NftRewardsPanel'
+import { ProjectUpdatesContext } from '../ProjectUpdatesProvider'
 import { TokensPanel } from '../TokensPanel'
 import { UpdatesPanel } from '../UpdatesPanel'
 import { ProjectTab } from '../ui'
 
 export const ProjectTabs = ({ className }: { className?: string }) => {
+  const { projectUpdates } = useContext(ProjectUpdatesContext)
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
   const { projectOwnerAddress } = useProjectContext()
   const isProjectOwner = useIsUserAddress(projectOwnerAddress)
@@ -73,13 +82,17 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
               id: 'updates',
               name: t`Updates`,
               panel: <UpdatesPanel />,
-              // TODO: Show tab only if project has updates
-              hideTab: !isProjectOwner,
+              hideTab: !isProjectOwner && projectUpdates.length === 0,
             },
           ]
         : []),
     ],
-    [isProjectOwner, projectUpdatesEnabled, showNftRewards],
+    [
+      isProjectOwner,
+      projectUpdates.length,
+      projectUpdatesEnabled,
+      showNftRewards,
+    ],
   )
 
   const selectedTabIndex = useMemo(() => {

@@ -10,10 +10,10 @@ import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useCallback, useContext, useMemo } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { PopupMenu } from '../../PopupMenu/PopupMenu'
+import { ProjectUpdate as ProjectUpdateEntity } from '../../ProjectUpdatesProvider'
+import { ProjectUpdatesContext } from '../../ProjectUpdatesProvider/ProjectUpdatesProvider'
 import { useFactoredProjectId } from '../hooks/useFactoredProjectId'
-import { ProjectUpdate as ProjectUpdateEntity } from '../hooks/useUpdatesPanel'
 import { formatDateString } from '../utils/formatDateString'
-import { UpdatesPanelContext } from './UpdatesPanelProvider'
 
 export const ProjectUpdate = ({
   id,
@@ -23,7 +23,7 @@ export const ProjectUpdate = ({
   message,
   posterWallet,
 }: ProjectUpdateEntity) => {
-  const { loadProjectUpdates } = useContext(UpdatesPanelContext)
+  const { loadProjectUpdates } = useContext(ProjectUpdatesContext)
   const projectId = useFactoredProjectId()
   const signIn = useWalletSignIn()
   const { projectOwnerAddress } = useProjectContext()

@@ -14,7 +14,7 @@ import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { getSubgraphIdForProject } from 'utils/graph'
 import * as Yup from 'yup'
-import { UpdatesPanelContext } from '../UpdatesPanel/components/UpdatesPanelProvider'
+import { ProjectUpdatesContext } from '../ProjectUpdatesProvider/ProjectUpdatesProvider'
 
 const ValidationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required').max(100, 'Too long'),
@@ -30,7 +30,7 @@ export const AddProjectUpdateModal = ({
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-  const { loadProjectUpdates } = useContext(UpdatesPanelContext)
+  const { loadProjectUpdates } = useContext(ProjectUpdatesContext)
   const { projectId } = useProjectMetadata()
   const project = projectId
     ? getSubgraphIdForProject(PV_V2, projectId)

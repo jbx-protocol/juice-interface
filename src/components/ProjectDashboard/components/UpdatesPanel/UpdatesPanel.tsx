@@ -8,10 +8,9 @@ import {
   ProjectUpdate,
   ProjectUpdateSkeleton,
 } from './components/ProjectUpdate'
-import { UpdatesPanelProvider } from './components/UpdatesPanelProvider'
 import { useUpdatesPanel } from './hooks/useUpdatesPanel'
 
-const _UpdatesPanel = () => {
+export const UpdatesPanel = () => {
   const { loading, projectUpdates, error, open, isProjectOwner, setOpen } =
     useUpdatesPanel()
 
@@ -103,13 +102,5 @@ const EmptyState = () => {
         </Button>
       )}
     </>
-  )
-}
-
-export const UpdatesPanel = () => {
-  return (
-    <UpdatesPanelProvider>
-      <_UpdatesPanel />
-    </UpdatesPanelProvider>
   )
 }

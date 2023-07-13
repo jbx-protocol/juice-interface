@@ -32,6 +32,7 @@ export const useProjectUpdates = () => {
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
+      console.error(e)
       dispatch({ type: 'error', error: e.message })
     }
   }, [projectId])

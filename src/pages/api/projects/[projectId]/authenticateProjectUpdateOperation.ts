@@ -14,7 +14,7 @@ export const authenticateProjectUpdateOperation = async (
   res: NextApiResponse,
 ) => {
   const session = await authenticateUserApiCall(req, res)
-  if (!session) return res.status(401).json({ message: 'Unauthorized.' })
+  if (!session) return false
 
   const projectResult = await sudoPublicDbClient
     .from('projects')

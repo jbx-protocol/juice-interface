@@ -29,7 +29,7 @@ const GET = async (req: NextApiRequest, res: NextApiResponse) => {
   const supabase = createServerSupabaseClient<Database>({ req, res })
   const result = await supabase
     .from('project_updates')
-    .select('*,users (wallet)')
+    .select('*,user_profiles (wallet)')
     .eq('project', req.query.projectId)
     .order('created_at', { ascending: false })
   if (result.error) {
@@ -45,7 +45,7 @@ const GET = async (req: NextApiRequest, res: NextApiResponse) => {
       id: d.id,
       imageUrl: d.image_url,
       message: d.message,
-      posterWallet: (d.users as { wallet: string }).wallet,
+      posterWallet: (d.user_profiles as { wallet: string }).wallet,
       project: d.project,
       title: d.title,
     })),

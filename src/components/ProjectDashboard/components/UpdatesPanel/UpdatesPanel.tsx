@@ -1,6 +1,7 @@
 import { PlusIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
+import useMobile from 'hooks/useMobile'
 import { useEffect } from 'react'
 import { AddProjectUpdateModal } from '../AddProjectUpdateModal'
 import { EmptyScreen } from '../EmptyScreen'
@@ -12,6 +13,7 @@ import {
 import { useUpdatesPanel } from './hooks/useUpdatesPanel'
 
 export const UpdatesPanel = () => {
+  const isMobile = useMobile()
   const {
     loading,
     addProjectUpdateButtonLoading,
@@ -80,24 +82,34 @@ export const UpdatesPanel = () => {
           <span className="text-start font-heading text-2xl font-medium">
             <Trans>Project Updates</Trans>
           </span>
-          {isProjectOwner && (
-            <PopupMenu
-              items={[
-                {
-                  id: 'add-update',
-                  label: (
-                    <>
-                      <PlusIcon className="h-5 w-5" />
-                      <span className="whitespace-nowrap">
-                        <Trans>Add project update</Trans>
-                      </span>
-                    </>
-                  ),
-                  onClick: handleAddProjectUpdateClicked,
-                },
-              ]}
-            />
-          )}
+          {isProjectOwner &&
+            (isMobile ? (
+              <PopupMenu
+                items={[
+                  {
+                    id: 'add-update',
+                    label: (
+                      <>
+                        <PlusIcon className="h-5 w-5" />
+                        <span className="whitespace-nowrap">
+                          <Trans>Add project update</Trans>
+                        </span>
+                      </>
+                    ),
+                    onClick: handleAddProjectUpdateClicked,
+                  },
+                ]}
+              />
+            ) : (
+              <Button
+                className="flex items-center gap-2 text-base font-medium"
+                type="link"
+                icon={<PlusIcon className="h-5 w-5" />}
+                onClick={handleAddProjectUpdateClicked}
+              >
+                <Trans>Add project update</Trans>
+              </Button>
+            ))}
         </div>
         {projectUpdates.map(u => (
           <ProjectUpdate key={u.id} {...u} />

@@ -911,9 +911,6 @@ msgstr ""
 msgid "Add a banner to the top of your project's page."
 msgstr ""
 
-msgid "Title is required"
-msgstr ""
-
 msgid "Hold fees"
 msgstr ""
 
@@ -2048,6 +2045,9 @@ msgstr ""
 msgid "Save token recipients"
 msgstr ""
 
+msgid "Project Updates"
+msgstr ""
+
 msgid "Token migration"
 msgstr ""
 
@@ -2438,6 +2438,9 @@ msgstr ""
 msgid "handle"
 msgstr ""
 
+msgid "Posted {dateString} by <0/>"
+msgstr ""
+
 msgid "Watching projects"
 msgstr ""
 
@@ -2580,9 +2583,6 @@ msgid "Project Owner"
 msgstr ""
 
 msgid "Unarchive project"
-msgstr ""
-
-msgid "Message is required"
 msgstr ""
 
 msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
@@ -4181,9 +4181,6 @@ msgstr ""
 msgid "Cycle #1 starts when you create your project. With locked cycles, if you edit your project's rules during Cycle #1, those edits will be <0>queued</0> for the next cycle."
 msgstr ""
 
-msgid "Invalid URL"
-msgstr ""
-
 msgid "Unsaved changes"
 msgstr ""
 
@@ -4635,9 +4632,6 @@ msgid "Set up your top-level project configuration details."
 msgstr ""
 
 msgid "Do not include .eth"
-msgstr ""
-
-msgid "Too long"
 msgstr ""
 
 msgid "Collection symbol"

@@ -82,10 +82,10 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
               id: 'updates',
               name: (
                 <div className="flex items-center gap-1">
+                  <Trans>Updates</Trans>
                   {!!projectUpdates.length && (
                     <TabBadgeCount count={projectUpdates.length} />
                   )}
-                  <Trans>Updates</Trans>
                 </div>
               ),
               panel: <UpdatesPanel />,

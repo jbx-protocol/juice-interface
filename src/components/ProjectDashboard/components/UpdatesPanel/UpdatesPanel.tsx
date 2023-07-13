@@ -3,6 +3,7 @@ import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import { AddProjectUpdateModal } from '../AddProjectUpdateModal'
 import { EmptyScreen } from '../EmptyScreen'
+import { PopupMenu } from '../PopupMenu/PopupMenu'
 import {
   ProjectUpdate,
   ProjectUpdateSkeleton,
@@ -10,7 +11,8 @@ import {
 import { useUpdatesPanel } from './hooks/useUpdatesPanel'
 
 export const UpdatesPanel = () => {
-  const { loading, projectUpdates, error, open, setOpen } = useUpdatesPanel()
+  const { loading, projectUpdates, error, open, isProjectOwner, setOpen } =
+    useUpdatesPanel()
 
   const containerClassName =
     'flex w-full flex-col items-center gap-6 md:max-w-[596px]'
@@ -41,10 +43,28 @@ export const UpdatesPanel = () => {
   return (
     <>
       <div className="flex w-full flex-col items-center gap-6 md:max-w-[596px]">
-        <div className="flex w-full">
+        <div className="flex w-full justify-between gap-5">
           <span className="text-start font-heading text-2xl font-medium">
             <Trans>Project Updates</Trans>
           </span>
+          {isProjectOwner && (
+            <PopupMenu
+              items={[
+                {
+                  id: 'add-update',
+                  label: (
+                    <>
+                      <PlusIcon className="h-5 w-5" />
+                      <span className="whitespace-nowrap">
+                        <Trans>Add project update</Trans>
+                      </span>
+                    </>
+                  ),
+                  onClick: () => setOpen(true),
+                },
+              ]}
+            />
+          )}
         </div>
         {projectUpdates.map(u => (
           <ProjectUpdate key={u.id} {...u} />

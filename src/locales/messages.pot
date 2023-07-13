@@ -689,6 +689,9 @@ msgstr ""
 msgid "Your project is up to date!"
 msgstr ""
 
+msgid "Add an update that will be posted to your project page."
+msgstr ""
+
 msgid "Change networks to deploy"
 msgstr ""
 
@@ -906,6 +909,9 @@ msgid "Explore projects"
 msgstr ""
 
 msgid "Add a banner to the top of your project's page."
+msgstr ""
+
+msgid "Title is required"
 msgstr ""
 
 msgid "Hold fees"
@@ -1637,6 +1643,9 @@ msgstr ""
 msgid "Your NFTs & Rewards"
 msgstr ""
 
+msgid "Add update"
+msgstr ""
+
 msgid "Send a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr ""
 
@@ -1755,6 +1764,9 @@ msgid "Migrate tokens"
 msgstr ""
 
 msgid "Update NFT theme"
+msgstr ""
+
+msgid "Title"
 msgstr ""
 
 msgid "Background color"
@@ -2079,6 +2091,9 @@ msgid "A platform without limits, just the way you like it."
 msgstr ""
 
 msgid "Current balance"
+msgstr ""
+
+msgid "Add banner image"
 msgstr ""
 
 msgid "Splits payer addresses"
@@ -2565,6 +2580,9 @@ msgid "Project Owner"
 msgstr ""
 
 msgid "Unarchive project"
+msgstr ""
+
+msgid "Message is required"
 msgstr ""
 
 msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
@@ -4163,6 +4181,9 @@ msgstr ""
 msgid "Cycle #1 starts when you create your project. With locked cycles, if you edit your project's rules during Cycle #1, those edits will be <0>queued</0> for the next cycle."
 msgstr ""
 
+msgid "Invalid URL"
+msgstr ""
+
 msgid "Unsaved changes"
 msgstr ""
 
@@ -4616,6 +4637,9 @@ msgstr ""
 msgid "Do not include .eth"
 msgstr ""
 
+msgid "Too long"
+msgstr ""
+
 msgid "Collection symbol"
 msgstr ""
 
@@ -4701,6 +4725,9 @@ msgid "Overflow"
 msgstr ""
 
 msgid "Project contracts directory"
+msgstr ""
+
+msgid "A horizontal banner image sized 288 x 556 is recommended."
 msgstr ""
 
 msgid "Save profile details"

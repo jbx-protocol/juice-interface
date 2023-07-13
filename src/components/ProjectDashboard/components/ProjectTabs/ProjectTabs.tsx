@@ -1,5 +1,5 @@
 import { Tab } from '@headlessui/react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -80,7 +80,14 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         ? [
             {
               id: 'updates',
-              name: t`Updates`,
+              name: (
+                <div className="flex items-center gap-1">
+                  {!!projectUpdates.length && (
+                    <TabBadgeCount count={projectUpdates.length} />
+                  )}
+                  <Trans>Updates</Trans>
+                </div>
+              ),
               panel: <UpdatesPanel />,
               hideTab: !isProjectOwner && projectUpdates.length === 0,
             },
@@ -135,3 +142,9 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
     </div>
   )
 }
+
+const TabBadgeCount = ({ count }: { count: number }) => (
+  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-bluebs-500 text-xs text-white">
+    {count}
+  </div>
+)

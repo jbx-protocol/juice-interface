@@ -1,24 +1,14 @@
 import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { UpdatesPanelContext } from '../components/UpdatesPanelProvider'
-
-export type ProjectUpdate = {
-  id: string
-  title: string
-  message: string
-  imageUrl: string | undefined
-  createdAt: Date
-  posterWallet: string
-}
+import { useCallback, useContext, useState } from 'react'
+import { ProjectUpdatesContext } from '../../ProjectUpdatesProvider/ProjectUpdatesProvider'
 
 export const useUpdatesPanel = () => {
   const { projectOwnerAddress } = useProjectContext()
   const isProjectOwner = useIsUserAddress(projectOwnerAddress)
   const signIn = useWalletSignIn()
-  const { loadProjectUpdates, ...projectUpdates } =
-    useContext(UpdatesPanelContext)
+  const projectUpdates = useContext(ProjectUpdatesContext)
 
   const [addProjectUpdateButtonLoading, setAddProjectUpdateButtonLoading] =
     useState(false)
@@ -35,10 +25,6 @@ export const useUpdatesPanel = () => {
       setAddProjectUpdateButtonLoading(false)
     }
   }, [signIn])
-
-  useEffect(() => {
-    loadProjectUpdates()
-  }, [loadProjectUpdates])
 
   return {
     loading: projectUpdates.loading,

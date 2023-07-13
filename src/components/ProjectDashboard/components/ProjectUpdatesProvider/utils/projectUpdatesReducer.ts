@@ -1,4 +1,4 @@
-import { ProjectUpdate } from '../hooks/useUpdatesPanel'
+import { ProjectUpdate } from '../ProjectUpdatesProvider'
 
 export type ProjectUpdatesReducerState = {
   projectUpdates: ProjectUpdate[]

@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { useCallback, useReducer } from 'react'
+import { ProjectUpdate } from '../ProjectUpdatesProvider'
 import { projectUpdatesReducer } from '../utils/projectUpdatesReducer'
 import { useFactoredProjectId } from './useFactoredProjectId'
-import { ProjectUpdate } from './useUpdatesPanel'
 
 export const useProjectUpdates = () => {
   const projectId = useFactoredProjectId()

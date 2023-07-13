@@ -2,11 +2,13 @@ import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { useOnScreen } from 'hooks/useOnScreen'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { AboutPanel } from '../AboutPanel'
 import { ActivityPanel } from '../ActivityPanel'
 import { CyclesPayoutsPanel } from '../CyclesPayoutsPanel'
@@ -26,6 +28,10 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
   const panelRef = useRef<HTMLDivElement>(null)
   const isPanelVisible = useOnScreen(panelRef)
   const [firstRender, setFirstRender] = useState(true)
+
+  const projectUpdatesEnabled = featureFlagEnabled(
+    FEATURE_FLAGS.PROJECT_UPDATES,
+  )
 
   useEffect(() => {
     if (firstRender) {
@@ -61,15 +67,19 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         panel: <CyclesPayoutsPanel />,
       },
       { id: 'tokens', name: t`Tokens`, panel: <TokensPanel /> },
-      // TODO: Show tab only if project has updates
-      {
-        id: 'updates',
-        name: t`Updates`,
-        panel: <UpdatesPanel />,
-        hideTab: !isProjectOwner,
-      },
+      ...(projectUpdatesEnabled
+        ? [
+            {
+              id: 'updates',
+              name: t`Updates`,
+              panel: <UpdatesPanel />,
+              // TODO: Show tab only if project has updates
+              hideTab: !isProjectOwner,
+            },
+          ]
+        : []),
     ],
-    [isProjectOwner, showNftRewards],
+    [isProjectOwner, projectUpdatesEnabled, showNftRewards],
   )
 
   const selectedTabIndex = useMemo(() => {

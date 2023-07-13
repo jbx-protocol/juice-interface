@@ -3,16 +3,30 @@ import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
+import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useCallback, useState } from 'react'
 import { AddProjectUpdateModal } from '../AddProjectUpdateModal'
 import { EmptyScreen } from '../EmptyScreen'
 
 export const UpdatesPanel = () => {
+  const signIn = useWalletSignIn()
+  const [addProjectUpdateButtonLoading, setAddProjectUpdateButtonLoading] =
+    useState(false)
   const [open, setOpen] = useState(false)
   const { projectOwnerAddress } = useProjectContext()
   const isProjectOwner = useIsUserAddress(projectOwnerAddress)
 
-  const openModal = useCallback(() => setOpen(true), [setOpen])
+  const handleAddProjectUpdateClicked = useCallback(async () => {
+    setAddProjectUpdateButtonLoading(true)
+    try {
+      await signIn()
+      setOpen(true)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setAddProjectUpdateButtonLoading(false)
+    }
+  }, [signIn])
 
   const emptyScreenMessage = isProjectOwner
     ? t`Your project has no updates`
@@ -26,8 +40,9 @@ export const UpdatesPanel = () => {
           <Button
             className="flex w-fit items-center gap-2"
             type="primary"
+            loading={addProjectUpdateButtonLoading}
             icon={<PlusIcon className="h-5 w-5" />}
-            onClick={openModal}
+            onClick={handleAddProjectUpdateClicked}
           >
             <Trans>Add project update</Trans>
           </Button>

@@ -107,14 +107,14 @@ export const ProjectUpdateSkeleton = () => {
   return (
     <div className="flex w-full flex-col gap-4 rounded-lg border border-grey-200 py-6 px-5 shadow-md dark:border-slate-600">
       <div className="flex justify-between">
-        <div className="flex h-5 w-[80%] animate-pulse rounded-md bg-grey-200" />
+        <div className="flex h-5 w-[80%] animate-pulse rounded-md bg-smoke-200 dark:bg-slate-500" />
       </div>
-      <span className="h-4 w-[40%] animate-pulse rounded-md bg-grey-200" />
+      <span className="h-4 w-[40%] animate-pulse rounded-md bg-smoke-200 dark:bg-slate-500" />
       <div className="flex flex-col gap-2">
-        <div className="h-4 w-full animate-pulse rounded-md bg-grey-200" />
-        <div className="h-4 w-[80%] animate-pulse rounded-md bg-grey-200" />
-        <div className="h-4 w-[72%] animate-pulse rounded-md bg-grey-200" />
-        <div className="h-4 w-full animate-pulse rounded-md bg-grey-200" />
+        <div className="h-4 w-full animate-pulse rounded-md bg-smoke-200 dark:bg-slate-500" />
+        <div className="h-4 w-[80%] animate-pulse rounded-md bg-smoke-200 dark:bg-slate-500" />
+        <div className="h-4 w-[72%] animate-pulse rounded-md bg-smoke-200 dark:bg-slate-500" />
+        <div className="h-4 w-full animate-pulse rounded-md bg-smoke-200 dark:bg-slate-500" />
       </div>
     </div>
   )

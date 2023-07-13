@@ -14,6 +14,7 @@ import { useUpdatesPanel } from './hooks/useUpdatesPanel'
 export const UpdatesPanel = () => {
   const {
     loading,
+    addProjectUpdateButtonLoading,
     projectUpdates,
     error,
     open,
@@ -29,6 +30,10 @@ export const UpdatesPanel = () => {
 
   const containerClassName =
     'flex w-full flex-col items-center gap-6 md:max-w-[596px]'
+
+  const emptyScreenMessage = isProjectOwner
+    ? t`Your project has no updates`
+    : t`This project has no updates`
 
   if (!projectUpdates.length && loading) {
     return (
@@ -47,9 +52,24 @@ export const UpdatesPanel = () => {
 
   if (!projectUpdates.length && !loading) {
     return (
-      <div className={containerClassName}>
-        <EmptyState />
-      </div>
+      <>
+        <div className={containerClassName}>
+          <EmptyScreen title={emptyScreenMessage} />
+          {isProjectOwner && (
+            <Button
+              className="flex w-fit items-center gap-2"
+              type="primary"
+              loading={addProjectUpdateButtonLoading}
+              icon={<PlusIcon className="h-5 w-5" />}
+              onClick={handleAddProjectUpdateClicked}
+            >
+              <Trans>Add project update</Trans>
+            </Button>
+          )}
+        </div>
+        {error && <div className="text-error-500">{error}</div>}
+        <AddProjectUpdateModal open={open} setOpen={setOpen} />
+      </>
     )
   }
 
@@ -85,35 +105,6 @@ export const UpdatesPanel = () => {
       </div>
       {error && <div className="text-error-500">{error}</div>}
       <AddProjectUpdateModal open={open} setOpen={setOpen} />
-    </>
-  )
-}
-
-const EmptyState = () => {
-  const {
-    addProjectUpdateButtonLoading,
-    isProjectOwner,
-    handleAddProjectUpdateClicked,
-  } = useUpdatesPanel()
-
-  const emptyScreenMessage = isProjectOwner
-    ? t`Your project has no updates`
-    : t`This project has no updates`
-
-  return (
-    <>
-      <EmptyScreen title={emptyScreenMessage} />
-      {isProjectOwner && (
-        <Button
-          className="flex w-fit items-center gap-2"
-          type="primary"
-          loading={addProjectUpdateButtonLoading}
-          icon={<PlusIcon className="h-5 w-5" />}
-          onClick={handleAddProjectUpdateClicked}
-        >
-          <Trans>Add project update</Trans>
-        </Button>
-      )}
     </>
   )
 }

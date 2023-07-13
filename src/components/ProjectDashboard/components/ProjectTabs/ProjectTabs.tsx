@@ -1,7 +1,9 @@
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
+import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
+import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { useOnScreen } from 'hooks/useOnScreen'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -10,10 +12,13 @@ import { ActivityPanel } from '../ActivityPanel'
 import { CyclesPayoutsPanel } from '../CyclesPayoutsPanel'
 import { NftRewardsPanel } from '../NftRewardsPanel'
 import { TokensPanel } from '../TokensPanel'
+import { UpdatesPanel } from '../UpdatesPanel'
 import { ProjectTab } from '../ui'
 
 export const ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
+  const { projectOwnerAddress } = useProjectContext()
+  const isProjectOwner = useIsUserAddress(projectOwnerAddress)
 
   const { value: showNftRewards } = useHasNftRewards()
 
@@ -56,8 +61,15 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         panel: <CyclesPayoutsPanel />,
       },
       { id: 'tokens', name: t`Tokens`, panel: <TokensPanel /> },
+      // TODO: Show tab only if project has updates
+      {
+        id: 'updates',
+        name: t`Updates`,
+        panel: <UpdatesPanel />,
+        hideTab: !isProjectOwner,
+      },
     ],
-    [showNftRewards],
+    [isProjectOwner, showNftRewards],
   )
 
   const selectedTabIndex = useMemo(() => {

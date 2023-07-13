@@ -7,12 +7,13 @@ import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { emitConfirmationDeletionModal } from 'components/ProjectDashboard/utils/modals'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { PopupMenu } from '../../PopupMenu/PopupMenu'
 import { useFactoredProjectId } from '../hooks/useFactoredProjectId'
 import { ProjectUpdate as ProjectUpdateEntity } from '../hooks/useUpdatesPanel'
 import { formatDateString } from '../utils/formatDateString'
+import { UpdatesPanelContext } from './UpdatesPanelProvider'
 
 export const ProjectUpdate = ({
   id,
@@ -22,6 +23,7 @@ export const ProjectUpdate = ({
   message,
   posterWallet,
 }: ProjectUpdateEntity) => {
+  const { loadProjectUpdates } = useContext(UpdatesPanelContext)
   const projectId = useFactoredProjectId()
   const signIn = useWalletSignIn()
   const { projectOwnerAddress } = useProjectContext()
@@ -39,11 +41,12 @@ export const ProjectUpdate = ({
   const handleUpdateDelete = useCallback(async () => {
     try {
       await axios.delete(`/api/projects/${projectId}/updates/${id}`)
+      loadProjectUpdates()
     } catch (error) {
       console.error(error)
       emitErrorNotification('Could not delete update')
     }
-  }, [id, projectId])
+  }, [id, loadProjectUpdates, projectId])
 
   const handleDeleteProjectUpdateClicked = useCallback(async () => {
     try {

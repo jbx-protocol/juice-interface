@@ -10,9 +10,11 @@ import { JuiceModal } from 'components/modals/JuiceModal'
 import { PV_V2 } from 'constants/pv'
 import { Formik } from 'formik'
 import { useIpfsFilePicker } from 'hooks/useIpfsFilePicker/useIpfsFilePicker'
+import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { getSubgraphIdForProject } from 'utils/graph'
 import * as Yup from 'yup'
+import { UpdatesPanelContext } from '../UpdatesPanel/components/UpdatesPanelProvider'
 
 const ValidationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required').max(100, 'Too long'),
@@ -28,6 +30,7 @@ export const AddProjectUpdateModal = ({
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
+  const { loadProjectUpdates } = useContext(UpdatesPanelContext)
   const { projectId } = useProjectMetadata()
   const project = projectId
     ? getSubgraphIdForProject(PV_V2, projectId)
@@ -49,6 +52,7 @@ export const AddProjectUpdateModal = ({
           message,
           imageUrl,
         })
+        loadProjectUpdates()
         setOpen(false)
         setTimeout(() => {
           helper.setSubmitting(false)

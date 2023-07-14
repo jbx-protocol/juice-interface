@@ -63,30 +63,32 @@ export const ProjectUpdate = ({
 
   return (
     <div className="flex w-full flex-col gap-4 rounded-lg border border-grey-200 py-6 px-5 shadow-md dark:border-slate-600">
-      <div className="flex justify-between">
-        <div className="font-heading text-xl font-medium">{title}</div>
-        {isProjectOwner && (
-          <PopupMenu
-            items={[
-              {
-                id: 'delete-update',
-                label: (
-                  <>
-                    <TrashIcon className="h-5 w-5 text-error-500" />
-                    <span className="whitespace-nowrap text-error-500">
-                      <Trans>Delete project update</Trans>
-                    </span>
-                  </>
-                ),
-                onClick: handleDeleteProjectUpdateClicked,
-              },
-            ]}
-          />
-        )}
+      <div className="flex flex-col gap-2">
+        <div className="flex justify-between">
+          <div className="font-heading text-xl font-medium">{title}</div>
+          {isProjectOwner && (
+            <PopupMenu
+              items={[
+                {
+                  id: 'delete-update',
+                  label: (
+                    <>
+                      <TrashIcon className="h-5 w-5 text-error-500" />
+                      <span className="whitespace-nowrap text-error-500">
+                        <Trans>Delete project update</Trans>
+                      </span>
+                    </>
+                  ),
+                  onClick: handleDeleteProjectUpdateClicked,
+                },
+              ]}
+            />
+          )}
+        </div>
+        <span className="text-xs text-grey-500 dark:text-slate-200">
+          {subtitle}
+        </span>
       </div>
-      <span className="text-xs text-grey-500 dark:text-slate-200">
-        {subtitle}
-      </span>
       <div>
         {message.split('\n').map((paragraph, index) => (
           <p key={index}>{paragraph}</p>

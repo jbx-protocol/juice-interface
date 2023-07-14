@@ -1,6 +1,5 @@
 import Loading from 'components/Loading'
 import { AppWrapper, SEO } from 'components/common'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V2 } from 'constants/pv'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
@@ -8,13 +7,11 @@ import { paginateDepleteProjectsQueryCall } from 'lib/apollo/paginateDepleteProj
 import { ProjectMetadata } from 'models/projectMetadata'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { Suspense, lazy } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { cidFromUrl, ipfsPublicGatewayUrl } from 'utils/ipfs'
 import {
   ProjectPageProps,
   getProjectStaticProps,
 } from 'utils/server/pages/props'
-import { V2V3Dashboard } from './components/V2V3Dashboard'
 const ProjectDashboard = lazy(() => import('components/ProjectDashboard'))
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -78,10 +75,6 @@ export default function V2ProjectPage({
   metadata,
   projectId,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const newProjectPageEnabled = featureFlagEnabled(
-    FEATURE_FLAGS.NEW_PROJECT_PAGE,
-  )
-
   return (
     <>
       <ProjectPageSEO metadata={metadata} projectId={projectId} />
@@ -89,13 +82,9 @@ export default function V2ProjectPage({
       <AppWrapper>
         <V2V3ProjectPageProvider projectId={projectId} metadata={metadata}>
           <AnnouncementsProvider>
-            {newProjectPageEnabled ? (
-              <Suspense fallback={<Loading />}>
-                <ProjectDashboard />
-              </Suspense>
-            ) : (
-              <V2V3Dashboard />
-            )}
+            <Suspense fallback={<Loading />}>
+              <ProjectDashboard />
+            </Suspense>
           </AnnouncementsProvider>
         </V2V3ProjectPageProvider>
       </AppWrapper>

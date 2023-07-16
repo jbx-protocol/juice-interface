@@ -3,8 +3,12 @@ import { Button, Form, FormInstance } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
+import { MarkdownEditor } from 'components/Markdown'
 import { MinimalCollapse } from 'components/MinimalCollapse'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectTagName } from 'models/project-tags'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
 export type ProjectDetailsFormFields = {
@@ -40,6 +44,10 @@ export function ProjectDetailsForm({
   const initialLogoUrl = useWatch('logoUri', form)
   const initialCoverImageUri = useWatch('coverImageUri', form)
 
+  const richProjectDescriptionEnabled = featureFlagEnabled(
+    FEATURE_FLAGS.RICH_PROJECT_DESCRIPTION,
+  )
+
   return (
     <Form
       scrollToFirstError={{ behavior: 'smooth' }}
@@ -73,7 +81,18 @@ export function ProjectDetailsForm({
               required
             />
           )}
-          <FormItems.ProjectDescription name="description" />
+          {richProjectDescriptionEnabled ? (
+            <Form.Item name="description" label={t`Project description`}>
+              <MarkdownEditor />
+            </Form.Item>
+          ) : (
+            <Form.Item name="description" label={t`Project description`}>
+              <JuiceTextArea
+                rows={4}
+                placeholder={t`Tell us about your project.`}
+              />
+            </Form.Item>
+          )}
 
           <Form.Item name={'logoUri'} label={t`Logo`}>
             <FormImageUploader

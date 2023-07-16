@@ -689,6 +689,9 @@ msgstr ""
 msgid "Your project is up to date!"
 msgstr ""
 
+msgid "Add an update that will be posted to your project page."
+msgstr ""
+
 msgid "Change networks to deploy"
 msgstr ""
 
@@ -923,6 +926,9 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+msgid "Your project has no updates"
+msgstr ""
+
 msgid "Please check {lastEmailUpdated} and verify your new email address.<0/>Still no email after a couple of minutes? <1>Click here to resend.</1>"
 msgstr ""
 
@@ -1029,6 +1035,9 @@ msgid "Your project was successfully created!"
 msgstr ""
 
 msgid "Redeem {0} {tokensTextShort} for ETH"
+msgstr ""
+
+msgid "Delete project update"
 msgstr ""
 
 msgid "I understand and accept the risks associated with <0>this project</0> and the <1>Juicebox Protocol</1>."
@@ -1490,6 +1499,9 @@ msgstr ""
 msgid "What do we value?"
 msgstr ""
 
+msgid "Tell us about your project."
+msgstr ""
+
 msgid "Launch V3 migration token"
 msgstr ""
 
@@ -1634,6 +1646,9 @@ msgstr ""
 msgid "Your NFTs & Rewards"
 msgstr ""
 
+msgid "Add update"
+msgstr ""
+
 msgid "Send a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr ""
 
@@ -1653,6 +1668,9 @@ msgid "JuiceboxDAO is a community of passionate builders, creators, and innovato
 msgstr ""
 
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
+msgstr ""
+
+msgid "NFTs are not enabled for pay"
 msgstr ""
 
 msgid "{tokenText} balance"
@@ -1751,7 +1769,13 @@ msgstr ""
 msgid "Update NFT theme"
 msgstr ""
 
+msgid "Title"
+msgstr ""
+
 msgid "Background color"
+msgstr ""
+
+msgid "Payments are paused"
 msgstr ""
 
 msgid "Link minters of this NFT to your project's website, Discord, etc."
@@ -1770,6 +1794,9 @@ msgid "Send {tokensText}"
 msgstr ""
 
 msgid "Not set"
+msgstr ""
+
+msgid "Add project update"
 msgstr ""
 
 msgid "Recipient address"
@@ -2030,6 +2057,9 @@ msgstr ""
 msgid "Save token recipients"
 msgstr ""
 
+msgid "Project Updates"
+msgstr ""
+
 msgid "Token migration"
 msgstr ""
 
@@ -2073,6 +2103,9 @@ msgid "A platform without limits, just the way you like it."
 msgstr ""
 
 msgid "Current balance"
+msgstr ""
+
+msgid "Add banner image"
 msgstr ""
 
 msgid "Splits payer addresses"
@@ -2415,6 +2448,9 @@ msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr ""
 
 msgid "handle"
+msgstr ""
+
+msgid "Posted {dateString} by <0/>"
 msgstr ""
 
 msgid "Watching projects"
@@ -2814,6 +2850,9 @@ msgid "Manage {tokenText}"
 msgstr ""
 
 msgid "Bookmark project"
+msgstr ""
+
+msgid "Attach files by dragging & dropping, or pasting from the clipboard."
 msgstr ""
 
 msgid "Download project activity CSV"
@@ -3539,6 +3578,9 @@ msgstr ""
 msgid "Burn {0} {tokensTextShort}"
 msgstr ""
 
+msgid "This project has disabled payments"
+msgstr ""
+
 msgid "No tokens to redeem."
 msgstr ""
 
@@ -3699,6 +3741,9 @@ msgid "We're always looking for talented people to join the DAO and help build J
 msgstr ""
 
 msgid "Payouts to other Juicebox projects won't incur fees."
+msgstr ""
+
+msgid "Sold out"
 msgstr ""
 
 msgid "Burn {tokensTextLong}"
@@ -3998,6 +4043,9 @@ msgstr ""
 msgid "JB vs. Indiegogo"
 msgstr ""
 
+msgid "Updates"
+msgstr ""
+
 msgid "Allow a few days for your project to appear in the \"active\" projects list on the Projects page."
 msgstr ""
 
@@ -4038,6 +4086,9 @@ msgid "Customization"
 msgstr ""
 
 msgid "Block number"
+msgstr ""
+
+msgid "This project has no updates"
 msgstr ""
 
 msgid "{titleCasedAllocationName} Amount"
@@ -4646,6 +4697,9 @@ msgstr ""
 msgid "{titleCasedAllocationName} Percentage"
 msgstr ""
 
+msgid "Tokens cannot be issued while payments are disabled."
+msgstr ""
+
 msgid "Owner wallet balance"
 msgstr ""
 
@@ -4695,6 +4749,9 @@ msgid "Overflow"
 msgstr ""
 
 msgid "Project contracts directory"
+msgstr ""
+
+msgid "A horizontal banner image sized 288 x 556 is recommended."
 msgstr ""
 
 msgid "Save profile details"

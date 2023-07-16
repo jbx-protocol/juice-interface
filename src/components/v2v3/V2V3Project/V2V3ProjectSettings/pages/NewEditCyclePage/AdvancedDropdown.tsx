@@ -8,7 +8,7 @@ export function AdvancedDropdown({
   const [isOpen, setIsOpen] = useState(false)
   const iconClass = 'h-4 w-4'
   return (
-    <div className="border-t border-grey-300 pt-4">
+    <div className="border-t border-grey-300 pt-4 dark:border-grey-600">
       <div
         className="flex cursor-pointer justify-between"
         onClick={() => setIsOpen(!isOpen)}

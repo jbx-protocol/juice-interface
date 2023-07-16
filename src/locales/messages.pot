@@ -3323,9 +3323,6 @@ msgstr ""
 msgid "View token holders"
 msgstr ""
 
-msgid "V2 7-day deadline V2"
-msgstr ""
-
 msgid "How a community of space enthusiasts raised $8.3 million to send a DAO member to space on a Blue Origin rocket"
 msgstr ""
 
@@ -4011,6 +4008,9 @@ msgid "Your project's first cycle will start on <0>{0} at {1}</0>. Your project 
 msgstr ""
 
 msgid "MoonDAO has built an enthusiastic community of over 10,000 members, successfully sent their first astronaut to space, and is currently coordinating the spaceflight for their second astronaut. Their ambitious long-term roadmap goals include building a settlement on the Moon by 2030. In collaboration with StudioDAO, a decentralized movie studio running on Juicebox, MoonDAO has donated $100,000 to help fund the production of Ticket To Space, the first DAO documentary. The film will cover the story of Yan, a MoonDAO member from China, who will be sent to space on an upcoming Blue Origin flight after minting a free NFT."
+msgstr ""
+
+msgid "V2 7-day deadline"
 msgstr ""
 
 msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."

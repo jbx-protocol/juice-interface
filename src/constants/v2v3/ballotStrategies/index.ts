@@ -109,7 +109,7 @@ export function ballotStrategiesFn(network?: NetworkName): BallotStrategy[] {
     },
     {
       id: 'sevenDayV2',
-      name: t`V2 7-day deadline V2`,
+      name: t`V2 7-day deadline`,
       description: durationBallotStrategyDescription(7),
       address: V2_BALLOT_ADDRESSES.SEVEN_DAY[network ?? readNetwork.name]!,
       durationSeconds: SECONDS_IN_DAY * 7,

@@ -22,7 +22,7 @@ export default function DurationInputAndSelect({
         <FormattedNumberInput
           className="h-10 pr-4"
           placeholder="30"
-          min={1}
+          min={0}
           disabled={disabled}
         />
       </Form.Item>

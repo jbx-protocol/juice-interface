@@ -2615,12 +2615,6 @@ msgstr ""
 msgid "Add a collection name"
 msgstr ""
 
-msgid "No transaction history"
-msgstr ""
-
-msgid "No NFTs have been configured for this project."
-msgstr ""
-
 msgid "Unstaked balance"
 msgstr ""
 

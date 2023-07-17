@@ -4,6 +4,9 @@ import ExternalLink from 'components/ExternalLink'
 import Logo from 'components/Logo'
 import Discord from 'components/icons/Discord'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
+import { useWallet } from 'hooks/Wallet'
+import { useFetchDeveloperWallets } from 'hooks/useFetchDeveloperWallets'
+import { isEqualAddress } from 'utils/address'
 import { LinkColProps, LinkColumn } from './LinkColumn'
 
 const ImageButtons = [
@@ -25,6 +28,12 @@ const ImageButtons = [
 ]
 
 export function Footer() {
+  const { userAddress } = useWallet()
+  const { data } = useFetchDeveloperWallets()
+
+  const showDeveloperLinks =
+    data?.some(wallet => isEqualAddress(wallet.wallet, userAddress)) ?? false
+
   const LinkCols: LinkColProps[] = [
     {
       title: t`Juicebox`,
@@ -50,6 +59,9 @@ export function Footer() {
           externalLink: true,
           link: 'https://juicebox.canny.io/feature-requests',
         },
+        ...(showDeveloperLinks
+          ? [{ title: t`Experimental flags`, link: '/experimental/flags' }]
+          : []),
       ],
     },
     {

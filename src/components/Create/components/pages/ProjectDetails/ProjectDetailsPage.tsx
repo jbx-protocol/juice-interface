@@ -10,11 +10,12 @@ import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/inputs/PrefixedInput'
-import { MarkdownEditor } from 'components/Markdown'
+// import { MarkdownEditor } from 'components/Markdown'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
@@ -25,6 +26,13 @@ import { OptionalHeader } from '../../OptionalHeader'
 import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useProjectDetailsForm } from './hooks/useProjectDetailsForm'
+
+const MarkdownEditor = dynamic(
+  () => import('components/Markdown').then(mod => mod.MarkdownEditor),
+  {
+    ssr: false,
+  },
+)
 
 export const ProjectDetailsPage: React.FC<
   React.PropsWithChildren<unknown>

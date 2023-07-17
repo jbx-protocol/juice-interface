@@ -1,8 +1,12 @@
-import { InformationCircleIcon } from '@heroicons/react/24/outline'
+import { InformationCircleIcon, PhotoIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { MDEditorProps } from '@uiw/react-md-editor'
+import MDEditor, {
+  ICommand,
+  MDEditorProps,
+  TextState,
+  commands,
+} from '@uiw/react-md-editor'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import dynamic from 'next/dynamic'
 import {
   ClipboardEventHandler,
   DragEventHandler,
@@ -13,10 +17,10 @@ import {
 import rehypeSanitize from 'rehype-sanitize'
 import { markdownReducer, processFile } from './utils'
 
-const MDEditor = dynamic<MDEditorProps>(
-  () => import('@uiw/react-md-editor').then(mod => mod.default),
-  { ssr: false },
-)
+// const MDEditor = dynamic<MDEditorProps>(
+//   () => import('@uiw/react-md-editor').then(mod => mod.default),
+//   { ssr: false },
+// )
 
 export type MarkdownEditorProps = Omit<MDEditorProps, 'data-color-mode'>
 
@@ -26,6 +30,38 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
     uploading: false,
     progress: 0,
   })
+
+  const uploadImage: ICommand = {
+    name: 'upload-image',
+    keyCommand: 'upload-image',
+    buttonProps: { 'aria-label': 'Upload image' },
+    icon: <PhotoIcon className="h-3 w-3" />,
+    execute: (state: TextState) => {
+      const file = document.createElement('input')
+      file.type = 'file'
+      file.accept = 'image/*'
+      file.onchange = async () => {
+        if (!file.files) return
+        const f = file.files[0]
+        const caretPositionStart = state.selection.start || 0
+        const caretPositionEnd = state.selection.end || 0
+        await processFile(
+          f,
+          caretPositionStart,
+          caretPositionEnd,
+          props,
+          dispatch,
+        )
+      }
+      file.click()
+
+      // let modifyText = `### ${state.selectedText}\n`
+      // if (!state.selectedText) {
+      //   modifyText = `### `
+      // }
+      // api.replaceSelection(modifyText)
+    },
+  }
 
   const handleDrop: DragEventHandler<HTMLTextAreaElement> = useCallback(
     async e => {
@@ -48,7 +84,7 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
 
   const handlePaste: ClipboardEventHandler<HTMLTextAreaElement> = useCallback(
     async e => {
-      const file = e.clipboardData.items[0]?.getAsFile()
+      const file = e.clipboardData.files[0]
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const caretPositionStart = (e.target as any).selectionStart
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -80,6 +116,16 @@ export const MarkdownEditor = (props: MarkdownEditorProps) => {
         previewOptions={{
           rehypePlugins: [rehypeSanitize],
         }}
+        commands={[
+          commands.bold,
+          commands.italic,
+          commands.title,
+          commands.quote,
+          commands.link,
+          uploadImage,
+          commands.unorderedListCommand,
+          commands.orderedListCommand,
+        ]}
       />
       {!state.uploading ? (
         <div className="py-3 text-xs text-grey-500 dark:text-slate-200">

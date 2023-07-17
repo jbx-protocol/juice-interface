@@ -539,6 +539,9 @@ msgstr ""
 msgid "{0} ago"
 msgstr ""
 
+msgid "Experimental flags"
+msgstr ""
+
 msgid "Edit {allocationName}"
 msgstr ""
 

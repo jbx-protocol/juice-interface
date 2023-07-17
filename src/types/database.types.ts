@@ -99,6 +99,20 @@ export interface Database {
           title?: string | null
         }
       }
+      developer_wallets: {
+        Row: {
+          created_at: string
+          wallet: string
+        }
+        Insert: {
+          created_at?: string
+          wallet: string
+        }
+        Update: {
+          created_at?: string
+          wallet?: string
+        }
+      }
       project_updates: {
         Row: {
           created_at: string | null

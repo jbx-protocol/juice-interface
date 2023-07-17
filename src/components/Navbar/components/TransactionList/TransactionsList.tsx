@@ -16,10 +16,8 @@ import { formatHistoricalDate } from 'utils/format/formatDate'
 import TxStatusIcon from './TxStatusIcon'
 
 export function TransactionsList({
-  className,
   listClassName,
 }: {
-  className?: string
   listClassName?: string
 }) {
   const { transactions, removeTransaction } = useContext(TxHistoryContext)
@@ -40,7 +38,7 @@ export function TransactionsList({
   if (!transactions?.length) return null
 
   return (
-    <div className={className}>
+    <div className="relative md:order-4">
       <div
         className={
           'flex cursor-pointer select-none items-center transition-colors'

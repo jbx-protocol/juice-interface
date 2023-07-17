@@ -80,10 +80,7 @@ export default function SiteNavigation() {
                         <NavLanguageSelector className="md:order-2" />
                         <ThemePicker className="md:order-3" />
                         <QuickProjectSearch className="md:order-1" />
-                        <TransactionsList
-                          className="relative md:order-4"
-                          listClassName="absolute top-full mt-4 right-0 md:-right-6 md:w-[320px] w-full"
-                        />
+                        <TransactionsList listClassName="absolute top-full mt-4 right-0 md:-right-6 md:w-[320px] w-full" />
                       </div>
                     </div>
                   </div>

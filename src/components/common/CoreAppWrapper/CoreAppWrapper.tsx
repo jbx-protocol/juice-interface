@@ -6,7 +6,9 @@ import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
+import { WalletProvider } from 'contexts/Wallet/WalletProvider'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
+import { SessionProvider } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
@@ -33,19 +35,23 @@ export const AppWrapper: React.FC<
 > = ({ children, hideNav }) => {
   return (
     <React.StrictMode>
-      <ReactQueryProvider>
-        <LanguageProvider>
-          <TxHistoryProvider>
-            <ThemeProvider>
-              <EtherPriceProvider>
-                <ArcxProvider>
-                  <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
-                </ArcxProvider>
-              </EtherPriceProvider>
-            </ThemeProvider>
-          </TxHistoryProvider>
-        </LanguageProvider>
-      </ReactQueryProvider>
+      <SessionProvider>
+        <ReactQueryProvider>
+          <LanguageProvider>
+            <TxHistoryProvider>
+              <ThemeProvider>
+                <EtherPriceProvider>
+                  <ArcxProvider>
+                    <WalletProvider>
+                      <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
+                    </WalletProvider>
+                  </ArcxProvider>
+                </EtherPriceProvider>
+              </ThemeProvider>
+            </TxHistoryProvider>
+          </LanguageProvider>
+        </ReactQueryProvider>
+      </SessionProvider>
     </React.StrictMode>
   )
 }

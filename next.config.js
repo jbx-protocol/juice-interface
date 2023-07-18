@@ -52,6 +52,7 @@ const IMG_SRC = [
 ]
 
 const CONNECT_SRC = [
+  'https://api.usekeyp.com',
   'https://subgraph.satsuma-prod.com',
   'https://*.juicebox.money',
   'https://juicebox.money',
@@ -171,4 +172,7 @@ const nextConfig = removeImports({
 
 module.exports = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
+  env: {
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+  },
 })(withSentryConfig(nextConfig, { silent: true }))

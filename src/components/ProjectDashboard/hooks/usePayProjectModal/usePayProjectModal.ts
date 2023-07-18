@@ -1,5 +1,5 @@
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet/useJBWallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { TxStatus } from 'models/transaction'
 import { useCallback, useContext, useMemo, useReducer } from 'react'
@@ -36,7 +36,7 @@ export const usePayProjectModal = () => {
   } = useProjectCart()
   const { projectMetadata } = useProjectMetadata()
   const { name, payDisclosure } = projectMetadata ?? {}
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const converter = useCurrencyConverter()
   const [modalState, modalDispatch] = useReducer(payProjectModalReducer, {
     isTransactionPending: false,

@@ -5,7 +5,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet/useJBWallet'
 import { ReactNode, useCallback, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { DropdownMenu, DropdownMenuItem } from '../DropdownMenu'
@@ -24,7 +24,7 @@ const WalletItemContainer = ({
 )
 
 export default function WalletMenu({ userAddress }: { userAddress: string }) {
-  const { disconnect } = useWallet()
+  const { disconnect, keyp } = useJBWallet()
   const [copied, setCopied] = useState<boolean>(false)
 
   const onCopyAddressClicked = useCallback(() => {
@@ -80,6 +80,7 @@ export default function WalletMenu({ userAddress }: { userAddress: string }) {
         <div className="flex w-full cursor-pointer select-none items-center justify-center rounded-lg bg-bluebs-50 px-4 py-2.5 dark:bg-bluebs-900">
           <EthereumAddress
             address={userAddress}
+            label={keyp.username}
             tooltipDisabled
             linkDisabled
             className="select-none text-sm font-medium text-bluebs-700 dark:text-bluebs-100"

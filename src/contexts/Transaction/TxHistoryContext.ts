@@ -11,7 +11,7 @@ export const timestampForTxLog = (txLog: TransactionLog) => {
 
 export type AddTransactionFunction = (
   title: string,
-  tx: providers.TransactionResponse,
+  tx: TransactionLog['tx'],
   callbacks?: Omit<TransactionCallbacks, 'onDone' | 'onError'>,
 ) => void
 

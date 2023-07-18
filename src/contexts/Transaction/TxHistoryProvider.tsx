@@ -1,8 +1,8 @@
-import { useWallet } from 'hooks/Wallet'
 import { TransactionLog, TxStatus } from 'models/transaction'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { clearInterval, setInterval } from 'timers'
 
+import { useJBWallet } from 'hooks/Wallet/useJBWallet'
 import { readProvider } from '../../constants/readProvider'
 import { AddTransactionFunction, TxHistoryContext } from './TxHistoryContext'
 
@@ -17,27 +17,37 @@ const TX_HISTORY_TIME_SECS = 60 * 60 // 1 hr
 const pollTransaction = async (
   txLog: TransactionLog,
 ): Promise<TransactionLog> => {
-  // Only do refresh logic for pending txs
-  // tx.hash shouldn't ever be undefined but it's optional typed :shrug:
-  if (!txLog.tx?.hash || txLog.status !== TxStatus.pending) {
-    return txLog
-  }
+  const { tx, status, callbacks } = txLog
 
-  const response = await readProvider.getTransaction(txLog.tx.hash)
-  // if no response, then the tx is cancelled.
-  if (!response) {
-    txLog.callbacks?.onCancelled?.(response)
+  if (!tx.hash && status !== TxStatus.failed) {
+    // If no tx hash, assume failure
+    callbacks?.onCancelled?.()
     return {
       ...txLog,
-      tx: response,
+      status: TxStatus.failed,
+    }
+  }
+
+  // Only poll pending txs
+  if (status !== TxStatus.pending) return txLog
+
+  const response = tx.hash
+    ? await readProvider.getTransaction(tx.hash)
+    : undefined
+
+  // if no response, then the tx is cancelled.
+  if (!response) {
+    callbacks?.onCancelled?.()
+    return {
+      ...txLog,
       status: TxStatus.failed,
     }
   }
 
   // Tx has been mined
-  if (response.confirmations > 0 && txLog.status === TxStatus.pending) {
+  if (response.confirmations > 0) {
     console.info('TxHistoryProvider::calling `onConfirmed` callback', response)
-    txLog.callbacks?.onConfirmed?.(response)
+    callbacks?.onConfirmed?.(response)
     return {
       ...txLog,
       tx: response,
@@ -45,9 +55,7 @@ const pollTransaction = async (
     }
   }
 
-  return {
-    ...txLog,
-  }
+  return txLog
 }
 
 export default function TxHistoryProvider({
@@ -55,7 +63,14 @@ export default function TxHistoryProvider({
 }: {
   children: ReactNode
 }) {
-  const { userAddress, chain } = useWallet()
+  const {
+    userAddress,
+    eoa: { chain: eoaChain },
+    keyp: { chain: keypChain },
+  } = useJBWallet()
+
+  const chain = useMemo(() => keypChain ?? eoaChain, [keypChain, eoaChain])
+
   const [transactions, setTransactions] = useState<TransactionLog[]>([])
 
   const localStorageKey = useMemo(

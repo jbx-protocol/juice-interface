@@ -3,7 +3,7 @@ import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721Delegate
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { Transaction } from 'ethers'
 import { FormikHelpers } from 'formik'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet/useJBWallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/usePayETHPaymentTerminalTx'
 import { useCallback, useContext } from 'react'
@@ -33,7 +33,7 @@ export const usePayProjectTx = ({
     formikHelpers: FormikHelpers<PayProjectModalFormValues>,
   ) => void
 }) => {
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const { totalAmount, nftRewards } = useProjectCart()
   const { version: JB721DelegateVersion } = useContext(
     JB721DelegateContractsContext,

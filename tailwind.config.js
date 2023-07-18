@@ -3,6 +3,7 @@ module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
+    "./node_modules/@usekeyp/ui-kit/**/*.{js,jsx,ts,tsx,md}"
   ],
   darkMode: 'class', // Use class for now, switch to media later
   important: true,
@@ -258,6 +259,7 @@ module.exports = {
     },
   },
   plugins: [
+    require('@usekeyp/ui-kit/plugin'),
     function ({ addUtilities }) {
       const newUtilities = {
         '.hide-scrollbar::-webkit-scrollbar': {

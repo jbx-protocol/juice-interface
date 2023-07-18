@@ -1,16 +1,30 @@
 import { t } from '@lingui/macro'
+import { writeContract } from '@usekeyp/js-sdk'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { useArcx } from 'contexts/Arcx/useArcx'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { Contract, providers } from 'ethers'
+import { BigNumber, BigNumberish, Contract } from 'ethers'
+import { FunctionFragment, Interface } from 'ethers/lib/utils'
 import { simulateTransaction } from 'lib/tenderly'
-import { TransactionOptions } from 'models/transaction'
+import { TransactionLog, TransactionOptions } from 'models/transaction'
 import { CV2V3 } from 'models/v2v3/cv'
 import { useCallback, useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { emitErrorNotification } from 'utils/notifications'
-import { useWallet } from './Wallet'
+import { useJBWallet } from './Wallet/useJBWallet'
+
+function abiFunctionName(functionName: string, abi: Interface) {
+  const fn = abi.fragments.find(
+    f => f.type === 'function' && f.name === functionName,
+  ) as FunctionFragment
+
+  return `${functionName}(${fn?.inputs
+    .map(i => `${i.indexed ? 'indexed ' : ''}${i.type}`)
+    .join(',')}) public ${fn?.stateMutability} returns (${fn?.outputs
+    ?.map(o => `${o.type}${o.name ? `${o.name}` : ''}`)
+    .join(',')})`
+}
 
 type TxOpts = Omit<TransactionOptions, 'value'>
 
@@ -48,6 +62,38 @@ function logTx({
   )
 }
 
+function sendKeypTransaction({
+  contract,
+  functionName,
+  args,
+  accessToken,
+  value,
+}: {
+  contract: Contract
+  functionName: string
+  args: string[]
+  accessToken: string
+  value?: BigNumberish
+}) {
+  const { address } = contract
+
+  // console.log(
+  //   'asdf req data',
+  //   { address },
+  //   { abi },
+  //   { accessToken },
+  //   contract.interface.fragments,
+  // )
+
+  return writeContract({
+    accessToken,
+    address,
+    abi: abiFunctionName(functionName, contract.interface),
+    args,
+    value: BigNumber.from(value)?.toHexString(),
+  })
+}
+
 function prepareTransaction({
   functionName,
   contract,
@@ -81,8 +127,9 @@ export type TransactorInstance<T = undefined> = (
 export function useTransactor(): Transactor | undefined {
   const { addTransaction } = useContext(TxHistoryContext)
 
-  const { chain, signer, userAddress } = useWallet()
-  const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
+  const { eoa, keyp, isConnected, userAddress, connect } = useJBWallet()
+  const { chainUnsupported, signer, chain, changeNetworks } = eoa
+
   const arcx = useArcx()
 
   return useCallback(
@@ -92,18 +139,22 @@ export function useTransactor(): Transactor | undefined {
       args: unknown[],
       options?: TransactionOptions,
     ) => {
+      const { accessToken, isAuthenticated } = keyp
+      const { onCancelled, onConfirmed, onDone, onError } = options ?? {}
+
       if (chainUnsupported) {
         await changeNetworks()
-        options?.onDone?.()
+        onDone?.()
         return false
       }
-      if (!isConnected) {
+      if (!isConnected && connect) {
         await connect()
-        options?.onDone?.()
+        onDone?.()
         return false
       }
-      if (!signer || !chain) {
-        options?.onDone?.()
+      if (!accessToken && (!signer || !chain)) {
+        // this checks the properties required for a transaction, instead of just eoa.isConnected/keyp.isAuthenticated. this block should probably never be reached
+        onDone?.()
         return false
       }
 
@@ -127,20 +178,43 @@ export function useTransactor(): Transactor | undefined {
       }
 
       try {
-        const tx = prepareTransaction({ functionName, contract, args, options })
-        const result: providers.TransactionResponse = await tx
+        let result: TransactionLog['tx'] | undefined = undefined
 
-        console.info('✅ Transactor::submitted', result)
+        if (isAuthenticated) {
+          if (accessToken) {
+            result = await sendKeypTransaction({
+              contract,
+              functionName,
+              args: args.map(a => (a as { toString: () => string }).toString()),
+              accessToken,
+              value: options?.value,
+            })
+          } else {
+            onError?.(new DOMException('Keyp authentication error'))
+          }
+        } else {
+          result = await prepareTransaction({
+            functionName,
+            contract,
+            args,
+            options,
+          })
+        }
 
         // transaction was submitted, but not confirmed/mined yet.
-        options?.onDone?.()
+        console.info('✅ Transactor::submitted', result)
+        onDone?.()
+
+        const txTitle = options?.title ?? functionName
 
         // add transaction to the history UI
-        const txTitle = options?.title ?? functionName
-        addTransaction?.(txTitle, result as providers.TransactionResponse, {
-          onConfirmed: options?.onConfirmed,
-          onCancelled: options?.onCancelled,
-        })
+        console.log('asdf result', result)
+        if (result) {
+          addTransaction?.(txTitle, result, {
+            onConfirmed,
+            onCancelled,
+          })
+        }
 
         try {
           // log transaction in Arcx
@@ -168,19 +242,20 @@ export function useTransactor(): Transactor | undefined {
           let json = message.split('(error=')[1]
           json = json.split(', method=')[0]
           description = JSON.parse(json).message || message
-          options?.onError?.(new DOMException(description))
+          onError?.(new DOMException(description))
         } catch (_) {
           description = message
-          options?.onError?.(new DOMException(description))
+          onError?.(new DOMException(description))
           emitErrorNotification(t`Transaction failed`, { description })
         }
 
-        options?.onDone?.()
+        onDone?.()
 
         return false
       }
     },
     [
+      keyp,
       arcx,
       chainUnsupported,
       isConnected,

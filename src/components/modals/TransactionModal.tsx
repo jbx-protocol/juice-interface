@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
 import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet/useJBWallet'
 import { TxStatus } from 'models/transaction'
 import Image from 'next/image'
 import { PropsWithChildren, useContext, useMemo } from 'react'
@@ -61,7 +61,11 @@ const PendingTransactionModalBody = () => {
  * are replaced with a juicy loading state.
  */
 export default function TransactionModal(props: TransactionModalProps) {
-  const { isConnected, chainUnsupported } = useWallet()
+  const {
+    isConnected,
+    eoa: { chainUnsupported },
+  } = useJBWallet()
+
   const okText = useMemo(() => {
     if (chainUnsupported) {
       return (

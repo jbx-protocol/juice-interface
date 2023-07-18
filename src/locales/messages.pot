@@ -251,6 +251,9 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
+msgid "Keyp login"
+msgstr ""
+
 msgid "No"
 msgstr ""
 
@@ -4662,6 +4665,9 @@ msgid "Make changes to your cycle settings and rules"
 msgstr ""
 
 msgid "Amount:"
+msgstr ""
+
+msgid "Ethereum wallet"
 msgstr ""
 
 msgid "Reserved tokens"

@@ -1,5 +1,5 @@
 import { isAddress } from 'ethers/lib/utils'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet/useJBWallet'
 import { resolveAddress } from 'lib/api/ens'
 import { useCallback, useReducer } from 'react'
 import { editRewardBeneficiaryReducer } from './editRewardBeneficiaryReducer'
@@ -10,7 +10,7 @@ export const useEditRewardBeneficiary = (
   _value: string | undefined,
   onChange: ((value: string) => void) | undefined,
 ) => {
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const address = _value || userAddress
 
   const [state, dispatch] = useReducer(editRewardBeneficiaryReducer, {

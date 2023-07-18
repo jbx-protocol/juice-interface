@@ -2,7 +2,6 @@ import { Tab } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
 import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { useOnScreen } from 'hooks/useOnScreen'
@@ -15,7 +14,6 @@ import {
   useState,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { AboutPanel } from '../AboutPanel'
 import { ActivityPanel } from '../ActivityPanel'
 import { CyclesPayoutsPanel } from '../CyclesPayoutsPanel'
@@ -37,10 +35,6 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
   const panelRef = useRef<HTMLDivElement>(null)
   const isPanelVisible = useOnScreen(panelRef)
   const [firstRender, setFirstRender] = useState(true)
-
-  const projectUpdatesEnabled = featureFlagEnabled(
-    FEATURE_FLAGS.PROJECT_UPDATES,
-  )
 
   useEffect(() => {
     if (firstRender) {
@@ -76,30 +70,21 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         panel: <CyclesPayoutsPanel />,
       },
       { id: 'tokens', name: t`Tokens`, panel: <TokensPanel /> },
-      ...(projectUpdatesEnabled
-        ? [
-            {
-              id: 'updates',
-              name: (
-                <div className="flex items-center gap-1">
-                  <Trans>Updates</Trans>
-                  {!!projectUpdates.length && (
-                    <TabBadgeCount count={projectUpdates.length} />
-                  )}
-                </div>
-              ),
-              panel: <UpdatesPanel />,
-              hideTab: !isProjectOwner && projectUpdates.length === 0,
-            },
-          ]
-        : []),
+      {
+        id: 'updates',
+        name: (
+          <div className="flex items-center gap-1">
+            <Trans>Updates</Trans>
+            {!!projectUpdates.length && (
+              <TabBadgeCount count={projectUpdates.length} />
+            )}
+          </div>
+        ),
+        panel: <UpdatesPanel />,
+        hideTab: !isProjectOwner && projectUpdates.length === 0,
+      },
     ],
-    [
-      isProjectOwner,
-      projectUpdates.length,
-      projectUpdatesEnabled,
-      showNftRewards,
-    ],
+    [isProjectOwner, projectUpdates, showNftRewards],
   )
 
   const selectedTabIndex = useMemo(() => {

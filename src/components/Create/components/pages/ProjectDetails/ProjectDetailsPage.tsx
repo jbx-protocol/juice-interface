@@ -10,7 +10,7 @@ import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/inputs/PrefixedInput'
-import { MarkdownEditor } from 'components/Markdown'
+import { RichEditor } from 'components/RichEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useWallet } from 'hooks/Wallet'
@@ -71,7 +71,7 @@ export const ProjectDetailsPage: React.FC<
 
         {richProjectDescriptionEnabled ? (
           <Form.Item name="projectDescription" label={t`Project description`}>
-            <MarkdownEditor />
+            <RichEditor />
           </Form.Item>
         ) : (
           <Form.Item name="projectDescription" label={t`Project description`}>

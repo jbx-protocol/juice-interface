@@ -1,8 +1,8 @@
 import { t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
-import { MarkdownPreview } from 'components/Markdown/MarkdownPreview'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
+import { RichPreview } from 'components/RichPreview'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { ReviewDescription } from '../ReviewDescription'
 
@@ -38,11 +38,7 @@ export const ProjectDetailsReview = () => {
         className="col-span-3"
         title={t`Project description`}
         placeholder={t`No description`}
-        desc={
-          <MarkdownPreview source={description ?? ''} />
-          // <MarkdownPreview>{description ?? ''}</MarkdownPreview>
-          // <div className="overflow-hidden text-ellipsis">{description}</div>
-        }
+        desc={<RichPreview source={description ?? ''} />}
       />
       {/* END: Top */}
 

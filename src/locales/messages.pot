@@ -1442,6 +1442,9 @@ msgstr ""
 msgid "Next cycle, the project will issue {0} tokens per 1 ETH. The cycle after that, the project will issue {1} tokens per 1 ETH."
 msgstr ""
 
+msgid "Enable payment terminal configuration"
+msgstr ""
+
 msgid "Days"
 msgstr ""
 
@@ -1925,6 +1928,9 @@ msgstr ""
 msgid "The held fees will reset as ETH is transferred back to the project with the <0>transfer ETH to project</0> transaction above."
 msgstr ""
 
+msgid "Edits to cycles must occur before the selected period. Deadlines ensure your contributors are informed of upcoming changes to your projects’ configuration."
+msgstr ""
+
 msgid "Read the docs"
 msgstr ""
 
@@ -2001,6 +2007,9 @@ msgid "Juicebox is the best-in-class tool for crowdfunding your project with ETH
 msgstr ""
 
 msgid "Project tokens will be minted to this beneficiary address. The address that made the payment <0>won't receive any project tokens.</0>"
+msgstr ""
+
+msgid "V2 3-day deadline"
 msgstr ""
 
 msgid "Discord"
@@ -2481,6 +2490,9 @@ msgid "{0} after JBX fee"
 msgstr ""
 
 msgid "Subject"
+msgstr ""
+
+msgid "Enable controller configuration"
 msgstr ""
 
 msgid "{pageTitle}"
@@ -3521,6 +3533,9 @@ msgstr ""
 msgid "Contract permissions"
 msgstr ""
 
+msgid "Project configurations cannot be changed to the duration of locked cycles."
+msgstr ""
+
 msgid "This project has redemptions turned off."
 msgstr ""
 
@@ -3998,6 +4013,9 @@ msgstr ""
 msgid "MoonDAO has built an enthusiastic community of over 10,000 members, successfully sent their first astronaut to space, and is currently coordinating the spaceflight for their second astronaut. Their ambitious long-term roadmap goals include building a settlement on the Moon by 2030. In collaboration with StudioDAO, a decentralized movie studio running on Juicebox, MoonDAO has donated $100,000 to help fund the production of Ticket To Space, the first DAO documentary. The film will cover the story of Yan, a MoonDAO member from China, who will be sent to space on an upcoming Blue Origin flight after minting a free NFT."
 msgstr ""
 
+msgid "V2 7-day deadline"
+msgstr ""
+
 msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
 msgstr ""
 
@@ -4248,6 +4266,9 @@ msgid "Switch network to {0}"
 msgstr ""
 
 msgid "Schedule launch"
+msgstr ""
+
+msgid "Advanced"
 msgstr ""
 
 msgid "Percentage to reserve"
@@ -4547,6 +4568,9 @@ msgstr ""
 msgid "Advanced options"
 msgstr ""
 
+msgid "Reconfiguration deadline"
+msgstr ""
+
 msgid "Funding rules"
 msgstr ""
 
@@ -4692,6 +4716,9 @@ msgid "MoonDAO is a worldwide collective united by the mission of decentralizing
 msgstr ""
 
 msgid "V3"
+msgstr ""
+
+msgid "Disable payments to this project"
 msgstr ""
 
 msgid "project"

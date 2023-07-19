@@ -5,12 +5,13 @@ import { classNames } from 'utils/classNames'
 
 export const JuiceSwitch = ({
   label,
+  description,
   value,
   onChange,
-}: FormItemInput<boolean> & { label?: ReactNode }) => {
-  const switchId = `switch-${label}`
+}: FormItemInput<boolean> & { label?: ReactNode; description?: ReactNode }) => {
+  const switchId = `switch-${label}-${Math.random()}`
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-start gap-2">
       <Switch
         className={classNames(
           value ? 'bg-bluebs-500' : 'bg-smoke-200 dark:bg-slate-300',
@@ -20,9 +21,14 @@ export const JuiceSwitch = ({
         onChange={onChange}
       />
       {label && (
-        <label htmlFor={switchId} className="text-black dark:text-grey-200">
-          {label}
-        </label>
+        <div>
+          <label htmlFor={switchId} className="text-black dark:text-grey-200">
+            {label}
+          </label>
+          {description ? (
+            <div className="text-secondary text-sm">{description}</div>
+          ) : null}
+        </div>
       )}
     </div>
   )

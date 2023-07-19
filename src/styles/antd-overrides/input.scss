@@ -35,6 +35,12 @@
   }
 }
 
+.ant-input-number-input-wrap,
+.ant-input-number-input {
+  @apply h-full;
+}
+
+
 .ant-input-lg {
   @apply h-11;
 }

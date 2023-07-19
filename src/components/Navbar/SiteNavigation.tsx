@@ -9,6 +9,7 @@ import { MobileMenuButton } from './components/HamburgerMenuButton'
 import { LogoHomeButton } from './components/LogoHomeButton'
 import NavLanguageSelector from './components/NavLanguageSelector'
 import ThemePicker from './components/ThemePicker'
+import { TransactionsList } from './components/TransactionList'
 import WalletButton from './components/Wallet/WalletButton'
 
 export default function SiteNavigation() {
@@ -79,6 +80,7 @@ export default function SiteNavigation() {
                         <NavLanguageSelector className="md:order-2" />
                         <ThemePicker className="md:order-3" />
                         <QuickProjectSearch className="md:order-1" />
+                        <TransactionsList listClassName="absolute top-full mt-4 right-0 md:-right-6 md:w-[320px] w-full" />
                       </div>
                     </div>
                   </div>

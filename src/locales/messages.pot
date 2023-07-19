@@ -527,6 +527,9 @@ msgstr ""
 msgid "1-day deadline"
 msgstr ""
 
+msgid "Transactions"
+msgstr ""
+
 msgid "Save payout"
 msgstr ""
 
@@ -2610,9 +2613,6 @@ msgid "While enabled, the project owner can change the project's <0>controller</
 msgstr ""
 
 msgid "Add a collection name"
-msgstr ""
-
-msgid "No transaction history"
 msgstr ""
 
 msgid "Unstaked balance"

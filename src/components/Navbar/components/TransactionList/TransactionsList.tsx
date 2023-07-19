@@ -1,14 +1,19 @@
-import { CaretDownOutlined, ThunderboltOutlined } from '@ant-design/icons'
+import { BoltIcon, ChevronUpIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
+import { Divider } from 'antd'
+import BadgeIcon from 'components/BadgeIcon'
+import ExternalLink from 'components/ExternalLink'
+import Loading from 'components/Loading'
 import {
   TxHistoryContext,
   timestampForTxLog,
 } from 'contexts/Transaction/TxHistoryContext'
 import { TxStatus } from 'models/transaction'
 import { useContext, useEffect, useMemo, useState } from 'react'
-import { classNames } from 'utils/classNames'
-import Loading from '../../../Loading'
-import { TransactionItem } from './TransactionItem'
+import { twMerge } from 'tailwind-merge'
+import { etherscanLink } from 'utils/etherscan'
+import { formatHistoricalDate } from 'utils/format/formatDate'
+import TxStatusIcon from './TxStatusIcon'
 
 export function TransactionsList({
   listClassName,
@@ -30,66 +35,98 @@ export function TransactionsList({
     }
   }, [hasPendingTxs])
 
-  const hasTransactions = !!transactions?.length
-  if (!hasTransactions) return null
+  if (!transactions?.length) return null
 
   return (
-    <div>
+    <div className="relative md:order-4">
       <div
-        className={classNames(
-          'flex h-8 cursor-pointer select-none items-center justify-evenly rounded-full border border-smoke-300 pl-3 pr-1 transition-colors hover:border-smoke-500 dark:border-slate-300 dark:hover:border-slate-100',
-        )}
+        className={
+          'flex cursor-pointer select-none items-center transition-colors'
+        }
         role="button"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <span className="mt-0.5 flex items-center justify-center">
-          {hasPendingTxs ? (
-            <Loading size="small" />
-          ) : (
-            <ThunderboltOutlined className="text-lg leading-none text-grey-400 dark:text-slate-200" />
-          )}
-        </span>
-        <span
-          className={classNames(
-            'text-grey-black min-w-[20px] text-center font-medium dark:text-slate-100',
-          )}
-        >
-          {isExpanded ? <CaretDownOutlined /> : transactions.length}
+        <BadgeIcon
+          icon={
+            hasPendingTxs ? (
+              <Loading size="default" />
+            ) : (
+              <BoltIcon className="h-6 w-6" role="button" />
+            )
+          }
+          className="cursor-pointer hover:text-bluebs-400"
+          badgeNumber={transactions?.length}
+        />
+        <span className="ml-4 text-sm font-medium md:hidden">
+          <Trans>Transactions</Trans>
         </span>
       </div>
 
       {isExpanded && (
-        <div className={classNames('z-10 flex flex-col gap-2', listClassName)}>
-          {transactions?.length ? (
-            transactions
+        <div
+          className={twMerge(
+            'z-10 rounded-lg border border-smoke-300 bg-white pt-5 shadow-lg ring-1 ring-black ring-opacity-5 dark:border-slate-300 dark:bg-slate-800',
+            listClassName,
+          )}
+        >
+          <div className="mb-4 flex items-center justify-between px-5">
+            <h4 className="m-0">Transactions</h4>
+            <ChevronUpIcon
+              className="block h-5 w-5 cursor-pointer"
+              onClick={() => setIsExpanded(false)}
+            />
+          </div>
+
+          <Divider className="m-0" />
+
+          <div className="max-h-[296px] overflow-auto py-3">
+            {transactions
               .sort((a, b) =>
                 timestampForTxLog(a) > timestampForTxLog(b) ? -1 : 1,
               )
-              .map(tx =>
-                tx ? (
-                  <TransactionItem
-                    key={`txitem-${tx.id}`}
-                    tx={tx}
-                    onRemoveTransaction={
-                      removeTransaction
-                        ? () => {
-                            removeTransaction(tx.id)
+              .map(tx => (
+                <ExternalLink
+                  key={`txitem-${tx.id}`}
+                  href={
+                    tx.tx?.hash ? etherscanLink('tx', tx.tx.hash) : undefined
+                  }
+                  className="block px-5 py-3 text-black hover:bg-smoke-50 dark:text-grey-50 dark:hover:bg-slate-600"
+                >
+                  <div className="flex w-full items-center justify-between gap-5 text-sm last:border-0 last:pb-0 dark:border-slate-200">
+                    <TxStatusIcon status={tx.status} />
 
-                            // Close menu if removing last tx
-                            if (transactions.length === 1 && isExpanded) {
-                              setIsExpanded(false)
+                    <div className="flex-1">
+                      {tx.title}
+
+                      <div className="text-xs text-grey-400 dark:text-slate-200">
+                        {formatHistoricalDate(timestampForTxLog(tx) * 1000)}
+                      </div>
+                    </div>
+
+                    <div
+                      role="button"
+                      className="py-2 pl-3 text-grey-400 hover:text-bluebs-500 dark:text-slate-200 dark:hover:text-bluebs-400"
+                      onClick={
+                        removeTransaction
+                          ? e => {
+                              e.stopPropagation()
+                              e.preventDefault()
+                              removeTransaction(tx.id)
+
+                              // Close menu if removing last tx
+                              if (transactions.length === 1 && isExpanded) {
+                                setIsExpanded(false)
+                              }
                             }
-                          }
-                        : undefined
-                    }
-                  />
-                ) : null,
-              )
-          ) : (
-            <div className="font-medium">
-              <Trans>No transaction history</Trans>
-            </div>
-          )}
+                          : undefined
+                      }
+                    >
+                      <XMarkIcon className="h-5 w-5" />
+                    </div>
+                  </div>
+                </ExternalLink>
+              ))}
+          </div>
         </div>
       )}
     </div>

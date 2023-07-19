@@ -6,7 +6,7 @@ exports[`CurrentCycleCard renders 1`] = `
     class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 min-w-0 cursor-pointer pr-9"
   >
     <span
-      class="inline-flex items-center gap-1"
+      class="flex min-w-0 items-center gap-1"
     >
       <span
         class="truncate whitespace-nowrap text-base font-medium"
@@ -15,7 +15,7 @@ exports[`CurrentCycleCard renders 1`] = `
       </span>
       <svg
         aria-hidden="true"
-        class="h-4 w-4 text-grey-500 dark:text-slate-200"
+        class="h-4 w-4 flex-shrink-0 text-grey-500 dark:text-slate-200"
         fill="none"
         stroke="currentColor"
         stroke-width="1.5"

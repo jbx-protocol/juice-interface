@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { useProjectContext } from 'components/ProjectDashboard/hooks'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
@@ -13,6 +14,7 @@ export const useTreasuryStats = () => {
     distributionLimit,
     distributionLimitCurrency: distributionLimitCurrencyRaw,
     balanceInDistributionLimitCurrency,
+    primaryTerminalCurrentOverflow,
     fundingCycleMetadata,
   } = useProjectContext()
   const { distributableAmount } = useDistributableAmount()
@@ -32,25 +34,26 @@ export const useTreasuryStats = () => {
     })
   }, [balanceInDistributionLimitCurrency, distributionLimitCurrency])
 
+  const { weiToUsd } = useCurrencyConverter()
+
   const overflow = useMemo(() => {
     if (!distributionLimit) return undefined
     if (isInfiniteDistributionLimit(distributionLimit)) return t`No overflow`
-    if (!balanceInDistributionLimitCurrency) return undefined
-    let amount = 0
-    if (balanceInDistributionLimitCurrency.gt(distributionLimit ?? 0)) {
-      const amountWad = balanceInDistributionLimitCurrency.sub(
-        distributionLimit ?? 0,
-      )
-      amount = Number(fromWad(amountWad))
-    }
+
+    const overflowInDistributionLimitCurrency =
+      distributionLimitCurrency === V2V3_CURRENCY_ETH
+        ? fromWad(primaryTerminalCurrentOverflow)
+        : weiToUsd(primaryTerminalCurrentOverflow)
+
     return formatCurrencyAmount({
-      amount,
+      amount: overflowInDistributionLimitCurrency?.toString(),
       currency: distributionLimitCurrency,
     })
   }, [
-    balanceInDistributionLimitCurrency,
-    distributionLimit,
+    primaryTerminalCurrentOverflow,
     distributionLimitCurrency,
+    distributionLimit,
+    weiToUsd,
   ])
 
   const availableToPayout = useMemo(() => {

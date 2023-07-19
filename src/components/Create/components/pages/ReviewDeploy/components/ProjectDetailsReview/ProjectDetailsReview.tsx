@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
+import { MarkdownPreview } from 'components/Markdown/MarkdownPreview'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -38,7 +39,9 @@ export const ProjectDetailsReview = () => {
         title={t`Project description`}
         placeholder={t`No description`}
         desc={
-          <div className="overflow-hidden text-ellipsis">{description}</div>
+          <MarkdownPreview source={description ?? ''} />
+          // <MarkdownPreview>{description ?? ''}</MarkdownPreview>
+          // <div className="overflow-hidden text-ellipsis">{description}</div>
         }
       />
       {/* END: Top */}

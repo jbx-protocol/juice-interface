@@ -99,6 +99,49 @@ export interface Database {
           title?: string | null
         }
       }
+      developer_wallets: {
+        Row: {
+          created_at: string
+          wallet: string
+        }
+        Insert: {
+          created_at?: string
+          wallet: string
+        }
+        Update: {
+          created_at?: string
+          wallet?: string
+        }
+      }
+      project_updates: {
+        Row: {
+          created_at: string | null
+          id: string
+          image_url: string | null
+          message: string
+          poster_user_id: string
+          project: string
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          message: string
+          poster_user_id: string
+          project: string
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          message?: string
+          poster_user_id?: string
+          project?: string
+          title?: string
+        }
+      }
       projects: {
         Row: {
           _has_unresolved_metadata: boolean | null

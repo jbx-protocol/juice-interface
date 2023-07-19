@@ -1,4 +1,6 @@
-/* Disable for now - this causes opinionated settings by tailwind (which we want eventually) - need to update all classes before we can do this */
+// @import '@uiw/react-markdown-preview/markdown.css';
+// @import '@uiw/react-md-editor/markdown-editor.css';
+
 @tailwind base;
 @import './fonts';
 @tailwind components;
@@ -11,3 +13,4 @@
 @import 'create/index.scss';
 @import './next-overrides';
 @import './swiper.scss';
+@import './markdown-editor-overrides/index.scss';

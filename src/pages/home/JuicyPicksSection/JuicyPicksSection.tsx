@@ -41,9 +41,11 @@ export function JuicyPicksSection() {
           />
         ) : (
           <div className="mx-auto flex max-w-5xl flex-wrap justify-between gap-6 px-7 md:px-0">
-            <div className="mx-auto flex-1">
-              <SpotlightProjectCard project={projects[0]} />
-            </div>
+            {projects.length > 0 && (
+              <div className="mx-auto flex-1">
+                <SpotlightProjectCard project={projects[0]} />
+              </div>
+            )}
             <div className="grid grid-cols-2 grid-rows-2 gap-6">
               {projects.slice(1).map(project => (
                 <HomepageProjectCard

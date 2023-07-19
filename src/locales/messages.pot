@@ -527,6 +527,9 @@ msgstr ""
 msgid "1-day deadline"
 msgstr ""
 
+msgid "Transactions"
+msgstr ""
+
 msgid "Save payout"
 msgstr ""
 
@@ -537,6 +540,9 @@ msgid "Payouts to this project may mint its project tokens. Pick an address to r
 msgstr ""
 
 msgid "{0} ago"
+msgstr ""
+
+msgid "Experimental flags"
 msgstr ""
 
 msgid "Edit {allocationName}"
@@ -2619,9 +2625,6 @@ msgid "While enabled, the project owner can change the project's <0>controller</
 msgstr ""
 
 msgid "Add a collection name"
-msgstr ""
-
-msgid "No transaction history"
 msgstr ""
 
 msgid "Unstaked balance"

@@ -27,5 +27,5 @@
 }
 
 .ql-snow .ql-stroke.ql-fill {
-  @apply fill-grey-400 stroke-none dark:fill-slate-400;
+  @apply fill-grey-400 stroke-grey-400 dark:fill-slate-400 dark:stroke-grey-400;
 }

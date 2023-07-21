@@ -49,7 +49,7 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   }, [distributionLimit])
 
   const transformSplit = useCallback(
-    (split: Split) => {
+    (split: Split & { isProjectOwner?: boolean }) => {
       assert(split.beneficiary, 'Beneficiary must be defined')
       let amount = undefined
       const splitAmountWad = calculateSplitAmountWad(
@@ -70,6 +70,7 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
         address: split.beneficiary!,
         percent: `${formatSplitPercent(BigNumber.from(split.percent))}%`,
         amount,
+        isProjectOwner: split.isProjectOwner,
       }
     },
     [

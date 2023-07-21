@@ -10,6 +10,7 @@ import { helpPagePath, settingsPagePath } from 'utils/routes'
 import { DetailsSection } from './DetailsSection/DetailsSection'
 import { useEditCycleForm } from './EditCycleFormContext'
 import { EditCycleFormSection } from './EditCycleFormSection'
+import { PayoutsSection } from './PayoutsSection/PayoutsSection'
 
 export function EditCyclePage() {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -52,7 +53,7 @@ export function EditCyclePage() {
               <Trans>How your project will be paid and pay out in ETH.</Trans>
             }
           >
-            <div>Todo</div>
+            <PayoutsSection />
           </EditCycleFormSection>
 
           <EditCycleFormSection

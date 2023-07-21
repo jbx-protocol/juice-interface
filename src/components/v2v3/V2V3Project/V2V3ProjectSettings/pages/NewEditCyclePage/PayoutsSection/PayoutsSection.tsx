@@ -3,6 +3,7 @@ import ExternalLink from 'components/ExternalLink'
 import { helpPagePath } from 'utils/routes'
 import { AdvancedDropdown } from '../AdvancedDropdown'
 import { EditCycleHeader } from '../EditCycleHeader'
+import PayoutsTable from './PayoutsTable'
 
 export function PayoutsSection() {
   return (
@@ -23,7 +24,7 @@ export function PayoutsSection() {
         {/* Add recipient button */}
         {/* 3-dots overall payout settings button */}
       </div>
-      {/* <PayoutsTable /> */}
+      <PayoutsTable />
       <AdvancedDropdown>
         {/* "Enable unlimited payouts" switch */}
         {/* "Hold fees in project" switch */}

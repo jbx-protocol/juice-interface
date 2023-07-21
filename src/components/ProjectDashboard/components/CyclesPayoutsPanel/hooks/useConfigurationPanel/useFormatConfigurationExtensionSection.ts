@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import { V2V3FundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useMemo } from 'react'
 import { isZeroAddress } from 'utils/address'
+import { etherscanLink } from 'utils/etherscan'
 import {
   ConfigurationPanelDatum,
   ConfigurationPanelTableData,
@@ -21,10 +22,24 @@ export const useFormatConfigurationExtensionSection = ({
     const upcomingContract = upcomingFundingCycleMetadata?.dataSource
 
     if (upcomingFundingCycleMetadata === null) {
-      return pairToDatum(t`Contract`, currentContract, null)
+      const link = currentContract
+        ? etherscanLink('address', currentContract)
+        : undefined
+      return pairToDatum(t`Contract`, currentContract, null, link, true)
     }
 
-    return pairToDatum(t`Contract`, currentContract, upcomingContract)
+    const link = upcomingContract
+      ? etherscanLink('address', upcomingContract)
+      : currentContract
+      ? etherscanLink('address', currentContract)
+      : undefined
+    return pairToDatum(
+      t`Contract`,
+      currentContract,
+      upcomingContract,
+      link,
+      true,
+    )
   }, [fundingCycleMetadata?.dataSource, upcomingFundingCycleMetadata])
 
   const useForPaymentsDatum: ConfigurationPanelDatum = useMemo(() => {

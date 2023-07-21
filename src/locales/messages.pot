@@ -3503,6 +3503,9 @@ msgstr ""
 msgid "Start over"
 msgstr ""
 
+msgid "Juicebox provides trustless payroll capabilities to run automated payouts completely on-chain. <0>Learn more about payouts</0>"
+msgstr ""
+
 msgid "Notifications"
 msgstr ""
 

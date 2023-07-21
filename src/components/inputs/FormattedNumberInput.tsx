@@ -23,7 +23,7 @@ export default function FormattedNumberInput({
   placeholder?: string
   disabled?: boolean
   suffix?: string
-  prefix?: string
+  prefix?: string | JSX.Element
   accessory?: JSX.Element
   onChange?: (val?: string) => void
   onBlur?: (val?: string) => void

@@ -54,7 +54,7 @@ export const sanitizeSplit = (split: Split): Split => {
 export const getProjectOwnerRemainderSplit = (
   projectOwnerAddress: string,
   splits: Split[],
-): Split => {
+): Split & { isProjectOwner: true } => {
   const totalSplitPercentage = totalSplitsPercent(splits)
   const ownerPercentage = SPLITS_TOTAL_PERCENT - totalSplitPercentage
 
@@ -65,6 +65,7 @@ export const getProjectOwnerRemainderSplit = (
     lockedUntil: 0,
     projectId: BigNumber.from(0).toHexString(),
     allocator: constants.AddressZero,
+    isProjectOwner: true,
   }
 }
 

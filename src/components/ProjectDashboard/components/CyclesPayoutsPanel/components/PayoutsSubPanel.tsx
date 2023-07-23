@@ -18,7 +18,6 @@ export const PayoutsSubPanel = ({
   const { payouts, loading, totalPayoutAmount } = usePayoutsSubPanel(type)
   const hasPayouts = useMemo(() => {
     if (!payouts || payouts.length === 0) return false
-    if (payouts.length === 1) return !payouts[0].isProjectOwner
     return true
   }, [payouts])
   return (

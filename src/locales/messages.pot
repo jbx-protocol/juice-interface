@@ -665,6 +665,9 @@ msgstr ""
 msgid "Interested in becoming a JuiceboxDAO contributor?"
 msgstr ""
 
+msgid "Project tagline"
+msgstr ""
+
 msgid "Configure your cycle for transparent treasury and campaign management. Any adjustments made will be published on Ethereum to inform contributors."
 msgstr ""
 

@@ -1,7 +1,6 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
-import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { ArcxProvider } from 'contexts/Arcx/ArcxProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
@@ -40,9 +39,7 @@ export const AppWrapper: React.FC<
             <ThemeProvider>
               <EtherPriceProvider>
                 <ArcxProvider>
-                  <AnnouncementsProvider>
-                    <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
-                  </AnnouncementsProvider>
+                  <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
                 </ArcxProvider>
               </EtherPriceProvider>
             </ThemeProvider>

@@ -30,6 +30,7 @@ export function ProjectDetailsSettingsPage() {
     const uploadedMetadata = await uploadProjectMetadata({
       name: fields.name,
       description: fields.description,
+      projectTagline: fields.projectTagline,
       logoUri: fields.logoUri,
       coverImageUri: fields.coverImageUri,
       infoUri: fields.infoUri,

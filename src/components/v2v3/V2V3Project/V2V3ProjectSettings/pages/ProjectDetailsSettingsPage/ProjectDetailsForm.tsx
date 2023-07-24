@@ -4,16 +4,19 @@ import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { RichEditor } from 'components/RichEditor'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectTagName } from 'models/project-tags'
+import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
 export type ProjectDetailsFormFields = {
   name: string
   description: string
+  projectTagline: string
   infoUri: string
   handle: string
   logoUri: string
@@ -82,9 +85,24 @@ export function ProjectDetailsForm({
             />
           )}
           {richProjectDescriptionEnabled ? (
-            <Form.Item name="description" label={t`Project description`}>
-              <RichEditor />
-            </Form.Item>
+            <>
+              <Form.Item
+                name="projectTagline"
+                label={t`Project tagline`}
+                extra={t`Add a brief one-sentence summary of your project.`}
+                rules={[
+                  inputIsLengthRule({
+                    label: t`Tagline`,
+                    max: 48,
+                  }),
+                ]}
+              >
+                <JuiceInput />
+              </Form.Item>
+              <Form.Item name="description" label={t`Project description`}>
+                <RichEditor />
+              </Form.Item>
+            </>
           ) : (
             <Form.Item name="description" label={t`Project description`}>
               <JuiceTextArea
@@ -94,7 +112,12 @@ export function ProjectDetailsForm({
             </Form.Item>
           )}
 
-          <Form.Item name={'logoUri'} label={t`Logo`}>
+          <Form.Item
+            // Fix for RichEditor margin whackiness
+            className="pt-4"
+            name={'logoUri'}
+            label={t`Logo`}
+          >
             <FormImageUploader
               value={initialLogoUrl}
               maxSizeKBs={10000}

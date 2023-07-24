@@ -43,6 +43,9 @@ const editingV2ProjectSlice = createSlice({
     setName: (state, action: PayloadAction<string>) => {
       state.projectMetadata.name = action.payload
     },
+    setProjectTagline: (state, action: PayloadAction<string>) => {
+      state.projectMetadata.projectTagline = action.payload
+    },
     setInfoUri: (state, action: PayloadAction<string>) => {
       state.projectMetadata.infoUri = action.payload
     },

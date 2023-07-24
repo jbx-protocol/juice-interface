@@ -1,0 +1,29 @@
+#rich-text {
+  p {
+    @apply m-0;
+  }
+  h1 {
+    @apply text-2xl;
+  }
+  h1 {
+    @apply text-xl;
+  }
+  blockquote {
+    @apply my-1 border-l-4 border-grey-300 pl-4 dark:border-grey-500;
+  }
+  ol {
+    @apply ml-2;
+    @apply list-inside list-decimal;
+  }
+  ul {
+    @apply ml-2;
+    @apply list-inside list-disc;
+  }
+  pre {
+    @apply my-2;
+    @apply p-2;
+    @apply bg-smoke-100;
+    @apply dark:bg-slate-700;
+    @apply rounded-lg;
+  }
+}

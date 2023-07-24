@@ -4,8 +4,8 @@ import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
-import { MarkdownEditor } from 'components/Markdown'
 import { MinimalCollapse } from 'components/MinimalCollapse'
+import { RichEditor } from 'components/RichEditor'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectTagName } from 'models/project-tags'
 import { featureFlagEnabled } from 'utils/featureFlags'
@@ -83,7 +83,7 @@ export function ProjectDetailsForm({
           )}
           {richProjectDescriptionEnabled ? (
             <Form.Item name="description" label={t`Project description`}>
-              <MarkdownEditor />
+              <RichEditor />
             </Form.Item>
           ) : (
             <Form.Item name="description" label={t`Project description`}>

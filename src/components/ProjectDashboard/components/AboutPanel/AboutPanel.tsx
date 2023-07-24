@@ -1,9 +1,9 @@
 import { Trans, t } from '@lingui/macro'
-import { MarkdownPreview } from 'components/Markdown'
 import {
   SocialLink,
   useAboutPanel,
 } from 'components/ProjectDashboard/hooks/useAboutPanel'
+import { RichPreview } from 'components/RichPreview'
 import { EmptyScreen } from '../EmptyScreen'
 import { SocialLinkButton } from '../ui'
 
@@ -24,14 +24,14 @@ export const AboutPanel = () => {
       </div>
       <div className="flex flex-col gap-4">
         {description ? (
+          <RichPreview source={description} />
+        ) : (
           <>
             <h3 className="mb-0 font-heading text-2xl font-medium">
               <Trans>About {projectName}</Trans>
             </h3>
-            <MarkdownPreview source={description} />
+            <EmptyScreen subtitle={t`This project has no description`} />
           </>
-        ) : (
-          <EmptyScreen subtitle={t`This project has no description`} />
         )}
       </div>
     </div>

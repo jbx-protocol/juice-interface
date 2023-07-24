@@ -1,0 +1,31 @@
+.ql-toolbar.ql-snow {
+  @apply rounded-t-lg;
+  @apply dark:border-slate-300;
+}
+
+.ql-container.ql-snow {
+  @apply rounded-b-lg;
+  @apply dark:border-slate-300;
+}
+
+.ql-editor {
+  @apply rounded-b-lg;
+  @apply bg-smoke-50;
+  @apply dark:bg-slate-600;
+}
+
+.ql-toolbar .ql-stroke {
+  @apply fill-none stroke-grey-400 dark:stroke-slate-400;
+}
+
+.ql-toolbar .ql-fill {
+  @apply fill-grey-400 stroke-none dark:fill-slate-400;
+}
+
+.ql-toolbar .ql-picker {
+  @apply text-grey-400 dark:text-slate-400;
+}
+
+.ql-snow .ql-stroke.ql-fill {
+  @apply fill-grey-400 stroke-grey-400 dark:fill-slate-400 dark:stroke-grey-400;
+}

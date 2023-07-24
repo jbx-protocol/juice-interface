@@ -2381,6 +2381,9 @@ msgstr ""
 msgid "Receive ERC-20"
 msgstr ""
 
+msgid "Must be less than {0} characters"
+msgstr ""
+
 msgid "The amount of ETH this project can pay out of its treasury each Cycle."
 msgstr ""
 

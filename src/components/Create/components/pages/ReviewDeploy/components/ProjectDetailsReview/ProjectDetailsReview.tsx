@@ -18,6 +18,7 @@ export const ProjectDetailsReview = () => {
       payButton,
       payDisclosure,
       twitter,
+      projectTagline,
       tags,
     },
     inputProjectOwner,
@@ -36,6 +37,17 @@ export const ProjectDetailsReview = () => {
       />
       <ReviewDescription
         className="col-span-3"
+        title={t`Tagline`}
+        desc={
+          projectTagline ? (
+            <div className="overflow-hidden text-ellipsis text-base font-medium">
+              {projectTagline}
+            </div>
+          ) : null
+        }
+      />
+      <ReviewDescription
+        className="col-span-4"
         title={t`Project description`}
         placeholder={t`No description`}
         desc={<RichPreview source={description ?? ''} />}

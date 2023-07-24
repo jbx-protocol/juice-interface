@@ -7,6 +7,7 @@ import { useFormDispatchWatch } from '../../hooks'
 
 type ProjectDetailsFormProps = Partial<{
   projectName: string
+  projectTagline: string
   projectDescription: string
   logo: string
   coverImage: string
@@ -29,6 +30,7 @@ export const useProjectDetailsForm = () => {
   const initialValues: ProjectDetailsFormProps = useMemo(
     () => ({
       projectName: projectMetadata.name,
+      projectTagline: projectMetadata.projectTagline,
       projectDescription: projectMetadata.description,
       logo: projectMetadata.logoUri,
       coverImage: projectMetadata.coverImageUri,
@@ -42,18 +44,19 @@ export const useProjectDetailsForm = () => {
       tags: projectMetadata.tags,
     }),
     [
-      inputProjectOwner,
+      projectMetadata.name,
+      projectMetadata.projectTagline,
       projectMetadata.description,
-      projectMetadata.discord,
-      projectMetadata.infoUri,
       projectMetadata.logoUri,
       projectMetadata.coverImageUri,
-      projectMetadata.name,
-      projectMetadata.payButton,
-      projectMetadata.payDisclosure,
+      projectMetadata.infoUri,
       projectMetadata.twitter,
       projectMetadata.telegram,
+      projectMetadata.discord,
+      projectMetadata.payButton,
+      projectMetadata.payDisclosure,
       projectMetadata.tags,
+      inputProjectOwner,
     ],
   )
 
@@ -62,6 +65,13 @@ export const useProjectDetailsForm = () => {
     fieldName: 'projectName',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setName,
+    formatter: v => v ?? '',
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'projectTagline',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setProjectTagline,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({

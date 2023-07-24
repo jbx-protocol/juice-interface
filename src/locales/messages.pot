@@ -1508,6 +1508,9 @@ msgstr ""
 msgid "Tell us about your project."
 msgstr ""
 
+msgid "Add a brief one-sentence summary of your project."
+msgstr ""
+
 msgid "Launch V3 migration token"
 msgstr ""
 
@@ -4698,6 +4701,9 @@ msgid "Clear all"
 msgstr ""
 
 msgid "{titleCasedAllocationName} Percentage"
+msgstr ""
+
+msgid "Tagline"
 msgstr ""
 
 msgid "Tokens cannot be issued while payments are disabled."

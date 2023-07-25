@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Descriptions, Form } from 'antd'
+import { Checkbox, Descriptions, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { Callout } from 'components/Callout'
@@ -305,6 +305,29 @@ export function V2V3BurnOrRedeemModal({
                   tokenAddress={tokenAddress}
                 />
               ) : null}
+            </Form.Item>
+            <Form.Item
+              className="mb-0"
+              name="legalCheckbox"
+              valuePropName="checked"
+              rules={[
+                {
+                  validator: (_, value) =>
+                    value
+                      ? Promise.resolve()
+                      : Promise.reject(
+                          new Error(t`You must confirm your compliance.`),
+                        ),
+                },
+              ]}
+            >
+              <Checkbox>
+                <Trans>
+                  I confirm that the use and redemption of crypto tokens is
+                  legal in my jurisdiction, and that I am fully responsible for
+                  compliance with all relevant laws and regulations.
+                </Trans>
+              </Checkbox>
             </Form.Item>
 
             {/* Will comment memo form due to [note] missing in subgraph - see discussion in https://discord.com/channels/939317843059679252/1035458515709464586/1053400936971771974 */}

@@ -1892,6 +1892,9 @@ msgstr ""
 msgid "Optionally, you can create an ERC-20 token once your project has been deployed. Until then, the Juicebox protocol will track token balances internally, allowing your supporters to receive tokens and redeem them for ETH."
 msgstr ""
 
+msgid "I understand and accept this project's notice."
+msgstr ""
+
 msgid "Set this to the sum of your payouts"
 msgstr ""
 
@@ -2508,6 +2511,9 @@ msgid "{0} after JBX fee"
 msgstr ""
 
 msgid "Subject"
+msgstr ""
+
+msgid "You must confirm your compliance."
 msgstr ""
 
 msgid "Enable controller configuration"
@@ -3881,6 +3887,9 @@ msgstr ""
 msgid "<0>With unlocked cycles, you can edit your project's rules at any time.</0><1>With locked cycles, you can lock your project's rules for a period of time (like 3 minutes, 2 years, or 14 days), helping you build trust with your supporters.</1><2>This choice isn't permanent — you can switch between locked and unlocked cycles in the future.</2>"
 msgstr ""
 
+msgid "I confirm that the use and redemption of crypto tokens is legal in my jurisdiction, and that I am fully responsible for compliance with all relevant laws and regulations."
+msgstr ""
+
 msgid "Community-owned"
 msgstr ""
 
@@ -4322,9 +4331,6 @@ msgstr ""
 msgid "Simple token rules that will work for most projects. You can edit these rules in future cycles."
 msgstr ""
 
-msgid "Message from {0}"
-msgstr ""
-
 msgid "Start"
 msgstr ""
 
@@ -4743,6 +4749,9 @@ msgid "Avatar images are pulled from ENS."
 msgstr ""
 
 msgid "MoonDAO is a worldwide collective united by the mission of decentralizing access to space research and exploration. With privatized space exploration on the rise, MoonDAO is uniting space enthusiasts from around the globe to help make it more accessible while continuing to push research forward. In 2021, they launched a campaign to buy two tickets on a Blue Origin rocket and raised over $8 million on Juicebox. A year later, they sent Coby Cotton from viral YouTube channel Dude Perfect to space as their first astronaut."
+msgstr ""
+
+msgid "You must understand and accept this project's notice."
 msgstr ""
 
 msgid "V3"

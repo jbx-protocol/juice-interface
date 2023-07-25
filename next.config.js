@@ -81,7 +81,11 @@ if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')
 }
 
-const FRAME_SRC = ['https://verify.walletconnect.com/']
+const FRAME_SRC = [
+  'https://verify.walletconnect.com/',
+  'https://stg.checkout.pokoapp.xyz',
+  'https://checkout.pokoapp.xyz',
+]
 
 const ContentSecurityPolicy = `
   default-src 'none';

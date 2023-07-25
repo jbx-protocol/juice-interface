@@ -7,8 +7,10 @@ import {
 } from 'components/ProjectDashboard/hooks/usePayProjectModal/usePayProjectModal'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { Formik } from 'formik'
+import { useWallet } from 'hooks/Wallet'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
+import FiatCheckout from './components/FiatCheckout'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
 
@@ -25,6 +27,8 @@ export const PayProjectModal: React.FC = () => {
     setOpen,
     onPaySubmit,
   } = usePayProjectModal()
+
+  const { isConnected } = useWallet()
 
   return (
     <Formik<PayProjectModalFormValues>
@@ -109,44 +113,50 @@ export const PayProjectModal: React.FC = () => {
                     </div>
                   </div>
 
-                  <ReceiveSection className="py-6" />
+                  {isConnected && (
+                    <>
+                      <ReceiveSection className="py-6" />
 
-                  <div className="py-6">
-                    <MessageSection />
+                      <div className="py-6">
+                        <MessageSection />
+                      </div>
+                    </>
+                  )}
 
-                    <div className="mt-6 flex gap-2">
-                      <input
-                        id="userAcceptsTerms"
-                        name="userAcceptsTerms"
-                        type="checkbox"
-                        checked={props.values.userAcceptsTerms}
-                        onChange={() =>
-                          props.setFieldValue(
-                            'userAcceptsTerms',
-                            !props.values.userAcceptsTerms,
-                          )
-                        }
-                      />
-                      <label
-                        htmlFor="userAcceptsTerms"
-                        className={twMerge(
-                          'font-normal',
-                          props.errors.userAcceptsTerms &&
-                            props.submitCount > 0 &&
-                            'text-error-500 transition-colors',
-                        )}
-                      >
-                        <Trans>
-                          I accept the{' '}
-                          <ExternalLink href="https://docs.juicebox.money/dev/learn/risks">
-                            risks
-                          </ExternalLink>{' '}
-                          associated with the Juicebox protocol.
-                        </Trans>
-                      </label>
-                    </div>
+                  <div className="flex gap-2 py-6">
+                    <input
+                      id="userAcceptsTerms"
+                      name="userAcceptsTerms"
+                      type="checkbox"
+                      checked={props.values.userAcceptsTerms}
+                      onChange={() =>
+                        props.setFieldValue(
+                          'userAcceptsTerms',
+                          !props.values.userAcceptsTerms,
+                        )
+                      }
+                    />
+                    <label
+                      htmlFor="userAcceptsTerms"
+                      className={twMerge(
+                        'font-normal',
+                        props.errors.userAcceptsTerms &&
+                          props.submitCount > 0 &&
+                          'text-error-500 transition-colors',
+                      )}
+                    >
+                      <Trans>
+                        I accept the{' '}
+                        <ExternalLink href="https://docs.juicebox.money/dev/learn/risks">
+                          risks
+                        </ExternalLink>{' '}
+                        associated with the Juicebox protocol.
+                      </Trans>
+                    </label>
                   </div>
                 </div>
+
+                <FiatCheckout />
               </>
             )}
           </JuiceModal>

@@ -3143,6 +3143,9 @@ msgstr ""
 msgid "Payer"
 msgstr ""
 
+msgid "Pay with Fiat"
+msgstr ""
+
 msgid "Created"
 msgstr ""
 

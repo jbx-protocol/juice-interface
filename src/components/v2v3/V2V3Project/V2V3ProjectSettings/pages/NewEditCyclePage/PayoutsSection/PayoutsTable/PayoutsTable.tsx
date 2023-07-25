@@ -41,12 +41,12 @@ export function PayoutsTable() {
             {/* TODO: Add sub-total computation */}
             <Cell />
           </Row>
-          <Row className="h-11">
+          <Row>
             <Cell>Fees</Cell>
             {/* TODO: Add fees computation */}
             <Cell />
           </Row>
-          <Row className="h-11 border-none font-medium" highlighted>
+          <Row className="border-none font-medium" highlighted>
             <Cell>Total</Cell>
             <Cell>{getFieldValueDL}</Cell>
             <Cell />

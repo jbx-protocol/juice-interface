@@ -15,6 +15,7 @@ import {
   getNewDistributionLimit,
 } from 'utils/v2v3/distributions'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
+import { PayoutTitle } from './PayoutTitle'
 import { PayoutsTableCell } from './PayoutsTableCell'
 import { PayoutsTableRow } from './PayoutsTableRow'
 
@@ -105,14 +106,11 @@ export function PayoutSplitRow({ payoutSplit }: { payoutSplit: Split }) {
     },
   ]
 
-  const addressOrId =
-    !payoutSplit.projectId || payoutSplit.projectId === '0x00'
-      ? payoutSplit.beneficiary
-      : payoutSplit.projectId
-
   return (
     <PayoutsTableRow className="text-primary text-sm">
-      <Cell className="py-6">{addressOrId}</Cell>
+      <Cell className="py-6">
+        <PayoutTitle payoutSplit={payoutSplit} />
+      </Cell>
       <Cell className="py-6">
         <FormattedNumberInput
           prefix={CURRENCY_METADATA[currency ?? 'ETH'].symbol}

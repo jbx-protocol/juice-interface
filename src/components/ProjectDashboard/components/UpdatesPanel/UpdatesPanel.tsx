@@ -3,9 +3,9 @@ import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import useMobile from 'hooks/useMobile'
 import { useEffect } from 'react'
+import { PopupMenu } from '../../../ui/PopupMenu'
 import { AddProjectUpdateModal } from '../AddProjectUpdateModal'
 import { EmptyScreen } from '../EmptyScreen'
-import { PopupMenu } from '../PopupMenu/PopupMenu'
 import {
   ProjectUpdate,
   ProjectUpdateSkeleton,

@@ -77,14 +77,6 @@ function sendKeypTransaction({
 }) {
   const { address } = contract
 
-  // console.log(
-  //   'asdf req data',
-  //   { address },
-  //   { abi },
-  //   { accessToken },
-  //   contract.interface.fragments,
-  // )
-
   return writeContract({
     accessToken,
     address,
@@ -208,7 +200,6 @@ export function useTransactor(): Transactor | undefined {
         const txTitle = options?.title ?? functionName
 
         // add transaction to the history UI
-        console.log('asdf result', result)
         if (result) {
           addTransaction?.(txTitle, result, {
             onConfirmed,

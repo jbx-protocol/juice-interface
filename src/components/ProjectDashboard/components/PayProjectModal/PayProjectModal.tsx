@@ -66,7 +66,7 @@ export const PayProjectModal: React.FC = () => {
             {isTransactionPending ? (
               <div className="flex h-full w-full flex-col items-center justify-center">
                 <Image
-                  src="/assets/images/quint.webp"
+                  src="/assets/images/orange-loading.webp"
                   alt={t`Juicebox loading animation`}
                   width={140}
                   height={140}

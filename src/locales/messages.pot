@@ -1490,9 +1490,6 @@ msgstr ""
 msgid "A percentage of token issuance which is set aside for addresses and other projects chosen by the project owner."
 msgstr ""
 
-msgid "About {projectName}"
-msgstr ""
-
 msgid "Edit recipients"
 msgstr ""
 

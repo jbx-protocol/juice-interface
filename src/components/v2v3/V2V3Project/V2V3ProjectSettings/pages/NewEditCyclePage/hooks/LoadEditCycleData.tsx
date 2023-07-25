@@ -93,8 +93,9 @@ export const useLoadEditCycleData = () => {
       }
 
       setInitialFormData(formData)
+      editCycleForm.setFieldsValue(formData)
     }
-  }, [initialEditingData])
+  }, [initialEditingData, editCycleForm])
   return {
     initialFormData,
     editCycleForm,

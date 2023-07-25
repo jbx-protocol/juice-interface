@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { helpPagePath, settingsPagePath } from 'utils/routes'
 import { DetailsSection } from './DetailsSection/DetailsSection'
-import { useEditCycleForm } from './EditCycleFormContext'
+import { useEditCycleFormContext } from './EditCycleFormContext'
 import { EditCycleFormSection } from './EditCycleFormSection'
 import { PayoutsSection } from './PayoutsSection/PayoutsSection'
 
@@ -16,7 +16,7 @@ export function EditCyclePage() {
   const { projectId } = useContext(ProjectMetadataContext)
   const { handle } = useContext(V2V3ProjectContext)
 
-  const { editCycleForm, initialFormData } = useEditCycleForm()
+  const { editCycleForm, initialFormData } = useEditCycleFormContext()
   if (!initialFormData) return <Loading className="h-24" />
   return (
     <div>

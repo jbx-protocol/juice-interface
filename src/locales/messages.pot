@@ -2528,6 +2528,9 @@ msgstr ""
 msgid "Immediately"
 msgstr ""
 
+msgid "Address or ID"
+msgstr ""
+
 msgid "Error downloading redemptions, try again."
 msgstr ""
 

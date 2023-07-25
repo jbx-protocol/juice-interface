@@ -5,10 +5,10 @@ import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { CYCLE_EXPLANATION } from 'components/strings'
 import DurationInputAndSelect from 'components/v2v3/shared/FundingCycleConfigurationDrawers/FundingDrawer/FundingForm/DurationInputAndSelect'
 import { useState } from 'react'
-import { useEditCycleForm } from '../EditCycleFormContext'
+import { useEditCycleFormContext } from '../EditCycleFormContext'
 
 export function DurationFields() {
-  const { editCycleForm, initialFormData } = useEditCycleForm()
+  const { editCycleForm, initialFormData } = useEditCycleFormContext()
 
   const [durationEnabled, setDurationEnabled] = useState<boolean>(
     Boolean(initialFormData?.duration),

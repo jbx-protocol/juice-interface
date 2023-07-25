@@ -1,7 +1,7 @@
 import { WarningOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { useJBWallet } from 'hooks/Wallet/useJBWallet'
+import { useJBWallet } from 'hooks/Wallet'
 
 import WalletMenu from './WalletMenu'
 

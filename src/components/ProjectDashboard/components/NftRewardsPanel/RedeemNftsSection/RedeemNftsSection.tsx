@@ -3,13 +3,13 @@ import { Button } from 'antd'
 import { RedeemNftsModal } from 'components/v2v3/V2V3Project/ManageNftsSection/RedeemNftsModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/useNftAccountBalance'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { RedeemNftTiles } from './RedeemNftTiles'
 
 export function RedeemNftsSection() {
   const [redeemNftsModalVisible, setRedeemNftsModalVisible] = useState(false)
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const { data, loading } = useNftAccountBalance({
     accountAddress: userAddress,

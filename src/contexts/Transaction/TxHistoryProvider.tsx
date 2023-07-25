@@ -2,7 +2,7 @@ import { TransactionLog, TxStatus } from 'models/transaction'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { clearInterval, setInterval } from 'timers'
 
-import { useJBWallet } from 'hooks/Wallet/useJBWallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { readProvider } from '../../constants/readProvider'
 import { AddTransactionFunction, TxHistoryContext } from './TxHistoryContext'
 

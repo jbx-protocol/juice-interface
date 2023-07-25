@@ -1,5 +1,5 @@
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { useContext } from 'react'
 import { isEqualAddress } from 'utils/address'
@@ -9,7 +9,7 @@ import { useV1HasPermissions } from './useV1HasPermissions'
 export function useV1ConnectedWalletHasPermission(
   permission: V1OperatorPermission | V1OperatorPermission[],
 ) {
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const { projectId } = useContext(ProjectMetadataContext)
 
   const { owner } = useProjectOwner()

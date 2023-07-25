@@ -3,6 +3,7 @@ import { signInKeyp } from '@usekeyp/js-sdk'
 import { LoginPortal } from '@usekeyp/ui-kit'
 import { Button, Modal } from 'antd'
 import { useWallet } from 'hooks/Wallet'
+import { signOut } from 'next-auth/react'
 import { useCallback, useState } from 'react'
 
 import { WalletContext } from './WalletContext'
@@ -13,7 +14,7 @@ export const WalletProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   const [showWalletOptionModal, setShowWalletOptionModal] = useState<boolean>()
   const [showKeypLogin, setShowKeypLogin] = useState<boolean>()
 
-  const { connect: connectEOAWallet } = useWallet()
+  const { connect: connectEOAWallet, disconnect, isConnected } = useWallet()
 
   const connect = useCallback(() => setShowWalletOptionModal(true), [])
 
@@ -35,7 +36,11 @@ export const WalletProvider: React.FC<React.PropsWithChildren<unknown>> = ({
           <Button
             type="primary"
             onClick={() => {
-              connectEOAWallet()
+              connectEOAWallet().then(() => {
+                // Signout of keyp. Ensure only one wallet is connected at a time
+                signOut()
+              })
+
               setShowWalletOptionModal(false)
             }}
             block
@@ -64,7 +69,12 @@ export const WalletProvider: React.FC<React.PropsWithChildren<unknown>> = ({
       >
         <LoginPortal
           providers={['GOOGLE', 'DISCORD', 'TWITTER']}
-          onClick={(provider: string) => signInKeyp(provider)}
+          onClick={(provider: string) => {
+            signInKeyp(provider)
+
+            // Disconnect EOA wallet. Ensure only one wallet is connected at a time
+            if (isConnected) disconnect()
+          }}
         />
       </Modal>
     </WalletContext.Provider>

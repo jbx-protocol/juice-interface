@@ -6,7 +6,7 @@ import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/useTransactor'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 
@@ -15,7 +15,7 @@ export function useProcessHeldFeesTx(): TransactorInstance {
   const { contracts, cv } = useContext(V2V3ContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   return (_, txOpts) => {
     try {

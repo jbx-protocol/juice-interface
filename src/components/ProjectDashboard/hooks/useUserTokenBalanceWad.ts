@@ -1,10 +1,10 @@
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/useTotalBalanceOf'
 import { useMemo } from 'react'
 import { useProjectMetadata } from './useProjectMetadata'
 
 export const useUserTokenBalanceWad = () => {
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const { projectId } = useProjectMetadata()
 
   const { data: totalBalance, loading } = useTotalBalanceOf(

@@ -6,7 +6,7 @@ import { Announcement } from 'models/announcement'
 import { useRouter } from 'next/router'
 import React, { useCallback, useContext, useEffect } from 'react'
 
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { AnnouncementsContext } from './AnnouncementsContext'
 
 /**
@@ -15,7 +15,7 @@ import { AnnouncementsContext } from './AnnouncementsContext'
 export const AnnouncementLauncher: React.FC<
   React.PropsWithChildren<unknown>
 > = ({ children }) => {
-  const wallet = useWallet()
+  const wallet = useJBWallet()
   const { owner } = useContext(V1ProjectContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
   const isProjectOwner = useIsUserAddress(owner ?? projectOwnerAddress)

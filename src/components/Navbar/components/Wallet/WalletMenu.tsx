@@ -5,7 +5,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
-import { useJBWallet } from 'hooks/Wallet/useJBWallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { ReactNode, useCallback, useState } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { DropdownMenu, DropdownMenuItem } from '../DropdownMenu'

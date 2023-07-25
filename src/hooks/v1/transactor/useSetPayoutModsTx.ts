@@ -6,7 +6,7 @@ import { V1UserContext } from 'contexts/v1/User/V1UserContext'
 import { constants } from 'ethers'
 
 import { BigNumber } from 'ethers'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { PayoutMod } from 'models/v1/mods'
 import { useContext } from 'react'
@@ -21,7 +21,7 @@ export function useSetPayoutModsTx(): TransactorInstance<{
   const { projectId } = useContext(ProjectMetadataContext)
 
   const projectTitle = useV1ProjectTitle()
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   return ({ configured, payoutMods }, txOpts) => {
     if (

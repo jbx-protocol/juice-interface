@@ -1,6 +1,6 @@
 import { useProjectCart } from 'components/ProjectDashboard/hooks'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
-import { useJBWallet } from 'hooks/Wallet/useJBWallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useCallback, useContext, useMemo } from 'react'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 

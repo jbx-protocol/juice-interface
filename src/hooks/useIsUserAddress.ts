@@ -1,8 +1,8 @@
 import { isEqualAddress } from 'utils/address'
-import { useWallet } from './Wallet'
+import { useJBWallet } from './Wallet'
 
 export function useIsUserAddress(address: string | undefined) {
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   return isEqualAddress(address, userAddress)
 }

@@ -11,7 +11,7 @@ import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { getAddress } from 'ethers/lib/utils'
 import { useJBPrices } from 'hooks/JBPrices'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/defaultContracts/useDefaultJB721Delegate'
 import { useDefaultJBController } from 'hooks/defaultContracts/useDefaultJBController'
 import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
@@ -101,7 +101,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
   const { contracts } = useContext(V2V3ContractsContext)
   const defaultJBController = useDefaultJBController()
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const projectTitle = useV2ProjectTitle()
   const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
   const JBTiered721DelegateProjectDeployer =

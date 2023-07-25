@@ -2,7 +2,7 @@ import Icon from '@ant-design/icons'
 import { plural, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { useQueuedSafeTransactions } from 'hooks/safe/useQueuedSafeTransactions'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { GnosisSafe } from 'models/safe'
 import Link from 'next/link'
 import {
@@ -56,7 +56,7 @@ function BadgeMightHaveNotice({
   safe: GnosisSafe
   href: string
 }) {
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const { data: queuedSafeTransactions, isLoading } = useQueuedSafeTransactions(
     {
       safeAddress: safe.address,
@@ -121,7 +121,7 @@ export function GnosisSafeBadge({
   safe: GnosisSafe
   href: string
 }) {
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   const isMultisigMember = isSafeSigner({ safe, address: userAddress })
   if (isMultisigMember) {

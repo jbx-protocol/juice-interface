@@ -4,8 +4,8 @@ import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import TransactorButton from 'components/buttons/TransactorButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { BigNumber } from 'ethers'
+import { useJBWallet } from 'hooks/Wallet'
 import { TransactorInstance } from 'hooks/useTransactor'
-import { useWallet } from 'hooks/Wallet'
 import { useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
@@ -17,7 +17,7 @@ export function AddToProjectBalanceForm({
     value: BigNumber
   }>
 }) {
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   const [addToBalanceForm] = Form.useForm<{ amount: string }>()
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()

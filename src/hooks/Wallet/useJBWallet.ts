@@ -42,7 +42,10 @@ export function useJBWallet() {
       : isAuthenticated
       ? 'keyp'
       : undefined,
-    disconnect: isAuthenticated ? signOut : eoa.disconnect,
+    disconnect: () => {
+      if (eoa.isConnected) eoa.disconnect()
+      if (isAuthenticated) signOut()
+    },
     connect,
   }
 }

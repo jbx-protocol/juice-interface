@@ -3,15 +3,15 @@ import { AuthAPI } from 'lib/api/auth'
 import { useCallback } from 'react'
 import { Database } from 'types/database.types'
 import { v4 } from 'uuid'
-import { useWallet } from './Wallet'
+import { useJBWallet } from './Wallet/useJBWallet'
 
 export const useWalletSignIn = () => {
-  const wallet = useWallet()
+  const { eoa, keyp, userAddress } = useJBWallet()
   const supabase = useSupabaseClient<Database>()
 
   const checkCurrentSessionUserIsCurrentWalletConnected = useCallback(
     async (session: Session) => {
-      if (!wallet.userAddress) return false
+      if (!userAddress) return false
       const { error, data } = await supabase
         .from('users')
         .select('wallet')
@@ -21,23 +21,18 @@ export const useWalletSignIn = () => {
         console.error(error)
         return false
       }
-      return data.wallet === wallet.userAddress.toLowerCase()
+      return data.wallet === userAddress.toLowerCase()
     },
-    [supabase, wallet.userAddress],
+    [supabase, userAddress],
   )
 
   return useCallback(async () => {
-    if (wallet.chainUnsupported) {
-      const walletChanged = await wallet.changeNetworks()
+    if (eoa.chainUnsupported) {
+      const walletChanged = await eoa.changeNetworks()
       if (!walletChanged) {
         console.error('Wallet did not change networks')
         throw new Error('Wallet did not change networks')
       }
-    }
-
-    if (!wallet.signer || !wallet.userAddress) {
-      console.error('Wallet not connected')
-      throw new Error('Wallet not connected')
     }
 
     const getSessionResult = await supabase.auth.getSession()
@@ -50,15 +45,26 @@ export const useWalletSignIn = () => {
       return getSessionResult.data.session
     }
 
-    const challengeMessage = await AuthAPI.getChallengeMessage({
-      wallet: wallet.userAddress,
-    })
-    const signature = await wallet.signer.signMessage(challengeMessage)
-    const accessToken = await AuthAPI.walletSignIn({
-      wallet: wallet.userAddress,
-      signature,
-      message: challengeMessage,
-    })
+    let accessToken: string | undefined = undefined
+
+    // Connected wallet is EOA
+    if (eoa.signer && eoa.userAddress) {
+      const challengeMessage = await AuthAPI.getChallengeMessage({
+        wallet: eoa.userAddress,
+      })
+      const signature = await eoa.signer.signMessage(challengeMessage)
+      accessToken = await AuthAPI.walletSignIn({
+        wallet: eoa.userAddress,
+        signature,
+        message: challengeMessage,
+      })
+    } else if (keyp.address) {
+      accessToken = await AuthAPI.keypWalletSignIn({ wallet: keyp.address })
+    } else {
+      console.error('Wallet not connected')
+      throw new Error('Wallet not connected')
+    }
+
     const { error, data } = await supabase.auth.setSession({
       access_token: accessToken,
       refresh_token: v4(), // Set to garbage token, no long lived refresh tokens
@@ -72,5 +78,10 @@ export const useWalletSignIn = () => {
       throw new Error('No session returned')
     }
     return data.session
-  }, [checkCurrentSessionUserIsCurrentWalletConnected, supabase.auth, wallet])
+  }, [
+    checkCurrentSessionUserIsCurrentWalletConnected,
+    supabase.auth,
+    eoa,
+    keyp,
+  ])
 }

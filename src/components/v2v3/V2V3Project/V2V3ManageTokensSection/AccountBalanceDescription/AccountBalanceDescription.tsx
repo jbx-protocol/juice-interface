@@ -5,7 +5,7 @@ import ManageTokensModal from 'components/modals/ManageTokensModal'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import useERC20BalanceOf from 'hooks/ERC20/useERC20BalanceOf'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/useTotalBalanceOf'
 import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/useTransferUnclaimedTokensTx'
@@ -32,7 +32,7 @@ export function AccountBalanceDescription() {
   const [manageTokensModalVisible, setManageTokensModalVisible] =
     useState<boolean>(false)
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
   const unclaimedBalance = totalBalance?.sub(claimedBalance ?? 0)

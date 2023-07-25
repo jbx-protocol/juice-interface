@@ -3,7 +3,7 @@ import { Button, Descriptions } from 'antd'
 import SectionHeader from 'components/SectionHeader'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/useNftAccountBalance'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { CSSProperties, useContext, useState } from 'react'
 import { RedeemNftsModal } from './RedeemNftsModal'
 
@@ -19,7 +19,7 @@ const contentStyle: CSSProperties = {
 }
 
 export function ManageNftsSection() {
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
   const [redeemNftsModalVisible, setRedeemNftsModalVisible] =
     useState<boolean>(false)

@@ -5,7 +5,7 @@ import { Callout } from 'components/Callout'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactorInstance } from 'hooks/useTransactor'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
 import { useContext, useState } from 'react'
@@ -28,7 +28,7 @@ export function ArchiveProject({
 
   const [isLoadingArchive, setIsLoadingArchive] = useState<boolean>(false)
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   const revalidateProjectAfterArchive = async () => {
     switch (pv) {

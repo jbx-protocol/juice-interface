@@ -16,7 +16,7 @@ import useTotalSupplyOfProjectToken from 'hooks/v1/contractReader/useTotalSupply
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/useV1ConnectedWalletHasPermission'
 import { useV1UnclaimedBalance } from 'hooks/v1/contractReader/useV1UnclaimedBalance'
 import { useTransferTokensTx } from 'hooks/v1/transactor/useTransferTokensTx'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { V1OperatorPermission } from 'models/v1/permissions'
 import { CSSProperties, useContext, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
@@ -41,7 +41,7 @@ export function TokensSection() {
   const [participantsModalVisible, setParticipantsModalVisible] =
     useState<boolean>(false)
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   const fundingCycleMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
 

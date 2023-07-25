@@ -15,7 +15,7 @@ import { useContext, useState } from 'react'
 import { settingsPagePath } from 'utils/routes'
 
 export function V2V3ProjectHeaderActions() {
-  const wallet = useWallet()
+  const { chainUnsupported, isConnected } = useWallet()
   const { handle } = useContext(V2V3ProjectContext)
 
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)
@@ -26,7 +26,7 @@ export function V2V3ProjectHeaderActions() {
   const { projectId } = useContext(ProjectMetadataContext)
 
   // If the user is not connected to a wallet, or the wallet is on an unsupported chain, don't show the buttons
-  const showWalletButtons = wallet.isConnected && !wallet.chainUnsupported
+  const showWalletButtons = isConnected && !chainUnsupported
 
   if (projectId === undefined) return null
 

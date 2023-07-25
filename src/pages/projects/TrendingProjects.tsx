@@ -3,7 +3,7 @@ import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import { useTrendingProjects } from 'hooks/useProjects'
 
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useWalletBookmarkedIds } from 'hooks/useWalletBookmarkedProjects'
 import RankingExplanation from './RankingExplanation'
 import TrendingProjectCard from './TrendingProjectCard'
@@ -15,7 +15,7 @@ export default function TrendingProjects({
 }) {
   const { data: projects, isLoading } = useTrendingProjects(count)
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   const { ids: bookmarkedProjectIds } = useWalletBookmarkedIds({
     wallet: userAddress,

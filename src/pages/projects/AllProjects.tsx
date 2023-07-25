@@ -2,7 +2,7 @@ import { Trans, t } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useLoadMoreContent } from 'hooks/useLoadMore'
 import { useDBProjectsInfiniteQuery } from 'hooks/useProjects'
 import { useWalletBookmarkedIds } from 'hooks/useWalletBookmarkedProjects'
@@ -51,7 +51,7 @@ export default function AllProjects({
     hasNextPage,
   })
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   const { ids: bookmarkedProjectIds } = useWalletBookmarkedIds({
     wallet: userAddress,

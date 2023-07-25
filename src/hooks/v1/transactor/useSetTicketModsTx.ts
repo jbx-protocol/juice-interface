@@ -4,7 +4,7 @@ import { V1UserContext } from 'contexts/v1/User/V1UserContext'
 import { constants } from 'ethers'
 
 import { BigNumber } from 'ethers'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { TicketMod } from 'models/v1/mods'
 import { useContext } from 'react'
 
@@ -17,7 +17,7 @@ export function useSetTicketModsTx(): TransactorInstance<{
   ticketMods: TicketMod[]
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const { terminal } = useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 

@@ -2,7 +2,7 @@ import { t } from '@lingui/macro'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/useEthBalance'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { CurrencyOption } from 'models/currencyOption'
 import { Dispatch, SetStateAction, useContext, useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
@@ -57,7 +57,7 @@ export function usePayProjectForm(): PayProjectForm {
   )
   const [errorMessage, setErrorMessage] = useState<string>('')
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const converter = useCurrencyConverter()
   const { data: userBalanceWei } = useEthBalanceQuery(userAddress)
   const userBalanceUsd = converter.wadToCurrency(userBalanceWei, 'USD', 'ETH')

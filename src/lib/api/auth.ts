@@ -30,4 +30,15 @@ export const AuthAPI = {
     if (!result.data.accessToken) throw new Error('No access token received')
     return result.data.accessToken
   },
+  keypWalletSignIn: async ({
+    wallet: walletAddress,
+  }: {
+    wallet: string
+  }): Promise<string> => {
+    const result = await axios.post('/api/auth/keyp-sign-in', {
+      walletAddress,
+    })
+    if (!result.data.accessToken) throw new Error('No access token received')
+    return result.data.accessToken
+  },
 }

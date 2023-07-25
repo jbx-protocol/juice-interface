@@ -13,7 +13,7 @@ import PrefixedInput from 'components/inputs/PrefixedInput'
 import { RichEditor } from 'components/RichEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
 import { useContext } from 'react'
@@ -35,12 +35,12 @@ export const ProjectDetailsPage: React.FC<
   const { goToNextPage } = useContext(PageContext)
   const formProps = useProjectDetailsForm()
   const lockPageRulesWrapper = useLockPageRulesWrapper()
-  const wallet = useWallet()
+  const { userAddress } = useJBWallet()
 
   const inputWalletAddress = Form.useWatch('inputProjectOwner', formProps.form)
 
   const projectOwnerDifferentThanWalletAddress =
-    inputWalletAddress && wallet.userAddress !== inputWalletAddress
+    inputWalletAddress && userAddress !== inputWalletAddress
 
   const richProjectDescriptionEnabled = featureFlagEnabled(
     FEATURE_FLAGS.RICH_PROJECT_DESCRIPTION,

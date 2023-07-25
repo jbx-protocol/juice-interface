@@ -4,7 +4,7 @@ import ExternalLink from 'components/ExternalLink'
 import Logo from 'components/Logo'
 import Discord from 'components/icons/Discord'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useFetchDeveloperWallets } from 'hooks/useFetchDeveloperWallets'
 import { isEqualAddress } from 'utils/address'
 import { LinkColProps, LinkColumn } from './LinkColumn'
@@ -28,7 +28,7 @@ const ImageButtons = [
 ]
 
 export function Footer() {
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const { data } = useFetchDeveloperWallets()
 
   const showDeveloperLinks =

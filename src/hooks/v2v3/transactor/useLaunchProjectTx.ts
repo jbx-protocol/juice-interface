@@ -3,7 +3,7 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useDefaultJBController } from 'hooks/defaultContracts/useDefaultJBController'
 import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import { TransactorInstance } from 'hooks/useTransactor'
@@ -35,7 +35,7 @@ export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
   const defaultJBController = useDefaultJBController()
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   const projectTitle = useV2ProjectTitle()
   const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()

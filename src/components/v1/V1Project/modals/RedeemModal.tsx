@@ -13,7 +13,7 @@ import useClaimableOverflowOf from 'hooks/v1/contractReader/useClaimableOverflow
 import { useRedeemRate } from 'hooks/v1/contractReader/useRedeemRate'
 import useTotalBalanceOf from 'hooks/v1/contractReader/useTotalBalanceOf'
 import { useRedeemTokensTx } from 'hooks/v1/transactor/useRedeemTokensTx'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { formattedNum, fromWad, parseWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -42,7 +42,7 @@ export default function RedeemModal({
   }>()
 
   const fcMetadata = decodeFundingCycleMetadata(currentFC?.metadata)
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
   const maxClaimable = useClaimableOverflowOf()
   const rewardAmount = useRedeemRate({

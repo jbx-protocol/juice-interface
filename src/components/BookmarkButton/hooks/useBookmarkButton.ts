@@ -1,5 +1,5 @@
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { PV } from 'models/pv'
 import { useCallback, useEffect, useState } from 'react'
@@ -25,7 +25,7 @@ export const useBookmarkButton = ({
   const [loading, setLoading] = useState<boolean>(false)
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false)
 
-  const wallet = useWallet()
+  const { userAddress, isConnected } = useJBWallet()
   const signIn = useWalletSignIn()
   const session = useSession()
   const supabase = useSupabaseClient<Database>()
@@ -52,12 +52,12 @@ export const useBookmarkButton = ({
 
   const toggleBookmark = useCallback(async () => {
     // If the user is not connected to a wallet, don't do anything
-    if (!wallet.userAddress) return
+    if (!userAddress) return
 
     const { data: users } = await supabase
       .from('users')
       .select('*')
-      .eq('wallet', wallet.userAddress)
+      .eq('wallet', userAddress)
 
     let _session = session
 
@@ -95,7 +95,7 @@ export const useBookmarkButton = ({
       console.error(e)
       emitErrorNotification('Error saving project')
     }
-  }, [getIsBookmarked, session, supabase, wallet.userAddress, signIn, project])
+  }, [getIsBookmarked, session, supabase, userAddress, signIn, project])
 
   // Check if the project is bookmarked
   useEffect(() => {
@@ -114,7 +114,7 @@ export const useBookmarkButton = ({
 
   const onBookmarkButtonClicked = useCallback(async () => {
     // If the user is not connected to a wallet, don't do anything
-    if (!wallet.isConnected) return
+    if (!isConnected) return
 
     setLoading(true)
 
@@ -126,7 +126,7 @@ export const useBookmarkButton = ({
     } finally {
       setLoading(false)
     }
-  }, [toggleBookmark, wallet.isConnected])
+  }, [toggleBookmark, isConnected])
 
   return {
     loading,

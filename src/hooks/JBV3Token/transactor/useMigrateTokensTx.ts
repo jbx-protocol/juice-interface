@@ -7,7 +7,7 @@ import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/useTransactor'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 import { useJBV3Token } from '../contracts/useJBV3Token'
@@ -18,7 +18,7 @@ export function useMigrateTokensTx(): TransactorInstance {
   const { projectId } = useContext(ProjectMetadataContext)
   const { cv } = useContext(V2V3ContractsContext)
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const tokenContract = useJBV3Token({ tokenAddress })
 
   return (_, txOpts) => {

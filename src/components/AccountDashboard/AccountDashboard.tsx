@@ -25,7 +25,7 @@ import {
   useWalletBookmarkedProjects,
 } from 'hooks/useWalletBookmarkedProjects'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { client } from 'lib/apollo/client'
 import { Profile } from 'models/database'
 import { DBProject } from 'models/dbProject'
@@ -37,7 +37,7 @@ import { ensAvatarUrlForAddress } from 'utils/ens'
 import { etherscanLink } from 'utils/etherscan'
 
 function ProjectsList({ projects }: { projects: DBProject[] }) {
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   const { ids: bookmarkedProjectIds } = useWalletBookmarkedIds({
     wallet: userAddress,
@@ -83,7 +83,7 @@ function ContributedList({ address }: { address: string }) {
 
   const contributions = data?.participants
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   if (contributionsLoading) return <Loading />
 
@@ -134,7 +134,7 @@ function OwnedProjectsList({ address }: { address: string }) {
     orderDirection: 'desc',
   })
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   if (isLoading) return <Loading />
 
@@ -169,7 +169,7 @@ function SavedProjectsList({ address }: { address: string }) {
     wallet: address,
   })
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   if (isLoading) return <Loading />
 
@@ -198,7 +198,7 @@ function CreatedProjectsList({ address }: { address: string }) {
     orderDirection: 'desc',
   })
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   if (isLoading) return <Loading />
 
@@ -237,7 +237,7 @@ export function AccountDashboard({
   ensName: string | null | undefined
   profile: Profile | null | undefined
 }) {
-  const wallet = useWallet()
+  const wallet = useJBWallet()
   const signIn = useWalletSignIn()
   const router = useRouter()
 

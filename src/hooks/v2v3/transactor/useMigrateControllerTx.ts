@@ -6,7 +6,7 @@ import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/useTransactor'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 
@@ -18,7 +18,7 @@ export function useMigrateControllerTx(): TransactorInstance<{
   const { cv } = useContext(V2V3ContractsContext)
   const { contracts } = useContext(V2V3ProjectContractsContext)
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   return ({ projectId, newControllerAddress }, txOpts) => {
     try {

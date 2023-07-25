@@ -23,7 +23,7 @@ import { defaultAbiCoder } from 'ethers/lib/utils.js'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/useNftAccountBalance'
 import { useETHReceivedFromNftRedeem } from 'hooks/v2v3/contractReader/useETHReceivedFromNftRedeem'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/useRedeemTokensTx'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatRedemptionRate } from 'utils/v2v3/math'
@@ -83,7 +83,7 @@ export function RedeemNftsModal({
     redeemAmount: string
   }>()
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const redeemTokensTx = useRedeemTokensTx()
   const { data, loading: balanceLoading } = useNftAccountBalance({
     dataSourceAddress: fundingCycleMetadata?.dataSource,

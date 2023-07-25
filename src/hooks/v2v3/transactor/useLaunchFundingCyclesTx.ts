@@ -2,7 +2,7 @@ import { t } from '@lingui/macro'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { Contract } from 'ethers'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useDefaultJBController } from 'hooks/defaultContracts/useDefaultJBController'
 import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import { TransactorInstance } from 'hooks/useTransactor'
@@ -33,7 +33,7 @@ export function useLaunchFundingCyclesTx({
   const defaultJBController = useDefaultJBController()
   const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const projectTitle = useV2ProjectTitle()
 
   return (

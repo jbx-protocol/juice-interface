@@ -1,5 +1,5 @@
 import { isAddress } from 'ethers/lib/utils'
-import { useJBWallet } from 'hooks/Wallet/useJBWallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { resolveAddress } from 'lib/api/ens'
 import { useCallback, useReducer } from 'react'
 import { editRewardBeneficiaryReducer } from './editRewardBeneficiaryReducer'

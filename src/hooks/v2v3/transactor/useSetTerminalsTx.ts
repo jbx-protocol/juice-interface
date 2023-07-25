@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import {
   TransactorInstance,
   handleTransactionException,
@@ -16,7 +16,7 @@ export function useSetTerminalsTx(): TransactorInstance<{
   const { transactor } = useContext(TransactionContext)
   const { cv, contracts } = useContext(V2V3ContractsContext)
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   return ({ projectId, newTerminalAddress }, txOpts) => {
     try {

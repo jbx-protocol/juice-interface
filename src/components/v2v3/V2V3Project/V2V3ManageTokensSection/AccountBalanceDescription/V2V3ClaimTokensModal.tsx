@@ -12,7 +12,7 @@ import { BigNumber } from 'ethers'
 import { useUnclaimedTokenBalance } from 'hooks/v2v3/contractReader/useUnclaimedTokenBalance'
 import { useClaimTokensTx } from 'hooks/v2v3/transactor/useClaimTokensTx'
 import { useProjectHasErc20 } from 'hooks/v2v3/useProjectHasErc20'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
@@ -34,7 +34,7 @@ export function V2V3ClaimTokensModal({
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [claimAmount, setClaimAmount] = useState<string>()
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const claimTokensTx = useClaimTokensTx()
   const hasIssuedTokens = useProjectHasErc20()
   const { data: unclaimedBalance } = useUnclaimedTokenBalance({

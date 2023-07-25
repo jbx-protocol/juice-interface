@@ -3,7 +3,7 @@ import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721Delegate
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { Transaction } from 'ethers'
 import { FormikHelpers } from 'formik'
-import { useJBWallet } from 'hooks/Wallet/useJBWallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/usePayETHPaymentTerminalTx'
 import { useCallback, useContext } from 'react'

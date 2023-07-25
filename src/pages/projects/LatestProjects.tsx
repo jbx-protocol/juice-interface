@@ -4,7 +4,7 @@ import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
 import { useDBProjectsInfiniteQuery } from 'hooks/useProjects'
 import { useWalletBookmarkedIds } from 'hooks/useWalletBookmarkedProjects'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useEffect, useRef } from 'react'
 import { classNames } from 'utils/classNames'
 import { useLoadMoreContent } from '../../hooks/useLoadMore'
@@ -35,7 +35,7 @@ export default function LatestProjects() {
     [],
   )
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   const { ids: bookmarkedProjectIds } = useWalletBookmarkedIds({
     wallet: userAddress,

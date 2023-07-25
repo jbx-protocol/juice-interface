@@ -4,7 +4,7 @@ import {
   useSupabaseClient,
 } from '@supabase/auth-helpers-react'
 import { ModalContext } from 'contexts/Modal'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { ProjectNotification } from 'models/notifications/projectNotifications'
 import { useCallback, useContext, useEffect, useState } from 'react'
@@ -23,7 +23,7 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false)
 
-  const wallet = useWallet()
+  const { isConnected } = useJBWallet()
   const signIn = useWalletSignIn()
   const session = useSession()
   const supabase = useSupabaseClient<Database>()
@@ -57,7 +57,7 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
   const toggleSubscription = useCallback(
     async (s?: Session) => {
       // If the user is not connected to a wallet, don't do anything
-      if (!wallet.isConnected) return
+      if (!isConnected) return
       const _session = s ?? session
       if (!_session) return
 
@@ -98,7 +98,7 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
       projectId,
       session,
       supabase,
-      wallet.isConnected,
+      isConnected,
     ],
   )
 
@@ -126,7 +126,7 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
 
   const onSubscribeButtonClicked = useCallback(async () => {
     // If the user is not connected to a wallet, don't do anything
-    if (!wallet.isConnected) return
+    if (!isConnected) return
     setLoading(true)
 
     try {
@@ -153,7 +153,7 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
     } finally {
       setLoading(false)
     }
-  }, [signIn, subscribeModal, supabase, toggleSubscription, wallet.isConnected])
+  }, [signIn, subscribeModal, supabase, toggleSubscription, isConnected])
 
   return {
     loading,

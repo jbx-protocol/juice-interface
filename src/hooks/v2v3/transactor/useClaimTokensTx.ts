@@ -8,7 +8,7 @@ import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/useTransactor'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -21,7 +21,7 @@ export function useClaimTokensTx(): TransactorInstance<{
   const { tokenSymbol } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   return ({ claimAmount }, txOpts) => {
     try {

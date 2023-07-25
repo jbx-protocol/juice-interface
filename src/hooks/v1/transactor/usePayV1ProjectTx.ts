@@ -1,6 +1,6 @@
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
 import { t } from '@lingui/macro'
@@ -19,7 +19,7 @@ export function usePayV1ProjectTx(): TransactorInstance<{
   const { projectId } = useContext(ProjectMetadataContext)
 
   const projectTitle = useV1ProjectTitle()
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   return ({ note, preferUnstaked, value }, txOpts) => {
     if (

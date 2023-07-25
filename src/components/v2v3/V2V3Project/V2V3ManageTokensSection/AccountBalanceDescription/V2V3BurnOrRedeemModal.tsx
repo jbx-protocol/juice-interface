@@ -15,7 +15,7 @@ import { useETHReceivedFromTokens } from 'hooks/v2v3/contractReader/useETHReceiv
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/useTotalBalanceOf'
 import { useBurnTokensTx } from 'hooks/v2v3/transactor/useBurnTokensTx'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/useRedeemTokensTx'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
@@ -53,7 +53,7 @@ export function V2V3BurnOrRedeemModal({
     redeemAmount: string
   }>()
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
   const maxClaimable = useETHReceivedFromTokens({
     tokenAmount: fromWad(totalBalance),

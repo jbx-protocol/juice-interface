@@ -7,7 +7,7 @@ import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/useTransactor'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import type { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
@@ -22,7 +22,7 @@ export function useSetOperatorTx(): TransactorInstance<{
   const { contracts, cv } = useContext(V2V3ContractsContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
 
   return ({ operatorAddress, permissionIndexes, contractOverride }, txOpts) => {
     try {

@@ -5,7 +5,7 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { constants } from 'ethers'
 
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useContext } from 'react'
 import { useV2ProjectTitle } from '../useProjectTitle'
@@ -20,7 +20,7 @@ export type DeployProjectPayerTxArgs = {
 export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayerTxArgs> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const { projectId } = useContext(ProjectMetadataContext)
 
   const projectTitle = useV2ProjectTitle()

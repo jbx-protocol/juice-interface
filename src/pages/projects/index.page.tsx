@@ -5,7 +5,7 @@ import { AppWrapper } from 'components/common'
 import { Footer } from 'components/Footer'
 import { PROJECTS_PAGE } from 'constants/fathomEvents'
 import { PV_V1, PV_V2 } from 'constants/pv'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import { DBProjectQueryOpts } from 'models/dbProject'
 import { ProjectTagName } from 'models/project-tags'
@@ -50,7 +50,7 @@ function Projects() {
     [router.query],
   )
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const [searchText, setSearchText] = useState<typeof search>(search)
   const [searchTags, setSearchTags] = useState<ProjectTagName[]>([])
 

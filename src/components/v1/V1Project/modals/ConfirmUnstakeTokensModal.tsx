@@ -8,7 +8,7 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useV1UnclaimedBalance } from 'hooks/v1/contractReader/useV1UnclaimedBalance'
 import { useUnstakeTokensTx } from 'hooks/v1/transactor/useUnstakeTokensTx'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useContext, useEffect, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
@@ -29,7 +29,7 @@ export default function ConfirmUnstakeTokensModal({
   const [loading, setLoading] = useState<boolean>()
   const [unstakeAmount, setUnstakeAmount] = useState<string>()
 
-  const { userAddress } = useWallet()
+  const { userAddress } = useJBWallet()
   const unclaimedBalance = useV1UnclaimedBalance({
     projectId,
     userAddress,

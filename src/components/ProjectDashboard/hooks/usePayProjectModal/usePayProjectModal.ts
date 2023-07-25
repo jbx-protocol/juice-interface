@@ -1,5 +1,5 @@
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useJBWallet } from 'hooks/Wallet/useJBWallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { TxStatus } from 'models/transaction'
 import { useCallback, useContext, useMemo, useReducer } from 'react'

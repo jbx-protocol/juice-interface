@@ -2,7 +2,7 @@ import { getCompleted } from 'components/announcements/Announcement'
 import { Announcements } from 'constants/announcements'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { Announcement } from 'models/announcement'
 import { useRouter } from 'next/router'
@@ -15,7 +15,7 @@ export const AnnouncementsProvider: React.FC<
   const [activeId, setActiveId] = useState<string>()
   const [modalOpen, setModalOpen] = useState<boolean>(false)
 
-  const wallet = useWallet()
+  const wallet = useJBWallet() // TODO
   const { owner } = useContext(V1ProjectContext)
   const { projectOwnerAddress } = useContext(V2V3ProjectContext)
   const isProjectOwner = useIsUserAddress(owner ?? projectOwnerAddress)

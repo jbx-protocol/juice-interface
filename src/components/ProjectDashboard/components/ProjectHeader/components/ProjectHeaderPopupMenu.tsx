@@ -4,7 +4,7 @@ import { useBookmarkButton } from 'components/BookmarkButton/hooks/useBookmarkBu
 import { SubscribeButtonIcon } from 'components/SubscribeButton/SubscribeButtonIcon'
 import { useSubscribeButton } from 'components/SubscribeButton/hooks/useSubscribeButton'
 import { PV_V2 } from 'constants/pv'
-import { PopupMenu } from '../../PopupMenu/PopupMenu'
+import { PopupMenu } from '../../../../ui/PopupMenu'
 
 export function ProjectHeaderPopupMenu({ projectId }: { projectId: number }) {
   const { isBookmarked, onBookmarkButtonClicked } = useBookmarkButton({

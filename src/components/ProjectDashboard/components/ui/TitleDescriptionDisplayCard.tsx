@@ -2,7 +2,7 @@ import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
 import { Tooltip } from 'antd'
 import { AriaRole, MouseEventHandler, ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { PopupMenu, PopupMenuProps } from '../PopupMenu/PopupMenu'
+import { PopupMenu, PopupMenuProps } from '../../../ui/PopupMenu'
 import { DisplayCard } from './DisplayCard'
 
 type Props = {

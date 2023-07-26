@@ -13,7 +13,7 @@ export function EditCycleFormSection({
 }) {
   return (
     <section
-      className={`grid gap-4 border-b border-b-grey-300 pt-6 pb-16 dark:border-b-grey-600 md:grid-cols-[300px_1fr] ${className}`}
+      className={`grid gap-8 border-b border-b-grey-300 pt-6 pb-16 dark:border-b-grey-600 md:grid-cols-[280px_1fr] ${className}`}
     >
       <EditCycleHeader title={title} description={description} />
       <div className="flex flex-col gap-8">{children}</div>

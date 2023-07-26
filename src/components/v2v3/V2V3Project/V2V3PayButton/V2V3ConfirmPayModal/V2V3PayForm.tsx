@@ -292,7 +292,11 @@ export const V2V3PayForm = ({
                 ]}
               >
                 <Checkbox>
-                  <Trans>I understand and accept this project's notice.</Trans>
+                  <span className="font-normal">
+                    <Trans>
+                      I understand and accept this project's notice.
+                    </Trans>
+                  </span>
                 </Checkbox>
               </Form.Item>
             )}

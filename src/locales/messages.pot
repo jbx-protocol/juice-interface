@@ -2540,9 +2540,6 @@ msgstr ""
 msgid "Use a simple term like 'Pay' or 'Donate'."
 msgstr ""
 
-msgid "Message from {projectName}"
-msgstr ""
-
 msgid "to close"
 msgstr ""
 
@@ -4239,6 +4236,9 @@ msgid "Funding distribution"
 msgstr ""
 
 msgid "Cycle #1 starts when you create your project. With locked cycles, if you edit your project's rules during Cycle #1, those edits will be <0>queued</0> for the next cycle."
+msgstr ""
+
+msgid "Notice from {projectName}"
 msgstr ""
 
 msgid "Unsaved changes"

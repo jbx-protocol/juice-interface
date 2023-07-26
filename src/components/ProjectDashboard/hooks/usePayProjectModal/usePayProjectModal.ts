@@ -23,6 +23,10 @@ const ValidationSchema = Yup.object().shape({
     [true],
     'You must accept the terms and conditions',
   ),
+  userAcceptsNotice: Yup.boolean().oneOf(
+    [true],
+    "You must understand and accept this project's notice.",
+  ),
   beneficiaryAddress: Yup.string(),
 })
 export type PayProjectModalFormValues = Yup.InferType<typeof ValidationSchema>

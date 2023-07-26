@@ -73,6 +73,7 @@ export function useProjectEvents({
         distributeToPayoutSplitEvent: null,
         distributeToReservedTokenSplitEvent: null,
         initEvent: null,
+        migrateEvent: null,
 
         // ProjectEvents have exactly one non-null Event field. We can use `<filter>_not: null` to return only projectEvents where the matching Event field is defined
         ...(!filter || filter === 'all'

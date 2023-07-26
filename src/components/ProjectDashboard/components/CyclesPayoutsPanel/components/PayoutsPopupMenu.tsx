@@ -1,7 +1,7 @@
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { useCurrentUpcomingPayoutSplits } from 'components/ProjectDashboard/components/CyclesPayoutsPanel/hooks/useCurrentUpcomingPayoutSplits'
-import { PopupMenu } from 'components/ProjectDashboard/components/PopupMenu/PopupMenu'
+import { PopupMenu } from 'components/ui/PopupMenu'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import { useExportSplitsToCsv } from '../../../../../hooks/useExportSplitsToCsv'

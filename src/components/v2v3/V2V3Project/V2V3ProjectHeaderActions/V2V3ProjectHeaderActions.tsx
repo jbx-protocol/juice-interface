@@ -8,14 +8,17 @@ import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { settingsPagePath } from 'utils/routes'
 
 export function V2V3ProjectHeaderActions() {
-  const { chainUnsupported, isConnected } = useWallet()
+  const {
+    eoa: { chainUnsupported },
+    isConnected,
+  } = useJBWallet()
   const { handle } = useContext(V2V3ProjectContext)
 
   const [toolDrawerVisible, setToolDrawerVisible] = useState<boolean>(false)

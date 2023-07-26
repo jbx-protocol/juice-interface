@@ -19,7 +19,7 @@ import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { BigNumber, constants } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { usePayV1ProjectTx } from 'hooks/v1/transactor/usePayV1ProjectTx'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { classNames } from 'utils/classNames'
@@ -66,11 +66,10 @@ export default function V1ConfirmPayOwnerModal({
 
   const {
     userAddress,
-    chainUnsupported,
     isConnected,
-    changeNetworks,
     connect,
-  } = useWallet()
+    eoa: { chainUnsupported, changeNetworks },
+  } = useJBWallet()
   const converter = useCurrencyConverter()
   const payProjectTx = usePayV1ProjectTx()
 
@@ -96,7 +95,7 @@ export default function V1ConfirmPayOwnerModal({
       return
     }
     if (!isConnected) {
-      await connect()
+      await connect?.()
       return
     }
     setLoading(true)

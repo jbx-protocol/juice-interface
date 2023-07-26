@@ -8,7 +8,7 @@ import TransactionModal from 'components/modals/TransactionModal'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
 import useMobile from 'hooks/useMobile'
 import { useModal } from 'hooks/useModal'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -58,7 +58,11 @@ export const ReviewDeployPage = () => {
   useSetCreateFurthestPageReached('reviewDeploy')
   const { goToPage } = useContext(WizardContext)
   const isMobile = useMobile()
-  const { chainUnsupported, changeNetworks, isConnected, connect } = useWallet()
+  const {
+    eoa: { chainUnsupported, changeNetworks },
+    isConnected,
+    connect,
+  } = useJBWallet()
   const router = useRouter()
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
   const termsAccepted = Form.useWatch('termsAccepted', form)
@@ -89,7 +93,7 @@ export const ReviewDeployPage = () => {
       return
     }
     if (!isConnected) {
-      await connect()
+      await connect?.()
       return
     }
 

@@ -25,16 +25,14 @@ export function useJBWallet() {
   return {
     isConnected: isAuthenticated || eoa.isConnected,
     userAddress: user?.address || eoa.userAddress,
+    chain: eoa.chain ?? {
+      id: readNetwork.chainId,
+      name: readNetwork.name,
+    },
     eoa,
     keyp: {
       isAuthenticated,
       signOut,
-      chain: isAuthenticated
-        ? {
-            id: readNetwork.chainId,
-            name: readNetwork.name,
-          }
-        : undefined,
       ...user,
     },
     connectionType: eoa.isConnected

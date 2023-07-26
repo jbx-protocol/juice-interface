@@ -3,7 +3,7 @@ import { Form, Input } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { constants } from 'ethers'
 
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { FormItemInput } from 'models/formItemInput'
 import { NetworkName } from 'models/networkName'
 import { MouseEventHandler } from 'react'
@@ -14,7 +14,7 @@ export const CustomStrategyInput: React.FC<
     FormItemInput<string> & { onClick?: MouseEventHandler }
   >
 > = ({ value, onChange, onClick }) => {
-  const { chain } = useWallet()
+  const { chain } = useJBWallet()
   return (
     <div>
       <Form.Item

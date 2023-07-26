@@ -1,10 +1,13 @@
 import { Trans } from '@lingui/macro'
 import useMobile from 'hooks/useMobile'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 
 export function DeployButtonText() {
   const isMobile = useMobile()
-  const { isConnected, chainUnsupported, chain } = useWallet()
+  const {
+    isConnected,
+    eoa: { chainUnsupported, chain },
+  } = useJBWallet()
 
   if (chainUnsupported) {
     return isMobile ? (

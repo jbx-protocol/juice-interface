@@ -71,19 +71,59 @@ function sendKeypTransaction({
 }: {
   contract: Contract
   functionName: string
-  args: string[]
+  args: unknown[]
   accessToken: string
   value?: BigNumberish
 }) {
   const { address } = contract
 
-  return writeContract({
+  function flattenArg(a: unknown): string {
+    switch (typeof a) {
+      case 'string':
+        return a
+      case 'number':
+      case 'boolean':
+        return a.toString()
+    }
+
+    if (a === undefined || a === null) return a as unknown as string
+
+    if (BigNumber.isBigNumber(a)) return a.toHexString()
+
+    if (Array.isArray(a)) return a.map(flattenArg) as unknown as string
+
+    return Object.entries(a).reduce(
+      (acc, [k, v]) => ({
+        ...acc,
+        [k]: flattenArg(v),
+      }),
+      {},
+    ) as unknown as string // lol
+
+    // return Object.values(a).map(flattenArg).join(',')
+  }
+
+  const _args = args.map(flattenArg)
+
+  const opts = {
     accessToken,
     address,
     abi: abiFunctionName(functionName, contract.interface),
-    args,
-    value: BigNumber.from(value)?.toHexString(),
-  })
+    args: _args,
+    ...(value ? { value: BigNumber.from(value).toHexString() } : {}),
+  }
+
+  const log = [
+    `functionName=${functionName}`,
+    `contractAddress=${address}`,
+  ].join('\n')
+
+  console.info(
+    `🧃 Transactor::sending keyp transaction => \n${log}\nargs=`,
+    opts,
+  )
+
+  return writeContract(opts)
 }
 
 function prepareTransaction({
@@ -172,15 +212,19 @@ export function useTransactor(): Transactor | undefined {
       try {
         let result: TransactionLog['tx'] | undefined = undefined
 
+        console.log('asdf', isAuthenticated, accessToken)
+
         if (isAuthenticated) {
           if (accessToken) {
+            console.log('asdf0', { args })
             result = await sendKeypTransaction({
               contract,
               functionName,
-              args: args.map(a => (a as { toString: () => string }).toString()),
+              args,
               accessToken,
               value: options?.value,
             })
+            console.log('asdf1')
           } else {
             onError?.(new DOMException('Keyp authentication error'))
           }

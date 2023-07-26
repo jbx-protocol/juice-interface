@@ -6,7 +6,7 @@ import ExternalLink from 'components/ExternalLink'
 import { XLButton } from 'components/XLButton'
 import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDeployModal'
 import { readNetwork } from 'constants/networks'
-import { useWallet } from 'hooks/Wallet'
+import { useJBWallet } from 'hooks/Wallet'
 import { NetworkName } from 'models/networkName'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -16,7 +16,9 @@ import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'
 export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   console.info('Deploy: SUCCESS', projectId)
   const router = useRouter()
-  const { chain } = useWallet()
+  const {
+    eoa: { chain },
+  } = useJBWallet()
   let deployGreeting = t`Your project was successfully created!`
   if (chain?.name) {
     deployGreeting = t`Your project was successfully created on ${chain.name}!`

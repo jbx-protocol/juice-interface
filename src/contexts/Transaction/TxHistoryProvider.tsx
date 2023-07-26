@@ -63,13 +63,7 @@ export default function TxHistoryProvider({
 }: {
   children: ReactNode
 }) {
-  const {
-    userAddress,
-    eoa: { chain: eoaChain },
-    keyp: { chain: keypChain },
-  } = useJBWallet()
-
-  const chain = useMemo(() => keypChain ?? eoaChain, [keypChain, eoaChain])
+  const { userAddress, chain } = useJBWallet()
 
   const [transactions, setTransactions] = useState<TransactionLog[]>([])
 

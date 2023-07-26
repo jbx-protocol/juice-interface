@@ -172,7 +172,4 @@ const nextConfig = removeImports({
 
 module.exports = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
-  env: {
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-  },
 })(withSentryConfig(nextConfig, { silent: true }))

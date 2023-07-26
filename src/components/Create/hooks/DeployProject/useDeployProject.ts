@@ -156,6 +156,7 @@ export const useDeployProject = () => {
       onError: error => {
         console.error(error)
         emitErrorNotification(`Error deploying project: ${error}`)
+        setTransactionPending(false)
       },
       onCancelled: () => {
         setIsDeploying(false)

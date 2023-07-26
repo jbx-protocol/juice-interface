@@ -1,6 +1,5 @@
 import { InputNumberProps } from 'antd'
 import { twMerge } from 'tailwind-merge'
-import { classNames } from 'utils/classNames'
 import { formattedNum } from 'utils/format/formatNumber'
 import { JuiceInputNumber } from './JuiceInputNumber'
 
@@ -12,6 +11,7 @@ export default function FormattedNumberInput({
   suffix,
   prefix,
   accessory,
+  accessoryPosition = 'right',
   onChange,
   onBlur,
   isInteger,
@@ -23,8 +23,9 @@ export default function FormattedNumberInput({
   placeholder?: string
   disabled?: boolean
   suffix?: string
-  prefix?: string | JSX.Element
+  prefix?: string
   accessory?: JSX.Element
+  accessoryPosition?: 'left' | 'right'
   onChange?: (val?: string) => void
   onBlur?: (val?: string) => void
   isInteger?: boolean
@@ -51,11 +52,13 @@ export default function FormattedNumberInput({
   }
 
   return (
-    <div className={twMerge('relative flex items-center', className)}>
+    <div className={'relative flex items-center'}>
       <JuiceInputNumber
-        className={classNames(
+        className={twMerge(
           'h-full w-full',
           accessory ? 'antd-no-number-handler' : '',
+          accessoryPosition === 'left' ? 'pl-3' : null,
+          className,
         )}
         value={value !== undefined ? parseFloat(value) : undefined}
         step={step ?? 1}
@@ -97,7 +100,12 @@ export default function FormattedNumberInput({
         }}
         {...props}
       />
-      <div className="absolute right-[5px] z-auto text-xs">
+      <div
+        className={twMerge(
+          'absolute z-auto text-xs',
+          accessoryPosition === 'right' ? 'right-[5px]' : 'left-[10px]',
+        )}
+      >
         {accessory && <div>{accessory}</div>}
       </div>
     </div>

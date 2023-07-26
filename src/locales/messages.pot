@@ -1868,6 +1868,9 @@ msgstr ""
 msgid "The text on the button at the bottom of the pop-up. You can preview this below."
 msgstr ""
 
+msgid "Delete all"
+msgstr ""
+
 msgid "Payment Success Pop-up"
 msgstr ""
 
@@ -3149,6 +3152,9 @@ msgstr ""
 msgid "This address receives the tokens minted by this payout."
 msgstr ""
 
+msgid "Delete"
+msgstr ""
+
 msgid "Download project activity CSVs"
 msgstr ""
 
@@ -4134,6 +4140,9 @@ msgid "Pay amount"
 msgstr ""
 
 msgid "CSV download failed."
+msgstr ""
+
+msgid "Switch to unlimited"
 msgstr ""
 
 msgid "Pay Project"

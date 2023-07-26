@@ -1,11 +1,8 @@
-import {
-  EllipsisVerticalIcon,
-  PencilIcon,
-  TrashIcon,
-} from '@heroicons/react/24/solid'
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { Trans } from '@lingui/macro'
 import { useWatch } from 'antd/lib/form/Form'
-import { DropdownMenu } from 'components/Navbar/components/DropdownMenu'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { PopupMenu } from 'components/ui/PopupMenu'
 import { CURRENCY_METADATA } from 'constants/currency'
 import { ONE_BILLION } from 'constants/numbers'
 import round from 'lodash/round'
@@ -82,25 +79,26 @@ export function PayoutSplitRow({ payoutSplit }: { payoutSplit: Split }) {
       payoutSplits: newPayoutSplits,
     })
   }
-
+  const menuItemsLabelClass = 'flex gap-2 items-center'
+  const menuItemsIconClass = 'h-5 w-5'
   const menuItems = [
     {
-      id: '1',
+      id: 'edit',
       label: (
-        <>
-          <PencilIcon className="mr-2" />
-          Edit
-        </>
+        <div className={menuItemsLabelClass}>
+          <PencilIcon className={menuItemsIconClass} />
+          <Trans>Edit</Trans>
+        </div>
       ),
       onClick: () => console.info('Edit clicked'),
     },
     {
-      id: '2',
+      id: 'delete',
       label: (
-        <>
-          <TrashIcon className="mr-2" />
-          Delete
-        </>
+        <div className={menuItemsLabelClass}>
+          <TrashIcon className={menuItemsIconClass} />
+          <Trans>Delete</Trans>
+        </div>
       ),
       onClick: () => console.info('Delete clicked'),
     },
@@ -112,19 +110,20 @@ export function PayoutSplitRow({ payoutSplit }: { payoutSplit: Split }) {
         <PayoutTitle payoutSplit={payoutSplit} />
       </Cell>
       <Cell className="py-6">
-        <FormattedNumberInput
-          prefix={CURRENCY_METADATA[currency ?? 'ETH'].symbol}
-          value={amount.toString()}
-          onChange={onChange}
-        />
-      </Cell>
-      <Cell className="py-6">
-        <DropdownMenu
-          className="..."
-          dropdownClassName="..."
-          heading={<EllipsisVerticalIcon className="h-6 w-6" />}
-          items={menuItems}
-        />
+        <div className="flex items-center gap-3">
+          <FormattedNumberInput
+            accessory={
+              <span className="text-sm">
+                {CURRENCY_METADATA[currency ?? 'ETH'].symbol}
+              </span>
+            }
+            accessoryPosition="left"
+            value={amount.toString()}
+            onChange={onChange}
+            className="h-10"
+          />
+          <PopupMenu items={menuItems} />
+        </div>
       </Cell>
     </PayoutsTableRow>
   )

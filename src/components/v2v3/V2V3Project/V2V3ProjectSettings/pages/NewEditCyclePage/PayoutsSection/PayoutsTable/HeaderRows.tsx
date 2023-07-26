@@ -1,5 +1,10 @@
+import { PlusOutlined } from '@ant-design/icons'
+import { ReceiptPercentIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
+
+import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { PopupMenu } from 'components/ui/PopupMenu'
 import { helpPagePath } from 'utils/routes'
 import { PayoutsTableCell } from './PayoutsTableCell'
 import { PayoutsTableRow } from './PayoutsTableRow'
@@ -8,6 +13,30 @@ const Row = PayoutsTableRow
 const Cell = PayoutsTableCell
 
 export function HeaderRows() {
+  const menuItemsLabelClass = 'flex gap-2 items-center'
+  const menuItemsIconClass = 'h-5 w-5'
+  const menuItems = [
+    {
+      id: 'unlimited',
+      label: (
+        <div className={menuItemsLabelClass}>
+          <ReceiptPercentIcon className={menuItemsIconClass} />
+          <Trans>Switch to unlimited</Trans>
+        </div>
+      ),
+      onClick: () => console.info('Switch to unlimited modal open'),
+    },
+    {
+      id: 'delete',
+      label: (
+        <div className={menuItemsLabelClass}>
+          <TrashIcon className={menuItemsIconClass} />
+          <Trans>Delete all</Trans>
+        </div>
+      ),
+      onClick: () => console.info('Delete clicked'),
+    },
+  ]
   return (
     <thead>
       <Row className="text-primary">
@@ -25,8 +54,21 @@ export function HeaderRows() {
             </Trans>
           </div>
         </Cell>
-        {/* Add recipient button */}
-        {/* 3-dots overall payout settings button */}
+        <Cell className="pt-6 align-top">
+          <div className="flex items-center justify-end gap-3">
+            <Button
+              type="ghost"
+              onClick={() => console.info('Open add recipient modal')}
+              icon={<PlusOutlined />}
+              className="text-primary border-primary"
+            >
+              <span>
+                <Trans>Add recipient</Trans>
+              </span>
+            </Button>
+            <PopupMenu items={menuItems} className="w-50" />
+          </div>
+        </Cell>
       </Row>
       <Row className="font-medium" highlighted>
         <Cell>
@@ -35,7 +77,6 @@ export function HeaderRows() {
         <Cell>
           <Trans>Amount</Trans>
         </Cell>
-        <Cell></Cell>
       </Row>
     </thead>
   )

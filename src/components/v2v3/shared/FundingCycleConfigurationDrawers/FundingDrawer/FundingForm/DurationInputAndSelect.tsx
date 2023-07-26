@@ -20,7 +20,7 @@ export default function DurationInputAndSelect({
         required
       >
         <FormattedNumberInput
-          className="h-10 pr-4"
+          className="mr-4 h-10"
           placeholder="30"
           min={0}
           disabled={disabled}

@@ -49,7 +49,6 @@ export function PayoutsTable() {
           <Row className="border-none font-medium" highlighted>
             <Cell>Total</Cell>
             <Cell>{getFieldValueDL}</Cell>
-            <Cell />
           </Row>
         </tbody>
       </table>

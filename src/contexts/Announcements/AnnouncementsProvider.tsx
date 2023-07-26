@@ -26,16 +26,19 @@ export const AnnouncementsProvider: React.FC<
     [activeId],
   )
 
-  function trySetActiveId(id: string | undefined) {
-    // Ensure we don't overwrite an activeId
-    if (activeId || !id) return
+  const trySetActiveId = useCallback(
+    (id: string | undefined) => {
+      // Ensure we don't overwrite an activeId
+      if (activeId || !id) return
 
-    // Don't activate after having been completed
-    if (getCompleted()[id]) return false
+      // Don't activate after having been completed
+      if (getCompleted()[id]) return false
 
-    setActiveId(id)
-    setModalOpen(true)
-  }
+      setActiveId(id)
+      setModalOpen(true)
+    },
+    [activeId, setActiveId, setModalOpen],
+  )
 
   const shouldActivateAnnouncement = useCallback(
     (a: Announcement) => {
@@ -44,14 +47,14 @@ export const AnnouncementsProvider: React.FC<
 
       return a.conditions.every(c => c({ router, isProjectOwner, wallet }))
     },
-    [router, isProjectOwner, wallet],
+    [isProjectOwner, wallet, router],
   )
 
   // Try activating any announcements
   useEffect(() => {
     // Activate first announcement that fits conditions
-    setActiveId(Announcements.find(shouldActivateAnnouncement)?.id)
-  }, [shouldActivateAnnouncement, setActiveId])
+    trySetActiveId(Announcements.find(shouldActivateAnnouncement)?.id)
+  }, [shouldActivateAnnouncement, setActiveId, trySetActiveId])
 
   return (
     <AnnouncementsContext.Provider

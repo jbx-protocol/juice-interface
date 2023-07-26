@@ -21,55 +21,59 @@ exports[`ConfigurationTable renders 1`] = `
             foo
           </div>
           <div
-            class="truncate text-end"
+            class="flex gap-1"
           >
             <div
-              class="flex flex-col items-center gap-2"
+              class="truncate text-end"
             >
-              <span
-                class="flex flex-1 items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
+              <div
+                class="flex flex-col items-center gap-2"
               >
-                <svg
-                  aria-hidden="true"
-                  class="inline-block h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="flex flex-1 items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
                 >
-                  <path
-                    d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <span>
-                  old
+                  <svg
+                    aria-hidden="true"
+                    class="inline-block h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>
+                    old
+                  </span>
                 </span>
-              </span>
-              <span
-                class="flex flex-1 items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="inline-block h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="flex flex-1 items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
                 >
-                  <path
-                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <span>
-                  new
+                  <svg
+                    aria-hidden="true"
+                    class="inline-block h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>
+                    new
+                  </span>
                 </span>
-              </span>
+              </div>
             </div>
           </div>
         </div>
@@ -82,9 +86,13 @@ exports[`ConfigurationTable renders 1`] = `
             bar
           </div>
           <div
-            class="truncate text-end"
+            class="flex gap-1"
           >
-            new
+            <div
+              class="truncate text-end"
+            >
+              new
+            </div>
           </div>
         </div>
         <div
@@ -96,55 +104,59 @@ exports[`ConfigurationTable renders 1`] = `
             baz
           </div>
           <div
-            class="truncate text-end"
+            class="flex gap-1"
           >
             <div
-              class="flex flex-col items-center gap-2"
+              class="truncate text-end"
             >
-              <span
-                class="flex flex-1 items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
+              <div
+                class="flex flex-col items-center gap-2"
               >
-                <svg
-                  aria-hidden="true"
-                  class="inline-block h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="flex flex-1 items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
                 >
-                  <path
-                    d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <span>
-                  old
+                  <svg
+                    aria-hidden="true"
+                    class="inline-block h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>
+                    old
+                  </span>
                 </span>
-              </span>
-              <span
-                class="flex flex-1 items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="inline-block h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+                <span
+                  class="flex flex-1 items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
                 >
-                  <path
-                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <span>
-                  new
+                  <svg
+                    aria-hidden="true"
+                    class="inline-block h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>
+                    new
+                  </span>
                 </span>
-              </span>
+              </div>
             </div>
           </div>
         </div>

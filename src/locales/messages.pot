@@ -257,6 +257,9 @@ msgstr ""
 msgid "How do I decide?"
 msgstr ""
 
+msgid "Try it now"
+msgstr ""
+
 msgid "<0>Issuance reduction rate</0>. This allows you to predictably reduce your project token's issuance rate (tokens per ETH) over time without needing to manually edit your cycle."
 msgstr ""
 
@@ -665,6 +668,9 @@ msgstr ""
 msgid "Interested in becoming a JuiceboxDAO contributor?"
 msgstr ""
 
+msgid "Project tagline"
+msgstr ""
+
 msgid "Configure your cycle for transparent treasury and campaign management. Any adjustments made will be published on Ethereum to inform contributors."
 msgstr ""
 
@@ -707,6 +713,9 @@ msgstr ""
 msgid "Project token"
 msgstr ""
 
+msgid "Got it"
+msgstr ""
+
 msgid "Setup new NFTs for {projectTitle}"
 msgstr ""
 
@@ -732,6 +741,9 @@ msgid "Juicebox is non-custodial, meaning you have complete ownership over your 
 msgstr ""
 
 msgid "Tokens to burn"
+msgstr ""
+
+msgid "Use me as a base!"
 msgstr ""
 
 msgid "Receive ERC-20 tokens"
@@ -1322,6 +1334,9 @@ msgstr ""
 msgid "Juicebox is as versatile as you are, build anything from an NFT project to a boutique crypto lawfirm and everything in between."
 msgstr ""
 
+msgid "This is an example feature announcement."
+msgstr ""
+
 msgid "Button link"
 msgstr ""
 
@@ -1475,9 +1490,6 @@ msgstr ""
 msgid "A percentage of token issuance which is set aside for addresses and other projects chosen by the project owner."
 msgstr ""
 
-msgid "About {projectName}"
-msgstr ""
-
 msgid "Edit recipients"
 msgstr ""
 
@@ -1506,6 +1518,9 @@ msgid "What do we value?"
 msgstr ""
 
 msgid "Tell us about your project."
+msgstr ""
+
+msgid "Add a brief one-sentence summary of your project."
 msgstr ""
 
 msgid "Launch V3 migration token"
@@ -2378,6 +2393,9 @@ msgstr ""
 msgid "Receive ERC-20"
 msgstr ""
 
+msgid "Must be less than {0} characters"
+msgstr ""
+
 msgid "The amount of ETH this project can pay out of its treasury each Cycle."
 msgstr ""
 
@@ -2738,6 +2756,9 @@ msgstr ""
 msgid "If you don't raise the sum of your payouts (<0/>{distributionLimit}), this address will receive {0}% of all the ETH you raise."
 msgstr ""
 
+msgid "Project updates 📢"
+msgstr ""
+
 msgid "When checked, payments made through this address will mint the project's ERC-20 tokens. Payments will incur slightly higher gas fees. When unchecked, the Juicebox protocol will internally track the beneficiary's tokens, and they can claim their ERC-20 tokens at any time."
 msgstr ""
 
@@ -2844,6 +2865,9 @@ msgid "Track the total voting power of each address over time. <0>Learn more.</0
 msgstr ""
 
 msgid "All of this project's ETH will be paid out. Token holders will receive <0>no ETH</0> when redeeming their tokens."
+msgstr ""
+
+msgid "Keep contributors up to date by adding updates periodically to your project."
 msgstr ""
 
 msgid "Re-launch on V3"
@@ -3869,6 +3893,9 @@ msgstr ""
 msgid "Owner tools"
 msgstr ""
 
+msgid "Example Feature"
+msgstr ""
+
 msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
 msgstr ""
 
@@ -4704,6 +4731,9 @@ msgid "Clear all"
 msgstr ""
 
 msgid "{titleCasedAllocationName} Percentage"
+msgstr ""
+
+msgid "Tagline"
 msgstr ""
 
 msgid "Tokens cannot be issued while payments are disabled."

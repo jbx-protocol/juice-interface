@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjects'
 import { GnosisSafe } from 'models/safe'
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 import { useProjectMetadata } from './useProjectMetadata'
 
 export interface ProjectHeaderData {
@@ -33,9 +33,15 @@ export const useProjectHeader = (): ProjectHeaderData => {
   })
   const { data: gnosisSafe } = useGnosisSafe(projectOwnerAddress)
 
+  const subtitle = useMemo(() => {
+    const tagline = projectMetadata?.projectTagline
+    const description = projectMetadata?.description
+    return tagline ?? description
+  }, [projectMetadata?.description, projectMetadata?.projectTagline])
+
   return {
     title: projectMetadata?.name,
-    subtitle: projectMetadata?.description, // TODO eventually, metadata subtitle
+    subtitle,
     handle,
     projectId,
     owner: projectOwnerAddress,

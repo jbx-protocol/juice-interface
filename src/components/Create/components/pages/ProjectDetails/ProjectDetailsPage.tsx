@@ -10,7 +10,7 @@ import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/inputs/PrefixedInput'
-import { MarkdownEditor } from 'components/Markdown'
+import { RichEditor } from 'components/RichEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useWallet } from 'hooks/Wallet'
@@ -19,6 +19,7 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
+import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
@@ -70,9 +71,25 @@ export const ProjectDetailsPage: React.FC<
         </Form.Item>
 
         {richProjectDescriptionEnabled ? (
-          <Form.Item name="projectDescription" label={t`Project description`}>
-            <MarkdownEditor />
-          </Form.Item>
+          <>
+            <Form.Item
+              name="projectTagline"
+              label={t`Tagline`}
+              extra={t`Add a brief one-sentence summary of your project.`}
+              rules={lockPageRulesWrapper([
+                inputIsLengthRule({
+                  label: t`Tagline`,
+                  max: 48,
+                }),
+              ])}
+            >
+              <JuiceInput />
+            </Form.Item>
+
+            <Form.Item name="projectDescription" label={t`Project description`}>
+              <RichEditor />
+            </Form.Item>
+          </>
         ) : (
           <Form.Item name="projectDescription" label={t`Project description`}>
             <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />

@@ -1,6 +1,8 @@
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import ExternalLink from 'components/ExternalLink'
+import CopyTextButton from 'components/buttons/CopyTextButton'
 import { ReactNode, useMemo } from 'react'
 import { ConfigurationPanelTableData } from './ConfigurationPanel'
 
@@ -18,6 +20,8 @@ export const ConfigurationTable = ({
           return {
             id,
             name: d.name,
+            link: d.link,
+            easyCopy: d.easyCopy,
             loading: true,
           }
         }
@@ -26,6 +30,8 @@ export const ConfigurationTable = ({
             id,
             name: d.name,
             value: d.new,
+            link: d.link,
+            easyCopy: d.easyCopy,
           }
         }
 
@@ -33,6 +39,8 @@ export const ConfigurationTable = ({
           id: id,
           name: d.name,
           value: <Diff old={d.old} new={d.new} />,
+          link: d.link,
+          easyCopy: d.easyCopy,
         }
       }),
     [data],
@@ -51,6 +59,8 @@ export const ConfigurationTable = ({
                 key={row.id}
                 name={row.name}
                 value={row.value}
+                link={row.link}
+                easyCopy={row.easyCopy}
                 loading={row.loading}
               />
             ))}
@@ -64,16 +74,29 @@ export const ConfigurationTable = ({
 const ConfigurationTableRow = ({
   name,
   value,
+  link,
+  easyCopy = false,
   loading = false,
 }: {
   name: ReactNode
   value: ReactNode
+  link?: string
+  easyCopy?: boolean
   loading: boolean | undefined
 }) => (
   <div className="flex justify-between gap-10 border-b border-grey-200 py-3 dark:border-slate-500">
     <div className="flex justify-between gap-3 font-medium">{name}</div>
     {!loading ? (
-      <div className="truncate text-end">{value}</div>
+      <div className="flex gap-1">
+        {link ? (
+          <ExternalLink onClick={e => e.stopPropagation()} href={link}>
+            {value}
+          </ExternalLink>
+        ) : (
+          <div className="truncate text-end">{value}</div>
+        )}
+        {easyCopy && <CopyTextButton value={value as string} />}
+      </div>
     ) : (
       <div className="text-end">
         <div className="h-4 w-20 animate-pulse rounded bg-grey-200 dark:bg-slate-200" />

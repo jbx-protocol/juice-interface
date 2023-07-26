@@ -3,9 +3,9 @@ import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import useMobile from 'hooks/useMobile'
 import { useEffect } from 'react'
+import { PopupMenu } from '../../../ui/PopupMenu'
 import { AddProjectUpdateModal } from '../AddProjectUpdateModal'
 import { EmptyScreen } from '../EmptyScreen'
-import { PopupMenu } from '../PopupMenu/PopupMenu'
 import {
   ProjectUpdate,
   ProjectUpdateSkeleton,
@@ -55,21 +55,25 @@ export const UpdatesPanel = () => {
   if (!projectUpdates.length && !loading) {
     return (
       <>
-        <div className={containerClassName}>
-          <EmptyScreen title={emptyScreenMessage} />
-          {isProjectOwner && (
-            <Button
-              className="flex w-fit items-center gap-2"
-              type="primary"
-              loading={addProjectUpdateButtonLoading}
-              icon={<PlusIcon className="h-5 w-5" />}
-              onClick={handleAddProjectUpdateClicked}
-            >
-              <Trans>Add project update</Trans>
-            </Button>
+        <div className="flex flex-col gap-5">
+          <div className={containerClassName}>
+            <EmptyScreen title={emptyScreenMessage} />
+            {isProjectOwner && (
+              <Button
+                className="flex w-fit items-center gap-2"
+                type="primary"
+                loading={addProjectUpdateButtonLoading}
+                icon={<PlusIcon className="h-5 w-5" />}
+                onClick={handleAddProjectUpdateClicked}
+              >
+                <Trans>Add project update</Trans>
+              </Button>
+            )}
+          </div>
+          {error && (
+            <div className="text-center text-error-500">ERROR: {error}</div>
           )}
         </div>
-        {error && <div className="text-error-500">{error}</div>}
         <AddProjectUpdateModal open={open} setOpen={setOpen} />
       </>
     )

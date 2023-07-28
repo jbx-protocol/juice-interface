@@ -46,9 +46,11 @@ export function NftReward({
     [cart.nftRewards, rewardTier?.id],
   )
 
-  const fileUrl = rewardTier?.fileUrl
-    ? ipfsUriToGatewayUrl(rewardTier.fileUrl)
-    : rewardTier?.fileUrl
+  const fileUrl = useMemo(
+    () =>
+      rewardTier?.fileUrl ? ipfsUriToGatewayUrl(rewardTier.fileUrl) : undefined,
+    [rewardTier?.fileUrl],
+  )
 
   const isSelected = quantitySelected > 0
 

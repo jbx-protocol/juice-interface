@@ -1,6 +1,6 @@
 import { Popover, Transition } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
-import QuickProjectSearch from 'components/Navbar/components/QuickProjectSearch'
+import { QuickProjectSearchButton } from 'components/QuickProjectSearch'
 import PatchedNextLink from 'components/fixes/PatchedNextLink'
 import useMobile from 'hooks/useMobile'
 import { Fragment } from 'react'
@@ -79,7 +79,7 @@ export default function SiteNavigation() {
                       <div className="flex flex-col gap-8 px-6 md:flex-row md:items-center md:gap-6 md:px-0">
                         <NavLanguageSelector className="md:order-2" />
                         <ThemePicker className="md:order-3" />
-                        <QuickProjectSearch className="md:order-1" />
+                        <QuickProjectSearchButton className="md:order-1" />
                         <TransactionsList listClassName="absolute top-full mt-4 right-0 md:-right-6 md:w-[320px] w-full" />
                       </div>
                     </div>

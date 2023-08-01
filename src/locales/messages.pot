@@ -197,6 +197,9 @@ msgstr ""
 msgid "Juicebox loading animation"
 msgstr ""
 
+msgid "Remaining balance"
+msgstr ""
+
 msgid "Payments to this project paused"
 msgstr ""
 
@@ -3597,6 +3600,9 @@ msgid "Reserved token recipients"
 msgstr ""
 
 msgid "{0} is not a valid integer"
+msgstr ""
+
+msgid "The unallocated portion of your total will go to the wallet that owns the project by default."
 msgstr ""
 
 msgid "New"

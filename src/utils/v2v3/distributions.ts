@@ -102,20 +102,24 @@ export function getNewDistributionLimit({
   editingSplitPercent,
   newSplitAmount,
   currentDistributionLimit,
+  ownerRemainingAmount,
 }: {
   editingSplitPercent: number // percent per billion
   newSplitAmount: number
   currentDistributionLimit: string
+  ownerRemainingAmount?: number
 }) {
   const previousSplitAmount = amountFromPercent({
     percent: preciseFormatSplitPercent(editingSplitPercent),
     amount: currentDistributionLimit,
   }) // will be 0 when adding split but an actual amount when reconfiging or deleting
 
-  const newDistributionLimit =
-    parseFloat(currentDistributionLimit) - previousSplitAmount + newSplitAmount
-
-  return parseFloat(newDistributionLimit.toString())
+  return (
+    parseFloat(currentDistributionLimit) -
+    previousSplitAmount +
+    newSplitAmount -
+    (ownerRemainingAmount ?? 0)
+  )
 }
 
 // Determines if a split is a Juicebox project

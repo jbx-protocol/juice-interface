@@ -57,7 +57,7 @@ export default function FormattedNumberInput({
         className={twMerge(
           'h-full w-full',
           accessory ? 'antd-no-number-handler' : '',
-          accessoryPosition === 'left' ? 'pl-3' : null,
+          accessoryPosition === 'left' ? 'pl-7' : null,
           className,
         )}
         value={value !== undefined ? parseFloat(value) : undefined}

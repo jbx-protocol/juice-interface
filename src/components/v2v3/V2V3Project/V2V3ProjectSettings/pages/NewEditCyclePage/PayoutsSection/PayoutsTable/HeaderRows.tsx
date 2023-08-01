@@ -58,7 +58,7 @@ export function HeaderRows() {
           <div className="flex items-center justify-end gap-3">
             <Button
               type="ghost"
-              onClick={() => console.info('Open add recipient modal')}
+              onClick={() => null}
               icon={<PlusOutlined />}
               className="text-primary border-primary"
             >

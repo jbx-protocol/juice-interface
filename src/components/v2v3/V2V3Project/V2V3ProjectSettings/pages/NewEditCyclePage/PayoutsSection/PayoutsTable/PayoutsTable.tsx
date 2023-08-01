@@ -1,6 +1,9 @@
-import { useWatch } from 'antd/lib/form/Form'
-import { Split } from 'models/splits'
+import { Trans, t } from '@lingui/macro'
+import { Form } from 'antd'
+import TooltipLabel from 'components/TooltipLabel'
+import round from 'lodash/round'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
+import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { HeaderRows } from './HeaderRows'
 import { PayoutSplitRow } from './PayoutSplitRow'
 import { PayoutsTableCell } from './PayoutsTableCell'
@@ -12,43 +15,53 @@ const Cell = PayoutsTableCell
 export function PayoutsTable() {
   const { editCycleForm, initialFormData } = useEditCycleFormContext()
 
-  // useWatch is always undefined. Goal was have these update and trigger re-render when the field is updated in another component
-  const payoutSplits = useWatch('payoutSplits', editCycleForm)
-  const distributionLimit = useWatch('distributionLimit', editCycleForm)
-  console.info('!! useWatch("payoutSplits"): ', payoutSplits)
-  console.info('!! useWatch("distributionLimit"): ', distributionLimit)
+  const {
+    payoutSplits,
+    distributionLimit,
+    totalFeeAmount,
+    subTotal,
+    roundingPrecision,
+    ownerRemainderValue,
+  } = usePayoutsTable()
 
-  // These load but not instantly, only on abritrary component re-render
-  const getFieldValueSplit = editCycleForm?.getFieldValue(
-    'payoutSplits',
-  ) as Split[]
-  const getFieldValueDL = editCycleForm?.getFieldValue('distributionLimit')
-  console.info('!! getFieldValue("payoutSplits"): ', getFieldValueSplit)
-  console.info('!! getFieldValue("distributionLimit"): ', getFieldValueDL)
+  const formattedDistributionLimit = distributionLimit
+    ? round(distributionLimit, roundingPrecision)
+    : 'X'
 
   if (!editCycleForm || !initialFormData) return null
 
   return (
     <div className="rounded-lg border border-smoke-200 dark:border-grey-600">
+      <Form.Item name="payoutSplits" />
+      <Form.Item name="distributionLimit" />
       <table className="w-full text-left">
         <HeaderRows />
         <tbody>
-          {getFieldValueSplit?.map((payoutSplit, index) => (
+          {payoutSplits?.map((payoutSplit, index) => (
             <PayoutSplitRow key={index} payoutSplit={payoutSplit} />
           ))}
           <Row>
             <Cell>Sub-total</Cell>
-            {/* TODO: Add sub-total computation */}
-            <Cell />
+            <Cell>{round(subTotal, roundingPrecision)}</Cell>
           </Row>
+          {ownerRemainderValue ? (
+            <Row>
+              <Cell>
+                <TooltipLabel
+                  tip={t`The unallocated portion of your total will go to the wallet that owns the project by default.`}
+                  label={<Trans>Remaining balance</Trans>}
+                />
+              </Cell>
+              <Cell>{ownerRemainderValue}</Cell>
+            </Row>
+          ) : null}
           <Row>
             <Cell>Fees</Cell>
-            {/* TODO: Add fees computation */}
-            <Cell />
+            <Cell>{round(totalFeeAmount, roundingPrecision)}</Cell>
           </Row>
           <Row className="border-none font-medium" highlighted>
             <Cell>Total</Cell>
-            <Cell>{getFieldValueDL}</Cell>
+            <Cell>{formattedDistributionLimit}</Cell>
           </Row>
         </tbody>
       </table>

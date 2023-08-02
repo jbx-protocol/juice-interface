@@ -1679,6 +1679,9 @@ msgstr ""
 msgid "Set up custom rules for your project's tokens."
 msgstr ""
 
+msgid "Legal Resources"
+msgstr ""
+
 msgid "V1"
 msgstr ""
 

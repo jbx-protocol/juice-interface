@@ -24,7 +24,7 @@ export const AboutPanel = () => {
             ))}
         </div>
       )}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 whitespace-pre-wrap">
         {description ? (
           <RichPreview source={description} />
         ) : (

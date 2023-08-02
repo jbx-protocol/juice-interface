@@ -383,6 +383,9 @@ msgstr ""
 msgid "<0>You're about to delete all NFTs from your collection. This will take effect immediately, and you can add NFTs back to the collection at any time.</0><1>If you want to COMPLETELY detach NFTs from your project, you can do so in the <2>Danger Zone</2> section below.</1>"
 msgstr ""
 
+msgid "Legal Notice"
+msgstr ""
+
 msgid "<0>Owned by</0><1/>"
 msgstr ""
 
@@ -3117,6 +3120,9 @@ msgid "Other Rules"
 msgstr ""
 
 msgid "Disabled when your project's cycle has no duration."
+msgstr ""
+
+msgid "I Agree"
 msgstr ""
 
 msgid "Twitter handle"

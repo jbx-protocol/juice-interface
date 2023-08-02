@@ -33,6 +33,7 @@ export default function WalletButton() {
     localStorage.setItem('hasAcceptedLegalNotice', 'true')
     setLegalNoticeAccepted(true)
     setLegalNoticeVisible(false)
+    connect()
   }
 
   if (!legalNoticeAccepted) {
@@ -41,7 +42,11 @@ export default function WalletButton() {
         <Button onClick={() => setLegalNoticeVisible(true)} block>
           <Trans>Connect</Trans>
         </Button>
-        <LegalNoticeModal open={legalNoticeVisible} onOk={onOk} />
+        <LegalNoticeModal
+          open={legalNoticeVisible}
+          onOk={onOk}
+          onCancel={() => setLegalNoticeVisible(false)}
+        />
       </>
     )
   }

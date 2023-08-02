@@ -4,7 +4,7 @@ import { LoginPortal } from '@usekeyp/ui-kit'
 import { Button, Modal } from 'antd'
 import { useWallet } from 'hooks/Wallet'
 import { signOut } from 'next-auth/react'
-import { useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { featureFlagEnabled } from 'utils/featureFlags'
@@ -20,8 +20,8 @@ export const WalletProvider: React.FC<React.PropsWithChildren<unknown>> = ({
 
   const enabled = featureFlagEnabled(FEATURE_FLAGS.KEYP_WALLET)
 
-  const connect = useMemo(
-    () => (enabled ? () => setShowSelectWalletModal(true) : connectEOAWallet),
+  const connect = useCallback(
+    () => (enabled ? setShowSelectWalletModal(true) : connectEOAWallet()),
     [enabled, connectEOAWallet],
   )
 

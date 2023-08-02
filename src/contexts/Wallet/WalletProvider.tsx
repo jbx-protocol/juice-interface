@@ -4,19 +4,26 @@ import { LoginPortal } from '@usekeyp/ui-kit'
 import { Button, Modal } from 'antd'
 import { useWallet } from 'hooks/Wallet'
 import { signOut } from 'next-auth/react'
-import { useCallback, useState } from 'react'
+import { useMemo, useState } from 'react'
 
+import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { WalletContext } from './WalletContext'
 
 export const WalletProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
-  const [showWalletOptionModal, setShowWalletOptionModal] = useState<boolean>()
+  const [showSelectWalletModal, setShowSelectWalletModal] = useState<boolean>()
   const [showKeypLogin, setShowKeypLogin] = useState<boolean>()
 
   const { connect: connectEOAWallet, disconnect, isConnected } = useWallet()
 
-  const connect = useCallback(() => setShowWalletOptionModal(true), [])
+  const enabled = featureFlagEnabled(FEATURE_FLAGS.KEYP_WALLET)
+
+  const connect = useMemo(
+    () => (enabled ? () => setShowSelectWalletModal(true) : connectEOAWallet),
+    [enabled, connectEOAWallet],
+  )
 
   return (
     <WalletContext.Provider value={{ connect }}>
@@ -24,8 +31,8 @@ export const WalletProvider: React.FC<React.PropsWithChildren<unknown>> = ({
 
       <Modal
         title="Connect wallet"
-        open={showWalletOptionModal}
-        onCancel={() => setShowWalletOptionModal(false)}
+        open={showSelectWalletModal}
+        onCancel={() => setShowSelectWalletModal(false)}
         okButtonProps={{ hidden: true }}
         cancelText="Close"
         closable={false}
@@ -41,7 +48,7 @@ export const WalletProvider: React.FC<React.PropsWithChildren<unknown>> = ({
                 signOut()
               })
 
-              setShowWalletOptionModal(false)
+              setShowSelectWalletModal(false)
             }}
             block
           >
@@ -51,7 +58,7 @@ export const WalletProvider: React.FC<React.PropsWithChildren<unknown>> = ({
             type="primary"
             onClick={() => {
               setShowKeypLogin(true)
-              setShowWalletOptionModal(false)
+              setShowSelectWalletModal(false)
             }}
             block
           >

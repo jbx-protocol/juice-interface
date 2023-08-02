@@ -26,7 +26,7 @@ export function useJBWallet() {
     isConnected: isAuthenticated || eoa.isConnected,
     userAddress: user?.address || eoa.userAddress,
     chain: eoa.chain ?? {
-      id: readNetwork.chainId,
+      id: readNetwork.chainId.toString(),
       name: readNetwork.name,
     },
     eoa,

@@ -20,9 +20,12 @@ function abiFunctionName(functionName: string, abi: Interface) {
   ) as FunctionFragment
 
   return `${functionName}(${fn?.inputs
-    .map(i => `${i.indexed ? 'indexed ' : ''}${i.type}`)
+    .map(
+      i =>
+        `${i.indexed ? 'indexed ' : ''}${i.type}${i.name ? ` ${i.name}` : ''}`,
+    )
     .join(',')}) public ${fn?.stateMutability} returns (${fn?.outputs
-    ?.map(o => `${o.type}${o.name ? `${o.name}` : ''}`)
+    ?.map(o => `${o.type}${o.name ? ` ${o.name}` : ''}`)
     .join(',')})`
 }
 
@@ -77,39 +80,41 @@ function sendKeypTransaction({
 }) {
   const { address } = contract
 
-  function flattenArg(a: unknown): string {
-    switch (typeof a) {
-      case 'string':
-        return a
-      case 'number':
-      case 'boolean':
-        return a.toString()
-    }
+  // // TODO possible implementation for flattening args into string. (shouldn't be necessary)
+  // function flattenArg(a: unknown): string {
+  //   switch (typeof a) {
+  //     case 'string':
+  //       return a
+  //     case 'number':
+  //     case 'boolean':
+  //       return a.toString()
+  //   }
 
-    if (a === undefined || a === null) return a as unknown as string
+  //   if (a === undefined || a === null) return a as unknown as string
 
-    if (BigNumber.isBigNumber(a)) return a.toHexString()
+  //   if (BigNumber.isBigNumber(a)) return a.toHexString()
 
-    if (Array.isArray(a)) return a.map(flattenArg) as unknown as string
+  //   if (Array.isArray(a)) return a.map(flattenArg) as unknown as string
 
-    return Object.entries(a).reduce(
-      (acc, [k, v]) => ({
-        ...acc,
-        [k]: flattenArg(v),
-      }),
-      {},
-    ) as unknown as string // lol
+  //   return Object.entries(a).reduce(
+  //     (acc, [k, v]) => ({
+  //       ...acc,
+  //       [k]: flattenArg(v),
+  //     }),
+  //     {},
+  //   ) as unknown as string // lol
 
-    // return Object.values(a).map(flattenArg).join(',')
-  }
+  //   // return Object.values(a).map(flattenArg).join(',')
+  // }
 
-  const _args = args.map(flattenArg)
+  // const _args = args.map(flattenArg)
 
   const opts = {
     accessToken,
     address,
     abi: abiFunctionName(functionName, contract.interface),
-    args: _args,
+    // TODO determine correct args
+    args: args as string[],
     ...(value ? { value: BigNumber.from(value).toHexString() } : {}),
   }
 
@@ -212,11 +217,8 @@ export function useTransactor(): Transactor | undefined {
       try {
         let result: TransactionLog['tx'] | undefined = undefined
 
-        console.log('asdf', isAuthenticated, accessToken)
-
         if (isAuthenticated) {
           if (accessToken) {
-            console.log('asdf0', { args })
             result = await sendKeypTransaction({
               contract,
               functionName,
@@ -224,7 +226,6 @@ export function useTransactor(): Transactor | undefined {
               accessToken,
               value: options?.value,
             })
-            console.log('asdf1')
           } else {
             onError?.(new DOMException('Keyp authentication error'))
           }

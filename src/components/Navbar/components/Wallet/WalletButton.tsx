@@ -2,8 +2,10 @@ import { WarningOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { useWallet } from 'hooks/Wallet'
+import LegalNoticeModal from 'components/modals/LegalNoticeModal'
 
 import WalletMenu from './WalletMenu'
+import { useEffect, useState } from 'react'
 
 export default function WalletButton() {
   const {
@@ -13,6 +15,36 @@ export default function WalletButton() {
     chainUnsupported,
     changeNetworks,
   } = useWallet()
+
+  const [legalNoticeAccepted, setLegalNoticeAccepted] = useState<boolean>(
+    localStorage.getItem('hasAcceptedLegalNotice') === 'true',
+  )
+  const [legalNoticeVisible, setLegalNoticeVisible] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (!legalNoticeVisible) {
+      setLegalNoticeAccepted(
+        localStorage.getItem('hasAcceptedLegalNotice') === 'true',
+      )
+    }
+  }, [legalNoticeVisible])
+
+  const onOk = () => {
+    localStorage.setItem('hasAcceptedLegalNotice', 'true')
+    setLegalNoticeAccepted(true)
+    setLegalNoticeVisible(false)
+  }
+
+  if (!legalNoticeAccepted) {
+    return (
+      <>
+        <Button onClick={() => setLegalNoticeVisible(true)} block>
+          <Trans>Connect</Trans>
+        </Button>
+        <LegalNoticeModal open={legalNoticeVisible} onOk={onOk} />
+      </>
+    )
+  }
 
   if (!isConnected) {
     return (

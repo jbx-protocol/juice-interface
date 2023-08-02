@@ -9,7 +9,6 @@ export default function LegalNoticeModal({
 }: {
   open: boolean
   onOk: () => void
-  onCancel: () => void
 }) {
   return (
     <Modal

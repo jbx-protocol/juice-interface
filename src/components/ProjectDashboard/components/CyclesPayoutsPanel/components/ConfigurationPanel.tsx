@@ -6,6 +6,8 @@ export type ConfigurationPanelDatum = {
   name: ReactNode
   old?: ReactNode
   new: ReactNode
+  link?: string
+  easyCopy?: boolean
 }
 
 export type ConfigurationPanelTableData = {

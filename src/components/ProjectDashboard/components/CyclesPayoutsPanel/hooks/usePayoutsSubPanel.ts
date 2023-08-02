@@ -16,6 +16,7 @@ import {
 } from 'utils/v2v3/math'
 import { useCurrentUpcomingDistributionLimit } from './useCurrentUpcomingDistributionLimit'
 import { useCurrentUpcomingPayoutSplits } from './useCurrentUpcomingPayoutSplits'
+import { useDistributableAmount } from './useDistributableAmount'
 
 const splitHasFee = (split: Split) => {
   return !isJuiceboxProjectSplit(split)
@@ -38,6 +39,7 @@ const calculateSplitAmountWad = (
 export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { splits, loading } = useCurrentUpcomingPayoutSplits(type)
   const { projectOwnerAddress, primaryETHTerminalFee } = useProjectContext()
+  const { distributableAmount } = useDistributableAmount()
 
   const { distributionLimit, distributionLimitCurrency } =
     useCurrentUpcomingDistributionLimit(type)
@@ -96,6 +98,15 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const payouts = useMemo(() => {
     if (loading || !splits) return
 
+    if (
+      // We don't need to worry about upcoming as this is informational only
+      type === 'current' &&
+      splits.length === 0 &&
+      distributableAmount.eq(0)
+    ) {
+      return []
+    }
+
     const ownerPayout = projectOwnerAddress
       ? getProjectOwnerRemainderSplit(projectOwnerAddress, splits)
       : undefined
@@ -106,7 +117,14 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
     ]
       .sort((a, b) => Number(b.percent) - Number(a.percent))
       .map(transformSplit)
-  }, [loading, projectOwnerAddress, splits, transformSplit])
+  }, [
+    distributableAmount,
+    loading,
+    projectOwnerAddress,
+    splits,
+    transformSplit,
+    type,
+  ])
 
   return {
     loading,

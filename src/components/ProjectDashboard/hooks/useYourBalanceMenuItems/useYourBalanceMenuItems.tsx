@@ -6,7 +6,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import { ReactNode, useMemo, useState } from 'react'
-import { PopupMenuItem } from '../../components/PopupMenu/PopupMenu'
+import { PopupMenuItem } from '../../../ui/PopupMenu'
 import { useBalanceMenuItemsUserFlags } from './useBalanceMenuItemsUserFlags'
 
 export const useYourBalanceMenuItems = () => {

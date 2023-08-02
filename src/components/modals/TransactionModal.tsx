@@ -26,7 +26,7 @@ const PendingTransactionModalBody = () => {
     <div className="my-8 mx-0 flex h-full w-full items-center justify-center">
       <div className="flex flex-col items-center text-center font-normal">
         <Image
-          src="/assets/images/quint.webp"
+          src="/assets/images/orange-loading.webp"
           alt={t`Juicebox loading animation`}
           width={140}
           height={140}

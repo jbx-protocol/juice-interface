@@ -1,4 +1,5 @@
 import { Trans, t } from '@lingui/macro'
+import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
 import { TitleDescriptionDisplayCard } from '../../ui/TitleDescriptionDisplayCard'
@@ -15,6 +16,10 @@ export const PayoutsSubPanel = ({
   type: 'current' | 'upcoming'
 }) => {
   const { payouts, loading, totalPayoutAmount } = usePayoutsSubPanel(type)
+  const hasPayouts = useMemo(() => {
+    if (!payouts || payouts.length === 0) return false
+    return true
+  }, [payouts])
   return (
     <div className={twMerge(className)}>
       <h2 className="mb-0 font-heading text-2xl font-medium">
@@ -27,22 +32,26 @@ export const PayoutsSubPanel = ({
           className="w-full"
           title={t`Payouts`}
           description={totalPayoutAmount}
-          kebabMenu={{
-            items: [
-              {
-                id: 'export',
-                component: <ExportPayoutsCsvItem type={type} />,
-              },
-            ],
-          }}
+          {...(hasPayouts
+            ? {
+                kebabMenu: {
+                  items: [
+                    {
+                      id: 'export',
+                      component: <ExportPayoutsCsvItem type={type} />,
+                    },
+                  ],
+                },
+              }
+            : {})}
         >
           <div className="mt-4 w-full">
             {loading ? (
               Array.from({ length: 5 }).map((_, i) => (
                 <ProjectAllocationSkeleton key={i} />
               ))
-            ) : payouts?.length ? (
-              payouts.map(payout => (
+            ) : hasPayouts ? (
+              payouts?.map(payout => (
                 <ProjectAllocationRow
                   key={`${payout.address}${payout.projectId}`}
                   {...payout}
@@ -54,10 +63,10 @@ export const PayoutsSubPanel = ({
               </span>
             )}
           </div>
-          {!!payouts?.length && type === 'current' && (
+          {hasPayouts && type === 'current' && (
             <SendPayoutsButton
-              className="z-0 mt-6 w-full justify-center md:w-auto"
-              containerClassName="md:self-end"
+              className="z-0 w-full justify-center md:w-auto"
+              containerClassName="md:self-end mt-6 inline-flex"
             />
           )}
         </TitleDescriptionDisplayCard>

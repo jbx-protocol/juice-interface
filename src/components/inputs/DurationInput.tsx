@@ -62,7 +62,7 @@ export const DurationInput: React.FC<
   )
 }
 
-interface DurationOption {
+export interface DurationOption {
   label: string
   value: DurationUnitsOption
 }

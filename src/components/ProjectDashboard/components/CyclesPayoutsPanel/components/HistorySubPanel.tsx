@@ -1,11 +1,12 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
+import { Button } from 'antd'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
-import { Fragment } from 'react'
+import { Fragment, useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useHistorySubPanel } from '../hooks/useHistorySubPanel'
 import { HistoricalConfigurationPanel } from './HistoricalConfigurationPanel'
@@ -21,8 +22,15 @@ export type HistoryData = {
 }[]
 
 export const HistorySubPanel = () => {
-  const { loading, data, error } = useHistorySubPanel()
+  const { loading, data, error, paginationToken, paginateHistory } =
+    useHistorySubPanel()
   const tableHeaders = [t`Cycle #`, t`Withdrawn`, t`Date`]
+  const hasMore = !!paginationToken
+
+  const loadMore = useCallback(
+    async () => await paginateHistory(paginationToken),
+    [paginateHistory, paginationToken],
+  )
 
   return data.length || loading ? (
     <div className="grid min-w-full grid-cols-1">
@@ -43,14 +51,7 @@ export const HistorySubPanel = () => {
       </div>
 
       <div className="divide-y divide-grey-200 dark:divide-slate-500">
-        {loading ? (
-          <>
-            <SkeletonRow />
-            <SkeletonRow />
-            <SkeletonRow />
-            <SkeletonRow />
-          </>
-        ) : error ? (
+        {error ? (
           <div className="text-error-400">{error}</div>
         ) : (
           <>
@@ -92,6 +93,15 @@ export const HistorySubPanel = () => {
                 )}
               </Disclosure>
             ))}
+            {loading ? (
+              <LoadingState />
+            ) : (
+              hasMore && (
+                <Button type="link" onClick={loadMore}>
+                  <Trans>Load more</Trans>
+                </Button>
+              )
+            )}
           </>
         )}
       </div>
@@ -102,6 +112,14 @@ export const HistorySubPanel = () => {
     </div>
   )
 }
+
+const LoadingState = () => (
+  <>
+    {Array.from({ length: 5 }).map((_, i) => (
+      <SkeletonRow key={i} />
+    ))}
+  </>
+)
 
 const SkeletonRow = () => (
   <div className="p-4 pr-2">

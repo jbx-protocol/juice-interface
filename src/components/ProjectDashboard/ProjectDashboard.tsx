@@ -1,5 +1,4 @@
 import { Footer } from 'components/Footer'
-import { AnnouncementLauncher } from 'contexts/Announcements/AnnouncementLauncher'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { twMerge } from 'tailwind-merge'
@@ -12,6 +11,7 @@ import { PayProjectCard } from './components/PayProjectCard'
 import { ProjectCartProvider } from './components/ProjectCartProvider'
 import { ProjectHeader } from './components/ProjectHeader'
 import { ProjectTabs } from './components/ProjectTabs'
+import { ProjectUpdatesProvider } from './components/ProjectUpdatesProvider'
 import { SuccessPayView } from './components/SuccessPayView'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 
@@ -23,9 +23,9 @@ export const ProjectDashboard = () => {
 
   return (
     <TransactionProvider>
-      <AnnouncementLauncher>
-        <FundingCycleCountdownProvider>
-          <ProjectCartProvider>
+      <FundingCycleCountdownProvider>
+        <ProjectCartProvider>
+          <ProjectUpdatesProvider>
             <div className="flex w-full flex-col items-center pb-48">
               {projectPayReceipt !== undefined ? (
                 <SuccessPayView />
@@ -34,7 +34,7 @@ export const ProjectDashboard = () => {
                   <CoverPhoto />
                   <div className="flex w-full justify-center md:px-6">
                     <div className="flex w-full max-w-6xl flex-col">
-                      <ProjectHeader className="mt-4 px-4 md:px-0" />
+                      <ProjectHeader className="mt-12 px-4 md:mt-4 md:px-0" />
                       <div className="mt-10 flex w-full flex-col gap-4 px-4 md:flex-row md:px-0">
                         <PayProjectCard className="flex-1" />
                         {shouldShowNftCard ? <NftRewardsCard /> : null}
@@ -53,9 +53,9 @@ export const ProjectDashboard = () => {
             </div>
             <Footer />
             <Cart />
-          </ProjectCartProvider>
-        </FundingCycleCountdownProvider>
-      </AnnouncementLauncher>
+          </ProjectUpdatesProvider>
+        </ProjectCartProvider>
+      </FundingCycleCountdownProvider>
     </TransactionProvider>
   )
 }

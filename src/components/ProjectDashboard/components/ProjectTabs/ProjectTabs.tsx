@@ -1,19 +1,33 @@
 import { Tab } from '@headlessui/react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
+import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
+import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { useOnScreen } from 'hooks/useOnScreen'
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  Fragment,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { twMerge } from 'tailwind-merge'
 import { AboutPanel } from '../AboutPanel'
 import { ActivityPanel } from '../ActivityPanel'
 import { CyclesPayoutsPanel } from '../CyclesPayoutsPanel'
 import { NftRewardsPanel } from '../NftRewardsPanel'
+import { ProjectUpdatesContext } from '../ProjectUpdatesProvider'
 import { TokensPanel } from '../TokensPanel'
+import { UpdatesPanel } from '../UpdatesPanel'
 import { ProjectTab } from '../ui'
 
 export const ProjectTabs = ({ className }: { className?: string }) => {
+  const { projectUpdates } = useContext(ProjectUpdatesContext)
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
+  const { projectOwnerAddress } = useProjectContext()
+  const isProjectOwner = useIsUserAddress(projectOwnerAddress)
 
   const { value: showNftRewards } = useHasNftRewards()
 
@@ -56,8 +70,21 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         panel: <CyclesPayoutsPanel />,
       },
       { id: 'tokens', name: t`Tokens`, panel: <TokensPanel /> },
+      {
+        id: 'updates',
+        name: (
+          <div className="flex items-center gap-1">
+            <Trans>Updates</Trans>
+            {!!projectUpdates.length && (
+              <TabBadgeCount count={projectUpdates.length} />
+            )}
+          </div>
+        ),
+        panel: <UpdatesPanel />,
+        hideTab: !isProjectOwner && projectUpdates.length === 0,
+      },
     ],
-    [showNftRewards],
+    [isProjectOwner, projectUpdates, showNftRewards],
   )
 
   const selectedTabIndex = useMemo(() => {
@@ -75,7 +102,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         selectedIndex={selectedTabIndex}
         defaultIndex={0}
       >
-        <div className="sticky top-0 flex w-full snap-x overflow-x-scroll border-b border-grey-200 bg-white pt-8 hide-scrollbar dark:border-slate-600 dark:bg-slate-900 sm:justify-center md:z-10 md:justify-center">
+        <div className="fixed top-20 z-10 flex w-full snap-x overflow-x-scroll border-b border-grey-200 bg-white hide-scrollbar dark:border-slate-600 dark:bg-slate-900 sm:justify-center md:static md:z-10 md:justify-center md:pt-8">
           <Tab.List className="flex gap-8">
             {tabs.map(tab => (
               <ProjectTab
@@ -100,3 +127,9 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
     </div>
   )
 }
+
+const TabBadgeCount = ({ count }: { count: number }) => (
+  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-bluebs-500 text-xs text-white">
+    {count}
+  </div>
+)

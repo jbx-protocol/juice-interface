@@ -1,6 +1,10 @@
 import { t } from '@lingui/macro'
 import { BigNumber, BigNumberish } from 'ethers'
 
+import {
+  DurationOption,
+  durationOptions,
+} from 'components/inputs/DurationInput'
 import { SECONDS_IN_DAY, SECONDS_IN_HOUR } from 'constants/numbers'
 import { DurationUnitsOption } from 'models/time'
 
@@ -107,4 +111,15 @@ export const deriveDurationUnit = (
     return 'hours'
   }
   return 'days'
+}
+
+export const deriveDurationOption = (
+  durationSeconds: number | undefined,
+): DurationOption => {
+  const _durationOptions = durationOptions()
+  return (
+    _durationOptions.find(
+      option => option.value === deriveDurationUnit(durationSeconds),
+    ) ?? _durationOptions[0]
+  )
 }

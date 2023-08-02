@@ -257,6 +257,9 @@ msgstr ""
 msgid "How do I decide?"
 msgstr ""
 
+msgid "Try it now"
+msgstr ""
+
 msgid "<0>Issuance reduction rate</0>. This allows you to predictably reduce your project token's issuance rate (tokens per ETH) over time without needing to manually edit your cycle."
 msgstr ""
 
@@ -527,6 +530,9 @@ msgstr ""
 msgid "1-day deadline"
 msgstr ""
 
+msgid "Transactions"
+msgstr ""
+
 msgid "Save payout"
 msgstr ""
 
@@ -537,6 +543,9 @@ msgid "Payouts to this project may mint its project tokens. Pick an address to r
 msgstr ""
 
 msgid "{0} ago"
+msgstr ""
+
+msgid "Experimental flags"
 msgstr ""
 
 msgid "Edit {allocationName}"
@@ -659,6 +668,9 @@ msgstr ""
 msgid "Interested in becoming a JuiceboxDAO contributor?"
 msgstr ""
 
+msgid "Project tagline"
+msgstr ""
+
 msgid "Configure your cycle for transparent treasury and campaign management. Any adjustments made will be published on Ethereum to inform contributors."
 msgstr ""
 
@@ -689,6 +701,9 @@ msgstr ""
 msgid "Your project is up to date!"
 msgstr ""
 
+msgid "Add an update that will be posted to your project page."
+msgstr ""
+
 msgid "Change networks to deploy"
 msgstr ""
 
@@ -696,6 +711,9 @@ msgid "While transfers are paused, this project's tokens can't be transferred to
 msgstr ""
 
 msgid "Project token"
+msgstr ""
+
+msgid "Got it"
 msgstr ""
 
 msgid "Setup new NFTs for {projectTitle}"
@@ -723,6 +741,9 @@ msgid "Juicebox is non-custodial, meaning you have complete ownership over your 
 msgstr ""
 
 msgid "Tokens to burn"
+msgstr ""
+
+msgid "Use me as a base!"
 msgstr ""
 
 msgid "Receive ERC-20 tokens"
@@ -923,6 +944,9 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+msgid "Your project has no updates"
+msgstr ""
+
 msgid "Please check {lastEmailUpdated} and verify your new email address.<0/>Still no email after a couple of minutes? <1>Click here to resend.</1>"
 msgstr ""
 
@@ -1029,6 +1053,9 @@ msgid "Your project was successfully created!"
 msgstr ""
 
 msgid "Redeem {0} {tokensTextShort} for ETH"
+msgstr ""
+
+msgid "Delete project update"
 msgstr ""
 
 msgid "I understand and accept the risks associated with <0>this project</0> and the <1>Juicebox Protocol</1>."
@@ -1307,7 +1334,13 @@ msgstr ""
 msgid "Juicebox is as versatile as you are, build anything from an NFT project to a boutique crypto lawfirm and everything in between."
 msgstr ""
 
+msgid "This is an example feature announcement."
+msgstr ""
+
 msgid "Button link"
+msgstr ""
+
+msgid "Use cases"
 msgstr ""
 
 msgid "Owner token minting can be enabled or disabled by editing your cycle."
@@ -1424,6 +1457,9 @@ msgstr ""
 msgid "Next cycle, the project will issue {0} tokens per 1 ETH. The cycle after that, the project will issue {1} tokens per 1 ETH."
 msgstr ""
 
+msgid "Enable payment terminal configuration"
+msgstr ""
+
 msgid "Days"
 msgstr ""
 
@@ -1454,9 +1490,6 @@ msgstr ""
 msgid "A percentage of token issuance which is set aside for addresses and other projects chosen by the project owner."
 msgstr ""
 
-msgid "About {projectName}"
-msgstr ""
-
 msgid "Edit recipients"
 msgstr ""
 
@@ -1482,6 +1515,12 @@ msgid "No reserved tokens to send."
 msgstr ""
 
 msgid "What do we value?"
+msgstr ""
+
+msgid "Tell us about your project."
+msgstr ""
+
+msgid "Add a brief one-sentence summary of your project."
 msgstr ""
 
 msgid "Launch V3 migration token"
@@ -1628,6 +1667,9 @@ msgstr ""
 msgid "Your NFTs & Rewards"
 msgstr ""
 
+msgid "Add update"
+msgstr ""
+
 msgid "Send a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr ""
 
@@ -1650,6 +1692,9 @@ msgid "JuiceboxDAO is a community of passionate builders, creators, and innovato
 msgstr ""
 
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
+msgstr ""
+
+msgid "NFTs are not enabled for pay"
 msgstr ""
 
 msgid "{tokenText} balance"
@@ -1748,7 +1793,13 @@ msgstr ""
 msgid "Update NFT theme"
 msgstr ""
 
+msgid "Title"
+msgstr ""
+
 msgid "Background color"
+msgstr ""
+
+msgid "Payments are paused"
 msgstr ""
 
 msgid "Link minters of this NFT to your project's website, Discord, etc."
@@ -1767,6 +1818,9 @@ msgid "Send {tokensText}"
 msgstr ""
 
 msgid "Not set"
+msgstr ""
+
+msgid "Add project update"
 msgstr ""
 
 msgid "Recipient address"
@@ -1892,6 +1946,9 @@ msgstr ""
 msgid "The held fees will reset as ETH is transferred back to the project with the <0>transfer ETH to project</0> transaction above."
 msgstr ""
 
+msgid "Edits to cycles must occur before the selected period. Deadlines ensure your contributors are informed of upcoming changes to your projects’ configuration."
+msgstr ""
+
 msgid "Read the docs"
 msgstr ""
 
@@ -1970,6 +2027,9 @@ msgstr ""
 msgid "Project tokens will be minted to this beneficiary address. The address that made the payment <0>won't receive any project tokens.</0>"
 msgstr ""
 
+msgid "V2 3-day deadline"
+msgstr ""
+
 msgid "Discord"
 msgstr ""
 
@@ -2021,6 +2081,9 @@ msgstr ""
 msgid "Save token recipients"
 msgstr ""
 
+msgid "Project Updates"
+msgstr ""
+
 msgid "Token migration"
 msgstr ""
 
@@ -2064,6 +2127,9 @@ msgid "A platform without limits, just the way you like it."
 msgstr ""
 
 msgid "Current balance"
+msgstr ""
+
+msgid "Add banner image"
 msgstr ""
 
 msgid "Splits payer addresses"
@@ -2222,9 +2288,6 @@ msgstr ""
 msgid "Sent reserved tokens"
 msgstr ""
 
-msgid "GitHub"
-msgstr ""
-
 msgid "{nftBalanceFormatted, plural, one {NFT} other {NFTs}}"
 msgstr ""
 
@@ -2333,6 +2396,9 @@ msgstr ""
 msgid "Receive ERC-20"
 msgstr ""
 
+msgid "Must be less than {0} characters"
+msgstr ""
+
 msgid "The amount of ETH this project can pay out of its treasury each Cycle."
 msgstr ""
 
@@ -2411,6 +2477,9 @@ msgstr ""
 msgid "handle"
 msgstr ""
 
+msgid "Posted {dateString} by <0/>"
+msgstr ""
+
 msgid "Watching projects"
 msgstr ""
 
@@ -2442,6 +2511,9 @@ msgid "{0} after JBX fee"
 msgstr ""
 
 msgid "Subject"
+msgstr ""
+
+msgid "Enable controller configuration"
 msgstr ""
 
 msgid "{pageTitle}"
@@ -2576,9 +2648,6 @@ msgstr ""
 msgid "Add a collection name"
 msgstr ""
 
-msgid "No transaction history"
-msgstr ""
-
 msgid "Unstaked balance"
 msgstr ""
 
@@ -2687,7 +2756,13 @@ msgstr ""
 msgid "If you don't raise the sum of your payouts (<0/>{distributionLimit}), this address will receive {0}% of all the ETH you raise."
 msgstr ""
 
+msgid "Project updates 📢"
+msgstr ""
+
 msgid "When checked, payments made through this address will mint the project's ERC-20 tokens. Payments will incur slightly higher gas fees. When unchecked, the Juicebox protocol will internally track the beneficiary's tokens, and they can claim their ERC-20 tokens at any time."
+msgstr ""
+
+msgid "JB vs. Gofundme"
 msgstr ""
 
 msgid "All of your project's ETH can be paid out at any time. You can send percentages of that ETH to one or more recipients."
@@ -2720,10 +2795,16 @@ msgstr ""
 msgid "Claiming {tokenTextLong} will convert your {tokenTextShort} balance to ERC-20 tokens and mint them to your wallet."
 msgstr ""
 
+msgid "For charities"
+msgstr ""
+
 msgid "Edit project"
 msgstr ""
 
 msgid "Fund your thing"
+msgstr ""
+
+msgid "Compare"
 msgstr ""
 
 msgid "Burn {0}"
@@ -2786,6 +2867,9 @@ msgstr ""
 msgid "All of this project's ETH will be paid out. Token holders will receive <0>no ETH</0> when redeeming their tokens."
 msgstr ""
 
+msgid "Keep contributors up to date by adding updates periodically to your project."
+msgstr ""
+
 msgid "Re-launch on V3"
 msgstr ""
 
@@ -2796,6 +2880,9 @@ msgid "Manage {tokenText}"
 msgstr ""
 
 msgid "Bookmark project"
+msgstr ""
+
+msgid "Attach files by dragging & dropping, or pasting from the clipboard."
 msgstr ""
 
 msgid "Download project activity CSV"
@@ -3362,6 +3449,9 @@ msgstr ""
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no ETH, or is using all of its ETH for payouts."
 msgstr ""
 
+msgid "JB vs. Kickstarter"
+msgstr ""
+
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."
 msgstr ""
 
@@ -3470,6 +3560,9 @@ msgstr ""
 msgid "Contract permissions"
 msgstr ""
 
+msgid "Project configurations cannot be changed to the duration of locked cycles."
+msgstr ""
+
 msgid "This project has redemptions turned off."
 msgstr ""
 
@@ -3510,6 +3603,9 @@ msgid "If you don't raise the sum of your payouts (<0/>{distributionLimit}), thi
 msgstr ""
 
 msgid "Burn {0} {tokensTextShort}"
+msgstr ""
+
+msgid "This project has disabled payments"
 msgstr ""
 
 msgid "No tokens to redeem."
@@ -3674,6 +3770,9 @@ msgstr ""
 msgid "Payouts to other Juicebox projects won't incur fees."
 msgstr ""
 
+msgid "Sold out"
+msgstr ""
+
 msgid "Burn {tokensTextLong}"
 msgstr ""
 
@@ -3789,6 +3888,9 @@ msgid "Community-owned"
 msgstr ""
 
 msgid "Owner tools"
+msgstr ""
+
+msgid "Example Feature"
 msgstr ""
 
 msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
@@ -3941,6 +4043,9 @@ msgstr ""
 msgid "MoonDAO has built an enthusiastic community of over 10,000 members, successfully sent their first astronaut to space, and is currently coordinating the spaceflight for their second astronaut. Their ambitious long-term roadmap goals include building a settlement on the Moon by 2030. In collaboration with StudioDAO, a decentralized movie studio running on Juicebox, MoonDAO has donated $100,000 to help fund the production of Ticket To Space, the first DAO documentary. The film will cover the story of Yan, a MoonDAO member from China, who will be sent to space on an upcoming Blue Origin flight after minting a free NFT."
 msgstr ""
 
+msgid "V2 7-day deadline"
+msgstr ""
+
 msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
 msgstr ""
 
@@ -3966,6 +4071,12 @@ msgid "In other words: instead of taking effect immediately, those edits will ta
 msgstr ""
 
 msgid "Sent reserved {0}"
+msgstr ""
+
+msgid "JB vs. Indiegogo"
+msgstr ""
+
+msgid "Updates"
 msgstr ""
 
 msgid "Allow a few days for your project to appear in the \"active\" projects list on the Projects page."
@@ -4008,6 +4119,9 @@ msgid "Customization"
 msgstr ""
 
 msgid "Block number"
+msgstr ""
+
+msgid "This project has no updates"
 msgstr ""
 
 msgid "{titleCasedAllocationName} Amount"
@@ -4184,6 +4298,9 @@ msgstr ""
 msgid "Schedule launch"
 msgstr ""
 
+msgid "Advanced"
+msgstr ""
+
 msgid "Percentage to reserve"
 msgstr ""
 
@@ -4260,6 +4377,9 @@ msgid "Date created"
 msgstr ""
 
 msgid "What happens when I pay a project?"
+msgstr ""
+
+msgid "For fundraising"
 msgstr ""
 
 msgid "Status"
@@ -4478,6 +4598,9 @@ msgstr ""
 msgid "Advanced options"
 msgstr ""
 
+msgid "Reconfiguration deadline"
+msgstr ""
+
 msgid "Funding rules"
 msgstr ""
 
@@ -4583,6 +4706,9 @@ msgstr ""
 msgid "StudioDAO's project settings are designed to maximize trust with locked 28-day cycles, limited payouts, and a 3-day edit deadline. 20% of newly minted tokens are reserved for the DAO wallet and issuance will decrease by 5% each cycle. StudioDAO also leverages tiered NFT rewards to create incentives for supporters with benefits like private screenings, governance votes to decide which new films to fund, and screen credits."
 msgstr ""
 
+msgid "Load more"
+msgstr ""
+
 msgid "Loading"
 msgstr ""
 
@@ -4607,6 +4733,12 @@ msgstr ""
 msgid "{titleCasedAllocationName} Percentage"
 msgstr ""
 
+msgid "Tagline"
+msgstr ""
+
+msgid "Tokens cannot be issued while payments are disabled."
+msgstr ""
+
 msgid "Owner wallet balance"
 msgstr ""
 
@@ -4620,6 +4752,9 @@ msgid "MoonDAO is a worldwide collective united by the mission of decentralizing
 msgstr ""
 
 msgid "V3"
+msgstr ""
+
+msgid "Disable payments to this project"
 msgstr ""
 
 msgid "project"
@@ -4653,6 +4788,9 @@ msgid "Overflow"
 msgstr ""
 
 msgid "Project contracts directory"
+msgstr ""
+
+msgid "A horizontal banner image sized 288 x 556 is recommended."
 msgstr ""
 
 msgid "Save profile details"

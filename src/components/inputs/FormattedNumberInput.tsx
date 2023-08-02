@@ -54,7 +54,7 @@ export default function FormattedNumberInput({
     <div className={twMerge('relative flex items-center', className)}>
       <JuiceInputNumber
         className={classNames(
-          'w-full',
+          'h-full w-full',
           accessory ? 'antd-no-number-handler' : '',
         )}
         value={value !== undefined ? parseFloat(value) : undefined}

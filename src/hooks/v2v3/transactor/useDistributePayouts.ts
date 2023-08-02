@@ -17,6 +17,7 @@ import {
   JBETHPaymentTerminalVersion,
   JB_ETH_PAYMENT_TERMINAL_V_3,
   JB_ETH_PAYMENT_TERMINAL_V_3_1,
+  JB_ETH_PAYMENT_TERMINAL_V_3_1_1,
 } from '../V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminal'
 import { useV2ProjectTitle } from '../useProjectTitle'
 
@@ -67,6 +68,13 @@ function buildTxArgs({
   }
 
   if (JBETHPaymentTerminalVersion === JB_ETH_PAYMENT_TERMINAL_V_3_1) {
+    return [
+      ...baseArgs,
+      (args as DISTRIBUTE_PAYOUTS_TX_V3_1_PARAMS).metadata ?? DEFAULT_METADATA, // _metadata
+    ]
+  }
+
+  if (JBETHPaymentTerminalVersion === JB_ETH_PAYMENT_TERMINAL_V_3_1_1) {
     return [
       ...baseArgs,
       (args as DISTRIBUTE_PAYOUTS_TX_V3_1_PARAMS).metadata ?? DEFAULT_METADATA, // _metadata

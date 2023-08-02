@@ -1,7 +1,12 @@
 import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 
-import { preciseFormatSplitPercent, splitPercentFrom } from './math'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
+import {
+  MAX_DISTRIBUTION_LIMIT,
+  preciseFormatSplitPercent,
+  splitPercentFrom,
+} from './math'
 
 /**
  * Gets amount from percent of a bigger amount (rounded to 4dp)
@@ -113,6 +118,24 @@ export function getNewDistributionLimit({
   return parseFloat(newDistributionLimit.toString())
 }
 
+// Determines if a split is a Juicebox project
 export function isJuiceboxProjectSplit(split: Split) {
   return split.projectId ? BigNumber.from(split.projectId).gt(0) : false
+}
+
+/**
+ * Converts the distribution limit that comes from redux from string to a number. If infinite, returns undefined.
+ * @param distributionLimit {string | undefined} - The distribution limit as a string (or undefined).
+ * @returns {number | undefined} - Returns the distribution limit as a number if it isn't infinite, otherwise returns undefined.
+ */
+export function distributionLimitStringtoNumber(
+  distributionLimit: string | undefined,
+) {
+  if (distributionLimit === undefined) return undefined
+  const distributionLimitBN = parseWad(distributionLimit)
+  const distributionLimitIsInfinite =
+    !distributionLimitBN || distributionLimitBN.eq(MAX_DISTRIBUTION_LIMIT)
+  return distributionLimitIsInfinite
+    ? undefined
+    : parseFloat(fromWad(distributionLimitBN))
 }

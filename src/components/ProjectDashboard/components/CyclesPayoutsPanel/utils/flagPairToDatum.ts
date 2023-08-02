@@ -6,6 +6,8 @@ export const flagPairToDatum = (
   name: string,
   currentFlag: boolean | undefined,
   upcomingFlag: boolean | undefined | null,
+  link?: string,
+  easyCopy?: boolean,
 ): ConfigurationPanelDatum => {
   const current =
     currentFlag !== undefined
@@ -21,5 +23,5 @@ export const flagPairToDatum = (
           : t`Disabled`
         : undefined
       : null
-  return pairToDatum(name, current, upcoming)
+  return pairToDatum(name, current, upcoming, link, easyCopy)
 }

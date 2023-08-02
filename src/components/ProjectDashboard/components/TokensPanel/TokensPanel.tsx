@@ -80,14 +80,17 @@ export const TokensPanel = () => {
             <TitleDescriptionDisplayCard
               className="mt-4 flex flex-col items-center gap-5 md:flex-row"
               title={t`Your legacy balance`}
-              description={<TokenAmount amountWad={userLegacyTokenBalance} />}
-            >
-              <MigrateTokensButton
-                totalLegacyTokenBalance={userLegacyTokenBalance}
-                v1ClaimedBalance={userV1ClaimedBalance}
-                className="h-12 w-full md:h-10 md:w-fit"
-              />
-            </TitleDescriptionDisplayCard>
+              description={
+                <span className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
+                  <TokenAmount amountWad={userLegacyTokenBalance} />
+                  <MigrateTokensButton
+                    totalLegacyTokenBalance={userLegacyTokenBalance}
+                    v1ClaimedBalance={userV1ClaimedBalance}
+                    className="h-12 w-full md:h-10 md:w-fit"
+                  />
+                </span>
+              }
+            />
           ) : null}
 
           <div className="mt-4 flex flex-col gap-4">

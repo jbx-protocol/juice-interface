@@ -1,10 +1,10 @@
 import { Tab } from '@headlessui/react'
-import { useEffect, useRef } from 'react'
+import { ReactNode, useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 interface ProjectTabProps {
   className?: string
-  name: string
+  name: ReactNode
   onClick: () => void
 }
 

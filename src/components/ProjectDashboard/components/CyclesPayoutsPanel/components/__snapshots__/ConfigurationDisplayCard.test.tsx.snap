@@ -6,15 +6,15 @@ exports[`ConfigurationDisplayCard renders 1`] = `
     class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700"
     data-headlessui-state=""
   >
-    <button
-      aria-expanded="false"
+    <div
       class="w-full outline-none"
-      data-headlessui-state=""
-      id="headlessui-disclosure-button-:r0:"
-      type="button"
     >
-      <div
+      <button
+        aria-expanded="false"
         class="flex w-full items-center justify-between text-start"
+        data-headlessui-state=""
+        id="headlessui-disclosure-button-:r0:"
+        type="button"
       >
         <div
           class="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200"
@@ -41,8 +41,8 @@ exports[`ConfigurationDisplayCard renders 1`] = `
             stroke-linejoin="round"
           />
         </svg>
-      </div>
-    </button>
+      </button>
+    </div>
   </div>
 </div>
 `;

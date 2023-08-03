@@ -1,5 +1,6 @@
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
+import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { useMemo } from 'react'
 import { CurrentUpcomingSubPanel } from './components/CurrentUpcomingSubPanel'
 import { CyclesTab } from './components/CyclesTab'
@@ -11,14 +12,15 @@ export type CyclesSubPanel = {
 }
 
 export const CyclesPayoutsPanel = () => {
-  const tabs: CyclesSubPanel[] = useMemo(
-    () => [
-      { id: 'current', name: t`Current` },
-      { id: 'upcoming', name: t`Upcoming` },
-      { id: 'history', name: t`History` },
-    ],
-    [],
-  )
+  const { fundingCycle } = useProjectContext()
+  const tabs: CyclesSubPanel[] = useMemo(() => {
+    const _tabs = [{ id: 'current', name: t`Current` }]
+    if (fundingCycle?.duration && !fundingCycle.duration.eq(0)) {
+      _tabs.concat({ id: 'upcoming', name: t`Upcoming` })
+    }
+    _tabs.concat({ id: 'history', name: t`History` })
+    return _tabs as CyclesSubPanel[]
+  }, [fundingCycle?.duration])
   return (
     <Tab.Group
       as="div"

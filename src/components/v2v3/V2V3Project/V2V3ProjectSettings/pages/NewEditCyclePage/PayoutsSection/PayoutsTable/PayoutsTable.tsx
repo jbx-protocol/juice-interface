@@ -25,6 +25,7 @@ export function PayoutsTable() {
     roundingPrecision,
     ownerRemainderValue,
     currency,
+    handleDeletePayoutSplit,
   } = usePayoutsTable()
 
   const formattedDistributionLimit = distributionLimit
@@ -44,7 +45,12 @@ export function PayoutsTable() {
           <HeaderRows />
           <tbody>
             {payoutSplits?.map((payoutSplit, index) => (
-              <PayoutSplitRow key={index} payoutSplit={payoutSplit} />
+              <PayoutSplitRow
+                key={index}
+                payoutSplit={payoutSplit}
+                onDeleteClick={() => handleDeletePayoutSplit({ payoutSplit })}
+                onEditClick={() => null}
+              />
             ))}
             <Row>
               <Cell>Sub-total</Cell>

@@ -15,7 +15,7 @@ export type SplitWithDiff = Split & {
 }
 
 // determines if two splits are the same 'entity' (either projectId or address)
-const hasEqualRecipient = (a: Split, b: Split) => {
+export const hasEqualRecipient = (a: Split, b: Split) => {
   const isProject = isProjectSplit(a)
   const idsEqual =
     a.projectId === b.projectId ||

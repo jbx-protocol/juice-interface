@@ -6,9 +6,10 @@ import { GnosisSafe } from 'models/safe'
 import { useContext, useMemo } from 'react'
 import { useProjectMetadata } from './useProjectMetadata'
 
+type SubtitleType = 'tagline' | 'description'
 export interface ProjectHeaderData {
   title: string | undefined
-  subtitle: string | undefined
+  subtitle: { text: string; type: SubtitleType } | undefined
   handle: string | undefined
   projectId: number | undefined
   owner: string | undefined
@@ -36,7 +37,22 @@ export const useProjectHeader = (): ProjectHeaderData => {
   const subtitle = useMemo(() => {
     const tagline = projectMetadata?.projectTagline
     const description = projectMetadata?.description
-    return tagline ?? description
+      ? stripHtmlTags(projectMetadata?.description)
+      : undefined
+
+    if (tagline) {
+      return {
+        text: tagline,
+        type: 'tagline' as SubtitleType,
+      }
+    }
+
+    if (description) {
+      return {
+        text: description,
+        type: 'description' as SubtitleType,
+      }
+    }
   }, [projectMetadata?.description, projectMetadata?.projectTagline])
 
   return {
@@ -50,4 +66,8 @@ export const useProjectHeader = (): ProjectHeaderData => {
     last7DaysPercent,
     gnosisSafe,
   }
+}
+
+const stripHtmlTags = (html: string): string => {
+  return html.replace(/<[^>]*>/g, '')
 }

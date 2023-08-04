@@ -25,7 +25,7 @@ function mockUseProjectPageQueries() {
 
 const MOCK_PROJECT_HEADER_DATA: ProjectHeaderData = {
   title: 'bongdao',
-  subtitle: 'big rips',
+  subtitle: { text: 'big rips', type: 'tagline' },
   handle: 'bongdao',
   projectId: 420,
   owner: '0x1234',

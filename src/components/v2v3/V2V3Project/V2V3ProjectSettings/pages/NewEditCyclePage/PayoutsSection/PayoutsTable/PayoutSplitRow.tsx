@@ -25,7 +25,6 @@ export function PayoutSplitRow({ payoutSplit }: { payoutSplit: Split }) {
     roundingPrecision,
     handlePayoutSplitAmountChanged,
   } = usePayoutsTable()
-
   const amount = derivePayoutAmount({ payoutSplit })
 
   const formattedAmount = amount

@@ -1,4 +1,7 @@
 import { useWatch } from 'antd/lib/form/Form'
+import { useProjectContext } from 'components/ProjectDashboard/hooks'
+import { AddEditAllocationModalEntity } from 'components/v2v3/shared/Allocation/AddEditAllocationModal'
+import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { ONE_BILLION } from 'constants/numbers'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
@@ -15,11 +18,11 @@ import { useEditCycleFormContext } from '../../EditCycleFormContext'
 const JB_FEE = 0.025
 
 export const usePayoutsTable = () => {
+  const { projectOwnerAddress } = useProjectContext()
   const { editCycleForm } = useEditCycleFormContext()
   const distributionLimit = useWatch('distributionLimit', editCycleForm)
   const currency = useWatch('distributionLimitCurrency', editCycleForm)
   const payoutSplits = useWatch('payoutSplits', editCycleForm) ?? []
-
   const roundingPrecision = currency === 'ETH' ? 4 : 2
 
   const distributionLimitIsInfinite = useMemo(
@@ -76,6 +79,62 @@ export const usePayoutsTable = () => {
       (payoutSplit.percent / ONE_BILLION) * distributionLimit
     if (isProjectSplit(payoutSplit) || dontApplyFee) return amountBeforeFee // projects dont have fee applied
     return deriveAmountAfterFee(amountBeforeFee)
+  }
+
+  /**
+   * Handle payoutSplit added:
+   *    - Sets new distributionLimit (DL) based on sum of new payout amounts
+   *    - Changed the % of other splits based on the new DL keep their amount the same
+   * @param newSplit - Just added split
+   * @param newAmount - The new amount of the @editingPayoutSplit
+   */
+  function handleNewPayoutSplit({
+    newSplit,
+  }: {
+    newSplit: AddEditAllocationModalEntity
+  }) {
+    const isProjectOwner = !(newSplit?.projectOwner === false)
+    const newAmount = isProjectOwner
+      ? parseFloat(newSplit.amount)
+      : deriveAmountBeforeFee(parseFloat(newSplit.amount.value))
+    // Convert the newAmount to its percentage of the new DL in parts-per-bill
+    const newDistributionLimit = distributionLimit
+      ? getNewDistributionLimit({
+          currentDistributionLimit: distributionLimit.toString(),
+          newSplitAmount: newAmount,
+          editingSplitPercent: 0,
+          ownerRemainingAmount,
+        })
+      : undefined // undefined means DL is infinite
+
+    const newSplitPercentage =
+      (newAmount / (newDistributionLimit ?? 0)) * ONE_BILLION
+    let adjustedSplits: Split[] = payoutSplits
+
+    // recalculate all split percents based on newly added split amount
+    if (newDistributionLimit && !distributionLimitIsInfinite) {
+      adjustedSplits = adjustedSplitPercents({
+        splits: payoutSplits,
+        oldDistributionLimit: (distributionLimit as number).toString() ?? '0',
+        newDistributionLimit: newDistributionLimit.toString(),
+      })
+    }
+
+    const newPayoutSplit = {
+      beneficiary: isProjectOwner ? projectOwnerAddress : newSplit.beneficiary,
+      percent: newSplitPercentage,
+      preferClaimed: false,
+      lockedUntil: isProjectOwner ? undefined : newSplit.lockedUntil,
+      projectId: isProjectOwner ? '0x00' : newSplit.projectId,
+      allocator: NULL_ALLOCATOR_ADDRESS,
+    } as Split
+
+    const newPayoutSplits = [...adjustedSplits, newPayoutSplit]
+
+    editCycleForm?.setFieldsValue({
+      distributionLimit: newDistributionLimit,
+      payoutSplits: newPayoutSplits,
+    })
   }
 
   /**
@@ -163,6 +222,7 @@ export const usePayoutsTable = () => {
     derivePayoutAmount,
     roundingPrecision,
     handlePayoutSplitAmountChanged,
+    handleNewPayoutSplit,
     subTotal,
     ownerRemainderValue,
     totalFeeAmount,

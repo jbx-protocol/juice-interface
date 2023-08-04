@@ -13,21 +13,26 @@ export default function ProjectLogo({
   name,
   projectId,
   lazyLoad,
+  fallback = '🧃',
 }: {
-  className?: string
-  uri: string | undefined
   name: string | undefined
+  className?: string
+  uri?: string | undefined
   projectId?: number | undefined
   lazyLoad?: boolean
+  fallback?: string | JSX.Element | null
 }) {
   const [srcLoadError, setSrcLoadError] = useState(false)
-  const validImg = uri && !srcLoadError
+  const [loading, setLoading] = useState(true)
 
   const imageSrc = useMemo(() => {
-    if (projectId && IMAGE_URI_OVERRIDES[projectId]) {
+    if (!projectId) return undefined
+
+    if (IMAGE_URI_OVERRIDES[projectId]) {
       return IMAGE_URI_OVERRIDES[projectId]
     }
-    if (!uri) return undefined
+
+    if (!uri) return `/api/juicebox/projectLogo/${projectId}`
 
     // Some older JB projects have a logo URI hardcoded to use Pinata.
     // JBM no longer uses Pinata.
@@ -40,11 +45,14 @@ export default function ProjectLogo({
     return ipfsUriToGatewayUrl(uri)
   }, [uri, projectId])
 
+  const validImg = imageSrc && !srcLoadError
+
   return (
     <div
       className={twMerge(
-        'flex h-20 w-20 items-center justify-center overflow-hidden rounded-lg',
+        'flex h-20 w-20 items-center justify-center overflow-hidden rounded-lg text-4xl',
         'bg-smoke-100 dark:bg-slate-700',
+        loading ? 'animate-pulse' : undefined,
         className,
       )}
     >
@@ -54,15 +62,14 @@ export default function ProjectLogo({
           src={imageSrc}
           alt={name + ' logo'}
           onError={() => setSrcLoadError(true)}
+          onLoad={() => setLoading(false)}
           loading={lazyLoad ? 'lazy' : undefined}
           crossOrigin="anonymous"
           title={name}
         />
-      ) : (
-        <div className="text-4xl" title={name}>
-          🧃
-        </div>
-      )}
+      ) : null}
+
+      {!validImg ? <span title={name}>{fallback}</span> : null}
     </div>
   )
 }

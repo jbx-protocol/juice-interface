@@ -47,7 +47,7 @@ export const ProjectDetailsReview = () => {
         }
       />
       <ReviewDescription
-        className="col-span-4"
+        className="col-span-4 whitespace-pre-wrap"
         title={t`Project description`}
         placeholder={t`No description`}
         desc={<RichPreview source={description ?? ''} />}

@@ -1,6 +1,5 @@
 import { InputNumberProps } from 'antd'
 import { twMerge } from 'tailwind-merge'
-import { classNames } from 'utils/classNames'
 import { formattedNum } from 'utils/format/formatNumber'
 import { JuiceInputNumber } from './JuiceInputNumber'
 
@@ -53,8 +52,9 @@ export default function FormattedNumberInput({
   return (
     <div className={twMerge('relative flex items-center', className)}>
       <JuiceInputNumber
-        className={classNames(
+        className={twMerge(
           'h-full w-full',
+          'formatted-number-input',
           accessory ? 'antd-no-number-handler' : '',
         )}
         value={value !== undefined ? parseFloat(value) : undefined}

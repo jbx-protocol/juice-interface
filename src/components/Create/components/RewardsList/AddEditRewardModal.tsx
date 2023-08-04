@@ -16,7 +16,7 @@ import { pinFile } from 'lib/api/ipfs'
 import random from 'lodash/random'
 import { NftRewardTier } from 'models/nftRewards'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import {
   inputIsIntegerRule,
   inputIsValidUrlRule,
@@ -67,9 +67,8 @@ export const AddEditRewardModal = ({
   const [isReservingNfts, setIsReservingNfts] = useState<boolean>(false)
   const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState<boolean>(false)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!open) return
-
     if (!editingData) {
       setLimitedSupply(false)
       return
@@ -80,17 +79,21 @@ export const AddEditRewardModal = ({
         editingData.maxSupply !== DEFAULT_NFT_MAX_SUPPLY,
     )
     setIsReservingNfts(!!editingData.beneficiary && !!editingData.reservedRate)
-    form.setFieldsValue({
-      fileUrl: editingData.fileUrl.toString(),
-      rewardName: editingData.name,
-      description: editingData.description,
-      contributionFloor: editingData.contributionFloor.toString(),
-      maxSupply: editingData.maxSupply?.toString(),
-      externalUrl: editingData.externalLink,
-      beneficiary: editingData.beneficiary,
-      nftReservedRate: editingData.reservedRate,
-      votingWeight: editingData.votingWeight,
-    })
+
+    // Wait for form to be visible before setting values
+    setTimeout(() => {
+      form.setFieldsValue({
+        fileUrl: editingData.fileUrl.toString(),
+        rewardName: editingData.name,
+        description: editingData.description,
+        contributionFloor: editingData.contributionFloor.toString(),
+        maxSupply: editingData.maxSupply?.toString(),
+        externalUrl: editingData.externalLink,
+        beneficiary: editingData.beneficiary,
+        nftReservedRate: editingData.reservedRate,
+        votingWeight: editingData.votingWeight,
+      })
+    }, 0)
   }, [editingData, form, open])
 
   // Due to the way antd works, if advanced options are set, we need to open it on load

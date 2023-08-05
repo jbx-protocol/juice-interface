@@ -58,12 +58,12 @@ export const HistorySubPanel = () => {
             {data.map(cycle => (
               <Disclosure key={cycle.cycleNumber} as={Fragment}>
                 {({ open }) => (
-                  <Disclosure.Button
-                    data-testid={`disclosure-button-${cycle.cycleNumber}`}
-                    as="div"
-                    className="cursor-pointer p-4 pr-2"
-                  >
-                    <div className="grid grid-cols-config-table gap-3 whitespace-nowrap text-sm font-medium">
+                  <div className="p-4 pr-2">
+                    <Disclosure.Button
+                      data-testid={`disclosure-button-${cycle.cycleNumber}`}
+                      as="div"
+                      className="grid cursor-pointer grid-cols-config-table gap-3 whitespace-nowrap text-sm font-medium"
+                    >
                       <div>#{cycle.cycleNumber}</div>
                       <div>{cycle.withdrawn}</div>
                       <div className="text-grey-500 dark:text-slate-200">
@@ -74,7 +74,7 @@ export const HistorySubPanel = () => {
                           className={twMerge(open && 'rotate-180', 'h-5 w-5')}
                         />
                       </div>
-                    </div>
+                    </Disclosure.Button>
                     <Transition
                       show={open}
                       as={Fragment}
@@ -89,7 +89,7 @@ export const HistorySubPanel = () => {
                         <HistoricalConfigurationPanel {...cycle._metadata} />
                       </Disclosure.Panel>
                     </Transition>
-                  </Disclosure.Button>
+                  </div>
                 )}
               </Disclosure>
             ))}

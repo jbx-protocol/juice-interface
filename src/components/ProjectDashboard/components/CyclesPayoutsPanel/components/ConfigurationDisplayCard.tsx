@@ -19,8 +19,8 @@ export const ConfigurationDisplayCard = ({
       className={twMerge('rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700')}
     >
       {({ open }) => (
-        <Disclosure.Button className="w-full outline-none">
-          <div className="flex w-full items-center justify-between text-start">
+        <div className="w-full outline-none">
+          <Disclosure.Button className="flex w-full items-center justify-between text-start">
             <div className="flex flex-col gap-2 text-sm font-medium text-grey-600 dark:text-slate-200">
               {title}
               <div className="font-heading text-xl font-medium text-grey-900 dark:text-slate-50">
@@ -30,7 +30,7 @@ export const ConfigurationDisplayCard = ({
             <ChevronDownIcon
               className={twMerge('h-6 w-6', open && 'rotate-180')}
             />
-          </div>
+          </Disclosure.Button>
 
           <Transition
             show={open}
@@ -47,7 +47,7 @@ export const ConfigurationDisplayCard = ({
               <CurrentUpcomingConfigurationPanel type={type} />
             </Disclosure.Panel>
           </Transition>
-        </Disclosure.Button>
+        </div>
       )}
     </Disclosure>
   )

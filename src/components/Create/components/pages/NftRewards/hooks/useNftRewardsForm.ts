@@ -9,7 +9,6 @@ import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,
 } from 'utils/nftRewards'
-import { v4 } from 'uuid'
 import { useFormDispatchWatch } from '../../hooks'
 
 type NftRewardsFormProps = Partial<{
@@ -48,7 +47,7 @@ export const useNftRewardsForm = () => {
 
     const rewards: NftRewardTier[] =
       rewardTiers?.map(t => ({
-        id: parseInt(v4()),
+        id: Math.floor(Math.random() * 1000000),
         name: t.name,
         contributionFloor: t.contributionFloor,
         description: t.description,

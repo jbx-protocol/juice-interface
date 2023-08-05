@@ -31,13 +31,13 @@ export const SuccessPayCard = ({ className }: { className?: string }) => {
       )}
     >
       <div className="flex w-full justify-between gap-3 pb-6 md:pb-0">
-        <div className="flex gap-3 text-start">
+        <div className="flex min-w-0 gap-3 text-start">
           <ProjectHeaderLogo className="h-20 w-20 bg-white" />
-          <div className="flex flex-col gap-1">
+          <div className="flex min-w-0 flex-col gap-1">
             <span className="text-xs text-grey-500 dark:text-slate-200">
               <Trans>Paid</Trans>
             </span>
-            <span className="truncate text-sm font-medium">{name}</span>
+            <span className="text-sm font-medium">{name}</span>
             <span className="font-heading text-2xl font-medium">
               {formatCurrencyAmount({
                 ...projectPayReceipt.totalAmount,
@@ -49,14 +49,16 @@ export const SuccessPayCard = ({ className }: { className?: string }) => {
 
         <div className="flex flex-col items-end">
           <div className="flex items-center gap-2 ">
-            <span className="text-xs text-grey-500 dark:text-slate-200">
+            <span className="whitespace-nowrap text-xs text-grey-500 dark:text-slate-200">
               {transactionDateString}
             </span>
-            <EtherscanLink
-              linkClassName="text-black dark:text-slate-50"
-              type="tx"
-              value={projectPayReceipt.transactionHash}
-            />
+            {!isMobile && (
+              <EtherscanLink
+                linkClassName="text-black dark:text-slate-50"
+                type="tx"
+                value={projectPayReceipt.transactionHash}
+              />
+            )}
           </div>
           {!isMobile && (
             <EthereumAddress
@@ -68,11 +70,17 @@ export const SuccessPayCard = ({ className }: { className?: string }) => {
         </div>
       </div>
       {isMobile && (
-        <div className="flex justify-between pt-6">
+        <div className="flex items-center justify-between pt-6">
           <EthereumAddress
             tooltipDisabled
             address={projectPayReceipt.fromAddress}
             withEnsAvatar
+          />
+          <EtherscanLink
+            className="rounded-lg border border-grey-200 py-1 px-2 text-base dark:border-slate-300"
+            linkClassName="text-black text-base dark:text-slate-100"
+            type="tx"
+            value={projectPayReceipt.transactionHash}
           />
         </div>
       )}

@@ -23,12 +23,28 @@ export const useAboutPanel = () => {
     projectMetadata?.telegram,
     projectMetadata?.twitter,
   ])
-  const description = projectMetadata?.description
+  const description = useMemo(
+    () =>
+      projectMetadata?.description
+        ? wrapNonAnchorsInAnchor(projectMetadata?.description)
+        : undefined,
+    [projectMetadata?.description],
+  )
+
   return {
     description,
     socialLinks,
     projectName: projectMetadata?.name,
   }
+}
+
+const wrapNonAnchorsInAnchor = (text: string) => {
+  const urlRegex =
+    /\b((http|https):\/\/[a-zA-Z0-9-._~:/?#@\\[\]!$&'()*+,;=%]+)/g
+
+  return text.replace(urlRegex, url => {
+    return '<a href="' + url + '">' + url + '</a>'
+  })
 }
 
 const linkOrUndefined = (link: string | undefined) => {

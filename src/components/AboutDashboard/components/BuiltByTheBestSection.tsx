@@ -99,10 +99,10 @@ const ContributorCard: React.FC<
     avatarUrl: string | undefined
   }>
 > = ({ name, title, avatarUrl }) => {
-  const [validAvatar, setValidImage] = useState(true)
+  const [validAvatar, setValidAvatar] = useState(true)
 
   const handleImageError = () => {
-    setValidImage(false)
+    setValidAvatar(false)
   }
 
   return (

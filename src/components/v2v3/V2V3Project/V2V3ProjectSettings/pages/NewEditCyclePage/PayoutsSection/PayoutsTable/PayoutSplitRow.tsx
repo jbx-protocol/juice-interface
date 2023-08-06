@@ -16,7 +16,15 @@ import { PayoutsTableRow } from './PayoutsTableRow'
 
 const Cell = PayoutsTableCell
 
-export function PayoutSplitRow({ payoutSplit }: { payoutSplit: Split }) {
+export function PayoutSplitRow({
+  payoutSplit,
+  onEditClick,
+  onDeleteClick,
+}: {
+  payoutSplit: Split
+  onEditClick: VoidFunction
+  onDeleteClick: VoidFunction
+}) {
   const { editCycleForm } = useEditCycleFormContext()
 
   const {
@@ -25,7 +33,6 @@ export function PayoutSplitRow({ payoutSplit }: { payoutSplit: Split }) {
     roundingPrecision,
     handlePayoutSplitAmountChanged,
   } = usePayoutsTable()
-
   const amount = derivePayoutAmount({ payoutSplit })
 
   const formattedAmount = amount
@@ -52,7 +59,7 @@ export function PayoutSplitRow({ payoutSplit }: { payoutSplit: Split }) {
           <Trans>Edit</Trans>
         </div>
       ),
-      onClick: () => console.info('Edit clicked'),
+      onClick: () => onEditClick,
     },
     {
       id: 'delete',
@@ -62,7 +69,7 @@ export function PayoutSplitRow({ payoutSplit }: { payoutSplit: Split }) {
           <Trans>Delete</Trans>
         </div>
       ),
-      onClick: () => console.info('Delete clicked'),
+      onClick: onDeleteClick,
     },
   ]
 

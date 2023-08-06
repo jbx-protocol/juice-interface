@@ -8,6 +8,8 @@ import { useUnclaimedTokenBalance } from '../useUnclaimedTokenBalance'
 export const useBalanceMenuItemsUserFlags = () => {
   const { primaryTerminalCurrentOverflow, fundingCycleMetadata, tokenAddress } =
     useProjectContext()
+  const isDev = useMemo(() => process.env.NODE_ENV === 'development', [])
+
   const userHasMintPermission = useV2V3WalletHasPermission(
     V2V3OperatorPermission.MINT,
   )
@@ -29,21 +31,24 @@ export const useBalanceMenuItemsUserFlags = () => {
   )
   const unclaimedTokenBalance = useUnclaimedTokenBalance()
 
-  const canBurnTokens = useMemo(() => redeemDisabled, [redeemDisabled])
+  const canBurnTokens = useMemo(
+    () => redeemDisabled || isDev,
+    [isDev, redeemDisabled],
+  )
 
   const canClaimErcTokens = useMemo(
-    () => projectHasIssuedTokens,
-    [projectHasIssuedTokens],
+    () => projectHasIssuedTokens || isDev,
+    [isDev, projectHasIssuedTokens],
   )
 
   const canMintTokens = useMemo(
-    () => projectAllowsMint && userHasMintPermission,
-    [projectAllowsMint, userHasMintPermission],
+    () => (projectAllowsMint && userHasMintPermission) || isDev,
+    [isDev, projectAllowsMint, userHasMintPermission],
   )
 
   const canTransferTokens = useMemo(
-    () => !!unclaimedTokenBalance?.gt(0),
-    [unclaimedTokenBalance],
+    () => !!unclaimedTokenBalance?.gt(0) || isDev,
+    [unclaimedTokenBalance, isDev],
   )
 
   return {

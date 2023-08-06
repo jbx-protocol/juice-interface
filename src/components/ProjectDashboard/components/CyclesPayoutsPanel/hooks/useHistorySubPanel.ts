@@ -20,12 +20,16 @@ import { HistoryData } from '../components/HistorySubPanel'
 type State = {
   loading: boolean
   data: HistoryData
+  paginationToken?: number
   error?: string
 }
 
 type Action =
   | { type: 'request' }
-  | { type: 'success'; payload: HistoryData }
+  | {
+      type: 'success'
+      payload: { data: HistoryData; paginationToken?: number }
+    }
   | { type: 'failure'; payload: string }
 
 const reducer = (state: State, action: Action) => {
@@ -33,13 +37,28 @@ const reducer = (state: State, action: Action) => {
     case 'request':
       return { ...state, loading: true, error: undefined }
     case 'success':
-      return { ...state, loading: false, data: action.payload }
+      return {
+        ...state,
+        loading: false,
+        data: action.payload.data,
+        paginationToken: action.payload.paginationToken,
+      }
     case 'failure':
       return { ...state, loading: false, error: action.payload }
   }
 }
 
-export const useHistorySubPanel = () => {
+export type UseHistorySubPanelProps = {
+  pageSize?: number
+}
+
+const defaultProps = {
+  pageSize: 5,
+}
+
+export const useHistorySubPanel = (props?: UseHistorySubPanelProps) => {
+  const pageSize = props?.pageSize ?? defaultProps.pageSize
+
   const { projectId } = useProjectMetadata()
   const { fundingCycle, primaryETHTerminal } = useProjectContext()
   const {
@@ -49,6 +68,7 @@ export const useHistorySubPanel = () => {
   const [state, dispatch] = useReducer(reducer, {
     loading: false,
     data: [],
+    paginationToken: undefined,
   })
 
   const fetchCurrencyOfFundingCycle = useCallback(
@@ -125,18 +145,20 @@ export const useHistorySubPanel = () => {
     },
     [fetchCurrencyOfFundingCycle, fetchUsedDistributionLimitOfFundingCycle],
   )
-
-  useEffect(() => {
-    dispatch({ type: 'request' })
-
-    const fetchHistory = async () => {
+  const paginateHistory = useCallback(
+    async (paginationToken = 0) => {
       if (!projectId || !fundingCycle || !contracts.JBController) return
+      dispatch({ type: 'request' })
       try {
-        const data = await fetchPastFundingCycles({
-          projectId,
-          currentFundingCycle: fundingCycle,
-          JBController: contracts.JBController,
-        })
+        const data = (
+          await fetchPastFundingCycles({
+            projectId,
+            currentFundingCycle: fundingCycle,
+            JBController: contracts.JBController,
+          })
+        ).slice(paginationToken, paginationToken + pageSize)
+
+        const hasNextPage = data.length === pageSize
 
         const result = await Promise.all(
           data.map(async d => ({
@@ -152,22 +174,35 @@ export const useHistorySubPanel = () => {
           })),
         )
 
-        dispatch({ type: 'success', payload: result })
+        dispatch({
+          type: 'success',
+          payload: {
+            data: state.data.concat(result),
+            paginationToken: hasNextPage
+              ? paginationToken + pageSize
+              : undefined,
+          },
+        })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         console.error('error', error)
         dispatch({ type: 'failure', payload: error.message })
       }
-    }
+    },
+    [
+      contracts.JBController,
+      fetchWithdrawnOfFundingCycle,
+      fundingCycle,
+      pageSize,
+      projectId,
+      state.data,
+    ],
+  )
 
-    fetchHistory()
-  }, [
-    contracts.JBController,
-    fetchCurrencyOfFundingCycle,
-    fetchWithdrawnOfFundingCycle,
-    fundingCycle,
-    projectId,
-  ])
+  useEffect(() => {
+    paginateHistory()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  return state
+  return { ...state, paginateHistory }
 }

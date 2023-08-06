@@ -99,13 +99,20 @@ const ContributorCard: React.FC<
     avatarUrl: string | undefined
   }>
 > = ({ name, title, avatarUrl }) => {
+  const [validAvatar, setValidAvatar] = useState(true)
+
+  const handleImageError = () => {
+    setValidAvatar(false)
+  }
+
   return (
     <div className="max-w-[216px] overflow-hidden">
-      {avatarUrl ? (
+      {avatarUrl && validAvatar ? (
         <img
+          className="mx-auto mb-5 h-14 w-14 rounded-full md:h-20 md:w-20"
           src={avatarUrl}
           alt={name}
-          className="mx-auto mb-5 h-14 w-14 rounded-full md:h-20 md:w-20"
+          onError={handleImageError}
         />
       ) : (
         <div className="mx-auto mb-5 h-20 w-20 rounded-full bg-bluebs-400" />

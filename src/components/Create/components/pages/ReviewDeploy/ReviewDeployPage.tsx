@@ -196,7 +196,7 @@ export const ReviewDeployPage = () => {
             <Form.Item noStyle name="termsAccepted" valuePropName="checked">
               <Checkbox />
             </Form.Item>
-            <div>
+            <label htmlFor="termsAccepted">
               <Trans>
                 I have read and accept the{' '}
                 <ExternalLink href={TERMS_OF_SERVICE_URL}>
@@ -208,7 +208,7 @@ export const ReviewDeployPage = () => {
                 </ExternalLink>
                 .
               </Trans>
-            </div>
+            </label>
           </div>
         </Callout.Info>
         <Wizard.Page.ButtonControl

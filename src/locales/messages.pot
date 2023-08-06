@@ -1682,6 +1682,9 @@ msgstr ""
 msgid "Set up custom rules for your project's tokens."
 msgstr ""
 
+msgid "Legal Resources"
+msgstr ""
+
 msgid "V1"
 msgstr ""
 
@@ -4722,6 +4725,9 @@ msgid "Re-launch your Juicebox project using the v3 contracts."
 msgstr ""
 
 msgid "StudioDAO's project settings are designed to maximize trust with locked 28-day cycles, limited payouts, and a 3-day edit deadline. 20% of newly minted tokens are reserved for the DAO wallet and issuance will decrease by 5% each cycle. StudioDAO also leverages tiered NFT rewards to create incentives for supporters with benefits like private screenings, governance votes to decide which new films to fund, and screen credits."
+msgstr ""
+
+msgid "Load more"
 msgstr ""
 
 msgid "Loading"

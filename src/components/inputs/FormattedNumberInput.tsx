@@ -56,6 +56,7 @@ export default function FormattedNumberInput({
       <JuiceInputNumber
         className={twMerge(
           'h-full w-full',
+          'formatted-number-input',
           accessory ? 'antd-no-number-handler' : '',
           accessoryPosition === 'left' ? 'pl-7' : null,
           className,

@@ -142,6 +142,41 @@ export const usePayoutsTable = () => {
   }
 
   /**
+   * Handle payoutSplit changed through the Edit modal:
+   *    - Changes relevant split properties
+   *    - If amount changed, calls handlePayoutSplitAmountChanged
+   * @param editedPayoutSplit - Split that has been edited
+   * @param newPayoutSplit - The new payout split to replace @editedPayoutSplit
+   */
+  function handlePayoutSplitChanged({
+    editedPayoutSplit,
+    newPayoutSplit,
+  }: {
+    editedPayoutSplit: Split
+    newPayoutSplit: AddEditAllocationModalEntity
+  }) {
+    let newSplit = editedPayoutSplit
+    const newSplits = payoutSplits.map(m => {
+      if (hasEqualRecipient(m, editedPayoutSplit)) {
+        newSplit = {
+          ...m,
+          ...newPayoutSplit,
+        }
+        return newSplit
+      }
+      return m
+    })
+    editCycleForm?.setFieldsValue({ payoutSplits: newSplits })
+
+    if (!newPayoutSplit.projectOwner) {
+      handlePayoutSplitAmountChanged({
+        editingPayoutSplit: newSplit,
+        newAmount: parseFloat(newPayoutSplit.amount.value),
+      })
+    }
+  }
+
+  /**
    * Handle payoutSplit amount changed:
    *    - Sets new distributionLimit (DL) based on sum of new payout amounts
    *    - Changed the % of other splits based on the new DL keep their amount the same
@@ -170,12 +205,14 @@ export const usePayoutsTable = () => {
 
     const updatedPercentage =
       (_amount / (newDistributionLimit ?? 0)) * ONE_BILLION
-    let adjustedSplits: Split[] = payoutSplits
+
+    const _payoutSplits = editCycleForm?.getFieldValue('payoutSplits')
+    let adjustedSplits: Split[] = _payoutSplits
 
     // recalculate all split percents based on newly added split amount
     if (newDistributionLimit && !distributionLimitIsInfinite) {
       adjustedSplits = adjustedSplitPercents({
-        splits: payoutSplits,
+        splits: _payoutSplits,
         oldDistributionLimit: (distributionLimit as number).toString() ?? '0',
         newDistributionLimit: newDistributionLimit.toString(),
       })
@@ -258,6 +295,7 @@ export const usePayoutsTable = () => {
     roundingPrecision,
     handlePayoutSplitAmountChanged,
     handleNewPayoutSplit,
+    handlePayoutSplitChanged,
     handleDeletePayoutSplit,
     subTotal,
     ownerRemainderValue,

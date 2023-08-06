@@ -2,8 +2,13 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { PopupMenu } from 'components/ui/PopupMenu'
+import {
+  AddEditAllocationModal,
+  AddEditAllocationModalEntity,
+} from 'components/v2v3/shared/Allocation/AddEditAllocationModal'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
+import { useState } from 'react'
 import {
   V2V3_CURRENCY_METADATA,
   getV2V3CurrencyOption,
@@ -18,20 +23,21 @@ const Cell = PayoutsTableCell
 
 export function PayoutSplitRow({
   payoutSplit,
-  onEditClick,
   onDeleteClick,
 }: {
   payoutSplit: Split
-  onEditClick: VoidFunction
   onDeleteClick: VoidFunction
 }) {
+  const [editModalOpen, setEditModalOpen] = useState<boolean>()
   const { editCycleForm } = useEditCycleFormContext()
 
   const {
     currency,
     derivePayoutAmount,
     roundingPrecision,
+    handlePayoutSplitChanged,
     handlePayoutSplitAmountChanged,
+    distributionLimitIsInfinite,
   } = usePayoutsTable()
   const amount = derivePayoutAmount({ payoutSplit })
 
@@ -41,13 +47,32 @@ export function PayoutSplitRow({
 
   if (!editCycleForm) return null
 
-  const onChange = (val: string | undefined) => {
+  const onAmountPercentageInputChange = (val: string | undefined) => {
     const newAmount = parseFloat(val ?? '0')
     handlePayoutSplitAmountChanged({
       editingPayoutSplit: payoutSplit,
       newAmount,
     })
   }
+
+  const handleEditModalOk = (allocation: AddEditAllocationModalEntity) => {
+    handlePayoutSplitChanged({
+      editedPayoutSplit: payoutSplit,
+      newPayoutSplit: allocation,
+    })
+    setEditModalOpen(false)
+  }
+
+  const addEditAllocationModalEntity = {
+    projectOwner: false,
+    beneficiary: payoutSplit.beneficiary,
+    projectId: payoutSplit.projectId,
+    amount: {
+      value: formattedAmount,
+    },
+    lockedUntil: payoutSplit.lockedUntil,
+  } as AddEditAllocationModalEntity
+
   const menuItemsLabelClass = 'flex gap-2 items-center'
   const menuItemsIconClass = 'h-5 w-5'
   const menuItems = [
@@ -59,7 +84,7 @@ export function PayoutSplitRow({
           <Trans>Edit</Trans>
         </div>
       ),
-      onClick: () => onEditClick,
+      onClick: () => setEditModalOpen(true),
     },
     {
       id: 'delete',
@@ -74,26 +99,41 @@ export function PayoutSplitRow({
   ]
 
   return (
-    <PayoutsTableRow className="text-primary text-sm">
-      <Cell className="py-6">
-        <PayoutTitle payoutSplit={payoutSplit} />
-      </Cell>
-      <Cell className="py-6">
-        <div className="flex items-center gap-3">
-          <FormattedNumberInput
-            accessory={
-              <span className="text-sm">
-                {V2V3_CURRENCY_METADATA[getV2V3CurrencyOption(currency)].symbol}
-              </span>
-            }
-            accessoryPosition="left"
-            value={formattedAmount}
-            onChange={onChange}
-            className="h-10"
-          />
-          <PopupMenu items={menuItems} />
-        </div>
-      </Cell>
-    </PayoutsTableRow>
+    <>
+      <PayoutsTableRow className="text-primary text-sm">
+        <Cell className="py-6">
+          <PayoutTitle payoutSplit={payoutSplit} />
+        </Cell>
+        <Cell className="py-6">
+          <div className="flex items-center gap-3">
+            <FormattedNumberInput
+              accessory={
+                <span className="text-sm">
+                  {
+                    V2V3_CURRENCY_METADATA[getV2V3CurrencyOption(currency)]
+                      .symbol
+                  }
+                </span>
+              }
+              accessoryPosition="left"
+              value={formattedAmount}
+              onChange={onAmountPercentageInputChange}
+              className="h-10"
+            />
+            <PopupMenu items={menuItems} />
+          </div>
+        </Cell>
+      </PayoutsTableRow>
+      <AddEditAllocationModal
+        allocationName="payout"
+        availableModes={
+          new Set([distributionLimitIsInfinite ? 'percentage' : 'amount'])
+        }
+        editingData={addEditAllocationModalEntity}
+        open={editModalOpen}
+        onOk={handleEditModalOk}
+        onCancel={() => setEditModalOpen(false)}
+      />
+    </>
   )
 }

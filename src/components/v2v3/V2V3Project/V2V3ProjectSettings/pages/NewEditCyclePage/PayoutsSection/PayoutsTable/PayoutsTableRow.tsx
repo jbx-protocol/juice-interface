@@ -8,7 +8,7 @@ export function PayoutsTableRow({
   return (
     <tr
       className={twMerge(
-        'text-secondary border-b border-smoke-200 text-xs dark:border-grey-600',
+        'text-secondary rounded-b-lg border-b border-smoke-200 text-xs dark:border-grey-600',
         highlighted ? 'bg-grey-50 dark:bg-grey-900' : null,
         className,
       )}

@@ -41,12 +41,11 @@ export function PayoutsTable() {
           <table className="w-full text-left">
             <HeaderRows />
             <tbody>
-              {payoutSplits?.map((payoutSplit, index) => (
+              {payoutSplits.map((payoutSplit, index) => (
                 <PayoutSplitRow
                   key={index}
                   payoutSplit={payoutSplit}
                   onDeleteClick={() => handleDeletePayoutSplit({ payoutSplit })}
-                  onEditClick={() => null}
                 />
               ))}
               <Row>

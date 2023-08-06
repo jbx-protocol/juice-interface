@@ -1,15 +1,15 @@
 import { t, Trans } from '@lingui/macro'
-import { useForm } from 'antd/lib/form/Form'
 import { Button, Form } from 'antd'
+import { Rule } from 'antd/lib/form'
+import { useForm } from 'antd/lib/form/Form'
+import ExternalLink from 'components/ExternalLink'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useSetThemeTx } from 'hooks/v2v3/transactor/useSetThemeTx'
 import { useContext, useState } from 'react'
-import { Rule } from 'antd/lib/form'
-import { CustomResolverForm } from './CustomResolverForm'
 import { helpPagePath } from 'utils/routes'
-import ExternalLink from 'components/ExternalLink'
+import { CustomResolverForm } from './CustomResolverForm'
 import { ProjectNftPreview } from './ProjectNftPreview'
 
 export function ProjectNftSettingsPage() {
@@ -128,7 +128,7 @@ export function ProjectNftSettingsPage() {
           <Button htmlType="submit" loading={loadingSetTheme} type="primary">
             <Trans>Update NFT theme</Trans>
           </Button>
-          <Button type="ghost" onClick={updatePreview}>
+          <Button type="default" onClick={updatePreview}>
             <Trans>Update preview</Trans>
           </Button>
         </div>

@@ -6,8 +6,8 @@ import WithdrawModal from 'components/v1/shared/FundingCycle/modals/WithdrawModa
 import PayoutModsList from 'components/v1/shared/PayoutModsList'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { PayoutMod } from 'models/v1/mods'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
+import { PayoutMod } from 'models/v1/mods'
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import { perbicentToPercent } from 'utils/format/formatNumber'
@@ -54,7 +54,7 @@ export default function Spending({
           />
 
           <Button
-            type="ghost"
+            type="default"
             size="small"
             onClick={() => setWithdrawModalVisible(true)}
           >

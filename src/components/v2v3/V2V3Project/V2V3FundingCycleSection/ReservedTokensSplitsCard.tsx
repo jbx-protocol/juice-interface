@@ -59,7 +59,7 @@ export default function ReservedTokensSplitsCard({
 
   const DistributeButton = (
     <Button
-      type="ghost"
+      type="default"
       size="small"
       onClick={() => setDistributeReservedTokensModalVisible(true)}
       disabled={distributeButtonDisabled}

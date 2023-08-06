@@ -78,7 +78,6 @@ export function HeaderRows() {
                 type="ghost"
                 onClick={() => setAddRecipientModalOpen(true)}
                 icon={<PlusOutlined />}
-                className="text-primary border-primary"
               >
                 <span>
                   <Trans>Add recipient</Trans>

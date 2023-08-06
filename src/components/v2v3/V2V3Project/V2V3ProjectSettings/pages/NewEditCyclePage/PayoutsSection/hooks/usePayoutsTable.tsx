@@ -7,7 +7,11 @@ import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { useMemo } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
-import { isProjectSplit, totalSplitsPercent } from 'utils/splits'
+import {
+  hasEqualRecipient,
+  isProjectSplit,
+  totalSplitsPercent,
+} from 'utils/splits'
 import {
   adjustedSplitPercents,
   getNewDistributionLimit,
@@ -183,8 +187,7 @@ export const usePayoutsTable = () => {
     } as Split
 
     const newPayoutSplits = adjustedSplits.map(m =>
-      m.beneficiary === newPayoutSplit?.beneficiary &&
-      m.projectId === newPayoutSplit?.projectId
+      hasEqualRecipient(m, editingPayoutSplit)
         ? {
             ...m,
             ...newPayoutSplit,
@@ -195,6 +198,38 @@ export const usePayoutsTable = () => {
     editCycleForm?.setFieldsValue({
       distributionLimit: newDistributionLimit,
       payoutSplits: newPayoutSplits,
+    })
+  }
+
+  /**
+   * Handle payoutSplit amount deleted:
+   *    - Deletes a payout split and adjusts the distributionLimit (DL) accordingly
+   *    - Changed the % of other splits based on the new DL keep their amount the same
+   * @param split - Split to be deleted
+   */
+  function handleDeletePayoutSplit({ payoutSplit }: { payoutSplit: Split }) {
+    const newSplits = payoutSplits.filter(
+      m => !hasEqualRecipient(m, payoutSplit),
+    )
+
+    let adjustedSplits: Split[] = newSplits
+    let newDistributionLimit = distributionLimit
+    if (distributionLimit && !distributionLimitIsInfinite) {
+      const currentAmount = derivePayoutAmount({
+        payoutSplit,
+        dontApplyFee: true,
+      })
+      newDistributionLimit = distributionLimit - currentAmount
+      adjustedSplits = adjustedSplitPercents({
+        splits: newSplits,
+        oldDistributionLimit: (distributionLimit as number).toString() ?? '0',
+        newDistributionLimit: newDistributionLimit.toString(),
+      })
+    }
+
+    editCycleForm?.setFieldsValue({
+      distributionLimit: newDistributionLimit,
+      payoutSplits: adjustedSplits,
     })
   }
 
@@ -223,6 +258,7 @@ export const usePayoutsTable = () => {
     roundingPrecision,
     handlePayoutSplitAmountChanged,
     handleNewPayoutSplit,
+    handleDeletePayoutSplit,
     subTotal,
     ownerRemainderValue,
     totalFeeAmount,

@@ -8,6 +8,7 @@ import { constants } from 'ethers'
 
 import { BigNumber } from 'ethers'
 import { parseEther } from 'ethers/lib/utils'
+import round from 'lodash/round'
 import { JBFee } from 'models/v2v3/fee'
 import {
   V2V3FundingCycleData,
@@ -97,7 +98,7 @@ export const preciseFormatSplitPercent = (
  */
 export const splitPercentFrom = (percentage: number): BigNumber => {
   return percentage
-    ? BigNumber.from(((percentage * SPLITS_TOTAL_PERCENT) / 100).toFixed())
+    ? BigNumber.from(round((percentage * SPLITS_TOTAL_PERCENT) / 100))
     : BigNumber.from(0)
 }
 

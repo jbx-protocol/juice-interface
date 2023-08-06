@@ -34,7 +34,7 @@ function DistributeButton({
       open={distributeButtonDisabled ? undefined : false}
     >
       <Button
-        type="ghost"
+        type="default"
         size="small"
         disabled={distributeButtonDisabled}
         {...props}

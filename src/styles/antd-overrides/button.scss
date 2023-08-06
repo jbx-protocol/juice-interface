@@ -127,6 +127,15 @@
   }
 }
 
+.ant-btn-ghost {
+  @apply text-primary;
+  &:hover {
+    @apply text-action-primary;
+    @apply bg-transparent dark:bg-transparent;
+  }
+  @apply border-grey-300 dark:border-slate-300;
+}
+
 .ant-btn-lg {
   @apply h-12;
   line-height: 2.12rem;

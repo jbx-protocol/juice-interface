@@ -13,7 +13,7 @@ const EditCycleDataContext = createContext<EditCycleDataContextType>({
   editCycleForm: undefined,
 })
 
-export const useEditCycleForm = () => useContext(EditCycleDataContext)
+export const useEditCycleFormContext = () => useContext(EditCycleDataContext)
 
 export const EditCycleFormProvider: React.FC<
   React.PropsWithChildren<unknown>

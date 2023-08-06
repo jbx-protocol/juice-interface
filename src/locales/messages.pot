@@ -197,6 +197,9 @@ msgstr ""
 msgid "Juicebox loading animation"
 msgstr ""
 
+msgid "Remaining balance"
+msgstr ""
+
 msgid "Payments to this project paused"
 msgstr ""
 
@@ -1871,6 +1874,9 @@ msgstr ""
 msgid "The text on the button at the bottom of the pop-up. You can preview this below."
 msgstr ""
 
+msgid "Delete all"
+msgstr ""
+
 msgid "Payment Success Pop-up"
 msgstr ""
 
@@ -2549,6 +2555,9 @@ msgstr ""
 msgid "Immediately"
 msgstr ""
 
+msgid "Address or ID"
+msgstr ""
+
 msgid "Error downloading redemptions, try again."
 msgstr ""
 
@@ -3149,6 +3158,9 @@ msgstr ""
 msgid "This address receives the tokens minted by this payout."
 msgstr ""
 
+msgid "Delete"
+msgstr ""
+
 msgid "Download project activity CSVs"
 msgstr ""
 
@@ -3530,6 +3542,9 @@ msgstr ""
 msgid "Start over"
 msgstr ""
 
+msgid "Juicebox provides trustless payroll capabilities to run automated payouts completely on-chain. <0>Learn more about payouts</0>"
+msgstr ""
+
 msgid "Notifications"
 msgstr ""
 
@@ -3588,6 +3603,9 @@ msgid "Reserved token recipients"
 msgstr ""
 
 msgid "{0} is not a valid integer"
+msgstr ""
+
+msgid "The unallocated portion of your total will go to the wallet that owns the project by default."
 msgstr ""
 
 msgid "New"
@@ -4131,6 +4149,9 @@ msgid "Pay amount"
 msgstr ""
 
 msgid "CSV download failed."
+msgstr ""
+
+msgid "Switch to unlimited"
 msgstr ""
 
 msgid "Pay Project"

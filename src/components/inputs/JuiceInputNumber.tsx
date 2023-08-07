@@ -37,9 +37,11 @@ export const JuiceInputNumber = ({
         className,
       )}
       onChange={e => {
+        if (!onChange) return
+
         const _value = e.target.value
         const parsedVal = parser ? parser(_value) : _value
-        onChange?.(parsedVal)
+        onChange(parsedVal)
       }}
       {...props}
     />

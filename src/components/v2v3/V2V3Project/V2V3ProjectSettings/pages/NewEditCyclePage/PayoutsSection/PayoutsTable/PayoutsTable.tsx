@@ -20,17 +20,20 @@ export function PayoutsTable() {
   const {
     payoutSplits,
     distributionLimit,
+    distributionLimitIsInfinite,
     totalFeeAmount,
     subTotal,
     roundingPrecision,
     ownerRemainderValue,
     currency,
+    currencyOrPercentSymbol,
     handleDeletePayoutSplit,
   } = usePayoutsTable()
 
-  const formattedDistributionLimit = distributionLimit
-    ? round(distributionLimit, roundingPrecision)
-    : 'X'
+  const formattedDistributionLimit =
+    distributionLimit && !distributionLimitIsInfinite
+      ? round(distributionLimit, roundingPrecision)
+      : t`Unlimited`
 
   if (!editCycleForm || !initialFormData) return null
 
@@ -50,7 +53,9 @@ export function PayoutsTable() {
               ))}
               <Row>
                 <Cell>Sub-total</Cell>
-                <Cell>{round(subTotal, roundingPrecision)}</Cell>
+                <Cell>
+                  {currencyOrPercentSymbol} {round(subTotal, roundingPrecision)}
+                </Cell>
               </Row>
               {ownerRemainderValue ? (
                 <Row>
@@ -60,16 +65,30 @@ export function PayoutsTable() {
                       label={<Trans>Remaining balance</Trans>}
                     />
                   </Cell>
-                  <Cell>{ownerRemainderValue}</Cell>
+                  <Cell
+                    className={ownerRemainderValue < 0 ? 'text-error-500' : ''}
+                  >
+                    {currencyOrPercentSymbol} {ownerRemainderValue}
+                  </Cell>
                 </Row>
               ) : null}
               <Row>
                 <Cell>Fees</Cell>
-                <Cell>{round(totalFeeAmount, roundingPrecision)}</Cell>
+                <Cell>
+                  {currencyOrPercentSymbol}{' '}
+                  {round(totalFeeAmount, roundingPrecision)}
+                </Cell>
               </Row>
               <Row className="border-none font-medium" highlighted>
                 <Cell>Total</Cell>
-                <Cell>{formattedDistributionLimit}</Cell>
+                <Cell>
+                  <>
+                    {distributionLimitIsInfinite ? null : (
+                      <>{currencyOrPercentSymbol} </>
+                    )}
+                    {formattedDistributionLimit}
+                  </>
+                </Cell>
               </Row>
             </tbody>
           </table>

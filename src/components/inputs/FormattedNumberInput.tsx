@@ -1,4 +1,5 @@
-import { InputNumberProps } from 'antd'
+import { WAD_DECIMALS } from 'constants/numbers'
+import { DetailedHTMLProps, InputHTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formattedNum } from 'utils/format/formatNumber'
 import { JuiceInputNumber } from './JuiceInputNumber'
@@ -16,7 +17,10 @@ export default function FormattedNumberInput({
   onBlur,
   isInteger,
   ...props
-}: Omit<InputNumberProps, 'onChange'> & {
+}: Omit<
+  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+  'onChange'
+> & {
   className?: string
   step?: number
   value?: string
@@ -61,11 +65,10 @@ export default function FormattedNumberInput({
           accessoryPosition === 'left' ? 'pl-7' : null,
           className,
         )}
-        value={value !== undefined ? parseFloat(value) : undefined}
+        value={value}
         step={step ?? 1}
-        stringMode
         placeholder={placeholder}
-        formatter={(val?: string | number | undefined) =>
+        formatter={(val?: string | undefined) =>
           _prefix +
           (val
             ? formattedNum(val, {
@@ -86,12 +89,15 @@ export default function FormattedNumberInput({
               .replace(_suffix, '')
               .split('')
               .filter(char => allowedValueChars.includes(char))
-              .join('') || '0'
+              .join('')
+              .substring(0, WAD_DECIMALS) || '0'
+
           // Enforce the presence of the prefix
           if (_prefix && !val.startsWith(_prefix)) {
             processedValue = _prefix + processedValue
           }
-          return parseFloat(processedValue)
+
+          return processedValue
         }}
         onBlur={_value => {
           onBlur?.(_value?.toString())

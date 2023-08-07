@@ -1,10 +1,8 @@
 import { PlusOutlined } from '@ant-design/icons'
-import { ReceiptPercentIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 
 import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { PopupMenu } from 'components/ui/PopupMenu'
 import {
   AddEditAllocationModal,
   AddEditAllocationModalEntity,
@@ -12,6 +10,7 @@ import {
 import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
+import { PayoutTableSettings } from './PayoutTableSettings'
 import { PayoutsTableCell } from './PayoutsTableCell'
 import { PayoutsTableRow } from './PayoutsTableRow'
 
@@ -20,32 +19,8 @@ const Cell = PayoutsTableCell
 
 export function HeaderRows() {
   const [addRecipientModalOpen, setAddRecipientModalOpen] = useState<boolean>()
-  const { distributionLimitIsInfinite, handleNewPayoutSplit } =
+  const { distributionLimitIsInfinite, handleNewPayoutSplit, payoutSplits } =
     usePayoutsTable()
-  const menuItemsLabelClass = 'flex gap-2 items-center'
-  const menuItemsIconClass = 'h-5 w-5'
-  const menuItems = [
-    {
-      id: 'unlimited',
-      label: (
-        <div className={menuItemsLabelClass}>
-          <ReceiptPercentIcon className={menuItemsIconClass} />
-          <Trans>Switch to unlimited</Trans>
-        </div>
-      ),
-      onClick: () => console.info('Switch to unlimited modal open'),
-    },
-    {
-      id: 'delete',
-      label: (
-        <div className={menuItemsLabelClass}>
-          <TrashIcon className={menuItemsIconClass} />
-          <Trans>Delete all</Trans>
-        </div>
-      ),
-      onClick: () => console.info('Delete clicked'),
-    },
-  ]
 
   const handleAddRecipientModalOk = (
     newSplit: AddEditAllocationModalEntity,
@@ -83,23 +58,19 @@ export function HeaderRows() {
                   <Trans>Add recipient</Trans>
                 </span>
               </Button>
-              <PopupMenu items={menuItems} className="w-50" />
+              <PayoutTableSettings />
             </div>
-          </Cell>
-        </Row>
-        <Row className="font-medium" highlighted>
-          <Cell>
-            <Trans>Address or ID</Trans>
-          </Cell>
-          <Cell>
-            <Trans>Amount</Trans>
           </Cell>
         </Row>
       </thead>
       <AddEditAllocationModal
         allocationName="payout"
         availableModes={
-          new Set([distributionLimitIsInfinite ? 'percentage' : 'amount'])
+          new Set([
+            distributionLimitIsInfinite && payoutSplits?.length > 0
+              ? 'percentage'
+              : 'amount',
+          ])
         }
         open={addRecipientModalOpen}
         onOk={handleAddRecipientModalOk}

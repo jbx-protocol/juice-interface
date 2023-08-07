@@ -306,6 +306,13 @@ export const usePayoutsTable = () => {
     })
   }
 
+  function handleDeleteAllPayoutSplits() {
+    editCycleForm?.setFieldsValue({
+      distributionLimit: 0,
+      payoutSplits: [],
+    })
+  }
+
   const amountOrPercentValue = (payoutSplit: Split) =>
     distributionLimitIsInfinite
       ? (payoutSplit.percent / ONE_BILLION) * 100
@@ -343,6 +350,7 @@ export const usePayoutsTable = () => {
     handleNewPayoutSplit,
     handlePayoutSplitChanged,
     handleDeletePayoutSplit,
+    handleDeleteAllPayoutSplits,
     subTotal,
     ownerRemainderValue,
     totalFeeAmount,

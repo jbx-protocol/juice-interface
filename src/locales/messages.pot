@@ -752,6 +752,9 @@ msgstr ""
 msgid "Receive ERC-20 tokens"
 msgstr ""
 
+msgid "Confirm"
+msgstr ""
+
 msgid "Delete token allocation"
 msgstr ""
 
@@ -1914,6 +1917,9 @@ msgid "A project's handle is used in its URL, and allows it to be included in se
 msgstr ""
 
 msgid "Unlimited"
+msgstr ""
+
+msgid "Delete all payout recipients"
 msgstr ""
 
 msgid "<0>Website:</0> <1>{0}</1>"
@@ -4025,6 +4031,9 @@ msgstr ""
 msgid "Last paid"
 msgstr ""
 
+msgid "Are you sure you want to delete all payout recipients?"
+msgstr ""
+
 msgid "ENS Name"
 msgstr ""
 
@@ -4770,6 +4779,9 @@ msgid "Avatar images are pulled from ENS."
 msgstr ""
 
 msgid "MoonDAO is a worldwide collective united by the mission of decentralizing access to space research and exploration. With privatized space exploration on the rise, MoonDAO is uniting space enthusiasts from around the globe to help make it more accessible while continuing to push research forward. In 2021, they launched a campaign to buy two tickets on a Blue Origin rocket and raised over $8 million on Juicebox. A year later, they sent Coby Cotton from viral YouTube channel Dude Perfect to space as their first astronaut."
+msgstr ""
+
+msgid "No payout recipients"
 msgstr ""
 
 msgid "V3"

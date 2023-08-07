@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import ProjectLogo from 'components/ProjectLogo'
 import { useProjectHandleText } from 'hooks/useProjectHandleText'
 import Link from 'next/link'
 import { useMemo } from 'react'
@@ -44,11 +45,14 @@ export default function V2V3ProjectHandleLink({
       title={tooltipText}
       open={tooltipText ? undefined : false}
     >
-      {withProjectAvatar && firstLetterOfHandleText && (
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-grey-300 font-medium uppercase text-grey-600 dark:bg-slate-400 dark:text-slate-100">
-          {firstLetterOfHandleText}
-        </div>
-      )}
+      {withProjectAvatar ? (
+        <ProjectLogo
+          className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg bg-grey-300 text-base font-medium uppercase text-grey-600 dark:bg-slate-400 dark:text-slate-100"
+          name={name ?? undefined}
+          projectId={projectId}
+          fallback={firstLetterOfHandleText}
+        />
+      ) : null}
       <Link
         prefetch={false}
         href={v2v3ProjectRoute({ projectId })}

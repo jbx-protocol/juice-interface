@@ -17,11 +17,11 @@ export const JuiceInputNumber = ({
   value?: string
   formatter?: (s?: string | undefined) => string
   parser?: (s?: string | undefined) => string
-  onChange?: (s: string) => void
+  onChange?: (s?: string) => void
   className?: string
-} & DetailedHTMLProps<
-  InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
+} & Omit<
+  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+  'onChange'
 >) => {
   const [val, setVal] = useState<string>()
 

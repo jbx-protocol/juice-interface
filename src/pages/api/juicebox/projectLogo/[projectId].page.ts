@@ -9,7 +9,6 @@ import {
   ipfsUriToGatewayUrl,
   isIpfsUri,
 } from 'utils/ipfs'
-import { getProjectMetadata } from 'utils/server/metadata'
 
 const logger = getLogger('api/juicebox/projectLogo/[projectId]')
 
@@ -30,18 +29,11 @@ async function findLogoFromDb(
   return query.data?.[0]?.logo_uri as string | undefined
 }
 
-async function findLogoOnChain(projectId: string) {
-  const { logoUri } = (await getProjectMetadata(projectId as string)) ?? {}
-  return logoUri
-}
-
 /**
  *
  * @dev 2 network requests happen here:
  * 1. fetch the project metadata CID (DB fetch is prioritized)
  * 2. fetch the project logo image data
- *
- * Note, if DB request fails, we still try to fetch the logo from chain. This will be 2 more requests.
  *
  * Thus this endpoint should be cached.
  * However, the ideal duration is TBD.
@@ -49,7 +41,7 @@ async function findLogoOnChain(projectId: string) {
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {
-    return res.status(404)
+    return res.status(405).end()
   }
 
   try {
@@ -58,12 +50,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).json({ error: 'projectId is required' })
     }
 
-    // try getting logo from db. if for some reason its not there, try getting it from chain.
-    const logoUri =
-      (await findLogoFromDb(req, res, projectId as string)) ??
-      (await findLogoOnChain(projectId as string))
+    const logoUri = await findLogoFromDb(req, res, projectId as string)
     if (!logoUri) {
-      return res.status(404).json({ error: 'project metadata not found' })
+      return res.status(404).json({ error: 'project logo not found' })
     }
 
     const imageUrl = isIpfsUri(logoUri)

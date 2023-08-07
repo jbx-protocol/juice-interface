@@ -1,5 +1,5 @@
 import { NftPostPayModalConfig } from './nftRewards'
-import { ProjectTagName } from './project-tags'
+import { ProjectTagName, filterValidTags } from './project-tags'
 import { TokenRef } from './tokenRef'
 
 type ProjectMetadataV1 = Partial<{
@@ -98,6 +98,7 @@ export const consolidateMetadata = (
 ): ProjectMetadata => {
   return {
     ...metadata,
+    tags: filterValidTags((metadata as ProjectMetadataV8).tags),
     payButton:
       (metadata as ProjectMetadataV3).payButton ??
       (metadata as ProjectMetadataV2).payText,

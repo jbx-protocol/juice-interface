@@ -40,4 +40,14 @@ export type ProjectTagName = typeof projectTagOptions extends Readonly<
   ? T
   : never
 
+export function isValidProjectTag(
+  tag: ProjectTagName | string,
+): tag is ProjectTagName {
+  return projectTagOptions.includes(tag as ProjectTagName)
+}
+
+export function filterValidTags(tags: string[] | null | undefined) {
+  return tags?.filter(isValidProjectTag).slice(0, MAX_PROJECT_TAGS)
+}
+
 export const MAX_PROJECT_TAGS = 3

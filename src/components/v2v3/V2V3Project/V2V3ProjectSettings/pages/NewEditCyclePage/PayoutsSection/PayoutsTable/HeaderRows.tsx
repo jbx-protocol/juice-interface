@@ -2,7 +2,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 
 import { Button } from 'antd'
-import ExternalLink from 'components/ExternalLink'
+import { ExternalLinkWithIcon } from 'components/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import {
   AddEditAllocationModal,
   AddEditAllocationModalEntity,
@@ -41,9 +41,11 @@ export function HeaderRows() {
               <Trans>
                 Juicebox provides trustless payroll capabilities to run
                 automated payouts completely on-chain.{' '}
-                <ExternalLink href={helpPagePath(`/dao/reference/jbx/`)}>
-                  Learn more about payouts
-                </ExternalLink>
+                <ExternalLinkWithIcon
+                  href={helpPagePath(`/user/project/#payouts`)}
+                >
+                  <Trans>Learn more about payouts</Trans>
+                </ExternalLinkWithIcon>
               </Trans>
             </div>
           </Cell>

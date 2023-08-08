@@ -5,6 +5,7 @@ import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { ONE_BILLION } from 'constants/numbers'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useMemo } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
 import {
@@ -13,6 +14,7 @@ import {
   totalSplitsPercent,
 } from 'utils/splits'
 import {
+  V2V3CurrencyName,
   V2V3_CURRENCY_METADATA,
   getV2V3CurrencyOption,
 } from 'utils/v2v3/currency'
@@ -55,6 +57,16 @@ export const usePayoutsTable = () => {
   const currencyOrPercentSymbol = distributionLimitIsInfinite
     ? '%'
     : V2V3_CURRENCY_METADATA[getV2V3CurrencyOption(currency)].symbol
+
+  /**
+   * Sets the currency for the distributionLimit
+   * @param currency - Currency as a V2V3CurrencyOption (1 | 2)
+   */
+  function setCurrency(currency: V2V3CurrencyOption) {
+    editCycleForm?.setFieldsValue({
+      distributionLimitCurrency: V2V3CurrencyName(currency),
+    })
+  }
 
   /**
    * Derive payout amount before the fee has been applied.
@@ -139,7 +151,7 @@ export const usePayoutsTable = () => {
         : undefined // undefined means DL is infinite
 
       newSplitPercentPPB =
-        ((newAmount / (newDistributionLimit ?? 0)) * ONE_BILLION) / 100
+        (newAmount / (newDistributionLimit ?? 0)) * ONE_BILLION
 
       // recalculate all split percents based on newly added split amount
       if (newDistributionLimit && !distributionLimitIsInfinite) {
@@ -313,14 +325,20 @@ export const usePayoutsTable = () => {
     })
   }
 
-  const amountOrPercentValue = (payoutSplit: Split) =>
+  const amountOrPercentValue = ({
+    payoutSplit,
+    dontApplyFee,
+  }: {
+    payoutSplit: Split
+    dontApplyFee?: boolean
+  }) =>
     distributionLimitIsInfinite
       ? (payoutSplit.percent / ONE_BILLION) * 100
-      : derivePayoutAmount({ payoutSplit })
+      : derivePayoutAmount({ payoutSplit, dontApplyFee })
 
   /* Total amount that leaves the treasury minus fees */
   const subTotal = payoutSplits.reduce((acc, payoutSplit) => {
-    const reducer = amountOrPercentValue(payoutSplit)
+    const reducer = amountOrPercentValue({ payoutSplit })
     return acc + reducer
   }, 0)
 
@@ -331,16 +349,20 @@ export const usePayoutsTable = () => {
 
   /* Count the total fee amount. If % of payouts sums > 100, just set fees to 2.5% (maximum)*/
   const totalFeeAmount =
-    distributionLimitIsInfinite && subTotal > 100
+    distributionLimitIsInfinite && round(subTotal, roundingPrecision) > 100
       ? 2.5
       : nonJuiceboxProjectPayoutSplits.reduce((acc, payoutSplit) => {
-          return acc + amountOrPercentValue(payoutSplit) * JB_FEE
+          return (
+            acc +
+            amountOrPercentValue({ payoutSplit, dontApplyFee: true }) * JB_FEE
+          )
         }, 0)
 
   return {
     distributionLimit,
     distributionLimitIsInfinite,
     currency,
+    setCurrency,
     currencyOrPercentSymbol,
     payoutSplits,
     derivePayoutAmount,

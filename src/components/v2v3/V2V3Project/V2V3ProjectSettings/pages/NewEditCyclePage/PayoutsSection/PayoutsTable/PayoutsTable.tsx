@@ -16,17 +16,20 @@ const Cell = PayoutsTableCell
 export function PayoutsTable() {
   const { editCycleForm, initialFormData } = useEditCycleFormContext()
 
-  const { payoutSplits, distributionLimit, currency, handleDeletePayoutSplit } =
+  const { payoutSplits, currency, handleDeletePayoutSplit, setCurrency } =
     usePayoutsTable()
 
   if (!editCycleForm || !initialFormData) return null
 
-  const emptyState = payoutSplits.length === 0 || distributionLimit === 0
+  const emptyState = payoutSplits.length === 0
 
   return (
     <>
       <div className="rounded-lg border border-smoke-200 dark:border-grey-600">
-        <Allocation allocationCurrency={getV2V3CurrencyOption(currency)}>
+        <Allocation
+          allocationCurrency={getV2V3CurrencyOption(currency)}
+          setAllocationCurrency={setCurrency}
+        >
           <table className="w-full text-left">
             <HeaderRows />
             <tbody>

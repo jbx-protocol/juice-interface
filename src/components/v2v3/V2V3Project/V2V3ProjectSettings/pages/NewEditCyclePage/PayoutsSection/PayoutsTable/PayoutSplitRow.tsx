@@ -24,7 +24,7 @@ export function PayoutSplitRow({
   payoutSplit: Split
   onDeleteClick: VoidFunction
 }) {
-  const [editModalOpen, setEditModalOpen] = useState<boolean>()
+  const [editModalOpen, setEditModalOpen] = useState<boolean>(false)
   const { editCycleForm } = useEditCycleFormContext()
 
   const {

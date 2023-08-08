@@ -1931,9 +1931,6 @@ msgstr ""
 msgid "Unlimited"
 msgstr ""
 
-msgid "Delete all payout recipients"
-msgstr ""
-
 msgid "<0>Website:</0> <1>{0}</1>"
 msgstr ""
 
@@ -4050,9 +4047,6 @@ msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permi
 msgstr ""
 
 msgid "Last paid"
-msgstr ""
-
-msgid "Are you sure you want to delete all payout recipients?"
 msgstr ""
 
 msgid "ENS Name"

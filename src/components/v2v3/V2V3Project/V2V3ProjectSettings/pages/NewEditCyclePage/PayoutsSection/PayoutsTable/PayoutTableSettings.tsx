@@ -1,9 +1,9 @@
 import { ReceiptPercentIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
+import { handleConfirmationDeletion } from 'components/ProjectDashboard/utils/modals'
 import { PopupMenu, PopupMenuItem } from 'components/ui/PopupMenu'
 import { useState } from 'react'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
-import { DeleteAllPayoutsModal } from './modals/DeleteAllPayoutsModal'
 import { SwitchToLimitedModal } from './modals/SwitchToLimitedModal'
 import { SwitchToUnlimitedModal } from './modals/SwitchToUnlimitedModal'
 
@@ -12,9 +12,12 @@ export function PayoutTableSettings() {
     useState<boolean>(false)
   const [switchToLimitedModalOpen, setSwitchToLimitedModalOpen] =
     useState<boolean>(false)
-  const [deleteAllModalOpen, setDeleteAllModalOpen] = useState<boolean>(false)
 
-  const { payoutSplits, distributionLimitIsInfinite } = usePayoutsTable()
+  const {
+    payoutSplits,
+    distributionLimitIsInfinite,
+    handleDeleteAllPayoutSplits,
+  } = usePayoutsTable()
 
   const menuItemsLabelClass = 'flex gap-2 items-center text-sm'
   const menuItemsIconClass = 'h-5 w-5'
@@ -61,7 +64,10 @@ export function PayoutTableSettings() {
             <Trans>Delete all</Trans>
           </div>
         ),
-        onClick: () => setDeleteAllModalOpen(true),
+        onClick: handleConfirmationDeletion({
+          type: 'all payout recipients',
+          onConfirm: handleDeleteAllPayoutSplits,
+        }),
       },
     ]
   }
@@ -69,10 +75,6 @@ export function PayoutTableSettings() {
   return (
     <>
       <PopupMenu items={menuItems} popupClassName="w-52" />
-      <DeleteAllPayoutsModal
-        open={deleteAllModalOpen}
-        onClose={() => setDeleteAllModalOpen(false)}
-      />
       <SwitchToUnlimitedModal
         open={switchToUnlimitedModalOpen}
         onClose={() => setSwitchToUnlimitedModalOpen(false)}

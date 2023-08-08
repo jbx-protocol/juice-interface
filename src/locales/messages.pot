@@ -2675,9 +2675,6 @@ msgstr ""
 msgid "Read case studies"
 msgstr ""
 
-msgid "Current payout"
-msgstr ""
-
 msgid "tokens"
 msgstr ""
 
@@ -3462,6 +3459,9 @@ msgid "Burn your {tokensLabel}. You won't receive ETH in return because this pro
 msgstr ""
 
 msgid "JB vs. Kickstarter"
+msgstr ""
+
+msgid "Available payout"
 msgstr ""
 
 msgid "Big ups to the Ethereum community for crafting the infrastructure and economy to make Juicebox possible."

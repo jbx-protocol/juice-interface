@@ -12,6 +12,7 @@ export default function ProjectLogo({
   uri,
   name,
   projectId,
+  pv,
   lazyLoad,
   fallback = '🧃',
 }: {
@@ -19,6 +20,7 @@ export default function ProjectLogo({
   className?: string
   uri?: string | undefined
   projectId?: number | undefined
+  pv?: number | undefined
   lazyLoad?: boolean
   fallback?: string | JSX.Element | null
 }) {
@@ -32,7 +34,7 @@ export default function ProjectLogo({
       return IMAGE_URI_OVERRIDES[projectId]
     }
 
-    if (!uri) return `/api/juicebox/projectLogo/${projectId}`
+    if (!uri) return `/api/juicebox/pv/${pv}/project/${projectId}/logo`
 
     // Some older JB projects have a logo URI hardcoded to use Pinata.
     // JBM no longer uses Pinata.
@@ -43,7 +45,7 @@ export default function ProjectLogo({
     }
 
     return ipfsUriToGatewayUrl(uri)
-  }, [uri, projectId])
+  }, [uri, projectId, pv])
 
   const validImg = imageSrc && !srcLoadError
 

@@ -710,6 +710,9 @@ msgstr ""
 msgid "Change networks to deploy"
 msgstr ""
 
+msgid "Switch to limited"
+msgstr ""
+
 msgid "While transfers are paused, this project's tokens can't be transferred to other addresses. The project's ERC-20 tokens (if already issued) are always transferable, and will not be affected by this rule."
 msgstr ""
 
@@ -750,6 +753,9 @@ msgid "Use me as a base!"
 msgstr ""
 
 msgid "Receive ERC-20 tokens"
+msgstr ""
+
+msgid "Confirm"
 msgstr ""
 
 msgid "Delete token allocation"
@@ -1628,6 +1634,9 @@ msgstr ""
 msgid "{userTokenBalance} tokens"
 msgstr ""
 
+msgid "Switch to unlimited payouts"
+msgstr ""
+
 msgid "NO LIMIT"
 msgstr ""
 
@@ -1688,10 +1697,16 @@ msgstr ""
 msgid "V1"
 msgstr ""
 
+msgid "Switch to limited payouts"
+msgstr ""
+
 msgid "Export payout CSV"
 msgstr ""
 
 msgid "JuiceboxDAO is a community of passionate builders, creators, and innovators working together to push the boundaries of decentralized funding. Using the Juicebox protocol, we've created a DAO to coordinate thousands of JBX holders, build in the open, and govern the protocol over time."
+msgstr ""
+
+msgid "Learn more about payout limits"
 msgstr ""
 
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
@@ -2507,6 +2522,9 @@ msgstr ""
 msgid "Deselect all"
 msgstr ""
 
+msgid "Payout limit (max.)"
+msgstr ""
+
 msgid "Migrate project's payment terminal"
 msgstr ""
 
@@ -2844,6 +2862,9 @@ msgid "It's fast, powerful and easy to use. Launch your project and get funded i
 msgstr ""
 
 msgid "Redemptions aren't possible when all of a project's ETH is being used for payouts."
+msgstr ""
+
+msgid "Turn on unlimited payouts, and convert all your amounts to percentages."
 msgstr ""
 
 msgid "Redeem tokens"
@@ -3713,6 +3734,9 @@ msgstr ""
 msgid "NFTs, tokens and rewards will be sent to <0/>"
 msgstr ""
 
+msgid "Edit your cycles max. payout limit. Note that increases to the limit will take effect next cycle."
+msgstr ""
+
 msgid "See the code"
 msgstr ""
 
@@ -4059,6 +4083,9 @@ msgid "Your project's first cycle will start on <0>{0} at {1}</0>. Your project 
 msgstr ""
 
 msgid "MoonDAO has built an enthusiastic community of over 10,000 members, successfully sent their first astronaut to space, and is currently coordinating the spaceflight for their second astronaut. Their ambitious long-term roadmap goals include building a settlement on the Moon by 2030. In collaboration with StudioDAO, a decentralized movie studio running on Juicebox, MoonDAO has donated $100,000 to help fund the production of Ticket To Space, the first DAO documentary. The film will cover the story of Yan, a MoonDAO member from China, who will be sent to space on an upcoming Blue Origin flight after minting a free NFT."
+msgstr ""
+
+msgid "Learn more about unlimited payouts"
 msgstr ""
 
 msgid "V2 7-day deadline"
@@ -4772,6 +4799,9 @@ msgstr ""
 msgid "MoonDAO is a worldwide collective united by the mission of decentralizing access to space research and exploration. With privatized space exploration on the rise, MoonDAO is uniting space enthusiasts from around the globe to help make it more accessible while continuing to push research forward. In 2021, they launched a campaign to buy two tickets on a Blue Origin rocket and raised over $8 million on Juicebox. A year later, they sent Coby Cotton from viral YouTube channel Dude Perfect to space as their first astronaut."
 msgstr ""
 
+msgid "No payout recipients"
+msgstr ""
+
 msgid "V3"
 msgstr ""
 
@@ -4887,6 +4917,9 @@ msgid "Edit handle of {projectTitle}"
 msgstr ""
 
 msgid "Other assets in this project's owner's wallet."
+msgstr ""
+
+msgid "Learn more"
 msgstr ""
 
 msgid "Payout Recipients"

@@ -1,44 +1,41 @@
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import axios from 'axios'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { Database } from 'types/database.types'
 import {
   cidFromUrl,
   ipfsGatewayUrl,
   ipfsUriToGatewayUrl,
   isIpfsUri,
 } from 'utils/ipfs'
-import { getProjectMetadata } from 'utils/server/metadata'
 
-const logger = getLogger('api/juicebox/projectLogo/[projectId]')
+const logger = getLogger('api/juicebox/pv/[pv]/project/[projectId]/logo')
 
-// async function findLogoFromDb(
-//   req: NextApiRequest,
-//   res: NextApiResponse,
-//   projectId: string,
-// ) {
-//   const supabase = createServerSupabaseClient<Database>({ req, res })
+async function findLogoFromDb(
+  req: NextApiRequest,
+  res: NextApiResponse,
+  projectId: string,
+  pv: string,
+) {
+  const supabase = createServerSupabaseClient<Database>({ req, res })
 
-//   const query = await supabase
-//     .from('projects')
-//     .select('logo_uri')
-//     .eq('project_id', projectId)
+  const query = await supabase
+    .from('projects')
+    .select('logo_uri')
+    .eq('project_id', projectId)
+    .eq('pv', pv)
 
-//   if (query.error) throw query.error
+  if (query.error) throw query.error
 
-//   return query.data?.[0]?.logo_uri as string | undefined
-// }
-
-async function findLogoOnChain(projectId: string) {
-  const { logoUri } = (await getProjectMetadata(projectId as string)) ?? {}
-  return logoUri
+  return query.data?.[0]?.logo_uri as string | undefined
 }
 
 /**
  *
- * @dev 3 network requests happen here:
- * 1. fetch the project metadata CID (DB fetch is prioritized)
- * 2. fetch the project metadata from IPFS
- * 3. fetch the project logo image data
+ * @dev 2 sync ops happening here:
+ * 1. query the project logo URI from DB
+ * 2. fetch the project logo image data
  *
  * Thus this endpoint should be cached.
  * However, the ideal duration is TBD.
@@ -50,15 +47,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   try {
-    const { projectId } = req.query
-    if (!projectId) {
+    const { projectId, pv } = req.query
+    if (!projectId || !pv) {
       return res.status(400).json({ error: 'projectId is required' })
     }
 
-    const logoUri =
-      // TODO figure out why DB is returning incorrect (goerli?) project logos
-      // (await findLogoFromDb(req, res, projectId as string)) ??
-      await findLogoOnChain(projectId as string)
+    const logoUri = await findLogoFromDb(
+      req,
+      res,
+      projectId as string,
+      pv as string,
+    )
     if (!logoUri) {
       return res.status(404).json({ error: 'project logo not found' })
     }

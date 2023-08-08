@@ -9,10 +9,6 @@ import {
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { useState } from 'react'
-import {
-  V2V3_CURRENCY_METADATA,
-  getV2V3CurrencyOption,
-} from 'utils/v2v3/currency'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { PayoutTitle } from './PayoutTitle'
@@ -32,27 +28,43 @@ export function PayoutSplitRow({
   const { editCycleForm } = useEditCycleFormContext()
 
   const {
-    currency,
+    currencyOrPercentSymbol,
     derivePayoutAmount,
+    formattedPayoutPercent,
     roundingPrecision,
     handlePayoutSplitChanged,
     handlePayoutSplitAmountChanged,
     distributionLimitIsInfinite,
   } = usePayoutsTable()
   const amount = derivePayoutAmount({ payoutSplit })
+  const isPercent = !amount
 
-  const formattedAmount = amount
+  const formattedAmountOrPercentage = amount
     ? round(amount, roundingPrecision).toString()
-    : 'N.A.'
+    : formattedPayoutPercent({ payoutSplitPercent: payoutSplit.percent })
 
   if (!editCycleForm) return null
 
   const onAmountPercentageInputChange = (val: string | undefined) => {
     const newAmount = parseFloat(val ?? '0')
-    handlePayoutSplitAmountChanged({
-      editingPayoutSplit: payoutSplit,
-      newAmount,
-    })
+    if (isPercent) {
+      handlePayoutSplitChanged({
+        editedPayoutSplit: payoutSplit,
+        newPayoutSplit: {
+          ...payoutSplit,
+          projectOwner: false,
+          amount: {
+            value: newAmount.toString(),
+            isPercent,
+          },
+        },
+      })
+    } else {
+      handlePayoutSplitAmountChanged({
+        editingPayoutSplit: payoutSplit,
+        newAmount,
+      })
+    }
   }
 
   const handleEditModalOk = (allocation: AddEditAllocationModalEntity) => {
@@ -68,7 +80,8 @@ export function PayoutSplitRow({
     beneficiary: payoutSplit.beneficiary,
     projectId: payoutSplit.projectId,
     amount: {
-      value: formattedAmount,
+      value: formattedAmountOrPercentage,
+      isPercent,
     },
     lockedUntil: payoutSplit.lockedUntil,
   } as AddEditAllocationModalEntity
@@ -108,15 +121,10 @@ export function PayoutSplitRow({
           <div className="flex items-center gap-3">
             <FormattedNumberInput
               accessory={
-                <span className="text-sm">
-                  {
-                    V2V3_CURRENCY_METADATA[getV2V3CurrencyOption(currency)]
-                      .symbol
-                  }
-                </span>
+                <span className="text-sm">{currencyOrPercentSymbol}</span>
               }
               accessoryPosition="left"
-              value={formattedAmount}
+              value={formattedAmountOrPercentage}
               onChange={onAmountPercentageInputChange}
               className="h-10"
             />

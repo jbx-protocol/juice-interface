@@ -32,4 +32,16 @@
 
 .ql-tooltip {
   @apply z-10;
+  @apply dark:bg-slate-700;
+  @apply dark:border-slate-300;
+  @apply dark:shadow-[0_0_5px_#494361];
+  @apply rounded-lg;
+}
+
+.ql-snow .ql-tooltip input[type='text'] {
+  @apply dark:border-slate-300;
+}
+
+.ql-tooltip::before {
+  @apply dark:text-slate-200;
 }

@@ -2,11 +2,11 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjects'
+import { SubtitleType, useSubtitle } from 'hooks/useSubtitle'
 import { GnosisSafe } from 'models/safe'
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import { useProjectMetadata } from './useProjectMetadata'
 
-type SubtitleType = 'tagline' | 'description'
 export interface ProjectHeaderData {
   title: string | undefined
   subtitle: { text: string; type: SubtitleType } | undefined
@@ -34,26 +34,7 @@ export const useProjectHeader = (): ProjectHeaderData => {
   })
   const { data: gnosisSafe } = useGnosisSafe(projectOwnerAddress)
 
-  const subtitle = useMemo(() => {
-    const tagline = projectMetadata?.projectTagline
-    const description = projectMetadata?.description
-      ? stripHtmlTags(projectMetadata?.description)
-      : undefined
-
-    if (tagline) {
-      return {
-        text: tagline,
-        type: 'tagline' as SubtitleType,
-      }
-    }
-
-    if (description) {
-      return {
-        text: description,
-        type: 'description' as SubtitleType,
-      }
-    }
-  }, [projectMetadata?.description, projectMetadata?.projectTagline])
+  const subtitle = useSubtitle(projectMetadata)
 
   return {
     title: projectMetadata?.name,
@@ -66,8 +47,4 @@ export const useProjectHeader = (): ProjectHeaderData => {
     last7DaysPercent,
     gnosisSafe,
   }
-}
-
-const stripHtmlTags = (html: string): string => {
-  return html.replace(/<[^>]*>/g, '')
 }

@@ -138,7 +138,6 @@ export const RichEditor: React.FC<RichEditorProps> = ({ value, onChange }) => {
             'blockquote',
             'link',
             'image',
-            'video',
             { list: 'ordered' },
             { list: 'bullet' },
             'code-block',

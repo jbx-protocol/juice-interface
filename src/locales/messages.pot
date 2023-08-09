@@ -3338,6 +3338,9 @@ msgstr ""
 msgid "{label} is not a valid ETH Address"
 msgstr ""
 
+msgid "Fees are held in the project instead of being processed automatically."
+msgstr ""
+
 msgid "Set URI for {projectTitle}"
 msgstr ""
 
@@ -4455,6 +4458,9 @@ msgid "Give this NFT a voting weight to be used for on-chain governance. The num
 msgstr ""
 
 msgid "Your project's NFT contract version is not supported."
+msgstr ""
+
+msgid "Hold fees in project"
 msgstr ""
 
 msgid "I have another question!"

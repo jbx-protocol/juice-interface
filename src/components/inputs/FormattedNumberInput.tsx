@@ -68,16 +68,33 @@ export default function FormattedNumberInput({
         value={value}
         step={step ?? 1}
         placeholder={placeholder}
-        formatter={(val?: string | undefined) =>
-          _prefix +
-          (val
-            ? formattedNum(val, {
-                thousandsSeparator,
-                decimalSeparator,
-              })
-            : '') +
-          _suffix
-        }
+        formatter={(val?: string | undefined) => {
+          let formatted =
+            _prefix +
+            (val
+              ? formattedNum(val, {
+                  thousandsSeparator,
+                  decimalSeparator,
+                })
+              : '') +
+            _suffix
+
+          // Remove any unallowed chars that may be added by formattedNum()
+          formatted = formatted
+            .split('')
+            .filter(char => allowedValueChars.includes(char))
+            .join('')
+
+          if (
+            val?.endsWith(decimalSeparator) &&
+            !formatted.endsWith(decimalSeparator)
+          ) {
+            // Include decimal if stripped by formattedNum()
+            formatted += decimalSeparator
+          }
+
+          return formatted
+        }}
         parser={(val?: string) => {
           if (val === undefined || !val.length) return ''
           // Stops user from entering hex values

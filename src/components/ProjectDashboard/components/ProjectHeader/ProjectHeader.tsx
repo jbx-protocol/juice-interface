@@ -8,14 +8,12 @@ import { useProjectHeader } from 'components/ProjectDashboard/hooks'
 import { SubscribeButton } from 'components/SubscribeButton'
 import { TruncatedText } from 'components/TruncatedText'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V2 } from 'constants/pv'
 import useMobile from 'hooks/useMobile'
 import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { settingsPagePath } from 'utils/routes'
 import { ProjectHeaderLogo } from './components/ProjectHeaderLogo'
 import { ProjectHeaderPopupMenu } from './components/ProjectHeaderPopupMenu'
@@ -28,10 +26,6 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
   const isMobile = useMobile()
   const canReconfigure = useV2V3WalletHasPermission(
     V2V3OperatorPermission.RECONFIGURE,
-  )
-
-  const richProjectDescriptionEnabled = featureFlagEnabled(
-    FEATURE_FLAGS.RICH_PROJECT_DESCRIPTION,
   )
 
   return (
@@ -76,13 +70,13 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
         <div className="flex flex-col justify-between gap-8 md:flex-row md:gap-12">
           <div className="flex min-w-0 flex-col gap-3">
             {subtitle &&
-              (richProjectDescriptionEnabled ? (
+              (subtitle.type === 'tagline' ? (
                 <TruncatedText
                   className="text-grey-700 dark:text-slate-50 md:text-lg"
-                  text={subtitle}
+                  text={subtitle.text}
                 />
               ) : (
-                <Subtitle subtitle={subtitle} />
+                <Subtitle subtitle={subtitle.text} />
               ))}
             <div className="text-grey-500 dark:text-slate-200">
               {projectId ? (

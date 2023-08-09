@@ -29,3 +29,7 @@
 .ql-snow .ql-stroke.ql-fill {
   @apply fill-grey-400 stroke-grey-400 dark:fill-slate-400 dark:stroke-slate-400;
 }
+
+.ql-tooltip {
+  @apply z-10;
+}

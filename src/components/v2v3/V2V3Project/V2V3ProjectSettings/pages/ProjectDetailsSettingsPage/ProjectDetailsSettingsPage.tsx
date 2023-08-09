@@ -113,7 +113,10 @@ export function ProjectDetailsSettingsPage() {
 
   // initially fill form with any existing redux state
   useEffect(() => {
-    resetProjectForm()
+    // Bug with antd - required to make sure form is reset after initial render
+    setTimeout(() => {
+      resetProjectForm()
+    }, 0)
   }, [resetProjectForm])
 
   return (

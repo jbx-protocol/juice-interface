@@ -32,16 +32,20 @@ export default function ProjectReserved({
   checked,
   onToggled,
   issuanceRate,
+  hideExplainer,
 }: {
-  value: number | undefined
-  onChange: (val?: number) => void
+  value?: number
+  onChange?: (val?: number) => void
   checked?: boolean
   onToggled?: (checked: boolean) => void
   issuanceRate?: number
+  hideExplainer?: boolean
 } & FormItemExt) {
   const [showRiskWarning, setShowRiskWarning] = useState<boolean>(
     (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
   )
+
+  const noSwitch = checked === undefined && !onToggled
 
   const riskNotice = (
     <FormItemWarningText>
@@ -68,12 +72,14 @@ export default function ProjectReserved({
     <Form.Item
       extra={
         <div className="text-sm">
-          <p>
-            <Trans>
-              Reserve a percentage of freshly minted tokens for your project to
-              use.
-            </Trans>
-          </p>
+          {hideExplainer ? null : (
+            <p>
+              <Trans>
+                Reserve a percentage of freshly minted tokens for your project
+                to use.
+              </Trans>
+            </p>
+          )}
           <div className="w-full bg-smoke-100 p-4 dark:bg-slate-600">
             <div className="mb-1 flex w-full justify-between">
               <span className="flex gap-1">
@@ -129,23 +135,24 @@ export default function ProjectReserved({
       }
       {...formItemProps}
     >
-      {checked && (
-        <NumberSlider
-          sliderValue={value}
-          defaultValue={value ?? 0}
-          suffix="%"
-          onChange={value => {
-            setShowRiskWarning(
-              (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
-            )
-            onChange(value)
-          }}
-          name={name}
-          step={0.5}
-          formItemProps={showRiskWarning ? { extra: riskNotice } : {}}
-          disabled={!checked}
-        />
-      )}
+      {checked ||
+        (noSwitch && (
+          <NumberSlider
+            sliderValue={value}
+            defaultValue={value ?? 0}
+            suffix="%"
+            onChange={value => {
+              setShowRiskWarning(
+                (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
+              )
+              onChange?.(value)
+            }}
+            name={name}
+            step={0.5}
+            formItemProps={showRiskWarning ? { extra: riskNotice } : {}}
+            disabled={!checked && !noSwitch}
+          />
+        ))}
     </Form.Item>
   )
 }

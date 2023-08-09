@@ -51,14 +51,16 @@ export default function NumberSlider({
 
   return (
     <div className={className}>
-      <div className="mb-4 flex items-baseline">
-        <Slider
-          className="mr-5 flex-1"
-          {...inputConfig}
-          value={_value}
-          onChange={(val: number) => updateValue(val)}
-          disabled={disabled}
-        />
+      <div className="mb-4 flex items-center">
+        <Form.Item className="mb-0 w-full" name={name}>
+          <Slider
+            className="mr-5 flex-1"
+            {...inputConfig}
+            value={_value}
+            onChange={(val: number) => updateValue(val)}
+            disabled={disabled}
+          />
+        </Form.Item>
         <Form.Item
           className="mb-0"
           name={name}

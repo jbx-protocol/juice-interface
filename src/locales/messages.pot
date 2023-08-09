@@ -101,6 +101,9 @@ msgstr ""
 msgid "Previous V1 Project ID:"
 msgstr ""
 
+msgid "Total issuance"
+msgstr ""
+
 msgid "Free to launch, just pay gas."
 msgstr ""
 
@@ -363,6 +366,9 @@ msgid "Edit upcoming cycles"
 msgstr ""
 
 msgid "Join our Discord"
+msgstr ""
+
+msgid "Enable redemption rate"
 msgstr ""
 
 msgid "Tokens are burned when they are redeemed."
@@ -779,6 +785,9 @@ msgstr ""
 msgid "3-day deadline"
 msgstr ""
 
+msgid "Enter a number of tokens that your project contributors will receive when they pay your project. You can use these tokens for governance rights, community access, or other perks such as ETH redemption."
+msgstr ""
+
 msgid "<0/>{0} distributed"
 msgstr ""
 
@@ -822,6 +831,9 @@ msgid "Reserve a percentage of freshly minted tokens for your project to use."
 msgstr ""
 
 msgid "Convert to amounts"
+msgstr ""
+
+msgid "Enable issuance reduction rate"
 msgstr ""
 
 msgid "The total number of tokens issued when this project is paid 1 ETH. Some of these tokens may be reserved by the project, and the rest are sent to the payer."
@@ -2240,6 +2252,9 @@ msgstr ""
 msgid "{0} days"
 msgstr ""
 
+msgid "Enable reserved tokens"
+msgstr ""
+
 msgid "Case study"
 msgstr ""
 
@@ -2262,6 +2277,9 @@ msgid "Cycle #{0}"
 msgstr ""
 
 msgid "You must enable the following cycle rules:<0>{0}{1}{2}</0>"
+msgstr ""
+
+msgid "Project owner can mint tokens for themselves and others at any time."
 msgstr ""
 
 msgid "Are you sure you want to unwatch all projects? You will no longer be notified about new events."
@@ -2414,6 +2432,9 @@ msgstr ""
 msgid "Minimum Contribution"
 msgstr ""
 
+msgid "Incentivise long-term token holding with a redemption rate. <0>Learn more</0>"
+msgstr ""
+
 msgid "Receive ERC-20"
 msgstr ""
 
@@ -2460,6 +2481,9 @@ msgid "Required"
 msgstr ""
 
 msgid "Your project was successfully created on {0}!"
+msgstr ""
+
+msgid "Reserve a percentage of freshly minted tokens for specified recipients. <0>Learn more</0>"
 msgstr ""
 
 msgid "If you leave this blank, the button will close the pop-up."
@@ -2646,6 +2670,9 @@ msgid "Tokens to redeem"
 msgstr ""
 
 msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap migrate legacy <1>{1}</1> tokens for their new V3 tokens."
+msgstr ""
+
+msgid "Disable project token transfers"
 msgstr ""
 
 msgid "Project Owner"
@@ -2850,6 +2877,9 @@ msgid "Edit Deadline"
 msgstr ""
 
 msgid "We do everything in the light, for everyone to see."
+msgstr ""
+
+msgid "Enable project owner token minting"
 msgstr ""
 
 msgid "Modify the colors of your Juicebox Project NFT. This NFT represents ownership over your project."
@@ -4506,6 +4536,9 @@ msgid "Visit jbdao.org"
 msgstr ""
 
 msgid "Allow Controller migration"
+msgstr ""
+
+msgid "Reduce the total token issuance each cycle. <0>Learn more</0>"
 msgstr ""
 
 msgid "Cycle #"

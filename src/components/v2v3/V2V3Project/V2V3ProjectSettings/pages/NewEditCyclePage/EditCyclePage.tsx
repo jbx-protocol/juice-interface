@@ -7,10 +7,11 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { helpPagePath, settingsPagePath } from 'utils/routes'
-import { DetailsSection } from './DetailsSection/DetailsSection'
+import { DetailsSection } from './DetailsSection'
 import { useEditCycleFormContext } from './EditCycleFormContext'
 import { EditCycleFormSection } from './EditCycleFormSection'
-import { PayoutsSection } from './PayoutsSection/PayoutsSection'
+import { PayoutsSection } from './PayoutsSection'
+import { TokensSection } from './TokensSection'
 
 export function EditCyclePage() {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -66,7 +67,7 @@ export function EditCyclePage() {
               <Trans>Manage how your projects tokens should work.</Trans>
             }
           >
-            <div>Todo</div>
+            <TokensSection />
           </EditCycleFormSection>
 
           <EditCycleFormSection

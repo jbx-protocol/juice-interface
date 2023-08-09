@@ -10,6 +10,7 @@ import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/useEditProjectDet
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
 import { useCallback, useContext, useEffect, useState } from 'react'
+import { emitInfoNotification } from 'utils/notifications'
 
 export function ProjectDetailsSettingsPage() {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -54,6 +55,11 @@ export function ProjectDetailsSettingsPage() {
       {
         onConfirmed: async () => {
           setLoadingSaveChanges(false)
+
+          emitInfoNotification('Project details saved', {
+            description: 'Your project details have been saved.',
+          })
+
           if (projectId) {
             await revalidateProject({
               pv: PV_V2,

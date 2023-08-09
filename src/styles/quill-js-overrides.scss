@@ -5,12 +5,14 @@
 
 .ql-container.ql-snow {
   @apply rounded-b-lg;
+  @apply flex flex-1 flex-col;
   @apply dark:border-slate-300;
 }
 
 .ql-editor {
   @apply rounded-b-lg;
   @apply bg-smoke-50;
+  @apply h-full flex-1;
   @apply dark:bg-slate-600;
 }
 

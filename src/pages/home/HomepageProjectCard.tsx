@@ -62,6 +62,7 @@ export function HomepageProjectCard({
           className="h-[192px] w-full rounded-none object-cover"
           name={metadata?.name}
           projectId={project.projectId}
+          uri={metadata?.logoUri}
           lazyLoad={lazyLoad}
         />
       }

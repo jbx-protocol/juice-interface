@@ -77,12 +77,24 @@ export const RichEditor: React.FC<RichEditorProps> = ({ value, onChange }) => {
     const event = async (e: ClipboardEvent) => {
       e.preventDefault()
       e.stopPropagation()
+
       if (
         !e.clipboardData ||
         !e.clipboardData.files ||
         !e.clipboardData.files[0]
-      )
+      ) {
+        // standard paste - strip formatting
+        const text = e.clipboardData?.getData('text/plain')
+        if (text) {
+          // @ts-ignore
+          const editor = quillRef?.current?.getEditor()
+          // @ts-ignore
+          const range = editor.getSelection(true)
+          // @ts-ignore
+          editor.insertText(range.index, text)
+        }
         return
+      }
 
       for (const file of e.clipboardData.files) {
         if (!file.type.match('image.*')) {

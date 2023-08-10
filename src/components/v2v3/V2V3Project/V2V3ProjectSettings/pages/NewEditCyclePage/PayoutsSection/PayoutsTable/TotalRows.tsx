@@ -52,7 +52,7 @@ export function TotalRows() {
           {currencyOrPercentSymbol} {round(totalFeeAmount, roundingPrecision)}
         </Cell>
       </Row>
-      <Row className="border-none font-medium" highlighted>
+      <Row className="rounded-b-lg font-medium" highlighted>
         <Cell>Total</Cell>
         <Cell>
           <>

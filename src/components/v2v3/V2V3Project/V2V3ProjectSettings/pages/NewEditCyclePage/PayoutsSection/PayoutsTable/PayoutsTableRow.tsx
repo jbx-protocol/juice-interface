@@ -6,14 +6,14 @@ export function PayoutsTableRow({
   highlighted,
 }: React.PropsWithChildren<{ className?: string; highlighted?: boolean }>) {
   return (
-    <tr
+    <div
       className={twMerge(
-        'text-secondary rounded-b-lg border-b border-smoke-200 text-xs dark:border-grey-600',
+        'text-secondary grid grid-cols-[3fr,2fr] items-center border-t border-smoke-200 text-xs dark:border-grey-600',
         highlighted ? 'bg-grey-50 dark:bg-grey-900' : null,
         className,
       )}
     >
       {children}
-    </tr>
+    </div>
   )
 }

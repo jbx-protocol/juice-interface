@@ -1,4 +1,3 @@
-import { useWatch } from 'antd/lib/form/Form'
 import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { AddEditAllocationModalEntity } from 'components/v2v3/shared/Allocation/AddEditAllocationModal'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
@@ -23,16 +22,21 @@ import {
   getNewDistributionLimit,
 } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
-import { useEditCycleFormContext } from '../../EditCycleFormContext'
+import { usePayoutsTableContext } from '../PayoutsTable/context/PayoutsTableContext'
 
 const JB_FEE = 0.025
 
 export const usePayoutsTable = () => {
   const { projectOwnerAddress } = useProjectContext()
-  const { editCycleForm } = useEditCycleFormContext()
-  const distributionLimit = useWatch('distributionLimit', editCycleForm)
-  const currency = useWatch('distributionLimitCurrency', editCycleForm)
-  const payoutSplits = useWatch('payoutSplits', editCycleForm) ?? []
+  const {
+    payoutSplits,
+    setPayoutSplits,
+    distributionLimit,
+    setDistributionLimit,
+    currency,
+    setCurrency: _setCurrency,
+  } = usePayoutsTableContext()
+
   const roundingPrecision = currency === 'ETH' ? 4 : 2
 
   const distributionLimitIsInfinite = useMemo(
@@ -63,9 +67,7 @@ export const usePayoutsTable = () => {
    * @param currency - Currency as a V2V3CurrencyOption (1 | 2)
    */
   function setCurrency(currency: V2V3CurrencyOption) {
-    editCycleForm?.setFieldsValue({
-      distributionLimitCurrency: V2V3CurrencyName(currency),
-    })
+    _setCurrency(V2V3CurrencyName(currency) ?? 'ETH')
   }
 
   /**
@@ -174,10 +176,8 @@ export const usePayoutsTable = () => {
 
     const newPayoutSplits = [...adjustedSplits, newPayoutSplit]
 
-    editCycleForm?.setFieldsValue({
-      distributionLimit: newDistributionLimit,
-      payoutSplits: newPayoutSplits,
-    })
+    setDistributionLimit(newDistributionLimit)
+    setPayoutSplits(newPayoutSplits)
   }
 
   /**
@@ -215,7 +215,7 @@ export const usePayoutsTable = () => {
       }
       return m
     })
-    editCycleForm?.setFieldsValue({ payoutSplits: newSplits })
+    setPayoutSplits(newSplits)
     if (!distributionLimitIsInfinite && !newPayoutSplit.projectOwner) {
       handlePayoutSplitAmountChanged({
         editingPayoutSplit: newSplit,
@@ -254,13 +254,12 @@ export const usePayoutsTable = () => {
     const updatedPercentage =
       (_amount / (newDistributionLimit ?? 0)) * ONE_BILLION
 
-    const _payoutSplits = editCycleForm?.getFieldValue('payoutSplits')
-    let adjustedSplits: Split[] = _payoutSplits
+    let adjustedSplits: Split[] = payoutSplits
 
     // recalculate all split percents based on newly added split amount
     if (newDistributionLimit && !distributionLimitIsInfinite) {
       adjustedSplits = adjustedSplitPercents({
-        splits: _payoutSplits,
+        splits: adjustedSplits,
         oldDistributionLimit: (distributionLimit as number).toString() ?? '0',
         newDistributionLimit: newDistributionLimit.toString(),
       })
@@ -280,10 +279,8 @@ export const usePayoutsTable = () => {
         : m,
     )
 
-    editCycleForm?.setFieldsValue({
-      distributionLimit: newDistributionLimit,
-      payoutSplits: newPayoutSplits,
-    })
+    setDistributionLimit(newDistributionLimit)
+    setPayoutSplits(newPayoutSplits)
   }
 
   /**
@@ -312,17 +309,13 @@ export const usePayoutsTable = () => {
       })
     }
 
-    editCycleForm?.setFieldsValue({
-      distributionLimit: newDistributionLimit,
-      payoutSplits: adjustedSplits,
-    })
+    setDistributionLimit(newDistributionLimit)
+    setPayoutSplits(adjustedSplits)
   }
 
   function handleDeleteAllPayoutSplits() {
-    editCycleForm?.setFieldsValue({
-      distributionLimit: 0,
-      payoutSplits: [],
-    })
+    setDistributionLimit(0)
+    setPayoutSplits([])
   }
 
   const amountOrPercentValue = ({

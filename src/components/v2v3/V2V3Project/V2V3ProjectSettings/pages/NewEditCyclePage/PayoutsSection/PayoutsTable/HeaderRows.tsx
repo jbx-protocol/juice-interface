@@ -12,10 +12,6 @@ import { helpPagePath } from 'utils/routes'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { PayoutTableSettings } from './PayoutTableSettings'
 import { PayoutsTableCell } from './PayoutsTableCell'
-import { PayoutsTableRow } from './PayoutsTableRow'
-
-const Row = PayoutsTableRow
-const Cell = PayoutsTableCell
 
 export function HeaderRows() {
   const [addRecipientModalOpen, setAddRecipientModalOpen] = useState<boolean>()
@@ -31,40 +27,38 @@ export function HeaderRows() {
 
   return (
     <>
-      <thead>
-        <Row className="text-primary">
-          <Cell className="py-5">
-            <div className="mb-2 text-lg font-medium">
-              <Trans>Payout recipients</Trans>
-            </div>
-            <div className="text-secondary text-sm">
-              <Trans>
-                Juicebox provides trustless payroll capabilities to run
-                automated payouts completely on-chain.{' '}
-                <ExternalLinkWithIcon
-                  href={helpPagePath(`/user/project/#payouts`)}
-                >
-                  <Trans>Learn more about payouts</Trans>
-                </ExternalLinkWithIcon>
-              </Trans>
-            </div>
-          </Cell>
-          <Cell className="pt-6 align-top">
-            <div className="flex items-center justify-end gap-3">
-              <Button
-                type="ghost"
-                onClick={() => setAddRecipientModalOpen(true)}
-                icon={<PlusOutlined />}
+      <PayoutsTableCell className="flex gap-10">
+        <div className="py-5">
+          <div className="mb-2 text-lg font-medium">
+            <Trans>Payout recipients</Trans>
+          </div>
+          <div className="text-secondary text-sm">
+            <Trans>
+              Juicebox provides trustless payroll capabilities to run automated
+              payouts completely on-chain.{' '}
+              <ExternalLinkWithIcon
+                href={helpPagePath(`/user/project/#payouts`)}
               >
-                <span>
-                  <Trans>Add recipient</Trans>
-                </span>
-              </Button>
-              <PayoutTableSettings />
-            </div>
-          </Cell>
-        </Row>
-      </thead>
+                <Trans>Learn more about payouts</Trans>
+              </ExternalLinkWithIcon>
+            </Trans>
+          </div>
+        </div>
+        <div className="pt-6 align-top">
+          <div className="flex items-center justify-end gap-3">
+            <Button
+              type="ghost"
+              onClick={() => setAddRecipientModalOpen(true)}
+              icon={<PlusOutlined />}
+            >
+              <span>
+                <Trans>Add recipient</Trans>
+              </span>
+            </Button>
+            <PayoutTableSettings />
+          </div>
+        </div>
+      </PayoutsTableCell>
       <AddEditAllocationModal
         allocationName="payout"
         availableModes={

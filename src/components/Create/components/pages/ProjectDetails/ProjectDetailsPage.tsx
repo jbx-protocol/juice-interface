@@ -12,7 +12,6 @@ import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/inputs/PrefixedInput'
 import { RichEditor } from 'components/RichEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
@@ -20,7 +19,6 @@ import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
 import { Wizard } from '../../Wizard'
@@ -41,10 +39,6 @@ export const ProjectDetailsPage: React.FC<
 
   const projectOwnerDifferentThanWalletAddress =
     inputWalletAddress && wallet.userAddress !== inputWalletAddress
-
-  const richProjectDescriptionEnabled = featureFlagEnabled(
-    FEATURE_FLAGS.RICH_PROJECT_DESCRIPTION,
-  )
 
   return (
     <Form
@@ -70,31 +64,24 @@ export const ProjectDetailsPage: React.FC<
           <JuiceInput />
         </Form.Item>
 
-        {richProjectDescriptionEnabled ? (
-          <>
-            <Form.Item
-              name="projectTagline"
-              label={t`Tagline`}
-              extra={t`Add a brief one-sentence summary of your project.`}
-              rules={lockPageRulesWrapper([
-                inputIsLengthRule({
-                  label: t`Tagline`,
-                  max: 48,
-                }),
-              ])}
-            >
-              <JuiceInput />
-            </Form.Item>
+        <Form.Item
+          name="projectTagline"
+          label={t`Tagline`}
+          extra={t`Add a brief one-sentence summary of your project.`}
+          rules={lockPageRulesWrapper([
+            inputIsLengthRule({
+              label: t`Tagline`,
+              max: 48,
+            }),
+          ])}
+        >
+          <JuiceInput />
+        </Form.Item>
 
-            <Form.Item name="projectDescription" label={t`Project description`}>
-              <RichEditor />
-            </Form.Item>
-          </>
-        ) : (
-          <Form.Item name="projectDescription" label={t`Project description`}>
-            <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
-          </Form.Item>
-        )}
+        <Form.Item name="projectDescription" label={t`Project description`}>
+          <RichEditor />
+        </Form.Item>
+
         <Form.Item name="logo" label={t`Logo`}>
           <FormImageUploader text={t`Upload`} maxSizeKBs={10000} />
         </Form.Item>

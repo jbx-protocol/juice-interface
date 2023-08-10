@@ -1520,9 +1520,6 @@ msgstr ""
 msgid "What do we value?"
 msgstr ""
 
-msgid "Tell us about your project."
-msgstr ""
-
 msgid "Add a brief one-sentence summary of your project."
 msgstr ""
 

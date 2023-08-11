@@ -62,13 +62,16 @@ export default function FormattedNumberInput({
           'h-full w-full',
           'formatted-number-input',
           accessory ? 'antd-no-number-handler' : '',
-          accessoryPosition === 'left' ? 'pl-7' : null,
+          accessoryPosition === 'left' ? 'pl-9' : null,
           className,
         )}
         value={value}
         step={step ?? 1}
         placeholder={placeholder}
-        formatter={(val?: string | undefined) => {
+        formatter={(val?: string | number | undefined) => {
+          if (typeof val === 'number') {
+            val = val.toString()
+          }
           let formatted =
             _prefix +
             (val
@@ -84,7 +87,6 @@ export default function FormattedNumberInput({
             .split('')
             .filter(char => allowedValueChars.includes(char))
             .join('')
-
           if (
             val?.endsWith(decimalSeparator) &&
             !formatted.endsWith(decimalSeparator)
@@ -99,7 +101,7 @@ export default function FormattedNumberInput({
           if (val === undefined || !val.length) return ''
           // Stops user from entering hex values
           if (/^0?0x[0-9a-fA-F]+$/.test(val)) return '0'
-          let processedValue =
+          const processedValue =
             val
               .replace(new RegExp(thousandsSeparator, 'g'), '')
               .replace(_prefix, '')
@@ -108,11 +110,6 @@ export default function FormattedNumberInput({
               .filter(char => allowedValueChars.includes(char))
               .join('')
               .substring(0, WAD_DECIMALS) || '0'
-
-          // Enforce the presence of the prefix
-          if (_prefix && !val.startsWith(_prefix)) {
-            processedValue = _prefix + processedValue
-          }
 
           return processedValue
         }}

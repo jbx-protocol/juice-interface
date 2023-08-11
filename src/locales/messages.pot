@@ -2948,6 +2948,9 @@ msgstr ""
 msgid "Text record is set"
 msgstr ""
 
+msgid "Advanced tools"
+msgstr ""
+
 msgid "Tokens cannot be claimed because the project owner has not issued an ERC-20 for this project."
 msgstr ""
 

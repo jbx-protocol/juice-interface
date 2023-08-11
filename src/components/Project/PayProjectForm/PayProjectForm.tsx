@@ -83,7 +83,7 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
       <div className="flex w-full flex-wrap gap-2">
         <div className="min-w-[50%] flex-[2]">
           <FormattedNumberInput
-            size="large"
+            className="h-12"
             placeholder="0"
             onChange={onPayAmountChange}
             value={payAmount}

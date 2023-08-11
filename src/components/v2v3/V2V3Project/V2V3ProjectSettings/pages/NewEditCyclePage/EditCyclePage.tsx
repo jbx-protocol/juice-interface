@@ -69,18 +69,6 @@ export function EditCyclePage() {
           >
             <TokensSection />
           </EditCycleFormSection>
-
-          <EditCycleFormSection
-            title={<Trans>NFTs</Trans>}
-            description={
-              <Trans>
-                Manage how you reward supporters when they support your project.
-              </Trans>
-            }
-            className="border-b-0"
-          >
-            <div>Todo</div>
-          </EditCycleFormSection>
         </Form>
       </div>
 

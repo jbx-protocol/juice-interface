@@ -146,6 +146,9 @@ msgstr ""
 msgid "Data from current cycle"
 msgstr ""
 
+msgid "Contributors will redeem from the project's treasury with their NFTs as opposed to standard project tokens."
+msgstr ""
+
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
 msgstr ""
 
@@ -291,6 +294,9 @@ msgid "Deploy Snapshot space"
 msgstr ""
 
 msgid "Contributions"
+msgstr ""
+
+msgid "Enable NFTs for your project"
 msgstr ""
 
 msgid "Attach an image"
@@ -2111,6 +2117,9 @@ msgstr ""
 msgid "This project's rules may pose risks for contributors:"
 msgstr ""
 
+msgid "Enable NFTs"
+msgstr ""
+
 msgid "Save token recipients"
 msgstr ""
 
@@ -2960,6 +2969,9 @@ msgstr ""
 msgid "Danger Zone"
 msgstr ""
 
+msgid "Juicebox mints and provides extended functionality for you to sell or reward contributors with NFTs for your project. <0>Learn more about NFTs</0>"
+msgstr ""
+
 msgid "Create an ERC-20 token (optional)"
 msgstr ""
 
@@ -3141,9 +3153,6 @@ msgid "Request a feature."
 msgstr ""
 
 msgid "Fees held"
-msgstr ""
-
-msgid "Manage how you reward supporters when they support your project."
 msgstr ""
 
 msgid "Issuance reduction rate"
@@ -3473,6 +3482,9 @@ msgstr ""
 msgid "Prevent NFT overspending"
 msgstr ""
 
+msgid "To add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before launching your new cycle."
+msgstr ""
+
 msgid "Pay this project to receive NFTs."
 msgstr ""
 
@@ -3510,6 +3522,9 @@ msgid "Amount required"
 msgstr ""
 
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no ETH, or is using all of its ETH for payouts."
+msgstr ""
+
+msgid "Use NFTs for redemption"
 msgstr ""
 
 msgid "JB vs. Kickstarter"

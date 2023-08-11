@@ -15,6 +15,10 @@
   @apply bg-smoke-50;
   @apply h-full flex-1;
   @apply dark:bg-slate-600;
+  h1,
+  h2 {
+    @apply font-heading;
+  }
 }
 
 .ql-toolbar .ql-stroke {

@@ -61,6 +61,7 @@ export function ReservedTokensSettingsPage() {
   return (
     <>
       <V2V3EditReservedTokens
+        showInstantChangesCallout
         editingReservedTokensSplits={editingReservedTokensSplits}
         setEditingReservedTokensSplits={setEditingReservedTokensSplits}
       />

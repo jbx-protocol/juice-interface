@@ -10,7 +10,7 @@ export default function ToolsDrawerButton() {
     <>
       <Tooltip title={<span>Advanced tools</span>}>
         <EllipsisVerticalIcon
-          className="h-6 w-6 cursor-pointer text-bluebs-600"
+          className="h-6 w-6 cursor-pointer text-bluebs-600 dark:text-white"
           onClick={() => setOpen(true)}
         />
       </Tooltip>

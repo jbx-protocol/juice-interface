@@ -163,7 +163,6 @@ const nextConfig = removeImports({
       },
     ]
   },
-  pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
   sentry: {
     hideSourceMaps: true,
   },

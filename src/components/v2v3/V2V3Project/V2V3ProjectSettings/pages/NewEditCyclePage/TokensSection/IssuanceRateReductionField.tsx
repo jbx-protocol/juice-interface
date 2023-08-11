@@ -18,7 +18,7 @@ export function IssuanceRateReductionField() {
     setIssuanceReductionRateSwitchEnabled,
   ] = useState<boolean>(issuanceReductionRate > 0)
   return (
-    <>
+    <div>
       <JuiceSwitch
         label={<Trans>Enable issuance reduction rate</Trans>}
         description={
@@ -40,13 +40,8 @@ export function IssuanceRateReductionField() {
         }}
       />
       {issuanceReductionRateSwitchEnabled ? (
-        <NumberSlider
-          name="discountRate"
-          max={20}
-          suffix="%"
-          className="pb-5"
-        />
+        <NumberSlider name="discountRate" max={20} suffix="%" />
       ) : null}
-    </>
+    </div>
   )
 }

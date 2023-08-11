@@ -19,7 +19,7 @@ export function RedemptionRateField() {
       editCycleForm?.getFieldValue('redemptionRate') ?? 100 < 100,
     )
   return (
-    <>
+    <div className="flex flex-col gap-5">
       <JuiceSwitch
         label={<Trans>Enable redemption rate</Trans>}
         description={
@@ -57,6 +57,6 @@ export function RedemptionRateField() {
           />
         </div>
       ) : null}
-    </>
+    </div>
   )
 }

@@ -135,24 +135,23 @@ export default function ProjectReserved({
       }
       {...formItemProps}
     >
-      {checked ||
-        (noSwitch && (
-          <NumberSlider
-            sliderValue={value}
-            defaultValue={value ?? 0}
-            suffix="%"
-            onChange={value => {
-              setShowRiskWarning(
-                (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
-              )
-              onChange?.(value)
-            }}
-            name={name}
-            step={0.5}
-            formItemProps={showRiskWarning ? { extra: riskNotice } : {}}
-            disabled={!checked && !noSwitch}
-          />
-        ))}
+      {(checked || noSwitch) && (
+        <NumberSlider
+          sliderValue={value}
+          defaultValue={value ?? 0}
+          suffix="%"
+          onChange={value => {
+            setShowRiskWarning(
+              (value ?? 0) > RESERVED_RATE_WARNING_THRESHOLD_PERCENT,
+            )
+            onChange?.(value)
+          }}
+          name={name}
+          step={0.5}
+          formItemProps={showRiskWarning ? { extra: riskNotice } : {}}
+          disabled={!checked && !noSwitch}
+        />
+      )}
     </Form.Item>
   )
 }

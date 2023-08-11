@@ -44,7 +44,7 @@ export function ReservedTokensField() {
         }}
       />
       {reservedTokensSwitchEnabled ? (
-        <div className="pt-6 pb-10">
+        <div className="pt-6 pb-5">
           {/* Slider */}
           <FormItems.ProjectReserved
             hideLabel

@@ -7,9 +7,12 @@ import { RedemptionRateField } from './RedemptionRateField'
 import { ReservedTokensField } from './ReservedTokensField'
 
 export function TokensSectionAdvanced() {
+  const advancedChildrenClasses =
+    '[&>*]:border-b [&>*]:border-grey-300 [&>*]:dark:border-grey-600 [&>*]:pb-7'
+
   return (
     <AdvancedDropdown>
-      <div className="flex flex-col gap-5">
+      <div className={`flex flex-col gap-7 ${advancedChildrenClasses}`}>
         <ReservedTokensField />
         <IssuanceRateReductionField />
         <RedemptionRateField />

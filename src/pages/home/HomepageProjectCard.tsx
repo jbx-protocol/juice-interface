@@ -60,9 +60,9 @@ export function HomepageProjectCard({
       img={
         <ProjectLogo
           className="h-[192px] w-full rounded-none object-cover"
-          uri={metadata?.logoUri}
           name={metadata?.name}
           projectId={project.projectId}
+          uri={metadata?.logoUri}
           lazyLoad={lazyLoad}
         />
       }

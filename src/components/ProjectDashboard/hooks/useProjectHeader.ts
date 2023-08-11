@@ -2,13 +2,14 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjects'
+import { SubtitleType, useSubtitle } from 'hooks/useSubtitle'
 import { GnosisSafe } from 'models/safe'
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import { useProjectMetadata } from './useProjectMetadata'
 
 export interface ProjectHeaderData {
   title: string | undefined
-  subtitle: string | undefined
+  subtitle: { text: string; type: SubtitleType } | undefined
   handle: string | undefined
   projectId: number | undefined
   owner: string | undefined
@@ -33,11 +34,7 @@ export const useProjectHeader = (): ProjectHeaderData => {
   })
   const { data: gnosisSafe } = useGnosisSafe(projectOwnerAddress)
 
-  const subtitle = useMemo(() => {
-    const tagline = projectMetadata?.projectTagline
-    const description = projectMetadata?.description
-    return tagline ?? description
-  }, [projectMetadata?.description, projectMetadata?.projectTagline])
+  const subtitle = useSubtitle(projectMetadata)
 
   return {
     title: projectMetadata?.name,

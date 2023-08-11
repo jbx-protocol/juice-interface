@@ -9,6 +9,7 @@ import { formatDate } from 'utils/format/formatDate'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
+import { useSubtitle } from 'hooks/useSubtitle'
 import { DBProject } from 'models/dbProject'
 import { ArchivedBadge } from './ArchivedBadge'
 import Loading from './Loading'
@@ -28,6 +29,8 @@ export default function ProjectCard({
     handle: project?.handle,
     projectId: project?.projectId,
   })
+
+  const subtitle = useSubtitle(metadata)
 
   if (!project) return null
 
@@ -106,9 +109,9 @@ export default function ProjectCard({
             <div className="mt-1">
               <ProjectTagsList tagClassName="text-xs" tags={tags} />
             </div>
-          ) : metadata?.description ? (
+          ) : subtitle ? (
             <div className="max-h-5 overflow-hidden overflow-ellipsis text-grey-400 dark:text-slate-200">
-              {metadata.description}
+              {subtitle.text}
             </div>
           ) : null}
         </div>

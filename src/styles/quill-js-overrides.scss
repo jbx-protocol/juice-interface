@@ -4,14 +4,21 @@
 }
 
 .ql-container.ql-snow {
+  @apply overflow-y-scroll;
   @apply rounded-b-lg;
+  @apply flex flex-1 flex-col;
   @apply dark:border-slate-300;
 }
 
 .ql-editor {
   @apply rounded-b-lg;
   @apply bg-smoke-50;
+  @apply h-full flex-1;
   @apply dark:bg-slate-600;
+  h1,
+  h2 {
+    @apply font-heading;
+  }
 }
 
 .ql-toolbar .ql-stroke {
@@ -28,4 +35,20 @@
 
 .ql-snow .ql-stroke.ql-fill {
   @apply fill-grey-400 stroke-grey-400 dark:fill-slate-400 dark:stroke-slate-400;
+}
+
+.ql-tooltip {
+  @apply z-10;
+  @apply dark:bg-slate-700;
+  @apply dark:border-slate-300;
+  @apply dark:shadow-[0_0_5px_#494361];
+  @apply rounded-lg;
+}
+
+.ql-snow .ql-tooltip input[type='text'] {
+  @apply dark:border-slate-300;
+}
+
+.ql-tooltip::before {
+  @apply dark:text-slate-200;
 }

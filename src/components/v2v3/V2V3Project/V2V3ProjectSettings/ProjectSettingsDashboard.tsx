@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
+import { useDistributableAmount } from 'components/ProjectDashboard/components/CyclesPayoutsPanel/hooks/useDistributableAmount'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHAmount from 'components/currency/ETHAmount'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -61,11 +62,11 @@ export function ProjectSettingsDashboard() {
     projectOwnerAddress,
     handle,
     ETHBalance,
-    distributionLimit,
-    distributionLimitCurrency,
     loading: { distributionLimitLoading },
   } = useContext(V2V3ProjectContext)
   const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
+
+  const { distributableAmount, currency } = useDistributableAmount()
 
   return (
     <ProjectSettingsLayout>
@@ -107,15 +108,13 @@ export function ProjectSettingsDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <div className="mb-1  font-medium">
-                <Trans>Current payout</Trans>
+                <Trans>Available payout</Trans>
               </div>
               <div className="text-xl">
-                {distributionLimitCurrency && !distributionLimitLoading ? (
+                {currency && !distributionLimitLoading ? (
                   <AmountInCurrency
-                    amount={distributionLimit}
-                    currency={V2V3CurrencyName(
-                      distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
-                    )}
+                    amount={distributableAmount}
+                    currency={V2V3CurrencyName(currency as V2V3CurrencyOption)}
                   />
                 ) : (
                   <Loading />

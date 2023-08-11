@@ -123,6 +123,7 @@ export function TransferUnclaimedTokensModal({
           rules={[
             {
               validator: validateAmount,
+              validateTrigger: 'onBlur',
             },
           ]}
         >
@@ -148,6 +149,7 @@ export function TransferUnclaimedTokensModal({
           rules={[
             {
               validator: validateAddress,
+              validateTrigger: 'onBlur',
             },
           ]}
         >

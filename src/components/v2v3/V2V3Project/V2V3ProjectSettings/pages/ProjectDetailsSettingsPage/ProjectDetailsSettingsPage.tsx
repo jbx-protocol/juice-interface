@@ -10,6 +10,7 @@ import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/useEditProjectDet
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
 import { useCallback, useContext, useEffect, useState } from 'react'
+import { emitInfoNotification } from 'utils/notifications'
 
 export function ProjectDetailsSettingsPage() {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -54,6 +55,11 @@ export function ProjectDetailsSettingsPage() {
       {
         onConfirmed: async () => {
           setLoadingSaveChanges(false)
+
+          emitInfoNotification('Project details saved', {
+            description: 'Your project details have been saved.',
+          })
+
           if (projectId) {
             await revalidateProject({
               pv: PV_V2,
@@ -83,6 +89,7 @@ export function ProjectDetailsSettingsPage() {
       logoUri: projectMetadata?.logoUri ?? '',
       coverImageUri: projectMetadata?.coverImageUri ?? '',
       description: projectMetadata?.description ?? '',
+      projectTagline: projectMetadata?.projectTagline ?? '',
       twitter: projectMetadata?.twitter ?? '',
       discord: projectMetadata?.discord ?? '',
       telegram: projectMetadata?.telegram ?? '',
@@ -91,23 +98,27 @@ export function ProjectDetailsSettingsPage() {
       tags: projectMetadata?.tags ?? [],
     })
   }, [
+    projectForm,
     projectMetadata?.name,
     projectMetadata?.infoUri,
     projectMetadata?.logoUri,
     projectMetadata?.coverImageUri,
     projectMetadata?.description,
+    projectMetadata?.projectTagline,
     projectMetadata?.twitter,
     projectMetadata?.discord,
     projectMetadata?.telegram,
-    projectMetadata?.payDisclosure,
     projectMetadata?.payButton,
+    projectMetadata?.payDisclosure,
     projectMetadata?.tags,
-    projectForm,
   ])
 
   // initially fill form with any existing redux state
   useEffect(() => {
-    resetProjectForm()
+    // Bug with antd - required to make sure form is reset after initial render
+    setTimeout(() => {
+      resetProjectForm()
+    }, 0)
   }, [resetProjectForm])
 
   return (

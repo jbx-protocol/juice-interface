@@ -34,6 +34,7 @@ export const PayProjectModal: React.FC = () => {
           attachedUrl: undefined,
         },
         userAcceptsTerms: false,
+        userAcceptsNotice: false,
         beneficiaryAddress: undefined,
       }}
       validationSchema={validationSchema}
@@ -142,6 +143,33 @@ export const PayProjectModal: React.FC = () => {
                             risks
                           </ExternalLink>{' '}
                           associated with the Juicebox protocol.
+                        </Trans>
+                      </label>
+                    </div>
+                    <div className="mt-2 flex gap-2">
+                      <input
+                        id="userAcceptsNotice"
+                        name="userAcceptsNotice"
+                        type="checkbox"
+                        checked={props.values.userAcceptsNotice}
+                        onChange={() =>
+                          props.setFieldValue(
+                            'userAcceptsNotice',
+                            !props.values.userAcceptsNotice,
+                          )
+                        }
+                      />
+                      <label
+                        htmlFor="userAcceptsNotice"
+                        className={twMerge(
+                          'font-normal',
+                          props.errors.userAcceptsNotice &&
+                            props.submitCount > 0 &&
+                            'text-error-500 transition-colors',
+                        )}
+                      >
+                        <Trans>
+                          I understand and accept this project's notice.
                         </Trans>
                       </label>
                     </div>

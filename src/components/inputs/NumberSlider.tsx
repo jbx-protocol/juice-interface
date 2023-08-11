@@ -68,9 +68,9 @@ export default function NumberSlider({
         >
           <JuiceInputNumber
             {...inputConfig}
-            value={_value}
+            value={_value?.toString()}
             disabled={disabled}
-            formatter={(val?: string | number | undefined) => {
+            formatter={(val?: string | undefined) => {
               let _val = val?.toString() ?? '0'
 
               if (_val.includes('.') && _val.split('.')[1].length > decimals) {
@@ -79,12 +79,10 @@ export default function NumberSlider({
 
               return `${_val ?? ''}${suffix ?? ''}`
             }}
-            parser={(val?: string) =>
-              parseFloat(val?.replace(suffix ?? '', '') ?? '0')
-            }
-            onChange={(val: string | number | null | undefined) => {
+            parser={(val?: string) => val?.replace(suffix ?? '', '') ?? '0'}
+            onChange={(val: string | undefined) => {
               const newVal =
-                (typeof val === 'string' ? parseFloat(val) : val) ?? undefined
+                val !== undefined && val !== '' ? parseFloat(val) : undefined
               updateValue(newVal)
             }}
           />

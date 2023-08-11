@@ -223,7 +223,7 @@ export const V2V3PayForm = ({
               className="border border-solid border-grey-200 dark:border-grey-400"
             >
               <strong className="block">
-                <Trans>Message from {projectMetadata.name}</Trans>
+                <Trans>Notice from {projectMetadata.name}</Trans>
               </strong>
               <Paragraph
                 className="text-sm"
@@ -273,6 +273,33 @@ export const V2V3PayForm = ({
                 <TCCheckboxContent />
               </Checkbox>
             </Form.Item>
+            {projectMetadata?.payDisclosure ?? (
+              <Form.Item
+                className="mb-0"
+                name="disclosureCheckbox"
+                valuePropName="checked"
+                rules={[
+                  {
+                    validator: (_, value) =>
+                      value
+                        ? Promise.resolve()
+                        : Promise.reject(
+                            new Error(
+                              t`You must understand and accept this project's notice.`,
+                            ),
+                          ),
+                  },
+                ]}
+              >
+                <Checkbox>
+                  <span className="font-normal">
+                    <Trans>
+                      I understand and accept this project's notice.
+                    </Trans>
+                  </span>
+                </Checkbox>
+              </Form.Item>
+            )}
           </div>
         </div>
       </Form>

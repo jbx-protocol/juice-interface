@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
-import { Descriptions, Form } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
+import { Checkbox, Descriptions, Form } from 'antd'
+import { useForm, useWatch } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -51,8 +51,10 @@ export function V2V3BurnOrRedeemModal({
 
   const [form] = useForm<{
     redeemAmount: string
+    legalCheckbox: boolean
   }>()
 
+  const checkedLegal = useWatch('legalCheckbox', form)
   const { userAddress } = useWallet()
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
   const maxClaimable = useETHReceivedFromTokens({
@@ -203,7 +205,8 @@ export function V2V3BurnOrRedeemModal({
       }}
       okText={modalTitle}
       okButtonProps={{
-        disabled: !redeemAmount || parseInt(redeemAmount) === 0,
+        disabled:
+          !redeemAmount || parseInt(redeemAmount) === 0 || !checkedLegal,
       }}
       width={540}
       centered
@@ -305,6 +308,31 @@ export function V2V3BurnOrRedeemModal({
                   tokenAddress={tokenAddress}
                 />
               ) : null}
+            </Form.Item>
+            <Form.Item
+              className="mb-0"
+              name="legalCheckbox"
+              valuePropName="checked"
+              rules={[
+                {
+                  validator: (_, value) =>
+                    value
+                      ? Promise.resolve()
+                      : Promise.reject(
+                          new Error(t`You must confirm your compliance.`),
+                        ),
+                },
+              ]}
+            >
+              <Checkbox>
+                <span className="font-normal">
+                  <Trans>
+                    I confirm that the use and redemption of crypto tokens is
+                    legal in my jurisdiction, and that I am fully responsible
+                    for compliance with all relevant laws and regulations.
+                  </Trans>
+                </span>
+              </Checkbox>
             </Form.Item>
 
             {/* Will comment memo form due to [note] missing in subgraph - see discussion in https://discord.com/channels/939317843059679252/1035458515709464586/1053400936971771974 */}

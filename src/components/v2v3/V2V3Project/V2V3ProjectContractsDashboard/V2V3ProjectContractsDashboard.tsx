@@ -22,6 +22,7 @@ const CONTRACT_EXCLUSIONS = [
   V2V3ContractName.JBController,
   V2V3ContractName.JBETHPaymentTerminal,
   V2V3ContractName.JBETHPaymentTerminal3_1,
+  V2V3ContractName.JBETHPaymentTerminal3_1_1,
   V2V3ContractName.JBController3_1,
   V2V3ContractName.DeprecatedJBDirectory,
   V2V3ContractName.DeprecatedJBSplitsStore,
@@ -61,7 +62,7 @@ export function V2V3ProjectContractsDashboard() {
           key: k,
           name:
             k === V2V3ContractName.JBETHPaymentTerminal
-              ? 'Primary Terminal'
+              ? 'Primary ETH Payment Terminal'
               : k,
           address: projectContracts[k as keyof V2V3ProjectContracts]?.address,
         }

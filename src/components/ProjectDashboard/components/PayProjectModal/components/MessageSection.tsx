@@ -35,7 +35,7 @@ export const MessageSection = () => {
         >
           <div>
             <div className="font-medium text-bluebs-700 dark:text-bluebs-300">
-              <Trans>Message from {projectName}</Trans>
+              <Trans>Notice from {projectName}</Trans>
             </div>
             <p className="mt-2 mb-0">{projectPayDisclosure}</p>
           </div>

@@ -1,7 +1,11 @@
 import { ipfsGet } from 'lib/api/ipfs'
 import { DBProject, DBProjectRow, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
-import { ProjectTagName } from 'models/project-tags'
+import {
+  ProjectTagName,
+  filterValidTags,
+  isValidProjectTag,
+} from 'models/project-tags'
 import { ProjectMetadata, consolidateMetadata } from 'models/projectMetadata'
 import { PV } from 'models/pv'
 
@@ -185,6 +189,10 @@ export function getChangedSubgraphProjects({
         return true
       }
 
+      if (dbProject.tags?.some(t => !isValidProjectTag(t))) {
+        return true
+      }
+
       // Deep compare Subgraph project vs. database project and find any discrepancies
       const propertiesToUpdate = sgDbCompareKeys.filter(k => {
         const oldVal = dbProject[k]
@@ -277,7 +285,7 @@ export async function formatWithMetadata({
         description,
         logoUri,
         name,
-        tags,
+        tags: filterValidTags(tags) ?? null,
       },
     }
   }
@@ -297,7 +305,7 @@ export async function formatWithMetadata({
         name: name ?? null,
         description: description ?? null,
         logoUri: logoUri ?? null,
-        tags: tags ?? null,
+        tags: filterValidTags(tags) ?? null,
         archived: archived ?? null,
       },
     }

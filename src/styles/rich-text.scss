@@ -3,9 +3,11 @@
     @apply m-0;
   }
   h1 {
+    @apply font-heading;
     @apply text-2xl;
   }
-  h1 {
+  h2 {
+    @apply font-heading;
     @apply text-xl;
   }
   blockquote {

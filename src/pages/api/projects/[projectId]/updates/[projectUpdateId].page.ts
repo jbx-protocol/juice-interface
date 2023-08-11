@@ -2,7 +2,7 @@ import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Database } from 'types/database.types'
-import { authenticateProjectUpdateOperation } from '../authenticateProjectUpdateOperation'
+import { authenticateProjectUpdateOperation } from 'utils/authenticateProjectUpdateOperation'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await sudoPublicDbClient.auth.getSession()

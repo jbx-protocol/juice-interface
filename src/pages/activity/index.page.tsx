@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
+import { PaymentsFeed } from 'components/Activity'
 import { AppWrapper } from 'components/common'
-import { PaymentsFeed } from 'pages/activity/Payments'
 
 export default function ActivityPage() {
   return (

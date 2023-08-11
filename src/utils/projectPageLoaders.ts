@@ -1,8 +1,13 @@
 import { PV_V1 } from 'constants/pv'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo/paginateDepleteProjectsQuery'
+import { ProjectMetadata } from 'models/projectMetadata'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { findProjectMetadata } from 'utils/server'
-import { V1StaticProps } from './index.page'
+
+export interface V1StaticProps {
+  metadata: ProjectMetadata
+  handle: string
+}
 
 export const getV1StaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V1_PROJECTS === 'true') {

@@ -8,19 +8,17 @@ import { V1ProjectProvider } from 'contexts/v1/Project/V1ProjectProvider'
 import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { V1CurrencyProvider } from 'contexts/v1/V1CurrencyProvider'
 import { V1ProjectMetadataProvider } from 'contexts/v1/V1ProjectMetadataProvider'
-import { ProjectMetadata } from 'models/projectMetadata'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { Provider } from 'react-redux'
 import store from 'redux/store'
 import { cidFromUrl, ipfsPublicGatewayUrl } from 'utils/ipfs'
-import { getV1StaticPaths, getV1StaticProps } from './pageLoaders'
-
-export interface V1StaticProps {
-  metadata: ProjectMetadata
-  handle: string
-}
+import {
+  V1StaticProps,
+  getV1StaticPaths,
+  getV1StaticProps,
+} from 'utils/projectPageLoaders'
 
 export const getStaticPaths: GetStaticPaths = async context => {
   return getV1StaticPaths(context)

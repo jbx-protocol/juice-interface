@@ -11,7 +11,7 @@ import { useContext, useState } from 'react'
 import contactHeroDark from '/public/assets/images/contact-hero-od.webp'
 import contactHeroLight from '/public/assets/images/contact-hero-ol.webp'
 
-export default function Contact() {
+export function Contact() {
   const { forThemeOption } = useContext(ThemeContext)
   const [contactPlaceholder, setContactPlaceholder] = useState<string>(
     'banny@juicebox.money',

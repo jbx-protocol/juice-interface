@@ -1,5 +1,6 @@
 import Loading from 'components/Loading'
 import { AppWrapper, SEO } from 'components/common'
+import { V2V3Dashboard } from 'components/v2v3/V2V3Project/V2V3Dashboard'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V2 } from 'constants/pv'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
@@ -14,7 +15,6 @@ import {
   ProjectPageProps,
   getProjectStaticProps,
 } from 'utils/server/pages/props'
-import { V2V3Dashboard } from './components/V2V3Dashboard'
 const ProjectDashboard = lazy(() => import('components/ProjectDashboard'))
 
 export const getStaticPaths: GetStaticPaths = async () => {

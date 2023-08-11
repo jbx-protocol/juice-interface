@@ -4,6 +4,7 @@
 }
 
 .ql-container.ql-snow {
+  @apply overflow-y-scroll;
   @apply rounded-b-lg;
   @apply flex flex-1 flex-col;
   @apply dark:border-slate-300;

@@ -3,14 +3,11 @@ import { Button, Form, FormInstance } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
-import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { RichEditor } from 'components/RichEditor'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectTagName } from 'models/project-tags'
 import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
 export type ProjectDetailsFormFields = {
@@ -47,10 +44,6 @@ export function ProjectDetailsForm({
   const initialLogoUrl = useWatch('logoUri', form)
   const initialCoverImageUri = useWatch('coverImageUri', form)
 
-  const richProjectDescriptionEnabled = featureFlagEnabled(
-    FEATURE_FLAGS.RICH_PROJECT_DESCRIPTION,
-  )
-
   return (
     <Form
       scrollToFirstError={{ behavior: 'smooth' }}
@@ -84,33 +77,22 @@ export function ProjectDetailsForm({
               required
             />
           )}
-          {richProjectDescriptionEnabled ? (
-            <>
-              <Form.Item
-                name="projectTagline"
-                label={t`Project tagline`}
-                extra={t`Add a brief one-sentence summary of your project.`}
-                rules={[
-                  inputIsLengthRule({
-                    label: t`Tagline`,
-                    max: 48,
-                  }),
-                ]}
-              >
-                <JuiceInput />
-              </Form.Item>
-              <Form.Item name="description" label={t`Project description`}>
-                <RichEditor />
-              </Form.Item>
-            </>
-          ) : (
-            <Form.Item name="description" label={t`Project description`}>
-              <JuiceTextArea
-                rows={4}
-                placeholder={t`Tell us about your project.`}
-              />
-            </Form.Item>
-          )}
+          <Form.Item
+            name="projectTagline"
+            label={t`Project tagline`}
+            extra={t`Add a brief one-sentence summary of your project.`}
+            rules={[
+              inputIsLengthRule({
+                label: t`Tagline`,
+                max: 48,
+              }),
+            ]}
+          >
+            <JuiceInput />
+          </Form.Item>
+          <Form.Item name="description" label={t`Project description`}>
+            <RichEditor />
+          </Form.Item>
 
           <Form.Item
             // Fix for RichEditor margin whackiness

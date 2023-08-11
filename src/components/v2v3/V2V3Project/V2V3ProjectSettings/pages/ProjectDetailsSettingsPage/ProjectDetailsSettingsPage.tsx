@@ -89,6 +89,7 @@ export function ProjectDetailsSettingsPage() {
       logoUri: projectMetadata?.logoUri ?? '',
       coverImageUri: projectMetadata?.coverImageUri ?? '',
       description: projectMetadata?.description ?? '',
+      projectTagline: projectMetadata?.projectTagline ?? '',
       twitter: projectMetadata?.twitter ?? '',
       discord: projectMetadata?.discord ?? '',
       telegram: projectMetadata?.telegram ?? '',
@@ -97,18 +98,19 @@ export function ProjectDetailsSettingsPage() {
       tags: projectMetadata?.tags ?? [],
     })
   }, [
+    projectForm,
     projectMetadata?.name,
     projectMetadata?.infoUri,
     projectMetadata?.logoUri,
     projectMetadata?.coverImageUri,
     projectMetadata?.description,
+    projectMetadata?.projectTagline,
     projectMetadata?.twitter,
     projectMetadata?.discord,
     projectMetadata?.telegram,
-    projectMetadata?.payDisclosure,
     projectMetadata?.payButton,
+    projectMetadata?.payDisclosure,
     projectMetadata?.tags,
-    projectForm,
   ])
 
   // initially fill form with any existing redux state

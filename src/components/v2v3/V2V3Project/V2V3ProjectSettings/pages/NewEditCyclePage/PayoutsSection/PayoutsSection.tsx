@@ -22,7 +22,7 @@ export function PayoutsSection() {
       distributionLimitCurrency: currency,
     })
 
-  const setDistributionLimit = (distributionLimit: number) =>
+  const setDistributionLimit = (distributionLimit: number | undefined) =>
     editCycleForm?.setFieldsValue({ distributionLimit })
 
   return (

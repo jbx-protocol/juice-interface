@@ -4,11 +4,11 @@ import { createContext, useContext } from 'react'
 
 export interface PayoutsTableContextProps {
   payoutSplits: Split[]
-  setPayoutSplits: (splits: Split[]) => void
+  setPayoutSplits: (payoutSplits: Split[]) => void
   currency: CurrencyName
   setCurrency: (currency: CurrencyName) => void
   distributionLimit: number | undefined
-  setDistributionLimit: (limit: number | undefined) => void
+  setDistributionLimit: (distributionLimit: number | undefined) => void
 }
 
 export const PayoutsTableContext = createContext<

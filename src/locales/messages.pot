@@ -101,6 +101,9 @@ msgstr ""
 msgid "Previous V1 Project ID:"
 msgstr ""
 
+msgid "Total issuance"
+msgstr ""
+
 msgid "Free to launch, just pay gas."
 msgstr ""
 
@@ -363,6 +366,9 @@ msgid "Edit upcoming cycles"
 msgstr ""
 
 msgid "Join our Discord"
+msgstr ""
+
+msgid "Enable redemption rate"
 msgstr ""
 
 msgid "Tokens are burned when they are redeemed."
@@ -710,6 +716,9 @@ msgstr ""
 msgid "Change networks to deploy"
 msgstr ""
 
+msgid "Switch to limited"
+msgstr ""
+
 msgid "While transfers are paused, this project's tokens can't be transferred to other addresses. The project's ERC-20 tokens (if already issued) are always transferable, and will not be affected by this rule."
 msgstr ""
 
@@ -752,6 +761,9 @@ msgstr ""
 msgid "Receive ERC-20 tokens"
 msgstr ""
 
+msgid "Confirm"
+msgstr ""
+
 msgid "Delete token allocation"
 msgstr ""
 
@@ -771,6 +783,9 @@ msgid "<0>Recurring cycles</0>. Among other things, this allows you to predictab
 msgstr ""
 
 msgid "3-day deadline"
+msgstr ""
+
+msgid "Enter a number of tokens that your project contributors will receive when they pay your project. You can use these tokens for governance rights, community access, or other perks such as ETH redemption."
 msgstr ""
 
 msgid "<0/>{0} distributed"
@@ -816,6 +831,9 @@ msgid "Reserve a percentage of freshly minted tokens for your project to use."
 msgstr ""
 
 msgid "Convert to amounts"
+msgstr ""
+
+msgid "Enable issuance reduction rate"
 msgstr ""
 
 msgid "The total number of tokens issued when this project is paid 1 ETH. Some of these tokens may be reserved by the project, and the rest are sent to the payer."
@@ -1625,6 +1643,9 @@ msgstr ""
 msgid "{userTokenBalance} tokens"
 msgstr ""
 
+msgid "Switch to unlimited payouts"
+msgstr ""
+
 msgid "NO LIMIT"
 msgstr ""
 
@@ -1685,10 +1706,16 @@ msgstr ""
 msgid "V1"
 msgstr ""
 
+msgid "Switch to limited payouts"
+msgstr ""
+
 msgid "Export payout CSV"
 msgstr ""
 
 msgid "JuiceboxDAO is a community of passionate builders, creators, and innovators working together to push the boundaries of decentralized funding. Using the Juicebox protocol, we've created a DAO to coordinate thousands of JBX holders, build in the open, and govern the protocol over time."
+msgstr ""
+
+msgid "Learn more about payout limits"
 msgstr ""
 
 msgid "This address is an unrecognized strategy contract. Make sure it is correct!"
@@ -2225,6 +2252,9 @@ msgstr ""
 msgid "{0} days"
 msgstr ""
 
+msgid "Enable reserved tokens"
+msgstr ""
+
 msgid "Case study"
 msgstr ""
 
@@ -2247,6 +2277,9 @@ msgid "Cycle #{0}"
 msgstr ""
 
 msgid "You must enable the following cycle rules:<0>{0}{1}{2}</0>"
+msgstr ""
+
+msgid "Project owner can mint tokens for themselves and others at any time."
 msgstr ""
 
 msgid "Are you sure you want to unwatch all projects? You will no longer be notified about new events."
@@ -2399,6 +2432,9 @@ msgstr ""
 msgid "Minimum Contribution"
 msgstr ""
 
+msgid "Incentivise long-term token holding with a redemption rate. <0>Learn more</0>"
+msgstr ""
+
 msgid "Receive ERC-20"
 msgstr ""
 
@@ -2445,6 +2481,9 @@ msgid "Required"
 msgstr ""
 
 msgid "Your project was successfully created on {0}!"
+msgstr ""
+
+msgid "Reserve a percentage of freshly minted tokens for specified recipients. <0>Learn more</0>"
 msgstr ""
 
 msgid "If you leave this blank, the button will close the pop-up."
@@ -2505,6 +2544,9 @@ msgid "Settings"
 msgstr ""
 
 msgid "Deselect all"
+msgstr ""
+
+msgid "Payout limit (max.)"
 msgstr ""
 
 msgid "Migrate project's payment terminal"
@@ -2628,6 +2670,9 @@ msgid "Tokens to redeem"
 msgstr ""
 
 msgid "You have <0>{0}</0> tokens in one or more of their legacy projects. You can swap migrate legacy <1>{1}</1> tokens for their new V3 tokens."
+msgstr ""
+
+msgid "Disable project token transfers"
 msgstr ""
 
 msgid "Project Owner"
@@ -2831,6 +2876,9 @@ msgstr ""
 msgid "We do everything in the light, for everyone to see."
 msgstr ""
 
+msgid "Enable project owner token minting"
+msgstr ""
+
 msgid "Modify the colors of your Juicebox Project NFT. This NFT represents ownership over your project."
 msgstr ""
 
@@ -2841,6 +2889,9 @@ msgid "It's fast, powerful and easy to use. Launch your project and get funded i
 msgstr ""
 
 msgid "Redemptions aren't possible when all of a project's ETH is being used for payouts."
+msgstr ""
+
+msgid "Turn on unlimited payouts, and convert all your amounts to percentages."
 msgstr ""
 
 msgid "Redeem tokens"
@@ -3314,6 +3365,9 @@ msgstr ""
 msgid "{label} is not a valid ETH Address"
 msgstr ""
 
+msgid "Fees are held in the project instead of being processed automatically."
+msgstr ""
+
 msgid "Set URI for {projectTitle}"
 msgstr ""
 
@@ -3713,6 +3767,9 @@ msgstr ""
 msgid "NFTs, tokens and rewards will be sent to <0/>"
 msgstr ""
 
+msgid "Edit your cycles max. payout limit. Note that increases to the limit will take effect next cycle."
+msgstr ""
+
 msgid "See the code"
 msgstr ""
 
@@ -4062,6 +4119,9 @@ msgid "Your project's first cycle will start on <0>{0} at {1}</0>. Your project 
 msgstr ""
 
 msgid "MoonDAO has built an enthusiastic community of over 10,000 members, successfully sent their first astronaut to space, and is currently coordinating the spaceflight for their second astronaut. Their ambitious long-term roadmap goals include building a settlement on the Moon by 2030. In collaboration with StudioDAO, a decentralized movie studio running on Juicebox, MoonDAO has donated $100,000 to help fund the production of Ticket To Space, the first DAO documentary. The film will cover the story of Yan, a MoonDAO member from China, who will be sent to space on an upcoming Blue Origin flight after minting a free NFT."
+msgstr ""
+
+msgid "Learn more about unlimited payouts"
 msgstr ""
 
 msgid "V2 7-day deadline"
@@ -4433,6 +4493,9 @@ msgstr ""
 msgid "Your project's NFT contract version is not supported."
 msgstr ""
 
+msgid "Hold fees in project"
+msgstr ""
+
 msgid "I have another question!"
 msgstr ""
 
@@ -4476,6 +4539,9 @@ msgid "Visit jbdao.org"
 msgstr ""
 
 msgid "Allow Controller migration"
+msgstr ""
+
+msgid "Reduce the total token issuance each cycle. <0>Learn more</0>"
 msgstr ""
 
 msgid "Cycle #"
@@ -4775,6 +4841,9 @@ msgstr ""
 msgid "MoonDAO is a worldwide collective united by the mission of decentralizing access to space research and exploration. With privatized space exploration on the rise, MoonDAO is uniting space enthusiasts from around the globe to help make it more accessible while continuing to push research forward. In 2021, they launched a campaign to buy two tickets on a Blue Origin rocket and raised over $8 million on Juicebox. A year later, they sent Coby Cotton from viral YouTube channel Dude Perfect to space as their first astronaut."
 msgstr ""
 
+msgid "No payout recipients"
+msgstr ""
+
 msgid "You must understand and accept this project's notice."
 msgstr ""
 
@@ -4893,6 +4962,9 @@ msgid "Edit handle of {projectTitle}"
 msgstr ""
 
 msgid "Other assets in this project's owner's wallet."
+msgstr ""
+
+msgid "Learn more"
 msgstr ""
 
 msgid "Payout Recipients"

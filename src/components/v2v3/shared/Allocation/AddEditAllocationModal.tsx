@@ -127,16 +127,19 @@ export const AddEditAllocationModal = ({
     }
 
     setRecipient(isValidJuiceboxProject ? 'juiceboxProject' : 'walletAddress')
-    form.setFieldsValue({
-      juiceboxProjectId: isValidJuiceboxProject
-        ? hexToInt(editingData?.projectId).toString()
-        : undefined,
-      address: editingData.beneficiary,
-      amount: editingData.amount,
-      lockedUntil: editingData.lockedUntil
-        ? Moment.default(editingData.lockedUntil * 1000)
-        : undefined,
-    })
+
+    setTimeout(() => {
+      form.setFieldsValue({
+        juiceboxProjectId: isValidJuiceboxProject
+          ? hexToInt(editingData?.projectId).toString()
+          : undefined,
+        address: editingData.beneficiary,
+        amount: editingData.amount,
+        lockedUntil: editingData.lockedUntil
+          ? Moment.default(editingData.lockedUntil * 1000)
+          : undefined,
+      })
+    }, 0)
   }, [editingData, form, open, totalAllocationAmount, isValidJuiceboxProject])
 
   const onModalOk = useCallback(async () => {

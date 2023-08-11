@@ -1,23 +1,24 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form } from 'antd'
-import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
+import { ExternalLinkWithIcon } from 'components/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { helpPagePath, settingsPagePath } from 'utils/routes'
-import { DetailsSection } from './DetailsSection/DetailsSection'
+import { DetailsSection } from './DetailsSection'
 import { useEditCycleFormContext } from './EditCycleFormContext'
 import { EditCycleFormSection } from './EditCycleFormSection'
-import { PayoutsSection } from './PayoutsSection/PayoutsSection'
+import { PayoutsSection } from './PayoutsSection'
+import { TokensSection } from './TokensSection'
 
 export function EditCyclePage() {
   const { projectId } = useContext(ProjectMetadataContext)
   const { handle } = useContext(V2V3ProjectContext)
 
   const { editCycleForm, initialFormData } = useEditCycleFormContext()
-  if (!initialFormData) return <Loading className="h-24" />
+  if (!initialFormData) return <Loading className="h-70" />
   return (
     <div>
       <p>
@@ -26,7 +27,11 @@ export function EditCyclePage() {
           Any adjustments made will be published on Ethereum to inform
           contributors.
         </Trans>{' '}
-        <ExternalLink href={helpPagePath('')}>Learn more</ExternalLink>
+        <ExternalLinkWithIcon
+          href={helpPagePath('/user/project/#project-settings')}
+        >
+          <Trans>Learn more</Trans>
+        </ExternalLinkWithIcon>
       </p>
 
       {/* Details */}
@@ -62,7 +67,7 @@ export function EditCyclePage() {
               <Trans>Manage how your projects tokens should work.</Trans>
             }
           >
-            <div>Todo</div>
+            <TokensSection />
           </EditCycleFormSection>
 
           <EditCycleFormSection

@@ -12,9 +12,13 @@ import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 export function V2V3EditReservedTokens({
   editingReservedTokensSplits,
   setEditingReservedTokensSplits,
+  showInstantChangesCallout,
+  hideTitle,
 }: {
   editingReservedTokensSplits: Split[]
   setEditingReservedTokensSplits: (splits: Split[]) => void
+  showInstantChangesCallout?: boolean
+  hideTitle?: boolean
 }) {
   const { reservedTokensSplits } = useContext(V2V3ProjectContext)
 
@@ -36,15 +40,17 @@ export function V2V3EditReservedTokens({
 
   return (
     <>
-      <Callout.Info className="mb-4">
-        <Trans>
-          Changes to your reserved token recipients will take effect
-          immediately.
-        </Trans>
-      </Callout.Info>
+      {showInstantChangesCallout ? (
+        <Callout.Info className="mb-4">
+          <Trans>
+            Changes to your reserved token recipients will take effect
+            immediately.
+          </Trans>
+        </Callout.Info>
+      ) : null}
       <div className="flex min-h-0 flex-col gap-4">
         <div className="flex justify-between">
-          <Trans>Reserved token recipients</Trans>
+          {hideTitle ? <div /> : <Trans>Reserved token recipients</Trans>}
           <CsvUpload
             onChange={onSplitsChanged}
             templateUrl={'/assets/csv/v2-splits-template.csv'}

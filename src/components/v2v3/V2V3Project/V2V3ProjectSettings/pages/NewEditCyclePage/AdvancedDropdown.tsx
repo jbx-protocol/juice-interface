@@ -1,21 +1,27 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { useState } from 'react'
+import React, { ReactNode, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export function AdvancedDropdown({
   children,
-}: React.PropsWithChildren<unknown>) {
+  hideDivider,
+  title = <Trans>Advanced</Trans>,
+}: React.PropsWithChildren<{ hideDivider?: boolean; title?: ReactNode }>) {
   const [isOpen, setIsOpen] = useState(false)
   const iconClass = 'h-4 w-4'
   return (
-    <div className="border-t border-grey-300 pt-4 dark:border-grey-600">
+    <div
+      className={twMerge(
+        'border-t border-grey-300 pt-4 dark:border-grey-600',
+        hideDivider ? 'border-0' : null,
+      )}
+    >
       <div
         className="flex cursor-pointer justify-between"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="text-primary font-medium">
-          <Trans>Advanced</Trans>
-        </span>
+        <span className="text-primary font-medium">{title}</span>
         {isOpen ? (
           <ChevronUpIcon className={iconClass} />
         ) : (

@@ -27,6 +27,7 @@ export type PopupMenuItem = ComponentItem | LinkItem | ButtonItem
 
 export type PopupMenuProps = {
   className?: string
+  popupClassName?: string
   menuButtonIconClassName?: string
   items: PopupMenuItem[]
 }
@@ -41,6 +42,7 @@ function isButtonItem(item: PopupMenuItem): item is ButtonItem {
 
 export const PopupMenu = ({
   className,
+  popupClassName,
   items,
   menuButtonIconClassName,
 }: PopupMenuProps) => {
@@ -61,7 +63,10 @@ export const PopupMenu = ({
 
             <Menu.Items
               as="div"
-              className="absolute top-7 right-0 z-10 overflow-hidden rounded-lg border border-grey-200 bg-white shadow-md dark:border-slate-500 dark:bg-slate-900"
+              className={twMerge(
+                `absolute top-7 right-0 z-10 overflow-hidden rounded-lg border border-grey-200 bg-white shadow-md dark:border-slate-500 dark:bg-slate-900`,
+                popupClassName,
+              )}
             >
               {items.map(item => (
                 <Menu.Item key={item.id}>

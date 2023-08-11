@@ -19,8 +19,8 @@ export const hasEqualRecipient = (a: Split, b: Split) => {
   const isProject = isProjectSplit(a)
   const idsEqual =
     a.projectId === b.projectId ||
-    BigNumber.from(a.projectId).eq(b.projectId ?? 0) ||
-    BigNumber.from(b.projectId).eq(a.projectId ?? 0)
+    BigNumber.from(a.projectId ?? 0).eq(b.projectId ?? 0) ||
+    BigNumber.from(b.projectId ?? 0).eq(a.projectId ?? 0)
 
   return (
     (isProject && idsEqual) || (!isProject && a.beneficiary === b.beneficiary)

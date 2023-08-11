@@ -36,6 +36,7 @@
 
 .ant-input-number-input-wrap,
 .ant-input-number-input {
+  @apply rounded-lg;
   @apply h-full;
 }
 

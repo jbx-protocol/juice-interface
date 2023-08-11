@@ -1,6 +1,10 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
+import {
+  HOMEPAGE_CARD_BG,
+  HOMEPAGE_CARD_BORDER,
+} from 'components/Home/HomepageCard'
 import Paragraph from 'components/Paragraph'
 import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -12,7 +16,6 @@ import { TRENDING_WINDOW_DAYS } from 'pages/projects/RankingExplanation'
 import { twJoin } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { v2v3ProjectRoute } from 'utils/routes'
-import { HOMEPAGE_CARD_BG, HOMEPAGE_CARD_BORDER } from '../HomepageCard'
 
 function Statistic({
   name,

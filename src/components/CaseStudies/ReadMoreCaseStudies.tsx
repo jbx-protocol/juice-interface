@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
+import { ProjectCarousel } from 'components/Home/ProjectCarousel'
+import { SuccessStoriesCard } from 'components/Home/SuccessStoriesSection/SuccessStoriesCard'
 import { CASE_STUDY_PROJECTS } from 'constants/successStoryProjects'
 import { useDBProjectsQuery } from 'hooks/useProjects'
-import { ProjectCarousel } from 'pages/home/ProjectCarousel'
-import { SuccessStoriesCard } from 'pages/home/SuccessStoriesSection/SuccessStoriesCard'
 
 export function ReadMoreCaseStudies({
   currentProject,

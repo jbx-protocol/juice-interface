@@ -13,7 +13,7 @@ import {
   HOMEPAGE_CARD_BG,
   HOMEPAGE_CARD_BORDER,
   HOMEPAGE_CARD_BORDER_HOVER,
-} from '../HomepageCard'
+} from 'components/Home/HomepageCard'
 
 function SuccessStoriesCardTag({ tag }: { tag: ProjectTagName }) {
   const text = projectTagText[tag]()

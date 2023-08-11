@@ -1,6 +1,6 @@
 import { AppWrapper } from 'components/common'
+import { HomePage } from 'components/Home'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
-import { HomePage } from './home'
 
 export default function LandingPage() {
   return (

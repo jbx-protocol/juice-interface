@@ -1,15 +1,15 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
+import { HomepageProjectCard } from 'components/Home/HomepageProjectCard'
+import { SpotlightProjectCard } from 'components/Home/JuicyPicksSection/SpotlightProjectCard'
+import { ExploreCategories } from 'components/Home/JuicyPicksSection/components/ExploreCategories'
+import { useFetchJuicyPicks } from 'components/Home/JuicyPicksSection/hooks/useJuicyPicks'
+import { ProjectCarousel } from 'components/Home/ProjectCarousel'
+import { SectionContainer } from 'components/Home/SectionContainer'
+import { SectionHeading } from 'components/Home/SectionHeading'
 import { XLButton } from 'components/XLButton'
 import { useMedia } from 'contexts/Theme/useMedia'
 import Link from 'next/link'
-import { HomepageProjectCard } from '../HomepageProjectCard'
-import { ProjectCarousel } from '../ProjectCarousel'
-import { SectionContainer } from '../SectionContainer'
-import { SectionHeading } from '../SectionHeading'
-import { SpotlightProjectCard } from './SpotlightProjectCard'
-import { ExploreCategories } from './components/ExploreCategories'
-import { useFetchJuicyPicks } from './hooks/useJuicyPicks'
 
 export function JuicyPicksSection() {
   const { data: projects } = useFetchJuicyPicks()

@@ -1,8 +1,8 @@
+import { JUICY_PICKS_PROJECT_IDS } from 'components/Home/JuicyPicksSection/constants'
 import { PV_V2 } from 'constants/pv'
 import { useDBProjectsQuery } from 'hooks/useProjects'
 import { DBProject } from 'models/dbProject'
 import { getSubgraphIdForProject } from 'utils/graph'
-import { JUICY_PICKS_PROJECT_IDS } from '../constants'
 
 export function useFetchJuicyPicks() {
   const res = useDBProjectsQuery({

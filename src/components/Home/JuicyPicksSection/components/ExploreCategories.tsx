@@ -1,12 +1,12 @@
 import { Trans } from '@lingui/macro'
+import { HomepageCard } from 'components/Home/HomepageCard'
+import { useExploreCategories } from 'components/Home/JuicyPicksSection/hooks/useExploreCategories'
+import { ProjectCarousel } from 'components/Home/ProjectCarousel'
+import { SectionHeading } from 'components/Home/SectionHeading'
 import Loading from 'components/Loading'
 import template from 'lodash/template'
 import { projectTagText } from 'models/project-tags'
 import Image from 'next/image'
-import { HomepageCard } from '../../HomepageCard'
-import { ProjectCarousel } from '../../ProjectCarousel'
-import { SectionHeading } from '../../SectionHeading'
-import { useExploreCategories } from '../hooks/useExploreCategories'
 
 export const ExploreCategories = () => {
   const { tags, isLoading } = useExploreCategories()

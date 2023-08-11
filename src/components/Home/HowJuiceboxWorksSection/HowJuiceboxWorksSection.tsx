@@ -5,11 +5,11 @@ import {
 } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
+import { SectionContainer } from 'components/Home/SectionContainer'
+import { SectionHeading } from 'components/Home/SectionHeading'
 import { XLButton } from 'components/XLButton'
 import Image from 'next/image'
 import Link from 'next/link'
-import { SectionContainer } from '../SectionContainer'
-import { SectionHeading } from '../SectionHeading'
 import sassyBlueberry from '/public/assets/images/sassy-blueberry.webp'
 
 const StepItem = ({

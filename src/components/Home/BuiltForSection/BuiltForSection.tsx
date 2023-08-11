@@ -1,8 +1,8 @@
 import { t, Trans } from '@lingui/macro'
+import { BuiltForCard } from 'components/Home/BuiltForSection/BuiltForCard'
+import { SectionContainer } from 'components/Home/SectionContainer'
+import { SectionHeading } from 'components/Home/SectionHeading'
 import { useRef } from 'react'
-import { SectionContainer } from '../SectionContainer'
-import { SectionHeading } from '../SectionHeading'
-import { BuiltForCard } from './BuiltForCard'
 
 export function BuiltForSection() {
   const containerRef = useRef<HTMLDivElement>(null)

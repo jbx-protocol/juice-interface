@@ -190,6 +190,7 @@
     "babel-plugin-transform-remove-imports": "^1.7.0",
     "cypress": "^9.5.4",
     "dotenv": "^16.0.1",
+    "encoding": "^0.1.13",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",

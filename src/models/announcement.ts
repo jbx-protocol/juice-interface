@@ -1,9 +1,8 @@
 import { JuiceModalProps } from 'components/modals/JuiceModal'
 import { Wallet } from 'hooks/Wallet'
-import { NextRouter } from 'next/router'
 
 type AnnouncementCondition = (props: {
-  router: NextRouter
+  pathname: string
   isProjectOwner: boolean
   wallet: Pick<
     Wallet,

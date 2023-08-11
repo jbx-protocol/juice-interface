@@ -15,7 +15,7 @@ export const Announcements: Announcement[] = [
     id: 'project-updates',
     expire: new Date('2023-08-18').valueOf(),
     conditions: [
-      ({ router }) => router.pathname.startsWith('/v2/p/'),
+      ({ pathname }) => pathname.startsWith('/v2/p/'),
       ({ isProjectOwner }) => isProjectOwner,
     ],
     Content: ProjectsUpdateFeatureAnnouncement,

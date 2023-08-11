@@ -1,3 +1,5 @@
+'use client'
+
 import coinbaseWalletModule from '@web3-onboard/coinbase'
 import gnosisModule from '@web3-onboard/gnosis'
 import injectedModule from '@web3-onboard/injected-wallets'

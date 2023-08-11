@@ -1,3 +1,5 @@
+'use client'
+
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
@@ -9,7 +11,7 @@ import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { redirectTo } from 'utils/windowUtils'
@@ -57,15 +59,15 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
   children,
   hideNav,
 }) => {
-  const router = useRouter()
+  const pathname = usePathname()
 
   // run on initial mount
   useEffect(() => {
     installJuiceboxWindowObject()
   }, [])
 
-  if (router.asPath.match(/^\/#\//)) {
-    redirectTo(router.asPath.replace('/#/', ''))
+  if (pathname.match(/^\/#\//)) {
+    redirectTo(pathname.replace('/#/', ''))
   }
 
   return (

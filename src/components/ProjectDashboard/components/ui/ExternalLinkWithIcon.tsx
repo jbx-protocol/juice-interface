@@ -7,10 +7,10 @@ export function ExternalLinkWithIcon({
 }: React.PropsWithChildren<{ href: string }>) {
   return (
     <ExternalLink href={href}>
-      <div className="flex items-center gap-1">
+      <span className="whitespace-nowrap">
         {children}
-        <ArrowRightIcon className="h-3 w-3" />
-      </div>
+        <ArrowRightIcon className="ml-1 inline h-3 w-3" />
+      </span>
     </ExternalLink>
   )
 }

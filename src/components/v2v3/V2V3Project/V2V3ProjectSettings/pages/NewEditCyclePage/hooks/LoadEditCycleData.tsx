@@ -90,6 +90,8 @@ export const useLoadEditCycleData = () => {
         allowTokenMinting,
         pauseTransfers: pauseTransfers,
         nftRewards: initialEditingData.nftRewards,
+        useDataSourceForRedeem:
+          initialEditingData.fundingCycleMetadata.useDataSourceForRedeem,
       }
 
       setInitialFormData(formData)

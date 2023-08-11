@@ -18,7 +18,7 @@ export function IssuanceRateReductionField() {
     setIssuanceReductionRateSwitchEnabled,
   ] = useState<boolean>(issuanceReductionRate > 0)
   return (
-    <div>
+    <div className="flex flex-col gap-5">
       <JuiceSwitch
         label={<Trans>Enable issuance reduction rate</Trans>}
         description={

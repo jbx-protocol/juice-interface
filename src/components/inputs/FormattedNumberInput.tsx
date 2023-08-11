@@ -62,7 +62,7 @@ export default function FormattedNumberInput({
           'h-full w-full',
           'formatted-number-input',
           accessory ? 'antd-no-number-handler' : '',
-          accessoryPosition === 'left' ? 'pl-9' : null,
+          accessoryPosition === 'left' ? 'pl-10' : null,
           className,
         )}
         value={value}

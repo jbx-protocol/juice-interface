@@ -7,7 +7,7 @@ export function MintRateField() {
   return (
     <Form.Item name="mintRate">
       <FormattedNumberInput
-        className="py-1 pr-4"
+        className="h-10 py-1 pr-4"
         min={0}
         max={MAX_MINT_RATE}
         accessory={

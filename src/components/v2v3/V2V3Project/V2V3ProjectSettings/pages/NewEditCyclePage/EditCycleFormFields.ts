@@ -31,6 +31,7 @@ export type TokenSectionFields = {
 
 export type NftSectionFields = {
   nftRewards: NftRewardsData | undefined
+  useDataSourceForRedeem: boolean
 }
 
 export type EditCycleFormFields = DetailsSectionFields &

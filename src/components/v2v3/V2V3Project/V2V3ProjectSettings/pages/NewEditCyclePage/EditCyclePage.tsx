@@ -10,6 +10,7 @@ import { helpPagePath, settingsPagePath } from 'utils/routes'
 import { DetailsSection } from './DetailsSection'
 import { useEditCycleFormContext } from './EditCycleFormContext'
 import { EditCycleFormSection } from './EditCycleFormSection'
+import { NftsSection } from './NftsSection'
 import { PayoutsSection } from './PayoutsSection'
 import { TokensSection } from './TokensSection'
 
@@ -79,7 +80,7 @@ export function EditCyclePage() {
             }
             className="border-b-0"
           >
-            <div>Todo</div>
+            <NftsSection />
           </EditCycleFormSection>
         </Form>
       </div>

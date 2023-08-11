@@ -11,6 +11,7 @@ import {
   LATEST_METADATA_VERSION,
   ProjectMetadata,
 } from 'models/projectMetadata'
+import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
 import { issuanceRateFrom, redemptionRateFrom } from 'utils/v2v3/math'
 import {
   SerializedV2V3FundingCycleData,
@@ -86,7 +87,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
   infoUri: '',
   logoUri: '',
   coverImageUri: '',
-  description: '',
+  description: projectDescriptionTemplate(),
   twitter: '',
   discord: '',
   telegram: '',

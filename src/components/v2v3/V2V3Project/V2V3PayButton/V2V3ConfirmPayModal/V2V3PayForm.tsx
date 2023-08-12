@@ -273,7 +273,7 @@ export const V2V3PayForm = ({
                 <TCCheckboxContent />
               </Checkbox>
             </Form.Item>
-            {projectMetadata?.payDisclosure ?? (
+            {projectMetadata?.payDisclosure ? (
               <Form.Item
                 className="mb-0"
                 name="disclosureCheckbox"
@@ -299,6 +299,8 @@ export const V2V3PayForm = ({
                   </span>
                 </Checkbox>
               </Form.Item>
+            ) : (
+              ''
             )}
           </div>
         </div>

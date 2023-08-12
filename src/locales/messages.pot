@@ -2990,6 +2990,9 @@ msgstr ""
 msgid "Advanced tools"
 msgstr ""
 
+msgid "I understand and accept{0}the <0>risks</0> associated with the Juicebox protocol."
+msgstr ""
+
 msgid "Tokens cannot be claimed because the project owner has not issued an ERC-20 for this project."
 msgstr ""
 
@@ -4254,9 +4257,6 @@ msgid "Cycle"
 msgstr ""
 
 msgid "Save handle"
-msgstr ""
-
-msgid "I understand and accept {0}the <0>risks</0> associated with the Juicebox protocol."
 msgstr ""
 
 msgid "Has Juicebox been audited? What are the risks?"

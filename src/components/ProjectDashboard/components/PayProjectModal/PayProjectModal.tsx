@@ -138,7 +138,7 @@ export const PayProjectModal: React.FC = () => {
                         )}
                       >
                         <Trans>
-                          I understand and accept{' '}
+                          I understand and accept
                           {projectPayDisclosure
                             ? "this project's notice and "
                             : ' '}

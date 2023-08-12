@@ -4256,6 +4256,9 @@ msgstr ""
 msgid "Save handle"
 msgstr ""
 
+msgid "I understand and accept {0}the <0>risks</0> associated with the Juicebox protocol."
+msgstr ""
+
 msgid "Has Juicebox been audited? What are the risks?"
 msgstr ""
 

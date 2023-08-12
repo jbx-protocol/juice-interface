@@ -35,7 +35,6 @@ export const PayProjectModal: React.FC = () => {
           attachedUrl: undefined,
         },
         userAcceptsTerms: false,
-        userAcceptsNotice: false,
         beneficiaryAddress: undefined,
       }}
       validationSchema={validationSchema}
@@ -139,7 +138,11 @@ export const PayProjectModal: React.FC = () => {
                         )}
                       >
                         <Trans>
-                          I accept the{' '}
+                          I understand and accept{' '}
+                          {projectPayDisclosure
+                            ? "this project's notice and "
+                            : ' '}
+                          the{' '}
                           <ExternalLink href="https://docs.juicebox.money/dev/learn/risks">
                             risks
                           </ExternalLink>{' '}
@@ -147,37 +150,6 @@ export const PayProjectModal: React.FC = () => {
                         </Trans>
                       </label>
                     </div>
-                    {projectPayDisclosure ? (
-                      <div className="mt-2 flex gap-2">
-                        <input
-                          id="userAcceptsNotice"
-                          name="userAcceptsNotice"
-                          type="checkbox"
-                          checked={props.values.userAcceptsNotice}
-                          onChange={() =>
-                            props.setFieldValue(
-                              'userAcceptsNotice',
-                              !props.values.userAcceptsNotice,
-                            )
-                          }
-                        />
-                        <label
-                          htmlFor="userAcceptsNotice"
-                          className={twMerge(
-                            'font-normal',
-                            props.errors.userAcceptsNotice &&
-                              props.submitCount > 0 &&
-                              'text-error-500 transition-colors',
-                          )}
-                        >
-                          <Trans>
-                            I understand and accept this project's notice.
-                          </Trans>
-                        </label>
-                      </div>
-                    ) : (
-                      ''
-                    )}
                   </div>
                 </div>
               </>

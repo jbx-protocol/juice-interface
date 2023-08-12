@@ -16,18 +16,14 @@ export default function WalletButton() {
     changeNetworks,
   } = useWallet()
 
-  const [legalNoticeAccepted, setLegalNoticeAccepted] = useState<boolean>(
-    localStorage.getItem('hasAcceptedLegalNotice') === 'true',
-  )
+  const [legalNoticeAccepted, setLegalNoticeAccepted] = useState<boolean>(false)
   const [legalNoticeVisible, setLegalNoticeVisible] = useState<boolean>(false)
 
   useEffect(() => {
-    if (!legalNoticeVisible) {
-      setLegalNoticeAccepted(
-        localStorage.getItem('hasAcceptedLegalNotice') === 'true',
-      )
-    }
-  }, [legalNoticeVisible])
+    setLegalNoticeAccepted(
+      localStorage.getItem('hasAcceptedLegalNotice') === 'true',
+    )
+  }, [])
 
   const onOk = () => {
     localStorage.setItem('hasAcceptedLegalNotice', 'true')

@@ -1,6 +1,6 @@
 import { getLogger } from 'lib/logger'
 import { NextRequest, NextResponse } from 'next/server'
-import { fetchProjectIdForHandle } from 'pages/api/juicebox/project/[projectHandle].page'
+import { fetchProjectIdForHandle } from 'pages/api/juicebox/project/[projectHandle]'
 
 // get the handle name from a URL path
 const HANDLE_REGEX = new RegExp(/\/@([^/]+).*/)

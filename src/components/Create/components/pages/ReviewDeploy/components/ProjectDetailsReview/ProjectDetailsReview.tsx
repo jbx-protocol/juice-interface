@@ -3,7 +3,9 @@ import EthereumAddress from 'components/EthereumAddress'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
 import { RichPreview } from 'components/RichPreview'
+import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
 import { ReviewDescription } from '../ReviewDescription'
 
 export const ProjectDetailsReview = () => {
@@ -23,6 +25,11 @@ export const ProjectDetailsReview = () => {
     },
     inputProjectOwner,
   } = useAppSelector(state => state.editingV2Project)
+
+  const wrappedDescription = useMemo(() => {
+    if (!description) return undefined
+    return wrapNonAnchorsInAnchor(description)
+  }, [description])
 
   return (
     <div className="flex flex-col gap-y-10 pt-5 pb-12 md:grid md:grid-cols-4">
@@ -50,7 +57,7 @@ export const ProjectDetailsReview = () => {
         className="col-span-4 whitespace-pre-wrap"
         title={t`Project description`}
         placeholder={t`No description`}
-        desc={<RichPreview source={description ?? ''} />}
+        desc={<RichPreview source={wrappedDescription ?? ''} />}
       />
       {/* END: Top */}
 

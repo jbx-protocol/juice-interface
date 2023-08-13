@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { linkUrl } from 'utils/url'
+import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
 import { useProjectMetadata } from './useProjectMetadata'
 
 export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
@@ -36,15 +37,6 @@ export const useAboutPanel = () => {
     socialLinks,
     projectName: projectMetadata?.name,
   }
-}
-
-const wrapNonAnchorsInAnchor = (text: string) => {
-  const urlRegex =
-    /\b((http|https):\/\/[a-zA-Z0-9-._~:/?#@\\[\]!$&'()*+,;=%]+)\b/g
-
-  return text.replace(urlRegex, url => {
-    return '<a href="' + url + '">' + url + '</a>'
-  })
 }
 
 const linkOrUndefined = (link: string | undefined) => {

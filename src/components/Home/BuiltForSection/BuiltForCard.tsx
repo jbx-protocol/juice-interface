@@ -1,4 +1,4 @@
-import { BuiltForBlobAndImage } from './BuiltForBlobAndImage'
+import { BuiltForBlobAndImage } from 'components/Home/BuiltForSection/BuiltForBlobAndImage'
 
 export function BuiltForCard({
   card,

@@ -6,9 +6,9 @@ import {
   UserGroupIcon,
 } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
-import { SectionContainer } from '../SectionContainer'
-import { SectionHeading } from '../SectionHeading'
-import { WhyJuiceboxCard } from './WhyJuiceboxCard'
+import { SectionContainer } from 'components/Home/SectionContainer'
+import { SectionHeading } from 'components/Home/SectionHeading'
+import { WhyJuiceboxCard } from 'components/Home/WhyJuiceboxSection/WhyJuiceboxCard'
 
 export function WhyJuiceboxSection() {
   return (

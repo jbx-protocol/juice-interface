@@ -1,13 +1,13 @@
 import { Trans } from '@lingui/macro'
+import { ProjectCarousel } from 'components/Home/ProjectCarousel'
+import { SectionContainer } from 'components/Home/SectionContainer'
+import { SectionHeading } from 'components/Home/SectionHeading'
+import { SuccessStoriesCard } from 'components/Home/SuccessStoriesSection/SuccessStoriesCard'
 import { XLButton } from 'components/XLButton'
 import { CASE_STUDY_PROJECTS } from 'constants/successStoryProjects'
 import { useMedia } from 'contexts/Theme/useMedia'
 import { useDBProjectsQuery } from 'hooks/useProjects'
 import Link from 'next/link'
-import { ProjectCarousel } from '../ProjectCarousel'
-import { SectionContainer } from '../SectionContainer'
-import { SectionHeading } from '../SectionHeading'
-import { SuccessStoriesCard } from './SuccessStoriesCard'
 
 export function SuccessStoriesSection() {
   const { data } = useDBProjectsQuery({

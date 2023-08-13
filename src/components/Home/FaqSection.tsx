@@ -1,10 +1,10 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { Trans } from '@lingui/macro'
+import QAs from 'components/Home/FaqList/QAs'
+import { SectionContainer } from 'components/Home/SectionContainer'
+import { SectionHeading } from 'components/Home/SectionHeading'
 import { Fragment, useState } from 'react'
-import QAs from './FaqList/QAs'
-import { SectionContainer } from './SectionContainer'
-import { SectionHeading } from './SectionHeading'
 
 export function FaqSection() {
   const qa = QAs()

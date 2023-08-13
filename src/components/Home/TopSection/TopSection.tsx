@@ -1,6 +1,13 @@
 import { ArrowSmallRightIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Badge } from 'components/Badge'
+import {
+  HomepageProjectCard,
+  HomepageProjectCardSkeleton,
+} from 'components/Home/HomepageProjectCard'
+import { ProjectCarousel } from 'components/Home/ProjectCarousel'
+import { SectionContainer } from 'components/Home/SectionContainer'
+import { SectionHeading } from 'components/Home/SectionHeading'
 import { ProjectTag } from 'components/ProjectTags/ProjectTag'
 import { XLButton } from 'components/XLButton'
 import { HOMEPAGE } from 'constants/fathomEvents'
@@ -8,13 +15,6 @@ import { useTrendingProjects } from 'hooks/useProjects'
 import { trackFathomGoal } from 'lib/fathom'
 import { ProjectTagName } from 'models/project-tags'
 import Link from 'next/link'
-import {
-  HomepageProjectCard,
-  HomepageProjectCardSkeleton,
-} from '../HomepageProjectCard'
-import { ProjectCarousel } from '../ProjectCarousel'
-import { SectionContainer } from '../SectionContainer'
-import { SectionHeading } from '../SectionHeading'
 
 const TRENDING_PROJECTS_LIMIT = 10
 

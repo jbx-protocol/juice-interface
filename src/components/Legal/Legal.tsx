@@ -2,7 +2,7 @@ import { Divider } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import Link from 'next/link'
 
-export default function Legal() {
+export function Legal() {
   return (
     <div className="my-0 mx-auto max-w-5xl p-10">
       <h1 className="m-0 my-4 font-display text-4xl">Legal Resources</h1>

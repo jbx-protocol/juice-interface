@@ -136,7 +136,7 @@ export const RichEditor: React.FC<RichEditorProps> = ({ value, onChange }) => {
 
   return (
     <ReactQuill
-      className="mb-6 flex max-h-[100vh] min-h-[224px] flex-col"
+      className="mb-6 flex max-h-[80vh] min-h-[224px] flex-col md:max-h-[100vh]"
       value={value}
       onChange={handleChange}
       ref={quillRef}

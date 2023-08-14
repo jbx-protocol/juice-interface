@@ -92,6 +92,7 @@ export const useLoadEditCycleData = () => {
         nftRewards: initialEditingData.nftRewards,
         useDataSourceForRedeem:
           initialEditingData.fundingCycleMetadata.useDataSourceForRedeem,
+        memo: '',
       }
 
       setInitialFormData(formData)

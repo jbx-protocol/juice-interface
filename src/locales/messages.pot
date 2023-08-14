@@ -50,6 +50,9 @@ msgstr ""
 msgid "Art"
 msgstr ""
 
+msgid "Deploy changes"
+msgstr ""
+
 msgid "How should I set up my project?"
 msgstr ""
 
@@ -270,6 +273,9 @@ msgid "Try it now"
 msgstr ""
 
 msgid "<0>Issuance reduction rate</0>. This allows you to predictably reduce your project token's issuance rate (tokens per ETH) over time without needing to manually edit your cycle."
+msgstr ""
+
+msgid "Review & confirm"
 msgstr ""
 
 msgid "Cycles:"
@@ -711,6 +717,9 @@ msgid "Heads up"
 msgstr ""
 
 msgid "No deadline"
+msgstr ""
+
+msgid "Enable set payment terminal"
 msgstr ""
 
 msgid "Your project is up to date!"
@@ -1484,9 +1493,6 @@ msgstr ""
 msgid "Next cycle, the project will issue {0} tokens per 1 ETH. The cycle after that, the project will issue {1} tokens per 1 ETH."
 msgstr ""
 
-msgid "Enable payment terminal configuration"
-msgstr ""
-
 msgid "Days"
 msgstr ""
 
@@ -2099,6 +2105,9 @@ msgstr ""
 msgid "Project ID must be a number."
 msgstr ""
 
+msgid "Payments disabled"
+msgstr ""
+
 msgid "Add image"
 msgstr ""
 
@@ -2571,9 +2580,6 @@ msgid "Subject"
 msgstr ""
 
 msgid "You must confirm your compliance."
-msgstr ""
-
-msgid "Enable controller configuration"
 msgstr ""
 
 msgid "{pageTitle}"
@@ -3179,6 +3185,9 @@ msgstr ""
 msgid "How your project will be paid and pay out ETH."
 msgstr ""
 
+msgid "NFTs & rewards"
+msgstr ""
+
 msgid "Mint tokens as ERC-20"
 msgstr ""
 
@@ -3195,6 +3204,9 @@ msgid "Twitter handle"
 msgstr ""
 
 msgid "<0/> fee"
+msgstr ""
+
+msgid "Advanced options:"
 msgstr ""
 
 msgid "Payments to this project are paused in this cycle."
@@ -3647,6 +3659,9 @@ msgstr ""
 msgid "Contract permissions"
 msgstr ""
 
+msgid "Enable set controller"
+msgstr ""
+
 msgid "Project configurations cannot be changed to the duration of locked cycles."
 msgstr ""
 
@@ -3816,6 +3831,9 @@ msgid "Upgrade"
 msgstr ""
 
 msgid "After {0} (your first cycle), your project will not issue any tokens unless you edit the issuance rate."
+msgstr ""
+
+msgid "Please check your details carefully. Each change will incur a gas fee."
 msgstr ""
 
 msgid "Unknown extension"

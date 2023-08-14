@@ -5,16 +5,19 @@ import { ExternalLinkWithIcon } from 'components/ProjectDashboard/components/ui/
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import Link from 'next/link'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { helpPagePath, settingsPagePath } from 'utils/routes'
 import { DetailsSection } from './DetailsSection'
 import { useEditCycleFormContext } from './EditCycleFormContext'
 import { EditCycleFormSection } from './EditCycleFormSection'
 import { NftsSection } from './NftsSection'
 import { PayoutsSection } from './PayoutsSection'
+import { ReviewConfirmModal } from './ReviewConfirmModal'
 import { TokensSection } from './TokensSection'
 
 export function EditCyclePage() {
+  const [confirmModalOpen, setConfirmModalOpen] = useState<boolean>(false)
+
   const { projectId } = useContext(ProjectMetadataContext)
   const { handle } = useContext(V2V3ProjectContext)
 
@@ -94,16 +97,14 @@ export function EditCyclePage() {
           </Link>
         ) : null}
 
-        <Button
-          type="primary"
-          onClick={
-            () => null
-            // TODO: make it open modal which will then call hooks/SaveEditCycleForm.tsx
-          }
-        >
+        <Button type="primary" onClick={() => setConfirmModalOpen(true)}>
           <Trans>Save changes</Trans>
         </Button>
       </div>
+      <ReviewConfirmModal
+        open={confirmModalOpen}
+        onClose={() => setConfirmModalOpen(false)}
+      />
     </div>
   )
 }

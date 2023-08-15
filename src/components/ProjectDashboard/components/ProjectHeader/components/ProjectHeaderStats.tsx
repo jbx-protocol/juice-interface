@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import { useProjectHeader } from 'components/ProjectDashboard/hooks'
 import { useProjectPageQueries } from 'components/ProjectDashboard/hooks/useProjectPageQueries'
-import { TRENDING_WINDOW_DAYS } from 'pages/projects/RankingExplanation'
+import { TRENDING_WINDOW_DAYS } from 'components/Projects/RankingExplanation'
 import { useCallback } from 'react'
 import { ProjectHeaderStat } from './ProjectHeaderStat'
 

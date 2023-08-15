@@ -1,6 +1,6 @@
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline'
-import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
+import { Trans, t } from '@lingui/macro'
+import { Button, Tooltip } from 'antd'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useExportSplitsToCsv } from 'hooks/useExportSplitsToCsv'
 import { useContext } from 'react'
@@ -19,29 +19,33 @@ export const ExportPayoutsCsvItem = ({
       ? fundingCycle.number.toNumber()
       : fundingCycle.number.toNumber() + 1
     : undefined
+  const disabled = !payoutSplits?.length
   const { exportSplitsToCsv } = useExportSplitsToCsv(
     payoutSplits ?? [],
     'payouts',
     fcNumber,
   )
 
-  if (!loading && !payoutSplits?.length) return null
-
   return (
-    <Button
-      type="text"
-      loading={loading}
-      className={twMerge(
-        'flex h-auto gap-2 p-4',
-        loading && 'cursor-not-allowed',
-      )}
-      style={{ color: 'inherit' }}
-      onClick={exportSplitsToCsv}
+    <Tooltip
+      title={t`No payouts to export`}
+      open={disabled ? undefined : false}
     >
-      <ArrowUpTrayIcon className="h-5 w-5" />
-      <span className="whitespace-nowrap text-sm font-medium">
-        <Trans>Export payouts CSV</Trans>
-      </span>
-    </Button>
+      <Button
+        className={twMerge(
+          'flex h-auto gap-2 p-4',
+          (loading || disabled) && 'cursor-not-allowed',
+        )}
+        type="text"
+        loading={loading}
+        style={{ color: 'inherit' }}
+        onClick={!disabled ? exportSplitsToCsv : e => e.preventDefault()}
+      >
+        <ArrowUpTrayIcon className="h-5 w-5" />
+        <span className="whitespace-nowrap text-sm font-medium">
+          <Trans>Export payouts CSV</Trans>
+        </span>
+      </Button>
+    </Tooltip>
   )
 }

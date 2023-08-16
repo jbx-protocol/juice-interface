@@ -23,12 +23,20 @@ const ValidationSchema = Yup.object().shape({
     [true],
     'You must accept the terms and conditions',
   ),
-  userAcceptsNotice: Yup.boolean().oneOf(
-    [true],
-    "You must understand and accept this project's notice.",
-  ),
+  userAcceptsNotice: Yup.boolean(),
   beneficiaryAddress: Yup.string(),
 })
+
+const getValidationSchema = (projectHasPayNotice: boolean) =>
+  projectHasPayNotice
+    ? ValidationSchema.shape({
+        userAcceptsNotice: Yup.boolean().oneOf(
+          [true],
+          "You must understand and accept this project's notice.",
+        ),
+      })
+    : ValidationSchema
+
 export type PayProjectModalFormValues = Yup.InferType<typeof ValidationSchema>
 
 export const usePayProjectModal = () => {
@@ -107,13 +115,18 @@ export const usePayProjectModal = () => {
     return pendingTransaction?.tx?.hash
   }, [transactions])
 
+  const validationSchema = useMemo(
+    () => getValidationSchema(!!payDisclosure),
+    [payDisclosure],
+  )
+
   return {
     open,
     primaryAmount,
     secondaryAmount,
     userAddress,
     nftRewards,
-    validationSchema: ValidationSchema,
+    validationSchema,
     projectName: name,
     projectPayDisclosure: payDisclosure,
     pendingTransactionHash,

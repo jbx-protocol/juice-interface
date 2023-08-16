@@ -3185,9 +3185,6 @@ msgstr ""
 msgid "How your project will be paid and pay out ETH."
 msgstr ""
 
-msgid "NFTs & rewards"
-msgstr ""
-
 msgid "Mint tokens as ERC-20"
 msgstr ""
 

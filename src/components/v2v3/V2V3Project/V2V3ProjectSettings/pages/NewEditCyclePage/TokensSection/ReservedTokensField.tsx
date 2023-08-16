@@ -72,7 +72,6 @@ export function ReservedTokensField() {
       ) : null}
       {/* Empty inputs to keep AntD useWatch happy */}
       <ItemNoInput name="reservedSplits" className="hidden" />
-      <ItemNoInput name="reservedTokens" className="hidden" />
     </div>
   )
 }

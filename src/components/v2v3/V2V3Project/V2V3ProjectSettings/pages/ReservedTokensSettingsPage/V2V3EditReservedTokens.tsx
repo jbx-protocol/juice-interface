@@ -3,9 +3,8 @@ import { Callout } from 'components/Callout'
 import { ReservedTokensList } from 'components/Create/components/pages/ProjectToken/components/CustomTokenSettings/components/ReservedTokensList'
 import { CsvUpload } from 'components/inputs/CsvUpload'
 import { AllocationSplit } from 'components/v2v3/shared/Allocation'
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { Split } from 'models/splits'
-import { useCallback, useContext, useEffect } from 'react'
+import { useCallback } from 'react'
 import { parseV2SplitsCsv } from 'utils/csv'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
@@ -20,13 +19,6 @@ export function V2V3EditReservedTokens({
   showInstantChangesCallout?: boolean
   hideTitle?: boolean
 }) {
-  const { reservedTokensSplits } = useContext(V2V3ProjectContext)
-
-  useEffect(() => {
-    if (!reservedTokensSplits) return
-    setEditingReservedTokensSplits(reservedTokensSplits)
-  }, [reservedTokensSplits, setEditingReservedTokensSplits])
-
   const onSplitsChanged = useCallback(
     (newSplits: Split[]) => {
       setEditingReservedTokensSplits(newSplits)

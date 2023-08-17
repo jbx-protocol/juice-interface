@@ -83,7 +83,7 @@ export default function TransactionModal(props: TransactionModalProps) {
     ...props,
     ...{
       confirmLoading: props.transactionPending || props.confirmLoading,
-      cancelText: t`Close`,
+      cancelText: props.cancelText ?? t`Close`,
       okButtonProps: {
         ...props.okButtonProps,
       },

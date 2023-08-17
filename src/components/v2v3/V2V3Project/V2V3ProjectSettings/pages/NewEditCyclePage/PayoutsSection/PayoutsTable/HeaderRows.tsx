@@ -21,6 +21,12 @@ export function HeaderRows() {
   const handleAddRecipientModalOk = (
     newSplit: AddEditAllocationModalEntity,
   ) => {
+    if (newSplit.projectOwner) {
+      console.error(
+        'Not supporting manually adding project owner splits in Edit cycle form',
+      )
+      return
+    }
     handleNewPayoutSplit({ newSplit })
     setAddRecipientModalOpen(false)
   }

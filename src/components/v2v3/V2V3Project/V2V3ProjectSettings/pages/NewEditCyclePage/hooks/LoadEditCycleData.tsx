@@ -19,6 +19,7 @@ import {
 import { useInitialEditingData } from '../../ReconfigureFundingCycleSettingsPage/hooks/useInitialEditingData'
 import { EditCycleFormFields } from '../EditCycleFormFields'
 
+/** Loads project FC data from redux into an Ant D form instance */
 export const useLoadEditCycleData = () => {
   const [initialFormData, setInitialFormData] = useState<
     EditCycleFormFields | undefined
@@ -90,6 +91,9 @@ export const useLoadEditCycleData = () => {
         allowTokenMinting,
         pauseTransfers: pauseTransfers,
         nftRewards: initialEditingData.nftRewards,
+        useDataSourceForRedeem:
+          initialEditingData.fundingCycleMetadata.useDataSourceForRedeem,
+        memo: '',
       }
 
       setInitialFormData(formData)

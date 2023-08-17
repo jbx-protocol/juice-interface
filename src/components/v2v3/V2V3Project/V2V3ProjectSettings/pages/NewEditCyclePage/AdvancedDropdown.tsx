@@ -6,8 +6,17 @@ import { twMerge } from 'tailwind-merge'
 export function AdvancedDropdown({
   children,
   hideDivider,
+  className,
+  headerClassName,
+  contentContainerClass,
   title = <Trans>Advanced</Trans>,
-}: React.PropsWithChildren<{ hideDivider?: boolean; title?: ReactNode }>) {
+}: React.PropsWithChildren<{
+  hideDivider?: boolean
+  title?: ReactNode
+  className?: string
+  headerClassName?: string
+  contentContainerClass?: string
+}>) {
   const [isOpen, setIsOpen] = useState(false)
   const iconClass = 'h-4 w-4'
   return (
@@ -15,10 +24,14 @@ export function AdvancedDropdown({
       className={twMerge(
         'border-t border-grey-300 pt-4 dark:border-grey-600',
         hideDivider ? 'border-0' : null,
+        className,
       )}
     >
       <div
-        className="flex cursor-pointer justify-between"
+        className={twMerge(
+          'flex cursor-pointer items-center justify-between',
+          headerClassName,
+        )}
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="text-primary font-medium">{title}</span>
@@ -28,7 +41,13 @@ export function AdvancedDropdown({
           <ChevronDownIcon className={iconClass} />
         )}
       </div>
-      {isOpen && <div className="flex flex-col gap-2 pt-8">{children}</div>}
+      {isOpen && (
+        <div
+          className={twMerge('flex flex-col gap-2 pt-8', contentContainerClass)}
+        >
+          {children}
+        </div>
+      )}
     </div>
   )
 }

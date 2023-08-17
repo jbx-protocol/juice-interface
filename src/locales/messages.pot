@@ -50,6 +50,9 @@ msgstr ""
 msgid "Art"
 msgstr ""
 
+msgid "Deploy changes"
+msgstr ""
+
 msgid "How should I set up my project?"
 msgstr ""
 
@@ -144,6 +147,9 @@ msgid "Determines whether tokens will be minted by payments made through this ad
 msgstr ""
 
 msgid "Data from current cycle"
+msgstr ""
+
+msgid "Contributors will redeem from the project's treasury with their NFTs as opposed to standard project tokens."
 msgstr ""
 
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
@@ -269,6 +275,9 @@ msgstr ""
 msgid "<0>Issuance reduction rate</0>. This allows you to predictably reduce your project token's issuance rate (tokens per ETH) over time without needing to manually edit your cycle."
 msgstr ""
 
+msgid "Review & confirm"
+msgstr ""
+
 msgid "Cycles:"
 msgstr ""
 
@@ -291,6 +300,9 @@ msgid "Deploy Snapshot space"
 msgstr ""
 
 msgid "Contributions"
+msgstr ""
+
+msgid "Enable NFTs for your project"
 msgstr ""
 
 msgid "Attach an image"
@@ -705,6 +717,9 @@ msgid "Heads up"
 msgstr ""
 
 msgid "No deadline"
+msgstr ""
+
+msgid "Enable set payment terminal"
 msgstr ""
 
 msgid "Your project is up to date!"
@@ -1478,9 +1493,6 @@ msgstr ""
 msgid "Next cycle, the project will issue {0} tokens per 1 ETH. The cycle after that, the project will issue {1} tokens per 1 ETH."
 msgstr ""
 
-msgid "Enable payment terminal configuration"
-msgstr ""
-
 msgid "Days"
 msgstr ""
 
@@ -2093,6 +2105,9 @@ msgstr ""
 msgid "Project ID must be a number."
 msgstr ""
 
+msgid "Payments disabled"
+msgstr ""
+
 msgid "Add image"
 msgstr ""
 
@@ -2109,6 +2124,9 @@ msgid "allocation"
 msgstr ""
 
 msgid "This project's rules may pose risks for contributors:"
+msgstr ""
+
+msgid "Enable NFTs"
 msgstr ""
 
 msgid "Save token recipients"
@@ -2564,9 +2582,6 @@ msgstr ""
 msgid "You must confirm your compliance."
 msgstr ""
 
-msgid "Enable controller configuration"
-msgstr ""
-
 msgid "{pageTitle}"
 msgstr ""
 
@@ -2960,6 +2975,9 @@ msgstr ""
 msgid "Danger Zone"
 msgstr ""
 
+msgid "Juicebox mints and provides extended functionality for you to sell or reward contributors with NFTs for your project. <0>Learn more about NFTs</0>"
+msgstr ""
+
 msgid "Create an ERC-20 token (optional)"
 msgstr ""
 
@@ -3143,9 +3161,6 @@ msgstr ""
 msgid "Fees held"
 msgstr ""
 
-msgid "Manage how you reward supporters when they support your project."
-msgstr ""
-
 msgid "Issuance reduction rate"
 msgstr ""
 
@@ -3183,6 +3198,9 @@ msgid "Twitter handle"
 msgstr ""
 
 msgid "<0/> fee"
+msgstr ""
+
+msgid "Advanced options:"
 msgstr ""
 
 msgid "Payments to this project are paused in this cycle."
@@ -3473,6 +3491,9 @@ msgstr ""
 msgid "Prevent NFT overspending"
 msgstr ""
 
+msgid "To add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before launching your new cycle."
+msgstr ""
+
 msgid "Pay this project to receive NFTs."
 msgstr ""
 
@@ -3510,6 +3531,9 @@ msgid "Amount required"
 msgstr ""
 
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no ETH, or is using all of its ETH for payouts."
+msgstr ""
+
+msgid "Use NFTs for redemption"
 msgstr ""
 
 msgid "JB vs. Kickstarter"
@@ -3627,6 +3651,9 @@ msgid "Connect"
 msgstr ""
 
 msgid "Contract permissions"
+msgstr ""
+
+msgid "Enable set controller"
 msgstr ""
 
 msgid "Project configurations cannot be changed to the duration of locked cycles."
@@ -3798,6 +3825,9 @@ msgid "Upgrade"
 msgstr ""
 
 msgid "After {0} (your first cycle), your project will not issue any tokens unless you edit the issuance rate."
+msgstr ""
+
+msgid "Please check your details carefully. Each change will incur a gas fee."
 msgstr ""
 
 msgid "Unknown extension"
@@ -4560,6 +4590,9 @@ msgid "<0>If you're looking for help planning or deploying your project, you can
 msgstr ""
 
 msgid "Open source"
+msgstr ""
+
+msgid "Total payouts"
 msgstr ""
 
 msgid "Following the launch of their token $MOONEY, the next goal on MoonDAO's roadmap was to buy two tickets to space on a Blue Origin rocket. They set the project's Payouts to Infinite in order to raise as much as possible during their campaign and be able to distribute all of the funds. Using a reserved rate of 50%, the MoonDAO multi-sig received half of all newly minted tokens to build up a treasury of both ETH and $MOONEY that could later be used for bounties and compensation."

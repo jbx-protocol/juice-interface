@@ -137,11 +137,11 @@ export const PayProjectModal: React.FC = () => {
                             'text-error-500 transition-colors',
                         )}
                       >
+                        <Trans>I understand and accept</Trans>
+                        {projectPayDisclosure
+                          ? t`this project's notice and `
+                          : ' '}
                         <Trans>
-                          I understand and accept
-                          {projectPayDisclosure
-                            ? "this project's notice and "
-                            : ' '}
                           the{' '}
                           <ExternalLink href="https://docs.juicebox.money/dev/learn/risks">
                             risks

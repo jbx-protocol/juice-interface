@@ -19,6 +19,7 @@ import {
 import { useInitialEditingData } from '../../ReconfigureFundingCycleSettingsPage/hooks/useInitialEditingData'
 import { EditCycleFormFields } from '../EditCycleFormFields'
 
+/** Loads project FC data from redux into an Ant D form instance */
 export const useLoadEditCycleData = () => {
   const [initialFormData, setInitialFormData] = useState<
     EditCycleFormFields | undefined

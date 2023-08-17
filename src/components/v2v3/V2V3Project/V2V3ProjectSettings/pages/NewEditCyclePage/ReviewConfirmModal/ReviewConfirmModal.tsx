@@ -3,7 +3,9 @@ import { Form } from 'antd'
 import { CreateCollapse } from 'components/Create/components/CreateCollapse'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import TransactionModal from 'components/modals/TransactionModal'
+import { useSaveEditCycleData } from '../hooks/SaveEditCycleData'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
+import { PayoutsSectionDiff } from './PayoutsSectionDiff'
 
 export function ReviewConfirmModal({
   open,
@@ -12,14 +14,21 @@ export function ReviewConfirmModal({
   open: boolean
   onClose: VoidFunction
 }) {
+  const { saveEditCycleLoading, saveEditCycle } = useSaveEditCycleData()
+
+  const onOk = () => {
+    saveEditCycle()
+  }
   const panelProps = { className: 'text-lg' }
   return (
     <TransactionModal
       open={open}
       title={<Trans>Review & confirm</Trans>}
       destroyOnClose
+      onOk={onOk}
       okText={<Trans>Deploy changes</Trans>}
       onCancel={onClose}
+      confirmLoading={saveEditCycleLoading}
     >
       <p className="text-secondary text-sm">
         <Trans>
@@ -31,16 +40,9 @@ export function ReviewConfirmModal({
           <DetailsSectionDiff />
         </CreateCollapse.Panel>
         <CreateCollapse.Panel key={1} header={t`Payouts`} {...panelProps}>
-          <>Details diff</>
+          <PayoutsSectionDiff />
         </CreateCollapse.Panel>
         <CreateCollapse.Panel key={2} header={t`Tokens`} {...panelProps}>
-          <>Details diff</>
-        </CreateCollapse.Panel>
-        <CreateCollapse.Panel
-          key={3}
-          header={t`NFTs & rewards`}
-          {...panelProps}
-        >
           <>Details diff</>
         </CreateCollapse.Panel>
       </CreateCollapse>

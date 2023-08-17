@@ -16,7 +16,7 @@ export function DetailsSectionAdvanced() {
           label={
             <TooltipLabel
               tip={TERMINAL_CONFIG_EXPLANATION}
-              label={<Trans>Enable payment terminal configuration</Trans>}
+              label={<Trans>Enable set payment terminal</Trans>}
             />
           }
         />
@@ -26,7 +26,7 @@ export function DetailsSectionAdvanced() {
           label={
             <TooltipLabel
               tip={CONTROLLER_CONFIG_EXPLANATION}
-              label={<Trans>Enable controller configuration</Trans>}
+              label={<Trans>Enable set controller</Trans>}
             />
           }
         />

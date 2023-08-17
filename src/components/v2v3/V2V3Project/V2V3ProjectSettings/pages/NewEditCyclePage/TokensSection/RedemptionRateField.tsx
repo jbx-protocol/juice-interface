@@ -16,7 +16,7 @@ export function RedemptionRateField() {
 
   const [redemptionRateSwitchEnabled, setRedemptionRateSwitchEnabled] =
     useState<boolean>(
-      editCycleForm?.getFieldValue('redemptionRate') ?? 100 < 100,
+      (editCycleForm?.getFieldValue('redemptionRate') ?? 100) < 100,
     )
   return (
     <div className="flex flex-col gap-5">

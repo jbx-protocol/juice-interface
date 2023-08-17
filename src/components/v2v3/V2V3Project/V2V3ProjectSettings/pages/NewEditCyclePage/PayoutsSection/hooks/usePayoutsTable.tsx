@@ -1,4 +1,3 @@
-import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { AddEditAllocationModalEntity } from 'components/v2v3/shared/Allocation/AddEditAllocationModal'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { ONE_BILLION } from 'constants/numbers'
@@ -27,7 +26,6 @@ import { usePayoutsTableContext } from '../PayoutsTable/context/PayoutsTableCont
 const JB_FEE = 0.025
 
 export const usePayoutsTable = () => {
-  const { projectOwnerAddress } = useProjectContext()
   const {
     payoutSplits,
     setPayoutSplits,
@@ -130,10 +128,8 @@ export const usePayoutsTable = () => {
   function handleNewPayoutSplit({
     newSplit,
   }: {
-    newSplit: AddEditAllocationModalEntity
+    newSplit: AddEditAllocationModalEntity & { projectOwner: false }
   }) {
-    const isProjectOwner = !(newSplit?.projectOwner === false)
-    if (isProjectOwner) return
     const newSplitPercent = parseFloat(newSplit.amount.value)
     let newSplitPercentPPB = (newSplitPercent * ONE_BILLION) / 100
     let adjustedSplits: Split[] = payoutSplits
@@ -152,8 +148,9 @@ export const usePayoutsTable = () => {
           })
         : undefined // undefined means DL is infinite
 
-      newSplitPercentPPB =
-        (newAmount / (newDistributionLimit ?? 0)) * ONE_BILLION
+      newSplitPercentPPB = round(
+        (newAmount / (newDistributionLimit ?? 0)) * ONE_BILLION,
+      )
 
       // recalculate all split percents based on newly added split amount
       if (newDistributionLimit && !distributionLimitIsInfinite) {
@@ -163,20 +160,20 @@ export const usePayoutsTable = () => {
           newDistributionLimit: newDistributionLimit.toString(),
         })
       }
+      setDistributionLimit(newDistributionLimit)
     }
 
     const newPayoutSplit = {
-      beneficiary: isProjectOwner ? projectOwnerAddress : newSplit.beneficiary,
+      beneficiary: newSplit.beneficiary,
       percent: newSplitPercentPPB,
       preferClaimed: false,
-      lockedUntil: isProjectOwner ? undefined : newSplit.lockedUntil,
-      projectId: isProjectOwner ? '0x00' : newSplit.projectId,
+      lockedUntil: newSplit.lockedUntil,
+      projectId: newSplit.projectId,
       allocator: NULL_ALLOCATOR_ADDRESS,
     } as Split
 
     const newPayoutSplits = [...adjustedSplits, newPayoutSplit]
 
-    setDistributionLimit(newDistributionLimit)
     setPayoutSplits(newPayoutSplits)
   }
 
@@ -192,17 +189,19 @@ export const usePayoutsTable = () => {
     newPayoutSplit,
   }: {
     editedPayoutSplit: Split
-    newPayoutSplit: AddEditAllocationModalEntity
+    newPayoutSplit: AddEditAllocationModalEntity & { projectOwner: false }
   }) {
-    let newSplit = editedPayoutSplit
+    let newSplit: Split = editedPayoutSplit
     // Find editedPayoutSplit in payoutSplits and change it to newPayoutSplit
     const newSplits = payoutSplits.map(m => {
       if (hasEqualRecipient(m, editedPayoutSplit)) {
         newSplit = {
-          ...m,
-          ...newPayoutSplit,
+          ...newSplit,
+          beneficiary: newPayoutSplit.beneficiary,
+          lockedUntil: newPayoutSplit.lockedUntil ?? 0,
+          projectId: newPayoutSplit.projectId ?? '0x00',
         }
-        // If amounts (distributionLimitIsInfinite), further alterations to percentages are needed.
+        // If percents (distributionLimitIsInfinite), further alterations to percentages are not needed.
         // In this case, set the percent now.
         if (distributionLimitIsInfinite && !newPayoutSplit.projectOwner) {
           newSplit = {
@@ -251,8 +250,9 @@ export const usePayoutsTable = () => {
         })
       : undefined // undefined means DL is infinite
 
-    const updatedPercentage =
-      (_amount / (newDistributionLimit ?? 0)) * ONE_BILLION
+    const newSplitPercentPPB = round(
+      (_amount / (newDistributionLimit ?? 0)) * ONE_BILLION,
+    )
 
     let adjustedSplits: Split[] = payoutSplits
 
@@ -267,7 +267,7 @@ export const usePayoutsTable = () => {
 
     const newPayoutSplit = {
       ...editingPayoutSplit,
-      percent: updatedPercentage,
+      percent: newSplitPercentPPB,
     } as Split
 
     const newPayoutSplits = adjustedSplits.map(m =>

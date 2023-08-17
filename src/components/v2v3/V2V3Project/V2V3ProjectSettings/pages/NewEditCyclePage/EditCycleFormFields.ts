@@ -37,4 +37,6 @@ export type NftSectionFields = {
 export type EditCycleFormFields = DetailsSectionFields &
   PayoutsSectionFields &
   TokenSectionFields &
-  NftSectionFields
+  NftSectionFields & {
+    memo: string | undefined
+  }

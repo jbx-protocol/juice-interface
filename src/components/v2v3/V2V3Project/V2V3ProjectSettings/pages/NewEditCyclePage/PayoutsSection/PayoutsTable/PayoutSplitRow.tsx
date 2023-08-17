@@ -68,6 +68,12 @@ export function PayoutSplitRow({
   }
 
   const handleEditModalOk = (allocation: AddEditAllocationModalEntity) => {
+    if (allocation.projectOwner) {
+      console.error(
+        'Not supporting manually adding project owner splits in Edit cycle form',
+      )
+      return
+    }
     handlePayoutSplitChanged({
       editedPayoutSplit: payoutSplit,
       newPayoutSplit: allocation,

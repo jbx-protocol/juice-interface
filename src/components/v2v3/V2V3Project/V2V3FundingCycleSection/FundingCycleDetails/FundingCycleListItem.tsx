@@ -1,4 +1,5 @@
 import { Tooltip } from 'antd'
+import { twMerge } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 import { DiffedItem } from '../../../shared/DiffedItem'
 
@@ -9,12 +10,14 @@ export function FundingCycleListItem({
   value,
   oldValue,
   subItem,
+  className,
 }: {
   name: string
   value: string | JSX.Element
   oldValue?: string | JSX.Element
   helperText?: string | JSX.Element
   subItem?: boolean
+  className?: string
 }) {
   const hasDiff = oldValue && value !== oldValue
 
@@ -28,9 +31,10 @@ export function FundingCycleListItem({
   if (helperText) {
     return (
       <div
-        className={classNames(
-          'mb-2 flex cursor-default flex-wrap',
+        className={twMerge(
+          'mb-2 flex cursor-default flex-wrap items-center',
           subItem ? 'ml-5 text-xs' : 'text-sm',
+          className,
         )}
       >
         <Tooltip title={helperText} overlayInnerStyle={{ width: '400px' }}>
@@ -54,8 +58,9 @@ export function FundingCycleListItem({
   return (
     <div
       className={classNames(
-        'mb-2 flex flex-wrap',
+        'mb-2 flex flex-wrap items-center',
         subItem ? 'ml-5 text-xs' : 'text-sm',
+        className,
       )}
     >
       <div className="font-medium">{name}:</div> {_value}

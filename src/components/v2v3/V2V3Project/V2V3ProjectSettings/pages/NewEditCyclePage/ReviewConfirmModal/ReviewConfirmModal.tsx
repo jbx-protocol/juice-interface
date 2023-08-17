@@ -5,6 +5,7 @@ import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import TransactionModal from 'components/modals/TransactionModal'
 import { useSaveEditCycleData } from '../hooks/SaveEditCycleData'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
+import { PayoutsSectionDiff } from './PayoutsSectionDiff'
 
 export function ReviewConfirmModal({
   open,
@@ -39,7 +40,7 @@ export function ReviewConfirmModal({
           <DetailsSectionDiff />
         </CreateCollapse.Panel>
         <CreateCollapse.Panel key={1} header={t`Payouts`} {...panelProps}>
-          <>Details diff</>
+          <PayoutsSectionDiff />
         </CreateCollapse.Panel>
         <CreateCollapse.Panel key={2} header={t`Tokens`} {...panelProps}>
           <>Details diff</>

@@ -1,15 +1,18 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Empty, Tabs } from 'antd'
 import Loading from 'components/Loading'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { settingsPagePath } from 'utils/routes'
 import { EditCollectionDetailsSection } from './EditCollectionDetailsSection'
 import { EditNftsSection } from './EditNftsSection'
+import { NewEditNftsSection } from './NewEditNftsSection'
 import blueberry from '/public/assets/images/blueberry-ol.png'
 
 export function EditNftsPage() {
@@ -28,6 +31,10 @@ export function EditNftsPage() {
 
   if (hasNftsLoading) {
     return <Loading />
+  }
+
+  if (featureFlagEnabled(FEATURE_FLAGS.NEW_EDIT_NFTS)) {
+    return <NewEditNftsSection />
   }
 
   if (!hasExistingNfts) {

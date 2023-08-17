@@ -148,8 +148,9 @@ export const usePayoutsTable = () => {
           })
         : undefined // undefined means DL is infinite
 
-      newSplitPercentPPB =
-        (newAmount / (newDistributionLimit ?? 0)) * ONE_BILLION
+      newSplitPercentPPB = round(
+        (newAmount / (newDistributionLimit ?? 0)) * ONE_BILLION,
+      )
 
       // recalculate all split percents based on newly added split amount
       if (newDistributionLimit && !distributionLimitIsInfinite) {
@@ -249,8 +250,9 @@ export const usePayoutsTable = () => {
         })
       : undefined // undefined means DL is infinite
 
-    const updatedPercentage =
-      (_amount / (newDistributionLimit ?? 0)) * ONE_BILLION
+    const newSplitPercentPPB = round(
+      (_amount / (newDistributionLimit ?? 0)) * ONE_BILLION,
+    )
 
     let adjustedSplits: Split[] = payoutSplits
 
@@ -265,7 +267,7 @@ export const usePayoutsTable = () => {
 
     const newPayoutSplit = {
       ...editingPayoutSplit,
-      percent: updatedPercentage,
+      percent: newSplitPercentPPB,
     } as Split
 
     const newPayoutSplits = adjustedSplits.map(m =>

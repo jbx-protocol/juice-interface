@@ -10,7 +10,6 @@ import { helpPagePath, settingsPagePath } from 'utils/routes'
 import { DetailsSection } from './DetailsSection'
 import { useEditCycleFormContext } from './EditCycleFormContext'
 import { EditCycleFormSection } from './EditCycleFormSection'
-import { NftsSection } from './NftsSection'
 import { PayoutsSection } from './PayoutsSection'
 import { ReviewConfirmModal } from './ReviewConfirmModal'
 import { TokensSection } from './TokensSection'
@@ -70,20 +69,9 @@ export function EditCyclePage() {
             description={
               <Trans>Manage how your projects tokens should work.</Trans>
             }
-          >
-            <TokensSection />
-          </EditCycleFormSection>
-
-          <EditCycleFormSection
-            title={<Trans>NFTs</Trans>}
-            description={
-              <Trans>
-                Manage how you reward supporters when they support your project.
-              </Trans>
-            }
             className="border-b-0"
           >
-            <NftsSection />
+            <TokensSection />
           </EditCycleFormSection>
         </Form>
       </div>

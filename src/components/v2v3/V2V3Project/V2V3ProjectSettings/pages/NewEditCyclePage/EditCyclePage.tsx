@@ -69,6 +69,7 @@ export function EditCyclePage() {
             description={
               <Trans>Manage how your projects tokens should work.</Trans>
             }
+            className="border-b-0"
           >
             <TokensSection />
           </EditCycleFormSection>

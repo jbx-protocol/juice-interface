@@ -4,6 +4,7 @@ import { CreateCollapse } from 'components/Create/components/CreateCollapse'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import TransactionModal from 'components/modals/TransactionModal'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
+import { PayoutsSectionDiff } from './PayoutsSectionDiff'
 
 export function ReviewConfirmModal({
   open,
@@ -31,16 +32,9 @@ export function ReviewConfirmModal({
           <DetailsSectionDiff />
         </CreateCollapse.Panel>
         <CreateCollapse.Panel key={1} header={t`Payouts`} {...panelProps}>
-          <>Details diff</>
+          <PayoutsSectionDiff />
         </CreateCollapse.Panel>
         <CreateCollapse.Panel key={2} header={t`Tokens`} {...panelProps}>
-          <>Details diff</>
-        </CreateCollapse.Panel>
-        <CreateCollapse.Panel
-          key={3}
-          header={t`NFTs & rewards`}
-          {...panelProps}
-        >
           <>Details diff</>
         </CreateCollapse.Panel>
       </CreateCollapse>

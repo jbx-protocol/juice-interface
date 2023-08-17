@@ -39,7 +39,7 @@ export const usePayoutsTable = () => {
 
   const distributionLimitIsInfinite = useMemo(
     () =>
-      !distributionLimit ||
+      distributionLimit === undefined ||
       parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT),
     [distributionLimit],
   )
@@ -134,7 +134,6 @@ export const usePayoutsTable = () => {
     let newSplitPercentPPB = (newSplitPercent * ONE_BILLION) / 100
     let adjustedSplits: Split[] = payoutSplits
     let newDistributionLimit = distributionLimit
-
     // If amounts (!distributionLimitIsInfinite), handle changing DL and split %s
     if (!distributionLimitIsInfinite) {
       const newAmount = deriveAmountBeforeFee(newSplitPercent)
@@ -146,7 +145,7 @@ export const usePayoutsTable = () => {
             editingSplitPercent: 0,
             ownerRemainingAmount,
           })
-        : undefined // undefined means DL is infinite
+        : newAmount
 
       newSplitPercentPPB = round(
         (newAmount / (newDistributionLimit ?? 0)) * ONE_BILLION,

@@ -17,7 +17,7 @@ export function DiffSection({
         headerClassName="flex-row-reverse justify-end gap-2 text-sm"
         contentContainerClass="pt-2"
       >
-        <div className="pl-10">{advancedOptions}</div>
+        <div className="pl-10 text-xs">{advancedOptions}</div>
       </AdvancedDropdown>
     </div>
   )

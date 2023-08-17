@@ -3161,9 +3161,6 @@ msgstr ""
 msgid "Fees held"
 msgstr ""
 
-msgid "Manage how you reward supporters when they support your project."
-msgstr ""
-
 msgid "Issuance reduction rate"
 msgstr ""
 

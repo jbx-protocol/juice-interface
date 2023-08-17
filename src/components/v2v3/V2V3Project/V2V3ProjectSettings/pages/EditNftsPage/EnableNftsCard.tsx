@@ -3,7 +3,7 @@ import { Button } from 'antd'
 import { ExternalLinkWithIcon } from 'components/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
-import { EditCycleHeader } from '../EditCycleHeader'
+import { EditCycleHeader } from '../NewEditCyclePage/EditCycleHeader'
 import { EnableNftsModal } from './EnableNftsModal'
 
 export function EnableNftsCard() {

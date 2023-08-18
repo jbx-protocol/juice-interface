@@ -61,14 +61,14 @@ export function useDBProjectsInfiniteQuery(
       const { pageSize, ...evaluatedOpts } = queryKey[1]
 
       return axios
-        .get<DBProjectRow[]>(
+        .get<DBProjectRow[] | undefined>(
           `/api/projects?${formatQueryParams({
             ...evaluatedOpts,
             page: pageParam,
             pageSize,
           })}`,
         )
-        .then(res => res.data?.map(parseDBProject))
+        .then(res => (res.data ? res.data.map(parseDBProject) : []))
     },
     {
       staleTime: DEFAULT_STALE_TIME,

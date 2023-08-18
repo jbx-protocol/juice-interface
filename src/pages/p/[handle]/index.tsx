@@ -8,6 +8,7 @@ import { V1ProjectProvider } from 'contexts/v1/Project/V1ProjectProvider'
 import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { V1CurrencyProvider } from 'contexts/v1/V1CurrencyProvider'
 import { V1ProjectMetadataProvider } from 'contexts/v1/V1ProjectMetadataProvider'
+import { loadCatalog } from 'locales/utils'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
@@ -25,7 +26,20 @@ export const getStaticPaths: GetStaticPaths = async context => {
 }
 
 export const getStaticProps: GetStaticProps<V1StaticProps> = async context => {
-  return getV1StaticProps(context)
+  const locale = context.locale as string
+  const messages = await loadCatalog(locale)
+  const i18n = { locale, messages }
+
+  const v1Props = await getV1StaticProps(context)
+
+  return {
+    ...v1Props,
+    props: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ...(v1Props as any).props,
+      i18n,
+    },
+  }
 }
 
 export default function V1HandlePage({

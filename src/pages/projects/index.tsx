@@ -1,5 +1,6 @@
 import { ProjectsView } from 'components/Projects/ProjectsView'
 import { AppWrapper } from 'components/common'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function ProjectsPage() {
   return (
@@ -8,3 +9,5 @@ export default function ProjectsPage() {
     </AppWrapper>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

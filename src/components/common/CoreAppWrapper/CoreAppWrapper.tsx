@@ -8,18 +8,10 @@ import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { redirectTo } from 'utils/windowUtils'
-
-const LanguageProvider = dynamic(
-  () => import('contexts/Language/LanguageProvider'),
-  {
-    ssr: false,
-  },
-)
 
 /**
  * Contains all the core app providers used by each page.
@@ -35,19 +27,17 @@ export const AppWrapper: React.FC<
   return (
     <React.StrictMode>
       <ReactQueryProvider>
-        <LanguageProvider>
-          <TxHistoryProvider>
-            <ThemeProvider>
-              <EtherPriceProvider>
-                <ArcxProvider>
-                  <QuickProjectSearchProvider>
-                    <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
-                  </QuickProjectSearchProvider>
-                </ArcxProvider>
-              </EtherPriceProvider>
-            </ThemeProvider>
-          </TxHistoryProvider>
-        </LanguageProvider>
+        <TxHistoryProvider>
+          <ThemeProvider>
+            <EtherPriceProvider>
+              <ArcxProvider>
+                <QuickProjectSearchProvider>
+                  <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
+                </QuickProjectSearchProvider>
+              </ArcxProvider>
+            </EtherPriceProvider>
+          </ThemeProvider>
+        </TxHistoryProvider>
       </ReactQueryProvider>
     </React.StrictMode>
   )

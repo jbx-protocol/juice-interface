@@ -10,6 +10,7 @@ import {
   MOONDAO_FUNDING_CONFIG,
 } from 'constants/successStoryProjects'
 import Image from 'next/image'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function MoonDAOPage() {
   const moonDAOSuccessStoryProject = CASE_STUDY_PROJECTS[1]
@@ -114,3 +115,5 @@ export default function MoonDAOPage() {
     </AppWrapper>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

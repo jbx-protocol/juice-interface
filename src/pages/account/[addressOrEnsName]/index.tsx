@@ -4,8 +4,10 @@ import Loading from 'components/Loading'
 import { AppWrapper, SEO } from 'components/common'
 import { isAddress } from 'ethers/lib/utils'
 import { resolveAddress } from 'lib/api/ens'
+import { loadCatalog } from 'locales/utils'
 import { Profile } from 'models/database'
-import { useRouter } from 'next/router'
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 
@@ -47,18 +49,44 @@ function _AccountPage({ addressOrEnsName }: { addressOrEnsName: string }) {
   )
 }
 
-export default function AccountPage() {
-  const router = useRouter()
-  const { addressOrEnsName } = router.query as { addressOrEnsName: string }
+export default function AccountPage({
+  addressOrEnsName,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const addressFound = useMemo(
+    () => isAddress(addressOrEnsName) || addressOrEnsName.endsWith('eth'),
+    [addressOrEnsName],
+  )
 
   return (
     <AppWrapper>
-      {addressOrEnsName &&
-      (isAddress(addressOrEnsName) || addressOrEnsName.endsWith('eth')) ? (
+      {addressOrEnsName && addressFound ? (
         <_AccountPage addressOrEnsName={addressOrEnsName as string} />
       ) : (
         <div className="text-center">Not found</div>
       )}
     </AppWrapper>
   )
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  }
+}
+
+export const getStaticProps: GetStaticProps<{
+  addressOrEnsName: string
+}> = async context => {
+  const locale = context.locale as string
+  const messages = await loadCatalog(locale)
+  const i18n = { locale, messages }
+
+  const { addressOrEnsName } = context.params as { addressOrEnsName: string }
+  return {
+    props: {
+      addressOrEnsName,
+      i18n,
+    },
+  }
 }

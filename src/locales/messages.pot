@@ -2408,9 +2408,6 @@ msgstr ""
 msgid "Enabled"
 msgstr ""
 
-msgid "Reset website"
-msgstr ""
-
 msgid "Payout allocated to this project's {versionName} payment terminal. <0>Learn more</0>."
 msgstr ""
 
@@ -3438,9 +3435,6 @@ msgid "Set URI for {projectTitle}"
 msgstr ""
 
 msgid "Memo included on-chain"
-msgstr ""
-
-msgid "Troubleshoot"
 msgstr ""
 
 msgid "Burn {tokensLabel}"

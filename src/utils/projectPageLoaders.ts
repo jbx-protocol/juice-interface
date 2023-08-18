@@ -48,7 +48,7 @@ export const getV1StaticProps: GetStaticProps<
     console.error(
       `Failed to load metadata uri for ${JSON.stringify(context.params)}`,
     )
-    return { notFound: true }
+    return { notFound: true, props: undefined }
   }
 
   try {
@@ -63,7 +63,7 @@ export const getV1StaticProps: GetStaticProps<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     if (e?.response?.status === 404) {
-      return { notFound: true }
+      return { notFound: true, props: undefined }
     }
     throw e
   }

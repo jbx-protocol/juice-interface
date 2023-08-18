@@ -1,12 +1,16 @@
 import { Announcements } from 'constants/announcements'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { useWallet } from 'hooks/Wallet'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { Announcement } from 'models/announcement'
 import { useRouter } from 'next/router'
-import React, { useCallback, useContext, useEffect } from 'react'
-
-import { useWallet } from 'hooks/Wallet'
+import React, {
+  startTransition,
+  useCallback,
+  useContext,
+  useEffect,
+} from 'react'
 import { AnnouncementsContext } from './AnnouncementsContext'
 
 /**
@@ -35,8 +39,10 @@ export const AnnouncementLauncher: React.FC<
 
   // Try activating any announcements
   useEffect(() => {
-    // Activate first announcement that fits conditions
-    setActiveId(Announcements.find(shouldActivateAnnouncement)?.id)
+    startTransition(() => {
+      // Activate first announcement that fits conditions
+      setActiveId(Announcements.find(shouldActivateAnnouncement)?.id)
+    })
   }, [shouldActivateAnnouncement, setActiveId])
 
   return <>{children}</>

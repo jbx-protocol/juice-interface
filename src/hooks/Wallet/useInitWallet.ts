@@ -9,7 +9,7 @@ import walletConnectModule from '@web3-onboard/walletconnect'
 import config from 'config/seo_meta.json'
 import { NETWORKS, readNetwork } from 'constants/networks'
 import { BigNumber } from 'ethers'
-import { useEffect } from 'react'
+import { startTransition, useEffect } from 'react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
 import {
   useLoadSafeWallet,
@@ -68,21 +68,29 @@ export function useInitWallet() {
 
   // If possible, load Safe wallets
   useEffect(() => {
-    loadSafeWallet()
+    startTransition(() => {
+      loadSafeWallet()
+    })
   }, [loadSafeWallet])
 
   // Load any previously connected wallets
   useEffect(() => {
-    loadWalletFromLocalStorage()
+    startTransition(() => {
+      loadWalletFromLocalStorage()
+    })
   }, [loadWalletFromLocalStorage])
 
   // store any wallets
   useEffect(() => {
-    storeWalletsInLocalStorage(connectedWallets)
+    startTransition(() => {
+      storeWalletsInLocalStorage(connectedWallets)
+    })
   }, [storeWalletsInLocalStorage, connectedWallets])
 
   // disable account center in web3-onboard
   useEffect(() => {
-    updateAccountCenter({ enabled: false })
+    startTransition(() => {
+      updateAccountCenter({ enabled: false })
+    })
   }, [updateAccountCenter])
 }

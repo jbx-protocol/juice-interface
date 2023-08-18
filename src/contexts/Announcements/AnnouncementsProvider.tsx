@@ -6,7 +6,14 @@ import { useWallet } from 'hooks/Wallet'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { Announcement } from 'models/announcement'
 import { useRouter } from 'next/router'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import {
+  startTransition,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { AnnouncementsContext } from './AnnouncementsContext'
 
 export const AnnouncementsProvider: React.FC<
@@ -52,8 +59,10 @@ export const AnnouncementsProvider: React.FC<
 
   // Try activating any announcements
   useEffect(() => {
-    // Activate first announcement that fits conditions
-    trySetActiveId(Announcements.find(shouldActivateAnnouncement)?.id)
+    startTransition(() => {
+      // Activate first announcement that fits conditions
+      trySetActiveId(Announcements.find(shouldActivateAnnouncement)?.id)
+    })
   }, [shouldActivateAnnouncement, setActiveId, trySetActiveId])
 
   return (

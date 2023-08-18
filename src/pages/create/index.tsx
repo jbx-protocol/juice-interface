@@ -6,6 +6,7 @@ import { V2V3ContractsProvider } from 'contexts/v2v3/Contracts/V2V3ContractsProv
 import { V2V3CurrencyProvider } from 'contexts/v2v3/V2V3CurrencyProvider'
 import { Provider } from 'react-redux'
 import store from 'redux/store'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function V2CreatePage() {
   return (
@@ -31,3 +32,5 @@ export default function V2CreatePage() {
     </>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

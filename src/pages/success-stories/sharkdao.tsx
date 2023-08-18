@@ -10,6 +10,7 @@ import {
   SHARKDAO_FUNDING_CONFIG,
 } from 'constants/successStoryProjects'
 import Image from 'next/image'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function SharkDAOPage() {
   const sharkDAOSuccessStoryProject = CASE_STUDY_PROJECTS[2]
@@ -133,3 +134,5 @@ export default function SharkDAOPage() {
     </AppWrapper>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

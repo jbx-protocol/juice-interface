@@ -3,6 +3,7 @@ import { V2V3ProjectContractsDashboard } from 'components/v2v3/V2V3Project/V2V3P
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
 import { useRouter } from 'next/router'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function V2V3ProjectContractsPage() {
   const router = useRouter()
@@ -22,3 +23,5 @@ export default function V2V3ProjectContractsPage() {
     </AppWrapper>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

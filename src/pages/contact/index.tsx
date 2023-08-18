@@ -1,6 +1,7 @@
 import { Contact } from 'components/Contact'
 import { Footer } from 'components/Footer'
 import { AppWrapper, Head } from 'components/common'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function ContactPage() {
   return (
@@ -18,3 +19,5 @@ export default function ContactPage() {
     </>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

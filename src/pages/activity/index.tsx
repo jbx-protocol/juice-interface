@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { PaymentsFeed } from 'components/Activity'
 import { AppWrapper } from 'components/common'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function ActivityPage() {
   return (
@@ -18,3 +19,5 @@ export default function ActivityPage() {
     </AppWrapper>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

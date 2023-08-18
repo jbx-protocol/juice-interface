@@ -1,6 +1,7 @@
 import { Footer } from 'components/Footer/Footer'
 import { Legal } from 'components/Legal'
 import { AppWrapper, Head } from 'components/common'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function LegalPage() {
   return (
@@ -17,3 +18,5 @@ export default function LegalPage() {
     </>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

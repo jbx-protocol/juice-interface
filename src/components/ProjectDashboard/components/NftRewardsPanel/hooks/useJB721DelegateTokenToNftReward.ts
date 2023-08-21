@@ -6,7 +6,7 @@ import { Jb721DelegateToken } from 'generated/graphql'
 import { NftRewardTier } from 'models/nftRewards'
 import { UseQueryResult } from 'react-query'
 
-export type RedeemingNft = Pick<Jb721DelegateToken, 'address' | 'tokenUri'> & {
+export type RedeemingNft = Pick<Jb721DelegateToken, 'tokenUri'> & {
   tokenId: string
 }
 

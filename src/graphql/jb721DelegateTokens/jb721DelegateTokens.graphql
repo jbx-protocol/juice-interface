@@ -1,7 +1,7 @@
 query JB721DelegateTokens($where: JB721DelegateToken_filter) {
   jb721DelegateTokens(where: $where) {
     tokenId
-    address
+    collection { address }
     tokenUri
   }
 }

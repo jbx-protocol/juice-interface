@@ -25,15 +25,15 @@ We need to update the following configurations for new subgraph versions:
 #### Vercel
 
 - [ ] Update **juice-interface-goerli** project
-  - [ ] `GRAPHQL_SCHEMA_SUBGRAPH_URL`
+  - [ ] `SUBGRAPH_URL`
   - [ ] `NEXT_PUBLIC_SUBGRAPH_URL`
 - [ ] Update **juice-interface**
-  - [ ] `GRAPHQL_SCHEMA_SUBGRAPH_URL`
+  - [ ] `SUBGRAPH_URL`
   - [ ] `NEXT_PUBLIC_SUBGRAPH_URL`
 
 #### GitHub
 
-- [ ] `GRAPHQL_SCHEMA_SUBGRAPH_URL`
+- [ ] `SUBGRAPH_URL`
   1.  Select **Secrets** > **Actions**.
   2.  Locate the **Repository secrets** section.
   3.  Edit the secret variable

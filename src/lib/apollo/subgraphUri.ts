@@ -10,11 +10,9 @@ export const subgraphUri = () => {
       )
     }
   } else {
-    uri = process.env.GRAPHQL_SCHEMA_SUBGRAPH_URL
+    uri = process.env.SUBGRAPH_URL
     if (!uri) {
-      throw new Error(
-        'GRAPHQL_SCHEMA_SUBGRAPH_URL environment variable not defined',
-      )
+      throw new Error('SUBGRAPH_URL environment variable not defined')
     }
   }
 

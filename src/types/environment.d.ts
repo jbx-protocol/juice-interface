@@ -19,7 +19,7 @@ declare global {
       // Ask in Discord for the goerli subgraph url
       // for both SCHEMA and SUBGRAPH_URL
       NEXT_PUBLIC_SUBGRAPH_URL: string
-      GRAPHQL_SCHEMA_SUBGRAPH_URL: string
+      SUBGRAPH_URL: string
 
       NEXT_PUBLIC_BASE_URL: PublicBaseURLS
 

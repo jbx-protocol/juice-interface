@@ -12,11 +12,13 @@ export default function DistributionLimit({
   distributionLimit,
   currencyName,
   showTooltip,
+  shortName,
 }: {
   className?: string
   distributionLimit: BigNumber | undefined
   currencyName: CurrencyName | undefined
   showTooltip?: boolean
+  shortName?: boolean
 }) {
   const distributionLimitIsInfinite =
     distributionLimit && isInfiniteDistributionLimit(distributionLimit)
@@ -51,9 +53,15 @@ export default function DistributionLimit({
   ) : null
 
   const _text = distributionLimitIsInfinite ? (
-    <Trans>No limit (all available ETH)</Trans>
+    <>
+      {shortName ? (
+        <Trans>No limit</Trans>
+      ) : (
+        <Trans>No limit (all available ETH)</Trans>
+      )}
+    </>
   ) : distributionLimitIsZero ? (
-    <Trans>Zero (no payouts)</Trans>
+    <>{shortName ? <Trans>Zero</Trans> : <Trans>Zero (no payouts)</Trans>}</>
   ) : (
     <>
       {formatFundingTarget({

@@ -43,6 +43,9 @@ export const usePayoutsSectionValues = () => {
   const currentHoldFees = Boolean(currentFundingCycleMetadata?.holdFees)
   const holdFeesHasDiff = newHoldFees !== currentHoldFees
 
+  const advancedOptionsHasDiff = holdFeesHasDiff
+  const sectionHasDiff = distributionLimitHasDiff || advancedOptionsHasDiff // TODO: || payoutSplitsHasDiff
+
   return {
     newCurrency,
     currentCurrency,
@@ -54,9 +57,13 @@ export const usePayoutsSectionValues = () => {
 
     currentPayoutSplits,
     newPayoutSplits,
+    // TODO: payoutSplitsHasDiff,
 
     newHoldFees,
     currentHoldFees,
     holdFeesHasDiff,
+
+    advancedOptionsHasDiff,
+    sectionHasDiff,
   }
 }

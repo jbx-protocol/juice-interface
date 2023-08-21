@@ -1,13 +1,5 @@
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { useProjectContext } from 'components/ProjectDashboard/hooks'
-import {
-  DISCOUNT_RATE_EXPLANATION,
-  MINT_RATE_EXPLANATION,
-  OWNER_MINTING_EXPLANATION,
-  PAUSE_TRANSFERS_EXPLANATION,
-  REDEMPTION_RATE_EXPLANATION,
-  RESERVED_RATE_EXPLANATION,
-} from 'components/strings'
 import { FundingCycleListItem } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItem'
 import { AllowMintingValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/RulesListItems/AllowMintingValue'
 import { PauseTransfersValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/RulesListItems/PauseTransfersValue'
@@ -19,12 +11,15 @@ import {
   formatRedemptionRate,
   formatReservedRate,
 } from 'utils/v2v3/math'
+import { emptySectionClasses } from './DetailsSectionDiff'
 import { DiffSection } from './DiffSection'
 import { useTokensSectionValues } from './hooks/useTokensSectionValues'
 
 export function TokensSectionDiff() {
   const { projectOwnerAddress } = useProjectContext()
   const {
+    sectionHasDiff,
+
     newMintRate,
     currentMintRate,
     mintRateHasDiff,
@@ -57,6 +52,14 @@ export function TokensSectionDiff() {
     tokenSymbolPlural,
   } = useTokensSectionValues()
 
+  if (!sectionHasDiff) {
+    return (
+      <div className={emptySectionClasses}>
+        <Trans>No edits were made to tokens for this cycle.</Trans>
+      </div>
+    )
+  }
+
   const formattedReservedRate = parseFloat(formatReservedRate(newReservedRate))
 
   const content = (
@@ -78,13 +81,7 @@ export function TokensSectionDiff() {
             />
           ) : undefined
         }
-        helperText={MINT_RATE_EXPLANATION}
       />
-    </div>
-  )
-
-  const advancedOptions = (
-    <>
       <FundingCycleListItem
         name={t`Reserved tokens`}
         value={
@@ -98,17 +95,21 @@ export function TokensSectionDiff() {
             <ReservedRateValue value={currentReservedRate} />
           ) : undefined
         }
-        helperText={RESERVED_RATE_EXPLANATION}
       />
       {newReservedRate?.gt(0) ? (
-        <DiffedSplitList
-          splits={newReservedSplits}
-          diffSplits={currentReservedSplits}
-          projectOwnerAddress={projectOwnerAddress}
-          totalValue={undefined}
-          reservedRate={formattedReservedRate}
-          showDiffs
-        />
+        <div className="pb-4">
+          <div className="mb-3 text-sm font-semibold">
+            <Trans>Reserved recipients:</Trans>
+          </div>
+          <DiffedSplitList
+            splits={newReservedSplits}
+            diffSplits={currentReservedSplits}
+            projectOwnerAddress={projectOwnerAddress}
+            totalValue={undefined}
+            reservedRate={formattedReservedRate}
+            showDiffs
+          />
+        </div>
       ) : null}
 
       <FundingCycleListItem
@@ -119,7 +120,6 @@ export function TokensSectionDiff() {
             ? `${formatDiscountRate(currentDiscountRate)}%`
             : undefined
         }
-        helperText={DISCOUNT_RATE_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Redemption rate`}
@@ -129,7 +129,6 @@ export function TokensSectionDiff() {
             ? `${formatRedemptionRate(currentRedemptionRate)}%`
             : undefined
         }
-        helperText={REDEMPTION_RATE_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Project owner token minting`}
@@ -139,7 +138,6 @@ export function TokensSectionDiff() {
             <AllowMintingValue allowMinting={currentAllowMinting} />
           ) : undefined
         }
-        helperText={OWNER_MINTING_EXPLANATION}
       />
       <FundingCycleListItem
         name={t`Token transfers`}
@@ -149,10 +147,9 @@ export function TokensSectionDiff() {
             <PauseTransfersValue pauseTransfers={currentPauseTransfers} />
           ) : undefined
         }
-        helperText={PAUSE_TRANSFERS_EXPLANATION}
       />
-    </>
+    </div>
   )
 
-  return <DiffSection content={content} advancedOptions={advancedOptions} />
+  return <DiffSection content={content} />
 }

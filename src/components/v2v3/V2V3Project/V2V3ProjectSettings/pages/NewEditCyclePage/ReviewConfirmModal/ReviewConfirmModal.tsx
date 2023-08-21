@@ -6,7 +6,11 @@ import TransactionModal from 'components/modals/TransactionModal'
 import { useSaveEditCycleData } from '../hooks/SaveEditCycleData'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
 import { PayoutsSectionDiff } from './PayoutsSectionDiff'
+import { SectionCollapseHeader } from './SectionCollapseHeader'
 import { TokensSectionDiff } from './TokensSectionDiff'
+import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
+import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
+import { useTokensSectionValues } from './hooks/useTokensSectionValues'
 
 export function ReviewConfirmModal({
   open,
@@ -16,11 +20,15 @@ export function ReviewConfirmModal({
   onClose: VoidFunction
 }) {
   const { saveEditCycleLoading, saveEditCycle } = useSaveEditCycleData()
+  const { sectionHasDiff: detailsSectionHasDiff } = useDetailsSectionValues()
+  const { sectionHasDiff: payoutsSectionHasDiff } = usePayoutsSectionValues()
+  const { sectionHasDiff: tokensSectionHasDiff } = useTokensSectionValues()
 
   const onOk = () => {
     saveEditCycle()
   }
   const panelProps = { className: 'text-lg' }
+
   return (
     <TransactionModal
       open={open}
@@ -37,13 +45,40 @@ export function ReviewConfirmModal({
         </Trans>
       </p>
       <CreateCollapse>
-        <CreateCollapse.Panel key={0} header={t`Cycle details`} {...panelProps}>
+        <CreateCollapse.Panel
+          key={0}
+          header={
+            <SectionCollapseHeader
+              title={<Trans>Cycle details</Trans>}
+              hasDiff={detailsSectionHasDiff}
+            />
+          }
+          {...panelProps}
+        >
           <DetailsSectionDiff />
         </CreateCollapse.Panel>
-        <CreateCollapse.Panel key={1} header={t`Payouts`} {...panelProps}>
+        <CreateCollapse.Panel
+          key={1}
+          header={
+            <SectionCollapseHeader
+              title={<Trans>Payouts</Trans>}
+              hasDiff={payoutsSectionHasDiff}
+            />
+          }
+          {...panelProps}
+        >
           <PayoutsSectionDiff />
         </CreateCollapse.Panel>
-        <CreateCollapse.Panel key={2} header={t`Tokens`} {...panelProps}>
+        <CreateCollapse.Panel
+          key={2}
+          header={
+            <SectionCollapseHeader
+              title={<Trans>Tokens</Trans>}
+              hasDiff={tokensSectionHasDiff}
+            />
+          }
+          {...panelProps}
+        >
           <TokensSectionDiff />
         </CreateCollapse.Panel>
       </CreateCollapse>

@@ -1,19 +1,19 @@
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { FundingCycleListItem } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItem'
 import { DurationValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItems/DurationValue'
 
-import {
-  CONTROLLER_CONFIG_EXPLANATION,
-  RECONFIG_RULES_EXPLANATION,
-  TERMINAL_CONFIG_EXPLANATION,
-} from 'components/strings'
 import { AllowedValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/RulesListItems/AllowedValue'
 import { BallotStrategyValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/RulesListItems/BallotStrategyValue'
 import { DiffSection } from './DiffSection'
 import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
 
+export const emptySectionClasses = 'text-sm text-secondary pt-2 pb-3'
+
 export function DetailsSectionDiff() {
   const {
+    advancedOptionsHasDiff,
+    sectionHasDiff,
+
     currentDuration,
     newDuration,
     durationHasDiff,
@@ -35,6 +35,14 @@ export function DetailsSectionDiff() {
     allowSetControllerHasDiff,
   } = useDetailsSectionValues()
 
+  if (!sectionHasDiff) {
+    return (
+      <div className={emptySectionClasses}>
+        <Trans>No edits were made to cycle details for this cycle.</Trans>
+      </div>
+    )
+  }
+
   const content = (
     <>
       <FundingCycleListItem
@@ -45,7 +53,6 @@ export function DetailsSectionDiff() {
             <DurationValue duration={currentDuration} />
           ) : undefined
         }
-        // className='text-xs'
       />
       <FundingCycleListItem
         name={t`Edit deadline`}
@@ -63,13 +70,11 @@ export function DetailsSectionDiff() {
             />
           ) : undefined
         }
-        helperText={RECONFIG_RULES_EXPLANATION}
-        // className='text-xs'
       />
     </>
   )
 
-  const advancedOptions = (
+  const advancedOptions = advancedOptionsHasDiff ? (
     <>
       <FundingCycleListItem
         name={t`Payments disabled`}
@@ -79,7 +84,6 @@ export function DetailsSectionDiff() {
             <span className="capitalize">{currentPausePay.toString()}</span>
           ) : undefined
         }
-        className="text-xs"
       />
       <FundingCycleListItem
         name={t`Enable set payment terminal`}
@@ -89,8 +93,6 @@ export function DetailsSectionDiff() {
             <AllowedValue value={currentSetTerminals} />
           ) : undefined
         }
-        helperText={TERMINAL_CONFIG_EXPLANATION}
-        className="text-xs"
       />
       <FundingCycleListItem
         name={t`Enable set controller`}
@@ -100,11 +102,9 @@ export function DetailsSectionDiff() {
             <AllowedValue value={currentSetController} />
           ) : undefined
         }
-        helperText={CONTROLLER_CONFIG_EXPLANATION}
-        className="text-xs"
       />
     </>
-  )
+  ) : undefined
 
   return <DiffSection content={content} advancedOptions={advancedOptions} />
 }

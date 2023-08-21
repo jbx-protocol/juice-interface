@@ -91,6 +91,14 @@ export const useTokensSectionValues = () => {
     newPauseTransfers !== currentPauseTransfers,
   )
 
+  const advancedOptionsHasDiff =
+    reservedRateHasDiff ||
+    discountRateHasDiff ||
+    redemptionHasDiff ||
+    allowMintingHasDiff ||
+    pauseTransfersHasDiff
+  const sectionHasDiff = mintRateHasDiff || advancedOptionsHasDiff
+
   return {
     newMintRate,
     currentMintRate,
@@ -102,7 +110,7 @@ export const useTokensSectionValues = () => {
 
     newReservedSplits,
     currentReservedSplits,
-    // reservedSplitsHasDiff,
+    //TODO: reservedSplitsHasDiff,
 
     newDiscountRate,
     currentDiscountRate,
@@ -122,5 +130,8 @@ export const useTokensSectionValues = () => {
 
     tokenSymbolPlural,
     unsafeFundingCycleProperties,
+
+    advancedOptionsHasDiff,
+    sectionHasDiff,
   }
 }

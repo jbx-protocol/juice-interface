@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
+import { splitsListsHaveDiff } from 'utils/splits'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
   deriveNextIssuanceRate,
@@ -76,6 +77,11 @@ export const useTokensSectionValues = () => {
       !BigNumber.from(newReservedRate).eq(currentReservedRate),
   )
 
+  const reservedSplitsHasDiff = splitsListsHaveDiff(
+    currentReservedSplits,
+    newReservedSplits,
+  )
+
   const discountRateHasDiff = Boolean(
     currentDiscountRate &&
       !BigNumber.from(newDiscountRate).eq(currentDiscountRate),
@@ -97,7 +103,9 @@ export const useTokensSectionValues = () => {
     redemptionHasDiff ||
     allowMintingHasDiff ||
     pauseTransfersHasDiff
-  const sectionHasDiff = mintRateHasDiff || advancedOptionsHasDiff
+
+  const sectionHasDiff =
+    mintRateHasDiff || reservedSplitsHasDiff || advancedOptionsHasDiff
 
   return {
     newMintRate,
@@ -110,7 +118,7 @@ export const useTokensSectionValues = () => {
 
     newReservedSplits,
     currentReservedSplits,
-    //TODO: reservedSplitsHasDiff,
+    reservedSplitsHasDiff,
 
     newDiscountRate,
     currentDiscountRate,

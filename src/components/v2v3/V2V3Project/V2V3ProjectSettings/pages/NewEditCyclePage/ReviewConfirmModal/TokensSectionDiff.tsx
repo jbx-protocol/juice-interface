@@ -30,7 +30,7 @@ export function TokensSectionDiff() {
 
     newReservedSplits,
     currentReservedSplits,
-    //reservedSplitsHasDiff,
+    reservedSplitsHasDiff,
 
     newDiscountRate,
     currentDiscountRate,
@@ -96,7 +96,7 @@ export function TokensSectionDiff() {
           ) : undefined
         }
       />
-      {newReservedRate?.gt(0) ? (
+      {newReservedRate?.gt(0) && reservedSplitsHasDiff ? (
         <div className="pb-4">
           <div className="mb-3 text-sm font-semibold">
             <Trans>Reserved recipients:</Trans>

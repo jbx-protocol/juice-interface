@@ -23,6 +23,7 @@ export function PayoutsSectionDiff() {
 
     currentPayoutSplits,
     newPayoutSplits,
+    payoutSplitsHasDiff,
 
     newHoldFees,
     currentHoldFees,
@@ -60,21 +61,23 @@ export function PayoutsSectionDiff() {
           ) : undefined
         }
       />
-      <div className="pb-4">
-        <div className="mb-3 text-sm font-semibold">
-          <Trans>Payout recipients:</Trans>
+      {payoutSplitsHasDiff ? (
+        <div className="pb-4">
+          <div className="mb-3 text-sm font-semibold">
+            <Trans>Payout recipients:</Trans>
+          </div>
+          <DiffedSplitList
+            splits={newPayoutSplits}
+            diffSplits={currentPayoutSplits}
+            currency={BigNumber.from(getV2V3CurrencyOption(newCurrency))}
+            projectOwnerAddress={undefined}
+            totalValue={newDistributionLimit}
+            showAmounts={!distributionLimitIsInfinite}
+            valueFormatProps={{ precision: roundingPrecision }}
+            showDiffs
+          />
         </div>
-        <DiffedSplitList
-          splits={newPayoutSplits}
-          diffSplits={currentPayoutSplits}
-          currency={BigNumber.from(getV2V3CurrencyOption(newCurrency))}
-          projectOwnerAddress={undefined}
-          totalValue={newDistributionLimit}
-          showAmounts={!distributionLimitIsInfinite}
-          valueFormatProps={{ precision: roundingPrecision }}
-          showDiffs
-        />
-      </div>
+      ) : null}
     </div>
   )
 

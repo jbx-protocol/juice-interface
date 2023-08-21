@@ -3,6 +3,7 @@ import { Trans, t } from '@lingui/macro'
 import { QuickProjectSearchButton } from 'components/QuickProjectSearch'
 import { TruncatedText } from 'components/TruncatedText'
 import PatchedNextLink from 'components/fixes/PatchedNextLink'
+import dynamic from 'next/dynamic'
 import { Fragment } from 'react'
 import { DropdownMenu } from './components/DropdownMenu'
 import { MobileMenuButton } from './components/HamburgerMenuButton'
@@ -10,7 +11,11 @@ import { LogoHomeButton } from './components/LogoHomeButton'
 import NavLanguageSelector from './components/NavLanguageSelector'
 import ThemePicker from './components/ThemePicker'
 import { TransactionsList } from './components/TransactionList'
-import WalletButton from './components/Wallet/WalletButton'
+
+// Load this way until using app route
+const WalletButton = dynamic(() => import('./components/Wallet/WalletButton'), {
+  ssr: false,
+})
 
 export default function SiteNavigation() {
   return (

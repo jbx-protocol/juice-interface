@@ -34,13 +34,7 @@ export function V2V3ConfirmPayModal({
   const [form] = useForm<V2V3PayFormType>()
 
   const router = useRouter()
-  const {
-    userAddress,
-    chainUnsupported,
-    isConnected,
-    changeNetworks,
-    connect,
-  } = useWallet()
+  const { userAddress, chainUnsupported, changeNetworks } = useWallet()
   const delegateMetadata = useDelegateMetadata()
   const nftRewardTiers = useNftRewardTiersToMint()
   const payProjectTx = usePayETHPaymentTerminalTx()
@@ -56,10 +50,6 @@ export function V2V3ConfirmPayModal({
     // Prompt wallet connect if no wallet connected
     if (chainUnsupported) {
       await changeNetworks()
-      return
-    }
-    if (!isConnected) {
-      await connect()
       return
     }
 

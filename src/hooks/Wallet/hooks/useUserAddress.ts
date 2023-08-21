@@ -1,9 +1,7 @@
-import { useConnectWallet } from '@web3-onboard/react'
-import { useMemo } from 'react'
+import { useAccount } from 'wagmi'
 
 export function useUserAddress() {
-  const [{ wallet }] = useConnectWallet()
-  const userAddress = useMemo(() => wallet?.accounts[0]?.address, [wallet])
+  const { address } = useAccount()
 
-  return userAddress
+  return address
 }

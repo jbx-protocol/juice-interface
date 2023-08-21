@@ -197,6 +197,9 @@ msgstr ""
 msgid "Back to top"
 msgstr ""
 
+msgid "Project owner token minting"
+msgstr ""
+
 msgid "Project launch successful"
 msgstr ""
 

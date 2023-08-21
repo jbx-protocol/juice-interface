@@ -6,6 +6,7 @@ import TransactionModal from 'components/modals/TransactionModal'
 import { useSaveEditCycleData } from '../hooks/SaveEditCycleData'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
 import { PayoutsSectionDiff } from './PayoutsSectionDiff'
+import { TokensSectionDiff } from './TokensSectionDiff'
 
 export function ReviewConfirmModal({
   open,
@@ -43,7 +44,7 @@ export function ReviewConfirmModal({
           <PayoutsSectionDiff />
         </CreateCollapse.Panel>
         <CreateCollapse.Panel key={2} header={t`Tokens`} {...panelProps}>
-          <>Details diff</>
+          <TokensSectionDiff />
         </CreateCollapse.Panel>
       </CreateCollapse>
       <Form.Item name="memo" className="mt-10">

@@ -32,59 +32,6 @@ import {
 import { useReconfigureFundingCycle } from '../../ReconfigureFundingCycleSettingsPage/hooks/useReconfigureFundingCycle'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { EditCycleFormFields } from '../EditCycleFormFields'
-// EditingFundingCycleConfig {
-//   editingPayoutGroupedSplits: ETHPayoutGroupedSplits
-//   editingReservedTokensGroupedSplits: ReservedTokensGroupedSplits
-//   editingFundingCycleMetadata: Omit<V2V3FundingCycleMetadata, 'version'>
-//   editingFundingCycleData: V2V3FundingCycleData
-//   editingFundAccessConstraints: V2V3FundAccessConstraint[]
-//   editingNftRewards: NftRewardsData | undefined
-//   editingMustStartAtOrAfter: string
-// }
-
-// export type V2V3FundingCycleData = {
-//   duration: BigNumber
-//   weight: BigNumber
-//   discountRate: BigNumber
-//   ballot: string // hex, contract address
-// }
-
-/* export type V2V3FundingCycleMetadata =
-  | V2FundingCycleMetadata
-   | V3FundingCycleMetadata
- BaseV2V3FundingCycleMetadata = {
-  version?: number
-  global: BaseV3FundingCycleMetadataGlobal
-  reservedRate: BigNumber
-  redemptionRate: BigNumber
-  ballotRedemptionRate: BigNumber
-  pausePay: boolean
-  pauseDistributions: boolean
-  pauseRedeem: boolean
-  pauseBurn: boolean
-  allowMinting: boolean
-  allowTerminalMigration: boolean
-  allowControllerMigration: boolean
-  holdFees: boolean
-  useTotalOverflowForRedemptions: boolean
-  useDataSourceForPay: boolean // undefined for outgoing NFT args
-  useDataSourceForRedeem: boolean
-  dataSource: string // hex, contract address. undefined for outgoing NFT args
-}
-
-BaseV3FundingCycleMetadataGlobal = {
-  allowSetController: boolean
-  allowSetTerminals: boolean
-  pauseTransfers?: boolean
-}
-
- V3: preferClaimedTokenOverride?: boolean
-  metadata?: BigNumber
-
-V2: allowChangeToken: boolean
-**}
-
-//** Converts EditCycleForm data to EditingFundingCycleConfig and calls useReconfigureFundingCycle tx */
 
 export const useSaveEditCycleData = () => {
   // Use Redux to get current (pre-edit) project state since it's not changed by edit

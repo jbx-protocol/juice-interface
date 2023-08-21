@@ -19,6 +19,7 @@ import { ProjectHeaderLogo } from './components/ProjectHeaderLogo'
 import { ProjectHeaderPopupMenu } from './components/ProjectHeaderPopupMenu'
 import { ProjectHeaderStats } from './components/ProjectHeaderStats'
 import { Subtitle } from './components/Subtitle'
+import ToolsDrawerButton from './components/ToolsDrawerButton'
 
 export const ProjectHeader = ({ className }: { className?: string }) => {
   const { title, subtitle, projectId, handle, owner, gnosisSafe } =
@@ -32,7 +33,7 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
     <div className={twMerge('relative flex w-full flex-col', className)}>
       <ProjectHeaderLogo className="absolute left-3.5 -top-[146px] rounded-[0.85rem] border-6 border-white dark:border-slate-900 md:left-0" />
 
-      <div className="flex justify-end gap-4">
+      <div className="flex items-center justify-end gap-4">
         {projectId ? (
           isMobile ? (
             <ProjectHeaderPopupMenu projectId={projectId} />
@@ -44,6 +45,7 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
                 pv={PV_V2}
                 tooltipPlacement="bottom"
               />
+              <ToolsDrawerButton />
               {canReconfigure && (
                 <Link
                   href={settingsPagePath(undefined, { handle, projectId })}

@@ -134,6 +134,7 @@ export const usePayoutsTable = () => {
     let newSplitPercentPPB = (newSplitPercent * ONE_BILLION) / 100
     let adjustedSplits: Split[] = payoutSplits
     let newDistributionLimit = distributionLimit
+
     // If amounts (!distributionLimitIsInfinite), handle changing DL and split %s
     if (!distributionLimitIsInfinite) {
       const newAmount = deriveAmountBeforeFee(newSplitPercent)

@@ -6,6 +6,7 @@ import { useContext } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
 import { splitsListsHaveDiff } from 'utils/splits'
 import { V2V3CurrencyName, V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
+import { distributionLimitsEqual } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 
@@ -34,12 +35,13 @@ export const usePayoutsSectionValues = () => {
   )
   const currencyHasDiff = currentCurrency !== newCurrency
 
-  const newDistributionLimit = parseWad(
-    editCycleForm?.getFieldValue('distributionLimit') as number,
-  )
+  const newDistributionLimitNum =
+    editCycleForm?.getFieldValue('distributionLimit')
+  const newDistributionLimit = newDistributionLimitNum
+    ? parseWad(newDistributionLimitNum)
+    : undefined
   const distributionLimitHasDiff =
-    (currentDistributionLimit &&
-      !newDistributionLimit?.eq(currentDistributionLimit)) ||
+    !distributionLimitsEqual(currentDistributionLimit, newDistributionLimit) ||
     currencyHasDiff
   const distributionLimitIsInfinite =
     !newDistributionLimit || newDistributionLimit.eq(MAX_DISTRIBUTION_LIMIT)

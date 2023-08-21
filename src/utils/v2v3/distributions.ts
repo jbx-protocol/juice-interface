@@ -2,6 +2,7 @@ import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 
 import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { isInfiniteDistributionLimit } from './fundingCycle'
 import {
   MAX_DISTRIBUTION_LIMIT,
   preciseFormatSplitPercent,
@@ -142,4 +143,25 @@ export function distributionLimitStringtoNumber(
   return distributionLimitIsInfinite
     ? undefined
     : parseFloat(fromWad(distributionLimitBN))
+}
+
+/**
+ * Determines if two distributionLimits are the same
+ * @param distributionLimit1 {BigNumber | undefined} - First DL to compare (undefined === unlimited)
+ * @param distributionLimit2 {BigNumber | undefined} - Second DL to compare (undefined === unlimited)
+
+ * @returns {boolean} - True if DLs are the same, 
+ */
+export function distributionLimitsEqual(
+  distributionLimit1: BigNumber | undefined,
+  distributionLimit2: BigNumber | undefined,
+) {
+  const distributionLimit1IsInfinite =
+    !distributionLimit1 || isInfiniteDistributionLimit(distributionLimit1)
+  const distributionLimit2IsInfinite =
+    !distributionLimit2 || isInfiniteDistributionLimit(distributionLimit2)
+  if (distributionLimit1IsInfinite && distributionLimit2IsInfinite) {
+    return true
+  }
+  return distributionLimit1?.eq(distributionLimit2 ?? 0)
 }

@@ -2,6 +2,7 @@
 .ant-input-affix-wrapper .ant-input,
 .ant-input-textarea textarea {
   @apply text-primary;
+  @apply py-1.5;
 }
 
 .ant-input-number,

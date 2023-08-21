@@ -12,7 +12,7 @@ export function PayoutsSection() {
   const { editCycleForm } = useEditCycleFormContext()
   const payoutSplits = useWatch('payoutSplits', editCycleForm) ?? []
   const currency = useWatch('distributionLimitCurrency', editCycleForm) ?? 'ETH'
-  const distributionLimit = useWatch('distributionLimit', editCycleForm) ?? 0
+  const distributionLimit = useWatch('distributionLimit', editCycleForm)
 
   const setPayoutSplits = (payoutSplits: Split[]) =>
     editCycleForm?.setFieldsValue({ payoutSplits })

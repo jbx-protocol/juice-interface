@@ -5,7 +5,7 @@ import { useCallback, useContext, useMemo } from 'react'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 
 export const useCartSummary = () => {
-  const { isConnected, connect } = useWallet()
+  const { isConnected } = useWallet()
   const cart = useProjectCart()
   const nftRewardsCtx = useContext(NftRewardsContext).nftRewards
   const tiers = useMemo(
@@ -33,12 +33,8 @@ export const useCartSummary = () => {
   }, [cart])
 
   const payProject = useCallback(() => {
-    if (!isConnected) {
-      connect()
-      return
-    }
     cart.dispatch({ type: 'openPayModal' })
-  }, [cart, connect, isConnected])
+  }, [cart])
 
   const showCurrencyOnCollapse = useMemo(() => {
     return cart.payAmount?.amount ? cart.payAmount.amount > 0 : false

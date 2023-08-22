@@ -18,6 +18,7 @@ import {
 } from 'utils/v2v3/currency'
 import {
   adjustedSplitPercents,
+  ensureSplitsSumTo100Percent,
   getNewDistributionLimit,
 } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
@@ -237,7 +238,9 @@ export const usePayoutsTable = () => {
     editingPayoutSplit: Split
     newAmount: number
   }) {
-    const _amount = isProjectSplit(editingPayoutSplit)
+    const _amount = Number.isNaN(newAmount)
+      ? 0
+      : isProjectSplit(editingPayoutSplit)
       ? newAmount
       : deriveAmountBeforeFee(newAmount)
     // Convert the newAmount to its percentage of the new DL in parts-per-bill
@@ -280,7 +283,7 @@ export const usePayoutsTable = () => {
     )
 
     setDistributionLimit(newDistributionLimit)
-    setPayoutSplits(newPayoutSplits)
+    setPayoutSplits(ensureSplitsSumTo100Percent({ splits: newPayoutSplits }))
   }
 
   /**

@@ -96,7 +96,10 @@ export function ensureSplitsSumTo100Percent({
   const largestSplitIndex = adjustedSplits.findIndex(
     split => split.percent === Math.max(...adjustedSplits.map(s => s.percent)),
   )
-  adjustedSplits[largestSplitIndex].percent += difference
+  if (adjustedSplits[largestSplitIndex]) {
+    adjustedSplits[largestSplitIndex].percent += difference
+  }
+
   return adjustedSplits
 }
 

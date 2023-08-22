@@ -1,5 +1,6 @@
 import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { BigNumber } from 'ethers'
+import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { useMemo } from 'react'
 import {
@@ -9,6 +10,8 @@ import {
 import { formatSplitPercent } from 'utils/v2v3/math'
 import { SplitProps } from '../SplitItem'
 import { DiffedSplitItem } from './DiffedSplitItem'
+
+const JB_PERCENT_PRECISION = 2
 
 type DiffedSplitListProps = {
   splits: Split[]
@@ -51,10 +54,16 @@ export default function DiffedSplitList({
 
   const ownerSplitIsRemoved =
     !ownerSplit?.percent && diffOwnerSplit?.percent === 0
+
+  const roundedDiffOwnerSplitPercent = round(
+    parseFloat(
+      formatSplitPercent(BigNumber.from(diffOwnerSplit?.percent || 0)),
+    ),
+    JB_PERCENT_PRECISION,
+  )
   const diffOwnerSplitHasPercent =
-    diffOwnerSplit &&
-    parseFloat(formatSplitPercent(BigNumber.from(diffOwnerSplit.percent))) >=
-      0.01
+    diffOwnerSplit && roundedDiffOwnerSplitPercent !== 0
+
   const ownerSplitIsNew = ownerSplit?.percent && !diffOwnerSplitHasPercent
 
   const currencyHasDiff = Boolean(

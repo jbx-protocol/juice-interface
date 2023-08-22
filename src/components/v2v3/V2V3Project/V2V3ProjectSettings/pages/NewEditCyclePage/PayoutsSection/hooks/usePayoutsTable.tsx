@@ -137,9 +137,13 @@ export const usePayoutsTable = () => {
     let adjustedSplits: Split[] = payoutSplits
     let newDistributionLimit = distributionLimit
 
+    const isProject = newSplit.projectId && newSplit.projectId !== '0x00'
+
     // If amounts (!distributionLimitIsInfinite), handle changing DL and split %s
     if (!distributionLimitIsInfinite) {
-      const newAmount = deriveAmountBeforeFee(newSplitPercent)
+      const newAmount = isProject
+        ? newSplitPercent
+        : deriveAmountBeforeFee(newSplitPercent)
       // Convert the newAmount to its percentage of the new DL in parts-per-bill
       newDistributionLimit = distributionLimit
         ? getNewDistributionLimit({
@@ -274,14 +278,14 @@ export const usePayoutsTable = () => {
       percent: newSplitPercentPPB,
     } as Split
 
-    const newPayoutSplits = adjustedSplits.map(m =>
-      hasEqualRecipient(m, editingPayoutSplit)
+    const newPayoutSplits = adjustedSplits.map(m => {
+      return hasEqualRecipient(m, editingPayoutSplit)
         ? {
             ...m,
             ...newPayoutSplit,
           }
-        : m,
-    )
+        : m
+    })
 
     setDistributionLimit(newDistributionLimit)
     setPayoutSplits(ensureSplitsSumTo100Percent({ splits: newPayoutSplits }))

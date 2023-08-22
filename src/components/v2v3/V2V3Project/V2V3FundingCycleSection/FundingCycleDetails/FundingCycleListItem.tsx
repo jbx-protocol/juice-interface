@@ -32,7 +32,7 @@ export function FundingCycleListItem({
     return (
       <div
         className={twMerge(
-          'mb-2 flex cursor-default flex-wrap items-center',
+          'mb-2 flex cursor-default flex-wrap items-center justify-between',
           subItem ? 'ml-5 text-xs' : 'text-sm',
           className,
         )}
@@ -50,7 +50,7 @@ export function FundingCycleListItem({
             :
           </div>{' '}
         </Tooltip>
-        {_value}
+        <div className="flex">{_value}</div>
       </div>
     )
   }
@@ -58,12 +58,13 @@ export function FundingCycleListItem({
   return (
     <div
       className={classNames(
-        'mb-2 flex flex-wrap items-center',
+        'mb-2 flex flex-wrap items-center justify-between',
         subItem ? 'ml-5 text-xs' : 'text-sm',
         className,
       )}
     >
-      <div className="font-medium">{name}:</div> {_value}
+      <div className="font-medium">{name}:</div>
+      <div className="flex">{_value}</div>
     </div>
   )
 }

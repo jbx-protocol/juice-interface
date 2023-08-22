@@ -1,24 +1,23 @@
-import { t } from '@lingui/macro'
-import { AdvancedDropdown } from '../AdvancedDropdown'
+import { Trans } from '@lingui/macro'
 
 export function DiffSection({
   content,
   advancedOptions,
 }: {
   content: React.ReactNode
-  advancedOptions: React.ReactNode
+  advancedOptions?: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 text-sm">
       {content}
-      <AdvancedDropdown
-        title={t`Advanced options:`}
-        className="border-t-0 pb-3 pt-0"
-        headerClassName="flex-row-reverse justify-end gap-2 text-sm"
-        contentContainerClass="pt-2"
-      >
-        <div className="pl-10 text-xs">{advancedOptions}</div>
-      </AdvancedDropdown>
+      {advancedOptions ? (
+        <>
+          <div className="py-3 font-semibold">
+            <Trans>Advanced options:</Trans>
+          </div>
+          {advancedOptions}
+        </>
+      ) : null}
     </div>
   )
 }

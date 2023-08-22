@@ -77,6 +77,7 @@ export function HeaderRows() {
         open={addRecipientModalOpen}
         onOk={handleAddRecipientModalOk}
         onCancel={() => setAddRecipientModalOpen(false)}
+        hideProjectOwnerOption
       />
     </>
   )

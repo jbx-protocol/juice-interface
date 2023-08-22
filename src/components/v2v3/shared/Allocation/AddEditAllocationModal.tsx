@@ -54,6 +54,7 @@ export const AddEditAllocationModal = ({
   open,
   onOk,
   onCancel,
+  hideProjectOwnerOption,
 }: {
   className?: string
   allocationName: string
@@ -62,6 +63,7 @@ export const AddEditAllocationModal = ({
   open?: boolean
   onOk: (split: AddEditAllocationModalEntity) => void
   onCancel: VoidFunction
+  hideProjectOwnerOption?: boolean
 }) => {
   const { primaryETHTerminalFee } = useContext(V2V3ProjectContext)
 
@@ -190,7 +192,8 @@ export const AddEditAllocationModal = ({
   const showProjectOwnerRecipientOption =
     amountType !== 'percentage' &&
     (!allocations.length ||
-      ceilIfCloseToNextInteger(totalAllocationPercent) === 100)
+      ceilIfCloseToNextInteger(totalAllocationPercent) === 100) &&
+    !hideProjectOwnerOption
 
   const projectId = Form.useWatch('juiceboxProjectId', form)
 

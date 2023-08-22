@@ -200,6 +200,9 @@ msgstr ""
 msgid "Project owner token minting"
 msgstr ""
 
+msgid "Payout recipients:"
+msgstr ""
+
 msgid "Project launch successful"
 msgstr ""
 
@@ -321,6 +324,9 @@ msgid "Safe transactions"
 msgstr ""
 
 msgid "<0>Snapshot</0> is an off-chain voting system. You can use your Juicebox project tokens in a Snapshot voting strategy. <1>Learn more</1>."
+msgstr ""
+
+msgid "Changes will take effect when your next cycle starts."
 msgstr ""
 
 msgid "See example"
@@ -936,6 +942,9 @@ msgid "Automated"
 msgstr ""
 
 msgid "Design how your tokens should work."
+msgstr ""
+
+msgid "Back to settings"
 msgstr ""
 
 msgid "Project {projectId} not found"
@@ -1673,6 +1682,9 @@ msgstr ""
 msgid "Payments made"
 msgstr ""
 
+msgid "Reserved recipients:"
+msgstr ""
+
 msgid "Transfer ownership"
 msgstr ""
 
@@ -1854,6 +1866,9 @@ msgid "Treasury balance"
 msgstr ""
 
 msgid "DAO"
+msgstr ""
+
+msgid "Edited"
 msgstr ""
 
 msgid "Send {tokensText}"
@@ -2150,6 +2165,9 @@ msgstr ""
 msgid "{count} total"
 msgstr ""
 
+msgid "Your updated cycle has been deployed"
+msgstr ""
+
 msgid "Edit NFTs"
 msgstr ""
 
@@ -2336,6 +2354,9 @@ msgstr ""
 msgid "Available to pay out"
 msgstr ""
 
+msgid "Memo <0>(optional)</0>"
+msgstr ""
+
 msgid "Max. supply reached"
 msgstr ""
 
@@ -2346,6 +2367,9 @@ msgid "Send reserved tokens"
 msgstr ""
 
 msgid "Sent reserved tokens"
+msgstr ""
+
+msgid "No edits were made to cycle details for this cycle."
 msgstr ""
 
 msgid "{nftBalanceFormatted, plural, one {NFT} other {NFTs}}"
@@ -3149,6 +3173,9 @@ msgstr ""
 msgid "1. Grant permission"
 msgstr ""
 
+msgid "No edits were made to payouts for this cycle."
+msgstr ""
+
 msgid "V1 Project handle"
 msgstr ""
 
@@ -3297,6 +3324,9 @@ msgid "This transaction edits the project's cycle."
 msgstr ""
 
 msgid "Summary"
+msgstr ""
+
+msgid "New value"
 msgstr ""
 
 msgid "Find a project"
@@ -3563,6 +3593,9 @@ msgstr ""
 msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this project's owner's wallet."
 msgstr ""
 
+msgid "Previous value"
+msgstr ""
+
 msgid "Owner token minting:"
 msgstr ""
 
@@ -3813,6 +3846,9 @@ msgid "Something went wrong."
 msgstr ""
 
 msgid "Avatar"
+msgstr ""
+
+msgid "No changes"
 msgstr ""
 
 msgid "Project ENS name"
@@ -4236,6 +4272,9 @@ msgid "Has Juicebox been audited? What are the risks?"
 msgstr ""
 
 msgid "Customization"
+msgstr ""
+
+msgid "No limit"
 msgstr ""
 
 msgid "Block number"
@@ -4971,6 +5010,9 @@ msgid "Unlocked Cycles"
 msgstr ""
 
 msgid "Add token"
+msgstr ""
+
+msgid "No edits were made to tokens for this cycle."
 msgstr ""
 
 msgid "Your rules are locked during a cycle. With no duration, edits can be made at any time."

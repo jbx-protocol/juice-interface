@@ -49,6 +49,12 @@ export const useDetailsSectionValues = () => {
   )
   const allowSetControllerHasDiff = currentSetController !== newSetController
 
+  const advancedOptionsHasDiff =
+    pausePayHasDiff || allowSetTerminalsHasDiff || allowSetControllerHasDiff
+
+  const sectionHasDiff =
+    durationHasDiff || ballotHasDiff || advancedOptionsHasDiff
+
   return {
     currentDuration,
     newDuration,
@@ -69,5 +75,8 @@ export const useDetailsSectionValues = () => {
     newSetController,
     currentSetController,
     allowSetControllerHasDiff,
+
+    advancedOptionsHasDiff,
+    sectionHasDiff,
   }
 }

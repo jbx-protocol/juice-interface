@@ -2,14 +2,16 @@ import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 
 import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { isInfiniteDistributionLimit } from './fundingCycle'
 import {
   MAX_DISTRIBUTION_LIMIT,
+  SPLITS_TOTAL_PERCENT,
   preciseFormatSplitPercent,
   splitPercentFrom,
 } from './math'
 
 /**
- * Gets amount from percent of a bigger amount (rounded to 4dp)
+ * Gets amount from percent of a bigger amount
  * @param percent {float} - value as a percentage.
  * @param amount string (hexString)
  * @returns {number} distribution amount
@@ -26,7 +28,7 @@ export function amountFromPercent({
 
 /**
  * Gets split percent from split amount and the distribution limit
- * @param percent {float} - value as a percentage.
+ * @param amount {float} - value as a percentage.
  * @param distributionLimit number
  * @returns {number} percent as an actual percentage of distribution limit (/100)
  */
@@ -50,6 +52,52 @@ export function getTotalSplitsPercentage(splits: Split[]) {
     (acc, curr) => acc + preciseFormatSplitPercent(curr.percent),
     0,
   )
+}
+
+/**
+ * Due to limitations of rounding errors, it's possible that adjustedSplitPercents causes
+ * the splits to sum to 99.99999999% or 100.0000001% (causes error) instead of 100%.
+ * This function does one final pass of the percents to ensure they sum to 100%.
+ * @param splits {Split[]} - list of current splits to possibly have their percents adjusted
+ * @returns {Split[]} splits with their percents adjusted
+ */
+export function ensureSplitsSumTo100Percent({
+  splits,
+}: {
+  splits: Split[]
+}): Split[] {
+  // Calculate the percent total of the splits
+  const currentTotal = splits.reduce((sum, split) => sum + split.percent, 0)
+  // If the current total is already equal to SPLITS_TOTAL_PERCENT, no adjustment needed
+  if (currentTotal === SPLITS_TOTAL_PERCENT) {
+    return splits
+  }
+
+  // Calculate the ratio to adjust each split by
+  const ratio = SPLITS_TOTAL_PERCENT / currentTotal
+
+  // Adjust each split
+  const adjustedSplits = splits.map(split => ({
+    ...split,
+    percent: Math.round(split.percent * ratio),
+  }))
+
+  // Calculate the total after adjustment
+  const adjustedTotal = adjustedSplits.reduce(
+    (sum, split) => sum + split.percent,
+    0,
+  )
+  if (adjustedTotal === SPLITS_TOTAL_PERCENT) {
+    return adjustedSplits
+  }
+
+  // If there's STILL a difference due to rounding errors, adjust the largest split
+  const difference = SPLITS_TOTAL_PERCENT - adjustedTotal
+  const largestSplitIndex = adjustedSplits.findIndex(
+    split => split.percent === Math.max(...adjustedSplits.map(s => s.percent)),
+  )
+  adjustedSplits[largestSplitIndex].percent += difference
+  return adjustedSplits
 }
 
 /**
@@ -142,4 +190,24 @@ export function distributionLimitStringtoNumber(
   return distributionLimitIsInfinite
     ? undefined
     : parseFloat(fromWad(distributionLimitBN))
+}
+
+/**
+ * Determines if two distributionLimits are the same
+ * @param distributionLimit1 {BigNumber | undefined} - First DL to compare (undefined === unlimited)
+ * @param distributionLimit2 {BigNumber | undefined} - Second DL to compare (undefined === unlimited)
+
+ * @returns {boolean} - True if DLs are the same, 
+ */
+export function distributionLimitsEqual(
+  distributionLimit1: BigNumber | undefined,
+  distributionLimit2: BigNumber | undefined,
+) {
+  if (
+    isInfiniteDistributionLimit(distributionLimit1) &&
+    isInfiniteDistributionLimit(distributionLimit2)
+  ) {
+    return true
+  }
+  return distributionLimit1?.eq(distributionLimit2 ?? 0)
 }

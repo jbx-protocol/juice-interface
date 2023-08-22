@@ -23,10 +23,10 @@ export function PayoutsSectionDiff() {
 
     currentPayoutSplits,
     newPayoutSplits,
+    payoutSplitsHasDiff,
 
     newHoldFees,
     currentHoldFees,
-    holdFeesHasDiff,
   } = usePayoutsSectionValues()
 
   if (!sectionHasDiff) {
@@ -39,56 +39,59 @@ export function PayoutsSectionDiff() {
 
   const roundingPrecision = newCurrency === 'ETH' ? 4 : 2
 
-  const content = (
-    <div className="mb-5 flex flex-col gap-3 text-sm">
-      <FundingCycleListItem
-        name={t`Total payouts`}
-        value={
-          <DistributionLimitValue
-            distributionLimit={newDistributionLimit}
-            currency={newCurrency}
-            shortName
-          />
-        }
-        oldValue={
-          distributionLimitHasDiff ? (
-            <DistributionLimitValue
-              distributionLimit={currentDistributionLimit}
-              currency={currentCurrency}
-              shortName
+  return (
+    <DiffSection
+      content={
+        <div className="mb-5 flex flex-col gap-3 text-sm">
+          {distributionLimitHasDiff && (
+            <FundingCycleListItem
+              name={t`Total payouts`}
+              value={
+                <DistributionLimitValue
+                  distributionLimit={newDistributionLimit}
+                  currency={newCurrency}
+                  shortName
+                />
+              }
+              oldValue={
+                <DistributionLimitValue
+                  distributionLimit={currentDistributionLimit}
+                  currency={currentCurrency}
+                  shortName
+                />
+              }
             />
-          ) : undefined
-        }
-      />
-      <div className="pb-4">
-        <div className="mb-3 text-sm font-semibold">
-          <Trans>Payout recipients:</Trans>
+          )}
+          {payoutSplitsHasDiff && (
+            <div className="pb-4">
+              <div className="mb-3 text-sm font-semibold">
+                <Trans>Payout recipients:</Trans>
+              </div>
+              <DiffedSplitList
+                splits={newPayoutSplits}
+                diffSplits={currentPayoutSplits}
+                currency={BigNumber.from(getV2V3CurrencyOption(newCurrency))}
+                projectOwnerAddress={undefined}
+                totalValue={newDistributionLimit}
+                showAmounts={!distributionLimitIsInfinite}
+                valueFormatProps={{ precision: roundingPrecision }}
+                showDiffs
+              />
+            </div>
+          )}
         </div>
-        <DiffedSplitList
-          splits={newPayoutSplits}
-          diffSplits={currentPayoutSplits}
-          currency={BigNumber.from(getV2V3CurrencyOption(newCurrency))}
-          projectOwnerAddress={undefined}
-          totalValue={newDistributionLimit}
-          showAmounts={!distributionLimitIsInfinite}
-          valueFormatProps={{ precision: roundingPrecision }}
-          showDiffs
-        />
-      </div>
-    </div>
-  )
-
-  const advancedOptions = advancedOptionsHasDiff ? (
-    <FundingCycleListItem
-      name={t`Hold fees`}
-      value={<span className="capitalize">{newHoldFees.toString()}</span>}
-      oldValue={
-        holdFeesHasDiff ? (
-          <span className="capitalize">{currentHoldFees.toString()}</span>
-        ) : undefined
+      }
+      advancedOptions={
+        advancedOptionsHasDiff && (
+          <FundingCycleListItem
+            name={t`Hold fees`}
+            value={<span className="capitalize">{newHoldFees.toString()}</span>}
+            oldValue={
+              <span className="capitalize">{currentHoldFees.toString()}</span>
+            }
+          />
+        )
       }
     />
-  ) : undefined
-
-  return <DiffSection content={content} advancedOptions={advancedOptions} />
+  )
 }

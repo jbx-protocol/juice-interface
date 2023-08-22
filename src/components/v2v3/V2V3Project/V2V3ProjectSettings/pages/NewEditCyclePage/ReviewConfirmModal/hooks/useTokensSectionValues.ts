@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
+import { splitsListsHaveDiff } from 'utils/splits'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
   deriveNextIssuanceRate,
@@ -8,6 +9,7 @@ import {
 } from 'utils/v2v3/fundingCycle'
 import {
   discountRateFrom,
+  formatIssuanceRate,
   issuanceRateFrom,
   reservedRateFrom,
 } from 'utils/v2v3/math'
@@ -38,7 +40,11 @@ export const useTokensSectionValues = () => {
     plural: true,
   })
 
-  const newMintRate = BigNumber.from(issuanceRateFrom(formValues.mintRate))
+  const newMintRateNum = parseFloat(formValues.mintRate)
+  const newMintRate = BigNumber.from(
+    issuanceRateFrom(newMintRateNum.toString()),
+  )
+
   const newReservedRate = reservedRateFrom(formValues.reservedTokens)
   const newReservedSplits = formValues.reservedSplits
   const newDiscountRate = discountRateFrom(formValues.discountRate)
@@ -47,6 +53,10 @@ export const useTokensSectionValues = () => {
   const newPauseTransfers = formValues.pauseTransfers
 
   const currentMintRate = currentFundingCycle?.weight
+  const currentMintRateNum = currentMintRate
+    ? parseFloat(formatIssuanceRate(currentMintRate.toString()))
+    : undefined
+
   const currentReservedRate = currentFundingCycleMetadata?.reservedRate
   const currentDiscountRate = currentFundingCycle?.discountRate
   const currentRedemptionRate = currentFundingCycleMetadata?.redemptionRate
@@ -66,14 +76,17 @@ export const useTokensSectionValues = () => {
     )
 
   const mintRateHasDiff = Boolean(
-    currentMintRate &&
-      !newMintRate.eq(currentMintRate) &&
-      !onlyDiscountRateApplied,
+    currentMintRateNum !== newMintRateNum && !onlyDiscountRateApplied,
   )
 
   const reservedRateHasDiff = Boolean(
     currentReservedRate &&
       !BigNumber.from(newReservedRate).eq(currentReservedRate),
+  )
+
+  const reservedSplitsHasDiff = splitsListsHaveDiff(
+    currentReservedSplits,
+    newReservedSplits,
   )
 
   const discountRateHasDiff = Boolean(
@@ -97,7 +110,9 @@ export const useTokensSectionValues = () => {
     redemptionHasDiff ||
     allowMintingHasDiff ||
     pauseTransfersHasDiff
-  const sectionHasDiff = mintRateHasDiff || advancedOptionsHasDiff
+
+  const sectionHasDiff =
+    mintRateHasDiff || reservedSplitsHasDiff || advancedOptionsHasDiff
 
   return {
     newMintRate,
@@ -110,7 +125,7 @@ export const useTokensSectionValues = () => {
 
     newReservedSplits,
     currentReservedSplits,
-    //TODO: reservedSplitsHasDiff,
+    reservedSplitsHasDiff,
 
     newDiscountRate,
     currentDiscountRate,

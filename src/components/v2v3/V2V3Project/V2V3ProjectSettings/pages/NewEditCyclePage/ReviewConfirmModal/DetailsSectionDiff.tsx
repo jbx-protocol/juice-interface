@@ -2,7 +2,6 @@ import { Trans, t } from '@lingui/macro'
 import { FundingCycleListItem } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItem'
 import { DurationValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItems/DurationValue'
 
-import { AllowedValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/RulesListItems/AllowedValue'
 import { BallotStrategyValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/RulesListItems/BallotStrategyValue'
 import { DiffSection } from './DiffSection'
 import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
@@ -43,68 +42,85 @@ export function DetailsSectionDiff() {
     )
   }
 
-  const content = (
-    <>
-      <FundingCycleListItem
-        name={t`Duration`}
-        value={<DurationValue duration={newDuration} />}
-        oldValue={
-          durationHasDiff ? (
-            <DurationValue duration={currentDuration} />
-          ) : undefined
-        }
-      />
-      <FundingCycleListItem
-        name={t`Edit deadline`}
-        value={
-          <BallotStrategyValue
-            ballotStrategy={newBallot}
-            warningText={undefined}
-          />
-        }
-        oldValue={
-          currentBallot && ballotHasDiff ? (
-            <BallotStrategyValue
-              ballotStrategy={currentBallot}
-              warningText={undefined}
+  return (
+    <DiffSection
+      content={
+        <>
+          {durationHasDiff && (
+            <FundingCycleListItem
+              name={t`Duration`}
+              value={<DurationValue duration={newDuration} />}
+              oldValue={<DurationValue duration={currentDuration} />}
             />
-          ) : undefined
-        }
-      />
-    </>
+          )}
+          {ballotHasDiff && currentBallot && (
+            <FundingCycleListItem
+              name={t`Edit deadline`}
+              value={
+                <BallotStrategyValue
+                  ballotStrategy={newBallot}
+                  warningText={undefined}
+                />
+              }
+              oldValue={
+                <BallotStrategyValue
+                  ballotStrategy={currentBallot}
+                  warningText={undefined}
+                />
+              }
+            />
+          )}
+        </>
+      }
+      advancedOptions={
+        advancedOptionsHasDiff && (
+          <>
+            {pausePayHasDiff && (
+              <FundingCycleListItem
+                name={t`Payments disabled`}
+                value={
+                  <span className="capitalize">{newPausePay.toString()}</span>
+                }
+                oldValue={
+                  <span className="capitalize">
+                    {currentPausePay.toString()}
+                  </span>
+                }
+              />
+            )}
+            {allowSetTerminalsHasDiff && (
+              <FundingCycleListItem
+                name={t`Enable set payment terminal`}
+                value={
+                  <span className="capitalize">
+                    {newSetTerminals.toString()}
+                  </span>
+                }
+                oldValue={
+                  <span className="capitalize">
+                    {currentSetTerminals.toString()}
+                  </span>
+                }
+              />
+            )}
+            {allowSetControllerHasDiff && (
+              <FundingCycleListItem
+                name={t`Enable set controller`}
+                value={
+                  <span className="capitalize">
+                    {newSetController.toString()}
+                  </span>
+                }
+                oldValue={
+                  <span className="capitalize">
+                    {currentSetController.toString()}
+                  </span>
+                }
+              />
+            )}
+          </>
+        )
+      }
+    />
   )
-
-  const advancedOptions = advancedOptionsHasDiff ? (
-    <>
-      <FundingCycleListItem
-        name={t`Payments disabled`}
-        value={<span className="capitalize">{newPausePay.toString()}</span>}
-        oldValue={
-          pausePayHasDiff ? (
-            <span className="capitalize">{currentPausePay.toString()}</span>
-          ) : undefined
-        }
-      />
-      <FundingCycleListItem
-        name={t`Enable set payment terminal`}
-        value={<AllowedValue value={newSetTerminals} />}
-        oldValue={
-          allowSetTerminalsHasDiff ? (
-            <AllowedValue value={currentSetTerminals} />
-          ) : undefined
-        }
-      />
-      <FundingCycleListItem
-        name={t`Enable set controller`}
-        value={<AllowedValue value={newSetController} />}
-        oldValue={
-          allowSetControllerHasDiff ? (
-            <AllowedValue value={currentSetController} />
-          ) : undefined
-        }
-      />
-    </>
-  ) : undefined
-
-  return <DiffSection content={content} advancedOptions={advancedOptions} />
 }

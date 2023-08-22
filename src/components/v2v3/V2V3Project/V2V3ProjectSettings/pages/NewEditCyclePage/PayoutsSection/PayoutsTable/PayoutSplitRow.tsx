@@ -1,7 +1,4 @@
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
-import { Trans } from '@lingui/macro'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { PopupMenu } from 'components/ui/PopupMenu'
 import {
   AddEditAllocationModal,
   AddEditAllocationModalEntity,
@@ -11,6 +8,7 @@ import { Split } from 'models/splits'
 import { useState } from 'react'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
+import { PayoutSplitRowMenu } from './PayoutSplitRowMenu'
 import { PayoutTitle } from './PayoutTitle'
 import { PayoutsTableCell } from './PayoutsTableCell'
 import { PayoutsTableRow } from './PayoutsTableRow'
@@ -25,6 +23,11 @@ export function PayoutSplitRow({
   onDeleteClick: VoidFunction
 }) {
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false)
+  const [
+    amountPercentFieldHasEndingDecimal,
+    setAmountPercentFieldHasEndingDecimal,
+  ] = useState<boolean>(false)
+
   const { editCycleForm } = useEditCycleFormContext()
 
   const {
@@ -39,13 +42,15 @@ export function PayoutSplitRow({
   const amount = derivePayoutAmount({ payoutSplit })
   const isPercent = !amount
 
-  const formattedAmountOrPercentage = amount
-    ? round(amount, roundingPrecision).toString()
-    : formattedPayoutPercent({ payoutSplitPercent: payoutSplit.percent })
+  const formattedAmountOrPercentage = isPercent
+    ? formattedPayoutPercent({ payoutSplitPercent: payoutSplit.percent })
+    : round(amount, roundingPrecision).toString()
 
   if (!editCycleForm) return null
 
   const onAmountPercentageInputChange = (val: string | undefined) => {
+    setAmountPercentFieldHasEndingDecimal(Boolean(val?.endsWith('.')))
+
     const newAmount = parseFloat(val ?? '0')
     if (isPercent) {
       handlePayoutSplitChanged({
@@ -92,31 +97,6 @@ export function PayoutSplitRow({
     lockedUntil: payoutSplit.lockedUntil,
   } as AddEditAllocationModalEntity
 
-  const menuItemsLabelClass = 'flex gap-2 items-center'
-  const menuItemsIconClass = 'h-5 w-5'
-  const menuItems = [
-    {
-      id: 'edit',
-      label: (
-        <div className={menuItemsLabelClass}>
-          <PencilIcon className={menuItemsIconClass} />
-          <Trans>Edit</Trans>
-        </div>
-      ),
-      onClick: () => setEditModalOpen(true),
-    },
-    {
-      id: 'delete',
-      label: (
-        <div className={menuItemsLabelClass}>
-          <TrashIcon className={menuItemsIconClass} />
-          <Trans>Delete</Trans>
-        </div>
-      ),
-      onClick: onDeleteClick,
-    },
-  ]
-
   return (
     <>
       <PayoutsTableRow className="text-primary text-sm">
@@ -130,11 +110,16 @@ export function PayoutSplitRow({
                 <span className="text-sm">{currencyOrPercentSymbol}</span>
               }
               accessoryPosition="left"
-              value={formattedAmountOrPercentage}
+              value={`${formattedAmountOrPercentage}${
+                amountPercentFieldHasEndingDecimal ? '.' : ''
+              }`}
               onChange={onAmountPercentageInputChange}
               className="h-10"
             />
-            <PopupMenu items={menuItems} />
+            <PayoutSplitRowMenu
+              onEditClick={() => setEditModalOpen(true)}
+              onDeleteClick={onDeleteClick}
+            />
           </div>
         </Cell>
       </PayoutsTableRow>
@@ -147,6 +132,7 @@ export function PayoutSplitRow({
         open={editModalOpen}
         onOk={handleEditModalOk}
         onCancel={() => setEditModalOpen(false)}
+        hideProjectOwnerOption
       />
     </>
   )

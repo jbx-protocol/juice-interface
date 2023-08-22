@@ -152,3 +152,32 @@ export const projectIdToHex = (projectIdString: string | undefined) =>
 // Returns the sum of each split's percent in a list of splits
 export const totalSplitsPercent = (splits: Split[]) =>
   splits?.reduce((sum, split) => sum + split.percent, 0) ?? 0
+
+/**
+ * Determines if two lists of splits have any diff's within them.
+ * @param splits1 {Split[]} - first list of splits
+ * @param splits2 {Split[]} - second list of splits
+ * @returns {boolean} - true if splits have a diff, false if the same.
+ */
+export function splitsListsHaveDiff(
+  splits1: Split[] | undefined,
+  splits2: Split[] | undefined,
+) {
+  if (!splits1 && !splits2) return false
+  if ((splits1 && !splits2) || (!splits1 && splits2)) return true
+
+  for (const split1 of splits1!) {
+    const correspondingSplit = splits2!.find(split2 =>
+      hasEqualRecipient(split1, split2),
+    )
+
+    if (!correspondingSplit) {
+      return true
+    }
+
+    if (!isEqual(split1, correspondingSplit)) {
+      return true
+    }
+  }
+  return splits1!.length !== splits2!.length
+}

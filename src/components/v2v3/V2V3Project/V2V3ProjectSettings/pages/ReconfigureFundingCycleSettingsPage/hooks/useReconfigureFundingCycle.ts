@@ -45,10 +45,12 @@ export const useReconfigureFundingCycle = ({
   editingFundingCycleConfig,
   memo,
   launchedNewNfts,
+  onComplete,
 }: {
   editingFundingCycleConfig: EditingFundingCycleConfig
   memo: string
   launchedNewNfts?: boolean
+  onComplete?: VoidFunction
 }) => {
   const { fundingCycle } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
@@ -124,7 +126,11 @@ export const useReconfigureFundingCycle = ({
           })
         }
         setReconfigureTxLoading(false)
-        reloadWindow()
+        if (onComplete) {
+          onComplete()
+        } else {
+          reloadWindow()
+        }
       },
     }
 
@@ -161,6 +167,7 @@ export const useReconfigureFundingCycle = ({
     nftRewardsCids,
     fundingCycle,
     memo,
+    onComplete,
     projectId,
   ])
 

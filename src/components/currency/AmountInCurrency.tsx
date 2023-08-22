@@ -10,11 +10,14 @@ import USDAmount from './USDAmount'
 export function AmountInCurrency({
   currency,
   amount,
+  hideTooltip,
   ...props
 }: {
   amount: BigNumber | undefined
+  hideTooltip?: boolean
   currency?: CurrencyName
 }) {
-  if (currency === 'USD') return <USDAmount amount={amount} {...props} />
-  return <ETHAmount amount={amount} {...props} />
+  if (currency === 'USD')
+    return <USDAmount amount={amount} hideTooltip={hideTooltip} {...props} />
+  return <ETHAmount amount={amount} hideTooltip={hideTooltip} {...props} />
 }

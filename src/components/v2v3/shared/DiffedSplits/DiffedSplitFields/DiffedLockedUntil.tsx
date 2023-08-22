@@ -28,7 +28,7 @@ export function DiffedLockedUntil({
     return (
       <div className="ml-2">
         <DiffedItem
-          value={<LockedUntilValue value={lockedUntilFormatted} />}
+          value={<LockedUntilValue lockedUntil={lockedUntil} />}
           diffStatus="new"
         />
       </div>
@@ -41,7 +41,7 @@ export function DiffedLockedUntil({
       return (
         <div className="ml-2">
           <DiffedItem
-            value={<LockedUntilValue value={oldLockedUntilFormatted} />}
+            value={<LockedUntilValue lockedUntil={oldLockedUntil} />}
             diffStatus="old"
           />
         </div>

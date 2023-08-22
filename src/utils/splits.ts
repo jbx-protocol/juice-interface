@@ -2,6 +2,8 @@ import { BigNumber, constants } from 'ethers'
 import isEqual from 'lodash/isEqual'
 import { Split, SplitParams } from 'models/splits'
 
+import { formatWad } from './format/formatNumber'
+import { isFiniteDistributionLimit } from './v2v3/fundingCycle'
 import { SPLITS_TOTAL_PERCENT } from './v2v3/math'
 
 //  - true if the split has been removed (exists in old but not new),
@@ -87,26 +89,96 @@ export const sortSplits = (splits: Split[]) => {
   return [...splits].sort((a, b) => (a.percent < b.percent ? 1 : -1))
 }
 
-// returns all unique splits (projectIds or addresses), sorted by their new `percent`
+/* Determines if two splits AMOUNTS are equal. Extracts amounts for two splits from their respective totalValues **/
+export function splitAmountsAreEqual({
+  split1,
+  split2,
+  split1TotalValue,
+  split2TotalValue,
+}: {
+  split1: Split
+  split2: Split
+  split1TotalValue?: BigNumber
+  split2TotalValue?: BigNumber
+}) {
+  const split1Amount = formatWad(
+    split1TotalValue?.mul(split1.percent).div(SPLITS_TOTAL_PERCENT),
+    {
+      precision: 2,
+    },
+  )
+  const split2Amount = formatWad(
+    split2TotalValue?.mul(split2.percent).div(SPLITS_TOTAL_PERCENT),
+    {
+      precision: 2,
+    },
+  )
+  return split2Amount === split1Amount
+}
+
+/* Determines if two splits are equal. If given totalValues, uses the amount of each split instead of its percent **/
+function splitsAreEqual({
+  split1,
+  split2,
+  split1TotalValue,
+  split2TotalValue,
+}: {
+  split1: Split
+  split2: Split
+  split1TotalValue?: BigNumber
+  split2TotalValue?: BigNumber
+}) {
+  const isFiniteTotalValue =
+    isFiniteDistributionLimit(split1TotalValue) &&
+    isFiniteDistributionLimit(split2TotalValue)
+  if (!isFiniteTotalValue) {
+    return isEqual(split1, split2)
+  }
+  return (
+    splitAmountsAreEqual({
+      split1,
+      split2,
+      split1TotalValue,
+      split2TotalValue,
+    }) &&
+    split1.beneficiary === split2.beneficiary &&
+    split1.allocator === split2.allocator &&
+    split1.lockedUntil === split2.lockedUntil &&
+    split1.projectId === split2.projectId &&
+    split1.preferClaimed === split2.preferClaimed
+  )
+}
+
+// returns all unique and diffed splits (projectIds or addresses), sorted by their new `percent`
 // and assigns each split an additional property `oldSplit` (OldSplit)
 export const processUniqueSplits = ({
   oldTotalValue,
+  newTotalValue,
   oldSplits,
   newSplits,
+  allSplitsChanged,
 }: {
   oldTotalValue?: BigNumber
+  newTotalValue?: BigNumber
   oldSplits: Split[] | undefined
   newSplits: Split[]
+  allSplitsChanged?: boolean // pass when you know all splits have changed (e.g. currency has changed)
 }): SplitWithDiff[] => {
   const uniqueSplitsByProjectIdOrAddress: Array<SplitWithDiff> = []
   if (!oldSplits) return sortSplits(newSplits)
-
   newSplits.map(split => {
     const oldSplit = oldSplits.find(oldSplit =>
       hasEqualRecipient(oldSplit, split),
     )
-
-    const splitsEqual = isEqual(split, oldSplit)
+    const splitsEqual =
+      oldSplit && !allSplitsChanged
+        ? splitsAreEqual({
+            split1: split,
+            split2: oldSplit,
+            split1TotalValue: newTotalValue,
+            split2TotalValue: oldTotalValue,
+          })
+        : false
 
     if (oldSplit && !splitsEqual) {
       // adds diffed splits (exists in new and old and there is diff)
@@ -118,11 +190,8 @@ export const processUniqueSplits = ({
         },
       })
     } else if (oldSplit && splitsEqual) {
-      // adds undiffed splits (exists in new and old and there is no diff)
-      uniqueSplitsByProjectIdOrAddress.push({
-        ...split,
-        oldSplit: undefined,
-      })
+      // undiff'd split (exists in new and old and there is no diff) = DO NOTHING
+      return
     } else {
       // adds the new splits (exists in new but not old)
       uniqueSplitsByProjectIdOrAddress.push({

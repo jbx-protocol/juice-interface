@@ -15,6 +15,7 @@ export default function USDAmount({
   padEnd,
   symbol,
   tooltipContent,
+  hideTooltip,
   className,
 }: {
   amount?: BigNumber | string
@@ -22,6 +23,7 @@ export default function USDAmount({
   padEnd?: boolean
   symbol?: string | JSX.Element
   tooltipContent?: JSX.Element
+  hideTooltip?: boolean
   className?: string
 }) {
   const converter = useCurrencyConverter()
@@ -34,8 +36,12 @@ export default function USDAmount({
 
   if (!amount) return null
 
+  const _tooltipContent = tooltipContent ?? (
+    <ETHAmount amount={usdAmountInEth} />
+  )
+
   return (
-    <Tooltip title={tooltipContent ?? <ETHAmount amount={usdAmountInEth} />}>
+    <Tooltip title={hideTooltip ? undefined : _tooltipContent}>
       <span className={className}>
         {symbol ?? <CurrencySymbol currency="USD" />}
         {formattedUSDAmount}

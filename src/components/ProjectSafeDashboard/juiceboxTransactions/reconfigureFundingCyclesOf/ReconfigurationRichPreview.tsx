@@ -8,7 +8,7 @@ import { SafeTransactionType } from 'models/safe'
 import { useContext } from 'react'
 import { toSplit } from 'utils/splits'
 import { deriveNextIssuanceRate } from 'utils/v2v3/fundingCycle'
-import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { formatReservedRate } from 'utils/v2v3/math'
 import { LinkToSafeButton } from '../../LinkToSafeButton'
 import { useTransactionJBController } from './hooks/useTransactionJBController'
 
@@ -21,7 +21,6 @@ export function ReconfigureRichPreview({
   isPastTransaction?: boolean
 }) {
   const {
-    projectOwnerAddress,
     fundingCycle: previousFC,
     payoutSplits: diffPayoutSplits,
     distributionLimit: previousDistributionLimit,
@@ -103,8 +102,6 @@ export function ReconfigureRichPreview({
                 currency={distributionLimitCurrency}
                 totalValue={distributionLimit}
                 previousTotalValue={previousDistributionLimit}
-                projectOwnerAddress={projectOwnerAddress}
-                showAmounts={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
                 valueFormatProps={{ precision: 4 }}
                 showDiffs={showDiffs}
               />
@@ -119,7 +116,6 @@ export function ReconfigureRichPreview({
               <DiffedSplitList
                 splits={toSplit(reservedTokensSplits)}
                 diffSplits={diffReservedSplits}
-                projectOwnerAddress={projectOwnerAddress}
                 totalValue={undefined}
                 reservedRate={parseFloat(formatReservedRate(reservedRate))}
                 showDiffs={showDiffs}

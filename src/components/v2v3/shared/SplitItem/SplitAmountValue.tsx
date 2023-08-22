@@ -3,7 +3,6 @@ import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHToUSD from 'components/currency/ETHToUSD'
-import { Parenthesis } from 'components/Parenthesis'
 import { CurrencyName } from 'constants/currency'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
@@ -14,7 +13,13 @@ import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
 import { feeForAmount, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
 import { SplitProps } from './SplitItem'
 
-export function SplitAmountValue({ props }: { props: SplitProps }) {
+export function SplitAmountValue({
+  props,
+  hideTooltip,
+}: {
+  props: SplitProps
+  hideTooltip?: boolean
+}) {
   const { primaryETHTerminalFee } = useContext(V2V3ProjectContext)
 
   const splitValue = props.totalValue
@@ -36,6 +41,7 @@ export function SplitAmountValue({ props }: { props: SplitProps }) {
     curr: CurrencyName | undefined,
     amount: BigNumber | undefined,
   ) => {
+    if (hideTooltip) return undefined
     if (curr === 'ETH' && amount?.gt(0)) {
       return <ETHToUSD ethAmount={amount} />
     }
@@ -53,13 +59,14 @@ export function SplitAmountValue({ props }: { props: SplitProps }) {
       >
         <span className="pl-1">
           {valueAfterFees ? (
-            <Parenthesis>
+            <div>
               <AmountInCurrency
                 amount={valueAfterFees}
                 currency={currencyName}
+                hideTooltip={hideTooltip}
               />
               {props.valueSuffix ? <span> {props.valueSuffix}</span> : null}
-            </Parenthesis>
+            </div>
           ) : null}
         </span>
       </Tooltip>

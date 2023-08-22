@@ -6,18 +6,15 @@ import { JuiceboxProjectBeneficiary } from '../../SplitItem/JuiceboxProjectBenef
 export function DiffedJBProjectBeneficiary({
   split,
   oldSplit,
-  projectOwnerAddress,
 }: {
   split: Split
   oldSplit?: Split
-  projectOwnerAddress: string | undefined
 }) {
   const hasDiff = oldSplit && oldSplit.beneficiary !== split.beneficiary
 
   return (
     <JuiceboxProjectBeneficiary
       split={split}
-      projectOwnerAddress={projectOwnerAddress}
       value={
         hasDiff ? (
           <div className="flex">

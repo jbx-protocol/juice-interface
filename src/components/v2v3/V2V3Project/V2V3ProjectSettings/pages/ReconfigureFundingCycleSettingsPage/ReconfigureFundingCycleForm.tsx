@@ -211,7 +211,6 @@ export function V2V3ReconfigureFundingCycleForm() {
             editingFundingCycleConfig.editingFundAccessConstraints
           }
           nftRewards={editingFundingCycleConfig.editingNftRewards?.rewardTiers}
-          projectOwnerAddress={projectOwnerAddress}
           mustStartAtOrAfter={
             editingFundingCycleConfig.editingMustStartAtOrAfter
           }

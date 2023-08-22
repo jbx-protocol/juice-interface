@@ -18,7 +18,7 @@ import {
   deriveNextIssuanceRate,
   getDefaultFundAccessConstraint,
 } from 'utils/v2v3/fundingCycle'
-import { formatReservedRate, MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { formatReservedRate } from 'utils/v2v3/math'
 
 import NftSummarySection from './NftSummarySection'
 
@@ -29,7 +29,6 @@ export function ReconfigurePreview({
   fundingCycleData,
   fundAccessConstraints,
   nftRewards,
-  projectOwnerAddress,
   mustStartAtOrAfter,
 }: {
   payoutSplits: Split[]
@@ -38,7 +37,6 @@ export function ReconfigurePreview({
   fundingCycleData: V2V3FundingCycleData
   fundAccessConstraints: V2V3FundAccessConstraint[]
   nftRewards?: NftRewardTier[]
-  projectOwnerAddress?: string
   mustStartAtOrAfter?: string
 }) {
   const {
@@ -95,8 +93,6 @@ export function ReconfigurePreview({
             diffSplits={currentPayoutSplits}
             currency={distributionLimitCurrency}
             totalValue={distributionLimit}
-            projectOwnerAddress={projectOwnerAddress}
-            showAmounts={!distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)}
             valueFormatProps={{ precision: 4 }}
             showDiffs
           />
@@ -111,7 +107,6 @@ export function ReconfigurePreview({
           <DiffedSplitList
             splits={reserveSplits}
             diffSplits={currentReserveSplits}
-            projectOwnerAddress={projectOwnerAddress}
             totalValue={undefined}
             reservedRate={formattedReservedRate}
             showDiffs

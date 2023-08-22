@@ -177,8 +177,13 @@ export function hasDataSourceForPay(
   )
 }
 
-export function isInfiniteDistributionLimit(distributionLimit: BigNumber) {
-  return distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)
+export function isInfiniteDistributionLimit(
+  distributionLimit: BigNumber | undefined,
+) {
+  return (
+    distributionLimit === undefined ||
+    distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)
+  )
 }
 
 // Not zero and not infinite

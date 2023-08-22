@@ -203,11 +203,10 @@ export function distributionLimitsEqual(
   distributionLimit1: BigNumber | undefined,
   distributionLimit2: BigNumber | undefined,
 ) {
-  const distributionLimit1IsInfinite =
-    !distributionLimit1 || isInfiniteDistributionLimit(distributionLimit1)
-  const distributionLimit2IsInfinite =
-    !distributionLimit2 || isInfiniteDistributionLimit(distributionLimit2)
-  if (distributionLimit1IsInfinite && distributionLimit2IsInfinite) {
+  if (
+    isInfiniteDistributionLimit(distributionLimit1) &&
+    isInfiniteDistributionLimit(distributionLimit2)
+  ) {
     return true
   }
   return distributionLimit1?.eq(distributionLimit2 ?? 0)

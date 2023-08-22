@@ -95,7 +95,6 @@ export const useLoadEditCycleData = () => {
           initialEditingData.fundingCycleMetadata.useDataSourceForRedeem,
         memo: '',
       }
-
       setInitialFormData(formData)
       editCycleForm.setFieldsValue(formData)
     }

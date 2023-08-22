@@ -7,6 +7,7 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useMemo } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
 import {
+  getProjectOwnerRemainderSplit,
   hasEqualRecipient,
   isProjectSplit,
   totalSplitsPercent,
@@ -168,8 +169,8 @@ export const usePayoutsTable = () => {
       beneficiary: newSplit.beneficiary,
       percent: newSplitPercentPPB,
       preferClaimed: false,
-      lockedUntil: newSplit.lockedUntil,
-      projectId: newSplit.projectId,
+      lockedUntil: newSplit.lockedUntil ?? 0,
+      projectId: newSplit.projectId ?? '0x00',
       allocator: NULL_ALLOCATOR_ADDRESS,
     } as Split
 
@@ -339,9 +340,14 @@ export const usePayoutsTable = () => {
   }, 0)
 
   /* Payouts that don't go to Juicebox projects incur 2.5% fee */
-  const nonJuiceboxProjectPayoutSplits = payoutSplits.filter(
-    payoutSplit => !isProjectSplit(payoutSplit),
-  )
+  const nonJuiceboxProjectPayoutSplits = [
+    ...payoutSplits.filter(payoutSplit => !isProjectSplit(payoutSplit)),
+    getProjectOwnerRemainderSplit(
+      // remaining owner split also incurs fee
+      '',
+      payoutSplits,
+    ) as Split,
+  ]
 
   /* Count the total fee amount. If % of payouts sums > 100, just set fees to 2.5% (maximum)*/
   const totalFeeAmount =

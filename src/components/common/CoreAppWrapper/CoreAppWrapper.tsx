@@ -1,7 +1,8 @@
-import { LedgerConnector } from '@wagmi/connectors/ledger'
+import { SafeConnector } from '@wagmi/connectors/safe'
 import { InjectedConnector } from '@wagmi/core'
 import { CoinbaseWalletConnector } from '@wagmi/core/connectors/coinbaseWallet'
 import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask'
+import { WalletConnectLegacyConnector } from '@wagmi/core/connectors/walletConnectLegacy'
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
@@ -19,21 +20,21 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { redirectTo } from 'utils/windowUtils'
-import { WagmiConfig, configureChains, createClient } from 'wagmi'
+import { WagmiConfig, configureChains, createConfig } from 'wagmi'
 import { goerli, mainnet } from 'wagmi/chains'
-import { SafeConnector } from 'wagmi/connectors/safe'
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { infuraProvider } from 'wagmi/providers/infura'
 
 const chain = readNetwork.name === NetworkName.mainnet ? mainnet : goerli
 
-const { chains, provider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [chain],
   [infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_ID })],
 )
 
-const client = createClient({
-  provider,
+const config = createConfig({
+  autoConnect: true,
+  publicClient,
+  webSocketPublicClient,
   connectors: [
     new InjectedConnector({ chains }),
     new MetaMaskConnector({ chains }),
@@ -47,19 +48,57 @@ const client = createClient({
       options: { appName: 'Juicebox' },
       chains,
     }),
-    new LedgerConnector({
+    // new WalletConnectConnector({
+    //   chains,
+    //   options: {
+    //     projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ?? '',
+    //     showQrModal: false,
+    //   },
+    // }),
+    new WalletConnectLegacyConnector({
       chains,
-    }),
-    new WalletConnectConnector({
       options: {
-        projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ?? '',
-        showQrModal: false,
+        qrcode: false,
       },
-      chains,
     }),
+    // new LedgerConnector({
+    //   chains,
+    //   options: {
+    //     walletConnectVersion: 2,
+    //     projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ?? '',
+    //   },
+    // }),
   ],
-  autoConnect: true,
 })
+
+// const client = createClient({
+//   provider,
+//   connectors: [
+//     new InjectedConnector({ chains }),
+//     new MetaMaskConnector({ chains }),
+//     new SafeConnector({
+//       options: {
+//         debug: process.env.NODE_ENV === 'development',
+//       },
+//       chains,
+//     }),
+//     new CoinbaseWalletConnector({
+//       options: { appName: 'Juicebox' },
+//       chains,
+//     }),
+//     new LedgerConnector({
+//       chains,
+//     }),
+//     new WalletConnectConnector({
+//       options: {
+//         projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID ?? '',
+//         showQrModal: false,
+//       },
+//       chains,
+//     }),
+//   ],
+//   autoConnect: true,
+// })
 
 /**
  * Contains all the core app providers used by each page.
@@ -75,7 +114,7 @@ export const AppWrapper: React.FC<
   return (
     <React.StrictMode>
       <ReactQueryProvider>
-        <WagmiConfig client={client}>
+        <WagmiConfig config={config}>
           <ConnectKitProvider>
             <TxHistoryProvider>
               <ThemeProvider>

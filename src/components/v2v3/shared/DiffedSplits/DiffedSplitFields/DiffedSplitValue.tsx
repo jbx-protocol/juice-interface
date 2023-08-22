@@ -1,7 +1,10 @@
 import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 import { splitAmountsAreEqual } from 'utils/splits'
-import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
+import {
+  isFiniteDistributionLimit,
+  isInfiniteDistributionLimit,
+} from 'utils/v2v3/fundingCycle'
 import { formatSplitPercent } from 'utils/v2v3/math'
 import { DiffedItem } from '../../DiffedItem'
 import { SplitProps } from '../../SplitItem'
@@ -44,12 +47,18 @@ export function DiffedSplitValue({
       />
     )
 
-  const amountsAreEqual = splitAmountsAreEqual({
-    split1: splitProps.split,
-    split2: diffSplitProps.split,
-    split1TotalValue: splitProps.totalValue,
-    split2TotalValue: diffSplitProps.totalValue,
-  })
+  const isFiniteTotalValue =
+    isFiniteDistributionLimit(splitProps.totalValue) &&
+    isFiniteDistributionLimit(diffSplitProps.totalValue)
+
+  const amountsAreEqual = isFiniteTotalValue
+    ? splitAmountsAreEqual({
+        split1: splitProps.split,
+        split2: diffSplitProps.split,
+        split1TotalValue: splitProps.totalValue,
+        split2TotalValue: diffSplitProps.totalValue,
+      })
+    : false
 
   if (amountsAreEqual) return newValue
 

@@ -9,6 +9,7 @@ import {
 } from 'utils/v2v3/fundingCycle'
 import {
   discountRateFrom,
+  formatIssuanceRate,
   issuanceRateFrom,
   reservedRateFrom,
 } from 'utils/v2v3/math'
@@ -39,7 +40,11 @@ export const useTokensSectionValues = () => {
     plural: true,
   })
 
-  const newMintRate = BigNumber.from(issuanceRateFrom(formValues.mintRate))
+  const newMintRateNum = parseFloat(formValues.mintRate)
+  const newMintRate = BigNumber.from(
+    issuanceRateFrom(newMintRateNum.toString()),
+  )
+
   const newReservedRate = reservedRateFrom(formValues.reservedTokens)
   const newReservedSplits = formValues.reservedSplits
   const newDiscountRate = discountRateFrom(formValues.discountRate)
@@ -48,6 +53,10 @@ export const useTokensSectionValues = () => {
   const newPauseTransfers = formValues.pauseTransfers
 
   const currentMintRate = currentFundingCycle?.weight
+  const currentMintRateNum = currentMintRate
+    ? parseFloat(formatIssuanceRate(currentMintRate.toString()))
+    : undefined
+
   const currentReservedRate = currentFundingCycleMetadata?.reservedRate
   const currentDiscountRate = currentFundingCycle?.discountRate
   const currentRedemptionRate = currentFundingCycleMetadata?.redemptionRate
@@ -67,9 +76,7 @@ export const useTokensSectionValues = () => {
     )
 
   const mintRateHasDiff = Boolean(
-    currentMintRate &&
-      !newMintRate.eq(currentMintRate) &&
-      !onlyDiscountRateApplied,
+    currentMintRateNum !== newMintRateNum && !onlyDiscountRateApplied,
   )
 
   const reservedRateHasDiff = Boolean(

@@ -3,8 +3,8 @@ import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { twJoin } from 'tailwind-merge'
 
-export const DIFF_OLD_BACKGROUND = 'bg-error-100 dark:bg-error-900'
-export const DIFF_NEW_BACKGROUND = 'bg-melon-100 dark:bg-melon-900'
+export const DIFF_OLD_BACKGROUND = 'bg-error-100 dark:bg-error-950'
+export const DIFF_NEW_BACKGROUND = 'bg-melon-100 dark:bg-melon-950'
 
 // whether this value the old value or a new (updated) value
 type DiffStatus = 'new' | 'old'
@@ -14,7 +14,7 @@ const iconsStrokeWidth = 2
 
 export function DiffPlus() {
   const className = twJoin(
-    'text-melon-700 dark:text-melon-300',
+    'text-melon-700 dark:text-melon-400',
     diffIconsMargins,
   )
   return (
@@ -26,7 +26,7 @@ export function DiffPlus() {
 
 export function DiffMinus() {
   const className = twJoin(
-    'text-error-500 dark:text-error-200',
+    'text-error-500 dark:text-error-400',
     diffIconsMargins,
   )
   return (

@@ -8,7 +8,7 @@ export function DiffSection({
   advancedOptions?: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-1 text-sm">
+    <div className="flex flex-col gap-1 pt-1 text-sm">
       {content}
       {advancedOptions ? (
         <>

@@ -3,7 +3,6 @@ import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHToUSD from 'components/currency/ETHToUSD'
-import { Parenthesis } from 'components/Parenthesis'
 import { CurrencyName } from 'constants/currency'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
@@ -53,13 +52,13 @@ export function SplitAmountValue({ props }: { props: SplitProps }) {
       >
         <span className="pl-1">
           {valueAfterFees ? (
-            <Parenthesis>
+            <div>
               <AmountInCurrency
                 amount={valueAfterFees}
                 currency={currencyName}
               />
               {props.valueSuffix ? <span> {props.valueSuffix}</span> : null}
-            </Parenthesis>
+            </div>
           ) : null}
         </span>
       </Tooltip>

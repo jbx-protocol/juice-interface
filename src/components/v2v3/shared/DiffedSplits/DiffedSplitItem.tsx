@@ -4,7 +4,7 @@ import {
   DiffMinus,
   DiffPlus,
 } from 'components/v2v3/shared/DiffedItem'
-import { twJoin } from 'tailwind-merge'
+import { twMerge } from 'tailwind-merge'
 import { SplitWithDiff } from 'utils/splits'
 import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
 import { SplitProps } from '../SplitItem'
@@ -25,11 +25,11 @@ export function DiffedSplitItem({ props }: { props: DiffedSplitProps }) {
 
   const hasDiff = oldSplit !== undefined && !(splitIsRemoved || splitIsNew)
 
-  const className = twJoin(
-    'flex flex-wrap items-center justify-between p-1',
+  const className = twMerge(
+    'flex flex-wrap items-center justify-between py-1 rounded-md',
     splitIsRemoved ? DIFF_OLD_BACKGROUND : undefined,
     splitIsNew ? DIFF_NEW_BACKGROUND : undefined,
-    splitIsRemoved || splitIsNew ? '-ml-5 pr-1' : undefined,
+    splitIsRemoved || splitIsNew ? 'pl-3 pr-4 my-1' : undefined,
   )
 
   return (
@@ -40,7 +40,6 @@ export function DiffedSplitItem({ props }: { props: DiffedSplitProps }) {
           {splitIsNew ? <DiffPlus /> : null}
           {isJuiceboxProject ? (
             <DiffedJBProjectBeneficiary
-              projectOwnerAddress={props.projectOwnerAddress}
               split={props.split}
               oldSplit={hasDiff ? oldSplit : undefined}
             />
@@ -48,6 +47,7 @@ export function DiffedSplitItem({ props }: { props: DiffedSplitProps }) {
             <ETHAddressBeneficiary
               projectOwnerAddress={props.projectOwnerAddress}
               beneficaryAddress={props.split.beneficiary}
+              hideAvatar
             />
           )}
         </div>

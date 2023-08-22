@@ -18,7 +18,6 @@ export type SplitProps = {
   valueFormatProps?: { precision?: number }
   currency?: BigNumber
   showFee?: boolean
-  showAmount?: boolean
   dontApplyFeeToAmount?: boolean
 }
 
@@ -30,10 +29,7 @@ export function SplitItem({ props }: { props: SplitProps }) {
       <div>
         <div className="flex items-baseline leading-6">
           {isJuiceboxProject ? (
-            <JuiceboxProjectBeneficiary
-              projectOwnerAddress={props.projectOwnerAddress}
-              split={props.split}
-            />
+            <JuiceboxProjectBeneficiary split={props.split} />
           ) : (
             <ETHAddressBeneficiary
               projectOwnerAddress={props.projectOwnerAddress}

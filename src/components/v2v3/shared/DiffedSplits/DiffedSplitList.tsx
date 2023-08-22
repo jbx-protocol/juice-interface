@@ -1,3 +1,4 @@
+import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 import { useMemo } from 'react'
@@ -5,6 +6,7 @@ import {
   getProjectOwnerRemainderSplit,
   processUniqueSplits,
 } from 'utils/splits'
+import { formatSplitPercent } from 'utils/v2v3/math'
 import { SplitProps } from '../SplitItem'
 import { DiffedSplitItem } from './DiffedSplitItem'
 
@@ -12,10 +14,10 @@ type DiffedSplitListProps = {
   splits: Split[]
   diffSplits?: Split[]
   currency?: BigNumber
+  oldCurrency?: BigNumber
   totalValue: BigNumber | undefined
+  oldTotalValue?: BigNumber
   previousTotalValue?: BigNumber
-  projectOwnerAddress: string | undefined
-  showAmounts?: boolean
   showFees?: boolean
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
@@ -26,17 +28,17 @@ type DiffedSplitListProps = {
 export default function DiffedSplitList({
   splits,
   diffSplits,
-  showAmounts = false,
   showFees = false,
   currency,
+  oldCurrency,
   totalValue,
   previousTotalValue,
-  projectOwnerAddress,
   valueSuffix,
   valueFormatProps,
   reservedRate,
   showDiffs,
 }: DiffedSplitListProps) {
+  const { projectOwnerAddress } = useProjectContext()
   const ownerSplit = useMemo(() => {
     if (!projectOwnerAddress) return
     return getProjectOwnerRemainderSplit(projectOwnerAddress, splits)
@@ -47,8 +49,21 @@ export default function DiffedSplitList({
     return getProjectOwnerRemainderSplit(projectOwnerAddress, diffSplits)
   }, [projectOwnerAddress, diffSplits, showDiffs])
 
+  const ownerSplitIsRemoved =
+    !ownerSplit?.percent && diffOwnerSplit?.percent === 0
+  const diffOwnerSplitHasPercent =
+    diffOwnerSplit &&
+    parseFloat(formatSplitPercent(BigNumber.from(diffOwnerSplit.percent))) >=
+      0.01
+  const ownerSplitIsNew = ownerSplit?.percent && !diffOwnerSplitHasPercent
+
+  const currencyHasDiff = Boolean(
+    oldCurrency && currency && !oldCurrency.eq(currency),
+  )
   const uniqueSplits = processUniqueSplits({
     oldTotalValue: previousTotalValue,
+    newTotalValue: totalValue,
+    allSplitsChanged: currencyHasDiff,
     oldSplits: showDiffs ? diffSplits : undefined,
     newSplits: splits,
   })
@@ -61,11 +76,9 @@ export default function DiffedSplitList({
     valueFormatProps,
     reservedRate,
     showFee: showFees,
-    showAmount: showAmounts,
   }
-
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1.5">
       {uniqueSplits.map(split => {
         return (
           <DiffedSplitItem
@@ -82,7 +95,11 @@ export default function DiffedSplitList({
           props={{
             split: {
               ...ownerSplit,
-              oldSplit: diffOwnerSplit,
+              oldSplit: ownerSplitIsRemoved
+                ? true
+                : ownerSplitIsNew
+                ? false
+                : diffOwnerSplit,
             },
             ...splitProps,
           }}

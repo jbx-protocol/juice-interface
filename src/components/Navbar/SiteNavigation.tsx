@@ -211,7 +211,7 @@ const ResourcesMenu = () => {
     <DropdownMenu
       className="text-base md:text-sm"
       items={resourcesMenuItems}
-      heading={t`Resources`}
+      heading={<Trans>Resources</Trans>}
     />
   )
 }

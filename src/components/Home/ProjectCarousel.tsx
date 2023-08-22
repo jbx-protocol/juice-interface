@@ -1,5 +1,4 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
-import useMobile from 'hooks/useMobile'
 import { useState } from 'react'
 import { A11y, Mousewheel, Navigation } from 'swiper'
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
@@ -42,8 +41,6 @@ export function ProjectCarousel({ items }: { items: JSX.Element[] }) {
   const [canSwipePrev, setCanSwipePrev] = useState(false)
   const [canSwipeNext, setCanSwipeNext] = useState(true)
 
-  const isMobile = useMobile()
-
   return (
     <Swiper
       className="md: mx-auto md:mx-8 md:max-w-[1464px]"
@@ -67,24 +64,22 @@ export function ProjectCarousel({ items }: { items: JSX.Element[] }) {
         }
       }}
     >
-      {!isMobile ? (
-        <>
-          {canSwipePrev && (
-            <PageButton
-              className="left-0 -translate-x-1/2"
-              iconComponent={<ChevronLeftIcon className="h-6 w-6" />}
-              direction="prev"
-            />
-          )}
-          {canSwipeNext && (
-            <PageButton
-              className="right-0 translate-x-1/2"
-              iconComponent={<ChevronRightIcon className="h-6 w-6" />}
-              direction="next"
-            />
-          )}
-        </>
-      ) : null}
+      <div className="hidden md:block">
+        {canSwipePrev && (
+          <PageButton
+            className="left-0 -translate-x-1/2"
+            iconComponent={<ChevronLeftIcon className="h-6 w-6" />}
+            direction="prev"
+          />
+        )}
+        {canSwipeNext && (
+          <PageButton
+            className="right-0 translate-x-1/2"
+            iconComponent={<ChevronRightIcon className="h-6 w-6" />}
+            direction="next"
+          />
+        )}
+      </div>
 
       {items?.map((item, idx) => (
         <SwiperSlide key={idx}>{item}</SwiperSlide>

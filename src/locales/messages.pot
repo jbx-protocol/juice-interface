@@ -326,6 +326,9 @@ msgstr ""
 msgid "<0>Snapshot</0> is an off-chain voting system. You can use your Juicebox project tokens in a Snapshot voting strategy. <1>Learn more</1>."
 msgstr ""
 
+msgid "Changes will take effect when your next cycle starts."
+msgstr ""
+
 msgid "See example"
 msgstr ""
 
@@ -939,6 +942,9 @@ msgid "Automated"
 msgstr ""
 
 msgid "Design how your tokens should work."
+msgstr ""
+
+msgid "Back to settings"
 msgstr ""
 
 msgid "Project {projectId} not found"
@@ -2159,6 +2165,9 @@ msgstr ""
 msgid "{count} total"
 msgstr ""
 
+msgid "Your updated cycle has been deployed"
+msgstr ""
+
 msgid "Edit NFTs"
 msgstr ""
 
@@ -2343,6 +2352,9 @@ msgid "Project balance"
 msgstr ""
 
 msgid "Available to pay out"
+msgstr ""
+
+msgid "Memo <0>(optional)</0>"
 msgstr ""
 
 msgid "Max. supply reached"

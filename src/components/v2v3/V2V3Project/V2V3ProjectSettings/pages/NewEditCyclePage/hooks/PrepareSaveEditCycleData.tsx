@@ -29,11 +29,10 @@ import {
   EditingFundingCycleConfig,
   useEditingFundingCycleConfig,
 } from '../../ReconfigureFundingCycleSettingsPage/hooks/useEditingFundingCycleConfig'
-import { useReconfigureFundingCycle } from '../../ReconfigureFundingCycleSettingsPage/hooks/useReconfigureFundingCycle'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { EditCycleFormFields } from '../EditCycleFormFields'
 
-export const useSaveEditCycleData = () => {
+export const usePrepareSaveEditCycleData = () => {
   // Use Redux to get current (pre-edit) project state since it's not changed by edit
   // Only using this to get values of FC parameters not supported in the FC form (e.g. allowTerminalMigration, etc.)
   const reduxConfig = useEditingFundingCycleConfig()
@@ -45,8 +44,7 @@ export const useSaveEditCycleData = () => {
 
   if (!editCycleForm)
     return {
-      saveEditCycleLoading: false,
-      saveEditCycle: () => null,
+      editingFundingCycleConfig: reduxConfig,
     }
 
   const fundingCycleMetadata = reduxConfig.editingFundingCycleMetadata
@@ -121,17 +119,8 @@ export const useSaveEditCycleData = () => {
     editingNftRewards,
     editingMustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
   }
-  const {
-    reconfigureLoading: saveEditCycleLoading,
-    reconfigureFundingCycle: saveEditCycle,
-  } = useReconfigureFundingCycle({
-    editingFundingCycleConfig,
-    memo: formValues.memo ?? '',
-    launchedNewNfts: false, // TODO: isLaunchingNewCollection,
-  })
 
   return {
-    saveEditCycleLoading,
-    saveEditCycle,
+    editingFundingCycleConfig,
   }
 }

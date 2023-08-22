@@ -5,7 +5,8 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
 import { splitsListsHaveDiff } from 'utils/splits'
-import { V2V3CurrencyName, V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
+import { V2V3CurrencyName } from 'utils/v2v3/currency'
+import { distributionLimitsEqual } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 
@@ -28,18 +29,19 @@ export const usePayoutsSectionValues = () => {
   const newCurrency: CurrencyName = editCycleForm?.getFieldValue(
     'distributionLimitCurrency',
   )
-  const currentCurrency = V2V3CurrencyName(
-    (currentCurrencyOption?.toNumber() ??
-      V2V3_CURRENCY_ETH) as V2V3CurrencyOption,
-  )
+  const currentCurrency =
+    V2V3CurrencyName(currentCurrencyOption?.toNumber() as V2V3CurrencyOption) ??
+    'ETH'
   const currencyHasDiff = currentCurrency !== newCurrency
 
-  const newDistributionLimit = parseWad(
-    editCycleForm?.getFieldValue('distributionLimit') as number,
-  )
+  const newDistributionLimitNum =
+    editCycleForm?.getFieldValue('distributionLimit')
+  const newDistributionLimit =
+    newDistributionLimitNum !== undefined
+      ? parseWad(newDistributionLimitNum)
+      : undefined
   const distributionLimitHasDiff =
-    (currentDistributionLimit &&
-      !newDistributionLimit?.eq(currentDistributionLimit)) ||
+    !distributionLimitsEqual(currentDistributionLimit, newDistributionLimit) ||
     currencyHasDiff
   const distributionLimitIsInfinite =
     !newDistributionLimit || newDistributionLimit.eq(MAX_DISTRIBUTION_LIMIT)

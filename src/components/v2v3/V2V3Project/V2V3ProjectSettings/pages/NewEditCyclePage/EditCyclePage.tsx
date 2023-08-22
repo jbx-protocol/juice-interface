@@ -73,6 +73,10 @@ export function EditCyclePage() {
           >
             <TokensSection />
           </EditCycleFormSection>
+          <ReviewConfirmModal
+            open={confirmModalOpen}
+            onClose={() => setConfirmModalOpen(false)}
+          />
         </Form>
       </div>
 
@@ -89,10 +93,6 @@ export function EditCyclePage() {
           <Trans>Save changes</Trans>
         </Button>
       </div>
-      <ReviewConfirmModal
-        open={confirmModalOpen}
-        onClose={() => setConfirmModalOpen(false)}
-      />
     </div>
   )
 }

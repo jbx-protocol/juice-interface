@@ -1,8 +1,8 @@
 import { Tooltip } from 'antd'
-import { useEffect, useRef, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 
 interface TruncatedTextProps {
-  text: string
+  text: ReactNode
   className?: string
   placement?:
     | 'top'
@@ -45,7 +45,7 @@ export const TruncatedText: React.FC<
       <div
         ref={textRef}
         className={`truncate ${className}`}
-        aria-label={isTruncated ? text : ''}
+        aria-label={isTruncated && typeof text === 'string' ? text : undefined}
         onMouseEnter={() => setShow(true)}
         onMouseLeave={() => setShow(false)}
         onClick={() => setShow(!show)}

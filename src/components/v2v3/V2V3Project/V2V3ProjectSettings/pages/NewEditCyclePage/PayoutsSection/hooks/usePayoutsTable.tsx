@@ -243,13 +243,16 @@ export const usePayoutsTable = () => {
     editingPayoutSplit: Split
     newAmount: number
   }) {
-    const _amount = Number.isNaN(newAmount)
+    const isNaN = Number.isNaN(newAmount)
+    const _amount = isNaN
       ? 0
       : isProjectSplit(editingPayoutSplit)
       ? newAmount
       : deriveAmountBeforeFee(newAmount)
     // Convert the newAmount to its percentage of the new DL in parts-per-bill
-    const newDistributionLimit = distributionLimit
+    const newDistributionLimit = isNaN
+      ? 0
+      : distributionLimit !== undefined
       ? getNewDistributionLimit({
           currentDistributionLimit: distributionLimit.toString(),
           newSplitAmount: _amount,
@@ -257,7 +260,6 @@ export const usePayoutsTable = () => {
           ownerRemainingAmount,
         })
       : undefined // undefined means DL is infinite
-
     const newSplitPercentPPB = round(
       (_amount / (newDistributionLimit ?? 0)) * ONE_BILLION,
     )
@@ -286,7 +288,6 @@ export const usePayoutsTable = () => {
           }
         : m
     })
-
     setDistributionLimit(newDistributionLimit)
     setPayoutSplits(ensureSplitsSumTo100Percent({ splits: newPayoutSplits }))
   }

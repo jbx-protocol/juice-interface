@@ -160,10 +160,13 @@ export function getNewDistributionLimit({
   currentDistributionLimit: string
   ownerRemainingAmount?: number
 }) {
-  const previousSplitAmount = amountFromPercent({
-    percent: preciseFormatSplitPercent(editingSplitPercent),
-    amount: currentDistributionLimit,
-  }) // will be 0 when adding split but an actual amount when reconfiging or deleting
+  const previousSplitAmount =
+    currentDistributionLimit === '0'
+      ? 0
+      : amountFromPercent({
+          percent: preciseFormatSplitPercent(editingSplitPercent),
+          amount: currentDistributionLimit,
+        }) // will be 0 when adding split but an actual amount when reconfiging or deleting
 
   return (
     parseFloat(currentDistributionLimit) -

@@ -114,7 +114,7 @@ export function PayoutSplitRow({
                 amountPercentFieldHasEndingDecimal ? '.' : ''
               }`}
               onChange={onAmountPercentageInputChange}
-              className="h-10"
+              className="md:unset h-10 w-28"
             />
             <PayoutSplitRowMenu
               onEditClick={() => setEditModalOpen(true)}

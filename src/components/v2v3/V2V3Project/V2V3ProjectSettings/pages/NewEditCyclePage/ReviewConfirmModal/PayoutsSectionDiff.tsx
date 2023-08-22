@@ -19,7 +19,6 @@ export function PayoutsSectionDiff() {
     currentDistributionLimit,
     newDistributionLimit,
     distributionLimitHasDiff,
-    distributionLimitIsInfinite,
 
     currentPayoutSplits,
     newPayoutSplits,
@@ -64,16 +63,18 @@ export function PayoutsSectionDiff() {
           )}
           {payoutSplitsHasDiff && (
             <div className="pb-4">
-              <div className="mb-3 text-sm font-semibold">
+              <div className="mb-3 mt-2 text-sm font-semibold">
                 <Trans>Payout recipients:</Trans>
               </div>
               <DiffedSplitList
                 splits={newPayoutSplits}
                 diffSplits={currentPayoutSplits}
                 currency={BigNumber.from(getV2V3CurrencyOption(newCurrency))}
-                projectOwnerAddress={undefined}
+                oldCurrency={BigNumber.from(
+                  getV2V3CurrencyOption(currentCurrency),
+                )}
                 totalValue={newDistributionLimit}
-                showAmounts={!distributionLimitIsInfinite}
+                previousTotalValue={currentDistributionLimit}
                 valueFormatProps={{ precision: roundingPrecision }}
                 showDiffs
               />

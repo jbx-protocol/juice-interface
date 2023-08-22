@@ -7,16 +7,21 @@ import { isEqualAddress } from 'utils/address'
 export function ETHAddressBeneficiary({
   beneficaryAddress,
   projectOwnerAddress,
+  hideAvatar,
 }: {
   beneficaryAddress: string | undefined
   projectOwnerAddress: string | undefined
+  hideAvatar?: boolean
 }) {
   const isProjectOwner = isEqualAddress(projectOwnerAddress, beneficaryAddress)
 
   return (
     <div className="flex items-center justify-center gap-1 font-medium">
       {beneficaryAddress ? (
-        <JuiceboxAccountLink address={beneficaryAddress} withEnsAvatar />
+        <JuiceboxAccountLink
+          address={beneficaryAddress}
+          withEnsAvatar={!hideAvatar}
+        />
       ) : null}
       {!beneficaryAddress && isProjectOwner ? (
         <Trans>Project owner (you)</Trans>

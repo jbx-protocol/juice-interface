@@ -15,12 +15,8 @@ import { PayoutsTableCell } from './PayoutsTableCell'
 
 export function HeaderRows() {
   const [addRecipientModalOpen, setAddRecipientModalOpen] = useState<boolean>()
-  const {
-    distributionLimit,
-    distributionLimitIsInfinite,
-    handleNewPayoutSplit,
-    payoutSplits,
-  } = usePayoutsTable()
+  const { distributionLimitIsInfinite, handleNewPayoutSplit, payoutSplits } =
+    usePayoutsTable()
 
   const handleAddRecipientModalOk = (
     newSplit: AddEditAllocationModalEntity,
@@ -65,7 +61,7 @@ export function HeaderRows() {
                 <Trans>Add recipient</Trans>
               </span>
             </Button>
-            {distributionLimit === 0 ? null : <PayoutTableSettings />}
+            {payoutSplits?.length === 0 ? null : <PayoutTableSettings />}
           </div>
         </div>
       </PayoutsTableCell>

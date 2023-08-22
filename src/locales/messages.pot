@@ -3596,6 +3596,9 @@ msgstr ""
 msgid "Previous value"
 msgstr ""
 
+msgid "Please check your changes carefully. Each deploy will incur a gas fee."
+msgstr ""
+
 msgid "Owner token minting:"
 msgstr ""
 
@@ -3867,9 +3870,6 @@ msgid "Upgrade"
 msgstr ""
 
 msgid "After {0} (your first cycle), your project will not issue any tokens unless you edit the issuance rate."
-msgstr ""
-
-msgid "Please check your details carefully. Each change will incur a gas fee."
 msgstr ""
 
 msgid "Unknown extension"

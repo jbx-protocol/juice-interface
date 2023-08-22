@@ -70,6 +70,10 @@ export const usePayoutsTable = () => {
     _setCurrency(V2V3CurrencyName(currency) ?? 'ETH')
   }
 
+  function _setPayoutSplits(splits: Split[]) {
+    setPayoutSplits(ensureSplitsSumTo100Percent({ splits }))
+  }
+
   /**
    * Derive payout amount before the fee has been applied.
    * @param amount - An amount that has already had the fee applied
@@ -137,9 +141,13 @@ export const usePayoutsTable = () => {
     let adjustedSplits: Split[] = payoutSplits
     let newDistributionLimit = distributionLimit
 
+    const isProject = newSplit.projectId && newSplit.projectId !== '0x00'
+
     // If amounts (!distributionLimitIsInfinite), handle changing DL and split %s
     if (!distributionLimitIsInfinite) {
-      const newAmount = deriveAmountBeforeFee(newSplitPercent)
+      const newAmount = isProject
+        ? newSplitPercent
+        : deriveAmountBeforeFee(newSplitPercent)
       // Convert the newAmount to its percentage of the new DL in parts-per-bill
       newDistributionLimit = distributionLimit
         ? getNewDistributionLimit({
@@ -176,7 +184,7 @@ export const usePayoutsTable = () => {
 
     const newPayoutSplits = [...adjustedSplits, newPayoutSplit]
 
-    setPayoutSplits(newPayoutSplits)
+    _setPayoutSplits(newPayoutSplits)
   }
 
   /**
@@ -216,7 +224,7 @@ export const usePayoutsTable = () => {
       }
       return m
     })
-    setPayoutSplits(newSplits)
+    _setPayoutSplits(newSplits)
     if (!distributionLimitIsInfinite && !newPayoutSplit.projectOwner) {
       handlePayoutSplitAmountChanged({
         editingPayoutSplit: newSplit,
@@ -239,21 +247,22 @@ export const usePayoutsTable = () => {
     editingPayoutSplit: Split
     newAmount: number
   }) {
-    const _amount = Number.isNaN(newAmount)
+    const isNaN = Number.isNaN(newAmount)
+    const _amount = isNaN
       ? 0
       : isProjectSplit(editingPayoutSplit)
       ? newAmount
       : deriveAmountBeforeFee(newAmount)
     // Convert the newAmount to its percentage of the new DL in parts-per-bill
-    const newDistributionLimit = distributionLimit
-      ? getNewDistributionLimit({
-          currentDistributionLimit: distributionLimit.toString(),
-          newSplitAmount: _amount,
-          editingSplitPercent: editingPayoutSplit.percent,
-          ownerRemainingAmount,
-        })
-      : undefined // undefined means DL is infinite
-
+    const newDistributionLimit =
+      distributionLimit !== undefined
+        ? getNewDistributionLimit({
+            currentDistributionLimit: distributionLimit.toString(),
+            newSplitAmount: _amount,
+            editingSplitPercent: editingPayoutSplit.percent,
+            ownerRemainingAmount,
+          })
+        : undefined // undefined means DL is infinite
     const newSplitPercentPPB = round(
       (_amount / (newDistributionLimit ?? 0)) * ONE_BILLION,
     )
@@ -274,17 +283,16 @@ export const usePayoutsTable = () => {
       percent: newSplitPercentPPB,
     } as Split
 
-    const newPayoutSplits = adjustedSplits.map(m =>
-      hasEqualRecipient(m, editingPayoutSplit)
+    const newPayoutSplits = adjustedSplits.map(m => {
+      return hasEqualRecipient(m, editingPayoutSplit)
         ? {
             ...m,
             ...newPayoutSplit,
           }
-        : m,
-    )
-
+        : m
+    })
     setDistributionLimit(newDistributionLimit)
-    setPayoutSplits(ensureSplitsSumTo100Percent({ splits: newPayoutSplits }))
+    _setPayoutSplits(newPayoutSplits)
   }
 
   /**
@@ -314,7 +322,7 @@ export const usePayoutsTable = () => {
     }
 
     setDistributionLimit(newDistributionLimit)
-    setPayoutSplits(adjustedSplits)
+    _setPayoutSplits(adjustedSplits)
   }
 
   function handleDeleteAllPayoutSplits() {

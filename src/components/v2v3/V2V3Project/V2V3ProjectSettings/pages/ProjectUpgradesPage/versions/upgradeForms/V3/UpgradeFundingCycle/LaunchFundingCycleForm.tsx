@@ -151,7 +151,6 @@ export function LaunchFundingCycleForm() {
             nftRewards={
               editingFundingCycleConfig.editingNftRewards?.rewardTiers
             }
-            projectOwnerAddress={projectOwnerAddress}
           />
         </div>
 

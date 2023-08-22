@@ -1,5 +1,4 @@
 import { Trans, t } from '@lingui/macro'
-import { useProjectContext } from 'components/ProjectDashboard/hooks'
 import { FundingCycleListItem } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItem'
 import { MintRateValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/TokenListItems/MintRateValue'
 import { ReservedRateValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/TokenListItems/ReservedRateValue'
@@ -14,7 +13,6 @@ import { DiffSection } from './DiffSection'
 import { useTokensSectionValues } from './hooks/useTokensSectionValues'
 
 export function TokensSectionDiff() {
-  const { projectOwnerAddress } = useProjectContext()
   const {
     sectionHasDiff,
 
@@ -104,7 +102,6 @@ export function TokensSectionDiff() {
               <DiffedSplitList
                 splits={newReservedSplits}
                 diffSplits={currentReservedSplits}
-                projectOwnerAddress={projectOwnerAddress}
                 totalValue={undefined}
                 reservedRate={formattedReservedRate}
                 showDiffs

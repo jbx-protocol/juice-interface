@@ -21,7 +21,7 @@ export function TotalRows() {
   } = usePayoutsTable()
 
   const formattedDistributionLimit =
-    distributionLimit && !distributionLimitIsInfinite
+    distributionLimit !== undefined && !distributionLimitIsInfinite
       ? round(distributionLimit, roundingPrecision)
       : t`Unlimited`
 

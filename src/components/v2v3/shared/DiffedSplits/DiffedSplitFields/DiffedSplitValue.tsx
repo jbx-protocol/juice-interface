@@ -1,10 +1,14 @@
 import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
-import { classNames } from 'utils/classNames'
+import { splitAmountsAreEqual } from 'utils/splits'
+import {
+  isFiniteDistributionLimit,
+  isInfiniteDistributionLimit,
+} from 'utils/v2v3/fundingCycle'
 import { formatSplitPercent } from 'utils/v2v3/math'
+import { DiffedItem } from '../../DiffedItem'
 import { SplitProps } from '../../SplitItem'
-import { DiffedSplitAmount } from './DiffedSplitAmount'
-import { DiffedSplitPercent } from './DiffedSplitPercent'
+import { SplitAmountValue } from '../../SplitItem/SplitAmountValue'
 
 export function DiffedSplitValue({
   splitProps,
@@ -22,29 +26,46 @@ export function DiffedSplitValue({
       }
     : undefined
 
-  const splitIsZero =
-    formatSplitPercent(BigNumber.from(splitProps.split.percent)) === '0'
+  const newValue = isInfiniteDistributionLimit(splitProps?.totalValue) ? (
+    <>{formatSplitPercent(BigNumber.from(splitProps.split.percent))}%</>
+  ) : (
+    <SplitAmountValue props={splitProps} hideTooltip />
+  )
 
-  const showAmounts =
-    splitProps.showAmount && splitProps.totalValue?.gt(0) && !splitIsZero
+  if (!diffSplitProps) return newValue
+
+  const oldValue =
+    diffSplit && isInfiniteDistributionLimit(diffSplit?.totalValue) ? (
+      <>{formatSplitPercent(BigNumber.from(diffSplit.percent))}%</>
+    ) : (
+      <SplitAmountValue
+        props={{
+          ...diffSplitProps,
+          currency: splitProps.oldCurrency,
+        }}
+        hideTooltip
+      />
+    )
+
+  const isFiniteTotalValue =
+    isFiniteDistributionLimit(splitProps.totalValue) &&
+    isFiniteDistributionLimit(diffSplitProps.totalValue)
+
+  const amountsAreEqual = isFiniteTotalValue
+    ? splitAmountsAreEqual({
+        split1: splitProps.split,
+        split2: diffSplitProps.split,
+        split1TotalValue: splitProps.totalValue,
+        split2TotalValue: diffSplitProps.totalValue,
+      })
+    : false
+
+  if (amountsAreEqual) return newValue
 
   return (
-    <div
-      className={classNames(
-        'flex-end',
-        showAmounts ? 'grid grid-rows-2' : undefined,
-      )}
-    >
-      <DiffedSplitPercent
-        percent={splitProps.split.percent}
-        oldPercent={diffSplit?.percent}
-      />
-      {showAmounts && (
-        <DiffedSplitAmount
-          newSplitProps={splitProps}
-          oldSplitProps={diffSplitProps}
-        />
-      )}
+    <div className="flex">
+      <DiffedItem value={oldValue} diffStatus="old" />
+      <DiffedItem value={newValue} diffStatus="new" />
     </div>
   )
 }

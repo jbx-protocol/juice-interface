@@ -2504,9 +2504,6 @@ msgstr ""
 msgid "Ethereum wallet address"
 msgstr ""
 
-msgid "Receive {receivedTickets} {receivedTokenSymbolText}/1 {currencyText}"
-msgstr ""
-
 msgid "Juicebox enables the creators of tomorrow to launch, fund and manage the boldest projects on the internet."
 msgstr ""
 
@@ -3159,6 +3156,9 @@ msgid "To connect 1,000,000 creators to 100,000,000 contributors to raise ${0}, 
 msgstr ""
 
 msgid "Paying this project is currently disabled."
+msgstr ""
+
+msgid "Receive {receivedTickets} {receivedTokenSymbolText}{suffix}"
 msgstr ""
 
 msgid "Your project can't receive payments through the juicebox.money app."

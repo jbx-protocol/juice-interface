@@ -1,5 +1,4 @@
-import { WAD_DECIMALS } from 'constants/numbers'
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react'
+import { InputNumberProps } from 'antd'
 import { twMerge } from 'tailwind-merge'
 import { formattedNum } from 'utils/format/formatNumber'
 import { JuiceInputNumber } from './JuiceInputNumber'
@@ -17,10 +16,7 @@ export default function FormattedNumberInput({
   onBlur,
   isInteger,
   ...props
-}: Omit<
-  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-  'onChange'
-> & {
+}: Omit<InputNumberProps, 'onChange'> & {
   className?: string
   step?: number
   value?: string
@@ -62,56 +58,40 @@ export default function FormattedNumberInput({
           'h-full w-full',
           'formatted-number-input',
           accessory ? 'antd-no-number-handler' : '',
-          accessoryPosition === 'left' ? 'pl-10' : null,
+          accessoryPosition === 'left' ? 'pl-7' : null,
           className,
         )}
-        value={value}
+        value={value !== undefined ? parseFloat(value) : undefined}
         step={step ?? 1}
+        stringMode
         placeholder={placeholder}
-        formatter={(val?: string | number | undefined) => {
-          if (typeof val === 'number') {
-            val = val.toString()
-          }
-          let formatted =
-            _prefix +
-            (val
-              ? formattedNum(val, {
-                  thousandsSeparator,
-                  decimalSeparator,
-                })
-              : '') +
-            _suffix
-
-          // Remove any unallowed chars that may be added by formattedNum()
-          formatted = formatted
-            .split('')
-            .filter(char => allowedValueChars.includes(char))
-            .join('')
-          if (
-            val?.endsWith(decimalSeparator) &&
-            !formatted.endsWith(decimalSeparator)
-          ) {
-            // Include decimal if stripped by formattedNum()
-            formatted += decimalSeparator
-          }
-
-          return formatted
-        }}
+        formatter={(val?: string | number | undefined) =>
+          _prefix +
+          (val
+            ? formattedNum(val, {
+                thousandsSeparator,
+                decimalSeparator,
+              })
+            : '') +
+          _suffix
+        }
         parser={(val?: string) => {
           if (val === undefined || !val.length) return ''
           // Stops user from entering hex values
           if (/^0?0x[0-9a-fA-F]+$/.test(val)) return '0'
-          const processedValue =
+          let processedValue =
             val
               .replace(new RegExp(thousandsSeparator, 'g'), '')
               .replace(_prefix, '')
               .replace(_suffix, '')
               .split('')
               .filter(char => allowedValueChars.includes(char))
-              .join('')
-              .substring(0, WAD_DECIMALS) || '0'
-
-          return processedValue
+              .join('') || '0'
+          // Enforce the presence of the prefix
+          if (_prefix && !val.startsWith(_prefix)) {
+            processedValue = _prefix + processedValue
+          }
+          return parseFloat(processedValue)
         }}
         onBlur={_value => {
           onBlur?.(_value?.toString())

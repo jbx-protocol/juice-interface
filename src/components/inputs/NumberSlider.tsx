@@ -51,16 +51,14 @@ export default function NumberSlider({
 
   return (
     <div className={className}>
-      <div className="mb-4 flex items-center">
-        <Form.Item className="mb-0 w-full" name={name}>
-          <Slider
-            className="mr-5 flex-1"
-            {...inputConfig}
-            value={_value}
-            onChange={(val: number) => updateValue(val)}
-            disabled={disabled}
-          />
-        </Form.Item>
+      <div className="mb-4 flex items-baseline">
+        <Slider
+          className="mr-5 flex-1"
+          {...inputConfig}
+          value={_value}
+          onChange={(val: number) => updateValue(val)}
+          disabled={disabled}
+        />
         <Form.Item
           className="mb-0"
           name={name}
@@ -68,9 +66,9 @@ export default function NumberSlider({
         >
           <JuiceInputNumber
             {...inputConfig}
-            value={_value?.toString()}
+            value={_value}
             disabled={disabled}
-            formatter={(val?: string | undefined) => {
+            formatter={(val?: string | number | undefined) => {
               let _val = val?.toString() ?? '0'
 
               if (_val.includes('.') && _val.split('.')[1].length > decimals) {
@@ -79,10 +77,12 @@ export default function NumberSlider({
 
               return `${_val ?? ''}${suffix ?? ''}`
             }}
-            parser={(val?: string) => val?.replace(suffix ?? '', '') ?? '0'}
-            onChange={(val: string | undefined) => {
+            parser={(val?: string) =>
+              parseFloat(val?.replace(suffix ?? '', '') ?? '0')
+            }
+            onChange={(val: string | number | null | undefined) => {
               const newVal =
-                val !== undefined && val !== '' ? parseFloat(val) : undefined
+                (typeof val === 'string' ? parseFloat(val) : val) ?? undefined
               updateValue(newVal)
             }}
           />

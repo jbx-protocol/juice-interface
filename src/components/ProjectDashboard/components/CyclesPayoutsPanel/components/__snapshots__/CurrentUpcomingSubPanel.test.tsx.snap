@@ -12,7 +12,9 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
-          <div>
+          <div
+            class="w-full"
+          >
             <div
               class="flex flex-1 items-center justify-between"
             >
@@ -34,7 +36,9 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:w-fit"
         >
-          <div>
+          <div
+            class="w-full"
+          >
             <div
               class="flex flex-1 items-center justify-between"
             >
@@ -73,7 +77,9 @@ exports[`CurrentUpcomingSubPanel renders "current" 1`] = `
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
-          <div>
+          <div
+            class="w-full"
+          >
             <div
               class="flex flex-1 items-center justify-between"
             >
@@ -133,7 +139,9 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
-          <div>
+          <div
+            class="w-full"
+          >
             <div
               class="flex flex-1 items-center justify-between"
             >
@@ -155,7 +163,9 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:w-fit"
         >
-          <div>
+          <div
+            class="w-full"
+          >
             <div
               class="flex flex-1 items-center justify-between"
             >
@@ -194,7 +204,9 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
-          <div>
+          <div
+            class="w-full"
+          >
             <div
               class="flex flex-1 items-center justify-between"
             >
@@ -237,7 +249,9 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
-          <div>
+          <div
+            class="w-full"
+          >
             <div
               class="flex flex-1 items-center justify-between"
             >
@@ -259,7 +273,9 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:w-fit"
         >
-          <div>
+          <div
+            class="w-full"
+          >
             <div
               class="flex flex-1 items-center justify-between"
             >
@@ -298,7 +314,9 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "current" 1`] =
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
-          <div>
+          <div
+            class="w-full"
+          >
             <div
               class="flex flex-1 items-center justify-between"
             >
@@ -358,7 +376,9 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:max-w-[127px]"
         >
-          <div>
+          <div
+            class="w-full"
+          >
             <div
               class="flex flex-1 items-center justify-between"
             >
@@ -380,7 +400,9 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 w-full md:w-fit"
         >
-          <div>
+          <div
+            class="w-full"
+          >
             <div
               class="flex flex-1 items-center justify-between"
             >
@@ -419,7 +441,9 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
         <div
           class="rounded-lg bg-smoke-50 py-5 px-6 dark:bg-slate-700 col-span-2 md:flex-1"
         >
-          <div>
+          <div
+            class="w-full"
+          >
             <div
               class="flex flex-1 items-center justify-between"
             >

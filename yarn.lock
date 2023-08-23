@@ -3592,10 +3592,10 @@
     "@paulrberg/contracts" "^3.7.0"
     prb-math "^2.4.3"
 
-"@jbx-protocol/juice-contracts-v3@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-contracts-v3/-/juice-contracts-v3-4.0.0.tgz#b9f89fd694603b4ed8039c41eaef413474e05879"
-  integrity sha512-kekDeEZUhaXXwobcfSPy9feL98/GnLX/TrmpolFcCpBggPc22bQZiJi4MBcs4cgnqYtfjL7eRYNKKLq44jm9Tg==
+"@jbx-protocol/juice-contracts-v3@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-contracts-v3/-/juice-contracts-v3-5.0.0.tgz#019139c6c6a461e7b7093f58ae1c0ceb10220acd"
+  integrity sha512-9flESdrOHDN9y/fiUyeJoh55DHlJHOlVpWhCsIPEamksoVtz6KOInJ727lp8YWAGJdH3U1sHisWSL30nwhIFOg==
   dependencies:
     "@chainlink/contracts" "^0.1.6"
     "@openzeppelin/contracts" "^4.5.0-rc.0"

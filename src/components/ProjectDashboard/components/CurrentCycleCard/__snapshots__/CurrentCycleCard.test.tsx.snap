@@ -33,7 +33,6 @@ exports[`CurrentCycleCard renders 1`] = `
       class="mt-4 flex min-w-0 items-center gap-2"
     >
       <div
-        aria-label=""
         class="truncate text-2xl font-medium"
       >
         1 day
@@ -53,7 +52,6 @@ exports[`CurrentCycleCard renders 1`] = `
       </svg>
     </div>
     <div
-      aria-label=""
       class="truncate mt-2 text-smoke-500 dark:text-slate-200"
     >
       until Cycle #2

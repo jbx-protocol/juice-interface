@@ -21,6 +21,7 @@ export const TokensPanel = () => {
     userTokenBalance,
     userTokenBalanceLoading,
     userLegacyTokenBalance,
+    projectHasLegacyTokens,
     userV1ClaimedBalance,
     projectToken,
     totalSupply,
@@ -76,19 +77,19 @@ export const TokensPanel = () => {
             />
           )}
 
-          {userLegacyTokenBalance?.gt(0) ? (
+          {projectHasLegacyTokens && userLegacyTokenBalance?.gt(0) ? (
             <TitleDescriptionDisplayCard
               className="mt-4 flex flex-col items-center gap-5 md:flex-row"
               title={t`Your legacy balance`}
               description={
-                <span className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
+                <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
                   <TokenAmount amountWad={userLegacyTokenBalance} />
                   <MigrateTokensButton
                     totalLegacyTokenBalance={userLegacyTokenBalance}
                     v1ClaimedBalance={userV1ClaimedBalance}
                     className="h-12 w-full md:h-10 md:w-fit"
                   />
-                </span>
+                </div>
               }
             />
           ) : null}

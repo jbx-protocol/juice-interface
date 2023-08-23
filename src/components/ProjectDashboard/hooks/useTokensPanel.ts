@@ -1,5 +1,6 @@
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { constants } from 'ethers'
+import { useProjectHasLegacyTokens } from 'hooks/JBV3Token/contractReader/useProjectHasLegacyTokens'
 import { useTotalLegacyTokenBalance } from 'hooks/JBV3Token/contractReader/useTotalLegacyTokenBalance'
 import { useContext, useMemo } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
@@ -19,6 +20,8 @@ export const useTokensPanel = () => {
     capitalize: false,
     plural: true,
   })
+  const projectHasLegacyTokens = useProjectHasLegacyTokens()
+
   const { data: userTokenBalanceWad, loading: userTokenBalanceLoading } =
     useUserTokenBalanceWad()
 
@@ -43,6 +46,7 @@ export const useTokensPanel = () => {
     userTokenBalance,
     userTokenBalanceLoading,
     userLegacyTokenBalance: totalLegacyTokenBalance,
+    projectHasLegacyTokens,
     userV1ClaimedBalance: v1ClaimedBalance,
     projectToken,
     projectTokenAddress: tokenAddress,

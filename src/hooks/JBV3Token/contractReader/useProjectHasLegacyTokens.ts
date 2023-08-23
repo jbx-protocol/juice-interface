@@ -2,7 +2,7 @@ import { useJBTokenStoreForV3Token } from '../contracts/useJBTokenStoreForV3Toke
 import { useV1TicketBoothForV3Token } from '../contracts/useV1TicketBoothForV3Token'
 import { useV1ProjectId } from './useV1ProjectId'
 
-export function useHasJBV3Token() {
+export function useProjectHasLegacyTokens() {
   const { value: v1ProjectId } = useV1ProjectId()
   const v1TicketBookContract = useV1TicketBoothForV3Token()
 

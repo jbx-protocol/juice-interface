@@ -31,7 +31,7 @@ export const TitleDescriptionDisplayCard = ({
   const hasKebabMenu = !!kebabMenu?.items.length
   return (
     <DisplayCard className={twMerge(className)} {...rest}>
-      <div>
+      <div className="w-full">
         <div className="flex flex-1 items-center justify-between">
           <Tooltip title={tooltip}>
             <span className="inline-flex max-w-min items-center gap-1 whitespace-nowrap font-body text-sm font-medium text-grey-600 dark:text-slate-200">

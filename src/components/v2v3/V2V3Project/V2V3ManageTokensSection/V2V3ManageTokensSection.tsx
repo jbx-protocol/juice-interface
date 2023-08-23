@@ -3,7 +3,7 @@ import { Descriptions } from 'antd'
 import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
 import SectionHeader from 'components/SectionHeader'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useHasJBV3Token } from 'hooks/JBV3Token/contractReader/useHasJBV3Token'
+import { useProjectHasLegacyTokens } from 'hooks/JBV3Token/contractReader/useProjectHasLegacyTokens'
 import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
 import { useProjectHasErc20 } from 'hooks/v2v3/useProjectHasErc20'
 import { useWallet } from 'hooks/Wallet'
@@ -40,9 +40,7 @@ export function V2V3ManageTokensSection() {
 
   const hasIssuedERC20 = useProjectHasErc20()
   const showIssueErc20TokenButton = !hasIssuedERC20 && hasIssueTicketsPermission
-  const hasLegacyTokens = useHasJBV3Token()
-
-  const showLegacyProjectTokensSection = hasLegacyTokens
+  const showLegacyProjectTokensSection = useProjectHasLegacyTokens()
 
   const tokenText = tokenSymbolText({
     tokenSymbol,

@@ -70,7 +70,7 @@
     "@jbx-protocol/juice-721-delegate-v3-1": "npm:@jbx-protocol/juice-721-delegate@5.0.2",
     "@jbx-protocol/juice-721-delegate-v3-2": "npm:@jbx-protocol/juice-721-delegate@6.0.3",
     "@jbx-protocol/juice-721-delegate-v3-3": "npm:@jbx-protocol/juice-721-delegate@7.0.0",
-    "@jbx-protocol/juice-contracts-v3": "4.0.0",
+    "@jbx-protocol/juice-contracts-v3": "5.0.0",
     "@jbx-protocol/juice-delegates-registry": "1.0.0",
     "@jbx-protocol/juice-v1-token-terminal": "1.0.1",
     "@jbx-protocol/juice-v3-migration": "1.0.0",

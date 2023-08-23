@@ -45,6 +45,12 @@ export const loadJuiceboxV3Contract = async (
         )) as ContractJson
         break
       }
+      case V2V3ContractName.JBETHPaymentTerminal3_1_2: {
+        contractJson = (await import(
+          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBETHPaymentTerminal3_1_2.json`
+        )) as ContractJson
+        break
+      }
       case V2V3ContractName.JBFundingCycleStore: {
         contractJson = (await import(
           `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBFundingCycleStore.json`

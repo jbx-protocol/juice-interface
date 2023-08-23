@@ -21,7 +21,7 @@ describe('TokensPerEth', () => {
     ;(useTokensPerEth as jest.Mock).mockReturnValue(mockedTokensPerEth)
   })
 
-  it('renders', () => {
+  it('renders when `currencyAmount` is 1', () => {
     const { container } = render(
       <TokensPerEth
         currencyAmount={{
@@ -30,6 +30,12 @@ describe('TokensPerEth', () => {
         }}
       />,
     )
+    expect(container).toMatchSnapshot()
+    expect(screen.getByText('Receive 100 TKN')).toBeInTheDocument()
+  })
+
+  it('renders when `currencyAmount` is undefined', () => {
+    const { container } = render(<TokensPerEth currencyAmount={undefined} />)
     expect(container).toMatchSnapshot()
     expect(screen.getByText('Receive 100 TKN/1 ETH')).toBeInTheDocument()
   })

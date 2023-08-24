@@ -695,6 +695,9 @@ msgstr ""
 msgid "1. Create your project"
 msgstr ""
 
+msgid "Current Balance"
+msgstr ""
+
 msgid "Name"
 msgstr ""
 
@@ -795,6 +798,9 @@ msgid "Delete token allocation"
 msgstr ""
 
 msgid "Current handle"
+msgstr ""
+
+msgid "Click to view activity"
 msgstr ""
 
 msgid "Telegram link"
@@ -1200,9 +1206,6 @@ msgid "Your total legacy tokens"
 msgstr ""
 
 msgid "Start the V3 cycle as soon as the current V2 cycle ends <0>({0})</0>."
-msgstr ""
-
-msgid "until Cycle #{0}"
 msgstr ""
 
 msgid "Collection Name"
@@ -2649,9 +2652,6 @@ msgid "Error downloading redemptions, try again."
 msgstr ""
 
 msgid "Review reconfiguration"
-msgstr ""
-
-msgid "A Juicebox cycle is a predefined period of time during which a project’s settings and payout cannot be changed."
 msgstr ""
 
 msgid "Seconds"
@@ -4149,9 +4149,6 @@ msgid "Default"
 msgstr ""
 
 msgid "WAGMI!"
-msgstr ""
-
-msgid "Current Cycle: #{currentCycleNumber}"
 msgstr ""
 
 msgid "Basic Token Rules"

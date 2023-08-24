@@ -1,13 +1,7 @@
-import { useFundingCycleCountdown } from './useFundingCycleCountdown'
-import { useProjectContext } from './useProjectContext'
+import { useTreasuryStats } from '../components/CyclesPayoutsPanel/hooks/useTreasuryStats'
 
-export const useCurrentCycleCard = () => {
-  const { timeRemainingText } = useFundingCycleCountdown()
-  const { fundingCycle } = useProjectContext()
-  const isUnlocked = fundingCycle?.duration?.isZero() ?? true
-  return {
-    currentCycleNumber: fundingCycle?.number.toNumber() ?? 0,
-    timeRemainingText,
-    isUnlocked,
-  }
+export const useCurrentBalanceCard = () => {
+  const { treasuryBalance } = useTreasuryStats()
+
+  return { treasuryBalance }
 }

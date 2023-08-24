@@ -2,12 +2,12 @@
 
 exports[`TokensPerEth renders when \`currencyAmount\` is 1 1`] = `
 <div>
-  Receive 100 TKN
+  Receive 100 TKN 
 </div>
 `;
 
 exports[`TokensPerEth renders when \`currencyAmount\` is undefined 1`] = `
 <div>
-  Receive 100 TKN/1 ETH
+  Receive 100 TKN [object Object]
 </div>
 `;

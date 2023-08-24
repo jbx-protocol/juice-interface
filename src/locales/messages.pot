@@ -80,6 +80,9 @@ msgstr ""
 msgid "Contract address: {0}"
 msgstr ""
 
+msgid "per {currencyText} paid"
+msgstr ""
+
 msgid "Trust"
 msgstr ""
 
@@ -540,6 +543,9 @@ msgid "If locked, this percentage can't be edited or removed until the lock expi
 msgstr ""
 
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC-20 tokens and mint them to your wallet."
+msgstr ""
+
+msgid "Receive {receivedTickets} {receivedTokenSymbolText} {suffix}"
 msgstr ""
 
 msgid "Amount to pay out"
@@ -3156,9 +3162,6 @@ msgid "To connect 1,000,000 creators to 100,000,000 contributors to raise ${0}, 
 msgstr ""
 
 msgid "Paying this project is currently disabled."
-msgstr ""
-
-msgid "Receive {receivedTickets} {receivedTokenSymbolText}{suffix}"
 msgstr ""
 
 msgid "Your project can't receive payments through the juicebox.money app."

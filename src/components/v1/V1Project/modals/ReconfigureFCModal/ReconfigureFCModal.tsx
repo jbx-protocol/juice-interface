@@ -388,9 +388,11 @@ export default function ReconfigureFCModal({
         <h4 className="mb-0">
           <Trans>Edit upcoming cycles</Trans>
         </h4>
-        <Callout.Info>
-          <V1ReconfigureUpcomingMessage currentFC={currentFC} />
-        </Callout.Info>
+        <div className="my-6">
+          <Callout.Info>
+            <V1ReconfigureUpcomingMessage currentFC={currentFC} />
+          </Callout.Info>
+        </div>
 
         <Space direction="vertical" size="large" className="w-full">
           <div>
@@ -530,18 +532,19 @@ export default function ReconfigureFCModal({
               />
             </Space>
           )}
-
-          <div>
-            <h4>
-              <Trans>Payouts</Trans>
-            </h4>
-            <PayoutModsList
-              mods={editingPayoutMods}
-              projectId={undefined}
-              fundingCycle={editingFC}
-              feePerbicent={terminalFee}
-            />
-          </div>
+          {editingFC.target.gt(0) ? (
+            <div>
+              <h4>
+                <Trans>Payouts</Trans>
+              </h4>
+              <PayoutModsList
+                mods={editingPayoutMods}
+                projectId={undefined}
+                fundingCycle={editingFC}
+                feePerbicent={terminalFee}
+              />
+            </div>
+          ) : null}
 
           <div>
             <h4>

@@ -39,7 +39,10 @@ export function EditCycleSuccessModal({
           <Trans>Your updated cycle has been deployed</Trans>
         </div>
         <div className="text-secondary pb-6">
-          <Trans>Changes will take effect when your next cycle starts.</Trans>
+          <Trans>
+            Changes will take effect in your next cycle as long as it starts
+            after your edit deadline.
+          </Trans>
         </div>
         <div className="flex gap-2.5">
           <Link href={settingsPagePath(undefined, { projectId, handle })}>

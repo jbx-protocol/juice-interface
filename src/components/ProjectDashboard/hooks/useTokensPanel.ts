@@ -2,6 +2,8 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { constants } from 'ethers'
 import { useProjectHasLegacyTokens } from 'hooks/JBV3Token/contractReader/useProjectHasLegacyTokens'
 import { useTotalLegacyTokenBalance } from 'hooks/JBV3Token/contractReader/useTotalLegacyTokenBalance'
+import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useMemo } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -21,6 +23,9 @@ export const useTokensPanel = () => {
     plural: true,
   })
   const projectHasLegacyTokens = useProjectHasLegacyTokens()
+  const hasIssueTicketsPermission = useV2V3WalletHasPermission(
+    V2V3OperatorPermission.ISSUE,
+  )
 
   const { data: userTokenBalanceWad, loading: userTokenBalanceLoading } =
     useUserTokenBalanceWad()
@@ -42,6 +47,10 @@ export const useTokensPanel = () => {
     [tokenAddress],
   )
 
+  const canCreateErc20Token = useMemo(() => {
+    return !projectHasErc20Token && hasIssueTicketsPermission
+  }, [hasIssueTicketsPermission, projectHasErc20Token])
+
   return {
     userTokenBalance,
     userTokenBalanceLoading,
@@ -52,5 +61,6 @@ export const useTokensPanel = () => {
     projectTokenAddress: tokenAddress,
     totalSupply,
     projectHasErc20Token,
+    canCreateErc20Token,
   }
 }

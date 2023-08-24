@@ -2192,6 +2192,9 @@ msgstr ""
 msgid "Juicebox is an open-source protocol that is transparent, community-owned, and built on the Ethereum blockchain."
 msgstr ""
 
+msgid "Unlimited payouts"
+msgstr ""
+
 msgid "Configuration rules"
 msgstr ""
 
@@ -2538,9 +2541,6 @@ msgid "We are here"
 msgstr ""
 
 msgid "Redeem NFTs"
-msgstr ""
-
-msgid "Set up payouts"
 msgstr ""
 
 msgid "Docs"

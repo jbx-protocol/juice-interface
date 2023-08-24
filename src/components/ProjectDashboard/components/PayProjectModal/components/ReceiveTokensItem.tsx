@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/macro'
+import { useProjectHasErc20Token } from 'components/ProjectDashboard/hooks/useProjectHasErc20Token'
 import { useProjectPaymentTokens } from 'components/ProjectDashboard/hooks/useProjectPaymentTokens'
 import { twMerge } from 'tailwind-merge'
 import { CartItemBadge } from '../../Cart/components/CartItem/CartItemBadge'
@@ -6,6 +7,13 @@ import { ProjectHeaderLogo } from '../../ProjectHeader/components/ProjectHeaderL
 
 export const ReceiveTokensItem = ({ className }: { className?: string }) => {
   const { receivedTickets, receivedTokenSymbolText } = useProjectPaymentTokens()
+  const projectHasErc20Token = useProjectHasErc20Token()
+
+  const badgeTitle = projectHasErc20Token ? (
+    'ERC-20'
+  ) : (
+    <Trans>Juicebox Native</Trans>
+  )
 
   if (receivedTickets === '0') {
     return null
@@ -20,7 +28,7 @@ export const ReceiveTokensItem = ({ className }: { className?: string }) => {
             <Trans>{receivedTokenSymbolText} Token</Trans>
           </span>
           <CartItemBadge className="ml-2">
-            <Trans>Token</Trans>
+            <Trans>{badgeTitle} Token</Trans>
           </CartItemBadge>
         </div>
         <div>{receivedTickets}</div>

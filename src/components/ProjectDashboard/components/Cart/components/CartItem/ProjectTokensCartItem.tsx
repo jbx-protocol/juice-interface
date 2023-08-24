@@ -1,13 +1,21 @@
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { ProjectHeaderLogo } from 'components/ProjectDashboard/components/ProjectHeader/components/ProjectHeaderLogo'
+import { useProjectHasErc20Token } from 'components/ProjectDashboard/hooks/useProjectHasErc20Token'
 import { useProjectPaymentTokens } from 'components/ProjectDashboard/hooks/useProjectPaymentTokens'
 import { CartItem } from './CartItem'
 import { CartItemBadge } from './CartItemBadge'
 
 export const ProjectTokensCartItem = () => {
   const { receivedTickets } = useProjectPaymentTokens()
+  const projectHasErc20Token = useProjectHasErc20Token()
+
+  const badgeTitle = projectHasErc20Token ? (
+    'ERC-20'
+  ) : (
+    <Trans>Juicebox Native</Trans>
+  )
 
   return (
     <CartItem
@@ -20,7 +28,7 @@ export const ProjectTokensCartItem = () => {
             >
               <InformationCircleIcon className="h-4 w-4 text-grey-400 dark:text-slate-200" />
             </Tooltip>
-            <CartItemBadge>Token</CartItemBadge>
+            <CartItemBadge>{badgeTitle} Token</CartItemBadge>
           </span>
           <span>{receivedTickets}</span>
         </div>

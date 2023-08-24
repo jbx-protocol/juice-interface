@@ -6,9 +6,9 @@ import { isZeroAddress } from 'utils/address'
 export function useProjectHasErc20() {
   const { tokenAddress } = useContext(V2V3ProjectContext)
 
-  return (
+  return Boolean(
     tokenAddress &&
-    utils.isAddress(tokenAddress) &&
-    !isZeroAddress(tokenAddress)
+      utils.isAddress(tokenAddress) &&
+      !isZeroAddress(tokenAddress),
   )
 }

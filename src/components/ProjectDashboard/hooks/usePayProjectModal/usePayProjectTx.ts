@@ -6,6 +6,7 @@ import { FormikHelpers } from 'formik'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/usePayETHPaymentTerminalTx'
+import { useProjectHasErc20 } from 'hooks/v2v3/useProjectHasErc20'
 import { useCallback, useContext } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { encodeJb721DelegateMetadata } from 'utils/encodeJb721DelegateMetadata/encodeJb721DelegateMetadata'
@@ -44,6 +45,7 @@ export const usePayProjectTx = ({
   const converter = useCurrencyConverter()
   const payProjectTx = usePayETHPaymentTerminalTx()
   const { receivedTickets } = useProjectPaymentTokens()
+  const projectHasErc20 = useProjectHasErc20()
 
   const buildPayReceipt = useCallback(
     (e: Transaction | undefined): ProjectPayReceipt => {
@@ -112,7 +114,9 @@ export const usePayProjectTx = ({
             beneficiary,
             delegateMetadata,
             value: weiAmount,
-            preferClaimedTokens: false,
+            // always claim tokens if the project has an ERC20.
+            // if project has no erc20, then nothing to claim!
+            preferClaimedTokens: projectHasErc20,
           },
           {
             onConfirmed(e) {
@@ -141,6 +145,7 @@ export const usePayProjectTx = ({
       }
     },
     [
+      projectHasErc20,
       JB721DelegateVersion,
       buildPayReceipt,
       converter,

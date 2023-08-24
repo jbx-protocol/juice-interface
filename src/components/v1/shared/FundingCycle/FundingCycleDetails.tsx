@@ -129,7 +129,7 @@ export default function FundingCycleDetails({
               {formatWad(fundingCycle.target)}
             </>
           ) : (
-            <Trans>No payouts</Trans>
+            <Trans>Unlimited payouts</Trans>
           )}
         </Descriptions.Item>
 

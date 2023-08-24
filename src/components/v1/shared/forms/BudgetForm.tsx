@@ -12,10 +12,10 @@ import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useEditingV1FundingCycleSelector } from 'redux/hooks/useAppSelector'
 import { editingProjectActions } from 'redux/slices/editingProject'
-import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { fromWad } from 'utils/format/formatNumber'
 import { helpPagePath } from 'utils/routes'
 import { V1CurrencyName, getV1CurrencyOption } from 'utils/v1/currency'
-import { hasFundingTarget, isRecurring } from 'utils/v1/fundingCycle'
+import { isRecurring } from 'utils/v1/fundingCycle'
 import {
   targetSubFeeToTargetFormatted,
   targetToTargetSubFeeFormatted,
@@ -45,7 +45,7 @@ export default function BudgetForm({
   const [target, setTarget] = useState<string>('0')
   const [targetSubFee, setTargetSubFee] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')
-  const [showFundingFields, setShowFundingFields] = useState<boolean>()
+  // const [showFundingFields, setShowFundingFields] = useState<boolean>()
 
   const dispatch = useAppDispatch()
   const { terminal } = useContext(V1ProjectContext)
@@ -58,11 +58,9 @@ export default function BudgetForm({
     setTarget(initialTarget)
     setTargetSubFee(targetToTargetSubFeeFormatted(initialTarget, terminalFee))
     setDuration(initialDuration)
-    setShowFundingFields(
-      hasFundingTarget({
-        target: parseWad(initialTarget),
-      }),
-    )
+    // setShowFundingFields(
+    //   !parseWad(initialTarget)?.eq(0)
+    // )
   }, [initialCurrency, initialDuration, initialTarget, terminalFee])
 
   const maxIntStr = fromWad(constants.MaxUint256)
@@ -86,67 +84,66 @@ export default function BudgetForm({
           <p>{DISTRIBUTION_LIMIT_EXPLANATION}</p>
         </div>
 
-        <Form.Item>
+        <Space direction="vertical" size="middle">
           <Space>
             <Switch
-              checked={showFundingFields}
+              checked={target === maxIntStr}
               onChange={checked => {
                 const targetSubFee = checked
-                  ? DEFAULT_TARGET_AFTER_FEE
-                  : maxIntStr || '0'
+                  ? maxIntStr
+                  : DEFAULT_TARGET_AFTER_FEE
                 setTargetSubFee(targetSubFee)
                 setTarget(
                   targetSubFeeToTargetFormatted(targetSubFee, terminalFee),
                 )
                 setCurrency('USD')
-                setShowFundingFields(checked)
               }}
             />
             <label>
-              <Trans>Set up payouts</Trans>
+              <Trans>Unlimited payouts</Trans>
             </label>
           </Space>
-        </Form.Item>
+          {hasTarget ? (
+            <FormItems.ProjectTarget
+              formItemProps={{
+                rules: [{ required: true }],
+                extra: null,
+              }}
+              target={target}
+              targetSubFee={targetSubFee}
+              onTargetChange={target => {
+                setTarget(target ?? '0')
+                setTargetSubFee(
+                  targetToTargetSubFeeFormatted(target ?? '0', terminalFee),
+                )
+              }}
+              onTargetSubFeeChange={targetSubFee => {
+                setTargetSubFee(targetSubFee ?? '0')
+                setTarget(
+                  targetSubFeeToTargetFormatted(
+                    targetSubFee ?? '0',
+                    terminalFee,
+                  ),
+                )
+              }}
+              currency={currency}
+              onCurrencyChange={setCurrency}
+              feePerbicent={terminalFee}
+            />
+          ) : (
+            <p className="text-black dark:text-slate-100">
+              <span className="font-medium">
+                <Trans>Unlimited payouts.</Trans>{' '}
+              </span>
+              <Trans>
+                All ETH can be paid out from the project. No ETH will be
+                available for redemptions.
+              </Trans>
+            </p>
+          )}
+        </Space>
 
-        {!hasTarget && (
-          <p className="text-black dark:text-slate-100">
-            <span className="font-medium">
-              <Trans>Unlimited payouts.</Trans>{' '}
-            </span>
-            <Trans>
-              All ETH can be paid out from the project. No ETH will be available
-              for redemptions.
-            </Trans>
-          </p>
-        )}
-
-        {showFundingFields && (
-          <FormItems.ProjectTarget
-            formItemProps={{
-              rules: [{ required: true }],
-              extra: null,
-            }}
-            target={target}
-            targetSubFee={targetSubFee}
-            onTargetChange={target => {
-              setTarget(target ?? '0')
-              setTargetSubFee(
-                targetToTargetSubFeeFormatted(target ?? '0', terminalFee),
-              )
-            }}
-            onTargetSubFeeChange={targetSubFee => {
-              setTargetSubFee(targetSubFee ?? '0')
-              setTarget(
-                targetSubFeeToTargetFormatted(targetSubFee ?? '0', terminalFee),
-              )
-            }}
-            currency={currency}
-            onCurrencyChange={setCurrency}
-            feePerbicent={terminalFee}
-          />
-        )}
-
-        {showFundingFields && target === '0' && (
+        {target === '0' && (
           <p className="text-black dark:text-slate-100">
             <Trans>
               <span className="font-medium">No payouts.</span> All of the

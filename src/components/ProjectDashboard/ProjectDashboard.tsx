@@ -4,7 +4,7 @@ import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { twMerge } from 'tailwind-merge'
 import { Cart } from './components/Cart'
 import { CoverPhoto } from './components/CoverPhoto'
-import { CurrentCycleCard } from './components/CurrentCycleCard'
+import { CurrentBalanceCard } from './components/CurrentBalanceCard'
 import { FundingCycleCountdownProvider } from './components/FundingCycleCountdown/FundingCycleCountdownProvider'
 import { NftRewardsCard } from './components/NftRewardsCard'
 import { PayProjectCard } from './components/PayProjectCard'
@@ -44,7 +44,7 @@ export const ProjectDashboard = () => {
                       >
                         <PayProjectCard className="flex-1" />
                         {shouldShowNftCard ? <NftRewardsCard /> : null}
-                        <CurrentCycleCard
+                        <CurrentBalanceCard
                           className={twMerge(
                             'hidden w-full md:max-w-sm',
                             shouldShowNftCard ? 'lg:block' : 'md:block',

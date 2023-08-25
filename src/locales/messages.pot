@@ -257,9 +257,6 @@ msgstr ""
 msgid "Extended functionality for project owners"
 msgstr ""
 
-msgid "Create ERC-20"
-msgstr ""
-
 msgid "Error downloading participants, try again."
 msgstr ""
 
@@ -834,6 +831,9 @@ msgid "Launch a Decentralized Autonomous Organisation with governance in minutes
 msgstr ""
 
 msgid "Advanced (optional)"
+msgstr ""
+
+msgid "Create ERC-20 Token"
 msgstr ""
 
 msgid "Saved projects"

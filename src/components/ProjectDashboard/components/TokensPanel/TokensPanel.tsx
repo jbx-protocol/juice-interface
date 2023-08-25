@@ -3,6 +3,7 @@ import EthereumAddress from 'components/EthereumAddress'
 import { useTokensPanel } from 'components/ProjectDashboard/hooks/useTokensPanel'
 import { useYourBalanceMenuItems } from 'components/ProjectDashboard/hooks/useYourBalanceMenuItems'
 import { TokenAmount } from 'components/TokenAmount'
+import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
 import { V2V3BurnOrRedeemModal } from 'components/v2v3/V2V3Project/V2V3ManageTokensSection/AccountBalanceDescription/V2V3BurnOrRedeemModal'
 import { V2V3ClaimTokensModal } from 'components/v2v3/V2V3Project/V2V3ManageTokensSection/AccountBalanceDescription/V2V3ClaimTokensModal'
 import { V2V3MintModal } from 'components/v2v3/V2V3Project/V2V3ManageTokensSection/AccountBalanceDescription/V2V3MintModal'
@@ -148,22 +149,31 @@ export const TokensPanel = () => {
 }
 
 const ProjectTokenCard = () => {
-  const { projectToken, projectTokenAddress, projectHasErc20Token } =
-    useTokensPanel()
+  const {
+    projectToken,
+    projectTokenAddress,
+    projectHasErc20Token,
+    canCreateErc20Token,
+  } = useTokensPanel()
   return (
     <TitleDescriptionDisplayCard
       className="w-full"
       title={t`Project token`}
       description={
-        <div className="flex items-center gap-2">
-          <span>{projectHasErc20Token ? projectToken : t`Token`}</span>
-          <ProjectTokenBadge />
-          {projectHasErc20Token && (
-            <span className="text-xs font-normal text-grey-500 dark:text-slate-200">
-              <EthereumAddress address={projectTokenAddress} truncateTo={4} />
-            </span>
+        <>
+          <div className="flex items-center gap-2">
+            <span>{projectHasErc20Token ? projectToken : t`Token`}</span>
+            <ProjectTokenBadge />
+            {projectHasErc20Token && (
+              <span className="text-xs font-normal text-grey-500 dark:text-slate-200">
+                <EthereumAddress address={projectTokenAddress} truncateTo={4} />
+              </span>
+            )}
+          </div>
+          {canCreateErc20Token && (
+            <IssueErc20TokenButton onCompleted={reloadWindow} type="link" />
           )}
-        </div>
+        </>
       }
     />
   )

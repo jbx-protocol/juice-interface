@@ -78,5 +78,6 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     cycleNumber,
     status,
     cycleLength: upcomingCycleLength,
+    cycleUnlocked,
   }
 }

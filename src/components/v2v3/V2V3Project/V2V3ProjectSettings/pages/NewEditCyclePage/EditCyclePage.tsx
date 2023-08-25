@@ -16,11 +16,18 @@ import { TokensSection } from './TokensSection'
 
 export function EditCyclePage() {
   const [confirmModalOpen, setConfirmModalOpen] = useState<boolean>(false)
+  const [formHasChanged, setFormHasChanged] = useState<boolean>(false)
 
   const { projectId } = useContext(ProjectMetadataContext)
   const { handle } = useContext(V2V3ProjectContext)
 
   const { editCycleForm, initialFormData } = useEditCycleFormContext()
+
+  const handleFormValuesChange = () => {
+    if (!formHasChanged) {
+      setFormHasChanged(true)
+    }
+  }
   if (!initialFormData) return <Loading className="h-70" />
   return (
     <div>
@@ -43,6 +50,7 @@ export function EditCyclePage() {
           form={editCycleForm}
           layout="vertical"
           initialValues={initialFormData}
+          onValuesChange={handleFormValuesChange}
         >
           <EditCycleFormSection
             title={<Trans>Details</Trans>}
@@ -89,7 +97,11 @@ export function EditCyclePage() {
           </Link>
         ) : null}
 
-        <Button type="primary" onClick={() => setConfirmModalOpen(true)}>
+        <Button
+          type="primary"
+          onClick={() => setConfirmModalOpen(true)}
+          disabled={!formHasChanged}
+        >
           <Trans>Save changes</Trans>
         </Button>
       </div>

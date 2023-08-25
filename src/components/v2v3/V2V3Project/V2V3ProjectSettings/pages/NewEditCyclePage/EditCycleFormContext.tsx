@@ -1,7 +1,7 @@
 import { FormInstance } from 'antd'
 import React, { createContext, useContext } from 'react'
 import { EditCycleFormFields } from './EditCycleFormFields'
-import { useLoadEditCycleData } from './hooks/LoadEditCycleData'
+import { useLoadEditCycleData } from './hooks/useLoadEditCycleData'
 
 interface EditCycleDataContextType {
   initialFormData: EditCycleFormFields | undefined

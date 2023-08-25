@@ -4,7 +4,7 @@ import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { twMerge } from 'tailwind-merge'
 import { Cart } from './components/Cart'
 import { CoverPhoto } from './components/CoverPhoto'
-import { CurrentCycleCard } from './components/CurrentCycleCard'
+import { CurrentBalanceCard } from './components/CurrentBalanceCard'
 import { FundingCycleCountdownProvider } from './components/FundingCycleCountdown/FundingCycleCountdownProvider'
 import { NftRewardsCard } from './components/NftRewardsCard'
 import { PayProjectCard } from './components/PayProjectCard'
@@ -35,10 +35,16 @@ export const ProjectDashboard = () => {
                   <div className="flex w-full justify-center md:px-6">
                     <div className="flex w-full max-w-6xl flex-col">
                       <ProjectHeader className="mt-12 px-4 md:mt-4 md:px-0" />
-                      <div className="mt-10 flex w-full flex-col gap-4 px-4 md:flex-row md:px-0">
+                      <div
+                        className={twMerge(
+                          'mt-10 flex w-full flex-col gap-4 px-4 md:flex-row md:px-0',
+                          // Styles applied to children
+                          '[&>*]:border [&>*]:border-smoke-100 [&>*]:dark:border-slate-600',
+                        )}
+                      >
                         <PayProjectCard className="flex-1" />
                         {shouldShowNftCard ? <NftRewardsCard /> : null}
-                        <CurrentCycleCard
+                        <CurrentBalanceCard
                           className={twMerge(
                             'hidden w-full md:max-w-sm',
                             shouldShowNftCard ? 'lg:block' : 'md:block',

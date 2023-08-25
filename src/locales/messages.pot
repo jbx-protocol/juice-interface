@@ -80,6 +80,9 @@ msgstr ""
 msgid "Contract address: {0}"
 msgstr ""
 
+msgid "per {currencyText} paid"
+msgstr ""
+
 msgid "Trust"
 msgstr ""
 
@@ -255,9 +258,6 @@ msgid "Add payment"
 msgstr ""
 
 msgid "Extended functionality for project owners"
-msgstr ""
-
-msgid "Create ERC-20"
 msgstr ""
 
 msgid "Error downloading participants, try again."
@@ -542,6 +542,9 @@ msgstr ""
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC-20 tokens and mint them to your wallet."
 msgstr ""
 
+msgid "Receive {receivedTickets} {receivedTokenSymbolText} {suffix}"
+msgstr ""
+
 msgid "Amount to pay out"
 msgstr ""
 
@@ -689,6 +692,9 @@ msgstr ""
 msgid "1. Create your project"
 msgstr ""
 
+msgid "Current Balance"
+msgstr ""
+
 msgid "Name"
 msgstr ""
 
@@ -791,6 +797,9 @@ msgstr ""
 msgid "Current handle"
 msgstr ""
 
+msgid "Click to view activity"
+msgstr ""
+
 msgid "Telegram link"
 msgstr ""
 
@@ -831,6 +840,9 @@ msgid "Launch a Decentralized Autonomous Organisation with governance in minutes
 msgstr ""
 
 msgid "Advanced (optional)"
+msgstr ""
+
+msgid "Create ERC-20 Token"
 msgstr ""
 
 msgid "Saved projects"
@@ -1194,9 +1206,6 @@ msgid "Your total legacy tokens"
 msgstr ""
 
 msgid "Start the V3 cycle as soon as the current V2 cycle ends <0>({0})</0>."
-msgstr ""
-
-msgid "until Cycle #{0}"
 msgstr ""
 
 msgid "Collection Name"
@@ -2645,9 +2654,6 @@ msgstr ""
 msgid "Review reconfiguration"
 msgstr ""
 
-msgid "A Juicebox cycle is a predefined period of time during which a project’s settings and payout cannot be changed."
-msgstr ""
-
 msgid "Seconds"
 msgstr ""
 
@@ -3156,9 +3162,6 @@ msgid "To connect 1,000,000 creators to 100,000,000 contributors to raise ${0}, 
 msgstr ""
 
 msgid "Paying this project is currently disabled."
-msgstr ""
-
-msgid "Receive {receivedTickets} {receivedTokenSymbolText}{suffix}"
 msgstr ""
 
 msgid "Your project can't receive payments through the juicebox.money app."
@@ -4019,6 +4022,9 @@ msgstr ""
 msgid "Limited supply"
 msgstr ""
 
+msgid "Juicebox Native"
+msgstr ""
+
 msgid "How long one cycle will last. Your project's rules are locked during each cycle. Edits you make to your project's rules during a cycle will only take effect at the start of the next cycle."
 msgstr ""
 
@@ -4145,9 +4151,6 @@ msgstr ""
 msgid "WAGMI!"
 msgstr ""
 
-msgid "Current Cycle: #{currentCycleNumber}"
-msgstr ""
-
 msgid "Basic Token Rules"
 msgstr ""
 
@@ -4206,6 +4209,9 @@ msgid "This will give your <0/> or <1/> project's token holders the ability to m
 msgstr ""
 
 msgid "payment"
+msgstr ""
+
+msgid "{badgeTitle} Token"
 msgstr ""
 
 msgid "Create a splits payer address for {projectTitle}"

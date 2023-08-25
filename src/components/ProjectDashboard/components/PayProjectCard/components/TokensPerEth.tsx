@@ -16,11 +16,14 @@ export const TokensPerEth = ({
     useTokensPerEth(currencyAmount)
 
   const suffix =
-    !currencyAmount || !currencyAmount.amount ? `/1 ${currencyText}` : ''
+    !currencyAmount || !currencyAmount.amount ? (
+      <Trans>per {currencyText} paid</Trans>
+    ) : (
+      ''
+    )
   return (
     <Trans>
-      Receive {receivedTickets} {receivedTokenSymbolText}
-      {suffix}
+      Receive {receivedTickets} {receivedTokenSymbolText} {suffix}
     </Trans>
   )
 }

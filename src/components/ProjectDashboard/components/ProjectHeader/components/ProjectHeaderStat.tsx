@@ -13,7 +13,7 @@ export const ProjectHeaderStat = ({
       <span className="text-xs font-medium uppercase text-grey-500 dark:text-slate-200 md:text-sm">
         {label}
       </span>
-      <span className="text-medium font-display text-2xl text-grey-900  dark:text-slate-50 md:text-4xl">
+      <span className="text-medium font-heading text-2xl text-grey-900  dark:text-slate-50 md:text-3xl">
         {stat}
       </span>
     </div>

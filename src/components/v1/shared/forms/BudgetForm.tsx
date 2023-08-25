@@ -45,7 +45,6 @@ export default function BudgetForm({
   const [target, setTarget] = useState<string>('0')
   const [targetSubFee, setTargetSubFee] = useState<string>('0')
   const [duration, setDuration] = useState<string>('0')
-  // const [showFundingFields, setShowFundingFields] = useState<boolean>()
 
   const dispatch = useAppDispatch()
   const { terminal } = useContext(V1ProjectContext)
@@ -58,9 +57,6 @@ export default function BudgetForm({
     setTarget(initialTarget)
     setTargetSubFee(targetToTargetSubFeeFormatted(initialTarget, terminalFee))
     setDuration(initialDuration)
-    // setShowFundingFields(
-    //   !parseWad(initialTarget)?.eq(0)
-    // )
   }, [initialCurrency, initialDuration, initialTarget, terminalFee])
 
   const maxIntStr = fromWad(constants.MaxUint256)

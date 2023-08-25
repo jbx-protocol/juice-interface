@@ -15,8 +15,10 @@ export type IssueErc20TokenTxArgs = {
 
 export function IssueErc20TokenButton({
   onCompleted,
+  type = 'default',
 }: {
   onCompleted?: VoidFunction
+  type?: 'default' | 'link'
 }) {
   const [modalVisible, setModalVisible] = useState<boolean>(false)
 
@@ -36,10 +38,10 @@ export function IssueErc20TokenButton({
           size="small"
           icon={<SettingOutlined />}
           onClick={() => setModalVisible(true)}
-          type="default"
+          type={type}
         >
           <span>
-            <Trans>Create ERC-20</Trans>
+            <Trans>Create ERC-20 Token</Trans>
           </span>
         </Button>
       </Tooltip>

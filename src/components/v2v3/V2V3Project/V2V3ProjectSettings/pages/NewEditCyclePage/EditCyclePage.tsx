@@ -20,7 +20,14 @@ export function EditCyclePage() {
   const { projectId } = useContext(ProjectMetadataContext)
   const { handle } = useContext(V2V3ProjectContext)
 
-  const { editCycleForm, initialFormData } = useEditCycleFormContext()
+  const { editCycleForm, initialFormData, formHasUpdated, setFormHasUpdated } =
+    useEditCycleFormContext()
+
+  const handleFormValuesChange = () => {
+    if (!formHasUpdated) {
+      setFormHasUpdated(true)
+    }
+  }
   if (!initialFormData) return <Loading className="h-70" />
   return (
     <div>
@@ -37,12 +44,12 @@ export function EditCyclePage() {
         </ExternalLinkWithIcon>
       </p>
 
-      {/* Details */}
       <div className="divide-y divide-solid divide-slate-400">
         <Form
           form={editCycleForm}
           layout="vertical"
           initialValues={initialFormData}
+          onValuesChange={handleFormValuesChange}
         >
           <EditCycleFormSection
             title={<Trans>Details</Trans>}
@@ -89,7 +96,11 @@ export function EditCyclePage() {
           </Link>
         ) : null}
 
-        <Button type="primary" onClick={() => setConfirmModalOpen(true)}>
+        <Button
+          type="primary"
+          onClick={() => setConfirmModalOpen(true)}
+          disabled={!formHasUpdated}
+        >
           <Trans>Save changes</Trans>
         </Button>
       </div>

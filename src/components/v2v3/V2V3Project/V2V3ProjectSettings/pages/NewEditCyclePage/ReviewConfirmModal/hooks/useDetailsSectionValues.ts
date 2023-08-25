@@ -6,17 +6,17 @@ import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 
 export const useDetailsSectionValues = () => {
-  const { editCycleForm } = useEditCycleFormContext()
-
   const {
     fundingCycle: currentFundingCycle,
     fundingCycleMetadata: currentFundingCycleMetadata,
   } = useContext(V2V3ProjectContext)
 
+  const { editCycleForm } = useEditCycleFormContext()
+
   const currentDuration = currentFundingCycle?.duration
   const newDurationSeconds = otherUnitToSeconds({
     duration: editCycleForm?.getFieldValue('duration'),
-    unit: editCycleForm?.getFieldValue('durationUnit').value,
+    unit: editCycleForm?.getFieldValue('durationUnit')?.value,
   })
   const newDuration = BigNumber.from(newDurationSeconds)
   const durationHasDiff = !newDuration.eq(currentDuration ?? 0)

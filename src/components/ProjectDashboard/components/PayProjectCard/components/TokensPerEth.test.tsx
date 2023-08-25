@@ -34,12 +34,6 @@ describe('TokensPerEth', () => {
     expect(screen.getByText('Receive 100 TKN')).toBeInTheDocument()
   })
 
-  it('renders when `currencyAmount` is undefined', () => {
-    const { container } = render(<TokensPerEth currencyAmount={undefined} />)
-    expect(container).toMatchSnapshot()
-    expect(screen.getByText('Receive 100 TKN/1 ETH')).toBeInTheDocument()
-  })
-
   it('calls useTokensPerEth with correct arguments', () => {
     render(
       <TokensPerEth

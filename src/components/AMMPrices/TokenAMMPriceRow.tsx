@@ -81,7 +81,7 @@ export default function TokenAMMPriceRow({
             title={t`${tokenSymbol}/ETH exchange rate on ${exchangeName}.`}
           >
             <ExternalLink className="font-normal" href={exchangeLink}>
-              {`${formatPrice(WETHPrice)} ${tokenSymbol}/1 ETH`}
+              {`${formatPrice(WETHPrice)} ${tokenSymbol} per ETH`}
             </ExternalLink>
           </Tooltip>
         ) : (

@@ -2018,9 +2018,6 @@ msgstr ""
 msgid "The held fees will reset as ETH is transferred back to the project with the <0>transfer ETH to project</0> transaction above."
 msgstr ""
 
-msgid "Edits to cycles must occur before the selected period. Deadlines ensure your contributors are informed of upcoming changes to your projects’ configuration."
-msgstr ""
-
 msgid "Read the docs"
 msgstr ""
 
@@ -2373,6 +2370,9 @@ msgid "Max. supply reached"
 msgstr ""
 
 msgid "Migrate controller"
+msgstr ""
+
+msgid "Edits to cycles must occur before the selected period. Deadlines ensure your contributors are informed of upcoming changes to your project's configuration."
 msgstr ""
 
 msgid "Send reserved tokens"

@@ -21,7 +21,7 @@ export default function DurationInputAndSelect({
       >
         <FormattedNumberInput
           className="mr-4 h-10"
-          placeholder="30"
+          defaultValue={0}
           min={0}
           disabled={disabled}
         />

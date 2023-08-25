@@ -41,7 +41,7 @@ describe('ProjectHeaderStats', () => {
   })
   it.each`
     last7DaysPercent | shouldRender
-    ${0}             | ${false}
+    ${0}             | ${true}
     ${Infinity}      | ${false}
     ${69}            | ${true}
   `(

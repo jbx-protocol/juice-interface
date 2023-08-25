@@ -4022,6 +4022,9 @@ msgstr ""
 msgid "Limited supply"
 msgstr ""
 
+msgid "Juicebox Native"
+msgstr ""
+
 msgid "How long one cycle will last. Your project's rules are locked during each cycle. Edits you make to your project's rules during a cycle will only take effect at the start of the next cycle."
 msgstr ""
 
@@ -4209,6 +4212,9 @@ msgid "This will give your <0/> or <1/> project's token holders the ability to m
 msgstr ""
 
 msgid "payment"
+msgstr ""
+
+msgid "{badgeTitle} Token"
 msgstr ""
 
 msgid "Create a splits payer address for {projectTitle}"

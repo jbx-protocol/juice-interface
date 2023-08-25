@@ -30,7 +30,6 @@ describe('ReceiveTokensItem', () => {
   it('renders the correct text', () => {
     render(<ReceiveTokensItem />)
     expect(screen.getByText('Symbol Token')).toBeInTheDocument()
-    expect(screen.getByText('Token')).toBeInTheDocument()
     expect(screen.getByText('1')).toBeInTheDocument()
   })
 })

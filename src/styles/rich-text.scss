@@ -1,6 +1,8 @@
 #rich-text {
-  p {
+  p,
+  li {
     @apply m-0;
+    @apply text-base;
   }
   h1 {
     @apply font-heading;

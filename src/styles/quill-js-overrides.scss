@@ -19,6 +19,10 @@
   h2 {
     @apply font-heading;
   }
+  p,
+  li {
+    @apply text-base;
+  }
 }
 
 .ql-toolbar .ql-stroke {

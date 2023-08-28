@@ -10,16 +10,10 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
+import { PaymentTerminalVersion, V2V3ContractName } from 'models/v2v3/contracts'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
-import {
-  JBETHPaymentTerminalVersion,
-  JB_ETH_PAYMENT_TERMINAL_V_3,
-  JB_ETH_PAYMENT_TERMINAL_V_3_1,
-  JB_ETH_PAYMENT_TERMINAL_V_3_1_1,
-  JB_ETH_PAYMENT_TERMINAL_V_3_1_2,
-} from '../V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminal'
 import { useV2ProjectTitle } from '../useProjectTitle'
 
 interface DistributePayoutsTxBaseParams {
@@ -49,7 +43,7 @@ function buildTxArgs({
   projectId,
   args,
 }: {
-  JBETHPaymentTerminalVersion: JBETHPaymentTerminalVersion | undefined
+  JBETHPaymentTerminalVersion: PaymentTerminalVersion | undefined
   projectId: number
   args: DistributePayoutsTxArgs
 }) {
@@ -61,14 +55,16 @@ function buildTxArgs({
     DEFAULT_MIN_RETURNED_TOKENS, // _minReturnedTokens
   ]
 
-  if (JBETHPaymentTerminalVersion === JB_ETH_PAYMENT_TERMINAL_V_3) {
+  if (JBETHPaymentTerminalVersion === V2V3ContractName.JBETHPaymentTerminal) {
     return [
       ...baseArgs,
       (args as DISTRIBUTE_PAYOUTS_TX_V3_PARAMS).memo ?? DEFAULT_MEMO, // _memo
     ]
   }
 
-  if (JBETHPaymentTerminalVersion === JB_ETH_PAYMENT_TERMINAL_V_3_1) {
+  if (
+    JBETHPaymentTerminalVersion === V2V3ContractName.JBETHPaymentTerminal3_1
+  ) {
     return [
       ...baseArgs,
       (args as DISTRIBUTE_PAYOUTS_TX_V3_1_PARAMS).metadata ?? DEFAULT_METADATA, // _metadata
@@ -77,14 +73,19 @@ function buildTxArgs({
 
   // no changes between 3.1.1 and 3.1.2
   if (
-    JBETHPaymentTerminalVersion === JB_ETH_PAYMENT_TERMINAL_V_3_1_1 ||
-    JBETHPaymentTerminalVersion === JB_ETH_PAYMENT_TERMINAL_V_3_1_2
+    JBETHPaymentTerminalVersion ===
+      V2V3ContractName.JBETHPaymentTerminal3_1_1 ||
+    JBETHPaymentTerminalVersion === V2V3ContractName.JBETHPaymentTerminal3_1_2
   ) {
     return [
       ...baseArgs,
       (args as DISTRIBUTE_PAYOUTS_TX_V3_1_PARAMS).metadata ?? DEFAULT_METADATA, // _metadata
     ]
   }
+
+  throw new Error(
+    'JBM does not support Distribute Payouts for this terminal version yet.',
+  )
 }
 
 export function useDistributePayoutsTx(): DistributePayoutsTx {

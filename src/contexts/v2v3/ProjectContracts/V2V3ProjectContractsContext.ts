@@ -1,6 +1,6 @@
 import { Contract } from 'ethers'
 import { JBControllerVersion } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectController'
-import { JBETHPaymentTerminalVersion } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminal'
+import { PaymentTerminalVersion } from 'models/v2v3/contracts'
 import { createContext } from 'react'
 
 export interface V2V3ProjectContracts {
@@ -23,7 +23,7 @@ export const V2V3ProjectContractsContext: React.Context<{
   }
   versions: {
     JBControllerVersion?: JBControllerVersion
-    JBETHPaymentTerminalVersion?: JBETHPaymentTerminalVersion
+    JBETHPaymentTerminalVersion?: PaymentTerminalVersion
   }
 }> = createContext({
   contracts: {},

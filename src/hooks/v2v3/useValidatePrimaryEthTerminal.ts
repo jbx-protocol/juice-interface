@@ -1,5 +1,6 @@
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { SUPPORTED_PAYMENT_TERMINALS } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import { isEqualAddress } from 'utils/address'
 
@@ -16,22 +17,10 @@ export function useValidatePrimaryEthTerminal() {
   const { primaryETHTerminal } = useContext(V2V3ProjectContext)
   const { contracts } = useContext(V2V3ContractsContext)
 
-  return (
-    isEqualAddress(
+  return SUPPORTED_PAYMENT_TERMINALS.some(contractName => {
+    return isEqualAddress(
       primaryETHTerminal,
-      contracts?.JBETHPaymentTerminal?.address,
-    ) ||
-    isEqualAddress(
-      primaryETHTerminal,
-      contracts?.JBETHPaymentTerminal3_1?.address,
-    ) ||
-    isEqualAddress(
-      primaryETHTerminal,
-      contracts?.JBETHPaymentTerminal3_1_1?.address,
-    ) ||
-    isEqualAddress(
-      primaryETHTerminal,
-      contracts?.JBETHPaymentTerminal3_1_2?.address,
+      contracts?.[contractName]?.address,
     )
-  )
+  })
 }

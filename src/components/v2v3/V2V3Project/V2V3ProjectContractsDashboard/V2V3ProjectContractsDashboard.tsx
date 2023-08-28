@@ -10,25 +10,26 @@ import {
   V2V3ProjectContracts,
   V2V3ProjectContractsContext,
 } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
-import { V2V3ContractName } from 'models/v2v3/contracts'
+import {
+  SUPPORTED_PAYMENT_TERMINALS,
+  V2V3ContractName,
+} from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { V2V3ProjectHeaderActions } from '../V2V3ProjectHeaderActions'
 
 /**
  * Contracts that we don't want to show in the list.
+ * Typically this list consists of contracts that are project-specific (e.g. PaymentTerminal, Controller etc.)
  */
 const CONTRACT_EXCLUSIONS = [
   V2V3ContractName.JBController,
-  V2V3ContractName.JBETHPaymentTerminal,
-  V2V3ContractName.JBETHPaymentTerminal3_1,
-  V2V3ContractName.JBETHPaymentTerminal3_1_1,
-  V2V3ContractName.JBETHPaymentTerminal3_1_2, // unsure if this one belongs, just following suit
   V2V3ContractName.JBController3_1,
   V2V3ContractName.DeprecatedJBDirectory,
   V2V3ContractName.DeprecatedJBSplitsStore,
   V2V3ContractName.JBSingleTokenPaymentTerminalStore,
   V2V3ContractName.JBFundAccessConstraintsStore,
+  ...SUPPORTED_PAYMENT_TERMINALS,
 ]
 
 export function V2V3ProjectContractsDashboard() {

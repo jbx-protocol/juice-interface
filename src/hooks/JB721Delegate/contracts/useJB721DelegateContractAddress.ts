@@ -1,6 +1,6 @@
 import { readNetwork } from 'constants/networks'
 import { ForgeDeploy, addressFor } from 'forge-run-parser'
-import { JB721DelegateVersion } from 'models/nftRewards'
+import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { useEffect, useState } from 'react'
 
 async function loadJB721DelegateDeployment(version: JB721DelegateVersion) {

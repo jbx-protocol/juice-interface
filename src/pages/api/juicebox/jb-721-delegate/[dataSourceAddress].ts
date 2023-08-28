@@ -1,9 +1,3 @@
-import {
-  JB721_DELEGATE_V3,
-  JB721_DELEGATE_V3_1,
-  JB721_DELEGATE_V3_2,
-  JB721_DELEGATE_V3_3,
-} from 'constants/delegateVersions'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { Contract } from 'ethers'
@@ -11,6 +5,7 @@ import { ForgeDeploy, addressFor } from 'forge-run-parser'
 import { loadJB721DelegateJson } from 'hooks/JB721Delegate/contracts/useJB721DelegateAbi'
 import { loadJB721DelegateAddress } from 'hooks/JB721Delegate/contracts/useJB721DelegateContractAddress'
 import { getLogger } from 'lib/logger'
+import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { isEqualAddress, isZeroAddress } from 'utils/address'
 import JBDelegatesRegistryJson from './IJBDelegatesRegistry.json'
@@ -54,7 +49,7 @@ async function fetchDeployerOf(dataSourceAddress: string) {
 async function isJB721DelegateV3(dataSourceAddress: string) {
   const JB721TieredGovernanceJson = await loadJB721DelegateJson(
     'JB721TieredGovernance',
-    JB721_DELEGATE_V3,
+    JB721DelegateVersion.JB721DELEGATE_V3,
   )
   if (!JB721TieredGovernanceJson?.abi) return false
 
@@ -73,7 +68,7 @@ async function isJB721DelegateV3(dataSourceAddress: string) {
 async function isJB721DelegateV3_1(deployerAddress: string) {
   const deployerV3_1Address = await loadJB721DelegateAddress(
     'JBTiered721DelegateDeployer',
-    JB721_DELEGATE_V3_1,
+    JB721DelegateVersion.JB721DELEGATE_V3_1,
   )
 
   return (
@@ -86,7 +81,7 @@ async function isJB721DelegateV3_1(deployerAddress: string) {
 async function isJB721DelegateV3_2(deployerAddress: string) {
   const deployerV3_2Address = await loadJB721DelegateAddress(
     'JBTiered721DelegateDeployer',
-    JB721_DELEGATE_V3_2,
+    JB721DelegateVersion.JB721DELEGATE_V3_2,
   )
 
   return (
@@ -99,7 +94,7 @@ async function isJB721DelegateV3_2(deployerAddress: string) {
 async function isJB721DelegateV3_3(deployerAddress: string) {
   const deployerV3_2Address = await loadJB721DelegateAddress(
     'JBTiered721DelegateDeployer',
-    JB721_DELEGATE_V3_3,
+    JB721DelegateVersion.JB721DELEGATE_V3_3,
   )
 
   return (
@@ -111,7 +106,7 @@ async function isJB721DelegateV3_3(deployerAddress: string) {
 
 async function fetchJB721DelegateVersion(dataSourceAddress: string) {
   const isV3 = await isJB721DelegateV3(dataSourceAddress)
-  if (isV3) return JB721_DELEGATE_V3
+  if (isV3) return JB721DelegateVersion.JB721DELEGATE_V3
 
   const deployerAddress = await fetchDeployerOf(dataSourceAddress)
   const [isV3_1, isV3_2, isV3_3] = await Promise.all([
@@ -119,9 +114,9 @@ async function fetchJB721DelegateVersion(dataSourceAddress: string) {
     isJB721DelegateV3_2(deployerAddress),
     isJB721DelegateV3_3(deployerAddress),
   ])
-  if (isV3_1) return JB721_DELEGATE_V3_1
-  if (isV3_2) return JB721_DELEGATE_V3_2
-  if (isV3_3) return JB721_DELEGATE_V3_3
+  if (isV3_1) return JB721DelegateVersion.JB721DELEGATE_V3_1
+  if (isV3_2) return JB721DelegateVersion.JB721DELEGATE_V3_2
+  if (isV3_3) return JB721DelegateVersion.JB721DELEGATE_V3_3
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

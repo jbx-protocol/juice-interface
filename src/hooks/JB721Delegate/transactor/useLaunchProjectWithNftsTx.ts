@@ -1,10 +1,4 @@
 import { t } from '@lingui/macro'
-import {
-  JB721_DELEGATE_V3,
-  JB721_DELEGATE_V3_1,
-  JB721_DELEGATE_V3_2,
-  JB721_DELEGATE_V3_3,
-} from 'constants/delegateVersions'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
@@ -19,7 +13,6 @@ import { TransactorInstance } from 'hooks/useTransactor'
 import { LaunchProjectData } from 'hooks/v2v3/transactor/useLaunchProjectTx'
 import omit from 'lodash/omit'
 import {
-  JB721DelegateVersion,
   JB721GovernanceType,
   JB721TierParams,
   JBDeployTiered721DelegateData,
@@ -28,6 +21,7 @@ import {
   JB_721_TIER_PARAMS_V3_2,
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
+import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
@@ -84,13 +78,13 @@ function buildArgs(
     launchProjectData, // _launchProjectData
   ]
 
-  if (version === JB721_DELEGATE_V3) {
+  if (version === JB721DelegateVersion.JB721DELEGATE_V3) {
     return baseArgs
   }
   if (
-    version === JB721_DELEGATE_V3_1 ||
-    version === JB721_DELEGATE_V3_2 ||
-    version === JB721_DELEGATE_V3_3
+    version === JB721DelegateVersion.JB721DELEGATE_V3_1 ||
+    version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
+    version === JB721DelegateVersion.JB721DELEGATE_V3_3
   ) {
     return [...baseArgs, JBControllerAddress] // v1.1 requires us to pass the controller address in
   }

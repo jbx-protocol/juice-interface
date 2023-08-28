@@ -1,6 +1,6 @@
 import { Contract } from 'ethers'
 import { useContractReadValue } from 'hooks/ContractReader'
-import { JB721DelegateVersion } from 'models/nftRewards'
+import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { useJB721TieredDelegateStore } from './useJB721TieredDelegateStore'
 
 export function useStoreOfJB721TieredDelegate({

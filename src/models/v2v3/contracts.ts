@@ -1,22 +1,24 @@
 import { Contract } from 'ethers'
 
 export enum V2V3ContractName {
-  JBController = 'JBController',
-  JBController3_1 = 'JBController3_1',
   JBDirectory = 'JBDirectory',
-  JBETHPaymentTerminal = 'JBETHPaymentTerminal',
-  JBETHPaymentTerminal3_1 = 'JBETHPaymentTerminal3_1',
-  JBETHPaymentTerminal3_1_1 = 'JBETHPaymentTerminal3_1_1',
-  JBETHPaymentTerminal3_1_2 = 'JBETHPaymentTerminal3_1_2',
+  JBProjects = 'JBProjects',
   JBFundingCycleStore = 'JBFundingCycleStore',
   JBFundAccessConstraintsStore = 'JBFundAccessConstraintsStore',
   JBOperatorStore = 'JBOperatorStore',
-  JBProjects = 'JBProjects',
   JBSplitsStore = 'JBSplitsStore',
   JBTokenStore = 'JBTokenStore',
   JBSingleTokenPaymentTerminalStore = 'JBSingleTokenPaymentTerminalStore',
   JBETHERC20ProjectPayerDeployer = 'JBETHERC20ProjectPayerDeployer',
   JBETHERC20SplitsPayerDeployer = 'JBETHERC20SplitsPayerDeployer',
+
+  JBController = 'JBController',
+  JBController3_1 = 'JBController3_1',
+
+  JBETHPaymentTerminal = 'JBETHPaymentTerminal',
+  JBETHPaymentTerminal3_1 = 'JBETHPaymentTerminal3_1',
+  JBETHPaymentTerminal3_1_1 = 'JBETHPaymentTerminal3_1_1',
+  JBETHPaymentTerminal3_1_2 = 'JBETHPaymentTerminal3_1_2',
 
   DeprecatedJBSplitsStore = 'DeprecatedJBSplitsStore',
   DeprecatedJBDirectory = 'DeprecatedJBDirectory',
@@ -31,7 +33,7 @@ export type V2V3Contracts = Record<V2V3ContractName, Contract>
  * To support a new payment terminal:
  * 1. Add it to V2V3ContractName
  * 2. Add it to this array
- * 3. Add support for it in any other transactions that use it.
+ * 3. Add support for it in any contract reads or transactions that use it.
  */
 export const SUPPORTED_PAYMENT_TERMINALS = [
   V2V3ContractName.JBETHPaymentTerminal,
@@ -39,6 +41,20 @@ export const SUPPORTED_PAYMENT_TERMINALS = [
   V2V3ContractName.JBETHPaymentTerminal3_1_1,
   V2V3ContractName.JBETHPaymentTerminal3_1_2,
 ] as const
-
 export type PaymentTerminalVersion =
   (typeof SUPPORTED_PAYMENT_TERMINALS)[number]
+
+/**
+ * Single source of truth for supported jbcontroller versions.
+ *
+ * DEV NOTE:
+ * To support a new controllers:
+ * 1. Add it to V2V3ContractName
+ * 2. Add it to this array
+ * 3. Add support for it in any contract reads or transactions that use it.
+ */
+export const SUPPORTED_CONTROLLERS = [
+  V2V3ContractName.JBController,
+  V2V3ContractName.JBController3_1,
+] as const
+export type ControllerVersion = (typeof SUPPORTED_CONTROLLERS)[number]

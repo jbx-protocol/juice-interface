@@ -1,13 +1,14 @@
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
-import { V2V3ContractName } from 'models/v2v3/contracts'
+import {
+  ControllerVersion,
+  SUPPORTED_CONTROLLERS,
+  V2V3ContractName,
+  V2V3Contracts,
+} from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import { isEqualAddress } from 'utils/address'
 import useProjectControllerAddress from '../../contractReader/useProjectControllerAddress'
 import { useLoadV2V3Contract } from '../../useLoadV2V3Contract'
-
-export type JBControllerVersion = '3' | '3.1'
-export const JB_CONTROLLER_V_3: JBControllerVersion = '3'
-export const JB_CONTROLLER_V_3_1: JBControllerVersion = '3.1'
 
 export function useProjectController({ projectId }: { projectId: number }) {
   const { cv, contracts } = useContext(V2V3ContractsContext)
@@ -17,25 +18,29 @@ export function useProjectController({ projectId }: { projectId: number }) {
       projectId,
     })
 
-  const version = isEqualAddress(
-    controllerAddress,
-    contracts?.JBController?.address,
-  )
-    ? JB_CONTROLLER_V_3
-    : isEqualAddress(controllerAddress, contracts?.JBController3_1?.address)
-    ? JB_CONTROLLER_V_3_1
-    : undefined
+  const contractName = getControllerName(controllerAddress, contracts)
 
   const JBController = useLoadV2V3Contract({
     cv,
-    contractName:
-      version === JB_CONTROLLER_V_3
-        ? V2V3ContractName.JBController
-        : version === JB_CONTROLLER_V_3_1
-        ? V2V3ContractName.JBController3_1
-        : undefined,
+    contractName,
     address: controllerAddress,
   })
 
-  return { JBController, loading: JBControllerLoading, version }
+  return { JBController, loading: JBControllerLoading, version: contractName }
+}
+
+const getControllerName = (
+  address: string | undefined,
+  contracts: V2V3Contracts | undefined,
+): ControllerVersion | undefined => {
+  if (!address || !contracts) return undefined
+
+  const terminalName = SUPPORTED_CONTROLLERS.find(contractName => {
+    return isEqualAddress(
+      address,
+      contracts[contractName as V2V3ContractName]?.address,
+    )
+  })
+
+  return terminalName
 }

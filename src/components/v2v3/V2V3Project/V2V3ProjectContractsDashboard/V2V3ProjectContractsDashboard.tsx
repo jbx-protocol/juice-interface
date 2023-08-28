@@ -11,6 +11,7 @@ import {
   V2V3ProjectContractsContext,
 } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import {
+  SUPPORTED_CONTROLLERS,
   SUPPORTED_PAYMENT_TERMINALS,
   V2V3ContractName,
 } from 'models/v2v3/contracts'
@@ -23,12 +24,11 @@ import { V2V3ProjectHeaderActions } from '../V2V3ProjectHeaderActions'
  * Typically this list consists of contracts that are project-specific (e.g. PaymentTerminal, Controller etc.)
  */
 const CONTRACT_EXCLUSIONS = [
-  V2V3ContractName.JBController,
-  V2V3ContractName.JBController3_1,
   V2V3ContractName.DeprecatedJBDirectory,
   V2V3ContractName.DeprecatedJBSplitsStore,
   V2V3ContractName.JBSingleTokenPaymentTerminalStore,
   V2V3ContractName.JBFundAccessConstraintsStore,
+  ...SUPPORTED_CONTROLLERS,
   ...SUPPORTED_PAYMENT_TERMINALS,
 ]
 

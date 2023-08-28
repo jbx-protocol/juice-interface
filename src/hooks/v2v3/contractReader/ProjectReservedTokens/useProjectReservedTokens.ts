@@ -1,9 +1,6 @@
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { BigNumber } from 'ethers'
-import {
-  JB_CONTROLLER_V_3,
-  JB_CONTROLLER_V_3_1,
-} from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectController'
+import { V2V3ContractName } from 'models/v2v3/contracts'
 import { useContext, useMemo } from 'react'
 import useContractReader from '../useV2ContractReader'
 import { useProjectReservedTokensArgsV3 } from './useProjectReservedTokensArgsV3'
@@ -25,11 +22,11 @@ export function useProjectReservedTokens({
   const JBControllerArgsV3_1 = useProjectReservedTokensArgsV3_1({ projectId })
 
   const args = useMemo(() => {
-    if (versions.JBControllerVersion === JB_CONTROLLER_V_3) {
+    if (versions.JBControllerVersion === V2V3ContractName.JBController) {
       return JBControllerArgsV3_0
     }
 
-    if (versions.JBControllerVersion === JB_CONTROLLER_V_3_1) {
+    if (versions.JBControllerVersion === V2V3ContractName.JBController3_1) {
       return JBControllerArgsV3_1
     }
 

@@ -6,7 +6,7 @@ import { fetchPastFundingCycles } from 'components/v2v3/V2V3Project/V2V3FundingC
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { BigNumber, Contract } from 'ethers'
-import { JB_CONTROLLER_V_3_1 } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectController'
+import { V2V3ContractName } from 'models/v2v3/contracts'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
 import moment from 'moment'
@@ -76,7 +76,7 @@ export const useHistorySubPanel = (props?: UseHistorySubPanelProps) => {
       const terminal = primaryETHTerminal
       const { JBController, JBFundAccessConstraintsStore } = contracts
       const contract =
-        JBControllerVersion === JB_CONTROLLER_V_3_1
+        JBControllerVersion === V2V3ContractName.JBController3_1
           ? JBFundAccessConstraintsStore
           : JBController
       const result = await callContract({

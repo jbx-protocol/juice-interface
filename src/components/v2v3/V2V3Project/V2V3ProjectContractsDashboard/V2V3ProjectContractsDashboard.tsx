@@ -17,13 +17,14 @@ import { V2V3ProjectHeaderActions } from '../V2V3ProjectHeaderActions'
 
 /**
  * Contracts that we don't want to show in the list.
+ * Typically this list consists of contracts that are project-specific (e.g. PaymentTerminal, Controller etc.)
  */
 const CONTRACT_EXCLUSIONS = [
   V2V3ContractName.JBController,
   V2V3ContractName.JBETHPaymentTerminal,
   V2V3ContractName.JBETHPaymentTerminal3_1,
   V2V3ContractName.JBETHPaymentTerminal3_1_1,
-  V2V3ContractName.JBETHPaymentTerminal3_1_2, // unsure if this one belongs, just following suit
+  V2V3ContractName.JBETHPaymentTerminal3_1_2,
   V2V3ContractName.JBController3_1,
   V2V3ContractName.DeprecatedJBDirectory,
   V2V3ContractName.DeprecatedJBSplitsStore,

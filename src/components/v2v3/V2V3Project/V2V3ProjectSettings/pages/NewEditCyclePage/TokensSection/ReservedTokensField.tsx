@@ -12,7 +12,7 @@ import { AdvancedDropdown } from '../AdvancedDropdown'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 
 export function ReservedTokensField() {
-  const { editCycleForm } = useEditCycleFormContext()
+  const { editCycleForm, setFormHasUpdated } = useEditCycleFormContext()
 
   const reservedTokens = useWatch('reservedTokens', editCycleForm) ?? 0
   const reservedSplits = useWatch('reservedSplits', editCycleForm) ?? []
@@ -64,6 +64,7 @@ export function ReservedTokensField() {
                 editCycleForm?.setFieldsValue({
                   reservedSplits: splits,
                 })
+                setFormHasUpdated(true)
               }}
               hideTitle
             />

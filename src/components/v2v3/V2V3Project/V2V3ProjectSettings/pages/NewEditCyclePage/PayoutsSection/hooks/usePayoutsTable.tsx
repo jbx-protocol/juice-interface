@@ -23,6 +23,7 @@ import {
   getNewDistributionLimit,
 } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
+import { useEditCycleFormContext } from '../../EditCycleFormContext'
 import { usePayoutsTableContext } from '../PayoutsTable/context/PayoutsTableContext'
 
 const JB_FEE = 0.025
@@ -36,6 +37,7 @@ export const usePayoutsTable = () => {
     currency,
     setCurrency: _setCurrency,
   } = usePayoutsTableContext()
+  const { setFormHasUpdated } = useEditCycleFormContext()
 
   const roundingPrecision = currency === 'ETH' ? 4 : 2
 
@@ -68,10 +70,12 @@ export const usePayoutsTable = () => {
    */
   function setCurrency(currency: V2V3CurrencyOption) {
     _setCurrency(V2V3CurrencyName(currency) ?? 'ETH')
+    setFormHasUpdated(true)
   }
 
   function _setPayoutSplits(splits: Split[]) {
     setPayoutSplits(ensureSplitsSumTo100Percent({ splits }))
+    setFormHasUpdated(true)
   }
 
   /**

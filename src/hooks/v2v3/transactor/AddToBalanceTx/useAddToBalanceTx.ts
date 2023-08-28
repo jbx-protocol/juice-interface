@@ -8,8 +8,7 @@ import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/useTransactor'
-import { PaymentTerminalVersion } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminal'
-import { V2V3ContractName } from 'models/v2v3/contracts'
+import { PaymentTerminalVersion, V2V3ContractName } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 import { useV2ProjectTitle } from '../../useProjectTitle'

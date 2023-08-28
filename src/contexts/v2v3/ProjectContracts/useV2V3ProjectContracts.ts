@@ -4,11 +4,9 @@ import {
   useProjectController,
 } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectController'
 import { useProjectFundAccessConstraintsStore } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectFundAccessContraintsStore'
-import {
-  PaymentTerminalVersion,
-  useProjectPrimaryEthTerminal,
-} from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminal'
+import { useProjectPrimaryEthTerminal } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminal'
 import { useProjectPrimaryEthTerminalStore } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminalStore'
+import { PaymentTerminalVersion } from 'models/v2v3/contracts'
 
 /**
  * Load project-specific JB contracts.

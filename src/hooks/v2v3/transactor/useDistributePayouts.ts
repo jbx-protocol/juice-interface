@@ -10,11 +10,10 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
-import { V2V3ContractName } from 'models/v2v3/contracts'
+import { PaymentTerminalVersion, V2V3ContractName } from 'models/v2v3/contracts'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
-import { PaymentTerminalVersion } from '../V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminal'
 import { useV2ProjectTitle } from '../useProjectTitle'
 
 interface DistributePayoutsTxBaseParams {

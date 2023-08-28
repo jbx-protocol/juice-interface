@@ -1,10 +1,4 @@
 import { NftFileType } from 'components/inputs/UploadNoStyle'
-import {
-  JB721_DELEGATE_V3,
-  JB721_DELEGATE_V3_1,
-  JB721_DELEGATE_V3_2,
-  JB721_DELEGATE_V3_3,
-} from 'constants/delegateVersions'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
@@ -16,7 +10,6 @@ import round from 'lodash/round'
 import {
   IPFSNftCollectionMetadata,
   IPFSNftRewardTier,
-  JB721DelegateVersion,
   JB721GovernanceType,
   JB721PricingParams,
   JB721TierParams,
@@ -29,6 +22,7 @@ import {
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
   NftRewardTier,
 } from 'models/nftRewards'
+import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
 import { V2V3_CURRENCY_ETH } from './v2v3/currency'
 
@@ -332,12 +326,12 @@ export function buildJB721TierParams({
         | JB_721_TIER_PARAMS_V3_1
         | JB_721_TIER_PARAMS_V3_2 => {
         const rewardTier = sortedRewardTiers[index]
-        if (version === JB721_DELEGATE_V3_1) {
+        if (version === JB721DelegateVersion.JB721DELEGATE_V3_1) {
           return nftRewardTierToJB721TierParamsV3_1(rewardTier, cid)
         }
         if (
-          version === JB721_DELEGATE_V3_2 ||
-          version === JB721_DELEGATE_V3_3
+          version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
+          version === JB721DelegateVersion.JB721DELEGATE_V3_3
         ) {
           return nftRewardTierToJB721TierParamsV3_2(rewardTier, cid)
         }
@@ -351,7 +345,10 @@ export function buildJB721TierParams({
       // Tiers MUST BE in ascending order when sent to contract.
 
       // bit bongy, sorry!
-      if (version === JB721_DELEGATE_V3_2 || version === JB721_DELEGATE_V3_3) {
+      if (
+        version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
+        version === JB721DelegateVersion.JB721DELEGATE_V3_3
+      ) {
         if (
           (a as JB_721_TIER_PARAMS_V3_2).price.gt(
             (b as JB_721_TIER_PARAMS_V3_2).price,
@@ -485,8 +482,8 @@ export function buildDeployTiered721DelegateData(
     governanceType,
   }
 
-  // Only need to specify directory in V1
-  if (version === JB721_DELEGATE_V3) {
+  // Only need to specify directory in V3.0
+  if (version === JB721DelegateVersion.JB721DELEGATE_V3) {
     return {
       ...baseArgs,
       directory: JBDirectoryAddress,

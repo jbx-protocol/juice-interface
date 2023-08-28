@@ -1,6 +1,5 @@
 import { t } from '@lingui/macro'
 import { CV_V3 } from 'constants/cv'
-import { JB721_DELEGATE_V3 } from 'constants/delegateVersions'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
@@ -13,12 +12,11 @@ import { LaunchFundingCyclesData } from 'hooks/v2v3/transactor/useLaunchFundingC
 import { useLoadV2V3Contract } from 'hooks/v2v3/useLoadV2V3Contract'
 import omit from 'lodash/omit'
 import {
-  JB721DelegateVersion,
   JBDeployTiered721DelegateData,
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
 import { GroupedSplits, SplitGroup } from 'models/splits'
-import { V2V3ContractName } from 'models/v2v3/contracts'
+import { JB721DelegateVersion, V2V3ContractName } from 'models/v2v3/contracts'
 import {
   JBPayDataSourceFundingCycleMetadata,
   V2V3FundAccessConstraint,
@@ -78,7 +76,7 @@ function buildArgs(
     launchFundingCyclesData, // _launchFundingCyclesData
   ]
 
-  if (version === JB721_DELEGATE_V3) {
+  if (version === JB721DelegateVersion.JB721DELEGATE_V3) {
     return baseArgs
   }
   return [...baseArgs, JBControllerAddress] // v3.1/3.2 requires us to pass the controller address in

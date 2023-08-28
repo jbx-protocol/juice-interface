@@ -9,10 +9,6 @@ import { RedeemingNft } from 'components/ProjectDashboard/components/NftRewardsP
 import { REDEMPTION_RATE_EXPLANATION } from 'components/strings'
 import TooltipLabel from 'components/TooltipLabel'
 import {
-  JB721_DELEGATE_V3_2,
-  JB721_DELEGATE_V3_3,
-} from 'constants/delegateVersions'
-import {
   IJB721Delegate_V3_2_INTERFACE_ID,
   IJB721Delegate_V3_INTERFACE_ID,
 } from 'constants/nftRewards'
@@ -24,6 +20,7 @@ import { useNftAccountBalance } from 'hooks/JB721Delegate/useNftAccountBalance'
 import { useETHReceivedFromNftRedeem } from 'hooks/v2v3/contractReader/useETHReceivedFromNftRedeem'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/useRedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
+import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatRedemptionRate } from 'utils/v2v3/math'
@@ -70,7 +67,7 @@ export function RedeemNftsModal({
 }) {
   const { fundingCycle, primaryTerminalCurrentOverflow, fundingCycleMetadata } =
     useContext(V2V3ProjectContext)
-  const { version: JB721DelegateVersion } = useContext(
+  const { version: jb721DelegateVersion } = useContext(
     JB721DelegateContractsContext,
   )
 
@@ -114,8 +111,8 @@ export function RedeemNftsModal({
         minReturnedTokens: BigNumber.from(0),
         memo,
         metadata:
-          JB721DelegateVersion === JB721_DELEGATE_V3_2 ||
-          JB721DelegateVersion === JB721_DELEGATE_V3_3
+          jb721DelegateVersion === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
+          jb721DelegateVersion === JB721DelegateVersion.JB721DELEGATE_V3_3
             ? encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem)
             : encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem),
       },

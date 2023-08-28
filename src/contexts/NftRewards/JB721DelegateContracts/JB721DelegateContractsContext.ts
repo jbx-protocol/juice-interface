@@ -1,5 +1,5 @@
 import { Contract } from 'ethers'
-import { JB721DelegateVersion } from 'models/nftRewards'
+import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { createContext } from 'react'
 
 interface JB721DelegateContracts {

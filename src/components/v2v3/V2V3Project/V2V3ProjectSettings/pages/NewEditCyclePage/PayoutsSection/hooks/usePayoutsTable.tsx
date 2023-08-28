@@ -74,7 +74,11 @@ export const usePayoutsTable = () => {
   }
 
   function _setPayoutSplits(splits: Split[]) {
-    setPayoutSplits(ensureSplitsSumTo100Percent({ splits }))
+    if (distributionLimitIsInfinite) {
+      setPayoutSplits(splits)
+    } else {
+      setPayoutSplits(ensureSplitsSumTo100Percent({ splits }))
+    }
     setFormHasUpdated(true)
   }
 
@@ -238,7 +242,7 @@ export const usePayoutsTable = () => {
   }
 
   /**
-   * Handle payoutSplit amount changed:
+   * Handle payoutSplit amount changed (called when payouts table rows' input fields update):
    *    - Sets new distributionLimit (DL) based on sum of new payout amounts
    *    - Changed the % of other splits based on the new DL keep their amount the same
    * @param editingPayoutSplit - Split that has had its amount changed

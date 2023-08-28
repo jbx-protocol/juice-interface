@@ -1,8 +1,8 @@
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { SUPPORTED_PAYMENT_TERMINALS } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import { isEqualAddress } from 'utils/address'
-import { SUPPORTED_PAYMENT_TERMINALS } from './V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminal'
 
 /**
  * Check whether a project's primary terminal is one that we support.

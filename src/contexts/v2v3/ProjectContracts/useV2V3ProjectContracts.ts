@@ -5,7 +5,7 @@ import {
 } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectController'
 import { useProjectFundAccessConstraintsStore } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectFundAccessContraintsStore'
 import {
-  JBETHPaymentTerminalVersion,
+  PaymentTerminalVersion,
   useProjectPrimaryEthTerminal,
 } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminal'
 import { useProjectPrimaryEthTerminalStore } from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminalStore'
@@ -22,7 +22,7 @@ export function useV2V3ProjectContracts({ projectId }: { projectId: number }): {
     JBFundAccessConstraintsStoreLoading: boolean
   }
   versions: {
-    JBETHPaymentTerminalVersion: JBETHPaymentTerminalVersion | undefined
+    JBETHPaymentTerminalVersion: PaymentTerminalVersion | undefined
     JBControllerVersion: JBControllerVersion | undefined
   }
 } {

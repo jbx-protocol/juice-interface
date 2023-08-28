@@ -19,7 +19,10 @@ export const SUPPORTED_PAYMENT_TERMINALS = [
   V2V3ContractName.JBETHPaymentTerminal3_1,
   V2V3ContractName.JBETHPaymentTerminal3_1_1,
   V2V3ContractName.JBETHPaymentTerminal3_1_2,
-]
+] as const
+
+export type PaymentTerminalVersion =
+  (typeof SUPPORTED_PAYMENT_TERMINALS)[number]
 
 /**
  * Load and return the primary ETH payment terminal contract for a project.
@@ -56,7 +59,7 @@ export function useProjectPrimaryEthTerminal({
 const getTerminalName = (
   address: string | undefined,
   contracts: V2V3Contracts | undefined,
-) => {
+): PaymentTerminalVersion | undefined => {
   if (!address || !contracts) return undefined
 
   const terminalName = SUPPORTED_PAYMENT_TERMINALS.find(contractName => {

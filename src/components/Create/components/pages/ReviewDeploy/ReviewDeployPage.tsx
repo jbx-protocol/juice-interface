@@ -1,10 +1,11 @@
 import { CheckCircleFilled } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
-import { Checkbox, Form, Modal } from 'antd'
+import { Trans } from '@lingui/macro'
+import { Checkbox, Form } from 'antd'
 import { Callout } from 'components/Callout'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/modals/TransactionModal'
+import { emitConfirmationDeletionModal } from 'components/ProjectDashboard/utils/modals'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
 import useMobile from 'hooks/useMobile'
 import { useModal } from 'hooks/useModal'
@@ -226,7 +227,20 @@ export const ReviewDeployPage = () => {
         </div>
         <span>
           <Trans>Made a mistake?</Trans>{' '}
-          <a onClick={modal.open}>
+          <a
+            onClick={() =>
+              emitConfirmationDeletionModal({
+                description: (
+                  <Trans>
+                    Starting over will erase all currently saved progress.
+                  </Trans>
+                ),
+                okText: <Trans>Yes, start over</Trans>,
+                cancelText: <Trans>No, keep editing</Trans>,
+                onConfirm: handleStartOverClicked,
+              })
+            }
+          >
             <Trans>Start over</Trans>
           </a>
           .
@@ -236,20 +250,6 @@ export const ReviewDeployPage = () => {
         transactionPending={deployTransactionPending}
         open={deployTransactionPending}
       />
-      <Modal
-        title={
-          <h2 className="text-xl font-medium text-black dark:text-grey-200">
-            <Trans>Are you sure?</Trans>
-          </h2>
-        }
-        okText={t`Yes, start over`}
-        cancelText={t`No, keep editing`}
-        open={modal.visible}
-        onOk={handleStartOverClicked}
-        onCancel={modal.close}
-      >
-        <Trans>Starting over will erase all currently saved progress.</Trans>
-      </Modal>
     </>
   )
 }

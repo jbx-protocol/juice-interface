@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { ModalOnCancelFn, ModalOnOkFn } from 'components/modals/JuiceModal'
-import LanguageProvider from 'contexts/Language/LanguageProvider'
+import { LanguageProvider } from 'contexts/Language/LanguageProvider'
 import { ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ConfirmationDeletionModal } from '../components/ui/ConfirmationDeletionModal'

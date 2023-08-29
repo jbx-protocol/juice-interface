@@ -2282,6 +2282,9 @@ msgstr ""
 msgid "If enabled, project tokens will be minted to a custom beneficiary address. By default, project tokens will be minted to the wallet that pays this address."
 msgstr ""
 
+msgid "This project has no upcoming cycle"
+msgstr ""
+
 msgid "Highest paid"
 msgstr ""
 

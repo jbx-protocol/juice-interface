@@ -1,4 +1,5 @@
 import { Trans, t } from '@lingui/macro'
+import { Tooltip } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
 import round from 'lodash/round'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
@@ -29,11 +30,19 @@ export function TotalRows() {
     <>
       <Row>
         <Cell>Sub-total</Cell>
-        <Cell>
-          {currencyOrPercentSymbol} {round(subTotal, roundingPrecision)}
+        <Cell className={ownerRemainderValue < 0 ? 'text-error-500' : ''}>
+          <Tooltip
+            title={
+              ownerRemainderValue < 0 ? (
+                <Trans>Sub-total cannot exceed 100%</Trans>
+              ) : undefined
+            }
+          >
+            {currencyOrPercentSymbol} {round(subTotal, roundingPrecision)}
+          </Tooltip>
         </Cell>
       </Row>
-      {ownerRemainderValue ? (
+      {ownerRemainderValue > 0 ? (
         <Row>
           <Cell>
             <TooltipLabel
@@ -41,7 +50,7 @@ export function TotalRows() {
               label={<Trans>Remaining balance</Trans>}
             />
           </Cell>
-          <Cell className={ownerRemainderValue < 0 ? 'text-error-500' : ''}>
+          <Cell>
             {currencyOrPercentSymbol} {ownerRemainderValue}
           </Cell>
         </Row>

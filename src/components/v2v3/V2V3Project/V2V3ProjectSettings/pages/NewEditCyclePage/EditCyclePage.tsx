@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { Button, Form } from 'antd'
+import { Button, Form, Tooltip } from 'antd'
 import Loading from 'components/Loading'
 import { ExternalLinkWithIcon } from 'components/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -13,6 +13,7 @@ import { EditCycleFormSection } from './EditCycleFormSection'
 import { PayoutsSection } from './PayoutsSection'
 import { ReviewConfirmModal } from './ReviewConfirmModal'
 import { TokensSection } from './TokensSection'
+import { useEditCycleFormHasError } from './hooks/useEditCycleFormHasError'
 
 export function EditCyclePage() {
   const [confirmModalOpen, setConfirmModalOpen] = useState<boolean>(false)
@@ -23,12 +24,15 @@ export function EditCyclePage() {
   const { editCycleForm, initialFormData, formHasUpdated, setFormHasUpdated } =
     useEditCycleFormContext()
 
+  const { error } = useEditCycleFormHasError()
+
   const handleFormValuesChange = () => {
     if (!formHasUpdated) {
       setFormHasUpdated(true)
     }
   }
   if (!initialFormData) return <Loading className="h-70" />
+
   return (
     <div>
       <p>
@@ -95,14 +99,15 @@ export function EditCyclePage() {
             </Button>
           </Link>
         ) : null}
-
-        <Button
-          type="primary"
-          onClick={() => setConfirmModalOpen(true)}
-          disabled={!formHasUpdated}
-        >
-          <Trans>Save changes</Trans>
-        </Button>
+        <Tooltip title={error}>
+          <Button
+            type="primary"
+            onClick={() => setConfirmModalOpen(true)}
+            disabled={!formHasUpdated || Boolean(error)}
+          >
+            <Trans>Save changes</Trans>
+          </Button>
+        </Tooltip>
       </div>
     </div>
   )

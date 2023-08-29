@@ -4,6 +4,7 @@ import {
 } from 'constants/nftRewards'
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { constants, utils } from 'ethers'
+import { createMetadata } from 'juicebox-metadata-helper'
 import { JB721DelegateVersion } from 'models/v2v3/contracts'
 
 export interface JB721DELAGATE_V3_PAY_METADATA {
@@ -42,6 +43,10 @@ export function encodeJb721DelegateMetadata(
     case JB721DelegateVersion.JB721DELEGATE_V3_2:
     case JB721DelegateVersion.JB721DELEGATE_V3_3:
       return encodeJB721DelegateV3_2PayMetadata(
+        metadata as JB721DELAGATE_V3_2_PAY_METADATA,
+      )
+    case JB721DelegateVersion.JB721DELEGATE_V3_4:
+      return encodeJB721DelegateV3_4PayMetadata(
         metadata as JB721DELAGATE_V3_2_PAY_METADATA,
       )
     default:
@@ -112,4 +117,21 @@ function encodeJB721DelegateV3_2PayMetadata(
   )
 
   return encoded
+}
+
+function encodeJB721DelegateV3_4PayMetadata(
+  metadata: JB721DELAGATE_V3_2_PAY_METADATA | undefined,
+) {
+  if (!metadata) return undefined
+
+  const args = [
+    metadata.allowOverspending ?? DEFAULT_ALLOW_OVERSPENDING,
+    metadata.tierIdsToMint,
+  ]
+
+  const encoded = utils.defaultAbiCoder.encode(['bool', 'uint16[]'], args)
+
+  const result = createMetadata(['721P'], [encoded])
+
+  return result
 }

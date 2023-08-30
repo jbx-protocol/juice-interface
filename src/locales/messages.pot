@@ -1037,6 +1037,9 @@ msgstr ""
 msgid "Using crowdfunding platforms for films has been around for a while, but Juicebox adds an extra layer of transparency to the process, allowing fans to see where funds are going. Unlike traditional models where money is controlled behind the scenes, StudioDAO members source, vote, fund, and distribute movies transparently using the treasury while creators retain 100% of their creative control and ownership. With the entertainment market currently valued at two trillion dollars, StudioDAO founder Kenny Miller can see a “clear scenario for a decentralized studio to do one billion dollars of production 2-3 years from now.” To learn more about Kenny's vision for StudioDAO, listen to episode 9 of the Juicecast: <0>https://podcast.juicebox.money</0>."
 msgstr ""
 
+msgid "Reserved token recipients cannot exceed 100%"
+msgstr ""
+
 msgid "Contributors will receive this NFT when they contribute at least this amount."
 msgstr ""
 
@@ -2798,6 +2801,9 @@ msgstr ""
 msgid "Update basic project details"
 msgstr ""
 
+msgid "Reserved recipients cannot exceed 100%"
+msgstr ""
+
 msgid "Available: {0}"
 msgstr ""
 
@@ -4457,6 +4463,9 @@ msgstr ""
 msgid "Other rules"
 msgstr ""
 
+msgid "Sub-total cannot exceed 100%"
+msgstr ""
+
 msgid "{0} holders"
 msgstr ""
 
@@ -4613,6 +4622,9 @@ msgstr ""
 msgid "You will receive {0}<0/>"
 msgstr ""
 
+msgid "Payouts cannot exceed 100%"
+msgstr ""
+
 msgid "Data from upcoming cycle"
 msgstr ""
 
@@ -4713,6 +4725,9 @@ msgid "Max Supply"
 msgstr ""
 
 msgid "The maximum supply of this NFT in circulation."
+msgstr ""
+
+msgid "Payout and reserved token recipients cannot exceed 100%"
 msgstr ""
 
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return. <0>Learn more</0>."

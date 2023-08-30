@@ -1,4 +1,5 @@
 import { Trans, t } from '@lingui/macro'
+import { Tooltip } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
 import round from 'lodash/round'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
@@ -7,6 +8,8 @@ import { PayoutsTableRow } from './PayoutsTableRow'
 
 const Row = PayoutsTableRow
 const Cell = PayoutsTableCell
+
+const SMALL_FEE_PRECISION_BUFFER = 2
 
 /* Bottom few rows of the payouts table which show total amounts and fees */
 export function TotalRows() {
@@ -25,15 +28,31 @@ export function TotalRows() {
       ? round(distributionLimit, roundingPrecision)
       : t`Unlimited`
 
+  const subTotalExceedsMax = distributionLimitIsInfinite && subTotal > 100
+
+  // Make fee more precise when it is very small
+  const feeRoundingPrecision =
+    totalFeeAmount >= 1
+      ? roundingPrecision
+      : roundingPrecision + SMALL_FEE_PRECISION_BUFFER
+
   return (
     <>
       <Row>
         <Cell>Sub-total</Cell>
-        <Cell>
-          {currencyOrPercentSymbol} {round(subTotal, roundingPrecision)}
+        <Cell className={subTotalExceedsMax ? 'text-error-500' : ''}>
+          <Tooltip
+            title={
+              subTotalExceedsMax ? (
+                <Trans>Sub-total cannot exceed 100%</Trans>
+              ) : undefined
+            }
+          >
+            {currencyOrPercentSymbol} {round(subTotal, roundingPrecision)}
+          </Tooltip>
         </Cell>
       </Row>
-      {ownerRemainderValue ? (
+      {ownerRemainderValue > 0 ? (
         <Row>
           <Cell>
             <TooltipLabel
@@ -41,7 +60,7 @@ export function TotalRows() {
               label={<Trans>Remaining balance</Trans>}
             />
           </Cell>
-          <Cell className={ownerRemainderValue < 0 ? 'text-error-500' : ''}>
+          <Cell>
             {currencyOrPercentSymbol} {ownerRemainderValue}
           </Cell>
         </Row>
@@ -49,7 +68,8 @@ export function TotalRows() {
       <Row>
         <Cell>Fees</Cell>
         <Cell>
-          {currencyOrPercentSymbol} {round(totalFeeAmount, roundingPrecision)}
+          {currencyOrPercentSymbol}{' '}
+          {round(totalFeeAmount, feeRoundingPrecision)}
         </Cell>
       </Row>
       <Row className="rounded-b-lg font-medium" highlighted>

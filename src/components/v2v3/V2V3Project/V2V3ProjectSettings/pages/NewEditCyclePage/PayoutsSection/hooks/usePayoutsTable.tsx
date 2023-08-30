@@ -40,14 +40,43 @@ export const usePayoutsTable = () => {
   } = usePayoutsTableContext()
   const { setFormHasUpdated } = useEditCycleFormContext()
 
-  const roundingPrecision = currency === 'ETH' ? 4 : 2
-
   const distributionLimitIsInfinite = useMemo(
     () =>
       distributionLimit === undefined ||
       parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT),
     [distributionLimit],
   )
+
+  const amountOrPercentValue = ({
+    payoutSplit,
+    dontApplyFee,
+  }: {
+    payoutSplit: Split
+    dontApplyFee?: boolean
+  }) =>
+    distributionLimitIsInfinite
+      ? (payoutSplit.percent / ONE_BILLION) * 100
+      : derivePayoutAmount({ payoutSplit, dontApplyFee })
+
+  /* Total amount that leaves the treasury minus fees */
+  const subTotal = payoutSplits.reduce((acc, payoutSplit) => {
+    const reducer = amountOrPercentValue({ payoutSplit })
+    return acc + reducer
+  }, 0)
+
+  let roundingPrecision = currency === 'ETH' ? 4 : 2
+  // If subTotal exceeds 100%, set rounding precision to exceeding decimal amount
+  // e.g. subTotal = 100.00001, roundingPrecision = 5
+  if (distributionLimitIsInfinite && subTotal > 100) {
+    const decimalPart = subTotal - Math.floor(subTotal)
+    if (decimalPart > 0) {
+      const decimalStr = decimalPart.toString()
+      const decimalPrecision = decimalStr.slice(
+        decimalStr.indexOf('.') + 1,
+      ).length
+      roundingPrecision = Math.max(roundingPrecision, decimalPrecision)
+    }
+  }
 
   const ownerRemainingPercentPPB =
     SPLITS_TOTAL_PERCENT - totalSplitsPercent(payoutSplits) // parts-per-billion
@@ -64,6 +93,27 @@ export const usePayoutsTable = () => {
   const currencyOrPercentSymbol = distributionLimitIsInfinite
     ? '%'
     : V2V3_CURRENCY_METADATA[getV2V3CurrencyOption(currency)].symbol
+
+  /* Payouts that don't go to Juicebox projects incur 2.5% fee */
+  const nonJuiceboxProjectPayoutSplits = [
+    ...payoutSplits.filter(payoutSplit => !isProjectSplit(payoutSplit)),
+    getProjectOwnerRemainderSplit(
+      // remaining owner split also incurs fee
+      '',
+      payoutSplits,
+    ) as Split,
+  ]
+
+  /* Count the total fee amount. If % of payouts sums > 100, just set fees to 2.5% (maximum)*/
+  const totalFeeAmount =
+    distributionLimitIsInfinite && round(subTotal, roundingPrecision) > 100
+      ? 2.5
+      : nonJuiceboxProjectPayoutSplits.reduce((acc, payoutSplit) => {
+          return (
+            acc +
+            amountOrPercentValue({ payoutSplit, dontApplyFee: true }) * JB_FEE
+          )
+        }, 0)
 
   /**
    * Sets the currency for the distributionLimit
@@ -130,7 +180,10 @@ export const usePayoutsTable = () => {
   }: {
     payoutSplitPercent: number
   }) {
-    return round((payoutSplitPercent / ONE_BILLION) * 100, 2).toString()
+    return round(
+      (payoutSplitPercent / ONE_BILLION) * 100,
+      roundingPrecision,
+    ).toString()
   }
 
   /**
@@ -336,44 +389,6 @@ export const usePayoutsTable = () => {
     setDistributionLimit(0)
     setPayoutSplits([])
   }
-
-  const amountOrPercentValue = ({
-    payoutSplit,
-    dontApplyFee,
-  }: {
-    payoutSplit: Split
-    dontApplyFee?: boolean
-  }) =>
-    distributionLimitIsInfinite
-      ? (payoutSplit.percent / ONE_BILLION) * 100
-      : derivePayoutAmount({ payoutSplit, dontApplyFee })
-
-  /* Total amount that leaves the treasury minus fees */
-  const subTotal = payoutSplits.reduce((acc, payoutSplit) => {
-    const reducer = amountOrPercentValue({ payoutSplit })
-    return acc + reducer
-  }, 0)
-
-  /* Payouts that don't go to Juicebox projects incur 2.5% fee */
-  const nonJuiceboxProjectPayoutSplits = [
-    ...payoutSplits.filter(payoutSplit => !isProjectSplit(payoutSplit)),
-    getProjectOwnerRemainderSplit(
-      // remaining owner split also incurs fee
-      '',
-      payoutSplits,
-    ) as Split,
-  ]
-
-  /* Count the total fee amount. If % of payouts sums > 100, just set fees to 2.5% (maximum)*/
-  const totalFeeAmount =
-    distributionLimitIsInfinite && round(subTotal, roundingPrecision) > 100
-      ? 2.5
-      : nonJuiceboxProjectPayoutSplits.reduce((acc, payoutSplit) => {
-          return (
-            acc +
-            amountOrPercentValue({ payoutSplit, dontApplyFee: true }) * JB_FEE
-          )
-        }, 0)
 
   return {
     distributionLimit,

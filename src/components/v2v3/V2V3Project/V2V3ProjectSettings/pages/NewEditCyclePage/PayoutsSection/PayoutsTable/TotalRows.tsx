@@ -26,14 +26,16 @@ export function TotalRows() {
       ? round(distributionLimit, roundingPrecision)
       : t`Unlimited`
 
+  const subTotalExceedsMax = distributionLimitIsInfinite && subTotal > 100
+
   return (
     <>
       <Row>
         <Cell>Sub-total</Cell>
-        <Cell className={ownerRemainderValue < 0 ? 'text-error-500' : ''}>
+        <Cell className={subTotalExceedsMax ? 'text-error-500' : ''}>
           <Tooltip
             title={
-              ownerRemainderValue < 0 ? (
+              subTotalExceedsMax ? (
                 <Trans>Sub-total cannot exceed 100%</Trans>
               ) : undefined
             }

@@ -65,6 +65,7 @@ export const otherUnitToSeconds = ({
   duration: number
   unit: DurationUnitsOption
 }) => {
+  if (!duration) return 0
   switch (unit) {
     case 'days':
       return duration * SECONDS_IN_DAY

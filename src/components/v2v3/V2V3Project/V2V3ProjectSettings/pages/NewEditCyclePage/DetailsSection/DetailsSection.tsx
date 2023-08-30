@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/macro'
+import { CYCLE_EXPLANATION } from 'components/strings'
 import { EditCycleHeader } from '../EditCycleHeader'
 import CycleDeadlineDropdown from './CycleDeadlineDropdown'
 import { DetailsSectionAdvanced } from './DetailsSectionAdvanced'
@@ -10,13 +11,7 @@ export function DetailsSection() {
       <div className="flex flex-col gap-2">
         <EditCycleHeader
           title={<Trans>Cycle duration</Trans>}
-          description={
-            <Trans>
-              Edits to cycles must occur before the selected period. Deadlines
-              ensure your contributors are informed of upcoming changes to your
-              projects’ configuration.
-            </Trans>
-          }
+          description={CYCLE_EXPLANATION}
         />
         <DurationFields />
       </div>
@@ -27,7 +22,7 @@ export function DetailsSection() {
             <Trans>
               Edits to cycles must occur before the selected period. Deadlines
               ensure your contributors are informed of upcoming changes to your
-              projects’ configuration.
+              project's configuration.
             </Trans>
           }
         />

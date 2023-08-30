@@ -1037,6 +1037,9 @@ msgstr ""
 msgid "Changes will take effect in your next cycle as long as it starts after your edit deadline."
 msgstr ""
 
+msgid "Reserved token recipients cannot exceed 100%"
+msgstr ""
+
 msgid "Contributors will receive this NFT when they contribute at least this amount."
 msgstr ""
 
@@ -2018,9 +2021,6 @@ msgstr ""
 msgid "The held fees will reset as ETH is transferred back to the project with the <0>transfer ETH to project</0> transaction above."
 msgstr ""
 
-msgid "Edits to cycles must occur before the selected period. Deadlines ensure your contributors are informed of upcoming changes to your projects’ configuration."
-msgstr ""
-
 msgid "Read the docs"
 msgstr ""
 
@@ -2376,6 +2376,9 @@ msgid "Max. supply reached"
 msgstr ""
 
 msgid "Migrate controller"
+msgstr ""
+
+msgid "Edits to cycles must occur before the selected period. Deadlines ensure your contributors are informed of upcoming changes to your project's configuration."
 msgstr ""
 
 msgid "Send reserved tokens"
@@ -2799,6 +2802,9 @@ msgid "Save deadline"
 msgstr ""
 
 msgid "Update basic project details"
+msgstr ""
+
+msgid "Reserved recipients cannot exceed 100%"
 msgstr ""
 
 msgid "Available: {0}"
@@ -4460,6 +4466,9 @@ msgstr ""
 msgid "Other rules"
 msgstr ""
 
+msgid "Sub-total cannot exceed 100%"
+msgstr ""
+
 msgid "{0} holders"
 msgstr ""
 
@@ -4616,6 +4625,9 @@ msgstr ""
 msgid "You will receive {0}<0/>"
 msgstr ""
 
+msgid "Payouts cannot exceed 100%"
+msgstr ""
+
 msgid "Data from upcoming cycle"
 msgstr ""
 
@@ -4716,6 +4728,9 @@ msgid "Max Supply"
 msgstr ""
 
 msgid "The maximum supply of this NFT in circulation."
+msgstr ""
+
+msgid "Payout and reserved token recipients cannot exceed 100%"
 msgstr ""
 
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return. <0>Learn more</0>."

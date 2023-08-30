@@ -9,6 +9,8 @@ import { PayoutsTableRow } from './PayoutsTableRow'
 const Row = PayoutsTableRow
 const Cell = PayoutsTableCell
 
+const SMALL_FEE_PRECISION_BUFFER = 2
+
 /* Bottom few rows of the payouts table which show total amounts and fees */
 export function TotalRows() {
   const {
@@ -27,6 +29,12 @@ export function TotalRows() {
       : t`Unlimited`
 
   const subTotalExceedsMax = distributionLimitIsInfinite && subTotal > 100
+
+  // Make fee more precise when it is very small
+  const feeRoundingPrecision =
+    totalFeeAmount >= 1
+      ? roundingPrecision
+      : roundingPrecision + SMALL_FEE_PRECISION_BUFFER
 
   return (
     <>
@@ -60,7 +68,8 @@ export function TotalRows() {
       <Row>
         <Cell>Fees</Cell>
         <Cell>
-          {currencyOrPercentSymbol} {round(totalFeeAmount, roundingPrecision)}
+          {currencyOrPercentSymbol}{' '}
+          {round(totalFeeAmount, feeRoundingPrecision)}
         </Cell>
       </Row>
       <Row className="rounded-b-lg font-medium" highlighted>

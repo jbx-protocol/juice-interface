@@ -11,14 +11,14 @@ import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 
 export const usePayoutsSectionValues = () => {
-  const { editCycleForm } = useEditCycleFormContext()
-
   const {
     distributionLimit: currentDistributionLimit,
     distributionLimitCurrency: currentCurrencyOption,
     fundingCycleMetadata: currentFundingCycleMetadata,
     payoutSplits: currentPayoutSplits,
   } = useContext(V2V3ProjectContext)
+
+  const { editCycleForm } = useEditCycleFormContext()
 
   const newPayoutSplits: Split[] = editCycleForm?.getFieldValue('payoutSplits')
   const payoutSplitsHasDiff = splitsListsHaveDiff(

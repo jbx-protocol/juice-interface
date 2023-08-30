@@ -7,7 +7,7 @@ import TransactionModal from 'components/modals/TransactionModal'
 import { useState } from 'react'
 import { useReconfigureFundingCycle } from '../../ReconfigureFundingCycleSettingsPage/hooks/useReconfigureFundingCycle'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
-import { usePrepareSaveEditCycleData } from '../hooks/PrepareSaveEditCycleData'
+import { usePrepareSaveEditCycleData } from '../hooks/usePrepareSaveEditCycleData'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
 import { EditCycleSuccessModal } from './EditCycleSuccessModal'
 import { PayoutsSectionDiff } from './PayoutsSectionDiff'
@@ -33,6 +33,9 @@ export function ReviewConfirmModal({
   const { sectionHasDiff: payoutsSectionHasDiff } = usePayoutsSectionValues()
   const { sectionHasDiff: tokensSectionHasDiff } = useTokensSectionValues()
 
+  const formHasChanges =
+    detailsSectionHasDiff || payoutsSectionHasDiff || tokensSectionHasDiff
+
   const memo = useWatch('memo', editCycleForm)
   const { editingFundingCycleConfig } = usePrepareSaveEditCycleData()
 
@@ -56,6 +59,7 @@ export function ReviewConfirmModal({
         destroyOnClose
         onOk={reconfigureFundingCycle}
         okText={<Trans>Deploy changes</Trans>}
+        okButtonProps={{ disabled: !formHasChanges }}
         cancelButtonProps={{ hidden: true }}
         onCancel={onClose}
         confirmLoading={reconfigureLoading}

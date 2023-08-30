@@ -7,16 +7,21 @@ import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { Split } from 'models/splits'
 import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
+import { totalSplitsPercent } from 'utils/splits'
+import { SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
 import { V2V3EditReservedTokens } from '../../ReservedTokensSettingsPage/V2V3EditReservedTokens'
 import { AdvancedDropdown } from '../AdvancedDropdown'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 
 export function ReservedTokensField() {
-  const { editCycleForm } = useEditCycleFormContext()
+  const { editCycleForm, setFormHasUpdated } = useEditCycleFormContext()
 
   const reservedTokens = useWatch('reservedTokens', editCycleForm) ?? 0
   const reservedSplits = useWatch('reservedSplits', editCycleForm) ?? []
   const totalIssuanceRate = useWatch('mintRate', editCycleForm) ?? 0
+
+  const reservedSplitsPercentExceedsMax =
+    totalSplitsPercent(reservedSplits) > SPLITS_TOTAL_PERCENT
 
   const [reservedTokensSwitchEnabled, setReservedTokensSwitchEnabled] =
     useState<boolean>(editCycleForm?.getFieldValue('reservedTokens') > 0)
@@ -64,11 +69,17 @@ export function ReservedTokensField() {
                 editCycleForm?.setFieldsValue({
                   reservedSplits: splits,
                 })
+                setFormHasUpdated(true)
               }}
               hideTitle
             />
           </AdvancedDropdown>
         </div>
+      ) : null}
+      {reservedSplitsPercentExceedsMax ? (
+        <span className="font-medium text-error-500">
+          <Trans>Reserved recipients cannot exceed 100%</Trans>
+        </span>
       ) : null}
       {/* Empty inputs to keep AntD useWatch happy */}
       <ItemNoInput name="reservedSplits" className="hidden" />

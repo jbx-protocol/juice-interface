@@ -39,8 +39,7 @@ export const useTokensSectionValues = () => {
     capitalize: false,
     plural: true,
   })
-
-  const newMintRateNum = parseFloat(formValues.mintRate)
+  const newMintRateNum = parseFloat(formValues.mintRate ?? '0')
   const newMintRate = BigNumber.from(
     issuanceRateFrom(newMintRateNum.toString()),
   )

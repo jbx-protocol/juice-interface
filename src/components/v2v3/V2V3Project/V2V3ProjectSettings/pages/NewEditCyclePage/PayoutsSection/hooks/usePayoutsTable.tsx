@@ -1,6 +1,7 @@
 import { AddEditAllocationModalEntity } from 'components/v2v3/shared/Allocation/AddEditAllocationModal'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
-import { ONE_BILLION } from 'constants/numbers'
+import { ONE_BILLION, WAD_DECIMALS } from 'constants/numbers'
+import isEqual from 'lodash/isEqual'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -23,6 +24,7 @@ import {
   getNewDistributionLimit,
 } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
+import { useEditCycleFormContext } from '../../EditCycleFormContext'
 import { usePayoutsTableContext } from '../PayoutsTable/context/PayoutsTableContext'
 
 const JB_FEE = 0.025
@@ -36,15 +38,44 @@ export const usePayoutsTable = () => {
     currency,
     setCurrency: _setCurrency,
   } = usePayoutsTableContext()
-
-  const roundingPrecision = currency === 'ETH' ? 4 : 2
-
+  const { setFormHasUpdated } = useEditCycleFormContext()
   const distributionLimitIsInfinite = useMemo(
     () =>
       distributionLimit === undefined ||
       parseWad(distributionLimit).eq(MAX_DISTRIBUTION_LIMIT),
     [distributionLimit],
   )
+
+  const amountOrPercentValue = ({
+    payoutSplit,
+    dontApplyFee,
+  }: {
+    payoutSplit: Split
+    dontApplyFee?: boolean
+  }) =>
+    distributionLimitIsInfinite
+      ? (payoutSplit.percent / ONE_BILLION) * 100
+      : derivePayoutAmount({ payoutSplit, dontApplyFee })
+
+  /* Total amount that leaves the treasury minus fees */
+  const subTotal = payoutSplits.reduce((acc, payoutSplit) => {
+    const reducer = amountOrPercentValue({ payoutSplit })
+    return acc + reducer
+  }, 0)
+
+  let roundingPrecision = currency === 'ETH' ? 4 : 2
+  // If subTotal exceeds 100%, set rounding precision to exceeding decimal amount
+  // e.g. subTotal = 100.00001, roundingPrecision = 5
+  if (distributionLimitIsInfinite && subTotal > 100) {
+    const decimalPart = subTotal - Math.floor(subTotal)
+    if (decimalPart > 0) {
+      const decimalStr = decimalPart.toString()
+      const decimalPrecision = decimalStr.slice(
+        decimalStr.indexOf('.') + 1,
+      ).length
+      roundingPrecision = Math.max(roundingPrecision, decimalPrecision)
+    }
+  }
 
   const ownerRemainingPercentPPB =
     SPLITS_TOTAL_PERCENT - totalSplitsPercent(payoutSplits) // parts-per-billion
@@ -62,16 +93,51 @@ export const usePayoutsTable = () => {
     ? '%'
     : V2V3_CURRENCY_METADATA[getV2V3CurrencyOption(currency)].symbol
 
+  /* Payouts that don't go to Juicebox projects incur 2.5% fee */
+  const nonJuiceboxProjectPayoutSplits = [
+    ...payoutSplits.filter(payoutSplit => !isProjectSplit(payoutSplit)),
+    getProjectOwnerRemainderSplit(
+      // remaining owner split also incurs fee
+      '',
+      payoutSplits,
+    ) as Split,
+  ]
+
+  /* Count the total fee amount. If % of payouts sums > 100, just set fees to 2.5% (maximum)*/
+  const totalFeeAmount =
+    distributionLimitIsInfinite && round(subTotal, roundingPrecision) > 100
+      ? 2.5
+      : nonJuiceboxProjectPayoutSplits.reduce((acc, payoutSplit) => {
+          return (
+            acc +
+            amountOrPercentValue({ payoutSplit, dontApplyFee: true }) * JB_FEE
+          )
+        }, 0)
+
   /**
    * Sets the currency for the distributionLimit
    * @param currency - Currency as a V2V3CurrencyOption (1 | 2)
    */
   function setCurrency(currency: V2V3CurrencyOption) {
     _setCurrency(V2V3CurrencyName(currency) ?? 'ETH')
+    setFormHasUpdated(true)
   }
 
   function _setPayoutSplits(splits: Split[]) {
-    setPayoutSplits(ensureSplitsSumTo100Percent({ splits }))
+    if (distributionLimitIsInfinite) {
+      setPayoutSplits(splits)
+    } else {
+      setPayoutSplits(ensureSplitsSumTo100Percent({ splits }))
+    }
+    setFormHasUpdated(true)
+  }
+
+  function _setDistributionLimit(distributionLimit: number | undefined) {
+    const _distributionLimit =
+      distributionLimit !== undefined
+        ? round(distributionLimit, WAD_DECIMALS)
+        : undefined
+    setDistributionLimit(_distributionLimit)
   }
 
   /**
@@ -121,7 +187,10 @@ export const usePayoutsTable = () => {
   }: {
     payoutSplitPercent: number
   }) {
-    return round((payoutSplitPercent / ONE_BILLION) * 100, 2).toString()
+    return round(
+      (payoutSplitPercent / ONE_BILLION) * 100,
+      roundingPrecision,
+    ).toString()
   }
 
   /**
@@ -170,7 +239,7 @@ export const usePayoutsTable = () => {
           newDistributionLimit: newDistributionLimit.toString(),
         })
       }
-      setDistributionLimit(newDistributionLimit)
+      _setDistributionLimit(newDistributionLimit)
     }
 
     const newPayoutSplit = {
@@ -234,7 +303,7 @@ export const usePayoutsTable = () => {
   }
 
   /**
-   * Handle payoutSplit amount changed:
+   * Handle payoutSplit amount changed (called when payouts table rows' input fields update):
    *    - Sets new distributionLimit (DL) based on sum of new payout amounts
    *    - Changed the % of other splits based on the new DL keep their amount the same
    * @param editingPayoutSplit - Split that has had its amount changed
@@ -291,7 +360,7 @@ export const usePayoutsTable = () => {
           }
         : m
     })
-    setDistributionLimit(newDistributionLimit)
+    _setDistributionLimit(newDistributionLimit)
     _setPayoutSplits(newPayoutSplits)
   }
 
@@ -302,9 +371,7 @@ export const usePayoutsTable = () => {
    * @param split - Split to be deleted
    */
   function handleDeletePayoutSplit({ payoutSplit }: { payoutSplit: Split }) {
-    const newSplits = payoutSplits.filter(
-      m => !hasEqualRecipient(m, payoutSplit),
-    )
+    const newSplits = payoutSplits.filter(m => !isEqual(m, payoutSplit))
 
     let adjustedSplits: Split[] = newSplits
     let newDistributionLimit = distributionLimit
@@ -321,7 +388,7 @@ export const usePayoutsTable = () => {
       })
     }
 
-    setDistributionLimit(newDistributionLimit)
+    _setDistributionLimit(newDistributionLimit)
     _setPayoutSplits(adjustedSplits)
   }
 
@@ -329,44 +396,6 @@ export const usePayoutsTable = () => {
     setDistributionLimit(0)
     setPayoutSplits([])
   }
-
-  const amountOrPercentValue = ({
-    payoutSplit,
-    dontApplyFee,
-  }: {
-    payoutSplit: Split
-    dontApplyFee?: boolean
-  }) =>
-    distributionLimitIsInfinite
-      ? (payoutSplit.percent / ONE_BILLION) * 100
-      : derivePayoutAmount({ payoutSplit, dontApplyFee })
-
-  /* Total amount that leaves the treasury minus fees */
-  const subTotal = payoutSplits.reduce((acc, payoutSplit) => {
-    const reducer = amountOrPercentValue({ payoutSplit })
-    return acc + reducer
-  }, 0)
-
-  /* Payouts that don't go to Juicebox projects incur 2.5% fee */
-  const nonJuiceboxProjectPayoutSplits = [
-    ...payoutSplits.filter(payoutSplit => !isProjectSplit(payoutSplit)),
-    getProjectOwnerRemainderSplit(
-      // remaining owner split also incurs fee
-      '',
-      payoutSplits,
-    ) as Split,
-  ]
-
-  /* Count the total fee amount. If % of payouts sums > 100, just set fees to 2.5% (maximum)*/
-  const totalFeeAmount =
-    distributionLimitIsInfinite && round(subTotal, roundingPrecision) > 100
-      ? 2.5
-      : nonJuiceboxProjectPayoutSplits.reduce((acc, payoutSplit) => {
-          return (
-            acc +
-            amountOrPercentValue({ payoutSplit, dontApplyFee: true }) * JB_FEE
-          )
-        }, 0)
 
   return {
     distributionLimit,

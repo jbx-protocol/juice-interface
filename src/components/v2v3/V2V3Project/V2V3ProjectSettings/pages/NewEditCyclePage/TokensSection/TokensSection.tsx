@@ -18,7 +18,6 @@ export function TokensSection() {
             </Trans>
           }
         />
-        {/* Mint rate field */}
         <MintRateField />
       </div>
       <TokensSectionAdvanced />

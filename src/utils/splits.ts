@@ -218,8 +218,12 @@ export const isProjectSplit = (split: Split): boolean => {
 export const projectIdToHex = (projectIdString: string | undefined) =>
   BigNumber.from(projectIdString ?? 0).toHexString()
 
-// Returns the sum of each split's percent in a list of splits
-export const totalSplitsPercent = (splits: Split[]) =>
+/**
+ * Returns the sum of each split's percent in a list of splits
+ * @param splits {Split[]} - list of splits to sum percents
+ * @returns {number} - sum of percents in part-per-billion (max = SPLITS_TOTAL_PERCENT)
+ */
+export const totalSplitsPercent = (splits: Split[]): number =>
   splits?.reduce((sum, split) => sum + split.percent, 0) ?? 0
 
 /**

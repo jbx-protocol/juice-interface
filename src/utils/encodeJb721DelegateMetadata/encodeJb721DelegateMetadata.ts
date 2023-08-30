@@ -1,16 +1,10 @@
 import {
-  JB721_DELEGATE_V3,
-  JB721_DELEGATE_V3_1,
-  JB721_DELEGATE_V3_2,
-  JB721_DELEGATE_V3_3,
-} from 'constants/delegateVersions'
-import {
   IJB721Delegate_V3_INTERFACE_ID,
   IJBTiered721Delegate_V3_2_INTERFACE_ID,
 } from 'constants/nftRewards'
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { constants, utils } from 'ethers'
-import { JB721DelegateVersion } from 'models/nftRewards'
+import { JB721DelegateVersion } from 'models/v2v3/contracts'
 
 export interface JB721DELAGATE_V3_PAY_METADATA {
   tierIdsToMint: number[]
@@ -37,16 +31,16 @@ export function encodeJb721DelegateMetadata(
 ) {
   if (!version) return undefined
   switch (version) {
-    case JB721_DELEGATE_V3:
+    case JB721DelegateVersion.JB721DELEGATE_V3:
       return encodeJB721DelegateV3PayMetadata(
         metadata as JB721DELAGATE_V3_PAY_METADATA,
       )
-    case JB721_DELEGATE_V3_1:
+    case JB721DelegateVersion.JB721DELEGATE_V3_1:
       return encodeJB721DelegateV3_1PayMetadata(
         metadata as JB721DELAGATE_V3_1_PAY_METADATA,
       )
-    case JB721_DELEGATE_V3_2:
-    case JB721_DELEGATE_V3_3:
+    case JB721DelegateVersion.JB721DELEGATE_V3_2:
+    case JB721DelegateVersion.JB721DELEGATE_V3_3:
       return encodeJB721DelegateV3_2PayMetadata(
         metadata as JB721DELAGATE_V3_2_PAY_METADATA,
       )

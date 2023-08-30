@@ -1,19 +1,19 @@
 import { t } from '@lingui/macro'
-import { JB721_DELEGATE_V3 } from 'constants/delegateVersions'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { getAddress } from 'ethers/lib/utils'
+import { useJBPrices } from 'hooks/JBPrices'
 import { TransactorInstance } from 'hooks/useTransactor'
 import omit from 'lodash/omit'
 import {
-  JB721DelegateVersion,
   JBDeployTiered721DelegateData,
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
 import { GroupedSplits, SplitGroup } from 'models/splits'
+import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import {
   JBPayDataSourceFundingCycleMetadata,
   V2V3FundAccessConstraint,
@@ -22,8 +22,6 @@ import {
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { NftRewardsData } from 'redux/slices/editingV2Project/types'
-
-import { useJBPrices } from 'hooks/JBPrices'
 import {
   buildDeployTiered721DelegateData,
   buildJB721TierParams,
@@ -72,7 +70,7 @@ function buildArgs(
     reconfigureFundingCyclesData, // _reconfigureFundingCyclesData
   ]
 
-  if (version === JB721_DELEGATE_V3) {
+  if (version === JB721DelegateVersion.JB721DELEGATE_V3) {
     return baseArgs
   }
 

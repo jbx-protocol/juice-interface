@@ -1,10 +1,5 @@
-import {
-  JB721_DELEGATE_V3,
-  JB721_DELEGATE_V3_1,
-  JB721_DELEGATE_V3_2,
-  JB721_DELEGATE_V3_3,
-} from 'constants/delegateVersions'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
+import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import useV2ContractReader from '../../v2v3/contractReader/useV2ContractReader'
 
@@ -21,7 +16,8 @@ export function useNftCollectionMetadataUri(
     contract: JB721TieredDelegateStore,
     functionName: 'contractUriOf',
     args:
-      version === JB721_DELEGATE_V3 || version === JB721_DELEGATE_V3_1
+      version === JB721DelegateVersion.JB721DELEGATE_V3 ||
+      version === JB721DelegateVersion.JB721DELEGATE_V3_1
         ? [dataSourceAddress]
         : null,
   })
@@ -30,10 +26,14 @@ export function useNftCollectionMetadataUri(
     contract: JB721TieredDelegate,
     functionName: 'contractURI',
     args:
-      version === JB721_DELEGATE_V3_2 || JB721_DELEGATE_V3_3 ? undefined : null,
+      version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
+      JB721DelegateVersion.JB721DELEGATE_V3_3
+        ? undefined
+        : null,
   })
 
-  return version === JB721_DELEGATE_V3_2 || version === JB721_DELEGATE_V3_3
+  return version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
+    version === JB721DelegateVersion.JB721DELEGATE_V3_3
     ? v3_2_response
     : v3response
 }

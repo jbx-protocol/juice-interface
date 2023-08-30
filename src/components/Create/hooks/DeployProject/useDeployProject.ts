@@ -1,11 +1,5 @@
-import {
-  JB721_DELEGATE_V3_1,
-  JB721_DELEGATE_V3_2,
-  JB721_DELEGATE_V3_3,
-} from 'constants/delegateVersions'
 import { readProvider } from 'constants/readProvider'
 import { BigNumber, providers } from 'ethers'
-import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/defaultContracts/useDefaultJB721Delegate'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { TransactionCallbacks } from 'models/transaction'
 import { useCallback, useState } from 'react'
@@ -26,8 +20,7 @@ import {
 } from './hooks'
 
 const CREATE_EVENT_IDX = 2
-const NFT_CREATE_EVENT_IDX_V3 = 2
-const NFT_CREATE_EVENT_IDX_V3_1 = 3 // JB721Delegate v3.1's log is a different index.
+const NFT_CREATE_EVENT_IDX = 3
 const PROJECT_ID_TOPIC_IDX = 1
 
 /**
@@ -38,13 +31,7 @@ const getProjectIdFromNftLaunchReceipt = (
   txReceipt: providers.TransactionReceipt,
 ): number => {
   const projectIdHex: unknown | undefined =
-    txReceipt?.logs[
-      DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V3_1 ||
-      DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V3_2 ||
-      DEFAULT_JB_721_DELEGATE_VERSION === JB721_DELEGATE_V3_3
-        ? NFT_CREATE_EVENT_IDX_V3_1
-        : NFT_CREATE_EVENT_IDX_V3
-    ]?.topics?.[PROJECT_ID_TOPIC_IDX]
+    txReceipt?.logs[NFT_CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
   const projectId = BigNumber.from(projectIdHex).toNumber()
 
   return projectId

@@ -1,7 +1,7 @@
 import { Contract } from 'ethers'
 import { useJB721DelegateAbi } from 'hooks/JB721Delegate/contracts/useJB721DelegateAbi'
 import { useLoadContractFromAddress } from 'hooks/useLoadContractFromAddress'
-import { JB721DelegateVersion } from 'models/nftRewards'
+import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { useJB721DelegateContractAddress } from './useJB721DelegateContractAddress'
 
 export function useJBTiered721DelegateProjectDeployer({

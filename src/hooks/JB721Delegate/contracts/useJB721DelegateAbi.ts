@@ -1,6 +1,6 @@
 import { ContractInterface } from 'ethers'
 import { ContractJson } from 'models/contracts'
-import { JB721DelegateVersion } from 'models/nftRewards'
+import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { useEffect, useState } from 'react'
 
 type JB721DelegateContractName =

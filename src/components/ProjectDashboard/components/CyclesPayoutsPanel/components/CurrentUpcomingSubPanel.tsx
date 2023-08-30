@@ -1,3 +1,4 @@
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -61,6 +62,22 @@ export const CurrentUpcomingSubPanel = ({
       This project's rules will be locked in place for {cycleStatusValue} days.
     </Trans>
   )
+
+  if (info.type === 'upcoming' && info.cycleUnlocked) {
+    return (
+      <div>
+        <div
+          className={twMerge(
+            'flex items-center gap-2 rounded-lg py-2 px-3.5 text-sm font-medium shadow-sm',
+            'bg-smoke-75 text-smoke-700 dark:bg-slate-400 dark:text-slate-200',
+          )}
+        >
+          <InformationCircleIcon className="h-5 w-5" />
+          <Trans>This project has no upcoming cycle</Trans>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>

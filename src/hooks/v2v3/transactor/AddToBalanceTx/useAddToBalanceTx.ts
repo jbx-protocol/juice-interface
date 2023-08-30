@@ -8,11 +8,7 @@ import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/useTransactor'
-import {
-  JB_ETH_PAYMENT_TERMINAL_V_3,
-  JB_ETH_PAYMENT_TERMINAL_V_3_1,
-  JBETHPaymentTerminalVersion,
-} from 'hooks/v2v3/V2V3ProjectContracts/projectContractLoaders/useProjectPrimaryEthTerminal'
+import { PaymentTerminalVersion, V2V3ContractName } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 import { useV2ProjectTitle } from '../../useProjectTitle'
@@ -27,14 +23,16 @@ function buildTxArgs({
   projectId,
   value,
 }: {
-  JBETHPaymentTerminalVersion: JBETHPaymentTerminalVersion | undefined
+  JBETHPaymentTerminalVersion: PaymentTerminalVersion | undefined
   projectId: number
   value: BigNumber
 }) {
-  if (JBETHPaymentTerminalVersion === JB_ETH_PAYMENT_TERMINAL_V_3) {
+  if (JBETHPaymentTerminalVersion === V2V3ContractName.JBETHPaymentTerminal) {
     return getAddToBalanceArgsV3({ projectId, value })
   }
-  if (JBETHPaymentTerminalVersion === JB_ETH_PAYMENT_TERMINAL_V_3_1) {
+  if (
+    JBETHPaymentTerminalVersion === V2V3ContractName.JBETHPaymentTerminal3_1
+  ) {
     return getAddToBalanceArgsV3_1({ projectId, value })
   }
 }

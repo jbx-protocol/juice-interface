@@ -1,3 +1,4 @@
+import { PV } from 'models/pv'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { cidFromUrl, ipfsGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
@@ -20,7 +21,7 @@ export default function ProjectLogo({
   className?: string
   uri?: string | undefined
   projectId?: number | undefined
-  pv?: number | undefined
+  pv?: PV | undefined
   lazyLoad?: boolean
   fallback?: string | JSX.Element | null
 }) {

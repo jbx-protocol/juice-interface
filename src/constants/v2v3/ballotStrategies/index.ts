@@ -2,7 +2,9 @@ import { plural, t } from '@lingui/macro'
 import { readNetwork } from 'constants/networks'
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { constants } from 'ethers'
+import { CV2V3 } from 'models/v2v3/cv'
 
+import { CV_V2 } from 'constants/cv'
 import { NetworkName } from 'models/networkName'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 
@@ -69,8 +71,14 @@ const durationBallotStrategyDescription = (days: number) =>
       'Edits to an upcoming cycle must be submitted at least # days before that cycle starts.',
   })
 
-export function ballotStrategiesFn(network?: NetworkName): BallotStrategy[] {
-  return [
+export function ballotStrategiesFn({
+  network,
+  cv,
+}: {
+  network?: NetworkName
+  cv?: CV2V3
+} = {}): BallotStrategy[] {
+  const ballotStrategies: BallotStrategy[] = [
     {
       id: 'none',
       name: t`No deadline`,
@@ -78,41 +86,48 @@ export function ballotStrategiesFn(network?: NetworkName): BallotStrategy[] {
       address: constants.AddressZero,
       durationSeconds: 0,
     },
-    {
-      id: 'oneDay',
-      name: t`1-day deadline`,
-      description: durationBallotStrategyDescription(1),
-      address: BALLOT_ADDRESSES.ONE_DAY[network ?? readNetwork.name]!,
-      durationSeconds: SECONDS_IN_DAY,
-    },
-    {
-      id: 'threeDay',
-      name: t`3-day deadline`,
-      description: durationBallotStrategyDescription(3),
-      address: BALLOT_ADDRESSES.THREE_DAY[network ?? readNetwork.name]!,
-      durationSeconds: SECONDS_IN_DAY * 3,
-    },
-    {
-      id: 'sevenDay',
-      name: t`7-day deadline`,
-      description: durationBallotStrategyDescription(7),
-      address: BALLOT_ADDRESSES.SEVEN_DAY[network ?? readNetwork.name]!,
-      durationSeconds: SECONDS_IN_DAY * 7,
-    },
-    // v2, hacky, sorry
-    {
-      id: 'threeDayV2',
-      name: t`V2 3-day deadline`,
-      description: durationBallotStrategyDescription(3),
-      address: V2_BALLOT_ADDRESSES.THREE_DAY[network ?? readNetwork.name]!,
-      durationSeconds: SECONDS_IN_DAY * 3,
-    },
-    {
-      id: 'sevenDayV2',
-      name: t`V2 7-day deadline`,
-      description: durationBallotStrategyDescription(7),
-      address: V2_BALLOT_ADDRESSES.SEVEN_DAY[network ?? readNetwork.name]!,
-      durationSeconds: SECONDS_IN_DAY * 7,
-    },
   ]
+  if (cv === CV_V2) {
+    ballotStrategies.push(
+      {
+        id: 'threeDayV2',
+        name: t`V2 3-day deadline`,
+        description: durationBallotStrategyDescription(3),
+        address: V2_BALLOT_ADDRESSES.THREE_DAY[network ?? readNetwork.name]!,
+        durationSeconds: SECONDS_IN_DAY * 3,
+      },
+      {
+        id: 'sevenDayV2',
+        name: t`V2 7-day deadline`,
+        description: durationBallotStrategyDescription(7),
+        address: V2_BALLOT_ADDRESSES.SEVEN_DAY[network ?? readNetwork.name]!,
+        durationSeconds: SECONDS_IN_DAY * 7,
+      },
+    )
+  } else {
+    ballotStrategies.push(
+      {
+        id: 'oneDay',
+        name: t`1-day deadline`,
+        description: durationBallotStrategyDescription(1),
+        address: BALLOT_ADDRESSES.ONE_DAY[network ?? readNetwork.name]!,
+        durationSeconds: SECONDS_IN_DAY,
+      },
+      {
+        id: 'threeDay',
+        name: t`3-day deadline`,
+        description: durationBallotStrategyDescription(3),
+        address: BALLOT_ADDRESSES.THREE_DAY[network ?? readNetwork.name]!,
+        durationSeconds: SECONDS_IN_DAY * 3,
+      },
+      {
+        id: 'sevenDay',
+        name: t`7-day deadline`,
+        description: durationBallotStrategyDescription(7),
+        address: BALLOT_ADDRESSES.SEVEN_DAY[network ?? readNetwork.name]!,
+        durationSeconds: SECONDS_IN_DAY * 7,
+      },
+    )
+  }
+  return ballotStrategies
 }

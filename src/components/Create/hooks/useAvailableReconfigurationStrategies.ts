@@ -3,7 +3,7 @@ import { NetworkName } from 'models/networkName'
 import { ArrayElement } from 'utils/arrayElement'
 
 export const useAvailableReconfigurationStrategies = (network: NetworkName) => {
-  const strategies = ballotStrategiesFn(network).map(s =>
+  const strategies = ballotStrategiesFn({ network }).map(s =>
     s.id === 'threeDay'
       ? { ...s, isDefault: true }
       : { ...s, isDefault: false },

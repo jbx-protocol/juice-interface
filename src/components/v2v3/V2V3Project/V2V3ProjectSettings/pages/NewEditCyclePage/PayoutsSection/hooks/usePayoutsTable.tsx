@@ -1,6 +1,7 @@
 import { AddEditAllocationModalEntity } from 'components/v2v3/shared/Allocation/AddEditAllocationModal'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { ONE_BILLION } from 'constants/numbers'
+import isEqual from 'lodash/isEqual'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -310,9 +311,7 @@ export const usePayoutsTable = () => {
    * @param split - Split to be deleted
    */
   function handleDeletePayoutSplit({ payoutSplit }: { payoutSplit: Split }) {
-    const newSplits = payoutSplits.filter(
-      m => !hasEqualRecipient(m, payoutSplit),
-    )
+    const newSplits = payoutSplits.filter(m => !isEqual(m, payoutSplit))
 
     let adjustedSplits: Split[] = newSplits
     let newDistributionLimit = distributionLimit

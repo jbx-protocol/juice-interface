@@ -123,7 +123,7 @@
     "lottie-react": "^2.4.0",
     "mjml": "^4.13.0",
     "mustache": "^4.2.0",
-    "next": "^13.4.3",
+    "next": "^13.4.13",
     "object-hash": "^3.0.0",
     "pino": "^8.11.0",
     "pino-pretty": "^10.0.0",

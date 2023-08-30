@@ -1,6 +1,6 @@
 import { AddEditAllocationModalEntity } from 'components/v2v3/shared/Allocation/AddEditAllocationModal'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
-import { ONE_BILLION } from 'constants/numbers'
+import { ONE_BILLION, WAD_DECIMALS } from 'constants/numbers'
 import isEqual from 'lodash/isEqual'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
@@ -39,7 +39,6 @@ export const usePayoutsTable = () => {
     setCurrency: _setCurrency,
   } = usePayoutsTableContext()
   const { setFormHasUpdated } = useEditCycleFormContext()
-
   const distributionLimitIsInfinite = useMemo(
     () =>
       distributionLimit === undefined ||
@@ -131,6 +130,14 @@ export const usePayoutsTable = () => {
       setPayoutSplits(ensureSplitsSumTo100Percent({ splits }))
     }
     setFormHasUpdated(true)
+  }
+
+  function _setDistributionLimit(distributionLimit: number | undefined) {
+    const _distributionLimit =
+      distributionLimit !== undefined
+        ? round(distributionLimit, WAD_DECIMALS)
+        : undefined
+    setDistributionLimit(_distributionLimit)
   }
 
   /**
@@ -232,7 +239,7 @@ export const usePayoutsTable = () => {
           newDistributionLimit: newDistributionLimit.toString(),
         })
       }
-      setDistributionLimit(newDistributionLimit)
+      _setDistributionLimit(newDistributionLimit)
     }
 
     const newPayoutSplit = {
@@ -353,7 +360,7 @@ export const usePayoutsTable = () => {
           }
         : m
     })
-    setDistributionLimit(newDistributionLimit)
+    _setDistributionLimit(newDistributionLimit)
     _setPayoutSplits(newPayoutSplits)
   }
 
@@ -381,7 +388,7 @@ export const usePayoutsTable = () => {
       })
     }
 
-    setDistributionLimit(newDistributionLimit)
+    _setDistributionLimit(newDistributionLimit)
     _setPayoutSplits(adjustedSplits)
   }
 

@@ -7,6 +7,8 @@ import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { useCartSummary } from '../hooks/useCartSummary'
 import { SummaryCollapsedView } from './SummaryCollapsedView'
 
+jest.mock('contexts/Language/LanguageProvider')
+
 jest.mock('use-resize-observer', () => ({
   __esModule: true,
   default: jest.fn(() => ({

@@ -17,8 +17,13 @@
     "noEmit": true,
     "jsx": "preserve",
     "incremental": true,
-    "typeRoots": ["node_modules/@types", "src/@types"]
+    "typeRoots": ["node_modules/@types", "src/@types"],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src", "scripts"],
+  "include": ["src", "scripts", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

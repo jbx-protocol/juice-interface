@@ -1,3 +1,5 @@
+'use client'
+
 import { useConnectWallet } from '@web3-onboard/react'
 import {
   useChain,

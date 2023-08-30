@@ -87,7 +87,9 @@ export const usePrepareSaveEditCycleData = () => {
 
   const editingFundingCycleData: V2V3FundingCycleData = {
     duration: BigNumber.from(durationSeconds),
-    weight: BigNumber.from(issuanceRateFrom(formValues.mintRate.toString())),
+    weight: BigNumber.from(
+      issuanceRateFrom(formValues.mintRate?.toString() ?? '0'),
+    ),
     discountRate: discountRateFrom(formValues.discountRate),
     ballot: formValues.ballot,
   }

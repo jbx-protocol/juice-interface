@@ -9,6 +9,7 @@ export function MintRateField() {
       <FormattedNumberInput
         className="h-10 py-1 pr-4"
         min={0}
+        defaultValue={0}
         max={MAX_MINT_RATE}
         accessory={
           <span className="mr-5 text-sm text-black dark:text-slate-100">

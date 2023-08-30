@@ -1,8 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
 import { DefaultSettings as DefaultTokenSettings } from 'components/Create/components/pages/ProjectToken/hooks/useProjectTokenForm'
+import isEqual from 'lodash/isEqual'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   deriveDurationOption,
   deriveDurationUnit,
@@ -24,17 +25,26 @@ export const useLoadEditCycleData = () => {
   const [initialFormData, setInitialFormData] = useState<
     EditCycleFormFields | undefined
   >(undefined)
-  const { initialEditingData } = useInitialEditingData({ visible: true })
+  // Project's current FC, metadata, fund access constraint, etc.
+  const { initialEditingData: currentProjectData } = useInitialEditingData({
+    visible: true,
+  })
   const [editCycleForm] = Form.useForm<EditCycleFormFields>()
 
+  const initialEditingData = useRef(currentProjectData)
+
+  // Extracts EditCycleFormFields from initialEditingData (which comes from redux)
   useEffect(() => {
-    // Extracts EditCycleFormFields from initialEditingData (which comes from redux)
-    if (initialEditingData) {
+    // Ensure set formValues if currentProjectData has changed (currentProjectData !== initialEditingData.current)
+    if (
+      currentProjectData &&
+      !isEqual(currentProjectData, initialEditingData.current)
+    ) {
       const duration = BigNumber.from(
-        initialEditingData.fundingCycleData.duration,
+        currentProjectData.fundingCycleData.duration,
       ).toNumber()
-      const fundingCycleData = initialEditingData.fundingCycleData
-      const fundingCycleMetadata = initialEditingData.fundingCycleMetadata
+      const fundingCycleData = currentProjectData.fundingCycleData
+      const fundingCycleMetadata = currentProjectData.fundingCycleMetadata
       const mintRate = fundingCycleData?.weight
         ? parseFloat(formatIssuanceRate(fundingCycleData.weight))
         : parseFloat(DefaultTokenSettings.initialMintRate)
@@ -42,7 +52,7 @@ export const useLoadEditCycleData = () => {
         ? parseFloat(formatReservedRate(fundingCycleMetadata.reservedRate))
         : DefaultTokenSettings.reservedTokensPercentage
       const reservedSplits =
-        initialEditingData.payoutGroupedSplits.reservedTokensGroupedSplits
+        currentProjectData.payoutGroupedSplits.reservedTokensGroupedSplits
       const discountRate = fundingCycleData.discountRate
         ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
         : DefaultTokenSettings.discountRate
@@ -64,25 +74,25 @@ export const useLoadEditCycleData = () => {
           unit: deriveDurationUnit(duration),
         }),
         durationUnit: deriveDurationOption(duration),
-        ballot: initialEditingData.fundingCycleData.ballot,
+        ballot: currentProjectData.fundingCycleData.ballot,
         allowSetTerminals:
-          initialEditingData.fundingCycleMetadata.global.allowSetTerminals,
+          currentProjectData.fundingCycleMetadata.global.allowSetTerminals,
         allowSetController:
-          initialEditingData.fundingCycleMetadata.global.allowSetController,
-        pausePay: initialEditingData.fundingCycleMetadata.pausePay,
+          currentProjectData.fundingCycleMetadata.global.allowSetController,
+        pausePay: currentProjectData.fundingCycleMetadata.pausePay,
         payoutSplits:
-          initialEditingData.payoutGroupedSplits.payoutGroupedSplits,
+          currentProjectData.payoutGroupedSplits.payoutGroupedSplits,
         distributionLimit: distributionLimitStringtoNumber(
-          initialEditingData.fundAccessConstraints[0]?.distributionLimit,
+          currentProjectData.fundAccessConstraints[0]?.distributionLimit,
         ),
         distributionLimitCurrency:
           V2V3CurrencyName(
             BigNumber.from(
-              initialEditingData.fundAccessConstraints[0]
+              currentProjectData.fundAccessConstraints[0]
                 ?.distributionLimitCurrency ?? 0,
             ).toNumber() as V2V3CurrencyOption,
           ) ?? 'ETH',
-        holdFees: initialEditingData.fundingCycleMetadata.holdFees,
+        holdFees: currentProjectData.fundingCycleMetadata.holdFees,
         mintRate,
         reservedTokens,
         reservedSplits,
@@ -90,15 +100,16 @@ export const useLoadEditCycleData = () => {
         redemptionRate,
         allowTokenMinting,
         pauseTransfers: pauseTransfers,
-        nftRewards: initialEditingData.nftRewards,
+        nftRewards: currentProjectData.nftRewards,
         useDataSourceForRedeem:
-          initialEditingData.fundingCycleMetadata.useDataSourceForRedeem,
+          currentProjectData.fundingCycleMetadata.useDataSourceForRedeem,
         memo: '',
       }
       setInitialFormData(formData)
       editCycleForm.setFieldsValue(formData)
+      initialEditingData.current = currentProjectData
     }
-  }, [initialEditingData, editCycleForm])
+  }, [currentProjectData, editCycleForm])
   return {
     initialFormData,
     editCycleForm,

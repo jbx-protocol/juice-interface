@@ -5,11 +5,12 @@ import { ExternalLinkWithIcon } from 'components/ProjectDashboard/components/ui/
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import Link from 'next/link'
-import { useContext, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { helpPagePath, settingsPagePath } from 'utils/routes'
 import { DetailsSection } from './DetailsSection'
 import { useEditCycleFormContext } from './EditCycleFormContext'
-import { EditCycleFormSection } from './EditCycleFormSection'
+import EditCycleFormSection from './EditCycleFormSection'
 import { PayoutsSection } from './PayoutsSection'
 import { ReviewConfirmModal } from './ReviewConfirmModal'
 import { TokensSection } from './TokensSection'
@@ -17,6 +18,7 @@ import { useEditCycleFormHasError } from './hooks/useEditCycleFormHasError'
 
 export function EditCyclePage() {
   const [confirmModalOpen, setConfirmModalOpen] = useState<boolean>(false)
+  const [firstRender, setFirstRender] = useState(true)
 
   const { projectId } = useContext(ProjectMetadataContext)
   const { handle } = useContext(V2V3ProjectContext)
@@ -26,11 +28,38 @@ export function EditCyclePage() {
 
   const { error } = useEditCycleFormHasError()
 
+  const router = useRouter()
+  const { section } = router.query
+
+  const detailsRef = useRef<HTMLDivElement>(null)
+  const payoutsRef = useRef<HTMLDivElement>(null)
+  const tokensRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (initialFormData && firstRender) {
+      switch (section) {
+        case 'details':
+          detailsRef.current?.scrollIntoView({ behavior: 'smooth' })
+          break
+        case 'payouts':
+          payoutsRef.current?.scrollIntoView({ behavior: 'smooth' })
+          break
+        case 'tokens':
+          tokensRef.current?.scrollIntoView({ behavior: 'smooth' })
+          break
+        default:
+          break
+      }
+      setFirstRender(false)
+    }
+  }, [section, firstRender, initialFormData])
+
   const handleFormValuesChange = () => {
     if (!formHasUpdated) {
       setFormHasUpdated(true)
     }
   }
+
   if (!initialFormData) return <Loading className="h-70" />
 
   return (
@@ -56,6 +85,7 @@ export function EditCyclePage() {
           onValuesChange={handleFormValuesChange}
         >
           <EditCycleFormSection
+            ref={detailsRef}
             title={<Trans>Details</Trans>}
             description={
               <Trans>
@@ -67,6 +97,7 @@ export function EditCyclePage() {
           </EditCycleFormSection>
 
           <EditCycleFormSection
+            ref={payoutsRef}
             title={<Trans>Payouts</Trans>}
             description={
               <Trans>How your project will be paid and pay out in ETH.</Trans>
@@ -76,6 +107,7 @@ export function EditCyclePage() {
           </EditCycleFormSection>
 
           <EditCycleFormSection
+            ref={tokensRef}
             title={<Trans>Tokens</Trans>}
             description={
               <Trans>Manage how your projects tokens should work.</Trans>

@@ -21,7 +21,6 @@ import {
   JB_721_TIER_PARAMS_V3_2,
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
-import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
@@ -56,38 +55,26 @@ type JB721DelegateLaunchProjectData = JB721DelegateLaunchFundingCycleData & {
   }
 }
 
-function buildArgs(
-  version: JB721DelegateVersion,
-  {
-    owner,
-    deployTiered721DelegateData,
-    launchProjectData,
-    JBControllerAddress,
-  }: {
-    owner: string
-    JBControllerAddress: string
-    deployTiered721DelegateData:
-      | JBDeployTiered721DelegateData
-      | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1
-    launchProjectData: JB721DelegateLaunchProjectData
-  },
-) {
+function buildArgs({
+  owner,
+  deployTiered721DelegateData,
+  launchProjectData,
+  JBControllerAddress,
+}: {
+  owner: string
+  JBControllerAddress: string
+  deployTiered721DelegateData:
+    | JBDeployTiered721DelegateData
+    | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1
+  launchProjectData: JB721DelegateLaunchProjectData
+}) {
   const baseArgs = [
     owner,
     deployTiered721DelegateData, //_deployTiered721DelegateData
     launchProjectData, // _launchProjectData
   ]
 
-  if (version === JB721DelegateVersion.JB721DELEGATE_V3) {
-    return baseArgs
-  }
-  if (
-    version === JB721DelegateVersion.JB721DELEGATE_V3_1 ||
-    version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
-    version === JB721DelegateVersion.JB721DELEGATE_V3_3
-  ) {
-    return [...baseArgs, JBControllerAddress] // v1.1 requires us to pass the controller address in
-  }
+  return [...baseArgs, JBControllerAddress]
 }
 
 export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWithNftsTxArgs> {
@@ -211,7 +198,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       memo: DEFAULT_MEMO,
     } // _launchProjectData
 
-    const args = buildArgs(DEFAULT_JB_721_DELEGATE_VERSION, {
+    const args = buildArgs({
       owner: _owner,
       deployTiered721DelegateData,
       launchProjectData,

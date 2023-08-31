@@ -1,7 +1,32 @@
 import { readNetwork } from 'constants/networks'
 import { ForgeDeploy, addressFor } from 'forge-run-parser'
+import { NetworkName } from 'models/networkName'
 import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { useEffect, useState } from 'react'
+
+/**
+ * Some addresses aren't in the forge deployment manifests, so we have to hardcode them here.
+ */
+const ADDRESSES: {
+  [k in JB721DelegateVersion]?: {
+    [k in NetworkName]?: {
+      [k: string]: string
+    }
+  }
+} = {
+  [JB721DelegateVersion.JB721DELEGATE_V3_4]: {
+    [NetworkName.goerli]: {
+      JBTiered721DelegateStore: '0x155B49f303443a3334bB2EF42E10C628438a0656', // the store from 3.3
+      JBTiered721DelegateProjectDeployer:
+        '0xB5870d8eeb195E09Ac47641121889CCdBbA3E8FE', // this is in the forge deployment manifest, but the name isn't specified because of a failed verification
+    },
+    [NetworkName.mainnet]: {
+      JBTiered721DelegateStore: '0x615B5b50F1Fc591AAAb54e633417640d6F2773Fd', // the store from 3.3
+      JBTiered721DelegateProjectDeployer:
+        '0xFbD1B7dE4082826Bf4BaA68D020eFA5c2707Fb3e',
+    },
+  },
+}
 
 async function loadJB721DelegateDeployment(version: JB721DelegateVersion) {
   return (await import(
@@ -13,10 +38,13 @@ export async function loadJB721DelegateAddress(
   contractName: string,
   version: JB721DelegateVersion,
 ) {
-  const deployment = await loadJB721DelegateDeployment(version)
+  const hardcodedAddress =
+    ADDRESSES[version]?.[readNetwork.name]?.[contractName]
+  if (hardcodedAddress) return hardcodedAddress
 
-  const address = addressFor(contractName, deployment)
-  return address!
+  const forgeGeployment = await loadJB721DelegateDeployment(version)
+  const forgeAddress = addressFor(contractName, forgeGeployment)
+  return forgeAddress!
 }
 
 export function useJB721DelegateContractAddress({

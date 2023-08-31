@@ -48,10 +48,10 @@ export function useReconfigureNftCollectionMetadata(): TransactorInstance<NftCol
 
     return transactor(
       JB721TieredDelegate,
-      version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
-        version === JB721DelegateVersion.JB721DELEGATE_V3_3
-        ? 'setMetadata'
-        : 'setContractUri',
+      version === JB721DelegateVersion.JB721DELEGATE_V3 ||
+        version === JB721DelegateVersion.JB721DELEGATE_V3_1
+        ? 'setContractUri'
+        : 'setMetadata',
       buildArgs(version, { contractUri: ipfsUri(uri) }),
       {
         ...txOpts,

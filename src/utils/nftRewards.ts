@@ -326,18 +326,15 @@ export function buildJB721TierParams({
         | JB_721_TIER_PARAMS_V3_1
         | JB_721_TIER_PARAMS_V3_2 => {
         const rewardTier = sortedRewardTiers[index]
+        if (version === JB721DelegateVersion.JB721DELEGATE_V3) {
+          return nftRewardTierToJB721TierParamsV3(rewardTier, cid)
+        }
         if (version === JB721DelegateVersion.JB721DELEGATE_V3_1) {
           return nftRewardTierToJB721TierParamsV3_1(rewardTier, cid)
         }
-        if (
-          version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
-          version === JB721DelegateVersion.JB721DELEGATE_V3_3
-        ) {
-          return nftRewardTierToJB721TierParamsV3_2(rewardTier, cid)
-        }
 
-        // default return v1 params
-        return nftRewardTierToJB721TierParamsV3(rewardTier, cid)
+        // default return v3.2 params (unchanged in 3.3, 3.4)
+        return nftRewardTierToJB721TierParamsV3_2(rewardTier, cid)
       },
     )
     .slice() // clone object
@@ -347,7 +344,8 @@ export function buildJB721TierParams({
       // bit bongy, sorry!
       if (
         version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
-        version === JB721DelegateVersion.JB721DELEGATE_V3_3
+        version === JB721DelegateVersion.JB721DELEGATE_V3_3 ||
+        version === JB721DelegateVersion.JB721DELEGATE_V3_4
       ) {
         if (
           (a as JB_721_TIER_PARAMS_V3_2).price.gt(

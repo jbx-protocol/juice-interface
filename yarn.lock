@@ -3647,9 +3647,9 @@
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-contracts-v3/-/juice-contracts-v3-2.0.5.tgz#b75e5547d3ffe660a3fb9124e5e747fc52b5d642"
   integrity sha512-pQSJbzz96nzHc2HDlN0Xx6uJufnRPAiUsilSwGRLjX38KZaeOtC7LU+YY0G5OHpH8tQPyAC/G/m5EwjpObIh3A==
 
-"@jbx-protocol/juice-delegate-metadata-lib@git+https://github.com/jbx-protocol/juice-delegate-metadata-lib.git":
+"@jbx-protocol/juice-delegate-metadata-lib@https://github.com/jbx-protocol/juice-delegate-metadata-lib.git":
   version "1.0.1"
-  resolved "git+https://github.com/jbx-protocol/juice-delegate-metadata-lib.git#da5a4b405dd77812ee819145a5c71885119339d3"
+  resolved "https://github.com/jbx-protocol/juice-delegate-metadata-lib.git#da5a4b405dd77812ee819145a5c71885119339d3"
   dependencies:
     ds-test "https://github.com/dapphub/ds-test.git#e282159d5170298eb2455a6c05280ab5a73a4ef0"
     forge-std "https://github.com/foundry-rs/forge-std.git#e8a047e3f40f13fa37af6fe14e6e06283d9a060e"
@@ -3680,14 +3680,6 @@
     "@jbx-protocol/juice-contracts-v3" "^2.0.3"
     "@openzeppelin/contracts" "^4.8.0"
     "@paulrberg/contracts" "^3.7.0"
-
-"@jbx-protocol/juice-ownable@git+https://github.com/jbx-protocol/juice-ownable.git":
-  version "0.0.2"
-  uid b2f98133c7bea013db967e8a204ce0d9cc06d21f
-  resolved "git+https://github.com/jbx-protocol/juice-ownable.git#b2f98133c7bea013db967e8a204ce0d9cc06d21f"
-  dependencies:
-    "@jbx-protocol/juice-contracts-v3" "^2.0.2"
-    "@openzeppelin/contracts" "^4.8.0"
 
 "@jbx-protocol/juice-ownable@https://github.com/jbx-protocol/juice-ownable":
   version "0.0.2"
@@ -14061,10 +14053,10 @@ juice@^9.0.0:
     slick "^1.12.2"
     web-resource-inliner "^6.0.1"
 
-juicebox-metadata-helper@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/juicebox-metadata-helper/-/juicebox-metadata-helper-0.1.6.tgz#718565397ac5e68d888b2d053c1476a847fd58f6"
-  integrity sha512-VUuryL0nGxLuGu+nHAIRX+LuhiZv/23Ew+qV+gpfsLq8AF067K161A2QVyGG4DTJkoyeljgm5MBV/kSY6juQvQ==
+juicebox-metadata-helper@0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/juicebox-metadata-helper/-/juicebox-metadata-helper-0.1.7.tgz#c642729e93dca1d924901d14a714010ab0eb70ed"
+  integrity sha512-bP97KtDKOx6ztkOMlgpWxGm/qKy6Y2wFRHyH6psD9Wjfs9WhjEUIZf20obDz+osDCytCMPfWE0im1vFYmYuEaw==
   dependencies:
     "@dethcrypto/eth-sdk" "^0.3.4"
     "@dethcrypto/eth-sdk-client" "^0.1.6"

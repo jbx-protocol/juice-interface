@@ -132,6 +132,8 @@ async function fetchJB721DelegateVersion(dataSourceAddress: string) {
   if (isV3_2) return JB721DelegateVersion.JB721DELEGATE_V3_2
   if (isV3_3) return JB721DelegateVersion.JB721DELEGATE_V3_3
   if (isV3_4) return JB721DelegateVersion.JB721DELEGATE_V3_4
+
+  return null
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

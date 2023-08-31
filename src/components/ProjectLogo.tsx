@@ -26,7 +26,6 @@ export default function ProjectLogo({
   fallback?: string | JSX.Element | null
 }) {
   const [srcLoadError, setSrcLoadError] = useState(false)
-  const [loading, setLoading] = useState(true)
 
   const imageSrc = useMemo(() => {
     if (!projectId) return undefined
@@ -55,7 +54,6 @@ export default function ProjectLogo({
       className={twMerge(
         'flex h-20 w-20 items-center justify-center overflow-hidden rounded-lg text-4xl',
         'bg-smoke-100 dark:bg-slate-700',
-        loading ? 'animate-pulse' : undefined,
         className,
       )}
     >
@@ -65,7 +63,6 @@ export default function ProjectLogo({
           src={imageSrc}
           alt={name + ' logo'}
           onError={() => setSrcLoadError(true)}
-          onLoad={() => setLoading(false)}
           loading={lazyLoad ? 'lazy' : undefined}
           crossOrigin="anonymous"
           title={name}

@@ -57,14 +57,7 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "resolutions": {
-    "@walletconnect/core": "^2.7.4",
-    "@walletconnect/sign-client": "^2.7.4",
-    "@walletconnect/ethereum-provider": "^2.7.4",
-    "@walletconnect/types": "^2.7.4",
-    "@walletconnect/universal-provider": "^2.7.4",
-    "@walletconnect/utils": "^2.7.4"
-  },
+  "resolutions": {},
   "dependencies": {
     "@apollo/client": "3.6.9",
     "@arcxmoney/analytics": "1.6.1",
@@ -148,7 +141,8 @@
     "use-deep-compare-effect": "^1.6.1",
     "use-resize-observer": "^9.1.0",
     "uuid": "^8.3.2",
-    "wagmi": "^0.12.13",
+    "viem": "^1.6.4",
+    "wagmi": "^1.3.10",
     "yup": "^1.0.2"
   },
   "devDependencies": {

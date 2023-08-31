@@ -3654,10 +3654,10 @@
     ds-test "https://github.com/dapphub/ds-test.git#e282159d5170298eb2455a6c05280ab5a73a4ef0"
     forge-std "https://github.com/foundry-rs/forge-std.git#e8a047e3f40f13fa37af6fe14e6e06283d9a060e"
 
-"@jbx-protocol/juice-delegates-registry@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-delegates-registry/-/juice-delegates-registry-1.0.0.tgz#d7c3a3e7744b49f1a3349c438ce76f3b1739713f"
-  integrity sha512-HslMIDivkn6Zx663DBwrQHR1SfAet5sM1lAznlMvuWF2i5dhulYBPdkrreT1G0xjLU8hUZjb8quoj6Cey9QzXQ==
+"@jbx-protocol/juice-delegates-registry@1.0.3", "@jbx-protocol/juice-delegates-registry@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-delegates-registry/-/juice-delegates-registry-1.0.3.tgz#9b8ff159b74ffc7f8c0272da690f0ca0ef46902a"
+  integrity sha512-jsvhhXKu7AF93Ji1JdOpM3kwp07uVT6IaSwR59NpdA1M9QcHkn0G4+MFuvsCZ4mUhKBn/8aR0z93eM3ouWQqCA==
   dependencies:
     "@jbx-protocol/juice-contracts-v3" "^2.0.3"
     "@openzeppelin/contracts" "^4.8.0"
@@ -3667,15 +3667,6 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-delegates-registry/-/juice-delegates-registry-1.0.1.tgz#88badca1dd2e271605e62e4d300bb3e616604622"
   integrity sha512-kAN/xv8VBK/GkdkKKjOGV6nzOS0RI9/eyPWsR9UExZIcFr8fBoO7fLlTIWA/YSvQNdrMYd8urUJJpGPiXkRlLw==
-  dependencies:
-    "@jbx-protocol/juice-contracts-v3" "^2.0.3"
-    "@openzeppelin/contracts" "^4.8.0"
-    "@paulrberg/contracts" "^3.7.0"
-
-"@jbx-protocol/juice-delegates-registry@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@jbx-protocol/juice-delegates-registry/-/juice-delegates-registry-1.0.3.tgz#9b8ff159b74ffc7f8c0272da690f0ca0ef46902a"
-  integrity sha512-jsvhhXKu7AF93Ji1JdOpM3kwp07uVT6IaSwR59NpdA1M9QcHkn0G4+MFuvsCZ4mUhKBn/8aR0z93eM3ouWQqCA==
   dependencies:
     "@jbx-protocol/juice-contracts-v3" "^2.0.3"
     "@openzeppelin/contracts" "^4.8.0"

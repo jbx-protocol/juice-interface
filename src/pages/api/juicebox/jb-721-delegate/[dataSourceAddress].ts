@@ -1,4 +1,5 @@
 import { readNetwork } from 'constants/networks'
+import { IJB721TieredDelegate_V3_INTERFACE_ID } from 'constants/nftRewards'
 import { readProvider } from 'constants/readProvider'
 import { Contract } from 'ethers'
 import { ForgeDeploy, addressFor } from 'forge-run-parser'
@@ -9,8 +10,6 @@ import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { isEqualAddress, isZeroAddress } from 'utils/address'
 import JBDelegatesRegistryJson from './IJBDelegatesRegistry.json'
-
-const IJB721TieredDelegate_V3_INTERFACE_ID = '0xf34282c8'
 
 const logger = getLogger('api/juicebox/jb-721-delegate/[dataSourceAddress]')
 
@@ -39,11 +38,20 @@ async function fetchDeployerOf(dataSourceAddress: string) {
     readProvider,
   )
 
-  const deployerAddress = await JBDelegatesRegistry.deployerOf(
-    dataSourceAddress,
+  // theres 2 registries, so need to check if the dataSourceAddress might be in the old one
+  const oldRegistry = await JBDelegatesRegistry.oldRegistry()
+  const OldJBDelegatesRegistry = new Contract(
+    oldRegistry,
+    JBDelegatesRegistryJson.abi,
+    readProvider,
   )
 
-  return deployerAddress
+  const [deployerAddress, deployerAddressOldRegistry] = await Promise.all([
+    JBDelegatesRegistry.deployerOf(dataSourceAddress),
+    OldJBDelegatesRegistry.deployerOf(dataSourceAddress),
+  ])
+
+  return deployerAddress || deployerAddressOldRegistry
 }
 
 async function isJB721DelegateV3(dataSourceAddress: string) {

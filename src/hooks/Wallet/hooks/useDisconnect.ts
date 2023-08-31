@@ -1,16 +1,13 @@
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
-import { useConnectWallet } from '@web3-onboard/react'
 import { useCallback } from 'react'
+import { useDisconnect as useWagmiDisconnect } from 'wagmi'
 
 export function useDisconnect() {
-  const [{ wallet }, , disconnectHook] = useConnectWallet()
+  const { disconnect } = useWagmiDisconnect()
   const supabase = useSupabaseClient()
-  const disconnect = useCallback(async () => {
-    if (wallet) {
-      await disconnectHook(wallet)
-      window.localStorage.removeItem('connectedWallets')
-      await supabase.auth.signOut()
-    }
-  }, [disconnectHook, supabase.auth, wallet])
-  return disconnect
+  return useCallback(async () => {
+    await disconnect()
+    window.localStorage.removeItem('connectedWallets')
+    await supabase.auth.signOut()
+  }, [disconnect, supabase.auth])
 }

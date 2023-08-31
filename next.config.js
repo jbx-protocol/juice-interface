@@ -30,6 +30,7 @@ const SCRIPT_SRC = [
   'https://static.hotjar.com',
   'https://script.hotjar.com',
   'https://cdn.usefathom.com',
+  'https://cdn.jsdelivr.net/npm/@ledgerhq/connect-kit@1',
   // Not working as unsafe-eval is required for metamask
   // `'sha256-kZ9E6/oLrki51Yx03/BugStfFrPlm8hjaFbaokympXo='`, // hotjar
   `'unsafe-eval'`, // hotjar
@@ -70,6 +71,7 @@ const CONNECT_SRC = [
   'https://*.safe.global',
   'https://*.snapshot.org',
   'https://*.wallet.coinbase.com',
+  'wss://www.walletlink.org/rpc',
   ...WALLET_CONNECT_URLS,
   'https://*.supabase.co',
   'https://api.ensideas.com',

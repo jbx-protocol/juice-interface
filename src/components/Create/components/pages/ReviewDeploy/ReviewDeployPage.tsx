@@ -4,12 +4,13 @@ import { Checkbox, Form } from 'antd'
 import { Callout } from 'components/Callout'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
-import TransactionModal from 'components/modals/TransactionModal'
 import { emitConfirmationDeletionModal } from 'components/ProjectDashboard/utils/modals'
+import TransactionModal from 'components/modals/TransactionModal'
+import { ConnectKitButton } from 'connectkit'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
+import { useWallet } from 'hooks/Wallet'
 import useMobile from 'hooks/useMobile'
 import { useModal } from 'hooks/useModal'
-import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -59,7 +60,7 @@ export const ReviewDeployPage = () => {
   useSetCreateFurthestPageReached('reviewDeploy')
   const { goToPage } = useContext(WizardContext)
   const isMobile = useMobile()
-  const { chainUnsupported, changeNetworks, isConnected, connect } = useWallet()
+  const { chainUnsupported, changeNetworks, isConnected } = useWallet()
   const router = useRouter()
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
   const termsAccepted = Form.useWatch('termsAccepted', form)
@@ -89,10 +90,6 @@ export const ReviewDeployPage = () => {
       await changeNetworks()
       return
     }
-    if (!isConnected) {
-      await connect()
-      return
-    }
 
     await deployProject({
       onProjectDeployed: deployedProjectId =>
@@ -100,14 +97,7 @@ export const ReviewDeployPage = () => {
           shallow: true,
         }),
     })
-  }, [
-    chainUnsupported,
-    changeNetworks,
-    connect,
-    deployProject,
-    isConnected,
-    router,
-  ])
+  }, [chainUnsupported, changeNetworks, deployProject, router])
 
   const [activeKey, setActiveKey] = useState<ReviewDeployKey[]>(
     !isMobile ? [ReviewDeployKey.ProjectDetails] : [],
@@ -186,37 +176,47 @@ export const ReviewDeployPage = () => {
           <RulesReview />
         </CreateCollapse.Panel>
       </CreateCollapse>
-      <Form
-        form={form}
-        initialValues={{ termsAccepted: false }}
-        onFinish={onFinish}
-        className="mt-8 flex flex-col"
-      >
-        <Callout.Info noIcon collapsible={false}>
-          <div className="flex gap-4">
-            <Form.Item noStyle name="termsAccepted" valuePropName="checked">
-              <Checkbox />
-            </Form.Item>
-            <label htmlFor="termsAccepted">
-              <Trans>
-                I have read and accept the{' '}
-                <ExternalLink href={TERMS_OF_SERVICE_URL}>
-                  Terms of Service
-                </ExternalLink>{' '}
-                and{' '}
-                <ExternalLink href={helpPagePath(`/dev/learn/risks`)}>
-                  the risks
-                </ExternalLink>
-                .
-              </Trans>
-            </label>
-          </div>
-        </Callout.Info>
-        <Wizard.Page.ButtonControl
-          isNextLoading={isDeploying}
-          isNextEnabled={isNextEnabled}
-        />
-      </Form>
+      <ConnectKitButton.Custom>
+        {({ show }) => {
+          return (
+            <Form
+              form={form}
+              initialValues={{ termsAccepted: false }}
+              onFinish={isConnected ? onFinish : show}
+              className="mt-8 flex flex-col"
+            >
+              <Callout.Info noIcon collapsible={false}>
+                <div className="flex gap-4">
+                  <Form.Item
+                    noStyle
+                    name="termsAccepted"
+                    valuePropName="checked"
+                  >
+                    <Checkbox />
+                  </Form.Item>
+                  <label htmlFor="termsAccepted">
+                    <Trans>
+                      I have read and accept the{' '}
+                      <ExternalLink href={TERMS_OF_SERVICE_URL}>
+                        Terms of Service
+                      </ExternalLink>{' '}
+                      and{' '}
+                      <ExternalLink href={helpPagePath(`/dev/learn/risks`)}>
+                        the risks
+                      </ExternalLink>
+                      .
+                    </Trans>
+                  </label>
+                </div>
+              </Callout.Info>
+              <Wizard.Page.ButtonControl
+                isNextLoading={isDeploying}
+                isNextEnabled={isNextEnabled}
+              />
+            </Form>
+          )
+        }}
+      </ConnectKitButton.Custom>
 
       <div className="flex flex-col gap-4 pt-20 text-grey-400 dark:text-slate-200">
         <div>

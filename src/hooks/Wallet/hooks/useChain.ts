@@ -1,9 +1,10 @@
-import { useSetChain } from '@web3-onboard/react'
 import { BigNumber } from 'ethers'
 import { useMemo } from 'react'
+import { useNetwork } from 'wagmi'
 
 export function useChain() {
-  const [{ connectedChain, chains }] = useSetChain()
+  const { chain: connectedChain, chains } = useNetwork()
+
   const chain = useMemo(
     () =>
       connectedChain
@@ -11,7 +12,7 @@ export function useChain() {
             id: connectedChain.id,
             name:
               chains.find(c => BigNumber.from(c.id).eq(connectedChain.id))
-                ?.label ?? 'Unknown',
+                ?.name ?? 'Unknown',
           }
         : undefined,
     [chains, connectedChain],

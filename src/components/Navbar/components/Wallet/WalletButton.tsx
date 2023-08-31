@@ -1,24 +1,25 @@
 import { WarningOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
+import { ConnectKitButton } from 'connectkit'
 import { useWallet } from 'hooks/Wallet'
-
 import WalletMenu from './WalletMenu'
 
 export default function WalletButton() {
-  const {
-    userAddress,
-    isConnected,
-    connect,
-    chainUnsupported,
-    changeNetworks,
-  } = useWallet()
+  const { userAddress, isConnected, chainUnsupported, changeNetworks } =
+    useWallet()
 
   if (!isConnected) {
     return (
-      <Button onClick={() => connect()} block>
-        <Trans>Connect</Trans>
-      </Button>
+      <ConnectKitButton.Custom>
+        {({ show }) => {
+          return (
+            <Button onClick={show} block>
+              <Trans>Connect</Trans>
+            </Button>
+          )
+        }}
+      </ConnectKitButton.Custom>
     )
   }
 

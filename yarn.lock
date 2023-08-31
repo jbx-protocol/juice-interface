@@ -4415,7 +4415,7 @@
     "@babel/runtime" "^7.20.13"
     "@lingui/core" "4.1.2"
 
-"@lingui/swc-plugin@^4.0.4":
+"@lingui/swc-plugin@4.0.4":
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/@lingui/swc-plugin/-/swc-plugin-4.0.4.tgz#1e6e753b8aae50edd929eb4905db24a186513dca"
   integrity sha512-xRnR96Mqi6zwGlVfGJMfoM8QykBbUz/sSnwmcFL9BZ8Y9YBZxzLAVf4t1BbiIQsAs+pMYu/HfujTBD4y/r1ucA==

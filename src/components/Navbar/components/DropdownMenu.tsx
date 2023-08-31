@@ -15,6 +15,7 @@ type LinkItem = {
   id: string
   label: ReactNode
   href: string
+  locale?: string
   isExternal?: boolean
 }
 
@@ -130,6 +131,7 @@ export const DropdownMenu = ({
                       <PatchedNextLink
                         className="text-primary px-4 first:rounded-t-lg last:rounded-b-lg hover:bg-grey-100 dark:hover:bg-slate-600 md:whitespace-nowrap md:py-2.5 md:font-medium md:first:pt-3.5 md:last:pb-3.5"
                         href={item.href}
+                        locale={item.locale ?? undefined}
                       >
                         {item.label}
                       </PatchedNextLink>

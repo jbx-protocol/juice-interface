@@ -1,11 +1,12 @@
-import { AppWrapper } from 'components/common'
 import { ProjectSafeDashboard } from 'components/ProjectSafeDashboard'
+import { AppWrapper } from 'components/common'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { useRouter } from 'next/router'
+import { V1ProjectProvider } from 'contexts/v1/Project/V1ProjectProvider'
 import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { V1ProjectMetadataProvider } from 'contexts/v1/V1ProjectMetadataProvider'
-import { V1ProjectProvider } from 'contexts/v1/Project/V1ProjectProvider'
+import { useRouter } from 'next/router'
 import { useContext } from 'react'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 function V1ProjectSafeDashboard({ handle }: { handle: string }) {
   const { owner } = useContext(V1ProjectContext)
@@ -36,3 +37,5 @@ export default function V1ProjectSafeDashboardPage() {
     </AppWrapper>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

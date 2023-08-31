@@ -9,6 +9,7 @@ import { User } from 'models/database'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { Database } from 'types/database.types'
 import { isEqualAddress } from 'utils/address'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 type AccountSettingsType = {
   initialSession: Session
@@ -18,6 +19,8 @@ type AccountSettingsType = {
 export const getServerSideProps: GetServerSideProps<
   AccountSettingsType
 > = async context => {
+  const global = await globalGetServerSideProps(context)
+
   const supabase = createServerSupabaseClient<Database>(context)
   const {
     data: { session },
@@ -28,6 +31,7 @@ export const getServerSideProps: GetServerSideProps<
     typeof context.params.addressOrEnsName !== 'string'
   ) {
     return {
+      ...global,
       redirect: {
         destination: '/',
         permanent: false,
@@ -39,6 +43,7 @@ export const getServerSideProps: GetServerSideProps<
   )
   if (!pair) {
     return {
+      ...global,
       redirect: {
         destination: '/',
         permanent: false,
@@ -56,6 +61,7 @@ export const getServerSideProps: GetServerSideProps<
 
   if (!user.data) {
     return {
+      ...global,
       redirect: {
         destination: '/',
         permanent: false,
@@ -70,6 +76,7 @@ export const getServerSideProps: GetServerSideProps<
       console.info('Error occurred on signout', e)
     }
     return {
+      ...global,
       redirect: {
         destination: '/',
         permanent: false,
@@ -78,7 +85,10 @@ export const getServerSideProps: GetServerSideProps<
   }
 
   return {
+    ...global,
     props: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ...((global as any).props || {}),
       initialSession: session,
       user: user.data,
     },

@@ -968,6 +968,9 @@ msgstr ""
 msgid "You are eligible for {0} <0/> (NFT)"
 msgstr ""
 
+msgid "Are you sure you want to remove ${0}?"
+msgstr ""
+
 msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
 msgstr ""
 
@@ -1371,9 +1374,6 @@ msgid "Remaining ETH"
 msgstr ""
 
 msgid "100% transparent"
-msgstr ""
-
-msgid "Are you sure you want to remove {type}?"
 msgstr ""
 
 msgid "Edit your project's NFTs."
@@ -4485,9 +4485,6 @@ msgid "Advanced"
 msgstr ""
 
 msgid "Percentage to reserve"
-msgstr ""
-
-msgid "Remove"
 msgstr ""
 
 msgid "All assets"

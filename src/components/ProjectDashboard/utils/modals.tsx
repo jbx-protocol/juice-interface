@@ -1,18 +1,31 @@
-import { t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { ModalOnCancelFn, ModalOnOkFn } from 'components/modals/JuiceModal'
+import LanguageProvider from 'contexts/Language/LanguageProvider'
 import { ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ConfirmationDeletionModal } from '../components/ui/ConfirmationDeletionModal'
 
-export const emitConfirmationDeletionModal = ({
-  type,
-  description,
-  onConfirm,
-}: {
-  type: string
+type EmitConfirmationDeletionModalProps = {
   description?: ReactNode
+  okText?: ReactNode
+  cancelText?: ReactNode
   onConfirm: () => void
-}) => {
+} & (
+  | {
+      type?: string
+    }
+  | {
+      title?: ReactNode
+    }
+)
+
+export const emitConfirmationDeletionModal = ({
+  description,
+  okText,
+  cancelText,
+  onConfirm,
+  ...props
+}: EmitConfirmationDeletionModalProps) => {
   const modalRoot = document.createElement('div')
   const root = createRoot(modalRoot)
   document.body.appendChild(modalRoot)
@@ -34,16 +47,26 @@ export const emitConfirmationDeletionModal = ({
     }, 500)
   }
 
-  const title = t`Are you sure you want to remove ${type}?`
+  const title = (() => {
+    if ('title' in props) return props.title
+    if ('type' in props) {
+      return <Trans>Are you sure you want to remove ${props.type}?</Trans>
+    }
+    return <Trans>Are you sure?</Trans>
+  })()
 
   root.render(
-    <ConfirmationDeletionModal
-      initialOpenState={true}
-      title={title}
-      description={description}
-      onOk={handleOk}
-      onCancel={handleCancel}
-    />,
+    <LanguageProvider>
+      <ConfirmationDeletionModal
+        initialOpenState={true}
+        title={title}
+        description={description}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okText={okText}
+        cancelText={cancelText}
+      />
+    </LanguageProvider>,
   )
 }
 

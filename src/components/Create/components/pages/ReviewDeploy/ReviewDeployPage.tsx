@@ -4,12 +4,12 @@ import { Checkbox, Form } from 'antd'
 import { Callout } from 'components/Callout'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
-import TransactionModal from 'components/modals/TransactionModal'
 import { emitConfirmationDeletionModal } from 'components/ProjectDashboard/utils/modals'
+import TransactionModal from 'components/modals/TransactionModal'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
+import { useWallet } from 'hooks/Wallet'
 import useMobile from 'hooks/useMobile'
 import { useModal } from 'hooks/useModal'
-import { useWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -63,7 +63,7 @@ export const ReviewDeployPage = () => {
   const router = useRouter()
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
   const termsAccepted = Form.useWatch('termsAccepted', form)
-  const modal = useModal()
+  const transactionModal = useModal()
   const { deployProject, isDeploying, deployTransactionPending } =
     useDeployProject()
   const nftRewards = useAppSelector(
@@ -80,9 +80,8 @@ export const ReviewDeployPage = () => {
   const handleStartOverClicked = useCallback(() => {
     router.push('/create')
     goToPage?.('projectDetails')
-    modal.close()
     dispatch(editingV2ProjectActions.resetState())
-  }, [dispatch, goToPage, modal, router])
+  }, [dispatch, goToPage, router])
 
   const onFinish = useCallback(async () => {
     if (chainUnsupported) {
@@ -94,11 +93,14 @@ export const ReviewDeployPage = () => {
       return
     }
 
+    transactionModal.open()
     await deployProject({
-      onProjectDeployed: deployedProjectId =>
+      onProjectDeployed: deployedProjectId => {
         router.push({ query: { deployedProjectId } }, '/create', {
           shallow: true,
-        }),
+        })
+        transactionModal.close()
+      },
     })
   }, [
     chainUnsupported,
@@ -107,6 +109,7 @@ export const ReviewDeployPage = () => {
     deployProject,
     isConnected,
     router,
+    transactionModal,
   ])
 
   const [activeKey, setActiveKey] = useState<ReviewDeployKey[]>(
@@ -248,7 +251,8 @@ export const ReviewDeployPage = () => {
       </div>
       <TransactionModal
         transactionPending={deployTransactionPending}
-        open={deployTransactionPending}
+        open={deployTransactionPending && transactionModal.visible}
+        onCancel={transactionModal.close}
       />
     </>
   )

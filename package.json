@@ -163,7 +163,7 @@
     "@graphql-codegen/typescript-react-apollo": "^3.3.2",
     "@graphql-codegen/typescript-resolvers": "^3.2.0",
     "@lingui/loader": "^4.4.0",
-    "@lingui/swc-plugin": "^4.0.4",
+    "@lingui/swc-plugin": "4.0.4",
     "@next/bundle-analyzer": "^13.2.4",
     "@testing-library/cypress": "^8.0.2",
     "@testing-library/jest-dom": "^5.16.5",

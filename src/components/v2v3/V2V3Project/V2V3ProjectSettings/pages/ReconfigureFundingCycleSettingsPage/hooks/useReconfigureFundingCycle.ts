@@ -57,6 +57,10 @@ export const useReconfigureFundingCycle = ({
   const {
     nftRewards: { CIDs: nftRewardsCids },
   } = useContext(NftRewardsContext)
+  console.info(
+    'TODO REMOVE: editingFundingCycleConfig: ',
+    editingFundingCycleConfig,
+  )
 
   const [reconfigureTxLoading, setReconfigureTxLoading] =
     useState<boolean>(false)

@@ -175,7 +175,6 @@ export async function pinNftCollectionMetadata({
       : 'https://juicebox.money',
     fee_recipient: undefined,
   }
-
   const res = await pinJson(IPFSNftCollectionMetadata)
   return res.Hash
 }

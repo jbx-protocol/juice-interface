@@ -31,7 +31,11 @@ import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useNftRewardsForm } from './hooks'
 
-export const NftRewardsPage = () => {
+export const NftRewardsPage = ({
+  okButton,
+}: {
+  okButton?: React.ReactNode
+}) => {
   useSetCreateFurthestPageReached('nftRewards')
   const { form, initialValues } = useNftRewardsForm()
   const lockPageRulesWrapper = useLockPageRulesWrapper()
@@ -258,7 +262,7 @@ export const NftRewardsPage = () => {
             </div>
           )}
         </div>
-        <Wizard.Page.ButtonControl />
+        {okButton ?? <Wizard.Page.ButtonControl />}
       </Form>
 
       <div className="mt-8 text-center">

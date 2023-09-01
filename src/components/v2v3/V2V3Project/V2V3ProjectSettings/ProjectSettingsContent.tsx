@@ -4,6 +4,7 @@ import { Trans, t } from '@lingui/macro'
 import { Button, Layout } from 'antd'
 import { V2V3SettingsPageKey } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { twJoin } from 'tailwind-merge'
@@ -14,6 +15,7 @@ import { ArchiveProjectSettingsPage } from './pages/ArchiveProjectSettingsPage'
 import { EditNftsPage } from './pages/EditNftsPage'
 import { GovernanceSettingsPage } from './pages/GovernanceSettingsPage'
 import { EditCyclePage } from './pages/NewEditCyclePage/EditCyclePage'
+import { NewEditNftsPage } from './pages/NewEditNftsPage/NewEditNftsPage'
 import { PayoutsSettingsPage } from './pages/PayoutsSettingsPage'
 import { ProjectDetailsSettingsPage } from './pages/ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
 import { ProjectHandleSettingsPage } from './pages/ProjectHandleSettingsPage'
@@ -32,7 +34,9 @@ const SettingsPageComponents: {
   cycle: featureFlagEnabled(FEATURE_FLAGS.NEW_CYCLE_CONFIG_PAGE)
     ? EditCyclePage
     : ReconfigureFundingCycleSettingsPage,
-  nfts: EditNftsPage,
+  nfts: featureFlagEnabled(FEATURE_FLAGS.NEW_EDIT_NFTS)
+    ? NewEditNftsPage
+    : EditNftsPage,
   payouts: PayoutsSettingsPage,
   reservedtokens: ReservedTokensSettingsPage,
   tokenmigration: V1V2TokenMigrationSettingsPage,
@@ -43,7 +47,9 @@ const SettingsPageComponents: {
   projectnft: ProjectNftSettingsPage,
 }
 
-const V2V3SettingsPageKeyTitleMap = (): {
+const V2V3SettingsPageKeyTitleMap = (
+  hasExistingNfts: boolean,
+): {
   [k in V2V3SettingsPageKey]: string
 } => ({
   general: t`General`,
@@ -51,7 +57,7 @@ const V2V3SettingsPageKeyTitleMap = (): {
   cycle: t`Cycle configuration`,
   payouts: t`Payouts`,
   reservedtokens: t`Reserved token recipients`,
-  nfts: t`Edit NFT collection`,
+  nfts: hasExistingNfts ? t`Edit NFT collection` : t`Launch New NFT Collection`,
   tokenmigration: t`Token migration`,
   transferownership: t`Transfer ownership`,
   archiveproject: t`Archive project`,
@@ -99,12 +105,15 @@ export function ProjectSettingsContent({
 }: {
   settingsPageKey: V2V3SettingsPageKey
 }) {
+  const { value: hasExistingNfts } = useHasNftRewards()
+
   const ActiveSettingsPage = useMemo(
     () => SettingsPageComponents[settingsPageKey],
     [settingsPageKey],
   )
 
-  const pageTitle = V2V3SettingsPageKeyTitleMap()[settingsPageKey]
+  const pageTitle =
+    V2V3SettingsPageKeyTitleMap(hasExistingNfts)[settingsPageKey]
 
   return (
     <ProjectSettingsLayout>

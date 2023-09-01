@@ -43,8 +43,8 @@ export function EnableNftsModal({
       confirmLoading={loading}
     >
       <Trans>
-        To add NFTs to your cycle. You'll need to{' '}
-        <strong>grant NFT permissions</strong> before launching your new cycle.
+        To add NFTs to your next cycle. You'll need to{' '}
+        <strong>grant NFT permissions</strong>.
       </Trans>{' '}
       <TooltipIcon
         tip={

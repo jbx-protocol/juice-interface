@@ -308,9 +308,6 @@ msgstr ""
 msgid "Contributions"
 msgstr ""
 
-msgid "Enable NFTs for your project"
-msgstr ""
-
 msgid "Attach an image"
 msgstr ""
 
@@ -498,6 +495,9 @@ msgid "2. Set text record"
 msgstr ""
 
 msgid "Due to your <0>{0}</0> contract, edits you make will not take effect until the first cycle to start at least <1>{1}</1> from now."
+msgstr ""
+
+msgid "To add NFTs to your next cycle. You'll need to <0>grant NFT permissions</0>."
 msgstr ""
 
 msgid "Payer issuance rate"
@@ -3017,9 +3017,6 @@ msgstr ""
 msgid "Danger Zone"
 msgstr ""
 
-msgid "Juicebox mints and provides extended functionality for you to sell or reward contributors with NFTs for your project. <0>Learn more about NFTs</0>"
-msgstr ""
-
 msgid "Create an ERC-20 token (optional)"
 msgstr ""
 
@@ -3401,6 +3398,9 @@ msgstr ""
 msgid "Project tags"
 msgstr ""
 
+msgid "Deploy NFT collection"
+msgstr ""
+
 msgid "Configure how your project will collect and spend ETH."
 msgstr ""
 
@@ -3537,9 +3537,6 @@ msgid "Each cycle, the project will issue {discountRate}% fewer tokens per ETH."
 msgstr ""
 
 msgid "Prevent NFT overspending"
-msgstr ""
-
-msgid "To add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before launching your new cycle."
 msgstr ""
 
 msgid "Pay this project to receive NFTs."
@@ -4562,10 +4559,16 @@ msgstr ""
 msgid "For fundraising"
 msgstr ""
 
+msgid "Launch New NFT Collection"
+msgstr ""
+
 msgid "Status"
 msgstr ""
 
 msgid "Redemption rate:"
+msgstr ""
+
+msgid "You haven't launched an NFT collection yet."
 msgstr ""
 
 msgid "Project Token"

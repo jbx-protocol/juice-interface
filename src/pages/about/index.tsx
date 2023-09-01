@@ -1,5 +1,6 @@
 import { AboutDashboard } from 'components/AboutDashboard'
 import { AppWrapper, Head } from 'components/common'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function AboutPage() {
   return (
@@ -17,3 +18,5 @@ export default function AboutPage() {
     </>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

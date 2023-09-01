@@ -1,6 +1,7 @@
 import { AppWrapper } from 'components/common'
 import ExternalLink from 'components/ExternalLink'
 import Link from 'next/link'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function PrivacyPolicyPage() {
   return (
@@ -73,3 +74,5 @@ function PrivacyPolicy() {
     </div>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

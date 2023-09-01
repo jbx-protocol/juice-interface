@@ -8,53 +8,23 @@ import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
 import { RedeemingNft } from 'components/ProjectDashboard/components/NftRewardsPanel/hooks/useJB721DelegateTokenToNftReward'
 import { REDEMPTION_RATE_EXPLANATION } from 'components/strings'
 import TooltipLabel from 'components/TooltipLabel'
-import {
-  IJB721Delegate_V3_2_INTERFACE_ID,
-  IJB721Delegate_V3_INTERFACE_ID,
-} from 'constants/nftRewards'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber, constants } from 'ethers'
-import { defaultAbiCoder } from 'ethers/lib/utils.js'
+import { BigNumber } from 'ethers'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/useNftAccountBalance'
 import { useETHReceivedFromNftRedeem } from 'hooks/v2v3/contractReader/useETHReceivedFromNftRedeem'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/useRedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { useContext, useState } from 'react'
+import {
+  encodeJB721DelegateV3_2RedeemMetadata,
+  encodeJB721DelegateV3_4RedeemMetadata,
+  encodeJB721DelegateV3RedeemMetadata,
+} from 'utils/encodeJb721DelegateMetadata/encodeJb721DelegateMetadata'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatRedemptionRate } from 'utils/v2v3/math'
 import { RedeemNftCard } from './RedeemNftCard'
-
-function encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem: string[]) {
-  const args = [
-    constants.HashZero,
-    IJB721Delegate_V3_INTERFACE_ID,
-    tokenIdsToRedeem,
-  ]
-
-  const encoded = defaultAbiCoder.encode(
-    ['bytes32', 'bytes4', 'uint256[]'],
-    args,
-  )
-
-  return encoded
-}
-
-function encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem: string[]) {
-  const args = [
-    constants.HashZero,
-    IJB721Delegate_V3_2_INTERFACE_ID,
-    tokenIdsToRedeem,
-  ]
-
-  const encoded = defaultAbiCoder.encode(
-    ['bytes32', 'bytes4', 'uint256[]'],
-    args,
-  )
-
-  return encoded
-}
 
 export function RedeemNftsModal({
   open,
@@ -111,10 +81,14 @@ export function RedeemNftsModal({
         minReturnedTokens: BigNumber.from(0),
         memo,
         metadata:
-          jb721DelegateVersion === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
-          jb721DelegateVersion === JB721DelegateVersion.JB721DELEGATE_V3_3
+          jb721DelegateVersion === JB721DelegateVersion.JB721DELEGATE_V3 ||
+          jb721DelegateVersion === JB721DelegateVersion.JB721DELEGATE_V3_1
+            ? encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem)
+            : jb721DelegateVersion ===
+                JB721DelegateVersion.JB721DELEGATE_V3_2 ||
+              jb721DelegateVersion === JB721DelegateVersion.JB721DELEGATE_V3_3
             ? encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem)
-            : encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem),
+            : encodeJB721DelegateV3_4RedeemMetadata(tokenIdsToRedeem),
       },
       {
         // step 1

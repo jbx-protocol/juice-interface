@@ -1,9 +1,8 @@
 import { LanguageIcon } from '@heroicons/react/24/solid'
-import { Trans } from '@lingui/macro'
+import { useLingui } from '@lingui/react'
 import { SUPPORTED_LANGUAGES } from 'constants/locale'
-import { useCallback, useMemo } from 'react'
+import { useRouter } from 'next/router'
 import { twMerge } from 'tailwind-merge'
-import { reloadWindow } from 'utils/windowUtils'
 import { DropdownMenu } from './DropdownMenu'
 
 // Language select tool seen in top nav
@@ -12,16 +11,10 @@ export default function NavLanguageSelector({
 }: {
   className?: string
 }) {
-  // Sets the new language with localStorage and reloads the page
-  const setLanguage = useCallback((newLanguage: string) => {
-    localStorage.setItem('lang', newLanguage)
-    reloadWindow()
-  }, [])
-
-  const currentLanguage = useMemo(
-    () => localStorage.getItem('lang') ?? 'en',
-    [],
-  )
+  const router = useRouter()
+  const {
+    i18n: { locale },
+  } = useLingui()
 
   return (
     <DropdownMenu
@@ -33,15 +26,19 @@ export default function NavLanguageSelector({
         <div className="flex items-center gap-4">
           <LanguageIcon className="h-6 w-6" />
           <span className="font-medium md:hidden">
-            <Trans>{SUPPORTED_LANGUAGES[currentLanguage].short}</Trans>
+            {SUPPORTED_LANGUAGES[locale].short}
           </span>
         </div>
       }
       items={Object.values(SUPPORTED_LANGUAGES).map(lang => ({
         id: lang.code,
         label: lang.long,
-        onClick: () => {
-          setLanguage(lang.code)
+        // TODO: We want to use the bottom but due to a bug in t macros we cant
+        // locale: lang.code,
+        // href: pathname,
+        onClick: async () => {
+          await router.push(router.asPath, router.asPath, { locale: lang.code })
+          router.reload()
         },
       }))}
     />

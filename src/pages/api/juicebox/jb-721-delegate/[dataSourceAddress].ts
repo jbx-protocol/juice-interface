@@ -1,4 +1,5 @@
 import { readNetwork } from 'constants/networks'
+import { IJB721TieredDelegate_V3_INTERFACE_ID } from 'constants/nftRewards'
 import { readProvider } from 'constants/readProvider'
 import { Contract } from 'ethers'
 import { ForgeDeploy, addressFor } from 'forge-run-parser'
@@ -9,8 +10,6 @@ import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { isEqualAddress, isZeroAddress } from 'utils/address'
 import JBDelegatesRegistryJson from './IJBDelegatesRegistry.json'
-
-const IJB721TieredDelegate_V3_INTERFACE_ID = '0xf34282c8'
 
 const logger = getLogger('api/juicebox/jb-721-delegate/[dataSourceAddress]')
 
@@ -39,11 +38,20 @@ async function fetchDeployerOf(dataSourceAddress: string) {
     readProvider,
   )
 
-  const deployerAddress = await JBDelegatesRegistry.deployerOf(
-    dataSourceAddress,
+  // theres 2 registries, so need to check if the dataSourceAddress might be in the old one
+  const oldRegistry = await JBDelegatesRegistry.oldRegistry()
+  const OldJBDelegatesRegistry = new Contract(
+    oldRegistry,
+    JBDelegatesRegistryJson.abi,
+    readProvider,
   )
 
-  return deployerAddress
+  const [deployerAddress, deployerAddressOldRegistry] = await Promise.all([
+    JBDelegatesRegistry.deployerOf(dataSourceAddress),
+    OldJBDelegatesRegistry.deployerOf(dataSourceAddress),
+  ])
+
+  return deployerAddress || deployerAddressOldRegistry
 }
 
 async function isJB721DelegateV3(dataSourceAddress: string) {
@@ -92,7 +100,7 @@ async function isJB721DelegateV3_2(deployerAddress: string) {
 }
 
 async function isJB721DelegateV3_3(deployerAddress: string) {
-  const deployerV3_2Address = await loadJB721DelegateAddress(
+  const deployerV3_3Address = await loadJB721DelegateAddress(
     'JBTiered721DelegateDeployer',
     JB721DelegateVersion.JB721DELEGATE_V3_3,
   )
@@ -100,7 +108,20 @@ async function isJB721DelegateV3_3(deployerAddress: string) {
   return (
     Boolean(deployerAddress) &&
     !isZeroAddress(deployerAddress) &&
-    isEqualAddress(deployerV3_2Address, deployerAddress)
+    isEqualAddress(deployerV3_3Address, deployerAddress)
+  )
+}
+
+async function isJB721DelegateV3_4(deployerAddress: string) {
+  const deployerV3_4Address = await loadJB721DelegateAddress(
+    'JBTiered721DelegateDeployer',
+    JB721DelegateVersion.JB721DELEGATE_V3_4,
+  )
+
+  return (
+    Boolean(deployerAddress) &&
+    !isZeroAddress(deployerAddress) &&
+    isEqualAddress(deployerV3_4Address, deployerAddress)
   )
 }
 
@@ -109,14 +130,18 @@ async function fetchJB721DelegateVersion(dataSourceAddress: string) {
   if (isV3) return JB721DelegateVersion.JB721DELEGATE_V3
 
   const deployerAddress = await fetchDeployerOf(dataSourceAddress)
-  const [isV3_1, isV3_2, isV3_3] = await Promise.all([
+  const [isV3_1, isV3_2, isV3_3, isV3_4] = await Promise.all([
     isJB721DelegateV3_1(deployerAddress),
     isJB721DelegateV3_2(deployerAddress),
     isJB721DelegateV3_3(deployerAddress),
+    isJB721DelegateV3_4(deployerAddress),
   ])
   if (isV3_1) return JB721DelegateVersion.JB721DELEGATE_V3_1
   if (isV3_2) return JB721DelegateVersion.JB721DELEGATE_V3_2
   if (isV3_3) return JB721DelegateVersion.JB721DELEGATE_V3_3
+  if (isV3_4) return JB721DelegateVersion.JB721DELEGATE_V3_4
+
+  return null
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

@@ -4,6 +4,7 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 const { withSentryConfig } = require('@sentry/nextjs')
 const withBundleAnalyzer = require('@next/bundle-analyzer')
+const linguiConfig = require('./lingui.config')
 
 const webpack = require('webpack')
 
@@ -112,8 +113,19 @@ const SECURITY_HEADERS = [
   }, // NOTE: gnosis safe is still allowed due to frame-ancestors definition
 ]
 
+/** @type {import('next').NextConfig} */
 const nextConfig = removeImports({
-  experimental: { esmExternals: true },
+  experimental: {
+    esmExternals: true,
+    swcPlugins: [
+      '@lingui/swc-plugin',
+      {
+        runtimeModules: {
+          i18n: ['@lingui/core', 'i18n'],
+        },
+      },
+    ],
+  },
   staticPageGenerationTimeout: 90,
   webpack: config => {
     config.resolve.fallback = { fs: false, module: false }
@@ -125,6 +137,11 @@ const nextConfig = removeImports({
     )
 
     return config
+  },
+  i18n: {
+    localeDetection: false,
+    locales: linguiConfig.locales,
+    defaultLocale: linguiConfig.sourceLocale,
   },
   async redirects() {
     return [

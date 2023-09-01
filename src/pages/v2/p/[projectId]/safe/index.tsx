@@ -1,11 +1,12 @@
-import { AppWrapper } from 'components/common'
 import { ProjectSafeDashboard } from 'components/ProjectSafeDashboard'
+import { AppWrapper } from 'components/common'
+import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useRouter } from 'next/router'
-import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
+import { useRouter } from 'next/router'
 import { useContext } from 'react'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 function V2V3ProjectSafeDashboard() {
@@ -38,3 +39,5 @@ export default function V2V3ProjectSafeDashboardPage() {
     </AppWrapper>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

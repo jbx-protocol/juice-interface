@@ -6,9 +6,10 @@ import { PV_V2 } from 'constants/pv'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo/paginateDepleteProjectsQuery'
+import { loadCatalog } from 'locales/utils'
 import { ProjectMetadata } from 'models/projectMetadata'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
-import { Suspense, lazy } from 'react'
+import React, { PropsWithChildren, Suspense, lazy } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { cidFromUrl, ipfsPublicGatewayUrl } from 'utils/ipfs'
 import {
@@ -37,12 +38,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<
-  ProjectPageProps
+  ProjectPageProps & { i18n: unknown }
 > = async context => {
+  const locale = context.locale as string
+  const messages = await loadCatalog(locale)
+  const i18n = { locale, messages }
+
   if (!context.params) throw new Error('params not supplied')
 
   const projectId = parseInt(context.params.projectId as string)
-  const props = await getProjectStaticProps(projectId)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const props = (await getProjectStaticProps(projectId)) as any
+  props.props.i18n = i18n
 
   return {
     ...props,
@@ -86,19 +93,34 @@ export default function V2ProjectPage({
     <>
       <ProjectPageSEO metadata={metadata} projectId={projectId} />
 
-      <AppWrapper>
-        <V2V3ProjectPageProvider projectId={projectId} metadata={metadata}>
-          <AnnouncementsProvider>
-            {newProjectPageEnabled ? (
-              <Suspense fallback={<Loading />}>
-                <ProjectDashboard />
-              </Suspense>
-            ) : (
-              <V2V3Dashboard />
-            )}
-          </AnnouncementsProvider>
-        </V2V3ProjectPageProvider>
-      </AppWrapper>
+      <_Wrapper>
+        <AppWrapper>
+          <V2V3ProjectPageProvider projectId={projectId} metadata={metadata}>
+            <AnnouncementsProvider>
+              {newProjectPageEnabled ? (
+                <Suspense fallback={<Loading />}>
+                  <ProjectDashboard />
+                </Suspense>
+              ) : (
+                <V2V3Dashboard />
+              )}
+            </AnnouncementsProvider>
+          </V2V3ProjectPageProvider>
+        </AppWrapper>
+      </_Wrapper>
     </>
   )
+}
+
+// This is a hack to avoid SSR for now. At the moment when this is not applied to this page, you will see a rehydration error.
+const _Wrapper: React.FC<PropsWithChildren> = ({ children }) => {
+  const [hasMounted, setHasMounted] = React.useState(false)
+  React.useEffect(() => {
+    setHasMounted(true)
+  }, [])
+  if (!hasMounted) {
+    return null
+  }
+
+  return <>{children}</>
 }

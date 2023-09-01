@@ -27,13 +27,14 @@ export function useNftCollectionMetadataUri(
     functionName: 'contractURI',
     args:
       version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
-      JB721DelegateVersion.JB721DELEGATE_V3_3
+      JB721DelegateVersion.JB721DELEGATE_V3_3 ||
+      JB721DelegateVersion.JB721DELEGATE_V3_4
         ? undefined
         : null,
   })
 
-  return version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
-    version === JB721DelegateVersion.JB721DELEGATE_V3_3
-    ? v3_2_response
-    : v3response
+  return version === JB721DelegateVersion.JB721DELEGATE_V3 ||
+    version === JB721DelegateVersion.JB721DELEGATE_V3_1
+    ? v3response
+    : v3_2_response
 }

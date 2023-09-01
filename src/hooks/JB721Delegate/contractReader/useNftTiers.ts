@@ -43,6 +43,15 @@ function buildArgs(
         0, // _startingId
         limit ?? MAX_NFT_REWARD_TIERS,
       ]
+
+    case JB721DelegateVersion.JB721DELEGATE_V3_4: // unchanged
+      return [
+        dataSourceAddress,
+        [], // _categories
+        false, // _includeResolvedUri, return in each tier a result from a tokenUriResolver if one is included in the delegate
+        0, // _startingId
+        limit ?? MAX_NFT_REWARD_TIERS,
+      ]
     default:
       return null
   }
@@ -71,10 +80,10 @@ export function useNftTiers({
   return useV2ContractReader<JB721TierV3[] | JB_721_TIER_V3_2[]>({
     contract: JB721TieredDelegateStore,
     functionName:
-      version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
-      version === JB721DelegateVersion.JB721DELEGATE_V3_3
-        ? 'tiersOf'
-        : 'tiers',
+      version === JB721DelegateVersion.JB721DELEGATE_V3 ||
+      version === JB721DelegateVersion.JB721DELEGATE_V3_1
+        ? 'tiers'
+        : 'tiersOf',
     args,
   })
 }

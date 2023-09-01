@@ -10,6 +10,7 @@ import {
   CONSTITUTION_FUNDING_CONFIG,
 } from 'constants/successStoryProjects'
 import Image from 'next/image'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function ConstitutionDAOPage() {
   const constitutionSuccessStoryProject = CASE_STUDY_PROJECTS[0]
@@ -106,3 +107,5 @@ export default function ConstitutionDAOPage() {
     </AppWrapper>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

@@ -10,6 +10,7 @@ import {
   STUDIODAO_FUNDING_CONFIG,
 } from 'constants/successStoryProjects'
 import Image from 'next/image'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function StudioDAOPage() {
   const studioDAOSuccessStoryProject = CASE_STUDY_PROJECTS[3]
@@ -117,3 +118,5 @@ export default function StudioDAOPage() {
     </AppWrapper>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

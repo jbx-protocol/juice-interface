@@ -5,6 +5,7 @@ import { readNetwork } from 'constants/networks'
 import Head from 'next/head'
 import { useCallback, useState } from 'react'
 import { featureFlagEnabled, setFeatureFlag } from 'utils/featureFlags'
+import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function FlagsPage() {
   const [, updateState] = useState({})
@@ -49,3 +50,5 @@ export default function FlagsPage() {
     </>
   )
 }
+
+export const getServerSideProps = globalGetServerSideProps

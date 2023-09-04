@@ -206,7 +206,7 @@ export function V2V3BurnOrRedeemModal({
       okText={modalTitle}
       okButtonProps={{
         disabled:
-          !redeemAmount || parseInt(redeemAmount) === 0 || !checkedLegal,
+          !redeemAmount || parseFloat(redeemAmount) === 0 || !checkedLegal,
       }}
       width={540}
       centered

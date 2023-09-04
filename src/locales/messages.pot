@@ -152,9 +152,6 @@ msgstr ""
 msgid "Data from current cycle"
 msgstr ""
 
-msgid "Contributors will redeem from the project's treasury with their NFTs as opposed to standard project tokens."
-msgstr ""
-
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
 msgstr ""
 
@@ -495,9 +492,6 @@ msgid "2. Set text record"
 msgstr ""
 
 msgid "Due to your <0>{0}</0> contract, edits you make will not take effect until the first cycle to start at least <1>{1}</1> from now."
-msgstr ""
-
-msgid "To add NFTs to your next cycle. You'll need to <0>grant NFT permissions</0>."
 msgstr ""
 
 msgid "Payer issuance rate"
@@ -1020,6 +1014,9 @@ msgid "Adding an edit deadline is recommended. Projects with no deadline will ap
 msgstr ""
 
 msgid "<0><1>Peel</1> manages this website — the juicebox.money frontend interface. You can reach out to Peel through the <2>Peel Discord</2>.</0><3><4>JuiceboxDAO</4> builds and governs the Juicebox fundraising protocol and other community resources. You can reach out to JuiceboxDAO through the <5>Juicebox Discord</5>.</3>"
+msgstr ""
+
+msgid "To add NFTs to your next cycle, you'll need to <0>grant NFT permissions</0>."
 msgstr ""
 
 msgid "Email address"
@@ -3576,9 +3573,6 @@ msgid "Amount required"
 msgstr ""
 
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no ETH, or is using all of its ETH for payouts."
-msgstr ""
-
-msgid "Use NFTs for redemption"
 msgstr ""
 
 msgid "JB vs. Kickstarter"

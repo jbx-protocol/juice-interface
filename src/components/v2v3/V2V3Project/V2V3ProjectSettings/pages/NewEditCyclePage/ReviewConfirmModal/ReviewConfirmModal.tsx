@@ -57,7 +57,7 @@ export function ReviewConfirmModal({
         open={open}
         title={<Trans>Review & confirm</Trans>}
         destroyOnClose
-        onOk={reconfigureFundingCycle}
+        onOk={() => reconfigureFundingCycle()}
         okText={<Trans>Deploy changes</Trans>}
         okButtonProps={{ disabled: !formHasChanges }}
         cancelButtonProps={{ hidden: true }}

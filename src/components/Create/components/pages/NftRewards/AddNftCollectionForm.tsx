@@ -31,7 +31,7 @@ import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useNftRewardsForm } from './hooks'
 
-export const NftRewardsPage = ({
+export const AddNftCollectionForm = ({
   okButton,
 }: {
   okButton?: React.ReactNode

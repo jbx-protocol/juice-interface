@@ -1,4 +1,4 @@
-import { useJb721DelegateTokensQuery } from 'generated/graphql'
+import { useNfTsQuery } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
 
 /**
@@ -11,11 +11,13 @@ export function useNftAccountBalance({
   dataSourceAddress: string | undefined
   accountAddress: string | undefined
 }) {
-  return useJb721DelegateTokensQuery({
+  return useNfTsQuery({
     client,
     variables: {
       where: {
-        ...(dataSourceAddress ? { address: dataSourceAddress } : {}),
+        ...(dataSourceAddress
+          ? { collection_: { address: dataSourceAddress } }
+          : {}),
         ...(accountAddress ? { owner_: { wallet: accountAddress } } : {}),
       },
     },

@@ -2,11 +2,11 @@ import {
   NFT_METADATA_CONTRIBUTION_FLOOR_ATTRIBUTES_INDEX,
   useJB721DelegateTokenMetadata,
 } from 'components/v2v3/V2V3Project/ManageNftsSection/RedeemNftsModal/RedeemNftCard'
-import { Jb721DelegateToken } from 'generated/graphql'
+import { Nft } from 'generated/graphql'
 import { NftRewardTier } from 'models/nftRewards'
 import { UseQueryResult } from 'react-query'
 
-export type RedeemingNft = Pick<Jb721DelegateToken, 'address' | 'tokenUri'> & {
+export type RedeemingNft = Pick<Nft, 'tokenUri'> & {
   tokenId: string
 }
 

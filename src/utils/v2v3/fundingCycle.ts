@@ -4,6 +4,7 @@ import { BigNumber } from 'ethers'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycle,
+  V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 import { isZeroAddress } from 'utils/address'
@@ -138,19 +139,21 @@ export const deriveNextIssuanceRate = ({
   weight,
   previousFC,
 }: {
-  weight: BigNumber
-  previousFC: V2V3FundingCycle | undefined
+  weight?: BigNumber
+  previousFC: V2V3FundingCycle | V2V3FundingCycleData | undefined
 }) => {
   const previousWeight = previousFC?.weight
-  if (weight.eq(WEIGHT_ZERO)) {
+  const newWeight = weight ?? BigNumber.from(WEIGHT_UNCHANGED)
+
+  if (newWeight.eq(WEIGHT_ZERO)) {
     return BigNumber.from(0)
 
     // If no previous FC exists, return given weight
   } else if (!previousWeight) {
-    return weight
+    return newWeight
 
     // If weight=0 passed, derive next weight from previous weight
-  } else if (weight.eq(WEIGHT_UNCHANGED)) {
+  } else if (newWeight.eq(WEIGHT_UNCHANGED)) {
     const weightNumber = parseFloat(
       formatIssuanceRate(previousWeight.toString()),
     )
@@ -162,7 +165,7 @@ export const deriveNextIssuanceRate = ({
 
     return BigNumber.from(issuanceRateFrom(newWeightNumber.toString()))
   }
-  return weight
+  return newWeight
 }
 
 /**

@@ -12,6 +12,7 @@ import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { v2v3ProjectRoute } from 'utils/routes'
 import { EditProjectHandleButton } from './EditProjectHandleButton'
 import SocialLinks from './SocialLinks'
 
@@ -75,7 +76,7 @@ function ProjectSubheading({
             {!gnosisSafeLoading && gnosisSafe && (
               <GnosisSafeBadge
                 safe={gnosisSafe}
-                href={`${window.location.href}/safe`}
+                href={`${v2v3ProjectRoute({ projectId })}/safe`}
               />
             )}
           </div>

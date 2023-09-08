@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-08-27 00:26\n"
+"PO-Revision-Date: 2023-09-03 00:27\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -330,9 +330,6 @@ msgstr "Safe 交易"
 
 msgid "<0>Snapshot</0> is an off-chain voting system. You can use your Juicebox project tokens in a Snapshot voting strategy. <1>Learn more</1>."
 msgstr "<0>Snapshot</0> 是一个链下投票系统。 你可以将你的 Juicebox 项目代币用于 Snapshot 的投票策略。 <1>了解更多</1>。"
-
-msgid "Changes will take effect when your next cycle starts."
-msgstr ""
 
 msgid "See example"
 msgstr "例如"
@@ -976,6 +973,9 @@ msgstr "移除付款将清空购物车内所有物品。是否确定移除付款
 msgid "You are eligible for {0} <0/> (NFT)"
 msgstr "你将可以获得 {0} <0/> （NFT）"
 
+msgid "Are you sure you want to remove ${0}?"
+msgstr ""
+
 msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
 msgstr "SharkDAO 如何筹集超过 1,000 ETH 购买 6 个 Nouns NFT 并成为 Nouns DAO 最大的子 DAO"
 
@@ -1041,6 +1041,12 @@ msgstr "设定支付终端"
 
 msgid "Using crowdfunding platforms for films has been around for a while, but Juicebox adds an extra layer of transparency to the process, allowing fans to see where funds are going. Unlike traditional models where money is controlled behind the scenes, StudioDAO members source, vote, fund, and distribute movies transparently using the treasury while creators retain 100% of their creative control and ownership. With the entertainment market currently valued at two trillion dollars, StudioDAO founder Kenny Miller can see a “clear scenario for a decentralized studio to do one billion dollars of production 2-3 years from now.” To learn more about Kenny's vision for StudioDAO, listen to episode 9 of the Juicecast: <0>https://podcast.juicebox.money</0>."
 msgstr "使用众筹平台上为电影募资这一做法已经存在一段时间了，但 Juicebox 允许粉丝们掌握资金的去向，更加提高了整个流程的透明度。与传统的后台管理资金模式不同，StudioDAO 通过使用金库公开地发掘、票选、资助及发行电影，同时创作者得以保留其 100% 的创意自主权和电影所有权。当前娱乐市场的总估值在 2 万亿美元左右，StudioDAO 的创始人 Kenny Miller 预计 ”两至三年后去中心化工作室实现 10 亿美元的电影制作这个前景是清晰可见的“。要了解更多 Kenny 对 StudioDAO 的展望，欢迎收听 Juicecast 的第 9 期节目：<0>https://podcast.juicebox.money</0> 。"
+
+msgid "Changes will take effect in your next cycle as long as it starts after your edit deadline."
+msgstr ""
+
+msgid "Reserved token recipients cannot exceed 100%"
+msgstr ""
 
 msgid "Contributors will receive this NFT when they contribute at least this amount."
 msgstr "捐款人捐赠达到这个金额就会获得这个 NFT。"
@@ -1374,9 +1380,6 @@ msgstr "剩余的 ETH"
 
 msgid "100% transparent"
 msgstr "完全公开透明"
-
-msgid "Are you sure you want to remove {type}?"
-msgstr "你确定想要移除 {type} 吗？"
 
 msgid "Edit your project's NFTs."
 msgstr "编辑项目的 NFT。"
@@ -2023,9 +2026,6 @@ msgstr "只在主网上可用"
 msgid "The held fees will reset as ETH is transferred back to the project with the <0>transfer ETH to project</0> transaction above."
 msgstr "ETH 通过以上的 <0>转移 ETH 至项目</0>交易转回到项目之后，缓缴的费用将会重置。"
 
-msgid "Edits to cycles must occur before the selected period. Deadlines ensure your contributors are informed of upcoming changes to your projects’ configuration."
-msgstr "编辑周期须于选择的时间段前完成。编辑期限可以确保你的捐款人知晓项目配置即将发生的变化。"
-
 msgid "Read the docs"
 msgstr "阅读文档"
 
@@ -2287,6 +2287,9 @@ msgstr "百分比"
 msgid "If enabled, project tokens will be minted to a custom beneficiary address. By default, project tokens will be minted to the wallet that pays this address."
 msgstr "打开此选项，将向一个指定的受益人地址铸造项目代币。默认情况下，项目代币将铸造给向此地址付款的钱包。"
 
+msgid "This project has no upcoming cycle"
+msgstr ""
+
 msgid "Highest paid"
 msgstr "最高付款"
 
@@ -2379,6 +2382,9 @@ msgstr "已达到供应量上限"
 
 msgid "Migrate controller"
 msgstr "迁移控制器"
+
+msgid "Edits to cycles must occur before the selected period. Deadlines ensure your contributors are informed of upcoming changes to your project's configuration."
+msgstr ""
 
 msgid "Send reserved tokens"
 msgstr "发送保留代币"
@@ -2802,6 +2808,9 @@ msgstr "保存截止期限"
 
 msgid "Update basic project details"
 msgstr "更新项目的基本情况"
+
+msgid "Reserved recipients cannot exceed 100%"
+msgstr ""
 
 msgid "Available: {0}"
 msgstr "可用： {0}"
@@ -4462,6 +4471,9 @@ msgstr "支出:"
 msgid "Other rules"
 msgstr "其他规则"
 
+msgid "Sub-total cannot exceed 100%"
+msgstr ""
+
 msgid "{0} holders"
 msgstr "{0} 持有者"
 
@@ -4479,9 +4491,6 @@ msgstr "高级"
 
 msgid "Percentage to reserve"
 msgstr "要保留的百分比"
-
-msgid "Remove"
-msgstr "移除"
 
 msgid "All assets"
 msgstr "所有资产"
@@ -4618,6 +4627,9 @@ msgstr "当前可供发送给以下支出接收人的 ETH 数量（未扣除 {fe
 msgid "You will receive {0}<0/>"
 msgstr "你将收到 {0}<0/>"
 
+msgid "Payouts cannot exceed 100%"
+msgstr ""
+
 msgid "Data from upcoming cycle"
 msgstr "下一周期的数据"
 
@@ -4719,6 +4731,9 @@ msgstr "最大供应量"
 
 msgid "The maximum supply of this NFT in circulation."
 msgstr "这个 NFT 的最大流通供应量。"
+
+msgid "Payout and reserved token recipients cannot exceed 100%"
+msgstr ""
 
 msgid "Payouts to Ethereum addresses incur a {feePercentage}% fee. Your project will receive JBX in return. <0>Learn more</0>."
 msgstr "支出给以太坊地址会产生一个 {feePercentage}% 的费用。你的项目会相应获得 JBX 代币。<0>了解更多</0>。"

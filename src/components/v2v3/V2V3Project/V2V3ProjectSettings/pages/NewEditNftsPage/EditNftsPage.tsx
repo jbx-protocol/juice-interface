@@ -6,7 +6,7 @@ import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useContext } from 'react'
 import { EnableNftsCard } from './LaunchNftCollection/EnableNftsCard'
 import { LaunchNftsPage } from './LaunchNftCollection/LaunchNftsCollection'
-import { UpdateNftsTabs } from './UpdateNftsTabs/UpdateNftsTabs'
+import { UpdateNftsPage } from './UpdateNftsPage'
 
 export function EditNftsPage() {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -22,7 +22,7 @@ export function EditNftsPage() {
     return <Loading />
   }
   if (hasExistingNfts) {
-    return <UpdateNftsTabs />
+    return <UpdateNftsPage />
   } else if (!nftDeployerCanReconfigure) {
     return <EnableNftsCard />
   } else {

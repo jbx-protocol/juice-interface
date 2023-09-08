@@ -4,7 +4,7 @@ import { EditCollectionDetailsSection } from './EditCollectionDetailsSection'
 import { EditNftsPostPaySection } from './EditNftsPostPaySection/EditNftsPostPaySection'
 import { EditNftsSection } from './EditNftsSection'
 
-export function UpdateNftsTabs() {
+export function UpdateNftsPage() {
   const items = [
     { label: t`NFTs`, key: 'nfts', children: <EditNftsSection /> },
     {

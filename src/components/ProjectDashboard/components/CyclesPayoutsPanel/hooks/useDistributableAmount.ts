@@ -12,9 +12,8 @@ export const useDistributableAmount = () => {
     distributionLimitCurrency,
   } = useContext(V2V3ProjectContext)
 
-  const currency =
-    distributionLimitCurrency?.toNumber() ??
-    (V2V3_CURRENCY_ETH as V2V3CurrencyOption)
+  const currency = (distributionLimitCurrency?.toNumber() ||
+    V2V3_CURRENCY_ETH) as V2V3CurrencyOption
 
   const effectiveDistributionLimit = distributionLimit ?? BigNumber.from(0)
   const distributedAmount = usedDistributionLimit ?? BigNumber.from(0)

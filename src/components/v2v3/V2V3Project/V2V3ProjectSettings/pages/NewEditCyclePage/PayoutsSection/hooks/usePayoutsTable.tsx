@@ -394,7 +394,7 @@ export const usePayoutsTable = () => {
 
   function handleDeleteAllPayoutSplits() {
     setDistributionLimit(0)
-    setPayoutSplits([])
+    _setPayoutSplits([])
   }
 
   return {

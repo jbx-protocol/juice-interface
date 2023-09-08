@@ -111,7 +111,7 @@ export function ProjectSettingsDashboard() {
                 <Trans>Available payout</Trans>
               </div>
               <div className="text-xl">
-                {currency && !distributionLimitLoading ? (
+                {!distributionLimitLoading ? (
                   <AmountInCurrency
                     amount={distributableAmount}
                     currency={V2V3CurrencyName(currency as V2V3CurrencyOption)}
@@ -121,7 +121,7 @@ export function ProjectSettingsDashboard() {
                 )}
               </div>
             </div>
-            <Link href={useSettingsPagePath('payouts')}>
+            <Link href={`${useSettingsPagePath('cycle')}?section=payouts`}>
               <Button type="primary">
                 <Trans>Edit payout</Trans>
               </Button>

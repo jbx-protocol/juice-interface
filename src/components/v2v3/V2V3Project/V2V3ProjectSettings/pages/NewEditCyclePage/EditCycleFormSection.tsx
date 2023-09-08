@@ -1,18 +1,20 @@
+import React, { forwardRef, ReactNode } from 'react'
 import { EditCycleHeader } from './EditCycleHeader'
 
-export function EditCycleFormSection({
-  title,
-  description,
-  children,
-  className,
-}: {
+interface EditCycleFormSectionProps {
   title: JSX.Element
   description: JSX.Element
-  children: React.ReactNode
+  children: ReactNode
   className?: string
-}) {
+}
+
+function EditCycleFormSection(
+  { title, description, children, className }: EditCycleFormSectionProps,
+  ref: React.Ref<HTMLDivElement>,
+) {
   return (
     <section
+      ref={ref}
       className={`grid gap-8 border-b border-b-grey-300 pt-6 pb-16 dark:border-b-grey-600 md:grid-cols-[280px_1fr] ${className}`}
     >
       <EditCycleHeader title={title} description={description} />
@@ -20,3 +22,7 @@ export function EditCycleFormSection({
     </section>
   )
 }
+
+export default forwardRef<HTMLDivElement, EditCycleFormSectionProps>(
+  EditCycleFormSection,
+)

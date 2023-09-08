@@ -14,7 +14,7 @@ import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3Wal
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { settingsPagePath } from 'utils/routes'
+import { settingsPagePath, v2v3ProjectRoute } from 'utils/routes'
 import { ProjectHeaderLogo } from './components/ProjectHeaderLogo'
 import { ProjectHeaderPopupMenu } from './components/ProjectHeaderPopupMenu'
 import { ProjectHeaderStats } from './components/ProjectHeaderStats'
@@ -98,7 +98,7 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
                 {gnosisSafe && (
                   <GnosisSafeBadge
                     safe={gnosisSafe}
-                    href={`${window.location.href}/safe`}
+                    href={`${v2v3ProjectRoute({ projectId })}/safe`}
                   />
                 )}
               </span>

@@ -13,10 +13,11 @@ import {
   USE_DATASOURCE_FOR_REDEEM_EXPLANATION,
 } from 'components/strings'
 import { ballotStrategiesFn } from 'constants/v2v3/ballotStrategies'
+import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { isAddress } from 'ethers/lib/utils'
 import isEqual from 'lodash/isEqual'
 import { BallotStrategy } from 'models/ballot'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
@@ -30,10 +31,13 @@ export default function RulesForm({
   onFormUpdated?: (updated: boolean) => void
   onFinish: VoidFunction
 }) {
+  const { cv } = useContext(V2V3ContractsContext)
   const dispatch = useAppDispatch()
   const { fundingCycleMetadata, fundingCycleData } = useAppSelector(
     state => state.editingV2Project,
   )
+
+  const ballotStrategies = ballotStrategiesFn({ cv })
 
   // Form initial values set by default
   const initialValues = useMemo(
@@ -41,7 +45,7 @@ export default function RulesForm({
       pausePay: fundingCycleMetadata.pausePay,
       allowMinting: fundingCycleMetadata.allowMinting,
       ballotStrategy: getBallotStrategyByAddress(
-        fundingCycleData.ballot ?? ballotStrategiesFn()[0].address,
+        fundingCycleData.ballot ?? ballotStrategies[0].address,
       ),
       allowSetTerminals: fundingCycleMetadata.global.allowSetTerminals,
       allowSetController: fundingCycleMetadata.global.allowSetController,
@@ -51,7 +55,7 @@ export default function RulesForm({
       holdFees: fundingCycleMetadata.holdFees,
       useDataSourceForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
     }),
-    [fundingCycleData, fundingCycleMetadata],
+    [fundingCycleData, fundingCycleMetadata, ballotStrategies],
   )
 
   const [showMintingWarning, setShowMintingWarning] = useState<boolean>(false)
@@ -297,7 +301,7 @@ export default function RulesForm({
           }
         >
           <ReconfigurationStrategySelector
-            ballotStrategies={ballotStrategiesFn()}
+            ballotStrategies={ballotStrategies}
             selectedStrategy={ballotStrategy}
             onChange={setBallotStrategy}
           />

@@ -73,7 +73,7 @@ const parseCreateFlowStateFromInitialState = (
   }
 
   const reconfigurationRuleSelection =
-    ballotStrategiesFn().find(s =>
+    ballotStrategiesFn({}).find(s =>
       isEqualAddress(s.address, initialState.fundingCycleData.ballot),
     )?.id ?? 'threeDay'
 

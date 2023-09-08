@@ -1511,6 +1511,9 @@ msgstr ""
 msgid "Current"
 msgstr ""
 
+msgid "Save post-pay popup"
+msgstr ""
+
 msgid "Next cycle, the project will issue {0} tokens per 1 ETH. The cycle after that, the project will issue {1} tokens per 1 ETH."
 msgstr ""
 
@@ -4476,6 +4479,9 @@ msgid "Advanced"
 msgstr ""
 
 msgid "Percentage to reserve"
+msgstr ""
+
+msgid "Post-pay popup"
 msgstr ""
 
 msgid "All assets"

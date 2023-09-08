@@ -4,9 +4,9 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftDeployerCanReconfigure } from 'hooks/JB721Delegate/contractReader/useNftDeployerCanReconfigure'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useContext } from 'react'
-import { EditNftsTabs } from '../EditNftsPage/EditNftsTabs'
-import { EnableNftsCard } from './EnableNftsCard'
-import { LaunchNftsPage } from './LaunchNftsPage'
+import { EnableNftsCard } from './LaunchNftCollection/EnableNftsCard'
+import { LaunchNftsPage } from './LaunchNftCollection/LaunchNftsCollection'
+import { UpdateNftsTabs } from './UpdateNftsTabs/UpdateNftsTabs'
 
 export function EditNftsPage() {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -22,7 +22,7 @@ export function EditNftsPage() {
     return <Loading />
   }
   if (hasExistingNfts) {
-    return <EditNftsTabs />
+    return <UpdateNftsTabs />
   } else if (!nftDeployerCanReconfigure) {
     return <EnableNftsCard />
   } else {

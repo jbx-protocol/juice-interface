@@ -233,12 +233,11 @@ export const AddEditRewardModal = ({
           rules={[inputMustExistRule({ label: t`Minimum Contribution` })]}
         >
           <FormattedNumberInput
-            className="w-1/2"
             accessory={<InputAccessoryButton content="ETH" />}
           />
         </Form.Item>
         <Form.Item>
-          <div className="flex flex-col gap-2">
+          <div className="mt-2 flex flex-col gap-2">
             <JuiceSwitch
               value={limitedSupply}
               onChange={setLimitedSupply}

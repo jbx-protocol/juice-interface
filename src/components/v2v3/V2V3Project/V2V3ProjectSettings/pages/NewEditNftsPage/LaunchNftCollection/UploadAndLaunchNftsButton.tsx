@@ -6,8 +6,8 @@ import { pinNftCollectionMetadata, pinNftRewards } from 'utils/nftRewards'
 import {
   EditingFundingCycleConfig,
   useEditingFundingCycleConfig,
-} from '../ReconfigureFundingCycleSettingsPage/hooks/useEditingFundingCycleConfig'
-import { useReconfigureFundingCycle } from '../ReconfigureFundingCycleSettingsPage/hooks/useReconfigureFundingCycle'
+} from '../../ReconfigureFundingCycleSettingsPage/hooks/useEditingFundingCycleConfig'
+import { useReconfigureFundingCycle } from '../../ReconfigureFundingCycleSettingsPage/hooks/useReconfigureFundingCycle'
 
 export function UploadAndLaunchNftsButton({
   className,

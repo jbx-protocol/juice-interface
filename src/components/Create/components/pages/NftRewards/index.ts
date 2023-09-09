@@ -1,1 +1,1 @@
-export * from './NftRewardsPage'
+export * from './AddNftCollectionForm'

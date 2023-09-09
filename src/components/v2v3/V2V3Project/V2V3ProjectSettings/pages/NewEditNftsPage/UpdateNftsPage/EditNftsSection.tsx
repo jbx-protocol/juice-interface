@@ -7,7 +7,7 @@ import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3Proj
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 
 import { useCallback, useState } from 'react'
-import { useEditingNfts } from './hooks/useEditingNfts.tsx'
+import { useEditingNfts } from '../../EditNftsPage/hooks/useEditingNfts'
 
 export function EditNftsSection() {
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
@@ -27,7 +27,11 @@ export function EditNftsSection() {
     setSubmitLoading(false)
   }, [rewardTiers, updateExistingCollection])
 
-  if (loading) return <Loading />
+  // this component only renders when data source is not 0x000..
+  // so if there are no rewardTiers here, it's safe to assume they're still loading
+  const noTiers = !rewardTiers || rewardTiers.length === 0
+
+  if (loading || noTiers) return <Loading className="mt-20" />
 
   return (
     <>

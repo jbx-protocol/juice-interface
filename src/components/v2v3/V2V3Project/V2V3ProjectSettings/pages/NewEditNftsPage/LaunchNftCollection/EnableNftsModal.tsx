@@ -4,6 +4,7 @@ import TooltipIcon from 'components/TooltipIcon'
 import TransactionModal from 'components/modals/TransactionModal'
 import { useSetNftOperatorPermissionsTx } from 'hooks/JB721Delegate/transactor/useSetNftOperatorPermissionsTx'
 import { useState } from 'react'
+import { reloadWindow } from 'utils/windowUtils'
 
 export function EnableNftsModal({
   open,
@@ -21,7 +22,7 @@ export function EnableNftsModal({
     await setNftOperatorPermissionsTx(undefined, {
       onConfirmed: () => {
         setLoading(false)
-        onClose()
+        reloadWindow()
       },
       onDone() {
         setLoading(false)
@@ -43,8 +44,8 @@ export function EnableNftsModal({
       confirmLoading={loading}
     >
       <Trans>
-        To add NFTs to your cycle. You'll need to{' '}
-        <strong>grant NFT permissions</strong> before launching your new cycle.
+        To add NFTs to your next cycle, you'll need to{' '}
+        <strong>grant NFT permissions</strong>.
       </Trans>{' '}
       <TooltipIcon
         tip={

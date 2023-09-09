@@ -152,9 +152,6 @@ msgstr ""
 msgid "Data from current cycle"
 msgstr ""
 
-msgid "Contributors will redeem from the project's treasury with their NFTs as opposed to standard project tokens."
-msgstr ""
-
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
 msgstr ""
 
@@ -306,9 +303,6 @@ msgid "Deploy Snapshot space"
 msgstr ""
 
 msgid "Contributions"
-msgstr ""
-
-msgid "Enable NFTs for your project"
 msgstr ""
 
 msgid "Attach an image"
@@ -1022,6 +1016,9 @@ msgstr ""
 msgid "<0><1>Peel</1> manages this website — the juicebox.money frontend interface. You can reach out to Peel through the <2>Peel Discord</2>.</0><3><4>JuiceboxDAO</4> builds and governs the Juicebox fundraising protocol and other community resources. You can reach out to JuiceboxDAO through the <5>Juicebox Discord</5>.</3>"
 msgstr ""
 
+msgid "To add NFTs to your next cycle, you'll need to <0>grant NFT permissions</0>."
+msgstr ""
+
 msgid "Email address"
 msgstr ""
 
@@ -1512,6 +1509,9 @@ msgid "<0>This project is using all of its ETH for payouts, or has no ETH.</0>Yo
 msgstr ""
 
 msgid "Current"
+msgstr ""
+
+msgid "Save post-pay popup"
 msgstr ""
 
 msgid "Next cycle, the project will issue {0} tokens per 1 ETH. The cycle after that, the project will issue {1} tokens per 1 ETH."
@@ -3017,9 +3017,6 @@ msgstr ""
 msgid "Danger Zone"
 msgstr ""
 
-msgid "Juicebox mints and provides extended functionality for you to sell or reward contributors with NFTs for your project. <0>Learn more about NFTs</0>"
-msgstr ""
-
 msgid "Create an ERC-20 token (optional)"
 msgstr ""
 
@@ -3401,6 +3398,9 @@ msgstr ""
 msgid "Project tags"
 msgstr ""
 
+msgid "Deploy NFT collection"
+msgstr ""
+
 msgid "Configure how your project will collect and spend ETH."
 msgstr ""
 
@@ -3539,9 +3539,6 @@ msgstr ""
 msgid "Prevent NFT overspending"
 msgstr ""
 
-msgid "To add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before launching your new cycle."
-msgstr ""
-
 msgid "Pay this project to receive NFTs."
 msgstr ""
 
@@ -3579,9 +3576,6 @@ msgid "Amount required"
 msgstr ""
 
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no ETH, or is using all of its ETH for payouts."
-msgstr ""
-
-msgid "Use NFTs for redemption"
 msgstr ""
 
 msgid "JB vs. Kickstarter"
@@ -4487,6 +4481,9 @@ msgstr ""
 msgid "Percentage to reserve"
 msgstr ""
 
+msgid "Post-pay popup"
+msgstr ""
+
 msgid "All assets"
 msgstr ""
 
@@ -4559,10 +4556,16 @@ msgstr ""
 msgid "For fundraising"
 msgstr ""
 
+msgid "Launch New NFT Collection"
+msgstr ""
+
 msgid "Status"
 msgstr ""
 
 msgid "Redemption rate:"
+msgstr ""
+
+msgid "You haven't launched an NFT collection yet."
 msgstr ""
 
 msgid "Project Token"

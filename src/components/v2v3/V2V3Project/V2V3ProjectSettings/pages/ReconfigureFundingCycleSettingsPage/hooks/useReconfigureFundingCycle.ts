@@ -65,111 +65,109 @@ export const useReconfigureFundingCycle = ({
   const reconfigureV2V3FundingCycleWithNftsTx =
     useReconfigureV2V3FundingCycleWithNftsTx()
 
-  const {
-    editingPayoutGroupedSplits,
-    editingReservedTokensGroupedSplits,
-    editingFundingCycleMetadata,
-    editingFundingCycleData,
-    editingFundAccessConstraints,
-    editingNftRewards,
-    editingMustStartAtOrAfter,
-  } = editingFundingCycleConfig
-
-  const reconfigureFundingCycle = useCallback(async () => {
-    setReconfigureTxLoading(true)
-    if (
-      !(
-        fundingCycle &&
-        editingFundingCycleData &&
-        editingFundingCycleMetadata &&
-        editingFundAccessConstraints
-      )
-    ) {
-      setReconfigureTxLoading(false)
-      throw new Error('Error deploying project.')
-    }
-
-    // Projects with NFT rewards need useDataSourceForPay to be true for NFT rewards to work
-    const fundingCycleMetadata = nftRewardsCids?.length
-      ? {
-          ...editingFundingCycleMetadata,
-          ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
-        }
-      : editingFundingCycleMetadata
-
-    const weight = getWeightArgument({
-      currentFundingCycleWeight: fundingCycle.weight,
-      newFundingCycleWeight: editingFundingCycleData.weight,
-    })
-
-    const reconfigureFundingCycleData: ReconfigureFundingCycleTxParams = {
-      fundingCycleData: {
-        ...editingFundingCycleData,
-        weight,
-      },
-      fundingCycleMetadata,
-      fundAccessConstraints: editingFundAccessConstraints,
-      groupedSplits: [
+  // If given a latestEditingData, will use that. Else, will use redux store
+  const reconfigureFundingCycle = useCallback(
+    async (latestEditingData?: EditingFundingCycleConfig) => {
+      const {
         editingPayoutGroupedSplits,
         editingReservedTokensGroupedSplits,
-      ],
-      memo,
-      mustStartAtOrAfter: editingMustStartAtOrAfter,
-    }
+        editingFundingCycleMetadata,
+        editingFundingCycleData,
+        editingFundAccessConstraints,
+        editingNftRewards,
+        editingMustStartAtOrAfter,
+      } = latestEditingData ?? editingFundingCycleConfig
 
-    const txOpts = {
-      async onConfirmed() {
-        if (projectId) {
-          await revalidateProject({
-            pv: PV_V2,
-            projectId: String(projectId),
-          })
-        }
+      setReconfigureTxLoading(true)
+      if (
+        !(
+          fundingCycle &&
+          editingFundingCycleData &&
+          editingFundingCycleMetadata &&
+          editingFundAccessConstraints
+        )
+      ) {
         setReconfigureTxLoading(false)
-        if (onComplete) {
-          onComplete()
-        } else {
-          reloadWindow()
-        }
-      },
-    }
+        throw new Error('Error deploying project.')
+      }
 
-    let txSuccessful: boolean
-    if (launchedNewNfts && editingNftRewards?.rewardTiers) {
-      txSuccessful = await reconfigureV2V3FundingCycleWithNftsTx(
-        {
-          reconfigureData: reconfigureFundingCycleData,
-          tiered721DelegateData: editingNftRewards,
+      // Projects with NFT rewards need useDataSourceForPay to be true for NFT rewards to work
+      const fundingCycleMetadata = nftRewardsCids?.length
+        ? {
+            ...editingFundingCycleMetadata,
+            ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
+          }
+        : editingFundingCycleMetadata
+
+      const weight = getWeightArgument({
+        currentFundingCycleWeight: fundingCycle.weight,
+        newFundingCycleWeight: editingFundingCycleData.weight,
+      })
+
+      const reconfigureFundingCycleData: ReconfigureFundingCycleTxParams = {
+        fundingCycleData: {
+          ...editingFundingCycleData,
+          weight,
         },
-        txOpts,
-      )
-    } else {
-      txSuccessful = await reconfigureV2V3FundingCycleTx(
-        reconfigureFundingCycleData,
-        txOpts,
-      )
-    }
+        fundingCycleMetadata,
+        fundAccessConstraints: editingFundAccessConstraints,
+        groupedSplits: [
+          editingPayoutGroupedSplits,
+          editingReservedTokensGroupedSplits,
+        ],
+        memo,
+        mustStartAtOrAfter: editingMustStartAtOrAfter,
+      }
 
-    if (!txSuccessful) {
-      setReconfigureTxLoading(false)
-    }
-  }, [
-    editingFundingCycleData,
-    editingFundingCycleMetadata,
-    editingFundAccessConstraints,
-    reconfigureV2V3FundingCycleTx,
-    reconfigureV2V3FundingCycleWithNftsTx,
-    launchedNewNfts,
-    editingNftRewards,
-    editingPayoutGroupedSplits,
-    editingReservedTokensGroupedSplits,
-    editingMustStartAtOrAfter,
-    nftRewardsCids,
-    fundingCycle,
-    memo,
-    onComplete,
-    projectId,
-  ])
+      const txOpts = {
+        async onConfirmed() {
+          if (projectId) {
+            await revalidateProject({
+              pv: PV_V2,
+              projectId: String(projectId),
+            })
+          }
+          setReconfigureTxLoading(false)
+          if (onComplete) {
+            onComplete()
+          } else {
+            reloadWindow()
+          }
+        },
+      }
+
+      let txSuccessful: boolean
+      if (launchedNewNfts && editingNftRewards?.rewardTiers) {
+        txSuccessful = await reconfigureV2V3FundingCycleWithNftsTx(
+          {
+            reconfigureData: reconfigureFundingCycleData,
+            tiered721DelegateData: editingNftRewards,
+          },
+          txOpts,
+        )
+      } else {
+        txSuccessful = await reconfigureV2V3FundingCycleTx(
+          reconfigureFundingCycleData,
+          txOpts,
+        )
+      }
+
+      if (!txSuccessful) {
+        setReconfigureTxLoading(false)
+      }
+    },
+    [
+      editingFundingCycleConfig,
+      reconfigureV2V3FundingCycleTx,
+      reconfigureV2V3FundingCycleWithNftsTx,
+      launchedNewNfts,
+      nftRewardsCids,
+      fundingCycle,
+      memo,
+      onComplete,
+      projectId,
+    ],
+  )
 
   return { reconfigureLoading: reconfigureTxLoading, reconfigureFundingCycle }
 }

@@ -1,18 +1,14 @@
-import { t, Trans } from '@lingui/macro'
-import { Button, Empty, Tabs } from 'antd'
+import { Trans } from '@lingui/macro'
+import { Button, Empty } from 'antd'
 import Loading from 'components/Loading'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { settingsPagePath } from 'utils/routes'
-import { EditCollectionDetailsSection } from './EditCollectionDetailsSection'
-import { EditNftsSection } from './EditNftsSection'
-import { NewEditNftsSection } from './NewEditNftsSection'
+import { UpdateNftsPage } from '../NewEditNftsPage/UpdateNftsPage/UpdateNftsPage'
 import blueberry from '/public/assets/images/blueberry-ol.png'
 
 export function EditNftsPage() {
@@ -20,21 +16,8 @@ export function EditNftsPage() {
   const { projectId } = useContext(ProjectMetadataContext)
   const { handle } = useContext(V2V3ProjectContext)
 
-  const items = [
-    { label: t`NFTs`, key: 'nfts', children: <EditNftsSection /> },
-    {
-      label: t`Collection details`,
-      key: 'collection',
-      children: <EditCollectionDetailsSection />,
-    },
-  ]
-
   if (hasNftsLoading) {
     return <Loading />
-  }
-
-  if (featureFlagEnabled(FEATURE_FLAGS.NEW_EDIT_NFTS)) {
-    return <NewEditNftsSection />
   }
 
   if (!hasExistingNfts) {
@@ -78,5 +61,5 @@ export function EditNftsPage() {
     )
   }
 
-  return <Tabs items={items} />
+  return <UpdateNftsPage />
 }

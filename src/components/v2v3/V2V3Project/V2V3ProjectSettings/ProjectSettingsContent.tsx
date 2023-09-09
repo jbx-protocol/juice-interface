@@ -1,12 +1,13 @@
+import * as constants from '@ethersproject/constants'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Layout } from 'antd'
 import { V2V3SettingsPageKey } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import Link from 'next/link'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
@@ -105,7 +106,9 @@ export function ProjectSettingsContent({
 }: {
   settingsPageKey: V2V3SettingsPageKey
 }) {
-  const { value: hasExistingNfts } = useHasNftRewards()
+  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
+  const hasExistingNfts =
+    fundingCycleMetadata?.dataSource !== constants.AddressZero
 
   const ActiveSettingsPage = useMemo(
     () => SettingsPageComponents[settingsPageKey],

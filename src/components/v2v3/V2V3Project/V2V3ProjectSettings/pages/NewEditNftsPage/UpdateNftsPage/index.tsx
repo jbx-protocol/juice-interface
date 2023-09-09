@@ -1,1 +1,1 @@
-export * from './UpdateNftsTabs'
+export * from './UpdateNftsPage'

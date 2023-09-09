@@ -8,7 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { settingsPagePath } from 'utils/routes'
-import { EditNftsTabs } from './EditNftsTabs'
+import { UpdateNftsPage } from '../NewEditNftsPage/UpdateNftsPage'
 import blueberry from '/public/assets/images/blueberry-ol.png'
 
 export function EditNftsPage() {
@@ -61,5 +61,5 @@ export function EditNftsPage() {
     )
   }
 
-  return <EditNftsTabs />
+  return <UpdateNftsPage />
 }

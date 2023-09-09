@@ -9,7 +9,7 @@ export function EnableNftsCard() {
   const [enableNftsModalOpen, setEnableNftsModalOpen] = useState<boolean>(false)
   return (
     <>
-      <div className="flex flex-col items-center gap-5">
+      <div className="mt-10 flex flex-col items-center gap-5">
         <Image
           src={noNftsImage}
           alt={`No NFT collection`}

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-03 00:27\n"
+"PO-Revision-Date: 2023-09-10 00:27\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -157,9 +157,6 @@ msgstr "决定了通过这个地址付款是否会铸造代币。"
 msgid "Data from current cycle"
 msgstr "当前周期的数据"
 
-msgid "Contributors will redeem from the project's treasury with their NFTs as opposed to standard project tokens."
-msgstr "捐款人将使用持有的 NFT 而非标准项目代币来从项目金库进行赎回。"
-
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
 msgstr "你即将添加 NFT 功能到项目的周期。 在部署新的周期前，你将需要 <0>授予 NFT 权限</0>。"
 
@@ -312,9 +309,6 @@ msgstr "部署 Snapshot 空间"
 
 msgid "Contributions"
 msgstr "捐款次数"
-
-msgid "Enable NFTs for your project"
-msgstr "为你的项目启用 NFT"
 
 msgid "Attach an image"
 msgstr "附加一个图像"
@@ -1027,6 +1021,9 @@ msgstr "建议添加一个编辑的截止期限。没有截止期限的项目对
 msgid "<0><1>Peel</1> manages this website — the juicebox.money frontend interface. You can reach out to Peel through the <2>Peel Discord</2>.</0><3><4>JuiceboxDAO</4> builds and governs the Juicebox fundraising protocol and other community resources. You can reach out to JuiceboxDAO through the <5>Juicebox Discord</5>.</3>"
 msgstr "<0><1>Peel</1> 负责管理 juicebox.money 这个网站的前端界面。你可以通过 <2>Peel 的 Discord</2>来与 Peel 取得联系。</0><3><4>JuiceboxDAO</4> 负责开发和治理 Juicebox 筹款协议及其他社区资源。 你可以通过<5>JuiceboxDAO 的 Discord</5>来与 JuiceboxDAO 联络。</3>"
 
+msgid "To add NFTs to your next cycle, you'll need to <0>grant NFT permissions</0>."
+msgstr ""
+
 msgid "Email address"
 msgstr "邮件地址"
 
@@ -1518,6 +1515,9 @@ msgstr "<0>本项目的所有 ETH 用于支出，或者没有 ETH。</0>销毁 N
 
 msgid "Current"
 msgstr "当前"
+
+msgid "Save post-pay popup"
+msgstr ""
 
 msgid "Next cycle, the project will issue {0} tokens per 1 ETH. The cycle after that, the project will issue {1} tokens per 1 ETH."
 msgstr "下个周期，项目每个 ETH 将发行 {0} 个代币。 再下一个周期，项目每个 ETH 将发行 {1} 个代币。"
@@ -3022,9 +3022,6 @@ msgstr "授予 {0} 在项目 #{projectId} 的权限"
 msgid "Danger Zone"
 msgstr "危险区域"
 
-msgid "Juicebox mints and provides extended functionality for you to sell or reward contributors with NFTs for your project. <0>Learn more about NFTs</0>"
-msgstr "Juicebox 提供扩展功能，支持向项目的捐款人销售或奖励项目的 NFT。 <0>了解更多 NFT</0>"
-
 msgid "Create an ERC-20 token (optional)"
 msgstr "创建一个 ERC-20 标准代币（可选）"
 
@@ -3406,6 +3403,9 @@ msgstr "可通过 URL 访问 <0>{exampleHandleUrl}</0>。"
 msgid "Project tags"
 msgstr "项目标签"
 
+msgid "Deploy NFT collection"
+msgstr ""
+
 msgid "Configure how your project will collect and spend ETH."
 msgstr "设置你的项目接收及使用 ETH 的方式。"
 
@@ -3544,9 +3544,6 @@ msgstr "每个周期，项目每 ETH 将少发行 {discountRate}% 的代币。"
 msgid "Prevent NFT overspending"
 msgstr "防止付款超出 NFT 价格"
 
-msgid "To add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before launching your new cycle."
-msgstr "要向你的周期添加 NFT，你需要 <0>授予 NFT 权限</0> 后再启动新的周期。"
-
 msgid "Pay this project to receive NFTs."
 msgstr "向这个项目付款来获取 NFT。"
 
@@ -3585,9 +3582,6 @@ msgstr "需要的金额"
 
 msgid "Burn your {tokensLabel}. You won't receive ETH in return because this project has no ETH, or is using all of its ETH for payouts."
 msgstr "销毁你的 {tokensLabel} 代币。因为本项目没有 ETH，或将所有的 ETH 用于支出，所以你不会相应获得 ETH。"
-
-msgid "Use NFTs for redemption"
-msgstr "将 NFT 用于赎回"
 
 msgid "JB vs. Kickstarter"
 msgstr "JB 与 Kickstarter 对比"
@@ -4492,6 +4486,9 @@ msgstr "高级"
 msgid "Percentage to reserve"
 msgstr "要保留的百分比"
 
+msgid "Post-pay popup"
+msgstr ""
+
 msgid "All assets"
 msgstr "所有资产"
 
@@ -4564,11 +4561,17 @@ msgstr "我向一个项目付款会发生什么？"
 msgid "For fundraising"
 msgstr "筹款用途"
 
+msgid "Launch New NFT Collection"
+msgstr ""
+
 msgid "Status"
 msgstr "状态"
 
 msgid "Redemption rate:"
 msgstr "赎回比率："
+
+msgid "You haven't launched an NFT collection yet."
+msgstr ""
 
 msgid "Project Token"
 msgstr "项目代币"

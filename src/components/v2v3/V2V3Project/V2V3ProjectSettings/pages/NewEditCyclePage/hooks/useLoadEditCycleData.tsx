@@ -11,12 +11,14 @@ import {
 } from 'utils/format/formatTime'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { distributionLimitStringtoNumber } from 'utils/v2v3/distributions'
+import { deriveNextIssuanceRate } from 'utils/v2v3/fundingCycle'
 import {
   formatDiscountRate,
   formatIssuanceRate,
   formatRedemptionRate,
   formatReservedRate,
 } from 'utils/v2v3/math'
+import { deserializeV2V3FundingCycleData } from 'utils/v2v3/serializers'
 import { useInitialEditingData } from '../../ReconfigureFundingCycleSettingsPage/hooks/useInitialEditingData'
 import { EditCycleFormFields } from '../EditCycleFormFields'
 
@@ -45,9 +47,16 @@ export const useLoadEditCycleData = () => {
       ).toNumber()
       const fundingCycleData = currentProjectData.fundingCycleData
       const fundingCycleMetadata = currentProjectData.fundingCycleMetadata
-      const mintRate = fundingCycleData?.weight
-        ? parseFloat(formatIssuanceRate(fundingCycleData.weight))
-        : parseFloat(DefaultTokenSettings.initialMintRate)
+      const mintRate = parseFloat(
+        formatIssuanceRate(
+          deriveNextIssuanceRate({
+            weight: BigNumber.from(0),
+            previousFC: deserializeV2V3FundingCycleData(
+              currentProjectData.fundingCycleData,
+            ),
+          }).toString(),
+        ),
+      )
       const reservedTokens = fundingCycleMetadata.reservedRate
         ? parseFloat(formatReservedRate(fundingCycleMetadata.reservedRate))
         : DefaultTokenSettings.reservedTokensPercentage

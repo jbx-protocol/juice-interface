@@ -9,6 +9,7 @@ export type I18nProviderProps = {
 }
 
 let i18nSingleton: { messages: Messages; locale: string } | undefined
+export const defaultI18n = { messages: {}, locale: 'en' }
 
 export const LanguageProvider: React.FC<I18nProviderProps> = ({
   children,
@@ -17,7 +18,7 @@ export const LanguageProvider: React.FC<I18nProviderProps> = ({
   if (_i18n) {
     i18nSingleton = _i18n
   } else {
-    _i18n = i18nSingleton || { messages: {}, locale: 'en' }
+    _i18n = i18nSingleton || defaultI18n
   }
 
   if (!_i18n)

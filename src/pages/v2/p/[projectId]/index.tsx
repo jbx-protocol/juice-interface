@@ -4,6 +4,7 @@ import { V2V3Dashboard } from 'components/v2v3/V2V3Project/V2V3Dashboard'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V2 } from 'constants/pv'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
+import { defaultI18n } from 'contexts/Language/LanguageProvider'
 import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo/paginateDepleteProjectsQuery'
 import { loadCatalog } from 'locales/utils'
@@ -51,6 +52,11 @@ export const getStaticProps: GetStaticProps<
   const props = (await getProjectStaticProps(projectId)) as any
   if (props?.props?.i18n) {
     props.props.i18n = i18n
+  } else {
+    props.props = {
+      ...props.props,
+      i18n: defaultI18n,
+    }
   }
 
   return {

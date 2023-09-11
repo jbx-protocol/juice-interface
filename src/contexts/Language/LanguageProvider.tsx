@@ -17,7 +17,7 @@ export const LanguageProvider: React.FC<I18nProviderProps> = ({
   if (_i18n) {
     i18nSingleton = _i18n
   } else {
-    _i18n = i18nSingleton
+    _i18n = i18nSingleton || { messages: {}, locale: 'en' }
   }
 
   if (!_i18n)

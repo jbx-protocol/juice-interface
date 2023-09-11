@@ -49,7 +49,9 @@ export const getStaticProps: GetStaticProps<
   const projectId = parseInt(context.params.projectId as string)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const props = (await getProjectStaticProps(projectId)) as any
-  props.props.i18n = i18n
+  if (props?.props?.i18n) {
+    props.props.i18n = i18n
+  }
 
   return {
     ...props,

@@ -1,16 +1,16 @@
 import Loading from 'components/Loading'
-import { Jb721DelegateTokensQuery } from 'generated/graphql'
+import { NfTsQuery } from 'generated/graphql'
 import { useJB721DelegateTokenToNftReward } from '../hooks/useJB721DelegateTokenToNftReward'
 import { RedeemNftTile } from './RedeemNftTile'
 
 export function RedeemNftTiles({
   nftAccountBalance,
 }: {
-  nftAccountBalance: Jb721DelegateTokensQuery | undefined
+  nftAccountBalance: NfTsQuery | undefined
 }) {
   return (
     <div className="flex space-x-2.5 overflow-x-scroll">
-      {nftAccountBalance?.jb721DelegateTokens.map((nft, i) => {
+      {nftAccountBalance?.nfts.map((nft, i) => {
         const tokenId = nft.tokenId.toHexString()
         const _nft = {
           ...nft,

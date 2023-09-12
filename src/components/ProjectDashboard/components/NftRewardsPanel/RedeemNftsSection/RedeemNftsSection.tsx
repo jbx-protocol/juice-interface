@@ -15,7 +15,7 @@ export function RedeemNftsSection() {
     accountAddress: userAddress,
     dataSourceAddress: fundingCycleMetadata?.dataSource,
   })
-  const hasRedeemableNfts = (data?.jb721DelegateTokens?.length ?? 0) > 0
+  const hasRedeemableNfts = (data?.nfts?.length ?? 0) > 0
 
   if (loading || !hasRedeemableNfts || !userAddress) return null
 

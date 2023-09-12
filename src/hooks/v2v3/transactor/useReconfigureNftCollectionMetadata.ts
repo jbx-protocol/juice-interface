@@ -1,7 +1,9 @@
+import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { useDefaultTokenUriResolver } from 'hooks/DefaultTokenUriResolver/contracts/useDefaultTokenUriResolver'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { NftCollectionMetadata } from 'models/nftRewards'
 import { JB721DelegateVersion } from 'models/v2v3/contracts'
@@ -12,9 +14,18 @@ import { useV2ProjectTitle } from '../useProjectTitle'
 
 function buildArgs(
   version: JB721DelegateVersion,
-  { contractUri }: { contractUri: string | undefined },
+  {
+    contractUri,
+    tokenUriResolverAddress,
+  }: {
+    contractUri: string | undefined
+    tokenUriResolverAddress: string
+  },
 ) {
   switch (version) {
+    case JB721DelegateVersion.JB721DELEGATE_V3_3:
+    case JB721DelegateVersion.JB721DELEGATE_V3_4:
+      return ['', contractUri, tokenUriResolverAddress, '', '']
     case JB721DelegateVersion.JB721DELEGATE_V3_2:
       return [undefined, contractUri, undefined, undefined, undefined]
     default: // v3, v3.1
@@ -30,6 +41,8 @@ export function useReconfigureNftCollectionMetadata(): TransactorInstance<NftCol
     contracts: { JB721TieredDelegate },
     version,
   } = useContext(JB721DelegateContractsContext)
+
+  const defaultTokenUriResolver = useDefaultTokenUriResolver()
 
   const projectTitle = useV2ProjectTitle()
 
@@ -52,7 +65,11 @@ export function useReconfigureNftCollectionMetadata(): TransactorInstance<NftCol
         version === JB721DelegateVersion.JB721DELEGATE_V3_1
         ? 'setContractUri'
         : 'setMetadata',
-      buildArgs(version, { contractUri: ipfsUri(uri) }),
+      buildArgs(version, {
+        contractUri: ipfsUri(uri),
+        tokenUriResolverAddress:
+          defaultTokenUriResolver?.address || constants.AddressZero,
+      }),
       {
         ...txOpts,
         title: t`Update ${projectTitle}'s NFT collection details.`,

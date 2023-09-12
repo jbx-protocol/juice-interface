@@ -127,7 +127,7 @@ export function EditCollectionDetailsSection() {
           onClick={() => marketplaceForm.submit()}
           type="primary"
         >
-          Save collection details
+          <Trans>Save collection details</Trans>
         </Button>
       </Form>
     </div>

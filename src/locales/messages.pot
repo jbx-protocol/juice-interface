@@ -1676,6 +1676,9 @@ msgstr ""
 msgid "Switch to unlimited payouts"
 msgstr ""
 
+msgid "Save collection details"
+msgstr ""
+
 msgid "NO LIMIT"
 msgstr ""
 

@@ -21,7 +21,6 @@ import { getV2V3CurrencyOption } from 'utils/v2v3/currency'
 import {
   MAX_DISTRIBUTION_LIMIT,
   discountRateFrom,
-  issuanceRateFrom,
   redemptionRateFrom,
   reservedRateFrom,
 } from 'utils/v2v3/math'
@@ -31,11 +30,14 @@ import {
 } from '../../ReconfigureFundingCycleSettingsPage/hooks/useEditingFundingCycleConfig'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { EditCycleFormFields } from '../EditCycleFormFields'
+import { useTokensSectionValues } from '../ReviewConfirmModal/hooks/useTokensSectionValues'
 
 export const usePrepareSaveEditCycleData = () => {
   // Use Redux to get current (pre-edit) project state since it's not changed by edit
   // Only using this to get values of FC parameters not supported in the FC form (e.g. allowTerminalMigration, etc.)
   const reduxConfig = useEditingFundingCycleConfig()
+
+  const { newMintRate, mintRateHasDiff } = useTokensSectionValues()
 
   const { editCycleForm } = useEditCycleFormContext()
   const {
@@ -87,9 +89,9 @@ export const usePrepareSaveEditCycleData = () => {
 
   const editingFundingCycleData: V2V3FundingCycleData = {
     duration: BigNumber.from(durationSeconds),
-    weight: BigNumber.from(
-      issuanceRateFrom(formValues.mintRate?.toString() ?? '0'),
-    ),
+    weight: mintRateHasDiff
+      ? newMintRate
+      : reduxConfig.editingFundingCycleData.weight,
     discountRate: discountRateFrom(formValues.discountRate),
     ballot: formValues.ballot,
   }

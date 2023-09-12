@@ -31,7 +31,7 @@ import { PayoutsList } from './components/PayoutsList'
 import { usePayoutsForm } from './hooks'
 import { useFundingTarget } from './hooks/useFundingTarget'
 
-const treasuryOptions = [
+const treasuryOptions = () => [
   { name: t`None`, value: 'zero', icon: <StopOutlined /> },
   { name: t`Limited`, value: 'amount', icon: <Icons.Target /> },
   { name: t`Unlimited`, value: 'unlimited', icon: <Icons.Infinity /> },
@@ -194,7 +194,7 @@ export const PayoutsPage = () => {
           value={treasuryOption}
           onChange={onTreasuryOptionChange}
         >
-          {treasuryOptions.map(option => (
+          {treasuryOptions().map(option => (
             <RadioGroup.Option
               className="flex-1 cursor-pointer"
               key={option.name}

@@ -69,7 +69,6 @@ export function TokensSectionDiff() {
                 <MintRateValue
                   value={newMintRate}
                   tokenSymbol={tokenSymbolPlural}
-                  zeroAsUnchanged
                 />
               }
               oldValue={

@@ -1,8 +1,10 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
+import TransactionModal from 'components/modals/TransactionModal'
 import { useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { pinNftCollectionMetadata, pinNftRewards } from 'utils/nftRewards'
+import { TransactionSuccessModal } from '../../../TransactionSuccessModal'
 import {
   EditingFundingCycleConfig,
   useEditingFundingCycleConfig,
@@ -15,18 +17,22 @@ export function UploadAndLaunchNftsButton({
   className?: string
 }) {
   const [ipfsUploading, setIpfsUploading] = useState<boolean>(false)
+  const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false)
 
   const {
     projectMetadata: { logoUri },
   } = useAppSelector(state => state.editingV2Project)
 
   const editingFundingCycleConfig = useEditingFundingCycleConfig()
-  const { reconfigureLoading, reconfigureFundingCycle } =
+  const { reconfigureLoading, reconfigureFundingCycle, txPending } =
     useReconfigureFundingCycle({
       editingFundingCycleConfig,
       memo: 'First NFT collection',
       launchedNewNfts: true,
+      onComplete: () => setSuccessModalOpen(true),
     })
+
+  const buttonLoading = ipfsUploading || reconfigureLoading
 
   const {
     editingPayoutGroupedSplits,
@@ -83,13 +89,33 @@ export function UploadAndLaunchNftsButton({
   }
 
   return (
-    <Button
-      type="primary"
-      onClick={uploadNftsToIpfs}
-      loading={ipfsUploading || reconfigureLoading}
-      className={className}
-    >
-      <Trans>Deploy NFT collection</Trans>
-    </Button>
+    <>
+      <Button
+        type="primary"
+        onClick={uploadNftsToIpfs}
+        loading={buttonLoading}
+        className={className}
+      >
+        <Trans>Deploy NFT collection</Trans>
+      </Button>
+      <TransactionModal transactionPending open={txPending} />
+      <TransactionSuccessModal
+        open={successModalOpen}
+        onClose={() => setSuccessModalOpen(false)}
+        content={
+          <>
+            <div className="w-80 pt-1 text-2xl font-medium">
+              <Trans>Your new NFTs have been deployed</Trans>
+            </div>
+            <div className="text-secondary pb-6">
+              <Trans>
+                New NFTs will be available in your next cycle as long as it
+                starts after your edit deadline.
+              </Trans>
+            </div>
+          </>
+        }
+      />
+    </>
   )
 }

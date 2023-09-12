@@ -5,11 +5,11 @@ import { CreateCollapse } from 'components/Create/components/CreateCollapse'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import TransactionModal from 'components/modals/TransactionModal'
 import { useState } from 'react'
+import { TransactionSuccessModal } from '../../../TransactionSuccessModal'
 import { useReconfigureFundingCycle } from '../../ReconfigureFundingCycleSettingsPage/hooks/useReconfigureFundingCycle'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { usePrepareSaveEditCycleData } from '../hooks/usePrepareSaveEditCycleData'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
-import { EditCycleSuccessModal } from './EditCycleSuccessModal'
 import { PayoutsSectionDiff } from './PayoutsSectionDiff'
 import { SectionCollapseHeader } from './SectionCollapseHeader'
 import { TokensSectionDiff } from './TokensSectionDiff'
@@ -123,9 +123,22 @@ export function ReviewConfirmModal({
           />
         </Form.Item>
       </TransactionModal>
-      <EditCycleSuccessModal
+      <TransactionSuccessModal
         open={editCycleSuccessModalOpen}
         onClose={() => setEditCycleSuccessModalOpen(false)}
+        content={
+          <>
+            <div className="w-80 pt-1 text-2xl font-medium">
+              <Trans>Your updated cycle has been deployed</Trans>
+            </div>
+            <div className="text-secondary pb-6">
+              <Trans>
+                Changes will take effect in your next cycle as long as it starts
+                after your edit deadline.
+              </Trans>
+            </div>
+          </>
+        }
       />
     </>
   )

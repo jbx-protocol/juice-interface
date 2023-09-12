@@ -60,6 +60,7 @@ export const useReconfigureFundingCycle = ({
 
   const [reconfigureTxLoading, setReconfigureTxLoading] =
     useState<boolean>(false)
+  const [txPending, setTxPending] = useState<boolean>(false)
 
   const reconfigureV2V3FundingCycleTx = useReconfigureV2V3FundingCycleTx()
   const reconfigureV2V3FundingCycleWithNftsTx =
@@ -120,6 +121,9 @@ export const useReconfigureFundingCycle = ({
       }
 
       const txOpts = {
+        onDone() {
+          setTxPending(true)
+        },
         async onConfirmed() {
           if (projectId) {
             await revalidateProject({
@@ -128,14 +132,20 @@ export const useReconfigureFundingCycle = ({
             })
           }
           setReconfigureTxLoading(false)
+          setTxPending(false)
           if (onComplete) {
             onComplete()
           } else {
             reloadWindow()
           }
         },
+        onCancelled() {
+          setTxPending(false)
+        },
+        onError() {
+          setTxPending(false)
+        },
       }
-
       let txSuccessful: boolean
       if (launchedNewNfts && editingNftRewards?.rewardTiers) {
         txSuccessful = await reconfigureV2V3FundingCycleWithNftsTx(
@@ -154,6 +164,7 @@ export const useReconfigureFundingCycle = ({
 
       if (!txSuccessful) {
         setReconfigureTxLoading(false)
+        setTxPending(false)
       }
     },
     [
@@ -169,5 +180,9 @@ export const useReconfigureFundingCycle = ({
     ],
   )
 
-  return { reconfigureLoading: reconfigureTxLoading, reconfigureFundingCycle }
+  return {
+    reconfigureLoading: reconfigureTxLoading,
+    reconfigureFundingCycle,
+    txPending,
+  }
 }

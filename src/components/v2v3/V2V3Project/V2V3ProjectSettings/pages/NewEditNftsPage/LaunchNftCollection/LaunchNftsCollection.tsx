@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm'
 import TransactionModal from 'components/modals/TransactionModal'
 import { TransactionSuccessModal } from '../../../TransactionSuccessModal'
-import { UploadAndLaunchNftsButton } from './UploadAndLaunchNftsButton'
-import { useSettingsLaunchNftsForm } from './hooks/useSettingsLaunchNftsForm'
+import { useLaunchNftsForm } from './hooks/useLaunchNftsForm'
 
 export function LaunchNftsPage() {
   const {
@@ -13,17 +13,20 @@ export function LaunchNftsPage() {
     launchTxPending,
     successModalOpen,
     setSuccessModalOpen,
-  } = useSettingsLaunchNftsForm()
+  } = useLaunchNftsForm()
   return (
     <>
       <AddNftCollectionForm
         form={form}
         okButton={
-          <UploadAndLaunchNftsButton
-            className="mt-10"
-            onClick={() => launchCollection}
+          <Button
+            type="primary"
+            onClick={launchCollection}
             loading={launchButtonLoading}
-          />
+            className="mt-10"
+          >
+            <Trans>Deploy NFT collection</Trans>
+          </Button>
         }
       />
       <TransactionModal transactionPending open={launchTxPending} />

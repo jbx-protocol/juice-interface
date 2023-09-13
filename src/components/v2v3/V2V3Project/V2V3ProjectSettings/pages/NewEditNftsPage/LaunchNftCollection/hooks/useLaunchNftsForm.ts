@@ -16,7 +16,7 @@ import {
 } from '../../../ReconfigureFundingCycleSettingsPage/hooks/useEditingFundingCycleConfig'
 import { useReconfigureFundingCycle } from '../../../ReconfigureFundingCycleSettingsPage/hooks/useReconfigureFundingCycle'
 
-export const useSettingsLaunchNftsForm = () => {
+export const useLaunchNftsForm = () => {
   const [form] = useForm<NftRewardsFormProps>()
 
   const [ipfsUploading, setIpfsUploading] = useState<boolean>(false)

@@ -28,7 +28,7 @@ export function ManageNftsSection() {
     dataSourceAddress: fundingCycleMetadata?.dataSource,
   })
 
-  const nftBalanceFormatted = data?.jb721DelegateTokens.length ?? 0
+  const nftBalanceFormatted = data?.nfts.length ?? 0
   const nftRedeemAllowed =
     fundingCycleMetadata?.useDataSourceForRedeem && nftBalanceFormatted > 0
 

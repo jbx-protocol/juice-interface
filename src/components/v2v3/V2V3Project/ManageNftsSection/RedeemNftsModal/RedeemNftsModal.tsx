@@ -115,11 +115,11 @@ export function RedeemNftsModal({
     }
   }
 
-  const jb721DelegateTokens = data?.jb721DelegateTokens.map(t => ({
+  const nfts = data?.nfts.map(t => ({
     ...t,
     tokenId: t.tokenId.toHexString(),
   }))
-  const nftBalanceFormatted = jb721DelegateTokens?.length ?? 0
+  const nftBalanceFormatted = nfts?.length ?? 0
   const hasOverflow = primaryTerminalCurrentOverflow?.gt(0)
   const hasRedemptionRate = fundingCycleMetadata.redemptionRate.gt(0)
   const canRedeem = hasOverflow && hasRedemptionRate
@@ -213,7 +213,7 @@ export function RedeemNftsModal({
           <Form form={form} layout="vertical">
             <Form.Item label={t`Select NFTs to redeem`}>
               <Row gutter={[20, 20]}>
-                {jb721DelegateTokens?.map(nft => {
+                {nfts?.map(nft => {
                   const isSelected = tokenIdsToRedeem.includes(nft.tokenId)
                   return (
                     <Col span={8} key={nft.tokenId}>

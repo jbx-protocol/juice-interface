@@ -1,1 +1,1 @@
-export * from './useNftRewardsForm'
+export * from './useCreateFlowNftRewardsForm'

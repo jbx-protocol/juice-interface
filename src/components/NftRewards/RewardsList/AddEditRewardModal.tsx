@@ -26,8 +26,8 @@ import {
 } from 'utils/antdRules'
 import { withHttps } from 'utils/externalLink'
 import { ipfsGatewayUrl } from 'utils/ipfs'
-import { CreateCollapse } from '../CreateCollapse'
-import { OptionalHeader } from '../OptionalHeader'
+import { CreateCollapse } from '../../Create/components/CreateCollapse'
+import { OptionalHeader } from '../../Create/components/OptionalHeader'
 
 interface AddEditRewardModalFormProps {
   fileUrl: string

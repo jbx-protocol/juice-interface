@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { NEW_NFT_ID_LOWER_LIMIT } from 'components/Create/components/RewardsList/AddEditRewardModal'
+import { NEW_NFT_ID_LOWER_LIMIT } from 'components/NftRewards/RewardsList/AddEditRewardModal'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { useAdjustTiersTx } from 'hooks/JB721Delegate/transactor/useAdjustTiersTx'
 import { NftRewardTier } from 'models/nftRewards'

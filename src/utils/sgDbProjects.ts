@@ -108,7 +108,7 @@ export function formatDBProjectRow(
     archived: p.archived,
     contributors_count: p.contributorsCount,
     created_at: p.createdAt,
-    created_within_trending_window: p.createdWithinTrendingWindow,
+    created_within_trending_window: p.createdWithinTrendingWindow || false,
     creator: p.creator,
     current_balance: p.currentBalance,
     deployer: p.deployer,

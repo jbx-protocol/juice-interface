@@ -21,7 +21,7 @@ export function LaunchNftsPage() {
         okButton={
           <UploadAndLaunchNftsButton
             className="mt-10"
-            onClick={() => launchCollection}
+            onClick={launchCollection}
             loading={launchButtonLoading}
           />
         }

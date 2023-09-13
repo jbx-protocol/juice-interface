@@ -7,7 +7,7 @@ export function UploadAndLaunchNftsButton({
   loading,
 }: {
   className?: string
-  onClick?: VoidFunction
+  onClick: VoidFunction
   loading: boolean
 }) {
   return (

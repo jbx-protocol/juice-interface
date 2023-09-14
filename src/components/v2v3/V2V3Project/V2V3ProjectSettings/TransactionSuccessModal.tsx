@@ -4,15 +4,17 @@ import { Button, Modal } from 'antd'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import Link from 'next/link'
-import { useContext } from 'react'
+import { ReactNode, useContext } from 'react'
 import { settingsPagePath, v2v3ProjectRoute } from 'utils/routes'
 
-export function EditCycleSuccessModal({
+export function TransactionSuccessModal({
   open,
   onClose,
+  content,
 }: {
   open: boolean
   onClose: VoidFunction
+  content: ReactNode
 }) {
   const { projectId } = useContext(ProjectMetadataContext)
   const { handle } = useContext(V2V3ProjectContext)
@@ -35,15 +37,7 @@ export function EditCycleSuccessModal({
     >
       <div className="flex w-full flex-col items-center gap-4 pt-2 text-center">
         {checkIconWithBackground}
-        <div className="w-80 pt-1 text-2xl font-medium">
-          <Trans>Your updated cycle has been deployed</Trans>
-        </div>
-        <div className="text-secondary pb-6">
-          <Trans>
-            Changes will take effect in your next cycle as long as it starts
-            after your edit deadline.
-          </Trans>
-        </div>
+        {content}
         <div className="flex gap-2.5">
           <Link href={settingsPagePath(undefined, { projectId, handle })}>
             <Button type="ghost" className={buttonClasses}>

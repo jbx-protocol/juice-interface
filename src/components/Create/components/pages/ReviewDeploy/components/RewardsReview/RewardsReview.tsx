@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { RewardsList } from 'components/Create/components/RewardsList'
+import { RewardsList } from 'components/NftRewards/RewardsList'
 import { JB721GovernanceType, NftRewardTier } from 'models/nftRewards'
 import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'

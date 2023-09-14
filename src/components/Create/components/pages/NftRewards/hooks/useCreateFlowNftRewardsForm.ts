@@ -1,4 +1,5 @@
 import { Form } from 'antd'
+import { NftRewardsFormProps } from 'components/NftRewards/AddNftCollectionForm'
 import { JB721GovernanceType, NftRewardTier } from 'models/nftRewards'
 import { useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
@@ -11,20 +12,7 @@ import {
 } from 'utils/nftRewards'
 import { useFormDispatchWatch } from '../../hooks'
 
-type NftRewardsFormProps = Partial<{
-  rewards: NftRewardTier[]
-  collectionName?: string
-  collectionSymbol?: string
-  collectionDescription?: string
-  postPayMessage?: string
-  postPayButtonText?: string
-  postPayButtonLink?: string
-  onChainGovernance: JB721GovernanceType
-  useDataSourceForRedeem: boolean
-  preventOverspending: boolean
-}>
-
-export const useNftRewardsForm = () => {
+export const useCreateFlowNftRewardsForm = () => {
   const [form] = Form.useForm<NftRewardsFormProps>()
   const {
     collectionMetadata,

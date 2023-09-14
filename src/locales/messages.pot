@@ -782,6 +782,9 @@ msgstr ""
 msgid "Receive ERC-20 tokens"
 msgstr ""
 
+msgid "New NFTs will be available in your next cycle as long as it starts after your edit deadline."
+msgstr ""
+
 msgid "Confirm"
 msgstr ""
 
@@ -4428,6 +4431,9 @@ msgid "Project tokens will be minted as ERC-20 tokens by default, incurring slig
 msgstr ""
 
 msgid "Add recipient"
+msgstr ""
+
+msgid "Your new NFTs have been deployed"
 msgstr ""
 
 msgid "Your balance"

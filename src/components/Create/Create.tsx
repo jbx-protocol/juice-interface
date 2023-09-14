@@ -12,8 +12,8 @@ import { NetworkName } from 'models/networkName'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import {
-  AddNftCollectionForm,
   FundingCyclesPage,
+  NftRewardsPage,
   ProjectDetailsPage,
   ProjectTokenPage,
   ReconfigurationRulesPage,
@@ -124,7 +124,7 @@ export function Create() {
               <Trans>Reward your supporters with custom NFTs.</Trans>
             }
           >
-            <AddNftCollectionForm />
+            <NftRewardsPage />
           </Wizard.Page>
           <Wizard.Page
             name="reconfigurationRules"

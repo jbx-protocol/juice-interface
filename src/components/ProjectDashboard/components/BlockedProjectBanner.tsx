@@ -1,10 +1,10 @@
 import { Trans } from '@lingui/macro'
 import Banner from 'components/Banner'
 import ExternalLink from 'components/ExternalLink'
-import { useBlockedProject } from 'hooks/useBlockedProject'
+import { useV2BlockedProject } from 'hooks/useBlockedProject'
 
 export function BlockedProjectBanner({ className }: { className?: string }) {
-  const isBlockedProject = useBlockedProject()
+  const isBlockedProject = useV2BlockedProject()
   if (!isBlockedProject) return null
 
   const delistingPolicyLink =

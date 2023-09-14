@@ -6,7 +6,7 @@ import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { usePayProjectCard } from 'components/ProjectDashboard/hooks'
 import { Formik } from 'formik'
-import { useBlockedProject } from 'hooks/useBlockedProject'
+import { useV2BlockedProject } from 'hooks/useBlockedProject'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { twMerge } from 'tailwind-merge'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
@@ -15,7 +15,7 @@ import { PayInput } from './components/PayInput'
 import { TokensPerEth } from './components/TokensPerEth'
 
 export const PayProjectCard = ({ className }: { className?: string }) => {
-  const isBlockedProject = useBlockedProject()
+  const isBlockedProject = useV2BlockedProject()
 
   const { validationSchema, paymentsPaused, addPay } = usePayProjectCard()
   const determiningIfProjectCanReceivePayments = paymentsPaused === undefined

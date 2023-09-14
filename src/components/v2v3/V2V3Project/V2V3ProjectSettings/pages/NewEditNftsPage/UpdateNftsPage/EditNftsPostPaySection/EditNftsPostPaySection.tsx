@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form } from 'antd'
-import { NftPaymentSuccessFormItems } from 'components/Create/components/pages/NftRewards/NftPaymentSuccessFormItems'
+import { NftPaymentSuccessFormItems } from 'components/NftRewards/AddNftCollectionForm/NftPaymentSuccessFormItems'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/useEditProjectDetailsTx'

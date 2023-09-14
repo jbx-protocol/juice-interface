@@ -1,37 +1,46 @@
 import { RightOutlined } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
-import { Form, Radio } from 'antd'
+import { Form, FormInstance, Radio } from 'antd'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import ExternalLink from 'components/ExternalLink'
 import TooltipLabel from 'components/TooltipLabel'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { RadioItem } from 'components/inputs/RadioItem'
-import { CREATE_FLOW } from 'constants/fathomEvents'
-import { trackFathomGoal } from 'lib/fathom'
-import { JB721GovernanceType } from 'models/nftRewards'
-import { useContext } from 'react'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
+import { JB721GovernanceType, NftRewardTier } from 'models/nftRewards'
 import { inputMustExistRule } from 'utils/antdRules'
 import { helpPagePath } from 'utils/routes'
-import { CreateBadge } from '../../CreateBadge'
-import { CreateCollapse } from '../../CreateCollapse'
-import { OptionalHeader } from '../../OptionalHeader'
-import { RewardsList } from '../../RewardsList'
-import { Wizard } from '../../Wizard'
-import { PageContext } from '../../Wizard/contexts/PageContext'
+import { CreateBadge } from '../../Create/components/CreateBadge'
+import { CreateCollapse } from '../../Create/components/CreateCollapse'
+import { OptionalHeader } from '../../Create/components/OptionalHeader'
+import { RewardsList } from '../RewardsList'
 import { NftAdvancedFormItems } from './NftAdvancedFormItems'
 import { NftPaymentSuccessFormItems } from './NftPaymentSuccessFormItems'
-import { useNftRewardsForm } from './hooks'
+
+export type NftRewardsFormProps = Partial<{
+  rewards: NftRewardTier[]
+  collectionName?: string
+  collectionSymbol?: string
+  collectionDescription?: string
+  postPayMessage?: string
+  postPayButtonText?: string
+  postPayButtonLink?: string
+  onChainGovernance: JB721GovernanceType
+  useDataSourceForRedeem: boolean
+  preventOverspending: boolean
+}>
 
 export const AddNftCollectionForm = ({
+  form,
+  initialValues,
   okButton,
+  onFinish,
 }: {
-  okButton?: React.ReactNode
+  form: FormInstance<NftRewardsFormProps>
+  initialValues?: NftRewardsFormProps
+  okButton: React.ReactNode
+  onFinish?: VoidFunction
 }) => {
-  useSetCreateFurthestPageReached('nftRewards')
-  const { form, initialValues } = useNftRewardsForm()
   const lockPageRulesWrapper = useLockPageRulesWrapper()
-  const { goToNextPage } = useContext(PageContext)
 
   const hasNfts = !!Form.useWatch('rewards', form)?.length
 
@@ -43,10 +52,7 @@ export const AddNftCollectionForm = ({
         name="fundingCycles"
         colon={false}
         layout="vertical"
-        onFinish={() => {
-          goToNextPage?.()
-          trackFathomGoal(CREATE_FLOW.NFT_NEXT_CTA)
-        }}
+        onFinish={onFinish}
         scrollToFirstError
       >
         <div className="flex flex-col gap-6">
@@ -171,7 +177,7 @@ export const AddNftCollectionForm = ({
             </div>
           )}
         </div>
-        {okButton ?? <Wizard.Page.ButtonControl />}
+        {okButton}
       </Form>
 
       <div className="mt-8 text-center">

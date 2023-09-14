@@ -2,6 +2,7 @@ import { Footer } from 'components/Footer'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { twMerge } from 'tailwind-merge'
+import { BlockedProjectBanner } from './components/BlockedProjectBanner'
 import { Cart } from './components/Cart'
 import { CoverPhoto } from './components/CoverPhoto'
 import { CurrentBalanceCard } from './components/CurrentBalanceCard'
@@ -35,6 +36,7 @@ export const ProjectDashboard = () => {
                   <div className="flex w-full justify-center md:px-6">
                     <div className="flex w-full max-w-6xl flex-col">
                       <ProjectHeader className="mt-12 px-4 md:mt-4 md:px-0" />
+                      <BlockedProjectBanner className="mt-10" />
                       <div
                         className={twMerge(
                           'mt-10 flex w-full flex-col gap-4 px-4 md:flex-row md:px-0',

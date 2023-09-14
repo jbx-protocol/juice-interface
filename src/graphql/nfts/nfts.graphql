@@ -1,0 +1,9 @@
+query NFTs($where: NFT_filter) {
+  nfts(where: $where) {
+    tokenId
+    collection {
+      address
+    }
+    tokenUri
+  }
+}

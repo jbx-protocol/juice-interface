@@ -298,6 +298,7 @@ export const usePayoutsTable = () => {
       handlePayoutSplitAmountChanged({
         editingPayoutSplit: newSplit,
         newAmount: parseFloat(newPayoutSplit.amount.value),
+        newSplits,
       })
     }
   }
@@ -308,13 +309,16 @@ export const usePayoutsTable = () => {
    *    - Changed the % of other splits based on the new DL keep their amount the same
    * @param editingPayoutSplit - Split that has had its amount changed
    * @param newAmount - The new amount of the @editingPayoutSplit
+   * @param newSplits - (optional) pass new splits to adjust. If undefined, uses current @payoutSplits state
    */
   function handlePayoutSplitAmountChanged({
     editingPayoutSplit,
     newAmount,
+    newSplits,
   }: {
     editingPayoutSplit: Split
     newAmount: number
+    newSplits?: Split[]
   }) {
     const isNaN = Number.isNaN(newAmount)
     const _amount = isNaN
@@ -335,9 +339,7 @@ export const usePayoutsTable = () => {
     const newSplitPercentPPB = round(
       (_amount / (newDistributionLimit ?? 0)) * ONE_BILLION,
     )
-
-    let adjustedSplits: Split[] = payoutSplits
-
+    let adjustedSplits: Split[] = newSplits ?? payoutSplits
     // recalculate all split percents based on newly added split amount
     if (newDistributionLimit && !distributionLimitIsInfinite) {
       adjustedSplits = adjustedSplitPercents({

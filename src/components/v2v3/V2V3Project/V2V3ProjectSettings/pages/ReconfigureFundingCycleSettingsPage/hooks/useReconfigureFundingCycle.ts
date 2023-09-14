@@ -14,6 +14,8 @@ import { fromWad } from 'utils/format/formatNumber'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { WEIGHT_UNCHANGED, WEIGHT_ZERO } from 'utils/v2v3/fundingCycle'
 import { reloadWindow } from 'utils/windowUtils'
+import { useConflictingEditCycleTx } from './useConflictingLaunchEditCycleTx'
+import { useConflictingNftSettingsTx } from './useConflictingNftSettingsTx'
 import { EditingFundingCycleConfig } from './useEditingFundingCycleConfig'
 
 /**
@@ -41,6 +43,11 @@ const getWeightArgument = ({
   return newFundingCycleWeight
 }
 
+/**
+ * This hook is used in two places:
+ *    1. Edit cycle form
+ *    2. NFT page - edit dataSource-related attributes of the cycle
+ */
 export const useReconfigureFundingCycle = ({
   editingFundingCycleConfig,
   memo,
@@ -65,6 +72,12 @@ export const useReconfigureFundingCycle = ({
   const reconfigureV2V3FundingCycleTx = useReconfigureV2V3FundingCycleTx()
   const reconfigureV2V3FundingCycleWithNftsTx =
     useReconfigureV2V3FundingCycleWithNftsTx()
+
+  const { hasConflictingNftTx, mergeAlreadyQueuedNftTx } =
+    useConflictingNftSettingsTx()
+
+  const { hasConflictingEditCycleTx, mergeAlreadyQueuedEditCycleTx } =
+    useConflictingEditCycleTx()
 
   // If given a latestEditingData, will use that. Else, will use redux store
   const reconfigureFundingCycle = useCallback(
@@ -105,7 +118,7 @@ export const useReconfigureFundingCycle = ({
         newFundingCycleWeight: editingFundingCycleData.weight,
       })
 
-      const reconfigureFundingCycleData: ReconfigureFundingCycleTxParams = {
+      let reconfigureFundingCycleData: ReconfigureFundingCycleTxParams = {
         fundingCycleData: {
           ...editingFundingCycleData,
           weight,
@@ -118,6 +131,16 @@ export const useReconfigureFundingCycle = ({
         ],
         memo,
         mustStartAtOrAfter: editingMustStartAtOrAfter,
+      }
+
+      if (hasConflictingNftTx) {
+        reconfigureFundingCycleData = mergeAlreadyQueuedNftTx(
+          reconfigureFundingCycleData,
+        )
+      } else if (hasConflictingEditCycleTx) {
+        reconfigureFundingCycleData = mergeAlreadyQueuedEditCycleTx(
+          reconfigureFundingCycleData,
+        )
       }
 
       const txOpts = {
@@ -177,6 +200,10 @@ export const useReconfigureFundingCycle = ({
       memo,
       onComplete,
       projectId,
+      hasConflictingEditCycleTx,
+      hasConflictingNftTx,
+      mergeAlreadyQueuedEditCycleTx,
+      mergeAlreadyQueuedNftTx,
     ],
   )
 

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { BLOCKED_PROJECT_IDS } from 'constants/blocklist'
 import { BigNumber } from 'ethers'
 import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
 import { Json } from 'models/json'
@@ -68,7 +69,13 @@ export function useDBProjectsInfiniteQuery(
             pageSize,
           })}`,
         )
-        .then(res => (res.data ? res.data.map(parseDBProject) : []))
+        .then(res =>
+          res.data
+            ? res.data
+                .map(parseDBProject)
+                .filter(project => !BLOCKED_PROJECT_IDS.includes(project.id))
+            : [],
+        )
     },
     {
       staleTime: DEFAULT_STALE_TIME,
@@ -93,7 +100,9 @@ export function useTrendingProjects(count: number) {
       '/api/projects/trending?count=' + count,
     )
 
-    return res.data.map(parseDBProjectJson)
+    return res.data
+      .map(parseDBProjectJson)
+      .filter(project => !BLOCKED_PROJECT_IDS.includes(project.id))
   })
 }
 

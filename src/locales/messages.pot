@@ -1484,6 +1484,9 @@ msgstr ""
 msgid "Custom strategy"
 msgstr ""
 
+msgid "Delisted project"
+msgstr ""
+
 msgid "If you use the default governance option (no governance), the voting weight will still be accessible on the blockchain for use in Snapshot strategies or any other desired purpose."
 msgstr ""
 
@@ -3930,6 +3933,9 @@ msgid "Burn {tokensTextLong}"
 msgstr ""
 
 msgid "Duration"
+msgstr ""
+
+msgid "This project has been <0>delisted</0> for breaching our <1>policy</1>. <2>Get in touch</2>."
 msgstr ""
 
 msgid "Supporters will be sent to this page if they click the button on your pop-up. You can preview this below."

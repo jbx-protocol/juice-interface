@@ -26,8 +26,8 @@ import {
 } from 'utils/antdRules'
 import { withHttps } from 'utils/externalLink'
 import { ipfsGatewayUrl } from 'utils/ipfs'
-import { CreateCollapse } from '../CreateCollapse'
-import { OptionalHeader } from '../OptionalHeader'
+import { CreateCollapse } from '../../Create/components/CreateCollapse'
+import { OptionalHeader } from '../../Create/components/OptionalHeader'
 
 interface AddEditRewardModalFormProps {
   fileUrl: string
@@ -41,7 +41,12 @@ interface AddEditRewardModalFormProps {
   externalUrl?: string | undefined
 }
 
-const NFT_FILE_UPLOAD_EXTRA = t`Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app.`
+const NFT_FILE_UPLOAD_EXTRA = (
+  <Trans>
+    Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox
+    app.
+  </Trans>
+)
 const MAX_NFT_FILE_SIZE_MB = 100
 
 // This assumes an existing NFT ID (from the contracts) will never be >= 1000000

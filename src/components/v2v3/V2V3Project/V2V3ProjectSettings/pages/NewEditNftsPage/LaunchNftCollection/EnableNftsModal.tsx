@@ -24,9 +24,6 @@ export function EnableNftsModal({
         setLoading(false)
         reloadWindow()
       },
-      onDone() {
-        setLoading(false)
-      },
       onError() {
         setLoading(false)
       },

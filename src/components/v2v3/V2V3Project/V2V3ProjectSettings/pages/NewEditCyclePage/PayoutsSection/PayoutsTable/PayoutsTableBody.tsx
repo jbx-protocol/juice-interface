@@ -16,16 +16,21 @@ const Cell = PayoutsTableCell
 export function PayoutsTableBody() {
   const { editCycleForm, initialFormData } = useEditCycleFormContext()
 
-  const { payoutSplits, currency, handleDeletePayoutSplit, setCurrency } =
-    usePayoutsTable()
+  const {
+    payoutSplits,
+    currency,
+    handleDeletePayoutSplit,
+    setCurrency,
+    distributionLimit,
+  } = usePayoutsTable()
 
   if (!editCycleForm || !initialFormData) return null
 
-  const emptyState = payoutSplits.length === 0
+  const emptyState = distributionLimit === 0
 
   return (
     <>
-      <div className="rounded-lg border border-smoke-200 dark:border-grey-600">
+      <div className="rounded-lg border border-smoke-200 dark:border-slate-600">
         <Allocation
           allocationCurrency={getV2V3CurrencyOption(currency)}
           setAllocationCurrency={setCurrency}
@@ -34,21 +39,23 @@ export function PayoutsTableBody() {
             <HeaderRows />
             <div>
               {emptyState ? (
-                <Row className="border-0 text-center">
+                <Row className="text-center">
                   <Cell colSpan={4} className="text-tertiary py-32">
                     <Trans>No payout recipients</Trans>
                   </Cell>
                 </Row>
               ) : (
                 <>
-                  <Row className="font-medium" highlighted>
-                    <Cell>
-                      <Trans>Address or ID</Trans>
-                    </Cell>
-                    <Cell>
-                      <Trans>Amount</Trans>
-                    </Cell>
-                  </Row>
+                  {payoutSplits.length > 0 ? (
+                    <Row className="font-medium" highlighted>
+                      <Cell>
+                        <Trans>Address or ID</Trans>
+                      </Cell>
+                      <Cell>
+                        <Trans>Amount</Trans>
+                      </Cell>
+                    </Row>
+                  ) : null}
                   {payoutSplits.map((payoutSplit, index) => (
                     <PayoutSplitRow
                       key={index}

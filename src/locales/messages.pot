@@ -212,9 +212,6 @@ msgstr ""
 msgid "Juicebox loading animation"
 msgstr ""
 
-msgid "Remaining balance"
-msgstr ""
-
 msgid "Payments to this project paused"
 msgstr ""
 
@@ -965,9 +962,6 @@ msgstr ""
 msgid "You are eligible for {0} <0/> (NFT)"
 msgstr ""
 
-msgid "Are you sure you want to remove ${0}?"
-msgstr ""
-
 msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
 msgstr ""
 
@@ -1122,6 +1116,9 @@ msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr ""
 
 msgid "Delete project update"
+msgstr ""
+
+msgid "Are you sure you want to remove {0}?"
 msgstr ""
 
 msgid "I understand and accept the risks associated with <0>this project</0> and the <1>Juicebox Protocol</1>."
@@ -4506,6 +4503,9 @@ msgid "The amount of ETH this project has received since it was created."
 msgstr ""
 
 msgid "There's nothing here"
+msgstr ""
+
+msgid "Remaining balance (Project Owner)"
 msgstr ""
 
 msgid "Locked cycles"

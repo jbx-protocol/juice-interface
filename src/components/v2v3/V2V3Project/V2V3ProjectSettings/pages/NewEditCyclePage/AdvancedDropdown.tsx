@@ -22,7 +22,7 @@ export function AdvancedDropdown({
   return (
     <div
       className={twMerge(
-        'border-t border-grey-300 pt-4 dark:border-grey-600',
+        'border-t border-grey-300 pt-4 dark:border-slate-600',
         hideDivider ? 'border-0' : null,
         className,
       )}

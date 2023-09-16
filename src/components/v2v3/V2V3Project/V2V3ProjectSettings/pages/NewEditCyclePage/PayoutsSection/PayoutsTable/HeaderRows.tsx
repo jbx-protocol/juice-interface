@@ -68,11 +68,7 @@ export function HeaderRows() {
       <AddEditAllocationModal
         allocationName="payout"
         availableModes={
-          new Set([
-            distributionLimitIsInfinite && payoutSplits?.length > 0
-              ? 'percentage'
-              : 'amount',
-          ])
+          new Set([distributionLimitIsInfinite ? 'percentage' : 'amount'])
         }
         open={addRecipientModalOpen}
         onOk={handleAddRecipientModalOk}

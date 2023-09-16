@@ -69,6 +69,7 @@ export default function NumberSlider({
           <JuiceInputNumber
             {...inputConfig}
             value={_value}
+            defaultValue={`${defaultValue}%`}
             disabled={disabled}
             formatter={(val?: string | number | undefined) => {
               let _val = val?.toString() ?? '0'

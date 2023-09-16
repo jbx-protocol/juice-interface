@@ -43,7 +43,7 @@ export function RedemptionRateField() {
         }}
       />
       {redemptionRateSwitchEnabled ? (
-        <div className="flex w-full items-center justify-between gap-5 pb-5">
+        <div className="flex w-full flex-col items-start justify-between gap-5 pb-5 md:flex-row md:items-center">
           <TokenRedemptionRateGraph
             value={redemptionReductionRate}
             graphPad={50}

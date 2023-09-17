@@ -2522,6 +2522,9 @@ msgstr ""
 msgid "Deploy an address which forwards ETH to your project. This makes it easier to pay your project with third-party tools."
 msgstr ""
 
+msgid "Remaining (to project owner)"
+msgstr ""
+
 msgid "Ethereum wallet address"
 msgstr ""
 
@@ -4503,9 +4506,6 @@ msgid "The amount of ETH this project has received since it was created."
 msgstr ""
 
 msgid "There's nothing here"
-msgstr ""
-
-msgid "Remaining balance (Project Owner)"
 msgstr ""
 
 msgid "Locked cycles"

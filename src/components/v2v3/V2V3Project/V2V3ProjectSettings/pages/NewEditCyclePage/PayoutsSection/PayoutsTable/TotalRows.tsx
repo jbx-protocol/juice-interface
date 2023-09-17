@@ -57,7 +57,7 @@ export function TotalRows() {
           <Cell>
             <TooltipLabel
               tip={t`The unallocated portion of your total will go to the wallet that owns the project by default.`}
-              label={<Trans>Remaining balance (Project Owner)</Trans>}
+              label={<Trans>Remaining (to project owner)</Trans>}
             />
           </Cell>
           <Cell>

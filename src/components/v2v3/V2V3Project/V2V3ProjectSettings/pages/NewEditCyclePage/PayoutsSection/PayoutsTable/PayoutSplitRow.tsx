@@ -133,6 +133,7 @@ export function PayoutSplitRow({
         onOk={handleEditModalOk}
         onCancel={() => setEditModalOpen(false)}
         hideProjectOwnerOption
+        hideFee
       />
     </>
   )

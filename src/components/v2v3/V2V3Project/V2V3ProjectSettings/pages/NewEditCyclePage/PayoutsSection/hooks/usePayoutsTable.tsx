@@ -123,6 +123,10 @@ export const usePayoutsTable = () => {
     setFormHasUpdated(true)
   }
 
+  function setSplits100Percent() {
+    setPayoutSplits(ensureSplitsSumTo100Percent({ splits: payoutSplits }))
+  }
+
   function _setPayoutSplits(splits: Split[]) {
     if (distributionLimitIsInfinite) {
       setPayoutSplits(splits)
@@ -402,10 +406,12 @@ export const usePayoutsTable = () => {
   return {
     distributionLimit,
     distributionLimitIsInfinite,
+    setDistributionLimit: _setDistributionLimit,
     currency,
     setCurrency,
     currencyOrPercentSymbol,
     payoutSplits,
+    setSplits100Percent,
     derivePayoutAmount,
     formattedPayoutPercent,
     roundingPrecision,

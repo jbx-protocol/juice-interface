@@ -7,10 +7,12 @@ import {
   CYCLE_EXPLANATION,
   RECONFIG_RULES_EXPLANATION,
 } from 'components/strings'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import {
   FundingCyclesPage,
   NftRewardsPage,
@@ -20,7 +22,8 @@ import {
   ReviewDeployPage,
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
-import { PayoutsPage } from './components/pages/PayoutsPage'
+import { OldPayoutsPage } from './components/pages/PayoutsPage'
+import { PayoutsPage } from './components/pages/PayoutsPage/PayoutsPage'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { PayoutsMigrationModal } from './components/PayoutsMigrationModal'
 import { Wizard } from './components/Wizard'
@@ -39,6 +42,10 @@ export function Create() {
   const initialStateLoading = useLoadingInitialStateFromQuery()
 
   if (initialStateLoading) return <Loading />
+
+  const newPayoutsTableEnabled = featureFlagEnabled(
+    FEATURE_FLAGS.PAYOUTS_TABLE_CREATE_FLOW,
+  )
 
   return (
     <div className="mt-12 md:mt-10">
@@ -95,7 +102,7 @@ export function Create() {
               </Trans>
             }
           >
-            <PayoutsPage />
+            {newPayoutsTableEnabled ? <PayoutsPage /> : <OldPayoutsPage />}
           </Wizard.Page>
           <Wizard.Page
             name="projectToken"

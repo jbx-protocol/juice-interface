@@ -6,7 +6,6 @@ import {
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { useState } from 'react'
-import { useEditCycleFormContext } from '../../EditCycleFormContext'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { PayoutSplitRowMenu } from './PayoutSplitRowMenu'
 import { PayoutTitle } from './PayoutTitle'
@@ -28,8 +27,6 @@ export function PayoutSplitRow({
     setAmountPercentFieldHasEndingDecimal,
   ] = useState<boolean>(false)
 
-  const { editCycleForm } = useEditCycleFormContext()
-
   const {
     currencyOrPercentSymbol,
     derivePayoutAmount,
@@ -45,8 +42,6 @@ export function PayoutSplitRow({
   const formattedAmountOrPercentage = isPercent
     ? formattedPayoutPercent({ payoutSplitPercent: payoutSplit.percent })
     : round(amount, roundingPrecision).toString()
-
-  if (!editCycleForm) return null
 
   const onAmountPercentageInputChange = (val: string | undefined) => {
     setAmountPercentFieldHasEndingDecimal(Boolean(val?.endsWith('.')))

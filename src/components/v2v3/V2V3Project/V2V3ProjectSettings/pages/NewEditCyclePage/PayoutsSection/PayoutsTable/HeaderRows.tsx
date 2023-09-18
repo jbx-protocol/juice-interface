@@ -74,6 +74,7 @@ export function HeaderRows() {
         onOk={handleAddRecipientModalOk}
         onCancel={() => setAddRecipientModalOpen(false)}
         hideProjectOwnerOption
+        hideFee
       />
     </>
   )

@@ -55,6 +55,7 @@ export const AddEditAllocationModal = ({
   onOk,
   onCancel,
   hideProjectOwnerOption,
+  hideFee,
 }: {
   className?: string
   allocationName: string
@@ -64,6 +65,7 @@ export const AddEditAllocationModal = ({
   onOk: (split: AddEditAllocationModalEntity) => void
   onCancel: VoidFunction
   hideProjectOwnerOption?: boolean
+  hideFee?: boolean
 }) => {
   const { primaryETHTerminalFee } = useContext(V2V3ProjectContext)
 
@@ -81,7 +83,8 @@ export const AddEditAllocationModal = ({
 
   const amount = Form.useWatch('amount', form)
 
-  const showFee = amountType === 'amount' && recipient === 'walletAddress'
+  const showFee =
+    amountType === 'amount' && recipient === 'walletAddress' && !hideFee
 
   const isValidJuiceboxProject = useMemo(
     () =>

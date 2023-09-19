@@ -6,7 +6,6 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import { useEditCycleFormContext } from '../../../EditCycleFormContext'
 import { usePayoutsTable } from '../../hooks/usePayoutsTable'
 
 export function SwitchToLimitedModal({
@@ -18,13 +17,10 @@ export function SwitchToLimitedModal({
 }) {
   const [limit, setLimit] = useState<string>('')
 
-  const { editCycleForm } = useEditCycleFormContext()
-  const { setCurrency, currency } = usePayoutsTable()
+  const { setCurrency, currency, setDistributionLimit } = usePayoutsTable()
 
   const onOk = () => {
-    editCycleForm?.setFieldsValue({
-      distributionLimit: parseFloat(limit),
-    })
+    setDistributionLimit(parseFloat(limit))
     onClose()
   }
 

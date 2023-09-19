@@ -2,8 +2,6 @@ import { Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import { ExternalLinkWithIcon } from 'components/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { helpPagePath } from 'utils/routes'
-import { ensureSplitsSumTo100Percent } from 'utils/v2v3/distributions'
-import { useEditCycleFormContext } from '../../../EditCycleFormContext'
 import { usePayoutsTable } from '../../hooks/usePayoutsTable'
 
 export function SwitchToUnlimitedModal({
@@ -13,14 +11,11 @@ export function SwitchToUnlimitedModal({
   open: boolean
   onClose: VoidFunction
 }) {
-  const { editCycleForm } = useEditCycleFormContext()
-  const { payoutSplits } = usePayoutsTable()
+  const { setDistributionLimit, setSplits100Percent } = usePayoutsTable()
 
   const onOk = () => {
-    editCycleForm?.setFieldsValue({
-      distributionLimit: undefined,
-      payoutSplits: ensureSplitsSumTo100Percent({ splits: payoutSplits }),
-    })
+    setDistributionLimit(undefined)
+    setSplits100Percent()
     onClose()
   }
 

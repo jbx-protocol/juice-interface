@@ -2,7 +2,6 @@ import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { Allocation } from 'components/v2v3/shared/Allocation'
 import { getV2V3CurrencyOption } from 'utils/v2v3/currency'
-import { useEditCycleFormContext } from '../../EditCycleFormContext'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { HeaderRows } from './HeaderRows'
 import { PayoutSplitRow } from './PayoutSplitRow'
@@ -14,8 +13,6 @@ const Row = PayoutsTableRow
 const Cell = PayoutsTableCell
 
 export function PayoutsTableBody() {
-  const { editCycleForm, initialFormData } = useEditCycleFormContext()
-
   const {
     payoutSplits,
     currency,
@@ -23,8 +20,6 @@ export function PayoutsTableBody() {
     setCurrency,
     distributionLimit,
   } = usePayoutsTable()
-
-  if (!editCycleForm || !initialFormData) return null
 
   const emptyState = distributionLimit === 0
 

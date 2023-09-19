@@ -266,9 +266,6 @@ msgstr ""
 msgid "How do I decide?"
 msgstr ""
 
-msgid "Try it now"
-msgstr ""
-
 msgid "<0>Issuance reduction rate</0>. This allows you to predictably reduce your project token's issuance rate (tokens per ETH) over time without needing to manually edit your cycle."
 msgstr ""
 
@@ -2855,9 +2852,6 @@ msgstr ""
 msgid "If you don't raise the sum of your payouts (<0/>{distributionLimit}), this address will receive {0}% of all the ETH you raise."
 msgstr ""
 
-msgid "Project updates 📢"
-msgstr ""
-
 msgid "When checked, payments made through this address will mint the project's ERC-20 tokens. Payments will incur slightly higher gas fees. When unchecked, the Juicebox protocol will internally track the beneficiary's tokens, and they can claim their ERC-20 tokens at any time."
 msgstr ""
 
@@ -2970,9 +2964,6 @@ msgid "Track the total voting power of each address over time. <0>Learn more.</0
 msgstr ""
 
 msgid "All of this project's ETH will be paid out. Token holders will receive <0>no ETH</0> when redeeming their tokens."
-msgstr ""
-
-msgid "Keep contributors up to date by adding updates periodically to your project."
 msgstr ""
 
 msgid "Re-launch on V3"

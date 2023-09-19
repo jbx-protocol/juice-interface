@@ -110,7 +110,7 @@ export function EditCyclePage() {
             ref={tokensRef}
             title={<Trans>Tokens</Trans>}
             description={
-              <Trans>Manage how your projects tokens should work.</Trans>
+              <Trans>Manage how your project's tokens should work.</Trans>
             }
             className="border-b-0"
           >

@@ -18,11 +18,6 @@ const FEATURE_FLAG_DEFAULTS: {
     goerli: true,
     localhost: true,
   },
-  [FEATURE_FLAGS.NEW_CYCLE_CONFIG_PAGE]: {
-    mainnet: true,
-    goerli: true,
-    localhost: true,
-  },
 }
 
 const featureFlagKey = (baseKey: string) => {

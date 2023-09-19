@@ -4,7 +4,7 @@ import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
 import { useRouter } from 'next/router'
 import { Provider } from 'react-redux'
 import store from 'redux/store'
-import { EditCycleFormProvider } from './pages/NewEditCyclePage/EditCycleFormContext'
+import { EditCycleFormProvider } from './pages/EditCyclePage/EditCycleFormContext'
 
 export const V2V3SettingsProvider: React.FC<React.PropsWithChildren> = ({
   children,

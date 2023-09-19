@@ -2516,9 +2516,6 @@ msgstr ""
 msgid "{payerRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
-msgid "You haven't launched an NFT collection yet! Edit your cycle to add NFTs."
-msgstr ""
-
 msgid "Deploy an address which forwards ETH to your project. This makes it easier to pay your project with third-party tools."
 msgstr ""
 
@@ -4461,9 +4458,6 @@ msgid "This custom deadline contract"
 msgstr ""
 
 msgid "I have a media inquiry."
-msgstr ""
-
-msgid "Add NFTs to cycle"
 msgstr ""
 
 msgid "Payouts:"

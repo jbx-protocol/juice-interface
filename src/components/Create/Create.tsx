@@ -22,8 +22,8 @@ import {
   ReviewDeployPage,
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
-import { OldPayoutsPage } from './components/pages/PayoutsPage'
-import { PayoutsPage } from './components/pages/PayoutsPage/PayoutsPage'
+import { PayoutsPage } from './components/pages/PayoutsPage'
+import { NewPayoutsPage } from './components/pages/PayoutsPage/NewPayoutsPage'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { PayoutsMigrationModal } from './components/PayoutsMigrationModal'
 import { Wizard } from './components/Wizard'
@@ -102,7 +102,7 @@ export function Create() {
               </Trans>
             }
           >
-            {newPayoutsTableEnabled ? <PayoutsPage /> : <OldPayoutsPage />}
+            {newPayoutsTableEnabled ? <NewPayoutsPage /> : <PayoutsPage />}
           </Wizard.Page>
           <Wizard.Page
             name="projectToken"

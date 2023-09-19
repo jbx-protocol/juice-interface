@@ -1,1 +1,1 @@
-export * from './OldPayoutsPage'
+export * from './PayoutsPage'

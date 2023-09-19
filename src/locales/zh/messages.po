@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: juicebox-interface\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-09-10 00:27\n"
+"PO-Revision-Date: 2023-09-17 00:27\n"
 "Last-Translator: \n"
 "Language: zh_CN\n"
 "Language-Team: Chinese Simplified\n"
@@ -216,9 +216,6 @@ msgstr "锁定至"
 
 msgid "Juicebox loading animation"
 msgstr "Juicebox加载动画"
-
-msgid "Remaining balance"
-msgstr "剩余数量"
 
 msgid "Payments to this project paused"
 msgstr "暂停向本项目付款"
@@ -787,6 +784,9 @@ msgstr "从这里开始！"
 msgid "Receive ERC-20 tokens"
 msgstr "收到 ERC-20 标准代币"
 
+msgid "New NFTs will be available in your next cycle as long as it starts after your edit deadline."
+msgstr ""
+
 msgid "Confirm"
 msgstr "确认"
 
@@ -967,9 +967,6 @@ msgstr "移除付款将清空购物车内所有物品。是否确定移除付款
 msgid "You are eligible for {0} <0/> (NFT)"
 msgstr "你将可以获得 {0} <0/> （NFT）"
 
-msgid "Are you sure you want to remove ${0}?"
-msgstr ""
-
 msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
 msgstr "SharkDAO 如何筹集超过 1,000 ETH 购买 6 个 Nouns NFT 并成为 Nouns DAO 最大的子 DAO"
 
@@ -1125,6 +1122,9 @@ msgstr "燃烧 {0} {tokensTextShort} 来赎回 ETH"
 
 msgid "Delete project update"
 msgstr "删除项目更新信息"
+
+msgid "Are you sure you want to remove {0}?"
+msgstr ""
 
 msgid "I understand and accept the risks associated with <0>this project</0> and the <1>Juicebox Protocol</1>."
 msgstr "我理解及接受与 <0>这个项目</0> 及 <1>Juicebox 协议</1>相关的风险。"
@@ -1488,6 +1488,9 @@ msgstr "需要帮助？"
 
 msgid "Custom strategy"
 msgstr "自定义策略"
+
+msgid "Delisted project"
+msgstr ""
 
 msgid "If you use the default governance option (no governance), the voting weight will still be accessible on the blockchain for use in Snapshot strategies or any other desired purpose."
 msgstr "即使你选用默认的治理选项（无治理功能），投票权重仍将可以在区块链上进行修改，以用于 Snapshot 策略或任何其他需要的目的。"
@@ -3937,6 +3940,9 @@ msgstr "燃烧 {tokensTextLong}"
 msgid "Duration"
 msgstr "持续时间"
 
+msgid "This project has been <0>delisted</0> for breaching our <1>policy</1>. <2>Get in touch</2>."
+msgstr ""
+
 msgid "Supporters will be sent to this page if they click the button on your pop-up. You can preview this below."
 msgstr "支持者点击你的弹窗内的按钮会跳转至这个页面。你可以在下方预览弹窗的效果。"
 
@@ -4429,6 +4435,9 @@ msgstr "项目代币默认铸造为 ERC-20 标准代币，会产生略微高一�
 msgid "Add recipient"
 msgstr "添加接收人"
 
+msgid "Your new NFTs have been deployed"
+msgstr ""
+
 msgid "Your balance"
 msgstr "你的余额"
 
@@ -4500,6 +4509,9 @@ msgstr "这个项目创建后收到的 ETH 金额。"
 
 msgid "There's nothing here"
 msgstr "此处空白"
+
+msgid "Remaining balance (Project Owner)"
+msgstr ""
 
 msgid "Locked cycles"
 msgstr "锁定的周期"

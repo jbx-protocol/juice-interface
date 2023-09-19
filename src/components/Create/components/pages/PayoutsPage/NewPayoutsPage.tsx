@@ -1,6 +1,6 @@
 import { Form } from 'antd'
 import PayoutsTable from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/NewEditCyclePage/PayoutsSection/PayoutsTable'
-import { CurrencyName } from 'constants/currency'
+import { CURRENCY_METADATA, CurrencyName } from 'constants/currency'
 import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 import { useContext } from 'react'
@@ -15,66 +15,68 @@ import { PageContext } from '../../Wizard/contexts/PageContext'
 import { usePayoutsForm } from './hooks'
 
 const DEFAULT_DISTRIBUTION_LIMIT = BigNumber.from(0)
-const DEFAULT_CURRENCY_NAME = 'ETH'
+const DEFAULT_CURRENCY_NAME = CURRENCY_METADATA.ETH.name
 
 export const NewPayoutsPage = () => {
   useSetCreateFurthestPageReached('payouts')
   const { goToNextPage } = useContext(PageContext)
 
-  const { form, initialValues } = usePayoutsForm()
-  const [distributionLimit, setDistributionLimit] =
+  const [editingDistributionLimit, setDistributionLimit] =
     useEditingDistributionLimit()
 
-  const _distributionLimit = !distributionLimit
+  const { form, initialValues } = usePayoutsForm()
+
+  const distributionLimit = !editingDistributionLimit
     ? 0
-    : distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)
+    : editingDistributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)
     ? undefined
-    : parseFloat(fromWad(distributionLimit?.amount))
+    : parseFloat(fromWad(editingDistributionLimit?.amount))
+
+  const splits: Split[] =
+    form.getFieldValue('payoutsList')?.map(allocationToSplit) ?? []
 
   const setDistributionLimitAmount = (amount: number | undefined) => {
     setDistributionLimit({
-      amount: amount
-        ? BigNumber.from(parseWad(amount))
-        : MAX_DISTRIBUTION_LIMIT,
+      amount: amount ? parseWad(amount) : MAX_DISTRIBUTION_LIMIT,
       currency:
-        distributionLimit?.currency ??
+        editingDistributionLimit?.currency ??
         getV2V3CurrencyOption(DEFAULT_CURRENCY_NAME),
     })
   }
 
   const setDistributionLimitCurrency = (currency: CurrencyName) => {
     setDistributionLimit({
-      amount: distributionLimit?.amount ?? DEFAULT_DISTRIBUTION_LIMIT,
+      amount: editingDistributionLimit?.amount ?? DEFAULT_DISTRIBUTION_LIMIT,
       currency: getV2V3CurrencyOption(currency),
     })
   }
 
-  const splits: Split[] =
-    form.getFieldValue('payoutsList')?.map(allocationToSplit) ?? []
   const setSplits = (splits: Split[]) => {
     form.setFieldsValue({ payoutsList: splits.map(splitToAllocation) })
   }
+
   return (
-    <>
-      <Form
-        form={form}
-        initialValues={initialValues}
-        onFinish={() => {
-          goToNextPage?.()
-        }}
-      >
-        <PayoutsTable
-          payoutSplits={splits}
-          setPayoutSplits={setSplits}
-          currency={V2V3CurrencyName(distributionLimit?.currency) ?? 'ETH'}
-          setCurrency={setDistributionLimitCurrency}
-          distributionLimit={_distributionLimit}
-          setDistributionLimit={setDistributionLimitAmount}
-        />
-        {/* Empty form item just to keep AntD useWatch happy */}
-        <Form.Item shouldUpdate name="payoutsList" className="mb-0" />
-        <Wizard.Page.ButtonControl />
-      </Form>
-    </>
+    <Form
+      form={form}
+      initialValues={initialValues}
+      onFinish={() => {
+        goToNextPage?.()
+      }}
+    >
+      <PayoutsTable
+        payoutSplits={splits}
+        setPayoutSplits={setSplits}
+        currency={
+          V2V3CurrencyName(editingDistributionLimit?.currency) ??
+          DEFAULT_CURRENCY_NAME
+        }
+        setCurrency={setDistributionLimitCurrency}
+        distributionLimit={distributionLimit}
+        setDistributionLimit={setDistributionLimitAmount}
+      />
+      {/* Empty form item just to keep AntD useWatch happy */}
+      <Form.Item shouldUpdate name="payoutsList" className="mb-0" />
+      <Wizard.Page.ButtonControl />
+    </Form>
   )
 }

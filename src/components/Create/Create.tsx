@@ -95,10 +95,10 @@ export function Create() {
             title={t`Payouts`}
             description={
               <Trans>
-                Pay out ETH from your project to the Ethereum wallets or
-                Juicebox projects of your choice. ETH which <em>isn't</em> paid
-                out will be available for token redemptions, or for use in
-                future cycles. Payouts reset each cycle.
+                Pay out ETH from your project to any Ethereum wallet or Juicebox
+                project. ETH which <em>isn't</em> paid out will be available for
+                token redemptions, or for use in future cycles. Payouts reset
+                each cycle.
               </Trans>
             }
           >

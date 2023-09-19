@@ -395,9 +395,6 @@ msgstr ""
 msgid "Tokens receiver"
 msgstr ""
 
-msgid "Pay out ETH from your project to the Ethereum wallets or Juicebox projects of your choice. ETH which <0>isn't</0> paid out will be available for token redemptions, or for use in future cycles. Payouts reset each cycle."
-msgstr ""
-
 msgid "Next:"
 msgstr ""
 
@@ -1998,6 +1995,9 @@ msgid "With unlocked cycles, the project's owner can edit the project's rules an
 msgstr ""
 
 msgid "{0} reserved"
+msgstr ""
+
+msgid "Pay out ETH from your project to any Ethereum wallet or Juicebox project. ETH which <0>isn't</0> paid out will be available for token redemptions, or for use in future cycles. Payouts reset each cycle."
 msgstr ""
 
 msgid "Built for ideas like yours"

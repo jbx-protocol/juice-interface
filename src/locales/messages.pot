@@ -116,6 +116,9 @@ msgstr ""
 msgid "Project handle must be unique."
 msgstr ""
 
+msgid "No distributions configured."
+msgstr ""
+
 msgid "Your Name"
 msgstr ""
 
@@ -743,6 +746,9 @@ msgstr ""
 msgid "Setup new NFTs for {projectTitle}"
 msgstr ""
 
+msgid "<0>Contribution floor:</0> {0} ETH"
+msgstr ""
+
 msgid "A collection's name is the full name used on NFT marketplaces (like <0>OpenSea</0>)."
 msgstr ""
 
@@ -1029,6 +1035,9 @@ msgid "Contributors will receive this NFT when they contribute at least this amo
 msgstr ""
 
 msgid "Mint {tokensLabel}"
+msgstr ""
+
+msgid "Funding cycle details"
 msgstr ""
 
 msgid "Archive"
@@ -1658,6 +1667,9 @@ msgstr ""
 msgid "Set aside a percentage of freshly minted NFTs."
 msgstr ""
 
+msgid "NFTs detached from project."
+msgstr ""
+
 msgid "V2"
 msgstr ""
 
@@ -1968,6 +1980,9 @@ msgid "A project's handle is used in its URL, and allows it to be included in se
 msgstr ""
 
 msgid "Unlimited"
+msgstr ""
+
+msgid "<0>Website:</0> <1>{0}</1>"
 msgstr ""
 
 msgid "Reserved rate"
@@ -3056,6 +3071,9 @@ msgstr ""
 msgid "Edit NFT"
 msgstr ""
 
+msgid "<0>Description: </0><1/>"
+msgstr ""
+
 msgid "Create a project payer address"
 msgstr ""
 
@@ -4094,6 +4112,9 @@ msgstr ""
 msgid "While enabled, this project will use the custom behavior defined in the contract above when somebody pays this project. Exercise caution."
 msgstr ""
 
+msgid "<0>Max. supply:</0> <1>{0}</1>"
+msgstr ""
+
 msgid "No on-chain governance"
 msgstr ""
 
@@ -4365,6 +4386,9 @@ msgid "Who is Peel? Who is JuiceboxDAO?"
 msgstr ""
 
 msgid "USD value of ETH transferred"
+msgstr ""
+
+msgid "Funding distribution"
 msgstr ""
 
 msgid "Cycle #1 starts when you create your project. With locked cycles, if you edit your project's rules during Cycle #1, those edits will be <0>queued</0> for the next cycle."
@@ -4647,6 +4671,9 @@ msgid "A message from {name}"
 msgstr ""
 
 msgid "Pay project"
+msgstr ""
+
+msgid "No reserved tokens configured."
 msgstr ""
 
 msgid "Sent reserved tokens (v1)"

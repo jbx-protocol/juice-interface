@@ -827,6 +827,9 @@ msgstr ""
 msgid "Launch a Decentralized Autonomous Organisation with governance in minutes."
 msgstr ""
 
+msgid "I understand and accept the <0>risks</0> associated with the Juicebox protocol."
+msgstr ""
+
 msgid "Advanced (optional)"
 msgstr ""
 
@@ -4605,6 +4608,9 @@ msgid "Payouts cannot exceed 100%"
 msgstr ""
 
 msgid "Data from upcoming cycle"
+msgstr ""
+
+msgid "I understand and accept this project's notice and the <0>risks</0> associated with the Juicebox protocol."
 msgstr ""
 
 msgid "Visit jbdao.org"

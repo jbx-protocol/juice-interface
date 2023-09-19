@@ -9,6 +9,7 @@ import { JuiceModal } from 'components/modals/JuiceModal'
 import { Formik } from 'formik'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
+import { helpPagePath } from 'utils/routes'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
 
@@ -35,7 +36,6 @@ export const PayProjectModal: React.FC = () => {
           attachedUrl: undefined,
         },
         userAcceptsTerms: false,
-        userAcceptsNotice: false,
         beneficiaryAddress: undefined,
       }}
       validationSchema={validationSchema}
@@ -138,46 +138,30 @@ export const PayProjectModal: React.FC = () => {
                             'text-error-500 transition-colors',
                         )}
                       >
-                        <Trans>
-                          I accept the{' '}
-                          <ExternalLink href="https://docs.juicebox.money/dev/learn/risks">
-                            risks
-                          </ExternalLink>{' '}
-                          associated with the Juicebox protocol.
-                        </Trans>
+                        {projectPayDisclosure ? (
+                          <Trans>
+                            I understand and accept this project's notice and
+                            the{' '}
+                            <ExternalLink
+                              href={helpPagePath('dev/learn/risks')}
+                            >
+                              risks
+                            </ExternalLink>{' '}
+                            associated with the Juicebox protocol.
+                          </Trans>
+                        ) : (
+                          <Trans>
+                            I understand and accept the{' '}
+                            <ExternalLink
+                              href={helpPagePath('dev/learn/risks')}
+                            >
+                              risks
+                            </ExternalLink>{' '}
+                            associated with the Juicebox protocol.
+                          </Trans>
+                        )}
                       </label>
                     </div>
-                    {projectPayDisclosure ? (
-                      <div className="mt-2 flex gap-2">
-                        <input
-                          id="userAcceptsNotice"
-                          name="userAcceptsNotice"
-                          type="checkbox"
-                          checked={props.values.userAcceptsNotice}
-                          onChange={() =>
-                            props.setFieldValue(
-                              'userAcceptsNotice',
-                              !props.values.userAcceptsNotice,
-                            )
-                          }
-                        />
-                        <label
-                          htmlFor="userAcceptsNotice"
-                          className={twMerge(
-                            'font-normal',
-                            props.errors.userAcceptsNotice &&
-                              props.submitCount > 0 &&
-                              'text-error-500 transition-colors',
-                          )}
-                        >
-                          <Trans>
-                            I understand and accept this project's notice.
-                          </Trans>
-                        </label>
-                      </div>
-                    ) : (
-                      ''
-                    )}
                   </div>
                 </div>
               </>

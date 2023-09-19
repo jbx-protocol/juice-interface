@@ -23,7 +23,6 @@ const ValidationSchema = Yup.object().shape({
     [true],
     'You must accept the terms and conditions',
   ),
-  userAcceptsNotice: Yup.boolean(),
   beneficiaryAddress: Yup.string(),
 })
 

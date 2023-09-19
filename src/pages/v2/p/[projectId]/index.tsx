@@ -1,6 +1,6 @@
 import Loading from 'components/Loading'
+import ProjectDashboard from 'components/ProjectDashboard'
 import { AppWrapper, SEO } from 'components/common'
-import { V2V3Dashboard } from 'components/v2v3/V2V3Project/V2V3Dashboard'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V2 } from 'constants/pv'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
@@ -16,7 +16,9 @@ import {
   ProjectPageProps,
   getProjectStaticProps,
 } from 'utils/server/pages/props'
-const ProjectDashboard = lazy(() => import('components/ProjectDashboard'))
+const V2V3Dashboard = lazy(
+  () => import('components/v2v3/V2V3Project/V2V3Dashboard'),
+)
 
 export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V2_PROJECTS === 'true') {
@@ -100,11 +102,11 @@ export default function V2ProjectPage({
           <V2V3ProjectPageProvider projectId={projectId} metadata={metadata}>
             <AnnouncementsProvider>
               {newProjectPageEnabled ? (
-                <Suspense fallback={<Loading />}>
-                  <ProjectDashboard />
-                </Suspense>
+                <ProjectDashboard />
               ) : (
-                <V2V3Dashboard />
+                <Suspense fallback={<Loading />}>
+                  <V2V3Dashboard />
+                </Suspense>
               )}
             </AnnouncementsProvider>
           </V2V3ProjectPageProvider>

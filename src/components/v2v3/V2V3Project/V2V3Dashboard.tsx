@@ -5,7 +5,7 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { useContext } from 'react'
 
-export function V2V3Dashboard() {
+export default function V2V3Dashboard() {
   const { projectMetadata } = useContext(ProjectMetadataContext)
 
   if (!projectMetadata) return <Loading />

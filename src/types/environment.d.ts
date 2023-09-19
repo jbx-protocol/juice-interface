@@ -23,8 +23,6 @@ declare global {
 
       NEXT_PUBLIC_BASE_URL: PublicBaseURLS
 
-      NEXT_PUBLIC_SENTRY_DSN: string
-
       NEXT_PUBLIC_ARCX_API_KEY: string
 
       NEXT_PUBLIC_TENDERLY_API_KEY: string

@@ -7,7 +7,7 @@ import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3Proj
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 
 import { useCallback, useState } from 'react'
-import { useEditingNfts } from '../../EditNftsPage/hooks/useEditingNfts'
+import { useEditingNfts } from '../hooks/useEditingNfts'
 
 export function EditNftsSection() {
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)

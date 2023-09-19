@@ -23,11 +23,6 @@ const FEATURE_FLAG_DEFAULTS: {
     goerli: true,
     localhost: true,
   },
-  [FEATURE_FLAGS.NEW_EDIT_NFTS]: {
-    mainnet: true,
-    goerli: true,
-    localhost: true,
-  },
 }
 
 const featureFlagKey = (baseKey: string) => {

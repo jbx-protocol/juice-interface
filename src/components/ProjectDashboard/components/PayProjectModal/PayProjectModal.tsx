@@ -9,6 +9,7 @@ import { JuiceModal } from 'components/modals/JuiceModal'
 import { Formik } from 'formik'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
+import { helpPagePath } from 'utils/routes'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
 
@@ -137,18 +138,28 @@ export const PayProjectModal: React.FC = () => {
                             'text-error-500 transition-colors',
                         )}
                       >
-                        <Trans>I understand and accept</Trans>
-                        {projectPayDisclosure
-                          ? ' ' + t`this project's notice and`
-                          : ''}
-                        <Trans>
-                          {' '}
-                          the{' '}
-                          <ExternalLink href="https://docs.juicebox.money/dev/learn/risks">
-                            risks
-                          </ExternalLink>{' '}
-                          associated with the Juicebox protocol.
-                        </Trans>
+                        {projectPayDisclosure ? (
+                          <Trans>
+                            I understand and accept this project's notice and
+                            the{' '}
+                            <ExternalLink
+                              href={helpPagePath('dev/learn/risks')}
+                            >
+                              risks
+                            </ExternalLink>{' '}
+                            associated with the Juicebox protocol.
+                          </Trans>
+                        ) : (
+                          <Trans>
+                            I understand and accept the{' '}
+                            <ExternalLink
+                              href={helpPagePath('dev/learn/risks')}
+                            >
+                              risks
+                            </ExternalLink>{' '}
+                            associated with the Juicebox protocol.
+                          </Trans>
+                        )}
                       </label>
                     </div>
                   </div>

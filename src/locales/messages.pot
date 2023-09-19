@@ -116,9 +116,6 @@ msgstr ""
 msgid "Project handle must be unique."
 msgstr ""
 
-msgid "No distributions configured."
-msgstr ""
-
 msgid "Your Name"
 msgstr ""
 
@@ -150,9 +147,6 @@ msgid "Determines whether tokens will be minted by payments made through this ad
 msgstr ""
 
 msgid "Data from current cycle"
-msgstr ""
-
-msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
 msgstr ""
 
 msgid "Add NFT"
@@ -444,6 +438,9 @@ msgid "Transfer unclaimed tokens"
 msgstr ""
 
 msgid "You've completed this step."
+msgstr ""
+
+msgid "Manage how your project's tokens should work."
 msgstr ""
 
 msgid "Connect wallet to send reserved {tokenTextPlural}"
@@ -746,9 +743,6 @@ msgstr ""
 msgid "Setup new NFTs for {projectTitle}"
 msgstr ""
 
-msgid "<0>Contribution floor:</0> {0} ETH"
-msgstr ""
-
 msgid "A collection's name is the full name used on NFT marketplaces (like <0>OpenSea</0>)."
 msgstr ""
 
@@ -902,9 +896,6 @@ msgstr ""
 msgid "This account hasn't created any projects yet."
 msgstr ""
 
-msgid "Restrictions for your cycles."
-msgstr ""
-
 msgid "Project upgrades"
 msgstr ""
 
@@ -1038,9 +1029,6 @@ msgid "Contributors will receive this NFT when they contribute at least this amo
 msgstr ""
 
 msgid "Mint {tokensLabel}"
-msgstr ""
-
-msgid "Funding cycle details"
 msgstr ""
 
 msgid "Archive"
@@ -1670,9 +1658,6 @@ msgstr ""
 msgid "Set aside a percentage of freshly minted NFTs."
 msgstr ""
 
-msgid "NFTs detached from project."
-msgstr ""
-
 msgid "V2"
 msgstr ""
 
@@ -1983,9 +1968,6 @@ msgid "A project's handle is used in its URL, and allows it to be included in se
 msgstr ""
 
 msgid "Unlimited"
-msgstr ""
-
-msgid "<0>Website:</0> <1>{0}</1>"
 msgstr ""
 
 msgid "Reserved rate"
@@ -2316,9 +2298,6 @@ msgid "Case study"
 msgstr ""
 
 msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
-msgstr ""
-
-msgid "Deploy cycle"
 msgstr ""
 
 msgid "Juicebox native"
@@ -2658,9 +2637,6 @@ msgid "Address or ID"
 msgstr ""
 
 msgid "Error downloading redemptions, try again."
-msgstr ""
-
-msgid "Review reconfiguration"
 msgstr ""
 
 msgid "Seconds"
@@ -3080,9 +3056,6 @@ msgstr ""
 msgid "Edit NFT"
 msgstr ""
 
-msgid "<0>Description: </0><1/>"
-msgstr ""
-
 msgid "Create a project payer address"
 msgstr ""
 
@@ -3222,9 +3195,6 @@ msgid "Discard"
 msgstr ""
 
 msgid "Connect wallet to pay"
-msgstr ""
-
-msgid "How your project will be paid and pay out ETH."
 msgstr ""
 
 msgid "Mint tokens as ERC-20"
@@ -3773,9 +3743,6 @@ msgstr ""
 msgid "Project settings"
 msgstr ""
 
-msgid "Unix timestamp in seconds (for example, {0}). Leave blank to start as soon as possible."
-msgstr ""
-
 msgid "The issuance rate will not change unless you edit it. There will be less of an incentive to support this project early on."
 msgstr ""
 
@@ -4097,9 +4064,6 @@ msgstr ""
 msgid "Discord link"
 msgstr ""
 
-msgid "Your project's token."
-msgstr ""
-
 msgid "Minimum contribution"
 msgstr ""
 
@@ -4128,9 +4092,6 @@ msgid "Total payments"
 msgstr ""
 
 msgid "While enabled, this project will use the custom behavior defined in the contract above when somebody pays this project. Exercise caution."
-msgstr ""
-
-msgid "<0>Max. supply:</0> <1>{0}</1>"
 msgstr ""
 
 msgid "No on-chain governance"
@@ -4406,9 +4367,6 @@ msgstr ""
 msgid "USD value of ETH transferred"
 msgstr ""
 
-msgid "Funding distribution"
-msgstr ""
-
 msgid "Cycle #1 starts when you create your project. With locked cycles, if you edit your project's rules during Cycle #1, those edits will be <0>queued</0> for the next cycle."
 msgstr ""
 
@@ -4509,9 +4467,6 @@ msgid "Simple token rules that will work for most projects. You can edit these r
 msgstr ""
 
 msgid "Start"
-msgstr ""
-
-msgid "Manage how your projects tokens should work."
 msgstr ""
 
 msgid "File empty or corrupt. Try again."
@@ -4637,9 +4592,6 @@ msgstr ""
 msgid "Data from upcoming cycle"
 msgstr ""
 
-msgid "Your project's NFTs."
-msgstr ""
-
 msgid "Visit jbdao.org"
 msgstr ""
 
@@ -4695,9 +4647,6 @@ msgid "A message from {name}"
 msgstr ""
 
 msgid "Pay project"
-msgstr ""
-
-msgid "No reserved tokens configured."
 msgstr ""
 
 msgid "Sent reserved tokens (v1)"

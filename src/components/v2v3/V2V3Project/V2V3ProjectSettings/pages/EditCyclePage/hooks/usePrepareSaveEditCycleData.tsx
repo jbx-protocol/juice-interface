@@ -27,7 +27,7 @@ import {
 import {
   EditingFundingCycleConfig,
   useEditingFundingCycleConfig,
-} from '../../ReconfigureFundingCycleSettingsPage/hooks/useEditingFundingCycleConfig'
+} from '../../../hooks/useEditingFundingCycleConfig'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { EditCycleFormFields } from '../EditCycleFormFields'
 import { useTokensSectionValues } from '../ReviewConfirmModal/hooks/useTokensSectionValues'

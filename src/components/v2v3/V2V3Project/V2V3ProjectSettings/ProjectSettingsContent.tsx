@@ -13,7 +13,6 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { ArchiveProjectSettingsPage } from './pages/ArchiveProjectSettingsPage'
-import { EditNftsPage } from './pages/EditNftsPage'
 import { GovernanceSettingsPage } from './pages/GovernanceSettingsPage'
 import { EditCyclePage } from './pages/NewEditCyclePage/EditCyclePage'
 import { EditNftsPage as NewEditNftsPage } from './pages/NewEditNftsPage/EditNftsPage'
@@ -35,9 +34,7 @@ const SettingsPageComponents: {
   cycle: featureFlagEnabled(FEATURE_FLAGS.NEW_CYCLE_CONFIG_PAGE)
     ? EditCyclePage
     : ReconfigureFundingCycleSettingsPage,
-  nfts: featureFlagEnabled(FEATURE_FLAGS.NEW_EDIT_NFTS)
-    ? NewEditNftsPage
-    : EditNftsPage,
+  nfts: NewEditNftsPage,
   payouts: PayoutsSettingsPage,
   reservedtokens: ReservedTokensSettingsPage,
   tokenmigration: V1V2TokenMigrationSettingsPage,

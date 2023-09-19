@@ -1,27 +1,24 @@
-import * as constants from '@ethersproject/constants'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Layout } from 'antd'
 import { V2V3SettingsPageKey } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import Link from 'next/link'
 import { useContext, useMemo } from 'react'
 import { twJoin } from 'tailwind-merge'
-import { featureFlagEnabled } from 'utils/featureFlags'
+import { isZeroAddress } from 'utils/address'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { ArchiveProjectSettingsPage } from './pages/ArchiveProjectSettingsPage'
+import { EditCyclePage } from './pages/EditCyclePage/EditCyclePage'
 import { EditNftsPage } from './pages/EditNftsPage/EditNftsPage'
 import { GovernanceSettingsPage } from './pages/GovernanceSettingsPage'
-import { EditCyclePage } from './pages/NewEditCyclePage/EditCyclePage'
 import { PayoutsSettingsPage } from './pages/PayoutsSettingsPage'
 import { ProjectDetailsSettingsPage } from './pages/ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
 import { ProjectHandleSettingsPage } from './pages/ProjectHandleSettingsPage'
 import { ProjectNftSettingsPage } from './pages/ProjectNftSettingsPage'
 import { ProjectUpgradesPage } from './pages/ProjectUpgradesPage'
-import { ReconfigureFundingCycleSettingsPage } from './pages/ReconfigureFundingCycleSettingsPage'
 import { ReservedTokensSettingsPage } from './pages/ReservedTokensSettingsPage'
 import { TransferOwnershipSettingsPage } from './pages/TransferOwnershipSettingsPage'
 import { V1V2TokenMigrationSettingsPage } from './pages/V1V2TokenMigrationSettingsPage'
@@ -31,9 +28,7 @@ const SettingsPageComponents: {
 } = {
   general: ProjectDetailsSettingsPage,
   handle: ProjectHandleSettingsPage,
-  cycle: featureFlagEnabled(FEATURE_FLAGS.NEW_CYCLE_CONFIG_PAGE)
-    ? EditCyclePage
-    : ReconfigureFundingCycleSettingsPage,
+  cycle: EditCyclePage,
   nfts: EditNftsPage,
   payouts: PayoutsSettingsPage,
   reservedtokens: ReservedTokensSettingsPage,
@@ -104,8 +99,7 @@ export function ProjectSettingsContent({
   settingsPageKey: V2V3SettingsPageKey
 }) {
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
-  const hasExistingNfts =
-    fundingCycleMetadata?.dataSource !== constants.AddressZero
+  const hasExistingNfts = !isZeroAddress(fundingCycleMetadata?.dataSource)
 
   const ActiveSettingsPage = useMemo(
     () => SettingsPageComponents[settingsPageKey],

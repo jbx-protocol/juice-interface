@@ -152,9 +152,6 @@ msgstr ""
 msgid "Data from current cycle"
 msgstr ""
 
-msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
-msgstr ""
-
 msgid "Add NFT"
 msgstr ""
 
@@ -444,6 +441,9 @@ msgid "Transfer unclaimed tokens"
 msgstr ""
 
 msgid "You've completed this step."
+msgstr ""
+
+msgid "Manage how your project's tokens should work."
 msgstr ""
 
 msgid "Connect wallet to send reserved {tokenTextPlural}"
@@ -900,9 +900,6 @@ msgid "Scheduled launch time"
 msgstr ""
 
 msgid "This account hasn't created any projects yet."
-msgstr ""
-
-msgid "Restrictions for your cycles."
 msgstr ""
 
 msgid "Project upgrades"
@@ -2318,9 +2315,6 @@ msgstr ""
 msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 
-msgid "Deploy cycle"
-msgstr ""
-
 msgid "Juicebox native"
 msgstr ""
 
@@ -2658,9 +2652,6 @@ msgid "Address or ID"
 msgstr ""
 
 msgid "Error downloading redemptions, try again."
-msgstr ""
-
-msgid "Review reconfiguration"
 msgstr ""
 
 msgid "Seconds"
@@ -3224,9 +3215,6 @@ msgstr ""
 msgid "Connect wallet to pay"
 msgstr ""
 
-msgid "How your project will be paid and pay out ETH."
-msgstr ""
-
 msgid "Mint tokens as ERC-20"
 msgstr ""
 
@@ -3773,9 +3761,6 @@ msgstr ""
 msgid "Project settings"
 msgstr ""
 
-msgid "Unix timestamp in seconds (for example, {0}). Leave blank to start as soon as possible."
-msgstr ""
-
 msgid "The issuance rate will not change unless you edit it. There will be less of an incentive to support this project early on."
 msgstr ""
 
@@ -4095,9 +4080,6 @@ msgid "When enabled, supporters can only mint NFTs by paying their exact price. 
 msgstr ""
 
 msgid "Discord link"
-msgstr ""
-
-msgid "Your project's token."
 msgstr ""
 
 msgid "Minimum contribution"
@@ -4511,9 +4493,6 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-msgid "Manage how your projects tokens should work."
-msgstr ""
-
 msgid "File empty or corrupt. Try again."
 msgstr ""
 
@@ -4635,9 +4614,6 @@ msgid "Payouts cannot exceed 100%"
 msgstr ""
 
 msgid "Data from upcoming cycle"
-msgstr ""
-
-msgid "Your project's NFTs."
 msgstr ""
 
 msgid "Visit jbdao.org"

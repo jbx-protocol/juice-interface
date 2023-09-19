@@ -19,7 +19,7 @@ import {
   formatReservedRate,
 } from 'utils/v2v3/math'
 import { deserializeV2V3FundingCycleData } from 'utils/v2v3/serializers'
-import { useInitialEditingData } from '../../ReconfigureFundingCycleSettingsPage/hooks/useInitialEditingData'
+import { useInitialEditingData } from '../../../hooks/useInitialEditingData'
 import { EditCycleFormFields } from '../EditCycleFormFields'
 
 /** Loads project FC data from redux into an Ant D form instance */

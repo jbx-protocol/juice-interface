@@ -1,4 +1,4 @@
-import { EditingFundingCycleConfig } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/ReconfigureFundingCycleSettingsPage/hooks/useEditingFundingCycleConfig'
+import { EditingFundingCycleConfig } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/hooks/useEditingFundingCycleConfig'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'

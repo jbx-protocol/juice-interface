@@ -13,8 +13,8 @@ import {
 import {
   EditingFundingCycleConfig,
   useEditingFundingCycleConfig,
-} from '../../../ReconfigureFundingCycleSettingsPage/hooks/useEditingFundingCycleConfig'
-import { useReconfigureFundingCycle } from '../../../ReconfigureFundingCycleSettingsPage/hooks/useReconfigureFundingCycle'
+} from '../../../../hooks/useEditingFundingCycleConfig'
+import { useReconfigureFundingCycle } from '../../../../hooks/useReconfigureFundingCycle'
 
 export const useLaunchNftsForm = () => {
   const [form] = useForm<NftRewardsFormProps>()

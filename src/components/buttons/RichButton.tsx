@@ -3,7 +3,7 @@ import { ComponentPropsWithoutRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 
-export type RichButtonProps = {
+type RichButtonProps = {
   className?: string
   heading: JSX.Element | string
   description: JSX.Element | string

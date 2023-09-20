@@ -1,7 +1,5 @@
-import Loading from 'components/Loading'
-import ProjectDashboard from 'components/ProjectDashboard'
 import { AppWrapper, SEO } from 'components/common'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
+import ProjectDashboard from 'components/v2v3/V2V3Project/ProjectDashboard'
 import { PV_V2 } from 'constants/pv'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
@@ -9,16 +7,12 @@ import { paginateDepleteProjectsQueryCall } from 'lib/apollo/paginateDepleteProj
 import { loadCatalog } from 'locales/utils'
 import { ProjectMetadata } from 'models/projectMetadata'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
-import React, { PropsWithChildren, Suspense, lazy } from 'react'
-import { featureFlagEnabled } from 'utils/featureFlags'
+import React, { PropsWithChildren } from 'react'
 import { cidFromUrl, ipfsPublicGatewayUrl } from 'utils/ipfs'
 import {
   ProjectPageProps,
   getProjectStaticProps,
 } from 'utils/server/pages/props'
-const V2V3Dashboard = lazy(
-  () => import('components/v2v3/V2V3Project/V2V3Dashboard'),
-)
 
 export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V2_PROJECTS === 'true') {
@@ -85,14 +79,10 @@ const ProjectPageSEO = ({
   />
 )
 
-export default function V2ProjectPage({
+export default function V2V3ProjectPage({
   metadata,
   projectId,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const newProjectPageEnabled = featureFlagEnabled(
-    FEATURE_FLAGS.NEW_PROJECT_PAGE,
-  )
-
   return (
     <>
       <ProjectPageSEO metadata={metadata} projectId={projectId} />
@@ -101,13 +91,7 @@ export default function V2ProjectPage({
         <AppWrapper>
           <V2V3ProjectPageProvider projectId={projectId} metadata={metadata}>
             <AnnouncementsProvider>
-              {newProjectPageEnabled ? (
-                <ProjectDashboard />
-              ) : (
-                <Suspense fallback={<Loading />}>
-                  <V2V3Dashboard />
-                </Suspense>
-              )}
+              <ProjectDashboard />
             </AnnouncementsProvider>
           </V2V3ProjectPageProvider>
         </AppWrapper>

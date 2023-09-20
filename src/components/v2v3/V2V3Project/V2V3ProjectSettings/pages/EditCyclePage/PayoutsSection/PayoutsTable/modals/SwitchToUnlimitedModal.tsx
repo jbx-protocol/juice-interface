@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Modal } from 'antd'
-import { ExternalLinkWithIcon } from 'components/ProjectDashboard/components/ui/ExternalLinkWithIcon'
+import { ExternalLinkWithIcon } from 'components/v2v3/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { helpPagePath } from 'utils/routes'
 import { usePayoutsTable } from '../../hooks/usePayoutsTable'
 

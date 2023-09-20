@@ -2,7 +2,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 
 import { Button } from 'antd'
-import { ExternalLinkWithIcon } from 'components/ProjectDashboard/components/ui/ExternalLinkWithIcon'
+import { ExternalLinkWithIcon } from 'components/v2v3/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import {
   AddEditAllocationModal,
   AddEditAllocationModalEntity,

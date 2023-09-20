@@ -29,7 +29,7 @@ import {
   serializeV2V3FundingCycleMetadata,
 } from 'utils/v2v3/serializers'
 
-export interface InitialEditingData {
+interface InitialEditingData {
   fundAccessConstraints: SerializedV2V3FundAccessConstraint[]
   fundingCycleData: SerializedV2V3FundingCycleData
   fundingCycleMetadata: SerializedV2V3FundingCycleMetadata

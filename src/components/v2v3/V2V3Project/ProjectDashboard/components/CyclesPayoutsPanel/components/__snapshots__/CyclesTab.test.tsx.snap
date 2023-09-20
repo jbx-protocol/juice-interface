@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/v2v3/V2V3Project/ProjectDashboard/components/CyclesPayoutsPanel/components/CyclesTab.tsx should match snapshot 1`] = `
+<body>
+  <div>
+    <button
+      aria-selected="true"
+      class="outline-none"
+      data-headlessui-state="selected"
+      id="headlessui-tabs-tab-:r0:"
+      role="tab"
+      tabindex="0"
+      type="button"
+    >
+      <div
+        class="rounded-2xl py-0.5 px-3 font-medium bg-smoke-700 text-grey-25 dark:bg-slate-400 dark:text-slate-50"
+      >
+        name
+      </div>
+    </button>
+  </div>
+</body>
+`;

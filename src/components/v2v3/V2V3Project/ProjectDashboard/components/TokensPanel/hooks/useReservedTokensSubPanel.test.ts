@@ -10,7 +10,7 @@ import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useReservedTokensSubPanel } from './useReservedTokensSubPanel'
 
-jest.mock('components/ProjectDashboard/hooks')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
 jest.mock('hooks/v2v3/contractReader/ProjectReservedTokens')
 
 describe('useReservedTokensSubPanel', () => {

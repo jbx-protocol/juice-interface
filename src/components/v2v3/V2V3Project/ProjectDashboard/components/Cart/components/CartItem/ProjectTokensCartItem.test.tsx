@@ -9,9 +9,9 @@ import {
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { ProjectTokensCartItem } from './ProjectTokensCartItem'
 
-jest.mock('components/ProjectDashboard/hooks')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
 jest.mock(
-  'components/ProjectDashboard/components/ProjectHeader/components/ProjectHeaderLogo',
+  'components/v2v3/V2V3Project/ProjectDashboard/components/ProjectHeader/components/ProjectHeaderLogo',
   () => ({
     ProjectHeaderLogo: () => <div>ProjectHeaderLogo</div>,
   }),

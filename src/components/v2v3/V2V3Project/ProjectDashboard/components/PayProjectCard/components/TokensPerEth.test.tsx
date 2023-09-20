@@ -6,9 +6,12 @@ import { useTokensPerEth } from 'components/v2v3/V2V3Project/ProjectDashboard/ho
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { TokensPerEth } from './TokensPerEth'
 
-jest.mock('components/ProjectDashboard/hooks/useTokensPerEth', () => ({
-  useTokensPerEth: jest.fn(),
-}))
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useTokensPerEth',
+  () => ({
+    useTokensPerEth: jest.fn(),
+  }),
+)
 
 describe('TokensPerEth', () => {
   const mockedTokensPerEth = {

@@ -5,19 +5,22 @@ import { render } from '@testing-library/react'
 import { useTokensPanel } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useTokensPanel'
 import { TokensPanel } from './TokensPanel'
 
-jest.mock('components/ProjectDashboard/hooks/useYourBalanceMenuItems', () => ({
-  useYourBalanceMenuItems: jest.fn().mockReturnValue({
-    items: [],
-    redeemModalVisible: false,
-    setRedeemModalVisible: jest.fn(),
-    claimTokensModalVisible: false,
-    setClaimTokensModalVisible: jest.fn(),
-    mintModalVisible: false,
-    setMintModalVisible: jest.fn(),
-    transferUnclaimedTokensModalVisible: false,
-    setTransferUnclaimedTokensModalVisible: jest.fn(),
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useYourBalanceMenuItems',
+  () => ({
+    useYourBalanceMenuItems: jest.fn().mockReturnValue({
+      items: [],
+      redeemModalVisible: false,
+      setRedeemModalVisible: jest.fn(),
+      claimTokensModalVisible: false,
+      setClaimTokensModalVisible: jest.fn(),
+      mintModalVisible: false,
+      setMintModalVisible: jest.fn(),
+      transferUnclaimedTokensModalVisible: false,
+      setTransferUnclaimedTokensModalVisible: jest.fn(),
+    }),
   }),
-}))
+)
 
 jest.mock(
   'components/v2v3/V2V3Project/V2V3ManageTokensSection/AccountBalanceDescription/V2V3BurnOrRedeemModal',
@@ -47,7 +50,7 @@ jest.mock('./components/TransferUnclaimedTokensModalWrapper', () => ({
     .mockImplementation(() => <div>TransferUnclaimedTokensModalWrapper</div>),
 }))
 
-jest.mock('components/ProjectDashboard/hooks/useTokensPanel')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useTokensPanel')
 jest.mock('./components/ReservedTokensSubPanel', () => ({
   ReservedTokensSubPanel: jest
     .fn()

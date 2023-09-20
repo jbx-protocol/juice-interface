@@ -5,7 +5,7 @@ import { render, screen } from '@testing-library/react'
 import { useNftCartItem } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useNftCartItem'
 import { ReceiveNftItem } from './ReceiveNftItem'
 
-jest.mock('components/ProjectDashboard/hooks/useNftCartItem')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useNftCartItem')
 
 jest.mock('../../NftRewardsCard/SmallNftSquare', () => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

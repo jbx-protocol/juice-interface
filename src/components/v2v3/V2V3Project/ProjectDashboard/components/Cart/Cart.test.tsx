@@ -5,7 +5,7 @@ import { fireEvent, render } from '@testing-library/react'
 import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
 import { Cart } from './Cart'
 
-jest.mock('components/ProjectDashboard/hooks/useProjectCart')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart')
 
 jest.mock('./components', () => ({
   SummaryCollapsedView: () => <div>SummaryCollapsedView</div>,

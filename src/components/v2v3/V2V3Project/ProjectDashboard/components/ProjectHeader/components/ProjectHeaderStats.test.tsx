@@ -10,8 +10,10 @@ import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashbo
 import { BigNumber } from 'ethers'
 import { ProjectHeaderStats } from './ProjectHeaderStats'
 
-jest.mock('components/ProjectDashboard/hooks')
-jest.mock('components/ProjectDashboard/hooks/useProjectPageQueries')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries',
+)
 
 function mockUseProjectHeader(data: ProjectHeaderData) {
   ;(useProjectHeader as jest.Mock).mockReturnValue(data)

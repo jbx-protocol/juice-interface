@@ -6,7 +6,7 @@ import { renderHook } from '@testing-library/react-hooks'
 import { useHistoricalConfigurationPanel } from './useHistoricalConfigurationPanel'
 
 // Mock the hooks you used inside your custom hook
-jest.mock('components/ProjectDashboard/hooks', () => ({
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks', () => ({
   useProjectContext: () => ({
     primaryETHTerminal: 'mockTerminal',
     tokenSymbol: 'mockTokenSymbol',

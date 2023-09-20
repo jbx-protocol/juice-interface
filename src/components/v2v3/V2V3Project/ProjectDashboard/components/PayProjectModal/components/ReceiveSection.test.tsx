@@ -9,8 +9,12 @@ import { useProjectPaymentTokens } from 'components/v2v3/V2V3Project/ProjectDash
 import { Formik } from 'formik'
 import { ReceiveSection } from './ReceiveSection'
 
-jest.mock('components/ProjectDashboard/hooks/usePayProjectModal')
-jest.mock('components/ProjectDashboard/hooks/useProjectPaymentTokens')
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/usePayProjectModal',
+)
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPaymentTokens',
+)
 
 jest.mock('./ReceiveNftItem', () => ({
   ReceiveNftItem: jest.fn().mockImplementation(() => <div>NFT</div>),

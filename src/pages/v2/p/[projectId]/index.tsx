@@ -1,5 +1,5 @@
-import ProjectDashboard from 'components/ProjectDashboard'
 import { AppWrapper, SEO } from 'components/common'
+import ProjectDashboard from 'components/v2v3/V2V3Project/ProjectDashboard'
 import { PV_V2 } from 'constants/pv'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'

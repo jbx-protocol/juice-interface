@@ -1,7 +1,7 @@
 import { ReceiptPercentIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { handleConfirmationDeletion } from 'components/ProjectDashboard/utils/modals'
 import { PopupMenu, PopupMenuItem } from 'components/ui/PopupMenu'
+import { handleConfirmationDeletion } from 'components/v2v3/V2V3Project/ProjectDashboard/utils/modals'
 import { useState } from 'react'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { SwitchToLimitedModal } from './modals/SwitchToLimitedModal'

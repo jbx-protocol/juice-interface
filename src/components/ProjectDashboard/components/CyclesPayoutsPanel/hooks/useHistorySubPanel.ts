@@ -48,7 +48,7 @@ const reducer = (state: State, action: Action) => {
   }
 }
 
-export type UseHistorySubPanelProps = {
+type UseHistorySubPanelProps = {
   pageSize?: number
 }
 

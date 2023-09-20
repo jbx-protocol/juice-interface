@@ -15,8 +15,6 @@ import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 
-export type MenuKey = V2V3SettingsPageKey
-
 export type V2V3SettingsPageKey =
   | 'general'
   | 'handle'

@@ -3,7 +3,7 @@ import { CurrencyName } from 'constants/currency'
 import { Split } from 'models/splits'
 import { NftRewardsData } from 'redux/slices/editingV2Project/types'
 
-export type DetailsSectionFields = {
+type DetailsSectionFields = {
   duration: number
   durationUnit: DurationOption
   ballot: string
@@ -12,14 +12,14 @@ export type DetailsSectionFields = {
   pausePay: boolean
 }
 
-export type PayoutsSectionFields = {
+type PayoutsSectionFields = {
   payoutSplits: Split[]
   distributionLimit: number | undefined // undefined = infinite limit
   distributionLimitCurrency: CurrencyName
   holdFees: boolean
 }
 
-export type TokenSectionFields = {
+type TokenSectionFields = {
   mintRate: number
   reservedTokens: number // percentage
   reservedSplits: Split[]
@@ -29,7 +29,7 @@ export type TokenSectionFields = {
   pauseTransfers: boolean // "Disable project token transfers"
 }
 
-export type NftSectionFields = {
+type NftSectionFields = {
   nftRewards: NftRewardsData | undefined
   useDataSourceForRedeem: boolean
 }

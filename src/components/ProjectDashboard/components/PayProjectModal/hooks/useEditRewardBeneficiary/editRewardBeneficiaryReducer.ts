@@ -1,11 +1,11 @@
-export type EditRewardBeneficiaryReducerState = {
+type EditRewardBeneficiaryReducerState = {
   isEditing: boolean
   isLoading: boolean
   address?: string
   error?: string
 }
 
-export type EditRewardBeneficiaryReducerAction =
+type EditRewardBeneficiaryReducerAction =
   | {
       type: 'edit'
     }

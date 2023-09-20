@@ -10,19 +10,19 @@ import { constants, utils } from 'ethers'
 import { createMetadata } from 'juicebox-metadata-helper'
 import { JB721DelegateVersion } from 'models/v2v3/contracts'
 
-export interface JB721DELAGATE_V3_PAY_METADATA {
+interface JB721DELAGATE_V3_PAY_METADATA {
   tierIdsToMint: number[]
   dontMint?: boolean
   expectMintFromExtraFunds?: boolean
   dontOverspend?: boolean
 }
 
-export interface JB721DELAGATE_V3_1_PAY_METADATA {
+interface JB721DELAGATE_V3_1_PAY_METADATA {
   tierIdsToMint: number[]
   allowOverspending?: boolean
 }
 
-export type JB721DELAGATE_V3_2_PAY_METADATA = JB721DELAGATE_V3_1_PAY_METADATA
+type JB721DELAGATE_V3_2_PAY_METADATA = JB721DELAGATE_V3_1_PAY_METADATA
 
 export type PayMetadata =
   | JB721DELAGATE_V3_PAY_METADATA

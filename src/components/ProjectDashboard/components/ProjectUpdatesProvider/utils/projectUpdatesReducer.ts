@@ -1,12 +1,12 @@
 import { ProjectUpdate } from '../ProjectUpdatesProvider'
 
-export type ProjectUpdatesReducerState = {
+type ProjectUpdatesReducerState = {
   projectUpdates: ProjectUpdate[]
   loading: boolean
   error: string | undefined
 }
 
-export type ProjectUpdatesReducerAction =
+type ProjectUpdatesReducerAction =
   | { type: 'loading' }
   | { type: 'error'; error: string }
   | { type: 'success'; projectUpdates: ProjectUpdate[] }

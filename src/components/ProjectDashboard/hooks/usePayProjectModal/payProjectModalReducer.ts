@@ -1,9 +1,9 @@
-export type PayProjectModalState = {
+type PayProjectModalState = {
   isTransactionPending: boolean
   isTransactionConfirmed: boolean
   transactionError: string | undefined
 }
-export type PayProjectModalAction =
+type PayProjectModalAction =
   | { type: 'transactionPending' }
   | { type: 'transactionConfirmed' }
   | { type: 'transactionError'; error: string }

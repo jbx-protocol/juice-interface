@@ -4,7 +4,6 @@ import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { XLButton } from 'components/XLButton'
-import { NEW_DEPLOY_QUERY_PARAM } from 'components/v2v3/V2V3Project/modals/NewDeployModal'
 import { readNetwork } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
 import { NetworkName } from 'models/networkName'
@@ -12,6 +11,8 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
 import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'
+
+const NEW_DEPLOY_QUERY_PARAM = 'np'
 
 export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   console.info('Deploy: SUCCESS', projectId)

@@ -1,6 +1,6 @@
 import { CurrencyName } from 'constants/currency'
 import { Split } from 'models/splits'
-import { createContext, useContext } from 'react'
+import { ReactNode, createContext, useContext } from 'react'
 
 export interface PayoutsTableContextProps {
   payoutSplits: Split[]
@@ -9,6 +9,9 @@ export interface PayoutsTableContextProps {
   setCurrency: (currency: CurrencyName) => void
   distributionLimit: number | undefined
   setDistributionLimit: (distributionLimit: number | undefined) => void
+  hideExplaination?: boolean
+  topAccessory?: ReactNode
+  hideSettings?: boolean
 }
 
 export const PayoutsTableContext = createContext<

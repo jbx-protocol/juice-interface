@@ -5,36 +5,43 @@ import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { Parenthesis } from 'components/Parenthesis'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
+import { ExternalLinkWithIcon } from 'components/v2v3/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'
+import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { ReactNode, useCallback, useMemo, useState } from 'react'
 import {
   ReduxDistributionLimit,
   useEditingDistributionLimit,
 } from 'redux/hooks/useEditingDistributionLimit'
-import { useEditingPayoutSplits } from 'redux/hooks/useEditingPayoutSplits'
-import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { helpPagePath } from 'utils/routes'
 import { isProjectSplit } from 'utils/splits'
-import { splitToAllocation } from 'utils/splitToAllocation'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import { MAX_DISTRIBUTION_LIMIT, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
+import {
+  deriveAmountAfterFee,
+  derivePayoutAmount,
+} from 'utils/v2v3/distributions'
+import { SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
 
 export const ConvertAmountsModal = ({
   open,
   onOk,
   onCancel,
+  splits,
 }: {
   open: boolean
   onOk: (d: ReduxDistributionLimit) => void
   onCancel: VoidFunction
+  splits: Split[]
 }) => {
   const [distributionLimit] = useEditingDistributionLimit()
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>('')
   const [currency, setCurrency] = useState<V2V3CurrencyOption>(
     distributionLimit?.currency ?? V2V3_CURRENCY_ETH,
   )
-  const [splits] = useEditingPayoutSplits()
 
   const totalPayoutsPercent = useMemo(
     () =>
@@ -48,19 +55,6 @@ export const ConvertAmountsModal = ({
     () => Math.max(0, 100 - totalPayoutsPercent),
     [totalPayoutsPercent],
   )
-
-  // While closed, keep the distribution limit 'updated' to last non zero, non infinite value
-  useEffect(() => {
-    if (
-      open ||
-      !distributionLimit ||
-      distributionLimit?.amount.eq(0) ||
-      distributionLimit?.amount.eq(MAX_DISTRIBUTION_LIMIT)
-    ) {
-      return
-    }
-    setNewDistributionLimit(fromWad(distributionLimit.amount))
-  }, [distributionLimit, open])
 
   const onModalOk = useCallback(() => {
     onOk({
@@ -88,27 +82,31 @@ export const ConvertAmountsModal = ({
     >
       <section className="mb-8 text-sm text-grey-700 dark:text-slate-200">
         <Trans>
-          To switch to 'Limited' payouts, enter a total amount of payouts to
-          split between your recipients.
-        </Trans>
+          To switch to 'Limited' payouts, enter a total amount to pay out of the
+          treasury to split between your recipients.
+        </Trans>{' '}
+        <ExternalLinkWithIcon href={helpPagePath(`/user/project/#payouts`)}>
+          <Trans>Learn more about payout limits</Trans>
+        </ExternalLinkWithIcon>
       </section>
 
       <label className="text-base font-medium text-black dark:text-slate-100">
-        <Trans>Payout total</Trans>
+        <Trans>Payout total (max.)</Trans>
       </label>
-      <FormattedNumberInput
-        className="mt-2 mb-10"
-        value={newDistributionLimit}
-        onChange={val => setNewDistributionLimit(val ? val : '')}
-        accessory={
-          <CurrencySwitch
-            currency={currency === V2V3_CURRENCY_ETH ? 'ETH' : 'USD'}
-            onCurrencyChange={c =>
-              setCurrency(c === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD)
-            }
-          />
-        }
-      />
+      <div className="mt-2 mb-10">
+        <FormattedNumberInput
+          value={newDistributionLimit}
+          onChange={val => setNewDistributionLimit(val ? val : '')}
+          accessory={
+            <CurrencySwitch
+              currency={currency === V2V3_CURRENCY_ETH ? 'ETH' : 'USD'}
+              onCurrencyChange={c =>
+                setCurrency(c === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD)
+              }
+            />
+          }
+        />
+      </div>
 
       <section>
         <span className="mb-4 text-base font-medium text-black dark:text-slate-100">
@@ -121,8 +119,9 @@ export const ConvertAmountsModal = ({
               <>
                 {newDistributionLimit &&
                   formatCurrencyAmount({
-                    amount:
+                    amount: deriveAmountAfterFee(
                       (ownerPercent / 100) * parseFloat(newDistributionLimit),
+                    ),
                     currency,
                   })}{' '}
                 <Parenthesis>{formatPercent(ownerPercent)}</Parenthesis>
@@ -150,9 +149,10 @@ export const ConvertAmountsModal = ({
                 <>
                   {newDistributionLimit &&
                     formatCurrencyAmount({
-                      amount:
-                        (allocation.percent / 100) *
-                        parseFloat(newDistributionLimit),
+                      amount: derivePayoutAmount({
+                        payoutSplit: allocationToSplit(allocation),
+                        distributionLimit: parseFloat(newDistributionLimit),
+                      }),
                       currency,
                     })}{' '}
                   <Parenthesis>{formatPercent(allocation.percent)}</Parenthesis>

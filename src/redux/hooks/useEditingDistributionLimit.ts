@@ -8,6 +8,7 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
+import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export interface ReduxDistributionLimit {
   amount: BigNumber
@@ -22,6 +23,8 @@ export interface ReduxDistributionLimit {
 export const useEditingDistributionLimit = (): [
   ReduxDistributionLimit | undefined,
   (input: ReduxDistributionLimit | undefined) => void,
+  (amount: BigNumber) => void,
+  (currency: V2V3CurrencyOption) => void,
 ] => {
   const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
   const dispatch = useAppDispatch()
@@ -70,5 +73,37 @@ export const useEditingDistributionLimit = (): [
     [defaultJBETHPaymentTerminal, dispatch],
   )
 
-  return [distributionLimit, setDistributionLimit]
+  const setDistributionLimitAmount = useCallback(
+    (input: BigNumber) => {
+      if (!defaultJBETHPaymentTerminal) return
+      dispatch(
+        editingV2ProjectActions.setFundAccessConstraints([
+          {
+            ...fundAccessConstraints?.[0],
+            distributionLimit: fromWad(
+              input === undefined ? MAX_DISTRIBUTION_LIMIT : input,
+            ),
+          },
+        ]),
+      )
+    },
+    [defaultJBETHPaymentTerminal, dispatch, fundAccessConstraints],
+  )
+
+  const setDistributionLimitCurrency = useCallback(
+    (input: V2V3CurrencyOption) => {
+      if (!defaultJBETHPaymentTerminal) return
+      dispatch(
+        editingV2ProjectActions.setDistributionLimitCurrency(input.toString()),
+      )
+    },
+    [defaultJBETHPaymentTerminal, dispatch],
+  )
+
+  return [
+    distributionLimit,
+    setDistributionLimit,
+    setDistributionLimitAmount,
+    setDistributionLimitCurrency,
+  ]
 }

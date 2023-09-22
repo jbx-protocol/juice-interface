@@ -19,15 +19,16 @@ import {
   getV2V3CurrencyOption,
 } from 'utils/v2v3/currency'
 import {
+  JB_FEE,
   adjustedSplitPercents,
+  deriveAmountBeforeFee,
+  derivePayoutAmount,
   ensureSplitsSumTo100Percent,
   getNewDistributionLimit,
 } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 import { usePayoutsTableContext } from '../PayoutsTable/context/PayoutsTableContext'
-
-const JB_FEE = 0.025
 
 export const usePayoutsTable = () => {
   const {
@@ -36,7 +37,7 @@ export const usePayoutsTable = () => {
     distributionLimit,
     setDistributionLimit,
     currency,
-    setCurrency: _setCurrency,
+    setCurrency: setCurrencyName,
   } = usePayoutsTableContext()
   const { setFormHasUpdated } = useEditCycleFormContext()
   const distributionLimitIsInfinite = useMemo(
@@ -55,7 +56,7 @@ export const usePayoutsTable = () => {
   }) =>
     distributionLimitIsInfinite
       ? (payoutSplit.percent / ONE_BILLION) * 100
-      : derivePayoutAmount({ payoutSplit, dontApplyFee })
+      : _derivePayoutAmount({ payoutSplit, dontApplyFee })
 
   /* Total amount that leaves the treasury minus fees */
   const subTotal = payoutSplits.reduce((acc, payoutSplit) => {
@@ -119,7 +120,7 @@ export const usePayoutsTable = () => {
    * @param currency - Currency as a V2V3CurrencyOption (1 | 2)
    */
   function setCurrency(currency: V2V3CurrencyOption) {
-    _setCurrency(V2V3CurrencyName(currency) ?? 'ETH')
+    setCurrencyName(V2V3CurrencyName(currency) ?? 'ETH')
     setFormHasUpdated(true)
   }
 
@@ -145,40 +146,22 @@ export const usePayoutsTable = () => {
   }
 
   /**
-   * Derive payout amount before the fee has been applied.
-   * @param amount - An amount that has already had the fee applied
-   * @returns Amount @amount plus the JB fee
-   */
-  function deriveAmountBeforeFee(amount: number) {
-    return amount / (1 - JB_FEE)
-  }
-
-  /**
-   * Derive payout amount after the fee has been applied.
-   * @param amount - Amount before fee applied
-   * @returns Amount @amount minus the JB fee
-   */
-  function deriveAmountAfterFee(amount: number) {
-    return amount - amount * JB_FEE
-  }
-
-  /**
    * Derive payout amount from the % of the distributionLimit
    * @param percent - Percent of distributionLimit in parts-per-billion (PPB)
    * @returns Amount in the distributionLimitCurrency.
    */
-  function derivePayoutAmount({
+  function _derivePayoutAmount({
     payoutSplit,
     dontApplyFee,
   }: {
     payoutSplit: Split
     dontApplyFee?: boolean
   }) {
-    if (!distributionLimit || distributionLimitIsInfinite) return 0
-    const amountBeforeFee =
-      (payoutSplit.percent / ONE_BILLION) * distributionLimit
-    if (isProjectSplit(payoutSplit) || dontApplyFee) return amountBeforeFee // projects dont have fee applied
-    return deriveAmountAfterFee(amountBeforeFee)
+    return derivePayoutAmount({
+      payoutSplit,
+      distributionLimit,
+      dontApplyFee,
+    })
   }
 
   /**
@@ -382,7 +365,7 @@ export const usePayoutsTable = () => {
     let adjustedSplits: Split[] = newSplits
     let newDistributionLimit = distributionLimit
     if (distributionLimit && !distributionLimitIsInfinite) {
-      const currentAmount = derivePayoutAmount({
+      const currentAmount = _derivePayoutAmount({
         payoutSplit,
         dontApplyFee: true,
       })
@@ -411,8 +394,9 @@ export const usePayoutsTable = () => {
     setCurrency,
     currencyOrPercentSymbol,
     payoutSplits,
+    setPayoutSplits: _setPayoutSplits,
     setSplits100Percent,
-    derivePayoutAmount,
+    derivePayoutAmount: _derivePayoutAmount,
     formattedPayoutPercent,
     roundingPrecision,
     handlePayoutSplitAmountChanged,

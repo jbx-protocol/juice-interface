@@ -1,6 +1,7 @@
 import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
 import { MaxUint54 } from 'constants/numbers'
 import { BigNumber } from 'ethers'
+import { FundingCycle } from 'generated/graphql'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycle,
@@ -199,3 +200,80 @@ export const isFiniteDistributionLimit = (
       !isInfiniteDistributionLimit(distributionLimit),
   )
 }
+
+// Convert the fundingCycle object returned by subgraph query to the native fundingCycle type used by the app
+export const sgFCToV2V3FundingCycle = (
+  fc: Pick<
+    FundingCycle,
+    | 'ballot'
+    | 'basedOn'
+    | 'configuration'
+    | 'discountRate'
+    | 'duration'
+    | 'metadata'
+    | 'number'
+    | 'startTimestamp'
+    | 'weight'
+  >,
+): V2V3FundingCycle => ({
+  ballot: fc.ballot as string,
+  basedOn: BigNumber.from(fc.basedOn),
+  configuration: fc.configuration,
+  discountRate: fc.discountRate,
+  duration: BigNumber.from(fc.duration),
+  metadata: fc.metadata,
+  number: BigNumber.from(fc.number),
+  start: BigNumber.from(fc.startTimestamp),
+  weight: fc.weight,
+})
+
+// Derive fundingCycleMetdata type from the fundingCycle object returned by subgraph query
+export const sgFCToV2V3FundingCycleMetadata = (
+  fc: Pick<
+    FundingCycle,
+    | 'controllerMigrationAllowed'
+    | 'mintingAllowed'
+    | 'terminalMigrationAllowed'
+    | 'ballotRedemptionRate'
+    | 'dataSource'
+    | 'setControllerAllowed'
+    | 'setTerminalsAllowed'
+    | 'transfersPaused'
+    | 'shouldHoldFees'
+    | 'metadata'
+    | 'useTotalOverflowForRedemptions'
+    | 'burnPaused'
+    | 'distributionsPaused'
+    | 'pausePay'
+    | 'redeemPaused'
+    | 'preferClaimedTokenOverride'
+    | 'redemptionRate'
+    | 'reservedRate'
+    | 'useDataSourceForPay'
+    | 'useDataSourceForRedeem'
+  >,
+): V2V3FundingCycleMetadata => ({
+  allowChangeToken: false, // only v2, not supported in subgraph
+  allowControllerMigration: fc.controllerMigrationAllowed,
+  allowMinting: fc.mintingAllowed,
+  allowTerminalMigration: fc.terminalMigrationAllowed,
+  ballotRedemptionRate: BigNumber.from(fc.ballotRedemptionRate),
+  dataSource: fc.dataSource,
+  global: {
+    allowSetController: fc.setControllerAllowed,
+    allowSetTerminals: fc.setTerminalsAllowed,
+    pauseTransfers: fc.transfersPaused,
+  },
+  holdFees: fc.shouldHoldFees,
+  metadata: fc.metadata,
+  useTotalOverflowForRedemptions: fc.useTotalOverflowForRedemptions,
+  pauseBurn: fc.burnPaused,
+  pauseDistributions: fc.distributionsPaused,
+  pausePay: fc.pausePay,
+  pauseRedeem: fc.redeemPaused,
+  preferClaimedTokenOverride: fc.preferClaimedTokenOverride,
+  redemptionRate: BigNumber.from(fc.redemptionRate),
+  reservedRate: BigNumber.from(fc.reservedRate),
+  useDataSourceForPay: fc.useDataSourceForPay,
+  useDataSourceForRedeem: fc.useDataSourceForRedeem,
+})

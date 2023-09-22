@@ -8,11 +8,13 @@ import { PayoutSplitRow } from './PayoutSplitRow'
 import { PayoutsTableCell } from './PayoutsTableCell'
 import { PayoutsTableRow } from './PayoutsTableRow'
 import { TotalRows } from './TotalRows'
+import { usePayoutsTableContext } from './context/PayoutsTableContext'
 
 const Row = PayoutsTableRow
 const Cell = PayoutsTableCell
 
 export function PayoutsTableBody() {
+  const { topAccessory } = usePayoutsTableContext()
   const {
     payoutSplits,
     currency,
@@ -20,11 +22,11 @@ export function PayoutsTableBody() {
     setCurrency,
     distributionLimit,
   } = usePayoutsTable()
-
   const emptyState = distributionLimit === 0
 
   return (
     <>
+      {topAccessory}
       <div className="rounded-lg border border-smoke-200 dark:border-slate-600">
         <Allocation
           allocationCurrency={getV2V3CurrencyOption(currency)}

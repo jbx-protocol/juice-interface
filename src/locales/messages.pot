@@ -152,9 +152,6 @@ msgstr ""
 msgid "Data from current cycle"
 msgstr ""
 
-msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before deploying the new cycle"
-msgstr ""
-
 msgid "Add NFT"
 msgstr ""
 
@@ -212,9 +209,6 @@ msgstr ""
 msgid "Juicebox loading animation"
 msgstr ""
 
-msgid "Remaining balance"
-msgstr ""
-
 msgid "Payments to this project paused"
 msgstr ""
 
@@ -270,9 +264,6 @@ msgid "No"
 msgstr ""
 
 msgid "How do I decide?"
-msgstr ""
-
-msgid "Try it now"
 msgstr ""
 
 msgid "<0>Issuance reduction rate</0>. This allows you to predictably reduce your project token's issuance rate (tokens per ETH) over time without needing to manually edit your cycle."
@@ -398,9 +389,6 @@ msgstr ""
 msgid "Tokens receiver"
 msgstr ""
 
-msgid "Pay out ETH from your project to the Ethereum wallets or Juicebox projects of your choice. ETH which <0>isn't</0> paid out will be available for token redemptions, or for use in future cycles. Payouts reset each cycle."
-msgstr ""
-
 msgid "Next:"
 msgstr ""
 
@@ -450,6 +438,9 @@ msgid "Transfer unclaimed tokens"
 msgstr ""
 
 msgid "You've completed this step."
+msgstr ""
+
+msgid "Manage how your project's tokens should work."
 msgstr ""
 
 msgid "Connect wallet to send reserved {tokenTextPlural}"
@@ -782,6 +773,9 @@ msgstr ""
 msgid "Receive ERC-20 tokens"
 msgstr ""
 
+msgid "New NFTs will be available in your next cycle as long as it starts after your edit deadline."
+msgstr ""
+
 msgid "Confirm"
 msgstr ""
 
@@ -905,9 +899,6 @@ msgstr ""
 msgid "This account hasn't created any projects yet."
 msgstr ""
 
-msgid "Restrictions for your cycles."
-msgstr ""
-
 msgid "Project upgrades"
 msgstr ""
 
@@ -960,9 +951,6 @@ msgid "Removing the payment will remove all the items from the cart. Are you sur
 msgstr ""
 
 msgid "You are eligible for {0} <0/> (NFT)"
-msgstr ""
-
-msgid "Are you sure you want to remove ${0}?"
 msgstr ""
 
 msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
@@ -1119,6 +1107,9 @@ msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr ""
 
 msgid "Delete project update"
+msgstr ""
+
+msgid "Are you sure you want to remove {0}?"
 msgstr ""
 
 msgid "I understand and accept the risks associated with <0>this project</0> and the <1>Juicebox Protocol</1>."
@@ -2003,6 +1994,9 @@ msgstr ""
 msgid "{0} reserved"
 msgstr ""
 
+msgid "Pay out ETH from your project to any Ethereum wallet or Juicebox project. ETH which <0>isn't</0> paid out will be available for token redemptions, or for use in future cycles. Payouts reset each cycle."
+msgstr ""
+
 msgid "Built for ideas like yours"
 msgstr ""
 
@@ -2321,9 +2315,6 @@ msgstr ""
 msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 
-msgid "Deploy cycle"
-msgstr ""
-
 msgid "Juicebox native"
 msgstr ""
 
@@ -2519,10 +2510,10 @@ msgstr ""
 msgid "{payerRate} {tokenSymbolPlural}/ETH"
 msgstr ""
 
-msgid "You haven't launched an NFT collection yet! Edit your cycle to add NFTs."
+msgid "Deploy an address which forwards ETH to your project. This makes it easier to pay your project with third-party tools."
 msgstr ""
 
-msgid "Deploy an address which forwards ETH to your project. This makes it easier to pay your project with third-party tools."
+msgid "Remaining (to project owner)"
 msgstr ""
 
 msgid "Ethereum wallet address"
@@ -2661,9 +2652,6 @@ msgid "Address or ID"
 msgstr ""
 
 msgid "Error downloading redemptions, try again."
-msgstr ""
-
-msgid "Review reconfiguration"
 msgstr ""
 
 msgid "Seconds"
@@ -2867,9 +2855,6 @@ msgstr ""
 msgid "If you don't raise the sum of your payouts (<0/>{distributionLimit}), this address will receive {0}% of all the ETH you raise."
 msgstr ""
 
-msgid "Project updates 📢"
-msgstr ""
-
 msgid "When checked, payments made through this address will mint the project's ERC-20 tokens. Payments will incur slightly higher gas fees. When unchecked, the Juicebox protocol will internally track the beneficiary's tokens, and they can claim their ERC-20 tokens at any time."
 msgstr ""
 
@@ -2982,9 +2967,6 @@ msgid "Track the total voting power of each address over time. <0>Learn more.</0
 msgstr ""
 
 msgid "All of this project's ETH will be paid out. Token holders will receive <0>no ETH</0> when redeeming their tokens."
-msgstr ""
-
-msgid "Keep contributors up to date by adding updates periodically to your project."
 msgstr ""
 
 msgid "Re-launch on V3"
@@ -3225,9 +3207,6 @@ msgid "Discard"
 msgstr ""
 
 msgid "Connect wallet to pay"
-msgstr ""
-
-msgid "How your project will be paid and pay out ETH."
 msgstr ""
 
 msgid "Mint tokens as ERC-20"
@@ -3776,9 +3755,6 @@ msgstr ""
 msgid "Project settings"
 msgstr ""
 
-msgid "Unix timestamp in seconds (for example, {0}). Leave blank to start as soon as possible."
-msgstr ""
-
 msgid "The issuance rate will not change unless you edit it. There will be less of an incentive to support this project early on."
 msgstr ""
 
@@ -4098,9 +4074,6 @@ msgid "When enabled, supporters can only mint NFTs by paying their exact price. 
 msgstr ""
 
 msgid "Discord link"
-msgstr ""
-
-msgid "Your project's token."
 msgstr ""
 
 msgid "Minimum contribution"
@@ -4433,6 +4406,9 @@ msgstr ""
 msgid "Add recipient"
 msgstr ""
 
+msgid "Your new NFTs have been deployed"
+msgstr ""
+
 msgid "Your balance"
 msgstr ""
 
@@ -4458,9 +4434,6 @@ msgid "This custom deadline contract"
 msgstr ""
 
 msgid "I have a media inquiry."
-msgstr ""
-
-msgid "Add NFTs to cycle"
 msgstr ""
 
 msgid "Payouts:"
@@ -4512,9 +4485,6 @@ msgid "Simple token rules that will work for most projects. You can edit these r
 msgstr ""
 
 msgid "Start"
-msgstr ""
-
-msgid "Manage how your projects tokens should work."
 msgstr ""
 
 msgid "File empty or corrupt. Try again."
@@ -4638,9 +4608,6 @@ msgid "Payouts cannot exceed 100%"
 msgstr ""
 
 msgid "Data from upcoming cycle"
-msgstr ""
-
-msgid "Your project's NFTs."
 msgstr ""
 
 msgid "Visit jbdao.org"

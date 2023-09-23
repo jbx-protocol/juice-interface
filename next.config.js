@@ -1,8 +1,3 @@
-// This file sets a custom webpack configuration to use your Next.js app
-// with Sentry.
-// https://nextjs.org/docs/api-reference/next.config.js/introduction
-// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-const { withSentryConfig } = require('@sentry/nextjs')
 const withBundleAnalyzer = require('@next/bundle-analyzer')
 const linguiConfig = require('./lingui.config')
 
@@ -73,7 +68,6 @@ const CONNECT_SRC = [
   ...WALLET_CONNECT_URLS,
   'https://*.supabase.co',
   'https://api.ensideas.com',
-  'https://*.sentry.io',
 ]
 
 const FRAME_ANCESTORS = ['https://*.gnosis.io', 'https://*.safe.global']
@@ -180,11 +174,8 @@ const nextConfig = removeImports({
       },
     ]
   },
-  sentry: {
-    hideSourceMaps: true,
-  },
 })
 
 module.exports = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
-})(withSentryConfig(nextConfig, { silent: true }))
+})(nextConfig)

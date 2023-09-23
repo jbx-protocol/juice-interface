@@ -50,7 +50,7 @@ export const emitConfirmationDeletionModal = ({
   const title = (() => {
     if ('title' in props) return props.title
     if ('type' in props) {
-      return <Trans>Are you sure you want to remove ${props.type}?</Trans>
+      return <Trans>Are you sure you want to remove {props.type}?</Trans>
     }
     return <Trans>Are you sure?</Trans>
   })()

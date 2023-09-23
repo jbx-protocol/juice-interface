@@ -1,5 +1,5 @@
-import { ErrorBoundary } from '@sentry/nextjs'
 import { PropsWithChildren } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import { Callout } from '.'
 
 export function ErrorBoundaryCallout({

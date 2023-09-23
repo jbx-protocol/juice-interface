@@ -1,65 +1,29 @@
-import { Trans } from '@lingui/macro'
-import { Button, Empty } from 'antd'
-import Loading from 'components/Loading'
+import * as constants from '@ethersproject/constants'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
-import Image from 'next/image'
-import Link from 'next/link'
+import { useNftDeployerCanReconfigure } from 'hooks/JB721Delegate/contractReader/useNftDeployerCanReconfigure'
 import { useContext } from 'react'
-import { settingsPagePath } from 'utils/routes'
-import { UpdateNftsPage } from '../NewEditNftsPage/UpdateNftsPage/UpdateNftsPage'
-import blueberry from '/public/assets/images/blueberry-ol.png'
+import { EnableNftsCard } from './LaunchNftCollection/EnableNftsCard'
+import { LaunchNftsPage } from './LaunchNftCollection/LaunchNftsCollection'
+import { UpdateNftsPage } from './UpdateNftsPage/UpdateNftsPage'
 
 export function EditNftsPage() {
-  const { value: hasExistingNfts, loading: hasNftsLoading } = useHasNftRewards()
   const { projectId } = useContext(ProjectMetadataContext)
-  const { handle } = useContext(V2V3ProjectContext)
+  const { projectOwnerAddress, fundingCycleMetadata } =
+    useContext(V2V3ProjectContext)
+  const hasExistingNfts =
+    fundingCycleMetadata?.dataSource !== constants.AddressZero
 
-  if (hasNftsLoading) {
-    return <Loading />
+  const nftDeployerCanReconfigure = useNftDeployerCanReconfigure({
+    projectId,
+    projectOwnerAddress,
+  })
+
+  if (hasExistingNfts) {
+    return <UpdateNftsPage />
+  } else if (!nftDeployerCanReconfigure) {
+    return <EnableNftsCard />
+  } else {
+    return <LaunchNftsPage />
   }
-
-  if (!hasExistingNfts) {
-    return (
-      <div className="m-auto max-w-lg">
-        <Empty
-          image={
-            <div className="m-auto h-24 w-24 grayscale">
-              <Image
-                className="grayscale"
-                src={blueberry}
-                alt="Sexy Juicebox blueberry with bright pink lipstick spraying a can of spraypaint"
-                loading="lazy"
-                style={{
-                  maxWidth: '100%',
-                  height: 'auto',
-                }}
-              />
-            </div>
-          }
-          description={
-            <>
-              <p>
-                <Trans>
-                  You haven't launched an NFT collection yet! Edit your cycle to
-                  add NFTs.
-                </Trans>
-              </p>
-              <Link
-                href={settingsPagePath('cycle', { projectId, handle })}
-                legacyBehavior
-              >
-                <Button type="primary">
-                  <Trans>Add NFTs to cycle</Trans>
-                </Button>
-              </Link>
-            </>
-          }
-        />
-      </div>
-    )
-  }
-
-  return <UpdateNftsPage />
 }

@@ -17,7 +17,8 @@ import { usePayoutsTableContext } from './context/PayoutsTableContext'
 export function HeaderRows() {
   const [addRecipientModalOpen, setAddRecipientModalOpen] = useState<boolean>()
 
-  const { hideExplaination, hideSettings } = usePayoutsTableContext()
+  const { hideExplaination, hideSettings, addPayoutsDisabled } =
+    usePayoutsTableContext()
 
   const { distributionLimitIsInfinite, handleNewPayoutSplit, payoutSplits } =
     usePayoutsTable()
@@ -58,15 +59,17 @@ export function HeaderRows() {
         </div>
         <div className={`align-top ${hideExplaination ? 'pt-3' : 'pt-6'}`}>
           <div className="flex items-center justify-end gap-3">
-            <Button
-              type="ghost"
-              onClick={() => setAddRecipientModalOpen(true)}
-              icon={<PlusOutlined />}
-            >
-              <span>
-                <Trans>Add recipient</Trans>
-              </span>
-            </Button>
+            {addPayoutsDisabled ? null : (
+              <Button
+                type="ghost"
+                onClick={() => setAddRecipientModalOpen(true)}
+                icon={<PlusOutlined />}
+              >
+                <span>
+                  <Trans>Add recipient</Trans>
+                </span>
+              </Button>
+            )}
             {payoutSplits?.length === 0 || hideSettings ? null : (
               <PayoutTableSettings />
             )}

@@ -3,36 +3,40 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import {
-  V2V3FundingCycle,
-  V2V3FundingCycleMetadata,
-} from 'models/v2v3/fundingCycle'
-import { Fragment, useCallback } from 'react'
+  useProjectContext,
+  useProjectMetadata,
+} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { BigNumber } from 'ethers'
+import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import moment from 'moment'
+import { Fragment, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useHistorySubPanel } from '../hooks/useHistorySubPanel'
+import { isBigNumberish } from 'utils/bigNumbers'
+import { fromWad } from 'utils/format/formatNumber'
+import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import {
+  sgFCToV2V3FundingCycle,
+  sgFCToV2V3FundingCycleMetadata,
+} from 'utils/v2v3/fundingCycle'
+import { usePastFundingCycles } from '../hooks/usePastFundingCycles'
 import { HistoricalConfigurationPanel } from './HistoricalConfigurationPanel'
 
-export type HistoryData = {
-  _metadata: {
-    fundingCycle: V2V3FundingCycle
-    metadata: V2V3FundingCycleMetadata
-  }
-  cycleNumber: string
-  withdrawn: string
-  date: string
-}[]
-
 export const HistorySubPanel = () => {
-  const { loading, data, error, paginationToken, paginateHistory } =
-    useHistorySubPanel()
+  const { projectId } = useProjectMetadata()
+
+  const [isFetchingMore, setIsFetchingMore] = useState<boolean>()
+  const { data, fetchMore, loading, error } = usePastFundingCycles({
+    projectId,
+  })
+
+  const isLoading = loading || isFetchingMore
+
   const tableHeaders = [t`Cycle #`, t`Withdrawn`, t`Date`]
-  const hasMore = !!paginationToken
+  const hasMore =
+    data && data.fundingCycles[data.fundingCycles.length - 1].number > 1
 
-  const loadMore = useCallback(
-    async () => await paginateHistory(paginationToken),
-    [paginateHistory, paginationToken],
-  )
-
-  return data.length || loading ? (
+  return data?.fundingCycles.length || isLoading ? (
     <div className="grid min-w-full grid-cols-1">
       <div className="rounded-t-lg bg-smoke-50 p-4 pr-2 dark:bg-slate-700">
         <div className="grid grid-cols-config-table gap-3">
@@ -52,22 +56,26 @@ export const HistorySubPanel = () => {
 
       <div className="divide-y divide-grey-200 dark:divide-slate-500">
         {error ? (
-          <div className="text-error-400">{error}</div>
+          <div className="text-error-400">{error.message}</div>
         ) : (
           <>
-            {data.map(cycle => (
-              <Disclosure key={cycle.cycleNumber} as={Fragment}>
+            {data?.fundingCycles.map(cycle => (
+              <Disclosure key={cycle.number} as={Fragment}>
                 {({ open }) => (
                   <div className="p-4 pr-2">
                     <Disclosure.Button
-                      data-testid={`disclosure-button-${cycle.cycleNumber}`}
+                      data-testid={`disclosure-button-${cycle.number}`}
                       as="div"
                       className="grid cursor-pointer grid-cols-config-table gap-3 whitespace-nowrap text-sm font-medium"
                     >
-                      <div>#{cycle.cycleNumber}</div>
-                      <div>{cycle.withdrawn}</div>
+                      <div>#{cycle.number}</div>
+                      <div>
+                        <FormattedWithdrawnAmount {...cycle} />
+                      </div>
                       <div className="text-grey-500 dark:text-slate-200">
-                        {cycle.date}
+                        {`${moment(
+                          (cycle.startTimestamp + cycle.duration) * 1000,
+                        ).fromNow(true)} ago`}
                       </div>
                       <div className="text-gray-500 flex items-center justify-end whitespace-nowrap text-sm">
                         <ChevronDownIcon
@@ -86,18 +94,31 @@ export const HistorySubPanel = () => {
                       leaveTo="max-h-0 overflow-hidden opacity-0"
                     >
                       <Disclosure.Panel className="p-4">
-                        <HistoricalConfigurationPanel {...cycle._metadata} />
+                        <HistoricalConfigurationPanel
+                          fundingCycle={sgFCToV2V3FundingCycle(cycle)}
+                          metadata={sgFCToV2V3FundingCycleMetadata(cycle)}
+                        />
                       </Disclosure.Panel>
                     </Transition>
                   </div>
                 )}
               </Disclosure>
             ))}
-            {loading ? (
+            {isLoading ? (
               <LoadingState />
             ) : (
               hasMore && (
-                <Button type="link" onClick={loadMore}>
+                <Button
+                  type="link"
+                  onClick={() => {
+                    setIsFetchingMore(true)
+                    fetchMore({
+                      variables: {
+                        skip: data?.fundingCycles.length + 1,
+                      },
+                    }).finally(() => setIsFetchingMore(false))
+                  }}
+                >
                   <Trans>Load more</Trans>
                 </Button>
               )
@@ -137,3 +158,56 @@ const SkeletonRow = () => (
     </div>
   </div>
 )
+
+/**
+ * Component to get the currency for a specific funding cycle, and render its formatted withdrawnAmount in that currency
+ */
+function FormattedWithdrawnAmount({
+  configuration,
+  withdrawnAmount,
+}: {
+  configuration: BigNumber
+  withdrawnAmount: BigNumber
+}) {
+  const { projectId } = useProjectMetadata()
+  const { primaryETHTerminal } = useProjectContext()
+
+  const { data: distributionLimit } = useProjectDistributionLimit({
+    projectId,
+    configuration: configuration.toString(),
+    terminal: primaryETHTerminal,
+  })
+
+  const currencyOption = useMemo(() => {
+    if (typeof distributionLimit === 'undefined') return
+
+    if (!(Array.isArray(distributionLimit) && distributionLimit.length === 2)) {
+      console.error(
+        'Unexpected result from distributionLimitOf',
+        distributionLimit,
+      )
+      throw new Error('Unexpected result from distributionLimitOf')
+    }
+
+    const [, currency] = distributionLimit
+
+    if (!isBigNumberish(currency)) {
+      console.error(
+        'Unexpected result from distributionLimitOf',
+        distributionLimit,
+      )
+      throw new Error('Unexpected result from distributionLimitOf')
+    }
+    const _currencyOption = BigNumber.from(currency).toNumber()
+    if (_currencyOption !== 0) return _currencyOption as V2V3CurrencyOption
+  }, [distributionLimit])
+
+  return (
+    <span>
+      {formatCurrencyAmount({
+        amount: fromWad(withdrawnAmount),
+        currency: currencyOption,
+      }) ?? '0Ξ'}
+    </span>
+  )
+}

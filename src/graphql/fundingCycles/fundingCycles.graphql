@@ -1,0 +1,49 @@
+query FundingCycles(
+  $where: FundingCycle_filter
+  $orderBy: FundingCycle_orderBy
+  $orderDirection: OrderDirection
+  $first: Int
+  $skip: Int
+) {
+  fundingCycles(
+    where: $where
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    first: $first
+    skip: $skip
+  ) {
+    id
+    projectId
+    mustStartAtOrAfter
+    preferClaimedTokenOverride
+    number
+    basedOn
+    startTimestamp
+    duration
+    weight
+    discountRate
+    ballot
+    configuration
+    metadata
+    transfersPaused
+    reservedRate
+    redemptionRate
+    ballotRedemptionRate
+    pausePay
+    distributionsPaused
+    redeemPaused
+    burnPaused
+    mintingAllowed
+    dataSource
+    controllerMigrationAllowed
+    setControllerAllowed
+    setTerminalsAllowed
+    shouldHoldFees
+    terminalMigrationAllowed
+    useDataSourceForPay
+    useDataSourceForRedeem
+    useTotalOverflowForRedemptions
+    metametadata
+    withdrawnAmount
+  }
+}

@@ -13,6 +13,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { ProjectEventsQuery } from 'generated/graphql'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
 import { useContext } from 'react'
+import { sgFCToV2V3FundingCycleMetadata } from 'utils/v2v3/fundingCycle'
 import { ActivityEvent } from '../ActivityElement'
 
 export default function ConfigureEventElem({
@@ -42,27 +43,8 @@ export default function ConfigureEventElem({
       : undefined,
   }
 
-  const fundingCycleMetadata: Partial<V2V3FundingCycleMetadata> = {
-    reservedRate: BigNumber.from(event.reservedRate),
-    redemptionRate: BigNumber.from(event.redemptionRate),
-    global: {
-      pauseTransfers: event.transfersPaused,
-      allowSetController: event.setControllerAllowed,
-      allowSetTerminals: event.setTerminalsAllowed,
-    },
-    allowControllerMigration: event.controllerMigrationAllowed,
-    allowTerminalMigration: event.terminalMigrationAllowed,
-    pausePay: event.pausePay,
-    pauseRedeem: event.redeemPaused,
-    pauseBurn: event.burnPaused,
-    pauseDistributions: event.distributionsPaused,
-    useTotalOverflowForRedemptions: event.useTotalOverflowForRedemptions,
-    holdFees: event.shouldHoldFees,
-    dataSource: event.dataSource,
-    useDataSourceForPay: event.useDataSourceForPay,
-    useDataSourceForRedeem: event.useDataSourceForRedeem,
-    allowMinting: event.mintingAllowed,
-  }
+  const fundingCycleMetadata =
+    event.fundingCycle && sgFCToV2V3FundingCycleMetadata(event.fundingCycle)
 
   return (
     <ActivityEvent

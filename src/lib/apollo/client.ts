@@ -1,6 +1,7 @@
 import {
   ApolloClient,
   ApolloLink,
+  FieldPolicy,
   HttpLink,
   InMemoryCache,
 } from '@apollo/client'
@@ -33,21 +34,24 @@ const schema = buildClientSchema(
 const scalarsLink = withScalars({ schema, typesMap })
 const httpLink = new HttpLink({ uri: subgraphUri() })
 
+const paginationConfig: FieldPolicy = {
+  // Create a new cache list when the `where` variable changes. Otherwise apply the below `merge` function to any existing cached list, even if other variables change like `first` or `skip`. This strategy enables infinite paging for unique lists while still preventing cached data from being unexpectedly included in query results, especially when updating the `where` argument to filter events by Paid, Redeemed, etc.
+  // https://www.apollographql.com/docs/react/pagination/key-args/
+  keyArgs: ['where'],
+  merge(existing = [], incoming) {
+    // For a single list (even if `first` or `skip` arguments have changed) concatenate results of subsequent queries into the existing cache
+    // https://www.apollographql.com/docs/react/pagination/core-api
+    return [...existing, ...incoming]
+  },
+}
+
 const client = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
         fields: {
-          projectEvents: {
-            // Create a new cache list when the `where` variable changes. Otherwise apply the below `merge` function to any existing cached list, even if other variables change like `first` or `skip`. This strategy enables infinite paging for unique lists while still preventing cached data from being unexpectedly included in query results, especially when updating the `where` argument to filter events by Paid, Redeemed, etc.
-            // https://www.apollographql.com/docs/react/pagination/key-args/
-            keyArgs: ['where'],
-            merge(existing = [], incoming) {
-              // For a single list (even if `first` or `skip` arguments have changed) concatenate results of subsequent queries into the existing cache
-              // https://www.apollographql.com/docs/react/pagination/core-api
-              return [...existing, ...incoming]
-            },
-          },
+          projectEvents: paginationConfig,
+          fundingCycles: paginationConfig,
         },
       },
     },

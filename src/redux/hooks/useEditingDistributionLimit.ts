@@ -76,10 +76,18 @@ export const useEditingDistributionLimit = (): [
   const setDistributionLimitAmount = useCallback(
     (input: BigNumber) => {
       if (!defaultJBETHPaymentTerminal) return
+
+      const currentFundAccessConstraint = fundAccessConstraints?.[0] ?? {
+        terminal: defaultJBETHPaymentTerminal?.address,
+        token: ETH_TOKEN_ADDRESS,
+        distributionLimitCurrency: V2V3_CURRENCY_ETH.toString(),
+        overflowAllowance: '0',
+        overflowAllowanceCurrency: '0',
+      }
       dispatch(
         editingV2ProjectActions.setFundAccessConstraints([
           {
-            ...fundAccessConstraints?.[0],
+            ...currentFundAccessConstraint,
             distributionLimit: fromWad(
               input === undefined ? MAX_DISTRIBUTION_LIMIT : input,
             ),

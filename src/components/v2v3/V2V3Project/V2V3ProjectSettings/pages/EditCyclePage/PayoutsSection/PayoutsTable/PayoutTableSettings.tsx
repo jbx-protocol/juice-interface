@@ -9,6 +9,9 @@ import { fromWad } from 'utils/format/formatNumber'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { SwitchToUnlimitedModal } from './modals/SwitchToUnlimitedModal'
 
+export const payoutsTableMenuItemsLabelClass = 'flex gap-2 items-center text-sm'
+export const payoutsTableMenuItemsIconClass = 'h-5 w-5'
+
 export function PayoutTableSettings() {
   const [switchToUnlimitedModalOpen, setSwitchToUnlimitedModalOpen] =
     useState<boolean>(false)
@@ -34,8 +37,6 @@ export function PayoutTableSettings() {
     setSwitchToUnlimitedModalOpen(false)
   }
 
-  const menuItemsLabelClass = 'flex gap-2 items-center text-sm'
-  const menuItemsIconClass = 'h-5 w-5'
   let menuItems: PopupMenuItem[] = []
 
   if (distributionLimitIsInfinite) {
@@ -44,8 +45,8 @@ export function PayoutTableSettings() {
       {
         id: 'limited',
         label: (
-          <div className={menuItemsLabelClass}>
-            <ReceiptPercentIcon className={menuItemsIconClass} />
+          <div className={payoutsTableMenuItemsLabelClass}>
+            <ReceiptPercentIcon className={payoutsTableMenuItemsIconClass} />
             <Trans>Switch to limited</Trans>
           </div>
         ),
@@ -58,8 +59,8 @@ export function PayoutTableSettings() {
       {
         id: 'unlimited',
         label: (
-          <div className={menuItemsLabelClass}>
-            <ReceiptPercentIcon className={menuItemsIconClass} />
+          <div className={payoutsTableMenuItemsLabelClass}>
+            <ReceiptPercentIcon className={payoutsTableMenuItemsIconClass} />
             <Trans>Switch to unlimited</Trans>
           </div>
         ),
@@ -74,8 +75,8 @@ export function PayoutTableSettings() {
       {
         id: 'delete',
         label: (
-          <div className={menuItemsLabelClass}>
-            <TrashIcon className={menuItemsIconClass} />
+          <div className={payoutsTableMenuItemsLabelClass}>
+            <TrashIcon className={payoutsTableMenuItemsIconClass} />
             <Trans>Delete all</Trans>
           </div>
         ),

@@ -12,6 +12,7 @@ export interface PayoutsTableContextProps {
   hideExplaination?: boolean
   topAccessory?: ReactNode
   hideSettings?: boolean
+  addPayoutsDisabled?: boolean
 }
 
 export const PayoutsTableContext = createContext<

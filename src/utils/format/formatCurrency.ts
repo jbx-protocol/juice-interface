@@ -1,6 +1,7 @@
 import { BigNumber, BigNumberish } from 'ethers'
 
 import { CurrencyName } from 'constants/currency'
+import round from 'lodash/round'
 import { parseWad } from './formatNumber'
 
 export class CurrencyUtils {
@@ -59,7 +60,7 @@ export class CurrencyUtils {
       return parseWad(this.weiToUsd(amount)?.toString())
     if (targetCurrency === 'ETH' && this.usdPerEth !== undefined)
       return BigNumber.from(amount)
-        .div(this.usdPerEth * 100)
+        .div(round(this.usdPerEth * 100))
         .mul(100)
   }
 }

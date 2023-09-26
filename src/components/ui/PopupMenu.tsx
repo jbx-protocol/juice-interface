@@ -26,6 +26,7 @@ type ButtonItem = {
 export type PopupMenuItem = ComponentItem | LinkItem | ButtonItem
 
 export type PopupMenuProps = {
+  customButton?: ReactNode
   className?: string
   popupClassName?: string
   menuButtonIconClassName?: string
@@ -41,6 +42,7 @@ function isButtonItem(item: PopupMenuItem): item is ButtonItem {
 }
 
 export const PopupMenu = ({
+  customButton,
   className,
   popupClassName,
   items,
@@ -53,12 +55,16 @@ export const PopupMenu = ({
           <>
             <Menu.Button
               className={twMerge(
-                open && 'rounded-lg bg-smoke-100 dark:bg-slate-600',
+                open &&
+                  !customButton &&
+                  'rounded-lg bg-smoke-100 dark:bg-slate-600',
               )}
             >
-              <EllipsisVerticalIcon
-                className={twMerge('h-6 w-6', menuButtonIconClassName)}
-              />
+              {customButton ?? (
+                <EllipsisVerticalIcon
+                  className={twMerge('h-6 w-6', menuButtonIconClassName)}
+                />
+              )}
             </Menu.Button>
 
             <Menu.Items

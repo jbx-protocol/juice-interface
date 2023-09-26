@@ -6,59 +6,28 @@ import {
   useProjectContext,
   useProjectMetadata,
 } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
-import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
-import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
-import { BigNumber, Contract } from 'ethers'
-import {
-  FundingCycle_OrderBy,
-  OrderDirection,
-  useFundingCyclesQuery,
-} from 'generated/graphql'
-import { client } from 'lib/apollo/client'
-import { V2V3ContractName } from 'models/v2v3/contracts'
+import { BigNumber } from 'ethers'
+import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import {
-  V2V3FundingCycle,
-  V2V3FundingCycleMetadata,
-} from 'models/v2v3/fundingCycle'
 import moment from 'moment'
-import { Fragment, useContext, useEffect, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { isBigNumberish } from 'utils/bigNumbers'
-import { callContract } from 'utils/callContract'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import {
   sgFCToV2V3FundingCycle,
   sgFCToV2V3FundingCycleMetadata,
 } from 'utils/v2v3/fundingCycle'
+import { usePastFundingCycles } from '../hooks/usePastFundingCycles'
 import { HistoricalConfigurationPanel } from './HistoricalConfigurationPanel'
-
-export type HistoryData = {
-  _metadata: {
-    fundingCycle: V2V3FundingCycle
-    metadata: V2V3FundingCycleMetadata
-  }
-  cycleNumber: string
-  withdrawn: string
-  date: string
-}[]
-
-const pageSize = 5
 
 export const HistorySubPanel = () => {
   const { projectId } = useProjectMetadata()
 
   const [isFetchingMore, setIsFetchingMore] = useState<boolean>()
-  const { data, fetchMore, loading, error } = useFundingCyclesQuery({
-    client,
-    variables: {
-      where: { projectId },
-      orderBy: FundingCycle_OrderBy.number,
-      orderDirection: OrderDirection.desc,
-      first: pageSize,
-      skip: 1, // skip current cycle
-    },
+  const { data, fetchMore, loading, error } = usePastFundingCycles({
+    projectId,
   })
 
   const isLoading = loading || isFetchingMore
@@ -202,48 +171,36 @@ function FormattedWithdrawnAmount({
 }) {
   const { projectId } = useProjectMetadata()
   const { primaryETHTerminal } = useProjectContext()
-  const {
-    contracts,
-    versions: { JBControllerVersion },
-  } = useContext(V2V3ProjectContractsContext)
 
-  const [currencyOption, setCurrencyOption] = useState<V2V3CurrencyOption>()
+  const { data: distributionLimit } = useProjectDistributionLimit({
+    projectId,
+    configuration: configuration.toString(),
+    terminal: primaryETHTerminal,
+  })
 
-  const terminal = primaryETHTerminal
-  const { JBController, JBFundAccessConstraintsStore } = contracts
-  const contract =
-    JBControllerVersion === V2V3ContractName.JBController3_1
-      ? JBFundAccessConstraintsStore
-      : JBController
+  const currencyOption = useMemo(() => {
+    if (typeof distributionLimit === 'undefined') return
 
-  useEffect(() => {
-    callContract({
-      contract,
-      contracts: contracts as Record<string, Contract>,
-      functionName: 'distributionLimitOf',
-      args:
-        projectId && configuration && terminal && contract
-          ? [projectId, configuration.toString(), terminal, ETH_TOKEN_ADDRESS]
-          : null,
-    }).then(result => {
-      if (typeof result === undefined) return
-      if (!(Array.isArray(result) && result.length === 2)) {
-        console.error('Unexpected result from distributionLimitOf', result)
-        throw new Error('Unexpected result from distributionLimitOf')
-      }
-      const [, currency] = result
-      if (!isBigNumberish(currency)) {
-        console.error('Unexpected result from distributionLimitOf', result)
-        throw new Error('Unexpected result from distributionLimitOf')
-      }
-      const _currencyOption = BigNumber.from(currency).toNumber()
-      if (_currencyOption === 0) {
-        setCurrencyOption(undefined)
-      } else {
-        setCurrencyOption(_currencyOption as V2V3CurrencyOption)
-      }
-    })
-  }, [projectId, configuration, terminal, contract, contracts])
+    if (!(Array.isArray(distributionLimit) && distributionLimit.length === 2)) {
+      console.error(
+        'Unexpected result from distributionLimitOf',
+        distributionLimit,
+      )
+      throw new Error('Unexpected result from distributionLimitOf')
+    }
+
+    const [, currency] = distributionLimit
+
+    if (!isBigNumberish(currency)) {
+      console.error(
+        'Unexpected result from distributionLimitOf',
+        distributionLimit,
+      )
+      throw new Error('Unexpected result from distributionLimitOf')
+    }
+    const _currencyOption = BigNumber.from(currency).toNumber()
+    if (_currencyOption !== 0) return _currencyOption as V2V3CurrencyOption
+  }, [distributionLimit])
 
   return (
     <span>

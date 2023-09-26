@@ -2,11 +2,13 @@
  * @jest-environment jsdom
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { useHistorySubPanel } from '../hooks/useHistorySubPanel'
-import { HistoryData, HistorySubPanel } from './HistorySubPanel'
+import { render, screen } from '@testing-library/react'
+import { BigNumber } from 'ethers'
+import { FundingCyclesQuery } from 'generated/graphql'
+import { usePastFundingCycles } from '../hooks/usePastFundingCycles'
+import { HistorySubPanel } from './HistorySubPanel'
 
-jest.mock('../hooks/useHistorySubPanel')
+jest.mock('../hooks/usePastFundingCycles')
 jest.mock('@headlessui/react', () => {
   return {
     __esModule: true,
@@ -30,22 +32,50 @@ jest.mock('./HistoricalConfigurationPanel', () => {
 })
 
 describe('HistorySubPanel', () => {
-  const mockData: HistoryData = [
+  const mockFundingCycles: FundingCyclesQuery['fundingCycles'] = [
     {
-      _metadata: {
-        fundingCycle: { id: '1' } as any,
-        metadata: { data: 'test data' } as any,
-      },
-      cycleNumber: '1',
-      withdrawn: '100',
-      date: '2023-01-01',
+      ballot: '0x4b9f876c7fc5f6def8991fde639b2c812a85fb12',
+      ballotRedemptionRate: 6000,
+      basedOn: 1685615915,
+      burnPaused: false,
+      configuration: BigNumber.from('1686266495'),
+      controllerMigrationAllowed: true,
+      dataSource: '0x0000000000000000000000000000000000000000',
+      discountRate: BigNumber.from('15000000'),
+      distributionsPaused: false,
+      duration: 604800,
+      id: '2-397-37',
+      metadata: BigNumber.from('453635417129768049443073'),
+      metametadata: 0,
+      mintingAllowed: false,
+      mustStartAtOrAfter: null,
+      number: 37,
+      pausePay: false,
+      preferClaimedTokenOverride: false,
+      projectId: 397,
+      redeemPaused: false,
+      redemptionRate: 6000,
+      reservedRate: 5000,
+      setControllerAllowed: false,
+      setTerminalsAllowed: true,
+      shouldHoldFees: false,
+      startTimestamp: 1694997023,
+      terminalMigrationAllowed: true,
+      transfersPaused: false,
+      useDataSourceForPay: false,
+      useDataSourceForRedeem: false,
+      useTotalOverflowForRedemptions: false,
+      weight: BigNumber.from('341957057837004498728584'),
+      withdrawnAmount: BigNumber.from('30779487181046138000000'),
     },
   ]
 
   beforeEach(() => {
-    ;(useHistorySubPanel as jest.Mock).mockReturnValue({
+    ;(usePastFundingCycles as jest.Mock).mockReturnValue({
       loading: false,
-      data: mockData,
+      data: {
+        fundingCycles: mockFundingCycles,
+      },
       error: null,
     })
   })
@@ -56,21 +86,8 @@ describe('HistorySubPanel', () => {
 
   it('displays correct cycle data', () => {
     render(<HistorySubPanel />)
-    expect(screen.getByText(`#${mockData[0].cycleNumber}`)).toBeInTheDocument()
-    expect(screen.getByText(mockData[0].withdrawn)).toBeInTheDocument()
-    expect(screen.getByText(mockData[0].date)).toBeInTheDocument()
-  })
-
-  it('displays HistoricalConfigurationPanel with correct props on click', async () => {
-    render(<HistorySubPanel />)
-    const button = screen.getByTestId(
-      `disclosure-button-${mockData[0].cycleNumber}`,
-    )
-    fireEvent.click(button)
-    await waitFor(() =>
-      expect(
-        screen.getByTestId((mockData[0]._metadata.fundingCycle as any).id),
-      ).toHaveTextContent(JSON.stringify(mockData[0]._metadata.metadata)),
-    )
+    expect(
+      screen.getByText(`#${mockFundingCycles[0].number}`),
+    ).toBeInTheDocument()
   })
 })

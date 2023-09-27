@@ -1,7 +1,9 @@
 import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 
+import { ONE_BILLION } from 'constants/numbers'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { isProjectSplit } from 'utils/splits'
 import { isInfiniteDistributionLimit } from './fundingCycle'
 import {
   MAX_DISTRIBUTION_LIMIT,
@@ -9,6 +11,48 @@ import {
   preciseFormatSplitPercent,
   splitPercentFrom,
 } from './math'
+
+export const JB_FEE = 0.025
+
+/**
+ * Derive payout amount after the fee has been applied.
+ * @param amount - Amount before fee applied
+ * @returns Amount @amount minus the JB fee
+ */
+export function deriveAmountAfterFee(amount: number) {
+  return amount - amount * JB_FEE
+}
+
+/**
+ * Derive payout amount before the fee has been applied.
+ * @param amount - An amount that has already had the fee applied
+ * @returns Amount @amount plus the JB fee
+ */
+export function deriveAmountBeforeFee(amount: number) {
+  return amount / (1 - JB_FEE)
+}
+
+/**
+ * Derive payout amount from its % of the distributionLimit. Apply fee if necessary
+ * @param split - Payout split
+ * @param distributionLimit - Distribution limit
+ * @returns Amount that payout will receive as a number.
+ */
+export function derivePayoutAmount({
+  payoutSplit,
+  distributionLimit,
+  dontApplyFee,
+}: {
+  payoutSplit: Split
+  distributionLimit: number | undefined
+  dontApplyFee?: boolean
+}) {
+  if (!distributionLimit) return 0
+  const amountBeforeFee =
+    (payoutSplit.percent / ONE_BILLION) * distributionLimit
+  if (isProjectSplit(payoutSplit) || dontApplyFee) return amountBeforeFee // projects dont have fee applied
+  return deriveAmountAfterFee(amountBeforeFee)
+}
 
 /**
  * Gets amount from percent of a bigger amount

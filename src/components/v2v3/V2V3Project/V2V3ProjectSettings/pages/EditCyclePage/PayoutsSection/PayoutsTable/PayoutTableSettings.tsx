@@ -1,11 +1,16 @@
 import { ReceiptPercentIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
+import { ConvertAmountsModal } from 'components/Create/components/pages/PayoutsPage/components'
 import { PopupMenu, PopupMenuItem } from 'components/ui/PopupMenu'
 import { handleConfirmationDeletion } from 'components/v2v3/V2V3Project/ProjectDashboard/utils/modals'
 import { useState } from 'react'
+import { ReduxDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
+import { fromWad } from 'utils/format/formatNumber'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
-import { SwitchToLimitedModal } from './modals/SwitchToLimitedModal'
 import { SwitchToUnlimitedModal } from './modals/SwitchToUnlimitedModal'
+
+export const payoutsTableMenuItemsLabelClass = 'flex gap-2 items-center text-sm'
+export const payoutsTableMenuItemsIconClass = 'h-5 w-5'
 
 export function PayoutTableSettings() {
   const [switchToUnlimitedModalOpen, setSwitchToUnlimitedModalOpen] =
@@ -17,10 +22,21 @@ export function PayoutTableSettings() {
     payoutSplits,
     distributionLimitIsInfinite,
     handleDeleteAllPayoutSplits,
+    setDistributionLimit,
+    setSplits100Percent,
   } = usePayoutsTable()
 
-  const menuItemsLabelClass = 'flex gap-2 items-center text-sm'
-  const menuItemsIconClass = 'h-5 w-5'
+  const handleSwitchToLimitedPayouts = (newLimit: ReduxDistributionLimit) => {
+    setDistributionLimit(parseFloat(fromWad(newLimit.amount)))
+    setSwitchToLimitedModalOpen(false)
+  }
+
+  const handleSwitchToUnlimitedPayouts = () => {
+    setDistributionLimit(undefined)
+    setSplits100Percent()
+    setSwitchToUnlimitedModalOpen(false)
+  }
+
   let menuItems: PopupMenuItem[] = []
 
   if (distributionLimitIsInfinite) {
@@ -29,8 +45,8 @@ export function PayoutTableSettings() {
       {
         id: 'limited',
         label: (
-          <div className={menuItemsLabelClass}>
-            <ReceiptPercentIcon className={menuItemsIconClass} />
+          <div className={payoutsTableMenuItemsLabelClass}>
+            <ReceiptPercentIcon className={payoutsTableMenuItemsIconClass} />
             <Trans>Switch to limited</Trans>
           </div>
         ),
@@ -43,8 +59,8 @@ export function PayoutTableSettings() {
       {
         id: 'unlimited',
         label: (
-          <div className={menuItemsLabelClass}>
-            <ReceiptPercentIcon className={menuItemsIconClass} />
+          <div className={payoutsTableMenuItemsLabelClass}>
+            <ReceiptPercentIcon className={payoutsTableMenuItemsIconClass} />
             <Trans>Switch to unlimited</Trans>
           </div>
         ),
@@ -59,8 +75,8 @@ export function PayoutTableSettings() {
       {
         id: 'delete',
         label: (
-          <div className={menuItemsLabelClass}>
-            <TrashIcon className={menuItemsIconClass} />
+          <div className={payoutsTableMenuItemsLabelClass}>
+            <TrashIcon className={payoutsTableMenuItemsIconClass} />
             <Trans>Delete all</Trans>
           </div>
         ),
@@ -78,10 +94,13 @@ export function PayoutTableSettings() {
       <SwitchToUnlimitedModal
         open={switchToUnlimitedModalOpen}
         onClose={() => setSwitchToUnlimitedModalOpen(false)}
+        onOk={handleSwitchToUnlimitedPayouts}
       />
-      <SwitchToLimitedModal
+      <ConvertAmountsModal
         open={switchToLimitedModalOpen}
-        onClose={() => setSwitchToLimitedModalOpen(false)}
+        onOk={handleSwitchToLimitedPayouts}
+        onCancel={() => setSwitchToLimitedModalOpen(false)}
+        splits={payoutSplits}
       />
     </>
   )

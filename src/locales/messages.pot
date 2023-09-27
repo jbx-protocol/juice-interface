@@ -14,9 +14,6 @@ msgstr ""
 msgid "Extensible"
 msgstr ""
 
-msgid "To switch to 'Limited' payouts, enter a total amount of payouts to split between your recipients."
-msgstr ""
-
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr ""
 
@@ -57,6 +54,9 @@ msgid "How should I set up my project?"
 msgstr ""
 
 msgid "Re-launch project"
+msgstr ""
+
+msgid "To switch to 'Limited' payouts, enter a total amount to pay out of the treasury to split between your recipients."
 msgstr ""
 
 msgid "Your project's tokens are not ERC-20 tokens by default. After you create your project, you can create an ERC-20 for your token holders to claim. This is optional."
@@ -264,6 +264,9 @@ msgid "Cycles:"
 msgstr ""
 
 msgid "or <0><1>sell {tokenSymbol} on exchange.</1></0>"
+msgstr ""
+
+msgid "Amount (USD)"
 msgstr ""
 
 msgid "Payout recipients"
@@ -1418,6 +1421,9 @@ msgstr ""
 msgid "minutes"
 msgstr ""
 
+msgid "Convert to USD"
+msgstr ""
+
 msgid "The project owner is the only payout recipient. Any ETH paid out this cycle will go to them."
 msgstr ""
 
@@ -1680,9 +1686,6 @@ msgid "Legal Resources"
 msgstr ""
 
 msgid "V1"
-msgstr ""
-
-msgid "Switch to limited payouts"
 msgstr ""
 
 msgid "JuiceboxDAO is a community of passionate builders, creators, and innovators working together to push the boundaries of decentralized funding. Using the Juicebox protocol, we've created a DAO to coordinate thousands of JBX holders, build in the open, and govern the protocol over time."
@@ -2522,9 +2525,6 @@ msgstr ""
 msgid "Deselect all"
 msgstr ""
 
-msgid "Payout limit (max.)"
-msgstr ""
-
 msgid "Migrate project's payment terminal"
 msgstr ""
 
@@ -2852,9 +2852,6 @@ msgstr ""
 msgid "Redemptions aren't possible when all of a project's ETH is being used for payouts."
 msgstr ""
 
-msgid "Turn on unlimited payouts, and convert all your amounts to percentages."
-msgstr ""
-
 msgid "Redeem tokens"
 msgstr ""
 
@@ -2955,9 +2952,6 @@ msgid "Notice from {0}"
 msgstr ""
 
 msgid "V1 Edit Cycle"
-msgstr ""
-
-msgid "Payout total"
 msgstr ""
 
 msgid "This address will receive any tokens minted when this project is paid."
@@ -3419,6 +3413,9 @@ msgstr ""
 msgid "Each cycle, the project will issue {discountRate}% fewer tokens per ETH."
 msgstr ""
 
+msgid "Payout total (max.)"
+msgstr ""
+
 msgid "Prevent NFT overspending"
 msgstr ""
 
@@ -3717,9 +3714,6 @@ msgid "Mint tokens"
 msgstr ""
 
 msgid "NFTs, tokens and rewards will be sent to <0/>"
-msgstr ""
-
-msgid "Edit your cycles max. payout limit. Note that increases to the limit will take effect next cycle."
 msgstr ""
 
 msgid "See the code"
@@ -4247,6 +4241,9 @@ msgstr ""
 msgid "{0} is not valid URL"
 msgstr ""
 
+msgid "Amount (ETH)"
+msgstr ""
+
 msgid "You haven't created any projects yet!"
 msgstr ""
 
@@ -4494,6 +4491,9 @@ msgid "Visit jbdao.org"
 msgstr ""
 
 msgid "Allow Controller migration"
+msgstr ""
+
+msgid "Turn on unlimited payouts, and convert all your payout amounts to percentages."
 msgstr ""
 
 msgid "Reduce the total token issuance each cycle. <0>Learn more</0>"
@@ -4875,6 +4875,9 @@ msgid "Custom deadline contract"
 msgstr ""
 
 msgid "Unlocked Cycles"
+msgstr ""
+
+msgid "Convert to ETH"
 msgstr ""
 
 msgid "No edits were made to tokens for this cycle."

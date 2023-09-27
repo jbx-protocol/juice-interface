@@ -20,6 +20,7 @@ env:
   NEXT_PUBLIC_INFURA_NETWORK: mainnet
   PRE_RENDER_INFURA_ID: ${{ secrets.PRE_RENDER_INFURA_ID }}
   SUBGRAPH_URL: ${{ secrets.SUBGRAPH_URL }}
+  NEXT_PUBLIC_SUBGRAPH_URL: ${{ secrets.NEXT_PUBLIC_SUBGRAPH_URL }}
 
 jobs:
   jest:

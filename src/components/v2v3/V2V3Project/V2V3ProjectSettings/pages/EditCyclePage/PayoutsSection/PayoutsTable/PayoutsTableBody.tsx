@@ -3,16 +3,19 @@ import { Form } from 'antd'
 import { Allocation } from 'components/v2v3/shared/Allocation'
 import { getV2V3CurrencyOption } from 'utils/v2v3/currency'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
+import { CurrencySwitcher } from './CurrencySwitcher'
 import { HeaderRows } from './HeaderRows'
 import { PayoutSplitRow } from './PayoutSplitRow'
 import { PayoutsTableCell } from './PayoutsTableCell'
 import { PayoutsTableRow } from './PayoutsTableRow'
 import { TotalRows } from './TotalRows'
+import { usePayoutsTableContext } from './context/PayoutsTableContext'
 
 const Row = PayoutsTableRow
 const Cell = PayoutsTableCell
 
 export function PayoutsTableBody() {
+  const { topAccessory } = usePayoutsTableContext()
   const {
     payoutSplits,
     currency,
@@ -20,11 +23,11 @@ export function PayoutsTableBody() {
     setCurrency,
     distributionLimit,
   } = usePayoutsTable()
-
-  const emptyState = distributionLimit === 0
+  const emptyState = distributionLimit === 0 && !payoutSplits?.length
 
   return (
     <>
+      {topAccessory}
       <div className="rounded-lg border border-smoke-200 dark:border-slate-600">
         <Allocation
           allocationCurrency={getV2V3CurrencyOption(currency)}
@@ -47,7 +50,7 @@ export function PayoutsTableBody() {
                         <Trans>Address or ID</Trans>
                       </Cell>
                       <Cell>
-                        <Trans>Amount</Trans>
+                        <CurrencySwitcher />
                       </Cell>
                     </Row>
                   ) : null}

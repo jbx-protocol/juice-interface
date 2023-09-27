@@ -25,6 +25,7 @@
     "prepare": "husky install",
     "pristine": "rm -Rf node_modules && yarn cache clean --all && yarn install",
     "start": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next start",
+    "pretest": "yarn codegen",
     "test": "jest",
     "ts:compile": "tsc --noEmit --incremental",
     "ts:prune": "ts-prune",

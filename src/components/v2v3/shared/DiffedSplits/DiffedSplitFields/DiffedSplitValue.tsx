@@ -51,16 +51,19 @@ export function DiffedSplitValue({
     isFiniteDistributionLimit(splitProps.totalValue) &&
     isFiniteDistributionLimit(diffSplitProps.totalValue)
 
-  const amountsAreEqual = isFiniteTotalValue
+  const percentsEqual =
+    splitProps.split.percent === diffSplitProps.split.percent
+
+  const valuesEqual = isFiniteTotalValue
     ? splitAmountsAreEqual({
         split1: splitProps.split,
         split2: diffSplitProps.split,
         split1TotalValue: splitProps.totalValue,
         split2TotalValue: diffSplitProps.totalValue,
       })
-    : false
+    : percentsEqual
 
-  if (amountsAreEqual) return newValue
+  if (valuesEqual) return <div className="mr-4">{newValue}</div>
 
   return (
     <div className="flex">

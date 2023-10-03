@@ -9,8 +9,10 @@ import {
 import { useContext } from 'react'
 
 /**
- * Determines if there's an NFT conflict between the current and queued funding cycle metadata.
- * A conflict arises if there are differences in the NFT related attributes.
+ * Determines if a "Launch NFTs" (NftDeployer.reconfigureFundingCycleOf) has been called
+ * in the same cycle as an "Edit cycle" (reconfigureFundingCycleOf) tx. If so, need to pass
+ * the new delegate and other NFT related attributes into the subsequent "Edit cycle" tx so
+ * they are not overriden and lost.
  *
  * @param {V2V3FundingCycleMetadata} currentFcMetadata - The current funding cycle metadata.
  * @param {V2V3FundingCycleMetadata} queuedFcMetadata - The queued funding cycle metadata.
@@ -48,13 +50,6 @@ export const useResolveEditCycleConflicts = () => {
   const queuedFcData: V2V3FundingCycleData = queuedCycle[0]
   const queuedFcMetadata: V2V3FundingCycleMetadata = queuedCycle[1]
 
-  /**
-   * Resolves any potential conflicts in the reconfiguration of funding cycles.
-   * It merges the given data with the data from a queued cycle, taking into account any NFT specific conflicts.
-   *
-   * @param {ReconfigureFundingCycleTxParams} data - The data for reconfiguring the funding cycle.
-   * @returns {ReconfigureFundingCycleTxParams} - The modified data after resolving conflicts.
-   */
   return (data: ReconfigureFundingCycleTxParams) => {
     if (hasNftConflict(fundingCycleMetadata, queuedFcMetadata)) {
       return {
@@ -70,12 +65,12 @@ export const useResolveEditCycleConflicts = () => {
       return {
         ...data,
         fundingCycleMetadata: {
-          ...queuedFcMetadata,
           ...data.fundingCycleMetadata,
+          ...queuedFcMetadata,
         },
         fundingCycleData: {
-          ...queuedFcData,
           ...data.fundingCycleData,
+          ...queuedFcData,
         },
       }
     }

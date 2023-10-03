@@ -752,9 +752,6 @@ msgstr ""
 msgid "New NFTs will be available in your next cycle as long as it starts after your edit deadline."
 msgstr ""
 
-msgid "New NFTs will be available in your next cycle as long as it starts after your edit deadline."
-msgstr ""
-
 msgid "Confirm"
 msgstr ""
 

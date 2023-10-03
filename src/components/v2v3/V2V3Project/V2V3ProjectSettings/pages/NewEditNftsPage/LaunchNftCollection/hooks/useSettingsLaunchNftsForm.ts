@@ -1,5 +1,10 @@
 import { useForm } from 'antd/lib/form/Form'
 import { NftRewardsFormProps } from 'components/NftRewards/AddNftCollectionForm'
+import {
+  EditingFundingCycleConfig,
+  useEditingFundingCycleConfig,
+} from 'components/v2v3/V2V3Project/V2V3ProjectSettings/hooks/useEditingFundingCycleConfig'
+import { useReconfigureFundingCycle } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/hooks/useReconfigureFundingCycle'
 import { JB721GovernanceType } from 'models/nftRewards'
 import { useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -10,11 +15,6 @@ import {
   pinNftCollectionMetadata,
   pinNftRewards,
 } from 'utils/nftRewards'
-import {
-  EditingFundingCycleConfig,
-  useEditingFundingCycleConfig,
-} from '../../../ReconfigureFundingCycleSettingsPage/hooks/useEditingFundingCycleConfig'
-import { useReconfigureFundingCycle } from '../../../ReconfigureFundingCycleSettingsPage/hooks/useReconfigureFundingCycle'
 
 export const useSettingsLaunchNftsForm = () => {
   const [form] = useForm<NftRewardsFormProps>()

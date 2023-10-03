@@ -287,6 +287,7 @@ export const PayoutsPage = () => {
         open={switchingToAmountsModal.visible}
         onOk={switchToAmountsPayoutSelection}
         onCancel={switchingToAmountsModal.close}
+        splits={splits}
       />
     </>
   )

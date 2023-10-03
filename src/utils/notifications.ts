@@ -1,5 +1,5 @@
 import { notification } from 'antd'
-import ErrorNotificationButtons from 'components/ErrorNotificationButtons'
+import ErrorNotificationButtons from 'components/buttons/ErrorNotificationButtons'
 
 /**
  * @param message Title of notification

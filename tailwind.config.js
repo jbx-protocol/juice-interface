@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
@@ -8,9 +10,9 @@ module.exports = {
   important: true,
   theme: {
     fontFamily: {
-      display: ['Agrandir-Wide', 'Helvetica Neue', 'Arial', 'sans-serif'],
-      heading: ['Agrandir', 'Helvetica Neue', 'Arial', 'sans-serif'],
-      body: ['Beatrice', 'Helvetica Neue', 'Arial', 'sans-serif'],
+      display: ['Agrandir-Wide', ...defaultTheme.fontFamily.sans],
+      heading: ['Agrandir', ...defaultTheme.fontFamily.sans],
+      body: ['Beatrice', ...defaultTheme.fontFamily.sans],
       mono: [
         'ui-monospace',
         'SFMono-Regular',

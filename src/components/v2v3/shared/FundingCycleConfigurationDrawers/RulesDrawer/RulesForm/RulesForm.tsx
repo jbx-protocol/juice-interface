@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form, Switch } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
-import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
+import ReconfigurationStrategySelector from 'components/inputs/ReconfigurationStrategy/ReconfigurationStrategySelector'
 import {
   CONTROLLER_CONFIG_EXPLANATION,
   CONTROLLER_MIGRATION_EXPLANATION,

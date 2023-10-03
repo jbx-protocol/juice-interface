@@ -16,10 +16,10 @@ import { useContext, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { formatDate } from 'utils/format/formatDate'
-import { useEditingFundingCycleConfig } from '../../../../../ReconfigureFundingCycleSettingsPage/hooks/useEditingFundingCycleConfig'
-import { ReconfigurePreview } from '../../../../../ReconfigureFundingCycleSettingsPage/ReconfigurePreview'
-import { SetNftOperatorPermissionsButton } from '../../../../../ReconfigureFundingCycleSettingsPage/SetNftOperatorPermissionsButton'
+import { useEditingFundingCycleConfig } from '../../../../../../hooks/useEditingFundingCycleConfig'
 import { useLaunchFundingCycles } from './hooks/useLaunchFundingCycles'
+import { ReconfigurePreview } from './ReconfigurePreview'
+import { SetNftOperatorPermissionsButton } from './SetNftOperatorPermissionsButton'
 
 export function LaunchFundingCycleForm() {
   const { projectOwnerAddress, fundingCycle } = useContext(V2V3ProjectContext)

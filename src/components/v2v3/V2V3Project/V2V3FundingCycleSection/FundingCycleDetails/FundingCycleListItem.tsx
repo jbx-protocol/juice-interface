@@ -22,10 +22,10 @@ export function FundingCycleListItem({
   const hasDiff = oldValue && value !== oldValue
 
   const _value = (
-    <>
+    <div className="flex flex-wrap">
       {hasDiff ? <DiffedItem value={oldValue} diffStatus={'old'} /> : null}
       <DiffedItem value={value} diffStatus={hasDiff ? 'new' : undefined} />
-    </>
+    </div>
   )
 
   if (helperText) {
@@ -50,7 +50,7 @@ export function FundingCycleListItem({
             :
           </div>{' '}
         </Tooltip>
-        <div className="flex">{_value}</div>
+        {_value}
       </div>
     )
   }

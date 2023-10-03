@@ -7,10 +7,12 @@ import {
   CYCLE_EXPLANATION,
   RECONFIG_RULES_EXPLANATION,
 } from 'components/strings'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import {
   FundingCyclesPage,
   NftRewardsPage,
@@ -21,6 +23,7 @@ import {
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
 import { PayoutsPage } from './components/pages/PayoutsPage'
+import { NewPayoutsPage } from './components/pages/PayoutsPage/NewPayoutsPage'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { PayoutsMigrationModal } from './components/PayoutsMigrationModal'
 import { Wizard } from './components/Wizard'
@@ -39,6 +42,10 @@ export function Create() {
   const initialStateLoading = useLoadingInitialStateFromQuery()
 
   if (initialStateLoading) return <Loading />
+
+  const newPayoutsTableEnabled = featureFlagEnabled(
+    FEATURE_FLAGS.PAYOUTS_TABLE_CREATE_FLOW,
+  )
 
   return (
     <div className="mt-12 md:mt-10">
@@ -88,14 +95,14 @@ export function Create() {
             title={t`Payouts`}
             description={
               <Trans>
-                Pay out ETH from your project to the Ethereum wallets or
-                Juicebox projects of your choice. ETH which <em>isn't</em> paid
-                out will be available for token redemptions, or for use in
-                future cycles. Payouts reset each cycle.
+                Pay out ETH from your project to any Ethereum wallet or Juicebox
+                project. ETH which <em>isn't</em> paid out will be available for
+                token redemptions, or for use in future cycles. Payouts reset
+                each cycle.
               </Trans>
             }
           >
-            <PayoutsPage />
+            {newPayoutsTableEnabled ? <NewPayoutsPage /> : <PayoutsPage />}
           </Wizard.Page>
           <Wizard.Page
             name="projectToken"

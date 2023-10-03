@@ -57,18 +57,16 @@ export function SplitAmountValue({
           createTooltipTitle(currencyName, splitValue.sub(feeAmount))
         }
       >
-        <span className="pl-1">
-          {valueAfterFees ? (
-            <div>
-              <AmountInCurrency
-                amount={valueAfterFees}
-                currency={currencyName}
-                hideTooltip={hideTooltip}
-              />
-              {props.valueSuffix ? <span> {props.valueSuffix}</span> : null}
-            </div>
-          ) : null}
-        </span>
+        {valueAfterFees ? (
+          <>
+            <AmountInCurrency
+              amount={valueAfterFees}
+              currency={currencyName}
+              hideTooltip={hideTooltip}
+            />
+            {props.valueSuffix ? <span> {props.valueSuffix}</span> : null}
+          </>
+        ) : null}
       </Tooltip>
 
       {props.showFee && !isJuiceboxProject && (

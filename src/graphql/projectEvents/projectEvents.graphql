@@ -46,33 +46,50 @@ query ProjectEvents(
       txHash
       from
       ballot
-      dataSource
       discountRate
       duration
       configuration
       projectId
-      mintingAllowed
-      pausePay
-      redeemPaused
-      redemptionRate
-      reservedRate
       weight
-      shouldHoldFees
-      terminalMigrationAllowed
-      controllerMigrationAllowed
-      setTerminalsAllowed
-      setControllerAllowed
-      useDataSourceForPay
-      useDataSourceForRedeem
       memo
       mustStartAtOrAfter
-      transfersPaused
-      burnPaused
-      distributionsPaused
-      useTotalOverflowForRedemptions
       projectId
       project {
         handle
+      }
+      fundingCycle {
+        projectId
+        mustStartAtOrAfter
+        preferClaimedTokenOverride
+        number
+        basedOn
+        startTimestamp
+        duration
+        weight
+        discountRate
+        ballot
+        configuration
+        metadata
+        transfersPaused
+        reservedRate
+        redemptionRate
+        ballotRedemptionRate
+        pausePay
+        distributionsPaused
+        redeemPaused
+        burnPaused
+        mintingAllowed
+        dataSource
+        controllerMigrationAllowed
+        setControllerAllowed
+        setTerminalsAllowed
+        shouldHoldFees
+        terminalMigrationAllowed
+        useDataSourceForPay
+        useDataSourceForRedeem
+        useTotalOverflowForRedemptions
+        metametadata
+        withdrawnAmount
       }
     }
     deployedERC20Event {

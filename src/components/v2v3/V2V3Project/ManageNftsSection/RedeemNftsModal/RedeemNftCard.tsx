@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { NftTierCard } from 'components/NftRewards/NftTierCard'
-import { RedeemingNft } from 'components/ProjectDashboard/components/NftRewardsPanel/hooks/useJB721DelegateTokenToNftReward'
+import { RedeemingNft } from 'components/v2v3/V2V3Project/ProjectDashboard/components/NftRewardsPanel/hooks/useJB721DelegateTokenToNftReward'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/nftRewards'
 import { UseQueryResult, useQuery } from 'react-query'
 import { cidFromIpfsUri, ipfsGatewayUrl } from 'utils/ipfs'

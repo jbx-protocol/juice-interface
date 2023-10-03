@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button, Drawer, DrawerProps } from 'antd'
 
-import ReconfigurationStrategySelector from 'components/ReconfigurationStrategy/ReconfigurationStrategySelector'
+import ReconfigurationStrategySelector from 'components/inputs/ReconfigurationStrategy/ReconfigurationStrategySelector'
 import { BallotStrategy } from 'models/ballot'
 import { useEffect, useState } from 'react'
 

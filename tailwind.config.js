@@ -1,12 +1,20 @@
 /** @type {import('tailwindcss').Config} */
+
 const defaultTheme = require('tailwindcss/defaultTheme')
+
+/**
+ * @typedef { import('tailwindcss').DarkModeConfig } DarkModeConfig
+ */
+
+/** @type {DarkModeConfig} */
+const darkModeValue = 'class' // Use class for now, switch to media later
 
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
   ],
-  darkMode: 'class', // Use class for now, switch to media later
+  darkMode: darkModeValue,
   important: true,
   theme: {
     fontFamily: {
@@ -43,12 +51,12 @@ module.exports = {
       },
       keyframes: {
         rise: {
-          '0%': { transform: 'translate(-50%, 100%)', opacity: 0 },
-          '100%': { transform: 'translate(0%, 0%)', opacity: 1 },
+          '0%': { transform: 'translate(-50%, 100%)', opacity: '0' },
+          '100%': { transform: 'translate(0%, 0%)', opacity: '1' },
         },
         set: {
-          '0%': { transform: 'translate(0%, 0%)', opacity: 1 },
-          '100%': { transform: 'translate(50%, 100%)', opacity: 0 },
+          '0%': { transform: 'translate(0%, 0%)', opacity: '1' },
+          '100%': { transform: 'translate(50%, 100%)', opacity: '0' },
         },
       },
       animation: {

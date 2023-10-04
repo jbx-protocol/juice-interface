@@ -27,11 +27,7 @@ export function EditNftsSection() {
     setSubmitLoading(false)
   }, [rewardTiers, updateExistingCollection])
 
-  // this component only renders when data source is not 0x000..
-  // so if there are no rewardTiers here, it's safe to assume they're still loading
-  const noTiers = !rewardTiers || rewardTiers.length === 0
-
-  if (loading || noTiers) return <Loading className="mt-20" />
+  if (loading) return <Loading className="mt-20" />
 
   return (
     <>
@@ -40,14 +36,12 @@ export function EditNftsSection() {
       </Callout.Info>
 
       <div className="mb-8">
-        {rewardTiers && rewardTiers.length > 0 && (
-          <RewardsList
-            value={rewardTiers}
-            onChange={setRewardTiers}
-            allowCreate
-            withEditWarning
-          />
-        )}
+        <RewardsList
+          value={rewardTiers}
+          onChange={setRewardTiers}
+          allowCreate
+          withEditWarning
+        />
 
         {rewardTiers?.length === 0 && (
           <Empty

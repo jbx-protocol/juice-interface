@@ -34,7 +34,8 @@ export const HistorySubPanel = () => {
 
   const tableHeaders = [t`Cycle #`, t`Withdrawn`, t`Date`]
   const hasMore =
-    data && data.fundingCycles[data.fundingCycles.length - 1].number > 1
+    data?.fundingCycles.length &&
+    data.fundingCycles[data.fundingCycles.length - 1].number > 1
 
   return data?.fundingCycles.length || isLoading ? (
     <div className="grid min-w-full grid-cols-1">

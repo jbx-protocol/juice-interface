@@ -17,11 +17,13 @@ export function usePastFundingCycles({
   return useFundingCyclesQuery({
     client,
     variables: {
-      where: { projectId },
+      where: {
+        projectId,
+        endTimestamp_lt: Math.floor(Date.now() / 1000), // Only already ended
+      },
       orderBy: FundingCycle_OrderBy.number,
       orderDirection: OrderDirection.desc,
       first: pageSize ?? DEFAULT_PAGE_SIZE,
-      skip: 1, // skip current cycle
     },
   })
 }

@@ -35,8 +35,8 @@ interface State {
 }
 
 type Props = {
-  tokenSymbol: string
-  tokenAddress: string
+  tokenSymbol: string | undefined
+  tokenAddress: string | undefined
 }
 
 /**
@@ -126,6 +126,8 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
   return useQuery(
     [`${tokenSymbol}-uniswap-price`],
     async () => {
+      if (!tokenAddress || !tokenSymbol) return null
+
       try {
         const poolAddress = await getPoolAddress()
         if (!poolAddress) {
@@ -179,6 +181,7 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
     },
     {
       refetchInterval: 30000, // refetch every 30 seconds
+      enabled: !!(tokenAddress && tokenSymbol),
     },
   )
 }

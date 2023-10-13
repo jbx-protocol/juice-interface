@@ -1,7 +1,10 @@
+import { useUniswapPriceQuery } from 'components/AMMPrices/hooks/useERC20UniswapPrice'
+import { BUYBACK_DELEGATE_ENABLED_PROJECT_IDS } from 'constants/buybackDelegateEnabledProjectIds'
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
-import { Transaction } from 'ethers'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { BigNumber, Transaction } from 'ethers'
 import { FormikHelpers } from 'formik'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
@@ -9,10 +12,12 @@ import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/usePayETHPayme
 import { useProjectHasErc20 } from 'hooks/v2v3/useProjectHasErc20'
 import { useCallback, useContext } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
-import { encodeJb721DelegateMetadata } from 'utils/encodeJb721DelegateMetadata/encodeJb721DelegateMetadata'
+import { encodeDelegateMetadata } from 'utils/delegateMetadata/encodeDelegateMetadata'
 import { parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
+import { MAX_RESERVED_RATE } from 'utils/v2v3/math'
 import { useProjectCart } from '../useProjectCart'
+import { useProjectContext } from '../useProjectContext'
 import { ProjectPayReceipt } from '../useProjectPageQueries'
 import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
 import { PayProjectModalFormValues } from './usePayProjectModal'
@@ -39,6 +44,9 @@ export const usePayProjectTx = ({
   const { version: JB721DelegateVersion } = useContext(
     JB721DelegateContractsContext,
   )
+  const { projectId } = useContext(ProjectMetadataContext)
+  const { tokenAddress, tokenSymbol, fundingCycleMetadata } =
+    useProjectContext()
   const {
     nftRewards: { rewardTiers },
   } = useContext(NftRewardsContext)
@@ -46,6 +54,11 @@ export const usePayProjectTx = ({
   const payProjectTx = usePayETHPaymentTerminalTx()
   const { receivedTickets } = useProjectPaymentTokens()
   const projectHasErc20 = useProjectHasErc20()
+
+  const { data: priceQuery } = useUniswapPriceQuery({
+    tokenAddress,
+    tokenSymbol,
+  })
 
   const buildPayReceipt = useCallback(
     (e: Transaction | undefined): ProjectPayReceipt => {
@@ -97,14 +110,37 @@ export const usePayProjectTx = ({
         .map(({ id, quantity }) => Array<number>(quantity).fill(id))
         .flat()
 
-      const delegateMetadata = encodeJb721DelegateMetadata(
-        {
-          tierIdsToMint,
-          allowOverspending:
-            nftRewards.length > 0 ? DEFAULT_ALLOW_OVERSPENDING : undefined,
+      // Total tokens that should be minted by pay() tx, including reserved tokens
+      const totalMintedTokens = fundingCycleMetadata
+        ? BigNumber.from(receivedTickets)
+            .mul(MAX_RESERVED_RATE)
+            .div(fundingCycleMetadata.reservedRate)
+        : undefined
+
+      const shouldUseBuybackDelegate =
+        projectId &&
+        priceQuery &&
+        totalMintedTokens &&
+        BUYBACK_DELEGATE_ENABLED_PROJECT_IDS.includes(projectId) &&
+        BigNumber.from(totalMintedTokens).mul(2).lt(priceQuery.liquidity) // total token amount must be less than half of available liquidity (arbitrary)
+
+      // Encode metadata for jb721Delegate AND/OR jbBuybackDelegate
+      const delegateMetadata = encodeDelegateMetadata({
+        jb721Delegate: {
+          metadata: {
+            tierIdsToMint,
+            allowOverspending:
+              nftRewards.length > 0 ? DEFAULT_ALLOW_OVERSPENDING : undefined,
+          },
+          version: JB721DelegateVersion,
         },
-        JB721DelegateVersion,
-      )
+        jbBuybackDelegate: shouldUseBuybackDelegate
+          ? {
+              amountToSwap: 0, // use all ETH
+              minExpectedTokens: totalMintedTokens, // must receive minimum of expected tokens
+            }
+          : undefined,
+      })
 
       let onError = undefined
       try {
@@ -157,6 +193,10 @@ export const usePayProjectTx = ({
       rewardTiers,
       totalAmount,
       userAddress,
+      priceQuery,
+      projectId,
+      receivedTickets,
+      fundingCycleMetadata,
     ],
   )
 }

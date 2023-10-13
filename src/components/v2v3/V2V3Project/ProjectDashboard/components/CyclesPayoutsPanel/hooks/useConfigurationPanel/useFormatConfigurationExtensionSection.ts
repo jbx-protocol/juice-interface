@@ -90,7 +90,10 @@ export const useFormatConfigurationExtensionSection = ({
     }
   }, [contractDatum, useForPaymentsDatum, useForRedemptionsDatum])
 
-  if (isZeroAddress(fundingCycleMetadata?.dataSource)) {
+  if (
+    isZeroAddress(fundingCycleMetadata?.dataSource) &&
+    !upcomingFundingCycleMetadata
+  ) {
     return null
   }
 

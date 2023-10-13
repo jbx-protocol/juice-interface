@@ -63,7 +63,16 @@ export const CurrentUpcomingSubPanel = ({
     </Trans>
   )
 
-  if (info.type === 'upcoming' && info.cycleUnlocked) {
+  if (
+    info.type === 'upcoming' &&
+    info.cycleUnlocked &&
+    /**
+     * Always show 'upcoming' tab if it's FC 1
+     * (which happens when Scheduled Launch is used,
+     * mustStartAtOrAfter is in the future)
+     */
+    info.cycleNumber !== 1
+  ) {
     return (
       <div>
         <div

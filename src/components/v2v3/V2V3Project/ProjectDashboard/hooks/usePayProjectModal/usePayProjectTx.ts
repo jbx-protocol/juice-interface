@@ -97,7 +97,7 @@ export const usePayProjectTx = ({
       })
       const beneficiary = values.beneficiaryAddress ?? userAddress
 
-      let weiAmount
+      let weiAmount: BigNumber
       if (!totalAmount) {
         weiAmount = parseWad(0)
       } else if (totalAmount.currency === V2V3_CURRENCY_ETH) {
@@ -111,18 +111,33 @@ export const usePayProjectTx = ({
         .flat()
 
       // Total tokens that should be minted by pay() tx, including reserved tokens
-      const totalMintedTokens = fundingCycleMetadata
-        ? BigNumber.from(receivedTickets)
+      const requiredTokens = fundingCycleMetadata
+        ? parseWad(receivedTickets)
             .mul(MAX_RESERVED_RATE)
             .div(fundingCycleMetadata.reservedRate)
         : undefined
 
+      const expectedTokensFromSwap = weiAmount.div(
+        BigNumber.from(priceQuery?.projectTokenPrice.numerator.toString()).div(
+          BigNumber.from(priceQuery?.projectTokenPrice.denominator.toString()),
+        ),
+      )
+
       const shouldUseBuybackDelegate =
         projectId &&
         priceQuery &&
-        totalMintedTokens &&
+        requiredTokens &&
         BUYBACK_DELEGATE_ENABLED_PROJECT_IDS.includes(projectId) &&
-        BigNumber.from(totalMintedTokens).mul(2).lt(priceQuery.liquidity) // total token amount must be less than half of available liquidity (arbitrary)
+        expectedTokensFromSwap.gte(requiredTokens) &&
+        BigNumber.from(requiredTokens).mul(2).lt(priceQuery.liquidity) // total token amount must be less than half of available liquidity (arbitrary) to avoid slippage
+
+      // Expect whichever is greater: 95% of expected tokens from swap, or minimum amount of tokens required to be minted
+      // We don't really care if less tokens are returned from the swap than what we've estimated (as long as we're getting at least the minimum amount that would otherwise be minted). The main concern is sending as high a minimum as possible to limit arbitrage possibility
+      const minExpectedTokens =
+        requiredTokens &&
+        expectedTokensFromSwap.mul(95).div(100).gt(requiredTokens)
+          ? expectedTokensFromSwap.mul(95).div(100)
+          : requiredTokens
 
       // Encode metadata for jb721Delegate AND/OR jbBuybackDelegate
       const delegateMetadata = encodeDelegateMetadata({
@@ -134,12 +149,13 @@ export const usePayProjectTx = ({
           },
           version: JB721DelegateVersion,
         },
-        jbBuybackDelegate: shouldUseBuybackDelegate
-          ? {
-              amountToSwap: 0, // use all ETH
-              minExpectedTokens: totalMintedTokens, // must receive minimum of expected tokens
-            }
-          : undefined,
+        jbBuybackDelegate:
+          shouldUseBuybackDelegate && minExpectedTokens !== undefined
+            ? {
+                amountToSwap: 0, // use all ETH
+                minExpectedTokens,
+              }
+            : undefined,
       })
 
       let onError = undefined

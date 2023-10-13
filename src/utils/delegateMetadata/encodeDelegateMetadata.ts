@@ -55,11 +55,11 @@ export function encodeDelegateMetadata({
     )
   }
 
-  const ids: string[] = []
+  const delegateIds: string[] = []
   const metadatas: string[] = []
 
   if (jbBuybackDelegate) {
-    ids.push(IJBBuybackDelegate_INTERFACE_ID)
+    delegateIds.push(IJBBuybackDelegate_INTERFACE_ID)
     metadatas.push(
       utils.defaultAbiCoder.encode(
         ['uint256', 'uint256'],
@@ -78,12 +78,14 @@ export function encodeDelegateMetadata({
     )
 
     if (encoded) {
-      ids.push(IJBTiered721Delegate_V3_4_PAY_ID)
+      delegateIds.push(IJBTiered721Delegate_V3_4_PAY_ID)
       metadatas.push(encoded)
     }
   }
 
-  return createMetadata(ids, metadatas)
+  if (!delegateIds.length || !metadatas.length) return
+
+  return createMetadata(delegateIds, metadatas)
 }
 
 /**

@@ -176,9 +176,6 @@ msgstr ""
 msgid "Twitter"
 msgstr ""
 
-msgid "The text on the button supporters will click to pay your project"
-msgstr ""
-
 msgid "Issue tokens or NFTs to your supporters and use them for governance, token-gated websites, or redemptions. With flexible token issuance and redemption, your project automatically scales to meet your supporters' demand."
 msgstr ""
 
@@ -2556,9 +2553,6 @@ msgid "Unlimited payouts."
 msgstr ""
 
 msgid "<0>View transactions.</0>"
-msgstr ""
-
-msgid "Use a simple term like 'Pay' or 'Donate'."
 msgstr ""
 
 msgid "to close"

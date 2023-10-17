@@ -14,6 +14,9 @@ msgstr ""
 msgid "Extensible"
 msgstr ""
 
+msgid "Wallet not connected"
+msgstr ""
+
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr ""
 

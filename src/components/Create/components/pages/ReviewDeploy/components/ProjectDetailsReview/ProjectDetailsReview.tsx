@@ -1,14 +1,16 @@
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
 import { RichPreview } from 'components/RichPreview'
+import { useWallet } from 'hooks/Wallet'
 import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
 import { ReviewDescription } from '../ReviewDescription'
 
 export const ProjectDetailsReview = () => {
+  const { userAddress } = useWallet()
   const {
     projectMetadata: {
       description,
@@ -24,6 +26,8 @@ export const ProjectDetailsReview = () => {
     },
     inputProjectOwner,
   } = useAppSelector(state => state.editingV2Project)
+
+  const ownerAddress = inputProjectOwner ?? userAddress
 
   const wrappedDescription = useMemo(() => {
     if (!description) return undefined
@@ -123,7 +127,13 @@ export const ProjectDetailsReview = () => {
       {/* END: Bottom */}
       <ReviewDescription
         title={t`Project owner`}
-        desc={<EthereumAddress address={inputProjectOwner} />}
+        desc={
+          ownerAddress ? (
+            <EthereumAddress address={ownerAddress} />
+          ) : (
+            <Trans>Wallet not connected</Trans>
+          )
+        }
       />
     </div>
   )

@@ -24,6 +24,7 @@ export function ReconfigureRichPreview({
     fundingCycle: previousFC,
     payoutSplits: diffPayoutSplits,
     distributionLimit: previousDistributionLimit,
+    distributionLimitCurrency: previousCurrency,
     reservedTokensSplits: diffReservedSplits,
   } = useContext(V2V3ProjectContext)
 
@@ -100,6 +101,7 @@ export function ReconfigureRichPreview({
                 splits={toSplit(payoutSplits)}
                 diffSplits={diffPayoutSplits}
                 currency={distributionLimitCurrency}
+                oldCurrency={previousCurrency}
                 totalValue={distributionLimit}
                 previousTotalValue={previousDistributionLimit}
                 valueFormatProps={{ precision: 4 }}

@@ -17,7 +17,6 @@ export const ProjectDetailsReview = () => {
       logoUri,
       infoUri,
       name,
-      payButton,
       payDisclosure,
       twitter,
       projectTagline,
@@ -110,16 +109,6 @@ export const ProjectDetailsReview = () => {
       <ReviewDescription
         title={t`Tags`}
         desc={tags?.length ? <ProjectTagsList tags={tags} /> : t`No tags`}
-      />
-      <ReviewDescription
-        title={t`Pay button text`}
-        desc={
-          payButton ? (
-            <div className="overflow-hidden text-ellipsis text-base font-medium">
-              {payButton}
-            </div>
-          ) : null
-        }
       />
       <ReviewDescription
         title={t`Payment notice`}

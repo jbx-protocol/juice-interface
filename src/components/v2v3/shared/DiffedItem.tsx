@@ -57,9 +57,9 @@ export function DiffedItem({
       title={
         diffStatus === 'old' ? (
           <Trans>Previous value</Trans>
-        ) : (
+        ) : diffStatus === 'new' ? (
           <Trans>New value</Trans>
-        )
+        ) : undefined
       }
     >
       <div

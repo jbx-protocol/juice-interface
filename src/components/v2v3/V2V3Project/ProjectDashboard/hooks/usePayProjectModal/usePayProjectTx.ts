@@ -90,26 +90,17 @@ export const usePayProjectTx = ({
             .div(fundingCycleMetadata.reservedRate)
         : undefined
 
-      const priceQueryNumerator = BigNumber.from(
-        priceQuery?.projectTokenPrice.numerator.toString() ?? 0,
+      const priceQueryNumerator =
+        priceQuery?.projectTokenPrice.numerator.toString()
+      const priceQueryDenominator =
+        priceQuery?.projectTokenPrice.denominator.toString()
+      const priceQueryFactor = BigNumber.from(priceQueryNumerator ?? 0).div(
+        BigNumber.from(priceQueryDenominator ?? 0),
       )
-      const priceQueryDenominator = BigNumber.from(
-        priceQuery?.projectTokenPrice.denominator.toString() ?? 0,
-      )
-      const priceQueryFactor = priceQueryNumerator.div(priceQueryDenominator)
 
-      const expectedTokensFromSwap =
-        priceQueryFactor.gt(0) && weiAmount.div(priceQueryFactor)
-
-      const shouldUseBuybackDelegate =
-        projectId &&
-        priceQuery &&
-        requiredTokens &&
-        BUYBACK_DELEGATE_ENABLED_PROJECT_IDS.includes(projectId) &&
-        expectedTokensFromSwap &&
-        expectedTokensFromSwap.gte(requiredTokens) &&
-        // total token amount must be less than half of available liquidity (arbitrary) to avoid slippage
-        BigNumber.from(requiredTokens).mul(2).lt(priceQuery.liquidity)
+      const expectedTokensFromSwap = priceQueryFactor.gt(0)
+        ? weiAmount.div(priceQueryFactor)
+        : undefined
 
       /**
        * Expect whichever is greater: 95% of expected tokens from swap, or minimum amount of tokens required to be minted.
@@ -123,6 +114,30 @@ export const usePayProjectTx = ({
           ? expectedTokensFromSwap.mul(95).div(100)
           : requiredTokens
 
+      const shouldUseBuybackDelegate =
+        Boolean(
+          projectId &&
+            priceQuery &&
+            BUYBACK_DELEGATE_ENABLED_PROJECT_IDS.includes(projectId) &&
+            requiredTokens &&
+            expectedTokensFromSwap?.gte(requiredTokens) &&
+            // total token amount must be less than half of available liquidity (arbitrary) to avoid slippage
+            BigNumber.from(requiredTokens).mul(2).lt(priceQuery.liquidity),
+        ) && minExpectedTokens !== undefined
+
+      console.info(
+        '🧃 useProjectPayTx::use buy back delegate::',
+        shouldUseBuybackDelegate,
+        {
+          weiAmount: weiAmount.toString(),
+          priceQueryNumerator,
+          priceQueryDenominator,
+          requiredTokens: requiredTokens?.toString(),
+          expectedTokensFromSwap: expectedTokensFromSwap?.toString(),
+          minExpectedTokens: minExpectedTokens?.toString(),
+        },
+      )
+
       // Encode metadata for jb721Delegate AND/OR jbBuybackDelegate
       const delegateMetadata = encodeDelegateMetadata({
         jb721Delegate: {
@@ -133,13 +148,12 @@ export const usePayProjectTx = ({
           },
           version: JB721DelegateVersion,
         },
-        jbBuybackDelegate:
-          shouldUseBuybackDelegate && minExpectedTokens !== undefined
-            ? {
-                amountToSwap: 0, // use all ETH
-                minExpectedTokens,
-              }
-            : undefined,
+        jbBuybackDelegate: shouldUseBuybackDelegate
+          ? {
+              amountToSwap: 0, // use all ETH
+              minExpectedTokens,
+            }
+          : undefined,
       })
 
       return delegateMetadata

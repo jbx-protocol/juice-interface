@@ -94,11 +94,14 @@ export const usePayProjectTx = ({
         priceQuery?.projectTokenPrice.numerator.toString()
       const priceQueryDenominator =
         priceQuery?.projectTokenPrice.denominator.toString()
-      const priceQueryFactor = BigNumber.from(priceQueryNumerator ?? 0).div(
-        BigNumber.from(priceQueryDenominator ?? 0),
-      )
+      const priceQueryFactor =
+        priceQueryNumerator && priceQueryDenominator
+          ? BigNumber.from(priceQueryNumerator).div(
+              BigNumber.from(priceQueryDenominator),
+            )
+          : undefined
 
-      const expectedTokensFromSwap = priceQueryFactor.gt(0)
+      const expectedTokensFromSwap = priceQueryFactor?.gt(0)
         ? weiAmount.div(priceQueryFactor)
         : undefined
 

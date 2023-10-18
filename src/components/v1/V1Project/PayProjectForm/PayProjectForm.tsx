@@ -6,7 +6,7 @@ import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { getHighestAffordableNft, getNftRewardOfFloor } from 'utils/nftRewards'
 
-import FormattedNumberInput from '../../inputs/FormattedNumberInput'
+import FormattedNumberInput from '../../../inputs/FormattedNumberInput'
 import PayInputSubText from './PayInputSubText'
 import { PayProjectFormContext } from './payProjectFormContext'
 

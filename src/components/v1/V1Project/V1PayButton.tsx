@@ -5,7 +5,7 @@ import PayWarningModal from 'components/modals/PayWarningModal'
 import {
   PayButtonProps,
   PayProjectFormContext,
-} from 'components/Project/PayProjectForm/payProjectFormContext'
+} from 'components/v1/V1Project/PayProjectForm/payProjectFormContext'
 import { PROJECT_PAGE } from 'constants/fathomEvents'
 import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'

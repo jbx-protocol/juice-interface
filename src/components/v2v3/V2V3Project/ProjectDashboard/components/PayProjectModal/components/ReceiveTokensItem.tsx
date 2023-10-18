@@ -44,7 +44,7 @@ export const ReceiveTokensItem = ({ className }: { className?: string }) => {
             ≥ {receivedTickets}
             <TooltipIcon
               tip={
-                'This project may purchase tokens from a secondary market instead of minting new tokens, which may result in more tokens distributed depending on the swap price.'
+                'Your payment may purchase tokens from a secondary market instead of minting new tokens. You might receive more tokens depending on the swap price.'
               }
             />
           </div>

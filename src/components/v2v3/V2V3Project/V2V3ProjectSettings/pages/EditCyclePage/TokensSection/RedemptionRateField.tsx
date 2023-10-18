@@ -9,7 +9,7 @@ import { helpPagePath } from 'utils/routes'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 
 export function RedemptionRateField() {
-  const { editCycleForm } = useEditCycleFormContext()
+  const { editCycleForm, setFormHasUpdated } = useEditCycleFormContext()
 
   // Redemption rate %
   const redemptionReductionRate = useWatch('redemptionRate', editCycleForm)
@@ -35,6 +35,7 @@ export function RedemptionRateField() {
         value={redemptionRateSwitchEnabled}
         onChange={val => {
           setRedemptionRateSwitchEnabled(val)
+          setFormHasUpdated(true)
           if (!val) {
             editCycleForm?.setFieldsValue({
               redemptionRate: 100,

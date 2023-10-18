@@ -28,9 +28,7 @@ export default function ProjectLogo({
   const [srcLoadError, setSrcLoadError] = useState(false)
 
   const imageSrc = useMemo(() => {
-    if (!projectId) return undefined
-
-    if (IMAGE_URI_OVERRIDES[projectId]) {
+    if (projectId && IMAGE_URI_OVERRIDES[projectId]) {
       return IMAGE_URI_OVERRIDES[projectId]
     }
 

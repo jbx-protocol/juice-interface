@@ -2528,6 +2528,9 @@ msgstr ""
 msgid "Migrate project's payment terminal"
 msgstr ""
 
+msgid "Project cover photo"
+msgstr ""
+
 msgid "Not a valid ETH address"
 msgstr ""
 

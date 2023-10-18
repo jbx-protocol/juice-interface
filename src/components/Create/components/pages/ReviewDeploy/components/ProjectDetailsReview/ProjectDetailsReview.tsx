@@ -6,6 +6,7 @@ import { RichPreview } from 'components/RichPreview'
 import { useWallet } from 'hooks/Wallet'
 import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
 import { ReviewDescription } from '../ReviewDescription'
 
@@ -17,6 +18,7 @@ export const ProjectDetailsReview = () => {
       discord,
       telegram,
       logoUri,
+      coverImageUri,
       infoUri,
       name,
       payDisclosure,
@@ -33,6 +35,10 @@ export const ProjectDetailsReview = () => {
     if (!description) return undefined
     return wrapNonAnchorsInAnchor(description)
   }, [description])
+
+  const coverImageSrc = coverImageUri
+    ? ipfsUriToGatewayUrl(coverImageUri)
+    : undefined
 
   return (
     <div className="flex flex-col gap-y-10 pt-5 pb-12 md:grid md:grid-cols-4">
@@ -124,6 +130,15 @@ export const ProjectDetailsReview = () => {
           ) : null
         }
       />
+      {coverImageSrc ? (
+        <ReviewDescription
+          className="row-span-2"
+          title={t`Project cover photo`}
+          desc={
+            <img width={144} src={coverImageSrc} alt={`${name} cover photo`} />
+          }
+        />
+      ) : null}
       {/* END: Bottom */}
       <ReviewDescription
         title={t`Project owner`}

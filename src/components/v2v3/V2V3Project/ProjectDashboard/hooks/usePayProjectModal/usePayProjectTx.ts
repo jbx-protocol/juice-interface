@@ -77,64 +77,48 @@ export const usePayProjectTx = ({
     [nftRewards, receivedTickets, totalAmount, userAddress],
   )
 
-  return useCallback(
-    async (
-      values: PayProjectModalFormValues,
-      formikHelpers: FormikHelpers<PayProjectModalFormValues>,
-    ) => {
-      if (!values.userAcceptsTerms) return
-      const { messageString, attachedUrl } = values.message
-      const memo = buildPaymentMemo({
-        text: messageString,
-        imageUrl: attachedUrl,
-        nftUrls: nftRewards
-          .map(
-            ({ id }) =>
-              (rewardTiers ?? []).find(({ id: tierId }) => tierId === id)
-                ?.fileUrl,
-          )
-          .filter((url): url is string => !!url),
-      })
-      const beneficiary = values.beneficiaryAddress ?? userAddress
-
-      let weiAmount: BigNumber
-      if (!totalAmount) {
-        weiAmount = parseWad(0)
-      } else if (totalAmount.currency === V2V3_CURRENCY_ETH) {
-        weiAmount = parseWad(totalAmount.amount)
-      } else {
-        weiAmount = converter.usdToWei(totalAmount.amount)
-      }
-
+  const buildPayDelegateMetadata = useCallback(
+    (weiAmount: BigNumber) => {
       const tierIdsToMint = nftRewards
         .map(({ id, quantity }) => Array<number>(quantity).fill(id))
         .flat()
 
       // Total tokens that should be minted by pay() tx, including reserved tokens
       const requiredTokens = fundingCycleMetadata
-        ? parseWad(receivedTickets)
+        ? parseWad(receivedTickets?.replace(',', ''))
             .mul(MAX_RESERVED_RATE)
             .div(fundingCycleMetadata.reservedRate)
         : undefined
 
-      const expectedTokensFromSwap = weiAmount.div(
-        BigNumber.from(priceQuery?.projectTokenPrice.numerator.toString()).div(
-          BigNumber.from(priceQuery?.projectTokenPrice.denominator.toString()),
-        ),
+      const priceQueryNumerator = BigNumber.from(
+        priceQuery?.projectTokenPrice.numerator.toString() ?? 0,
       )
+      const priceQueryDenominator = BigNumber.from(
+        priceQuery?.projectTokenPrice.denominator.toString() ?? 0,
+      )
+      const priceQueryFactor = priceQueryNumerator.div(priceQueryDenominator)
+
+      const expectedTokensFromSwap =
+        priceQueryFactor.gt(0) && weiAmount.div(priceQueryFactor)
 
       const shouldUseBuybackDelegate =
         projectId &&
         priceQuery &&
         requiredTokens &&
         BUYBACK_DELEGATE_ENABLED_PROJECT_IDS.includes(projectId) &&
+        expectedTokensFromSwap &&
         expectedTokensFromSwap.gte(requiredTokens) &&
-        BigNumber.from(requiredTokens).mul(2).lt(priceQuery.liquidity) // total token amount must be less than half of available liquidity (arbitrary) to avoid slippage
+        // total token amount must be less than half of available liquidity (arbitrary) to avoid slippage
+        BigNumber.from(requiredTokens).mul(2).lt(priceQuery.liquidity)
 
-      // Expect whichever is greater: 95% of expected tokens from swap, or minimum amount of tokens required to be minted
-      // We don't really care if less tokens are returned from the swap than what we've estimated (as long as we're getting at least the minimum amount that would otherwise be minted). The main concern is sending as high a minimum as possible to limit arbitrage possibility
+      /**
+       * Expect whichever is greater: 95% of expected tokens from swap, or minimum amount of tokens required to be minted.
+       * We don't really care if less tokens are returned from the swap than what we've estimated (as long as we're getting at least the minimum amount that would otherwise be minted).
+       * The main concern is sending as high a minimum as possible to limit arbitrage possibility.
+       */
       const minExpectedTokens =
         requiredTokens &&
+        expectedTokensFromSwap &&
         expectedTokensFromSwap.mul(95).div(100).gt(requiredTokens)
           ? expectedTokensFromSwap.mul(95).div(100)
           : requiredTokens
@@ -158,8 +142,52 @@ export const usePayProjectTx = ({
             : undefined,
       })
 
+      return delegateMetadata
+    },
+    [
+      JB721DelegateVersion,
+      fundingCycleMetadata,
+      nftRewards,
+      priceQuery,
+      projectId,
+      receivedTickets,
+    ],
+  )
+
+  return useCallback(
+    async (
+      values: PayProjectModalFormValues,
+      formikHelpers: FormikHelpers<PayProjectModalFormValues>,
+    ) => {
+      if (!values.userAcceptsTerms) return
+
+      const { messageString, attachedUrl } = values.message
+      const memo = buildPaymentMemo({
+        text: messageString,
+        imageUrl: attachedUrl,
+        nftUrls: nftRewards
+          .map(
+            ({ id }) =>
+              (rewardTiers ?? []).find(({ id: tierId }) => tierId === id)
+                ?.fileUrl,
+          )
+          .filter((url): url is string => !!url),
+      })
+      const beneficiary = values.beneficiaryAddress ?? userAddress
+
+      let weiAmount: BigNumber
+      if (!totalAmount) {
+        weiAmount = parseWad(0)
+      } else if (totalAmount.currency === V2V3_CURRENCY_ETH) {
+        weiAmount = parseWad(totalAmount.amount)
+      } else {
+        weiAmount = converter.usdToWei(totalAmount.amount)
+      }
+
       let onError = undefined
       try {
+        const delegateMetadata = buildPayDelegateMetadata(weiAmount)
+
         const success = await payProjectTx(
           {
             memo,
@@ -198,7 +226,6 @@ export const usePayProjectTx = ({
     },
     [
       projectHasErc20,
-      JB721DelegateVersion,
       buildPayReceipt,
       converter,
       nftRewards,
@@ -209,10 +236,7 @@ export const usePayProjectTx = ({
       rewardTiers,
       totalAmount,
       userAddress,
-      priceQuery,
-      projectId,
-      receivedTickets,
-      fundingCycleMetadata,
+      buildPayDelegateMetadata,
     ],
   )
 }

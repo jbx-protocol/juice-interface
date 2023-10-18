@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
 import { useProjectHasErc20Token } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectHasErc20Token'
 import { useProjectPaymentTokens } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPaymentTokens'
@@ -41,11 +41,9 @@ export const ReceiveTokensItem = ({ className }: { className?: string }) => {
         </div>
         {buybackDelegateEnabled ? (
           <div>
-            ≥ {receivedTickets}
+            ≥ {receivedTickets}{' '}
             <TooltipIcon
-              tip={
-                'Your payment may purchase tokens from a secondary market instead of minting new tokens. You might receive more tokens depending on the swap price.'
-              }
+              tip={t`Your payment may purchase tokens from a secondary market instead of minting new tokens. You might receive more tokens depending on the swap price.`}
             />
           </div>
         ) : (

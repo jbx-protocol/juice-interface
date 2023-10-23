@@ -15,8 +15,8 @@ import { JuicecrowdBanner } from './JuicecrowdBanner'
 export function HomePage() {
   return (
     <>
+      <JuicecrowdBanner />
       <div className="[&>*:nth-child(even)]:bg-smoke-50 dark:[&>*:nth-child(even)]:bg-slate-700">
-        <JuicecrowdBanner />
         <TopSection />
 
         <StatsSection />

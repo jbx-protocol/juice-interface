@@ -41,10 +41,10 @@ export default function ProjectLogo({
     // This rewrites those URLs to use the Infura gateway.
     if (uri.startsWith('https://jbx.mypinata.cloud')) {
       const cid = cidFromUrl(uri)
-      return ipfsGatewayUrl(cid)
+      return `/api/logo/${encodeURIComponent(ipfsGatewayUrl(cid))}`
     }
 
-    return ipfsUriToGatewayUrl(uri)
+    return `/api/logo/${encodeURIComponent(ipfsUriToGatewayUrl(uri))}`
   }, [uri, projectId, pv])
 
   const validImg = imageSrc && !srcLoadError

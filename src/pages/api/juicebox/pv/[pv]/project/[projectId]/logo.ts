@@ -73,7 +73,35 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       responseType: 'arraybuffer',
     })
 
-    const contentType = logoImageRes.headers['content-type'] ?? 'image/png'
+    // Ensure that the header reflects a valid image MIME type
+    const contentType = logoImageRes.headers['content-type']
+    const acceptedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']
+    if (!acceptedTypes.includes(contentType)) {
+      return res.status(403).json({ error: 'Forbidden. Invalid content-type.' })
+    }
+
+    // Check the file signature (magic numbers) https://en.wikipedia.org/wiki/List_of_file_signatures
+    const data = new Uint8Array(logoImageRes.data)
+    if (
+      !(data[0] === 0xff && data[1] === 0xd8 && data[2] === 0xff) && // JPEG
+      !(
+        data[0] === 0x89 &&
+        data[1] === 0x50 &&
+        data[2] === 0x4e &&
+        data[3] === 0x47
+      ) && // PNG
+      !(
+        data[0] === 0x47 &&
+        data[1] === 0x49 &&
+        data[2] === 0x46 &&
+        data[3] === 0x38
+      ) // GIF
+    ) {
+      return res
+        .status(403)
+        .json({ error: 'Forbidden. Invalid file signature.' })
+    }
+
     res.setHeader('Content-Type', contentType)
     res.setHeader('Content-Length', logoImageRes.data.length)
     // cache for 5 minutes

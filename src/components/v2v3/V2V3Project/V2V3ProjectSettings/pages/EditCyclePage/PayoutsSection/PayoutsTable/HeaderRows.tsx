@@ -20,7 +20,7 @@ export function HeaderRows() {
   const { hideExplaination, hideSettings, addPayoutsDisabled } =
     usePayoutsTableContext()
 
-  const { distributionLimitIsInfinite, handleNewPayoutSplit, payoutSplits } =
+  const { distributionLimitIsInfinite, handleNewPayoutSplit } =
     usePayoutsTable()
 
   const handleAddRecipientModalOk = (
@@ -70,9 +70,7 @@ export function HeaderRows() {
                 </span>
               </Button>
             )}
-            {payoutSplits?.length === 0 || hideSettings ? null : (
-              <PayoutTableSettings />
-            )}
+            {hideSettings ? null : <PayoutTableSettings />}
           </div>
         </div>
       </PayoutsTableCell>

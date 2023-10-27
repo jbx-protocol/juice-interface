@@ -37,7 +37,7 @@ export function RedemptionRateField() {
           setRedemptionRateSwitchEnabled(val)
           if (!val) {
             editCycleForm?.setFieldsValue({
-              redemptionRate: 100,
+              redemptionRate: 0,
             })
           }
         }}

@@ -12,6 +12,7 @@ import { SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
 import { V2V3EditReservedTokens } from '../../ReservedTokensSettingsPage/V2V3EditReservedTokens'
 import { AdvancedDropdown } from '../AdvancedDropdown'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
+import { zeroPercentDisabledNoticed } from './RedemptionRateField'
 
 export function ReservedTokensField() {
   const { editCycleForm, setFormHasUpdated } = useEditCycleFormContext()
@@ -48,6 +49,7 @@ export function ReservedTokensField() {
             editCycleForm?.setFieldsValue({ reservedTokens: 0 })
           }
         }}
+        extra={reservedTokensSwitchEnabled ? null : zeroPercentDisabledNoticed}
       />
       {reservedTokensSwitchEnabled ? (
         <div className="pt-6 pb-5">

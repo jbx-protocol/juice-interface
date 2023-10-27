@@ -135,7 +135,6 @@ export function EditCyclePage() {
           <Button
             type="primary"
             onClick={() => setConfirmModalOpen(true)}
-            // Removed the disabled state for now, as it was causing issues.
             disabled={Boolean(error)}
           >
             <Trans>Save changes</Trans>

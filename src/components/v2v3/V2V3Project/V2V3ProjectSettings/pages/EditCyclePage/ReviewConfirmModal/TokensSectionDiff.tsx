@@ -79,34 +79,6 @@ export function TokensSectionDiff() {
               }
             />
           )}
-          {reservedRateHasDiff && currentReservedRate && (
-            <FundingCycleListItem
-              name={t`Reserved tokens`}
-              value={
-                <ReservedRateValue
-                  value={newReservedRate}
-                  showWarning={
-                    unsafeFundingCycleProperties?.metadataReservedRate
-                  }
-                />
-              }
-              oldValue={<ReservedRateValue value={currentReservedRate} />}
-            />
-          )}
-          {reservedSplitsHasDiff && (
-            <div className="pb-4">
-              <div className="mb-3 text-sm font-semibold">
-                <Trans>Reserved recipients:</Trans>
-              </div>
-              <DiffedSplitList
-                splits={newReservedSplits}
-                diffSplits={currentReservedSplits}
-                totalValue={undefined}
-                reservedRate={formattedReservedRate}
-                showDiffs
-              />
-            </div>
-          )}
           {discountRateHasDiff && currentDiscountRate && (
             <FundingCycleListItem
               name={t`Issuance reduction rate`}
@@ -148,6 +120,34 @@ export function TokensSectionDiff() {
                 </span>
               }
             />
+          )}
+          {reservedRateHasDiff && currentReservedRate && (
+            <FundingCycleListItem
+              name={t`Reserved tokens`}
+              value={
+                <ReservedRateValue
+                  value={newReservedRate}
+                  showWarning={
+                    unsafeFundingCycleProperties?.metadataReservedRate
+                  }
+                />
+              }
+              oldValue={<ReservedRateValue value={currentReservedRate} />}
+            />
+          )}
+          {reservedSplitsHasDiff && (
+            <div className="pb-4">
+              <div className="mb-3 text-sm font-semibold">
+                <Trans>Reserved recipients:</Trans>
+              </div>
+              <DiffedSplitList
+                splits={newReservedSplits}
+                diffSplits={currentReservedSplits}
+                totalValue={undefined}
+                reservedRate={formattedReservedRate}
+                showDiffs
+              />
+            </div>
           )}
         </div>
       }

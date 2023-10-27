@@ -7,7 +7,7 @@ import { helpPagePath } from 'utils/routes'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 
 export function IssuanceRateReductionField() {
-  const { editCycleForm } = useEditCycleFormContext()
+  const { editCycleForm, setFormHasUpdated } = useEditCycleFormContext()
 
   // Issurance reduction rate %
   const issuanceReductionRate =
@@ -34,6 +34,7 @@ export function IssuanceRateReductionField() {
         value={issuanceReductionRateSwitchEnabled}
         onChange={val => {
           setIssuanceReductionRateSwitchEnabled(val)
+          setFormHasUpdated(true)
           if (!val) {
             editCycleForm?.setFieldsValue({ discountRate: 0 })
           }

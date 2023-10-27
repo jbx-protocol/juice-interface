@@ -43,6 +43,7 @@ export function ReservedTokensField() {
         value={reservedTokensSwitchEnabled}
         onChange={val => {
           setReservedTokensSwitchEnabled(val)
+          setFormHasUpdated(true)
           if (!val) {
             editCycleForm?.setFieldsValue({ reservedTokens: 0 })
           }

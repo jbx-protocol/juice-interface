@@ -47,9 +47,12 @@ exports[`SummaryExpandedView should render correctly 1`] = `
               <div
                 class="flex items-center justify-center overflow-hidden text-4xl bg-smoke-100 dark:bg-slate-700 h-14 w-14 rounded-full"
               >
-                <span>
-                  🧃
-                </span>
+                <img
+                  alt="undefined logo"
+                  class="h-full w-full object-cover object-center"
+                  crossorigin="anonymous"
+                  src="/api/juicebox/pv/undefined/project/undefined/logo"
+                />
               </div>
               <span
                 class="ml-3 min-w-0 font-medium dark:text-slate-50"

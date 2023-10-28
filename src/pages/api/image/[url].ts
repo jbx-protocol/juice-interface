@@ -22,7 +22,13 @@ export default async function handler(
 
     // Ensure that the header reflects a valid image MIME type
     const contentType = imageRes.headers['content-type']
-    const acceptedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']
+    const acceptedTypes = [
+      'image/png',
+      'image/jpeg',
+      'image/jpg',
+      'image/gif',
+      'image/vnd.mozilla.apng',
+    ]
     if (!acceptedTypes.includes(contentType)) {
       return res.status(403).json({ error: 'Forbidden. Invalid content-type.' })
     }
@@ -36,7 +42,7 @@ export default async function handler(
         data[1] === 0x50 &&
         data[2] === 0x4e &&
         data[3] === 0x47
-      ) && // PNG
+      ) && // PNG / APNG
       !(
         data[0] === 0x47 &&
         data[1] === 0x49 &&

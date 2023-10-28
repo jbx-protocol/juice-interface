@@ -30,6 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       'Cache-Control',
       `s-maxage=${PRICE_REFRESH_INTERVAL_SECONDS}, stale-while-revalidate`,
     )
+    res.setHeader('Access-Control-Allow-Origin', '*')
     return res.status(200).json({ price })
   } catch (err) {
     logger.error({ error: err })

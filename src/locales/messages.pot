@@ -3119,6 +3119,9 @@ msgstr ""
 msgid "Disabled when your project's cycle has no duration."
 msgstr ""
 
+msgid "I Agree"
+msgstr ""
+
 msgid "Twitter handle"
 msgstr ""
 

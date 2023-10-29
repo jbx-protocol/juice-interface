@@ -16,7 +16,11 @@ export default async function handler(
   }
 
   try {
+    // Fetch the first 4 bytes of the image to check its headers and file signature.
     const imageRes = await axios.get(imageUrl, {
+      headers: {
+        Range: 'bytes=0-3',
+      },
       responseType: 'arraybuffer',
     })
 
@@ -55,8 +59,7 @@ export default async function handler(
         .json({ error: 'Forbidden. Invalid file signature.' })
     }
 
-    res.setHeader('Content-Type', contentType)
-    return res.end(imageRes.data, 'binary')
+    return res.redirect(imageUrl)
   } catch (error) {
     logger.error({ error })
     return res.status(500).json({ error: 'failed to resolve image' })

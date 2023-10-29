@@ -23,11 +23,11 @@ export default function LegalNoticeModal({
     >
       <h2 className="font-display text-2xl">Notice</h2>
       <p className="mb-4 text-center">
-        By selecting "I Agree", you commit to adhering to the{' '}
+        By selecting "I Agree", you accept and agree to the{' '}
         <ExternalLink href={helpPagePath('/tos')}>
-          JuiceboxDAO Terms of Service
+          Terms of Service
         </ExternalLink>
-        , and acknowledge your understanding that:
+        , and acknowledge the following:
       </p>
       <div className="overflow-y-auto" style={{ maxHeight: '60vh' }}>
         <ol className="list-decimal space-y-4 px-8">

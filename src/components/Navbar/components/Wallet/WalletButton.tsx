@@ -1,11 +1,12 @@
 import { WarningOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { useWallet } from 'hooks/Wallet'
 import LegalNoticeModal from 'components/modals/LegalNoticeModal'
-
-import WalletMenu from './WalletMenu'
+import { useWallet } from 'hooks/Wallet'
 import { useEffect, useState } from 'react'
+import WalletMenu from './WalletMenu'
+
+const LEGAL_NOTICE_STORAGE_KEY = 'jbm_hasAcceptedLegalNotice'
 
 export default function WalletButton() {
   const {
@@ -21,12 +22,12 @@ export default function WalletButton() {
 
   useEffect(() => {
     setLegalNoticeAccepted(
-      localStorage.getItem('hasAcceptedLegalNotice') === 'true',
+      localStorage.getItem(LEGAL_NOTICE_STORAGE_KEY) === 'true',
     )
   }, [])
 
   const onOk = () => {
-    localStorage.setItem('hasAcceptedLegalNotice', 'true')
+    localStorage.setItem(LEGAL_NOTICE_STORAGE_KEY, 'true')
     setLegalNoticeAccepted(true)
     setLegalNoticeVisible(false)
     connect()

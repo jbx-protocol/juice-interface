@@ -129,7 +129,7 @@
     "object-hash": "^3.0.0",
     "pino": "^8.11.0",
     "pino-pretty": "^10.0.0",
-    "postcss": "^8.4.23",
+    "postcss": "^8.4.31",
     "postmark": "^3.0.15",
     "qs": "^6.11.0",
     "quill": "^1.3.7",

@@ -94,15 +94,16 @@ export const usePayProjectTx = ({
         priceQuery?.projectTokenPrice.numerator.toString()
       const priceQueryDenominator =
         priceQuery?.projectTokenPrice.denominator.toString()
-      const priceQueryFactor =
+      const inversePriceQueryFactor =
         priceQueryNumerator && priceQueryDenominator
-          ? BigNumber.from(priceQueryNumerator).div(
-              BigNumber.from(priceQueryDenominator),
+          ? BigNumber.from(priceQueryDenominator).div(
+              BigNumber.from(priceQueryNumerator),
             )
           : undefined
 
-      const expectedTokensFromSwap = priceQueryFactor?.gt(0)
-        ? weiAmount.div(priceQueryFactor)
+      // Using inverse price query helps avoid dividing by zero. This assumes the token price is < 1ETH
+      const expectedTokensFromSwap = inversePriceQueryFactor?.gt(0)
+        ? weiAmount.mul(inversePriceQueryFactor)
         : undefined
 
       /**

@@ -1,4 +1,5 @@
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { V2_BLOCKLISTED_PROJECTS } from 'constants/blocklist'
 import { DbProjectsDocument, DbProjectsQuery, Project } from 'generated/graphql'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { serverClient } from 'lib/apollo/serverClient'
@@ -98,6 +99,9 @@ export async function queryDBProjects(
     .select('*')
     .order(orderBy, { ascending })
     .range(page * pageSize, (page + 1) * pageSize - 1)
+
+  // Filter out blocklisted projects
+  query = query.not('id', 'in', `(${V2_BLOCKLISTED_PROJECTS.join(',')})`)
 
   if (opts.archived) query = query.is('archived', true)
   else query = query.not('archived', 'is', true)

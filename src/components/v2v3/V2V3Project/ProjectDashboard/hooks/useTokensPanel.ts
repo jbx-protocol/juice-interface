@@ -1,6 +1,7 @@
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useProjectHasLegacyTokens } from 'hooks/JBV3Token/contractReader/useProjectHasLegacyTokens'
 import { useTotalLegacyTokenBalance } from 'hooks/JBV3Token/contractReader/useTotalLegacyTokenBalance'
+import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useContext, useMemo } from 'react'
@@ -16,7 +17,18 @@ export const useTokensPanel = () => {
     tokenSymbol: tokenSymbolRaw,
     totalTokenSupply,
     tokenAddress,
+    fundingCycleMetadata,
   } = useProjectContext()
+
+  const { data: undistributedReservedTokens } = useProjectReservedTokens({
+    projectId,
+    reservedRate: fundingCycleMetadata?.reservedRate,
+  })
+
+  const totalTokenSupplyIncludingReserved = undistributedReservedTokens
+    ? totalTokenSupply?.add(undistributedReservedTokens)
+    : totalTokenSupply
+
   const projectToken = tokenSymbolText({
     tokenSymbol: tokenSymbolRaw,
     capitalize: false,
@@ -40,8 +52,8 @@ export const useTokensPanel = () => {
     useTotalLegacyTokenBalance({ projectId })
 
   const totalSupply = useMemo(() => {
-    return formatWad(totalTokenSupply, { precision: 2 })
-  }, [totalTokenSupply])
+    return formatWad(totalTokenSupplyIncludingReserved, { precision: 2 })
+  }, [totalTokenSupplyIncludingReserved])
 
   const canCreateErc20Token = useMemo(() => {
     return !projectHasErc20Token && hasIssueTicketsPermission

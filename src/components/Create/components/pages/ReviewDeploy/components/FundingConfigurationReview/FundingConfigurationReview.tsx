@@ -1,27 +1,12 @@
 import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { twMerge } from 'tailwind-merge'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { CreateFlowPayoutsTable } from '../../../PayoutsPage/components/CreateFlowPayoutsTable'
-import { PayoutsList } from '../../../PayoutsPage/components/PayoutsList'
 import { ReviewDescription } from '../ReviewDescription'
 import { useFundingConfigurationReview } from './hooks/useFundingConfigurationReview'
 
 export const FundingConfigurationReview = () => {
-  const {
-    selection,
-    allocationSplits,
-    duration,
-    fundingCycles,
-    fundingTarget,
-    setAllocationSplits,
-    launchDate,
-  } = useFundingConfigurationReview()
-
-  const newPayoutsTableEnabled = featureFlagEnabled(
-    FEATURE_FLAGS.PAYOUTS_TABLE_CREATE_FLOW,
-  )
+  const { duration, fundingCycles, launchDate } =
+    useFundingConfigurationReview()
 
   return (
     <>
@@ -58,39 +43,8 @@ export const FundingConfigurationReview = () => {
             </div>
           }
         />
-        {newPayoutsTableEnabled ? null : (
-          <>
-            <ReviewDescription
-              title={t`Payouts`}
-              desc={
-                <div className="text-base font-medium">{fundingTarget}</div>
-              }
-            />
-
-            <ReviewDescription
-              className={twMerge(allocationSplits.length ? 'col-span-4' : '')}
-              title={t`Payout recipients`}
-              desc={
-                allocationSplits.length > 0 ? (
-                  <PayoutsList
-                    value={allocationSplits}
-                    onChange={setAllocationSplits}
-                    payoutsSelection={selection ?? 'amounts'}
-                    isEditable={false}
-                  />
-                ) : (
-                  <div className="text-base font-medium">
-                    <Trans>None</Trans>
-                  </div>
-                )
-              }
-            />
-          </>
-        )}
       </div>
-      {newPayoutsTableEnabled ? (
-        <CreateFlowPayoutsTable addPayoutsDisabled />
-      ) : null}
+      <CreateFlowPayoutsTable addPayoutsDisabled />
     </>
   )
 }

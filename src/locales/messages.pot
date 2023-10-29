@@ -128,9 +128,6 @@ msgstr ""
 msgid "project owner"
 msgstr ""
 
-msgid "Add wallet addresses or Juicebox projects to receive payouts."
-msgstr ""
-
 msgid "When people pay your project, they receive its tokens. Project tokens can be used for governance or community access, and token holders can redeem their tokens to reclaim some ETH from your project. You can also reserve some tokens for recipients of your choosing."
 msgstr ""
 
@@ -225,9 +222,6 @@ msgid "Project tools"
 msgstr ""
 
 msgid "Built by the best"
-msgstr ""
-
-msgid "Your project will pay out ETH to these addresses and Juicebox projects."
 msgstr ""
 
 msgid "Staked balance"
@@ -2180,9 +2174,6 @@ msgstr ""
 msgid "Uploaded to: <0>{imageUrl}</0>"
 msgstr ""
 
-msgid "If redemptions are enabled, supporters can burn their tokens to reclaim some of the ETH not needed for payouts (any ETH exceeding the amount above). You can turn off redemptions in the Token settings."
-msgstr ""
-
 msgid "By default, the payer will receive any project tokens minted from the payment."
 msgstr ""
 
@@ -3830,9 +3821,6 @@ msgstr ""
 msgid "The wallet address that reserved NFTs will be sent to"
 msgstr ""
 
-msgid "Payouts: {fundingTarget}"
-msgstr ""
-
 msgid "Other."
 msgstr ""
 
@@ -4923,9 +4911,6 @@ msgid "Other assets in this project's owner's wallet."
 msgstr ""
 
 msgid "Learn more"
-msgstr ""
-
-msgid "Payout Recipients"
 msgstr ""
 
 msgid "Success"

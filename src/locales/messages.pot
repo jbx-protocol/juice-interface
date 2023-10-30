@@ -3992,6 +3992,9 @@ msgstr ""
 msgid "Edit recipient"
 msgstr ""
 
+msgid "(0%)"
+msgstr ""
+
 msgid "Update preview"
 msgstr ""
 

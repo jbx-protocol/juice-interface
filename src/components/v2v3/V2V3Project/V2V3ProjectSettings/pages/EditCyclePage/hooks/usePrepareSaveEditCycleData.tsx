@@ -78,6 +78,7 @@ export const usePrepareSaveEditCycleData = () => {
       } as BaseV3FundingCycleMetadataGlobal,
       reservedRate: reservedRateFrom(formValues.reservedTokens),
       redemptionRate: redemptionRateFrom(formValues.redemptionRate),
+      ballotRedemptionRate: redemptionRateFrom(formValues.redemptionRate),
       pausePay: formValues.pausePay,
       allowMinting: formValues.allowTokenMinting,
       holdFees: formValues.holdFees,

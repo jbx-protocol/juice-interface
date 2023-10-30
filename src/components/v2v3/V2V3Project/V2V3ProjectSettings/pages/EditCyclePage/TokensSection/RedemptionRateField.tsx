@@ -8,6 +8,12 @@ import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 
+export const zeroPercentDisabledNoticed = (
+  <span className="text-tertiary text-xs">
+    <Trans>(0%)</Trans>
+  </span>
+)
+
 export function RedemptionRateField() {
   const { editCycleForm, setFormHasUpdated } = useEditCycleFormContext()
 
@@ -16,7 +22,7 @@ export function RedemptionRateField() {
 
   const [redemptionRateSwitchEnabled, setRedemptionRateSwitchEnabled] =
     useState<boolean>(
-      (editCycleForm?.getFieldValue('redemptionRate') ?? 100) < 100,
+      (editCycleForm?.getFieldValue('redemptionRate') ?? 100) > 0,
     )
   return (
     <div className="flex flex-col gap-5">
@@ -33,12 +39,13 @@ export function RedemptionRateField() {
           </Trans>
         }
         value={redemptionRateSwitchEnabled}
+        extra={redemptionRateSwitchEnabled ? null : zeroPercentDisabledNoticed}
         onChange={val => {
           setRedemptionRateSwitchEnabled(val)
           setFormHasUpdated(true)
           if (!val) {
             editCycleForm?.setFieldsValue({
-              redemptionRate: 100,
+              redemptionRate: 0,
             })
           }
         }}

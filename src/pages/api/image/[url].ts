@@ -11,18 +11,30 @@ export default async function handler(
 
   const imageUrl = req.query?.url as string
   if (!imageUrl) {
-    res.status(400).send('Bad Request: url not provided')
-    return
+    return res
+      .status(400)
+      .json({ error: 'Bad Request: Invalid or missing URL.' })
   }
 
   try {
     // Fetch the first 4 bytes of the image to check its headers and file signature.
-    const imageRes = await axios.get(imageUrl, {
-      headers: {
-        Range: 'bytes=0-3',
-      },
-      responseType: 'arraybuffer',
-    })
+    const imageRes = await axios
+      .get(imageUrl, {
+        headers: {
+          Range: 'bytes=0-3',
+        },
+        responseType: 'arraybuffer',
+      })
+      .catch(error => {
+        logger.error({ error })
+        return res
+          .status(502)
+          .json({ error: `Could not get image headers or file signature.` })
+      })
+
+    if (!imageRes || !imageRes.headers) {
+      return res.status(500).json({ error: 'Failed to process image.' })
+    }
 
     // Ensure that the header reflects a valid image MIME type
     const contentType = imageRes.headers['content-type']

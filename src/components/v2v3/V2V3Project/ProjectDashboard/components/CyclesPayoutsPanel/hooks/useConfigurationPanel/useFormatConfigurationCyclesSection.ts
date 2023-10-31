@@ -61,16 +61,13 @@ export const useFormatConfigurationCyclesSection = ({
       const timeWeekdayString = timeDate.toLocaleString('en-US', formatOptions)
       return isoDateString + ', ' + timeWeekdayString
     }
-
-    const currentStartTime = formatTime(fundingCycle?.start)
-    if (!fundingCycle?.duration) {
-      return pairToDatum(t`Start time`, currentStartTime, t`Any time`)
+    const timeDatum: ConfigurationPanelDatum = {
+      name: t`Start time`,
+      new: formatTime(fundingCycle?.start),
+      easyCopy: true,
     }
-    const upcomingStartTime = formatTime(
-      fundingCycle?.start.add(fundingCycle?.duration),
-    )
-    return pairToDatum(t`Start time`, currentStartTime, upcomingStartTime)
-  }, [fundingCycle?.start, fundingCycle?.duration])
+    return timeDatum
+  }, [fundingCycle?.start])
 
   const payoutsDatum: ConfigurationPanelDatum = useMemo(() => {
     const formatCurrency = (currency: BigNumber | undefined) => {

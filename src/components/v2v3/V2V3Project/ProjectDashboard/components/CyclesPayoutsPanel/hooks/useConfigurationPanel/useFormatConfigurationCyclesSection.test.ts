@@ -7,8 +7,17 @@ import { BigNumber } from 'ethers'
 import { parseWad } from 'utils/format/formatNumber'
 import { useFormatConfigurationCyclesSection } from './useFormatConfigurationCyclesSection'
 
+// Use EST timezone for start time tests
+beforeAll(() => {
+  process.env.TZ = 'America/New_York'
+})
+afterAll(() => {
+  delete process.env.TZ
+})
+
 describe('useFormatConfigurationCyclesSection', () => {
   const mockFundingCycle = {
+    start: BigNumber.from(0),
     duration: BigNumber.from(10000),
     ballot: '0x0000000000000000000000000000000000000000',
   }
@@ -44,6 +53,11 @@ describe('useFormatConfigurationCyclesSection', () => {
       old: '2 hours',
       new: '5 hours',
     }
+    const expectedStartTime = {
+      name: 'Start time',
+      old: '1970-01-01, Wednesday, 07:00:00 PM EST',
+      new: '1970-01-01, Wednesday, 09:46:40 PM EST',
+    }
     const expectedPayouts = { name: 'Payouts', old: 'Ξ100', new: 'US$200' }
     const expectedEditDeadline = {
       name: 'Edit deadline',
@@ -52,6 +66,7 @@ describe('useFormatConfigurationCyclesSection', () => {
     }
 
     expect(result.current.duration).toEqual(expectedDuration)
+    expect(result.current.startTime).toEqual(expectedStartTime)
     expect(result.current.payouts).toEqual(expectedPayouts)
     expect(result.current.editDeadline).toEqual(expectedEditDeadline)
   })

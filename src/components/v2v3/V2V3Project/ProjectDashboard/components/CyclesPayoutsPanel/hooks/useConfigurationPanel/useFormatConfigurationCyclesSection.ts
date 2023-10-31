@@ -45,6 +45,33 @@ export const useFormatConfigurationCyclesSection = ({
     return pairToDatum(t`Duration`, currentDuration, upcomingDuration)
   }, [fundingCycle?.duration, upcomingFundingCycle])
 
+  const startTimeDatum: ConfigurationPanelDatum = useMemo(() => {
+    const formatTime = (timestamp: BigNumber | undefined) => {
+      if (timestamp === undefined) return undefined
+      const timeDate = new Date(timestamp.toNumber() * 1000)
+      const isoDateString = timeDate.toISOString().split('T')[0]
+      const formatOptions: Intl.DateTimeFormatOptions = {
+        weekday: 'long',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+        timeZoneName: 'short',
+      }
+      const timeWeekdayString = timeDate.toLocaleString('en-US', formatOptions)
+      return isoDateString + ', ' + timeWeekdayString
+    }
+
+    const currentStartTime = formatTime(fundingCycle?.start)
+    if (!fundingCycle?.duration) {
+      return pairToDatum(t`Start time`, currentStartTime, t`Any time`)
+    }
+    const upcomingStartTime = formatTime(
+      fundingCycle?.start.add(fundingCycle?.duration),
+    )
+    return pairToDatum(t`Start time`, currentStartTime, upcomingStartTime)
+  }, [fundingCycle?.start, fundingCycle?.duration])
+
   const payoutsDatum: ConfigurationPanelDatum = useMemo(() => {
     const formatCurrency = (currency: BigNumber | undefined) => {
       if (currency === undefined) return undefined
@@ -108,8 +135,9 @@ export const useFormatConfigurationCyclesSection = ({
   return useMemo(() => {
     return {
       duration: durationDatum,
+      startTime: startTimeDatum,
       payouts: payoutsDatum,
       editDeadline: editDeadlineDatum,
     }
-  }, [durationDatum, editDeadlineDatum, payoutsDatum])
+  }, [durationDatum, startTimeDatum, editDeadlineDatum, payoutsDatum])
 }

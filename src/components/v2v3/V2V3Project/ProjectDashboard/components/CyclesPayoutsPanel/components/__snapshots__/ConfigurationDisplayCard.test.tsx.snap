@@ -23,7 +23,7 @@ exports[`ConfigurationDisplayCard renders 1`] = `
           <div
             class="font-heading text-xl font-medium text-grey-900 dark:text-slate-50"
           >
-            Configuration
+            Rules
           </div>
         </div>
         <svg

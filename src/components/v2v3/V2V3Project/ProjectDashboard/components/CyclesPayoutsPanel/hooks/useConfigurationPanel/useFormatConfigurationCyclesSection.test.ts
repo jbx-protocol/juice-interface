@@ -55,7 +55,7 @@ describe('useFormatConfigurationCyclesSection', () => {
     }
     const expectedStartTime = {
       name: 'Start time',
-      new: '1970-01-01, Wednesday, 07:00:00 PM EST',
+      new: '1970-01-01, Wednesday, 09:46:40 PM EST',
       easyCopy: true,
     }
     const expectedPayouts = { name: 'Payouts', old: 'Ξ100', new: 'US$200' }

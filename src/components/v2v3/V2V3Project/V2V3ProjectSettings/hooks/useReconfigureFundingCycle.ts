@@ -43,7 +43,9 @@ const getWeightArgument = ({
 }
 
 /**
- * This hook is used in two places:
+ * Return a function to initiate a transaction to reconfigure a project's funding cycle.
+ *
+ * @dev Used in two places:
  *    1. Edit cycle form
  *    2. NFT page - edit dataSource-related attributes of the cycle
  */
@@ -71,13 +73,6 @@ export const useReconfigureFundingCycle = ({
   const reconfigureV2V3FundingCycleTx = useReconfigureV2V3FundingCycleTx()
   const reconfigureV2V3FundingCycleWithNftsTx =
     useReconfigureV2V3FundingCycleWithNftsTx()
-
-  // const { hasConflictingNftTx, mergeAlreadyQueuedNftTx } =
-  //   useConflictingNftSettingsTx()
-
-  // const { hasConflictingEditCycleTx, mergeAlreadyQueuedEditCycleTx } =
-  //   useConflictingEditCycleTx()
-
   const resolveEditCycleConflicts = useResolveEditCycleConflicts()
 
   // If given a latestEditingData, will use that. Else, will use redux store
@@ -119,24 +114,21 @@ export const useReconfigureFundingCycle = ({
         newFundingCycleWeight: editingFundingCycleData.weight,
       })
 
-      let reconfigureFundingCycleData: ReconfigureFundingCycleTxParams = {
-        fundingCycleData: {
-          ...editingFundingCycleData,
-          weight,
-        },
-        fundingCycleMetadata,
-        fundAccessConstraints: editingFundAccessConstraints,
-        groupedSplits: [
-          editingPayoutGroupedSplits,
-          editingReservedTokensGroupedSplits,
-        ],
-        memo,
-        mustStartAtOrAfter: editingMustStartAtOrAfter,
-      }
-
-      reconfigureFundingCycleData = resolveEditCycleConflicts(
-        reconfigureFundingCycleData,
-      )
+      const reconfigureFundingCycleData: ReconfigureFundingCycleTxParams =
+        resolveEditCycleConflicts({
+          fundingCycleData: {
+            ...editingFundingCycleData,
+            weight,
+          },
+          fundingCycleMetadata,
+          fundAccessConstraints: editingFundAccessConstraints,
+          groupedSplits: [
+            editingPayoutGroupedSplits,
+            editingReservedTokensGroupedSplits,
+          ],
+          memo,
+          mustStartAtOrAfter: editingMustStartAtOrAfter,
+        })
 
       const txOpts = {
         onDone() {

@@ -1,4 +1,3 @@
-import { Trans, t } from '@lingui/macro'
 import { JuiceModalProps } from 'components/modals/JuiceModal'
 import { NewFeatureAnnouncement } from './NewFeatureAnnouncement'
 
@@ -11,17 +10,13 @@ export const ExampleFeatureAnnouncement = (
   return (
     <NewFeatureAnnouncement
       {...props}
-      title={t`Example Feature`}
+      title="Example Feature"
       position="topRight"
-      okText={t`Got it`}
+      okText="Got it"
       hideCancelButton
     >
-      <p>
-        <Trans>This is an example feature announcement.</Trans>
-      </p>
-      <p>
-        <Trans>Use me as a base!</Trans>
-      </p>
+      <p>This is an example feature announcement.</p>
+      <p>Use me as a base!</p>
     </NewFeatureAnnouncement>
   )
 }

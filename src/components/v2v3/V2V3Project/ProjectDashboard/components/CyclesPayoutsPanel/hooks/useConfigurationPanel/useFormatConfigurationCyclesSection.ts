@@ -65,6 +65,8 @@ export const useFormatConfigurationCyclesSection = ({
     const formattedTime =
       upcomingFundingCycle === null
         ? formatTime(fundingCycle?.start)
+        : fundingCycle?.duration.isZero()
+        ? t`Any time`
         : formatTime(fundingCycle?.start.add(fundingCycle?.duration))
 
     const formatTimeDatum: ConfigurationPanelDatum = {

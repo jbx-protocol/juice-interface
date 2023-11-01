@@ -65,17 +65,14 @@ export default function TokenDistributionChart({
   const chartData = useMemo(() => {
     if (!tokenSupply || !allParticipants) return []
 
-    // Only show wallets with a minimum (arbitrary) balance to avoid chart clutter
-    const minBalanceThreshold = tokenSupply.div(400) // 0.25% of token supply
+    // Only show (arbitrary) max number of wallets to avoid chart clutter
+    const maxVisibleWallets = 80
 
     const visibleWallets: typeof allParticipants = []
     const remainderWallets: typeof allParticipants = []
 
-    allParticipants.forEach(p =>
-      (p.balance.gte(minBalanceThreshold)
-        ? visibleWallets
-        : remainderWallets
-      ).push(p),
+    allParticipants.forEach((p, i) =>
+      (i < maxVisibleWallets ? visibleWallets : remainderWallets).push(p),
     )
 
     const _chartData = visibleWallets.reduce(
@@ -161,7 +158,7 @@ export default function TokenDistributionChart({
           outerRadius={size / 2}
           innerRadius={size / 2 - 60}
           stroke={stroke}
-          minAngle={1}
+          minAngle={1.5}
           startAngle={0}
           endAngle={345}
         >

@@ -2,6 +2,9 @@
  * @jest-environment jsdom
  */
 import { renderHook } from '@testing-library/react'
+import { Price, Token } from '@uniswap/sdk-core'
+import { ADDRESS_ZERO } from '@uniswap/v3-sdk'
+import { useUniswapPriceQuery } from 'components/AMMPrices/hooks/useERC20UniswapPrice'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { CurrencyUtils } from 'utils/format/formatCurrency'
@@ -14,6 +17,7 @@ jest.mock('hooks/Wallet')
 jest.mock('hooks/useCurrencyConverter')
 jest.mock('../useProjectCart')
 jest.mock('../useProjectPageQueries')
+jest.mock('components/AMMPrices/hooks/useERC20UniswapPrice')
 
 describe('usePayProjectModal', () => {
   const DefaultuseProjectCart = {
@@ -31,12 +35,24 @@ describe('usePayProjectModal', () => {
     userAddress: '0x1234567890',
   }
   const mockCurrencyUtils = new CurrencyUtils(2000)
+  const mockPriceQuery = {
+    data: {
+      liquidity: '1000000',
+      projectTokenPrice: new Price(
+        new Token(1, ADDRESS_ZERO, 18),
+        new Token(1, ADDRESS_ZERO, 18),
+        1000,
+        1000,
+      ),
+    },
+  }
   beforeEach(() => {
     DefaultuseProjectCart.dispatch.mockClear()
     DefaultUseProjectPageQueries.setProjectPayReceipt.mockClear()
     ;(useProjectCart as jest.Mock).mockReturnValue(DefaultuseProjectCart)
     ;(useWallet as jest.Mock).mockReturnValue(DefaultUseWallet)
     ;(useCurrencyConverter as jest.Mock).mockReturnValue(mockCurrencyUtils)
+    ;(useUniswapPriceQuery as jest.Mock).mockReturnValue(mockPriceQuery)
     ;(useProjectPageQueries as jest.Mock).mockReturnValue(
       DefaultUseProjectPageQueries,
     )

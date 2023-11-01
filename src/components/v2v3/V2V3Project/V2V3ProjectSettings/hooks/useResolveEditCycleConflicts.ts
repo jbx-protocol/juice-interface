@@ -10,9 +10,10 @@ import { useContext } from 'react'
 
 /**
  * Determines if a "Launch NFTs" (NftDeployer.reconfigureFundingCycleOf) has been called
- * in the same cycle as an "Edit cycle" (reconfigureFundingCycleOf) tx. If so, need to pass
- * the new delegate and other NFT related attributes into the subsequent "Edit cycle" tx so
- * they are not overriden and lost.
+ * in the same cycle as an "Edit cycle" (reconfigureFundingCycleOf) tx.
+ *
+ * If so, we need to pass the new delegate and other NFT-related data into the subsequent
+ * "Edit cycle" tx so they are not overriden and lost.
  *
  * @param {V2V3FundingCycleMetadata} currentFcMetadata - The current funding cycle metadata.
  * @param {V2V3FundingCycleMetadata} queuedFcMetadata - The queued funding cycle metadata.
@@ -22,6 +23,7 @@ function hasNftConflict(
   currentFcMetadata: V2V3FundingCycleMetadata,
   queuedFcMetadata: V2V3FundingCycleMetadata,
 ): boolean {
+  // if the queued cycle's NFT data has any changes to the current cycle, return true.
   const useDataSourceForPayHasDiff =
     queuedFcMetadata.useDataSourceForPay !==
     currentFcMetadata.useDataSourceForPay
@@ -38,11 +40,17 @@ function hasNftConflict(
   )
 }
 
+/**
+ *
+ * @returns
+ */
 export const useResolveEditCycleConflicts = () => {
   const { projectId } = useContext(ProjectMetadataContext)
   const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
+
   const { data: queuedCycle } = useProjectQueuedFundingCycle({ projectId })
 
+  //
   if (!queuedCycle || !fundingCycleMetadata) {
     return (data: ReconfigureFundingCycleTxParams) => data
   }
@@ -51,6 +59,7 @@ export const useResolveEditCycleConflicts = () => {
   const queuedFcMetadata: V2V3FundingCycleMetadata = queuedCycle[1]
 
   return (data: ReconfigureFundingCycleTxParams) => {
+    // if the queued cycle's NFT data has changed, inject the queued NFT data.
     if (hasNftConflict(fundingCycleMetadata, queuedFcMetadata)) {
       return {
         ...data,
@@ -61,18 +70,18 @@ export const useResolveEditCycleConflicts = () => {
           dataSource: queuedFcMetadata.dataSource,
         },
       }
-    } else {
-      return {
-        ...data,
-        fundingCycleMetadata: {
-          ...data.fundingCycleMetadata,
-          ...queuedFcMetadata,
-        },
-        fundingCycleData: {
-          ...data.fundingCycleData,
-          ...queuedFcData,
-        },
-      }
+    }
+
+    return {
+      ...data,
+      fundingCycleMetadata: {
+        ...data.fundingCycleMetadata,
+        ...queuedFcMetadata,
+      },
+      fundingCycleData: {
+        ...data.fundingCycleData,
+        ...queuedFcData,
+      },
     }
   }
 }

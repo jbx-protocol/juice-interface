@@ -2,10 +2,18 @@ import { PV } from 'models/pv'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { cidFromUrl, ipfsGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { readNetwork } from 'constants/networks'
+import { NetworkName } from 'models/networkName'
 
 // Override some project logos.
-const IMAGE_URI_OVERRIDES: { [k: number]: string } = {
-  1: '/assets/images/juiceboxdao_logo.webp', // the on-chain logo's filesize is too large. This is a smaller version.
+const imageUriOverridePath = '/assets/images/image-uri-overrides'
+const MAINNET_URI_OVERRIDES: { [k: number]: string } = {
+  1: `${imageUriOverridePath}/juiceboxdao_logo.webp`, // the on-chain logo's filesize is too large. This is a smaller version.
+  470: `${imageUriOverridePath}/breadfruit_logo.webp`,
+}
+
+const GOERLI_URI_OVERRIDES: { [k: number]: string } = {
+  1: `${imageUriOverridePath}/juiceboxdao_logo.webp`, // the on-chain logo's filesize is too large. This is a smaller version.
 }
 
 export default function ProjectLogo({
@@ -28,9 +36,19 @@ export default function ProjectLogo({
   const [srcLoadError, setSrcLoadError] = useState(false)
 
   const imageSrc = useMemo(() => {
-    if (projectId && IMAGE_URI_OVERRIDES[projectId]) {
-      return IMAGE_URI_OVERRIDES[projectId]
-    }
+    if (
+      projectId &&
+      readNetwork.name === NetworkName.mainnet &&
+      MAINNET_URI_OVERRIDES[projectId]
+    )
+      return MAINNET_URI_OVERRIDES[projectId]
+
+    if (
+      projectId &&
+      readNetwork.name === NetworkName.goerli &&
+      GOERLI_URI_OVERRIDES[projectId]
+    )
+      return GOERLI_URI_OVERRIDES[projectId]
 
     if (!uri) return `/api/juicebox/pv/${pv}/project/${projectId}/logo`
 

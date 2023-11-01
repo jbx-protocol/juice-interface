@@ -11,18 +11,40 @@ export default async function handler(
 
   const imageUrl = req.query?.url as string
   if (!imageUrl) {
-    res.status(400).send('Bad Request: url not provided')
-    return
+    return res
+      .status(400)
+      .json({ error: 'Bad Request: Invalid or missing URL.' })
   }
 
   try {
-    const imageRes = await axios.get(imageUrl, {
-      responseType: 'arraybuffer',
-    })
+    // Fetch the first 4 bytes of the image to check its headers and file signature.
+    const imageRes = await axios
+      .get(imageUrl, {
+        headers: {
+          Range: 'bytes=0-3',
+        },
+        responseType: 'arraybuffer',
+      })
+      .catch(error => {
+        logger.error({ error })
+        return res
+          .status(502)
+          .json({ error: `Could not get image headers or file signature.` })
+      })
+
+    if (!imageRes || !imageRes.headers) {
+      return res.status(500).json({ error: 'Failed to process image.' })
+    }
 
     // Ensure that the header reflects a valid image MIME type
     const contentType = imageRes.headers['content-type']
-    const acceptedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']
+    const acceptedTypes = [
+      'image/png',
+      'image/jpeg',
+      'image/jpg',
+      'image/gif',
+      'image/vnd.mozilla.apng',
+    ]
     if (!acceptedTypes.includes(contentType)) {
       return res.status(403).json({ error: 'Forbidden. Invalid content-type.' })
     }
@@ -36,7 +58,7 @@ export default async function handler(
         data[1] === 0x50 &&
         data[2] === 0x4e &&
         data[3] === 0x47
-      ) && // PNG
+      ) && // PNG / APNG
       !(
         data[0] === 0x47 &&
         data[1] === 0x49 &&
@@ -49,8 +71,7 @@ export default async function handler(
         .json({ error: 'Forbidden. Invalid file signature.' })
     }
 
-    res.setHeader('Content-Type', contentType)
-    return res.end(imageRes.data, 'binary')
+    return res.redirect(imageUrl)
   } catch (error) {
     logger.error({ error })
     return res.status(500).json({ error: 'failed to resolve image' })

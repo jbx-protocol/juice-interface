@@ -1,11 +1,11 @@
 import { t } from '@lingui/macro'
+import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useMemo } from 'react'
-import { fromWad } from 'utils/format/formatNumber'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
-import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
+import { parseWad } from 'utils/format/formatNumber'
+import { V2V3CurrencyName, V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import { useDistributableAmount } from './useDistributableAmount'
 
@@ -28,10 +28,13 @@ export const useTreasuryStats = () => {
 
   const treasuryBalance = useMemo(() => {
     if (!balanceInDistributionLimitCurrency) return undefined
-    return formatCurrencyAmount({
-      amount: Number(fromWad(balanceInDistributionLimitCurrency)),
-      currency: distributionLimitCurrency,
-    })
+
+    return (
+      <AmountInCurrency
+        amount={balanceInDistributionLimitCurrency}
+        currency={V2V3CurrencyName(distributionLimitCurrency)}
+      />
+    )
   }, [balanceInDistributionLimitCurrency, distributionLimitCurrency])
 
   const { weiToUsd } = useCurrencyConverter()
@@ -42,13 +45,15 @@ export const useTreasuryStats = () => {
 
     const overflowInDistributionLimitCurrency =
       distributionLimitCurrency === V2V3_CURRENCY_ETH
-        ? fromWad(primaryTerminalCurrentOverflow)
-        : weiToUsd(primaryTerminalCurrentOverflow)
+        ? primaryTerminalCurrentOverflow
+        : parseWad(weiToUsd(primaryTerminalCurrentOverflow))
 
-    return formatCurrencyAmount({
-      amount: overflowInDistributionLimitCurrency?.toString(),
-      currency: distributionLimitCurrency,
-    })
+    return (
+      <AmountInCurrency
+        amount={overflowInDistributionLimitCurrency}
+        currency={V2V3CurrencyName(distributionLimitCurrency)}
+      />
+    )
   }, [
     primaryTerminalCurrentOverflow,
     distributionLimitCurrency,
@@ -57,10 +62,12 @@ export const useTreasuryStats = () => {
   ])
 
   const availableToPayout = useMemo(() => {
-    return formatCurrencyAmount({
-      amount: Number(fromWad(distributableAmount)),
-      currency: distributionLimitCurrency,
-    })
+    return (
+      <AmountInCurrency
+        amount={distributableAmount}
+        currency={V2V3CurrencyName(distributionLimitCurrency)}
+      />
+    )
   }, [distributableAmount, distributionLimitCurrency])
   return {
     treasuryBalance,

@@ -14,6 +14,9 @@ msgstr ""
 msgid "Extensible"
 msgstr ""
 
+msgid "Wallet not connected"
+msgstr ""
+
 msgid "Projects using a reserved rate of {reservedRateRiskyMin}% or more will appear risky to contributors, as a relatively small number of tokens will be received in exchange for paying your project."
 msgstr ""
 
@@ -125,9 +128,6 @@ msgstr ""
 msgid "project owner"
 msgstr ""
 
-msgid "Add wallet addresses or Juicebox projects to receive payouts."
-msgstr ""
-
 msgid "When people pay your project, they receive its tokens. Project tokens can be used for governance or community access, and token holders can redeem their tokens to reclaim some ETH from your project. You can also reserve some tokens for recipients of your choosing."
 msgstr ""
 
@@ -144,6 +144,9 @@ msgid "Determines whether tokens will be minted by payments made through this ad
 msgstr ""
 
 msgid "Data from current cycle"
+msgstr ""
+
+msgid "Juicecrowd submissions are now open. <0>3 ETH</0> prize pool. <1>Learn more</1>"
 msgstr ""
 
 msgid "Add NFT"
@@ -174,9 +177,6 @@ msgid "Where to Contact You"
 msgstr ""
 
 msgid "Twitter"
-msgstr ""
-
-msgid "The text on the button supporters will click to pay your project"
 msgstr ""
 
 msgid "Issue tokens or NFTs to your supporters and use them for governance, token-gated websites, or redemptions. With flexible token issuance and redemption, your project automatically scales to meet your supporters' demand."
@@ -222,9 +222,6 @@ msgid "Project tools"
 msgstr ""
 
 msgid "Built by the best"
-msgstr ""
-
-msgid "Your project will pay out ETH to these addresses and Juicebox projects."
 msgstr ""
 
 msgid "Staked balance"
@@ -2177,9 +2174,6 @@ msgstr ""
 msgid "Uploaded to: <0>{imageUrl}</0>"
 msgstr ""
 
-msgid "If redemptions are enabled, supporters can burn their tokens to reclaim some of the ETH not needed for payouts (any ETH exceeding the amount above). You can turn off redemptions in the Token settings."
-msgstr ""
-
 msgid "By default, the payer will receive any project tokens minted from the payment."
 msgstr ""
 
@@ -2528,6 +2522,9 @@ msgstr ""
 msgid "Migrate project's payment terminal"
 msgstr ""
 
+msgid "Project cover photo"
+msgstr ""
+
 msgid "Not a valid ETH address"
 msgstr ""
 
@@ -2556,9 +2553,6 @@ msgid "Unlimited payouts."
 msgstr ""
 
 msgid "<0>View transactions.</0>"
-msgstr ""
-
-msgid "Use a simple term like 'Pay' or 'Donate'."
 msgstr ""
 
 msgid "to close"
@@ -3114,6 +3108,9 @@ msgid "Other Rules"
 msgstr ""
 
 msgid "Disabled when your project's cycle has no duration."
+msgstr ""
+
+msgid "I Agree"
 msgstr ""
 
 msgid "Twitter handle"
@@ -3824,9 +3821,6 @@ msgstr ""
 msgid "The wallet address that reserved NFTs will be sent to"
 msgstr ""
 
-msgid "Payouts: {fundingTarget}"
-msgstr ""
-
 msgid "Other."
 msgstr ""
 
@@ -3996,6 +3990,9 @@ msgid "No on-chain governance"
 msgstr ""
 
 msgid "Edit recipient"
+msgstr ""
+
+msgid "(0%)"
 msgstr ""
 
 msgid "Update preview"
@@ -4917,9 +4914,6 @@ msgid "Other assets in this project's owner's wallet."
 msgstr ""
 
 msgid "Learn more"
-msgstr ""
-
-msgid "Payout Recipients"
 msgstr ""
 
 msgid "Success"

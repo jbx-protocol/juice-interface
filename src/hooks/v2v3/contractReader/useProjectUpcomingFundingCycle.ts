@@ -14,7 +14,7 @@ type UpcomingFundingCycleDataType = [
 ]
 
 /**
- * If the latestConfiguredFundingCycleOf has an active ballot, return latestConfiguredFundingCycleOf.
+ * If the latestConfiguredFundingCycleOf's ballot state is ACTIVE, return latestConfiguredFundingCycleOf.
  * Else, return queuedFundingCycleOf.
  */
 export function useProjectUpcomingFundingCycle({
@@ -42,7 +42,7 @@ export function useProjectUpcomingFundingCycle({
     latestConfiguredFundingCycleBallotState === BallotState.active
 
   /**
-   * Get Queued Configured Funding Cycle, only if latestConfiguredFundingCycle isn't active.
+   * Get Queued Configured Funding Cycle, *only if* latestConfiguredFundingCycle isn't active.
    */
   const {
     data: queuedFundingCycleResponse,
@@ -56,6 +56,9 @@ export function useProjectUpcomingFundingCycle({
   const loading =
     queuedFundingCycleLoading || latestConfiguredFundingCycleLoading
 
+  /**
+   * Return latest configured cycle if it exists and is active
+   */
   if (isLatestConfiguredActive) {
     return {
       data: [
@@ -68,6 +71,9 @@ export function useProjectUpcomingFundingCycle({
     }
   }
 
+  /**
+   * Else, return the queued cycle.
+   */
   return {
     data: [queuedFundingCycle, queuedFundingCycleMetadata],
     loading,

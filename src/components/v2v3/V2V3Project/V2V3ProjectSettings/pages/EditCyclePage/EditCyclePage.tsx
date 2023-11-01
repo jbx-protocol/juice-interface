@@ -135,7 +135,7 @@ export function EditCyclePage() {
           <Button
             type="primary"
             onClick={() => setConfirmModalOpen(true)}
-            disabled={!formHasUpdated || Boolean(error)}
+            disabled={Boolean(error)}
           >
             <Trans>Save changes</Trans>
           </Button>

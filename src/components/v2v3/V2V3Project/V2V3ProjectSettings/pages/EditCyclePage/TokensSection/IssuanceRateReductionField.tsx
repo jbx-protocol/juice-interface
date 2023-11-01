@@ -5,9 +5,10 @@ import { ExternalLinkWithIcon } from 'components/v2v3/V2V3Project/ProjectDashboa
 import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
+import { zeroPercentDisabledNoticed } from './RedemptionRateField'
 
 export function IssuanceRateReductionField() {
-  const { editCycleForm } = useEditCycleFormContext()
+  const { editCycleForm, setFormHasUpdated } = useEditCycleFormContext()
 
   // Issurance reduction rate %
   const issuanceReductionRate =
@@ -32,8 +33,12 @@ export function IssuanceRateReductionField() {
           </Trans>
         }
         value={issuanceReductionRateSwitchEnabled}
+        extra={
+          issuanceReductionRateSwitchEnabled ? null : zeroPercentDisabledNoticed
+        }
         onChange={val => {
           setIssuanceReductionRateSwitchEnabled(val)
+          setFormHasUpdated(true)
           if (!val) {
             editCycleForm?.setFieldsValue({ discountRate: 0 })
           }

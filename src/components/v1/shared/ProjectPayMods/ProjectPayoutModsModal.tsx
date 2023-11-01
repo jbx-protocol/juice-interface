@@ -162,7 +162,7 @@ export const ProjectPayoutModsModal = ({
 
     // alloctor uses `addToBalance`, therefore no beneficiary required
     const beneficiary =
-      allocator === NULL_ALLOCATOR_ADDRESS
+      !allocator || allocator === NULL_ALLOCATOR_ADDRESS
         ? form.getFieldValue('beneficiary')
         : constants.AddressZero
 

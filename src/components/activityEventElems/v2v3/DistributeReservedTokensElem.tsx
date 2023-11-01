@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
+import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { PV_V2 } from 'constants/pv'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import {
@@ -62,10 +63,14 @@ export default function DistributeReservedTokensEventElem({
           {data?.distributeToReservedTokenSplitEvents.map(e => (
             <div key={e.id} className="flex items-baseline justify-between">
               <div>
-                <JuiceboxAccountLink
-                  className="text-grey-900 dark:text-slate-100"
-                  address={e.beneficiary}
-                />
+                {e.splitProjectId ? (
+                  <V2V3ProjectHandleLink projectId={e.splitProjectId} />
+                ) : (
+                  <JuiceboxAccountLink
+                    className="text-grey-900 dark:text-slate-100"
+                    address={e.beneficiary}
+                  />
+                )}
               </div>
 
               <div className="text-sm text-grey-500 dark:text-grey-300">

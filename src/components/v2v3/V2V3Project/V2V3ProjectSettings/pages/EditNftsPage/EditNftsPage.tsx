@@ -12,8 +12,8 @@ export function EditNftsPage() {
   const { projectOwnerAddress, fundingCycleMetadata } =
     useContext(V2V3ProjectContext)
   const hasExistingNfts =
-    fundingCycleMetadata?.dataSource !== constants.AddressZero
-
+    fundingCycleMetadata?.dataSource &&
+    fundingCycleMetadata.dataSource !== constants.AddressZero
   const nftDeployerCanReconfigure = useNftDeployerCanReconfigure({
     projectId,
     projectOwnerAddress,

@@ -18,6 +18,7 @@ import { formatPercent } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { TokenAmount } from 'components/TokenAmount'
+import TokenDistributionChart from 'components/TokenDistributionChart'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import {
   OrderDirection,
@@ -218,6 +219,14 @@ export default function ParticipantsModal({
               </Trans>
             </div>
           )}
+
+          <div className="mb-4 flex items-center justify-center">
+            <TokenDistributionChart
+              projectId={projectId}
+              pv={pv}
+              tokenSupply={totalTokenSupply}
+            />
+          </div>
 
           {list}
 

@@ -65,7 +65,7 @@ export const CurrentUpcomingSubPanel = ({
 
   if (
     info.type === 'upcoming' &&
-    info.cycleUnlocked &&
+    info.currentCycleUnlocked &&
     /**
      * Always show 'upcoming' tab if it's FC 1
      * (which happens when Scheduled Launch is used,
@@ -82,7 +82,10 @@ export const CurrentUpcomingSubPanel = ({
           )}
         >
           <InformationCircleIcon className="h-5 w-5" />
-          <Trans>This project has no upcoming cycle</Trans>
+          <Trans>
+            This project has no upcoming cycle. Its rules can change at any
+            time.
+          </Trans>
         </div>
       </div>
     )

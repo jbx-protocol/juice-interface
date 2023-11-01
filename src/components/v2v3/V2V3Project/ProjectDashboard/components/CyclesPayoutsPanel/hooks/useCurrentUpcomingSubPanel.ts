@@ -35,6 +35,12 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     return upcomingFundingCycle?.duration?.isZero() ?? true
   }, [fundingCycle?.duration, type, upcomingFundingCycle?.duration])
 
+  /** Determines if the CURRENT cycle is unlocked.
+   * This is used to check if the upcoming cycle can start at any time. */
+  const currentCycleUnlocked = useMemo(() => {
+    return fundingCycle?.duration?.isZero() ?? true
+  }, [fundingCycle?.duration])
+
   const upcomingCycleLength = useMemo(() => {
     if (!upcomingFundingCycle) return
     if (cycleUnlocked) return '-'
@@ -79,5 +85,6 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     status,
     cycleLength: upcomingCycleLength,
     cycleUnlocked,
+    currentCycleUnlocked,
   }
 }

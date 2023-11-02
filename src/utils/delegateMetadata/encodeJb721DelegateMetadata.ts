@@ -28,7 +28,7 @@ export type JB721DelegatePayMetadata =
   | JB721DELAGATE_V3_1_PAY_METADATA
   | JB721DELAGATE_V3_2_PAY_METADATA // in future, maybe more
 
-export function encodeJb721DelegateMetadata(
+export function encodeJb721DelegatePayMetadata(
   metadata: JB721DelegatePayMetadata,
   version: JB721DelegateVersion | undefined,
 ) {
@@ -51,6 +51,25 @@ export function encodeJb721DelegateMetadata(
       return encodeJB721DelegateV3_4PayMetadata(
         metadata as JB721DELAGATE_V3_2_PAY_METADATA,
       )
+    default:
+      throw new Error(`Invalid delegate version: ${version}`)
+  }
+}
+
+export function encodeJb721DelegateRedeemMetadata(
+  tokenIdsToRedeem: string[],
+  version: JB721DelegateVersion | undefined,
+) {
+  if (!version) return undefined
+  switch (version) {
+    case JB721DelegateVersion.JB721DELEGATE_V3:
+    case JB721DelegateVersion.JB721DELEGATE_V3_1:
+      return encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem)
+    case JB721DelegateVersion.JB721DELEGATE_V3_2:
+    case JB721DelegateVersion.JB721DELEGATE_V3_3:
+      return encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem)
+    case JB721DelegateVersion.JB721DELEGATE_V3_4:
+      return encodeJB721DelegateV3_4RedeemMetadata(tokenIdsToRedeem)
     default:
       throw new Error(`Invalid delegate version: ${version}`)
   }
@@ -134,9 +153,7 @@ function encodeJB721DelegateV3_4PayMetadata(
   return encoded
 }
 
-export function encodeJB721DelegateV3RedeemMetadata(
-  tokenIdsToRedeem: string[],
-) {
+function encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem: string[]) {
   const args = [
     constants.HashZero,
     IJB721Delegate_V3_INTERFACE_ID,
@@ -151,9 +168,7 @@ export function encodeJB721DelegateV3RedeemMetadata(
   return encoded
 }
 
-export function encodeJB721DelegateV3_2RedeemMetadata(
-  tokenIdsToRedeem: string[],
-) {
+function encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem: string[]) {
   const args = [
     constants.HashZero,
     IJB721Delegate_V3_2_INTERFACE_ID,
@@ -168,9 +183,7 @@ export function encodeJB721DelegateV3_2RedeemMetadata(
   return encoded
 }
 
-export function encodeJB721DelegateV3_4RedeemMetadata(
-  tokenIdsToRedeem: string[],
-) {
+function encodeJB721DelegateV3_4RedeemMetadata(tokenIdsToRedeem: string[]) {
   const args = [tokenIdsToRedeem]
   const encoded = utils.defaultAbiCoder.encode(['uint256[]'], args)
   const result = createMetadata(

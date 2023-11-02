@@ -2,7 +2,6 @@ import {
   IJB721Delegate_V3_2_INTERFACE_ID,
   IJB721Delegate_V3_INTERFACE_ID,
   IJBTiered721Delegate_V3_2_INTERFACE_ID,
-  IJBTiered721Delegate_V3_4_PAY_ID,
   IJBTiered721Delegate_V3_4_REDEEM_ID,
 } from 'constants/nftRewards'
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
@@ -24,13 +23,13 @@ interface JB721DELAGATE_V3_1_PAY_METADATA {
 
 type JB721DELAGATE_V3_2_PAY_METADATA = JB721DELAGATE_V3_1_PAY_METADATA
 
-export type PayMetadata =
+export type JB721DelegatePayMetadata =
   | JB721DELAGATE_V3_PAY_METADATA
   | JB721DELAGATE_V3_1_PAY_METADATA
   | JB721DELAGATE_V3_2_PAY_METADATA // in future, maybe more
 
 export function encodeJb721DelegateMetadata(
-  metadata: PayMetadata,
+  metadata: JB721DelegatePayMetadata,
   version: JB721DelegateVersion | undefined,
 ) {
   if (!version) return undefined
@@ -123,19 +122,16 @@ function encodeJB721DelegateV3_2PayMetadata(
 }
 
 function encodeJB721DelegateV3_4PayMetadata(
-  metadata: JB721DELAGATE_V3_2_PAY_METADATA | undefined,
+  metadata: JB721DELAGATE_V3_2_PAY_METADATA,
 ) {
-  if (!metadata) return undefined
-
   const args = [
     metadata.allowOverspending ?? DEFAULT_ALLOW_OVERSPENDING,
     metadata.tierIdsToMint,
   ]
 
   const encoded = utils.defaultAbiCoder.encode(['bool', 'uint16[]'], args)
-  const result = createMetadata([IJBTiered721Delegate_V3_4_PAY_ID], [encoded])
 
-  return result
+  return encoded
 }
 
 export function encodeJB721DelegateV3RedeemMetadata(

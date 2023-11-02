@@ -1,3 +1,4 @@
+import { enableCors } from 'lib/api/nextjs'
 import { queryDBProjects } from 'lib/api/supabase/projects'
 import { DBProjectQueryOpts } from 'models/dbProject'
 import { ProjectTagName } from 'models/project-tags'
@@ -8,6 +9,8 @@ import { NextApiHandler } from 'next'
  * @returns Raw SQL query response
  */
 const handler: NextApiHandler = async (req, res) => {
+  enableCors(res)
+
   const {
     text,
     tags,
@@ -22,15 +25,6 @@ const handler: NextApiHandler = async (req, res) => {
     projectId,
     ids,
   } = req.query
-
-  // https://vercel.com/guides/how-to-enable-cors#enabling-cors-in-a-next.js-app
-  res.setHeader('Access-Control-Allow-Credentials', 'true')
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET')
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
-  )
 
   if (text && typeof text !== 'string') {
     res.status(400).send('Text is not a string')

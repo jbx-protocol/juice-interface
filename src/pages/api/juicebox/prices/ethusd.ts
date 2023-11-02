@@ -1,6 +1,7 @@
 import { CV_V3 } from 'constants/cv'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { loadJBPrices } from 'hooks/JBPrices/loadJBPrices'
+import { enableCors } from 'lib/api/nextjs'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { fromWad } from 'utils/format/formatNumber'
@@ -11,6 +12,8 @@ const PRICE_REFRESH_INTERVAL_SECONDS = 60 * 5 // 5 minutes
 const logger = getLogger('api/juicebox/prices/ethusd')
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  enableCors(res)
+
   if (req.method !== 'GET') {
     return res.status(404)
   }
@@ -30,7 +33,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       'Cache-Control',
       `s-maxage=${PRICE_REFRESH_INTERVAL_SECONDS}, stale-while-revalidate`,
     )
-    res.setHeader('Access-Control-Allow-Origin', '*')
     return res.status(200).json({ price })
   } catch (err) {
     logger.error({ error: err })

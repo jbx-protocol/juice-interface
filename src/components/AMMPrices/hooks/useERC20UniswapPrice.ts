@@ -2,7 +2,6 @@ import { Token } from '@uniswap/sdk-core'
 import IUniswapV3FactoryABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
 import IUniswapV3PoolABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
 import {
-  FeeAmount,
   Pool,
   FACTORY_ADDRESS as UNISWAP_V3_FACTORY_ADDRESS,
 } from '@uniswap/v3-sdk'
@@ -36,20 +35,15 @@ interface State {
 }
 
 type Props = {
-  tokenSymbol: string | undefined
-  tokenAddress: string | undefined
+  tokenSymbol: string
+  tokenAddress: string
 }
 
 /**
  * Pools are created at a specific fee tier.
  * https://docs.uniswap.org/protocol/concepts/V3-overview/fees#pool-fees-tiers
  */
-const UNISWAP_FEES_BPS = [
-  FeeAmount.LOWEST,
-  FeeAmount.LOW,
-  FeeAmount.MEDIUM,
-  FeeAmount.HIGH,
-]
+const UNISWAP_FEES_BPS = [10000, 3000, 500]
 const networkId = readNetwork.chainId
 
 /**
@@ -132,8 +126,6 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
   return useQuery(
     [`${tokenSymbol}-uniswap-price`],
     async () => {
-      if (!tokenAddress || !tokenSymbol) return null
-
       try {
         const poolAddress = await getPoolAddress()
         if (!poolAddress) {
@@ -187,7 +179,6 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
     },
     {
       refetchInterval: 30000, // refetch every 30 seconds
-      enabled: !!(tokenAddress && tokenSymbol),
     },
   )
 }

@@ -3707,9 +3707,6 @@ msgstr ""
 msgid "Detach NFTs from cycle"
 msgstr ""
 
-msgid "Your payment may purchase tokens from a secondary market instead of minting new tokens. You might receive more tokens depending on the swap price."
-msgstr ""
-
 msgid "Mint tokens"
 msgstr ""
 

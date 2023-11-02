@@ -21,7 +21,7 @@ import {
   encodeJB721DelegateV3_2RedeemMetadata,
   encodeJB721DelegateV3_4RedeemMetadata,
   encodeJB721DelegateV3RedeemMetadata,
-} from 'utils/delegateMetadata/encodeJb721DelegateMetadata'
+} from 'utils/encodeJb721DelegateMetadata/encodeJb721DelegateMetadata'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatRedemptionRate } from 'utils/v2v3/math'
 import { RedeemNftCard } from './RedeemNftCard'

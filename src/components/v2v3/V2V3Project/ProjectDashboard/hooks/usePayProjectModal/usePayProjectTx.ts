@@ -1,11 +1,11 @@
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
-import { BigNumber, Transaction } from 'ethers'
+import { Transaction } from 'ethers'
 import { FormikHelpers } from 'formik'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { usePayETHPaymentTerminalTx } from 'hooks/v2v3/transactor/usePayETHPaymentTerminalTx'
 import { useProjectHasErc20 } from 'hooks/v2v3/useProjectHasErc20'
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
@@ -59,14 +59,16 @@ export const usePayProjectTx = ({
     [nftRewards, receivedTickets, totalAmount, userAddress],
   )
 
-  let weiAmount: BigNumber
-  if (!totalAmount) {
-    weiAmount = parseWad(0)
-  } else if (totalAmount.currency === V2V3_CURRENCY_ETH) {
-    weiAmount = parseWad(totalAmount.amount)
-  } else {
-    weiAmount = converter.usdToWei(totalAmount.amount)
-  }
+  const weiAmount = useMemo(() => {
+    if (!totalAmount) {
+      return parseWad(0)
+    } else if (totalAmount.currency === V2V3_CURRENCY_ETH) {
+      return parseWad(totalAmount.amount)
+    } else {
+      return converter.usdToWei(totalAmount.amount)
+    }
+  }, [totalAmount, converter])
+
   const delegateMetadata = usePreparePayDelegateMetadata(weiAmount, {
     nftRewards,
     receivedTickets,

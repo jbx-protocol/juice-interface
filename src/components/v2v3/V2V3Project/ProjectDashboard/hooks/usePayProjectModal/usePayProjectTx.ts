@@ -13,7 +13,7 @@ import { useProjectCart } from '../useProjectCart'
 import { ProjectPayReceipt } from '../useProjectPageQueries'
 import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
 import { PayProjectModalFormValues } from './usePayProjectModal'
-import { usePreparePayDelegateMetadata } from './usePrepareDelegatePayMetadata'
+import { usePrepareDelegatePayMetadata } from './usePrepareDelegatePayMetadata'
 
 export const usePayProjectTx = ({
   onTransactionPending: onTransactionPendingCallback,
@@ -69,7 +69,7 @@ export const usePayProjectTx = ({
     }
   }, [totalAmount, converter])
 
-  const delegateMetadata = usePreparePayDelegateMetadata(weiAmount, {
+  const delegateMetadata = usePrepareDelegatePayMetadata(weiAmount, {
     nftRewards,
     receivedTickets,
   })

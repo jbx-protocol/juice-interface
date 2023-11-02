@@ -11,7 +11,7 @@ import { MAX_RESERVED_RATE } from 'utils/v2v3/math'
 import { ProjectCartNftReward } from '../../components/ProjectCartProvider'
 import { useProjectContext } from '../useProjectContext'
 
-export function usePreparePayDelegateMetadata(
+export function usePrepareDelegatePayMetadata(
   weiAmount: BigNumber,
   {
     nftRewards,
@@ -24,25 +24,24 @@ export function usePreparePayDelegateMetadata(
   const { tokenAddress, tokenSymbol, fundingCycleMetadata } =
     useProjectContext()
   const { projectId } = useContext(ProjectMetadataContext)
+  const { version: JB721DelegateVersion } = useContext(
+    JB721DelegateContractsContext,
+  )
 
   const { data: priceQuery } = useUniswapPriceQuery({
     tokenAddress,
     tokenSymbol,
   })
 
-  const { version: JB721DelegateVersion } = useContext(
-    JB721DelegateContractsContext,
-  )
-  const tierIdsToMint = nftRewards
-    .map(({ id, quantity }) => Array<number>(quantity).fill(id))
-    .flat()
+  const receivedTicketsWei = parseWad(receivedTickets?.replace(',', ''))
 
   // Total tokens that should be minted by pay() tx, including reserved tokens
-  const requiredTokens = fundingCycleMetadata
-    ? parseWad(receivedTickets?.replace(',', ''))
-        .mul(MAX_RESERVED_RATE)
-        .div(fundingCycleMetadata.reservedRate)
-    : undefined
+  const requiredTokens =
+    fundingCycleMetadata && fundingCycleMetadata.reservedRate.gt(0)
+      ? receivedTicketsWei
+          .mul(MAX_RESERVED_RATE)
+          .div(fundingCycleMetadata.reservedRate)
+      : receivedTicketsWei
 
   const priceQueryNumerator = priceQuery?.projectTokenPrice.numerator.toString()
   const priceQueryDenominator =
@@ -94,6 +93,10 @@ export function usePreparePayDelegateMetadata(
       minExpectedTokens: minExpectedTokens?.toString(),
     },
   )
+
+  const tierIdsToMint = nftRewards
+    .map(({ id, quantity }) => Array<number>(quantity).fill(id))
+    .flat()
 
   // Encode metadata for jb721Delegate AND/OR jbBuybackDelegate
   const delegateMetadata = encodeDelegatePayMetadata({

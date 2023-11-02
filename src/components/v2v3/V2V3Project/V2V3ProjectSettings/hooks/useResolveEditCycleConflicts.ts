@@ -50,7 +50,7 @@ export const useResolveEditCycleConflicts = () => {
 
   const { data: queuedCycle } = useProjectQueuedFundingCycle({ projectId })
 
-  //
+  // If no queued cycle, no resolving needs to be done. Return current data
   if (!queuedCycle || !fundingCycleMetadata) {
     return (data: ReconfigureFundingCycleTxParams) => data
   }
@@ -58,8 +58,10 @@ export const useResolveEditCycleConflicts = () => {
   const queuedFcData: V2V3FundingCycleData = queuedCycle[0]
   const queuedFcMetadata: V2V3FundingCycleMetadata = queuedCycle[1]
 
-  return (data: ReconfigureFundingCycleTxParams) => {
-    // if the queued cycle's NFT data has changed, inject the queued NFT data.
+  return (
+    data: ReconfigureFundingCycleTxParams & { launchedNewNfts?: boolean },
+  ) => {
+    // Calling from "Edit cycle" and an NFT tx has be called same cycle: pass that previously queued NFT data into this "Edit cycle" tx
     if (hasNftConflict(fundingCycleMetadata, queuedFcMetadata)) {
       return {
         ...data,
@@ -71,17 +73,20 @@ export const useResolveEditCycleConflicts = () => {
         },
       }
     }
-
-    return {
-      ...data,
-      fundingCycleMetadata: {
-        ...data.fundingCycleMetadata,
-        ...queuedFcMetadata,
-      },
-      fundingCycleData: {
-        ...data.fundingCycleData,
-        ...queuedFcData,
-      },
-    }
+    // Calling from "Launch NFTs" and an "Edit cycle" tx has be called same cycle: pass that previously queued data into this "Launch NFTs" tx
+    if (data.launchedNewNfts) {
+      return {
+        ...data,
+        fundingCycleMetadata: {
+          ...data.fundingCycleMetadata,
+          ...queuedFcMetadata,
+        },
+        fundingCycleData: {
+          ...data.fundingCycleData,
+          ...queuedFcData,
+        },
+      }
+      // Calling "Edit cycle" when a previously "Edit cycle" tx exists: ignore the old tx data, return the new one
+    } else return data
   }
 }

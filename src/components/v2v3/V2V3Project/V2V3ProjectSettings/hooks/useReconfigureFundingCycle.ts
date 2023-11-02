@@ -128,6 +128,7 @@ export const useReconfigureFundingCycle = ({
           ],
           memo,
           mustStartAtOrAfter: editingMustStartAtOrAfter,
+          launchedNewNfts,
         })
 
       const txOpts = {

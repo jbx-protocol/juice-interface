@@ -83,22 +83,29 @@ export const usePayProjectTx = ({
         .map(({ id, quantity }) => Array<number>(quantity).fill(id))
         .flat()
 
-      // Total tokens that should be minted by pay() tx, including reserved tokens
-      const requiredTokens = fundingCycleMetadata
-        ? parseWad(receivedTickets?.replace(',', ''))
-            .mul(MAX_RESERVED_RATE)
-            .div(fundingCycleMetadata.reservedRate)
-        : undefined
+      const receivedTicketsWei = parseWad(receivedTickets?.replace(',', ''))
 
-      const priceQueryNumerator =
+      // Total tokens that should be minted by pay() tx, including reserved tokens
+      const requiredTokens =
+        fundingCycleMetadata && fundingCycleMetadata.reservedRate.gt(0)
+          ? receivedTicketsWei
+              .mul(MAX_RESERVED_RATE)
+              .div(fundingCycleMetadata.reservedRate)
+          : receivedTicketsWei
+
+      const priceQueryNumeratorRaw =
         priceQuery?.projectTokenPrice.numerator.toString()
-      const priceQueryDenominator =
+      const priceQueryDenominatorRaw =
         priceQuery?.projectTokenPrice.denominator.toString()
+      const priceQueryNumerator = priceQueryNumeratorRaw
+        ? BigNumber.from(priceQueryNumeratorRaw)
+        : undefined
+      const priceQueryDenominator = priceQueryNumeratorRaw
+        ? BigNumber.from(priceQueryDenominatorRaw)
+        : undefined
       const inversePriceQueryFactor =
-        priceQueryNumerator && priceQueryDenominator
-          ? BigNumber.from(priceQueryDenominator).div(
-              BigNumber.from(priceQueryNumerator),
-            )
+        priceQueryNumerator?.gt(0) && priceQueryDenominator?.gt(0)
+          ? priceQueryDenominator.div(priceQueryNumerator)
           : undefined
 
       // Using inverse price query helps avoid dividing by zero. This assumes the token price is < 1ETH

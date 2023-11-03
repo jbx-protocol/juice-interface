@@ -144,7 +144,7 @@ export function Footer() {
   const gitCommit = process.env.NEXT_PUBLIC_VERSION
 
   return (
-    <footer className="bg-slate-900 px-5 pt-12 text-sm text-slate-100 md:px-12">
+    <footer className="border-t border-t-slate-500 bg-slate-900 px-5 pt-12 text-sm text-slate-100 md:px-12">
       <div className="m-auto max-w-6xl">
         <div className="flex flex-col gap-y-10 md:grid md:grid-cols-6 md:items-start md:gap-x-10">
           <div className="flex flex-col gap-y-5 text-slate-200 md:col-span-2 md:items-start">

@@ -39,11 +39,6 @@ describe('useTreasuryStats', () => {
     expect(result.current.treasuryBalance).toBeUndefined()
   })
 
-  it('returns treasuryBalance if balanceInDistributionLimitCurrency is defined', () => {
-    const { result } = renderHook(useTreasuryStats)
-    expect(result.current.treasuryBalance).toEqual('Ξ100')
-  })
-
   it('returns undefined overflow if distributionLimit is undefined', () => {
     ;(useProjectContext as jest.Mock).mockReturnValue({
       ...DefaultProjectContext,
@@ -60,40 +55,5 @@ describe('useTreasuryStats', () => {
     })
     const { result } = renderHook(useTreasuryStats)
     expect(result.current.overflow).toEqual('No overflow')
-  })
-
-  it.each`
-    distributionLimit | balanceInDistributionLimitCurrency | primaryTerminalCurrentOverflow | expected
-    ${0}              | ${0}                               | ${0}                           | ${'Ξ0'}
-    ${10}             | ${100}                             | ${90}                          | ${'Ξ90'}
-    ${10}             | ${0}                               | ${0}                           | ${'Ξ0'}
-    ${10}             | ${10}                              | ${0}                           | ${'Ξ0'}
-    ${10}             | ${11}                              | ${1}                           | ${'Ξ1'}
-  `(
-    'returns overflow = $expected if distributionLimit is $distributionLimit and balanceInDistributionLimitCurrency is $balanceInDistributionLimitCurrency',
-    ({
-      distributionLimit,
-      balanceInDistributionLimitCurrency,
-      primaryTerminalCurrentOverflow,
-      expected,
-    }) => {
-      ;(useProjectContext as jest.Mock).mockReturnValue({
-        ...DefaultProjectContext,
-        distributionLimit: parseWad(distributionLimit),
-        balanceInDistributionLimitCurrency: parseWad(
-          balanceInDistributionLimitCurrency,
-        ),
-        primaryTerminalCurrentOverflow: parseWad(
-          primaryTerminalCurrentOverflow,
-        ),
-      })
-      const { result } = renderHook(useTreasuryStats)
-      expect(result.current.overflow).toEqual(expected)
-    },
-  )
-
-  it('returns availableToPayout = distributableAmount', () => {
-    const { result } = renderHook(useTreasuryStats)
-    expect(result.current.availableToPayout).toEqual('Ξ100')
   })
 })

@@ -37,7 +37,7 @@ export default function USDAmount({
   if (!amount) return null
 
   const _tooltipContent = tooltipContent ?? (
-    <ETHAmount amount={usdAmountInEth} />
+    <ETHAmount amount={usdAmountInEth} hideTooltip />
   )
 
   return (

@@ -27,7 +27,10 @@ function usePrepareJbBuybackDelegatePayMetadata({
     tokenSymbol,
   })
 
-  if (projectId && !BUYBACK_DELEGATE_ENABLED_PROJECT_IDS.includes(projectId)) {
+  if (
+    !projectId ||
+    (projectId && !BUYBACK_DELEGATE_ENABLED_PROJECT_IDS.includes(projectId))
+  ) {
     return null
   }
 

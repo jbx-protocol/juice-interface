@@ -4,7 +4,10 @@ import {
 } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { usePayProjectCard } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import {
+  usePayProjectCard,
+  useProjectMetadata,
+} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
 import { Formik } from 'formik'
 import { useV2BlockedProject } from 'hooks/useBlockedProject'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -16,10 +19,11 @@ import { TokensPerEth } from './components/TokensPerEth'
 
 export const PayProjectCard = ({ className }: { className?: string }) => {
   const isBlockedProject = useV2BlockedProject()
-
+  const { projectMetadata } = useProjectMetadata()
   const { validationSchema, paymentsPaused, addPay } = usePayProjectCard()
   const determiningIfProjectCanReceivePayments = paymentsPaused === undefined
 
+  const payButtonText = projectMetadata?.payButton
   return (
     <DisplayCard
       className={twMerge('flex flex-col gap-2 px-4 md:pr-9 md:pl-6', className)}
@@ -83,7 +87,7 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
                     style={{ height: '48px' }}
                     type="primary"
                   >
-                    <Trans>Add payment</Trans>
+                    {payButtonText ? payButtonText : <Trans>Add payment</Trans>}
                   </Button>
                 </Tooltip>
               </div>

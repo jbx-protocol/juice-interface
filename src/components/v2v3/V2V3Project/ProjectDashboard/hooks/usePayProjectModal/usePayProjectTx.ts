@@ -69,7 +69,7 @@ export const usePayProjectTx = ({
     }
   }, [totalAmount, converter])
 
-  const delegateMetadata = usePrepareDelegatePayMetadata(weiAmount, {
+  const prepareDelegateMetadata = usePrepareDelegatePayMetadata(weiAmount, {
     nftRewards,
     receivedTickets,
   })
@@ -101,7 +101,7 @@ export const usePayProjectTx = ({
           {
             memo,
             beneficiary,
-            delegateMetadata,
+            delegateMetadata: prepareDelegateMetadata(),
             value: weiAmount,
             // always claim tokens if the project has an ERC20.
             // if project has no erc20, then nothing to claim!
@@ -144,7 +144,7 @@ export const usePayProjectTx = ({
       rewardTiers,
       weiAmount,
       userAddress,
-      delegateMetadata,
+      prepareDelegateMetadata,
     ],
   )
 }

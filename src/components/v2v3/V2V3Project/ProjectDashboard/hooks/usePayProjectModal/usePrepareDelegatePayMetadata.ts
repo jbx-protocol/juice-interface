@@ -4,9 +4,9 @@ import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { BigNumber } from 'ethers'
-import { useContext } from 'react'
+import { useCallback, useContext } from 'react'
 import { encodeDelegatePayMetadata } from 'utils/delegateMetadata/encodeDelegateMetadata'
-import { parseWad } from 'utils/format/formatNumber'
+import { parseWad, stripCommas } from 'utils/format/formatNumber'
 import { MAX_RESERVED_RATE } from 'utils/v2v3/math'
 import { ProjectCartNftReward } from '../../components/ProjectCartProvider'
 import { useProjectContext } from '../useProjectContext'
@@ -31,15 +31,18 @@ function usePrepareJbBuybackDelegatePayMetadata({
     return null
   }
 
-  const receivedTicketsWei = parseWad(receivedTickets?.replace(',', ''))
+  const receivedTicketsWei = receivedTickets
+    ? parseWad(stripCommas(receivedTickets))
+    : undefined
 
   // Total tokens that should be minted by pay() tx, including reserved tokens
-  const requiredTokens =
-    fundingCycleMetadata && fundingCycleMetadata.reservedRate.gt(0)
+  const requiredTokens = receivedTicketsWei
+    ? fundingCycleMetadata && fundingCycleMetadata.reservedRate.gt(0)
       ? receivedTicketsWei
           .mul(MAX_RESERVED_RATE)
           .div(fundingCycleMetadata.reservedRate)
       : receivedTicketsWei
+    : undefined
 
   const priceQueryNumeratorRaw =
     priceQuery?.projectTokenPrice.numerator.toString()
@@ -125,13 +128,22 @@ export function usePrepareDelegatePayMetadata(
     weiAmount,
     receivedTickets,
   })
-  const jb721DelegateMetadata = usePrepareJb721DelegateMetadata({ nftRewards })
-
-  // Encode metadata for jb721Delegate AND/OR jbBuybackDelegate
-  const delegateMetadata = encodeDelegatePayMetadata({
-    jb721Delegate: jb721DelegateMetadata,
-    jbBuybackDelegate: jbBuyBackDelegateMetadata,
+  const jb721DelegateMetadata = usePrepareJb721DelegateMetadata({
+    nftRewards,
   })
 
-  return delegateMetadata
+  return useCallback(() => {
+    console.info('usePrepareDelegatePayMetadata::', {
+      jb721Delegate: jb721DelegateMetadata,
+      jbBuybackDelegate: jbBuyBackDelegateMetadata,
+    })
+
+    // Encode metadata for jb721Delegate AND/OR jbBuybackDelegate
+    const delegateMetadata = encodeDelegatePayMetadata({
+      jb721Delegate: jb721DelegateMetadata,
+      jbBuybackDelegate: jbBuyBackDelegateMetadata,
+    })
+
+    return delegateMetadata
+  }, [jbBuyBackDelegateMetadata, jb721DelegateMetadata])
 }

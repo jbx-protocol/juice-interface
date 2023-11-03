@@ -6,6 +6,7 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TooltipLabel from 'components/TooltipLabel'
 
 import { CurrencyName } from 'constants/currency'
+import { stripCommas } from 'utils/format/formatNumber'
 
 export default function SpecificLimitModal({
   open,
@@ -24,11 +25,10 @@ export default function SpecificLimitModal({
 
   function setNewSplitsFromLimit() {
     form.validateFields()
-
-    const distributionLimit = form
-      .getFieldValue('distributionLimit')
-      // Remove all commas from distribution limit
-      .replace(/,/g, '')
+    // Remove all commas from distribution limit
+    const distributionLimit = stripCommas(
+      form.getFieldValue('distributionLimit'),
+    )
     setDistributionLimit(distributionLimit)
     onClose()
   }

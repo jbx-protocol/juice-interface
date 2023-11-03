@@ -8,24 +8,26 @@ import { TransactorInstance } from 'hooks/useTransactor'
 import { NftCollectionMetadata } from 'models/nftRewards'
 import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { useContext } from 'react'
-import { ipfsUri } from 'utils/ipfs'
+import { cidFromUrl, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
 import { pinNftCollectionMetadata } from 'utils/nftRewards'
 import { useV2ProjectTitle } from '../useProjectTitle'
 
 function buildArgs(
   version: JB721DelegateVersion,
   {
-    contractUri,
+    uri,
     tokenUriResolverAddress,
   }: {
-    contractUri: string | undefined
+    uri: string
     tokenUriResolverAddress: string
   },
 ) {
+  const contractUri = ipfsUri(uri)
+  const cid = cidFromUrl(uri) as string
   switch (version) {
     case JB721DelegateVersion.JB721DELEGATE_V3_3:
     case JB721DelegateVersion.JB721DELEGATE_V3_4:
-      return ['', contractUri, tokenUriResolverAddress, '', '']
+      return ['', contractUri, tokenUriResolverAddress, '0', encodeIpfsUri(cid)]
     case JB721DelegateVersion.JB721DELEGATE_V3_2:
       return [undefined, contractUri, undefined, undefined, undefined]
     default: // v3, v3.1
@@ -66,7 +68,7 @@ export function useReconfigureNftCollectionMetadata(): TransactorInstance<NftCol
         ? 'setContractUri'
         : 'setMetadata',
       buildArgs(version, {
-        contractUri: ipfsUri(uri),
+        uri,
         tokenUriResolverAddress:
           defaultTokenUriResolver?.address || constants.AddressZero,
       }),

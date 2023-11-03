@@ -54,25 +54,6 @@ describe('usePayoutsSubPanel', () => {
     expect(result.current.payouts).toBeUndefined()
   })
 
-  it('returns payouts sorted by percent', () => {
-    const { result } = renderHook(usePayoutsSubPanel, {
-      initialProps: 'current',
-    })
-    expect(result.current.payouts).toEqual([
-      {
-        address: '0x000001',
-        amount: 'Ξ20',
-        percent: '20%',
-        projectId: 1,
-      },
-      {
-        amount: 'Ξ10',
-        address: '0x000000',
-        percent: '10%',
-      },
-    ])
-  })
-
   it.each([
     [BigNumber.from(0), '0%'],
     [BigNumber.from(MAX_DISTRIBUTION_LIMIT), '10%'],

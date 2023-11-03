@@ -1,10 +1,11 @@
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
+import { ReactNode } from 'react'
 
 type ProjectAllocationRowProps = {
   projectId: number | undefined
   address: string
-  amount?: string
+  amount?: ReactNode | string
   percent: string
 }
 

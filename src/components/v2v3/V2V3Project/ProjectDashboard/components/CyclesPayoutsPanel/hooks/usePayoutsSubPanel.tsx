@@ -1,12 +1,12 @@
+import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
 import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useMemo } from 'react'
 import assert from 'utils/assert'
-import { fromWad } from 'utils/format/formatNumber'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { getProjectOwnerRemainderSplit } from 'utils/splits'
+import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
 import {
   MAX_DISTRIBUTION_LIMIT,
@@ -60,10 +60,14 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
         primaryETHTerminalFee,
       )
       if (showAmountOnPayout && splitAmountWad && distributionLimitCurrency) {
-        amount = formatCurrencyAmount({
-          amount: Number(fromWad(splitAmountWad)),
-          currency: distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
-        })
+        amount = (
+          <AmountInCurrency
+            amount={splitAmountWad}
+            currency={V2V3CurrencyName(
+              distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+            )}
+          />
+        )
       }
       return {
         projectId: split.projectId
@@ -89,10 +93,15 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
       distributionLimit.isZero()
     )
       return
-    return formatCurrencyAmount({
-      amount: fromWad(distributionLimit),
-      currency: distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
-    })
+
+    return (
+      <AmountInCurrency
+        amount={distributionLimit}
+        currency={V2V3CurrencyName(
+          distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+        )}
+      />
+    )
   }, [distributionLimit, distributionLimitCurrency])
 
   const payouts = useMemo(() => {

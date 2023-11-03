@@ -30,11 +30,11 @@ export function encodeDelegatePayMetadata({
   jbBuybackDelegate?: {
     amountToSwap: BigNumberish
     minExpectedTokens: BigNumberish
-  }
+  } | null
   jb721Delegate?: {
     metadata: JB721DelegatePayMetadata
     version: JB721DelegateVersion | undefined
-  }
+  } | null
 }) {
   if (
     jb721Delegate?.version &&

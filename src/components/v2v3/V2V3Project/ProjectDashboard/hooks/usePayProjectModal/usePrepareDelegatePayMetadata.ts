@@ -11,27 +11,25 @@ import { MAX_RESERVED_RATE } from 'utils/v2v3/math'
 import { ProjectCartNftReward } from '../../components/ProjectCartProvider'
 import { useProjectContext } from '../useProjectContext'
 
-export function usePrepareDelegatePayMetadata(
-  weiAmount: BigNumber,
-  {
-    nftRewards,
-    receivedTickets,
-  }: {
-    nftRewards: ProjectCartNftReward[]
-    receivedTickets: string | undefined
-  },
-) {
+function usePrepareJbBuybackDelegatePayMetadata({
+  weiAmount,
+  receivedTickets,
+}: {
+  weiAmount: BigNumber
+  receivedTickets: string | undefined
+}) {
+  const { projectId } = useContext(ProjectMetadataContext)
   const { tokenAddress, tokenSymbol, fundingCycleMetadata } =
     useProjectContext()
-  const { projectId } = useContext(ProjectMetadataContext)
-  const { version: JB721DelegateVersion } = useContext(
-    JB721DelegateContractsContext,
-  )
 
   const { data: priceQuery } = useUniswapPriceQuery({
     tokenAddress,
     tokenSymbol,
   })
+
+  if (projectId && BUYBACK_DELEGATE_ENABLED_PROJECT_IDS.includes(projectId)) {
+    return null
+  }
 
   const receivedTicketsWei = parseWad(receivedTickets?.replace(',', ''))
 
@@ -43,14 +41,19 @@ export function usePrepareDelegatePayMetadata(
           .div(fundingCycleMetadata.reservedRate)
       : receivedTicketsWei
 
-  const priceQueryNumerator = priceQuery?.projectTokenPrice.numerator.toString()
-  const priceQueryDenominator =
+  const priceQueryNumeratorRaw =
+    priceQuery?.projectTokenPrice.numerator.toString()
+  const priceQueryDenominatorRaw =
     priceQuery?.projectTokenPrice.denominator.toString()
+  const priceQueryNumerator = priceQueryNumeratorRaw
+    ? BigNumber.from(priceQueryNumeratorRaw)
+    : undefined
+  const priceQueryDenominator = priceQueryNumeratorRaw
+    ? BigNumber.from(priceQueryDenominatorRaw)
+    : undefined
   const inversePriceQueryFactor =
-    priceQueryNumerator && priceQueryDenominator
-      ? BigNumber.from(priceQueryDenominator).div(
-          BigNumber.from(priceQueryNumerator),
-        )
+    priceQueryNumerator?.gt(0) && priceQueryDenominator?.gt(0)
+      ? priceQueryDenominator.div(priceQueryNumerator)
       : undefined
 
   // Using inverse price query helps avoid dividing by zero. This assumes the token price is < 1ETH
@@ -70,50 +73,64 @@ export function usePrepareDelegatePayMetadata(
       ? expectedTokensFromSwap.mul(95).div(100)
       : requiredTokens
 
-  const shouldUseBuybackDelegate =
-    Boolean(
-      projectId &&
-        priceQuery &&
-        BUYBACK_DELEGATE_ENABLED_PROJECT_IDS.includes(projectId) &&
-        requiredTokens &&
-        expectedTokensFromSwap?.gte(requiredTokens) &&
-        // total token amount must be less than half of available liquidity (arbitrary) to avoid slippage
-        BigNumber.from(requiredTokens).mul(2).lt(priceQuery.liquidity),
-    ) && minExpectedTokens !== undefined
+  if (
+    requiredTokens &&
+    // ensure we're getting at least the minimum amount of tokens from the swap
+    expectedTokensFromSwap?.gte(requiredTokens) &&
+    // total token amount must be less than half of available liquidity (arbitrary) to avoid slippage
+    priceQuery &&
+    BigNumber.from(requiredTokens).mul(2).lt(priceQuery.liquidity) &&
+    minExpectedTokens !== undefined
+  ) {
+    return { minExpectedTokens, amountToSwap: 0 }
+  }
 
-  console.info(
-    '🧃 useProjectPayTx::use buy back delegate::',
-    shouldUseBuybackDelegate,
-    {
-      weiAmount: weiAmount.toString(),
-      priceQueryNumerator,
-      priceQueryDenominator,
-      requiredTokens: requiredTokens?.toString(),
-      expectedTokensFromSwap: expectedTokensFromSwap?.toString(),
-      minExpectedTokens: minExpectedTokens?.toString(),
-    },
+  return null
+}
+
+function usePrepareJb721DelegateMetadata({
+  nftRewards,
+}: {
+  nftRewards: ProjectCartNftReward[]
+}) {
+  const { version: JB721DelegateVersion } = useContext(
+    JB721DelegateContractsContext,
   )
-
   const tierIdsToMint = nftRewards
     .map(({ id, quantity }) => Array<number>(quantity).fill(id))
     .flat()
 
+  if (tierIdsToMint.length === 0) return null
+
+  return {
+    metadata: {
+      tierIdsToMint,
+      allowOverspending: DEFAULT_ALLOW_OVERSPENDING,
+    },
+    version: JB721DelegateVersion,
+  }
+}
+
+export function usePrepareDelegatePayMetadata(
+  weiAmount: BigNumber,
+  {
+    nftRewards,
+    receivedTickets,
+  }: {
+    nftRewards: ProjectCartNftReward[]
+    receivedTickets: string | undefined
+  },
+) {
+  const jbBuyBackDelegateMetadata = usePrepareJbBuybackDelegatePayMetadata({
+    weiAmount,
+    receivedTickets,
+  })
+  const jb721DelegateMetadata = usePrepareJb721DelegateMetadata({ nftRewards })
+
   // Encode metadata for jb721Delegate AND/OR jbBuybackDelegate
   const delegateMetadata = encodeDelegatePayMetadata({
-    jb721Delegate: {
-      metadata: {
-        tierIdsToMint,
-        allowOverspending:
-          nftRewards.length > 0 ? DEFAULT_ALLOW_OVERSPENDING : undefined,
-      },
-      version: JB721DelegateVersion,
-    },
-    jbBuybackDelegate: shouldUseBuybackDelegate
-      ? {
-          amountToSwap: 0, // use all ETH
-          minExpectedTokens,
-        }
-      : undefined,
+    jb721Delegate: jb721DelegateMetadata,
+    jbBuybackDelegate: jbBuyBackDelegateMetadata,
   })
 
   return delegateMetadata

@@ -12,6 +12,7 @@ import {
   ProjectMetadata,
 } from 'models/projectMetadata'
 import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
+import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { issuanceRateFrom, redemptionRateFrom } from 'utils/v2v3/math'
 import {
   SerializedV2V3FundingCycleData,
@@ -94,6 +95,8 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
   tokens: [],
   tags: [],
   nftPaymentSuccessModal: undefined,
+  softTargetAmount: undefined,
+  softTargetCurrency: V2V3_CURRENCY_USD.toString(),
   version: LATEST_METADATA_VERSION,
 }
 

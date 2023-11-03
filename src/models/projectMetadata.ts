@@ -77,6 +77,15 @@ type ProjectMetadataV9 = Partial<
   }
 >
 
+type ProjectMetadataV10 = Partial<
+  Omit<ProjectMetadataV9, 'version'> & {
+    version: 10
+    introVideoUrl: string
+    softTargetAmount: string
+    softTargetCurrency: string
+  }
+>
+
 export type AnyProjectMetadata =
   | ProjectMetadataV1
   | ProjectMetadataV2
@@ -87,10 +96,11 @@ export type AnyProjectMetadata =
   | ProjectMetadataV7
   | ProjectMetadataV8
   | ProjectMetadataV9
+  | ProjectMetadataV10
 
 // Current version
-export type ProjectMetadata = ProjectMetadataV9
-export const LATEST_METADATA_VERSION = 9
+export type ProjectMetadata = ProjectMetadataV10
+export const LATEST_METADATA_VERSION = 10
 
 // Converts metadata of any version to latest version
 export const consolidateMetadata = (

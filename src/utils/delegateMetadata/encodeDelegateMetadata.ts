@@ -5,8 +5,8 @@ import { createMetadata } from 'juicebox-metadata-helper'
 import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import {
   JB721DelegatePayMetadata,
-  encodeJb721DelegateMetadata,
-} from 'utils/delegateMetadata/encodeJb721DelegateMetadata'
+  encodeJb721DelegatePayMetadata,
+} from './encodeJb721DelegateMetadata'
 
 /**
  * Encode pay metadata for project delegate contracts.
@@ -23,33 +23,31 @@ import {
  * @param jb721Delegate.version Version of jb721Delegate
  * @returns Encoded metadata string for buyback delegate https://github.com/jbx-protocol/juice-buyback
  */
-export function encodeDelegateMetadata({
+export function encodeDelegatePayMetadata({
   jbBuybackDelegate,
   jb721Delegate,
 }: {
   jbBuybackDelegate?: {
     amountToSwap: BigNumberish
     minExpectedTokens: BigNumberish
-  }
+  } | null
   jb721Delegate?: {
     metadata: JB721DelegatePayMetadata
     version: JB721DelegateVersion | undefined
-  }
+  } | null
 }) {
   if (
-    jb721Delegate &&
-    jb721Delegate.version &&
+    jb721Delegate?.version &&
     !jb721DelegateVersionSupportsMetadataLib(jb721Delegate.version)
   ) {
-    // Encode without using metadata lib pattern
-
     if (jbBuybackDelegate) {
       throw new Error(
         'Metadata encoding for JBBuybackDelegate incompatible with encoding for JB721Delegate',
       )
     }
 
-    return encodeJb721DelegateMetadata(
+    // Encode without using metadata lib pattern
+    return encodeJb721DelegatePayMetadata(
       jb721Delegate.metadata,
       jb721Delegate.version,
     )
@@ -72,7 +70,7 @@ export function encodeDelegateMetadata({
   }
 
   if (jb721Delegate?.version) {
-    const encoded = encodeJb721DelegateMetadata(
+    const encoded = encodeJb721DelegatePayMetadata(
       jb721Delegate.metadata,
       jb721Delegate.version,
     )
@@ -89,7 +87,8 @@ export function encodeDelegateMetadata({
 }
 
 /**
- * <JB721Delegate3_4 supports JB Metadata Lib pattern and should be handled differently (https://github.com/jbx-protocol/juice-delegate-metadata-lib)
+ * JB721Delegate3_4 supports JB Metadata Lib pattern and should be handled differently
+ * @link https://github.com/jbx-protocol/juice-delegate-metadata-lib
  */
 function jb721DelegateVersionSupportsMetadataLib(
   version: JB721DelegateVersion | undefined,

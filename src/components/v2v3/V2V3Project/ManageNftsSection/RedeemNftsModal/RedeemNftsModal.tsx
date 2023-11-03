@@ -15,13 +15,8 @@ import { useNftAccountBalance } from 'hooks/JB721Delegate/useNftAccountBalance'
 import { useETHReceivedFromNftRedeem } from 'hooks/v2v3/contractReader/useETHReceivedFromNftRedeem'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/useRedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
-import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { useContext, useState } from 'react'
-import {
-  encodeJB721DelegateV3_2RedeemMetadata,
-  encodeJB721DelegateV3_4RedeemMetadata,
-  encodeJB721DelegateV3RedeemMetadata,
-} from 'utils/delegateMetadata/encodeJb721DelegateMetadata'
+import { encodeJb721DelegateRedeemMetadata } from 'utils/delegateMetadata/encodeJb721DelegateMetadata'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatRedemptionRate } from 'utils/v2v3/math'
 import { RedeemNftCard } from './RedeemNftCard'
@@ -80,15 +75,10 @@ export function RedeemNftsModal({
         redeemAmount: BigNumber.from(0),
         minReturnedTokens: BigNumber.from(0),
         memo,
-        metadata:
-          jb721DelegateVersion === JB721DelegateVersion.JB721DELEGATE_V3 ||
-          jb721DelegateVersion === JB721DelegateVersion.JB721DELEGATE_V3_1
-            ? encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem)
-            : jb721DelegateVersion ===
-                JB721DelegateVersion.JB721DELEGATE_V3_2 ||
-              jb721DelegateVersion === JB721DelegateVersion.JB721DELEGATE_V3_3
-            ? encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem)
-            : encodeJB721DelegateV3_4RedeemMetadata(tokenIdsToRedeem),
+        metadata: encodeJb721DelegateRedeemMetadata(
+          tokenIdsToRedeem,
+          jb721DelegateVersion,
+        ),
       },
       {
         // step 1

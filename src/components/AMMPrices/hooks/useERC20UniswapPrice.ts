@@ -187,7 +187,7 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
     },
     {
       refetchInterval: 30000, // refetch every 30 seconds
-      enabled: !!(tokenAddress && tokenSymbol),
+      enabled: Boolean(tokenAddress && tokenSymbol),
     },
   )
 }

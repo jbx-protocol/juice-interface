@@ -23,6 +23,7 @@ describe('usePayProjectModal', () => {
   const DefaultuseProjectCart = {
     dispatch: jest.fn(),
     payModalOpen: false,
+    nftRewards: [],
     totalAmount: {
       amount: 0,
       currency: V2V3_CURRENCY_ETH,

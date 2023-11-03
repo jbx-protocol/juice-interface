@@ -17,6 +17,7 @@ describe('useProjectPaymentTokens', () => {
       amount: 100,
       currency: V2V3_CURRENCY_ETH,
     },
+    nftRewards: [],
     dispatch: jest.fn(),
   }
   const DefaultUseTokensPerEth = {

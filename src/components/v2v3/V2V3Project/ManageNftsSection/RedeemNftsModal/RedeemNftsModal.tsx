@@ -3,11 +3,11 @@ import { Col, Descriptions, Form, Row, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
+import { MemoFormInput } from 'components/inputs/MemoFormInput'
 import TransactionModal from 'components/modals/TransactionModal'
-import { MemoFormInput } from 'components/Project/PayProjectForm/MemoFormInput'
-import { RedeemingNft } from 'components/ProjectDashboard/components/NftRewardsPanel/hooks/useJB721DelegateTokenToNftReward'
 import { REDEMPTION_RATE_EXPLANATION } from 'components/strings'
 import TooltipLabel from 'components/TooltipLabel'
+import { RedeemingNft } from 'components/v2v3/V2V3Project/ProjectDashboard/components/NftRewardsPanel/hooks/useJB721DelegateTokenToNftReward'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
@@ -21,7 +21,7 @@ import {
   encodeJB721DelegateV3_2RedeemMetadata,
   encodeJB721DelegateV3_4RedeemMetadata,
   encodeJB721DelegateV3RedeemMetadata,
-} from 'utils/encodeJb721DelegateMetadata/encodeJb721DelegateMetadata'
+} from 'utils/delegateMetadata/encodeJb721DelegateMetadata'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatRedemptionRate } from 'utils/v2v3/math'
 import { RedeemNftCard } from './RedeemNftCard'

@@ -1,6 +1,4 @@
 import axios from 'axios'
-import { V2_BLOCKLISTED_PROJECT_IDS } from 'constants/blocklist'
-import { PV_V2 } from 'constants/pv'
 import { BigNumber } from 'ethers'
 import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
 import { Json } from 'models/json'
@@ -15,11 +13,6 @@ import { formatQueryParams } from 'utils/queryParams'
 import { parseDBProject, parseDBProjectJson } from 'utils/sgDbProjects'
 
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
-
-// Filter applied to all DB project query results
-// TODO this could be applied at the /api/projects level, but would take some more finessing. we're working quick here
-const dbProjectFilter: (p: DBProject) => boolean = (p: DBProject) =>
-  !(p.pv === PV_V2 && V2_BLOCKLISTED_PROJECT_IDS.includes(p.projectId))
 
 export function useDBProjectsQuery(
   opts: DBProjectQueryOpts | null,
@@ -43,7 +36,7 @@ export function useDBProjectsQuery(
             .get<Json<DBProjectRow>[]>(
               `/api/projects?${formatQueryParams(opts)}`,
             )
-            .then(res => res.data?.map(parseDBProject).filter(dbProjectFilter))
+            .then(res => res.data?.map(parseDBProject))
         : Promise.resolve([] as DBProject[]),
     {
       staleTime: DEFAULT_STALE_TIME,
@@ -71,13 +64,11 @@ export function useDBProjectsInfiniteQuery(
         .get<DBProjectRow[] | undefined>(
           `/api/projects?${formatQueryParams({
             ...evaluatedOpts,
-            page: pageParam,
+            page: pageParam ?? 0,
             pageSize,
           })}`,
         )
-        .then(res =>
-          res.data ? res.data.map(parseDBProject).filter(dbProjectFilter) : [],
-        )
+        .then(res => (res.data ? res.data.map(parseDBProject) : []))
     },
     {
       staleTime: DEFAULT_STALE_TIME,
@@ -102,7 +93,7 @@ export function useTrendingProjects(count: number) {
       '/api/projects/trending?count=' + count,
     )
 
-    return res.data.map(parseDBProjectJson).filter(dbProjectFilter)
+    return res.data.map(parseDBProjectJson)
   })
 }
 

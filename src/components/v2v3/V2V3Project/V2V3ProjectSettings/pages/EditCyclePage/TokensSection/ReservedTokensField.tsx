@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
 import { useWatch } from 'antd/lib/form/Form'
-import { ExternalLinkWithIcon } from 'components/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { FormItems } from 'components/formItems'
 import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
+import { ExternalLinkWithIcon } from 'components/v2v3/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { Split } from 'models/splits'
 import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
@@ -12,6 +12,7 @@ import { SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
 import { V2V3EditReservedTokens } from '../../ReservedTokensSettingsPage/V2V3EditReservedTokens'
 import { AdvancedDropdown } from '../AdvancedDropdown'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
+import { zeroPercentDisabledNoticed } from './RedemptionRateField'
 
 export function ReservedTokensField() {
   const { editCycleForm, setFormHasUpdated } = useEditCycleFormContext()
@@ -43,10 +44,12 @@ export function ReservedTokensField() {
         value={reservedTokensSwitchEnabled}
         onChange={val => {
           setReservedTokensSwitchEnabled(val)
+          setFormHasUpdated(true)
           if (!val) {
             editCycleForm?.setFieldsValue({ reservedTokens: 0 })
           }
         }}
+        extra={reservedTokensSwitchEnabled ? null : zeroPercentDisabledNoticed}
       />
       {reservedTokensSwitchEnabled ? (
         <div className="pt-6 pb-5">

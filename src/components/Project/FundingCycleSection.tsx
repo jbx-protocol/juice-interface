@@ -1,11 +1,9 @@
 import { Trans } from '@lingui/macro'
-
-import { useState } from 'react'
-
 import SectionHeader from 'components/SectionHeader'
 import { Tab } from 'components/Tab'
+import { useState } from 'react'
 
-export type TabType = {
+type TabType = {
   key: string
   label: string | JSX.Element
   content: JSX.Element

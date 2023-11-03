@@ -7,7 +7,7 @@ import { useFetchJuicyPicks } from 'components/Home/JuicyPicksSection/hooks/useJ
 import { ProjectCarousel } from 'components/Home/ProjectCarousel'
 import { SectionContainer } from 'components/Home/SectionContainer'
 import { SectionHeading } from 'components/Home/SectionHeading'
-import { XLButton } from 'components/XLButton'
+import { XLButton } from 'components/buttons/XLButton'
 import { useMedia } from 'contexts/Theme/useMedia'
 import Link from 'next/link'
 

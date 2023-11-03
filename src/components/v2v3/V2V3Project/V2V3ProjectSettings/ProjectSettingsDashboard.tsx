@@ -2,9 +2,9 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
-import { useDistributableAmount } from 'components/ProjectDashboard/components/CyclesPayoutsPanel/hooks/useDistributableAmount'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHAmount from 'components/currency/ETHAmount'
+import { useDistributableAmount } from 'components/v2v3/V2V3Project/ProjectDashboard/components/CyclesPayoutsPanel/hooks/useDistributableAmount'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
@@ -14,8 +14,6 @@ import { useContext } from 'react'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
-
-export type MenuKey = V2V3SettingsPageKey
 
 export type V2V3SettingsPageKey =
   | 'general'

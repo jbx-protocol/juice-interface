@@ -1,5 +1,5 @@
-import { usePayProjectForm } from 'components/Project/PayProjectForm/hooks/usePayProjectForm'
-import { PayProjectFormContext } from 'components/Project/PayProjectForm/payProjectFormContext'
+import { usePayProjectForm } from 'components/v1/V1Project/PayProjectForm/hooks/usePayProjectForm'
+import { PayProjectFormContext } from 'components/v1/V1Project/PayProjectForm/payProjectFormContext'
 import { V1PayButton } from 'components/v1/V1Project/V1PayButton'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { useContext } from 'react'

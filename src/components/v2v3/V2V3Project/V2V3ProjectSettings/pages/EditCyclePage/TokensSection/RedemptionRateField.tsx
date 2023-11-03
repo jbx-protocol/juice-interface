@@ -1,22 +1,28 @@
 import { Trans } from '@lingui/macro'
 import { useWatch } from 'antd/lib/form/Form'
-import { ExternalLinkWithIcon } from 'components/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import NumberSlider from 'components/inputs/NumberSlider'
+import { ExternalLinkWithIcon } from 'components/v2v3/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 
+export const zeroPercentDisabledNoticed = (
+  <span className="text-tertiary text-xs">
+    <Trans>(0%)</Trans>
+  </span>
+)
+
 export function RedemptionRateField() {
-  const { editCycleForm } = useEditCycleFormContext()
+  const { editCycleForm, setFormHasUpdated } = useEditCycleFormContext()
 
   // Redemption rate %
   const redemptionReductionRate = useWatch('redemptionRate', editCycleForm)
 
   const [redemptionRateSwitchEnabled, setRedemptionRateSwitchEnabled] =
     useState<boolean>(
-      (editCycleForm?.getFieldValue('redemptionRate') ?? 100) < 100,
+      (editCycleForm?.getFieldValue('redemptionRate') ?? 100) > 0,
     )
   return (
     <div className="flex flex-col gap-5">
@@ -33,11 +39,13 @@ export function RedemptionRateField() {
           </Trans>
         }
         value={redemptionRateSwitchEnabled}
+        extra={redemptionRateSwitchEnabled ? null : zeroPercentDisabledNoticed}
         onChange={val => {
           setRedemptionRateSwitchEnabled(val)
+          setFormHasUpdated(true)
           if (!val) {
             editCycleForm?.setFieldsValue({
-              redemptionRate: 100,
+              redemptionRate: 0,
             })
           }
         }}

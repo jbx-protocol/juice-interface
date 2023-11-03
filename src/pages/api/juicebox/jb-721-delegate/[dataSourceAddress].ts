@@ -5,6 +5,7 @@ import { Contract } from 'ethers'
 import { ForgeDeploy, addressFor } from 'forge-run-parser'
 import { loadJB721DelegateJson } from 'hooks/JB721Delegate/contracts/useJB721DelegateAbi'
 import { loadJB721DelegateAddress } from 'hooks/JB721Delegate/contracts/useJB721DelegateContractAddress'
+import { enableCors } from 'lib/api/nextjs'
 import { getLogger } from 'lib/logger'
 import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -145,6 +146,8 @@ async function fetchJB721DelegateVersion(dataSourceAddress: string) {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  enableCors(res)
+
   if (req.method !== 'GET') {
     return res.status(404)
   }

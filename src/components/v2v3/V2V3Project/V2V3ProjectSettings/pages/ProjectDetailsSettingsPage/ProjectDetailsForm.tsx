@@ -140,7 +140,6 @@ export function ProjectDetailsForm({
               />
             </Form.Item>
 
-            <FormItems.ProjectPayButton name="payButton" />
             <FormItems.ProjectPayDisclosure name="payDisclosure" />
           </MinimalCollapse>
         </div>

@@ -52,6 +52,7 @@ const client = new ApolloClient({
         fields: {
           projectEvents: paginationConfig,
           fundingCycles: paginationConfig,
+          participants: paginationConfig,
         },
       },
     },

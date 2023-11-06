@@ -84,18 +84,14 @@ export default function TokenPieChart({
     theme: { colors },
   } = tailwind
 
-  const inactiveFill =
-    themeOption === 'dark' ? colors.bluebs[600] : colors.bluebs[300]
-  const activeFill =
-    themeOption === 'dark' ? colors.bluebs[300] : colors.bluebs[500]
-  const remainderInactiveFill =
-    themeOption === 'dark' ? colors.grey[400] : colors.grey[300]
-  const remainderActiveFill =
-    themeOption === 'dark' ? colors.grey[300] : colors.grey[400]
+  const inactiveFill = colors.bluebs[500]
+  const activeFill = colors.bluebs[300]
+  const remainderInactiveFill = colors.grey[500]
+  const remainderActiveFill = colors.grey[300]
   const stroke = themeOption === 'dark' ? colors.slate[800] : colors.smoke[25]
 
   return (
-    <>
+    <div className="relative flex items-center justify-center">
       <PieChart
         width={size}
         height={size}
@@ -154,6 +150,6 @@ export default function TokenPieChart({
           </>
         )}
       </div>
-    </>
+    </div>
   )
 }

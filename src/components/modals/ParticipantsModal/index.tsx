@@ -55,7 +55,7 @@ export default function ParticipantsModal({
       }),
     {
       staleTime: 5 * 60 * 1000, // 5 min
-      enabled: !!(projectId && pv),
+      enabled: Boolean(projectId && pv && open),
     },
   )
 
@@ -66,6 +66,7 @@ export default function ParticipantsModal({
       onOk={onCancel}
       okText={t`Done`}
       cancelButtonProps={{ hidden: true }}
+      destroyOnClose={true}
     >
       <div>
         <h4>

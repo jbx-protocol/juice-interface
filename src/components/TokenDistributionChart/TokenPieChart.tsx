@@ -109,8 +109,6 @@ export default function TokenPieChart({
           innerRadius={size / 2 - 60}
           stroke={stroke}
           minAngle={1.5}
-          startAngle={0}
-          endAngle={345}
         >
           {pieChartData.map((entry, index) => {
             let fill: string

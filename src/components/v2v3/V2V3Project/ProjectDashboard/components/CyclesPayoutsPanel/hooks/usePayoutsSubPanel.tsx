@@ -139,5 +139,6 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
     loading,
     payouts,
     totalPayoutAmount,
+    distributionLimit,
   }
 }

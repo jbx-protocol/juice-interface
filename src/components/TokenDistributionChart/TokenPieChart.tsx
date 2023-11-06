@@ -32,7 +32,7 @@ export default function TokenPieChart({
     if (!tokenSupply || !participants) return []
 
     // Only show (arbitrary) max number of wallets to avoid chart clutter
-    const maxVisibleWallets = 80
+    const maxVisibleWallets = 100
 
     const visibleWallets: typeof participants = []
     const remainderWallets: typeof participants = []
@@ -145,7 +145,10 @@ export default function TokenPieChart({
               {formattedNum(Math.round(activeWallet.balance ?? 0))}
             </div>
             <div className="text-xs font-medium" style={{ color: activeFill }}>
-              {(activeWallet.percent * 100).toFixed(2)}%
+              {activeWallet.percent >= 0.0001
+                ? (activeWallet.percent * 100).toFixed(2)
+                : '<0.01'}
+              %
             </div>
           </>
         )}

@@ -1,9 +1,12 @@
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectTagName } from 'models/project-tags'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { useFormDispatchWatch } from '../../hooks'
+import { AmountInputValue } from '../ProjectDetailsPage'
 
 type ProjectDetailsFormProps = Partial<{
   projectName: string
@@ -19,6 +22,10 @@ type ProjectDetailsFormProps = Partial<{
   payDisclosure: string
   inputProjectOwner: string
   tags: ProjectTagName[]
+  // Only relevant to Juicecrowd
+  introVideoUrl: string
+  // Only relevant to Juicecrowd
+  softTarget: AmountInputValue
 }>
 
 export const useProjectDetailsForm = () => {
@@ -42,6 +49,16 @@ export const useProjectDetailsForm = () => {
       payDisclosure: projectMetadata.payDisclosure,
       inputProjectOwner,
       tags: projectMetadata.tags,
+      // Only relevant to Juicecrowd
+      softTarget:
+        projectMetadata.softTargetAmount && projectMetadata.softTargetCurrency
+          ? {
+              amount: projectMetadata.softTargetAmount,
+              currency: parseInt(
+                projectMetadata.softTargetCurrency,
+              ) as V2V3CurrencyOption,
+            }
+          : undefined,
     }),
     [
       projectMetadata.name,
@@ -56,6 +73,8 @@ export const useProjectDetailsForm = () => {
       projectMetadata.payButton,
       projectMetadata.payDisclosure,
       projectMetadata.tags,
+      projectMetadata.softTargetAmount,
+      projectMetadata.softTargetCurrency,
       inputProjectOwner,
     ],
   )
@@ -149,6 +168,21 @@ export const useProjectDetailsForm = () => {
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setPayDisclosure,
     formatter: v => v ?? '',
+  })
+
+  useFormDispatchWatch({
+    form,
+    fieldName: 'introVideoUrl',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setIntroVideoUrl,
+    formatter: v => v ?? '',
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'softTarget',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setSoftTarget,
+    formatter: v => v ?? { amount: '', currency: V2V3_CURRENCY_USD },
   })
 
   return { form, initialValues }

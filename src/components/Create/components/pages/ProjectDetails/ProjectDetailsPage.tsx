@@ -4,21 +4,27 @@ import { ADDRESS_ZERO } from '@uniswap/v3-sdk'
 import { Col, Form, Row } from 'antd'
 import { Callout } from 'components/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
+import CurrencySwitch from 'components/currency/CurrencySwitch'
 import { FormItems } from 'components/formItems'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/inputs/PrefixedInput'
 import { RichEditor } from 'components/RichEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import Link from 'next/link'
-import { useContext } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
 import { Wizard } from '../../Wizard'
@@ -179,6 +185,32 @@ export const ProjectDetailsPage: React.FC<
               <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
             </Form.Item>
           </CreateCollapse.Panel>
+
+          {featureFlagEnabled(
+            FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION,
+          ) && (
+            <CreateCollapse.Panel
+              key={3}
+              header={<OptionalHeader header={t`👷‍♂️ Juicecrowd`} />}
+              hideDivider
+            >
+              <Form.Item
+                name="introVideoUrl"
+                label={t`Intro video YouTube URL`}
+                tooltip={t`Add a YouTube video to the top of your Juicecrowd project's page.`}
+              >
+                <JuiceInput />
+              </Form.Item>
+
+              <Form.Item
+                name="softTarget"
+                label={<Trans>Soft target for funding</Trans>}
+                tooltip={t`The soft target for the juicecrowd project. Note: this is not a cap, but a expected target for the project.`}
+              >
+                <AmountInput />
+              </Form.Item>
+            </CreateCollapse.Panel>
+          )}
         </CreateCollapse>
       </div>
 
@@ -194,5 +226,62 @@ export const ProjectDetailsPage: React.FC<
         </div>
       </div>
     </Form>
+  )
+}
+
+// Only relevant to Juicecrowd
+
+export type AmountInputValue = {
+  amount: string
+  currency: V2V3CurrencyOption
+}
+
+const AmountInput = ({
+  value,
+  onChange,
+}: {
+  value?: AmountInputValue
+  onChange?: (input: AmountInputValue | undefined) => void
+}) => {
+  const [_amount, _setAmount] = useState<AmountInputValue>({
+    amount: '',
+    currency: V2V3_CURRENCY_USD,
+  })
+  const amount = value ?? _amount
+  const setAmount = onChange ?? _setAmount
+
+  const onAmountInputChange = useCallback(
+    (value: AmountInputValue | undefined) => {
+      if (value && !isNaN(parseFloat(value.amount))) {
+        setAmount(value)
+        return
+      }
+    },
+    [setAmount],
+  )
+
+  return (
+    <div className="flex w-full items-center gap-4">
+      <FormattedNumberInput
+        className="flex-1"
+        value={amount.amount}
+        onChange={val =>
+          onAmountInputChange(
+            val ? { amount: val, currency: amount.currency } : undefined,
+          )
+        }
+        accessory={
+          <CurrencySwitch
+            currency={amount.currency === V2V3_CURRENCY_ETH ? 'ETH' : 'USD'}
+            onCurrencyChange={c => {
+              const currency =
+                c === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD
+              onAmountInputChange({ amount: amount.amount, currency })
+            }}
+            className="rounded"
+          />
+        }
+      />
+    </div>
   )
 }

@@ -76,7 +76,11 @@ if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')
 }
 
-const FRAME_SRC = ['https://verify.walletconnect.com/']
+const FRAME_SRC = [
+  'https://verify.walletconnect.com/',
+  'https://youtube.com',
+  'https://www.youtube.com/',
+]
 
 const ContentSecurityPolicy = `
   default-src 'none';

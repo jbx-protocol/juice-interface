@@ -3,9 +3,13 @@ import EthereumAddress from 'components/EthereumAddress'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
 import { RichPreview } from 'components/RichPreview'
+import { AmountInCurrency } from 'components/currency/AmountInCurrency'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useWallet } from 'hooks/Wallet'
 import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { parseWad } from 'utils/format/formatNumber'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
 import { ReviewDescription } from '../ReviewDescription'
@@ -25,9 +29,20 @@ export const ProjectDetailsReview = () => {
       twitter,
       projectTagline,
       tags,
+      introVideoUrl,
+      softTargetAmount,
+      softTargetCurrency,
     },
     inputProjectOwner,
   } = useAppSelector(state => state.editingV2Project)
+
+  const youtubeUrl = useMemo(() => {
+    if (!introVideoUrl) return undefined
+    const url = new URL(introVideoUrl)
+    const videoId = url.searchParams.get('v')
+    if (!videoId) return undefined
+    return `https://www.youtube.com/embed/${videoId}`
+  }, [introVideoUrl])
 
   const ownerAddress = inputProjectOwner ?? userAddress
 
@@ -150,6 +165,39 @@ export const ProjectDetailsReview = () => {
           )
         }
       />
+
+      {featureFlagEnabled(FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION) && (
+        <>
+          <ReviewDescription
+            className="col-span-4"
+            title={t`Juicecrowd intro video`}
+            desc={
+              youtubeUrl ? (
+                <div className="relative w-full overflow-hidden rounded-lg pt-[56.25%]">
+                  <iframe
+                    className="absolute top-0 left-0 h-full w-full"
+                    src={youtubeUrl}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    title="Embedded youtube"
+                  />
+                </div>
+              ) : null
+            }
+          />
+          <ReviewDescription
+            title={t`Juicecrowd soft target`}
+            desc={
+              softTargetAmount ? (
+                <AmountInCurrency
+                  amount={parseWad(softTargetAmount)}
+                  currency={softTargetCurrency === '1' ? 'ETH' : 'USD'}
+                />
+              ) : null
+            }
+          />
+        </>
+      )}
     </div>
   )
 }

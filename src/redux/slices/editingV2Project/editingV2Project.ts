@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AmountInputValue } from 'components/Create/components'
 import { projectTokenSettingsToReduxFormat } from 'components/Create/utils/projectTokenSettingsToReduxFormat'
 import { AllocationSplit } from 'components/v2v3/shared/Allocation'
 import { CreatePage } from 'models/createPage'
@@ -298,6 +299,20 @@ const editingV2ProjectSlice = createSlice({
       state.fundingCycleData.discountRate = converted.discountRate
       state.fundingCycleMetadata.redemptionRate = converted.redemptionRate
       state.fundingCycleMetadata.allowMinting = converted.allowMinting
+    },
+    setIntroVideoUrl: (state, action: PayloadAction<string>) => {
+      state.projectMetadata.introVideoUrl = action.payload
+    },
+    setSoftTarget: (state, action: PayloadAction<AmountInputValue>) => {
+      state.projectMetadata.softTargetAmount = action.payload.amount
+      state.projectMetadata.softTargetCurrency =
+        action.payload.currency.toString()
+    },
+    setSoftTargetAmount: (state, action: PayloadAction<string>) => {
+      state.projectMetadata.softTargetAmount = action.payload
+    },
+    setSoftTargetCurrency: (state, action: PayloadAction<string>) => {
+      state.projectMetadata.softTargetCurrency = action.payload
     },
   },
 })

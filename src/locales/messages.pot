@@ -512,6 +512,9 @@ msgstr ""
 msgid "Receive {receivedTickets} {receivedTokenSymbolText} {suffix}"
 msgstr ""
 
+msgid "👷‍♂️ Juicecrowd"
+msgstr ""
+
 msgid "Amount to pay out"
 msgstr ""
 
@@ -546,6 +549,9 @@ msgid "Experimental flags"
 msgstr ""
 
 msgid "Edit {allocationName}"
+msgstr ""
+
+msgid "Soft target for funding"
 msgstr ""
 
 msgid "Newsletter"
@@ -1437,6 +1443,9 @@ msgid "Using a duration is recommended. Without one, you can edit your cycle at 
 msgstr ""
 
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
+msgstr ""
+
+msgid "Juicecrowd intro video"
 msgstr ""
 
 msgid "Token symbol"
@@ -2549,6 +2558,9 @@ msgstr ""
 msgid "Unlimited payouts."
 msgstr ""
 
+msgid "The soft target for the juicecrowd project. Note: this is not a cap, but a expected target for the project."
+msgstr ""
+
 msgid "<0>View transactions.</0>"
 msgstr ""
 
@@ -2924,6 +2936,9 @@ msgstr ""
 msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to migrate your legacy tokens (V1 or V2) for V3 tokens."
 msgstr ""
 
+msgid "Add a YouTube video to the top of your Juicecrowd project's page."
+msgstr ""
+
 msgid "How do I use this website?"
 msgstr ""
 
@@ -2994,6 +3009,9 @@ msgid "Minutes"
 msgstr ""
 
 msgid "Approve migration for your {0} v{version} legacy ERC-20 tokens."
+msgstr ""
+
+msgid "Intro video YouTube URL"
 msgstr ""
 
 msgid "Education"
@@ -3918,6 +3936,9 @@ msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It he
 msgstr ""
 
 msgid "Payouts to other Juicebox projects don't incur fees. A 2.5% fee is taken out of all other payouts. You will receive the <0>JuiceboxDAO governance token</0> when you pay fees. <1>Learn more</1>."
+msgstr ""
+
+msgid "Juicecrowd soft target"
 msgstr ""
 
 msgid "Reserved issuance rate"

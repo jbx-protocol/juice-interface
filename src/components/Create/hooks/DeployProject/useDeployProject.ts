@@ -1,3 +1,4 @@
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readProvider } from 'constants/readProvider'
 import { BigNumber, providers } from 'ethers'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
@@ -11,7 +12,10 @@ import {
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
+import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import {
   useDeployNftProject,
   useDeployStandardProject,
@@ -185,11 +189,42 @@ export const useDeployProject = () => {
         return
       }
 
+      const deleteIfExists = (obj: Record<string, unknown>, key: string) => {
+        if (obj[key] !== undefined) delete obj[key]
+      }
+      let softTargetAmount: string | undefined
+      let softTargetCurrency: string | undefined
+
+      if (
+        !featureFlagEnabled(FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION)
+      ) {
+        // strip out metadata if feature flag is not enabled
+        deleteIfExists(projectMetadata, 'introVideoUrl')
+        deleteIfExists(projectMetadata, 'softTargetAmount')
+        deleteIfExists(projectMetadata, 'softTargetCurrency')
+      } else {
+        // metadata is enabled, ensure price set properly
+        if (projectMetadata.softTargetAmount) {
+          // Set currency to USD if not set
+          softTargetCurrency = projectMetadata.softTargetCurrency
+            ? projectMetadata.softTargetCurrency
+            : V2V3_CURRENCY_USD.toString()
+          // Parse to wad format
+          softTargetAmount = parseWad(
+            projectMetadata.softTargetAmount,
+          ).toString()
+        } else {
+          deleteIfExists(projectMetadata, 'softTargetAmount')
+        }
+      }
+
       let projectMetadataCid: string | undefined
       try {
         projectMetadataCid = (
           await uploadProjectMetadata({
             ...projectMetadata,
+            softTargetAmount,
+            softTargetCurrency,
             nftPaymentSuccessModal: postPayModal,
           })
         ).Hash

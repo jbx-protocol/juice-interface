@@ -1964,6 +1964,9 @@ msgstr ""
 msgid "<0>Supporters can burn their tokens to reclaim some of the ETH not needed for payouts. The amount of ETH they receive depends on the redemption rate.</0><1>At 100%, redemptions are 1:1 — somebody redeeming 10% of all project tokens will receive 10% of the available ETH. At 0%, redemptions are turned off.</1><2>Anywhere else, redemptions take place along a bonding curve, meaning people who redeem first will get less ETH per token, and people who redeem later will get more ETH per token.</2><3>Learn more in this <4>short video</4>.</3>"
 msgstr ""
 
+msgid "This project has no upcoming cycle. Its rules can change at any time."
+msgstr ""
+
 msgid "We recommend you <0>contact us</0> or visit the <1>Juicebox Discord</1> for help with this process."
 msgstr ""
 
@@ -2199,9 +2202,6 @@ msgid "Percentages"
 msgstr ""
 
 msgid "If enabled, project tokens will be minted to a custom beneficiary address. By default, project tokens will be minted to the wallet that pays this address."
-msgstr ""
-
-msgid "This project has no upcoming cycle"
 msgstr ""
 
 msgid "Highest paid"

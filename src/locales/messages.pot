@@ -971,6 +971,9 @@ msgstr ""
 msgid "Adding an edit deadline is recommended. Projects with no deadline will appear risky to contributors."
 msgstr ""
 
+msgid "Saved!"
+msgstr ""
+
 msgid "<0><1>Peel</1> manages this website — the juicebox.money frontend interface. You can reach out to Peel through the <2>Peel Discord</2>.</0><3><4>JuiceboxDAO</4> builds and governs the Juicebox fundraising protocol and other community resources. You can reach out to JuiceboxDAO through the <5>Juicebox Discord</5>.</3>"
 msgstr ""
 
@@ -1623,6 +1626,9 @@ msgid "{userTokenBalance} tokens"
 msgstr ""
 
 msgid "Switch to unlimited payouts"
+msgstr ""
+
+msgid "Save collection details"
 msgstr ""
 
 msgid "NO LIMIT"
@@ -4803,6 +4809,9 @@ msgid "Disable payments to this project"
 msgstr ""
 
 msgid "project"
+msgstr ""
+
+msgid "Something went wrong!"
 msgstr ""
 
 msgid "Configuration"

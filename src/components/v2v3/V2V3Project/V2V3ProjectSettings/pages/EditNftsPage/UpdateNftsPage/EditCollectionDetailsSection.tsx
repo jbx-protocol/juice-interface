@@ -49,6 +49,8 @@ export function EditCollectionDetailsSection() {
   } = useCollectionDetailsForm()
   const [formHasUpdated, setFormHasUpdated] = useState<boolean>()
   const [txLoading, setTxLoading] = useState<boolean>()
+  const [txSuccessful, setTxSuccessful] = useState<boolean>()
+  const [txFailed, setTxFailed] = useState<boolean>()
 
   const reconfigureNftCollectionMetadata = useReconfigureNftCollectionMetadata()
 
@@ -91,11 +93,24 @@ export function EditCollectionDetailsSection() {
       symbol: marketplaceForm.getFieldValue('collectionSymbol'),
     }
 
-    await reconfigureNftCollectionMetadata({
-      ...newCollectionMetadata,
-    })
+    const txOpts = {
+      onConfirmed() {
+        setTxLoading(false)
+        setTxSuccessful(true)
+      },
+    }
 
-    setTxLoading(false)
+    const txSuccess = await reconfigureNftCollectionMetadata(
+      {
+        ...newCollectionMetadata,
+      },
+      txOpts,
+    )
+
+    if (!txSuccess) {
+      setTxFailed(true)
+      setTxLoading(false)
+    }
   }
 
   if (isLoading) return <Loading />
@@ -120,15 +135,26 @@ export function EditCollectionDetailsSection() {
         onFinish={submitCollectionMetadata}
       >
         <NftCollectionDetailsFormItems isReconfigure />
-
-        <Button
-          loading={txLoading}
-          disabled={!formHasUpdated}
-          onClick={() => marketplaceForm.submit()}
-          type="primary"
-        >
-          Save collection details
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            loading={txLoading}
+            disabled={!formHasUpdated}
+            onClick={() => marketplaceForm.submit()}
+            type="primary"
+            className="grow-0"
+          >
+            <Trans>Save collection details</Trans>
+          </Button>
+          {txSuccessful ? (
+            <span className="text-success-500">
+              <Trans>Saved!</Trans>
+            </span>
+          ) : txFailed ? (
+            <span className="text-error-500">
+              <Trans>Something went wrong!</Trans>
+            </span>
+          ) : null}
+        </div>
       </Form>
     </div>
   )

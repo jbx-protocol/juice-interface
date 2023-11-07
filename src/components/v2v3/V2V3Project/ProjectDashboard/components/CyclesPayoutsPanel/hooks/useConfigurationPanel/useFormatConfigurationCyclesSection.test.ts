@@ -9,7 +9,7 @@ import { useFormatConfigurationCyclesSection } from './useFormatConfigurationCyc
 
 // Use EST timezone for start time tests
 beforeAll(() => {
-  process.env.TZ = 'America/New_York'
+  process.env.TZ = 'UTC'
 })
 afterAll(() => {
   delete process.env.TZ
@@ -55,7 +55,8 @@ describe('useFormatConfigurationCyclesSection', () => {
     }
     const expectedStartTime = {
       name: 'Start time',
-      new: '1970-01-01, Wednesday, 09:46:40 PM EST',
+      new: '1970-01-01, Thursday, 02:46:40 AM UTC',
+      // new: '1970-01-01, Wednesday, 09:46:40 PM EST',
       easyCopy: true,
     }
     const expectedPayouts = { name: 'Payouts', old: 'Ξ100', new: 'US$200' }

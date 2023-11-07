@@ -15,11 +15,13 @@ export const PayoutsSubPanel = ({
   className?: string
   type: 'current' | 'upcoming'
 }) => {
-  const { payouts, loading, totalPayoutAmount } = usePayoutsSubPanel(type)
+  const { payouts, loading, totalPayoutAmount, distributionLimit } =
+    usePayoutsSubPanel(type)
   const hasPayouts = useMemo(() => {
-    if (!payouts || payouts.length === 0) return false
+    if (!payouts || payouts.length === 0 || distributionLimit?.eq(0))
+      return false
     return true
-  }, [payouts])
+  }, [payouts, distributionLimit])
   return (
     <div className={twMerge(className)}>
       <h2 className="mb-0 font-heading text-2xl font-medium">

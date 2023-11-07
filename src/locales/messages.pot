@@ -713,9 +713,6 @@ msgstr ""
 msgid "Project token"
 msgstr ""
 
-msgid "Got it"
-msgstr ""
-
 msgid "Setup new NFTs for {projectTitle}"
 msgstr ""
 
@@ -741,9 +738,6 @@ msgid "Juicebox is non-custodial, meaning you have complete ownership over your 
 msgstr ""
 
 msgid "Tokens to burn"
-msgstr ""
-
-msgid "Use me as a base!"
 msgstr ""
 
 msgid "New NFTs will be available in your next cycle as long as it starts after your edit deadline."
@@ -1335,9 +1329,6 @@ msgid "Time remaining for edits to affect the next cycle:"
 msgstr ""
 
 msgid "Juicebox is as versatile as you are, build anything from an NFT project to a boutique crypto lawfirm and everything in between."
-msgstr ""
-
-msgid "This is an example feature announcement."
 msgstr ""
 
 msgid "Button link"
@@ -3921,9 +3912,6 @@ msgid "Community-owned"
 msgstr ""
 
 msgid "Owner tools"
-msgstr ""
-
-msgid "Example Feature"
 msgstr ""
 
 msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"

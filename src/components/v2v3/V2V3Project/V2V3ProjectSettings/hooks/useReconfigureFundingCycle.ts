@@ -15,6 +15,7 @@ import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetad
 import { WEIGHT_UNCHANGED, WEIGHT_ZERO } from 'utils/v2v3/fundingCycle'
 import { reloadWindow } from 'utils/windowUtils'
 import { EditingFundingCycleConfig } from './useEditingFundingCycleConfig'
+import { useResolveEditCycleConflicts } from './useResolveEditCycleConflicts'
 
 /**
  * Return the value of the `weight` argument to send in the transaction.
@@ -41,6 +42,13 @@ const getWeightArgument = ({
   return newFundingCycleWeight
 }
 
+/**
+ * Return a function to initiate a transaction to reconfigure a project's funding cycle.
+ *
+ * @dev Used in two places:
+ *    1. Edit cycle form
+ *    2. NFT page - edit dataSource-related attributes of the cycle
+ */
 export const useReconfigureFundingCycle = ({
   editingFundingCycleConfig,
   memo,
@@ -65,6 +73,7 @@ export const useReconfigureFundingCycle = ({
   const reconfigureV2V3FundingCycleTx = useReconfigureV2V3FundingCycleTx()
   const reconfigureV2V3FundingCycleWithNftsTx =
     useReconfigureV2V3FundingCycleWithNftsTx()
+  const resolveEditCycleConflicts = useResolveEditCycleConflicts()
 
   // If given a latestEditingData, will use that. Else, will use redux store
   const reconfigureFundingCycle = useCallback(
@@ -105,20 +114,22 @@ export const useReconfigureFundingCycle = ({
         newFundingCycleWeight: editingFundingCycleData.weight,
       })
 
-      const reconfigureFundingCycleData: ReconfigureFundingCycleTxParams = {
-        fundingCycleData: {
-          ...editingFundingCycleData,
-          weight,
-        },
-        fundingCycleMetadata,
-        fundAccessConstraints: editingFundAccessConstraints,
-        groupedSplits: [
-          editingPayoutGroupedSplits,
-          editingReservedTokensGroupedSplits,
-        ],
-        memo,
-        mustStartAtOrAfter: editingMustStartAtOrAfter,
-      }
+      const reconfigureFundingCycleData: ReconfigureFundingCycleTxParams =
+        resolveEditCycleConflicts({
+          fundingCycleData: {
+            ...editingFundingCycleData,
+            weight,
+          },
+          fundingCycleMetadata,
+          fundAccessConstraints: editingFundAccessConstraints,
+          groupedSplits: [
+            editingPayoutGroupedSplits,
+            editingReservedTokensGroupedSplits,
+          ],
+          memo,
+          mustStartAtOrAfter: editingMustStartAtOrAfter,
+          launchedNewNfts,
+        })
 
       const txOpts = {
         onDone() {
@@ -177,6 +188,7 @@ export const useReconfigureFundingCycle = ({
       memo,
       onComplete,
       projectId,
+      resolveEditCycleConflicts,
     ],
   )
 

@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import {
   V2V3FundingCycle,
@@ -13,9 +14,19 @@ export default function useProjectQueuedFundingCycle({
 }) {
   const { contracts } = useContext(V2V3ProjectContractsContext)
 
-  return useV2ContractReader<[V2V3FundingCycle, V2V3FundingCycleMetadata]>({
+  const { data, loading } = useV2ContractReader<
+    [V2V3FundingCycle, V2V3FundingCycleMetadata]
+  >({
     contract: contracts.JBController,
     functionName: 'queuedFundingCycleOf',
     args: projectId ? [projectId] : null,
   })
+
+  if (data && data[0].start.eq(BigNumber.from(0))) {
+    return { data: undefined, loading: false }
+  }
+  return {
+    data,
+    loading,
+  }
 }

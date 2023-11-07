@@ -43,12 +43,12 @@ module.exports = {
       },
       keyframes: {
         rise: {
-          '0%': { transform: 'translate(-50%, 100%)', opacity: 0 },
-          '100%': { transform: 'translate(0%, 0%)', opacity: 1 },
+          '0%': { transform: 'translate(-50%, 100%)', opacity: '0' },
+          '100%': { transform: 'translate(0%, 0%)', opacity: '1' },
         },
         set: {
-          '0%': { transform: 'translate(0%, 0%)', opacity: 1 },
-          '100%': { transform: 'translate(50%, 100%)', opacity: 0 },
+          '0%': { transform: 'translate(0%, 0%)', opacity: '1' },
+          '100%': { transform: 'translate(50%, 100%)', opacity: '0' },
         },
       },
       animation: {

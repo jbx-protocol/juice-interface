@@ -5,6 +5,7 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
 import { useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
+import { formatTime } from 'utils/format/formatTime'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
@@ -46,22 +47,6 @@ export const useFormatConfigurationCyclesSection = ({
   }, [fundingCycle?.duration, upcomingFundingCycle])
 
   const startTimeDatum: ConfigurationPanelDatum = useMemo(() => {
-    const formatTime = (timestamp: BigNumber | undefined) => {
-      if (timestamp === undefined) return undefined
-      const timeDate = new Date(timestamp.toNumber() * 1000)
-      const isoDateString = timeDate.toISOString().split('T')[0]
-      const formatOptions: Intl.DateTimeFormatOptions = {
-        weekday: 'long',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true,
-        timeZoneName: 'short',
-      }
-      const timeWeekdayString = timeDate.toLocaleString('en-US', formatOptions)
-      return isoDateString + ', ' + timeWeekdayString
-    }
-
     const formattedTime =
       upcomingFundingCycle === null
         ? formatTime(fundingCycle?.start)

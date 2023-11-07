@@ -124,3 +124,20 @@ export const deriveDurationOption = (
     ) ?? _durationOptions[0]
   )
 }
+
+export const formatTime = (timestamp: BigNumber | undefined) => {
+  if (timestamp === undefined) return undefined
+  const timeDate = new Date(timestamp.toNumber() * 1000)
+  const isoDateString = timeDate.toISOString().split('T')[0]
+  const formatOptions: Intl.DateTimeFormatOptions = {
+    weekday: 'long',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true,
+    timeZoneName: 'short',
+    timeZone: 'UTC',
+  }
+  const timeWeekdayString = timeDate.toLocaleString('en-US', formatOptions)
+  return isoDateString + ', ' + timeWeekdayString
+}

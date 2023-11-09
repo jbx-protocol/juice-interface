@@ -10,7 +10,7 @@ import {
 import { UseQueryResult, useQuery } from 'react-query'
 import { withHttps } from 'utils/externalLink'
 import { formatWad } from 'utils/format/formatNumber'
-import { decodeEncodedIpfsUri, ipfsGatewayUrl } from 'utils/ipfs'
+import { cidFromUrl, decodeEncodedIpfsUri, ipfsGatewayUrl } from 'utils/ipfs'
 
 async function fetchRewardTierMetadata({
   tier,
@@ -28,6 +28,13 @@ async function fetchRewardTierMetadata({
   )
     ? DEFAULT_NFT_MAX_SUPPLY
     : tier.initialQuantity.toNumber()
+
+  // Some projects have image links hard-coded to the old IPFS gateway.
+  const pinataRegex = /^(https?:\/\/jbx\.mypinata\.cloud)/
+  if (tierMetadata?.image && pinataRegex.test(tierMetadata.image)) {
+    const imageUrlCid = cidFromUrl(tierMetadata.image)
+    tierMetadata.image = ipfsGatewayUrl(imageUrlCid)
+  }
 
   const rawContributionFloor =
     (tier as JB_721_TIER_V3_2).price ?? (tier as JB721TierV3).contributionFloor

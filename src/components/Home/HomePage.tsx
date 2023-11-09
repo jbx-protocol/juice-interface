@@ -10,12 +10,10 @@ import { TopSection } from 'components/Home/TopSection/TopSection'
 import { WhyJuiceboxSection } from 'components/Home/WhyJuiceboxSection'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
-import { JuicecrowdBanner } from './JuicecrowdBanner'
 
 export function HomePage() {
   return (
     <>
-      <JuicecrowdBanner />
       <div className="[&>*:nth-child(even)]:bg-smoke-50 dark:[&>*:nth-child(even)]:bg-slate-700">
         <TopSection />
 

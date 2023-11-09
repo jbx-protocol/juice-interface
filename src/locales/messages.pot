@@ -146,9 +146,6 @@ msgstr ""
 msgid "Data from current cycle"
 msgstr ""
 
-msgid "Juicecrowd submissions are now open. <0>3 ETH</0> prize pool. <1>Learn more</1>"
-msgstr ""
-
 msgid "Add NFT"
 msgstr ""
 

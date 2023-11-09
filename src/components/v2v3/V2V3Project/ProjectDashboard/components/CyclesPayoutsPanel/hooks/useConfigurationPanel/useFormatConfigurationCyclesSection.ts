@@ -5,6 +5,7 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
 import { useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
+import { formatTime } from 'utils/format/formatTime'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
@@ -44,6 +45,22 @@ export const useFormatConfigurationCyclesSection = ({
 
     return pairToDatum(t`Duration`, currentDuration, upcomingDuration)
   }, [fundingCycle?.duration, upcomingFundingCycle])
+
+  const startTimeDatum: ConfigurationPanelDatum = useMemo(() => {
+    const formattedTime =
+      upcomingFundingCycle === null
+        ? formatTime(fundingCycle?.start)
+        : fundingCycle?.duration.isZero()
+        ? t`Any time`
+        : formatTime(fundingCycle?.start.add(fundingCycle?.duration))
+
+    const formatTimeDatum: ConfigurationPanelDatum = {
+      name: t`Start time`,
+      new: formattedTime,
+      easyCopy: true,
+    }
+    return formatTimeDatum
+  }, [fundingCycle?.start, fundingCycle?.duration, upcomingFundingCycle])
 
   const payoutsDatum: ConfigurationPanelDatum = useMemo(() => {
     const formatCurrency = (currency: BigNumber | undefined) => {
@@ -108,8 +125,9 @@ export const useFormatConfigurationCyclesSection = ({
   return useMemo(() => {
     return {
       duration: durationDatum,
+      startTime: startTimeDatum,
       payouts: payoutsDatum,
       editDeadline: editDeadlineDatum,
     }
-  }, [durationDatum, editDeadlineDatum, payoutsDatum])
+  }, [durationDatum, startTimeDatum, editDeadlineDatum, payoutsDatum])
 }

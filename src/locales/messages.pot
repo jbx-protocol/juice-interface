@@ -647,6 +647,9 @@ msgstr ""
 msgid "To: <0/>"
 msgstr ""
 
+msgid "Any time"
+msgstr ""
+
 msgid "Join 1,000+ projects growing with Juicebox"
 msgstr ""
 
@@ -4818,9 +4821,6 @@ msgid "project"
 msgstr ""
 
 msgid "Something went wrong!"
-msgstr ""
-
-msgid "Configuration"
 msgstr ""
 
 msgid "Reserved {0}"

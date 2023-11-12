@@ -1061,6 +1061,9 @@ msgstr ""
 msgid "Download Template"
 msgstr ""
 
+msgid "Add a YouTube video to the top of your Juicecrowd project's page. Video will take priority over image"
+msgstr ""
+
 msgid "Project owner (you)"
 msgstr ""
 
@@ -1437,6 +1440,9 @@ msgid "If you use the default governance option (no governance), the voting weig
 msgstr ""
 
 msgid "Transfer ETH to this project"
+msgstr ""
+
+msgid "Juicecrowd intro image"
 msgstr ""
 
 msgid "Using a duration is recommended. Without one, you can edit your cycle at any time, which may appear risky."
@@ -2936,9 +2942,6 @@ msgstr ""
 msgid "This Juicebox V3 project also has a project on Juicebox V1 and/or V2. The project owner is allowing you to migrate your legacy tokens (V1 or V2) for V3 tokens."
 msgstr ""
 
-msgid "Add a YouTube video to the top of your Juicecrowd project's page."
-msgstr ""
-
 msgid "How do I use this website?"
 msgstr ""
 
@@ -3692,6 +3695,9 @@ msgstr ""
 msgid "The amount of ETH which can be paid out from this project during the cycle. Payouts reset each cycle."
 msgstr ""
 
+msgid "Intro image"
+msgstr ""
+
 msgid "Safe, Snapshot, or even on-chain governance: Juicebox uses simple standards and works with all of your favorite Ethereum tools."
 msgstr ""
 
@@ -3813,6 +3819,9 @@ msgid "Sold out"
 msgstr ""
 
 msgid "Burn {tokensTextLong}"
+msgstr ""
+
+msgid "Add a Intro image to the top of the Juicecrowd project's page. If a video is also included, the video will always take priority."
 msgstr ""
 
 msgid "Duration"

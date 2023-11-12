@@ -200,6 +200,7 @@ export const useDeployProject = () => {
       ) {
         // strip out metadata if feature flag is not enabled
         deleteIfExists(projectMetadata, 'introVideoUrl')
+        deleteIfExists(projectMetadata, 'introImageUri')
         deleteIfExists(projectMetadata, 'softTargetAmount')
         deleteIfExists(projectMetadata, 'softTargetCurrency')
       } else {

@@ -190,16 +190,24 @@ export const ProjectDetailsPage: React.FC<
             FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION,
           ) && (
             <CreateCollapse.Panel
-              key={3}
+              key={4}
               header={<OptionalHeader header={t`👷‍♂️ Juicecrowd`} />}
               hideDivider
             >
               <Form.Item
                 name="introVideoUrl"
                 label={t`Intro video YouTube URL`}
-                tooltip={t`Add a YouTube video to the top of your Juicecrowd project's page.`}
+                tooltip={t`Add a YouTube video to the top of your Juicecrowd project's page. Video will take priority over image`}
               >
                 <JuiceInput />
+              </Form.Item>
+
+              <Form.Item
+                name="introImageUri"
+                label={t`Intro image`}
+                tooltip={t`Add a Intro image to the top of the Juicecrowd project's page. If a video is also included, the video will always take priority.`}
+              >
+                <FormImageUploader text={t`Upload`} maxSizeKBs={10000} />
               </Form.Item>
 
               <Form.Item

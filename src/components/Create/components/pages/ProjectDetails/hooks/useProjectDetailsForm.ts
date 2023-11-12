@@ -25,6 +25,8 @@ type ProjectDetailsFormProps = Partial<{
   // Only relevant to Juicecrowd
   introVideoUrl: string
   // Only relevant to Juicecrowd
+  introImageUri: string
+  // Only relevant to Juicecrowd
   softTarget: AmountInputValue
 }>
 
@@ -50,6 +52,8 @@ export const useProjectDetailsForm = () => {
       inputProjectOwner,
       tags: projectMetadata.tags,
       // Only relevant to Juicecrowd
+      introVideoUrl: projectMetadata.introVideoUrl,
+      introImageUri: projectMetadata.introImageUri,
       softTarget:
         projectMetadata.softTargetAmount && projectMetadata.softTargetCurrency
           ? {
@@ -73,6 +77,8 @@ export const useProjectDetailsForm = () => {
       projectMetadata.payButton,
       projectMetadata.payDisclosure,
       projectMetadata.tags,
+      projectMetadata.introVideoUrl,
+      projectMetadata.introImageUri,
       projectMetadata.softTargetAmount,
       projectMetadata.softTargetCurrency,
       inputProjectOwner,
@@ -175,6 +181,13 @@ export const useProjectDetailsForm = () => {
     fieldName: 'introVideoUrl',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setIntroVideoUrl,
+    formatter: v => v ?? '',
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'introImageUri',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setIntroImageUri,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({

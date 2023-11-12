@@ -303,6 +303,9 @@ const editingV2ProjectSlice = createSlice({
     setIntroVideoUrl: (state, action: PayloadAction<string>) => {
       state.projectMetadata.introVideoUrl = action.payload
     },
+    setIntroImageUri: (state, action: PayloadAction<string>) => {
+      state.projectMetadata.introImageUri = action.payload
+    },
     setSoftTarget: (state, action: PayloadAction<AmountInputValue>) => {
       state.projectMetadata.softTargetAmount = action.payload.amount
       state.projectMetadata.softTargetCurrency =

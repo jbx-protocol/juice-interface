@@ -1,4 +1,5 @@
 import { Trans, t } from '@lingui/macro'
+import { Callout } from 'components/Callout'
 import EthereumAddress from 'components/EthereumAddress'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
@@ -30,6 +31,7 @@ export const ProjectDetailsReview = () => {
       projectTagline,
       tags,
       introVideoUrl,
+      introImageUri,
       softTargetAmount,
       softTargetCurrency,
     },
@@ -53,6 +55,10 @@ export const ProjectDetailsReview = () => {
 
   const coverImageSrc = coverImageUri
     ? ipfsUriToGatewayUrl(coverImageUri)
+    : undefined
+
+  const introImageSrc = introImageUri
+    ? ipfsUriToGatewayUrl(introImageUri)
     : undefined
 
   return (
@@ -168,6 +174,12 @@ export const ProjectDetailsReview = () => {
 
       {featureFlagEnabled(FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION) && (
         <>
+          {introVideoUrl && introImageUri ? (
+            <Callout.Warning className="col-span-4">
+              Intro video and image are both set. Only the video will be seen on
+              the juicecrowd project
+            </Callout.Warning>
+          ) : null}
           <ReviewDescription
             className="col-span-4"
             title={t`Juicecrowd intro video`}
@@ -182,6 +194,18 @@ export const ProjectDetailsReview = () => {
                     title="Embedded youtube"
                   />
                 </div>
+              ) : null
+            }
+          />
+          <ReviewDescription
+            title={t`Juicecrowd intro image`}
+            desc={
+              introImageSrc ? (
+                <img
+                  width={144}
+                  src={introImageSrc}
+                  alt={`${name} intro image`}
+                />
               ) : null
             }
           />

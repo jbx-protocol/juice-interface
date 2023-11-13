@@ -18,6 +18,7 @@ describe('useReservedTokensSubPanel', () => {
     projectId: 1,
   }
   const DefaultProjectContext = {
+    projectOwnerAddress: '0x0000000000000000000000000000000000000000',
     fundingCycleMetadata: {
       reservedRate: 10000,
     },
@@ -52,6 +53,11 @@ describe('useReservedTokensSubPanel', () => {
   it('returns sorted reservedList when reservedTokensSplits is defined', () => {
     const { result } = renderHook(useReservedTokensSubPanel)
     expect(result.current.reservedList).toEqual([
+      {
+        projectId: 1,
+        address: '0x0000000000000000000000000000000000000000',
+        percent: '97%',
+      },
       {
         projectId: undefined,
         address: '0x456',

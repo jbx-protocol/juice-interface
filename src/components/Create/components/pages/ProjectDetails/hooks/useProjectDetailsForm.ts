@@ -1,9 +1,14 @@
+import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectTagName } from 'models/project-tags'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import {
+  DEFAULT_MUST_START_AT_OR_AFTER,
+  editingV2ProjectActions,
+} from 'redux/slices/editingV2Project'
 import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { useFormDispatchWatch } from '../../hooks'
 import { AmountInputValue } from '../ProjectDetailsPage'
@@ -28,13 +33,13 @@ type ProjectDetailsFormProps = Partial<{
   introImageUri: string
   // Only relevant to Juicecrowd
   softTarget: AmountInputValue
+  startTimestamp: string
 }>
 
 export const useProjectDetailsForm = () => {
   const [form] = useForm<ProjectDetailsFormProps>()
-  const { projectMetadata, inputProjectOwner } = useAppSelector(
-    state => state.editingV2Project,
-  )
+  const { projectMetadata, inputProjectOwner, mustStartAtOrAfter } =
+    useAppSelector(state => state.editingV2Project)
 
   const initialValues: ProjectDetailsFormProps = useMemo(
     () => ({
@@ -54,6 +59,11 @@ export const useProjectDetailsForm = () => {
       // Only relevant to Juicecrowd
       introVideoUrl: projectMetadata.introVideoUrl,
       introImageUri: projectMetadata.introImageUri,
+      startTimestamp:
+        mustStartAtOrAfter !== DEFAULT_MUST_START_AT_OR_AFTER &&
+        !isNaN(parseInt(mustStartAtOrAfter))
+          ? mustStartAtOrAfter
+          : '',
       softTarget:
         projectMetadata.softTargetAmount && projectMetadata.softTargetCurrency
           ? {
@@ -82,6 +92,7 @@ export const useProjectDetailsForm = () => {
       projectMetadata.softTargetAmount,
       projectMetadata.softTargetCurrency,
       inputProjectOwner,
+      mustStartAtOrAfter,
     ],
   )
 
@@ -197,6 +208,27 @@ export const useProjectDetailsForm = () => {
     dispatchFunction: editingV2ProjectActions.setSoftTarget,
     formatter: v => v ?? { amount: '', currency: V2V3_CURRENCY_USD },
   })
+
+  const startTimestamp = Form.useWatch('startTimestamp', form)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (!startTimestamp) return
+    const launchDate = parseInt(startTimestamp)
+    if (isNaN(launchDate)) return
+    // check if launch date is in ms or seconds
+    if (launchDate > 1000000000000) {
+      dispatch(
+        editingV2ProjectActions.setMustStartAtOrAfter(
+          (launchDate / 1000).toString(),
+        ),
+      )
+    } else {
+      dispatch(
+        editingV2ProjectActions.setMustStartAtOrAfter(launchDate.toString()),
+      )
+    }
+  }, [dispatch, startTimestamp])
 
   return { form, initialValues }
 }

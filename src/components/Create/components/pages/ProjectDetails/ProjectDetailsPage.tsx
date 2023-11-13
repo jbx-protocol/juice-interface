@@ -19,7 +19,7 @@ import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import Link from 'next/link'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
@@ -45,6 +45,32 @@ export const ProjectDetailsPage: React.FC<
 
   const projectOwnerDifferentThanWalletAddress =
     inputWalletAddress && wallet.userAddress !== inputWalletAddress
+
+  const startTimestamp = Form.useWatch('startTimestamp', formProps.form)
+
+  // just for juicecrowd
+  const launchDate = useMemo(() => {
+    if (!startTimestamp) {
+      return null
+    }
+    const number = Number(startTimestamp)
+    if (isNaN(number)) {
+      return null
+    }
+
+    let date
+    if (number > 1000000000000) {
+      date = new Date(number)
+    } else {
+      date = new Date(number * 1000)
+    }
+
+    // format in local timezone
+    return {
+      local: date.toLocaleString(),
+      utc: date.toUTCString(),
+    }
+  }, [startTimestamp])
 
   return (
     <Form
@@ -217,6 +243,19 @@ export const ProjectDetailsPage: React.FC<
               >
                 <AmountInput />
               </Form.Item>
+
+              <Form.Item
+                name="startTimestamp"
+                label={<Trans>Start date timestamp</Trans>}
+                tooltip={t`The timestamp for the start of the project.`}
+              >
+                <JuiceInput />
+              </Form.Item>
+              {launchDate && (
+                <div className="text-gray-500 text-sm">
+                  {t`Launch date: ${launchDate.local} (${launchDate.utc})`}
+                </div>
+              )}
             </CreateCollapse.Panel>
           )}
         </CreateCollapse>

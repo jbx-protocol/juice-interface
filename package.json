@@ -60,7 +60,6 @@
   },
   "dependencies": {
     "@apollo/client": "3.6.9",
-    "@arcxmoney/analytics": "1.6.1",
     "@graphql-codegen/add": "^4.0.1",
     "@headlessui/react": "^1.7.10",
     "@heroicons/react": "^2.0.17",

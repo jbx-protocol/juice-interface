@@ -2,6 +2,7 @@ import config from 'config/seo_meta.json'
 import Head from 'next/head'
 import { FC, ReactNode } from 'react'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { HotjarScript } from '../Head/scripts/HotjarScript'
 import { OpenGraphMetaTags } from './OpenGraphMetaTags'
 import {
   TwitterCardType,
@@ -84,6 +85,16 @@ export const SEO: FC<React.PropsWithChildren<SEOProps>> = ({
       />
 
       <Head>{children}</Head>
+      {/**
+       * As recommended in Next docs that next/script can be loaded directly
+       * outside next/head with strategies like afterInteractive without affecting
+       * the page performance
+       */}
+      {process.env.NODE_ENV === 'production' && (
+        <>
+          <HotjarScript />
+        </>
+      )}
     </>
   )
 }

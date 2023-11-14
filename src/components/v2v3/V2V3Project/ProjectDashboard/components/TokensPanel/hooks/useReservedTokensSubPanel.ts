@@ -2,6 +2,7 @@ import {
   useProjectContext,
   useProjectMetadata,
 } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { ONE_BILLION } from 'constants/numbers'
 import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useMemo } from 'react'
@@ -10,7 +11,7 @@ import { formatAmount } from 'utils/format/formatAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatReservedRate, formatSplitPercent } from 'utils/v2v3/math'
 
-const ONE_BILLION = BigNumber.from(1_000_000_000)
+const ONE_BILLION_BIG = BigNumber.from(ONE_BILLION)
 
 export const useReservedTokensSubPanel = () => {
   const { projectId } = useProjectMetadata()
@@ -25,23 +26,24 @@ export const useReservedTokensSubPanel = () => {
 
   const reservedList = useMemo(() => {
     if (!projectOwnerAddress || !projectId || !reservedTokensSplits) return
+    // If there aren't explicitly defined splits, all reserved tokens go to this project.
     if (reservedTokensSplits?.length === 0)
       return [
         {
           projectId,
           address: projectOwnerAddress!,
-          percent: `${formatSplitPercent(ONE_BILLION)}%`,
+          percent: `${formatSplitPercent(ONE_BILLION_BIG)}%`,
         },
       ]
 
-    let percentTotal = BigNumber.from(0)
-
+    // If the splits don't add up to 100%, remaining tokens go to this project.
+    let splitsPercentTotal = BigNumber.from(0)
     const processedSplits = reservedTokensSplits
       .sort((a, b) => Number(b.percent) - Number(a.percent))
       .map(split => {
         assert(split.beneficiary, 'Beneficiary must be defined')
         const splitPercent = BigNumber.from(split.percent)
-        percentTotal = percentTotal.add(splitPercent)
+        splitsPercentTotal = splitsPercentTotal.add(splitPercent)
 
         return {
           projectId: split.projectId
@@ -52,16 +54,21 @@ export const useReservedTokensSubPanel = () => {
         }
       })
 
-    const remainingPercentage = ONE_BILLION.sub(percentTotal)
+    const remainingPercentage = ONE_BILLION_BIG.sub(splitsPercentTotal)
 
+    // Check if this project is already one of the splits.
     if (!remainingPercentage.isZero()) {
-      const foundIndex = processedSplits.findIndex(
+      const projectSplitIndex = processedSplits.findIndex(
         v => v.projectId === projectId,
       )
-      if (foundIndex != -1)
-        processedSplits[foundIndex].percent = `${formatSplitPercent(
-          remainingPercentage.add(reservedTokensSplits[foundIndex].percent),
+      if (projectSplitIndex != -1)
+        // If it is, increase its split percentage to bring the total to 100%.
+        processedSplits[projectSplitIndex].percent = `${formatSplitPercent(
+          remainingPercentage.add(
+            reservedTokensSplits[projectSplitIndex].percent,
+          ),
         )}%`
+      // If it isn't, add a split at the beginning which brings the total percentage to 100%.
       else
         processedSplits.unshift({
           projectId,

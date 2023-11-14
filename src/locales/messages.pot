@@ -1379,6 +1379,9 @@ msgstr ""
 msgid "Use NFTs for redemptions"
 msgstr ""
 
+msgid "Launch date: {0} ({1})"
+msgstr ""
+
 msgid "Assets"
 msgstr ""
 
@@ -2088,6 +2091,9 @@ msgid "You can redeem your {tokenTextLong} for ETH without claiming them. You ca
 msgstr ""
 
 msgid "Crowdfunding"
+msgstr ""
+
+msgid "Start date timestamp"
 msgstr ""
 
 msgid "30 days"
@@ -3141,6 +3147,9 @@ msgid "Advanced options:"
 msgstr ""
 
 msgid "Payments to this project are paused in this cycle."
+msgstr ""
+
+msgid "The timestamp for the start of the project."
 msgstr ""
 
 msgid "Redemption rate"

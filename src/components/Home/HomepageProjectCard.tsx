@@ -58,13 +58,16 @@ export function HomepageProjectCard({
     <HomepageCard
       href={v2v3ProjectRoute(project)}
       img={
-        <ProjectLogo
-          className="h-[192px] w-full rounded-none object-cover"
-          name={metadata?.name}
-          projectId={project.projectId}
-          uri={metadata?.logoUri}
-          lazyLoad={lazyLoad}
-        />
+        metadata && !isLoading ? (
+          <ProjectLogo
+            className="h-[192px] w-full rounded-none object-cover"
+            name={metadata?.name}
+            projectId={project.projectId}
+            uri={metadata?.logoUri}
+            pv={project.pv}
+            lazyLoad={lazyLoad}
+          />
+        ) : null
       }
       title={
         metadata && !isLoading ? (

@@ -2,6 +2,7 @@ import { Head } from 'components/common'
 import { LanguageProvider } from 'contexts/Language/LanguageProvider'
 import SupabaseSessionProvider from 'contexts/SupabaseSession/SupabaseSessionProvider'
 import { initWeb3Onboard, useInitWallet } from 'hooks/Wallet'
+import { useFathom } from 'lib/fathom'
 import type { AppProps } from 'next/app'
 import '../styles/index.scss'
 
@@ -15,6 +16,7 @@ initWeb3Onboard()
 export default function MyApp({ Component, pageProps }: AppProps) {
   // Currently, init() must be called *here* (as opposed to AppWrapper), or else it breaks when navigating between pages.
   useInitWallet()
+  useFathom()
 
   if (!pageProps.i18n) {
     console.error(

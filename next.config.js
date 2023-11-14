@@ -44,6 +44,7 @@ const IMG_SRC = [
   'https://cdn.stamp.fyi',
   'https://ipfs.io',
   'https://cdn.discordapp.com',
+  'https://cdn.usefathom.com',
   '*.walletconnect.com',
 ]
 

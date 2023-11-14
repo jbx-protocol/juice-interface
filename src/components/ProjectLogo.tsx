@@ -1,9 +1,9 @@
+import { readNetwork } from 'constants/networks'
+import { NetworkName } from 'models/networkName'
 import { PV } from 'models/pv'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { cidFromUrl, ipfsGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
-import { readNetwork } from 'constants/networks'
-import { NetworkName } from 'models/networkName'
 
 // Override some project logos.
 const imageUriOverridePath = '/assets/images/image-uri-overrides'
@@ -16,25 +16,30 @@ const GOERLI_URI_OVERRIDES: { [k: number]: string } = {
   1: `${imageUriOverridePath}/juiceboxdao_logo.webp`, // the on-chain logo's filesize is too large. This is a smaller version.
 }
 
-export default function ProjectLogo({
-  className,
-  uri,
-  name,
-  projectId,
-  pv,
-  lazyLoad,
-  fallback = '🧃',
-}: {
-  name: string | undefined
+type ProjectLogoBaseProps = {
   className?: string
-  uri?: string | undefined
-  projectId?: number | undefined
-  pv?: PV | undefined
+  name?: string
+  projectId?: number
   lazyLoad?: boolean
   fallback?: string | JSX.Element | null
-}) {
-  const [srcLoadError, setSrcLoadError] = useState(false)
+  uri?: string | undefined
+  pv?: PV | undefined
+}
 
+export default function ProjectLogo({
+  className,
+  name,
+  projectId,
+  lazyLoad,
+  fallback = '🧃',
+  uri,
+  pv,
+}: ProjectLogoBaseProps) {
+  const [srcLoadError, setSrcLoadError] = useState(false)
+  /**
+   * If URI is passed, use it.
+   * If URI isn't passed or is undefined, use the API logo. THIS REQUIRES PV + PROJECT ID
+   */
   const imageSrc = useMemo(() => {
     if (
       projectId &&

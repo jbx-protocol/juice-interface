@@ -1,7 +1,5 @@
 import { t } from '@lingui/macro'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { readNetwork } from 'constants/networks'
-import { useArcx } from 'contexts/Arcx/useArcx'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { Contract, providers } from 'ethers'
 import { simulateTransaction } from 'lib/tenderly'
@@ -83,7 +81,6 @@ export function useTransactor(): Transactor | undefined {
 
   const { chain, signer, userAddress } = useWallet()
   const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
-  const arcx = useArcx()
 
   return useCallback(
     async (
@@ -142,21 +139,6 @@ export function useTransactor(): Transactor | undefined {
           onCancelled: options?.onCancelled,
         })
 
-        try {
-          // log transaction in Arcx
-          arcx?.transaction({
-            chain: readNetwork.chainId, // required(string) - chain ID that the transaction is taking place on
-            transactionHash: result?.hash as string,
-            metadata: {
-              functionName,
-              title: txTitle,
-            },
-          })
-        } catch (_) {
-          // ignore
-          console.warn('Arcx transaction logging failed')
-        }
-
         return true
       } catch (e) {
         const message = (e as Error).message
@@ -181,7 +163,6 @@ export function useTransactor(): Transactor | undefined {
       }
     },
     [
-      arcx,
       chainUnsupported,
       isConnected,
       signer,

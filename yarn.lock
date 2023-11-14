@@ -77,13 +77,6 @@
     tslib "^2.3.0"
     zen-observable-ts "^1.2.5"
 
-"@arcxmoney/analytics@1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@arcxmoney/analytics/-/analytics-1.6.1.tgz#1d90b7379b3bb672255b1cb1d3df310ab6b0c9be"
-  integrity sha512-GWct4Jkrxi1uRBxQWsbJYFQCgauCgHQxIne5Qc/M5whnlyiap9iL5O9VNKbIfSjONXYFe4zhh+EPFEKgjs4YtA==
-  dependencies:
-    "@restless/sanitizers" "^0.2.5"
-
 "@ardatan/relay-compiler@12.0.0":
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@ardatan/relay-compiler/-/relay-compiler-12.0.0.tgz#2e4cca43088e807adc63450e8cab037020e91106"
@@ -4858,11 +4851,6 @@
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@repeaterjs/repeater/-/repeater-3.0.4.tgz#a04d63f4d1bf5540a41b01a921c9a7fddc3bd1ca"
   integrity sha512-AW8PKd6iX3vAZ0vA43nOUOnbq/X5ihgU+mSXXqunMkeQADGiqw/PY0JNeYtD5sr0PAy51YPgAPbDoeapv9r8WA==
-
-"@restless/sanitizers@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@restless/sanitizers/-/sanitizers-0.2.5.tgz#96a5cfa3edb52abd8fa14e77798738f3a067dbec"
-  integrity sha512-utsOFwv5owNnbj8HijF7uML/AURgUl5YvY4S2gpxQsrp2D1EP/4rQU/HSyYdIQaL89BoZ/5NHveRJrcFyuHo/w==
 
 "@rushstack/eslint-patch@^1.1.0":
   version "1.2.0"

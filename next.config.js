@@ -57,7 +57,6 @@ const CONNECT_SRC = [
   'https://jbx.mypinata.cloud',
   'https://api.studio.thegraph.com',
   'https://gateway.thegraph.com',
-  'https://api.arcx.money',
   'https://api.tenderly.co',
   'https://*.hotjar.com',
   'https://*.hotjar.io',

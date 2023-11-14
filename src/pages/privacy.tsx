@@ -17,7 +17,6 @@ function PrivacyPolicy() {
       <h1 className="text-2xl">Privacy Policy</h1>
       <p>
         <Link href="/">juicebox.money</Link> uses{' '}
-        <ExternalLink href="https://arcx.money/">ARCx</ExternalLink>,{' '}
         <ExternalLink href="https://www.hotjar.com/">Hotjar</ExternalLink>, and{' '}
         <ExternalLink href="https://usefathom.com/">Fathom</ExternalLink> to
         collect and analyze user data.
@@ -61,15 +60,6 @@ function PrivacyPolicy() {
         stores this information on our behalf in a pseudonymized user profile.
         Hotjar is contractually forbidden to sell any of the data collected on
         our behalf.
-      </p>
-      <h2 className="text-2xl">ARCx</h2>
-      <p>
-        We use ARCx to collect non-personally identifiable information to help
-        us understand how users interact with our website. To learn more, read{' '}
-        <ExternalLink href="https://arcx.notion.site/Privacy-Policy-12e5f98a1756409d9ec72110b430eed5">
-          ARCx's Privacy Policy
-        </ExternalLink>
-        .
       </p>
     </div>
   )

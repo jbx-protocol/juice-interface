@@ -33,7 +33,7 @@ export function useFathom() {
       //  - This must be an exact match of your domain.
       //  - If you're using www. for your domain, make sure you include that here.
       Fathom.load('ERYRRJSV', {
-        includedDomains: ['juicebox.money'],
+        includedDomains: ['juicebox.money', 'www.juicebox.money'],
       })
 
       function onRouteChangeComplete() {

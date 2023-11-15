@@ -116,7 +116,7 @@
     "forge-run-parser": "^1.0.2",
     "formidable": "^2.0.1",
     "formik": "^2.2.9",
-    "graphql": "^16.5.0",
+    "graphql": "^16.8.1",
     "he": "^1.2.0",
     "jsonwebtoken": "^9.0.0",
     "juicebox-metadata-helper": "0.1.7",

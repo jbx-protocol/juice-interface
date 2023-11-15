@@ -2093,9 +2093,6 @@ msgstr ""
 msgid "Crowdfunding"
 msgstr ""
 
-msgid "Start date timestamp"
-msgstr ""
-
 msgid "30 days"
 msgstr ""
 
@@ -3147,9 +3144,6 @@ msgid "Advanced options:"
 msgstr ""
 
 msgid "Payments to this project are paused in this cycle."
-msgstr ""
-
-msgid "The timestamp for the start of the project."
 msgstr ""
 
 msgid "Redemption rate"

@@ -4,7 +4,6 @@ import injectedModule from '@web3-onboard/injected-wallets'
 import keystoneModule from '@web3-onboard/keystone'
 import ledgerModule from '@web3-onboard/ledger'
 import { init, useAccountCenter, useWallets } from '@web3-onboard/react'
-import trezorModule from '@web3-onboard/trezor'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import config from 'config/seo_meta.json'
 import { NETWORKS, readNetwork } from 'constants/networks'
@@ -23,10 +22,6 @@ export function initWeb3Onboard() {
   const injected = injectedModule()
   const gnosis = gnosisModule()
   const ledger = ledgerModule()
-  const trezor = trezorModule({
-    appUrl: 'https://juicebox.money/',
-    email: 'me.jango@protonmail.com',
-  })
   const keystone = keystoneModule()
   const walletConnect = walletConnectModule({
     version: 2,

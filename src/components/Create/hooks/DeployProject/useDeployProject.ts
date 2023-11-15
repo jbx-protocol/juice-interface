@@ -80,6 +80,12 @@ const findTransactionReceipt = async (txHash: string) => {
   return receipt
 }
 
+const deleteIfExists = (obj: Record<string, unknown>, key: string) => {
+  if (key in obj) {
+    delete obj[key]
+  }
+}
+
 /**
  * Hook that returns a function that deploys a project.
  * @returns A function that deploys a project.
@@ -189,12 +195,8 @@ export const useDeployProject = () => {
         return
       }
 
-      const deleteIfExists = (obj: Record<string, unknown>, key: string) => {
-        if (obj[key] !== undefined) delete obj[key]
-      }
       let softTargetAmount: string | undefined
       let softTargetCurrency: string | undefined
-
       if (
         !featureFlagEnabled(FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION)
       ) {

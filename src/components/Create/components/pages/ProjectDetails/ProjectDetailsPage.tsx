@@ -4,7 +4,6 @@ import { ADDRESS_ZERO } from '@uniswap/v3-sdk'
 import { Col, Form, Row } from 'antd'
 import { Callout } from 'components/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
-import CurrencySwitch from 'components/currency/CurrencySwitch'
 import { FormItems } from 'components/formItems'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
@@ -244,13 +243,13 @@ export const ProjectDetailsPage: React.FC<
                 <AmountInput />
               </Form.Item>
 
-              <Form.Item
+              {/* <Form.Item
                 name="startTimestamp"
                 label={<Trans>Start date timestamp</Trans>}
                 tooltip={t`The timestamp for the start of the project.`}
               >
                 <JuiceInput />
-              </Form.Item>
+              </Form.Item> */}
               {launchDate && (
                 <div className="text-gray-500 text-sm">
                   {t`Launch date: ${launchDate.local} (${launchDate.utc})`}
@@ -318,15 +317,7 @@ const AmountInput = ({
           )
         }
         accessory={
-          <CurrencySwitch
-            currency={amount.currency === V2V3_CURRENCY_ETH ? 'ETH' : 'USD'}
-            onCurrencyChange={c => {
-              const currency =
-                c === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD
-              onAmountInputChange({ amount: amount.amount, currency })
-            }}
-            className="rounded"
-          />
+          <span>{amount.currency === V2V3_CURRENCY_ETH ? 'ETH' : 'USD'}</span>
         }
       />
     </div>

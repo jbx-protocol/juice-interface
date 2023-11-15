@@ -54,7 +54,9 @@ export const ReservedTokensSubPanel = ({
             items: kebabMenuItems,
           }}
         >
-          {reservedList?.length ? (
+          {reservedTokens ||
+          reservedRate ||
+          (reservedList && reservedList.length > 1) ? (
             <>
               <div className="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500">
                 {reservedList

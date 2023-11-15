@@ -35,7 +35,6 @@ export function initWeb3Onboard() {
       injected,
       gnosis,
       ledger,
-      trezor,
       keystone,
       walletConnect,
       coinbaseWalletSdk,

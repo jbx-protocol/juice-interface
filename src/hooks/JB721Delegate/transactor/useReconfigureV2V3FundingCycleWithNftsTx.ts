@@ -27,6 +27,7 @@ import {
   buildJB721TierParams,
   defaultNftCollectionName,
 } from 'utils/nftRewards'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
 import { ReconfigureFundingCycleTxParams } from '../../v2v3/transactor/useReconfigureV2V3FundingCycleTx'
 import { useV2ProjectTitle } from '../../v2v3/useProjectTitle'
@@ -153,6 +154,7 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
         collectionUri: collectionMetadata.uri ?? '',
         collectionName,
         collectionSymbol: collectionMetadata.symbol ?? '',
+        currency: V2V3_CURRENCY_ETH, // TODO use the user-set currency form the form
         governanceType,
         tiers,
         ownerAddress: projectOwnerAddress,

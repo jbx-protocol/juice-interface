@@ -21,6 +21,7 @@ import {
   JB_721_TIER_PARAMS_V3_2,
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
@@ -38,6 +39,7 @@ interface DeployTiered721DelegateData {
   collectionUri: string
   collectionName: string
   collectionSymbol: string
+  currency: V2V3CurrencyOption
   governanceType: JB721GovernanceType
   tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2)[]
   flags: JBTiered721Flags
@@ -101,6 +103,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
         collectionUri,
         collectionName,
         collectionSymbol,
+        currency,
         tiers,
         flags,
         governanceType,
@@ -159,6 +162,7 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
         collectionUri,
         collectionName,
         collectionSymbol,
+        currency,
         tiers,
         ownerAddress: _owner,
         governanceType,

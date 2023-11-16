@@ -8,7 +8,10 @@ import { useReconfigureFundingCycle } from 'components/v2v3/V2V3Project/V2V3Proj
 import { JB721GovernanceType } from 'models/nftRewards'
 import { useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { DEFAULT_NFT_FLAGS } from 'redux/slices/editingV2Project'
+import {
+  DEFAULT_NFT_FLAGS,
+  EMPTY_NFT_PRICING,
+} from 'redux/slices/editingV2Project'
 import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,
@@ -99,6 +102,7 @@ export const useSettingsLaunchNftsForm = () => {
         },
         governanceType:
           formValues.onChainGovernance ?? JB721GovernanceType.NONE,
+        pricing: EMPTY_NFT_PRICING, // TODO add to form
       },
       editingMustStartAtOrAfter,
     }

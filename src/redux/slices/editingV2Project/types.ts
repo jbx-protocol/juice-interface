@@ -1,3 +1,4 @@
+import { NftPricingContext } from 'hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'
 import { CreatePage } from 'models/createPage'
 import { FundingTargetType } from 'models/fundingTargetType'
 import {
@@ -29,6 +30,7 @@ export type NftRewardsData = {
   postPayModal: NftPostPayModalConfig | undefined
   flags: JBTiered721Flags
   governanceType: JB721GovernanceType
+  pricing: NftPricingContext
 }
 
 export interface CreateState {

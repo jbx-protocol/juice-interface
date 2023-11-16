@@ -29,6 +29,7 @@ import {
   buildDeployTiered721DelegateData,
   buildJB721TierParams,
 } from 'utils/nftRewards'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import {
   getTerminalsFromFundAccessConstraints,
   isValidMustStartAtOrAfter,
@@ -183,6 +184,7 @@ export function useLaunchFundingCyclesWithNftsTx(): TransactorInstance<LaunchFun
         collectionUri: collectionMetadata.uri ?? '',
         collectionName,
         collectionSymbol: collectionMetadata.symbol ?? '',
+        currency: V2V3_CURRENCY_ETH,
         governanceType,
         tiers,
         ownerAddress: projectOwnerAddress,

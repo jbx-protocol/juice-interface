@@ -11,6 +11,7 @@ import { useContext } from 'react'
 import {
   DEFAULT_NFT_FLAGS,
   EMPTY_NFT_COLLECTION_METADATA,
+  EMPTY_NFT_PRICING,
 } from 'redux/slices/editingV2Project'
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { JB721DelegateContractsContext } from './JB721DelegateContracts/JB721DelegateContractsContext'
@@ -59,7 +60,7 @@ export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   const contextData = {
     nftRewards: {
       rewardTiers,
-      pricing,
+      pricing: pricing ?? EMPTY_NFT_PRICING,
       // TODO: Load governance type
       governanceType: JB721GovernanceType.NONE,
       CIDs,

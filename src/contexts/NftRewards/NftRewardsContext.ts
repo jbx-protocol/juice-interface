@@ -3,6 +3,7 @@ import { createContext } from 'react'
 import {
   DEFAULT_NFT_FLAGS,
   EMPTY_NFT_COLLECTION_METADATA,
+  EMPTY_NFT_PRICING,
 } from 'redux/slices/editingV2Project'
 import { NftRewardsData } from 'redux/slices/editingV2Project/types'
 
@@ -19,6 +20,7 @@ export const NftRewardsContext = createContext<NftRewardsContextType>({
     collectionMetadata: EMPTY_NFT_COLLECTION_METADATA,
     flags: DEFAULT_NFT_FLAGS,
     governanceType: JB721GovernanceType.NONE,
+    pricing: EMPTY_NFT_PRICING,
   },
   loading: false,
 })

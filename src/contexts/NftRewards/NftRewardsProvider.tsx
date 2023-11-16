@@ -40,14 +40,13 @@ export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   const tierData = hasNftRewards ? nftRewardTiersResponse ?? [] : []
   const CIDs = CIDsOfNftRewardTiersResponse(tierData)
 
-  const { data: pricingContext } = useNftCollectionPricingContext()
+  const { data: pricing } = useNftCollectionPricingContext()
 
   // fetch NFT metadata (its image, name etc.) from ipfs
   const { data: rewardTiers, isLoading: nftRewardTiersLoading } = useNftRewards(
     tierData,
     projectId,
     dataSourceAddress,
-    pricingContext,
   )
 
   const nftsLoading = Boolean(nftRewardTiersLoading || nftRewardsCIDsLoading)
@@ -60,6 +59,7 @@ export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   const contextData = {
     nftRewards: {
       rewardTiers,
+      pricing,
       // TODO: Load governance type
       governanceType: JB721GovernanceType.NONE,
       CIDs,

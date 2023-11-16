@@ -1,11 +1,9 @@
 import { BigNumber } from 'ethers'
 import { CurrencyOption } from './currencyOption'
-import { V2V3CurrencyOption } from './v2v3/currencyOption'
 
 // How we store reward tiers for use around the app
 export type NftRewardTier = {
   contributionFloor: number // ETH or USD amount
-  currency: V2V3CurrencyOption
   fileUrl: string // link to ipfs
   name: string
   id: number

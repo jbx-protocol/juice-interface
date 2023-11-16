@@ -20,7 +20,10 @@ export function RedeemNftTiles({
           useJB721DelegateTokenToNftReward(_nft)
         if (isLoading || !rewardTier)
           return (
-            <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-smoke-100">
+            <div
+              key={`loading-nft-${i}`}
+              className="flex h-14 w-14 items-center justify-center rounded-lg bg-smoke-100"
+            >
               <Loading size="small" />
             </div>
           )

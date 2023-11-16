@@ -3,6 +3,7 @@ import useNftRewards from 'contexts/NftRewards/useNftRewards'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/useNftCollectionMetadataUri'
+import { useNftCollectionPricingContext } from 'hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'
 import { useNftFlagsOf } from 'hooks/JB721Delegate/contractReader/useNftFlagsOf'
 import { useNftTiers } from 'hooks/JB721Delegate/contractReader/useNftTiers'
 import { JB721GovernanceType } from 'models/nftRewards'
@@ -39,12 +40,16 @@ export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   const tierData = hasNftRewards ? nftRewardTiersResponse ?? [] : []
   const CIDs = CIDsOfNftRewardTiersResponse(tierData)
 
+  const { data: pricingContext } = useNftCollectionPricingContext()
+
   // fetch NFT metadata (its image, name etc.) from ipfs
   const { data: rewardTiers, isLoading: nftRewardTiersLoading } = useNftRewards(
     tierData,
     projectId,
     dataSourceAddress,
+    pricingContext,
   )
+
   const nftsLoading = Boolean(nftRewardTiersLoading || nftRewardsCIDsLoading)
 
   // fetch some other related stuff

@@ -1,12 +1,14 @@
 import axios from 'axios'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { BigNumber } from 'ethers'
+import { NftPricingContext } from 'hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'
 import {
   IPFSNftRewardTier,
   JB721TierV3,
   JB_721_TIER_V3_2,
   NftRewardTier,
 } from 'models/nftRewards'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { UseQueryResult, useQuery } from 'react-query'
 import { withHttps } from 'utils/externalLink'
 import { formatWad } from 'utils/format/formatNumber'
@@ -14,8 +16,12 @@ import { cidFromUrl, decodeEncodedIpfsUri, ipfsGatewayUrl } from 'utils/ipfs'
 
 async function fetchRewardTierMetadata({
   tier,
+  pricingContext,
 }: {
   tier: JB721TierV3 | JB_721_TIER_V3_2
+  pricingContext: {
+    currency: V2V3CurrencyOption
+  }
 }): Promise<NftRewardTier> {
   const tierCid = decodeEncodedIpfsUri(tier.encodedIPFSUri)
   const url = ipfsGatewayUrl(tierCid)
@@ -45,6 +51,7 @@ async function fetchRewardTierMetadata({
     description: tierMetadata.description,
     externalLink: withHttps(tierMetadata.externalLink),
     contributionFloor: parseFloat(formatWad(rawContributionFloor) ?? '0'),
+    currency: pricingContext.currency,
     maxSupply,
     remainingSupply: tier.remainingQuantity?.toNumber() ?? maxSupply,
     fileUrl: tierMetadata.image,
@@ -60,13 +67,20 @@ export default function useNftRewards(
   tiers: JB721TierV3[] | JB_721_TIER_V3_2[],
   projectId: number | undefined,
   dataSourceAddress: string | undefined,
+  pricingContext: NftPricingContext | undefined,
 ): UseQueryResult<NftRewardTier[]> {
-  const hasTiers = Boolean(tiers?.length)
+  const enabled = Boolean(tiers?.length && pricingContext?.currency)
 
   return useQuery(
-    ['nft-rewards', projectId, dataSourceAddress],
+    [
+      'nft-rewards',
+      projectId,
+      dataSourceAddress,
+      enabled,
+      pricingContext?.currency,
+    ],
     async () => {
-      if (!hasTiers) {
+      if (!enabled || !pricingContext) {
         return
       }
 
@@ -74,10 +88,11 @@ export default function useNftRewards(
         tiers.map(tier =>
           fetchRewardTierMetadata({
             tier,
+            pricingContext,
           }),
         ),
       )
     },
-    { enabled: hasTiers },
+    { enabled: enabled },
   )
 }

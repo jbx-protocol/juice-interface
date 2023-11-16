@@ -76,7 +76,7 @@ export const EMPTY_NFT_COLLECTION_METADATA = {
   description: undefined,
 }
 
-export const EMPTY_NFT_PRICING = {
+export const DEFAULT_NFT_PRICING = {
   currency: V2V3_CURRENCY_ETH,
 }
 
@@ -129,7 +129,7 @@ const DEFAULT_PROJECT_STATE: ProjectState = {
     postPayModal: undefined,
     flags: DEFAULT_NFT_FLAGS,
     governanceType: JB721GovernanceType.NONE,
-    pricing: EMPTY_NFT_PRICING,
+    pricing: DEFAULT_NFT_PRICING,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
   inputProjectOwner: undefined,

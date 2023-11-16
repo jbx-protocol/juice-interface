@@ -10,7 +10,7 @@ import { useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   DEFAULT_NFT_FLAGS,
-  EMPTY_NFT_PRICING,
+  DEFAULT_NFT_PRICING,
 } from 'redux/slices/editingV2Project'
 import {
   defaultNftCollectionDescription,
@@ -102,7 +102,7 @@ export const useSettingsLaunchNftsForm = () => {
         },
         governanceType:
           formValues.onChainGovernance ?? JB721GovernanceType.NONE,
-        pricing: EMPTY_NFT_PRICING, // TODO add to form
+        pricing: DEFAULT_NFT_PRICING, // TODO add to form
       },
       editingMustStartAtOrAfter,
     }

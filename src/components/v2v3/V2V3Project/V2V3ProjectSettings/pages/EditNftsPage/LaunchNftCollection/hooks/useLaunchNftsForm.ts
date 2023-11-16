@@ -1,18 +1,21 @@
 import { useForm } from 'antd/lib/form/Form'
 import { NftRewardsFormProps } from 'components/NftRewards/AddNftCollectionForm'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { JB721GovernanceType } from 'models/nftRewards'
 import { useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   DEFAULT_NFT_FLAGS,
-  EMPTY_NFT_PRICING,
+  DEFAULT_NFT_PRICING,
 } from 'redux/slices/editingV2Project'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,
   pinNftCollectionMetadata,
   pinNftRewards,
 } from 'utils/nftRewards'
+import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import {
   EditingFundingCycleConfig,
   useEditingFundingCycleConfig,
@@ -102,7 +105,13 @@ export const useLaunchNftsForm = () => {
         },
         governanceType:
           formValues.onChainGovernance ?? JB721GovernanceType.NONE,
-        pricing: EMPTY_NFT_PRICING, // TODO add to form
+        pricing: featureFlagEnabled(
+          FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION,
+        )
+          ? {
+              currency: V2V3_CURRENCY_USD,
+            }
+          : DEFAULT_NFT_PRICING, // TODO add to form
       },
       editingMustStartAtOrAfter,
     }

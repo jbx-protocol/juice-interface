@@ -10,6 +10,7 @@ import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/inputs/PrefixedInput'
 import { NftFileType, UploadNoStyle } from 'components/inputs/UploadNoStyle'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { pinFile } from 'lib/api/ipfs'
@@ -25,6 +26,7 @@ import {
   inputNonZeroRule,
 } from 'utils/antdRules'
 import { withHttps } from 'utils/externalLink'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { ipfsGatewayUrl } from 'utils/ipfs'
 import { CreateCollapse } from '../../Create/components/CreateCollapse'
 import { OptionalHeader } from '../../Create/components/OptionalHeader'
@@ -238,7 +240,17 @@ export const AddEditRewardModal = ({
           rules={[inputMustExistRule({ label: t`Minimum Contribution` })]}
         >
           <FormattedNumberInput
-            accessory={<InputAccessoryButton content="ETH" />}
+            accessory={
+              <InputAccessoryButton
+                content={
+                  featureFlagEnabled(
+                    FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION,
+                  )
+                    ? 'USD'
+                    : 'ETH'
+                }
+              />
+            }
           />
         </Form.Item>
         <Form.Item>

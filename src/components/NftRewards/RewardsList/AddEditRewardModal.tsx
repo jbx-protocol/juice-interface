@@ -10,7 +10,6 @@ import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/inputs/PrefixedInput'
 import { NftFileType, UploadNoStyle } from 'components/inputs/UploadNoStyle'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { pinFile } from 'lib/api/ipfs'
@@ -18,6 +17,7 @@ import random from 'lodash/random'
 import { NftRewardTier } from 'models/nftRewards'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   inputIsIntegerRule,
   inputIsValidUrlRule,
@@ -26,8 +26,8 @@ import {
   inputNonZeroRule,
 } from 'utils/antdRules'
 import { withHttps } from 'utils/externalLink'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { ipfsGatewayUrl } from 'utils/ipfs'
+import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { CreateCollapse } from '../../Create/components/CreateCollapse'
 import { OptionalHeader } from '../../Create/components/OptionalHeader'
 
@@ -73,6 +73,9 @@ export const AddEditRewardModal = ({
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
   const [isReservingNfts, setIsReservingNfts] = useState<boolean>(false)
   const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState<boolean>(false)
+
+  const { nftRewards } = useAppSelector(state => state.editingV2Project)
+  const nftCurrency = nftRewards?.pricing.currency
 
   useLayoutEffect(() => {
     if (!open) return
@@ -242,13 +245,7 @@ export const AddEditRewardModal = ({
           <FormattedNumberInput
             accessory={
               <InputAccessoryButton
-                content={
-                  featureFlagEnabled(
-                    FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION,
-                  )
-                    ? 'USD'
-                    : 'ETH'
-                }
+                content={nftCurrency === V2V3_CURRENCY_USD ? 'USD' : 'ETH'}
               />
             }
           />

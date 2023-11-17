@@ -46,12 +46,10 @@ export const RewardsList: React.FC<React.PropsWithChildren<RewardsListProps>> &
   onChange,
   withEditWarning,
 }: RewardsListProps) => {
-  const [selectedReward, setSelectedReward] = useState<NftRewardTier>()
-
   const rewardsHook = useRewards({ value, onChange })
-  const { rewards, upsertReward, removeReward } = rewardsHook
+  const [selectedReward, setSelectedReward] = useState<NftRewardTier>()
   const modal = useModal()
-
+  const { rewards, upsertReward, removeReward } = rewardsHook
   const onModalOk = useCallback(
     (reward: NftRewardTier) => {
       upsertReward(reward)

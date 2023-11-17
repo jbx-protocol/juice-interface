@@ -5,6 +5,7 @@ import {
 } from 'constants/splits'
 import { constants } from 'ethers'
 
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { BigNumber } from 'ethers'
 import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewards'
 import {
@@ -12,7 +13,8 @@ import {
   ProjectMetadata,
 } from 'models/projectMetadata'
 import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
-import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { issuanceRateFrom, redemptionRateFrom } from 'utils/v2v3/math'
 import {
   SerializedV2V3FundingCycleData,
@@ -76,6 +78,10 @@ export const EMPTY_NFT_COLLECTION_METADATA = {
   description: undefined,
 }
 
+export const DEFAULT_NFT_PRICING = {
+  currency: V2V3_CURRENCY_ETH,
+}
+
 export const DEFAULT_NFT_FLAGS: JBTiered721Flags = {
   lockReservedTokenChanges: false,
   lockVotingUnitChanges: false,
@@ -125,6 +131,13 @@ const DEFAULT_PROJECT_STATE: ProjectState = {
     postPayModal: undefined,
     flags: DEFAULT_NFT_FLAGS,
     governanceType: JB721GovernanceType.NONE,
+    pricing: featureFlagEnabled(
+      FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION,
+    )
+      ? {
+          currency: V2V3_CURRENCY_USD,
+        }
+      : DEFAULT_NFT_PRICING, // TODO add to form,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
   inputProjectOwner: undefined,

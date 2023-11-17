@@ -6,7 +6,6 @@ import { WAD_DECIMALS } from 'constants/numbers'
 import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
 import { BigNumber, constants, utils } from 'ethers'
 import { pinJson } from 'lib/api/ipfs'
-import round from 'lodash/round'
 import {
   IPFSNftCollectionMetadata,
   IPFSNftRewardTier,
@@ -23,8 +22,8 @@ import {
   NftRewardTier,
 } from 'models/nftRewards'
 import { JB721DelegateVersion } from 'models/v2v3/contracts'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
-import { V2V3_CURRENCY_ETH } from './v2v3/currency'
 
 export function sortNftsByContributionFloor(
   rewardTiers: NftRewardTier[],
@@ -386,40 +385,21 @@ export function buildJB721TierParams({
     })
 }
 
-// returns an array of NftRewardTiers corresponding to a given list of tier IDs
-//    Note: If ids contains multiple of the same ID, the return value
-//          will contain corresponding rewardTier multiple times.
-export function rewardTiersFromIds({
-  tierIds,
-  rewardTiers,
-}: {
-  tierIds: number[]
-  rewardTiers: NftRewardTier[]
-}) {
-  return tierIds
-    .map(id => rewardTiers.find(tier => tier.id === id))
-    .filter(tier => Boolean(tier)) as NftRewardTier[]
-}
-
-// sums the contribution floors of a given list of nftRewardTiers
-//    - optional select only an array of ids
-export function sumTierFloors(
-  rewardTiers: NftRewardTier[],
-  tierIds?: number[],
-) {
-  if (tierIds !== undefined && tierIds.length === 0) return 0
-
-  const selectedTiers = tierIds
-    ? rewardTiersFromIds({
-        tierIds,
-        rewardTiers,
-      })
-    : rewardTiers
-
-  return round(
-    selectedTiers.reduce((subSum, tier) => subSum + tier.contributionFloor, 0),
-    6,
-  )
+type DeployTiered721DelegateParams = {
+  collectionUri: string
+  collectionName: string
+  collectionSymbol: string
+  currency: V2V3CurrencyOption
+  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2)[]
+  ownerAddress: string
+  governanceType: JB721GovernanceType
+  contractAddresses: {
+    JBDirectoryAddress: string
+    JBFundingCycleStoreAddress: string
+    JBPricesAddress: string
+    JBTiered721DelegateStoreAddress: string
+  }
+  flags: JBTiered721Flags
 }
 
 export function buildDeployTiered721DelegateData(
@@ -427,6 +407,7 @@ export function buildDeployTiered721DelegateData(
     collectionUri,
     collectionName,
     collectionSymbol,
+    currency,
     tiers,
     ownerAddress,
     governanceType,
@@ -437,30 +418,12 @@ export function buildDeployTiered721DelegateData(
       JBTiered721DelegateStoreAddress,
     },
     flags,
-  }: {
-    collectionUri: string
-    collectionName: string
-    collectionSymbol: string
-    tiers: (
-      | JB721TierParams
-      | JB_721_TIER_PARAMS_V3_1
-      | JB_721_TIER_PARAMS_V3_2
-    )[]
-    ownerAddress: string
-    governanceType: JB721GovernanceType
-    contractAddresses: {
-      JBDirectoryAddress: string
-      JBFundingCycleStoreAddress: string
-      JBPricesAddress: string
-      JBTiered721DelegateStoreAddress: string
-    }
-    flags: JBTiered721Flags
-  },
+  }: DeployTiered721DelegateParams,
   version: JB721DelegateVersion,
 ): JBDeployTiered721DelegateData | JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1 {
   const pricing: JB721PricingParams = {
     tiers,
-    currency: V2V3_CURRENCY_ETH,
+    currency,
     decimals: WAD_DECIMALS,
     prices: JBPricesAddress,
   }

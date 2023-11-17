@@ -17,6 +17,7 @@ import random from 'lodash/random'
 import { NftRewardTier } from 'models/nftRewards'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   inputIsIntegerRule,
   inputIsValidUrlRule,
@@ -26,6 +27,7 @@ import {
 } from 'utils/antdRules'
 import { withHttps } from 'utils/externalLink'
 import { ipfsGatewayUrl } from 'utils/ipfs'
+import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { CreateCollapse } from '../../Create/components/CreateCollapse'
 import { OptionalHeader } from '../../Create/components/OptionalHeader'
 
@@ -71,6 +73,9 @@ export const AddEditRewardModal = ({
   const [limitedSupply, setLimitedSupply] = useState<boolean>(false)
   const [isReservingNfts, setIsReservingNfts] = useState<boolean>(false)
   const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState<boolean>(false)
+
+  const { nftRewards } = useAppSelector(state => state.editingV2Project)
+  const nftCurrency = nftRewards?.pricing.currency
 
   useLayoutEffect(() => {
     if (!open) return
@@ -238,7 +243,11 @@ export const AddEditRewardModal = ({
           rules={[inputMustExistRule({ label: t`Minimum Contribution` })]}
         >
           <FormattedNumberInput
-            accessory={<InputAccessoryButton content="ETH" />}
+            accessory={
+              <InputAccessoryButton
+                content={nftCurrency === V2V3_CURRENCY_USD ? 'USD' : 'ETH'}
+              />
+            }
           />
         </Form.Item>
         <Form.Item>

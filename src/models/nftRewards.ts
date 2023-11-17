@@ -3,12 +3,12 @@ import { CurrencyOption } from './currencyOption'
 
 // How we store reward tiers for use around the app
 export type NftRewardTier = {
-  contributionFloor: number // ETH amount
-  maxSupply: number | undefined
-  remainingSupply: number | undefined
+  contributionFloor: number // ETH or USD amount
   fileUrl: string // link to ipfs
   name: string
   id: number
+  maxSupply: number | undefined
+  remainingSupply: number | undefined
   reservedRate: number | undefined
   beneficiary: string | undefined
   votingWeight: string | undefined

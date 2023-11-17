@@ -61,12 +61,12 @@ export default function useNftRewards(
   projectId: number | undefined,
   dataSourceAddress: string | undefined,
 ): UseQueryResult<NftRewardTier[]> {
-  const hasTiers = Boolean(tiers?.length)
+  const enabled = Boolean(tiers?.length)
 
   return useQuery(
-    ['nft-rewards', projectId, dataSourceAddress],
+    ['nft-rewards', projectId, dataSourceAddress, enabled],
     async () => {
-      if (!hasTiers) {
+      if (!enabled) {
         return
       }
 
@@ -78,6 +78,6 @@ export default function useNftRewards(
         ),
       )
     },
-    { enabled: hasTiers },
+    { enabled: enabled },
   )
 }

@@ -48,10 +48,8 @@ export const useDeployNftProject = () => {
     () => nftRewards.flags ?? DEFAULT_NFT_FLAGS,
     [nftRewards.flags],
   )
-  const governanceType = useMemo(
-    () => nftRewards.governanceType,
-    [nftRewards.governanceType],
-  )
+  const governanceType = nftRewards.governanceType
+  const currency = nftRewards.pricing.currency
 
   /**
    * Deploy a project with NFT rewards.
@@ -91,6 +89,7 @@ export const useDeployNftProject = () => {
             collectionUri: nftCollectionMetadataUri,
             collectionName,
             collectionSymbol,
+            currency,
             governanceType,
             tiers,
             flags: nftFlags,
@@ -119,6 +118,7 @@ export const useDeployNftProject = () => {
     [
       collectionName,
       nftRewards.rewardTiers,
+      currency,
       payoutGroupedSplits,
       reservedTokensGroupedSplits,
       launchProjectWithNftsTx,

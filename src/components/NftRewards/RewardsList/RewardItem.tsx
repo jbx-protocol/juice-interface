@@ -7,9 +7,11 @@ import TooltipLabel from 'components/TooltipLabel'
 import round from 'lodash/round'
 import { NftRewardTier } from 'models/nftRewards'
 import { ReactNode } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { isZeroAddress } from 'utils/address'
 import { hasLimitedSupply } from 'utils/nftRewards'
 import { prettyUrl } from 'utils/url'
+import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { RewardItemButton } from './RewardItemButton'
 
 const SIGNIFICANT_FIGURE_LIMIT = 6
@@ -44,6 +46,9 @@ export const RewardItem = ({
     externalLink,
     fileUrl,
   } = reward
+
+  const { nftRewards } = useAppSelector(state => state.editingV2Project)
+  const nftCurrency = nftRewards?.pricing.currency
 
   const hasBeneficiary = Boolean(beneficiary) && !isZeroAddress(beneficiary)
 
@@ -91,7 +96,9 @@ export const RewardItem = ({
           <div className="grid grid-cols-2 gap-y-6 gap-x-16">
             <RewardStatLine
               title={t`Minimum contribution`}
-              stat={`${numberUpToPrecisionFormat(contributionFloor)} ETH`}
+              stat={`${numberUpToPrecisionFormat(contributionFloor)} ${
+                nftCurrency === V2V3_CURRENCY_USD ? 'USD' : 'ETH'
+              }`}
             />
             {hasLimitedSupply(maxSupply) && (
               <RewardStatLine

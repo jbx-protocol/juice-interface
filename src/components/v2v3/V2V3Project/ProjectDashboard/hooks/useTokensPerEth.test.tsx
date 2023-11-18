@@ -13,7 +13,9 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { useTokensPerEth } from './useTokensPerEth'
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
+)
 
 jest.mock('hooks/useCurrencyConverter')
 

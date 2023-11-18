@@ -7,7 +7,8 @@ import { useTokensPerEth } from 'components/v2v3/V2V3Project/ProjectDashboard/ho
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { ProjectTokensCartItem } from './ProjectTokensCartItem'
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useTokensPerEth')
 jest.mock(
   'components/v2v3/V2V3Project/ProjectDashboard/components/ProjectHeader/components/ProjectHeaderLogo',
   () => ({

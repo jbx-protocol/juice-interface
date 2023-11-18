@@ -20,16 +20,19 @@ jest.mock('./ConfigurationPanel', () => {
   }
 })
 
-jest.mock('../hooks/useConfigurationPanel', () => {
-  return {
-    __esModule: true,
-    useCurrentUpcomingConfigurationPanel: jest.fn().mockReturnValue({
-      cycle: { name: 'cycle' },
-      token: { name: 'token' },
-      otherRules: { name: 'otherRules' },
-    }),
-  }
-})
+jest.mock(
+  '../hooks/useConfigurationPanel/useCurrentUpcomingConfigurationPanel',
+  () => {
+    return {
+      __esModule: true,
+      useCurrentUpcomingConfigurationPanel: jest.fn().mockReturnValue({
+        cycle: { name: 'cycle' },
+        token: { name: 'token' },
+        otherRules: { name: 'otherRules' },
+      }),
+    }
+  },
+)
 
 describe('CurrentUpcomingConfigurationPanel', () => {
   it('renders without crashing', () => {

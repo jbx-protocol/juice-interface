@@ -5,7 +5,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { useEditRewardBeneficiary } from '../hooks/useEditRewardBeneficiary/useEditRewardBeneficiary'
 import { EditRewardBeneficiary } from './EditRewardBeneficiary'
 
-jest.mock('../hooks/useEditRewardBeneficiary')
+jest.mock('../hooks/useEditRewardBeneficiary/useEditRewardBeneficiary')
 jest.mock('components/EthereumAddress')
 
 describe('EditRewardBeneficiary', () => {

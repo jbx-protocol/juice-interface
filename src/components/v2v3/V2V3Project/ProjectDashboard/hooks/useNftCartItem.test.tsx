@@ -39,7 +39,7 @@ const renderUseNftCartItemHook = (quantity = 1) => {
   )
 }
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart')
 
 describe('useNftCartItem', () => {
   const DefaultUseProjectCartMock = {

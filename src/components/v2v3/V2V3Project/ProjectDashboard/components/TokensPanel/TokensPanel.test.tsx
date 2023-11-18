@@ -6,7 +6,7 @@ import { useTokensPanel } from 'components/v2v3/V2V3Project/ProjectDashboard/hoo
 import { TokensPanel } from './TokensPanel'
 
 jest.mock(
-  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useYourBalanceMenuItems',
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useYourBalanceMenuItems/useYourBalanceMenuItems',
   () => ({
     useYourBalanceMenuItems: jest.fn().mockReturnValue({
       items: [],
@@ -59,7 +59,7 @@ jest.mock('./components/ReservedTokensSubPanel', () => ({
 jest.mock('components/EthereumAddress', () =>
   jest.fn().mockImplementation(() => <div>EthereumAddress</div>),
 )
-jest.mock('../TokenHoldersModal', () => ({
+jest.mock('../TokenHoldersModal/TokenHoldersModal', () => ({
   TokenHoldersModal: jest
     .fn()
     .mockImplementation(() => <div>TokenHoldersModal</div>),

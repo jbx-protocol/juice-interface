@@ -6,7 +6,12 @@ import { BigNumber } from 'ethers'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
 import { useCurrentUpcomingSubPanel } from './useCurrentUpcomingSubPanel'
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
+)
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata',
+)
 jest.mock('hooks/v2v3/contractReader/useProjectUpcomingFundingCycle')
 
 const mockUseProjectContext = useProjectContext as jest.MockedFunction<

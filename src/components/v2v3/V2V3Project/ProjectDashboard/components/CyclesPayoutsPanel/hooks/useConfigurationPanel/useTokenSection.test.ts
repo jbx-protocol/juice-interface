@@ -6,14 +6,23 @@ import { renderHook } from '@testing-library/react-hooks'
 import { useOtherRulesSection } from './useOtherRulesSection'
 
 // Mock the hooks used inside your custom hook
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks', () => ({
-  useProjectContext: () => ({
-    fundingCycleMetadata: 'mockFundingCycleMetadata',
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
+  () => ({
+    useProjectContext: () => ({
+      fundingCycleMetadata: 'mockFundingCycleMetadata',
+    }),
   }),
-  useProjectMetadata: () => ({
-    projectId: 'mockProjectId',
+)
+
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata',
+  () => ({
+    useProjectMetadata: () => ({
+      projectId: 'mockProjectId',
+    }),
   }),
-}))
+)
 
 jest.mock('hooks/v2v3/contractReader/useProjectUpcomingFundingCycle', () => ({
   __esModule: true,

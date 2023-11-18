@@ -11,7 +11,12 @@ import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { usePayoutsSubPanel } from './usePayoutsSubPanel'
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
+)
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata',
+)
 
 describe('usePayoutsSubPanel', () => {
   const DefaultProjectContext = {

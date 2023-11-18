@@ -6,7 +6,7 @@ import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hoo
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { PaymentCartItem } from './PaymentCartItem'
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart')
 
 describe('PaymentCartItem', () => {
   const DefaultUseProjectCartMock = {

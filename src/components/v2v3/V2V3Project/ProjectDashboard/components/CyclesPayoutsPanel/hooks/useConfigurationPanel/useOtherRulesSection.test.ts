@@ -8,10 +8,12 @@ import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
 import { useOtherRulesSection } from './useOtherRulesSection'
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks', () => ({
-  useProjectContext: jest.fn(),
-  useProjectMetadata: jest.fn(),
-}))
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
+)
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata',
+)
 
 jest.mock('hooks/v2v3/contractReader/useProjectUpcomingFundingCycle', () => ({
   useProjectUpcomingFundingCycle: jest.fn(),

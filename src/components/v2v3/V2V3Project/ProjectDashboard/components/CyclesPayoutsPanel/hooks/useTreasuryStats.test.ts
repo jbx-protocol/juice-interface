@@ -10,7 +10,9 @@ import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { useDistributableAmount } from './useDistributableAmount'
 import { useTreasuryStats } from './useTreasuryStats'
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
+)
 jest.mock('./useDistributableAmount')
 
 describe('useTreasuryStats', () => {

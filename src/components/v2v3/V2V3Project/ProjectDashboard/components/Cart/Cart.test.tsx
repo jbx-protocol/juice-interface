@@ -7,12 +7,14 @@ import { Cart } from './Cart'
 
 jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart')
 
-jest.mock('./components', () => ({
+jest.mock('./components/SummaryCollapsedView', () => ({
   SummaryCollapsedView: () => <div>SummaryCollapsedView</div>,
+}))
+jest.mock('./components/SummaryExpandedView', () => ({
   SummaryExpandedView: () => <div>SummaryExpandedView</div>,
 }))
 
-jest.mock('../PayProjectModal', () => ({
+jest.mock('../PayProjectModal/PayProjectModal', () => ({
   PayProjectModal: () => <div>PayProjectModal</div>,
 }))
 

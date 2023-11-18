@@ -6,7 +6,7 @@ import {
 import { Trans, t } from '@lingui/macro'
 import { Form, Tooltip } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import { DurationInput } from 'components/inputs/DurationInput'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
@@ -18,13 +18,16 @@ import { useContext, useEffect } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import { durationMustExistRule } from 'utils/antdRules'
 import { CreateBadge } from '../../CreateBadge'
-import { CreateCollapse } from '../../CreateCollapse'
+import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
 import { Icons } from '../../Icons'
-import { OptionalHeader } from '../../OptionalHeader'
+import { OptionalHeader } from '../../OptionalHeader/OptionalHeader'
 import { Selection } from '../../Selection/Selection'
-import { Wizard } from '../../Wizard'
+import { Wizard } from '../../Wizard/Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import { FundingCyclesFormProps, useFundingCyclesForm } from './hooks'
+import {
+  FundingCyclesFormProps,
+  useFundingCyclesForm,
+} from './hooks/useFundingCyclesForm'
 
 const FundingCycleCallout: React.FC<React.PropsWithChildren<unknown>> = () => {
   const form = Form.useFormInstance<FundingCyclesFormProps>()

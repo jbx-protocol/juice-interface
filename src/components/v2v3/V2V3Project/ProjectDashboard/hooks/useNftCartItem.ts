@@ -1,8 +1,8 @@
-import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useCallback, useContext, useMemo } from 'react'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
-import { ProjectCartNftReward } from '../components/ProjectCartProvider'
+import { ProjectCartNftReward } from '../components/ProjectCartProvider/ProjectCartProvider'
 
 export const useNftCartItem = ({ id, quantity }: ProjectCartNftReward) => {
   const { dispatch } = useProjectCart()

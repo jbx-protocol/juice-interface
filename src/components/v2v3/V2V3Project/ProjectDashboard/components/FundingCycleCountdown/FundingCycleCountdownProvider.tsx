@@ -1,5 +1,5 @@
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
 import { useCountdownClock } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useCountdownClock'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { createContext } from 'react'
 
 type FundingCycleCountdownContextType = {

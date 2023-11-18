@@ -1,4 +1,4 @@
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { PV_V2 } from 'constants/pv'
 import { getSubgraphIdForProject } from 'utils/graph'
 

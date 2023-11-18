@@ -1,7 +1,7 @@
 import { Trans, t } from '@lingui/macro'
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { CreateCollapse } from 'components/Create/components/CreateCollapse'
+import { CreateCollapse } from 'components/Create/components/CreateCollapse/CreateCollapse'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import TransactionModal from 'components/modals/TransactionModal'
 import { useState } from 'react'

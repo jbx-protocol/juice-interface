@@ -1,5 +1,5 @@
-import { ProjectSafeDashboard } from 'components/ProjectSafeDashboard'
-import { AppWrapper } from 'components/common'
+import { ProjectSafeDashboard } from 'components/ProjectSafeDashboard/ProjectSafeDashboard'
+import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'

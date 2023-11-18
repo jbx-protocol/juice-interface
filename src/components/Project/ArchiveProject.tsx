@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Statistic } from 'antd'
 import axios from 'axios'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactorInstance } from 'hooks/useTransactor'

@@ -2,7 +2,10 @@ import { DeleteOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
-import { Allocation, AllocationSplit } from 'components/v2v3/shared/Allocation'
+import {
+  Allocation,
+  AllocationSplit,
+} from 'components/v2v3/shared/Allocation/Allocation'
 import { AllocationItemTitle } from 'components/v2v3/shared/Allocation/components/AllocationItemTitle'
 import { useModal } from 'hooks/useModal'
 import { PayoutsSelection } from 'models/payoutsSelection'

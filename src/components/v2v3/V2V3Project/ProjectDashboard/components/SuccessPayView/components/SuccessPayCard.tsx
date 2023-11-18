@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import EtherscanLink from 'components/EtherscanLink'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import useMobile from 'hooks/useMobile'
 import moment from 'moment'

@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 
 import { ProjectEventsQuery } from 'generated/graphql'
-import { ActivityEvent } from './ActivityElement'
+import { ActivityEvent } from './ActivityElement/ActivityElement'
 
 export default function ProjectCreateEventElem({
   event,

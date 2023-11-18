@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Empty, Form } from 'antd'
-import { RewardsList } from 'components/NftRewards/RewardsList'
+import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
 
 import { useCallback, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'

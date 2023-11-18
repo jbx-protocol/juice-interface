@@ -2,12 +2,12 @@ import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { TruncatedText } from 'components/TruncatedText'
-import { useCurrentBalanceCard } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useCurrentBalanceCard } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useCurrentCycleCard'
 import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { treasuryBalanceTooltip } from '../CyclesPayoutsPanel/components/CyclesPanelTooltips'
-import { DisplayCard } from '../ui'
+import { DisplayCard } from '../ui/DisplayCard'
 
 export const CurrentBalanceCard = ({ className }: { className?: string }) => {
   const { treasuryBalance } = useCurrentBalanceCard()

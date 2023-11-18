@@ -11,7 +11,8 @@ import {
   useReducer,
 } from 'react'
 import rehypeSanitize from 'rehype-sanitize'
-import { markdownReducer, processFile } from './utils'
+import { markdownReducer } from './utils/markdownEditorReducer'
+import { processFile } from './utils/processFile'
 
 const MDEditor = dynamic<MDEditorProps>(
   () => import('@uiw/react-md-editor').then(mod => mod.default),

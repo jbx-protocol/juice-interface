@@ -1,5 +1,5 @@
 import { TransferUnclaimedTokensModal } from 'components/modals/TransferUnclaimedTokensModal'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useUnclaimedTokenBalance } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useUnclaimedTokenBalance'
 import { useTransferUnclaimedTokensTx } from 'hooks/v2v3/transactor/useTransferUnclaimedTokensTx'
 

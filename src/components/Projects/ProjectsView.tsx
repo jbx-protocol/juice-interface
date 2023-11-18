@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
-import { Footer } from 'components/Footer'
+import { Footer } from 'components/Footer/Footer'
 import { PROJECTS_PAGE } from 'constants/fathomEvents'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { useWallet } from 'hooks/Wallet'

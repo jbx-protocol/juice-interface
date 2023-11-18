@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 
 export default function ArchivedProjectsMessage({
   hidden,

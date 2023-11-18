@@ -37,7 +37,7 @@ import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import { getDefaultFundAccessConstraint } from 'utils/v2v3/fundingCycle'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { SerializedV2V3FundAccessConstraint } from 'utils/v2v3/serializers'
-import { DistributionSplitsSection } from './DistributionSplitsSection'
+import { DistributionSplitsSection } from './DistributionSplitsSection/DistributionSplitsSection'
 import DurationInputAndSelect from './DurationInputAndSelect'
 import { FundingCycleExplainerCollapse } from './FundingCycleExplainerCollapse'
 

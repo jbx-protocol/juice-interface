@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { MigrateLegacyProjectTokensModal } from 'components/v2v3/V2V3Project/V2V3ManageTokensSection/LegacyProjectTokensDescription/MigrateLegacyProjectTokensModal'
+import { MigrateLegacyProjectTokensModal } from 'components/v2v3/V2V3Project/V2V3ManageTokensSection/LegacyProjectTokensDescription/MigrateLegacyProjectTokensModal/MigrateLegacyProjectTokensModal'
 import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { BigNumber } from 'ethers'
 import { useState } from 'react'

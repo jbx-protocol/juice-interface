@@ -1,5 +1,5 @@
 import { CurrencyIcon } from 'components/v2v3/V2V3Project/ProjectDashboard/components/ui/CurrencyIcon'
-import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
 import { handleConfirmationDeletion } from 'components/v2v3/V2V3Project/ProjectDashboard/utils/modals'
 import { useCallback } from 'react'
 import { CartItem } from './CartItem'

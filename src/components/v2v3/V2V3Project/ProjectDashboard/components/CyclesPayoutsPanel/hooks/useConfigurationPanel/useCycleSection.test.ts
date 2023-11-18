@@ -3,16 +3,19 @@
  */
 
 import { renderHook } from '@testing-library/react'
-import {
-  useProjectContext,
-  useProjectMetadata,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
 import { useCycleSection } from './useCycleSection'
 import { useFormatConfigurationCyclesSection } from './useFormatConfigurationCyclesSection'
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
+)
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata',
+)
 jest.mock('hooks/v2v3/contractReader/useProjectDistributionLimit')
 jest.mock('hooks/v2v3/contractReader/useProjectUpcomingFundingCycle')
 jest.mock('./useFormatConfigurationCyclesSection')

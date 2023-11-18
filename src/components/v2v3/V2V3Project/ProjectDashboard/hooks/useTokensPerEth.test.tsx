@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { renderHook } from '@testing-library/react-hooks'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { V2V3CurrencyProvider } from 'contexts/v2v3/V2V3CurrencyProvider'
 import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
@@ -13,7 +13,9 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { useTokensPerEth } from './useTokensPerEth'
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
+)
 
 jest.mock('hooks/useCurrencyConverter')
 

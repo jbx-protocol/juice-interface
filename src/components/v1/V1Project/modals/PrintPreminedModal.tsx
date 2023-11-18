@@ -13,7 +13,7 @@ import { parseWad } from 'utils/format/formatNumber'
 
 import { RuleObject } from 'antd/lib/form'
 import { StoreValue } from 'antd/lib/form/interface'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { OWNER_MINTING_EXPLANATION } from 'components/strings'
 import { V1_CURRENCY_ETH } from 'constants/v1/currency'

@@ -7,7 +7,7 @@ import { JuicyPicksSection } from 'components/Home/JuicyPicksSection/JuicyPicksS
 import { StatsSection } from 'components/Home/StatsSection'
 import { SuccessStoriesSection } from 'components/Home/SuccessStoriesSection/SuccessStoriesSection'
 import { TopSection } from 'components/Home/TopSection/TopSection'
-import { WhyJuiceboxSection } from 'components/Home/WhyJuiceboxSection'
+import { WhyJuiceboxSection } from 'components/Home/WhyJuiceboxSection/WhyJuiceboxSection'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
 

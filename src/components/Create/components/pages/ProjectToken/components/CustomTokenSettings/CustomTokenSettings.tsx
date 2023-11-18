@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Divider, Form } from 'antd'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
@@ -12,7 +12,7 @@ import {
   PAUSE_TRANSFERS_EXPLANATION,
   REDEMPTION_RATE_EXPLANATION,
 } from 'components/strings'
-import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
+import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
 import useMobile from 'hooks/useMobile'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
@@ -21,7 +21,8 @@ import { formatAmount } from 'utils/format/formatAmount'
 import { MAX_DISTRIBUTION_LIMIT, MAX_MINT_RATE } from 'utils/v2v3/math'
 import * as ProjectTokenForm from '../../hooks/useProjectTokenForm'
 import { ProjectTokensFormProps } from '../../hooks/useProjectTokenForm'
-import { ReservedTokenRateCallout, ReservedTokensList } from './components'
+import { ReservedTokenRateCallout } from './components/ReservedTokenRateCallout/ReservedTokenRateCallout'
+import { ReservedTokensList } from './components/ReservedTokensList/ReservedTokensList'
 
 const calculateMintRateAfterDiscount = ({
   mintRate,

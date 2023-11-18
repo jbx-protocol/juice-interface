@@ -1,7 +1,7 @@
 import { Trans, t } from '@lingui/macro'
 import { EmptyScreen } from '../EmptyScreen'
-import { NftReward } from './NftReward'
-import { RedeemNftsSection } from './RedeemNftsSection'
+import { NftReward } from './NftReward/NftReward'
+import { RedeemNftsSection } from './RedeemNftsSection/RedeemNftsSection'
 import { useNftRewardsPanel } from './hooks/useNftRewardsPanel'
 
 export const NftRewardsPanel = () => {

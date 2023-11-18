@@ -1,10 +1,8 @@
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { NftPreview } from 'components/NftRewards/NftPreview'
-import {
-  useProjectCart,
-  useProjectContext,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { useNftRewardsEnabledForPay } from 'hooks/JB721Delegate/useNftRewardsEnabledForPay'
 import { NftRewardTier } from 'models/nftRewards'

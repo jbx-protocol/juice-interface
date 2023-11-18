@@ -6,7 +6,7 @@ import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
 import { useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useEditRewardBeneficiary } from '../hooks/useEditRewardBeneficiary'
+import { useEditRewardBeneficiary } from '../hooks/useEditRewardBeneficiary/useEditRewardBeneficiary'
 
 export const EditRewardBeneficiary = ({
   className,

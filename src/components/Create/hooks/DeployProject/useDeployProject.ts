@@ -16,12 +16,10 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import {
-  useDeployNftProject,
-  useDeployStandardProject,
-  useIsNftProject,
-  useUploadNftRewards,
-} from './hooks'
+import { useDeployNftProject } from './hooks/NFT/useDeployNftProject'
+import { useIsNftProject } from './hooks/NFT/useIsNftProject'
+import { useUploadNftRewards } from './hooks/NFT/useUploadNftRewards'
+import { useDeployStandardProject } from './hooks/useDeployStandardProject'
 
 const CREATE_EVENT_IDX = 2
 const NFT_CREATE_EVENT_IDX = 3

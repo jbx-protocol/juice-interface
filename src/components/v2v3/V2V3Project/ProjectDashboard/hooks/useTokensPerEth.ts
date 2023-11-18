@@ -1,4 +1,4 @@
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 import { BigNumber, utils } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'

@@ -3,13 +3,13 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { renderHook } from '@testing-library/react'
-import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { useCartSummary } from './useCartSummary'
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart')
 jest.mock('hooks/Wallet')
 
 const DefaultNftRewardsContextMock = {

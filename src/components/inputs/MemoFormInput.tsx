@@ -1,6 +1,6 @@
 import { Input } from 'antd'
 import Sticker from 'components/icons/Sticker'
-import { AttachStickerModal } from 'components/modals/AttachStickerModal'
+import { AttachStickerModal } from 'components/modals/AttachStickerModal/AttachStickerModal'
 import { useState } from 'react'
 
 export function MemoFormInput({

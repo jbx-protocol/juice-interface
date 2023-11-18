@@ -1,8 +1,8 @@
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { Callout } from 'components/Callout'
-import { Selection } from 'components/Create/components/Selection'
+import { Callout } from 'components/Callout/Callout'
+import { Selection } from 'components/Create/components/Selection/Selection'
 import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/useAvailableReconfigurationStrategies'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import {
@@ -19,11 +19,12 @@ import { readNetwork } from 'constants/networks'
 import { trackFathomGoal } from 'lib/fathom'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
-import { CreateCollapse } from '../../CreateCollapse'
-import { Wizard } from '../../Wizard'
+import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import { CustomRuleCard, RuleCard } from './components'
-import { useReconfigurationRulesForm } from './hooks'
+import { Wizard } from '../../Wizard/Wizard'
+import { CustomRuleCard } from './components/CustomRuleCard'
+import { RuleCard } from './components/RuleCard'
+import { useReconfigurationRulesForm } from './hooks/useReconfigurationRulesForm'
 
 export const ReconfigurationRulesPage = () => {
   useSetCreateFurthestPageReached('reconfigurationRules')

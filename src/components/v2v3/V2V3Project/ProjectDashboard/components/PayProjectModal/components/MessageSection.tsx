@@ -1,6 +1,6 @@
 import { EnvelopeIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import {
   PayProjectModalFormValues,
   usePayProjectModal,

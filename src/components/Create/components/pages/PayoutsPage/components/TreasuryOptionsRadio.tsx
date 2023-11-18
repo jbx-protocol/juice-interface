@@ -1,7 +1,7 @@
 import { StopOutlined } from '@ant-design/icons'
 import { RadioGroup } from '@headlessui/react'
 import { t } from '@lingui/macro'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
 import { SwitchToUnlimitedModal } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditCyclePage/PayoutsSection/PayoutsTable/modals/SwitchToUnlimitedModal'
 import { usePayoutsTable } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditCyclePage/PayoutsSection/hooks/usePayoutsTable'

@@ -1,4 +1,4 @@
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 
 export const useProjectHeaderLogo = () => {
   const { projectMetadata, projectId } = useProjectMetadata()

@@ -1,7 +1,7 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Divider } from 'antd'
-import { CreateButton } from 'components/buttons/CreateButton'
+import { CreateButton } from 'components/buttons/CreateButton/CreateButton'
 import { MAX_NFT_REWARD_TIERS } from 'constants/nftRewards'
 import { useModal } from 'hooks/useModal'
 import { FormItemInput } from 'models/formItemInput'
@@ -10,7 +10,7 @@ import { createContext, useCallback, useContext, useState } from 'react'
 import { sortNftsByContributionFloor } from 'utils/nftRewards'
 import { AddEditRewardModal } from './AddEditRewardModal'
 import { RewardItem } from './RewardItem'
-import { useRewards } from './hooks'
+import { useRewards } from './hooks/useRewards'
 
 const RewardsListContext = createContext<ReturnType<typeof useRewards>>({
   rewards: [],

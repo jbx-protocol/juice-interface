@@ -1,4 +1,4 @@
-import { Head } from 'components/common'
+import { Head } from 'components/common/Head/Head'
 import { LanguageProvider } from 'contexts/Language/LanguageProvider'
 import SupabaseSessionProvider from 'contexts/SupabaseSession/SupabaseSessionProvider'
 import { initWeb3Onboard, useInitWallet } from 'hooks/Wallet'

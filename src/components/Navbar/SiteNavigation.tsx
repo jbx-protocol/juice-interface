@@ -1,6 +1,6 @@
 import { Popover, Transition } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
-import { QuickProjectSearchButton } from 'components/QuickProjectSearch'
+import { QuickProjectSearchButton } from 'components/QuickProjectSearch/QuickProjectSearchButton'
 import { TruncatedText } from 'components/TruncatedText'
 import PatchedNextLink from 'components/fixes/PatchedNextLink'
 import { Fragment } from 'react'
@@ -9,7 +9,7 @@ import { MobileMenuButton } from './components/HamburgerMenuButton'
 import { LogoHomeButton } from './components/LogoHomeButton'
 import NavLanguageSelector from './components/NavLanguageSelector'
 import ThemePicker from './components/ThemePicker'
-import { TransactionsList } from './components/TransactionList'
+import { TransactionsList } from './components/TransactionList/TransactionsList'
 import WalletButton from './components/Wallet/WalletButton'
 
 export default function SiteNavigation() {

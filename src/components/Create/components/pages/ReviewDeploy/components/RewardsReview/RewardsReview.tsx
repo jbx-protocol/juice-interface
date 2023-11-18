@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import { RewardsList } from 'components/NftRewards/RewardsList'
+import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
 import { JB721GovernanceType, NftRewardTier } from 'models/nftRewards'
 import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
@@ -7,7 +7,7 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { formatEnabled } from 'utils/format/formatBoolean'
 import { v4 } from 'uuid'
-import { ReviewDescription } from '../ReviewDescription'
+import { ReviewDescription } from '../ReviewDescription/ReviewDescription'
 
 export const RewardsReview = () => {
   const {

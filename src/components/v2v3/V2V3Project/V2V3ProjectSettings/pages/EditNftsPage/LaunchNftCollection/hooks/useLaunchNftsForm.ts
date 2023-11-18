@@ -1,5 +1,5 @@
 import { useForm } from 'antd/lib/form/Form'
-import { NftRewardsFormProps } from 'components/NftRewards/AddNftCollectionForm'
+import { NftRewardsFormProps } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
 import {
   EditingFundingCycleConfig,
   useEditingFundingCycleConfig,

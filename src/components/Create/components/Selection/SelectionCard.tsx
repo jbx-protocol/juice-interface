@@ -2,7 +2,8 @@ import { Divider } from 'antd'
 import { ReactNode, useCallback, useContext, useMemo } from 'react'
 import { classNames } from 'utils/classNames'
 import { SelectionContext } from './Selection'
-import { CheckedCircle, RadialBackgroundIcon } from './components'
+import { CheckedCircle } from './components/CheckedCircle'
+import { RadialBackgroundIcon } from './components/RadialBackgroundIcon'
 
 const Container: React.FC<
   React.PropsWithChildren<{

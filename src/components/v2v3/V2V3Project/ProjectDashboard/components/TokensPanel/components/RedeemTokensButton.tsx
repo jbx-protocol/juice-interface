@@ -1,6 +1,6 @@
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useUserTokenBalanceWad } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useUserTokenBalanceWad'
 import { V2V3BurnOrRedeemModal } from 'components/v2v3/V2V3Project/V2V3ManageTokensSection/AccountBalanceDescription/V2V3BurnOrRedeemModal'
 import { useCallback, useMemo, useState } from 'react'

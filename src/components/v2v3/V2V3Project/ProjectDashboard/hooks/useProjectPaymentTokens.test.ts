@@ -2,14 +2,13 @@
  * @jest-environment jsdom
  */
 import { renderHook } from '@testing-library/react'
-import {
-  useProjectCart,
-  useTokensPerEth,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
+import { useTokensPerEth } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useTokensPerEth'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { useProjectPaymentTokens } from './useProjectPaymentTokens'
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart')
+jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useTokensPerEth')
 
 describe('useProjectPaymentTokens', () => {
   const DefaultUseProjectCart = {

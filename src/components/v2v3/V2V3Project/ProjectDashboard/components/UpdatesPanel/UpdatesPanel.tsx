@@ -4,7 +4,7 @@ import { Button } from 'antd'
 import useMobile from 'hooks/useMobile'
 import { useEffect } from 'react'
 import { PopupMenu } from '../../../../../ui/PopupMenu'
-import { AddProjectUpdateModal } from '../AddProjectUpdateModal'
+import { AddProjectUpdateModal } from '../AddProjectUpdateModal/AddProjectUpdateModal'
 import { EmptyScreen } from '../EmptyScreen'
 import {
   ProjectUpdate,

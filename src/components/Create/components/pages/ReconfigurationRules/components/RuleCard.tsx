@@ -1,5 +1,5 @@
 import { CreateBadge } from 'components/Create/components/CreateBadge'
-import { Selection } from 'components/Create/components/Selection'
+import { Selection } from 'components/Create/components/Selection/Selection'
 import { AvailableReconfigurationStrategy } from 'components/Create/hooks/useAvailableReconfigurationStrategies'
 import EthereumAddress from 'components/EthereumAddress'
 

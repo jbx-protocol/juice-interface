@@ -1,4 +1,4 @@
-import { AppWrapper } from 'components/common'
+import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import ExternalLink from 'components/ExternalLink'
 import Link from 'next/link'
 import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'

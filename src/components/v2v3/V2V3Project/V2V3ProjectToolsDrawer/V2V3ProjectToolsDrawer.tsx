@@ -17,8 +17,8 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { ExportSplitsButton } from './ExportSplitsButton'
-import { PaymentAddressSection } from './PaymentAddressSection'
-import { SplitsPayerSection } from './SplitsPayerSection'
+import { PaymentAddressSection } from './PaymentAddressSection/PaymentAddressSection'
+import { SplitsPayerSection } from './SplitsPayerSection/SplitsPayerSection'
 
 export function V2V3ProjectToolsDrawer({
   open,

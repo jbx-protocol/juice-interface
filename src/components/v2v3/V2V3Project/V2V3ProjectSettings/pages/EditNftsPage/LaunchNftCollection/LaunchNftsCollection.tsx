@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm'
+import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
 import TransactionModal from 'components/modals/TransactionModal'
 import { TransactionSuccessModal } from '../../../TransactionSuccessModal'
 import { useLaunchNftsForm } from './hooks/useLaunchNftsForm'

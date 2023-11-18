@@ -1,11 +1,11 @@
 import { t } from '@lingui/macro'
-import { RichPreview } from 'components/RichPreview'
+import { RichPreview } from 'components/RichPreview/RichPreview'
 import {
   SocialLink,
   useAboutPanel,
 } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useAboutPanel'
 import { EmptyScreen } from '../EmptyScreen'
-import { SocialLinkButton } from '../ui'
+import { SocialLinkButton } from '../ui/SocialLinkButton'
 
 export const AboutPanel = () => {
   const { description, socialLinks } = useAboutPanel()

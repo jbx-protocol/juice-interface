@@ -1,1 +1,0 @@
-export { SplitsPayerSection } from './SplitsPayerSection'

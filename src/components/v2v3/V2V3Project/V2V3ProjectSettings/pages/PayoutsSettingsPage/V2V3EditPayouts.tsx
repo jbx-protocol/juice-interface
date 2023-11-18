@@ -5,10 +5,13 @@ import { Split } from 'models/splits'
 import { useCallback, useContext, useEffect, useMemo } from 'react'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import TooltipIcon from 'components/TooltipIcon'
-import { Allocation, AllocationSplit } from 'components/v2v3/shared/Allocation'
-import { OwnerPayoutCard } from 'components/v2v3/shared/PayoutCard'
+import {
+  Allocation,
+  AllocationSplit,
+} from 'components/v2v3/shared/Allocation/Allocation'
+import { OwnerPayoutCard } from 'components/v2v3/shared/PayoutCard/OwnerPayoutCard'
 import { PayoutCard } from 'components/v2v3/shared/PayoutCard/PayoutCard'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { PayoutsSelection } from 'models/payoutsSelection'

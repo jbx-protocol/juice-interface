@@ -1,5 +1,5 @@
 import { Form } from 'antd'
-import { NftRewardsFormProps } from 'components/NftRewards/AddNftCollectionForm'
+import { NftRewardsFormProps } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
 import { JB721GovernanceType, NftRewardTier } from 'models/nftRewards'
 import { useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
@@ -10,7 +10,7 @@ import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,
 } from 'utils/nftRewards'
-import { useFormDispatchWatch } from '../../hooks'
+import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
 export const useCreateFlowNftRewardsForm = () => {
   const [form] = Form.useForm<NftRewardsFormProps>()

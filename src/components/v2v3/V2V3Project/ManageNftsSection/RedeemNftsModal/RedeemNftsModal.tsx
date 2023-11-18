@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Col, Descriptions, Form, Row, Statistic } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import { MemoFormInput } from 'components/inputs/MemoFormInput'
 import TransactionModal from 'components/modals/TransactionModal'

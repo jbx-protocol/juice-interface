@@ -1,8 +1,11 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
-import { Allocation, AllocationSplit } from 'components/v2v3/shared/Allocation'
+import {
+  Allocation,
+  AllocationSplit,
+} from 'components/v2v3/shared/Allocation/Allocation'
 import { AllocationItemTitle } from 'components/v2v3/shared/Allocation/components/AllocationItemTitle'
-import { OwnerPayoutCard } from 'components/v2v3/shared/PayoutCard'
+import { OwnerPayoutCard } from 'components/v2v3/shared/PayoutCard/OwnerPayoutCard'
 import { FormItemInput } from 'models/formItemInput'
 import { useMemo } from 'react'
 import { formatPercent } from 'utils/format/formatPercent'

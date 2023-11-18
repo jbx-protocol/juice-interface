@@ -2,15 +2,18 @@
  * @jest-environment jsdom
  */
 import { renderHook } from '@testing-library/react'
-import {
-  useProjectContext,
-  useProjectMetadata,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useReservedTokensSubPanel } from './useReservedTokensSubPanel'
 
-jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks')
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
+)
+jest.mock(
+  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata',
+)
 jest.mock('hooks/v2v3/contractReader/ProjectReservedTokens')
 
 describe('useReservedTokensSubPanel', () => {

@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { Callout } from '.'
+import { Callout } from './Callout'
 
 export function ErrorBoundaryCallout({
   children,

@@ -1,5 +1,6 @@
-import { AppWrapper, Head } from 'components/common'
-import { Create } from 'components/Create'
+import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
+import { Head } from 'components/common/Head/Head'
+import { Create } from 'components/Create/Create'
 import { CV_V3 } from 'constants/cv'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { V2V3ContractsProvider } from 'contexts/v2v3/Contracts/V2V3ContractsProvider'

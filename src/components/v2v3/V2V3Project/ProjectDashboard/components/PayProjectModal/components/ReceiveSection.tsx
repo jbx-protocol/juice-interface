@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import {
   PayProjectModalFormValues,
   usePayProjectModal,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/usePayProjectModal'
+} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/usePayProjectModal/usePayProjectModal'
 import { useProjectPaymentTokens } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPaymentTokens'
 import { useFormikContext } from 'formik'
 import { EditRewardBeneficiary } from './EditRewardBeneficiary'

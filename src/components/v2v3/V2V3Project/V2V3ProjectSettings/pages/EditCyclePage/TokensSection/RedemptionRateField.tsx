@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { useWatch } from 'antd/lib/form/Form'
-import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph'
+import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import NumberSlider from 'components/inputs/NumberSlider'
 import { ExternalLinkWithIcon } from 'components/v2v3/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'

@@ -1,1 +1,0 @@
-export { ReservedTokensSettingsPage } from './ReservedTokensSettingsPage'

@@ -2,7 +2,7 @@ import { t } from '@lingui/macro'
 
 import { TokenAmount } from 'components/TokenAmount'
 import { ProjectEventsQuery } from 'generated/graphql'
-import { ActivityEvent } from './ActivityElement'
+import { ActivityEvent } from './ActivityElement/ActivityElement'
 
 export default function BurnEventElem({
   event,

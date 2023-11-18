@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
-import { UpgradeController } from './upgradeForms/JBController3_1'
-import { UpgradeFundingCycle } from './upgradeForms/V3/UpgradeFundingCycle'
+import { UpgradeController } from './upgradeForms/JBController3_1/UpgradeController'
+import { UpgradeFundingCycle } from './upgradeForms/V3/UpgradeFundingCycle/UpgradeFundingCycle'
 
 export type JBUpgrade =
   | '3' // upgrades to layer 2 contracts

@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
 import { ProjectTokensFormProps } from '../../../../hooks/useProjectTokenForm'

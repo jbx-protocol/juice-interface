@@ -10,7 +10,7 @@ import {
 } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
 
-import { ActivityEvent } from '../ActivityElement'
+import { ActivityEvent } from '../ActivityElement/ActivityElement'
 
 export default function DistributePayoutsElem({
   event,

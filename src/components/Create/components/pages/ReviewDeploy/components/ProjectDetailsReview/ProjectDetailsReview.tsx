@@ -1,9 +1,9 @@
 import { Trans, t } from '@lingui/macro'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import EthereumAddress from 'components/EthereumAddress'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
-import { RichPreview } from 'components/RichPreview'
+import { RichPreview } from 'components/RichPreview/RichPreview'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useWallet } from 'hooks/Wallet'
@@ -13,7 +13,7 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { parseWad } from 'utils/format/formatNumber'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
-import { ReviewDescription } from '../ReviewDescription'
+import { ReviewDescription } from '../ReviewDescription/ReviewDescription'
 
 export const ProjectDetailsReview = () => {
   const { userAddress } = useWallet()

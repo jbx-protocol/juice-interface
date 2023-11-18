@@ -1,9 +1,10 @@
 import { ChevronUpIcon } from '@heroicons/react/24/outline'
-import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
 import { useCallback, useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { PayProjectModal } from '../PayProjectModal'
-import { SummaryCollapsedView, SummaryExpandedView } from './components'
+import { PayProjectModal } from '../PayProjectModal/PayProjectModal'
+import { SummaryCollapsedView } from './components/SummaryCollapsedView'
+import { SummaryExpandedView } from './components/SummaryExpandedView'
 
 export const Cart = ({ className }: { className?: string }) => {
   const cart = useProjectCart()

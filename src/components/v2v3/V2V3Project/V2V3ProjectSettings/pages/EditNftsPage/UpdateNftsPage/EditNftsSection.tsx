@@ -1,8 +1,8 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Empty } from 'antd'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import Loading from 'components/Loading'
-import { RewardsList } from 'components/NftRewards/RewardsList'
+import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
 import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/useUpdateCurrentCollection'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 

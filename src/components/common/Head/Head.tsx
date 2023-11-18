@@ -1,4 +1,4 @@
-import { SEO, SEOProps } from '../SEO'
+import { SEO, SEOProps } from '../SEO/SEO'
 import { FONT_PATHS } from './fonts'
 
 export const Head: React.FC<SEOProps> = props => {

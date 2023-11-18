@@ -1,4 +1,4 @@
-import { AllocationSplit } from 'components/v2v3/shared/Allocation'
+import { AllocationSplit } from 'components/v2v3/shared/Allocation/Allocation'
 import { BigNumber } from 'ethers'
 import { useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'

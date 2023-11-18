@@ -2,10 +2,10 @@ import { Trans } from '@lingui/macro'
 import useMobile from 'hooks/useMobile'
 import { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { PageButtonControl } from './PageButtonControl'
-import { Steps } from './Steps'
+import { PageButtonControl } from './PageButtonControl/PageButtonControl'
+import { Steps } from './Steps/Steps'
 import { PageContext } from './contexts/PageContext'
-import { usePage } from './hooks'
+import { usePage } from './hooks/usePage'
 
 export interface PageProps {
   className?: string

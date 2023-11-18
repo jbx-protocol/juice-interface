@@ -3,15 +3,17 @@ import { Trans } from '@lingui/macro'
 import axios from 'axios'
 import EthereumAddress from 'components/EthereumAddress'
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { emitConfirmationDeletionModal } from 'components/v2v3/V2V3Project/ProjectDashboard/utils/modals'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useCallback, useContext, useMemo } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { PopupMenu } from '../../../../../../ui/PopupMenu'
-import { ProjectUpdate as ProjectUpdateEntity } from '../../ProjectUpdatesProvider'
-import { ProjectUpdatesContext } from '../../ProjectUpdatesProvider/ProjectUpdatesProvider'
+import {
+  ProjectUpdate as ProjectUpdateEntity,
+  ProjectUpdatesContext,
+} from '../../ProjectUpdatesProvider/ProjectUpdatesProvider'
 import { useFactoredProjectId } from '../hooks/useFactoredProjectId'
 import { formatDateString } from '../utils/formatDateString'
 

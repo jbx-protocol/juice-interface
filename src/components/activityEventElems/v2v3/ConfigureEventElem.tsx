@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { MinimalCollapse } from 'components/MinimalCollapse'
-import RichNote from 'components/RichNote'
+import RichNote from 'components/RichNote/RichNote'
 import { BigNumber } from 'ethers'
 import {
   V2V3FundingCycle,
@@ -14,7 +14,7 @@ import { ProjectEventsQuery } from 'generated/graphql'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
 import { useContext } from 'react'
 import { sgFCToV2V3FundingCycleMetadata } from 'utils/v2v3/fundingCycle'
-import { ActivityEvent } from '../ActivityElement'
+import { ActivityEvent } from '../ActivityElement/ActivityElement'
 
 export default function ConfigureEventElem({
   event,

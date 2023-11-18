@@ -84,6 +84,7 @@ type ProjectMetadataV10 = Partial<
     introImageUri: string
     softTargetAmount: string
     softTargetCurrency: string
+    domain: string
   }
 >
 

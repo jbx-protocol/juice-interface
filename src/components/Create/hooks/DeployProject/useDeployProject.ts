@@ -25,6 +25,9 @@ const CREATE_EVENT_IDX = 2
 const NFT_CREATE_EVENT_IDX = 3
 const PROJECT_ID_TOPIC_IDX = 1
 
+const JUICEBOX_DOMAIN = 'juicebox'
+const JUICECROWD_DOMAIN = 'juicecrowd'
+
 /**
  * Return the project ID created from a `launchProjectFor` transaction.
  * @param txReceipt receipt of `launchProjectFor` transaction
@@ -195,6 +198,7 @@ export const useDeployProject = () => {
 
       let softTargetAmount: string | undefined
       let softTargetCurrency: string | undefined
+      let domain = JUICEBOX_DOMAIN
       if (
         !featureFlagEnabled(FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION)
       ) {
@@ -217,6 +221,14 @@ export const useDeployProject = () => {
         } else {
           deleteIfExists(projectMetadata, 'softTargetAmount')
         }
+
+        // Set domain to juicecrowd if juicecrowd project
+        if (
+          projectMetadata.softTargetAmount &&
+          (projectMetadata.introVideoUrl || projectMetadata.introImageUri)
+        ) {
+          domain = JUICECROWD_DOMAIN
+        }
       }
 
       let projectMetadataCid: string | undefined
@@ -224,6 +236,7 @@ export const useDeployProject = () => {
         projectMetadataCid = (
           await uploadProjectMetadata({
             ...projectMetadata,
+            domain,
             softTargetAmount,
             softTargetCurrency,
             nftPaymentSuccessModal: postPayModal,

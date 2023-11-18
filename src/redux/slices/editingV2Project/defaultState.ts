@@ -24,6 +24,8 @@ import {
 } from 'utils/v2v3/serializers'
 import { CreateState, ProjectState } from './types'
 
+const DEFAULT_DOMAIN = 'juicebox'
+
 export const DEFAULT_MUST_START_AT_OR_AFTER = '1'
 export const DEFAULT_MINT_RATE = ONE_MILLION
 
@@ -103,6 +105,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
   nftPaymentSuccessModal: undefined,
   softTargetAmount: undefined,
   softTargetCurrency: V2V3_CURRENCY_USD.toString(),
+  domain: DEFAULT_DOMAIN,
   version: LATEST_METADATA_VERSION,
 }
 

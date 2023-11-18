@@ -2,7 +2,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')
 const linguiConfig = require('./lingui.config')
 
 const webpack = require('webpack')
-
 const removeImports = require('next-remove-imports')({
   test: /node_modules([\s\S]*?)\.(tsx|ts|js|mjs|jsx)$/,
   matchImports: '\\.(less|css|scss|sass|styl)$',
@@ -116,12 +115,14 @@ const nextConfig = removeImports({
   experimental: {
     esmExternals: true,
     swcPlugins: [
-      '@lingui/swc-plugin',
-      {
-        runtimeModules: {
-          i18n: ['@lingui/core', 'i18n'],
+      [
+        '@lingui/swc-plugin',
+        {
+          runtimeModules: {
+            i18n: ['@lingui/core', 'i18n'],
+          },
         },
-      },
+      ],
     ],
   },
   staticPageGenerationTimeout: 90,

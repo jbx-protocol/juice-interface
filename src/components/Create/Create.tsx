@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { DeployButtonText } from 'components/buttons/DeployProjectButtonText'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
 import {
@@ -22,7 +22,7 @@ import {
 import { CreateBadge } from './components/CreateBadge'
 import { PayoutsPage } from './components/pages/PayoutsPage'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
-import { PayoutsMigrationModal } from './components/PayoutsMigrationModal'
+import { PayoutsMigrationModal } from './components/PayoutsMigrationModal/PayoutsMigrationModal'
 import { Wizard } from './components/Wizard'
 import { useLoadingInitialStateFromQuery } from './hooks/useLoadInitialStateFromQuery'
 

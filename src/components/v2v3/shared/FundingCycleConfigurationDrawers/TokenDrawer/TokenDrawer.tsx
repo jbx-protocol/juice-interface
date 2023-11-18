@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import UnsavedChangesModal from 'components/modals/UnsavedChangesModal'
 import { TokenForm } from 'components/v2v3/shared/FundingCycleConfigurationDrawers/TokenDrawer/TokenForm'
 import FundingCycleDrawer from '../FundingCycleDrawer'

@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { renderHook } from '@testing-library/react-hooks'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { V2V3CurrencyProvider } from 'contexts/v2v3/V2V3CurrencyProvider'
 import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'

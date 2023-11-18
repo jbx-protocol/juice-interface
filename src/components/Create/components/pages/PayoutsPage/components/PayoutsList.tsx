@@ -1,6 +1,9 @@
 import { t } from '@lingui/macro'
-import { Allocation, AllocationSplit } from 'components/v2v3/shared/Allocation'
-import { OwnerPayoutCard } from 'components/v2v3/shared/PayoutCard'
+import {
+  Allocation,
+  AllocationSplit,
+} from 'components/v2v3/shared/Allocation/Allocation'
+import { OwnerPayoutCard } from 'components/v2v3/shared/PayoutCard/OwnerPayoutCard'
 import { PayoutCard } from 'components/v2v3/shared/PayoutCard/PayoutCard'
 import { BigNumber } from 'ethers'
 import { FormItemInput } from 'models/formItemInput'

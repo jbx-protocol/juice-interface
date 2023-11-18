@@ -1,5 +1,5 @@
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'

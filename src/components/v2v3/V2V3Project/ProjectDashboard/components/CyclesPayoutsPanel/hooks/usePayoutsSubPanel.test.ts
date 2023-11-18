@@ -3,10 +3,8 @@
  */
 
 import { renderHook } from '@testing-library/react'
-import {
-  useProjectContext,
-  useProjectMetadata,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { BigNumber } from 'ethers'
 import { parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'

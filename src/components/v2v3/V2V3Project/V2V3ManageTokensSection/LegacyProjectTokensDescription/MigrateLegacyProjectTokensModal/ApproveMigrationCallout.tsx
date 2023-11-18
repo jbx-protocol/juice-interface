@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
 import { useApproveERC20Tx } from 'hooks/ERC20/transactor/useApproveTx'

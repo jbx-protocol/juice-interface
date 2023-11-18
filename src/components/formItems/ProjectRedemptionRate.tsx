@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Form, Space } from 'antd'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import FormItemLabel from 'components/FormItemLabel'
 import FormItemWarningText from 'components/FormItemWarningText'
 import { MinimalCollapse } from 'components/MinimalCollapse'

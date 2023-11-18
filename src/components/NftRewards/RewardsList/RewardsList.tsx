@@ -1,7 +1,8 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Divider } from 'antd'
-import { CreateButton } from 'components/buttons/CreateButton'
+import { CreateButton } from 'components/buttons/CreateButton/CreateButton'
+
 import { MAX_NFT_REWARD_TIERS } from 'constants/nftRewards'
 import { useModal } from 'hooks/useModal'
 import { FormItemInput } from 'models/formItemInput'

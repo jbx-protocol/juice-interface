@@ -1,1 +1,0 @@
-export { RedeemNftsModal } from './RedeemNftsModal'

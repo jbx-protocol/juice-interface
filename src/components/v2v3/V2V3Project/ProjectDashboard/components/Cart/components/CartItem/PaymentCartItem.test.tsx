@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { render } from '@testing-library/react'
-import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { PaymentCartItem } from './PaymentCartItem'
 

@@ -1,4 +1,4 @@
-import { useCoverPhoto } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useCoverPhoto } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useCoverPhoto'
 import { twMerge } from 'tailwind-merge'
 
 export const CoverPhoto = () => {

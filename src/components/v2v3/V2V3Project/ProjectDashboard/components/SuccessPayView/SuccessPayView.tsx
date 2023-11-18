@@ -1,15 +1,13 @@
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { SubscribeButton } from 'components/buttons/SubscribeButton'
+import { SubscribeButton } from 'components/buttons/SubscribeButton/SubscribeButton'
 import { useSuccessPayView } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useSuccessPayView'
 import confettiAnimationJuicebox from 'data/lottie/confetti-animation-juicebox.json'
 import dynamic from 'next/dynamic'
-import {
-  SuccessButton,
-  SuccessNftItem,
-  SuccessPayCard,
-  SuccessTokensItem,
-} from './components'
+import { SuccessButton } from './components/SuccessButton'
+import { SuccessNftItem } from './components/SuccessNftItem'
+import { SuccessPayCard } from './components/SuccessPayCard'
+import { SuccessTokensItem } from './components/SuccessTokensItem'
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 
 export const SuccessPayView = () => {

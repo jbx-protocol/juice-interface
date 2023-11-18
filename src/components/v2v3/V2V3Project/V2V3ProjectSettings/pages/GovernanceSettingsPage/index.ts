@@ -1,1 +1,0 @@
-export { GovernanceSettingsPage } from './GovernanceSettingsPage'

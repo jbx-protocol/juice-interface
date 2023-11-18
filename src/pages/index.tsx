@@ -1,5 +1,5 @@
-import { AppWrapper } from 'components/common'
-import { HomePage } from 'components/Home'
+import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
+import { HomePage } from 'components/Home/HomePage'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 

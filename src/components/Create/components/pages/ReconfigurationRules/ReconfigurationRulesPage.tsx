@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { Selection } from 'components/Create/components/Selection'
 import { useAvailableReconfigurationStrategies } from 'components/Create/hooks/useAvailableReconfigurationStrategies'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'

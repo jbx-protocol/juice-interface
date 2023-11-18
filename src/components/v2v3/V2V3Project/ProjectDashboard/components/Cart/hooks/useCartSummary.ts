@@ -1,4 +1,4 @@
-import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useWallet } from 'hooks/Wallet'
 import { useCallback, useContext, useMemo } from 'react'

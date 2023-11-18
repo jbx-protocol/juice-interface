@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AmountInputValue } from 'components/Create/components'
+import { AmountInputValue } from 'components/Create/components/pages/ProjectDetails/ProjectDetailsPage'
 import { projectTokenSettingsToReduxFormat } from 'components/Create/utils/projectTokenSettingsToReduxFormat'
-import { AllocationSplit } from 'components/v2v3/shared/Allocation'
+import { AllocationSplit } from 'components/v2v3/shared/Allocation/Allocation'
 import { CreatePage } from 'models/createPage'
 import {
   JB721GovernanceType,

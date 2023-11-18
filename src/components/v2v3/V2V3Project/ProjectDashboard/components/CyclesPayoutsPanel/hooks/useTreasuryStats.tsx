@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useMemo } from 'react'

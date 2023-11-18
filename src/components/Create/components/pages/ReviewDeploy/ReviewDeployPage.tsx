@@ -1,7 +1,7 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Checkbox, Form } from 'antd'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { useDeployProject } from 'components/Create/hooks/DeployProject'
 import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/modals/TransactionModal'

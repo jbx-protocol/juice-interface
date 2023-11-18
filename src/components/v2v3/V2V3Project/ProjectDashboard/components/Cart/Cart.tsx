@@ -1,5 +1,5 @@
 import { ChevronUpIcon } from '@heroicons/react/24/outline'
-import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
 import { useCallback, useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { PayProjectModal } from '../PayProjectModal'

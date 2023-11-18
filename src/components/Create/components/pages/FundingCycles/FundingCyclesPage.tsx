@@ -6,7 +6,7 @@ import {
 import { Trans, t } from '@lingui/macro'
 import { Form, Tooltip } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import { DurationInput } from 'components/inputs/DurationInput'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'

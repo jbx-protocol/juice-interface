@@ -1,7 +1,7 @@
 import { CloseOutlined, LoadingOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button, Col, Row, Skeleton } from 'antd'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { ErrorBoundaryCallout } from 'components/Callout/ErrorBoundaryCallout'
 import ExternalLink from 'components/ExternalLink'
 import { ProjectHeader } from 'components/Project/ProjectHeader'

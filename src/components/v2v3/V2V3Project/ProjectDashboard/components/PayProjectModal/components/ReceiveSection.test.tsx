@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { render, screen } from '@testing-library/react'
-import { usePayProjectModal } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/usePayProjectModal'
+import { usePayProjectModal } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/usePayProjectModal/usePayProjectModal'
 import { useProjectPaymentTokens } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPaymentTokens'
 import { Formik } from 'formik'
 import { ReceiveSection } from './ReceiveSection'

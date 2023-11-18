@@ -1,4 +1,4 @@
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { CV_V3 } from 'constants/cv'
 import { V2V3ContractsProvider } from 'contexts/v2v3/Contracts/V2V3ContractsProvider'
 import { useRef } from 'react'

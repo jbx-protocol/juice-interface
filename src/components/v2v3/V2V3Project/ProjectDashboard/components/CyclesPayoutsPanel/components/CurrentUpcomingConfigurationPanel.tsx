@@ -1,4 +1,4 @@
-import { useCurrentUpcomingConfigurationPanel } from '../hooks/useConfigurationPanel'
+import { useCurrentUpcomingConfigurationPanel } from '../hooks/useConfigurationPanel/useCurrentUpcomingConfigurationPanel'
 import { ConfigurationPanel } from './ConfigurationPanel'
 
 type CurrentUpcomingConfigurationPanelProps = {

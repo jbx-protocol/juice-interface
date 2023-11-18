@@ -5,7 +5,7 @@ import { render } from '@testing-library/react'
 import {
   ProjectHeaderData,
   useProjectHeader,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectHeader'
 import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import { BigNumber } from 'ethers'
 import { ProjectHeaderStats } from './ProjectHeaderStats'

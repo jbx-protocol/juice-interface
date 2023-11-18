@@ -1,4 +1,4 @@
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useCallback, useContext, useState } from 'react'

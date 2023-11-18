@@ -1,7 +1,5 @@
-import {
-  useProjectContext,
-  useProjectMetadata,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { ONE_BILLION } from 'constants/numbers'
 import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'

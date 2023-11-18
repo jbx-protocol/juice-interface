@@ -1,6 +1,6 @@
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useExportSplitsToCsv } from 'hooks/useExportSplitsToCsv'
 import { useContext } from 'react'

@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { Divider, Form } from 'antd'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'

@@ -1,5 +1,6 @@
-import { AboutDashboard } from 'components/AboutDashboard'
-import { AppWrapper, Head } from 'components/common'
+import { AboutDashboard } from 'components/AboutDashboard/AboutDashboard'
+import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
+import { Head } from 'components/common/Head/Head'
 import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function AboutPage() {

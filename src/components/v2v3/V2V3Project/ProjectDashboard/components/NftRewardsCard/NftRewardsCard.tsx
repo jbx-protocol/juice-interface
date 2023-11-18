@@ -5,7 +5,7 @@ import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashbo
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useCallback, useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { DisplayCard } from '../ui'
+import { DisplayCard } from '../ui/DisplayCard'
 import StackedComponents from '../ui/StackedComponents'
 import { HoverPreview } from './HoverPreview'
 import { SmallNftSquare } from './SmallNftSquare'

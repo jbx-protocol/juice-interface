@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { PaymentsFeed } from 'components/Activity'
-import { AppWrapper } from 'components/common'
+import { PaymentsFeed } from 'components/Activity/PaymentsFeed'
+import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function ActivityPage() {

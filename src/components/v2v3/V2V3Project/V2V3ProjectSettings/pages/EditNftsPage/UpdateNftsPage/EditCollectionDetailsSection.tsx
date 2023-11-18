@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import Loading from 'components/Loading'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useNftCollectionMetadata } from 'hooks/JB721Delegate/useNftCollectionMetadata'

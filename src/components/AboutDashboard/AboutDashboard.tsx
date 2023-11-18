@@ -1,4 +1,4 @@
-import { Footer } from 'components/Footer'
+import { Footer } from 'components/Footer/Footer'
 import { AboutTheProtocolSection } from './components/AboutTheProtocolSection'
 import { BuiltByTheBestSection } from './components/BuiltByTheBestSection'
 import { FindOutMoreSection } from './components/FindOutMoreSection'

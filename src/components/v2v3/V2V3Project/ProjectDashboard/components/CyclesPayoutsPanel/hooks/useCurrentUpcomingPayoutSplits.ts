@@ -1,7 +1,5 @@
-import {
-  useProjectContext,
-  useProjectMetadata,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/splits'
 import useProjectSplits from 'hooks/v2v3/contractReader/useProjectSplits'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'

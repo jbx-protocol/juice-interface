@@ -2,7 +2,7 @@ import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useCurrentUpcomingConfigurationPanel } from '../hooks/useConfigurationPanel'
+import { useCurrentUpcomingConfigurationPanel } from '../hooks/useConfigurationPanel/useCurrentUpcomingConfigurationPanel'
 
 export const UpcomingCycleChangesCallout = () => {
   const data = useCurrentUpcomingConfigurationPanel('upcoming')

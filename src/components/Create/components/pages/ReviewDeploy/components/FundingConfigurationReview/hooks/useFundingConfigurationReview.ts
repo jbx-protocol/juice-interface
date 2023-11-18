@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { useAvailablePayoutsSelections } from 'components/Create/components/pages/PayoutsPage/hooks/useAvailablePayoutsSelections'
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
-import { AllocationSplit } from 'components/v2v3/shared/Allocation'
+import { AllocationSplit } from 'components/v2v3/shared/Allocation/Allocation'
 import moment from 'moment'
 import { useCallback, useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'

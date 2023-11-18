@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { RedeemNftsModal } from 'components/v2v3/V2V3Project/ManageNftsSection/RedeemNftsModal'
+import { RedeemNftsModal } from 'components/v2v3/V2V3Project/ManageNftsSection/RedeemNftsModal/RedeemNftsModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/useNftAccountBalance'
 import { useWallet } from 'hooks/Wallet'

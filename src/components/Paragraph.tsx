@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { Button } from 'antd'
-import RichNote from 'components/RichNote'
+import RichNote from 'components/RichNote/RichNote'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 

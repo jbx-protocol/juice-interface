@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { useEditRewardBeneficiary } from '../hooks/useEditRewardBeneficiary'
+import { useEditRewardBeneficiary } from '../hooks/useEditRewardBeneficiary/useEditRewardBeneficiary'
 import { EditRewardBeneficiary } from './EditRewardBeneficiary'
 
 jest.mock('../hooks/useEditRewardBeneficiary')

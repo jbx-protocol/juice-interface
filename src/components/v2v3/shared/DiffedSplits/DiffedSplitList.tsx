@@ -1,4 +1,4 @@
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { BigNumber } from 'ethers'
 import round from 'lodash/round'
 import { Split } from 'models/splits'

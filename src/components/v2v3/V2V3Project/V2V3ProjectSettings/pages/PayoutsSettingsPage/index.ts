@@ -1,1 +1,0 @@
-export { PayoutsSettingsPage } from './PayoutsSettingsPage'

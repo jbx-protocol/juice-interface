@@ -1,4 +1,4 @@
-import { Footer } from 'components/Footer'
+import { Footer } from 'components/Footer/Footer'
 import { classNames } from 'utils/classNames'
 import { CASE_STUDY_BODY_TEXT_COLOR } from './CaseStudiesHeader'
 import { ReadMoreCaseStudies } from './ReadMoreCaseStudies'

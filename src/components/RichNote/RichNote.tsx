@@ -1,7 +1,7 @@
 import Autolinker from 'autolinker'
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
 import { twMerge } from 'tailwind-merge'
-import { useProcessedRichNote } from './hooks'
+import { useProcessedRichNote } from './hooks/useProcessedRichNote'
 
 type RichNoteProps = {
   className?: string

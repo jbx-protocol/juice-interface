@@ -2,10 +2,8 @@ import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
-import {
-  useProjectContext,
-  useProjectMetadata,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { BigNumber } from 'ethers'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'

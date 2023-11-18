@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
-import { Allocation } from 'components/v2v3/shared/Allocation'
+import { Allocation } from 'components/v2v3/shared/Allocation/Allocation'
 import { getV2V3CurrencyOption } from 'utils/v2v3/currency'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { CurrencySwitcher } from './CurrencySwitcher'

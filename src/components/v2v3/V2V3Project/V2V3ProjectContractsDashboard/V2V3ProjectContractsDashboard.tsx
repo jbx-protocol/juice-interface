@@ -17,7 +17,7 @@ import {
 } from 'models/v2v3/contracts'
 import { useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
-import { V2V3ProjectHeaderActions } from '../V2V3ProjectHeaderActions'
+import { V2V3ProjectHeaderActions } from '../V2V3ProjectHeaderActions/V2V3ProjectHeaderActions'
 
 /**
  * Contracts that we don't want to show in the list.

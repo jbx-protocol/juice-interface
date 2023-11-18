@@ -2,8 +2,8 @@ import {
   createServerSupabaseClient,
   Session,
 } from '@supabase/auth-helpers-nextjs'
-import { AccountSettingsDashboard } from 'components/AccountSettingsDashboard'
-import { AppWrapper } from 'components/common'
+import { AccountSettingsDashboard } from 'components/AccountSettingsDashboard/AccountSettingsDashboard'
+import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import { resolveAddress } from 'lib/api/ens'
 import { User } from 'models/database'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'

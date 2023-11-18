@@ -1,6 +1,7 @@
 import { Footer } from 'components/Footer/Footer'
-import { Legal } from 'components/Legal'
-import { AppWrapper, Head } from 'components/common'
+import { Legal } from 'components/Legal/Legal'
+import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
+import { Head } from 'components/common/Head/Head'
 import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function LegalPage() {

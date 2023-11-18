@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button, Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import FormItemWarningText from 'components/FormItemWarningText'
 import SwitchHeading from 'components/SwitchHeading'
 import { FormItems } from 'components/formItems'

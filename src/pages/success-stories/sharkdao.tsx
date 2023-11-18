@@ -4,7 +4,7 @@ import { CaseStudyContentContainer } from 'components/CaseStudies/CaseStudyConte
 import { CaseStudyPageWrapper } from 'components/CaseStudies/CaseStudyPageWrapper'
 import ExternalLink from 'components/ExternalLink'
 import SectionHeader from 'components/SectionHeader'
-import { AppWrapper } from 'components/common'
+import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import {
   CASE_STUDY_PROJECTS,
   SHARKDAO_FUNDING_CONFIG,

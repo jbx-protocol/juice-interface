@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { render, screen } from '@testing-library/react'
-import { useCurrentUpcomingConfigurationPanel } from '../hooks/useConfigurationPanel'
+import { useCurrentUpcomingConfigurationPanel } from '../hooks/useConfigurationPanel/useCurrentUpcomingConfigurationPanel'
 import { CurrentUpcomingConfigurationPanel } from './CurrentUpcomingConfigurationPanel'
 
 jest.mock('./ConfigurationPanel', () => {

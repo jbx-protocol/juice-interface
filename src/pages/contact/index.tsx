@@ -1,6 +1,7 @@
-import { Contact } from 'components/Contact'
-import { Footer } from 'components/Footer'
-import { AppWrapper, Head } from 'components/common'
+import { Contact } from 'components/Contact/Contact'
+import { Footer } from 'components/Footer/Footer'
+import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
+import { Head } from 'components/common/Head/Head'
 import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function ContactPage() {

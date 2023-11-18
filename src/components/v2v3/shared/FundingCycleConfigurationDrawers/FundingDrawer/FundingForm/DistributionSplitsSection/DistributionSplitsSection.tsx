@@ -3,9 +3,12 @@ import { Form, Radio } from 'antd'
 import { FormItemExt } from 'components/formItems/formItemExt'
 import { FEES_EXPLANATION } from 'components/strings'
 import TooltipIcon from 'components/TooltipIcon'
-import { Allocation, AllocationSplit } from 'components/v2v3/shared/Allocation'
+import {
+  Allocation,
+  AllocationSplit,
+} from 'components/v2v3/shared/Allocation/Allocation'
 import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
-import { OwnerPayoutCard } from 'components/v2v3/shared/PayoutCard'
+import { OwnerPayoutCard } from 'components/v2v3/shared/PayoutCard/OwnerPayoutCard'
 import { PayoutCard } from 'components/v2v3/shared/PayoutCard/PayoutCard'
 import { CurrencyName } from 'constants/currency'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
@@ -21,7 +24,7 @@ import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { getTotalSplitsPercentage } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, splitPercentFrom } from 'utils/v2v3/math'
-import { DistributionSplitModal } from '../../../DistributionSplitModal'
+import { DistributionSplitModal } from '../../../DistributionSplitModal/DistributionSplitModal'
 import { PayoutConfigurationExplainerCollapse } from './PayoutConfigurationExplainerCollapse'
 import SpecificLimitModal from './SpecificLimitModal'
 

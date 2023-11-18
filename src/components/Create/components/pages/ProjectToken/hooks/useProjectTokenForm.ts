@@ -1,6 +1,6 @@
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { AllocationSplit } from 'components/v2v3/shared/Allocation'
+import { AllocationSplit } from 'components/v2v3/shared/Allocation/Allocation'
 import { ONE_MILLION } from 'constants/numbers'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { useDebugValue, useEffect, useMemo } from 'react'

@@ -1,6 +1,6 @@
 import { Tab } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
@@ -14,14 +14,14 @@ import {
   useState,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { AboutPanel } from '../AboutPanel'
-import { ActivityPanel } from '../ActivityPanel'
-import { CyclesPayoutsPanel } from '../CyclesPayoutsPanel'
-import { NftRewardsPanel } from '../NftRewardsPanel'
-import { ProjectUpdatesContext } from '../ProjectUpdatesProvider'
-import { TokensPanel } from '../TokensPanel'
-import { UpdatesPanel } from '../UpdatesPanel'
-import { ProjectTab } from '../ui'
+import { AboutPanel } from '../AboutPanel/AboutPanel'
+import { ActivityPanel } from '../ActivityPanel/ActivityPanel'
+import { CyclesPayoutsPanel } from '../CyclesPayoutsPanel/CyclesPayoutsPanel'
+import { NftRewardsPanel } from '../NftRewardsPanel/NftRewardsPanel'
+import { ProjectUpdatesContext } from '../ProjectUpdatesProvider/ProjectUpdatesProvider'
+import { TokensPanel } from '../TokensPanel/TokensPanel'
+import { UpdatesPanel } from '../UpdatesPanel/UpdatesPanel'
+import { ProjectTab } from '../ui/ProjectTab'
 
 export const ProjectTabs = ({ className }: { className?: string }) => {
   const { projectUpdates } = useContext(ProjectUpdatesContext)

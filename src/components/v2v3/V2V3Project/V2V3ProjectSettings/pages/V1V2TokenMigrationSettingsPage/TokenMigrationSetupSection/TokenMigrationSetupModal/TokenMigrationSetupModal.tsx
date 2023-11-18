@@ -1,7 +1,7 @@
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
 import { useState } from 'react'

@@ -1,5 +1,5 @@
 import ParticipantsModal from 'components/modals/ParticipantsModal'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 
 // TODO: This is hacked together - we should consider rebuilding
 export const TokenHoldersModal = ({

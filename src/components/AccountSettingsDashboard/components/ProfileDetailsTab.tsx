@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { Badge } from 'components/Badge'
-import { Callout } from 'components/Callout'
+import { Callout } from 'components/Callout/Callout'
 import { Formik } from 'formik'
 import { User } from 'models/database'
 import { useProfileDetailsTab } from '../hooks/useProfileDetailsTab'

@@ -1,7 +1,5 @@
-import {
-  useProjectContext,
-  useProjectMetadata,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
 import { ConfigurationPanelTableData } from '../../components/ConfigurationPanel'
 import { useFormatConfigurationExtensionSection } from './useFormatConfigurationExtensionSection'

@@ -7,7 +7,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { fromWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 
-const PRICE_REFRESH_INTERVAL_SECONDS = 60 * 5 // 5 minutes
+const PRICE_REFRESH_INTERVAL_SECONDS = 5 // 5 seconds
 
 const logger = getLogger('api/juicebox/prices/ethusd')
 
@@ -28,7 +28,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const price = priceRaw ? fromWad(priceRaw) : 0
 
-    // cache for one hour
     res.setHeader(
       'Cache-Control',
       `s-maxage=${PRICE_REFRESH_INTERVAL_SECONDS}, stale-while-revalidate`,

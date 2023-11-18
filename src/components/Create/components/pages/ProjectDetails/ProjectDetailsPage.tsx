@@ -102,7 +102,7 @@ export const ProjectDetailsPage: React.FC<
           rules={lockPageRulesWrapper([
             inputIsLengthRule({
               label: t`Tagline`,
-              max: 48,
+              max: 100,
             }),
           ])}
         >

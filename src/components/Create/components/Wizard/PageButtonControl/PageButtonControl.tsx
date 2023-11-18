@@ -1,6 +1,8 @@
 import { useContext } from 'react'
 import { PageContext } from '../contexts/PageContext'
-import { BackButton, DoneButton, NextButton } from './components'
+import { BackButton } from './components/BackButton'
+import { DoneButton } from './components/DoneButton'
+import { NextButton } from './components/NextButton'
 
 export const PageButtonControl = ({
   isNextEnabled = true, // Default enabled if not supplied

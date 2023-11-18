@@ -1,4 +1,4 @@
-import { CheckedCircle } from 'components/Create/components/Selection/components'
+import { CheckedCircle } from 'components/Create/components/Selection/components/CheckedCircle'
 import { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 

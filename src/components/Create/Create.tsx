@@ -11,17 +11,15 @@ import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import {
-  FundingCyclesPage,
-  NftRewardsPage,
-  ProjectDetailsPage,
-  ProjectTokenPage,
-  ReconfigurationRulesPage,
-  ReviewDeployPage,
-} from './components'
 import { CreateBadge } from './components/CreateBadge'
+import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
+import { NftRewardsPage } from './components/pages/NftRewards/NftRewardsPage'
 import { PayoutsPage } from './components/pages/PayoutsPage/PayoutsPage'
+import { ProjectDetailsPage } from './components/pages/ProjectDetails/ProjectDetailsPage'
+import { ProjectTokenPage } from './components/pages/ProjectToken/ProjectTokenPage'
+import { ReconfigurationRulesPage } from './components/pages/ReconfigurationRules/ReconfigurationRulesPage'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess/DeploySuccess'
+import { ReviewDeployPage } from './components/pages/ReviewDeploy/ReviewDeployPage'
 import { PayoutsMigrationModal } from './components/PayoutsMigrationModal/PayoutsMigrationModal'
 import { Wizard } from './components/Wizard/Wizard'
 import { useLoadingInitialStateFromQuery } from './hooks/useLoadInitialStateFromQuery'

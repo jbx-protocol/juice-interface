@@ -1,7 +1,7 @@
 import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
-import { QuickProjectSearchProvider } from 'components/QuickProjectSearch'
+import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickProjectSearchProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'

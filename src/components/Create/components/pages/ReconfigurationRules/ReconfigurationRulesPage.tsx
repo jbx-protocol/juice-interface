@@ -22,7 +22,8 @@ import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFur
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { Wizard } from '../../Wizard/Wizard'
-import { CustomRuleCard, RuleCard } from './components'
+import { CustomRuleCard } from './components/CustomRuleCard'
+import { RuleCard } from './components/RuleCard'
 import { useReconfigurationRulesForm } from './hooks/useReconfigurationRulesForm'
 
 export const ReconfigurationRulesPage = () => {

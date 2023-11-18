@@ -8,7 +8,7 @@ import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { V2V3CurrencyName, getV2V3CurrencyOption } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
-import { usePayoutsForm } from '../hooks'
+import { usePayoutsForm } from '../hooks/usePayoutsForm'
 
 export const DEFAULT_CURRENCY_NAME = CURRENCY_METADATA.ETH.name
 

@@ -2,7 +2,7 @@ import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Checkbox, Form } from 'antd'
 import { Callout } from 'components/Callout/Callout'
-import { useDeployProject } from 'components/Create/hooks/DeployProject'
+import { useDeployProject } from 'components/Create/hooks/DeployProject/useDeployProject'
 import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/modals/TransactionModal'
 import { emitConfirmationDeletionModal } from 'components/v2v3/V2V3Project/ProjectDashboard/utils/modals'
@@ -21,13 +21,11 @@ import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
 import { Wizard } from '../../Wizard/Wizard'
 import { WizardContext } from '../../Wizard/contexts/WizardContext'
-import {
-  FundingConfigurationReview,
-  ProjectDetailsReview,
-  ProjectTokenReview,
-  RewardsReview,
-  RulesReview,
-} from './components'
+import { FundingConfigurationReview } from './components/FundingConfigurationReview/FundingConfigurationReview'
+import { ProjectDetailsReview } from './components/ProjectDetailsReview/ProjectDetailsReview'
+import { ProjectTokenReview } from './components/ProjectTokenReview/ProjectTokenReview'
+import { RewardsReview } from './components/RewardsReview/RewardsReview'
+import { RulesReview } from './components/RulesReview/RulesReview'
 
 enum ReviewDeployKey {
   ProjectDetails = 0,

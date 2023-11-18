@@ -10,6 +10,7 @@ import { useProjectMetadata } from './useProjectMetadata'
 export interface ProjectHeaderData {
   title: string | undefined
   subtitle: { text: string; type: SubtitleType } | undefined
+  domain: string | undefined
   handle: string | undefined
   projectId: number | undefined
   owner: string | undefined
@@ -39,6 +40,7 @@ export const useProjectHeader = (): ProjectHeaderData => {
   return {
     title: projectMetadata?.name,
     subtitle,
+    domain: projectMetadata?.domain,
     handle,
     projectId,
     owner: projectOwnerAddress,

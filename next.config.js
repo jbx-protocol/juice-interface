@@ -113,7 +113,6 @@ const SECURITY_HEADERS = [
 /** @type {import('next').NextConfig} */
 const nextConfig = removeImports({
   experimental: {
-    esmExternals: true,
     swcPlugins: [
       [
         '@lingui/swc-plugin',

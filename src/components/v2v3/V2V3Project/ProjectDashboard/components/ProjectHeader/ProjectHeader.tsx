@@ -1,6 +1,7 @@
 import { Cog6ToothIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button, Divider } from 'antd'
+import { DomainBadge } from 'components/DomainBadge'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
 import { TruncatedText } from 'components/TruncatedText'
@@ -22,7 +23,7 @@ import { Subtitle } from './components/Subtitle'
 import ToolsDrawerButton from './components/ToolsDrawerButton'
 
 export const ProjectHeader = ({ className }: { className?: string }) => {
-  const { title, subtitle, projectId, handle, owner, gnosisSafe } =
+  const { title, subtitle, domain, projectId, handle, owner, gnosisSafe } =
     useProjectHeader()
   const isMobile = useMobile()
   const canReconfigure = useV2V3WalletHasPermission(
@@ -65,9 +66,12 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
       </div>
 
       <div className="flex flex-col gap-3">
-        <h1 className="mb-0 font-heading text-3xl font-medium dark:text-slate-50 md:text-4xl">
-          {title}
-        </h1>
+        <div className="flex items-center gap-3">
+          <h1 className="mb-0 font-heading text-3xl font-medium leading-none dark:text-slate-50 md:text-4xl">
+            {title}
+          </h1>
+          <DomainBadge domain={domain} />
+        </div>
 
         <div className="flex flex-col justify-between gap-8 md:flex-row md:gap-12">
           <div className="flex min-w-0 flex-col gap-3">

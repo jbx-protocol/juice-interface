@@ -6,7 +6,7 @@ import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 import { PV_V2 } from 'constants/pv'
-import { ActivityEvent } from '../ActivityElement'
+import { ActivityEvent } from '../ActivityElement/ActivityElement'
 
 export default function SetFundAccessConstraintsEventElem({
   event,

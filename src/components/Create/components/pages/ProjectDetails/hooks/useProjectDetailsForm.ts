@@ -10,7 +10,7 @@ import {
   editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
 import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import { useFormDispatchWatch } from '../../hooks'
+import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 import { AmountInputValue } from '../ProjectDetailsPage'
 
 type ProjectDetailsFormProps = Partial<{

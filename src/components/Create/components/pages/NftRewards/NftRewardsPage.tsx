@@ -3,7 +3,7 @@ import { CREATE_FLOW } from 'constants/fathomEvents'
 import { trackFathomGoal } from 'lib/fathom'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
-import { Wizard } from '../../Wizard'
+import { Wizard } from '../../Wizard/Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { useCreateFlowNftRewardsForm } from './hooks'
 

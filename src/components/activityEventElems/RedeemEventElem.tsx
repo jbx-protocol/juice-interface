@@ -1,13 +1,13 @@
 import { plural, t, Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
-import RichNote from 'components/RichNote'
+import RichNote from 'components/RichNote/RichNote'
 import { TokenAmount } from 'components/TokenAmount'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { BigNumber } from 'ethers'
 import { defaultAbiCoder } from 'ethers/lib/utils.js'
 import { ProjectEventsQuery } from 'generated/graphql'
 import { useContext } from 'react'
-import { ActivityEvent } from './ActivityElement'
+import { ActivityEvent } from './ActivityElement/ActivityElement'
 
 function decodeJB721DelegateRedeemMetadata(
   metadata: string,

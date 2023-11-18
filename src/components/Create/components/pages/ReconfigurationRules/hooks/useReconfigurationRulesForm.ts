@@ -8,7 +8,7 @@ import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { isEqualAddress, isZeroAddress } from 'utils/address'
-import { useFormDispatchWatch } from '../../hooks'
+import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
 type ReconfigurationRulesFormProps = Partial<{
   selection: ReconfigurationStrategy

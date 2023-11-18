@@ -2,9 +2,9 @@ import useMobile from 'hooks/useMobile'
 import React, { ReactNode } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { Page } from './Page'
-import { Steps } from './Steps'
-import { WizardContext } from './contexts'
-import { useWizard } from './hooks'
+import { Steps } from './Steps/Steps'
+import { WizardContext } from './contexts/WizardContext'
+import { useWizard } from './hooks/useWizard'
 
 const WizardContainer: React.FC<
   React.PropsWithChildren<{

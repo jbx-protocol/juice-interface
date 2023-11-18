@@ -6,9 +6,9 @@ import {
   formatRedemptionRate,
   formatReservedRate,
 } from 'utils/v2v3/math'
-import { ReservedTokensList } from '../../../ProjectToken/components/CustomTokenSettings/components'
+import { ReservedTokensList } from '../../../ProjectToken/components/CustomTokenSettings/components/ReservedTokensList/ReservedTokensList'
 import * as ProjectTokenForm from '../../../ProjectToken/hooks/useProjectTokenForm'
-import { ReviewDescription } from '../ReviewDescription'
+import { ReviewDescription } from '../ReviewDescription/ReviewDescription'
 import { useProjectTokenReview } from './hooks/useProjectTokenReview'
 
 export const ProjectTokenReview = () => {

@@ -1,10 +1,10 @@
 import { t, Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
-import RichNote from 'components/RichNote'
+import RichNote from 'components/RichNote/RichNote'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 
 import { ProjectEventsQuery } from 'generated/graphql'
-import { ActivityEvent } from './ActivityElement'
+import { ActivityEvent } from './ActivityElement/ActivityElement'
 
 export default function PayEventElem({
   event,

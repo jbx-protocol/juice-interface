@@ -18,9 +18,9 @@ import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFur
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { helpPagePath } from 'utils/routes'
 import { CreateBadge } from '../../CreateBadge'
-import { CreateCollapse } from '../../CreateCollapse'
-import { Wizard } from '../../Wizard'
-import { WizardContext } from '../../Wizard/contexts'
+import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
+import { Wizard } from '../../Wizard/Wizard'
+import { WizardContext } from '../../Wizard/contexts/WizardContext'
 import {
   FundingConfigurationReview,
   ProjectDetailsReview,

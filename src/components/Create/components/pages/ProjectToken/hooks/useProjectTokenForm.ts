@@ -21,7 +21,7 @@ import {
   redemptionRateFrom,
   reservedRateFrom,
 } from 'utils/v2v3/math'
-import { useFormDispatchWatch } from '../../hooks'
+import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
 export type ProjectTokensFormProps = Partial<{
   selection: ProjectTokensSelection

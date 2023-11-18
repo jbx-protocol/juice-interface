@@ -22,7 +22,7 @@ import { CreateCollapse } from '../../CreateCollapse'
 import { Icons } from '../../Icons'
 import { OptionalHeader } from '../../OptionalHeader'
 import { Selection } from '../../Selection/Selection'
-import { Wizard } from '../../Wizard'
+import { Wizard } from '../../Wizard/Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { FundingCyclesFormProps, useFundingCyclesForm } from './hooks'
 

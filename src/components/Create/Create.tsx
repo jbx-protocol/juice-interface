@@ -20,10 +20,10 @@ import {
   ReviewDeployPage,
 } from './components'
 import { CreateBadge } from './components/CreateBadge'
-import { PayoutsPage } from './components/pages/PayoutsPage'
-import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
+import { PayoutsPage } from './components/pages/PayoutsPage/PayoutsPage'
+import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess/DeploySuccess'
 import { PayoutsMigrationModal } from './components/PayoutsMigrationModal/PayoutsMigrationModal'
-import { Wizard } from './components/Wizard'
+import { Wizard } from './components/Wizard/Wizard'
 import { useLoadingInitialStateFromQuery } from './hooks/useLoadInitialStateFromQuery'
 
 export function Create() {

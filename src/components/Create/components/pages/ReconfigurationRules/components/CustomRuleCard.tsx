@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { Form } from 'antd'
-import { Selection } from 'components/Create/components/Selection'
+import { Selection } from 'components/Create/components/Selection/Selection'
 import { CustomStrategyInput } from 'components/inputs/ReconfigurationStrategy/CustomStrategyInput'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 

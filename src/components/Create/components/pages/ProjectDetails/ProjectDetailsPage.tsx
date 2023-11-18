@@ -26,8 +26,8 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { CreateCollapse } from '../../CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
-import { Wizard } from '../../Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
+import { Wizard } from '../../Wizard/Wizard'
 import { useProjectDetailsForm } from './hooks/useProjectDetailsForm'
 
 export const ProjectDetailsPage: React.FC<

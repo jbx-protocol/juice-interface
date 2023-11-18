@@ -11,7 +11,7 @@ import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
-import { ActivityEvent } from '../ActivityElement'
+import { ActivityEvent } from '../ActivityElement/ActivityElement'
 
 export default function ReservesEventElem({
   event,

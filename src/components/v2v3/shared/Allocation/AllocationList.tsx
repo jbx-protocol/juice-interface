@@ -9,7 +9,7 @@ import { roundIfCloseToNextInteger } from 'utils/math'
 import { projectIdToHex } from 'utils/splits'
 import { amountFromPercent } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
-import { CreateButton } from '../../../buttons/CreateButton'
+import { CreateButton } from '../../../buttons/CreateButton/CreateButton'
 import {
   AddEditAllocationModal,
   AddEditAllocationModalEntity,

@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
-import { ReviewDescription } from '../ReviewDescription'
+import { ReviewDescription } from '../ReviewDescription/ReviewDescription'
 import { useRulesReview } from './hooks/useRulesReview'
 
 export const RulesReview = () => {

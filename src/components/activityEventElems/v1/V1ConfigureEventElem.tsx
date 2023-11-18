@@ -16,7 +16,7 @@ import { detailedTimeString } from 'utils/format/formatTime'
 import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 
 import { PV_V1 } from 'constants/pv'
-import { ActivityEvent } from '../ActivityElement'
+import { ActivityEvent } from '../ActivityElement/ActivityElement'
 
 export default function V1ConfigureEventElem({
   event,

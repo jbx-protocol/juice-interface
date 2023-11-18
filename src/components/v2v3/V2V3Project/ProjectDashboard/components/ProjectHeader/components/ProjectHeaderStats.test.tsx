@@ -27,6 +27,7 @@ function mockUseProjectPageQueries() {
 
 const MOCK_PROJECT_HEADER_DATA: ProjectHeaderData = {
   title: 'bongdao',
+  domain: 'juicebox',
   subtitle: { text: 'big rips', type: 'tagline' },
   handle: 'bongdao',
   projectId: 420,

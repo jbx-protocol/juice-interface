@@ -105,8 +105,8 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
   nftPaymentSuccessModal: undefined,
   softTargetAmount: undefined,
   softTargetCurrency: V2V3_CURRENCY_USD.toString(),
-  version: LATEST_METADATA_VERSION,
   domain: DEFAULT_DOMAIN,
+  version: LATEST_METADATA_VERSION,
 }
 
 const DEFAULT_CREATE_STATE: CreateState = {

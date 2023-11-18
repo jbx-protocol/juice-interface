@@ -107,6 +107,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
   softTargetCurrency: V2V3_CURRENCY_USD.toString(),
   domain: DEFAULT_DOMAIN,
   version: LATEST_METADATA_VERSION,
+  domain: DEFAULT_DOMAIN,
 }
 
 const DEFAULT_CREATE_STATE: CreateState = {

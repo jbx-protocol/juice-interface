@@ -88,6 +88,13 @@ type ProjectMetadataV10 = Partial<
   }
 >
 
+type ProjectMetadataV11 = Partial<
+  Omit<ProjectMetadataV10, 'version'> & {
+    version: 11
+    domain: string
+  }
+>
+
 export type AnyProjectMetadata =
   | ProjectMetadataV1
   | ProjectMetadataV2
@@ -99,10 +106,11 @@ export type AnyProjectMetadata =
   | ProjectMetadataV8
   | ProjectMetadataV9
   | ProjectMetadataV10
+  | ProjectMetadataV11
 
 // Current version
-export type ProjectMetadata = ProjectMetadataV10
-export const LATEST_METADATA_VERSION = 10
+export type ProjectMetadata = ProjectMetadataV11
+export const LATEST_METADATA_VERSION = 11
 
 // Converts metadata of any version to latest version
 export const consolidateMetadata = (

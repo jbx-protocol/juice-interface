@@ -1,4 +1,7 @@
+import { readNetwork } from 'constants/networks'
+import { NetworkName } from 'models/networkName'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Badge } from './Badge'
@@ -6,10 +9,18 @@ import { Badge } from './Badge'
 export type DomainBadgeProps = {
   className?: string
   domain: string | undefined
+  projectId?: number
 }
+
+function getJuicecrowdUrl(projectId: number) {
+  const prefix = readNetwork.name === NetworkName.goerli ? 'goerli.' : ''
+  return `https://${prefix}juicecrowd.gg/p/${projectId}`
+}
+
 export const DomainBadge: React.FC<DomainBadgeProps> = ({
   className,
   domain,
+  projectId,
 }) => {
   const domainString = useMemo(() => {
     if (!domain) return undefined
@@ -21,9 +32,14 @@ export const DomainBadge: React.FC<DomainBadgeProps> = ({
     if (domain === 'juicecrowd') return '/assets/images/juicecrowd-logo.webp'
   }, [domain])
 
+  const linkUrl = useMemo(() => {
+    if (!domain || !projectId) return undefined
+    if (domain === 'juicecrowd') return getJuicecrowdUrl(projectId)
+  }, [projectId, domain])
+
   if (!customDomainImageSrc) return null
 
-  return (
+  const badge = (
     <Badge className={twMerge('pl-1.5', className)} variant="info">
       <Image
         height={16}
@@ -34,4 +50,13 @@ export const DomainBadge: React.FC<DomainBadgeProps> = ({
       {domainString}
     </Badge>
   )
+
+  if (linkUrl)
+    return (
+      <Link href={linkUrl} target="_blank" rel="noopener noreferrer">
+        {badge}
+      </Link>
+    )
+
+  return badge
 }

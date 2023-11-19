@@ -32,7 +32,7 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
 
   return (
     <div className={twMerge('relative flex w-full flex-col', className)}>
-      <ProjectHeaderLogo className="absolute left-3.5 -top-[146px] rounded-[0.85rem] border-6 border-white dark:border-slate-900 md:left-0" />
+      <ProjectHeaderLogo className="absolute -top-[146px] left-3.5 rounded-[0.85rem] border-6 border-white dark:border-slate-900 md:left-0" />
 
       <div className="flex items-center justify-end gap-4">
         {projectId ? (
@@ -70,7 +70,7 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
           <h1 className="mb-0 font-heading text-3xl font-medium leading-none dark:text-slate-50 md:text-4xl">
             {title}
           </h1>
-          <DomainBadge domain={domain} />
+          <DomainBadge domain={domain} projectId={projectId} />
         </div>
 
         <div className="flex flex-col justify-between gap-8 md:flex-row md:gap-12">

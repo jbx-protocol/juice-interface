@@ -83,7 +83,7 @@ const findTransactionReceipt = async (txHash: string) => {
 
 const deleteIfExists = (obj: Record<string, unknown>, key: string) => {
   if (key in obj) {
-    delete obj[key]
+    obj[key] = undefined
   }
 }
 

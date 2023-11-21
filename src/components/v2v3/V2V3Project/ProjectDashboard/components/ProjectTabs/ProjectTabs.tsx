@@ -1,9 +1,6 @@
 import { Tab } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
-import {
-  useProjectContext,
-  useProjectMetadata,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
@@ -17,6 +14,7 @@ import {
   useState,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { useProjectContext } from '../../hooks/useProjectContext'
 import { AboutPanel } from '../AboutPanel/AboutPanel'
 import { ActivityPanel } from '../ActivityPanel/ActivityPanel'
 import { CyclesPayoutsPanel } from '../CyclesPayoutsPanel/CyclesPayoutsPanel'

@@ -34,26 +34,18 @@ export default function TokenPieChart({
     // Only show (arbitrary) max number of wallets to avoid chart clutter
     const maxVisibleWallets = 100
 
-    const visibleWallets: typeof participants = []
-    const remainderWallets: typeof participants = []
-
-    participants.forEach((p, i) =>
-      (i < maxVisibleWallets ? visibleWallets : remainderWallets).push(p),
+    const visibleWallets = participants.slice(0, maxVisibleWallets)
+    const remainderWallets = participants.slice(
+      maxVisibleWallets,
+      participants.length,
     )
 
-    const _chartData = visibleWallets.reduce(
-      (acc, curr) => [
-        ...acc,
-        {
-          wallet: curr.wallet.id,
-          balance: parseFloat(fromWad(curr.balance)),
-          percent:
-            parseFloat(fromWad(curr.balance)) /
-            parseFloat(fromWad(tokenSupply)),
-        },
-      ],
-      [] as Entry[],
-    )
+    const _chartData: Entry[] = visibleWallets.map(w => ({
+      wallet: w.wallet.id,
+      balance: parseFloat(fromWad(w.balance)),
+      percent:
+        parseFloat(fromWad(w.balance)) / parseFloat(fromWad(tokenSupply)),
+    }))
 
     // If any remainder wallets, include them as a single entry
     if (remainderWallets.length) {

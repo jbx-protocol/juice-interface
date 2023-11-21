@@ -23,6 +23,7 @@ type ProjectDetailsFormProps = Partial<{
   projectTwitter: string
   projectTelegram: string
   projectDiscord: string
+  projectRequiredOFACCheck?: boolean
   payButtonText: string
   payDisclosure: string
   inputProjectOwner: string
@@ -52,6 +53,7 @@ export const useProjectDetailsForm = () => {
       projectTwitter: projectMetadata.twitter,
       projectTelegram: projectMetadata.telegram,
       projectDiscord: projectMetadata.discord,
+      projectRequiredOFACCheck: projectMetadata.projectRequiredOFACCheck,
       payButtonText: projectMetadata.payButton,
       payDisclosure: projectMetadata.payDisclosure,
       inputProjectOwner,
@@ -91,6 +93,7 @@ export const useProjectDetailsForm = () => {
       projectMetadata.introImageUri,
       projectMetadata.softTargetAmount,
       projectMetadata.softTargetCurrency,
+      projectMetadata.projectRequiredOFACCheck,
       inputProjectOwner,
       mustStartAtOrAfter,
     ],
@@ -157,6 +160,13 @@ export const useProjectDetailsForm = () => {
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setDiscord,
     formatter: v => v ?? '',
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'projectRequiredOFACCheck',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setRequiredOFACCheck,
+    formatter: v => v,
   })
   useFormDispatchWatch({
     form,

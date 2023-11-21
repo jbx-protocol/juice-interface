@@ -102,6 +102,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
   telegram: '',
   tokens: [],
   tags: [],
+  projectRequiredOFACCheck: undefined,
   nftPaymentSuccessModal: undefined,
   softTargetAmount: undefined,
   softTargetCurrency: V2V3_CURRENCY_USD.toString(),

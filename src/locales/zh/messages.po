@@ -4930,3 +4930,20 @@ msgstr "支出的接收人"
 msgid "Success"
 msgstr "成功"
 
+msgid "OFAC Sanctions screening"
+msgstr "OFAC制裁筛查"
+
+msgid "OFAC Sanctions"
+msgstr "OFAC检查"
+
+msgid "Additional settings"
+msgstr "附加设置"
+
+msgid "Check User Wallet Address"
+msgstr "检查用户钱包地址"
+
+msgid "Activating this option enables running the user's wallet address against OFAC’s Specially Designated Nationals (SDN) list"
+msgstr "激活此选项可将用户的钱包地址与OFAC的 特别指定国民（SDN）名单进行比对"
+
+msgid "Unfortunately, this action cannot be completed because your wallet address failed compliance check"
+msgstr "很遗憾，由于您的钱包地址未能通过合规性检查，因此无法完成此操作"

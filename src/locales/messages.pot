@@ -164,6 +164,9 @@ msgstr ""
 msgid "An address"
 msgstr ""
 
+msgid "Activating this option enables running the user's wallet address against OFAC’s Specially Designated Nationals (SDN) list"
+msgstr ""
+
 msgid "Pay {0}"
 msgstr ""
 
@@ -1076,6 +1079,9 @@ msgstr ""
 msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr ""
 
+msgid "Unfortunately, this action cannot be completed because your wallet address failed compliance check"
+msgstr ""
+
 msgid "Delete project update"
 msgstr ""
 
@@ -1953,6 +1959,9 @@ msgid "Failed to create ERC20 token. Check transaction and try again."
 msgstr ""
 
 msgid "About the protocol"
+msgstr ""
+
+msgid "OFAC Sanctions screening"
 msgstr ""
 
 msgid "Existing project payer addresses can be found in the Tools drawer (<0/>) on the project page."
@@ -3380,6 +3389,9 @@ msgstr ""
 msgid "How a community of space enthusiasts raised $8.3 million to send a DAO member to space on a Blue Origin rocket"
 msgstr ""
 
+msgid "Check User Wallet Address"
+msgstr ""
+
 msgid "Set ENS text record for {ensName}"
 msgstr ""
 
@@ -4056,6 +4068,9 @@ msgid "Payment amount can't exceed your wallet balance."
 msgstr ""
 
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before launching cycles."
+msgstr ""
+
+msgid "Additional settings"
 msgstr ""
 
 msgid "Last paid"

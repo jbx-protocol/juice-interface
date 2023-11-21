@@ -5,6 +5,7 @@ import { NftRewardsProvider } from '../NftRewards/NftRewardsProvider'
 import { V2V3ContractsProvider } from './Contracts/V2V3ContractsProvider'
 import V2V3ProjectProvider from './Project/V2V3ProjectProvider'
 import { V2V3ProjectContractsProvider } from './ProjectContracts/V2V3ProjectContractsProvider'
+import V2V3ProjectOFACProvider from './V2V3ProjectOFACProvider'
 import V2V3ProjectMetadataProvider from './V2V3ProjectMetadataProvider'
 
 /**
@@ -18,9 +19,11 @@ export const V2V3ProjectPageProvider: React.FC<
       <V2V3ProjectContractsProvider projectId={projectId}>
         <V2V3ProjectMetadataProvider projectId={projectId} metadata={metadata}>
           <V2V3ProjectProvider projectId={projectId}>
-            <JB721DelegateContractsProvider>
-              <NftRewardsProvider>{children}</NftRewardsProvider>
-            </JB721DelegateContractsProvider>
+            <V2V3ProjectOFACProvider>
+              <JB721DelegateContractsProvider>
+                <NftRewardsProvider>{children}</NftRewardsProvider>
+              </JB721DelegateContractsProvider>
+            </V2V3ProjectOFACProvider>
           </V2V3ProjectProvider>
         </V2V3ProjectMetadataProvider>
       </V2V3ProjectContractsProvider>

@@ -1,13 +1,9 @@
 import { Tab } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
-<<<<<<< HEAD
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-=======
 import {
   useProjectContext,
   useProjectMetadata,
 } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
->>>>>>> 460c87df9 (disable juicecrowd nft and payments)
 import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'

@@ -5,6 +5,7 @@ import {
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { usePayProjectCard } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/usePayProjectCard'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { Formik } from 'formik'
 import { useV2BlockedProject } from 'hooks/useBlockedProject'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -16,13 +17,16 @@ import { TokensPerEth } from './components/TokensPerEth'
 
 export const PayProjectCard = ({ className }: { className?: string }) => {
   const isBlockedProject = useV2BlockedProject()
+  const { projectMetadata } = useProjectMetadata()
 
   const { validationSchema, paymentsPaused, addPay } = usePayProjectCard()
   const determiningIfProjectCanReceivePayments = paymentsPaused === undefined
 
+  const isJuicecrowdProject = projectMetadata?.domain === 'juicecrowd'
+
   return (
     <DisplayCard
-      className={twMerge('flex flex-col gap-2 px-4 md:pr-9 md:pl-6', className)}
+      className={twMerge('flex flex-col gap-2 px-4 md:pl-6 md:pr-9', className)}
     >
       <div className="text-base font-medium">
         <Tooltip
@@ -35,9 +39,9 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
           <QuestionMarkCircleIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
         </Tooltip>
       </div>
-      {paymentsPaused ? (
+      {paymentsPaused || isJuicecrowdProject ? (
         <div className="text-grey-600 dark:text-slate-200">
-          <div className="flex cursor-not-allowed items-center gap-2 rounded-lg bg-smoke-100 py-3 px-4 text-base leading-none dark:bg-slate-800">
+          <div className="flex cursor-not-allowed items-center gap-2 rounded-lg bg-smoke-100 px-4 py-3 text-base leading-none dark:bg-slate-800">
             <NoSymbolIcon className="h-5 w-5" />
             <Trans>This project has disabled payments</Trans>
           </div>
@@ -72,12 +76,16 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
                 />
                 <Tooltip
                   title={t`Payments to this project are paused in this cycle.`}
-                  open={paymentsPaused ? undefined : false}
+                  open={
+                    paymentsPaused || isJuicecrowdProject ? undefined : false
+                  }
                   className="h-12"
                 >
                   <Button
                     loading={determiningIfProjectCanReceivePayments}
-                    disabled={paymentsPaused || isBlockedProject}
+                    disabled={
+                      paymentsPaused || isBlockedProject || isJuicecrowdProject
+                    }
                     htmlType="submit"
                     className="h-12 text-base"
                     style={{ height: '48px' }}

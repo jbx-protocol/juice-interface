@@ -1,6 +1,6 @@
 import { Tab } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
@@ -14,6 +14,7 @@ import {
   useState,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { useProjectContext } from '../../hooks/useProjectContext'
 import { AboutPanel } from '../AboutPanel/AboutPanel'
 import { ActivityPanel } from '../ActivityPanel/ActivityPanel'
 import { CyclesPayoutsPanel } from '../CyclesPayoutsPanel/CyclesPayoutsPanel'
@@ -28,8 +29,18 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
   const { projectOwnerAddress } = useProjectContext()
   const isProjectOwner = useIsUserAddress(projectOwnerAddress)
+  const { projectMetadata } = useProjectMetadata()
 
-  const { value: showNftRewards } = useHasNftRewards()
+  const { value: hasNftRewards } = useHasNftRewards()
+
+  const showNftRewards = useMemo(() => {
+    // disable juicecrowd nft rewards
+    if (projectMetadata?.domain === 'juicecrowd') {
+      return false
+    }
+
+    return hasNftRewards
+  }, [hasNftRewards, projectMetadata?.domain])
 
   const containerRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
@@ -84,7 +95,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         hideTab: !isProjectOwner && projectUpdates.length === 0,
       },
     ],
-    [isProjectOwner, projectUpdates, showNftRewards],
+    [showNftRewards, projectUpdates.length, isProjectOwner],
   )
 
   const selectedTabIndex = useMemo(() => {

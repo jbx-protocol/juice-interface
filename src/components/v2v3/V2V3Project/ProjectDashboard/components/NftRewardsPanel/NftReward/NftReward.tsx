@@ -9,6 +9,7 @@ import { NftRewardTier } from 'models/nftRewards'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { useProjectMetadata } from '../../../hooks/useProjectMetadata'
 import { AddNftButton } from './AddNftButton'
 import { NftDetails } from './NftDetails'
 import { NftThumbnail } from './NftThumbnail'
@@ -34,6 +35,7 @@ export function NftReward({
   onDeselect,
   hideAttributes,
 }: NftRewardProps) {
+  const { projectMetadata } = useProjectMetadata()
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
   const cart = useProjectCart()
   const nftsEnabledForPay = useNftRewardsEnabledForPay()
@@ -64,14 +66,28 @@ export function NftReward({
     ? t`Unlimited`
     : t`${rewardTier?.remainingSupply} remaining`
 
+  const isJuicecrowdNft = useMemo(() => {
+    return projectMetadata?.domain === 'juicecrowd'
+  }, [projectMetadata?.domain])
+
   const disabled =
-    !hasRemainingSupply || !nftsEnabledForPay || fundingCycleMetadata?.pausePay
+    !hasRemainingSupply ||
+    !nftsEnabledForPay ||
+    fundingCycleMetadata?.pausePay ||
+    isJuicecrowdNft
 
   const disabledReason = useMemo(() => {
     if (!hasRemainingSupply) return t`Sold out`
     if (!nftsEnabledForPay) return t`NFTs are not enabled for pay`
     if (fundingCycleMetadata?.pausePay) return t`Payments are paused`
-  }, [hasRemainingSupply, nftsEnabledForPay, fundingCycleMetadata?.pausePay])
+    if (isJuicecrowdNft)
+      return t`Nfts for this project are only purchasable through juicecrowd.gg`
+  }, [
+    hasRemainingSupply,
+    nftsEnabledForPay,
+    fundingCycleMetadata?.pausePay,
+    isJuicecrowdNft,
+  ])
 
   return (
     <>

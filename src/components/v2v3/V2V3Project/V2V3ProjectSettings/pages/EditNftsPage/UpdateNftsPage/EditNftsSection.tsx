@@ -3,10 +3,10 @@ import { Button, Empty } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import Loading from 'components/Loading'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/useUpdateCurrentCollection'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
-
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useEditingNfts } from '../hooks/useEditingNfts'
 
 export function EditNftsSection() {
@@ -18,6 +18,16 @@ export function EditNftsSection() {
     editedRewardTierIds,
     rewardTiers,
   })
+  const { projectMetadata } = useProjectMetadata()
+
+  const showNftRewards = useMemo(() => {
+    // disable juicecrowd nft rewards
+    if (projectMetadata?.domain === 'juicecrowd') {
+      return false
+    }
+
+    return hasExistingNfts
+  }, [hasExistingNfts, projectMetadata?.domain])
 
   const onNftFormSaved = useCallback(async () => {
     if (!rewardTiers) return
@@ -52,7 +62,7 @@ export function EditNftsSection() {
         )}
       </div>
 
-      {hasExistingNfts && rewardTiers?.length === 0 && (
+      {showNftRewards && rewardTiers?.length === 0 && (
         <Callout.Warning className="mb-5 bg-smoke-100 dark:bg-slate-500">
           <Trans>
             <p>

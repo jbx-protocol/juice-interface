@@ -29,6 +29,7 @@ export function ProjectDetailsSettingsPage() {
     const fields = projectForm.getFieldsValue(true)
 
     const uploadedMetadata = await uploadProjectMetadata({
+      ...projectMetadata,
       name: fields.name,
       description: fields.description,
       projectTagline: fields.projectTagline,
@@ -80,7 +81,13 @@ export function ProjectDetailsSettingsPage() {
     if (!txSuccess) {
       setLoadingSaveChanges(false)
     }
-  }, [editV2ProjectDetailsTx, projectForm, projectId, refetchProjectMetadata])
+  }, [
+    editV2ProjectDetailsTx,
+    projectForm,
+    projectId,
+    refetchProjectMetadata,
+    projectMetadata,
+  ])
 
   const resetProjectForm = useCallback(() => {
     projectForm.setFieldsValue({

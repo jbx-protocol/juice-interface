@@ -3434,6 +3434,9 @@ msgstr ""
 msgid "Payout total (max.)"
 msgstr ""
 
+msgid "Nfts for this project are only purchasable through juicecrowd.gg"
+msgstr ""
+
 msgid "Prevent NFT overspending"
 msgstr ""
 

@@ -1,6 +1,7 @@
 import { Footer } from 'components/Footer/Footer'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
+import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BlockedProjectBanner } from './components/BlockedProjectBanner'
 import { Cart } from './components/Cart/Cart'
@@ -14,13 +15,22 @@ import { ProjectHeader } from './components/ProjectHeader/ProjectHeader'
 import { ProjectTabs } from './components/ProjectTabs/ProjectTabs'
 import { ProjectUpdatesProvider } from './components/ProjectUpdatesProvider/ProjectUpdatesProvider'
 import { SuccessPayView } from './components/SuccessPayView/SuccessPayView'
+import { useProjectMetadata } from './hooks/useProjectMetadata'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 
 export const ProjectDashboard = () => {
   const { projectPayReceipt } = useProjectPageQueries()
+  const { projectMetadata } = useProjectMetadata()
 
   const { value: hasNftRewards } = useHasNftRewards()
-  const shouldShowNftCard = hasNftRewards
+  const shouldShowNftCard = useMemo(() => {
+    // disable juicecrowd nft rewards
+    if (projectMetadata?.domain === 'juicecrowd') {
+      return false
+    }
+
+    return hasNftRewards
+  }, [hasNftRewards, projectMetadata?.domain])
 
   return (
     <TransactionProvider>

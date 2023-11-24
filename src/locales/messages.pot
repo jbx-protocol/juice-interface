@@ -572,9 +572,6 @@ msgstr ""
 msgid "You have unsaved changes. Are you sure you want to discard them?"
 msgstr ""
 
-msgid "Deploy edited NFTs"
-msgstr ""
-
 msgid "I understand"
 msgstr ""
 
@@ -3182,6 +3179,9 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
+msgid "Your NFTs have been edited successfully"
+msgstr ""
+
 msgid "No file uploaded."
 msgstr ""
 
@@ -3774,6 +3774,9 @@ msgid "Upgrade"
 msgstr ""
 
 msgid "After {0} (your first cycle), your project will not issue any tokens unless you edit the issuance rate."
+msgstr ""
+
+msgid "New NFTs will available on your project page shortly."
 msgstr ""
 
 msgid "Unknown extension"

@@ -81,12 +81,6 @@ const findTransactionReceipt = async (txHash: string) => {
   return receipt
 }
 
-const deleteIfExists = (obj: Record<string, unknown>, key: string) => {
-  if (key in obj) {
-    obj[key] = undefined
-  }
-}
-
 /**
  * Hook that returns a function that deploys a project.
  * @returns A function that deploys a project.
@@ -199,15 +193,10 @@ export const useDeployProject = () => {
       let softTargetAmount: string | undefined
       let softTargetCurrency: string | undefined
       let domain = JUICEBOX_DOMAIN
+
       if (
-        !featureFlagEnabled(FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION)
+        featureFlagEnabled(FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION)
       ) {
-        // strip out metadata if feature flag is not enabled
-        deleteIfExists(projectMetadata, 'introVideoUrl')
-        deleteIfExists(projectMetadata, 'introImageUri')
-        deleteIfExists(projectMetadata, 'softTargetAmount')
-        deleteIfExists(projectMetadata, 'softTargetCurrency')
-      } else {
         // metadata is enabled, ensure price set properly
         if (projectMetadata.softTargetAmount) {
           // Set currency to USD if not set
@@ -218,8 +207,6 @@ export const useDeployProject = () => {
           softTargetAmount = parseWad(
             projectMetadata.softTargetAmount,
           ).toString()
-        } else {
-          deleteIfExists(projectMetadata, 'softTargetAmount')
         }
 
         // Set domain to juicecrowd if juicecrowd project

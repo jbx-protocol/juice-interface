@@ -1,16 +1,21 @@
+import { useMemo } from 'react'
+
 import {
   NoSymbolIcon,
   QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { usePayProjectCard } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/usePayProjectCard'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { Formik } from 'formik'
 import { useV2BlockedProject } from 'hooks/useBlockedProject'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { twMerge } from 'tailwind-merge'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
+import {
+  usePayProjectCard,
+  useProjectMetadata,
+  useProjectOFACContext,
+} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
 import { DisplayCard } from '../ui/DisplayCard'
 import { PayInput } from './components/PayInput'
 import { TokensPerEth } from './components/TokensPerEth'
@@ -18,11 +23,48 @@ import { TokensPerEth } from './components/TokensPerEth'
 export const PayProjectCard = ({ className }: { className?: string }) => {
   const isBlockedProject = useV2BlockedProject()
   const { projectMetadata } = useProjectMetadata()
-
+  const { isAddressListedInOFAC } = useProjectOFACContext()
   const { validationSchema, paymentsPaused, addPay } = usePayProjectCard()
   const determiningIfProjectCanReceivePayments = paymentsPaused === undefined
 
-  const isJuicecrowdProject = projectMetadata?.domain === 'juicecrowd'
+  const isJuicecrowdProject = useMemo(
+    () => projectMetadata?.domain === 'juicecrowd',
+    [projectMetadata?.domain],
+  )
+
+  const isPaymentDisabled = useMemo(() => {
+    return (
+      paymentsPaused ||
+      isBlockedProject ||
+      isAddressListedInOFAC ||
+      isJuicecrowdProject
+    )
+  }, [
+    isAddressListedInOFAC,
+    paymentsPaused,
+    isBlockedProject,
+    isJuicecrowdProject,
+  ])
+
+  const paymentTooltip = useMemo(() => {
+    if (paymentsPaused || isJuicecrowdProject) {
+      return {
+        title: t`Payments to this project are paused in this cycle.`,
+        open: paymentsPaused || isJuicecrowdProject ? undefined : false,
+      }
+    }
+
+    if (isAddressListedInOFAC) {
+      return {
+        title: t`Unfortunately, this action cannot be completed because your wallet address failed compliance check`,
+        open: true,
+      }
+    }
+
+    return {
+      open: false,
+    }
+  }, [paymentsPaused, isAddressListedInOFAC, isJuicecrowdProject])
 
   return (
     <DisplayCard
@@ -74,18 +116,10 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
                   onBlur={props.handleBlur}
                   name="payAmount"
                 />
-                <Tooltip
-                  title={t`Payments to this project are paused in this cycle.`}
-                  open={
-                    paymentsPaused || isJuicecrowdProject ? undefined : false
-                  }
-                  className="h-12"
-                >
+                <Tooltip className="h-12" {...paymentTooltip}>
                   <Button
                     loading={determiningIfProjectCanReceivePayments}
-                    disabled={
-                      paymentsPaused || isBlockedProject || isJuicecrowdProject
-                    }
+                    disabled={isPaymentDisabled}
                     htmlType="submit"
                     className="h-12 text-base"
                     style={{ height: '48px' }}

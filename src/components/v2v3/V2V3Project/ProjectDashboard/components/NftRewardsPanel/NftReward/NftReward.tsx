@@ -1,8 +1,11 @@
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { NftPreview } from 'components/NftRewards/NftPreview'
-import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import {
+  useProjectCart,
+  useProjectContext,
+  useProjectOFACContext,
+} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { useNftRewardsEnabledForPay } from 'hooks/JB721Delegate/useNftRewardsEnabledForPay'
 import { NftRewardTier } from 'models/nftRewards'
@@ -35,11 +38,13 @@ export function NftReward({
   onDeselect,
   hideAttributes,
 }: NftRewardProps) {
-  const { projectMetadata } = useProjectMetadata()
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
   const cart = useProjectCart()
   const nftsEnabledForPay = useNftRewardsEnabledForPay()
+
+  const { projectMetadata } = useProjectMetadata()
   const { fundingCycleMetadata } = useProjectContext()
+  const { isAddressListedInOFAC } = useProjectOFACContext()
 
   const quantitySelected = useMemo(
     () => cart.nftRewards.find(nft => nft.id === rewardTier?.id)?.quantity ?? 0,
@@ -70,23 +75,35 @@ export function NftReward({
     return projectMetadata?.domain === 'juicecrowd'
   }, [projectMetadata?.domain])
 
-  const disabled =
-    !hasRemainingSupply ||
-    !nftsEnabledForPay ||
-    fundingCycleMetadata?.pausePay ||
-    isJuicecrowdNft
-
+  const disabled = useMemo(() => {
+    return (
+      !hasRemainingSupply ||
+      !nftsEnabledForPay ||
+      fundingCycleMetadata?.pausePay ||
+      isAddressListedInOFAC ||
+      isJuicecrowdNft
+    )
+  }, [
+    hasRemainingSupply,
+    nftsEnabledForPay,
+    fundingCycleMetadata?.pausePay,
+    isAddressListedInOFAC,
+    isJuicecrowdNft,
+  ])
   const disabledReason = useMemo(() => {
     if (!hasRemainingSupply) return t`Sold out`
     if (!nftsEnabledForPay) return t`NFTs are not enabled for pay`
     if (fundingCycleMetadata?.pausePay) return t`Payments are paused`
     if (isJuicecrowdNft)
       return t`Nfts for this project are only purchasable through juicecrowd.gg`
+    if (isAddressListedInOFAC)
+      return t`Unfortunately, this action cannot be completed because your wallet address failed compliance check`
   }, [
-    hasRemainingSupply,
-    nftsEnabledForPay,
-    fundingCycleMetadata?.pausePay,
     isJuicecrowdNft,
+    nftsEnabledForPay,
+    hasRemainingSupply,
+    isAddressListedInOFAC,
+    fundingCycleMetadata?.pausePay,
   ])
 
   return (

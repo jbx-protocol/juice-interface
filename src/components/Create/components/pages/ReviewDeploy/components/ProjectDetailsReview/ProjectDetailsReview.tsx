@@ -29,6 +29,7 @@ export const ProjectDetailsReview = () => {
       payDisclosure,
       twitter,
       projectTagline,
+      projectRequiredOFACCheck,
       tags,
       introVideoUrl,
       introImageUri,
@@ -83,6 +84,17 @@ export const ProjectDetailsReview = () => {
           ) : null
         }
       />
+      {projectRequiredOFACCheck && (
+        <ReviewDescription
+          className="col-span-3"
+          title={t`OFAC Sanctions screening`}
+          desc={
+            <div className="overflow-hidden text-ellipsis text-base font-medium">
+              {String(projectRequiredOFACCheck)}
+            </div>
+          }
+        />
+      )}
       <ReviewDescription
         className="col-span-4 whitespace-pre-wrap"
         title={t`Project description`}

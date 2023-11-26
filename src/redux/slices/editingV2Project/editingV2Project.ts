@@ -47,6 +47,12 @@ const editingV2ProjectSlice = createSlice({
     setProjectTagline: (state, action: PayloadAction<string>) => {
       state.projectMetadata.projectTagline = action.payload
     },
+    setRequiredOFACCheck: (
+      state,
+      action: PayloadAction<boolean | undefined>,
+    ) => {
+      state.projectMetadata.projectRequiredOFACCheck = action.payload
+    },
     setInfoUri: (state, action: PayloadAction<string>) => {
       state.projectMetadata.infoUri = action.payload
     },

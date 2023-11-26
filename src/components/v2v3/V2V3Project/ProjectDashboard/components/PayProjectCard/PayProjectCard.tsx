@@ -6,8 +6,6 @@ import {
 } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { usePayProjectCard } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/usePayProjectCard'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { Formik } from 'formik'
 import { useV2BlockedProject } from 'hooks/useBlockedProject'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -15,6 +13,7 @@ import { twMerge } from 'tailwind-merge'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import {
   usePayProjectCard,
+  useProjectMetadata,
   useProjectOFACContext,
 } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
 import { DisplayCard } from '../ui/DisplayCard'
@@ -28,11 +27,24 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
   const { validationSchema, paymentsPaused, addPay } = usePayProjectCard()
   const determiningIfProjectCanReceivePayments = paymentsPaused === undefined
 
-  const isJuicecrowdProject = useMemo(() => projectMetadata?.domain === 'juicecrowd', [projectMetadata?.domain])
+  const isJuicecrowdProject = useMemo(
+    () => projectMetadata?.domain === 'juicecrowd',
+    [projectMetadata?.domain],
+  )
 
   const isPaymentDisabled = useMemo(() => {
-    return paymentsPaused || isBlockedProject || isAddressListedInOFAC || isJuicecrowdProject
-  }, [isAddressListedInOFAC, paymentsPaused, isBlockedProject, isJuicecrowdProject])
+    return (
+      paymentsPaused ||
+      isBlockedProject ||
+      isAddressListedInOFAC ||
+      isJuicecrowdProject
+    )
+  }, [
+    isAddressListedInOFAC,
+    paymentsPaused,
+    isBlockedProject,
+    isJuicecrowdProject,
+  ])
 
   const paymentTooltip = useMemo(() => {
     if (paymentsPaused || isJuicecrowdProject) {
@@ -52,7 +64,7 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
     return {
       open: false,
     }
-  }, [paymentsPaused, isAddressListedInOFAC])
+  }, [paymentsPaused, isAddressListedInOFAC, isJuicecrowdProject])
 
   return (
     <DisplayCard

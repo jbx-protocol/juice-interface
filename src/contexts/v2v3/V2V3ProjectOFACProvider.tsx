@@ -23,27 +23,22 @@ export default function V2V3ProjectOFACProvider({
     return projectMetadata?.projectRequiredOFACCheck && isConnected
   }, [projectMetadata?.projectRequiredOFACCheck, isConnected])
 
-  const checkIsAddressListedInOFAC = useCallback(
-    async (address: string) => {
-      try {
-        const { data } = await axios.get<{ isGoodAddress: boolean }>(
-          `${OFAC_API}?address=${address}`,
-        )
-        setIsListed(!data.isGoodAddress)
-      } catch (err) {
-        setIsListed(true)
-      }
-    },
-    [setIsListed],
-  )
+  const checkIsAddressListedInOFAC = useCallback(async (address: string) => {
+    try {
+      const { data } = await axios.get<{ isGoodAddress: boolean }>(
+        `${OFAC_API}?address=${address}`,
+      )
+      setIsListed(!data.isGoodAddress)
+    } catch (err) {
+      setIsListed(true)
+    }
+  }, [])
 
   useEffect(() => {
     if (shouldCheckOfac && userAddress) {
       checkIsAddressListedInOFAC(userAddress)
     }
-    // unexpected dependency checkIsAddressListedInOFAC
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shouldCheckOfac, userAddress])
+  }, [shouldCheckOfac, userAddress, checkIsAddressListedInOFAC])
 
   return (
     <ProjectOFACContext.Provider value={{ isAddressListedInOFAC }}>

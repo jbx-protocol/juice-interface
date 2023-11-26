@@ -17,7 +17,10 @@ export function JuiceboxProjectBeneficiary({
   return (
     <div>
       <div className="flex gap-2">
-        <V2V3ProjectHandleLink projectId={parseInt(split.projectId)} />
+        <V2V3ProjectHandleLink
+          projectId={parseInt(split.projectId)}
+          withProjectAvatar
+        />
         <AllocatorBadge allocator={split.allocator} />
       </div>
       {split.allocator === NULL_ALLOCATOR_ADDRESS ? (

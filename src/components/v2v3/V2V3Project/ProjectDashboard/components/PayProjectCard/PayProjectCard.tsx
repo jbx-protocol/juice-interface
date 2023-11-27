@@ -25,10 +25,7 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
   const { validationSchema, paymentsPaused, addPay } = usePayProjectCard()
   const determiningIfProjectCanReceivePayments = paymentsPaused === undefined
 
-  const isJuicecrowdProject = useMemo(
-    () => projectMetadata?.domain === 'juicecrowd',
-    [projectMetadata?.domain],
-  )
+  const isJuicecrowdProject = projectMetadata?.domain === 'juicecrowd'
 
   const isPaymentDisabled = useMemo(() => {
     return (

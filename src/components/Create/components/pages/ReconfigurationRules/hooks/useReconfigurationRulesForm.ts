@@ -20,6 +20,7 @@ type ReconfigurationRulesFormProps = Partial<{
   allowControllerConfiguration: boolean
   allowTerminalMigration: boolean
   allowControllerMigration: boolean
+  projectRequiredOFACCheck: boolean
 }>
 
 export const useReconfigurationRulesForm = () => {
@@ -177,6 +178,13 @@ export const useReconfigurationRulesForm = () => {
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setAllowControllerMigration,
     formatter: v => !!v,
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'projectRequiredOFACCheck',
+    ignoreUndefined: true,
+    dispatchFunction: editingV2ProjectActions.setRequiredOFACCheck,
+    formatter: v => v,
   })
 
   return { form, initialValues }

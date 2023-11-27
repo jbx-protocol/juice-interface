@@ -163,13 +163,6 @@ export const useProjectDetailsForm = () => {
   })
   useFormDispatchWatch({
     form,
-    fieldName: 'projectRequiredOFACCheck',
-    ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setRequiredOFACCheck,
-    formatter: v => v,
-  })
-  useFormDispatchWatch({
-    form,
     fieldName: 'projectTelegram',
     ignoreUndefined: true,
     dispatchFunction: editingV2ProjectActions.setTelegram,

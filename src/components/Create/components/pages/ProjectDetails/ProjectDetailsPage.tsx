@@ -11,7 +11,6 @@ import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/inputs/PrefixedInput'
-import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { RichEditor } from 'components/RichEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -209,19 +208,6 @@ export const ProjectDetailsPage: React.FC<
               tooltip={t`Show a disclosure, a message, or a warning to supporters before they pay your project`}
             >
               <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
-            </Form.Item>
-          </CreateCollapse.Panel>
-          <CreateCollapse.Panel
-            key={4}
-            header={<OptionalHeader header={t`Additional settings`} />}
-            hideDivider
-          >
-            <Form.Item
-              name="projectRequiredOFACCheck"
-              label={t`OFAC Sanctions screening`}
-              extra={t`Activating this option enables running the user's wallet address against OFAC’s Specially Designated Nationals (SDN) list`}
-            >
-              <JuiceSwitch label={t`Check User Wallet Address`} />
             </Form.Item>
           </CreateCollapse.Panel>
           {featureFlagEnabled(

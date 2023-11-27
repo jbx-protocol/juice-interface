@@ -16,6 +16,7 @@ export const useRulesReview = () => {
     fundingCycleData: { ballot: customAddress },
     reconfigurationRuleSelection,
     fundingCycleMetadata,
+    projectMetadata,
   } = useAppSelector(state => state.editingV2Project)
 
   const pausePayments = useMemo(() => {
@@ -47,6 +48,9 @@ export const useRulesReview = () => {
   const holdFees = useMemo(() => {
     return formatBoolean(fundingCycleMetadata.holdFees)
   }, [fundingCycleMetadata.holdFees])
+  const ofac = useMemo(() => {
+    return formatBoolean(projectMetadata.projectRequiredOFACCheck)
+  }, [projectMetadata.projectRequiredOFACCheck])
 
   return {
     customAddress,
@@ -57,5 +61,6 @@ export const useRulesReview = () => {
     controllerMigration,
     strategy,
     holdFees,
+    ofac,
   }
 }

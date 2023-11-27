@@ -210,7 +210,6 @@ export const ProjectDetailsPage: React.FC<
               <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
             </Form.Item>
           </CreateCollapse.Panel>
-
           {featureFlagEnabled(
             FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION,
           ) && (

@@ -13,6 +13,7 @@ export const RulesReview = () => {
     terminalMigration,
     controllerMigration,
     holdFees,
+    ofac,
   } = useRulesReview()
 
   return (
@@ -61,6 +62,10 @@ export const RulesReview = () => {
         desc={
           <div className="text-base font-medium">{controllerMigration}</div>
         }
+      />
+      <ReviewDescription
+        title={t`OFAC Sanctions screening`}
+        desc={<div className="text-base font-medium">{ofac}</div>}
       />
     </div>
   )

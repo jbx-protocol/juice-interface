@@ -1415,6 +1415,9 @@ msgstr ""
 msgid "Collection Symbol"
 msgstr ""
 
+msgid "NFTs can't be purchased because your wallet address failed compliance check."
+msgstr ""
+
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have the Juicebox protocol internally track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
@@ -2417,6 +2420,9 @@ msgstr ""
 msgid "When enabled, fees are held in the project instead of being processed automatically. <0>Learn more.</0>"
 msgstr ""
 
+msgid "You can't pay this project because your wallet address failed compliance check."
+msgstr ""
+
 msgid "No, keep"
 msgstr ""
 
@@ -3101,6 +3107,9 @@ msgstr ""
 msgid "Issuance reduction rate"
 msgstr ""
 
+msgid "This project's NFTs can only be purchased on juicecrowd.gg."
+msgstr ""
+
 msgid "{0}% to {1}"
 msgstr ""
 
@@ -3432,9 +3441,6 @@ msgid "Each cycle, the project will issue {discountRate}% fewer tokens per ETH."
 msgstr ""
 
 msgid "Payout total (max.)"
-msgstr ""
-
-msgid "Nfts for this project are only purchasable through juicecrowd.gg"
 msgstr ""
 
 msgid "Prevent NFT overspending"

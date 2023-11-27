@@ -9,6 +9,7 @@ import { NftRewardTier } from 'models/nftRewards'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { useProjectIsOFACListed } from '../../../hooks/useProjectIsOFACListed'
 import { useProjectMetadata } from '../../../hooks/useProjectMetadata'
 import { AddNftButton } from './AddNftButton'
 import { NftDetails } from './NftDetails'
@@ -35,11 +36,13 @@ export function NftReward({
   onDeselect,
   hideAttributes,
 }: NftRewardProps) {
-  const { projectMetadata } = useProjectMetadata()
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
   const cart = useProjectCart()
   const nftsEnabledForPay = useNftRewardsEnabledForPay()
+
+  const { projectMetadata } = useProjectMetadata()
   const { fundingCycleMetadata } = useProjectContext()
+  const { isAddressListedInOFAC } = useProjectIsOFACListed()
 
   const quantitySelected = useMemo(
     () => cart.nftRewards.find(nft => nft.id === rewardTier?.id)?.quantity ?? 0,
@@ -70,23 +73,35 @@ export function NftReward({
     return projectMetadata?.domain === 'juicecrowd'
   }, [projectMetadata?.domain])
 
-  const disabled =
-    !hasRemainingSupply ||
-    !nftsEnabledForPay ||
-    fundingCycleMetadata?.pausePay ||
-    isJuicecrowdNft
-
+  const disabled = useMemo(() => {
+    return (
+      !hasRemainingSupply ||
+      !nftsEnabledForPay ||
+      fundingCycleMetadata?.pausePay ||
+      isAddressListedInOFAC ||
+      isJuicecrowdNft
+    )
+  }, [
+    hasRemainingSupply,
+    nftsEnabledForPay,
+    fundingCycleMetadata?.pausePay,
+    isAddressListedInOFAC,
+    isJuicecrowdNft,
+  ])
   const disabledReason = useMemo(() => {
     if (!hasRemainingSupply) return t`Sold out`
     if (!nftsEnabledForPay) return t`NFTs are not enabled for pay`
     if (fundingCycleMetadata?.pausePay) return t`Payments are paused`
     if (isJuicecrowdNft)
-      return t`Nfts for this project are only purchasable through juicecrowd.gg`
+      return t`This project's NFTs can only be purchased on juicecrowd.gg.`
+    if (isAddressListedInOFAC)
+      return t`NFTs can't be purchased because your wallet address failed compliance check.`
   }, [
-    hasRemainingSupply,
-    nftsEnabledForPay,
-    fundingCycleMetadata?.pausePay,
     isJuicecrowdNft,
+    nftsEnabledForPay,
+    hasRemainingSupply,
+    isAddressListedInOFAC,
+    fundingCycleMetadata?.pausePay,
   ])
 
   return (

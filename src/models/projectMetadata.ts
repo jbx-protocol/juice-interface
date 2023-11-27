@@ -85,6 +85,7 @@ type ProjectMetadataV10 = Partial<
     softTargetAmount: string
     softTargetCurrency: string
     domain: string
+    projectRequiredOFACCheck: boolean
   }
 >
 

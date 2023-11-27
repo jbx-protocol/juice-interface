@@ -44,6 +44,7 @@ export function ReviewConfirmModal({
       editingFundingCycleConfig,
       memo: memo ?? '',
       onComplete: () => {
+        editCycleForm?.resetFields()
         setEditCycleSuccessModalOpen(true)
         onClose()
       },

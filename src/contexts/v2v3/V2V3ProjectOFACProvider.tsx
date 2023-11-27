@@ -1,13 +1,10 @@
+import axios from 'axios'
+import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
+import { ProjectOFACContext } from 'contexts/shared/ProjectOFACContext'
+import { useWallet } from 'hooks/Wallet'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 
-import axios from 'axios'
-
-import { useWallet } from 'hooks/Wallet'
-
-import { ProjectOFACContext } from 'contexts/shared/ProjectOFACContext'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
-
-import { OFAC_API } from 'constants/links'
+const OFAC_API = 'https://api.wewantjusticedao.org/donation/validate'
 
 export default function V2V3ProjectOFACProvider({
   children,

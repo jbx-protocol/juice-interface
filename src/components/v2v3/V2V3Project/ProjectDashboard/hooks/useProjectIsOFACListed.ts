@@ -1,5 +1,4 @@
+import { ProjectOFACContext } from 'contexts/shared/ProjectOFACContext'
 import { useContext } from 'react'
 
-import { ProjectOFACContext } from 'contexts/shared/ProjectOFACContext'
-
-export const useProjectOFACContext = () => useContext(ProjectOFACContext)
+export const useProjectIsOFACListed = () => useContext(ProjectOFACContext)

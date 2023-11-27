@@ -1,17 +1,15 @@
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { NftPreview } from 'components/NftRewards/NftPreview'
-import {
-  useProjectCart,
-  useProjectContext,
-  useProjectOFACContext,
-} from 'components/v2v3/V2V3Project/ProjectDashboard/hooks'
+import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { useNftRewardsEnabledForPay } from 'hooks/JB721Delegate/useNftRewardsEnabledForPay'
 import { NftRewardTier } from 'models/nftRewards'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { useProjectIsOFACListed } from '../../../hooks/useProjectIsOFACListed'
 import { useProjectMetadata } from '../../../hooks/useProjectMetadata'
 import { AddNftButton } from './AddNftButton'
 import { NftDetails } from './NftDetails'
@@ -44,7 +42,7 @@ export function NftReward({
 
   const { projectMetadata } = useProjectMetadata()
   const { fundingCycleMetadata } = useProjectContext()
-  const { isAddressListedInOFAC } = useProjectOFACContext()
+  const { isAddressListedInOFAC } = useProjectIsOFACListed()
 
   const quantitySelected = useMemo(
     () => cart.nftRewards.find(nft => nft.id === rewardTier?.id)?.quantity ?? 0,

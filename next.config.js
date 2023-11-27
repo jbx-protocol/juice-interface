@@ -64,7 +64,7 @@ const CONNECT_SRC = [
   'wss://*.hotjar.com',
   'https://*.safe.global',
   'https://*.snapshot.org',
-  'https://api.wewantjusticedao.org',
+  'https://api.wewantjusticedao.org', // OFAC check
   'https://*.wallet.coinbase.com',
   ...WALLET_CONNECT_URLS,
   'https://*.supabase.co',

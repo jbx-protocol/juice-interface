@@ -2,21 +2,26 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Empty } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import Loading from 'components/Loading'
+import TransactionModal from 'components/modals/TransactionModal'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
 import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/useUpdateCurrentCollection'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useCallback, useMemo, useState } from 'react'
+import { TransactionSuccessModal } from '../../../TransactionSuccessModal'
 import { useEditingNfts } from '../hooks/useEditingNfts'
 
 export function EditNftsSection() {
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
+  const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false)
+
   const { rewardTiers, setRewardTiers, editedRewardTierIds, loading } =
     useEditingNfts()
   const { value: hasExistingNfts } = useHasNftRewards()
-  const updateExistingCollection = useUpdateCurrentCollection({
+  const { updateExistingCollection, txLoading } = useUpdateCurrentCollection({
     editedRewardTierIds,
     rewardTiers,
+    onConfirmed: () => setSuccessModalOpen(true),
   })
   const { projectMetadata } = useProjectMetadata()
 
@@ -85,9 +90,26 @@ export function EditNftsSection() {
         loading={submitLoading}
       >
         <span>
-          <Trans>Deploy edited NFTs</Trans>
+          <Trans>Edit NFTs</Trans>
         </span>
       </Button>
+      <TransactionModal transactionPending open={txLoading} />
+      <TransactionSuccessModal
+        open={successModalOpen}
+        onClose={() => setSuccessModalOpen(false)}
+        content={
+          <>
+            <div className="w-80 pt-1 text-2xl font-medium">
+              <Trans>Your NFTs have been edited successfully</Trans>
+            </div>
+            <div className="text-secondary pb-6">
+              <Trans>
+                New NFTs will available on your project page shortly.
+              </Trans>
+            </div>
+          </>
+        }
+      />
     </>
   )
 }

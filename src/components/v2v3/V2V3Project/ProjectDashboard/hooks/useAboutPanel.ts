@@ -24,6 +24,7 @@ export const useAboutPanel = () => {
     projectMetadata?.telegram,
     projectMetadata?.twitter,
   ])
+
   const description = useMemo(
     () =>
       projectMetadata?.description

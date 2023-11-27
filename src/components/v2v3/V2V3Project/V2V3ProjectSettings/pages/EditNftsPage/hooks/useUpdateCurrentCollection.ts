@@ -3,23 +3,20 @@ import { NEW_NFT_ID_LOWER_LIMIT } from 'components/NftRewards/RewardsList/AddEdi
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { useAdjustTiersTx } from 'hooks/JB721Delegate/transactor/useAdjustTiersTx'
 import { NftRewardTier } from 'models/nftRewards'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext } from 'react'
 import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
+import { reloadWindow } from 'utils/windowUtils'
 
 export function useUpdateCurrentCollection({
   rewardTiers,
   editedRewardTierIds,
-  onConfirmed,
 }: {
   rewardTiers: NftRewardTier[] | undefined
   editedRewardTierIds: number[]
-  onConfirmed?: VoidFunction
 }) {
   const adjustTiersTx = useAdjustTiersTx()
   const { version } = useContext(JB721DelegateContractsContext)
-
-  const [txLoading, setTxLoading] = useState<boolean>(false)
 
   const updateExistingCollection = useCallback(async () => {
     if (!rewardTiers || !version) {
@@ -49,28 +46,20 @@ export function useUpdateCurrentCollection({
       return
     }
 
-    return await adjustTiersTx(
+    await adjustTiersTx(
       {
         newTiers,
         tierIdsChanged: editedRewardTierIds,
       },
       {
         onConfirmed: () => {
-          setTxLoading(false)
-          onConfirmed?.()
-        },
-        onDone: () => {
-          setTxLoading(true)
-        },
-        onCancelled: () => {
-          setTxLoading(false)
+          // reloading because if you go to edit again before new tiers have
+          // loaded from contracts it could cause problems (no tier.id's)
+          reloadWindow()
         },
       },
     )
-  }, [editedRewardTierIds, adjustTiersTx, rewardTiers, version, onConfirmed])
+  }, [editedRewardTierIds, adjustTiersTx, rewardTiers, version])
 
-  return {
-    updateExistingCollection,
-    txLoading,
-  }
+  return updateExistingCollection
 }

@@ -1,10 +1,18 @@
 import axios from 'axios'
 import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
-import { ProjectOFACContext } from 'contexts/shared/ProjectOFACContext'
 import { useWallet } from 'hooks/Wallet'
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { ReactNode, createContext } from 'react'
+import { useQuery } from 'react-query'
 
 const OFAC_API = 'https://api.wewantjusticedao.org/donation/validate'
+
+interface ProjectOFACContextType {
+  isAddressListedInOFAC?: boolean
+}
+
+export const ProjectOFACContext = createContext<ProjectOFACContextType>({
+  isAddressListedInOFAC: undefined,
+})
 
 export default function V2V3ProjectOFACProvider({
   children,
@@ -14,28 +22,29 @@ export default function V2V3ProjectOFACProvider({
   const { userAddress, isConnected } = useWallet()
   const { projectMetadata } = useProjectMetadata()
 
-  const [isAddressListedInOFAC, setIsListed] = useState<boolean | undefined>()
+  const { data: isAddressListedInOFAC } = useQuery(
+    ['isAddressListedInOFAC', userAddress],
+    async () => {
+      if (!(projectMetadata?.projectRequiredOFACCheck && isConnected)) {
+        return
+      }
 
-  const shouldCheckOfac = useMemo(() => {
-    return projectMetadata?.projectRequiredOFACCheck && isConnected
-  }, [projectMetadata?.projectRequiredOFACCheck, isConnected])
+      try {
+        const { data } = await axios.get<{ isGoodAddress: boolean }>(
+          `${OFAC_API}?address=${userAddress}`,
+        )
 
-  const checkIsAddressListedInOFAC = useCallback(async (address: string) => {
-    try {
-      const { data } = await axios.get<{ isGoodAddress: boolean }>(
-        `${OFAC_API}?address=${address}`,
-      )
-      setIsListed(!data.isGoodAddress)
-    } catch (err) {
-      setIsListed(true)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (shouldCheckOfac && userAddress) {
-      checkIsAddressListedInOFAC(userAddress)
-    }
-  }, [shouldCheckOfac, userAddress, checkIsAddressListedInOFAC])
+        return !data.isGoodAddress
+      } catch (e) {
+        console.warn(e)
+        /**
+         * If the request fails, we assume the address is listed in OFAC.
+         * A bad actor could block or otherwise cause the request to fail.
+         */
+        return true
+      }
+    },
+  )
 
   return (
     <ProjectOFACContext.Provider value={{ isAddressListedInOFAC }}>

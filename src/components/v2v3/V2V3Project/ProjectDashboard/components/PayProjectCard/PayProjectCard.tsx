@@ -51,7 +51,7 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
 
     if (isAddressListedInOFAC) {
       return {
-        title: t`Unfortunately, this action cannot be completed because your wallet address failed compliance check`,
+        title: t`You can't pay this project because your wallet address failed compliance check.`,
         open: true,
       }
     }

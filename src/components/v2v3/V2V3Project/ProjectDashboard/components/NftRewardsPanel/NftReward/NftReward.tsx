@@ -93,9 +93,9 @@ export function NftReward({
     if (!nftsEnabledForPay) return t`NFTs are not enabled for pay`
     if (fundingCycleMetadata?.pausePay) return t`Payments are paused`
     if (isJuicecrowdNft)
-      return t`Nfts for this project are only purchasable through juicecrowd.gg`
+      return t`This project's NFTs can only be purchased on juicecrowd.gg.`
     if (isAddressListedInOFAC)
-      return t`Unfortunately, this action cannot be completed because your wallet address failed compliance check`
+      return t`NFTs can't be purchased because your wallet address failed compliance check.`
   }, [
     isJuicecrowdNft,
     nftsEnabledForPay,

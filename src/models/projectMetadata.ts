@@ -80,11 +80,11 @@ type ProjectMetadataV9 = Partial<
 type ProjectMetadataV10 = Partial<
   Omit<ProjectMetadataV9, 'version'> & {
     version: 10
-    domain: string
     introVideoUrl: string
     introImageUri: string
     softTargetAmount: string
     softTargetCurrency: string
+    domain: string
     projectRequiredOFACCheck: boolean
   }
 >

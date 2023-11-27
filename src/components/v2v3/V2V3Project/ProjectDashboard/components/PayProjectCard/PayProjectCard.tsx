@@ -45,14 +45,14 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
     if (paymentsPaused || isJuicecrowdProject) {
       return {
         title: t`Payments to this project are paused in this cycle.`,
-        open: paymentsPaused || isJuicecrowdProject ? undefined : false,
+        open: undefined,
       }
     }
 
     if (isAddressListedInOFAC) {
       return {
         title: t`You can't pay this project because your wallet address failed compliance check.`,
-        open: true,
+        open: undefined,
       }
     }
 

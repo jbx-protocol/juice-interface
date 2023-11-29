@@ -1949,6 +1949,9 @@ msgstr ""
 msgid "Built for ideas like yours"
 msgstr ""
 
+msgid "It looks like this is a JuiceCrowd project."
+msgstr ""
+
 msgid "The <0>Juicebox protocol</0> could be vulnerable to bugs or hacks. All of the ETH moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses."
 msgstr ""
 
@@ -2769,6 +2772,9 @@ msgid "Current #1 trending"
 msgstr ""
 
 msgid "Attach a sticker"
+msgstr ""
+
+msgid "Open on Juicecrowd"
 msgstr ""
 
 msgid "Disclose any details to your contributors before they pay your project."
@@ -3654,6 +3660,9 @@ msgid "The unallocated portion of your total will go to the wallet that owns the
 msgstr ""
 
 msgid "New"
+msgstr ""
+
+msgid "Some functionality may not work on juicebox.money, check it out on Juicecrowd for the full experience."
 msgstr ""
 
 msgid "Select NFTs to redeem"

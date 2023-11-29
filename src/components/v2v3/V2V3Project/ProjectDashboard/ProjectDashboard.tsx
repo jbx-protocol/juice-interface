@@ -17,6 +17,7 @@ import { ProjectUpdatesProvider } from './components/ProjectUpdatesProvider/Proj
 import { SuccessPayView } from './components/SuccessPayView/SuccessPayView'
 import { useProjectMetadata } from './hooks/useProjectMetadata'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
+import { JuiceCrowdRedirectModal } from './components/JuiceCrowdRedirectModal'
 
 export const ProjectDashboard = () => {
   const { projectPayReceipt } = useProjectPageQueries()
@@ -64,6 +65,7 @@ export const ProjectDashboard = () => {
                         />
                       </div>
                       <ProjectTabs className="mt-8" />
+                      <JuiceCrowdRedirectModal />
                     </div>
                   </div>
                 </>

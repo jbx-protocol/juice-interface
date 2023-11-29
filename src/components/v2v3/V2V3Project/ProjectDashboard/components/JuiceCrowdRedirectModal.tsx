@@ -10,7 +10,7 @@ export function JuiceCrowdRedirectModal() {
   const { projectMetadata, projectId } = useProjectMetadata()
 
   const isJuiceCrowd = projectMetadata?.domain === 'juicecrowd'
-  const [open, setOpen] = useState<boolean>(isJuiceCrowd || true)
+  const [open, setOpen] = useState<boolean>(isJuiceCrowd)
 
   if (!projectId) return null
 

@@ -10,8 +10,10 @@ import {
   payoutsTableMenuItemsIconClass,
   payoutsTableMenuItemsLabelClass,
 } from './PayoutTableSettings'
+import { usePayoutsTableContext } from './context/PayoutsTableContext'
 
 export function CurrencySwitcher() {
+  const { setCurrency: setCurrencyName } = usePayoutsTableContext()
   const { currency, setCurrency, distributionLimit, setDistributionLimit } =
     usePayoutsTable()
   const converter = useCurrencyConverter()
@@ -23,9 +25,13 @@ export function CurrencySwitcher() {
       ) : (
         <Trans>Amount (USD)</Trans>
       )}
-      <ChevronDownIcon className="h-4 w-4" />
+      {setCurrencyName ? <ChevronDownIcon className="h-4 w-4" /> : null}
     </div>
   )
+
+  if (!setCurrencyName) {
+    return button
+  }
 
   const itemsClassName = `${payoutsTableMenuItemsLabelClass} text-primary`
   const items =

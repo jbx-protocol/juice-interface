@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { Allocation } from 'components/v2v3/shared/Allocation/Allocation'
+import { twMerge } from 'tailwind-merge'
 import { getV2V3CurrencyOption } from 'utils/v2v3/currency'
 import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { CurrencySwitcher } from './CurrencySwitcher'
@@ -15,7 +16,7 @@ const Row = PayoutsTableRow
 const Cell = PayoutsTableCell
 
 export function PayoutsTableBody() {
-  const { topAccessory } = usePayoutsTableContext()
+  const { topAccessory, hideHeader } = usePayoutsTableContext()
   const {
     payoutSplits,
     currency,
@@ -34,7 +35,7 @@ export function PayoutsTableBody() {
           setAllocationCurrency={setCurrency}
         >
           <div className="w-full text-left">
-            <HeaderRows />
+            {hideHeader ? null : <HeaderRows />}
             <div>
               {emptyState ? (
                 <Row className="text-center">
@@ -45,7 +46,13 @@ export function PayoutsTableBody() {
               ) : (
                 <>
                   {payoutSplits.length > 0 ? (
-                    <Row className="font-medium" highlighted>
+                    <Row
+                      className={twMerge(
+                        'font-medium',
+                        hideHeader ? 'rounded-t-lg border-t-0' : null,
+                      )}
+                      highlighted
+                    >
                       <Cell>
                         <Trans>Address or ID</Trans>
                       </Cell>

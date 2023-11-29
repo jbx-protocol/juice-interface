@@ -5,8 +5,11 @@ import EthereumAddress from 'components/EthereumAddress'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { Split } from 'models/splits'
 import { formatDate } from 'utils/format/formatDate'
+import { usePayoutsTableContext } from './context/PayoutsTableContext'
 
 export function PayoutTitle({ payoutSplit }: { payoutSplit: Split }) {
+  const { showAvatars } = usePayoutsTableContext()
+
   const isProject =
     Boolean(payoutSplit.projectId) && payoutSplit.projectId !== '0x00'
 
@@ -15,9 +18,13 @@ export function PayoutTitle({ payoutSplit }: { payoutSplit: Split }) {
       {isProject ? (
         <V2V3ProjectHandleLink
           projectId={parseInt(payoutSplit.projectId as string)}
+          withProjectAvatar={showAvatars}
         />
       ) : (
-        <EthereumAddress address={payoutSplit.beneficiary} />
+        <EthereumAddress
+          address={payoutSplit.beneficiary}
+          withEnsAvatar={showAvatars}
+        />
       )}
       {!!payoutSplit.lockedUntil && (
         <Tooltip

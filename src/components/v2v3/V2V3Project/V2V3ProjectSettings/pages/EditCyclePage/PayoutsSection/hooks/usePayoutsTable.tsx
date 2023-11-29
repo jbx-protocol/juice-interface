@@ -120,19 +120,19 @@ export const usePayoutsTable = () => {
    * @param currency - Currency as a V2V3CurrencyOption (1 | 2)
    */
   function setCurrency(currency: V2V3CurrencyOption) {
-    setCurrencyName(V2V3CurrencyName(currency) ?? 'ETH')
+    setCurrencyName?.(V2V3CurrencyName(currency) ?? 'ETH')
     setFormHasUpdated(true)
   }
 
   function setSplits100Percent() {
-    setPayoutSplits(ensureSplitsSumTo100Percent({ splits: payoutSplits }))
+    setPayoutSplits?.(ensureSplitsSumTo100Percent({ splits: payoutSplits }))
   }
 
   function _setPayoutSplits(splits: Split[]) {
     if (distributionLimitIsInfinite) {
-      setPayoutSplits(splits)
+      setPayoutSplits?.(splits)
     } else {
-      setPayoutSplits(ensureSplitsSumTo100Percent({ splits }))
+      setPayoutSplits?.(ensureSplitsSumTo100Percent({ splits }))
     }
     setFormHasUpdated(true)
   }
@@ -142,7 +142,7 @@ export const usePayoutsTable = () => {
       distributionLimit !== undefined
         ? round(distributionLimit, WAD_DECIMALS)
         : undefined
-    setDistributionLimit(_distributionLimit)
+    setDistributionLimit?.(_distributionLimit)
   }
 
   /**
@@ -382,7 +382,7 @@ export const usePayoutsTable = () => {
   }
 
   function handleDeleteAllPayoutSplits() {
-    setDistributionLimit(0)
+    setDistributionLimit?.(0)
     _setPayoutSplits([])
   }
 

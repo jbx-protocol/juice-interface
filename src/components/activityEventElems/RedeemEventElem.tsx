@@ -24,6 +24,17 @@ function decodeJB721DelegateRedeemMetadata(
   }
 }
 
+const getRedeemedTokenIds = (metadata: string) => {
+  try {
+    const [, , redeemedTokenIds] = metadata
+      ? decodeJB721DelegateRedeemMetadata(metadata) ?? []
+      : []
+    return redeemedTokenIds
+  } catch (e) {
+    return []
+  }
+}
+
 export default function RedeemEventElem({
   event,
   withProjectLink,
@@ -35,9 +46,7 @@ export default function RedeemEventElem({
 
   if (!event) return null
 
-  const [, , redeemedTokenIds] = event.metadata
-    ? decodeJB721DelegateRedeemMetadata(event.metadata) ?? []
-    : []
+  const redeemedTokenIds = getRedeemedTokenIds(event.metadata)
 
   const redeemedTokens = (
     <TokenAmount amountWad={event.amount} tokenSymbol={tokenSymbol} />
@@ -45,8 +54,8 @@ export default function RedeemEventElem({
 
   return (
     <ActivityEvent
-      event={event}
       header={t`Redeemed`}
+      event={event}
       withProjectLink={withProjectLink}
       subject={
         <div className="text-base font-medium">

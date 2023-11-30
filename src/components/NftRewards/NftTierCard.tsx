@@ -10,7 +10,6 @@ import { twMerge } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 import { parseWad } from 'utils/format/formatNumber'
 import { cidFromUrl, ipfsGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
-import { NftPreview } from './NftPreview'
 import { QuantitySelector } from './QuantitySelector'
 
 // The clickable cards on the project page
@@ -22,7 +21,6 @@ export function NftTierCard({
   maxQuantity,
   onSelect,
   onDeselect,
-  previewDisabled,
   hideAttributes,
 }: {
   rewardTier?: NftRewardTier
@@ -32,10 +30,8 @@ export function NftTierCard({
   maxQuantity?: number
   onSelect: (quantity?: number) => void
   onDeselect: (quantity?: number) => void
-  previewDisabled?: boolean
   hideAttributes?: boolean
 }) {
-  const [previewVisible, setPreviewVisible] = useState<boolean>(false)
   // used to return to previous state on second click if user accidentally unselected the NFT
   const [previousQuantity, setPreviousQuantity] = useState<number>(1)
 
@@ -58,12 +54,7 @@ export function NftTierCard({
     maxQuantity && maxQuantity > 1 && hasQuantitySelected,
   )
 
-  // When previewDisabled, we want card to deselect when clicked while it is selected.
-  const onClickNoPreview = _isSelected ? onDeselect : onSelect
-
-  const openPreview = () => {
-    setPreviewVisible(true)
-  }
+  const toggleSelected = _isSelected ? onDeselect : onSelect
 
   const remainingSupply = rewardTier?.remainingSupply
   const hasRemainingSupply = remainingSupply && remainingSupply > 0
@@ -90,11 +81,7 @@ export function NftTierCard({
           'flex h-full w-full cursor-pointer select-none flex-col rounded-lg shadow-smoke-300 outline-2 outline-bluebs-500 transition-shadow duration-100 hover:shadow-md dark:shadow-grey-900',
           _isSelected ? 'shadow-md outline' : '',
         )}
-        onClick={
-          (_isSelected && !previewDisabled) || !hasRemainingSupply
-            ? openPreview
-            : () => onClickNoPreview()
-        }
+        onClick={() => toggleSelected()}
         role="button"
       >
         {/* Image/video container */}
@@ -191,14 +178,6 @@ export function NftTierCard({
           ) : null}
         </div>
       </div>
-      {rewardTier && !previewDisabled ? (
-        <NftPreview
-          open={previewVisible}
-          setOpen={setPreviewVisible}
-          rewardTier={rewardTier}
-          fileUrl={fileUrl}
-        />
-      ) : null}
     </>
   )
 }

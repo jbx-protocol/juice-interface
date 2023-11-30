@@ -1,16 +1,17 @@
 import { Trans } from '@lingui/macro'
 import { Button, Modal } from 'antd'
-import { getJuicecrowdUrl } from 'components/DomainBadge'
 import ExternalLink from 'components/ExternalLink'
+import { useIsJuicecrowd } from 'hooks/v2v3/useIsJuiceCrowd'
 import Image from 'next/image'
 import { useState } from 'react'
 import { useProjectMetadata } from '../hooks/useProjectMetadata'
+import { getJuicecrowdUrl } from 'utils/juicecrowd'
 
-export function JuiceCrowdRedirectModal() {
-  const { projectMetadata, projectId } = useProjectMetadata()
+export function JuicecrowdRedirectModal() {
+  const { projectId } = useProjectMetadata()
 
-  const isJuiceCrowd = projectMetadata?.domain === 'juicecrowd'
-  const [open, setOpen] = useState<boolean>(isJuiceCrowd)
+  const isJuicecrowd = useIsJuicecrowd()
+  const [open, setOpen] = useState<boolean>(isJuicecrowd)
 
   if (!projectId) return null
 
@@ -26,13 +27,13 @@ export function JuiceCrowdRedirectModal() {
         <div className="mb-3 flex h-20 w-20 items-center justify-center rounded-full bg-bluebs-50 dark:bg-bluebs-900">
           <Image
             src="/assets/images/juicecrowd-logo.webp"
-            alt="JuiceCrowd logo"
+            alt="Juicecrowd logo"
             height={35}
             width={35}
           />
         </div>
         <div className="text-xl font-medium">
-          <Trans>It looks like this is a JuiceCrowd project.</Trans>
+          <Trans>It looks like this is a Juicecrowd project.</Trans>
         </div>
         <p className="text-base">
           <Trans>
@@ -41,7 +42,7 @@ export function JuiceCrowdRedirectModal() {
           </Trans>
         </p>
       </div>
-      <div className="-mb-4 flex w-full flex-col gap-2 pt-4 md:flex-row">
+      <div className="-mb-5 flex w-full flex-col gap-2 pt-4 md:flex-row">
         <Button
           type="default"
           onClick={() => setOpen(false)}

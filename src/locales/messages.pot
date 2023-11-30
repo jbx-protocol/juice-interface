@@ -998,6 +998,9 @@ msgstr ""
 msgid "Changes will take effect in your next cycle as long as it starts after your edit deadline."
 msgstr ""
 
+msgid "It looks like this is a Juicecrowd project."
+msgstr ""
+
 msgid "Reserved token recipients cannot exceed 100%"
 msgstr ""
 
@@ -1947,9 +1950,6 @@ msgid "Pay out ETH from your project to any Ethereum wallet or Juicebox project.
 msgstr ""
 
 msgid "Built for ideas like yours"
-msgstr ""
-
-msgid "It looks like this is a JuiceCrowd project."
 msgstr ""
 
 msgid "The <0>Juicebox protocol</0> could be vulnerable to bugs or hacks. All of the ETH moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses."

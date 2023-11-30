@@ -1,6 +1,7 @@
 import { Footer } from 'components/Footer/Footer'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
+import { useIsJuicecrowd } from 'hooks/v2v3/useIsJuiceCrowd'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BlockedProjectBanner } from './components/BlockedProjectBanner'
@@ -8,6 +9,7 @@ import { Cart } from './components/Cart/Cart'
 import { CoverPhoto } from './components/CoverPhoto/CoverPhoto'
 import { CurrentBalanceCard } from './components/CurrentBalanceCard/CurrentBalanceCard'
 import { FundingCycleCountdownProvider } from './components/FundingCycleCountdown/FundingCycleCountdownProvider'
+import { JuicecrowdRedirectModal } from './components/JuiceCrowdRedirectModal'
 import { NftRewardsCard } from './components/NftRewardsCard/NftRewardsCard'
 import { PayProjectCard } from './components/PayProjectCard/PayProjectCard'
 import { ProjectCartProvider } from './components/ProjectCartProvider/ProjectCartProvider'
@@ -15,23 +17,21 @@ import { ProjectHeader } from './components/ProjectHeader/ProjectHeader'
 import { ProjectTabs } from './components/ProjectTabs/ProjectTabs'
 import { ProjectUpdatesProvider } from './components/ProjectUpdatesProvider/ProjectUpdatesProvider'
 import { SuccessPayView } from './components/SuccessPayView/SuccessPayView'
-import { useProjectMetadata } from './hooks/useProjectMetadata'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
-import { JuiceCrowdRedirectModal } from './components/JuiceCrowdRedirectModal'
 
 export const ProjectDashboard = () => {
   const { projectPayReceipt } = useProjectPageQueries()
-  const { projectMetadata } = useProjectMetadata()
 
   const { value: hasNftRewards } = useHasNftRewards()
+  const isJuicecrowd = useIsJuicecrowd()
   const shouldShowNftCard = useMemo(() => {
     // disable juicecrowd nft rewards
-    if (projectMetadata?.domain === 'juicecrowd') {
+    if (isJuicecrowd) {
       return false
     }
 
     return hasNftRewards
-  }, [hasNftRewards, projectMetadata?.domain])
+  }, [hasNftRewards, isJuicecrowd])
 
   return (
     <TransactionProvider>
@@ -65,7 +65,7 @@ export const ProjectDashboard = () => {
                         />
                       </div>
                       <ProjectTabs className="mt-8" />
-                      <JuiceCrowdRedirectModal />
+                      <JuicecrowdRedirectModal />
                     </div>
                   </div>
                 </>

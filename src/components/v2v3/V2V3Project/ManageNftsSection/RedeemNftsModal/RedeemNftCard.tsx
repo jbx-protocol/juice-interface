@@ -67,7 +67,6 @@ export function RedeemNftCard({
       maxQuantity={1}
       isSelected={isSelected}
       loading={loading}
-      previewDisabled
       hideAttributes
     />
   )

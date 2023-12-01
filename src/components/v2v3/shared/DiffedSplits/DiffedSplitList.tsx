@@ -90,11 +90,13 @@ export default function DiffedSplitList({
   return (
     <div className="flex flex-col gap-1.5">
       {uniqueSplits.map(split => {
+        const splitIsRemoved = split.oldSplit === true
         return (
           <DiffedSplitItem
             props={{
               split,
               ...splitProps,
+              totalValue: splitIsRemoved ? previousTotalValue : totalValue,
             }}
             key={`${split.beneficiary}-${split.projectId}-${split.percent}`}
           />

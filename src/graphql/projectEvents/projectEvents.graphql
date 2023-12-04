@@ -159,6 +159,7 @@ query ProjectEvents(
       project {
         handle
       }
+      distributionFromProjectId
     }
     printReservesEvent {
       id

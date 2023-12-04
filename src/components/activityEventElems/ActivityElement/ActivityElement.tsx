@@ -35,12 +35,11 @@ const FromBeneficiary = ({
             </div>
           )}
           {distributionFromProjectId && (
-            <div className="flex gap-1">
+            <div className="flex items-baseline gap-1">
               Paid from:{' '}
               <V2V3ProjectHandleLink
                 projectId={distributionFromProjectId}
-                className="leading-3 dark:text-grey-900"
-                containerClassName="p-0"
+                className="leading-5 dark:text-grey-900"
               />
             </div>
           )}

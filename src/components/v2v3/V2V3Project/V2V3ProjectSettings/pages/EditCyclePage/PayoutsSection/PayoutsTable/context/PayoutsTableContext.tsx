@@ -4,12 +4,14 @@ import { ReactNode, createContext, useContext } from 'react'
 
 export interface PayoutsTableContextProps {
   payoutSplits: Split[]
-  setPayoutSplits: (payoutSplits: Split[]) => void
+  setPayoutSplits?: (payoutSplits: Split[]) => void
   currency: CurrencyName
-  setCurrency: (currency: CurrencyName) => void
+  setCurrency?: (currency: CurrencyName) => void
   distributionLimit: number | undefined
-  setDistributionLimit: (distributionLimit: number | undefined) => void
+  setDistributionLimit?: (distributionLimit: number | undefined) => void
   hideExplaination?: boolean
+  hideHeader?: boolean
+  showAvatars?: boolean
   topAccessory?: ReactNode
   hideSettings?: boolean
   addPayoutsDisabled?: boolean

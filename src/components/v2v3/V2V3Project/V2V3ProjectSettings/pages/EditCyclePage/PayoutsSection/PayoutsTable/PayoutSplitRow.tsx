@@ -11,6 +11,7 @@ import { PayoutSplitRowMenu } from './PayoutSplitRowMenu'
 import { PayoutTitle } from './PayoutTitle'
 import { PayoutsTableCell } from './PayoutsTableCell'
 import { PayoutsTableRow } from './PayoutsTableRow'
+import { usePayoutsTableContext } from './context/PayoutsTableContext'
 
 const Cell = PayoutsTableCell
 
@@ -27,6 +28,9 @@ export function PayoutSplitRow({
     setAmountPercentFieldHasEndingDecimal,
   ] = useState<boolean>(false)
 
+  const { setPayoutSplits } = usePayoutsTableContext()
+  const canEditSplits = Boolean(setPayoutSplits)
+
   const {
     currencyOrPercentSymbol,
     derivePayoutAmount,
@@ -37,11 +41,15 @@ export function PayoutSplitRow({
     distributionLimitIsInfinite,
   } = usePayoutsTable()
   const amount = derivePayoutAmount({ payoutSplit })
-  const isPercent = !amount
+  const isPercent = distributionLimitIsInfinite
 
-  const formattedAmountOrPercentage = isPercent
+  let formattedAmountOrPercentage = isPercent
     ? formattedPayoutPercent({ payoutSplitPercent: payoutSplit.percent })
     : round(amount, roundingPrecision).toString()
+
+  if (!canEditSplits) {
+    formattedAmountOrPercentage = `${currencyOrPercentSymbol}${formattedAmountOrPercentage}`
+  }
 
   const onAmountPercentageInputChange = (val: string | undefined) => {
     setAmountPercentFieldHasEndingDecimal(Boolean(val?.endsWith('.')))
@@ -92,30 +100,38 @@ export function PayoutSplitRow({
     lockedUntil: payoutSplit.lockedUntil,
   } as AddEditAllocationModalEntity
 
+  const _value = `${formattedAmountOrPercentage}${
+    amountPercentFieldHasEndingDecimal ? '.' : ''
+  }`
+
+  const paddingY = canEditSplits ? 'py-6' : 'py-3'
+
   return (
     <>
       <PayoutsTableRow className="text-primary text-sm">
-        <Cell className="py-6">
+        <Cell className={paddingY}>
           <PayoutTitle payoutSplit={payoutSplit} />
         </Cell>
-        <Cell className="py-6">
-          <div className="flex items-center gap-3">
-            <FormattedNumberInput
-              accessory={
-                <span className="text-sm">{currencyOrPercentSymbol}</span>
-              }
-              accessoryPosition="left"
-              value={`${formattedAmountOrPercentage}${
-                amountPercentFieldHasEndingDecimal ? '.' : ''
-              }`}
-              onChange={onAmountPercentageInputChange}
-              className="h-10 w-28 md:w-full"
-            />
-            <PayoutSplitRowMenu
-              onEditClick={() => setEditModalOpen(true)}
-              onDeleteClick={onDeleteClick}
-            />
-          </div>
+        <Cell className={paddingY}>
+          {setPayoutSplits ? (
+            <div className="flex items-center gap-3">
+              <FormattedNumberInput
+                accessory={
+                  <span className="text-sm">{currencyOrPercentSymbol}</span>
+                }
+                accessoryPosition="left"
+                value={_value}
+                onChange={onAmountPercentageInputChange}
+                className="h-10 w-28 md:w-full"
+              />
+              <PayoutSplitRowMenu
+                onEditClick={() => setEditModalOpen(true)}
+                onDeleteClick={onDeleteClick}
+              />
+            </div>
+          ) : (
+            _value
+          )}
         </Cell>
       </PayoutsTableRow>
       <AddEditAllocationModal

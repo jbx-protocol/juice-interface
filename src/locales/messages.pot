@@ -998,6 +998,9 @@ msgstr ""
 msgid "Changes will take effect in your next cycle as long as it starts after your edit deadline."
 msgstr ""
 
+msgid "It looks like this is a Juicecrowd project."
+msgstr ""
+
 msgid "Reserved token recipients cannot exceed 100%"
 msgstr ""
 
@@ -2771,6 +2774,9 @@ msgstr ""
 msgid "Attach a sticker"
 msgstr ""
 
+msgid "Open on Juicecrowd"
+msgstr ""
+
 msgid "Disclose any details to your contributors before they pay your project."
 msgstr ""
 
@@ -3654,6 +3660,9 @@ msgid "The unallocated portion of your total will go to the wallet that owns the
 msgstr ""
 
 msgid "New"
+msgstr ""
+
+msgid "Some functionality may not work on juicebox.money, check it out on Juicecrowd for the full experience."
 msgstr ""
 
 msgid "Select NFTs to redeem"

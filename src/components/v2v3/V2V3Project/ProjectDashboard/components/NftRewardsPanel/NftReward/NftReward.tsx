@@ -5,12 +5,12 @@ import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hoo
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { useNftRewardsEnabledForPay } from 'hooks/JB721Delegate/useNftRewardsEnabledForPay'
+import { useIsJuicecrowd } from 'hooks/v2v3/useIsJuiceCrowd'
 import { NftRewardTier } from 'models/nftRewards'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { useProjectIsOFACListed } from '../../../hooks/useProjectIsOFACListed'
-import { useProjectMetadata } from '../../../hooks/useProjectMetadata'
 import { AddNftButton } from './AddNftButton'
 import { NftDetails } from './NftDetails'
 import { NftThumbnail } from './NftThumbnail'
@@ -40,7 +40,6 @@ export function NftReward({
   const cart = useProjectCart()
   const nftsEnabledForPay = useNftRewardsEnabledForPay()
 
-  const { projectMetadata } = useProjectMetadata()
   const { fundingCycleMetadata } = useProjectContext()
   const { isAddressListedInOFAC } = useProjectIsOFACListed()
 
@@ -69,9 +68,7 @@ export function NftReward({
     ? t`Unlimited`
     : t`${rewardTier?.remainingSupply} remaining`
 
-  const isJuicecrowdNft = useMemo(() => {
-    return projectMetadata?.domain === 'juicecrowd'
-  }, [projectMetadata?.domain])
+  const isJuicecrowdNft = useIsJuicecrowd()
 
   const disabled = useMemo(() => {
     return (

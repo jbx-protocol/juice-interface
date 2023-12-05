@@ -4,9 +4,9 @@ import { Callout } from 'components/Callout/Callout'
 import Loading from 'components/Loading'
 import TransactionModal from 'components/modals/TransactionModal'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/useUpdateCurrentCollection'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
+import { useIsJuicecrowd } from 'hooks/v2v3/useIsJuiceCrowd'
 import { useCallback, useMemo, useState } from 'react'
 import { TransactionSuccessModal } from '../../../TransactionSuccessModal'
 import { useEditingNfts } from '../hooks/useEditingNfts'
@@ -23,16 +23,15 @@ export function EditNftsSection() {
     rewardTiers,
     onConfirmed: () => setSuccessModalOpen(true),
   })
-  const { projectMetadata } = useProjectMetadata()
-
+  const isJuicecrowd = useIsJuicecrowd()
   const showNftRewards = useMemo(() => {
     // disable juicecrowd nft rewards
-    if (projectMetadata?.domain === 'juicecrowd') {
+    if (isJuicecrowd) {
       return false
     }
 
     return hasExistingNfts
-  }, [hasExistingNfts, projectMetadata?.domain])
+  }, [hasExistingNfts, isJuicecrowd])
 
   const onNftFormSaved = useCallback(async () => {
     if (!rewardTiers) return

@@ -1,20 +1,14 @@
-import { readNetwork } from 'constants/networks'
-import { NetworkName } from 'models/networkName'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { getJuicecrowdUrl } from 'utils/juicecrowd'
 import { Badge } from './Badge'
 
 export type DomainBadgeProps = {
   className?: string
   domain: string | undefined
   projectId?: number
-}
-
-function getJuicecrowdUrl(projectId: number) {
-  const prefix = readNetwork.name === NetworkName.goerli ? 'goerli.' : ''
-  return `https://${prefix}juicecrowd.gg/p/${projectId}`
 }
 
 export const DomainBadge: React.FC<DomainBadgeProps> = ({

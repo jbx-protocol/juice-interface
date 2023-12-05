@@ -1,10 +1,10 @@
 import { Tab } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { useOnScreen } from 'hooks/useOnScreen'
+import { useIsJuicecrowd } from 'hooks/v2v3/useIsJuiceCrowd'
 import {
   Fragment,
   useContext,
@@ -29,18 +29,18 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
   const { projectOwnerAddress } = useProjectContext()
   const isProjectOwner = useIsUserAddress(projectOwnerAddress)
-  const { projectMetadata } = useProjectMetadata()
+  const isJuicecrowd = useIsJuicecrowd()
 
   const { value: hasNftRewards } = useHasNftRewards()
 
   const showNftRewards = useMemo(() => {
     // disable juicecrowd nft rewards
-    if (projectMetadata?.domain === 'juicecrowd') {
+    if (isJuicecrowd) {
       return false
     }
 
     return hasNftRewards
-  }, [hasNftRewards, projectMetadata?.domain])
+  }, [hasNftRewards, isJuicecrowd])
 
   const containerRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)

@@ -67,7 +67,9 @@ const ProjectPageSEO = ({
     // Set known values, leave others undefined to be overridden
     title={metadata?.name}
     url={`${process.env.NEXT_PUBLIC_BASE_URL}v2/p/${projectId}`}
-    description={metadata?.description}
+    description={
+      metadata?.projectTagline ? metadata.projectTagline : metadata?.description
+    }
     twitter={{
       card: 'summary',
       creator: metadata?.twitter,

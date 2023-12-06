@@ -7,10 +7,12 @@ import { useQuery } from 'react-query'
 const OFAC_API = 'https://api.wewantjusticedao.org/donation/validate'
 
 interface ProjectOFACContextType {
+  isLoading?: boolean
   isAddressListedInOFAC?: boolean
 }
 
 export const ProjectOFACContext = createContext<ProjectOFACContextType>({
+  isLoading: false,
   isAddressListedInOFAC: undefined,
 })
 
@@ -22,7 +24,7 @@ export default function V2V3ProjectOFACProvider({
   const { userAddress, isConnected } = useWallet()
   const { projectMetadata } = useProjectMetadata()
 
-  const { data: isAddressListedInOFAC } = useQuery(
+  const { data: isAddressListedInOFAC, isLoading } = useQuery(
     ['isAddressListedInOFAC', userAddress],
     async () => {
       if (!(projectMetadata?.projectRequiredOFACCheck && isConnected)) {
@@ -47,7 +49,7 @@ export default function V2V3ProjectOFACProvider({
   )
 
   return (
-    <ProjectOFACContext.Provider value={{ isAddressListedInOFAC }}>
+    <ProjectOFACContext.Provider value={{ isAddressListedInOFAC, isLoading }}>
       {children}
     </ProjectOFACContext.Provider>
   )

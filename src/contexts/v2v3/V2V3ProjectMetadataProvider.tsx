@@ -15,6 +15,7 @@ export default function V2V3ProjectMetadataProvider({
   projectId: number
 }>) {
   const hasMetadata = Boolean(metadata)
+  console.info('🧃 Server metadata', metadata)
 
   // only load metadata if it hasn't been previously loaded into the prop.
   const { data: metadataCid, refetchValue } = useProjectMetadataContent(

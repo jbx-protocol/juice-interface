@@ -11,7 +11,9 @@ export function useProjectMetadata(uri: string | null | undefined) {
       }
 
       const response = await ipfsGet<AnyProjectMetadata>(uri)
-      return consolidateMetadata(response.data)
+      const metadata = consolidateMetadata(response.data)
+      console.info('📗 Project metadata', consolidateMetadata)
+      return metadata
     },
     {
       enabled: !!uri,

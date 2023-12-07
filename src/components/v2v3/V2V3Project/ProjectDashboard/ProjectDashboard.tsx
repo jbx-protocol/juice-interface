@@ -2,7 +2,6 @@ import { Footer } from 'components/Footer/Footer'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useIsJuicecrowd } from 'hooks/v2v3/useIsJuiceCrowd'
-import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BlockedProjectBanner } from './components/BlockedProjectBanner'
 import { Cart } from './components/Cart/Cart'
@@ -21,17 +20,11 @@ import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 
 export const ProjectDashboard = () => {
   const { projectPayReceipt } = useProjectPageQueries()
-
   const { value: hasNftRewards } = useHasNftRewards()
   const isJuicecrowd = useIsJuicecrowd()
-  const shouldShowNftCard = useMemo(() => {
-    // disable juicecrowd nft rewards
-    if (isJuicecrowd) {
-      return false
-    }
 
-    return hasNftRewards
-  }, [hasNftRewards, isJuicecrowd])
+  // disable juicecrowd nft rewards
+  const shouldShowNftCard = isJuicecrowd ? false : hasNftRewards
 
   return (
     <TransactionProvider>

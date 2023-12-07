@@ -24,10 +24,12 @@ export default function V2V3ProjectOFACProvider({
   const { userAddress, isConnected } = useWallet()
   const { projectMetadata } = useProjectMetadata()
 
+  const enabled = projectMetadata?.projectRequiredOFACCheck && isConnected
+
   const { data: isAddressListedInOFAC, isLoading } = useQuery(
     ['isAddressListedInOFAC', userAddress],
     async () => {
-      if (!(projectMetadata?.projectRequiredOFACCheck && isConnected)) {
+      if (!enabled) {
         return
       }
 
@@ -46,6 +48,7 @@ export default function V2V3ProjectOFACProvider({
         return true
       }
     },
+    { enabled },
   )
 
   return (

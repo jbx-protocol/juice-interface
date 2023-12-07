@@ -1013,9 +1013,6 @@ msgstr ""
 msgid "Funding cycle details"
 msgstr ""
 
-msgid "This project is blocked."
-msgstr ""
-
 msgid "Archive"
 msgstr ""
 
@@ -3329,6 +3326,9 @@ msgstr ""
 msgid "Pay disclosure"
 msgstr ""
 
+msgid "This is a Juicecrowd project. Go to juicecrowd.gg to pay this project."
+msgstr ""
+
 msgid "If there is enough ETH available, each recipient will receive their percent of this amount each cycle. Otherwise, they will receive their percent of whatever is available."
 msgstr ""
 
@@ -3762,6 +3762,9 @@ msgid "Your payment may purchase tokens from a secondary market instead of minti
 msgstr ""
 
 msgid "Mint tokens"
+msgstr ""
+
+msgid "This project has been delisted and can't be paid."
 msgstr ""
 
 msgid "NFTs, tokens and rewards will be sent to <0/>"
@@ -4968,9 +4971,6 @@ msgid "Process held fees"
 msgstr ""
 
 msgid "Awaiting IPFS response. This may take a while."
-msgstr ""
-
-msgid "You can't pay this project because it is a Juicecrowd project."
 msgstr ""
 
 msgid "Edit handle of {projectTitle}"

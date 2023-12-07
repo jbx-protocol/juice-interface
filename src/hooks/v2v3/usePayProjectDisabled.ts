@@ -44,7 +44,7 @@ export function usePayProjectDisabled(): {
     return {
       ...disabled,
       reason: PayDisabledReason.BLOCKED,
-      message: t`This project is blocked.`,
+      message: t`This project has been delisted and can't be paid.`,
     }
   }
 
@@ -68,7 +68,7 @@ export function usePayProjectDisabled(): {
     return {
       ...disabled,
       reason: PayDisabledReason.JUICECROWD,
-      message: t`You can't pay this project because it is a Juicecrowd project.`,
+      message: t`This is a Juicecrowd project. Go to juicecrowd.gg to pay this project.`,
     }
   }
 

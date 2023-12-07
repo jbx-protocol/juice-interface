@@ -37,11 +37,12 @@ export function NftReward({
   hideAttributes,
 }: NftRewardProps) {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
+
   const cart = useProjectCart()
   const nftsEnabledForPay = useNftRewardsEnabledForPay()
-
   const { fundingCycleMetadata } = useProjectContext()
-  const { isAddressListedInOFAC } = useProjectIsOFACListed()
+  const { isAddressListedInOFAC, isLoading: isOFACLoading } =
+    useProjectIsOFACListed()
 
   const quantitySelected = useMemo(
     () => cart.nftRewards.find(nft => nft.id === rewardTier?.id)?.quantity ?? 0,
@@ -75,7 +76,7 @@ export function NftReward({
       !hasRemainingSupply ||
       !nftsEnabledForPay ||
       fundingCycleMetadata?.pausePay ||
-      isAddressListedInOFAC ||
+      (!isOFACLoading && isAddressListedInOFAC) ||
       isJuicecrowdNft
     )
   }, [
@@ -83,6 +84,7 @@ export function NftReward({
     nftsEnabledForPay,
     fundingCycleMetadata?.pausePay,
     isAddressListedInOFAC,
+    isOFACLoading,
     isJuicecrowdNft,
   ])
   const disabledReason = useMemo(() => {
@@ -92,7 +94,7 @@ export function NftReward({
     if (isJuicecrowdNft)
       return t`This project's NFTs can only be purchased on juicecrowd.gg.`
     if (isAddressListedInOFAC)
-      return t`NFTs can't be purchased because your wallet address failed compliance check.`
+      return t`NFTs can't be purchased because your wallet address failed the compliance check.`
   }, [
     isJuicecrowdNft,
     nftsEnabledForPay,

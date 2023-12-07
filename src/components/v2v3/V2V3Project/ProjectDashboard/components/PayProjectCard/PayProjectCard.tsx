@@ -1,5 +1,3 @@
-import { useMemo } from 'react'
-
 import {
   NoSymbolIcon,
   QuestionMarkCircleIcon,
@@ -12,6 +10,7 @@ import { Formik } from 'formik'
 import { useV2BlockedProject } from 'hooks/useBlockedProject'
 import { useIsJuicecrowd } from 'hooks/v2v3/useIsJuiceCrowd'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { DisplayCard } from '../ui/DisplayCard'
@@ -20,7 +19,8 @@ import { TokensPerEth } from './components/TokensPerEth'
 
 export const PayProjectCard = ({ className }: { className?: string }) => {
   const isBlockedProject = useV2BlockedProject()
-  const { isAddressListedInOFAC } = useProjectIsOFACListed()
+  const { isAddressListedInOFAC, isLoading: isOFACLoading } =
+    useProjectIsOFACListed()
   const { validationSchema, paymentsPaused, addPay } = usePayProjectCard()
   const determiningIfProjectCanReceivePayments = paymentsPaused === undefined
 
@@ -30,11 +30,12 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
     return (
       paymentsPaused ||
       isBlockedProject ||
-      isAddressListedInOFAC ||
+      (!isOFACLoading && isAddressListedInOFAC) ||
       isJuicecrowdProject
     )
   }, [
     isAddressListedInOFAC,
+    isOFACLoading,
     paymentsPaused,
     isBlockedProject,
     isJuicecrowdProject,
@@ -50,7 +51,7 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
 
     if (isAddressListedInOFAC) {
       return {
-        title: t`You can't pay this project because your wallet address failed compliance check.`,
+        title: t`You can't pay this project because your wallet address failed the compliance check.`,
         open: undefined,
       }
     }

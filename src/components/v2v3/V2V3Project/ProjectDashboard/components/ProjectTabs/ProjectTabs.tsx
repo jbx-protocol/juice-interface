@@ -24,6 +24,13 @@ import { TokensPanel } from '../TokensPanel/TokensPanel'
 import { UpdatesPanel } from '../UpdatesPanel/UpdatesPanel'
 import { ProjectTab } from '../ui/ProjectTab'
 
+type ProjectTabConfig = {
+  id: string
+  name: JSX.Element | string
+  panel: JSX.Element | string
+  hideTab?: boolean
+}
+
 export const ProjectTabs = ({ className }: { className?: string }) => {
   const { projectUpdates } = useContext(ProjectUpdatesContext)
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
@@ -65,7 +72,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectPageTab])
 
-  const tabs = useMemo(
+  const tabs: ProjectTabConfig[] = useMemo(
     () => [
       { id: 'activity', name: t`Activity`, panel: <ActivityPanel /> },
       { id: 'about', name: t`About`, panel: <AboutPanel /> },

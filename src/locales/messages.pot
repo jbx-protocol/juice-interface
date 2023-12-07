@@ -1421,9 +1421,6 @@ msgstr ""
 msgid "Collection Symbol"
 msgstr ""
 
-msgid "NFTs can't be purchased because your wallet address failed compliance check."
-msgstr ""
-
 msgid "Check this to mint {tokenSymbol} ERC-20 to your wallet. Leave unchecked to have the Juicebox protocol internally track your token balance, saving gas on this transaction. You can claim your ERC-20 tokens later."
 msgstr ""
 
@@ -2234,6 +2231,9 @@ msgstr ""
 msgid "Highest paid"
 msgstr ""
 
+msgid "You can't pay this project because your wallet address failed the compliance check."
+msgstr ""
+
 msgid "Community owned"
 msgstr ""
 
@@ -2427,9 +2427,6 @@ msgid "Percent"
 msgstr ""
 
 msgid "When enabled, fees are held in the project instead of being processed automatically. <0>Learn more.</0>"
-msgstr ""
-
-msgid "You can't pay this project because your wallet address failed compliance check."
 msgstr ""
 
 msgid "No, keep"
@@ -3666,6 +3663,9 @@ msgid "Some functionality may not work on juicebox.money, check it out on Juicec
 msgstr ""
 
 msgid "Select NFTs to redeem"
+msgstr ""
+
+msgid "NFTs can't be purchased because your wallet address failed the compliance check."
 msgstr ""
 
 msgid "A contract which defines custom behavior which can be used when somebody pays this project or redeems from it. <0>Learn more</0>"

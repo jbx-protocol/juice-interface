@@ -1334,6 +1334,9 @@ msgstr ""
 msgid "Issuance reduction rate:"
 msgstr ""
 
+msgid "This project has paused payments this cycle."
+msgstr ""
+
 msgid "This transaction will set your project's Controller contract to: <0>{controllerAddress}</0>. <1>Any reserved tokens will be sent out.</1>"
 msgstr ""
 
@@ -1812,9 +1815,6 @@ msgid "Title"
 msgstr ""
 
 msgid "Background color"
-msgstr ""
-
-msgid "Payments are paused"
 msgstr ""
 
 msgid "Link minters of this NFT to your project's website, Discord, etc."
@@ -3119,9 +3119,6 @@ msgstr ""
 msgid "Issuance reduction rate"
 msgstr ""
 
-msgid "This project's NFTs can only be purchased on juicecrowd.gg."
-msgstr ""
-
 msgid "{0}% to {1}"
 msgstr ""
 
@@ -3327,6 +3324,9 @@ msgid "You must <0>Edit your Cycle</0> to change your total payout amount."
 msgstr ""
 
 msgid "Pay disclosure"
+msgstr ""
+
+msgid "This is a Juicecrowd project. Go to juicecrowd.gg to pay this project."
 msgstr ""
 
 msgid "If there is enough ETH available, each recipient will receive their percent of this amount each cycle. Otherwise, they will receive their percent of whatever is available."
@@ -3665,9 +3665,6 @@ msgstr ""
 msgid "Select NFTs to redeem"
 msgstr ""
 
-msgid "NFTs can't be purchased because your wallet address failed the compliance check."
-msgstr ""
-
 msgid "A contract which defines custom behavior which can be used when somebody pays this project or redeems from it. <0>Learn more</0>"
 msgstr ""
 
@@ -3765,6 +3762,9 @@ msgid "Your payment may purchase tokens from a secondary market instead of minti
 msgstr ""
 
 msgid "Mint tokens"
+msgstr ""
+
+msgid "This project has been delisted and can't be paid."
 msgstr ""
 
 msgid "NFTs, tokens and rewards will be sent to <0/>"

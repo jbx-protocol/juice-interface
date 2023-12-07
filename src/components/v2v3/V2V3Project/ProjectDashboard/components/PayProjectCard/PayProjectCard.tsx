@@ -2,15 +2,15 @@ import {
   NoSymbolIcon,
   QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { usePayProjectCard } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/usePayProjectCard'
-import { useProjectIsOFACListed } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectIsOFACListed'
 import { Formik } from 'formik'
-import { useV2BlockedProject } from 'hooks/useBlockedProject'
-import { useIsJuicecrowd } from 'hooks/v2v3/useIsJuiceCrowd'
+import {
+  PayDisabledReason,
+  usePayProjectDisabled,
+} from 'hooks/v2v3/usePayProjectDisabled'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { DisplayCard } from '../ui/DisplayCard'
@@ -18,48 +18,17 @@ import { PayInput } from './components/PayInput'
 import { TokensPerEth } from './components/TokensPerEth'
 
 export const PayProjectCard = ({ className }: { className?: string }) => {
-  const isBlockedProject = useV2BlockedProject()
-  const { isAddressListedInOFAC, isLoading: isOFACLoading } =
-    useProjectIsOFACListed()
-  const { validationSchema, paymentsPaused, addPay } = usePayProjectCard()
-  const determiningIfProjectCanReceivePayments = paymentsPaused === undefined
-
-  const isJuicecrowdProject = useIsJuicecrowd()
-
-  const isPaymentDisabled = useMemo(() => {
-    return (
-      paymentsPaused ||
-      isBlockedProject ||
-      (!isOFACLoading && isAddressListedInOFAC) ||
-      isJuicecrowdProject
-    )
-  }, [
-    isAddressListedInOFAC,
-    isOFACLoading,
-    paymentsPaused,
-    isBlockedProject,
-    isJuicecrowdProject,
-  ])
-
-  const paymentTooltip = useMemo(() => {
-    if (paymentsPaused || isJuicecrowdProject) {
-      return {
-        title: t`Payments to this project are paused in this cycle.`,
-        open: undefined,
-      }
-    }
-
-    if (isAddressListedInOFAC) {
-      return {
-        title: t`You can't pay this project because your wallet address failed the compliance check.`,
-        open: undefined,
-      }
-    }
-
-    return {
-      open: false,
-    }
-  }, [paymentsPaused, isAddressListedInOFAC, isJuicecrowdProject])
+  const { validationSchema, addPay } = usePayProjectCard()
+  const { payDisabled, reason, message, loading } = usePayProjectDisabled()
+  const payButtonTooltip =
+    payDisabled && message
+      ? {
+          title: message,
+          open: undefined,
+        }
+      : {
+          open: false,
+        }
 
   return (
     <DisplayCard
@@ -76,7 +45,10 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
           <QuestionMarkCircleIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
         </Tooltip>
       </div>
-      {paymentsPaused || isJuicecrowdProject ? (
+      {reason &&
+      [PayDisabledReason.JUICECROWD, PayDisabledReason.PAUSED].includes(
+        reason,
+      ) ? (
         <div className="text-grey-600 dark:text-slate-200">
           <div className="flex cursor-not-allowed items-center gap-2 rounded-lg bg-smoke-100 px-4 py-3 text-base leading-none dark:bg-slate-800">
             <NoSymbolIcon className="h-5 w-5" />
@@ -111,10 +83,10 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
                   onBlur={props.handleBlur}
                   name="payAmount"
                 />
-                <Tooltip className="h-12" {...paymentTooltip}>
+                <Tooltip className="h-12" {...payButtonTooltip}>
                   <Button
-                    loading={determiningIfProjectCanReceivePayments}
-                    disabled={isPaymentDisabled}
+                    loading={loading}
+                    disabled={payDisabled}
                     htmlType="submit"
                     className="h-12 text-base"
                     style={{ height: '48px' }}

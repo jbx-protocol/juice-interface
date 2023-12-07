@@ -20,14 +20,15 @@ import { TokensPerEth } from './components/TokensPerEth'
 export const PayProjectCard = ({ className }: { className?: string }) => {
   const { validationSchema, addPay } = usePayProjectCard()
   const { payDisabled, reason, message, loading } = usePayProjectDisabled()
-  const payButtonTooltip = message
-    ? {
-        title: message,
-        open: undefined,
-      }
-    : {
-        open: false,
-      }
+  const payButtonTooltip =
+    payDisabled && message
+      ? {
+          title: message,
+          open: undefined,
+        }
+      : {
+          open: false,
+        }
 
   return (
     <DisplayCard

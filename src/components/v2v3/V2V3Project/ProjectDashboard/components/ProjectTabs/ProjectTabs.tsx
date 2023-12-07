@@ -37,17 +37,10 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
   const { projectOwnerAddress } = useProjectContext()
   const isProjectOwner = useIsUserAddress(projectOwnerAddress)
   const isJuicecrowd = useIsJuicecrowd()
-
   const { value: hasNftRewards } = useHasNftRewards()
 
-  const showNftRewards = useMemo(() => {
-    // disable juicecrowd nft rewards
-    if (isJuicecrowd) {
-      return false
-    }
-
-    return hasNftRewards
-  }, [hasNftRewards, isJuicecrowd])
+  // disable juicecrowd nft rewards
+  const showNftRewards = isJuicecrowd ? false : hasNftRewards
 
   const containerRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)

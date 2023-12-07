@@ -2,15 +2,13 @@ import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { NftPreview } from 'components/NftRewards/NftPreview'
 import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
-import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { useNftRewardsEnabledForPay } from 'hooks/JB721Delegate/useNftRewardsEnabledForPay'
-import { useIsJuicecrowd } from 'hooks/v2v3/useIsJuiceCrowd'
+import { usePayProjectDisabled } from 'hooks/v2v3/usePayProjectDisabled'
 import { NftRewardTier } from 'models/nftRewards'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
-import { useProjectIsOFACListed } from '../../../hooks/useProjectIsOFACListed'
 import { AddNftButton } from './AddNftButton'
 import { NftDetails } from './NftDetails'
 import { NftThumbnail } from './NftThumbnail'
@@ -40,26 +38,23 @@ export function NftReward({
 
   const cart = useProjectCart()
   const nftsEnabledForPay = useNftRewardsEnabledForPay()
-  const { fundingCycleMetadata } = useProjectContext()
-  const { isAddressListedInOFAC, isLoading: isOFACLoading } =
-    useProjectIsOFACListed()
+  const {
+    payDisabled,
+    message,
+    loading: payDisabledLoading,
+  } = usePayProjectDisabled()
 
   const quantitySelected = useMemo(
     () => cart.nftRewards.find(nft => nft.id === rewardTier?.id)?.quantity ?? 0,
     [cart.nftRewards, rewardTier?.id],
   )
+  const isSelected = quantitySelected > 0
 
   const fileUrl = useMemo(
     () =>
       rewardTier?.fileUrl ? ipfsUriToGatewayUrl(rewardTier.fileUrl) : undefined,
     [rewardTier?.fileUrl],
   )
-
-  const isSelected = quantitySelected > 0
-
-  const openPreview = () => {
-    setPreviewVisible(true)
-  }
 
   const remainingSupply = rewardTier?.remainingSupply
   const hasRemainingSupply = remainingSupply && remainingSupply > 0
@@ -69,39 +64,18 @@ export function NftReward({
     ? t`Unlimited`
     : t`${rewardTier?.remainingSupply} remaining`
 
-  const isJuicecrowdNft = useIsJuicecrowd()
-
-  const disabled = useMemo(() => {
-    return (
-      !hasRemainingSupply ||
-      !nftsEnabledForPay ||
-      fundingCycleMetadata?.pausePay ||
-      (!isOFACLoading && isAddressListedInOFAC) ||
-      isJuicecrowdNft
-    )
-  }, [
-    hasRemainingSupply,
-    nftsEnabledForPay,
-    fundingCycleMetadata?.pausePay,
-    isAddressListedInOFAC,
-    isOFACLoading,
-    isJuicecrowdNft,
-  ])
+  const disabled = Boolean(
+    !hasRemainingSupply || !nftsEnabledForPay || payDisabled,
+  )
   const disabledReason = useMemo(() => {
     if (!hasRemainingSupply) return t`Sold out`
     if (!nftsEnabledForPay) return t`NFTs are not enabled for pay`
-    if (fundingCycleMetadata?.pausePay) return t`Payments are paused`
-    if (isJuicecrowdNft)
-      return t`This project's NFTs can only be purchased on juicecrowd.gg.`
-    if (isAddressListedInOFAC)
-      return t`NFTs can't be purchased because your wallet address failed the compliance check.`
-  }, [
-    isJuicecrowdNft,
-    nftsEnabledForPay,
-    hasRemainingSupply,
-    isAddressListedInOFAC,
-    fundingCycleMetadata?.pausePay,
-  ])
+    if (payDisabled) return message
+  }, [nftsEnabledForPay, hasRemainingSupply, payDisabled, message])
+
+  const openPreview = () => {
+    setPreviewVisible(true)
+  }
 
   return (
     <>
@@ -131,7 +105,7 @@ export function NftReward({
           />
           <NftDetails
             rewardTier={rewardTier}
-            loading={loading}
+            loading={loading || payDisabledLoading}
             hideAttributes={hideAttributes}
             remainingSupplyText={remainingSupplyText}
           />

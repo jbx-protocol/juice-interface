@@ -5,8 +5,8 @@ import { isBigNumberish } from 'utils/bigNumbers'
 import { formatError } from 'utils/format/formatError'
 import { formatWad } from 'utils/format/formatNumber'
 import {
+  formatSgProjectsForUpdate,
   formatWithMetadata,
-  getChangedSubgraphProjects,
 } from 'utils/sgDbProjects'
 import { dbpQueryAll, queryAllSGProjectsForServer, writeDBProjects } from '.'
 import { dbpLog } from './logger'
@@ -14,6 +14,7 @@ import { dbpLog } from './logger'
 export async function updateDBProjects(
   res: NextApiResponse,
   retryIpfs: boolean,
+  forceUpdateAll?: boolean,
 ) {
   try {
     // Load all database projects
@@ -35,21 +36,22 @@ export async function updateDBProjects(
     // Load all projects from Subgraph
     const sgProjects = await queryAllSGProjectsForServer()
 
-    // Determine which subgraph projects have changed from what we have stored in the database
+    // Determine which subgraph projects should be updated
     const {
-      changedSubgraphProjects,
+      subgraphProjects: sgProjectsToUpdate,
       retryMetadataCount,
       updatedProperties,
       idsOfNewProjects,
-    } = getChangedSubgraphProjects({
+    } = formatSgProjectsForUpdate({
       sgProjects,
       dbProjects,
       retryIpfs,
+      returnAllProjects: forceUpdateAll,
     })
 
     // Append metadata props to all changed subgraph projects, and re-resolve metadata where needed
     const resolveMetadataResults = await Promise.all(
-      changedSubgraphProjects.map(sgProject =>
+      sgProjectsToUpdate.map(sgProject =>
         formatWithMetadata({
           sgProject,
           dbProject: dbProjects[sgProject.id],

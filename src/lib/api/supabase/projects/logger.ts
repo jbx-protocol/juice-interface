@@ -24,7 +24,7 @@ type DBPLogOpts =
       notif: keyof typeof DBP_NOTIFS
     }
 
-const logger = getLogger('lib/sepana')
+const logger = getLogger('lib/dbProjects')
 
 export async function dbpLog(
   opts: DBPLogOpts & {

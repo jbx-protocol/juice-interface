@@ -144,15 +144,18 @@ export function formatDBProjectRow(
  * @param sgProjects List of Subgraph projects
  * @param dbProjects List of database projects
  * @param retryIpfs If true, any project that previously failed to resolve metadata will be marked for change, regardless of if the project has since changed in the Subgraph.
+ * @param returnAllProjects If true, all projects will be returned.
  */
-export function getChangedSubgraphProjects({
+export function formatSgProjectsForUpdate({
   sgProjects,
   dbProjects,
   retryIpfs,
+  returnAllProjects,
 }: {
   sgProjects: Json<Pick<Project, SGSBCompareKey>>[]
   dbProjects: Record<string, Json<DBProject>>
   retryIpfs?: boolean
+  returnAllProjects?: boolean
 }) {
   const idsOfNewProjects = new Set<string>([])
 
@@ -166,60 +169,69 @@ export function getChangedSubgraphProjects({
 
   let retryMetadataCount = 0
 
-  const changedSubgraphProjects = sgProjects
-    .map(formatSGProjectForDB)
-    .filter(sgProject => {
-      const id = sgProject.id
+  const formattedSgProjects = sgProjects.map(formatSGProjectForDB)
 
-      const dbProject = dbProjects[id]
+  const subgraphProjects = returnAllProjects
+    ? formattedSgProjects
+    : formattedSgProjects.filter(sgProject => {
+        const id = sgProject.id
 
-      if (!dbProject) {
-        idsOfNewProjects.add(id)
-        return true
-      }
+        const dbProject = dbProjects[id]
 
-      const { _hasUnresolvedMetadata, _metadataRetriesLeft } = dbProject
-
-      if (
-        retryIpfs &&
-        _hasUnresolvedMetadata &&
-        (_metadataRetriesLeft || _metadataRetriesLeft === undefined)
-      ) {
-        retryMetadataCount += 1
-        return true
-      }
-
-      if (dbProject.tags?.some(t => !isValidProjectTag(t))) {
-        return true
-      }
-
-      // Deep compare Subgraph project vs. database project and find any discrepancies
-      const propertiesToUpdate = sgDbCompareKeys.filter(k => {
-        const oldVal = dbProject[k]
-        const newVal = sgProject[k]
-
-        // Store a record of properties that need updating
-        if (oldVal !== newVal) {
-          updatedProperties[id] = [
-            ...(updatedProperties[id] ?? []),
-            {
-              key: k,
-              oldVal: oldVal?.toString(),
-              newVal: newVal?.toString(),
-            },
-          ]
+        if (!dbProject) {
+          idsOfNewProjects.add(id)
           return true
         }
 
-        return false
+        const { _hasUnresolvedMetadata, _metadataRetriesLeft } = dbProject
+
+        if (
+          retryIpfs &&
+          _hasUnresolvedMetadata &&
+          (_metadataRetriesLeft || _metadataRetriesLeft === undefined)
+        ) {
+          retryMetadataCount += 1
+          return true
+        }
+
+        if (dbProject.tags?.some(t => !isValidProjectTag(t))) {
+          return true
+        }
+
+        // Deep compare Subgraph project vs. database project and find any discrepancies
+        const propertiesToUpdate = sgDbCompareKeys.filter(k => {
+          const oldVal = dbProject[k]
+          const newVal = sgProject[k]
+
+          // Store a record of properties that need updating
+          if (oldVal !== newVal) {
+            if (k === 'createdWithinTrendingWindow') {
+              // Hack. DB only stores boolean for this property, but subgraph may return undefined/null
+              if (!oldVal && !newVal) return false
+            }
+
+            updatedProperties[id] = [
+              ...(updatedProperties[id] ?? []),
+              {
+                key: k,
+                oldVal: oldVal?.toString(),
+                newVal: newVal?.toString(),
+              },
+            ]
+            return true
+          }
+
+          return false
+        })
+
+        // Return true if any properties are out of date
+        return propertiesToUpdate.length
       })
 
-      // Return true if any properties are out of date
-      return propertiesToUpdate.length
-    })
+  // console.log('asdf', { changedSubgraphProjects })
 
   return {
-    changedSubgraphProjects,
+    subgraphProjects,
     updatedProperties,
     retryMetadataCount,
     idsOfNewProjects,

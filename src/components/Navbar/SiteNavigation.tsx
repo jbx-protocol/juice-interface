@@ -201,6 +201,12 @@ const ResourcesMenu = () => {
       isExternal: true,
     },
     {
+      id: 'telegram',
+      label: t`Join the Telegram`,
+      href: 'https://t.me/jbx_eth',
+      isExternal: true,
+    },
+    {
       id: 'contact',
       label: t`Contact`,
       href: '/contact',

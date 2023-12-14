@@ -18,7 +18,7 @@ export default function TokenDistributionChart({
   const [viewMode, setViewMode] = useState<'pie' | 'area'>('pie')
 
   // Don't render chart for projects with no token supply
-  if (tokenSupply?.eq(0)) return null
+  if (tokenSupply?.eq(0) || !participants?.length) return null
 
   const size = 320
 
@@ -52,22 +52,20 @@ export default function TokenDistributionChart({
     <div className="w-full">
       <div style={{ height: size, width: '100%' }}>{content}</div>
 
-      {participants?.length && participants.length > 1 && (
-        <div className="mt-4 flex justify-center gap-3">
-          <div
-            onClick={() => setViewMode('pie')}
-            className={viewMode === 'pie' ? 'opacity-100' : 'opacity-50'}
-          >
-            <ChartPieIcon className="h-5 w-5" />
-          </div>
-          <div
-            onClick={() => setViewMode('area')}
-            className={viewMode === 'area' ? 'opacity-100' : 'opacity-50'}
-          >
-            <ChartBarSquareIcon className="h-5 w-5" />
-          </div>
+      <div className="mt-4 flex justify-center gap-3">
+        <div
+          onClick={() => setViewMode('pie')}
+          className={viewMode === 'pie' ? 'opacity-100' : 'opacity-50'}
+        >
+          <ChartPieIcon className="h-5 w-5" />
         </div>
-      )}
+        <div
+          onClick={() => setViewMode('area')}
+          className={viewMode === 'area' ? 'opacity-100' : 'opacity-50'}
+        >
+          <ChartBarSquareIcon className="h-5 w-5" />
+        </div>
+      </div>
     </div>
   )
 }

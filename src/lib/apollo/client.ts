@@ -35,13 +35,24 @@ const scalarsLink = withScalars({ schema, typesMap })
 const httpLink = new HttpLink({ uri: subgraphUri() })
 
 const paginationConfig: FieldPolicy = {
-  // Create a new cache list when the `where` variable changes. Otherwise apply the below `merge` function to any existing cached list, even if other variables change like `first` or `skip`. This strategy enables infinite paging for unique lists while still preventing cached data from being unexpectedly included in query results, especially when updating the `where` argument to filter events by Paid, Redeemed, etc.
+  // Create a new cache list when the `keyArgs` variables change. Otherwise apply the below `merge` function to any existing cached list, even if other variables change like `first` or `skip`. This strategy enables infinite paging for unique lists while still preventing cached data from being unexpectedly included in query results, especially when updating the `where` argument to filter by properties of entities.
   // https://www.apollographql.com/docs/react/pagination/key-args/
-  keyArgs: ['where'],
-  merge(existing = [], incoming) {
-    // For a single list (even if `first` or `skip` arguments have changed) concatenate results of subsequent queries into the existing cache
-    // https://www.apollographql.com/docs/react/pagination/core-api
-    return [...existing, ...incoming]
+  keyArgs: ['where', 'orderBy', 'orderDirection'],
+  merge(existing, incoming, { args }) {
+    const merged = existing ? existing.slice(0) : []
+
+    if (incoming) {
+      if (args?.['skip']) {
+        // Assume an offset of 0 if args.offset omitted.
+        for (let i = 0; i < incoming.length; ++i) {
+          merged[args['skip'] + i] = incoming[i]
+        }
+      } else {
+        return incoming
+      }
+    }
+
+    return merged
   },
 }
 

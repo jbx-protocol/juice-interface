@@ -1451,6 +1451,9 @@ msgstr ""
 msgid "Transfer ETH to this project"
 msgstr ""
 
+msgid "<0>Warning:</0> On-going <1>Ledger Connect</1> vulnerability. Exercise caution. <2>Learn more</2>"
+msgstr ""
+
 msgid "Juicecrowd intro image"
 msgstr ""
 

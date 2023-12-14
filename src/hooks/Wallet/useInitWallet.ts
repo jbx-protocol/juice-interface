@@ -2,7 +2,6 @@ import coinbaseWalletModule from '@web3-onboard/coinbase'
 import gnosisModule from '@web3-onboard/gnosis'
 import injectedModule from '@web3-onboard/injected-wallets'
 import keystoneModule from '@web3-onboard/keystone'
-import ledgerModule from '@web3-onboard/ledger'
 import { init, useAccountCenter, useWallets } from '@web3-onboard/react'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import config from 'config/seo_meta.json'
@@ -21,7 +20,6 @@ export function initWeb3Onboard() {
 
   const injected = injectedModule()
   const gnosis = gnosisModule()
-  const ledger = ledgerModule()
   const keystone = keystoneModule()
   const walletConnect = walletConnectModule({
     version: 2,
@@ -31,14 +29,7 @@ export function initWeb3Onboard() {
   const coinbaseWalletSdk = coinbaseWalletModule()
 
   return init({
-    wallets: [
-      injected,
-      gnosis,
-      ledger,
-      keystone,
-      walletConnect,
-      coinbaseWalletSdk,
-    ],
+    wallets: [injected, gnosis, keystone, walletConnect, coinbaseWalletSdk],
     chains: Object.values(NETWORKS).map(n => ({
       id: unpadLeadingZerosString(BigNumber.from(n.chainId).toHexString()),
       rpcUrl: n.rpcUrl,

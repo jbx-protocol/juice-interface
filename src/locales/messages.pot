@@ -386,6 +386,9 @@ msgstr ""
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr ""
 
+msgid "<0>Warning:</0> An ongoing Ledger Connect vulnerability may affect Juicebox users. <1>Clear your cache before using Juicecbox.</1> Exercise caution. <2>Learn more.</2>"
+msgstr ""
+
 msgid "Button label"
 msgstr ""
 

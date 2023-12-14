@@ -371,6 +371,9 @@ msgstr ""
 msgid "Tokens receiver"
 msgstr ""
 
+msgid "<0>Warning:</0> An ongoing Ledger Connect vulnerability may affect Juicebox users.<1>Clear your cache before using Juicecbox.</1> Exercise caution. <2>Learn more</2>"
+msgstr ""
+
 msgid "Next:"
 msgstr ""
 
@@ -1449,9 +1452,6 @@ msgid "If you use the default governance option (no governance), the voting weig
 msgstr ""
 
 msgid "Transfer ETH to this project"
-msgstr ""
-
-msgid "<0>Warning:</0> On-going <1>Ledger Connect</1> vulnerability. Exercise caution. <2>Learn more</2>"
 msgstr ""
 
 msgid "Juicecrowd intro image"

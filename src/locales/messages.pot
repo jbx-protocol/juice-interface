@@ -1040,9 +1040,6 @@ msgstr ""
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr ""
 
-msgid "<0>Warning:</0> An ongoing Ledger Connect vulnerability may affect Juicebox users. <1>Clear your cache before using Juicebox.</1> Exercise caution. <2>Learn more.</2>"
-msgstr ""
-
 msgid "% tokens redeemed"
 msgstr ""
 
@@ -2262,6 +2259,9 @@ msgid "Case study"
 msgstr ""
 
 msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
+msgstr ""
+
+msgid "<0>Warning:</0> An ongoing Ledger Connect vulnerability could affect many dapps. Juicebox should be safe, but <1>exercise caution.</1> <2>Learn more.</2>"
 msgstr ""
 
 msgid "Juicebox native"

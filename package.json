@@ -97,7 +97,6 @@
     "@web3-onboard/gnosis": "2.1.5",
     "@web3-onboard/injected-wallets": "2.2.0",
     "@web3-onboard/keystone": "2.2.1",
-    "@web3-onboard/ledger": "2.2.1",
     "@web3-onboard/react": "2.3.1",
     "@web3-onboard/walletconnect": "^2.3.9",
     "antd": "^4.24.0",

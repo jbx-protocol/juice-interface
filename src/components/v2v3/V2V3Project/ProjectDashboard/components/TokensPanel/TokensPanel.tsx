@@ -1,4 +1,5 @@
 import { Trans, t } from '@lingui/macro'
+import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import { TokenAmount } from 'components/TokenAmount'
 import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
@@ -66,10 +67,22 @@ export const TokensPanel = () => {
               description={
                 <span className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
                   <Trans>{userTokenBalance} tokens</Trans>
-                  <RedeemTokensButton
-                    containerClassName="w-full md:w-fit"
-                    className="h-12 w-full md:h-10"
-                  />
+                  <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center md:gap-4">
+                    <Button
+                      className="p-0 text-start md:text-end"
+                      type="link"
+                      size="small"
+                      onClick={() => {
+                        setClaimTokensModalVisible(true)
+                      }}
+                    >
+                      <Trans>Claim ERC-20 token</Trans>
+                    </Button>
+                    <RedeemTokensButton
+                      containerClassName="w-full md:w-fit"
+                      className="h-12 w-full md:h-10"
+                    />
+                  </div>
                 </span>
               }
               kebabMenu={{

@@ -8,11 +8,11 @@ export function WalletConnectWarningBanner() {
       body={
         <Trans>
           <strong>Warning:</strong> An ongoing Ledger Connect vulnerability may
-          affect Juicebox users.
+          affect Juicebox users.{' '}
           <strong>Clear your cache before using Juicecbox.</strong> Exercise
           caution.{' '}
           <ExternalLink href="https://cointelegraph.com/news/multiple-dapps-using-ledger-connector-compromised">
-            Learn more
+            Learn more.
           </ExternalLink>
         </Trans>
       }

@@ -2,7 +2,6 @@ import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
 import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickProjectSearchProvider'
-import { WalletConnectWarningBanner } from 'components/WalletConnectWarningBanner'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
@@ -58,7 +57,6 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
 
   return (
     <Layout className="flex h-screen flex-col bg-transparent">
-      <WalletConnectWarningBanner />
       {hideNav ? null : <SiteNavigation />}
       <Content className={twJoin(!hideNav ? 'pt-20' : '', 'md:p-0')}>
         {children}

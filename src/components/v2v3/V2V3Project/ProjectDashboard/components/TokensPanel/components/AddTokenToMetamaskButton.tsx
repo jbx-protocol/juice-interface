@@ -1,20 +1,20 @@
-import { ExternalProvider } from '@ethersproject/providers'
 import { Trans } from '@lingui/macro'
 import type { MetaMaskInpageProvider } from '@metamask/providers'
 import { Button } from 'antd'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { useSigner } from 'hooks/Wallet/hooks'
+import { providers } from 'ethers'
+import { useWallet } from 'hooks/Wallet'
 import { useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 declare global {
   interface Window {
-    ethereum?: ExternalProvider
+    ethereum?: providers.ExternalProvider
   }
 }
 
 export const useProviderIsMetamask = () => {
-  const signer = useSigner()
+  const { signer } = useWallet()
   const isMetamask = useMemo(() => {
     return signer?.provider.connection.url === 'metamask'
   }, [signer])

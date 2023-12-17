@@ -1265,6 +1265,9 @@ msgstr ""
 msgid "Check your email for a confirmation link and retry subscribing."
 msgstr ""
 
+msgid "Claim ERC-20 token"
+msgstr ""
+
 msgid "While enabled, the project owner can migrate the project's current <0>payment terminals</0> to another version of the contract."
 msgstr ""
 

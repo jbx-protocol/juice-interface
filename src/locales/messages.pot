@@ -881,6 +881,9 @@ msgstr ""
 msgid "Tap {projectTitle}"
 msgstr ""
 
+msgid "Join the Telegram"
+msgstr ""
+
 msgid "Reserved token allocation"
 msgstr ""
 

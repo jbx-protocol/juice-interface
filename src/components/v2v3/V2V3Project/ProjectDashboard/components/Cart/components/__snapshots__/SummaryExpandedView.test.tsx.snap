@@ -129,7 +129,7 @@ exports[`SummaryExpandedView should render correctly 1`] = `
           type="button"
         >
           <span>
-            Connect wallet
+            Connect wallet to pay
           </span>
         </button>
       </div>

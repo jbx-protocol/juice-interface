@@ -114,11 +114,14 @@ export default function HoldersList({
             )
           }}
         >
-          {sortPayerReportsDirection === OrderDirection.asc ? (
-            <SortAscendingOutlined />
-          ) : (
-            <SortDescendingOutlined />
-          )}
+          {
+            // these icons are visually confusing and reversed on purpose
+            sortPayerReportsDirection === OrderDirection.asc ? (
+              <SortDescendingOutlined />
+            ) : (
+              <SortAscendingOutlined />
+            )
+          }
         </div>
 
         <Button

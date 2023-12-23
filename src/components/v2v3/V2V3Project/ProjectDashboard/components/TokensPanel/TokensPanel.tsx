@@ -12,6 +12,7 @@ import { useCallback, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
 import { TokenHoldersModal } from '../TokenHoldersModal/TokenHoldersModal'
 import { TitleDescriptionDisplayCard } from '../ui/TitleDescriptionDisplayCard'
+import { AddTokenToMetamaskButton } from './components/AddTokenToMetamaskButton'
 import { MigrateTokensButton } from './components/MigrateTokensButton'
 import { RedeemTokensButton } from './components/RedeemTokensButton'
 import { ReservedTokensSubPanel } from './components/ReservedTokensSubPanel'
@@ -183,6 +184,9 @@ const ProjectTokenCard = () => {
               </span>
             )}
           </div>
+          {projectHasErc20Token && (
+            <AddTokenToMetamaskButton className="mt-2" />
+          )}
           {canCreateErc20Token && (
             <IssueErc20TokenButton onCompleted={reloadWindow} type="link" />
           )}

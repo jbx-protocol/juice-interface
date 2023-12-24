@@ -2,7 +2,7 @@ import { Tooltip } from 'antd'
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
 import { NftRewardTier } from 'models/nftRewards'
 import { useMemo } from 'react'
-import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { convertToNewIpfsGateway } from 'utils/ipfs'
 
 export function RedeemNftTile({
   rewardTier,
@@ -14,7 +14,7 @@ export function RedeemNftTile({
   const _name = rewardTier?.name ?? `NFT ${tokenId}`
   const fileUrl = useMemo(() => {
     if (!rewardTier?.fileUrl) return
-    return ipfsUriToGatewayUrl(rewardTier.fileUrl)
+    return convertToNewIpfsGateway(rewardTier.fileUrl)
   }, [rewardTier?.fileUrl])
   return (
     <Tooltip title={_name} placement="bottom">

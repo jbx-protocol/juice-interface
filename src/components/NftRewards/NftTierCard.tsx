@@ -9,7 +9,7 @@ import { stopPropagation } from 'react-stop-propagation'
 import { twMerge } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 import { parseWad } from 'utils/format/formatNumber'
-import { cidFromUrl, ipfsGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { convertToNewIpfsGateway } from 'utils/ipfs'
 import { QuantitySelector } from './QuantitySelector'
 
 // The clickable cards on the project page
@@ -35,17 +35,9 @@ export function NftTierCard({
   // used to return to previous state on second click if user accidentally unselected the NFT
   const [previousQuantity, setPreviousQuantity] = useState<number>(1)
 
-  let fileUrl = rewardTier?.fileUrl
-  if (fileUrl) {
-    switch (true) {
-      case fileUrl.startsWith('https://jbx.mypinata.cloud'):
-        fileUrl = ipfsGatewayUrl(cidFromUrl(fileUrl))
-        break
-      case fileUrl.startsWith('ipfs://'):
-        fileUrl = ipfsUriToGatewayUrl(fileUrl)
-        break
-    }
-  }
+  const fileUrl = rewardTier?.fileUrl
+    ? convertToNewIpfsGateway(rewardTier.fileUrl)
+    : undefined
 
   const hasQuantitySelected = quantitySelected > 0
   const _isSelected = isSelected || hasQuantitySelected

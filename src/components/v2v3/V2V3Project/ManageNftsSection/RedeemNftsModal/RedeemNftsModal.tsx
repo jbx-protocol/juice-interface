@@ -165,7 +165,7 @@ export function RedeemNftsModal({
                   <strong>
                     This project is using all of its ETH for payouts, or has no
                     ETH.
-                  </strong>
+                  </strong>{' '}
                   You won't receive any ETH for burning your NFTs.
                 </Trans>
               )}

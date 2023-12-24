@@ -10,11 +10,15 @@ import { RedeemNftTiles } from './RedeemNftTiles'
 export function RedeemNftsSection() {
   const [redeemNftsModalVisible, setRedeemNftsModalVisible] = useState(false)
   const { userAddress } = useWallet()
-  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
+  const { fundingCycleMetadata, primaryTerminalCurrentOverflow } =
+    useContext(V2V3ProjectContext)
   const { data, loading } = useNftAccountBalance({
     accountAddress: userAddress,
     dataSourceAddress: fundingCycleMetadata?.dataSource,
   })
+  const hasOverflow = primaryTerminalCurrentOverflow?.gt(0)
+  const hasRedemptionRate = fundingCycleMetadata?.redemptionRate.gt(0)
+  const canRedeem = hasOverflow && hasRedemptionRate
   const hasRedeemableNfts = (data?.nfts?.length ?? 0) > 0
 
   if (loading || !hasRedeemableNfts || !userAddress) return null
@@ -29,7 +33,7 @@ export function RedeemNftsSection() {
         <RedeemNftTiles nftAccountBalance={data} />
 
         <Button type="primary" onClick={() => setRedeemNftsModalVisible(true)}>
-          <Trans>Redeem NFTs</Trans>
+          {canRedeem ? <Trans>Redeem NFTs</Trans> : <Trans>Burn NFTs</Trans>}
         </Button>
       </div>
 

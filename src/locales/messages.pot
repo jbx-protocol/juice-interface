@@ -1481,9 +1481,6 @@ msgstr ""
 msgid "Only use lowercase letters"
 msgstr ""
 
-msgid "<0>This project is using all of its ETH for payouts, or has no ETH.</0>You won't receive any ETH for burning your NFTs."
-msgstr ""
-
 msgid "Current"
 msgstr ""
 
@@ -1959,6 +1956,9 @@ msgid "Built for ideas like yours"
 msgstr ""
 
 msgid "The <0>Juicebox protocol</0> could be vulnerable to bugs or hacks. All of the ETH moved through Juicebox could be lost or stolen. JuiceboxDAO and Peel are not liable for any losses."
+msgstr ""
+
+msgid "<0>This project is using all of its ETH for payouts, or has no ETH.</0> You won't receive any ETH for burning your NFTs."
 msgstr ""
 
 msgid "Failed to create ERC20 token. Check transaction and try again."

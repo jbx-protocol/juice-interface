@@ -44,6 +44,20 @@ export function ipfsUriToGatewayUrl(ipfsUri: string): string {
 }
 
 /**
+ * Convert `ipfs://` urls or urls using old gateway to a url using the new gateway.
+ * e.g.- ipfs://123 -> https://new-gateway.io/ipfs/123
+ *     - https://old-gateway.io/ipfs/123 -> https://new-gateway.io/ipfs/123
+ */
+export function convertToNewIpfsGateway(url: string) {
+  if (url.startsWith('https://jbx.mypinata.cloud')) {
+    return ipfsGatewayUrl(cidFromUrl(url))
+  } else if (url.startsWith('ipfs://')) {
+    return ipfsUriToGatewayUrl(url)
+  }
+  return url
+}
+
+/**
  * Return a hex-encoded CID to store on-chain.
  *
  * Hex-encoded CIDs are used to store some CIDs on-chain because they are more gas-efficient.

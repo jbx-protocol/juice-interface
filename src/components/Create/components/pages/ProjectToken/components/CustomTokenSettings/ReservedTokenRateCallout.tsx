@@ -3,7 +3,7 @@ import { Form } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import { useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
-import { ProjectTokensFormProps } from '../../../../hooks/useProjectTokenForm'
+import { ProjectTokensFormProps } from '../../hooks/useProjectTokenForm'
 
 export const ReservedTokenRateCallout: React.FC<
   React.PropsWithChildren<unknown>

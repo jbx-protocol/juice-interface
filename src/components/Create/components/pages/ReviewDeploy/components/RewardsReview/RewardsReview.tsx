@@ -7,7 +7,7 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { formatEnabled } from 'utils/format/formatBoolean'
 import { v4 } from 'uuid'
-import { ReviewDescription } from '../ReviewDescription/ReviewDescription'
+import { ReviewDescription } from '../ReviewDescription'
 
 export const RewardsReview = () => {
   const {

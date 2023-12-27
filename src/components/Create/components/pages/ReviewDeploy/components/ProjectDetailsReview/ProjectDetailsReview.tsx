@@ -13,7 +13,7 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 import { parseWad } from 'utils/format/formatNumber'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
-import { ReviewDescription } from '../ReviewDescription/ReviewDescription'
+import { ReviewDescription } from '../ReviewDescription'
 
 export const ProjectDetailsReview = () => {
   const { userAddress } = useWallet()

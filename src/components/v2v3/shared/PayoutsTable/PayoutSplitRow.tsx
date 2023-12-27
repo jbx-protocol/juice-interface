@@ -6,12 +6,12 @@ import {
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { useState } from 'react'
-import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { PayoutSplitRowMenu } from './PayoutSplitRowMenu'
 import { PayoutTitle } from './PayoutTitle'
 import { PayoutsTableCell } from './PayoutsTableCell'
 import { PayoutsTableRow } from './PayoutsTableRow'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
+import { usePayoutsTable } from './hooks/usePayoutsTable'
 
 const Cell = PayoutsTableCell
 

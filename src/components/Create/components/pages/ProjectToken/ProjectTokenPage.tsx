@@ -13,7 +13,7 @@ import { Selection } from '../../Selection/Selection'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { Wizard } from '../../Wizard/Wizard'
 import { CustomTokenSettings } from './components/CustomTokenSettings/CustomTokenSettings'
-import { DefaultSettings } from './components/DefaultSettings/DefaultSettings'
+import { DefaultSettings } from './components/DefaultSettings'
 import { useProjectTokensForm } from './hooks/useProjectTokenForm'
 
 export const ProjectTokenPage: React.FC<

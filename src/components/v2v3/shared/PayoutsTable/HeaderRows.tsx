@@ -1,6 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-
 import { Button } from 'antd'
 import { ExternalLinkWithIcon } from 'components/v2v3/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import {
@@ -9,10 +8,10 @@ import {
 } from 'components/v2v3/shared/Allocation/AddEditAllocationModal'
 import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
-import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { PayoutTableSettings } from './PayoutTableSettings'
 import { PayoutsTableCell } from './PayoutsTableCell'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
+import { usePayoutsTable } from './hooks/usePayoutsTable'
 
 export function HeaderRows() {
   const [addRecipientModalOpen, setAddRecipientModalOpen] = useState<boolean>()

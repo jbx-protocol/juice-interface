@@ -1,4 +1,5 @@
 import { t } from '@lingui/macro'
+import { ReservedTokensList } from 'components/v2v3/shared/ReservedTokensList'
 import { formatAmount } from 'utils/format/formatAmount'
 import {
   formatDiscountRate,
@@ -6,9 +7,8 @@ import {
   formatRedemptionRate,
   formatReservedRate,
 } from 'utils/v2v3/math'
-import { ReservedTokensList } from '../../../ProjectToken/components/CustomTokenSettings/components/ReservedTokensList/ReservedTokensList'
 import * as ProjectTokenForm from '../../../ProjectToken/hooks/useProjectTokenForm'
-import { ReviewDescription } from '../ReviewDescription/ReviewDescription'
+import { ReviewDescription } from '../ReviewDescription'
 import { useProjectTokenReview } from './hooks/useProjectTokenReview'
 
 export const ProjectTokenReview = () => {

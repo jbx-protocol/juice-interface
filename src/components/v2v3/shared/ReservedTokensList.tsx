@@ -43,14 +43,17 @@ export const ReservedTokensList: React.FC<
                   title={<AllocationItemTitle allocation={allocation} />}
                   amount={formatPercent(allocation.percent)}
                   extra={
-                    <DeleteOutlined
-                      onClick={e => {
-                        e.stopPropagation()
-                        removeAllocation(allocation.id)
-                      }}
-                    />
+                    isEditable ? (
+                      <DeleteOutlined
+                        onClick={e => {
+                          e.stopPropagation()
+                          removeAllocation(allocation.id)
+                        }}
+                      />
+                    ) : undefined
                   }
                   onClick={() => {
+                    if (!isEditable) return
                     setSelectedAllocation(allocation)
                     modal.open()
                   }}

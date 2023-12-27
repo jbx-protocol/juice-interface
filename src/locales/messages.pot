@@ -2837,6 +2837,9 @@ msgstr ""
 msgid "Pause project token transfers"
 msgstr ""
 
+msgid "Recipients will recieve payouts in ETH"
+msgstr ""
+
 msgid "{0} must be numeric"
 msgstr ""
 
@@ -3437,9 +3440,6 @@ msgstr ""
 msgid "The issuance rate is reduced by this percentage every cycle (every {0}). The higher this rate, the more incentive to pay this project earlier."
 msgstr ""
 
-msgid "Recipients will receive payouts in ETH."
-msgstr ""
-
 msgid "Supporters won't receive tokens when they pay this project."
 msgstr ""
 
@@ -3989,9 +3989,6 @@ msgstr ""
 msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
 msgstr ""
 
-msgid "Payouts to other Juicebox projects don't incur fees. A 2.5% fee is taken out of all other payouts. You will receive the <0>JuiceboxDAO governance token</0> when you pay fees. <1>Learn more</1>."
-msgstr ""
-
 msgid "Juicecrowd soft target"
 msgstr ""
 
@@ -4434,6 +4431,9 @@ msgid "Simple token rules that will work for most projects. You can edit these r
 msgstr ""
 
 msgid "Start"
+msgstr ""
+
+msgid "Payouts to other Juicebox projects don't incur fees. A 2.5% fee is taken from all other payouts. This project's owner will receive <0>JBX</0> in exchange for fees paid. <1>Learn more</1>."
 msgstr ""
 
 msgid "File empty or corrupt. Try again."

@@ -227,12 +227,10 @@ export const PREVENT_OVERSPENDING_EXPLANATION = (
 
 export const FEES_EXPLANATION = (
   <Trans>
-    Payouts to other Juicebox projects don't incur fees. A 2.5% fee is taken out
-    of all other payouts. You will receive the{' '}
-    <Link href={v2v3ProjectRoute({ projectId: 1 })}>
-      JuiceboxDAO governance token
-    </Link>{' '}
-    when you pay fees.{' '}
+    Payouts to other Juicebox projects don't incur fees. A 2.5% fee is taken
+    from all other payouts. This project's owner will receive{' '}
+    <Link href={v2v3ProjectRoute({ projectId: 1 })}>JBX</Link> in exchange for
+    fees paid.{' '}
     <ExternalLink href={helpPagePath(`/dao/reference/jbx/`)}>
       Learn more
     </ExternalLink>

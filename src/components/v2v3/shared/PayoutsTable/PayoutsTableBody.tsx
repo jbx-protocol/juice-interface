@@ -3,7 +3,6 @@ import { Form } from 'antd'
 import { Allocation } from 'components/v2v3/shared/Allocation/Allocation'
 import { twMerge } from 'tailwind-merge'
 import { getV2V3CurrencyOption } from 'utils/v2v3/currency'
-import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { CurrencySwitcher } from './CurrencySwitcher'
 import { HeaderRows } from './HeaderRows'
 import { PayoutSplitRow } from './PayoutSplitRow'
@@ -11,6 +10,7 @@ import { PayoutsTableCell } from './PayoutsTableCell'
 import { PayoutsTableRow } from './PayoutsTableRow'
 import { TotalRows } from './TotalRows'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
+import { usePayoutsTable } from './hooks/usePayoutsTable'
 
 const Row = PayoutsTableRow
 const Cell = PayoutsTableCell

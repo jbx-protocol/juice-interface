@@ -19,10 +19,10 @@ import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionL
 import { inputMustExistRule } from 'utils/antdRules'
 import { formatAmount } from 'utils/format/formatAmount'
 import { MAX_DISTRIBUTION_LIMIT, MAX_MINT_RATE } from 'utils/v2v3/math'
+import { ReservedTokensList } from '../../../../../../v2v3/shared/ReservedTokensList'
 import * as ProjectTokenForm from '../../hooks/useProjectTokenForm'
 import { ProjectTokensFormProps } from '../../hooks/useProjectTokenForm'
-import { ReservedTokenRateCallout } from './components/ReservedTokenRateCallout/ReservedTokenRateCallout'
-import { ReservedTokensList } from './components/ReservedTokensList/ReservedTokensList'
+import { ReservedTokenRateCallout } from './ReservedTokenRateCallout'
 
 const calculateMintRateAfterDiscount = ({
   mintRate,

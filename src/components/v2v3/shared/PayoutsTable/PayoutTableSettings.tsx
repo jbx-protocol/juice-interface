@@ -6,7 +6,7 @@ import { handleConfirmationDeletion } from 'components/v2v3/V2V3Project/ProjectD
 import { useState } from 'react'
 import { ReduxDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
 import { fromWad } from 'utils/format/formatNumber'
-import { usePayoutsTable } from '../hooks/usePayoutsTable'
+import { usePayoutsTable } from './hooks/usePayoutsTable'
 import { SwitchToUnlimitedModal } from './modals/SwitchToUnlimitedModal'
 
 export const payoutsTableMenuItemsLabelClass = 'flex gap-2 items-center text-sm'

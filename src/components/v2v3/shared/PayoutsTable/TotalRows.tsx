@@ -2,9 +2,9 @@ import { Trans, t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
 import round from 'lodash/round'
-import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import { PayoutsTableCell } from './PayoutsTableCell'
 import { PayoutsTableRow } from './PayoutsTableRow'
+import { usePayoutsTable } from './hooks/usePayoutsTable'
 
 const Row = PayoutsTableRow
 const Cell = PayoutsTableCell

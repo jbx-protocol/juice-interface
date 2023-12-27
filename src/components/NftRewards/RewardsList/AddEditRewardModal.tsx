@@ -29,7 +29,7 @@ import { withHttps } from 'utils/externalLink'
 import { ipfsGatewayUrl } from 'utils/ipfs'
 import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { CreateCollapse } from '../../Create/components/CreateCollapse/CreateCollapse'
-import { OptionalHeader } from '../../Create/components/OptionalHeader/OptionalHeader'
+import { OptionalHeader } from '../../Create/components/OptionalHeader'
 
 interface AddEditRewardModalFormProps {
   fileUrl: string

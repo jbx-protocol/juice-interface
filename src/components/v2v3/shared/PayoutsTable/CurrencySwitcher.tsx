@@ -5,12 +5,12 @@ import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import round from 'lodash/round'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import { usePayoutsTable } from '../hooks/usePayoutsTable'
 import {
   payoutsTableMenuItemsIconClass,
   payoutsTableMenuItemsLabelClass,
 } from './PayoutTableSettings'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
+import { usePayoutsTable } from './hooks/usePayoutsTable'
 
 export function CurrencySwitcher() {
   const { setCurrency: setCurrencyName } = usePayoutsTableContext()

@@ -5,6 +5,7 @@ import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { FEES_EXPLANATION } from 'components/strings'
+import { PayoutsTable } from 'components/v2v3/shared/PayoutsTable/PayoutsTable'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
@@ -13,7 +14,6 @@ import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_USD, V2V3CurrencyName } from 'utils/v2v3/currency'
-import PayoutsTable from '../../V2V3ProjectSettings/pages/EditCyclePage/PayoutsSection/PayoutsTable'
 
 export default function DistributePayoutsModal({
   open,

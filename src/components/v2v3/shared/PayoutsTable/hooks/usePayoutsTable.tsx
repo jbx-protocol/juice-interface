@@ -27,8 +27,8 @@ import {
   getNewDistributionLimit,
 } from 'utils/v2v3/distributions'
 import { MAX_DISTRIBUTION_LIMIT, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
-import { useEditCycleFormContext } from '../../EditCycleFormContext'
-import { usePayoutsTableContext } from '../PayoutsTable/context/PayoutsTableContext'
+import { useEditCycleFormContext } from '../../../V2V3Project/V2V3ProjectSettings/pages/EditCyclePage/EditCycleFormContext'
+import { usePayoutsTableContext } from '../context/PayoutsTableContext'
 
 export const usePayoutsTable = () => {
   const {

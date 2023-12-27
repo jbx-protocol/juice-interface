@@ -1,5 +1,5 @@
 import { Form } from 'antd'
-import PayoutsTable from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditCyclePage/PayoutsSection/PayoutsTable'
+import { PayoutsTable } from 'components/v2v3/shared/PayoutsTable/PayoutsTable'
 import { CURRENCY_METADATA, CurrencyName } from 'constants/currency'
 import { Split } from 'models/splits'
 import { ReactNode } from 'react'

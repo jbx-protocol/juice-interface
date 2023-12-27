@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { CreateFlowPayoutsTable } from '../../../PayoutsPage/components/CreateFlowPayoutsTable'
-import { ReviewDescription } from '../ReviewDescription/ReviewDescription'
+import { ReviewDescription } from '../ReviewDescription'
 import { useFundingConfigurationReview } from './hooks/useFundingConfigurationReview'
 
 export const FundingConfigurationReview = () => {

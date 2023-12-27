@@ -5,7 +5,7 @@ import { CurrentUpcomingSubPanel } from './components/CurrentUpcomingSubPanel'
 import { CyclesTab } from './components/CyclesTab'
 import { HistorySubPanel } from './components/HistorySubPanel'
 
-export type CyclesSubPanel = {
+type CyclesSubPanel = {
   id: 'current' | 'upcoming' | 'history'
   name: string
 }

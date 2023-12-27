@@ -5,7 +5,7 @@ import { ReactNode, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 
-export type CartItemProps = {
+type CartItemProps = {
   className?: string
   title: ReactNode
   price: { amount: number; currency: V2V3CurrencyOption } | null

@@ -3,8 +3,7 @@ import type { MetaMaskInpageProvider } from '@metamask/providers'
 import { Button } from 'antd'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { providers } from 'ethers'
-import { useWallet } from 'hooks/Wallet'
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 declare global {
@@ -13,15 +12,15 @@ declare global {
   }
 }
 
-export const useProviderIsMetamask = () => {
-  const { signer } = useWallet()
-  const isMetamask = useMemo(() => {
-    return signer?.provider.connection.url === 'metamask'
-  }, [signer])
-  return isMetamask
-}
+// const useProviderIsMetamask = () => {
+//   const { signer } = useWallet()
+//   const isMetamask = useMemo(() => {
+//     return signer?.provider.connection.url === 'metamask'
+//   }, [signer])
+//   return isMetamask
+// }
 
-export const useMetamask = () => {
+const useMetamask = () => {
   const ethereum = global?.window?.ethereum
   if (!ethereum || !ethereum.isMetaMask) return
   return ethereum as unknown as MetaMaskInpageProvider

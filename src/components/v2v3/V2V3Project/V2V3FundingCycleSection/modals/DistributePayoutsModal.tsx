@@ -122,7 +122,11 @@ export default function DistributePayoutsModal({
     >
       <div className="flex flex-col gap-6">
         <Form layout="vertical">
-          <Form.Item className="mb-0" label={<Trans>Amount to pay out</Trans>}>
+          <Form.Item
+            className="mb-0"
+            label={<Trans>Amount to pay out</Trans>}
+            extra={<Trans>Recipients will recieve payouts in ETH</Trans>}
+          >
             <FormattedNumberInput
               placeholder="0"
               value={distributionAmount}
@@ -145,9 +149,9 @@ export default function DistributePayoutsModal({
           </Form.Item>
         </Form>
         <div>
-          <h4>
+          <div className="text-md mb-2 font-medium">
             <Trans>Payout recipients</Trans>
-          </h4>
+          </div>
 
           {payoutSplits?.length === 0 ? (
             <Callout.Info className="mb-4">
@@ -168,14 +172,8 @@ export default function DistributePayoutsModal({
             />
           </div>
         </div>
-        <Callout.Info>
-          <>
-            <p>
-              <Trans>Recipients will receive payouts in ETH.</Trans>
-            </p>
-            {FEES_EXPLANATION}
-          </>
-        </Callout.Info>
+
+        <Callout.Info>{FEES_EXPLANATION}</Callout.Info>
       </div>
     </TransactionModal>
   )

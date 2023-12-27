@@ -1,4 +1,4 @@
-import { BigNumber, utils } from 'ethers'
+import { utils } from 'ethers'
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { authCheck } from 'lib/auth'
@@ -20,33 +20,31 @@ const JUICE_API_EVENTS_ENABLED = process.env.JUICE_API_EVENTS_ENABLED === 'true'
 
 const logger = getLogger('api/events/on-pay')
 
-const BigNumberValidator = (errorMessage: string) => {
-  return Yup.mixed<BigNumber>()
+const BigIntValidator = (errorMessage: string) => {
+  return Yup.mixed<bigint>()
     .transform(current => {
       try {
-        return BigNumber.from(current)
+        return BigInt(current)
       } catch (e) {
         return undefined
       }
     })
-    .test('is-big-number', errorMessage, value => BigNumber.isBigNumber(value))
+    .test('is-big-number', errorMessage, value => typeof value === 'bigint')
 }
 
 const Schema = Yup.object().shape({
-  fundingCycleConfiguration: BigNumberValidator(
-    'fundingCycleConfiguration must be an ethers BigNumber',
+  fundingCycleConfiguration: BigIntValidator(
+    'fundingCycleConfiguration must be a BigInt',
   ).required(),
-  fundingCycleNumber: BigNumberValidator(
-    'fundingCycleNumber must be an ethers BigNumber',
+  fundingCycleNumber: BigIntValidator(
+    'fundingCycleNumber must be a BigInt',
   ).required(),
-  projectId: BigNumberValidator(
-    'projectId must be an ethers BigNumber',
-  ).required(),
+  projectId: BigIntValidator('projectId must be a BigInt').required(),
   payer: Yup.string().required(),
   beneficiary: Yup.string().required(),
-  amount: BigNumberValidator('amount must be an ethers BigNumber').required(),
-  beneficiaryTokenCount: BigNumberValidator(
-    'beneficiaryTokenCount must be an ethers BigNumber',
+  amount: BigIntValidator('amount must be a BigInt').required(),
+  beneficiaryTokenCount: BigIntValidator(
+    'beneficiaryTokenCount must be a BigInt',
   ).required(),
   memo: Yup.string(),
   metadata: Yup.string().required(),
@@ -67,7 +65,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const event = await Schema.validate(req.body)
 
     const emailEvents = await findEmailEventsForProjectId(
-      event.projectId.toNumber(),
+      Number(event.projectId),
       event.payer.toLowerCase(),
     )
     const emailMetadata = await compileEmailMetadata(event)
@@ -127,7 +125,7 @@ const compileEmailMetadata = async ({
 
   let projectName = `Project ${projectId.toString()}`
   try {
-    const projectMetadata = await getProjectMetadata(projectId.toNumber())
+    const projectMetadata = await getProjectMetadata(Number(projectId))
     if (projectMetadata?.name) {
       projectName = projectMetadata.name
     }

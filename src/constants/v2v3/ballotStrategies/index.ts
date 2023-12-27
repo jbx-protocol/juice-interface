@@ -13,21 +13,6 @@ type BallotOption = Record<
   Partial<Record<NetworkName, string>>
 >
 
-// based on @jbx-protocol/v2-contracts@4.0.0
-export const DEPRECATED_BALLOT_ADDRESSES: BallotOption = {
-  ONE_DAY: {
-    // No 1 day delay contract deployed with original V2
-    mainnet: constants.AddressZero,
-  },
-  THREE_DAY: {
-    mainnet: '0x9733F02d3A1068A11B07516fa2f3C3BaEf90e7eF',
-  },
-  SEVEN_DAY: {
-    // No 7 day delay contract deployed with original V2
-    mainnet: constants.AddressZero,
-  },
-}
-
 const V2_BALLOT_ADDRESSES: BallotOption = {
   ONE_DAY: {
     // No 1 day delay contract deployed with V2
@@ -41,7 +26,7 @@ const V2_BALLOT_ADDRESSES: BallotOption = {
   },
 }
 
-export const BALLOT_ADDRESSES: BallotOption = {
+const BALLOT_ADDRESSES: BallotOption = {
   ONE_DAY: {
     mainnet: '0xDd9303491328F899796319C2b6bD614324b86314',
     goerli: '0x9d5687A9A175308773Bb289159Aa61D326E3aDB5',

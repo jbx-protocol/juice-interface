@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge'
 import { getJuicecrowdUrl } from 'utils/juicecrowd'
 import { Badge } from './Badge'
 
-export type DomainBadgeProps = {
+type DomainBadgeProps = {
   className?: string
   domain: string | undefined
   projectId?: number

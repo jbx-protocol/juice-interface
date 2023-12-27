@@ -6,7 +6,7 @@ import * as Yup from 'yup'
 import { useProjectCart } from './useProjectCart'
 import { useProjectContext } from './useProjectContext'
 
-export const PayProjectCardSchema = Yup.object().shape({
+const PayProjectCardSchema = Yup.object().shape({
   payAmount: Yup.object()
     .shape({
       amount: Yup.number()

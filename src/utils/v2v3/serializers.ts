@@ -7,7 +7,7 @@ import {
   V2V3FundingCycleMetadata,
 } from 'models/v2v3/fundingCycle'
 import { V3FundingCycleMetadata } from 'models/v3/fundingCycle'
-import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { parseWad } from 'utils/format/formatNumber'
 
 type V2FundingCycleMetadataStrings = Record<
   keyof Pick<
@@ -209,21 +209,6 @@ export const deserializeV2V3FundingCycleData = (
   discountRate: BigNumber.from(serializedFundingCycleData.discountRate),
   ballot: serializedFundingCycleData.ballot, // hex, contract address
 })
-
-export const serializeFundAccessConstraint = (
-  fundAccessConstraint: V2V3FundAccessConstraint,
-): SerializedV2V3FundAccessConstraint => {
-  return {
-    terminal: fundAccessConstraint.terminal,
-    token: fundAccessConstraint.token,
-    distributionLimit: fromWad(fundAccessConstraint.distributionLimit),
-    distributionLimitCurrency:
-      fundAccessConstraint.distributionLimitCurrency.toString(),
-    overflowAllowance: fromWad(fundAccessConstraint.overflowAllowance),
-    overflowAllowanceCurrency:
-      fundAccessConstraint.overflowAllowanceCurrency.toString(),
-  }
-}
 
 export const deserializeFundAccessConstraint = (
   fundAccessConstraint: SerializedV2V3FundAccessConstraint,

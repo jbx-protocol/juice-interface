@@ -110,19 +110,6 @@ export const getUnsafeV2V3FundingCycleProperties = (
 }
 
 /**
- * Return number of risk indicators for a funding cycle.
- * 0 if we deem a project "safe" to contribute to.
- */
-export const getV2V3FundingCycleRiskCount = (
-  fundingCycle: V2V3FundingCycle,
-  fundingCycleMetadata: V2V3FundingCycleMetadata,
-): number => {
-  return Object.values(
-    getUnsafeV2V3FundingCycleProperties(fundingCycle, fundingCycleMetadata),
-  ).filter(v => v === true).length
-}
-
-/**
  * _mustStartAtOrAfter + _duration > type(uint54).max
  * @param mustStartAtOrAfter
  */

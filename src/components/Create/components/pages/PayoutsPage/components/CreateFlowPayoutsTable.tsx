@@ -10,7 +10,7 @@ import { V2V3CurrencyName, getV2V3CurrencyOption } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { usePayoutsForm } from '../hooks/usePayoutsForm'
 
-export const DEFAULT_CURRENCY_NAME = CURRENCY_METADATA.ETH.name
+const DEFAULT_CURRENCY_NAME = CURRENCY_METADATA.ETH.name
 
 export function CreateFlowPayoutsTable({
   onFinish,

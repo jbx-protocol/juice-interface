@@ -8,6 +8,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext } from 'react'
+import { formatWad } from 'utils/format/formatNumber'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
 import { feeForAmount, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
@@ -59,11 +60,16 @@ export function SplitAmountValue({
       >
         {valueAfterFees ? (
           <>
-            <AmountInCurrency
-              amount={valueAfterFees}
-              currency={currencyName}
-              hideTooltip={hideTooltip}
-            />
+            {currencyName ? (
+              <AmountInCurrency
+                amount={valueAfterFees}
+                currency={currencyName}
+                hideTooltip={hideTooltip}
+              />
+            ) : (
+              // if no currency, assume its a token with 18 decimals (a wad)
+              <>{formatWad(valueAfterFees, { precision: 2 })}</>
+            )}
             {props.valueSuffix ? <span> {props.valueSuffix}</span> : null}
           </>
         ) : null}

@@ -14,10 +14,12 @@ export function AmountInCurrency({
   ...props
 }: {
   amount: BigNumber | undefined
+  currency: CurrencyName | undefined
   hideTooltip?: boolean
-  currency?: CurrencyName
 }) {
   if (currency === 'USD')
     return <USDAmount amount={amount} hideTooltip={hideTooltip} {...props} />
-  return <ETHAmount amount={amount} hideTooltip={hideTooltip} {...props} />
+  if (currency === 'ETH')
+    return <ETHAmount amount={amount} hideTooltip={hideTooltip} {...props} />
+  return null
 }

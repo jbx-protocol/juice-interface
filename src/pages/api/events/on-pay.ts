@@ -29,28 +29,31 @@ const BigIntValidator = (errorMessage: string) => {
         return undefined
       }
     })
-    .test('is-big-number', errorMessage, value => typeof value === 'bigint')
+    .test('is-bigint', errorMessage, value => typeof value === 'bigint')
 }
 
 const Schema = Yup.object().shape({
-  fundingCycleConfiguration: BigIntValidator(
-    'fundingCycleConfiguration must be a BigInt',
-  ).required(),
-  fundingCycleNumber: BigIntValidator(
-    'fundingCycleNumber must be a BigInt',
-  ).required(),
-  projectId: BigIntValidator('projectId must be a BigInt').required(),
-  payer: Yup.string().required(),
-  beneficiary: Yup.string().required(),
-  amount: BigIntValidator('amount must be a BigInt').required(),
-  beneficiaryTokenCount: BigIntValidator(
-    'beneficiaryTokenCount must be a BigInt',
-  ).required(),
-  memo: Yup.string(),
-  metadata: Yup.string().required(),
-  from: Yup.string().required(),
-  blockHash: Yup.string().required(),
-  blockNumber: Yup.number(),
+  data: Yup.object().shape({
+    fundingCycleConfiguration: BigIntValidator(
+      'fundingCycleConfiguration must be a BigInt',
+    ).required(),
+    fundingCycleNumber: BigIntValidator(
+      'fundingCycleNumber must be a BigInt',
+    ).required(),
+    projectId: BigIntValidator('projectId must be a BigInt').required(),
+    payer: Yup.string().required(),
+    beneficiary: Yup.string().required(),
+    amount: BigIntValidator('amount must be a BigInt').required(),
+    beneficiaryTokenCount: BigIntValidator(
+      'beneficiaryTokenCount must be a BigInt',
+    ).required(),
+    memo: Yup.string(),
+    metadata: Yup.string().required(),
+  }),
+  metadata: Yup.object().shape({
+    transactionHash: Yup.string().required(),
+    // TODO add more fields if needed
+  }),
 })
 
 type OnPayEvent = Awaited<ReturnType<typeof Schema.validate>>
@@ -64,11 +67,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const event = await Schema.validate(req.body)
 
-    const emailEvents = await findEmailEventsForProjectId(
-      Number(event.projectId),
-      event.payer.toLowerCase(),
-    )
     const emailMetadata = await compileEmailMetadata(event)
+
+    const emailEvents = await findEmailEventsForProjectId(
+      Number(event.data.projectId),
+      event.data.payer.toLowerCase(),
+    )
 
     await sendEmails(emailMetadata, emailEvents)
 
@@ -105,10 +109,8 @@ type EmailMetadata = {
 }
 
 const compileEmailMetadata = async ({
-  projectId,
-  amount,
-  payer,
-  blockHash,
+  data: { projectId, amount, payer },
+  metadata: { transactionHash },
 }: OnPayEvent): Promise<EmailMetadata> => {
   const formattedAmount = fromWad(amount.toString())
   const normalizedPayerAddress = utils.getAddress(payer)
@@ -136,8 +138,8 @@ const compileEmailMetadata = async ({
     })
   }
 
-  const transactionName = blockHash
-  const transactionUrl = `https://etherscan.io/block/${blockHash}`
+  const transactionName = transactionHash
+  const transactionUrl = `https://etherscan.io/tx/${transactionHash}`
 
   return {
     amount: formattedAmount,

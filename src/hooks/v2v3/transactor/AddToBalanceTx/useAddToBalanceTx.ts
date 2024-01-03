@@ -31,7 +31,10 @@ function buildTxArgs({
     return getAddToBalanceArgsV3({ projectId, value })
   }
   if (
-    JBETHPaymentTerminalVersion === V2V3ContractName.JBETHPaymentTerminal3_1
+    JBETHPaymentTerminalVersion === V2V3ContractName.JBETHPaymentTerminal3_1 ||
+    JBETHPaymentTerminalVersion ===
+      V2V3ContractName.JBETHPaymentTerminal3_1_1 ||
+    JBETHPaymentTerminalVersion === V2V3ContractName.JBETHPaymentTerminal3_1_2
   ) {
     return getAddToBalanceArgsV3_1({ projectId, value })
   }

@@ -1,14 +1,12 @@
 import { Footer } from 'components/Footer/Footer'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
-import { useIsJuicecrowd } from 'hooks/v2v3/useIsJuiceCrowd'
 import { twMerge } from 'tailwind-merge'
 import { BlockedProjectBanner } from './components/BlockedProjectBanner'
 import { Cart } from './components/Cart/Cart'
 import { CoverPhoto } from './components/CoverPhoto/CoverPhoto'
 import { CurrentBalanceCard } from './components/CurrentBalanceCard/CurrentBalanceCard'
 import { FundingCycleCountdownProvider } from './components/FundingCycleCountdown/FundingCycleCountdownProvider'
-import { JuicecrowdRedirectModal } from './components/JuiceCrowdRedirectModal'
 import { NftRewardsCard } from './components/NftRewardsCard/NftRewardsCard'
 import { PayProjectCard } from './components/PayProjectCard/PayProjectCard'
 import { ProjectCartProvider } from './components/ProjectCartProvider/ProjectCartProvider'
@@ -21,10 +19,9 @@ import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 export const ProjectDashboard = () => {
   const { projectPayReceipt } = useProjectPageQueries()
   const { value: hasNftRewards } = useHasNftRewards()
-  const isJuicecrowd = useIsJuicecrowd()
 
   // disable juicecrowd nft rewards
-  const shouldShowNftCard = isJuicecrowd ? false : hasNftRewards
+  const shouldShowNftCard = hasNftRewards
 
   return (
     <TransactionProvider>
@@ -58,7 +55,6 @@ export const ProjectDashboard = () => {
                         />
                       </div>
                       <ProjectTabs className="mt-8" />
-                      <JuicecrowdRedirectModal />
                     </div>
                   </div>
                 </>

@@ -87,6 +87,8 @@ export function useDBProjectsInfiniteQuery(
   )
 }
 
+export const DEFAULT_TRENDING_PROJECTS_LIMIT = 10
+
 export function useTrendingProjects(count: number) {
   return useQuery(['trending-projects', count], async () => {
     const res = await axios.get<Json<DBProject>[]>(

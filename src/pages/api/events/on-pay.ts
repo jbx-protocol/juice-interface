@@ -20,6 +20,31 @@ const JUICE_API_EVENTS_ENABLED = process.env.JUICE_API_EVENTS_ENABLED === 'true'
 
 const logger = getLogger('api/events/on-pay')
 
+enum EmailType {
+  PayEvent = 'payment-received',
+  PayReceipt = 'payment-receipt',
+}
+
+type EmailEvent = {
+  email: string
+  type: EmailType
+}
+
+type EmailMetadata = {
+  amount: string
+  payerName: string
+  payerEthscanUrl: string
+  timestamp: string
+  projectUrl: string
+  projectName: string
+  // Used in transaction receipt
+  transactionUrl: string | undefined
+  // Used in transaction receipt
+  transactionName: string | undefined
+}
+
+type OnPayEvent = Awaited<ReturnType<typeof Schema.validate>>
+
 const BigIntValidator = (errorMessage: string) => {
   return Yup.mixed<bigint>()
     .transform(current => {
@@ -55,58 +80,6 @@ const Schema = Yup.object().shape({
     // TODO add more fields if needed
   }),
 })
-
-type OnPayEvent = Awaited<ReturnType<typeof Schema.validate>>
-
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    if (req.method !== 'POST' || !JUICE_API_EVENTS_ENABLED) {
-      return res.status(404).json({ message: 'Not found.' })
-    }
-    if (!authCheck(req, res)) return
-
-    const event = await Schema.validate(req.body)
-
-    const emailMetadata = await compileEmailMetadata(event)
-
-    const emailEvents = await findEmailEventsForProjectId(
-      Number(event.data.projectId),
-      event.data.payer.toLowerCase(),
-    )
-
-    await sendEmails(emailMetadata, emailEvents)
-
-    return res.status(200).json('Success!')
-  } catch (e) {
-    logger.error({ error: e })
-    return res
-      .status(500)
-      .json({ message: 'Unexpected server error occurred.' })
-  }
-}
-
-enum EmailType {
-  PayEvent = 'payment-received',
-  PayReceipt = 'payment-receipt',
-}
-
-type EmailEvent = {
-  email: string
-  type: EmailType
-}
-
-type EmailMetadata = {
-  amount: string
-  payerName: string
-  payerEthscanUrl: string
-  timestamp: string
-  projectUrl: string
-  projectName: string
-  // Used in transaction receipt
-  transactionUrl: string | undefined
-  // Used in transaction receipt
-  transactionName: string | undefined
-}
 
 const compileEmailMetadata = async ({
   data: { projectId, amount, payer },
@@ -243,4 +216,29 @@ const findEmailEventsForProjectId = async (
   })
 }
 
-export default handler
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    if (req.method !== 'POST' || !JUICE_API_EVENTS_ENABLED) {
+      return res.status(404).json({ message: 'Not found.' })
+    }
+    if (!authCheck(req, res)) return
+
+    const event = await Schema.validate(req.body)
+
+    const emailMetadata = await compileEmailMetadata(event)
+
+    const emailEvents = await findEmailEventsForProjectId(
+      Number(event.data.projectId),
+      event.data.payer.toLowerCase(),
+    )
+
+    await sendEmails(emailMetadata, emailEvents)
+
+    return res.status(200).json('Success!')
+  } catch (e) {
+    logger.error({ error: e })
+    return res
+      .status(500)
+      .json({ message: 'Unexpected server error occurred.' })
+  }
+}

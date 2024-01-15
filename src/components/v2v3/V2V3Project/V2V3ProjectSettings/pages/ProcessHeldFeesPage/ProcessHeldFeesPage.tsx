@@ -101,9 +101,17 @@ export function ProcessHeldFeesPage() {
         onClick={processHeldFees}
         loading={processingHeldFees}
         type="primary"
+        connectWalletText={<Trans>Not able to process fees</Trans>}
         text={<Trans>Process held fees</Trans>}
-        disabled={!canProcessHeldFees}
+        disabled={!canProcessHeldFees || !heldFees}
       />
+      {!canProcessHeldFees ? (
+        <p>
+          <Trans>Your wallet isn't allowed to process held fees.</Trans>
+        </p>
+      ) : (
+        ''
+      )}
     </>
   )
 }

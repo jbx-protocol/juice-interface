@@ -524,6 +524,9 @@ msgstr ""
 msgid "JuiceboxDAO"
 msgstr ""
 
+msgid "Go to Safe"
+msgstr ""
+
 msgid "The issuance rate is reduced by this amount each cycle (unless the owner changes the issuance rate)."
 msgstr ""
 
@@ -1398,9 +1401,6 @@ msgid "Assets"
 msgstr ""
 
 msgid "Why Juicebox?"
-msgstr ""
-
-msgid "Go to your Safe"
 msgstr ""
 
 msgid "Music"

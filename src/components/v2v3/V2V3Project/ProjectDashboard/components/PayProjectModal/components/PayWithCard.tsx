@@ -12,6 +12,7 @@ import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3
 import { useFormikContext } from 'formik'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { useGasPrice } from 'hooks/useGasPrice'
 import { useProjectHasErc20 } from 'hooks/v2v3/useProjectHasErc20'
 import { NetworkName } from 'models/networkName'
 import {
@@ -66,6 +67,7 @@ export const PayWithCard: React.FC<PayWithCardProps> = ({ className }) => {
   const projectHasErc20 = useProjectHasErc20()
   const { receivedTickets } = useProjectPaymentTokens()
   const { setProjectPayReceipt } = useProjectPageQueries()
+  const { gasPriceWei, estimateGas } = useGasPrice()
 
   const weiAmount = useMemo(() => {
     if (!totalAmount) {
@@ -177,14 +179,22 @@ export const PayWithCard: React.FC<PayWithCardProps> = ({ className }) => {
   const privyPay = useCallback(async () => {
     const data = constructDataPayload()
 
+    const gasLimit = await estimateGas({
+      to: contracts.JBETHPaymentTerminal?.address,
+      chainId: readNetwork.chainId,
+      data,
+      value: weiAmount.toBigInt(),
+      gasPrice: gasPriceWei,
+    })
+
     try {
       const res = await sendTransaction({
         to: contracts.JBETHPaymentTerminal?.address,
         chainId: readNetwork.chainId,
         data,
         value: weiAmount.toBigInt(),
-        gasLimit: 1000000,
-        gasPrice: 1000000000,
+        gasLimit: gasLimit.toBigInt(),
+        gasPrice: gasPriceWei.toBigInt(),
       })
       dispatch({ type: 'payProject' })
       dispatch({ type: 'closePayModal' })
@@ -199,6 +209,8 @@ export const PayWithCard: React.FC<PayWithCardProps> = ({ className }) => {
     constructDataPayload,
     contracts.JBETHPaymentTerminal?.address,
     dispatch,
+    estimateGas,
+    gasPriceWei,
     sendTransaction,
     setProjectPayReceipt,
     weiAmount,

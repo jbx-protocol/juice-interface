@@ -28,6 +28,7 @@ export type V2V3SettingsPageKey =
   | 'tokenmigration'
   | 'upgrades'
   | 'projectnft'
+  | 'heldfees'
 
 function SettingsCard({ children }: { children: React.ReactNode }) {
   return (
@@ -192,6 +193,11 @@ export function ProjectSettingsDashboard() {
               <li>
                 <Link href={useSettingsPagePath('governance')}>
                   <Trans>Governance</Trans>
+                </Link>
+              </li>
+              <li>
+                <Link href={useSettingsPagePath('heldfees')}>
+                  <Trans>Process held fees</Trans>
                 </Link>
               </li>
             </ul>

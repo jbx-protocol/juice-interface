@@ -314,6 +314,9 @@ msgstr ""
 msgid "{label} must be numeric"
 msgstr ""
 
+msgid "What are held fees?"
+msgstr ""
+
 msgid "This is the amount of ETH that you can pay out from your project each cycle."
 msgstr ""
 
@@ -974,6 +977,9 @@ msgstr ""
 msgid "Payments to this project"
 msgstr ""
 
+msgid "$JBX is the Juicebox governance token. Normally, when a project pays ETH out to wallets, a 2.5% fee is taken out and used to buy $JBX from Uniswap or from <0>JuiceboxDAO's project</0> (whichever is cheaper). The project's owner gets 50% of that $JBX."
+msgstr ""
+
 msgid "File must be less than {formattedSize}{unit}"
 msgstr ""
 
@@ -1236,6 +1242,9 @@ msgid "Bio"
 msgstr ""
 
 msgid "Disabled"
+msgstr ""
+
+msgid "This project has no held fees."
 msgstr ""
 
 msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
@@ -3068,6 +3077,9 @@ msgstr ""
 msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
 msgstr ""
 
+msgid "Current held fees"
+msgstr ""
+
 msgid "Unarchiving your project has the following effects:"
 msgstr ""
 
@@ -3165,6 +3177,9 @@ msgid "Advanced options:"
 msgstr ""
 
 msgid "Payments to this project are paused in this cycle."
+msgstr ""
+
+msgid "If your project has \"hold fees\" enabled, instead of processing that that 2.5% fee immediately, the fee gets held within the Juicebox contracts. These fees can be unlocked by transferring the ETH back to your project."
 msgstr ""
 
 msgid "Redemption rate"
@@ -3402,6 +3417,9 @@ msgid "View token holders"
 msgstr ""
 
 msgid "How a community of space enthusiasts raised $8.3 million to send a DAO member to space on a Blue Origin rocket"
+msgstr ""
+
+msgid "If you don't plan on unlocking the held fees later on, you can use the button below to process them now. When you press the button, the held fees will be used to buy $JBX. This cannot be undone."
 msgstr ""
 
 msgid "Check User Wallet Address"
@@ -3837,6 +3855,9 @@ msgid "1400px x 256px image size recommended."
 msgstr ""
 
 msgid "Create a project"
+msgstr ""
+
+msgid "To learn more about this mechanism and $JBX, visit the <0>docs</0>."
 msgstr ""
 
 msgid "Show your supporters a pop-up with a message and a link after they receive an NFT. You can use this to direct supporters to your project's website, a Discord server, or somewhere else."
@@ -4581,6 +4602,9 @@ msgid "Following the launch of their token $MOONEY, the next goal on MoonDAO's r
 msgstr ""
 
 msgid "Paid"
+msgstr ""
+
+msgid "Process this project's held fees."
 msgstr ""
 
 msgid "You can redeem your {tokenSymbol} for ETH without claiming them. You can transfer your unclaimed {tokenSymbol} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right-hand corner of this project."

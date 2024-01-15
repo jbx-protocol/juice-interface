@@ -1685,9 +1685,6 @@ msgstr ""
 msgid "Explore Projects"
 msgstr ""
 
-msgid "Total volume"
-msgstr ""
-
 msgid "Your NFTs & Rewards"
 msgstr ""
 

@@ -2627,6 +2627,9 @@ msgstr ""
 msgid "When someone pays your project 1 ETH:"
 msgstr ""
 
+msgid "This project's rules will be locked in place for {cycleLengthValue}."
+msgstr ""
+
 msgid "What does Juicebox cost?"
 msgstr ""
 
@@ -2892,9 +2895,6 @@ msgid "Archive project"
 msgstr ""
 
 msgid "Allow a few days for your project to appear in the \"archived\" projects list on the Projects page."
-msgstr ""
-
-msgid "This project's rules will be locked in place for {cycleStatusValue} days."
 msgstr ""
 
 msgid "Your edits will take effect in <0>cycle #{0}</0>. The current cycle (#{currentFCNumber}) won't be altered."
@@ -3201,6 +3201,9 @@ msgid "Created"
 msgstr ""
 
 msgid "Your NFTs have been edited successfully"
+msgstr ""
+
+msgid "The project's rules are unlocked and can change at any time."
 msgstr ""
 
 msgid "No file uploaded."

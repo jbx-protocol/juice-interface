@@ -2,6 +2,7 @@ import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
 import SiteNavigation from 'components/Navbar/SiteNavigation'
 import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickProjectSearchProvider'
+import { PrivyTestComponent } from 'components/v2v3/V2V3Project/ProjectDashboard/components/PayProjectModal/components/PayWithCard'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
@@ -30,7 +31,9 @@ export const AppWrapper: React.FC<
           <ThemeProvider>
             <EtherPriceProvider>
               <QuickProjectSearchProvider>
-                <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
+                <PrivyTestComponent>
+                  <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
+                </PrivyTestComponent>
               </QuickProjectSearchProvider>
             </EtherPriceProvider>
           </ThemeProvider>

@@ -2,6 +2,7 @@ import { usePrivy, useWallets } from '@privy-io/react-auth'
 import { Button } from 'antd'
 import { PrivyContext } from 'components/Privy'
 import { PayProjectModalFormValues } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/usePayProjectModal/usePayProjectModal'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { DEFAULT_MIN_RETURNED_TOKENS } from 'constants/transactionDefaults'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
@@ -12,11 +13,22 @@ import { useFormikContext } from 'formik'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectHasErc20 } from 'hooks/v2v3/useProjectHasErc20'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import {
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { twMerge } from 'tailwind-merge'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { parseWad } from 'utils/format/formatNumber'
-import { emitErrorNotification } from 'utils/notifications'
+import {
+  emitErrorNotification,
+  emitInfoNotification,
+} from 'utils/notifications'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { usePrepareDelegatePayMetadata } from '../../../hooks/usePayProjectModal/usePrepareDelegatePayMetadata'
 import { useProjectCart } from '../../../hooks/useProjectCart'
@@ -249,5 +261,31 @@ function encodeNumber(num: number): string {
   return (
     padLeft(length) +
     padLeft(numHex, numHex.length + (64 - (numHex.length % 64)))
+  )
+}
+
+export const PrivyTestComponent: React.FC<PropsWithChildren> = ({
+  children,
+}) => {
+  const { logout } = usePrivy()
+  if (!featureFlagEnabled(FEATURE_FLAGS.PRIVY_DEBUG_TOOLS)) {
+    return <>{children}</>
+  }
+
+  return (
+    <div className="relative">
+      {children}
+      <div className="fixed bottom-4 right-4 z-50">
+        <Button
+          type="link"
+          onClick={() => {
+            logout()
+            emitInfoNotification('Logged out')
+          }}
+        >
+          Logout
+        </Button>
+      </div>
+    </div>
   )
 }

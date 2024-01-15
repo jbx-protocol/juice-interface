@@ -1,4 +1,4 @@
-import { BigNumber, utils } from 'ethers'
+import { utils } from 'ethers'
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { authCheck } from 'lib/auth'
@@ -19,69 +19,6 @@ import * as Yup from 'yup'
 const JUICE_API_EVENTS_ENABLED = process.env.JUICE_API_EVENTS_ENABLED === 'true'
 
 const logger = getLogger('api/events/on-pay')
-
-const BigNumberValidator = (errorMessage: string) => {
-  return Yup.mixed<BigNumber>()
-    .transform(current => {
-      try {
-        return BigNumber.from(current)
-      } catch (e) {
-        return undefined
-      }
-    })
-    .test('is-big-number', errorMessage, value => BigNumber.isBigNumber(value))
-}
-
-const Schema = Yup.object().shape({
-  fundingCycleConfiguration: BigNumberValidator(
-    'fundingCycleConfiguration must be an ethers BigNumber',
-  ).required(),
-  fundingCycleNumber: BigNumberValidator(
-    'fundingCycleNumber must be an ethers BigNumber',
-  ).required(),
-  projectId: BigNumberValidator(
-    'projectId must be an ethers BigNumber',
-  ).required(),
-  payer: Yup.string().required(),
-  beneficiary: Yup.string().required(),
-  amount: BigNumberValidator('amount must be an ethers BigNumber').required(),
-  beneficiaryTokenCount: BigNumberValidator(
-    'beneficiaryTokenCount must be an ethers BigNumber',
-  ).required(),
-  memo: Yup.string(),
-  metadata: Yup.string().required(),
-  from: Yup.string().required(),
-  blockHash: Yup.string().required(),
-  blockNumber: Yup.number(),
-})
-
-type OnPayEvent = Awaited<ReturnType<typeof Schema.validate>>
-
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    if (req.method !== 'POST' || !JUICE_API_EVENTS_ENABLED) {
-      return res.status(404).json({ message: 'Not found.' })
-    }
-    if (!authCheck(req, res)) return
-
-    const event = await Schema.validate(req.body)
-
-    const emailEvents = await findEmailEventsForProjectId(
-      event.projectId.toNumber(),
-      event.payer.toLowerCase(),
-    )
-    const emailMetadata = await compileEmailMetadata(event)
-
-    await sendEmails(emailMetadata, emailEvents)
-
-    return res.status(200).json('Success!')
-  } catch (e) {
-    logger.error({ error: e })
-    return res
-      .status(500)
-      .json({ message: 'Unexpected server error occurred.' })
-  }
-}
 
 enum EmailType {
   PayEvent = 'payment-received',
@@ -106,11 +43,47 @@ type EmailMetadata = {
   transactionName: string | undefined
 }
 
+type OnPayEvent = Awaited<ReturnType<typeof Schema.validate>>
+
+const BigIntValidator = (errorMessage: string) => {
+  return Yup.mixed<bigint>()
+    .transform(current => {
+      try {
+        return BigInt(current)
+      } catch (e) {
+        return undefined
+      }
+    })
+    .test('is-bigint', errorMessage, value => typeof value === 'bigint')
+}
+
+const Schema = Yup.object().shape({
+  data: Yup.object().shape({
+    fundingCycleConfiguration: BigIntValidator(
+      'fundingCycleConfiguration must be a BigInt',
+    ).required(),
+    fundingCycleNumber: BigIntValidator(
+      'fundingCycleNumber must be a BigInt',
+    ).required(),
+    projectId: BigIntValidator('projectId must be a BigInt').required(),
+    payer: Yup.string().required(),
+    beneficiary: Yup.string().required(),
+    amount: BigIntValidator('amount must be a BigInt').required(),
+    beneficiaryTokenCount: BigIntValidator(
+      'beneficiaryTokenCount must be a BigInt',
+    ).required(),
+    memo: Yup.string(),
+    metadata: Yup.string().required(),
+  }),
+  metadata: Yup.object().shape({
+    transactionHash: Yup.string().required(),
+    // TODO add more fields if needed
+  }),
+})
+
 const compileEmailMetadata = async ({
-  projectId,
-  amount,
-  payer,
-  blockHash,
+  data: { projectId, amount, payer },
+  metadata: { transactionHash },
 }: OnPayEvent): Promise<EmailMetadata> => {
   const formattedAmount = fromWad(amount.toString())
   const normalizedPayerAddress = utils.getAddress(payer)
@@ -127,7 +100,7 @@ const compileEmailMetadata = async ({
 
   let projectName = `Project ${projectId.toString()}`
   try {
-    const projectMetadata = await getProjectMetadata(projectId.toNumber())
+    const projectMetadata = await getProjectMetadata(Number(projectId))
     if (projectMetadata?.name) {
       projectName = projectMetadata.name
     }
@@ -138,8 +111,8 @@ const compileEmailMetadata = async ({
     })
   }
 
-  const transactionName = blockHash
-  const transactionUrl = `https://etherscan.io/block/${blockHash}`
+  const transactionName = transactionHash
+  const transactionUrl = `https://etherscan.io/tx/${transactionHash}`
 
   return {
     amount: formattedAmount,
@@ -243,4 +216,29 @@ const findEmailEventsForProjectId = async (
   })
 }
 
-export default handler
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    if (req.method !== 'POST' || !JUICE_API_EVENTS_ENABLED) {
+      return res.status(404).json({ message: 'Not found.' })
+    }
+    if (!authCheck(req, res)) return
+
+    const event = await Schema.validate(req.body)
+
+    const emailMetadata = await compileEmailMetadata(event)
+
+    const emailEvents = await findEmailEventsForProjectId(
+      Number(event.data.projectId),
+      event.data.payer.toLowerCase(),
+    )
+
+    await sendEmails(emailMetadata, emailEvents)
+
+    return res.status(200).json('Success!')
+  } catch (e) {
+    logger.error({ error: e })
+    return res
+      .status(500)
+      .json({ message: 'Unexpected server error occurred.' })
+  }
+}

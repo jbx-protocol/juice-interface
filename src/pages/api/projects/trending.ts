@@ -36,7 +36,7 @@ const handler: NextApiHandler = async (req, res) => {
       query: TrendingProjectsDocument,
       variables: {
         where: {
-          // trendingScore_gt: '0', // Turned off because there wasn't sufficient number of projects to fulfill `first`.
+          trendingScore_gt: '0' as any, // eslint-disable-line @typescript-eslint/no-explicit-any
           ...(ARCHIVED_SUBGRAPH_IDS.length
             ? { id_not_in: ARCHIVED_SUBGRAPH_IDS }
             : {}), // `id_not_in: <empty-array>` will return 0 results

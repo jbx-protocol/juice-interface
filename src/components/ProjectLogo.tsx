@@ -47,7 +47,6 @@ export default function ProjectLogo({
       MAINNET_URI_OVERRIDES[projectId]
     )
       return MAINNET_URI_OVERRIDES[projectId]
-
     if (
       projectId &&
       readNetwork.name === NetworkName.goerli &&
@@ -55,7 +54,13 @@ export default function ProjectLogo({
     )
       return GOERLI_URI_OVERRIDES[projectId]
 
-    if (!uri) return `/api/juicebox/pv/${pv}/project/${projectId}/logo`
+    if (!uri) {
+      if (projectId && pv) {
+        return `/api/juicebox/pv/${pv}/project/${projectId}/logo`
+      }
+
+      return undefined
+    }
 
     // Some older JB projects have a logo URI hardcoded to use Pinata.
     // JBM no longer uses Pinata.

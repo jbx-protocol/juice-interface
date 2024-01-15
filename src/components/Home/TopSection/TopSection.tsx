@@ -11,12 +11,16 @@ import { SectionHeading } from 'components/Home/SectionHeading'
 import { ProjectTag } from 'components/ProjectTags/ProjectTag'
 import { XLButton } from 'components/buttons/XLButton'
 import { HOMEPAGE } from 'constants/fathomEvents'
-import { useTrendingProjects } from 'hooks/useProjects'
+import { PV_V1 } from 'constants/pv'
+import {
+  DEFAULT_TRENDING_PROJECTS_LIMIT,
+  useDBProjectsQuery,
+  useTrendingProjects,
+} from 'hooks/useProjects'
 import { trackFathomGoal } from 'lib/fathom'
 import { ProjectTagName } from 'models/project-tags'
 import Link from 'next/link'
-
-const TRENDING_PROJECTS_LIMIT = 10
+import { getSubgraphIdForProject } from 'utils/graph'
 
 const HEADER_TAGS: ProjectTagName[] = [
   'dao',
@@ -26,10 +30,40 @@ const HEADER_TAGS: ProjectTagName[] = [
   'business',
 ]
 
+// These projects will render if there isn't enough trending projects.
+const BACKUP_PROJECTS = [
+  getSubgraphIdForProject(PV_V1, 199), // moondao
+  getSubgraphIdForProject(PV_V1, 36), // constituiondao
+  getSubgraphIdForProject(PV_V1, 323), // assange
+  // add more as needed
+]
+
 export function TopSection() {
   const { data: trendingProjects, isLoading } = useTrendingProjects(
-    TRENDING_PROJECTS_LIMIT,
+    DEFAULT_TRENDING_PROJECTS_LIMIT,
   )
+  const { data: backupProjects } = useDBProjectsQuery({
+    ids: BACKUP_PROJECTS,
+  })
+
+  const remainderProjectCount =
+    DEFAULT_TRENDING_PROJECTS_LIMIT - (trendingProjects?.length ?? 0)
+
+  const renderBackup =
+    trendingProjects && backupProjects && remainderProjectCount
+      ? backupProjects
+          .slice(0, remainderProjectCount)
+          .filter(
+            p =>
+              !trendingProjects
+                .map(proj => proj.projectId)
+                .includes(p.projectId),
+          )
+      : []
+
+  const renderProjects = trendingProjects
+    ? [...trendingProjects, ...renderBackup]
+    : undefined
 
   return (
     <SectionContainer className="pt-6 pb-24 md:px-0 md:pt-10">
@@ -87,9 +121,9 @@ export function TopSection() {
           </XLButton>
         </Link>
       </div>
-      {!isLoading && trendingProjects ? (
+      {!isLoading && renderProjects ? (
         <ProjectCarousel
-          items={trendingProjects?.map(p => (
+          items={renderProjects?.map(p => (
             <HomepageProjectCard project={p} key={p.id} />
           ))}
         />

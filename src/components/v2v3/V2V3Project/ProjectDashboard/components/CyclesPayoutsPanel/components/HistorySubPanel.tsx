@@ -22,10 +22,12 @@ import { HistoricalConfigurationPanel } from './HistoricalConfigurationPanel'
 
 export const HistorySubPanel = () => {
   const { projectId } = useProjectMetadata()
+  const { fundingCycle } = useProjectContext()
 
   const [isFetchingMore, setIsFetchingMore] = useState<boolean>()
   const { data, fetchMore, loading, error } = usePastFundingCycles({
     projectId,
+    currentFcNumber: fundingCycle?.number.toNumber() ?? 0,
   })
 
   const isLoading = loading || isFetchingMore

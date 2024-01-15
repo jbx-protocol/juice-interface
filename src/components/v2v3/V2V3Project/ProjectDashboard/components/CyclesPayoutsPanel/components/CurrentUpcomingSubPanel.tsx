@@ -65,7 +65,7 @@ export const CurrentUpcomingSubPanel = ({
     </Trans>
   )
 
-  if (
+  const hasNoUpcomingCycle =
     info.type === 'upcoming' &&
     info.currentCycleUnlocked &&
     /**
@@ -73,8 +73,10 @@ export const CurrentUpcomingSubPanel = ({
      * (which happens when Scheduled Launch is used,
      * mustStartAtOrAfter is in the future)
      */
-    info.cycleNumber !== 1
-  ) {
+    info.cycleNumber !== 1 &&
+    !info.hasPendingConfiguration
+
+  if (hasNoUpcomingCycle) {
     return (
       <div>
         <div

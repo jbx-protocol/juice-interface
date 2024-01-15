@@ -4,8 +4,6 @@ import { useWallet } from 'hooks/Wallet'
 import { ReactNode, createContext } from 'react'
 import { useQuery } from 'react-query'
 
-const OFAC_API = 'https://api.wewantjusticedao.org/donation/validate'
-
 interface ProjectOFACContextType {
   isLoading?: boolean
   isAddressListedInOFAC?: boolean
@@ -35,7 +33,7 @@ export default function V2V3ProjectOFACProvider({
 
       try {
         const { data } = await axios.get<{ isGoodAddress: boolean }>(
-          `${OFAC_API}?address=${userAddress}`,
+          `/api/ofac/validate/${userAddress}`,
         )
 
         return !data.isGoodAddress

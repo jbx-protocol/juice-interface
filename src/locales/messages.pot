@@ -1799,9 +1799,6 @@ msgstr ""
 msgid "Send Message"
 msgstr ""
 
-msgid "This project's rules will be locked in place for {cycleLengthValue} days."
-msgstr ""
-
 msgid "Tokens redeemed"
 msgstr ""
 
@@ -2631,6 +2628,9 @@ msgid "Export a list of this cycle's reserved token recipients to CSV."
 msgstr ""
 
 msgid "When someone pays your project 1 ETH:"
+msgstr ""
+
+msgid "This project's rules will be locked in place for {cycleLengthValue}."
 msgstr ""
 
 msgid "What does Juicebox cost?"

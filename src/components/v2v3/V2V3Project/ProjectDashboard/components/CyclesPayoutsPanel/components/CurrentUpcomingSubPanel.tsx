@@ -61,7 +61,7 @@ export const CurrentUpcomingSubPanel = ({
     <Trans>The project's rules are unlocked and can change at any time.</Trans>
   ) : (
     <Trans>
-      This project's rules will be locked in place for {cycleLengthValue} days.
+      This project's rules will be locked in place for {cycleLengthValue}.
     </Trans>
   )
 

@@ -32,7 +32,7 @@ export const usePayProjectTx = ({
     formikHelpers: FormikHelpers<PayProjectModalFormValues>,
   ) => void
 }) => {
-  const { userAddress } = useWallet()
+  const { userAddress, isConnected, connect } = useWallet()
   const { totalAmount, nftRewards } = useProjectCart()
   const {
     nftRewards: { rewardTiers },
@@ -80,6 +80,10 @@ export const usePayProjectTx = ({
       formikHelpers: FormikHelpers<PayProjectModalFormValues>,
     ) => {
       if (!values.userAcceptsTerms) return
+      if (!isConnected) {
+        connect()
+        return
+      }
 
       const { messageString, attachedUrl } = values.message
       const memo = buildPaymentMemo({
@@ -134,17 +138,19 @@ export const usePayProjectTx = ({
       }
     },
     [
-      projectHasErc20,
-      buildPayReceipt,
+      isConnected,
       nftRewards,
-      onTransactionConfirmedCallback,
-      onTransactionErrorCallback,
-      onTransactionPendingCallback,
-      payProjectTx,
-      rewardTiers,
-      weiAmount,
       userAddress,
+      connect,
+      rewardTiers,
+      payProjectTx,
       prepareDelegateMetadata,
+      weiAmount,
+      projectHasErc20,
+      onTransactionConfirmedCallback,
+      buildPayReceipt,
+      onTransactionPendingCallback,
+      onTransactionErrorCallback,
     ],
   )
 }

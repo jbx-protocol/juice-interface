@@ -68,6 +68,9 @@ const CONNECT_SRC = [
   ...WALLET_CONNECT_URLS,
   'https://*.supabase.co',
   'https://api.ensideas.com',
+  'https://auth.privy.io',
+  'wss://www.walletlink.org',
+  'https://api.moonpay.com',
 ]
 
 const FRAME_ANCESTORS = ['https://*.gnosis.io', 'https://*.safe.global']
@@ -80,6 +83,7 @@ const FRAME_SRC = [
   'https://verify.walletconnect.com/',
   'https://youtube.com',
   'https://www.youtube.com/',
+  'https://auth.privy.io/',
 ]
 
 const ContentSecurityPolicy = `

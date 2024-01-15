@@ -81,6 +81,7 @@
     "@lingui/macro": "^4.0.0",
     "@lingui/react": "^4.0.0",
     "@metamask/providers": "^10.0.0",
+    "@privy-io/react-auth": "^1.52.4",
     "@reduxjs/toolkit": "^1.6.2",
     "@supabase/auth-helpers-nextjs": "^0.5.4",
     "@supabase/auth-helpers-react": "^0.3.1",

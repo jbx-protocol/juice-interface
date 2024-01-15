@@ -1,3 +1,4 @@
+import { Privy } from 'components/Privy'
 import { Head } from 'components/common/Head/Head'
 import { LanguageProvider } from 'contexts/Language/LanguageProvider'
 import SupabaseSessionProvider from 'contexts/SupabaseSession/SupabaseSessionProvider'
@@ -28,9 +29,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <LanguageProvider i18n={pageProps.i18n}>
       {/* Default HEAD - overwritten by specific page SEO */}
       <Head />
-      <SupabaseSessionProvider initialSession={pageProps.initialSession}>
-        <Component {...pageProps} />
-      </SupabaseSessionProvider>
+      <Privy>
+        <SupabaseSessionProvider initialSession={pageProps.initialSession}>
+          <Component {...pageProps} />
+        </SupabaseSessionProvider>
+      </Privy>
     </LanguageProvider>
   )
 }

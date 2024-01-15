@@ -19,8 +19,10 @@ type UpcomingFundingCycleDataType = [
  */
 export function useProjectUpcomingFundingCycle({
   projectId,
+  useLatestConfigured, // force latestConfiguredFundingCycleOf to be returned.
 }: {
   projectId: number | undefined
+  useLatestConfigured?: boolean
 }): ContractReadResult<UpcomingFundingCycleDataType> {
   /**
    * Get Latest Configured Funding Cycle.
@@ -38,8 +40,9 @@ export function useProjectUpcomingFundingCycle({
     latestConfiguredFundingCycleBallotState,
   ] = latestConfiguredFundingCycleResponse ?? []
   const isLatestConfiguredActive =
-    latestConfiguredFundingCycle &&
-    latestConfiguredFundingCycleBallotState === BallotState.active
+    (latestConfiguredFundingCycle &&
+      latestConfiguredFundingCycleBallotState === BallotState.active) ||
+    useLatestConfigured
 
   /**
    * Get Queued Configured Funding Cycle, *only if* latestConfiguredFundingCycle isn't active.

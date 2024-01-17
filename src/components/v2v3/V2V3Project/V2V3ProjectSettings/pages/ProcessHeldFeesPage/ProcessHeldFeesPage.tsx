@@ -50,7 +50,7 @@ export function ProcessHeldFeesPage() {
             <Trans>Process this project's held fees.</Trans>
           </p>
           <Statistic
-            title={<Trans>Current held fees</Trans>}
+            title={<Trans>Fees held</Trans>}
             valueRender={() => <span>{heldFees} ETH</span>}
             className="my-4"
           />
@@ -97,14 +97,18 @@ export function ProcessHeldFeesPage() {
           </Trans>
         </p>
       </MinimalCollapse>
-      <TransactorButton
-        onClick={processHeldFees}
-        loading={processingHeldFees}
-        type="primary"
-        connectWalletText={<Trans>Not able to process fees</Trans>}
-        text={<Trans>Process held fees</Trans>}
-        disabled={!canProcessHeldFees || !heldFees}
-      />
+      {heldFees ? (
+        <TransactorButton
+          onClick={processHeldFees}
+          loading={processingHeldFees}
+          type="primary"
+          connectWalletText={<Trans>Not able to process fees</Trans>}
+          text={<Trans>Process held fees</Trans>}
+          disabled={!canProcessHeldFees}
+        />
+      ) : (
+        ''
+      )}
       {!canProcessHeldFees ? (
         <p>
           <Trans>Your wallet isn't allowed to process held fees.</Trans>

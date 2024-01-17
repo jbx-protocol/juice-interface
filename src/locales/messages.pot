@@ -1988,9 +1988,6 @@ msgstr ""
 msgid "Only available on Mainnet"
 msgstr ""
 
-msgid "The held fees will reset as ETH is transferred back to the project with the <0>transfer ETH to project</0> transaction above."
-msgstr ""
-
 msgid "Read the docs"
 msgstr ""
 
@@ -3002,9 +2999,6 @@ msgstr ""
 msgid "This address will receive any tokens minted when this project is paid."
 msgstr ""
 
-msgid "Processing held fees will pay <0>JuiceboxDAO</0> and mint JBX to the project owner's address."
-msgstr ""
-
 msgid "Edit NFT"
 msgstr ""
 
@@ -3078,9 +3072,6 @@ msgid "Save recipient"
 msgstr ""
 
 msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
-msgstr ""
-
-msgid "Current held fees"
 msgstr ""
 
 msgid "Unarchiving your project has the following effects:"
@@ -3504,9 +3495,6 @@ msgid "Transfer {tokenTextShort}"
 msgstr ""
 
 msgid "Owner token minting is not available for V1.0 projects. Owner token minting can be enabled by editing the project's cycle."
-msgstr ""
-
-msgid "Held fees"
 msgstr ""
 
 msgid "<0/> reclaimed from project"

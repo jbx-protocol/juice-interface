@@ -23,7 +23,7 @@ describe('SummaryPayButton copy', () => {
   it.each`
     walletConnected | buttonText
     ${true}         | ${'Pay project'}
-    ${false}        | ${'Connect wallet'}
+    ${false}        | ${'Pay project'}
   `(
     'should render button with text $buttonText when walletConnected is $walletConnected',
     ({ walletConnected, buttonText }) => {

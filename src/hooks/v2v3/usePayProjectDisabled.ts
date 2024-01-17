@@ -2,13 +2,11 @@ import { t } from '@lingui/macro'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useProjectIsOFACListed } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectIsOFACListed'
 import { useV2V3BlockedProject } from './useBlockedProject'
-import { useIsJuicecrowd } from './useIsJuiceCrowd'
 
 export enum PayDisabledReason {
   BLOCKED = 'BLOCKED',
   PAUSED = 'PAUSED',
   OFAC = 'OFAC',
-  JUICECROWD = 'JC',
 }
 
 const disabled = {
@@ -27,7 +25,6 @@ export function usePayProjectDisabled(): {
 } {
   const { fundingCycleMetadata, loading } = useProjectContext()
   const isBlockedProject = useV2V3BlockedProject()
-  const isJuicecrowdProject = useIsJuicecrowd()
   const { isAddressListedInOFAC, isLoading: isOFACLoading } =
     useProjectIsOFACListed()
 
@@ -61,14 +58,6 @@ export function usePayProjectDisabled(): {
       ...disabled,
       reason: PayDisabledReason.OFAC,
       message: t`You can't pay this project because your wallet address failed the compliance check.`,
-    }
-  }
-
-  if (isJuicecrowdProject) {
-    return {
-      ...disabled,
-      reason: PayDisabledReason.JUICECROWD,
-      message: t`This is a Juicecrowd project. Go to juicecrowd.gg to pay this project.`,
     }
   }
 

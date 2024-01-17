@@ -45,10 +45,7 @@ export const PayProjectCard = ({ className }: { className?: string }) => {
           <QuestionMarkCircleIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
         </Tooltip>
       </div>
-      {reason &&
-      [PayDisabledReason.JUICECROWD, PayDisabledReason.PAUSED].includes(
-        reason,
-      ) ? (
+      {reason && [PayDisabledReason.PAUSED].includes(reason) ? (
         <div className="text-grey-600 dark:text-slate-200">
           <div className="flex cursor-not-allowed items-center gap-2 rounded-lg bg-smoke-100 px-4 py-3 text-base leading-none dark:bg-slate-800">
             <NoSymbolIcon className="h-5 w-5" />

@@ -27,7 +27,7 @@ export const VolumeStatLine = ({
 
   return (
     <StatLine
-      statLabel={<Trans>Total volume</Trans>}
+      statLabel={<Trans>Total raised</Trans>}
       statLabelTip={
         <Trans>
           The amount of ETH this project has received since it was created.

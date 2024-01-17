@@ -77,7 +77,7 @@ export function ProjectSafeDashboard({
 
       <div className="flex justify-between">
         <ExternalLink className="underline" href={safeUrl}>
-          <Trans>Go to your Safe</Trans>
+          <Trans>Go to Safe</Trans>
         </ExternalLink>
         <BackToProjectButton projectPageUrl={projectPageUrl} />
       </div>

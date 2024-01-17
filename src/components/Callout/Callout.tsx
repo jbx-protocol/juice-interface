@@ -2,9 +2,8 @@ import {
   ChevronDownIcon,
   InformationCircleIcon,
 } from '@heroicons/react/24/solid'
-import { PropsWithChildren, useCallback, useState } from 'react'
+import { PropsWithChildren, useState } from 'react'
 import { twJoin, twMerge } from 'tailwind-merge'
-import { classNames } from 'utils/classNames'
 import { InfoCallout } from './InfoCallout'
 import { WarningCallout } from './WarningCallout'
 
@@ -29,11 +28,6 @@ export const Callout: React.FC<React.PropsWithChildren<CalloutProps>> &
   // Whether the callout is collapsed. Only relevant if collapsible is true.
   const [expanded, setExpanded] = useState<boolean>(false)
 
-  // react callback handler to expand the callout text
-  const handleToggleExpand = useCallback(() => {
-    setExpanded(!expanded)
-  }, [expanded])
-
   return (
     <div
       className={twMerge(
@@ -41,7 +35,7 @@ export const Callout: React.FC<React.PropsWithChildren<CalloutProps>> &
         collapsible ? 'cursor-pointer select-none' : undefined,
         className,
       )}
-      onClick={collapsible ? handleToggleExpand : undefined}
+      onClick={collapsible ? () => setExpanded(!expanded) : undefined}
       role={collapsible ? 'button' : undefined}
     >
       {iconComponent !== null && (
@@ -50,7 +44,7 @@ export const Callout: React.FC<React.PropsWithChildren<CalloutProps>> &
         </span>
       )}
       <div
-        className={classNames(
+        className={twMerge(
           'inline-block overflow-hidden overflow-ellipsis',
           collapsible && !expanded ? 'whitespace-nowrap' : 'whitespace-normal',
         )}

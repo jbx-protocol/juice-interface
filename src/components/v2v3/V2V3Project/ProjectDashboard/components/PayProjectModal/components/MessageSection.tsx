@@ -33,14 +33,12 @@ export const MessageSection = () => {
           className="mt-6 border border-bluebs-100 bg-bluebs-25 text-bluebs-700 dark:border-bluebs-800 dark:bg-bluebs-950 dark:text-bluebs-400"
           iconComponent={<EnvelopeIcon className="h-6 w-6" />}
         >
-          <div>
+          <>
             <div className="font-medium text-bluebs-700 dark:text-bluebs-300">
               <Trans>Notice from {projectName}</Trans>
             </div>
-            <p className="mt-2 mb-0 whitespace-pre-wrap">
-              {projectPayDisclosure}
-            </p>
-          </div>
+            <p className="mt-2 mb-0">{projectPayDisclosure}</p>
+          </>
         </Callout>
       )}
     </div>

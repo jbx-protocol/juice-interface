@@ -1,21 +1,20 @@
+import { readProvider } from 'constants/readProvider'
 import { BigNumber, ethers } from 'ethers'
 import { useCallback, useEffect, useState } from 'react'
 import { useWallet } from './Wallet'
-
-const provider = new ethers.providers.JsonRpcProvider()
 
 export const useGasPrice = () => {
   const [gasPriceWei, setGasPriceWei] = useState<BigNumber>(BigNumber.from(0))
   const { signer } = useWallet()
 
   const fetchGasPrice = useCallback(async () => {
-    const gp = await (signer ?? provider).getGasPrice()
+    const gp = await (signer ?? readProvider).getGasPrice()
     setGasPriceWei(gp)
   }, [signer])
 
   const estimateGas = useCallback(
     async (tx: ethers.providers.TransactionRequest) => {
-      const gasLimit = await (signer ?? provider).estimateGas(tx)
+      const gasLimit = await (signer ?? readProvider).estimateGas(tx)
       return gasLimit
     },
     [signer],

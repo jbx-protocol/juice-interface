@@ -26,7 +26,7 @@ import {
 import { twMerge } from 'tailwind-merge'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { parseWad } from 'utils/format/formatNumber'
+import { formatWad, parseWad } from 'utils/format/formatNumber'
 import {
   emitErrorNotification,
   emitInfoNotification,
@@ -57,6 +57,7 @@ export const PayWithCard: React.FC<PayWithCardProps> = ({ className }) => {
     nftRewards: { rewardTiers },
   } = useContext(NftRewardsContext)
 
+  const [isPayingByCard, setIsPayingByCard] = useState(false)
   const [userJustLoggedIn, setUserJustLoggedIn] = useState(false)
 
   const { login, ready, authenticated, sendTransaction } = usePrivy()
@@ -177,25 +178,58 @@ export const PayWithCard: React.FC<PayWithCardProps> = ({ className }) => {
   )
 
   const privyPay = useCallback(async () => {
+    setIsPayingByCard(true)
+    const privyWallet = wallets.find(
+      wallet => wallet.walletClientType === 'privy',
+    )
+    if (!privyWallet) {
+      emitErrorNotification('Could not find Privy wallet - contact support')
+      setIsPayingByCard(false)
+      return
+    }
+
     const data = constructDataPayload()
 
-    const gasLimit = await estimateGas({
-      to: contracts.JBETHPaymentTerminal?.address,
-      chainId: readNetwork.chainId,
-      data,
-      value: weiAmount.toBigInt(),
-      gasPrice: gasPriceWei,
-    })
-
     try {
-      const res = await sendTransaction({
+      const gasEstimate = await estimateGas({
         to: contracts.JBETHPaymentTerminal?.address,
         chainId: readNetwork.chainId,
         data,
         value: weiAmount.toBigInt(),
-        gasLimit: gasLimit.toBigInt(),
-        gasPrice: gasPriceWei.toBigInt(),
+        gasPrice: gasPriceWei,
       })
+      const balance = await (
+        await privyWallet.getEthersProvider()
+      ).getBalance(privyWallet.address, 'latest')
+      const weiGap = gasEstimate.add(weiAmount).sub(balance)
+      // add 10% buffer
+      const weiGapWithBuffer = weiGap.add(weiGap.div(10))
+      const ethGapWithBuffer = parseFloat(
+        parseFloat(formatWad(weiGapWithBuffer) ?? '0').toFixed(3),
+      )
+      // 0.011 is the minimum amount that Privy allows
+      const eth = Math.max(ethGapWithBuffer, 0.011)
+
+      setIsPayingByCard(false) // This is a hack to ensure the button is not disabled if user adds funds
+      const res = await sendTransaction(
+        {
+          to: contracts.JBETHPaymentTerminal?.address,
+          chainId: readNetwork.chainId,
+          data,
+          value: weiAmount.toBigInt(),
+          gasLimit: gasEstimate.toBigInt(),
+          gasPrice: gasPriceWei.toBigInt(),
+        },
+        undefined,
+        {
+          config: {
+            currencyCode: 'ETH_ETHEREUM',
+            paymentMethod: 'credit_debit_card',
+            quoteCurrencyAmount: eth,
+          },
+        },
+      )
+      setIsPayingByCard(false)
       dispatch({ type: 'payProject' })
       dispatch({ type: 'closePayModal' })
       setProjectPayReceipt(buildPayReceipt(res.transactionHash))
@@ -203,6 +237,7 @@ export const PayWithCard: React.FC<PayWithCardProps> = ({ className }) => {
     } catch (error: any) {
       console.error(error)
       emitErrorNotification(error?.message ?? 'Could not pay')
+      setIsPayingByCard(false)
     }
   }, [
     buildPayReceipt,
@@ -213,6 +248,7 @@ export const PayWithCard: React.FC<PayWithCardProps> = ({ className }) => {
     gasPriceWei,
     sendTransaction,
     setProjectPayReceipt,
+    wallets,
     weiAmount,
   ])
 
@@ -264,6 +300,7 @@ export const PayWithCard: React.FC<PayWithCardProps> = ({ className }) => {
         'flex w-full items-center justify-center gap-2',
         className,
       )}
+      loading={isPayingByCard}
       onClick={handlePayWithCard}
     >
       Pay with card

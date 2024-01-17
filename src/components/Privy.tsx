@@ -1,5 +1,10 @@
 import { PrivyProvider } from '@privy-io/react-auth'
+import { readNetwork } from 'constants/networks'
+import { NetworkName } from 'models/networkName'
 import { createContext, useCallback, useState } from 'react'
+import { goerli, mainnet } from 'viem/chains'
+
+const chain = readNetwork.name === NetworkName.mainnet ? mainnet : goerli
 
 export const PrivyContext = createContext<{
   addLoginHandler: (handler: VoidFunction) => string
@@ -45,6 +50,7 @@ export const Privy = ({ children }: { children: React.ReactNode }) => {
         appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID ?? ''}
         onSuccess={handleLogin}
         config={{
+          supportedChains: [chain],
           loginMethods: ['email', 'wallet'],
           appearance: {
             theme: 'light',

@@ -149,6 +149,7 @@
     "use-deep-compare-effect": "^1.6.1",
     "use-resize-observer": "^9.1.0",
     "uuid": "^8.3.2",
+    "viem": "1.21.4",
     "yup": "^1.0.2"
   },
   "devDependencies": {

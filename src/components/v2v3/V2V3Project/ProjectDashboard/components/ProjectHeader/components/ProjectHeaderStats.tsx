@@ -24,7 +24,7 @@ export function ProjectHeaderStats() {
         <ProjectHeaderStat label={t`Payments`} stat={payments ?? 0} />
       </a>
       <ProjectHeaderStat
-        label={t`Total volume`}
+        label={t`Total raised`}
         stat={
           <ETHAmount amount={totalVolume ?? BigNumber.from(0)} precision={2} />
         }

@@ -70,7 +70,12 @@ const CONNECT_SRC = [
   'https://api.ensideas.com',
 ]
 
-const FRAME_ANCESTORS = ['https://*.gnosis.io', 'https://*.safe.global']
+const FRAME_ANCESTORS = [
+  'https://*.gnosis.io',
+  'https://*.safe.global',
+  'https://nance.app',
+  'https://jbdao.org',
+]
 
 if (process.env.NODE_ENV === 'development') {
   CONNECT_SRC.push('localhost:*')

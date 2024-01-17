@@ -55,15 +55,17 @@ export const CurrentUpcomingSubPanel = ({
   const cycleLengthTooltip =
     info.type === 'current' ? currentCycleRemainingLengthTooltip : undefined
 
-  const cycleStatusValue = topPanelsInfo[STATUS_INDEX].value
+  const cycleLengthValue = topPanelsInfo[CYCLE_LENGTH_INDEX].value
 
-  const cycleStatusTooltip = (
+  const cycleStatusTooltip = info.currentCycleUnlocked ? (
+    <Trans>The project's rules are unlocked and can change at any time.</Trans>
+  ) : (
     <Trans>
-      This project's rules will be locked in place for {cycleStatusValue} days.
+      This project's rules will be locked in place for {cycleLengthValue}.
     </Trans>
   )
 
-  if (
+  const hasNoUpcomingCycle =
     info.type === 'upcoming' &&
     info.currentCycleUnlocked &&
     /**
@@ -71,8 +73,10 @@ export const CurrentUpcomingSubPanel = ({
      * (which happens when Scheduled Launch is used,
      * mustStartAtOrAfter is in the future)
      */
-    info.cycleNumber !== 1
-  ) {
+    info.cycleNumber !== 1 &&
+    !info.hasPendingConfiguration
+
+  if (hasNoUpcomingCycle) {
     return (
       <div>
         <div

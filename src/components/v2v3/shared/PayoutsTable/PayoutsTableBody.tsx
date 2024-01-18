@@ -26,6 +26,8 @@ export function PayoutsTableBody() {
   } = usePayoutsTable()
   const emptyState = distributionLimit === 0 && !payoutSplits?.length
 
+  const hasDistributionLimit = distributionLimit && distributionLimit > 0
+
   return (
     <>
       {topAccessory}
@@ -45,7 +47,8 @@ export function PayoutsTableBody() {
                 </Row>
               ) : (
                 <>
-                  {payoutSplits.length > 0 ? (
+                  {/* `|| hasDistributionLimit` to account for old projects whose payout is only the "remaining project owner" split, but still have a distributionLimit.  */}
+                  {payoutSplits.length > 0 || hasDistributionLimit ? (
                     <Row
                       className={twMerge(
                         'font-medium',

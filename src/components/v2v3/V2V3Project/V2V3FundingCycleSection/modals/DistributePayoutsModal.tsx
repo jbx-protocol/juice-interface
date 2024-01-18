@@ -166,7 +166,7 @@ export default function DistributePayoutsModal({
             <PayoutsTable
               payoutSplits={payoutSplits ?? []}
               currency={currencyName}
-              distributionLimit={parseFloat(distributionAmount ?? '0')}
+              distributionLimit={parseFloat(distributionAmount ?? '0')} // distributionLimit is the amount to distribute in the instance.
               hideHeader
               showAvatars
             />

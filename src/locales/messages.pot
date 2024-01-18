@@ -626,6 +626,9 @@ msgstr ""
 msgid "Snapshot voting"
 msgstr ""
 
+msgid "This project has been verified by Juicebox"
+msgstr ""
+
 msgid "Flexible"
 msgstr ""
 

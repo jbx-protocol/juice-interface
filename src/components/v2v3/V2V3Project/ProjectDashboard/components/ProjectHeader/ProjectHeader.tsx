@@ -5,6 +5,7 @@ import { DomainBadge } from 'components/DomainBadge'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
 import { TruncatedText } from 'components/TruncatedText'
+import { VerifiedBadge } from 'components/VerifiedBadge'
 import BookmarkButton from 'components/buttons/BookmarkButton/BookmarkButton'
 import { SubscribeButton } from 'components/buttons/SubscribeButton/SubscribeButton'
 import { useProjectHeader } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectHeader'
@@ -70,6 +71,7 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
           <h1 className="mb-0 font-heading text-3xl font-medium leading-none dark:text-slate-50 md:text-4xl">
             {title}
           </h1>
+          <VerifiedBadge projectId={projectId} />
           <DomainBadge domain={domain} projectId={projectId} />
         </div>
 

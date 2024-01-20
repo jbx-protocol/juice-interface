@@ -21,6 +21,7 @@ import {
 import {
   JB_FEE,
   adjustedSplitPercents,
+  deriveAmountAfterFee,
   deriveAmountBeforeFee,
   derivePayoutAmount,
   ensureSplitsSumTo100Percent,
@@ -82,7 +83,9 @@ export const usePayoutsTable = () => {
     SPLITS_TOTAL_PERCENT - totalSplitsPercent(payoutSplits) // parts-per-billion
   const ownerRemainingAmount =
     distributionLimit && !distributionLimitIsInfinite
-      ? (ownerRemainingPercentPPB / ONE_BILLION) * distributionLimit
+      ? deriveAmountAfterFee(
+          (ownerRemainingPercentPPB / ONE_BILLION) * distributionLimit,
+        )
       : undefined
 
   const ownerRemainderValue = round(

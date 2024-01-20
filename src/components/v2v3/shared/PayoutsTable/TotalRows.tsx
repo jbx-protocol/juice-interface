@@ -1,6 +1,8 @@
 import { Trans, t } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import EthereumAddress from 'components/EthereumAddress'
 import TooltipLabel from 'components/TooltipLabel'
+import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import round from 'lodash/round'
 import { PayoutsTableCell } from './PayoutsTableCell'
 import { PayoutsTableRow } from './PayoutsTableRow'
@@ -19,6 +21,7 @@ export function TotalRows() {
     totalFeeAmount,
     subTotal,
     roundingPrecision,
+    payoutSplits,
     ownerRemainderValue,
     currencyOrPercentSymbol,
   } = usePayoutsTable()
@@ -28,6 +31,8 @@ export function TotalRows() {
       ? round(distributionLimit, roundingPrecision)
       : t`Unlimited`
 
+  const { projectOwnerAddress } = useProjectContext()
+
   const subTotalExceedsMax = distributionLimitIsInfinite && subTotal > 100
 
   // Make fee more precise when it is very small
@@ -36,30 +41,37 @@ export function TotalRows() {
       ? roundingPrecision
       : roundingPrecision + SMALL_FEE_PRECISION_BUFFER
 
+  const wholePayoutToRemainingOwner =
+    distributionLimit && distributionLimit > 0 && payoutSplits.length === 0
+  const remainingOwnerLabel = wholePayoutToRemainingOwner ? (
+    <EthereumAddress address={projectOwnerAddress} />
+  ) : (
+    <TooltipLabel
+      tip={t`The unallocated portion of your total will go to the wallet that owns the project by default.`}
+      label={<Trans>Remaining (to project owner)</Trans>}
+    />
+  )
   return (
     <>
-      <Row>
-        <Cell>Sub-total</Cell>
-        <Cell className={subTotalExceedsMax ? 'text-error-500' : ''}>
-          <Tooltip
-            title={
-              subTotalExceedsMax ? (
-                <Trans>Sub-total cannot exceed 100%</Trans>
-              ) : undefined
-            }
-          >
-            {currencyOrPercentSymbol} {round(subTotal, roundingPrecision)}
-          </Tooltip>
-        </Cell>
-      </Row>
+      {wholePayoutToRemainingOwner ? null : (
+        <Row>
+          <Cell>Sub-total</Cell>
+          <Cell className={subTotalExceedsMax ? 'text-error-500' : ''}>
+            <Tooltip
+              title={
+                subTotalExceedsMax ? (
+                  <Trans>Sub-total cannot exceed 100%</Trans>
+                ) : undefined
+              }
+            >
+              {currencyOrPercentSymbol} {round(subTotal, roundingPrecision)}
+            </Tooltip>
+          </Cell>
+        </Row>
+      )}
       {ownerRemainderValue > 0 ? (
         <Row>
-          <Cell>
-            <TooltipLabel
-              tip={t`The unallocated portion of your total will go to the wallet that owns the project by default.`}
-              label={<Trans>Remaining (to project owner)</Trans>}
-            />
-          </Cell>
+          <Cell>{remainingOwnerLabel}</Cell>
           <Cell>
             {currencyOrPercentSymbol} {ownerRemainderValue}
           </Cell>

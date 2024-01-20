@@ -15,6 +15,7 @@ import { EditCyclePage } from './pages/EditCyclePage/EditCyclePage'
 import { EditNftsPage } from './pages/EditNftsPage/EditNftsPage'
 import { GovernanceSettingsPage } from './pages/GovernanceSettingsPage/GovernanceSettingsPage'
 import { PayoutsSettingsPage } from './pages/PayoutsSettingsPage/PayoutsSettingsPage'
+import { ProcessHeldFeesPage } from './pages/ProcessHeldFeesPage/ProcessHeldFeesPage'
 import { ProjectDetailsSettingsPage } from './pages/ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
 import { ProjectHandleSettingsPage } from './pages/ProjectHandleSettingsPage'
 import { ProjectNftSettingsPage } from './pages/ProjectNftSettingsPage/ProjectNftSettingsPage'
@@ -38,6 +39,7 @@ const SettingsPageComponents: {
   governance: GovernanceSettingsPage,
   upgrades: ProjectUpgradesPage,
   projectnft: ProjectNftSettingsPage,
+  heldfees: ProcessHeldFeesPage,
 }
 
 const V2V3SettingsPageKeyTitleMap = (
@@ -57,6 +59,7 @@ const V2V3SettingsPageKeyTitleMap = (
   governance: t`Governance`,
   upgrades: t`Project upgrades`,
   projectnft: t`Project NFT theme`,
+  heldfees: t`Process held fees`,
 })
 
 function Breadcrumbs({

@@ -1,17 +1,16 @@
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
+import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { useContext, useEffect, useState } from 'react'
 import { sumHeldFees } from 'utils/v2v3/math'
 
 export function useHeldFeesOf() {
   const [heldFees, setHeldFees] = useState<number>()
-
   const { projectId } = useContext(ProjectMetadataContext)
-  const { contracts } = useContext(V2V3ContractsContext)
+  const { contracts } = useContext(V2V3ProjectContractsContext)
 
   useEffect(() => {
     async function fetchData() {
-      const res = await contracts?.JBETHPaymentTerminal.functions.heldFeesOf(
+      const res = await contracts.JBETHPaymentTerminal?.functions.heldFeesOf(
         projectId,
       )
       if (!res) return
@@ -19,7 +18,6 @@ export function useHeldFeesOf() {
       setHeldFees(_heldFees)
     }
     fetchData()
-  }, [contracts, projectId])
-
+  }, [projectId, contracts])
   return heldFees
 }

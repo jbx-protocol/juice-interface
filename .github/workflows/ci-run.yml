@@ -65,7 +65,7 @@ jobs:
       - name: Lint translations template
         run: 'yarn i18n:lint'
 
-      - uses: tj-actions/changed-files@v24.1
+      - uses: tj-actions/changed-files@v41
         id: changed-files
         with:
           files: '**/*.po'

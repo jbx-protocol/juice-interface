@@ -219,9 +219,16 @@ export const FundingCyclesPage = () => {
                       showNow={false}
                       showToday={false}
                       format="YYYY-MM-DD HH:mm:ss"
-                      disabledDate={current =>
-                        current && current < moment().endOf('day')
-                      }
+                      disabledDate={current => {
+                        if (!current) return false
+                        const now = moment()
+                        if (
+                          current.isSame(now, 'day') ||
+                          current.isAfter(now, 'day')
+                        )
+                          return false
+                        return true
+                      }}
                       showTime={{ defaultValue: moment('00:00:00') }}
                     />
                   </Form.Item>

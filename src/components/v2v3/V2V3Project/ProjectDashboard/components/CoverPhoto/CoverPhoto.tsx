@@ -1,9 +1,19 @@
 import { useCoverPhoto } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useCoverPhoto'
+import Image from 'next/image'
+import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { useProjectMetadata } from '../../hooks/useProjectMetadata'
+
+const RS_PROJECT_ID = 618
 
 export const CoverPhoto = () => {
   const { coverImageUrl, coverImageAltText } = useCoverPhoto()
+  const { projectId } = useProjectMetadata()
   const hasCoverImage = !!coverImageUrl
+
+  const applyDarkerCoverPhoto = useMemo(() => {
+    return projectId === RS_PROJECT_ID
+  }, [projectId])
 
   return (
     <div
@@ -13,15 +23,21 @@ export const CoverPhoto = () => {
       )}
     >
       {coverImageUrl && (
-        <img
-          src={coverImageUrl}
-          className={twMerge(
-            'w-full object-cover',
-            hasCoverImage ? 'h-70' : 'h-[168px]',
+        <>
+          <Image
+            fill
+            src={coverImageUrl}
+            className={twMerge(
+              'w-full object-cover',
+              hasCoverImage ? 'h-70' : 'h-[168px]',
+            )}
+            crossOrigin="anonymous"
+            alt={coverImageAltText}
+          />
+          {applyDarkerCoverPhoto && (
+            <div className="absolute h-70 w-full bg-black opacity-30" />
           )}
-          crossOrigin="anonymous"
-          alt={coverImageAltText}
-        />
+        </>
       )}
     </div>
   )

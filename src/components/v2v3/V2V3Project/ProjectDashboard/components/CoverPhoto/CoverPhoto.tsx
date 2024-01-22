@@ -35,7 +35,7 @@ export const CoverPhoto = () => {
             alt={coverImageAltText}
           />
           {applyDarkerCoverPhoto && (
-            <div className="absolute h-70 w-full bg-black opacity-30" />
+            <div className="absolute h-70 w-full bg-black opacity-30 drop-shadow" />
           )}
         </>
       )}

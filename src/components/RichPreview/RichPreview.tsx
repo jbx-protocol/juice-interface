@@ -6,6 +6,7 @@ export const RichPreview = ({ source }: { source: string }) => {
   return (
     <div
       id="rich-text"
+      className="break-words"
       dangerouslySetInnerHTML={{
         __html: purified,
       }}

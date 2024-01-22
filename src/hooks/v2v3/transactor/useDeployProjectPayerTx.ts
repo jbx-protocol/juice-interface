@@ -17,6 +17,10 @@ export type DeployProjectPayerTxArgs = {
   preferClaimed: boolean
 }
 
+/**
+ *
+ * @dev ONLY LATEST JB PROJECT SUPPORTED! Won't work if deploying a project payer on an older project.
+ */
 export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayerTxArgs> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
@@ -45,14 +49,13 @@ export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayer
       contracts?.JBETHERC20ProjectPayerDeployer,
       'deployProjectPayer',
       [
-        projectId,
-        customBeneficiaryAddress ?? constants.AddressZero, // defaultBeneficiary is none because we want tokens to go to msg.sender
-        preferClaimed, // _defaultPreferClaimedTokens,
-        customMemo ?? DEFAULT_MEMO, // _defaultMemo,
-        DEFAULT_METADATA, //_defaultMetadata,
-        !tokenMintingEnabled, // defaultPreferAddToBalance,
-        contracts.JBDirectory.address, // _directory,
-        userAddress, //, _owner
+        projectId, // _defaultProjectId
+        customBeneficiaryAddress ?? constants.AddressZero, // _defaultBeneficiary, is 0x00 because we want tokens to go to msg.sender
+        preferClaimed, // _defaultPreferClaimedTokens
+        customMemo ?? DEFAULT_MEMO, // _defaultMemo
+        DEFAULT_METADATA, //_defaultMetadata
+        !tokenMintingEnabled, // defaultPreferAddToBalance
+        userAddress, // _owner
       ],
       {
         ...txOpts,

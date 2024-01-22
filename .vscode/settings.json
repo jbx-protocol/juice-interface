@@ -1,7 +1,7 @@
 {
   "editor.tabSize": 2,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true
+    "source.organizeImports": "explicit"
   },
   "scss.lint.unknownAtRules": "ignore",
   "files.exclude": {

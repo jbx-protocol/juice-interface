@@ -4,11 +4,15 @@ import { createContext } from 'react'
 
 type FundingCycleCountdownContextType = {
   timeRemainingText: string
+  endEpochSeconds: number
+  secondsRemaining: number
 }
 
 export const FundingCycleCountdownContext =
   createContext<FundingCycleCountdownContextType>({
     timeRemainingText: '0d 0h 0m 0s',
+    endEpochSeconds: 0,
+    secondsRemaining: 0,
   })
 
 export const FundingCycleCountdownProvider = ({
@@ -20,13 +24,16 @@ export const FundingCycleCountdownProvider = ({
 
   const endEpochSeconds = fundingCycle
     ? fundingCycle.start.add(fundingCycle.duration).toNumber()
-    : undefined
+    : 0
 
-  const remainingTimeText = useCountdownClock(endEpochSeconds)
+  const { remainingTimeText, secondsRemaining } =
+    useCountdownClock(endEpochSeconds)
   return (
     <FundingCycleCountdownContext.Provider
       value={{
         timeRemainingText: remainingTimeText,
+        endEpochSeconds,
+        secondsRemaining,
       }}
     >
       {children}

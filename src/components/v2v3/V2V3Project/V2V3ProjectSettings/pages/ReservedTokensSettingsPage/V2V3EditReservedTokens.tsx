@@ -52,6 +52,7 @@ export function V2V3EditReservedTokens({
         <ReservedTokensList
           onChange={onAllocationChanged}
           value={editingReservedTokensSplits.map(splitToAllocation)}
+          isEditable
         />
       </div>
     </>

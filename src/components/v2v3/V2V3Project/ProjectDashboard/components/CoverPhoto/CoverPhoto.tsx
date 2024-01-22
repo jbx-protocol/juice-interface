@@ -4,8 +4,7 @@ import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useProjectMetadata } from '../../hooks/useProjectMetadata'
 
-// TODO: Update with real project ID
-const RS_PROJECT_ID = -1
+const RS_PROJECT_ID = 618
 
 export const CoverPhoto = () => {
   const { coverImageUrl, coverImageAltText } = useCoverPhoto()

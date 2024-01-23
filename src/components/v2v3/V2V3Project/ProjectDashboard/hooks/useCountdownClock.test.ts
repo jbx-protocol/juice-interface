@@ -9,7 +9,10 @@ describe('useCountdownClock', () => {
   })
   it('returns empty string if endSeconds is undefined', () => {
     const { result } = renderHook(() => useCountdownClock(undefined))
-    expect(result.current).toEqual('')
+    expect(result.current).toEqual({
+      remainingTimeText: '',
+      secondsRemaining: 0,
+    })
   })
 
   it('returns remaining time', () => {

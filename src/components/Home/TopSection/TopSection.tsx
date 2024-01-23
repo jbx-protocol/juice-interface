@@ -47,7 +47,7 @@ export function TopSection() {
   const { data: backupProjects } = useDBProjectsQuery({
     ids: [FIRST_PROJECT, ...BACKUP_PROJECTS],
   })
-  const firstProject = backupProjects?.[0] // hardcore the first project in the list
+  const firstProject = backupProjects?.find(p => p.id === FIRST_PROJECT) // hardcore the first project in the list
 
   const remainderProjectCount =
     DEFAULT_TRENDING_PROJECTS_LIMIT - (trendingProjects?.length ?? 0)

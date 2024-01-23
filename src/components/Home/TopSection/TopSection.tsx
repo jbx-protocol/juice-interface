@@ -11,7 +11,7 @@ import { SectionHeading } from 'components/Home/SectionHeading'
 import { ProjectTag } from 'components/ProjectTags/ProjectTag'
 import { XLButton } from 'components/buttons/XLButton'
 import { HOMEPAGE } from 'constants/fathomEvents'
-import { PV_V1 } from 'constants/pv'
+import { PV_V1, PV_V2 } from 'constants/pv'
 import {
   DEFAULT_TRENDING_PROJECTS_LIMIT,
   useDBProjectsQuery,
@@ -30,6 +30,8 @@ const HEADER_TAGS: ProjectTagName[] = [
   'business',
 ]
 
+const FIRST_PROJECT = getSubgraphIdForProject(PV_V2, 618) // roman storm
+
 // These projects will render if there isn't enough trending projects.
 const BACKUP_PROJECTS = [
   getSubgraphIdForProject(PV_V1, 199), // moondao
@@ -43,8 +45,9 @@ export function TopSection() {
     DEFAULT_TRENDING_PROJECTS_LIMIT,
   )
   const { data: backupProjects } = useDBProjectsQuery({
-    ids: BACKUP_PROJECTS,
+    ids: [FIRST_PROJECT, ...BACKUP_PROJECTS],
   })
+  const firstProject = backupProjects?.[0] // hardcore the first project in the list
 
   const remainderProjectCount =
     DEFAULT_TRENDING_PROJECTS_LIMIT - (trendingProjects?.length ?? 0)
@@ -52,7 +55,7 @@ export function TopSection() {
   const renderBackup =
     trendingProjects && backupProjects && remainderProjectCount
       ? backupProjects
-          .slice(0, remainderProjectCount)
+          .slice(1, remainderProjectCount)
           .filter(
             p =>
               !trendingProjects
@@ -61,9 +64,10 @@ export function TopSection() {
           )
       : []
 
-  const renderProjects = trendingProjects
-    ? [...trendingProjects, ...renderBackup]
-    : undefined
+  const renderProjects =
+    trendingProjects && firstProject
+      ? [firstProject, ...trendingProjects, ...renderBackup]
+      : undefined
 
   return (
     <SectionContainer className="pt-6 pb-24 md:px-0 md:pt-10">

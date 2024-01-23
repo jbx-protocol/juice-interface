@@ -57,7 +57,7 @@ export function usePayProjectDisabled(): {
     return {
       ...disabled,
       reason: PayDisabledReason.OFAC,
-      message: t`You can't pay this project because your wallet address failed the compliance check.`,
+      message: t`You can't pay this project because your wallet address failed a compliance check set up by the project owner.`,
     }
   }
 

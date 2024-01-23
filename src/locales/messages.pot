@@ -2243,9 +2243,6 @@ msgstr ""
 msgid "Highest paid"
 msgstr ""
 
-msgid "You can't pay this project because your wallet address failed the compliance check."
-msgstr ""
-
 msgid "Community owned"
 msgstr ""
 
@@ -3684,6 +3681,9 @@ msgid "Burn {0} {tokensTextShort}"
 msgstr ""
 
 msgid "This project has disabled payments"
+msgstr ""
+
+msgid "You can't pay this project because your wallet address failed a compliance check set up by the project owner."
 msgstr ""
 
 msgid "No tokens to redeem."

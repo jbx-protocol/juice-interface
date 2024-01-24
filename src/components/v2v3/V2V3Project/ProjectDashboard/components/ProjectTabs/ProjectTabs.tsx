@@ -1,7 +1,7 @@
 import { Tab } from '@headlessui/react'
 import { Trans, t } from '@lingui/macro'
 import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
-import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
+import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { useOnScreen } from 'hooks/useOnScreen'
 import {
@@ -35,7 +35,13 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
   const { projectOwnerAddress } = useProjectContext()
   const isProjectOwner = useIsUserAddress(projectOwnerAddress)
-  const { value: hasNftRewards } = useHasNftRewards()
+  const {
+    nftRewards: { rewardTiers },
+  } = useContext(NftRewardsContext)
+  const hasNftRewards = useMemo(
+    () => (rewardTiers ?? []).length !== 0,
+    [rewardTiers],
+  )
 
   const showNftRewards = hasNftRewards
 

@@ -11,7 +11,6 @@ import Loading from 'components/Loading'
 import Paragraph from 'components/Paragraph'
 import SocialLinks from 'components/Project/ProjectHeader/SocialLinks'
 import ProjectCard from 'components/ProjectCard'
-import ProjectLogo from 'components/ProjectLogo'
 import WalletContributionCard from 'components/WalletContributionCard'
 import {
   OrderDirection,
@@ -291,11 +290,15 @@ export function AccountDashboard({
       <header className="mb-10">
         <div className="flex flex-wrap items-start justify-between">
           <div className="mb-5 flex">
-            <ProjectLogo
-              uri={ensAvatarUrlForAddress(address, { size: 128 })}
-              name={ensName ?? undefined}
-              className="mr-5 h-32 w-32 rounded-full"
-            />
+            <div className="mr-5 flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-smoke-100 text-4xl dark:bg-slate-700">
+              <img
+                className="h-full w-full object-cover object-center"
+                src={ensAvatarUrlForAddress(address, { size: 128 * 2 })}
+                alt={address + ' avatar'}
+                crossOrigin="anonymous"
+                title={address}
+              />
+            </div>
             <div className="flex flex-col gap-2">
               <h1 className="mb-0 font-heading text-4xl font-medium text-black dark:text-slate-100">
                 {ensName ?? <EthereumAddress address={address} />}

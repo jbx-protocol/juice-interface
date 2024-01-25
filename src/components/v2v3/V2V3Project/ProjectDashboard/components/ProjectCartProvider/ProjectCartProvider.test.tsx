@@ -11,6 +11,12 @@ import { ProjectCartContext, ProjectCartProvider } from './ProjectCartProvider'
 
 jest.mock('contexts/NftRewards/NftRewardsContext')
 
+jest.mock('hooks/Wallet', () => ({
+  useWallet: () => ({
+    userAddress: 'userAddress',
+  }),
+}))
+
 describe('ProjectCartProvider', () => {
   const DefaultNftRewardsContext = {
     nftRewards: {

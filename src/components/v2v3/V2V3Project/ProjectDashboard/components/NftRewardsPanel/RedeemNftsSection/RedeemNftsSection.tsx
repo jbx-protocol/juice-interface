@@ -36,15 +36,15 @@ export function RedeemNftsSection() {
   if (!showRedeemSection && !showCreditSection) return null
 
   return (
-    <div className="w-full rounded-lg bg-smoke-50 p-5 dark:bg-slate-700">
+    <div className="flex w-full flex-col gap-4 rounded-lg bg-smoke-50 p-5 dark:bg-slate-700">
       {showCreditSection ? (
-        <div className="mb-4">
+        <div>
           <NftCreditsSection credits={credits} />
         </div>
       ) : null}
 
       {showRedeemSection ? (
-        <>
+        <div>
           <div className="text-sm font-medium text-grey-600 dark:text-slate-50">
             <Trans>Your NFTs</Trans>
           </div>
@@ -71,7 +71,7 @@ export function RedeemNftsSection() {
               onConfirmed={() => setRedeemNftsModalVisible(false)}
             />
           )}
-        </>
+        </div>
       ) : null}
     </div>
   )

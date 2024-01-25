@@ -1,19 +1,23 @@
 import { Trans } from '@lingui/macro'
-import { useTokensPerEth } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useTokensPerEth'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
+import { useTokensPerEth } from '../../../hooks/useTokensPerEth'
 
 export const TokensPerEth = ({
   currencyAmount,
 }: {
   currencyAmount:
     | {
-        amount: number
+        amount: string
         currency: V2V3CurrencyOption
       }
     | undefined
 }) => {
   const { currencyText, receivedTickets, receivedTokenSymbolText } =
-    useTokensPerEth(currencyAmount)
+    useTokensPerEth({
+      amount: parseFloat(currencyAmount?.amount || '1'),
+      currency: currencyAmount?.currency || V2V3_CURRENCY_ETH,
+    })
 
   const suffix =
     !currencyAmount || !currencyAmount.amount ? (

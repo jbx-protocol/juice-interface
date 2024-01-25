@@ -1,7 +1,6 @@
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
-import { BigNumber, utils } from 'ethers'
-import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { BigNumber } from 'ethers'
 import useWeiConverter from 'hooks/useWeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -31,8 +30,6 @@ export function useTokensPerEth(
   const reservedRate = reservedRateBigNumber?.toNumber()
   const { weight } = fundingCycle ?? {}
 
-  const converter = useCurrencyConverter()
-
   const weiPayAmt = useWeiConverter<CurrencyOption>({
     currency,
     amount: amount?.toString(),
@@ -53,16 +50,7 @@ export function useTokensPerEth(
     [weight, reservedRate],
   )
 
-  const receivedTickets = useMemo(() => {
-    if (weiPayAmt.gt(0)) {
-      return formatReceivedTickets(weiPayAmt)
-    }
-    return formatReceivedTickets(
-      (currency === V2V3_CURRENCY_ETH
-        ? utils.parseEther('1')
-        : converter.usdToWei('1')) ?? BigNumber.from(0),
-    )
-  }, [converter, currency, formatReceivedTickets, weiPayAmt])
+  const receivedTickets = formatReceivedTickets(weiPayAmt)
 
   const receivedTokenSymbolText = useMemo(
     () =>

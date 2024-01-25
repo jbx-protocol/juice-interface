@@ -5,6 +5,7 @@ import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/useNftAccountBalance'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
+import { NftCreditsSection } from './NftCreditsSection'
 import { RedeemNftTiles } from './RedeemNftTiles'
 
 export function RedeemNftsSection() {
@@ -25,6 +26,9 @@ export function RedeemNftsSection() {
 
   return (
     <div className="h-32 w-full rounded-lg bg-smoke-50 p-5 dark:bg-slate-700">
+      <div>
+        <NftCreditsSection />
+      </div>
       <div className="text-sm font-medium text-grey-600 dark:text-slate-50">
         <Trans>Your NFTs</Trans>
       </div>

@@ -82,12 +82,12 @@ export const ReconfigurationRulesPage = () => {
               <JuiceSwitch label={t`Hold fees`} />
             </Form.Item>
 
-            <Form.Item
+            {/* <Form.Item
               name="projectRequiredOFACCheck"
               extra={t`Disallow payments from users who appear on OFAC’s Specially Designated Nationals (SDN) list. Note: payments are still possible on other websites (for example, Etherscan).`}
             >
               <JuiceSwitch label={t`OFAC Sanctions screening`} />
-            </Form.Item>
+            </Form.Item> */}
           </CreateCollapse.Panel>
           <CreateCollapse.Panel
             key={1}

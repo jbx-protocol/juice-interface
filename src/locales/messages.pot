@@ -167,9 +167,6 @@ msgstr ""
 msgid "An address"
 msgstr ""
 
-msgid "Activating this option enables running the user's wallet address against OFAC’s Specially Designated Nationals (SDN) list"
-msgstr ""
-
 msgid "Pay {0}"
 msgstr ""
 
@@ -1973,9 +1970,6 @@ msgstr ""
 msgid "About the protocol"
 msgstr ""
 
-msgid "OFAC Sanctions screening"
-msgstr ""
-
 msgid "Existing project payer addresses can be found in the Tools drawer (<0/>) on the project page."
 msgstr ""
 
@@ -2595,9 +2589,6 @@ msgid "to close"
 msgstr ""
 
 msgid "Pay out percentages of your project's total ETH balance to addresses or projects. No ETH will stay in the project, making token redemption impossible."
-msgstr ""
-
-msgid "Disallow payments from users who appear on OFAC’s Specially Designated Nationals (SDN) list. Note: payments are still possible on other websites (for example, Etherscan)."
 msgstr ""
 
 msgid "Immediately"
@@ -3416,9 +3407,6 @@ msgstr ""
 msgid "If you don't plan on unlocking the held fees later on, you can use the button below to process them now. When you press the button, the held fees will be used to buy $JBX. This cannot be undone."
 msgstr ""
 
-msgid "Check User Wallet Address"
-msgstr ""
-
 msgid "Set ENS text record for {ensName}"
 msgstr ""
 
@@ -4095,9 +4083,6 @@ msgid "Payment amount can't exceed your wallet balance."
 msgstr ""
 
 msgid "You're about to add NFTs to your cycle. You'll need to <0>grant NFT permissions</0> before launching cycles."
-msgstr ""
-
-msgid "Additional settings"
 msgstr ""
 
 msgid "Last paid"

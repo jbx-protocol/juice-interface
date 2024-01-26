@@ -2,11 +2,10 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Form, FormInstance } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
-import { RichEditor } from 'components/RichEditor'
-import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
-import { MinimalCollapse } from 'components/MinimalCollapse'
-import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
+import { MinimalCollapse } from 'components/MinimalCollapse'
+import { RichEditor } from 'components/RichEditor'
 
 import { ProjectTagName } from 'models/project-tags'
 import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
@@ -146,7 +145,7 @@ export function ProjectDetailsForm({
             <FormItems.ProjectPayDisclosure name="payDisclosure" />
           </MinimalCollapse>
         </div>
-        <div>
+        {/* <div>
           <MinimalCollapse header={<Trans>Additional settings</Trans>}>
             <Form.Item
               name="projectRequiredOFACCheck"
@@ -156,7 +155,7 @@ export function ProjectDetailsForm({
               <JuiceSwitch label={t`Check User Wallet Address`} />
             </Form.Item>
           </MinimalCollapse>
-        </div>
+        </div> */}
         <div>
           <Form.Item>
             {saveButton ?? (

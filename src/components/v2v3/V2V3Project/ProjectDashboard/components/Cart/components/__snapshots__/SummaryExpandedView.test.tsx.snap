@@ -126,7 +126,7 @@ exports[`SummaryExpandedView should render correctly 1`] = `
           type="button"
         >
           <span>
-            Connect wallet to pay
+            Pay project
           </span>
         </button>
       </div>

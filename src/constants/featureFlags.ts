@@ -1,4 +1,7 @@
-export type FeatureFlag = 'SIMULATE_TXS' | 'JUICE_CROWD_METADATA_CONFIGURATION'
+export type FeatureFlag =
+  | 'SIMULATE_TXS'
+  | 'JUICE_CROWD_METADATA_CONFIGURATION'
+  | 'PRIVY_DEBUG_TOOLS'
 
 export const FEATURE_FLAGS: { [k in FeatureFlag]: string } = {
   SIMULATE_TXS: 'simulateTxs',
@@ -8,4 +11,6 @@ export const FEATURE_FLAGS: { [k in FeatureFlag]: string } = {
    * once creation is available on juicecrowd.
    */
   JUICE_CROWD_METADATA_CONFIGURATION: 'juiceCrowdMetadataConfiguration',
+
+  PRIVY_DEBUG_TOOLS: 'privyDebugTools',
 }

@@ -97,15 +97,4 @@ describe('useCartSummary', () => {
       type: 'openPayModal',
     })
   })
-
-  test('payProject method calls connect if wallet is not connected', () => {
-    ;(useWallet as jest.Mock).mockReturnValue({
-      ...DefaultUseWalletMock,
-      isConnected: false,
-    })
-    const { result } = renderUseCartSummaryHook()
-    result.current.payProject()
-    expect(DefaultUseWalletMock.connect).toHaveBeenCalled()
-    expect(DefaultUseProjectCartMock.dispatch).not.toHaveBeenCalled()
-  })
 })

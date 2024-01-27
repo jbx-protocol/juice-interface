@@ -11,6 +11,7 @@ import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { helpPagePath } from 'utils/routes'
 import { MessageSection } from './components/MessageSection'
+import { PayWithCard } from './components/PayWithCard'
 import { ReceiveSection } from './components/ReceiveSection'
 
 export const PayProjectModal: React.FC = () => {
@@ -20,7 +21,6 @@ export const PayProjectModal: React.FC = () => {
     secondaryAmount,
     validationSchema,
     isTransactionPending,
-    isTransactionConfirmed,
     projectPayDisclosure,
     pendingTransactionHash,
     projectName,
@@ -51,11 +51,7 @@ export const PayProjectModal: React.FC = () => {
             okLoading={props.isSubmitting || isTransactionPending}
             okButtonForm="PayProjectModalForm"
             okText={t`Pay ${primaryAmount}`}
-            cancelText={
-              isTransactionPending || isTransactionConfirmed
-                ? t`Close`
-                : t`Cancel`
-            }
+            hideCancelButton
             open={open}
             setOpen={setOpen}
             onSubmit={props.handleSubmit}
@@ -162,6 +158,8 @@ export const PayProjectModal: React.FC = () => {
                         )}
                       </label>
                     </div>
+
+                    <PayWithCard className="mt-10" />
                   </div>
                 </div>
               </>

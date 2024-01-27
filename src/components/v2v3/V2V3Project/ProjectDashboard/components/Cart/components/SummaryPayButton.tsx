@@ -4,7 +4,7 @@ import { usePayProjectDisabled } from 'hooks/v2v3/usePayProjectDisabled'
 import { useCartSummary } from '../hooks/useCartSummary'
 
 export const SummaryPayButton = ({ className }: { className?: string }) => {
-  const { payProject, walletConnected } = useCartSummary()
+  const { payProject } = useCartSummary()
   const {
     payDisabled,
     message,
@@ -21,11 +21,7 @@ export const SummaryPayButton = ({ className }: { className?: string }) => {
         onClick={payProject}
       >
         <span>
-          {walletConnected ? (
-            <Trans>Pay project</Trans>
-          ) : (
-            <Trans>Connect wallet to pay</Trans>
-          )}
+          <Trans>Pay project</Trans>
         </span>
       </Button>
     </Tooltip>

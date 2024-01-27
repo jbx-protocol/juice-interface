@@ -521,6 +521,9 @@ msgstr ""
 msgid "Amount to pay out"
 msgstr ""
 
+msgid "You have NFT credits from previous payments. Select NFTs to mint and use your credits."
+msgstr ""
+
 msgid "JuiceboxDAO"
 msgstr ""
 
@@ -2115,6 +2118,9 @@ msgid "This project's rules may pose risks for contributors:"
 msgstr ""
 
 msgid "Enable NFTs"
+msgstr ""
+
+msgid "Your credits"
 msgstr ""
 
 msgid "Save token recipients"

@@ -1,4 +1,8 @@
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
+import { BigNumber } from 'ethers'
+import { formatEther } from 'ethers/lib/utils'
+import { useNftCredits } from 'hooks/JB721Delegate/useNftCredits'
+import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import React, { createContext, useContext, useMemo, useReducer } from 'react'
@@ -45,6 +49,12 @@ export const ProjectCartProvider = ({
 }: {
   children: React.ReactNode
 }) => {
+  const { userAddress } = useWallet()
+  const userNftCredits = useNftCredits(userAddress)
+  const userNftCreditsNumber = parseFloat(
+    formatEther(userNftCredits.data ?? BigNumber.from(0)),
+  )
+
   const [state, dispatch] = useReducer(projectCartReducer, {
     payAmount: undefined,
     nftRewards: [],
@@ -72,16 +82,22 @@ export const ProjectCartProvider = ({
           nft.quantity,
       0,
     )
+    if (nftRewardsTotal > 0) {
+      nftRewardsTotal -= userNftCreditsNumber
+    }
     if (state.payAmount?.currency === V2V3_CURRENCY_USD) {
       nftRewardsTotal =
         converter.weiToUsd(parseWad(nftRewardsTotal))?.toNumber() ?? 0
     }
+
     const payAmount = state.payAmount?.amount ?? 0
+
     return {
       amount: payAmount + nftRewardsTotal,
       currency: state.payAmount?.currency ?? V2V3_CURRENCY_ETH,
     }
   }, [
+    userNftCreditsNumber,
     converter,
     rewardTiers,
     state.nftRewards,
@@ -94,6 +110,7 @@ export const ProjectCartProvider = ({
     ...state,
     visible,
     totalAmount,
+    userNftCredits,
   }
 
   return (

@@ -8,14 +8,14 @@ export const TokensPerEth = ({
 }: {
   currencyAmount:
     | {
-        amount: string
+        amount: number
         currency: V2V3CurrencyOption
       }
     | undefined
 }) => {
   const { currencyText, receivedTickets, receivedTokenSymbolText } =
     useTokensPerEth({
-      amount: parseFloat(currencyAmount?.amount || '1'),
+      amount: parseFloat(currencyAmount?.amount.toString() || '1'),
       currency: currencyAmount?.currency || V2V3_CURRENCY_ETH,
     })
 

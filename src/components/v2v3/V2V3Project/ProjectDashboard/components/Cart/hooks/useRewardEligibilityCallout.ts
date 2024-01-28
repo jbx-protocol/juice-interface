@@ -20,7 +20,7 @@ export const useRewardEligibilityCallout = () => {
 
   const weiPayAmount = useWeiConverter({
     currency: payAmount?.currency,
-    amount: payAmount?.amount.toString(),
+    amount: payAmount?.amount?.toString(),
   })
 
   const eligibleRewards = useMemo(() => {

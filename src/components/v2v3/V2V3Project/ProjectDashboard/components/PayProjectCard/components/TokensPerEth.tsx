@@ -8,7 +8,7 @@ export const TokensPerEth = ({
 }: {
   currencyAmount:
     | {
-        amount: number // NOTE this is actually a string from what I can tell. Too scared to change it atm.
+        amount: number // NOTE this is actually a `string | undefined` from what I can tell. Too scared to change it atm.
         currency: V2V3CurrencyOption
       }
     | undefined

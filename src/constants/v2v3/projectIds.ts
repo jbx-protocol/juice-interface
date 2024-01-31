@@ -12,4 +12,5 @@ export const V2V3_PROJECT_IDS = {
   SCHIZO_DAO: 209,
   CDAO2: 350,
   PROJECT_445: 445,
+  OCTRA: 631,
 }

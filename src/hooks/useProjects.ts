@@ -9,7 +9,6 @@ import {
   useInfiniteQuery,
   useQuery,
 } from 'react-query'
-import { isHardArchived } from 'utils/archived'
 import { formatQueryParams } from 'utils/queryParams'
 import { parseDBProject, parseDBProjectJson } from 'utils/sgDbProjects'
 
@@ -96,9 +95,7 @@ export function useTrendingProjects(count: number) {
       '/api/projects/trending?count=' + count,
     )
 
-    return res.data
-      .map(parseDBProjectJson)
-      .filter(p => !isHardArchived({ pv: p.pv, projectId: parseInt(p.id) }))
+    return res.data.map(parseDBProjectJson)
   })
 }
 

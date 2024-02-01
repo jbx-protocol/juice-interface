@@ -4,7 +4,7 @@
 
 import { renderHook } from '@testing-library/react'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { BigNumber } from 'ethers'
 import { parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
@@ -14,9 +14,7 @@ import { usePayoutsSubPanel } from './usePayoutsSubPanel'
 jest.mock(
   'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
 )
-jest.mock(
-  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata',
-)
+jest.mock('contexts/shared/ProjectMetadataContext')
 
 describe('usePayoutsSubPanel', () => {
   const DefaultProjectContext = {
@@ -41,7 +39,7 @@ describe('usePayoutsSubPanel', () => {
   }
   beforeEach(() => {
     ;(useProjectContext as jest.Mock).mockReturnValue(DefaultProjectContext)
-    ;(useProjectMetadata as jest.Mock).mockReturnValue(
+    ;(useProjectMetadataContext as jest.Mock).mockReturnValue(
       DefaultUseProjectMetadata,
     )
   })

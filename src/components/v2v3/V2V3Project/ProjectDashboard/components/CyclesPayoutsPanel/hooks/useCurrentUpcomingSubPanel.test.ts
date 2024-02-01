@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { renderHook } from '@testing-library/react-hooks'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { BigNumber } from 'ethers'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
 import { useCurrentUpcomingSubPanel } from './useCurrentUpcomingSubPanel'
@@ -9,16 +9,14 @@ import { useCurrentUpcomingSubPanel } from './useCurrentUpcomingSubPanel'
 jest.mock(
   'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
 )
-jest.mock(
-  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata',
-)
+jest.mock('contexts/shared/ProjectMetadataContext')
 jest.mock('hooks/v2v3/contractReader/useProjectUpcomingFundingCycle')
 
 const mockUseProjectContext = useProjectContext as jest.MockedFunction<
   typeof useProjectContext
 >
-const mockUseProjectMetadata = useProjectMetadata as jest.MockedFunction<
-  typeof useProjectMetadata
+const mockUseProjectMetadata = useProjectMetadataContext as jest.MockedFunction<
+  typeof useProjectMetadataContext
 >
 const mockUseProjectUpcomingFundingCycle =
   useProjectUpcomingFundingCycle as jest.MockedFunction<

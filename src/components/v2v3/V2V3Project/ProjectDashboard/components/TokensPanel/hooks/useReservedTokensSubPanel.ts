@@ -1,6 +1,6 @@
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { ONE_BILLION } from 'constants/numbers'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useMemo } from 'react'
@@ -12,7 +12,7 @@ import { formatReservedRate, formatSplitPercent } from 'utils/v2v3/math'
 const ONE_BILLION_BIG = BigNumber.from(ONE_BILLION)
 
 export const useReservedTokensSubPanel = () => {
-  const { projectId } = useProjectMetadata()
+  const { projectId } = useProjectMetadataContext()
   const { fundingCycleMetadata, reservedTokensSplits, projectOwnerAddress } =
     useProjectContext()
   const reservedRateWad = fundingCycleMetadata?.reservedRate

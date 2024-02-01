@@ -15,14 +15,11 @@ jest.mock(
     }),
   }),
 )
-jest.mock(
-  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata',
-  () => ({
-    useProjectMetadata: () => ({
-      projectId: 'mockProjectId',
-    }),
+jest.mock('contexts/shared/ProjectMetadataContext', () => ({
+  useProjectMetadataContext: () => ({
+    projectId: 'mockProjectId',
   }),
-)
+}))
 
 jest.mock('hooks/v2v3/contractReader/useProjectDistributionLimit', () => ({
   __esModule: true,

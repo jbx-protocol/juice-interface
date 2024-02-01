@@ -1,14 +1,14 @@
 import { t } from '@lingui/macro'
 import { useFundingCycleCountdown } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useFundingCycleCountdown'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { timeSecondsToDateString } from 'components/v2v3/V2V3Project/ProjectDashboard/utils/timeSecondsToDateString'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
 import { BallotState } from 'models/v2v3/fundingCycle'
 import { useMemo } from 'react'
 
 export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
-  const { projectId } = useProjectMetadata()
+  const { projectId } = useProjectMetadataContext()
   const {
     fundingCycle,
     loading: { fundingCycleLoading },

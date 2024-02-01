@@ -1,8 +1,8 @@
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
-import { useProjectMetadata } from './useProjectMetadata'
 
 export const useCoverPhoto = () => {
-  const { projectMetadata } = useProjectMetadata()
+  const { projectMetadata } = useProjectMetadataContext()
   const coverImageUrl = projectMetadata?.coverImageUri
     ? ipfsUriToGatewayUrl(projectMetadata?.coverImageUri)
     : undefined

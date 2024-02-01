@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import EtherscanLink from 'components/EtherscanLink'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import useMobile from 'hooks/useMobile'
 import moment from 'moment'
 import { useMemo } from 'react'
@@ -12,7 +12,7 @@ import { ProjectHeaderLogo } from '../../ProjectHeader/components/ProjectHeaderL
 
 export const SuccessPayCard = ({ className }: { className?: string }) => {
   const isMobile = useMobile()
-  const { name } = useProjectMetadata().projectMetadata ?? {}
+  const { name } = useProjectMetadataContext().projectMetadata ?? {}
   const { projectPayReceipt } = useProjectPageQueries()
 
   const transactionDateString = useMemo(() => {

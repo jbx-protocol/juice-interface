@@ -1,3 +1,4 @@
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
@@ -5,7 +6,6 @@ import { useProjectTrendingPercentageIncrease } from 'hooks/useProjects'
 import { SubtitleType, useSubtitle } from 'hooks/useSubtitle'
 import { GnosisSafe } from 'models/safe'
 import { useContext } from 'react'
-import { useProjectMetadata } from './useProjectMetadata'
 
 export interface ProjectHeaderData {
   title: string | undefined
@@ -21,7 +21,7 @@ export interface ProjectHeaderData {
 }
 
 export const useProjectHeader = (): ProjectHeaderData => {
-  const { projectMetadata, projectId } = useProjectMetadata()
+  const { projectMetadata, projectId } = useProjectMetadataContext()
   const {
     handle,
     projectOwnerAddress,

@@ -1,7 +1,7 @@
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 
 export const useProjectHeaderLogo = () => {
-  const { projectMetadata, projectId } = useProjectMetadata()
+  const { projectMetadata, projectId } = useProjectMetadataContext()
   return {
     projectId,
     projectLogoUri: projectMetadata?.logoUri,

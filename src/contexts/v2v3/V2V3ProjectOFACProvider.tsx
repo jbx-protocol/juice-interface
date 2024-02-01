@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useWallet } from 'hooks/Wallet'
 import { ReactNode, createContext } from 'react'
 import { useQuery } from 'react-query'
@@ -20,7 +20,7 @@ export default function V2V3ProjectOFACProvider({
   children?: ReactNode
 }) {
   const { userAddress, isConnected } = useWallet()
-  const { projectMetadata } = useProjectMetadata()
+  const { projectMetadata } = useProjectMetadataContext()
 
   const enabled = projectMetadata?.projectRequiredOFACCheck && isConnected
 

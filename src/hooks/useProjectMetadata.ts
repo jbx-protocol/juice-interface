@@ -1,4 +1,4 @@
-import { ipfsGatewayFetch } from 'lib/api/ipfs'
+import { ipfsFetch } from 'lib/api/ipfs'
 import { AnyProjectMetadata, consolidateMetadata } from 'models/projectMetadata'
 import { useQuery } from 'react-query'
 
@@ -10,13 +10,12 @@ export function useProjectMetadata(uri: string | null | undefined) {
         throw new Error('Project URI not specified.')
       }
 
-      const response = await ipfsGatewayFetch<AnyProjectMetadata>(uri)
+      const response = await ipfsFetch<AnyProjectMetadata>(uri)
       const metadata = consolidateMetadata(response.data)
       return metadata
     },
     {
       enabled: !!uri,
-      staleTime: 60000,
     },
   )
 }

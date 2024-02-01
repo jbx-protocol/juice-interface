@@ -1,4 +1,4 @@
-import { ipfsGatewayFetch } from 'lib/api/ipfs'
+import { ipfsFetch } from 'lib/api/ipfs'
 import { NftCollectionMetadata } from 'models/nftRewards'
 import { useQuery } from 'react-query'
 import { cidFromUrl } from 'utils/ipfs'
@@ -17,7 +17,7 @@ export function useNftCollectionMetadata(uri: string | undefined) {
         throw new Error('NFT Contract URI invalid.')
       }
 
-      const response = await ipfsGatewayFetch<NftCollectionMetadata>(cid)
+      const response = await ipfsFetch<NftCollectionMetadata>(cid)
       return response.data
     },
     {

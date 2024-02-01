@@ -1,12 +1,12 @@
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useProjectMetadata } from './useProjectMetadata'
 import { useProjectPageQueries } from './useProjectPageQueries'
 
 export const useSuccessPayView = () => {
   const router = useRouter()
   const { name, nftPaymentSuccessModal } =
-    useProjectMetadata().projectMetadata ?? {}
+    useProjectMetadataContext().projectMetadata ?? {}
   const { projectPayReceipt, setProjectPayReceipt } = useProjectPageQueries()
   const nftsPurchased = useMemo(
     () => !!projectPayReceipt?.nfts.length,

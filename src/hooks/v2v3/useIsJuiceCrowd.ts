@@ -1,4 +1,5 @@
 import { readNetwork } from 'constants/networks'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { NetworkName } from 'models/networkName'
 
 export function useIsJuicecrowd() {

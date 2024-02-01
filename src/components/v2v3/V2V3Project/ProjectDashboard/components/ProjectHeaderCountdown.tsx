@@ -1,7 +1,7 @@
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { ReactNode, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useFundingCycleCountdown } from '../hooks/useFundingCycleCountdown'
-import { useProjectMetadata } from '../hooks/useProjectMetadata'
 
 const RS_PROJECT_ID = 618
 
@@ -12,7 +12,7 @@ export type ProjectHeaderCountdownProps = {
 export const ProjectHeaderCountdown: React.FC<ProjectHeaderCountdownProps> = ({
   className,
 }) => {
-  const { projectId } = useProjectMetadata()
+  const { projectId } = useProjectMetadataContext()
   const { secondsRemaining } = useFundingCycleCountdown()
 
   const { days, hours, minutes, seconds } = useMemo(() => {

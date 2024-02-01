@@ -1,14 +1,14 @@
 import { useCoverPhoto } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useCoverPhoto'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useProjectMetadata } from '../../hooks/useProjectMetadata'
 
 const RS_PROJECT_ID = 618
 
 export const CoverPhoto = () => {
   const { coverImageUrl, coverImageAltText } = useCoverPhoto()
-  const { projectId } = useProjectMetadata()
+  const { projectId } = useProjectMetadataContext()
   const hasCoverImage = !!coverImageUrl
 
   const applyDarkerCoverPhoto = useMemo(() => {

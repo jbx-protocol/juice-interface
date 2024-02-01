@@ -65,17 +65,6 @@ export function ArchiveProject({
       return emitErrorNotification(t`Failed to update project metadata`)
     }
 
-    // Create github issue when archive is requested
-    // https://docs.github.com/en/rest/reference/issues#create-an-issue
-    // Do this first, in case the user closes the page before the on-chain tx completes
-    axios.post(`/api/github/archive-project`, {
-      archived,
-      projectId,
-      projectMetadata,
-      handle,
-      pv,
-    })
-
     const txSuccessful = await storeCidTx(
       { cid: uploadedMetadata.Hash },
       {
@@ -89,7 +78,12 @@ export function ArchiveProject({
     if (!txSuccessful) {
       emitErrorNotification(t`Transaction unsuccessful`)
       setIsLoadingArchive(false)
+      return
     }
+
+    return axios.put(
+      `/api/juicebox/pv/${pv}/project/${projectId}/refreshMetadata`,
+    )
   }
 
   if (projectMetadata?.archived) {

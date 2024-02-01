@@ -2,8 +2,8 @@ import { ArrowUpCircleIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import DistributeReservedTokensModal from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/modals/DistributeReservedTokensModal'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useCallback, useMemo, useState } from 'react'
@@ -17,7 +17,7 @@ export const SendReservedTokensButton = ({
   className?: string
   containerClassName?: string
 }) => {
-  const { projectId } = useProjectMetadata()
+  const { projectId } = useProjectMetadataContext()
   const { reservedRate } = useProjectContext().fundingCycleMetadata ?? {}
   const { data: reservedTokens, loading: loadingReservedTokens } =
     useProjectReservedTokens({

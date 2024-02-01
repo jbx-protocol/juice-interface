@@ -20,7 +20,7 @@ const extractJsonFromBase64Data = (base64: string) => {
   return JSON.parse(decoded.substring(jsonStart, jsonEnd + 1))
 }
 
-export const ipfsGet = async <T>(
+export const ipfsGatewayFetch = async <T>(
   hash: string,
   opts?: AxiosRequestConfig<T>,
 ) => {

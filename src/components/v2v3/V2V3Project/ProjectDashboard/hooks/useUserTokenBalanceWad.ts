@@ -1,11 +1,11 @@
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useWallet } from 'hooks/Wallet'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/useTotalBalanceOf'
 import { useMemo } from 'react'
-import { useProjectMetadata } from './useProjectMetadata'
 
 export const useUserTokenBalanceWad = () => {
   const { userAddress } = useWallet()
-  const { projectId } = useProjectMetadata()
+  const { projectId } = useProjectMetadataContext()
 
   const { data: totalBalance, loading } = useTotalBalanceOf(
     userAddress,

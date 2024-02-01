@@ -1,9 +1,9 @@
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { readNetwork } from 'constants/networks'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { NetworkName } from 'models/networkName'
 
 export function useIsJuicecrowd() {
-  const { projectMetadata, projectId } = useProjectMetadata()
+  const { projectMetadata, projectId } = useProjectMetadataContext()
 
   // Some project's metadata are broken, need to hardcode
   const JCProjectsWithBrokenMetadata = [

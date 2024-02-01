@@ -4,7 +4,7 @@
 
 import { renderHook } from '@testing-library/react'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
 import { useCycleSection } from './useCycleSection'
@@ -13,9 +13,7 @@ import { useFormatConfigurationCyclesSection } from './useFormatConfigurationCyc
 jest.mock(
   'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
 )
-jest.mock(
-  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata',
-)
+jest.mock('contexts/shared/ProjectMetadataContext')
 jest.mock('hooks/v2v3/contractReader/useProjectDistributionLimit')
 jest.mock('hooks/v2v3/contractReader/useProjectUpcomingFundingCycle')
 jest.mock('./useFormatConfigurationCyclesSection')
@@ -26,7 +24,7 @@ describe('useCycleSection', () => {
   })
 
   it('calls the dependent hooks correctly', () => {
-    ;(useProjectMetadata as jest.Mock).mockReturnValue({
+    ;(useProjectMetadataContext as jest.Mock).mockReturnValue({
       projectId: 'projectIdMock',
     })
     ;(useProjectContext as jest.Mock).mockReturnValue({
@@ -45,7 +43,7 @@ describe('useCycleSection', () => {
 
     renderHook(() => useCycleSection('current'))
 
-    expect(useProjectMetadata).toHaveBeenCalled()
+    expect(useProjectMetadataContext).toHaveBeenCalled()
     expect(useProjectContext).toHaveBeenCalled()
     expect(useProjectUpcomingFundingCycle).toHaveBeenCalledWith({
       projectId: 'projectIdMock',

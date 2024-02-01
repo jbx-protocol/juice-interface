@@ -1,12 +1,12 @@
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
 
 export const useCurrentUpcomingDistributionLimit = (
   type: 'current' | 'upcoming',
 ) => {
-  const { projectId } = useProjectMetadata()
+  const { projectId } = useProjectMetadataContext()
   const {
     primaryETHTerminal,
     distributionLimit: currentDistributionLimit,

@@ -48,7 +48,7 @@ export function ipfsUriToGatewayUrl(ipfsUri: string): string {
  * e.g.- ipfs://123 -> https://new-gateway.io/ipfs/123
  *     - https://old-gateway.io/ipfs/123 -> https://new-gateway.io/ipfs/123
  */
-export function convertToNewIpfsGateway(url: string) {
+export function pinataToGatewayUrl(url: string) {
   if (url.startsWith('https://jbx.mypinata.cloud')) {
     return ipfsGatewayUrl(cidFromUrl(url))
   } else if (url.startsWith('ipfs://')) {

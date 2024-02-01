@@ -3,7 +3,7 @@
  */
 import { renderHook } from '@testing-library/react'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useReservedTokensSubPanel } from './useReservedTokensSubPanel'
@@ -11,9 +11,7 @@ import { useReservedTokensSubPanel } from './useReservedTokensSubPanel'
 jest.mock(
   'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext',
 )
-jest.mock(
-  'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata',
-)
+jest.mock('contexts/shared/ProjectMetadataContext')
 jest.mock('hooks/v2v3/contractReader/ProjectReservedTokens')
 
 describe('useReservedTokensSubPanel', () => {
@@ -38,7 +36,9 @@ describe('useReservedTokensSubPanel', () => {
   }
   beforeEach(() => {
     jest.clearAllMocks()
-    ;(useProjectMetadata as jest.Mock).mockReturnValue(DefaultProjectMetadata)
+    ;(useProjectMetadataContext as jest.Mock).mockReturnValue(
+      DefaultProjectMetadata,
+    )
     ;(useProjectContext as jest.Mock).mockReturnValue(DefaultProjectContext)
     ;(useProjectReservedTokens as jest.Mock).mockReturnValue({
       data: BigNumber.from('1000000000000000000'),

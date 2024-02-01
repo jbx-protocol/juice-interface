@@ -3,7 +3,7 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { BigNumber } from 'ethers'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -21,7 +21,7 @@ import { usePastFundingCycles } from '../hooks/usePastFundingCycles'
 import { HistoricalConfigurationPanel } from './HistoricalConfigurationPanel'
 
 export const HistorySubPanel = () => {
-  const { projectId } = useProjectMetadata()
+  const { projectId } = useProjectMetadataContext()
   const { fundingCycle } = useProjectContext()
 
   const [isFetchingMore, setIsFetchingMore] = useState<boolean>()
@@ -170,7 +170,7 @@ function FormattedWithdrawnAmount({
   configuration: BigNumber
   withdrawnAmount: BigNumber
 }) {
-  const { projectId } = useProjectMetadata()
+  const { projectId } = useProjectMetadataContext()
   const { primaryETHTerminal } = useProjectContext()
 
   const { data: distributionLimit } = useProjectDistributionLimit({

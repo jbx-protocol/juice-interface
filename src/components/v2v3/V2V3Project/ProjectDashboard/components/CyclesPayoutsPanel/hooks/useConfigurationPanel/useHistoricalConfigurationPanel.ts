@@ -1,5 +1,5 @@
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
 import {
   V2V3FundingCycle,
@@ -17,7 +17,7 @@ export const useHistoricalConfigurationPanel = ({
   fundingCycle: V2V3FundingCycle
   metadata: V2V3FundingCycleMetadata
 }) => {
-  const { projectId } = useProjectMetadata()
+  const { projectId } = useProjectMetadataContext()
   const { primaryETHTerminal: terminal, tokenSymbol } = useProjectContext()
   const { data: distributionLimitData } = useProjectDistributionLimit({
     projectId,

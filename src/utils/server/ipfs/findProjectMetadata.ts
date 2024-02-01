@@ -1,5 +1,5 @@
 import Bottleneck from 'bottleneck'
-import { ipfsGet } from 'lib/api/ipfs'
+import { ipfsGatewayFetch } from 'lib/api/ipfs'
 import {
   AnyProjectMetadata,
   consolidateMetadata,
@@ -23,7 +23,7 @@ export const findProjectMetadata = async ({
   while (true) {
     try {
       const response = await limiter.schedule(
-        async () => await ipfsGet<AnyProjectMetadata>(metadataCid),
+        async () => await ipfsGatewayFetch<AnyProjectMetadata>(metadataCid),
       )
       const metadata = consolidateMetadata(response.data)
       Object.keys(metadata).forEach(key =>

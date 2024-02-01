@@ -1,4 +1,4 @@
-import { ipfsGet } from 'lib/api/ipfs'
+import { ipfsGatewayFetch } from 'lib/api/ipfs'
 import { DBProject, DBProjectRow, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
 import {
@@ -304,9 +304,12 @@ export async function formatWithMetadata({
 
   try {
     // We need to use a timeout here, because if the object can't be found the request may never resolve. We use 30 seconds to stay well below the max of 60 seconds for vercel edge functions.
-    const { data: metadata } = await ipfsGet<ProjectMetadata>(metadataUri, {
-      timeout: 30000,
-    })
+    const { data: metadata } = await ipfsGatewayFetch<ProjectMetadata>(
+      metadataUri,
+      {
+        timeout: 30000,
+      },
+    )
 
     const { name, description, logoUri, tags, archived } =
       consolidateMetadata(metadata)

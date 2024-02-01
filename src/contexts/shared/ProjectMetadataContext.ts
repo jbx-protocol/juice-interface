@@ -1,6 +1,6 @@
 import { ProjectMetadata } from 'models/projectMetadata'
 import { PV } from 'models/pv'
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 
 interface ProjectMetadataContextType {
   projectMetadata: ProjectMetadata | undefined
@@ -22,3 +22,6 @@ export const ProjectMetadataContext = createContext<ProjectMetadataContextType>(
       ),
   },
 )
+
+export const useProjectMetadataContext = () =>
+  useContext(ProjectMetadataContext)

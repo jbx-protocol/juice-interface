@@ -6,8 +6,8 @@ import ExternalLink from 'components/ExternalLink'
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
 import Loading from 'components/Loading'
 import { JuiceModal } from 'components/modals/JuiceModal'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
 import { PV_V2 } from 'constants/pv'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { Formik } from 'formik'
 import { useIpfsFilePicker } from 'hooks/useIpfsFilePicker/useIpfsFilePicker'
 import { useContext } from 'react'
@@ -31,7 +31,7 @@ export const AddProjectUpdateModal = ({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const { loadProjectUpdates } = useContext(ProjectUpdatesContext)
-  const { projectId } = useProjectMetadata()
+  const { projectId } = useProjectMetadataContext()
   const project = projectId
     ? getSubgraphIdForProject(PV_V2, projectId)
     : undefined

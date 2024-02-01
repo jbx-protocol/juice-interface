@@ -9,7 +9,7 @@ import { stopPropagation } from 'react-stop-propagation'
 import { twMerge } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
 import { parseWad } from 'utils/format/formatNumber'
-import { convertToNewIpfsGateway } from 'utils/ipfs'
+import { pinataToGatewayUrl } from 'utils/ipfs'
 import { QuantitySelector } from './QuantitySelector'
 
 // The clickable cards on the project page
@@ -36,7 +36,7 @@ export function NftTierCard({
   const [previousQuantity, setPreviousQuantity] = useState<number>(1)
 
   const fileUrl = rewardTier?.fileUrl
-    ? convertToNewIpfsGateway(rewardTier.fileUrl)
+    ? pinataToGatewayUrl(rewardTier.fileUrl)
     : undefined
 
   const hasQuantitySelected = quantitySelected > 0

@@ -1,12 +1,12 @@
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useMemo } from 'react'
 import { linkUrl } from 'utils/url'
 import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
-import { useProjectMetadata } from './useProjectMetadata'
 
 export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
 export const useAboutPanel = () => {
-  const { projectMetadata } = useProjectMetadata()
+  const { projectMetadata } = useProjectMetadataContext()
 
   const socialLinks: Record<SocialLink, string | undefined> = useMemo(() => {
     return {

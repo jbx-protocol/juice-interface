@@ -1,5 +1,5 @@
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { useProjectMetadata } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectMetadata'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
 import { ConfigurationPanelTableData } from '../../components/ConfigurationPanel'
 import { useFormatConfigurationOtherRulesSection } from './useFormatConfigurationOtherRulesSection'
@@ -7,8 +7,7 @@ import { useFormatConfigurationOtherRulesSection } from './useFormatConfiguratio
 export const useOtherRulesSection = (
   type: 'current' | 'upcoming',
 ): ConfigurationPanelTableData => {
-  const { projectId } = useProjectMetadata()
-
+  const { projectId } = useProjectMetadataContext()
   const { fundingCycleMetadata } = useProjectContext()
   const { data: upcomingFundingCycleData } = useProjectUpcomingFundingCycle({
     projectId,

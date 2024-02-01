@@ -1,6 +1,7 @@
 import { t } from '@lingui/macro'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useProjectIsOFACListed } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectIsOFACListed'
+import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useV2V3BlockedProject } from './useBlockedProject'
 
 export enum PayDisabledReason {
@@ -23,6 +24,7 @@ export function usePayProjectDisabled(): {
   reason: PayDisabledReason | undefined
   message: string | undefined
 } {
+  const { projectMetadata } = useProjectMetadataContext()
   const { fundingCycleMetadata, loading } = useProjectContext()
   const isBlockedProject = useV2V3BlockedProject()
   const { isAddressListedInOFAC, isLoading: isOFACLoading } =
@@ -58,6 +60,14 @@ export function usePayProjectDisabled(): {
       ...disabled,
       reason: PayDisabledReason.OFAC,
       message: t`You can't pay this project because your wallet address failed a compliance check set up by the project owner.`,
+    }
+  }
+
+  if (projectMetadata?.archived) {
+    return {
+      ...disabled,
+      reason: PayDisabledReason.BLOCKED,
+      message: t`This project has been archived and can't be paid.`,
     }
   }
 

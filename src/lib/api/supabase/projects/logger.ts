@@ -35,7 +35,7 @@ export async function dbpLog(
 
   // log the error to the console
   if (type === 'alert') {
-    logger.error({ data: { type, message: DBP_ALERTS[opts.alert] } })
+    logger.error({ data: { type, message: DBP_ALERTS[opts.alert], body } })
   } else {
     logger.info({ data: { type, message: DBP_NOTIFS[opts.notif] } })
   }

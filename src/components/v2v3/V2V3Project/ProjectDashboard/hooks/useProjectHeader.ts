@@ -18,6 +18,7 @@ export interface ProjectHeaderData {
   totalVolume: BigNumber | undefined
   last7DaysPercent: number
   gnosisSafe: GnosisSafe | undefined | null
+  archived: boolean | undefined
 }
 
 export const useProjectHeader = (): ProjectHeaderData => {
@@ -48,5 +49,6 @@ export const useProjectHeader = (): ProjectHeaderData => {
     totalVolume,
     last7DaysPercent,
     gnosisSafe,
+    archived: projectMetadata?.archived,
   }
 }

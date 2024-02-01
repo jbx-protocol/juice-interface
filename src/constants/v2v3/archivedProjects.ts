@@ -14,7 +14,7 @@ const {
   WEB3_COOL_KIDS,
   SCHIZO_DAO,
   PROJECT_445,
-  OCTRA,
+  // OCTRA,
 } = V2V3_PROJECT_IDS
 
 const V2ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
@@ -29,7 +29,7 @@ const V2ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
     WEB3_COOL_KIDS,
     SCHIZO_DAO,
     PROJECT_445,
-    OCTRA,
+    // OCTRA,
   ],
   [NetworkName.goerli]: [],
 }

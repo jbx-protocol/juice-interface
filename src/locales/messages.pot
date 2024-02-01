@@ -200,6 +200,9 @@ msgstr ""
 msgid "Juicebox loading animation"
 msgstr ""
 
+msgid "This project has been archived and can't be paid."
+msgstr ""
+
 msgid "Payments to this project paused"
 msgstr ""
 
@@ -4689,9 +4692,6 @@ msgid "Token rules"
 msgstr ""
 
 msgid "Potential risks"
-msgstr ""
-
-msgid "Transaction unsuccessful"
 msgstr ""
 
 msgid "All-in-one crowdfunding with powerful treasury management and redemptions."

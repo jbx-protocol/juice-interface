@@ -76,7 +76,7 @@ export function ArchiveProject({
       },
     )
     if (!txSuccessful) {
-      emitErrorNotification(t`Transaction unsuccessful`)
+      emitErrorNotification(t`Failed to update project metadata`)
       setIsLoadingArchive(false)
       return
     }

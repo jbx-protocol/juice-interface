@@ -3,6 +3,9 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { Database } from 'types/database.types'
 import { getProjectMetadata } from 'utils/server/metadata'
 
+/**
+ * Force refresh a given project's metadata in the database.
+ */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'PUT') {
     return res.status(405).end()
@@ -22,9 +25,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .update({ archived: metadata?.archived }) // TODO add more
       .eq('id', projectId)
 
-    return res.status(204)
+    return res.status(204).end()
   } catch (error) {
-    return res.status(500)
+    return res.status(500).end()
   }
 }
 export default handler

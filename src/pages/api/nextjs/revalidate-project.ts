@@ -43,7 +43,7 @@ export default async function handler(
 
   // Update database projects whenever a project needs revalidating. However, database will only get updated if the new project data is already available in the subgraph, which can sometimes take a couple minutes
   await axios
-    .get('/api/projects/update')
+    .get(`${process.env.NEXT_PUBLIC_BASE_URL}api/projects/update`)
     // can throw error when env isnt set correctly
     .catch(err => console.error('Database projects update failed', err))
 

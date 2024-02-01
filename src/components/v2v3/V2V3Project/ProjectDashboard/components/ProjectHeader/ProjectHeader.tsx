@@ -1,6 +1,7 @@
 import { Cog6ToothIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button, Divider } from 'antd'
+import { Badge } from 'components/Badge'
 import { DomainBadge } from 'components/DomainBadge'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
@@ -23,8 +24,16 @@ import { Subtitle } from './components/Subtitle'
 import ToolsDrawerButton from './components/ToolsDrawerButton'
 
 export const ProjectHeader = ({ className }: { className?: string }) => {
-  const { title, subtitle, domain, projectId, handle, owner, gnosisSafe } =
-    useProjectHeader()
+  const {
+    title,
+    subtitle,
+    domain,
+    projectId,
+    handle,
+    owner,
+    gnosisSafe,
+    archived,
+  } = useProjectHeader()
   const isMobile = useMobile()
   const canReconfigure = useV2V3WalletHasPermission(
     V2V3OperatorPermission.RECONFIGURE,
@@ -72,7 +81,9 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
           </h1>
           <DomainBadge domain={domain} projectId={projectId} />
         </div>
-
+        <div className="flex">
+          {archived ? <Badge variant="warning">Archived</Badge> : null}
+        </div>
         <div className="flex flex-col justify-between gap-8 md:flex-row md:gap-12">
           <div className="flex min-w-0 flex-col gap-3">
             {subtitle &&

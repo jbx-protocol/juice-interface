@@ -8,6 +8,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  if (!req.query) {
+    res.status(500).end()
+  }
   if (req.method !== 'GET') {
     return res.status(405).end()
   }

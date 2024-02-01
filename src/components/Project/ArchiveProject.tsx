@@ -1,6 +1,5 @@
 import { t, Trans } from '@lingui/macro'
 import { Button, Statistic } from 'antd'
-import axios from 'axios'
 import { Callout } from 'components/Callout/Callout'
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -80,10 +79,6 @@ export function ArchiveProject({
       setIsLoadingArchive(false)
       return
     }
-
-    return axios.put(
-      `/api/juicebox/pv/${pv}/project/${projectId}/refreshMetadata`,
-    )
   }
 
   if (projectMetadata?.archived) {

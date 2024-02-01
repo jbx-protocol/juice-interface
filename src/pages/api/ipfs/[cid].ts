@@ -8,8 +8,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.method !== 'GET') res.status(405).end()
-
+  if (req.method !== 'GET') {
+    return res.status(405).end()
+  }
   if (!req.query.cid) {
     return res.status(400).json({ error: 'cid not specified' })
   }

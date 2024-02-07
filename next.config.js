@@ -65,6 +65,7 @@ const CONNECT_SRC = [
   'https://*.safe.global',
   'https://*.snapshot.org',
   'https://*.wallet.coinbase.com',
+  'wss://www.walletlink.org/rpc', // Coinbase
   ...WALLET_CONNECT_URLS,
   'https://*.supabase.co',
   'https://api.ensideas.com',

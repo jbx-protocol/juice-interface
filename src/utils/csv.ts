@@ -59,6 +59,22 @@ export const parseV2SplitsCsv = (csvContent: string): Split[] => {
     }
   })
 
+  if (splits.some(split => split.percent === 0)) {
+    throw new Error('CSV contains splits with 0% percent.')
+  }
+
+  // find duplicates
+  const duplicateBeneficiaries = splits
+    .map(split => split.beneficiary)
+    .filter((beneficiary, index, self) => self.indexOf(beneficiary) !== index)
+  if (duplicateBeneficiaries.length > 0) {
+    throw new Error(
+      `CSV contains multiple splits for the same beneficiary: ${duplicateBeneficiaries.join(
+        ', ',
+      )}`,
+    )
+  }
+
   return splits
 }
 

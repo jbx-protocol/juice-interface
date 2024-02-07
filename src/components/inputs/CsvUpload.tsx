@@ -32,7 +32,9 @@ export function CsvUpload<T>({
       const parsed = parser(csvContent)
       onChange(parsed)
     } catch (e) {
-      emitErrorNotification(t`File upload failed. Try again.`)
+      emitErrorNotification(
+        t`File upload failed.` + ` ${(e as { message: string }).message ?? ''}`,
+      )
       console.error(e)
     }
   }

@@ -2054,9 +2054,6 @@ msgstr ""
 msgid "Transparency"
 msgstr ""
 
-msgid "File upload failed. Try again."
-msgstr ""
-
 msgid "Tags"
 msgstr ""
 
@@ -2247,6 +2244,9 @@ msgid "Highest paid"
 msgstr ""
 
 msgid "Community owned"
+msgstr ""
+
+msgid "File upload failed."
 msgstr ""
 
 msgid "Paid as <0/>"

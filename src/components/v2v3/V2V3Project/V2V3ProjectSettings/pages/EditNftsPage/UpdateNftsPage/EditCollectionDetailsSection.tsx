@@ -8,8 +8,8 @@ import { useNftCollectionMetadata } from 'hooks/JB721Delegate/useNftCollectionMe
 import { useReconfigureNftCollectionMetadata } from 'hooks/v2v3/transactor/useReconfigureNftCollectionMetadata'
 import { NftCollectionMetadata } from 'models/nftRewards'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { NftCollectionDetailsFormItems } from '../../../../../shared/FundingCycleConfigurationDrawers/NftDrawer/shared/NftCollectionDetailsFormItems'
-import { MarketplaceFormFields } from '../../../../../shared/FundingCycleConfigurationDrawers/NftDrawer/shared/formFields'
+import { NftCollectionDetailsFormItems } from './NftCollectionDetailsFormItems'
+import { MarketplaceFormFields } from './formFields'
 
 const useCollectionDetailsForm = () => {
   const [form] = useForm<MarketplaceFormFields>()

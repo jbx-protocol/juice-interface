@@ -21,8 +21,13 @@ import {
   JB_721_TIER_PARAMS_V3_2,
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
+import { GroupedSplits, SplitGroup } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { JBPayDataSourceFundingCycleMetadata } from 'models/v2v3/fundingCycle'
+import {
+  JBPayDataSourceFundingCycleMetadata,
+  V2V3FundAccessConstraint,
+  V2V3FundingCycleData,
+} from 'models/v2v3/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { buildDeployTiered721DelegateData } from 'utils/nftRewards'
@@ -33,7 +38,6 @@ import {
 import { useV2ProjectTitle } from '../../v2v3/useProjectTitle'
 import { useJB721DelegateContractAddress } from '../contracts/useJB721DelegateContractAddress'
 import { useJBTiered721DelegateProjectDeployer } from '../contracts/useJBTiered721DelegateProjectDeployer'
-import { JB721DelegateLaunchFundingCycleData } from './useLaunchFundingCyclesWithNftsTx'
 
 interface DeployTiered721DelegateData {
   collectionUri: string
@@ -43,6 +47,16 @@ interface DeployTiered721DelegateData {
   governanceType: JB721GovernanceType
   tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2)[]
   flags: JBTiered721Flags
+}
+
+interface JB721DelegateLaunchFundingCycleData {
+  data: V2V3FundingCycleData
+  metadata: JBPayDataSourceFundingCycleMetadata
+  memo?: string
+  fundAccessConstraints: V2V3FundAccessConstraint[]
+  groupedSplits?: GroupedSplits<SplitGroup>[]
+  mustStartAtOrAfter?: string // epoch seconds. anything less than "now" will start immediately.
+  terminals: string[]
 }
 
 interface LaunchProjectWithNftsTxArgs {

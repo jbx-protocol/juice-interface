@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { v2v3ProjectRoute } from 'utils/routes'
-import { AllocatorBadge } from './FundingCycleConfigurationDrawers/AllocatorBadge'
+import { AllocatorBadge } from '../../AllocatorBadge'
 
 /**
  * Different from V2V3ProjectHandleLink in that it doesn't use the handle. This can be used outside of V2V3ContractsContext and V2V3ProjectContext.

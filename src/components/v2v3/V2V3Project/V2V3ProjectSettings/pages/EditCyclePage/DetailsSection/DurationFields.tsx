@@ -3,9 +3,9 @@ import TooltipLabel from 'components/TooltipLabel'
 import { durationOptions } from 'components/inputs/DurationInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { CYCLE_EXPLANATION } from 'components/strings'
-import DurationInputAndSelect from 'components/v2v3/shared/FundingCycleConfigurationDrawers/FundingDrawer/FundingForm/DurationInputAndSelect'
 import { useState } from 'react'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
+import DurationInputAndSelect from './DurationInputAndSelect'
 
 export function DurationFields() {
   const { editCycleForm, initialFormData } = useEditCycleFormContext()

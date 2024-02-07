@@ -5,7 +5,7 @@ import { useFundingCycleCountdown } from '../hooks/useFundingCycleCountdown'
 
 const RS_PROJECT_ID = 618
 
-export type ProjectHeaderCountdownProps = {
+type ProjectHeaderCountdownProps = {
   className?: string
 }
 
@@ -45,13 +45,7 @@ export const ProjectHeaderCountdown: React.FC<ProjectHeaderCountdownProps> = ({
   )
 }
 
-export const CountdownCard = ({
-  label,
-  unit,
-}: {
-  label: ReactNode
-  unit: number
-}) => (
+const CountdownCard = ({ label, unit }: { label: ReactNode; unit: number }) => (
   <div className="flex w-11 flex-1 flex-col items-center rounded-lg border border-smoke-75 bg-smoke-50 py-1 px-1 text-black drop-shadow dark:border-slate-400 dark:bg-slate-700 dark:text-white sm:px-1.5">
     <div className="text-sm sm:text-xl">{unit}</div>
     <div className="text-xs font-medium text-grey-500 dark:text-slate-200">

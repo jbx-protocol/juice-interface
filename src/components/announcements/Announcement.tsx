@@ -15,6 +15,26 @@ export function getCompleted() {
   return (content ? JSON.parse(content) : {}) as { [k: string]: true }
 }
 
+/**
+ * 
+ * @example
+ export const ExampleFeatureAnnouncement = (
+  props: Pick<JuiceModalProps, 'open' | 'setOpen'>,
+) => {
+  return (
+    <NewFeatureAnnouncement
+      {...props}
+      title="Example Feature"
+      position="topRight"
+      okText="Got it"
+      hideCancelButton
+    >
+      <p>This is an example feature announcement.</p>
+      <p>Use me as a base!</p>
+    </NewFeatureAnnouncement>
+  )
+}
+ */
 export const Announcement: React.FC<
   React.PropsWithChildren<JuiceModalProps>
 > = props => {

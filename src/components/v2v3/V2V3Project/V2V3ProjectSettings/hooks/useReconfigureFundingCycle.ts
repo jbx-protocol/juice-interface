@@ -12,7 +12,11 @@ import { revalidateProject } from 'lib/api/nextjs'
 import { useCallback, useContext, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
-import { WEIGHT_UNCHANGED, WEIGHT_ZERO } from 'utils/v2v3/fundingCycle'
+import {
+  WEIGHT_UNCHANGED,
+  WEIGHT_ZERO,
+  deriveNextIssuanceRate,
+} from 'utils/v2v3/fundingCycle'
 import { reloadWindow } from 'utils/windowUtils'
 import { EditingFundingCycleConfig } from './useEditingFundingCycleConfig'
 import { useResolveEditCycleConflicts } from './useResolveEditCycleConflicts'
@@ -21,25 +25,25 @@ import { useResolveEditCycleConflicts } from './useResolveEditCycleConflicts'
  * Return the value of the `weight` argument to send in the transaction.
  */
 const getWeightArgument = ({
-  currentFundingCycleWeight,
-  newFundingCycleWeight,
+  currentWeightAfterDiscountRate,
+  newWeight,
 }: {
-  currentFundingCycleWeight: BigNumber
-  newFundingCycleWeight: BigNumber
+  currentWeightAfterDiscountRate: BigNumber
+  newWeight: BigNumber
 }): BigNumber => {
-  if (newFundingCycleWeight.eq(BigNumber.from(0))) {
+  if (newWeight.eq(BigNumber.from(0))) {
     // if desired weight is 0 (no tokens), send weight=1 to the contract
     return BigNumber.from(WEIGHT_ZERO)
   } else if (
-    parseInt(fromWad(newFundingCycleWeight)) ===
-    parseInt(fromWad(currentFundingCycleWeight))
+    parseInt(fromWad(newWeight)) ===
+    parseInt(fromWad(currentWeightAfterDiscountRate))
   ) {
     // If the weight is unchanged, send weight=0 to the contract
     return BigNumber.from(WEIGHT_UNCHANGED)
   }
 
   // else, return the new weight
-  return newFundingCycleWeight
+  return newWeight
 }
 
 /**
@@ -110,8 +114,11 @@ export const useReconfigureFundingCycle = ({
         : editingFundingCycleMetadata
 
       const weight = getWeightArgument({
-        currentFundingCycleWeight: fundingCycle.weight,
-        newFundingCycleWeight: editingFundingCycleData.weight,
+        currentWeightAfterDiscountRate: deriveNextIssuanceRate({
+          weight: BigNumber.from(0),
+          previousFC: fundingCycle,
+        }),
+        newWeight: editingFundingCycleData.weight,
       })
 
       const reconfigureFundingCycleData: ReconfigureFundingCycleTxParams =

@@ -37,7 +37,7 @@ export const usePrepareSaveEditCycleData = () => {
   // Only using this to get values of FC parameters not supported in the FC form (e.g. allowTerminalMigration, etc.)
   const reduxConfig = useEditingFundingCycleConfig()
 
-  const { newMintRate, mintRateHasDiff } = useTokensSectionValues()
+  const { newMintRate } = useTokensSectionValues()
 
   const { editCycleForm } = useEditCycleFormContext()
   const {
@@ -90,9 +90,7 @@ export const usePrepareSaveEditCycleData = () => {
 
   const editingFundingCycleData: V2V3FundingCycleData = {
     duration: BigNumber.from(durationSeconds),
-    weight: mintRateHasDiff
-      ? newMintRate
-      : reduxConfig.editingFundingCycleData.weight,
+    weight: newMintRate,
     discountRate: discountRateFrom(formValues.discountRate),
     ballot: formValues.ballot,
   }

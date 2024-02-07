@@ -26,10 +26,11 @@ export const AllocationItem = ({
           : '',
         className,
       )}
+      role={isClickable ? 'button' : undefined}
       onClick={onClick}
     >
       <div className="pb-3 pr-3 pl-7 md:col-span-6 md:py-3">{title}</div>
-      <div className="justify-self-end pr-3 md:col-start-12 md:py-3">
+      <div className="mr-3 flex items-center justify-self-end md:col-start-12">
         {extra}
       </div>
       <div

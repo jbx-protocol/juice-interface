@@ -389,6 +389,9 @@ msgstr ""
 msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr ""
 
+msgid "Your payouts do not sum to 100%. Because your project is set to pay out all available ETH, the remainder will go to the project owner."
+msgstr ""
+
 msgid "Button label"
 msgstr ""
 
@@ -2037,9 +2040,6 @@ msgid "Failed to launch Snapshot. Try again."
 msgstr ""
 
 msgid "Choose how you would like to set up payouts."
-msgstr ""
-
-msgid "This project is set to pay out all available ETH. Your payouts do not sum to 100%, so the remainder will go to the project owner."
 msgstr ""
 
 msgid "Upload"

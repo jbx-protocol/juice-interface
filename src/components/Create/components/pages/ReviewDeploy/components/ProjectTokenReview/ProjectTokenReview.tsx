@@ -54,7 +54,6 @@ export const ProjectTokenReview = () => {
         title={t`Reserved token recipients`}
         desc={
           <ReservedTokensList
-            isEditable={false}
             value={allocationSplits}
             onChange={setAllocationSplits}
           />

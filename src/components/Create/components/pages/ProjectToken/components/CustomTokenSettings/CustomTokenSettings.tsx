@@ -121,7 +121,7 @@ export const CustomTokenSettings = () => {
               }),
             ]}
           >
-            <ReservedTokensList />
+            <ReservedTokensList isEditable />
           </Form.Item>
         </div>
       </Form.Item>

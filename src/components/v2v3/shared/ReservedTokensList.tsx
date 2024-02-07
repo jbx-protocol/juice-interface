@@ -1,5 +1,6 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
+import { Button } from 'antd'
 import {
   Allocation,
   AllocationSplit,
@@ -44,12 +45,16 @@ export const ReservedTokensList: React.FC<
                   amount={formatPercent(allocation.percent)}
                   extra={
                     isEditable ? (
-                      <DeleteOutlined
+                      <Button
+                        type="ghost"
+                        className="h-8 border-0 px-2 py-1 text-black shadow-none hover:bg-smoke-200 dark:text-slate-100 dark:hover:bg-slate-300"
                         onClick={e => {
                           e.stopPropagation()
                           removeAllocation(allocation.id)
                         }}
-                      />
+                      >
+                        <DeleteOutlined />
+                      </Button>
                     ) : undefined
                   }
                   onClick={() => {

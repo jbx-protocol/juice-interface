@@ -1,27 +1,16 @@
-import {
-  CrownFilled,
-  DeleteOutlined,
-  QuestionCircleOutlined,
-} from '@ant-design/icons'
+import { CrownFilled, QuestionCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { Allocation } from 'components/v2v3/shared/Allocation/Allocation'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { Amount } from './Amount'
 
-type OwnerPayoutCardType =
-  | {
-      payoutsSelection: PayoutsSelection
-      canBeDeleted?: false
-    }
-  | {
-      payoutsSelection: PayoutsSelection
-      canBeDeleted: true
-      onDelete: VoidFunction
-    }
+type OwnerPayoutCardProps = {
+  payoutsSelection: PayoutsSelection
+}
 
 export const OwnerPayoutCard: React.FC<
-  React.PropsWithChildren<OwnerPayoutCardType>
+  React.PropsWithChildren<OwnerPayoutCardProps>
 > = props => {
   return (
     <Allocation.Item
@@ -33,21 +22,17 @@ export const OwnerPayoutCard: React.FC<
       }
       amount={<Amount payoutsSelection={props.payoutsSelection} />}
       extra={
-        props.canBeDeleted ? (
-          <DeleteOutlined onClick={props.onDelete} />
-        ) : (
-          <Tooltip
-            title={
-              <Trans>
-                This project is set to pay out all available ETH. Your payouts
-                do not sum to 100%, so the remainder will go to the project
-                owner.
-              </Trans>
-            }
-          >
-            <QuestionCircleOutlined className="text-lg md:text-sm" />
-          </Tooltip>
-        )
+        <Tooltip
+          title={
+            <Trans>
+              Your payouts do not sum to 100%. Because your project is set to
+              pay out all available ETH, the remainder will go to the project
+              owner.
+            </Trans>
+          }
+        >
+          <QuestionCircleOutlined className="mr-2 text-lg md:text-sm" />
+        </Tooltip>
       }
     />
   )

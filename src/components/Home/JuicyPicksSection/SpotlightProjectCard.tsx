@@ -98,9 +98,9 @@ export function SpotlightProjectCard({ project }: { project: DBProject }) {
           />
         </div>
         <div className="mb-6">
-          {metadata?.description ? (
+          {metadata?.projectTagline ? (
             <Paragraph
-              description={metadata.description}
+              description={metadata.projectTagline}
               characterLimit={150}
               className="text-sm text-grey-600 dark:text-slate-200"
             />

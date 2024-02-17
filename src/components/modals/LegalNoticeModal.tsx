@@ -1,26 +1,11 @@
 import { t } from '@lingui/macro'
-import { Modal } from 'antd'
+import { Modal, ModalProps } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { helpPagePath } from 'utils/routes'
 
-export default function LegalNoticeModal({
-  open,
-  onOk,
-  onCancel,
-}: {
-  open: boolean
-  onOk: () => void
-  onCancel: () => void
-}) {
+export function LegalNoticeModal(props: ModalProps) {
   return (
-    <Modal
-      okText={t`I Agree`}
-      open={open}
-      destroyOnClose
-      centered={true}
-      onOk={onOk}
-      onCancel={onCancel}
-    >
+    <Modal okText={t`I Agree`} destroyOnClose centered={true} {...props}>
       <h2 className="font-display text-2xl">Notice</h2>
       <p className="mb-4 text-center">
         By selecting "I Agree", you accept and agree to the{' '}

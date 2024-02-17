@@ -1,14 +1,14 @@
 import { WarningOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import LegalNoticeModal from 'components/modals/LegalNoticeModal'
+import { LegalNoticeModal } from 'components/modals/LegalNoticeModal'
 import { useWallet } from 'hooks/Wallet'
 import { useEffect, useState } from 'react'
 import WalletMenu from './WalletMenu'
 
 const LEGAL_NOTICE_STORAGE_KEY = 'jbm_hasAcceptedLegalNotice'
 
-export default function WalletButton() {
+export function WalletButton() {
   const {
     userAddress,
     isConnected,
@@ -20,10 +20,18 @@ export default function WalletButton() {
   const [legalNoticeAccepted, setLegalNoticeAccepted] = useState<boolean>(false)
   const [legalNoticeVisible, setLegalNoticeVisible] = useState<boolean>(false)
 
+  // set initial state
   useEffect(() => {
-    setLegalNoticeAccepted(
-      localStorage.getItem(LEGAL_NOTICE_STORAGE_KEY) === 'true',
-    )
+    try {
+      const localStorageState = localStorage.getItem(LEGAL_NOTICE_STORAGE_KEY)
+      const isLegalNoticeAccepted = Boolean(
+        JSON.parse(localStorageState ?? 'false'),
+      )
+
+      setLegalNoticeAccepted(isLegalNoticeAccepted)
+    } catch (error) {
+      return
+    }
   }, [])
 
   const onOk = () => {
@@ -36,13 +44,20 @@ export default function WalletButton() {
   if (!legalNoticeAccepted) {
     return (
       <>
-        <Button onClick={() => setLegalNoticeVisible(true)} block>
+        <Button
+          onClick={() => {
+            setLegalNoticeVisible(true)
+          }}
+          block
+        >
           <Trans>Connect</Trans>
         </Button>
         <LegalNoticeModal
           open={legalNoticeVisible}
           onOk={onOk}
-          onCancel={() => setLegalNoticeVisible(false)}
+          onCancel={() => {
+            setLegalNoticeVisible(false)
+          }}
         />
       </>
     )

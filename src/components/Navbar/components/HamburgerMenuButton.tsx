@@ -14,7 +14,7 @@ export const MobileMenuButton = ({
     role="button"
     aria-label="menu button"
   >
-    <div>
+    <>
       {open ? (
         <XMarkIcon
           className="text-primary h-9 w-9 leading-none"
@@ -26,6 +26,6 @@ export const MobileMenuButton = ({
           role="button"
         />
       )}
-    </div>
+    </>
   </Popover.Button>
 )

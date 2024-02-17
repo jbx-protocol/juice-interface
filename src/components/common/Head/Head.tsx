@@ -25,7 +25,11 @@ export const Head: React.FC<SEOProps> = props => {
         sizes="16x16"
         href="/favicon-16x16.png"
       />
-      <link rel="manifest" href="/manifest.json" />
+      <link
+        rel="manifest"
+        href="/manifest.json"
+        crossOrigin="use-credentials"
+      />
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5777EB" />
       {FONT_PATHS.map(path => (
         <link

@@ -3,6 +3,7 @@ import { Skeleton } from 'antd'
 import { HomepageCard } from 'components/Home/HomepageCard'
 import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
+import { PV_V2 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { DBProject } from 'models/dbProject'
 import { v2v3ProjectRoute } from 'utils/routes'
@@ -37,7 +38,7 @@ export function HomepageProjectCardSkeleton() {
 
 // Used in Trending Projects Caroursel and Juicy Picks section
 export function HomepageProjectCard({
-  project,
+  project, // v1 or v2 project
   lazyLoad,
 }: {
   project: Pick<
@@ -56,7 +57,11 @@ export function HomepageProjectCard({
 
   return (
     <HomepageCard
-      href={v2v3ProjectRoute(project)}
+      href={
+        project.pv === PV_V2
+          ? v2v3ProjectRoute(project)
+          : `/p/${project.handle}`
+      }
       img={
         metadata && !isLoading ? (
           <ProjectLogo

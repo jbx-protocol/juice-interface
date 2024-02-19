@@ -13,20 +13,14 @@ export function useTotalLegacyTokenBalance({
   const v1UnclaimedBalance = useV1UnclaimedBalanceForV3Token()
   const v1ClaimedBalance = v1TotalBalance?.sub(v1UnclaimedBalance)
 
-  const { data: v2TotalBalance, loading: v2BalanceLoading } = useV2TotalBalance(
-    { projectId },
-  )
-  const { data: v2UnclaimedBalance, loading: unclaimedBalanceLoading } =
-    useV2UnclaimedBalanceForV3Token({
-      projectId,
-    })
-
-  if (v2BalanceLoading || unclaimedBalanceLoading) return BigNumber.from(0)
-
-  const totalLegacyTokenBalance = v1TotalBalance?.add(v2TotalBalance ?? 0)
-
+  const { data: v2TotalBalance } = useV2TotalBalance({ projectId })
+  const { data: v2UnclaimedBalance } = useV2UnclaimedBalanceForV3Token({
+    projectId,
+  })
   const v2ClaimedBalance =
     v2TotalBalance?.sub(v2UnclaimedBalance ?? 0) ?? BigNumber.from(0)
+
+  const totalLegacyTokenBalance = v1TotalBalance?.add(v2TotalBalance ?? 0)
 
   return {
     v1TotalBalance,

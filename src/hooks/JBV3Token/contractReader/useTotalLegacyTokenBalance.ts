@@ -17,10 +17,11 @@ export function useTotalLegacyTokenBalance({
   const { data: v2UnclaimedBalance } = useV2UnclaimedBalanceForV3Token({
     projectId,
   })
-  const v2ClaimedBalance =
-    v2TotalBalance?.sub(v2UnclaimedBalance ?? 0) ?? BigNumber.from(0)
 
   const totalLegacyTokenBalance = v1TotalBalance?.add(v2TotalBalance ?? 0)
+
+  const v2ClaimedBalance =
+    v2TotalBalance?.sub(v2UnclaimedBalance ?? 0) ?? BigNumber.from(0)
 
   return {
     v1TotalBalance,

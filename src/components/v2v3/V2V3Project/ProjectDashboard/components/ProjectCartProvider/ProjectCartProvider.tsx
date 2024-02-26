@@ -76,13 +76,7 @@ function useNftRewardsTotal({
   )
 
   if (nftRewardsTotal > 0) {
-    // if user has enough nft credits to cover the nft rewards, then the total amount is 0
-    if (nftRewardsTotal <= userNftCreditsNumber) {
-      nftRewardsTotal = 0
-    } else {
-      // if user has some nft credits to cover the nft rewards, then the total amount is the difference
-      nftRewardsTotal -= userNftCreditsNumber
-    }
+    nftRewardsTotal = Math.max(0, nftRewardsTotal - userNftCreditsNumber)
   }
 
   if (payAmountCurrency === V2V3_CURRENCY_USD) {

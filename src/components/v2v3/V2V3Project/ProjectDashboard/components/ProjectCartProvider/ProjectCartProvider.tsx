@@ -57,12 +57,9 @@ function useNftRewardsTotal({
   userNftCredits: ReturnType<typeof useNftCredits>
 }) {
   const converter = useCurrencyConverter()
-
   const nftRewards = useContext(NftRewardsContext).nftRewards
-  const rewardTiers = useMemo(
-    () => nftRewards.rewardTiers ?? [],
-    [nftRewards.rewardTiers],
-  )
+
+  const rewardTiers = nftRewards.rewardTiers ?? []
   const userNftCreditsNumber = parseFloat(
     formatEther(userNftCredits.data ?? BigNumber.from(0)),
   )

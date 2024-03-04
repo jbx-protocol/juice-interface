@@ -17,7 +17,8 @@
     "noEmit": true,
     "jsx": "preserve",
     "incremental": true,
-    "typeRoots": ["node_modules/@types", "src/@types"]
+    "typeRoots": ["node_modules/@types", "src/@types"],
+    "noEmitOnError": false // NEED TO DELETE THIS, TEMPORARY BECAUSE SUBGRAPH DOWN
   },
   "include": ["src", "scripts"],
   "exclude": ["node_modules"]

@@ -13,6 +13,5 @@
       "path": "/api/projects/update-retry-ipfs",
       "schedule": "0 8,20 * * *"
     }
-  ],
-  "ignoredBuildStep": "echo 'Ignore all builds'"
+  ]
 }

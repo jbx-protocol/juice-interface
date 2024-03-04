@@ -19,18 +19,6 @@ export async function middleware(request: NextRequest) {
 
   const trailingPath = request.nextUrl.pathname.split('/').slice(2).join('/')
 
-  if (handleDecoded === 'free-pertsev-and-storm') {
-    const url = request.nextUrl
-    url.pathname = `/v2/p/618${trailingPath ? `/${trailingPath}` : ''}`
-    return NextResponse.rewrite(url)
-  }
-
-  if (handleDecoded === 'juicebox') {
-    const url = request.nextUrl
-    url.pathname = `/v2/p/1${trailingPath ? `/${trailingPath}` : ''}`
-    return NextResponse.rewrite(url)
-  }
-
   logger.info('resolving handle', {
     pathname: request.nextUrl.pathname,
     handle: handleDecoded,

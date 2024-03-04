@@ -7,19 +7,17 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": false, //CHANGED TO FALSE, TEMPORARY BECAUSE SUBGRAPH DOWN
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": false, // NEED TO MAKE TRUE, SUBGRAPH RELATED
+    "noEmit": true,
     "jsx": "preserve",
     "incremental": true,
-    "typeRoots": ["node_modules/@types", "src/@types"],
-    "noEmitOnError": false, // NEED TO DELETE THIS, TEMPORARY BECAUSE SUBGRAPH DOWN
-    "noImplicitAny": false // NEED TO DELETE THIS, TEMPORARY BECAUSE SUBGRAPH DOWN
+    "typeRoots": ["node_modules/@types", "src/@types"]
   },
   "include": ["src", "scripts"],
   "exclude": ["node_modules"]

@@ -10,7 +10,7 @@ export const v2v3ProjectRoute = ({
   projectId?: BigNumberish
   handle?: string | null
 }) => {
-  if (handle) return `/@${handle}`
+  console.info('Temporarily unable to use handle: ', handle)
   return `/v2/p/${BigNumber.from(projectId).toNumber()}`
 }
 

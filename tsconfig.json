@@ -14,7 +14,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    "noEmit": false, // NEED TO MAKE TRUE, SUBGRAPH RELATED
     "jsx": "preserve",
     "incremental": true,
     "typeRoots": ["node_modules/@types", "src/@types"],

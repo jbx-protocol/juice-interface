@@ -1,5 +1,4 @@
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
-import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import { useNftCredits } from 'hooks/JB721Delegate/useNftCredits'
 import { useWallet } from 'hooks/Wallet'
@@ -46,6 +45,7 @@ export const ProjectCartContext = createContext<ProjectCartContextType>({
 
 /**
  * Return the sum total of selected NFTs to mint, minus any credits the user has.
+ * @returns The total amount in ETH or USD (not wei!), depending on the selected currency.
  */
 function useNftRewardsTotal({
   selectedNftRewards,
@@ -60,11 +60,8 @@ function useNftRewardsTotal({
   const nftRewards = useContext(NftRewardsContext).nftRewards
 
   const rewardTiers = nftRewards.rewardTiers ?? []
-  const userNftCreditsNumber = parseFloat(
-    formatEther(userNftCredits.data ?? BigNumber.from(0)),
-  )
 
-  let nftRewardsTotal = selectedNftRewards.reduce(
+  const nftRewardsTotalEth = selectedNftRewards.reduce(
     (acc, nft) =>
       acc +
       Number(rewardTiers.find(n => n.id === nft.id)?.contributionFloor ?? 0) *
@@ -72,16 +69,24 @@ function useNftRewardsTotal({
     0,
   )
 
-  if (nftRewardsTotal > 0) {
-    nftRewardsTotal = Math.max(0, nftRewardsTotal - userNftCreditsNumber)
+  // Subtract the user's NFT credits from the total. Never go below 0.
+  if (
+    nftRewardsTotalEth > 0 &&
+    userNftCredits.data &&
+    userNftCredits.data.gt(0)
+  ) {
+    const nftRewardsTotalWei = parseWad(nftRewardsTotalEth)
+    const newTotalWei = nftRewardsTotalWei.sub(userNftCredits.data)
+    const newTotalEth = parseFloat(formatEther(newTotalWei))
+
+    return Math.max(0, newTotalEth)
   }
 
   if (payAmountCurrency === V2V3_CURRENCY_USD) {
-    nftRewardsTotal =
-      converter.weiToUsd(parseWad(nftRewardsTotal))?.toNumber() ?? 0
+    return converter.weiToUsd(parseWad(nftRewardsTotalEth))?.toNumber() ?? 0
   }
 
-  return nftRewardsTotal
+  return nftRewardsTotalEth
 }
 
 export const ProjectCartProvider = ({

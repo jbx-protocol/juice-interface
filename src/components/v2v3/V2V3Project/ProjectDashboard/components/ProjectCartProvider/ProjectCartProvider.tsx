@@ -45,6 +45,7 @@ export const ProjectCartContext = createContext<ProjectCartContextType>({
 
 /**
  * Return the sum total of selected NFTs to mint, minus any credits the user has.
+ * @returns The total amount in ETH or USD (not wei!), depending on the selected currency.
  */
 function useNftRewardsTotal({
   selectedNftRewards,

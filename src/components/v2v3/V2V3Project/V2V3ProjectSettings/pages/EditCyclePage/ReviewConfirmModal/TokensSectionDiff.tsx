@@ -1,8 +1,12 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans, t } from '@lingui/macro'
 import { FundingCycleListItem } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItem'
 import { MintRateValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/TokenListItems/MintRateValue'
 import { ReservedRateValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/TokenListItems/ReservedRateValue'
 import DiffedSplitList from 'components/v2v3/shared/DiffedSplits/DiffedSplitList'
+import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { useContext } from 'react'
+import { deriveNextIssuanceRate } from 'utils/v2v3/fundingCycle'
 import {
   formatDiscountRate,
   formatRedemptionRate,
@@ -17,7 +21,6 @@ export function TokensSectionDiff() {
     sectionHasDiff,
 
     newMintRate,
-    currentMintRate,
     mintRateHasDiff,
 
     newReservedRate,
@@ -48,6 +51,8 @@ export function TokensSectionDiff() {
     tokenSymbolPlural,
   } = useTokensSectionValues()
 
+  const { fundingCycle: currentFundingCycle } = useContext(V2V3ProjectContext)
+
   if (!sectionHasDiff) {
     return (
       <div className={emptySectionClasses}>
@@ -58,11 +63,16 @@ export function TokensSectionDiff() {
 
   const formattedReservedRate = parseFloat(formatReservedRate(newReservedRate))
 
+  const currentMintRateAfterDiscountRateApplied = deriveNextIssuanceRate({
+    weight: BigNumber.from(0),
+    previousFC: currentFundingCycle,
+  })
+
   return (
     <DiffSection
       content={
         <div className="mb-5 flex flex-col gap-3 text-sm">
-          {mintRateHasDiff && currentMintRate && (
+          {mintRateHasDiff && currentMintRateAfterDiscountRateApplied && (
             <FundingCycleListItem
               name={t`Total issuance`}
               value={
@@ -73,7 +83,7 @@ export function TokensSectionDiff() {
               }
               oldValue={
                 <MintRateValue
-                  value={currentMintRate}
+                  value={currentMintRateAfterDiscountRateApplied}
                   tokenSymbol={tokenSymbolPlural}
                 />
               }

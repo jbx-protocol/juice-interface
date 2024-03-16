@@ -1,9 +1,7 @@
-import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+// import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { ReactNode, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useFundingCycleCountdown } from '../hooks/useFundingCycleCountdown'
-
-const RS_PROJECT_ID = 618
 
 type ProjectHeaderCountdownProps = {
   className?: string
@@ -12,7 +10,7 @@ type ProjectHeaderCountdownProps = {
 export const ProjectHeaderCountdown: React.FC<ProjectHeaderCountdownProps> = ({
   className,
 }) => {
-  const { projectId } = useProjectMetadataContext()
+  // const { projectId } = useProjectMetadataContext()
   const { secondsRemaining } = useFundingCycleCountdown()
 
   const { days, hours, minutes, seconds } = useMemo(() => {
@@ -23,7 +21,8 @@ export const ProjectHeaderCountdown: React.FC<ProjectHeaderCountdownProps> = ({
     return { days, hours, minutes, seconds }
   }, [secondsRemaining])
 
-  if (projectId !== RS_PROJECT_ID) return null
+  // Project header countdown is disbaled. We might want to enable it in the future.
+  return null
 
   if (secondsRemaining === 0) return null
 

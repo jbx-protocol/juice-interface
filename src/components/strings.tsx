@@ -231,10 +231,7 @@ export const FEES_EXPLANATION = (
     from all other payouts. This project's owner will receive{' '}
     <Link href={v2v3ProjectRoute({ projectId: 1 })}>JBX</Link> in exchange for
     fees paid.{' '}
-    <ExternalLink href={helpPagePath(`/dao/reference/jbx/`)}>
-      Learn more
-    </ExternalLink>
-    .
+    <ExternalLink href={helpPagePath(`/dao/jbx/`)}>Learn more</ExternalLink>.
   </Trans>
 )
 

@@ -196,7 +196,7 @@ export default function QAs(): {
             <b>Payouts to other Juicebox projects don't incur any fees.</b>
           </p>
           <p>
-            <ExternalLink href={helpPagePath(`/dao/reference/jbx/#about-fees`)}>
+            <ExternalLink href={helpPagePath(`/dao/jbx/#about-fees`)}>
               Learn more about fees
             </ExternalLink>
             .

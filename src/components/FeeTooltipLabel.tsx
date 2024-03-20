@@ -41,7 +41,7 @@ export const FeeTooltipLabel = ({
         <Trans>
           Payouts to Ethereum addresses incur a {feePercentage}% fee. Your
           project will receive JBX in return.{' '}
-          <ExternalLink href={helpPagePath(`/dao/reference/jbx/#about-fees`)}>
+          <ExternalLink href={helpPagePath(`/dao/jbx/#about-fees`)}>
             Learn more
           </ExternalLink>
           .

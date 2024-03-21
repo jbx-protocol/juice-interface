@@ -6,13 +6,12 @@ import {
   Pool,
   FACTORY_ADDRESS as UNISWAP_V3_FACTORY_ADDRESS,
 } from '@uniswap/v3-sdk'
-import { BigNumber, Contract } from 'ethers'
-import { useQuery } from 'react-query'
-
 import { WETH } from 'constants/contracts/tokens'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
+import { BigNumber, Contract } from 'ethers'
+import { useQuery } from 'react-query'
 import { isZeroAddress } from 'utils/address'
 
 interface Immutables {
@@ -52,90 +51,91 @@ const UNISWAP_FEES_BPS = [
 ]
 const networkId = readNetwork.chainId
 
+const factoryContract = new Contract(
+  UNISWAP_V3_FACTORY_ADDRESS,
+  IUniswapV3FactoryABI.abi,
+  readProvider,
+)
+
+/**
+ * Recursively attempts to find liquidty pool at a given [fee].
+ * Recurs through each fee tier until a pool is found.
+ * If no pool is found, return undefined.
+ * @returns contract address of liquidty pool
+ */
+const getPoolAddress = async (
+  tokenAddress: string,
+  fee: number | undefined = UNISWAP_FEES_BPS[0],
+): Promise<string | undefined> => {
+  const poolAddress = await factoryContract.getPool(tokenAddress, WETH, fee)
+
+  if (poolAddress && !isZeroAddress(poolAddress)) {
+    return poolAddress
+  }
+
+  // If we've got no more fees to search on, bail.
+  const feeIdx = UNISWAP_FEES_BPS.findIndex(f => f === fee)
+  if (feeIdx === UNISWAP_FEES_BPS.length - 1) {
+    return undefined
+  }
+
+  return getPoolAddress(tokenAddress, UNISWAP_FEES_BPS[feeIdx + 1])
+}
+
+async function getPoolImmutables(poolContract: Contract) {
+  const [factory, token0, token1, fee, tickSpacing, maxLiquidityPerTick] =
+    await Promise.all([
+      poolContract.factory(),
+      poolContract.token0(),
+      poolContract.token1(),
+      poolContract.fee(),
+      poolContract.tickSpacing(),
+      poolContract.maxLiquidityPerTick(),
+    ])
+
+  const immutables: Immutables = {
+    factory,
+    token0,
+    token1,
+    fee,
+    tickSpacing,
+    maxLiquidityPerTick,
+  }
+
+  return immutables
+}
+
+async function getPoolState(poolContract: Contract) {
+  const [slot, liquidity] = await Promise.all([
+    poolContract.slot0(),
+    poolContract.liquidity(),
+  ])
+  const PoolState: State = {
+    liquidity,
+    sqrtPriceX96: slot[0],
+    tick: slot[1],
+    observationIndex: slot[2],
+    observationCardinality: slot[3],
+    observationCardinalityNext: slot[4],
+    feeProtocol: slot[5],
+    unlocked: slot[6],
+  }
+
+  return PoolState
+}
+
 /**
  * Hook to fetch the Uniswap price for a given token.
  * Uniswap-related code inspired by https://docs.uniswap.org/sdk/guides/fetching-prices.
  */
 export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
-  const factoryContract = new Contract(
-    UNISWAP_V3_FACTORY_ADDRESS,
-    IUniswapV3FactoryABI.abi,
-    readProvider,
-  )
-
-  /**
-   * Recursively attempts to find liquidty pool at a given [fee].
-   * Recurs through each fee tier until a pool is found.
-   * If no pool is found, return undefined.
-   * @returns contract address of liquidty pool
-   */
-  const getPoolAddress = async (
-    fee: number | undefined = UNISWAP_FEES_BPS[0],
-  ): Promise<string | undefined> => {
-    const poolAddress = await factoryContract.getPool(tokenAddress, WETH, fee)
-
-    if (poolAddress && !isZeroAddress(poolAddress)) {
-      return poolAddress
-    }
-
-    // If we've got no more fees to search on, bail.
-    const feeIdx = UNISWAP_FEES_BPS.findIndex(f => f === fee)
-    if (feeIdx === UNISWAP_FEES_BPS.length - 1) {
-      return undefined
-    }
-
-    return getPoolAddress(UNISWAP_FEES_BPS[feeIdx + 1])
-  }
-
-  async function getPoolImmutables(poolContract: Contract) {
-    const [factory, token0, token1, fee, tickSpacing, maxLiquidityPerTick] =
-      await Promise.all([
-        poolContract.factory(),
-        poolContract.token0(),
-        poolContract.token1(),
-        poolContract.fee(),
-        poolContract.tickSpacing(),
-        poolContract.maxLiquidityPerTick(),
-      ])
-
-    const immutables: Immutables = {
-      factory,
-      token0,
-      token1,
-      fee,
-      tickSpacing,
-      maxLiquidityPerTick,
-    }
-
-    return immutables
-  }
-
-  async function getPoolState(poolContract: Contract) {
-    const [slot, liquidity] = await Promise.all([
-      poolContract.slot0(),
-      poolContract.liquidity(),
-    ])
-    const PoolState: State = {
-      liquidity,
-      sqrtPriceX96: slot[0],
-      tick: slot[1],
-      observationIndex: slot[2],
-      observationCardinality: slot[3],
-      observationCardinalityNext: slot[4],
-      feeProtocol: slot[5],
-      unlocked: slot[6],
-    }
-
-    return PoolState
-  }
-
   return useQuery(
-    [`${tokenSymbol}-uniswap-price`],
+    ['uniswap-price', tokenSymbol, tokenAddress],
     async () => {
       if (!tokenAddress || !tokenSymbol) return null
 
       try {
-        const poolAddress = await getPoolAddress()
+        const poolAddress = await getPoolAddress(tokenAddress)
         if (!poolAddress) {
           throw new Error('No liquidity pool found.')
         }

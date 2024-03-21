@@ -1,5 +1,5 @@
 import { readProvider } from 'constants/readProvider'
-import { useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
 
 /**
  * Get the chain height, or a block number at a specific heigh from the chain height.
@@ -11,13 +11,8 @@ export function useBlockNumber({
 }: {
   behindChainHeight?: number
 }) {
-  const [blockNumber, setBlockNumber] = useState<number>()
-
-  useEffect(() => {
-    readProvider
-      .getBlockNumber()
-      .then(val => setBlockNumber(val - (behindChainHeight ?? 0)))
-  }, [behindChainHeight])
-
-  return blockNumber
+  return useQuery(['blockNumber', behindChainHeight], async () => {
+    const blockNumber = await readProvider.getBlockNumber()
+    return blockNumber - (behindChainHeight ?? 0)
+  })
 }

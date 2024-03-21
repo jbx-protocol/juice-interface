@@ -32,7 +32,7 @@ export function DownloadParticipantsModal({
   const [loading, setLoading] = useState<boolean>()
 
   // Use block number 5 blocks behind chain head to allow for subgraph being a bit behind on indexing.
-  const latestBlockNumber = useBlockNumber({ behindChainHeight: 5 })
+  const { data: latestBlockNumber } = useBlockNumber({ behindChainHeight: 5 })
 
   useEffect(() => {
     setBlockNumber(latestBlockNumber)

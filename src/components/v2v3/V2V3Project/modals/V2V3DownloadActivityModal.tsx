@@ -18,7 +18,7 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
   const [blockNumber, setBlockNumber] = useState<number>()
 
   // Use block number 5 blocks behind chain head to allow for subgraph being a bit behind on indexing.
-  const latestBlockNumber = useBlockNumber({ behindChainHeight: 5 })
+  const { data: latestBlockNumber } = useBlockNumber({ behindChainHeight: 5 })
 
   useEffect(() => {
     setBlockNumber(latestBlockNumber)

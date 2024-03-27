@@ -24,12 +24,14 @@ export const FormImageUploader = ({
   text?: string
 }) => {
   const [loadingUpload, setLoadingUpload] = useState<boolean>(false)
-  const [imageCid, setImageCid] = useState<string | undefined>(
+  const [_imageCid, _setImageCid] = useState<string | undefined>(
     value ? cidFromIpfsUri(value) : undefined,
   )
 
+  const imageCid = value ? cidFromIpfsUri(value) : _imageCid
+
   const setValue = (cid?: string) => {
-    setImageCid(cid)
+    _setImageCid(cid)
     // storing images in `ipfs://` format where possible (see issue #1726)
     const url = cid ? ipfsUri(cid) : undefined
     onChange?.(url)

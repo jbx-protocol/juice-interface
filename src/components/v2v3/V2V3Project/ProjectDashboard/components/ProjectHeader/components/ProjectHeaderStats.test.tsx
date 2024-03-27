@@ -37,6 +37,7 @@ const MOCK_PROJECT_HEADER_DATA: ProjectHeaderData = {
   last7DaysPercent: 69,
   gnosisSafe: undefined,
   archived: false,
+  createdAtSeconds: 420,
 }
 
 describe('ProjectHeaderStats', () => {

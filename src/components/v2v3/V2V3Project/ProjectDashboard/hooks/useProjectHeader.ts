@@ -19,6 +19,7 @@ export interface ProjectHeaderData {
   last7DaysPercent: number
   gnosisSafe: GnosisSafe | undefined | null
   archived: boolean | undefined
+  createdAtSeconds: number | undefined
 }
 
 export const useProjectHeader = (): ProjectHeaderData => {
@@ -29,6 +30,7 @@ export const useProjectHeader = (): ProjectHeaderData => {
     totalVolume,
     trendingVolume,
     paymentsCount,
+    createdAt,
   } = useContext(V2V3ProjectContext)
   const last7DaysPercent = useProjectTrendingPercentageIncrease({
     totalVolume: totalVolume ?? BigNumber.from(0),
@@ -50,5 +52,6 @@ export const useProjectHeader = (): ProjectHeaderData => {
     last7DaysPercent,
     gnosisSafe,
     archived: projectMetadata?.archived,
+    createdAtSeconds: createdAt,
   }
 }

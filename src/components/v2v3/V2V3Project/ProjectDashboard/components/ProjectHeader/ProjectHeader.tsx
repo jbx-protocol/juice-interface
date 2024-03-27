@@ -128,7 +128,10 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
                 )}
               </span>
               {createdAt ? (
-                <div className="mt-2">Project since {createdAt}</div>
+                <>
+                  <Divider className="mx-4" type="vertical" />
+                  <span>Created {createdAt}</span>
+                </>
               ) : null}
             </div>
           </div>

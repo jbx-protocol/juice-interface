@@ -33,11 +33,21 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
     owner,
     gnosisSafe,
     archived,
+    createdAtSeconds,
   } = useProjectHeader()
   const isMobile = useMobile()
   const canReconfigure = useV2V3WalletHasPermission(
     V2V3OperatorPermission.RECONFIGURE,
   )
+
+  // convert createdAtSeconds to date string Month DD, YYYY in local time
+  const createdAt = createdAtSeconds
+    ? new Date(createdAtSeconds * 1000).toLocaleDateString(undefined, {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      })
+    : undefined
 
   return (
     <div className={twMerge('relative flex w-full flex-col', className)}>
@@ -117,6 +127,9 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
                   />
                 )}
               </span>
+              {createdAt ? (
+                <div className="mt-2">Project since {createdAt}</div>
+              ) : null}
             </div>
           </div>
 

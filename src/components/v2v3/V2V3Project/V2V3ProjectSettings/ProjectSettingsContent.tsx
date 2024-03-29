@@ -11,6 +11,7 @@ import { isZeroAddress } from 'utils/address'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { ArchiveProjectSettingsPage } from './pages/ArchiveProjectSettingsPage/ArchiveProjectSettingsPage'
+import { CreateErc20TokenSettingsPage } from './pages/CreateErc20TokenSettingsPage'
 import { EditCyclePage } from './pages/EditCyclePage/EditCyclePage'
 import { EditNftsPage } from './pages/EditNftsPage/EditNftsPage'
 import { GovernanceSettingsPage } from './pages/GovernanceSettingsPage/GovernanceSettingsPage'
@@ -40,6 +41,7 @@ const SettingsPageComponents: {
   upgrades: ProjectUpgradesPage,
   projectnft: ProjectNftSettingsPage,
   heldfees: ProcessHeldFeesPage,
+  createerc20: CreateErc20TokenSettingsPage,
 }
 
 const V2V3SettingsPageKeyTitleMap = (
@@ -60,6 +62,7 @@ const V2V3SettingsPageKeyTitleMap = (
   upgrades: t`Project upgrades`,
   projectnft: t`Project NFT theme`,
   heldfees: t`Process held fees`,
+  createerc20: t`Create ERC-20 token`,
 })
 
 function Breadcrumbs({

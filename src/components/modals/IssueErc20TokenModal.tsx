@@ -116,8 +116,8 @@ export function IssueErc20TokenModal({
         </Form.Item>
         <Form.Item
           name="symbol"
-          label={t`Token symbol`}
-          rules={[{ required: true, message: t`Token symbol is required` }]}
+          label={t`Token ticker`}
+          rules={[{ required: true, message: t`Token ticker is required` }]}
         >
           <Input
             placeholder="PRJ"

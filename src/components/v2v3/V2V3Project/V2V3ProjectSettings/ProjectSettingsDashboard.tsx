@@ -8,10 +8,13 @@ import { useDistributableAmount } from 'components/v2v3/V2V3Project/ProjectDashb
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
+import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
+import { useProjectHasErc20Token } from '../ProjectDashboard/hooks/useProjectHasErc20Token'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 
@@ -29,6 +32,7 @@ export type V2V3SettingsPageKey =
   | 'upgrades'
   | 'projectnft'
   | 'heldfees'
+  | 'createerc20'
 
 function SettingsCard({ children }: { children: React.ReactNode }) {
   return (
@@ -66,6 +70,12 @@ export function ProjectSettingsDashboard() {
   const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
 
   const { distributableAmount, currency } = useDistributableAmount()
+  const projectHasErc20Token = useProjectHasErc20Token()
+  const hasIssueTicketsPermission = useV2V3WalletHasPermission(
+    V2V3OperatorPermission.ISSUE,
+  )
+
+  const canCreateErc20Token = !projectHasErc20Token && hasIssueTicketsPermission
 
   return (
     <ProjectSettingsLayout>
@@ -180,6 +190,13 @@ export function ProjectSettingsDashboard() {
             subtitle={<Trans>Extended functionality for project owners</Trans>}
           >
             <ul>
+              {canCreateErc20Token && (
+                <li>
+                  <Link href={useSettingsPagePath('createerc20')}>
+                    <Trans>Create ERC-20 Token</Trans>
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link href={useSettingsPagePath('tokenmigration')}>
                   <Trans>Token migration</Trans>

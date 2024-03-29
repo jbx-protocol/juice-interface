@@ -28,6 +28,7 @@ export const TokensPanel = () => {
     userV1ClaimedBalance,
     projectToken,
     totalSupply,
+    projectHasErc20Token,
   } = useTokensPanel()
 
   const [tokenHolderModalOpen, setTokenHolderModalOpen] = useState(false)
@@ -69,16 +70,18 @@ export const TokensPanel = () => {
                 <span className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
                   <Trans>{userTokenBalance} tokens</Trans>
                   <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center md:gap-4">
-                    <Button
-                      className="p-0 text-start md:text-end"
-                      type="link"
-                      size="small"
-                      onClick={() => {
-                        setClaimTokensModalVisible(true)
-                      }}
-                    >
-                      <Trans>Claim ERC-20 token</Trans>
-                    </Button>
+                    {projectHasErc20Token && (
+                      <Button
+                        className="p-0 text-start md:text-end"
+                        type="link"
+                        size="small"
+                        onClick={() => {
+                          setClaimTokensModalVisible(true)
+                        }}
+                      >
+                        <Trans>Claim ERC-20 token</Trans>
+                      </Button>
+                    )}
                     <RedeemTokensButton
                       containerClassName="w-full md:w-fit"
                       className="h-12 w-full md:h-10"

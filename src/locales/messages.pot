@@ -1427,9 +1427,6 @@ msgstr ""
 msgid "Juicecrowd intro video"
 msgstr ""
 
-msgid "Token symbol"
-msgstr ""
-
 msgid "Limited"
 msgstr ""
 
@@ -2981,6 +2978,9 @@ msgstr ""
 msgid "Collection details"
 msgstr ""
 
+msgid "Token ticker is required"
+msgstr ""
+
 msgid "Request a feature."
 msgstr ""
 
@@ -3405,9 +3405,6 @@ msgid "Sum of percentages cannot exceed 100%."
 msgstr ""
 
 msgid "No payouts remaining for this cycle."
-msgstr ""
-
-msgid "Token symbol is required"
 msgstr ""
 
 msgid "Set controller"
@@ -4359,6 +4356,9 @@ msgid "Data from upcoming cycle"
 msgstr ""
 
 msgid "I understand and accept this project's notice and the <0>risks</0> associated with the Juicebox protocol."
+msgstr ""
+
+msgid "Token ticker"
 msgstr ""
 
 msgid "Visit jbdao.org"

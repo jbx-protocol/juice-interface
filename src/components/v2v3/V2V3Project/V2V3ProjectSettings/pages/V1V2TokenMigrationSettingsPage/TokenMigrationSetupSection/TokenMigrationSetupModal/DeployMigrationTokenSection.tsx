@@ -135,7 +135,7 @@ export function DeployMigrationTokenSection({
           <JuiceInput />
         </Form.Item>
         <Form.Item
-          label={t`Token symbol`}
+          label={t`Token ticker`}
           name="tokenSymbol"
           rules={[{ required: true }]}
         >

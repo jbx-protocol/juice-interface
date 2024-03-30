@@ -14,7 +14,7 @@ export default function ProjectLink({
       label={hideLabel ? undefined : t`Website`}
       {...formItemProps}
     >
-      <Input type="text" autoComplete="off" />
+      <Input type="text" autoComplete="off" prefix="https://" />
     </Form.Item>
   )
 }

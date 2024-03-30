@@ -86,7 +86,7 @@ export function ProjectDetailsForm({
             rules={[
               inputIsLengthRule({
                 label: t`Tagline`,
-                max: 48,
+                max: 100,
               }),
             ]}
           >

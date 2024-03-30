@@ -14,7 +14,7 @@ export default function ProjectDiscord({
       label={hideLabel ? undefined : t`Discord link`}
       {...formItemProps}
     >
-      <Input type="url" autoComplete="off" />
+      <Input type="url" autoComplete="off" prefix="https://" />
     </Form.Item>
   )
 }

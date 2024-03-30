@@ -10,6 +10,7 @@ import { useEditProjectDetailsTx } from 'hooks/v2v3/transactor/useEditProjectDet
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
 import { useCallback, useContext, useEffect, useState } from 'react'
+import { withoutHttps } from 'utils/http'
 import { emitInfoNotification } from 'utils/notifications'
 
 export function ProjectDetailsSettingsPage() {
@@ -91,9 +92,12 @@ export function ProjectDetailsSettingsPage() {
   ])
 
   const resetProjectForm = useCallback(() => {
+    const infoUri = withoutHttps(projectMetadata?.infoUri ?? '')
+    const discord = withoutHttps(projectMetadata?.discord ?? '')
+    const telegram = withoutHttps(projectMetadata?.telegram ?? '')
     projectForm.setFieldsValue({
       name: projectMetadata?.name ?? '',
-      infoUri: projectMetadata?.infoUri ?? '',
+      infoUri,
       logoUri: projectMetadata?.logoUri ?? '',
       coverImageUri: projectMetadata?.coverImageUri ?? '',
       description: projectMetadata?.description ?? '',
@@ -101,8 +105,8 @@ export function ProjectDetailsSettingsPage() {
       projectRequiredOFACCheck:
         projectMetadata?.projectRequiredOFACCheck ?? false,
       twitter: projectMetadata?.twitter ?? '',
-      discord: projectMetadata?.discord ?? '',
-      telegram: projectMetadata?.telegram ?? '',
+      discord,
+      telegram,
       payButton: projectMetadata?.payButton ?? '',
       payDisclosure: projectMetadata?.payDisclosure ?? '',
       tags: projectMetadata?.tags ?? [],

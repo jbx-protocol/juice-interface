@@ -2,7 +2,7 @@ import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hoo
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { useWallet } from 'hooks/Wallet'
 import { useCallback, useContext, useMemo } from 'react'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 
 export const useCartSummary = () => {
   const { isConnected, connect } = useWallet()

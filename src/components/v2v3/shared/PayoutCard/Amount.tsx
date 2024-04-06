@@ -3,8 +3,8 @@ import { Parenthesis } from 'components/Parenthesis'
 import { Allocation } from 'components/v2v3/shared/Allocation/Allocation'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { useMemo } from 'react'
+import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { formatPercent } from 'utils/format/formatPercent'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 
 export const Amount = ({
   allocationId, // if undefined, assume owner

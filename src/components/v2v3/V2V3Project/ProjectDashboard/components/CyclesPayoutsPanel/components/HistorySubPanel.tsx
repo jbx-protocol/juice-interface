@@ -11,8 +11,8 @@ import moment from 'moment'
 import { Fragment, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { isBigNumberish } from 'utils/bigNumbers'
+import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad } from 'utils/format/formatNumber'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import {
   sgFCToV2V3FundingCycle,
   sgFCToV2V3FundingCycleMetadata,

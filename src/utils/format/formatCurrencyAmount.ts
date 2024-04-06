@@ -1,7 +1,11 @@
-import { CURRENCY_METADATA } from 'constants/currency'
+import {
+  CURRENCY_METADATA,
+  PRECISION_ETH,
+  PRECISION_USD,
+} from 'constants/currency'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { formatAmount, formatAmountWithScale } from './format/formatAmount'
-import { V2V3CurrencyName, V2V3_CURRENCY_ETH } from './v2v3/currency'
+import { V2V3CurrencyName, V2V3_CURRENCY_ETH } from '../v2v3/currency'
+import { formatAmount, formatAmountWithScale } from './formatAmount'
 
 /**
  * Format the input amount with the currency.
@@ -27,7 +31,13 @@ export const formatCurrencyAmount = ({
   if (withScale) {
     formattedAmount = amount !== undefined ? formatAmountWithScale(amount) : '0'
   } else {
-    formattedAmount = amount !== undefined ? formatAmount(amount) : '0'
+    formattedAmount =
+      amount !== undefined
+        ? formatAmount(amount, {
+            maximumFractionDigits:
+              currency === V2V3_CURRENCY_ETH ? PRECISION_ETH : PRECISION_USD,
+          })
+        : '0'
   }
   return `${currencyMetadata.symbol}${formattedAmount}`
 }

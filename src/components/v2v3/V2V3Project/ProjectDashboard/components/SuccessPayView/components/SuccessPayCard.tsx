@@ -7,7 +7,7 @@ import useMobile from 'hooks/useMobile'
 import moment from 'moment'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { ProjectHeaderLogo } from '../../ProjectHeader/components/ProjectHeaderLogo'
 
 export const SuccessPayCard = ({ className }: { className?: string }) => {

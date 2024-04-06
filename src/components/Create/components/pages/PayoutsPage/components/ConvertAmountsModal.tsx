@@ -13,9 +13,9 @@ import {
   ReduxDistributionLimit,
   useEditingDistributionLimit,
 } from 'redux/hooks/useEditingDistributionLimit'
+import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { helpPagePath } from 'utils/routes'
 import { isProjectSplit } from 'utils/splits'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'

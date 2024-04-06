@@ -8,9 +8,19 @@ describe('formatAmount', () => {
     [1234567890, '1,234,567,890'],
     [1234567890.123, '1,234,567,890.12'],
     ['1234567890.123', '1,234,567,890.12'],
+    ['0.0015', '0.0015'],
   ])('formatAmount(%s) returns %s', (input, expected) => {
     expect(formatAmount(input)).toEqual(expected)
   })
+})
+
+describe('formatAmount', () => {
+  it.each([['0.015', 6, '0.015']])(
+    'formatAmount(%s) with maximumFractionDigits=%s returns %s',
+    (input, maximumFractionDigits, expected) => {
+      expect(formatAmount(input, { maximumFractionDigits })).toEqual(expected)
+    },
+  )
 })
 
 describe('formatAmountWithScale', () => {

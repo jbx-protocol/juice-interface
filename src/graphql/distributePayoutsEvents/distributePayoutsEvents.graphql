@@ -1,0 +1,55 @@
+query DistributePayoutsEvents(
+  $where: DistributePayoutsEvent_filter
+  $orderBy: DistributePayoutsEvent_orderBy
+  $orderDirection: OrderDirection
+  $first: Int
+  $skip: Int
+) {
+  distributePayoutsEvents(
+    where: $where
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    first: $first
+    skip: $skip
+  ) {
+    txHash
+    amount
+    amountUSD
+    beneficiary
+    beneficiaryDistributionAmount
+    beneficiaryDistributionAmountUSD
+    caller
+    from
+    projectId
+    splitDistributions {
+      beneficiary
+      amount
+      amountUSD
+      allocator
+      caller
+      domain
+      from
+      group
+      id
+      lockedUntil
+      percent
+      preferAddToBalance
+      preferClaimed
+      projectId
+      splitProjectId
+      terminal
+      timestamp
+      txHash
+    }
+    distributedAmount
+    distributedAmountUSD
+    fee
+    feeUSD
+    fundingCycleConfiguration
+    fundingCycleNumber
+    id
+    memo
+    terminal
+    timestamp
+  }
+}

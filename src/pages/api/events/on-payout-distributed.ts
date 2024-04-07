@@ -2,7 +2,10 @@ import { BigNumber, utils } from 'ethers'
 import {
   DistributePayoutsEventsDocument,
   DistributePayoutsEventsQuery,
+  ProjectsDocument,
+  ProjectsQuery,
   QueryDistributePayoutsEventsArgs,
+  QueryProjectsArgs,
 } from 'generated/graphql'
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
@@ -15,13 +18,15 @@ import moment from 'moment'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { distributePayoutEmailTemplate } from 'templates/email/payments'
 import { truncateEthAddress } from 'utils/format/formatAddress'
+import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import { getProjectMetadata } from 'utils/server/metadata'
+import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import * as Yup from 'yup'
 
 const JUICE_API_EVENTS_ENABLED = process.env.JUICE_API_EVENTS_ENABLED === 'true'
 
-const logger = getLogger('api/events/on-pay')
+const logger = getLogger('api/events/on-payout-distributed')
 
 type EmailEvent = {
   email: string
@@ -37,6 +42,7 @@ type EmailMetadata = {
   recipients: {
     name: string
     amount: string
+    href: string
   }[]
   // Used in transaction receipt
   transactionUrl: string | undefined
@@ -64,38 +70,64 @@ const Schema = Yup.object().shape({
   }),
 })
 
+// TODO: Get project image or address ens image
 const splitDistributionToRecipient = async ({
   beneficiary,
+  splitProjectId,
   amount,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   beneficiary: any
+  splitProjectId: number
   amount: BigNumber
 }) => {
-  const normalizedRecipientAddress = utils.getAddress(beneficiary)
-  const { name: recipientEnsName } = await resolveAddressEnsIdeas(
-    normalizedRecipientAddress,
-  )
-  const recipientName =
-    recipientEnsName ??
-    truncateEthAddress({ address: normalizedRecipientAddress })
+  let recipientName = '??'
+  let href = '#'
+  if (splitProjectId) {
+    const project = await queryProject(splitProjectId)
+    if (project) {
+      recipientName = project.handle
+        ? `@${project.handle}`
+        : `Project ID: ${splitProjectId}`
+      href = `https://juicebox.money/v2/p/${splitProjectId}`
+    }
+  } else {
+    const normalizedRecipientAddress = utils.getAddress(beneficiary)
+    const { name: recipientEnsName } = await resolveAddressEnsIdeas(
+      normalizedRecipientAddress,
+    )
+    recipientName =
+      recipientEnsName ??
+      truncateEthAddress({ address: normalizedRecipientAddress })
+    href = `https://juicebox.money/account/${normalizedRecipientAddress}`
+  }
   const am = fromWad(amount.toString())
+  const formattedAmount = formatCurrencyAmount({
+    amount: am,
+    currency: V2V3_CURRENCY_ETH,
+  })!
   return {
     name: recipientName,
-    amount: am,
+    amount: formattedAmount,
+    href,
   }
 }
 
 const compileEmailMetadata = async ({
   transactionHash,
-  amount,
+  distributedAmount,
   from,
   projectId,
   splitDistributions,
 }: DistributePayoutsEventsQuery['distributePayoutsEvents'][0] & {
   transactionHash: string
 }): Promise<EmailMetadata> => {
-  const formattedAmount = fromWad(amount.toString())
+  // TODO: Support USD?
+  const amount = fromWad(distributedAmount.toString())
+  const formattedAmount = formatCurrencyAmount({
+    amount,
+    currency: V2V3_CURRENCY_ETH,
+  })!
   const normalizedPayerAddress = utils.getAddress(from)
   const { name: payerEnsName } = await resolveAddressEnsIdeas(
     normalizedPayerAddress,
@@ -115,7 +147,7 @@ const compileEmailMetadata = async ({
       projectName = projectMetadata.name
     }
   } catch (e) {
-    console.error('failed to get project name', {
+    logger.error('failed to get project name', {
       projectId: projectId.toString(),
       e,
     })
@@ -172,7 +204,7 @@ const sendEmails = async (
   )
 
   logger.info({
-    message: 'broadcasted payment-received email',
+    message: 'broadcasted payout-distributed email',
     messageIds: res.map(r => r.MessageID),
   })
 }
@@ -221,6 +253,20 @@ const findEmailEventsForProjectId = async (
   })
 }
 
+const queryProject = async (projectId: number) => {
+  const { data } = await client.query<ProjectsQuery, QueryProjectsArgs>({
+    query: ProjectsDocument,
+    variables: {
+      where: {
+        projectId: projectId,
+        pv: '2',
+      },
+    },
+  })
+  if (data.projects.length === 0) return undefined
+  return data.projects[0]
+}
+
 const queryDistributePayoutEvent = async (transactionHash: string) => {
   const { data } = await client.query<
     DistributePayoutsEventsQuery,
@@ -243,6 +289,7 @@ const MAX_RETRIES = 3 as const
 const MAX_RETRY_TIME = 60_000 as const
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  let respondedToClient = false
   try {
     if (req.method !== 'POST' || !JUICE_API_EVENTS_ENABLED) {
       return res.status(404).json({ message: 'Not found.' })
@@ -252,7 +299,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const requestData = await Schema.validate(req.body)
 
     // Immediately respond to the request
+    res.write('Processing...')
     res.end()
+    respondedToClient = true
 
     let event
     let retries = 0
@@ -266,16 +315,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }
       retries += 1
       if (retries < MAX_RETRIES) {
-        console.warn(
-          `Retrying to find pay event - {${retries} / ${MAX_RETRIES}`,
-        )
+        logger.warn(`Retrying to find pay event - {${retries} / ${MAX_RETRIES}`)
         await new Promise(resolve =>
           setTimeout(resolve, MAX_RETRY_TIME / MAX_RETRIES),
         )
       }
     }
     if (!event) {
-      console.error('Failed to find pay event')
+      logger.error('Failed to find distributed pay event')
       return
     }
 
@@ -287,12 +334,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const emailEvents = await findEmailEventsForProjectId(
       Number(event.projectId),
     )
+    logger.info({
+      message: 'Found email events for project',
+      projectId: event.projectId,
+      emailEvents,
+    })
 
     await sendEmails(emailMetadata, emailEvents)
-
-    return res.status(200).json('Success!')
+    logger.info({
+      message: 'Successfully sent payout distribution emails',
+      projectId: event.projectId,
+    })
   } catch (e) {
     logger.error({ error: e })
+    if (respondedToClient) return
     return res
       .status(500)
       .json({ message: 'Unexpected server error occurred.' })

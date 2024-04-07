@@ -7,6 +7,7 @@ type DistributePayoutTemplateData = {
   recipients: {
     name: string
     amount: string
+    href: string
   }[]
 } & PaymentTemplateData
 
@@ -59,6 +60,10 @@ const template = `
 
       .bg-primary {
       background-color: #5777eb;
+      }
+
+      .pb-8 {
+      padding-bottom: 32px !important;
       }
 
       .text-secondary {
@@ -154,7 +159,7 @@ const template = `
           <p>There has been some recent activity on a Juicebox project you're subscribed to.</p>
         </mj-text>
 
-        <mj-table css-class="rounded-2xl bg-card">
+        <mj-table css-class="rounded-2xl bg-card pb-8">
           <tr>
             <td style="padding: 12px">
               <h1 class="text-3xl">{{ project_name }}</h1>
@@ -177,9 +182,9 @@ const template = `
           {{#recipients}}
           <tr style>
             <td style="padding-left: 12px">
-              {{ name }}
+              <a href="{{ href }}">{{ name }}</a>
             </td>
-            <td style="padding-left: 12px">
+            <td style="padding-right: 12px; text-align: end">
               {{ amount }} ETH
             </td>
           </tr>

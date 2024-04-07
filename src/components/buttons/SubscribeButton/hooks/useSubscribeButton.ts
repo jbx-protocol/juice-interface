@@ -69,13 +69,10 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
           userId,
         })
         if (!notifications?.length) {
-          const { error } = await supabase.from('user_subscriptions').insert([
-            {
-              user_id: _session.user.id,
-              project_id: projectId,
-              notification_id: ProjectNotification.ProjectPaid,
-            },
-          ])
+          const subscriptions = generateUserSubscriptions(userId, projectId)
+          const { error } = await supabase
+            .from('user_subscriptions')
+            .insert(subscriptions)
           if (error) throw error
           setIsSubscribed(true)
         } else {
@@ -84,7 +81,9 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
             .delete()
             .eq('user_id', userId)
             .eq('project_id', projectId)
-            .eq('notification_id', ProjectNotification.ProjectPaid)
+            .or(
+              'notification_id.eq.project_paid,notification_id.eq.payouts_distributed',
+            )
           if (error) throw error
           setIsSubscribed(false)
         }
@@ -160,4 +159,18 @@ export const useSubscribeButton = ({ projectId }: { projectId: number }) => {
     isSubscribed,
     onSubscribeButtonClicked,
   }
+}
+
+const generateUserSubscriptions = (userId: string, projectId: number) => {
+  const base = {
+    user_id: userId,
+    project_id: projectId,
+  }
+  return [
+    ProjectNotification.ProjectPaid,
+    ProjectNotification.PayoutsDistributed,
+  ].map(notification_id => ({
+    ...base,
+    notification_id,
+  }))
 }

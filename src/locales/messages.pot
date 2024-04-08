@@ -689,9 +689,6 @@ msgstr ""
 msgid "No deadline"
 msgstr ""
 
-msgid "Enable set payment terminal"
-msgstr ""
-
 msgid "Your project is up to date!"
 msgstr ""
 
@@ -2180,6 +2177,9 @@ msgstr ""
 msgid "Your project can still receive payments directly through the Juicebox protocol contracts."
 msgstr ""
 
+msgid "Enable payment terminal configurations"
+msgstr ""
+
 msgid "Juicebox native"
 msgstr ""
 
@@ -2319,6 +2319,9 @@ msgid "A project name"
 msgstr ""
 
 msgid "Telegram"
+msgstr ""
+
+msgid "Enable controller migrations"
 msgstr ""
 
 msgid "StudioDAO is a decentralized movie studio flipping the script on how films get funded. By combining the power of collective action with NFTs tied to programmable treasuries, StudioDAO gives audiences a platform to vote on which films they want to fund and watch while giving filmmakers new opportunities to get their projects funded."
@@ -2549,6 +2552,9 @@ msgstr ""
 msgid "Since launching in November 2022 StudioDAO has raised nearly 50 ETH and is gearing up to launch their first film *Ticket to Space*, the first DAO documentary about MoonDAO sending DAO member Yan Kejun to space on a Blue Origin rocket. MoonDAO has recently voted to donate $100,000 to help fund the film's production. To learn more about the Ticket to Space documentary, listen to episode 22 of the Juicebox podcast featuring a roundtable discussion with director Fernando Urdapilleta, producer Susie Conley, MoonDAO co-founder Pablo Moncada-Larrotiz, and StudioDAO co-founders Kenny Miller and Rachel Leventhal: <0>https://podcast.juicebox.money</0>."
 msgstr ""
 
+msgid "Enable payment terminal migrations"
+msgstr ""
+
 msgid "You would receive at least <0/>"
 msgstr ""
 
@@ -2690,6 +2696,9 @@ msgstr ""
 msgid "Your project's current cycle has no duration. Edits you make below will take effect immediately."
 msgstr ""
 
+msgid "Enable controller configurations"
+msgstr ""
+
 msgid "When checked, payments made through this address will mint the project's ERC-20 tokens. Payments will incur slightly higher gas fees. When unchecked, the Juicebox protocol will internally track the beneficiary's tokens, and they can claim their ERC-20 tokens at any time."
 msgstr ""
 
@@ -2709,6 +2718,9 @@ msgid "See the NFTs and rewards offered by this project."
 msgstr ""
 
 msgid "Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
+msgstr ""
+
+msgid "Enable controller config"
 msgstr ""
 
 msgid "Recipients will recieve payouts in ETH"
@@ -3465,9 +3477,6 @@ msgid "Connect"
 msgstr ""
 
 msgid "Contract permissions"
-msgstr ""
-
-msgid "Enable set controller"
 msgstr ""
 
 msgid "Project configurations cannot be changed to the duration of locked cycles."
@@ -4470,6 +4479,9 @@ msgid "Zero"
 msgstr ""
 
 msgid "Latest"
+msgstr ""
+
+msgid "Enable payment terminal config"
 msgstr ""
 
 msgid "Custom metadata resolvers replace the default metadata above. They must conform to the <0>IJBTokenUriResolver</0> interface."

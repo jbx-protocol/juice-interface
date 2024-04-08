@@ -41,6 +41,24 @@ export const useDetailsSectionValues = () => {
   )
   const allowSetTerminalsHasDiff = currentSetTerminals !== newSetTerminals
 
+  const newAllowTerminalMigration = Boolean(
+    editCycleForm?.getFieldValue('allowTerminalMigration'),
+  )
+  const currentAllowTerminalMigration = Boolean(
+    currentFundingCycleMetadata?.allowTerminalMigration,
+  )
+  const allowTerminalMigrationHasDiff =
+    currentAllowTerminalMigration !== newAllowTerminalMigration
+
+  const newAllowControllerMigration = Boolean(
+    editCycleForm?.getFieldValue('allowControllerMigration'),
+  )
+  const currentAllowControllerMigration = Boolean(
+    currentFundingCycleMetadata?.allowControllerMigration,
+  )
+  const allowControllerMigrationHasDiff =
+    currentAllowControllerMigration !== newAllowControllerMigration
+
   const newSetController = Boolean(
     editCycleForm?.getFieldValue('allowSetController'),
   )
@@ -50,7 +68,11 @@ export const useDetailsSectionValues = () => {
   const allowSetControllerHasDiff = currentSetController !== newSetController
 
   const advancedOptionsHasDiff =
-    pausePayHasDiff || allowSetTerminalsHasDiff || allowSetControllerHasDiff
+    pausePayHasDiff ||
+    allowSetTerminalsHasDiff ||
+    allowSetControllerHasDiff ||
+    allowControllerMigrationHasDiff ||
+    allowTerminalMigrationHasDiff
 
   const sectionHasDiff =
     durationHasDiff || ballotHasDiff || advancedOptionsHasDiff
@@ -71,6 +93,14 @@ export const useDetailsSectionValues = () => {
     newSetTerminals,
     currentSetTerminals,
     allowSetTerminalsHasDiff,
+
+    newAllowTerminalMigration,
+    currentAllowTerminalMigration,
+    allowTerminalMigrationHasDiff,
+
+    newAllowControllerMigration,
+    currentAllowControllerMigration,
+    allowControllerMigrationHasDiff,
 
     newSetController,
     currentSetController,

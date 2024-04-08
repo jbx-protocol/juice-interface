@@ -86,6 +86,8 @@ export const usePrepareSaveEditCycleData = () => {
         ? false
         : true,
       useDataSourceForRedeem: formValues.useDataSourceForRedeem,
+      allowControllerMigration: formValues.allowControllerMigration,
+      allowTerminalMigration: formValues.allowTerminalMigration,
     }
 
   const editingFundingCycleData: V2V3FundingCycleData = {

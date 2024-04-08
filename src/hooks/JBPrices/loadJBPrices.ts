@@ -18,6 +18,8 @@ export async function loadJBPrices({
         '@jbx-protocol/contracts-v2-latest/deployments/mainnet/JBPrices.json'
       )
       contractJson.address = '0x57bF7C005B77d487074AB3b6Dcd3E5f4D420E3C1'
+    } else if (readNetwork.name === NetworkName.sepolia) {
+      throw new Error('No v2 JBPrices contract on sepolia')
     } else {
       contractJson = await import(
         '@jbx-protocol/contracts-v2-latest/deployments/mainnet/JBPrices.json'
@@ -29,6 +31,10 @@ export async function loadJBPrices({
     if (readNetwork.name === NetworkName.goerli) {
       contractJson = await import(
         '@jbx-protocol/juice-contracts-v3/deployments/goerli/JBPrices.json'
+      )
+    } else if (readNetwork.name === NetworkName.sepolia) {
+      contractJson = await import(
+        '@jbx-protocol/juice-contracts-v3/deployments/sepolia/JBPrices.json'
       )
     } else {
       contractJson = await import(

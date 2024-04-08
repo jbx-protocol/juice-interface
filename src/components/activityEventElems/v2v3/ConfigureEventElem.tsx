@@ -2,10 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import RichNote from 'components/RichNote/RichNote'
 import { BigNumber } from 'ethers'
-import {
-  V2V3FundingCycle,
-  V2V3FundingCycleMetadata,
-} from 'models/v2v3/fundingCycle'
+import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
 
 import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
 import { PV_V2 } from 'constants/pv'
@@ -60,15 +57,17 @@ export default function ConfigureEventElem({
             </span>
           }
         >
-          <FundingCycleDetails
-            fundingCycle={fundingCycle as V2V3FundingCycle}
-            fundingCycleMetadata={
-              fundingCycleMetadata as V2V3FundingCycleMetadata
-            }
-            distributionLimit={distributionLimit?.[0]}
-            distributionLimitCurrency={distributionLimit?.[1]}
-            mintRateZeroAsUnchanged
-          />
+          {fundingCycle && fundingCycleMetadata ? (
+            <FundingCycleDetails
+              fundingCycle={fundingCycle as V2V3FundingCycle}
+              fundingCycleMetadata={fundingCycleMetadata}
+              distributionLimit={distributionLimit?.[0]}
+              distributionLimitCurrency={distributionLimit?.[1]}
+              mintRateZeroAsUnchanged
+            />
+          ) : (
+            <div>No data</div>
+          )}
           {event.memo ? <RichNote className="mt-3" note={event.memo} /> : null}
         </MinimalCollapse>
       }

@@ -4526,9 +4526,6 @@ msgstr ""
 msgid "Advanced options"
 msgstr ""
 
-msgid "Reconfiguration deadline"
-msgstr ""
-
 msgid "Start time"
 msgstr ""
 

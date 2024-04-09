@@ -29,6 +29,14 @@ export function DetailsSectionDiff() {
     currentSetTerminals,
     allowSetTerminalsHasDiff,
 
+    newAllowTerminalMigration,
+    currentAllowTerminalMigration,
+    allowTerminalMigrationHasDiff,
+
+    newAllowControllerMigration,
+    currentAllowControllerMigration,
+    allowControllerMigrationHasDiff,
+
     newSetController,
     currentSetController,
     allowSetControllerHasDiff,
@@ -90,7 +98,7 @@ export function DetailsSectionDiff() {
             )}
             {allowSetTerminalsHasDiff && (
               <FundingCycleListItem
-                name={t`Enable set payment terminal`}
+                name={t`Enable payment terminal config`}
                 value={
                   <span className="capitalize">
                     {newSetTerminals.toString()}
@@ -103,9 +111,24 @@ export function DetailsSectionDiff() {
                 }
               />
             )}
+            {allowTerminalMigrationHasDiff && (
+              <FundingCycleListItem
+                name={t`Enable payment terminal migrations`}
+                value={
+                  <span className="capitalize">
+                    {newAllowTerminalMigration.toString()}
+                  </span>
+                }
+                oldValue={
+                  <span className="capitalize">
+                    {currentAllowTerminalMigration.toString()}
+                  </span>
+                }
+              />
+            )}
             {allowSetControllerHasDiff && (
               <FundingCycleListItem
-                name={t`Enable set controller`}
+                name={t`Enable controller config`}
                 value={
                   <span className="capitalize">
                     {newSetController.toString()}
@@ -114,6 +137,21 @@ export function DetailsSectionDiff() {
                 oldValue={
                   <span className="capitalize">
                     {currentSetController.toString()}
+                  </span>
+                }
+              />
+            )}
+            {allowControllerMigrationHasDiff && (
+              <FundingCycleListItem
+                name={t`Enable controller migrations`}
+                value={
+                  <span className="capitalize">
+                    {newAllowControllerMigration.toString()}
+                  </span>
+                }
+                oldValue={
+                  <span className="capitalize">
+                    {currentAllowControllerMigration.toString()}
                   </span>
                 }
               />

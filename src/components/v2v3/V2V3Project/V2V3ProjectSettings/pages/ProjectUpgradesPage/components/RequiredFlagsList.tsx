@@ -10,14 +10,14 @@ export function RequiredFlagsList() {
       <Trans>
         You must enable the following cycle rules:
         <ul className="list-disc pl-10">
-          {!fundingCycleMetadata?.allowControllerMigration ? (
-            <li>Allow Controller Migrations</li>
+          {!fundingCycleMetadata?.global.allowSetTerminals ? (
+            <li>Enable payment terminal configurations</li>
           ) : null}
           {!fundingCycleMetadata?.allowTerminalMigration ? (
-            <li>Allow Payment Terminal Migrations</li>
+            <li>Enable payment terminal migrations</li>
           ) : null}
-          {!fundingCycleMetadata?.global.allowSetTerminals ? (
-            <li>Allow Payment Terminal Configurations</li>
+          {!fundingCycleMetadata?.allowControllerMigration ? (
+            <li>Enable controller migrations</li>
           ) : null}
         </ul>
       </Trans>

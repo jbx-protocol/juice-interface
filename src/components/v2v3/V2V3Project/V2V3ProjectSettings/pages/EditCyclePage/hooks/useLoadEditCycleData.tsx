@@ -88,6 +88,10 @@ export const useLoadEditCycleData = () => {
           currentProjectData.fundingCycleMetadata.global.allowSetTerminals,
         allowSetController:
           currentProjectData.fundingCycleMetadata.global.allowSetController,
+        allowControllerMigration:
+          currentProjectData.fundingCycleMetadata.allowControllerMigration,
+        allowTerminalMigration:
+          currentProjectData.fundingCycleMetadata.allowTerminalMigration,
         pausePay: currentProjectData.fundingCycleMetadata.pausePay,
         payoutSplits:
           currentProjectData.payoutGroupedSplits.payoutGroupedSplits,

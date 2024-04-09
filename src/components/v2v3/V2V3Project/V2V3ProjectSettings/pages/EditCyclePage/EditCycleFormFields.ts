@@ -9,6 +9,8 @@ type DetailsSectionFields = {
   ballot: string
   allowSetTerminals: boolean
   allowSetController: boolean
+  allowControllerMigration: boolean
+  allowTerminalMigration: boolean
   pausePay: boolean
 }
 

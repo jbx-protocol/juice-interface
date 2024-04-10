@@ -14,7 +14,7 @@ const loadV1Contract = async (
 ): Promise<Contract | undefined> => {
   let contract: Contract | undefined
 
-  if (network === NetworkName.goerli) return
+  if (network === NetworkName.goerli || network === NetworkName.sepolia) return
 
   switch (contractName) {
     case V1ContractName.FundingCycles:

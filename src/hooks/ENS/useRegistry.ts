@@ -8,8 +8,12 @@ import { useEffect, useState } from 'react'
 async function loadENSRegistryContract(): Promise<ContractJson | undefined> {
   const { name } = readNetwork
 
-  if (name === NetworkName.mainnet || name === NetworkName.goerli) {
-    // Registry address is the same for both mainnet + goerli
+  if (
+    name === NetworkName.mainnet ||
+    name === NetworkName.goerli ||
+    name === NetworkName.sepolia
+  ) {
+    // Registry address is the same for both mainnet + goerli + sepolia
     return await import('hooks/ENS/contracts/ENSRegistry.json')
   }
 }

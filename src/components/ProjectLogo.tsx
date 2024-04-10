@@ -16,6 +16,21 @@ const GOERLI_URI_OVERRIDES: { [k: number]: string } = {
   1: `${imageUriOverridePath}/juiceboxdao_logo.webp`, // the on-chain logo's filesize is too large. This is a smaller version.
 }
 
+const SEPOLIA_URI_OVERRIDES: { [k: number]: string } = {
+  1: `${imageUriOverridePath}/juiceboxdao_logo.webp`, // the on-chain logo's filesize is too large. This is a smaller version.
+}
+
+const imgOverrideForProjectId = (projectId: number) => {
+  switch (readNetwork.name) {
+    case NetworkName.mainnet:
+      return MAINNET_URI_OVERRIDES[projectId]
+    case NetworkName.goerli:
+      return GOERLI_URI_OVERRIDES[projectId]
+    case NetworkName.sepolia:
+      return SEPOLIA_URI_OVERRIDES[projectId]
+  }
+}
+
 type ProjectLogoBaseProps = {
   className?: string
   name?: string
@@ -41,20 +56,13 @@ export default function ProjectLogo({
    * If URI isn't passed or is undefined, use the API logo. THIS REQUIRES PV + PROJECT ID
    */
   const imageSrc = useMemo(() => {
-    if (
-      projectId &&
-      readNetwork.name === NetworkName.mainnet &&
-      MAINNET_URI_OVERRIDES[projectId]
-    )
-      return MAINNET_URI_OVERRIDES[projectId]
-    if (
-      projectId &&
-      readNetwork.name === NetworkName.goerli &&
-      GOERLI_URI_OVERRIDES[projectId]
-    )
-      return GOERLI_URI_OVERRIDES[projectId]
+    if (projectId) {
+      const override = imgOverrideForProjectId(projectId)
+      if (override) return override
+    }
 
     if (!uri) {
+      // Attempt to use the API logo if projectId and pv exists.
       if (projectId && pv) {
         return `/api/juicebox/pv/${pv}/project/${projectId}/logo`
       }

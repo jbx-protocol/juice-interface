@@ -6,6 +6,7 @@ type PublicBaseURLS =
   | 'http://localhost:3000'
   | 'https://juicebox.money'
   | 'https://goerli.juicebox.money'
+  | 'https://sepolia.juicebox.money'
 
 declare global {
   namespace NodeJS {

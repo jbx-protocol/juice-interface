@@ -20,6 +20,11 @@ const ADDRESSES: {
       JBTiered721DelegateProjectDeployer:
         '0xB5870d8eeb195E09Ac47641121889CCdBbA3E8FE', // this is in the forge deployment manifest, but the name isn't specified because of a failed verification
     },
+    [NetworkName.sepolia]: {
+      JBTiered721DelegateStore: '0xd7F9Ee12b5De2388109C9dD4fAAf39BEfe4C92FB', // the store from 3.3
+      JBTiered721DelegateProjectDeployer:
+        '0x79c66fCEC6b9843EEa0c28397609d6DA3e5E1781',
+    },
     [NetworkName.mainnet]: {
       JBTiered721DelegateStore: '0x615B5b50F1Fc591AAAb54e633417640d6F2773Fd', // the store from 3.3
       JBTiered721DelegateProjectDeployer:

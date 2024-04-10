@@ -34,6 +34,7 @@ const V1ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
     DEMU,
   ],
   [NetworkName.goerli]: [],
+  [NetworkName.sepolia]: [],
 }
 
 export const V1ArchivedProjectIds =

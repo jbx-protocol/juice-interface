@@ -40,6 +40,9 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     rpcUrl: `https://mainnet.infura.io/v3/${infuraId}`,
     blockExplorer: 'https://etherscan.io/',
   },
+  /**
+   * @deprecated Please use sepolia
+   */
   5: {
     name: NetworkName.goerli,
     label: 'Goerli',
@@ -48,6 +51,15 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     faucet: 'https://goerli-faucet.slock.it/',
     blockExplorer: 'https://goerli.etherscan.io/',
     rpcUrl: `https://goerli.infura.io/v3/${infuraId}`,
+  },
+  11155111: {
+    name: NetworkName.sepolia,
+    label: 'Sepolia',
+    color: '#ff8b9e',
+    chainId: 11155111,
+    faucet: 'https://example.com',
+    blockExplorer: 'https://sepolia.etherscan.io',
+    rpcUrl: `https://sepolia.infura.io/v3/${infuraId}`,
   },
 }
 

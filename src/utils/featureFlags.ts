@@ -7,6 +7,7 @@ import { NetworkName } from 'models/networkName'
  [FEATURE_FLAGS.NFT_MP4]: {
     mainnet: true,
     goerli: true,
+    sepolia: true,
   }
  */
 const FEATURE_FLAG_DEFAULTS: {

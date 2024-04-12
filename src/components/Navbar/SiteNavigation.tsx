@@ -30,7 +30,7 @@ export function SiteNavigation() {
 
 const DesktopSiteNavigation = () => {
   return (
-    <div className="z-10 w-full min-w-0 px-6 xl:px-20">
+    <div className="z-20 w-full min-w-0 px-6 xl:px-20">
       <nav className="flex items-center gap-12 bg-white px-0 py-4 dark:bg-slate-900">
         <>
           <div className="flex items-center justify-between py-6 px-5 md:inline-flex md:py-0 md:px-0">
@@ -86,7 +86,7 @@ const DesktopSiteNavigation = () => {
 
 const MobileSiteNavigation = () => {
   return (
-    <div className="fixed z-10 w-full min-w-0 md:static md:px-6 xl:px-20">
+    <div className="fixed z-20 w-full min-w-0 md:static md:px-6 xl:px-20">
       <Popover
         className="bg-white dark:bg-slate-900 md:flex md:items-center md:gap-12 md:px-0 md:py-4"
         as="nav"

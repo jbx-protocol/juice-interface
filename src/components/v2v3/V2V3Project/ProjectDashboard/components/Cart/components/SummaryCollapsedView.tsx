@@ -6,7 +6,7 @@ import useMobile from 'hooks/useMobile'
 import { useMemo } from 'react'
 import useResizeObserver from 'use-resize-observer'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
-import { SmallNftSquare } from '../../NftRewardsCard/SmallNftSquare'
+import { SmallNftSquare } from '../../SmallNftSquare'
 import { CurrencyIcon } from '../../ui/CurrencyIcon'
 import StackedComponents, {
   StackComponentItem,

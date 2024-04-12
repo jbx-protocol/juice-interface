@@ -1,14 +1,10 @@
 import { Footer } from 'components/Footer/Footer'
-import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
-import { useContext, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BlockedProjectBanner } from './components/BlockedProjectBanner'
 import { Cart } from './components/Cart/Cart'
 import { CoverPhoto } from './components/CoverPhoto/CoverPhoto'
-import { CurrentBalanceCard } from './components/CurrentBalanceCard/CurrentBalanceCard'
 import { FundingCycleCountdownProvider } from './components/FundingCycleCountdown/FundingCycleCountdownProvider'
-import { NftRewardsCard } from './components/NftRewardsCard/NftRewardsCard'
 import { PayRedeemCard } from './components/PayRedeemCard'
 import { ProjectCartProvider } from './components/ProjectCartProvider/ProjectCartProvider'
 import { ProjectHeader } from './components/ProjectHeader/ProjectHeader'
@@ -20,16 +16,6 @@ import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 
 export const ProjectDashboard = () => {
   const { projectPayReceipt } = useProjectPageQueries()
-  const {
-    nftRewards: { rewardTiers },
-  } = useContext(NftRewardsContext)
-  const hasNftRewards = useMemo(
-    () => (rewardTiers ?? []).length !== 0,
-    [rewardTiers],
-  )
-
-  // disable juicecrowd nft rewards
-  const shouldShowNftCard = hasNftRewards
 
   return (
     <TransactionProvider>
@@ -57,13 +43,6 @@ export const ProjectDashboard = () => {
                         )}
                       >
                         <PayRedeemCard className="flex-1" />
-                        {shouldShowNftCard ? <NftRewardsCard /> : null}
-                        <CurrentBalanceCard
-                          className={twMerge(
-                            'hidden w-full md:max-w-sm',
-                            shouldShowNftCard ? 'lg:block' : 'md:block',
-                          )}
-                        />
                       </div>
                       <ProjectTabs className="mt-8" />
                     </div>

@@ -9,7 +9,7 @@ import { CoverPhoto } from './components/CoverPhoto/CoverPhoto'
 import { CurrentBalanceCard } from './components/CurrentBalanceCard/CurrentBalanceCard'
 import { FundingCycleCountdownProvider } from './components/FundingCycleCountdown/FundingCycleCountdownProvider'
 import { NftRewardsCard } from './components/NftRewardsCard/NftRewardsCard'
-import { PayProjectCard } from './components/PayProjectCard/PayProjectCard'
+import { PayRedeemCard } from './components/PayRedeemCard'
 import { ProjectCartProvider } from './components/ProjectCartProvider/ProjectCartProvider'
 import { ProjectHeader } from './components/ProjectHeader/ProjectHeader'
 import { ProjectHeaderCountdown } from './components/ProjectHeaderCountdown'
@@ -56,7 +56,7 @@ export const ProjectDashboard = () => {
                           '[&>*]:border [&>*]:border-smoke-100 [&>*]:dark:border-slate-600',
                         )}
                       >
-                        <PayProjectCard className="flex-1" />
+                        <PayRedeemCard className="flex-1" />
                         {shouldShowNftCard ? <NftRewardsCard /> : null}
                         <CurrentBalanceCard
                           className={twMerge(

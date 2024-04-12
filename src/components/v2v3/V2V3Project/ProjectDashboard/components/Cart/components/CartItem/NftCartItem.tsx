@@ -1,6 +1,6 @@
 import { TruncatedText } from 'components/TruncatedText'
-import { SmallNftSquare } from 'components/v2v3/V2V3Project/ProjectDashboard/components/NftRewardsCard/SmallNftSquare'
 import { ProjectCartNftReward } from 'components/v2v3/V2V3Project/ProjectDashboard/components/ProjectCartProvider/ProjectCartProvider'
+import { SmallNftSquare } from 'components/v2v3/V2V3Project/ProjectDashboard/components/SmallNftSquare'
 import { useNftCartItem } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useNftCartItem'
 import { handleConfirmationDeletion } from 'components/v2v3/V2V3Project/ProjectDashboard/utils/modals'
 import { CartItem } from './CartItem'

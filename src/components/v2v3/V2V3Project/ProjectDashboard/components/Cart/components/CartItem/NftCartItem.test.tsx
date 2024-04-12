@@ -8,7 +8,7 @@ import { NftCartItem } from './NftCartItem'
 
 jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useNftCartItem')
 jest.mock(
-  'components/v2v3/V2V3Project/ProjectDashboard/components/NftRewardsCard/SmallNftSquare',
+  'components/v2v3/V2V3Project/ProjectDashboard/components/SmallNftSquare',
   () => ({
     SmallNftSquare: () => <div />,
   }),

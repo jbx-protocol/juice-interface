@@ -168,3 +168,15 @@ yarn test
    ```
 
 1. Run tests.
+
+# Debugging and Troubleshooting
+
+## Analyzing bundle size
+
+To analyze the bundle size, run the following command:
+
+```bash
+ANALYZE=true yarn build
+```
+
+This command will generate a report in the `dist` folder.

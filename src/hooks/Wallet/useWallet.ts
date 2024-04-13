@@ -7,6 +7,7 @@ import {
   useIsConnected,
   useSigner,
   useUserAddress,
+  useWalletBalance,
 } from './hooks'
 
 export function useWallet() {
@@ -15,6 +16,7 @@ export function useWallet() {
   const isConnected = useIsConnected()
   const chain = useChain()
   const chainUnsupported = useChainUnsupported()
+  const balance = useWalletBalance()
 
   const [, connect] = useConnectWallet()
   const disconnect = useDisconnect()
@@ -26,6 +28,7 @@ export function useWallet() {
     isConnected,
     chain,
     chainUnsupported,
+    balance,
     connect,
     disconnect,
     changeNetworks,

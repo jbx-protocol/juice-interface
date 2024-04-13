@@ -13,15 +13,22 @@ import { formatIssuanceRate, weightAmountPermyriad } from 'utils/v2v3/math'
 export function useTokensPerEth(
   currencyAmount: { amount: number; currency: V2V3CurrencyOption } | undefined,
 ) {
-  const amount =
-    currencyAmount && currencyAmount.amount && !isNaN(currencyAmount.amount)
-      ? currencyAmount.amount
-      : undefined
-  const currency = currencyAmount
-    ? currencyAmount?.currency === V2V3_CURRENCY_USD
-      ? V2V3_CURRENCY_USD
-      : V2V3_CURRENCY_ETH
-    : undefined
+  const amount = useMemo(
+    () =>
+      currencyAmount && currencyAmount.amount && !isNaN(currencyAmount.amount)
+        ? currencyAmount.amount
+        : undefined,
+    [currencyAmount],
+  )
+  const currency = useMemo(
+    () =>
+      currencyAmount
+        ? currencyAmount?.currency === V2V3_CURRENCY_USD
+          ? V2V3_CURRENCY_USD
+          : V2V3_CURRENCY_ETH
+        : undefined,
+    [currencyAmount],
+  )
 
   const { currencyMetadata } = useContext(CurrencyContext)
   const { fundingCycle, fundingCycleMetadata, tokenSymbol } =
@@ -50,7 +57,10 @@ export function useTokensPerEth(
     [weight, reservedRate],
   )
 
-  const receivedTickets = formatReceivedTickets(weiPayAmt)
+  const receivedTickets = useMemo(
+    () => formatReceivedTickets(weiPayAmt),
+    [formatReceivedTickets, weiPayAmt],
+  )
 
   const receivedTokenSymbolText = useMemo(
     () =>

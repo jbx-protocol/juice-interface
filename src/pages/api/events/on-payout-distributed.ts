@@ -299,11 +299,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const requestData = await Schema.validate(req.body)
 
     // Immediately respond to the request
-    await new Promise((resolve, reject) =>
-      res.write('Processing...', error =>
-        error ? reject(error) : resolve(null),
-      ),
-    )
+    res.status(200).json({ message: 'Received.' })
     res.end()
     respondedToClient = true
 

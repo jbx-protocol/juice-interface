@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
-import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 
@@ -11,10 +10,11 @@ import {
   TransactorInstance,
 } from 'hooks/useTransactor'
 import invariant from 'tiny-invariant'
+import { toHexString } from 'utils/bigNumbers'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useTransferTokensTx(): TransactorInstance<{
-  amount: BigNumber
+  amount: bigint
   to: string
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
@@ -29,12 +29,7 @@ export function useTransferTokensTx(): TransactorInstance<{
       return transactor(
         contracts.TicketBooth,
         'transfer',
-        [
-          userAddress,
-          BigNumber.from(projectId).toHexString(),
-          amount.toHexString(),
-          to,
-        ],
+        [userAddress, toHexString(BigInt(projectId)), toHexString(amount), to],
         {
           ...txOpts,
           title: t`Transfer unclaimed ${tokenSymbolText({

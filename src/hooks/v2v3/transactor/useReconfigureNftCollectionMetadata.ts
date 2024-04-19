@@ -1,8 +1,8 @@
-import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { ethers } from 'ethers'
 import { useDefaultTokenUriResolver } from 'hooks/DefaultTokenUriResolver/contracts/useDefaultTokenUriResolver'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { NftCollectionMetadata } from 'models/nftRewards'
@@ -70,7 +70,8 @@ export function useReconfigureNftCollectionMetadata(): TransactorInstance<NftCol
       buildArgs(version, {
         uri,
         tokenUriResolverAddress:
-          defaultTokenUriResolver?.address || constants.AddressZero,
+          // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+          (defaultTokenUriResolver?.target as string) || ethers.ZeroAddress,
       }),
       {
         ...txOpts,

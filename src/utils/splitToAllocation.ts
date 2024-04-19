@@ -17,7 +17,7 @@ export const allocationToSplit = (allocation: AllocationSplit): Split => {
   const a = {
     ...defaultSplit,
     ...allocation,
-    percent: splitPercentFrom(allocation.percent).toNumber(),
+    percent: Number(splitPercentFrom(allocation.percent)),
   }
   return sanitizeSplit(a)
 }

@@ -6,7 +6,6 @@ import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
 import { LOCKED_PAYOUT_EXPLANATION } from 'components/strings'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber } from 'ethers'
 import moment, * as Moment from 'moment'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
@@ -15,6 +14,7 @@ import {
   inputMustBeEthAddressRule,
   inputMustExistRule,
 } from 'utils/antdRules'
+import { toHexString } from 'utils/bigNumbers'
 import { hexToInt, parseWad, stripCommas } from 'utils/format/formatNumber'
 import { ceilIfCloseToNextInteger } from 'utils/math'
 import { projectIdToHex } from 'utils/splits'
@@ -90,7 +90,7 @@ export const AddEditAllocationModal = ({
     () =>
       !editingData?.projectOwner &&
       editingData?.projectId &&
-      editingData.projectId !== BigNumber.from(0).toHexString(),
+      editingData.projectId !== toHexString(BigInt(0)),
     [editingData],
   )
 
@@ -326,7 +326,7 @@ export const AddEditAllocationModal = ({
             !!amount?.value &&
             !!allocationCurrency &&
             showFee &&
-            primaryETHTerminalFee && (
+            !!primaryETHTerminalFee && (
               <FeeTooltipLabel
                 amountWad={parseWad(stripCommas(amount.value))}
                 currency={allocationCurrency}

@@ -11,7 +11,7 @@ import { PV } from 'models/pv'
 
 import { Project } from 'generated/graphql'
 import { formatError } from './format/formatError'
-import { parseBigNumberKeyVals } from './graph'
+import { parsebigintKeyVals } from './graph'
 import { isIpfsCID } from './ipfs'
 
 /**
@@ -48,11 +48,11 @@ export const sgDbCompareKeys: SGSBCompareKey[] = [
 export const parseDBProject = (r: DBProjectRow): DBProject =>
   parseDBProjectJson(parseDBProjectsRow(r))
 
-// Parse DB Project json, converting strings to BigNumbers
+// Parse DB Project json, converting strings to bigints
 export const parseDBProjectJson = (j: Json<DBProject>): DBProject => ({
   ...j,
   tags: j.tags ?? [],
-  ...parseBigNumberKeyVals(j, [
+  ...parsebigintKeyVals(j, [
     'currentBalance',
     'volume',
     'volumeUSD',
@@ -347,7 +347,7 @@ export async function formatWithMetadata({
   }
 }
 
-// BigNumber values are stored as strings. To sort by these they must have an equal number of digits, so we pad them with leading 0s up to a 32 char length.
+// bigint values are stored as strings. To sort by these they must have an equal number of digits, so we pad them with leading 0s up to a 32 char length.
 function padBigNumForSort(bn: string) {
   return bn.padStart(32, '0')
 }
@@ -357,7 +357,7 @@ export function formatSGProjectForDB(
 ): Json<Pick<Project, SGSBCompareKey>> {
   return {
     ...p,
-    // Adjust BigNumber values before we compare them to database values
+    // Adjust bigint values before we compare them to database values
     currentBalance: padBigNumForSort(p.currentBalance),
     redeemVolume: padBigNumForSort(p.redeemVolume),
     redeemVolumeUSD: padBigNumForSort(p.redeemVolumeUSD),

@@ -1,6 +1,5 @@
 import { ChartBarSquareIcon, ChartPieIcon } from '@heroicons/react/24/outline'
 import Loading from 'components/Loading'
-import { BigNumber } from 'ethers'
 import { ParticipantsQuery } from 'generated/graphql'
 import { useState } from 'react'
 import TokenAreaChart from './TokenAreaChart'
@@ -13,12 +12,12 @@ export default function TokenDistributionChart({
 }: {
   participants: ParticipantsQuery['participants'] | undefined
   isLoading?: boolean
-  tokenSupply: BigNumber | undefined
+  tokenSupply: bigint | undefined
 }) {
   const [viewMode, setViewMode] = useState<'pie' | 'area'>('pie')
 
   // Don't render chart for projects with no token supply
-  if (tokenSupply?.eq(0) || !participants?.length) return null
+  if (tokenSupply === 0n || !participants?.length) return null
 
   const size = 320
 

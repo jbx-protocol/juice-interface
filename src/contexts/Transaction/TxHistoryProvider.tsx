@@ -26,7 +26,7 @@ const pollTransaction = async (
   const response = await readProvider.getTransaction(txLog.tx.hash)
   // if no response, then the tx is cancelled.
   if (!response) {
-    txLog.callbacks?.onCancelled?.(response)
+    txLog.callbacks?.onCancelled?.(undefined)
     return {
       ...txLog,
       tx: response,
@@ -35,7 +35,8 @@ const pollTransaction = async (
   }
 
   // Tx has been mined
-  if (response.confirmations > 0 && txLog.status === TxStatus.pending) {
+  const confirmations = await response.confirmations()
+  if (confirmations > 0 && txLog.status === TxStatus.pending) {
     console.info('TxHistoryProvider::calling `onConfirmed` callback', response)
     txLog.callbacks?.onConfirmed?.(response)
     return {
@@ -149,8 +150,22 @@ export default function TxHistoryProvider({
           createdAt: nowSeconds(),
           status: TxStatus.pending,
           callbacks,
+          block: undefined,
         },
       ])
+      // Once added, immediately search for the block
+      if (!tx.blockNumber) return
+      readProvider.getBlock(tx.blockNumber).then(block => {
+        if (!block) return
+        _setTransactions(
+          // Add the block to the txLog
+          transactions.map(txLog =>
+            !!txLog.tx?.hash && txLog.tx?.hash === tx.hash
+              ? { ...txLog, block }
+              : txLog,
+          ),
+        )
+      })
     },
     [transactions, _setTransactions],
   )

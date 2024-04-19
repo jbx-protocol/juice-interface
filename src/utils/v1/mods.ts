@@ -1,7 +1,6 @@
 import { TEN_THOUSAND } from 'constants/numbers'
-import { constants } from 'ethers'
+import { ethers } from 'ethers'
 
-import { BigNumber } from 'ethers'
 import { PayoutMod, TicketMod } from 'models/v1/mods'
 
 export const MODS_TOTAL_PERCENT = TEN_THOUSAND // = 100%
@@ -18,15 +17,15 @@ export const getProjectOwnerRemainderPayoutMod = (
 ): PayoutMod => {
   const totalSplitPercentage =
     splits?.reduce((sum, split) => sum + split.percent, 0) ?? 0
-  const ownerPercentage = MODS_TOTAL_PERCENT - totalSplitPercentage
+  const ownerPercentage = Number(MODS_TOTAL_PERCENT) - totalSplitPercentage
 
   return {
     beneficiary: projectOwnerAddress,
     percent: ownerPercentage,
     preferUnstaked: false,
     lockedUntil: 0,
-    projectId: BigNumber.from(0),
-    allocator: constants.AddressZero,
+    projectId: BigInt(0),
+    allocator: ethers.ZeroAddress,
   }
 }
 
@@ -42,7 +41,7 @@ export const getProjectOwnerRemainderTicketMod = (
 ): TicketMod => {
   const totalSplitPercentage =
     splits?.reduce((sum, split) => sum + split.percent, 0) ?? 0
-  const ownerPercentage = MODS_TOTAL_PERCENT - totalSplitPercentage
+  const ownerPercentage = Number(MODS_TOTAL_PERCENT) - totalSplitPercentage
 
   return {
     beneficiary: projectOwnerAddress,

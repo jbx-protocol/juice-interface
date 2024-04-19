@@ -1,8 +1,9 @@
 import { IJBBuybackDelegate_INTERFACE_ID } from 'constants/buybackDelegate'
 import { IJBTiered721Delegate_V3_4_PAY_ID } from 'constants/nftRewards'
-import { BigNumber, BigNumberish, utils } from 'ethers'
+import { ethers } from 'ethers'
 import { createMetadata } from 'juicebox-metadata-helper'
 import { JB721DelegateVersion } from 'models/v2v3/contracts'
+import { BigintIsh, toHexString } from 'utils/bigNumbers'
 import {
   JB721DelegatePayMetadata,
   encodeJb721DelegatePayMetadata,
@@ -28,8 +29,8 @@ export function encodeDelegatePayMetadata({
   jb721Delegate,
 }: {
   jbBuybackDelegate?: {
-    amountToSwap: BigNumberish
-    minExpectedTokens: BigNumberish
+    amountToSwap: BigintIsh
+    minExpectedTokens: BigintIsh
   } | null
   jb721Delegate?: {
     metadata: JB721DelegatePayMetadata
@@ -59,11 +60,11 @@ export function encodeDelegatePayMetadata({
   if (jbBuybackDelegate) {
     delegateIds.push(IJBBuybackDelegate_INTERFACE_ID)
     metadatas.push(
-      utils.defaultAbiCoder.encode(
+      ethers.AbiCoder.defaultAbiCoder().encode(
         ['uint256', 'uint256'],
         [
-          BigNumber.from(jbBuybackDelegate.amountToSwap).toHexString(),
-          BigNumber.from(jbBuybackDelegate.minExpectedTokens).toHexString(),
+          toHexString(BigInt(jbBuybackDelegate.amountToSwap)),
+          toHexString(BigInt(jbBuybackDelegate.minExpectedTokens)),
         ],
       ),
     )

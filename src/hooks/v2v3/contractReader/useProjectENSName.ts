@@ -1,8 +1,7 @@
 import { useCallback, useMemo } from 'react'
 
-import { BigNumber } from 'ethers'
-
 import { useJBProjectHandles } from 'hooks/JBProjectHandles/contracts/useJBProjectHandles'
+import { toHexString } from 'utils/bigNumbers'
 import useV2ContractReader from './useV2ContractReader'
 
 export default function useProjectENSName({
@@ -28,7 +27,7 @@ export default function useProjectENSName({
               {
                 contract: JBProjectHandles,
                 eventName: 'SetEnsNameParts',
-                topics: [BigNumber.from(projectId).toHexString()],
+                topics: [toHexString(BigInt(projectId))],
               },
             ]
           : undefined,

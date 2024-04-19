@@ -96,27 +96,36 @@ export const useInitialEditingData = ({
     queuedDistributionLimitData ?? []
 
   // Use data from the queued funding cycle (if it exists).
-  const effectiveFundingCycle = queuedFundingCycle?.number.gt(0)
-    ? queuedFundingCycle
-    : fundingCycle
-  const effectiveFundingCycleMetadata = queuedFundingCycle?.number.gt(0)
-    ? queuedFundingCycleMetadata
-    : fundingCycleMetadata
-  const effectivePayoutSplits = queuedFundingCycle?.number.gt(0)
-    ? queuedPayoutSplits
-    : payoutSplits
-  const effectiveReservedTokensSplits = queuedFundingCycle?.number.gt(0)
-    ? queuedReservedTokensSplits
-    : reservedTokensSplits
+  const effectiveFundingCycle =
+    queuedFundingCycle && queuedFundingCycle.number > 0n
+      ? queuedFundingCycle
+      : fundingCycle
+  const effectiveFundingCycleMetadata =
+    queuedFundingCycle && queuedFundingCycle.number > 0n
+      ? queuedFundingCycleMetadata
+      : fundingCycleMetadata
+  const effectivePayoutSplits =
+    queuedFundingCycle && queuedFundingCycle.number > 0n
+      ? queuedPayoutSplits
+      : payoutSplits
+  const effectiveReservedTokensSplits =
+    queuedFundingCycle && queuedFundingCycle.number > 0n
+      ? queuedReservedTokensSplits
+      : reservedTokensSplits
 
   let effectiveDistributionLimit = distributionLimit
-  if (effectiveFundingCycle?.duration.gt(0) && queuedDistributionLimit) {
+  if (
+    effectiveFundingCycle &&
+    effectiveFundingCycle.duration > 0n &&
+    queuedDistributionLimit
+  ) {
     effectiveDistributionLimit = queuedDistributionLimit
   }
 
   let effectiveDistributionLimitCurrency = distributionLimitCurrency
   if (
-    effectiveFundingCycle?.duration.gt(0) &&
+    effectiveFundingCycle &&
+    effectiveFundingCycle.duration > 0n &&
     queuedDistributionLimitCurrency
   ) {
     effectiveDistributionLimitCurrency = queuedDistributionLimitCurrency
@@ -131,8 +140,9 @@ export const useInitialEditingData = ({
     let fundAccessConstraint: SerializedV2V3FundAccessConstraint | undefined =
       undefined
     if (effectiveDistributionLimit) {
-      const distributionLimitCurrency =
-        effectiveDistributionLimitCurrency?.toNumber() ?? V2V3_CURRENCY_ETH
+      const distributionLimitCurrency = effectiveDistributionLimitCurrency
+        ? Number(effectiveDistributionLimitCurrency)
+        : V2V3_CURRENCY_ETH
 
       fundAccessConstraint = {
         terminal: primaryETHTerminal ?? '',

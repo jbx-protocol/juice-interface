@@ -8,7 +8,6 @@ import { CV_V2 } from 'constants/cv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber } from 'ethers'
 import useERC20Allowance from 'hooks/ERC20/useERC20Allowance'
 import { useV1ProjectId } from 'hooks/JBV3Token/contractReader/useV1ProjectId'
 import { useJBOperatorStoreForV3Token } from 'hooks/JBV3Token/contracts/useJBOperatorStoreForV3Token'
@@ -32,8 +31,8 @@ export function MigrateLegacyProjectTokensModal({
   v1ClaimedBalance,
   ...props
 }: {
-  legacyTokenBalance: BigNumber | undefined
-  v1ClaimedBalance: BigNumber | undefined
+  legacyTokenBalance: bigint | undefined
+  v1ClaimedBalance: bigint | undefined
 } & ModalProps) {
   const { cvs } = useContext(V2V3ContractsContext)
   const { tokenAddress } = useContext(V2V3ProjectContext)
@@ -60,7 +59,7 @@ export function MigrateLegacyProjectTokensModal({
   const migrateTokensTx = useMigrateTokensTx()
 
   const hasV1Project = Boolean(
-    V1TicketBooth && v1ProjectId && !v1ProjectId.eq(0),
+    V1TicketBooth && v1ProjectId && v1ProjectId !== 0n,
   )
   const hasV2Project = cvs?.includes(CV_V2)
 
@@ -68,7 +67,7 @@ export function MigrateLegacyProjectTokensModal({
     useV1HasPermissions({
       operator: tokenAddress,
       account: userAddress,
-      domain: v1ProjectId?.toNumber(),
+      domain: v1ProjectId ? Number(v1ProjectId) : undefined,
       permissionIndexes: [V1OperatorPermission.Transfer],
     }) || grantV1PermissionDone
 
@@ -95,12 +94,14 @@ export function MigrateLegacyProjectTokensModal({
   const showV2GrantPermissionCallout =
     !showV1GrantPermissionCallout && !v2MigrationReady
 
-  const hasV1ClaimedBalance = v1ClaimedBalance && v1ClaimedBalance.gt(0)
+  const hasV1ClaimedBalance = v1ClaimedBalance && v1ClaimedBalance > 0n
 
   const needsV1Approval = hasV1Project && hasV1ClaimedBalance
 
   const hasV1ApprovedTokenAllowance =
-    !needsV1Approval || v1Allowance?.gte(v1ClaimedBalance) || approveDone
+    !needsV1Approval ||
+    (v1Allowance && v1Allowance >= v1ClaimedBalance) ||
+    approveDone
 
   const showV1ApproveCallout =
     !showV1GrantPermissionCallout &&
@@ -180,7 +181,8 @@ export function MigrateLegacyProjectTokensModal({
             </div>
           )}
           {hasV1Project &&
-            v1ClaimedBalance?.gt(0) &&
+            !!v1ClaimedBalance &&
+            v1ClaimedBalance > 0n &&
             hasV1ApprovedTokenAllowance && (
               <div>
                 <CheckCircleOutlined /> V1 ERC-20 token spend approved.
@@ -201,7 +203,7 @@ export function MigrateLegacyProjectTokensModal({
               onDone={() => setGrantV2PermissionDone(true)}
             />
           ))}
-        {showV1ApproveCallout && v1ClaimedBalance && (
+        {showV1ApproveCallout && !!v1ClaimedBalance && (
           <ApproveMigrationCallout
             version="1"
             onDone={() => setApproveDone(true)}

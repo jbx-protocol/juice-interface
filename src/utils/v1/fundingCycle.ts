@@ -1,7 +1,3 @@
-import { BigNumber } from 'ethers'
-
-import { constants } from 'ethers'
-
 import { V1FundingCycle, V1FundingCycleMetadata } from 'models/v1/fundingCycle'
 import { perbicentToPercent } from 'utils/format/formatNumber'
 import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'
@@ -9,9 +5,11 @@ import unsafeFundingCycleProperties from 'utils/unsafeFundingCycleProperties'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 
 import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
+import { ethers } from 'ethers'
+import { toHexString } from 'utils/bigNumbers'
 import { EditingV1FundingCycle } from './serializers'
 
-const DISCOUNT_RATE_NON_RECURRING = 201
+const DISCOUNT_RATE_NON_RECURRING = 201n
 
 // packed `metadata` format: 0btTPRRRRRRRRBBBBBBBBrrrrrrrrVVVVVVVV
 // V: version (bits 0-7)
@@ -22,28 +20,25 @@ const DISCOUNT_RATE_NON_RECURRING = 201
 // T: ticketPrintingIsAllowed (bits 33)
 // t: treasuryExtension (bits 34-194)
 
-const bits8 = 0b11111111
-const bits1 = 0b1
+const bits8 = 0b11111111n
+const bits1 = 0b1n
 
 export const decodeFundingCycleMetadata = (
-  metadata?: BigNumber,
+  metadata?: bigint,
 ): V1FundingCycleMetadata | undefined => {
   if (!metadata) return
 
-  const version = metadata
-    .and(bits8)
-    .toNumber() as V1FundingCycleMetadata['version']
+  const version = Number(metadata & bits8) as V1FundingCycleMetadata['version']
 
   return {
     version,
-    reservedRate: metadata.shr(8).and(bits8).toNumber(),
-    bondingCurveRate: metadata.shr(16).and(bits8).toNumber(),
-    reconfigurationBondingCurveRate: metadata.shr(24).and(bits8).toNumber(),
-    payIsPaused:
-      version === 0 ? null : Boolean(metadata.shr(32).and(bits1).toNumber()),
+    reservedRate: Number((metadata >> 8n) & bits8),
+    bondingCurveRate: Number((metadata >> 16n) & bits8),
+    reconfigurationBondingCurveRate: Number((metadata >> 24n) & bits8),
+    payIsPaused: version === 0 ? null : Boolean((metadata >> 32n) & bits1),
     ticketPrintingIsAllowed:
-      version === 0 ? null : Boolean(metadata.shr(33).and(bits1).toNumber()),
-    treasuryExtension: version === 0 ? null : metadata.shr(34).toHexString(),
+      version === 0 ? null : Boolean((metadata >> 33n) & bits1),
+    treasuryExtension: version === 0 ? null : toHexString(metadata >> 34n),
   } as V1FundingCycleMetadata
 }
 
@@ -53,15 +48,17 @@ export const decodeFundingCycleMetadata = (
  */
 export const isRecurring = (
   fundingCycle: V1FundingCycle | EditingV1FundingCycle,
-) => fundingCycle.discountRate.lt(DISCOUNT_RATE_NON_RECURRING)
+) => fundingCycle.discountRate < DISCOUNT_RATE_NON_RECURRING
 
 export const hasFundingTarget = (
   fundingCycle: Pick<V1FundingCycle | EditingV1FundingCycle, 'target'>,
-) => fundingCycle.target.lt(constants.MaxUint256)
+) => fundingCycle.target < ethers.MaxUint256
 
 const hasFundingDuration = (
   fundingCycle: Pick<V1FundingCycle | EditingV1FundingCycle, 'duration'>,
-) => fundingCycle.duration && !fundingCycle.duration.eq(constants.AddressZero)
+) =>
+  !!fundingCycle.duration &&
+  fundingCycle.duration !== BigInt(ethers.ZeroAddress)
 
 /**
  * Mark various funding cycle properties as "unsafe",

@@ -16,11 +16,13 @@ export function useTransactionVersion(
     contractName: V2V3ContractName.JBController,
   })
 
-  if (transaction.to === V2JBController?.address) {
+  // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+  if (transaction.to === V2JBController?.target) {
     return CV_V2
   }
 
-  if (transaction.to === V3JBController?.address) {
+  // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+  if (transaction.to === V3JBController?.target) {
     return CV_V3
   }
 }

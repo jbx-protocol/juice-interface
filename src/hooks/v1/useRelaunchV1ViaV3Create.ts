@@ -1,18 +1,18 @@
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { PayoutMod, TicketMod } from 'models/v1/mods'
 import { consolidateMetadata } from 'models/projectMetadata'
+import { PayoutMod, TicketMod } from 'models/v1/mods'
 import { useRouter } from 'next/router'
 import { useCallback, useContext, useMemo } from 'react'
 import {
-  permyriadToPercent,
-  percentToPermyriad,
-  perbicentToPercent,
   fromWad,
+  perbicentToPercent,
+  percentToPermyriad,
+  permyriadToPercent,
 } from 'utils/format/formatNumber'
 import { decodeFundingCycleMetadata } from 'utils/v1/fundingCycle'
-import { splitPercentFrom, discountRateFrom } from 'utils/v2v3/math'
+import { discountRateFrom, splitPercentFrom } from 'utils/v2v3/math'
 
 export const useRelaunchV1ViaV3Create = () => {
   const router = useRouter()
@@ -45,9 +45,8 @@ export const useRelaunchV1ViaV3Create = () => {
           beneficiary: mod.beneficiary,
           lockedUntil: mod.lockedUntil,
           preferClaimed: mod.preferUnstaked,
-          projectId: !mod.projectId?.eq(0)
-            ? mod.projectId?.toString()
-            : undefined,
+          projectId:
+            mod.projectId !== 0n ? mod.projectId?.toString() : undefined,
         })
       }
       return converted
@@ -71,11 +70,13 @@ export const useRelaunchV1ViaV3Create = () => {
         ? consolidateMetadata(projectMetadata)
         : undefined,
       fundingCycleData: {
-        duration: queuedFC?.duration.mul(SECONDS_IN_DAY).toString(),
+        duration: queuedFC
+          ? (queuedFC.duration * SECONDS_IN_DAY).toString()
+          : undefined,
         weight: queuedFC?.weight.toString(),
-        discountRate: discountRateFrom(queuedFC?.discountRate.toString() ?? 0)
-          .div(10)
-          .toString(),
+        discountRate: (
+          discountRateFrom(queuedFC?.discountRate.toString() ?? 0) / 10n
+        ).toString(),
         ballot: queuedFC?.ballot,
       },
       fundingCycleMetadata: {
@@ -126,12 +127,7 @@ export const useRelaunchV1ViaV3Create = () => {
     fundingCycleMetadata?.reservedRate,
     fundingCycleMetadata?.ticketPrintingIsAllowed,
     projectMetadata,
-    queuedFC?.ballot,
-    queuedFC?.currency,
-    queuedFC?.discountRate,
-    queuedFC?.duration,
-    queuedFC?.target,
-    queuedFC?.weight,
+    queuedFC,
     queuedPayoutMods,
     queuedTicketMods,
   ])

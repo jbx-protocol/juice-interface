@@ -3,7 +3,6 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
-import { BigNumber } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,
@@ -25,7 +24,7 @@ function buildTxArgs({
 }: {
   JBETHPaymentTerminalVersion: PaymentTerminalVersion | undefined
   projectId: number
-  value: BigNumber
+  value: bigint
 }) {
   if (JBETHPaymentTerminalVersion === V2V3ContractName.JBETHPaymentTerminal) {
     return getAddToBalanceArgsV3({ projectId, value })
@@ -41,7 +40,7 @@ function buildTxArgs({
 }
 
 export function useAddToBalanceTx(): TransactorInstance<{
-  value: BigNumber
+  value: bigint
 }> {
   const { transactor } = useContext(TransactionContext)
   const { contracts, versions } = useContext(V2V3ProjectContractsContext)

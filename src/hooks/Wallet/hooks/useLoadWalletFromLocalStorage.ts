@@ -1,4 +1,4 @@
-import { providers } from 'ethers'
+import { BrowserProvider } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { useCallback, useMemo } from 'react'
 
@@ -11,7 +11,7 @@ export function useLoadWalletFromLocalStorage() {
     const { ethereum } = window as any
     if (typeof ethereum === 'undefined') return
 
-    return new providers.Web3Provider(ethereum)
+    return new BrowserProvider(ethereum)
   }, [])
 
   // Returns if a wallet is currently connected to Juicebox.

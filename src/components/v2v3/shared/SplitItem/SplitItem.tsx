@@ -1,5 +1,3 @@
-import { BigNumber } from 'ethers'
-
 import { Split } from 'models/splits'
 
 import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
@@ -11,13 +9,13 @@ import { SplitValue } from './SplitValue'
 
 export type SplitProps = {
   split: Split
-  totalValue: BigNumber | undefined
+  totalValue: bigint | undefined
   projectOwnerAddress: string | undefined
   reservedRate?: number
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
-  currency?: BigNumber
-  oldCurrency?: BigNumber
+  currency?: bigint
+  oldCurrency?: bigint
   showAmount?: boolean
   showFee?: boolean
   dontApplyFeeToAmount?: boolean

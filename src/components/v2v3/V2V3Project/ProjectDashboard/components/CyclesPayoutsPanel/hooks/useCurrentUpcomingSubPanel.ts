@@ -21,37 +21,37 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     /**
      * if the current cycle is unlocked, force the use of latestConfiguredFundingCycleOf.
      */
-    useLatestConfigured: fundingCycle?.duration?.isZero() ?? false,
+    useLatestConfigured: fundingCycle?.duration === 0n ?? false,
   })
   const [upcomingFundingCycle, , ballotState] = upcomingFundingCycleData ?? []
   const { timeRemainingText } = useFundingCycleCountdown()
 
   const cycleNumber = useMemo(() => {
     if (type === 'current') {
-      return fundingCycle?.number.toNumber()
+      return fundingCycle?.number ? Number(fundingCycle?.number) : undefined
     }
-    return fundingCycle?.number ? fundingCycle.number.toNumber() + 1 : undefined
+    return fundingCycle?.number ? Number(fundingCycle.number) + 1 : undefined
   }, [fundingCycle?.number, type])
 
   const cycleUnlocked = useMemo(() => {
     if (type === 'current') {
-      return fundingCycle?.duration?.isZero() ?? true
+      return fundingCycle?.duration === 0n ?? true
     }
-    return upcomingFundingCycle?.duration?.isZero() ?? true
+    return upcomingFundingCycle?.duration === 0n ?? true
   }, [fundingCycle?.duration, type, upcomingFundingCycle?.duration])
 
   const upcomingCycleLength = useMemo(() => {
     if (!upcomingFundingCycle) return
     if (cycleUnlocked) return '-'
     return timeSecondsToDateString(
-      upcomingFundingCycle.duration.toNumber(),
+      Number(upcomingFundingCycle.duration),
       'short',
     )
   }, [cycleUnlocked, upcomingFundingCycle])
 
   /** Determines if the CURRENT cycle is unlocked.
    * This is used to check if the upcoming cycle can start at any time. */
-  const currentCycleUnlocked = fundingCycle?.duration?.isZero() ?? true
+  const currentCycleUnlocked = fundingCycle?.duration === 0n ?? true
 
   const status = cycleUnlocked ? t`Unlocked` : t`Locked`
   const remainingTime = cycleUnlocked ? '-' : timeRemainingText

@@ -81,7 +81,7 @@ export default function DistributeReservedTokensModal({
       confirmLoading={loading}
       transactionPending={transactionPending}
       onCancel={onCancel}
-      okButtonProps={{ disabled: !reservedTokens?.gt(0) }}
+      okButtonProps={{ disabled: !(reservedTokens && reservedTokens > 0n) }}
       width={640}
       centered={true}
     >

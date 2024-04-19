@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { ArrowTrendingUpIcon } from '@heroicons/react/24/outline'
 import { t, Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -25,9 +24,7 @@ export function ProjectHeaderStats() {
       </a>
       <ProjectHeaderStat
         label={t`Total raised`}
-        stat={
-          <ETHAmount amount={totalVolume ?? BigNumber.from(0)} precision={2} />
-        }
+        stat={<ETHAmount amount={totalVolume ?? BigInt(0)} precision={2} />}
       />
       {last7DaysPercent !== Infinity ? (
         <ProjectHeaderStat

@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
 import { DefaultSettings as DefaultTokenSettings } from 'components/Create/components/pages/ProjectToken/hooks/useProjectTokenForm'
 import isEqual from 'lodash/isEqual'
@@ -42,15 +41,15 @@ export const useLoadEditCycleData = () => {
       currentProjectData &&
       !isEqual(currentProjectData, initialEditingData.current)
     ) {
-      const duration = BigNumber.from(
-        currentProjectData.fundingCycleData.duration,
-      ).toNumber()
+      const duration = Number(
+        BigInt(currentProjectData.fundingCycleData.duration),
+      )
       const fundingCycleData = currentProjectData.fundingCycleData
       const fundingCycleMetadata = currentProjectData.fundingCycleMetadata
       const mintRate = parseFloat(
         formatIssuanceRate(
           deriveNextIssuanceRate({
-            weight: BigNumber.from(0),
+            weight: BigInt(0),
             previousFC: deserializeV2V3FundingCycleData(
               currentProjectData.fundingCycleData,
             ),
@@ -100,10 +99,12 @@ export const useLoadEditCycleData = () => {
         ),
         distributionLimitCurrency:
           V2V3CurrencyName(
-            BigNumber.from(
-              currentProjectData.fundAccessConstraints[0]
-                ?.distributionLimitCurrency ?? 0,
-            ).toNumber() as V2V3CurrencyOption,
+            Number(
+              BigInt(
+                currentProjectData.fundAccessConstraints[0]
+                  ?.distributionLimitCurrency ?? 0,
+              ),
+            ) as V2V3CurrencyOption,
           ) ?? 'ETH',
         holdFees: currentProjectData.fundingCycleMetadata.holdFees,
         mintRate,

@@ -1,10 +1,9 @@
 import { CaretDownFilled, CloseCircleOutlined } from '@ant-design/icons'
 import { Button, Form, Input } from 'antd'
-import { constants } from 'ethers'
 
-import { BigNumber } from 'ethers'
 import { TokenRef } from 'models/tokenRef'
 
+import { ethers } from 'ethers'
 import ProjectHandleFormItem from './ProjectHandle/ProjectHandleFormItem'
 
 export default function TokenRefs({
@@ -44,7 +43,7 @@ export default function TokenRefs({
                 <Form.Item>
                   <Input
                     value={r.value}
-                    placeholder={constants.AddressZero}
+                    placeholder={ethers.ZeroAddress}
                     onChange={e =>
                       onRefsChange(
                         refs.map((_r, _i) =>
@@ -58,7 +57,7 @@ export default function TokenRefs({
                 <ProjectHandleFormItem
                   formItemProps={{
                     label: null,
-                    initialValue: r.value ? BigNumber.from(r.value) : '',
+                    initialValue: r.value ? BigInt(r.value) : '',
                   }}
                   requireState="exists"
                   returnValue="id"

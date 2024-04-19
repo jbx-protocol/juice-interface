@@ -1,6 +1,5 @@
 import { SupabaseClient } from '@supabase/supabase-js'
-import { utils } from 'ethers'
-import { isAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import * as jsonwebtoken from 'jsonwebtoken'
 import { juiceAuthDbClient, sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -26,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!signature || typeof walletAddress !== 'string') {
       return res.status(400).json({ message: 'Invalid request.' })
     }
-    if (!isAddress(walletAddress)) {
+    if (!ethers.isAddress(walletAddress)) {
       return res.status(400).json({ message: 'Invalid request.' })
     }
     const walletAddressNormalized = walletAddress.toLowerCase()
@@ -43,9 +42,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(401).json({ message: 'Unauthorized.' })
     }
 
-    const walletAddressUsedForRequestSign = utils
+    const walletAddressUsedForRequestSign = ethers
       .recoverAddress(
-        utils.hashMessage(signingRequestResult.data.challenge_message),
+        ethers.hashMessage(signingRequestResult.data.challenge_message),
         signature,
       )
       .toLowerCase()

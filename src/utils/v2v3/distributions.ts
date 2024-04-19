@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 
 import { ONE_BILLION } from 'constants/numbers'
@@ -49,7 +48,7 @@ export function derivePayoutAmount({
 }) {
   if (!distributionLimit) return 0
   const amountBeforeFee =
-    (payoutSplit.percent / ONE_BILLION) * distributionLimit
+    (payoutSplit.percent / Number(ONE_BILLION)) * distributionLimit
   if (isProjectSplit(payoutSplit) || dontApplyFee) return amountBeforeFee // projects dont have fee applied
   return deriveAmountAfterFee(amountBeforeFee)
 }
@@ -83,7 +82,7 @@ export function getDistributionPercentFromAmount({
   amount: number
   distributionLimit: number
 }) {
-  return splitPercentFrom((amount / distributionLimit) * 100).toNumber()
+  return Number(splitPercentFrom((amount / distributionLimit) * 100))
 }
 
 /**
@@ -113,12 +112,12 @@ export function ensureSplitsSumTo100Percent({
   // Calculate the percent total of the splits
   const currentTotal = splits.reduce((sum, split) => sum + split.percent, 0)
   // If the current total is already equal to SPLITS_TOTAL_PERCENT, no adjustment needed
-  if (currentTotal === SPLITS_TOTAL_PERCENT) {
+  if (currentTotal === Number(SPLITS_TOTAL_PERCENT)) {
     return splits
   }
 
   // Calculate the ratio to adjust each split by
-  const ratio = SPLITS_TOTAL_PERCENT / currentTotal
+  const ratio = Number(SPLITS_TOTAL_PERCENT) / currentTotal
 
   // Adjust each split
   const adjustedSplits = splits.map(split => ({
@@ -131,12 +130,12 @@ export function ensureSplitsSumTo100Percent({
     (sum, split) => sum + split.percent,
     0,
   )
-  if (adjustedTotal === SPLITS_TOTAL_PERCENT) {
+  if (adjustedTotal === Number(SPLITS_TOTAL_PERCENT)) {
     return adjustedSplits
   }
 
   // If there's STILL a difference due to rounding errors, adjust the largest split
-  const difference = SPLITS_TOTAL_PERCENT - adjustedTotal
+  const difference = Number(SPLITS_TOTAL_PERCENT) - adjustedTotal
   const largestSplitIndex = adjustedSplits.findIndex(
     split => split.percent === Math.max(...adjustedSplits.map(s => s.percent)),
   )
@@ -222,7 +221,7 @@ export function getNewDistributionLimit({
 
 // Determines if a split is a Juicebox project
 export function isJuiceboxProjectSplit(split: Split) {
-  return split.projectId ? BigNumber.from(split.projectId).gt(0) : false
+  return split.projectId ? BigInt(split.projectId) > 0n : false
 }
 
 /**
@@ -236,7 +235,7 @@ export function distributionLimitStringtoNumber(
   if (distributionLimit === undefined) return undefined
   const distributionLimitBN = parseWad(distributionLimit)
   const distributionLimitIsInfinite =
-    !distributionLimitBN || distributionLimitBN.eq(MAX_DISTRIBUTION_LIMIT)
+    !distributionLimitBN || distributionLimitBN === MAX_DISTRIBUTION_LIMIT
   return distributionLimitIsInfinite
     ? undefined
     : parseFloat(fromWad(distributionLimitBN))
@@ -244,14 +243,14 @@ export function distributionLimitStringtoNumber(
 
 /**
  * Determines if two distributionLimits are the same
- * @param distributionLimit1 {BigNumber | undefined} - First DL to compare (undefined === unlimited)
- * @param distributionLimit2 {BigNumber | undefined} - Second DL to compare (undefined === unlimited)
+ * @param distributionLimit1 {bigint | undefined} - First DL to compare (undefined === unlimited)
+ * @param distributionLimit2 {bigint | undefined} - Second DL to compare (undefined === unlimited)
 
  * @returns {boolean} - True if DLs are the same, 
  */
 export function distributionLimitsEqual(
-  distributionLimit1: BigNumber | undefined,
-  distributionLimit2: BigNumber | undefined,
+  distributionLimit1: bigint | undefined,
+  distributionLimit2: bigint | undefined,
 ) {
   if (
     isInfiniteDistributionLimit(distributionLimit1) &&
@@ -259,5 +258,5 @@ export function distributionLimitsEqual(
   ) {
     return true
   }
-  return distributionLimit1?.eq(distributionLimit2 ?? 0)
+  return distributionLimit1 === (distributionLimit2 ?? 0)
 }

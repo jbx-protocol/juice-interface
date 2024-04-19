@@ -1,6 +1,5 @@
 import { t } from '@lingui/macro'
 import { timeSecondsToDateString } from 'components/v2v3/V2V3Project/ProjectDashboard/utils/timeSecondsToDateString'
-import { BigNumber } from 'ethers'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
 import { useMemo } from 'react'
@@ -22,20 +21,20 @@ export const useFormatConfigurationCyclesSection = ({
   upcomingFundingCycle?: V2V3FundingCycle | null
   distributionLimitAmountCurrency:
     | {
-        distributionLimit: BigNumber | undefined
-        currency: BigNumber | undefined
+        distributionLimit: bigint | undefined
+        currency: bigint | undefined
       }
     | undefined
   upcomingDistributionLimitAmountCurrency?: {
-    distributionLimit: BigNumber | undefined
-    currency: BigNumber | undefined
+    distributionLimit: bigint | undefined
+    currency: bigint | undefined
   } | null
 }) => {
   const durationDatum: ConfigurationPanelDatum = useMemo(() => {
-    const formatDuration = (duration: BigNumber | undefined) => {
+    const formatDuration = (duration: bigint | undefined) => {
       if (duration === undefined) return undefined
-      if (duration.eq(0)) return t`Not set`
-      return timeSecondsToDateString(duration.toNumber(), 'short', 'lower')
+      if (duration === 0n) return t`Not set`
+      return timeSecondsToDateString(Number(duration), 'short', 'lower')
     }
     const currentDuration = formatDuration(fundingCycle?.duration)
     if (upcomingFundingCycle === null) {
@@ -50,9 +49,13 @@ export const useFormatConfigurationCyclesSection = ({
     const formattedTime =
       upcomingFundingCycle === null
         ? formatTime(fundingCycle?.start)
-        : fundingCycle?.duration.isZero()
+        : fundingCycle?.duration === 0n
         ? t`Any time`
-        : formatTime(fundingCycle?.start.add(fundingCycle?.duration))
+        : formatTime(
+            fundingCycle
+              ? fundingCycle.start + fundingCycle.duration
+              : undefined,
+          )
 
     const formatTimeDatum: ConfigurationPanelDatum = {
       name: t`Start time`,
@@ -60,20 +63,20 @@ export const useFormatConfigurationCyclesSection = ({
       easyCopy: true,
     }
     return formatTimeDatum
-  }, [fundingCycle?.start, fundingCycle?.duration, upcomingFundingCycle])
+  }, [upcomingFundingCycle, fundingCycle])
 
   const payoutsDatum: ConfigurationPanelDatum = useMemo(() => {
-    const formatCurrency = (currency: BigNumber | undefined) => {
+    const formatCurrency = (currency: bigint | undefined) => {
       if (currency === undefined) return undefined
-      return currency.toNumber() as V2V3CurrencyOption
+      return Number(currency) as V2V3CurrencyOption
     }
     const formatAmountWad = (
-      amountWad: BigNumber | undefined,
+      amountWad: bigint | undefined,
       currency: V2V3CurrencyOption | undefined,
     ) => {
       if (amountWad === undefined) return undefined
-      if (amountWad.eq(MAX_DISTRIBUTION_LIMIT)) return t`Unlimited`
-      if (amountWad.eq(0)) return t`Zero (no payouts)`
+      if (amountWad === MAX_DISTRIBUTION_LIMIT) return t`Unlimited`
+      if (amountWad === 0n) return t`Zero (no payouts)`
       return formatCurrencyAmount({
         amount: Number(fromWad(amountWad)),
         currency,

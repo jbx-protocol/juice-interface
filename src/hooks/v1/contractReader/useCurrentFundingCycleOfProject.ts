@@ -1,8 +1,8 @@
-import { BigNumber } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { V1TerminalName } from 'models/v1/terminals'
 import { useCallback, useMemo } from 'react'
+import { toHexString } from 'utils/bigNumbers'
 import { deepEqFundingCycles } from 'utils/v1/deepEqFundingCycles'
 
 import useContractReader from './useContractReader'
@@ -15,7 +15,7 @@ export default function useCurrentFundingCycleOfProject(
   return useContractReader<V1FundingCycle>({
     contract: V1ContractName.FundingCycles,
     functionName: 'currentOf',
-    args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
+    args: projectId ? [toHexString(BigInt(projectId))] : null,
     valueDidChange: useCallback(
       (a: V1FundingCycle | undefined, b: V1FundingCycle | undefined) =>
         !deepEqFundingCycles(a, b),
@@ -28,17 +28,17 @@ export default function useCurrentFundingCycleOfProject(
               {
                 contract: V1ContractName.FundingCycles,
                 eventName: 'Configure',
-                topics: [[], BigNumber.from(projectId).toHexString()],
+                topics: [[], toHexString(BigInt(projectId))],
               },
               {
                 contract: terminalName,
                 eventName: 'Pay',
-                topics: [[], BigNumber.from(projectId).toHexString()],
+                topics: [[], toHexString(BigInt(projectId))],
               },
               {
                 contract: terminalName,
                 eventName: 'Tap',
-                topics: [[], BigNumber.from(projectId).toHexString()],
+                topics: [[], toHexString(BigInt(projectId))],
               },
             ]
           : undefined,

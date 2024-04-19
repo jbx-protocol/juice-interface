@@ -15,11 +15,15 @@ export function useV1TerminalVersion({
   const { contracts } = useContext(V1UserContext)
   if (!terminalAddress) return { name: undefined, version: undefined }
 
-  if (isEqualAddress(terminalAddress, contracts?.TerminalV1.address)) {
+  // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+  if (isEqualAddress(terminalAddress, contracts?.TerminalV1.target as string)) {
     return { version: '1', name: V1ContractName.TerminalV1 }
   }
 
-  if (isEqualAddress(terminalAddress, contracts?.TerminalV1_1.address)) {
+  // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+  if (
+    isEqualAddress(terminalAddress, contracts?.TerminalV1_1.target as string)
+  ) {
     return { version: '1.1', name: V1ContractName.TerminalV1_1 }
   }
 

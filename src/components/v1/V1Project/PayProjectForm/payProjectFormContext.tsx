@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { createContext } from 'react'
 import { WeightFunction } from 'utils/math'
 import { PayProjectForm } from './hooks/usePayProjectForm'
@@ -11,7 +10,7 @@ export interface PayButtonProps {
 interface PayProjectFormContextType {
   PayButton: undefined | ((props: PayButtonProps) => JSX.Element | null)
   reservedRate: number | undefined
-  weight: BigNumber | undefined
+  weight: bigint | undefined
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
   weightingFn: WeightFunction | undefined

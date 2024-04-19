@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { useV1UnclaimedBalance } from 'hooks/v1/contractReader/useV1UnclaimedBalance'
 import { useV1TicketBoothForV3Token } from '../contracts/useV1TicketBoothForV3Token'
@@ -11,9 +10,9 @@ export function useV1UnclaimedBalanceForV3Token() {
 
   return (
     useV1UnclaimedBalance({
-      projectId: v1ProjectId?.toNumber(),
+      projectId: v1ProjectId ? Number(v1ProjectId) : undefined,
       userAddress,
       TicketBooth: v1TicketBoothContract,
-    }) ?? BigNumber.from(0)
+    }) ?? BigInt(0)
   )
 }

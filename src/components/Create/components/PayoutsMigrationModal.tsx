@@ -7,7 +7,6 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import { AllocationSplit } from 'components/v2v3/shared/Allocation/Allocation'
 import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
-import { BigNumber } from 'ethers'
 import { FormItemInput } from 'models/formItemInput'
 import { useRouter } from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
@@ -21,7 +20,7 @@ interface V1MigrationCardForm {
 
 const HackLabel = (props: FormItemInput<string>) => (
   <V1UserProvider>
-    <V1ProjectHandle projectId={BigNumber.from(props.value)} />
+    {props.value ? <V1ProjectHandle projectId={BigInt(props.value)} /> : null}
   </V1UserProvider>
 )
 
@@ -134,7 +133,7 @@ export const PayoutsMigrationModal = ({
 
   const affectedBeneficiaries = useMemo(() => {
     const allocationsWithProjectId = allocations.filter(
-      s => !!s.projectId && !BigNumber.from(s.projectId).eq(0),
+      s => !!s.projectId && BigInt(s.projectId) !== 0n,
     )
 
     return Object.entries(

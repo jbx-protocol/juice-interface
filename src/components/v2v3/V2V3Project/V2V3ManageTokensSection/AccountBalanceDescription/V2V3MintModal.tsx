@@ -5,7 +5,7 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { utils } from 'ethers'
+import { ethers } from 'ethers'
 import { useMintTokensTx } from 'hooks/v2v3/transactor/useMintTokensTx'
 import { useProjectHasErc20 } from 'hooks/v2v3/useProjectHasErc20'
 import { useContext, useState } from 'react'
@@ -39,7 +39,7 @@ export function V2V3MintModal({
     const amount = form.getFieldValue('amount') ?? '0'
     const beneficiary = form.getFieldValue('beneficary')
 
-    if (amount === '0' || !utils.isAddress(beneficiary)) return
+    if (amount === '0' || !ethers.isAddress(beneficiary)) return
 
     setLoading(true)
 
@@ -109,7 +109,7 @@ export function V2V3MintModal({
               required: true,
               validateTrigger: 'onCreate',
               validator: (rule, value) => {
-                if (!value || !utils.isAddress(value))
+                if (!value || !ethers.isAddress(value))
                   return Promise.reject('Not a valid ETH address')
                 else return Promise.resolve()
               },

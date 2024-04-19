@@ -29,5 +29,5 @@ export async function hasFundingCycle(
   )
 
   // if the funding cycle number is non-zero, it exists.
-  return !fundingCycle.number.eq(0)
+  return fundingCycle.number !== 0n
 }

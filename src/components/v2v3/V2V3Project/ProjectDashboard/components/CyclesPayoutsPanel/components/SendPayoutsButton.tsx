@@ -19,7 +19,7 @@ export const SendPayoutsButton = ({
   const closeModal = useCallback(() => setOpen(false), [])
 
   const distributeButtonDisabled = useMemo(() => {
-    return distributableAmount.eq(0)
+    return distributableAmount === 0n
   }, [distributableAmount])
 
   return (

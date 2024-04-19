@@ -5,7 +5,6 @@ import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
-import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useContext } from 'react'
 import { useV2V3BlockedProject } from '../useBlockedProject'
@@ -16,7 +15,7 @@ const DEFAULT_DELEGATE_METADATA = 0
 type PayV2ProjectTx = TransactorInstance<{
   memo: string
   preferClaimedTokens: boolean
-  value: BigNumber
+  value: bigint
   beneficiary?: string
   delegateMetadata?: string
 }>

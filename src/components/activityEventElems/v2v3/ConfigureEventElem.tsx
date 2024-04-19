@@ -1,7 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import RichNote from 'components/RichNote/RichNote'
-import { BigNumber } from 'ethers'
 import { V2V3FundingCycle } from 'models/v2v3/fundingCycle'
 
 import FundingCycleDetails from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
@@ -31,12 +30,12 @@ export default function ConfigureEventElem({
   })
 
   const fundingCycle: Partial<V2V3FundingCycle> = {
-    duration: BigNumber.from(event.duration),
-    weight: BigNumber.from(event.weight),
-    discountRate: BigNumber.from(event.discountRate),
+    duration: BigInt(event.duration),
+    weight: BigInt(event.weight),
+    discountRate: BigInt(event.discountRate),
     ballot: event.ballot,
     start: event.mustStartAtOrAfter
-      ? BigNumber.from(event.mustStartAtOrAfter)
+      ? BigInt(event.mustStartAtOrAfter)
       : undefined,
   }
 

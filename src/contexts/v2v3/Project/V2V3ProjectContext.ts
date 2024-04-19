@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { V2BallotState } from 'models/ballot'
 import { Split } from 'models/splits'
 import {
@@ -24,29 +23,29 @@ export type V2V3ProjectContextType = {
   tokenName: string | undefined
   terminals: string[] | undefined // array of terminal addresses, 0xABC...
   primaryETHTerminal: string | undefined
-  primaryETHTerminalFee: BigNumber | undefined
-  ETHBalance: BigNumber | undefined
+  primaryETHTerminalFee: bigint | undefined
+  ETHBalance: bigint | undefined
 
-  totalVolume: BigNumber | undefined
-  trendingVolume: BigNumber | undefined
+  totalVolume: bigint | undefined
+  trendingVolume: bigint | undefined
   paymentsCount: number | undefined
 
   projectOwnerAddress: string | undefined
-  balanceInDistributionLimitCurrency: BigNumber | undefined
-  usedDistributionLimit: BigNumber | undefined // how much has been distributed
+  balanceInDistributionLimitCurrency: bigint | undefined
+  usedDistributionLimit: bigint | undefined // how much has been distributed
 
   fundingCycleMetadata: V2V3FundingCycleMetadata | undefined
   fundingCycle: V2V3FundingCycle | undefined
   ballotState: V2BallotState | undefined
 
-  distributionLimit: BigNumber | undefined
-  distributionLimitCurrency: BigNumber | undefined
+  distributionLimit: bigint | undefined
+  distributionLimitCurrency: bigint | undefined
 
   payoutSplits: Split[] | undefined
   reservedTokensSplits: Split[] | undefined
 
-  primaryTerminalCurrentOverflow: BigNumber | undefined
-  totalTokenSupply: BigNumber | undefined
+  primaryTerminalCurrentOverflow: bigint | undefined
+  totalTokenSupply: bigint | undefined
 
   loading: V2V3ProjectLoadingStates
 }

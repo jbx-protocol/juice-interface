@@ -22,8 +22,8 @@ export const useTreasuryStats = () => {
   const distributionLimitCurrency: V2V3CurrencyOption | undefined =
     useMemo(() => {
       if (!distributionLimitCurrencyRaw) return undefined
-      if (distributionLimitCurrencyRaw.eq(0)) return V2V3_CURRENCY_ETH // treat as eth
-      return distributionLimitCurrencyRaw.toNumber() as V2V3CurrencyOption
+      if (distributionLimitCurrencyRaw === 0n) return V2V3_CURRENCY_ETH // treat as eth
+      return Number(distributionLimitCurrencyRaw) as V2V3CurrencyOption
     }, [distributionLimitCurrencyRaw])
 
   const treasuryBalance = useMemo(() => {

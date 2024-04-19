@@ -49,9 +49,9 @@ const parseCreateFlowStateFromInitialState = (
 
   if (distributionLimit === undefined) {
     treasurySelection = undefined
-  } else if (distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)) {
+  } else if (distributionLimit === MAX_DISTRIBUTION_LIMIT) {
     treasurySelection = 'unlimited'
-  } else if (distributionLimit.eq(0)) {
+  } else if (distributionLimit === 0n) {
     treasurySelection = 'zero'
   } else {
     treasurySelection = 'amount'
@@ -161,7 +161,8 @@ export function useLoadingInitialStateFromQuery() {
               {
                 ...DEFAULT_REDUX_STATE.fundAccessConstraints[0],
                 ...parsedInitialState.fundAccessConstraints[0],
-                terminal: defaultJBETHPaymentTerminal.address,
+                // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+                terminal: defaultJBETHPaymentTerminal.target as string,
                 token: ETH_TOKEN_ADDRESS,
               },
             ],

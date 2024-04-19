@@ -29,9 +29,14 @@ export const usePayoutsSectionValues = () => {
   const newCurrency: CurrencyName = editCycleForm?.getFieldValue(
     'distributionLimitCurrency',
   )
-  const currentCurrency =
-    V2V3CurrencyName(currentCurrencyOption?.toNumber() as V2V3CurrencyOption) ??
-    'ETH'
+
+  let currentCurrency: CurrencyName = 'ETH'
+  if (currentCurrencyOption) {
+    currentCurrency = V2V3CurrencyName(
+      Number(currentCurrencyOption) as V2V3CurrencyOption,
+    )!
+  }
+
   const currencyHasDiff = currentCurrency !== newCurrency
 
   const newDistributionLimitNum =
@@ -44,7 +49,7 @@ export const usePayoutsSectionValues = () => {
     !distributionLimitsEqual(currentDistributionLimit, newDistributionLimit) ||
     currencyHasDiff
   const distributionLimitIsInfinite =
-    !newDistributionLimit || newDistributionLimit.eq(MAX_DISTRIBUTION_LIMIT)
+    !newDistributionLimit || newDistributionLimit === MAX_DISTRIBUTION_LIMIT
 
   const newHoldFees = Boolean(editCycleForm?.getFieldValue('holdFees'))
   const currentHoldFees = Boolean(currentFundingCycleMetadata?.holdFees)

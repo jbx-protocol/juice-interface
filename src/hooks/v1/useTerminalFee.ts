@@ -1,10 +1,10 @@
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
-import { BigNumber, Contract } from 'ethers'
+import { Contract } from 'ethers'
 import { V1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useEffect, useState } from 'react'
 
 export function useTerminalFee(version?: V1TerminalVersion) {
-  const [fee, setFee] = useState<BigNumber>()
+  const [fee, setFee] = useState<bigint>()
   const { contracts } = useContext(V1UserContext)
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export function useTerminalFee(version?: V1TerminalVersion) {
 
       if (!terminalContract) return
 
-      const res = await terminalContract?.functions.fee()
+      const res = await terminalContract?.fee()
 
       if (res) setFee(res[0])
     }

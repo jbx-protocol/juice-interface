@@ -60,7 +60,7 @@ export const useReconfigurationRulesForm = () => {
         fundingCycleMetadata.allowControllerMigration
       const pauseTransfers = fundingCycleMetadata.global.pauseTransfers
       const holdFees = fundingCycleMetadata.holdFees
-      // By default, ballot is addressZero
+      // By default, ballot is ZeroAddress
       if (!reconfigurationRuleSelection && isZeroAddress(ballot))
         return {
           selection: defaultStrategy.name,

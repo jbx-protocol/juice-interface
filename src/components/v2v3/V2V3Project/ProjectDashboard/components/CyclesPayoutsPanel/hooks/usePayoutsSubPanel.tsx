@@ -1,6 +1,5 @@
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useMemo } from 'react'
@@ -24,16 +23,16 @@ const splitHasFee = (split: Split) => {
 
 const calculateSplitAmountWad = (
   split: Split,
-  distributionLimit: BigNumber | undefined,
-  primaryETHTerminalFee: BigNumber | undefined,
+  distributionLimit: bigint | undefined,
+  primaryETHTerminalFee: bigint | undefined,
 ) => {
   const splitValue = distributionLimit
-    ?.mul(split.percent)
-    .div(SPLITS_TOTAL_PERCENT)
+    ? (distributionLimit * BigInt(split.percent)) / SPLITS_TOTAL_PERCENT
+    : undefined
   const feeAmount = splitHasFee(split)
-    ? feeForAmount(splitValue, primaryETHTerminalFee) ?? BigNumber.from(0)
-    : BigNumber.from(0)
-  return splitValue?.sub(feeAmount)
+    ? feeForAmount(splitValue, primaryETHTerminalFee) ?? BigInt(0)
+    : BigInt(0)
+  return splitValue ? splitValue - feeAmount : undefined
 }
 
 export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
@@ -45,8 +44,8 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
     useCurrentUpcomingDistributionLimit(type)
 
   const showAmountOnPayout = useMemo(() => {
-    if (distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)) return false
-    if (distributionLimit?.eq(0)) return false
+    if (distributionLimit === MAX_DISTRIBUTION_LIMIT) return false
+    if (distributionLimit === 0n) return false
     return true
   }, [distributionLimit])
 
@@ -64,17 +63,17 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
           <AmountInCurrency
             amount={splitAmountWad}
             currency={V2V3CurrencyName(
-              distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+              Number(distributionLimitCurrency) as V2V3CurrencyOption,
             )}
           />
         )
       }
       return {
         projectId: split.projectId
-          ? BigNumber.from(split.projectId).toNumber()
+          ? Number(BigInt(split.projectId))
           : undefined,
         address: split.beneficiary!,
-        percent: `${formatSplitPercent(BigNumber.from(split.percent))}%`,
+        percent: `${formatSplitPercent(BigInt(split.percent))}%`,
         amount,
       }
     },
@@ -89,8 +88,8 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const totalPayoutAmount = useMemo(() => {
     if (!distributionLimit || !distributionLimitCurrency) return
     if (
-      distributionLimit.eq(MAX_DISTRIBUTION_LIMIT) ||
-      distributionLimit.isZero()
+      distributionLimit === MAX_DISTRIBUTION_LIMIT ||
+      distributionLimit === 0n
     )
       return
 
@@ -98,7 +97,7 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
       <AmountInCurrency
         amount={distributionLimit}
         currency={V2V3CurrencyName(
-          distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+          Number(distributionLimitCurrency) as V2V3CurrencyOption,
         )}
       />
     )
@@ -111,7 +110,7 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
       // We don't need to worry about upcoming as this is informational only
       type === 'current' &&
       splits.length === 0 &&
-      distributableAmount.eq(0)
+      distributableAmount === 0n
     ) {
       return []
     }

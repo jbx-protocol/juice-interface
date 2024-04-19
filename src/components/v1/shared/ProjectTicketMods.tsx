@@ -161,7 +161,7 @@ export default function ProjectTicketMods({
     await form.validateFields()
 
     const beneficiary = form.getFieldValue('beneficiary')
-    const percent = percentToPermyriad(form.getFieldValue('percent')).toNumber()
+    const percent = Number(percentToPermyriad(form.getFieldValue('percent')))
     const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
 
     const lockedUntil = _lockedUntil

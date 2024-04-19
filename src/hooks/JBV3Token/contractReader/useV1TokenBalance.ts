@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import useTotalBalanceOf from 'hooks/v1/contractReader/useTotalBalanceOf'
 import { useV1TicketBoothForV3Token } from '../contracts/useV1TicketBoothForV3Token'
@@ -15,6 +14,6 @@ export function useV1TotalBalance() {
       v1ProjectId,
       undefined,
       v1TicketBoothContract,
-    ) ?? BigNumber.from(0)
+    ) ?? BigInt(0)
   )
 }

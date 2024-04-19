@@ -6,23 +6,22 @@ import {
   InMemoryCache,
 } from '@apollo/client'
 import { FunctionsMap, withScalars } from 'apollo-link-scalars'
-import { BigNumber } from 'ethers'
 import { IntrospectionQuery, buildClientSchema } from 'graphql'
-import { isBigNumberish } from 'utils/bigNumbers'
+import { isBigintIsh } from 'utils/bigNumbers'
 import introspectionResult from '../../../graphql.schema.json'
 import { subgraphUri } from './subgraphUri'
 
 const typesMap: FunctionsMap = {
-  BigInt: {
+  bigint: {
     serialize: (parsed: unknown): string | null => {
-      return BigNumber.isBigNumber(parsed) ? parsed.toString() : null
+      return typeof parsed === 'bigint' ? parsed.toString() : null
     },
-    parseValue: (raw: unknown): BigNumber | null => {
+    parseValue: (raw: unknown): bigint | null => {
       if (raw === undefined || raw === null) return null
 
-      if (isBigNumberish(raw)) return BigNumber.from(raw)
+      if (isBigintIsh(raw)) return BigInt(raw)
 
-      throw new Error('Parse BigInt: Invalid BigNumber')
+      throw new Error('Parse bigint: Invalid bigint')
     },
   },
 }

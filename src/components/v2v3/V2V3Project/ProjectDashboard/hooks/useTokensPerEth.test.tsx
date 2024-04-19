@@ -6,7 +6,6 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { V2V3CurrencyProvider } from 'contexts/v2v3/V2V3CurrencyProvider'
-import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import useWeiConverter from 'hooks/useWeiConverter'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -31,8 +30,8 @@ const wrapper = ({ children }: { children: React.ReactNode }) => {
 
 describe('useTokensPerEth', () => {
   const mockUseProjectContext = {
-    fundingCycle: { weight: BigNumber.from('347164525722847206831050') },
-    fundingCycleMetadata: { reservedRate: BigNumber.from('5000') },
+    fundingCycle: { weight: BigInt('347164525722847206831050') },
+    fundingCycleMetadata: { reservedRate: BigInt('5000') },
     tokenSymbol: 'mockTokenSymbol',
   }
 
@@ -40,11 +39,11 @@ describe('useTokensPerEth', () => {
     jest.clearAllMocks()
     ;(useProjectContext as jest.Mock).mockReturnValue(mockUseProjectContext)
     ;(useWeiConverter as jest.Mock).mockReturnValue(
-      BigNumber.from('1000000000000000000'),
+      BigInt('1000000000000000000'),
     )
     ;(tokenSymbolText as jest.Mock).mockReturnValue('mockTokenSymbol')
     ;(useCurrencyConverter as jest.Mock).mockReturnValue({
-      usdToWei: jest.fn().mockReturnValue(BigNumber.from('1000000')),
+      usdToWei: jest.fn().mockReturnValue(BigInt('1000000')),
     })
   })
 
@@ -73,7 +72,7 @@ describe('useTokensPerEth', () => {
   })
 
   it('returns default when wei is 0', () => {
-    ;(useWeiConverter as jest.Mock).mockReturnValue(BigNumber.from('0'))
+    ;(useWeiConverter as jest.Mock).mockReturnValue(BigInt('0'))
     const { result } = renderHook(
       () => useTokensPerEth({ amount: 0, currency: V2V3_CURRENCY_USD }),
       { wrapper },

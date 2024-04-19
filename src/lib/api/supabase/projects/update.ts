@@ -1,7 +1,7 @@
 import { DBProject } from 'models/dbProject'
 import { Json } from 'models/json'
 import { NextApiResponse } from 'next'
-import { isBigNumberish } from 'utils/bigNumbers'
+import { isBigintIsh } from 'utils/bigNumbers'
 import { formatError } from 'utils/format/formatError'
 import { formatWad } from 'utils/format/formatNumber'
 import {
@@ -82,8 +82,8 @@ export async function updateDBProjects(
           project: { id, name },
         } = r
 
-        const formatBigNumberish = (b: unknown) =>
-          isBigNumberish(b) ? formatWad(b, { precision: 6 }) : b
+        const formatBigintIsh = (b: unknown) =>
+          isBigintIsh(b) ? formatWad(b, { precision: 6 }) : b
 
         return `\`[${id}]\` ${name} _(${
           idsOfNewProjects.has(id as string)
@@ -91,9 +91,9 @@ export async function updateDBProjects(
             : updatedProperties[id]
                 ?.map(
                   prop =>
-                    `${prop.key}: ${formatBigNumberish(
+                    `${prop.key}: ${formatBigintIsh(
                       prop.oldVal,
-                    )} -> ${formatBigNumberish(prop.newVal)}`,
+                    )} -> ${formatBigintIsh(prop.newVal)}`,
                 )
                 .join(', ') ?? 'no changes'
         })_`

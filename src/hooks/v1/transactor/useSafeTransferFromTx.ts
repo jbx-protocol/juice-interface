@@ -1,11 +1,11 @@
 import { t } from '@lingui/macro'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
-import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactorInstance } from 'hooks/useTransactor'
+import { toHexString } from 'utils/bigNumbers'
 import { useV1ProjectTitle } from '../useProjectTitle'
 
 export function useSafeTransferFromTx(): TransactorInstance<{
@@ -44,7 +44,7 @@ export function useSafeTransferFromTx(): TransactorInstance<{
     return transactor(
       contracts.Projects,
       'safeTransferFrom(address,address,uint256)',
-      [owner, newOwnerAddress, BigNumber.from(projectId).toHexString()],
+      [owner, newOwnerAddress, toHexString(BigInt(projectId))],
       {
         ...txOpts,
         title: t`Transfer ownership of ${projectTitle}`,

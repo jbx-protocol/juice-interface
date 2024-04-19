@@ -59,7 +59,7 @@ export function V1PayButton({ wrapperClassName, disabled }: PayButtonProps) {
     (fcMetadata.payIsPaused || // v1.1 only
       overridePayDisabled ||
       isV1AndMaxRR || // v1 projects who still use 100% RR to disable pay
-      currentFC.configured.eq(0) || // Edge case, see sequoiacapitaldao
+      currentFC.configured === 0n || // Edge case, see sequoiacapitaldao
       isArchived ||
       disabled) ??
     false

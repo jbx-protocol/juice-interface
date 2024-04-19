@@ -1,5 +1,4 @@
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber } from 'ethers'
 import { V2BallotState } from 'models/ballot'
 import { useContext } from 'react'
 
@@ -18,7 +17,7 @@ export function useETHReceivedFromNftRedeem({
   tokenIdsToRedeem,
 }: {
   tokenIdsToRedeem: string[] | undefined
-}): BigNumber | undefined {
+}): bigint | undefined {
   const { fundingCycleMetadata, primaryTerminalCurrentOverflow, ballotState } =
     useContext(V2V3ProjectContext)
 
@@ -35,10 +34,10 @@ export function useETHReceivedFromNftRedeem({
 
   if (
     !fundingCycleMetadata ||
-    !selectedRedemptionWeight?.gt(0) ||
-    !totalRedemptionWeight?.gt(0)
+    !(selectedRedemptionWeight && selectedRedemptionWeight > 0n) ||
+    !(totalRedemptionWeight && totalRedemptionWeight > 0n)
   )
-    return BigNumber.from(0)
+    return BigInt(0)
 
   const redemptionRate =
     ballotState === V2BallotState.Active
@@ -46,19 +45,15 @@ export function useETHReceivedFromNftRedeem({
       : fundingCycleMetadata.redemptionRate
 
   const base = primaryTerminalCurrentOverflow
-    ? primaryTerminalCurrentOverflow
-        .mul(selectedRedemptionWeight)
-        .div(totalRedemptionWeight)
-    : BigNumber.from(0)
+    ? (primaryTerminalCurrentOverflow * selectedRedemptionWeight) /
+      totalRedemptionWeight
+    : BigInt(0)
 
-  if (redemptionRate.eq(BigNumber.from(MAX_REDEMPTION_RATE))) return base
+  if (redemptionRate === BigInt(MAX_REDEMPTION_RATE)) return base
 
-  // return { base * [RR + (weight * (maxRR - RR) / total )] / maxRR }
-  const numerator = redemptionRate.add(
-    selectedRedemptionWeight
-      .mul(BigNumber.from(MAX_REDEMPTION_RATE).sub(redemptionRate))
-      .div(totalRedemptionWeight),
-  )
-
-  return base.mul(numerator).div(MAX_REDEMPTION_RATE)
+  const numerator =
+    redemptionRate +
+    (selectedRedemptionWeight * (MAX_REDEMPTION_RATE - redemptionRate)) /
+      totalRedemptionWeight
+  return (base * numerator) / MAX_REDEMPTION_RATE
 }

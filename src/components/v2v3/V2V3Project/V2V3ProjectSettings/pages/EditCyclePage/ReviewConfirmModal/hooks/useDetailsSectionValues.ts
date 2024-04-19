@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import { otherUnitToSeconds } from 'utils/format/formatTime'
@@ -18,8 +17,8 @@ export const useDetailsSectionValues = () => {
     duration: editCycleForm?.getFieldValue('duration'),
     unit: editCycleForm?.getFieldValue('durationUnit')?.value,
   })
-  const newDuration = BigNumber.from(newDurationSeconds)
-  const durationHasDiff = !newDuration.eq(currentDuration ?? 0)
+  const newDuration = BigInt(newDurationSeconds)
+  const durationHasDiff = newDuration !== (currentDuration ?? 0)
 
   const newBallot = getBallotStrategyByAddress(
     editCycleForm?.getFieldValue('ballot'),

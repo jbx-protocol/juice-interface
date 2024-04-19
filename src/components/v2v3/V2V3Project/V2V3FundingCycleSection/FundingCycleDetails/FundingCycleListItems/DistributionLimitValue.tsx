@@ -2,14 +2,13 @@ import { Tooltip } from 'antd'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import DistributionLimit from 'components/v2v3/shared/DistributionLimit'
 import { CurrencyName } from 'constants/currency'
-import { BigNumber } from 'ethers'
 
 export function DistributionLimitValue({
   distributionLimit,
   currency,
   shortName,
 }: {
-  distributionLimit: BigNumber | undefined
+  distributionLimit: bigint | undefined
   currency: CurrencyName | undefined
   shortName?: boolean
 }) {
@@ -17,7 +16,7 @@ export function DistributionLimitValue({
     <span className="whitespace-nowrap">
       <Tooltip
         title={
-          currency === 'ETH' && distributionLimit?.gt(0) ? (
+          currency === 'ETH' && distributionLimit && distributionLimit > 0n ? (
             <ETHToUSD ethAmount={distributionLimit} />
           ) : undefined
         }

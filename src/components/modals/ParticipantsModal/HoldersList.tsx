@@ -10,7 +10,7 @@ import Loading from 'components/Loading'
 import { TokenAmount } from 'components/TokenAmount'
 import ETHAmount from 'components/currency/ETHAmount'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
-import { BigNumber, constants } from 'ethers'
+import { ethers } from 'ethers'
 import {
   OrderDirection,
   Participant_OrderBy,
@@ -54,7 +54,7 @@ export default function HoldersList({
   projectId: number | undefined
   pv: PV | undefined
   tokenSymbol: string | undefined
-  totalTokenSupply: BigNumber | undefined
+  totalTokenSupply: bigint | undefined
 }) {
   const [sortPayerReports, setSortPayerReports] = useState<Participant_OrderBy>(
     Participant_OrderBy.balance,
@@ -84,8 +84,8 @@ export default function HoldersList({
       where: {
         projectId,
         pv,
-        balance_gt: BigNumber.from(0),
-        wallet_not: constants.AddressZero,
+        balance_gt: BigInt(0),
+        wallet_not: ethers.ZeroAddress,
       },
     },
   })

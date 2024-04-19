@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import {
   BaseV3FundingCycleMetadataGlobal,
@@ -13,9 +12,9 @@ export type BaseV2V3FundingCycleMetadataGlobal = {
 export type BaseV2V3FundingCycleMetadata = {
   version?: number
   global: BaseV3FundingCycleMetadataGlobal
-  reservedRate: BigNumber
-  redemptionRate: BigNumber
-  ballotRedemptionRate: BigNumber
+  reservedRate: bigint
+  redemptionRate: bigint
+  ballotRedemptionRate: bigint
   pausePay: boolean
   pauseDistributions: boolean
   pauseRedeem: boolean
@@ -38,25 +37,25 @@ export type JBPayDataSourceFundingCycleMetadata = Omit<
 export type V2V3FundAccessConstraint = {
   terminal: string // address
   token: string // address
-  distributionLimit: BigNumber
-  distributionLimitCurrency: BigNumber
-  overflowAllowance: BigNumber
-  overflowAllowanceCurrency: BigNumber
+  distributionLimit: bigint
+  distributionLimitCurrency: bigint
+  overflowAllowance: bigint
+  overflowAllowanceCurrency: bigint
 }
 
 export type V2V3FundingCycleData = {
-  duration: BigNumber
-  weight: BigNumber
-  discountRate: BigNumber
+  duration: bigint
+  weight: bigint
+  discountRate: bigint
   ballot: string // hex, contract address
 }
 
 export type V2V3FundingCycle = V2V3FundingCycleData & {
-  number: BigNumber
-  configuration: BigNumber
-  basedOn: BigNumber
-  start: BigNumber
-  metadata: BigNumber // encoded FundingCycleMetadata
+  number: bigint
+  configuration: bigint
+  basedOn: bigint
+  start: bigint
+  metadata: bigint // encoded FundingCycleMetadata
 }
 
 export type V2V3FundingCycleMetadata =

@@ -1,5 +1,4 @@
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { BigNumber } from 'ethers'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { useMemo } from 'react'
@@ -16,11 +15,11 @@ const JB_PERCENT_PRECISION = 2
 type DiffedSplitListProps = {
   splits: Split[]
   diffSplits?: Split[]
-  currency?: BigNumber
-  oldCurrency?: BigNumber
-  totalValue: BigNumber | undefined
-  oldTotalValue?: BigNumber
-  previousTotalValue?: BigNumber
+  currency?: bigint
+  oldCurrency?: bigint
+  totalValue: bigint | undefined
+  oldTotalValue?: bigint
+  previousTotalValue?: bigint
   showFees?: boolean
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
@@ -56,9 +55,7 @@ export default function DiffedSplitList({
     !ownerSplit?.percent && diffOwnerSplit?.percent === 0
 
   const roundedDiffOwnerSplitPercent = round(
-    parseFloat(
-      formatSplitPercent(BigNumber.from(diffOwnerSplit?.percent || 0)),
-    ),
+    parseFloat(formatSplitPercent(BigInt(diffOwnerSplit?.percent || 0))),
     JB_PERCENT_PRECISION,
   )
   const diffOwnerSplitHasPercent =
@@ -67,7 +64,7 @@ export default function DiffedSplitList({
   const ownerSplitIsNew = ownerSplit?.percent && !diffOwnerSplitHasPercent
 
   const currencyHasDiff = Boolean(
-    oldCurrency && currency && !oldCurrency.eq(currency),
+    oldCurrency && currency && oldCurrency !== currency,
   )
   const uniqueSplits = processUniqueSplits({
     oldTotalValue: previousTotalValue,

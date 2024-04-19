@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { BigNumber } from 'ethers'
 import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
 import { Json } from 'models/json'
 import { useMemo } from 'react'
@@ -103,18 +102,15 @@ export function useProjectTrendingPercentageIncrease({
   totalVolume,
   trendingVolume,
 }: {
-  totalVolume: BigNumber
-  trendingVolume: BigNumber
+  totalVolume: bigint
+  trendingVolume: bigint
 }): number {
   const percentageGain = useMemo(() => {
-    const preTrendingVolume = totalVolume?.sub(trendingVolume)
+    const preTrendingVolume = totalVolume && totalVolume - trendingVolume
 
-    if (!preTrendingVolume?.gt(0)) return Infinity
+    if (!(preTrendingVolume && preTrendingVolume > 0n)) return Infinity
 
-    const percentGain = trendingVolume
-      .mul(10000)
-      .div(preTrendingVolume)
-      .toNumber()
+    const percentGain = Number((trendingVolume * 10000n) / preTrendingVolume)
 
     let percentRounded: number
 

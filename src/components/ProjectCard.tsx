@@ -1,16 +1,15 @@
-import * as constants from '@ethersproject/constants'
 import { BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
 import { Skeleton } from 'antd'
 import { PV_V2 } from 'constants/pv'
+import { ethers } from 'ethers'
 import { useProjectHandleText } from 'hooks/useProjectHandleText'
+import { useProjectMetadata } from 'hooks/useProjectMetadata'
+import { useSubtitle } from 'hooks/useSubtitle'
+import { DBProject } from 'models/dbProject'
 import Link from 'next/link'
 import { isHardArchived } from 'utils/archived'
 import { formatDate } from 'utils/format/formatDate'
 import { v2v3ProjectRoute } from 'utils/routes'
-
-import { useProjectMetadata } from 'hooks/useProjectMetadata'
-import { useSubtitle } from 'hooks/useSubtitle'
-import { DBProject } from 'models/dbProject'
 import { ArchivedBadge } from './ArchivedBadge'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
@@ -37,7 +36,7 @@ export default function ProjectCard({
   const { volume, pv, handle, projectId, tags, createdAt } = project
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
-  const precision = volume?.gt(0) && volume.lt(constants.WeiPerEther) ? 2 : 0
+  const precision = volume > 0n && volume < ethers.WeiPerEther ? 2 : 0
 
   /**
    * We need to set the `as` prop for V2V3 projects

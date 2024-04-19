@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import {
   fromWad,
@@ -11,8 +10,8 @@ import {
 
 // Spreads all properties from both v0 or v1 FundingCycleMetadata
 export type EditingV1FundingCycle = Omit<V1FundingCycle, 'metadata'> & {
-  reserved: BigNumber
-  bondingCurveRate: BigNumber
+  reserved: bigint
+  bondingCurveRate: bigint
   payIsPaused: boolean | null
   ticketPrintingIsAllowed: boolean | null
   treasuryExtension: string | null
@@ -63,22 +62,22 @@ export const deserializeV1FundingCycle = (
   fc: SerializedV1FundingCycle,
 ): EditingV1FundingCycle => ({
   ...fc,
-  projectId: BigNumber.from(fc.projectId),
-  id: BigNumber.from(fc.id),
-  number: BigNumber.from(fc.number),
-  basedOn: BigNumber.from(fc.basedOn),
+  projectId: BigInt(fc.projectId),
+  id: BigInt(fc.id),
+  number: BigInt(fc.number),
+  basedOn: BigInt(fc.basedOn),
   target: parseWad(fc.target),
-  currency: BigNumber.from(fc.currency),
-  start: BigNumber.from(fc.start),
-  duration: BigNumber.from(fc.duration),
+  currency: BigInt(fc.currency),
+  start: BigInt(fc.start),
+  duration: BigInt(fc.duration),
   tapped: parseWad(fc.tapped),
   weight: parseWad(fc.weight),
   fee: percentToPerbicent(fc.fee),
   reserved: percentToPerbicent(fc.reserved),
   bondingCurveRate: percentToPerbicent(fc.bondingCurveRate),
   discountRate: percentToPermille(fc.discountRate),
-  cycleLimit: BigNumber.from(fc.cycleLimit),
-  configured: BigNumber.from(fc.configured),
+  cycleLimit: BigInt(fc.cycleLimit),
+  configured: BigInt(fc.configured),
   ballot: fc.ballot,
   payIsPaused: fc.payIsPaused,
   ticketPrintingIsAllowed: fc.ticketPrintingIsAllowed,

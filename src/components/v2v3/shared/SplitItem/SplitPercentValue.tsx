@@ -1,8 +1,7 @@
-import { BigNumber } from 'ethers'
 import { formatSplitPercent } from 'utils/v2v3/math'
 
 export function SplitPercentValue({ percent }: { percent: number }) {
-  const formattedPercent = formatSplitPercent(BigNumber.from(percent))
+  const formattedPercent = formatSplitPercent(BigInt(percent))
 
   return <span>{formattedPercent}%</span>
 }

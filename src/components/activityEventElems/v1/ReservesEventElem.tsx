@@ -87,7 +87,7 @@ export default function ReservesEventElem({
             </div>
           ))}
 
-          {event.beneficiaryTicketAmount?.gt(0) && (
+          {event.beneficiaryTicketAmount > 0 && (
             <div
               style={{
                 display: 'flex',

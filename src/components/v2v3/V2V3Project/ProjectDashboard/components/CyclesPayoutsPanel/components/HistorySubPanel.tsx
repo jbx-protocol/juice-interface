@@ -4,13 +4,12 @@ import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import moment from 'moment'
 import { Fragment, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { isBigNumberish } from 'utils/bigNumbers'
+import { isBigintIsh } from 'utils/bigNumbers'
 import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import {
@@ -27,7 +26,7 @@ export const HistorySubPanel = () => {
   const [isFetchingMore, setIsFetchingMore] = useState<boolean>()
   const { data, fetchMore, loading, error } = usePastFundingCycles({
     projectId,
-    currentFcNumber: fundingCycle?.number.toNumber() ?? 0,
+    currentFcNumber: fundingCycle?.number ? Number(fundingCycle.number) : 0,
   })
 
   const isLoading = loading || isFetchingMore
@@ -167,8 +166,8 @@ function FormattedWithdrawnAmount({
   configuration,
   withdrawnAmount,
 }: {
-  configuration: BigNumber
-  withdrawnAmount: BigNumber
+  configuration: bigint
+  withdrawnAmount: bigint
 }) {
   const { projectId } = useProjectMetadataContext()
   const { primaryETHTerminal } = useProjectContext()
@@ -192,14 +191,14 @@ function FormattedWithdrawnAmount({
 
     const [, currency] = distributionLimit
 
-    if (!isBigNumberish(currency)) {
+    if (!isBigintIsh(currency)) {
       console.error(
         'Unexpected result from distributionLimitOf',
         distributionLimit,
       )
       throw new Error('Unexpected result from distributionLimitOf')
     }
-    const _currencyOption = BigNumber.from(currency).toNumber()
+    const _currencyOption = Number(BigInt(currency))
     if (_currencyOption !== 0) return _currencyOption as V2V3CurrencyOption
   }, [distributionLimit])
 

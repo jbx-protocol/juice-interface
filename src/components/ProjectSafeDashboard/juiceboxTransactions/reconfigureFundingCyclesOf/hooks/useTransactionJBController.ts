@@ -20,13 +20,15 @@ export function useTransactionJBController(transaction: SafeTransactionType) {
   if (!contracts) return
 
   switch (transaction.to) {
-    case contracts?.JBController3_1.address:
+    // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+    case contracts?.JBController3_1.target as string:
       return contracts.JBController3_1
-
-    case V2JBController?.address:
+    // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+    case V2JBController?.target as string:
       return V2JBController
 
-    case V3JBController?.address:
+    // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+    case V3JBController?.target as string:
       return V3JBController
   }
 }

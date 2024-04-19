@@ -1,9 +1,7 @@
-import { BigNumber } from 'ethers'
-
 export type WeightFunction = (
-  weight: BigNumber | undefined,
+  weight: bigint | undefined,
   reservedRate: number | undefined,
-  wadAmount: BigNumber | undefined,
+  wadAmount: bigint | undefined,
   outputType: 'payer' | 'reserved',
 ) => string
 

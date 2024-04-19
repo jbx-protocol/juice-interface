@@ -1,5 +1,3 @@
-import { BigNumber } from 'ethers'
-
 import { t, Trans } from '@lingui/macro'
 import { Modal, Space, Tooltip } from 'antd'
 import RichButton from 'components/buttons/RichButton'
@@ -72,11 +70,11 @@ export default function ManageTokensModal({
   redeemDisabled: boolean | undefined
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
-  tokenUnclaimedBalance: BigNumber | undefined
+  tokenUnclaimedBalance: bigint | undefined
 
   transferUnclaimedTokensTx: () => TransactorInstance<{
     to: string
-    amount: BigNumber
+    amount: bigint
   }>
 
   RedeemModal: (props: ModalProps) => JSX.Element | null
@@ -197,7 +195,7 @@ export default function ManageTokensModal({
               </div>
             </Tooltip>
           )}
-          {tokenUnclaimedBalance?.gt(0) ? (
+          {tokenUnclaimedBalance && tokenUnclaimedBalance > 0n ? (
             <RichButton
               heading={<Trans>Transfer unclaimed {tokensLabel}</Trans>}
               description={

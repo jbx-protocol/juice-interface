@@ -23,7 +23,7 @@ export const FundingCycleCountdownProvider = ({
   const fundingCycle = useProjectContext().fundingCycle
 
   const endEpochSeconds = fundingCycle
-    ? fundingCycle.start.add(fundingCycle.duration).toNumber()
+    ? Number(fundingCycle.start + fundingCycle.duration)
     : 0
 
   const { remainingTimeText, secondsRemaining } =

@@ -1,4 +1,5 @@
 import { EMPTY_RESERVED_TOKENS_GROUPED_SPLITS } from 'redux/slices/editingV2Project'
+import { toHexString } from 'utils/bigNumbers'
 import { allocationToSplit } from 'utils/splitToAllocation'
 import {
   discountRateFrom,
@@ -12,19 +13,19 @@ export const projectTokenSettingsToReduxFormat = (
   projectTokenSettings: Required<Omit<ProjectTokensFormProps, 'selection'>>,
 ) => {
   const weight = formatIssuanceRate(projectTokenSettings.initialMintRate)
-  const reservedRate = reservedRateFrom(
-    projectTokenSettings.reservedTokensPercentage,
-  ).toHexString()
+  const reservedRate = toHexString(
+    reservedRateFrom(projectTokenSettings.reservedTokensPercentage),
+  )
   const reservedTokensGroupedSplits = {
     ...EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
     splits: projectTokenSettings.reservedTokenAllocation.map(allocationToSplit),
   }
-  const discountRate = discountRateFrom(
-    projectTokenSettings.discountRate,
-  ).toHexString()
-  const redemptionRate = redemptionRateFrom(
-    projectTokenSettings.redemptionRate,
-  ).toHexString()
+  const discountRate = toHexString(
+    discountRateFrom(projectTokenSettings.discountRate),
+  )
+  const redemptionRate = toHexString(
+    redemptionRateFrom(projectTokenSettings.redemptionRate),
+  )
   const allowMinting = projectTokenSettings.tokenMinting
   const pauseTransfers = projectTokenSettings.pauseTransfers
 

@@ -3,10 +3,9 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { constants } from 'ethers'
 
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { BigNumber } from 'ethers'
+import { ethers } from 'ethers'
 import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewards'
 import {
   LATEST_METADATA_VERSION,
@@ -31,10 +30,10 @@ export const DEFAULT_MINT_RATE = ONE_MILLION
 
 export const DEFAULT_FUNDING_CYCLE_DATA: SerializedV2V3FundingCycleData =
   serializeV2V3FundingCycleData({
-    duration: BigNumber.from(0),
-    weight: BigNumber.from(issuanceRateFrom(DEFAULT_MINT_RATE.toString())), // 1e24, resulting in 1,000,000 tokens per ETH
-    discountRate: BigNumber.from(0), // A number from 0-1,000,000,000
-    ballot: constants.AddressZero,
+    duration: BigInt(0),
+    weight: BigInt(issuanceRateFrom(DEFAULT_MINT_RATE.toString())), // 1e24, resulting in 1,000,000 tokens per ETH
+    discountRate: BigInt(0), // A number from 0-1,000,000,000
+    ballot: ethers.ZeroAddress,
   })
 
 export const DEFAULT_FUNDING_CYCLE_METADATA: SerializedV2V3FundingCycleMetadata =
@@ -44,7 +43,7 @@ export const DEFAULT_FUNDING_CYCLE_METADATA: SerializedV2V3FundingCycleMetadata 
       allowSetController: false,
       pauseTransfers: false,
     },
-    reservedRate: BigNumber.from(0), // A number from 0-10,000
+    reservedRate: BigInt(0), // A number from 0-10,000
     redemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
     ballotRedemptionRate: redemptionRateFrom('100'), // A number from 0-10,000
     pausePay: false,
@@ -59,8 +58,8 @@ export const DEFAULT_FUNDING_CYCLE_METADATA: SerializedV2V3FundingCycleMetadata 
     useTotalOverflowForRedemptions: false,
     useDataSourceForPay: false,
     useDataSourceForRedeem: false,
-    dataSource: constants.AddressZero,
-    metadata: BigNumber.from(0),
+    dataSource: ethers.ZeroAddress,
+    metadata: BigInt(0),
   }) ?? {}
 
 export const EMPTY_PAYOUT_GROUPED_SPLITS = {

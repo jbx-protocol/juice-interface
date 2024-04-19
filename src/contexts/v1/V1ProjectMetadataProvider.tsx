@@ -17,7 +17,7 @@ export function V1ProjectMetadataProvider({
 
   const isArchived =
     ((projectId &&
-      isHardArchived({ pv: PV_V1, projectId: projectId.toNumber() })) ||
+      isHardArchived({ pv: PV_V1, projectId: Number(projectId) })) ||
       metadata?.archived) ??
     false
 
@@ -31,7 +31,7 @@ export function V1ProjectMetadataProvider({
         },
         projectMetadata: metadata,
         isArchived,
-        projectId: projectId?.toNumber(),
+        projectId: projectId ? Number(projectId) : undefined,
         pv: PV_V1,
       }}
     >

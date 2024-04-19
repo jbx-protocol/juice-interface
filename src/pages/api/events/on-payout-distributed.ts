@@ -1,4 +1,4 @@
-import { BigNumber, utils } from 'ethers'
+import { ethers } from 'ethers'
 import {
   DistributePayoutsEventsDocument,
   DistributePayoutsEventsQuery,
@@ -55,11 +55,11 @@ const Schema = Yup.object().shape({
 
   // data: Yup.object().shape({
   //   beneficiary: Yup.string().required(),
-  //   amount: BigIntValidator('amount must be a BigInt').required(),
-  //   distributedAmount: BigIntValidator(
-  //     'distributedAmount must be a BigInt',
+  //   amount: bigintValidator('amount must be a bigint').required(),
+  //   distributedAmount: bigintValidator(
+  //     'distributedAmount must be a bigint',
   //   ).required(),
-  //   fee: BigIntValidator('fee must be a BigInt').required(),
+  //   fee: bigintValidator('fee must be a bigint').required(),
   //   beneficiaryDistributionAmount: Yup.string().required(),
   //   caller: Yup.string().required(),
   //   metadata: Yup.string().required(),
@@ -79,7 +79,7 @@ const splitDistributionToRecipient = async ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   beneficiary: any
   splitProjectId: number
-  amount: BigNumber
+  amount: bigint
 }) => {
   let recipientName = '??'
   let href = '#'
@@ -92,7 +92,7 @@ const splitDistributionToRecipient = async ({
       href = `https://juicebox.money/v2/p/${splitProjectId}`
     }
   } else {
-    const normalizedRecipientAddress = utils.getAddress(beneficiary)
+    const normalizedRecipientAddress = ethers.getAddress(beneficiary)
     const { name: recipientEnsName } = await resolveAddressEnsIdeas(
       normalizedRecipientAddress,
     )
@@ -128,7 +128,7 @@ const compileEmailMetadata = async ({
     amount,
     currency: V2V3_CURRENCY_ETH,
   })!
-  const normalizedPayerAddress = utils.getAddress(from)
+  const normalizedPayerAddress = ethers.getAddress(from)
   const { name: payerEnsName } = await resolveAddressEnsIdeas(
     normalizedPayerAddress,
   )

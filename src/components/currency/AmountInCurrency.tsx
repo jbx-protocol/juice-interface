@@ -1,5 +1,4 @@
 import { CurrencyName } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import ETHAmount from './ETHAmount'
 import USDAmount from './USDAmount'
 
@@ -13,7 +12,7 @@ export function AmountInCurrency({
   hideTooltip,
   ...props
 }: {
-  amount: BigNumber | undefined
+  amount: bigint | undefined
   currency: CurrencyName | undefined
   hideTooltip?: boolean
 }) {

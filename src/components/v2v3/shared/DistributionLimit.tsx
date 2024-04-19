@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
 import { CurrencyName } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import { twMerge } from 'tailwind-merge'
 import { formatFundingTarget } from 'utils/format/formatFundingTarget'
 import { getV2V3CurrencyOption } from 'utils/v2v3/currency'
@@ -15,14 +14,14 @@ export default function DistributionLimit({
   shortName,
 }: {
   className?: string
-  distributionLimit: BigNumber | undefined
+  distributionLimit: bigint | undefined
   currencyName: CurrencyName | undefined
   showTooltip?: boolean
   shortName?: boolean
 }) {
   const distributionLimitIsInfinite =
     !distributionLimit || isInfiniteDistributionLimit(distributionLimit)
-  const distributionLimitIsZero = distributionLimit?.eq(0)
+  const distributionLimitIsZero = distributionLimit === 0n
   const distributionLimitCurrency = currencyName
     ? getV2V3CurrencyOption(currencyName)
     : undefined

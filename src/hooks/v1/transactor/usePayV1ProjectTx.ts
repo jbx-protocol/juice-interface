@@ -5,14 +5,14 @@ import { useContext } from 'react'
 
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
+import { toHexString } from 'utils/bigNumbers'
 import { useV1ProjectTitle } from '../useProjectTitle'
 
 export function usePayV1ProjectTx(): TransactorInstance<{
   note: string
   preferUnstaked: boolean
-  value: BigNumber
+  value: bigint
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
   const { terminal } = useContext(V1ProjectContext)
@@ -51,15 +51,10 @@ export function usePayV1ProjectTx(): TransactorInstance<{
         ? contracts.TerminalV1_1
         : contracts.TerminalV1,
       'pay',
-      [
-        BigNumber.from(projectId).toHexString(),
-        userAddress,
-        note || '',
-        preferUnstaked,
-      ],
+      [toHexString(BigInt(projectId)), userAddress, note || '', preferUnstaked],
       {
         ...txOpts,
-        value: value.toHexString(),
+        value: toHexString(value),
         title: t`Pay ${projectTitle}`,
       },
     )

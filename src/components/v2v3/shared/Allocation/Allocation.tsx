@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { FormItemInput } from 'models/formItemInput'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -15,8 +14,8 @@ const DEFAULT_SET_CURRENCY_FN = () => {
 
 const AllocationContext = createContext<{
   allocations: AllocationSplit[]
-  totalAllocationAmount?: BigNumber
-  setTotalAllocationAmount?: (total: BigNumber) => void
+  totalAllocationAmount?: bigint
+  setTotalAllocationAmount?: (total: bigint) => void
   allocationCurrency?: V2V3CurrencyOption
   addAllocation: (allocation: AllocationSplit) => void
   removeAllocation: (id: string) => void
@@ -49,8 +48,8 @@ const useAllocationInstance = () => {
 }
 
 interface AllocationProps {
-  totalAllocationAmount?: BigNumber
-  setTotalAllocationAmount?: (total: BigNumber) => void
+  totalAllocationAmount?: bigint
+  setTotalAllocationAmount?: (total: bigint) => void
   allocationCurrency?: V2V3CurrencyOption
   setAllocationCurrency?: (currency: V2V3CurrencyOption) => void
 }

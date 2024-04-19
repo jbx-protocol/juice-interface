@@ -4,7 +4,6 @@ import { Button, Tooltip } from 'antd'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import DistributeReservedTokensModal from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/modals/DistributeReservedTokensModal'
 import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useCallback, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -29,7 +28,7 @@ export const SendReservedTokensButton = ({
   const closeModal = useCallback(() => setOpen(false), [])
 
   const distributeButtonDisabled = useMemo(() => {
-    return (reservedTokens ?? BigNumber.from(0)).eq(0)
+    return (reservedTokens ?? BigInt(0)) === 0n
   }, [reservedTokens])
 
   return (

@@ -3,8 +3,8 @@ import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
-import { constants } from 'ethers'
 
+import { ethers } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useContext } from 'react'
@@ -50,7 +50,7 @@ export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayer
       'deployProjectPayer',
       [
         projectId, // _defaultProjectId
-        customBeneficiaryAddress ?? constants.AddressZero, // _defaultBeneficiary, is 0x00 because we want tokens to go to msg.sender
+        customBeneficiaryAddress ?? ethers.ZeroAddress, // _defaultBeneficiary, is 0x00 because we want tokens to go to msg.sender
         preferClaimed, // _defaultPreferClaimedTokens
         customMemo ?? DEFAULT_MEMO, // _defaultMemo
         DEFAULT_METADATA, //_defaultMetadata

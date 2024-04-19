@@ -16,7 +16,6 @@ import {
 import { FundingCycleListItem } from '../FundingCycleListItem'
 
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber } from 'ethers'
 import { useContext } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import {
@@ -86,20 +85,19 @@ export function TokenListItems({
   // Diffs in token issuance are only due to discount rate. i.e. A new token issuance was not set => NO DIFF
   const onlyDiscountRateApplied =
     oldFundingCycle &&
-    fundingCycle.weight.eq(
+    fundingCycle.weight ===
       deriveNextIssuanceRate({
-        weight: BigNumber.from(0),
+        weight: BigInt(0),
         previousFC: oldFundingCycle,
-      }),
-    )
+      })
 
   const mintRateHasDiff =
     oldFundingCycle &&
-    !fundingCycle.weight.eq(oldFundingCycle.weight) &&
+    fundingCycle.weight !== oldFundingCycle.weight &&
     !onlyDiscountRateApplied
   const reservedRateHasDiff =
     oldFundingCycleMetadata &&
-    !fundingCycleMetadata.reservedRate.eq(oldFundingCycleMetadata.reservedRate)
+    fundingCycleMetadata.reservedRate !== oldFundingCycleMetadata.reservedRate
 
   const payerTokensHasDiff =
     oldPayerTokens && (mintRateHasDiff || reservedRateHasDiff)
@@ -107,12 +105,11 @@ export function TokenListItems({
 
   const discountRateHasDiff =
     oldFundingCycle &&
-    !fundingCycle.discountRate.eq(oldFundingCycle.discountRate)
+    fundingCycle.discountRate !== oldFundingCycle.discountRate
   const redemptionHasDiff =
     oldFundingCycleMetadata &&
-    !fundingCycleMetadata.redemptionRate.eq(
-      oldFundingCycleMetadata.redemptionRate,
-    )
+    fundingCycleMetadata.redemptionRate !==
+      oldFundingCycleMetadata.redemptionRate
 
   const allowMintingHasDiff =
     oldFundingCycleMetadata &&

@@ -33,7 +33,7 @@ export function CreateFlowPayoutsTable({
   const { form, initialValues } = usePayoutsForm()
   const distributionLimit = !editingDistributionLimit
     ? 0
-    : editingDistributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)
+    : editingDistributionLimit.amount === MAX_DISTRIBUTION_LIMIT
     ? undefined
     : parseFloat(fromWad(editingDistributionLimit?.amount))
 

@@ -2,7 +2,6 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { MigrateLegacyProjectTokensModal } from 'components/v2v3/V2V3Project/V2V3ManageTokensSection/LegacyProjectTokensDescription/MigrateLegacyProjectTokensModal/MigrateLegacyProjectTokensModal'
 import { V1UserProvider } from 'contexts/v1/User/V1UserProvider'
-import { BigNumber } from 'ethers'
 import { useState } from 'react'
 
 export function MigrateTokensButton({
@@ -10,8 +9,8 @@ export function MigrateTokensButton({
   v1ClaimedBalance,
   className,
 }: {
-  totalLegacyTokenBalance: BigNumber
-  v1ClaimedBalance: BigNumber
+  totalLegacyTokenBalance: bigint
+  v1ClaimedBalance: bigint | undefined
   className?: string
 }) {
   const [modalOpen, setModalOpen] = useState<boolean>(false)

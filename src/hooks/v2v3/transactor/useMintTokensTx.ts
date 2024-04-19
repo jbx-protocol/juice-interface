@@ -4,19 +4,19 @@ import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
-import { BigNumber } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/useTransactor'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
+import { toHexString } from 'utils/bigNumbers'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 const DEFAULT_USE_RESERVED_RATE = false
 
 export function useMintTokensTx(): TransactorInstance<{
-  value: BigNumber
+  value: bigint
   beneficiary: string
   preferClaimed: boolean
   memo: string
@@ -37,7 +37,7 @@ export function useMintTokensTx(): TransactorInstance<{
         'mintTokensOf',
         [
           projectId,
-          value.toHexString(),
+          toHexString(value),
           beneficiary,
           memo ?? '',
           preferClaimed,

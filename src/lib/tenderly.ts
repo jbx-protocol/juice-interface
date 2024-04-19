@@ -29,15 +29,18 @@ export const simulateTransaction = async ({
 
   const unsignedTx =
     options?.value !== undefined
-      ? await contract.populateTransaction[functionName](...args, {
+      ? // TODO: This might not work
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (contract as any).populateTransaction[functionName](...args, {
           value: options.value,
         })
-      : await contract.populateTransaction[functionName](...args)
+      : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (contract as any).populateTransaction[functionName](...args)
 
   const body = {
     network_id: readNetwork.chainId,
     from: userAddress,
-    to: contract.address,
+    to: contract.target,
     input: unsignedTx.data,
     value: options?.value?.toString() ?? 0,
     save_if_fails: true,

@@ -1,6 +1,6 @@
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readProvider } from 'constants/readProvider'
-import { BigNumber, providers } from 'ethers'
+import { TransactionReceipt } from 'ethers'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { TransactionCallbacks } from 'models/transaction'
 import { useCallback, useState } from 'react'
@@ -12,6 +12,7 @@ import {
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { isBigintIsh } from 'utils/bigNumbers'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
@@ -33,11 +34,13 @@ const JUICECROWD_DOMAIN = 'juicecrowd'
  * @param txReceipt receipt of `launchProjectFor` transaction
  */
 const getProjectIdFromNftLaunchReceipt = (
-  txReceipt: providers.TransactionReceipt,
+  txReceipt: TransactionReceipt,
 ): number => {
   const projectIdHex: unknown | undefined =
     txReceipt?.logs[NFT_CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
-  const projectId = BigNumber.from(projectIdHex).toNumber()
+  if (!isBigintIsh(projectIdHex))
+    throw new Error('Invalid project ID - could not parse to bigint')
+  const projectId = Number(BigInt(projectIdHex))
 
   return projectId
 }
@@ -47,11 +50,13 @@ const getProjectIdFromNftLaunchReceipt = (
  * @param txReceipt receipt of `launchProjectFor` transaction
  */
 const getProjectIdFromLaunchReceipt = (
-  txReceipt: providers.TransactionReceipt,
+  txReceipt: TransactionReceipt,
 ): number => {
   const projectIdHex: unknown | undefined =
     txReceipt?.logs[CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
-  const projectId = BigNumber.from(projectIdHex).toNumber()
+  if (!isBigintIsh(projectIdHex))
+    throw new Error('Invalid project ID - could not parse to bigint')
+  const projectId = Number(BigInt(projectIdHex))
 
   return projectId
 }

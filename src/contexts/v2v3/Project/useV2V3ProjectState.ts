@@ -3,7 +3,6 @@ import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { BigNumber } from 'ethers'
 import { useProjectsQuery } from 'generated/graphql'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'
@@ -39,8 +38,8 @@ const useBalanceInDistributionLimitCurrency = ({
   distributionLimitCurrency,
 }: {
   ETHBalanceLoading: boolean
-  ETHBalance: BigNumber | undefined
-  distributionLimitCurrency: BigNumber
+  ETHBalance: bigint | undefined
+  distributionLimitCurrency: bigint
 }) => {
   const converter = useCurrencyConverter()
 
@@ -49,8 +48,8 @@ const useBalanceInDistributionLimitCurrency = ({
 
     // if ETH, no conversion necessary
     if (
-      distributionLimitCurrency?.eq(V2V3_CURRENCY_ETH) ||
-      distributionLimitCurrency?.eq(NO_CURRENCY)
+      Number(distributionLimitCurrency) === V2V3_CURRENCY_ETH ||
+      Number(distributionLimitCurrency) === NO_CURRENCY
     ) {
       return { data: ETHBalance, loading: false }
     }
@@ -58,9 +57,11 @@ const useBalanceInDistributionLimitCurrency = ({
     return {
       data: converter.wadToCurrency(
         ETHBalance,
-        V2V3CurrencyName(
-          distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
-        ),
+        distributionLimitCurrency
+          ? V2V3CurrencyName(
+              Number(distributionLimitCurrency) as V2V3CurrencyOption,
+            )
+          : undefined,
         V2V3CurrencyName(V2V3_CURRENCY_ETH),
       ),
       loading: false,
@@ -134,7 +135,8 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const { data: terminals } = useProjectTerminals({
     projectId,
   })
-  const primaryETHTerminal = JBETHPaymentTerminal?.address
+  // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+  const primaryETHTerminal = JBETHPaymentTerminal?.target as string
   const { value: primaryETHTerminalFee } = useETHPaymentTerminalFee()
   const { data: ETHBalance, loading: ETHBalanceLoading } =
     usePaymentTerminalBalance({

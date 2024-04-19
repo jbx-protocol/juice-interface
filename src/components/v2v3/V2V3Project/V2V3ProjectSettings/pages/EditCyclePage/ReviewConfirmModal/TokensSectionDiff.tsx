@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans, t } from '@lingui/macro'
 import { FundingCycleListItem } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItem'
 import { MintRateValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/TokenListItems/MintRateValue'
@@ -64,7 +63,7 @@ export function TokensSectionDiff() {
   const formattedReservedRate = parseFloat(formatReservedRate(newReservedRate))
 
   const currentMintRateAfterDiscountRateApplied = deriveNextIssuanceRate({
-    weight: BigNumber.from(0),
+    weight: BigInt(0),
     previousFC: currentFundingCycle,
   })
 
@@ -72,7 +71,7 @@ export function TokensSectionDiff() {
     <DiffSection
       content={
         <div className="mb-5 flex flex-col gap-3 text-sm">
-          {mintRateHasDiff && currentMintRateAfterDiscountRateApplied && (
+          {!!mintRateHasDiff && !!currentMintRateAfterDiscountRateApplied && (
             <FundingCycleListItem
               name={t`Total issuance`}
               value={
@@ -89,14 +88,14 @@ export function TokensSectionDiff() {
               }
             />
           )}
-          {discountRateHasDiff && currentDiscountRate && (
+          {!!discountRateHasDiff && !!currentDiscountRate && (
             <FundingCycleListItem
               name={t`Issuance reduction rate`}
               value={`${formatDiscountRate(newDiscountRate)}%`}
               oldValue={`${formatDiscountRate(currentDiscountRate)}%`}
             />
           )}
-          {redemptionHasDiff && currentRedemptionRate && (
+          {!!redemptionHasDiff && !!currentRedemptionRate && (
             <FundingCycleListItem
               name={t`Redemption rate`}
               value={`${formatRedemptionRate(newRedemptionRate)}%`}
@@ -131,7 +130,7 @@ export function TokensSectionDiff() {
               }
             />
           )}
-          {reservedRateHasDiff && currentReservedRate && (
+          {!!reservedRateHasDiff && !!currentReservedRate && (
             <FundingCycleListItem
               name={t`Reserved tokens`}
               value={

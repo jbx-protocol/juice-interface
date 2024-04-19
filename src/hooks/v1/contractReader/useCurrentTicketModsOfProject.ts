@@ -1,14 +1,14 @@
-import { BigNumber, BigNumberish } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { TicketMod } from 'models/v1/mods'
 import { useMemo } from 'react'
+import { BigintIsh, toHexString } from 'utils/bigNumbers'
 
 import useContractReader from './useContractReader'
 
 /** Returns current ticket mods for project with `projectId`. `currentConfigured`: configured property of current funding cycle. */
 export default function useCurrentTicketModsOfProject(
-  projectId: BigNumberish | undefined,
-  currentConfigured: BigNumberish | undefined,
+  projectId: BigintIsh | undefined,
+  currentConfigured: BigintIsh | undefined,
 ) {
   return useContractReader<TicketMod[]>({
     contract: V1ContractName.ModStore,
@@ -16,8 +16,8 @@ export default function useCurrentTicketModsOfProject(
     args:
       projectId && currentConfigured
         ? [
-            BigNumber.from(projectId).toHexString(),
-            BigNumber.from(currentConfigured).toHexString(),
+            toHexString(BigInt(projectId)),
+            toHexString(BigInt(currentConfigured)),
           ]
         : null,
     updateOn: useMemo(
@@ -28,8 +28,8 @@ export default function useCurrentTicketModsOfProject(
                 contract: V1ContractName.ModStore,
                 eventName: 'SetTicketMod',
                 topics: [
-                  BigNumber.from(projectId).toHexString(),
-                  BigNumber.from(currentConfigured).toHexString(),
+                  toHexString(BigInt(projectId)),
+                  toHexString(BigInt(currentConfigured)),
                 ],
               },
             ]

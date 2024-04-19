@@ -1,5 +1,4 @@
 import { PRECISION_ETH } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import { HTMLProps } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -11,7 +10,7 @@ export function TokenAmount({
   precision = PRECISION_ETH,
   ...props
 }: {
-  amountWad: BigNumber
+  amountWad: bigint
   tokenSymbol?: string
   decimals?: number
   precision?: number

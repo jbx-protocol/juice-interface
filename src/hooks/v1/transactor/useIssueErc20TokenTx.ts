@@ -1,9 +1,9 @@
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
-import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useContext } from 'react'
+import { toHexString } from 'utils/bigNumbers'
 
 export function useV1IssueErc20TokenTx(): TransactorInstance<{
   name: string
@@ -21,7 +21,7 @@ export function useV1IssueErc20TokenTx(): TransactorInstance<{
     return transactor(
       contracts.TicketBooth,
       'issue',
-      [BigNumber.from(projectId).toHexString(), name, symbol],
+      [toHexString(BigInt(projectId)), name, symbol],
       {
         ...txOpts,
         title: t`Issue $${symbol}`,

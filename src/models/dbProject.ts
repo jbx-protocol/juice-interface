@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { Database } from 'types/database.types'
 
 import { Project } from 'generated/graphql'
@@ -39,13 +38,13 @@ export type DBProject = {
   handle: string | null
   metadataUri: string | null
 
-  currentBalance: BigNumber
-  trendingScore: BigNumber
-  volume: BigNumber
-  volumeUSD: BigNumber
-  redeemVolume: BigNumber
-  redeemVolumeUSD: BigNumber
-  trendingVolume: BigNumber
+  currentBalance: bigint
+  trendingScore: bigint
+  volume: bigint
+  volumeUSD: bigint
+  redeemVolume: bigint
+  redeemVolumeUSD: bigint
+  trendingVolume: bigint
 
   paymentsCount: number
   trendingPaymentsCount: number

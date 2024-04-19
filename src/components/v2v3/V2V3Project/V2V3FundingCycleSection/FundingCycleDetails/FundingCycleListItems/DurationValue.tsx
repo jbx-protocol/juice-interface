@@ -1,24 +1,19 @@
 import { Trans } from '@lingui/macro'
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
-import { BigNumber } from 'ethers'
 import { detailedTimeString } from 'utils/format/formatTime'
 
-export function DurationValue({
-  duration,
-}: {
-  duration: BigNumber | undefined
-}) {
+export function DurationValue({ duration }: { duration: bigint | undefined }) {
   const formattedDuration = duration
     ? detailedTimeString({
-        timeSeconds: duration.toNumber(),
+        timeSeconds: Number(duration),
         fullWords: true,
       })
     : undefined
   const riskWarningText = FUNDING_CYCLE_WARNING_TEXT()
   return (
     <>
-      {duration?.gt(0) ? (
+      {duration && duration > 0n ? (
         formattedDuration
       ) : (
         <FundingCycleDetailWarning

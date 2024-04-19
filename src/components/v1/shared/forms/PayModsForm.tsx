@@ -2,7 +2,6 @@ import { t, Trans } from '@lingui/macro'
 
 import { Button, Form, Input, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { BigNumber } from 'ethers'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { PayoutMod } from 'models/v1/mods'
 import { useContext, useLayoutEffect, useState } from 'react'
@@ -13,8 +12,8 @@ import ProjectPayoutMods from 'components/v1/shared/ProjectPayMods/ProjectPayout
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
 
 import { CsvUpload } from 'components/inputs/CsvUpload'
-import { constants } from 'ethers'
 
+import { ethers } from 'ethers'
 import { parseV1PayoutModsCsv } from 'utils/csv'
 
 export default function PayModsForm({
@@ -26,8 +25,8 @@ export default function PayModsForm({
 }: {
   initialMods: PayoutMod[]
   currency: V1CurrencyOption
-  target: BigNumber
-  fee: BigNumber | undefined
+  target: bigint
+  fee: bigint | undefined
   onSave: (mods: PayoutMod[]) => void
 }) {
   // State objects avoid antd form input dependency rerendering issues
@@ -126,7 +125,7 @@ export default function PayModsForm({
           formItemProps={{
             label: t`Payouts (optional)`,
           }}
-          targetIsInfinite={!target || target.eq(constants.MaxUint256)}
+          targetIsInfinite={!target || target === ethers.MaxUint256}
         />
         <Form.Item>
           <Button

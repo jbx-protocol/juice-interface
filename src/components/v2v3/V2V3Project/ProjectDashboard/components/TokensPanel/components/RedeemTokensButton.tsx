@@ -20,7 +20,7 @@ export const RedeemTokensButton = ({
   const closeModal = useCallback(() => setOpen(false), [])
 
   const hasOverflow = useMemo(
-    () => !!primaryTerminalCurrentOverflow?.gt(0),
+    () => primaryTerminalCurrentOverflow && primaryTerminalCurrentOverflow > 0n,
     [primaryTerminalCurrentOverflow],
   )
 
@@ -28,18 +28,18 @@ export const RedeemTokensButton = ({
     if (
       !userTokenBalanceWad ||
       !hasOverflow ||
-      fundingCycleMetadata?.redemptionRate.eq(0)
+      fundingCycleMetadata?.redemptionRate === 0n
     )
       return true
-    return userTokenBalanceWad.isZero()
+    return userTokenBalanceWad === 0n
   }, [fundingCycleMetadata?.redemptionRate, hasOverflow, userTokenBalanceWad])
 
   const redeemDisabledTooltip = useMemo(() => {
-    if (!userTokenBalanceWad || userTokenBalanceWad.eq(0))
+    if (!userTokenBalanceWad || userTokenBalanceWad === 0n)
       return t`No tokens to redeem.`
     if (!hasOverflow)
       return t`This project has no ETH, or is using all of its ETH for payouts.`
-    if (fundingCycleMetadata?.redemptionRate.eq(0))
+    if (fundingCycleMetadata?.redemptionRate === 0n)
       return t`This project has redemptions turned off.`
     return undefined
   }, [fundingCycleMetadata?.redemptionRate, hasOverflow, userTokenBalanceWad])

@@ -7,7 +7,6 @@ import ParticipantsModal from 'components/modals/ParticipantsModal'
 import SectionHeader from 'components/SectionHeader'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { BigNumber } from 'ethers'
 import useERC20BalanceOf from 'hooks/ERC20/useERC20BalanceOf'
 import useCanPrintPreminedTokens from 'hooks/v1/contractReader/useCanPrintPreminedTokens'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/useReservedTokensOfProject'
@@ -55,9 +54,10 @@ export function TokensSection() {
     fundingCycleMetadata?.reservedRate,
   )
   const totalSupply = useTotalSupplyOfProjectToken(projectId)
-  const totalSupplyWithReservedTicketBalance = totalSupply?.add(
-    reservedTicketBalance ? reservedTicketBalance : BigNumber.from(0),
-  )
+  const totalSupplyWithReservedTicketBalance = totalSupply
+    ? totalSupply + (reservedTicketBalance ? reservedTicketBalance : BigInt(0))
+    : undefined
+
   const hasIssueTicketsPermission = useV1ConnectedWalletHasPermission(
     V1OperatorPermission.Issue,
   )
@@ -80,7 +80,7 @@ export function TokensSection() {
         : fundingCycleMetadata.ticketPrintingIsAllowed),
   )
 
-  const hasOverflow = Boolean(overflow?.gt(0))
+  const hasOverflow = Boolean(overflow && overflow > 0n)
   const redeemDisabled = Boolean(
     !hasOverflow || fundingCycleMetadata?.bondingCurveRate === 0,
   )

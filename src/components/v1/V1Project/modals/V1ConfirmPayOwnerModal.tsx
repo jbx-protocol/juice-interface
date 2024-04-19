@@ -16,7 +16,7 @@ import ProjectRiskNotice from 'components/ProjectRiskNotice'
 import { ProjectPreferences } from 'constants/projectPreferences'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { BigNumber, constants } from 'ethers'
+import { ethers } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { usePayV1ProjectTx } from 'hooks/v1/transactor/usePayV1ProjectTx'
 import { useWallet } from 'hooks/Wallet'
@@ -48,7 +48,7 @@ export default function V1ConfirmPayOwnerModal({
   payButtonText,
 }: {
   open?: boolean
-  weiAmount: BigNumber | undefined
+  weiAmount: bigint | undefined
   onSuccess?: VoidFunction
   onCancel?: VoidFunction
   payButtonText: string
@@ -153,7 +153,7 @@ export default function V1ConfirmPayOwnerModal({
     })
   }
 
-  const hasIssuedTokens = tokenAddress && tokenAddress !== constants.AddressZero
+  const hasIssuedTokens = tokenAddress && tokenAddress !== ethers.ZeroAddress
 
   if (!projectMetadata) return null
 

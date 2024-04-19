@@ -1,30 +1,29 @@
-import { BigNumber } from 'ethers'
 import { fromWad, percentToPerbicent } from 'utils/format/formatNumber'
 import { WeightFunction } from 'utils/math'
 
 export const feeForAmount = (
-  amount: BigNumber | undefined,
-  feePerbicent: BigNumber | undefined,
+  amount: bigint | undefined,
+  feePerbicent: bigint | undefined,
 ) => {
   if (!feePerbicent || !amount) return
-  return amount.sub(amount.mul(200).div(feePerbicent.add(200)))
+  return amount - (amount * 200n) / (feePerbicent + 200n)
 }
 
-export const amountSubFee = (amount?: BigNumber, feePerbicent?: BigNumber) => {
+export const amountSubFee = (amount?: bigint, feePerbicent?: bigint) => {
   if (!feePerbicent || !amount) return
-  return amount.sub(feeForAmount(amount, feePerbicent) ?? 0)
+  return amount - (feeForAmount(amount, feePerbicent) ?? 0n)
 }
 
 /**
  * new amount = old amount / (1 - fee)
  */
-export const amountAddFee = (amount?: string, feePerbicent?: BigNumber) => {
+export const amountAddFee = (amount?: string, feePerbicent?: bigint) => {
   if (!feePerbicent || !amount) return
 
-  const inverseFeePerbicent = percentToPerbicent(100).sub(feePerbicent)
-  const amountPerbicent = BigNumber.from(amount).mul(percentToPerbicent(100))
+  const inverseFeePerbicent = percentToPerbicent(100) - feePerbicent
+  const amountPerbicent = BigInt(amount) * percentToPerbicent(100)
   // new amount is in regular decimal units
-  const newAmount = amountPerbicent.div(inverseFeePerbicent)
+  const newAmount = amountPerbicent / inverseFeePerbicent
 
   return newAmount.toString()
 }
@@ -40,23 +39,21 @@ export const amountAddFee = (amount?: string, feePerbicent?: BigNumber) => {
  * @param outputType
  */
 export const weightAmountPerbicent: WeightFunction = (
-  weight: BigNumber | undefined,
+  weight: bigint | undefined,
   reservedRatePerbicent: number | undefined,
-  wadAmount: BigNumber | undefined,
+  wadAmount: bigint | undefined,
   outputType: 'payer' | 'reserved',
 ) => {
   if (!weight || !wadAmount) return '0'
 
   if (reservedRatePerbicent === undefined) return '0'
 
-  return fromWad(
-    weight
-      .mul(wadAmount)
-      .mul(
-        outputType === 'reserved'
-          ? reservedRatePerbicent
-          : percentToPerbicent(100).sub(reservedRatePerbicent),
-      )
-      .div(percentToPerbicent(100)),
-  )
+  const value =
+    (weight *
+      wadAmount *
+      (outputType === 'reserved'
+        ? BigInt(reservedRatePerbicent)
+        : percentToPerbicent(100) - BigInt(reservedRatePerbicent))) /
+    percentToPerbicent(100)
+  return fromWad(value)
 }

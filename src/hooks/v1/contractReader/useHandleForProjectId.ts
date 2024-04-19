@@ -1,22 +1,23 @@
-import { BigNumber, BigNumberish, BytesLike, utils } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { useCallback } from 'react'
+import { BigintIsh, toHexString } from 'utils/bigNumbers'
 
+import { BytesLike, ethers } from 'ethers'
 import useContractReader from './useContractReader'
 
 /** Returns handle of project with `projectId`. */
 export default function useHandleForProjectId(
-  projectId: BigNumberish | undefined,
+  projectId: BigintIsh | undefined,
 ) {
   return useContractReader<string>({
     contract: V1ContractName.Projects,
     functionName: 'handleOf',
-    args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
+    args: projectId ? [toHexString(BigInt(projectId))] : null,
     formatter: useCallback((val: BytesLike) => {
       if (val === undefined || val === null) {
         return undefined
       }
-      return utils.parseBytes32String(val)
+      return ethers.decodeBytes32String(val)
     }, []),
   })
 }

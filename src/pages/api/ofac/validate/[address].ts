@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { isAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -15,7 +15,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   const { address } = req.query as { address: string }
-  if (!address || !isAddress(address)) {
+  if (!address || !ethers.isAddress(address)) {
     return res.status(400).json({ error: 'address is required' })
   }
 

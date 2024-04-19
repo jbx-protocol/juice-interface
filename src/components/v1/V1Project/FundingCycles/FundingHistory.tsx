@@ -5,7 +5,6 @@ import { Space } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import CurrencySymbol from 'components/currency/CurrencySymbol'
 import Loading from 'components/Loading'
-import { BigNumber } from 'ethers'
 import useContractReader from 'hooks/v1/contractReader/useContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
@@ -23,14 +22,14 @@ import { V1CurrencyName } from 'utils/v1/currency'
 export default function FundingHistory({
   startId,
 }: {
-  startId: BigNumber | undefined
+  startId: bigint | undefined
 }) {
   const [selectedIndex, setSelectedIndex] = useState<number>()
   const [fundingCycles, setFundingCycles] = useState<V1FundingCycle[]>([])
-  const [cycleIds, setCycleIds] = useState<BigNumber[]>([])
+  const [cycleIds, setCycleIds] = useState<bigint[]>([])
 
   //startId = currentFC.basedOn
-  if (startId?.gt(0) && !cycleIds.length) setCycleIds([startId])
+  if (startId && startId > 0n && !cycleIds.length) setCycleIds([startId])
 
   const allCyclesLoaded = fundingCycles.length >= cycleIds.length
   const cycleNumber = allCyclesLoaded
@@ -54,14 +53,14 @@ export default function FundingHistory({
           !cycle ||
           !cycleNumber ||
           cycleIds.includes(cycle.basedOn) ||
-          cycle.id.eq(0)
+          cycle.id === 0n
         )
           return
 
         setFundingCycles([...fundingCycles, cycle])
         setCycleIds([
           ...cycleIds,
-          ...(cycle.basedOn.toNumber() > 0 ? [cycle.basedOn] : []),
+          ...(Number(cycle.basedOn) > 0 ? [cycle.basedOn] : []),
         ])
       },
       [cycleNumber, cycleIds, fundingCycles],
@@ -88,7 +87,7 @@ export default function FundingHistory({
               <div className="ml-2 text-sm">
                 <CurrencySymbol
                   currency={V1CurrencyName(
-                    cycle.currency.toNumber() as V1CurrencyOption,
+                    Number(cycle.currency) as V1CurrencyOption,
                   )}
                 />
                 {hasFundingTarget(cycle) ? (
@@ -112,7 +111,7 @@ export default function FundingHistory({
 
             <Space className="text-sm" align="baseline">
               {formatHistoricalDate(
-                cycle.start.add(cycle.duration.mul(86400)).mul(1000).toNumber(),
+                Number((cycle.start + cycle.duration * 86400n) * 1000n),
               )}
               <CaretRightOutlined />
             </Space>

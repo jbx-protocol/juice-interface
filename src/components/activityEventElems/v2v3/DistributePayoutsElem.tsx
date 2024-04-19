@@ -70,7 +70,7 @@ export default function DistributePayoutsElem({
             </div>
           ))}
 
-          {event.beneficiaryDistributionAmount?.gt(0) && (
+          {event.beneficiaryDistributionAmount > 0n && (
             <div className="flex items-baseline justify-between">
               <div>
                 <EthereumAddress

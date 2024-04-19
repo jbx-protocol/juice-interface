@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { useEffect, useState } from 'react'
 import { perbicentToPercent } from 'utils/format/formatNumber'
 
@@ -28,7 +27,7 @@ export default function BudgetTargetInput({
   onCurrencyChange?: (currency: CurrencyName) => void
   disabled?: boolean
   placeholder?: string
-  feePerbicent: BigNumber | undefined
+  feePerbicent: bigint | undefined
   showTargetSubFeeInput?: boolean
 }) {
   const [_currency, setCurrency] = useState<CurrencyName>()
@@ -56,7 +55,7 @@ export default function BudgetTargetInput({
         accessory={_currencySwitch}
         onChange={target => onTargetChange(target?.toString())}
       />
-      {feePerbicent?.gt(0) && showTargetSubFeeInput && (
+      {!!feePerbicent && feePerbicent > 0n && showTargetSubFeeInput && (
         <div className="mb-2 mt-2 flex items-center text-black dark:text-slate-100">
           <div className="mr-0 flex-grow font-medium">
             <FormattedNumberInput

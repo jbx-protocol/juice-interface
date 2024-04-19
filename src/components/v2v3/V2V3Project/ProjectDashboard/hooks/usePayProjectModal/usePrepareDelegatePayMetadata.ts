@@ -3,7 +3,6 @@ import { BUYBACK_DELEGATE_ENABLED_PROJECT_IDS } from 'constants/buybackDelegateE
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { useCallback, useContext } from 'react'
 import { encodeDelegatePayMetadata } from 'utils/delegateMetadata/encodeDelegateMetadata'
 import { parseWad, stripCommas } from 'utils/format/formatNumber'
@@ -15,7 +14,7 @@ function usePrepareJbBuybackDelegatePayMetadata({
   weiAmount,
   receivedTickets,
 }: {
-  weiAmount: BigNumber
+  weiAmount: bigint
   receivedTickets: string | undefined
 }) {
   const { projectId } = useContext(ProjectMetadataContext)
@@ -40,10 +39,9 @@ function usePrepareJbBuybackDelegatePayMetadata({
 
   // Total tokens that should be minted by pay() tx, including reserved tokens
   const requiredTokens = receivedTicketsWei
-    ? fundingCycleMetadata && fundingCycleMetadata.reservedRate.gt(0)
-      ? receivedTicketsWei
-          .mul(MAX_RESERVED_RATE)
-          .div(fundingCycleMetadata.reservedRate)
+    ? fundingCycleMetadata && fundingCycleMetadata.reservedRate > 0n
+      ? (receivedTicketsWei * MAX_RESERVED_RATE) /
+        fundingCycleMetadata.reservedRate
       : receivedTicketsWei
     : undefined
 
@@ -52,20 +50,24 @@ function usePrepareJbBuybackDelegatePayMetadata({
   const priceQueryDenominatorRaw =
     priceQuery?.projectTokenPrice.denominator.toString()
   const priceQueryNumerator = priceQueryNumeratorRaw
-    ? BigNumber.from(priceQueryNumeratorRaw)
+    ? BigInt(priceQueryNumeratorRaw)
     : undefined
-  const priceQueryDenominator = priceQueryNumeratorRaw
-    ? BigNumber.from(priceQueryDenominatorRaw)
+  const priceQueryDenominator = priceQueryDenominatorRaw
+    ? BigInt(priceQueryDenominatorRaw)
     : undefined
   const inversePriceQueryFactor =
-    priceQueryNumerator?.gt(0) && priceQueryDenominator?.gt(0)
-      ? priceQueryDenominator.div(priceQueryNumerator)
+    priceQueryNumerator &&
+    priceQueryNumerator > 0n &&
+    priceQueryDenominator &&
+    priceQueryDenominator > 0n
+      ? priceQueryDenominator / priceQueryNumerator
       : undefined
 
   // Using inverse price query helps avoid dividing by zero. This assumes the token price is < 1ETH
-  const expectedTokensFromSwap = inversePriceQueryFactor?.gt(0)
-    ? weiAmount.mul(inversePriceQueryFactor)
-    : undefined
+  const expectedTokensFromSwap =
+    inversePriceQueryFactor && inversePriceQueryFactor > 0n
+      ? weiAmount * inversePriceQueryFactor
+      : undefined
 
   /**
    * Expect whichever is greater: 95% of expected tokens from swap, or minimum amount of tokens required to be minted.
@@ -75,17 +77,18 @@ function usePrepareJbBuybackDelegatePayMetadata({
   const minExpectedTokens =
     requiredTokens &&
     expectedTokensFromSwap &&
-    expectedTokensFromSwap.mul(95).div(100).gt(requiredTokens)
-      ? expectedTokensFromSwap.mul(95).div(100)
+    (expectedTokensFromSwap * 95n) / 100n > requiredTokens
+      ? (expectedTokensFromSwap * 95n) / 100n
       : requiredTokens
 
   if (
     requiredTokens &&
     // ensure we're getting at least the minimum amount of tokens from the swap
-    expectedTokensFromSwap?.gte(requiredTokens) &&
+    expectedTokensFromSwap &&
+    expectedTokensFromSwap >= requiredTokens &&
     // total token amount must be less than half of available liquidity (arbitrary) to avoid slippage
     priceQuery &&
-    BigNumber.from(requiredTokens).mul(2).lt(priceQuery.liquidity) &&
+    BigInt(requiredTokens) * 2n > BigInt(priceQuery.liquidity) &&
     minExpectedTokens !== undefined
   ) {
     return { minExpectedTokens, amountToSwap: 0 }
@@ -118,7 +121,7 @@ function usePrepareJb721DelegateMetadata({
 }
 
 export function usePrepareDelegatePayMetadata(
-  weiAmount: BigNumber,
+  weiAmount: bigint,
   {
     nftRewards,
     receivedTickets,

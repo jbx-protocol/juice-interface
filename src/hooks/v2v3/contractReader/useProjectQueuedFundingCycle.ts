@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import {
   V2V3FundingCycle,
@@ -22,7 +21,7 @@ export default function useProjectQueuedFundingCycle({
     args: projectId ? [projectId] : null,
   })
 
-  if (data && data[0].start.eq(BigNumber.from(0))) {
+  if (data && data[0].start === BigInt(0)) {
     return { data: undefined, loading: false }
   }
   return {

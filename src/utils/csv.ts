@@ -1,5 +1,4 @@
-import { BigNumber } from 'ethers'
-import { getAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { Split } from 'models/splits'
 import { PayoutMod, TicketMod } from 'models/v1/mods'
 import { splitPercentFrom } from 'utils/v2v3/math'
@@ -50,12 +49,12 @@ export const parseV2SplitsCsv = (csvContent: string): Split[] => {
     ] = row.split(',')
 
     return {
-      beneficiary: beneficiary ? getAddress(beneficiary) : undefined,
-      percent: splitPercentFrom(parseFloat(percent) * 100).toNumber(),
+      beneficiary: beneficiary ? ethers.getAddress(beneficiary) : undefined,
+      percent: Number(splitPercentFrom(parseFloat(percent) * 100)),
       preferClaimed: Boolean(preferClaimed),
       lockedUntil: lockedUntil ? parseInt(lockedUntil) : undefined,
       projectId: projectId?.trim() || undefined,
-      allocator: allocator ? getAddress(allocator.trim()) : undefined,
+      allocator: allocator ? ethers.getAddress(allocator.trim()) : undefined,
     }
   })
 
@@ -93,10 +92,10 @@ export const parseV1PayoutModsCsv = (csvContent: string): PayoutMod[] => {
 
     const payoutMod: PayoutMod = {
       beneficiary,
-      percent: percentToPermyriad(parseFloat(percent) * 100).toNumber(),
+      percent: Number(percentToPermyriad(parseFloat(percent) * 100)),
       preferUnstaked: parseBoolean(preferUnstaked),
       lockedUntil: lockedUntil ? parseInt(lockedUntil) : undefined,
-      projectId: projectId ? BigNumber.from(projectId) : undefined,
+      projectId: projectId ? BigInt(projectId) : undefined,
       allocator,
     }
 
@@ -114,7 +113,7 @@ export const parseV1TicketModsCsv = (csvContent: string): TicketMod[] => {
 
     return {
       preferUnstaked: Boolean(preferUnstaked),
-      percent: percentToPermyriad(parseFloat(percent) * 100).toNumber(),
+      percent: Number(percentToPermyriad(parseFloat(percent) * 100)),
       lockedUntil: lockedUntil ? parseInt(lockedUntil) : undefined,
       beneficiary: beneficiary || undefined,
     }

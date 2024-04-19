@@ -8,7 +8,7 @@ import EtherscanLink from 'components/EtherscanLink'
 import TransactionModal from 'components/modals/TransactionModal'
 import { PROJECT_PAYER_ADDRESS_EXPLANATION } from 'components/strings'
 import { readProvider } from 'constants/readProvider'
-import { providers } from 'ethers'
+import { TransactionReceipt } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { DeployProjectPayerTxArgs } from 'hooks/v2v3/transactor/useDeployProjectPayerTx'
 import { useState } from 'react'
@@ -22,7 +22,7 @@ const DEPLOY_EVENT_IDX = 0
  * @param txReceipt receipt of `deployProjectPayer` transaction
  */
 const getProjectPayerAddressFromReceipt = (
-  txReceipt: providers.TransactionReceipt,
+  txReceipt: TransactionReceipt,
 ): string => {
   const newProjectPayerAddress = txReceipt?.logs[DEPLOY_EVENT_IDX]?.address
   return newProjectPayerAddress
@@ -85,6 +85,10 @@ export function LaunchProjectPayerModal({
           }
 
           const txReceipt = await readProvider.getTransactionReceipt(txHash)
+          if (!txReceipt) {
+            emitErrorNotification(t`Something went wrong.`)
+            return
+          }
           const newProjectPayerAddress =
             getProjectPayerAddressFromReceipt(txReceipt)
           if (newProjectPayerAddress === undefined) {

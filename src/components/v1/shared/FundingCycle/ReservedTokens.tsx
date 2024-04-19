@@ -5,7 +5,6 @@ import TooltipLabel from 'components/TooltipLabel'
 import { RESERVED_RATE_EXPLANATION } from 'components/strings'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { BigNumber } from 'ethers'
 import useReservedTokensOfProject from 'hooks/v1/contractReader/useReservedTokensOfProject'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { TicketMod } from 'models/v1/mods'
@@ -71,7 +70,7 @@ export default function ReservedTokens({
           <span>
             <Trans>
               <TokenAmount
-                amountWad={reservedTokens ?? BigNumber.from(0)}
+                amountWad={reservedTokens ?? BigInt(0)}
                 tokenSymbol={tokenSymbol}
               />{' '}
               reserved

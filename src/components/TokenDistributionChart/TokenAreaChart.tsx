@@ -1,5 +1,4 @@
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { BigNumber } from 'ethers'
 import { ParticipantsQuery } from 'generated/graphql'
 import tailwind from 'lib/tailwind'
 import { useContext, useMemo } from 'react'
@@ -23,7 +22,7 @@ export default function TokenAreaChart({
   tokenSupply,
   participants,
 }: {
-  tokenSupply: BigNumber | undefined
+  tokenSupply: bigint | undefined
   participants: ParticipantsQuery['participants'] | undefined
 }) {
   const { themeOption } = useContext(ThemeContext)
@@ -41,11 +40,11 @@ export default function TokenAreaChart({
   const chartData = useMemo(() => {
     if (!tokenSupply || !participants || !groupSize) return []
 
-    let tempTotalBalance = BigNumber.from(0)
+    let tempTotalBalance = BigInt(0)
     let groupIndex = 0
 
     const participantGroups = participants.reduce((acc, curr, i) => {
-      tempTotalBalance = tempTotalBalance.add(curr.balance)
+      tempTotalBalance = tempTotalBalance + curr.balance
 
       if (i >= groupSize - 1 && i % groupSize === 0) {
         // Add group
@@ -53,7 +52,7 @@ export default function TokenAreaChart({
           (parseFloat(fromWad(tempTotalBalance)) /
             parseFloat(fromWad(tokenSupply))) *
           100
-        tempTotalBalance = BigNumber.from(0)
+        tempTotalBalance = BigInt(0)
         groupIndex = groupIndex + 1
 
         return [...acc, { percent, groupIndex: groupIndex - 1 }]

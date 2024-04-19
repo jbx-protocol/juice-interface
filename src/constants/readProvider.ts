@@ -1,7 +1,7 @@
-import { providers } from 'ethers'
+import { JsonRpcProvider } from 'ethers'
 import { readNetwork } from './networks'
 
-export const readProvider = new providers.JsonRpcBatchProvider(
+export const readProvider = new JsonRpcProvider(
   readNetwork.rpcUrl,
   readNetwork.chainId,
 )

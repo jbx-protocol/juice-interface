@@ -89,7 +89,8 @@ export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
       fundAccessConstraints, // _fundAccessConstraints,
       getTerminalsFromFundAccessConstraints(
         fundAccessConstraints,
-        defaultJBETHPaymentTerminal?.address,
+        // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+        defaultJBETHPaymentTerminal?.target as string,
       ), // _terminals
       DEFAULT_MEMO,
     ]

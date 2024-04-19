@@ -10,7 +10,7 @@ import { WETH } from 'constants/contracts/tokens'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
-import { BigNumber, Contract } from 'ethers'
+import { Contract } from 'ethers'
 import { useQuery } from 'react-query'
 import { isZeroAddress } from 'utils/address'
 
@@ -20,12 +20,12 @@ interface Immutables {
   token1: string
   fee: number
   tickSpacing: number
-  maxLiquidityPerTick: BigNumber
+  maxLiquidityPerTick: bigint
 }
 
 interface State {
-  liquidity: BigNumber
-  sqrtPriceX96: BigNumber
+  liquidity: bigint
+  sqrtPriceX96: bigint
   tick: number
   observationIndex: number
   observationCardinality: number

@@ -1,5 +1,4 @@
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
-import { BigNumber } from 'ethers'
 import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useCallback, useMemo } from 'react'
@@ -11,7 +10,7 @@ import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export interface ReduxDistributionLimit {
-  amount: BigNumber
+  amount: bigint
   currency: V2V3CurrencyOption
 }
 
@@ -23,7 +22,7 @@ export interface ReduxDistributionLimit {
 export const useEditingDistributionLimit = (): [
   ReduxDistributionLimit | undefined,
   (input: ReduxDistributionLimit | undefined) => void,
-  (amount: BigNumber) => void,
+  (amount: bigint) => void,
   (currency: V2V3CurrencyOption) => void,
 ] => {
   const defaultJBETHPaymentTerminal = useDefaultJBETHPaymentTerminal()
@@ -60,7 +59,8 @@ export const useEditingDistributionLimit = (): [
       dispatch(
         editingV2ProjectActions.setFundAccessConstraints([
           {
-            terminal: defaultJBETHPaymentTerminal?.address,
+            // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+            terminal: defaultJBETHPaymentTerminal.target as string,
             token: ETH_TOKEN_ADDRESS,
             distributionLimit: fromWad(input.amount),
             distributionLimitCurrency,
@@ -74,7 +74,7 @@ export const useEditingDistributionLimit = (): [
   )
 
   const setDistributionLimitAmount = useCallback(
-    (input: BigNumber) => {
+    (input: bigint) => {
       if (!defaultJBETHPaymentTerminal) return
 
       const currentFundAccessConstraint = fundAccessConstraints?.[0] ?? {

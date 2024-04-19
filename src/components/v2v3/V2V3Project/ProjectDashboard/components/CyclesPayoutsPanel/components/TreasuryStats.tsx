@@ -13,7 +13,7 @@ export const TreasuryStats = () => {
 
   const overflowTooltip = useMemo(
     () =>
-      redemptionRate?.gt(0) ? (
+      redemptionRate && redemptionRate > 0n ? (
         <Trans>
           {overflow} is available for token redemptions or future payouts.
         </Trans>

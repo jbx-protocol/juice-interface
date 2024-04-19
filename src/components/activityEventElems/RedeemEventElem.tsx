@@ -3,22 +3,26 @@ import ETHAmount from 'components/currency/ETHAmount'
 import RichNote from 'components/RichNote/RichNote'
 import { TokenAmount } from 'components/TokenAmount'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { BigNumber } from 'ethers'
-import { defaultAbiCoder } from 'ethers/lib/utils.js'
+import { ethers } from 'ethers'
 import { ProjectEventsQuery } from 'generated/graphql'
 import { useContext } from 'react'
 import { ActivityEvent } from './ActivityElement/ActivityElement'
 
 function decodeJB721DelegateRedeemMetadata(
   metadata: string,
-): [string, string, BigNumber[]] | undefined {
+): [string, string, bigint[]] | undefined {
   try {
-    const decoded = defaultAbiCoder.decode(
+    const decoded = ethers.AbiCoder.defaultAbiCoder().decode(
       ['bytes32', 'bytes4', 'uint256[]'],
       metadata,
-    ) as [string, string, BigNumber[]]
+    )
 
-    return decoded
+    return [
+      decoded[0] as string,
+      decoded[1] as string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      decoded[2].map((x: any) => BigInt(x)) as bigint[],
+    ]
   } catch (e) {
     return undefined
   }

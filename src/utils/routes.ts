@@ -1,5 +1,5 @@
 import { V2V3SettingsPageKey } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
-import { BigNumber, BigNumberish } from 'ethers'
+import { BigintIsh } from './bigNumbers'
 
 const HELP_PAGE_HOSTNAME = 'https://docs.juicebox.money'
 
@@ -7,11 +7,12 @@ export const v2v3ProjectRoute = ({
   projectId,
   handle,
 }: {
-  projectId?: BigNumberish
+  projectId?: BigintIsh
   handle?: string | null
 }) => {
   if (handle) return `/@${handle}`
-  return `/v2/p/${BigNumber.from(projectId).toNumber()}`
+
+  return `/v2/p/${Number(BigInt(projectId ?? -1))}`
 }
 
 export function helpPagePath(path: string): string {
@@ -24,7 +25,7 @@ export const settingsPagePath = (
     projectId,
     handle,
   }: {
-    projectId?: BigNumberish
+    projectId?: BigintIsh
     handle?: string | null
   } = {},
 ) => {

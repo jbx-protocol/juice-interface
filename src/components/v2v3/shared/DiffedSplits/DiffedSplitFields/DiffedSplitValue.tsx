@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 import { splitAmountsAreEqual } from 'utils/splits'
 import {
@@ -27,7 +26,7 @@ export function DiffedSplitValue({
     : undefined
 
   const newValue = isInfiniteDistributionLimit(splitProps?.totalValue) ? (
-    <>{formatSplitPercent(BigNumber.from(splitProps.split.percent))}%</>
+    <>{formatSplitPercent(BigInt(splitProps.split.percent))}%</>
   ) : (
     <SplitAmountValue props={splitProps} hideTooltip />
   )
@@ -36,7 +35,7 @@ export function DiffedSplitValue({
 
   const oldValue =
     diffSplit && isInfiniteDistributionLimit(diffSplit?.totalValue) ? (
-      <>{formatSplitPercent(BigNumber.from(diffSplit.percent))}%</>
+      <>{formatSplitPercent(BigInt(diffSplit.percent))}%</>
     ) : (
       <SplitAmountValue
         props={{

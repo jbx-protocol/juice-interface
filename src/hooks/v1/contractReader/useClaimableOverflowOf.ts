@@ -1,9 +1,8 @@
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useMemo } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbers'
+import { bigintsDiff, toHexString } from 'utils/bigNumbers'
 import useContractReader from './useContractReader'
 import useTotalBalanceOf from './useTotalBalanceOf'
 
@@ -14,18 +13,16 @@ export default function useClaimableOverflowOf() {
 
   const { userAddress } = useWallet()
   const totalBalance = useTotalBalanceOf(userAddress, projectId, terminal?.name)
-  const _projectId = projectId
-    ? BigNumber.from(projectId).toHexString()
-    : undefined
+  const _projectId = projectId ? toHexString(BigInt(projectId)) : undefined
 
-  return useContractReader<BigNumber>({
+  return useContractReader<bigint>({
     contract: terminal?.name,
     functionName: 'claimableOverflowOf',
     args:
       userAddress && _projectId && totalBalance
         ? [userAddress, _projectId, totalBalance]
         : null,
-    valueDidChange: bigNumbersDiff,
+    valueDidChange: bigintsDiff,
     updateOn: useMemo(
       () =>
         _projectId && userAddress

@@ -1,4 +1,4 @@
-import { utils } from 'ethers'
+import { ethers } from 'ethers'
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { authCheck } from 'lib/auth'
@@ -45,7 +45,7 @@ type EmailMetadata = {
 
 type OnPayEvent = Awaited<ReturnType<typeof Schema.validate>>
 
-const BigIntValidator = (errorMessage: string) => {
+const bigintValidator = (errorMessage: string) => {
   return Yup.mixed<bigint>()
     .transform(current => {
       try {
@@ -59,18 +59,18 @@ const BigIntValidator = (errorMessage: string) => {
 
 const Schema = Yup.object().shape({
   data: Yup.object().shape({
-    fundingCycleConfiguration: BigIntValidator(
-      'fundingCycleConfiguration must be a BigInt',
+    fundingCycleConfiguration: bigintValidator(
+      'fundingCycleConfiguration must be a bigint',
     ).required(),
-    fundingCycleNumber: BigIntValidator(
-      'fundingCycleNumber must be a BigInt',
+    fundingCycleNumber: bigintValidator(
+      'fundingCycleNumber must be a bigint',
     ).required(),
-    projectId: BigIntValidator('projectId must be a BigInt').required(),
+    projectId: bigintValidator('projectId must be a bigint').required(),
     payer: Yup.string().required(),
     beneficiary: Yup.string().required(),
-    amount: BigIntValidator('amount must be a BigInt').required(),
-    beneficiaryTokenCount: BigIntValidator(
-      'beneficiaryTokenCount must be a BigInt',
+    amount: bigintValidator('amount must be a bigint').required(),
+    beneficiaryTokenCount: bigintValidator(
+      'beneficiaryTokenCount must be a bigint',
     ).required(),
     memo: Yup.string(),
     metadata: Yup.string().required(),
@@ -86,7 +86,7 @@ const compileEmailMetadata = async ({
   metadata: { transactionHash },
 }: OnPayEvent): Promise<EmailMetadata> => {
   const formattedAmount = fromWad(amount.toString())
-  const normalizedPayerAddress = utils.getAddress(payer)
+  const normalizedPayerAddress = ethers.getAddress(payer)
   const { name: payerEnsName } = await resolveAddressEnsIdeas(
     normalizedPayerAddress,
   )

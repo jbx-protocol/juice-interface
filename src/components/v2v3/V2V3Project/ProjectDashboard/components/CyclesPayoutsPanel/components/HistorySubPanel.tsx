@@ -14,7 +14,7 @@ export const HistorySubPanel = () => {
   const [isFetchingMore, setIsFetchingMore] = useState<boolean>()
   const { data, fetchMore, loading, error } = usePastFundingCycles({
     projectId,
-    currentFcNumber: fundingCycle?.number.toNumber() ?? 0,
+    currentFcNumber: fundingCycle?.number ? Number(fundingCycle.number) : 0,
   })
 
   const isLoading = loading || isFetchingMore

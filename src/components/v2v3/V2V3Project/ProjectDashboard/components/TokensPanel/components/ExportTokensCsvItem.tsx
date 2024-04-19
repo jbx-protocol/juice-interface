@@ -11,7 +11,7 @@ export const ExportTokensCsvItem = () => {
   const { exportSplitsToCsv } = useExportSplitsToCsv(
     reservedTokensSplits ?? [],
     'reserved-tokens',
-    fundingCycle?.number.toNumber(),
+    fundingCycle?.number ? Number(fundingCycle?.number) : undefined,
   )
   if (!reservedTokensSplits?.length) return null
 

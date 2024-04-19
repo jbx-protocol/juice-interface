@@ -16,8 +16,8 @@ export const ExportPayoutsCsvItem = ({
   const { fundingCycle } = useContext(V2V3ProjectContext)
   const fcNumber = fundingCycle
     ? type === 'current'
-      ? fundingCycle.number.toNumber()
-      : fundingCycle.number.toNumber() + 1
+      ? Number(fundingCycle.number)
+      : Number(fundingCycle.number) + 1
     : undefined
   const disabled = !payoutSplits?.length
   const { exportSplitsToCsv } = useExportSplitsToCsv(

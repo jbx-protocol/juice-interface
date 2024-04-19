@@ -25,7 +25,7 @@ export default function SetFundAccessConstraintsEventElem({
       header={t`Edited payout`}
       subject={
         <div className="font-heading text-lg">
-          {event.distributionLimit.eq(MAX_DISTRIBUTION_LIMIT) ? (
+          {event.distributionLimit === MAX_DISTRIBUTION_LIMIT ? (
             t`Unlimited`
           ) : (
             <AmountInCurrency

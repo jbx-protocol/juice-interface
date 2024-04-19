@@ -1,4 +1,4 @@
-import { ContractInterface } from 'ethers'
+import { ethers } from 'ethers'
 import { useLoadContractFromAddress } from 'hooks/useLoadContractFromAddress'
 import { ContractJson } from 'models/contracts'
 import { useEffect, useState } from 'react'
@@ -10,7 +10,7 @@ async function loadPublicResolverContractAbi(): Promise<
 }
 
 export function useResolver(address: string | undefined) {
-  const [abi, setAbi] = useState<ContractInterface | undefined>(undefined)
+  const [abi, setAbi] = useState<ethers.InterfaceAbi | undefined>(undefined)
 
   useEffect(() => {
     async function load() {

@@ -4,9 +4,8 @@ import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 
 import { t, Trans } from '@lingui/macro'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { constants } from 'ethers'
 
-import { isAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { usePrintTokensTx } from 'hooks/v1/transactor/usePrintTokensTx'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
@@ -43,7 +42,7 @@ export default function PrintPreminedModal({
     await form.validateFields()
     const amount = form.getFieldValue('amount') ?? '0'
     const beneficiary = form.getFieldValue('beneficiary')
-    if (!isAddress(beneficiary)) return
+    if (!ethers.isAddress(beneficiary)) return
 
     setLoading(true)
 
@@ -118,14 +117,14 @@ export default function PrintPreminedModal({
             {
               required: true,
               validator: (rule, value) => {
-                if (!value || !isAddress(value))
+                if (!value || !ethers.isAddress(value))
                   return Promise.reject(t`Not a valid ETH address`)
                 else return Promise.resolve()
               },
             },
           ]}
         >
-          <Input placeholder={constants.AddressZero} />
+          <Input placeholder={ethers.ZeroAddress} />
         </Form.Item>
         <div className="mb-4">
           <Form.Item

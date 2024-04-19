@@ -1,13 +1,13 @@
 import { t } from '@lingui/macro'
 import { Input } from 'antd'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
-import { BigNumber, utils } from 'ethers'
+import { ethers } from 'ethers'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { isBigNumberish } from 'utils/bigNumbers'
+import { isBigintIsh, toHexString } from 'utils/bigNumbers'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
 type ProjectHandleInputValue = string | undefined
-export type ProjectHandleInitialValue = string | BigNumber | undefined
+export type ProjectHandleInitialValue = string | bigint | undefined
 
 interface ProjectHandleProps {
   onChange?: (value: ProjectHandleInputValue) => void
@@ -46,14 +46,15 @@ export function ProjectHandleInput({
     if (typeof initialValue === 'string') {
       setInputContents(initialValue)
       triggerChange(initialValue)
-    } else if (isBigNumberish(initialValue)) {
-      contracts?.Projects.functions
-        .handleOf(BigNumber.from(initialValue).toHexString())
-        .then(res => {
-          const handle = utils.parseBytes32String(res[0])
+    } else if (isBigintIsh(initialValue)) {
+      // TODO: Unsure if this is the correct way to handle the contract call
+      contracts?.Projects.handleOf(toHexString(BigInt(initialValue))).then(
+        res => {
+          const handle = ethers.decodeBytes32String(res[0])
           setInputContents(handle)
           triggerChange(handle)
-        })
+        },
+      )
     }
     // Note: if we make `triggerChange` a dependency, this effect will
     // be triggered every re-render, we only want this to change

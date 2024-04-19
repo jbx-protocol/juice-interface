@@ -2,7 +2,6 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Collapse, Tooltip } from 'antd'
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel'
-import { BigNumber } from 'ethers'
 import { BallotState } from 'models/v2v3/fundingCycle'
 import { formatDateToUTC } from 'utils/format/formatDate'
 import { detailedTimeUntil } from 'utils/format/formatTime'
@@ -20,9 +19,9 @@ export default function FundingCycleDetailsCard({
   ballotState,
   ballotStrategyAddress,
 }: {
-  fundingCycleNumber: BigNumber
-  fundingCycleStartTime: BigNumber
-  fundingCycleDurationSeconds: BigNumber
+  fundingCycleNumber: bigint
+  fundingCycleStartTime: bigint
+  fundingCycleDurationSeconds: bigint
   fundingCycleRiskCount: number
   fundingCycleDetails: JSX.Element
   isFundingCycleRecurring: boolean
@@ -39,20 +38,18 @@ export default function FundingCycleDetailsCard({
       )
     }
 
-    if (!fundingCycleDurationSeconds.gt(0)) return null
+    if (!(fundingCycleDurationSeconds > 0n)) return null
 
-    const endTimeSeconds = fundingCycleStartTime.add(
-      fundingCycleDurationSeconds,
-    )
+    const endTimeSeconds = fundingCycleStartTime + fundingCycleDurationSeconds
     const formattedTimeLeft = detailedTimeUntil(endTimeSeconds)
-    const fundingCycleDurationMilliseconds = endTimeSeconds.mul(1000).toNumber()
+    const fundingCycleDurationMilliseconds = Number(endTimeSeconds * 1000n)
 
     return (
       <Tooltip title={`${formatDateToUTC(fundingCycleDurationMilliseconds)}`}>
         <span className="ml-2 text-grey-500 dark:text-grey-300">
           {isFundingCycleRecurring ? (
             <Trans>
-              {formattedTimeLeft} until #{fundingCycleNumber.add(1).toString()}
+              {formattedTimeLeft} until #{fundingCycleNumber + 1n.toString()}
             </Trans>
           ) : (
             <Trans>{formattedTimeLeft} left</Trans>
@@ -73,9 +70,9 @@ export default function FundingCycleDetailsCard({
         header={
           <div className="flex w-full cursor-pointer items-center justify-between">
             <div className="flex items-center gap-2">
-              {fundingCycleDurationSeconds.gt(0) ||
-              (fundingCycleDurationSeconds.eq(0) &&
-                fundingCycleNumber.gt(0)) ? (
+              {fundingCycleDurationSeconds > 0n ||
+              (fundingCycleDurationSeconds === 0n &&
+                fundingCycleNumber > 0n) ? (
                 <Trans>Cycle #{fundingCycleNumber.toString()}</Trans>
               ) : (
                 <Trans>Details</Trans>

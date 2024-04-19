@@ -1,4 +1,4 @@
-import { Contract, EventFilter } from 'ethers'
+import { Contract, ContractEventName } from 'ethers'
 import { ContractUpdateOn } from '../types'
 import { getContract } from './getContract'
 
@@ -13,7 +13,7 @@ export function convertUpdateOnArrayToSubscriptions<C extends string>({
 }) {
   const subscriptions: {
     contract: Contract
-    filter: EventFilter
+    filter: ContractEventName
   }[] = []
 
   if (updateOn?.length) {

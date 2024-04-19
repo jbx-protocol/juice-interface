@@ -4,7 +4,6 @@ import { CsvUpload } from 'components/inputs/CsvUpload'
 import Mod from 'components/v1/shared/Mod'
 import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { BigNumber } from 'ethers'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/useV1ConnectedWalletHasPermission'
 import { useSetTicketModsTx } from 'hooks/v1/transactor/useSetTicketModsTx'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
@@ -28,7 +27,7 @@ export default function TicketModsList({
   projectId,
   reservedRate,
 }: {
-  total?: BigNumber
+  total?: bigint
   mods: TicketMod[] | undefined
   fundingCycle: V1FundingCycle | undefined
   projectId: number | undefined
@@ -73,7 +72,7 @@ export default function TicketModsList({
   }
 
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
-  const ownerPercent = MODS_TOTAL_PERCENT - (modsTotal ?? 0)
+  const ownerPercent = Number(MODS_TOTAL_PERCENT) - (modsTotal ?? 0)
 
   const hasEditPermission = useV1ConnectedWalletHasPermission(
     V1OperatorPermission.SetTicketMods,
@@ -99,9 +98,14 @@ export default function TicketModsList({
                     permyriadToPercent(mod.percent) +
                     '%' +
                     (total
-                      ? ` (${formatWad(total?.mul(mod.percent).div(10000), {
-                          precision: 0,
-                        })} ${tokenSymbolText({
+                      ? ` (${formatWad(
+                          total
+                            ? (Number(total) * mod.percent) / 10000
+                            : undefined,
+                          {
+                            precision: 0,
+                          },
+                        )} ${tokenSymbolText({
                           tokenSymbol,
                           capitalize: false,
                           plural: true,
@@ -120,9 +124,12 @@ export default function TicketModsList({
             <span className="font-normal">
               {permyriadToPercent(ownerPercent)}%
               {total
-                ? ` (${formatWad(total?.mul(ownerPercent).div(10000), {
-                    precision: 0,
-                  })} ${tokenSymbolText({
+                ? ` (${formatWad(
+                    total ? (Number(total) * ownerPercent) / 10000 : undefined,
+                    {
+                      precision: 0,
+                    },
+                  )} ${tokenSymbolText({
                     tokenSymbol,
                     capitalize: false,
                     plural: true,

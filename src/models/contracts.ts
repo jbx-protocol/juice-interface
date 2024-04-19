@@ -1,8 +1,8 @@
-import { ContractInterface } from 'ethers'
+import { InterfaceAbi } from 'ethers'
 
 export interface ContractJson {
   address: string | undefined
-  abi: ContractInterface | undefined
+  abi: InterfaceAbi | undefined
 }
 
 export interface ForgeDeploy {

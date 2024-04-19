@@ -1,6 +1,5 @@
 import { FundingCycleRiskFlags } from 'constants/fundingWarningText'
 import { MaxUint54 } from 'constants/numbers'
-import { BigNumber } from 'ethers'
 import { FundingCycle } from 'generated/graphql'
 import {
   V2V3FundAccessConstraint,
@@ -24,8 +23,8 @@ import {
   SerializedV2V3FundingCycleData,
 } from './serializers'
 
-export const WEIGHT_ZERO = 1 // send `1` when we want to set the weight to `0`
-export const WEIGHT_UNCHANGED = 0 // send `0` when we don't want to change the weight.
+export const WEIGHT_ZERO = 1n // send `1` when we want to set the weight to `0`
+export const WEIGHT_UNCHANGED = 0n // send `0` when we don't want to change the weight.
 
 export const hasDistributionLimit = (
   fundAccessConstraint: SerializedV2V3FundAccessConstraint | undefined,
@@ -34,9 +33,7 @@ export const hasDistributionLimit = (
   if (!fundAccessConstraint) return true
 
   return Boolean(
-    !parseWad(fundAccessConstraint.distributionLimit).eq(
-      MAX_DISTRIBUTION_LIMIT,
-    ),
+    parseWad(fundAccessConstraint.distributionLimit) !== MAX_DISTRIBUTION_LIMIT,
   )
 }
 
@@ -102,7 +99,7 @@ export const getUnsafeV2V3FundingCycleProperties = (
   return unsafeFundingCycleProperties({
     ballot,
     reservedRatePercentage,
-    hasFundingDuration: fundingCycle.duration?.gt(0),
+    hasFundingDuration: fundingCycle.duration > 0n,
     allowMinting,
     paymentIssuanceRate,
     useDataSourceForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
@@ -115,11 +112,9 @@ export const getUnsafeV2V3FundingCycleProperties = (
  */
 export const isValidMustStartAtOrAfter = (
   mustStartAtOrAfter: string,
-  fundingCycleDuration: BigNumber,
+  fundingCycleDuration: bigint,
 ): boolean => {
-  return BigNumber.from(mustStartAtOrAfter)
-    .add(fundingCycleDuration)
-    .lt(MaxUint54)
+  return BigInt(mustStartAtOrAfter) + fundingCycleDuration < MaxUint54
 }
 
 // Derives next FC's issuance rate from previous FC's weight and discount
@@ -127,21 +122,21 @@ export const deriveNextIssuanceRate = ({
   weight,
   previousFC,
 }: {
-  weight?: BigNumber
+  weight?: bigint
   previousFC: V2V3FundingCycle | V2V3FundingCycleData | undefined
 }) => {
   const previousWeight = previousFC?.weight
-  const newWeight = weight ?? BigNumber.from(WEIGHT_UNCHANGED)
+  const newWeight = weight ?? BigInt(WEIGHT_UNCHANGED)
 
-  if (newWeight.eq(WEIGHT_ZERO)) {
-    return BigNumber.from(0)
+  if (newWeight === WEIGHT_ZERO) {
+    return BigInt(0)
 
     // If no previous FC exists, return given weight
   } else if (!previousWeight) {
     return newWeight
 
     // If weight=0 passed, derive next weight from previous weight
-  } else if (newWeight.eq(WEIGHT_UNCHANGED)) {
+  } else if (newWeight === WEIGHT_UNCHANGED) {
     const weightNumber = parseFloat(
       formatIssuanceRate(previousWeight.toString()),
     )
@@ -151,7 +146,7 @@ export const deriveNextIssuanceRate = ({
       weightNumber - weightNumber * discountRateNumber,
     )
 
-    return BigNumber.from(issuanceRateFrom(newWeightNumber.toString()))
+    return BigInt(issuanceRateFrom(newWeightNumber.toString()))
   }
   return newWeight
 }
@@ -169,21 +164,21 @@ export function hasDataSourceForPay(
 }
 
 export function isInfiniteDistributionLimit(
-  distributionLimit: BigNumber | undefined,
+  distributionLimit: bigint | undefined,
 ) {
   return (
     distributionLimit === undefined ||
-    distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)
+    distributionLimit === MAX_DISTRIBUTION_LIMIT
   )
 }
 
 // Not zero and not infinite
 export const isFiniteDistributionLimit = (
-  distributionLimit: BigNumber | undefined,
+  distributionLimit: bigint | undefined,
 ): boolean => {
   return Boolean(
     distributionLimit &&
-      !distributionLimit.eq(0) &&
+      distributionLimit !== 0n &&
       !isInfiniteDistributionLimit(distributionLimit),
   )
 }
@@ -204,13 +199,13 @@ export const sgFCToV2V3FundingCycle = (
   >,
 ): V2V3FundingCycle => ({
   ballot: fc.ballot as string,
-  basedOn: BigNumber.from(fc.basedOn),
+  basedOn: BigInt(fc.basedOn),
   configuration: fc.configuration,
   discountRate: fc.discountRate,
-  duration: BigNumber.from(fc.duration),
+  duration: BigInt(fc.duration),
   metadata: fc.metadata,
-  number: BigNumber.from(fc.number),
-  start: BigNumber.from(fc.startTimestamp),
+  number: BigInt(fc.number),
+  start: BigInt(fc.startTimestamp),
   weight: fc.weight,
 })
 
@@ -244,7 +239,7 @@ export const sgFCToV2V3FundingCycleMetadata = (
   allowControllerMigration: fc.controllerMigrationAllowed,
   allowMinting: fc.mintingAllowed,
   allowTerminalMigration: fc.terminalMigrationAllowed,
-  ballotRedemptionRate: BigNumber.from(fc.ballotRedemptionRate),
+  ballotRedemptionRate: BigInt(fc.ballotRedemptionRate),
   dataSource: fc.dataSource,
   global: {
     allowSetController: fc.setControllerAllowed,
@@ -259,8 +254,8 @@ export const sgFCToV2V3FundingCycleMetadata = (
   pausePay: fc.pausePay,
   pauseRedeem: fc.redeemPaused,
   preferClaimedTokenOverride: fc.preferClaimedTokenOverride,
-  redemptionRate: BigNumber.from(fc.redemptionRate),
-  reservedRate: BigNumber.from(fc.reservedRate),
+  redemptionRate: BigInt(fc.redemptionRate),
+  reservedRate: BigInt(fc.reservedRate),
   useDataSourceForPay: fc.useDataSourceForPay,
   useDataSourceForRedeem: fc.useDataSourceForRedeem,
 })

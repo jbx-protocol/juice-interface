@@ -8,8 +8,6 @@ generates:
       - 'typescript-operations'
       - 'typescript-resolvers'
       - 'typescript-react-apollo'
-      - add:
-          content: "import { BigNumber } from 'ethers'"
   ./graphql.schema.json:
     plugins:
       - 'introspection'
@@ -17,7 +15,7 @@ config:
   namingConvention:
     enumValues: keep
   scalars:
-    BigInt: BigNumber
+    BigInt: bigint
   avoidOptionals:
     field: true
   skipTypename: true

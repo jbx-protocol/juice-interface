@@ -4,7 +4,6 @@
 import { renderHook } from '@testing-library/react'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { useProjectReservedTokens } from 'hooks/v2v3/contractReader/ProjectReservedTokens'
 import { useReservedTokensSubPanel } from './useReservedTokensSubPanel'
 
@@ -41,7 +40,7 @@ describe('useReservedTokensSubPanel', () => {
     )
     ;(useProjectContext as jest.Mock).mockReturnValue(DefaultProjectContext)
     ;(useProjectReservedTokens as jest.Mock).mockReturnValue({
-      data: BigNumber.from('1000000000000000000'),
+      data: BigInt('1000000000000000000'),
     })
   })
   it('returns undefined reservedList when reservedTokensSplits is undefined', () => {

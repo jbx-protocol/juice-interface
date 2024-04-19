@@ -1,7 +1,6 @@
 import { Tooltip } from 'antd'
 import CurrencySymbol from 'components/currency/CurrencySymbol'
 import { PRECISION_ETH } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import { betweenZeroAndOne } from 'utils/bigNumbers'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import ETHToUSD from './ETHToUSD'
@@ -18,7 +17,7 @@ export default function ETHAmount({
   fallback,
   hideTooltip,
 }: {
-  amount: BigNumber | undefined // in wad (18 decimals)
+  amount: bigint | undefined // in wad (18 decimals)
   precision?: number
   padEnd?: boolean
   fallback?: string
@@ -27,7 +26,7 @@ export default function ETHAmount({
   const symbol = <CurrencySymbol currency="ETH" />
   if (amount === undefined) return fallback ? <span>{fallback}</span> : null
 
-  if (amount?.isZero()) {
+  if (amount === 0n) {
     return <>{symbol}0</>
   }
 

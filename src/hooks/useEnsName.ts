@@ -1,4 +1,4 @@
-import { isAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { resolveAddress } from 'lib/api/ens'
 import { useQuery } from 'react-query'
 
@@ -12,7 +12,7 @@ export function useEnsName(
   return useQuery(
     ['ensName', address],
     async () => {
-      if (!address || !isAddress(address)) return
+      if (!address || !ethers.isAddress(address)) return
 
       const data = await resolveAddress(address)
 

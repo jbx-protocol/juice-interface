@@ -51,9 +51,12 @@ export default function RedeemModal({
   })
 
   // 0.5% slippage for USD-denominated projects
-  const minAmount = currentFC?.currency.eq(V1_CURRENCY_USD)
-    ? rewardAmount?.mul(1000).div(1005)
-    : rewardAmount
+  const minAmount =
+    currentFC && Number(currentFC.currency) === V1_CURRENCY_USD
+      ? rewardAmount
+        ? (rewardAmount * 1000n) / 1005n
+        : undefined
+      : rewardAmount
 
   async function redeem() {
     await form.validateFields()
@@ -91,7 +94,7 @@ export default function RedeemModal({
 
   let modalTitle: string
   // Defining whole sentence for translations
-  if (overflow?.gt(0)) {
+  if (overflow && overflow > 0n) {
     modalTitle = t`Redeem ${tokensTextLong} for ETH`
   } else {
     modalTitle = t`Burn ${tokensTextLong}`
@@ -99,7 +102,7 @@ export default function RedeemModal({
 
   let buttonText: string
   // Defining whole sentence for translations
-  if (overflow?.gt(0)) {
+  if (overflow && overflow > 0n) {
     buttonText = t`Redeem ${formattedNum(redeemAmount, {
       precision: 2,
     })} ${tokensTextShort} for ETH`
@@ -112,9 +115,9 @@ export default function RedeemModal({
   const redeemBN = parseWad(redeemAmount ?? 0)
 
   const validateRedeemAmount = () => {
-    if (redeemBN.eq(0)) {
+    if (redeemBN === 0n) {
       return Promise.reject(t`Required`)
-    } else if (redeemBN.gt(totalBalance ?? 0)) {
+    } else if (redeemBN > (totalBalance ?? 0n)) {
       return Promise.reject(t`Balance exceeded`)
     }
     return Promise.resolve()
@@ -172,7 +175,7 @@ export default function RedeemModal({
           </p>
         </div>
         <p>
-          {overflow?.gt(0) ? (
+          {!!overflow && overflow > 0n ? (
             <Trans>
               Project tokens can be redeemed to reclaim a portion of the ETH not
               needed for this cycle's payouts. The amount of ETH returned
@@ -212,7 +215,7 @@ export default function RedeemModal({
                     onClick={() => setRedeemAmount(fromWad(totalBalance))}
                   />
                 }
-                disabled={totalBalance?.eq(0)}
+                disabled={totalBalance === 0n}
                 onChange={val => setRedeemAmount(val)}
               />
               {tokenSymbol && tokenAddress ? (
@@ -224,11 +227,13 @@ export default function RedeemModal({
               ) : null}
             </Form.Item>
           </Form>
-          {overflow?.gt(0) ? (
+          {!!overflow && overflow > 0n ? (
             <div className="mt-5 font-medium">
               <Trans>
                 You will receive{' '}
-                {currentFC?.currency.eq(V1_CURRENCY_USD) ? 'minimum ' : ' '}
+                {!!currentFC && Number(currentFC.currency) === V1_CURRENCY_USD
+                  ? 'minimum '
+                  : ' '}
                 <ETHAmount amount={rewardAmount} />
               </Trans>
             </div>

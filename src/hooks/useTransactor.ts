@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { Contract, providers } from 'ethers'
+import { Contract, TransactionResponse } from 'ethers'
 import { simulateTransaction } from 'lib/tenderly'
 import { TransactionOptions } from 'models/transaction'
 import { CV2V3 } from 'models/v2v3/cv'
@@ -23,8 +23,8 @@ function logTx({
   args: unknown[]
   options: TransactionOptions | undefined
 }) {
-  const reportArgs = Object.values(contract.interface.functions)
-    .find(f => f.name === functionName)
+  const reportArgs = contract.interface
+    .getFunction(functionName)
     ?.inputs.reduce(
       (acc, input, i) => ({
         ...acc,
@@ -125,7 +125,7 @@ export function useTransactor(): Transactor | undefined {
 
       try {
         const tx = prepareTransaction({ functionName, contract, args, options })
-        const result: providers.TransactionResponse = await tx
+        const result: TransactionResponse = await tx
 
         console.info('✅ Transactor::submitted', result)
 
@@ -134,7 +134,7 @@ export function useTransactor(): Transactor | undefined {
 
         // add transaction to the history UI
         const txTitle = options?.title ?? functionName
-        addTransaction?.(txTitle, result as providers.TransactionResponse, {
+        addTransaction?.(txTitle, result as TransactionResponse, {
           onConfirmed: options?.onConfirmed,
           onCancelled: options?.onCancelled,
         })

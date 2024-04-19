@@ -167,9 +167,14 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
         </Callout.Info>
       )}
 
-      {projectHasErc20Token && unclaimedTokenBalance?.gt(0) && (
-        <ClaimErc20Callout className="mt-4" unclaimed={unclaimedTokenBalance} />
-      )}
+      {projectHasErc20Token &&
+        !!unclaimedTokenBalance &&
+        unclaimedTokenBalance > 0n && (
+          <ClaimErc20Callout
+            className="mt-4"
+            unclaimed={unclaimedTokenBalance}
+          />
+        )}
 
       <PayProjectModal />
     </div>
@@ -606,8 +611,8 @@ const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
 
   // 0.5% slippage for USD-denominated tokens
   const slippage = useMemo(() => {
-    if (distributionLimitCurrency?.eq(V2V3_CURRENCY_USD)) {
-      return ethReceivedFromTokens?.mul(1000).div(1005)
+    if (Number(distributionLimitCurrency) === V2V3_CURRENCY_USD) {
+      return ((ethReceivedFromTokens ?? 0n) * 1000n) / 1005n
     }
     return ethReceivedFromTokens
   }, [distributionLimitCurrency, ethReceivedFromTokens])

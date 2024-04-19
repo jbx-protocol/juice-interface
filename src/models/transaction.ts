@@ -1,4 +1,5 @@
-import { BigNumberish, Signer, Transaction, providers } from 'ethers'
+import { ethers } from 'ethers'
+import { BigintIsh } from 'utils/bigNumbers'
 
 export enum TxStatus {
   pending = 'PENDING',
@@ -6,7 +7,10 @@ export enum TxStatus {
   failed = 'FAILED',
 }
 
-type TransactionCallback = (e?: Transaction, signer?: Signer) => void
+type TransactionCallback = (
+  e?: ethers.TransactionResponse,
+  signer?: ethers.Signer,
+) => void
 
 export interface TransactionCallbacks {
   onDone?: VoidFunction
@@ -17,7 +21,7 @@ export interface TransactionCallbacks {
 
 export interface TransactionOptions extends TransactionCallbacks {
   title?: string
-  value?: BigNumberish
+  value?: BigintIsh
 }
 
 export type TransactionLog = {
@@ -29,11 +33,13 @@ export type TransactionLog = {
   | {
       // Only pending txs have not been mined
       status: TxStatus.pending
-      tx: Transaction | null
+      tx: ethers.TransactionResponse | null
+      block: ethers.Block | undefined
     }
   | {
       // Once mined, tx will be a TransactionResponse
       status: TxStatus.success | TxStatus.failed
-      tx: providers.TransactionResponse | null
+      tx: ethers.TransactionResponse | null
+      block: ethers.Block | undefined
     }
 )

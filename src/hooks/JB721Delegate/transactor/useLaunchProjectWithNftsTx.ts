@@ -3,7 +3,7 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
-import { getAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { useJBPrices } from 'hooks/JBPrices'
 import { useWallet } from 'hooks/Wallet'
 import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/defaultContracts/useDefaultJB721Delegate'
@@ -181,11 +181,16 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
         ownerAddress: _owner,
         governanceType,
         contractAddresses: {
-          JBDirectoryAddress: getAddress(contracts.JBDirectory.address),
-          JBFundingCycleStoreAddress: getAddress(
-            contracts.JBFundingCycleStore.address,
+          JBDirectoryAddress: ethers.getAddress(
+            // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+            contracts.JBDirectory.target as string,
           ),
-          JBPricesAddress: getAddress(JBPrices.address),
+          JBFundingCycleStoreAddress: ethers.getAddress(
+            // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+            contracts.JBFundingCycleStore.target as string,
+          ),
+          // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+          JBPricesAddress: ethers.getAddress(JBPrices.target as string),
           JBTiered721DelegateStoreAddress,
         },
         flags,
@@ -211,7 +216,8 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       fundAccessConstraints,
       terminals: getTerminalsFromFundAccessConstraints(
         fundAccessConstraints,
-        defaultJBETHPaymentTerminal?.address,
+        // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+        defaultJBETHPaymentTerminal?.target as string,
       ),
       memo: DEFAULT_MEMO,
     } // _launchProjectData
@@ -220,7 +226,8 @@ export function useLaunchProjectWithNftsTx(): TransactorInstance<LaunchProjectWi
       owner: _owner,
       deployTiered721DelegateData,
       launchProjectData,
-      JBControllerAddress: defaultJBController.address,
+      // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+      JBControllerAddress: defaultJBController.target as string,
     })
 
     if (!args) {

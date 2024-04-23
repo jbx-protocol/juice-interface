@@ -178,6 +178,7 @@ async function fetchJB721DelegateVersion(dataSourceAddress: string) {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   enableCors(res)
+  logger.info({ query: req.query })
 
   if (req.method !== 'GET') {
     return res.status(404)

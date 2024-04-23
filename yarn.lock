@@ -3635,9 +3635,9 @@
     "@openzeppelin/contracts" "^4.5.0-rc.0"
     "@paulrberg/contracts" "^3.4.0"
 
-"@jbx-protocol/juice-delegate-metadata-lib@https://github.com/jbx-protocol/juice-delegate-metadata-lib.git":
+"@jbx-protocol/juice-delegate-metadata-lib@git+https://github.com/jbx-protocol/juice-delegate-metadata-lib.git":
   version "1.0.1"
-  resolved "https://github.com/jbx-protocol/juice-delegate-metadata-lib.git#da5a4b405dd77812ee819145a5c71885119339d3"
+  resolved "git+https://github.com/jbx-protocol/juice-delegate-metadata-lib.git#da5a4b405dd77812ee819145a5c71885119339d3"
   dependencies:
     ds-test "https://github.com/dapphub/ds-test.git#e282159d5170298eb2455a6c05280ab5a73a4ef0"
     forge-std "https://github.com/foundry-rs/forge-std.git#e8a047e3f40f13fa37af6fe14e6e06283d9a060e"
@@ -3659,6 +3659,14 @@
     "@jbx-protocol/juice-contracts-v3" "^2.0.3"
     "@openzeppelin/contracts" "^4.8.0"
     "@paulrberg/contracts" "^3.7.0"
+
+"@jbx-protocol/juice-ownable@git+https://github.com/jbx-protocol/juice-ownable.git":
+  version "0.0.2"
+  uid b2f98133c7bea013db967e8a204ce0d9cc06d21f
+  resolved "git+https://github.com/jbx-protocol/juice-ownable.git#b2f98133c7bea013db967e8a204ce0d9cc06d21f"
+  dependencies:
+    "@jbx-protocol/juice-contracts-v3" "^2.0.2"
+    "@openzeppelin/contracts" "^4.8.0"
 
 "@jbx-protocol/juice-ownable@https://github.com/jbx-protocol/juice-ownable":
   version "0.0.2"

@@ -10,7 +10,7 @@ import { useContext } from 'react'
 import { useV2V3BlockedProject } from '../useBlockedProject'
 import { useV2ProjectTitle } from '../useProjectTitle'
 
-const DEFAULT_DELEGATE_METADATA = 0
+const DEFAULT_DELEGATE_METADATA = '0x00'
 
 type PayV2ProjectTx = TransactorInstance<{
   memo: string

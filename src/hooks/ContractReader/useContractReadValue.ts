@@ -1,7 +1,42 @@
-import { Contract } from 'ethers'
+import { Contract, ethers } from 'ethers'
 import { useCallback, useState } from 'react'
 import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect'
 import { callContractRead, getContract } from './util'
+
+/**
+ * Ethers v6 returns a `Result` object when calling a contract function.
+ *
+ * This function recursively converts the `Result` object to a plain object.
+ *
+ * If the object is not a `Result`, it is returned as is.
+ */
+const ethersResultToObjectOrArray =
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (result: any): any => {
+    if (result instanceof ethers.Result) {
+      // try to convert the result to an object, and get the entries.
+      try {
+        const obj = result.toObject()
+        // const entries = Object.entries(obj)
+        const retVal = Object.entries(obj).reduce((acc, [key, value]) => {
+          if (value instanceof ethers.Result) {
+            return { ...acc, [key]: ethersResultToObjectOrArray(value) }
+          }
+          return { ...acc, [key]: value }
+        }, {})
+        if (Object.keys(retVal).length === 0) {
+          return []
+        }
+        return retVal
+      } catch (e) {
+        // Let it be free - an error will sometimes be thrown when trying to
+        // convert a Result to an object which usually means it's an array so we
+        // can return it as is and pray the ethers team got it right.
+        return result
+      }
+    }
+    return result
+  }
 
 /**
  * Reads a `contract` value from `contracts`, using the `functionName`.
@@ -32,7 +67,14 @@ export function useContractReadValue<C extends string, V>({
   const [loading, setLoading] = useState<boolean>(false)
 
   const _formatter = useCallback(
-    (val: any) => (formatter ? formatter(val) : val), // eslint-disable-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (val: any) => {
+      if (val instanceof ethers.Result) {
+        const obj = ethersResultToObjectOrArray(val)
+        return formatter ? formatter(obj) : obj
+      }
+      return formatter ? formatter(val) : val
+    },
     [formatter],
   )
   const _valueDidChange = useCallback(

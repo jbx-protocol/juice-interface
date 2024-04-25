@@ -6,6 +6,11 @@ import {
 import { useContext } from 'react'
 import useV2ContractReader from './useV2ContractReader'
 
+type V2V3QueuedFundingCycleOfResult = {
+  fundingCycle: V2V3FundingCycle
+  metadata: V2V3FundingCycleMetadata
+}
+
 export default function useProjectQueuedFundingCycle({
   projectId,
 }: {
@@ -13,15 +18,15 @@ export default function useProjectQueuedFundingCycle({
 }) {
   const { contracts } = useContext(V2V3ProjectContractsContext)
 
-  const { data, loading } = useV2ContractReader<
-    [V2V3FundingCycle, V2V3FundingCycleMetadata]
-  >({
-    contract: contracts.JBController,
-    functionName: 'queuedFundingCycleOf',
-    args: projectId ? [projectId] : null,
-  })
+  const { data, loading } = useV2ContractReader<V2V3QueuedFundingCycleOfResult>(
+    {
+      contract: contracts.JBController,
+      functionName: 'queuedFundingCycleOf',
+      args: projectId ? [projectId] : null,
+    },
+  )
 
-  if (data && data[0].start === BigInt(0)) {
+  if (data && data.fundingCycle.start === BigInt(0)) {
     return { data: undefined, loading: false }
   }
   return {

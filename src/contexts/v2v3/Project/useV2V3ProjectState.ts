@@ -108,7 +108,8 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     useProjectCurrentFundingCycle({
       projectId,
     })
-  const [fundingCycle, fundingCycleMetadata] = fundingCycleResponse ?? []
+  const { fundingCycle, metadata: fundingCycleMetadata } =
+    fundingCycleResponse ?? {}
   const { data: ballotState } = useBallotState(projectId)
 
   /**

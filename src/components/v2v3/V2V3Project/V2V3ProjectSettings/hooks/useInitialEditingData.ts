@@ -72,8 +72,10 @@ export const useInitialEditingData = ({
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
   })
-  const [queuedFundingCycle, queuedFundingCycleMetadata] =
-    queuedFundingCycleResponse ?? []
+  const {
+    fundingCycle: queuedFundingCycle,
+    metadata: queuedFundingCycleMetadata,
+  } = queuedFundingCycleResponse ?? {}
 
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,

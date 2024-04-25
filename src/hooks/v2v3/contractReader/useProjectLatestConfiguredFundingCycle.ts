@@ -7,6 +7,12 @@ import {
 import { useContext } from 'react'
 import useV2ContractReader from './useV2ContractReader'
 
+type LatestConfiguredFundingCycleOfResult = {
+  fundingCycle: V2V3FundingCycle
+  metadata: V2V3FundingCycleMetadata
+  ballotState: BallotState
+}
+
 export function useProjectLatestConfiguredFundingCycle({
   projectId,
 }: {
@@ -16,9 +22,7 @@ export function useProjectLatestConfiguredFundingCycle({
     contracts: { JBController },
   } = useContext(V2V3ProjectContractsContext)
 
-  return useV2ContractReader<
-    [V2V3FundingCycle, V2V3FundingCycleMetadata, BallotState]
-  >({
+  return useV2ContractReader<LatestConfiguredFundingCycleOfResult>({
     contract: JBController,
     functionName: 'latestConfiguredFundingCycleOf',
     args: projectId ? [projectId] : null,

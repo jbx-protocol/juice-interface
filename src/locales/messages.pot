@@ -650,9 +650,6 @@ msgstr ""
 msgid "1. Create your project"
 msgstr ""
 
-msgid "Current Balance"
-msgstr ""
-
 msgid "Name"
 msgstr ""
 
@@ -740,9 +737,6 @@ msgstr ""
 msgid "Current handle"
 msgstr ""
 
-msgid "Click to view activity"
-msgstr ""
-
 msgid "Telegram link"
 msgstr ""
 
@@ -783,6 +777,9 @@ msgid "Advanced (optional)"
 msgstr ""
 
 msgid "Create ERC-20 Token"
+msgstr ""
+
+msgid "You receive"
 msgstr ""
 
 msgid "Saved projects"
@@ -942,6 +939,9 @@ msgid "$JBX is the Juicebox governance token. Normally, when a project pays ETH 
 msgstr ""
 
 msgid "File must be less than {formattedSize}{unit}"
+msgstr ""
+
+msgid "Connect wallet to redeem"
 msgstr ""
 
 msgid "Adding an edit deadline is recommended. Projects with no deadline will appear risky to contributors."
@@ -1847,9 +1847,6 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-msgid "View all"
-msgstr ""
-
 msgid "Optionally, you can create an ERC-20 token once your project has been deployed. Until then, the Juicebox protocol will track token balances internally, allowing your supporters to receive tokens and redeem them for ETH."
 msgstr ""
 
@@ -2046,6 +2043,9 @@ msgid "{count} total"
 msgstr ""
 
 msgid "Your updated cycle has been deployed"
+msgstr ""
+
+msgid "You can safely close this modal."
 msgstr ""
 
 msgid "Edit NFTs"
@@ -2519,6 +2519,9 @@ msgstr ""
 msgid "Total amount"
 msgstr ""
 
+msgid "You pay"
+msgstr ""
+
 msgid "Explore categories"
 msgstr ""
 
@@ -2714,7 +2717,7 @@ msgstr ""
 msgid "No NFTs"
 msgstr ""
 
-msgid "See the NFTs and rewards offered by this project."
+msgid "You redeem"
 msgstr ""
 
 msgid "Images will be cropped to a 1:1 square in thumbnail previews on the Juicebox app."
@@ -3119,6 +3122,9 @@ msgstr ""
 msgid "Setting a handle requires 2 transactions: <0>Set ENS name</0> and <1>Set text record</1>."
 msgstr ""
 
+msgid "Redeem {tokenTicker}"
+msgstr ""
+
 msgid "{reservedRate} of token issuance is set aside for the recipients below."
 msgstr ""
 
@@ -3180,6 +3186,9 @@ msgid "Edit deadline"
 msgstr ""
 
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building. Join thousands of projects sippin' the Juice."
+msgstr ""
+
+msgid "Your transaction was successful."
 msgstr ""
 
 msgid "Owner wallet"
@@ -3698,6 +3707,9 @@ msgstr ""
 msgid "We're always looking for talented people to join the DAO and help build Juicebox. Hit the button below to find out more."
 msgstr ""
 
+msgid "Your transaction is processing."
+msgstr ""
+
 msgid "Sold out"
 msgstr ""
 
@@ -3723,6 +3735,9 @@ msgid "Any ETH sent to these project payer addresses will be forwarded to the pr
 msgstr ""
 
 msgid "No payouts to export"
+msgstr ""
+
+msgid "Redeeming tokens"
 msgstr ""
 
 msgid "Deployed ERC20"
@@ -4770,6 +4785,9 @@ msgid "Redemption value"
 msgstr ""
 
 msgid "Mints tokens as ERC-20:"
+msgstr ""
+
+msgid "Insufficient balance"
 msgstr ""
 
 msgid "Process held fees"

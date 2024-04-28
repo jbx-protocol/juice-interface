@@ -1,6 +1,7 @@
 import { ArrowDownIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, Tooltip } from 'antd'
+import { Callout } from 'components/Callout/Callout'
 import Loading from 'components/Loading'
 import { EthereumIcon } from 'components/icons/Ethereum'
 import { JuiceModal, JuiceModalProps } from 'components/modals/JuiceModal'
@@ -11,7 +12,6 @@ import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
 import { useETHReceivedFromTokens } from 'hooks/v2v3/contractReader/useETHReceivedFromTokens'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/useRedeemTokensTx'
-import Image from 'next/image'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
@@ -19,6 +19,7 @@ import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
+import { computeIssuanceRate } from 'utils/v2v3/math'
 import { useProjectCart } from '../hooks/useProjectCart'
 import { useProjectContext } from '../hooks/useProjectContext'
 import { useTokensPanel } from '../hooks/useTokensPanel'
@@ -27,14 +28,27 @@ import { useCartSummary } from './Cart/hooks/useCartSummary'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
 
+type PayerIssuanceRate = {
+  loading: boolean
+  enabled: boolean
+}
+
+type Redeems = {
+  loading: boolean
+  enabled: boolean
+}
+
 export type PayRedeemCardProps = {
   className?: string
 }
 
 export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
+  const project = useProjectContext()
   const [state, setState] = useState<'pay' | 'redeem'>('pay')
   // TODO: We should probably break out tokens panel hook into reusable module
   const { userTokenBalance: panelBalance } = useTokensPanel()
+
+  project.fundingCycleMetadata?.pauseRedeem
 
   const tokenBalance = useMemo(() => {
     return panelBalance
@@ -42,35 +56,82 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
       : undefined
   }, [panelBalance])
 
+  const payerIssuanceRate = useMemo<PayerIssuanceRate>(() => {
+    if (!project.fundingCycle || !project.fundingCycleMetadata) {
+      return {
+        loading: project.loading.fundingCycleLoading,
+        enabled: false,
+      }
+    }
+    const weightAmount = computeIssuanceRate(
+      project.fundingCycle,
+      project.fundingCycleMetadata,
+      'payer',
+      false,
+    )
+    const hasPayerIssuanceRate = Number(weightAmount) > 0
+    return {
+      loading: project.loading.fundingCycleLoading,
+      enabled: hasPayerIssuanceRate,
+    }
+  }, [
+    project.fundingCycle,
+    project.fundingCycleMetadata,
+    project.loading.fundingCycleLoading,
+  ])
+
+  const redeems = useMemo<Redeems>(() => {
+    return {
+      loading: project.loading.fundingCycleLoading,
+      enabled: !project.fundingCycleMetadata?.pauseRedeem || false,
+    }
+  }, [
+    project.fundingCycleMetadata?.pauseRedeem,
+    project.loading.fundingCycleLoading,
+  ])
+
   return (
-    <div
-      className={twMerge(
-        'flex flex-col rounded-lg border border-grey-200 p-5 pb-6 dark:border-slate-600 dark:bg-slate-700',
-        className,
-      )}
-    >
-      <div>
-        <ChoiceButton
-          selected={state === 'pay'}
-          onClick={() => setState('pay')}
-        >
-          Pay
-        </ChoiceButton>
-        <ChoiceButton
-          selected={state === 'redeem'}
-          onClick={() => setState('redeem')}
-        >
-          Redeem
-        </ChoiceButton>
+    <div className="flex flex-col">
+      <div
+        className={twMerge(
+          'flex flex-col rounded-lg border border-grey-200 p-5 pb-6 dark:border-slate-600 dark:bg-slate-700',
+          className,
+        )}
+      >
+        <div>
+          <ChoiceButton
+            selected={state === 'pay'}
+            onClick={() => setState('pay')}
+          >
+            Pay
+          </ChoiceButton>
+          <ChoiceButton
+            selected={state === 'redeem'}
+            onClick={() => setState('redeem')}
+            disabled={!redeems.enabled}
+          >
+            Redeem
+          </ChoiceButton>
+        </div>
+
+        <div className="mt-5">
+          {state === 'pay' ? (
+            <PayConfiguration
+              userTokenBalance={tokenBalance}
+              payerIssuanceRate={payerIssuanceRate}
+            />
+          ) : (
+            <RedeemConfiguration userTokenBalance={tokenBalance} />
+          )}
+        </div>
       </div>
 
-      <div className="mt-5">
-        {state === 'pay' ? (
-          <PayConfiguration userTokenBalance={tokenBalance} />
-        ) : (
-          <RedeemConfiguration userTokenBalance={tokenBalance} />
-        )}
-      </div>
+      {/* Extra matter */}
+      {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
+        <Callout.Info className="mt-6 py-2 px-3.5" collapsible={false}>
+          <Trans>This project does not currently offer tokens</Trans>
+        </Callout.Info>
+      )}
     </div>
   )
 }
@@ -79,24 +140,36 @@ const ChoiceButton = ({
   children,
   onClick,
   selected,
+  disabled,
 }: {
   children: React.ReactNode
   onClick?: () => void
   selected?: boolean
+  disabled?: boolean
 }) => {
-  return (
-    <button
-      onClick={onClick}
-      className={twMerge(
-        'w-fit rounded-full px-4 py-1.5 text-base font-medium transition-colors',
-        selected
-          ? 'bg-grey-100 text-grey-900 dark:bg-slate-900 dark:text-slate-100'
-          : 'bg-transparent text-grey-500 hover:bg-grey-100 hover:text-grey-900 dark:text-slate-300 dark:hover:bg-slate-600 dark:hover:text-slate-100',
-      )}
-    >
-      {children}
-    </button>
+  const Button = useMemo(
+    () => (
+      <button
+        disabled={disabled}
+        onClick={onClick}
+        className={twMerge(
+          'w-fit rounded-full px-4 py-1.5 text-base font-medium transition-colors',
+          selected
+            ? 'bg-grey-100 text-grey-900 dark:bg-slate-900 dark:text-slate-100'
+            : !disabled
+            ? 'bg-transparent text-grey-500 hover:bg-grey-100 hover:text-grey-900 dark:text-slate-300 dark:hover:bg-slate-600 dark:hover:text-slate-100'
+            : 'cursor-not-allowed text-grey-400 dark:text-slate-300',
+        )}
+      >
+        {children}
+      </button>
+    ),
+    [children, disabled, onClick, selected],
   )
+  if (disabled) {
+    return <Tooltip title={t`Disabled for this project`}>{Button}</Tooltip>
+  }
+  return Button
 }
 
 const PayRedeemInput = ({
@@ -232,10 +305,12 @@ const DownArrow = ({ className }: { className?: string }) => {
 
 type PayConfigurationProps = {
   userTokenBalance: number | undefined
+  payerIssuanceRate: PayerIssuanceRate
 }
 
 const PayConfiguration: React.FC<PayConfigurationProps> = ({
   userTokenBalance,
+  payerIssuanceRate,
 }) => {
   const { tokenSymbol } = useProjectContext()
   const cart = useProjectCart()
@@ -297,33 +372,36 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
             value={payAmount}
             onChange={setPayAmount}
           />
-          <PayRedeemInput
-            label={t`You receive`}
-            readOnly
-            token={{
-              balance: userTokenBalance?.toString(),
-              image:
-                tokenLogo && !fallbackImage ? (
-                  <Image
-                    src={tokenLogo}
-                    alt="Token logo"
-                    fill
-                    onError={() => setFallbackImage(true)}
-                  />
-                ) : (
-                  '🧃'
-                ),
-              ticker: tokenTicker,
-            }}
-            value={
-              tokenReceivedAmount.receivedTickets &&
-              !!parseFloat(tokenReceivedAmount.receivedTickets)
-                ? tokenReceivedAmount.receivedTickets
-                : ''
-            }
-          />
+          {payerIssuanceRate.enabled && (
+            <PayRedeemInput
+              label={t`You receive`}
+              readOnly
+              token={{
+                balance: userTokenBalance?.toString(),
+                image:
+                  tokenLogo && !fallbackImage ? (
+                    <img
+                      src={tokenLogo}
+                      alt="Token logo"
+                      onError={() => setFallbackImage(true)}
+                    />
+                  ) : (
+                    '🧃'
+                  ),
+                ticker: tokenTicker,
+              }}
+              value={
+                tokenReceivedAmount.receivedTickets &&
+                !!parseFloat(tokenReceivedAmount.receivedTickets)
+                  ? tokenReceivedAmount.receivedTickets
+                  : ''
+              }
+            />
+          )}
         </div>
-        <DownArrow className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        {payerIssuanceRate.enabled && (
+          <DownArrow className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        )}
       </div>
 
       <Button
@@ -441,10 +519,9 @@ const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
                 balance: userTokenBalance?.toString(),
                 image:
                   tokenLogo && !fallbackImage ? (
-                    <Image
+                    <img
                       src={tokenLogo}
                       alt="Token logo"
-                      fill
                       onError={() => setFallbackImage(true)}
                     />
                   ) : (

@@ -9,8 +9,10 @@ export default async function handler(
 ) {
   const logger = getLogger('api/image/[url]')
 
+  logger.info({ data: { query: req.query } })
   const imageUrl = req.query?.url as string
   if (!imageUrl) {
+    logger.error({ error: 'Bad Request: Invalid or missing URL.' })
     return res
       .status(400)
       .json({ error: 'Bad Request: Invalid or missing URL.' })
@@ -71,7 +73,7 @@ export default async function handler(
         .json({ error: 'Forbidden. Invalid file signature.' })
     }
 
-    return res.redirect(imageUrl)
+    return res.redirect(imageUrl).end()
   } catch (error) {
     logger.error({ error })
     return res.status(500).json({ error: 'failed to resolve image' })

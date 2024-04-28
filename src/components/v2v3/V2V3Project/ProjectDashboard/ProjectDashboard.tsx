@@ -38,8 +38,6 @@ export const ProjectDashboard = () => {
                       <div
                         className={twMerge(
                           'mt-10 flex w-full flex-col gap-4 px-4 md:flex-row md:px-0',
-                          // Styles applied to children
-                          '[&>*]:border [&>*]:border-smoke-100 [&>*]:dark:border-slate-600',
                         )}
                       >
                         <PayRedeemCard className="flex-1" />

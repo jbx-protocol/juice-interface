@@ -265,15 +265,15 @@ export function computeIssuanceRate(
   fundingCycle: V2V3FundingCycleData,
   fundingCycleMetadata: V2V3FundingCycleMetadata,
   issuee: IssueeType,
+  formatted = true,
 ) {
-  return formattedNum(
-    formatIssuanceRate(
-      weightAmountPermyriad(
-        fundingCycle?.weight,
-        fundingCycleMetadata?.reservedRate.toNumber(),
-        parseEther('1'),
-        issuee,
-      ) ?? '',
-    ),
+  const computed = formatIssuanceRate(
+    weightAmountPermyriad(
+      fundingCycle.weight,
+      fundingCycleMetadata.reservedRate.toNumber(),
+      parseEther('1'),
+      issuee,
+    ) ?? '',
   )
+  return formatted ? formattedNum(computed)! : computed
 }

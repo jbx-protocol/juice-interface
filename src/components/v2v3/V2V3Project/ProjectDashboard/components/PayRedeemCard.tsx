@@ -2,6 +2,7 @@ import { ArrowDownIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import Loading from 'components/Loading'
+import { EthereumIcon } from 'components/icons/Ethereum'
 import { JuiceModal, JuiceModalProps } from 'components/modals/JuiceModal'
 import { PV_V2 } from 'constants/pv'
 import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
@@ -289,7 +290,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
             label={t`You pay`}
             token={{
               balance: wallet.balance,
-              image: <div />,
+              image: <EthereumLogo />,
               ticker: 'ETH',
               type: 'eth',
             }}
@@ -459,7 +460,7 @@ const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
               readOnly
               token={{
                 balance: wallet.balance,
-                image: <div />,
+                image: <EthereumLogo />,
                 ticker: 'ETH',
                 type: 'eth',
               }}
@@ -541,5 +542,13 @@ const RedeemModal: React.FC<JuiceModalProps & { redeeming: boolean }> = ({
         {/* <ExternalLink className="mt-3">View on block explorer</ExternalLink> */}
       </div>
     </JuiceModal>
+  )
+}
+
+const EthereumLogo = () => {
+  return (
+    <div className="flex h-full w-full items-center justify-center rounded-full bg-bluebs-500">
+      <EthereumIcon className="text-white" />
+    </div>
   )
 }

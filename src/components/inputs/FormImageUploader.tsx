@@ -80,7 +80,10 @@ export const FormImageUploader = ({
                   const res = await pinFile(req.file)
                   setValue(res.Hash)
                 } catch (e) {
-                  emitErrorNotification(t`Error uploading file`)
+                  // emitErrorNotification(t`Error uploading file`)
+                  emitErrorNotification(
+                    `Sorry! Our vendor, Infura, is currently experiencing issues. Please try again later. \n More information: https://status.infura.io/incidents/ys2p3spjb022`,
+                  )
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   req.onError?.(null as any)
                 } finally {

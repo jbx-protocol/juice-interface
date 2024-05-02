@@ -3740,6 +3740,9 @@ msgstr ""
 msgid "Connected wallet not authorized"
 msgstr ""
 
+msgid "Error uploading file"
+msgstr ""
+
 msgid "Even though ConstitutionDAO lost the auction, they onboarded thousands to crypto with a powerful vision of collectively owning an important piece of U.S. history. This historical document meant different things to different people, but using Juicebox they were able to pool resources and work together towards a common goal. To learn more about the ConstitutionDAO story, listen to episode 15, 16, and 17 of the Juicebox podcast: <0>https://podcast.juicebox.money</0>."
 msgstr ""
 

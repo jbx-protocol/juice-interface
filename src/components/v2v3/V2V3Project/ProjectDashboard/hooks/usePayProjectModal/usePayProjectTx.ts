@@ -33,7 +33,7 @@ export const usePayProjectTx = ({
   ) => void
 }) => {
   const { userAddress } = useWallet()
-  const { totalAmount, nftRewards } = useProjectCart()
+  const { totalAmount, chosenNftRewards } = useProjectCart()
   const {
     nftRewards: { rewardTiers },
   } = useContext(NftRewardsContext)
@@ -49,14 +49,14 @@ export const usePayProjectTx = ({
           amount: 0,
           currency: V2V3_CURRENCY_ETH,
         },
-        nfts: nftRewards ?? [],
+        nfts: chosenNftRewards ?? [],
         timestamp: new Date(),
         transactionHash: e?.hash,
         fromAddress: userAddress ?? '',
         tokensReceived: receivedTickets ?? '',
       }
     },
-    [nftRewards, receivedTickets, totalAmount, userAddress],
+    [chosenNftRewards, receivedTickets, totalAmount, userAddress],
   )
 
   const weiAmount = useMemo(() => {
@@ -70,7 +70,7 @@ export const usePayProjectTx = ({
   }, [totalAmount, converter])
 
   const prepareDelegateMetadata = usePrepareDelegatePayMetadata(weiAmount, {
-    nftRewards,
+    nftRewards: chosenNftRewards,
     receivedTickets,
   })
 
@@ -85,7 +85,7 @@ export const usePayProjectTx = ({
       const memo = buildPaymentMemo({
         text: messageString,
         imageUrl: attachedUrl,
-        nftUrls: nftRewards
+        nftUrls: chosenNftRewards
           .map(
             ({ id }) =>
               (rewardTiers ?? []).find(({ id: tierId }) => tierId === id)
@@ -136,7 +136,7 @@ export const usePayProjectTx = ({
     [
       projectHasErc20,
       buildPayReceipt,
-      nftRewards,
+      chosenNftRewards,
       onTransactionConfirmedCallback,
       onTransactionErrorCallback,
       onTransactionPendingCallback,

@@ -43,7 +43,7 @@ export const usePayProjectModal = () => {
     dispatch: cartDispatch,
     payModalOpen,
     totalAmount,
-    nftRewards,
+    chosenNftRewards,
   } = useProjectCart()
   const { projectMetadata } = useProjectMetadataContext()
   const { name, payDisclosure } = projectMetadata ?? {}
@@ -124,7 +124,7 @@ export const usePayProjectModal = () => {
     primaryAmount,
     secondaryAmount,
     userAddress,
-    nftRewards,
+    nftRewards: chosenNftRewards,
     validationSchema,
     projectName: name,
     projectPayDisclosure: payDisclosure,

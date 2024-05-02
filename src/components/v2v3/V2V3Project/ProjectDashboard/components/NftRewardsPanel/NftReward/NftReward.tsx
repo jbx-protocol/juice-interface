@@ -45,8 +45,10 @@ export function NftReward({
   } = usePayProjectDisabled()
 
   const quantitySelected = useMemo(
-    () => cart.nftRewards.find(nft => nft.id === rewardTier?.id)?.quantity ?? 0,
-    [cart.nftRewards, rewardTier?.id],
+    () =>
+      cart.chosenNftRewards.find(nft => nft.id === rewardTier?.id)?.quantity ??
+      0,
+    [cart.chosenNftRewards, rewardTier?.id],
   )
   const isSelected = quantitySelected > 0
 

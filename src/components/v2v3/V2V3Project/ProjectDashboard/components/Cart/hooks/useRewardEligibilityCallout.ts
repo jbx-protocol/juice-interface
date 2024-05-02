@@ -12,7 +12,7 @@ export const useRewardEligibilityCallout = () => {
   const { rewardTiers } = useContext(NftRewardsContext).nftRewards
   const {
     payAmount,
-    nftRewards,
+    chosenNftRewards,
     nftRewardEligibilityDismissed: dismissed,
     dispatch,
   } = useProjectCart()
@@ -29,7 +29,7 @@ export const useRewardEligibilityCallout = () => {
     const potentialRewards = rewardTiers
       .filter(tier => (tier.remainingSupply ?? Infinity) > 0)
       .filter(tier => tier.contributionFloor <= ethAmount)
-      .filter(tier => !nftRewards.find(nft => nft.id === tier.id))
+      .filter(tier => !chosenNftRewards.find(nft => nft.id === tier.id))
       .sort((a, b) => b.contributionFloor - a.contributionFloor)
 
     const eligibleRewards = []
@@ -45,7 +45,7 @@ export const useRewardEligibilityCallout = () => {
       }
     }
     return eligibleRewards
-  }, [nftRewards, payAmount, rewardTiers, weiPayAmount])
+  }, [chosenNftRewards, payAmount, rewardTiers, weiPayAmount])
 
   const dismiss = useCallback(() => {
     dispatch({

@@ -340,6 +340,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
 
   const tokenTicker = tokenSymbol || 'TOKENS'
 
+  // Update cart with payment amount from input
   useEffect(() => {
     cart.dispatch({
       type: 'addPayment',
@@ -356,6 +357,14 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payAmount])
+
+  // Update the pay amount input from the cart
+  useEffect(() => {
+    const updated = cart.payAmount?.amount
+      ? cart.payAmount?.amount?.toString()
+      : ''
+    setPayAmount(updated)
+  }, [cart.payAmount?.amount])
 
   return (
     <div>

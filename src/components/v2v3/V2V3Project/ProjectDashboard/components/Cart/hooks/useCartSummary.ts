@@ -13,7 +13,7 @@ export const useCartSummary = () => {
     [nftRewardsCtx.rewardTiers],
   )
   const nftRewards = useMemo(() => {
-    return cart.nftRewards
+    return cart.chosenNftRewards
       .map(nft => ({ ...tiers.find(tier => tier.id === nft.id), ...nft }))
       .filter(nft => nft !== undefined)
       .map(nft => ({
@@ -22,7 +22,7 @@ export const useCartSummary = () => {
         quantity: nft.quantity,
         id: nft.id,
       }))
-  }, [cart.nftRewards, tiers])
+  }, [cart.chosenNftRewards, tiers])
 
   const amountText = cart.totalAmount
     ? formatCurrencyAmount(cart.totalAmount)

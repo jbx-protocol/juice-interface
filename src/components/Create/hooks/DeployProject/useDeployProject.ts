@@ -107,10 +107,7 @@ export const useDeployProject = () => {
 
   const handleDeployFailure = useCallback((error: unknown) => {
     console.error(error)
-    // emitErrorNotification(`Error deploying project: ${error}`)
-    emitErrorNotification(
-      `Sorry! Our vendor, Infura, is currently experiencing issues. Please try again later. \n More information: https://status.infura.io/incidents/ys2p3spjb022`,
-    )
+    emitErrorNotification(`Error deploying project: ${error}`)
     setIsDeploying(false)
     setTransactionPending(false)
   }, [])

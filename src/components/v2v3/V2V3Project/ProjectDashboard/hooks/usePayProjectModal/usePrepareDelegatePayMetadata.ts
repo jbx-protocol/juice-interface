@@ -8,7 +8,7 @@ import { useCallback, useContext } from 'react'
 import { encodeDelegatePayMetadata } from 'utils/delegateMetadata/encodeDelegateMetadata'
 import { parseWad, stripCommas } from 'utils/format/formatNumber'
 import { MAX_RESERVED_RATE } from 'utils/v2v3/math'
-import { ProjectCartNftReward } from '../../components/ProjectCartProvider/ProjectCartProvider'
+import { ProjectCartNftReward } from '../../components/ReduxProjectCartProvider'
 import { useProjectContext } from '../useProjectContext'
 
 function usePrepareJbBuybackDelegatePayMetadata({

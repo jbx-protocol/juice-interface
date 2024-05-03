@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { NftPreview } from 'components/NftRewards/NftPreview'
-import { useProjectCart } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectCart'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { useNftRewardsEnabledForPay } from 'hooks/JB721Delegate/useNftRewardsEnabledForPay'
 import { usePayProjectDisabled } from 'hooks/v2v3/usePayProjectDisabled'
@@ -9,6 +8,7 @@ import { NftRewardTier } from 'models/nftRewards'
 import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { useProjectSelector } from '../../../redux/hooks'
 import { AddNftButton } from './AddNftButton'
 import { NftDetails } from './NftDetails'
 import { NftThumbnail } from './NftThumbnail'
@@ -35,8 +35,10 @@ export function NftReward({
   hideAttributes,
 }: NftRewardProps) {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false)
+  const chosenNftRewards = useProjectSelector(
+    state => state.projectCart.chosenNftRewards,
+  )
 
-  const cart = useProjectCart()
   const nftsEnabledForPay = useNftRewardsEnabledForPay()
   const {
     payDisabled,
@@ -46,9 +48,8 @@ export function NftReward({
 
   const quantitySelected = useMemo(
     () =>
-      cart.chosenNftRewards.find(nft => nft.id === rewardTier?.id)?.quantity ??
-      0,
-    [cart.chosenNftRewards, rewardTier?.id],
+      chosenNftRewards.find(nft => nft.id === rewardTier?.id)?.quantity ?? 0,
+    [chosenNftRewards, rewardTier?.id],
   )
   const isSelected = quantitySelected > 0
 

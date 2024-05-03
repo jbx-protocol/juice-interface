@@ -1,8 +1,15 @@
-import { ArrowDownIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
+import {
+  ArrowDownIcon,
+  CheckCircleIcon,
+  MinusIcon,
+  PlusIcon,
+  TrashIcon,
+} from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import Loading from 'components/Loading'
+import { TruncatedText } from 'components/TruncatedText'
 import { EthereumIcon } from 'components/icons/Ethereum'
 import { JuiceModal, JuiceModalProps } from 'components/modals/JuiceModal'
 import { PV_V2 } from 'constants/pv'
@@ -20,10 +27,19 @@ import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { computeIssuanceRate } from 'utils/v2v3/math'
-import { useProjectCart } from '../hooks/useProjectCart'
+import { useNftCartItem } from '../hooks/useNftCartItem'
 import { useProjectContext } from '../hooks/useProjectContext'
 import { useTokensPanel } from '../hooks/useTokensPanel'
 import { useTokensPerEth } from '../hooks/useTokensPerEth'
+import {
+  useProjectDispatch,
+  useProjectSelector,
+  useProjectStore,
+} from '../redux/hooks'
+import { projectCartActions } from '../redux/projectCartSlice'
+import { CartItemBadge } from './CartItemBadge'
+import { ProjectCartNftReward } from './ReduxProjectCartProvider'
+import { SmallNftSquare } from './SmallNftSquare'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
 
@@ -174,20 +190,26 @@ const ChoiceButton = ({
 const PayRedeemInput = ({
   className,
   label,
+  downArrow,
   readOnly,
+  redeemUnavailable,
   token,
+  nfts,
   value,
   onChange,
 }: {
   className?: string
   label?: string
+  downArrow?: boolean
   readOnly?: boolean
+  redeemUnavailable?: boolean
   token: {
     type?: 'eth' | 'other'
     ticker: string
     image: ReactNode
     balance: string | undefined
   }
+  nfts?: ProjectCartNftReward[]
   value?: string | undefined
   onChange?: (value: string | undefined) => void
 }) => {
@@ -233,32 +255,49 @@ const PayRedeemInput = ({
     }
   }
 
+  if (redeemUnavailable && !nfts?.length) {
+    return null
+  }
+
   return (
-    <div
-      className={twMerge(
-        'flex flex-col gap-y-2 overflow-hidden rounded-lg border border-grey-200 bg-grey-50 px-4 py-3 text-sm text-grey-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200',
-        className,
+    <div className="relative">
+      <div
+        className={twMerge(
+          'flex flex-col gap-y-2 overflow-hidden rounded-lg border border-grey-200 bg-grey-50 px-4 py-3 text-sm text-grey-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200',
+          className,
+        )}
+      >
+        <label>{label}</label>
+        <div className="flex w-full justify-between gap-2">
+          <input
+            className="min-w-0 bg-transparent text-3xl font-medium text-grey-900 placeholder:text-grey-300 focus:outline-none dark:text-slate-100 dark:placeholder-slate-400"
+            // TODO: Format and de-format
+            value={value}
+            placeholder="0"
+            readOnly={readOnly}
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+          />
+          <TokenBadge token={token.ticker} image={token.image} />
+        </div>
+        <div className="flex min-h-[22px] justify-between">
+          <span>{convertedValue && formatCurrencyAmount(convertedValue)}</span>
+          <span>
+            {token.balance && <>Balance: {formatAmount(token.balance)}</>}
+          </span>
+        </div>
+        {nfts && nfts?.length > 0 && (
+          <div className="mt-4 space-y-4 border-t border-grey-200 pt-6 dark:border-slate-600">
+            {nfts.map((nft, i) => (
+              <NftReward key={i} nft={nft} />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {downArrow && (
+        <DownArrow className="absolute -top-1 left-1/2 -translate-y-1/2 -translate-x-1/2" />
       )}
-    >
-      <label>{label}</label>
-      <div className="flex w-full justify-between gap-2">
-        <input
-          className="min-w-0 bg-transparent text-3xl font-medium text-grey-900 placeholder:text-grey-300 focus:outline-none dark:text-slate-100 dark:placeholder-slate-400"
-          // TODO: Format and de-format
-          value={value}
-          placeholder="0"
-          readOnly={readOnly}
-          onChange={handleInputChange}
-          onBlur={handleBlur}
-        />
-        <TokenBadge token={token.ticker} image={token.image} />
-      </div>
-      <div className="flex min-h-[22px] justify-between">
-        <span>{convertedValue && formatCurrencyAmount(convertedValue)}</span>
-        <span>
-          {token.balance && <>Balance: {formatAmount(token.balance)}</>}
-        </span>
-      </div>
     </div>
   )
 }
@@ -291,7 +330,7 @@ const DownArrow = ({ className }: { className?: string }) => {
   return (
     <div
       className={twMerge(
-        'absolute top-1/2 left-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-grey-50 p-1 dark:bg-slate-900',
+        'flex h-10 w-10 items-center justify-center bg-grey-50 p-1 dark:bg-slate-900',
         className,
       )}
     >
@@ -312,7 +351,11 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
   payerIssuanceRate,
 }) => {
   const { tokenSymbol } = useProjectContext()
-  const cart = useProjectCart()
+  const chosenNftRewards = useProjectSelector(
+    state => state.projectCart.chosenNftRewards,
+  )
+  const dispatch = useProjectDispatch()
+  const store = useProjectStore()
   const wallet = useWallet()
   const { isConnected: walletConnected, connect } = useWallet()
   const { projectId, projectMetadata } = useProjectMetadataContext()
@@ -338,6 +381,19 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
 
   const tokenTicker = tokenSymbol || 'TOKENS'
 
+  const handleUserPayAmountChange = useCallback(
+    (value: string | undefined) => {
+      dispatch(
+        projectCartActions.addPayment({
+          amount: parseFloat(value || '0'),
+          currency: V2V3_CURRENCY_ETH,
+        }),
+      )
+      setPayAmount(value)
+    },
+    [dispatch],
+  )
+
   const payProject = useCallback(() => {
     if (!walletConnected) {
       connect()
@@ -347,31 +403,23 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
     // TODO: dispatch action to open pay modal via redux
   }, [connect, walletConnected])
 
-  // Update cart with payment amount from input
   useEffect(() => {
-    cart.dispatch({
-      type: 'addPayment',
-      payload: {
-        amount: parseFloat(payAmount || '0'),
-        currency: V2V3_CURRENCY_ETH,
-      },
-    })
-
     return () => {
-      cart.dispatch({
-        type: 'removePayment',
-      })
+      dispatch(projectCartActions.removePayment())
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [payAmount])
+  }, [dispatch])
 
   // Update the pay amount input from the cart
   useEffect(() => {
-    const updated = cart.payAmount?.amount
-      ? cart.payAmount?.amount?.toString()
-      : ''
-    setPayAmount(updated)
-  }, [cart.payAmount?.amount])
+    const unsubscribe = store.subscribe(() => {
+      const state = store.getState()
+      const payAmount = state.projectCart.payAmount?.amount
+      setPayAmount(payAmount?.toString())
+    })
+    return () => {
+      unsubscribe()
+    }
+  }, [store])
 
   return (
     <div>
@@ -386,38 +434,36 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
               type: 'eth',
             }}
             value={payAmount}
-            onChange={setPayAmount}
+            onChange={handleUserPayAmountChange}
           />
-          {payerIssuanceRate.enabled && (
-            <PayRedeemInput
-              label={t`You receive`}
-              readOnly
-              token={{
-                balance: userTokenBalance?.toString(),
-                image:
-                  tokenLogo && !fallbackImage ? (
-                    <img
-                      src={tokenLogo}
-                      alt="Token logo"
-                      onError={() => setFallbackImage(true)}
-                    />
-                  ) : (
-                    '🧃'
-                  ),
-                ticker: tokenTicker,
-              }}
-              value={
-                tokenReceivedAmount.receivedTickets &&
-                !!parseFloat(tokenReceivedAmount.receivedTickets)
-                  ? tokenReceivedAmount.receivedTickets
-                  : ''
-              }
-            />
-          )}
+          <PayRedeemInput
+            label={t`You receive`}
+            redeemUnavailable={!payerIssuanceRate.enabled}
+            downArrow
+            readOnly
+            token={{
+              balance: userTokenBalance?.toString(),
+              image:
+                tokenLogo && !fallbackImage ? (
+                  <img
+                    src={tokenLogo}
+                    alt="Token logo"
+                    onError={() => setFallbackImage(true)}
+                  />
+                ) : (
+                  '🧃'
+                ),
+              ticker: tokenTicker,
+            }}
+            nfts={chosenNftRewards}
+            value={
+              tokenReceivedAmount.receivedTickets &&
+              !!parseFloat(tokenReceivedAmount.receivedTickets)
+                ? tokenReceivedAmount.receivedTickets
+                : ''
+            }
+          />
         </div>
-        {payerIssuanceRate.enabled && (
-          <DownArrow className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-        )}
       </div>
 
       <Button
@@ -550,6 +596,7 @@ const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
             />
             <PayRedeemInput
               label={t`You receive`}
+              downArrow
               readOnly
               token={{
                 balance: wallet.balance,
@@ -560,7 +607,6 @@ const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
               value={tokenFromRedeemAmount}
             />
           </div>
-          <DownArrow className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         </div>
 
         <Button
@@ -643,5 +689,87 @@ const EthereumLogo = () => {
     <div className="flex h-full w-full items-center justify-center rounded-full bg-bluebs-500">
       <EthereumIcon className="text-white" />
     </div>
+  )
+}
+
+const NftReward: React.FC<{
+  nft: ProjectCartNftReward
+  className?: string
+}> = ({ nft, className }) => {
+  const {
+    price,
+    name,
+    quantity,
+    fileUrl,
+    removeNft,
+    increaseQuantity,
+    decreaseQuantity,
+  } = useNftCartItem(nft)
+
+  const priceText = useMemo(() => {
+    if (price === null) {
+      return '-'
+    }
+    return formatCurrencyAmount(price)
+  }, [price])
+
+  return (
+    <div className={twMerge('flex items-center justify-between', className)}>
+      <div className="flex items-center gap-3">
+        <SmallNftSquare
+          className="h-12 w-12"
+          nftReward={{
+            fileUrl: fileUrl ?? '',
+            name: name ?? '',
+          }}
+        />
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2">
+            <TruncatedText
+              className="text-sm font-medium leading-none text-grey-900 dark:text-slate-100"
+              text={name ?? 'Loading...'}
+            />
+            <CartItemBadge>NFT</CartItemBadge>
+          </div>
+          <div className="text-xs">{priceText}</div>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <QuantityControl
+          quantity={quantity}
+          onIncrease={increaseQuantity}
+          onDecrease={decreaseQuantity}
+        />
+        <RemoveIcon onClick={removeNft} />
+      </div>
+    </div>
+  )
+}
+
+const RemoveIcon: React.FC<{ onClick: () => void }> = ({ onClick }) => (
+  <TrashIcon
+    data-testid="cart-item-remove-button"
+    role="button"
+    className="inline h-6 w-6 text-grey-400 dark:text-slate-300 md:h-4 md:w-4"
+    onClick={onClick}
+  />
+)
+
+const QuantityControl: React.FC<{
+  quantity: number
+  onIncrease: () => void
+  onDecrease: () => void
+}> = ({ quantity, onIncrease, onDecrease }) => {
+  return (
+    <span className="mr-8 flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm dark:border-slate-600">
+      <button data-testid="cart-item-decrease-button" onClick={onDecrease}>
+        <MinusIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
+      </button>
+      {quantity}
+      <button data-testid="cart-item-increase-button" onClick={onIncrease}>
+        <PlusIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
+      </button>
+    </span>
   )
 }

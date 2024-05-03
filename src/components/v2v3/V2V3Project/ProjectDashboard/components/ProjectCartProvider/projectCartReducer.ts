@@ -96,7 +96,6 @@ export type ProjectCartState = {
   allNftRewards: NftRewardTier[]
   userNftCredits: bigint
   nftRewardEligibilityDismissed: boolean
-  expanded: boolean
   payModalOpen: boolean
 }
 
@@ -138,12 +137,10 @@ export const projectCartReducer = (
         payAmount: undefined,
         chosenNftRewards: [],
         nftRewardEligibilityDismissed: false,
-        expanded: false,
       }
     case 'toggleExpanded':
       return {
         ...state,
-        expanded: !state.expanded,
       }
     case 'upsertNftReward': {
       // TODO: NFT Credits

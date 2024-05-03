@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
-import { CartItemBadge } from '../../Cart/components/CartItem/CartItemBadge'
+import { CartItemBadge } from '../../CartItemBadge'
 import { ProjectHeaderLogo } from '../../ProjectHeader/components/ProjectHeaderLogo'
 
 export const SuccessTokensItem = () => {

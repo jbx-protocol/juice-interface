@@ -28,8 +28,6 @@ type ProjectCartContextType = {
   totalAmount: ProjectCartCurrencyAmount | undefined
   chosenNftRewards: ProjectCartNftReward[]
   nftRewardEligibilityDismissed: boolean
-  visible: boolean
-  expanded: boolean
   payModalOpen: boolean
 }
 
@@ -41,8 +39,6 @@ export const ProjectCartContext = createContext<ProjectCartContextType>({
   totalAmount: undefined,
   chosenNftRewards: [],
   nftRewardEligibilityDismissed: false,
-  visible: false,
-  expanded: false,
   payModalOpen: false,
 })
 
@@ -58,19 +54,11 @@ export const ProjectCartProvider = ({
     allNftRewards: [],
     userNftCredits: 0n,
     nftRewardEligibilityDismissed: false,
-    expanded: false,
     payModalOpen: false,
   })
 
   const { userAddress } = useWallet()
   const userNftCredits = useNftCredits(userAddress)
-
-  const visible = useMemo(
-    () =>
-      (state?.payAmount?.amount ?? 0) > 0 ||
-      state?.chosenNftRewards?.length > 0,
-    [state?.chosenNftRewards?.length, state?.payAmount?.amount],
-  )
 
   const totalAmount = useMemo(() => {
     const payAmount = state.payAmount?.amount ?? 0
@@ -104,7 +92,6 @@ export const ProjectCartProvider = ({
   const value = {
     dispatch,
     ...state,
-    visible,
     totalAmount,
     userNftCredits,
   }

@@ -24,7 +24,6 @@ import { useProjectCart } from '../hooks/useProjectCart'
 import { useProjectContext } from '../hooks/useProjectContext'
 import { useTokensPanel } from '../hooks/useTokensPanel'
 import { useTokensPerEth } from '../hooks/useTokensPerEth'
-import { useCartSummary } from './Cart/hooks/useCartSummary'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
 
@@ -315,8 +314,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
   const { tokenSymbol } = useProjectContext()
   const cart = useProjectCart()
   const wallet = useWallet()
-  // TODO: We should probably break out tokens panel hook into reusable module
-  const { payProject, walletConnected } = useCartSummary()
+  const { isConnected: walletConnected, connect } = useWallet()
   const { projectId, projectMetadata } = useProjectMetadataContext()
 
   const [payAmount, setPayAmount] = useState<string>()
@@ -339,6 +337,15 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
   }, [payAmount, wallet.balance])
 
   const tokenTicker = tokenSymbol || 'TOKENS'
+
+  const payProject = useCallback(() => {
+    if (!walletConnected) {
+      connect()
+      return
+    }
+    // cart.dispatch({ type: 'openPayModal' })
+    // TODO: dispatch action to open pay modal via redux
+  }, [connect, walletConnected])
 
   // Update cart with payment amount from input
   useEffect(() => {

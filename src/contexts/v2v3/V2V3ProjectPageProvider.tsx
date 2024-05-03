@@ -5,8 +5,8 @@ import { NftRewardsProvider } from '../NftRewards/NftRewardsProvider'
 import { V2V3ContractsProvider } from './Contracts/V2V3ContractsProvider'
 import V2V3ProjectProvider from './Project/V2V3ProjectProvider'
 import { V2V3ProjectContractsProvider } from './ProjectContracts/V2V3ProjectContractsProvider'
-import V2V3ProjectOFACProvider from './V2V3ProjectOFACProvider'
 import V2V3ProjectMetadataProvider from './V2V3ProjectMetadataProvider'
+import V2V3ProjectOFACProvider from './V2V3ProjectOFACProvider'
 
 /**
  * Provide all the necessary contexts to render a V2V3 Project.

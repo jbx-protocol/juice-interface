@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { useNftCartItem } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useNftCartItem'
 import { twMerge } from 'tailwind-merge'
 import { CartItemBadge } from '../../CartItemBadge'
-import { ProjectCartNftReward } from '../../ProjectCartProvider/ProjectCartProvider'
+import { ProjectCartNftReward } from '../../ReduxProjectCartProvider'
 import { SmallNftSquare } from '../../SmallNftSquare'
 
 export const ReceiveNftItem = ({

@@ -39,6 +39,7 @@ import {
 import { payRedeemActions } from '../redux/payRedeemSlice'
 import { projectCartActions } from '../redux/projectCartSlice'
 import { CartItemBadge } from './CartItemBadge'
+import { PayProjectModal } from './PayProjectModal/PayProjectModal'
 import { ProjectCartNftReward } from './ReduxProjectCartProvider'
 import { SmallNftSquare } from './SmallNftSquare'
 
@@ -108,50 +109,53 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
   ])
 
   return (
-    <div className="flex flex-col">
-      <div
-        className={twMerge(
-          'flex flex-col rounded-lg border border-grey-200 p-5 pb-6 dark:border-slate-600 dark:bg-slate-700',
-          className,
-        )}
-      >
-        <div>
-          <ChoiceButton
-            selected={state === 'pay'}
-            onClick={() => dispatch(payRedeemActions.changeToPay())}
-          >
-            Pay
-          </ChoiceButton>
-          <ChoiceButton
-            selected={state === 'redeem'}
-            onClick={() => {
-              dispatch(payRedeemActions.changeToRedeem())
-            }}
-            disabled={!redeems.enabled}
-          >
-            Redeem
-          </ChoiceButton>
-        </div>
-
-        <div className="mt-5">
-          {state === 'pay' ? (
-            <PayConfiguration
-              userTokenBalance={tokenBalance}
-              payerIssuanceRate={payerIssuanceRate}
-            />
-          ) : (
-            <RedeemConfiguration userTokenBalance={tokenBalance} />
+    <>
+      <div className="flex flex-col">
+        <div
+          className={twMerge(
+            'flex flex-col rounded-lg border border-grey-200 p-5 pb-6 dark:border-slate-600 dark:bg-slate-700',
+            className,
           )}
-        </div>
-      </div>
+        >
+          <div>
+            <ChoiceButton
+              selected={state === 'pay'}
+              onClick={() => dispatch(payRedeemActions.changeToPay())}
+            >
+              Pay
+            </ChoiceButton>
+            <ChoiceButton
+              selected={state === 'redeem'}
+              onClick={() => {
+                dispatch(payRedeemActions.changeToRedeem())
+              }}
+              disabled={!redeems.enabled}
+            >
+              Redeem
+            </ChoiceButton>
+          </div>
 
-      {/* Extra matter */}
-      {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
-        <Callout.Info className="mt-6 py-2 px-3.5" collapsible={false}>
-          <Trans>This project does not currently offer tokens</Trans>
-        </Callout.Info>
-      )}
-    </div>
+          <div className="mt-5">
+            {state === 'pay' ? (
+              <PayConfiguration
+                userTokenBalance={tokenBalance}
+                payerIssuanceRate={payerIssuanceRate}
+              />
+            ) : (
+              <RedeemConfiguration userTokenBalance={tokenBalance} />
+            )}
+          </div>
+        </div>
+
+        {/* Extra matter */}
+        {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
+          <Callout.Info className="mt-6 py-2 px-3.5" collapsible={false}>
+            <Trans>This project does not currently offer tokens</Trans>
+          </Callout.Info>
+        )}
+      </div>
+      <PayProjectModal />
+    </>
   )
 }
 
@@ -406,9 +410,8 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
       connect()
       return
     }
-    // cart.dispatch({ type: 'openPayModal' })
-    // TODO: dispatch action to open pay modal via redux
-  }, [connect, walletConnected])
+    dispatch(projectCartActions.openPayModal())
+  }, [connect, dispatch, walletConnected])
 
   // Update the pay amount input from the cart
   useEffect(() => {

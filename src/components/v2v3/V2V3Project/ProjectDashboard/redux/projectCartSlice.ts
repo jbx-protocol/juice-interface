@@ -65,6 +65,7 @@ const projectCartSlice = createSlice({
     },
     removePayment: state => {
       state.payAmount = undefined
+      state.chosenNftRewards = []
       state.nftRewardEligibilityDismissed = false
     },
     reset: resetReducer,

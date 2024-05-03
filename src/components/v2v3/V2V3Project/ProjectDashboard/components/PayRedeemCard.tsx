@@ -36,6 +36,7 @@ import {
   useProjectSelector,
   useProjectStore,
 } from '../redux/hooks'
+import { payRedeemActions } from '../redux/payRedeemSlice'
 import { projectCartActions } from '../redux/projectCartSlice'
 import { CartItemBadge } from './CartItemBadge'
 import { ProjectCartNftReward } from './ReduxProjectCartProvider'
@@ -59,7 +60,8 @@ export type PayRedeemCardProps = {
 
 export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
   const project = useProjectContext()
-  const [state, setState] = useState<'pay' | 'redeem'>('pay')
+  const state = useProjectSelector(state => state.payRedeem.cardState)
+  const dispatch = useProjectDispatch()
   // TODO: We should probably break out tokens panel hook into reusable module
   const { userTokenBalance: panelBalance } = useTokensPanel()
 
@@ -116,13 +118,15 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
         <div>
           <ChoiceButton
             selected={state === 'pay'}
-            onClick={() => setState('pay')}
+            onClick={() => dispatch(payRedeemActions.changeToPay())}
           >
             Pay
           </ChoiceButton>
           <ChoiceButton
             selected={state === 'redeem'}
-            onClick={() => setState('redeem')}
+            onClick={() => {
+              dispatch(payRedeemActions.changeToRedeem())
+            }}
             disabled={!redeems.enabled}
           >
             Redeem
@@ -354,6 +358,9 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
   const chosenNftRewards = useProjectSelector(
     state => state.projectCart.chosenNftRewards,
   )
+  const cartPayAmount = useProjectSelector(
+    state => state.projectCart.payAmount?.amount,
+  )
   const dispatch = useProjectDispatch()
   const store = useProjectStore()
   const wallet = useWallet()
@@ -369,15 +376,15 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
     uri: projectMetadata?.logoUri,
   })
   const tokenReceivedAmount = useTokensPerEth({
-    amount: parseFloat(payAmount || '0'),
+    amount: payAmount ? parseFloat(payAmount) : cartPayAmount ?? 0,
     currency: V2V3_CURRENCY_ETH,
   })
   const insufficientBalance = useMemo(() => {
     if (!wallet.balance) return false
-    const amount = parseFloat(payAmount || '0')
+    const amount = cartPayAmount ?? 0
     const balance = parseFloat(wallet.balance)
     return amount > balance
-  }, [payAmount, wallet.balance])
+  }, [cartPayAmount, wallet.balance])
 
   const tokenTicker = tokenSymbol || 'TOKENS'
 
@@ -403,12 +410,6 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
     // TODO: dispatch action to open pay modal via redux
   }, [connect, walletConnected])
 
-  useEffect(() => {
-    return () => {
-      dispatch(projectCartActions.removePayment())
-    }
-  }, [dispatch])
-
   // Update the pay amount input from the cart
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
@@ -433,7 +434,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
               ticker: 'ETH',
               type: 'eth',
             }}
-            value={payAmount}
+            value={payAmount ?? cartPayAmount?.toString()}
             onChange={handleUserPayAmountChange}
           />
           <PayRedeemInput
@@ -470,7 +471,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
         type="primary"
         className="mt-6 w-full"
         size="large"
-        disabled={insufficientBalance || payAmount === '0' || !payAmount}
+        disabled={insufficientBalance || cartPayAmount === 0 || !cartPayAmount}
         onClick={payProject}
       >
         {walletConnected ? (

@@ -77,10 +77,12 @@ const projectCartSlice = createSlice({
       const existingIndex = state.chosenNftRewards.findIndex(
         reward => reward.id === nftReward.id,
       )
-      const payAmount = (state.payAmount?.amount ?? 0) + (chosenNftCost ?? 0)
+      const payAmount = parseWad(state.payAmount?.amount ?? 0).add(
+        parseWad(chosenNftCost ?? 0),
+      )
       if (existingIndex === -1) {
         state.payAmount = {
-          amount: payAmount,
+          amount: Number(fromWad(payAmount)),
           currency: state.payAmount?.currency ?? V2V3_CURRENCY_ETH,
         }
         state.chosenNftRewards = [...state.chosenNftRewards, nftReward]
@@ -88,7 +90,7 @@ const projectCartSlice = createSlice({
       const newNftRewards = [...state.chosenNftRewards]
       newNftRewards[existingIndex] = nftReward
       state.payAmount = {
-        amount: payAmount,
+        amount: Number(fromWad(payAmount)),
         currency: state.payAmount?.currency ?? V2V3_CURRENCY_ETH,
       }
       state.chosenNftRewards = newNftRewards
@@ -103,7 +105,9 @@ const projectCartSlice = createSlice({
         nft => nft.id === id,
       )?.quantity
       if (quantity && quantity > 0) {
-        payAmount = Math.max(0, payAmount - (removedNftCost ?? 0) * quantity)
+        const nftCostBn = parseWad(removedNftCost ?? 0).mul(quantity)
+        const payAmountBn = parseWad(payAmount)
+        payAmount = Math.max(0, Number(fromWad(payAmountBn.sub(nftCostBn))))
       }
       state.payAmount = payAmount
         ? {
@@ -132,9 +136,11 @@ const projectCartSlice = createSlice({
       const chosenNftCost = state.allNftRewards.find(
         n => n.id === id,
       )?.contributionFloor
-      const payAmount = (state.payAmount?.amount ?? 0) + (chosenNftCost ?? 0)
+      const payAmount = parseWad(state.payAmount?.amount ?? 0).add(
+        parseWad(chosenNftCost ?? 0),
+      )
       state.payAmount = {
-        amount: payAmount,
+        amount: Number(fromWad(payAmount)),
         currency: state.payAmount?.currency ?? V2V3_CURRENCY_ETH,
       }
       state.chosenNftRewards = newNftRewards
@@ -151,10 +157,10 @@ const projectCartSlice = createSlice({
       const removedNftCost = state.allNftRewards.find(
         n => n.id === id,
       )?.contributionFloor
-      const payAmount = Math.max(
-        0,
-        (state.payAmount?.amount ?? 0) - (removedNftCost ?? 0),
+      const payAmountBn = parseWad(state.payAmount?.amount ?? 0).sub(
+        parseWad(removedNftCost ?? 0),
       )
+      const payAmount = Math.max(0, Number(fromWad(payAmountBn)))
       const newNftRewards = [...state.chosenNftRewards]
       if (newNftRewards[existingIndex].quantity - 1 <= 0) {
         state.payAmount = payAmount

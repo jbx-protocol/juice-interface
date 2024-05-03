@@ -414,7 +414,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
     const unsubscribe = store.subscribe(() => {
       const state = store.getState()
       const payAmount = state.projectCart.payAmount?.amount
-      setPayAmount(payAmount?.toString())
+      setPayAmount(payAmount?.toString() ?? '')
     })
     return () => {
       unsubscribe()

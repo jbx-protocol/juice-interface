@@ -6,7 +6,7 @@ import { BUYBACK_DELEGATE_ENABLED_PROJECT_IDS } from 'constants/buybackDelegateE
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { CartItemBadge } from '../../Cart/components/CartItem/CartItemBadge'
+import { CartItemBadge } from '../../CartItemBadge'
 import { ProjectHeaderLogo } from '../../ProjectHeader/components/ProjectHeaderLogo'
 
 export const ReceiveTokensItem = ({ className }: { className?: string }) => {

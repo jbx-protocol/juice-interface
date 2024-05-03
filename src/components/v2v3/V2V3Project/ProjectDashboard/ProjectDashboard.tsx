@@ -2,7 +2,6 @@ import { Footer } from 'components/Footer/Footer'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { twMerge } from 'tailwind-merge'
 import { BlockedProjectBanner } from './components/BlockedProjectBanner'
-import { Cart } from './components/Cart/Cart'
 import { CoverPhoto } from './components/CoverPhoto/CoverPhoto'
 import { FundingCycleCountdownProvider } from './components/FundingCycleCountdown/FundingCycleCountdownProvider'
 import { PayRedeemCard } from './components/PayRedeemCard'
@@ -49,7 +48,6 @@ export const ProjectDashboard = () => {
               )}
             </div>
             <Footer />
-            <Cart />
           </ProjectUpdatesProvider>
         </ProjectCartProvider>
       </FundingCycleCountdownProvider>

@@ -23,9 +23,6 @@ msgstr ""
 msgid "Add token to Metamask"
 msgstr ""
 
-msgid "Add <0/>"
-msgstr ""
-
 msgid "Redeemed"
 msgstr ""
 
@@ -234,9 +231,6 @@ msgid "Error downloading participants, try again."
 msgstr ""
 
 msgid "Set a future date & time to start your project's first cycle."
-msgstr ""
-
-msgid "Dismiss"
 msgstr ""
 
 msgid "No"
@@ -888,12 +882,6 @@ msgid "Project {projectId} not found"
 msgstr ""
 
 msgid "Create a project payer address for {projectTitle}"
-msgstr ""
-
-msgid "Removing the payment will remove all the items from the cart. Are you sure you want to remove the payment?"
-msgstr ""
-
-msgid "You are eligible for {0} <0/> (NFT)"
 msgstr ""
 
 msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
@@ -1850,9 +1838,6 @@ msgstr ""
 msgid "Optionally, you can create an ERC-20 token once your project has been deployed. Until then, the Juicebox protocol will track token balances internally, allowing your supporters to receive tokens and redeem them for ETH."
 msgstr ""
 
-msgid "{rewardCount, plural, one {reward} other {rewards}}"
-msgstr ""
-
 msgid "Your transaction has been submitted and is awaiting confirmation."
 msgstr ""
 
@@ -2093,6 +2078,9 @@ msgstr ""
 msgid "ERC-20 tokens can only be issued once an ERC-20 token has been created for this project."
 msgstr ""
 
+msgid "This project does not currently offer tokens"
+msgstr ""
+
 msgid "How a group of friends on the internet raised over $46 million to buy the U.S. Constitution"
 msgstr ""
 
@@ -2142,6 +2130,9 @@ msgid "Percentages"
 msgstr ""
 
 msgid "If enabled, project tokens will be minted to a custom beneficiary address. By default, project tokens will be minted to the wallet that pays this address."
+msgstr ""
+
+msgid "Disabled for this project"
 msgstr ""
 
 msgid "Highest paid"
@@ -3434,9 +3425,6 @@ msgstr ""
 msgid "Send reserved {tokenTextPlural}"
 msgstr ""
 
-msgid "Total to pay"
-msgstr ""
-
 msgid "Warning: Only the project owner can edit a project. If you don't have access to the address above, you will lose access to your project."
 msgstr ""
 
@@ -3983,9 +3971,6 @@ msgstr ""
 msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
 msgstr ""
 
-msgid "payment"
-msgstr ""
-
 msgid "{badgeTitle} Token"
 msgstr ""
 
@@ -4035,9 +4020,6 @@ msgid "Project NFT theme"
 msgstr ""
 
 msgid "payout"
-msgstr ""
-
-msgid "Payments to Juicebox projects automatically mint tokens"
 msgstr ""
 
 msgid "Cycle"
@@ -4653,9 +4635,6 @@ msgid "Error loading redemptions"
 msgstr ""
 
 msgid "Hours"
-msgstr ""
-
-msgid "Clear all"
 msgstr ""
 
 msgid "{titleCasedAllocationName} Percentage"

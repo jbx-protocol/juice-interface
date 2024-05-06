@@ -19,39 +19,56 @@ export const ProjectDashboard = () => {
   const { projectPayReceipt } = useProjectPageQueries()
 
   return (
+    <Wrapper>
+      <div className="flex w-full flex-col items-center pb-48">
+        {projectPayReceipt !== undefined ? (
+          <SuccessPayView />
+        ) : (
+          <>
+            <div className="relative w-full">
+              <CoverPhoto />
+              <ProjectHeaderCountdown />
+            </div>
+            <div className="flex w-full justify-center md:px-6">
+              <div className="flex w-full max-w-6xl flex-col">
+                <ProjectHeader className="mt-12 px-4 md:mt-4 md:px-0" />
+                <BlockedProjectBanner className="mt-10" />
+                <div
+                  className={twMerge(
+                    'mx-auto w-full min-w-0 max-w-xl px-4 md:px-0',
+                    '[@media(min-width:960px)]:flex [@media(min-width:960px)]:max-w-6xl [@media(min-width:960px)]:justify-between [@media(min-width:960px)]:gap-x-8',
+                  )}
+                >
+                  <PayRedeemCard
+                    className={twMerge(
+                      'mt-10 flex-1',
+                      '[@media(min-width:960px)]:order-last [@media(min-width:960px)]:min-w-[340px] [@media(min-width:960px)]:max-w-md',
+                    )}
+                  />
+                  <ProjectTabs
+                    className={twMerge(
+                      'mt-10',
+                      '[@media(min-width:960px)]:order-first [@media(min-width:960px)]:max-w-[596px]',
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+      <Footer />
+    </Wrapper>
+  )
+}
+
+const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return (
     <Provider store={store}>
       <TransactionProvider>
         <FundingCycleCountdownProvider>
           <ReduxProjectCartProvider>
-            <ProjectUpdatesProvider>
-              <div className="flex w-full flex-col items-center pb-48">
-                {projectPayReceipt !== undefined ? (
-                  <SuccessPayView />
-                ) : (
-                  <>
-                    <div className="relative w-full">
-                      <CoverPhoto />
-                      <ProjectHeaderCountdown />
-                    </div>
-                    <div className="flex w-full justify-center md:px-6">
-                      <div className="flex w-full max-w-6xl flex-col">
-                        <ProjectHeader className="mt-12 px-4 md:mt-4 md:px-0" />
-                        <BlockedProjectBanner className="mt-10" />
-                        <div
-                          className={twMerge(
-                            'mt-10 flex w-full flex-col gap-4 px-4 md:flex-row md:px-0',
-                          )}
-                        >
-                          <PayRedeemCard className="flex-1" />
-                        </div>
-                        <ProjectTabs className="mt-8" />
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-              <Footer />
-            </ProjectUpdatesProvider>
+            <ProjectUpdatesProvider>{children}</ProjectUpdatesProvider>
           </ReduxProjectCartProvider>
         </FundingCycleCountdownProvider>
       </TransactionProvider>

@@ -109,53 +109,51 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
   ])
 
   return (
-    <>
-      <div className="flex flex-col">
-        <div
-          className={twMerge(
-            'flex flex-col rounded-lg border border-grey-200 p-5 pb-6 dark:border-slate-600 dark:bg-slate-700',
-            className,
-          )}
-        >
-          <div>
-            <ChoiceButton
-              selected={state === 'pay'}
-              onClick={() => dispatch(payRedeemActions.changeToPay())}
-            >
-              Pay
-            </ChoiceButton>
-            <ChoiceButton
-              selected={state === 'redeem'}
-              onClick={() => {
-                dispatch(payRedeemActions.changeToRedeem())
-              }}
-              disabled={!redeems.enabled}
-            >
-              Redeem
-            </ChoiceButton>
-          </div>
-
-          <div className="mt-5">
-            {state === 'pay' ? (
-              <PayConfiguration
-                userTokenBalance={tokenBalance}
-                payerIssuanceRate={payerIssuanceRate}
-              />
-            ) : (
-              <RedeemConfiguration userTokenBalance={tokenBalance} />
-            )}
-          </div>
+    <div className={twMerge('flex flex-col', className)}>
+      <div
+        className={twMerge(
+          'flex flex-col rounded-lg border border-grey-200 bg-white p-5 pb-6 shadow-[0_6px_16px_0_rgba(0,_0,_0,_0.04)] dark:border-slate-600 dark:bg-slate-700',
+        )}
+      >
+        <div>
+          <ChoiceButton
+            selected={state === 'pay'}
+            onClick={() => dispatch(payRedeemActions.changeToPay())}
+          >
+            Pay
+          </ChoiceButton>
+          <ChoiceButton
+            selected={state === 'redeem'}
+            onClick={() => {
+              dispatch(payRedeemActions.changeToRedeem())
+            }}
+            disabled={!redeems.enabled}
+          >
+            Redeem
+          </ChoiceButton>
         </div>
 
-        {/* Extra matter */}
-        {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
-          <Callout.Info className="mt-6 py-2 px-3.5" collapsible={false}>
-            <Trans>This project does not currently offer tokens</Trans>
-          </Callout.Info>
-        )}
+        <div className="mt-5">
+          {state === 'pay' ? (
+            <PayConfiguration
+              userTokenBalance={tokenBalance}
+              payerIssuanceRate={payerIssuanceRate}
+            />
+          ) : (
+            <RedeemConfiguration userTokenBalance={tokenBalance} />
+          )}
+        </div>
       </div>
+
+      {/* Extra matter */}
+      {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
+        <Callout.Info className="mt-6 py-2 px-3.5" collapsible={false}>
+          <Trans>This project does not currently offer tokens</Trans>
+        </Callout.Info>
+      )}
+
       <PayProjectModal />
-    </>
+    </div>
   )
 }
 

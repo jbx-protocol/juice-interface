@@ -74,7 +74,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
       { id: 'about', name: t`About`, panel: <AboutPanel /> },
       {
         id: 'nft_rewards',
-        name: t`NFTs & Rewards`,
+        name: t`NFTs`,
         panel: <NftRewardsPanel />,
         hideTab: !showNftRewards,
       },

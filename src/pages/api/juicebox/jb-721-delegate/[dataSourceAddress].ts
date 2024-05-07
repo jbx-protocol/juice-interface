@@ -47,10 +47,31 @@ async function fetchDeployerOf(dataSourceAddress: string) {
     readProvider,
   )
 
-  const [deployerAddress, deployerAddressOldRegistry] = await Promise.all([
-    JBDelegatesRegistry.deployerOf(dataSourceAddress),
-    OldJBDelegatesRegistry.deployerOf(dataSourceAddress),
-  ])
+  const [deployerAddressResult, deployerAddressOldRegistryResult] =
+    await Promise.allSettled([
+      JBDelegatesRegistry.deployerOf(dataSourceAddress),
+      OldJBDelegatesRegistry.deployerOf(dataSourceAddress),
+    ])
+  if (
+    deployerAddressResult.status === 'rejected' &&
+    deployerAddressOldRegistryResult.status === 'rejected'
+  ) {
+    logger.error(
+      {
+        deployerAddress: deployerAddressResult,
+        deployerAddressOldRegistry: deployerAddressOldRegistryResult,
+      },
+      'Failed to resolve deployer',
+    )
+    return null
+  }
+  let deployerAddress, deployerAddressOldRegistry
+  if (deployerAddressResult.status === 'fulfilled') {
+    deployerAddress = deployerAddressResult.value
+  }
+  if (deployerAddressOldRegistryResult.status === 'fulfilled') {
+    deployerAddressOldRegistry = deployerAddressOldRegistryResult.value
+  }
 
   return deployerAddress || deployerAddressOldRegistry
 }
@@ -131,12 +152,22 @@ async function fetchJB721DelegateVersion(dataSourceAddress: string) {
   if (isV3) return JB721DelegateVersion.JB721DELEGATE_V3
 
   const deployerAddress = await fetchDeployerOf(dataSourceAddress)
-  const [isV3_1, isV3_2, isV3_3, isV3_4] = await Promise.all([
+  const results = await Promise.allSettled([
     isJB721DelegateV3_1(deployerAddress),
     isJB721DelegateV3_2(deployerAddress),
     isJB721DelegateV3_3(deployerAddress),
     isJB721DelegateV3_4(deployerAddress),
   ])
+  const errors = results.filter(result => result.status === 'rejected')
+  if (errors.length === 4) {
+    logger.error({ error: errors }, 'Failed to resolve delegate')
+    return null
+  } else {
+    logger.warn({ failures: errors }, 'Failed to resolve delegate')
+  }
+  const [isV3_1, isV3_2, isV3_3, isV3_4] = results.map(result =>
+    result.status === 'fulfilled' ? result.value : false,
+  )
   if (isV3_1) return JB721DelegateVersion.JB721DELEGATE_V3_1
   if (isV3_2) return JB721DelegateVersion.JB721DELEGATE_V3_2
   if (isV3_3) return JB721DelegateVersion.JB721DELEGATE_V3_3

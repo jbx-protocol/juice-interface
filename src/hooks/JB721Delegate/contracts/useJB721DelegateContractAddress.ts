@@ -23,7 +23,7 @@ const ADDRESSES: {
     [NetworkName.sepolia]: {
       JBTiered721DelegateStore: '0xd7F9Ee12b5De2388109C9dD4fAAf39BEfe4C92FB', // the store from 3.3
       JBTiered721DelegateProjectDeployer:
-        '0x79c66fCEC6b9843EEa0c28397609d6DA3e5E1781',
+        '0x70b59C0ad71b8e7c9B57328bEb7Ad5921b44dB81',
     },
     [NetworkName.mainnet]: {
       JBTiered721DelegateStore: '0x615B5b50F1Fc591AAAb54e633417640d6F2773Fd', // the store from 3.3

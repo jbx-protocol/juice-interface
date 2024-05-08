@@ -269,31 +269,41 @@ const PayRedeemInput = ({
     <div className="relative">
       <div
         className={twMerge(
-          'flex flex-col gap-y-2 overflow-hidden rounded-lg border border-grey-200 bg-grey-50 px-4 py-3 text-sm text-grey-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200',
+          'flex flex-col overflow-hidden rounded-lg border border-grey-200 bg-grey-50 px-4 py-3 text-sm text-grey-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200',
           className,
         )}
       >
-        <label>{label}</label>
-        <div className="flex w-full justify-between gap-2">
-          <input
-            className="min-w-0 bg-transparent text-3xl font-medium text-grey-900 placeholder:text-grey-300 focus:outline-none dark:text-slate-100 dark:placeholder-slate-400"
-            // TODO: Format and de-format
-            value={value}
-            placeholder="0"
-            readOnly={readOnly}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-          />
-          <TokenBadge token={token.ticker} image={token.image} />
-        </div>
-        <div className="flex min-h-[22px] justify-between">
-          <span>{convertedValue && formatCurrencyAmount(convertedValue)}</span>
-          <span>
-            {token.balance && <>Balance: {formatAmount(token.balance)}</>}
-          </span>
-        </div>
+        <label className="mb-2">{label}</label>
+        {!redeemUnavailable && (
+          <div className="space-y-2">
+            <div className="flex w-full justify-between gap-2">
+              <input
+                className="min-w-0 bg-transparent text-3xl font-medium text-grey-900 placeholder:text-grey-300 focus:outline-none dark:text-slate-100 dark:placeholder-slate-400"
+                // TODO: Format and de-format
+                value={value}
+                placeholder="0"
+                readOnly={readOnly}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+              />
+              <TokenBadge token={token.ticker} image={token.image} />
+            </div>
+            <div className="flex min-h-[22px] justify-between">
+              <span>
+                {convertedValue && formatCurrencyAmount(convertedValue)}
+              </span>
+              <span>
+                {token.balance && <>Balance: {formatAmount(token.balance)}</>}
+              </span>
+            </div>
+          </div>
+        )}
+        {/* Only show spacer if redeem is available and nfts are not empty */}
+        {!redeemUnavailable && !!nfts?.length && (
+          <div className="my-2 h-[1px] w-full border-t border-grey-200 dark:border-slate-600" />
+        )}
         {nfts && nfts?.length > 0 && (
-          <div className="mt-4 space-y-4 border-t border-grey-200 pt-6 dark:border-slate-600">
+          <div className="mt-4 space-y-4">
             {nfts.map((nft, i) => (
               <NftReward key={i} nft={nft} />
             ))}

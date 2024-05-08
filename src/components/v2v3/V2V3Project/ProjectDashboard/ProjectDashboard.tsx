@@ -47,7 +47,7 @@ export const ProjectDashboard = () => {
                   />
                   <ProjectTabs
                     className={twMerge(
-                      'mt-10',
+                      'mt-10 w-full',
                       '[@media(min-width:960px)]:order-first [@media(min-width:960px)]:max-w-[596px]',
                     )}
                   />

@@ -20,10 +20,7 @@ export const CyclesPayoutsPanel = () => {
     [],
   )
   return (
-    <Tab.Group
-      as="div"
-      className="mx-auto flex w-full max-w-[596px] flex-col gap-5"
-    >
+    <Tab.Group as="div" className="mx-auto flex w-full flex-col gap-5">
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <h2 className="mb-0 font-heading text-2xl font-medium">Cycle</h2>
         <Tab.List className="flex gap-2">

@@ -1,6 +1,8 @@
+import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { isAddress } from 'ethers/lib/utils'
 import { getLogger } from 'lib/logger'
+import { NetworkName } from 'models/networkName'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const logger = getLogger('api/ens/resolve/[address]')
@@ -14,6 +16,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const addressOrEnsName = req.query.address as string | undefined
     if (!addressOrEnsName) {
       return res.status(400).json({ error: 'address is required' })
+    }
+
+    if (readNetwork.name === NetworkName.sepolia) {
+      // ethers v5 doesn't support ens on sepolia
+      return res.status(404).json({ error: 'ens not supported on sepolia' })
     }
 
     let response

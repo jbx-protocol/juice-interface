@@ -119,6 +119,9 @@ msgstr ""
 msgid "Your Name"
 msgstr ""
 
+msgid "You have <0/> unclaimed {ticker} tokens."
+msgstr ""
+
 msgid "REMAINING SUPPLY: Unlimited"
 msgstr ""
 
@@ -3354,6 +3357,9 @@ msgid "Owner token minting is not available for V1.0 projects. Owner token minti
 msgstr ""
 
 msgid "<0/> reclaimed from project"
+msgstr ""
+
+msgid "Claim {ticker} tokens"
 msgstr ""
 
 msgid "More updates coming soon"

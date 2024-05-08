@@ -13,7 +13,7 @@ export const NftRewardsPanel = () => {
   } = useNftRewardsPanel()
 
   return (
-    <div className="flex w-full max-w-[800px] flex-col gap-5">
+    <div className="flex w-full flex-col gap-5">
       <h2 className="font-heading text-2xl font-medium">
         <Trans>NFTs</Trans>
       </h2>

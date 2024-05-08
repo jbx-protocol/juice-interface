@@ -31,6 +31,7 @@ import { useNftCartItem } from '../hooks/useNftCartItem'
 import { useProjectContext } from '../hooks/useProjectContext'
 import { useTokensPanel } from '../hooks/useTokensPanel'
 import { useTokensPerEth } from '../hooks/useTokensPerEth'
+import { useUnclaimedTokenBalance } from '../hooks/useUnclaimedTokenBalance'
 import {
   useProjectDispatch,
   useProjectSelector,
@@ -39,6 +40,7 @@ import {
 import { payRedeemActions } from '../redux/payRedeemSlice'
 import { projectCartActions } from '../redux/projectCartSlice'
 import { CartItemBadge } from './CartItemBadge'
+import { ClaimErc20Callout } from './ClaimErc20Callout'
 import { PayProjectModal } from './PayProjectModal/PayProjectModal'
 import { ProjectCartNftReward } from './ReduxProjectCartProvider'
 import { SmallNftSquare } from './SmallNftSquare'
@@ -65,6 +67,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
   const dispatch = useProjectDispatch()
   // TODO: We should probably break out tokens panel hook into reusable module
   const { userTokenBalance: panelBalance } = useTokensPanel()
+  const unclaimedTokenBalance = useUnclaimedTokenBalance()
 
   project.fundingCycleMetadata?.pauseRedeem
 
@@ -146,10 +149,15 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
       </div>
 
       {/* Extra matter */}
+
       {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
         <Callout.Info className="mt-6 py-2 px-3.5" collapsible={false}>
           <Trans>This project does not currently offer tokens</Trans>
         </Callout.Info>
+      )}
+
+      {unclaimedTokenBalance?.gt(0) && (
+        <ClaimErc20Callout className="mt-4" unclaimed={unclaimedTokenBalance} />
       )}
 
       <PayProjectModal />

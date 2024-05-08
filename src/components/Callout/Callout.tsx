@@ -45,7 +45,7 @@ export const Callout: React.FC<React.PropsWithChildren<CalloutProps>> &
       )}
       <div
         className={twMerge(
-          'inline-block overflow-hidden overflow-ellipsis',
+          'inline-block flex-1 overflow-hidden overflow-ellipsis',
           collapsible && !expanded ? 'whitespace-nowrap' : 'whitespace-normal',
         )}
       >

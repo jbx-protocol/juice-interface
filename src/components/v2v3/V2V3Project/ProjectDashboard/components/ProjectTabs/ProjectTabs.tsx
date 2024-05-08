@@ -1,8 +1,7 @@
 import { Tab } from '@headlessui/react'
-import { Trans, t } from '@lingui/macro'
+import { t } from '@lingui/macro'
 import { useProjectPageQueries } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
-import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { useOnScreen } from 'hooks/useOnScreen'
 import {
   Fragment,
@@ -13,14 +12,11 @@ import {
   useState,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useProjectContext } from '../../hooks/useProjectContext'
 import { AboutPanel } from '../AboutPanel/AboutPanel'
 import { ActivityPanel } from '../ActivityPanel/ActivityPanel'
 import { CyclesPayoutsPanel } from '../CyclesPayoutsPanel/CyclesPayoutsPanel'
 import { NftRewardsPanel } from '../NftRewardsPanel/NftRewardsPanel'
-import { ProjectUpdatesContext } from '../ProjectUpdatesProvider/ProjectUpdatesProvider'
 import { TokensPanel } from '../TokensPanel/TokensPanel'
-import { UpdatesPanel } from '../UpdatesPanel/UpdatesPanel'
 import { ProjectTab } from '../ui/ProjectTab'
 
 type ProjectTabConfig = {
@@ -31,10 +27,7 @@ type ProjectTabConfig = {
 }
 
 export const ProjectTabs = ({ className }: { className?: string }) => {
-  const { projectUpdates } = useContext(ProjectUpdatesContext)
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
-  const { projectOwnerAddress } = useProjectContext()
-  const isProjectOwner = useIsUserAddress(projectOwnerAddress)
   const {
     nftRewards: { rewardTiers },
   } = useContext(NftRewardsContext)
@@ -84,21 +77,22 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         panel: <CyclesPayoutsPanel />,
       },
       { id: 'tokens', name: t`Tokens`, panel: <TokensPanel /> },
-      {
-        id: 'updates',
-        name: (
-          <div className="flex items-center gap-1">
-            <Trans>Updates</Trans>
-            {!!projectUpdates.length && (
-              <TabBadgeCount count={projectUpdates.length} />
-            )}
-          </div>
-        ),
-        panel: <UpdatesPanel />,
-        hideTab: !isProjectOwner && projectUpdates.length === 0,
-      },
+      // disabled for now
+      // {
+      //   id: 'updates',
+      //   name: (
+      //     <div className="flex items-center gap-1">
+      //       <Trans>Updates</Trans>
+      //       {!!projectUpdates.length && (
+      //         <TabBadgeCount count={projectUpdates.length} />
+      //       )}
+      //     </div>
+      //   ),
+      //   panel: <UpdatesPanel />,
+      //   hideTab: !isProjectOwner && projectUpdates.length === 0,
+      // },
     ],
-    [showNftRewards, projectUpdates.length, isProjectOwner],
+    [showNftRewards],
   )
 
   const selectedTabIndex = useMemo(() => {
@@ -142,8 +136,8 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
   )
 }
 
-const TabBadgeCount = ({ count }: { count: number }) => (
-  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-bluebs-500 text-xs text-white">
-    {count}
-  </div>
-)
+// const TabBadgeCount = ({ count }: { count: number }) => (
+//   <div className="flex h-5 w-5 items-center justify-center rounded-full bg-bluebs-500 text-xs text-white">
+//     {count}
+//   </div>
+// )

@@ -36,6 +36,8 @@ export const EthPerTokenAccordian: React.FC<EthPerTokenAccordianProps> = ({
     [setProjectPageTab],
   )
 
+  if (!receivedTickets || receivedTickets === '0') return null
+
   return (
     <Accordion className={cn('mt-4 px-4', className)} type="single" collapsible>
       <AccordionItem value="item-1">

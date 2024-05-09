@@ -29,6 +29,7 @@ import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { computeIssuanceRate } from 'utils/v2v3/math'
 import { useNftCartItem } from '../hooks/useNftCartItem'
 import { useProjectContext } from '../hooks/useProjectContext'
+import { useProjectHasErc20Token } from '../hooks/useProjectHasErc20Token'
 import { useTokensPanel } from '../hooks/useTokensPanel'
 import { useTokensPerEth } from '../hooks/useTokensPerEth'
 import { useUnclaimedTokenBalance } from '../hooks/useUnclaimedTokenBalance'
@@ -69,8 +70,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
   // TODO: We should probably break out tokens panel hook into reusable module
   const { userTokenBalance: panelBalance } = useTokensPanel()
   const unclaimedTokenBalance = useUnclaimedTokenBalance()
-
-  project.fundingCycleMetadata?.pauseRedeem
+  const projectHasErc20Token = useProjectHasErc20Token()
 
   const tokenBalance = useMemo(() => {
     return panelBalance
@@ -141,10 +141,14 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
           {state === 'pay' ? (
             <PayConfiguration
               userTokenBalance={tokenBalance}
+              projectHasErc20Token={projectHasErc20Token}
               payerIssuanceRate={payerIssuanceRate}
             />
           ) : (
-            <RedeemConfiguration userTokenBalance={tokenBalance} />
+            <RedeemConfiguration
+              userTokenBalance={tokenBalance}
+              projectHasErc20Token={projectHasErc20Token}
+            />
           )}
         </div>
       </div>
@@ -221,7 +225,7 @@ const PayRedeemInput = ({
   readOnly?: boolean
   redeemUnavailable?: boolean
   token: {
-    type?: 'eth' | 'other'
+    type?: 'eth' | 'native' | 'erc20'
     ticker: string
     image: ReactNode
     balance: string | undefined
@@ -230,7 +234,7 @@ const PayRedeemInput = ({
   value?: string | undefined
   onChange?: (value: string | undefined) => void
 }) => {
-  token.type = token.type || 'other'
+  token.type = token.type || 'native'
 
   const converter = useCurrencyConverter()
 
@@ -297,7 +301,13 @@ const PayRedeemInput = ({
                 onChange={handleInputChange}
                 onBlur={handleBlur}
               />
-              <TokenBadge token={token.ticker} image={token.image} />
+              <TokenBadge
+                token={token.ticker}
+                image={token.image}
+                isErc20={
+                  token.type !== 'eth' ? token.type === 'erc20' : undefined
+                }
+              />
             </div>
             <div className="flex min-h-[22px] justify-between">
               <span>
@@ -333,21 +343,40 @@ const TokenBadge = ({
   className,
   token,
   image,
+  isErc20,
 }: {
   className?: string
   token: string
   image: ReactNode
+  isErc20?: boolean
 }) => {
   return (
     <div
       className={twMerge(
-        'flex items-center gap-2 rounded-full border border-grey-200 bg-white py-1 px-1.5 pr-3 text-base font-medium text-grey-700 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100',
+        'flex items-center justify-between gap-2 rounded-full border border-grey-200 bg-white py-1 px-1.5 pr-3 text-base font-medium text-grey-700 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100',
         className,
       )}
     >
-      <div className="relative flex h-6 w-6 items-center justify-center overflow-hidden rounded-full bg-grey-200">
-        {image}
-      </div>
+      <Tooltip
+        title={
+          isErc20 !== undefined
+            ? isErc20
+              ? t`ERC-20 token`
+              : t`This project's tokens are not ERC-20`
+            : undefined
+        }
+      >
+        <div className="relative h-8 w-8 rounded-full bg-grey-200">
+          <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-full">
+            {image}
+          </div>
+          {isErc20 && (
+            <div className="absolute -bottom-0.5 -right-0.5 h-5 w-5 rounded-full border-2 border-white">
+              <EthereumLogo />
+            </div>
+          )}
+        </div>
+      </Tooltip>
       {token}
     </div>
   )
@@ -370,11 +399,13 @@ const DownArrow = ({ className }: { className?: string }) => {
 
 type PayConfigurationProps = {
   userTokenBalance: number | undefined
+  projectHasErc20Token: boolean
   payerIssuanceRate: PayerIssuanceRate
 }
 
 const PayConfiguration: React.FC<PayConfigurationProps> = ({
   userTokenBalance,
+  projectHasErc20Token,
   payerIssuanceRate,
 }) => {
   const { tokenSymbol } = useProjectContext()
@@ -477,6 +508,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
                   '🧃'
                 ),
               ticker: tokenTicker,
+              type: projectHasErc20Token ? 'erc20' : 'native',
             }}
             nfts={chosenNftRewards}
             value={
@@ -512,10 +544,12 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
 
 type RedeemConfigurationProps = {
   userTokenBalance: number | undefined
+  projectHasErc20Token: boolean
 }
 
 const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
   userTokenBalance,
+  projectHasErc20Token,
 }) => {
   const { tokenSymbol, distributionLimitCurrency } = useProjectContext()
   const { projectId, projectMetadata } = useProjectMetadataContext()
@@ -613,6 +647,7 @@ const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
                     '🧃'
                   ),
                 ticker: tokenTicker,
+                type: projectHasErc20Token ? 'erc20' : 'native',
               }}
               value={redeemAmount}
               onChange={setRedeemAmount}

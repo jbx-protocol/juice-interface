@@ -2633,6 +2633,9 @@ msgstr ""
 msgid "Changes to your reserved token recipients will take effect immediately."
 msgstr ""
 
+msgid "ERC-20 token"
+msgstr ""
+
 msgid "{tokensTokenUpper} amount"
 msgstr ""
 
@@ -2922,6 +2925,9 @@ msgid "Education"
 msgstr ""
 
 msgid "after {0}% JBX fee"
+msgstr ""
+
+msgid "This project's tokens are not ERC-20"
 msgstr ""
 
 msgid "Save {allocationName}"

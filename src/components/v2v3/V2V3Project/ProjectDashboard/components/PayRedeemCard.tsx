@@ -41,6 +41,7 @@ import { payRedeemActions } from '../redux/payRedeemSlice'
 import { projectCartActions } from '../redux/projectCartSlice'
 import { CartItemBadge } from './CartItemBadge'
 import { ClaimErc20Callout } from './ClaimErc20Callout'
+import { EthPerTokenAccordian } from './EthPerTokenAccordian'
 import { PayProjectModal } from './PayProjectModal/PayProjectModal'
 import { ProjectCartNftReward } from './ReduxProjectCartProvider'
 import { SmallNftSquare } from './SmallNftSquare'
@@ -149,6 +150,8 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
       </div>
 
       {/* Extra matter */}
+
+      <EthPerTokenAccordian className="mt-4" />
 
       {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
         <Callout.Info className="mt-6 py-2 px-3.5" collapsible={false}>

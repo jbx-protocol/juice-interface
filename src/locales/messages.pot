@@ -371,6 +371,9 @@ msgstr ""
 msgid "Your payouts do not sum to 100%. Because your project is set to pay out all available ETH, the remainder will go to the project owner."
 msgstr ""
 
+msgid "New tokens are minted each time a payment is made"
+msgstr ""
+
 msgid "Button label"
 msgstr ""
 
@@ -1125,6 +1128,9 @@ msgid "Limited (1,050 ETH)"
 msgstr ""
 
 msgid "Your total legacy tokens"
+msgstr ""
+
+msgid "Redemption rate determines what proportion of this project's treasury can be reclaimed by a token holder by redeeming their tokens."
 msgstr ""
 
 msgid "Collection Name"
@@ -4307,6 +4313,9 @@ msgstr ""
 msgid "Project Token"
 msgstr ""
 
+msgid "View token info"
+msgstr ""
+
 msgid "Unchanged"
 msgstr ""
 
@@ -4404,6 +4413,9 @@ msgid "Following the launch of their token $MOONEY, the next goal on MoonDAO's r
 msgstr ""
 
 msgid "Paid"
+msgstr ""
+
+msgid "Total token supply: {totalSupply}"
 msgstr ""
 
 msgid "Process this project's held fees."
@@ -4524,6 +4536,9 @@ msgid "Pay {projectName}"
 msgstr ""
 
 msgid "Advanced options"
+msgstr ""
+
+msgid "Current redemption rate: {0}%"
 msgstr ""
 
 msgid "Start time"

@@ -1,8 +1,14 @@
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { Contract } from 'ethers'
 import { useContractReadValue } from 'hooks/ContractReader'
-import { V2V3ContractName } from 'models/v2v3/contracts'
+import {
+  SUPPORTED_SINGLE_TOKEN_PAYMENT_TERMINAL_STORES,
+  SingleTokenPaymentTerminalStoreVersion,
+  V2V3ContractName,
+  V2V3Contracts,
+} from 'models/v2v3/contracts'
 import { useContext } from 'react'
+import { isEqualAddress } from 'utils/address'
 import { useLoadV2V3Contract } from '../../useLoadV2V3Contract'
 
 export function useProjectPrimaryEthTerminalStore({
@@ -10,7 +16,7 @@ export function useProjectPrimaryEthTerminalStore({
 }: {
   JBETHPaymentTerminal: Contract | undefined
 }) {
-  const { cv } = useContext(V2V3ContractsContext)
+  const { cv, contracts } = useContext(V2V3ContractsContext)
   const { value: storeAddress, loading } = useContractReadValue<string, string>(
     {
       contract: JBETHPaymentTerminal,
@@ -19,11 +25,31 @@ export function useProjectPrimaryEthTerminalStore({
     },
   )
 
+  const storeName = getStoreContractName(storeAddress, contracts)
+
   const JBETHPaymentTerminalStore = useLoadV2V3Contract({
     cv,
-    contractName: V2V3ContractName.JBSingleTokenPaymentTerminalStore,
     address: storeAddress,
+    contractName: storeName,
   })
 
   return { JBETHPaymentTerminalStore, loading }
+}
+
+const getStoreContractName = (
+  address: string | undefined,
+  contracts: V2V3Contracts | undefined,
+): SingleTokenPaymentTerminalStoreVersion | undefined => {
+  if (!address || !contracts) return undefined
+
+  const storeName = SUPPORTED_SINGLE_TOKEN_PAYMENT_TERMINAL_STORES.find(
+    contractName => {
+      return isEqualAddress(
+        address,
+        contracts[contractName as V2V3ContractName]?.address,
+      )
+    },
+  )
+
+  return storeName
 }

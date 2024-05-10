@@ -93,6 +93,18 @@ export const loadJuiceboxV3Contract = async (
         )) as ContractJson
         break
       }
+      case V2V3ContractName.JBSingleTokenPaymentTerminalStore3_1: {
+        contractJson = (await import(
+          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBSingleTokenPaymentTerminalStore3_1.json`
+        )) as ContractJson
+        break
+      }
+      case V2V3ContractName.JBSingleTokenPaymentTerminalStore3_1_1: {
+        contractJson = (await import(
+          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBSingleTokenPaymentTerminalStore3_1_1.json`
+        )) as ContractJson
+        break
+      }
       case V2V3ContractName.JBETHERC20ProjectPayerDeployer: {
         contractJson = (await import(
           `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBETHERC20ProjectPayerDeployer.json`

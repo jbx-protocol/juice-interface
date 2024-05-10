@@ -18,7 +18,7 @@ import { useLoadV2V3Contract } from '../../useLoadV2V3Contract'
 export function useProjectPrimaryEthTerminal({
   projectId,
 }: {
-  projectId: number
+  projectId: number | undefined
 }) {
   const { cv, contracts } = useContext(V2V3ContractsContext)
 

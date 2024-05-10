@@ -53,9 +53,9 @@ export const PayoutsSubPanel = ({
                 <ProjectAllocationSkeleton key={i} />
               ))
             ) : hasPayouts ? (
-              payouts?.map(payout => (
+              payouts?.map((payout, i) => (
                 <ProjectAllocationRow
-                  key={`${payout.address}${payout.projectId}`}
+                  key={`${payout.address}${payout.projectId}-${i}`}
                   {...payout}
                 />
               ))

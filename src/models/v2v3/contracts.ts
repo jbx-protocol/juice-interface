@@ -8,7 +8,11 @@ export enum V2V3ContractName {
   JBOperatorStore = 'JBOperatorStore',
   JBSplitsStore = 'JBSplitsStore',
   JBTokenStore = 'JBTokenStore',
+
   JBSingleTokenPaymentTerminalStore = 'JBSingleTokenPaymentTerminalStore',
+  JBSingleTokenPaymentTerminalStore3_1 = 'JBSingleTokenPaymentTerminalStore3_1',
+  JBSingleTokenPaymentTerminalStore3_1_1 = 'JBSingleTokenPaymentTerminalStore3_1_1',
+
   JBETHERC20ProjectPayerDeployer = 'JBETHERC20ProjectPayerDeployer',
   JBETHERC20SplitsPayerDeployer = 'JBETHERC20SplitsPayerDeployer',
 
@@ -24,6 +28,23 @@ export enum V2V3ContractName {
   DeprecatedJBDirectory = 'DeprecatedJBDirectory',
 }
 export type V2V3Contracts = Record<V2V3ContractName, Contract>
+
+/**
+ * Single source of truth for supported single token payment terminal store versions.
+ *
+ * DEV NOTE:
+ * To support a new payment single token terminal store:
+ * 1. Add it to V2V3ContractName
+ * 2. Add it to this array
+ * 3. Add support for it in any contract reads or transactions that use it.
+ */
+export const SUPPORTED_SINGLE_TOKEN_PAYMENT_TERMINAL_STORES = [
+  V2V3ContractName.JBSingleTokenPaymentTerminalStore,
+  V2V3ContractName.JBSingleTokenPaymentTerminalStore3_1,
+  V2V3ContractName.JBSingleTokenPaymentTerminalStore3_1_1,
+] as const
+export type SingleTokenPaymentTerminalStoreVersion =
+  (typeof SUPPORTED_SINGLE_TOKEN_PAYMENT_TERMINAL_STORES)[number]
 
 /**
  * Single source of truth for supported terminal versions.

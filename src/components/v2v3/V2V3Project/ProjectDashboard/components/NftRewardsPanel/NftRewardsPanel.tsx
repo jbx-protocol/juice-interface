@@ -1,6 +1,6 @@
 import { Trans, t } from '@lingui/macro'
 import { EmptyScreen } from '../EmptyScreen'
-import { NftReward } from './NftReward/NftReward'
+import { NftReward, NftRewardSkeleton } from './NftReward/NftReward'
 import { RedeemNftsSection } from './RedeemNftsSection/RedeemNftsSection'
 import { useNftRewardsPanel } from './hooks/useNftRewardsPanel'
 
@@ -31,6 +31,12 @@ export const NftRewardsPanel = () => {
                 onDeselect={() => handleTierDeselect(tier.id)}
               />
             </div>
+          ))}
+        </div>
+      ) : nftsLoading ? (
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
+          {[...Array(6)].map((_, i) => (
+            <NftRewardSkeleton key={i} />
           ))}
         </div>
       ) : (

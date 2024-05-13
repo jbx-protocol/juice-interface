@@ -137,3 +137,18 @@ export function NftReward({
     </>
   )
 }
+
+export const NftRewardSkeleton = () => (
+  <div
+    className={twMerge(
+      'flex h-full w-40 animate-pulse select-none flex-col rounded-[10px] bg-grey-100 dark:bg-slate-600 md:w-[252px]',
+      'shadow-[0_4px_14px_rgba(0,0,0,0.0392156862745098)]', // box-shadow: 0px 4px 14px 0px #0000000A
+    )}
+  >
+    <div className="flex h-40 w-full items-center justify-center rounded-t-lg bg-grey-200 dark:bg-slate-500 md:h-60" />
+    <div className="flex w-full flex-col justify-between rounded-b-lg p-4">
+      <div className="h-4 w-2/3 rounded-full bg-grey-200 dark:bg-slate-500" />
+      <div className="mt-3 h-4 w-1/3 rounded-full bg-grey-200 dark:bg-slate-500" />
+    </div>
+  </div>
+)

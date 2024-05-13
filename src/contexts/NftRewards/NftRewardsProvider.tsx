@@ -7,7 +7,7 @@ import { useNftCollectionPricingContext } from 'hooks/JB721Delegate/contractRead
 import { useNftFlagsOf } from 'hooks/JB721Delegate/contractReader/useNftFlagsOf'
 import { useNftTiers } from 'hooks/JB721Delegate/contractReader/useNftTiers'
 import { JB721GovernanceType } from 'models/nftRewards'
-import { useContext, useMemo } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import {
   DEFAULT_NFT_FLAGS,
   DEFAULT_NFT_PRICING,
@@ -24,6 +24,8 @@ export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   const { version: JB721DelegateVersion } = useContext(
     JB721DelegateContractsContext,
   )
+
+  const [firstLoad, setFirstLoad] = useState(true)
 
   const dataSourceAddress = fundingCycleMetadata?.dataSource
 
@@ -47,8 +49,6 @@ export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   const { data: loadedRewardTiers, isLoading: nftRewardTiersLoading } =
     useNftRewards(tierData, projectId, dataSourceAddress)
 
-  // Roman storm specific stuff, cached data
-
   const rewardTiers = useMemo(() => {
     return loadedRewardTiers
   }, [loadedRewardTiers])
@@ -57,9 +57,16 @@ export const NftRewardsProvider: React.FC<React.PropsWithChildren<unknown>> = ({
     return loadedCIDs
   }, [loadedCIDs])
 
+  useEffect(() => {
+    // First load is always true until either nftRewardTiersLoading or nftRewardsCIDsLoading is true
+    if (firstLoad && (nftRewardTiersLoading || nftRewardsCIDsLoading)) {
+      setFirstLoad(false)
+    }
+  }, [firstLoad, nftRewardTiersLoading, nftRewardsCIDsLoading])
+
   const nftsLoading = useMemo(() => {
-    return Boolean(nftRewardTiersLoading || nftRewardsCIDsLoading)
-  }, [nftRewardTiersLoading, nftRewardsCIDsLoading])
+    return Boolean(firstLoad || nftRewardTiersLoading || nftRewardsCIDsLoading)
+  }, [firstLoad, nftRewardTiersLoading, nftRewardsCIDsLoading])
 
   // fetch some other related stuff
   const { data: collectionMetadataUri } =

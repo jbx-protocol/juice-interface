@@ -220,7 +220,7 @@ const PayRedeemInput = ({
   onChange,
 }: {
   className?: string
-  label?: string
+  label?: ReactNode
   downArrow?: boolean
   readOnly?: boolean
   redeemUnavailable?: boolean
@@ -633,7 +633,13 @@ const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
         <div className="relative">
           <div className="flex flex-col gap-y-2">
             <PayRedeemInput
-              label={t`You redeem`}
+              label={
+                <Tooltip
+                  title={t`Redeem your tokens for a portion of this project's treasury`}
+                >
+                  {t`You redeem`}
+                </Tooltip>
+              }
               token={{
                 balance: userTokenBalance?.toString(),
                 image:

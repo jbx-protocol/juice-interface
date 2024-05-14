@@ -40,6 +40,7 @@ import {
 } from '../redux/hooks'
 import { payRedeemActions } from '../redux/payRedeemSlice'
 import { projectCartActions } from '../redux/projectCartSlice'
+import { emitConfirmationDeletionModal } from '../utils/modals'
 import { CartItemBadge } from './CartItemBadge'
 import { ClaimErc20Callout } from './ClaimErc20Callout'
 import { EthPerTokenAccordian } from './EthPerTokenAccordian'
@@ -770,6 +771,14 @@ const NftReward: React.FC<{
     decreaseQuantity,
   } = useNftCartItem(nft)
 
+  const handleRemove = useCallback(() => {
+    emitConfirmationDeletionModal({
+      onConfirm: removeNft,
+      title: t`Remove NFT`,
+      description: t`Are you sure you want to remove this NFT?`,
+    })
+  }, [removeNft])
+
   const priceText = useMemo(() => {
     if (price === null) {
       return '-'
@@ -805,7 +814,7 @@ const NftReward: React.FC<{
           onIncrease={increaseQuantity}
           onDecrease={decreaseQuantity}
         />
-        <RemoveIcon onClick={removeNft} />
+        <RemoveIcon onClick={handleRemove} />
       </div>
     </div>
   )

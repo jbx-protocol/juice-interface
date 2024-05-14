@@ -1,7 +1,9 @@
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
+import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { emitConfirmationDeletionModal } from '../../../utils/modals'
 
 const iconClasses = 'mr-1 h-6 w-6'
 const containerClasses = 'flex items-center justify-center'
@@ -32,10 +34,19 @@ export function PreviewAddRemoveNftButton({
       </span>
     </div>
   )
+
+  const handleDeselect = useCallback(() => {
+    emitConfirmationDeletionModal({
+      onConfirm: onDeselect,
+      title: t`Remove NFT`,
+      description: t`Are you sure you want to remove this NFT?`,
+    })
+  }, [onDeselect])
+
   return (
     <Button
       type="primary"
-      onClick={isSelected ? onDeselect : onSelect}
+      onClick={isSelected ? handleDeselect : onSelect}
       className={twMerge(
         isSelected ? 'border-none bg-error-500 hover:bg-error-600' : '',
         className,

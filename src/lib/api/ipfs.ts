@@ -3,6 +3,7 @@ import { InfuraPinResponse } from 'lib/infura/ipfs'
 import { consolidateMetadata, ProjectMetadata } from 'models/projectMetadata'
 import { ipfsGatewayUrl } from 'utils/ipfs'
 
+import { SiteBaseUrl } from 'constants/url'
 import { UploadProgressEvent } from 'rc-upload/lib/interface'
 
 // Workaround function for a bug in pinata where the data is sometimes returned in bytes
@@ -24,9 +25,8 @@ const extractJsonFromBase64Data = (base64: string) => {
  * Fetch an IPFS hash from our proxy.
  */
 export const ipfsFetch = async <T>(hash: string) => {
-  const response = await axios.get<T>(
-    `${process.env.NEXT_PUBLIC_BASE_URL}api/ipfs/${hash}`,
-  )
+  if (!SiteBaseUrl) throw new Error('ipfs fetch failed: Undefined base url')
+  const response = await axios.get<T>(`${SiteBaseUrl}api/ipfs/${hash}`)
 
   return response
 }

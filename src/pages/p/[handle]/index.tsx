@@ -3,6 +3,7 @@ import Project404 from 'components/Project404'
 import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import { SEO } from 'components/common/SEO/SEO'
 import { V1Project } from 'components/v1/V1Project/V1Project'
+import { SiteBaseUrl } from 'constants/url'
 import { AnnouncementLauncher } from 'contexts/Announcements/AnnouncementLauncher'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectProvider } from 'contexts/v1/Project/V1ProjectProvider'
@@ -53,7 +54,7 @@ export default function V1HandlePage({
       <SEO
         // Set known values, leave others undefined to be overridden
         title={metadata?.name}
-        url={`${process.env.NEXT_PUBLIC_BASE_URL}p/${handle}`}
+        url={`${SiteBaseUrl}p/${handle}`}
         description={metadata?.description ? metadata.description : undefined}
         twitter={{
           card: 'summary',

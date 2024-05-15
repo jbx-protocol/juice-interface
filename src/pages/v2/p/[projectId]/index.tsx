@@ -2,6 +2,7 @@ import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import { SEO } from 'components/common/SEO/SEO'
 import { ProjectDashboard } from 'components/v2v3/V2V3Project/ProjectDashboard/ProjectDashboard'
 import { PV_V2 } from 'constants/pv'
+import { SiteBaseUrl } from 'constants/url'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo/paginateDepleteProjectsQuery'
@@ -66,7 +67,7 @@ const ProjectPageSEO = ({
   <SEO
     // Set known values, leave others undefined to be overridden
     title={metadata?.name}
-    url={`${process.env.NEXT_PUBLIC_BASE_URL}v2/p/${projectId}`}
+    url={`${SiteBaseUrl}v2/p/${projectId}`}
     description={
       metadata?.projectTagline ? metadata.projectTagline : metadata?.description
     }

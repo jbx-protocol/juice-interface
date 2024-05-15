@@ -2,6 +2,7 @@ import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import { Head } from 'components/common/Head/Head'
 import { Create } from 'components/Create/Create'
 import { CV_V3 } from 'constants/cv'
+import { SiteBaseUrl } from 'constants/url'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { V2V3ContractsProvider } from 'contexts/v2v3/Contracts/V2V3ContractsProvider'
 import { V2V3CurrencyProvider } from 'contexts/v2v3/V2V3CurrencyProvider'
@@ -14,7 +15,7 @@ export default function V2CreatePage() {
     <>
       <Head
         title="Create your project"
-        url={process.env.NEXT_PUBLIC_BASE_URL + '/create'}
+        url={SiteBaseUrl + '/create'}
         description="Launch a project on Juicebox"
       />
 

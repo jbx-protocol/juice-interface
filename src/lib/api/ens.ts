@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { readNetwork } from 'constants/networks'
+import { SiteBaseUrl } from 'constants/url'
 import { resolveAddressEnsIdeas } from 'lib/ensIdeas'
 import { NetworkName } from 'models/networkName'
 
@@ -20,7 +21,7 @@ export function resolveAddress(addressOrEnsName: string) {
   } catch (e) {
     return axios
       .get<{ name: string; address: string }>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}api/ens/resolve/${addressOrEnsName}`,
+        `${SiteBaseUrl}api/ens/resolve/${addressOrEnsName}`,
       )
       .then(data => data.data)
   }

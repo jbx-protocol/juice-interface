@@ -1,4 +1,5 @@
 import config from 'config/seo_meta.json'
+import { SiteBaseUrl } from 'constants/url'
 import Head from 'next/head'
 import { FC, ReactNode } from 'react'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
@@ -69,15 +70,13 @@ export const SEO: FC<React.PropsWithChildren<SEOProps>> = ({
       />
       <OpenGraphMetaTags
         type="website"
-        url={url ?? process.env.NEXT_PUBLIC_BASE_URL} // default to base url
+        url={url ?? SiteBaseUrl} // default to base url
         title={formattedTitle}
         description={description ?? config.description}
         siteName={config.title}
         image={{
           src:
-            (process.env.NEXT_PUBLIC_BASE_URL
-              ? process.env.NEXT_PUBLIC_BASE_URL
-              : '/') + 'assets/JBM-Unfurl-banner.png',
+            (SiteBaseUrl ? SiteBaseUrl : '/') + 'assets/JBM-Unfurl-banner.png',
           type: 'image/png',
           width: '1136',
           height: '497',

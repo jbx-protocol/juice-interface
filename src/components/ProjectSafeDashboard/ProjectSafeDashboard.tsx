@@ -2,6 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
 import { Tab } from 'components/Tab'
+import { SiteBaseUrl } from 'constants/url'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useQueuedSafeTransactions } from 'hooks/safe/useQueuedSafeTransactions'
 import { generateSafeUrl } from 'lib/safe'
@@ -52,7 +53,7 @@ export function ProjectSafeDashboard({
     )
   }
 
-  const url = new URL(router.asPath, process.env.NEXT_PUBLIC_BASE_URL)
+  const url = new URL(router.asPath, SiteBaseUrl)
   const preSelectedTx = url.hash.slice(1) as string
   if (preSelectedTx) {
     document

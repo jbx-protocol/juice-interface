@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { PV_V1, PV_V2 } from 'constants/pv'
+import { SiteBaseUrl } from 'constants/url'
 import { PV } from 'models/pv'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -43,7 +44,7 @@ export default async function handler(
 
   // Update database projects whenever a project needs revalidating. However, database will only get updated if the new project data is already available in the subgraph, which can sometimes take a couple minutes
   await axios
-    .get(`${process.env.NEXT_PUBLIC_BASE_URL}api/projects/update`)
+    .get(`${SiteBaseUrl}api/projects/update`)
     // can throw error when env isnt set correctly
     .catch(err => console.error('Database projects update failed', err))
 

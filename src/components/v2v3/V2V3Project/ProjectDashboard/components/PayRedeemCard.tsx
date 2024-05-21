@@ -579,10 +579,7 @@ const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
 
   const tokenFromRedeemAmount = useMemo(() => {
     if (!redeemAmount) return ''
-    return formatCurrencyAmount({
-      amount: fromWad(ethReceivedFromTokens),
-      currency: V2V3_CURRENCY_ETH,
-    })
+    return formatAmount(fromWad(ethReceivedFromTokens))
   }, [ethReceivedFromTokens, redeemAmount])
 
   const insufficientBalance = useMemo(() => {

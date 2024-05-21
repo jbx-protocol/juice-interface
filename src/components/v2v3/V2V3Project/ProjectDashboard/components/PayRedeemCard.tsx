@@ -165,7 +165,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
         </Callout.Info>
       )}
 
-      {unclaimedTokenBalance?.gt(0) && (
+      {projectHasErc20Token && unclaimedTokenBalance?.gt(0) && (
         <ClaimErc20Callout className="mt-4" unclaimed={unclaimedTokenBalance} />
       )}
 

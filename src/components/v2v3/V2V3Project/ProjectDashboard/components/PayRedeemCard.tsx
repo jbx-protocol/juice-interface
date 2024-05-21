@@ -375,7 +375,7 @@ const TokenBadge = ({
             {image}
           </div>
           {isErc20 && (
-            <div className="absolute -bottom-0.5 -right-0.5 h-5 w-5 rounded-full border-2 border-white">
+            <div className="absolute -bottom-0.5 -right-0.5 h-5 w-5 rounded-full border-2 border-white dark:border-slate-700">
               <EthereumLogo />
             </div>
           )}

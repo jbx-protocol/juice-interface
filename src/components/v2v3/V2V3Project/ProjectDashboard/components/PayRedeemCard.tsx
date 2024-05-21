@@ -129,6 +129,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
           </ChoiceButton>
           <ChoiceButton
             selected={state === 'redeem'}
+            tooltip={t`Redeem tokens for a portion of this project's treasury`}
             onClick={() => {
               dispatch(payRedeemActions.changeToRedeem())
             }}
@@ -177,13 +178,18 @@ const ChoiceButton = ({
   children,
   onClick,
   selected,
+  tooltip,
   disabled,
 }: {
   children: React.ReactNode
   onClick?: () => void
   selected?: boolean
+  tooltip?: ReactNode
   disabled?: boolean
 }) => {
+  if (disabled) {
+    tooltip = t`Disabled for this project`
+  }
   const Button = useMemo(
     () => (
       <button
@@ -203,10 +209,7 @@ const ChoiceButton = ({
     ),
     [children, disabled, onClick, selected],
   )
-  if (disabled) {
-    return <Tooltip title={t`Disabled for this project`}>{Button}</Tooltip>
-  }
-  return Button
+  return <Tooltip title={tooltip}>{Button}</Tooltip>
 }
 
 const PayRedeemInput = ({

@@ -3392,6 +3392,9 @@ msgstr ""
 msgid "JB vs. Kickstarter"
 msgstr ""
 
+msgid "Redeem tokens for a portion of this project's treasury"
+msgstr ""
+
 msgid "Available payout"
 msgstr ""
 

@@ -289,7 +289,7 @@ const PayRedeemInput = ({
           className,
         )}
       >
-        <label className="mb-2">{label}</label>
+        <label className="mb-2 font-normal">{label}</label>
         {!redeemUnavailable && (
           <div className="space-y-2">
             <div className="flex w-full justify-between gap-2">

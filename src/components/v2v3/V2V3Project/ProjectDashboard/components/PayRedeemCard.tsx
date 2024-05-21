@@ -781,6 +781,14 @@ const NftReward: React.FC<{
     })
   }, [removeNft])
 
+  const handleDecreaseQuantity = useCallback(() => {
+    if (quantity - 1 <= 0) {
+      handleRemove()
+    } else {
+      decreaseQuantity()
+    }
+  }, [decreaseQuantity, handleRemove, quantity])
+
   const priceText = useMemo(() => {
     if (price === null) {
       return '-'
@@ -814,7 +822,7 @@ const NftReward: React.FC<{
         <QuantityControl
           quantity={quantity}
           onIncrease={increaseQuantity}
-          onDecrease={decreaseQuantity}
+          onDecrease={handleDecreaseQuantity}
         />
         <RemoveIcon onClick={handleRemove} />
       </div>

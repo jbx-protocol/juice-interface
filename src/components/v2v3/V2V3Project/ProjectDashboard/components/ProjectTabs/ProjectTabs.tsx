@@ -111,7 +111,7 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         defaultIndex={0}
       >
         <div className="sticky top-20 z-10 flex w-full snap-x overflow-x-scroll border-b border-grey-200 bg-white hide-scrollbar dark:border-slate-600 dark:bg-slate-900 sm:justify-center md:static md:z-10 md:justify-center md:pt-8">
-          <Tab.List className="flex gap-8">
+          <Tab.List className="flex w-full gap-10">
             {tabs.map(tab => (
               <ProjectTab
                 className={twMerge(tab.hideTab && 'hidden')}

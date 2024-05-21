@@ -20,7 +20,7 @@ export const ProjectTab: React.FC<ProjectTabProps> = ({
       as="button"
       ref={tabRef}
       className={twMerge(
-        'snap-start scroll-mx-4 outline-none first:ml-4 last:mr-4 md:ml-0 md:mr-0',
+        'snap-start scroll-mx-4 outline-none first:ml-4 last:mr-4 md:ml-0 md:mr-0 md:first:ml-1 md:last:mr-0',
         className,
       )}
       onClick={onClick}

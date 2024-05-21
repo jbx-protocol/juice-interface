@@ -476,6 +476,11 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
     }
   }, [store])
 
+  const payButtonDisabled = useMemo(() => {
+    if (!walletConnected) return false
+    return insufficientBalance || cartPayAmount === 0 || !cartPayAmount
+  }, [cartPayAmount, insufficientBalance, walletConnected])
+
   return (
     <div>
       <div className="relative">
@@ -526,7 +531,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
         type="primary"
         className="mt-6 w-full"
         size="large"
-        disabled={insufficientBalance || cartPayAmount === 0 || !cartPayAmount}
+        disabled={payButtonDisabled}
         onClick={payProject}
       >
         {walletConnected ? (
@@ -536,7 +541,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
             <Trans>Pay project</Trans>
           )
         ) : (
-          <Trans>Connect wallet to pay</Trans>
+          <Trans>Connect wallet</Trans>
         )}
       </Button>
     </div>

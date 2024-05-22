@@ -55,7 +55,7 @@ export const TokensPanel = () => {
 
   return (
     <>
-      <div className="flex w-full max-w-[596px] flex-col items-stretch gap-5">
+      <div className="flex w-full flex-col items-stretch gap-5">
         <div className="flex w-full flex-1 items-center justify-between">
           <h2 className="font-heading text-2xl font-medium">Tokens</h2>
         </div>

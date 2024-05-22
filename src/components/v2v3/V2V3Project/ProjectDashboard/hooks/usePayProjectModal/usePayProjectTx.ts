@@ -9,7 +9,7 @@ import { useCallback, useContext, useMemo } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { parseWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
-import { useProjectCart } from '../useProjectCart'
+import { useProjectSelector } from '../../redux/hooks'
 import { ProjectPayReceipt } from '../useProjectPageQueries'
 import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
 import { PayProjectModalFormValues } from './usePayProjectModal'
@@ -33,7 +33,9 @@ export const usePayProjectTx = ({
   ) => void
 }) => {
   const { userAddress } = useWallet()
-  const { totalAmount, nftRewards } = useProjectCart()
+  const { payAmount, chosenNftRewards } = useProjectSelector(
+    state => state.projectCart,
+  )
   const {
     nftRewards: { rewardTiers },
   } = useContext(NftRewardsContext)
@@ -45,32 +47,32 @@ export const usePayProjectTx = ({
   const buildPayReceipt = useCallback(
     (e: Transaction | undefined): ProjectPayReceipt => {
       return {
-        totalAmount: totalAmount ?? {
+        totalAmount: payAmount ?? {
           amount: 0,
           currency: V2V3_CURRENCY_ETH,
         },
-        nfts: nftRewards ?? [],
+        nfts: chosenNftRewards ?? [],
         timestamp: new Date(),
         transactionHash: e?.hash,
         fromAddress: userAddress ?? '',
         tokensReceived: receivedTickets ?? '',
       }
     },
-    [nftRewards, receivedTickets, totalAmount, userAddress],
+    [chosenNftRewards, payAmount, receivedTickets, userAddress],
   )
 
   const weiAmount = useMemo(() => {
-    if (!totalAmount) {
+    if (!payAmount) {
       return parseWad(0)
-    } else if (totalAmount.currency === V2V3_CURRENCY_ETH) {
-      return parseWad(totalAmount.amount)
+    } else if (payAmount.currency === V2V3_CURRENCY_ETH) {
+      return parseWad(payAmount.amount)
     } else {
-      return converter.usdToWei(totalAmount.amount)
+      return converter.usdToWei(payAmount.amount)
     }
-  }, [totalAmount, converter])
+  }, [payAmount, converter])
 
   const prepareDelegateMetadata = usePrepareDelegatePayMetadata(weiAmount, {
-    nftRewards,
+    nftRewards: chosenNftRewards,
     receivedTickets,
   })
 
@@ -85,7 +87,7 @@ export const usePayProjectTx = ({
       const memo = buildPaymentMemo({
         text: messageString,
         imageUrl: attachedUrl,
-        nftUrls: nftRewards
+        nftUrls: chosenNftRewards
           .map(
             ({ id }) =>
               (rewardTiers ?? []).find(({ id: tierId }) => tierId === id)
@@ -136,7 +138,7 @@ export const usePayProjectTx = ({
     [
       projectHasErc20,
       buildPayReceipt,
-      nftRewards,
+      chosenNftRewards,
       onTransactionConfirmedCallback,
       onTransactionErrorCallback,
       onTransactionPendingCallback,

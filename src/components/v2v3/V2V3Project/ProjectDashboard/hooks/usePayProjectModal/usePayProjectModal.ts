@@ -9,7 +9,8 @@ import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import * as Yup from 'yup'
-import { useProjectCart } from '../useProjectCart'
+import { useProjectDispatch, useProjectSelector } from '../../redux/hooks'
+import { projectCartActions } from '../../redux/projectCartSlice'
 import { useProjectPageQueries } from '../useProjectPageQueries'
 import { payProjectModalReducer } from './payProjectModalReducer'
 import { usePayProjectTx } from './usePayProjectTx'
@@ -39,12 +40,10 @@ const getValidationSchema = (projectHasPayNotice: boolean) =>
 export type PayProjectModalFormValues = Yup.InferType<typeof ValidationSchema>
 
 export const usePayProjectModal = () => {
-  const {
-    dispatch: cartDispatch,
-    payModalOpen,
-    totalAmount,
-    nftRewards,
-  } = useProjectCart()
+  const { payModalOpen, payAmount, chosenNftRewards } = useProjectSelector(
+    state => state.projectCart,
+  )
+  const dispatch = useProjectDispatch()
   const { projectMetadata } = useProjectMetadataContext()
   const { name, payDisclosure } = projectMetadata ?? {}
   const { userAddress } = useWallet()
@@ -60,9 +59,9 @@ export const usePayProjectModal = () => {
   const open = payModalOpen
   const setOpen = useCallback(
     (open: boolean) => {
-      cartDispatch({ type: 'setPayModal', payload: { open } })
+      dispatch(projectCartActions.setPayModal({ open }))
     },
-    [cartDispatch],
+    [dispatch],
   )
 
   const onPaySubmit = usePayProjectTx({
@@ -72,7 +71,7 @@ export const usePayProjectModal = () => {
     onTransactionConfirmed: (payReceipt, formikHelpers) => {
       setProjectPayReceipt(payReceipt)
       setOpen(false)
-      cartDispatch({ type: 'payProject' })
+      dispatch(projectCartActions.payProject())
       setTimeout(() => {
         formikHelpers.setSubmitting(false)
         formikHelpers.resetForm()
@@ -87,25 +86,25 @@ export const usePayProjectModal = () => {
   })
 
   const primaryAmount = useMemo(() => {
-    if (!totalAmount)
+    if (!payAmount)
       return formatCurrencyAmount({ amount: 0, currency: V2V3_CURRENCY_ETH })
-    return formatCurrencyAmount(totalAmount)
-  }, [totalAmount])
+    return formatCurrencyAmount(payAmount)
+  }, [payAmount])
 
   const secondaryAmount = useMemo(() => {
-    if (!totalAmount) return undefined
-    if (totalAmount.currency === V2V3_CURRENCY_ETH) {
-      const amount = Number(converter.weiToUsd(parseWad(totalAmount.amount)))
+    if (!payAmount) return undefined
+    if (payAmount.currency === V2V3_CURRENCY_ETH) {
+      const amount = Number(converter.weiToUsd(parseWad(payAmount.amount)))
       return formatCurrencyAmount({
         amount,
         currency: V2V3_CURRENCY_USD,
       })
     }
     return formatCurrencyAmount({
-      amount: fromWad(converter.usdToWei(totalAmount.amount)),
+      amount: fromWad(converter.usdToWei(payAmount.amount)),
       currency: V2V3_CURRENCY_ETH,
     })
-  }, [converter, totalAmount])
+  }, [converter, payAmount])
 
   const pendingTransactionHash = useMemo(() => {
     const pendingTransaction = transactions?.find(
@@ -124,7 +123,7 @@ export const usePayProjectModal = () => {
     primaryAmount,
     secondaryAmount,
     userAddress,
-    nftRewards,
+    nftRewards: chosenNftRewards,
     validationSchema,
     projectName: name,
     projectPayDisclosure: payDisclosure,

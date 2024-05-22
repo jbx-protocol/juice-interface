@@ -7,7 +7,7 @@ import { ReceiveNftItem } from './ReceiveNftItem'
 
 jest.mock('components/v2v3/V2V3Project/ProjectDashboard/hooks/useNftCartItem')
 
-jest.mock('../../NftRewardsCard/SmallNftSquare', () => ({
+jest.mock('../../SmallNftSquare', () => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   SmallNftSquare: ({ nftReward: { fileUrl } }: any) => <img src={fileUrl} />,
 }))

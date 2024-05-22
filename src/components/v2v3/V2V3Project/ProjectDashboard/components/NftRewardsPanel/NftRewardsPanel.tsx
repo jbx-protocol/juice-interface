@@ -13,14 +13,14 @@ export const NftRewardsPanel = () => {
   } = useNftRewardsPanel()
 
   return (
-    <div className="flex w-full max-w-[800px] flex-col gap-5">
+    <div className="flex w-full flex-col gap-5">
       <h2 className="font-heading text-2xl font-medium">
         <Trans>NFTs</Trans>
       </h2>
       <RedeemNftsSection />
 
       {!nftsLoading && rewardTiers?.length ? (
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-2 md:gap-6">
           {rewardTiers?.map((tier, i) => (
             <div key={i} className="flex justify-center">
               <NftReward
@@ -34,7 +34,7 @@ export const NftRewardsPanel = () => {
           ))}
         </div>
       ) : nftsLoading ? (
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-2 md:gap-6">
           {[...Array(6)].map((_, i) => (
             <NftRewardSkeleton key={i} />
           ))}

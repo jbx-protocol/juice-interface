@@ -129,6 +129,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
           </ChoiceButton>
           <ChoiceButton
             selected={state === 'redeem'}
+            tooltip={t`Redeem tokens for a portion of this project's treasury`}
             onClick={() => {
               dispatch(payRedeemActions.changeToRedeem())
             }}
@@ -164,7 +165,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
         </Callout.Info>
       )}
 
-      {unclaimedTokenBalance?.gt(0) && (
+      {projectHasErc20Token && unclaimedTokenBalance?.gt(0) && (
         <ClaimErc20Callout className="mt-4" unclaimed={unclaimedTokenBalance} />
       )}
 
@@ -177,13 +178,18 @@ const ChoiceButton = ({
   children,
   onClick,
   selected,
+  tooltip,
   disabled,
 }: {
   children: React.ReactNode
   onClick?: () => void
   selected?: boolean
+  tooltip?: ReactNode
   disabled?: boolean
 }) => {
+  if (disabled) {
+    tooltip = t`Disabled for this project`
+  }
   const Button = useMemo(
     () => (
       <button
@@ -203,10 +209,7 @@ const ChoiceButton = ({
     ),
     [children, disabled, onClick, selected],
   )
-  if (disabled) {
-    return <Tooltip title={t`Disabled for this project`}>{Button}</Tooltip>
-  }
-  return Button
+  return <Tooltip title={tooltip}>{Button}</Tooltip>
 }
 
 const PayRedeemInput = ({
@@ -289,7 +292,7 @@ const PayRedeemInput = ({
           className,
         )}
       >
-        <label className="mb-2">{label}</label>
+        <label className="mb-2 font-normal">{label}</label>
         {!redeemUnavailable && (
           <div className="space-y-2">
             <div className="flex w-full justify-between gap-2">
@@ -372,7 +375,7 @@ const TokenBadge = ({
             {image}
           </div>
           {isErc20 && (
-            <div className="absolute -bottom-0.5 -right-0.5 h-5 w-5 rounded-full border-2 border-white">
+            <div className="absolute -bottom-0.5 -right-0.5 h-5 w-5 rounded-full border-2 border-white dark:border-slate-700">
               <EthereumLogo />
             </div>
           )}
@@ -476,6 +479,11 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
     }
   }, [store])
 
+  const payButtonDisabled = useMemo(() => {
+    if (!walletConnected) return false
+    return insufficientBalance || cartPayAmount === 0 || !cartPayAmount
+  }, [cartPayAmount, insufficientBalance, walletConnected])
+
   return (
     <div>
       <div className="relative">
@@ -526,7 +534,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
         type="primary"
         className="mt-6 w-full"
         size="large"
-        disabled={insufficientBalance || cartPayAmount === 0 || !cartPayAmount}
+        disabled={payButtonDisabled}
         onClick={payProject}
       >
         {walletConnected ? (
@@ -536,7 +544,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
             <Trans>Pay project</Trans>
           )
         ) : (
-          <Trans>Connect wallet to pay</Trans>
+          <Trans>Connect wallet</Trans>
         )}
       </Button>
     </div>
@@ -574,10 +582,7 @@ const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
 
   const tokenFromRedeemAmount = useMemo(() => {
     if (!redeemAmount) return ''
-    return formatCurrencyAmount({
-      amount: fromWad(ethReceivedFromTokens),
-      currency: V2V3_CURRENCY_ETH,
-    })
+    return formatAmount(fromWad(ethReceivedFromTokens))
   }, [ethReceivedFromTokens, redeemAmount])
 
   const insufficientBalance = useMemo(() => {
@@ -779,6 +784,14 @@ const NftReward: React.FC<{
     })
   }, [removeNft])
 
+  const handleDecreaseQuantity = useCallback(() => {
+    if (quantity - 1 <= 0) {
+      handleRemove()
+    } else {
+      decreaseQuantity()
+    }
+  }, [decreaseQuantity, handleRemove, quantity])
+
   const priceText = useMemo(() => {
     if (price === null) {
       return '-'
@@ -812,7 +825,7 @@ const NftReward: React.FC<{
         <QuantityControl
           quantity={quantity}
           onIncrease={increaseQuantity}
-          onDecrease={decreaseQuantity}
+          onDecrease={handleDecreaseQuantity}
         />
         <RemoveIcon onClick={handleRemove} />
       </div>

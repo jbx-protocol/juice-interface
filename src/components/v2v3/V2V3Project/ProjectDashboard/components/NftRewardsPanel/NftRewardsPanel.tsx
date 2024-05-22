@@ -22,7 +22,7 @@ export const NftRewardsPanel = () => {
       {!nftsLoading && rewardTiers?.length ? (
         <div className="grid grid-cols-2 gap-4 md:grid-cols-2 md:gap-6">
           {rewardTiers?.map((tier, i) => (
-            <div key={i} className="flex justify-center">
+            <div key={i} className="flex">
               <NftReward
                 className="min-w-0"
                 rewardTier={tier}

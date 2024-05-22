@@ -160,7 +160,10 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
       <EthPerTokenAccordian className="mt-4" />
 
       {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
-        <Callout.Info className="mt-6 py-2 px-3.5" collapsible={false}>
+        <Callout.Info
+          className="mt-6 py-2 px-3.5 dark:bg-slate-700"
+          collapsible={false}
+        >
           <Trans>This project does not currently offer tokens</Trans>
         </Callout.Info>
       )}

@@ -2030,6 +2030,9 @@ msgstr ""
 msgid "With highly competitive auctions happening every 24 hours, SharkDAO's success was made possible through the flexibility of their Juicebox project settings. From cycle to cycle, SharkDAO enabled or disabled payments and adjusted $SHARK tokenomics (total issuance rate, reserved rate, and issuance reduction rate). With unlocked cycles and no edit deadline, they were able to make changes to their project quickly in response to upcoming Nouns auctions."
 msgstr ""
 
+msgid "Redeem your tokens for a portion of this project's treasury"
+msgstr ""
+
 msgid "Edits to an upcoming cycle must be submitted at least 3 days before that cycle starts."
 msgstr ""
 

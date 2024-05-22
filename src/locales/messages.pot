@@ -1346,6 +1346,9 @@ msgstr ""
 msgid "FF9213"
 msgstr ""
 
+msgid "Are you sure you want to remove this NFT?"
+msgstr ""
+
 msgid "Use NFTs for redemptions"
 msgstr ""
 

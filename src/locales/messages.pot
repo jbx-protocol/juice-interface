@@ -4637,6 +4637,9 @@ msgstr ""
 msgid "Do not include .eth"
 msgstr ""
 
+msgid "Compliance check is in progress. Please try again shortly"
+msgstr ""
+
 msgid "Collection symbol"
 msgstr ""
 

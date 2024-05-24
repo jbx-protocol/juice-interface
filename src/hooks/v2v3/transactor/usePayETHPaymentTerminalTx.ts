@@ -1,4 +1,5 @@
 import { t } from '@lingui/macro'
+import { useProjectIsOFACListed } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectIsOFACListed'
 import { DEFAULT_MIN_RETURNED_TOKENS } from 'constants/transactionDefaults'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
@@ -7,6 +8,7 @@ import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3
 import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useContext } from 'react'
+import { useV2V3BlockedProject } from '../useBlockedProject'
 import { useV2ProjectTitle } from '../useProjectTitle'
 
 const DEFAULT_DELEGATE_METADATA = 0
@@ -26,6 +28,12 @@ export function usePayETHPaymentTerminalTx(): PayV2ProjectTx {
 
   const projectTitle = useV2ProjectTitle()
 
+  // Blocked project
+  const isBlockedProject = useV2V3BlockedProject()
+  // OFAC Compliance
+  const { isAddressListedInOFAC, isLoading: isOFACLoading } =
+    useProjectIsOFACListed()
+
   return (
     { memo, preferClaimedTokens, beneficiary, value, delegateMetadata },
     txOpts,
@@ -37,6 +45,27 @@ export function usePayETHPaymentTerminalTx(): PayV2ProjectTx {
       !beneficiary
     ) {
       txOpts?.onDone?.()
+      return Promise.resolve(false)
+    }
+
+    if (isBlockedProject) {
+      txOpts?.onError?.(
+        new Error(t`This project has been delisted and can't be paid.`),
+      )
+      return Promise.resolve(false)
+    }
+    if (isOFACLoading) {
+      txOpts?.onError?.(
+        new Error(t`Compliance check is in progress. Please try again shortly`),
+      )
+      return Promise.resolve(false)
+    }
+    if (isAddressListedInOFAC) {
+      txOpts?.onError?.(
+        new Error(
+          t`You can't pay this project because your wallet address failed a compliance check set up by the project owner.`,
+        ),
+      )
       return Promise.resolve(false)
     }
 

@@ -8,11 +8,11 @@
 }
 
 .ant-tooltip-arrow-content::before {
-   background: theme('colors.slate.600');
+  background: theme('colors.slate.600');
 }
 
 .dark .ant-tooltip-arrow-content::before {
-  background: theme('colors.smoke.100')
+  background: theme('colors.smoke.100');
 }
 
 .ant-tooltip-disabled-compatible-wrapper.block {
@@ -20,5 +20,5 @@
 }
 
 .ant-tooltip-content a {
-  @apply text-bluebs-300 dark:text-bluebs-600 hover:text-bluebs-400 dark:hover:text-bluebs-500 hover:underline;
+  @apply text-bluebs-300 hover:text-bluebs-400 hover:underline dark:text-bluebs-600 dark:hover:text-bluebs-500;
 }

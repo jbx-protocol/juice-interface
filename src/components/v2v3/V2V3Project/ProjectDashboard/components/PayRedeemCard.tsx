@@ -19,6 +19,7 @@ import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
 import { useETHReceivedFromTokens } from 'hooks/v2v3/contractReader/useETHReceivedFromTokens'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/useRedeemTokensTx'
+import { usePayProjectDisabled } from 'hooks/v2v3/usePayProjectDisabled'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
@@ -415,6 +416,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
   projectHasErc20Token,
   payerIssuanceRate,
 }) => {
+  const { payDisabled, message } = usePayProjectDisabled()
   const { tokenSymbol } = useProjectContext()
   const chosenNftRewards = useProjectSelector(
     state => state.projectCart.chosenNftRewards,
@@ -484,8 +486,13 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
 
   const payButtonDisabled = useMemo(() => {
     if (!walletConnected) return false
-    return insufficientBalance || cartPayAmount === 0 || !cartPayAmount
-  }, [cartPayAmount, insufficientBalance, walletConnected])
+    return (
+      insufficientBalance ||
+      cartPayAmount === 0 ||
+      !cartPayAmount ||
+      payDisabled
+    )
+  }, [cartPayAmount, insufficientBalance, payDisabled, walletConnected])
 
   return (
     <div>
@@ -533,23 +540,26 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
         </div>
       </div>
 
-      <Button
-        type="primary"
-        className="mt-6 w-full"
-        size="large"
-        disabled={payButtonDisabled}
-        onClick={payProject}
-      >
-        {walletConnected ? (
-          insufficientBalance ? (
-            <Trans>Insufficient balance</Trans>
+      <Tooltip className="w-full flex-1" title={message}>
+        <Button
+          style={{ display: 'block', width: '100%' }}
+          type="primary"
+          className="mt-6"
+          size="large"
+          disabled={payButtonDisabled}
+          onClick={payProject}
+        >
+          {walletConnected ? (
+            insufficientBalance ? (
+              <Trans>Insufficient balance</Trans>
+            ) : (
+              <Trans>Pay project</Trans>
+            )
           ) : (
-            <Trans>Pay project</Trans>
-          )
-        ) : (
-          <Trans>Connect wallet</Trans>
-        )}
-      </Button>
+            <Trans>Connect wallet</Trans>
+          )}
+        </Button>
+      </Tooltip>
     </div>
   )
 }

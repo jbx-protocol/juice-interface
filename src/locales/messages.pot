@@ -65,9 +65,6 @@ msgstr ""
 msgid "Your project's tokens are not ERC-20 tokens by default. After you create your project, you can create an ERC-20 for your token holders to claim. This is optional."
 msgstr ""
 
-msgid "Available upgrades"
-msgstr ""
-
 msgid "If Reserved NFTs are set, the first reserved NFT from the tier will be distributable once the tier receives its first mint."
 msgstr ""
 
@@ -668,9 +665,6 @@ msgstr ""
 msgid "No deadline"
 msgstr ""
 
-msgid "Your project is up to date!"
-msgstr ""
-
 msgid "Add an update that will be posted to your project page."
 msgstr ""
 
@@ -825,9 +819,6 @@ msgid "Scheduled launch time"
 msgstr ""
 
 msgid "This account hasn't created any projects yet."
-msgstr ""
-
-msgid "Project upgrades"
 msgstr ""
 
 msgid "Tap {projectTitle}"
@@ -1142,9 +1133,6 @@ msgstr ""
 msgid "Subscribe to project activity"
 msgstr ""
 
-msgid "Move ETH"
-msgstr ""
-
 msgid "Profile details"
 msgstr ""
 
@@ -1235,9 +1223,6 @@ msgstr ""
 msgid "On-chain Governance"
 msgstr ""
 
-msgid "Set project's payment terminals"
-msgstr ""
-
 msgid "Fee from <0><1/></0>"
 msgstr ""
 
@@ -1260,9 +1245,6 @@ msgid "This project has paused payments this cycle."
 msgstr ""
 
 msgid "Not able to process fees"
-msgstr ""
-
-msgid "This transaction will set your project's Controller contract to: <0>{controllerAddress}</0>. <1>Any reserved tokens will be sent out.</1>"
 msgstr ""
 
 msgid "Time remaining for edits to affect the next cycle:"
@@ -1460,9 +1442,6 @@ msgstr ""
 msgid "{0}"
 msgstr ""
 
-msgid "This transaction will set your project's Payment Terminal contract to: <0>{terminalAddress}</0>."
-msgstr ""
-
 msgid "If you're not sure if you need to claim, you probably don't."
 msgstr ""
 
@@ -1485,9 +1464,6 @@ msgid "Editing NFTs"
 msgstr ""
 
 msgid "No tags"
-msgstr ""
-
-msgid "Upgrade Controller"
 msgstr ""
 
 msgid "Juicebox is reliable, open-source, audited, and has been battle-tested by more than 1,000 projects raising over 50,000 ETH."
@@ -2036,9 +2012,6 @@ msgstr ""
 msgid "Export data"
 msgstr ""
 
-msgid "Upgrade JBETHPaymentTerminal"
-msgstr ""
-
 msgid "Show a disclosure, a message, or a warning to supporters before they pay your project"
 msgstr ""
 
@@ -2100,9 +2073,6 @@ msgid "File must be in a format of {0}"
 msgstr ""
 
 msgid "Cycle #{0}"
-msgstr ""
-
-msgid "You must enable the following cycle rules:<0>{0}{1}{2}</0>"
 msgstr ""
 
 msgid "Project owner can mint tokens for themselves and others at any time."
@@ -2355,9 +2325,6 @@ msgid "Settings"
 msgstr ""
 
 msgid "Deselect all"
-msgstr ""
-
-msgid "Migrate project's payment terminal"
 msgstr ""
 
 msgid "Project cover photo"
@@ -3044,9 +3011,6 @@ msgstr ""
 msgid "If you don't raise this amount, your payout recipients will receive their percentage of the available ETH."
 msgstr ""
 
-msgid "Upgrade to {0}"
-msgstr ""
-
 msgid "Edit details of {projectTitle}"
 msgstr ""
 
@@ -3443,9 +3407,6 @@ msgstr ""
 msgid "Connect wallet to claim"
 msgstr ""
 
-msgid "This transaction will move your project's ETH to the new Payment Terminal contract: <0>{terminalAddress}</0>."
-msgstr ""
-
 msgid "Contact"
 msgstr ""
 
@@ -3537,9 +3498,6 @@ msgid "Download CSV"
 msgstr ""
 
 msgid "Contract"
-msgstr ""
-
-msgid "Upgrade"
 msgstr ""
 
 msgid "After {0} (your first cycle), your project will not issue any tokens unless you edit the issuance rate."
@@ -3660,9 +3618,6 @@ msgid "Cycles & Payouts"
 msgstr ""
 
 msgid "Redeem {tokensLabel} for ETH"
-msgstr ""
-
-msgid "Set metadata resolver for {projectTitle}\\'s project NFT"
 msgstr ""
 
 msgid "Made a mistake?"
@@ -3986,9 +3941,6 @@ msgstr ""
 msgid "tokens per ETH paid"
 msgstr ""
 
-msgid "Edit funding cycle"
-msgstr ""
-
 msgid "Congratulations!"
 msgstr ""
 
@@ -4050,9 +4002,6 @@ msgid "Review your project and deploy it to {0}."
 msgstr ""
 
 msgid "Error downloading ETH transfers to project, try again."
-msgstr ""
-
-msgid "Upgrade your project's JBController and JBETHPaymentTerminal contracts. This upgrade is required to deploy a migration token (JBV3Token)."
 msgstr ""
 
 msgid "Edit reserved token recipients"
@@ -4416,9 +4365,6 @@ msgid "Manage your notifications and email preferences."
 msgstr ""
 
 msgid "End"
-msgstr ""
-
-msgid "Migrate project's Controller"
 msgstr ""
 
 msgid "Message sent!"

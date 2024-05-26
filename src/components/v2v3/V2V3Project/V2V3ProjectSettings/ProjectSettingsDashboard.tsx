@@ -27,7 +27,6 @@ export type V2V3SettingsPageKey =
   | 'reservedtokens'
   | 'transferownership'
   | 'archiveproject'
-  | 'upgrades'
   | 'heldfees'
   | 'createerc20'
 
@@ -211,12 +210,6 @@ export function ProjectSettingsDashboard() {
                   <Trans>Transfer ownership</Trans>
                 </Link>
               </li>
-              <li>
-                <Link href={useSettingsPagePath('upgrades')}>
-                  <Trans>Upgrade</Trans>
-                </Link>
-              </li>
-
               <li>
                 <Link href={useSettingsPagePath('archiveproject')}>
                   <Trans>Archive</Trans>

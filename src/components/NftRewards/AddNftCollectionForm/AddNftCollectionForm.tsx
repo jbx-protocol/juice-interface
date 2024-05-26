@@ -1,15 +1,12 @@
 import { RightOutlined } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
-import { Form, FormInstance, Radio } from 'antd'
+import { Form, FormInstance } from 'antd'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
 import ExternalLink from 'components/ExternalLink'
 import TooltipLabel from 'components/TooltipLabel'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import { RadioItem } from 'components/inputs/RadioItem'
-import { JB721GovernanceType, NftRewardTier } from 'models/nftRewards'
+import { NftRewardTier } from 'models/nftRewards'
 import { inputMustExistRule } from 'utils/antdRules'
-import { helpPagePath } from 'utils/routes'
-import { CreateBadge } from '../../Create/components/CreateBadge'
 import { CreateCollapse } from '../../Create/components/CreateCollapse/CreateCollapse'
 import { OptionalHeader } from '../../Create/components/OptionalHeader'
 import { RewardsList } from '../RewardsList/RewardsList'
@@ -24,7 +21,6 @@ export type NftRewardsFormProps = Partial<{
   postPayMessage?: string
   postPayButtonText?: string
   postPayButtonLink?: string
-  onChainGovernance: JB721GovernanceType
   useDataSourceForRedeem: boolean
   preventOverspending: boolean
 }>
@@ -121,43 +117,6 @@ export const AddNftCollectionForm = ({
               </Form.Item>
 
               <CreateCollapse>
-                <CreateCollapse.Panel
-                  key={1}
-                  header={<OptionalHeader header={t`On-chain Governance`} />}
-                  hideDivider
-                >
-                  <Form.Item name="onChainGovernance">
-                    <Radio.Group className="flex flex-col gap-5">
-                      <RadioItem
-                        value={JB721GovernanceType.NONE}
-                        title={
-                          <div className="flex items-center gap-3">
-                            <Trans>No on-chain governance</Trans>{' '}
-                            <CreateBadge.Default />
-                          </div>
-                        }
-                        description={t`Your project's NFTs will not have on-chain governance capabilities. Select this option if you don't want governance, or if you plan to use an off-chain voting client (like Snapshot).`}
-                      />
-                      <RadioItem
-                        value={JB721GovernanceType.ONCHAIN}
-                        title={t`Standard on-chain governance`}
-                        description={
-                          <Trans>
-                            Track the total voting power of each address over
-                            time.{' '}
-                            <ExternalLink
-                              href={helpPagePath(
-                                '/user/configuration/#on-chain-governance',
-                              )}
-                            >
-                              Learn more.
-                            </ExternalLink>
-                          </Trans>
-                        }
-                      />
-                    </Radio.Group>
-                  </Form.Item>
-                </CreateCollapse.Panel>
                 <CreateCollapse.Panel
                   key={2}
                   header={<OptionalHeader header={t`Payment Success Pop-up`} />}

@@ -218,9 +218,6 @@ msgstr ""
 msgid "While enabled, the project owner can mint any amount of project tokens."
 msgstr ""
 
-msgid "Add payment"
-msgstr ""
-
 msgid "Extended functionality for project owners"
 msgstr ""
 
@@ -887,9 +884,6 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-msgid "Your project has no updates"
-msgstr ""
-
 msgid "Please check {lastEmailUpdated} and verify your new email address.<0/>Still no email after a couple of minutes? <1>Click here to resend.</1>"
 msgstr ""
 
@@ -1005,9 +999,6 @@ msgid "Your project was successfully created!"
 msgstr ""
 
 msgid "Redeem {0} {tokensTextShort} for ETH"
-msgstr ""
-
-msgid "Delete project update"
 msgstr ""
 
 msgid "Are you sure you want to remove {0}?"
@@ -1220,9 +1211,6 @@ msgstr ""
 msgid "{0} {tokenSymbol}/ETH"
 msgstr ""
 
-msgid "On-chain Governance"
-msgstr ""
-
 msgid "Fee from <0><1/></0>"
 msgstr ""
 
@@ -1346,9 +1334,6 @@ msgstr ""
 msgid "Delisted project"
 msgstr ""
 
-msgid "If you use the default governance option (no governance), the voting weight will still be accessible on the blockchain for use in Snapshot strategies or any other desired purpose."
-msgstr ""
-
 msgid "Transfer ETH to this project"
 msgstr ""
 
@@ -1449,9 +1434,6 @@ msgid "File"
 msgstr ""
 
 msgid "<0>Juicebox is a <1>governance-minimal</1> protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><2>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</2><3>Juicebox is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no way to access project's ETH or change their rules.</3>"
-msgstr ""
-
-msgid "Your project's NFTs will not have on-chain governance capabilities. Select this option if you don't want governance, or if you plan to use an off-chain voting client (like Snapshot)."
 msgstr ""
 
 msgid "Pay {projectTitle}"
@@ -1922,9 +1904,6 @@ msgstr ""
 msgid "Save token recipients"
 msgstr ""
 
-msgid "Project Updates"
-msgstr ""
-
 msgid "With highly competitive auctions happening every 24 hours, SharkDAO's success was made possible through the flexibility of their Juicebox project settings. From cycle to cycle, SharkDAO enabled or disabled payments and adjusted $SHARK tokenomics (total issuance rate, reserved rate, and issuance reduction rate). With unlocked cycles and no edit deadline, they were able to make changes to their project quickly in response to upcoming Nouns auctions."
 msgstr ""
 
@@ -2267,9 +2246,6 @@ msgstr ""
 msgid "{formattedTimeLeft} until #{0}"
 msgstr ""
 
-msgid "Standard"
-msgstr ""
-
 msgid "Required"
 msgstr ""
 
@@ -2310,9 +2286,6 @@ msgid "Customize your project's \"pay\" button. Leave blank to use the default."
 msgstr ""
 
 msgid "handle"
-msgstr ""
-
-msgid "Posted {dateString} by <0/>"
 msgstr ""
 
 msgid "Watching projects"
@@ -2660,9 +2633,6 @@ msgstr ""
 msgid "Your edits will take effect in <0>cycle #{0}</0>. The current cycle (#{currentFCNumber}) won't be altered."
 msgstr ""
 
-msgid "Track the total voting power of each address over time. <0>Learn more.</0>"
-msgstr ""
-
 msgid "All of this project's ETH will be paid out. Token holders will receive <0>no ETH</0> when redeeming their tokens."
 msgstr ""
 
@@ -2796,9 +2766,6 @@ msgid "2. Manage your funds"
 msgstr ""
 
 msgid "Connect wallet to transfer ETH"
-msgstr ""
-
-msgid "On-chain governance type"
 msgstr ""
 
 msgid "Use for redemptions"
@@ -3380,9 +3347,6 @@ msgstr ""
 msgid "Burn {0} {tokensTextShort}"
 msgstr ""
 
-msgid "This project has disabled payments"
-msgstr ""
-
 msgid "You can't pay this project because your wallet address failed a compliance check set up by the project owner."
 msgstr ""
 
@@ -3737,9 +3701,6 @@ msgstr ""
 msgid "While enabled, this project will use the custom behavior defined in the contract above when somebody pays this project. Exercise caution."
 msgstr ""
 
-msgid "No on-chain governance"
-msgstr ""
-
 msgid "Edit recipient"
 msgstr ""
 
@@ -3875,9 +3836,6 @@ msgstr ""
 msgid "Block number"
 msgstr ""
 
-msgid "This project has no updates"
-msgstr ""
-
 msgid "{titleCasedAllocationName} Amount"
 msgstr ""
 
@@ -3890,9 +3848,6 @@ msgstr ""
 msgid "Switch to unlimited"
 msgstr ""
 
-msgid "Pay Project"
-msgstr ""
-
 msgid "7 days"
 msgstr ""
 
@@ -3903,9 +3858,6 @@ msgid "ETH received"
 msgstr ""
 
 msgid "Edited payout"
-msgstr ""
-
-msgid "Send ETH payments to this project."
 msgstr ""
 
 msgid "Launch {projectTitle}"
@@ -4140,9 +4092,6 @@ msgid "{0} tokens will be reserved."
 msgstr ""
 
 msgid "Project links"
-msgstr ""
-
-msgid "Give this NFT a voting weight to be used for on-chain governance. The number you set is only used in relation to other NFTs in this collection."
 msgstr ""
 
 msgid "Your project's NFT contract version is not supported."
@@ -4445,9 +4394,6 @@ msgstr ""
 msgid "Juicy picks"
 msgstr ""
 
-msgid "Standard on-chain governance"
-msgstr ""
-
 msgid "Owner token minting"
 msgstr ""
 
@@ -4461,9 +4407,6 @@ msgid "{titleCasedAllocationName} Percentage"
 msgstr ""
 
 msgid "Tagline"
-msgstr ""
-
-msgid "Tokens cannot be issued while payments are disabled."
 msgstr ""
 
 msgid "Owner wallet balance"

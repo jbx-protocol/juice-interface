@@ -100,8 +100,7 @@ export const useLaunchNftsForm = () => {
             formValues.preventOverspending ??
             DEFAULT_NFT_FLAGS.preventOverspending,
         },
-        governanceType:
-          formValues.onChainGovernance ?? JB721GovernanceType.NONE,
+        governanceType: JB721GovernanceType.NONE,
         pricing: DEFAULT_NFT_PRICING, // TODO add to form
       },
       editingMustStartAtOrAfter,

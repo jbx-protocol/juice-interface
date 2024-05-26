@@ -338,26 +338,6 @@ export const AddEditRewardModal = ({
               </>
             )}
             <Form.Item
-              name="votingWeight"
-              label={t`Voting weight`}
-              extra={t`Give this NFT a voting weight to be used for on-chain governance. The number you set is only used in relation to other NFTs in this collection.`}
-              tooltip={
-                <Trans>
-                  If you use the default governance option (no governance), the
-                  voting weight will still be accessible on the blockchain for
-                  use in Snapshot strategies or any other desired purpose.
-                </Trans>
-              }
-              rules={[
-                inputIsIntegerRule({
-                  label: t`Voting weight`,
-                  stringOkay: true,
-                }),
-              ]}
-            >
-              <FormattedNumberInput />
-            </Form.Item>
-            <Form.Item
               name="externalUrl"
               label={t`External link`}
               tooltip={t`Link minters of this NFT to your project's website, Discord, etc.`}

@@ -69,16 +69,11 @@ export function EditCollectionDetailsSection() {
       'collectionSymbol',
       initialValues.collectionSymbol,
     )
-    const onchainGovernanceChanged = hasChanged(
-      'onChainGovernance',
-      initialValues.onChainGovernance,
-    )
 
     const hasUpdated =
       collectionNameChanged ||
       collectionDescriptionChanged ||
-      collectionSymbolChanged ||
-      onchainGovernanceChanged
+      collectionSymbolChanged
 
     setFormHasUpdated(hasUpdated)
   }, [marketplaceForm, initialValues, setFormHasUpdated])

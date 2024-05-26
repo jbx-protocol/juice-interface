@@ -1,6 +1,6 @@
 import { Form } from 'antd'
 import { NftRewardsFormProps } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
-import { JB721GovernanceType, NftRewardTier } from 'models/nftRewards'
+import { NftRewardTier } from 'models/nftRewards'
 import { useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -132,23 +132,6 @@ export const useCreateFlowNftRewardsForm = () => {
       editingV2ProjectActions.setNftRewardsCollectionDescription,
     formatter: v => {
       if (!v || typeof v !== 'string') return ''
-      return v
-    },
-  })
-
-  useFormDispatchWatch({
-    form,
-    fieldName: 'onChainGovernance',
-    ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setNftRewardsGovernance,
-    formatter: v => {
-      if (
-        !v ||
-        typeof v === 'string' ||
-        typeof v === 'object' ||
-        typeof v === 'boolean'
-      )
-        return JB721GovernanceType.NONE
       return v
     },
   })

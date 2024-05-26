@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
-import { JB721GovernanceType, NftRewardTier } from 'models/nftRewards'
+import { NftRewardTier } from 'models/nftRewards'
 import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -11,7 +11,7 @@ import { ReviewDescription } from '../ReviewDescription'
 
 export const RewardsReview = () => {
   const {
-    nftRewards: { rewardTiers, flags, governanceType },
+    nftRewards: { rewardTiers, flags },
     fundingCycleMetadata,
   } = useAppSelector(state => state.editingV2Project)
 
@@ -66,16 +66,6 @@ export const RewardsReview = () => {
     return formatEnabled(flags.preventOverspending)
   }, [flags.preventOverspending])
 
-  const onChainGovernance = useMemo(() => {
-    switch (governanceType) {
-      case JB721GovernanceType.ONCHAIN:
-        return t`Standard`
-      case JB721GovernanceType.NONE:
-      default:
-        return t`None`
-    }
-  }, [governanceType])
-
   return (
     <div className="flex flex-col gap-12">
       <RewardsList value={rewards} onChange={setRewards} />
@@ -86,12 +76,6 @@ export const RewardsReview = () => {
             <div className="text-base font-medium">
               {shouldUseDataSourceForRedeem}
             </div>
-          }
-        />
-        <ReviewDescription
-          title={t`On-chain governance type`}
-          desc={
-            <div className="text-base font-medium">{onChainGovernance}</div>
           }
         />
         <ReviewDescription

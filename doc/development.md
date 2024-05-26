@@ -150,25 +150,6 @@ Run the jest test suite using the following command:
 yarn test
 ```
 
-## End-to-end tests
-
-### Running Cypress
-
-1. Start the app in a separate terminal:
-
-   ```bash
-   yarn build && yarn start
-   # Alternatively, you can use `yarn dev` for testing
-   ```
-
-1. Open Cypress.
-
-   ```bash
-   yarn cy:open
-   ```
-
-1. Run tests.
-
 # Debugging and Troubleshooting
 
 ## Analyzing bundle size

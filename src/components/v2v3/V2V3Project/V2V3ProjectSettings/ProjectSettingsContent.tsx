@@ -14,7 +14,6 @@ import { ArchiveProjectSettingsPage } from './pages/ArchiveProjectSettingsPage/A
 import { CreateErc20TokenSettingsPage } from './pages/CreateErc20TokenSettingsPage'
 import { EditCyclePage } from './pages/EditCyclePage/EditCyclePage'
 import { EditNftsPage } from './pages/EditNftsPage/EditNftsPage'
-import { GovernanceSettingsPage } from './pages/GovernanceSettingsPage/GovernanceSettingsPage'
 import { PayoutsSettingsPage } from './pages/PayoutsSettingsPage/PayoutsSettingsPage'
 import { ProcessHeldFeesPage } from './pages/ProcessHeldFeesPage/ProcessHeldFeesPage'
 import { ProjectDetailsSettingsPage } from './pages/ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
@@ -37,7 +36,6 @@ const SettingsPageComponents: {
   tokenmigration: V1V2TokenMigrationSettingsPage,
   transferownership: TransferOwnershipSettingsPage,
   archiveproject: ArchiveProjectSettingsPage,
-  governance: GovernanceSettingsPage,
   upgrades: ProjectUpgradesPage,
   projectnft: ProjectNftSettingsPage,
   heldfees: ProcessHeldFeesPage,
@@ -58,7 +56,6 @@ const V2V3SettingsPageKeyTitleMap = (
   tokenmigration: t`Token migration`,
   transferownership: t`Transfer ownership`,
   archiveproject: t`Archive project`,
-  governance: t`Governance`,
   upgrades: t`Project upgrades`,
   projectnft: t`Project NFT theme`,
   heldfees: t`Process held fees`,

@@ -27,7 +27,6 @@ export type V2V3SettingsPageKey =
   | 'reservedtokens'
   | 'transferownership'
   | 'archiveproject'
-  | 'upgrades'
   | 'heldfees'
   | 'createerc20'
 

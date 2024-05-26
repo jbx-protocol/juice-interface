@@ -211,12 +211,6 @@ export function ProjectSettingsDashboard() {
                 </Link>
               </li>
               <li>
-                <Link href={useSettingsPagePath('upgrades')}>
-                  <Trans>Upgrade</Trans>
-                </Link>
-              </li>
-
-              <li>
                 <Link href={useSettingsPagePath('archiveproject')}>
                   <Trans>Archive</Trans>
                 </Link>

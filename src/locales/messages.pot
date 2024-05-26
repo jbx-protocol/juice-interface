@@ -3500,9 +3500,6 @@ msgstr ""
 msgid "Contract"
 msgstr ""
 
-msgid "Upgrade"
-msgstr ""
-
 msgid "After {0} (your first cycle), your project will not issue any tokens unless you edit the issuance rate."
 msgstr ""
 

@@ -27,7 +27,6 @@ export type V2V3SettingsPageKey =
   | 'reservedtokens'
   | 'transferownership'
   | 'archiveproject'
-  | 'tokenmigration'
   | 'upgrades'
   | 'heldfees'
   | 'createerc20'
@@ -195,11 +194,6 @@ export function ProjectSettingsDashboard() {
                   </Link>
                 </li>
               )}
-              <li>
-                <Link href={useSettingsPagePath('tokenmigration')}>
-                  <Trans>Token migration</Trans>
-                </Link>
-              </li>
               <li>
                 <Link href={useSettingsPagePath('heldfees')}>
                   <Trans>Process held fees</Trans>

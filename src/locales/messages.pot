@@ -308,9 +308,6 @@ msgstr ""
 msgid "Add an on-chain memo to this payment."
 msgstr ""
 
-msgid "Background gradient color"
-msgstr ""
-
 msgid "+{percentageGain}%"
 msgstr ""
 
@@ -974,9 +971,6 @@ msgstr ""
 msgid "You haven't contributed to any projects yet!"
 msgstr ""
 
-msgid "44190F"
-msgstr ""
-
 msgid "{0} withdrawn"
 msgstr ""
 
@@ -1190,9 +1184,6 @@ msgstr ""
 msgid "Project tokens will be minted to the address that made the payment."
 msgstr ""
 
-msgid "Custom metadata resolver contract"
-msgstr ""
-
 msgid "Migrate legacy tokens"
 msgstr ""
 
@@ -1326,9 +1317,6 @@ msgid "Contact WAGMI Studios"
 msgstr ""
 
 msgid "Deploy"
-msgstr ""
-
-msgid "FF9213"
 msgstr ""
 
 msgid "Are you sure you want to remove this NFT?"
@@ -1559,9 +1547,6 @@ msgstr ""
 msgid "Balance exceeded"
 msgstr ""
 
-msgid "3A0F0C"
-msgstr ""
-
 msgid "Set aside a percentage of freshly minted NFTs."
 msgstr ""
 
@@ -1664,9 +1649,6 @@ msgstr ""
 msgid "<0>This website interacts with the Ethereum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Ethereum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
 msgstr ""
 
-msgid "Each field is required."
-msgstr ""
-
 msgid "Set up token migration"
 msgstr ""
 
@@ -1730,13 +1712,7 @@ msgstr ""
 msgid "Migrate tokens"
 msgstr ""
 
-msgid "Update NFT theme"
-msgstr ""
-
 msgid "Title"
-msgstr ""
-
-msgid "Background color"
 msgstr ""
 
 msgid "Link minters of this NFT to your project's website, Discord, etc."
@@ -1764,9 +1740,6 @@ msgid "Add project update"
 msgstr ""
 
 msgid "Recipient address"
-msgstr ""
-
-msgid "Text color"
 msgstr ""
 
 msgid "{0} is required"
@@ -2411,9 +2384,6 @@ msgstr ""
 msgid "Watching projects"
 msgstr ""
 
-msgid "Set theme for {projectTitle}\\'s project NFT"
-msgstr ""
-
 msgid "Check {0} and verify your new email address."
 msgstr ""
 
@@ -2582,9 +2552,6 @@ msgstr ""
 msgid "Recommended"
 msgstr ""
 
-msgid "Enter a valid color hex code."
-msgstr ""
-
 msgid "Total unclaimed and claimed V1 and V2 tokens"
 msgstr ""
 
@@ -2742,9 +2709,6 @@ msgid "We do everything in the light, for everyone to see."
 msgstr ""
 
 msgid "Enable project owner token minting"
-msgstr ""
-
-msgid "Modify the colors of your Juicebox Project NFT. This NFT represents ownership over your project."
 msgstr ""
 
 msgid "Set aside a percentage of token issuance for the wallets and Juicebox projects of your choosing."
@@ -3401,9 +3365,6 @@ msgstr ""
 msgid "Memos appear on the project's activity feed when a payment is made through this address."
 msgstr ""
 
-msgid "Customize theme"
-msgstr ""
-
 msgid "Sum of percentages cannot exceed 100%."
 msgstr ""
 
@@ -3887,9 +3848,6 @@ msgstr ""
 msgid "(0%)"
 msgstr ""
 
-msgid "Update preview"
-msgstr ""
-
 msgid "Tokens per ETH contributed"
 msgstr ""
 
@@ -4001,9 +3959,6 @@ msgstr ""
 msgid "{0}{1}"
 msgstr ""
 
-msgid "Project NFT theme"
-msgstr ""
-
 msgid "payout"
 msgstr ""
 
@@ -4070,16 +4025,10 @@ msgstr ""
 msgid "View on Etherscan"
 msgstr ""
 
-msgid "Preview"
-msgstr ""
-
 msgid "This account hasn't saved any projects yet."
 msgstr ""
 
 msgid "Token amount"
-msgstr ""
-
-msgid "Custom resolver address"
 msgstr ""
 
 msgid "Allow the <0>Juicebox NFT deployer contract</0> to edit this project's cycle."
@@ -4472,9 +4421,6 @@ msgstr ""
 msgid "Enable payment terminal config"
 msgstr ""
 
-msgid "Custom metadata resolvers replace the default metadata above. They must conform to the <0>IJBTokenUriResolver</0> interface."
-msgstr ""
-
 msgid "REMAINING SUPPLY: Sold out"
 msgstr ""
 
@@ -4575,9 +4521,6 @@ msgid "Make changes to your cycle settings and rules"
 msgstr ""
 
 msgid "Reserved tokens"
-msgstr ""
-
-msgid "Set custom resolver"
 msgstr ""
 
 msgid "Invalid type - contact Juicebox Support"
@@ -4686,9 +4629,6 @@ msgid "Thank you, your payment was successful."
 msgstr ""
 
 msgid "{0}% of supply"
-msgstr ""
-
-msgid "Enter a valid Ethereum address"
 msgstr ""
 
 msgid "Overflow"

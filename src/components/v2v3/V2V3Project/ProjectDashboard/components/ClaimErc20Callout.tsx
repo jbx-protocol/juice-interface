@@ -10,7 +10,7 @@ import { reloadWindow } from 'utils/windowUtils'
 import { V2V3ClaimTokensModal } from '../../V2V3ManageTokensSection/AccountBalanceDescription/V2V3ClaimTokensModal'
 import { useProjectContext } from '../hooks/useProjectContext'
 
-export type ClaimErc20CalloutProps = {
+type ClaimErc20CalloutProps = {
   className?: string
   unclaimed: BigNumber
 }

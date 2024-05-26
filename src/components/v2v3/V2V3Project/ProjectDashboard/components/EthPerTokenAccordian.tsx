@@ -16,7 +16,7 @@ import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import { useTokensPanel } from '../hooks/useTokensPanel'
 import { useTokensPerEth } from '../hooks/useTokensPerEth'
 
-export type EthPerTokenAccordianProps = {
+type EthPerTokenAccordianProps = {
   className?: string
 }
 

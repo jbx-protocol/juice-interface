@@ -6,9 +6,3 @@ export type MarketplaceFormFields = {
   collectionDescription: string
   onChainGovernance: JB721GovernanceType
 }
-
-export type NftPostPayModalFormFields = {
-  content: string
-  ctaButton: string
-  ctaLink: string
-}

@@ -61,7 +61,7 @@ type Redeems = {
   enabled: boolean
 }
 
-export type PayRedeemCardProps = {
+type PayRedeemCardProps = {
   className?: string
 }
 

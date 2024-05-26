@@ -260,9 +260,6 @@ msgstr ""
 msgid "Reserved rate:"
 msgstr ""
 
-msgid "Deploy Snapshot space"
-msgstr ""
-
 msgid "Contributions"
 msgstr ""
 
@@ -273,9 +270,6 @@ msgid "A reserved rate of more than {RESERVED_RATE_WARNING_THRESHOLD_PERCENT}% i
 msgstr ""
 
 msgid "Safe transactions"
-msgstr ""
-
-msgid "<0>Snapshot</0> is an off-chain voting system. You can use your Juicebox project tokens in a Snapshot voting strategy. <1>Learn more</1>."
 msgstr ""
 
 msgid "See example"
@@ -611,9 +605,6 @@ msgstr ""
 msgid "Project owners can archive their Juicebox projects in their project's settings page."
 msgstr ""
 
-msgid "Snapshot voting"
-msgstr ""
-
 msgid "Flexible"
 msgstr ""
 
@@ -891,9 +882,6 @@ msgid "Create a project payer address for {projectTitle}"
 msgstr ""
 
 msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
-msgstr ""
-
-msgid "Go to <0>{snapshotUrl}</0>"
 msgstr ""
 
 msgid "USD value of ETH received"
@@ -1886,9 +1874,6 @@ msgstr ""
 msgid "Total raised"
 msgstr ""
 
-msgid "Only available on Mainnet"
-msgstr ""
-
 msgid "Read the docs"
 msgstr ""
 
@@ -1935,9 +1920,6 @@ msgid "Project #{projectId}"
 msgstr ""
 
 msgid "Project rules"
-msgstr ""
-
-msgid "Failed to launch Snapshot. Try again."
 msgstr ""
 
 msgid "Upload"
@@ -2109,9 +2091,6 @@ msgid "Uploaded to: <0>{imageUrl}</0>"
 msgstr ""
 
 msgid "By default, the payer will receive any project tokens minted from the payment."
-msgstr ""
-
-msgid "Project handle required. <0>Set project handle.</0>"
 msgstr ""
 
 msgid "Export data"
@@ -3102,9 +3081,6 @@ msgid "Your project will appear as 'active'."
 msgstr ""
 
 msgid "Project tokens are sent to anyone who pays your project, and they can be redeemed to reclaim ETH that isn't needed for payouts."
-msgstr ""
-
-msgid "Governance"
 msgstr ""
 
 msgid "Address: <0/>"

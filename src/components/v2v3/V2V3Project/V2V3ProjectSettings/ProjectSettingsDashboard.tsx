@@ -27,7 +27,6 @@ export type V2V3SettingsPageKey =
   | 'reservedtokens'
   | 'transferownership'
   | 'archiveproject'
-  | 'governance'
   | 'tokenmigration'
   | 'upgrades'
   | 'projectnft'
@@ -205,11 +204,6 @@ export function ProjectSettingsDashboard() {
               <li>
                 <Link href={useSettingsPagePath('projectnft')}>
                   <Trans>Project NFT theme</Trans>
-                </Link>
-              </li>
-              <li>
-                <Link href={useSettingsPagePath('governance')}>
-                  <Trans>Governance</Trans>
                 </Link>
               </li>
               <li>

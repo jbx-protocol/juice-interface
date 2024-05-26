@@ -111,12 +111,6 @@ export const loadJuiceboxV3Contract = async (
         )) as ContractJson
         break
       }
-      case V2V3ContractName.JBETHERC20SplitsPayerDeployer: {
-        contractJson = (await import(
-          `@jbx-protocol/juice-contracts-v3/deployments/${network}/JBETHERC20SplitsPayerDeployer.json`
-        )) as ContractJson
-        break
-      }
     }
 
     return contractJson

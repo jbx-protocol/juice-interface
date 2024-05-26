@@ -17,7 +17,6 @@ import { useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { ExportSplitsButton } from './ExportSplitsButton'
 import { PaymentAddressSection } from './PaymentAddressSection/PaymentAddressSection'
-import { SplitsPayerSection } from './SplitsPayerSection/SplitsPayerSection'
 
 export function V2V3ProjectToolsDrawer({
   open,
@@ -58,16 +57,6 @@ export function V2V3ProjectToolsDrawer({
           <PaymentAddressSection
             useDeployProjectPayerTx={useDeployProjectPayerTx}
           />
-        </section>
-
-        <Divider />
-
-        <section>
-          <h3 className="text-primary">
-            <Trans>Splits payer addresses</Trans>
-          </h3>
-
-          <SplitsPayerSection />
         </section>
 
         <Divider />

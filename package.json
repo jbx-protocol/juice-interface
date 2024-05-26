@@ -71,7 +71,6 @@
     "@jbx-protocol/juice-721-delegate-v3-4": "npm:@jbx-protocol/juice-721-delegate@8.0.1",
     "@jbx-protocol/juice-contracts-v3": "5.0.1",
     "@jbx-protocol/juice-delegates-registry": "1.0.3",
-    "@jbx-protocol/juice-v1-token-terminal": "1.0.1",
     "@jbx-protocol/juice-v3-migration": "1.0.0",
     "@jbx-protocol/project-handles": "^2.0.5",
     "@lingui/cli": "^4.0.0",

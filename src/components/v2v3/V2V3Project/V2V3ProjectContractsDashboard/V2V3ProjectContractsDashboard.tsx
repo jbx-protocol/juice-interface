@@ -24,8 +24,6 @@ import { V2V3ProjectHeaderActions } from '../V2V3ProjectHeaderActions/V2V3Projec
  * Typically this list consists of contracts that are project-specific (e.g. PaymentTerminal, Controller etc.)
  */
 const CONTRACT_EXCLUSIONS = [
-  V2V3ContractName.DeprecatedJBDirectory,
-  V2V3ContractName.DeprecatedJBSplitsStore,
   V2V3ContractName.JBSingleTokenPaymentTerminalStore,
   V2V3ContractName.JBFundAccessConstraintsStore,
   ...SUPPORTED_CONTROLLERS,

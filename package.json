@@ -62,7 +62,6 @@
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.0.17",
     "@jbx-protocol/contracts-v1": "2.0.0",
-    "@jbx-protocol/contracts-v2-4.0.0": "npm:@jbx-protocol/contracts-v2@4.0.0",
     "@jbx-protocol/contracts-v2-latest": "npm:@jbx-protocol/contracts-v2@8.0.4",
     "@jbx-protocol/juice-721-delegate-v3": "npm:@jbx-protocol/juice-721-delegate@3.0.0",
     "@jbx-protocol/juice-721-delegate-v3-1": "npm:@jbx-protocol/juice-721-delegate@5.0.2",

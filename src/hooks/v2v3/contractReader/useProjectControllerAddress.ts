@@ -5,19 +5,12 @@ import useV2ContractReader from './useV2ContractReader'
 export default function useProjectControllerAddress({
   projectId,
   contract,
-  useDeprecatedContract,
 }: {
   projectId?: number
   contract?: ContractConfig<V2V3ContractName> | undefined
-  useDeprecatedContract?: boolean
 }) {
-  if (!contract) {
-    contract = useDeprecatedContract
-      ? V2V3ContractName.DeprecatedJBDirectory
-      : V2V3ContractName.JBDirectory
-  }
   return useV2ContractReader<string>({
-    contract,
+    contract: contract ?? V2V3ContractName.JBDirectory,
     functionName: 'controllerOf',
     args: projectId ? [projectId] : null,
   })

@@ -4,15 +4,11 @@ import useV2ContractReader from './useV2ContractReader'
 
 export default function useProjectTerminals({
   projectId,
-  useDeprecatedContract,
 }: {
   projectId?: number
-  useDeprecatedContract?: boolean
 }) {
   return useV2ContractReader<string[]>({
-    contract: useDeprecatedContract
-      ? V2V3ContractName.DeprecatedJBDirectory
-      : V2V3ContractName.JBDirectory,
+    contract: V2V3ContractName.JBDirectory,
     functionName: 'terminalsOf',
     args: projectId ? [projectId] : null,
   })

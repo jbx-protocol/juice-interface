@@ -96,18 +96,6 @@ export const loadJuiceboxV2Contract = async (
   try {
     let contractJson: ContractJson | undefined
     switch (contractName) {
-      case V2V3ContractName.DeprecatedJBDirectory: {
-        contractJson = (await import(
-          `@jbx-protocol/contracts-v2-4.0.0/deployments/mainnet/JBDirectory.json`
-        )) as ContractJson
-        break
-      }
-      case V2V3ContractName.DeprecatedJBSplitsStore: {
-        contractJson = (await import(
-          `@jbx-protocol/contracts-v2-4.0.0/deployments/mainnet/JBSplitsStore.json`
-        )) as ContractJson
-        break
-      }
       case V2V3ContractName.JBController: {
         contractJson = (await import(
           `@jbx-protocol/contracts-v2-latest/deployments/mainnet/JBController.json`

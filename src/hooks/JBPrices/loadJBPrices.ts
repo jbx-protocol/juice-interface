@@ -31,11 +31,7 @@ export async function loadJBPrices({
   }
 
   if (cv === CV_V3) {
-    if (readNetwork.name === NetworkName.goerli) {
-      contractJson = await import(
-        '@jbx-protocol/juice-contracts-v3/deployments/goerli/JBPrices.json'
-      )
-    } else if (readNetwork.name === NetworkName.sepolia) {
+    if (readNetwork.name === NetworkName.sepolia) {
       contractJson = await import(
         '@jbx-protocol/juice-contracts-v3/deployments/sepolia/JBPrices.json'
       )

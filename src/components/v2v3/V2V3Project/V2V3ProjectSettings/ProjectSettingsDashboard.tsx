@@ -29,7 +29,6 @@ export type V2V3SettingsPageKey =
   | 'archiveproject'
   | 'tokenmigration'
   | 'upgrades'
-  | 'projectnft'
   | 'heldfees'
   | 'createerc20'
 
@@ -199,11 +198,6 @@ export function ProjectSettingsDashboard() {
               <li>
                 <Link href={useSettingsPagePath('tokenmigration')}>
                   <Trans>Token migration</Trans>
-                </Link>
-              </li>
-              <li>
-                <Link href={useSettingsPagePath('projectnft')}>
-                  <Trans>Project NFT theme</Trans>
                 </Link>
               </li>
               <li>

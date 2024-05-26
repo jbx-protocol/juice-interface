@@ -1109,9 +1109,6 @@ msgstr ""
 msgid "Transaction hash"
 msgstr ""
 
-msgid "Create a splits payer address"
-msgstr ""
-
 msgid "Cycle length"
 msgstr ""
 
@@ -1946,9 +1943,6 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
-msgid "Create splits payer address"
-msgstr ""
-
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr ""
 
@@ -2085,9 +2079,6 @@ msgid "Current balance"
 msgstr ""
 
 msgid "Add banner image"
-msgstr ""
-
-msgid "Splits payer addresses"
 msgstr ""
 
 msgid "ERC-20 tokens can only be issued once an ERC-20 token has been created for this project."
@@ -2301,9 +2292,6 @@ msgid "Set ENS name"
 msgstr ""
 
 msgid "Controller migration"
-msgstr ""
-
-msgid "Your new splits payer address:"
 msgstr ""
 
 msgid "JBX membership fee ({0}%):"
@@ -3999,9 +3987,6 @@ msgid "This will give your <0/> or <1/> project's token holders the ability to m
 msgstr ""
 
 msgid "{badgeTitle} Token"
-msgstr ""
-
-msgid "Create a splits payer address for {projectTitle}"
 msgstr ""
 
 msgid "Create token"

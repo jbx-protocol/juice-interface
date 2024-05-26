@@ -101,9 +101,6 @@ msgstr ""
 msgid "Claim {tokensLabel} as ERC-20"
 msgstr ""
 
-msgid "Project handle not found"
-msgstr ""
-
 msgid "Previous V1 Project ID:"
 msgstr ""
 
@@ -399,9 +396,6 @@ msgid "Uploaded to: <0/>"
 msgstr ""
 
 msgid "Transfer unclaimed tokens"
-msgstr ""
-
-msgid "You've completed this step."
 msgstr ""
 
 msgid "Manage how your project's tokens should work."
@@ -702,9 +696,6 @@ msgid "Collection Description"
 msgstr ""
 
 msgid "There is already a payout for this address"
-msgstr ""
-
-msgid "Allow your legacy project token holders (<0/> or <1/>) to swap their tokens for your <2/> project tokens."
 msgstr ""
 
 msgid "Juicebox is non-custodial, meaning you have complete ownership over your project and its funds. Easily customize your own on-chain rules."
@@ -1151,9 +1142,6 @@ msgstr ""
 msgid "Subscribe to project activity"
 msgstr ""
 
-msgid "If you have a V1 project, add the project's handle here. Otherwise, leave this blank."
-msgstr ""
-
 msgid "Move ETH"
 msgstr ""
 
@@ -1251,9 +1239,6 @@ msgid "Set project's payment terminals"
 msgstr ""
 
 msgid "Fee from <0><1/></0>"
-msgstr ""
-
-msgid "2. Deploy V3 Migration Token"
 msgstr ""
 
 msgid "Later"
@@ -1469,9 +1454,6 @@ msgstr ""
 msgid "Add a brief one-sentence summary of your project."
 msgstr ""
 
-msgid "Launch V3 migration token"
-msgstr ""
-
 msgid "days"
 msgstr ""
 
@@ -1649,9 +1631,6 @@ msgstr ""
 msgid "<0>This website interacts with the Ethereum blockchain — to use it, you'll need to have a wallet and some ETH (ETH is the main currency on Ethereum). You can get a free wallet from <1>MetaMask.io</1>, and buy ETH from within the wallet by using a credit card.</0>"
 msgstr ""
 
-msgid "Set up token migration"
-msgstr ""
-
 msgid "<0>For more information, or help with anything else, <1>contact onboarding</1> and join the <2>JuiceboxDAO Discord server</2>.</0>"
 msgstr ""
 
@@ -1668,9 +1647,6 @@ msgid "No upcoming cycle"
 msgstr ""
 
 msgid "ETH paid"
-msgstr ""
-
-msgid "Deploy a V3 Migration Token for your project."
 msgstr ""
 
 msgid "Privacy Policy"
@@ -1692,9 +1668,6 @@ msgid "While enabled, NFTs can be minted when this project receives a payment."
 msgstr ""
 
 msgid "<0>Edits to this project must be made before this deadline. This gives token holders time to verify the edits before they take effect.</0><1>For example: with a 1-day edit deadline, edits must be made at least 1 day before a cycle starts.</1>"
-msgstr ""
-
-msgid "Holders of this V1 project's token will be able to migrate their tokens to the V3 token you're deploying."
 msgstr ""
 
 msgid "Send Message"
@@ -1976,9 +1949,6 @@ msgstr ""
 msgid "Project Updates"
 msgstr ""
 
-msgid "Token migration"
-msgstr ""
-
 msgid "With highly competitive auctions happening every 24 hours, SharkDAO's success was made possible through the flexibility of their Juicebox project settings. From cycle to cycle, SharkDAO enabled or disabled payments and adjusted $SHARK tokenomics (total issuance rate, reserved rate, and issuance reduction rate). With unlocked cycles and no edit deadline, they were able to make changes to their project quickly in response to upcoming Nouns auctions."
 msgstr ""
 
@@ -2010,9 +1980,6 @@ msgid "Transfer ETH to {projectTitle}"
 msgstr ""
 
 msgid "Export reserved token recipient CSV"
-msgstr ""
-
-msgid "Why do you need this permission?"
 msgstr ""
 
 msgid "Redeem your NFTs to reclaim a portion of the ETH that isn't needed for payouts. This cycle's <0>redemption rate</0> determines how much ETH you will receive."
@@ -2070,9 +2037,6 @@ msgid "Export data"
 msgstr ""
 
 msgid "Upgrade JBETHPaymentTerminal"
-msgstr ""
-
-msgid "Deploy Migration Token"
 msgstr ""
 
 msgid "Show a disclosure, a message, or a warning to supporters before they pay your project"
@@ -2387,9 +2351,6 @@ msgstr ""
 msgid "Check {0} and verify your new email address."
 msgstr ""
 
-msgid "To do so, you need to give your legacy token holders the ability to exchange their tokens for V3 tokens. Select <0>Set up token migration</0> below to get started."
-msgstr ""
-
 msgid "Settings"
 msgstr ""
 
@@ -2544,9 +2505,6 @@ msgid "While enabled, the project owner can change the project's <0>controller</
 msgstr ""
 
 msgid "Unstaked balance"
-msgstr ""
-
-msgid "We'll need this permission to change your project's token to your V3 Migration Token in the next step."
 msgstr ""
 
 msgid "Recommended"
@@ -2837,9 +2795,6 @@ msgstr ""
 msgid "The onchain memo for each payment made through this address. The project's payment feed will include the memo alongside the payment."
 msgstr ""
 
-msgid "Failed to grant permission."
-msgstr ""
-
 msgid "No activity yet"
 msgstr ""
 
@@ -2919,9 +2874,6 @@ msgid "Mint {tokensTokenLower}"
 msgstr ""
 
 msgid "<0>Note:</0> These properties are locked during each cycle. They can only be edited for <1>upcoming</1> cycles."
-msgstr ""
-
-msgid "1. Grant permission"
 msgstr ""
 
 msgid "No edits were made to payouts for this cycle."
@@ -3206,9 +3158,6 @@ msgstr ""
 msgid "Set a duration for locked cycles."
 msgstr ""
 
-msgid "Do I need this?"
-msgstr ""
-
 msgid "Deadline"
 msgstr ""
 
@@ -3279,9 +3228,6 @@ msgid "Payout total (max.)"
 msgstr ""
 
 msgid "Prevent NFT overspending"
-msgstr ""
-
-msgid "V1 project handle"
 msgstr ""
 
 msgid "Yes, start over"
@@ -3614,9 +3560,6 @@ msgstr ""
 msgid "No previous cycles."
 msgstr ""
 
-msgid "Failed to deploy migration token. Check the development console and contact our team in the JuiceboxDAO Discord."
-msgstr ""
-
 msgid "This cycle's rules may lead to unexpected behavior. Before paying this project, know and understand its rules."
 msgstr ""
 
@@ -3915,9 +3858,6 @@ msgid "Learn more about unlimited payouts"
 msgstr ""
 
 msgid "V2 7-day deadline"
-msgstr ""
-
-msgid "This will give your <0/> or <1/> project's token holders the ability to migrate their tokens to <2/>."
 msgstr ""
 
 msgid "{badgeTitle} Token"
@@ -4382,9 +4322,6 @@ msgstr ""
 msgid "Add a cover image to your project page. This will be displayed at the top of your project page."
 msgstr ""
 
-msgid "You're all set!"
-msgstr ""
-
 msgid "Set payouts as percentages of the total amount being paid out."
 msgstr ""
 
@@ -4482,9 +4419,6 @@ msgid "End"
 msgstr ""
 
 msgid "Migrate project's Controller"
-msgstr ""
-
-msgid "If you have <0/> or <1/> legacy Juicebox projects, we recommend you migrate to <2/> exclusively."
 msgstr ""
 
 msgid "Message sent!"
@@ -4656,9 +4590,6 @@ msgid "Whether you're building a boutique crypto law firm or the next mega-fundr
 msgstr ""
 
 msgid "Payouts (optional)"
-msgstr ""
-
-msgid "Your legacy project token holders can now migrate their tokens in the <0>Tokens</0> section on your V3 project page."
 msgstr ""
 
 msgid "This Safe has no queued transactions."

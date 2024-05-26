@@ -21,7 +21,6 @@ import { ProjectHandleSettingsPage } from './pages/ProjectHandleSettingsPage'
 import { ProjectUpgradesPage } from './pages/ProjectUpgradesPage/ProjectUpgradesPage'
 import { ReservedTokensSettingsPage } from './pages/ReservedTokensSettingsPage/ReservedTokensSettingsPage'
 import { TransferOwnershipSettingsPage } from './pages/TransferOwnershipSettingsPage'
-import { V1V2TokenMigrationSettingsPage } from './pages/V1V2TokenMigrationSettingsPage/V1V2TokenMigrationSettingsPage'
 
 const SettingsPageComponents: {
   [k in V2V3SettingsPageKey]: () => JSX.Element | null
@@ -32,7 +31,6 @@ const SettingsPageComponents: {
   nfts: EditNftsPage,
   payouts: PayoutsSettingsPage,
   reservedtokens: ReservedTokensSettingsPage,
-  tokenmigration: V1V2TokenMigrationSettingsPage,
   transferownership: TransferOwnershipSettingsPage,
   archiveproject: ArchiveProjectSettingsPage,
   upgrades: ProjectUpgradesPage,
@@ -51,7 +49,6 @@ const V2V3SettingsPageKeyTitleMap = (
   payouts: t`Payouts`,
   reservedtokens: t`Reserved token recipients`,
   nfts: hasExistingNfts ? t`Edit NFT collection` : t`Launch New NFT Collection`,
-  tokenmigration: t`Token migration`,
   transferownership: t`Transfer ownership`,
   archiveproject: t`Archive project`,
   upgrades: t`Project upgrades`,

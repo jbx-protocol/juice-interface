@@ -17,6 +17,9 @@ const payRedeemSlice = createSlice({
     changeToRedeem: state => {
       state.cardState = 'redeem'
     },
+    reset: state => {
+      state.cardState = 'pay'
+    },
   },
 })
 

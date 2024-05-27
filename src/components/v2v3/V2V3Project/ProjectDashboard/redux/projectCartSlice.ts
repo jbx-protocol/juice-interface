@@ -32,17 +32,19 @@ const resetReducer: CaseReducer = state => {
   state.expanded = false
 }
 
+export const projectCartInitialState = {
+  payAmount: undefined,
+  chosenNftRewards: [],
+  allNftRewards: [],
+  userNftCredits: BigInt(0).toString(),
+  nftRewardEligibilityDismissed: false,
+  expanded: false,
+  payModalOpen: false,
+} as ProjectCartState
+
 const projectCartSlice = createSlice({
   name: 'projectCart',
-  initialState: {
-    payAmount: undefined,
-    chosenNftRewards: [],
-    allNftRewards: [],
-    userNftCredits: BigInt(0).toString(),
-    nftRewardEligibilityDismissed: false,
-    expanded: false,
-    payModalOpen: false,
-  } as ProjectCartState,
+  initialState: projectCartInitialState,
   reducers: {
     addPayment: (
       state,

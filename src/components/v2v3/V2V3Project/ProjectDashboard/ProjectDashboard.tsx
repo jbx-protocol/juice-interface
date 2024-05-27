@@ -1,5 +1,6 @@
 import { Footer } from 'components/Footer/Footer'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
+import { useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { twMerge } from 'tailwind-merge'
 import { BlockedProjectBanner } from './components/BlockedProjectBanner'
@@ -13,6 +14,9 @@ import { ProjectUpdatesProvider } from './components/ProjectUpdatesProvider/Proj
 import { ReduxProjectCartProvider } from './components/ReduxProjectCartProvider'
 import { SuccessPayView } from './components/SuccessPayView/SuccessPayView'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
+import { useProjectDispatch } from './redux/hooks'
+import { payRedeemActions } from './redux/payRedeemSlice'
+import { projectCartActions } from './redux/projectCartSlice'
 import store from './redux/store'
 
 export const ProjectDashboard = () => {
@@ -20,6 +24,7 @@ export const ProjectDashboard = () => {
 
   return (
     <Wrapper>
+      <ResetStoreOnLoad />
       <div className="flex w-full flex-col items-center pb-48">
         {projectPayReceipt !== undefined ? (
           <SuccessPayView />
@@ -74,4 +79,18 @@ const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       </TransactionProvider>
     </Provider>
   )
+}
+
+/**
+ * Reset the store on load.
+ */
+const ResetStoreOnLoad: React.FC = () => {
+  const dispatch = useProjectDispatch()
+
+  useEffect(() => {
+    dispatch(projectCartActions.reset())
+    dispatch(payRedeemActions.reset())
+  }, [dispatch])
+
+  return null
 }

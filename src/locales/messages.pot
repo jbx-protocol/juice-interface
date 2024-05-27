@@ -1961,9 +1961,6 @@ msgstr ""
 msgid "ERC-20 tokens can only be issued once an ERC-20 token has been created for this project."
 msgstr ""
 
-msgid "This project does not currently offer tokens"
-msgstr ""
-
 msgid "How a group of friends on the internet raised over $46 million to buy the U.S. Constitution"
 msgstr ""
 
@@ -4038,6 +4035,9 @@ msgid "Events"
 msgstr ""
 
 msgid "Download CSV of {0} holders"
+msgstr ""
+
+msgid "This project is not currently issuing tokens"
 msgstr ""
 
 msgid "Introducing"

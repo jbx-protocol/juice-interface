@@ -39,7 +39,7 @@ export default function Paragraph({
         {CHARACTER_LIMIT_EXCEEDED && (
           <Button
             type="link"
-            className="h-auto p-0"
+            className="h-auto p-0 font-medium text-bluebs-600 dark:text-bluebs-500"
             onClick={e => {
               toggleExpanded()
               e.stopPropagation()

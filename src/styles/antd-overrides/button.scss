@@ -113,9 +113,10 @@
 
 .ant-btn-link {
   @apply px-2;
-  @apply text-action-primary;
-  border: none;
+  @apply text-bluebs-600 dark:text-bluebs-500;
   @apply font-medium;
+
+  border: none;
 
   &:hover {
     @apply text-action-primary-hover;

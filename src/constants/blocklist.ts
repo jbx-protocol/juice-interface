@@ -5,13 +5,14 @@ import { PV_V2 } from './pv'
 
 const PROJECT_IDS = {
   METAKEYS_COPYCAT: 564, // copycat of 563
+  RS_COPYCAT: 676, // copycat of 618
 }
 
 // List of delisted projects
 const V2_BLOCKLISTED_PROJECT_IDS_BY_NETWORK: Partial<
   Record<NetworkName, number[]>
 > = {
-  [NetworkName.mainnet]: [PROJECT_IDS.METAKEYS_COPYCAT],
+  [NetworkName.mainnet]: [PROJECT_IDS.METAKEYS_COPYCAT, PROJECT_IDS.RS_COPYCAT],
 }
 
 export const V2_BLOCKLISTED_PROJECT_IDS =

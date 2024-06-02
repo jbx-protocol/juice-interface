@@ -50,7 +50,13 @@ export const PopupMenu = ({
 }: PopupMenuProps) => {
   return (
     <>
-      <Menu as="div" className={twMerge('relative', className)}>
+      <Menu
+        as="div"
+        className={twMerge(
+          'relative flex items-center justify-center',
+          className,
+        )}
+      >
         {({ open }) => (
           <>
             <Menu.Button

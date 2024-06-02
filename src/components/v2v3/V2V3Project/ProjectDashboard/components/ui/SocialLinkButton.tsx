@@ -9,9 +9,11 @@ type SocialLinkButtonType = 'twitter' | 'discord' | 'telegram' | 'website'
 export const SocialLinkButton = ({
   type,
   href,
+  iconOnly = false,
 }: {
   type: SocialLinkButtonType
   href: string
+  iconOnly?: boolean
 }) => {
   const Icon = useMemo(() => {
     switch (type) {
@@ -35,9 +37,12 @@ export const SocialLinkButton = ({
   }, [type])
 
   return (
-    <ExternalLink className="flex items-center gap-2 font-medium" href={href}>
-      <Icon className="h-4 w-4 text-lg text-bluebs-500" />
-      <span className="text-sm">{text}</span>
+    <ExternalLink
+      className="flex items-center gap-2 font-medium text-black dark:text-slate-100"
+      href={href}
+    >
+      <Icon className="h-5 w-5 text-xl md:h-6 md:w-6 md:text-2xl md:leading-none" />
+      {iconOnly ? null : <span className="text-sm">{text}</span>}
     </ExternalLink>
   )
 }

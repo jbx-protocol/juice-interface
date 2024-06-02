@@ -6,24 +6,25 @@ import { DomainBadge } from 'components/DomainBadge'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
 import { TruncatedText } from 'components/TruncatedText'
-import BookmarkButton from 'components/buttons/BookmarkButton/BookmarkButton'
-import { SubscribeButton } from 'components/buttons/SubscribeButton/SubscribeButton'
 import { useProjectHeader } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectHeader'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
-import { PV_V2 } from 'constants/pv'
 import useMobile from 'hooks/useMobile'
 import { useV2V3WalletHasPermission } from 'hooks/v2v3/contractReader/useV2V3WalletHasPermission'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { settingsPagePath, v2v3ProjectRoute } from 'utils/routes'
+import { SocialLink } from '../../hooks/useAboutPanel'
+import { useSocialLinks } from '../../hooks/useSocialLinks'
+import { SocialLinkButton } from '../ui/SocialLinkButton'
 import { ProjectHeaderLogo } from './components/ProjectHeaderLogo'
 import { ProjectHeaderPopupMenu } from './components/ProjectHeaderPopupMenu'
 import { ProjectHeaderStats } from './components/ProjectHeaderStats'
 import { Subtitle } from './components/Subtitle'
-import ToolsDrawerButton from './components/ToolsDrawerButton'
 
 export const ProjectHeader = ({ className }: { className?: string }) => {
+  const socialLinks = useSocialLinks()
+
   const {
     title,
     subtitle,
@@ -59,13 +60,19 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
             <ProjectHeaderPopupMenu projectId={projectId} />
           ) : (
             <>
-              <SubscribeButton projectId={projectId} />
-              <BookmarkButton
-                projectId={projectId}
-                pv={PV_V2}
-                tooltipPlacement="bottom"
-              />
-              <ToolsDrawerButton />
+              <div className="flex items-center gap-6">
+                {Object.entries(socialLinks)
+                  .filter(([, href]) => !!href)
+                  .map(([type, href]) => (
+                    <SocialLinkButton
+                      iconOnly
+                      key={type}
+                      type={type as SocialLink}
+                      href={href ?? ''}
+                    />
+                  ))}
+              </div>
+              <ProjectHeaderPopupMenu projectId={projectId} />
               {canReconfigure && (
                 <Link
                   href={settingsPagePath(undefined, { handle, projectId })}

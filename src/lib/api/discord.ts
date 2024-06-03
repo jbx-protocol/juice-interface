@@ -2,11 +2,9 @@ import axios from 'axios'
 import { ContactMessageMetadata } from 'lib/discord'
 
 export function createContactMessage(
-  message: string,
-  metadata: ContactMessageMetadata,
+  props: {
+    message: string
+  } & ContactMessageMetadata,
 ) {
-  return axios.post(`/api/discord/contact`, {
-    message,
-    metadata,
-  })
+  return axios.post(`/api/discord/contact`, props)
 }

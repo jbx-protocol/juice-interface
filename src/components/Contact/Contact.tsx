@@ -30,15 +30,14 @@ export function Contact() {
     setSuccess(false)
 
     try {
-      const metadata = {
+      setLoading(true)
+      await createContactMessage({
+        message: values.message,
         name: values.name,
         contact: values.contact,
-        contactPlatform: values.contactPlatform,
+        contactPlatform: contactType.value,
         subject: values.subject.value,
-      }
-
-      setLoading(true)
-      await createContactMessage(values.message, metadata)
+      })
 
       setSuccess(true)
     } catch (e) {
@@ -95,24 +94,39 @@ export function Contact() {
               form={form}
               layout="vertical"
               className="mt-5 flex max-w-4xl flex-col gap-2"
+              initialValues={{
+                contactPlatform: contactTypeOptions()[0].value,
+                subject: subjectOptions()[0],
+              }}
             >
-              <Form.Item name="name" label={t`Your Name`}>
+              <Form.Item
+                name="name"
+                label={t`Your Name`}
+                required
+                rules={[{ required: true, message: 'Enter your name.' }]}
+              >
                 <JuiceInput placeholder="Banny" size="large" />
               </Form.Item>
               <div>
-                <Form.Item label={t`Where to Contact You`} className="mb-0" />
+                <Form.Item
+                  label={t`Where to Contact You`}
+                  required
+                  rules={[{ required: true, message: 'Enter a contact.' }]}
+                  className="mb-0"
+                />
                 <div className="-mt-1 flex gap-4">
                   {contactTypes}
-                  <Form.Item name="contact" className="grow">
+                  <Form.Item
+                    name="contact"
+                    required
+                    rules={[{ required: true, message: 'Enter a contact.' }]}
+                    className="grow"
+                  >
                     <JuiceInput placeholder={contactPlaceholder} size="large" />
                   </Form.Item>
                 </div>
               </div>
-              <Form.Item
-                name="subject"
-                label={t`Subject`}
-                initialValue={subjectOptions()[0]}
-              >
+              <Form.Item name="subject" label={t`Subject`}>
                 <JuiceListbox
                   buttonClassName="py-2.5"
                   options={subjectOptions()}

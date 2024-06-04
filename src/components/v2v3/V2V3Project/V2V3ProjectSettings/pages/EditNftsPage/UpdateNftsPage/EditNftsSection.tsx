@@ -66,10 +66,6 @@ export function EditNftsSection() {
               take effect immediately, and you can add NFTs back to the
               collection at any time.
             </p>
-            <p>
-              If you want to COMPLETELY detach NFTs from your project, you can
-              do so in the <strong>Danger Zone</strong> section below.
-            </p>
           </Trans>
         </Callout.Warning>
       )}

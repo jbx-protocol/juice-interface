@@ -275,6 +275,9 @@ msgstr ""
 msgid "{0}% of total token issuance."
 msgstr ""
 
+msgid "<0>You're about to delete all NFTs from your collection. This will take effect immediately, and you can add NFTs back to the collection at any time.</0>"
+msgstr ""
+
 msgid "When enabled, {tokenSymbol} ERC-20 tokens are minted. When disabled, unclaimed {tokenSymbol} tokens will be minted, which the receiver can claim later as ERC-20."
 msgstr ""
 
@@ -342,9 +345,6 @@ msgid "Tokens receiver"
 msgstr ""
 
 msgid "Next:"
-msgstr ""
-
-msgid "<0>You're about to delete all NFTs from your collection. This will take effect immediately, and you can add NFTs back to the collection at any time.</0><1>If you want to COMPLETELY detach NFTs from your project, you can do so in the <2>Danger Zone</2> section below.</1>"
 msgstr ""
 
 msgid "<0>Owned by</0><1/>"

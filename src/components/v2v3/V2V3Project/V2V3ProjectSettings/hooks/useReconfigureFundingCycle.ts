@@ -2,7 +2,7 @@ import { PV_V2 } from 'constants/pv'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber } from 'ethers'
+import { BigNumber, constants } from 'ethers'
 import { useReconfigureV2V3FundingCycleWithNftsTx } from 'hooks/JB721Delegate/transactor/useReconfigureV2V3FundingCycleWithNftsTx'
 import {
   ReconfigureFundingCycleTxParams,
@@ -57,11 +57,13 @@ export const useReconfigureFundingCycle = ({
   editingFundingCycleConfig,
   memo,
   launchedNewNfts,
+  removeDatasource,
   onComplete,
 }: {
   editingFundingCycleConfig: EditingFundingCycleConfig
   memo: string
   launchedNewNfts?: boolean
+  removeDatasource?: boolean
   onComplete?: VoidFunction
 }) => {
   const { fundingCycle } = useContext(V2V3ProjectContext)
@@ -127,7 +129,12 @@ export const useReconfigureFundingCycle = ({
             ...editingFundingCycleData,
             weight,
           },
-          fundingCycleMetadata,
+          fundingCycleMetadata: {
+            ...fundingCycleMetadata,
+            dataSource: removeDatasource
+              ? constants.AddressZero
+              : fundingCycleMetadata.dataSource,
+          },
           fundAccessConstraints: editingFundAccessConstraints,
           groupedSplits: [
             editingPayoutGroupedSplits,
@@ -192,6 +199,7 @@ export const useReconfigureFundingCycle = ({
       launchedNewNfts,
       nftRewardsCids,
       fundingCycle,
+      removeDatasource,
       memo,
       onComplete,
       projectId,

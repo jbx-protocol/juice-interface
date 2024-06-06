@@ -1646,6 +1646,9 @@ msgstr ""
 msgid "Migrate tokens"
 msgstr ""
 
+msgid "Detach NFTs"
+msgstr ""
+
 msgid "Title"
 msgstr ""
 

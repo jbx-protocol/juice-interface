@@ -1,4 +1,3 @@
-import { cn } from '@/lib/utils'
 import { WrenchScrewdriverIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { BookmarkButtonIcon } from 'components/buttons/BookmarkButton/BookmarkButtonIcon'
@@ -9,6 +8,7 @@ import { V2V3ProjectToolsDrawer } from 'components/v2v3/V2V3Project/V2V3ProjectT
 import { PV_V2 } from 'constants/pv'
 import useMobile from 'hooks/useMobile'
 import { useMemo, useState } from 'react'
+import { twJoin } from 'tailwind-merge'
 import { PopupMenu } from '../../../../../../ui/PopupMenu'
 import { SocialLink } from '../../../hooks/useAboutPanel'
 import { useSocialLinks } from '../../../hooks/useSocialLinks'
@@ -41,7 +41,7 @@ export function ProjectHeaderPopupMenu({
   return (
     <>
       <PopupMenu
-        className={cn('z-20', className)}
+        className={twJoin('z-20', className)}
         menuButtonIconClassName="h-8 w-8"
         items={[
           ...(isMobile

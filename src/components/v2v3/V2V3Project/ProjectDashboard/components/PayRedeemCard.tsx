@@ -156,9 +156,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
         </div>
       </div>
 
-      {/* Extra matter */}
-
-      <EthPerTokenAccordion className="mt-4" />
+      <EthPerTokenAccordion />
 
       {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
         <Callout.Info

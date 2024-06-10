@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { render, screen } from '@testing-library/react'
+import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useHistoricalConfigurationPanel } from '../hooks/useConfigurationPanel/useHistoricalConfigurationPanel'
 import { HistoricalConfigurationPanel } from './HistoricalConfigurationPanel'
 
@@ -42,6 +43,10 @@ describe('CurrentUpcomingConfigurationPanel', () => {
       <HistoricalConfigurationPanel
         fundingCycle={{ id: '1' } as any}
         metadata={{ id: '1' } as any}
+        withdrawnAmountAndCurrency={{
+          amount: 1,
+          currency: 1 as V2V3CurrencyOption,
+        }}
       />,
     )
   })
@@ -51,6 +56,10 @@ describe('CurrentUpcomingConfigurationPanel', () => {
       <HistoricalConfigurationPanel
         fundingCycle={{ id: '1' } as any}
         metadata={{ id: '1' } as any}
+        withdrawnAmountAndCurrency={{
+          amount: 100,
+          currency: 2 as V2V3CurrencyOption,
+        }}
       />,
     )
     expect(screen.getByTestId('configuration-panel')).toHaveTextContent(
@@ -69,11 +78,19 @@ describe('CurrentUpcomingConfigurationPanel', () => {
       <HistoricalConfigurationPanel
         fundingCycle={{ id: '1' } as any}
         metadata={{ id: '1' } as any}
+        withdrawnAmountAndCurrency={{
+          amount: 1,
+          currency: 1 as V2V3CurrencyOption,
+        }}
       />,
     )
     expect(useHistoricalConfigurationPanel).toHaveBeenCalledWith({
       fundingCycle: { id: '1' },
       metadata: { id: '1' },
+      withdrawnAmountAndCurrency: {
+        amount: 1,
+        currency: 1 as V2V3CurrencyOption,
+      },
     })
   })
 })

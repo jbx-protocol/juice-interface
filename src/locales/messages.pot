@@ -1172,6 +1172,9 @@ msgstr ""
 msgid "Check your email for a confirmation link and retry subscribing."
 msgstr ""
 
+msgid "Unknown"
+msgstr ""
+
 msgid "Claim ERC-20 token"
 msgstr ""
 

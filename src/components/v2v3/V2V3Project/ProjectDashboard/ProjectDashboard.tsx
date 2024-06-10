@@ -10,7 +10,6 @@ import { PayRedeemCard } from './components/PayRedeemCard'
 import { ProjectHeader } from './components/ProjectHeader/ProjectHeader'
 import { ProjectHeaderCountdown } from './components/ProjectHeaderCountdown'
 import { ProjectTabs } from './components/ProjectTabs/ProjectTabs'
-import { ProjectUpdatesProvider } from './components/ProjectUpdatesProvider/ProjectUpdatesProvider'
 import { ReduxProjectCartProvider } from './components/ReduxProjectCartProvider'
 import { SuccessPayView } from './components/SuccessPayView/SuccessPayView'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
@@ -72,9 +71,7 @@ const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <Provider store={store}>
       <TransactionProvider>
         <FundingCycleCountdownProvider>
-          <ReduxProjectCartProvider>
-            <ProjectUpdatesProvider>{children}</ProjectUpdatesProvider>
-          </ReduxProjectCartProvider>
+          <ReduxProjectCartProvider>{children}</ReduxProjectCartProvider>
         </FundingCycleCountdownProvider>
       </TransactionProvider>
     </Provider>

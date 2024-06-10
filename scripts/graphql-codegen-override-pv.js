@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const path = __dirname + '/../src/generated/graphql.tsx'
+const path = __dirname + '/../src/generated/graphql.ts'
 
 try {
   // Load generated file

@@ -665,9 +665,6 @@ msgstr ""
 msgid "No deadline"
 msgstr ""
 
-msgid "Add an update that will be posted to your project page."
-msgstr ""
-
 msgid "Change networks to deploy"
 msgstr ""
 
@@ -1544,9 +1541,6 @@ msgstr ""
 msgid "Your NFTs & Rewards"
 msgstr ""
 
-msgid "Add update"
-msgstr ""
-
 msgid "Send a portion of your project's reserved tokens to other Ethereum wallets or Juicebox projects."
 msgstr ""
 
@@ -1646,9 +1640,6 @@ msgstr ""
 msgid "Migrate tokens"
 msgstr ""
 
-msgid "Title"
-msgstr ""
-
 msgid "Link minters of this NFT to your project's website, Discord, etc."
 msgstr ""
 
@@ -1668,9 +1659,6 @@ msgid "Send {tokensText}"
 msgstr ""
 
 msgid "Not set"
-msgstr ""
-
-msgid "Add project update"
 msgstr ""
 
 msgid "Recipient address"
@@ -1956,9 +1944,6 @@ msgid "A platform without limits, just the way you like it."
 msgstr ""
 
 msgid "Current balance"
-msgstr ""
-
-msgid "Add banner image"
 msgstr ""
 
 msgid "ERC-20 tokens can only be issued once an ERC-20 token has been created for this project."
@@ -4461,9 +4446,6 @@ msgid "Overflow"
 msgstr ""
 
 msgid "Project contracts directory"
-msgstr ""
-
-msgid "A horizontal banner image sized 288 x 556 is recommended."
 msgstr ""
 
 msgid "Save profile details"

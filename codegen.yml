@@ -23,3 +23,4 @@ config:
   reactQueryVersion: 3
   fetcher:
     endpoint: process.env.NEXT_PUBLIC_SUBGRAPH_URL
+  addInfiniteQuery: true

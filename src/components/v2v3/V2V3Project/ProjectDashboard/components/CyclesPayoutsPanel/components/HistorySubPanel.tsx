@@ -122,7 +122,7 @@ export const HistorySubPanel = () => {
                     setSkip(data?.fundingCycles.length + 1)
                   }}
                 >
-                  <Trans>Load more</Trans>
+                  <Trans>Load more...</Trans>
                 </Button>
               )
             )}

@@ -86,7 +86,7 @@ export default function HoldersList({
       balance_gt: '0',
       wallet_not: constants.AddressZero,
     },
-    skip: (pageNumber + 1) * pageSize,
+    skip: pageNumber * pageSize,
   })
 
   const participants = data?.participants

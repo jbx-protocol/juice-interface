@@ -68,10 +68,15 @@ export function useProjectTimeline({
     return { blocks, timestamps }
   }, [blockData])
 
-  const { data: queryResult, isLoading: isLoadingQuery } = useProjectTlQuery({
-    id: blocks ? getSubgraphIdForProject(pv, projectId) : '',
-    ...blocks,
-  })
+  const { data: queryResult, isLoading: isLoadingQuery } = useProjectTlQuery(
+    {
+      id: blocks ? getSubgraphIdForProject(pv, projectId) : '',
+      ...blocks,
+    },
+    {
+      enabled: blocks && Object.keys(blocks).length > 0,
+    },
+  )
 
   const points = useMemo(() => {
     if (!queryResult || !timestamps) return

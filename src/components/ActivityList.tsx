@@ -80,6 +80,8 @@ const SHARED_OPTS = (): ActivityOption[] => [
   { label: t`Created project`, value: 'projectCreateEvent' },
 ]
 
+const DEFAULT_PAGE_SIZE = 10
+
 /**
  * An infinite-paging list of projectEvents that can be filtered by the user.
  * @param projectId Restrict to events with a specific projectId value.
@@ -94,28 +96,26 @@ export default function ActivityList({
   projectId,
   pv,
   from,
-  pageSize,
   tokenSymbol,
   header,
   onClickDownload,
 }: Pick<ProjectEventsQueryArgs, 'projectId' | 'pv' | 'from'> & {
-  pageSize?: number
   tokenSymbol?: string
   header?: JSX.Element | null
   onClickDownload?: VoidCallback
 }) {
   const [eventFilter, setEventFilter] = useState<ProjectEventFilter>('all')
-  const [skip, setSkip] = useState<number>(0)
-
-  const _pageSize = pageSize ?? 10
-
-  const { data, isLoading: loading } = useProjectEvents({
+  const _pageSize = DEFAULT_PAGE_SIZE
+  const {
+    data,
+    isLoading: loading,
+    fetchNextPage,
+  } = useProjectEvents({
     filter: eventFilter,
     projectId,
     pv,
     from,
     first: _pageSize,
-    skip,
   })
 
   const activityOptions = useMemo((): ActivityOption[] => {
@@ -131,7 +131,7 @@ export default function ActivityList({
 
   const activityOption = activityOptions.find(o => o.value === eventFilter)
 
-  const projectEvents = data?.projectEvents
+  const projectEvents = data?.pages.flatMap(p => p.projectEvents)
 
   const count = projectEvents?.length || 0
 
@@ -182,7 +182,7 @@ export default function ActivityList({
         <div className="text-center">
           <Button
             onClick={() => {
-              setSkip(count)
+              fetchNextPage()
             }}
             type="link"
             className="px-0"
@@ -198,7 +198,7 @@ export default function ActivityList({
         <Trans>{count} total</Trans>
       </div>
     )
-  }, [loading, count, _pageSize])
+  }, [loading, count, _pageSize, fetchNextPage])
 
   return (
     <div>

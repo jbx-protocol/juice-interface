@@ -77,20 +77,6 @@ export const ProjectTabs = ({ className }: { className?: string }) => {
         panel: <CyclesPayoutsPanel />,
       },
       { id: 'tokens', name: t`Tokens`, panel: <TokensPanel /> },
-      // disabled for now
-      // {
-      //   id: 'updates',
-      //   name: (
-      //     <div className="flex items-center gap-1">
-      //       <Trans>Updates</Trans>
-      //       {!!projectUpdates.length && (
-      //         <TabBadgeCount count={projectUpdates.length} />
-      //       )}
-      //     </div>
-      //   ),
-      //   panel: <UpdatesPanel />,
-      //   hideTab: !isProjectOwner && projectUpdates.length === 0,
-      // },
     ],
     [showNftRewards],
   )

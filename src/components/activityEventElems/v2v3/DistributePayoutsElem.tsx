@@ -8,10 +8,8 @@ import {
   ProjectEventsQuery,
   useSplitDistributionsForDistributePayoutsEventQuery,
 } from 'generated/graphql'
-import { client } from 'lib/apollo/client'
-
+import { toBigNumber } from 'utils/bigNumbers'
 import { ActivityEvent } from '../ActivityElement/ActivityElement'
-
 export default function DistributePayoutsElem({
   event,
   withProjectLink,
@@ -21,13 +19,13 @@ export default function DistributePayoutsElem({
 }) {
   // Load individual DistributeToPayoutSplit events, emitted by internal transactions of the DistributeReservedPayouts transaction
   const { data } = useSplitDistributionsForDistributePayoutsEventQuery({
-    client,
-    variables: {
-      distributePayoutsEvent: event?.id,
-    },
+    distributePayoutsEvent: event?.id,
   })
 
   if (!event) return null
+
+  const amount = toBigNumber(event.distributedAmount)
+  const benAmount = toBigNumber(event.beneficiaryDistributionAmount)
 
   return (
     <ActivityEvent
@@ -38,7 +36,7 @@ export default function DistributePayoutsElem({
       subject={
         data?.distributeToPayoutSplitEvents.length ? (
           <span className="font-heading text-lg">
-            <ETHAmount amount={event.distributedAmount} />
+            <ETHAmount amount={amount} />
           </span>
         ) : null
       }
@@ -65,12 +63,12 @@ export default function DistributePayoutsElem({
               </div>
 
               <div className="text-secondary">
-                <ETHAmount amount={e.amount} />
+                <ETHAmount amount={toBigNumber(e.amount)} />
               </div>
             </div>
           ))}
 
-          {event.beneficiaryDistributionAmount?.gt(0) && (
+          {benAmount?.gt(0) && (
             <div className="flex items-baseline justify-between">
               <div>
                 <EthereumAddress
@@ -80,7 +78,7 @@ export default function DistributePayoutsElem({
                 :
               </div>
               <div className="text-sm text-grey-500 dark:text-grey-300">
-                <ETHAmount amount={event.beneficiaryDistributionAmount} />
+                <ETHAmount amount={benAmount} />
               </div>
             </div>
           )}

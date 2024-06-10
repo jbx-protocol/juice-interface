@@ -47,7 +47,7 @@ export function RedeemNftsModal({
 
   const { userAddress } = useWallet()
   const redeemTokensTx = useRedeemTokensTx()
-  const { data, loading: balanceLoading } = useNftAccountBalance({
+  const { data, isLoading: balanceLoading } = useNftAccountBalance({
     dataSourceAddress: fundingCycleMetadata?.dataSource,
     accountAddress: userAddress,
   })
@@ -105,10 +105,7 @@ export function RedeemNftsModal({
     }
   }
 
-  const nfts = data?.nfts.map(t => ({
-    ...t,
-    tokenId: t.tokenId.toHexString(),
-  }))
+  const { nfts } = data ?? {}
   const nftBalanceFormatted = nfts?.length ?? 0
   const hasOverflow = primaryTerminalCurrentOverflow?.gt(0)
   const hasRedemptionRate = fundingCycleMetadata.redemptionRate.gt(0)

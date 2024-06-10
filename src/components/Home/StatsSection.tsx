@@ -2,8 +2,8 @@ import { Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import USDAmount from 'components/currency/USDAmount'
 import { useProtocolLogQuery } from 'generated/graphql'
-import { client } from 'lib/apollo/client'
 import Link from 'next/link'
+import { toBigNumber } from 'utils/bigNumbers'
 import { formattedNum } from 'utils/format/formatNumber'
 
 const Stat = ({
@@ -28,9 +28,7 @@ const Stat = ({
 }
 
 export function StatsSection() {
-  const { data, loading } = useProtocolLogQuery({
-    client,
-  })
+  const { data, isLoading: loading } = useProtocolLogQuery()
 
   const stats = data?.protocolLog
 
@@ -50,7 +48,7 @@ export function StatsSection() {
                 precision={0}
                 symbol="$"
                 tooltipContent={
-                  <ETHAmount amount={stats?.volume} hideTooltip />
+                  <ETHAmount amount={toBigNumber(stats?.volume)} hideTooltip />
                 }
                 className="gradient-animation bg-gradient-to-r from-bluebs-500 via-grape-400 to-juice-500 bg-clip-text font-display transition-colors hover:text-transparent"
               />

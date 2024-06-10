@@ -11,7 +11,7 @@ export function RedeemNftTiles({
   return (
     <div className="flex space-x-2.5 overflow-x-scroll">
       {nftAccountBalance?.nfts.map((nft, i) => {
-        const tokenId = nft.tokenId.toHexString()
+        const tokenId = nft.tokenId
         const _nft = {
           ...nft,
           tokenId,

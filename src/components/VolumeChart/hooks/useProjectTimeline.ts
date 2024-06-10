@@ -1,7 +1,6 @@
 import { readProvider } from 'constants/readProvider'
 import EthDater from 'ethereum-block-by-date'
 import { useProjectTlQuery } from 'generated/graphql'
-import { client } from 'lib/apollo/client'
 import { PV } from 'models/pv'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
@@ -69,12 +68,9 @@ export function useProjectTimeline({
     return { blocks, timestamps }
   }, [blockData])
 
-  const { data: queryResult, loading: isLoadingQuery } = useProjectTlQuery({
-    client,
-    variables: {
-      id: blocks ? getSubgraphIdForProject(pv, projectId) : '',
-      ...blocks,
-    },
+  const { data: queryResult, isLoading: isLoadingQuery } = useProjectTlQuery({
+    id: blocks ? getSubgraphIdForProject(pv, projectId) : '',
+    ...blocks,
   })
 
   const points = useMemo(() => {

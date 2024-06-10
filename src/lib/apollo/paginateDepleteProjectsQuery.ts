@@ -5,7 +5,6 @@ import {
 } from 'generated/graphql'
 
 import { paginateDepleteQuery } from './paginateDepleteQuery'
-import { serverClient } from './serverClient'
 
 /**
  * Loads all pages for the query.
@@ -17,8 +16,11 @@ export async function paginateDepleteProjectsQueryCall({
 }: {
   variables: QueryProjectsArgs
 }) {
-  return paginateDepleteQuery<ProjectsQuery, QueryProjectsArgs>({
-    client: serverClient,
+  return paginateDepleteQuery<
+    ProjectsQuery,
+    QueryProjectsArgs,
+    ProjectsQuery['projects'][0]
+  >({
     document: ProjectsDocument,
     variables,
   })

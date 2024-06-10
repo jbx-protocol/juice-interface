@@ -24,13 +24,12 @@ export const HistorySubPanel = () => {
   const { projectId } = useProjectMetadataContext()
   const { fundingCycle } = useProjectContext()
 
-  const [isFetchingMore, setIsFetchingMore] = useState<boolean>()
-  const { data, fetchMore, loading, error } = usePastFundingCycles({
+  const [skip, setSkip] = useState<number>(0)
+  const { data, isLoading, error } = usePastFundingCycles({
     projectId,
     currentFcNumber: fundingCycle?.number.toNumber() ?? 0,
+    skip,
   })
-
-  const isLoading = loading || isFetchingMore
 
   const tableHeaders = [t`Cycle #`, t`Withdrawn`, t`Date`]
   const hasMore =
@@ -71,7 +70,15 @@ export const HistorySubPanel = () => {
                     >
                       <div>#{cycle.number}</div>
                       <div>
-                        <FormattedWithdrawnAmount {...cycle} />
+                        {isBigNumberish(cycle.configuration) &&
+                        isBigNumberish(cycle.withdrawnAmount) ? (
+                          <FormattedWithdrawnAmount
+                            configuration={BigNumber.from(cycle.configuration)}
+                            withdrawnAmount={BigNumber.from(
+                              cycle.withdrawnAmount,
+                            )}
+                          />
+                        ) : null}
                       </div>
                       <div className="text-grey-500 dark:text-slate-200">
                         {`${moment(
@@ -112,12 +119,7 @@ export const HistorySubPanel = () => {
                 <Button
                   type="link"
                   onClick={() => {
-                    setIsFetchingMore(true)
-                    fetchMore({
-                      variables: {
-                        skip: data?.fundingCycles.length + 1,
-                      },
-                    }).finally(() => setIsFetchingMore(false))
+                    setSkip(data?.fundingCycles.length + 1)
                   }}
                 >
                   <Trans>Load more</Trans>

@@ -25,7 +25,6 @@ import {
 } from 'hooks/useWalletBookmarkedProjects'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useWallet } from 'hooks/Wallet'
-import { client } from 'lib/apollo/client'
 import { Profile } from 'models/database'
 import { DBProject } from 'models/dbProject'
 import Link from 'next/link'
@@ -71,14 +70,13 @@ function ContributedList({ address }: { address: string }) {
     orderByOpts()[0].value,
   )
 
-  const { data, loading: contributionsLoading } = useWalletContributionsQuery({
-    client,
-    variables: {
+  const { data, isLoading: contributionsLoading } = useWalletContributionsQuery(
+    {
       wallet: address.toLowerCase(),
       orderBy,
       orderDirection: OrderDirection.desc,
     },
-  })
+  )
 
   const contributions = data?.participants
 

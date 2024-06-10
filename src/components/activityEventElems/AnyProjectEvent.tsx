@@ -1,5 +1,4 @@
 import { ProjectEventsQuery } from 'generated/graphql'
-
 import AddToBalanceEventElem from './AddToBalanceEventElem'
 import BurnEventElem from './BurnEventElem'
 import DeployedERC20EventElem from './DeployedERC20EventElem'

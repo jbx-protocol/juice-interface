@@ -8,8 +8,8 @@ import {
   ProjectEventsQuery,
   useSplitDistributionsForDistributeReservedTokensEventQuery,
 } from 'generated/graphql'
-import { client } from 'lib/apollo/client'
 import { useContext } from 'react'
+import { toBigNumber } from 'utils/bigNumbers'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { ActivityEvent } from '../ActivityElement/ActivityElement'
@@ -25,13 +25,12 @@ export default function DistributeReservedTokensEventElem({
 
   // Load individual DistributeToReservedTokenSplit events, emitted by internal transactions of the DistributeReservedTokens transaction
   const { data } = useSplitDistributionsForDistributeReservedTokensEventQuery({
-    client,
-    variables: {
-      distributeReservedTokensEvent: event?.id,
-    },
+    distributeReservedTokensEvent: event?.id,
   })
 
   if (!event) return null
+
+  const amount = toBigNumber(event.beneficiaryTokenCount)
 
   return (
     <ActivityEvent
@@ -84,7 +83,7 @@ export default function DistributeReservedTokensEventElem({
             </div>
           ))}
 
-          {event.beneficiaryTokenCount?.gt(0) && (
+          {amount?.gt(0) && (
             <div className="flex items-baseline justify-between">
               <div>
                 <EthereumAddress

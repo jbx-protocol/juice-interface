@@ -1,8 +1,8 @@
 import { t } from '@lingui/macro'
-import ETHAmount from 'components/currency/ETHAmount'
 import RichNote from 'components/RichNote/RichNote'
-
+import ETHAmount from 'components/currency/ETHAmount'
 import { ProjectEventsQuery } from 'generated/graphql'
+import { toBigNumber } from 'utils/bigNumbers'
 import { ActivityEvent } from './ActivityElement/ActivityElement'
 
 export default function AddToBalanceEventElem({
@@ -21,7 +21,7 @@ export default function AddToBalanceEventElem({
       header={t`Transferred ETH to project`}
       subject={
         <span className="font-heading text-lg font-medium">
-          <ETHAmount amount={event.amount} />
+          <ETHAmount amount={toBigNumber(event.amount)} />
         </span>
       }
       extra={

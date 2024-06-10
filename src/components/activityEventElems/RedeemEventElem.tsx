@@ -7,6 +7,7 @@ import { BigNumber } from 'ethers'
 import { defaultAbiCoder } from 'ethers/lib/utils.js'
 import { ProjectEventsQuery } from 'generated/graphql'
 import { useContext } from 'react'
+import { toBigNumber } from 'utils/bigNumbers'
 import { ActivityEvent } from './ActivityElement/ActivityElement'
 
 function decodeJB721DelegateRedeemMetadata(
@@ -47,9 +48,11 @@ export default function RedeemEventElem({
   if (!event) return null
 
   const redeemedTokenIds = getRedeemedTokenIds(event.metadata)
-
-  const redeemedTokens = (
-    <TokenAmount amountWad={event.amount} tokenSymbol={tokenSymbol} />
+  const amount = toBigNumber(event.amount)
+  const redeemedTokens = amount ? (
+    <TokenAmount amountWad={amount} tokenSymbol={tokenSymbol} />
+  ) : (
+    <Trans>Unknown</Trans>
   )
 
   return (
@@ -79,7 +82,8 @@ export default function RedeemEventElem({
       extra={
         <div className="text-grey-900 dark:text-slate-100">
           <Trans>
-            <ETHAmount amount={event.returnAmount} /> reclaimed from project
+            <ETHAmount amount={toBigNumber(event.returnAmount)} /> reclaimed
+            from project
           </Trans>
           {event.memo && <RichNote className="mt-4" note={event.memo} />}
         </div>

@@ -1,7 +1,6 @@
 import { BigNumber } from 'ethers'
-import { Database } from 'types/database.types'
-
 import { Project } from 'generated/graphql'
+import { Database } from 'types/database.types'
 import { ProjectTagName } from './project-tags'
 import { PV } from './pv'
 

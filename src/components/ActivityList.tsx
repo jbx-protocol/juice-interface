@@ -105,16 +105,17 @@ export default function ActivityList({
   onClickDownload?: VoidCallback
 }) {
   const [eventFilter, setEventFilter] = useState<ProjectEventFilter>('all')
-  const [isFetchingMore, setIsFetchingMore] = useState<boolean>()
+  const [skip, setSkip] = useState<number>(0)
 
   const _pageSize = pageSize ?? 10
 
-  const { data, fetchMore, loading } = useProjectEvents({
+  const { data, isLoading: loading } = useProjectEvents({
     filter: eventFilter,
     projectId,
     pv,
     from,
     first: _pageSize,
+    skip,
   })
 
   const activityOptions = useMemo((): ActivityOption[] => {
@@ -127,8 +128,6 @@ export default function ActivityList({
         return SHARED_OPTS()
     }
   }, [pv])
-
-  const isLoading = loading || isFetchingMore
 
   const activityOption = activityOptions.find(o => o.value === eventFilter)
 
@@ -159,7 +158,7 @@ export default function ActivityList({
   )
 
   const listStatus = useMemo(() => {
-    if (isLoading) {
+    if (loading) {
       return (
         <div>
           <Loading />
@@ -167,7 +166,7 @@ export default function ActivityList({
       )
     }
 
-    if (count === 0 && !isLoading) {
+    if (count === 0 && !loading) {
       return (
         <>
           <Divider />
@@ -183,12 +182,7 @@ export default function ActivityList({
         <div className="text-center">
           <Button
             onClick={() => {
-              setIsFetchingMore(true)
-              fetchMore({
-                variables: {
-                  skip: count,
-                },
-              }).finally(() => setIsFetchingMore(false))
+              setSkip(count)
             }}
             type="link"
             className="px-0"
@@ -204,7 +198,7 @@ export default function ActivityList({
         <Trans>{count} total</Trans>
       </div>
     )
-  }, [isLoading, fetchMore, count, _pageSize])
+  }, [loading, count, _pageSize])
 
   return (
     <div>

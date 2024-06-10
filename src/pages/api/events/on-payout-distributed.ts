@@ -1,15 +1,12 @@
-import { BigNumber, utils } from 'ethers'
+import { utils } from 'ethers'
+import { DistributePayoutsEventsDocument } from 'generated/apollo'
 import {
-  DistributePayoutsEventsDocument,
   DistributePayoutsEventsQuery,
-  ProjectsDocument,
-  ProjectsQuery,
   QueryDistributePayoutsEventsArgs,
-  QueryProjectsArgs,
 } from 'generated/graphql'
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
-import { client } from 'lib/apollo/client'
+import { serverClient } from 'lib/apollo/serverClient'
 import { authCheck } from 'lib/auth'
 import { resolveAddressEnsIdeas } from 'lib/ensIdeas'
 import { getLogger } from 'lib/logger'
@@ -39,11 +36,6 @@ type EmailMetadata = {
   timestamp: string
   projectUrl: string
   projectName: string
-  recipients: {
-    name: string
-    amount: string
-    href: string
-  }[]
   // Used in transaction receipt
   transactionUrl: string | undefined
   // Used in transaction receipt
@@ -70,55 +62,11 @@ const Schema = Yup.object().shape({
   }),
 })
 
-// TODO: Get project image or address ens image
-const splitDistributionToRecipient = async ({
-  beneficiary,
-  splitProjectId,
-  amount,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  beneficiary: any
-  splitProjectId: number
-  amount: BigNumber
-}) => {
-  let recipientName = '??'
-  let href = '#'
-  if (splitProjectId) {
-    const project = await queryProject(splitProjectId)
-    if (project) {
-      recipientName = project.handle
-        ? `@${project.handle}`
-        : `Project ID: ${splitProjectId}`
-      href = `https://juicebox.money/v2/p/${splitProjectId}`
-    }
-  } else {
-    const normalizedRecipientAddress = utils.getAddress(beneficiary)
-    const { name: recipientEnsName } = await resolveAddressEnsIdeas(
-      normalizedRecipientAddress,
-    )
-    recipientName =
-      recipientEnsName ??
-      truncateEthAddress({ address: normalizedRecipientAddress })
-    href = `https://juicebox.money/account/${normalizedRecipientAddress}`
-  }
-  const am = fromWad(amount.toString())
-  const formattedAmount = formatCurrencyAmount({
-    amount: am,
-    currency: V2V3_CURRENCY_ETH,
-  })!
-  return {
-    name: recipientName,
-    amount: formattedAmount,
-    href,
-  }
-}
-
 const compileEmailMetadata = async ({
   transactionHash,
   distributedAmount,
   from,
   projectId,
-  splitDistributions,
 }: DistributePayoutsEventsQuery['distributePayoutsEvents'][0] & {
   transactionHash: string
 }): Promise<EmailMetadata> => {
@@ -153,10 +101,6 @@ const compileEmailMetadata = async ({
     })
   }
 
-  const recipients = await Promise.all(
-    splitDistributions.map(splitDistributionToRecipient),
-  )
-
   const transactionName = transactionHash
   const transactionUrl = `https://etherscan.io/tx/${transactionHash}`
 
@@ -167,7 +111,6 @@ const compileEmailMetadata = async ({
     timestamp: formattedTimestamp,
     projectUrl,
     projectName,
-    recipients,
     transactionName,
     transactionUrl,
   }
@@ -186,7 +129,6 @@ const sendEmails = async (
     tx_url: metadata.transactionUrl,
     tx_name: metadata.transactionName,
     juicebox_project_url: 'https://juicebox.money/@juicebox',
-    recipients: metadata.recipients,
   }
   const distributePayoutsEmail = distributePayoutEmailTemplate(templateData)
 
@@ -253,22 +195,8 @@ const findEmailEventsForProjectId = async (
   })
 }
 
-const queryProject = async (projectId: number) => {
-  const { data } = await client.query<ProjectsQuery, QueryProjectsArgs>({
-    query: ProjectsDocument,
-    variables: {
-      where: {
-        projectId: projectId,
-        pv: '2',
-      },
-    },
-  })
-  if (data.projects.length === 0) return undefined
-  return data.projects[0]
-}
-
 const queryDistributePayoutEvent = async (transactionHash: string) => {
-  const { data } = await client.query<
+  const { data } = await serverClient.query<
     DistributePayoutsEventsQuery,
     QueryDistributePayoutsEventsArgs
   >({

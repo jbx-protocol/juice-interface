@@ -205,13 +205,13 @@ export const sgFCToV2V3FundingCycle = (
 ): V2V3FundingCycle => ({
   ballot: fc.ballot as string,
   basedOn: BigNumber.from(fc.basedOn),
-  configuration: fc.configuration,
-  discountRate: fc.discountRate,
+  configuration: BigNumber.from(fc.configuration),
+  discountRate: BigNumber.from(fc.discountRate),
   duration: BigNumber.from(fc.duration),
-  metadata: fc.metadata,
+  metadata: BigNumber.from(fc.metadata),
   number: BigNumber.from(fc.number),
   start: BigNumber.from(fc.startTimestamp),
-  weight: fc.weight,
+  weight: BigNumber.from(fc.weight),
 })
 
 // Derive fundingCycleMetdata type from the fundingCycle object returned by subgraph query
@@ -252,7 +252,7 @@ export const sgFCToV2V3FundingCycleMetadata = (
     pauseTransfers: fc.transfersPaused,
   },
   holdFees: fc.shouldHoldFees,
-  metadata: fc.metadata,
+  metadata: BigNumber.from(fc.metadata),
   useTotalOverflowForRedemptions: fc.useTotalOverflowForRedemptions,
   pauseBurn: fc.burnPaused,
   pauseDistributions: fc.distributionsPaused,

@@ -3,13 +3,7 @@ import mjml from 'mjml'
 import mustache from 'mustache'
 import { PaymentTemplateData } from './paymentTemplateData'
 
-type DistributePayoutTemplateData = {
-  recipients: {
-    name: string
-    amount: string
-    href: string
-  }[]
-} & PaymentTemplateData
+type DistributePayoutTemplateData = PaymentTemplateData
 
 const template = `
 <mjml>
@@ -175,20 +169,6 @@ const template = `
               <strong>{{ payer_name }}</strong>
             </td>
           </tr>
-          <tr>
-            <td class="text-2xl" style="padding: 12px">
-            <div>Recipients</div>
-          </tr>
-          {{#recipients}}
-          <tr style>
-            <td style="padding-left: 12px">
-              <a href="{{ href }}">{{ name }}</a>
-            </td>
-            <td style="padding-right: 12px; text-align: end">
-              {{ amount }} ETH
-            </td>
-          </tr>
-          {{/recipients}}
 
         </mj-table>
         <mj-text align="center">

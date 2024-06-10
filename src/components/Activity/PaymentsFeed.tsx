@@ -11,8 +11,8 @@ import {
   PayEvent_OrderBy,
   usePayEventsQuery,
 } from 'generated/graphql'
-import { client } from 'lib/apollo/client'
 import { DBProject } from 'models/dbProject'
+import { toBigNumber } from 'utils/bigNumbers'
 import { classNames } from 'utils/classNames'
 
 const ProjectHandle = ({
@@ -40,13 +40,10 @@ const ProjectHandle = ({
 }
 
 export function PaymentsFeed() {
-  const { data, loading } = usePayEventsQuery({
-    client,
-    variables: {
-      first: 20,
-      orderBy: PayEvent_OrderBy.timestamp,
-      orderDirection: OrderDirection.desc,
-    },
+  const { data, isLoading: loading } = usePayEventsQuery({
+    first: 20,
+    orderBy: PayEvent_OrderBy.timestamp,
+    orderDirection: OrderDirection.desc,
   })
 
   const events = data?.payEvents
@@ -71,7 +68,7 @@ export function PaymentsFeed() {
             header={<ProjectHandle project={event.project} />}
             subject={
               <span className="font-heading text-lg">
-                <ETHAmount amount={event.amount} />
+                <ETHAmount amount={toBigNumber(event.amount)} />
               </span>
             }
             extra={

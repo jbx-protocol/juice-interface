@@ -6,11 +6,10 @@ import {
   ProjectEventsQuery,
   useTicketModDistributionsForPrintReservesEventQuery,
 } from 'generated/graphql'
-import { client } from 'lib/apollo/client'
 import { useContext } from 'react'
+import { toBigNumber } from 'utils/bigNumbers'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-
 import { ActivityEvent } from '../ActivityElement/ActivityElement'
 
 export default function ReservesEventElem({
@@ -24,13 +23,12 @@ export default function ReservesEventElem({
 
   // Load individual DistributeToTicketMod events, emitted by internal transactions of the PrintReserves transaction
   const { data } = useTicketModDistributionsForPrintReservesEventQuery({
-    client,
-    variables: {
-      printReservesEvent: event?.id,
-    },
+    printReservesEvent: event?.id,
   })
 
   if (!event) return null
+
+  const amount = toBigNumber(event.beneficiaryTicketAmount)
 
   return (
     <ActivityEvent
@@ -87,7 +85,7 @@ export default function ReservesEventElem({
             </div>
           ))}
 
-          {event.beneficiaryTicketAmount?.gt(0) && (
+          {amount?.gt(0) && (
             <div
               style={{
                 display: 'flex',

@@ -9,7 +9,6 @@ import {
   QueryParticipantsArgs,
 } from 'generated/graphql'
 import { useBlockNumber } from 'hooks/useBlockNumber'
-import { client } from 'lib/apollo/client'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
@@ -58,7 +57,6 @@ export function DownloadParticipantsModal({
         ParticipantsDownloadQuery,
         QueryParticipantsArgs
       >({
-        client,
         document: ParticipantsDownloadDocument,
         variables: {
           where: {

@@ -15,7 +15,7 @@ export function RedeemNftsSection() {
   const { userAddress } = useWallet()
   const { fundingCycleMetadata, primaryTerminalCurrentOverflow } =
     useContext(V2V3ProjectContext)
-  const { data, loading } = useNftAccountBalance({
+  const { data, isLoading: loading } = useNftAccountBalance({
     accountAddress: userAddress,
     dataSourceAddress: fundingCycleMetadata?.dataSource,
   })

@@ -7,6 +7,7 @@ import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
+import { Parenthesis } from 'components/Parenthesis'
 import { TokenAmount } from 'components/TokenAmount'
 import ETHAmount from 'components/currency/ETHAmount'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
@@ -16,9 +17,9 @@ import {
   Participant_OrderBy,
   useParticipantsQuery,
 } from 'generated/graphql'
-import { client } from 'lib/apollo/client'
 import { PV } from 'models/pv'
 import { useState } from 'react'
+import { isBigNumberish, toBigNumber } from 'utils/bigNumbers'
 import { formatPercent } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { DownloadParticipantsModal } from '../DownloadParticipantsModal'
@@ -75,19 +76,17 @@ export default function HoldersList({
     option => option.value === sortPayerReports,
   )
 
-  const { data, loading, fetchMore } = useParticipantsQuery({
-    client,
-    variables: {
-      orderBy: sortPayerReports,
-      orderDirection: sortPayerReportsDirection,
-      first: pageSize,
-      where: {
-        projectId,
-        pv,
-        balance_gt: BigNumber.from(0),
-        wallet_not: constants.AddressZero,
-      },
+  const { data, isLoading: loading } = useParticipantsQuery({
+    orderBy: sortPayerReports,
+    orderDirection: sortPayerReportsDirection,
+    first: pageSize,
+    where: {
+      projectId,
+      pv,
+      balance_gt: '0',
+      wallet_not: constants.AddressZero,
     },
+    skip: (pageNumber + 1) * pageSize,
   })
 
   const participants = data?.participants
@@ -143,24 +142,39 @@ export default function HoldersList({
               </div>
               <div className="text-xs text-grey-400 dark:text-slate-200">
                 <Trans>
-                  <ETHAmount amount={p.volume} /> contributed
+                  <ETHAmount amount={toBigNumber(p.volume)} /> contributed
                 </Trans>
               </div>
             </div>
 
             <div className="text-right">
               <div className="leading-6">
-                <TokenAmount amountWad={p.balance} tokenSymbol={tokenSymbol} />{' '}
-                ({formatPercent(p.balance, totalTokenSupply)}%)
+                {isBigNumberish(p.balance) ? (
+                  <>
+                    <TokenAmount
+                      amountWad={BigNumber.from(p.balance)}
+                      tokenSymbol={tokenSymbol}
+                    />{' '}
+                    <Parenthesis>
+                      {formatPercent(
+                        BigNumber.from(p.balance),
+                        totalTokenSupply,
+                      )}
+                      %
+                    </Parenthesis>
+                  </>
+                ) : null}
               </div>
               <div className="text-xs text-grey-400 dark:text-slate-200">
-                <Trans>
-                  <TokenAmount
-                    amountWad={p.stakedBalance}
-                    tokenSymbol={tokenSymbol}
-                  />{' '}
-                  unclaimed
-                </Trans>
+                {isBigNumberish(p.stakedBalance) ? (
+                  <Trans>
+                    <TokenAmount
+                      amountWad={BigNumber.from(p.stakedBalance)}
+                      tokenSymbol={tokenSymbol}
+                    />{' '}
+                    unclaimed
+                  </Trans>
+                ) : null}
               </div>
             </div>
           </div>
@@ -179,7 +193,6 @@ export default function HoldersList({
         <div
           className="cursor-pointer text-center text-grey-500 dark:text-grey-300"
           onClick={() => {
-            fetchMore({ variables: { skip: (pageNumber + 1) * pageSize } })
             setPageNumber(n => n + 1)
           }}
         >

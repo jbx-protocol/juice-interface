@@ -1,5 +1,4 @@
 import { t, Trans } from '@lingui/macro'
-
 import { ProjectEventsQuery } from 'generated/graphql'
 import { ActivityEvent } from './ActivityElement/ActivityElement'
 

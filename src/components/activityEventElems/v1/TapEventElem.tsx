@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
-import ETHAmount from 'components/currency/ETHAmount'
 import EthereumAddress from 'components/EthereumAddress'
+import ETHAmount from 'components/currency/ETHAmount'
 import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2V3ProjectLink from 'components/v2v3/shared/V2V3ProjectLink'
 import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
@@ -11,8 +11,7 @@ import {
   usePayoutModDistributionsForTapEventQuery,
 } from 'generated/graphql'
 import { isEqualAddress } from 'utils/address'
-
-import { client } from 'lib/apollo/client'
+import { toBigNumber } from 'utils/bigNumbers'
 import { ActivityEvent } from '../ActivityElement/ActivityElement'
 
 export default function TapEventElem({
@@ -24,13 +23,13 @@ export default function TapEventElem({
 }) {
   // Load individual DistributeToPayoutMod events, emitted by internal transactions of the Tap transaction
   const { data } = usePayoutModDistributionsForTapEventQuery({
-    client,
-    variables: {
-      tapEvent: event?.id,
-    },
+    tapEvent: event?.id,
   })
 
   if (!event) return null
+
+  const amount = toBigNumber(event.netTransferAmount)
+  const benAmount = toBigNumber(event.beneficiaryTransferAmount)
 
   return (
     <ActivityEvent
@@ -38,7 +37,7 @@ export default function TapEventElem({
       header={t`Sent payouts`}
       subject={
         <span className="text-base font-medium">
-          <ETHAmount amount={event.netTransferAmount} />
+          <ETHAmount amount={amount} />
         </span>
       }
       withProjectLink={withProjectLink}
@@ -69,12 +68,12 @@ export default function TapEventElem({
               </div>
 
               <div className="text-secondary">
-                <ETHAmount amount={e.modCut} />
+                <ETHAmount amount={toBigNumber(e.modCut)} />
               </div>
             </div>
           ))}
 
-          {event.beneficiaryTransferAmount?.gt(0) && (
+          {benAmount?.gt(0) && (
             <div
               style={{
                 display: 'flex',
@@ -87,7 +86,7 @@ export default function TapEventElem({
                 <EthereumAddress address={event.beneficiary} />:
               </div>
               <div>
-                <ETHAmount amount={event.beneficiaryTransferAmount} />
+                <ETHAmount amount={benAmount} />
               </div>
             </div>
           )}

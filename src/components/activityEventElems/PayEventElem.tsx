@@ -2,8 +2,8 @@ import { t, Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import RichNote from 'components/RichNote/RichNote'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
-
 import { ProjectEventsQuery } from 'generated/graphql'
+import { toBigNumber } from 'utils/bigNumbers'
 import { ActivityEvent } from './ActivityElement/ActivityElement'
 
 export default function PayEventElem({
@@ -22,7 +22,7 @@ export default function PayEventElem({
       header={t`Paid`}
       subject={
         <span className="font-heading text-lg">
-          <ETHAmount amount={event.amount} />
+          <ETHAmount amount={toBigNumber(event.amount)} />
         </span>
       }
       extra={

@@ -1,11 +1,11 @@
 import { PV_V1, PV_V2 } from 'constants/pv'
 import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
 import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
+import { TrendingProjectsDocument } from 'generated/apollo'
 import {
   OrderDirection,
   Project_OrderBy,
   QueryProjectsArgs,
-  TrendingProjectsDocument,
   TrendingProjectsQuery,
 } from 'generated/graphql'
 import { serverClient } from 'lib/apollo/serverClient'

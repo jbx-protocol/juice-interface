@@ -1,14 +1,9 @@
 import { Trans, t } from '@lingui/macro'
 import { Modal } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-
-import { BigNumber, constants } from 'ethers'
-import { useContext } from 'react'
-import { isZeroAddress } from 'utils/address'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-
 import TokenDistributionChart from 'components/TokenDistributionChart'
+import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { BigNumber, constants } from 'ethers'
 import {
   OrderDirection,
   Participant_OrderBy,
@@ -16,9 +11,11 @@ import {
   ParticipantsQuery,
   QueryParticipantsArgs,
 } from 'generated/graphql'
-import { client } from 'lib/apollo/client'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
+import { useContext } from 'react'
 import { useQuery } from 'react-query'
+import { isZeroAddress } from 'utils/address'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
 import HoldersList from './HoldersList'
 
 export default function ParticipantsModal({
@@ -40,7 +37,6 @@ export default function ParticipantsModal({
     [`token-holders-${projectId}-${pv}`],
     () =>
       paginateDepleteQuery<ParticipantsQuery, QueryParticipantsArgs>({
-        client,
         document: ParticipantsDocument,
         variables: {
           orderDirection: OrderDirection.desc,
@@ -48,7 +44,7 @@ export default function ParticipantsModal({
           where: {
             projectId,
             pv,
-            balance_gt: BigNumber.from(0),
+            balance_gt: '0',
             wallet_not: constants.AddressZero,
           },
         },

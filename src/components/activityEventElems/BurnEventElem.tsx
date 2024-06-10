@@ -1,7 +1,7 @@
-import { t } from '@lingui/macro'
-
+import { t, Trans } from '@lingui/macro'
 import { TokenAmount } from 'components/TokenAmount'
 import { ProjectEventsQuery } from 'generated/graphql'
+import { toBigNumber } from 'utils/bigNumbers'
 import { ActivityEvent } from './ActivityElement/ActivityElement'
 
 export default function BurnEventElem({
@@ -15,6 +15,8 @@ export default function BurnEventElem({
 }) {
   if (!event) return null
 
+  const amount = toBigNumber(event.amount)
+
   return (
     <ActivityEvent
       event={event}
@@ -22,7 +24,11 @@ export default function BurnEventElem({
       header={t`Burned`}
       subject={
         <span className="font-heading text-lg font-medium">
-          <TokenAmount amountWad={event.amount} tokenSymbol={tokenSymbol} />
+          {amount ? (
+            <TokenAmount amountWad={amount} tokenSymbol={tokenSymbol} />
+          ) : (
+            <Trans>Unknown</Trans>
+          )}
         </span>
       }
     />

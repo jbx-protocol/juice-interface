@@ -2,7 +2,6 @@ import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { V2_BLOCKLISTED_PROJECTS } from 'constants/blocklist'
 import { DbProjectsDocument, DbProjectsQuery, Project } from 'generated/graphql'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
-import { serverClient } from 'lib/apollo/serverClient'
 import { DBProject, DBProjectQueryOpts, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -20,7 +19,6 @@ import { dbProjects } from '../clients'
  */
 export async function queryAllSGProjectsForServer() {
   const res = await paginateDepleteQuery<DbProjectsQuery>({
-    client: serverClient,
     document: DbProjectsDocument,
   })
 

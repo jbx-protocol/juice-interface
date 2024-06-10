@@ -15,6 +15,16 @@ export function isBigNumberish(value: unknown): value is BigNumberish {
   )
 }
 
+export function toBigNumber(value: unknown): BigNumber | undefined {
+  try {
+    if (isBigNumberish(value)) {
+      return BigNumber.from(value)
+    }
+  } catch {
+    return undefined
+  }
+}
+
 export const bigNumbersDiff = (a?: BigNumber, b?: BigNumber) => {
   if ((a && !b) || (!a && b)) return true
 

@@ -7,9 +7,7 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { useEtherc20ProjectPayersQuery } from 'generated/graphql'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { DeployProjectPayerTxArgs } from 'hooks/v2v3/transactor/useDeployProjectPayerTx'
-import { client } from 'lib/apollo/client'
 import { useContext, useState } from 'react'
-
 export function PaymentAddressSection({
   useDeployProjectPayerTx,
 }: {
@@ -22,12 +20,9 @@ export function PaymentAddressSection({
   const [projectPayersModalIsVisible, setProjectPayersModalIsVisible] =
     useState<boolean>()
 
-  const { data, loading } = useEtherc20ProjectPayersQuery({
-    client,
-    variables: {
-      where: {
-        projectId,
-      },
+  const { data, isLoading: loading } = useEtherc20ProjectPayersQuery({
+    where: {
+      projectId,
     },
   })
 

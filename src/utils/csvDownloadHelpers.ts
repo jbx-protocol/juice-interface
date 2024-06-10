@@ -25,7 +25,6 @@ import {
   TapEventsDownloadDocument,
   TapEventsDownloadQuery,
 } from 'generated/graphql'
-import { client } from 'lib/apollo/client'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { PV } from 'models/pv'
 import { downloadCsvFile } from 'utils/csv'
@@ -56,7 +55,6 @@ export async function downloadParticipants(
       ParticipantsDownloadQuery,
       QueryParticipantsArgs
     >({
-      client,
       document: ParticipantsDownloadDocument,
       variables: {
         where: {
@@ -121,7 +119,6 @@ export async function downloadV2V3Payouts(
       DistributeToPayoutSplitEventsDownloadQuery,
       QueryDistributeToPayoutSplitEventsArgs
     >({
-      client,
       document: DistributeToPayoutSplitEventsDownloadDocument,
       variables: {
         where: { projectId },
@@ -135,7 +132,6 @@ export async function downloadV2V3Payouts(
       DistributePayoutsEventsDownloadQuery,
       QueryDistributePayoutsEventsArgs
     >({
-      client,
       document: DistributePayoutsEventsDownloadDocument,
       variables: {
         where: { projectId },
@@ -216,7 +212,6 @@ export async function downloadV1Payouts(
       DistributeToPayoutModEventsDownloadQuery,
       QueryDistributeToPayoutModEventsArgs
     >({
-      client,
       document: DistributeToPayoutModEventsDownloadDocument,
       variables: {
         where: {
@@ -232,7 +227,6 @@ export async function downloadV1Payouts(
       TapEventsDownloadQuery,
       QueryTapEventsArgs
     >({
-      client,
       document: TapEventsDownloadDocument,
       variables: {
         where: {
@@ -317,7 +311,6 @@ export async function downloadPayments(
       PayEventsDownloadQuery,
       QueryPayEventsArgs
     >({
-      client,
       document: PayEventsDownloadDocument,
       variables: {
         block: {
@@ -381,7 +374,6 @@ export async function downloadRedemptions(
       RedeemEventsDownloadQuery,
       QueryRedeemEventsArgs
     >({
-      client,
       document: RedeemEventsDownloadDocument,
       variables: {
         block: {
@@ -447,7 +439,6 @@ export async function downloadAdditionsToBalance(
       AddToBalanceEventsDownloadQuery,
       QueryAddToBalanceEventsArgs
     >({
-      client,
       document: AddToBalanceEventsDownloadDocument,
       variables: {
         block: {

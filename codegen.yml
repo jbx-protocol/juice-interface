@@ -6,18 +6,20 @@ generates:
     plugins:
       - 'typescript'
       - 'typescript-operations'
-      - 'typescript-resolvers'
-      - 'typescript-react-apollo'
-      - add:
-          content: "import { BigNumber } from 'ethers'"
-  ./graphql.schema.json:
+      - 'typescript-react-query'
+  src/generated/apollo.ts:
     plugins:
-      - 'introspection'
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
 config:
   namingConvention:
     enumValues: keep
   scalars:
-    BigInt: BigNumber
+    BigInt: string
   avoidOptionals:
     field: true
   skipTypename: true
+  reactQueryVersion: 3
+  fetcher:
+    endpoint: process.env.NEXT_PUBLIC_SUBGRAPH_URL

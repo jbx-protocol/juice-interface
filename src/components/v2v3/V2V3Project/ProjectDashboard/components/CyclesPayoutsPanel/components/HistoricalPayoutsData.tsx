@@ -1,10 +1,12 @@
 import EthereumAddress from 'components/EthereumAddress'
+import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/splits'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import useProjectSplits from 'hooks/v2v3/contractReader/useProjectSplits'
 import round from 'lodash/round'
 import React, { useContext } from 'react'
 import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
+import { isProjectSplit } from 'utils/splits'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
 import { derivePayoutAmount } from 'utils/v2v3/distributions'
 import { ConfigurationPanelTableData } from './ConfigurationPanel'
@@ -28,7 +30,8 @@ export const HistoricalPayoutsData: React.FC<
 
   const payoutSplitsData =
     payoutSplits?.reduce<ConfigurationPanelTableData>((acc, split) => {
-      const key = split.beneficiary ?? ''
+      const key = `${split.beneficiary}-${split.projectId}`
+      const isProject = isProjectSplit(split)
       const payoutAmount = round(
         derivePayoutAmount({
           payoutSplit: split,
@@ -44,7 +47,15 @@ export const HistoricalPayoutsData: React.FC<
         }) ?? '0'
 
       acc[key] = {
-        name: <EthereumAddress address={split.beneficiary} />,
+        name: isProject ? (
+          <V2V3ProjectHandleLink
+            className="truncate"
+            containerClassName="truncate"
+            projectId={parseFloat(split.projectId ?? '')}
+          />
+        ) : (
+          <EthereumAddress address={split.beneficiary} />
+        ),
         new: <span>{formattedPayout}</span>,
       }
       return acc

@@ -1640,6 +1640,9 @@ msgstr ""
 msgid "Migrate tokens"
 msgstr ""
 
+msgid "Detach NFTs"
+msgstr ""
+
 msgid "Link minters of this NFT to your project's website, Discord, etc."
 msgstr ""
 

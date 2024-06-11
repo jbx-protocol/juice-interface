@@ -7,6 +7,8 @@ import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
 import { useUpdateCurrentCollection } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/useUpdateCurrentCollection'
 import { useHasNftRewards } from 'hooks/JB721Delegate/useHasNftRewards'
 import { useCallback, useState } from 'react'
+import { useEditingFundingCycleConfig } from '../../../hooks/useEditingFundingCycleConfig'
+import { useReconfigureFundingCycle } from '../../../hooks/useReconfigureFundingCycle'
 import { TransactionSuccessModal } from '../../../TransactionSuccessModal'
 import { useEditingNfts } from '../hooks/useEditingNfts'
 
@@ -33,7 +35,26 @@ export function EditNftsSection() {
     setSubmitLoading(false)
   }, [rewardTiers, updateExistingCollection])
 
+  const editingFundingCycleConfig = useEditingFundingCycleConfig()
+  const {
+    reconfigureLoading: removeDatasourceLoading,
+    reconfigureFundingCycle,
+  } = useReconfigureFundingCycle({
+    editingFundingCycleConfig,
+    memo: 'Detach NFT collection',
+    removeDatasource: true,
+    onComplete: () => setSuccessModalOpen(true),
+  })
+
+  const removeDatasource = () => {
+    reconfigureFundingCycle()
+  }
+
   if (loading) return <Loading className="mt-20" />
+
+  const allNftsRemoved = showNftRewards && rewardTiers?.length === 0
+
+  const hasDataSourceButNoNfts = hasNftRewards && !rewardTiers
 
   return (
     <>
@@ -58,7 +79,7 @@ export function EditNftsSection() {
         )}
       </div>
 
-      {showNftRewards && rewardTiers?.length === 0 && (
+      {allNftsRemoved && (
         <Callout.Warning className="mb-5 bg-smoke-100 dark:bg-slate-500">
           <Trans>
             <p>
@@ -84,6 +105,30 @@ export function EditNftsSection() {
           <Trans>Edit NFTs</Trans>
         </span>
       </Button>
+
+      {hasDataSourceButNoNfts && (
+        <Callout.Warning className="mt-5 bg-smoke-100 dark:bg-slate-500">
+          <div>
+            <strong className="text-lg">Danger Zone</strong>
+          </div>
+          <p>
+            This will remove the NFT <strong>Extension Contract</strong> from
+            your project's next funding cycle. You can relaunch a new NFT
+            collection for later cycles.
+          </p>
+          <Button
+            onClick={removeDatasource}
+            htmlType="submit"
+            type="default"
+            loading={removeDatasourceLoading}
+          >
+            <span>
+              <Trans>Detach NFTs</Trans>
+            </span>
+          </Button>
+        </Callout.Warning>
+      )}
+
       <TransactionModal transactionPending open={txLoading} />
       <TransactionSuccessModal
         open={successModalOpen}

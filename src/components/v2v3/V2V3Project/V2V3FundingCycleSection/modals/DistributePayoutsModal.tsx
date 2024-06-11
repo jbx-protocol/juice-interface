@@ -73,7 +73,6 @@ export default function DistributePayoutsModal({
       },
       {
         onDone: () => {
-          console.info('onDone: distributePayoutsTx')
           setTransactionPending(true)
         },
         onConfirmed: () => {

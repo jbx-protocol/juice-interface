@@ -23,11 +23,13 @@ export function PayoutTableSettings() {
     distributionLimitIsInfinite,
     handleDeleteAllPayoutSplits,
     setDistributionLimit,
+    setCurrency,
     setSplits100Percent,
   } = usePayoutsTable()
 
   const handleSwitchToLimitedPayouts = (newLimit: ReduxDistributionLimit) => {
     setDistributionLimit(parseFloat(fromWad(newLimit.amount)))
+    setCurrency(newLimit.currency)
     setSwitchToLimitedModalOpen(false)
   }
 

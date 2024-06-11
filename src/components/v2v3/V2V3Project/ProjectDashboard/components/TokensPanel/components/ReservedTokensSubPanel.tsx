@@ -47,42 +47,47 @@ export const ReservedTokensSubPanel = ({
             tooltip={reservedRateTooltip}
           />
         </div>
-        <TitleDescriptionDisplayCard
-          className="w-full"
-          title={t`Reserved tokens list`}
-          kebabMenu={{
-            items: kebabMenuItems,
-          }}
-        >
-          {reservedTokens ||
-          reservedRate ||
-          (reservedList && reservedList.length > 1) ? (
-            <>
-              <div className="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500">
-                {reservedList
-                  ? reservedList.map(props => (
-                      <ProjectAllocationRow
-                        key={`${props.address}${props.projectId}`}
-                        {...props}
-                      />
-                    ))
-                  : null}
-              </div>
+        {reservedRate &&
+        reservedTokens &&
+        reservedTokens !== '0' &&
+        reservedRate !== '0' ? (
+          <TitleDescriptionDisplayCard
+            className="w-full"
+            title={t`Reserved tokens list`}
+            kebabMenu={{
+              items: kebabMenuItems,
+            }}
+          >
+            {reservedTokens ||
+            reservedRate ||
+            (reservedList && reservedList.length > 1) ? (
+              <>
+                <div className="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500">
+                  {reservedList
+                    ? reservedList.map(props => (
+                        <ProjectAllocationRow
+                          key={`${props.address}${props.projectId}`}
+                          {...props}
+                        />
+                      ))
+                    : null}
+                </div>
 
-              <SendReservedTokensButton
-                className="z-0 w-full justify-center md:w-auto"
-                containerClassName="md:self-end mt-6 inline-flex"
-              />
-            </>
-          ) : (
-            <div className="mt-5">
-              <Trans>
-                No distributable reserved tokens have been configured for this
-                project.
-              </Trans>
-            </div>
-          )}
-        </TitleDescriptionDisplayCard>
+                <SendReservedTokensButton
+                  className="z-0 w-full justify-center md:w-auto"
+                  containerClassName="md:self-end mt-6 inline-flex"
+                />
+              </>
+            ) : (
+              <div className="mt-5">
+                <Trans>
+                  No distributable reserved tokens have been configured for this
+                  project.
+                </Trans>
+              </div>
+            )}
+          </TitleDescriptionDisplayCard>
+        ) : null}
       </div>
     </div>
   )

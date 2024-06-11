@@ -116,7 +116,7 @@ exports[`ReservedTokensSubPanel renders 1`] = `
               </span>
             </span>
             <div
-              class="relative"
+              class="relative flex items-center justify-center"
               data-headlessui-state=""
             >
               <button

@@ -22,18 +22,25 @@ const pollTransaction = async (
   if (!txLog.tx?.hash || txLog.status !== TxStatus.pending) {
     return txLog
   }
-
   const response = await readProvider.getTransaction(txLog.tx.hash)
-  // if no response, then the tx is cancelled.
+  const oneMinuteAgo = nowSeconds() - 1 * 60
   if (!response) {
-    txLog.callbacks?.onCancelled?.(response)
+    // if no response and tx was created over a minute ago, then assume the tx is cancelled.
+    if (oneMinuteAgo > txLog.createdAt) {
+      txLog.callbacks?.onCancelled?.(response)
+      return {
+        ...txLog,
+        tx: response,
+        status: TxStatus.failed,
+      }
+    }
+    // if no response but tx was created less a minute ago, return and run it through pollTransaction again.
     return {
       ...txLog,
-      tx: response,
-      status: TxStatus.failed,
+      tx: txLog.tx,
+      status: TxStatus.pending,
     }
   }
-
   // Tx has been mined
   if (response.confirmations > 0 && txLog.status === TxStatus.pending) {
     console.info('TxHistoryProvider::calling `onConfirmed` callback', response)

@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import EthereumAddress from 'components/EthereumAddress'
 import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/splits'
@@ -51,7 +52,7 @@ export const HistoricalPayoutsData: React.FC<
           <V2V3ProjectHandleLink
             className="truncate"
             containerClassName="truncate"
-            projectId={parseFloat(split.projectId ?? '')}
+            projectId={BigNumber.from(split.projectId).toNumber()}
           />
         ) : (
           <EthereumAddress address={split.beneficiary} />

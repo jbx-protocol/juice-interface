@@ -21,6 +21,7 @@ import useProjectToken from 'hooks/v2v3/contractReader/useProjectToken'
 import useProjectTokenTotalSupply from 'hooks/v2v3/contractReader/useProjectTokenTotalSupply'
 import useTerminalCurrentOverflow from 'hooks/v2v3/contractReader/useTerminalCurrentOverflow'
 import useUsedDistributionLimit from 'hooks/v2v3/contractReader/useUsedDistributionLimit'
+import { client } from 'lib/apollo/client'
 import first from 'lodash/first'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useMemo } from 'react'
@@ -85,14 +86,17 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
    * Load project stats
    */
   const { data } = useProjectsQuery({
+    client,
     variables: {
       where: {
         projectId,
-        pv_in: [PV_V2],
+        pv: PV_V2,
       },
     },
   })
-  const projectStatsData = first(data?.projects)
+
+  const projects = data?.projects
+  const projectStatsData = first(projects)
   const {
     createdAt,
     volume: totalVolume,

@@ -17,6 +17,7 @@ import {
   DEFAULT_TRENDING_PROJECTS_LIMIT,
   useTrendingProjects,
 } from 'hooks/useProjects'
+import { client } from 'lib/apollo/client'
 import { trackFathomGoal } from 'lib/fathom'
 import { ProjectTagName } from 'models/project-tags'
 import Link from 'next/link'
@@ -44,6 +45,7 @@ export function TopSection() {
   )
 
   const { data } = useProjectsQuery({
+    client,
     variables: {
       where: {
         id_in: BACKUP_PROJECTS,

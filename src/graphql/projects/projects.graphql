@@ -14,5 +14,7 @@ query Projects(
     pv
     volume
     owner
+    trendingVolume
+    paymentsCount
   }
 }

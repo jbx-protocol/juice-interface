@@ -1,9 +1,9 @@
 import { PV_V1 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContextType } from 'contexts/v1/Project/V1ProjectContext'
+import { useProjectsQuery } from 'generated/graphql'
 import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useDBProjectsQuery } from 'hooks/useProjects'
 import useBalanceOfProject from 'hooks/v1/contractReader/useBalanceOfProject'
 import useCurrentFundingCycleOfProject from 'hooks/v1/contractReader/useCurrentFundingCycleOfProject'
 import useCurrentPayoutModsOfProject from 'hooks/v1/contractReader/useCurrentPayoutModsOfProject'
@@ -16,6 +16,7 @@ import useQueuedTicketModsOfProject from 'hooks/v1/contractReader/useQueuedTicke
 import useTerminalOfProject from 'hooks/v1/contractReader/useTerminalOfProject'
 import useTokenAddressOfProject from 'hooks/v1/contractReader/useTokenAddressOfProject'
 import { useV1TerminalVersion } from 'hooks/v1/contractReader/useV1TerminalVersion'
+import { client } from 'lib/apollo/client'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext, useMemo } from 'react'
 import { V1CurrencyName } from 'utils/v1/currency'
@@ -66,15 +67,17 @@ export function useV1ProjectState({
   )
   const overflow = useOverflowOfProject(projectId, terminalName)
 
-  const { data: projects } = useDBProjectsQuery(
-    projectId
-      ? {
-          projectId,
-          pv: [PV_V1],
-        }
-      : null,
-  )
+  const { data } = useProjectsQuery({
+    client,
+    variables: {
+      where: {
+        projectId,
+        pv: PV_V1,
+      },
+    },
+  })
 
+  const projects = data?.projects
   const createdAt = projects?.[0]?.createdAt
   const earned = projects?.[0]?.volume
 

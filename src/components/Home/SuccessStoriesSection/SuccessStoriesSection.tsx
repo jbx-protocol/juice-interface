@@ -7,10 +7,12 @@ import { XLButton } from 'components/buttons/XLButton'
 import { CASE_STUDY_PROJECTS } from 'constants/successStoryProjects'
 import { useMedia } from 'contexts/Theme/useMedia'
 import { useProjectsQuery } from 'generated/graphql'
+import { client } from 'lib/apollo/client'
 import Link from 'next/link'
 
 export function SuccessStoriesSection() {
   const { data } = useProjectsQuery({
+    client,
     variables: {
       where: {
         id_in: CASE_STUDY_PROJECTS.map(p => p.id),

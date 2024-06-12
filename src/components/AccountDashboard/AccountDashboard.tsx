@@ -129,6 +129,7 @@ function ContributedList({ address }: { address: string }) {
 
 function OwnedProjectsList({ address }: { address: string }) {
   const { data, loading } = useProjectsQuery({
+    client,
     variables: {
       where: {
         owner: address,
@@ -199,6 +200,7 @@ function SavedProjectsList({ address }: { address: string }) {
 
 function CreatedProjectsList({ address }: { address: string }) {
   const { data, loading } = useProjectsQuery({
+    client,
     variables: {
       where: {
         owner: address,

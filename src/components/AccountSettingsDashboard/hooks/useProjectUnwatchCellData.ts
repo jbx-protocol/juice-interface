@@ -1,5 +1,6 @@
 import { PV_V2 } from 'constants/pv'
 import { useProjectsQuery } from 'generated/graphql'
+import { client } from 'lib/apollo/client'
 import { SubgraphQueryProject } from 'models/subgraphProjects'
 
 /**
@@ -13,6 +14,7 @@ export const useProjectUnwatchCellData = ({
   projectId: number
 }): SubgraphQueryProject | undefined => {
   const { data } = useProjectsQuery({
+    client,
     variables: {
       where: {
         projectId,

@@ -3,6 +3,7 @@ import { ProjectCarousel } from 'components/Home/ProjectCarousel'
 import { SuccessStoriesCard } from 'components/Home/SuccessStoriesSection/SuccessStoriesCard'
 import { CASE_STUDY_PROJECTS } from 'constants/successStoryProjects'
 import { useProjectsQuery } from 'generated/graphql'
+import { client } from 'lib/apollo/client'
 
 export function ReadMoreCaseStudies({
   currentProject,
@@ -14,6 +15,7 @@ export function ReadMoreCaseStudies({
   )
 
   const { data } = useProjectsQuery({
+    client,
     variables: {
       where: {
         id_in: otherCaseStudies.map(p => p.id),

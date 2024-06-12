@@ -9,9 +9,9 @@ import Paragraph from 'components/Paragraph'
 import ProjectLogo from 'components/ProjectLogo'
 import { TRENDING_WINDOW_DAYS } from 'components/Projects/RankingExplanation'
 import ETHAmount from 'components/currency/ETHAmount'
+import { Project } from 'generated/graphql'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjects'
-import { DBProject } from 'models/dbProject'
 import Link from 'next/link'
 import { twJoin } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
@@ -36,7 +36,7 @@ function Statistic({
   )
 }
 
-export function SpotlightProjectCard({ project }: { project: DBProject }) {
+export function SpotlightProjectCard({ project }: { project: Project }) {
   const { data: metadata } = useProjectMetadata(project.metadataUri)
 
   const percentageGain = useProjectTrendingPercentageIncrease({

@@ -4,10 +4,10 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
 import { BigNumber } from 'ethers'
+import { useProjectsQuery } from 'generated/graphql'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useDBProjectsQuery } from 'hooks/useProjects'
 import { useBallotState } from 'hooks/v2v3/contractReader/useBallotState'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/useETHPaymentTerminalFee'
 import { usePaymentTerminalBalance } from 'hooks/v2v3/contractReader/usePaymentTerminalBalance'
@@ -84,15 +84,15 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   /**
    * Load project stats
    */
-  const { data: projects } = useDBProjectsQuery(
-    projectId
-      ? {
-          projectId,
-          pv: [PV_V2],
-        }
-      : null,
-  )
-  const projectStatsData = first(projects)
+  const { data } = useProjectsQuery({
+    variables: {
+      where: {
+        projectId,
+        pv_in: [PV_V2],
+      },
+    },
+  })
+  const projectStatsData = first(data?.projects)
   const {
     createdAt,
     volume: totalVolume,

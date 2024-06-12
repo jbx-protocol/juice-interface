@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { ProjectCarousel } from 'components/Home/ProjectCarousel'
 import { SuccessStoriesCard } from 'components/Home/SuccessStoriesSection/SuccessStoriesCard'
 import { CASE_STUDY_PROJECTS } from 'constants/successStoryProjects'
-import { useDBProjectsQuery } from 'hooks/useProjects'
+import { useProjectsQuery } from 'generated/graphql'
 
 export function ReadMoreCaseStudies({
   currentProject,
@@ -13,14 +13,19 @@ export function ReadMoreCaseStudies({
     p => p.id !== currentProject,
   )
 
-  const { data } = useDBProjectsQuery({
-    ids: otherCaseStudies.map(p => p.id),
+  const { data } = useProjectsQuery({
+    variables: {
+      where: {
+        id_in: otherCaseStudies.map(p => p.id),
+      },
+    },
   })
+  const projects = data?.projects
 
   if (!data) return null
 
   const readMoreProjects = CASE_STUDY_PROJECTS.map(p => {
-    const project = data.find(proj => proj.id === p.id)
+    const project = projects?.find(proj => proj.id === p.id)
     if (!project) return
 
     return {

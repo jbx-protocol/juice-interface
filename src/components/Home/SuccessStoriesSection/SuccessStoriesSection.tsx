@@ -6,20 +6,25 @@ import { SuccessStoriesCard } from 'components/Home/SuccessStoriesSection/Succes
 import { XLButton } from 'components/buttons/XLButton'
 import { CASE_STUDY_PROJECTS } from 'constants/successStoryProjects'
 import { useMedia } from 'contexts/Theme/useMedia'
-import { useDBProjectsQuery } from 'hooks/useProjects'
+import { useProjectsQuery } from 'generated/graphql'
 import Link from 'next/link'
 
 export function SuccessStoriesSection() {
-  const { data } = useDBProjectsQuery({
-    ids: CASE_STUDY_PROJECTS.map(p => p.id),
+  const { data } = useProjectsQuery({
+    variables: {
+      where: {
+        id_in: CASE_STUDY_PROJECTS.map(p => p.id),
+      },
+    },
   })
+  const projects = data?.projects
 
   const isXl = useMedia('(min-width: 1280px)')
 
   if (!data) return null
 
   const topProjects = CASE_STUDY_PROJECTS.map(p => {
-    const project = data.find(proj => proj.id === p.id)
+    const project = projects?.find(proj => proj.id === p.id)
     if (!project) return
 
     return {

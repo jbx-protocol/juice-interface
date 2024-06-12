@@ -12,16 +12,19 @@ import {
   LATEST_METADATA_VERSION,
   ProjectMetadata,
 } from 'models/projectMetadata'
-import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
-import { featureFlagEnabled } from 'utils/featureFlags'
-import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import { issuanceRateFrom, redemptionRateFrom } from 'utils/v2v3/math'
+import {
+  V2V3_CURRENCY_ETH,
+  V2V3_CURRENCY_USD,
+} from 'packages/v2v3/utils/currency'
+import { issuanceRateFrom, redemptionRateFrom } from 'packages/v2v3/utils/math'
 import {
   SerializedV2V3FundingCycleData,
   SerializedV2V3FundingCycleMetadata,
   serializeV2V3FundingCycleData,
   serializeV2V3FundingCycleMetadata,
-} from 'utils/v2v3/serializers'
+} from 'packages/v2v3/utils/serializers'
+import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { CreateState, ProjectState } from './types'
 
 const DEFAULT_DOMAIN = 'juicebox'

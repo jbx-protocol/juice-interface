@@ -1,6 +1,9 @@
-import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/defaultContracts/useDefaultJB721Delegate'
-import { JB721DelegateVersion, V2V3ContractName } from 'models/v2v3/contracts'
+import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
+import {
+  JB721DelegateVersion,
+  V2V3ContractName,
+} from 'packages/v2v3/models/contracts'
 import { useContext } from 'react'
 
 /**

@@ -2,7 +2,6 @@ import { t } from '@lingui/macro'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { getAddress } from 'ethers/lib/utils'
 import { useJBPrices } from 'hooks/JBPrices'
 import { useWallet } from 'hooks/Wallet'
@@ -10,7 +9,6 @@ import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/defaultContracts/useDefau
 import { useDefaultJBController } from 'hooks/defaultContracts/useDefaultJBController'
 import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import { TransactorInstance } from 'hooks/useTransactor'
-import { LaunchProjectData } from 'hooks/v2v3/transactor/useLaunchProjectTx'
 import omit from 'lodash/omit'
 import {
   JB721GovernanceType,
@@ -22,20 +20,22 @@ import {
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
 import { GroupedSplits, SplitGroup } from 'models/splits'
-import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
+import { LaunchProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import {
   JBPayDataSourceFundingCycleMetadata,
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
-} from 'models/v2v3/fundingCycle'
-import { useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
-import { buildDeployTiered721DelegateData } from 'utils/nftRewards'
+} from 'packages/v2v3/models/fundingCycle'
 import {
   getTerminalsFromFundAccessConstraints,
   isValidMustStartAtOrAfter,
-} from 'utils/v2v3/fundingCycle'
-import { useV2ProjectTitle } from '../../v2v3/useProjectTitle'
+} from 'packages/v2v3/utils/fundingCycle'
+import { useContext } from 'react'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
+import { buildDeployTiered721DelegateData } from 'utils/nftRewards'
+import { useV2ProjectTitle } from '../../../packages/v2v3/hooks/useProjectTitle'
 import { useJB721DelegateContractAddress } from '../contracts/useJB721DelegateContractAddress'
 import { useJBTiered721DelegateProjectDeployer } from '../contracts/useJBTiered721DelegateProjectDeployer'
 

@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
-import useTotalBalanceOf from 'hooks/v2v3/contractReader/useTotalBalanceOf'
+import useTotalBalanceOf from 'packages/v2v3/hooks/contractReader/useTotalBalanceOf'
 import { useJBTokenStoreForV3Token } from '../contracts/useJBTokenStoreForV3Token'
 
 export function useV2TotalBalance({

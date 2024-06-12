@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { JB721DelegateVersion } from 'models/v2v3/contracts'
+import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import { useQuery } from 'react-query'
 import { isZeroAddress } from 'utils/address'
 

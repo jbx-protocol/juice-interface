@@ -1,7 +1,7 @@
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { Contract } from 'ethers'
 import { useContractReadValue } from 'hooks/ContractReader'
 import { useLoadContractFromAddress } from 'hooks/useLoadContractFromAddress'
+import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
 import { useContext } from 'react'
 import { useJBTokenStoreForV3Token } from './useJBTokenStoreForV3Token'
 

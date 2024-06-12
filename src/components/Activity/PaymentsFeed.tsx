@@ -1,10 +1,8 @@
 import { Trans } from '@lingui/macro'
-import { ActivityEvent } from 'components/activityEventElems/ActivityElement/ActivityElement'
-import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
-import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
-import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
+import { ActivityEvent } from 'components/activityEventElems/ActivityElement/ActivityElement'
+import ETHAmount from 'components/currency/ETHAmount'
 import { PV_V1 } from 'constants/pv'
 import {
   OrderDirection,
@@ -13,6 +11,8 @@ import {
 } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
 import { DBProject } from 'models/dbProject'
+import V1ProjectHandle from 'packages/v1/components/shared/V1ProjectHandle'
+import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
 import { classNames } from 'utils/classNames'
 
 const ProjectHandle = ({

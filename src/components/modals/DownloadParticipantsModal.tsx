@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import {
   ParticipantsDownloadDocument,
   ParticipantsDownloadQuery,

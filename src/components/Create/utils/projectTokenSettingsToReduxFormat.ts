@@ -1,11 +1,11 @@
-import { EMPTY_RESERVED_TOKENS_GROUPED_SPLITS } from 'redux/slices/editingV2Project'
-import { allocationToSplit } from 'utils/splitToAllocation'
 import {
   discountRateFrom,
   formatIssuanceRate,
   redemptionRateFrom,
   reservedRateFrom,
-} from 'utils/v2v3/math'
+} from 'packages/v2v3/utils/math'
+import { EMPTY_RESERVED_TOKENS_GROUPED_SPLITS } from 'redux/slices/editingV2Project'
+import { allocationToSplit } from 'utils/splitToAllocation'
 import { ProjectTokensFormProps } from '../components/pages/ProjectToken/hooks/useProjectTokenForm'
 
 export const projectTokenSettingsToReduxFormat = (

@@ -1,9 +1,6 @@
 import { t } from '@lingui/macro'
+import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import { getAddress } from 'ethers/lib/utils'
 import { useJBPrices } from 'hooks/JBPrices'
 import { TransactorInstance } from 'hooks/useTransactor'
@@ -13,12 +10,17 @@ import {
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
 import { GroupedSplits, SplitGroup } from 'models/splits'
-import { JB721DelegateVersion } from 'models/v2v3/contracts'
+import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
+import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
+import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
+import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import {
   JBPayDataSourceFundingCycleMetadata,
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
-} from 'models/v2v3/fundingCycle'
+} from 'packages/v2v3/models/fundingCycle'
+import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
+import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { NftRewardsData } from 'redux/slices/editingV2Project/types'
@@ -27,10 +29,8 @@ import {
   buildJB721TierParams,
   defaultNftCollectionName,
 } from 'utils/nftRewards'
-import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
-import { isValidMustStartAtOrAfter } from 'utils/v2v3/fundingCycle'
-import { ReconfigureFundingCycleTxParams } from '../../v2v3/transactor/useReconfigureV2V3FundingCycleTx'
-import { useV2ProjectTitle } from '../../v2v3/useProjectTitle'
+import { ReconfigureFundingCycleTxParams } from '../../../packages/v2v3/hooks/transactor/useReconfigureV2V3FundingCycleTx'
+import { useV2ProjectTitle } from '../../../packages/v2v3/hooks/useProjectTitle'
 import { useJB721DelegateContractAddress } from '../contracts/useJB721DelegateContractAddress'
 import { useJBTiered721DelegateProjectDeployer } from '../contracts/useJBTiered721DelegateProjectDeployer'
 import { useProjectControllerJB721DelegateVersion } from '../contracts/useProjectJB721DelegateVersion'

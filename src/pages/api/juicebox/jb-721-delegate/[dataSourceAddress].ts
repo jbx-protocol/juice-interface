@@ -7,8 +7,8 @@ import { loadJB721DelegateJson } from 'hooks/JB721Delegate/contracts/useJB721Del
 import { loadJB721DelegateAddress } from 'hooks/JB721Delegate/contracts/useJB721DelegateContractAddress'
 import { enableCors } from 'lib/api/nextjs'
 import { getLogger } from 'lib/logger'
-import { JB721DelegateVersion } from 'models/v2v3/contracts'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import { isEqualAddress, isZeroAddress } from 'utils/address'
 import JBDelegatesRegistryJson from './IJBDelegatesRegistry.json'
 

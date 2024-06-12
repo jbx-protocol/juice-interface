@@ -7,7 +7,7 @@ import {
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { constants, utils } from 'ethers'
 import { createMetadata } from 'juicebox-metadata-helper'
-import { JB721DelegateVersion } from 'models/v2v3/contracts'
+import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 
 interface JB721DELAGATE_V3_PAY_METADATA {
   tierIdsToMint: number[]

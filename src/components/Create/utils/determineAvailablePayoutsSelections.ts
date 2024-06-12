@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers'
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
 
 export const determineAvailablePayoutsSelections = (
   distributionLimit: BigNumber | undefined,

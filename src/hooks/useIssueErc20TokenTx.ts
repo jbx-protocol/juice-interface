@@ -1,10 +1,10 @@
 import { IssueErc20TokenTxArgs } from 'components/buttons/IssueErc20TokenButton'
 import { CV_V2, CV_V3 } from 'constants/cv'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { TransactorInstance } from 'hooks/useTransactor'
-import { useV1IssueErc20TokenTx } from 'hooks/v1/transactor/useIssueErc20TokenTx'
-import { useV2IssueErc20TokenTx } from 'hooks/v2/transactor/useV2IssueErc20TokenTx'
-import { useV3IssueErc20TokenTx } from 'hooks/v3/transactor/useV3IssueErc20TokenTx'
+import { useV1IssueErc20TokenTx } from 'packages/v1/hooks/transactor/useIssueErc20TokenTx'
+import { useV2IssueErc20TokenTx } from 'packages/v2/hooks/transactor/useV2IssueErc20TokenTx'
+import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
+import { useV3IssueErc20TokenTx } from 'packages/v3/hooks/transactor/useV3IssueErc20TokenTx'
 import { useContext } from 'react'
 
 /**

@@ -1,4 +1,4 @@
-import { JB721DelegateVersion } from 'models/v2v3/contracts'
+import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 
 /**
  * The version of the JB721Delegate contracts (NFT Rewards) that should be used to launch projects, funding cycles, etc.

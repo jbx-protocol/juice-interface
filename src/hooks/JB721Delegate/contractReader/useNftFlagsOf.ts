@@ -1,7 +1,7 @@
-import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { JBTiered721Flags } from 'models/nftRewards'
+import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { useContext } from 'react'
-import useV2ContractReader from '../../v2v3/contractReader/useV2ContractReader'
+import useV2ContractReader from '../../../packages/v2v3/hooks/contractReader/useV2ContractReader'
 
 export function useNftFlagsOf(dataSourceAddress: string | undefined) {
   const {

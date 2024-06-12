@@ -1,5 +1,5 @@
 import { t } from '@lingui/macro'
-import useProjectHandle from './v2v3/contractReader/useProjectHandle'
+import useProjectHandle from '../packages/v2v3/hooks/contractReader/useProjectHandle'
 
 /**
  * Return text to present to the user as the project's 'handle'.

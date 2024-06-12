@@ -4,7 +4,7 @@ import { readProvider } from 'constants/readProvider'
 import { Contract } from 'ethers'
 import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
-import { CV2V3 } from 'models/v2v3/cv'
+import { CV2V3 } from 'packages/v2v3/models/cv'
 
 export async function loadJBPrices({
   cv,

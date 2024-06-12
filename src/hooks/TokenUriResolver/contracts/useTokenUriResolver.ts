@@ -1,6 +1,6 @@
 import { Contract } from 'ethers'
 import { useLoadContractFromAddress } from 'hooks/useLoadContractFromAddress'
-import useTokenUriResolverAddress from 'hooks/v2v3/contractReader/TokenUriResolverAddress'
+import useTokenUriResolverAddress from 'packages/v2v3/hooks/contractReader/TokenUriResolverAddress'
 import JBTokenUriResolverJson from './JBTokenUriResolver.json'
 
 export function useTokenUriResolver(): Contract | undefined {

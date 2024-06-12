@@ -1,9 +1,9 @@
 import { ClockCircleOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
-import { BallotState } from 'models/v2v3/fundingCycle'
+import { BallotState } from 'packages/v2v3/models/fundingCycle'
 
-import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
+import { getBallotStrategyByAddress } from 'packages/v2v3/utils/ballotStrategies'
 import { Badge, BadgeVariant } from '../Badge'
 
 export function BallotStateBadge({

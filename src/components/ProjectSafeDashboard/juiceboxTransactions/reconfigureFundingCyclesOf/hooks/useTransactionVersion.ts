@@ -1,8 +1,8 @@
 import { CV_V2, CV_V3 } from 'constants/cv'
-import { useLoadV2V3Contract } from 'hooks/v2v3/useLoadV2V3Contract'
 import { SafeTransactionType } from 'models/safe'
-import { V2V3ContractName } from 'models/v2v3/contracts'
-import { CV2V3 } from 'models/v2v3/cv'
+import { useLoadV2V3Contract } from 'packages/v2v3/hooks/useLoadV2V3Contract'
+import { V2V3ContractName } from 'packages/v2v3/models/contracts'
+import { CV2V3 } from 'packages/v2v3/models/cv'
 
 export function useTransactionVersion(
   transaction: SafeTransactionType,

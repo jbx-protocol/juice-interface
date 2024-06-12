@@ -1,11 +1,11 @@
 import { getCompleted } from 'components/announcements/Announcement'
 import { Announcements } from 'constants/announcements'
-import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useWallet } from 'hooks/Wallet'
 import { useIsUserAddress } from 'hooks/useIsUserAddress'
 import { Announcement } from 'models/announcement'
 import { useRouter } from 'next/router'
+import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
+import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import {
   startTransition,
   useCallback,

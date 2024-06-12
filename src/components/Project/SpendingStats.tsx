@@ -5,8 +5,8 @@ import ETHToUSD from 'components/currency/ETHToUSD'
 import TooltipLabel from 'components/TooltipLabel'
 import { CurrencyName } from 'constants/currency'
 import { BigNumber } from 'ethers'
+import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { formatWad } from 'utils/format/formatNumber'
-import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 
 export default function SpendingStats({
   currency,

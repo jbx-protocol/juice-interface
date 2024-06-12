@@ -1,6 +1,6 @@
 import { getAddress } from 'ethers/lib/utils'
-import { useV2V3HasPermissions } from 'hooks/v2v3/contractReader/useV2V3HasPermissions'
-import { V2V3OperatorPermission } from 'models/v2v3/permissions'
+import { useV2V3HasPermissions } from 'packages/v2v3/hooks/contractReader/useV2V3HasPermissions'
+import { V2V3OperatorPermission } from 'packages/v2v3/models/permissions'
 import { useJBTiered721DelegateProjectDeployer } from '../contracts/useJBTiered721DelegateProjectDeployer'
 import { useProjectControllerJB721DelegateVersion } from '../contracts/useProjectJB721DelegateVersion'
 

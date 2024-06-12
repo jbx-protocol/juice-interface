@@ -1,7 +1,7 @@
-import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { BigNumber } from 'ethers'
-import useV2ContractReader from 'hooks/v2v3/contractReader/useV2ContractReader'
-import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
+import useV2ContractReader from 'packages/v2v3/hooks/contractReader/useV2ContractReader'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { useContext } from 'react'
 
 export type NftPricingContext = {

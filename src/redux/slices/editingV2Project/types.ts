@@ -21,7 +21,7 @@ import {
   SerializedV2V3FundAccessConstraint,
   SerializedV2V3FundingCycleData,
   SerializedV2V3FundingCycleMetadata,
-} from 'utils/v2v3/serializers'
+} from 'packages/v2v3/utils/serializers'
 
 export type NftRewardsData = {
   rewardTiers: NftRewardTier[] | undefined

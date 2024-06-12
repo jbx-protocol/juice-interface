@@ -1,5 +1,5 @@
 import { isAddress } from 'ethers/lib/utils'
-import { PayoutMod } from 'models/v1/mods'
+import { PayoutMod } from 'packages/v1/models/mods'
 import { permyriadToPercent } from 'utils/format/formatNumber'
 
 import { Split } from 'models/splits'

@@ -4,10 +4,19 @@ import CurrencySwitch from 'components/currency/CurrencySwitch'
 import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { Parenthesis } from 'components/Parenthesis'
-import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
-import { ExternalLinkWithIcon } from 'components/v2v3/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { Split } from 'models/splits'
-import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
+import { ExternalLinkWithIcon } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import {
+  V2V3_CURRENCY_ETH,
+  V2V3_CURRENCY_USD,
+} from 'packages/v2v3/utils/currency'
+import {
+  deriveAmountAfterFee,
+  derivePayoutAmount,
+} from 'packages/v2v3/utils/distributions'
+import { SPLITS_TOTAL_PERCENT } from 'packages/v2v3/utils/math'
 import { ReactNode, useCallback, useMemo, useState } from 'react'
 import {
   ReduxDistributionLimit,
@@ -19,12 +28,6 @@ import { formatPercent } from 'utils/format/formatPercent'
 import { helpPagePath } from 'utils/routes'
 import { isProjectSplit } from 'utils/splits'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
-import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
-import {
-  deriveAmountAfterFee,
-  derivePayoutAmount,
-} from 'utils/v2v3/distributions'
-import { SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
 
 export const ConvertAmountsModal = ({
   open,

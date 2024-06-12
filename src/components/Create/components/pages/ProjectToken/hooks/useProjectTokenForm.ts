@@ -1,15 +1,8 @@
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { AllocationSplit } from 'components/v2v3/shared/Allocation/Allocation'
 import { ONE_MILLION } from 'constants/numbers'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
-import { useDebugValue, useEffect, useMemo } from 'react'
-import { useAppDispatch } from 'redux/hooks/useAppDispatch'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
-import { useEditingReservedTokensSplits } from 'redux/hooks/useEditingReservedTokensSplits'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
+import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
 import {
   MAX_DISTRIBUTION_LIMIT,
   discountRateFrom,
@@ -20,7 +13,14 @@ import {
   issuanceRateFrom,
   redemptionRateFrom,
   reservedRateFrom,
-} from 'utils/v2v3/math'
+} from 'packages/v2v3/utils/math'
+import { useDebugValue, useEffect, useMemo } from 'react'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
+import { useEditingReservedTokensSplits } from 'redux/hooks/useEditingReservedTokensSplits'
+import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
 export type ProjectTokensFormProps = Partial<{

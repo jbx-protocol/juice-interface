@@ -1,13 +1,13 @@
 import { t } from '@lingui/macro'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
+import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
+import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
+import { formatSplitPercent } from 'packages/v2v3/utils/math'
 import { useContext, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { emitErrorNotification } from 'utils/notifications'
 import { getProjectOwnerRemainderSplit } from 'utils/splits'
-import { formatSplitPercent } from 'utils/v2v3/math'
 
 const CSV_HEADER = [
   'beneficiary',

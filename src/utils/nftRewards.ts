@@ -21,8 +21,8 @@ import {
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
   NftRewardTier,
 } from 'models/nftRewards'
-import { JB721DelegateVersion } from 'models/v2v3/contracts'
-import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
 
 export function sortNftsByContributionFloor(

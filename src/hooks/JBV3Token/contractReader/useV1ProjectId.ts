@@ -1,6 +1,6 @@
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
 import { useContractReadValue } from 'hooks/ContractReader'
+import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import { useJBV3Token } from '../contracts/useJBV3Token'
 

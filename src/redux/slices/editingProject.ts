@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { V1_CURRENCY_USD } from 'constants/v1/currency'
 import { constants } from 'ethers'
+import { V1_CURRENCY_USD } from 'packages/v1/constants/currency'
 
 import { BigNumber } from 'ethers'
 import { ProjectTagName } from 'models/project-tags'
@@ -8,8 +8,12 @@ import {
   LATEST_METADATA_VERSION,
   ProjectMetadata,
 } from 'models/projectMetadata'
-import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { PayoutMod, TicketMod } from 'models/v1/mods'
+import { V1CurrencyOption } from 'packages/v1/models/currencyOption'
+import { PayoutMod, TicketMod } from 'packages/v1/models/mods'
+import {
+  SerializedV1FundingCycle,
+  serializeV1FundingCycle,
+} from 'packages/v1/utils/serializers'
 import { toDateSeconds } from 'utils/format/formatDate'
 import {
   perbicentToPercent,
@@ -17,10 +21,6 @@ import {
   percentToPermille,
   permilleToPercent,
 } from 'utils/format/formatNumber'
-import {
-  SerializedV1FundingCycle,
-  serializeV1FundingCycle,
-} from 'utils/v1/serializers'
 
 interface EditingProjectInfo {
   metadata: ProjectMetadata

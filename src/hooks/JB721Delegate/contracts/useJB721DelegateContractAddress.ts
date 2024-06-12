@@ -1,7 +1,7 @@
 import { readNetwork } from 'constants/networks'
 import { ForgeDeploy, addressFor } from 'forge-run-parser'
 import { NetworkName } from 'models/networkName'
-import { JB721DelegateVersion } from 'models/v2v3/contracts'
+import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import { useEffect, useState } from 'react'
 
 /**

@@ -1,9 +1,9 @@
 import { MAX_NFT_REWARD_TIERS } from 'constants/nftRewards'
-import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { JB721TierV3, JB_721_TIER_V3_2 } from 'models/nftRewards'
-import { JB721DelegateVersion } from 'models/v2v3/contracts'
+import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
+import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import { useContext } from 'react'
-import useV2ContractReader from '../../v2v3/contractReader/useV2ContractReader'
+import useV2ContractReader from '../../../packages/v2v3/hooks/contractReader/useV2ContractReader'
 
 function buildArgs(
   version: JB721DelegateVersion,

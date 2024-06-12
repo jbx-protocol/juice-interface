@@ -3,8 +3,11 @@ import {
   PRECISION_ETH,
   PRECISION_USD,
 } from 'constants/currency'
-import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { V2V3CurrencyName, V2V3_CURRENCY_ETH } from '../v2v3/currency'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import {
+  V2V3CurrencyName,
+  V2V3_CURRENCY_ETH,
+} from 'packages/v2v3/utils/currency'
 import { formatAmount, formatAmountWithScale } from './formatAmount'
 
 /**

@@ -1,7 +1,8 @@
 import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectTagName } from 'models/project-tags'
-import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -9,7 +10,6 @@ import {
   DEFAULT_MUST_START_AT_OR_AFTER,
   editingV2ProjectActions,
 } from 'redux/slices/editingV2Project'
-import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 import { AmountInputValue } from '../ProjectDetailsPage'
 

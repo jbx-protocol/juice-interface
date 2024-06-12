@@ -1,8 +1,8 @@
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
-import { useV1SetOperatorTx } from 'hooks/v1/transactor/useV1SetOperatorTx'
-import { V1OperatorPermission } from 'models/v1/permissions'
+import { useV1SetOperatorTx } from 'packages/v1/hooks/transactor/useV1SetOperatorTx'
+import { V1OperatorPermission } from 'packages/v1/models/permissions'
+import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import { useJBV3Token } from '../contracts/useJBV3Token'
 

@@ -4,7 +4,7 @@ import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThum
 import { Popup } from 'components/Popup'
 import { TruncatedText } from 'components/TruncatedText'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import useMobile from 'hooks/useMobile'
 import { NftRewardTier } from 'models/nftRewards'
 import { useContext } from 'react'

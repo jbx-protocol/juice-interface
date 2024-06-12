@@ -1,7 +1,7 @@
 import { Trans, t } from '@lingui/macro'
 import { Modal } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 
 import { BigNumber, constants } from 'ethers'
 import { useContext } from 'react'

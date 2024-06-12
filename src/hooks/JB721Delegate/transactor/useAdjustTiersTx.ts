@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro'
-import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { TransactorInstance } from 'hooks/useTransactor'
 import {
@@ -7,6 +6,7 @@ import {
   JB_721_TIER_PARAMS_V3_1,
   JB_721_TIER_PARAMS_V3_2,
 } from 'models/nftRewards'
+import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { useContext } from 'react'
 
 export function useAdjustTiersTx(): TransactorInstance<{

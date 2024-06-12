@@ -1,13 +1,13 @@
 import { t } from '@lingui/macro'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
-import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import {
   handleTransactionException,
   TransactorInstance,
 } from 'hooks/useTransactor'
 import { useWallet } from 'hooks/Wallet'
+import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
+import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 import { useJBV3Token } from '../contracts/useJBV3Token'

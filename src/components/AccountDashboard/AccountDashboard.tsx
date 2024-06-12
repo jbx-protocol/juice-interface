@@ -15,10 +15,11 @@ import WalletContributionCard from 'components/WalletContributionCard'
 import {
   OrderDirection,
   Participant_OrderBy,
+  Project_OrderBy,
+  useProjectsQuery,
   useWalletContributionsQuery,
 } from 'generated/graphql'
 import useMobile from 'hooks/useMobile'
-import { useDBProjectsQuery } from 'hooks/useProjects'
 import {
   useWalletBookmarkedIds,
   useWalletBookmarkedProjects,
@@ -27,7 +28,7 @@ import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useWallet } from 'hooks/Wallet'
 import { client } from 'lib/apollo/client'
 import { Profile } from 'models/database'
-import { DBProject } from 'models/dbProject'
+import { SubgraphQueryProject } from 'models/subgraphProjects'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
@@ -35,7 +36,7 @@ import { isEqualAddress } from 'utils/address'
 import { ensAvatarUrlForAddress } from 'utils/ens'
 import { etherscanLink } from 'utils/etherscan'
 
-function ProjectsList({ projects }: { projects: DBProject[] }) {
+function ProjectsList({ projects }: { projects: SubgraphQueryProject[] }) {
   const { userAddress } = useWallet()
 
   const { ids: bookmarkedProjectIds } = useWalletBookmarkedIds({
@@ -127,15 +128,21 @@ function ContributedList({ address }: { address: string }) {
 }
 
 function OwnedProjectsList({ address }: { address: string }) {
-  const { data: projects, isLoading } = useDBProjectsQuery({
-    owner: address,
-    orderBy: 'created_at',
-    orderDirection: 'desc',
+  const { data, loading } = useProjectsQuery({
+    variables: {
+      where: {
+        owner: address,
+      },
+      orderBy: Project_OrderBy.createdAt,
+      orderDirection: OrderDirection.desc,
+    },
   })
+
+  const projects = data?.projects
 
   const { userAddress } = useWallet()
 
-  if (isLoading) return <Loading />
+  if (loading) return <Loading />
 
   if (!projects || projects.length === 0)
     return (
@@ -191,15 +198,19 @@ function SavedProjectsList({ address }: { address: string }) {
 }
 
 function CreatedProjectsList({ address }: { address: string }) {
-  const { data: projects, isLoading } = useDBProjectsQuery({
-    creator: address,
-    orderBy: 'created_at',
-    orderDirection: 'desc',
+  const { data, loading } = useProjectsQuery({
+    variables: {
+      where: {
+        owner: address,
+      },
+    },
   })
+
+  const projects = data?.projects
 
   const { userAddress } = useWallet()
 
-  if (isLoading) return <Loading />
+  if (loading) return <Loading />
 
   if (!projects || projects.length === 0)
     return (

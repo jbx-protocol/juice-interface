@@ -1,7 +1,20 @@
-query Projects($where: Project_filter, $first: Int, $skip: Int) {
+query Projects(
+  $where: Project_filter, 
+  $first: Int, 
+  $skip: Int,
+  $orderBy: Project_orderBy
+  $orderDirection: OrderDirection
+) {
   projects(where: $where, first: $first, skip: $skip) {
+    id
     projectId
     metadataUri
     handle
+    createdAt
+    pv
+    volume
+    owner
+    trendingVolume
+    paymentsCount
   }
 }

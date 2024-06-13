@@ -1,5 +1,7 @@
 import { PV_V2 } from 'constants/pv'
-import { useDBProjectsQuery } from 'hooks/useProjects'
+import { useProjectsQuery } from 'generated/graphql'
+import { client } from 'lib/apollo/client'
+import { SubgraphQueryProject } from 'models/subgraphProjects'
 
 /**
  * Fetches project data from the subgraph, using the project id as a key.
@@ -10,11 +12,16 @@ export const useProjectUnwatchCellData = ({
   projectId,
 }: {
   projectId: number
-}) => {
-  const { data } = useDBProjectsQuery({
-    projectId,
-    pv: [PV_V2],
+}): SubgraphQueryProject | undefined => {
+  const { data } = useProjectsQuery({
+    client,
+    variables: {
+      where: {
+        projectId,
+        pv: PV_V2,
+      },
+    },
   })
 
-  return data?.[0]
+  return data?.projects[0]
 }

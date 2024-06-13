@@ -12,11 +12,12 @@ import { ProjectTag } from 'components/ProjectTags/ProjectTag'
 import { XLButton } from 'components/buttons/XLButton'
 import { HOMEPAGE } from 'constants/fathomEvents'
 import { PV_V1 } from 'constants/pv'
+import { useProjectsQuery } from 'generated/graphql'
 import {
   DEFAULT_TRENDING_PROJECTS_LIMIT,
-  useDBProjectsQuery,
   useTrendingProjects,
 } from 'hooks/useProjects'
+import { client } from 'lib/apollo/client'
 import { trackFathomGoal } from 'lib/fathom'
 import { ProjectTagName } from 'models/project-tags'
 import Link from 'next/link'
@@ -42,9 +43,16 @@ export function TopSection() {
   const { data: trendingProjects, isLoading } = useTrendingProjects(
     DEFAULT_TRENDING_PROJECTS_LIMIT,
   )
-  const { data: backupProjects } = useDBProjectsQuery({
-    ids: BACKUP_PROJECTS,
+
+  const { data } = useProjectsQuery({
+    client,
+    variables: {
+      where: {
+        id_in: BACKUP_PROJECTS,
+      },
+    },
   })
+  const backupProjects = data?.projects
 
   const remainderProjectCount =
     DEFAULT_TRENDING_PROJECTS_LIMIT - (trendingProjects?.length ?? 0)

@@ -10,7 +10,7 @@ import { v2v3ProjectRoute } from 'utils/routes'
 
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useSubtitle } from 'hooks/useSubtitle'
-import { DBProject } from 'models/dbProject'
+import { SubgraphQueryProject } from 'models/subgraphProjects'
 import { ArchivedBadge } from './ArchivedBadge'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
@@ -21,7 +21,7 @@ export default function ProjectCard({
   project,
   bookmarked,
 }: {
-  project?: DBProject
+  project?: SubgraphQueryProject
   bookmarked?: boolean
 }) {
   const { data: metadata } = useProjectMetadata(project?.metadataUri)
@@ -34,7 +34,8 @@ export default function ProjectCard({
 
   if (!project) return null
 
-  const { volume, pv, handle, projectId, tags, createdAt } = project
+  const { volume, pv, handle, projectId, createdAt } = project
+  const tags = metadata?.tags
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
   const precision = volume?.gt(0) && volume.lt(constants.WeiPerEther) ? 2 : 0

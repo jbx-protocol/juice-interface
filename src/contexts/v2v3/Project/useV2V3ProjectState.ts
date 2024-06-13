@@ -4,10 +4,10 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
 import { BigNumber } from 'ethers'
+import { useProjectsQuery } from 'generated/graphql'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useDBProjectsQuery } from 'hooks/useProjects'
 import { useBallotState } from 'hooks/v2v3/contractReader/useBallotState'
 import { useETHPaymentTerminalFee } from 'hooks/v2v3/contractReader/useETHPaymentTerminalFee'
 import { usePaymentTerminalBalance } from 'hooks/v2v3/contractReader/usePaymentTerminalBalance'
@@ -21,6 +21,7 @@ import useProjectToken from 'hooks/v2v3/contractReader/useProjectToken'
 import useProjectTokenTotalSupply from 'hooks/v2v3/contractReader/useProjectTokenTotalSupply'
 import useTerminalCurrentOverflow from 'hooks/v2v3/contractReader/useTerminalCurrentOverflow'
 import useUsedDistributionLimit from 'hooks/v2v3/contractReader/useUsedDistributionLimit'
+import { client } from 'lib/apollo/client'
 import first from 'lodash/first'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { useContext, useMemo } from 'react'
@@ -84,14 +85,17 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   /**
    * Load project stats
    */
-  const { data: projects } = useDBProjectsQuery(
-    projectId
-      ? {
-          projectId,
-          pv: [PV_V2],
-        }
-      : null,
-  )
+  const { data } = useProjectsQuery({
+    client,
+    variables: {
+      where: {
+        projectId,
+        pv: PV_V2,
+      },
+    },
+  })
+
+  const projects = data?.projects
   const projectStatsData = first(projects)
   const {
     createdAt,

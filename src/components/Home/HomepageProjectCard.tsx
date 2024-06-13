@@ -5,7 +5,7 @@ import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
 import { PV_V2 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
-import { DBProject } from 'models/dbProject'
+import { SubgraphQueryProject } from 'models/subgraphProjects'
 import { v2v3ProjectRoute } from 'utils/routes'
 
 function Statistic({
@@ -42,14 +42,8 @@ export function HomepageProjectCard({
   lazyLoad,
 }: {
   project: Pick<
-    DBProject,
-    | 'terminal'
-    | 'metadataUri'
-    | 'volume'
-    | 'paymentsCount'
-    | 'handle'
-    | 'pv'
-    | 'projectId'
+    SubgraphQueryProject,
+    'metadataUri' | 'volume' | 'paymentsCount' | 'handle' | 'pv' | 'projectId'
   >
   lazyLoad?: boolean
 }) {

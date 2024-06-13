@@ -9,12 +9,21 @@ import { SectionContainer } from 'components/Home/SectionContainer'
 import { SectionHeading } from 'components/Home/SectionHeading'
 import { XLButton } from 'components/buttons/XLButton'
 import { useMedia } from 'contexts/Theme/useMedia'
+import { Project } from 'generated/graphql'
 import Link from 'next/link'
+import { JUICY_PICKS_PROJECT_IDS } from './constants'
 
 export function JuicyPicksSection() {
-  const { data: projects } = useFetchJuicyPicks()
+  const juicyPicksQuery = useFetchJuicyPicks()
 
   const isCarouselBreakpoint = useMedia('(max-width: 1079px)')
+
+  // ensure list sorted by JUICY_PICKS_PROJECT_IDS array order
+  const projects = JUICY_PICKS_PROJECT_IDS.map(projectId => {
+    return juicyPicksQuery.data?.projects.find(
+      project => project.projectId === projectId,
+    ) as Project | undefined
+  }).filter((p): p is Project => !!p)
 
   if (!projects) {
     return null

@@ -4,7 +4,6 @@ import { Badge } from 'components/Badge'
 import ETHAmount from 'components/currency/ETHAmount'
 import ProjectLogo from 'components/ProjectLogo'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
-import { DBProject } from 'models/dbProject'
 import { ProjectTagName, projectTagText } from 'models/project-tags'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,6 +13,7 @@ import {
   HOMEPAGE_CARD_BORDER,
   HOMEPAGE_CARD_BORDER_HOVER,
 } from 'components/Home/HomepageCard'
+import { SubgraphQueryProject } from 'models/subgraphProjects'
 
 function SuccessStoriesCardTag({ tag }: { tag: ProjectTagName }) {
   const text = projectTagText[tag]()
@@ -33,7 +33,7 @@ export function SuccessStoriesCard({
   nameOverride,
   imageOverride,
 }: {
-  project: DBProject
+  project: SubgraphQueryProject
   tags: ProjectTagName[]
   nameOverride?: string
   imageOverride?: string

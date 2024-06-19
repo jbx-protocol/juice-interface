@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 
 /**
- * Hook for controlling modal state
+ * Hook for controlling modal state.
  */
 export const useModal = () => {
   const [visible, setVisible] = useState<boolean>(false)

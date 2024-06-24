@@ -12,7 +12,7 @@ import introspectionResult from '../../../graphql.schema.json'
 import { subgraphUri } from './subgraphUri'
 
 const typesMap: FunctionsMap = {
-  bigint: {
+  BigInt: {
     serialize: (parsed: unknown): string | null => {
       return typeof parsed === 'bigint' ? parsed.toString() : null
     },

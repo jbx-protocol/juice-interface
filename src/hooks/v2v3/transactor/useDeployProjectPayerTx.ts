@@ -4,7 +4,7 @@ import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 
-import { ethers } from 'ethers'
+import { ethers, toUtf8Bytes } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useContext } from 'react'
@@ -29,8 +29,6 @@ export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayer
 
   const projectTitle = useV2ProjectTitle()
 
-  const DEFAULT_METADATA = [0x1]
-
   return (
     {
       customBeneficiaryAddress,
@@ -51,9 +49,9 @@ export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayer
       [
         projectId, // _defaultProjectId
         customBeneficiaryAddress ?? ethers.ZeroAddress, // _defaultBeneficiary, is 0x00 because we want tokens to go to msg.sender
-        preferClaimed, // _defaultPreferClaimedTokens
+        Boolean(preferClaimed), // _defaultPreferClaimedTokens
         customMemo ?? DEFAULT_MEMO, // _defaultMemo
-        DEFAULT_METADATA, //_defaultMetadata
+        toUtf8Bytes('0'), //_defaultMetadata
         !tokenMintingEnabled, // defaultPreferAddToBalance
         userAddress, // _owner
       ],

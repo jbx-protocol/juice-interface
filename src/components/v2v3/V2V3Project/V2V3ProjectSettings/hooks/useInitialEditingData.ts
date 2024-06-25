@@ -117,7 +117,7 @@ export const useInitialEditingData = ({
   if (
     effectiveFundingCycle &&
     effectiveFundingCycle.duration > 0n &&
-    queuedDistributionLimit
+    queuedDistributionLimit !== undefined
   ) {
     effectiveDistributionLimit = queuedDistributionLimit
   }
@@ -126,23 +126,25 @@ export const useInitialEditingData = ({
   if (
     effectiveFundingCycle &&
     effectiveFundingCycle.duration > 0n &&
-    queuedDistributionLimitCurrency
+    queuedDistributionLimitCurrency !== undefined
   ) {
     effectiveDistributionLimitCurrency = queuedDistributionLimitCurrency
   }
 
   // Populates the local redux state from V2V3ProjectContext values
   useDeepCompareEffect(() => {
-    if (!visible || !effectiveFundingCycle || !effectiveFundingCycleMetadata)
+    if (!visible || !effectiveFundingCycle || !effectiveFundingCycleMetadata) {
       return
+    }
 
     // Build fundAccessConstraint
     let fundAccessConstraint: SerializedV2V3FundAccessConstraint | undefined =
       undefined
-    if (effectiveDistributionLimit) {
-      const distributionLimitCurrency = effectiveDistributionLimitCurrency
-        ? Number(effectiveDistributionLimitCurrency)
-        : V2V3_CURRENCY_ETH
+    if (effectiveDistributionLimit !== undefined) {
+      const distributionLimitCurrency =
+        effectiveDistributionLimitCurrency !== undefined
+          ? Number(effectiveDistributionLimitCurrency)
+          : V2V3_CURRENCY_ETH
 
       fundAccessConstraint = {
         terminal: primaryETHTerminal ?? '',
@@ -166,13 +168,13 @@ export const useInitialEditingData = ({
     )
 
     // Set editing funding cycle
-    const editingFundingCycleData = fundingCycle?.weight
-      ? serializeV2V3FundingCycleData({
-          ...effectiveFundingCycle,
-          weight: fundingCycle.weight,
-        })
-      : serializeV2V3FundingCycleData(effectiveFundingCycle)
-
+    const editingFundingCycleData =
+      fundingCycle?.weight !== undefined
+        ? serializeV2V3FundingCycleData({
+            ...effectiveFundingCycle,
+            weight: fundingCycle.weight,
+          })
+        : serializeV2V3FundingCycleData(effectiveFundingCycle)
     dispatch(
       editingV2ProjectActions.setFundingCycleData(editingFundingCycleData),
     )
@@ -180,7 +182,6 @@ export const useInitialEditingData = ({
     const editingFundingCycleMetadata = serializeV2V3FundingCycleMetadata(
       effectiveFundingCycleMetadata,
     )
-
     // Set editing funding cycle metadata
     dispatch(
       editingV2ProjectActions.setFundingCycleMetadata(

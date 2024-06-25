@@ -36,94 +36,93 @@ export const useLoadEditCycleData = () => {
 
   // Extracts EditCycleFormFields from initialEditingData (which comes from redux)
   useEffect(() => {
-    // Ensure set formValues if currentProjectData has changed (currentProjectData !== initialEditingData.current)
     if (
-      currentProjectData &&
-      !isEqual(currentProjectData, initialEditingData.current)
+      !currentProjectData ||
+      isEqual(currentProjectData, initialEditingData.current)
     ) {
-      const duration = Number(
-        BigInt(currentProjectData.fundingCycleData.duration),
-      )
-      const fundingCycleData = currentProjectData.fundingCycleData
-      const fundingCycleMetadata = currentProjectData.fundingCycleMetadata
-      const mintRate = parseFloat(
-        formatIssuanceRate(
-          deriveNextIssuanceRate({
-            weight: BigInt(0),
-            previousFC: deserializeV2V3FundingCycleData(
-              currentProjectData.fundingCycleData,
-            ),
-          }).toString(),
-        ),
-      )
-      const reservedTokens = fundingCycleMetadata.reservedRate
+      return
+    }
+
+    const fundingCycleData = currentProjectData.fundingCycleData
+    const fundingCycleMetadata = currentProjectData.fundingCycleMetadata
+    if (!fundingCycleData || !fundingCycleMetadata) return
+
+    const duration = Number(BigInt(fundingCycleData.duration))
+
+    const mintRate = parseFloat(
+      formatIssuanceRate(
+        deriveNextIssuanceRate({
+          weight: BigInt(0),
+          previousFC: deserializeV2V3FundingCycleData(fundingCycleData),
+        }).toString(),
+      ),
+    )
+    const reservedTokens =
+      fundingCycleMetadata !== undefined
         ? parseFloat(formatReservedRate(fundingCycleMetadata.reservedRate))
         : DefaultTokenSettings.reservedTokensPercentage
-      const reservedSplits =
-        currentProjectData.payoutGroupedSplits.reservedTokensGroupedSplits
-      const discountRate = fundingCycleData.discountRate
+    const reservedSplits =
+      currentProjectData.payoutGroupedSplits.reservedTokensGroupedSplits
+    const discountRate =
+      fundingCycleData !== undefined
         ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
         : DefaultTokenSettings.discountRate
-      const redemptionRate = fundingCycleMetadata.redemptionRate
+    const redemptionRate =
+      fundingCycleMetadata.redemptionRate !== undefined
         ? parseFloat(formatRedemptionRate(fundingCycleMetadata.redemptionRate))
         : DefaultTokenSettings.redemptionRate
-      const allowTokenMinting =
-        fundingCycleMetadata.allowMinting !== undefined
-          ? fundingCycleMetadata.allowMinting
-          : DefaultTokenSettings.tokenMinting
-      const pauseTransfers =
-        fundingCycleMetadata.global.pauseTransfers !== undefined
-          ? fundingCycleMetadata.global.pauseTransfers
-          : DefaultTokenSettings.pauseTransfers
+    const allowTokenMinting =
+      fundingCycleMetadata.allowMinting !== undefined
+        ? fundingCycleMetadata.allowMinting
+        : DefaultTokenSettings.tokenMinting
+    const pauseTransfers =
+      fundingCycleMetadata.global.pauseTransfers !== undefined
+        ? fundingCycleMetadata.global.pauseTransfers
+        : DefaultTokenSettings.pauseTransfers
 
-      const formData = {
-        duration: secondsToOtherUnit({
-          duration,
-          unit: deriveDurationUnit(duration),
-        }),
-        durationUnit: deriveDurationOption(duration),
-        ballot: currentProjectData.fundingCycleData.ballot,
-        allowSetTerminals:
-          currentProjectData.fundingCycleMetadata.global.allowSetTerminals,
-        allowSetController:
-          currentProjectData.fundingCycleMetadata.global.allowSetController,
-        allowControllerMigration:
-          currentProjectData.fundingCycleMetadata.allowControllerMigration,
-        allowTerminalMigration:
-          currentProjectData.fundingCycleMetadata.allowTerminalMigration,
-        pausePay: currentProjectData.fundingCycleMetadata.pausePay,
-        payoutSplits:
-          currentProjectData.payoutGroupedSplits.payoutGroupedSplits,
-        distributionLimit: distributionLimitStringtoNumber(
-          currentProjectData.fundAccessConstraints[0]?.distributionLimit,
-        ),
-        distributionLimitCurrency:
-          V2V3CurrencyName(
-            Number(
-              BigInt(
-                currentProjectData.fundAccessConstraints[0]
-                  ?.distributionLimitCurrency ?? 0,
-              ),
-            ) as V2V3CurrencyOption,
-          ) ?? 'ETH',
-        holdFees: currentProjectData.fundingCycleMetadata.holdFees,
-        mintRate,
-        reservedTokens,
-        reservedSplits,
-        discountRate,
-        redemptionRate,
-        allowTokenMinting,
-        pauseTransfers: pauseTransfers,
-        nftRewards: currentProjectData.nftRewards,
-        useDataSourceForRedeem:
-          currentProjectData.fundingCycleMetadata.useDataSourceForRedeem,
-        memo: '',
-      }
-      setInitialFormData(formData)
-      editCycleForm.setFieldsValue(formData)
-      initialEditingData.current = currentProjectData
+    const formData = {
+      duration: secondsToOtherUnit({
+        duration,
+        unit: deriveDurationUnit(duration),
+      }),
+      durationUnit: deriveDurationOption(duration),
+      ballot: currentProjectData.fundingCycleData.ballot,
+      allowSetTerminals: fundingCycleMetadata.global.allowSetTerminals,
+      allowSetController: fundingCycleMetadata.global.allowSetController,
+      allowControllerMigration: fundingCycleMetadata.allowControllerMigration,
+      allowTerminalMigration: fundingCycleMetadata.allowTerminalMigration,
+      pausePay: fundingCycleMetadata.pausePay,
+      payoutSplits: currentProjectData.payoutGroupedSplits.payoutGroupedSplits,
+      distributionLimit: distributionLimitStringtoNumber(
+        currentProjectData.fundAccessConstraints[0]?.distributionLimit,
+      ),
+      distributionLimitCurrency:
+        V2V3CurrencyName(
+          Number(
+            BigInt(
+              currentProjectData.fundAccessConstraints[0]
+                ?.distributionLimitCurrency ?? 0,
+            ),
+          ) as V2V3CurrencyOption,
+        ) ?? 'ETH',
+      holdFees: fundingCycleMetadata.holdFees,
+      mintRate,
+      reservedTokens,
+      reservedSplits,
+      discountRate,
+      redemptionRate,
+      allowTokenMinting,
+      pauseTransfers: pauseTransfers,
+      nftRewards: currentProjectData.nftRewards,
+      useDataSourceForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
+      memo: '',
     }
+
+    setInitialFormData(formData)
+    editCycleForm.setFieldsValue(formData)
+    initialEditingData.current = currentProjectData
   }, [currentProjectData, editCycleForm])
+
   return {
     initialFormData,
     editCycleForm,

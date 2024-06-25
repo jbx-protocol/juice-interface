@@ -6,5 +6,3 @@ export const reservedTokensTooltip = (
     recipients below.
   </Trans>
 )
-
-// TODO: redemptionsEnableTooltip

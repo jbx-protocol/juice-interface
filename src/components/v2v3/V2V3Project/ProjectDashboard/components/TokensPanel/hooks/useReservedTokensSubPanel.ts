@@ -16,7 +16,7 @@ export const useReservedTokensSubPanel = () => {
     useProjectContext()
   const reservedRateWad = fundingCycleMetadata?.reservedRate
 
-  const { data: reservedTokensWad } = useProjectReservedTokens({
+  const { data: reservedTokensWad, loading } = useProjectReservedTokens({
     projectId,
     reservedRate: reservedRateWad,
   })
@@ -76,15 +76,8 @@ export const useReservedTokensSubPanel = () => {
     return processedSplits
   }, [reservedTokensSplits, projectOwnerAddress, projectId])
 
-  const reservedRate = useMemo(() => {
-    if (!reservedRateWad) return undefined
-    return `${formatReservedRate(reservedRateWad)}%`
-  }, [reservedRateWad])
+  const reservedRate = `${formatReservedRate(reservedRateWad)}%`
+  const reservedTokens = formatAmount(fromWad(reservedTokensWad))
 
-  const reservedTokens = useMemo(() => {
-    if (!reservedTokensWad) return undefined
-    return formatAmount(fromWad(reservedTokensWad))
-  }, [reservedTokensWad])
-
-  return { reservedList, reservedTokens, reservedRate }
+  return { reservedList, reservedTokens, reservedRate, loading }
 }

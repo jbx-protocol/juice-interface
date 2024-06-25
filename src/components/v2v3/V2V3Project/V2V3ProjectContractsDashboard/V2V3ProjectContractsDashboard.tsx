@@ -64,7 +64,7 @@ export function V2V3ProjectContractsDashboard() {
             k === V2V3ContractName.JBETHPaymentTerminal
               ? 'Primary ETH Payment Terminal'
               : k,
-          address: projectContracts[k as keyof V2V3ProjectContracts]?.address,
+          address: projectContracts[k as keyof V2V3ProjectContracts]?.target,
         }
       })
       .filter(
@@ -76,7 +76,7 @@ export function V2V3ProjectContractsDashboard() {
         return {
           key: k,
           name: k,
-          address: contracts[k as V2V3ContractName]?.address,
+          address: contracts[k as V2V3ContractName]?.target,
         }
       })
       .filter(
@@ -88,8 +88,8 @@ export function V2V3ProjectContractsDashboard() {
       key: 'JBFundAccessConstraintsStore',
       name: 'JBFundAccessConstraintsStore',
       address:
-        projectContracts.JBFundAccessConstraintsStore?.address ||
-        contracts.JBFundAccessConstraintsStore?.address,
+        projectContracts.JBFundAccessConstraintsStore?.target ||
+        contracts.JBFundAccessConstraintsStore?.target,
     },
   ].sort((a, b) => a.name.localeCompare(b.name))
 

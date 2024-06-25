@@ -11,6 +11,11 @@ import { isBigintIsh } from 'utils/bigNumbers'
 import introspectionResult from '../../../graphql.schema.json'
 import { subgraphUri } from './subgraphUri'
 
+//eslint-disable-next-line
+;(BigInt.prototype as any).toJSON = function () {
+  return { $bigint: this.toString() }
+}
+
 const typesMap: FunctionsMap = {
   BigInt: {
     serialize: (parsed: unknown): string | null => {

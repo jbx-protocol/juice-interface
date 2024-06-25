@@ -19,28 +19,21 @@ export const useTreasuryStats = () => {
   } = useProjectContext()
   const { distributableAmount } = useDistributableAmount()
 
-  const distributionLimitCurrency: V2V3CurrencyOption | undefined =
-    useMemo(() => {
-      if (!distributionLimitCurrencyRaw) return undefined
-      if (distributionLimitCurrencyRaw === 0n) return V2V3_CURRENCY_ETH // treat as eth
-      return Number(distributionLimitCurrencyRaw) as V2V3CurrencyOption
-    }, [distributionLimitCurrencyRaw])
+  const distributionLimitCurrency: V2V3CurrencyOption =
+    distributionLimitCurrencyRaw === 0n
+      ? V2V3_CURRENCY_ETH
+      : (Number(distributionLimitCurrencyRaw) as V2V3CurrencyOption) // treat as eth
 
-  const treasuryBalance = useMemo(() => {
-    if (!balanceInDistributionLimitCurrency) return undefined
-
-    return (
-      <AmountInCurrency
-        amount={balanceInDistributionLimitCurrency}
-        currency={V2V3CurrencyName(distributionLimitCurrency)}
-      />
-    )
-  }, [balanceInDistributionLimitCurrency, distributionLimitCurrency])
+  const treasuryBalance = (
+    <AmountInCurrency
+      amount={balanceInDistributionLimitCurrency}
+      currency={V2V3CurrencyName(distributionLimitCurrency)}
+    />
+  )
 
   const { weiToUsd } = useCurrencyConverter()
 
   const overflow = useMemo(() => {
-    if (!distributionLimit) return undefined
     if (isInfiniteDistributionLimit(distributionLimit)) return t`No overflow`
 
     const overflowInDistributionLimitCurrency =

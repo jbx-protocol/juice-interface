@@ -49,7 +49,7 @@ export default function FundingCycleDetailsCard({
         <span className="ml-2 text-grey-500 dark:text-grey-300">
           {isFundingCycleRecurring ? (
             <Trans>
-              {formattedTimeLeft} until #{fundingCycleNumber + 1n.toString()}
+              {formattedTimeLeft} until #{(fundingCycleNumber + 1n).toString()}
             </Trans>
           ) : (
             <Trans>{formattedTimeLeft} left</Trans>

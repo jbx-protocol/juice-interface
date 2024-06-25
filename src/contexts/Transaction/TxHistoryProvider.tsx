@@ -27,7 +27,7 @@ const pollTransaction = async (
   if (!response) {
     // if no response and tx was created over a minute ago, then assume the tx is cancelled.
     if (oneMinuteAgo > txLog.createdAt) {
-      txLog.callbacks?.onCancelled?.(response)
+      txLog.callbacks?.onCancelled?.(response ?? undefined)
       return {
         ...txLog,
         tx: response,

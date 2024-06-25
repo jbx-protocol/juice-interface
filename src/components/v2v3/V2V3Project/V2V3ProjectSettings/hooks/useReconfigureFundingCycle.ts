@@ -2,7 +2,7 @@ import { PV_V2 } from 'constants/pv'
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { constants } from 'ethers'
+import { ZeroAddress } from 'ethers'
 import { useReconfigureV2V3FundingCycleWithNftsTx } from 'hooks/JB721Delegate/transactor/useReconfigureV2V3FundingCycleWithNftsTx'
 import {
   ReconfigureFundingCycleTxParams,
@@ -132,7 +132,7 @@ export const useReconfigureFundingCycle = ({
           fundingCycleMetadata: {
             ...fundingCycleMetadata,
             dataSource: removeDatasource
-              ? constants.AddressZero
+              ? ZeroAddress
               : fundingCycleMetadata.dataSource,
           },
           fundAccessConstraints: editingFundAccessConstraints,

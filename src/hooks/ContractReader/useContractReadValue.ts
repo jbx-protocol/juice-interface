@@ -60,7 +60,7 @@ export function useContractReadValue<C extends string, V>({
           functionName,
           { args },
           { newValue },
-          { contract: readContract?.address },
+          { contract: readContract?.target },
         )
         setValue(newValue)
       }

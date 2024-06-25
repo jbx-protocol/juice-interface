@@ -78,7 +78,7 @@ export const useEditingDistributionLimit = (): [
       if (!defaultJBETHPaymentTerminal) return
 
       const currentFundAccessConstraint = fundAccessConstraints?.[0] ?? {
-        terminal: defaultJBETHPaymentTerminal?.address,
+        terminal: defaultJBETHPaymentTerminal?.target,
         token: ETH_TOKEN_ADDRESS,
         distributionLimitCurrency: V2V3_CURRENCY_ETH.toString(),
         overflowAllowance: '0',

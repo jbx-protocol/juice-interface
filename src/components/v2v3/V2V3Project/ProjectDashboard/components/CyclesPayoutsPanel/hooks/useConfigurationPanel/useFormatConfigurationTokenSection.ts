@@ -99,26 +99,24 @@ export const useFormatConfigurationTokenSection = ({
   ])
 
   const reservedRateDatum: ConfigurationPanelDatum = useMemo(() => {
-    const currentReservedRate = fundingCycleMetadata?.reservedRate
-      ? formatReservedRate(fundingCycleMetadata?.reservedRate)
-      : undefined
-    const current = currentReservedRate ? `${currentReservedRate}%` : undefined
+    const currentReservedRate = formatReservedRate(
+      fundingCycleMetadata?.reservedRate,
+    )
+    const current = `${currentReservedRate}%`
     if (upcomingFundingCycleMetadata === null) {
       return pairToDatum(t`Reserved rate`, current, null)
     }
 
-    const upcomingReservedRate = upcomingFundingCycleMetadata?.reservedRate
-      ? formatReservedRate(upcomingFundingCycleMetadata?.reservedRate)
-      : undefined
-    const upcoming = upcomingReservedRate
-      ? `${upcomingReservedRate}%`
-      : undefined
+    const upcomingReservedRate = formatReservedRate(
+      upcomingFundingCycleMetadata?.reservedRate,
+    )
+    const upcoming = `${upcomingReservedRate}%`
     return pairToDatum(t`Reserved rate`, current, upcoming)
   }, [fundingCycleMetadata?.reservedRate, upcomingFundingCycleMetadata])
 
   const issueanceReductionRateDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentIssueanceReductionRate = fundingCycle
-      ? formatDiscountRate(fundingCycle?.discountRate.toString())
+      ? formatDiscountRate(fundingCycle?.discountRate)
       : undefined
     const current = currentIssueanceReductionRate
       ? `${currentIssueanceReductionRate}%`
@@ -129,7 +127,7 @@ export const useFormatConfigurationTokenSection = ({
     }
 
     const upcomingIssueanceReductionRate = upcomingFundingCycle
-      ? formatDiscountRate(upcomingFundingCycle?.discountRate.toString())
+      ? formatDiscountRate(upcomingFundingCycle?.discountRate)
       : undefined
     const upcoming = upcomingIssueanceReductionRate
       ? `${upcomingIssueanceReductionRate}%`

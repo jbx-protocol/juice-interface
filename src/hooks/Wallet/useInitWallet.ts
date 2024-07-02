@@ -22,6 +22,7 @@ export function initWeb3Onboard() {
     whitelistedDomains: [/.*nance.app/, /.*juicebox.money/, /juicebox.money/],
   })
   const walletConnect = walletConnectModule({
+    dappUrl: 'https://juicebox.money',
     version: 2,
     projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID!,
     requiredChains: [readNetwork.chainId],

@@ -8,8 +8,7 @@ import {
   V1_V3_ALLOCATOR_ADDRESS,
 } from 'constants/contracts/mainnet/Allocators'
 import { CurrencyName } from 'constants/currency'
-import { BigNumber } from 'ethers'
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, useMemo } from 'react'
 import { isEqualAddress, isZeroAddress } from 'utils/address'
 import { classNames } from 'utils/classNames'
 import { formatDate } from 'utils/format/formatDate'
@@ -49,23 +48,26 @@ const FormattedPercentageAmount = ({
   currencyName,
 }: {
   percent: number
-  feePerbicent: BigNumber
+  feePerbicent: bigint
   target: string
   targetIsInfinite: boolean | undefined
   currencyName: CurrencyName | undefined
 }) => {
+  const formatted = useMemo(() => {
+    const asf = amountSubFee(parseWad(target), feePerbicent)
+    return asf ? (asf * BigInt(percent)) / 10000n : undefined
+  }, [percent, target, feePerbicent])
+
   return (
     <Space size="large">
       <span>{permyriadToPercent(percent)}%</span>
       {!targetIsInfinite && (
         <span>
           <CurrencySymbol currency={currencyName} />
-          {formatWad(
-            amountSubFee(parseWad(target), feePerbicent)
-              ?.mul(percent)
-              .div(10000),
-            { precision: currencyName === 'USD' ? 2 : 4, padEnd: true },
-          )}
+          {formatWad(formatted, {
+            precision: currencyName === 'USD' ? 2 : 4,
+            padEnd: true,
+          })}
         </span>
       )}
     </Space>
@@ -95,9 +97,11 @@ export function ProjectModInput({
 }) {
   const feePerbicent = percentToPerbicent(feePercentage)
 
-  const isV1Project = mod.projectId?.gt(0) && isZeroAddress(mod.allocator)
+  const isV1Project =
+    mod.projectId && mod.projectId > 0n && isZeroAddress(mod.allocator)
   const isV3Project =
-    mod.projectId?.gt(0) &&
+    mod.projectId &&
+    mod.projectId > 0n &&
     isEqualAddress(mod.allocator, V1_V3_ALLOCATOR_ADDRESS)
 
   return (
@@ -125,7 +129,7 @@ export function ProjectModInput({
         ) : isV3Project ? (
           <FormattedRow label={'Project ID'}>
             <Space size="small">
-              <span>{mod.projectId?.toNumber()}</span>
+              <span>{Number(mod.projectId)}</span>
               <AllocatorBadge allocator={mod.allocator} />
             </Space>
           </FormattedRow>
@@ -134,11 +138,13 @@ export function ProjectModInput({
             <EthereumAddress address={mod.beneficiary} />
           </FormattedRow>
         )}
-        {mod.projectId?.gt(0) && mod.allocator === NULL_ALLOCATOR_ADDRESS && (
-          <FormattedRow label="Beneficiary">
-            <EthereumAddress address={mod.beneficiary} />
-          </FormattedRow>
-        )}
+        {!!mod.projectId &&
+          mod.projectId > 0n &&
+          mod.allocator === NULL_ALLOCATOR_ADDRESS && (
+            <FormattedRow label="Beneficiary">
+              <EthereumAddress address={mod.beneficiary} />
+            </FormattedRow>
+          )}
         <FormattedRow label="Percentage">
           <FormattedPercentageAmount
             percent={mod.percent}

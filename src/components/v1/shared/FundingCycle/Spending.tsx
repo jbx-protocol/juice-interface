@@ -31,11 +31,12 @@ export default function Spending({
   const target = currentFC.target
   const distributedAmount = currentFC.tapped
 
-  const distributable = target.sub(distributedAmount)
+  const distributable = target - distributedAmount
 
-  const distributableAmount = balanceInCurrency?.gt(distributable)
-    ? distributable
-    : balanceInCurrency
+  const distributableAmount =
+    balanceInCurrency && balanceInCurrency > distributable
+      ? distributable
+      : balanceInCurrency
 
   return (
     <div>
@@ -44,7 +45,7 @@ export default function Spending({
           <SpendingStats
             hasFundingTarget={hasFundingTarget(currentFC)}
             currency={V1CurrencyName(
-              currentFC.currency.toNumber() as V1CurrencyOption,
+              Number(currentFC.currency) as V1CurrencyOption,
             )}
             distributableAmount={distributableAmount}
             targetAmount={target}
@@ -62,7 +63,7 @@ export default function Spending({
           </Button>
         </div>
 
-        {currentFC.target.gt(0) && (
+        {currentFC.target > 0n && (
           <div>
             <TooltipLabel
               label={

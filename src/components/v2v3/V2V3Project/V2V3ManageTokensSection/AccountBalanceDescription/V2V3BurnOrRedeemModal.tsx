@@ -10,7 +10,6 @@ import { RedeemAMMPrices } from 'components/Project/RedeemAMMPrices'
 import { TokenAmount } from 'components/TokenAmount'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber } from 'ethers'
 import { useETHReceivedFromTokens } from 'hooks/v2v3/contractReader/useETHReceivedFromTokens'
 import useTotalBalanceOf from 'hooks/v2v3/contractReader/useTotalBalanceOf'
 import { useBurnTokensTx } from 'hooks/v2v3/transactor/useBurnTokensTx'
@@ -67,10 +66,13 @@ export function V2V3BurnOrRedeemModal({
   if (!fundingCycle || !fundingCycleMetadata) return null
 
   // 0.5% slippage for USD-denominated projects
-  const minReturnedTokens = distributionLimitCurrency?.eq(V2V3_CURRENCY_USD)
-    ? rewardAmount?.mul(1000).div(1005)
-    : // ? rewardAmount?.mul(100).div(101)
-      rewardAmount
+  const minReturnedTokens =
+    distributionLimitCurrency &&
+    Number(distributionLimitCurrency) === V2V3_CURRENCY_USD
+      ? rewardAmount
+        ? (rewardAmount * 1000n) / 1005n
+        : undefined
+      : rewardAmount
 
   const tokensTextLong = tokenSymbolText({
     tokenSymbol,
@@ -81,8 +83,9 @@ export function V2V3BurnOrRedeemModal({
 
   let modalTitle: string
 
-  const hasOverflow = primaryTerminalCurrentOverflow?.gt(0)
-  const hasRedemptionRate = fundingCycleMetadata.redemptionRate.gt(0)
+  const hasOverflow =
+    primaryTerminalCurrentOverflow && primaryTerminalCurrentOverflow > 0n
+  const hasRedemptionRate = fundingCycleMetadata.redemptionRate > 0n
 
   // Single source of truth for determining if a user can redeem.
   // If this is false, the user is burning their tokens.
@@ -97,11 +100,11 @@ export function V2V3BurnOrRedeemModal({
   const validateRedeemAmount = () => {
     const redeemBN = parseWad(redeemAmount ?? 0)
 
-    if (redeemBN.eq(0)) {
+    if (redeemBN === 0n) {
       return Promise.reject(t`Required`)
-    } else if (redeemBN.gt(totalBalance ?? 0)) {
+    } else if (redeemBN > (totalBalance ?? 0n)) {
       return Promise.reject(t`Insufficient token balance`)
-    } else if (redeemBN.gt(totalTokenSupply ?? 0)) {
+    } else if (redeemBN > (totalTokenSupply ?? 0n)) {
       // Error message already showing for this case
       return Promise.reject()
     }
@@ -187,7 +190,9 @@ export function V2V3BurnOrRedeemModal({
     parseFloat(redeemAmount) > parseFloat(fromWad(totalTokenSupply))
   const personalBalanceExceeded =
     redeemAmount && parseFloat(redeemAmount) > parseFloat(fromWad(totalBalance))
-  const inUSD = distributionLimitCurrency?.eq(V2V3_CURRENCY_USD)
+  const inUSD =
+    distributionLimitCurrency &&
+    Number(distributionLimitCurrency) === V2V3_CURRENCY_USD
 
   return (
     <TransactionModal
@@ -265,7 +270,7 @@ export function V2V3BurnOrRedeemModal({
             }
           >
             <TokenAmount
-              amountWad={totalBalance ?? BigNumber.from(0)}
+              amountWad={totalBalance ?? BigInt(0)}
               tokenSymbol={tokenSymbol}
             />
           </Descriptions.Item>
@@ -298,7 +303,7 @@ export function V2V3BurnOrRedeemModal({
                     onClick={() => setRedeemAmount(fromWad(totalBalance))}
                   />
                 }
-                disabled={totalBalance?.eq(0)}
+                disabled={totalBalance === 0n}
                 onChange={val => setRedeemAmount(val)}
               />
               {tokenSymbol && tokenAddress ? (
@@ -341,7 +346,10 @@ export function V2V3BurnOrRedeemModal({
             </Form.Item> */}
           </Form>
 
-          {canRedeem && !totalSupplyExceeded && minReturnedTokens?.gt(0) ? (
+          {canRedeem &&
+          !totalSupplyExceeded &&
+          minReturnedTokens &&
+          minReturnedTokens > 0n ? (
             <div className="mt-5 font-medium">
               <>
                 {/* If USD denominated, can only define the lower limit (not exact amount), hence 'at least' */}

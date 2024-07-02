@@ -1,16 +1,17 @@
 import { t } from '@lingui/macro'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
-import { BigNumber, Contract } from 'ethers'
+import { Contract } from 'ethers'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
 import { useContext } from 'react'
 
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactorInstance } from 'hooks/useTransactor'
+import { toHexString } from 'utils/bigNumbers'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function usePrintTokensTx(): TransactorInstance<{
-  value: BigNumber
+  value: bigint
   currency: V1CurrencyOption
   beneficiary: string
   memo: string
@@ -35,9 +36,9 @@ export function usePrintTokensTx(): TransactorInstance<{
         terminalContract = contracts.TerminalV1
         functionName = 'printPreminedTickets'
         args = [
-          BigNumber.from(projectId).toHexString(),
-          value.toHexString(),
-          BigNumber.from(currency).toHexString(),
+          toHexString(BigInt(projectId)),
+          toHexString(value),
+          toHexString(BigInt(currency)),
           beneficiary,
           memo ?? '',
           preferUnstaked,
@@ -47,8 +48,8 @@ export function usePrintTokensTx(): TransactorInstance<{
         terminalContract = contracts.TerminalV1_1
         functionName = 'printTickets'
         args = [
-          BigNumber.from(projectId).toHexString(),
-          value.toHexString(),
+          toHexString(BigInt(projectId)),
+          toHexString(value),
           beneficiary,
           memo ?? '',
           preferUnstaked,

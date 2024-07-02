@@ -7,7 +7,6 @@ import V1ProjectTokenBalance from 'components/v1/shared/V1ProjectTokenBalance'
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { BigNumber } from 'ethers'
 import { useV1ConnectedWalletHasPermission } from 'hooks/v1/contractReader/useV1ConnectedWalletHasPermission'
 import { useSetProjectUriTx } from 'hooks/v1/transactor/useSetProjectUriTx'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
@@ -121,7 +120,7 @@ export function V1BalancesModal({
               <V1ProjectTokenBalance
                 key={t.value}
                 wallet={owner}
-                projectId={BigNumber.from(t.value).toNumber()}
+                projectId={Number(BigInt(t.value))}
               />
             ),
           )}

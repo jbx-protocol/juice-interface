@@ -1,11 +1,9 @@
-import { BigNumber } from 'ethers'
-
 export interface PayoutMod {
   beneficiary?: string
   percent: number
   preferUnstaked?: boolean
   lockedUntil?: number
-  projectId?: BigNumber
+  projectId?: bigint
   allocator?: string
 }
 

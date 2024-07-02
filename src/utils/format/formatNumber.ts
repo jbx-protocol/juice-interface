@@ -1,6 +1,7 @@
 import { WAD_DECIMALS } from 'constants/numbers'
-import { BigNumber, BigNumberish, utils } from 'ethers'
+import { ethers } from 'ethers'
 import round from 'lodash/round'
+import { BigintIsh } from 'utils/bigNumbers'
 
 type FormatConfig = {
   empty?: string
@@ -26,8 +27,8 @@ const thousandsSeparator = ','
  * parseWad(1);
  *
  */
-export const parseWad = (value?: BigNumberish) =>
-  utils.parseUnits(value?.toString() || '0', WAD_DECIMALS)
+export const parseWad = (value?: BigintIsh) =>
+  ethers.parseUnits(value?.toString() || '0', WAD_DECIMALS)
 
 /**
  * Returns a string representation of a given [wadValue]
@@ -41,8 +42,8 @@ export const parseWad = (value?: BigNumberish) =>
  * fromWad(1000000000000000000);
  *
  */
-export const fromWad = (wadValue?: BigNumberish) => {
-  const result = utils.formatUnits(wadValue ?? '0')
+export const fromWad = (wadValue?: BigintIsh) => {
+  const result = ethers.formatUnits(wadValue ?? '0')
   return result.substring(result.length - 2) === '.0'
     ? result.substring(0, result.length - 2)
     : result
@@ -61,7 +62,7 @@ export const fromWad = (wadValue?: BigNumberish) => {
  *
  */
 export const formatWad = (
-  wadValue?: BigNumberish,
+  wadValue?: BigintIsh,
   formatConfig?: FormatConfig,
 ) => {
   if (wadValue === undefined && wadValue === null && wadValue === '') return
@@ -82,7 +83,7 @@ export const formatWad = (
  * fromWad(1230000000000000000);
  *
  */
-export const wadToFloat = (wadValue?: BigNumberish) => {
+export const wadToFloat = (wadValue?: BigintIsh) => {
   return parseFloat(fromWad(wadValue))
 }
 
@@ -94,7 +95,7 @@ export const wadToFloat = (wadValue?: BigNumberish) => {
  * Ref: https://math.fandom.com/wiki/Permyriad
  */
 export const percentToPermyriad = (percentValue?: string | number) =>
-  BigNumber.from(
+  BigInt(
     percentValue ? Math.floor(parseFloat(percentValue.toString()) * 100) : 0,
   )
 
@@ -105,10 +106,8 @@ export const percentToPermyriad = (percentValue?: string | number) =>
  *
  * Ref: https://math.fandom.com/wiki/Permyriad
  */
-export const permyriadToPercent = (permyriadValue?: BigNumberish) =>
-  permyriadValue
-    ? (BigNumber.from(permyriadValue).toNumber() / 100).toString()
-    : '0'
+export const permyriadToPercent = (permyriadValue?: BigintIsh) =>
+  permyriadValue ? (Number(BigInt(permyriadValue)) / 100).toString() : '0'
 
 /**
  * Scale a given [percentValue] to the permille unit by multiplying it by 10.
@@ -118,7 +117,7 @@ export const permyriadToPercent = (permyriadValue?: BigNumberish) =>
  * Ref: https://math.fandom.com/wiki/Permille
  */
 export const percentToPermille = (percentValue?: string | number) =>
-  BigNumber.from(
+  BigInt(
     percentValue ? Math.floor(parseFloat(percentValue.toString()) * 10) : 0,
   )
 
@@ -129,10 +128,8 @@ export const percentToPermille = (percentValue?: string | number) =>
  *
  * Ref: https://math.fandom.com/wiki/Permille
  */
-export const permilleToPercent = (permilleValue?: BigNumberish) =>
-  permilleValue
-    ? (BigNumber.from(permilleValue).toNumber() / 10).toString()
-    : '0'
+export const permilleToPercent = (permilleValue?: BigintIsh) =>
+  permilleValue ? (Number(BigInt(permilleValue)) / 10).toString() : '0'
 
 /**
  * Scale a given [percentValue] to the perbicent unit by multiplying it by 2.
@@ -140,19 +137,15 @@ export const permilleToPercent = (permilleValue?: BigNumberish) =>
  * Perbicent: x/200
  */
 export const percentToPerbicent = (percentValue?: string | number) =>
-  BigNumber.from(
-    percentValue ? Math.floor(parseFloat(percentValue.toString()) * 2) : 0,
-  )
+  BigInt(percentValue ? Math.floor(parseFloat(percentValue.toString()) * 2) : 0)
 
 /**
  * Scale a given [perbicentValue] to the percent unit by dividing it by 2.
  *
  * Perbicent: x/200
  */
-export const perbicentToPercent = (perbicentValue?: BigNumberish) =>
-  perbicentValue
-    ? (BigNumber.from(perbicentValue).toNumber() / 2).toString()
-    : '0'
+export const perbicentToPercent = (perbicentValue?: BigintIsh) =>
+  perbicentValue ? (Number(BigInt(perbicentValue)) / 2).toString() : '0'
 
 export const fracDiv = (quotient: string, dividend: string) => {
   return parseFloat(quotient) / parseFloat(dividend)
@@ -170,7 +163,7 @@ export const stripCommas = (string: string) => {
 }
 
 export const formattedNum = (
-  num: BigNumberish | undefined,
+  num: BigintIsh | undefined,
   config?: FormatConfig,
 ) => {
   const _empty = config?.empty ?? '0'
@@ -238,18 +231,18 @@ export const formattedNum = (
 }
 
 export const formatPercent = (
-  numerator: BigNumber | undefined,
-  divisor: BigNumber | undefined,
+  numerator: bigint | undefined,
+  divisor: bigint | undefined,
 ): string => {
-  if (!divisor?.gt(0) || !numerator) return ''
+  if (!(divisor && divisor > 0n) || !numerator) return ''
 
   // Multiply by 10,000 for 4 significant figures
-  const sharePct = numerator?.mul(10000).div(divisor)
+  const sharePct = (numerator * 10000n) / divisor
 
-  if (sharePct?.toString() === '0' && numerator?.gt(0)) {
+  if (sharePct?.toString() === '0' && numerator > 0n) {
     return '<0.01'
   }
-  return (sharePct?.toNumber() / 100).toString()
+  return (sharePct / 100n).toString()
 }
 
 /**

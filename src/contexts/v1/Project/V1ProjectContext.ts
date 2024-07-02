@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { V1FundingCycle } from 'models/v1/fundingCycle'
 import { PayoutMod, TicketMod } from 'models/v1/mods'
 import { V1TerminalName, V1TerminalVersion } from 'models/v1/terminals'
@@ -9,7 +8,7 @@ export type V1ProjectContextType = {
   createdAt: number | undefined
   handle: string | undefined
   owner: string | undefined // owner address
-  earned: BigNumber | undefined
+  earned: bigint | undefined
   currentFC: V1FundingCycle | undefined
   queuedFC: V1FundingCycle | undefined
   currentPayoutMods: PayoutMod[] | undefined
@@ -18,9 +17,9 @@ export type V1ProjectContextType = {
   queuedTicketMods: TicketMod[] | undefined
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
-  balance: BigNumber | undefined
-  balanceInCurrency: BigNumber | undefined
-  overflow: BigNumber | undefined
+  balance: bigint | undefined
+  balanceInCurrency: bigint | undefined
+  overflow: bigint | undefined
   terminal:
     | {
         version: V1TerminalVersion | undefined

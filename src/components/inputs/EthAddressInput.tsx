@@ -1,7 +1,5 @@
 import { CheckCircleFilled, LoadingOutlined } from '@ant-design/icons'
-import { constants } from 'ethers'
-
-import { isAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { resolveAddress } from 'lib/api/ens'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -13,7 +11,7 @@ const isENS = (address = '') => address.endsWith('.eth')
 export function EthAddressInput({
   className,
   value,
-  placeholder = `juicebox.eth / ${constants.AddressZero}`,
+  placeholder = `juicebox.eth / ${ethers.ZeroAddress}`,
   onChange,
   onBlur,
   ref,
@@ -74,7 +72,7 @@ export function EthAddressInput({
         } finally {
           setLoadingENSName(false)
         }
-      } else if (isAddress(val)) {
+      } else if (ethers.isAddress(val)) {
         setLoadingENSName(true)
         await handleAddressInput(val)
         setLoadingENSName(false)

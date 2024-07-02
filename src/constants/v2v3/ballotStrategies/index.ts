@@ -1,12 +1,14 @@
 import { plural, t } from '@lingui/macro'
 import { readNetwork } from 'constants/networks'
-import { SECONDS_IN_DAY } from 'constants/numbers'
-import { constants } from 'ethers'
+import { SECONDS_IN_DAY as SECONDS_IN_DAY_BI } from 'constants/numbers'
 import { CV2V3 } from 'models/v2v3/cv'
 
 import { CV_V2 } from 'constants/cv'
+import { ethers } from 'ethers'
 import { NetworkName } from 'models/networkName'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
+
+const SECONDS_IN_DAY = Number(SECONDS_IN_DAY_BI)
 
 type BallotOption = Record<
   'ONE_DAY' | 'THREE_DAY' | 'SEVEN_DAY',
@@ -16,7 +18,7 @@ type BallotOption = Record<
 const V2_BALLOT_ADDRESSES: BallotOption = {
   ONE_DAY: {
     // No 1 day delay contract deployed with V2
-    mainnet: constants.AddressZero,
+    mainnet: ethers.ZeroAddress,
   },
   THREE_DAY: {
     mainnet: '0x4b9f876c7Fc5f6DEF8991fDe639b2C812a85Fb12',
@@ -71,7 +73,7 @@ export function ballotStrategiesFn({
       id: 'none',
       name: t`No deadline`,
       description: t`Edits to upcoming cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner.`,
-      address: constants.AddressZero,
+      address: ethers.ZeroAddress,
       durationSeconds: 0,
     },
   ]

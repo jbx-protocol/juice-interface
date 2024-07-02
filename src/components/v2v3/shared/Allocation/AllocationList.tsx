@@ -1,6 +1,5 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { BigNumber } from 'ethers'
 import { useModal } from 'hooks/useModal'
 import { ReactNode, useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -74,7 +73,7 @@ export const AllocationList = ({
 
       if (
         !totalAllocationAmount ||
-        totalAllocationAmount.eq(MAX_DISTRIBUTION_LIMIT)
+        totalAllocationAmount === MAX_DISTRIBUTION_LIMIT
       ) {
         allocationInstance.removeAllocation(id)
         return
@@ -121,7 +120,7 @@ export const AllocationList = ({
         }
 
         const originalTotal = parseFloat(
-          fromWad(totalAllocationAmount ?? BigNumber.from(0)),
+          fromWad(totalAllocationAmount ?? BigInt(0)),
         )
         let totalAmount = originalTotal
 
@@ -158,7 +157,7 @@ export const AllocationList = ({
           }
 
           const originalTotal = parseFloat(
-            fromWad(totalAllocationAmount ?? BigNumber.from(0)),
+            fromWad(totalAllocationAmount ?? BigInt(0)),
           )
 
           // checks original ID
@@ -178,7 +177,7 @@ export const AllocationList = ({
           // Only set new total if setTotalAllocationAmount available
           //   e.g. Edit payouts does not allow setting new total
           const newTotal = setTotalAllocationAmount
-            ? parseWad(totalAmount).add(allocationAmount)
+            ? parseWad(totalAmount) + allocationAmount
             : parseWad(originalTotal)
 
           const newOrEditedAllocation = entityToAllocation(result, newTotal)
@@ -269,7 +268,7 @@ export const AllocationList = ({
 
 const entityToAllocation = (
   entity: AddEditAllocationModalEntity & { projectOwner: false },
-  totalAllocationAmount: BigNumber | undefined,
+  totalAllocationAmount: bigint | undefined,
 ): AllocationSplit => {
   const projectIdHex = projectIdToHex(entity.projectId)
   const allocationProps = {
@@ -298,12 +297,12 @@ const entityToAllocation = (
 
 const allocationToEntity = (
   alloc: AllocationSplit,
-  totalAllocationAmount: BigNumber | undefined,
+  totalAllocationAmount: bigint | undefined,
   availableModes: Set<'amount' | 'percentage'>,
 ): AddEditAllocationModalEntity & { projectOwner: false } => {
   const isPercent =
     !totalAllocationAmount ||
-    totalAllocationAmount.eq(MAX_DISTRIBUTION_LIMIT) ||
+    totalAllocationAmount === MAX_DISTRIBUTION_LIMIT ||
     !availableModes.has('amount') // override if amount not available in the instance
   let amount = { value: alloc.percent.toString(), isPercent }
 

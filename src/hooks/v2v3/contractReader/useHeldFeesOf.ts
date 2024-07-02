@@ -10,9 +10,7 @@ export function useHeldFeesOf() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await contracts.JBETHPaymentTerminal?.functions.heldFeesOf(
-        projectId,
-      )
+      const res = await contracts.JBETHPaymentTerminal?.heldFeesOf(projectId)
       if (!res) return
       const _heldFees = sumHeldFees(res[0])
       setHeldFees(_heldFees)

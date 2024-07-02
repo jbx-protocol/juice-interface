@@ -1,4 +1,4 @@
-import { isAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { resolveAddress } from 'lib/api/ens'
 import { useCallback, useReducer } from 'react'
@@ -50,7 +50,7 @@ export const useEditRewardBeneficiary = (
             dispatch({ type: 'error', error: e.message })
           }
         }
-        if (isAddress(value)) {
+        if (ethers.isAddress(value)) {
           return handleFinishedEditing(value)
         }
       },

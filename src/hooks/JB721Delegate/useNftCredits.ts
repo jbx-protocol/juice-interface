@@ -1,5 +1,4 @@
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
-import { BigNumber } from 'ethers'
 import useV2ContractReader from 'hooks/v2v3/contractReader/useV2ContractReader'
 import { useContext } from 'react'
 
@@ -14,7 +13,7 @@ export function useNftCredits(address: string | undefined) {
     contracts: { JB721TieredDelegate },
   } = useContext(JB721DelegateContractsContext)
 
-  return useV2ContractReader<BigNumber>({
+  return useV2ContractReader<bigint>({
     contract: JB721TieredDelegate,
     functionName: 'creditsOf',
     args: address ? [address] : null,

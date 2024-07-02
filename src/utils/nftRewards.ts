@@ -4,7 +4,7 @@ import { juiceboxEmojiImageUri } from 'constants/images'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
-import { BigNumber, constants, utils } from 'ethers'
+import { ethers } from 'ethers'
 import { pinJson } from 'lib/api/ipfs'
 import {
   IPFSNftCollectionMetadata,
@@ -202,25 +202,24 @@ function nftRewardTierToJB721TierParamsV3(
   rewardTier: NftRewardTier,
   cid: string,
 ): JB721TierParams {
-  const contributionFloorWei = utils.parseEther(
+  const contributionFloorWei = ethers.parseEther(
     rewardTier.contributionFloor.toString(),
   )
   const maxSupply = rewardTier.maxSupply
-  const initialQuantity = BigNumber.from(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
+  const initialQuantity = BigInt(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
   const encodedIPFSUri = encodeIpfsUri(cid)
 
   const reservedRate = rewardTier.reservedRate
-    ? BigNumber.from(rewardTier.reservedRate - 1)
-    : BigNumber.from(0)
-  const reservedTokenBeneficiary =
-    rewardTier.beneficiary ?? constants.AddressZero
+    ? BigInt(rewardTier.reservedRate - 1)
+    : BigInt(0)
+  const reservedTokenBeneficiary = rewardTier.beneficiary ?? ethers.ZeroAddress
   const votingUnits = rewardTier.votingWeight
-    ? BigNumber.from(rewardTier.votingWeight)
-    : BigNumber.from(0)
+    ? BigInt(rewardTier.votingWeight)
+    : BigInt(0)
 
   return {
     contributionFloor: contributionFloorWei,
-    lockedUntil: BigNumber.from(0),
+    lockedUntil: BigInt(0),
     initialQuantity,
     votingUnits,
     reservedRate,
@@ -236,25 +235,24 @@ function nftRewardTierToJB721TierParamsV3_1(
   rewardTier: NftRewardTier,
   cid: string,
 ): JB_721_TIER_PARAMS_V3_1 {
-  const contributionFloorWei = utils.parseEther(
+  const contributionFloorWei = ethers.parseEther(
     rewardTier.contributionFloor.toString(),
   )
   const maxSupply = rewardTier.maxSupply
-  const initialQuantity = BigNumber.from(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
+  const initialQuantity = BigInt(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
   const encodedIPFSUri = encodeIpfsUri(cid)
 
   const reservedRate = rewardTier.reservedRate
-    ? BigNumber.from(rewardTier.reservedRate - 1)
-    : BigNumber.from(0)
-  const reservedTokenBeneficiary =
-    rewardTier.beneficiary ?? constants.AddressZero
+    ? BigInt(rewardTier.reservedRate - 1)
+    : BigInt(0)
+  const reservedTokenBeneficiary = rewardTier.beneficiary ?? ethers.ZeroAddress
   const votingUnits = rewardTier.votingWeight
-    ? BigNumber.from(rewardTier.votingWeight)
-    : BigNumber.from(0)
+    ? BigInt(rewardTier.votingWeight)
+    : BigInt(0)
 
   return {
     contributionFloor: contributionFloorWei,
-    lockedUntil: BigNumber.from(0),
+    lockedUntil: BigInt(0),
     initialQuantity,
     votingUnits,
     reservedRate,
@@ -263,7 +261,7 @@ function nftRewardTierToJB721TierParamsV3_1(
     allowManualMint: false,
     transfersPausable: false,
     royaltyRate: 0,
-    royaltyBeneficiary: constants.AddressZero, // address
+    royaltyBeneficiary: ethers.ZeroAddress, // address
     shouldUseReservedTokenBeneficiaryAsDefault: false,
     shouldUseRoyaltyBeneficiaryAsDefault: false,
     category: DEFAULT_JB_721_TIER_CATEGORY,
@@ -274,19 +272,18 @@ function nftRewardTierToJB721TierParamsV3_2(
   rewardTier: NftRewardTier,
   cid: string,
 ): JB_721_TIER_PARAMS_V3_2 {
-  const price = utils.parseEther(rewardTier.contributionFloor.toString())
+  const price = ethers.parseEther(rewardTier.contributionFloor.toString())
   const maxSupply = rewardTier.maxSupply
-  const initialQuantity = BigNumber.from(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
+  const initialQuantity = BigInt(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
   const encodedIPFSUri = encodeIpfsUri(cid)
 
   const reservedRate = rewardTier.reservedRate
-    ? BigNumber.from(rewardTier.reservedRate - 1)
-    : BigNumber.from(0)
-  const reservedTokenBeneficiary =
-    rewardTier.beneficiary ?? constants.AddressZero
+    ? BigInt(rewardTier.reservedRate - 1)
+    : BigInt(0)
+  const reservedTokenBeneficiary = rewardTier.beneficiary ?? ethers.ZeroAddress
   const votingUnits = rewardTier.votingWeight
-    ? BigNumber.from(rewardTier.votingWeight)
-    : BigNumber.from(0) // should default to 0, with useVotingUnits `true`, to save gas
+    ? BigInt(rewardTier.votingWeight)
+    : BigInt(0) // should default to 0, with useVotingUnits `true`, to save gas
 
   return {
     price,
@@ -347,17 +344,15 @@ export function buildJB721TierParams({
         version === JB721DelegateVersion.JB721DELEGATE_V3_4
       ) {
         if (
-          (a as JB_721_TIER_PARAMS_V3_2).price.gt(
-            (b as JB_721_TIER_PARAMS_V3_2).price,
-          )
+          (a as JB_721_TIER_PARAMS_V3_2).price >
+          (b as JB_721_TIER_PARAMS_V3_2).price
         ) {
           return 1
         }
 
         if (
-          (a as JB_721_TIER_PARAMS_V3_2).price.lt(
-            (b as JB_721_TIER_PARAMS_V3_2).price,
-          )
+          (a as JB_721_TIER_PARAMS_V3_2).price <
+          (b as JB_721_TIER_PARAMS_V3_2).price
         ) {
           return -1
         }
@@ -366,17 +361,15 @@ export function buildJB721TierParams({
       }
 
       if (
-        (a as JB_721_TIER_PARAMS_V3_1).contributionFloor.gt(
-          (b as JB_721_TIER_PARAMS_V3_1).contributionFloor,
-        )
+        (a as JB_721_TIER_PARAMS_V3_1).contributionFloor >
+        (b as JB_721_TIER_PARAMS_V3_1).contributionFloor
       ) {
         return 1
       }
 
       if (
-        (a as JB_721_TIER_PARAMS_V3_1).contributionFloor.lt(
-          (b as JB_721_TIER_PARAMS_V3_1).contributionFloor,
-        )
+        (a as JB_721_TIER_PARAMS_V3_1).contributionFloor <
+        (b as JB_721_TIER_PARAMS_V3_1).contributionFloor
       ) {
         return -1
       }
@@ -433,11 +426,11 @@ export function buildDeployTiered721DelegateData(
     symbol: collectionSymbol,
     fundingCycleStore: JBFundingCycleStoreAddress,
     baseUri: ipfsUri(''),
-    tokenUriResolver: constants.AddressZero,
+    tokenUriResolver: ethers.ZeroAddress,
     contractUri: ipfsUri(collectionUri),
     owner: ownerAddress,
     pricing,
-    reservedTokenBeneficiary: constants.AddressZero,
+    reservedTokenBeneficiary: ethers.ZeroAddress,
     store: JBTiered721DelegateStoreAddress,
     flags,
     governanceType,

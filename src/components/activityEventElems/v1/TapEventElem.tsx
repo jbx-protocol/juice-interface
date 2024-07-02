@@ -5,13 +5,13 @@ import V1ProjectHandle from 'components/v1/shared/V1ProjectHandle'
 import V2V3ProjectLink from 'components/v2v3/shared/V2V3ProjectLink'
 import { V1_V3_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { PV_V1 } from 'constants/pv'
-import { getAddress } from 'ethers/lib/utils'
 import {
   ProjectEventsQuery,
   usePayoutModDistributionsForTapEventQuery,
 } from 'generated/graphql'
 import { isEqualAddress } from 'utils/address'
 
+import { ethers } from 'ethers'
 import { client } from 'lib/apollo/client'
 import { ActivityEvent } from '../ActivityElement/ActivityElement'
 
@@ -56,7 +56,7 @@ export default function TapEventElem({
                     {isEqualAddress(e.modAllocator, V1_V3_ALLOCATOR_ADDRESS) ? (
                       <V2V3ProjectLink
                         projectId={e.modProjectId}
-                        allocator={getAddress(e.modAllocator)}
+                        allocator={ethers.getAddress(e.modAllocator)}
                       />
                     ) : (
                       <V1ProjectHandle projectId={e.modProjectId} />
@@ -74,7 +74,7 @@ export default function TapEventElem({
             </div>
           ))}
 
-          {event.beneficiaryTransferAmount?.gt(0) && (
+          {event.beneficiaryTransferAmount > 0 && (
             <div
               style={{
                 display: 'flex',

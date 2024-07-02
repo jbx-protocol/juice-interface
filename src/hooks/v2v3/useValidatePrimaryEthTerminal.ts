@@ -20,7 +20,8 @@ export function useValidatePrimaryEthTerminal() {
   return SUPPORTED_PAYMENT_TERMINALS.some(contractName => {
     return isEqualAddress(
       primaryETHTerminal,
-      contracts?.[contractName]?.address,
+      // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+      contracts?.[contractName]?.target as string,
     )
   })
 }

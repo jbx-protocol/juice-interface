@@ -21,9 +21,8 @@ import TicketingForm, {
 import { SECONDS_IN_DAY } from 'constants/numbers'
 import { getBallotStrategyByAddress } from 'constants/v1/ballotStrategies/getBallotStrategiesByAddress'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { constants } from 'ethers'
+import { ethers } from 'ethers'
 
-import { BigNumber } from 'ethers'
 import { useConfigureProjectTx } from 'hooks/v1/transactor/useConfigureProjectTx'
 import { useTerminalFee } from 'hooks/v1/useTerminalFee'
 import { BallotStrategy } from 'models/ballot'
@@ -59,13 +58,13 @@ const V1ReconfigureUpcomingMessage = ({
   currentFC: V1FundingCycle | undefined
 }) => {
   if (!currentFC) return null
-  const currentFCNumber = currentFC.number.toNumber()
+  const currentFCNumber = Number(currentFC.number)
   const ballotStrategy = getBallotStrategyByAddress(currentFC.ballot)
   const ballotStrategyLength = ballotStrategy.durationSeconds
-  const duration = currentFC.duration.toNumber()
-  const durationInSeconds = duration * SECONDS_IN_DAY
+  const duration = Number(currentFC.duration)
+  const durationInSeconds = duration * Number(SECONDS_IN_DAY)
   const secondsUntilNextFC = secondsUntil(
-    currentFC.start.add(durationInSeconds),
+    Number(currentFC.start) + durationInSeconds,
   )
   if (!duration || duration === 0) {
     // If duration is unset/0, changes take effect immediately to current FC
@@ -89,7 +88,7 @@ const V1ReconfigureUpcomingMessage = ({
         make will not take effect until the first cycle to start at least{' '}
         <strong>
           {detailedTimeString({
-            timeSeconds: BigNumber.from(ballotStrategyLength),
+            timeSeconds: BigInt(ballotStrategyLength),
             fullWords: true,
           })}
         </strong>{' '}
@@ -113,9 +112,7 @@ const V1ReconfigureUpcomingMessage = ({
         <div>
           <strong>
             {detailedTimeString({
-              timeSeconds: BigNumber.from(
-                secondsUntilNextFC - ballotStrategyLength,
-              ),
+              timeSeconds: BigInt(secondsUntilNextFC - ballotStrategyLength),
               fullWords: true,
             })}
           </strong>
@@ -181,7 +178,7 @@ export default function ReconfigureFCModal({
     decodeFundingCycleMetadata(currentFC?.metadata)
 
   const editingFCCurrency = V1CurrencyName(
-    editingFC.currency.toNumber() as V1CurrencyOption,
+    Number(editingFC.currency) as V1CurrencyOption,
   )
 
   const resetRestrictedActionsForm = () => {
@@ -234,13 +231,11 @@ export default function ReconfigureFCModal({
   }
 
   useLayoutEffect(() => {
-    const fundingCycle = queuedFC?.number.gt(0) ? queuedFC : currentFC
-    const payoutMods = queuedFC?.number.gt(0)
-      ? queuedPayoutMods
-      : currentPayoutMods
-    const ticketMods = queuedFC?.number.gt(0)
-      ? queuedTicketMods
-      : currentTicketMods
+    const fundingCycle = queuedFC && queuedFC.number > 0n ? queuedFC : currentFC
+    const payoutMods =
+      queuedFC && queuedFC.number > 0n ? queuedPayoutMods : currentPayoutMods
+    const ticketMods =
+      queuedFC && queuedFC.number > 0n ? queuedTicketMods : currentTicketMods
 
     if (!open || !fundingCycle || !ticketMods || !payoutMods) return
 
@@ -252,8 +247,8 @@ export default function ReconfigureFCModal({
         serializeV1FundingCycle({
           ...fundingCycle,
           ...metadata,
-          reserved: BigNumber.from(metadata.reservedRate),
-          bondingCurveRate: BigNumber.from(metadata.bondingCurveRate),
+          reserved: BigInt(metadata.reservedRate),
+          bondingCurveRate: BigInt(metadata.bondingCurveRate),
         }),
       ),
     )
@@ -297,17 +292,16 @@ export default function ReconfigureFCModal({
           currency: editingFC.currency,
           duration: editingFC.duration,
           discountRate: editingFC.discountRate,
-          cycleLimit: BigNumber.from(0),
+          cycleLimit: BigInt(0),
           ballot: editingFC.ballot,
         },
         fcMetadata: {
-          reservedRate: editingFC.reserved.toNumber(),
-          bondingCurveRate: editingFC.bondingCurveRate.toNumber(),
-          reconfigurationBondingCurveRate:
-            editingFC.bondingCurveRate.toNumber(),
+          reservedRate: Number(editingFC.reserved),
+          bondingCurveRate: Number(editingFC.bondingCurveRate),
+          reconfigurationBondingCurveRate: Number(editingFC.bondingCurveRate),
           payIsPaused: editingFC.payIsPaused,
           ticketPrintingIsAllowed: editingFC.ticketPrintingIsAllowed,
-          treasuryExtension: constants.AddressZero,
+          treasuryExtension: ethers.ZeroAddress,
         },
         payoutMods: editingPayoutMods,
         ticketMods: editingTicketMods,
@@ -401,7 +395,7 @@ export default function ReconfigureFCModal({
                 title: t`Cycle`,
                 callback: () => setBudgetFormModalVisible(true),
               },
-              ...(editingFC.target.gt(0)
+              ...(editingFC.target > 0n
                 ? [
                     {
                       title: t`Payouts`,
@@ -441,11 +435,11 @@ export default function ReconfigureFCModal({
             <Statistic
               title={t`Duration`}
               value={
-                editingFC.duration.gt(0)
+                editingFC.duration > 0n
                   ? formattedNum(editingFC.duration)
                   : 'Not set'
               }
-              suffix={editingFC.duration.gt(0) ? 'days' : ''}
+              suffix={editingFC.duration > 0n ? 'days' : ''}
             />
             {hasFundingTarget(editingFC) && (
               <Statistic
@@ -456,7 +450,7 @@ export default function ReconfigureFCModal({
                     {formatWad(editingFC.target)}{' '}
                     <span className="text-sm">
                       (
-                      {terminalFee?.gt(0) ? (
+                      {!!terminalFee && terminalFee > 0n ? (
                         <span>
                           <CurrencySymbol currency={editingFCCurrency} />
                           <Trans>
@@ -532,7 +526,7 @@ export default function ReconfigureFCModal({
               />
             </Space>
           )}
-          {editingFC.target.gt(0) ? (
+          {editingFC.target > 0n ? (
             <div>
               <h4>
                 <Trans>Payouts</Trans>
@@ -572,7 +566,7 @@ export default function ReconfigureFCModal({
         destroyOnClose
       >
         <BudgetForm
-          initialCurrency={editingFC.currency.toNumber() as V1CurrencyOption}
+          initialCurrency={Number(editingFC.currency) as V1CurrencyOption}
           initialTarget={fromWad(editingFC.target)}
           initialDuration={editingFC.duration.toString()}
           onSave={async (currency, target, duration) => {
@@ -594,7 +588,7 @@ export default function ReconfigureFCModal({
       >
         <PayModsForm
           initialMods={editingPayoutMods}
-          currency={editingFC.currency.toNumber() as V1CurrencyOption}
+          currency={Number(editingFC.currency) as V1CurrencyOption}
           target={editingFC.target}
           fee={terminalFee}
           onSave={async mods => {

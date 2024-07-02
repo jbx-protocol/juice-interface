@@ -4,7 +4,6 @@ import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
-import { BigNumber } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,
@@ -15,7 +14,7 @@ import invariant from 'tiny-invariant'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useBurnTokensTx(): TransactorInstance<{
-  burnAmount: BigNumber
+  burnAmount: bigint
   memo: string
   preferClaimedTokens?: boolean
 }> {

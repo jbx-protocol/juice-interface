@@ -6,8 +6,7 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { TokenAmount } from 'components/TokenAmount'
-import { BigNumber } from 'ethers'
-import { isAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useState } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
@@ -26,10 +25,10 @@ export function TransferUnclaimedTokensModal({
   onCancel: VoidFunction
   onConfirmed: VoidFunction
   tokenSymbol: string | undefined
-  unclaimedBalance: BigNumber | undefined
+  unclaimedBalance: bigint | undefined
   useTransferUnclaimedTokensTx: () => TransactorInstance<{
     to: string
-    amount: BigNumber
+    amount: bigint
   }>
 }) {
   const [loading, setLoading] = useState<boolean>()
@@ -74,14 +73,14 @@ export function TransferUnclaimedTokensModal({
   }
 
   const validateAmount = () => {
-    if (parseWad(amount).eq(0)) {
+    if (parseWad(amount) === 0n) {
       return Promise.reject(t`Amount is required.`)
     }
     return Promise.resolve()
   }
 
   const validateAddress = () => {
-    if (!isAddress(address)) {
+    if (!ethers.isAddress(address)) {
       return Promise.reject(t`Recipient address is required.`)
     }
     return Promise.resolve()

@@ -38,7 +38,8 @@ const getControllerName = (
   const terminalName = SUPPORTED_CONTROLLERS.find(contractName => {
     return isEqualAddress(
       address,
-      contracts[contractName as V2V3ContractName]?.address,
+      // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+      contracts[contractName as V2V3ContractName]?.target as string,
     )
   })
 

@@ -1,19 +1,19 @@
 import { t } from '@lingui/macro'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
-import { constants } from 'ethers'
 
-import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { TicketMod } from 'models/v1/mods'
 import { useContext } from 'react'
 
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { ethers } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
+import { toHexString } from 'utils/bigNumbers'
 import { useV1ProjectTitle } from '../useProjectTitle'
 
 export function useSetTicketModsTx(): TransactorInstance<{
-  configured: BigNumber
+  configured: bigint
   ticketMods: TicketMod[]
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
@@ -39,13 +39,13 @@ export function useSetTicketModsTx(): TransactorInstance<{
       contracts.ModStore,
       'setTicketMods',
       [
-        BigNumber.from(projectId).toHexString(),
-        configured.toHexString(),
+        toHexString(BigInt(projectId)),
+        toHexString(configured),
         ticketMods.map(m => ({
           preferUnstaked: false,
-          percent: BigNumber.from(m.percent).toHexString(),
-          lockedUntil: BigNumber.from(m.lockedUntil ?? 0).toHexString(),
-          beneficiary: m.beneficiary || constants.AddressZero,
+          percent: toHexString(BigInt(m.percent)),
+          lockedUntil: toHexString(BigInt(m.lockedUntil ?? 0)),
+          beneficiary: m.beneficiary || ethers.ZeroAddress,
         })),
       ],
       {

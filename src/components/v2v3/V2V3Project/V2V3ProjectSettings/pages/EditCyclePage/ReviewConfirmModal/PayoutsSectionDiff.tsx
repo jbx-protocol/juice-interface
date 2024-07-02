@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans, t } from '@lingui/macro'
 import { FundingCycleListItem } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItem'
 import { DistributionLimitValue } from 'components/v2v3/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItems/DistributionLimitValue'
@@ -69,10 +68,8 @@ export function PayoutsSectionDiff() {
               <DiffedSplitList
                 splits={newPayoutSplits}
                 diffSplits={currentPayoutSplits}
-                currency={BigNumber.from(getV2V3CurrencyOption(newCurrency))}
-                oldCurrency={BigNumber.from(
-                  getV2V3CurrencyOption(currentCurrency),
-                )}
+                currency={BigInt(getV2V3CurrencyOption(newCurrency))}
+                oldCurrency={BigInt(getV2V3CurrencyOption(currentCurrency))}
                 totalValue={newDistributionLimit}
                 previousTotalValue={currentDistributionLimit}
                 valueFormatProps={{ precision: roundingPrecision }}

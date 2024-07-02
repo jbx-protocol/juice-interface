@@ -4,7 +4,7 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
-import { getAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { useJBPrices } from 'hooks/JBPrices'
 import { TransactorInstance } from 'hooks/useTransactor'
 import omit from 'lodash/omit'
@@ -159,11 +159,16 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
         tiers,
         ownerAddress: projectOwnerAddress,
         contractAddresses: {
-          JBDirectoryAddress: getAddress(contracts.JBDirectory.address),
-          JBFundingCycleStoreAddress: getAddress(
-            contracts.JBFundingCycleStore.address,
+          // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+          JBDirectoryAddress: ethers.getAddress(
+            contracts.JBDirectory.target as string,
           ),
-          JBPricesAddress: getAddress(JBPrices.address),
+          JBFundingCycleStoreAddress: ethers.getAddress(
+            // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+            contracts.JBFundingCycleStore.target as string,
+          ),
+          // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+          JBPricesAddress: ethers.getAddress(JBPrices.target as string),
           JBTiered721DelegateStoreAddress,
         },
         flags,
@@ -191,7 +196,8 @@ export function useReconfigureV2V3FundingCycleWithNftsTx(): TransactorInstance<R
       projectId,
       deployTiered721DelegateData,
       reconfigureFundingCyclesData,
-      JBControllerAddress: projectJBController.address,
+      // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+      JBControllerAddress: projectJBController.target as string,
     })
 
     if (!args) {

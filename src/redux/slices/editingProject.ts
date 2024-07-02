@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { V1_CURRENCY_USD } from 'constants/v1/currency'
-import { constants } from 'ethers'
+import { ethers } from 'ethers'
 
-import { BigNumber } from 'ethers'
 import { ProjectTagName } from 'models/project-tags'
 import {
   LATEST_METADATA_VERSION,
@@ -62,26 +61,26 @@ export const defaultProjectState: EditingProjectState = {
     handle: '',
   },
   fundingCycle: serializeV1FundingCycle({
-    id: BigNumber.from(1),
-    projectId: BigNumber.from(0),
-    number: BigNumber.from(1),
-    basedOn: BigNumber.from(0),
-    target: constants.MaxUint256,
-    currency: BigNumber.from(V1_CURRENCY_USD),
-    start: BigNumber.from(toDateSeconds(new Date())),
-    duration: BigNumber.from(0),
-    tapped: BigNumber.from(0),
-    weight: constants.WeiPerEther.mul(1000000), // 1e24
-    fee: BigNumber.from(0),
+    id: BigInt(1),
+    projectId: BigInt(0),
+    number: BigInt(1),
+    basedOn: BigInt(0),
+    target: ethers.MaxUint256,
+    currency: BigInt(V1_CURRENCY_USD),
+    start: BigInt(toDateSeconds(new Date())),
+    duration: BigInt(0),
+    tapped: BigInt(0),
+    weight: ethers.WeiPerEther * 1000000n, // 1e24
+    fee: BigInt(0),
     reserved: percentToPerbicent(0),
     bondingCurveRate: defaultBondingCurveRate,
     discountRate: defaultDiscountRate,
-    cycleLimit: BigNumber.from(0),
-    configured: BigNumber.from(0),
-    ballot: constants.AddressZero,
+    cycleLimit: BigInt(0),
+    configured: BigInt(0),
+    ballot: ethers.ZeroAddress,
     payIsPaused: false,
     ticketPrintingIsAllowed: false,
-    treasuryExtension: constants.AddressZero,
+    treasuryExtension: ethers.ZeroAddress,
   }),
   payoutMods: [],
   ticketMods: [],

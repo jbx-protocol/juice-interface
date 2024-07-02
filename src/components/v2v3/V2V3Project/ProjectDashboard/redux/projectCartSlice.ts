@@ -1,5 +1,4 @@
 import { CaseReducer, PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { BigNumber } from 'ethers'
 import { NftRewardTier } from 'models/nftRewards'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
@@ -80,9 +79,9 @@ const projectCartSlice = createSlice({
       const existingIndex = state.chosenNftRewards.findIndex(
         reward => reward.id === nftReward.id,
       )
-      const payAmount = parseWad(state.payAmount?.amount ?? 0).add(
-        parseWad(chosenNftCost ?? 0),
-      )
+      const payAmount =
+        parseWad(state.payAmount?.amount ?? 0) + parseWad(chosenNftCost ?? 0)
+
       if (existingIndex === -1) {
         state.payAmount = {
           amount: Number(fromWad(payAmount)),
@@ -108,9 +107,9 @@ const projectCartSlice = createSlice({
         nft => nft.id === id,
       )?.quantity
       if (quantity && quantity > 0) {
-        const nftCostBn = parseWad(removedNftCost ?? 0).mul(quantity)
+        const nftCostBn = parseWad(removedNftCost ?? 0) * BigInt(quantity)
         const payAmountBn = parseWad(payAmount)
-        payAmount = Math.max(0, Number(fromWad(payAmountBn.sub(nftCostBn))))
+        payAmount = Math.max(0, Number(fromWad(payAmountBn - nftCostBn)))
       }
       state.payAmount = payAmount
         ? {
@@ -139,9 +138,9 @@ const projectCartSlice = createSlice({
       const chosenNftCost = state.allNftRewards.find(
         n => n.id === id,
       )?.contributionFloor
-      const payAmount = parseWad(state.payAmount?.amount ?? 0).add(
-        parseWad(chosenNftCost ?? 0),
-      )
+      const payAmount =
+        parseWad(state.payAmount?.amount ?? 0) + parseWad(chosenNftCost ?? 0)
+
       state.payAmount = {
         amount: Number(fromWad(payAmount)),
         currency: state.payAmount?.currency ?? V2V3_CURRENCY_ETH,
@@ -160,9 +159,8 @@ const projectCartSlice = createSlice({
       const removedNftCost = state.allNftRewards.find(
         n => n.id === id,
       )?.contributionFloor
-      const payAmountBn = parseWad(state.payAmount?.amount ?? 0).sub(
-        parseWad(removedNftCost ?? 0),
-      )
+      const payAmountBn =
+        parseWad(state.payAmount?.amount ?? 0) - parseWad(removedNftCost ?? 0)
       const payAmount = Math.max(0, Number(fromWad(payAmountBn)))
       const newNftRewards = [...state.chosenNftRewards]
       if (newNftRewards[existingIndex].quantity - 1 <= 0) {
@@ -217,10 +215,10 @@ const calculateEligibleNftRewards = ({
   nftRewards,
 }: {
   rewardTiers: NftRewardTier[] | undefined
-  weiPayAmount: BigNumber
+  weiPayAmount: bigint
   nftRewards: ProjectCartNftReward[]
 }) => {
-  if (!rewardTiers || weiPayAmount.eq(0)) return []
+  if (!rewardTiers || weiPayAmount === 0n) return []
   const ethAmount = Number(fromWad(weiPayAmount))
   const potentialRewards = rewardTiers
     .filter(tier => (tier.remainingSupply ?? Infinity) > 0)

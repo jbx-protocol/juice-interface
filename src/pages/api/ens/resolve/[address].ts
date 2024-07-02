@@ -1,6 +1,6 @@
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
-import { isAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { getLogger } from 'lib/logger'
 import { NetworkName } from 'models/networkName'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     let response
 
-    if (isAddress(addressOrEnsName)) {
+    if (ethers.isAddress(addressOrEnsName)) {
       const name = await readProvider.lookupAddress(addressOrEnsName)
       response = {
         address: addressOrEnsName,

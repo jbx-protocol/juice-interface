@@ -1,22 +1,22 @@
-import { BigNumber, BigNumberish, Contract } from 'ethers'
+import { Contract } from 'ethers'
 import { V2V3ContractName } from 'models/v2v3/contracts'
-import { bigNumbersDiff } from 'utils/bigNumbers'
+import { BigintIsh, bigintsDiff, toHexString } from 'utils/bigNumbers'
 
 import useContractReader from './useV2ContractReader'
 
 /** Returns combined ERC20 + unclaimed balance of user with `userAddress`. */
 export default function useTotalBalanceOf(
   userAddress: string | undefined,
-  projectId: BigNumberish | undefined,
+  projectId: BigintIsh | undefined,
   contract?: Contract,
 ) {
-  return useContractReader<BigNumber>({
+  return useContractReader<bigint>({
     contract: contract ?? V2V3ContractName.JBTokenStore,
     functionName: 'balanceOf',
     args:
       userAddress && projectId
-        ? [userAddress, BigNumber.from(projectId).toHexString()]
+        ? [userAddress, toHexString(BigInt(projectId))]
         : null,
-    valueDidChange: bigNumbersDiff,
+    valueDidChange: bigintsDiff,
   })
 }

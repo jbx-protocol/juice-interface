@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import { splitsListsHaveDiff } from 'utils/splits'
@@ -39,9 +38,7 @@ export const useTokensSectionValues = () => {
     plural: true,
   })
   const newMintRateNum = parseFloat(formValues.mintRate ?? '0')
-  const newMintRate = BigNumber.from(
-    issuanceRateFrom(newMintRateNum.toString()),
-  )
+  const newMintRate = BigInt(issuanceRateFrom(newMintRateNum.toString()))
 
   const newReservedRate = reservedRateFrom(formValues.reservedTokens)
   const newReservedSplits = formValues.reservedSplits
@@ -63,18 +60,16 @@ export const useTokensSectionValues = () => {
   const onlyDiscountRateApplied =
     currentFundingCycle &&
     newMintRate &&
-    newMintRate.eq(
+    newMintRate ===
       deriveNextIssuanceRate({
-        weight: BigNumber.from(0),
+        weight: BigInt(0),
         previousFC: currentFundingCycle,
-      }),
-    )
+      })
 
   const mintRateHasDiff = !onlyDiscountRateApplied
 
   const reservedRateHasDiff = Boolean(
-    currentReservedRate &&
-      !BigNumber.from(newReservedRate).eq(currentReservedRate),
+    currentReservedRate && BigInt(newReservedRate) !== currentReservedRate,
   )
 
   const reservedSplitsHasDiff = splitsListsHaveDiff(
@@ -83,13 +78,11 @@ export const useTokensSectionValues = () => {
   )
 
   const discountRateHasDiff = Boolean(
-    currentDiscountRate &&
-      !BigNumber.from(newDiscountRate).eq(currentDiscountRate),
+    currentDiscountRate && BigInt(newDiscountRate) !== currentDiscountRate,
   )
 
   const redemptionHasDiff =
-    currentRedemptionRate &&
-    !BigNumber.from(newRedemptionRate).eq(currentRedemptionRate)
+    currentRedemptionRate && BigInt(newRedemptionRate) !== currentRedemptionRate
 
   const allowMintingHasDiff = Boolean(newAllowMinting !== currentAllowMinting)
 

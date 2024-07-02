@@ -26,8 +26,10 @@ export const useTokensPanel = () => {
   })
 
   const totalTokenSupplyIncludingReserved = undistributedReservedTokens
-    ? totalTokenSupply?.add(undistributedReservedTokens)
-    : totalTokenSupply
+    ? totalTokenSupply
+      ? totalTokenSupply + undistributedReservedTokens
+      : undefined
+    : totalTokenSupply ?? undefined
 
   const projectToken = tokenSymbolText({
     tokenSymbol: tokenSymbolRaw,

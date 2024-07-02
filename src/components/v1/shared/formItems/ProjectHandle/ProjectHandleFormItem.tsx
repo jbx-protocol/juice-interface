@@ -2,12 +2,13 @@ import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Form } from 'antd'
 import { FormItemExt } from 'components/formItems/formItemExt'
-import { BigNumber, utils } from 'ethers'
+import { ethers } from 'ethers'
 import useContractReader from 'hooks/v1/contractReader/useContractReader'
 import { V1ContractName } from 'models/v1/contracts'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
+import { toHexString } from 'utils/bigNumbers'
 import {
   ProjectHandleInitialValue,
   ProjectHandleInput,
@@ -48,29 +49,29 @@ export default function ProjectHandleFormItem({
     if (!inputContents) return
 
     try {
-      return utils.formatBytes32String(normalizeHandle(inputContents))
+      return ethers.encodeBytes32String(normalizeHandle(inputContents))
     } catch (e) {
       console.error('Error formatting handle', inputContents, e)
     }
   }, [inputContents]) // 0xabc...
 
-  const idForHandle = useContractReader<BigNumber>({
+  const idForHandle = useContractReader<bigint>({
     contract: V1ContractName.Projects,
     functionName: 'projectFor',
     args: handleHex && requireState ? [handleHex] : null,
     callback: useCallback(
-      (id: BigNumber | undefined) => {
+      (id: bigint | undefined) => {
         setHandleLoading(false)
 
         if (returnValue === 'id') {
-          onValueChange?.(id?.toHexString() ?? '0x00')
+          onValueChange?.(id ? toHexString(id) : '0x00')
         }
       },
       [onValueChange, returnValue],
     ),
   })
 
-  const handleExists = Boolean(idForHandle?.gt(0))
+  const handleExists = Boolean((idForHandle ?? 0n) > 0)
 
   // Validator function for Form.Item
   const validator = useCallback(() => {

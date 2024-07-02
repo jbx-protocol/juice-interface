@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { namehash } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useContext } from 'react'
 
@@ -25,7 +25,9 @@ export function useSetENSTextRecordForHandleTx(
       return Promise.resolve(false)
     }
 
-    const node = namehash(ensName + (ensName.endsWith('.eth') ? '' : '.eth'))
+    const node = ethers.namehash(
+      ensName + (ensName.endsWith('.eth') ? '' : '.eth'),
+    )
 
     return transactor(Resolver, 'setText', [node, key, value], {
       ...txOpts,

@@ -1,7 +1,7 @@
-import { BigNumberish } from 'ethers'
 import useHandleForProjectId from 'hooks/v1/contractReader/useHandleForProjectId'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
+import { BigintIsh } from 'utils/bigNumbers'
 
 export default function V1ProjectHandle({
   className,
@@ -9,7 +9,7 @@ export default function V1ProjectHandle({
   handle,
 }: {
   className?: string
-  projectId: BigNumberish
+  projectId: BigintIsh
   handle?: string | null
 }) {
   const _handle = useHandleForProjectId(!handle ? projectId : undefined)

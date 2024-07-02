@@ -1,7 +1,8 @@
-import { BigNumber, constants } from 'ethers'
+import { ethers } from 'ethers'
 import isEqual from 'lodash/isEqual'
 import { Split, SplitParams } from 'models/splits'
 
+import { toHexString } from './bigNumbers'
 import { formatWad } from './format/formatNumber'
 import { isFiniteDistributionLimit } from './v2v3/fundingCycle'
 import { SPLITS_TOTAL_PERCENT } from './v2v3/math'
@@ -21,8 +22,8 @@ export const hasEqualRecipient = (a: Split, b: Split) => {
   const isProject = isProjectSplit(a) || isProjectSplit(b)
   const idsEqual =
     a.projectId === b.projectId ||
-    BigNumber.from(a.projectId ?? 0).eq(b.projectId ?? 0) ||
-    BigNumber.from(b.projectId ?? 0).eq(a.projectId ?? 0)
+    BigInt(a.projectId ?? 0) === BigInt(b.projectId ?? 0) ||
+    BigInt(b.projectId ?? 0) === BigInt(a.projectId ?? 0)
 
   return (
     (isProject && idsEqual) || (!isProject && a.beneficiary === b.beneficiary)
@@ -39,9 +40,9 @@ const getRemovedSplits = (oldSplits: Split[], newSplits: Split[]) => {
 export const sanitizeSplit = (split: Split): Split => {
   return {
     lockedUntil: split.lockedUntil ?? 0,
-    projectId: split.projectId ?? BigNumber.from(0).toHexString(),
-    beneficiary: split.beneficiary ?? constants.AddressZero,
-    allocator: split.allocator ?? constants.AddressZero,
+    projectId: split.projectId ?? toHexString(0n),
+    beneficiary: split.beneficiary ?? ethers.ZeroAddress,
+    allocator: split.allocator ?? ethers.ZeroAddress,
     preferClaimed: false,
     percent: split.percent,
   }
@@ -58,28 +59,28 @@ export const getProjectOwnerRemainderSplit = (
   splits: Split[],
 ): Split & { isProjectOwner: true } => {
   const totalSplitPercentage = totalSplitsPercent(splits)
-  const ownerPercentage = SPLITS_TOTAL_PERCENT - totalSplitPercentage
+  const ownerPercentage = Number(SPLITS_TOTAL_PERCENT) - totalSplitPercentage
 
   return {
     beneficiary: projectOwnerAddress,
     percent: ownerPercentage,
     preferClaimed: false,
     lockedUntil: 0,
-    projectId: BigNumber.from(0).toHexString(),
-    allocator: constants.AddressZero,
+    projectId: toHexString(0n),
+    allocator: ethers.ZeroAddress,
     isProjectOwner: true,
   }
 }
 
 /**
  * Converts array of splits from transaction data (e.g. outgoing reconfig tx) to array of native Split objects
- * (Outgoing Split objects have percent and lockedUntil as BigNumbers)
+ * (Outgoing Split objects have percent and lockedUntil as bigints)
  */
 export const toSplit = (splits: SplitParams[]): Split[] => {
   return (
     splits?.map(
       (split: SplitParams) =>
-        ({ ...split, percent: split.percent.toNumber() } as Split),
+        ({ ...split, percent: Number(split.percent) } as Split),
     ) ?? []
   )
 }
@@ -89,7 +90,7 @@ export const sortSplits = (splits: Split[]) => {
   return [...splits].sort((a, b) => (a.percent < b.percent ? 1 : -1))
 }
 
-/* Determines if two splits AMOUNTS are equal. Extracts amounts for two splits from their respective totalValues **/
+/* Determines if two splits AMOUNTS are===ual. Extracts amounts for two splits from their respective totalValues **/
 export function splitAmountsAreEqual({
   split1,
   split2,
@@ -98,17 +99,17 @@ export function splitAmountsAreEqual({
 }: {
   split1: Split
   split2: Split
-  split1TotalValue?: BigNumber
-  split2TotalValue?: BigNumber
+  split1TotalValue?: bigint
+  split2TotalValue?: bigint
 }) {
   const split1Amount = formatWad(
-    split1TotalValue?.mul(split1.percent).div(SPLITS_TOTAL_PERCENT),
+    ((split1TotalValue ?? 0n) * BigInt(split1.percent)) / SPLITS_TOTAL_PERCENT,
     {
       precision: 2,
     },
   )
   const split2Amount = formatWad(
-    split2TotalValue?.mul(split2.percent).div(SPLITS_TOTAL_PERCENT),
+    ((split2TotalValue ?? 0n) * BigInt(split2.percent)) / SPLITS_TOTAL_PERCENT,
     {
       precision: 2,
     },
@@ -116,7 +117,7 @@ export function splitAmountsAreEqual({
   return split2Amount === split1Amount
 }
 
-/* Determines if two splits are equal. If given totalValues, uses the amount of each split instead of its percent **/
+/* Determines if two splits are===ual. If given totalValues, uses the amount of each split instead of its percent **/
 function splitsAreEqual({
   split1,
   split2,
@@ -125,8 +126,8 @@ function splitsAreEqual({
 }: {
   split1: Split
   split2: Split
-  split1TotalValue?: BigNumber
-  split2TotalValue?: BigNumber
+  split1TotalValue?: bigint
+  split2TotalValue?: bigint
 }) {
   const isFiniteTotalValue =
     isFiniteDistributionLimit(split1TotalValue) &&
@@ -158,8 +159,8 @@ export const processUniqueSplits = ({
   newSplits,
   allSplitsChanged,
 }: {
-  oldTotalValue?: BigNumber
-  newTotalValue?: BigNumber
+  oldTotalValue?: bigint
+  newTotalValue?: bigint
   oldSplits: Split[] | undefined
   newSplits: Split[]
   allSplitsChanged?: boolean // pass when you know all splits have changed (e.g. currency has changed)
@@ -212,11 +213,11 @@ export const processUniqueSplits = ({
 }
 
 export const isProjectSplit = (split: Split): boolean => {
-  return Boolean(split.projectId) && BigNumber.from(split.projectId).gt(0)
+  return Boolean(split.projectId) && BigInt(split.projectId ?? 0) > 0n
 }
 
 export const projectIdToHex = (projectIdString: string | undefined) =>
-  BigNumber.from(projectIdString ?? 0).toHexString()
+  toHexString(BigInt(projectIdString ?? 0))
 
 /**
  * Returns the sum of each split's percent in a list of splits

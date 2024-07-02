@@ -1,5 +1,5 @@
 import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
-import { namehash } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { useCallback, useMemo } from 'react'
 
 import { useResolverForENS } from '../useENSResolver'
@@ -7,7 +7,7 @@ import useV2ContractReader from './useV2ContractReader'
 
 export function useProjectHandleENSTextRecord(ensName: string | undefined) {
   const node = ensName
-    ? namehash(ensName + (ensName.endsWith('.eth') ? '' : '.eth'))
+    ? ethers.namehash(ensName + (ensName.endsWith('.eth') ? '' : '.eth'))
     : undefined
 
   const Resolver = useResolverForENS(ensName)

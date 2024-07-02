@@ -17,10 +17,8 @@ import NumberSlider from 'components/inputs/NumberSlider'
 import { LOCKED_PAYOUT_EXPLANATION } from 'components/strings'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { CurrencyName } from 'constants/currency'
-import { constants } from 'ethers'
 
-import { BigNumber } from 'ethers'
-import { isAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { PayoutMod } from 'models/v1/mods'
 import * as moment from 'moment'
 import { useCallback, useEffect, useState } from 'react'
@@ -72,7 +70,7 @@ export const ProjectPayoutModsModal = ({
   const [modalMode, setModalMode] = useState<ModalMode>('Add') //either 'Add', or 'Edit'
   // states are all initial values only
   const [editingModType, setEditingModType] = useState<ModType>('address')
-  const [editingModHandle, setEditingModHandle] = useState<string | BigNumber>()
+  const [editingModHandle, setEditingModHandle] = useState<string | bigint>()
   const [editingModAllocator, setEditingModAllocator] = useState<string>()
   const [, setEditingPercent] = useState<number>()
   const [form] = useForm<ProjectPayoutModsForm>()
@@ -81,7 +79,7 @@ export const ProjectPayoutModsModal = ({
     const loadSelectedMod = (mod: EditingPayoutMod) => {
       setModalMode('Edit')
       setEditingModType(
-        BigNumber.from(mod.projectId ?? '0').gt(0) ? 'project' : 'address',
+        BigInt(mod.projectId ?? '0') > 0n ? 'project' : 'address',
       )
       setEditingModHandle(mod.handle ?? mod.projectId)
       setEditingModAllocator(mod.allocator)
@@ -164,11 +162,11 @@ export const ProjectPayoutModsModal = ({
     const beneficiary =
       !allocator || allocator === NULL_ALLOCATOR_ADDRESS
         ? form.getFieldValue('beneficiary')
-        : constants.AddressZero
+        : ethers.ZeroAddress
 
-    const percent = percentToPermyriad(form.getFieldValue('percent')).toNumber()
+    const percent = Number(percentToPermyriad(form.getFieldValue('percent')))
     const _projectId = form.getFieldValue('projectId')
-    const projectId = _projectId ? BigNumber.from(_projectId) : undefined
+    const projectId = _projectId ? BigInt(_projectId) : undefined
     const _lockedUntil = form.getFieldValue('lockedUntil') as
       | moment.Moment
       | undefined
@@ -274,7 +272,7 @@ export const ProjectPayoutModsModal = ({
               {
                 validator: (_, value) => {
                   const address = value
-                  if (!address || !isAddress(address))
+                  if (!address || !ethers.isAddress(address))
                     return Promise.reject('Address is required')
                   else if (isZeroAddress(address))
                     return Promise.reject('Cannot use zero address.')

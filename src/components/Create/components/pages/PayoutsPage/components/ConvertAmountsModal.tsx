@@ -46,7 +46,7 @@ export const ConvertAmountsModal = ({
   const totalPayoutsPercent = useMemo(
     () =>
       splits
-        .map(s => (s.percent / SPLITS_TOTAL_PERCENT) * 100)
+        .map(s => (s.percent / Number(SPLITS_TOTAL_PERCENT)) * 100)
         .reduce((acc, curr) => acc + curr, 0),
     [splits],
   )

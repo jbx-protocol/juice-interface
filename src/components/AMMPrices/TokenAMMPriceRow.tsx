@@ -54,7 +54,7 @@ export default function TokenAMMPriceRow({
 
   const formatPrice = (price: string) => {
     const p = parseInt(price, 10)
-    const formatLimit = ONE_TRILLION
+    const formatLimit = Number(ONE_TRILLION)
 
     // format all values below trillion value, otherwise truncate is as long number.
     return formatOrTruncate(p, formatLimit)

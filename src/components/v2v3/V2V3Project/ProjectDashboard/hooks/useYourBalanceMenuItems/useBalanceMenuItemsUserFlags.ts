@@ -14,11 +14,11 @@ export const useBalanceMenuItemsUserFlags = () => {
     V2V3OperatorPermission.MINT,
   )
   const hasOverflow = useMemo(
-    () => !!primaryTerminalCurrentOverflow?.gt(0),
+    () => primaryTerminalCurrentOverflow && primaryTerminalCurrentOverflow > 0n,
     [primaryTerminalCurrentOverflow],
   )
   const redeemDisabled = useMemo(
-    () => !hasOverflow || fundingCycleMetadata?.redemptionRate.eq(0),
+    () => !hasOverflow || fundingCycleMetadata?.redemptionRate === 0n,
     [hasOverflow, fundingCycleMetadata],
   )
   const projectHasIssuedTokens = useMemo(
@@ -47,7 +47,7 @@ export const useBalanceMenuItemsUserFlags = () => {
   )
 
   const canTransferTokens = useMemo(
-    () => !!unclaimedTokenBalance?.gt(0) || isDev,
+    () => (unclaimedTokenBalance && unclaimedTokenBalance > 0n) || isDev,
     [unclaimedTokenBalance, isDev],
   )
 

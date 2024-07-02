@@ -16,7 +16,7 @@ export default function QueuedFundingCycle() {
 
   return (
     <div>
-      {queuedFC?.number.gt(0) ? (
+      {queuedFC && queuedFC.number > 0n ? (
         <div className="relative">
           <CardSection>
             <FundingCycleDetails fundingCycle={queuedFC} />

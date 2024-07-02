@@ -1,7 +1,4 @@
-import { constants } from 'ethers'
-
-import { BigNumber } from 'ethers'
-
+import { ethers } from 'ethers'
 import {
   formatWad,
   fromWad,
@@ -15,7 +12,7 @@ import { amountAddFee, amountSubFee } from 'utils/v1/math'
 // given 'funding target'
 export const targetToTargetSubFeeFormatted = (
   target: string,
-  fee: BigNumber | undefined,
+  fee: bigint | undefined,
 ) => {
   const newTargetSubFee = amountSubFee(parseWad(target ?? ''), fee)
   return fromWad(newTargetSubFee)
@@ -25,10 +22,10 @@ export const targetToTargetSubFeeFormatted = (
 // 'funding target after fee'
 export const targetSubFeeToTargetFormatted = (
   targetSubFee: string,
-  fee: BigNumber | undefined,
+  fee: bigint | undefined,
 ): string => {
-  if (targetSubFee === fromWad(constants.MaxUint256)) {
-    return fromWad(constants.MaxUint256)
+  if (targetSubFee === fromWad(ethers.MaxUint256)) {
+    return fromWad(ethers.MaxUint256)
   }
   const newTarget = amountAddFee(targetSubFee ?? '0', fee)
   return newTarget ?? '0'
@@ -42,12 +39,12 @@ export function getAmountFromPercent(
   feePercentage: string | undefined,
 ) {
   const amount = fromWad(
-    amountSubFee(
+    ((amountSubFee(
       parseWad(stripCommas(target)),
       percentToPerbicent(feePercentage),
-    )
-      ?.mul(Math.floor((percent ?? 0) * 100))
-      .div(10000),
+    ) ?? 0n) *
+      BigInt(Math.floor((percent ?? 0) * 100))) /
+      10000n,
   )
   return parseFloat(amount)
 }

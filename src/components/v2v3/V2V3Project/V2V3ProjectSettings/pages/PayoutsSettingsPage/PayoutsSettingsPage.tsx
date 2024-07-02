@@ -54,7 +54,7 @@ export function PayoutsSettingsPage() {
     [setProjectSplits, totalSplitsPercentageInvalid],
   )
 
-  const cannotEditPayouts = !distributionLimit || distributionLimit?.eq(0)
+  const cannotEditPayouts = !distributionLimit || distributionLimit === 0n
 
   return !distributionLimit || distributionLimitLoading ? (
     <Loading />

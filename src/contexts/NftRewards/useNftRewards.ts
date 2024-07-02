@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
-import { BigNumber } from 'ethers'
 import {
   IPFSNftRewardTier,
   JB721TierV3,
@@ -23,11 +22,10 @@ async function fetchRewardTierMetadata({
   const response = await axios.get(url)
   const tierMetadata: IPFSNftRewardTier = response.data
 
-  const maxSupply = tier.initialQuantity.eq(
-    BigNumber.from(DEFAULT_NFT_MAX_SUPPLY),
-  )
-    ? DEFAULT_NFT_MAX_SUPPLY
-    : tier.initialQuantity.toNumber()
+  const maxSupply =
+    tier.initialQuantity === BigInt(DEFAULT_NFT_MAX_SUPPLY)
+      ? DEFAULT_NFT_MAX_SUPPLY
+      : Number(tier.initialQuantity)
 
   // Some projects have image links hard-coded to the old IPFS gateway.
   const pinataRegex = /^(https?:\/\/jbx\.mypinata\.cloud)/
@@ -40,16 +38,18 @@ async function fetchRewardTierMetadata({
     (tier as JB_721_TIER_V3_2).price ?? (tier as JB721TierV3).contributionFloor
 
   return {
-    id: tier.id.toNumber(),
+    id: Number(tier.id),
     name: tierMetadata.name,
     description: tierMetadata.description,
     externalLink: withHttps(tierMetadata.externalLink),
     contributionFloor: parseFloat(formatWad(rawContributionFloor) ?? '0'),
     maxSupply,
-    remainingSupply: tier.remainingQuantity?.toNumber() ?? maxSupply,
+    remainingSupply: tier.remainingQuantity
+      ? Number(tier.remainingQuantity)
+      : maxSupply,
     fileUrl: tierMetadata.image,
     beneficiary: tier.reservedTokenBeneficiary,
-    reservedRate: tier.reservedRate.toNumber(),
+    reservedRate: Number(tier.reservedRate),
     votingWeight: tier.votingUnits.toString(),
   }
 }

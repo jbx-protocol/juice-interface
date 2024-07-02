@@ -1,20 +1,19 @@
-import { BigNumber, BigNumberish } from 'ethers'
 import { V1TerminalName } from 'models/v1/terminals'
 import { useMemo } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbers'
+import { BigintIsh, bigintsDiff, toHexString } from 'utils/bigNumbers'
 
 import useContractReader from './useContractReader'
 
 /** Returns overflow in ETH of project with `projectId`. */
 export default function useOverflowOfProject(
-  projectId: BigNumberish | undefined,
+  projectId: BigintIsh | undefined,
   terminalName: V1TerminalName | undefined,
 ) {
-  return useContractReader<BigNumber>({
+  return useContractReader<bigint>({
     contract: terminalName,
     functionName: 'currentOverflowOf',
-    args: projectId ? [BigNumber.from(projectId).toHexString()] : null,
-    valueDidChange: bigNumbersDiff,
+    args: projectId ? [toHexString(BigInt(projectId))] : null,
+    valueDidChange: bigintsDiff,
     updateOn: useMemo(
       () =>
         projectId
@@ -22,12 +21,12 @@ export default function useOverflowOfProject(
               {
                 contract: terminalName,
                 eventName: 'Pay',
-                topics: [[], BigNumber.from(projectId).toHexString()],
+                topics: [[], toHexString(BigInt(projectId))],
               },
               {
                 contract: terminalName,
                 eventName: 'Tap',
-                topics: [[], BigNumber.from(projectId).toHexString()],
+                topics: [[], toHexString(BigInt(projectId))],
               },
             ]
           : undefined,

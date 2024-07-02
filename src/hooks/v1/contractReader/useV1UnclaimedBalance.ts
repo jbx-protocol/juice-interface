@@ -1,8 +1,8 @@
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { BigNumber, Contract } from 'ethers'
+import { Contract } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbers'
+import { bigintsDiff } from 'utils/bigNumbers'
 import useContractReader from './useContractReader'
 import useShouldUpdateTokens from './useShouldUpdateTokens'
 
@@ -18,11 +18,11 @@ export function useV1UnclaimedBalance({
 }) {
   const { terminal } = useContext(V1ProjectContext)
 
-  return useContractReader<BigNumber>({
+  return useContractReader<bigint>({
     contract: TicketBooth ?? V1ContractName.TicketBooth,
     functionName: 'stakedBalanceOf',
     args: userAddress && projectId ? [userAddress, projectId] : null,
-    valueDidChange: bigNumbersDiff,
+    valueDidChange: bigintsDiff,
     updateOn: useShouldUpdateTokens(projectId, terminal?.name, userAddress),
   })
 }

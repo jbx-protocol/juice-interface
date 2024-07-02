@@ -1,6 +1,5 @@
-import { BigNumber } from 'ethers'
 import { PV } from 'models/pv'
-import { isBigNumberish } from './bigNumbers'
+import { isBigintIsh } from './bigNumbers'
 
 /**
  * Get the subgraph representation of a project ID, based on given [pv] and [projectId]
@@ -14,41 +13,41 @@ export const getSubgraphIdForProject = (pv: PV, projectId: number) => {
   return `${pv}-${projectId}`
 }
 
-export const parseBigNumberKeyVals = <T extends object, K extends keyof T>(
+export const parsebigintKeyVals = <T extends object, K extends keyof T>(
   json: T,
   keys: K[],
 ) => {
   return keys.reduce(
     (acc, k) => ({
       ...acc,
-      ...parseBigNumberKeyVal(k, json[k]),
+      ...parsebigintKeyVal(k, json[k]),
     }),
-    {} as { [k in K]: BigNumber },
+    {} as { [k in K]: bigint },
   )
 }
 
 /**
  * Parse a key value pair from an object
  * @param key Name of key
- * @param val Value to convert to BigNumber
- * @returns Key value pair, where value is a BigNumber
+ * @param val Value to convert to bigint
+ * @returns Key value pair, where value is a bigint
  */
-export const parseBigNumberKeyVal = <K extends string | number | symbol>(
+export const parsebigintKeyVal = <K extends string | number | symbol>(
   key: K,
   val: unknown,
 ) => {
   let output
 
   try {
-    if ((val as { type: 'BigNumber'; hex: string }).type === 'BigNumber') {
+    if ((val as { type: 'bigint'; hex: string }).type === 'bigint') {
       // Patch to allow this to work with responses already parsed by the Apollo client. Eventually this parsing layer should be removed entirely in favor of using just the Apollo client.
-      output = { [key]: BigNumber.from((val as { hex: string }).hex) }
-    } else if (isBigNumberish(val)) {
-      output = { [key]: BigNumber.from(val) }
+      output = { [key]: BigInt((val as { hex: string }).hex) }
+    } else if (isBigintIsh(val)) {
+      output = { [key]: BigInt(val) }
     }
   } catch (e) {
     output = {}
   }
 
-  return output as { [k in K]: BigNumber }
+  return output as { [k in K]: bigint }
 }

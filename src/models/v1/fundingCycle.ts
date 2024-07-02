@@ -1,30 +1,28 @@
-import { BigNumber } from 'ethers'
-
 export interface V1FundingCycle {
-  id: BigNumber
-  projectId: BigNumber
-  number: BigNumber
-  basedOn: BigNumber
-  target: BigNumber
-  currency: BigNumber // 0 ETH, 1 USD
-  start: BigNumber
-  duration: BigNumber
-  tapped: BigNumber
-  fee: BigNumber
-  weight: BigNumber
-  discountRate: BigNumber
-  cycleLimit: BigNumber
-  configured: BigNumber
+  id: bigint
+  projectId: bigint
+  number: bigint
+  basedOn: bigint
+  target: bigint
+  currency: bigint // 0 ETH, 1 USD
+  start: bigint
+  duration: bigint
+  tapped: bigint
+  fee: bigint
+  weight: bigint
+  discountRate: bigint
+  cycleLimit: bigint
+  configured: bigint
   ballot: string
-  metadata: BigNumber // encoded FundingCycleData
+  metadata: bigint // encoded FundingCycleData
 }
 
 export interface V1FundingCycleProperties {
-  target: BigNumber
-  currency: BigNumber
-  duration: BigNumber
-  discountRate: BigNumber
-  cycleLimit: BigNumber
+  target: bigint
+  currency: bigint
+  duration: bigint
+  discountRate: bigint
+  cycleLimit: bigint
   ballot: string
 }
 

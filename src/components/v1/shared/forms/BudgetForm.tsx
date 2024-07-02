@@ -4,7 +4,6 @@ import ExternalLink from 'components/ExternalLink'
 import FormItemWarningText from 'components/FormItemWarningText'
 import { FormItems } from 'components/formItems'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { constants } from 'ethers'
 
 import { useTerminalFee } from 'hooks/v1/useTerminalFee'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
@@ -26,6 +25,7 @@ import {
   DISTRIBUTION_LIMIT_EXPLANATION,
 } from 'components/strings'
 import { CurrencyName } from 'constants/currency'
+import { ethers } from 'ethers'
 
 const DEFAULT_TARGET_AFTER_FEE = '10000'
 
@@ -59,7 +59,7 @@ export default function BudgetForm({
     setDuration(initialDuration)
   }, [initialCurrency, initialDuration, initialTarget, terminalFee])
 
-  const maxIntStr = fromWad(constants.MaxUint256)
+  const maxIntStr = fromWad(ethers.MaxUint256)
   const hasTarget = useMemo(() => {
     return target !== maxIntStr
   }, [target, maxIntStr])

@@ -10,12 +10,12 @@ import TooltipLabel from 'components/TooltipLabel'
 import { RedeemingNft } from 'components/v2v3/V2V3Project/ProjectDashboard/components/NftRewardsPanel/hooks/useJB721DelegateTokenToNftReward'
 import { JB721DelegateContractsContext } from 'contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber } from 'ethers'
 import { useNftAccountBalance } from 'hooks/JB721Delegate/useNftAccountBalance'
 import { useETHReceivedFromNftRedeem } from 'hooks/v2v3/contractReader/useETHReceivedFromNftRedeem'
 import { useRedeemTokensTx } from 'hooks/v2v3/transactor/useRedeemTokensTx'
 import { useWallet } from 'hooks/Wallet'
 import { useContext, useState } from 'react'
+import { toHexString } from 'utils/bigNumbers'
 import { encodeJb721DelegateRedeemMetadata } from 'utils/delegateMetadata/encodeJb721DelegateMetadata'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatRedemptionRate } from 'utils/v2v3/math'
@@ -72,8 +72,8 @@ export function RedeemNftsModal({
 
     const txSuccess = await redeemTokensTx(
       {
-        redeemAmount: BigNumber.from(0),
-        minReturnedTokens: BigNumber.from(0),
+        redeemAmount: BigInt(0),
+        minReturnedTokens: BigInt(0),
         memo,
         metadata: encodeJb721DelegateRedeemMetadata(
           tokenIdsToRedeem,
@@ -107,11 +107,11 @@ export function RedeemNftsModal({
 
   const nfts = data?.nfts.map(t => ({
     ...t,
-    tokenId: t.tokenId.toHexString(),
+    tokenId: toHexString(t.tokenId),
   }))
   const nftBalanceFormatted = nfts?.length ?? 0
-  const hasOverflow = primaryTerminalCurrentOverflow?.gt(0)
-  const hasRedemptionRate = fundingCycleMetadata.redemptionRate.gt(0)
+  const hasOverflow = (primaryTerminalCurrentOverflow ?? 0n) > 0n
+  const hasRedemptionRate = fundingCycleMetadata.redemptionRate > 0n
   const canRedeem = hasOverflow && hasRedemptionRate
 
   let modalTitle: string

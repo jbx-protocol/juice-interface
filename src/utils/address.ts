@@ -1,12 +1,11 @@
-import { constants } from 'ethers'
-import { getAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 
 export function safeGetAddress(
   address: string | undefined,
 ): string | undefined {
   if (!address) return undefined
   try {
-    return getAddress(address)
+    return ethers.getAddress(address)
   } catch (e) {
     return undefined
   }
@@ -28,5 +27,5 @@ export function isEqualAddress(
 }
 
 export function isZeroAddress(address: string | undefined): boolean {
-  return isEqualAddress(address, constants.AddressZero)
+  return isEqualAddress(address, ethers.ZeroAddress)
 }

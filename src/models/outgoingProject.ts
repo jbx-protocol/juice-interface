@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { SplitParams } from './splits'
 import { V2FundingCycleMetadata } from './v2/fundingCycle'
 import { V2V3FundAccessConstraint, V2V3FundingCycle } from './v2v3/fundingCycle'
@@ -14,6 +13,6 @@ export type OutgoingProjectData = {
   _data: V2V3FundingCycle
   _fundAccessConstraints: V2V3FundAccessConstraint[]
   _groupedSplits: OutgoingGroupedSplit[]
-  _projectId: BigNumber
-  _mustStartAtOrAfter: BigNumber
+  _projectId: bigint
+  _mustStartAtOrAfter: bigint
 }

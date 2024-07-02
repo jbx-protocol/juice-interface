@@ -1,14 +1,13 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { FundingCyclesQuery } from 'generated/graphql'
 import useProjectDistributionLimit from 'hooks/v2v3/contractReader/useProjectDistributionLimit'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
 import moment from 'moment'
 import React, { Fragment, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { isBigNumberish } from 'utils/bigNumbers'
+import { isBigintIsh } from 'utils/bigNumbers'
 import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
@@ -46,14 +45,14 @@ const HistoricalCycle: React.FC<QueriedFundingCycle> = cycle => {
 
       const [, currency] = distributionLimit
 
-      if (!isBigNumberish(currency)) {
+      if (!isBigintIsh(currency)) {
         console.error(
           'Unexpected result from distributionLimitOf',
           distributionLimit,
         )
         throw new Error('Unexpected result from distributionLimitOf')
       }
-      const _currencyOption = BigNumber.from(currency).toNumber()
+      const _currencyOption = Number(currency)
       if (_currencyOption !== 0) return _currencyOption as V2V3CurrencyOption
     }, [distributionLimit]) ?? V2V3_CURRENCY_ETH
 

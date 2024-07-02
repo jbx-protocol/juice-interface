@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro'
-import { BigNumber } from 'ethers'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
@@ -22,8 +21,8 @@ export default function FundingCycleDetails({
 }: {
   fundingCycle: V2V3FundingCycle
   fundingCycleMetadata: V2V3FundingCycleMetadata
-  distributionLimit: BigNumber | undefined
-  distributionLimitCurrency: BigNumber | undefined
+  distributionLimit: bigint | undefined
+  distributionLimitCurrency: bigint | undefined
   showDiffs?: boolean
   mintRateZeroAsUnchanged?: boolean
 }) {

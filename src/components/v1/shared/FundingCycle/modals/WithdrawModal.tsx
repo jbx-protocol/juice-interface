@@ -46,10 +46,11 @@ export default function WithdrawModal({
   useEffect(() => {
     if (!currentFC) return
 
-    const untapped = currentFC.target.sub(currentFC.tapped)
-    const withdrawable = balanceInCurrency?.gt(untapped)
-      ? untapped
-      : balanceInCurrency
+    const untapped = currentFC.target - currentFC.tapped
+    const withdrawable =
+      balanceInCurrency && balanceInCurrency > untapped
+        ? untapped
+        : balanceInCurrency
 
     setTapAmount(fromWad(withdrawable))
   }, [balanceInCurrency, currentFC])
@@ -57,16 +58,17 @@ export default function WithdrawModal({
   if (!currentFC) return null
 
   const currentFCCurrency = V1CurrencyName(
-    currentFC.currency.toNumber() as V1CurrencyOption,
+    Number(currentFC.currency) as V1CurrencyOption,
   )
-  const untapped = currentFC.target.sub(currentFC.tapped)
+  const untapped = currentFC.target - currentFC.tapped
 
-  const withdrawable = balanceInCurrency?.gt(untapped)
-    ? untapped
-    : balanceInCurrency
+  const withdrawable =
+    balanceInCurrency && balanceInCurrency > untapped
+      ? untapped
+      : balanceInCurrency
 
   const convertedAmountSubFee = amountSubFee(
-    currentFC.currency.eq(V1_CURRENCY_USD)
+    Number(currentFC.currency) === V1_CURRENCY_USD
       ? converter.usdToWei(tapAmount)
       : parseWad(tapAmount),
     currentFC.fee,
@@ -75,11 +77,11 @@ export default function WithdrawModal({
   async function executeTapTx() {
     if (!currentFC || !tapAmount) return
 
-    const minAmount = (
-      currentFC.currency.eq(V1_CURRENCY_USD)
+    const _min =
+      Number(currentFC.currency) === V1_CURRENCY_USD
         ? converter.usdToWei(tapAmount)
         : parseWad(tapAmount)
-    )?.sub(1e12) // Arbitrary value subtracted
+    const minAmount = _min ? _min - 1_000_000_000_000n : undefined
 
     if (!minAmount) return
 
@@ -88,7 +90,7 @@ export default function WithdrawModal({
     const txSuccessful = await tapProjectTx(
       {
         tapAmount: parseWad(tapAmount),
-        currency: currentFC.currency.toNumber() as V1CurrencyOption,
+        currency: Number(currentFC.currency) as V1CurrencyOption,
         minAmount,
       },
       {
@@ -170,7 +172,7 @@ export default function WithdrawModal({
               <div className="flex items-center">
                 <span className="mr-2 text-black dark:text-slate-100">
                   {V1CurrencyName(
-                    currentFC.currency.toNumber() as V1CurrencyOption,
+                    Number(currentFC.currency) as V1CurrencyOption,
                   )}
                 </span>
                 <InputAccessoryButton

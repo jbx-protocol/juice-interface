@@ -1,4 +1,4 @@
-import { getAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { useV2V3HasPermissions } from 'hooks/v2v3/contractReader/useV2V3HasPermissions'
 import { V2V3OperatorPermission } from 'models/v2v3/permissions'
 import { useJBTiered721DelegateProjectDeployer } from '../contracts/useJBTiered721DelegateProjectDeployer'
@@ -25,7 +25,7 @@ export function useNftDeployerCanReconfigure({
 
   const JBTiered721DelegateProjectDeployerAddress =
     JBTiered721DelegateProjectDeployer
-      ? getAddress(JBTiered721DelegateProjectDeployer?.address)
+      ? ethers.getAddress(JBTiered721DelegateProjectDeployer?.target as string)
       : undefined
 
   const { data: JBTiered721DelegateProjectDeployerCanReconfigure } =

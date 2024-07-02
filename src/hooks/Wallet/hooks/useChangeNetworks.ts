@@ -1,5 +1,4 @@
 import { useSetChain } from '@web3-onboard/react'
-import { BigNumber } from 'ethers'
 import { useCallback } from 'react'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
 
@@ -9,7 +8,7 @@ export function useChangeNetworks() {
   const [{ chains }, setChain] = useSetChain()
 
   const changeNetworks = useCallback(async () => {
-    const chain = chains.find(c => BigNumber.from(c.id).eq(readNetwork.chainId))
+    const chain = chains.find(c => BigInt(c.id) === BigInt(readNetwork.chainId))
     if (!chain) {
       console.error('FATAL: Chain not found')
       throw new Error('FATAL: Chain not found')

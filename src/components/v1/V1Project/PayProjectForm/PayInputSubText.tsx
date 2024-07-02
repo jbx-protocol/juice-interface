@@ -2,7 +2,7 @@ import { plural, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import Loading from 'components/Loading'
 import { CurrencyContext } from 'contexts/shared/CurrencyContext'
-import { BigNumber, utils } from 'ethers'
+import { ethers } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import useWeiConverter from 'hooks/useWeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
@@ -48,14 +48,14 @@ export default function PayInputSubText({
   })
 
   const receiveText = useMemo(() => {
-    const formatReceivedTickets = (wei: BigNumber): string | undefined => {
+    const formatReceivedTickets = (wei: bigint): string | undefined => {
       const exchangeRate = weightingFn?.(weight, reservedRate, wei, 'payer')
       return exchangeRate
         ? formattedNum(formatIssuanceRate(exchangeRate))
         : undefined
     }
 
-    if (weiPayAmt?.gt(0)) {
+    if (weiPayAmt > 0n) {
       const receivedTickets = formatReceivedTickets(weiPayAmt)
       const tokenReceiveText = tokenSymbolText({
         tokenSymbol,
@@ -75,8 +75,8 @@ export default function PayInputSubText({
 
     const receivedTickets = formatReceivedTickets(
       (payInCurrency === ETH
-        ? utils.parseEther('1')
-        : converter.usdToWei('1')) ?? BigNumber.from(0),
+        ? ethers.parseEther('1')
+        : converter.usdToWei('1')) ?? BigInt(0),
     )
 
     const tokenReceiveText = tokenSymbolText({

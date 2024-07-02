@@ -14,7 +14,7 @@ export default function FundingCyclePreview({
   return (
     <FundingCycleDetailsCard
       fundingCycleDetails={<FundingCycleDetails fundingCycle={fundingCycle} />}
-      fundingCycleDurationSeconds={fundingCycle.duration.mul(SECONDS_IN_DAY)}
+      fundingCycleDurationSeconds={fundingCycle.duration * SECONDS_IN_DAY}
       fundingCycleNumber={fundingCycle.number}
       fundingCycleStartTime={fundingCycle.start}
       isFundingCycleRecurring={isRecurring(fundingCycle)}

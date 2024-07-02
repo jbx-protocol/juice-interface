@@ -3,7 +3,6 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,
@@ -11,10 +10,11 @@ import {
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
+import { toHexString } from 'utils/bigNumbers'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useClaimTokensTx(): TransactorInstance<{
-  claimAmount: BigNumber
+  claimAmount: bigint
 }> {
   const { transactor } = useContext(TransactionContext)
   const { contracts, cv } = useContext(V2V3ContractsContext)
@@ -31,7 +31,7 @@ export function useClaimTokensTx(): TransactorInstance<{
       return transactor(
         contracts?.JBTokenStore,
         'claimFor',
-        [userAddress, projectId, claimAmount.toHexString()],
+        [userAddress, projectId, toHexString(claimAmount)],
         {
           ...txOpts,
           title: t`Claim ${tokenSymbolText({

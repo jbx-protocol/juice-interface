@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { V2FundingCycleMetadata } from 'models/v2/fundingCycle'
 import {
   BaseV2V3FundingCycleMetadata,
@@ -140,11 +139,9 @@ export const deserializeV2V3FundingCycleMetadata = (
       allowSetController:
         serializedFundingCycleMetadata.global.allowSetController,
     },
-    reservedRate: BigNumber.from(serializedFundingCycleMetadata.reservedRate),
-    redemptionRate: BigNumber.from(
-      serializedFundingCycleMetadata.redemptionRate,
-    ),
-    ballotRedemptionRate: BigNumber.from(
+    reservedRate: BigInt(serializedFundingCycleMetadata.reservedRate),
+    redemptionRate: BigInt(serializedFundingCycleMetadata.redemptionRate),
+    ballotRedemptionRate: BigInt(
       serializedFundingCycleMetadata.ballotRedemptionRate,
     ),
     pausePay: serializedFundingCycleMetadata.pausePay,
@@ -188,7 +185,7 @@ export const deserializeV2V3FundingCycleMetadata = (
     },
     preferClaimedTokenOverride:
       v3SerializedFundingCycleMetadata.preferClaimedTokenOverride,
-    metadata: BigNumber.from(v3SerializedFundingCycleMetadata.metadata),
+    metadata: BigInt(v3SerializedFundingCycleMetadata.metadata),
   } as V3FundingCycleMetadata
 }
 
@@ -204,9 +201,9 @@ export const serializeV2V3FundingCycleData = (
 export const deserializeV2V3FundingCycleData = (
   serializedFundingCycleData: SerializedV2V3FundingCycleData,
 ): V2V3FundingCycleData => ({
-  duration: BigNumber.from(serializedFundingCycleData.duration || '0'),
-  weight: BigNumber.from(serializedFundingCycleData.weight),
-  discountRate: BigNumber.from(serializedFundingCycleData.discountRate),
+  duration: BigInt(serializedFundingCycleData.duration || '0'),
+  weight: BigInt(serializedFundingCycleData.weight),
+  discountRate: BigInt(serializedFundingCycleData.discountRate),
   ballot: serializedFundingCycleData.ballot, // hex, contract address
 })
 
@@ -217,11 +214,11 @@ export const deserializeFundAccessConstraint = (
     terminal: fundAccessConstraint.terminal,
     token: fundAccessConstraint.token,
     distributionLimit: parseWad(fundAccessConstraint.distributionLimit),
-    distributionLimitCurrency: BigNumber.from(
+    distributionLimitCurrency: BigInt(
       fundAccessConstraint.distributionLimitCurrency,
     ),
     overflowAllowance: parseWad(fundAccessConstraint.overflowAllowance),
-    overflowAllowanceCurrency: BigNumber.from(
+    overflowAllowanceCurrency: BigInt(
       fundAccessConstraint.overflowAllowanceCurrency.toString(),
     ),
   }

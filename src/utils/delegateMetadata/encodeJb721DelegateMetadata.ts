@@ -5,7 +5,7 @@ import {
   IJBTiered721Delegate_V3_4_REDEEM_ID,
 } from 'constants/nftRewards'
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
-import { constants, utils } from 'ethers'
+import { ethers } from 'ethers'
 import { createMetadata } from 'juicebox-metadata-helper'
 import { JB721DelegateVersion } from 'models/v2v3/contracts'
 
@@ -81,8 +81,8 @@ function encodeJB721DelegateV3PayMetadata(
   if (!metadata) return undefined
 
   const args = [
-    constants.HashZero,
-    constants.HashZero,
+    ethers.ZeroHash,
+    ethers.ZeroHash,
     IJB721Delegate_V3_INTERFACE_ID,
     metadata.dontMint ?? false,
     metadata.expectMintFromExtraFunds ?? false,
@@ -90,7 +90,7 @@ function encodeJB721DelegateV3PayMetadata(
     metadata.tierIdsToMint,
   ]
 
-  const encoded = utils.defaultAbiCoder.encode(
+  const encoded = ethers.AbiCoder.defaultAbiCoder().encode(
     ['bytes32', 'bytes32', 'bytes4', 'bool', 'bool', 'bool', 'uint16[]'],
     args,
   )
@@ -104,14 +104,14 @@ function encodeJB721DelegateV3_1PayMetadata(
   if (!metadata) return undefined
 
   const args = [
-    constants.HashZero,
-    constants.HashZero,
+    ethers.ZeroHash,
+    ethers.ZeroHash,
     IJB721Delegate_V3_INTERFACE_ID,
     metadata.allowOverspending ?? DEFAULT_ALLOW_OVERSPENDING,
     metadata.tierIdsToMint,
   ]
 
-  const encoded = utils.defaultAbiCoder.encode(
+  const encoded = ethers.AbiCoder.defaultAbiCoder().encode(
     ['bytes32', 'bytes32', 'bytes4', 'bool', 'uint16[]'],
     args,
   )
@@ -125,14 +125,14 @@ function encodeJB721DelegateV3_2PayMetadata(
   if (!metadata) return undefined
 
   const args = [
-    constants.HashZero,
-    constants.HashZero,
+    ethers.ZeroHash,
+    ethers.ZeroHash,
     IJBTiered721Delegate_V3_2_INTERFACE_ID,
     metadata.allowOverspending ?? DEFAULT_ALLOW_OVERSPENDING,
     metadata.tierIdsToMint,
   ]
 
-  const encoded = utils.defaultAbiCoder.encode(
+  const encoded = ethers.AbiCoder.defaultAbiCoder().encode(
     ['bytes32', 'bytes32', 'bytes4', 'bool', 'uint16[]'],
     args,
   )
@@ -148,19 +148,22 @@ function encodeJB721DelegateV3_4PayMetadata(
     metadata.tierIdsToMint,
   ]
 
-  const encoded = utils.defaultAbiCoder.encode(['bool', 'uint16[]'], args)
+  const encoded = ethers.AbiCoder.defaultAbiCoder().encode(
+    ['bool', 'uint16[]'],
+    args,
+  )
 
   return encoded
 }
 
 function encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem: string[]) {
   const args = [
-    constants.HashZero,
+    ethers.ZeroHash,
     IJB721Delegate_V3_INTERFACE_ID,
     tokenIdsToRedeem,
   ]
 
-  const encoded = utils.defaultAbiCoder.encode(
+  const encoded = ethers.AbiCoder.defaultAbiCoder().encode(
     ['bytes32', 'bytes4', 'uint256[]'],
     args,
   )
@@ -170,12 +173,12 @@ function encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem: string[]) {
 
 function encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem: string[]) {
   const args = [
-    constants.HashZero,
+    ethers.ZeroHash,
     IJB721Delegate_V3_2_INTERFACE_ID,
     tokenIdsToRedeem,
   ]
 
-  const encoded = utils.defaultAbiCoder.encode(
+  const encoded = ethers.AbiCoder.defaultAbiCoder().encode(
     ['bytes32', 'bytes4', 'uint256[]'],
     args,
   )
@@ -185,7 +188,7 @@ function encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem: string[]) {
 
 function encodeJB721DelegateV3_4RedeemMetadata(tokenIdsToRedeem: string[]) {
   const args = [tokenIdsToRedeem]
-  const encoded = utils.defaultAbiCoder.encode(['uint256[]'], args)
+  const encoded = ethers.AbiCoder.defaultAbiCoder().encode(['uint256[]'], args)
   const result = createMetadata(
     [IJBTiered721Delegate_V3_4_REDEEM_ID],
     [encoded],

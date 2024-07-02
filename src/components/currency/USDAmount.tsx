@@ -1,6 +1,5 @@
 import { Tooltip } from 'antd'
 import { PRECISION_USD } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import CurrencySymbol from './CurrencySymbol'
@@ -18,7 +17,7 @@ export default function USDAmount({
   hideTooltip,
   className,
 }: {
-  amount?: BigNumber | string
+  amount?: bigint | string
   precision?: number
   padEnd?: boolean
   symbol?: string | JSX.Element

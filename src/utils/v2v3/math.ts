@@ -4,10 +4,8 @@ import {
   ONE_BILLION,
   TEN_THOUSAND,
 } from 'constants/numbers'
-import { constants } from 'ethers'
+import { ethers } from 'ethers'
 
-import { BigNumber } from 'ethers'
-import { parseEther } from 'ethers/lib/utils'
 import round from 'lodash/round'
 import { JBFee } from 'models/v2v3/fee'
 import {
@@ -39,26 +37,21 @@ type IssueeType = 'reserved' | 'payer'
  * @param discountRate - discount rate as parts-per-billion.
  * @returns {string} discount rate expressed as a percentage.
  */
-export const formatDiscountRate = (
-  discountRate: BigNumber | string,
-): string => {
+export const formatDiscountRate = (discountRate: bigint | string): string => {
   return (
-    BigNumber.from(discountRate)
-      .mul(100)
-      .div(MAX_DISCOUNT_RATE / 100)
-      .toNumber() / 100
+    Number((BigInt(discountRate) * 100n) / (MAX_DISCOUNT_RATE / 100n)) / 100
   ).toString()
 }
 
 /**
  * Express a given percentage as a discount rate (parts-per-billion).
  * @param percentage - value as a percentage.
- * @returns {BigNumber} percentage expressed as parts-per-billion.
+ * @returns {bigint} percentage expressed as parts-per-billion.
  */
-export const discountRateFrom = (percentage: string | number): BigNumber => {
+export const discountRateFrom = (percentage: string | number): bigint => {
   const percentageAsNumber = Number(percentage)
-  return BigNumber.from(
-    Math.floor((percentageAsNumber * MAX_DISCOUNT_RATE) / 100),
+  return BigInt(
+    Math.floor(Number(percentageAsNumber * Number(MAX_DISCOUNT_RATE))) / 100,
   )
 }
 
@@ -69,12 +62,9 @@ export const discountRateFrom = (percentage: string | number): BigNumber => {
  * @param splitPercent - split "percent" as parts-per-billion.
  * @returns {string} split expressed as a percentage.
  */
-export const formatSplitPercent = (splitPercent: BigNumber): string => {
+export const formatSplitPercent = (splitPercent: bigint): string => {
   return (
-    splitPercent
-      .mul(100)
-      .div(SPLITS_TOTAL_PERCENT / 100)
-      .toNumber() / 100
+    Number((splitPercent * 100n) / (SPLITS_TOTAL_PERCENT / 100n)) / 100
   ).toString()
 }
 
@@ -86,7 +76,7 @@ export const formatSplitPercent = (splitPercent: BigNumber): string => {
 export const preciseFormatSplitPercent = (
   percentPerBillion: number,
 ): number => {
-  return (percentPerBillion / SPLITS_TOTAL_PERCENT) * 100
+  return (percentPerBillion / Number(SPLITS_TOTAL_PERCENT)) * 100
 }
 
 /**
@@ -94,12 +84,12 @@ export const preciseFormatSplitPercent = (
  * NOTE: splitPercent is named misleadingly. splitPercent is not a percentage (x/100)
  * It is express as parts-per-billion.
  * @param percentage {float} - value as a percentage.
- * @returns {BigNumber} percentage expressed as parts-per-billion.
+ * @returns {bigint} percentage expressed as parts-per-billion.
  */
-export const splitPercentFrom = (percentage: number): BigNumber => {
+export const splitPercentFrom = (percentage: number): bigint => {
   return percentage
-    ? BigNumber.from(round((percentage * SPLITS_TOTAL_PERCENT) / 100))
-    : BigNumber.from(0)
+    ? BigInt(round((percentage * Number(SPLITS_TOTAL_PERCENT)) / 100))
+    : BigInt(0)
 }
 
 /**
@@ -108,14 +98,11 @@ export const splitPercentFrom = (percentage: number): BigNumber => {
  * @returns {string} reserved rate expressed as a percentage.
  */
 export const formatReservedRate = (
-  reservedRate: BigNumber | string | undefined,
+  reservedRate: bigint | string | undefined,
 ): string => {
   return reservedRate
     ? (
-        BigNumber.from(reservedRate)
-          .mul(100)
-          .div(MAX_RESERVED_RATE / 100)
-          .toNumber() / 100
+        Number((BigInt(reservedRate) * 100n) / (MAX_RESERVED_RATE / 100n)) / 100
       ).toString()
     : '0'
 }
@@ -123,12 +110,12 @@ export const formatReservedRate = (
 /**
  * Express a given [percentage] as a reserved rate (parts-per-ten thousand).
  * @param percentage - value as a percentage.
- * @returns {BigNumber} percentage expressed as parts-per-thousand.
+ * @returns {bigint} percentage expressed as parts-per-thousand.
  */
-export const reservedRateFrom = (percentage: string | number): BigNumber => {
+export const reservedRateFrom = (percentage: string | number): bigint => {
   const percentageAsNumber = Number(percentage)
-  return BigNumber.from(
-    Math.floor((percentageAsNumber * MAX_RESERVED_RATE) / 100),
+  return BigInt(
+    Math.floor((percentageAsNumber * Number(MAX_RESERVED_RATE)) / 100),
   )
 }
 
@@ -138,25 +125,22 @@ export const reservedRateFrom = (percentage: string | number): BigNumber => {
  * @returns {string} redemption rate expressed as a percentage.
  */
 export const formatRedemptionRate = (
-  redemptionRate: BigNumber | string,
+  redemptionRate: bigint | string,
 ): string => {
   return (
-    BigNumber.from(redemptionRate)
-      .mul(100)
-      .div(MAX_REDEMPTION_RATE / 100)
-      .toNumber() / 100
+    Number((BigInt(redemptionRate) * 100n) / (MAX_REDEMPTION_RATE / 100n)) / 100
   ).toString()
 }
 
 /**
  * Express a given [percentage] as a redemption rate (parts-per-ten thousand).
  * @param percentage - value as a percentage.
- * @returns {BigNumber} percentage expressed as parts-per-thousand.
+ * @returns {bigint} percentage expressed as parts-per-thousand.
  */
-export const redemptionRateFrom = (percentage: string | number): BigNumber => {
+export const redemptionRateFrom = (percentage: string | number): bigint => {
   const percentageAsNumber = Number(percentage)
-  return BigNumber.from(
-    Math.floor((percentageAsNumber * MAX_REDEMPTION_RATE) / 100),
+  return BigInt(
+    Math.floor((percentageAsNumber * Number(MAX_REDEMPTION_RATE)) / 100),
   )
 }
 
@@ -166,14 +150,14 @@ export const redemptionRateFrom = (percentage: string | number): BigNumber => {
  * @returns {string} issuance rate in parts per 1e18
  */
 export const issuanceRateFrom = (issuanceRate: string): string => {
-  return constants.WeiPerEther.mul(
-    Math.floor(parseFloat(issuanceRate)),
+  return (
+    ethers.WeiPerEther * BigInt(Math.floor(parseFloat(issuanceRate)))
   ).toString()
 }
 
 /**
  * Express a given issuance rate in parts per 1e18 as an issuance rate [tokens / 1 ETH]
- * @param {BigNumber} issuanceRate issuance rate in parts per 1e18
+ * @param {bigint} issuanceRate issuance rate in parts per 1e18
  * @returns {string} issuance rate in tokens / 1ETH
  */
 export const formatIssuanceRate = (issuanceRate: string): string => {
@@ -181,7 +165,7 @@ export const formatIssuanceRate = (issuanceRate: string): string => {
   if (issuanceRate.split('.').length) {
     issuanceRate = issuanceRate.split('.')[0]
   }
-  return BigNumber.from(issuanceRate).div(constants.WeiPerEther).toString()
+  return (BigInt(issuanceRate) / ethers.WeiPerEther).toString()
 }
 
 /**
@@ -189,12 +173,9 @@ export const formatIssuanceRate = (issuanceRate: string): string => {
  * @param feePerBillion - fee as parts-per-billion.
  * @returns {string} fee expressed as a percentage.
  */
-export const formatFee = (feePerBillion: BigNumber): string => {
+export const formatFee = (feePerBillion: bigint): string => {
   return (
-    feePerBillion
-      .mul(ONE_BILLION * 100)
-      .div(MAX_FEE)
-      .toNumber() / ONE_BILLION
+    Number((feePerBillion * ONE_BILLION * 100n) / MAX_FEE) / Number(ONE_BILLION)
   ).toString()
 }
 
@@ -210,44 +191,40 @@ export const formatFee = (feePerBillion: BigNumber): string => {
  * @returns
  */
 export const weightAmountPermyriad: WeightFunction = (
-  weight: BigNumber | undefined,
+  weight: bigint | undefined,
   reservedRatePermyriad: number | undefined,
-  amountWad: BigNumber | undefined,
+  amountWad: bigint | undefined,
   outputType: IssueeType,
 ): string => {
   if (!weight || !amountWad) return '0'
 
   if (reservedRatePermyriad === undefined) return '0'
 
-  return (
-    fromWad(
-      amountWad
-        .mul(weight)
-        .mul(
-          outputType === 'reserved'
-            ? reservedRatePermyriad
-            : invertPermyriad(BigNumber.from(reservedRatePermyriad)),
-        )
-        .div(percentToPermyriad(100)),
-    ) ?? '0'
-  )
+  const value =
+    (amountWad *
+      weight *
+      (outputType === 'reserved'
+        ? BigInt(reservedRatePermyriad)
+        : invertPermyriad(BigInt(reservedRatePermyriad)))) /
+    percentToPermyriad(100)
+  return fromWad(value) ?? '0'
 }
 
 export const feeForAmount = (
-  amountWad: BigNumber | undefined,
-  feePerBillion: BigNumber | undefined,
-): BigNumber | undefined => {
+  amountWad: bigint | undefined,
+  feePerBillion: bigint | undefined,
+): bigint | undefined => {
   if (!feePerBillion || !amountWad) return
-  return amountWad.mul(feePerBillion).div(ONE_BILLION)
+  return (amountWad * feePerBillion) / ONE_BILLION
 }
 
 export const amountSubFee = (
-  amountWad: BigNumber | undefined,
-  feePerBillion: BigNumber | undefined,
-): BigNumber | undefined => {
+  amountWad: bigint | undefined,
+  feePerBillion: bigint | undefined,
+): bigint | undefined => {
   if (!feePerBillion || !amountWad) return
-  const feeAmount = feeForAmount(amountWad, feePerBillion) ?? 0
-  return amountWad.sub(feeAmount)
+  const feeAmount = feeForAmount(amountWad, feePerBillion) ?? 0n
+  return amountWad - feeAmount
 }
 
 // `heldFeesOf` returns list of JBFee
@@ -255,7 +232,7 @@ export const amountSubFee = (
 // and return the sum of them all
 export function sumHeldFees(fees: JBFee[]) {
   return fees.reduce((sum, heldFee) => {
-    const amountWad = feeForAmount(heldFee.amount, BigNumber.from(heldFee.fee))
+    const amountWad = feeForAmount(heldFee.amount, BigInt(heldFee.fee))
     const amountNum = parseFloat(fromWad(amountWad))
     return sum + (amountNum ?? 0)
   }, 0)
@@ -270,8 +247,8 @@ export function computeIssuanceRate(
   const computed = formatIssuanceRate(
     weightAmountPermyriad(
       fundingCycle.weight,
-      fundingCycleMetadata.reservedRate.toNumber(),
-      parseEther('1'),
+      Number(fundingCycleMetadata.reservedRate ?? 0),
+      ethers.parseEther('1'),
       issuee,
     ) ?? '',
   )

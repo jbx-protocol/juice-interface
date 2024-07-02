@@ -1,5 +1,3 @@
-import { BigNumber } from 'ethers'
-
 type Primitive = string | number | boolean | symbol | null | undefined
 
 export type Json<T> = {
@@ -7,13 +5,13 @@ export type Json<T> = {
     ? T[K]
     : T[K] extends Array<infer A>
     ? Json<A>[]
-    : T[K] extends BigNumber
+    : T[K] extends bigint
     ? string
-    : T[K] extends BigNumber | undefined
+    : T[K] extends bigint | undefined
     ? string | undefined
-    : T[K] extends BigNumber | null
+    : T[K] extends bigint | null
     ? string | null
-    : T[K] extends BigNumber | null | undefined
+    : T[K] extends bigint | null | undefined
     ? string | null | undefined
     : Json<T[K]>
 }

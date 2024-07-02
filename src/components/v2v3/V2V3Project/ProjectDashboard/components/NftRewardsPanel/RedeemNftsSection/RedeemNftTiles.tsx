@@ -1,5 +1,6 @@
 import Loading from 'components/Loading'
 import { NfTsQuery } from 'generated/graphql'
+import { toHexString } from 'utils/bigNumbers'
 import { useJB721DelegateTokenToNftReward } from '../hooks/useJB721DelegateTokenToNftReward'
 import { RedeemNftTile } from './RedeemNftTile'
 
@@ -11,7 +12,7 @@ export function RedeemNftTiles({
   return (
     <div className="flex space-x-2.5 overflow-x-scroll">
       {nftAccountBalance?.nfts.map((nft, i) => {
-        const tokenId = nft.tokenId.toHexString()
+        const tokenId = toHexString(nft.tokenId)
         const _nft = {
           ...nft,
           tokenId,

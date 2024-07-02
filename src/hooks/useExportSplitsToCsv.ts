@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 import { useContext, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
@@ -21,7 +20,7 @@ const CSV_HEADER = [
 const splitToCsvRow = (split: Split) => {
   return [
     split.beneficiary,
-    `${parseFloat(formatSplitPercent(BigNumber.from(split.percent))) / 100}`,
+    `${parseFloat(formatSplitPercent(BigInt(split.percent))) / 100}`,
     `${split.preferClaimed}`,
     `${split.lockedUntil}`,
     split.projectId,

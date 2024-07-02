@@ -3,7 +3,7 @@ import { AccountDashboard } from 'components/AccountDashboard/AccountDashboard'
 import Loading from 'components/Loading'
 import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import { SEO } from 'components/common/SEO/SEO'
-import { isAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { resolveAddress } from 'lib/api/ens'
 import { loadCatalog } from 'locales/utils'
 import { Profile } from 'models/database'
@@ -54,7 +54,8 @@ export default function AccountPage({
   addressOrEnsName,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const addressFound = useMemo(
-    () => isAddress(addressOrEnsName) || addressOrEnsName.endsWith('eth'),
+    () =>
+      addressOrEnsName.endsWith('eth') || ethers.isAddress(addressOrEnsName),
     [addressOrEnsName],
   )
 

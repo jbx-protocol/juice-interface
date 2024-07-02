@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 import { useMemo } from 'react'
 import { getProjectOwnerRemainderSplit, sortSplits } from 'utils/splits'
@@ -17,8 +16,8 @@ export default function SplitList({
   dontApplyFeeToAmounts,
 }: {
   splits: Split[]
-  currency?: BigNumber
-  totalValue: BigNumber | undefined
+  currency?: bigint
+  totalValue: bigint | undefined
   projectOwnerAddress: string | undefined
   showAmounts?: boolean
   showFees?: boolean

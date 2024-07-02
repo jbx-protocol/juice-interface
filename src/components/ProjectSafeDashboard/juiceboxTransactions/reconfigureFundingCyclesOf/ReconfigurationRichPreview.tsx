@@ -96,7 +96,7 @@ export function ReconfigureRichPreview({
         </MinimalCollapse>
         <div className="flex w-full flex-col gap-4 md:w-2/3">
           <MinimalCollapse header={t`Payouts`} light>
-            {distributionLimit?.gt(0) ? (
+            {distributionLimit > 0n ? (
               <DiffedSplitList
                 splits={toSplit(payoutSplits)}
                 diffSplits={diffPayoutSplits}
@@ -114,7 +114,7 @@ export function ReconfigureRichPreview({
             )}
           </MinimalCollapse>
           <MinimalCollapse header={t`Reserved token recipients`} light>
-            {reservedRate?.gt(0) ? (
+            {reservedRate > 0n ? (
               <DiffedSplitList
                 splits={toSplit(reservedTokensSplits)}
                 diffSplits={diffReservedSplits}

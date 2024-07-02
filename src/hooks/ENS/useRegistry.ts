@@ -1,5 +1,5 @@
 import { readNetwork } from 'constants/networks'
-import { ContractInterface } from 'ethers'
+import { ethers } from 'ethers'
 import { useLoadContractFromAddress } from 'hooks/useLoadContractFromAddress'
 import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
@@ -19,7 +19,7 @@ async function loadENSRegistryContract(): Promise<ContractJson | undefined> {
 }
 
 export function useENSRegistry() {
-  const [abi, setAbi] = useState<ContractInterface | undefined>(undefined)
+  const [abi, setAbi] = useState<ethers.InterfaceAbi | undefined>(undefined)
   const [address, setAddress] = useState<string | undefined>(undefined)
 
   useEffect(() => {

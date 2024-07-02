@@ -1,16 +1,16 @@
-import { BigNumber } from 'ethers'
 import isEqual from 'lodash/isEqual'
 import { Split, SplitGroup } from 'models/splits'
 import { V2V3ContractName } from 'models/v2v3/contracts'
 
 import { useCallback } from 'react'
 
+import { toHexString } from 'utils/bigNumbers'
 import useV2ContractReader from './useV2ContractReader'
 
 type SplitResult = {
-  percent: BigNumber
-  lockedUntil: BigNumber
-  projectId: BigNumber
+  percent: bigint
+  lockedUntil: bigint
+  projectId: bigint
   beneficiary: string
   allocator: string
   preferClaimed: boolean
@@ -19,9 +19,9 @@ type SplitResult = {
 const formatSplitResult = (splitResult: SplitResult[]) => {
   return splitResult.map((split: SplitResult) => {
     return {
-      percent: split.percent.toNumber(),
-      lockedUntil: split.lockedUntil.toNumber(),
-      projectId: split.projectId.toHexString(),
+      percent: Number(split.percent),
+      lockedUntil: Number(split.lockedUntil),
+      projectId: toHexString(split.projectId),
       beneficiary: split.beneficiary,
       allocator: split.allocator,
       preferClaimed: split.preferClaimed,

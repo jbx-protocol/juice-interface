@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { useV1TotalBalance } from './useV1TokenBalance'
 import { useV1UnclaimedBalanceForV3Token } from './useV1UnclaimedBalanceForV3Token'
 import { useV2TotalBalance } from './useV2TokenBalance'
@@ -11,17 +10,22 @@ export function useTotalLegacyTokenBalance({
 }) {
   const v1TotalBalance = useV1TotalBalance()
   const v1UnclaimedBalance = useV1UnclaimedBalanceForV3Token()
-  const v1ClaimedBalance = v1TotalBalance?.sub(v1UnclaimedBalance)
+  const v1ClaimedBalance = v1TotalBalance
+    ? v1TotalBalance - v1UnclaimedBalance
+    : undefined
 
   const { data: v2TotalBalance } = useV2TotalBalance({ projectId })
   const { data: v2UnclaimedBalance } = useV2UnclaimedBalanceForV3Token({
     projectId,
   })
 
-  const totalLegacyTokenBalance = v1TotalBalance?.add(v2TotalBalance ?? 0)
+  const totalLegacyTokenBalance = v1TotalBalance
+    ? v1TotalBalance + (v2TotalBalance ?? 0n)
+    : undefined
 
-  const v2ClaimedBalance =
-    v2TotalBalance?.sub(v2UnclaimedBalance ?? 0) ?? BigNumber.from(0)
+  const v2ClaimedBalance = v2TotalBalance
+    ? v2TotalBalance - (v2UnclaimedBalance ?? 0n)
+    : BigInt(0)
 
   return {
     v1TotalBalance,

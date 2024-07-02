@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
 import {
@@ -91,7 +90,7 @@ export const usePrepareSaveEditCycleData = () => {
     }
 
   const editingFundingCycleData: V2V3FundingCycleData = {
-    duration: BigNumber.from(durationSeconds),
+    duration: BigInt(durationSeconds),
     weight: newMintRate,
     discountRate: discountRateFrom(formValues.discountRate),
     ballot: formValues.ballot,
@@ -102,14 +101,15 @@ export const usePrepareSaveEditCycleData = () => {
       : parseWad(formValues.distributionLimit)
   const editingFundAccessConstraints: V2V3FundAccessConstraint[] = [
     {
-      terminal: JBETHPaymentTerminal?.address ?? '',
+      // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+      terminal: (JBETHPaymentTerminal?.target as string | undefined) ?? '',
       token: ETH_TOKEN_ADDRESS,
       distributionLimit,
-      distributionLimitCurrency: BigNumber.from(
+      distributionLimitCurrency: BigInt(
         getV2V3CurrencyOption(formValues.distributionLimitCurrency),
       ),
-      overflowAllowance: BigNumber.from(0),
-      overflowAllowanceCurrency: BigNumber.from(0),
+      overflowAllowance: BigInt(0),
+      overflowAllowanceCurrency: BigInt(0),
     },
   ]
 

@@ -12,7 +12,7 @@ export const ReservedTokensSubPanel = ({
 }: {
   className?: string
 }) => {
-  const { reservedList, reservedTokens, reservedRate } =
+  const { reservedList, reservedTokens, reservedRate, loading } =
     useReservedTokensSubPanel()
 
   const reservedRateTooltip = (
@@ -32,7 +32,7 @@ export const ReservedTokensSubPanel = ({
             className="w-full min-w-min flex-[1_0_0]"
             title={t`Reserved tokens`}
             description={
-              reservedTokens ? (
+              !loading ? (
                 <>{reservedTokens}</>
               ) : (
                 <div className="h-7 w-24 animate-pulse rounded bg-grey-200 dark:bg-slate-200" />

@@ -1,5 +1,4 @@
 import { AllocationSplit } from 'components/v2v3/shared/Allocation/Allocation'
-import { BigNumber } from 'ethers'
 import { useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { useFundingTargetType } from './useFundingTargetType'
@@ -19,7 +18,7 @@ export const usePayoutSplitAmountPercentage = ({
 }: {
   allocationId?: string
   allocations: AllocationSplit[]
-  totalAllocationAmount?: BigNumber | undefined
+  totalAllocationAmount?: bigint | undefined
 }) => {
   const fundingTargetType = useFundingTargetType(totalAllocationAmount)
   const hasSpecificFundingTarget = fundingTargetType === 'specific'

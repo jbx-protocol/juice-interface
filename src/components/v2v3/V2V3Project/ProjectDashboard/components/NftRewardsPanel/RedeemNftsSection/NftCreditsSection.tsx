@@ -1,9 +1,8 @@
 import { Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
 import ETHAmount from 'components/currency/ETHAmount'
-import { BigNumber } from 'ethers'
 
-export function NftCreditsSection({ credits }: { credits: BigNumber }) {
+export function NftCreditsSection({ credits }: { credits: bigint }) {
   return (
     <>
       <div className="text-sm font-medium text-grey-600 dark:text-slate-50">

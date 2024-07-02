@@ -1,5 +1,5 @@
 import { NftRewardsContext } from 'contexts/NftRewards/NftRewardsContext'
-import { Transaction } from 'ethers'
+import { ethers } from 'ethers'
 import { FormikHelpers } from 'formik'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
@@ -45,7 +45,7 @@ export const usePayProjectTx = ({
   const projectHasErc20 = useProjectHasErc20()
 
   const buildPayReceipt = useCallback(
-    (e: Transaction | undefined): ProjectPayReceipt => {
+    (e: ethers.TransactionResponse | undefined): ProjectPayReceipt => {
       return {
         totalAmount: payAmount ?? {
           amount: 0,
@@ -53,7 +53,7 @@ export const usePayProjectTx = ({
         },
         nfts: chosenNftRewards ?? [],
         timestamp: new Date(),
-        transactionHash: e?.hash,
+        transactionHash: e?.hash ?? undefined,
         fromAddress: userAddress ?? '',
         tokensReceived: receivedTickets ?? '',
       }

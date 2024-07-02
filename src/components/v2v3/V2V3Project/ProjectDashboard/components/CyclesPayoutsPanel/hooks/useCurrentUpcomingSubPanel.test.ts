@@ -2,7 +2,6 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { useProjectContext } from 'components/v2v3/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { useProjectUpcomingFundingCycle } from 'hooks/v2v3/contractReader/useProjectUpcomingFundingCycle'
 import { useCurrentUpcomingSubPanel } from './useCurrentUpcomingSubPanel'
 
@@ -31,9 +30,9 @@ describe('useCurrentUpcomingSubPanel', () => {
       () =>
         ({
           fundingCycle: {
-            duration: BigNumber.from(1),
-            number: BigNumber.from(1),
-            start: BigNumber.from(1),
+            duration: BigInt(1),
+            number: BigInt(1),
+            start: BigInt(1),
           },
           loading: { fundingCycleLoading: false },
         } as any),
@@ -42,7 +41,7 @@ describe('useCurrentUpcomingSubPanel', () => {
     mockUseProjectUpcomingFundingCycle.mockImplementation(
       () =>
         ({
-          data: [{ duration: BigNumber.from(1) }],
+          data: [{ duration: BigInt(1) }],
           loading: false,
         } as any),
     )
@@ -75,9 +74,9 @@ describe('useCurrentUpcomingSubPanel', () => {
       () =>
         ({
           fundingCycle: {
-            duration: BigNumber.from(0),
-            number: BigNumber.from(1),
-            start: BigNumber.from(1),
+            duration: BigInt(0),
+            number: BigInt(1),
+            start: BigInt(1),
           },
           loading: { fundingCycleLoading: false },
         } as any),
@@ -91,9 +90,9 @@ describe('useCurrentUpcomingSubPanel', () => {
       () =>
         ({
           fundingCycle: {
-            duration: BigNumber.from(1),
-            number: BigNumber.from(1),
-            start: BigNumber.from(1),
+            duration: BigInt(1),
+            number: BigInt(1),
+            start: BigInt(1),
           },
           loading: { fundingCycleLoading: false },
         } as any),
@@ -101,7 +100,7 @@ describe('useCurrentUpcomingSubPanel', () => {
     mockUseProjectUpcomingFundingCycle.mockImplementation(
       () =>
         ({
-          data: [{ duration: BigNumber.from(1) }],
+          data: [{ duration: BigInt(1) }],
           loading: true,
         } as any),
     )
@@ -114,9 +113,9 @@ describe('useCurrentUpcomingSubPanel', () => {
       () =>
         ({
           fundingCycle: {
-            duration: BigNumber.from(1),
-            number: BigNumber.from(1),
-            start: BigNumber.from(1),
+            duration: BigInt(1),
+            number: BigInt(1),
+            start: BigInt(1),
           },
           loading: { fundingCycleLoading: false },
         } as any),
@@ -124,7 +123,7 @@ describe('useCurrentUpcomingSubPanel', () => {
     mockUseProjectUpcomingFundingCycle.mockImplementation(
       () =>
         ({
-          data: [{ duration: BigNumber.from(1) }],
+          data: [{ duration: BigInt(1) }],
           loading: true,
         } as any),
     )

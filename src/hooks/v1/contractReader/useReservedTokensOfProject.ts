@@ -1,29 +1,28 @@
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
-import { BigNumber, BigNumberish } from 'ethers'
 import { V1ContractName } from 'models/v1/contracts'
 import { useContext, useMemo } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbers'
+import { BigintIsh, bigintsDiff, toHexString } from 'utils/bigNumbers'
 
 import useContractReader from './useContractReader'
 
 /** Returns supply of reserved tokens for project in current context, using provided `reservedRate` argument. */
 export default function useReservedTokensOfProject(
-  reservedRate: BigNumberish | undefined,
+  reservedRate: BigintIsh | undefined,
 ) {
   const { terminal } = useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
-  const _projectId = BigNumber.from(projectId).toHexString()
+  const _projectId = projectId ? toHexString(BigInt(projectId)) : undefined
 
-  return useContractReader<BigNumber>({
+  return useContractReader<bigint>({
     contract: terminal?.name,
     functionName: 'reservedTicketBalanceOf',
     args:
       projectId && reservedRate
-        ? [_projectId, BigNumber.from(reservedRate).toHexString()]
+        ? [_projectId, toHexString(BigInt(reservedRate))]
         : null,
-    valueDidChange: bigNumbersDiff,
+    valueDidChange: bigintsDiff,
     updateOn: useMemo(
       () => [
         {

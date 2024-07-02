@@ -1,7 +1,6 @@
-import { BigNumber } from 'ethers'
 import { V1TerminalName } from 'models/v1/terminals'
 import { useMemo } from 'react'
-import { bigNumbersDiff } from 'utils/bigNumbers'
+import { bigintsDiff, toHexString } from 'utils/bigNumbers'
 
 import useContractReader from './useContractReader'
 
@@ -10,11 +9,11 @@ export default function useBalanceOfProject(
   projectId: number | undefined,
   terminalName: V1TerminalName | undefined,
 ) {
-  return useContractReader<BigNumber>({
+  return useContractReader<bigint>({
     contract: terminalName,
     functionName: 'balanceOf',
     args: projectId ? [projectId] : null,
-    valueDidChange: bigNumbersDiff,
+    valueDidChange: bigintsDiff,
     updateOn: useMemo(
       () =>
         projectId
@@ -22,12 +21,12 @@ export default function useBalanceOfProject(
               {
                 contract: terminalName,
                 eventName: 'Pay',
-                topics: [[], BigNumber.from(projectId).toHexString()],
+                topics: [[], toHexString(BigInt(projectId))],
               },
               {
                 contract: terminalName,
                 eventName: 'Tap',
-                topics: [[], BigNumber.from(projectId).toHexString()],
+                topics: [[], toHexString(BigInt(projectId))],
               },
             ]
           : undefined,

@@ -3,7 +3,6 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { renderHook } from '@testing-library/react-hooks'
-import { BigNumber } from 'ethers'
 import { formattedNum } from 'utils/format/formatNumber'
 import {
   computeIssuanceRate,
@@ -23,24 +22,24 @@ jest.mock('utils/format/formatNumber')
 
 describe('useFormatConfigurationTokenSection', () => {
   const mockFundingCycle = {
-    weight: BigNumber.from(1),
-    discountRate: BigNumber.from(2),
+    weight: BigInt(1),
+    discountRate: BigInt(2),
   }
   const mockFundingCycleMetadata = {
-    reservedRate: BigNumber.from(1),
-    redemptionRate: BigNumber.from(2),
+    reservedRate: BigInt(1),
+    redemptionRate: BigInt(2),
     allowMinting: true,
     global: {
       pauseTransfers: true,
     },
   }
   const mockUpcomingFundingCycle = {
-    weight: BigNumber.from(3),
-    discountRate: BigNumber.from(4),
+    weight: BigInt(3),
+    discountRate: BigInt(4),
   }
   const mockUpcomingFundingCycleMetadata = {
-    reservedRate: BigNumber.from(3),
-    redemptionRate: BigNumber.from(4),
+    reservedRate: BigInt(3),
+    redemptionRate: BigInt(4),
     allowMinting: false,
     global: {
       pauseTransfers: false,

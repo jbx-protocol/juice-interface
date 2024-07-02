@@ -2,9 +2,9 @@ import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { V1UserContext } from 'contexts/v1/User/V1UserContext'
-import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useContext } from 'react'
+import { toHexString } from 'utils/bigNumbers'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useDistributeTokensTx(): TransactorInstance {
@@ -23,7 +23,7 @@ export function useDistributeTokensTx(): TransactorInstance {
         ? contracts.TerminalV1_1
         : contracts.TerminalV1,
       'printReservedTickets',
-      [BigNumber.from(projectId).toHexString()],
+      [toHexString(BigInt(projectId))],
       {
         ...txOpts,
         title: t`Send reserved ${tokenSymbolText({

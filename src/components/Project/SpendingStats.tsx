@@ -4,7 +4,6 @@ import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import TooltipLabel from 'components/TooltipLabel'
 import { CurrencyName } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import { formatWad } from 'utils/format/formatNumber'
 import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 
@@ -17,9 +16,9 @@ export default function SpendingStats({
   hasFundingTarget,
 }: {
   currency: CurrencyName | undefined
-  targetAmount: BigNumber
-  distributedAmount: BigNumber
-  distributableAmount: BigNumber | undefined
+  targetAmount: bigint
+  distributedAmount: bigint
+  distributableAmount: bigint | undefined
   ownerAddress: string | undefined
   feePercentage: string | undefined
   hasFundingTarget: boolean | undefined
@@ -33,7 +32,9 @@ export default function SpendingStats({
       <div className="mb-1 flex gap-x-1">
         <Tooltip
           title={
-            currency === 'ETH' && distributableAmount?.gt(0) ? (
+            currency === 'ETH' &&
+            distributableAmount &&
+            distributableAmount > 0n ? (
               <ETHToUSD ethAmount={distributableAmount} />
             ) : undefined
           }

@@ -1,24 +1,24 @@
 import { t } from '@lingui/macro'
-import { BigNumber, BigNumberish } from 'ethers'
 
 import { Tooltip } from 'antd'
 
 import moment from 'moment'
+import { BigintIsh } from 'utils/bigNumbers'
 
 export const formatDate = (
-  dateMillis: BigNumberish,
+  dateMillis: BigintIsh,
   format = 'YYYY-MM-DD h:mma',
-) => moment(BigNumber.from(dateMillis).toNumber()).format(format)
+) => moment(Number(dateMillis)).format(format)
 
 export const formatDateToUTC = (
-  dateMillis: BigNumberish,
+  dateMillis: BigintIsh,
   format = 'YYYY-MM-DD h:mma UTC',
-) => moment(BigNumber.from(dateMillis).toNumber()).utc().format(format)
+) => moment(Number(dateMillis)).utc().format(format)
 
-export function formatHistoricalDate(dateMillis: BigNumberish) {
+export function formatHistoricalDate(dateMillis: BigintIsh) {
   return (
     <Tooltip title={`${formatDateToUTC(dateMillis)}`}>
-      {t`${moment(BigNumber.from(dateMillis).toNumber()).fromNow(true)} ago`}
+      {t`${moment(Number(dateMillis)).fromNow(true)} ago`}
     </Tooltip>
   )
 }

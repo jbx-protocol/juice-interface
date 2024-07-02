@@ -1,6 +1,5 @@
 import { readProvider } from 'constants/readProvider'
-import { Contract, ContractInterface } from 'ethers'
-import { isAddress } from 'ethers/lib/utils'
+import { Contract, ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { useWallet } from './Wallet'
@@ -8,13 +7,15 @@ import { useWallet } from './Wallet'
 const isInputAddressValid = (
   address: string | undefined,
 ): address is string => {
-  if (address && isAddress(address) && !isZeroAddress(address)) {
+  if (address && ethers.isAddress(address) && !isZeroAddress(address)) {
     return true
   }
   return false
 }
 
-export const useLoadContractFromAddress = <ABI extends ContractInterface>({
+export const useLoadContractFromAddress = <
+  ABI extends ethers.InterfaceAbi | ethers.Interface,
+>({
   address,
   abi,
 }: {

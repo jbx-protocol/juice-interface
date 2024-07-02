@@ -3,7 +3,6 @@ import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,
@@ -11,10 +10,11 @@ import {
 import { useWallet } from 'hooks/Wallet'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
+import { toHexString } from 'utils/bigNumbers'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useTransferUnclaimedTokensTx(): TransactorInstance<{
-  amount: BigNumber
+  amount: bigint
   to: string
 }> {
   const { transactor } = useContext(TransactionContext)
@@ -30,7 +30,7 @@ export function useTransferUnclaimedTokensTx(): TransactorInstance<{
       return transactor(
         contracts.JBTokenStore,
         'transferFrom',
-        [userAddress, projectId, to, amount.toHexString()],
+        [userAddress, projectId, to, toHexString(amount)],
         {
           ...txOpts,
           title: t`Transfer unclaimed ${tokenSymbolText({

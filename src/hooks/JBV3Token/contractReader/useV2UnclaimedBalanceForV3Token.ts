@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import useV2ContractReader from 'hooks/v2v3/contractReader/useV2ContractReader'
 import { useJBTokenStoreForV3Token } from '../contracts/useJBTokenStoreForV3Token'
@@ -11,7 +10,7 @@ export function useV2UnclaimedBalanceForV3Token({
   const { userAddress } = useWallet()
   const v2TokenStoreContract = useJBTokenStoreForV3Token()
 
-  return useV2ContractReader<BigNumber>({
+  return useV2ContractReader<bigint>({
     contract: v2TokenStoreContract,
     functionName: 'unclaimedBalanceOf',
     args:

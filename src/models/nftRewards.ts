@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { CurrencyOption } from './currencyOption'
 
 // How we store reward tiers for use around the app
@@ -25,11 +24,11 @@ export type JBTiered721Flags = {
 
 // Used when launching or adjusting tiers.
 export interface JB721TierParams {
-  contributionFloor: BigNumber // uint128
-  lockedUntil: BigNumber
-  initialQuantity: BigNumber // uint64
-  votingUnits: BigNumber
-  reservedRate: BigNumber
+  contributionFloor: bigint // uint128
+  lockedUntil: bigint
+  initialQuantity: bigint // uint64
+  votingUnits: bigint
+  reservedRate: bigint
   reservedTokenBeneficiary: string
   encodedIPFSUri: string // encoded link to the rewardTier on IPFS
   allowManualMint: boolean
@@ -56,21 +55,21 @@ export type JB_721_TIER_PARAMS_V3_2 = Omit<
   | 'contributionFloor'
   | 'lockedUntil'
 > & {
-  price: BigNumber
+  price: bigint
   useVotingUnits: boolean
 }
 
 // Tiers as they are stored on-chain.
 export type JB721TierV3 = JB721TierParams & {
-  id: BigNumber
-  remainingQuantity?: BigNumber
+  id: bigint
+  remainingQuantity?: bigint
 }
 
 export type JB_721_TIER_V3_2 = Omit<
   JB721TierV3,
   'royaltyRate' | 'royaltyBeneficiary' | 'contributionFloor' | 'lockedUntil'
 > & {
-  price: BigNumber
+  price: bigint
   resolvedUri: string
 }
 

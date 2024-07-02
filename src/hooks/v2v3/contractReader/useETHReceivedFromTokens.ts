@@ -1,6 +1,5 @@
 import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
-import { BigNumber } from 'ethers'
 import { V2BallotState } from 'models/ballot'
 import { useContext } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
@@ -28,7 +27,7 @@ export function useETHReceivedFromTokens({
   tokenAmount,
 }: {
   tokenAmount: string | undefined
-}): BigNumber | undefined {
+}): bigint | undefined {
   const {
     fundingCycle,
     fundingCycleMetadata,
@@ -46,11 +45,17 @@ export function useETHReceivedFromTokens({
   if (!fundingCycle) return
 
   const realTotalTokenSupply = undistributedReservedTokens
-    ? totalTokenSupply?.add(undistributedReservedTokens)
+    ? totalTokenSupply
+      ? totalTokenSupply + undistributedReservedTokens
+      : undefined
     : totalTokenSupply
 
-  if (!fundingCycleMetadata || !realTotalTokenSupply?.gt(0) || !tokenAmount)
-    return BigNumber.from(0)
+  if (
+    !fundingCycleMetadata ||
+    !(realTotalTokenSupply && realTotalTokenSupply > 0n) ||
+    !tokenAmount
+  )
+    return BigInt(0)
 
   const redemptionRate =
     ballotState === V2BallotState.Active
@@ -62,18 +67,15 @@ export function useETHReceivedFromTokens({
   // base = ox/s
   const base =
     realTotalTokenSupply && primaryTerminalCurrentOverflow
-      ? primaryTerminalCurrentOverflow
-          .mul(tokenAmountWad)
-          .div(realTotalTokenSupply)
-      : BigNumber.from(0)
+      ? (primaryTerminalCurrentOverflow * tokenAmountWad) / realTotalTokenSupply
+      : BigInt(0)
 
   // numerator = r + (x(1 - r)/s)
-  const numerator = redemptionRate.add(
-    tokenAmountWad
-      .mul(BigNumber.from(MAX_REDEMPTION_RATE).sub(redemptionRate))
-      .div(realTotalTokenSupply),
-  )
+  const numerator =
+    redemptionRate +
+    (tokenAmountWad * (MAX_REDEMPTION_RATE - redemptionRate)) /
+      realTotalTokenSupply
 
   // y = base * numerator ==> ox/s * ( r + (x(1 - r)/s) )
-  return base.mul(numerator).div(MAX_REDEMPTION_RATE)
+  return (base * numerator) / MAX_REDEMPTION_RATE
 }

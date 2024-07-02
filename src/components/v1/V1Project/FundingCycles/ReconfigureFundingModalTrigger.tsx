@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { BigNumber } from 'ethers'
 import { useRef, useState } from 'react'
 import { Provider } from 'react-redux'
 import store, { createStore } from 'redux/store'
@@ -14,7 +13,7 @@ import ReconfigureFCModal from '../modals/ReconfigureFCModal/ReconfigureFCModal'
 export default function ReconfigureFundingModalTrigger({
   fundingDuration,
 }: {
-  fundingDuration?: BigNumber
+  fundingDuration?: bigint
 }) {
   const localStoreRef = useRef<typeof store>()
 
@@ -29,7 +28,7 @@ export default function ReconfigureFundingModalTrigger({
   return (
     <div className="text-right">
       <Button onClick={handleModalOpen} size="small">
-        {fundingDuration?.gt(0) ? (
+        {fundingDuration && fundingDuration > 0n ? (
           <Trans>Edit upcoming cycle</Trans>
         ) : (
           <Trans>Edit cycle</Trans>

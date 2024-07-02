@@ -5,9 +5,8 @@ import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'contexts/v2v3/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'contexts/v2v3/ProjectContracts/V2V3ProjectContractsContext'
-import { constants } from 'ethers'
+import { ethers } from 'ethers'
 
-import { BigNumber } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,
@@ -18,8 +17,8 @@ import invariant from 'tiny-invariant'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useRedeemTokensTx(): TransactorInstance<{
-  redeemAmount: BigNumber
-  minReturnedTokens: BigNumber
+  redeemAmount: bigint
+  minReturnedTokens: bigint
   memo: string
   metadata?: string
 }> {
@@ -49,7 +48,7 @@ export function useRedeemTokensTx(): TransactorInstance<{
           userAddress, // _holder
           projectId, // _projectId
           redeemAmount, // _tokenCount, tokens to redeem
-          constants.AddressZero, // _token, unused parameter
+          ethers.ZeroAddress, // _token, unused parameter
           minReturnedTokens, // _minReturnedTokens, min amount of ETH to receive
           userAddress, // _beneficiary
           memo, // _memo

@@ -19,7 +19,8 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
 import { inputMustExistRule } from 'utils/antdRules'
 import { formatAmount } from 'utils/format/formatAmount'
-import { MAX_DISTRIBUTION_LIMIT, MAX_MINT_RATE } from 'utils/v2v3/math'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
+import { MAX_MINT_RATE } from 'utils/v2v3/math'
 import * as ProjectTokenForm from '../../hooks/useProjectTokenForm'
 import { ProjectTokensFormProps } from '../../hooks/useProjectTokenForm'
 import { ReservedTokenRateCallout } from './ReservedTokenRateCallout'
@@ -52,8 +53,9 @@ export const CustomTokenSettings = () => {
 
   const discountRateDisabled = !parseInt(duration)
 
-  const redemptionRateDisabled =
-    distributionLimit?.amount === MAX_DISTRIBUTION_LIMIT
+  const redemptionRateDisabled = isInfiniteDistributionLimit(
+    distributionLimit?.amount,
+  )
 
   const initalMintRateAccessory = (
     <span className="mr-5">

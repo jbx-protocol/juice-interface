@@ -1,5 +1,5 @@
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 
 export const determineAvailablePayoutsSelections = (
   distributionLimit: bigint | undefined,
@@ -10,7 +10,7 @@ export const determineAvailablePayoutsSelections = (
   if (distributionLimit === 0n) {
     return new Set(['amounts'])
   }
-  if (distributionLimit === MAX_DISTRIBUTION_LIMIT) {
+  if (isInfiniteDistributionLimit(distributionLimit)) {
     return new Set(['percentages'])
   }
   return new Set(['amounts', 'percentages'])

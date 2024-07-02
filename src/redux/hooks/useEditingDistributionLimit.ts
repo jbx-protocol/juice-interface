@@ -1,3 +1,4 @@
+import { INFINITE_DISTRIBUTION_LIMIT_VALUE } from 'components/Create/components/pages/PayoutsPage/components/TreasuryOptionsRadio'
 import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
 import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
@@ -11,7 +12,7 @@ import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export interface ReduxDistributionLimit {
   amount: bigint
-  currency: V2V3CurrencyOption
+  currency: V2V3CurrencyOption | undefined
 }
 
 /**
@@ -55,7 +56,9 @@ export const useEditingDistributionLimit = (): [
         dispatch(editingV2ProjectActions.setFundAccessConstraints([]))
         return
       }
-      const distributionLimitCurrency = input.currency.toString()
+      const distributionLimitCurrency =
+        input.currency?.toString() ?? V2V3_CURRENCY_ETH.toString()
+
       dispatch(
         editingV2ProjectActions.setFundAccessConstraints([
           {
@@ -89,7 +92,9 @@ export const useEditingDistributionLimit = (): [
           {
             ...currentFundAccessConstraint,
             distributionLimit: fromWad(
-              input === undefined ? MAX_DISTRIBUTION_LIMIT : input,
+              input === INFINITE_DISTRIBUTION_LIMIT_VALUE
+                ? MAX_DISTRIBUTION_LIMIT
+                : input,
             ),
           },
         ]),

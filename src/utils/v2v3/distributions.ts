@@ -5,7 +5,6 @@ import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { isProjectSplit } from 'utils/splits'
 import { isInfiniteDistributionLimit } from './fundingCycle'
 import {
-  MAX_DISTRIBUTION_LIMIT,
   SPLITS_TOTAL_PERCENT,
   preciseFormatSplitPercent,
   splitPercentFrom,
@@ -235,7 +234,7 @@ export function distributionLimitStringtoNumber(
   if (distributionLimit === undefined) return undefined
   const distributionLimitBN = parseWad(distributionLimit)
   const distributionLimitIsInfinite =
-    !distributionLimitBN || distributionLimitBN === MAX_DISTRIBUTION_LIMIT
+    isInfiniteDistributionLimit(distributionLimitBN)
   return distributionLimitIsInfinite
     ? undefined
     : parseFloat(fromWad(distributionLimitBN))

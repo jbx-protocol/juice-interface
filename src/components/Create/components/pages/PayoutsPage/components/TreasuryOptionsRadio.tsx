@@ -15,6 +15,9 @@ import { Icons } from '../../../Icons'
 import { ConvertAmountsModal } from './ConvertAmountsModal'
 import { RadioCard } from './RadioCard'
 
+// value to set in create flow when you want infinite dist limit
+export const INFINITE_DISTRIBUTION_LIMIT_VALUE = undefined
+
 const treasuryOptions = () => [
   { name: t`None`, value: 'zero', icon: <StopOutlined /> },
   { name: t`Limited`, value: 'amount', icon: <Icons.Target /> },
@@ -64,7 +67,7 @@ export function TreasuryOptionsRadio() {
   )
 
   const switchToUnlimitedPayouts = useCallback(() => {
-    setDistributionLimit(undefined)
+    setDistributionLimit(INFINITE_DISTRIBUTION_LIMIT_VALUE)
     setTreasuryOption('unlimited')
     switchingToUnlimitedModal.close()
   }, [switchingToUnlimitedModal, setDistributionLimit])

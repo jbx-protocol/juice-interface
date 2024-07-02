@@ -20,7 +20,7 @@ export default function DistributionLimit({
   shortName?: boolean
 }) {
   const distributionLimitIsInfinite =
-    !distributionLimit || isInfiniteDistributionLimit(distributionLimit)
+    isInfiniteDistributionLimit(distributionLimit)
   const distributionLimitIsZero = distributionLimit === 0n
   const distributionLimitCurrency = currencyName
     ? getV2V3CurrencyOption(currencyName)

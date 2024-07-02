@@ -11,8 +11,8 @@ import { useEditingReservedTokensSplits } from 'redux/hooks/useEditingReservedTo
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { toHexString } from 'utils/bigNumbers'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import {
-  MAX_DISTRIBUTION_LIMIT,
   discountRateFrom,
   formatDiscountRate,
   formatIssuanceRate,
@@ -58,8 +58,9 @@ export const useProjectTokensForm = () => {
   useDebugValue(form.getFieldsValue())
   const [distributionLimit] = useEditingDistributionLimit()
 
-  const redemptionRateDisabled =
-    !distributionLimit || distributionLimit.amount === MAX_DISTRIBUTION_LIMIT
+  const redemptionRateDisabled = isInfiniteDistributionLimit(
+    distributionLimit?.amount,
+  )
   const discountRateDisabled = !parseInt(fundingCycleData.duration)
 
   const initialValues: ProjectTokensFormProps | undefined = useMemo(() => {

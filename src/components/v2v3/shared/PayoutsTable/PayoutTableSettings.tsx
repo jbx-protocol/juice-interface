@@ -1,6 +1,7 @@
 import { ReceiptPercentIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { ConvertAmountsModal } from 'components/Create/components/pages/PayoutsPage/components/ConvertAmountsModal'
+import { INFINITE_DISTRIBUTION_LIMIT_VALUE } from 'components/Create/components/pages/PayoutsPage/components/TreasuryOptionsRadio'
 import { PopupMenu, PopupMenuItem } from 'components/ui/PopupMenu'
 import { handleConfirmationDeletion } from 'components/v2v3/V2V3Project/ProjectDashboard/utils/modals'
 import { useState } from 'react'
@@ -34,7 +35,7 @@ export function PayoutTableSettings() {
   }
 
   const handleSwitchToUnlimitedPayouts = () => {
-    setDistributionLimit(undefined)
+    setDistributionLimit(INFINITE_DISTRIBUTION_LIMIT_VALUE)
     setSplits100Percent()
     setSwitchToUnlimitedModalOpen(false)
   }

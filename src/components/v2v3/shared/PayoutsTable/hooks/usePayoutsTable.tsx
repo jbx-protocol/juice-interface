@@ -5,7 +5,6 @@ import isEqual from 'lodash/isEqual'
 import round from 'lodash/round'
 import { Split } from 'models/splits'
 import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
-import { useMemo } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
 import {
   getProjectOwnerRemainderSplit,
@@ -27,7 +26,8 @@ import {
   ensureSplitsSumTo100Percent,
   getNewDistributionLimit,
 } from 'utils/v2v3/distributions'
-import { MAX_DISTRIBUTION_LIMIT, SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
+import { SPLITS_TOTAL_PERCENT } from 'utils/v2v3/math'
 import { useEditCycleFormContext } from '../../../V2V3Project/V2V3ProjectSettings/pages/EditCyclePage/EditCycleFormContext'
 import { usePayoutsTableContext } from '../context/PayoutsTableContext'
 
@@ -41,11 +41,8 @@ export const usePayoutsTable = () => {
     setCurrency: setCurrencyName,
   } = usePayoutsTableContext()
   const { setFormHasUpdated } = useEditCycleFormContext()
-  const distributionLimitIsInfinite = useMemo(
-    () =>
-      distributionLimit === undefined ||
-      parseWad(distributionLimit) === MAX_DISTRIBUTION_LIMIT,
-    [distributionLimit],
+  const distributionLimitIsInfinite = isInfiniteDistributionLimit(
+    parseWad(distributionLimit),
   )
 
   const amountOrPercentValue = ({

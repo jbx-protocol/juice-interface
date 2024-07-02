@@ -16,7 +16,7 @@ import {
 import { CreateState, ProjectState } from 'redux/slices/editingV2Project/types'
 import { isEqualAddress } from 'utils/address'
 import { parseWad } from 'utils/format/formatNumber'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import { DefaultSettings as DefaultTokenSettings } from '../components/pages/ProjectToken/hooks/useProjectTokenForm'
 import { projectTokenSettingsToReduxFormat } from '../utils/projectTokenSettingsToReduxFormat'
 
@@ -49,7 +49,7 @@ const parseCreateFlowStateFromInitialState = (
 
   if (distributionLimit === undefined) {
     treasurySelection = undefined
-  } else if (distributionLimit === MAX_DISTRIBUTION_LIMIT) {
+  } else if (isInfiniteDistributionLimit(distributionLimit)) {
     treasurySelection = 'unlimited'
   } else if (distributionLimit === 0n) {
     treasurySelection = 'zero'

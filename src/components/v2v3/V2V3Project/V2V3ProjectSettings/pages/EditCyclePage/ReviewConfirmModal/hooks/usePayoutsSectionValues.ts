@@ -7,7 +7,7 @@ import { parseWad } from 'utils/format/formatNumber'
 import { splitsListsHaveDiff } from 'utils/splits'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { distributionLimitsEqual } from 'utils/v2v3/distributions'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 
 export const usePayoutsSectionValues = () => {
@@ -49,7 +49,7 @@ export const usePayoutsSectionValues = () => {
     !distributionLimitsEqual(currentDistributionLimit, newDistributionLimit) ||
     currencyHasDiff
   const distributionLimitIsInfinite =
-    !newDistributionLimit || newDistributionLimit === MAX_DISTRIBUTION_LIMIT
+    isInfiniteDistributionLimit(newDistributionLimit)
 
   const newHoldFees = Boolean(editCycleForm?.getFieldValue('holdFees'))
   const currentHoldFees = Boolean(currentFundingCycleMetadata?.holdFees)

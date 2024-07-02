@@ -7,8 +7,8 @@ import assert from 'utils/assert'
 import { getProjectOwnerRemainderSplit } from 'utils/splits'
 import { V2V3CurrencyName } from 'utils/v2v3/currency'
 import { isJuiceboxProjectSplit } from 'utils/v2v3/distributions'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import {
-  MAX_DISTRIBUTION_LIMIT,
   SPLITS_TOTAL_PERCENT,
   feeForAmount,
   formatSplitPercent,
@@ -43,11 +43,10 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { distributionLimit, distributionLimitCurrency } =
     useCurrentUpcomingDistributionLimit(type)
 
-  const showAmountOnPayout = useMemo(() => {
-    if (distributionLimit === MAX_DISTRIBUTION_LIMIT) return false
-    if (distributionLimit === 0n) return false
-    return true
-  }, [distributionLimit])
+  const showAmountOnPayout =
+    distributionLimit === 0n || isInfiniteDistributionLimit(distributionLimit)
+      ? false
+      : true
 
   const transformSplit = useCallback(
     (split: Split) => {
@@ -88,7 +87,7 @@ export const usePayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const totalPayoutAmount = useMemo(() => {
     if (!distributionLimit || !distributionLimitCurrency) return
     if (
-      distributionLimit === MAX_DISTRIBUTION_LIMIT ||
+      isInfiniteDistributionLimit(distributionLimit) ||
       distributionLimit === 0n
     )
       return

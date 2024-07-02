@@ -7,8 +7,10 @@ import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionL
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { V2V3CurrencyName, getV2V3CurrencyOption } from 'utils/v2v3/currency'
+import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 import { usePayoutsForm } from '../hooks/usePayoutsForm'
+import { INFINITE_DISTRIBUTION_LIMIT_VALUE } from './TreasuryOptionsRadio'
 
 const DEFAULT_CURRENCY_NAME = CURRENCY_METADATA.ETH.name
 
@@ -25,7 +27,6 @@ export function CreateFlowPayoutsTable({
 }) {
   const [
     editingDistributionLimit,
-    ,
     setDistributionLimitAmount,
     setDistributionLimitCurrency,
   ] = useEditingDistributionLimit()
@@ -33,7 +34,7 @@ export function CreateFlowPayoutsTable({
   const { form, initialValues } = usePayoutsForm()
   const distributionLimit = !editingDistributionLimit
     ? 0
-    : editingDistributionLimit.amount === MAX_DISTRIBUTION_LIMIT
+    : isInfiniteDistributionLimit(editingDistributionLimit.amount)
     ? undefined
     : parseFloat(fromWad(editingDistributionLimit?.amount))
 
@@ -42,7 +43,9 @@ export function CreateFlowPayoutsTable({
 
   const setDistributionLimit = (amount: number | undefined) => {
     setDistributionLimitAmount(
-      amount === undefined ? MAX_DISTRIBUTION_LIMIT : parseWad(amount),
+      amount === INFINITE_DISTRIBUTION_LIMIT_VALUE
+        ? MAX_DISTRIBUTION_LIMIT
+        : parseWad(amount),
     )
   }
   const setCurrency = (currency: CurrencyName) => {

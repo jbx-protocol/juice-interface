@@ -63,7 +63,7 @@ jobs:
         run: yarn install
 
       - name: Lint translations template
-        run: 'yarn i20n:lint'
+        run: 'yarn i18n:lint'
 
       - uses: tj-actions/changed-files@v41
         id: changed-files

@@ -56,9 +56,6 @@ msgstr ""
 msgid "How should I set up my project?"
 msgstr ""
 
-msgid "Re-launch project"
-msgstr ""
-
 msgid "To switch to 'Limited' payouts, enter a total amount to pay out of the treasury to split between your recipients."
 msgstr ""
 
@@ -83,9 +80,6 @@ msgstr ""
 msgid "Trust"
 msgstr ""
 
-msgid "New V3 Project ID"
-msgstr ""
-
 msgid "Copy to clipboard"
 msgstr ""
 
@@ -96,9 +90,6 @@ msgid "Share to JuiceboxDAO"
 msgstr ""
 
 msgid "Claim {tokensLabel} as ERC-20"
-msgstr ""
-
-msgid "Previous V1 Project ID:"
 msgstr ""
 
 msgid "Save project"
@@ -267,9 +258,6 @@ msgid "Safe transactions"
 msgstr ""
 
 msgid "See example"
-msgstr ""
-
-msgid "All payouts have been deleted for this recipient. Save to continue..."
 msgstr ""
 
 msgid "{0}% of total token issuance."
@@ -1790,9 +1778,6 @@ msgstr ""
 msgid "This project has no upcoming cycle. Its rules can change at any time."
 msgstr ""
 
-msgid "We recommend you <0>contact us</0> or visit the <1>Juicebox Discord</1> for help with this process."
-msgstr ""
-
 msgid "V3 Project ID"
 msgstr ""
 
@@ -2624,9 +2609,6 @@ msgstr ""
 msgid "All of this project's ETH will be paid out. Token holders will receive <0>no ETH</0> when redeeming their tokens."
 msgstr ""
 
-msgid "Re-launch on V3"
-msgstr ""
-
 msgid "Approve"
 msgstr ""
 
@@ -2910,9 +2892,6 @@ msgid "No file uploaded."
 msgstr ""
 
 msgid "How StudioDAO is building the first million person movie studio on Juicebox."
-msgstr ""
-
-msgid "Re-launch a project"
 msgstr ""
 
 msgid "Your project will appear as 'active'."
@@ -3557,9 +3536,6 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-msgid "We recommend visiting the <0>Juicebox Discord</0> for help and advice on this process."
-msgstr ""
-
 msgid "Supporters won't receive any tokens when paying this project. No ETH is available for redemption."
 msgstr ""
 
@@ -4184,9 +4160,6 @@ msgstr ""
 msgid "Wallet Address"
 msgstr ""
 
-msgid "Your V3 project cannot have payouts to V1 projects. Remove any payouts to V1 projects, or re-assign them to V3 projects."
-msgstr ""
-
 msgid "Something has gone wrong, please contact support."
 msgstr ""
 
@@ -4368,9 +4341,6 @@ msgid "Collection symbol"
 msgstr ""
 
 msgid "Edit payout"
-msgstr ""
-
-msgid "Re-launch your Juicebox project using the v3 contracts."
 msgstr ""
 
 msgid "StudioDAO's project settings are designed to maximize trust with locked 28-day cycles, limited payouts, and a 3-day edit deadline. 20% of newly minted tokens are reserved for the DAO wallet and issuance will decrease by 5% each cycle. StudioDAO also leverages tiered NFT rewards to create incentives for supporters with benefits like private screenings, governance votes to decide which new films to fund, and screen credits."

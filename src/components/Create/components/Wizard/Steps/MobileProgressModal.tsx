@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/macro'
 import { Modal } from 'antd'
-import { useRouter } from 'next/router'
 import { MobileStep } from './MobileStep'
 
 export const MobileProgressModal: React.FC<
@@ -20,7 +19,6 @@ export const MobileProgressModal: React.FC<
   onStepClicked,
   onCancel,
 }) => {
-  const isMigration = useRouter().query.migration === 'true'
   return (
     <Modal
       className="create-steps-modal" // ant override
@@ -28,11 +26,7 @@ export const MobileProgressModal: React.FC<
       title={
         <>
           <h2 className="text-xl font-medium text-black dark:text-grey-200">
-            {!isMigration ? (
-              <Trans>Create a project</Trans>
-            ) : (
-              <Trans>Re-launch a project</Trans>
-            )}
+            <Trans>Create a project</Trans>
           </h2>
         </>
       }

@@ -1,14 +1,14 @@
 import { INFINITE_DISTRIBUTION_LIMIT_VALUE } from 'components/Create/components/pages/PayoutsPage/components/TreasuryOptionsRadio'
-import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
-import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
-import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
+import { useDefaultJBETHPaymentTerminal } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
+import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
 import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
-import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export interface ReduxDistributionLimit {
   amount: bigint

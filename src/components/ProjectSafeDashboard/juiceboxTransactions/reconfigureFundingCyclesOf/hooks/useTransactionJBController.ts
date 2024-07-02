@@ -1,8 +1,8 @@
 import { CV_V2, CV_V3 } from 'constants/cv'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
-import { useLoadV2V3Contract } from 'hooks/v2v3/useLoadV2V3Contract'
 import { SafeTransactionType } from 'models/safe'
-import { V2V3ContractName } from 'models/v2v3/contracts'
+import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
+import { useLoadV2V3Contract } from 'packages/v2v3/hooks/useLoadV2V3Contract'
+import { V2V3ContractName } from 'packages/v2v3/models/contracts'
 import { useContext } from 'react'
 
 export function useTransactionJBController(transaction: SafeTransactionType) {

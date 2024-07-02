@@ -20,7 +20,7 @@ import {
 
 import { t } from '@lingui/macro'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { useTrendingProjects } from 'hooks/useProjects'
+import { useTrendingProjects } from 'hooks/useDBProjects'
 import tailwind from 'lib/tailwind'
 import { wadToFloat } from 'utils/format/formatNumber'
 import { daysToMS } from 'utils/units'

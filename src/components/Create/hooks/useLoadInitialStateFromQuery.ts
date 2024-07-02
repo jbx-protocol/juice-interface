@@ -1,11 +1,12 @@
-import { ballotStrategiesFn } from 'constants/v2v3/ballotStrategies'
-import { ETH_TOKEN_ADDRESS } from 'constants/v2v3/juiceboxTokens'
-import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import isEqual from 'lodash/isEqual'
 import { CreatePage } from 'models/createPage'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { TreasurySelection } from 'models/treasurySelection'
 import { useRouter } from 'next/router'
+import { ballotStrategiesFn } from 'packages/v2v3/constants/ballotStrategies'
+import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
+import { useDefaultJBETHPaymentTerminal } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
+import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
@@ -16,7 +17,6 @@ import {
 import { CreateState, ProjectState } from 'redux/slices/editingV2Project/types'
 import { isEqualAddress } from 'utils/address'
 import { parseWad } from 'utils/format/formatNumber'
-import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 import { DefaultSettings as DefaultTokenSettings } from '../components/pages/ProjectToken/hooks/useProjectTokenForm'
 import { projectTokenSettingsToReduxFormat } from '../utils/projectTokenSettingsToReduxFormat'
 

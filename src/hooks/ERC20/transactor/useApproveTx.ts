@@ -1,11 +1,11 @@
 import { t } from '@lingui/macro'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { V2V3ContractsContext } from 'contexts/v2v3/Contracts/V2V3ContractsContext'
 import { Contract } from 'ethers'
 import {
-  handleTransactionException,
   TransactorInstance,
+  handleTransactionException,
 } from 'hooks/useTransactor'
+import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 

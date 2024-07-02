@@ -16,7 +16,7 @@ import { useProjectsQuery } from 'generated/graphql'
 import {
   DEFAULT_TRENDING_PROJECTS_LIMIT,
   useTrendingProjects,
-} from 'hooks/useProjects'
+} from 'hooks/useDBProjects'
 import { client } from 'lib/apollo/client'
 import { trackFathomGoal } from 'lib/fathom'
 import { ProjectTagName } from 'models/project-tags'

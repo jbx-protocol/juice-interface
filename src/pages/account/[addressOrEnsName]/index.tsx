@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { AccountDashboard } from 'components/AccountDashboard/AccountDashboard'
 import Loading from 'components/Loading'
@@ -9,26 +10,31 @@ import { loadCatalog } from 'locales/utils'
 import { Profile } from 'models/database'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useMemo } from 'react'
-import { useQuery } from 'react-query'
 import { truncateEthAddress } from 'utils/format/formatAddress'
 
 function useEnsNamePair(addressOrEnsName: string | undefined) {
-  return useQuery(['ensNamePair', addressOrEnsName], async () => {
-    if (!addressOrEnsName) return
+  return useQuery({
+    queryKey: ['ensNamePair', addressOrEnsName],
+    queryFn: async () => {
+      if (!addressOrEnsName) return
 
-    const data = await resolveAddress(addressOrEnsName)
-    return data
+      const data = await resolveAddress(addressOrEnsName)
+      return data
+    },
   })
 }
 
 function useAccount({ address }: { address: string | undefined }) {
-  return useQuery(['account', address], async () => {
-    if (!address) return
+  return useQuery({
+    queryKey: ['account', address],
+    queryFn: async () => {
+      if (!address) return
 
-    const profile = await axios.get<{ profile: Profile | null }>(
-      `/api/account/${address}`,
-    )
-    return profile.data.profile
+      const profile = await axios.get<{ profile: Profile | null }>(
+        `/api/account/${address}`,
+      )
+      return profile.data.profile
+    },
   })
 }
 

@@ -1,4 +1,4 @@
-import { AllocationSplit } from 'components/v2v3/shared/Allocation/Allocation'
+import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
 import { useCallback, useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingReservedTokensSplits } from 'redux/hooks/useEditingReservedTokensSplits'

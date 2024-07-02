@@ -1,6 +1,6 @@
 import { FundingTargetType } from 'models/fundingTargetType'
+import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { useMemo } from 'react'
-import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 
 export const useFundingTargetType = (
   fundingTargetAmount: bigint | undefined,

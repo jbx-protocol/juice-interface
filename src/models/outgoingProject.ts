@@ -1,6 +1,9 @@
+import { V2FundingCycleMetadata } from '../packages/v2/models/fundingCycle'
+import {
+  V2V3FundAccessConstraint,
+  V2V3FundingCycle,
+} from '../packages/v2v3/models/fundingCycle'
 import { SplitParams } from './splits'
-import { V2FundingCycleMetadata } from './v2/fundingCycle'
-import { V2V3FundAccessConstraint, V2V3FundingCycle } from './v2v3/fundingCycle'
 
 type OutgoingGroupedSplit = {
   splits: SplitParams[]

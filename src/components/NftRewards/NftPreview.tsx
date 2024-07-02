@@ -3,10 +3,10 @@ import { Trans } from '@lingui/macro'
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
 import { Popup } from 'components/Popup'
 import { TruncatedText } from 'components/TruncatedText'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
-import { ProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import useMobile from 'hooks/useMobile'
 import { NftRewardTier } from 'models/nftRewards'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
 import { useContext } from 'react'
 
 export function NftPreview({

@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import { Split } from 'models/splits'
-import { PayoutMod, TicketMod } from 'models/v1/mods'
-import { splitPercentFrom } from 'utils/v2v3/math'
+import { PayoutMod, TicketMod } from 'packages/v1/models/mods'
+import { splitPercentFrom } from 'packages/v2v3/utils/math'
 import { percentToPermyriad } from './format/formatNumber'
 
 export function downloadCsvFile(

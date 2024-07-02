@@ -1,9 +1,9 @@
 import { t } from '@lingui/macro'
-import { V2V3CurrencyOption } from 'models/v2v3/currencyOption'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
+import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad } from 'utils/format/formatNumber'
-import { V2V3_CURRENCY_ETH } from 'utils/v2v3/currency'
-import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
 
 // Formats a funding target into the format:
 // {prefix} 99,999 {suffix}

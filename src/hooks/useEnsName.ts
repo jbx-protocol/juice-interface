@@ -1,6 +1,6 @@
-import { ethers } from 'ethers'
+import { useQuery } from '@tanstack/react-query'
+import { isAddress } from 'ethers'
 import { resolveAddress } from 'lib/api/ens'
-import { useQuery } from 'react-query'
 
 /**
  * Try to resolve an address to an ENS name.
@@ -9,17 +9,16 @@ export function useEnsName(
   address: string | undefined,
   { enabled }: { enabled?: boolean } = {},
 ) {
-  return useQuery(
-    ['ensName', address],
-    async () => {
-      if (!address || !ethers.isAddress(address)) return
+  return useQuery({
+    queryKey: ['ensName', address],
+    queryFn: async () => {
+      if (!address || !isAddress(address)) return
 
       const data = await resolveAddress(address)
 
       return data.name
     },
-    {
-      enabled,
-    },
-  )
+
+    enabled,
+  })
 }

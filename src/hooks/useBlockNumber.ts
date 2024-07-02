@@ -1,5 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
 import { readProvider } from 'constants/readProvider'
-import { useQuery } from 'react-query'
 
 /**
  * Get the chain height, or a block number at a specific heigh from the chain height.
@@ -11,8 +11,11 @@ export function useBlockNumber({
 }: {
   behindChainHeight?: number
 }) {
-  return useQuery(['blockNumber', behindChainHeight], async () => {
-    const blockNumber = await readProvider.getBlockNumber()
-    return blockNumber - (behindChainHeight ?? 0)
+  return useQuery({
+    queryKey: ['blockNumber', behindChainHeight],
+    queryFn: async () => {
+      const blockNumber = await readProvider.getBlockNumber()
+      return blockNumber - (behindChainHeight ?? 0)
+    },
   })
 }

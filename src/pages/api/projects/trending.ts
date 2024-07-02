@@ -1,6 +1,4 @@
 import { PV_V1, PV_V2 } from 'constants/pv'
-import { V1ArchivedProjectIds } from 'constants/v1/archivedProjects'
-import { V2ArchivedProjectIds } from 'constants/v2v3/archivedProjects'
 import {
   OrderDirection,
   Project_OrderBy,
@@ -10,6 +8,8 @@ import {
 } from 'generated/graphql'
 import { serverClient } from 'lib/apollo/serverClient'
 import { NextApiHandler } from 'next'
+import { V1ArchivedProjectIds } from 'packages/v1/constants/archivedProjects'
+import { V2ArchivedProjectIds } from 'packages/v2v3/constants/archivedProjects'
 import { getSubgraphIdForProject } from 'utils/graph'
 
 const CACHE_MAXAGE = 60 * 5 // 5 minutes

@@ -1,7 +1,7 @@
-import ProjectHandleFormItem from 'components/v1/shared/formItems/ProjectHandle/ProjectHandleFormItem'
-import { ProjectPayoutFormItem } from 'components/v1/shared/formItems/ProjectPayoutFormItem'
-import TokenRefs from 'components/v1/shared/formItems/TokenRefs'
-import ProjectTicketMods from 'components/v1/shared/ProjectTicketMods'
+import ProjectHandleFormItem from 'packages/v1/components/shared/formItems/ProjectHandle/ProjectHandleFormItem'
+import { ProjectPayoutFormItem } from 'packages/v1/components/shared/formItems/ProjectPayoutFormItem'
+import TokenRefs from 'packages/v1/components/shared/formItems/TokenRefs'
+import ProjectTicketMods from 'packages/v1/components/shared/ProjectTicketMods'
 
 import ENSName from './ENSName'
 import { ItemNoInput } from './ItemNoInput'

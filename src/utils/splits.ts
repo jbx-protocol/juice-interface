@@ -1,11 +1,10 @@
 import { ethers } from 'ethers'
 import isEqual from 'lodash/isEqual'
 import { Split, SplitParams } from 'models/splits'
-
+import { isFiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
+import { SPLITS_TOTAL_PERCENT } from 'packages/v2v3/utils/math'
 import { toHexString } from './bigNumbers'
 import { formatWad } from './format/formatNumber'
-import { isFiniteDistributionLimit } from './v2v3/fundingCycle'
-import { SPLITS_TOTAL_PERCENT } from './v2v3/math'
 
 //  - true if the split has been removed (exists in old but not new),
 //  - false if new (exists in new but not old)

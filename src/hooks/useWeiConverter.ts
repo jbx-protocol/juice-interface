@@ -1,6 +1,7 @@
-import { CurrencyContext } from 'contexts/shared/CurrencyContext'
-import { ethers } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+
+import { CurrencyContext } from 'contexts/CurrencyContext'
+import { ethers } from 'ethers'
 import { CurrencyOption } from 'models/currencyOption'
 import { useContext, useMemo } from 'react'
 

@@ -1,7 +1,10 @@
-import { AllocationSplit } from 'components/v2v3/shared/Allocation/Allocation'
 import { defaultSplit, Split } from 'models/splits'
+import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
+import {
+  preciseFormatSplitPercent,
+  splitPercentFrom,
+} from 'packages/v2v3/utils/math'
 import { sanitizeSplit } from 'utils/splits'
-import { preciseFormatSplitPercent, splitPercentFrom } from 'utils/v2v3/math'
 
 export const splitToAllocation = (split: Split): AllocationSplit => {
   return {

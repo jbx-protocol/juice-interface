@@ -1,5 +1,5 @@
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { isInfiniteDistributionLimit } from 'utils/v2v3/fundingCycle'
+import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 
 export const determineAvailablePayoutsSelections = (
   distributionLimit: bigint | undefined,

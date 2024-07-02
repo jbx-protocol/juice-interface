@@ -1,14 +1,14 @@
 import { Trans } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
-import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { PV_V2 } from 'constants/pv'
-import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import {
   ProjectEventsQuery,
   useSplitDistributionsForDistributeReservedTokensEventQuery,
 } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
+import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
+import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
 import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'

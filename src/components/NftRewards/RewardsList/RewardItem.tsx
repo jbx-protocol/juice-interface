@@ -6,12 +6,12 @@ import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThum
 import TooltipLabel from 'components/TooltipLabel'
 import round from 'lodash/round'
 import { NftRewardTier } from 'models/nftRewards'
+import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { ReactNode } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { isZeroAddress } from 'utils/address'
 import { hasLimitedSupply } from 'utils/nftRewards'
 import { prettyUrl } from 'utils/url'
-import { V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 import { RewardItemButton } from './RewardItemButton'
 
 const SIGNIFICANT_FIGURE_LIMIT = 6

@@ -1,8 +1,8 @@
 import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
-import { V2V3ProjectContractsDashboard } from 'components/v2v3/V2V3Project/V2V3ProjectContractsDashboard/V2V3ProjectContractsDashboard'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
-import { V2V3ProjectPageProvider } from 'contexts/v2v3/V2V3ProjectPageProvider'
 import { useRouter } from 'next/router'
+import { V2V3ProjectContractsDashboard } from 'packages/v2v3/components/V2V3Project/V2V3ProjectContractsDashboard/V2V3ProjectContractsDashboard'
+import { V2V3ProjectPageProvider } from 'packages/v2v3/contexts/V2V3ProjectPageProvider'
 import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
 
 export default function V2V3ProjectContractsPage() {

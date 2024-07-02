@@ -1,5 +1,5 @@
 import { useErc20Contract } from 'hooks/ERC20/useErc20Contract'
-import useContractReader from 'hooks/v2v3/contractReader/useV2ContractReader'
+import useContractReader from 'packages/v2v3/hooks/contractReader/useV2ContractReader'
 
 export default function useERC20Allowance(
   tokenAddress: string | undefined,

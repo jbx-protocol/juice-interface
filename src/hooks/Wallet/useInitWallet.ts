@@ -1,7 +1,6 @@
 import coinbaseWalletModule from '@web3-onboard/coinbase'
-import gnosisModule from '@web3-onboard/gnosis'
+import safeModule from '@web3-onboard/gnosis'
 import injectedModule from '@web3-onboard/injected-wallets'
-import keystoneModule from '@web3-onboard/keystone'
 import { init, useAccountCenter, useWallets } from '@web3-onboard/react'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import config from 'config/seo_meta.json'
@@ -18,9 +17,11 @@ export function initWeb3Onboard() {
   console.info('Initializing Web3Onboard...')
 
   const injected = injectedModule()
-  const gnosis = gnosisModule()
-  const keystone = keystoneModule()
+  const gnosis = safeModule({
+    whitelistedDomains: [/.*nance.app/, /.*juicebox.money/, /juicebox.money/],
+  })
   const walletConnect = walletConnectModule({
+    dappUrl: 'https://juicebox.money',
     version: 2,
     projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID!,
     requiredChains: [readNetwork.chainId],
@@ -28,7 +29,7 @@ export function initWeb3Onboard() {
   const coinbaseWalletSdk = coinbaseWalletModule()
 
   return init({
-    wallets: [injected, gnosis, keystone, walletConnect, coinbaseWalletSdk],
+    wallets: [injected, gnosis, walletConnect, coinbaseWalletSdk],
     chains: Object.values(NETWORKS).map(n => ({
       id: unpadLeadingZerosString(toHexString(BigInt(n.chainId))),
       rpcUrl: n.rpcUrl,

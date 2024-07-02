@@ -1,12 +1,12 @@
+import { PayoutMod } from 'packages/v1/models/mods'
+import { permyriadToPercent } from 'utils/format/formatNumber'
+
+import { Split } from 'models/splits'
+import { isEqualAddress, isZeroAddress } from 'utils/address'
+import { percentToPermyriad } from 'utils/format/formatNumber'
+
 import { t } from '@lingui/macro'
 import { ethers } from 'ethers'
-import { Split } from 'models/splits'
-import { PayoutMod } from 'models/v1/mods'
-import { isEqualAddress, isZeroAddress } from 'utils/address'
-import {
-  percentToPermyriad,
-  permyriadToPercent,
-} from 'utils/format/formatNumber'
 
 export type ModalMode = 'Add' | 'Edit' | undefined
 

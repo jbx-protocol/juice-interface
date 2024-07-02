@@ -11,12 +11,10 @@ import { DocumentNode } from 'graphql'
  */
 export async function paginateDepleteQuery<
   Query extends { [k: string]: T[] },
-  QueryArgs extends
-    | {
-        first?: InputMaybe<number>
-        skip?: InputMaybe<number>
-      }
-    | undefined = undefined,
+  QueryArgs extends {
+    first?: InputMaybe<number>
+    skip?: InputMaybe<number>
+  },
   T = Query[keyof Query] extends Array<infer U> ? U : never,
 >({
   client,

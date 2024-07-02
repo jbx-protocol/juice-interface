@@ -1,8 +1,8 @@
+import { UseQueryResult, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { NftTierCard } from 'components/NftRewards/NftTierCard'
 import { IPFSNftRewardTier, NftRewardTier } from 'models/nftRewards'
 import { RedeemingNft } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/components/NftRewardsPanel/hooks/useJB721DelegateTokenToNftReward'
-import { UseQueryResult, useQuery } from 'react-query'
 import { cidFromIpfsUri, ipfsGatewayUrl } from 'utils/ipfs'
 
 export const NFT_METADATA_CONTRIBUTION_FLOOR_ATTRIBUTES_INDEX = 0
@@ -10,9 +10,9 @@ export const NFT_METADATA_CONTRIBUTION_FLOOR_ATTRIBUTES_INDEX = 0
 export function useJB721DelegateTokenMetadata(
   tokenUri: string | undefined,
 ): UseQueryResult<IPFSNftRewardTier> {
-  return useQuery(
-    ['nft-rewards', tokenUri],
-    async (): Promise<IPFSNftRewardTier | undefined> => {
+  return useQuery({
+    queryKey: ['nft-rewards', tokenUri],
+    queryFn: async (): Promise<IPFSNftRewardTier | undefined> => {
       if (!tokenUri) return
 
       const url = ipfsGatewayUrl(cidFromIpfsUri(tokenUri))
@@ -21,7 +21,7 @@ export function useJB721DelegateTokenMetadata(
 
       return tierMetadata
     },
-  )
+  })
 }
 
 export function RedeemNftCard({

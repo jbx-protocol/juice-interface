@@ -1,3 +1,4 @@
+import { UseQueryResult, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { BigNumber } from 'ethers'
 import {
@@ -7,7 +8,6 @@ import {
   NftRewardTier,
 } from 'models/nftRewards'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
-import { UseQueryResult, useQuery } from 'react-query'
 import { withHttps } from 'utils/externalLink'
 import { formatWad } from 'utils/format/formatNumber'
 import { cidFromUrl, decodeEncodedIpfsUri, ipfsGatewayUrl } from 'utils/ipfs'
@@ -63,9 +63,9 @@ export default function useNftRewards(
 ): UseQueryResult<NftRewardTier[]> {
   const enabled = Boolean(tiers?.length)
 
-  return useQuery(
-    ['nft-rewards', projectId, dataSourceAddress, enabled],
-    async () => {
+  return useQuery({
+    queryKey: ['nft-rewards', projectId, dataSourceAddress, enabled],
+    queryFn: async () => {
       if (!enabled) {
         return
       }
@@ -78,6 +78,6 @@ export default function useNftRewards(
         ),
       )
     },
-    { enabled: enabled },
-  )
+    enabled,
+  })
 }

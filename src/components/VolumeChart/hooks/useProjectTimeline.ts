@@ -1,10 +1,10 @@
+import { useQuery } from '@tanstack/react-query'
 import { readProvider } from 'constants/readProvider'
 import EthDater from 'ethereum-block-by-date'
 import { useProjectTlQuery } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
 import { PV } from 'models/pv'
 import { useMemo } from 'react'
-import { useQuery } from 'react-query'
 import { wadToFloat } from 'utils/format/formatNumber'
 import { getSubgraphIdForProject } from 'utils/graph'
 import { daysToMS, minutesToMS } from 'utils/units'
@@ -21,9 +21,9 @@ export function useProjectTimeline({
   pv: PV
   range: ProjectTimelineRange
 }) {
-  const { data: blockData, isLoading: isLoadingBlockNumbers } = useQuery(
-    ['block-numbers', range],
-    async () => {
+  const { data: blockData, isLoading: isLoadingBlockNumbers } = useQuery({
+    queryKey: ['block-numbers', range],
+    queryFn: async () => {
       const dater = new EthDater(readProvider)
 
       const now = Date.now().valueOf() - minutesToMS(5)
@@ -39,10 +39,8 @@ export function useProjectTimeline({
         ]
       >
     },
-    {
-      staleTime: minutesToMS(5),
-    },
-  )
+    staleTime: minutesToMS(5),
+  })
 
   const { blocks, timestamps } = useMemo(() => {
     if (!blockData) return {}

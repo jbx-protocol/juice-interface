@@ -16,9 +16,8 @@ export function RedeemNftTiles({
           ...nft,
           tokenId,
         }
-        const { data: rewardTier, isLoading } =
-          useJB721DelegateTokenToNftReward(_nft)
-        if (isLoading || !rewardTier)
+        const { data: rewardTier } = useJB721DelegateTokenToNftReward(_nft)
+        if (!rewardTier)
           return (
             <div
               key={`loading-nft-${i}`}

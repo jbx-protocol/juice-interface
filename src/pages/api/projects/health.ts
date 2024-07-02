@@ -1,4 +1,9 @@
-import { DbProjectsDocument, DbProjectsQuery, Project } from 'generated/graphql'
+import {
+  DbProjectsDocument,
+  DbProjectsQuery,
+  Project,
+  QueryProjectsArgs,
+} from 'generated/graphql'
 import { dbpLog, dbpQueryAll } from 'lib/api/supabase/projects'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { serverClient } from 'lib/apollo/serverClient'
@@ -28,7 +33,7 @@ const handler: NextApiHandler = async (_, res) => {
 
   if (!isEmpty) {
     const subgraphProjects = (
-      (await paginateDepleteQuery<DbProjectsQuery>({
+      (await paginateDepleteQuery<DbProjectsQuery, QueryProjectsArgs>({
         client: serverClient,
         document: DbProjectsDocument,
       })) as unknown as Json<Pick<Project, SGSBCompareKey>>[]

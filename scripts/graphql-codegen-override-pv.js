@@ -9,6 +9,7 @@ try {
   // Replace generic string type with PV type for pv properties
   contents = contents.replaceAll("pv: Scalars['String']", 'pv: PV')
   contents = contents.replaceAll('pv: string', 'pv: PV')
+  contents = contents.replaceAll("pv: PV['output'];", 'pv: PV')
 
   // Add import of PV type
   contents = `import { PV } from 'models/pv';\n` + contents

@@ -1,7 +1,7 @@
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useQuery } from '@tanstack/react-query'
 import { DBProject } from 'models/dbProject'
 import { useMemo } from 'react'
-import { useQuery } from 'react-query'
 import { Database } from 'types/database.types'
 import { parseDBProject } from 'utils/sgDbProjects'
 
@@ -16,9 +16,9 @@ export function useWalletBookmarkedProjects({
 }) {
   const supabase = useSupabaseClient<Database>()
 
-  return useQuery(
-    ['user-bookmarks', wallet],
-    async (): Promise<DBProject[] | undefined> =>
+  return useQuery({
+    queryKey: ['user-bookmarks', wallet],
+    queryFn: async (): Promise<DBProject[] | undefined> =>
       supabase
         .from('projects')
         .select('*, user_bookmarks!inner(created_at, users(wallet))')
@@ -28,7 +28,7 @@ export function useWalletBookmarkedProjects({
           foreignTable: 'user_bookmarks',
         })
         .then(data => data.data?.map(p => parseDBProject(p))),
-  )
+  })
 }
 
 /**

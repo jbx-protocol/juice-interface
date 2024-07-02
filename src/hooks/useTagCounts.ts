@@ -1,6 +1,6 @@
+import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { ProjectTagName } from 'models/project-tags'
-import { useQuery } from 'react-query'
 
 export function useTagCounts() {
   return useQuery<
@@ -8,16 +8,15 @@ export function useTagCounts() {
     Error,
     Partial<Record<ProjectTagName, number>>,
     [string]
-  >(
-    ['tag-counts'],
-    () =>
+  >({
+    queryKey: ['tag-counts'],
+    queryFn: () =>
       axios
         .get<Partial<Record<ProjectTagName, number>>>(
           '/api/projects/tag-counts',
         )
         .then(res => res.data),
-    {
-      staleTime: 5 * 60 * 1000,
-    },
-  )
+
+    staleTime: 5 * 60 * 1000,
+  })
 }

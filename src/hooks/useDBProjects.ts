@@ -1,14 +1,14 @@
-import axios from 'axios'
-import { BigNumber } from 'ethers'
-import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
-import { Json } from 'models/json'
-import { useMemo } from 'react'
 import {
   UseInfiniteQueryOptions,
   UseQueryOptions,
   useInfiniteQuery,
   useQuery,
-} from 'react-query'
+} from '@tanstack/react-query'
+import axios from 'axios'
+import { BigNumber } from 'ethers'
+import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
+import { Json } from 'models/json'
+import { useMemo } from 'react'
 import { formatQueryParams } from 'utils/queryParams'
 import { parseDBProject, parseDBProjectJson } from 'utils/sgDbProjects'
 
@@ -16,11 +16,13 @@ const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
 
 export function useDBProjectsQuery(
   opts: DBProjectQueryOpts | null,
-  reactQueryOptions?: UseQueryOptions<
-    DBProject[],
-    Error,
-    DBProject[],
-    readonly [string, DBProjectQueryOpts | null]
+  reactQueryOptions?: Partial<
+    UseQueryOptions<
+      DBProject[],
+      Error,
+      DBProject[],
+      readonly [string, DBProjectQueryOpts | null]
+    >
   >,
 ) {
   return useQuery<
@@ -28,9 +30,9 @@ export function useDBProjectsQuery(
     Error,
     DBProject[],
     readonly [string, DBProjectQueryOpts | null]
-  >(
-    ['dbp-query', opts],
-    () =>
+  >({
+    queryKey: ['dbp-query', opts],
+    queryFn: () =>
       opts
         ? axios
             .get<Json<DBProjectRow>[]>(
@@ -38,11 +40,9 @@ export function useDBProjectsQuery(
             )
             .then(res => res.data?.map(parseDBProject))
         : Promise.resolve([] as DBProject[]),
-    {
-      staleTime: DEFAULT_STALE_TIME,
-      ...reactQueryOptions,
-    },
-  )
+    staleTime: DEFAULT_STALE_TIME,
+    ...reactQueryOptions,
+  })
 }
 
 export function useDBProjectsInfiniteQuery(
@@ -55,47 +55,53 @@ export function useDBProjectsInfiniteQuery(
     readonly [string, DBProjectQueryOpts]
   >,
 ) {
-  return useInfiniteQuery(
-    ['dbp-infinite-query', opts],
-    async ({ queryKey, pageParam }) => {
+  return useInfiniteQuery({
+    queryKey: ['dbp-infinite-query', opts],
+    queryFn: async ({ queryKey, pageParam }) => {
       const { pageSize, ...evaluatedOpts } = queryKey[1]
 
-      return axios
-        .get<DBProjectRow[] | undefined>(
-          `/api/projects?${formatQueryParams({
-            ...evaluatedOpts,
-            page: pageParam ?? 0,
-            pageSize,
-          })}`,
-        )
-        .then(res => (res.data ? res.data.map(parseDBProject) : []))
+      const res = await axios.get<DBProjectRow[] | undefined>(
+        `/api/projects?${formatQueryParams({
+          ...evaluatedOpts,
+          page: (pageParam as number) ?? 0,
+          pageSize,
+        })}`,
+      )
+
+      return res?.data?.map(parseDBProject) ?? []
     },
-    {
-      staleTime: DEFAULT_STALE_TIME,
-      ...reactQueryOptions,
-      // Don't allow this function to be overwritten by reactQueryOptions
-      getNextPageParam: (lastPage, allPages) => {
-        // If the last page contains less than the expected page size,
-        // it's safe to assume you're at the end.
-        if (opts.pageSize && lastPage.length < opts.pageSize) {
-          return false
-        } else {
-          return allPages.length
-        }
-      },
+    initialPageParam: 0,
+    staleTime: DEFAULT_STALE_TIME,
+    ...reactQueryOptions,
+    // Don't allow this function to be overwritten by reactQueryOptions
+    getNextPageParam: (lastPage, allPages) => {
+      // If the last page contains less than the expected page size,
+      // it's safe to assume you're at the end.
+      if (opts.pageSize && lastPage.length < opts.pageSize) {
+        return false
+      } else {
+        return allPages.length
+      }
     },
-  )
+    // somehow fixes a typescript issue where 'pages' isnt on 'data' object.
+    select: data => ({
+      pages: [...data.pages],
+    }),
+  })
 }
 
 export const DEFAULT_TRENDING_PROJECTS_LIMIT = 10
 
 export function useTrendingProjects(count: number) {
-  return useQuery(['trending-projects', count], async () => {
-    const res = await axios.get<Json<DBProject>[]>(
-      '/api/projects/trending?count=' + count,
-    )
+  return useQuery({
+    queryKey: ['trending-projects', count],
+    queryFn: async () => {
+      const res = await axios.get<Json<DBProject>[]>(
+        '/api/projects/trending?count=' + count,
+      )
 
-    return res.data.map(parseDBProjectJson)
+      return res.data.map(parseDBProjectJson)
+    },
   })
 }
 

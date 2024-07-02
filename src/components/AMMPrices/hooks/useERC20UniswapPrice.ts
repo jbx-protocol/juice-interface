@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { Token } from '@uniswap/sdk-core'
 import IUniswapV3FactoryABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
 import IUniswapV3PoolABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
@@ -11,7 +12,6 @@ import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
 import { BigNumber, Contract } from 'ethers'
-import { useQuery } from 'react-query'
 import { isZeroAddress } from 'utils/address'
 
 interface Immutables {
@@ -129,9 +129,9 @@ async function getPoolState(poolContract: Contract) {
  * Uniswap-related code inspired by https://docs.uniswap.org/sdk/guides/fetching-prices.
  */
 export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
-  return useQuery(
-    ['uniswap-price', tokenSymbol, tokenAddress],
-    async () => {
+  return useQuery({
+    queryKey: ['uniswap-price', tokenSymbol, tokenAddress],
+    queryFn: async () => {
       if (!tokenAddress || !tokenSymbol) return null
 
       try {
@@ -185,9 +185,7 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
         console.error('Error fetching AMM price', e)
       }
     },
-    {
-      refetchInterval: 30000, // refetch every 30 seconds
-      enabled: Boolean(tokenAddress && tokenSymbol),
-    },
-  )
+    refetchInterval: 30000, // refetch every 30 seconds
+    enabled: Boolean(tokenAddress && tokenSymbol),
+  })
 }

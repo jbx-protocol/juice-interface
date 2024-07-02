@@ -1,5 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { useQuery } from 'react-query'
 
 /**
  * Chainlink feed doesn't tend to up date that quickly.
@@ -12,15 +12,13 @@ const PRICE_REFRESH_INTERVAL = 60 * 1000 * 5 // 5 minutes
  * @example 1234.69
  */
 export function useEtherPrice() {
-  return useQuery(
-    'etherPrice',
-    async () => {
+  return useQuery({
+    queryKey: ['etherPrice'],
+    queryFn: async () => {
       return axios
         .get<{ price: number }>('/api/juicebox/prices/ethusd')
         .then(res => res.data.price ?? 0)
     },
-    {
-      staleTime: PRICE_REFRESH_INTERVAL,
-    },
-  )
+    staleTime: PRICE_REFRESH_INTERVAL,
+  })
 }

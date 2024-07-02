@@ -8,6 +8,7 @@ import { useContext } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
+import { useQuery } from '@tanstack/react-query'
 import TokenDistributionChart from 'components/TokenDistributionChart'
 import {
   OrderDirection,
@@ -18,7 +19,6 @@ import {
 } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
-import { useQuery } from 'react-query'
 import HoldersList from './HoldersList'
 
 export default function ParticipantsModal({
@@ -36,9 +36,9 @@ export default function ParticipantsModal({
 }) {
   const { projectId, pv } = useContext(ProjectMetadataContext)
 
-  const { data: allParticipants, isLoading } = useQuery(
-    [`token-holders-${projectId}-${pv}`],
-    () =>
+  const { data: allParticipants, isLoading } = useQuery({
+    queryKey: [`token-holders-${projectId}-${pv}`],
+    queryFn: () =>
       paginateDepleteQuery<ParticipantsQuery, QueryParticipantsArgs>({
         client,
         document: ParticipantsDocument,
@@ -53,11 +53,9 @@ export default function ParticipantsModal({
           },
         },
       }),
-    {
-      staleTime: 5 * 60 * 1000, // 5 min
-      enabled: Boolean(projectId && pv && open),
-    },
-  )
+    staleTime: 5 * 60 * 1000, // 5 min
+    enabled: Boolean(projectId && pv && open),
+  })
 
   return (
     <Modal

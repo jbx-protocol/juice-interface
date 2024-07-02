@@ -1,5 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
 import { fetchQueuedSafeTransactions } from 'lib/safe'
-import { useQuery } from 'react-query'
 
 export function useQueuedSafeTransactions({
   safeAddress,
@@ -8,15 +8,13 @@ export function useQueuedSafeTransactions({
   safeAddress: string | undefined
   limit?: number
 }) {
-  return useQuery(
-    ['queued-safe-transactions', safeAddress],
-    async () => {
+  return useQuery({
+    queryKey: ['queued-safe-transactions', safeAddress],
+    queryFn: async () => {
       if (!safeAddress) return
 
       return fetchQueuedSafeTransactions({ safeAddress, limit })
     },
-    {
-      enabled: Boolean(safeAddress),
-    },
-  )
+    enabled: Boolean(safeAddress),
+  })
 }

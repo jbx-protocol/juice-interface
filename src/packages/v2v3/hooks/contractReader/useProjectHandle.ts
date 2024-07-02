@@ -1,22 +1,21 @@
+import { useQuery } from '@tanstack/react-query'
 import { fetchProjectHandle } from 'lib/api/juicebox'
-import { useQuery } from 'react-query'
 
 export default function useProjectHandle({
   projectId,
 }: {
   projectId?: number
 }) {
-  return useQuery(
-    ['project-handle', projectId],
-    async () => {
+  return useQuery({
+    queryKey: ['project-handle', projectId],
+    queryFn: async () => {
       if (!projectId) {
         throw new Error('Project ID not specified.')
       }
 
       return await fetchProjectHandle(projectId)
     },
-    {
-      enabled: !!projectId,
-    },
-  )
+
+    enabled: !!projectId,
+  })
 }

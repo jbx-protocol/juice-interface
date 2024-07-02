@@ -1,8 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useWallet } from 'hooks/Wallet'
 import { ReactNode, createContext } from 'react'
-import { useQuery } from 'react-query'
 
 interface ProjectOFACContextType {
   isLoading?: boolean
@@ -24,9 +24,9 @@ export default function V2V3ProjectOFACProvider({
 
   const enabled = projectMetadata?.projectRequiredOFACCheck && isConnected
 
-  const { data: isAddressListedInOFAC, isLoading } = useQuery(
-    ['isAddressListedInOFAC', userAddress],
-    async () => {
+  const { data: isAddressListedInOFAC, isLoading } = useQuery({
+    queryKey: ['isAddressListedInOFAC', userAddress],
+    queryFn: async () => {
       if (!enabled) {
         return
       }
@@ -46,8 +46,8 @@ export default function V2V3ProjectOFACProvider({
         return true
       }
     },
-    { enabled },
-  )
+    enabled,
+  })
 
   return (
     <ProjectOFACContext.Provider value={{ isAddressListedInOFAC, isLoading }}>

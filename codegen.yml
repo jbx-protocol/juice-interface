@@ -6,7 +6,6 @@ generates:
     plugins:
       - 'typescript'
       - 'typescript-operations'
-      - 'typescript-resolvers'
       - 'typescript-react-apollo'
       - add:
           content: "import { BigNumber } from 'ethers'"

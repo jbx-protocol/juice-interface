@@ -3,13 +3,13 @@ import { Modal } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 
-import { BigNumber, constants } from 'ethers'
 import { useContext } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { useQuery } from '@tanstack/react-query'
 import TokenDistributionChart from 'components/TokenDistributionChart'
+import { ethers } from 'ethers'
 import {
   OrderDirection,
   Participant_OrderBy,
@@ -30,7 +30,7 @@ export default function ParticipantsModal({
 }: {
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
-  totalTokenSupply: BigNumber | undefined
+  totalTokenSupply: bigint | undefined
   open: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
@@ -48,8 +48,8 @@ export default function ParticipantsModal({
           where: {
             projectId,
             pv,
-            balance_gt: BigNumber.from(0),
-            wallet_not: constants.AddressZero,
+            balance_gt: BigInt(0),
+            wallet_not: ethers.ZeroAddress,
           },
         },
       }),

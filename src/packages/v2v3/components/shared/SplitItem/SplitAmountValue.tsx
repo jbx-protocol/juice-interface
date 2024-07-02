@@ -4,7 +4,6 @@ import { Tooltip } from 'antd'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import { CurrencyName } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
@@ -24,26 +23,26 @@ export function SplitAmountValue({
   const { primaryETHTerminalFee } = useContext(V2V3ProjectContext)
 
   const splitValue = props.totalValue
-    ?.mul(props.split.percent)
-    .div(SPLITS_TOTAL_PERCENT)
+    ? (props.totalValue * BigInt(props.split.percent)) / SPLITS_TOTAL_PERCENT
+    : undefined
 
   const isJuiceboxProject = isJuiceboxProjectSplit(props.split)
   const hasFee = !isJuiceboxProject && !props.dontApplyFeeToAmount
   const feeAmount = hasFee
-    ? feeForAmount(splitValue, primaryETHTerminalFee) ?? BigNumber.from(0)
-    : BigNumber.from(0)
-  const valueAfterFees = splitValue ? splitValue.sub(feeAmount) : 0
+    ? feeForAmount(splitValue, primaryETHTerminalFee) ?? BigInt(0)
+    : BigInt(0)
+  const valueAfterFees = splitValue ? splitValue - feeAmount : 0
 
   const currencyName = V2V3CurrencyName(
-    props.currency?.toNumber() as V2V3CurrencyOption | undefined,
+    Number(props.currency) as V2V3CurrencyOption | undefined,
   )
 
   const createTooltipTitle = (
     curr: CurrencyName | undefined,
-    amount: BigNumber | undefined,
+    amount: bigint | undefined,
   ) => {
     if (hideTooltip) return undefined
-    if (curr === 'ETH' && amount?.gt(0)) {
+    if (curr === 'ETH' && amount && amount > 0n) {
       return <ETHToUSD ethAmount={amount} />
     }
     return undefined
@@ -53,9 +52,9 @@ export function SplitAmountValue({
     <>
       <Tooltip
         title={
-          splitValue &&
-          feeAmount &&
-          createTooltipTitle(currencyName, splitValue.sub(feeAmount))
+          !!splitValue &&
+          !!feeAmount &&
+          createTooltipTitle(currencyName, splitValue - feeAmount)
         }
       >
         {valueAfterFees ? (

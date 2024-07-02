@@ -3,7 +3,6 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import { TokenAmount } from 'components/TokenAmount'
-import { BigNumber } from 'ethers'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { reloadWindow } from 'utils/windowUtils'
@@ -12,7 +11,7 @@ import { useProjectContext } from '../hooks/useProjectContext'
 
 type ClaimErc20CalloutProps = {
   className?: string
-  unclaimed: BigNumber
+  unclaimed: bigint
 }
 export const ClaimErc20Callout: React.FC<ClaimErc20CalloutProps> = ({
   className,
@@ -39,7 +38,7 @@ export const ClaimErc20Callout: React.FC<ClaimErc20CalloutProps> = ({
                 You have{' '}
                 <TokenAmount
                   className="font-medium"
-                  amountWad={unclaimed ?? BigNumber.from(0)}
+                  amountWad={unclaimed ?? 0n}
                   tokenSymbol=""
                 />{' '}
                 unclaimed {ticker} tokens.

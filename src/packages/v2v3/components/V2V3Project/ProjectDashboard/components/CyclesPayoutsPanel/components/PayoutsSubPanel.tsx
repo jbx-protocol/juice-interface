@@ -18,7 +18,7 @@ export const PayoutsSubPanel = ({
   const { payouts, loading, totalPayoutAmount, distributionLimit } =
     usePayoutsSubPanel(type)
   const hasPayouts = useMemo(() => {
-    if (!payouts || payouts.length === 0 || distributionLimit?.eq(0))
+    if (!payouts || payouts.length === 0 || distributionLimit === 0n)
       return false
     return true
   }, [payouts, distributionLimit])

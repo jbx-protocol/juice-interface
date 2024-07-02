@@ -7,7 +7,6 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { TokenAmount } from 'components/TokenAmount'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useUnclaimedTokenBalance } from 'packages/v2v3/hooks/contractReader/useUnclaimedTokenBalance'
@@ -49,7 +48,7 @@ export function V2V3ClaimTokensModal({
   const executeClaimTokensTx = async () => {
     if (
       !claimAmount ||
-      parseWad(claimAmount).eq(0) // Disable claiming 0 tokens
+      parseWad(claimAmount) === 0n // Disable claiming 0 tokens
     )
       return
 
@@ -100,7 +99,7 @@ export function V2V3ClaimTokensModal({
       okText={t`Claim ${tokenTextShort}`}
       confirmLoading={loading}
       transactionPending={transactionPending}
-      okButtonProps={{ disabled: parseWad(claimAmount).eq(0) }}
+      okButtonProps={{ disabled: parseWad(claimAmount) === 0n }}
       onCancel={onCancel}
       width={600}
       centered
@@ -142,7 +141,7 @@ export function V2V3ClaimTokensModal({
           <Descriptions.Item
             label={<Trans>Your unclaimed {tokenTextLong}</Trans>}
           >
-            <TokenAmount amountWad={unclaimedBalance ?? BigNumber.from(0)} />
+            <TokenAmount amountWad={unclaimedBalance ?? BigInt(0)} />
           </Descriptions.Item>
 
           {hasIssuedTokens && tokenSymbol && (

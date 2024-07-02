@@ -5,7 +5,6 @@ import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { FEES_EXPLANATION } from 'components/strings'
-import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { PayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/PayoutsTable'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
@@ -45,10 +44,14 @@ export default function DistributePayoutsModal({
   useEffect(() => {
     if (!distributionLimit) return
 
-    const unusedFunds = distributionLimit?.sub(usedDistributionLimit ?? 0) ?? 0
-    const distributable = balanceInDistributionLimitCurrency?.gt(unusedFunds)
-      ? unusedFunds
-      : balanceInDistributionLimitCurrency
+    const unusedFunds = distributionLimit
+      ? distributionLimit - (usedDistributionLimit ?? 0n)
+      : 0
+    const distributable =
+      balanceInDistributionLimitCurrency &&
+      balanceInDistributionLimitCurrency > unusedFunds
+        ? unusedFunds
+        : balanceInDistributionLimitCurrency
 
     setDistributionAmount(fromWad(distributable))
   }, [
@@ -60,11 +63,11 @@ export default function DistributePayoutsModal({
   async function executeDistributePayoutsTx() {
     if (!distributionLimitCurrency || !distributionAmount) return
 
-    const minAmount = (
-      distributionLimitCurrency.eq(V2V3_CURRENCY_USD)
+    const _min =
+      Number(distributionLimitCurrency) === V2V3_CURRENCY_USD
         ? converter.usdToWei(distributionAmount)
         : parseWad(distributionAmount)
-    )?.sub(1e12) // Arbitrary value subtracted
+    const minAmount = _min ? _min - 1_000_000_000_000n : undefined
     if (!minAmount) return
 
     setLoading(true)
@@ -72,7 +75,7 @@ export default function DistributePayoutsModal({
     const txSuccessful = await distributePayoutsTx(
       {
         amount: parseWad(distributionAmount),
-        currency: distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+        currency: Number(distributionLimitCurrency) as V2V3CurrencyOption,
       },
       {
         onDone: () => {
@@ -92,16 +95,21 @@ export default function DistributePayoutsModal({
     }
   }
 
-  const unusedFunds =
-    distributionLimit?.sub(usedDistributionLimit ?? 0) ?? BigNumber.from(0)
+  const unusedFunds = distributionLimit
+    ? distributionLimit - (usedDistributionLimit ?? 0n)
+    : BigInt(0)
 
-  const distributable = balanceInDistributionLimitCurrency?.gt(unusedFunds)
-    ? unusedFunds
-    : balanceInDistributionLimitCurrency
+  const distributable =
+    balanceInDistributionLimitCurrency &&
+    balanceInDistributionLimitCurrency > unusedFunds
+      ? unusedFunds
+      : balanceInDistributionLimitCurrency
 
   const currencyName =
     V2V3CurrencyName(
-      distributionLimitCurrency?.toNumber() as V2V3CurrencyOption,
+      distributionLimitCurrency
+        ? (Number(distributionLimitCurrency) as V2V3CurrencyOption)
+        : undefined,
     ) ?? 'ETH'
 
   return (

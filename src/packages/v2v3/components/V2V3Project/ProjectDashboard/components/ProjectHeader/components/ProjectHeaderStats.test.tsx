@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 import { render } from '@testing-library/react'
-import { BigNumber } from 'ethers'
 import {
   ProjectHeaderData,
   useProjectHeader,
@@ -35,7 +34,7 @@ const MOCK_PROJECT_HEADER_DATA: ProjectHeaderData = {
   projectId: 420,
   owner: '0x1234',
   payments: 420,
-  totalVolume: BigNumber.from(420),
+  totalVolume: BigInt(420),
   last7DaysPercent: 69,
   gnosisSafe: undefined,
   archived: false,

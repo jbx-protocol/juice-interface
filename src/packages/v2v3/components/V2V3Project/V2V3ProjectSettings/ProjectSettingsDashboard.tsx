@@ -5,7 +5,6 @@ import Loading from 'components/Loading'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHAmount from 'components/currency/ETHAmount'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import Link from 'next/link'
 import { useDistributableAmount } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/components/CyclesPayoutsPanel/hooks/useDistributableAmount'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
@@ -100,7 +99,7 @@ export function ProjectSettingsDashboard() {
                   <Trans>Project balance</Trans>
                 </div>
                 <div className="text-xl">
-                  <ETHAmount amount={ETHBalance ?? BigNumber.from(0)} />
+                  <ETHAmount amount={ETHBalance ?? BigInt(0)} />
                 </div>
               </div>
             </div>

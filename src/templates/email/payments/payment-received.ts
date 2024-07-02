@@ -185,7 +185,7 @@ const template = `
     <mj-section>
       <mj-column>
         <mj-text align="center">
-          <p class="text-sm">© 2023 Juicebox. All rights reserved.</p>
+          <p class="text-sm">© 2024 Juicebox. All rights reserved.</p>
         </mj-text>
       </mj-column>
 

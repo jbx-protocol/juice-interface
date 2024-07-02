@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 import { V1UserContext } from 'packages/v1/contexts/User/V1UserContext'
 import { useContext } from 'react'
@@ -8,11 +7,12 @@ import { V1CurrencyOption } from 'packages/v1/models/currencyOption'
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactorInstance } from 'hooks/useTransactor'
+import { toHexString } from 'utils/bigNumbers'
 import { useV1ProjectTitle } from '../useProjectTitle'
 
 export function useTapProjectTx(): TransactorInstance<{
-  tapAmount: BigNumber
-  minAmount: BigNumber
+  tapAmount: bigint
+  minAmount: bigint
   currency: V1CurrencyOption
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
@@ -38,10 +38,10 @@ export function useTapProjectTx(): TransactorInstance<{
         : contracts.TerminalV1,
       'tap',
       [
-        BigNumber.from(projectId).toHexString(),
-        tapAmount.toHexString(),
+        toHexString(BigInt(projectId)),
+        toHexString(tapAmount),
         currency,
-        minAmount?.toHexString(),
+        minAmount ? toHexString(minAmount) : undefined,
       ],
       {
         ...txOpts,

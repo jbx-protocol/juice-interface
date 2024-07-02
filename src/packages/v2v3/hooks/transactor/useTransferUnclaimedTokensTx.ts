@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { BigNumber } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,
@@ -11,10 +10,11 @@ import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3Contr
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
+import { toHexString } from 'utils/bigNumbers'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useTransferUnclaimedTokensTx(): TransactorInstance<{
-  amount: BigNumber
+  amount: bigint
   to: string
 }> {
   const { transactor } = useContext(TransactionContext)
@@ -30,7 +30,7 @@ export function useTransferUnclaimedTokensTx(): TransactorInstance<{
       return transactor(
         contracts.JBTokenStore,
         'transferFrom',
-        [userAddress, projectId, to, amount.toHexString()],
+        [userAddress, projectId, to, toHexString(amount)],
         {
           ...txOpts,
           title: t`Transfer unclaimed ${tokenSymbolText({

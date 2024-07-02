@@ -2,9 +2,9 @@ import { t } from '@lingui/macro'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { constants } from 'ethers'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
 
+import { ethers, toUtf8Bytes } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useContext } from 'react'
@@ -29,8 +29,6 @@ export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayer
 
   const projectTitle = useV2ProjectTitle()
 
-  const DEFAULT_METADATA = [0x1]
-
   return (
     {
       customBeneficiaryAddress,
@@ -50,10 +48,10 @@ export function useDeployProjectPayerTx(): TransactorInstance<DeployProjectPayer
       'deployProjectPayer',
       [
         projectId, // _defaultProjectId
-        customBeneficiaryAddress ?? constants.AddressZero, // _defaultBeneficiary, is 0x00 because we want tokens to go to msg.sender
-        preferClaimed, // _defaultPreferClaimedTokens
+        customBeneficiaryAddress ?? ethers.ZeroAddress, // _defaultBeneficiary, is 0x00 because we want tokens to go to msg.sender
+        Boolean(preferClaimed), // _defaultPreferClaimedTokens
         customMemo ?? DEFAULT_MEMO, // _defaultMemo
-        DEFAULT_METADATA, //_defaultMetadata
+        toUtf8Bytes('0'), //_defaultMetadata
         !tokenMintingEnabled, // defaultPreferAddToBalance
         userAddress, // _owner
       ],

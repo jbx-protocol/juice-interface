@@ -7,7 +7,6 @@ import {
   NULL_ALLOCATOR_ADDRESS,
   V1_V3_ALLOCATOR_ADDRESS,
 } from 'constants/contracts/mainnet/Allocators'
-import { BigNumber } from 'ethers'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 import { PayoutMod, TicketMod } from 'packages/v1/models/mods'
 import V2V3ProjectLink from 'packages/v2v3/components/shared/V2V3ProjectLink'
@@ -28,7 +27,7 @@ export default function Mod({
   if (!mod) return null
 
   const _mod = mod as PayoutMod
-  const projectId = _mod.projectId as BigNumber
+  const projectId = _mod.projectId as bigint
   const allocator = _mod.allocator
 
   const isV1Project = projectId && allocator === NULL_ALLOCATOR_ADDRESS
@@ -38,7 +37,7 @@ export default function Mod({
     <div className="mb-1 flex items-baseline justify-between">
       <div className="leading-6">
         <div className="flex items-baseline">
-          {projectId?.gt(0) ? (
+          {projectId > 0 ? (
             <div>
               <div className="font-medium">
                 {isV1Project ? (
@@ -46,7 +45,7 @@ export default function Mod({
                 ) : isV3Project ? (
                   <Space size="small">
                     <V2V3ProjectLink
-                      projectId={projectId.toNumber()}
+                      projectId={Number(projectId)}
                       allocator={allocator}
                     />
                   </Space>

@@ -4,7 +4,7 @@ import { useForm } from 'antd/lib/form/Form'
 import CurrencySymbol from 'components/currency/CurrencySymbol'
 import { getTotalPercentage } from 'components/formItems/formHelpers'
 import { CsvUpload } from 'components/inputs/CsvUpload'
-import { BigNumber, constants } from 'ethers'
+import { ethers } from 'ethers'
 import Mod from 'packages/v1/components/shared/Mod'
 import { V1_CURRENCY_ETH } from 'packages/v1/constants/currency'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
@@ -44,8 +44,8 @@ export default function PayoutModsList({
     | Pick<V1FundingCycle, 'target' | 'currency' | 'configured' | 'fee'>
     | undefined
   projectId: number | undefined
-  feePerbicent: BigNumber | undefined
-  total?: BigNumber
+  feePerbicent: bigint | undefined
+  total?: bigint
 }) {
   const [form] = useForm<{
     totalPercent: number
@@ -57,7 +57,9 @@ export default function PayoutModsList({
   const setPayoutModsTx = useSetPayoutModsTx()
 
   const fundingCycleCurrency = V1CurrencyName(
-    fundingCycle?.currency.toNumber() as V1CurrencyOption,
+    fundingCycle?.currency
+      ? (Number(fundingCycle.currency) as V1CurrencyOption)
+      : undefined,
   )
 
   const { editableMods, lockedMods } = useMemo(() => {
@@ -102,7 +104,7 @@ export default function PayoutModsList({
   )
 
   const modsTotal = mods?.reduce((acc, curr) => acc + curr.percent, 0)
-  const ownerPercent = MODS_TOTAL_PERCENT - (modsTotal ?? 0)
+  const ownerPercent = Number(MODS_TOTAL_PERCENT) - (modsTotal ?? 0)
 
   const baseTotal = total ?? amountSubFee(fundingCycle?.target, feePerbicent)
 
@@ -115,7 +117,7 @@ export default function PayoutModsList({
   if (!fundingCycle) return null
 
   const { target } = fundingCycle
-  const targetIsInfinite = !target || target.eq(constants.MaxUint256)
+  const targetIsInfinite = !target || target === ethers.MaxUint256
 
   return (
     <div>
@@ -132,17 +134,24 @@ export default function PayoutModsList({
                   value={
                     <span className="font-normal">
                       {permyriadToPercent(mod.percent)}%
-                      {!fundingCycle.target.eq(constants.MaxUint256) && (
+                      {fundingCycle.target !== ethers.MaxUint256 && (
                         <>
                           {' '}
                           (
                           <CurrencySymbol currency={fundingCycleCurrency} />
-                          {formatWad(baseTotal?.mul(mod.percent).div(10000), {
-                            precision: fundingCycle.currency.eq(V1_CURRENCY_ETH)
-                              ? 4
-                              : 0,
-                            padEnd: true,
-                          })}
+                          {formatWad(
+                            baseTotal
+                              ? (Number(baseTotal) * mod.percent) / 10000
+                              : undefined,
+                            {
+                              precision:
+                                Number(fundingCycle.currency) ===
+                                V1_CURRENCY_ETH
+                                  ? 4
+                                  : 0,
+                              padEnd: true,
+                            },
+                          )}
                           )
                         </>
                       )}
@@ -164,12 +173,18 @@ export default function PayoutModsList({
                   {' '}
                   (
                   <CurrencySymbol currency={fundingCycleCurrency} />
-                  {formatWad(baseTotal?.mul(ownerPercent).div(10000), {
-                    precision: fundingCycle.currency.eq(V1_CURRENCY_ETH)
-                      ? 4
-                      : 0,
-                    padEnd: true,
-                  })}
+                  {formatWad(
+                    baseTotal
+                      ? (Number(baseTotal) * ownerPercent) / 10000
+                      : undefined,
+                    {
+                      precision:
+                        Number(fundingCycle.currency) === V1_CURRENCY_ETH
+                          ? 4
+                          : 0,
+                      padEnd: true,
+                    },
+                  )}
                   )
                 </>
               )}

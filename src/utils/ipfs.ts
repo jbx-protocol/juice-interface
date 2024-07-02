@@ -1,5 +1,5 @@
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
-import { base58 } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import round from 'lodash/round'
 import { UploadProgressEvent } from 'rc-upload/lib/interface'
 
@@ -63,7 +63,7 @@ export function pinataToGatewayUrl(url: string) {
  * Hex-encoded CIDs are used to store some CIDs on-chain because they are more gas-efficient.
  */
 export function encodeIpfsUri(cid: string) {
-  return '0x' + Buffer.from(base58.decode(cid).slice(2)).toString('hex')
+  return '0x' + ethers.decodeBase58(cid).toString(16)
 }
 
 /**
@@ -77,7 +77,7 @@ export function decodeEncodedIpfsUri(hex: string) {
   // - also cut off leading "0x"
   const hashHex = '1220' + hex.slice(2)
   const hashBytes = Buffer.from(hashHex, 'hex')
-  const hashStr = base58.encode(hashBytes)
+  const hashStr = ethers.encodeBase58(hashBytes)
   return hashStr
 }
 

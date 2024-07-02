@@ -8,7 +8,6 @@ import TooltipLabel from 'components/TooltipLabel'
 import ETHAmount from 'components/currency/ETHAmount'
 import USDAmount from 'components/currency/USDAmount'
 import { DISTRIBUTION_LIMIT_EXPLANATION } from 'components/strings'
-import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useEthBalanceQuery } from 'hooks/useEthBalance'
 import V1ProjectTokenBalance from 'packages/v1/components/shared/V1ProjectTokenBalance'
@@ -36,20 +35,20 @@ export function TreasuryStatsSection() {
 
   const overflowInCurrency = converter.wadToCurrency(
     overflow ?? 0,
-    V1CurrencyName(currentFC?.currency.toNumber() as V1CurrencyOption),
+    V1CurrencyName(Number(currentFC?.currency) as V1CurrencyOption),
     'ETH',
   )
 
   if (!currentFC) return null
 
-  const formatCurrencyAmount = (amt: BigNumber | undefined) => {
+  const formatCurrencyAmount = (amt: bigint | undefined) => {
     if (!amt) return null
 
-    if (currentFC.currency.eq(V1_CURRENCY_ETH)) {
+    if (Number(currentFC.currency) === V1_CURRENCY_ETH) {
       return <ETHAmount amount={amt} precision={2} padEnd />
     }
 
-    if (currentFC.currency.eq(V1_CURRENCY_USD)) {
+    if (Number(currentFC.currency) === V1_CURRENCY_USD) {
       return <USDAmount amount={amt} precision={2} padEnd />
     }
 
@@ -61,7 +60,7 @@ export function TreasuryStatsSection() {
       <VolumeStatLine totalVolume={earned} />
       <div
         className={classNames(
-          hasFundingTarget(currentFC) && currentFC.target.gt(0)
+          hasFundingTarget(currentFC) && currentFC.target > 0n
             ? 'my-4'
             : 'my-2',
         )}
@@ -73,7 +72,7 @@ export function TreasuryStatsSection() {
           }
           statValue={
             <div className="ml-2 text-lg font-medium text-juice-400 dark:text-juice-300">
-              {currentFC.currency.eq(V1_CURRENCY_USD) ? (
+              {Number(currentFC.currency) === V1_CURRENCY_USD ? (
                 <span className="text-sm font-medium uppercase text-grey-400 dark:text-grey-300">
                   <ETHAmount amount={balance} precision={2} padEnd={true} />{' '}
                 </span>
@@ -86,7 +85,7 @@ export function TreasuryStatsSection() {
         />
 
         {hasFundingTarget(currentFC) &&
-          (currentFC.target.gt(0) ? (
+          (currentFC.target > 0n ? (
             <StatLine
               statLabel={<Trans>Payouts</Trans>}
               statLabelTip={DISTRIBUTION_LIMIT_EXPLANATION}
@@ -111,7 +110,7 @@ export function TreasuryStatsSection() {
             </div>
           ))}
 
-        {hasFundingTarget(currentFC) && currentFC.target.gt(0) && (
+        {hasFundingTarget(currentFC) && currentFC.target > 0n && (
           <FundingProgressBar
             targetAmount={currentFC.target}
             overflowAmountInTargetCurrency={overflowInCurrency}

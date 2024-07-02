@@ -1,6 +1,6 @@
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber, constants } from 'ethers'
+import { ethers } from 'ethers'
 import { revalidateProject } from 'lib/api/nextjs'
 import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
@@ -28,18 +28,18 @@ const getWeightArgument = ({
   currentWeightAfterDiscountRate,
   newWeight,
 }: {
-  currentWeightAfterDiscountRate: BigNumber
-  newWeight: BigNumber
-}): BigNumber => {
-  if (newWeight.eq(BigNumber.from(0))) {
+  currentWeightAfterDiscountRate: bigint
+  newWeight: bigint
+}): bigint => {
+  if (newWeight === BigInt(0)) {
     // if desired weight is 0 (no tokens), send weight=1 to the contract
-    return BigNumber.from(WEIGHT_ZERO)
+    return BigInt(WEIGHT_ZERO)
   } else if (
     parseInt(fromWad(newWeight)) ===
     parseInt(fromWad(currentWeightAfterDiscountRate))
   ) {
     // If the weight is unchanged, send weight=0 to the contract
-    return BigNumber.from(WEIGHT_UNCHANGED)
+    return BigInt(WEIGHT_UNCHANGED)
   }
 
   // else, return the new weight
@@ -117,7 +117,7 @@ export const useReconfigureFundingCycle = ({
 
       const weight = getWeightArgument({
         currentWeightAfterDiscountRate: deriveNextIssuanceRate({
-          weight: BigNumber.from(0),
+          weight: BigInt(0),
           previousFC: fundingCycle,
         }),
         newWeight: editingFundingCycleData.weight,
@@ -132,7 +132,7 @@ export const useReconfigureFundingCycle = ({
           fundingCycleMetadata: {
             ...fundingCycleMetadata,
             dataSource: removeDatasource
-              ? constants.AddressZero
+              ? ethers.ZeroAddress
               : fundingCycleMetadata.dataSource,
           },
           fundAccessConstraints: editingFundAccessConstraints,

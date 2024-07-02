@@ -1,5 +1,4 @@
 import { CurrencyContext } from 'contexts/CurrencyContext'
-import { BigNumber } from 'ethers'
 import useWeiConverter from 'hooks/useWeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
@@ -39,8 +38,10 @@ export function useTokensPerEth(
   const { currencyMetadata } = useContext(CurrencyContext)
   const { fundingCycle, fundingCycleMetadata, tokenSymbol } =
     useProjectContext()
-  const { reservedRate: reservedRateBigNumber } = fundingCycleMetadata ?? {}
-  const reservedRate = reservedRateBigNumber?.toNumber()
+  const { reservedRate: reservedRatebigint } = fundingCycleMetadata ?? {}
+  const reservedRate = reservedRatebigint
+    ? Number(reservedRatebigint)
+    : undefined
   const { weight } = fundingCycle ?? {}
 
   const weiPayAmt = useWeiConverter<CurrencyOption>({
@@ -49,7 +50,7 @@ export function useTokensPerEth(
   })
 
   const formatReceivedTickets = useCallback(
-    (wei: BigNumber): string | undefined => {
+    (wei: bigint): string | undefined => {
       const exchangeRate = weightAmountPermyriad(
         weight,
         reservedRate,

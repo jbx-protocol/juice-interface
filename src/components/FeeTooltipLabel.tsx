@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import { BigNumber } from 'ethers'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
 import { amountSubFee, formatFee } from 'packages/v2v3/utils/math'
@@ -16,8 +15,8 @@ export const FeeTooltipLabel = ({
   feePerBillion,
 }: {
   currency: V2V3CurrencyOption
-  amountWad: BigNumber | undefined
-  feePerBillion: BigNumber | undefined
+  amountWad: bigint | undefined
+  feePerBillion: bigint | undefined
 }) => {
   if (!amountWad || !currency || !feePerBillion) return null
   const amountSubFeeValue = amountSubFee(amountWad, feePerBillion)

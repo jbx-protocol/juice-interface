@@ -4,7 +4,6 @@ import { Button, Modal, Space } from 'antd'
 import ERC20TokenBalance from 'components/ERC20TokenBalance'
 import { FormItems } from 'components/formItems'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
 import { PV1 } from 'models/pv'
@@ -121,7 +120,7 @@ export function V1BalancesModal({
               <V1ProjectTokenBalance
                 key={t.value}
                 wallet={owner}
-                projectId={BigNumber.from(t.value).toNumber()}
+                projectId={Number(BigInt(t.value))}
               />
             ),
           )}

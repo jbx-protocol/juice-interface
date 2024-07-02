@@ -1,26 +1,27 @@
-import { BigNumber, BigNumberish, Contract } from 'ethers'
+import { Contract } from 'ethers'
 import { V1ContractName } from 'packages/v1/models/contracts'
 import { V1TerminalName } from 'packages/v1/models/terminals'
-import { bigNumbersDiff } from 'utils/bigNumbers'
 
+import { BigintIsh } from '@sushiswap/sdk'
+import { bigintsDiff, toHexString } from 'utils/bigNumbers'
 import useContractReader from './useContractReader'
 import useShouldUpdateTokens from './useShouldUpdateTokens'
 
 /** Returns combined ERC20 + unclaimed balance of user with `userAddress`. */
 export default function useTotalBalanceOf(
   userAddress: string | undefined,
-  projectId: BigNumberish | undefined,
+  projectId: BigintIsh | undefined,
   terminalName?: V1TerminalName,
   contract?: Contract,
 ) {
-  return useContractReader<BigNumber>({
+  return useContractReader<bigint>({
     contract: contract ?? V1ContractName.TicketBooth,
     functionName: 'balanceOf',
     args:
       userAddress && projectId
-        ? [userAddress, BigNumber.from(projectId).toHexString()]
+        ? [userAddress, toHexString(BigInt(projectId))]
         : null,
-    valueDidChange: bigNumbersDiff,
+    valueDidChange: bigintsDiff,
     updateOn: useShouldUpdateTokens(projectId, terminalName, userAddress),
   })
 }

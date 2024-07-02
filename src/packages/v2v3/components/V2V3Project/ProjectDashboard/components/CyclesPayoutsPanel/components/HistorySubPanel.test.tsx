@@ -3,7 +3,6 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { render, screen } from '@testing-library/react'
-import { BigNumber } from 'ethers'
 import { FundingCyclesQuery } from 'generated/graphql'
 import { usePastFundingCycles } from '../hooks/usePastFundingCycles'
 import { HistorySubPanel } from './HistorySubPanel'
@@ -38,14 +37,14 @@ describe('HistorySubPanel', () => {
       ballotRedemptionRate: 6000,
       basedOn: 1685615915,
       burnPaused: false,
-      configuration: BigNumber.from('1686266495'),
+      configuration: BigInt('1686266495'),
       controllerMigrationAllowed: true,
       dataSource: '0x0000000000000000000000000000000000000000',
-      discountRate: BigNumber.from('15000000'),
+      discountRate: BigInt('15000000'),
       distributionsPaused: false,
       duration: 604800,
       id: '2-397-37',
-      metadata: BigNumber.from('453635417129768049443073'),
+      metadata: BigInt('453635417129768049443073'),
       metametadata: 0,
       mintingAllowed: false,
       mustStartAtOrAfter: null,
@@ -65,8 +64,8 @@ describe('HistorySubPanel', () => {
       useDataSourceForPay: false,
       useDataSourceForRedeem: false,
       useTotalOverflowForRedemptions: false,
-      weight: BigNumber.from('341957057837004498728584'),
-      withdrawnAmount: BigNumber.from('30779487181046138000000'),
+      weight: BigInt('341957057837004498728584'),
+      withdrawnAmount: BigInt('30779487181046138000000'),
     },
   ]
 

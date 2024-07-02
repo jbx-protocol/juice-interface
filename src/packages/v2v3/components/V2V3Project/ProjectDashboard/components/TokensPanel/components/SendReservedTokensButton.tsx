@@ -2,7 +2,6 @@ import { ArrowUpCircleIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import DistributeReservedTokensModal from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/modals/DistributeReservedTokensModal'
 import { useProjectReservedTokens } from 'packages/v2v3/hooks/contractReader/ProjectReservedTokens'
@@ -29,7 +28,7 @@ export const SendReservedTokensButton = ({
   const closeModal = useCallback(() => setOpen(false), [])
 
   const distributeButtonDisabled = useMemo(() => {
-    return (reservedTokens ?? BigNumber.from(0)).eq(0)
+    return (reservedTokens ?? BigInt(0)) === 0n
   }, [reservedTokens])
 
   return (

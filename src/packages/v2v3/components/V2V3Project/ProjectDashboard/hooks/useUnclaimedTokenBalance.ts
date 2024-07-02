@@ -18,6 +18,8 @@ export const useUnclaimedTokenBalance = () => {
     return undefined
   }
 
-  const unclaimedBalance = totalBalance?.sub(claimedBalance ?? 0)
+  const unclaimedBalance = totalBalance
+    ? totalBalance - (claimedBalance ?? 0n)
+    : undefined
   return unclaimedBalance
 }

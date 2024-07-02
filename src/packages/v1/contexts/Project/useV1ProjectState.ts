@@ -60,7 +60,9 @@ export function useV1ProjectState({
       balance &&
       converter.wadToCurrency(
         balance,
-        V1CurrencyName(currentFC?.currency.toNumber() as V1CurrencyOption),
+        currentFC
+          ? V1CurrencyName(Number(currentFC.currency) as V1CurrencyOption)
+          : undefined,
         'ETH',
       ),
     [balance, converter, currentFC],

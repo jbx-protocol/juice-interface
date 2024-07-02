@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { BigNumber } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,
@@ -28,7 +27,7 @@ function buildTxArgs({
 }: {
   JBETHPaymentTerminalVersion: PaymentTerminalVersion | undefined
   projectId: number
-  value: BigNumber
+  value: bigint
 }) {
   if (JBETHPaymentTerminalVersion === V2V3ContractName.JBETHPaymentTerminal) {
     return getAddToBalanceArgsV3({ projectId, value })
@@ -44,7 +43,7 @@ function buildTxArgs({
 }
 
 export function useAddToBalanceTx(): TransactorInstance<{
-  value: BigNumber
+  value: bigint
 }> {
   const { transactor } = useContext(TransactionContext)
   const { contracts, versions } = useContext(V2V3ProjectContractsContext)

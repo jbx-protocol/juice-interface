@@ -72,8 +72,10 @@ export const useInitialEditingData = ({
   const { data: queuedFundingCycleResponse } = useProjectQueuedFundingCycle({
     projectId,
   })
-  const [queuedFundingCycle, queuedFundingCycleMetadata] =
-    queuedFundingCycleResponse ?? []
+  const {
+    fundingCycle: queuedFundingCycle,
+    metadata: queuedFundingCycleMetadata,
+  } = queuedFundingCycleResponse ?? {}
 
   const { data: queuedPayoutSplits } = useProjectSplits({
     projectId,
@@ -96,43 +98,55 @@ export const useInitialEditingData = ({
     queuedDistributionLimitData ?? []
 
   // Use data from the queued funding cycle (if it exists).
-  const effectiveFundingCycle = queuedFundingCycle?.number.gt(0)
-    ? queuedFundingCycle
-    : fundingCycle
-  const effectiveFundingCycleMetadata = queuedFundingCycle?.number.gt(0)
-    ? queuedFundingCycleMetadata
-    : fundingCycleMetadata
-  const effectivePayoutSplits = queuedFundingCycle?.number.gt(0)
-    ? queuedPayoutSplits
-    : payoutSplits
-  const effectiveReservedTokensSplits = queuedFundingCycle?.number.gt(0)
-    ? queuedReservedTokensSplits
-    : reservedTokensSplits
+  const effectiveFundingCycle =
+    queuedFundingCycle && queuedFundingCycle.number > 0n
+      ? queuedFundingCycle
+      : fundingCycle
+  const effectiveFundingCycleMetadata =
+    queuedFundingCycle && queuedFundingCycle.number > 0n
+      ? queuedFundingCycleMetadata
+      : fundingCycleMetadata
+  const effectivePayoutSplits =
+    queuedFundingCycle && queuedFundingCycle.number > 0n
+      ? queuedPayoutSplits
+      : payoutSplits
+  const effectiveReservedTokensSplits =
+    queuedFundingCycle && queuedFundingCycle.number > 0n
+      ? queuedReservedTokensSplits
+      : reservedTokensSplits
 
   let effectiveDistributionLimit = distributionLimit
-  if (effectiveFundingCycle?.duration.gt(0) && queuedDistributionLimit) {
+  if (
+    effectiveFundingCycle &&
+    effectiveFundingCycle.duration > 0n &&
+    queuedDistributionLimit !== undefined
+  ) {
     effectiveDistributionLimit = queuedDistributionLimit
   }
 
   let effectiveDistributionLimitCurrency = distributionLimitCurrency
   if (
-    effectiveFundingCycle?.duration.gt(0) &&
-    queuedDistributionLimitCurrency
+    effectiveFundingCycle &&
+    effectiveFundingCycle.duration > 0n &&
+    queuedDistributionLimitCurrency !== undefined
   ) {
     effectiveDistributionLimitCurrency = queuedDistributionLimitCurrency
   }
 
   // Populates the local redux state from V2V3ProjectContext values
   useDeepCompareEffect(() => {
-    if (!visible || !effectiveFundingCycle || !effectiveFundingCycleMetadata)
+    if (!visible || !effectiveFundingCycle || !effectiveFundingCycleMetadata) {
       return
+    }
 
     // Build fundAccessConstraint
     let fundAccessConstraint: SerializedV2V3FundAccessConstraint | undefined =
       undefined
-    if (effectiveDistributionLimit) {
+    if (effectiveDistributionLimit !== undefined) {
       const distributionLimitCurrency =
-        effectiveDistributionLimitCurrency?.toNumber() ?? V2V3_CURRENCY_ETH
+        effectiveDistributionLimitCurrency !== undefined
+          ? Number(effectiveDistributionLimitCurrency)
+          : V2V3_CURRENCY_ETH
 
       fundAccessConstraint = {
         terminal: primaryETHTerminal ?? '',
@@ -156,13 +170,13 @@ export const useInitialEditingData = ({
     )
 
     // Set editing funding cycle
-    const editingFundingCycleData = fundingCycle?.weight
-      ? serializeV2V3FundingCycleData({
-          ...effectiveFundingCycle,
-          weight: fundingCycle.weight,
-        })
-      : serializeV2V3FundingCycleData(effectiveFundingCycle)
-
+    const editingFundingCycleData =
+      fundingCycle?.weight !== undefined
+        ? serializeV2V3FundingCycleData({
+            ...effectiveFundingCycle,
+            weight: fundingCycle.weight,
+          })
+        : serializeV2V3FundingCycleData(effectiveFundingCycle)
     dispatch(
       editingV2ProjectActions.setFundingCycleData(editingFundingCycleData),
     )
@@ -170,7 +184,6 @@ export const useInitialEditingData = ({
     const editingFundingCycleMetadata = serializeV2V3FundingCycleMetadata(
       effectiveFundingCycleMetadata,
     )
-
     // Set editing funding cycle metadata
     dispatch(
       editingV2ProjectActions.setFundingCycleMetadata(

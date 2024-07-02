@@ -19,7 +19,8 @@ export function useV2SetTransferPermissionTx(): TransactorInstance {
 
     return setOperatorTx(
       {
-        operatorAddress: JBV3TokenContract?.address,
+        // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+        operatorAddress: JBV3TokenContract?.target as string,
         permissionIndexes: [V2V3OperatorPermission.TRANSFER],
         contractOverride: JBOperatorStore,
       },

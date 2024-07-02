@@ -5,9 +5,8 @@ import { init, useAccountCenter, useWallets } from '@web3-onboard/react'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import config from 'config/seo_meta.json'
 import { NETWORKS, readNetwork } from 'constants/networks'
-import { BigNumber } from 'ethers'
 import { startTransition, useEffect } from 'react'
-import { unpadLeadingZerosString } from 'utils/bigNumbers'
+import { toHexString, unpadLeadingZerosString } from 'utils/bigNumbers'
 import {
   useLoadSafeWallet,
   useLoadWalletFromLocalStorage,
@@ -32,7 +31,7 @@ export function initWeb3Onboard() {
   return init({
     wallets: [injected, gnosis, walletConnect, coinbaseWalletSdk],
     chains: Object.values(NETWORKS).map(n => ({
-      id: unpadLeadingZerosString(BigNumber.from(n.chainId).toHexString()),
+      id: unpadLeadingZerosString(toHexString(BigInt(n.chainId))),
       rpcUrl: n.rpcUrl,
       token: n.token ?? 'ETH',
       label: n.label,

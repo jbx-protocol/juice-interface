@@ -4,7 +4,7 @@ import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectCo
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
 import { distributionLimitsEqual } from 'packages/v2v3/utils/distributions'
-import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
+import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { useContext } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
 import { splitsListsHaveDiff } from 'utils/splits'
@@ -29,9 +29,14 @@ export const usePayoutsSectionValues = () => {
   const newCurrency: CurrencyName = editCycleForm?.getFieldValue(
     'distributionLimitCurrency',
   )
-  const currentCurrency =
-    V2V3CurrencyName(currentCurrencyOption?.toNumber() as V2V3CurrencyOption) ??
-    'ETH'
+
+  let currentCurrency: CurrencyName = 'ETH'
+  if (currentCurrencyOption) {
+    currentCurrency = V2V3CurrencyName(
+      Number(currentCurrencyOption) as V2V3CurrencyOption,
+    )!
+  }
+
   const currencyHasDiff = currentCurrency !== newCurrency
 
   const newDistributionLimitNum =
@@ -44,7 +49,7 @@ export const usePayoutsSectionValues = () => {
     !distributionLimitsEqual(currentDistributionLimit, newDistributionLimit) ||
     currencyHasDiff
   const distributionLimitIsInfinite =
-    !newDistributionLimit || newDistributionLimit.eq(MAX_DISTRIBUTION_LIMIT)
+    isInfiniteDistributionLimit(newDistributionLimit)
 
   const newHoldFees = Boolean(editCycleForm?.getFieldValue('holdFees'))
   const currentHoldFees = Boolean(currentFundingCycleMetadata?.holdFees)

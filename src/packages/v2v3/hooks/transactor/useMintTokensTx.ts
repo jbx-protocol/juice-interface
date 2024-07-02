@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { BigNumber } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,
@@ -11,12 +10,13 @@ import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectCo
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
+import { toHexString } from 'utils/bigNumbers'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 const DEFAULT_USE_RESERVED_RATE = false
 
 export function useMintTokensTx(): TransactorInstance<{
-  value: BigNumber
+  value: bigint
   beneficiary: string
   preferClaimed: boolean
   memo: string
@@ -37,7 +37,7 @@ export function useMintTokensTx(): TransactorInstance<{
         'mintTokensOf',
         [
           projectId,
-          value.toHexString(),
+          toHexString(value),
           beneficiary,
           memo ?? '',
           preferClaimed,

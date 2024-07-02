@@ -3,10 +3,8 @@ import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 
 import { t, Trans } from '@lingui/macro'
-import { constants } from 'ethers'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 
-import { isAddress } from 'ethers/lib/utils'
 import { usePrintTokensTx } from 'packages/v1/hooks/transactor/usePrintTokensTx'
 import { useContext, useMemo, useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
@@ -16,6 +14,7 @@ import { StoreValue } from 'antd/lib/form/interface'
 import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { OWNER_MINTING_EXPLANATION } from 'components/strings'
+import { ethers } from 'ethers'
 import { V1_CURRENCY_ETH } from 'packages/v1/constants/currency'
 import { isZeroAddress } from 'utils/address'
 
@@ -43,7 +42,7 @@ export default function PrintPreminedModal({
     await form.validateFields()
     const amount = form.getFieldValue('amount') ?? '0'
     const beneficiary = form.getFieldValue('beneficiary')
-    if (!isAddress(beneficiary)) return
+    if (!ethers.isAddress(beneficiary)) return
 
     setLoading(true)
 
@@ -118,14 +117,14 @@ export default function PrintPreminedModal({
             {
               required: true,
               validator: (rule, value) => {
-                if (!value || !isAddress(value))
+                if (!value || !ethers.isAddress(value))
                   return Promise.reject(t`Not a valid ETH address`)
                 else return Promise.resolve()
               },
             },
           ]}
         >
-          <Input placeholder={constants.AddressZero} />
+          <Input placeholder={ethers.ZeroAddress} />
         </Form.Item>
         <div className="mb-4">
           <Form.Item

@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
 import { V2V3ContractName } from 'packages/v2v3/models/contracts'
 import { useContext, useMemo } from 'react'
@@ -11,7 +10,7 @@ export function useProjectReservedTokens({
   reservedRate,
 }: {
   projectId: number | undefined
-  reservedRate: BigNumber | undefined
+  reservedRate: bigint | undefined
 }) {
   const { versions } = useContext(V2V3ProjectContractsContext)
 
@@ -33,5 +32,5 @@ export function useProjectReservedTokens({
     return { contract: undefined, functionName: undefined, args: undefined }
   }, [JBControllerArgsV3_0, JBControllerArgsV3_1, versions.JBControllerVersion])
 
-  return useContractReader<BigNumber>(args)
+  return useContractReader<bigint>(args)
 }

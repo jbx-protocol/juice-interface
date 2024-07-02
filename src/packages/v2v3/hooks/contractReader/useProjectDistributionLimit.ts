@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
 import { V2V3ContractName } from 'packages/v2v3/models/contracts'
@@ -25,7 +24,7 @@ export default function useProjectDistributionLimit({
       ? JBFundAccessConstraintsStore
       : JBController
 
-  return useV2ContractReader<BigNumber[]>({
+  return useV2ContractReader<bigint[]>({
     contract,
     functionName: 'distributionLimitOf',
     args:

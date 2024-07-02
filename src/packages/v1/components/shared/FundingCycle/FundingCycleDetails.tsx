@@ -14,7 +14,7 @@ import {
 } from 'components/strings'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
 import { SECONDS_IN_DAY } from 'constants/numbers'
-import { utils } from 'ethers'
+import { ethers } from 'ethers'
 import { getBallotStrategyByAddress } from 'packages/v1/constants/ballotStrategies/getBallotStrategiesByAddress'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 import { V1CurrencyOption } from 'packages/v1/models/currencyOption'
@@ -46,10 +46,10 @@ export default function FundingCycleDetails({
 
   if (!fundingCycle) return null
 
-  const formattedStartTime = formatDate(fundingCycle.start.mul(1000))
+  const formattedStartTime = formatDate(fundingCycle.start * 1000n)
 
   const formattedEndTime = formatDate(
-    fundingCycle.start.add(fundingCycle.duration.mul(SECONDS_IN_DAY)).mul(1000),
+    fundingCycle.start + fundingCycle.duration * SECONDS_IN_DAY * 1000n,
   )
 
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
@@ -70,7 +70,7 @@ export default function FundingCycleDetails({
       weightAmountPerbicent(
         fundingCycle?.weight,
         fcReservedRate,
-        utils.parseEther('1'),
+        ethers.parseEther('1'),
         'payer',
       ),
       {
@@ -82,7 +82,7 @@ export default function FundingCycleDetails({
       weightAmountPerbicent(
         fundingCycle?.weight,
         fcReservedRate,
-        utils.parseEther('1'),
+        ethers.parseEther('1'),
         'reserved',
       ),
       {
@@ -123,7 +123,7 @@ export default function FundingCycleDetails({
             <>
               <CurrencySymbol
                 currency={V1CurrencyName(
-                  fundingCycle.currency.toNumber() as V1CurrencyOption,
+                  Number(fundingCycle.currency) as V1CurrencyOption,
                 )}
               />
               {formatWad(fundingCycle.target)}
@@ -134,7 +134,7 @@ export default function FundingCycleDetails({
         </Descriptions.Item>
 
         <Descriptions.Item label={<Trans>Duration</Trans>}>
-          {fundingCycle.duration.gt(0) ? (
+          {fundingCycle.duration > 0n ? (
             <Trans>{fundingCycle.duration.toString()} days</Trans>
           ) : (
             <FundingCycleDetailWarning
@@ -146,21 +146,20 @@ export default function FundingCycleDetails({
           )}
         </Descriptions.Item>
 
-        {fundingCycle.duration.gt(0) && (
+        {fundingCycle.duration > 0n && (
           <Descriptions.Item label={<Trans>Start</Trans>}>
-            <Tooltip title={formatDateToUTC(fundingCycle.start.mul(1000))}>
+            <Tooltip title={formatDateToUTC(fundingCycle.start * 1000n)}>
               {formattedStartTime}
             </Tooltip>
           </Descriptions.Item>
         )}
 
-        {fundingCycle.duration.gt(0) && (
+        {fundingCycle.duration > 0n && (
           <Descriptions.Item label={<Trans>End</Trans>}>
             <Tooltip
               title={formatDateToUTC(
-                fundingCycle.start
-                  .add(fundingCycle.duration.mul(SECONDS_IN_DAY))
-                  .mul(1000),
+                (fundingCycle.start + fundingCycle.duration * SECONDS_IN_DAY) *
+                  1000n,
               )}
             >
               {formattedEndTime}

@@ -1,28 +1,26 @@
-import { BigNumber, BigNumberish } from 'ethers'
-
-import { isBytes, isHexString } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { parseWad } from './format/formatNumber'
 
-export function isBigNumberish(value: unknown): value is BigNumberish {
+export type BigintIsh = bigint | string | number
+
+export function isBigintIsh(value: unknown): value is BigintIsh {
   return (
     value != null &&
-    (BigNumber.isBigNumber(value) ||
-      (typeof value === 'number' && value % 1 === 0) ||
+    ((typeof value === 'number' && value % 1 === 0) ||
       (typeof value === 'string' && !!value.match(/^-?[0-9]+$/)) ||
-      isHexString(value) ||
+      ethers.isHexString(value) ||
       typeof value === 'bigint' ||
-      isBytes(value))
+      ethers.isBytesLike(value))
   )
 }
 
-export const bigNumbersDiff = (a?: BigNumber, b?: BigNumber) => {
+export const bigintsDiff = (a?: bigint, b?: bigint) => {
   if ((a && !b) || (!a && b)) return true
-
-  return a && b ? !a.eq(b) : false
+  return a !== b
 }
 
-export const betweenZeroAndOne = (amount: BigNumber) => {
-  return amount?.lt(parseWad('1')) && amount.gt(0)
+export const betweenZeroAndOne = (amount: bigint) => {
+  return amount < parseWad('1') && amount > 0n
 }
 
 // permyriad: x/10000
@@ -33,8 +31,8 @@ export const betweenZeroAndOne = (amount: BigNumber) => {
  * @param permyriad
  * @returns
  */
-export const invertPermyriad = (permyriad: BigNumber) => {
-  return BigNumber.from(10000).sub(permyriad)
+export const invertPermyriad = (permyriad: bigint) => {
+  return 10000n - permyriad
 }
 
 /**
@@ -53,4 +51,10 @@ export const unpadLeadingZerosString = (num: string) => {
     break
   }
   return `0x${num}`
+}
+
+export const toHexString = (num: bigint) => {
+  // A hack to allow for undefined values to be passed in.
+  if (num === undefined) return undefined as unknown as string
+  return `0x${num.toString(16)}`
 }

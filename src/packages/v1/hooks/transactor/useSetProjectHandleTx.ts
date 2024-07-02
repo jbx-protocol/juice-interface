@@ -1,12 +1,11 @@
-import { formatBytes32String } from 'ethers/lib/utils'
 import { V1UserContext } from 'packages/v1/contexts/User/V1UserContext'
 import { useContext } from 'react'
 
-import { BigNumber } from 'ethers'
-
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
+import { ethers } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
+import { toHexString } from 'utils/bigNumbers'
 
 export function useSetProjectHandleTx(): TransactorInstance<{
   handle: string
@@ -23,7 +22,7 @@ export function useSetProjectHandleTx(): TransactorInstance<{
     return transactor(
       contracts.Projects,
       'setHandle',
-      [BigNumber.from(projectId).toHexString(), formatBytes32String(handle)],
+      [toHexString(BigInt(projectId)), ethers.encodeBytes32String(handle)],
       {
         ...txOpts,
         title: t`Set handle @${handle}`,

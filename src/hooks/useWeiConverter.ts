@@ -1,7 +1,7 @@
-import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 
 import { CurrencyContext } from 'contexts/CurrencyContext'
+import { ethers } from 'ethers'
 import { CurrencyOption } from 'models/currencyOption'
 import { useContext, useMemo } from 'react'
 
@@ -22,6 +22,6 @@ export default function useWeiConverter<C extends CurrencyOption>({
     if (currency === USD) {
       return converter.usdToWei(amount)
     }
-    return parseEther(amount || '0')
+    return ethers.parseEther(amount || '0')
   }, [USD, amount, converter, currency])
 }

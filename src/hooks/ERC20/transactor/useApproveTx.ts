@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { BigNumber, Contract } from 'ethers'
+import { Contract } from 'ethers'
 import {
   TransactorInstance,
   handleTransactionException,
@@ -11,7 +11,7 @@ import invariant from 'tiny-invariant'
 
 export function useApproveERC20Tx(): TransactorInstance<{
   tokenContract: Contract
-  amountWad: BigNumber
+  amountWad: bigint
   senderAddress: string
 }> {
   const { transactor } = useContext(TransactionContext)

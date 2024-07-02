@@ -1,14 +1,14 @@
-import { BigNumber, BigNumberish } from 'ethers'
 import { V1ContractName } from 'packages/v1/models/contracts'
 import { TicketMod } from 'packages/v1/models/mods'
 import { useMemo } from 'react'
+import { BigintIsh, toHexString } from 'utils/bigNumbers'
 
 import useContractReader from './useContractReader'
 
 /** Returns queued ticket mods for project with `projectId`. `queuedConfigured`: configured property of queued funding cycle. */
 export default function useQueuedTicketModsOfProject(
-  projectId: BigNumberish | undefined,
-  queuedConfigured: BigNumberish | undefined,
+  projectId: BigintIsh | undefined,
+  queuedConfigured: BigintIsh | undefined,
 ) {
   return useContractReader<TicketMod[]>({
     contract: V1ContractName.ModStore,
@@ -16,8 +16,8 @@ export default function useQueuedTicketModsOfProject(
     args:
       projectId && queuedConfigured
         ? [
-            BigNumber.from(projectId).toHexString(),
-            BigNumber.from(queuedConfigured).toHexString(),
+            toHexString(BigInt(projectId)),
+            toHexString(BigInt(queuedConfigured)),
           ]
         : null,
     updateOn: useMemo(
@@ -28,8 +28,8 @@ export default function useQueuedTicketModsOfProject(
                 contract: V1ContractName.ModStore,
                 eventName: 'SetTicketMod',
                 topics: [
-                  BigNumber.from(projectId).toHexString(),
-                  BigNumber.from(queuedConfigured).toHexString(),
+                  toHexString(BigInt(projectId)),
+                  toHexString(BigInt(queuedConfigured)),
                 ],
               },
             ]

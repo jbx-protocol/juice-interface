@@ -1,4 +1,4 @@
-import { getAddress } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useSetOperatorTx } from 'packages/v2v3/hooks/transactor/useSetOperatorTx'
 import { V2V3OperatorPermission } from 'packages/v2v3/models/permissions'
@@ -13,8 +13,9 @@ export function useSetNftOperatorPermissionsTx(): TransactorInstance {
     useJBTiered721DelegateProjectDeployer({ version: JB721DelegateVersion })
 
   return (_, txOpts) => {
-    const operator = getAddress(
-      JBTiered721DelegateProjectDeployer?.address ?? '',
+    const operator = ethers.getAddress(
+      // from ethers v5 to v6 migration: https://github.com/ethers-io/ethers.js/discussions/4312#discussioncomment-8398867
+      (JBTiered721DelegateProjectDeployer?.target as string | undefined) ?? '',
     )
 
     return setOperatorTx(

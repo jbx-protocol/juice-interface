@@ -1,14 +1,13 @@
-import { BigNumber } from 'ethers'
 import { FundingTargetType } from 'models/fundingTargetType'
-import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
+import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { useMemo } from 'react'
 
 export const useFundingTargetType = (
-  fundingTargetAmount: BigNumber | undefined,
+  fundingTargetAmount: bigint | undefined,
 ): FundingTargetType | undefined => {
   return useMemo(() => {
-    if (!fundingTargetAmount || fundingTargetAmount.eq(0)) return undefined
-    if (fundingTargetAmount.eq(MAX_DISTRIBUTION_LIMIT)) return 'infinite'
+    if (!fundingTargetAmount || fundingTargetAmount === 0n) return undefined
+    if (isInfiniteDistributionLimit(fundingTargetAmount)) return 'infinite'
     return 'specific'
   }, [fundingTargetAmount])
 }

@@ -10,9 +10,9 @@ export const useTokenRedemptionCallout = () => {
   const redemptionEnabled = useMemo(() => {
     if (!fundingCycleMetadata) return
     return (
-      fundingCycleMetadata.redemptionRate.gt(0) &&
+      fundingCycleMetadata.redemptionRate > 0n &&
       !fundingCycleMetadata.pauseRedeem &&
-      !distributionLimit?.eq(MAX_DISTRIBUTION_LIMIT)
+      distributionLimit !== MAX_DISTRIBUTION_LIMIT
     )
   }, [distributionLimit, fundingCycleMetadata])
 

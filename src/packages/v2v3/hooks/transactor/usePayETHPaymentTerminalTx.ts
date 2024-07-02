@@ -2,7 +2,6 @@ import { t } from '@lingui/macro'
 import { DEFAULT_MIN_RETURNED_TOKENS } from 'constants/transactionDefaults'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useProjectIsOFACListed } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectIsOFACListed'
 import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
@@ -11,12 +10,12 @@ import { useContext } from 'react'
 import { useV2V3BlockedProject } from '../useBlockedProject'
 import { useV2ProjectTitle } from '../useProjectTitle'
 
-const DEFAULT_DELEGATE_METADATA = 0
+const DEFAULT_DELEGATE_METADATA = '0x00'
 
 type PayV2ProjectTx = TransactorInstance<{
   memo: string
   preferClaimedTokens: boolean
-  value: BigNumber
+  value: bigint
   beneficiary?: string
   delegateMetadata?: string
 }>

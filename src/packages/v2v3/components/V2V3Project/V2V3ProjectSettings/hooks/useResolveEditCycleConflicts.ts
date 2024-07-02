@@ -2,10 +2,7 @@ import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import useProjectQueuedFundingCycle from 'packages/v2v3/hooks/contractReader/useProjectQueuedFundingCycle'
 import { ReconfigureFundingCycleTxParams } from 'packages/v2v3/hooks/transactor/useReconfigureV2V3FundingCycleTx'
-import {
-  V2V3FundingCycleData,
-  V2V3FundingCycleMetadata,
-} from 'packages/v2v3/models/fundingCycle'
+import { V2V3FundingCycleMetadata } from 'packages/v2v3/models/fundingCycle'
 import { useContext } from 'react'
 
 /**
@@ -55,8 +52,7 @@ export const useResolveEditCycleConflicts = () => {
     return (data: ReconfigureFundingCycleTxParams) => data
   }
 
-  const queuedFcData: V2V3FundingCycleData = queuedCycle[0]
-  const queuedFcMetadata: V2V3FundingCycleMetadata = queuedCycle[1]
+  const { fundingCycle: queuedFcData, metadata: queuedFcMetadata } = queuedCycle
 
   return (
     data: ReconfigureFundingCycleTxParams & { launchedNewNfts?: boolean },

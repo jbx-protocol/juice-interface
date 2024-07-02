@@ -5,7 +5,6 @@ import {
   NULL_ALLOCATOR_ADDRESS,
   V1_V3_ALLOCATOR_ADDRESS,
 } from 'constants/contracts/mainnet/Allocators'
-import { BigNumber } from 'ethers'
 import { useState } from 'react'
 
 export function ProjectPayoutFormItem({
@@ -13,7 +12,7 @@ export function ProjectPayoutFormItem({
   initialAllocator,
   onChange,
 }: {
-  initialHandle: string | BigNumber | undefined
+  initialHandle: string | bigint | undefined
   initialAllocator: string | undefined
   onChange: (id: string) => void
 }) {

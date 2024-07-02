@@ -15,7 +15,8 @@ import {
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
 import useMobile from 'hooks/useMobile'
 import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
-import { MAX_DISTRIBUTION_LIMIT, MAX_MINT_RATE } from 'packages/v2v3/utils/math'
+import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
+import { MAX_MINT_RATE } from 'packages/v2v3/utils/math'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
 import { inputMustExistRule } from 'utils/antdRules'
@@ -52,8 +53,8 @@ export const CustomTokenSettings = () => {
 
   const discountRateDisabled = !parseInt(duration)
 
-  const redemptionRateDisabled = distributionLimit?.amount.eq(
-    MAX_DISTRIBUTION_LIMIT,
+  const redemptionRateDisabled = isInfiniteDistributionLimit(
+    distributionLimit?.amount,
   )
 
   const initalMintRateAccessory = (

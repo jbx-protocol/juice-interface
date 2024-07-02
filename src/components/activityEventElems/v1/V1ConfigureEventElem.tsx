@@ -49,7 +49,7 @@ export default function V1ConfigureEventElem({
               {
                 key: t`Duration`,
                 value: detailedTimeString({
-                  timeSeconds: event.duration * SECONDS_IN_DAY,
+                  timeSeconds: event.duration * Number(SECONDS_IN_DAY),
                   fullWords: true,
                 }),
               },

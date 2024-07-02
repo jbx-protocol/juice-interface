@@ -1,16 +1,18 @@
 import { t } from '@lingui/macro'
-import { constants } from 'ethers'
 
 import { BallotStrategy } from 'models/ballot'
 
-import { SECONDS_IN_DAY } from 'constants/numbers'
+import { SECONDS_IN_DAY as SECONDS_IN_DAY_BI } from 'constants/numbers'
+import { ethers } from 'ethers'
+
+const SECONDS_IN_DAY = Number(SECONDS_IN_DAY_BI)
 
 export function ballotStrategies(): BallotStrategy[] {
   return [
     {
       name: t`No deadline`,
       description: t`Edits to upcoming cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner.`,
-      address: constants.AddressZero,
+      address: ethers.ZeroAddress,
       durationSeconds: 0,
     },
     {

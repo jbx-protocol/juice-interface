@@ -3,7 +3,6 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { renderHook } from '@testing-library/react-hooks'
-import { BigNumber } from 'ethers'
 import { parseWad } from 'utils/format/formatNumber'
 import { useFormatConfigurationCyclesSection } from './useFormatConfigurationCyclesSection'
 
@@ -17,24 +16,24 @@ afterAll(() => {
 
 describe('useFormatConfigurationCyclesSection', () => {
   const mockFundingCycle = {
-    start: BigNumber.from(0),
-    duration: BigNumber.from(10000),
+    start: BigInt(0),
+    duration: BigInt(10000),
     ballot: '0x0000000000000000000000000000000000000000',
   }
 
   const mockUpcomingFundingCycle = {
-    duration: BigNumber.from(20000),
+    duration: BigInt(20000),
     ballot: '0x0000000000000000000000000000000000000001',
   }
 
   const mockDistributionLimitAmountCurrency = {
     distributionLimit: parseWad(100),
-    currency: BigNumber.from(1),
+    currency: BigInt(1),
   }
 
   const mockUpcomingDistributionLimitAmountCurrency = {
     distributionLimit: parseWad(200),
-    currency: BigNumber.from(2),
+    currency: BigInt(2),
   }
 
   it('calculates the correct values', () => {

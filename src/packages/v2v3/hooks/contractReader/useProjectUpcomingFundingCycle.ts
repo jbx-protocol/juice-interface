@@ -34,11 +34,11 @@ export function useProjectUpcomingFundingCycle({
   } = useProjectLatestConfiguredFundingCycle({
     projectId,
   })
-  const [
-    latestConfiguredFundingCycle,
-    latestConfiguredFundingCycleMetadata,
-    latestConfiguredFundingCycleBallotState,
-  ] = latestConfiguredFundingCycleResponse ?? []
+  const {
+    fundingCycle: latestConfiguredFundingCycle,
+    metadata: latestConfiguredFundingCycleMetadata,
+    ballotState: latestConfiguredFundingCycleBallotState,
+  } = latestConfiguredFundingCycleResponse ?? {}
   const isLatestConfiguredActive =
     (latestConfiguredFundingCycle &&
       latestConfiguredFundingCycleBallotState === BallotState.active) ||
@@ -53,8 +53,10 @@ export function useProjectUpcomingFundingCycle({
   } = useProjectQueuedFundingCycle({
     projectId: !isLatestConfiguredActive ? projectId : undefined,
   })
-  const [queuedFundingCycle, queuedFundingCycleMetadata] =
-    queuedFundingCycleResponse ?? []
+  const {
+    fundingCycle: queuedFundingCycle,
+    metadata: queuedFundingCycleMetadata,
+  } = queuedFundingCycleResponse ?? {}
 
   const loading =
     queuedFundingCycleLoading || latestConfiguredFundingCycleLoading

@@ -1,9 +1,9 @@
-import { BigNumberish } from 'ethers'
+import { BigintIsh } from '@sushiswap/sdk'
 import { V1ContractName } from 'packages/v1/models/contracts'
 import useContractReader from './useContractReader'
 
 /** Returns address of project owner. */
-export default function useOwnerOfProject(projectId: BigNumberish | undefined) {
+export default function useOwnerOfProject(projectId: BigintIsh | undefined) {
   return useContractReader<string>({
     contract: V1ContractName.Projects,
     functionName: 'ownerOf',

@@ -1,4 +1,3 @@
-import { isAddress } from 'ethers/lib/utils'
 import { PayoutMod } from 'packages/v1/models/mods'
 import { permyriadToPercent } from 'utils/format/formatNumber'
 
@@ -7,6 +6,7 @@ import { isEqualAddress, isZeroAddress } from 'utils/address'
 import { percentToPermyriad } from 'utils/format/formatNumber'
 
 import { t } from '@lingui/macro'
+import { ethers } from 'ethers'
 
 export type ModalMode = 'Add' | 'Edit' | undefined
 
@@ -44,7 +44,7 @@ export function validateEthAddress(
     isEqualAddress(address, mods[editingModIndex ?? 0]?.beneficiary)
   )
     return Promise.resolve()
-  else if (!address || !isAddress(address))
+  else if (!address || !ethers.isAddress(address))
     return Promise.reject(t`An address is required`)
   else if (isZeroAddress(address))
     return Promise.reject(t`Cannot use zero address`)
@@ -62,5 +62,5 @@ export function countDecimalPlaces(value: number | undefined) {
 // Rounds a value down to a certain number of decimal places if given, else takes floor
 export function roundDown(value: number, decimalPlaces: number | undefined) {
   if (!decimalPlaces) return Math.floor(value)
-  return percentToPermyriad(value).toNumber() / 100
+  return Number(percentToPermyriad(value)) / 100
 }

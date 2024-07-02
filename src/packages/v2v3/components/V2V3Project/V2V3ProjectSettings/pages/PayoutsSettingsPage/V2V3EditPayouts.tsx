@@ -39,7 +39,7 @@ export const V2V3EditPayouts = ({
   const {
     payoutSplits: contextPayoutSplits,
     distributionLimit,
-    distributionLimitCurrency: distributionLimitCurrencyBigNumber,
+    distributionLimitCurrency: distributionLimitCurrencybigint,
     handle,
   } = useContext(V2V3ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
@@ -80,8 +80,11 @@ export const V2V3EditPayouts = ({
   }, [distributionLimit])
 
   const distributionLimitCurrency = useMemo(
-    () => distributionLimitCurrencyBigNumber?.toNumber() as V2V3CurrencyOption,
-    [distributionLimitCurrencyBigNumber],
+    () =>
+      distributionLimitCurrencybigint
+        ? (Number(distributionLimitCurrencybigint) as V2V3CurrencyOption)
+        : undefined,
+    [distributionLimitCurrencybigint],
   )
 
   // Load original splits from context into editing splits.

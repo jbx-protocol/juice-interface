@@ -6,7 +6,6 @@ import {
 } from 'constants/transactionDefaults'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
@@ -20,7 +19,7 @@ import invariant from 'tiny-invariant'
 import { useV2ProjectTitle } from '../useProjectTitle'
 
 interface DistributePayoutsTxBaseParams {
-  amount: BigNumber | undefined
+  amount: bigint | undefined
   currency: V2V3CurrencyOption | undefined
 }
 

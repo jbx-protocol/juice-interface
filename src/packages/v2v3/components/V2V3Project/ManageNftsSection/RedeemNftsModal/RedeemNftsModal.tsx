@@ -7,7 +7,6 @@ import { MemoFormInput } from 'components/inputs/MemoFormInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { REDEMPTION_RATE_EXPLANATION } from 'components/strings'
 import TooltipLabel from 'components/TooltipLabel'
-import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { RedeemingNft } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/components/NftRewardsPanel/hooks/useJB721DelegateTokenToNftReward'
 import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
@@ -17,6 +16,7 @@ import { useNftAccountBalance } from 'packages/v2v3/hooks/JB721Delegate/useNftAc
 import { useRedeemTokensTx } from 'packages/v2v3/hooks/transactor/useRedeemTokensTx'
 import { formatRedemptionRate } from 'packages/v2v3/utils/math'
 import { useContext, useState } from 'react'
+import { toHexString } from 'utils/bigNumbers'
 import { encodeJb721DelegateRedeemMetadata } from 'utils/delegateMetadata/encodeJb721DelegateMetadata'
 import { emitErrorNotification } from 'utils/notifications'
 import { RedeemNftCard } from './RedeemNftCard'
@@ -72,8 +72,8 @@ export function RedeemNftsModal({
 
     const txSuccess = await redeemTokensTx(
       {
-        redeemAmount: BigNumber.from(0),
-        minReturnedTokens: BigNumber.from(0),
+        redeemAmount: BigInt(0),
+        minReturnedTokens: BigInt(0),
         memo,
         metadata: encodeJb721DelegateRedeemMetadata(
           tokenIdsToRedeem,
@@ -107,11 +107,11 @@ export function RedeemNftsModal({
 
   const nfts = data?.nfts.map(t => ({
     ...t,
-    tokenId: t.tokenId.toHexString(),
+    tokenId: toHexString(t.tokenId),
   }))
   const nftBalanceFormatted = nfts?.length ?? 0
-  const hasOverflow = primaryTerminalCurrentOverflow?.gt(0)
-  const hasRedemptionRate = fundingCycleMetadata.redemptionRate.gt(0)
+  const hasOverflow = (primaryTerminalCurrentOverflow ?? 0n) > 0n
+  const hasRedemptionRate = fundingCycleMetadata.redemptionRate > 0n
   const canRedeem = hasOverflow && hasRedemptionRate
 
   let modalTitle: string

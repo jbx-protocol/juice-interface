@@ -3,8 +3,8 @@ import { useWatch } from 'antd/lib/form/Form'
 import { ONE_MILLION } from 'constants/numbers'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
+import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import {
-  MAX_DISTRIBUTION_LIMIT,
   discountRateFrom,
   formatDiscountRate,
   formatIssuanceRate,
@@ -20,6 +20,7 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
 import { useEditingReservedTokensSplits } from 'redux/hooks/useEditingReservedTokensSplits'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { toHexString } from 'utils/bigNumbers'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
@@ -57,8 +58,9 @@ export const useProjectTokensForm = () => {
   useDebugValue(form.getFieldsValue())
   const [distributionLimit] = useEditingDistributionLimit()
 
-  const redemptionRateDisabled =
-    !distributionLimit || distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)
+  const redemptionRateDisabled = isInfiniteDistributionLimit(
+    distributionLimit?.amount,
+  )
   const discountRateDisabled = !parseInt(fundingCycleData.duration)
 
   const initialValues: ProjectTokensFormProps | undefined = useMemo(() => {
@@ -149,10 +151,10 @@ export const useProjectTokensForm = () => {
     dispatchFunction: editingV2ProjectActions.setReservedRate,
     formatter: v => {
       if (v === undefined || typeof v !== 'number')
-        return reservedRateFrom(
-          DefaultSettings.reservedTokensPercentage,
-        ).toHexString()
-      return reservedRateFrom(v).toHexString()
+        return toHexString(
+          reservedRateFrom(DefaultSettings.reservedTokensPercentage),
+        )
+      return toHexString(reservedRateFrom(v))
     },
   })
 
@@ -174,8 +176,8 @@ export const useProjectTokensForm = () => {
     dispatchFunction: editingV2ProjectActions.setDiscountRate,
     formatter: v => {
       if (v === undefined || typeof v !== 'number')
-        return discountRateFrom(DefaultSettings.discountRate).toHexString()
-      return discountRateFrom(v).toHexString()
+        return toHexString(discountRateFrom(DefaultSettings.discountRate))
+      return toHexString(discountRateFrom(v))
     },
   })
 
@@ -185,8 +187,8 @@ export const useProjectTokensForm = () => {
     dispatchFunction: editingV2ProjectActions.setRedemptionRate,
     formatter: v => {
       if (v === undefined || typeof v !== 'number')
-        return redemptionRateFrom(DefaultSettings.redemptionRate).toHexString()
-      return redemptionRateFrom(v).toHexString()
+        return toHexString(redemptionRateFrom(DefaultSettings.redemptionRate))
+      return toHexString(redemptionRateFrom(v))
     },
   })
   useFormDispatchWatch({
@@ -195,8 +197,8 @@ export const useProjectTokensForm = () => {
     dispatchFunction: editingV2ProjectActions.setBallotRedemptionRate,
     formatter: v => {
       if (v === undefined || typeof v !== 'number')
-        return redemptionRateFrom(DefaultSettings.redemptionRate).toHexString()
-      return redemptionRateFrom(v).toHexString()
+        return toHexString(redemptionRateFrom(DefaultSettings.redemptionRate))
+      return toHexString(redemptionRateFrom(v))
     },
   })
 

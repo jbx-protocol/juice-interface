@@ -61,7 +61,7 @@ const loadV1Contract = async (
 
   if (!contract) return
 
-  return new Contract(contract.address, contract.abi, signerOrProvider)
+  return new Contract(contract.target, contract.interface, signerOrProvider)
 }
 
 export function useV1ContractLoader() {

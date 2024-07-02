@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { isAddress } from 'ethers/lib/utils'
+import { isAddress } from 'ethers'
 import { resolveAddress } from 'lib/api/ens'
 
 /**

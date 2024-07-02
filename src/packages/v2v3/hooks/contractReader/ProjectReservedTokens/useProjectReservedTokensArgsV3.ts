@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
 import { useContext, useMemo } from 'react'
 
@@ -7,7 +6,7 @@ export function useProjectReservedTokensArgsV3({
   reservedRate,
 }: {
   projectId: number | undefined
-  reservedRate: BigNumber | undefined
+  reservedRate: bigint | undefined
 }) {
   const { contracts } = useContext(V2V3ProjectContractsContext)
 

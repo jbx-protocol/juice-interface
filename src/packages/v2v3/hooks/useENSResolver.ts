@@ -1,4 +1,4 @@
-import { namehash } from 'ethers/lib/utils'
+import { ethers } from 'ethers'
 import { useENSRegistry } from 'hooks/ENS/useRegistry'
 import { useResolver } from 'hooks/ENS/useResolver'
 import useV2ContractReader from './contractReader/useV2ContractReader'
@@ -12,7 +12,7 @@ export function useResolverForENS(ensName: string | undefined) {
   const ENSRegistry = useENSRegistry()
 
   const node = ensName
-    ? namehash(ensName + (ensName.endsWith('.eth') ? '' : '.eth'))
+    ? ethers.namehash(ensName + (ensName.endsWith('.eth') ? '' : '.eth'))
     : undefined
 
   const { data: resolverAddress } = useV2ContractReader<string>({

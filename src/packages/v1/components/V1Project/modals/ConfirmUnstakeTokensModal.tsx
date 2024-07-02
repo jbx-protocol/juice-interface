@@ -43,7 +43,7 @@ export default function ConfirmUnstakeTokensModal({
   function unstake() {
     if (
       !unstakeAmount ||
-      parseWad(unstakeAmount).eq(0) // Disable claiming 0 tokens
+      parseWad(unstakeAmount) === 0n // Disable claiming 0 tokens
     )
       return
 
@@ -69,7 +69,7 @@ export default function ConfirmUnstakeTokensModal({
       onOk={unstake}
       okText={t`Claim ${tokenTextPlural}`}
       confirmLoading={loading}
-      okButtonProps={{ disabled: parseWad(unstakeAmount).eq(0) }}
+      okButtonProps={{ disabled: parseWad(unstakeAmount) === 0n }}
       onCancel={onCancel}
       width={600}
       centered

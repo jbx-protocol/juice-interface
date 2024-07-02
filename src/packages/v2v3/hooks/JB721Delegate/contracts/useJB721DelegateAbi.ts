@@ -1,4 +1,4 @@
-import { ContractInterface } from 'ethers'
+import { ethers } from 'ethers'
 import { ContractJson } from 'models/contracts'
 import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import { useEffect, useState } from 'react'
@@ -45,7 +45,7 @@ export function useJB721DelegateAbi(
   contractName: JB721DelegateContractName,
   version: JB721DelegateVersion | undefined,
 ) {
-  const [abi, setAbi] = useState<ContractInterface | undefined>(undefined)
+  const [abi, setAbi] = useState<ethers.InterfaceAbi | undefined>(undefined)
 
   useEffect(() => {
     if (!version) return

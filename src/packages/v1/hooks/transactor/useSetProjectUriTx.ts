@@ -1,9 +1,9 @@
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { V1UserContext } from 'packages/v1/contexts/User/V1UserContext'
 import { useContext } from 'react'
+import { toHexString } from 'utils/bigNumbers'
 import { useV1ProjectTitle } from '../useProjectTitle'
 
 export function useSetProjectUriTx(): TransactorInstance<{
@@ -23,7 +23,7 @@ export function useSetProjectUriTx(): TransactorInstance<{
     return transactor(
       contracts.Projects,
       'setUri',
-      [BigNumber.from(projectId).toHexString(), cid],
+      [toHexString(BigInt(projectId)), cid],
       {
         ...txOpts,
         title: t`Set URI for ${projectTitle}`,

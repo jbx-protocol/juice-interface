@@ -1,14 +1,13 @@
 import { Trans } from '@lingui/macro'
 import type { MetaMaskInpageProvider } from '@metamask/providers'
 import { Button } from 'antd'
-import { providers } from 'ethers'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 declare global {
   interface Window {
-    ethereum?: providers.ExternalProvider
+    ethereum?: MetaMaskInpageProvider
   }
 }
 

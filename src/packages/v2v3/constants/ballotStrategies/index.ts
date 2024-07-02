@@ -1,12 +1,11 @@
 import { plural, t } from '@lingui/macro'
+import { CV_V2 } from 'constants/cv'
 import { readNetwork } from 'constants/networks'
 import { SECONDS_IN_DAY } from 'constants/numbers'
-import { constants } from 'ethers'
-import { CV2V3 } from 'packages/v2v3/models/cv'
-
-import { CV_V2 } from 'constants/cv'
+import { ethers } from 'ethers'
 import { NetworkName } from 'models/networkName'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
+import { CV2V3 } from 'packages/v2v3/models/cv'
 
 type BallotOption = Record<
   'ONE_DAY' | 'THREE_DAY' | 'SEVEN_DAY',
@@ -16,7 +15,7 @@ type BallotOption = Record<
 const V2_BALLOT_ADDRESSES: BallotOption = {
   ONE_DAY: {
     // No 1 day delay contract deployed with V2
-    mainnet: constants.AddressZero,
+    mainnet: ethers.ZeroAddress,
   },
   THREE_DAY: {
     mainnet: '0x4b9f876c7Fc5f6DEF8991fDe639b2C812a85Fb12',
@@ -71,7 +70,7 @@ export function ballotStrategiesFn({
       id: 'none',
       name: t`No deadline`,
       description: t`Edits to upcoming cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner.`,
-      address: constants.AddressZero,
+      address: ethers.ZeroAddress,
       durationSeconds: 0,
     },
   ]
@@ -82,14 +81,14 @@ export function ballotStrategiesFn({
         name: t`V2 3-day deadline`,
         description: durationBallotStrategyDescription(3),
         address: V2_BALLOT_ADDRESSES.THREE_DAY[network ?? readNetwork.name]!,
-        durationSeconds: SECONDS_IN_DAY * 3,
+        durationSeconds: Number(SECONDS_IN_DAY) * 3,
       },
       {
         id: 'sevenDayV2',
         name: t`V2 7-day deadline`,
         description: durationBallotStrategyDescription(7),
         address: V2_BALLOT_ADDRESSES.SEVEN_DAY[network ?? readNetwork.name]!,
-        durationSeconds: SECONDS_IN_DAY * 7,
+        durationSeconds: Number(SECONDS_IN_DAY) * 7,
       },
     )
   } else {
@@ -99,21 +98,21 @@ export function ballotStrategiesFn({
         name: t`1-day deadline`,
         description: durationBallotStrategyDescription(1),
         address: BALLOT_ADDRESSES.ONE_DAY[network ?? readNetwork.name]!,
-        durationSeconds: SECONDS_IN_DAY,
+        durationSeconds: Number(SECONDS_IN_DAY),
       },
       {
         id: 'threeDay',
         name: t`3-day deadline`,
         description: durationBallotStrategyDescription(3),
         address: BALLOT_ADDRESSES.THREE_DAY[network ?? readNetwork.name]!,
-        durationSeconds: SECONDS_IN_DAY * 3,
+        durationSeconds: Number(SECONDS_IN_DAY) * 3,
       },
       {
         id: 'sevenDay',
         name: t`7-day deadline`,
         description: durationBallotStrategyDescription(7),
         address: BALLOT_ADDRESSES.SEVEN_DAY[network ?? readNetwork.name]!,
-        durationSeconds: SECONDS_IN_DAY * 7,
+        durationSeconds: Number(SECONDS_IN_DAY) * 7,
       },
     )
   }

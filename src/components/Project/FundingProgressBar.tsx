@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { Progress, Tooltip } from 'antd'
 import { JUICE_ORANGE } from 'constants/theme/colors'
-import { BigNumber } from 'ethers'
 import { useMemo, useState } from 'react'
 import { fracDiv } from 'utils/format/formatNumber'
 
@@ -75,9 +74,9 @@ export default function FundingProgressBar({
   balanceInTargetCurrency,
   overflowAmountInTargetCurrency,
 }: {
-  targetAmount: BigNumber
-  balanceInTargetCurrency: BigNumber | undefined
-  overflowAmountInTargetCurrency: BigNumber | undefined
+  targetAmount: bigint
+  balanceInTargetCurrency: bigint | undefined
+  overflowAmountInTargetCurrency: bigint | undefined
 }) {
   const percentPaid = useMemo(
     () =>
@@ -92,16 +91,19 @@ export default function FundingProgressBar({
   const percentOverflow = useMemo(
     () =>
       fracDiv(
-        (
-          overflowAmountInTargetCurrency?.sub(targetAmount ?? 0) ?? 0
+        (overflowAmountInTargetCurrency
+          ? overflowAmountInTargetCurrency - (targetAmount ?? 0)
+          : 0
         ).toString(),
         (targetAmount ?? 0).toString(),
       ),
     [overflowAmountInTargetCurrency, targetAmount],
   )
 
-  const hasTargetAmount = targetAmount.gt(0)
-  const hasOverFlow = overflowAmountInTargetCurrency?.gt(0) ?? false
+  const hasTargetAmount = targetAmount > 0n
+  const hasOverFlow =
+    (overflowAmountInTargetCurrency && overflowAmountInTargetCurrency > 0n) ??
+    false
 
   if (!hasTargetAmount || !hasOverFlow) {
     return <ProgressNoOverflow percentPaid={percentPaid} />

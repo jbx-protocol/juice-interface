@@ -56,7 +56,7 @@ export default function ProjectReserved({
       </Trans>
     </FormItemWarningText>
   )
-  const effectiveIssuanceRate = issuanceRate ?? DEFAULT_MINT_RATE
+  const effectiveIssuanceRate = issuanceRate ?? Number(DEFAULT_MINT_RATE)
 
   // Reserved tokens received by project per ETH
   const initialReservedTokensPerEth =

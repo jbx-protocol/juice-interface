@@ -1,7 +1,5 @@
 import { Form } from 'antd'
 
-import { BigNumber } from 'ethers'
-
 import { Trans } from '@lingui/macro'
 
 import { DISTRIBUTION_LIMIT_EXPLANATION } from 'components/strings'
@@ -28,7 +26,7 @@ export default function ProjectTarget({
   currency: CurrencyName
   onCurrencyChange: (val: CurrencyName) => void
   disabled?: boolean
-  feePerbicent?: BigNumber
+  feePerbicent?: bigint
 } & FormItemExt) {
   return (
     <Form.Item

@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import useV2ContractReader from 'packages/v2v3/hooks/contractReader/useV2ContractReader'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
@@ -13,7 +12,7 @@ export function useNftCollectionPricingContext() {
     contracts: { JB721TieredDelegate },
   } = useContext(JB721DelegateContractsContext)
 
-  const response = useV2ContractReader<[BigNumber, BigNumber, string]>({
+  const response = useV2ContractReader<[bigint, bigint, string]>({
     contract: JB721TieredDelegate,
     functionName: 'pricingContext',
   })
@@ -25,7 +24,7 @@ export function useNftCollectionPricingContext() {
   return {
     ...response,
     data: {
-      currency: currency?.toNumber(),
+      currency: currency ? Number(currency) : undefined,
     } as NftPricingContext,
   }
 }

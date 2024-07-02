@@ -2,7 +2,6 @@ import { Trans } from '@lingui/macro'
 import CurrencySymbol from 'components/currency/CurrencySymbol'
 import ETHAmount from 'components/currency/ETHAmount'
 import { CurrencyName } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useMemo } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
@@ -12,7 +11,7 @@ export const VolumeStatLine = ({
   totalVolume,
   convertToCurrency,
 }: {
-  totalVolume: BigNumber | undefined
+  totalVolume: bigint | undefined
   convertToCurrency?: CurrencyName
 }) => {
   const converter = useCurrencyConverter()
@@ -42,10 +41,7 @@ export const VolumeStatLine = ({
             </span>
           ) : null}
           <span className="text-black dark:text-slate-100">
-            <ETHAmount
-              amount={totalVolume ?? BigNumber.from(0)}
-              precision={2}
-            />
+            <ETHAmount amount={totalVolume ?? BigInt(0)} precision={2} />
           </span>
         </span>
       }

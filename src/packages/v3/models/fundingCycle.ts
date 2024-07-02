@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import {
   BaseV2V3FundingCycleMetadata,
   BaseV2V3FundingCycleMetadataGlobal,
@@ -12,5 +11,5 @@ export type BaseV3FundingCycleMetadataGlobal =
 export type V3FundingCycleMetadata = BaseV2V3FundingCycleMetadata & {
   global: BaseV3FundingCycleMetadataGlobal
   preferClaimedTokenOverride?: boolean
-  metadata?: BigNumber
+  metadata?: bigint
 }

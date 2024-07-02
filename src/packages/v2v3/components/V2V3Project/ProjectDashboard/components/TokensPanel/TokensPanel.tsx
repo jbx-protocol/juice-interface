@@ -95,7 +95,9 @@ export const TokensPanel = () => {
             />
           )}
 
-          {projectHasLegacyTokens && userLegacyTokenBalance?.gt(0) ? (
+          {projectHasLegacyTokens &&
+          !!userLegacyTokenBalance &&
+          userLegacyTokenBalance > 0n ? (
             <TitleDescriptionDisplayCard
               className="mt-4 flex flex-col items-center gap-5 md:flex-row"
               title={t`Your legacy balance`}

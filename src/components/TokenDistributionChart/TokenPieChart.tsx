@@ -1,6 +1,5 @@
 import EthereumAddress from 'components/EthereumAddress'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { BigNumber } from 'ethers'
 import { ParticipantsQuery } from 'generated/graphql'
 import tailwind from 'lib/tailwind'
 import { useContext, useEffect, useMemo, useState } from 'react'
@@ -19,7 +18,7 @@ export default function TokenPieChart({
   participants,
   size,
 }: {
-  tokenSupply: BigNumber | undefined
+  tokenSupply: bigint | undefined
   participants: ParticipantsQuery['participants'] | undefined
   size: number
 }) {
@@ -51,8 +50,8 @@ export default function TokenPieChart({
     if (remainderWallets.length) {
       // Calculate total tokens held by remainder participants
       const remainderBalance = remainderWallets.reduce(
-        (acc, curr) => acc.add(curr.balance),
-        BigNumber.from(0),
+        (acc, curr) => acc + curr.balance,
+        BigInt(0),
       )
 
       _chartData.push({

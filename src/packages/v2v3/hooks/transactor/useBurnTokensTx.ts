@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { BigNumber } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,
@@ -15,7 +14,7 @@ import invariant from 'tiny-invariant'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useBurnTokensTx(): TransactorInstance<{
-  burnAmount: BigNumber
+  burnAmount: bigint
   memo: string
   preferClaimedTokens?: boolean
 }> {

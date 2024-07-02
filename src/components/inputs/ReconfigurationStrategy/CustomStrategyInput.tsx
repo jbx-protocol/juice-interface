@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Form, Input } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { constants } from 'ethers'
+import { ethers } from 'ethers'
 
 import { useWallet } from 'hooks/Wallet'
 import { FormItemInput } from 'models/formItemInput'
@@ -34,7 +34,7 @@ export const CustomStrategyInput: React.FC<
         <Input
           className="font-normal"
           value={value}
-          placeholder={constants.AddressZero}
+          placeholder={ethers.ZeroAddress}
           onChange={e => onChange?.(e.target.value.toLowerCase())}
           onClick={onClick}
         />

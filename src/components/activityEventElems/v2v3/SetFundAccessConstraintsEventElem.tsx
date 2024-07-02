@@ -1,11 +1,10 @@
 import { t } from '@lingui/macro'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
+import { PV_V2 } from 'constants/pv'
 import { ProjectEventsQuery } from 'generated/graphql'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
-import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
-
-import { PV_V2 } from 'constants/pv'
+import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { ActivityEvent } from '../ActivityElement/ActivityElement'
 
 export default function SetFundAccessConstraintsEventElem({
@@ -25,7 +24,7 @@ export default function SetFundAccessConstraintsEventElem({
       header={t`Edited payout`}
       subject={
         <div className="font-heading text-lg">
-          {event.distributionLimit.eq(MAX_DISTRIBUTION_LIMIT) ? (
+          {isInfiniteDistributionLimit(event.distributionLimit) ? (
             t`Unlimited`
           ) : (
             <AmountInCurrency

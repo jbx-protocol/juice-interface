@@ -1,5 +1,4 @@
 import { DEFAULT_MEMO, DEFAULT_METADATA } from 'constants/transactionDefaults'
-import { BigNumber } from 'ethers'
 import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
 
 export function getAddToBalanceArgsV3({
@@ -7,7 +6,7 @@ export function getAddToBalanceArgsV3({
   value,
 }: {
   projectId: number
-  value: BigNumber
+  value: bigint
 }) {
   return {
     functionName: 'addToBalanceOf',

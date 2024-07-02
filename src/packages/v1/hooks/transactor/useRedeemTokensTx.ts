@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro'
-import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 import { V1UserContext } from 'packages/v1/contexts/User/V1UserContext'
@@ -7,11 +6,12 @@ import { useContext } from 'react'
 
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactorInstance } from 'hooks/useTransactor'
+import { toHexString } from 'utils/bigNumbers'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export function useRedeemTokensTx(): TransactorInstance<{
-  redeemAmount: BigNumber
-  minAmount: BigNumber
+  redeemAmount: bigint
+  minAmount: bigint
   preferConverted: boolean
 }> {
   const { transactor, contracts } = useContext(V1UserContext)
@@ -39,9 +39,9 @@ export function useRedeemTokensTx(): TransactorInstance<{
       'redeem',
       [
         userAddress,
-        BigNumber.from(projectId).toHexString(),
-        redeemAmount.toHexString(),
-        minAmount.toHexString(),
+        toHexString(BigInt(projectId)),
+        toHexString(redeemAmount),
+        toHexString(minAmount),
         userAddress,
         preferConverted,
       ],

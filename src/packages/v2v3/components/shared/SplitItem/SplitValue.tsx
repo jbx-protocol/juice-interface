@@ -7,7 +7,9 @@ export function SplitValue({ splitProps }: { splitProps: SplitProps }) {
   return (
     <div className="text-primary flex items-center">
       <SplitPercentValue percent={splitProps.split.percent} />
-      {splitProps.showAmount && splitProps.totalValue?.gt(0) ? (
+      {splitProps.showAmount &&
+      splitProps.totalValue &&
+      splitProps.totalValue > 0n ? (
         <div className="ml-2 flex items-center">
           <Parenthesis>
             <SplitAmountValue props={splitProps} />

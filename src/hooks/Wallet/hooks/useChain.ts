@@ -1,5 +1,4 @@
 import { useSetChain } from '@web3-onboard/react'
-import { BigNumber } from 'ethers'
 import { useMemo } from 'react'
 
 export function useChain() {
@@ -10,7 +9,7 @@ export function useChain() {
         ? {
             id: connectedChain.id,
             name:
-              chains.find(c => BigNumber.from(c.id).eq(connectedChain.id))
+              chains.find(c => BigInt(c.id) === BigInt(connectedChain.id))
                 ?.label ?? 'Unknown',
           }
         : undefined,

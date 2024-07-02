@@ -10,7 +10,7 @@ import { fromWad } from 'utils/format/formatNumber'
 import { SectionContainer } from './SectionContainer'
 import illustration from '/public/assets/images/about/illustration1.webp'
 
-const PROGRESS_MAX_AMOUNT = ONE_BILLION
+const PROGRESS_MAX_AMOUNT = Number(ONE_BILLION)
 
 export const OurMissionSection = () => {
   const { data } = useProtocolLogQuery({

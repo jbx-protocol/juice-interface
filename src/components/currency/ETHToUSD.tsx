@@ -1,5 +1,4 @@
 import { LoadingOutlined } from '@ant-design/icons'
-import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { formatWad } from 'utils/format/formatNumber'
 
@@ -9,7 +8,7 @@ import CurrencySymbol from './CurrencySymbol'
 export default function ETHToUSD({
   ethAmount,
 }: {
-  ethAmount: BigNumber | string
+  ethAmount: bigint | string
 }) {
   const converter = useCurrencyConverter()
   const usdAmount = converter.wadToCurrency(ethAmount, 'USD', 'ETH')
@@ -18,7 +17,7 @@ export default function ETHToUSD({
     padEnd: true,
   })
 
-  if (usdAmount?.eq(0)) {
+  if (usdAmount === 0n) {
     return (
       <span>
         <CurrencySymbol currency="USD" />0
@@ -26,7 +25,7 @@ export default function ETHToUSD({
     )
   }
 
-  if (usdAmount?.gt(0)) {
+  if (usdAmount && usdAmount > 0n) {
     return (
       <span>
         <CurrencySymbol currency="USD" />

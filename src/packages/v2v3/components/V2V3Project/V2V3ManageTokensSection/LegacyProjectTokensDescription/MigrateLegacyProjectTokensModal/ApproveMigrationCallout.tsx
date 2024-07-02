@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { Callout } from 'components/Callout/Callout'
-import { BigNumber } from 'ethers'
 import { useApproveERC20Tx } from 'hooks/ERC20/transactor/useApproveTx'
 import { useErc20Contract } from 'hooks/ERC20/useErc20Contract'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
@@ -14,7 +13,7 @@ export function ApproveMigrationCallout({
   version,
   onDone,
 }: {
-  approveAmount: BigNumber
+  approveAmount: bigint
   legacyTokenContractAddress: string | undefined
   version: '1' | '2'
   onDone: VoidFunction

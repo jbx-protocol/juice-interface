@@ -1,23 +1,28 @@
 import { t } from '@lingui/macro'
-import { BigNumber, BigNumberish } from 'ethers'
 
 import {
   DurationOption,
   durationOptions,
 } from 'components/inputs/DurationInput'
-import { SECONDS_IN_DAY, SECONDS_IN_HOUR } from 'constants/numbers'
+import {
+  SECONDS_IN_DAY as SECONDS_IN_DAY_BI,
+  SECONDS_IN_HOUR,
+} from 'constants/numbers'
 import { DurationUnitsOption } from 'models/time'
+import { BigintIsh } from 'utils/bigNumbers'
+
+const SECONDS_IN_DAY = Number(SECONDS_IN_DAY_BI)
 
 export function detailedTimeString({
   timeSeconds,
   roundToMinutes,
   fullWords,
 }: {
-  timeSeconds?: BigNumberish
+  timeSeconds?: BigintIsh
   roundToMinutes?: boolean
   fullWords?: boolean
 }) {
-  const timeSecondsNumber = BigNumber.from(timeSeconds).toNumber()
+  const timeSecondsNumber = Number(timeSeconds)
 
   const days = Math.floor(timeSecondsNumber / 60 / 60 / 24)
   const hours = (timeSecondsNumber / 60 / 60) % 24
@@ -45,12 +50,13 @@ export function detailedTimeString({
   return `${daysText}${hoursText}${minutesText}${secondsText}`.trimEnd() || '--'
 }
 
-export function secondsUntil(timeSeconds?: BigNumberish) {
+export function secondsUntil(timeSeconds?: BigintIsh) {
   const nowSeconds = Math.floor(Date.now().valueOf() / 1000)
-  return BigNumber.from(timeSeconds).sub(Math.floor(nowSeconds)).toNumber()
+  if (timeSeconds === undefined) return 0
+  return Number(timeSeconds) - Math.floor(nowSeconds)
 }
 
-export function detailedTimeUntil(endTimeSeconds?: BigNumberish) {
+export function detailedTimeUntil(endTimeSeconds?: BigintIsh) {
   const secondsLeft = secondsUntil(endTimeSeconds)
   return detailedTimeString({
     timeSeconds: secondsLeft,
@@ -108,7 +114,7 @@ export const deriveDurationUnit = (
     return 'seconds'
   } else if (durationSeconds < SECONDS_IN_HOUR) {
     return 'minutes'
-  } else if (durationSeconds < SECONDS_IN_DAY * 3) {
+  } else if (durationSeconds < Number(SECONDS_IN_DAY) * 3) {
     return 'hours'
   }
   return 'days'
@@ -125,9 +131,9 @@ export const deriveDurationOption = (
   )
 }
 
-export const formatTime = (timestamp: BigNumber | undefined) => {
+export const formatTime = (timestamp: bigint | undefined) => {
   if (timestamp === undefined) return undefined
-  const timeDate = new Date(timestamp.toNumber() * 1000)
+  const timeDate = new Date(Number(timestamp) * 1000)
   const isoDateString = timeDate.toISOString().split('T')[0]
   const formatOptions: Intl.DateTimeFormatOptions = {
     weekday: 'long',

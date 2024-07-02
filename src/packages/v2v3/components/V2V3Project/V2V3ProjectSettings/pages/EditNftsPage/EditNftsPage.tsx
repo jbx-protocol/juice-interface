@@ -1,5 +1,5 @@
-import * as constants from '@ethersproject/constants'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
+import { ethers } from 'ethers'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useNftDeployerCanReconfigure } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftDeployerCanReconfigure'
 import { useContext } from 'react'
@@ -13,7 +13,7 @@ export function EditNftsPage() {
     useContext(V2V3ProjectContext)
   const hasExistingNfts =
     fundingCycleMetadata?.dataSource &&
-    fundingCycleMetadata.dataSource !== constants.AddressZero
+    fundingCycleMetadata.dataSource !== ethers.ZeroAddress
   const nftDeployerCanReconfigure = useNftDeployerCanReconfigure({
     projectId,
     projectOwnerAddress,

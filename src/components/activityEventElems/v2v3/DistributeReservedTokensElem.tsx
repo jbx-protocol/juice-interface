@@ -84,7 +84,7 @@ export default function DistributeReservedTokensEventElem({
             </div>
           ))}
 
-          {event.beneficiaryTokenCount?.gt(0) && (
+          {event.beneficiaryTokenCount > 0n && (
             <div className="flex items-baseline justify-between">
               <div>
                 <EthereumAddress

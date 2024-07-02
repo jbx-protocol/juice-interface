@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { useContext } from 'react'
 import useV2ContractReader from './useV2ContractReader'
@@ -14,10 +13,10 @@ export function useRedemptionWeightOfNfts({
     contracts: { JB721TieredDelegateStore },
   } = useContext(JB721DelegateContractsContext)
 
-  const _tokenIds = tokenIdsToRedeem?.map(idString => BigNumber.from(idString))
+  const _tokenIds = tokenIdsToRedeem?.map(idString => BigInt(idString))
   const args =
     dataSourceAddress && _tokenIds ? [dataSourceAddress, _tokenIds] : null
-  return useV2ContractReader<BigNumber>({
+  return useV2ContractReader<bigint>({
     contract: JB721TieredDelegateStore,
     functionName: 'redemptionWeightOf',
     args,

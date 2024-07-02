@@ -5,7 +5,6 @@ import {
   RECONFIG_RULES_EXPLANATION,
 } from 'components/strings'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
-import { BigNumber } from 'ethers'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import {
@@ -31,8 +30,8 @@ export function FundingCycleListItems({
 }: {
   fundingCycle: V2V3FundingCycle
   fundingCycleMetadata: V2V3FundingCycleMetadata
-  distributionLimit: BigNumber | undefined
-  distributionLimitCurrency: BigNumber | undefined
+  distributionLimit: bigint | undefined
+  distributionLimitCurrency: bigint | undefined
   showDiffs?: boolean
 }) {
   const {
@@ -42,35 +41,42 @@ export function FundingCycleListItems({
   } = useContext(V2V3ProjectContext)
 
   const formattedStartTime = fundingCycle.start
-    ? formatDate(fundingCycle.start.mul(1000))
+    ? formatDate(fundingCycle.start * 1000n)
     : undefined
 
   // show start if `start` is later than now
   const showStart = fundingCycle.start
-    ? fundingCycle.start.mul(1000).gt(BigNumber.from(Date.now()))
+    ? fundingCycle.start * 1000n > BigInt(Date.now())
     : false
 
-  const formattedEndTime = showStart
-    ? formatDate(fundingCycle.start?.add(fundingCycle.duration).mul(1000))
-    : undefined
+  const formattedEndTime =
+    showStart && fundingCycle.start
+      ? formatDate((fundingCycle.start + fundingCycle.duration) * 1000n)
+      : undefined
 
   const currency = V2V3CurrencyName(
-    distributionLimitCurrency?.toNumber() as V2V3CurrencyOption | undefined,
+    distributionLimitCurrency
+      ? (Number(distributionLimitCurrency) as V2V3CurrencyOption)
+      : undefined,
   )
   const oldCurrency = showDiffs
     ? V2V3CurrencyName(
-        oldDistributionLimitCurrency?.toNumber() as
-          | V2V3CurrencyOption
-          | undefined,
+        oldDistributionLimitCurrency
+          ? (Number(oldDistributionLimitCurrency) as V2V3CurrencyOption)
+          : undefined,
       )
     : undefined
 
   const durationHasDiff =
-    oldFundingCycle && !fundingCycle.duration.eq(oldFundingCycle.duration)
+    oldFundingCycle && fundingCycle.duration !== oldFundingCycle.duration
   const distributionLimitHasDiff =
-    (oldDistributionLimit && !distributionLimit?.eq(oldDistributionLimit)) ||
+    (oldDistributionLimit &&
+      !(distributionLimit && distributionLimit === oldDistributionLimit)) ||
     (oldDistributionLimitCurrency &&
-      !distributionLimitCurrency?.eq(oldDistributionLimitCurrency))
+      !(
+        distributionLimitCurrency &&
+        distributionLimitCurrency === oldDistributionLimitCurrency
+      ))
 
   const ballotStrategy = getBallotStrategyByAddress(fundingCycle.ballot)
   const oldBallotStrategy = oldFundingCycle
@@ -97,19 +103,19 @@ export function FundingCycleListItems({
         <FundingCycleListItem
           name={t`Start`}
           value={
-            <Tooltip title={formatDateToUTC(fundingCycle.start.mul(1000))}>
+            <Tooltip title={formatDateToUTC(fundingCycle.start * 1000n)}>
               {formattedStartTime}
             </Tooltip>
           }
         />
       ) : null}
-      {fundingCycle.duration.gt(0) && formattedEndTime ? (
+      {fundingCycle.duration > 0n && formattedEndTime ? (
         <FundingCycleListItem
           name={t`End`}
           value={
             <Tooltip
               title={formatDateToUTC(
-                fundingCycle.start.add(fundingCycle.duration).mul(1000),
+                (fundingCycle.start + fundingCycle.duration) * 1000n,
               )}
             >
               {formattedEndTime}

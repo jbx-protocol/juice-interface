@@ -1,17 +1,16 @@
-import { BigNumber } from 'ethers'
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
+import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 
 export const determineAvailablePayoutsSelections = (
-  distributionLimit: BigNumber | undefined,
+  distributionLimit: bigint | undefined,
 ): Set<PayoutsSelection> => {
   if (!distributionLimit) {
     return new Set()
   }
-  if (distributionLimit.eq(0)) {
+  if (distributionLimit === 0n) {
     return new Set(['amounts'])
   }
-  if (distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)) {
+  if (isInfiniteDistributionLimit(distributionLimit)) {
     return new Set(['percentages'])
   }
   return new Set(['amounts', 'percentages'])

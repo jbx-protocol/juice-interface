@@ -106,9 +106,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-      - uses: supabase/setup-cli@v1
-        with:
-          version: 1.38.7
+      - uses: supabase/setup-cli@v1.3.0
 
       - name: Start Supabase local development setup
         run: supabase start

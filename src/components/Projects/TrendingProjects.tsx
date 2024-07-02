@@ -1,7 +1,7 @@
 import { InfoCircleOutlined } from '@ant-design/icons'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
-import { useTrendingProjects } from 'hooks/useProjects'
+import { useTrendingProjects } from 'hooks/useDBProjects'
 
 import { useWallet } from 'hooks/Wallet'
 import { useWalletBookmarkedIds } from 'hooks/useWalletBookmarkedProjects'

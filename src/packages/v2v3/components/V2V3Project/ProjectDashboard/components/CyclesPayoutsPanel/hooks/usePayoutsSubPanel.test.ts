@@ -14,7 +14,7 @@ import { usePayoutsSubPanel } from './usePayoutsSubPanel'
 jest.mock(
   'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext',
 )
-jest.mock('contexts/shared/ProjectMetadataContext')
+jest.mock('contexts/ProjectMetadataContext')
 
 describe('usePayoutsSubPanel', () => {
   const DefaultProjectContext = {

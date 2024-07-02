@@ -9,8 +9,8 @@ import { useCurrentUpcomingSubPanel } from './useCurrentUpcomingSubPanel'
 jest.mock(
   'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext',
 )
-jest.mock('contexts/shared/ProjectMetadataContext')
-jest.mock('hooks/v2v3/contractReader/useProjectUpcomingFundingCycle')
+jest.mock('contexts/ProjectMetadataContext')
+jest.mock('packages/v2v3/hooks/contractReader/useProjectUpcomingFundingCycle')
 
 const mockUseProjectContext = useProjectContext as jest.MockedFunction<
   typeof useProjectContext

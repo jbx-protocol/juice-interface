@@ -15,18 +15,21 @@ jest.mock(
   }),
 )
 
-jest.mock('contexts/shared/ProjectMetadataContext', () => ({
+jest.mock('contexts/ProjectMetadataContext', () => ({
   useProjectMetadataContext: () => ({
     projectId: 'mockProjectId',
   }),
 }))
 
-jest.mock('hooks/v2v3/contractReader/useProjectUpcomingFundingCycle', () => ({
-  __esModule: true,
-  useProjectUpcomingFundingCycle: () => ({
-    data: ['mockUpcomingFundingCycle', 'mockUpcomingFundingCycleMetadata'],
+jest.mock(
+  'packages/v2v3/hooks/contractReader/useProjectUpcomingFundingCycle',
+  () => ({
+    __esModule: true,
+    useProjectUpcomingFundingCycle: () => ({
+      data: ['mockUpcomingFundingCycle', 'mockUpcomingFundingCycleMetadata'],
+    }),
   }),
-}))
+)
 
 jest.mock('./useFormatConfigurationOtherRulesSection', () => ({
   __esModule: true,

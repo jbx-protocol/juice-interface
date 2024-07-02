@@ -15,18 +15,21 @@ jest.mock(
     }),
   }),
 )
-jest.mock('contexts/shared/ProjectMetadataContext', () => ({
+jest.mock('contexts/ProjectMetadataContext', () => ({
   useProjectMetadataContext: () => ({
     projectId: 'mockProjectId',
   }),
 }))
 
-jest.mock('hooks/v2v3/contractReader/useProjectDistributionLimit', () => ({
-  __esModule: true,
-  default: () => ({
-    data: ['mockDistributionLimit', 'mockDistributionLimitCurrency'],
+jest.mock(
+  'packages/v2v3/hooks/contractReader/useProjectDistributionLimit',
+  () => ({
+    __esModule: true,
+    default: () => ({
+      data: ['mockDistributionLimit', 'mockDistributionLimitCurrency'],
+    }),
   }),
-}))
+)
 
 jest.mock('./useFormatConfigurationCyclesSection', () => ({
   __esModule: true,

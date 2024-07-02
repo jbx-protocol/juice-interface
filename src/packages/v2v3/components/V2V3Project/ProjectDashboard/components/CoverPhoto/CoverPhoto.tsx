@@ -1,5 +1,5 @@
 import { useCoverPhoto } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useCoverPhoto'
-// import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+// import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'

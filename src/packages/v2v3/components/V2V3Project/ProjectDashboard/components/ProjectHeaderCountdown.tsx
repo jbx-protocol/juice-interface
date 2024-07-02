@@ -1,4 +1,4 @@
-// import { useProjectMetadataContext } from 'contexts/shared/ProjectMetadataContext'
+// import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { ReactNode, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useFundingCycleCountdown } from '../hooks/useFundingCycleCountdown'

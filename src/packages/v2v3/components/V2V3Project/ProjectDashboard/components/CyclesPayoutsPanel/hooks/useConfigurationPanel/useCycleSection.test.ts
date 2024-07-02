@@ -13,9 +13,9 @@ import { useFormatConfigurationCyclesSection } from './useFormatConfigurationCyc
 jest.mock(
   'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext',
 )
-jest.mock('contexts/shared/ProjectMetadataContext')
-jest.mock('hooks/v2v3/contractReader/useProjectDistributionLimit')
-jest.mock('hooks/v2v3/contractReader/useProjectUpcomingFundingCycle')
+jest.mock('contexts/ProjectMetadataContext')
+jest.mock('packages/v2v3/hooks/contractReader/useProjectDistributionLimit')
+jest.mock('packages/v2v3/hooks/contractReader/useProjectUpcomingFundingCycle')
 jest.mock('./useFormatConfigurationCyclesSection')
 
 describe('useCycleSection', () => {

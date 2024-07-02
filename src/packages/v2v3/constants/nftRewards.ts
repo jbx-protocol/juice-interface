@@ -1,4 +1,4 @@
-import { ONE_BILLION } from './numbers'
+import { ONE_BILLION } from 'constants/numbers'
 
 export const MAX_NFT_REWARD_TIERS = 69
 

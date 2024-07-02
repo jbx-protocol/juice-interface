@@ -1,7 +1,6 @@
-import { projectHandleENSTextRecordKey } from 'constants/projectHandleENSTextRecordKey'
 import { namehash } from 'ethers/lib/utils'
+import { projectHandleENSTextRecordKey } from 'packages/v2v3/constants/projectHandleENSTextRecordKey'
 import { useCallback, useMemo } from 'react'
-
 import { useResolverForENS } from '../useENSResolver'
 import useV2ContractReader from './useV2ContractReader'
 

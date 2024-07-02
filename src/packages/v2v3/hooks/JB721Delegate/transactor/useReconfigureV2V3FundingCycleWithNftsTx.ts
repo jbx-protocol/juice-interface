@@ -13,6 +13,8 @@ import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3Contr
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
 import { useJBPrices } from 'packages/v2v3/hooks/JBPrices'
+import { ReconfigureFundingCycleTxParams } from 'packages/v2v3/hooks/transactor/useReconfigureV2V3FundingCycleTx'
+import { useV2ProjectTitle } from 'packages/v2v3/hooks/useProjectTitle'
 import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import {
   JBPayDataSourceFundingCycleMetadata,
@@ -29,8 +31,6 @@ import {
   buildJB721TierParams,
   defaultNftCollectionName,
 } from 'utils/nftRewards'
-import { ReconfigureFundingCycleTxParams } from '../../../packages/v2v3/hooks/transactor/useReconfigureV2V3FundingCycleTx'
-import { useV2ProjectTitle } from '../../../packages/v2v3/hooks/useProjectTitle'
 import { useJB721DelegateContractAddress } from '../contracts/useJB721DelegateContractAddress'
 import { useJBTiered721DelegateProjectDeployer } from '../contracts/useJBTiered721DelegateProjectDeployer'
 import { useProjectControllerJB721DelegateVersion } from '../contracts/useProjectJB721DelegateVersion'

@@ -1,7 +1,7 @@
 import * as constants from '@ethersproject/constants'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useNftDeployerCanReconfigure } from 'hooks/JB721Delegate/contractReader/useNftDeployerCanReconfigure'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
+import { useNftDeployerCanReconfigure } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftDeployerCanReconfigure'
 import { useContext } from 'react'
 import { LaunchNftsPage } from './LaunchNftCollection'
 import { EnableNftsCard } from './LaunchNftCollection/EnableNftsCard'

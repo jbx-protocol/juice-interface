@@ -1,12 +1,12 @@
+import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
+import { constants, utils } from 'ethers'
+import { createMetadata } from 'juicebox-metadata-helper'
 import {
   IJB721Delegate_V3_2_INTERFACE_ID,
   IJB721Delegate_V3_INTERFACE_ID,
   IJBTiered721Delegate_V3_2_INTERFACE_ID,
   IJBTiered721Delegate_V3_4_REDEEM_ID,
-} from 'constants/nftRewards'
-import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
-import { constants, utils } from 'ethers'
-import { createMetadata } from 'juicebox-metadata-helper'
+} from 'packages/v2v3/constants/nftRewards'
 import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 
 interface JB721DELAGATE_V3_PAY_METADATA {

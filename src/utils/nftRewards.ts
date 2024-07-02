@@ -1,7 +1,6 @@
 import { NftFileType } from 'components/inputs/UploadNoStyle'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { juiceboxEmojiImageUri } from 'constants/images'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
 import { BigNumber, constants, utils } from 'ethers'
@@ -21,6 +20,7 @@ import {
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
   NftRewardTier,
 } from 'models/nftRewards'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
 import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'

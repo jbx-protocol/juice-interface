@@ -1,10 +1,10 @@
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { BigNumber, constants } from 'ethers'
-import { useReconfigureV2V3FundingCycleWithNftsTx } from 'hooks/JB721Delegate/transactor/useReconfigureV2V3FundingCycleWithNftsTx'
 import { revalidateProject } from 'lib/api/nextjs'
 import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
+import { useReconfigureV2V3FundingCycleWithNftsTx } from 'packages/v2v3/hooks/JB721Delegate/transactor/useReconfigureV2V3FundingCycleWithNftsTx'
 import {
   ReconfigureFundingCycleTxParams,
   useReconfigureV2V3FundingCycleTx,

@@ -1,4 +1,3 @@
-import { NftPricingContext } from 'hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'
 import { CreatePage } from 'models/createPage'
 import { FundingTargetType } from 'models/fundingTargetType'
 import {
@@ -17,6 +16,7 @@ import {
   ReservedTokensGroupedSplits,
 } from 'models/splits'
 import { TreasurySelection } from 'models/treasurySelection'
+import { NftPricingContext } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'
 import {
   SerializedV2V3FundAccessConstraint,
   SerializedV2V3FundingCycleData,

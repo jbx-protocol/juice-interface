@@ -1,9 +1,9 @@
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { Contract } from 'ethers'
-import { loadJBProjectHandlesContract } from 'hooks/JBProjectHandles/contracts/loadJBProjectHandles'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { loadJBProjectHandlesContract } from 'packages/v2v3/hooks/JBProjectHandles/contracts/loadJBProjectHandles'
 
 const logger = getLogger('api/juicebox/projectHandle/[projectId]')
 

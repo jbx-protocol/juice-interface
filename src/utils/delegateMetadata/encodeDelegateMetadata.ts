@@ -1,7 +1,7 @@
-import { IJBBuybackDelegate_INTERFACE_ID } from 'constants/buybackDelegate'
-import { IJBTiered721Delegate_V3_4_PAY_ID } from 'constants/nftRewards'
 import { BigNumber, BigNumberish, utils } from 'ethers'
 import { createMetadata } from 'juicebox-metadata-helper'
+import { IJBBuybackDelegate_INTERFACE_ID } from 'packages/v2v3/constants/buybackDelegate'
+import { IJBTiered721Delegate_V3_4_PAY_ID } from 'packages/v2v3/constants/nftRewards'
 import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import {
   JB721DelegatePayMetadata,

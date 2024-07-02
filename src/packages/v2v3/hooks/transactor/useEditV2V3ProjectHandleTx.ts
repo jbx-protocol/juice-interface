@@ -1,8 +1,8 @@
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { useJBProjectHandles } from 'hooks/JBProjectHandles/contracts/useJBProjectHandles'
 import { TransactorInstance } from 'hooks/useTransactor'
+import { useJBProjectHandles } from 'packages/v2v3/hooks/JBProjectHandles/contracts/useJBProjectHandles'
 import { useContext } from 'react'
 import { useV2ProjectTitle } from '../useProjectTitle'
 

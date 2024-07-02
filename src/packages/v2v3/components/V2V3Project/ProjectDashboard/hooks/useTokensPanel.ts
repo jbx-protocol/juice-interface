@@ -1,6 +1,6 @@
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useProjectHasLegacyTokens } from 'hooks/JBV3Token/contractReader/useProjectHasLegacyTokens'
-import { useTotalLegacyTokenBalance } from 'hooks/JBV3Token/contractReader/useTotalLegacyTokenBalance'
+import { useProjectHasLegacyTokens } from 'packages/v2v3/hooks/JBV3Token/contractReader/useProjectHasLegacyTokens'
+import { useTotalLegacyTokenBalance } from 'packages/v2v3/hooks/JBV3Token/contractReader/useTotalLegacyTokenBalance'
 import { useProjectReservedTokens } from 'packages/v2v3/hooks/contractReader/ProjectReservedTokens'
 import { useV2V3WalletHasPermission } from 'packages/v2v3/hooks/contractReader/useV2V3WalletHasPermission'
 import { V2V3OperatorPermission } from 'packages/v2v3/models/permissions'

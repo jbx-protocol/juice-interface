@@ -1,6 +1,6 @@
-import { useNftCredits } from 'hooks/JB721Delegate/useNftCredits'
 import { useWallet } from 'hooks/Wallet'
 import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
+import { useNftCredits } from 'packages/v2v3/hooks/JB721Delegate/useNftCredits'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import React, { useContext, useEffect } from 'react'
 import { useProjectDispatch } from '../redux/hooks'

@@ -4,9 +4,6 @@ import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { getAddress } from 'ethers/lib/utils'
 import { useWallet } from 'hooks/Wallet'
-import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/defaultContracts/useDefaultJB721Delegate'
-import { useDefaultJBController } from 'hooks/defaultContracts/useDefaultJBController'
-import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import { TransactorInstance } from 'hooks/useTransactor'
 import omit from 'lodash/omit'
 import {
@@ -21,7 +18,11 @@ import {
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
 import { useJBPrices } from 'packages/v2v3/hooks/JBPrices'
+import { DEFAULT_JB_721_DELEGATE_VERSION } from 'packages/v2v3/hooks/defaultContracts/useDefaultJB721Delegate'
+import { useDefaultJBController } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBController'
+import { useDefaultJBETHPaymentTerminal } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import { LaunchProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
+import { useV2ProjectTitle } from 'packages/v2v3/hooks/useProjectTitle'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import {
   JBPayDataSourceFundingCycleMetadata,
@@ -35,7 +36,6 @@ import {
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { buildDeployTiered721DelegateData } from 'utils/nftRewards'
-import { useV2ProjectTitle } from '../../../packages/v2v3/hooks/useProjectTitle'
 import { useJB721DelegateContractAddress } from '../contracts/useJB721DelegateContractAddress'
 import { useJBTiered721DelegateProjectDeployer } from '../contracts/useJBTiered721DelegateProjectDeployer'
 

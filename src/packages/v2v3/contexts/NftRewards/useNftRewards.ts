@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'constants/nftRewards'
 import { BigNumber } from 'ethers'
 import {
   IPFSNftRewardTier,
@@ -7,6 +6,7 @@ import {
   JB_721_TIER_V3_2,
   NftRewardTier,
 } from 'models/nftRewards'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
 import { UseQueryResult, useQuery } from 'react-query'
 import { withHttps } from 'utils/externalLink'
 import { formatWad } from 'utils/format/formatNumber'

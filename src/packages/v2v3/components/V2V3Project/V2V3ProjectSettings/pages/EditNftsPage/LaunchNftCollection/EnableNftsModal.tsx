@@ -2,7 +2,7 @@ import { Trans, t } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import TooltipIcon from 'components/TooltipIcon'
 import TransactionModal from 'components/modals/TransactionModal'
-import { useSetNftOperatorPermissionsTx } from 'hooks/JB721Delegate/transactor/useSetNftOperatorPermissionsTx'
+import { useSetNftOperatorPermissionsTx } from 'packages/v2v3/hooks/JB721Delegate/transactor/useSetNftOperatorPermissionsTx'
 import { useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
 

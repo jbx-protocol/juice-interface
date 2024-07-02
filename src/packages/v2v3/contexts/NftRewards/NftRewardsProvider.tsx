@@ -1,12 +1,12 @@
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useNftCollectionMetadataUri } from 'hooks/JB721Delegate/contractReader/useNftCollectionMetadataUri'
-import { useNftCollectionPricingContext } from 'hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'
-import { useNftFlagsOf } from 'hooks/JB721Delegate/contractReader/useNftFlagsOf'
-import { useNftTiers } from 'hooks/JB721Delegate/contractReader/useNftTiers'
 import { JB721GovernanceType } from 'models/nftRewards'
 import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
 import useNftRewards from 'packages/v2v3/contexts/NftRewards/useNftRewards'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
+import { useNftCollectionMetadataUri } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftCollectionMetadataUri'
+import { useNftCollectionPricingContext } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'
+import { useNftFlagsOf } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftFlagsOf'
+import { useNftTiers } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftTiers'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import {
   DEFAULT_NFT_FLAGS,

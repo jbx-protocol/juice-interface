@@ -3,11 +3,11 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { useWallet } from 'hooks/Wallet'
-import { useDefaultJBController } from 'hooks/defaultContracts/useDefaultJBController'
-import { useDefaultJBETHPaymentTerminal } from 'hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
+import { useDefaultJBController } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBController'
+import { useDefaultJBETHPaymentTerminal } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,

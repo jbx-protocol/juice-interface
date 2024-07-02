@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { Callout } from 'components/Callout/Callout'
-import { useV1ProjectId } from 'hooks/JBV3Token/contractReader/useV1ProjectId'
-import { useV1SetTransferPermissionTx } from 'hooks/JBV3Token/transactor/useV1SetTransferPermissionTx'
+import { useV1ProjectId } from 'packages/v2v3/hooks/JBV3Token/contractReader/useV1ProjectId'
+import { useV1SetTransferPermissionTx } from 'packages/v2v3/hooks/JBV3Token/transactor/useV1SetTransferPermissionTx'
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 

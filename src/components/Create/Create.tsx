@@ -1,7 +1,5 @@
 import { t, Trans } from '@lingui/macro'
 import { DeployButtonText } from 'components/buttons/DeployProjectButtonText'
-import { Callout } from 'components/Callout/Callout'
-import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
 import {
   CYCLE_EXPLANATION,
@@ -9,7 +7,6 @@ import {
 } from 'components/strings'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { CreateBadge } from './components/CreateBadge'
 import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
@@ -20,7 +17,6 @@ import { ProjectTokenPage } from './components/pages/ProjectToken/ProjectTokenPa
 import { ReconfigurationRulesPage } from './components/pages/ReconfigurationRules/ReconfigurationRulesPage'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { ReviewDeployPage } from './components/pages/ReviewDeploy/ReviewDeployPage'
-import { PayoutsMigrationModal } from './components/PayoutsMigrationModal'
 import { Wizard } from './components/Wizard/Wizard'
 import { useLoadingInitialStateFromQuery } from './hooks/useLoadInitialStateFromQuery'
 
@@ -32,8 +28,6 @@ export function Create() {
     return <DeploySuccess projectId={projectId} />
   }
 
-  const isMigration = router.query.migration === 'true'
-
   const initialStateLoading = useLoadingInitialStateFromQuery()
 
   if (initialStateLoading) return <Loading />
@@ -41,32 +35,11 @@ export function Create() {
   return (
     <div className="mt-12 md:mt-10">
       <h1 className="mb-0 text-center font-heading text-base font-medium uppercase text-black dark:text-slate-100">
-        {!isMigration ? (
-          <Trans>Create a project</Trans>
-        ) : (
-          <Trans>Re-launch a project</Trans>
-        )}
+        <Trans>Create a project</Trans>
       </h1>
       {/* TODO: Remove wizard-create once form item css override is replaced */}
       <div className="wizard-create">
         <Wizard className="pb-28" doneText={<DeployButtonText />}>
-          {isMigration && (
-            <Callout.Info className="md:w-3xl w-full">
-              <strong>
-                <Trans>Re-launch on V3</Trans>
-              </strong>
-              <p>
-                <Trans>
-                  We recommend you <Link href="/contact">contact us</Link> or
-                  visit the{' '}
-                  <ExternalLink href="https://discord.gg/6jXrJSyDFf">
-                    Juicebox Discord
-                  </ExternalLink>{' '}
-                  for help with this process.
-                </Trans>
-              </p>
-            </Callout.Info>
-          )}
           <Wizard.Page
             name="projectDetails"
             title={t`Project Details`}
@@ -146,7 +119,6 @@ export function Create() {
           </Wizard.Page>
         </Wizard>
       </div>
-      <PayoutsMigrationModal />
     </div>
   )
 }

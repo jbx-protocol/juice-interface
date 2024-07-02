@@ -1,5 +1,5 @@
-import { V2V3SettingsPageKey } from 'components/v2v3/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
 import { BigNumber, BigNumberish } from 'ethers'
+import { V2V3SettingsPageKey } from 'packages/v2v3/components/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
 
 const HELP_PAGE_HOSTNAME = 'https://docs.juicebox.money'
 

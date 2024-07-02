@@ -1,5 +1,5 @@
-import { AllocationSplit } from 'components/v2v3/shared/Allocation/Allocation'
 import { BigNumber } from 'ethers'
+import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
 import { useMemo } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { useFundingTargetType } from './useFundingTargetType'

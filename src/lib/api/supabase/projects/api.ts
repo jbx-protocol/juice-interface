@@ -1,6 +1,11 @@
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { V2_BLOCKLISTED_PROJECTS } from 'constants/blocklist'
-import { DbProjectsDocument, DbProjectsQuery, Project } from 'generated/graphql'
+import {
+  DbProjectsDocument,
+  DbProjectsQuery,
+  Project,
+  QueryProjectsArgs,
+} from 'generated/graphql'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { serverClient } from 'lib/apollo/serverClient'
 import { DBProject, DBProjectQueryOpts, SGSBCompareKey } from 'models/dbProject'
@@ -14,12 +19,11 @@ import {
   parseDBProjectsRow,
 } from 'utils/sgDbProjects'
 import { dbProjects } from '../clients'
-
 /**
  * Query all projects from subgraph using apollo serverClient which is safe to use in edge runtime.
  */
 export async function queryAllSGProjectsForServer() {
-  const res = await paginateDepleteQuery<DbProjectsQuery>({
+  const res = await paginateDepleteQuery<DbProjectsQuery, QueryProjectsArgs>({
     client: serverClient,
     document: DbProjectsDocument,
   })

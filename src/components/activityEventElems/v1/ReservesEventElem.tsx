@@ -1,12 +1,12 @@
 import { Trans } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import { PV_V1 } from 'constants/pv'
-import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import {
   ProjectEventsQuery,
   useTicketModDistributionsForPrintReservesEventQuery,
 } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
+import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 import { useContext } from 'react'
 import { formatWad, fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'

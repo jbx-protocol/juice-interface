@@ -2,8 +2,8 @@ import { CV_V3 } from 'constants/cv'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
-import { V2V3ContractName } from 'models/v2v3/contracts'
-import { loadV2V3Contract } from 'utils/v2v3/loadV2V3Contract'
+import { V2V3ContractName } from 'packages/v2v3/models/contracts'
+import { loadV2V3Contract } from 'packages/v2v3/utils/loadV2V3Contract'
 import { findProjectMetadata } from './ipfs'
 
 export const getProjectMetadata = async (projectId: string | number) => {

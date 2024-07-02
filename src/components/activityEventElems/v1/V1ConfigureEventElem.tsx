@@ -1,11 +1,12 @@
 import { t } from '@lingui/macro'
-import CurrencySymbol from 'components/currency/CurrencySymbol'
 import EthereumAddress from 'components/EthereumAddress'
 import MinimalTable from 'components/MinimalTable'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
 import { SECONDS_IN_DAY } from 'constants/numbers'
-import { V1_CURRENCY_ETH } from 'constants/v1/currency'
-import { V1ProjectContext } from 'contexts/v1/Project/V1ProjectContext'
 import { ProjectEventsQuery } from 'generated/graphql'
+import { V1_CURRENCY_ETH } from 'packages/v1/constants/currency'
+import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
+import { getBallotStrategyByAddress } from 'packages/v2v3/utils/ballotStrategies'
 import { useContext } from 'react'
 import {
   formatWad,
@@ -13,7 +14,6 @@ import {
   permilleToPercent,
 } from 'utils/format/formatNumber'
 import { detailedTimeString } from 'utils/format/formatTime'
-import { getBallotStrategyByAddress } from 'utils/v2v3/ballotStrategies'
 
 import { PV_V1 } from 'constants/pv'
 import { ActivityEvent } from '../ActivityElement/ActivityElement'

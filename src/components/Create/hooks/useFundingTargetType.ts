@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import { FundingTargetType } from 'models/fundingTargetType'
+import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
 import { useMemo } from 'react'
-import { MAX_DISTRIBUTION_LIMIT } from 'utils/v2v3/math'
 
 export const useFundingTargetType = (
   fundingTargetAmount: BigNumber | undefined,

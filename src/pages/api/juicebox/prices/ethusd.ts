@@ -1,11 +1,14 @@
 import { CV_V3 } from 'constants/cv'
 import { WAD_DECIMALS } from 'constants/numbers'
-import { loadJBPrices } from 'hooks/JBPrices/loadJBPrices'
 import { enableCors } from 'lib/api/nextjs'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { loadJBPrices } from 'packages/v2v3/hooks/JBPrices/loadJBPrices'
+import {
+  V2V3_CURRENCY_ETH,
+  V2V3_CURRENCY_USD,
+} from 'packages/v2v3/utils/currency'
 import { fromWad } from 'utils/format/formatNumber'
-import { V2V3_CURRENCY_ETH, V2V3_CURRENCY_USD } from 'utils/v2v3/currency'
 
 const PRICE_REFRESH_INTERVAL_SECONDS = 5 // 5 seconds
 

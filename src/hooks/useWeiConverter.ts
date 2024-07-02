@@ -1,7 +1,7 @@
 import { parseEther } from 'ethers/lib/utils'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 
-import { CurrencyContext } from 'contexts/shared/CurrencyContext'
+import { CurrencyContext } from 'contexts/CurrencyContext'
 import { CurrencyOption } from 'models/currencyOption'
 import { useContext, useMemo } from 'react'
 

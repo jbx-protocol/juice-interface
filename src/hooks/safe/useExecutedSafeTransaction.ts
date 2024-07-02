@@ -1,5 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
 import { fetchExecutedSafeTransactions } from 'lib/safe'
-import { useQuery } from 'react-query'
 
 export function useExecutedSafeTransactions({
   safeAddress,
@@ -8,15 +8,13 @@ export function useExecutedSafeTransactions({
   safeAddress: string | undefined
   limit?: number
 }) {
-  return useQuery(
-    ['executed-safe-transactions', safeAddress],
-    async () => {
+  return useQuery({
+    queryKey: ['executed-safe-transactions', safeAddress],
+    queryFn: async () => {
       if (!safeAddress) return
 
       return fetchExecutedSafeTransactions({ safeAddress, limit })
     },
-    {
-      enabled: Boolean(safeAddress),
-    },
-  )
+    enabled: Boolean(safeAddress),
+  })
 }

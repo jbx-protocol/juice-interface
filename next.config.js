@@ -121,14 +121,6 @@ const SECURITY_HEADERS = [
 const nextConfig = removeImports({
   experimental: {
     esmExternals: true,
-    swcPlugins: [
-      '@lingui/swc-plugin',
-      {
-        runtimeModules: {
-          i18n: ['@lingui/core', 'i18n'],
-        },
-      },
-    ],
   },
   staticPageGenerationTimeout: 90,
   webpack: config => {

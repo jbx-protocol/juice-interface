@@ -2,13 +2,13 @@ import { t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
 import ETHAmount from 'components/currency/ETHAmount'
-import V2V3ProjectHandleLink from 'components/v2v3/shared/V2V3ProjectHandleLink'
 import { PV_V2 } from 'constants/pv'
 import {
   ProjectEventsQuery,
   useSplitDistributionsForDistributePayoutsEventQuery,
 } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
+import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
 
 import { ActivityEvent } from '../ActivityElement/ActivityElement'
 

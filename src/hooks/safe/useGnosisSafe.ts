@@ -1,11 +1,11 @@
+import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { GnosisSafe } from 'models/safe'
-import { useQuery } from 'react-query'
 
 export const useGnosisSafe = (address?: string) => {
-  return useQuery(
-    ['gnosis-safe', address],
-    async () => {
+  return useQuery({
+    queryKey: ['gnosis-safe', address],
+    queryFn: async () => {
       if (!address) {
         return
       }
@@ -22,9 +22,7 @@ export const useGnosisSafe = (address?: string) => {
         return null
       }
     },
-    {
-      retry: false,
-      refetchOnWindowFocus: false,
-    },
-  )
+    retry: false,
+    refetchOnWindowFocus: false,
+  })
 }

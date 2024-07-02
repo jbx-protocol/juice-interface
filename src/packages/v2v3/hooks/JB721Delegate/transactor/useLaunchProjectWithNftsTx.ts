@@ -3,7 +3,6 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { getAddress } from 'ethers/lib/utils'
-import { useJBPrices } from 'hooks/JBPrices'
 import { useWallet } from 'hooks/Wallet'
 import { DEFAULT_JB_721_DELEGATE_VERSION } from 'hooks/defaultContracts/useDefaultJB721Delegate'
 import { useDefaultJBController } from 'hooks/defaultContracts/useDefaultJBController'
@@ -21,6 +20,7 @@ import {
 } from 'models/nftRewards'
 import { GroupedSplits, SplitGroup } from 'models/splits'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
+import { useJBPrices } from 'packages/v2v3/hooks/JBPrices'
 import { LaunchProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import {

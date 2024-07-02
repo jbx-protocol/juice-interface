@@ -2,7 +2,6 @@ import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { getAddress } from 'ethers/lib/utils'
-import { useJBPrices } from 'hooks/JBPrices'
 import { TransactorInstance } from 'hooks/useTransactor'
 import omit from 'lodash/omit'
 import {
@@ -13,6 +12,7 @@ import { GroupedSplits, SplitGroup } from 'models/splits'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
+import { useJBPrices } from 'packages/v2v3/hooks/JBPrices'
 import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import {
   JBPayDataSourceFundingCycleMetadata,

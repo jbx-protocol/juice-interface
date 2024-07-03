@@ -18,12 +18,15 @@ function useEnsNamePair(addressOrEnsName: string | undefined) {
     queryFn: async () => {
       if (!addressOrEnsName) return
 
-      const data = await resolveAddress(addressOrEnsName)
-      if (!data && isAddress(addressOrEnsName)) {
-        return { address: addressOrEnsName, name: null }
-      }
+      try {
+        return await resolveAddress(addressOrEnsName)
+      } catch {
+        if (isAddress(addressOrEnsName)) {
+          return { address: addressOrEnsName, name: null }
+        }
 
-      return data
+        return null
+      }
     },
   })
 }

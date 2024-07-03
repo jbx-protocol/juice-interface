@@ -13,10 +13,7 @@ import { XLButton } from 'components/buttons/XLButton'
 import { HOMEPAGE } from 'constants/fathomEvents'
 import { PV_V1 } from 'constants/pv'
 import { useProjectsQuery } from 'generated/graphql'
-import {
-  DEFAULT_TRENDING_PROJECTS_LIMIT,
-  useTrendingProjects,
-} from 'hooks/useDBProjects'
+import { useTrendingProjects } from 'hooks/useTrendingProjects'
 import { client } from 'lib/apollo/client'
 import { trackFathomGoal } from 'lib/fathom'
 import { ProjectTagName } from 'models/project-tags'
@@ -30,6 +27,8 @@ const HEADER_TAGS: ProjectTagName[] = [
   'art',
   'business',
 ]
+
+const DEFAULT_TRENDING_PROJECTS_LIMIT = 10
 
 // These projects will render if there isn't enough trending projects.
 const BACKUP_PROJECTS = [

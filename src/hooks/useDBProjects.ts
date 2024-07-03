@@ -5,12 +5,10 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import axios from 'axios'
-import { BigNumber } from 'ethers'
 import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
 import { Json } from 'models/json'
-import { useMemo } from 'react'
 import { formatQueryParams } from 'utils/queryParams'
-import { parseDBProject, parseDBProjectJson } from 'utils/sgDbProjects'
+import { parseDBProject } from 'utils/sgDbProjects'
 
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
 
@@ -88,55 +86,4 @@ export function useDBProjectsInfiniteQuery(
       pages: [...data.pages],
     }),
   })
-}
-
-export const DEFAULT_TRENDING_PROJECTS_LIMIT = 10
-
-export function useTrendingProjects(count: number) {
-  return useQuery({
-    queryKey: ['trending-projects', count],
-    queryFn: async () => {
-      const res = await axios.get<Json<DBProject>[]>(
-        '/api/projects/trending?count=' + count,
-      )
-
-      return res.data.map(parseDBProjectJson)
-    },
-  })
-}
-
-export function useProjectTrendingPercentageIncrease({
-  totalVolume,
-  trendingVolume,
-}: {
-  totalVolume: BigNumber
-  trendingVolume: BigNumber
-}): number {
-  const percentageGain = useMemo(() => {
-    const preTrendingVolume = totalVolume?.sub(trendingVolume)
-
-    if (!preTrendingVolume?.gt(0)) return Infinity
-
-    const percentGain = trendingVolume
-      .mul(10000)
-      .div(preTrendingVolume)
-      .toNumber()
-
-    let percentRounded: number
-
-    // If percentGain > 1, round to int
-    if (percentGain >= 100) {
-      percentRounded = Math.round(percentGain / 100)
-      // If 0.1 <= percentGain < 1, round to 1dp
-    } else if (percentGain >= 10) {
-      percentRounded = Math.round(percentGain / 10) / 10
-      // If percentGain < 0.1, round to 2dp
-    } else {
-      percentRounded = percentGain / 100
-    }
-
-    return percentRounded
-  }, [totalVolume, trendingVolume])
-
-  return percentageGain
 }

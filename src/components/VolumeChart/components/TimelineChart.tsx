@@ -1,4 +1,8 @@
+import { t } from '@lingui/macro'
 import CurrencySymbol from 'components/currency/CurrencySymbol'
+import { ThemeContext } from 'contexts/Theme/ThemeContext'
+import { useTrendingProjects } from 'hooks/useTrendingProjects'
+import tailwind from 'lib/tailwind'
 import moment from 'moment'
 import { CSSProperties, useContext, useMemo } from 'react'
 import {
@@ -12,20 +16,15 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
+import { wadToFloat } from 'utils/format/formatNumber'
+import { daysToMS } from 'utils/units'
+import { useTicks } from '../hooks/useTicks'
+import { useTimelineYDomain } from '../hooks/useTimelineYDomain'
 import {
   ProjectTimelinePoint,
   ProjectTimelineRange,
   ProjectTimelineView,
 } from '../types'
-
-import { t } from '@lingui/macro'
-import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { useTrendingProjects } from 'hooks/useDBProjects'
-import tailwind from 'lib/tailwind'
-import { wadToFloat } from 'utils/format/formatNumber'
-import { daysToMS } from 'utils/units'
-import { useTicks } from '../hooks/useTicks'
-import { useTimelineYDomain } from '../hooks/useTimelineYDomain'
 
 const now = Date.now().valueOf()
 

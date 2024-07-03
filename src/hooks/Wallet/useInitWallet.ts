@@ -18,9 +18,10 @@ export function initWeb3Onboard() {
   console.info('Initializing Web3Onboard...')
 
   const injected = injectedModule()
-  const gnosis = safeModule({
-    whitelistedDomains: [/.*nance.app/, /.*juicebox.money/, /juicebox.money/],
-  })
+  const safe = safeModule()
+  //   {
+  //   whitelistedDomains: [/.*nance.app/, /.*juicebox.money/, /juicebox.money/],
+  // }
   const walletConnect = walletConnectModule({
     dappUrl: 'https://juicebox.money',
     version: 2,
@@ -30,7 +31,7 @@ export function initWeb3Onboard() {
   const coinbaseWalletSdk = coinbaseWalletModule()
 
   return init({
-    wallets: [injected, gnosis, walletConnect, coinbaseWalletSdk],
+    wallets: [injected, safe, walletConnect, coinbaseWalletSdk],
     chains: Object.values(NETWORKS).map(n => ({
       id: unpadLeadingZerosString(BigNumber.from(n.chainId).toHexString()),
       rpcUrl: n.rpcUrl,

@@ -29,7 +29,7 @@ export const MessageInput: React.FC<Props> = ({
   ...props
 }) => {
   const acceptedFileTypes =
-    'image/jpeg,image/png,image/gif,video/mp4,video/quicktime,video/x-m4v,video/webm'
+    'image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/x-m4v,video/webm'
   const {
     uploadedUrl,
     isUploading,

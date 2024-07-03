@@ -60,7 +60,7 @@ export const FormImageUploader = ({
             />
           ) : (
             <Upload
-              accept="image/png, image/jpeg, image/jpg, image/gif"
+              accept="image/png, image/jpeg, image/jpg, image/gif, image/webp"
               beforeUpload={async file => {
                 if (maxSize !== undefined && file.size > maxSize * 1000) {
                   const unit = maxSize > 999 ? ByteUnit.MB : ByteUnit.KB

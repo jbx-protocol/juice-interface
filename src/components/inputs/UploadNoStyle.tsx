@@ -19,6 +19,7 @@ export type NftFileType =
   | 'image/jpeg'
   | 'image/png'
   | 'image/gif'
+  | 'image/webp'
   | 'video/mp4'
   | 'video/quicktime'
   | 'video/x-m4v'

@@ -45,6 +45,7 @@ export default async function handler(
       'image/jpeg',
       'image/jpg',
       'image/gif',
+      'image/webp',
       'image/vnd.mozilla.apng',
     ]
     if (!acceptedTypes.includes(contentType)) {

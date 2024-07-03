@@ -184,6 +184,7 @@ export const AddEditRewardModal = ({
     'image/jpeg',
     'image/png',
     'image/gif',
+    'image/webp',
   ]
 
   return (

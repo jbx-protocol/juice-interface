@@ -81,6 +81,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       'image/jpg',
       'image/gif',
       'image/vnd.mozilla.apng',
+      'image/webp',
     ]
     if (!acceptedTypes.includes(contentType)) {
       return res.status(403).json({ error: 'Forbidden. Invalid content-type.' })

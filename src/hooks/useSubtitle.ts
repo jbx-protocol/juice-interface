@@ -1,5 +1,6 @@
 import { ProjectMetadata } from 'models/projectMetadata'
 import { useMemo } from 'react'
+import { stripHtmlTags } from 'utils/string'
 
 export type SubtitleType = 'tagline' | 'description'
 
@@ -30,8 +31,4 @@ export const useSubtitle = (
   }, [projectMetadata?.description, projectMetadata?.projectTagline])
 
   return subtitle
-}
-
-const stripHtmlTags = (html: string): string => {
-  return html.replace(/<[^>]*>/g, '')
 }

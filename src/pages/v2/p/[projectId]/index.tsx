@@ -15,6 +15,7 @@ import {
   ProjectPageProps,
   getProjectStaticProps,
 } from 'utils/server/pages/props'
+import { stripHtmlTags } from 'utils/string'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V2_PROJECTS === 'true') {
@@ -69,7 +70,11 @@ const ProjectPageSEO = ({
     title={metadata?.name}
     url={`${SiteBaseUrl}v2/p/${projectId}`}
     description={
-      metadata?.projectTagline ? metadata.projectTagline : metadata?.description
+      metadata?.projectTagline
+        ? metadata.projectTagline
+        : metadata?.description
+        ? stripHtmlTags(metadata.description)
+        : undefined
     }
     twitter={{
       card: 'summary',

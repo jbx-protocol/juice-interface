@@ -19,6 +19,10 @@ function useEnsNamePair(addressOrEnsName: string | undefined) {
       if (!addressOrEnsName) return
 
       const data = await resolveAddress(addressOrEnsName)
+      if (!data && isAddress(addressOrEnsName)) {
+        return { address: addressOrEnsName, name: null }
+      }
+
       return data
     },
   })
@@ -45,8 +49,12 @@ function _AccountPage({ addressOrEnsName }: { addressOrEnsName: string }) {
 
   const { data: profile } = useAccount({ address })
 
-  if (ensLoading) return <Loading />
-  if (!address) return null
+  if (ensLoading) {
+    return <Loading />
+  }
+  if (!address) {
+    return <div className="text-center">No address given.</div>
+  }
 
   return (
     <>

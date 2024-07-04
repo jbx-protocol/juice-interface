@@ -288,7 +288,10 @@ export const config = {
 const MAX_RETRIES = 3 as const
 const MAX_RETRY_TIME = 60_000 as const
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   let respondedToClient = false
   try {
     if (req.method !== 'POST' || !JUICE_API_EVENTS_ENABLED) {

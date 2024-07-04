@@ -23,14 +23,14 @@ import { useLoadingInitialStateFromQuery } from './hooks/useLoadInitialStateFrom
 export function Create() {
   const router = useRouter()
   const deployedProjectId = router.query.deployedProjectId as string
+  const initialStateLoading = useLoadingInitialStateFromQuery()
+
+  if (initialStateLoading) return <Loading />
+
   if (deployedProjectId) {
     const projectId = parseInt(deployedProjectId)
     return <DeploySuccess projectId={projectId} />
   }
-
-  const initialStateLoading = useLoadingInitialStateFromQuery()
-
-  if (initialStateLoading) return <Loading />
 
   return (
     <div className="mt-12 md:mt-10">

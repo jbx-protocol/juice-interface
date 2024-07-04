@@ -19,12 +19,12 @@ export function JuiceVideoOrImgPreview({
   visible: boolean
   onClose: VoidFunction
 }) {
-  if (!visible || !src) return null
-
   const { data: contentType } = useContentType(src)
   const isVideo = fileTypeIsVideo(contentType)
 
   const _onClose = stopPropagation(onClose)
+
+  if (!visible || !src) return null
 
   return (
     <div className={JUICE_IMG_PREVIEW_CONTAINER_CLASS} onClick={_onClose}>

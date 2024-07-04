@@ -73,6 +73,8 @@ export function ProjectSettingsDashboard() {
 
   const canCreateErc20Token = !projectHasErc20Token && hasIssueTicketsPermission
 
+  const erc20Path = useSettingsPagePath('createerc20')
+
   return (
     <ProjectSettingsLayout>
       <section className="mb-12 grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -188,7 +190,7 @@ export function ProjectSettingsDashboard() {
             <ul>
               {canCreateErc20Token && (
                 <li>
-                  <Link href={useSettingsPagePath('createerc20')}>
+                  <Link href={erc20Path}>
                     <Trans>Create ERC-20 Token</Trans>
                   </Link>
                 </li>

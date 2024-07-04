@@ -52,6 +52,10 @@ export function RedeemNftsModal({
     accountAddress: userAddress,
   })
 
+  const redeemValue = useETHReceivedFromNftRedeem({
+    tokenIdsToRedeem,
+  })
+
   if (!fundingCycle || !fundingCycleMetadata || balanceLoading) return null
 
   const handleTierSelect = (nft: RedeemingNft) => {
@@ -120,10 +124,6 @@ export function RedeemNftsModal({
   } else {
     modalTitle = t`Burn NFTs`
   }
-
-  const redeemValue = useETHReceivedFromNftRedeem({
-    tokenIdsToRedeem,
-  })
 
   return (
     <TransactionModal

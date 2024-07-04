@@ -147,15 +147,17 @@ export default function ProjectTicketMods({
     [mods, form, onModsChanged],
   )
 
-  if (!mods) return null
-
   const total = useMemo(
     () =>
       parseFloat(
-        permyriadToPercent(mods.map(m => m.percent).reduce((a, b) => a + b, 0)),
+        permyriadToPercent(
+          mods?.map(m => m.percent).reduce((a, b) => a + b, 0),
+        ),
       ),
     [mods],
   )
+
+  if (!mods) return null
 
   const setReceiver = async () => {
     await form.validateFields()

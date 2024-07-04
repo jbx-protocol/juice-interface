@@ -1,6 +1,5 @@
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
 import { NftRewardTier } from 'models/nftRewards'
-import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 
@@ -31,10 +30,7 @@ export const SmallNftSquare = ({
     )
   }
 
-  const fileUrl = useMemo(
-    () => ipfsUriToGatewayUrl(nftReward.fileUrl),
-    [nftReward.fileUrl],
-  )
+  const fileUrl = ipfsUriToGatewayUrl(nftReward.fileUrl)
 
   return (
     <JuiceVideoThumbnailOrImage

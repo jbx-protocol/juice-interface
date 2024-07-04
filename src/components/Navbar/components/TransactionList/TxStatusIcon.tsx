@@ -8,8 +8,6 @@ import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export default function TxStatusIcon({ status }: { status: TxStatus }) {
-  if (status === TxStatus.pending) return <Loading size="default" />
-
   const Icon = useMemo(() => {
     switch (status) {
       case TxStatus.success:
@@ -18,6 +16,8 @@ export default function TxStatusIcon({ status }: { status: TxStatus }) {
         return ExclamationCircleIcon
     }
   }, [status])
+
+  if (status === TxStatus.pending) return <Loading size="default" />
 
   return (
     <div

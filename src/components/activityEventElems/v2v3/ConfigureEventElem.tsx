@@ -1,14 +1,13 @@
 import { t, Trans } from '@lingui/macro'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import RichNote from 'components/RichNote/RichNote'
-import { BigNumber } from 'ethers'
-import { V2V3FundingCycle } from 'packages/v2v3/models/fundingCycle'
-
 import { PV_V2 } from 'constants/pv'
+import { BigNumber } from 'ethers'
 import { ProjectEventsQuery } from 'generated/graphql'
 import FundingCycleDetails from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import useProjectDistributionLimit from 'packages/v2v3/hooks/contractReader/useProjectDistributionLimit'
+import { V2V3FundingCycle } from 'packages/v2v3/models/fundingCycle'
 import { sgFCToV2V3FundingCycleMetadata } from 'packages/v2v3/utils/fundingCycle'
 import { useContext } from 'react'
 import { ActivityEvent } from '../ActivityElement/ActivityElement'
@@ -20,15 +19,15 @@ export default function ConfigureEventElem({
   event: ProjectEventsQuery['projectEvents'][0]['configureEvent']
   withProjectLink?: boolean
 }) {
-  if (!event) return null
-
   const { primaryETHTerminal } = useContext(V2V3ProjectContext)
 
   const { data: distributionLimit } = useProjectDistributionLimit({
-    projectId: event.projectId,
+    projectId: event?.projectId,
     terminal: primaryETHTerminal,
-    configuration: event.configuration?.toString(),
+    configuration: event?.configuration?.toString(),
   })
+
+  if (!event) return null
 
   const fundingCycle: Partial<V2V3FundingCycle> = {
     duration: BigNumber.from(event.duration),

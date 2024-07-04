@@ -216,7 +216,10 @@ const findEmailEventsForProjectId = async (
   })
 }
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   try {
     if (req.method !== 'POST' || !JUICE_API_EVENTS_ENABLED) {
       return res.status(404).json({ message: 'Not found.' })

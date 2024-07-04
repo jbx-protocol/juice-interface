@@ -1,5 +1,5 @@
 import { Tab } from '@headlessui/react'
-import { ReactNode, useEffect, useRef } from 'react'
+import { ReactNode, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 interface ProjectTabProps {
@@ -26,15 +26,13 @@ export const ProjectTab: React.FC<ProjectTabProps> = ({
       onClick={onClick}
     >
       {({ selected }) => {
-        useEffect(() => {
-          if (selected && tabRef.current) {
-            tabRef.current.scrollIntoView({
-              behavior: 'smooth',
-              block: 'nearest',
-              inline: 'start',
-            })
-          }
-        }, [selected])
+        if (selected && tabRef.current) {
+          tabRef.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'start',
+          })
+        }
 
         return (
           <div

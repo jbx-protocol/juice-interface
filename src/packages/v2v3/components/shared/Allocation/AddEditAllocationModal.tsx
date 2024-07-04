@@ -69,10 +69,7 @@ export const AddEditAllocationModal = ({
 }) => {
   const { primaryETHTerminalFee } = useContext(V2V3ProjectContext)
 
-  if (availableModes.size === 0) {
-    console.error('AddEditAllocationModal: no available modes')
-    return null
-  }
+  i
   const { totalAllocationAmount, allocations, allocationCurrency } =
     Allocation.useAllocationInstance()
   const [form] = Form.useForm<AddEditAllocationModalFormProps>()
@@ -209,6 +206,11 @@ export const AddEditAllocationModal = ({
         .join(' '),
     [allocationName],
   )
+
+  if (availableModes.size === 0) {
+    console.error('AddEditAllocationModal: no available modes')
+    return null
+  }
 
   return (
     <Modal

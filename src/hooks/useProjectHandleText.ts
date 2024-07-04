@@ -19,12 +19,12 @@ export function useProjectHandleText({
   handle?: string | null
   name?: string | null
 }) {
-  if (!projectId) return {}
-
   // fetch handle if not provided
   const { data: _handle } = useProjectHandle({
     projectId: !handle ? projectId : undefined,
   })
+
+  if (!projectId) return {}
 
   const resolvedHandle = handle ?? _handle
 

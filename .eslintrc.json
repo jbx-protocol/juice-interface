@@ -1,72 +1,14 @@
 {
-  "env": {
-    "node": true,
-    "browser": true,
-    "es2021": true
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
-  "overrides": [
-    {
-      "files": ["*.config.js", "*.setup.ts"],
-      "rules": {
-        "@typescript-eslint/no-var-requires": "off"
-      }
-    }
-  ],
-  "plugins": ["react", "@typescript-eslint", "import", "react-hooks"],
+  "extends": "next/core-web-vitals",
+  "plugins": ["@typescript-eslint"],
   "rules": {
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "react/prop-types": "off",
     "react/no-unescaped-entities": "off",
-    "react/react-in-jsx-scope": "off",
-
-    "@typescript-eslint/no-var-requires": "warn",
-    "@typescript-eslint/ban-ts-comment": "warn",
-
-    "@typescript-eslint/no-explicit-any": "error",
-    "react-hooks/exhaustive-deps": "error",
-    "@typescript-eslint/no-redeclare": "error",
-    "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": "typeLike",
-        "format": ["PascalCase", "UPPER_CASE"]
-      }
-    ],
     "no-console": [
       "error",
       { "allow": ["warn", "error", "info", "time", "timeEnd"] }
     ],
-    "no-restricted-imports": [
-      "error",
-      {
-        "paths": [
-          {
-            "name": "lodash",
-            "message": "Import from 'lodash/<package>' directly to support tree-shaking."
-          }
-        ]
-      }
-    ],
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-redeclare": "error",
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
   }
 }

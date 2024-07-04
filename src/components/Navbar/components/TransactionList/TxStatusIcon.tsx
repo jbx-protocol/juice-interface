@@ -14,6 +14,8 @@ export default function TxStatusIcon({ status }: { status: TxStatus }) {
         return CheckCircleIcon
       case TxStatus.failed:
         return ExclamationCircleIcon
+      default:
+        return null
     }
   }, [status])
 
@@ -29,7 +31,7 @@ export default function TxStatusIcon({ status }: { status: TxStatus }) {
           'bg-error-100 text-error-700 dark:bg-error-900 dark:text-error-300',
       )}
     >
-      <Icon className="h-6 w-6" />
+      {Icon ? <Icon className="h-6 w-6" /> : null}
     </div>
   )
 }

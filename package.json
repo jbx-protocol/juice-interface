@@ -19,7 +19,7 @@
     "i18n:extract-source-locale": "NODE_ENV=development lingui extract --locale en",
     "i18n:lint": "./scripts/lint-translations-template.sh",
     "postinstall": "yarn i18n:compile",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
+    "lint": "next lint",
     "lint-staged": "lint-staged",
     "lint:fix": "yarn lint --fix",
     "prepare": "husky install",
@@ -37,12 +37,6 @@
     "supabase:diffdb": "supabase db diff",
     "supabase:generate:local": "supabase gen types typescript --local > src/types/database.types.ts"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css}": [
-      "eslint",
-      "prettier --write"
-    ]
-  },
   "browserslist": {
     "production": [
       "last 1 chrome version",
@@ -59,7 +53,7 @@
   "dependencies": {
     "@apollo/client": "^3.10.8",
     "@headlessui/react": "^1.7.18",
-    "@heroicons/react": "^2.0.17",
+    "@heroicons/react": "^2.1.4",
     "@jbx-protocol/contracts-v1": "2.0.0",
     "@jbx-protocol/contracts-v2-latest": "npm:@jbx-protocol/contracts-v2@8.0.4",
     "@jbx-protocol/juice-721-delegate-v3": "npm:@jbx-protocol/juice-721-delegate@3.0.0",
@@ -112,7 +106,7 @@
     "fathom-client": "^3.6.0",
     "forge-run-parser": "^1.0.2",
     "formidable": "^2.0.1",
-    "formik": "^2.2.9",
+    "formik": "^2.4.6",
     "graphql": "^16.8.1",
     "he": "^1.2.0",
     "jsonwebtoken": "^9.0.0",
@@ -120,8 +114,7 @@
     "less": "4.1.2",
     "lodash": "^4.17.21",
     "lottie-react": "^2.4.0",
-    "lucide-react": "^0.378.0",
-    "mjml": "^4.13.0",
+    "mjml": "^4.15.3",
     "mustache": "^4.2.0",
     "next": "^13.4.3",
     "object-hash": "^3.0.0",
@@ -130,7 +123,7 @@
     "postcss": "^8.4.31",
     "postmark": "^3.0.15",
     "prop-types": "^15.8.1",
-    "qs": "^6.11.0",
+    "qs": "^6.12.2",
     "quill": "^1.3.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -138,10 +131,10 @@
     "react-quill": "^2.0.0",
     "react-redux": "^8",
     "react-stop-propagation": "^0.2.0",
-    "recharts": "^2.6.2",
+    "recharts": "^2.12.7",
     "rehype-sanitize": "^5.0.1",
-    "sass": "^1.52.1",
-    "sharp": "^0.32.6",
+    "sass": "^1.77.6",
+    "sharp": "^0.33.4",
     "swiper": "^9.2.3",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
@@ -150,7 +143,7 @@
     "use-resize-observer": "^9.1.0",
     "uuid": "^8.3.2",
     "yarn": "^1.22.22",
-    "yup": "^1.0.2"
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
@@ -183,7 +176,6 @@
     "@types/react-dom": "^18",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
-    "@typescript-eslint/parser": "^5.35.1",
     "autoprefixer": "10.4.13",
     "babel-jest": "^29.5.0",
     "babel-loader": "^9.1.3",
@@ -191,11 +183,6 @@
     "babel-plugin-transform-remove-imports": "^1.7.0",
     "dotenv": "^16.0.1",
     "eslint": "^8.19.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-react-app": "^7.0.1",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-react": "^7.31.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
     "graphql-tag": "^2.12.6",
     "husky": "^7.0.0",
     "jest": "^28.1.3",
@@ -209,7 +196,7 @@
     "prettier-plugin-organize-imports": "^3.1.0",
     "prettier-plugin-tailwindcss": "^0.1.13",
     "react-test-renderer": "^18.2.0",
-    "supabase": "1.153.4",
+    "supabase": "^1.178.2",
     "tailwindcss": "3.2.3",
     "ts-prune": "^0.10.3",
     "typescript": "^5.5.3",

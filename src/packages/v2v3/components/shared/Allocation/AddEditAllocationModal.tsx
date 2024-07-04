@@ -69,7 +69,6 @@ export const AddEditAllocationModal = ({
 }) => {
   const { primaryETHTerminalFee } = useContext(V2V3ProjectContext)
 
-  i
   const { totalAllocationAmount, allocations, allocationCurrency } =
     Allocation.useAllocationInstance()
   const [form] = Form.useForm<AddEditAllocationModalFormProps>()

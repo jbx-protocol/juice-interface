@@ -160,7 +160,7 @@ export function Footer() {
         </div>
 
         <div className="mt-32 flex justify-between border-t border-slate-400 pb-16 pt-5">
-          <span className="text-slate-200">© Juicebox 2023</span>
+          <span className="text-slate-200">© Juicebox 2024</span>
 
           <div className="flex gap-x-7">
             {gitCommit && <AppVersion gitCommit={gitCommit} />}

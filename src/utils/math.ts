@@ -7,11 +7,6 @@ export type WeightFunction = (
   outputType: 'payer' | 'reserved',
 ) => string
 
-// Determines if a string value contains only digits
-export const stringIsDigit = (value: string) => {
-  return /^\d+$/.test(value)
-}
-
 /**
  * Rounds up a number to the nearest integer if it is very close to the next highest integer.
  * The closeness is determined by a precision parameter.

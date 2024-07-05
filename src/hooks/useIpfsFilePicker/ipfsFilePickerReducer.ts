@@ -5,7 +5,7 @@ export type IpfsFilePickerState = {
   uploadProgress: number | null
 }
 
-export type IpfsFilePickerAction =
+type IpfsFilePickerAction =
   | {
       type: 'uploading'
     }

@@ -536,9 +536,6 @@ msgstr ""
 msgid "If locked, this payout can't be edited or removed until the lock expires or the cycle is edited."
 msgstr ""
 
-msgid "You have unsaved changes. Are you sure you want to discard them?"
-msgstr ""
-
 msgid "I understand"
 msgstr ""
 
@@ -2813,9 +2810,6 @@ msgstr ""
 msgid "Whatever you're building or creating — get it launched and funded on Juicebox."
 msgstr ""
 
-msgid "Discard"
-msgstr ""
-
 msgid "Connect wallet to pay"
 msgstr ""
 
@@ -3894,9 +3888,6 @@ msgid "Cycle #1 starts when you create your project. With locked cycles, if you 
 msgstr ""
 
 msgid "Notice from {projectName}"
-msgstr ""
-
-msgid "Unsaved changes"
 msgstr ""
 
 msgid "Making it fun & exciting to discover, launch and manage projects."

@@ -1,6 +1,6 @@
+import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
-import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { JBChainId, JBProjectProvider } from 'juice-sdk-react'
 import { useRouter } from 'next/router'
 import { V4ProjectDashboard } from 'packages/v4/views/V4ProjectDashboard/V4ProjectDashboard'
@@ -43,7 +43,7 @@ const Providers: React.FC<
   PropsWithChildren & { chainId: JBChainId; projectId: bigint }
 > = ({ chainId, projectId, children }) => {
   return (
-    <ReactQueryProvider>
+    <AppWrapper>
       <WagmiProvider config={wagmiConfig}>
         <JBProjectProvider
           chainId={chainId}
@@ -55,7 +55,7 @@ const Providers: React.FC<
           {children}
         </JBProjectProvider>
       </WagmiProvider>
-    </ReactQueryProvider>
+    </AppWrapper>
   )
 }
 

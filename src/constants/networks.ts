@@ -12,6 +12,7 @@ type NetworkInfo = {
   chainId: number
   blockExplorer: string
   rpcUrl: string
+  token: string
 }
 
 let hostname = 'localhost'
@@ -25,6 +26,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     label: 'Ethereum Mainnet',
     color: '#ff8b9e',
     chainId: 1,
+    token: 'ETH',
     rpcUrl: `https://mainnet.infura.io/v3/${infuraId}`,
     blockExplorer: 'https://etherscan.io/',
   },
@@ -35,6 +37,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     chainId: 11155111,
     blockExplorer: 'https://sepolia.etherscan.io',
     rpcUrl: `https://sepolia.infura.io/v3/${infuraId}`,
+    token: 'SepETH',
   },
 }
 

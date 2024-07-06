@@ -29,6 +29,7 @@ exports[`ConfigurationDisplayCard renders 1`] = `
         <svg
           aria-hidden="true"
           class="h-6 w-6"
+          data-slot="icon"
           fill="none"
           stroke="currentColor"
           stroke-width="1.5"
@@ -36,7 +37,7 @@ exports[`ConfigurationDisplayCard renders 1`] = `
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+            d="m19.5 8.25-7.5 7.5-7.5-7.5"
             stroke-linecap="round"
             stroke-linejoin="round"
           />

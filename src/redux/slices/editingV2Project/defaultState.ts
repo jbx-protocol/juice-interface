@@ -5,7 +5,6 @@ import {
 } from 'constants/splits'
 import { constants } from 'ethers'
 
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { BigNumber } from 'ethers'
 import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewards'
 import {
@@ -24,7 +23,6 @@ import {
   serializeV2V3FundingCycleMetadata,
 } from 'packages/v2v3/utils/serializers'
 import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { CreateState, ProjectState } from './types'
 
 const DEFAULT_DOMAIN = 'juicebox'
@@ -138,13 +136,7 @@ const DEFAULT_PROJECT_STATE: ProjectState = {
     postPayModal: undefined,
     flags: DEFAULT_NFT_FLAGS,
     governanceType: JB721GovernanceType.NONE,
-    pricing: featureFlagEnabled(
-      FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION,
-    )
-      ? {
-          currency: V2V3_CURRENCY_USD,
-        }
-      : DEFAULT_NFT_PRICING, // TODO add to form,
+    pricing: DEFAULT_NFT_PRICING,
   },
   mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
   inputProjectOwner: undefined,

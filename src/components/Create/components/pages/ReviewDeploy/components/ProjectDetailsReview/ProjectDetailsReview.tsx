@@ -1,16 +1,11 @@
 import { Trans, t } from '@lingui/macro'
-import { Callout } from 'components/Callout/Callout'
 import EthereumAddress from 'components/EthereumAddress'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
 import { RichPreview } from 'components/RichPreview/RichPreview'
-import { AmountInCurrency } from 'components/currency/AmountInCurrency'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useWallet } from 'hooks/Wallet'
 import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { featureFlagEnabled } from 'utils/featureFlags'
-import { parseWad } from 'utils/format/formatNumber'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
 import { ReviewDescription } from '../ReviewDescription'
@@ -171,57 +166,6 @@ export const ProjectDetailsReview = () => {
           )
         }
       />
-
-      {featureFlagEnabled(FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION) && (
-        <>
-          {introVideoUrl && introImageUri ? (
-            <Callout.Warning className="col-span-4">
-              Intro video and image are both set. Only the video will be seen on
-              the juicecrowd project
-            </Callout.Warning>
-          ) : null}
-          <ReviewDescription
-            className="col-span-4"
-            title={t`Juicecrowd intro video`}
-            desc={
-              youtubeUrl ? (
-                <div className="relative w-full overflow-hidden rounded-lg pt-[56.25%]">
-                  <iframe
-                    className="absolute top-0 left-0 h-full w-full"
-                    src={youtubeUrl}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="Embedded youtube"
-                  />
-                </div>
-              ) : null
-            }
-          />
-          <ReviewDescription
-            title={t`Juicecrowd intro image`}
-            desc={
-              introImageSrc ? (
-                <img
-                  width={144}
-                  src={introImageSrc}
-                  alt={`${name} intro image`}
-                />
-              ) : null
-            }
-          />
-          <ReviewDescription
-            title={t`Juicecrowd soft target`}
-            desc={
-              softTargetAmount ? (
-                <AmountInCurrency
-                  amount={parseWad(softTargetAmount)}
-                  currency={softTargetCurrency === '1' ? 'ETH' : 'USD'}
-                />
-              ) : null
-            }
-          />
-        </>
-      )}
     </div>
   )
 }

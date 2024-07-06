@@ -1,0 +1,15 @@
+overwrite: true
+schema: ${NEXT_PUBLIC_V4_SUBGRAPH_URL}
+documents: 'src/packages/v4/graphql/queries/**/*.graphql'
+generates:
+  src/packages/v4/graphql/client/:
+    preset: 'client'
+  src/packages/v4/graphql/graphql.schema.json:
+    plugins:
+      - 'introspection'
+config:
+  namingConvention:
+    enumValues: keep
+  avoidOptionals:
+    field: true
+  skipTypename: true

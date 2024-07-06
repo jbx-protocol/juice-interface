@@ -1,9 +1,12 @@
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { JBChainId, JBProjectProvider } from 'juice-sdk-react'
 import { useRouter } from 'next/router'
+import { V4ProjectDashboard } from 'packages/v4/views/V4ProjectDashboard/V4ProjectDashboard'
 import { wagmiConfig } from 'pages/v4/wagmiConfig'
 import React, { PropsWithChildren } from 'react'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import {
   arbitrumSepolia,
   baseSepolia,
@@ -30,9 +33,7 @@ export default function V4ProjectPage() {
   return (
     <_Wrapper>
       <Providers chainId={chainId} projectId={BigInt(projectId as string)}>
-        <div>
-          Hello {chainName} {projectId}
-        </div>
+        <V4ProjectDashboard />
       </Providers>
     </_Wrapper>
   )
@@ -64,8 +65,17 @@ const _Wrapper: React.FC<PropsWithChildren> = ({ children }) => {
   React.useEffect(() => {
     setHasMounted(true)
   }, [])
+
   if (!hasMounted) {
     return null
+  }
+
+  if (!featureFlagEnabled(FEATURE_FLAGS.V4)) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        Too early sir. Please come back later. 🫡
+      </div>
+    )
   }
 
   return <>{children}</>

@@ -473,9 +473,6 @@ msgstr ""
 msgid "Receive {receivedTickets} {receivedTokenSymbolText} {suffix}"
 msgstr ""
 
-msgid "👷‍♂️ Juicecrowd"
-msgstr ""
-
 msgid "Amount to pay out"
 msgstr ""
 
@@ -513,9 +510,6 @@ msgid "Experimental flags"
 msgstr ""
 
 msgid "Edit {allocationName}"
-msgstr ""
-
-msgid "Soft target for funding"
 msgstr ""
 
 msgid "Newsletter"
@@ -971,9 +965,6 @@ msgstr ""
 msgid "Download Template"
 msgstr ""
 
-msgid "Add a YouTube video to the top of your Juicecrowd project's page. Video will take priority over image"
-msgstr ""
-
 msgid "Project owner (you)"
 msgstr ""
 
@@ -1265,9 +1256,6 @@ msgstr ""
 msgid "Use NFTs for redemptions"
 msgstr ""
 
-msgid "Launch date: {0} ({1})"
-msgstr ""
-
 msgid "Assets"
 msgstr ""
 
@@ -1322,16 +1310,10 @@ msgstr ""
 msgid "Transfer ETH to this project"
 msgstr ""
 
-msgid "Juicecrowd intro image"
-msgstr ""
-
 msgid "Using a duration is recommended. Without one, you can edit your cycle at any time, which may appear risky."
 msgstr ""
 
 msgid "<0>Your unclaimed {tokenSymbol} tokens:</0> {0}"
-msgstr ""
-
-msgid "Juicecrowd intro video"
 msgstr ""
 
 msgid "Limited"
@@ -2300,9 +2282,6 @@ msgstr ""
 msgid "Unlimited payouts."
 msgstr ""
 
-msgid "The soft target for the juicecrowd project. Note: this is not a cap, but a expected target for the project."
-msgstr ""
-
 msgid "<0>View transactions.</0>"
 msgstr ""
 
@@ -2709,9 +2688,6 @@ msgid "Minutes"
 msgstr ""
 
 msgid "Approve migration for your {0} v{version} legacy ERC-20 tokens."
-msgstr ""
-
-msgid "Intro video YouTube URL"
 msgstr ""
 
 msgid "Education"
@@ -3356,9 +3332,6 @@ msgstr ""
 msgid "The amount of ETH which can be paid out from this project during the cycle. Payouts reset each cycle."
 msgstr ""
 
-msgid "Intro image"
-msgstr ""
-
 msgid "Safe, Snapshot, or even on-chain governance: Juicebox uses simple standards and works with all of your favorite Ethereum tools."
 msgstr ""
 
@@ -3482,9 +3455,6 @@ msgstr ""
 msgid "Burn {tokensTextLong}"
 msgstr ""
 
-msgid "Add a Intro image to the top of the Juicecrowd project's page. If a video is also included, the video will always take priority."
-msgstr ""
-
 msgid "Duration"
 msgstr ""
 
@@ -3594,9 +3564,6 @@ msgid "Owner tools"
 msgstr ""
 
 msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
-msgstr ""
-
-msgid "Juicecrowd soft target"
 msgstr ""
 
 msgid "Reserved issuance rate"

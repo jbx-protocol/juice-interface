@@ -6,6 +6,7 @@ import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
+import { useInitWallet } from 'hooks/Wallet'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
@@ -45,12 +46,14 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
   hideNav,
 }) => {
   const router = useRouter()
+  useInitWallet()
 
   // run on initial mount
   useEffect(() => {
     installJuiceboxWindowObject()
   }, [])
 
+  // redirect legacy hash routes
   if (router.asPath.match(/^\/#\//)) {
     redirectTo(router.asPath.replace('/#/', ''))
   }

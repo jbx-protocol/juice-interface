@@ -3,6 +3,7 @@ import { Trans, t } from '@lingui/macro'
 import { QuickProjectSearchButton } from 'components/QuickProjectSearch/QuickProjectSearchButton'
 import { TruncatedText } from 'components/TruncatedText'
 import PatchedNextLink from 'components/fixes/PatchedNextLink'
+import { useWallet } from 'hooks/Wallet'
 import useMobile from 'hooks/useMobile'
 import { Fragment, useEffect, useState } from 'react'
 import { DropdownMenu } from './components/DropdownMenu'
@@ -11,6 +12,7 @@ import { LogoHomeButton } from './components/LogoHomeButton'
 import NavLanguageSelector from './components/NavLanguageSelector'
 import ThemePicker from './components/ThemePicker'
 import { TransactionsList } from './components/TransactionList/TransactionsList'
+import { ChangeNetworksButton } from './components/Wallet/ChangeNetworksButton'
 import { WalletButton } from './components/Wallet/WalletButton'
 
 export function SiteNavigation() {
@@ -29,6 +31,8 @@ export function SiteNavigation() {
 }
 
 const DesktopSiteNavigation = () => {
+  const { chainUnsupported } = useWallet()
+
   return (
     <div className="z-20 w-full min-w-0 px-6 xl:px-20">
       <nav className="flex items-center gap-12 bg-white px-0 py-4 dark:bg-slate-900">
@@ -40,7 +44,7 @@ const DesktopSiteNavigation = () => {
           </div>
 
           <div
-            className="stroke-tertiar flex flex-col shadow-lg outline-none md:inline-flex md:max-h-full md:w-full md:min-w-0 md:flex-row md:items-center md:justify-between md:gap-6 md:overflow-y-visible md:border-b-0 md:shadow-none"
+            className="stroke-tertiary flex flex-col shadow-lg outline-none md:inline-flex md:max-h-full md:w-full md:min-w-0 md:flex-row md:items-center md:justify-between md:gap-6 md:overflow-y-visible md:border-b-0 md:shadow-none"
             style={{
               maxHeight: 'initial',
               overflowY: 'visible',
@@ -74,7 +78,8 @@ const DesktopSiteNavigation = () => {
               </div>
             </div>
 
-            <div className="py-6 px-5 md:p-0">
+            <div className="flex items-center gap-2 py-6 px-5 md:p-0">
+              {chainUnsupported && <ChangeNetworksButton size="small" />}
               <WalletButton />
             </div>
           </div>
@@ -85,6 +90,8 @@ const DesktopSiteNavigation = () => {
 }
 
 const MobileSiteNavigation = () => {
+  const { chainUnsupported } = useWallet()
+
   return (
     <div className="fixed z-20 w-full min-w-0 md:static md:px-6 xl:px-20">
       <Popover
@@ -112,7 +119,7 @@ const MobileSiteNavigation = () => {
                 leaveTo="transform opacity-0 scale-95"
               >
                 <Popover.Panel
-                  className="stroke-tertiar flex flex-col shadow-lg outline-none md:inline-flex md:max-h-full md:w-full md:min-w-0 md:flex-row md:items-center md:justify-between md:gap-6 md:overflow-y-visible md:border-b-0 md:shadow-none"
+                  className="stroke-tertiary flex flex-col shadow-lg outline-none md:inline-flex md:max-h-full md:w-full md:min-w-0 md:flex-row md:items-center md:justify-between md:gap-6 md:overflow-y-visible md:border-b-0 md:shadow-none"
                   style={{
                     maxHeight: 'calc(100vh - 5rem)',
                     overflowY: 'auto',
@@ -153,7 +160,8 @@ const MobileSiteNavigation = () => {
                     </div>
                   </div>
 
-                  <div className="py-6 px-5 md:p-0">
+                  <div className="py-6 px-5 md:p-0 flex flex-col gap-2">
+                    {chainUnsupported && <ChangeNetworksButton block />}
                     <WalletButton />
                   </div>
                 </Popover.Panel>

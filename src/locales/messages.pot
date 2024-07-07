@@ -3515,6 +3515,9 @@ msgstr ""
 msgid "Made a mistake?"
 msgstr ""
 
+msgid "Change networks"
+msgstr ""
+
 msgid "Token holders <0>cannot redeem their tokens</0> for ETH when the redemption rate is 0%."
 msgstr ""
 

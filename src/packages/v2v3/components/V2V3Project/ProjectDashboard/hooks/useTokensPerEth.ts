@@ -1,5 +1,5 @@
 import { CurrencyContext } from 'contexts/CurrencyContext'
-import { BigNumber } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 import useWeiConverter from 'hooks/useWeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
@@ -8,10 +8,7 @@ import {
   V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
-import {
-  formatIssuanceRate,
-  weightAmountPermyriad,
-} from 'packages/v2v3/utils/math'
+import { weightAmountPermyriad } from 'packages/v2v3/utils/math'
 import { useCallback, useContext, useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -56,9 +53,8 @@ export function useTokensPerEth(
         wei,
         'payer',
       )
-      return exchangeRate
-        ? formattedNum(formatIssuanceRate(exchangeRate))
-        : undefined
+      const rate = BigNumber.from(exchangeRate)
+      return formattedNum(utils.formatUnits(rate, 18))
     },
     [weight, reservedRate],
   )

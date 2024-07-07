@@ -2,6 +2,7 @@ import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import { TruncatedText } from 'components/TruncatedText'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import { ReactNode, useMemo } from 'react'
 import { ConfigurationPanelTableData } from './ConfigurationPanel'
@@ -87,13 +88,17 @@ const ConfigurationTableRow = ({
   <div className="flex justify-between gap-10 border-b border-grey-200 py-3 dark:border-slate-500">
     <div className="flex justify-between gap-3 font-medium">{name}</div>
     {!loading ? (
-      <div className="flex gap-1">
+      <div className="flex min-w-0 gap-1">
         {link ? (
-          <ExternalLink onClick={e => e.stopPropagation()} href={link}>
-            {value}
-          </ExternalLink>
+          <TruncatedText
+            text={
+              <ExternalLink onClick={e => e.stopPropagation()} href={link}>
+                {value}
+              </ExternalLink>
+            }
+          />
         ) : (
-          <div className="truncate text-end">{value}</div>
+          <TruncatedText text={value} />
         )}
         {easyCopy && <CopyTextButton value={value as string} />}
       </div>

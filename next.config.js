@@ -69,6 +69,7 @@ const CONNECT_SRC = [
   ...WALLET_CONNECT_URLS,
   'https://*.supabase.co',
   'https://api.ensideas.com',
+  'https://cloudflare-eth.com',
 ]
 
 const FRAME_ANCESTORS = [

@@ -13,7 +13,6 @@ import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/inputs/PrefixedInput'
 import { RichEditor } from 'components/RichEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
@@ -26,7 +25,6 @@ import { useCallback, useContext, useMemo, useState } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
-import { featureFlagEnabled } from 'utils/featureFlags'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
 import { PageContext } from '../../Wizard/contexts/PageContext'
@@ -213,52 +211,6 @@ export const ProjectDetailsPage: React.FC<
               <JuiceTextArea autoSize={{ minRows: 4, maxRows: 6 }} />
             </Form.Item>
           </CreateCollapse.Panel>
-          {featureFlagEnabled(
-            FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION,
-          ) && (
-            <CreateCollapse.Panel
-              key={4}
-              header={<OptionalHeader header={t`👷‍♂️ Juicecrowd`} />}
-              hideDivider
-            >
-              <Form.Item
-                name="introVideoUrl"
-                label={t`Intro video YouTube URL`}
-                tooltip={t`Add a YouTube video to the top of your Juicecrowd project's page. Video will take priority over image`}
-              >
-                <JuiceInput />
-              </Form.Item>
-
-              <Form.Item
-                name="introImageUri"
-                label={t`Intro image`}
-                tooltip={t`Add a Intro image to the top of the Juicecrowd project's page. If a video is also included, the video will always take priority.`}
-              >
-                <FormImageUploader text={t`Upload`} maxSizeKBs={10000} />
-              </Form.Item>
-
-              <Form.Item
-                name="softTarget"
-                label={<Trans>Soft target for funding</Trans>}
-                tooltip={t`The soft target for the juicecrowd project. Note: this is not a cap, but a expected target for the project.`}
-              >
-                <AmountInput />
-              </Form.Item>
-
-              {/* <Form.Item
-                name="startTimestamp"
-                label={<Trans>Start date timestamp</Trans>}
-                tooltip={t`The timestamp for the start of the project.`}
-              >
-                <JuiceInput />
-              </Form.Item> */}
-              {launchDate && (
-                <div className="text-gray-500 text-sm">
-                  {t`Launch date: ${launchDate.local} (${launchDate.utc})`}
-                </div>
-              )}
-            </CreateCollapse.Panel>
-          )}
         </CreateCollapse>
       </div>
 

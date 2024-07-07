@@ -1,9 +1,7 @@
-import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readProvider } from 'constants/readProvider'
 import { BigNumber, providers } from 'ethers'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { TransactionCallbacks } from 'models/transaction'
-import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { useCallback, useState } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import {
@@ -13,8 +11,6 @@ import {
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { featureFlagEnabled } from 'utils/featureFlags'
-import { parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { useDeployNftProject } from './hooks/NFT/useDeployNftProject'
 import { useIsNftProject } from './hooks/NFT/useIsNftProject'
@@ -193,30 +189,6 @@ export const useDeployProject = () => {
       let softTargetAmount: string | undefined
       let softTargetCurrency: string | undefined
       let domain = JUICEBOX_DOMAIN
-
-      if (
-        featureFlagEnabled(FEATURE_FLAGS.JUICE_CROWD_METADATA_CONFIGURATION)
-      ) {
-        // metadata is enabled, ensure price set properly
-        if (projectMetadata.softTargetAmount) {
-          // Set currency to USD if not set
-          softTargetCurrency = projectMetadata.softTargetCurrency
-            ? projectMetadata.softTargetCurrency
-            : V2V3_CURRENCY_USD.toString()
-          // Parse to wad format
-          softTargetAmount = parseWad(
-            projectMetadata.softTargetAmount,
-          ).toString()
-        }
-
-        // Set domain to juicecrowd if juicecrowd project
-        if (
-          projectMetadata.softTargetAmount &&
-          (projectMetadata.introVideoUrl || projectMetadata.introImageUri)
-        ) {
-          domain = JUICECROWD_DOMAIN
-        }
-      }
 
       let projectMetadataCid: string | undefined
       try {

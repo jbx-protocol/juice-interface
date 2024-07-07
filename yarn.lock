@@ -5323,15 +5323,6 @@
     "@walletconnect/modal" "2.6.2"
     cbw-sdk "npm:@coinbase/wallet-sdk@3.9.3"
 
-"@wagmi/core@2.10.4":
-  version "2.10.4"
-  resolved "https://registry.yarnpkg.com/@wagmi/core/-/core-2.10.4.tgz#13113dc5a9817e731671cb7cb457f2571e98aa24"
-  integrity sha512-X/PW4zckkSQ/y4LwkQ5cwLKv551I6kVorH3VsTQghxYt0Vj9K5/XhCCRQg5Q200u6fiUCJ+2WjpmhZu3XYNU9w==
-  dependencies:
-    eventemitter3 "5.0.1"
-    mipd "0.0.5"
-    zustand "4.4.1"
-
 "@wagmi/core@2.11.6":
   version "2.11.6"
   resolved "https://registry.yarnpkg.com/@wagmi/core/-/core-2.11.6.tgz#bfb592e76fe5c863e4faec545874abdc4df00fe8"
@@ -5922,17 +5913,6 @@
     "@web3-onboard/common" "^2.4.1"
     "@web3-onboard/core" "2.22.2"
     use-sync-external-store "1.0.0"
-
-"@web3-onboard/wagmi@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/wagmi/-/wagmi-2.0.1.tgz#283bbac7aa8817a91aadeb8ee23f5b1cdeae8080"
-  integrity sha512-j/WQ85MaMJzf0MbRMlPh/7xt72u7F6dUifhwjnlr6yWtl56PB5fNgc/LLD0ax923Zd0cRujUvkw4LW8OtRUxbg==
-  dependencies:
-    "@wagmi/core" "2.10.4"
-    "@web3-onboard/common" "^2.4.1"
-    eventemitter3 "^4.0.7"
-    joi "17.9.1"
-    viem "2.12.0"
 
 "@web3-onboard/walletconnect@^2.6.1":
   version "2.6.1"

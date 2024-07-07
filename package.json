@@ -91,7 +91,6 @@
     "@web3-onboard/gnosis": "^2.3.1",
     "@web3-onboard/injected-wallets": "^2.11.1",
     "@web3-onboard/react": "^2.9.2",
-    "@web3-onboard/wagmi": "^2.0.1",
     "@web3-onboard/walletconnect": "^2.6.1",
     "antd": "^4.24.0",
     "apollo-link-scalars": "^4.0.2",

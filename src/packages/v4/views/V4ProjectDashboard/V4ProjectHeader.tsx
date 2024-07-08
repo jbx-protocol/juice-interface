@@ -5,41 +5,42 @@ import { Badge } from 'components/Badge'
 import { DomainBadge } from 'components/DomainBadge'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
+import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
+import { ProjectHeaderPopupMenu } from 'components/Project/ProjectHeader/ProjectHeaderPopupMenu'
+import { ProjectHeaderStats } from 'components/Project/ProjectHeader/ProjectHeaderStats'
+import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
+import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
+import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
 import { TruncatedText } from 'components/TruncatedText'
 import useMobile from 'hooks/useMobile'
 import Link from 'next/link'
-import { useProjectHeader } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectHeader'
-import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
-import { useV2V3WalletHasPermission } from 'packages/v2v3/hooks/contractReader/useV2V3WalletHasPermission'
-import { V2V3OperatorPermission } from 'packages/v2v3/models/permissions'
+import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
 import { twMerge } from 'tailwind-merge'
-import { settingsPagePath, v2v3ProjectRoute } from 'utils/routes'
-import { SocialLink } from '../../hooks/useAboutPanel'
-import { useSocialLinks } from '../../hooks/useSocialLinks'
-import { SocialLinkButton } from '../ui/SocialLinkButton'
-import { ProjectHeaderLogo } from './components/ProjectHeaderLogo'
-import { ProjectHeaderPopupMenu } from './components/ProjectHeaderPopupMenu'
-import { ProjectHeaderStats } from './components/ProjectHeaderStats'
-import { Subtitle } from './components/Subtitle'
+import { settingsPagePath, v4ProjectRoute } from 'utils/routes'
+import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
 
-export const ProjectHeader = ({ className }: { className?: string }) => {
+export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
+
+export const V4ProjectHeader = ({ className }: { className?: string }) => {
   const socialLinks = useSocialLinks()
 
   const {
     title,
     subtitle,
+    chainName,
     domain,
     projectId,
-    handle,
     owner,
     gnosisSafe,
     archived,
     createdAtSeconds,
-  } = useProjectHeader()
+  } = useV4ProjectHeader()
   const isMobile = useMobile()
-  const canReconfigure = useV2V3WalletHasPermission(
-    V2V3OperatorPermission.RECONFIGURE,
-  )
+
+  const canReconfigure = true
+  // TODO: useV4WalletHasPermission(
+  //   V4OperatorPermission.RECONFIGURE,
+  // )
 
   // convert createdAtSeconds to date string Month DD, YYYY in local time
   const createdAt = createdAtSeconds
@@ -75,7 +76,7 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
               <ProjectHeaderPopupMenu projectId={projectId} />
               {canReconfigure && (
                 <Link
-                  href={settingsPagePath(undefined, { handle, projectId })}
+                  href={settingsPagePath(undefined, { projectId })}
                   legacyBehavior
                 >
                   <Button size="small">
@@ -113,10 +114,10 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
                 <Subtitle subtitle={subtitle.text} />
               ))}
             <div className="text-grey-500 dark:text-slate-200">
-              {projectId ? (
-                <V2V3ProjectHandleLink
+              {projectId && chainName ? (
+                <V4ProjectHandleLink
                   className="text-grey-500 dark:text-slate-200"
-                  handle={handle}
+                  chainName={chainName}
                   projectId={projectId}
                 />
               ) : null}
@@ -127,10 +128,10 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
                 <Trans>
                   Owned by: <EthereumAddress address={owner} />
                 </Trans>
-                {gnosisSafe && (
+                {gnosisSafe && projectId && (
                   <GnosisSafeBadge
                     safe={gnosisSafe}
-                    href={`${v2v3ProjectRoute({ projectId })}/safe`}
+                    href={`${v4ProjectRoute({ projectId })}/safe`}
                   />
                 )}
               </span>

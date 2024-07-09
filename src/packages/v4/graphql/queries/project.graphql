@@ -5,5 +5,8 @@ query Projects($where: Project_filter, $first: Int, $skip: Int) {
     handle
     contributorsCount
     createdAt
+    volume
+    trendingVolume
+    paymentsCount
   }
 }

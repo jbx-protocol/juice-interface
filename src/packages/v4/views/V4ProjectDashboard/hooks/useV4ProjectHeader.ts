@@ -3,9 +3,13 @@ import { BigNumber } from 'ethers'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { SubtitleType, useSubtitle } from 'hooks/useSubtitle'
+import {
+  useReadJbProjectsOwnerOf,
+} from 'juice-sdk-react'
 import { GnosisSafe } from 'models/safe'
 import { useRouter } from 'next/router'
-
+import { ProjectsDocument } from 'packages/v4/graphql/client/graphql'
+import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 export interface ProjectHeaderData {
   title: string | undefined
   subtitle: { text: string; type: SubtitleType } | undefined
@@ -24,20 +28,37 @@ export interface ProjectHeaderData {
 export const useV4ProjectHeader = (): ProjectHeaderData => {
   const router = useRouter()
   const { projectMetadata, projectId } = useProjectMetadataContext()
-  // const {
-  //   handle,
-  //   projectOwnerAddress,
-  //   totalVolume,
-  //   trendingVolume,
-  //   paymentsCount,
-  //   createdAt,
-  // } = useContext(V2V3ProjectContext) -> How it looks on v2v3
+  
+  const _projectId = BigInt(projectId ?? 0)
 
-  const projectOwnerAddress = 'placeholderData'
-  const totalVolume = 100n
-  const trendingVolume =  100n
-  const paymentsCount =  100
-  const createdAt = 100
+  const { data: projectOwnerAddress } = useReadJbProjectsOwnerOf({
+    args: [_projectId],
+  })
+
+  const { data } = useSubgraphQuery(
+    ProjectsDocument,
+    {
+      where: {
+        projectId,
+      },
+    },
+  )
+
+  const projectStatsData = data?.projects?.[0]
+  const {
+    createdAt,
+    volume: totalVolumeStr,
+    trendingVolume: trendingVolumeStr,
+    paymentsCount,
+  } = projectStatsData ?? {
+    createdAt: 0,
+    volume: '0',
+    trendingVolume: '0',
+    paymentsCount: 0,
+  }
+
+  const totalVolume = BigInt(totalVolumeStr)
+  const trendingVolume = BigInt(trendingVolumeStr)
 
   const { chainName } = router.query
 

@@ -10,11 +10,11 @@ export default function V4ProjectMetadataProvider({
 }: PropsWithChildren<{
   projectId: bigint
 }>) {
-  const _projectId = parseInt(projectId.toString())
+  const _projectId = Number(projectId)
 
   const { metadata } = useJBProjectMetadataContext()
 
-  const projectMetadata = metadata?.data!
+  const projectMetadata = metadata?.data ?? undefined
 
   const isArchived =
     ((_projectId && isHardArchived({ pv: PV_V4, projectId: _projectId })) ||

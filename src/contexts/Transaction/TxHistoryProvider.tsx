@@ -1,9 +1,7 @@
+import { readProvider } from 'constants/readProvider'
 import { useWallet } from 'hooks/Wallet'
 import { TransactionLog, TxStatus } from 'models/transaction'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
-import { clearInterval, setInterval } from 'timers'
-
-import { readProvider } from '../../constants/readProvider'
 import { AddTransactionFunction, TxHistoryContext } from './TxHistoryContext'
 
 const nowSeconds = () => Math.round(new Date().valueOf() / 1000)

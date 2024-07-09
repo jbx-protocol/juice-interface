@@ -15,6 +15,8 @@ import { TruncatedText } from 'components/TruncatedText'
 import useMobile from 'hooks/useMobile'
 import Link from 'next/link'
 import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
+import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
+import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
 import { twMerge } from 'tailwind-merge'
 import { settingsPagePath, v4ProjectRoute } from 'utils/routes'
 import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
@@ -37,10 +39,9 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
   } = useV4ProjectHeader()
   const isMobile = useMobile()
 
-  const canReconfigure = true
-  // TODO: useV4WalletHasPermission(
-  //   V4OperatorPermission.RECONFIGURE,
-  // )
+  const canQueueRuleSets = useV4WalletHasPermission(
+    V4OperatorPermission.QUEUE_RULESETS,
+  )
 
   // convert createdAtSeconds to date string Month DD, YYYY in local time
   const createdAt = createdAtSeconds
@@ -74,7 +75,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                   ))}
               </div>
               <ProjectHeaderPopupMenu projectId={projectId} />
-              {canReconfigure && (
+              {canQueueRuleSets && (
                 <Link
                   href={settingsPagePath(undefined, { projectId })}
                   legacyBehavior

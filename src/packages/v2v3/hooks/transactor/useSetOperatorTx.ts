@@ -8,7 +8,7 @@ import {
 } from 'hooks/useTransactor'
 import { useWallet } from 'hooks/Wallet'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
-import type { V2V3OperatorPermission } from 'packages/v2v3/models/permissions'
+import type { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
 import { useContext } from 'react'
 import invariant from 'tiny-invariant'
 import { truncateEthAddress } from 'utils/format/formatAddress'

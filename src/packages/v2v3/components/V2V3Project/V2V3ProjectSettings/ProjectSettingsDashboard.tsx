@@ -11,7 +11,7 @@ import { useDistributableAmount } from 'packages/v2v3/components/V2V3Project/Pro
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useV2V3WalletHasPermission } from 'packages/v2v3/hooks/contractReader/useV2V3WalletHasPermission'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { V2V3OperatorPermission } from 'packages/v2v3/models/permissions'
+import { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
 import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
 import { useContext } from 'react'
 import { useProjectHasErc20Token } from '../ProjectDashboard/hooks/useProjectHasErc20Token'

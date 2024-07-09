@@ -1,5 +1,5 @@
 import { useV2V3WalletHasPermission } from 'packages/v2v3/hooks/contractReader/useV2V3WalletHasPermission'
-import { V2V3OperatorPermission } from 'packages/v2v3/models/permissions'
+import { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
 import { useMemo } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { useProjectContext } from '../useProjectContext'

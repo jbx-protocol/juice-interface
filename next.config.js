@@ -70,6 +70,7 @@ const CONNECT_SRC = [
   'https://*.supabase.co',
   'https://api.ensideas.com',
   'https://cloudflare-eth.com',
+  'https://rpc.sepolia.org/'
 ]
 
 const FRAME_ANCESTORS = [

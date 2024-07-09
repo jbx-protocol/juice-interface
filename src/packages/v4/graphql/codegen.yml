@@ -10,6 +10,8 @@ generates:
 config:
   namingConvention:
     enumValues: keep
+  scalars:
+    BigInt: bigint
   avoidOptionals:
     field: true
   skipTypename: true

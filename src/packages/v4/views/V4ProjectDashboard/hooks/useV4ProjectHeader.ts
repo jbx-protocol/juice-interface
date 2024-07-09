@@ -5,7 +5,7 @@ import { SubtitleType, useSubtitle } from 'hooks/useSubtitle'
 import {
   useJBContractContext,
   useJBProjectMetadataContext,
-  useReadJbProjectsOwnerOf
+  useReadJbProjectsOwnerOf,
 } from 'juice-sdk-react'
 import { GnosisSafe } from 'models/safe'
 import { useRouter } from 'next/router'
@@ -29,7 +29,7 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
   const router = useRouter()
   const { projectId } = useJBContractContext()
   const { metadata } = useJBProjectMetadataContext()
-  const projectMetadata = metadata?.data!
+  const projectMetadata = metadata?.data
 
   const { data: projectOwnerAddress } = useReadJbProjectsOwnerOf({
     args: [projectId],
@@ -37,14 +37,11 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
 
   const projectIdNum = parseInt(projectId.toString())
 
-  const { data } = useSubgraphQuery(
-    ProjectsDocument,
-    {
-      where: {
-        projectId: projectIdNum,
-      },
+  const { data } = useSubgraphQuery(ProjectsDocument, {
+    where: {
+      projectId: projectIdNum,
     },
-  )
+  })
 
   const projectStatsData = data?.projects?.[0]
   const {
@@ -68,14 +65,14 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
     totalVolume: BigNumber.from(totalVolume ?? 0),
     trendingVolume: BigNumber.from(trendingVolume ?? 0),
   })
-  
+
   const { data: gnosisSafe } = useGnosisSafe(projectOwnerAddress)
 
-  const subtitle = useSubtitle(projectMetadata)
+  const subtitle = useSubtitle(projectMetadata ?? undefined)
 
   return {
     title: projectMetadata?.name,
-    chainName: chainName as string,
+    chainName: chainName as string, // TODO make this better. Single source for chain names, derived from useJBChainId.
     subtitle,
     projectId: projectIdNum,
     owner: projectOwnerAddress,

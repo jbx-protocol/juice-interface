@@ -1,6 +1,6 @@
 import ProjectLogo from 'components/ProjectLogo'
 import { twMerge } from 'tailwind-merge'
-import { useProjectHeaderLogo } from '../hooks/useProjectHeaderLogo'
+import { useProjectHeaderLogo } from './hooks/useProjectHeaderLogo'
 
 export const ProjectHeaderLogo = ({ className }: { className?: string }) => {
   const { projectId, projectLogoUri, projectLogoName } = useProjectHeaderLogo()

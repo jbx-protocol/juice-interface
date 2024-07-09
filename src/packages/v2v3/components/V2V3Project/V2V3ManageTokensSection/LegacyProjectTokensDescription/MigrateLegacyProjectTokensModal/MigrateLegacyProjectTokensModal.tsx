@@ -19,7 +19,7 @@ import { useJBOperatorStoreForV3Token } from 'packages/v2v3/hooks/JBV3Token/cont
 import { useV1TicketBoothForV3Token } from 'packages/v2v3/hooks/JBV3Token/contracts/useV1TicketBoothForV3Token'
 import { useMigrateTokensTx } from 'packages/v2v3/hooks/JBV3Token/transactor/useMigrateTokensTx'
 import { useV2V3HasPermissions } from 'packages/v2v3/hooks/contractReader/useV2V3HasPermissions'
-import { V2V3OperatorPermission } from 'packages/v2v3/models/permissions'
+import { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
 import { useContext, useState } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 import { ApproveMigrationCallout } from './ApproveMigrationCallout'

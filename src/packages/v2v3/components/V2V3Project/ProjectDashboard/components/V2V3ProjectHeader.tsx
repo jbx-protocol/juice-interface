@@ -5,24 +5,24 @@ import { Badge } from 'components/Badge'
 import { DomainBadge } from 'components/DomainBadge'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
+import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
+import { ProjectHeaderPopupMenu } from 'components/Project/ProjectHeader/ProjectHeaderPopupMenu'
+import { ProjectHeaderStats } from 'components/Project/ProjectHeader/ProjectHeaderStats'
+import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
+import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
+import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
 import { TruncatedText } from 'components/TruncatedText'
 import useMobile from 'hooks/useMobile'
 import Link from 'next/link'
-import { useProjectHeader } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectHeader'
+import { useV2V3ProjectHeader } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useV2V3ProjectHeader'
 import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
 import { useV2V3WalletHasPermission } from 'packages/v2v3/hooks/contractReader/useV2V3WalletHasPermission'
-import { V2V3OperatorPermission } from 'packages/v2v3/models/permissions'
+import { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
 import { twMerge } from 'tailwind-merge'
 import { settingsPagePath, v2v3ProjectRoute } from 'utils/routes'
-import { SocialLink } from '../../hooks/useAboutPanel'
-import { useSocialLinks } from '../../hooks/useSocialLinks'
-import { SocialLinkButton } from '../ui/SocialLinkButton'
-import { ProjectHeaderLogo } from './components/ProjectHeaderLogo'
-import { ProjectHeaderPopupMenu } from './components/ProjectHeaderPopupMenu'
-import { ProjectHeaderStats } from './components/ProjectHeaderStats'
-import { Subtitle } from './components/Subtitle'
+import { SocialLink } from '../hooks/useAboutPanel'
 
-export const ProjectHeader = ({ className }: { className?: string }) => {
+export const V2V3ProjectHeader = ({ className }: { className?: string }) => {
   const socialLinks = useSocialLinks()
 
   const {
@@ -35,7 +35,7 @@ export const ProjectHeader = ({ className }: { className?: string }) => {
     gnosisSafe,
     archived,
     createdAtSeconds,
-  } = useProjectHeader()
+  } = useV2V3ProjectHeader()
   const isMobile = useMobile()
   const canReconfigure = useV2V3WalletHasPermission(
     V2V3OperatorPermission.RECONFIGURE,

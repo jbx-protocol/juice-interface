@@ -22,7 +22,7 @@ export interface ProjectHeaderData {
   createdAtSeconds: number | undefined
 }
 
-export const useProjectHeader = (): ProjectHeaderData => {
+export const useV2V3ProjectHeader = (): ProjectHeaderData => {
   const { projectMetadata, projectId } = useProjectMetadataContext()
   const {
     handle,

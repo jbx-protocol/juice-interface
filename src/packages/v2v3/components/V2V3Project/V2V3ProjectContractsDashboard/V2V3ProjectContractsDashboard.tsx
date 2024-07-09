@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
 import { Table } from 'antd'
 import EtherscanLink from 'components/EtherscanLink'
-import { ProjectHeader } from 'components/Project/ProjectHeader'
 import { BackToProjectButton } from 'components/buttons/BackToProjectButton'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
+import { ProjectHeader } from 'packages/v1/components/V1Project/V1ProjectHeader'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import {
@@ -31,7 +31,7 @@ const CONTRACT_EXCLUSIONS = [
 ]
 
 export function V2V3ProjectContractsDashboard() {
-  const { projectId } = useContext(ProjectMetadataContext)
+  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
   const { contracts } = useContext(V2V3ContractsContext)
   const { handle } = useContext(V2V3ProjectContext)
   const { contracts: projectContracts } = useContext(

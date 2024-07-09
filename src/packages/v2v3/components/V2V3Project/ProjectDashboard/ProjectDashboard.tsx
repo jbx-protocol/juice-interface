@@ -1,17 +1,17 @@
 import { Footer } from 'components/Footer/Footer'
+import { CoverPhoto } from 'components/Project/ProjectHeader/CoverPhoto'
 import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { twMerge } from 'tailwind-merge'
 import { BlockedProjectBanner } from './components/BlockedProjectBanner'
-import { CoverPhoto } from './components/CoverPhoto/CoverPhoto'
 import { FundingCycleCountdownProvider } from './components/FundingCycleCountdown/FundingCycleCountdownProvider'
 import { PayRedeemCard } from './components/PayRedeemCard'
-import { ProjectHeader } from './components/ProjectHeader/ProjectHeader'
 import { ProjectHeaderCountdown } from './components/ProjectHeaderCountdown'
 import { ProjectTabs } from './components/ProjectTabs/ProjectTabs'
 import { ReduxProjectCartProvider } from './components/ReduxProjectCartProvider'
 import { SuccessPayView } from './components/SuccessPayView/SuccessPayView'
+import { V2V3ProjectHeader } from './components/V2V3ProjectHeader'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 import { useProjectDispatch } from './redux/hooks'
 import { payRedeemActions } from './redux/payRedeemSlice'
@@ -35,7 +35,7 @@ export const ProjectDashboard = () => {
             </div>
             <div className="flex w-full justify-center md:px-6">
               <div className="flex w-full max-w-6xl flex-col">
-                <ProjectHeader className="mt-12 px-4 md:mt-4 md:px-0" />
+                <V2V3ProjectHeader className="mt-12 px-4 md:mt-4 md:px-0" />
                 <BlockedProjectBanner className="mt-10" />
                 <div
                   className={twMerge(

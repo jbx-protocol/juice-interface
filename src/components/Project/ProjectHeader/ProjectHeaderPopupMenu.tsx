@@ -9,10 +9,10 @@ import useMobile from 'hooks/useMobile'
 import { V2V3ProjectToolsDrawer } from 'packages/v2v3/components/V2V3Project/V2V3ProjectToolsDrawer'
 import { useMemo, useState } from 'react'
 import { twJoin } from 'tailwind-merge'
-import { PopupMenu } from '../../../../../../../../components/ui/PopupMenu'
-import { SocialLink } from '../../../hooks/useAboutPanel'
-import { useSocialLinks } from '../../../hooks/useSocialLinks'
-import { SocialLinkButton } from '../../ui/SocialLinkButton'
+import { SocialLink } from '../../../packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useAboutPanel'
+import { PopupMenu } from '../../ui/PopupMenu'
+import { SocialLinkButton } from './SocialLinkButton'
+import { useSocialLinks } from './hooks/useSocialLinks'
 
 export function ProjectHeaderPopupMenu({
   className,

@@ -3,14 +3,14 @@ import { ArrowTrendingUpIcon } from '@heroicons/react/24/outline'
 import { t, Trans } from '@lingui/macro'
 import ETHAmount from 'components/currency/ETHAmount'
 import { TRENDING_WINDOW_DAYS } from 'components/Projects/RankingExplanation'
-import { useProjectHeader } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectHeader'
 import { useProjectPageQueries } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
+import { useV2V3ProjectHeader } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useV2V3ProjectHeader'
 import { PropsWithChildren, useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ProjectHeaderStat } from './ProjectHeaderStat'
 
 export function ProjectHeaderStats() {
-  const { payments, totalVolume, last7DaysPercent } = useProjectHeader()
+  const { payments, totalVolume, last7DaysPercent } = useV2V3ProjectHeader()
   const { setProjectPageTab } = useProjectPageQueries()
 
   const openActivityTab = useCallback(

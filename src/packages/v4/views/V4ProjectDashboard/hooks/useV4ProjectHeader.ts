@@ -1,10 +1,10 @@
-import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { BigNumber } from 'ethers'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { SubtitleType, useSubtitle } from 'hooks/useSubtitle'
 import {
   useJBContractContext,
+  useJBProjectMetadataContext,
   useReadJbProjectsOwnerOf
 } from 'juice-sdk-react'
 import { GnosisSafe } from 'models/safe'
@@ -14,7 +14,6 @@ import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 export interface ProjectHeaderData {
   title: string | undefined
   subtitle: { text: string; type: SubtitleType } | undefined
-  domain: string | undefined
   projectId: number | undefined
   owner: string | undefined
   payments: number | undefined
@@ -29,7 +28,8 @@ export interface ProjectHeaderData {
 export const useV4ProjectHeader = (): ProjectHeaderData => {
   const router = useRouter()
   const { projectId } = useJBContractContext()
-  const { projectMetadata } = useProjectMetadataContext()
+  const { metadata } = useJBProjectMetadataContext()
+  const projectMetadata = metadata?.data!
 
   const { data: projectOwnerAddress } = useReadJbProjectsOwnerOf({
     args: [projectId],
@@ -77,7 +77,6 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
     title: projectMetadata?.name,
     chainName: chainName as string,
     subtitle,
-    domain: projectMetadata?.domain,
     projectId: projectIdNum,
     owner: projectOwnerAddress,
     payments: paymentsCount,

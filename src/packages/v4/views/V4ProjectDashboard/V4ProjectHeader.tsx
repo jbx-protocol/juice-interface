@@ -2,7 +2,6 @@ import { Cog6ToothIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button, Divider } from 'antd'
 import { Badge } from 'components/Badge'
-import { DomainBadge } from 'components/DomainBadge'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
@@ -30,7 +29,6 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
     title,
     subtitle,
     chainName,
-    domain,
     projectId,
     owner,
     gnosisSafe,
@@ -98,7 +96,6 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
           <h1 className="mb-0 font-heading text-3xl font-medium leading-none dark:text-slate-50 md:text-4xl">
             {title}
           </h1>
-          <DomainBadge domain={domain} projectId={projectId} />
         </div>
         <div className="flex">
           {archived ? <Badge variant="warning">Archived</Badge> : null}

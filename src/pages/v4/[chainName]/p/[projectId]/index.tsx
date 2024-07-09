@@ -5,7 +5,7 @@ import { JBChainId, JBProjectProvider } from 'juice-sdk-react'
 import { useRouter } from 'next/router'
 import V4ProjectMetadataProvider from 'packages/v4/contexts/V4ProjectMetadataProvider'
 import { V4ProjectDashboard } from 'packages/v4/views/V4ProjectDashboard/V4ProjectDashboard'
-import { wagmiConfig } from 'pages/v4/wagmiConfig'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import React, { PropsWithChildren } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import {

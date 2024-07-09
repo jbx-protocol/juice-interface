@@ -21,10 +21,10 @@ exports[`ConfigurationTable renders 1`] = `
             foo
           </div>
           <div
-            class="flex gap-1"
+            class="flex min-w-0 gap-1"
           >
             <div
-              class="truncate text-end"
+              class="truncate undefined"
             >
               <div
                 class="flex flex-col items-center gap-2"
@@ -88,10 +88,10 @@ exports[`ConfigurationTable renders 1`] = `
             bar
           </div>
           <div
-            class="flex gap-1"
+            class="flex min-w-0 gap-1"
           >
             <div
-              class="truncate text-end"
+              class="truncate undefined"
             >
               new
             </div>
@@ -106,10 +106,10 @@ exports[`ConfigurationTable renders 1`] = `
             baz
           </div>
           <div
-            class="flex gap-1"
+            class="flex min-w-0 gap-1"
           >
             <div
-              class="truncate text-end"
+              class="truncate undefined"
             >
               <div
                 class="flex flex-col items-center gap-2"

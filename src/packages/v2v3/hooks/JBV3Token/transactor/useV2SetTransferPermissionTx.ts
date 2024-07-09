@@ -1,7 +1,7 @@
 import { TransactorInstance } from 'hooks/useTransactor'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useSetOperatorTx } from 'packages/v2v3/hooks/transactor/useSetOperatorTx'
-import { V2V3OperatorPermission } from 'packages/v2v3/models/permissions'
+import { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
 import { useContext } from 'react'
 import { useJBOperatorStoreForV3Token } from '../contracts/useJBOperatorStoreForV3Token'
 import { useJBV3Token } from '../contracts/useJBV3Token'

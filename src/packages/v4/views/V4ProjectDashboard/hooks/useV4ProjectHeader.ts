@@ -4,7 +4,8 @@ import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { SubtitleType, useSubtitle } from 'hooks/useSubtitle'
 import {
-  useReadJbProjectsOwnerOf,
+  useJBContractContext,
+  useReadJbProjectsOwnerOf
 } from 'juice-sdk-react'
 import { GnosisSafe } from 'models/safe'
 import { useRouter } from 'next/router'
@@ -27,19 +28,20 @@ export interface ProjectHeaderData {
 
 export const useV4ProjectHeader = (): ProjectHeaderData => {
   const router = useRouter()
-  const { projectMetadata, projectId } = useProjectMetadataContext()
-  
-  const _projectId = BigInt(projectId ?? 0)
+  const { projectId } = useJBContractContext()
+  const { projectMetadata } = useProjectMetadataContext()
 
   const { data: projectOwnerAddress } = useReadJbProjectsOwnerOf({
-    args: [_projectId],
+    args: [projectId],
   })
+
+  const projectIdNum = parseInt(projectId.toString())
 
   const { data } = useSubgraphQuery(
     ProjectsDocument,
     {
       where: {
-        projectId,
+        projectId: projectIdNum,
       },
     },
   )
@@ -76,7 +78,7 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
     chainName: chainName as string,
     subtitle,
     domain: projectMetadata?.domain,
-    projectId,
+    projectId: projectIdNum,
     owner: projectOwnerAddress,
     payments: paymentsCount,
     totalVolume,

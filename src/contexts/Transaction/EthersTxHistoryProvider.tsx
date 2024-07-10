@@ -1,16 +1,13 @@
 import { readProvider } from 'constants/readProvider'
-import { useWallet } from 'hooks/Wallet'
 import { TransactionLog, TxStatus } from 'models/transaction'
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
-import { AddTransactionFunction, TxHistoryContext } from './TxHistoryContext'
+import { ReactNode, useEffect } from 'react'
+import { TxHistoryContext } from './TxHistoryContext'
+import { useTransactions } from './useTransactions'
 
 const nowSeconds = () => Math.round(new Date().valueOf() / 1000)
 
 const SHORT_POLL_INTERVAL_MILLISECONDS = 3 * 1000 // 3 sec
 const LONG_POLL_INTERVAL_MILLISECONDS = 12 * 1000 // 12 sec
-
-// Arbitrary time to give folks a sense of tx history
-const TX_HISTORY_TIME_SECS = 60 * 60 // 1 hr
 
 const pollTransaction = async (
   txLog: TransactionLog,
@@ -41,7 +38,10 @@ const pollTransaction = async (
   }
   // Tx has been mined
   if (response.confirmations > 0 && txLog.status === TxStatus.pending) {
-    console.info('TxHistoryProvider::calling `onConfirmed` callback', response)
+    console.info(
+      'EthersTxHistoryProvider::calling `onConfirmed` callback',
+      response,
+    )
     txLog.callbacks?.onConfirmed?.(response)
     return {
       ...txLog,
@@ -55,49 +55,13 @@ const pollTransaction = async (
   }
 }
 
-export default function TxHistoryProvider({
+export default function EthersTxHistoryProvider({
   children,
 }: {
   children: ReactNode
 }) {
-  const { userAddress, chain } = useWallet()
-  const [transactions, setTransactions] = useState<TransactionLog[]>([])
-
-  const localStorageKey = useMemo(
-    () =>
-      chain && userAddress
-        ? `transactions_${chain?.id}_${userAddress}`
-        : undefined,
-    [chain, userAddress],
-  )
-
-  // Sets TransactionLogs in both localStorage and state
-  // Ensures localStorage is always up to date, so we can persist good data on refresh
-  const _setTransactions = useCallback(
-    (txs: TransactionLog[]) => {
-      if (!localStorageKey) return
-
-      localStorage.setItem(localStorageKey, JSON.stringify(txs))
-      setTransactions(txs)
-    },
-    [localStorageKey],
-  )
-
-  // Load initial state
-  useEffect(() => {
-    if (!localStorageKey) return
-
-    _setTransactions(
-      JSON.parse(localStorage.getItem(localStorageKey) || '[]')
-        // Only persist txs that are failed/pending
-        // or were created within history window
-        .filter(
-          (tx: TransactionLog) =>
-            tx.status !== TxStatus.success ||
-            nowSeconds() - TX_HISTORY_TIME_SECS < tx.createdAt,
-        ) as TransactionLog[],
-    )
-  }, [_setTransactions, localStorageKey])
+  const { transactions, addTransaction, removeTransaction, setTransactions } =
+    useTransactions()
 
   // Setup poller for refreshing transactions
   useEffect(() => {
@@ -115,10 +79,10 @@ export default function TxHistoryProvider({
       ? SHORT_POLL_INTERVAL_MILLISECONDS
       : LONG_POLL_INTERVAL_MILLISECONDS
 
-    console.info('TxHistoryProvider::Setting poller', pollInterval)
+    console.info('EthersTxHistoryProvider::Setting poller', pollInterval)
 
     const poller = setInterval(async () => {
-      console.info('TxHistoryProvider::poller::polling for tx updates...')
+      console.info('EthersTxHistoryProvider::poller::polling for tx updates...')
 
       const transactionLogs = await Promise.all(
         transactions.map(txLog => {
@@ -127,43 +91,19 @@ export default function TxHistoryProvider({
       )
 
       console.info(
-        'TxHistoryProvider::poller::updating transactions state',
+        'EthersTxHistoryProvider::poller::updating transactions state',
         transactionLogs,
       )
-      _setTransactions(transactionLogs)
+      setTransactions(transactionLogs)
     }, pollInterval)
 
     // Clean up
     return () => {
-      console.info('TxHistoryProvider::poller::removing poller')
+      console.info('EthersTxHistoryProvider::poller::removing poller')
 
       clearInterval(poller)
     }
-  }, [transactions, _setTransactions])
-
-  const addTransaction: AddTransactionFunction = useCallback(
-    (title, tx, callbacks) => {
-      _setTransactions([
-        ...transactions,
-        {
-          // We use millis timestamp for id bcuz tx.hash may be undefined
-          // UI couldn't create 2 txs at the same millisecond ...right?
-          id: new Date().valueOf(),
-          title,
-          tx,
-          createdAt: nowSeconds(),
-          status: TxStatus.pending,
-          callbacks,
-        },
-      ])
-    },
-    [transactions, _setTransactions],
-  )
-
-  const removeTransaction = useCallback(
-    (id: number) => _setTransactions(transactions.filter(tx => tx.id !== id)),
-    [transactions, _setTransactions],
-  )
+  }, [transactions, setTransactions])
 
   return (
     <TxHistoryContext.Provider

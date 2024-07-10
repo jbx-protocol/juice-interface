@@ -44,7 +44,7 @@ const Providers: React.FC<
   PropsWithChildren & { chainId: JBChainId; projectId: bigint }
 > = ({ chainId, projectId, children }) => {
   return (
-    <AppWrapper>
+    <AppWrapper txHistoryProvider="wagmi">
       <WagmiProvider config={wagmiConfig}>
         <JBProjectProvider
           chainId={chainId}

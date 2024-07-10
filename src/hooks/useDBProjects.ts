@@ -76,7 +76,7 @@ export function useDBProjectsInfiniteQuery(
       // If the last page contains less than the expected page size,
       // it's safe to assume you're at the end.
       if (opts.pageSize && lastPage.length < opts.pageSize) {
-        return false
+        return undefined
       } else {
         return allPages.length
       }

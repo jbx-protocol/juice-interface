@@ -5,8 +5,8 @@ import { twMerge } from 'tailwind-merge'
 import {
   PopupMenu,
   PopupMenuProps,
-} from '../../../../../../../components/ui/PopupMenu'
-import { DisplayCard } from './DisplayCard'
+} from '../../ui/PopupMenu'
+import { DisplayCard } from '../DisplayCard'
 
 type Props = {
   title: ReactNode

@@ -2,20 +2,19 @@ import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { CyclesTab } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesTab'
 import { useMemo } from 'react'
-import { CurrentUpcomingSubPanel } from './components/CurrentUpcomingSubPanel'
-import { HistorySubPanel } from './components/HistorySubPanel'
+import { V4CurrentUpcomingSubPanel } from './V4CurrentUpcomingSubPanel'
 
-type CyclesSubPanel = {
+type V4CyclesSubPanel = {
   id: 'current' | 'upcoming' | 'history'
   name: string
 }
 
-export const CyclesPayoutsPanel = () => {
-  const tabs: CyclesSubPanel[] = useMemo(
+export const V4CyclesPayoutsPanel = () => {
+  const tabs: V4CyclesSubPanel[] = useMemo(
     () => [
       { id: 'current', name: t`Current` },
       { id: 'upcoming', name: t`Upcoming` },
-      { id: 'history', name: t`History` },
+      // { id: 'history', name: t`History` },
     ],
     [],
   )
@@ -33,9 +32,9 @@ export const CyclesPayoutsPanel = () => {
         {tabs.map(tab => (
           <Tab.Panel key={tab.id} className="outline-none">
             {tab.id === 'history' ? (
-              <HistorySubPanel />
+              <></> //<HistorySubPanel />
             ) : (
-              <CurrentUpcomingSubPanel id={tab.id} />
+              <V4CurrentUpcomingSubPanel id={tab.id} />
             )}
           </Tab.Panel>
         ))}

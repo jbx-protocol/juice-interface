@@ -1,5 +1,6 @@
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
+import { ProjectTab } from 'components/Project/ProjectTabs/ProjectTab'
 import { useOnScreen } from 'hooks/useOnScreen'
 import { useProjectPageQueries } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
@@ -17,7 +18,6 @@ import { ActivityPanel } from '../ActivityPanel/ActivityPanel'
 import { CyclesPayoutsPanel } from '../CyclesPayoutsPanel/CyclesPayoutsPanel'
 import { NftRewardsPanel } from '../NftRewardsPanel/NftRewardsPanel'
 import { TokensPanel } from '../TokensPanel/TokensPanel'
-import { ProjectTab } from '../ui/ProjectTab'
 
 type ProjectTabConfig = {
   id: string
@@ -26,7 +26,7 @@ type ProjectTabConfig = {
   hideTab?: boolean
 }
 
-export const ProjectTabs = ({ className }: { className?: string }) => {
+export const V2V3ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
   const {
     nftRewards: { rewardTiers },

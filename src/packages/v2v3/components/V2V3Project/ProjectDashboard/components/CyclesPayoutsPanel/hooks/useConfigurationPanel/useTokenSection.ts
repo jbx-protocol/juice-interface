@@ -1,7 +1,7 @@
+import { ConfigurationPanelTableData } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useProjectUpcomingFundingCycle } from 'packages/v2v3/hooks/contractReader/useProjectUpcomingFundingCycle'
-import { ConfigurationPanelTableData } from '../../components/ConfigurationPanel'
 import { useFormatConfigurationTokenSection } from './useFormatConfigurationTokenSection'
 
 export const useTokenSection = (

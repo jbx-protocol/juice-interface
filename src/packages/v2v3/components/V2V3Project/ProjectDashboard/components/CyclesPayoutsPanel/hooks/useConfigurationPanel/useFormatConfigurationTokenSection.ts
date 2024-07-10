@@ -1,5 +1,9 @@
 import { t } from '@lingui/macro'
 import {
+  ConfigurationPanelDatum,
+  ConfigurationPanelTableData,
+} from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
+import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'packages/v2v3/models/fundingCycle'
@@ -13,10 +17,6 @@ import {
 import { useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import {
-  ConfigurationPanelDatum,
-  ConfigurationPanelTableData,
-} from '../../components/ConfigurationPanel'
 import { flagPairToDatum } from '../../utils/flagPairToDatum'
 import { pairToDatum } from '../../utils/pairToDatum'
 

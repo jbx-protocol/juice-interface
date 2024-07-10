@@ -1,4 +1,4 @@
-import { ConfigurationPanelDatum } from '../components/ConfigurationPanel'
+import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 
 export const pairToDatum = (
   name: string,

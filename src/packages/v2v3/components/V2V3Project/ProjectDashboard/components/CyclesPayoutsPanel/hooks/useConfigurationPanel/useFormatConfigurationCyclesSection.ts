@@ -1,4 +1,5 @@
 import { t } from '@lingui/macro'
+import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { BigNumber } from 'ethers'
 import { timeSecondsToDateString } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/utils/timeSecondsToDateString'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
@@ -9,7 +10,6 @@ import { useMemo } from 'react'
 import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatTime } from 'utils/format/formatTime'
-import { ConfigurationPanelDatum } from '../../components/ConfigurationPanel'
 import { pairToDatum } from '../../utils/pairToDatum'
 
 export const useFormatConfigurationCyclesSection = ({

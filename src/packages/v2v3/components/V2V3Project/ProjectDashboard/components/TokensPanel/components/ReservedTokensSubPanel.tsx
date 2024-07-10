@@ -1,7 +1,7 @@
 import { Trans, t } from '@lingui/macro'
+import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { twMerge } from 'tailwind-merge'
 import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
-import { TitleDescriptionDisplayCard } from '../../ui/TitleDescriptionDisplayCard'
 import { reservedTokensTooltip } from '../TokensPanelTooltips'
 import { useReservedTokensSubPanel } from '../hooks/useReservedTokensSubPanel'
 import { ExportTokensCsvItem } from './ExportTokensCsvItem'

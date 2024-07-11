@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro'
 import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { BigNumber } from 'ethers'
-import { timeSecondsToDateString } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/utils/timeSecondsToDateString'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3FundingCycle } from 'packages/v2v3/models/fundingCycle'
 import { getBallotStrategyByAddress } from 'packages/v2v3/utils/ballotStrategies'
@@ -10,6 +9,7 @@ import { useMemo } from 'react'
 import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatTime } from 'utils/format/formatTime'
+import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
 import { pairToDatum } from '../../utils/pairToDatum'
 
 export const useFormatConfigurationCyclesSection = ({

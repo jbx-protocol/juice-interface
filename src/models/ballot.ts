@@ -11,6 +11,16 @@ export enum V2BallotState {
   'Failed' = 2,
 }
 
+// TODO: Add to SDK
+export enum V4ApprovalStatus {
+  'Empty' = 0,
+  'Upcoming' = 1,
+  'Active' = 2,
+  'ApprovalExpected' = 3,
+  'Approved' = 4,
+  'Failed' = 5,
+}
+
 export type BallotStrategy = {
   address: string
   name: string

@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { useV4CurrentUpcomingConfigurationPanel } from "./useV4CurrentUpcomingConfigurationPanel"
 
-export const useV4UpcomingCycleHasChanges = () => {
+export const useV4UpcomingRulesetHasChanges = () => {
   const data = useV4CurrentUpcomingConfigurationPanel('upcoming')
 
   const loading = useMemo(

@@ -1,35 +1,36 @@
 import { useCountdownClock } from 'components/Project/hooks/useCountdownClock'
-import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { useJBRuleset } from 'juice-sdk-react'
 import { createContext } from 'react'
 
-type FundingCycleCountdownContextType = {
+type RulesetCountdownContextType = {
   timeRemainingText: string
   endEpochSeconds: number
   secondsRemaining: number
 }
 
-export const FundingCycleCountdownContext =
-  createContext<FundingCycleCountdownContextType>({
+export const RulesetCountdownContext =
+  createContext<RulesetCountdownContextType>({
     timeRemainingText: '0d 0h 0m 0s',
     endEpochSeconds: 0,
     secondsRemaining: 0,
   })
 
-export const FundingCycleCountdownProvider = ({
+export const RulesetCountdownProvider = ({
   children,
 }: {
   children: React.ReactNode
 }) => {
-  const fundingCycle = useProjectContext().fundingCycle
+  const { data: ruleset } = useJBRuleset()
 
-  const endEpochSeconds = fundingCycle
-    ? fundingCycle.start.add(fundingCycle.duration).toNumber()
+  const endEpochSeconds = ruleset
+    ? Number(ruleset.start + ruleset.duration)
     : 0
 
   const { remainingTimeText, secondsRemaining } =
     useCountdownClock(endEpochSeconds)
+
   return (
-    <FundingCycleCountdownContext.Provider
+    <RulesetCountdownContext.Provider
       value={{
         timeRemainingText: remainingTimeText,
         endEpochSeconds,
@@ -37,6 +38,6 @@ export const FundingCycleCountdownProvider = ({
       }}
     >
       {children}
-    </FundingCycleCountdownContext.Provider>
+    </RulesetCountdownContext.Provider>
   )
 }

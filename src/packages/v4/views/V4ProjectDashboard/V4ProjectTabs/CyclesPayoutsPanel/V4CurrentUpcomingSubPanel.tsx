@@ -6,8 +6,8 @@ import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/Titl
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
-import { useV4UpcomingCycleHasChanges } from './hooks/useV4UpcomingCycleHasChanges'
 import { V4ConfigurationDisplayCard } from './V4ConfigurationDisplayCard'
+import { useV4UpcomingRulesetHasChanges } from './hooks/useV4UpcomingRulesetHasChanges'
 
 const CYCLE_NUMBER_INDEX = 0
 const STATUS_INDEX = 1
@@ -19,13 +19,13 @@ export const V4CurrentUpcomingSubPanel = ({
   id: 'current' | 'upcoming'
 }) => {
   const info = useV4CurrentUpcomingSubPanel(id)
-  const { hasChanges, loading } = useV4UpcomingCycleHasChanges()
+  const { hasChanges, loading } = useV4UpcomingRulesetHasChanges()
 
   const topPanelsInfo = useMemo(() => {
     const topPanelInfo = [
       {
-        title: t`Cycle #`,
-        value: info.cycleNumber,
+        title: t`Ruleset #`,
+        value: info.rulesetNumber,
       },
       {
         title: t`Status`,
@@ -40,44 +40,44 @@ export const V4CurrentUpcomingSubPanel = ({
     }
     if (info.type === 'upcoming') {
       topPanelInfo.push({
-        title: t`Cycle length`,
-        value: info.cycleLength,
+        title: t`Ruleset length`,
+        value: info.rulesetLength,
       })
     }
     return topPanelInfo
   }, [
-    info.cycleLength,
-    info.cycleNumber,
+    info.rulesetLength,
+    info.rulesetNumber,
     info.remainingTime,
     info.status,
     info.type,
   ])
 
-  const cycleLengthTooltip =
+  const rulesetLengthTooltip =
     info.type === 'current' ? currentCycleRemainingLengthTooltip : undefined
 
-  const cycleLengthValue = topPanelsInfo[CYCLE_LENGTH_INDEX].value
+  const rulesetLengthValue = topPanelsInfo[CYCLE_LENGTH_INDEX].value
 
-  const cycleStatusTooltip = info.currentCycleUnlocked ? (
+  const rulesetStatusTooltip = info.currentRulesetUnlocked ? (
     <Trans>The project's rules are unlocked and can change at any time.</Trans>
   ) : (
     <Trans>
-      This project's rules will be locked in place for {cycleLengthValue}.
+      This project's rules will be locked in place for {rulesetLengthValue}.
     </Trans>
   )
 
-  const hasNoUpcomingCycle =
+  const hasNoUpcomingRuleset =
     info.type === 'upcoming' &&
-    info.currentCycleUnlocked &&
+    info.currentRulesetUnlocked &&
     /**
      * Always show 'upcoming' tab if it's FC 1
      * (which happens when Scheduled Launch is used,
      * mustStartAtOrAfter is in the future)
      */
-    info.cycleNumber !== 1 &&
+    info.rulesetNumber !== 1 &&
     !info.hasPendingConfiguration
 
-  if (hasNoUpcomingCycle) {
+  if (hasNoUpcomingRuleset) {
     return (
       <div>
         <div
@@ -88,7 +88,7 @@ export const V4CurrentUpcomingSubPanel = ({
         >
           <InformationCircleIcon className="h-5 w-5" />
           <Trans>
-            This project has no upcoming cycle. Its rules can change at any
+            This project has no upcoming ruleset. Its rules can change at any
             time.
           </Trans>
         </div>
@@ -96,16 +96,16 @@ export const V4CurrentUpcomingSubPanel = ({
     )
   }
 
-  const upcomingCycleChangesCalloutText = hasChanges
-    ? t`This cycle has upcoming changes`
-    : t`This cycle has no upcoming changes`
+  const upcomingRulesetChangesCalloutText = hasChanges
+    ? t`This ruleset has upcoming changes`
+    : t`This ruleset has no upcoming changes`
 
   return (
     <div>
       <div className="flex flex-col gap-4">
         {id === 'upcoming' && (
           <UpcomingCycleChangesCallout
-            text={upcomingCycleChangesCalloutText}
+            text={upcomingRulesetChangesCalloutText}
             loading={loading}
             hasChanges={hasChanges}
           />
@@ -125,7 +125,7 @@ export const V4CurrentUpcomingSubPanel = ({
             description={
               topPanelsInfo[STATUS_INDEX].value ?? <Skeleton className="w-22" />
             }
-            tooltip={cycleStatusTooltip}
+            tooltip={rulesetStatusTooltip}
           />
           <TitleDescriptionDisplayCard
             className="col-span-2 md:flex-1"
@@ -135,7 +135,7 @@ export const V4CurrentUpcomingSubPanel = ({
                 <Skeleton className="w-40" />
               )
             }
-            tooltip={cycleLengthTooltip}
+            tooltip={rulesetLengthTooltip}
           />
         </div>
         <V4ConfigurationDisplayCard type={info.type} />

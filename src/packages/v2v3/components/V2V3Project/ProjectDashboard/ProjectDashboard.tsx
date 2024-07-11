@@ -8,7 +8,7 @@ import { BlockedProjectBanner } from './components/BlockedProjectBanner'
 import { FundingCycleCountdownProvider } from './components/FundingCycleCountdown/FundingCycleCountdownProvider'
 import { PayRedeemCard } from './components/PayRedeemCard'
 import { ProjectHeaderCountdown } from './components/ProjectHeaderCountdown'
-import { ProjectTabs } from './components/ProjectTabs/ProjectTabs'
+import { V2V3ProjectTabs } from './components/ProjectTabs/V2V3ProjectTabs'
 import { ReduxProjectCartProvider } from './components/ReduxProjectCartProvider'
 import { SuccessPayView } from './components/SuccessPayView/SuccessPayView'
 import { V2V3ProjectHeader } from './components/V2V3ProjectHeader'
@@ -49,7 +49,7 @@ export const ProjectDashboard = () => {
                       '[@media(min-width:960px)]:order-last [@media(min-width:960px)]:min-w-[340px] [@media(min-width:960px)]:max-w-md',
                     )}
                   />
-                  <ProjectTabs
+                  <V2V3ProjectTabs
                     className={twMerge(
                       'mt-10 w-full',
                       '[@media(min-width:960px)]:order-first [@media(min-width:960px)]:max-w-[596px]',

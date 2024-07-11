@@ -5,8 +5,8 @@ import {
   ReceiptRefundIcon,
 } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
+import { PopupMenuItem } from 'components/ui/PopupMenu'
 import { ReactNode, useMemo, useState } from 'react'
-import { PopupMenuItem } from '../../../../../../../components/ui/PopupMenu'
 import { useBalanceMenuItemsUserFlags } from './useBalanceMenuItemsUserFlags'
 
 export const useYourBalanceMenuItems = () => {

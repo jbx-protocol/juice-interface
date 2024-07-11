@@ -5,22 +5,21 @@ import { UpcomingCycleChangesCallout } from 'components/Project/ProjectTabs/Cycl
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useV2V3UpcomingCycleHasChanges } from '../hooks/useConfigurationPanel/useV2V3UpcomingCycleHasChanges'
-import { useCurrentUpcomingSubPanel } from '../hooks/useCurrentUpcomingSubPanel'
-import { ConfigurationDisplayCard } from './ConfigurationDisplayCard'
-import { PayoutsSubPanel } from './PayoutsSubPanel'
+import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
+import { useV4UpcomingCycleHasChanges } from './hooks/useV4UpcomingCycleHasChanges'
+import { V4ConfigurationDisplayCard } from './V4ConfigurationDisplayCard'
 
 const CYCLE_NUMBER_INDEX = 0
 const STATUS_INDEX = 1
 const CYCLE_LENGTH_INDEX = 2
 
-export const CurrentUpcomingSubPanel = ({
+export const V4CurrentUpcomingSubPanel = ({
   id,
 }: {
   id: 'current' | 'upcoming'
 }) => {
-  const info = useCurrentUpcomingSubPanel(id)
-  const { hasChanges, loading } = useV2V3UpcomingCycleHasChanges()
+  const info = useV4CurrentUpcomingSubPanel(id)
+  const { hasChanges, loading } = useV4UpcomingCycleHasChanges()
 
   const topPanelsInfo = useMemo(() => {
     const topPanelInfo = [
@@ -105,10 +104,10 @@ export const CurrentUpcomingSubPanel = ({
     <div>
       <div className="flex flex-col gap-4">
         {id === 'upcoming' && (
-          <UpcomingCycleChangesCallout 
+          <UpcomingCycleChangesCallout
             text={upcomingCycleChangesCalloutText}
-            hasChanges={hasChanges}
             loading={loading}
+            hasChanges={hasChanges}
           />
         )}
 
@@ -139,10 +138,10 @@ export const CurrentUpcomingSubPanel = ({
             tooltip={cycleLengthTooltip}
           />
         </div>
-        <ConfigurationDisplayCard type={info.type} />
+        <V4ConfigurationDisplayCard type={info.type} />
       </div>
 
-      <PayoutsSubPanel className="mt-12" type={id} />
+      {/* <PayoutsSubPanel className="mt-12" type={id} /> */}
     </div>
   )
 }

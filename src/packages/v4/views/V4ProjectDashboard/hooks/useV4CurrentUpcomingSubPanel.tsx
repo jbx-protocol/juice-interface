@@ -1,5 +1,9 @@
 import { t } from '@lingui/macro'
-import { useJBRuleset, useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf, useReadJbRulesetsLatestQueuedOf } from 'juice-sdk-react'
+import {
+  useJBRuleset,
+  useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf,
+  useReadJbRulesetsLatestQueuedOf,
+} from 'juice-sdk-react'
 import { V4ApprovalStatus } from 'models/ballot'
 import { useMemo } from 'react'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
@@ -7,17 +11,21 @@ import { useRulesetCountdown } from './useRulesetCountdown'
 
 export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   const { data: ruleset, isLoading: rulesetLoading } = useJBRuleset()
-  const { data: _latestQueuedRuleset, isLoading: queuedRulesetsLoading } = useReadJbRulesetsLatestQueuedOf()
+  const { data: _latestQueuedRuleset, isLoading: queuedRulesetsLoading } =
+    useReadJbRulesetsLatestQueuedOf()
   const { timeRemainingText } = useRulesetCountdown()
 
-  const latestQueuedRuleset = _latestQueuedRuleset?.[0] 
-  const { data: approvalStatus } = useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf()
-  
+  const latestQueuedRuleset = _latestQueuedRuleset?.[0]
+  const { data: approvalStatus } =
+    useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf()
+
   const rulesetNumber = useMemo(() => {
     if (type === 'current') {
       return Number(ruleset?.cycleNumber)
     }
-    return latestQueuedRuleset?.cycleNumber ? Number(latestQueuedRuleset.cycleNumber) : undefined
+    return latestQueuedRuleset?.cycleNumber
+      ? Number(latestQueuedRuleset.cycleNumber)
+      : undefined
   }, [ruleset?.cycleNumber, type, latestQueuedRuleset?.cycleNumber])
 
   const rulesetUnlocked = useMemo(() => {

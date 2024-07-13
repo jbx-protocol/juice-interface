@@ -16,13 +16,13 @@ import {
   deriveAmountAfterFee,
   derivePayoutAmount,
 } from 'packages/v2v3/utils/distributions'
+import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { SPLITS_TOTAL_PERCENT } from 'packages/v2v3/utils/math'
 import { ReactNode, useCallback, useMemo, useState } from 'react'
 import {
   ReduxDistributionLimit,
   useEditingDistributionLimit,
 } from 'redux/hooks/useEditingDistributionLimit'
-import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
 import { helpPagePath } from 'utils/routes'

@@ -1,8 +1,8 @@
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
+import { CyclesTab } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesTab'
 import { useMemo } from 'react'
 import { CurrentUpcomingSubPanel } from './components/CurrentUpcomingSubPanel'
-import { CyclesTab } from './components/CyclesTab'
 import { HistorySubPanel } from './components/HistorySubPanel'
 
 type CyclesSubPanel = {

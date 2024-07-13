@@ -8,7 +8,7 @@ import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { useHistoricalConfigurationPanel } from '../hooks/useConfigurationPanel/useHistoricalConfigurationPanel'
 import { HistoricalConfigurationPanel } from './HistoricalConfigurationPanel'
 
-jest.mock('./ConfigurationPanel', () => {
+jest.mock('components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel', () => {
   return {
     __esModule: true,
     ConfigurationPanel: jest

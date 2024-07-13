@@ -12,7 +12,9 @@ export function useEnsName(
   return useQuery({
     queryKey: ['ensName', address],
     queryFn: async () => {
-      if (!address || !isAddress(address)) return
+      if (!address || !isAddress(address)) {
+        return null
+      }
 
       const data = await resolveAddress(address)
 

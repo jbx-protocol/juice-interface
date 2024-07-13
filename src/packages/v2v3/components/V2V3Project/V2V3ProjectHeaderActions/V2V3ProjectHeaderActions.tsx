@@ -10,7 +10,7 @@ import Link from 'next/link'
 import { V2V3ProjectToolsDrawer } from 'packages/v2v3/components/V2V3Project/V2V3ProjectToolsDrawer'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useV2V3WalletHasPermission } from 'packages/v2v3/hooks/contractReader/useV2V3WalletHasPermission'
-import { V2V3OperatorPermission } from 'packages/v2v3/models/permissions'
+import { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
 import { useContext, useState } from 'react'
 import { settingsPagePath } from 'utils/routes'
 

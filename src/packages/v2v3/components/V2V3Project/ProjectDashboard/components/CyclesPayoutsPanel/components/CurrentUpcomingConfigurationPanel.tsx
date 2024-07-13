@@ -1,5 +1,5 @@
+import { ConfigurationPanel } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { useCurrentUpcomingConfigurationPanel } from '../hooks/useConfigurationPanel/useCurrentUpcomingConfigurationPanel'
-import { ConfigurationPanel } from './ConfigurationPanel'
 
 type CurrentUpcomingConfigurationPanelProps = {
   type: 'current' | 'upcoming'

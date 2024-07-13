@@ -21,6 +21,7 @@ env:
   PRE_RENDER_INFURA_ID: ${{ secrets.PRE_RENDER_INFURA_ID }}
   SUBGRAPH_URL: ${{ secrets.SUBGRAPH_URL }}
   NEXT_PUBLIC_SUBGRAPH_URL: ${{ secrets.NEXT_PUBLIC_SUBGRAPH_URL }}
+  NEXT_PUBLIC_V4_SUBGRAPH_URL: ${{ secrets.NEXT_PUBLIC_V4_SUBGRAPH_URL }}
 
 jobs:
   jest:
@@ -99,28 +100,28 @@ jobs:
       - name: Compile
         run: 'yarn ts:compile'
 
-  build-db-types:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - uses: supabase/setup-cli@v1.3.0
+  # build-db-types:
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 20
+  #     - uses: supabase/setup-cli@v1.3.0
 
-      - name: Start Supabase local development setup
-        run: supabase start
+  #     - name: Start Supabase local development setup
+  #       run: supabase start
 
-      - name: Verify generated types are up-to-date
-        run: |
-          npm i -g prettier
-          supabase gen types typescript --local > src/types/database.types.ts
-          prettier --write src/types/database.types.ts
-          if [ "$(git diff --ignore-space-at-eol src/types/database.types.ts | wc -l)" -gt "0" ]; then
-            echo "Detected uncommitted changes after build. See status below:"
-            git diff
-            exit 1
-          fi
+  #     - name: Verify generated types are up-to-date
+  #       run: |
+  #         npm i -g prettier
+  #         supabase gen types typescript --local > src/types/database.types.ts
+  #         prettier --write src/types/database.types.ts
+  #         if [ "$(git diff --ignore-space-at-eol src/types/database.types.ts | wc -l)" -gt "0" ]; then
+  #           echo "Detected uncommitted changes after build. See status below:"
+  #           git diff
+  #           exit 1
+  #         fi
 
   # next-build:
   #   name: Build
@@ -129,7 +130,9 @@ jobs:
 
   #   steps:
   #     - uses: actions/checkout@v3
-
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 20
   #     - uses: actions/cache@v2
   #       with:
   #         path: '**/node_modules'

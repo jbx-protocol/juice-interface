@@ -1,13 +1,14 @@
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
+import { currentCycleRemainingLengthTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
+import { UpcomingCycleChangesCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTab/UpcomingCycleChangesCallout'
+import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { TitleDescriptionDisplayCard } from '../../ui/TitleDescriptionDisplayCard'
+import { useV2V3UpcomingCycleHasChanges } from '../hooks/useConfigurationPanel/useV2V3UpcomingCycleHasChanges'
 import { useCurrentUpcomingSubPanel } from '../hooks/useCurrentUpcomingSubPanel'
 import { ConfigurationDisplayCard } from './ConfigurationDisplayCard'
-import { currentCycleRemainingLengthTooltip } from './CyclesPanelTooltips'
 import { PayoutsSubPanel } from './PayoutsSubPanel'
-import { UpcomingCycleChangesCallout } from './UpcomingCycleChangesCallout'
 
 const CYCLE_NUMBER_INDEX = 0
 const STATUS_INDEX = 1
@@ -19,6 +20,7 @@ export const CurrentUpcomingSubPanel = ({
   id: 'current' | 'upcoming'
 }) => {
   const info = useCurrentUpcomingSubPanel(id)
+  const { hasChanges, loading } = useV2V3UpcomingCycleHasChanges()
 
   const topPanelsInfo = useMemo(() => {
     const topPanelInfo = [
@@ -95,10 +97,20 @@ export const CurrentUpcomingSubPanel = ({
     )
   }
 
+  const upcomingCycleChangesCalloutText = hasChanges
+    ? t`This cycle has upcoming changes`
+    : t`This cycle has no upcoming changes`
+
   return (
     <div>
       <div className="flex flex-col gap-4">
-        {id === 'upcoming' && <UpcomingCycleChangesCallout />}
+        {id === 'upcoming' && (
+          <UpcomingCycleChangesCallout 
+            text={upcomingCycleChangesCalloutText}
+            hasChanges={hasChanges}
+            loading={loading}
+          />
+        )}
 
         <div className="grid grid-cols-2 gap-4 md:flex">
           <TitleDescriptionDisplayCard

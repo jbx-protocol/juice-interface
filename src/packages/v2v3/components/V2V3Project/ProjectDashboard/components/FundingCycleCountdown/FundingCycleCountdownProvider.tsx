@@ -1,4 +1,4 @@
-import { useCountdownClock } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useCountdownClock'
+import { useCountdownClock } from 'components/Project/hooks/useCountdownClock'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { createContext } from 'react'
 

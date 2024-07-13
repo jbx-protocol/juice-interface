@@ -1,9 +1,9 @@
 import {
-  ArrowDownIcon,
-  CheckCircleIcon,
-  MinusIcon,
-  PlusIcon,
-  TrashIcon,
+    ArrowDownIcon,
+    CheckCircleIcon,
+    MinusIcon,
+    PlusIcon,
+    TrashIcon,
 } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
@@ -21,14 +21,14 @@ import { useETHReceivedFromTokens } from 'packages/v2v3/hooks/contractReader/use
 import { useRedeemTokensTx } from 'packages/v2v3/hooks/transactor/useRedeemTokensTx'
 import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import {
-  V2V3_CURRENCY_ETH,
-  V2V3_CURRENCY_USD,
+    V2V3_CURRENCY_ETH,
+    V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
+import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { computeIssuanceRate } from 'packages/v2v3/utils/math'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
-import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { useNftCartItem } from '../hooks/useNftCartItem'
@@ -38,9 +38,9 @@ import { useTokensPanel } from '../hooks/useTokensPanel'
 import { useTokensPerEth } from '../hooks/useTokensPerEth'
 import { useUnclaimedTokenBalance } from '../hooks/useUnclaimedTokenBalance'
 import {
-  useProjectDispatch,
-  useProjectSelector,
-  useProjectStore,
+    useProjectDispatch,
+    useProjectSelector,
+    useProjectStore,
 } from '../redux/hooks'
 import { payRedeemActions } from '../redux/payRedeemSlice'
 import { projectCartActions } from '../redux/projectCartSlice'

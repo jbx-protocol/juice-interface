@@ -1,35 +1,22 @@
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useRouter } from 'next/router'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
+import { useContext, useEffect, useState } from 'react'
 import { useProjectPageQueries } from './useProjectPageQueries'
 
 export const useSuccessPayView = () => {
-  const router = useRouter()
-  const { name, nftPaymentSuccessModal } =
-    useProjectMetadataContext().projectMetadata ?? {}
-  const { projectPayReceipt, setProjectPayReceipt } = useProjectPageQueries()
-  const nftsPurchased = useMemo(
-    () => !!projectPayReceipt?.nfts.length,
-    [projectPayReceipt?.nfts.length],
-  )
-  const tokensReceivedDuringTx = useMemo(
-    () =>
-      projectPayReceipt
-        ? projectPayReceipt.tokensReceived.length &&
-          projectPayReceipt.tokensReceived !== '0'
-        : false,
-    [projectPayReceipt],
-  )
+  const { projectMetadata, projectId } = useProjectMetadataContext()
+  const { handle } = useContext(V2V3ProjectContext)
+  const { projectPayReceipt } = useProjectPageQueries()
 
   const [confettiVisible, setConfettiVisible] = useState(true)
 
-  const projectId = useMemo(() => {
-    if (!router.isReady) return
-    if (router.query.projectId === undefined) return
-    const projectId = parseInt(router.query.projectId as string)
-    if (isNaN(projectId)) return
-    return projectId
-  }, [router.isReady, router.query.projectId])
+  const { name, nftPaymentSuccessModal } = projectMetadata ?? {}
+
+  const nftsPurchased = !!projectPayReceipt?.nfts.length
+  const tokensReceivedDuringTx = projectPayReceipt
+    ? projectPayReceipt.tokensReceived.length &&
+      projectPayReceipt.tokensReceived !== '0'
+    : false
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -38,18 +25,14 @@ export const useSuccessPayView = () => {
     return () => clearTimeout(timer)
   })
 
-  const returnToProject = useCallback(() => {
-    setProjectPayReceipt(undefined)
-  }, [setProjectPayReceipt])
-
   return {
     projectId,
+    handle,
     name,
     projectPayReceipt,
     nftPaymentSuccessModal,
     nftsPurchased,
     tokensReceivedDuringTx,
     confettiVisible,
-    returnToProject,
   }
 }

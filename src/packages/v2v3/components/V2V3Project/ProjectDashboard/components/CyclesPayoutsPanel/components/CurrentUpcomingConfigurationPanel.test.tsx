@@ -5,7 +5,7 @@ import { render, screen } from '@testing-library/react'
 import { useCurrentUpcomingConfigurationPanel } from '../hooks/useConfigurationPanel/useCurrentUpcomingConfigurationPanel'
 import { CurrentUpcomingConfigurationPanel } from './CurrentUpcomingConfigurationPanel'
 
-jest.mock('./ConfigurationPanel', () => {
+jest.mock('components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel', () => {
   return {
     __esModule: true,
     ConfigurationPanel: jest

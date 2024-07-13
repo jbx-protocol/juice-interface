@@ -1,11 +1,11 @@
 import { Trans, t } from '@lingui/macro'
-import { useMemo } from 'react'
-import { TitleDescriptionDisplayCard } from '../../ui/TitleDescriptionDisplayCard'
-import { useTreasuryStats } from '../hooks/useTreasuryStats'
 import {
   availableToPayOutTooltip,
   treasuryBalanceTooltip,
-} from './CyclesPanelTooltips'
+} from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
+import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
+import { useMemo } from 'react'
+import { useTreasuryStats } from '../hooks/useTreasuryStats'
 
 export const TreasuryStats = () => {
   const { availableToPayout, overflow, treasuryBalance, redemptionRate } =

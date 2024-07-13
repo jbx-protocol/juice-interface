@@ -1,4 +1,5 @@
 import { Trans, t } from '@lingui/macro'
+import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import TooltipIcon from 'components/TooltipIcon'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useProjectHasErc20Token } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectHasErc20Token'
@@ -7,7 +8,6 @@ import { BUYBACK_DELEGATE_ENABLED_PROJECT_IDS } from 'packages/v2v3/constants/bu
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { CartItemBadge } from '../../CartItemBadge'
-import { ProjectHeaderLogo } from '../../ProjectHeader/components/ProjectHeaderLogo'
 
 export const ReceiveTokensItem = ({ className }: { className?: string }) => {
   const { projectId } = useContext(ProjectMetadataContext)

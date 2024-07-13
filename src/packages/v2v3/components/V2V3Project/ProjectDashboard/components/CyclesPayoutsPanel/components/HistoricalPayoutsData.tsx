@@ -1,5 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import EthereumAddress from 'components/EthereumAddress'
+import { ConfigurationPanelTableData } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
+import { ConfigurationTable } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationTable'
 import { ETH_PAYOUT_SPLIT_GROUP } from 'constants/splits'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import round from 'lodash/round'
@@ -7,11 +9,9 @@ import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHa
 import useProjectSplits from 'packages/v2v3/hooks/contractReader/useProjectSplits'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
 import { derivePayoutAmount } from 'packages/v2v3/utils/distributions'
+import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import React, { useContext } from 'react'
-import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { isProjectSplit } from 'utils/splits'
-import { ConfigurationPanelTableData } from './ConfigurationPanel'
-import { ConfigurationTable } from './ConfigurationTable'
 import { HistoricalConfigurationPanelProps } from './HistoricalConfigurationPanel'
 
 export const HistoricalPayoutsData: React.FC<

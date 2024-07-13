@@ -1,4 +1,3 @@
-import { WarningOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { LegalNoticeModal } from 'components/modals/LegalNoticeModal'
@@ -9,13 +8,7 @@ import WalletMenu from './WalletMenu'
 const LEGAL_NOTICE_STORAGE_KEY = 'jbm_hasAcceptedLegalNotice'
 
 export function WalletButton() {
-  const {
-    userAddress,
-    isConnected,
-    connect,
-    chainUnsupported,
-    changeNetworks,
-  } = useWallet()
+  const { userAddress, isConnected, connect } = useWallet()
 
   const [legalNoticeAccepted, setLegalNoticeAccepted] = useState<boolean>(false)
   const [legalNoticeVisible, setLegalNoticeVisible] = useState<boolean>(false)
@@ -73,20 +66,5 @@ export function WalletButton() {
 
   if (!userAddress) return null
 
-  return (
-    <div className="flex items-center gap-2">
-      {chainUnsupported && (
-        <Button
-          className="border border-warning-200 bg-warning-50 text-warning-800 dark:border-warning-500 dark:bg-warning-900 dark:text-warning-100"
-          size="small"
-          icon={<WarningOutlined className="text-warning-500" />}
-          onClick={changeNetworks}
-        >
-          <span className="md:hidden lg:inline">Wrong network</span>
-        </Button>
-      )}
-
-      <WalletMenu userAddress={userAddress} />
-    </div>
-  )
+  return <WalletMenu userAddress={userAddress} />
 }

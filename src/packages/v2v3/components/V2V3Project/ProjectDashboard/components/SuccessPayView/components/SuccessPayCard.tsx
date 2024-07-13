@@ -1,14 +1,14 @@
 import { Trans } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import EtherscanLink from 'components/EtherscanLink'
+import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import useMobile from 'hooks/useMobile'
 import moment from 'moment'
 import { useProjectPageQueries } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
+import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
-import { ProjectHeaderLogo } from '../../ProjectHeader/components/ProjectHeaderLogo'
 
 export const SuccessPayCard = ({ className }: { className?: string }) => {
   const isMobile = useMobile()

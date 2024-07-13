@@ -1,10 +1,12 @@
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import { SubscribeButton } from 'components/buttons/SubscribeButton/SubscribeButton'
 import confettiAnimationJuicebox from 'data/lottie/confetti-animation-juicebox.json'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import { useSuccessPayView } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useSuccessPayView'
-import { SuccessButton } from './components/SuccessButton'
+import { v2v3ProjectRoute } from 'utils/routes'
 import { SuccessNftItem } from './components/SuccessNftItem'
 import { SuccessPayCard } from './components/SuccessPayCard'
 import { SuccessTokensItem } from './components/SuccessTokensItem'
@@ -19,8 +21,9 @@ export const SuccessPayView = () => {
     nftPaymentSuccessModal,
     nftsPurchased,
     tokensReceivedDuringTx,
-    returnToProject,
+    handle,
   } = useSuccessPayView()
+
   return (
     <div className="relative mt-16 w-full max-w-xl text-center">
       {confettiVisible && (
@@ -51,16 +54,16 @@ export const SuccessPayView = () => {
                 <Trans>Subscribe to updates</Trans>
               </SubscribeButton>
             )}
-            {/* // TODO: Hidden for now */}
-            {/* <SuccessButton
-              icon={<TwitterOutlined className="h-5 w-5 text-xl" />}
-              text={<Trans>Share on twitter</Trans>}
-            /> */}
-            <SuccessButton
-              icon={<ArrowUturnLeftIcon className="h-5 w-5" />}
-              text={<Trans>Return to project</Trans>}
-              onClick={returnToProject}
-            />
+
+            <Link href={v2v3ProjectRoute({ projectId, handle })}>
+              <Button
+                className="flex items-center gap-2 py-2 px-3.5 font-medium"
+                type="link"
+                icon={<ArrowUturnLeftIcon className="h-5 w-5 text-xl" />}
+              >
+                <Trans>Return to project</Trans>
+              </Button>
+            </Link>
           </div>
         </div>
 

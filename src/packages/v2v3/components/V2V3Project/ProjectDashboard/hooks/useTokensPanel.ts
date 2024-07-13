@@ -3,7 +3,7 @@ import { useProjectHasLegacyTokens } from 'packages/v2v3/hooks/JBV3Token/contrac
 import { useTotalLegacyTokenBalance } from 'packages/v2v3/hooks/JBV3Token/contractReader/useTotalLegacyTokenBalance'
 import { useProjectReservedTokens } from 'packages/v2v3/hooks/contractReader/ProjectReservedTokens'
 import { useV2V3WalletHasPermission } from 'packages/v2v3/hooks/contractReader/useV2V3WalletHasPermission'
-import { V2V3OperatorPermission } from 'packages/v2v3/models/permissions'
+import { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
 import { useContext, useMemo } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'

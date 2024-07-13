@@ -1,11 +1,11 @@
 import { BigNumber, utils } from 'ethers'
 import {
-  DistributePayoutsEventsDocument,
-  DistributePayoutsEventsQuery,
-  ProjectsDocument,
-  ProjectsQuery,
-  QueryDistributePayoutsEventsArgs,
-  QueryProjectsArgs,
+    DistributePayoutsEventsDocument,
+    DistributePayoutsEventsQuery,
+    ProjectsDocument,
+    ProjectsQuery,
+    QueryDistributePayoutsEventsArgs,
+    QueryProjectsArgs,
 } from 'generated/graphql'
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
@@ -17,9 +17,9 @@ import { ProjectNotification } from 'models/notifications/projectNotifications'
 import moment from 'moment'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
+import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { distributePayoutEmailTemplate } from 'templates/email/payments'
 import { truncateEthAddress } from 'utils/format/formatAddress'
-import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import { getProjectMetadata } from 'utils/server/metadata'
 import * as Yup from 'yup'

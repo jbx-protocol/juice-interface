@@ -1,14 +1,14 @@
 import { t } from '@lingui/macro'
+import { pairToDatum } from 'components/Project/ProjectHeader/utils/pairToDatum'
+import {
+    ConfigurationPanelDatum,
+    ConfigurationPanelTableData,
+} from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { V2V3FundingCycleMetadata } from 'packages/v2v3/models/fundingCycle'
 import { useMemo } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { etherscanLink } from 'utils/etherscan'
-import {
-  ConfigurationPanelDatum,
-  ConfigurationPanelTableData,
-} from '../../components/ConfigurationPanel'
 import { flagPairToDatum } from '../../utils/flagPairToDatum'
-import { pairToDatum } from '../../utils/pairToDatum'
 
 export const useFormatConfigurationExtensionSection = ({
   fundingCycleMetadata,

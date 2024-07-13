@@ -5,7 +5,9 @@ import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickP
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
-import TxHistoryProvider from 'contexts/Transaction/TxHistoryProvider'
+import EthersTxHistoryProvider from 'contexts/Transaction/EthersTxHistoryProvider'
+import WagmiTxHistoryProvider from 'contexts/Transaction/WagmiTxHistoryProvider'
+import { useInitWallet } from 'hooks/Wallet'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
@@ -21,8 +23,17 @@ import { redirectTo } from 'utils/windowUtils'
  * meta tags to be setup correctly.
  */
 export const AppWrapper: React.FC<
-  React.PropsWithChildren<{ hideNav?: boolean }>
-> = ({ children, hideNav }) => {
+  React.PropsWithChildren<{
+    hideNav?: boolean
+    txHistoryProvider?: 'ethers' | 'wagmi'
+  }>
+> = ({ children, hideNav, txHistoryProvider }) => {
+  // TODO(perf) dynamically import these components?
+  const TxHistoryProvider =
+    txHistoryProvider === 'wagmi'
+      ? WagmiTxHistoryProvider
+      : EthersTxHistoryProvider
+
   return (
     <React.StrictMode>
       <ReactQueryProvider>
@@ -45,12 +56,14 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
   hideNav,
 }) => {
   const router = useRouter()
+  useInitWallet()
 
   // run on initial mount
   useEffect(() => {
     installJuiceboxWindowObject()
   }, [])
 
+  // redirect legacy hash routes
   if (router.asPath.match(/^\/#\//)) {
     redirectTo(router.asPath.replace('/#/', ''))
   }

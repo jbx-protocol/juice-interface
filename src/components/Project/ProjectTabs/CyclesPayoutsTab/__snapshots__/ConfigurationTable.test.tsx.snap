@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfigurationTable renders 1`] = `
+<div>
+  <div>
+    <div
+      class="w-full"
+    >
+      <div
+        class="text-start text-base font-medium uppercase"
+      >
+        title
+      </div>
+      <div>
+        <div
+          class="flex justify-between gap-10 border-b border-grey-200 py-3 dark:border-slate-500"
+        >
+          <div
+            class="flex justify-between gap-3 font-medium"
+          >
+            foo
+          </div>
+          <div
+            class="flex min-w-0 gap-1"
+          >
+            <div
+              class="truncate"
+            >
+              <div
+                class="flex flex-col items-center gap-2"
+              >
+                <span
+                  class="flex flex-1 items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="inline-block h-5 w-5"
+                    data-slot="icon"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>
+                    old
+                  </span>
+                </span>
+                <span
+                  class="flex flex-1 items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="inline-block h-5 w-5"
+                    data-slot="icon"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>
+                    new
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex justify-between gap-10 border-b border-grey-200 py-3 dark:border-slate-500"
+        >
+          <div
+            class="flex justify-between gap-3 font-medium"
+          >
+            bar
+          </div>
+          <div
+            class="flex min-w-0 gap-1"
+          >
+            <div
+              class="truncate"
+            >
+              new
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex justify-between gap-10 border-b border-grey-200 py-3 dark:border-slate-500"
+        >
+          <div
+            class="flex justify-between gap-3 font-medium"
+          >
+            baz
+          </div>
+          <div
+            class="flex min-w-0 gap-1"
+          >
+            <div
+              class="truncate"
+            >
+              <div
+                class="flex flex-col items-center gap-2"
+              >
+                <span
+                  class="flex flex-1 items-center justify-between gap-3.5 rounded bg-error-100 p-1 font-medium text-error-700 dark:bg-error-500 dark:text-error-950"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="inline-block h-5 w-5"
+                    data-slot="icon"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>
+                    old
+                  </span>
+                </span>
+                <span
+                  class="flex flex-1 items-center justify-between gap-3.5 rounded bg-melon-100 p-1 font-medium text-melon-700 dark:bg-melon-500 dark:text-melon-950"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="inline-block h-5 w-5"
+                    data-slot="icon"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <span>
+                    new
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

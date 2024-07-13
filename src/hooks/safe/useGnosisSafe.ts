@@ -7,7 +7,7 @@ export const useGnosisSafe = (address?: string) => {
     queryKey: ['gnosis-safe', address],
     queryFn: async () => {
       if (!address) {
-        return
+        return null
       }
 
       try {

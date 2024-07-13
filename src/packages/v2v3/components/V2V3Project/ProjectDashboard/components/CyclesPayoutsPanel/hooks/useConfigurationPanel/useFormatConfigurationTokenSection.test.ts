@@ -6,18 +6,18 @@ import { renderHook } from '@testing-library/react-hooks'
 import { pairToDatum } from 'components/Project/ProjectHeader/utils/pairToDatum'
 import { BigNumber } from 'ethers'
 import {
-    computeIssuanceRate,
-    formatDiscountRate,
-    formatIssuanceRate,
-    formatRedemptionRate,
-    formatReservedRate,
+  computeIssuanceRate,
+  formatDiscountRate,
+  formatIssuanceRate,
+  formatRedemptionRate,
+  formatReservedRate,
 } from 'packages/v2v3/utils/math'
 import { formattedNum } from 'utils/format/formatNumber'
 import { flagPairToDatum } from '../../utils/flagPairToDatum'
 import { useFormatConfigurationTokenSection } from './useFormatConfigurationTokenSection'
 
 jest.mock('../../utils/flagPairToDatum')
-jest.mock('../../utils/pairToDatum')
+jest.mock('components/Project/ProjectHeader/utils/pairToDatum')
 jest.mock('packages/v2v3/utils/math')
 jest.mock('utils/format/formatNumber')
 

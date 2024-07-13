@@ -10,7 +10,7 @@ jest.mock('../hooks/useConfigurationDisplayCard', () => ({
   }),
 }))
 
-jest.mock('./ConfigurationPanel', () => ({
+jest.mock('components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel', () => ({
   ConfigurationPanel: jest.fn(() => (
     <div data-testid="ConfigurationPanel">ConfigurationPanel</div>
   )),

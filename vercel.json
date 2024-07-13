@@ -13,5 +13,12 @@
       "path": "/api/projects/update-retry-ipfs",
       "schedule": "0 8,20 * * *"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/@free-pertsev-and-storm",
+      "destination": "/@defend-roman-storm",
+      "permanent": true
+    }
   ]
 }

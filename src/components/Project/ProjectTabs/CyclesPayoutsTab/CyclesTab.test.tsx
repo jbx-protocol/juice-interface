@@ -9,7 +9,7 @@ const wrapper = ({ children }: { children?: React.ReactNode }) => (
   <Tab.Group>{children}</Tab.Group>
 )
 
-describe('src/packages/v2v3/components/V2V3Project/ProjectDashboard/components/CyclesPayoutsPanel/components/CyclesTab.tsx', () => {
+describe('packages/v2v3/components/V2V3Project/ProjectDashboard/components/CyclesPayoutsPanel/components/CyclesTab.tsx', () => {
   it('should match snapshot', () => {
     const { baseElement } = render(<CyclesTab name="name" />, { wrapper })
     expect(baseElement).toMatchSnapshot()

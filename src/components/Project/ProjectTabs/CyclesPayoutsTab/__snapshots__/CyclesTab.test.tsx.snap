@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`src/packages/v2v3/components/V2V3Project/ProjectDashboard/components/CyclesPayoutsPanel/components/CyclesTab.tsx should match snapshot 1`] = `
+exports[`packages/v2v3/components/V2V3Project/ProjectDashboard/components/CyclesPayoutsPanel/components/CyclesTab.tsx should match snapshot 1`] = `
 <body>
   <div>
     <button

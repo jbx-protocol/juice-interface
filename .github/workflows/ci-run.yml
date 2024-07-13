@@ -100,44 +100,44 @@ jobs:
       - name: Compile
         run: 'yarn ts:compile'
 
-  build-db-types:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - uses: supabase/setup-cli@v1.3.0
-
-      - name: Start Supabase local development setup
-        run: supabase start
-
-      - name: Verify generated types are up-to-date
-        run: |
-          npm i -g prettier
-          supabase gen types typescript --local > src/types/database.types.ts
-          prettier --write src/types/database.types.ts
-          if [ "$(git diff --ignore-space-at-eol src/types/database.types.ts | wc -l)" -gt "0" ]; then
-            echo "Detected uncommitted changes after build. See status below:"
-            git diff
-            exit 1
-          fi
-
-  # next-build:
-  #   name: Build
-  #   runs-on: ubuntu-latest
-  #   needs: compile
-
+  # build-db-types:
+  #   runs-on: ubuntu-22.04
   #   steps:
   #     - uses: actions/checkout@v3
-
-  #     - uses: actions/cache@v2
+  #     - uses: actions/setup-node@v3
   #       with:
-  #         path: '**/node_modules'
-  #         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+  #         node-version: 20
+  #     - uses: supabase/setup-cli@v1.3.0
 
-  #     - name: Install packages
-  #       run: yarn install --frozen-lockfile
+  #     - name: Start Supabase local development setup
+  #       run: supabase start
 
-  #     - name: Build NextJS app
-  #       run: 'yarn build'
+  #     - name: Verify generated types are up-to-date
+  #       run: |
+  #         npm i -g prettier
+  #         supabase gen types typescript --local > src/types/database.types.ts
+  #         prettier --write src/types/database.types.ts
+  #         if [ "$(git diff --ignore-space-at-eol src/types/database.types.ts | wc -l)" -gt "0" ]; then
+  #           echo "Detected uncommitted changes after build. See status below:"
+  #           git diff
+  #           exit 1
+  #         fi
+
+  next-build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: compile
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install packages
+        run: yarn install --frozen-lockfile
+
+      - name: Build NextJS app
+        run: 'yarn build'

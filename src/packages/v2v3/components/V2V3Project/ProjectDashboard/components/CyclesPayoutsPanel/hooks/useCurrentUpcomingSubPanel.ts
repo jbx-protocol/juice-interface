@@ -2,10 +2,10 @@ import { t } from '@lingui/macro'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useFundingCycleCountdown } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useFundingCycleCountdown'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { timeSecondsToDateString } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/utils/timeSecondsToDateString'
 import { useProjectUpcomingFundingCycle } from 'packages/v2v3/hooks/contractReader/useProjectUpcomingFundingCycle'
 import { BallotState } from 'packages/v2v3/models/fundingCycle'
 import { useMemo } from 'react'
+import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
 
 export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   const { projectId } = useProjectMetadataContext()

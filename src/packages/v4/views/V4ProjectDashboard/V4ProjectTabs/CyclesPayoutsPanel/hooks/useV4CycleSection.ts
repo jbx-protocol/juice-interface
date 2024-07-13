@@ -1,52 +1,42 @@
 import { ConfigurationPanelTableData } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
+import { useJBRuleset } from 'juice-sdk-react'
+import { useJBQueuedRuleset } from 'packages/v4/hooks/useJBQueuedRuleset'
+import { usePayoutLimits } from 'packages/v4/hooks/usePayoutLimits'
+import { useQueuedPayoutLimits } from 'packages/v4/hooks/useQueuedPayoutLimits'
+import { useV4FormatConfigurationCycleSection } from './useV4FormatConfigurationCycleSection'
 
 export const useV4CycleSection = (
   type: 'current' | 'upcoming',
 ): ConfigurationPanelTableData => {
-  return {
-    duration: {
-      name: 'Duration',
-      new: '60 days',
-    }
-  }
-  // const { projectId } = useProjectMetadataContext()
+  const { data: ruleset } = useJBRuleset()
+  
+  const { data: queuedRuleset } = useJBQueuedRuleset()
 
-  // const {
-  //   fundingCycle,
-  //   distributionLimit,
-  //   distributionLimitCurrency,
-  //   primaryETHTerminal,
-  // } = useProjectContext()
-  // const { data: upcomingFundingCycleData } = useProjectUpcomingFundingCycle({
-  //   projectId,
-  // })
-  // const [upcomingFundingCycle] = upcomingFundingCycleData ?? []
+  const { data: payoutLimits } = usePayoutLimits()
+  const payoutLimitAmount = payoutLimits?.amount
+  const payoutLimitCurrency = payoutLimits?.currency
 
-  // const { data: upcomingDistributionLimitData } = useProjectDistributionLimit({
-  //   projectId,
-  //   configuration: upcomingFundingCycle?.configuration.toString(),
-  //   terminal: primaryETHTerminal,
-  // })
-  // const [upcomingDistributionLimit, upcomingDistributionLimitCurrency] =
-  //   upcomingDistributionLimitData ?? []
+  const { data: queuedPayoutLimits } = useQueuedPayoutLimits()
+  const queuedPayoutLimitAmount = queuedPayoutLimits?.amount
+  const queuedPayoutLimitCurrency = queuedPayoutLimits?.currency
 
-  // return useFormatConfigurationCyclesSection({
-  //   fundingCycle,
-  //   distributionLimitAmountCurrency: {
-  //     distributionLimit: distributionLimit,
-  //     currency: distributionLimitCurrency,
-  //   },
+  return useV4FormatConfigurationCycleSection({
+    ruleset,
+    payoutLimitAmountCurrency: {
+      amount: payoutLimitAmount,
+      currency: payoutLimitCurrency,
+    },
 
-  //   upcomingFundingCycle,
-  //   upcomingDistributionLimitAmountCurrency: {
-  //     distributionLimit: upcomingDistributionLimit,
-  //     currency: upcomingDistributionLimitCurrency,
-  //   },
+    queuedRuleset,
+    upcomingDistributionLimitAmountCurrency: {
+      distributionLimit: queuedPayoutLimitAmount,
+      currency: queuedPayoutLimitCurrency,
+    },
 
-  //   // Hide upcoming info from current section.
-  //   ...(type === 'current' && {
-  //     upcomingFundingCycle: null,
-  //     upcomingDistributionLimitAmountCurrency: null,
-  //   }),
-  // })
+    // Hide upcoming info from current section.
+    ...(type === 'current' && {
+      upcomingFundingCycle: null,
+      upcomingDistributionLimitAmountCurrency: null,
+    }),
+  })
 }

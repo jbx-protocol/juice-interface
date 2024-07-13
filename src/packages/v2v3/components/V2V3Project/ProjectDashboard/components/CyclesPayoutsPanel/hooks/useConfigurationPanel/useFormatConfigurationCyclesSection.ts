@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
+import { pairToDatum } from 'components/Project/ProjectHeader/utils/pairToDatum'
 import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { BigNumber } from 'ethers'
-import { timeSecondsToDateString } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/utils/timeSecondsToDateString'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3FundingCycle } from 'packages/v2v3/models/fundingCycle'
 import { getBallotStrategyByAddress } from 'packages/v2v3/utils/ballotStrategies'
@@ -10,7 +10,7 @@ import { useMemo } from 'react'
 import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import { formatTime } from 'utils/format/formatTime'
-import { pairToDatum } from '../../utils/pairToDatum'
+import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
 
 export const useFormatConfigurationCyclesSection = ({
   fundingCycle,
@@ -49,10 +49,10 @@ export const useFormatConfigurationCyclesSection = ({
   const startTimeDatum: ConfigurationPanelDatum = useMemo(() => {
     const formattedTime =
       upcomingFundingCycle === null
-        ? formatTime(fundingCycle?.start)
+        ? formatTime(fundingCycle?.start.toBigInt())
         : fundingCycle?.duration.isZero()
         ? t`Any time`
-        : formatTime(fundingCycle?.start.add(fundingCycle?.duration))
+        : formatTime(fundingCycle?.start.add(fundingCycle?.duration).toBigInt())
 
     const formatTimeDatum: ConfigurationPanelDatum = {
       name: t`Start time`,

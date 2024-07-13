@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { timeSecondsToDateString } from '../utils/timeSecondsToDateString'
+import { timeSecondsToDateString } from '../../../utils/timeSecondsToDateString'
 
 /**
  * Update the remaining time every second.

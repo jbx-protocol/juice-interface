@@ -884,6 +884,9 @@ msgstr ""
 msgid "Saved!"
 msgstr ""
 
+msgid "This ruleset has upcoming changes"
+msgstr ""
+
 msgid "<0><1>Peel</1> manages this website — the juicebox.money frontend interface. You can reach out to Peel through the <2>Peel Discord</2>.</0><3><4>JuiceboxDAO</4> builds and governs the Juicebox fundraising protocol and other community resources. You can reach out to JuiceboxDAO through the <5>Juicebox Discord</5>.</3>"
 msgstr ""
 
@@ -2396,6 +2399,9 @@ msgstr ""
 msgid "While enabled, the project owner can change the project's <0>controller</0> at any time."
 msgstr ""
 
+msgid "Ruleset #"
+msgstr ""
+
 msgid "Unstaked balance"
 msgstr ""
 
@@ -3278,6 +3284,9 @@ msgstr ""
 msgid "New"
 msgstr ""
 
+msgid "This project has no upcoming ruleset. Its rules can change at any time."
+msgstr ""
+
 msgid "Select NFTs to redeem"
 msgstr ""
 
@@ -3704,6 +3713,9 @@ msgstr ""
 msgid "Learn more about unlimited payouts"
 msgstr ""
 
+msgid "This project's rules will be locked in place for {rulesetLengthValue}."
+msgstr ""
+
 msgid "V2 7-day deadline"
 msgstr ""
 
@@ -3963,6 +3975,9 @@ msgid "Juicebox Project ID"
 msgstr ""
 
 msgid "Events"
+msgstr ""
+
+msgid "This ruleset has no upcoming changes"
 msgstr ""
 
 msgid "Download CSV of {0} holders"
@@ -4269,6 +4284,9 @@ msgid "Your {0} balance"
 msgstr ""
 
 msgid "Terms of Service"
+msgstr ""
+
+msgid "Ruleset length"
 msgstr ""
 
 msgid "Payment notice"

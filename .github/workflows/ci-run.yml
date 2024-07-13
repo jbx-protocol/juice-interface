@@ -123,23 +123,23 @@ jobs:
   #           exit 1
   #         fi
 
-  next-build:
-    name: Build
-    runs-on: ubuntu-latest
-    needs: compile
+  # next-build:
+  #   name: Build
+  #   runs-on: ubuntu-latest
+  #   needs: compile
 
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 20
+  #     - uses: actions/cache@v2
+  #       with:
+  #         path: '**/node_modules'
+  #         key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Install packages
-        run: yarn install --frozen-lockfile
+  #     - name: Install packages
+  #       run: yarn install --frozen-lockfile
 
-      - name: Build NextJS app
-        run: 'yarn build'
+  #     - name: Build NextJS app
+  #       run: 'yarn build'

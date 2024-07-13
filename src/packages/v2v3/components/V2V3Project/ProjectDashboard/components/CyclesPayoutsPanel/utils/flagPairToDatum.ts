@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
+import { pairToDatum } from 'components/Project/ProjectHeader/utils/pairToDatum'
 import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
-import { pairToDatum } from './pairToDatum'
 
 export const flagPairToDatum = (
   name: string,

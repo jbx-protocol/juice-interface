@@ -3,22 +3,22 @@
  */
 import { render } from '@testing-library/react'
 import { BigNumber } from 'ethers'
+import { useProjectPageQueries } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import {
   ProjectHeaderData,
-  useProjectHeader,
-} from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectHeader'
-import { useProjectPageQueries } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
+  useV2V3ProjectHeader,
+} from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useV2V3ProjectHeader'
 import { ProjectHeaderStats } from './ProjectHeaderStats'
 
 jest.mock(
-  'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectHeader',
+  'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useV2V3ProjectHeader',
 )
 jest.mock(
   'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries',
 )
 
-function mockUseProjectHeader(data: ProjectHeaderData) {
-  ;(useProjectHeader as jest.Mock).mockReturnValue(data)
+function mockUseV2V3ProjectHeader(data: ProjectHeaderData) {
+  ;(useV2V3ProjectHeader as jest.Mock).mockReturnValue(data)
 }
 
 function mockUseProjectPageQueries() {
@@ -54,7 +54,7 @@ describe('ProjectHeaderStats', () => {
   `(
     'renders the ProjectHeaderStats component with last7DaysPercent = %last7DaysPercent',
     ({ last7DaysPercent, shouldRender }) => {
-      mockUseProjectHeader({
+      mockUseV2V3ProjectHeader({
         ...MOCK_PROJECT_HEADER_DATA,
         last7DaysPercent,
       })

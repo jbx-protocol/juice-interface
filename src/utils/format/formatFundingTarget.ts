@@ -2,8 +2,8 @@ import { t } from '@lingui/macro'
 import { BigNumber } from 'ethers'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
+import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
-import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad } from 'utils/format/formatNumber'
 
 // Formats a funding target into the format:

@@ -4,11 +4,11 @@ import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { TxStatus } from 'models/transaction'
 import {
-  V2V3_CURRENCY_ETH,
-  V2V3_CURRENCY_USD,
+    V2V3_CURRENCY_ETH,
+    V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
+import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { useCallback, useContext, useMemo, useReducer } from 'react'
-import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import * as Yup from 'yup'

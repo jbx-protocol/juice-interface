@@ -7,14 +7,14 @@ import moment from 'moment'
 import useProjectDistributionLimit from 'packages/v2v3/hooks/contractReader/useProjectDistributionLimit'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
+import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import {
-  sgFCToV2V3FundingCycle,
-  sgFCToV2V3FundingCycleMetadata,
+    sgFCToV2V3FundingCycle,
+    sgFCToV2V3FundingCycleMetadata,
 } from 'packages/v2v3/utils/fundingCycle'
 import React, { Fragment, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { isBigNumberish } from 'utils/bigNumbers'
-import { formatCurrencyAmount } from 'utils/format/formatCurrencyAmount'
 import { fromWad } from 'utils/format/formatNumber'
 import { useProjectContext } from '../../../hooks/useProjectContext'
 import { HistoricalConfigurationPanel } from './HistoricalConfigurationPanel'

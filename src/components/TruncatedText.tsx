@@ -1,5 +1,6 @@
 import { Tooltip } from 'antd'
 import { ReactNode, useEffect, useRef, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 interface TruncatedTextProps {
   text: ReactNode
@@ -44,7 +45,7 @@ export const TruncatedText: React.FC<
     <Tooltip open={open} title={text} placement={placement}>
       <div
         ref={textRef}
-        className={`truncate ${className}`}
+        className={twMerge('truncate', className)}
         aria-label={isTruncated && typeof text === 'string' ? text : undefined}
         onMouseEnter={() => setShow(true)}
         onMouseLeave={() => setShow(false)}

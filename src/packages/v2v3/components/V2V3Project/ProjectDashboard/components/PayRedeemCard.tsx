@@ -26,7 +26,13 @@ import {
 } from 'packages/v2v3/utils/currency'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { computeIssuanceRate } from 'packages/v2v3/utils/math'
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
@@ -34,6 +40,7 @@ import { emitErrorNotification } from 'utils/notifications'
 import { useNftCartItem } from '../hooks/useNftCartItem'
 import { useProjectContext } from '../hooks/useProjectContext'
 import { useProjectHasErc20Token } from '../hooks/useProjectHasErc20Token'
+import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import { useTokensPanel } from '../hooks/useTokensPanel'
 import { useTokensPerEth } from '../hooks/useTokensPerEth'
 import { useUnclaimedTokenBalance } from '../hooks/useUnclaimedTokenBalance'
@@ -784,6 +791,7 @@ const NftReward: React.FC<{
     increaseQuantity,
     decreaseQuantity,
   } = useNftCartItem(nft)
+  const { setProjectPageTab } = useProjectPageQueries()
 
   const handleRemove = useCallback(() => {
     emitConfirmationDeletionModal({
@@ -819,13 +827,18 @@ const NftReward: React.FC<{
           }}
         />
         <div className="flex flex-col">
-          <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-2"
+            role="button"
+            onClick={() => setProjectPageTab('nft_rewards')}
+          >
             <TruncatedText
-              className="text-sm font-medium leading-none text-grey-900 dark:text-slate-100"
-              text={name ?? 'Loading...'}
+              className="max-w-[70%] text-sm font-medium text-grey-900 hover:underline dark:text-slate-100"
+              text={name}
             />
             <CartItemBadge>NFT</CartItemBadge>
           </div>
+
           <div className="text-xs">{priceText}</div>
         </div>
       </div>
@@ -857,7 +870,7 @@ const QuantityControl: React.FC<{
   onDecrease: () => void
 }> = ({ quantity, onIncrease, onDecrease }) => {
   return (
-    <span className="mr-8 flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm dark:border-slate-600">
+    <span className="flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm dark:border-slate-600">
       <button data-testid="cart-item-decrease-button" onClick={onDecrease}>
         <MinusIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
       </button>

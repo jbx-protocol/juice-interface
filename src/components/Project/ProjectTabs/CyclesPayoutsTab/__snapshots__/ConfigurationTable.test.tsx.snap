@@ -92,6 +92,7 @@ exports[`ConfigurationTable renders 1`] = `
           >
             <div
               class="truncate"
+              title="new"
             >
               new
             </div>

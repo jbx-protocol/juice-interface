@@ -120,15 +120,8 @@ const ContributorCard: React.FC<
       <TruncatedText
         className="text-primary mb-2 font-heading text-base font-medium md:text-xl"
         text={name}
-        placement={title ? 'top' : 'bottom'}
       />
-      {title && (
-        <TruncatedText
-          className="text-secondary"
-          text={title}
-          placement="bottom"
-        />
-      )}
+      {title && <TruncatedText className="text-secondary" text={title} />}
     </div>
   )
 }

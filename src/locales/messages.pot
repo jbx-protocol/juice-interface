@@ -1406,6 +1406,9 @@ msgstr ""
 msgid "File"
 msgstr ""
 
+msgid "You have <0>{0} ETH</0> of unclaimed NFT credits"
+msgstr ""
+
 msgid "<0>Juicebox is a <1>governance-minimal</1> protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><2>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</2><3>Juicebox is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no way to access project's ETH or change their rules.</3>"
 msgstr ""
 

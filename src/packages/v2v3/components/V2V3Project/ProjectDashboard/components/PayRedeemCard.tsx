@@ -33,6 +33,7 @@ import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
+import { NftCreditsCallout } from '../../NftCreditsCallout'
 import { useNftCartItem } from '../hooks/useNftCartItem'
 import { useProjectContext } from '../hooks/useProjectContext'
 import { useProjectHasErc20Token } from '../hooks/useProjectHasErc20Token'
@@ -184,6 +185,8 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
           {noticeText}
         </Callout.Info>
       )}
+
+      <NftCreditsCallout />
 
       {projectHasErc20Token && unclaimedTokenBalance?.gt(0) && (
         <ClaimErc20Callout className="mt-4" unclaimed={unclaimedTokenBalance} />

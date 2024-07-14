@@ -1,9 +1,9 @@
 import {
-    ArrowDownIcon,
-    CheckCircleIcon,
-    MinusIcon,
-    PlusIcon,
-    TrashIcon,
+  ArrowDownIcon,
+  CheckCircleIcon,
+  MinusIcon,
+  PlusIcon,
+  TrashIcon,
 } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
@@ -21,8 +21,8 @@ import { useETHReceivedFromTokens } from 'packages/v2v3/hooks/contractReader/use
 import { useRedeemTokensTx } from 'packages/v2v3/hooks/transactor/useRedeemTokensTx'
 import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import {
-    V2V3_CURRENCY_ETH,
-    V2V3_CURRENCY_USD,
+  V2V3_CURRENCY_ETH,
+  V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { computeIssuanceRate } from 'packages/v2v3/utils/math'
@@ -38,9 +38,9 @@ import { useTokensPanel } from '../hooks/useTokensPanel'
 import { useTokensPerEth } from '../hooks/useTokensPerEth'
 import { useUnclaimedTokenBalance } from '../hooks/useUnclaimedTokenBalance'
 import {
-    useProjectDispatch,
-    useProjectSelector,
-    useProjectStore,
+  useProjectDispatch,
+  useProjectSelector,
+  useProjectStore,
 } from '../redux/hooks'
 import { payRedeemActions } from '../redux/payRedeemSlice'
 import { projectCartActions } from '../redux/projectCartSlice'
@@ -77,19 +77,23 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
   const unclaimedTokenBalance = useUnclaimedTokenBalance()
   const projectHasErc20Token = useProjectHasErc20Token()
 
-  const tokenBalance = useMemo(() => {
-    return panelBalance
-      ? parseFloat(panelBalance.replaceAll(',', ''))
-      : undefined
-  }, [panelBalance])
+  const tokenBalance = panelBalance
+    ? parseFloat(panelBalance.replaceAll(',', ''))
+    : undefined
+
+  const fundingCycleLoading =
+    project.loading.fundingCycleLoading ||
+    !project.fundingCycle ||
+    !project.fundingCycleMetadata
 
   const payerIssuanceRate = useMemo<PayerIssuanceRate>(() => {
     if (!project.fundingCycle || !project.fundingCycleMetadata) {
       return {
-        loading: project.loading.fundingCycleLoading,
+        loading: fundingCycleLoading,
         enabled: false,
       }
     }
+
     const weightAmount = computeIssuanceRate(
       project.fundingCycle,
       project.fundingCycleMetadata,
@@ -98,24 +102,15 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
     )
     const hasPayerIssuanceRate = Number(weightAmount) > 0
     return {
-      loading: project.loading.fundingCycleLoading,
+      loading: fundingCycleLoading,
       enabled: hasPayerIssuanceRate,
     }
-  }, [
-    project.fundingCycle,
-    project.fundingCycleMetadata,
-    project.loading.fundingCycleLoading,
-  ])
+  }, [project.fundingCycle, project.fundingCycleMetadata, fundingCycleLoading])
 
-  const redeems = useMemo<Redeems>(() => {
-    return {
-      loading: project.loading.fundingCycleLoading,
-      enabled: !project.fundingCycleMetadata?.pauseRedeem || false,
-    }
-  }, [
-    project.fundingCycleMetadata?.pauseRedeem,
-    project.loading.fundingCycleLoading,
-  ])
+  const redeems = {
+    loading: fundingCycleLoading,
+    enabled: !project.fundingCycleMetadata?.pauseRedeem || false,
+  }
 
   return (
     <div className={twMerge('flex flex-col', className)}>

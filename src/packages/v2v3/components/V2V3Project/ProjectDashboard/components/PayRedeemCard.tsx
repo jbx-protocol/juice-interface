@@ -1,6 +1,7 @@
 import {
   ArrowDownIcon,
   CheckCircleIcon,
+  InformationCircleIcon,
   MinusIcon,
   PlusIcon,
   TrashIcon,
@@ -17,6 +18,7 @@ import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
+import { useHasNftRewards } from 'packages/v2v3/hooks/JB721Delegate/useHasNftRewards'
 import { useETHReceivedFromTokens } from 'packages/v2v3/hooks/contractReader/useETHReceivedFromTokens'
 import { useRedeemTokensTx } from 'packages/v2v3/hooks/transactor/useRedeemTokensTx'
 import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
@@ -26,13 +28,7 @@ import {
 } from 'packages/v2v3/utils/currency'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { computeIssuanceRate } from 'packages/v2v3/utils/math'
-import {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react'
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
@@ -83,6 +79,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
   const { userTokenBalance: panelBalance } = useTokensPanel()
   const unclaimedTokenBalance = useUnclaimedTokenBalance()
   const projectHasErc20Token = useProjectHasErc20Token()
+  const { value: hasNfts, loading: hasNftsLoading } = useHasNftRewards()
 
   const tokenBalance = panelBalance
     ? parseFloat(panelBalance.replaceAll(',', ''))
@@ -118,6 +115,21 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
     loading: fundingCycleLoading,
     enabled: !project.fundingCycleMetadata?.pauseRedeem || false,
   }
+
+  const noticeText = useMemo(() => {
+    const showPayerIssuance =
+      !payerIssuanceRate.enabled && !payerIssuanceRate.loading
+    if (!showPayerIssuance) {
+      return
+    }
+
+    const showNfts = hasNfts && !hasNftsLoading
+    if (showNfts) {
+      return t`Project isn't currently issuing tokens, but is issuing NFTs`
+    }
+
+    return t`Project isn't currently issuing tokens`
+  }, [payerIssuanceRate, hasNfts, hasNftsLoading])
 
   return (
     <div className={twMerge('flex flex-col', className)}>
@@ -165,10 +177,11 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
 
       {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
         <Callout.Info
-          className="mt-6 py-2 px-3.5 dark:bg-slate-700"
+          className="mt-6 py-2 px-3.5 text-xs dark:bg-slate-700 leading-5"
           collapsible={false}
+          icon={<InformationCircleIcon className="h-5 w-5" />}
         >
-          <Trans>This project is not currently issuing tokens</Trans>
+          {noticeText}
         </Callout.Info>
       )}
 

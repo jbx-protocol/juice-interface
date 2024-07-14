@@ -530,6 +530,9 @@ msgstr ""
 msgid "If locked, this payout can't be edited or removed until the lock expires or the cycle is edited."
 msgstr ""
 
+msgid "Project isn't currently issuing tokens, but is issuing NFTs"
+msgstr ""
+
 msgid "I understand"
 msgstr ""
 
@@ -2471,6 +2474,9 @@ msgstr ""
 msgid "Burn NFTs"
 msgstr ""
 
+msgid "Project isn't currently issuing tokens"
+msgstr ""
+
 msgid "Current #1 trending"
 msgstr ""
 
@@ -3984,9 +3990,6 @@ msgid "This ruleset has no upcoming changes"
 msgstr ""
 
 msgid "Download CSV of {0} holders"
-msgstr ""
-
-msgid "This project is not currently issuing tokens"
 msgstr ""
 
 msgid "Introducing"

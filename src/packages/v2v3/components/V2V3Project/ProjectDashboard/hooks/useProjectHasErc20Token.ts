@@ -1,11 +1,7 @@
-import { constants } from 'ethers'
-import { useMemo } from 'react'
+import { isZeroAddress } from 'utils/address'
 import { useProjectContext } from './useProjectContext'
 
 export const useProjectHasErc20Token = () => {
   const { tokenAddress } = useProjectContext()
-  return useMemo(
-    () => tokenAddress !== undefined && tokenAddress !== constants.AddressZero,
-    [tokenAddress],
-  )
+  return !isZeroAddress(tokenAddress)
 }

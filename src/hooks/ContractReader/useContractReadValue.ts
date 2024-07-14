@@ -43,7 +43,9 @@ export function useContractReadValue<C extends string, V>({
   const fetchValue = useCallback(async () => {
     const readContract = getContract(contract, contracts)
     try {
-      if (!readContract || !functionName || args === null) return
+      if (!readContract || !functionName || args === null) {
+        return
+      }
 
       setLoading(true)
       const result = await callContractRead({

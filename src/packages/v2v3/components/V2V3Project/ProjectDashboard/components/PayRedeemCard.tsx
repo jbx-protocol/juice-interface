@@ -1,9 +1,10 @@
 import {
-    ArrowDownIcon,
-    CheckCircleIcon,
-    MinusIcon,
-    PlusIcon,
-    TrashIcon,
+  ArrowDownIcon,
+  CheckCircleIcon,
+  InformationCircleIcon,
+  MinusIcon,
+  PlusIcon,
+  TrashIcon,
 } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
@@ -17,12 +18,13 @@ import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
+import { useHasNftRewards } from 'packages/v2v3/hooks/JB721Delegate/useHasNftRewards'
 import { useETHReceivedFromTokens } from 'packages/v2v3/hooks/contractReader/useETHReceivedFromTokens'
 import { useRedeemTokensTx } from 'packages/v2v3/hooks/transactor/useRedeemTokensTx'
 import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import {
-    V2V3_CURRENCY_ETH,
-    V2V3_CURRENCY_USD,
+  V2V3_CURRENCY_ETH,
+  V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { computeIssuanceRate } from 'packages/v2v3/utils/math'
@@ -34,13 +36,14 @@ import { emitErrorNotification } from 'utils/notifications'
 import { useNftCartItem } from '../hooks/useNftCartItem'
 import { useProjectContext } from '../hooks/useProjectContext'
 import { useProjectHasErc20Token } from '../hooks/useProjectHasErc20Token'
+import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import { useTokensPanel } from '../hooks/useTokensPanel'
 import { useTokensPerEth } from '../hooks/useTokensPerEth'
 import { useUnclaimedTokenBalance } from '../hooks/useUnclaimedTokenBalance'
 import {
-    useProjectDispatch,
-    useProjectSelector,
-    useProjectStore,
+  useProjectDispatch,
+  useProjectSelector,
+  useProjectStore,
 } from '../redux/hooks'
 import { payRedeemActions } from '../redux/payRedeemSlice'
 import { projectCartActions } from '../redux/projectCartSlice'
@@ -76,20 +79,25 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
   const { userTokenBalance: panelBalance } = useTokensPanel()
   const unclaimedTokenBalance = useUnclaimedTokenBalance()
   const projectHasErc20Token = useProjectHasErc20Token()
+  const { value: hasNfts, loading: hasNftsLoading } = useHasNftRewards()
 
-  const tokenBalance = useMemo(() => {
-    return panelBalance
-      ? parseFloat(panelBalance.replaceAll(',', ''))
-      : undefined
-  }, [panelBalance])
+  const tokenBalance = panelBalance
+    ? parseFloat(panelBalance.replaceAll(',', ''))
+    : undefined
+
+  const fundingCycleLoading =
+    project.loading.fundingCycleLoading ||
+    !project.fundingCycle ||
+    !project.fundingCycleMetadata
 
   const payerIssuanceRate = useMemo<PayerIssuanceRate>(() => {
     if (!project.fundingCycle || !project.fundingCycleMetadata) {
       return {
-        loading: project.loading.fundingCycleLoading,
+        loading: fundingCycleLoading,
         enabled: false,
       }
     }
+
     const weightAmount = computeIssuanceRate(
       project.fundingCycle,
       project.fundingCycleMetadata,
@@ -98,24 +106,30 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
     )
     const hasPayerIssuanceRate = Number(weightAmount) > 0
     return {
-      loading: project.loading.fundingCycleLoading,
+      loading: fundingCycleLoading,
       enabled: hasPayerIssuanceRate,
     }
-  }, [
-    project.fundingCycle,
-    project.fundingCycleMetadata,
-    project.loading.fundingCycleLoading,
-  ])
+  }, [project.fundingCycle, project.fundingCycleMetadata, fundingCycleLoading])
 
-  const redeems = useMemo<Redeems>(() => {
-    return {
-      loading: project.loading.fundingCycleLoading,
-      enabled: !project.fundingCycleMetadata?.pauseRedeem || false,
+  const redeems = {
+    loading: fundingCycleLoading,
+    enabled: !project.fundingCycleMetadata?.pauseRedeem || false,
+  }
+
+  const noticeText = useMemo(() => {
+    const showPayerIssuance =
+      !payerIssuanceRate.enabled && !payerIssuanceRate.loading
+    if (!showPayerIssuance) {
+      return
     }
-  }, [
-    project.fundingCycleMetadata?.pauseRedeem,
-    project.loading.fundingCycleLoading,
-  ])
+
+    const showNfts = hasNfts && !hasNftsLoading
+    if (showNfts) {
+      return t`Project isn't currently issuing tokens, but is issuing NFTs`
+    }
+
+    return t`Project isn't currently issuing tokens`
+  }, [payerIssuanceRate, hasNfts, hasNftsLoading])
 
   return (
     <div className={twMerge('flex flex-col', className)}>
@@ -129,7 +143,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
             selected={state === 'pay'}
             onClick={() => dispatch(payRedeemActions.changeToPay())}
           >
-            Pay
+            <Trans>Pay</Trans>
           </ChoiceButton>
           <ChoiceButton
             selected={state === 'redeem'}
@@ -139,7 +153,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
             }}
             disabled={!redeems.enabled}
           >
-            Redeem
+            <Trans>Redeem</Trans>
           </ChoiceButton>
         </div>
 
@@ -163,10 +177,11 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
 
       {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
         <Callout.Info
-          className="mt-6 py-2 px-3.5 dark:bg-slate-700"
+          className="mt-6 py-2 px-3.5 text-xs dark:bg-slate-700 leading-5"
           collapsible={false}
+          icon={<InformationCircleIcon className="h-5 w-5" />}
         >
-          <Trans>This project is not currently issuing tokens</Trans>
+          {noticeText}
         </Callout.Info>
       )}
 
@@ -789,6 +804,7 @@ const NftReward: React.FC<{
     increaseQuantity,
     decreaseQuantity,
   } = useNftCartItem(nft)
+  const { setProjectPageTab } = useProjectPageQueries()
 
   const handleRemove = useCallback(() => {
     emitConfirmationDeletionModal({
@@ -824,13 +840,18 @@ const NftReward: React.FC<{
           }}
         />
         <div className="flex flex-col">
-          <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-2"
+            role="button"
+            onClick={() => setProjectPageTab('nft_rewards')}
+          >
             <TruncatedText
-              className="text-sm font-medium leading-none text-grey-900 dark:text-slate-100"
-              text={name ?? 'Loading...'}
+              className="max-w-[70%] text-sm font-medium text-grey-900 hover:underline dark:text-slate-100"
+              text={name}
             />
             <CartItemBadge>NFT</CartItemBadge>
           </div>
+
           <div className="text-xs">{priceText}</div>
         </div>
       </div>
@@ -862,7 +883,7 @@ const QuantityControl: React.FC<{
   onDecrease: () => void
 }> = ({ quantity, onIncrease, onDecrease }) => {
   return (
-    <span className="mr-8 flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm dark:border-slate-600">
+    <span className="flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm dark:border-slate-600">
       <button data-testid="cart-item-decrease-button" onClick={onDecrease}>
         <MinusIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
       </button>

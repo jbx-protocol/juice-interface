@@ -9,15 +9,15 @@ export const useUnclaimedTokenBalance = () => {
   const { projectId } = useContext(ProjectMetadataContext)
   const { tokenAddress } = useProjectContext()
   const { userAddress } = useWallet()
-  const { data: claimedBalance, loading: claimedBalanceLoading } =
-    useERC20BalanceOf(tokenAddress, userAddress)
-  const { data: totalBalance, loading: totalBalanceLoading } =
-    useTotalBalanceOf(userAddress, projectId)
+  const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
+  const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
 
-  if (!userAddress || claimedBalanceLoading || totalBalanceLoading) {
+  if (
+    typeof claimedBalance === 'undefined' ||
+    typeof totalBalance === 'undefined'
+  ) {
     return undefined
   }
 
-  const unclaimedBalance = totalBalance?.sub(claimedBalance ?? 0)
-  return unclaimedBalance
+  return totalBalance.sub(claimedBalance)
 }

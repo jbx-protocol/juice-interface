@@ -32,5 +32,16 @@ export function initWeb3Onboard() {
       name: config.title,
       description: config.description,
     },
+    connect: {
+      autoConnectLastWallet: true,
+    },
+    accountCenter: {
+      mobile: {
+        enabled: false,
+      },
+      desktop: {
+        enabled: false,
+      },
+    },
   })
 }

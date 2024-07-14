@@ -1,9 +1,9 @@
 import { BigNumber } from 'ethers'
-import { V2FundingCycleMetadata } from '../packages/v2/models/fundingCycle'
+import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycle,
-} from '../packages/v2v3/models/fundingCycle'
+} from 'packages/v2v3/models/fundingCycle'
 import { SplitParams } from './splits'
 
 type OutgoingGroupedSplit = {

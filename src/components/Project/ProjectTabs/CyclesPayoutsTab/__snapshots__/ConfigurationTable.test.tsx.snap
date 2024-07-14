@@ -24,7 +24,7 @@ exports[`ConfigurationTable renders 1`] = `
             class="flex min-w-0 gap-1"
           >
             <div
-              class="truncate undefined"
+              class="truncate"
             >
               <div
                 class="flex flex-col items-center gap-2"
@@ -91,7 +91,8 @@ exports[`ConfigurationTable renders 1`] = `
             class="flex min-w-0 gap-1"
           >
             <div
-              class="truncate undefined"
+              class="truncate"
+              title="new"
             >
               new
             </div>
@@ -109,7 +110,7 @@ exports[`ConfigurationTable renders 1`] = `
             class="flex min-w-0 gap-1"
           >
             <div
-              class="truncate undefined"
+              class="truncate"
             >
               <div
                 class="flex flex-col items-center gap-2"

@@ -2327,6 +2327,9 @@ msgstr ""
 msgid "Export a list of this cycle's reserved token recipients to CSV."
 msgstr ""
 
+msgid "Redeem"
+msgstr ""
+
 msgid "When someone pays your project 1 ETH:"
 msgstr ""
 

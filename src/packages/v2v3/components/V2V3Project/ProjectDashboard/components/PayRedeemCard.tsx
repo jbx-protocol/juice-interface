@@ -124,7 +124,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
             selected={state === 'pay'}
             onClick={() => dispatch(payRedeemActions.changeToPay())}
           >
-            Pay
+            <Trans>Pay</Trans>
           </ChoiceButton>
           <ChoiceButton
             selected={state === 'redeem'}
@@ -134,7 +134,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
             }}
             disabled={!redeems.enabled}
           >
-            Redeem
+            <Trans>Redeem</Trans>
           </ChoiceButton>
         </div>
 

@@ -10,7 +10,7 @@ export const useV4CycleSection = (
 ): ConfigurationPanelTableData => {
   const { data: ruleset } = useJBRuleset()
   
-  const { data: queuedRuleset } = useJBQueuedRuleset()
+  const { ruleset: queuedRuleset } = useJBQueuedRuleset()
 
   const { data: payoutLimits } = usePayoutLimits()
   const payoutLimitAmount = payoutLimits?.amount
@@ -19,7 +19,7 @@ export const useV4CycleSection = (
   const { data: queuedPayoutLimits } = useQueuedPayoutLimits()
   const queuedPayoutLimitAmount = queuedPayoutLimits?.amount
   const queuedPayoutLimitCurrency = queuedPayoutLimits?.currency
-
+  
   return useV4FormatConfigurationCycleSection({
     ruleset,
     payoutLimitAmountCurrency: {
@@ -28,15 +28,15 @@ export const useV4CycleSection = (
     },
 
     queuedRuleset,
-    upcomingDistributionLimitAmountCurrency: {
-      distributionLimit: queuedPayoutLimitAmount,
+    upcomingPayoutLimitAmountCurrency: {
+      amount: queuedPayoutLimitAmount,
       currency: queuedPayoutLimitCurrency,
     },
 
     // Hide upcoming info from current section.
     ...(type === 'current' && {
-      upcomingFundingCycle: null,
-      upcomingDistributionLimitAmountCurrency: null,
+      queuedRuleset: null,
+      upcomingPayoutLimitAmountCurrency: null,
     }),
   })
 }

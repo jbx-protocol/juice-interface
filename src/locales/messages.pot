@@ -3659,6 +3659,9 @@ msgstr ""
 msgid "(0%)"
 msgstr ""
 
+msgid "Decay rate"
+msgstr ""
+
 msgid "Tokens per ETH contributed"
 msgstr ""
 

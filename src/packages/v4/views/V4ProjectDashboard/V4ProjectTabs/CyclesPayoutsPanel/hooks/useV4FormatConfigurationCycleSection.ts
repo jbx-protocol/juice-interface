@@ -67,8 +67,7 @@ export const useV4FormatConfigurationCycleSection = ({
     amount: bigint | undefined,
     currency: V4CurrencyOption | undefined,
   ) => {
-    if (amount === undefined) return undefined;
-    if (amount === MAX_PAYOUT_LIMIT) return t`Unlimited`;
+    if (amount === undefined || amount === MAX_PAYOUT_LIMIT) return t`Unlimited`;
     if (amount === 0n) return t`Zero (no payouts)`;
     return formatCurrencyAmount({
       amount: Number(amount) / 1e18, // Assuming fromWad
@@ -80,7 +79,7 @@ export const useV4FormatConfigurationCycleSection = ({
     const { amount, currency } = payoutLimitAmountCurrency ?? {};
     const currentPayout = formatPayoutAmount(amount, currency);
 
-    if (!upcomingPayoutLimitAmountCurrency) {
+    if (upcomingPayoutLimitAmountCurrency === null) {
       return pairToDatum(t`Payouts`, currentPayout, null);
     }
 

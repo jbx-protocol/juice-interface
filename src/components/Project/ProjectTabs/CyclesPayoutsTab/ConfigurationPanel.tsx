@@ -16,7 +16,7 @@ export type ConfigurationPanelTableData = {
 
 type ConfigurationPanelProps = {
   cycle: ConfigurationPanelTableData
-  token?: ConfigurationPanelTableData // V4TODO: don't make token optional
+  token: ConfigurationPanelTableData
   otherRules?: ConfigurationPanelTableData // V4TODO: don't make otherRules optional
   extension?: ConfigurationPanelTableData | null // V4TODO: don't make extension optional
 }

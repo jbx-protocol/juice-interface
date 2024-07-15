@@ -1,11 +1,11 @@
 import { t } from '@lingui/macro'
+import { flagPairToDatum } from 'components/Project/ProjectHeader/utils/flagPairToDatum'
 import {
   ConfigurationPanelDatum,
   ConfigurationPanelTableData,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { V2V3FundingCycleMetadata } from 'packages/v2v3/models/fundingCycle'
 import { useMemo } from 'react'
-import { flagPairToDatum } from '../../utils/flagPairToDatum'
 
 export const useFormatConfigurationOtherRulesSection = ({
   fundingCycleMetadata,

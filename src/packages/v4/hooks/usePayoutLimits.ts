@@ -16,7 +16,8 @@ export function usePayoutLimits() {
 
   const primaryNativeTerminal = _primaryNativeTerminal.data;
 
-  const payoutLimits = useReadJbFundAccessLimitsPayoutLimitsOf({
+
+  const { data: payoutLimits, isLoading } = useReadJbFundAccessLimitsPayoutLimitsOf({
     args: [
       projectId,
       ruleset?.id ?? 0n,
@@ -24,12 +25,12 @@ export function usePayoutLimits() {
       NATIVE_TOKEN,
     ],
   });
-  const payoutLimit = payoutLimits?.data?.[0];
+  const payoutLimit = payoutLimits?.[0];
   return {
     data: {
       ...payoutLimit,
       currency: payoutLimit?.currency as V4CurrencyOption | undefined,
     },
-    isLoading: payoutLimits?.isLoading,
+    isLoading
   };
 }

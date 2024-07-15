@@ -35,7 +35,7 @@ export const useV4FormatConfigurationCycleSection = ({
 
   const durationDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentDuration = formatDuration(ruleset?.duration);
-    if (queuedRuleset === null) {
+    if (!queuedRuleset) {
       return pairToDatum(t`Duration`, currentDuration, null);
     }
     const upcomingDuration = formatDuration(queuedRuleset?.duration);
@@ -80,7 +80,7 @@ export const useV4FormatConfigurationCycleSection = ({
     const { amount, currency } = payoutLimitAmountCurrency ?? {};
     const currentPayout = formatPayoutAmount(amount, currency);
 
-    if (upcomingPayoutLimitAmountCurrency === null) {
+    if (!upcomingPayoutLimitAmountCurrency) {
       return pairToDatum(t`Payouts`, currentPayout, null);
     }
 
@@ -105,7 +105,7 @@ export const useV4FormatConfigurationCycleSection = ({
       ? getApprovalStrategyByAddress(ruleset.approvalHook)
       : undefined;
     const current = currentApprovalStrategy?.name;
-    if (queuedRuleset === null) {
+    if (!queuedRuleset) {
       return pairToDatum(t`Edit deadline`, current, null);
     }
 

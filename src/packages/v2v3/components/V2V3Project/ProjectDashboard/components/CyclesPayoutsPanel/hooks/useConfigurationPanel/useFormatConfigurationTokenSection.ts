@@ -1,20 +1,20 @@
 import { t } from '@lingui/macro'
-import { flagPairToDatum } from 'components/Project/ProjectHeader/utils/flagPairToDatum'
-import { pairToDatum } from 'components/Project/ProjectHeader/utils/pairToDatum'
 import {
-  ConfigurationPanelDatum,
-  ConfigurationPanelTableData,
+    ConfigurationPanelDatum,
+    ConfigurationPanelTableData,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
+import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
+import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import {
-  V2V3FundingCycle,
-  V2V3FundingCycleMetadata,
+    V2V3FundingCycle,
+    V2V3FundingCycleMetadata,
 } from 'packages/v2v3/models/fundingCycle'
 import {
-  computeIssuanceRate,
-  formatDiscountRate,
-  formatIssuanceRate,
-  formatRedemptionRate,
-  formatReservedRate,
+    computeIssuanceRate,
+    formatDiscountRate,
+    formatIssuanceRate,
+    formatRedemptionRate,
+    formatReservedRate,
 } from 'packages/v2v3/utils/math'
 import { useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'

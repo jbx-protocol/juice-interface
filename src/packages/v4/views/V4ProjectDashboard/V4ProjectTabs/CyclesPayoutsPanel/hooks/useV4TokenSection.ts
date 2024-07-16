@@ -12,7 +12,11 @@ export const useV4TokenSection = (
 
   const { data: ruleset } = useJBRuleset()
   const { data: rulesetMetadata } = useJBRulesetMetadata()
-  const { ruleset: queuedRuleset, rulesetMetadata: queuedRulesetMetadata } = useJBQueuedRuleset()
+  const { 
+    ruleset: queuedRuleset, 
+    rulesetMetadata: queuedRulesetMetadata, 
+    isLoading: queuedRulesetLoading 
+  } = useJBQueuedRuleset()
 
   return useV4FormatConfigurationTokenSection({
     ruleset,
@@ -24,6 +28,7 @@ export const useV4TokenSection = (
     tokenSymbol: tokenSymbolRaw,
     queuedRuleset,
     queuedRulesetMetadata,
+    queuedRulesetLoading,
     // Hide upcoming info from current section.
     ...(type === 'current' && {
       queuedRuleset: null,

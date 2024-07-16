@@ -1,13 +1,12 @@
-import { DecayRate, RedemptionRate, ReservedRate, RulesetWeight } from 'juice-sdk-core';
+import { DecayRate, JBRulesetMetadata, RedemptionRate, ReservedRate, RulesetWeight } from 'juice-sdk-core';
 import { useReadJbControllerLatestQueuedRulesetOf } from 'juice-sdk-react';
 import { Ruleset } from '../models/ruleset';
-import { RulesetMetadata } from '../models/rulesetMetadata';
 
 
 // @todo: add to SDK
 export function useJBQueuedRuleset(): { 
   ruleset: Ruleset | undefined, 
-  rulesetMetadata: RulesetMetadata | undefined, 
+  rulesetMetadata: JBRulesetMetadata | undefined, 
   isLoading: boolean
  } {
   const { data, isLoading } = useReadJbControllerLatestQueuedRulesetOf()

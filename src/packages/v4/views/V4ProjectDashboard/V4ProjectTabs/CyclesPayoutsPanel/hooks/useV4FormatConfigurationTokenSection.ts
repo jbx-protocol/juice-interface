@@ -1,14 +1,13 @@
 import { t } from '@lingui/macro'
-import { flagPairToDatum } from 'components/Project/ProjectHeader/utils/flagPairToDatum'
-import { pairToDatum } from 'components/Project/ProjectHeader/utils/pairToDatum'
 import {
   ConfigurationPanelDatum,
   ConfigurationPanelTableData,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
-
+import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
+import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
+import { JBRulesetMetadata } from 'juice-sdk-core'
 
 import { Ruleset } from 'packages/v4/models/ruleset'
-import { RulesetMetadata } from 'packages/v4/models/rulesetMetadata'
 import { useMemo } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -17,13 +16,15 @@ export const useV4FormatConfigurationTokenSection = ({
   rulesetMetadata,
   tokenSymbol: tokenSymbolRaw,
   queuedRuleset,
+  queuedRulesetLoading,
   queuedRulesetMetadata,
 }: {
   ruleset: Ruleset | undefined | null
-  rulesetMetadata: RulesetMetadata | undefined | null
+  rulesetMetadata: JBRulesetMetadata | undefined | null
   tokenSymbol: string | undefined
   queuedRuleset: Ruleset | undefined | null
-  queuedRulesetMetadata?: RulesetMetadata | undefined | null
+  queuedRulesetLoading: boolean
+  queuedRulesetMetadata?: JBRulesetMetadata | undefined | null
 }): ConfigurationPanelTableData => {
   const tokenSymbol = useMemo(
     () =>
@@ -47,14 +48,14 @@ export const useV4FormatConfigurationTokenSection = ({
       ? `${currentTotalIssuanceRate} ${tokenSymbol}/ETH`
       : undefined
 
-    if (queuedRuleset === null) {
+    if (queuedRuleset === null || queuedRulesetLoading) {
       return pairToDatum(t`Total issuance rate`, current, null)
     }
     const queued = queuedTotalIssuanceRate
       ? `${queuedTotalIssuanceRate} ${tokenSymbol}/ETH`
       : undefined
     return pairToDatum(t`Total issuance rate`, current, queued)
-  }, [queuedRuleset, currentTotalIssuanceRate, tokenSymbol, queuedTotalIssuanceRate])
+  }, [queuedRuleset, currentTotalIssuanceRate, tokenSymbol, queuedTotalIssuanceRate, queuedRulesetLoading])
 
   const reservedRateFloat = rulesetMetadata?.reservedRate.toFloat()
   const queuedReservedRateFloat = queuedRulesetMetadata?.reservedRate.toFloat()
@@ -67,7 +68,7 @@ export const useV4FormatConfigurationTokenSection = ({
     const current = currentPayerIssuanceRate
       ? `${currentPayerIssuanceRate} ${tokenSymbol}/ETH`
       : undefined
-    if (queuedRuleset === null || queuedRulesetMetadata === null) {
+    if (queuedRuleset === null || queuedRulesetMetadata === null || queuedRulesetLoading) {
       return pairToDatum(t`Payer issuance rate`, current, null)
     }
     const _reservedRate = queuedReservedRateFloat ?? reservedRateFloat
@@ -86,12 +87,13 @@ export const useV4FormatConfigurationTokenSection = ({
     currentTotalIssuanceRate,
     queuedTotalIssuanceRate,
     reservedRateFloat,
+    queuedRulesetLoading
   ])
 
   const reservedRateDatum: ConfigurationPanelDatum = useMemo(() => {
     const current = rulesetMetadata?.reservedRate ? 
       `${rulesetMetadata.reservedRate.formatPercentage()}%` : undefined
-    if (queuedRulesetMetadata === null) {
+    if (queuedRulesetMetadata === null || queuedRulesetLoading) {
       return pairToDatum(t`Reserved rate`, current, null)
     }
 
@@ -101,14 +103,14 @@ export const useV4FormatConfigurationTokenSection = ({
         `${rulesetMetadata.reservedRate.formatPercentage()}%`
       : undefined
     return pairToDatum(t`Reserved rate`, current, queued)
-  }, [queuedRulesetMetadata, rulesetMetadata])
+  }, [queuedRulesetMetadata, rulesetMetadata, queuedRulesetLoading])
 
   const decayRateDatum: ConfigurationPanelDatum = useMemo(() => {
     const current = ruleset ? 
       `${ruleset.decayRate.formatPercentage()}%`
       : undefined
 
-    if (queuedRuleset === null) {
+    if (queuedRuleset === null || queuedRulesetLoading) {
       return pairToDatum(t`Decay rate`, current, null)
     }
 
@@ -119,7 +121,7 @@ export const useV4FormatConfigurationTokenSection = ({
       : undefined
 
     return pairToDatum(t`Decay rate`, current, queued)
-  }, [ruleset, queuedRuleset])
+  }, [ruleset, queuedRuleset, queuedRulesetLoading])
 
   const redemptionRateDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentRedemptionRate = rulesetMetadata?.redemptionRate.formatPercentage()
@@ -128,7 +130,7 @@ export const useV4FormatConfigurationTokenSection = ({
       ? `${currentRedemptionRate}%`
       : undefined
 
-    if (queuedRulesetMetadata === null) {
+    if (queuedRulesetMetadata === null || queuedRulesetLoading) {
       return pairToDatum(t`Redemption rate`, current, null)
     }
 
@@ -138,14 +140,14 @@ export const useV4FormatConfigurationTokenSection = ({
         `${rulesetMetadata.redemptionRate.formatPercentage()}%`
       : undefined
     return pairToDatum(t`Redemption rate`, current, queued)
-  }, [queuedRulesetMetadata, rulesetMetadata])
+  }, [queuedRulesetMetadata, rulesetMetadata, queuedRulesetLoading])
 
   const ownerTokenMintingRateDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentOwnerTokenMintingRate =
       rulesetMetadata?.allowOwnerMinting !== undefined
         ? rulesetMetadata?.allowOwnerMinting
         : undefined
-    if (queuedRulesetMetadata === null) {
+    if (queuedRulesetMetadata === null || queuedRulesetLoading) {
       return flagPairToDatum(
         t`Owner token minting`,
         currentOwnerTokenMintingRate,
@@ -165,14 +167,14 @@ export const useV4FormatConfigurationTokenSection = ({
       currentOwnerTokenMintingRate,
       queuedOwnerTokenMintingRate,
     )
-  }, [rulesetMetadata?.allowOwnerMinting, queuedRulesetMetadata])
+  }, [rulesetMetadata?.allowOwnerMinting, queuedRulesetMetadata, queuedRulesetLoading])
 
   const tokenTransfersDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentTokenTransfersDatum =
       rulesetMetadata?.pauseCreditTransfers !== undefined
         ? !rulesetMetadata?.pauseCreditTransfers
         : undefined
-    if (queuedRulesetMetadata === null) {
+    if (queuedRulesetMetadata === null || queuedRulesetLoading) {
       return flagPairToDatum(
         t`Token transfers`,
         !!currentTokenTransfersDatum,
@@ -194,6 +196,7 @@ export const useV4FormatConfigurationTokenSection = ({
   }, [
     rulesetMetadata?.pauseCreditTransfers,
     queuedRulesetMetadata,
+    queuedRulesetLoading
   ])
 
   return useMemo(() => {

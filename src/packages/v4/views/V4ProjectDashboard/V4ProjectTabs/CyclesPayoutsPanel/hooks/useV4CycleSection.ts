@@ -10,13 +10,13 @@ export const useV4CycleSection = (
 ): ConfigurationPanelTableData => {
   const { data: ruleset } = useJBRuleset()
   
-  const { ruleset: queuedRuleset } = useJBQueuedRuleset()
+  const { ruleset: queuedRuleset, isLoading: queuedRulesetLoading } = useJBQueuedRuleset()
 
   const { data: payoutLimits } = usePayoutLimits()
   const payoutLimitAmount = payoutLimits?.amount
   const payoutLimitCurrency = payoutLimits?.currency
 
-  const { data: queuedPayoutLimits } = useQueuedPayoutLimits()
+  const { data: queuedPayoutLimits, isLoading: queuedPayoutLimitLoading } = useQueuedPayoutLimits()
   const queuedPayoutLimitAmount = queuedPayoutLimits?.amount
   const queuedPayoutLimitCurrency = queuedPayoutLimits?.currency
   
@@ -26,7 +26,8 @@ export const useV4CycleSection = (
       amount: payoutLimitAmount,
       currency: payoutLimitCurrency,
     },
-
+    queuedRulesetLoading,
+    queuedPayoutLimitLoading,
     queuedRuleset,
     upcomingPayoutLimitAmountCurrency: {
       amount: queuedPayoutLimitAmount,

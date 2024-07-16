@@ -14,7 +14,9 @@ export const useV4FormatConfigurationCycleSection = ({
   ruleset,
   payoutLimitAmountCurrency,
   queuedRuleset,
-  upcomingPayoutLimitAmountCurrency,
+  queuedRulesetLoading,
+  queuedPayoutLimitLoading,
+  queuedPayoutLimitAmountCurrency,
 }: {
   ruleset?: Ruleset | null;
   payoutLimitAmountCurrency: {
@@ -22,7 +24,9 @@ export const useV4FormatConfigurationCycleSection = ({
     currency: V4CurrencyOption | undefined;
   };
   queuedRuleset?: Ruleset | null;
-  upcomingPayoutLimitAmountCurrency?: {
+  queuedRulesetLoading: boolean,
+  queuedPayoutLimitLoading: boolean,
+  queuedPayoutLimitAmountCurrency?: {
     amount: bigint | undefined;
     currency: V4CurrencyOption | undefined;
   } | null;
@@ -35,13 +39,15 @@ export const useV4FormatConfigurationCycleSection = ({
 
   const durationDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentDuration = formatDuration(ruleset?.duration);
-    if (!queuedRuleset) {
+    if (queuedRuleset === null || queuedRulesetLoading) {
       return pairToDatum(t`Duration`, currentDuration, null);
     }
-    const upcomingDuration = formatDuration(queuedRuleset?.duration);
+    const upcomingDuration = formatDuration(
+      queuedRuleset ? queuedRuleset?.duration : ruleset?.duration
+    );
 
     return pairToDatum(t`Duration`, currentDuration, upcomingDuration);
-  }, [ruleset?.duration, queuedRuleset]);
+  }, [ruleset?.duration, queuedRuleset, queuedRulesetLoading]);
   
   const queuedRulesetStart = ruleset?.start ? 
     ruleset.start + (ruleset?.duration || 0n)
@@ -79,41 +85,44 @@ export const useV4FormatConfigurationCycleSection = ({
     const { amount, currency } = payoutLimitAmountCurrency ?? {};
     const currentPayout = formatPayoutAmount(amount, currency);
 
-    if (upcomingPayoutLimitAmountCurrency === null) {
+    if (queuedPayoutLimitAmountCurrency === null || queuedPayoutLimitLoading) {
       return pairToDatum(t`Payouts`, currentPayout, null);
     }
 
-    const upcomingPayoutLimit =
-      upcomingPayoutLimitAmountCurrency?.amount !== undefined
-        ? upcomingPayoutLimitAmountCurrency.amount
-        : undefined;
-    const upcomingPayoutLimitCurrency =
-      upcomingPayoutLimitAmountCurrency?.currency !== undefined
-        ? upcomingPayoutLimitAmountCurrency.currency
-        : undefined;
-    const upcomingPayout = formatPayoutAmount(
-      upcomingPayoutLimit,
-      upcomingPayoutLimitCurrency,
+    const queuedPayoutLimit =
+      queuedPayoutLimitAmountCurrency?.amount !== undefined
+        ? queuedPayoutLimitAmountCurrency.amount
+        : amount
+    const queuedPayoutLimitCurrency =
+      queuedPayoutLimitAmountCurrency?.currency !== undefined
+        ? queuedPayoutLimitAmountCurrency.currency
+        : currency;
+    const queuedPayout = formatPayoutAmount(
+      queuedPayoutLimit,
+      queuedPayoutLimitCurrency,
     );
 
-    return pairToDatum(t`Payouts`, currentPayout, upcomingPayout);
-  }, [payoutLimitAmountCurrency, upcomingPayoutLimitAmountCurrency]);
+    return pairToDatum(t`Payouts`, currentPayout, queuedPayout);
+  }, [payoutLimitAmountCurrency, queuedPayoutLimitAmountCurrency, queuedPayoutLimitLoading]);
 
   const editDeadlineDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentApprovalStrategy = ruleset?.approvalHook
       ? getApprovalStrategyByAddress(ruleset.approvalHook)
       : undefined;
     const current = currentApprovalStrategy?.name;
-    if (!queuedRuleset) {
+    if (queuedRuleset === null || queuedPayoutLimitLoading) {
       return pairToDatum(t`Edit deadline`, current, null);
     }
 
     const upcomingBallotStrategy = queuedRuleset?.approvalHook
       ? getApprovalStrategyByAddress(queuedRuleset.approvalHook)
-      : undefined;
+      : ruleset?.approvalHook ?
+        getApprovalStrategyByAddress(ruleset.approvalHook)
+      : undefined
+
     const upcoming = upcomingBallotStrategy?.name;
     return pairToDatum(t`Edit deadline`, current, upcoming);
-  }, [ruleset?.approvalHook, queuedRuleset]);
+  }, [ruleset?.approvalHook, queuedRuleset, queuedPayoutLimitLoading]);
 
   return useMemo(() => {
     return {

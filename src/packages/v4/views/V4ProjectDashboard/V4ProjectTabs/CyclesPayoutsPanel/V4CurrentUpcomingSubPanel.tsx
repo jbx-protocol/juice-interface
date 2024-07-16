@@ -40,7 +40,7 @@ export const V4CurrentUpcomingSubPanel = ({
     }
     if (info.type === 'upcoming') {
       topPanelInfo.push({
-        title: t`Ruleset length`,
+        title: t`Ruleset duration`,
         value: info.rulesetLength,
       })
     }
@@ -56,7 +56,7 @@ export const V4CurrentUpcomingSubPanel = ({
   const rulesetLengthTooltip =
     info.type === 'current' ? currentCycleRemainingLengthTooltip : undefined
 
-  const rulesetLengthValue = topPanelsInfo[CYCLE_LENGTH_INDEX].value
+  const rulesetLengthValue = topPanelsInfo[CYCLE_LENGTH_INDEX].value?.toString()
 
   const rulesetStatusTooltip = info.currentRulesetUnlocked ? (
     <Trans>The project's rules are unlocked and can change at any time.</Trans>
@@ -116,14 +116,14 @@ export const V4CurrentUpcomingSubPanel = ({
             className="w-full md:max-w-[127px]"
             title={topPanelsInfo[CYCLE_NUMBER_INDEX].title}
             description={
-              topPanelsInfo[CYCLE_NUMBER_INDEX].value ?? <Skeleton />
+              topPanelsInfo[CYCLE_NUMBER_INDEX].value?.toString() ?? <Skeleton />
             }
           />
           <TitleDescriptionDisplayCard
             className="w-full md:w-fit"
             title={topPanelsInfo[STATUS_INDEX].title}
             description={
-              topPanelsInfo[STATUS_INDEX].value ?? <Skeleton className="w-22" />
+              topPanelsInfo[STATUS_INDEX].value?.toString() ?? <Skeleton className="w-22" />
             }
             tooltip={rulesetStatusTooltip}
           />
@@ -131,7 +131,7 @@ export const V4CurrentUpcomingSubPanel = ({
             className="col-span-2 md:flex-1"
             title={topPanelsInfo[CYCLE_LENGTH_INDEX].title}
             description={
-              topPanelsInfo[CYCLE_LENGTH_INDEX].value ?? (
+              topPanelsInfo[CYCLE_LENGTH_INDEX].value?.toString() ?? (
                 <Skeleton className="w-40" />
               )
             }

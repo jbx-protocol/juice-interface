@@ -25,7 +25,6 @@ export const RulesetCountdownProvider = ({
   const endEpochSeconds = ruleset
     ? Number(ruleset.start + ruleset.duration)
     : 0
-
   const { remainingTimeText, secondsRemaining } =
     useCountdownClock(endEpochSeconds)
 

@@ -17,7 +17,7 @@ export type ConfigurationPanelTableData = {
 type ConfigurationPanelProps = {
   cycle: ConfigurationPanelTableData
   token: ConfigurationPanelTableData
-  otherRules?: ConfigurationPanelTableData // V4TODO: don't make otherRules optional
+  otherRules: ConfigurationPanelTableData 
   extension?: ConfigurationPanelTableData | null // V4TODO: don't make extension optional
 }
 
@@ -30,12 +30,8 @@ export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({
   return (
     <div className="flex flex-col gap-8">
       <ConfigurationTable title={t`Cycle`} data={cycle} />
-      {token && ( // V4TODO: don't make token optional
-        <ConfigurationTable title={t`Token`} data={token} />
-      )}  
-      {otherRules && ( // V4TODO: don't make otherRules optional
-        <ConfigurationTable title={t`Other rules`} data={otherRules} />
-      )}
+      <ConfigurationTable title={t`Token`} data={token} />
+      <ConfigurationTable title={t`Other rules`} data={otherRules} />
       {extension && (
         <ConfigurationTable title={t`Extension`} data={extension} />
       )}

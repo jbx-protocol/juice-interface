@@ -1,5 +1,5 @@
 import { DecayRate, JBRulesetMetadata, RedemptionRate, ReservedRate, RulesetWeight } from 'juice-sdk-core';
-import { useReadJbControllerLatestQueuedRulesetOf } from 'juice-sdk-react';
+import { useJBContractContext, useReadJbControllerUpcomingRulesetOf } from 'juice-sdk-react';
 import { Ruleset } from '../models/ruleset';
 
 
@@ -9,10 +9,13 @@ export function useJBQueuedRuleset(): {
   rulesetMetadata: JBRulesetMetadata | undefined, 
   isLoading: boolean
  } {
-  const { data, isLoading } = useReadJbControllerLatestQueuedRulesetOf()
+  const { contracts, projectId } = useJBContractContext()
+  const { data, isLoading } = useReadJbControllerUpcomingRulesetOf({
+    address: contracts.controller?.data ?? undefined,
+    args: [projectId]
+  })
   const _latestQueuedRuleset = data?.[0]
   const _latestQueuedRulesetMetadata = data?.[1]
-
   const queuedWeight = new RulesetWeight(_latestQueuedRuleset?.weight ?? 0n)
   const queuedDecayRate = new DecayRate(_latestQueuedRuleset?.decayRate ?? 0n)
 

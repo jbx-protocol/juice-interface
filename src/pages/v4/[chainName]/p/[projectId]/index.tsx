@@ -3,7 +3,6 @@ import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { JBChainId, JBProjectProvider } from 'juice-sdk-react'
 import { useRouter } from 'next/router'
-import { RulesetCountdownProvider } from 'packages/v4/contexts/RulesetCountdownProvider'
 import V4ProjectMetadataProvider from 'packages/v4/contexts/V4ProjectMetadataProvider'
 import { V4ProjectDashboard } from 'packages/v4/views/V4ProjectDashboard/V4ProjectDashboard'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
@@ -54,11 +53,9 @@ const Providers: React.FC<
             metadata: { ipfsGatewayHostname: OPEN_IPFS_GATEWAY_HOSTNAME },
           }}
         >
-          <RulesetCountdownProvider>
-            <V4ProjectMetadataProvider projectId={BigInt(projectId)}>
-              {children}
-            </V4ProjectMetadataProvider>
-          </RulesetCountdownProvider>
+          <V4ProjectMetadataProvider projectId={BigInt(projectId)}>
+            {children}
+          </V4ProjectMetadataProvider>
         </JBProjectProvider>
       </WagmiProvider>
     </AppWrapper>

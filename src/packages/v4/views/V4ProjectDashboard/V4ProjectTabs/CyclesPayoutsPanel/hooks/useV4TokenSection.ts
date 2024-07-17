@@ -20,11 +20,7 @@ export const useV4TokenSection = (
 
   return useV4FormatConfigurationTokenSection({
     ruleset,
-    rulesetMetadata: rulesetMetadata ? {
-      allowAddAccountingContext: false, // @todo: remove when next contracts deployed
-      allowAddPriceFeed: false, // @todo: remove when next contracts deployed
-      ...rulesetMetadata,
-    }: undefined,
+    rulesetMetadata,
     tokenSymbol: tokenSymbolRaw,
     queuedRuleset,
     queuedRulesetMetadata,

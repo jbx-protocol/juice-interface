@@ -113,9 +113,8 @@ export const useV4FormatConfigurationTokenSection = ({
     if (queuedRuleset === null || queuedRulesetLoading) {
       return pairToDatum(t`Decay rate`, current, null)
     }
-
     const queued = queuedRuleset
-      ? `${queuedRuleset.decayRate.formatPercentage}%`
+      ? `${queuedRuleset.decayRate.formatPercentage()}%`
       : ruleset ?
         `${ruleset.decayRate.formatPercentage()}%`
       : undefined

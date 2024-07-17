@@ -2,35 +2,35 @@ import * as constants from '@ethersproject/constants';
 import { NATIVE_TOKEN } from 'juice-sdk-core';
 import { useJBContractContext, useReadJbFundAccessLimitsPayoutLimitsOf } from 'juice-sdk-react';
 import { V4CurrencyOption } from '../models/v4CurrencyOption';
-import { useJBQueuedRuleset } from './useJBQueuedRuleset';
+import { useJBUpcomingRuleset } from './useJBUpcomingRuleset';
 
 /**
  * @todo add to sdk
  */
-export function useQueuedPayoutLimits() {
+export function useUpcomingPayoutLimits() {
   const {
     projectId,
     contracts: { primaryNativeTerminal: _primaryNativeTerminal },
   } = useJBContractContext()
 
-  const { ruleset: latestQueuedRuleset } = useJBQueuedRuleset();
+  const { ruleset: latestUpcomingRuleset } = useJBUpcomingRuleset();
 
   const primaryNativeTerminal = _primaryNativeTerminal.data;
 
-  const queuedPayoutLimits = useReadJbFundAccessLimitsPayoutLimitsOf({
+  const upcomingPayoutLimits = useReadJbFundAccessLimitsPayoutLimitsOf({
       args: [
         projectId,
-        latestQueuedRuleset?.id ?? 0n,
+        latestUpcomingRuleset?.id ?? 0n,
         primaryNativeTerminal ?? constants.AddressZero,
         NATIVE_TOKEN,
       ]
   });
-  const queuedPayoutLimit = queuedPayoutLimits?.data?.[0]
+  const upcomingPayoutLimit = upcomingPayoutLimits?.data?.[0]
   return {
     data: {
-      ...queuedPayoutLimit,
-      currency: queuedPayoutLimit?.currency as V4CurrencyOption | undefined,
+      ...upcomingPayoutLimit,
+      currency: upcomingPayoutLimit?.currency as V4CurrencyOption | undefined,
     },
-    isLoading: queuedPayoutLimits?.isLoading,
+    isLoading: upcomingPayoutLimits?.isLoading,
   };
 }

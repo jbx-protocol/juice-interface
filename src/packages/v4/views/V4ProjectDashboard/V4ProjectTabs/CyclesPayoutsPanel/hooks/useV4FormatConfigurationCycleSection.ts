@@ -13,8 +13,8 @@ import { timeSecondsToDateString } from 'utils/timeSecondsToDateString';
 export const useV4FormatConfigurationCycleSection = ({
   ruleset,
   payoutLimitAmountCurrency,
-  queuedRuleset,
-  queuedRulesetLoading,
+  upcomingRuleset,
+  upcomingRulesetLoading,
   queuedPayoutLimitLoading,
   queuedPayoutLimitAmountCurrency,
 }: {
@@ -23,8 +23,8 @@ export const useV4FormatConfigurationCycleSection = ({
     amount: bigint | undefined;
     currency: V4CurrencyOption | undefined;
   };
-  queuedRuleset?: Ruleset | null;
-  queuedRulesetLoading: boolean,
+  upcomingRuleset?: Ruleset | null;
+  upcomingRulesetLoading: boolean,
   queuedPayoutLimitLoading: boolean,
   queuedPayoutLimitAmountCurrency?: {
     amount: bigint | undefined;
@@ -39,27 +39,27 @@ export const useV4FormatConfigurationCycleSection = ({
 
   const durationDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentDuration = formatDuration(ruleset?.duration);
-    if (queuedRuleset === null || queuedRulesetLoading) {
+    if (upcomingRuleset === null || upcomingRulesetLoading) {
       return pairToDatum(t`Duration`, currentDuration, null);
     }
     const upcomingDuration = formatDuration(
-      queuedRuleset ? queuedRuleset?.duration : ruleset?.duration
+      upcomingRuleset ? upcomingRuleset?.duration : ruleset?.duration
     );
 
     return pairToDatum(t`Duration`, currentDuration, upcomingDuration);
-  }, [ruleset?.duration, queuedRuleset, queuedRulesetLoading]);
+  }, [ruleset?.duration, upcomingRuleset, upcomingRulesetLoading]);
   
-  const queuedRulesetStart = ruleset?.start ? 
+  const upcomingRulesetStart = ruleset?.start ? 
     ruleset.start + (ruleset?.duration || 0n)
   : 0n;
 
   const startTimeDatum: ConfigurationPanelDatum = useMemo(() => {
     const formattedTime =
-    queuedRuleset === null
+    upcomingRuleset === null
         ? formatTime(ruleset?.start)
         : ruleset?.duration === 0n
         ? t`Any time`
-        : formatTime(queuedRulesetStart);
+        : formatTime(upcomingRulesetStart);
 
     const formatTimeDatum: ConfigurationPanelDatum = {
       name: t`Start time`,
@@ -67,7 +67,7 @@ export const useV4FormatConfigurationCycleSection = ({
       easyCopy: true,
     };
     return formatTimeDatum;
-  }, [ruleset?.start, ruleset?.duration, queuedRuleset, queuedRulesetStart]);
+  }, [ruleset?.start, ruleset?.duration, upcomingRuleset, upcomingRulesetStart]);
 
   const formatPayoutAmount = (
     amount: bigint | undefined,
@@ -110,19 +110,19 @@ export const useV4FormatConfigurationCycleSection = ({
       ? getApprovalStrategyByAddress(ruleset.approvalHook)
       : undefined;
     const current = currentApprovalStrategy?.name;
-    if (queuedRuleset === null || queuedPayoutLimitLoading) {
+    if (upcomingRuleset === null || queuedPayoutLimitLoading) {
       return pairToDatum(t`Edit deadline`, current, null);
     }
 
-    const upcomingBallotStrategy = queuedRuleset?.approvalHook
-      ? getApprovalStrategyByAddress(queuedRuleset.approvalHook)
+    const upcomingBallotStrategy = upcomingRuleset?.approvalHook
+      ? getApprovalStrategyByAddress(upcomingRuleset.approvalHook)
       : ruleset?.approvalHook ?
         getApprovalStrategyByAddress(ruleset.approvalHook)
       : undefined
 
     const upcoming = upcomingBallotStrategy?.name;
     return pairToDatum(t`Edit deadline`, current, upcoming);
-  }, [ruleset?.approvalHook, queuedRuleset, queuedPayoutLimitLoading]);
+  }, [ruleset?.approvalHook, upcomingRuleset, queuedPayoutLimitLoading]);
 
   return useMemo(() => {
     return {

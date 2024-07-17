@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro';
-import { pairToDatum } from 'components/Project/ProjectHeader/utils/pairToDatum';
 import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel';
+import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum';
 import { Ruleset } from 'packages/v4/models/ruleset';
 import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption';
 import { getApprovalStrategyByAddress } from 'packages/v4/utils/approvalHooks';
@@ -13,7 +13,9 @@ import { timeSecondsToDateString } from 'utils/timeSecondsToDateString';
 export const useV4FormatConfigurationCycleSection = ({
   ruleset,
   payoutLimitAmountCurrency,
-  queuedRuleset,
+  upcomingRuleset,
+  upcomingRulesetLoading,
+  upcomingPayoutLimitLoading,
   upcomingPayoutLimitAmountCurrency,
 }: {
   ruleset?: Ruleset | null;
@@ -21,7 +23,9 @@ export const useV4FormatConfigurationCycleSection = ({
     amount: bigint | undefined;
     currency: V4CurrencyOption | undefined;
   };
-  queuedRuleset?: Ruleset | null;
+  upcomingRuleset?: Ruleset | null;
+  upcomingRulesetLoading: boolean,
+  upcomingPayoutLimitLoading: boolean,
   upcomingPayoutLimitAmountCurrency?: {
     amount: bigint | undefined;
     currency: V4CurrencyOption | undefined;
@@ -35,25 +39,27 @@ export const useV4FormatConfigurationCycleSection = ({
 
   const durationDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentDuration = formatDuration(ruleset?.duration);
-    if (!queuedRuleset) {
+    if (upcomingRuleset === null || upcomingRulesetLoading) {
       return pairToDatum(t`Duration`, currentDuration, null);
     }
-    const upcomingDuration = formatDuration(queuedRuleset?.duration);
+    const upcomingDuration = formatDuration(
+      upcomingRuleset ? upcomingRuleset?.duration : ruleset?.duration
+    );
 
     return pairToDatum(t`Duration`, currentDuration, upcomingDuration);
-  }, [ruleset?.duration, queuedRuleset]);
+  }, [ruleset?.duration, upcomingRuleset, upcomingRulesetLoading]);
   
-  const queuedRulesetStart = ruleset?.start ? 
+  const upcomingRulesetStart = ruleset?.start ? 
     ruleset.start + (ruleset?.duration || 0n)
   : 0n;
 
   const startTimeDatum: ConfigurationPanelDatum = useMemo(() => {
     const formattedTime =
-    queuedRuleset === null
+    upcomingRuleset === null
         ? formatTime(ruleset?.start)
         : ruleset?.duration === 0n
         ? t`Any time`
-        : formatTime(queuedRulesetStart);
+        : formatTime(upcomingRulesetStart);
 
     const formatTimeDatum: ConfigurationPanelDatum = {
       name: t`Start time`,
@@ -61,14 +67,13 @@ export const useV4FormatConfigurationCycleSection = ({
       easyCopy: true,
     };
     return formatTimeDatum;
-  }, [ruleset?.start, ruleset?.duration, queuedRuleset, queuedRulesetStart]);
+  }, [ruleset?.start, ruleset?.duration, upcomingRuleset, upcomingRulesetStart]);
 
   const formatPayoutAmount = (
     amount: bigint | undefined,
     currency: V4CurrencyOption | undefined,
   ) => {
-    if (amount === undefined) return undefined;
-    if (amount === MAX_PAYOUT_LIMIT) return t`Unlimited`;
+    if (amount === undefined || amount === MAX_PAYOUT_LIMIT) return t`Unlimited`;
     if (amount === 0n) return t`Zero (no payouts)`;
     return formatCurrencyAmount({
       amount: Number(amount) / 1e18, // Assuming fromWad
@@ -80,41 +85,44 @@ export const useV4FormatConfigurationCycleSection = ({
     const { amount, currency } = payoutLimitAmountCurrency ?? {};
     const currentPayout = formatPayoutAmount(amount, currency);
 
-    if (!upcomingPayoutLimitAmountCurrency) {
+    if (upcomingPayoutLimitAmountCurrency === null || upcomingPayoutLimitLoading) {
       return pairToDatum(t`Payouts`, currentPayout, null);
     }
 
     const upcomingPayoutLimit =
       upcomingPayoutLimitAmountCurrency?.amount !== undefined
         ? upcomingPayoutLimitAmountCurrency.amount
-        : undefined;
+        : amount
     const upcomingPayoutLimitCurrency =
       upcomingPayoutLimitAmountCurrency?.currency !== undefined
         ? upcomingPayoutLimitAmountCurrency.currency
-        : undefined;
+        : currency;
     const upcomingPayout = formatPayoutAmount(
       upcomingPayoutLimit,
       upcomingPayoutLimitCurrency,
     );
 
     return pairToDatum(t`Payouts`, currentPayout, upcomingPayout);
-  }, [payoutLimitAmountCurrency, upcomingPayoutLimitAmountCurrency]);
+  }, [payoutLimitAmountCurrency, upcomingPayoutLimitAmountCurrency, upcomingPayoutLimitLoading]);
 
   const editDeadlineDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentApprovalStrategy = ruleset?.approvalHook
       ? getApprovalStrategyByAddress(ruleset.approvalHook)
       : undefined;
     const current = currentApprovalStrategy?.name;
-    if (!queuedRuleset) {
+    if (upcomingRuleset === null || upcomingPayoutLimitLoading) {
       return pairToDatum(t`Edit deadline`, current, null);
     }
 
-    const upcomingBallotStrategy = queuedRuleset?.approvalHook
-      ? getApprovalStrategyByAddress(queuedRuleset.approvalHook)
-      : undefined;
+    const upcomingBallotStrategy = upcomingRuleset?.approvalHook
+      ? getApprovalStrategyByAddress(upcomingRuleset.approvalHook)
+      : ruleset?.approvalHook ?
+        getApprovalStrategyByAddress(ruleset.approvalHook)
+      : undefined
+
     const upcoming = upcomingBallotStrategy?.name;
     return pairToDatum(t`Edit deadline`, current, upcoming);
-  }, [ruleset?.approvalHook, queuedRuleset]);
+  }, [ruleset?.approvalHook, upcomingRuleset, upcomingPayoutLimitLoading]);
 
   return useMemo(() => {
     return {

@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
-import { pairToDatum } from 'components/Project/ProjectHeader/utils/pairToDatum'
 import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
+import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import { BigNumber } from 'ethers'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3FundingCycle } from 'packages/v2v3/models/fundingCycle'

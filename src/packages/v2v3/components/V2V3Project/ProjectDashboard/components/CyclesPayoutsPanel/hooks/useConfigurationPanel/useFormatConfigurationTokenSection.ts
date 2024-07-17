@@ -1,9 +1,10 @@
 import { t } from '@lingui/macro'
-import { pairToDatum } from 'components/Project/ProjectHeader/utils/pairToDatum'
 import {
     ConfigurationPanelDatum,
     ConfigurationPanelTableData,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
+import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
+import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import {
     V2V3FundingCycle,
     V2V3FundingCycleMetadata,
@@ -18,7 +19,6 @@ import {
 import { useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { flagPairToDatum } from '../../utils/flagPairToDatum'
 
 export const useFormatConfigurationTokenSection = ({
   fundingCycle,

@@ -3659,6 +3659,9 @@ msgstr ""
 msgid "(0%)"
 msgstr ""
 
+msgid "Decay rate"
+msgstr ""
+
 msgid "Tokens per ETH contributed"
 msgstr ""
 
@@ -4295,9 +4298,6 @@ msgstr ""
 msgid "Terms of Service"
 msgstr ""
 
-msgid "Ruleset length"
-msgstr ""
-
 msgid "Payment notice"
 msgstr ""
 
@@ -4482,6 +4482,9 @@ msgid "Awaiting IPFS response. This may take a while."
 msgstr ""
 
 msgid "Edit handle of {projectTitle}"
+msgstr ""
+
+msgid "Ruleset duration"
 msgstr ""
 
 msgid "Other assets in this project's owner's wallet."

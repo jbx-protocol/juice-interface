@@ -4,10 +4,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { renderHook } from '@testing-library/react-hooks'
-import { flagPairToDatum } from 'components/Project/ProjectHeader/utils/flagPairToDatum'
+import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
 import { useFormatConfigurationOtherRulesSection } from './useFormatConfigurationOtherRulesSection'
 
-jest.mock('components/Project/ProjectHeader/utils/flagPairToDatum')
+jest.mock('components/Project/ProjectTabs/utils/flagPairToDatum')
 
 describe('useFormatConfigurationOtherRulesSection', () => {
   const mockFundingCycleMetadata = {

@@ -1,7 +1,7 @@
 import { ConfigurationPanelTableData } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import { useJBRuleset, useJBRulesetMetadata, useReadJbTokensTokenOf } from 'juice-sdk-react'
-import { useJBQueuedRuleset } from 'packages/v4/hooks/useJBQueuedRuleset'
+import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { useV4FormatConfigurationTokenSection } from './useV4FormatConfigurationTokenSection'
 
 export const useV4TokenSection = (
@@ -12,22 +12,23 @@ export const useV4TokenSection = (
 
   const { data: ruleset } = useJBRuleset()
   const { data: rulesetMetadata } = useJBRulesetMetadata()
-  const { ruleset: queuedRuleset, rulesetMetadata: queuedRulesetMetadata } = useJBQueuedRuleset()
+  const { 
+    ruleset: upcomingRuleset, 
+    rulesetMetadata: upcomingRulesetMetadata, 
+    isLoading: upcomingRulesetLoading 
+  } = useJBUpcomingRuleset()
 
   return useV4FormatConfigurationTokenSection({
     ruleset,
-    rulesetMetadata: rulesetMetadata ? {
-      allowAddAccountingContext: false, // @todo: remove when next contracts deployed
-      allowAddPriceFeed: false, // @todo: remove when next contracts deployed
-      ...rulesetMetadata,
-    }: undefined,
+    rulesetMetadata,
     tokenSymbol: tokenSymbolRaw,
-    queuedRuleset,
-    queuedRulesetMetadata,
+    upcomingRuleset,
+    upcomingRulesetMetadata,
+    upcomingRulesetLoading,
     // Hide upcoming info from current section.
     ...(type === 'current' && {
-      queuedRuleset: null,
-      queuedRulesetMetadata: null,
+      upcomingRuleset: null,
+      upcomingRulesetMetadata: null,
     }),
   })
 }

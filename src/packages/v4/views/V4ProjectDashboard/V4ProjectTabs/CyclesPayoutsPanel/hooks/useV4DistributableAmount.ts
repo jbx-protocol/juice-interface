@@ -24,7 +24,7 @@ export const useV4DistributableAmount = () => {
     ],
   })
 
-  const { data: _balanceInPayoutLimitCurrency } =
+  const { data: _treasuryBalance } =
     useReadJbTerminalStoreBalanceOf({
       address: store.data ?? undefined,
       args: [
@@ -38,17 +38,17 @@ export const useV4DistributableAmount = () => {
 
   const effectiveDistributionLimit = payoutLimit?.amount ?? 0n
   const distributedAmount = usedPayoutLimit ?? 0n
-  const balanceInDistributionLimit = _balanceInPayoutLimitCurrency ?? 0n
+  const treasuryBalance =
+    _treasuryBalance ?? 0n
 
   const distributable =
     effectiveDistributionLimit === 0n
       ? effectiveDistributionLimit
       : effectiveDistributionLimit - distributedAmount
 
-  const distributableAmount =
-    balanceInDistributionLimit > distributable
-      ? distributable
-      : balanceInDistributionLimit
+  const distributableAmount = treasuryBalance > distributable
+    ? distributable
+    : treasuryBalance
 
   return {
     distributableAmount,

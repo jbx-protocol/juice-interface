@@ -4,13 +4,13 @@ import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPe
 import { SubtitleType, useSubtitle } from 'hooks/useSubtitle'
 import {
   useJBContractContext,
-  useJBProjectMetadataContext,
-  useReadJbProjectsOwnerOf,
+  useJBProjectMetadataContext
 } from 'juice-sdk-react'
 import { GnosisSafe } from 'models/safe'
 import { useRouter } from 'next/router'
 import { ProjectsDocument } from 'packages/v4/graphql/client/graphql'
 import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
+import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 export interface ProjectHeaderData {
   title: string | undefined
   subtitle: { text: string; type: SubtitleType } | undefined
@@ -31,9 +31,7 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
   const { metadata } = useJBProjectMetadataContext()
   const projectMetadata = metadata?.data
 
-  const { data: projectOwnerAddress } = useReadJbProjectsOwnerOf({
-    args: [projectId],
-  })
+  const { data: projectOwnerAddress } = useProjectOwnerOf()
 
   const projectIdNum = parseInt(projectId.toString())
 

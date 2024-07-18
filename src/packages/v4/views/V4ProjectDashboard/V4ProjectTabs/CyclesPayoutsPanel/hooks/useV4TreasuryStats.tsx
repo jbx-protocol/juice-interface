@@ -1,20 +1,21 @@
 import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 import { NATIVE_TOKEN } from 'juice-sdk-core'
-import { NativeTokenValue, useJBContractContext, useJBRulesetMetadata, useNativeTokenSurplus, useReadJbTerminalStoreBalanceOf } from 'juice-sdk-react'
+import { NativeTokenValue, useJBContractContext, useJBRulesetMetadata, useJBTerminalContext, useNativeTokenSurplus, useReadJbTerminalStoreBalanceOf } from 'juice-sdk-react'
 import { usePayoutLimits } from 'packages/v4/hooks/usePayoutLimits'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { useMemo } from 'react'
 import { useV4DistributableAmount } from './useV4DistributableAmount'
 
 export const useV4TreasuryStats = () => {
+  const { store } = useJBTerminalContext()
   const { data: rulesetMetadata } = useJBRulesetMetadata()
   const { projectId, contracts: { primaryNativeTerminal } } = useJBContractContext()
   const { distributableAmount } = useV4DistributableAmount()
   const { data: surplusInNativeToken } = useNativeTokenSurplus()
 
   const { data: _treasuryBalance } = useReadJbTerminalStoreBalanceOf({
-    address: primaryNativeTerminal.data ?? undefined, // TODO: this must be wrong, find terminalStore address
+    address: store.data ?? undefined,
     args: [
         primaryNativeTerminal.data ?? constants.AddressZero,
         projectId,

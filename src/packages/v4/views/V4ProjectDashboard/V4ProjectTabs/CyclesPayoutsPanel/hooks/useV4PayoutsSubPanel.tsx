@@ -1,5 +1,6 @@
-import { NativeTokenValue, useJBContractContext, useReadJbMultiTerminalFee, useReadJbProjectsOwnerOf } from 'juice-sdk-react'
+import { NativeTokenValue, useJBContractContext, useReadJbMultiTerminalFee } from 'juice-sdk-react'
 
+import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { V4Split } from 'packages/v4/models/v4Split'
 import { formatV4SplitPercent, MAX_PAYOUT_LIMIT, V4_SPLITS_TOTAL_PERCENT } from 'packages/v4/utils/math'
 import { v4GetProjectOwnerRemainderSplit } from 'packages/v4/utils/v4Splits'
@@ -32,9 +33,7 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { 
     projectId,
   } = useJBContractContext()
-  const { data: projectOwnerAddress } = useReadJbProjectsOwnerOf({
-    args: [projectId],
-  })
+  const { data: projectOwnerAddress } = useProjectOwnerOf()
 
   const { data: primaryNativeTerminalFee } = useReadJbMultiTerminalFee()
 

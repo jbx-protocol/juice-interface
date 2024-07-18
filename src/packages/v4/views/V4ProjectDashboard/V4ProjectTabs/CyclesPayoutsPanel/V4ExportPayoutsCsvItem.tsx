@@ -1,26 +1,25 @@
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { useExportSplitsToCsv } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useExportSplitsToCsv'
-import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
-import { useContext } from 'react'
+import { useJBRuleset } from 'juice-sdk-react'
 import { twMerge } from 'tailwind-merge'
-import { useCurrentUpcomingPayoutSplits } from '../hooks/useCurrentUpcomingPayoutSplits'
+import { useV4CurrentUpcomingPayoutSplits } from './hooks/useV4CurrentUpcomingPayoutSplits'
+import { useV4ExportSplitsToCsv } from './hooks/useV4ExportSplitsToCsv'
 
-export const ExportPayoutsCsvItem = ({
+export const V4ExportPayoutsCsvItem = ({
   type,
 }: {
   type: 'current' | 'upcoming'
 }) => {
-  const { splits: payoutSplits, loading } = useCurrentUpcomingPayoutSplits(type)
-  const { fundingCycle } = useContext(V2V3ProjectContext)
-  const fcNumber = fundingCycle
+  const { splits: payoutSplits, loading } = useV4CurrentUpcomingPayoutSplits(type)
+  const { data: ruleset } = useJBRuleset()
+  const fcNumber = ruleset
     ? type === 'current'
-      ? fundingCycle.number.toNumber()
-      : fundingCycle.number.toNumber() + 1
+      ? Number(ruleset.cycleNumber)
+      : Number(ruleset.cycleNumber) + 1
     : undefined
   const disabled = !payoutSplits?.length
-  const { exportSplitsToCsv } = useExportSplitsToCsv(
+  const { exportSplitsToCsv } = useV4ExportSplitsToCsv(
     payoutSplits ?? [],
     'payouts',
     fcNumber,

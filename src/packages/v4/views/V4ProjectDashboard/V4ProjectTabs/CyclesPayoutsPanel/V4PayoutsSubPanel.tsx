@@ -3,6 +3,7 @@ import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/Titl
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useV4PayoutsSubPanel } from './hooks/useV4PayoutsSubPanel'
+import { V4ExportPayoutsCsvItem } from './V4ExportPayoutsCsvItem'
 import { V4ProjectAllocationRow } from './V4ProjectAllocationRow'
 import { V4TreasuryStats } from './V4TreasuryStats'
 
@@ -39,7 +40,7 @@ export const V4PayoutsSubPanel = ({
                   items: [
                     {
                       id: 'export',
-                      component: <></>//<ExportPayoutsCsvItem type={type} />,
+                      component: <V4ExportPayoutsCsvItem type={type} />,
                     },
                   ],
                 },

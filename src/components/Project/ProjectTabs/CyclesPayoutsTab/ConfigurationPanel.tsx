@@ -18,7 +18,7 @@ type ConfigurationPanelProps = {
   cycle: ConfigurationPanelTableData
   token: ConfigurationPanelTableData
   otherRules: ConfigurationPanelTableData 
-  extension?: ConfigurationPanelTableData | null // V4TODO: don't make extension optional
+  extension: ConfigurationPanelTableData | null 
 }
 
 export const ConfigurationPanel: React.FC<ConfigurationPanelProps> = ({

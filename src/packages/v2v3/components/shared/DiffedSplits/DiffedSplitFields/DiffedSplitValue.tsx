@@ -5,7 +5,7 @@ import {
   isInfiniteDistributionLimit,
 } from 'packages/v2v3/utils/fundingCycle'
 import { formatSplitPercent } from 'packages/v2v3/utils/math'
-import { splitAmountsAreEqual } from 'utils/splits'
+import { splitAmountsAreEqual } from 'packages/v2v3/utils/v2v3Splits'
 import { DiffedItem } from '../../DiffedItem'
 import { SplitProps } from '../../SplitItem'
 import { SplitAmountValue } from '../../SplitItem/SplitAmountValue'

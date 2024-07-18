@@ -9,28 +9,27 @@ import { V4CurrencyOption } from '../models/v4CurrencyOption';
 export function usePayoutLimits() {
   const {
     projectId,
-    contracts: { primaryNativeTerminal: _primaryNativeTerminal },
+    contracts: { primaryNativeTerminal, fundAccessLimits },
   } = useJBContractContext();
 
   const { data: ruleset } = useJBRuleset();
 
-  const primaryNativeTerminal = _primaryNativeTerminal.data;
-
 
   const { data: payoutLimits, isLoading } = useReadJbFundAccessLimitsPayoutLimitsOf({
+    address: fundAccessLimits.data ?? undefined,
     args: [
       projectId,
       ruleset?.id ?? 0n,
-      primaryNativeTerminal ?? constants.AddressZero,
+      primaryNativeTerminal.data ?? constants.AddressZero,
       NATIVE_TOKEN,
     ],
   });
   const payoutLimit = payoutLimits?.[0];
   return {
-    data: {
+    data: payoutLimit ? {
       ...payoutLimit,
-      currency: payoutLimit?.currency as V4CurrencyOption | undefined,
-    },
+      currency: Number(payoutLimit.currency) as V4CurrencyOption,
+    }: undefined,
     isLoading
   };
 }

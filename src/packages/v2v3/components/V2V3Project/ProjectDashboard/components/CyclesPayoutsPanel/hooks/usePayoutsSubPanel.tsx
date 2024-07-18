@@ -8,12 +8,12 @@ import { isJuiceboxProjectSplit } from 'packages/v2v3/utils/distributions'
 import {
   MAX_DISTRIBUTION_LIMIT,
   SPLITS_TOTAL_PERCENT,
-  feeForAmount,
   formatSplitPercent,
 } from 'packages/v2v3/utils/math'
+import { getProjectOwnerRemainderSplit } from 'packages/v2v3/utils/v2v3Splits'
 import { useCallback, useMemo } from 'react'
 import assert from 'utils/assert'
-import { getProjectOwnerRemainderSplit } from 'utils/splits'
+import { feeForAmount } from 'utils/math'
 import { useCurrentUpcomingDistributionLimit } from './useCurrentUpcomingDistributionLimit'
 import { useCurrentUpcomingPayoutSplits } from './useCurrentUpcomingPayoutSplits'
 import { useDistributableAmount } from './useDistributableAmount'
@@ -31,7 +31,7 @@ const calculateSplitAmountWad = (
     ?.mul(split.percent)
     .div(SPLITS_TOTAL_PERCENT)
   const feeAmount = splitHasFee(split)
-    ? feeForAmount(splitValue, primaryETHTerminalFee) ?? BigNumber.from(0)
+    ? feeForAmount(splitValue?.toBigInt(), primaryETHTerminalFee?.toBigInt()) ?? 0n
     : BigNumber.from(0)
   return splitValue?.sub(feeAmount)
 }

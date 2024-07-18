@@ -77,6 +77,9 @@ msgstr ""
 msgid "per {currencyText} paid"
 msgstr ""
 
+msgid "No surplus"
+msgstr ""
+
 msgid "Trust"
 msgstr ""
 
@@ -257,6 +260,9 @@ msgstr ""
 msgid "Safe transactions"
 msgstr ""
 
+msgid "Surplus"
+msgstr ""
+
 msgid "See example"
 msgstr ""
 
@@ -357,6 +363,9 @@ msgid "Reserved NFTs"
 msgstr ""
 
 msgid "Basic details"
+msgstr ""
+
+msgid "{surplus} is available for future payouts."
 msgstr ""
 
 msgid "Your project can receive payments through the juicebox.money app."
@@ -1035,6 +1044,9 @@ msgid "The amount of ETH that this project has right now."
 msgstr ""
 
 msgid "1. Set ENS name"
+msgstr ""
+
+msgid "{surplus} is available for token redemptions or future payouts."
 msgstr ""
 
 msgid "No overflow"

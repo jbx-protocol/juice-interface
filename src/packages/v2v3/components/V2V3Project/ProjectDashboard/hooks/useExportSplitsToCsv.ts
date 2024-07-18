@@ -4,10 +4,10 @@ import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { formatSplitPercent } from 'packages/v2v3/utils/math'
+import { getProjectOwnerRemainderSplit } from 'packages/v2v3/utils/v2v3Splits'
 import { useContext, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { emitErrorNotification } from 'utils/notifications'
-import { getProjectOwnerRemainderSplit } from 'utils/splits'
 
 const CSV_HEADER = [
   'beneficiary',

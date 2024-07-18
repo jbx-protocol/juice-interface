@@ -2,8 +2,8 @@ import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
 
 import { ONE_BILLION } from 'constants/numbers'
+import { isProjectSplit } from 'packages/v2v3/utils/v2v3Splits'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
-import { isProjectSplit } from 'utils/splits'
 import { isInfiniteDistributionLimit } from './fundingCycle'
 import {
   MAX_DISTRIBUTION_LIMIT,

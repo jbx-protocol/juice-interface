@@ -4,7 +4,7 @@ import {
   preciseFormatSplitPercent,
   splitPercentFrom,
 } from 'packages/v2v3/utils/math'
-import { sanitizeSplit } from 'utils/splits'
+import { sanitizeSplit } from 'packages/v2v3/utils/v2v3Splits'
 
 export const splitToAllocation = (split: Split): AllocationSplit => {
   return {

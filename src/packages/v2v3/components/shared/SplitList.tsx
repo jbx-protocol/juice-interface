@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import { Split } from 'models/splits'
+import { getProjectOwnerRemainderSplit, sortSplits } from 'packages/v2v3/utils/v2v3Splits'
 import { useMemo } from 'react'
-import { getProjectOwnerRemainderSplit, sortSplits } from 'utils/splits'
 import { SplitItem, SplitProps } from './SplitItem'
 
 export default function SplitList({

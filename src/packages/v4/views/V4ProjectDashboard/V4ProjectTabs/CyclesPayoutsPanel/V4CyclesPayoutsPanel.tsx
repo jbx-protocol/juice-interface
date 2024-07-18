@@ -1,7 +1,6 @@
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { CyclesTab } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesTab'
-import { RulesetCountdownProvider } from 'packages/v4/contexts/RulesetCountdownProvider'
 import { useMemo } from 'react'
 import { V4CurrentUpcomingSubPanel } from './V4CurrentUpcomingSubPanel'
 
@@ -35,9 +34,7 @@ export const V4CyclesPayoutsPanel = () => {
             {tab.id === 'history' ? (
               <></> //<HistorySubPanel />
             ) : (
-              <RulesetCountdownProvider>
-                <V4CurrentUpcomingSubPanel id={tab.id} />
-              </RulesetCountdownProvider>
+              <V4CurrentUpcomingSubPanel id={tab.id} />
             )}
           </Tab.Panel>
         ))}

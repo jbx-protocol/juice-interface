@@ -5,11 +5,11 @@ import { BigNumber } from 'ethers'
 import { useModal } from 'hooks/useModal'
 import { amountFromPercent } from 'packages/v2v3/utils/distributions'
 import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
+import { projectIdToHex } from 'packages/v2v3/utils/v2v3Splits'
 import { ReactNode, useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { roundIfCloseToNextInteger } from 'utils/math'
-import { projectIdToHex } from 'utils/splits'
 import {
   AddEditAllocationModal,
   AddEditAllocationModalEntity,

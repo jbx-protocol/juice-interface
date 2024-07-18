@@ -1,19 +1,17 @@
 import { t } from '@lingui/macro'
 import {
   useJBRuleset,
-  useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf
+  useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf,
 } from 'juice-sdk-react'
 import { V4ApprovalStatus } from 'models/ballot'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { useMemo } from 'react'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
-import { useRulesetCountdown } from './useRulesetCountdown'
 
 export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   const { data: ruleset, isLoading: rulesetLoading } = useJBRuleset()
   const { ruleset: latestUpcomingRuleset, isLoading: upcomingRulesetsLoading } =
     useJBUpcomingRuleset()
-  const { timeRemainingText } = useRulesetCountdown()
 
   const { data: approvalStatus } =
     useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf()
@@ -23,7 +21,9 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     }
     return latestUpcomingRuleset?.cycleNumber
       ? Number(latestUpcomingRuleset.cycleNumber)
-      : ruleset?.cycleNumber ?  ruleset.cycleNumber + 1n : undefined
+      : ruleset?.cycleNumber
+      ? ruleset.cycleNumber + 1n
+      : undefined
   }, [ruleset?.cycleNumber, type, latestUpcomingRuleset?.cycleNumber])
 
   const rulesetUnlocked = useMemo(() => {
@@ -34,7 +34,8 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   }, [ruleset?.duration, type, latestUpcomingRuleset?.duration])
 
   const upcomingRulesetLength = useMemo(() => {
-    if (!latestUpcomingRuleset) return timeSecondsToDateString(Number(ruleset?.duration), 'short')
+    if (!latestUpcomingRuleset)
+      return timeSecondsToDateString(Number(ruleset?.duration), 'short')
     if (rulesetUnlocked) return '-'
     return timeSecondsToDateString(
       Number(latestUpcomingRuleset.duration),
@@ -47,7 +48,6 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   const currentRulesetUnlocked = ruleset?.duration === 0n ?? true
 
   const status = rulesetUnlocked ? t`Unlocked` : t`Locked`
-  const remainingTime = rulesetUnlocked ? '-' : timeRemainingText
 
   // Short circuit current for faster loading
   if (type === 'current') {
@@ -57,7 +57,6 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
       type,
       rulesetNumber,
       status,
-      remainingTime,
     }
   }
 

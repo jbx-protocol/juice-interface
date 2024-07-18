@@ -3,16 +3,24 @@ import { Trans, t } from '@lingui/macro'
 import { currentCycleRemainingLengthTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
 import { UpcomingCycleChangesCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTab/UpcomingCycleChangesCallout'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
-import { useMemo } from 'react'
+import { RulesetCountdownProvider } from 'packages/v4/contexts/RulesetCountdownProvider'
 import { twMerge } from 'tailwind-merge'
+import { useRulesetCountdown } from '../../hooks/useRulesetCountdown'
 import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
 import { useV4UpcomingRulesetHasChanges } from './hooks/useV4UpcomingRulesetHasChanges'
 import { V4ConfigurationDisplayCard } from './V4ConfigurationDisplayCard'
 import { V4PayoutsSubPanel } from './V4PayoutsSubPanel'
 
-const CYCLE_NUMBER_INDEX = 0
-const STATUS_INDEX = 1
-const CYCLE_LENGTH_INDEX = 2
+function CountdownClock({ rulesetUnlocked }: { rulesetUnlocked: boolean }) {
+  const { timeRemainingText } = useRulesetCountdown()
+
+  const remainingTime = rulesetUnlocked ? '-' : timeRemainingText
+
+  if (!remainingTime) {
+    return <Skeleton className="w-40" />
+  }
+  return <>{remainingTime}</>
+}
 
 export const V4CurrentUpcomingSubPanel = ({
   id,
@@ -22,42 +30,10 @@ export const V4CurrentUpcomingSubPanel = ({
   const info = useV4CurrentUpcomingSubPanel(id)
   const { hasChanges, loading } = useV4UpcomingRulesetHasChanges()
 
-  const topPanelsInfo = useMemo(() => {
-    const topPanelInfo = [
-      {
-        title: t`Ruleset #`,
-        value: info.rulesetNumber,
-      },
-      {
-        title: t`Status`,
-        value: info.status,
-      },
-    ]
-    if (info.type === 'current') {
-      topPanelInfo.push({
-        title: t`Remaining time`,
-        value: info.remainingTime,
-      })
-    }
-    if (info.type === 'upcoming') {
-      topPanelInfo.push({
-        title: t`Ruleset duration`,
-        value: info.rulesetLength,
-      })
-    }
-    return topPanelInfo
-  }, [
-    info.rulesetLength,
-    info.rulesetNumber,
-    info.remainingTime,
-    info.status,
-    info.type,
-  ])
-
   const rulesetLengthTooltip =
     info.type === 'current' ? currentCycleRemainingLengthTooltip : undefined
 
-  const rulesetLengthValue = topPanelsInfo[CYCLE_LENGTH_INDEX].value?.toString()
+  const rulesetLengthValue = info.rulesetLength?.toString()
 
   const rulesetStatusTooltip = info.currentRulesetUnlocked ? (
     <Trans>The project's rules are unlocked and can change at any time.</Trans>
@@ -115,29 +91,41 @@ export const V4CurrentUpcomingSubPanel = ({
         <div className="grid grid-cols-2 gap-4 md:flex">
           <TitleDescriptionDisplayCard
             className="w-full md:max-w-[127px]"
-            title={topPanelsInfo[CYCLE_NUMBER_INDEX].title}
-            description={
-              topPanelsInfo[CYCLE_NUMBER_INDEX].value?.toString() ?? <Skeleton />
-            }
+            title={t`Ruleset #`}
+            description={info.rulesetNumber?.toString() ?? <Skeleton />}
           />
           <TitleDescriptionDisplayCard
             className="w-full md:w-fit"
-            title={topPanelsInfo[STATUS_INDEX].title}
+            title={t`Status`}
             description={
-              topPanelsInfo[STATUS_INDEX].value?.toString() ?? <Skeleton className="w-22" />
+              info.status?.toString() ?? <Skeleton className="w-22" />
             }
             tooltip={rulesetStatusTooltip}
           />
-          <TitleDescriptionDisplayCard
-            className="col-span-2 md:flex-1"
-            title={topPanelsInfo[CYCLE_LENGTH_INDEX].title}
-            description={
-              topPanelsInfo[CYCLE_LENGTH_INDEX].value?.toString() ?? (
-                <Skeleton className="w-40" />
-              )
-            }
-            tooltip={rulesetLengthTooltip}
-          />
+
+          {info.type === 'current' ? (
+            <TitleDescriptionDisplayCard
+              className="col-span-2 md:flex-1"
+              title={t`Remaining time`}
+              description={
+                <RulesetCountdownProvider>
+                  <CountdownClock
+                    rulesetUnlocked={Boolean(info.rulesetUnlocked)}
+                  />
+                </RulesetCountdownProvider>
+              }
+              tooltip={rulesetLengthTooltip}
+            />
+          ) : (
+            <TitleDescriptionDisplayCard
+              className="col-span-2 md:flex-1"
+              title={t`Ruleset duration`}
+              description={
+                info.rulesetLength?.toString() ?? <Skeleton className="w-40" />
+              }
+              tooltip={rulesetLengthTooltip}
+            />
+          )}
         </div>
         <V4ConfigurationDisplayCard type={info.type} />
       </div>

@@ -26,10 +26,10 @@ export function usePayoutLimits() {
   });
   const payoutLimit = payoutLimits?.[0];
   return {
-    data: {
+    data: payoutLimit ? {
       ...payoutLimit,
-      currency: payoutLimit?.currency as V4CurrencyOption | undefined,
-    },
+      currency: Number(payoutLimit.currency) as V4CurrencyOption,
+    }: undefined,
     isLoading
   };
 }

@@ -2,8 +2,9 @@ import { Trans, t } from '@lingui/macro'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { V4ProjectAllocationRow } from './V4ProjectAllocationRow'
 import { useV4PayoutsSubPanel } from './hooks/useV4PayoutsSubPanel'
+import { V4ProjectAllocationRow } from './V4ProjectAllocationRow'
+import { V4TreasuryStats } from './V4TreasuryStats'
 
 export const V4PayoutsSubPanel = ({
   className,
@@ -26,7 +27,7 @@ export const V4PayoutsSubPanel = ({
         <Trans>Treasury & Payouts</Trans>
       </h2>
       <div className="mt-5 flex flex-col items-center gap-4">
-        {/* {type === 'current' && <TreasuryStats />} */}
+        {type === 'current' && <V4TreasuryStats />}
 
         <TitleDescriptionDisplayCard
           className="w-full"

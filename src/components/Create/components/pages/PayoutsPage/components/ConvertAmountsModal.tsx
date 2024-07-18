@@ -18,6 +18,7 @@ import {
 } from 'packages/v2v3/utils/distributions'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { SPLITS_TOTAL_PERCENT } from 'packages/v2v3/utils/math'
+import { isProjectSplit } from 'packages/v2v3/utils/v2v3Splits'
 import { ReactNode, useCallback, useMemo, useState } from 'react'
 import {
   ReduxDistributionLimit,
@@ -26,7 +27,6 @@ import {
 import { parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
 import { helpPagePath } from 'utils/routes'
-import { isProjectSplit } from 'utils/splits'
 import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
 export const ConvertAmountsModal = ({

@@ -10,20 +10,19 @@ import { useJBUpcomingRuleset } from './useJBUpcomingRuleset';
 export function useUpcomingPayoutLimit() {
   const {
     projectId,
-    contracts: { primaryNativeTerminal: _primaryNativeTerminal },
+    contracts: { primaryNativeTerminal, fundAccessLimits },
   } = useJBContractContext()
 
   const { ruleset: latestUpcomingRuleset } = useJBUpcomingRuleset();
 
-  const primaryNativeTerminal = _primaryNativeTerminal.data;
-
   const upcomingPayoutLimits = useReadJbFundAccessLimitsPayoutLimitsOf({
-      args: [
-        projectId,
-        latestUpcomingRuleset?.id ?? 0n,
-        primaryNativeTerminal ?? constants.AddressZero,
-        NATIVE_TOKEN,
-      ]
+    address: fundAccessLimits.data || undefined,
+    args: [
+      projectId,
+      latestUpcomingRuleset?.id ?? 0n,
+      primaryNativeTerminal.data ?? constants.AddressZero,
+      NATIVE_TOKEN,
+    ]
   });
   const upcomingPayoutLimit = upcomingPayoutLimits?.data?.[0]
   return {

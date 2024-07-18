@@ -3,7 +3,7 @@ import isEqual from 'lodash/isEqual'
 import { Split, SplitParams } from 'models/splits'
 import { isFiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { SPLITS_TOTAL_PERCENT } from 'packages/v2v3/utils/math'
-import { formatWad } from './format/formatNumber'
+import { formatWad } from '../../../utils/format/formatNumber'
 
 //  - true if the split has been removed (exists in old but not new),
 //  - false if new (exists in new but not old)

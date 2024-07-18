@@ -9,6 +9,7 @@ import { BigNumber } from 'ethers'
 import moment, * as Moment from 'moment'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
+import { projectIdToHex } from 'packages/v2v3/utils/v2v3Splits'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
   allocationInputAlreadyExistsRule,
@@ -18,7 +19,6 @@ import {
 } from 'utils/antdRules'
 import { hexToInt, parseWad, stripCommas } from 'utils/format/formatNumber'
 import { ceilIfCloseToNextInteger } from 'utils/math'
-import { projectIdToHex } from 'utils/splits'
 import { Allocation } from './Allocation'
 import { allocationId } from './AllocationList'
 import { AmountInput } from './components/AmountInput'

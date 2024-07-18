@@ -6,8 +6,9 @@ import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/Titl
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
-import { V4ConfigurationDisplayCard } from './V4ConfigurationDisplayCard'
 import { useV4UpcomingRulesetHasChanges } from './hooks/useV4UpcomingRulesetHasChanges'
+import { V4ConfigurationDisplayCard } from './V4ConfigurationDisplayCard'
+import { V4PayoutsSubPanel } from './V4PayoutsSubPanel'
 
 const CYCLE_NUMBER_INDEX = 0
 const STATUS_INDEX = 1
@@ -141,7 +142,7 @@ export const V4CurrentUpcomingSubPanel = ({
         <V4ConfigurationDisplayCard type={info.type} />
       </div>
 
-      {/* <PayoutsSubPanel className="mt-12" type={id} /> */}
+      <V4PayoutsSubPanel className="mt-12" type={id} />
     </div>
   )
 }

@@ -23,14 +23,14 @@ import {
   MAX_DISTRIBUTION_LIMIT,
   SPLITS_TOTAL_PERCENT,
 } from 'packages/v2v3/utils/math'
-import { useMemo } from 'react'
-import { parseWad } from 'utils/format/formatNumber'
 import {
   getProjectOwnerRemainderSplit,
   hasEqualRecipient,
   isProjectSplit,
   totalSplitsPercent,
-} from 'utils/splits'
+} from 'packages/v2v3/utils/v2v3Splits'
+import { useMemo } from 'react'
+import { parseWad } from 'utils/format/formatNumber'
 import { useEditCycleFormContext } from '../../../V2V3Project/V2V3ProjectSettings/pages/EditCyclePage/EditCycleFormContext'
 import { usePayoutsTableContext } from '../context/PayoutsTableContext'
 

@@ -1,30 +1,19 @@
 import { t } from '@lingui/macro'
-import { NATIVE_TOKEN } from 'juice-sdk-core'
-import { NativeTokenValue, useJBContractContext, useJBRulesetMetadata, useJBTerminalContext, useNativeTokenSurplus, useReadJbTerminalStoreBalanceOf } from 'juice-sdk-react'
-import { usePayoutLimits } from 'packages/v4/hooks/usePayoutLimits'
+import { NativeTokenValue, useJBRulesetMetadata, useNativeTokenSurplus } from 'juice-sdk-react'
+import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
+import { useV4BalanceOfNativeTerminal } from 'packages/v4/hooks/useV4BalanceOfNativeTerminal'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { useMemo } from 'react'
-import { zeroAddress } from 'viem'
 import { useV4DistributableAmount } from './useV4DistributableAmount'
 
 export const useV4TreasuryStats = () => {
-  const { store } = useJBTerminalContext()
   const { data: rulesetMetadata } = useJBRulesetMetadata()
-  const { projectId, contracts: { primaryNativeTerminal } } = useJBContractContext()
   const { distributableAmount } = useV4DistributableAmount()
   const { data: surplusInNativeToken } = useNativeTokenSurplus()
 
-  const { data: _treasuryBalance } =
-    useReadJbTerminalStoreBalanceOf({
-      address: store.data ?? undefined,
-      args: [
-        primaryNativeTerminal.data ?? zeroAddress,
-        projectId,
-        NATIVE_TOKEN,
-      ],
-    })
+  const { data: _treasuryBalance } = useV4BalanceOfNativeTerminal()
 
-  const { data: payoutLimit } = usePayoutLimits()
+  const { data: payoutLimit } = usePayoutLimit()
 
   const treasuryBalance = useMemo(() => {
     if (!_treasuryBalance) return undefined

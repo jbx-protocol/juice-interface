@@ -1,40 +1,13 @@
-import { NATIVE_CURRENCY_ID, NATIVE_TOKEN } from 'juice-sdk-core'
-import {
-  useJBContractContext,
-  useJBRulesetContext,
-  useJBTerminalContext,
-  useReadJbTerminalStoreBalanceOf,
-  useReadJbTerminalStoreUsedPayoutLimitOf,
-} from 'juice-sdk-react'
-import { usePayoutLimits } from 'packages/v4/hooks/usePayoutLimits'
-import { zeroAddress } from 'viem'
+import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
+import { useUsedPayoutLimitOf } from 'packages/v4/hooks/useUsedPayoutLimitOf'
+import { useV4BalanceOfNativeTerminal } from 'packages/v4/hooks/useV4BalanceOfNativeTerminal'
 
 export const useV4DistributableAmount = () => {
-  const { store } = useJBTerminalContext()
-  const { projectId, contracts } = useJBContractContext()
-  const { ruleset } = useJBRulesetContext()
-  const { data: usedPayoutLimit } = useReadJbTerminalStoreUsedPayoutLimitOf({
-    address: store.data ?? undefined,
-    args: [
-      contracts.primaryNativeTerminal.data ?? zeroAddress,
-      projectId,
-      NATIVE_TOKEN,
-      ruleset.data?.cycleNumber ?? 0n,
-      NATIVE_CURRENCY_ID,
-    ],
-  })
+  const { data: usedPayoutLimit } = useUsedPayoutLimitOf()
 
-  const { data: _treasuryBalance } =
-    useReadJbTerminalStoreBalanceOf({
-      address: store.data ?? undefined,
-      args: [
-        contracts.primaryNativeTerminal.data ?? zeroAddress,
-        projectId,
-        NATIVE_TOKEN,
-      ],
-    })
+  const { data: _treasuryBalance } = useV4BalanceOfNativeTerminal()
 
-  const { data: payoutLimit } = usePayoutLimits()
+  const { data: payoutLimit } = usePayoutLimit()
 
   const effectiveDistributionLimit = payoutLimit?.amount ?? 0n
   const distributedAmount = usedPayoutLimit ?? 0n

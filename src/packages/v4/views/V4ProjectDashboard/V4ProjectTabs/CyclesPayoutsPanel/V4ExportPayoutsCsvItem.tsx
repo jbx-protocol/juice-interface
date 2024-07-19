@@ -11,7 +11,7 @@ export const V4ExportPayoutsCsvItem = ({
 }: {
   type: 'current' | 'upcoming'
 }) => {
-  const { splits: payoutSplits, loading } = useV4CurrentUpcomingPayoutSplits(type)
+  const { splits: payoutSplits, isLoading } = useV4CurrentUpcomingPayoutSplits(type)
   const { data: ruleset } = useJBRuleset()
   const fcNumber = ruleset
     ? type === 'current'
@@ -33,10 +33,10 @@ export const V4ExportPayoutsCsvItem = ({
       <Button
         className={twMerge(
           'flex h-auto gap-2 p-4',
-          (loading || disabled) && 'cursor-not-allowed',
+          (isLoading || disabled) && 'cursor-not-allowed',
         )}
         type="text"
-        loading={loading}
+        loading={isLoading}
         style={{ color: 'inherit' }}
         onClick={!disabled ? exportSplitsToCsv : e => e.preventDefault()}
       >

@@ -1,4 +1,4 @@
-import { NativeTokenValue, useJBContractContext, useReadJbMultiTerminalFee } from 'juice-sdk-react'
+import { NativeTokenValue, useReadJbMultiTerminalFee } from 'juice-sdk-react'
 
 import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { V4Split } from 'packages/v4/models/v4Split'
@@ -29,10 +29,8 @@ const calculateSplitAmountWad = (
 }
 
 export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
-  const { splits, loading } = useV4CurrentUpcomingPayoutSplits(type)
-  const { 
-    projectId,
-  } = useJBContractContext()
+  const { splits, isLoading } = useV4CurrentUpcomingPayoutSplits(type)
+
   const { data: projectOwnerAddress } = useProjectOwnerOf()
 
   const { data: primaryNativeTerminalFee } = useReadJbMultiTerminalFee()
@@ -93,7 +91,7 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
   }, [payoutLimit, payoutLimitCurrency])
 
   const payouts = useMemo(() => {
-    if (loading || !splits) return
+    if (isLoading || !splits) return
 
     if (
       // We don't need to worry about upcoming as this is informational only
@@ -117,15 +115,16 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
       .map(transformSplit)
   }, [
     distributableAmount,
-    loading,
     projectOwnerAddress,
     splits,
+    isLoading,
+    payoutLimit,
     transformSplit,
     type,
   ])
 
   return {
-    loading,
+    isLoading,
     payouts,
     totalPayoutAmount,
     payoutLimit

@@ -5,6 +5,7 @@ import { twMerge } from 'tailwind-merge'
 import { useV4PayoutsSubPanel } from './hooks/useV4PayoutsSubPanel'
 import { V4ExportPayoutsCsvItem } from './V4ExportPayoutsCsvItem'
 import { V4ProjectAllocationRow } from './V4ProjectAllocationRow'
+import { V4SendPayoutsButton } from './V4SendPayoutsButton'
 import { V4TreasuryStats } from './V4TreasuryStats'
 
 export const V4PayoutsSubPanel = ({
@@ -66,11 +67,10 @@ export const V4PayoutsSubPanel = ({
             )}
           </div>
           {hasPayouts && type === 'current' && (
-            // <SendPayoutsButton
-            //   className="z-0 w-full justify-center md:w-auto"
-            //   containerClassName="md:self-end mt-6 inline-flex"
-            // />
-            <></>
+            <V4SendPayoutsButton
+              className="z-0 w-full justify-center md:w-auto"
+              containerClassName="md:self-end mt-6 inline-flex"
+            />
           )}
         </TitleDescriptionDisplayCard>
       </div>

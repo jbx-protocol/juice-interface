@@ -1,8 +1,7 @@
-import EthereumAddress from 'components/EthereumAddress'
-import EtherscanLink from 'components/EtherscanLink'
-import { formatDistance } from 'date-fns'
+import { t } from '@lingui/macro'
+import { ActivityEvent } from 'components/activityEventElems/ActivityElement/ActivityElement'
 import { Ether, JBProjectToken } from 'juice-sdk-core'
-import { useJBContractContext, useJBTokenContext } from 'juice-sdk-react'
+import { NativeTokenValue, useJBContractContext, useJBTokenContext } from 'juice-sdk-react'
 import {
   OrderDirection,
   PayEvent_OrderBy,
@@ -19,32 +18,6 @@ type PayEvent = {
   beneficiaryTokenCount?: JBProjectToken
   timestamp: number
   txHash: string
-}
-
-function ActivityItem(ev: PayEvent) {
-  const { token } = useJBTokenContext()
-  if (!token?.data) return null
-
-  const formattedDate = formatDistance(ev.timestamp * 1000, new Date(), {
-    addSuffix: true,
-  })
-
-  return (
-    <div>
-      <div className="flex flex-wrap items-center gap-1 text-sm">
-        <EthereumAddress address={ev.beneficiary} withEnsAvatar />
-        <div>
-          bought {ev.beneficiaryTokenCount?.format(6)} {token.data.symbol}
-        </div>
-      </div>
-      <div className="text-zinc-500 ml-7 text-xs">
-        Paid {ev.amount.format(6)} ETH •{' '}
-        <EtherscanLink type="tx" value={ev.txHash}>
-          {formattedDate}
-        </EtherscanLink>
-      </div>
-    </div>
-  )
 }
 
 function transformPayEventsRes(
@@ -65,7 +38,8 @@ function transformPayEventsRes(
   })
 }
 
-export function ActivityList() {
+export function V4ActivityList() {
+  const { token } = useJBTokenContext()
   const { projectId } = useJBContractContext()
   const { data } = useSubgraphQuery(PayEventsDocument, {
     orderBy: PayEvent_OrderBy.timestamp,
@@ -78,13 +52,37 @@ export function ActivityList() {
 
   const payEvents = transformPayEventsRes(data)
 
+  if (!token?.data?.symbol) return null
   return (
     <div>
-      <div className="mb-3 font-medium">Activity</div>
+      <h2 className="mb-6 font-heading text-2xl font-medium">Activity</h2>
       <div className="flex flex-col gap-3">
         {payEvents && payEvents.length > 0 ? (
           payEvents?.map(event => {
-            return <ActivityItem key={event.id} {...event} />
+            return (
+              <div
+                className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
+                key={event.id}
+              >
+                <ActivityEvent
+                  event={{
+                    ...event,
+                    from: event.beneficiary,
+                  }}
+                  header={t`Paid`}
+                  subject={
+                    <span className="font-heading text-lg">
+                      <NativeTokenValue wei={event.amount.value} />
+                    </span>
+                  }
+                  extra={
+                    <span>
+                      bought {event.beneficiaryTokenCount?.format(6)} {token.data?.symbol}
+                    </span>
+                  }
+                />
+              </div>
+            )
           })
         ) : (
           <span className="text-zinc-500 text-sm">No activity yet.</span>

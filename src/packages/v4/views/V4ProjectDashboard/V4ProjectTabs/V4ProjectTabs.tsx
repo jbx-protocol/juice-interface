@@ -11,7 +11,8 @@ import {
   useState,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { V4CyclesPayoutsPanel } from './CyclesPayoutsPanel/V4CyclesPayoutsPanel'
+import { V4CyclesPayoutsPanel } from './V4CyclesPayoutsPanel/V4CyclesPayoutsPanel'
+import { V4ActivityPanel } from './V4ActivityPanel/V4ActivityPanel'
 
 type ProjectTabConfig = {
   id: string
@@ -48,7 +49,7 @@ export const V4ProjectTabs = ({ className }: { className?: string }) => {
 
   const tabs: ProjectTabConfig[] = useMemo(
     () => [
-      { id: 'activity', name: t`Activity`, panel: <></> },
+      { id: 'activity', name: t`Activity`, panel: <V4ActivityPanel /> },
       { id: 'about', name: t`About`, panel: <></> },
       {
         id: 'cycle_payouts',

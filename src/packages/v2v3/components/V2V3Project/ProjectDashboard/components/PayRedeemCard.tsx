@@ -27,6 +27,7 @@ import {
   V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
+import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { computeIssuanceRate } from 'packages/v2v3/utils/math'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -132,6 +133,9 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
     return t`Project isn't currently issuing tokens`
   }, [payerIssuanceRate, hasNfts, hasNftsLoading])
 
+  const redeemDisabled = project.fundingCycleMetadata?.redemptionRate.eq(0) || 
+    isInfiniteDistributionLimit(project.distributionLimit)
+
   return (
     <div className={twMerge('flex flex-col', className)}>
       <div
@@ -146,16 +150,18 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
           >
             <Trans>Pay</Trans>
           </ChoiceButton>
-          <ChoiceButton
-            selected={state === 'redeem'}
-            tooltip={t`Redeem tokens for a portion of this project's treasury`}
-            onClick={() => {
-              dispatch(payRedeemActions.changeToRedeem())
-            }}
-            disabled={!redeems.enabled}
-          >
-            <Trans>Redeem</Trans>
-          </ChoiceButton>
+          {redeemDisabled ? null : (
+            <ChoiceButton
+              selected={state === 'redeem'}
+              tooltip={t`Redeem tokens for a portion of this project's treasury`}
+              onClick={() => {
+                dispatch(payRedeemActions.changeToRedeem())
+              }}
+              disabled={!redeems.enabled}
+            >
+              <Trans>Redeem</Trans>
+            </ChoiceButton>
+          )}
         </div>
 
         <div className="mt-5">

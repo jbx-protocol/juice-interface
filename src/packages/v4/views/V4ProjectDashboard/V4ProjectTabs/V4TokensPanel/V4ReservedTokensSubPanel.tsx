@@ -2,18 +2,18 @@ import { Trans, t } from '@lingui/macro'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { reservedTokensTooltip } from 'components/Project/ProjectTabs/TokensPanelTooltips'
 import { twMerge } from 'tailwind-merge'
-import { ProjectAllocationRow } from '../../ProjectAllocationRow/ProjectAllocationRow'
-import { useReservedTokensSubPanel } from '../hooks/useReservedTokensSubPanel'
-import { ExportTokensCsvItem } from './ExportTokensCsvItem'
-import { SendReservedTokensButton } from './SendReservedTokensButton'
+import { V4ProjectAllocationRow } from '../V4CyclesPayoutsPanel/V4ProjectAllocationRow'
+import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
+import { V4ExportReservedTokensCsvItem } from './V4ExportReservedTokensCsvItem'
+import { V4SendReservedTokensButton } from './V4SendReservedTokensButton'
 
-export const ReservedTokensSubPanel = ({
+export const V4ReservedTokensSubPanel = ({
   className,
 }: {
   className?: string
 }) => {
-  const { reservedList, reservedTokens, reservedRate } =
-    useReservedTokensSubPanel()
+  const { reservedList, totalCreditSupply, reservedRate } =
+    useV4ReservedTokensSubPanel()
 
   const reservedRateTooltip = (
     <Trans>
@@ -32,8 +32,8 @@ export const ReservedTokensSubPanel = ({
             className="w-full min-w-min flex-[1_0_0]"
             title={t`Reserved tokens`}
             description={
-              reservedTokens ? (
-                <>{reservedTokens}</>
+              totalCreditSupply ? (
+                <>{totalCreditSupply}</>
               ) : (
                 <div className="h-7 w-24 animate-pulse rounded bg-grey-200 dark:bg-slate-200" />
               )
@@ -48,8 +48,7 @@ export const ReservedTokensSubPanel = ({
           />
         </div>
         {reservedRate &&
-        reservedTokens &&
-        reservedTokens !== '0' &&
+        totalCreditSupply &&
         reservedRate !== '0' ? (
           <TitleDescriptionDisplayCard
             className="w-full"
@@ -58,14 +57,14 @@ export const ReservedTokensSubPanel = ({
               items: kebabMenuItems,
             }}
           >
-            {reservedTokens ||
+            {totalCreditSupply ||
             reservedRate ||
             (reservedList && reservedList.length > 1) ? (
               <>
                 <div className="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500">
                   {reservedList
                     ? reservedList.map(props => (
-                        <ProjectAllocationRow
+                        <V4ProjectAllocationRow
                           key={`${props.address}${props.projectId}`}
                           {...props}
                         />
@@ -73,7 +72,7 @@ export const ReservedTokensSubPanel = ({
                     : null}
                 </div>
 
-                <SendReservedTokensButton
+                <V4SendReservedTokensButton
                   className="z-0 w-full justify-center md:w-auto"
                   containerClassName="md:self-end mt-6 inline-flex"
                 />
@@ -96,6 +95,6 @@ export const ReservedTokensSubPanel = ({
 const kebabMenuItems = [
   {
     id: 'export',
-    component: <ExportTokensCsvItem />,
+    component: <V4ExportReservedTokensCsvItem />,
   },
 ]

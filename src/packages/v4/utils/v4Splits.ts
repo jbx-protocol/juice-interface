@@ -1,4 +1,5 @@
 import * as constants from '@ethersproject/constants'
+import { Split } from 'models/splits'
 import { V4Split } from "../models/v4Split"
 import { V4_SPLITS_TOTAL_PERCENT } from "./math"
 
@@ -33,3 +34,15 @@ export const v4GetProjectOwnerRemainderSplit = (
  */
 export const v4TotalSplitsPercent = (splits: V4Split[]): bigint =>
   splits?.reduce((sum, split) => sum + split.percent, 0n) ?? 0n
+
+
+export const v4SplitToV2V3Split = (v4Split: V4Split): Split => {
+  return {
+    beneficiary: v4Split.beneficiary,
+    percent: Number(v4Split.percent),
+    lockedUntil: Number(v4Split.lockedUntil),
+    projectId: v4Split.projectId.toString(),
+    preferClaimed: !v4Split.preferAddToBalance,
+    allocator: v4Split.hook,
+  }
+}

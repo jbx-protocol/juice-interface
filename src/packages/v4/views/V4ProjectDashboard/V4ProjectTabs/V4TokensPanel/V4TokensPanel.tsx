@@ -1,5 +1,4 @@
 import { Trans, t } from '@lingui/macro'
-import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 // import { TokenHoldersModal } from '../TokenHoldersModal/TokenHoldersModal'
@@ -10,9 +9,12 @@ import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/Titl
 // import { TransferUnclaimedTokensModalWrapper } from './components/TransferUnclaimedTokensModalWrapper'
 import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
 import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
+import { V4TokenHoldersModal } from 'packages/v4/components/V4TokenHoldersModal'
+import { useCallback, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
 import { useV4TokensPanel } from './hooks/useV4TokensPanel'
 import { useV4YourBalanceMenuItems } from './hooks/useV4YourBalanceMenuItems'
+import { V4ReservedTokensSubPanel } from './V4ReservedTokensSubPanel'
 
 export const V4TokensPanel = () => {
   const {
@@ -23,18 +25,17 @@ export const V4TokensPanel = () => {
     // userV1ClaimedBalance,
     projectToken,
     totalSupply,
-    projectHasErc20Token,
   } = useV4TokensPanel()
 
-  // const [tokenHolderModalOpen, setTokenHolderModalOpen] = useState(false)
-  // const openTokenHolderModal = useCallback(
-  //   () => setTokenHolderModalOpen(true),
-  //   [],
-  // )
-  // const closeTokenHolderModal = useCallback(
-  //   () => setTokenHolderModalOpen(false),
-  //   [],
-  // )
+  const [tokenHolderModalOpen, setTokenHolderModalOpen] = useState(false)
+  const openTokenHolderModal = useCallback(
+    () => setTokenHolderModalOpen(true),
+    [],
+  )
+  const closeTokenHolderModal = useCallback(
+    () => setTokenHolderModalOpen(false),
+    [],
+  )
 
   const {
     items,
@@ -65,7 +66,7 @@ export const V4TokensPanel = () => {
                 <span className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
                   <Trans>{userTokenBalance} tokens</Trans>
                   <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center md:gap-4">
-                    {projectHasErc20Token && (
+                    {/* {projectHasErc20Token && (
                       <Button
                         className="p-0 text-start md:text-end"
                         type="link"
@@ -76,7 +77,7 @@ export const V4TokensPanel = () => {
                       >
                         <Trans>Claim ERC-20 token</Trans>
                       </Button>
-                    )}
+                    )} */}
                     {/* <RedeemTokensButton
                       containerClassName="w-full md:w-fit"
                       className="h-12 w-full md:h-10"
@@ -120,22 +121,22 @@ export const V4TokensPanel = () => {
                 }
               />
             </div>
-            {/* <a
+            <a
               role="button"
               className="font-medium md:self-end"
               onClick={openTokenHolderModal}
             >
               <Trans>View token holders</Trans>
-            </a> */}
+            </a>
           </div>
 
-          {/* <ReservedTokensSubPanel className="mt-12" /> */}
+          <V4ReservedTokensSubPanel className="mt-12" />
         </div>
       </div>
-      {/* <TokenHoldersModal
+      <V4TokenHoldersModal
         open={tokenHolderModalOpen}
         onClose={closeTokenHolderModal}
-      /> */}
+      />
       {/* <V2V3BurnOrRedeemModal
         open={redeemModalVisible}
         onCancel={() => setRedeemModalVisible(false)}

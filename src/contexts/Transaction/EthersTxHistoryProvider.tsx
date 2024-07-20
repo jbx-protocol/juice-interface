@@ -1,7 +1,7 @@
 import { readProvider } from 'constants/readProvider'
-import { TransactionLog, TxStatus } from 'models/transaction'
+import { TxStatus } from 'models/transaction'
 import { ReactNode, useEffect } from 'react'
-import { TxHistoryContext } from './TxHistoryContext'
+import { TransactionLog, TxHistoryContext } from './TxHistoryContext'
 import { useTransactions } from './useTransactions'
 
 const nowSeconds = () => Math.round(new Date().valueOf() / 1000)

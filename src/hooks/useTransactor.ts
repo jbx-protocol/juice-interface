@@ -134,10 +134,17 @@ export function useTransactor(): Transactor | undefined {
 
         // add transaction to the history UI
         const txTitle = options?.title ?? functionName
-        addTransaction?.(txTitle, result as providers.TransactionResponse, {
-          onConfirmed: options?.onConfirmed,
-          onCancelled: options?.onCancelled,
-        })
+        addTransaction?.(
+          txTitle,
+          {
+            hash: result.hash,
+            timestamp: result.timestamp,
+          },
+          {
+            onConfirmed: options?.onConfirmed,
+            onCancelled: options?.onCancelled,
+          },
+        )
 
         return true
       } catch (e) {

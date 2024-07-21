@@ -87,7 +87,7 @@ export default function WagmiTxHistoryProvider({
 
       clearInterval(poller)
     }
-  }, [transactions, setTransactions, hasPoller])
+  }, [transactions, setTransactions])
 
   return (
     <TxHistoryContext.Provider

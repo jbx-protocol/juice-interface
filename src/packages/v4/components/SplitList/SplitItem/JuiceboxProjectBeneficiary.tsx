@@ -2,8 +2,9 @@ import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { AllocatorBadge } from 'components/AllocatorBadge'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
+import { useRouter } from 'next/router'
 import { Split } from 'packages/v2v3/models/splits'
-import V2V3ProjectHandleLink from '../V2V3ProjectHandleLink'
+import V4ProjectHandleLink from '../../V4ProjectHandleLink'
 
 export function JuiceboxProjectBeneficiary({
   split,
@@ -12,14 +13,18 @@ export function JuiceboxProjectBeneficiary({
   split: Split
   value?: string | JSX.Element
 }) {
-  if (!split.projectId) return null
+  const router = useRouter()
+  const { chainName } = router.query
 
+  if (!split.projectId) return null
+  
   return (
     <div>
       <div className="flex gap-2">
-        <V2V3ProjectHandleLink
+        <V4ProjectHandleLink
           projectId={parseInt(split.projectId)}
           withProjectAvatar
+          chainName={chainName as string}
         />
         <AllocatorBadge allocator={split.allocator} />
       </div>

@@ -4,6 +4,7 @@ import { Button } from 'antd'
 import { providers } from 'ethers'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import { twMerge } from 'tailwind-merge'
+import { Hash } from 'viem'
 
 declare global {
   interface Window {
@@ -28,7 +29,7 @@ const useMetamask = () => {
 function useAddTokenToWalletRequest({
   tokenAddress,
 }:{
-  tokenAddress: `0x${string}`
+  tokenAddress: Hash
 }) {
   const ethereum = useMetamask()
   const { data: tokenSymbol } = useNameOfERC20(tokenAddress)
@@ -57,7 +58,7 @@ export function AddTokenToMetamaskButton({
   tokenAddress
 }: { 
   className: string,
-  tokenAddress: `0x${string}`
+  tokenAddress: Hash
 }) {
   const addToken = useAddTokenToWalletRequest({
     tokenAddress

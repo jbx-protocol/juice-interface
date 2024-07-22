@@ -2,8 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import TransactionModal from 'components/modals/TransactionModal'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import { useJBContractContext, useReadJbTokensTokenOf, useReadJbTokensTotalCreditSupplyOf } from 'juice-sdk-react'
-import { useDistributeReservedTokens } from 'packages/v2v3/hooks/transactor/useDistributeReservedTokensTx'
-import V4SplitList from 'packages/v4/components/V4SplitList'
+import SplitList from 'packages/v4/components/SplitList/SplitList'
 import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
 import { useState } from 'react'
@@ -29,34 +28,35 @@ export default function V4DistributeReservedTokensModal({
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  const distributeReservedTokensTx = useDistributeReservedTokens()
+  // const distributeReservedTokensTx = useDistributeReservedTokens()
   const { data: totalCreditSupply } = useReadJbTokensTotalCreditSupplyOf({
     args: [projectId],
   })
   async function distributeReservedTokens() {
     setLoading(true)
 
-    const txSuccessful = await distributeReservedTokensTx(
-      {},
-      {
-        onDone: () => {
-          setTransactionPending(true)
-        },
-        onConfirmed: () => {
-          setLoading(false)
-          setTransactionPending(false)
-          onConfirmed?.()
-        },
-      },
-    )
+    // const txSuccessful = await distributeReservedTokensTx(
+    //   {},
+    //   {
+    //     onDone: () => {
+    //       setTransactionPending(true)
+    //     },
+    //     onConfirmed: () => {
+    //       setLoading(false)
+    //       setTransactionPending(false)
+    //       onConfirmed?.()
+    //     },
+    //   },
+    // )
 
-    if (!txSuccessful) {
+    // if (!txSuccessful) {
       setLoading(false)
       setTransactionPending(false)
-    }
+    // }
   }
 
   const reservedTokensFormatted = formatWad(totalCreditSupply, { precision: 0 })
+  
   const tokenTextPlural = tokenSymbolText({
     tokenSymbol,
     capitalize: false,
@@ -106,7 +106,7 @@ export default function V4DistributeReservedTokensModal({
             </p>
           ) : null}
 
-          <V4SplitList
+          <SplitList
             splits={reservedTokensSplits ?? []}
             projectOwnerAddress={projectOwnerAddress}
             totalValue={totalCreditSupply}

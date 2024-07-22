@@ -1,9 +1,9 @@
 import { BigNumber, constants } from 'ethers'
 import isEqual from 'lodash/isEqual'
-import { Split, SplitParams } from 'models/splits'
 import { isFiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { SPLITS_TOTAL_PERCENT } from 'packages/v2v3/utils/math'
 import { formatWad } from '../../../utils/format/formatNumber'
+import { Split, SplitParams } from '../models/splits'
 
 //  - true if the split has been removed (exists in old but not new),
 //  - false if new (exists in new but not old)

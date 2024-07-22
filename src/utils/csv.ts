@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import { getAddress } from 'ethers/lib/utils'
-import { Split } from 'models/splits'
 import { PayoutMod, TicketMod } from 'packages/v1/models/mods'
+import { Split } from 'packages/v2v3/models/splits'
 import { splitPercentFrom } from 'packages/v2v3/utils/math'
 import { percentToPermyriad } from './format/formatNumber'
 

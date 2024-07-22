@@ -5,8 +5,8 @@ import BadgeIcon from 'components/BadgeIcon'
 import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
 import {
+  TransactionLog,
   TxHistoryContext,
-  timestampForTxLog,
 } from 'contexts/Transaction/TxHistoryContext'
 import { TxStatus } from 'models/transaction'
 import { useContext, useEffect, useMemo, useState } from 'react'
@@ -14,6 +14,11 @@ import { twMerge } from 'tailwind-merge'
 import { etherscanLink } from 'utils/etherscan'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 import TxStatusIcon from './TxStatusIcon'
+
+// Prefer using tx.timestamp if tx has been mined. Otherwise use createdAt timestamp
+export const timestampForTxLog = (txLog: TransactionLog) => {
+  return txLog.tx?.timestamp ?? txLog.createdAt
+}
 
 export function TransactionsList({
   listClassName,

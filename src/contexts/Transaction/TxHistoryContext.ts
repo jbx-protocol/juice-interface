@@ -1,17 +1,23 @@
-import { providers } from 'ethers'
-import { TransactionCallbacks, TransactionLog } from 'models/transaction'
+import { TransactionCallbacks, TxStatus } from 'models/transaction'
 import { createContext } from 'react'
 
-// Prefer using tx.timestamp if tx has been mined. Otherwise use createdAt timestamp
-export const timestampForTxLog = (txLog: TransactionLog) => {
-  return (
-    (txLog.tx as providers.TransactionResponse)?.timestamp ?? txLog.createdAt
-  )
+export type TransactionType = {
+  hash: string
+  timestamp?: number
+}
+
+export type TransactionLog = {
+  id: number
+  title: string
+  createdAt: number
+  tx: TransactionType | null
+  status: TxStatus.pending | TxStatus.success | TxStatus.failed
+  callbacks?: TransactionCallbacks
 }
 
 export type AddTransactionFunction = (
   title: string,
-  tx: providers.TransactionResponse,
+  tx: TransactionType,
   callbacks?: Omit<TransactionCallbacks, 'onDone' | 'onError'>,
 ) => void
 

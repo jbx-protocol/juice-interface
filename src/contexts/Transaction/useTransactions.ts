@@ -1,7 +1,7 @@
 import { useWallet } from 'hooks/Wallet'
-import { TransactionLog, TxStatus } from 'models/transaction'
+import { TxStatus } from 'models/transaction'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { AddTransactionFunction } from './TxHistoryContext'
+import { AddTransactionFunction, TransactionLog } from './TxHistoryContext'
 
 // Arbitrary time to give folks a sense of tx history
 const TX_HISTORY_TIME_SECS = 60 * 60 // 1 hr

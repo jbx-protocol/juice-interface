@@ -15,7 +15,7 @@ export const V4PayoutsSubPanel = ({
   className?: string
   type: 'current' | 'upcoming'
 }) => {
-  const { payouts, loading, totalPayoutAmount, payoutLimit } =
+  const { payouts, isLoading, totalPayoutAmount, payoutLimit } =
     useV4PayoutsSubPanel(type)
 
     const hasPayouts = useMemo(() => {
@@ -49,7 +49,7 @@ export const V4PayoutsSubPanel = ({
             : {})}
         >
           <div className="mt-4 w-full">
-            {loading ? (
+            {isLoading ? (
               Array.from({ length: 5 }).map((_, i) => (
                 <ProjectAllocationSkeleton key={i} />
               ))

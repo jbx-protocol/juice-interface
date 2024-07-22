@@ -3,14 +3,14 @@ import { Tooltip } from 'antd'
 import { AllocatorBadge } from 'components/AllocatorBadge'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { useRouter } from 'next/router'
-import { Split } from 'packages/v2v3/models/splits'
+import { V4Split } from 'packages/v4/models/v4Split'
 import V4ProjectHandleLink from '../../V4ProjectHandleLink'
 
 export function JuiceboxProjectBeneficiary({
   split,
   value,
 }: {
-  split: Split
+  split: V4Split
   value?: string | JSX.Element
 }) {
   const router = useRouter()
@@ -22,13 +22,13 @@ export function JuiceboxProjectBeneficiary({
     <div>
       <div className="flex gap-2">
         <V4ProjectHandleLink
-          projectId={parseInt(split.projectId)}
+          projectId={Number(split.projectId)}
           withProjectAvatar
           chainName={chainName as string}
         />
-        <AllocatorBadge allocator={split.allocator} />
+        <AllocatorBadge allocator={split.hook} />
       </div>
-      {split.allocator === NULL_ALLOCATOR_ADDRESS ? (
+      {split.hook === NULL_ALLOCATOR_ADDRESS ? (
         <div className="ml-2 flex items-center gap-x-1 text-xs text-grey-500 dark:text-grey-300">
           {value ? (
             <>

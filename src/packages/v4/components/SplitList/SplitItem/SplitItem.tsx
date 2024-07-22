@@ -1,7 +1,7 @@
 
 
-import { isJuiceboxProjectSplit } from 'packages/v2v3/utils/distributions'
 import { V4Split } from 'packages/v4/models/v4Split'
+import { isJuiceboxProjectSplit } from 'packages/v4/utils/v4Splits'
 import { ETHAddressBeneficiary } from './EthAddressBeneficiary'
 import { JuiceboxProjectBeneficiary } from './JuiceboxProjectBeneficiary'
 import { LockedUntilValue } from './LockedUntilValue'

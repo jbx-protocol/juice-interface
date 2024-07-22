@@ -266,3 +266,8 @@ export function splitsListsHaveDiff(
   return splits1!.length !== splits2!.length
 }
 
+// Determines if a split is a Juicebox project
+export function isJuiceboxProjectSplit(split: V4Split) {
+  return split.projectId ? split.projectId > 0n : false
+}
+

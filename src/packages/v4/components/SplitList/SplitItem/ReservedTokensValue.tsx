@@ -4,18 +4,18 @@ import { SplitPortion } from 'juice-sdk-core'
 
 export function ReservedTokensValue({
   splitPercent,
-  reservedRate,
+  reservedPercent,
 }: {
-  splitPercent: bigint
-  reservedRate: number
+  splitPercent: SplitPortion
+  reservedPercent: number
 }) {
-  const splitPercentNum = new SplitPortion(splitPercent).toFloat()  
+  const splitPercentNum = splitPercent.toFloat()  
   return (
     <TooltipIcon
       iconClassName="ml-2"
       tip={
         <Trans>
-          {(reservedRate * splitPercentNum) / 100}% of total token issuance.
+          {(reservedPercent * splitPercentNum) / 100}% of total token issuance.
         </Trans>
       }
     />

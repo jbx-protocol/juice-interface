@@ -125,9 +125,9 @@ export const deriveDurationOption = (
   )
 }
 
-export const formatTime = (timestamp: bigint | undefined) => {
-  if (timestamp === undefined || timestamp === 0n) return undefined;
-  const timeDate = new Date(Number(timestamp) * 1000);
+export const formatTime = (timestamp: number | undefined) => {
+  if (timestamp === undefined || timestamp === 0) return undefined;
+  const timeDate = new Date(timestamp * 1000);
   const isoDateString = timeDate.toISOString().split('T')[0];
   const formatOptions: Intl.DateTimeFormatOptions = {
     weekday: 'long',

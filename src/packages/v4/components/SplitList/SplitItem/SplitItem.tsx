@@ -1,6 +1,4 @@
-
-
-import { V4Split } from 'packages/v4/models/v4Split'
+import { JBSplit } from 'juice-sdk-core'
 import { isJuiceboxProjectSplit } from 'packages/v4/utils/v4Splits'
 import { ETHAddressBeneficiary } from './EthAddressBeneficiary'
 import { JuiceboxProjectBeneficiary } from './JuiceboxProjectBeneficiary'
@@ -9,10 +7,10 @@ import { ReservedTokensValue } from './ReservedTokensValue'
 import { SplitValue } from './SplitValue'
 
 export type SplitProps = {
-  split: V4Split
+  split: JBSplit
   totalValue: bigint | undefined
   projectOwnerAddress: string | undefined
-  reservedRate?: number
+  reservedPercent?: number
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
   currency?: bigint
@@ -45,10 +43,10 @@ export function SplitItem({ props }: { props: SplitProps }) {
       </div>
       <div className="flex items-center whitespace-nowrap">
         <SplitValue splitProps={props} />
-        {props.reservedRate !== undefined ? (
+        {props.reservedPercent !== undefined ? (
           <ReservedTokensValue
             splitPercent={props.split.percent}
-            reservedRate={props.reservedRate}
+            reservedPercent={props.reservedPercent}
           />
         ) : null}
       </div>

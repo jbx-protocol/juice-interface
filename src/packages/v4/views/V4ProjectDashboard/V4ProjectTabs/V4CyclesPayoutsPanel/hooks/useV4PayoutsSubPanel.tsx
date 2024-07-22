@@ -1,9 +1,7 @@
+import { JBSplit, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
 import { NativeTokenValue, useReadJbMultiTerminalFee } from 'juice-sdk-react'
-
-import { SplitPortion } from 'juice-sdk-core'
 import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
-import { V4Split } from 'packages/v4/models/v4Split'
-import { MAX_PAYOUT_LIMIT, V4_SPLITS_TOTAL_PERCENT } from 'packages/v4/utils/math'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { v4GetProjectOwnerRemainderSplit } from 'packages/v4/utils/v4Splits'
 import { useCallback, useMemo } from 'react'
 import assert from 'utils/assert'
@@ -12,17 +10,18 @@ import { useV4CurrentUpcomingPayoutLimit } from './useV4CurrentUpcomingPayoutLim
 import { useV4CurrentUpcomingPayoutSplits } from './useV4CurrentUpcomingPayoutSplits'
 import { useV4DistributableAmount } from './useV4DistributableAmount'
 
-const splitHasFee = (split: V4Split) => {
+const splitHasFee = (split: JBSplit) => {
   return split.projectId || split.projectId > 0n
 }
 
 const calculateSplitAmountWad = (
-  split: V4Split,
+  split: JBSplit,
   payoutLimit: bigint | undefined,
   primaryETHTerminalFee: bigint | undefined,
 ) => {
-  const splitValue = payoutLimit ?
-    (payoutLimit * split.percent / V4_SPLITS_TOTAL_PERCENT) : undefined
+  const splitValue = payoutLimit
+    ? (payoutLimit * split.percent.value) / BigInt(SPLITS_TOTAL_PERCENT)
+    : undefined
   const feeAmount = splitHasFee(split)
     ? feeForAmount(splitValue, primaryETHTerminalFee) ?? 0n
     : 0n
@@ -42,11 +41,11 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
     useV4CurrentUpcomingPayoutLimit(type)
 
   const showAmountOnPayout = useMemo(() => {
-    return (payoutLimit === MAX_PAYOUT_LIMIT || payoutLimit === 0n)
+    return payoutLimit === MAX_PAYOUT_LIMIT || payoutLimit === 0n
   }, [payoutLimit])
 
   const transformSplit = useCallback(
-    (split: V4Split) => {
+    (split: JBSplit) => {
       assert(split.beneficiary, 'Beneficiary must be defined')
       let amount = undefined
       const splitAmountWad = calculateSplitAmountWad(
@@ -55,18 +54,12 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
         primaryNativeTerminalFee,
       )
       if (showAmountOnPayout && splitAmountWad && payoutLimitCurrency) {
-        amount = (
-          <NativeTokenValue
-            wei={splitAmountWad}
-          />
-        )
+        amount = <NativeTokenValue wei={splitAmountWad} />
       }
       return {
-        projectId: split.projectId
-          ? Number(split.projectId)
-          : undefined,
+        projectId: split.projectId ? Number(split.projectId) : undefined,
         address: split.beneficiary!,
-        percent: `${new SplitPortion(split.percent).formatPercentage()}%`,
+        percent: `${split.percent.formatPercentage()}%`,
         amount,
       }
     },
@@ -74,21 +67,15 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
       payoutLimit,
       payoutLimitCurrency,
       showAmountOnPayout,
-      primaryNativeTerminalFee
+      primaryNativeTerminalFee,
     ],
   )
 
   const totalPayoutAmount = useMemo(() => {
     if (!payoutLimit || !payoutLimitCurrency) return
-    if (
-      payoutLimit === MAX_PAYOUT_LIMIT ||
-      payoutLimit === 0n
-    )
-      return
+    if (payoutLimit === MAX_PAYOUT_LIMIT || payoutLimit === 0n) return
 
-    return (
-      <NativeTokenValue wei={payoutLimit} />
-    )
+    return <NativeTokenValue wei={payoutLimit} />
   }, [payoutLimit, payoutLimitCurrency])
 
   const payouts = useMemo(() => {
@@ -110,7 +97,7 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
 
     return [
       ...splits,
-      ...(ownerPayout && ownerPayout.percent > 0 ? [ownerPayout] : []),
+      ...(ownerPayout && ownerPayout.percent.value > 0n ? [ownerPayout] : []),
     ]
       .sort((a, b) => Number(b.percent) - Number(a.percent))
       .map(transformSplit)
@@ -128,6 +115,6 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
     isLoading,
     payouts,
     totalPayoutAmount,
-    payoutLimit
+    payoutLimit,
   }
 }

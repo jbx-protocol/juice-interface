@@ -5,11 +5,11 @@ import { CurrencyName } from 'constants/currency'
 import { NativeTokenValue, useReadJbMultiTerminalFee } from 'juice-sdk-react'
 import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
 import { V4CurrencyName } from 'packages/v4/utils/currency'
-import { V4_SPLITS_TOTAL_PERCENT } from 'packages/v4/utils/math'
 import { isJuiceboxProjectSplit } from 'packages/v4/utils/v4Splits'
 import { formatWad } from 'utils/format/formatNumber'
 import { feeForAmount } from 'utils/math'
 import { SplitProps } from './SplitItem'
+import { SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
 
 export function SplitAmountValue({
   props,
@@ -20,9 +20,9 @@ export function SplitAmountValue({
 }) {
   const { data: primaryNativeTerminalFee } = useReadJbMultiTerminalFee()
 
-  const splitValue = props.totalValue ? 
-    (props.totalValue * props.split.percent) / V4_SPLITS_TOTAL_PERCENT
-  : undefined
+  const splitValue = props.totalValue
+    ? (props.totalValue * props.split.percent) / SPLITS_TOTAL_PERCENT
+    : undefined
 
   const isJuiceboxProject = isJuiceboxProjectSplit(props.split)
   const hasFee = !isJuiceboxProject && !props.dontApplyFeeToAmount
@@ -32,7 +32,7 @@ export function SplitAmountValue({
   const valueAfterFees = splitValue ? splitValue - feeAmount : 0
 
   const currencyName = V4CurrencyName(
-    Number(props.currency) as V4CurrencyOption
+    Number(props.currency) as V4CurrencyOption,
   )
 
   const createTooltipTitle = (

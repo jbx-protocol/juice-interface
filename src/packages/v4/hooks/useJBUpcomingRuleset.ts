@@ -1,11 +1,9 @@
-import { DecayRate, JBRulesetMetadata, RedemptionRate, ReservedRate, RulesetWeight } from 'juice-sdk-core';
+import { DecayPercent, JBRulesetData, JBRulesetMetadata, RedemptionRate, ReservedPercent, RulesetWeight } from 'juice-sdk-core';
 import { useJBContractContext, useReadJbControllerUpcomingRulesetOf } from 'juice-sdk-react';
-import { Ruleset } from '../models/ruleset';
-
 
 // @todo: add to SDK
 export function useJBUpcomingRuleset(): { 
-  ruleset: Ruleset | undefined, 
+  ruleset: JBRulesetData | undefined, 
   rulesetMetadata: JBRulesetMetadata | undefined, 
   isLoading: boolean
  } {
@@ -17,24 +15,22 @@ export function useJBUpcomingRuleset(): {
   const _latestUpcomingRuleset = data?.[0]
   const _latestUpcomingRulesetMetadata = data?.[1]
   const upcomingWeight = new RulesetWeight(_latestUpcomingRuleset?.weight ?? 0n)
-  const upcomingDecayRate = new DecayRate(_latestUpcomingRuleset?.decayRate ?? 0n)
+  const upcomingDecayPercent = new DecayPercent(_latestUpcomingRuleset?.decayPercent ?? 0)
 
   const latestUpcomingRuleset = _latestUpcomingRuleset
     ? {
         ..._latestUpcomingRuleset,
         weight: upcomingWeight,
-        decayRate: upcomingDecayRate,
+        decayPercent: upcomingDecayPercent,
       }
     : undefined;
 
-  const upcomingReservedRate = new ReservedRate(_latestUpcomingRulesetMetadata?.reservedRate ?? 0n)
-  const upcomingRedemptionRate = new RedemptionRate(_latestUpcomingRulesetMetadata?.redemptionRate ?? 0n)
+  const upcomingReservedPercent = new ReservedPercent(_latestUpcomingRulesetMetadata?.reservedPercent ?? 0)
+  const upcomingRedemptionRate = new RedemptionRate(_latestUpcomingRulesetMetadata?.redemptionRate ?? 0)
   const latestUpcomingRulesetMetadata = _latestUpcomingRulesetMetadata ?
     {
-      allowAddAccountingContext: false,
-      allowAddPriceFeed: false,
       ..._latestUpcomingRulesetMetadata,
-      reservedRate: upcomingReservedRate,
+      reservedPercent: upcomingReservedPercent,
       redemptionRate: upcomingRedemptionRate,
 
     } : undefined

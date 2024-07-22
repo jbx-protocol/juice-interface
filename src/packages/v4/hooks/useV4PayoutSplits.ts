@@ -1,5 +1,10 @@
-import { useJBContractContext, useJBRuleset, useReadJbSplitsSplitsOf, useReadJbTokensTokenOf } from 'juice-sdk-react'
-import { V4Split } from 'packages/v4/models/v4Split'
+import { JBSplit, SplitPortion } from 'juice-sdk-core'
+import {
+  useJBContractContext,
+  useJBRuleset,
+  useReadJbSplitsSplitsOf,
+  useReadJbTokensTokenOf,
+} from 'juice-sdk-react'
 
 export const useV4CurrentPayoutSplits = () => {
   const { projectId } = useJBContractContext()
@@ -7,15 +12,20 @@ export const useV4CurrentPayoutSplits = () => {
   const { data: ruleset } = useJBRuleset()
 
   const groupId = BigInt(tokenAddress ?? 0) // contracts say this is: `uint256(uint160(tokenAddress))`
-  const { data: _splits, isLoading: currentSplitsLoading } = useReadJbSplitsSplitsOf({
-    args: [
-      projectId, 
-      ruleset?.id ?? 0n, 
-      groupId
-    ],
-  })
+  const { data: _splits, isLoading: currentSplitsLoading } =
+    useReadJbSplitsSplitsOf({
+      args: [projectId, BigInt(ruleset?.id ?? 0), groupId],
+      query: {
+        select(data) {
+          return data.map(d => ({
+            ...d,
+            percent: new SplitPortion(d.percent),
+          }))
+        },
+      },
+    })
 
-  const splits: V4Split[] = _splits ? [..._splits] : []
+  const splits: JBSplit[] = _splits ? [..._splits] : []
 
   return { splits, isLoading: currentSplitsLoading }
 }

@@ -1,7 +1,7 @@
 import { SplitPortion } from 'juice-sdk-core'
 
-export function SplitPercentValue({ percent }: { percent: bigint }) {
-  const formattedPercent = new SplitPortion(percent).formatPercentage()
+export function SplitPercentValue({ percent }: { percent: SplitPortion }) {
+  const formattedPercent = percent.formatPercentage()
 
   return <span>{formattedPercent}%</span>
 }

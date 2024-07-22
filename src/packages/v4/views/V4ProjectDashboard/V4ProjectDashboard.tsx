@@ -1,14 +1,9 @@
 import { CoverPhoto } from 'components/Project/ProjectHeader/CoverPhoto'
-import { NativeTokenValue, useJBContractContext, useNativeTokenSurplus } from 'juice-sdk-react'
-import { ActivityList } from 'packages/v4/components/ActivityList/ActivitiyList'
 import { twMerge } from 'tailwind-merge'
 import { V4ProjectHeader } from './V4ProjectHeader'
 import { V4ProjectTabs } from './V4ProjectTabs/V4ProjectTabs'
 
 export function V4ProjectDashboard() {
-  const { projectId } = useJBContractContext()
-  const { data: nativeTokenSurplus } = useNativeTokenSurplus()
-
   return (
     <>
       <div className="relative w-full">
@@ -36,26 +31,6 @@ export function V4ProjectDashboard() {
               )}
             />
           </div>
-        </div>
-      </div>
-      <div className="flex justify-between gap-2">
-        <div>
-          <div>
-            Surplus (overflow):{' '}
-            {nativeTokenSurplus ? (
-              <NativeTokenValue wei={nativeTokenSurplus} />
-            ) : null}
-          </div>
-          <div>Project Id: {projectId.toString()}</div>
-
-          <div className="flex max-h-52 overflow-auto">
-            <ActivityList />
-          </div>
-        </div>
-
-        <div>
-          Pay me
-          <div>Input</div>
         </div>
       </div>
     </>

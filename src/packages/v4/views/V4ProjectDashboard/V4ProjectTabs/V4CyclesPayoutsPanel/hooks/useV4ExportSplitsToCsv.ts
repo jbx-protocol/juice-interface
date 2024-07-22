@@ -1,12 +1,13 @@
 import { t } from '@lingui/macro'
+import { SplitPortion } from 'juice-sdk-core'
 import { useJBContractContext } from 'juice-sdk-react'
 import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { V4Split } from 'packages/v4/models/v4Split'
-import { formatV4SplitPercent } from 'packages/v4/utils/math'
 import { v4GetProjectOwnerRemainderSplit } from 'packages/v4/utils/v4Splits'
 import { useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { emitErrorNotification } from 'utils/notifications'
+import { Hash } from 'viem'
 
 const CSV_HEADER = [
   'beneficiary',
@@ -20,7 +21,7 @@ const CSV_HEADER = [
 const splitToCsvRow = (split: V4Split) => {
   return [
     split.beneficiary,
-    `${parseFloat(formatV4SplitPercent(split.percent)) / 100}`,
+    `${new SplitPortion(split.percent).formatPercentage()}%`,
     `${split.preferAddToBalance}`,
     `${split.lockedUntil}`,
     split.projectId.toString(),
@@ -30,7 +31,7 @@ const splitToCsvRow = (split: V4Split) => {
 
 const prepareSplitsCsv = (
   splits: V4Split[],
-  projectOwnerAddress: `0x${string}`,
+  projectOwnerAddress: Hash,
 ): (string | undefined)[][] => {
   const csvContent = splits.map(splitToCsvRow)
 

@@ -1,13 +1,12 @@
-import { usePayoutLimits } from 'packages/v4/hooks/usePayoutLimits'
+import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useUpcomingPayoutLimit } from 'packages/v4/hooks/useUpcomingPayoutLimit'
 
 export const useV4CurrentUpcomingPayoutLimit = (
   type: 'current' | 'upcoming',
 ) => {
-  const { data: payoutLimit, isLoading: currentLoading } = usePayoutLimits()
+  const { data: payoutLimit, isLoading: currentLoading } = usePayoutLimit()
 
   const { data: upcomingPayoutLimit, isLoading: upcomingLoading } = useUpcomingPayoutLimit()
-
 
   if (type === 'current') {
     return {

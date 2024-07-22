@@ -6,7 +6,7 @@ import { V4CurrencyOption } from '../models/v4CurrencyOption';
 /**
  * @todo add to sdk
  */
-export function usePayoutLimits() {
+export function usePayoutLimit() {
   const {
     projectId,
     contracts: { primaryNativeTerminal, fundAccessLimits },

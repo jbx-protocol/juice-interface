@@ -2,9 +2,9 @@ import { Trans } from '@lingui/macro'
 import type { MetaMaskInpageProvider } from '@metamask/providers'
 import { Button } from 'antd'
 import { providers } from 'ethers'
-import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
-import { useContext } from 'react'
+import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import { twMerge } from 'tailwind-merge'
+import { Hash } from 'viem'
 
 declare global {
   interface Window {
@@ -26,9 +26,13 @@ const useMetamask = () => {
   return ethereum as unknown as MetaMaskInpageProvider
 }
 
-function useAddTokenToWalletRequest() {
+function useAddTokenToWalletRequest({
+  tokenAddress,
+}:{
+  tokenAddress: Hash
+}) {
   const ethereum = useMetamask()
-  const { tokenAddress, tokenSymbol } = useContext(V2V3ProjectContext)
+  const { data: tokenSymbol } = useNameOfERC20(tokenAddress)
 
   if (!ethereum) {
     return
@@ -49,8 +53,16 @@ function useAddTokenToWalletRequest() {
   }
 }
 
-export function AddTokenToMetamaskButton({ className }: { className: string }) {
-  const addToken = useAddTokenToWalletRequest()
+export function AddTokenToMetamaskButton({ 
+  className,
+  tokenAddress
+}: { 
+  className: string,
+  tokenAddress: Hash
+}) {
+  const addToken = useAddTokenToWalletRequest({
+    tokenAddress
+  })
   if (!addToken) return null
 
   return (

@@ -1,7 +1,7 @@
 import { ConfigurationPanelTableData } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { useJBRuleset } from 'juice-sdk-react'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
-import { usePayoutLimits } from 'packages/v4/hooks/usePayoutLimits'
+import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useUpcomingPayoutLimit } from 'packages/v4/hooks/useUpcomingPayoutLimit'
 import { useV4FormatConfigurationCycleSection } from './useV4FormatConfigurationCycleSection'
 
@@ -12,7 +12,7 @@ export const useV4CycleSection = (
   
   const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } = useJBUpcomingRuleset()
 
-  const { data: payoutLimits } = usePayoutLimits()
+  const { data: payoutLimits } = usePayoutLimit()
   const payoutLimitAmount = payoutLimits?.amount
   const payoutLimitCurrency = payoutLimits?.currency
 

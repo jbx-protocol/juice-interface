@@ -1,25 +1,17 @@
-import { useJBContractContext, useJBRuleset, useReadJbSplitsSplitsOf, useReadJbTokensTokenOf } from 'juice-sdk-react'
+import { useJBContractContext, useReadJbSplitsSplitsOf, useReadJbTokensTokenOf } from 'juice-sdk-react'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { V4Split } from 'packages/v4/models/v4Split'
+import { useV4CurrentPayoutSplits } from '../../../../../hooks/useV4PayoutSplits'
 
 export const useV4CurrentUpcomingPayoutSplits = (
   type: 'current' | 'upcoming',
 ) => {
   const { projectId } = useJBContractContext()
   const { data: tokenAddress } = useReadJbTokensTokenOf()
-  const { data: ruleset } = useJBRuleset()
+  const { splits, isLoading: currentSplitsLoading } = useV4CurrentPayoutSplits()
 
-  const groupId = BigInt(tokenAddress ?? 0) // contracts say this is: `uint256(uint160(tokenAddress))`
   const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } = useJBUpcomingRuleset()
-  const { data: _splits, isLoading: currentSplitsLoading } = useReadJbSplitsSplitsOf({
-    args: [
-      projectId, 
-      ruleset?.id ?? 0n, 
-      groupId
-    ],
-  })
 
-  const splits: V4Split[] = _splits ? [..._splits] : []
 
   const { data: _upcomingSplits, isLoading: upcomingSplitsLoading } = useReadJbSplitsSplitsOf({
     args: [
@@ -32,10 +24,10 @@ export const useV4CurrentUpcomingPayoutSplits = (
   const upcomingSplits: V4Split[] = _upcomingSplits ? [..._upcomingSplits] : []
 
   if (type === 'current') {
-    return { splits, loading: currentSplitsLoading }
+    return { splits, isLoading: currentSplitsLoading }
   }
   return {
     splits: upcomingSplits,
-    loading: upcomingSplitsLoading || upcomingRulesetLoading,
+    isLoading: upcomingSplitsLoading || upcomingRulesetLoading,
   }
 }

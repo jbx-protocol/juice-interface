@@ -1,6 +1,7 @@
 import { readProvider } from 'constants/readProvider'
 import { TxStatus } from 'models/transaction'
 import { ReactNode, useEffect } from 'react'
+import { Hash } from 'viem'
 import { TransactionLog, TxHistoryContext } from './TxHistoryContext'
 import { useTransactions } from './useTransactions'
 
@@ -45,7 +46,10 @@ const pollTransaction = async (
     txLog.callbacks?.onConfirmed?.(response)
     return {
       ...txLog,
-      tx: response,
+      tx: {
+        hash: response.hash as Hash,
+        timestamp: response.timestamp,
+      },
       status: TxStatus.success,
     }
   }

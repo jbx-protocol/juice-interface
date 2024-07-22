@@ -1,5 +1,6 @@
 import { CoverPhoto } from 'components/Project/ProjectHeader/CoverPhoto'
 import { twMerge } from 'tailwind-merge'
+import { V4PayRedeemCard } from './V4PayRedeemCard/V4PayRedeemCard'
 import { V4ProjectHeader } from './V4ProjectHeader'
 import { V4ProjectTabs } from './V4ProjectTabs/V4ProjectTabs'
 
@@ -18,12 +19,12 @@ export function V4ProjectDashboard() {
               '[@media(min-width:960px)]:flex [@media(min-width:960px)]:max-w-6xl [@media(min-width:960px)]:justify-between [@media(min-width:960px)]:gap-x-8',
             )}
           >
-            {/* <PayRedeemCard
+            <V4PayRedeemCard
               className={twMerge(
                 'mt-10 flex-1',
                 '[@media(min-width:960px)]:order-last [@media(min-width:960px)]:min-w-[340px] [@media(min-width:960px)]:max-w-md',
               )}
-            /> */}
+            />
             <V4ProjectTabs
               className={twMerge(
                 'mt-10 w-full',

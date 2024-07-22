@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import round from 'lodash/round'
-import { Split } from 'models/splits'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { Split } from 'packages/v2v3/models/splits'
 import { formatSplitPercent } from 'packages/v2v3/utils/math'
 import {
   getProjectOwnerRemainderSplit,

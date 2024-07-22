@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { ActivityEvent } from 'components/activityEventElems/ActivityElement/ActivityElement'
+import Loading from 'components/Loading'
 import { Ether, JBProjectToken } from 'juice-sdk-core'
 import { NativeTokenValue, useJBContractContext, useJBTokenContext } from 'juice-sdk-react'
 import {
@@ -41,7 +42,7 @@ function transformPayEventsRes(
 export function V4ActivityList() {
   const { token } = useJBTokenContext()
   const { projectId } = useJBContractContext()
-  const { data } = useSubgraphQuery(PayEventsDocument, {
+  const { data, isLoading } = useSubgraphQuery(PayEventsDocument, {
     orderBy: PayEvent_OrderBy.timestamp,
     orderDirection: OrderDirection.desc,
     where: {
@@ -57,7 +58,8 @@ export function V4ActivityList() {
     <div>
       <h2 className="mb-6 font-heading text-2xl font-medium">Activity</h2>
       <div className="flex flex-col gap-3">
-        {payEvents && payEvents.length > 0 ? (
+        {isLoading && <Loading />}
+        {isLoading || (payEvents && payEvents.length > 0) ? (
           payEvents?.map(event => {
             return (
               <div

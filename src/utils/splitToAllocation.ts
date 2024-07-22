@@ -1,5 +1,5 @@
-import { defaultSplit, Split } from 'models/splits'
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
+import { defaultSplit, Split } from 'packages/v2v3/models/splits'
 import {
   preciseFormatSplitPercent,
   splitPercentFrom,

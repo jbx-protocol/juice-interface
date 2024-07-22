@@ -1,8 +1,7 @@
-import { BigNumber } from 'ethers'
 
-import { Split } from 'packages/v2v3/models/splits'
 
 import { isJuiceboxProjectSplit } from 'packages/v2v3/utils/distributions'
+import { V4Split } from 'packages/v4/models/v4Split'
 import { ETHAddressBeneficiary } from './EthAddressBeneficiary'
 import { JuiceboxProjectBeneficiary } from './JuiceboxProjectBeneficiary'
 import { LockedUntilValue } from './LockedUntilValue'
@@ -10,14 +9,14 @@ import { ReservedTokensValue } from './ReservedTokensValue'
 import { SplitValue } from './SplitValue'
 
 export type SplitProps = {
-  split: Split
-  totalValue: BigNumber | undefined
+  split: V4Split
+  totalValue: bigint | undefined
   projectOwnerAddress: string | undefined
   reservedRate?: number
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
-  currency?: BigNumber
-  oldCurrency?: BigNumber
+  currency?: bigint
+  oldCurrency?: bigint
   showAmount?: boolean
   showFee?: boolean
   dontApplyFeeToAmount?: boolean

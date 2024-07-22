@@ -1,9 +1,9 @@
 import { WeiPerEther } from '@ethersproject/constants'
 import { ONE_BILLION } from 'constants/numbers'
+import { SplitPortion } from 'juice-sdk-core'
 import { useJBContractContext, useJBRulesetMetadata, useReadJbTokensTotalCreditSupplyOf } from 'juice-sdk-react'
 import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
-import { formatV4SplitPercent } from 'packages/v4/utils/math'
 import { useMemo } from 'react'
 import assert from 'utils/assert'
 import { formatAmount } from 'utils/format/formatAmount'
@@ -29,7 +29,7 @@ export const useV4ReservedTokensSubPanel = () => {
         {
           projectId: Number(projectId),
           address: projectOwnerAddress!,
-          percent: `${formatV4SplitPercent(ONE_BILLION_BIG)}%`,
+          percent: `${new SplitPortion(ONE_BILLION_BIG).formatPercentage()}%`,
         },
       ]
 
@@ -44,7 +44,7 @@ export const useV4ReservedTokensSubPanel = () => {
         return {
           projectId: Number(split.projectId),
           address: split.beneficiary!,
-          percent: `${formatV4SplitPercent(split.percent)}%`,
+          percent: `${new SplitPortion(split.percent).formatPercentage()}%`,
         }
       })
 
@@ -57,15 +57,15 @@ export const useV4ReservedTokensSubPanel = () => {
       )
       if (projectSplitIndex != -1)
         // If it is, increase its split percentage to bring the total to 100%.
-        processedSplits[projectSplitIndex].percent = `${formatV4SplitPercent(
+        processedSplits[projectSplitIndex].percent = `${new SplitPortion(
           remainingPercentage + reservedTokensSplits[projectSplitIndex].percent
-        )}%`
+        ).formatPercentage()}%`
       // If it isn't, add a split at the beginning which brings the total percentage to 100%.
       else
         processedSplits.unshift({
           projectId: Number(projectId),
           address: projectOwnerAddress!,
-          percent: `${formatV4SplitPercent(remainingPercentage)}%`,
+          percent: `${new SplitPortion(remainingPercentage).formatPercentage()}%`,
         })
     }
 

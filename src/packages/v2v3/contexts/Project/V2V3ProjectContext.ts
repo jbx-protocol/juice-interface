@@ -1,10 +1,10 @@
 import { BigNumber } from 'ethers'
 import { V2BallotState } from 'models/ballot'
-import { Split } from 'models/splits'
 import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'packages/v2v3/models/fundingCycle'
+import { Split } from 'packages/v2v3/models/splits'
 import { createContext } from 'react'
 
 interface V2V3ProjectLoadingStates {

@@ -4,7 +4,6 @@ import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { useWallet } from 'hooks/Wallet'
 import { TransactorInstance } from 'hooks/useTransactor'
-import { GroupedSplits, SplitGroup } from 'models/splits'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
 import { useDefaultJBController } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBController'
 import { useDefaultJBETHPaymentTerminal } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
@@ -13,6 +12,7 @@ import {
   V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
 } from 'packages/v2v3/models/fundingCycle'
+import { GroupedSplits, SplitGroup } from 'packages/v2v3/models/splits'
 import {
   getTerminalsFromFundAccessConstraints,
   isValidMustStartAtOrAfter,

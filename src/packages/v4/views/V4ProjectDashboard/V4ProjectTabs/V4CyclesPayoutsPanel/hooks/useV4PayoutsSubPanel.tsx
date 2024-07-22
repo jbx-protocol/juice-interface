@@ -1,8 +1,9 @@
 import { NativeTokenValue, useReadJbMultiTerminalFee } from 'juice-sdk-react'
 
+import { SplitPortion } from 'juice-sdk-core'
 import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { V4Split } from 'packages/v4/models/v4Split'
-import { formatV4SplitPercent, MAX_PAYOUT_LIMIT, V4_SPLITS_TOTAL_PERCENT } from 'packages/v4/utils/math'
+import { MAX_PAYOUT_LIMIT, V4_SPLITS_TOTAL_PERCENT } from 'packages/v4/utils/math'
 import { v4GetProjectOwnerRemainderSplit } from 'packages/v4/utils/v4Splits'
 import { useCallback, useMemo } from 'react'
 import assert from 'utils/assert'
@@ -65,7 +66,7 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
           ? Number(split.projectId)
           : undefined,
         address: split.beneficiary!,
-        percent: `${formatV4SplitPercent(split.percent)}%`,
+        percent: `${new SplitPortion(split.percent).formatPercentage()}%`,
         amount,
       }
     },

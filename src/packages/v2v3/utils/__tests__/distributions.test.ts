@@ -1,4 +1,4 @@
-import { Split } from 'models/splits'
+import { Split } from 'packages/v2v3/models/splits'
 import {
   amountFromPercent,
   deriveAmountAfterFee,

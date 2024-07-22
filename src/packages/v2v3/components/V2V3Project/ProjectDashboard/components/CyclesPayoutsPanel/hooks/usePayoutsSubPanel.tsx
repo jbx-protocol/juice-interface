@@ -1,8 +1,8 @@
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { BigNumber } from 'ethers'
-import { Split } from 'models/splits'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { Split } from 'packages/v2v3/models/splits'
 import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
 import { isJuiceboxProjectSplit } from 'packages/v2v3/utils/distributions'
 import {

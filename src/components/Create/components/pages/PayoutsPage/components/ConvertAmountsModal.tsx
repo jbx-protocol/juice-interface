@@ -4,10 +4,10 @@ import CurrencySwitch from 'components/currency/CurrencySwitch'
 import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { Parenthesis } from 'components/Parenthesis'
-import { Split } from 'models/splits'
 import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
 import { ExternalLinkWithIcon } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { Split } from 'packages/v2v3/models/splits'
 import {
   V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD,

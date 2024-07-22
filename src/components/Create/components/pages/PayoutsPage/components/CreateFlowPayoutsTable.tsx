@@ -1,7 +1,7 @@
 import { Form } from 'antd'
 import { CURRENCY_METADATA, CurrencyName } from 'constants/currency'
-import { Split } from 'models/splits'
 import { PayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/PayoutsTable'
+import { Split } from 'packages/v2v3/models/splits'
 import {
   V2V3CurrencyName,
   getV2V3CurrencyOption,

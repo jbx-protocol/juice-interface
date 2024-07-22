@@ -1,5 +1,5 @@
 import EthereumAddress from 'components/EthereumAddress'
-import { Split } from 'models/splits'
+import { Split } from 'packages/v2v3/models/splits'
 import { DiffedItem } from '../../DiffedItem'
 import { JuiceboxProjectBeneficiary } from '../../SplitItem/JuiceboxProjectBeneficiary'
 

@@ -1,4 +1,5 @@
 import { DecayRate, RulesetWeight } from "juice-sdk-core";
+import { Hash } from "viem";
 
 export type Ruleset = Omit<{
   cycleNumber: bigint;
@@ -8,7 +9,7 @@ export type Ruleset = Omit<{
   duration: bigint;
   weight: bigint;
   decayRate: bigint;
-  approvalHook: `0x${string}`;
+  approvalHook: Hash;
   metadata: bigint;
 }, "weight" | "decayRate"> & {
   weight: RulesetWeight;

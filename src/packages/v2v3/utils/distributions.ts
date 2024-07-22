@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers'
-import { Split } from 'models/splits'
+import { Split } from 'packages/v2v3/models/splits'
 
 import { ONE_BILLION } from 'constants/numbers'
 import { isProjectSplit } from 'packages/v2v3/utils/v2v3Splits'

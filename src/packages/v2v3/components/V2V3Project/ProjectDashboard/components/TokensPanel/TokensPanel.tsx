@@ -3,6 +3,7 @@ import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { TokenAmount } from 'components/TokenAmount'
+import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
 import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
 import { useTokensPanel } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useTokensPanel'
 import { useYourBalanceMenuItems } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useYourBalanceMenuItems/useYourBalanceMenuItems'
@@ -11,7 +12,7 @@ import { V2V3ClaimTokensModal } from 'packages/v2v3/components/V2V3Project/V2V3M
 import { V2V3MintModal } from 'packages/v2v3/components/V2V3Project/V2V3ManageTokensSection/AccountBalanceDescription/V2V3MintModal'
 import { useCallback, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
-import { AddTokenToMetamaskButton } from '../../../../../../../components/buttons/AddTokenToMetamaskButton'
+import { Hash } from 'viem'
 import { TokenHoldersModal } from '../TokenHoldersModal/TokenHoldersModal'
 import { MigrateTokensButton } from './components/MigrateTokensButton'
 import { RedeemTokensButton } from './components/RedeemTokensButton'
@@ -190,7 +191,7 @@ const ProjectTokenCard = () => {
           {projectTokenAddress && projectHasErc20Token && (
             <AddTokenToMetamaskButton 
               className="mt-2" 
-              tokenAddress={projectTokenAddress as `0x${string}`}
+              tokenAddress={projectTokenAddress as Hash}
             />
           )}
           {canCreateErc20Token && (

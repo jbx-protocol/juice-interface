@@ -1,6 +1,5 @@
-import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import { useWallet } from 'hooks/Wallet'
-import { useJBContractContext, useReadJbTokensTokenOf, useReadJbTokensTotalBalanceOf } from 'juice-sdk-react'
+import { useJBContractContext, useJBTokenContext, useReadJbTokensTotalBalanceOf } from 'juice-sdk-react'
 import round from 'lodash/round'
 import { useV4TotalTokenSupply } from 'packages/v4/hooks/useV4TotalTokenSupply'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
@@ -12,15 +11,15 @@ import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { zeroAddress } from 'viem'
 
 export const useV4TokensPanel = () => {
-  const { projectId, contracts: { tokens: tokensContract } } = useJBContractContext()
-  const { data: tokenAddress } = useReadJbTokensTokenOf()
+  const { projectId } = useJBContractContext()
   const { userAddress } = useWallet()
-  const { data: tokenSymbolRaw } = useNameOfERC20(tokenAddress)
-
+  const { token } = useJBTokenContext()
+  const tokenAddress = token?.data?.address
+  
   const { data: totalTokenSupply } = useV4TotalTokenSupply()
 
   const projectToken = tokenSymbolText({
-    tokenSymbol: tokenSymbolRaw,
+    tokenSymbol: token?.data?.symbol,
     capitalize: false,
     plural: true,
   })

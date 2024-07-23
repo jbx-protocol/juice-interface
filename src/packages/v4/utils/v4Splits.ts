@@ -172,8 +172,18 @@ export const processUniqueSplits = ({
   oldSplits: JBSplit[] | undefined
   newSplits: JBSplit[]
   allSplitsChanged?: boolean // pass when you know all splits have changed (e.g. currency has changed)
-}): SplitWithDiff[] => {
-  const uniqueSplitsByProjectIdOrAddress: Array<SplitWithDiff> = []
+}): Array<
+  SplitWithDiff & {
+    totalValue?: number
+    oldSplit?: OldSplit & { totalValue?: bigint }
+  }
+> => {
+  const uniqueSplitsByProjectIdOrAddress: Array<
+    SplitWithDiff & {
+      totalValue?: bigint
+      oldSplit?: OldSplit & { totalValue?: bigint }
+    }
+  > = []
   if (!oldSplits) {
     return sortSplits(newSplits)
   }

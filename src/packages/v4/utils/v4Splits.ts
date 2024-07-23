@@ -1,8 +1,8 @@
 import * as constants from '@ethersproject/constants'
-import { JBSplit, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
+import { JBSplit, SplitPortion, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
 import isEqual from 'lodash/isEqual'
+import { formatWad } from 'utils/format/formatNumber'
 import { Hash } from 'viem'
-import { formatWad } from '../../../utils/format/formatNumber'
 import { isFinitePayoutLimit } from './fundingCycle'
 
 /**
@@ -16,11 +16,13 @@ export const v4GetProjectOwnerRemainderSplit = (
   splits: JBSplit[],
 ): JBSplit & { isProjectOwner: true } => {
   const totalSplitPercentage = v4TotalSplitsPercent(splits)
-  const ownerPercentage = SPLITS_TOTAL_PERCENT - totalSplitPercentage
+  const ownerPercentage = new SplitPortion(
+    SPLITS_TOTAL_PERCENT - Number(totalSplitPercentage),
+  )
 
   return {
     beneficiary: projectOwnerAddress,
-    percent: Number(ownerPercentage),
+    percent: ownerPercentage,
     lockedUntil: 0,
     projectId: 0n,
     isProjectOwner: true,
@@ -35,7 +37,7 @@ export const v4GetProjectOwnerRemainderSplit = (
  * @returns {bigint} - sum of percents in part-per-billion (max = SPLITS_TOTAL_PERCENT)
  */
 export const v4TotalSplitsPercent = (splits: JBSplit[]): bigint =>
-  splits?.reduce((sum, split) => sum + split.percent, 0n) ?? 0n
+  splits?.reduce((sum, split) => sum + split.percent.value, 0n) ?? 0n
 
 //  - true if the split has been removed (exists in old but not new),
 //  - false if new (exists in new but not old)
@@ -96,7 +98,7 @@ export const sortSplits = (splits: JBSplit[]) => {
 }
 
 /* Determines if two splits AMOUNTS are equal. Extracts amounts for two splits from their respective totalValues **/
-export function splitAmountsAreEqual({
+function splitAmountsAreEqual({
   split1,
   split2,
   split1TotalValue,
@@ -104,17 +106,17 @@ export function splitAmountsAreEqual({
 }: {
   split1: JBSplit
   split2: JBSplit
-  split1TotalValue?: bigint
-  split2TotalValue?: bigint
+  split1TotalValue: bigint
+  split2TotalValue: bigint
 }) {
   const split1Amount = formatWad(
-    (split1TotalValue! * split1.percent) / SPLITS_TOTAL_PERCENT,
+    (split1TotalValue * split1.percent.value) / BigInt(SPLITS_TOTAL_PERCENT),
     {
       precision: 2,
     },
   )
   const split2Amount = formatWad(
-    (split2TotalValue! * split2.percent) / SPLITS_TOTAL_PERCENT,
+    (split2TotalValue * split2.percent.value) / BigInt(SPLITS_TOTAL_PERCENT),
     {
       precision: 2,
     },
@@ -131,8 +133,8 @@ function splitsAreEqual({
 }: {
   split1: JBSplit
   split2: JBSplit
-  split1TotalValue?: bigint
-  split2TotalValue?: bigint
+  split1TotalValue: bigint
+  split2TotalValue: bigint
 }) {
   const isFiniteTotalValue =
     isFinitePayoutLimit(split1TotalValue) &&
@@ -140,6 +142,7 @@ function splitsAreEqual({
   if (!isFiniteTotalValue) {
     return isEqual(split1, split2)
   }
+
   return (
     splitAmountsAreEqual({
       split1,
@@ -171,13 +174,16 @@ export const processUniqueSplits = ({
   allSplitsChanged?: boolean // pass when you know all splits have changed (e.g. currency has changed)
 }): SplitWithDiff[] => {
   const uniqueSplitsByProjectIdOrAddress: Array<SplitWithDiff> = []
-  if (!oldSplits) return sortSplits(newSplits)
+  if (!oldSplits) {
+    return sortSplits(newSplits)
+  }
+
   newSplits.map(split => {
     const oldSplit = oldSplits.find(oldSplit =>
       hasEqualRecipient(oldSplit, split),
     )
     const splitsEqual =
-      oldSplit && !allSplitsChanged
+      oldSplit && !allSplitsChanged && newTotalValue && oldTotalValue
         ? splitsAreEqual({
             split1: split,
             split2: oldSplit,
@@ -206,6 +212,7 @@ export const processUniqueSplits = ({
       })
     }
   })
+
   // adds the old splits (exists in old but not new)
   const removedSplits = getRemovedSplits(oldSplits, newSplits)
   removedSplits.map(split => {
@@ -218,11 +225,8 @@ export const processUniqueSplits = ({
 }
 
 export const isProjectSplit = (split: JBSplit): boolean => {
-  return Boolean(split.projectId) && BigInt(split.projectId) > 0n
+  return Boolean(split.projectId) && split.projectId > 0n
 }
-
-export const projectIdToHex = (projectIdString: string | undefined) =>
-  BigInt(projectIdString ?? 0).toString(16)
 
 /**
  * Returns the sum of each split's percent in a list of splits
@@ -245,20 +249,17 @@ export function splitsListsHaveDiff(
   if (!splits1 && !splits2) return false
   if ((splits1 && !splits2) || (!splits1 && splits2)) return true
 
-  for (const split1 of splits1!) {
-    const correspondingSplit = splits2!.find(split2 =>
+  for (const split1 of splits1 ?? []) {
+    const correspondingSplit = splits2?.find(split2 =>
       hasEqualRecipient(split1, split2),
     )
 
-    if (!correspondingSplit) {
-      return true
-    }
-
-    if (!isEqual(split1, correspondingSplit)) {
+    if (!correspondingSplit || !isEqual(split1, correspondingSplit)) {
       return true
     }
   }
-  return splits1!.length !== splits2!.length
+
+  return splits1?.length !== splits2?.length
 }
 
 // Determines if a split is a Juicebox project

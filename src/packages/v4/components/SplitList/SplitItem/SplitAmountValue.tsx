@@ -2,6 +2,7 @@ import { DollarCircleOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { CurrencyName } from 'constants/currency'
+import { SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
 import { NativeTokenValue, useReadJbMultiTerminalFee } from 'juice-sdk-react'
 import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
 import { V4CurrencyName } from 'packages/v4/utils/currency'
@@ -9,7 +10,6 @@ import { isJuiceboxProjectSplit } from 'packages/v4/utils/v4Splits'
 import { formatWad } from 'utils/format/formatNumber'
 import { feeForAmount } from 'utils/math'
 import { SplitProps } from './SplitItem'
-import { SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
 
 export function SplitAmountValue({
   props,
@@ -21,7 +21,8 @@ export function SplitAmountValue({
   const { data: primaryNativeTerminalFee } = useReadJbMultiTerminalFee()
 
   const splitValue = props.totalValue
-    ? (props.totalValue * props.split.percent) / SPLITS_TOTAL_PERCENT
+    ? (props.totalValue * props.split.percent.value) /
+      BigInt(SPLITS_TOTAL_PERCENT)
     : undefined
 
   const isJuiceboxProject = isJuiceboxProjectSplit(props.split)
@@ -49,7 +50,7 @@ export function SplitAmountValue({
         title={
           splitValue !== undefined &&
           feeAmount !== undefined &&
-          createTooltipTitle(currencyName, splitValue - feeAmount)
+          createTooltipTitle(currencyName, BigInt(splitValue) - feeAmount)
         }
       >
         {valueAfterFees ? (

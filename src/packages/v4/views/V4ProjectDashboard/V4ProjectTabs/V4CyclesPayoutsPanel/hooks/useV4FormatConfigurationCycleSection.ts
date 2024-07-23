@@ -51,7 +51,7 @@ export const useV4FormatConfigurationCycleSection = ({
 
   const upcomingRulesetStart = ruleset?.start
     ? ruleset.start + (ruleset?.duration || 0)
-    : 0n
+    : 0
 
   const startTimeDatum: ConfigurationPanelDatum = useMemo(() => {
     const formattedTime =

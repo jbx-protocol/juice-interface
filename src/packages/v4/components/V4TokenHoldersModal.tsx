@@ -19,7 +19,7 @@ export const V4TokenHoldersModal = ({
     <ParticipantsModal
       tokenSymbol={tokenSymbol}
       tokenAddress={tokenAddress}
-      totalTokenSupply={BigNumber.from(totalTokenSupply)}
+      totalTokenSupply={totalTokenSupply ? BigNumber.from(totalTokenSupply.toString()): undefined}
       open={open}
       onCancel={onClose}
     />

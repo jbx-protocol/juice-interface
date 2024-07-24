@@ -42,7 +42,7 @@ export const useV4TreasuryStats = () => {
   const availableToPayout = useMemo(() => {
     return (
       <NativeTokenValue
-        wei={distributableAmount}
+        wei={distributableAmount.value}
       />
     )
   }, [distributableAmount])

@@ -5,7 +5,7 @@ import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
 import { PayoutsTableRow } from 'components/PayoutsTable/PayoutsTableRow'
 import TooltipLabel from 'components/TooltipLabel'
 import round from 'lodash/round'
-import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
 
 const Row = PayoutsTableRow
@@ -31,7 +31,7 @@ export function TotalRows() {
       ? round(distributionLimit, roundingPrecision)
       : t`Unlimited`
 
-  const { projectOwnerAddress } = useProjectContext()
+  const { data: projectOwnerAddress } = useProjectOwnerOf()
 
   const subTotalExceedsMax = distributionLimitIsInfinite && subTotal > 100
 

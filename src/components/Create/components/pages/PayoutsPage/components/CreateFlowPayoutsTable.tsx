@@ -7,10 +7,10 @@ import {
   getV2V3CurrencyOption,
 } from 'packages/v2v3/utils/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
+import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
 import { ReactNode } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
-import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { usePayoutsForm } from '../hooks/usePayoutsForm'
 
 const DEFAULT_CURRENCY_NAME = CURRENCY_METADATA.ETH.name

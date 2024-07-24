@@ -1,10 +1,8 @@
-import { AllocationItem } from 'components/Allocation/AllocationItem'
-import { BigNumber } from 'ethers'
+import { JBSplit as Split } from 'juice-sdk-core'
 import { FormItemInput } from 'models/formItemInput'
-import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { Split } from 'packages/v2v3/models/splits'
+import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
 import { createContext, useContext } from 'react'
-import { AllocationList } from './AllocationList'
+import { AllocationItem } from './AllocationItem'
 import { useAllocation } from './hooks/useAllocation'
 
 export type AllocationSplit = Split & { id: string }
@@ -15,14 +13,14 @@ const DEFAULT_SET_CURRENCY_FN = () => {
 
 const AllocationContext = createContext<{
   allocations: AllocationSplit[]
-  totalAllocationAmount?: BigNumber
-  setTotalAllocationAmount?: (total: BigNumber) => void
-  allocationCurrency?: V2V3CurrencyOption
+  totalAllocationAmount?: bigint
+  setTotalAllocationAmount?: (total: bigint) => void
+  allocationCurrency?: V4CurrencyOption
   addAllocation: (allocation: AllocationSplit) => void
   removeAllocation: (id: string) => void
   upsertAllocation: (allocation: AllocationSplit) => void
   setAllocations: (allocations: AllocationSplit[]) => void
-  setCurrency: (currency: V2V3CurrencyOption) => void
+  setCurrency: (currency: V4CurrencyOption) => void
 }>({
   allocations: [],
   addAllocation: () => {
@@ -49,16 +47,15 @@ const useAllocationInstance = () => {
 }
 
 interface AllocationProps {
-  totalAllocationAmount?: BigNumber
-  setTotalAllocationAmount?: (total: BigNumber) => void
-  allocationCurrency?: V2V3CurrencyOption
-  setAllocationCurrency?: (currency: V2V3CurrencyOption) => void
+  totalAllocationAmount?: bigint
+  setTotalAllocationAmount?: (total: bigint) => void
+  allocationCurrency?: V4CurrencyOption
+  setAllocationCurrency?: (currency: V4CurrencyOption) => void
 }
 
 export const Allocation: React.FC<
   React.PropsWithChildren<AllocationProps & FormItemInput<AllocationSplit[]>>
 > & {
-  List: typeof AllocationList
   Item: typeof AllocationItem
   useAllocationInstance: typeof useAllocationInstance
 } = ({
@@ -88,5 +85,4 @@ export const Allocation: React.FC<
 }
 
 Allocation.useAllocationInstance = useAllocationInstance
-Allocation.List = AllocationList
 Allocation.Item = AllocationItem

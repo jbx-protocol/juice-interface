@@ -5,13 +5,14 @@ import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { FEES_EXPLANATION } from 'components/strings'
+import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useUsedPayoutLimitOf } from 'packages/v4/hooks/useUsedPayoutLimitOf'
 import { useV4BalanceOfNativeTerminal } from 'packages/v4/hooks/useV4BalanceOfNativeTerminal'
+import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4PayoutSplits'
 import { V4CurrencyName } from 'packages/v4/utils/currency'
 import { useEffect, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
-import { useV4CurrentPayoutSplits } from '../../../../hooks/useV4PayoutSplits'
 import { useV4DistributableAmount } from './hooks/useV4DistributableAmount'
 
 export default function V4DistributePayoutsModal({
@@ -136,23 +137,14 @@ export default function V4DistributePayoutsModal({
             <Trans>Payout recipients</Trans>
           </div>
 
-          {payoutSplits?.length === 0 ? (
-            <Callout.Info className="mb-4">
-              <Trans>
-                The project owner is the only payout recipient. Any ETH paid out
-                this cycle will go to them.
-              </Trans>
-            </Callout.Info>
-          ) : null}
-
           <div className="max-h-[33vh] overflow-y-auto">
-            {/* <PayoutsTable
+            <PayoutsTable
               payoutSplits={payoutSplits ?? []}
-              currency={currencyName}
-              payoutLimitAmount={parseFloat(distributionAmount ?? '0')} // payoutLimitAmount is the amount to distribute in the instance.
+              currency={currencyName ?? 'ETH'}
+              distributionLimit={parseFloat(distributionAmount ?? '0')} // payoutLimitAmount is the amount to distribute in the instance.
               hideHeader
               showAvatars
-            /> */}
+            />
           </div>
         </div>
 

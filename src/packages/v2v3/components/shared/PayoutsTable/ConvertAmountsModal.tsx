@@ -2,10 +2,10 @@ import { t, Trans } from '@lingui/macro'
 import { Divider, Modal } from 'antd'
 import CurrencySwitch from 'components/currency/CurrencySwitch'
 import EthereumAddress from 'components/EthereumAddress'
+import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { Parenthesis } from 'components/Parenthesis'
 import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
-import { ExternalLinkWithIcon } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { Split } from 'packages/v2v3/models/splits'
 import {
@@ -18,6 +18,7 @@ import {
 } from 'packages/v2v3/utils/distributions'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { SPLITS_TOTAL_PERCENT } from 'packages/v2v3/utils/math'
+import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
 import { isProjectSplit } from 'packages/v2v3/utils/v2v3Splits'
 import { ReactNode, useCallback, useMemo, useState } from 'react'
 import {
@@ -27,7 +28,6 @@ import {
 import { parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
 import { helpPagePath } from 'utils/routes'
-import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
 export const ConvertAmountsModal = ({
   open,

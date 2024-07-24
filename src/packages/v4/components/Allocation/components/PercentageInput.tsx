@@ -2,8 +2,8 @@ import { AmountPercentageInput } from 'components/Allocation/types'
 import CurrencySymbol from 'components/currency/CurrencySymbol'
 import NumberSlider from 'components/inputs/NumberSlider'
 import round from 'lodash/round'
-import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
-import { isFiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
+import { V4CurrencyName } from 'packages/v4/utils/currency'
+import { isFinitePayoutLimit } from 'packages/v4/utils/fundingCycle'
 import { useCallback, useMemo, useState } from 'react'
 import { formatWad, stripCommas } from 'utils/format/formatNumber'
 import { Allocation } from '../Allocation'
@@ -26,7 +26,7 @@ export const PercentageInput = ({
     Allocation.useAllocationInstance()
 
   const hasTotalAllocationAmount = useMemo(
-    () => isFiniteDistributionLimit(totalAllocationAmount),
+    () => isFinitePayoutLimit(totalAllocationAmount),
     [totalAllocationAmount],
   )
 
@@ -44,7 +44,7 @@ export const PercentageInput = ({
   const totalAllocationAmountNum = parseFloat(
     stripCommas(formatWad(totalAllocationAmount) ?? '0'),
   )
-  const currencyName = V2V3CurrencyName(allocationCurrency)
+  const currencyName = V4CurrencyName(allocationCurrency)
   const roundedAmount = round(
     (percentage ? parseFloat(percentage.value) / 100 : 0) *
       totalAllocationAmountNum,

@@ -2,9 +2,9 @@ import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
 import { PayoutsTableRow } from 'components/PayoutsTable/PayoutsTableRow'
-import { Allocation } from 'packages/v2v3/components/shared/Allocation/Allocation'
-import { getV2V3CurrencyOption } from 'packages/v2v3/utils/currency'
+import { getV4CurrencyOption } from 'packages/v4/utils/currency'
 import { twMerge } from 'tailwind-merge'
+import { Allocation } from '../Allocation/Allocation'
 import { CurrencySwitcher } from './CurrencySwitcher'
 import { HeaderRows } from './HeaderRows'
 import { PayoutSplitRow } from './PayoutSplitRow'
@@ -33,7 +33,7 @@ export function PayoutsTableBody() {
       {topAccessory}
       <div className="rounded-lg border border-smoke-200 dark:border-slate-600">
         <Allocation
-          allocationCurrency={getV2V3CurrencyOption(currency)}
+          allocationCurrency={getV4CurrencyOption(currency)}
           setAllocationCurrency={setCurrency}
         >
           <div className="w-full text-left">

@@ -1,17 +1,14 @@
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
 import { PayoutsTableRow } from 'components/PayoutsTable/PayoutsTableRow'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { JBSplit as Split } from 'juice-sdk-core'
 import round from 'lodash/round'
-import {
-  AddEditAllocationModal,
-  AddEditAllocationModalEntity,
-} from 'packages/v2v3/components/shared/Allocation/AddEditAllocationModal'
-import { Split } from 'packages/v2v3/models/splits'
 import { useState } from 'react'
-import { PayoutSplitRowMenu } from './PayoutSplitRowMenu'
-import { PayoutTitle } from './PayoutTitle'
+import { AddEditAllocationModal, AddEditAllocationModalEntity } from '../Allocation/AddEditAllocationModal'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
+import { PayoutSplitRowMenu } from './PayoutSplitRowMenu'
+import { PayoutTitle } from './PayoutTitle'
 
 const Cell = PayoutsTableCell
 
@@ -44,7 +41,7 @@ export function PayoutSplitRow({
   const isPercent = distributionLimitIsInfinite
 
   let formattedAmountOrPercentage = isPercent
-    ? formattedPayoutPercent({ payoutSplitPercent: payoutSplit.percent })
+    ? formattedPayoutPercent({ payoutSplitPercent: Number(payoutSplit.percent.value) })
     : round(amount, roundingPrecision).toString()
 
   if (!canEditSplits) {
@@ -60,6 +57,7 @@ export function PayoutSplitRow({
         editedPayoutSplit: payoutSplit,
         newPayoutSplit: {
           ...payoutSplit,
+          projectId: payoutSplit.projectId.toString(),
           projectOwner: false,
           amount: {
             value: newAmount.toString(),
@@ -92,7 +90,7 @@ export function PayoutSplitRow({
   const addEditAllocationModalEntity = {
     projectOwner: false,
     beneficiary: payoutSplit.beneficiary,
-    projectId: payoutSplit.projectId,
+    projectId: payoutSplit.projectId.toString(),
     amount: {
       value: formattedAmountOrPercentage,
       isPercent,

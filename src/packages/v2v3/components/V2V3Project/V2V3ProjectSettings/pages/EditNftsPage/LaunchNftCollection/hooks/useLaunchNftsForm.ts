@@ -5,6 +5,7 @@ import {
   EditingFundingCycleConfig,
   useEditingFundingCycleConfig,
 } from 'packages/v2v3/components/V2V3Project/V2V3ProjectSettings/hooks/useEditingFundingCycleConfig'
+import { useReconfigureFundingCycle } from 'packages/v2v3/components/V2V3Project/V2V3ProjectSettings/hooks/useReconfigureFundingCycle'
 import { useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
@@ -17,7 +18,6 @@ import {
   pinNftCollectionMetadata,
   pinNftRewards,
 } from 'utils/nftRewards'
-import { useReconfigureFundingCycle } from '../../../../hooks/useReconfigureFundingCycle'
 
 export const useLaunchNftsForm = () => {
   const [form] = useForm<NftRewardsFormProps>()

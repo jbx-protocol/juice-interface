@@ -2,13 +2,11 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
+
 import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
-import {
-  AddEditAllocationModal,
-  AddEditAllocationModalEntity,
-} from 'packages/v2v3/components/shared/Allocation/AddEditAllocationModal'
 import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
+import { AddEditAllocationModal, AddEditAllocationModalEntity } from '../Allocation/AddEditAllocationModal'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
 import { PayoutTableSettings } from './PayoutTableSettings'

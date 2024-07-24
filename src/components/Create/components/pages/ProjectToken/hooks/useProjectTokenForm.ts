@@ -14,13 +14,13 @@ import {
   redemptionRateFrom,
   reservedRateFrom,
 } from 'packages/v2v3/utils/math'
+import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
 import { useDebugValue, useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
 import { useEditingReservedTokensSplits } from 'redux/hooks/useEditingReservedTokensSplits'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
-import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
 export type ProjectTokensFormProps = Partial<{

@@ -6,28 +6,36 @@ import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
 import { LOCKED_PAYOUT_EXPLANATION } from 'components/strings'
 import { BigNumber } from 'ethers'
+import { useReadJbMultiTerminalFee } from 'juice-sdk-react'
 import moment, * as Moment from 'moment'
-import { FeeTooltipLabel } from 'packages/v2v3/components/shared/FeeTooltipLabel'
-import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
-import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
-import { projectIdToHex } from 'packages/v2v3/utils/v2v3Splits'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { isInfinitePayoutLimit } from 'packages/v4/utils/fundingCycle'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   allocationInputAlreadyExistsRule,
   inputIsIntegerRule,
   inputMustBeEthAddressRule,
   inputMustExistRule,
 } from 'utils/antdRules'
-import { hexToInt, parseWad, stripCommas } from 'utils/format/formatNumber'
+import { hexToInt, stripCommas } from 'utils/format/formatNumber'
 import { ceilIfCloseToNextInteger } from 'utils/math'
+import { Hash } from 'viem'
+import { FeeTooltipLabel } from '../FeeTooltipLabel'
 import { Allocation } from './Allocation'
-import { allocationId } from './AllocationList'
 import { AmountInput } from './components/AmountInput'
 import { PercentageInput } from './components/PercentageInput'
 
+
+export const allocationId = (
+  beneficiary: string,
+  projectId: string | undefined,
+) => {
+  const hasProjectId = Boolean(projectId && projectId !== '0')
+  return `${beneficiary}${hasProjectId ? `-${projectId}` : ''}`
+}
+
 interface AddEditAllocationModalFormProps {
   juiceboxProjectId?: string | undefined
-  address?: string | undefined
+  address?: Hash | undefined
   amount?: AmountPercentageInput | undefined
   lockedUntil?: moment.Moment | null | undefined
 }
@@ -35,7 +43,7 @@ interface AddEditAllocationModalFormProps {
 export type AddEditAllocationModalEntity =
   | {
       projectOwner: false
-      beneficiary: string | undefined
+      beneficiary: Hash | undefined
       projectId: string | undefined
       amount: AmountPercentageInput
       lockedUntil: number | undefined
@@ -67,7 +75,7 @@ export const AddEditAllocationModal = ({
   hideProjectOwnerOption?: boolean
   hideFee?: boolean
 }) => {
-  const { primaryETHTerminalFee } = useContext(V2V3ProjectContext)
+  const { data: primaryNativeTerminalFee } = useReadJbMultiTerminalFee()
 
   const { totalAllocationAmount, allocations, allocationCurrency } =
     Allocation.useAllocationInstance()
@@ -92,13 +100,13 @@ export const AddEditAllocationModal = ({
 
   const totalAllocationPercent = allocations
     .map(a => a.percent)
-    .reduce((acc, curr) => acc + curr, 0)
+    .reduce((acc, curr) => acc + curr.toFloat(), 0)
 
   const hasInfiniteTotalAllocationAmount: boolean = useMemo(
     () =>
       Boolean(
         totalAllocationAmount &&
-          isInfiniteDistributionLimit(totalAllocationAmount),
+          isInfinitePayoutLimit(totalAllocationAmount),
       ),
     [totalAllocationAmount],
   )
@@ -162,7 +170,7 @@ export const AddEditAllocationModal = ({
         previousId: hasEditingBeneficiary
           ? allocationId(
               editingData?.beneficiary ?? '',
-              projectIdToHex(fields.juiceboxProjectId),
+              fields.juiceboxProjectId,
             )
           : undefined,
       }
@@ -300,8 +308,8 @@ export const AddEditAllocationModal = ({
                     (
                       a,
                     ): a is {
-                      beneficiary: string
-                      projectId: string | undefined
+                      beneficiary: Hash
+                      projectId: string
                     } => !!a.beneficiary,
                   ),
                 inputProjectId: projectId,
@@ -327,11 +335,11 @@ export const AddEditAllocationModal = ({
             !!amount?.value &&
             !!allocationCurrency &&
             showFee &&
-            primaryETHTerminalFee && (
+            !!primaryNativeTerminalFee && (
               <FeeTooltipLabel
-                amountWad={parseWad(stripCommas(amount.value))}
+                amount={BigInt(stripCommas(amount.value))}
                 currency={allocationCurrency}
-                feePerBillion={primaryETHTerminalFee}
+                feePerBillion={primaryNativeTerminalFee}
               />
             )
           }

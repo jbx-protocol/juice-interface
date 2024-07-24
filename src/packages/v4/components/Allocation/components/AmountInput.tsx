@@ -1,10 +1,8 @@
-import { AmountPercentageInput } from 'components/Allocation/types'
 import CurrencySwitch from 'components/currency/CurrencySwitch'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import {
-  V2V3_CURRENCY_ETH,
-  V2V3_CURRENCY_USD,
-} from 'packages/v2v3/utils/currency'
+
+import { AmountPercentageInput } from 'components/Allocation/types'
+import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
 import { useCallback, useState } from 'react'
 import { Allocation } from '../Allocation'
 
@@ -20,7 +18,7 @@ export const AmountInput = ({
   const setAmount = onChange ?? _setAmount
 
   const { allocationCurrency, setCurrency } = Allocation.useAllocationInstance()
-  const currency = allocationCurrency ?? V2V3_CURRENCY_ETH
+  const currency = allocationCurrency ?? V4_CURRENCY_ETH
 
   const onAmountInputChange = useCallback(
     (amount: AmountPercentageInput | undefined) => {
@@ -40,9 +38,9 @@ export const AmountInput = ({
         onChange={val => onAmountInputChange(val ? { value: val } : undefined)}
         accessory={
           <CurrencySwitch
-            currency={currency === V2V3_CURRENCY_ETH ? 'ETH' : 'USD'}
+            currency={currency === V4_CURRENCY_ETH ? 'ETH' : 'USD'}
             onCurrencyChange={c =>
-              setCurrency(c === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD)
+              setCurrency(c === 'ETH' ? V4_CURRENCY_ETH : V4_CURRENCY_USD)
             }
             className="rounded"
           />

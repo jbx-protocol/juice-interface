@@ -1,33 +1,33 @@
 import { Trans } from '@lingui/macro'
-import { BigNumber } from 'ethers'
-import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
-import { amountSubFee, formatFee } from 'packages/v2v3/utils/math'
+import ExternalLink from 'components/ExternalLink'
+import TooltipLabel from 'components/TooltipLabel'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
+import { Ether } from 'juice-sdk-core'
+import { NativeTokenValue } from 'juice-sdk-react'
 import { formatWad } from 'utils/format/formatNumber'
 import { helpPagePath } from 'utils/routes'
-import ExternalLink from './ExternalLink'
-import TooltipLabel from './TooltipLabel'
-import CurrencySymbol from './currency/CurrencySymbol'
-import ETHAmount from './currency/ETHAmount'
+import { V4CurrencyOption } from '../models/v4CurrencyOption'
+import { V4_CURRENCY_ETH } from '../utils/currency'
+import { amountSubFee } from '../utils/math'
 
 export const FeeTooltipLabel = ({
   currency,
-  amountWad,
+  amount,
   feePerBillion,
 }: {
-  currency: V2V3CurrencyOption
-  amountWad: BigNumber | undefined
-  feePerBillion: BigNumber | undefined
+  currency: V4CurrencyOption
+  amount: bigint | undefined
+  feePerBillion: bigint | undefined
 }) => {
-  if (!amountWad || !currency || !feePerBillion) return null
-  const amountSubFeeValue = amountSubFee(amountWad, feePerBillion)
-  const feePercentage = formatFee(feePerBillion)
+  if (!amount || !currency || !feePerBillion) return null
+  const amountSubFeeValue = amountSubFee(amount, feePerBillion) ?? 0n
+  const feePercentage = new Ether(feePerBillion).format()
   return (
     <TooltipLabel
       label={
         <Trans>
-          {currency === V2V3_CURRENCY_ETH ? (
-            <ETHAmount amount={amountSubFeeValue} />
+          {currency === V4_CURRENCY_ETH ? (
+            <NativeTokenValue wei={amountSubFeeValue} />
           ) : (
             <>
               <CurrencySymbol currency={'USD'} />

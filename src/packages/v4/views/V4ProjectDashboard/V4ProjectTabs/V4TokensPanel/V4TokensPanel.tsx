@@ -85,7 +85,7 @@ export const V4TokensPanel = () => {
                   </div>
                 </span>
               }
-              kebabMenu={userTokenBalance.toFloat() > 0 ? {
+              kebabMenu={userTokenBalance.value > 0n ? {
                 items
               } : undefined}
             />

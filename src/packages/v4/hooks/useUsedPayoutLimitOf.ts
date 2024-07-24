@@ -18,7 +18,7 @@ export const useUsedPayoutLimitOf = () => {
       contracts.primaryNativeTerminal.data ?? zeroAddress,
       projectId,
       NATIVE_TOKEN,
-      ruleset.data?.cycleNumber ?? 0n,
+      BigInt(ruleset.data?.cycleNumber ?? 0),
       NATIVE_CURRENCY_ID,
     ],
   });

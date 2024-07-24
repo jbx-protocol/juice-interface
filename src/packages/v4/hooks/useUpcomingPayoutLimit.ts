@@ -19,7 +19,7 @@ export function useUpcomingPayoutLimit() {
     address: fundAccessLimits.data || undefined,
     args: [
       projectId,
-      latestUpcomingRuleset?.id ?? 0n,
+      BigInt(latestUpcomingRuleset?.id ?? 0n),
       primaryNativeTerminal.data ?? constants.AddressZero,
       NATIVE_TOKEN,
     ]

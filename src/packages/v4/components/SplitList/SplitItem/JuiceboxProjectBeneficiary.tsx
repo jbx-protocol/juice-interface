@@ -2,22 +2,21 @@ import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { AllocatorBadge } from 'components/AllocatorBadge'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
+import { JBSplit } from 'juice-sdk-core'
 import { useRouter } from 'next/router'
-import { V4Split } from 'packages/v4/models/v4Split'
 import V4ProjectHandleLink from '../../V4ProjectHandleLink'
-
 export function JuiceboxProjectBeneficiary({
   split,
   value,
 }: {
-  split: V4Split
+  split: JBSplit
   value?: string | JSX.Element
 }) {
   const router = useRouter()
   const { chainName } = router.query
 
   if (!split.projectId) return null
-  
+
   return (
     <div>
       <div className="flex gap-2">

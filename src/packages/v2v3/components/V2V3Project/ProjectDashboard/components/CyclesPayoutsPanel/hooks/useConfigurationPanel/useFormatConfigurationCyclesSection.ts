@@ -49,10 +49,10 @@ export const useFormatConfigurationCyclesSection = ({
   const startTimeDatum: ConfigurationPanelDatum = useMemo(() => {
     const formattedTime =
       upcomingFundingCycle === null
-        ? formatTime(fundingCycle?.start.toBigInt())
+        ? formatTime(fundingCycle?.start.toNumber())
         : fundingCycle?.duration.isZero()
         ? t`Any time`
-        : formatTime(fundingCycle?.start.add(fundingCycle?.duration).toBigInt())
+        : formatTime(fundingCycle?.start.add(fundingCycle?.duration).toNumber())
 
     const formatTimeDatum: ConfigurationPanelDatum = {
       name: t`Start time`,

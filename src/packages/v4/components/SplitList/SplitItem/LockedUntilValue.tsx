@@ -7,13 +7,13 @@ export function LockedUntilValue({
   lockedUntil,
   value,
 }: {
-  lockedUntil?: bigint | undefined
+  lockedUntil?: number | undefined
   value?: JSX.Element | string
 }) {
   const hasLockedUntil = lockedUntil && lockedUntil > 0n
 
   const lockedUntilFormatted = hasLockedUntil
-    ? formatDate(lockedUntil * 1000n, 'yyyy-MM-DD')
+    ? formatDate(lockedUntil * 1000, 'yyyy-MM-DD')
     : undefined
 
   if (!lockedUntilFormatted) return null

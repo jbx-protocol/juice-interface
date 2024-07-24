@@ -22,15 +22,15 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     return latestUpcomingRuleset?.cycleNumber
       ? Number(latestUpcomingRuleset.cycleNumber)
       : ruleset?.cycleNumber
-      ? ruleset.cycleNumber + 1n
+      ? ruleset.cycleNumber + 1
       : undefined
   }, [ruleset?.cycleNumber, type, latestUpcomingRuleset?.cycleNumber])
 
   const rulesetUnlocked = useMemo(() => {
     if (type === 'current') {
-      return ruleset?.duration === 0n ?? true
+      return ruleset?.duration === 0 ?? true
     }
-    return latestUpcomingRuleset?.duration == 0n ?? true
+    return latestUpcomingRuleset?.duration == 0 ?? true
   }, [ruleset?.duration, type, latestUpcomingRuleset?.duration])
 
   const upcomingRulesetLength = useMemo(() => {
@@ -45,7 +45,7 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
 
   /** Determines if the CURRENT cycle is unlocked.
    * This is used to check if the upcoming cycle can start at any time. */
-  const currentRulesetUnlocked = ruleset?.duration === 0n ?? true
+  const currentRulesetUnlocked = ruleset?.duration === 0 ?? true
 
   const status = rulesetUnlocked ? t`Unlocked` : t`Locked`
 

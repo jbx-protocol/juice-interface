@@ -1,11 +1,13 @@
-import { sortSplits, v4GetProjectOwnerRemainderSplit } from "packages/v4/utils/v4Splits"
-import { useMemo } from "react"
-import { Hash } from "viem"
-import { V4Split } from "../../models/v4Split"
-import { SplitItem, SplitProps } from "./SplitItem"
-
+import { JBSplit } from 'juice-sdk-core'
+import {
+  sortSplits,
+  v4GetProjectOwnerRemainderSplit,
+} from 'packages/v4/utils/v4Splits'
+import { useMemo } from 'react'
+import { Hash } from 'viem'
+import { SplitItem, SplitProps } from './SplitItem'
 export type SplitListProps = {
-  splits: V4Split[]
+  splits: JBSplit[]
   currency?: bigint
   totalValue: bigint | undefined
   projectOwnerAddress: string | undefined
@@ -13,7 +15,7 @@ export type SplitListProps = {
   showFees?: boolean
   valueSuffix?: string | JSX.Element
   valueFormatProps?: { precision?: number }
-  reservedRate?: number
+  reservedPercent?: number
   dontApplyFeeToAmounts?: boolean
 }
 
@@ -26,7 +28,7 @@ export default function SplitList({
   projectOwnerAddress,
   valueSuffix,
   valueFormatProps,
-  reservedRate,
+  reservedPercent,
   dontApplyFeeToAmounts,
 }: SplitListProps) {
   const ownerSplit = useMemo(() => {
@@ -40,7 +42,7 @@ export default function SplitList({
     projectOwnerAddress,
     valueSuffix,
     valueFormatProps,
-    reservedRate,
+    reservedPercent,
     showFee: showFees,
     showAmount: showAmounts,
     dontApplyFeeToAmount: dontApplyFeeToAmounts,

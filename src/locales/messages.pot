@@ -4043,6 +4043,9 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
+msgid "{reservedPercent} of token issuance is set aside for the recipients below."
+msgstr ""
+
 msgid "Redemption rate:"
 msgstr ""
 

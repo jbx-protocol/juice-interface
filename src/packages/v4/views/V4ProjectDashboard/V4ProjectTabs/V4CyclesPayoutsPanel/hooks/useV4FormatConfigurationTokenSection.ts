@@ -5,9 +5,7 @@ import {
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
 import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
-import { JBRulesetMetadata } from 'juice-sdk-core'
-
-import { Ruleset } from 'packages/v4/models/ruleset'
+import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
 import { useMemo } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
@@ -19,10 +17,10 @@ export const useV4FormatConfigurationTokenSection = ({
   upcomingRulesetLoading,
   upcomingRulesetMetadata,
 }: {
-  ruleset: Ruleset | undefined | null
+  ruleset: JBRulesetData | undefined | null
   rulesetMetadata: JBRulesetMetadata | undefined | null
   tokenSymbol: string | undefined
-  upcomingRuleset: Ruleset | undefined | null
+  upcomingRuleset: JBRulesetData | undefined | null
   upcomingRulesetLoading: boolean
   upcomingRulesetMetadata?: JBRulesetMetadata | undefined | null
 }): ConfigurationPanelTableData => {
@@ -35,12 +33,12 @@ export const useV4FormatConfigurationTokenSection = ({
       }),
     [tokenSymbolRaw],
   )
-  const decayRateFloat = ruleset?.decayRate.toFloat()
+  const decayPercentFloat = ruleset?.decayPercent.toFloat()
   const currentTotalIssuanceRate = ruleset?.weight.toFloat()
   const queuedTotalIssuanceRate = upcomingRuleset ? 
     upcomingRuleset?.weight.toFloat()
-  : currentTotalIssuanceRate && decayRateFloat ?
-    currentTotalIssuanceRate - (currentTotalIssuanceRate * decayRateFloat)
+  : currentTotalIssuanceRate && decayPercentFloat ?
+    currentTotalIssuanceRate - (currentTotalIssuanceRate * decayPercentFloat)
   : undefined
 
   const totalIssuanceRateDatum: ConfigurationPanelDatum = useMemo(() => {
@@ -57,12 +55,12 @@ export const useV4FormatConfigurationTokenSection = ({
     return pairToDatum(t`Total issuance rate`, current, queued)
   }, [upcomingRuleset, currentTotalIssuanceRate, tokenSymbol, queuedTotalIssuanceRate, upcomingRulesetLoading])
 
-  const reservedRateFloat = rulesetMetadata?.reservedRate.toFloat()
-  const queuedReservedRateFloat = upcomingRulesetMetadata?.reservedRate.toFloat()
+  const reservedPercentFloat = rulesetMetadata?.reservedPercent.toFloat()
+  const queuedReservedPercentFloat = upcomingRulesetMetadata?.reservedPercent.toFloat()
 
   const payerIssuanceRateDatum: ConfigurationPanelDatum = useMemo(() => {
-    const currentPayerIssuanceRate = currentTotalIssuanceRate && reservedRateFloat ? 
-      currentTotalIssuanceRate - (currentTotalIssuanceRate * reservedRateFloat) 
+    const currentPayerIssuanceRate = currentTotalIssuanceRate && reservedPercentFloat ? 
+      currentTotalIssuanceRate - (currentTotalIssuanceRate * reservedPercentFloat) 
     : undefined
 
     const current = currentPayerIssuanceRate
@@ -71,9 +69,9 @@ export const useV4FormatConfigurationTokenSection = ({
     if (upcomingRuleset === null || upcomingRulesetMetadata === null || upcomingRulesetLoading) {
       return pairToDatum(t`Payer issuance rate`, current, null)
     }
-    const _reservedRate = queuedReservedRateFloat ?? reservedRateFloat
-    const queuedPayerIssuanceRate = queuedTotalIssuanceRate && _reservedRate ?
-      queuedTotalIssuanceRate - (queuedTotalIssuanceRate * _reservedRate) 
+    const _reservedPercent = queuedReservedPercentFloat ?? reservedPercentFloat
+    const queuedPayerIssuanceRate = queuedTotalIssuanceRate && _reservedPercent ?
+      queuedTotalIssuanceRate - (queuedTotalIssuanceRate * _reservedPercent) 
     : undefined
     const queued = queuedPayerIssuanceRate
       ? `${queuedPayerIssuanceRate} ${tokenSymbol}/ETH`
@@ -82,41 +80,41 @@ export const useV4FormatConfigurationTokenSection = ({
   }, [
     tokenSymbol,
     upcomingRuleset,
-    queuedReservedRateFloat,
+    queuedReservedPercentFloat,
     upcomingRulesetMetadata,
     currentTotalIssuanceRate,
     queuedTotalIssuanceRate,
-    reservedRateFloat,
+    reservedPercentFloat,
     upcomingRulesetLoading
   ])
 
-  const reservedRateDatum: ConfigurationPanelDatum = useMemo(() => {
-    const current = rulesetMetadata?.reservedRate ? 
-      `${rulesetMetadata.reservedRate.formatPercentage()}%` : undefined
+  const reservedPercentDatum: ConfigurationPanelDatum = useMemo(() => {
+    const current = rulesetMetadata?.reservedPercent ? 
+      `${rulesetMetadata.reservedPercent.formatPercentage()}%` : undefined
     if (upcomingRulesetMetadata === null || upcomingRulesetLoading) {
       return pairToDatum(t`Reserved rate`, current, null)
     }
 
-    const queued = upcomingRulesetMetadata?.reservedRate
-      ? `${upcomingRulesetMetadata.reservedRate.formatPercentage()}%`
-      : rulesetMetadata?.reservedRate ?
-        `${rulesetMetadata.reservedRate.formatPercentage()}%`
+    const queued = upcomingRulesetMetadata?.reservedPercent
+      ? `${upcomingRulesetMetadata.reservedPercent.formatPercentage()}%`
+      : rulesetMetadata?.reservedPercent ?
+        `${rulesetMetadata.reservedPercent.formatPercentage()}%`
       : undefined
     return pairToDatum(t`Reserved rate`, current, queued)
   }, [upcomingRulesetMetadata, rulesetMetadata, upcomingRulesetLoading])
 
-  const decayRateDatum: ConfigurationPanelDatum = useMemo(() => {
+  const decayPercentDatum: ConfigurationPanelDatum = useMemo(() => {
     const current = ruleset ? 
-      `${ruleset.decayRate.formatPercentage()}%`
+      `${ruleset.decayPercent.formatPercentage()}%`
       : undefined
 
     if (upcomingRuleset === null || upcomingRulesetLoading) {
       return pairToDatum(t`Decay rate`, current, null)
     }
     const queued = upcomingRuleset
-      ? `${upcomingRuleset.decayRate.formatPercentage()}%`
+      ? `${upcomingRuleset.decayPercent.formatPercentage()}%`
       : ruleset ?
-        `${ruleset.decayRate.formatPercentage()}%`
+        `${ruleset.decayPercent.formatPercentage()}%`
       : undefined
 
     return pairToDatum(t`Decay rate`, current, queued)
@@ -202,19 +200,19 @@ export const useV4FormatConfigurationTokenSection = ({
     return {
       totalIssuanceRate: totalIssuanceRateDatum,
       payerIssuanceRate: payerIssuanceRateDatum,
-      reservedRate: reservedRateDatum,
-      decayRateDatum: decayRateDatum,
+      reservedPercent: reservedPercentDatum,
+      decayPercentDatum: decayPercentDatum,
       redemptionRate: redemptionRateDatum,
       ownerTokenMintingRate: ownerTokenMintingRateDatum,
       tokenTransfers: tokenTransfersDatum,
     }
   }, [
-    decayRateDatum,
+    decayPercentDatum,
     totalIssuanceRateDatum,
     ownerTokenMintingRateDatum,
     payerIssuanceRateDatum,
     redemptionRateDatum,
-    reservedRateDatum,
+    reservedPercentDatum,
     tokenTransfersDatum,
   ])
 }

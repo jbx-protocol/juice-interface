@@ -12,12 +12,12 @@ export const V4ReservedTokensSubPanel = ({
 }: {
   className?: string
 }) => {
-  const { reservedList, totalCreditSupply, reservedRate } =
+  const { reservedList, totalCreditSupply, reservedPercent } =
     useV4ReservedTokensSubPanel()
 
-  const reservedRateTooltip = (
+  const reservedPercentTooltip = (
     <Trans>
-      {reservedRate} of token issuance is set aside for the recipients below.
+      {reservedPercent} of token issuance is set aside for the recipients below.
     </Trans>
   )
 
@@ -43,13 +43,13 @@ export const V4ReservedTokensSubPanel = ({
           <TitleDescriptionDisplayCard
             className="w-full min-w-min flex-[1_0_0]"
             title={t`Reserved rate`}
-            description={reservedRate}
-            tooltip={reservedRateTooltip}
+            description={reservedPercent}
+            tooltip={reservedPercentTooltip}
           />
         </div>
-        {reservedRate &&
+        {reservedPercent &&
         totalCreditSupply &&
-        reservedRate !== '0' ? (
+        reservedPercent !== '0' ? (
           <TitleDescriptionDisplayCard
             className="w-full"
             title={t`Reserved tokens list`}
@@ -58,7 +58,7 @@ export const V4ReservedTokensSubPanel = ({
             }}
           >
             {totalCreditSupply ||
-            reservedRate ||
+            reservedPercent ||
             (reservedList && reservedList.length > 1) ? (
               <>
                 <div className="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500">

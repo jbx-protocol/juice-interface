@@ -1,12 +1,11 @@
 import { useWallet } from 'hooks/Wallet'
 import { useJBContractContext, useJBTokenContext, useReadJbTokensTotalBalanceOf } from 'juice-sdk-react'
-import round from 'lodash/round'
 import { useV4TotalTokenSupply } from 'packages/v4/hooks/useV4TotalTokenSupply'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
 import { useMemo } from 'react'
 import { isZeroAddress } from 'utils/address'
-import { formatAmount } from 'utils/format/formatAmount'
+import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { zeroAddress } from 'viem'
 
@@ -38,14 +37,15 @@ export const useV4TokensPanel = () => {
     })
   const userTokenBalanceFormatted = useMemo(() => {
     if (userTokenBalance === undefined) return
-    return round(Number(userTokenBalance), 2)
+
+    return formatWad(userTokenBalance, { precision: 2 })
   }, [userTokenBalance])
 
   // const { totalLegacyTokenBalance, v1ClaimedBalance } =
   //   useTotalLegacyTokenBalance({ projectId })
 
   const totalTokenSupplyFormatted = useMemo(() => {
-    return formatAmount(Number(totalTokenSupply), { maximumFractionDigits: 2 })
+    return formatWad(totalTokenSupply)
   }, [totalTokenSupply])
 
   const canCreateErc20Token = useMemo(() => {

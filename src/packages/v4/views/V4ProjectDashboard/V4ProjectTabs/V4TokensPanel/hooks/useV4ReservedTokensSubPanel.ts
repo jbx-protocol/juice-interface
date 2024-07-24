@@ -51,7 +51,7 @@ export const useV4ReservedTokensSubPanel = () => {
         }
       })
 
-    const remainingPercentage = -splitsPercentTotal
+    const remainingPercentage = SPLITS_TOTAL_PERCENT - splitsPercentTotal
 
     // Check if this project is already one of the splits.
     if (!(remainingPercentage === 0)) {

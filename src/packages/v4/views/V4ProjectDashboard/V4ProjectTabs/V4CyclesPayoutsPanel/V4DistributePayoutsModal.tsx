@@ -12,6 +12,7 @@ import { V4CurrencyName } from 'packages/v4/utils/currency'
 import { useEffect, useState } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { useV4CurrentPayoutSplits } from '../../../../hooks/useV4PayoutSplits'
+import { useV4DistributableAmount } from './hooks/useV4DistributableAmount'
 
 export default function V4DistributePayoutsModal({
   open,
@@ -26,6 +27,7 @@ export default function V4DistributePayoutsModal({
   const { data: usedPayoutLimit } = useUsedPayoutLimitOf()
   const { data: payoutLimit } = usePayoutLimit()
   const { data: balanceOfNativeTerminal } = useV4BalanceOfNativeTerminal()
+  const { distributableAmount: distributable } = useV4DistributableAmount()
 
   const payoutLimitAmount = payoutLimit?.amount
   const payoutLimitAmountCurrency = payoutLimit?.currency
@@ -80,13 +82,6 @@ export default function V4DistributePayoutsModal({
     }
   }
 
-  const unusedFunds = payoutLimitAmount ?
-    payoutLimitAmount - (usedPayoutLimit ?? 0n) : 0n
-
-  const distributable = balanceOfNativeTerminal && balanceOfNativeTerminal > unusedFunds
-    ? unusedFunds
-    : 0n
-
   const currencyName = V4CurrencyName(payoutLimitAmountCurrency)
 
   return (
@@ -128,7 +123,7 @@ export default function V4DistributePayoutsModal({
                   <InputAccessoryButton
                     content={<Trans>MAX</Trans>}
                     onClick={() =>
-                      setDistributionAmount(fromWad(distributable))
+                      setDistributionAmount(distributable.format())
                     }
                   />
                 </div>

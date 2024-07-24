@@ -209,6 +209,9 @@ msgstr ""
 msgid "Built by the best"
 msgstr ""
 
+msgid "{0} tokens"
+msgstr ""
+
 msgid "Staked balance"
 msgstr ""
 

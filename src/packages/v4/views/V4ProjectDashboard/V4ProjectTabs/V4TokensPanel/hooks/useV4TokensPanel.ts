@@ -1,11 +1,11 @@
 import { useWallet } from 'hooks/Wallet'
+import { JBProjectToken } from 'juice-sdk-core'
 import { useJBContractContext, useJBTokenContext, useReadJbTokensTotalBalanceOf } from 'juice-sdk-react'
 import { useV4TotalTokenSupply } from 'packages/v4/hooks/useV4TotalTokenSupply'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
 import { useMemo } from 'react'
 import { isZeroAddress } from 'utils/address'
-import { formatWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { zeroAddress } from 'viem'
 
@@ -15,7 +15,7 @@ export const useV4TokensPanel = () => {
   const { token } = useJBTokenContext()
   const tokenAddress = token?.data?.address
   
-  const { data: totalTokenSupply } = useV4TotalTokenSupply()
+  const { data: _totalTokenSupply } = useV4TotalTokenSupply()
 
   const projectToken = tokenSymbolText({
     tokenSymbol: token?.data?.symbol,
@@ -28,39 +28,38 @@ export const useV4TokensPanel = () => {
   )
   const projectHasErc20Token = Boolean(tokenAddress && !isZeroAddress(tokenAddress))
 
-  const { data: userTokenBalance, isLoading: userTokenBalanceLoading } =
+  const { data: _userTokenBalance, isLoading: userTokenBalanceLoading } =
     useReadJbTokensTotalBalanceOf({
       args: [
         userAddress ?? zeroAddress,
         projectId
       ]
     })
-  const userTokenBalanceFormatted = useMemo(() => {
-    if (userTokenBalance === undefined) return
-
-    return formatWad(userTokenBalance, { precision: 2 })
-  }, [userTokenBalance])
+  const userTokenBalance = useMemo(() => {
+    if (_userTokenBalance === undefined) return
+    return new JBProjectToken(_userTokenBalance ?? 0n)
+  }, [_userTokenBalance])
 
   // const { totalLegacyTokenBalance, v1ClaimedBalance } =
   //   useTotalLegacyTokenBalance({ projectId })
 
-  const totalTokenSupplyFormatted = useMemo(() => {
-    return formatWad(totalTokenSupply)
-  }, [totalTokenSupply])
+  const totalTokenSupply = useMemo(() => {
+    return new JBProjectToken(_totalTokenSupply ?? 0n)
+  }, [_totalTokenSupply])
 
   const canCreateErc20Token = useMemo(() => {
     return !projectHasErc20Token && hasDeployErc20Permission
   }, [hasDeployErc20Permission, projectHasErc20Token])
 
   return {
-    userTokenBalance: userTokenBalanceFormatted,
+    userTokenBalance,
     userTokenBalanceLoading,
     // userLegacyTokenBalance: totalLegacyTokenBalance,
     // projectHasLegacyTokens,
     // userV1ClaimedBalance: v1ClaimedBalance,
     projectToken,
     projectTokenAddress: tokenAddress,
-    totalSupply: totalTokenSupplyFormatted,
+    totalSupply: totalTokenSupply,
     projectHasErc20Token,
     canCreateErc20Token,
   }

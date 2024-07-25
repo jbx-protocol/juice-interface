@@ -1,8 +1,17 @@
-import { JBSplit } from 'juice-sdk-core'
+import { JBSplit, SplitPortion } from 'juice-sdk-core'
 
+import { zeroAddress } from 'viem'
 import { AllocationSplit } from '../components/Allocation/Allocation'
-import { defaultSplit } from '../models/split'
 import { sanitizeSplit } from './v4Splits'
+
+const defaultSplit: JBSplit = {
+  beneficiary: zeroAddress,
+  percent: new SplitPortion(0),
+  preferAddToBalance: false,
+  lockedUntil: 0,
+  projectId: 0n,
+  hook: zeroAddress,
+}
 
 export const splitToAllocation = (split: JBSplit): AllocationSplit => {
   return {

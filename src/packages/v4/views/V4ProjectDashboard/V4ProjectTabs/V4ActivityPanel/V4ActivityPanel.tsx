@@ -11,7 +11,6 @@ import { Suspense } from 'react'
 import { V4ActivityList } from './V4ActivityList'
 
 export function V4ActivityPanel() {
-  // const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
   const { projectId } = useJBContractContext()
   const { data } = useSubgraphQuery(ProjectsDocument, {
     where: {
@@ -39,10 +38,6 @@ export function V4ActivityPanel() {
         </div>
       )}
       <V4ActivityList />
-      {/* <V4DownloadActivityModal
-        open={downloadModalVisible}
-        onCancel={() => setDownloadModalVisible(false)}
-      /> */}
     </div>
   )
 }

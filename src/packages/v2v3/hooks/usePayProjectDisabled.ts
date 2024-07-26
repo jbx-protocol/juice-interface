@@ -24,7 +24,7 @@ export function usePayProjectDisabled(): {
   reason: PayDisabledReason | undefined
   message: string | undefined
 } {
-  const { projectMetadata } = useProjectMetadataContext()
+  const { projectMetadata, projectId } = useProjectMetadataContext()
   const { fundingCycleMetadata, loading } = useProjectContext()
   const isBlockedProject = useV2V3BlockedProject()
   const { isAddressListedInOFAC, isLoading: isOFACLoading } =
@@ -36,6 +36,15 @@ export function usePayProjectDisabled(): {
       payDisabled: false,
       reason: undefined,
       message: undefined,
+    }
+  }
+
+  // Hard-coded block for Welshare Health, at their request. TODO: Remove this after 2024-07-28, Sunday, 04:58:47 AM UTC.
+  if (projectId && projectId === 698) {
+    return {
+      ...disabled,
+      reason: PayDisabledReason.PAUSED,
+      message: t`Welshare Health has requested that payments to their project be paused.`,
     }
   }
 

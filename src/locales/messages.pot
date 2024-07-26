@@ -1637,6 +1637,9 @@ msgstr ""
 msgid "Link minters of this NFT to your project's website, Discord, etc."
 msgstr ""
 
+msgid "Welshare Health has requested that payments to their project be paused."
+msgstr ""
+
 msgid "Cycle #1 starts when you create your project. With unlocked cycles, you can edit your project's rules at any time. This gives you more flexibility, but may appear risky to supporters. Switching to locked cycles will help you build supporter confidence."
 msgstr ""
 

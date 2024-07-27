@@ -86,7 +86,7 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
       type === 'current' &&
       splits.length === 0 &&
       payoutLimit === 0n &&
-      distributableAmount === 0n
+      distributableAmount.value === 0n
     ) {
       return []
     }

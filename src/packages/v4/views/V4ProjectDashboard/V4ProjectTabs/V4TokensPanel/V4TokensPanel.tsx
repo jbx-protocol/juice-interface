@@ -64,7 +64,7 @@ export const V4TokensPanel = () => {
               title={t`Your balance`}
               description={
                 <span className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
-                  <Trans>{userTokenBalance} tokens</Trans>
+                  <Trans>{userTokenBalance.format()} tokens</Trans>
                   <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center md:gap-4">
                     {/* {projectHasErc20Token && (
                       <Button
@@ -85,7 +85,7 @@ export const V4TokensPanel = () => {
                   </div>
                 </span>
               }
-              kebabMenu={userTokenBalance > 0 ? {
+              kebabMenu={userTokenBalance.value > 0n ? {
                 items
               } : undefined}
             />
@@ -116,7 +116,7 @@ export const V4TokensPanel = () => {
                 title={t`Total supply`}
                 description={
                   <span>
-                    {totalSupply} {projectToken}
+                    {totalSupply.format()} {projectToken}
                   </span>
                 }
               />

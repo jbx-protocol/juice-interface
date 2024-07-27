@@ -61,7 +61,7 @@ export default function SplitList({
           />
         )
       })}
-      {ownerSplit?.percent ? (
+      {ownerSplit && ownerSplit.percent.toFloat() > 0 ? (
         <SplitItem
           props={{
             split: { ...ownerSplit },

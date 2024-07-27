@@ -1,6 +1,4 @@
-import { WeiPerEther } from '@ethersproject/constants';
 import { useJBContractContext, useReadJbControllerTotalTokenSupplyWithReservedTokensOf } from 'juice-sdk-react';
-import { useMemo } from 'react';
 
 export const useV4TotalTokenSupply = () => {
   const { projectId, contracts: { controller } } = useJBContractContext();
@@ -10,12 +8,8 @@ export const useV4TotalTokenSupply = () => {
     args: [projectId],
   });
 
-  const totalTokenSupply = useMemo(() => {
-    return (totalTokenSupplyWei ?? 0n) / WeiPerEther.toBigInt()
-  }, [totalTokenSupplyWei]);
-
   return {
-    data: totalTokenSupply, 
+    data: totalTokenSupplyWei, 
     isLoading
   };
 };

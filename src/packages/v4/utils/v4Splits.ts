@@ -276,3 +276,10 @@ export function splitsListsHaveDiff(
 export function isJuiceboxProjectSplit(split: JBSplit) {
   return split.projectId ? split.projectId > 0n : false
 }
+
+// e.g. Converts 10 to 100000000 (10% of SPLITS_TOTAL_PERCENT)
+export const splitPortionFromFormattedPercent = (percentage: number): bigint => {
+  return percentage
+    ? BigInt((percentage * SPLITS_TOTAL_PERCENT) / 100)
+    : 0n
+}

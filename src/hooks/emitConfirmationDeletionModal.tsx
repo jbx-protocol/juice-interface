@@ -3,7 +3,7 @@ import { ModalOnCancelFn, ModalOnOkFn } from 'components/modals/JuiceModal'
 import { LanguageProvider } from 'contexts/Language/LanguageProvider'
 import { ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { ConfirmationDeletionModal } from '../components/ui/ConfirmationDeletionModal'
+import { ConfirmationDeletionModal } from '../packages/v2v3/components/V2V3Project/ProjectDashboard/components/ui/ConfirmationDeletionModal'
 
 type EmitConfirmationDeletionModalProps = {
   description?: ReactNode

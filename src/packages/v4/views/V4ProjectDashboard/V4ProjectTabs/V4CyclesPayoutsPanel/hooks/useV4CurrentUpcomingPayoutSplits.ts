@@ -5,7 +5,7 @@ import {
   useReadJbTokensTokenOf,
 } from 'juice-sdk-react'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
-import { useV4CurrentPayoutSplits } from '../../../../../hooks/useV4PayoutSplits'
+import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4PayoutSplits'
 
 export const useV4CurrentUpcomingPayoutSplits = (
   type: 'current' | 'upcoming',

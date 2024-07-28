@@ -1,12 +1,13 @@
 import { t, Trans } from '@lingui/macro'
 import { Form, Modal, Radio } from 'antd'
-import { FeeTooltipLabel } from 'components/FeeTooltipLabel'
+import { AmountPercentageInput } from 'components/Allocation/types'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
 import { LOCKED_PAYOUT_EXPLANATION } from 'components/strings'
 import { BigNumber } from 'ethers'
 import moment, * as Moment from 'moment'
+import { FeeTooltipLabel } from 'packages/v2v3/components/shared/FeeTooltipLabel'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { projectIdToHex } from 'packages/v2v3/utils/v2v3Splits'
@@ -23,7 +24,6 @@ import { Allocation } from './Allocation'
 import { allocationId } from './AllocationList'
 import { AmountInput } from './components/AmountInput'
 import { PercentageInput } from './components/PercentageInput'
-import { AmountPercentageInput } from './types'
 
 interface AddEditAllocationModalFormProps {
   juiceboxProjectId?: string | undefined

@@ -1,11 +1,11 @@
 import { Trans, t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
+import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
+import { PayoutsTableRow } from 'components/PayoutsTable/PayoutsTableRow'
 import TooltipLabel from 'components/TooltipLabel'
 import round from 'lodash/round'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { PayoutsTableCell } from './PayoutsTableCell'
-import { PayoutsTableRow } from './PayoutsTableRow'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
 
 const Row = PayoutsTableRow

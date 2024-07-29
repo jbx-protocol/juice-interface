@@ -1,4 +1,4 @@
-import { ProjectMetadata } from 'models/projectMetadata'
+import { JBProjectMetadata } from 'juice-sdk-core'
 import { useMemo } from 'react'
 import { stripHtmlTags } from 'utils/string'
 
@@ -6,7 +6,7 @@ export type SubtitleType = 'tagline' | 'description'
 
 export const useSubtitle = (
   projectMetadata:
-    | Pick<ProjectMetadata, 'projectTagline' | 'description'>
+    | Pick<JBProjectMetadata, 'projectTagline' | 'description'>
     | undefined,
 ) => {
   const subtitle = useMemo(() => {

@@ -77,6 +77,9 @@ msgstr ""
 msgid "per {currencyText} paid"
 msgstr ""
 
+msgid "No surplus"
+msgstr ""
+
 msgid "Trust"
 msgstr ""
 
@@ -206,6 +209,9 @@ msgstr ""
 msgid "Built by the best"
 msgstr ""
 
+msgid "{0} tokens"
+msgstr ""
+
 msgid "Staked balance"
 msgstr ""
 
@@ -255,6 +261,9 @@ msgid "A reserved rate of more than {RESERVED_RATE_WARNING_THRESHOLD_PERCENT}% i
 msgstr ""
 
 msgid "Safe transactions"
+msgstr ""
+
+msgid "Surplus"
 msgstr ""
 
 msgid "See example"
@@ -357,6 +366,9 @@ msgid "Reserved NFTs"
 msgstr ""
 
 msgid "Basic details"
+msgstr ""
+
+msgid "{surplus} is available for future payouts."
 msgstr ""
 
 msgid "Your project can receive payments through the juicebox.money app."
@@ -1035,6 +1047,9 @@ msgid "The amount of ETH that this project has right now."
 msgstr ""
 
 msgid "1. Set ENS name"
+msgstr ""
+
+msgid "{surplus} is available for token redemptions or future payouts."
 msgstr ""
 
 msgid "No overflow"
@@ -3230,6 +3245,9 @@ msgstr ""
 msgid "Start over"
 msgstr ""
 
+msgid "<0/>fee"
+msgstr ""
+
 msgid "Juicebox provides trustless payroll capabilities to run automated payouts completely on-chain. <0>Learn more about payouts</0>"
 msgstr ""
 
@@ -3659,6 +3677,9 @@ msgstr ""
 msgid "(0%)"
 msgstr ""
 
+msgid "Decay rate"
+msgstr ""
+
 msgid "Tokens per ETH contributed"
 msgstr ""
 
@@ -4025,6 +4046,9 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
+msgid "{reservedPercent} of token issuance is set aside for the recipients below."
+msgstr ""
+
 msgid "Redemption rate:"
 msgstr ""
 
@@ -4295,9 +4319,6 @@ msgstr ""
 msgid "Terms of Service"
 msgstr ""
 
-msgid "Ruleset length"
-msgstr ""
-
 msgid "Payment notice"
 msgstr ""
 
@@ -4482,6 +4503,9 @@ msgid "Awaiting IPFS response. This may take a while."
 msgstr ""
 
 msgid "Edit handle of {projectTitle}"
+msgstr ""
+
+msgid "Ruleset duration"
 msgstr ""
 
 msgid "Other assets in this project's owner's wallet."

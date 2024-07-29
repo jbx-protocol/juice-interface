@@ -1,15 +1,15 @@
+import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
+import { PayoutsTableRow } from 'components/PayoutsTable/PayoutsTableRow'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import round from 'lodash/round'
-import { Split } from 'models/splits'
 import {
   AddEditAllocationModal,
   AddEditAllocationModalEntity,
 } from 'packages/v2v3/components/shared/Allocation/AddEditAllocationModal'
+import { Split } from 'packages/v2v3/models/splits'
 import { useState } from 'react'
 import { PayoutSplitRowMenu } from './PayoutSplitRowMenu'
 import { PayoutTitle } from './PayoutTitle'
-import { PayoutsTableCell } from './PayoutsTableCell'
-import { PayoutsTableRow } from './PayoutsTableRow'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
 

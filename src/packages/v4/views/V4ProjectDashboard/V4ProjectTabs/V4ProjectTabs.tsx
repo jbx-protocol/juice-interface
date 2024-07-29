@@ -2,16 +2,12 @@ import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { ProjectTab } from 'components/Project/ProjectTabs/ProjectTab'
 import { useOnScreen } from 'hooks/useOnScreen'
-import { useProjectPageQueries } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
-import {
-  Fragment,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { V4CyclesPayoutsPanel } from './CyclesPayoutsPanel/V4CyclesPayoutsPanel'
+import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
+import { V4ActivityPanel } from './V4ActivityPanel/V4ActivityPanel'
+import { V4CyclesPayoutsPanel } from './V4CyclesPayoutsPanel/V4CyclesPayoutsPanel'
+import { V4TokensPanel } from './V4TokensPanel/V4TokensPanel'
 
 type ProjectTabConfig = {
   id: string
@@ -48,14 +44,14 @@ export const V4ProjectTabs = ({ className }: { className?: string }) => {
 
   const tabs: ProjectTabConfig[] = useMemo(
     () => [
-      { id: 'activity', name: t`Activity`, panel: <></> },
+      { id: 'activity', name: t`Activity`, panel: <V4ActivityPanel /> },
       { id: 'about', name: t`About`, panel: <></> },
       {
         id: 'cycle_payouts',
         name: t`Cycles & Payouts`,
         panel: <V4CyclesPayoutsPanel />,
       },
-      { id: 'tokens', name: t`Tokens`, panel: <></> },
+      { id: 'tokens', name: t`Tokens`, panel: <V4TokensPanel /> },
     ],
     [],
   )

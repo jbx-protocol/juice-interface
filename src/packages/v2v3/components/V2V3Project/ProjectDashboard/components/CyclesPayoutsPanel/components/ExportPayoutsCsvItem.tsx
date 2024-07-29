@@ -1,7 +1,7 @@
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { useExportSplitsToCsv } from 'hooks/useExportSplitsToCsv'
+import { useExportSplitsToCsv } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useExportSplitsToCsv'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'

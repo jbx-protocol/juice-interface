@@ -1,7 +1,7 @@
 import { useWallet } from 'hooks/Wallet'
-import { TransactionLog, TxStatus } from 'models/transaction'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { AddTransactionFunction } from './TxHistoryContext'
+import { TxStatus } from 'models/transaction'
+import { useCallback, useEffect, useState } from 'react'
+import { AddTransactionFunction, TransactionLog } from './TxHistoryContext'
 
 // Arbitrary time to give folks a sense of tx history
 const TX_HISTORY_TIME_SECS = 60 * 60 // 1 hr
@@ -9,16 +9,13 @@ const TX_HISTORY_TIME_SECS = 60 * 60 // 1 hr
 const nowSeconds = () => Math.round(new Date().valueOf() / 1000)
 
 export function useTransactions() {
-  const { userAddress, chain } = useWallet()
   const [transactions, setTransactionsState] = useState<TransactionLog[]>([])
+  const { userAddress, chain } = useWallet()
 
-  const localStorageKey = useMemo(
-    () =>
-      chain && userAddress
-        ? `transactions_${chain?.id}_${userAddress}`
-        : undefined,
-    [chain, userAddress],
-  )
+  const localStorageKey =
+    chain && userAddress
+      ? `transactions_${chain?.id}_${userAddress}`
+      : undefined
 
   // Sets TransactionLogs in both localStorage and state
   // Ensures localStorage is always up to date, so we can persist good data on refresh
@@ -52,7 +49,9 @@ export function useTransactions() {
   )
 
   const removeTransaction = useCallback(
-    (id: number) => setTransactions(transactions.filter(tx => tx.id !== id)),
+    (id: number) => {
+      setTransactions(transactions.filter(tx => tx.id !== id))
+    },
     [transactions, setTransactions],
   )
 
@@ -62,16 +61,14 @@ export function useTransactions() {
       return
     }
 
-    setTransactions(
-      JSON.parse(localStorage.getItem(localStorageKey) || '[]')
-        // Only persist txs that are failed/pending
-        // or were created within history window
-        .filter(
-          (tx: TransactionLog) =>
-            tx.status !== TxStatus.success ||
-            nowSeconds() - TX_HISTORY_TIME_SECS < tx.createdAt,
-        ) as TransactionLog[],
-    )
+    const txs = JSON.parse(localStorage.getItem(localStorageKey) || '[]')
+    const pendingOrFailedTxs = txs.filter(
+      (tx: TransactionLog) =>
+        tx.status !== TxStatus.success ||
+        nowSeconds() - TX_HISTORY_TIME_SECS < tx.createdAt,
+    ) as TransactionLog[]
+
+    setTransactions(pendingOrFailedTxs)
   }, [setTransactions, localStorageKey])
 
   return {

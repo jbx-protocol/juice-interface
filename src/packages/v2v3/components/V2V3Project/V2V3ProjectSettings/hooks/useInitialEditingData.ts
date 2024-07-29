@@ -3,7 +3,6 @@ import {
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { Split } from 'models/splits'
 import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
 import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
@@ -11,6 +10,7 @@ import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectCo
 import useProjectDistributionLimit from 'packages/v2v3/hooks/contractReader/useProjectDistributionLimit'
 import useProjectQueuedFundingCycle from 'packages/v2v3/hooks/contractReader/useProjectQueuedFundingCycle'
 import useProjectSplits from 'packages/v2v3/hooks/contractReader/useProjectSplits'
+import { Split } from 'packages/v2v3/models/splits'
 import { NO_CURRENCY, V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
 import {
   SerializedV2V3FundAccessConstraint,

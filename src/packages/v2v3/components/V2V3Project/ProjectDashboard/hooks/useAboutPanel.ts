@@ -10,7 +10,9 @@ export const useAboutPanel = () => {
   const description = useMemo(
     () =>
       projectMetadata?.description
-        ? wrapNonAnchorsInAnchor(projectMetadata?.description)
+        ? addHttpsToDescriptionUrls(
+            wrapNonAnchorsInAnchor(projectMetadata?.description),
+          )
         : undefined,
     [projectMetadata?.description],
   )
@@ -19,4 +21,10 @@ export const useAboutPanel = () => {
     description,
     projectName: projectMetadata?.name,
   }
+}
+
+const addHttpsToDescriptionUrls = (description: string) => {
+  // find all dangling a hrefs missing a https:// or http:// or any protocol and add https://
+  const urlRegex = /<a href="((?!http|https).+?)"/g
+  return description.replace(urlRegex, '<a href="https://$1"')
 }

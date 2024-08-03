@@ -10,21 +10,19 @@ import { v4ProjectRoute } from 'utils/routes'
  */
 export default function V4ProjectHandleLink({
   className,
-  containerClassName,
   name,
   projectId,
   chainName,
   withProjectAvatar = false,
 }: {
   className?: string
-  containerClassName?: string
   name?: string | null
   chainName: string
   projectId: number
   withProjectAvatar?: boolean
 }) {
   return (
-    <div className={twMerge('inline-flex items-center gap-3', containerClassName)}>
+    <>
       {withProjectAvatar ? (
         <ProjectLogo
           className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg bg-grey-300 text-base font-medium uppercase text-grey-600 dark:bg-slate-400 dark:text-slate-100"
@@ -44,6 +42,6 @@ export default function V4ProjectHandleLink({
       >
         <Trans>{chainName} Project #{projectId}</Trans>
       </Link>
-    </div>
+    </>
   )
 }

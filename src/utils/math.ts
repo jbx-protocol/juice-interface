@@ -1,4 +1,3 @@
-import { ONE_BILLION } from 'constants/numbers'
 import { BigNumber } from 'ethers'
 
 export type WeightFunction = (
@@ -40,12 +39,4 @@ export const roundIfCloseToNextInteger = (
     return Math.round(num)
   }
   return num
-}
-
-export const feeForAmount = (
-  amountWad: bigint | undefined,
-  feePerBillion: bigint | undefined,
-): bigint | undefined => {
-  if (!feePerBillion || !amountWad) return
-  return amountWad * feePerBillion / BigInt(ONE_BILLION)
 }

@@ -14,7 +14,6 @@ query PayEvents(
   ) {
     id
     amount
-    amountUSD
     beneficiary
     note
     timestamp

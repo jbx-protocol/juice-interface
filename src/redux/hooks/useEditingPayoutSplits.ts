@@ -1,4 +1,4 @@
-import { Split } from 'packages/v2v3/models/splits'
+import { Split } from 'models/splits'
 import { useCallback } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'

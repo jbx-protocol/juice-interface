@@ -1,19 +1,19 @@
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { BigNumber } from 'ethers'
+import { Split } from 'models/splits'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { Split } from 'packages/v2v3/models/splits'
 import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
 import { isJuiceboxProjectSplit } from 'packages/v2v3/utils/distributions'
 import {
   MAX_DISTRIBUTION_LIMIT,
   SPLITS_TOTAL_PERCENT,
+  feeForAmount,
   formatSplitPercent,
 } from 'packages/v2v3/utils/math'
-import { getProjectOwnerRemainderSplit } from 'packages/v2v3/utils/v2v3Splits'
 import { useCallback, useMemo } from 'react'
 import assert from 'utils/assert'
-import { feeForAmount } from 'utils/math'
+import { getProjectOwnerRemainderSplit } from 'utils/splits'
 import { useCurrentUpcomingDistributionLimit } from './useCurrentUpcomingDistributionLimit'
 import { useCurrentUpcomingPayoutSplits } from './useCurrentUpcomingPayoutSplits'
 import { useDistributableAmount } from './useDistributableAmount'
@@ -31,7 +31,7 @@ const calculateSplitAmountWad = (
     ?.mul(split.percent)
     .div(SPLITS_TOTAL_PERCENT)
   const feeAmount = splitHasFee(split)
-    ? feeForAmount(splitValue?.toBigInt(), primaryETHTerminalFee?.toBigInt()) ?? 0n
+    ? feeForAmount(splitValue, primaryETHTerminalFee) ?? BigNumber.from(0)
     : BigNumber.from(0)
   return splitValue?.sub(feeAmount)
 }

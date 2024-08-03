@@ -12,9 +12,9 @@ import { PayoutsSelection } from 'models/payoutsSelection'
 import { ProjectTagName } from 'models/project-tags'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
+import { Split } from 'models/splits'
 import { TreasurySelection } from 'models/treasurySelection'
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
-import { Split } from 'packages/v2v3/models/splits'
 import {
   SerializedV2V3FundAccessConstraint,
   SerializedV2V3FundingCycleData,

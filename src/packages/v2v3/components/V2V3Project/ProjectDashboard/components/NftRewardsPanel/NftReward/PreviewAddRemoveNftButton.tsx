@@ -1,9 +1,9 @@
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
-import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
 import { useCallback } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { emitConfirmationDeletionModal } from '../../../utils/modals'
 
 const iconClasses = 'mr-1 h-6 w-6'
 const containerClasses = 'flex items-center justify-center'

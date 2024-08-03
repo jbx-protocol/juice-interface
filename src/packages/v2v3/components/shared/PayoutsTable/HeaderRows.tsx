@@ -1,17 +1,17 @@
 import { PlusOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
-import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
+import { ExternalLinkWithIcon } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import {
   AddEditAllocationModal,
   AddEditAllocationModalEntity,
 } from 'packages/v2v3/components/shared/Allocation/AddEditAllocationModal'
 import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
+import { PayoutTableSettings } from './PayoutTableSettings'
+import { PayoutsTableCell } from './PayoutsTableCell'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
-import { PayoutTableSettings } from './PayoutTableSettings'
 
 export function HeaderRows() {
   const [addRecipientModalOpen, setAddRecipientModalOpen] = useState<boolean>()

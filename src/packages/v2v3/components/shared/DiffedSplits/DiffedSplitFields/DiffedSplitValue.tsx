@@ -1,11 +1,11 @@
 import { BigNumber } from 'ethers'
-import { Split } from 'packages/v2v3/models/splits'
+import { Split } from 'models/splits'
 import {
   isFiniteDistributionLimit,
   isInfiniteDistributionLimit,
 } from 'packages/v2v3/utils/fundingCycle'
 import { formatSplitPercent } from 'packages/v2v3/utils/math'
-import { splitAmountsAreEqual } from 'packages/v2v3/utils/v2v3Splits'
+import { splitAmountsAreEqual } from 'utils/splits'
 import { DiffedItem } from '../../DiffedItem'
 import { SplitProps } from '../../SplitItem'
 import { SplitAmountValue } from '../../SplitItem/SplitAmountValue'

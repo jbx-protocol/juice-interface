@@ -4,7 +4,7 @@ import {
   V2V3FundAccessConstraint,
   V2V3FundingCycle,
 } from 'packages/v2v3/models/fundingCycle'
-import { SplitParams } from 'packages/v2v3/models/splits'
+import { SplitParams } from './splits'
 
 type OutgoingGroupedSplit = {
   splits: SplitParams[]

@@ -9,8 +9,8 @@ import {
   issuanceRateFrom,
   reservedRateFrom,
 } from 'packages/v2v3/utils/math'
-import { splitsListsHaveDiff } from 'packages/v2v3/utils/v2v3Splits'
 import { useContext } from 'react'
+import { splitsListsHaveDiff } from 'utils/splits'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 

@@ -1,9 +1,9 @@
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
-import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
 import { useCallback, useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingReservedTokensSplits } from 'redux/hooks/useEditingReservedTokensSplits'
 import { formatEnabled, formatPaused } from 'utils/format/formatBoolean'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
 export const useProjectTokenReview = () => {
   const {

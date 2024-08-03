@@ -1,21 +1,8 @@
 import { BigNumber } from 'ethers'
-import { Split } from 'packages/v2v3/models/splits'
-import { getProjectOwnerRemainderSplit, sortSplits } from 'packages/v2v3/utils/v2v3Splits'
+import { Split } from 'models/splits'
 import { useMemo } from 'react'
+import { getProjectOwnerRemainderSplit, sortSplits } from 'utils/splits'
 import { SplitItem, SplitProps } from './SplitItem'
-
-export type V2V3SplitListProps = {
-  splits: Split[]
-  currency?: BigNumber
-  totalValue: BigNumber | undefined
-  projectOwnerAddress: string | undefined
-  showAmounts?: boolean
-  showFees?: boolean
-  valueSuffix?: string | JSX.Element
-  valueFormatProps?: { precision?: number }
-  reservedRate?: number
-  dontApplyFeeToAmounts?: boolean
-}
 
 export default function SplitList({
   splits,
@@ -28,7 +15,18 @@ export default function SplitList({
   valueFormatProps,
   reservedRate,
   dontApplyFeeToAmounts,
-}: V2V3SplitListProps) {
+}: {
+  splits: Split[]
+  currency?: BigNumber
+  totalValue: BigNumber | undefined
+  projectOwnerAddress: string | undefined
+  showAmounts?: boolean
+  showFees?: boolean
+  valueSuffix?: string | JSX.Element
+  valueFormatProps?: { precision?: number }
+  reservedRate?: number
+  dontApplyFeeToAmounts?: boolean
+}) {
   const ownerSplit = useMemo(() => {
     if (!projectOwnerAddress) return
     return getProjectOwnerRemainderSplit(projectOwnerAddress, splits)

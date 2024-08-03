@@ -67,24 +67,16 @@ export function useProjectTimeline({
     return { blocks, timestamps }
   }, [blockData])
 
-  const { data: v1v2v3QueryResult, loading: isLoadingQuery } = useProjectTlQuery({
+  const { data: queryResult, loading: isLoadingQuery } = useProjectTlQuery({
     client,
     variables: {
       id: blocks ? getSubgraphIdForProject(pv, projectId) : '',
       ...blocks,
     },
   })
-  // TODO: const { data: v4QueryResult } = useSubgraphQuery(ProjectTlDocument, {
-  //   where: {
-  //     projectId,
-  //   },
-  // })
 
   const points = useMemo(() => {
-    // TODO: if (!(v1v2v3QueryResult || v4QueryResult) || !timestamps) return
-    if (!v1v2v3QueryResult || !timestamps) return
-    // TODO: const queryResult = pv === PV_V4 ? v4QueryResult : v1v2v3QueryResult
-    const queryResult = v1v2v3QueryResult
+    if (!queryResult || !timestamps) return
 
     const points: ProjectTimelinePoint[] = []
 
@@ -102,7 +94,7 @@ export function useProjectTimeline({
     }
 
     return points
-  }, [timestamps, v1v2v3QueryResult])
+  }, [timestamps, queryResult])
 
   return {
     points,

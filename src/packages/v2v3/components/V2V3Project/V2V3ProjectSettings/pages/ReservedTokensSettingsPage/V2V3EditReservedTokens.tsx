@@ -1,12 +1,12 @@
 import { Trans } from '@lingui/macro'
 import { Callout } from 'components/Callout/Callout'
 import { CsvUpload } from 'components/inputs/CsvUpload'
+import { Split } from 'models/splits'
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
 import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
-import { Split } from 'packages/v2v3/models/splits'
-import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
 import { useCallback } from 'react'
 import { parseV2SplitsCsv } from 'utils/csv'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
 export function V2V3EditReservedTokens({
   editingReservedTokensSplits,

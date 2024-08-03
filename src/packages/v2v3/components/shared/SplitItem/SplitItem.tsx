@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers'
 
-import { Split } from 'packages/v2v3/models/splits'
+import { Split } from 'models/splits'
 
 import { isJuiceboxProjectSplit } from 'packages/v2v3/utils/distributions'
 import { ETHAddressBeneficiary } from './EthAddressBeneficiary'

@@ -1,4 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import {
+  ETHPayoutGroupedSplits,
+  ReservedTokensGroupedSplits,
+} from 'models/splits'
 import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
 import {
@@ -6,10 +10,6 @@ import {
   V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
 } from 'packages/v2v3/models/fundingCycle'
-import {
-  ETHPayoutGroupedSplits,
-  ReservedTokensGroupedSplits,
-} from 'packages/v2v3/models/splits'
 import { getV2V3CurrencyOption } from 'packages/v2v3/utils/currency'
 import {
   MAX_DISTRIBUTION_LIMIT,

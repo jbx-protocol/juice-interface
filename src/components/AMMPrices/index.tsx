@@ -2,7 +2,6 @@ import { Trans } from '@lingui/macro'
 import { generateAMMLink } from 'lib/amm'
 import { useSushiswapPriceQuery } from './hooks/useERC20SushiswapPrice'
 import { useUniswapPriceQuery } from './hooks/useERC20UniswapPrice'
-
 import TokenAMMPriceRow from './TokenAMMPriceRow'
 
 type Props = {

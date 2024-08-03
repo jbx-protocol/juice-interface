@@ -6,9 +6,7 @@ import UniswapLogo from 'components/icons/Uniswap'
 import { ONE_TRILLION } from 'constants/numbers'
 import { classNames } from 'utils/classNames'
 import { formatOrTruncate } from 'utils/format/formatNumber'
-
 import ExternalLink from '../ExternalLink'
-
 import TooltipIcon from '../TooltipIcon'
 
 type ExchangeName = 'Uniswap' | 'Sushiswap'
@@ -27,6 +25,29 @@ type Props = {
   loading?: boolean
 }
 
+const formatPrice = (price: string) => {
+  const p = parseInt(price, 10)
+  const formatLimit = ONE_TRILLION
+
+  // format all values below trillion value, otherwise truncate is as long number.
+  return formatOrTruncate(p, formatLimit)
+}
+
+const NotAvailableText = ({ WETHPrice, exchangeName, tokenSymbol }: Props) => {
+  const tooltip = !WETHPrice
+    ? t`${exchangeName} has no market for ${tokenSymbol}.`
+    : ''
+
+  return (
+    <Tooltip title={tooltip}>
+      <span className="cursor-default">
+        {!WETHPrice ? <Trans>Unavailable</Trans> : null}
+        <TooltipIcon iconClassName="ml-1" />
+      </span>
+    </Tooltip>
+  )
+}
+
 export default function TokenAMMPriceRow({
   className,
   exchangeName,
@@ -36,29 +57,6 @@ export default function TokenAMMPriceRow({
   loading,
 }: Props) {
   const LogoComponent = LOGOS[exchangeName]
-
-  const NotAvailableText = () => {
-    const tooltip = !WETHPrice
-      ? t`${exchangeName} has no market for ${tokenSymbol}.`
-      : ''
-
-    return (
-      <Tooltip title={tooltip}>
-        <span className="cursor-default">
-          {!WETHPrice ? <Trans>Unavailable</Trans> : null}
-          <TooltipIcon iconClassName="ml-1" />
-        </span>
-      </Tooltip>
-    )
-  }
-
-  const formatPrice = (price: string) => {
-    const p = parseInt(price, 10)
-    const formatLimit = ONE_TRILLION
-
-    // format all values below trillion value, otherwise truncate is as long number.
-    return formatOrTruncate(p, formatLimit)
-  }
 
   return (
     <div
@@ -81,11 +79,15 @@ export default function TokenAMMPriceRow({
             title={t`${tokenSymbol}/ETH exchange rate on ${exchangeName}.`}
           >
             <ExternalLink className="font-normal" href={exchangeLink}>
-              {`${formatPrice(WETHPrice)} ${tokenSymbol} per ETH`}
+              {`${formatPrice(WETHPrice)} ${tokenSymbol} / ETH`}
             </ExternalLink>
           </Tooltip>
         ) : (
-          <NotAvailableText />
+          <NotAvailableText
+            exchangeName={exchangeName}
+            WETHPrice={WETHPrice}
+            tokenSymbol={tokenSymbol}
+          />
         ))}
     </div>
   )

@@ -6,12 +6,15 @@ import { BigNumber, utils } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import useWeiConverter from 'hooks/useWeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
+import dynamic from 'next/dynamic'
 import { formatIssuanceRate } from 'packages/v2v3/utils/math'
-import { lazy, Suspense, useContext, useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { PayProjectFormContext } from './payProjectFormContext'
-const AMMPrices = lazy(() => import('components/AMMPrices'))
+const AMMPrices = dynamic(() => import('components/AMMPrices'), {
+  loading: () => <Loading />,
+})
 
 /**
  * Help text shown below the Pay input field.
@@ -110,13 +113,11 @@ export default function PayInputSubText({
             or{' '}
             <Tooltip
               title={
-                <Suspense fallback={<Loading />}>
-                  <AMMPrices
-                    mode="buy"
-                    tokenSymbol={tokenSymbol}
-                    tokenAddress={tokenAddress}
-                  />
-                </Suspense>
+                <AMMPrices
+                  mode="buy"
+                  tokenSymbol={tokenSymbol}
+                  tokenAddress={tokenAddress}
+                />
               }
               placement="bottomLeft"
               overlayClassName="min-w-xs"

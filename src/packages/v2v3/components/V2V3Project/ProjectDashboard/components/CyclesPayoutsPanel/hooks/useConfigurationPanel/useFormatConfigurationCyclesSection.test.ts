@@ -49,9 +49,11 @@ describe('useFormatConfigurationCyclesSection', () => {
     )
 
     const expectedDuration = {
+      easyCopy: undefined,
+      link: undefined,
       name: 'Duration',
-      old: '2 hours',
-      new: '5 hours',
+      old: '0d 2h 46m 40s',
+      new: '0d 5h 33m 20s',
     }
     const expectedStartTime = {
       name: 'Start time',

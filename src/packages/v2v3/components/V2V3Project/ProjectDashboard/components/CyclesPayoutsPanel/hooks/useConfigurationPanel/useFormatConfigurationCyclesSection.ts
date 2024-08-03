@@ -35,7 +35,7 @@ export const useFormatConfigurationCyclesSection = ({
     const formatDuration = (duration: BigNumber | undefined) => {
       if (duration === undefined) return undefined
       if (duration.eq(0)) return t`Not set`
-      return timeSecondsToDateString(duration.toNumber(), 'short', 'lower')
+      return timeSecondsToDateString(duration.toNumber(), 'long', 'lower')
     }
     const currentDuration = formatDuration(fundingCycle?.duration)
     if (upcomingFundingCycle === null) {

@@ -6,6 +6,6 @@
 export const getApprovalStrategyByAddress = (address: string) => {
   return {
     address,
-    name: '1 day (@todo: address->name)'
+    name: '1 day (@todo)'
   };
 }

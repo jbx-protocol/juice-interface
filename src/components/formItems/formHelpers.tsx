@@ -2,7 +2,7 @@ import { isAddress } from 'ethers/lib/utils'
 import { PayoutMod } from 'packages/v1/models/mods'
 import { permyriadToPercent } from 'utils/format/formatNumber'
 
-import { Split } from 'packages/v2v3/models/splits'
+import { Split } from 'models/splits'
 import { isEqualAddress, isZeroAddress } from 'utils/address'
 import { percentToPermyriad } from 'utils/format/formatNumber'
 

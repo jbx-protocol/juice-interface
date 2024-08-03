@@ -8,10 +8,10 @@ import {
 } from 'packages/v2v3/components/shared/Allocation/Allocation'
 import { AllocationItemTitle } from 'packages/v2v3/components/shared/Allocation/components/AllocationItemTitle'
 import { OwnerPayoutCard } from 'packages/v2v3/components/shared/PayoutCard/OwnerPayoutCard'
-import { totalSplitsPercent } from 'packages/v2v3/utils/v2v3Splits'
 import { useMemo } from 'react'
 import { formatPercent } from 'utils/format/formatPercent'
 import { ceilIfCloseToNextInteger } from 'utils/math'
+import { totalSplitsPercent } from 'utils/splits'
 
 export const ReservedTokensList: React.FC<
   React.PropsWithChildren<

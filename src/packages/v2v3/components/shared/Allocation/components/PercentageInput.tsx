@@ -1,4 +1,3 @@
-import { AmountPercentageInput } from 'components/Allocation/types'
 import CurrencySymbol from 'components/currency/CurrencySymbol'
 import NumberSlider from 'components/inputs/NumberSlider'
 import round from 'lodash/round'
@@ -7,6 +6,7 @@ import { isFiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { useCallback, useMemo, useState } from 'react'
 import { formatWad, stripCommas } from 'utils/format/formatNumber'
 import { Allocation } from '../Allocation'
+import { AmountPercentageInput } from '../types'
 
 export const PercentageInput = ({
   value,

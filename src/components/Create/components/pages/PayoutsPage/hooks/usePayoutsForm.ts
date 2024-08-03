@@ -1,11 +1,11 @@
 import { Form } from 'antd'
 import { TreasurySelection } from 'models/treasurySelection'
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
-import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
 import { useDebugValue, useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingPayoutSplits } from 'redux/hooks/useEditingPayoutSplits'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
 type PayoutsFormProps = Partial<{
   selection: TreasurySelection

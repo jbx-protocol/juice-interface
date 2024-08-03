@@ -14,7 +14,7 @@ export default function ProjectTelegam({
       label={hideLabel ? undefined : t`Telegram link`}
       {...formItemProps}
     >
-      <Input type="text" autoComplete="off" prefix="https://" />
+      <Input type="url" autoComplete="off" prefix="https://" />
     </Form.Item>
   )
 }

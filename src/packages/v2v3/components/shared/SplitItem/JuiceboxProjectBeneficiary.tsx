@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { AllocatorBadge } from 'components/AllocatorBadge'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
-import { Split } from 'packages/v2v3/models/splits'
+import { Split } from 'models/splits'
 import V2V3ProjectHandleLink from '../V2V3ProjectHandleLink'
 
 export function JuiceboxProjectBeneficiary({

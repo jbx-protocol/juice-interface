@@ -1,10 +1,10 @@
 import {
-    ArrowDownIcon,
-    CheckCircleIcon,
-    InformationCircleIcon,
-    MinusIcon,
-    PlusIcon,
-    TrashIcon,
+  ArrowDownIcon,
+  CheckCircleIcon,
+  InformationCircleIcon,
+  MinusIcon,
+  PlusIcon,
+  TrashIcon,
 } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
@@ -16,7 +16,6 @@ import { JuiceModal, JuiceModalProps } from 'components/modals/JuiceModal'
 import { PV_V2 } from 'constants/pv'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useWallet } from 'hooks/Wallet'
-import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
 import { useHasNftRewards } from 'packages/v2v3/hooks/JB721Delegate/useHasNftRewards'
@@ -24,8 +23,8 @@ import { useETHReceivedFromTokens } from 'packages/v2v3/hooks/contractReader/use
 import { useRedeemTokensTx } from 'packages/v2v3/hooks/transactor/useRedeemTokensTx'
 import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import {
-    V2V3_CURRENCY_ETH,
-    V2V3_CURRENCY_USD,
+  V2V3_CURRENCY_ETH,
+  V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
@@ -44,12 +43,13 @@ import { useTokensPanel } from '../hooks/useTokensPanel'
 import { useTokensPerEth } from '../hooks/useTokensPerEth'
 import { useUnclaimedTokenBalance } from '../hooks/useUnclaimedTokenBalance'
 import {
-    useProjectDispatch,
-    useProjectSelector,
-    useProjectStore,
+  useProjectDispatch,
+  useProjectSelector,
+  useProjectStore,
 } from '../redux/hooks'
 import { payRedeemActions } from '../redux/payRedeemSlice'
 import { projectCartActions } from '../redux/projectCartSlice'
+import { emitConfirmationDeletionModal } from '../utils/modals'
 import { CartItemBadge } from './CartItemBadge'
 import { ClaimErc20Callout } from './ClaimErc20Callout'
 import { EthPerTokenAccordion } from './EthPerTokenAccordion'

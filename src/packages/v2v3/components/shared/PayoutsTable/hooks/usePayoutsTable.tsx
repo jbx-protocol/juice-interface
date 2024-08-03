@@ -2,9 +2,9 @@ import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { ONE_BILLION, WAD_DECIMALS } from 'constants/numbers'
 import isEqual from 'lodash/isEqual'
 import round from 'lodash/round'
+import { Split } from 'models/splits'
 import { AddEditAllocationModalEntity } from 'packages/v2v3/components/shared/Allocation/AddEditAllocationModal'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { Split } from 'packages/v2v3/models/splits'
 import {
   V2V3CurrencyName,
   V2V3_CURRENCY_METADATA,
@@ -23,14 +23,14 @@ import {
   MAX_DISTRIBUTION_LIMIT,
   SPLITS_TOTAL_PERCENT,
 } from 'packages/v2v3/utils/math'
+import { useMemo } from 'react'
+import { parseWad } from 'utils/format/formatNumber'
 import {
   getProjectOwnerRemainderSplit,
   hasEqualRecipient,
   isProjectSplit,
   totalSplitsPercent,
-} from 'packages/v2v3/utils/v2v3Splits'
-import { useMemo } from 'react'
-import { parseWad } from 'utils/format/formatNumber'
+} from 'utils/splits'
 import { useEditCycleFormContext } from '../../../V2V3Project/V2V3ProjectSettings/pages/EditCyclePage/EditCycleFormContext'
 import { usePayoutsTableContext } from '../context/PayoutsTableContext'
 

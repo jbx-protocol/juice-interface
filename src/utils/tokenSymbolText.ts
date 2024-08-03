@@ -12,13 +12,13 @@ export const tokenSymbolText = ({
   plural?: boolean
   includeTokenWord?: boolean
 }) => {
-  const defaultTokenTextSingular = capitalize ? t`Token` : t`token`
-  const defaultTokenTextPlural = capitalize ? t`Tokens` : t`tokens`
-  const defaultTokenText = plural ? defaultTokenTextPlural : defaultTokenTextSingular
+  const tokenTextSingular = capitalize ? t`Token` : t`token`
+  const tokenTextPlural = capitalize ? t`Tokens` : t`tokens`
+  const tokenText = plural ? tokenTextPlural : tokenTextSingular
 
   if (includeTokenWord) {
-    return tokenSymbol ? `${tokenSymbol} ${defaultTokenText}` : defaultTokenText
+    return tokenSymbol ? `${tokenSymbol} ${tokenText}` : tokenText
   }
 
-  return tokenSymbol ?? defaultTokenText
+  return tokenSymbol ?? tokenText
 }

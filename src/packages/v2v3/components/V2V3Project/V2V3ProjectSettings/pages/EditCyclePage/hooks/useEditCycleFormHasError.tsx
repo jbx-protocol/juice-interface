@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { useWatch } from 'antd/lib/form/Form'
 import { SPLITS_TOTAL_PERCENT } from 'packages/v2v3/utils/math'
-import { totalSplitsPercent } from 'packages/v2v3/utils/v2v3Splits'
+import { totalSplitsPercent } from 'utils/splits'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 
 export function useEditCycleFormHasError() {

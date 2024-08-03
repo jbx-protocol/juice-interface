@@ -3,13 +3,13 @@ import { useAvailablePayoutsSelections } from 'components/Create/components/page
 import { formatFundingCycleDuration } from 'components/Create/utils/formatFundingCycleDuration'
 import moment from 'moment'
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
-import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
 import { useCallback, useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
 import { useEditingPayoutSplits } from 'redux/hooks/useEditingPayoutSplits'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { formatFundingTarget } from 'utils/format/formatFundingTarget'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
 export const useFundingConfigurationReview = () => {
   const { fundingCycleData, payoutsSelection, mustStartAtOrAfter } =

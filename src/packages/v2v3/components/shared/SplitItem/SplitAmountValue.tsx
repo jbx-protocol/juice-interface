@@ -9,10 +9,9 @@ import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectCo
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
 import { isJuiceboxProjectSplit } from 'packages/v2v3/utils/distributions'
-import { SPLITS_TOTAL_PERCENT } from 'packages/v2v3/utils/math'
+import { feeForAmount, SPLITS_TOTAL_PERCENT } from 'packages/v2v3/utils/math'
 import { useContext } from 'react'
 import { formatWad } from 'utils/format/formatNumber'
-import { feeForAmount } from 'utils/math'
 import { SplitProps } from './SplitItem'
 
 export function SplitAmountValue({
@@ -30,10 +29,9 @@ export function SplitAmountValue({
 
   const isJuiceboxProject = isJuiceboxProjectSplit(props.split)
   const hasFee = !isJuiceboxProject && !props.dontApplyFeeToAmount
-  const _feeAmount = hasFee
-    ? feeForAmount(splitValue?.toBigInt(), primaryETHTerminalFee?.toBigInt()) ?? 0n
-    : 0n
-  const feeAmount = BigNumber.from(_feeAmount)
+  const feeAmount = hasFee
+    ? feeForAmount(splitValue, primaryETHTerminalFee) ?? BigNumber.from(0)
+    : BigNumber.from(0)
   const valueAfterFees = splitValue ? splitValue.sub(feeAmount) : 0
 
   const currencyName = V2V3CurrencyName(

@@ -12,12 +12,12 @@ import {
 import { useMemo, useState } from 'react'
 import { AnyProjectEvent } from './activityEventElems/AnyProjectEvent'
 
-export interface ActivityOption {
+interface ActivityOption {
   label: string
   value: ProjectEventFilter
 }
 
-export const ALL_OPT = (): ActivityOption => ({ label: t`All activity`, value: 'all' })
+const ALL_OPT = (): ActivityOption => ({ label: t`All activity`, value: 'all' })
 
 const PV1_OPTS = (): ActivityOption[] => [
   ALL_OPT(),

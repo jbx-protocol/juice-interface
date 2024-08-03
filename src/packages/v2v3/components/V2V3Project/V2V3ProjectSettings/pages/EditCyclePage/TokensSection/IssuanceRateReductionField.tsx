@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
-import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import NumberSlider from 'components/inputs/NumberSlider'
+import { ExternalLinkWithIcon } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/components/ui/ExternalLinkWithIcon'
 import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
 import { useEditCycleFormContext } from '../EditCycleFormContext'

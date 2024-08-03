@@ -7,8 +7,8 @@ import FundingCycleDetails from 'packages/v2v3/components/V2V3Project/V2V3Fundin
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { deriveNextIssuanceRate } from 'packages/v2v3/utils/fundingCycle'
 import { formatReservedRate } from 'packages/v2v3/utils/math'
-import { toSplit } from 'packages/v2v3/utils/v2v3Splits'
 import { useContext } from 'react'
+import { toSplit } from 'utils/splits'
 import { LinkToSafeButton } from '../../LinkToSafeButton'
 import { useTransactionJBController } from './hooks/useTransactionJBController'
 

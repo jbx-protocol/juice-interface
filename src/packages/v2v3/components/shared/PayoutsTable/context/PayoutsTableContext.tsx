@@ -1,5 +1,5 @@
 import { CurrencyName } from 'constants/currency'
-import { Split } from 'packages/v2v3/models/splits'
+import { Split } from 'models/splits'
 import { ReactNode, createContext, useContext } from 'react'
 
 export interface PayoutsTableContextProps {

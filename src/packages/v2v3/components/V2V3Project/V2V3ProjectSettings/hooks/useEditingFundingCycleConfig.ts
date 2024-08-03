@@ -1,12 +1,12 @@
 import {
+  ETHPayoutGroupedSplits,
+  ReservedTokensGroupedSplits,
+} from 'models/splits'
+import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
   V2V3FundingCycleMetadata,
 } from 'packages/v2v3/models/fundingCycle'
-import {
-  ETHPayoutGroupedSplits,
-  ReservedTokensGroupedSplits,
-} from 'packages/v2v3/models/splits'
 import {
   useAppSelector,
   useEditingV2V3FundAccessConstraintsSelector,

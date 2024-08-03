@@ -11,12 +11,12 @@ import { PayoutsSelection } from 'models/payoutsSelection'
 import { ProjectMetadata } from 'models/projectMetadata'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
-import { TreasurySelection } from 'models/treasurySelection'
-import { NftPricingContext } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'
 import {
   ETHPayoutGroupedSplits,
   ReservedTokensGroupedSplits,
-} from 'packages/v2v3/models/splits'
+} from 'models/splits'
+import { TreasurySelection } from 'models/treasurySelection'
+import { NftPricingContext } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'
 import {
   SerializedV2V3FundAccessConstraint,
   SerializedV2V3FundingCycleData,

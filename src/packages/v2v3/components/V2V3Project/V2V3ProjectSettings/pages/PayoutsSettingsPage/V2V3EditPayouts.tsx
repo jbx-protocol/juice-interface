@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { CsvUpload } from 'components/inputs/CsvUpload'
+import { Split } from 'models/splits'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
-import { Split } from 'packages/v2v3/models/splits'
 import { getTotalSplitsPercentage } from 'packages/v2v3/utils/distributions'
 import { useCallback, useContext, useEffect, useMemo } from 'react'
 
@@ -18,12 +18,12 @@ import { OwnerPayoutCard } from 'packages/v2v3/components/shared/PayoutCard/Owne
 import { PayoutCard } from 'packages/v2v3/components/shared/PayoutCard/PayoutCard'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
-import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
 import { twMerge } from 'tailwind-merge'
 import { parseV2SplitsCsv } from 'utils/csv'
 import { formatFundingTarget } from 'utils/format/formatFundingTarget'
 import { formatPercent } from 'utils/format/formatPercent'
 import { settingsPagePath } from 'utils/routes'
+import { allocationToSplit, splitToAllocation } from 'utils/splitToAllocation'
 
 export const V2V3EditPayouts = ({
   editingSplits,

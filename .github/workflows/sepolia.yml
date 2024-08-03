@@ -3,7 +3,7 @@ name: Deploy Migrations to Sepolia
 on:
   push:
     branches:
-      - dev
+      - main
   workflow_dispatch:
 
 jobs:

@@ -5,14 +5,21 @@ import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickP
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
-import EthersTxHistoryProvider from 'contexts/Transaction/EthersTxHistoryProvider'
-import WagmiTxHistoryProvider from 'contexts/Transaction/WagmiTxHistoryProvider'
 import { useInitWallet } from 'hooks/Wallet'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { redirectTo } from 'utils/windowUtils'
+const EthersTxHistoryProvider = dynamic(
+  () => import('contexts/Transaction/EthersTxHistoryProvider'),
+  { ssr: false },
+)
+const WagmiTxHistoryProvider = dynamic(
+  () => import('contexts/Transaction/WagmiTxHistoryProvider'),
+  { ssr: false },
+)
 
 /**
  * Contains all the core app providers used by each page.

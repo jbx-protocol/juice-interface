@@ -10,8 +10,8 @@ import useProjectSplits from 'packages/v2v3/hooks/contractReader/useProjectSplit
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
 import { derivePayoutAmount } from 'packages/v2v3/utils/distributions'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
+import { isProjectSplit } from 'packages/v2v3/utils/v2v3Splits'
 import React, { useContext } from 'react'
-import { isProjectSplit } from 'utils/splits'
 import { HistoricalConfigurationPanelProps } from './HistoricalConfigurationPanel'
 
 export const HistoricalPayoutsData: React.FC<

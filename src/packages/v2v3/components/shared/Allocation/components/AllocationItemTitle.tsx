@@ -3,8 +3,8 @@ import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
+import { isProjectSplit } from 'packages/v2v3/utils/v2v3Splits'
 import { formatDate } from 'utils/format/formatDate'
-import { isProjectSplit } from 'utils/splits'
 import { AllocationSplit } from '../Allocation'
 
 export function AllocationItemTitle({

@@ -2,54 +2,52 @@ import { t } from '@lingui/macro'
 import {
   useJBRuleset,
   useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf,
-  useReadJbRulesetsLatestQueuedOf,
 } from 'juice-sdk-react'
 import { V4ApprovalStatus } from 'models/ballot'
+import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { useMemo } from 'react'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
-import { useRulesetCountdown } from './useRulesetCountdown'
 
 export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   const { data: ruleset, isLoading: rulesetLoading } = useJBRuleset()
-  const { data: _latestQueuedRuleset, isLoading: queuedRulesetsLoading } =
-    useReadJbRulesetsLatestQueuedOf()
-  const { timeRemainingText } = useRulesetCountdown()
+  const { ruleset: latestUpcomingRuleset, isLoading: upcomingRulesetsLoading } =
+    useJBUpcomingRuleset()
 
-  const latestQueuedRuleset = _latestQueuedRuleset?.[0]
   const { data: approvalStatus } =
     useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf()
-
   const rulesetNumber = useMemo(() => {
     if (type === 'current') {
       return Number(ruleset?.cycleNumber)
     }
-    return latestQueuedRuleset?.cycleNumber
-      ? Number(latestQueuedRuleset.cycleNumber)
+    return latestUpcomingRuleset?.cycleNumber
+      ? Number(latestUpcomingRuleset.cycleNumber)
+      : ruleset?.cycleNumber
+      ? ruleset.cycleNumber + 1
       : undefined
-  }, [ruleset?.cycleNumber, type, latestQueuedRuleset?.cycleNumber])
+  }, [ruleset?.cycleNumber, type, latestUpcomingRuleset?.cycleNumber])
 
   const rulesetUnlocked = useMemo(() => {
     if (type === 'current') {
-      return ruleset?.duration === 0n ?? true
+      return ruleset?.duration === 0 ?? true
     }
-    return latestQueuedRuleset?.duration == 0n ?? true
-  }, [ruleset?.duration, type, latestQueuedRuleset?.duration])
+    return latestUpcomingRuleset?.duration == 0 ?? true
+  }, [ruleset?.duration, type, latestUpcomingRuleset?.duration])
 
   const upcomingRulesetLength = useMemo(() => {
-    if (!latestQueuedRuleset) return
+    if (!latestUpcomingRuleset)
+      return timeSecondsToDateString(Number(ruleset?.duration), 'short')
     if (rulesetUnlocked) return '-'
     return timeSecondsToDateString(
-      Number(latestQueuedRuleset.duration),
+      Number(latestUpcomingRuleset.duration),
       'short',
     )
-  }, [rulesetUnlocked, latestQueuedRuleset])
+  }, [rulesetUnlocked, latestUpcomingRuleset, ruleset])
 
   /** Determines if the CURRENT cycle is unlocked.
    * This is used to check if the upcoming cycle can start at any time. */
-  const currentRulesetUnlocked = ruleset?.duration === 0n ?? true
+  const currentRulesetUnlocked = ruleset?.duration === 0 ?? true
 
   const status = rulesetUnlocked ? t`Unlocked` : t`Locked`
-  const remainingTime = rulesetUnlocked ? '-' : timeRemainingText
 
   // Short circuit current for faster loading
   if (type === 'current') {
@@ -59,11 +57,10 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
       type,
       rulesetNumber,
       status,
-      remainingTime,
     }
   }
 
-  if (rulesetLoading || queuedRulesetsLoading)
+  if (rulesetLoading || upcomingRulesetsLoading)
     return {
       loading: true,
       type,
@@ -80,7 +77,7 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     hasPendingConfiguration:
       /**
        * If a ruleset is unlocked, it may have a pending change.
-       * The only way it would, is if the approval status of the latestQueuedRuleset is `approved`.
+       * The only way it would, is if the approval status of the latestUpcomingRuleset is `approved`.
        */
       rulesetUnlocked &&
       typeof approvalStatus !== 'undefined' &&

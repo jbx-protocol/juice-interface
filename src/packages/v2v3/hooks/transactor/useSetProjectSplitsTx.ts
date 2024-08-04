@@ -2,10 +2,10 @@ import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { TransactorInstance } from 'hooks/useTransactor'
-import { GroupedSplits } from 'models/splits'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
+import { GroupedSplits } from 'packages/v2v3/models/splits'
+import { sanitizeSplit } from 'packages/v2v3/utils/v2v3Splits'
 import { useContext } from 'react'
-import { sanitizeSplit } from 'utils/splits'
 import { useV2ProjectTitle } from '../useProjectTitle'
 
 export const useSetProjectSplits = <G>({

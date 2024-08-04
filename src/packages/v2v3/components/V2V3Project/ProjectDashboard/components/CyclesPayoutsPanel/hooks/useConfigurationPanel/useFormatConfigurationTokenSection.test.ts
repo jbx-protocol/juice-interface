@@ -3,7 +3,8 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { renderHook } from '@testing-library/react-hooks'
-import { pairToDatum } from 'components/Project/ProjectHeader/utils/pairToDatum'
+import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
+import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import { BigNumber } from 'ethers'
 import {
   computeIssuanceRate,
@@ -13,11 +14,10 @@ import {
   formatReservedRate,
 } from 'packages/v2v3/utils/math'
 import { formattedNum } from 'utils/format/formatNumber'
-import { flagPairToDatum } from '../../utils/flagPairToDatum'
 import { useFormatConfigurationTokenSection } from './useFormatConfigurationTokenSection'
 
-jest.mock('../../utils/flagPairToDatum')
-jest.mock('components/Project/ProjectHeader/utils/pairToDatum')
+jest.mock('components/Project/ProjectTabs/utils/flagPairToDatum')
+jest.mock('components/Project/ProjectTabs/utils/pairToDatum')
 jest.mock('packages/v2v3/utils/math')
 jest.mock('utils/format/formatNumber')
 

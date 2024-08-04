@@ -20,7 +20,7 @@ import {
   fromWad,
   percentToPermyriad,
 } from 'utils/format/formatNumber'
-import { WeightFunction } from 'utils/math'
+import { feeForAmount, WeightFunction } from 'utils/math'
 
 export const MAX_RESERVED_RATE = TEN_THOUSAND
 export const MAX_REDEMPTION_RATE = TEN_THOUSAND
@@ -233,20 +233,12 @@ export const weightAmountPermyriad: WeightFunction = (
   )
 }
 
-export const feeForAmount = (
-  amountWad: BigNumber | undefined,
-  feePerBillion: BigNumber | undefined,
-): BigNumber | undefined => {
-  if (!feePerBillion || !amountWad) return
-  return amountWad.mul(feePerBillion).div(ONE_BILLION)
-}
-
 export const amountSubFee = (
   amountWad: BigNumber | undefined,
   feePerBillion: BigNumber | undefined,
 ): BigNumber | undefined => {
   if (!feePerBillion || !amountWad) return
-  const feeAmount = feeForAmount(amountWad, feePerBillion) ?? 0
+  const feeAmount = feeForAmount(amountWad.toBigInt(), feePerBillion.toBigInt()) ?? 0
   return amountWad.sub(feeAmount)
 }
 
@@ -255,7 +247,7 @@ export const amountSubFee = (
 // and return the sum of them all
 export function sumHeldFees(fees: JBFee[]) {
   return fees.reduce((sum, heldFee) => {
-    const amountWad = feeForAmount(heldFee.amount, BigNumber.from(heldFee.fee))
+    const amountWad = feeForAmount(heldFee.amount.toBigInt(), BigInt(heldFee.fee))
     const amountNum = parseFloat(fromWad(amountWad))
     return sum + (amountNum ?? 0)
   }, 0)

@@ -8,6 +8,7 @@ import { CV2V3 } from 'packages/v2v3/models/cv'
 import { useCallback, useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { emitErrorNotification } from 'utils/notifications'
+import { Hash } from 'viem'
 import { useWallet } from './Wallet'
 
 type TxOpts = Omit<TransactionOptions, 'value'>
@@ -134,10 +135,17 @@ export function useTransactor(): Transactor | undefined {
 
         // add transaction to the history UI
         const txTitle = options?.title ?? functionName
-        addTransaction?.(txTitle, result as providers.TransactionResponse, {
-          onConfirmed: options?.onConfirmed,
-          onCancelled: options?.onCancelled,
-        })
+        addTransaction?.(
+          txTitle,
+          {
+            hash: result.hash as Hash,
+            timestamp: result.timestamp,
+          },
+          {
+            onConfirmed: options?.onConfirmed,
+            onCancelled: options?.onCancelled,
+          },
+        )
 
         return true
       } catch (e) {

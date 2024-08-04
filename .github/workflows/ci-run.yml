@@ -9,9 +9,11 @@ on:
       - synchronize
     branches:
       - main
+      - dev
   push:
     branches:
       - main
+      - dev
 
   # manual trigger from Github UI - Action tab
   workflow_dispatch:

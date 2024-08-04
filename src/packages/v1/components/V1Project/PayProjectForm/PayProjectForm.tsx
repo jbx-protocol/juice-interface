@@ -6,7 +6,6 @@ import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsC
 import { useContext } from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { getHighestAffordableNft, getNftRewardOfFloor } from 'utils/nftRewards'
-import PayInputSubText from './PayInputSubText'
 import { PayProjectFormContext } from './payProjectFormContext'
 
 export function PayProjectForm({ disabled }: { disabled?: boolean }) {
@@ -97,10 +96,6 @@ export function PayProjectForm({ disabled }: { disabled?: boolean }) {
                 size="large"
               />
             }
-          />
-          <PayInputSubText
-            payInCurrency={payInCurrency ?? ETH}
-            amount={payAmount}
           />
         </div>
 

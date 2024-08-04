@@ -6,7 +6,6 @@ import { Callout } from 'components/Callout/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
-import { RedeemAMMPrices } from 'components/Project/RedeemAMMPrices'
 import { TokenAmount } from 'components/TokenAmount'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { BigNumber } from 'ethers'
@@ -301,13 +300,6 @@ export function V2V3BurnOrRedeemModal({
                 disabled={totalBalance?.eq(0)}
                 onChange={val => setRedeemAmount(val)}
               />
-              {tokenSymbol && tokenAddress ? (
-                <RedeemAMMPrices
-                  className="text-xs"
-                  tokenSymbol={tokenSymbol}
-                  tokenAddress={tokenAddress}
-                />
-              ) : null}
             </Form.Item>
             <Form.Item
               className="mb-0"

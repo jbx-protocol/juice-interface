@@ -1,6 +1,5 @@
 import { RightOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
-import { ADDRESS_ZERO } from '@uniswap/v3-sdk'
 import { Col, Form, Row } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import { useLockPageRulesWrapper } from 'components/Create/hooks/useLockPageRulesWrapper'
@@ -13,6 +12,7 @@ import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/inputs/PrefixedInput'
 import { RichEditor } from 'components/RichEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
+import { constants } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
@@ -166,7 +166,7 @@ export const ProjectDetailsPage: React.FC<
                 }),
               ])}
             >
-              <EthAddressInput placeholder={ADDRESS_ZERO} />
+              <EthAddressInput placeholder={constants.AddressZero} />
             </Form.Item>
             {projectOwnerDifferentThanWalletAddress && (
               <Callout.Warning collapsible={false}>

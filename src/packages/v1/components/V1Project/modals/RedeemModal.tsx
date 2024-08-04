@@ -1,14 +1,17 @@
 import { t, Trans } from '@lingui/macro'
-import { Form, Modal, Space } from 'antd'
+import { Form, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
+import { Callout } from 'components/Callout/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { RedeemAMMPrices } from 'components/Project/RedeemAMMPrices'
 import { TokenAmount } from 'components/TokenAmount'
+import { readNetwork } from 'constants/networks'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useWallet } from 'hooks/Wallet'
+import { NetworkName } from 'models/networkName'
 import { V1_CURRENCY_USD } from 'packages/v1/constants/currency'
+import { V1_PROJECT_IDS } from 'packages/v1/constants/projectIds'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 import useClaimableOverflowOf from 'packages/v1/hooks/contractReader/useClaimableOverflowOf'
 import { useRedeemRate } from 'packages/v1/hooks/contractReader/useRedeemRate'
@@ -29,7 +32,7 @@ export default function RedeemModal({
   onOk?: VoidFunction
   onCancel?: VoidFunction
 }) {
-  const { tokenSymbol, tokenAddress, currentFC, terminal, overflow } =
+  const { tokenSymbol, currentFC, terminal, overflow } =
     useContext(V1ProjectContext)
   const { projectId } = useContext(ProjectMetadataContext)
 
@@ -120,6 +123,10 @@ export default function RedeemModal({
     return Promise.resolve()
   }
 
+  const isConstitutionDao =
+    readNetwork.name === NetworkName.mainnet &&
+    projectId === V1_PROJECT_IDS.CONSTITUTION_DAO
+
   return (
     <Modal
       title={modalTitle}
@@ -140,19 +147,40 @@ export default function RedeemModal({
       width={540}
       centered
     >
-      <Space direction="vertical" className="w-full">
-        <div>
-          <p className="flex items-baseline justify-between">
-            <Trans>Redemption rate:</Trans>{' '}
-            <span>
-              {fcMetadata?.bondingCurveRate !== undefined
-                ? fcMetadata.bondingCurveRate / 2
-                : '--'}
-              %
-            </span>
-          </p>
-          <p className="flex items-baseline justify-between">
-            {tokenSymbolText({ tokenSymbol, capitalize: true })} balance:{' '}
+      <div className="flex flex-col gap-6">
+        {isConstitutionDao ? (
+          <Callout.Warning>
+            <strong>
+              <Trans>Get more for your PEOPLE.</Trans>
+            </strong>{' '}
+            <div>
+              <Trans>
+                Check{' '}
+                <a
+                  href="https://app.uniswap.org/explore/tokens/ethereum/0x7a58c0be72be218b41c608b7fe7c5bb630736c71"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Uniswap
+                </a>
+                ,{' '}
+                <a
+                  href="https://www.sushi.com/swap?chainId=1&token0=0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71&token1=NATIVE"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  SushiSwap
+                </a>
+                , or other third-party exchanges for better rates before
+                redeeming on Juicebox.
+              </Trans>
+            </div>
+          </Callout.Warning>
+        ) : null}
+        <hr />
+        <div className="flex flex-col gap-2">
+          <p className="m-0 flex items-baseline justify-between">
+            Your {tokenSymbolText({ tokenSymbol, capitalize: true })} balance:{' '}
             <span>
               {totalBalance ? (
                 <TokenAmount
@@ -162,7 +190,18 @@ export default function RedeemModal({
               ) : null}
             </span>
           </p>
-          <p className="flex items-baseline justify-between">
+
+          <p className="m-0 flex items-baseline justify-between">
+            <Trans>Current Redemption Rate:</Trans>{' '}
+            <span>
+              {fcMetadata?.bondingCurveRate !== undefined
+                ? fcMetadata.bondingCurveRate / 2
+                : '--'}
+              %
+            </span>
+          </p>
+
+          <p className="m-0 flex items-baseline justify-between">
             <Trans>
               Currently worth:{' '}
               <span>
@@ -171,13 +210,15 @@ export default function RedeemModal({
             </Trans>
           </p>
         </div>
+        <hr />
+
         <p>
           {overflow?.gt(0) ? (
             <Trans>
               Project tokens can be redeemed to reclaim a portion of the ETH not
               needed for this cycle's payouts. The amount of ETH returned
-              depends on this cycle's redemption rate.
-              <span className="font-medium text-warning-800 dark:text-warning-100">
+              depends on this cycle's redemption rate.{' '}
+              <span className="font-medium text-warning-800 dark:text-warning-400">
                 Tokens are burned when they are redeemed.
               </span>
             </Trans>
@@ -215,13 +256,6 @@ export default function RedeemModal({
                 disabled={totalBalance?.eq(0)}
                 onChange={val => setRedeemAmount(val)}
               />
-              {tokenSymbol && tokenAddress ? (
-                <RedeemAMMPrices
-                  className="text-xs"
-                  tokenSymbol={tokenSymbol}
-                  tokenAddress={tokenAddress}
-                />
-              ) : null}
             </Form.Item>
           </Form>
           {overflow?.gt(0) ? (
@@ -234,7 +268,7 @@ export default function RedeemModal({
             </div>
           ) : null}
         </div>
-      </Space>
+      </div>
     </Modal>
   )
 }

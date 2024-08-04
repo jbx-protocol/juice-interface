@@ -230,9 +230,6 @@ msgstr ""
 msgid "Cycles:"
 msgstr ""
 
-msgid "or <0><1>sell {tokenSymbol} on exchange.</1></0>"
-msgstr ""
-
 msgid "Amount (USD)"
 msgstr ""
 
@@ -336,9 +333,6 @@ msgid "<0>You're about to delete all NFTs from your collection. This will take e
 msgstr ""
 
 msgid "<0>Owned by</0><1/>"
-msgstr ""
-
-msgid "{tokenSymbol}/ETH exchange rate on {exchangeName}."
 msgstr ""
 
 msgid "Your payouts do not sum to 100%. Because your project is set to pay out all available ETH, the remainder will go to the project owner."
@@ -1499,9 +1493,6 @@ msgstr ""
 msgid "Still have questions or want to know more about us? Jump into our Discord and come say hello."
 msgstr ""
 
-msgid "Project tokens can be redeemed to reclaim a portion of the ETH not needed for this cycle's payouts. The amount of ETH returned depends on this cycle's redemption rate.<0>Tokens are burned when they are redeemed.</0>"
-msgstr ""
-
 msgid "Mint {0}"
 msgstr ""
 
@@ -1757,9 +1748,6 @@ msgstr ""
 msgid "Untitled project"
 msgstr ""
 
-msgid "or <0><1>buy {tokenText} on an exchange.</1></0>"
-msgstr ""
-
 msgid "{chainName} Project #{projectId}"
 msgstr ""
 
@@ -1857,6 +1845,9 @@ msgid "Crowdfunding"
 msgstr ""
 
 msgid "30 days"
+msgstr ""
+
+msgid "Get more for your PEOPLE."
 msgstr ""
 
 msgid "allocation"
@@ -1983,6 +1974,9 @@ msgid "File upload failed."
 msgstr ""
 
 msgid "Paid as <0/>"
+msgstr ""
+
+msgid "Check <0>Uniswap</0>, <1>SushiSwap</1>, or other third-party exchanges for better rates before redeeming on Juicebox."
 msgstr ""
 
 msgid "Send a percentage of reserved tokens to the wallets and Juicebox projects of your choosing. By default, reserved tokens are sent to the project owner."
@@ -2352,9 +2346,6 @@ msgid "Send {tokenTextPlural}"
 msgstr ""
 
 msgid "reserved token recipient"
-msgstr ""
-
-msgid "{nftCount, plural, one {+ # NFT} other {+ # NFTs}}"
 msgstr ""
 
 msgid "Controller configuration"
@@ -3170,6 +3161,9 @@ msgstr ""
 msgid "{tokenTextSingular} recipients"
 msgstr ""
 
+msgid "Project tokens can be redeemed to reclaim a portion of the ETH not needed for this cycle's payouts. The amount of ETH returned depends on this cycle's redemption rate. <0>Tokens are burned when they are redeemed.</0>"
+msgstr ""
+
 msgid "Will be rounded to <0/>{0}"
 msgstr ""
 
@@ -3234,9 +3228,6 @@ msgid "Juicebox provides trustless payroll capabilities to run automated payouts
 msgstr ""
 
 msgid "Notifications"
-msgstr ""
-
-msgid "{exchangeName} has no market for {tokenSymbol}."
 msgstr ""
 
 msgid "Logo"
@@ -3342,9 +3333,6 @@ msgid "Allowed"
 msgstr ""
 
 msgid "to select"
-msgstr ""
-
-msgid "Unavailable"
 msgstr ""
 
 msgid "Burn token"
@@ -3512,6 +3500,9 @@ msgstr ""
 msgid "With an auction estimate of $10-15 million at Sotheby's, ConstitutionDAO wanted to raise as much as possible and decided to set Payouts to Unlimited. In order to build trust with potential supporters, the campaign set up a 9/13 multisig with core team members and well-known figures in web3. Reserved Rate was also set to 0 to guarantee that everyone had equal access to PEOPLE tokens which would govern the document if they won the auction."
 msgstr ""
 
+msgid "Current Redemption Rate:"
+msgstr ""
+
 msgid "Connected wallet not authorized"
 msgstr ""
 
@@ -3546,9 +3537,6 @@ msgid "Token holders <0>cannot redeem their tokens</0> for ETH when the redempti
 msgstr ""
 
 msgid "No payouts are scheduled for this cycle. All ETH is available for redemption (subject to the redemption rate)."
-msgstr ""
-
-msgid "Receive {receiveText}"
 msgstr ""
 
 msgid "Need artwork?"
@@ -4272,9 +4260,6 @@ msgid "Message sent!"
 msgstr ""
 
 msgid "What's Juicebox?"
-msgstr ""
-
-msgid "Current 3rd Party Exchange Rates"
 msgstr ""
 
 msgid "Last {TRENDING_WINDOW_DAYS} days"

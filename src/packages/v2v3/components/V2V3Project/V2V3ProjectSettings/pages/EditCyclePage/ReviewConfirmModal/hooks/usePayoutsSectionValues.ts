@@ -1,13 +1,13 @@
 import { CurrencyName } from 'constants/currency'
-import { Split } from 'models/splits'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { Split } from 'packages/v2v3/models/splits'
 import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
 import { distributionLimitsEqual } from 'packages/v2v3/utils/distributions'
 import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
+import { splitsListsHaveDiff } from 'packages/v2v3/utils/v2v3Splits'
 import { useContext } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
-import { splitsListsHaveDiff } from 'utils/splits'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 
 export const usePayoutsSectionValues = () => {

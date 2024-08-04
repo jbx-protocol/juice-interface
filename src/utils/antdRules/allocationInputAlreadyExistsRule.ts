@@ -1,6 +1,6 @@
 import { RuleObject } from 'antd/lib/form'
 import isEqual from 'lodash/isEqual'
-import { projectIdToHex } from 'utils/splits'
+import { projectIdToHex } from 'packages/v2v3/utils/v2v3Splits'
 
 /**
  * Rule is the same as {@link inputAlreadyExistsRule}, however will allow for

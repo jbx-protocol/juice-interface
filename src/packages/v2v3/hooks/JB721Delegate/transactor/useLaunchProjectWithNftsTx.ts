@@ -15,7 +15,6 @@ import {
   JB_721_TIER_PARAMS_V3_2,
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
-import { GroupedSplits, SplitGroup } from 'models/splits'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
 import { useJBPrices } from 'packages/v2v3/hooks/JBPrices'
 import { DEFAULT_JB_721_DELEGATE_VERSION } from 'packages/v2v3/hooks/defaultContracts/useDefaultJB721Delegate'
@@ -29,6 +28,7 @@ import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
 } from 'packages/v2v3/models/fundingCycle'
+import { GroupedSplits, SplitGroup } from 'packages/v2v3/models/splits'
 import {
   getTerminalsFromFundAccessConstraints,
   isValidMustStartAtOrAfter,

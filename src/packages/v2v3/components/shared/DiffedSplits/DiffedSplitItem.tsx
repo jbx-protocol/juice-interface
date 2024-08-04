@@ -5,8 +5,8 @@ import {
   DiffPlus,
 } from 'packages/v2v3/components/shared/DiffedItem'
 import { isJuiceboxProjectSplit } from 'packages/v2v3/utils/distributions'
+import { SplitWithDiff } from 'packages/v2v3/utils/v2v3Splits'
 import { twMerge } from 'tailwind-merge'
-import { SplitWithDiff } from 'utils/splits'
 import { SplitProps } from '../SplitItem'
 import { ETHAddressBeneficiary } from '../SplitItem/EthAddressBeneficiary'
 import { ReservedTokensValue } from '../SplitItem/ReservedTokensValue'

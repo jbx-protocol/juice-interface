@@ -1,9 +1,9 @@
 import { TrashIcon } from '@heroicons/react/24/solid'
 import { Trans, t } from '@lingui/macro'
+import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
 import { useCallback } from 'react'
 import { stopPropagation } from 'react-stop-propagation'
 import { twMerge } from 'tailwind-merge'
-import { emitConfirmationDeletionModal } from '../../../utils/modals'
 import { nftHoverButtonClasses } from './AddNftButton'
 
 // Button that appears when hovering an NFT reward card

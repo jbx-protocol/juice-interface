@@ -1,3 +1,4 @@
+import { AmountPercentageInput } from 'components/Allocation/types'
 import CurrencySwitch from 'components/currency/CurrencySwitch'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import {
@@ -6,7 +7,6 @@ import {
 } from 'packages/v2v3/utils/currency'
 import { useCallback, useState } from 'react'
 import { Allocation } from '../Allocation'
-import { AmountPercentageInput } from '../types'
 
 export const AmountInput = ({
   value,

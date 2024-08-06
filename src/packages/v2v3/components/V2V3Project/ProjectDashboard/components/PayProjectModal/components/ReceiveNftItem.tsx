@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
+import { CartItemBadge } from 'components/CartItemBadge'
+import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
 import { useNftCartItem } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useNftCartItem'
 import { twMerge } from 'tailwind-merge'
-import { CartItemBadge } from '../../CartItemBadge'
 import { ProjectCartNftReward } from '../../ReduxProjectCartProvider'
-import { SmallNftSquare } from '../../SmallNftSquare'
 
 export const ReceiveNftItem = ({
   className,

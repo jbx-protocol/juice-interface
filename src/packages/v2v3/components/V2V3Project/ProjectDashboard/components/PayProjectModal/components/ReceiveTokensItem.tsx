@@ -1,4 +1,5 @@
 import { Trans, t } from '@lingui/macro'
+import { CartItemBadge } from 'components/CartItemBadge'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import TooltipIcon from 'components/TooltipIcon'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
@@ -7,7 +8,6 @@ import { useProjectPaymentTokens } from 'packages/v2v3/components/V2V3Project/Pr
 import { BUYBACK_DELEGATE_ENABLED_PROJECT_IDS } from 'packages/v2v3/constants/buybackDelegateEnabledProjectIds'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { CartItemBadge } from '../../CartItemBadge'
 
 export const ReceiveTokensItem = ({ className }: { className?: string }) => {
   const { projectId } = useContext(ProjectMetadataContext)

@@ -1,6 +1,6 @@
 import { CoverPhoto } from 'components/Project/ProjectHeader/CoverPhoto'
+import { V4PayRedeemCard } from 'packages/v4/components/ProjectDashboard/V4PayRedeemCard'
 import { twMerge } from 'tailwind-merge'
-import { V4PayRedeemCard } from './V4PayRedeemCard/V4PayRedeemCard'
 import { V4ProjectHeader } from './V4ProjectHeader'
 import { V4ProjectTabs } from './V4ProjectTabs/V4ProjectTabs'
 

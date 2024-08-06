@@ -21,6 +21,8 @@ import { useWallet } from 'hooks/Wallet'
 import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
+import { useJBRulesetContext, useJBTokenContext } from 'juice-sdk-react'
+import { useNftCartItem } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useNftCartItem'
 import { useHasNftRewards } from 'packages/v2v3/hooks/JB721Delegate/useHasNftRewards'
 import { useETHReceivedFromTokens } from 'packages/v2v3/hooks/contractReader/useETHReceivedFromTokens'
 import { useRedeemTokensTx } from 'packages/v2v3/hooks/transactor/useRedeemTokensTx'
@@ -30,32 +32,22 @@ import {
   V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
-import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
-import { computeIssuanceRate } from 'packages/v2v3/utils/math'
+import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
-import { NftCreditsCallout } from '../../NftCreditsCallout'
-import { useNftCartItem } from '../hooks/useNftCartItem'
-import { useProjectContext } from '../hooks/useProjectContext'
-import { useProjectHasErc20Token } from '../hooks/useProjectHasErc20Token'
-import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
-import { useTokensPanel } from '../hooks/useTokensPanel'
-import { useTokensPerEth } from '../hooks/useTokensPerEth'
-import { useUnclaimedTokenBalance } from '../hooks/useUnclaimedTokenBalance'
+// import { PayProjectModal } from './PayProjectModal/PayProjectModal'
+import { ProjectCartNftReward } from './ReduxProjectCartProvider'
 import {
   useProjectDispatch,
   useProjectSelector,
   useProjectStore,
-} from '../redux/hooks'
-import { payRedeemActions } from '../redux/payRedeemSlice'
-import { projectCartActions } from '../redux/projectCartSlice'
-import { ClaimErc20Callout } from './ClaimErc20Callout'
-import { EthPerTokenAccordion } from './EthPerTokenAccordion'
-import { PayProjectModal } from './PayProjectModal/PayProjectModal'
-import { ProjectCartNftReward } from './ReduxProjectCartProvider'
+} from './redux/hooks'
+import { payRedeemActions } from './redux/payRedeemSlice'
+import { projectCartActions } from './redux/projectCartSlice'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
 
@@ -64,78 +56,44 @@ type PayerIssuanceRate = {
   enabled: boolean
 }
 
-type Redeems = {
-  loading: boolean
-  enabled: boolean
-}
-
 type PayRedeemCardProps = {
   className?: string
 }
 
-export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
-  const project = useProjectContext()
+export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
+  const { ruleset, rulesetMetadata } = useJBRulesetContext()
   const state = useProjectSelector(state => state.payRedeem.cardState)
-  const dispatch = useProjectDispatch()
-  // TODO: We should probably break out tokens panel hook into reusable module
-  const { userTokenBalance: panelBalance } = useTokensPanel()
-  const unclaimedTokenBalance = useUnclaimedTokenBalance()
-  const projectHasErc20Token = useProjectHasErc20Token()
   const { value: hasNfts, loading: hasNftsLoading } = useHasNftRewards()
+  const { data: payoutLimit } = usePayoutLimit()
+  const dispatch = useProjectDispatch()
 
-  const tokenBalance = panelBalance
-    ? parseFloat(panelBalance.replaceAll(',', ''))
-    : undefined
+  const projectHasErc20Token = false // TODO
 
-  const fundingCycleLoading =
-    project.loading.fundingCycleLoading ||
-    !project.fundingCycle ||
-    !project.fundingCycleMetadata
-
-  const payerIssuanceRate = useMemo<PayerIssuanceRate>(() => {
-    if (!project.fundingCycle || !project.fundingCycleMetadata) {
-      return {
-        loading: fundingCycleLoading,
-        enabled: false,
-      }
-    }
-
-    const weightAmount = computeIssuanceRate(
-      project.fundingCycle,
-      project.fundingCycleMetadata,
-      'payer',
-      false,
-    )
-    const hasPayerIssuanceRate = Number(weightAmount) > 0
-    return {
-      loading: fundingCycleLoading,
-      enabled: hasPayerIssuanceRate,
-    }
-  }, [project.fundingCycle, project.fundingCycleMetadata, fundingCycleLoading])
+  // TODO: We should probably break out tokens panel hook into reusable module
+  // const { userTokenBalance: panelBalance } = useTokensPanel()
+  // const tokenBalance = panelBalance
+  //   ? parseFloat(panelBalance.replaceAll(',', ''))
+  //   : undefined
+  const tokenBalance = 0 // TODO
 
   const redeems = {
-    loading: fundingCycleLoading,
-    enabled: !project.fundingCycleMetadata?.pauseRedeem || false,
+    loading: ruleset.isLoading,
+    enabled:
+      !((rulesetMetadata.data?.redemptionRate?.value ?? 0n) > 0n) || false,
   }
 
-  const noticeText = useMemo(() => {
-    const showPayerIssuance =
-      !payerIssuanceRate.enabled && !payerIssuanceRate.loading
-    if (!showPayerIssuance) {
-      return
-    }
-
-    const showNfts = hasNfts && !hasNftsLoading
-    if (showNfts) {
-      return t`Project isn't currently issuing tokens, but is issuing NFTs`
-    }
-
-    return t`Project isn't currently issuing tokens`
-  }, [payerIssuanceRate, hasNfts, hasNftsLoading])
+  const weight = ruleset.data?.weight
+  const isIssuingTokens = Boolean(weight && weight.value > 0n)
+  const showNfts = hasNfts && !hasNftsLoading
+  const noticeText = isIssuingTokens
+    ? showNfts
+      ? t`Project isn't currently issuing tokens, but is issuing NFTs`
+      : t`Project isn't currently issuing tokens`
+    : undefined
 
   const redeemDisabled =
-    project.fundingCycleMetadata?.redemptionRate.eq(0) ||
-    isInfiniteDistributionLimit(project.distributionLimit)
+    !rulesetMetadata.data?.redemptionRate ||
+    payoutLimit?.amount === MAX_PAYOUT_LIMIT
 
   return (
     <div className={twMerge('flex flex-col', className)}>
@@ -170,7 +128,7 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
             <PayConfiguration
               userTokenBalance={tokenBalance}
               projectHasErc20Token={projectHasErc20Token}
-              payerIssuanceRate={payerIssuanceRate}
+              isIssuingTokens={isIssuingTokens}
             />
           ) : (
             <RedeemConfiguration
@@ -181,9 +139,9 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
         </div>
       </div>
 
-      <EthPerTokenAccordion />
+      {/* <EthPerTokenAccordion /> */}
 
-      {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
+      {!isIssuingTokens && noticeText && (
         <Callout.Info
           className="mt-6 py-2 px-3.5 text-xs leading-5 dark:bg-slate-700"
           collapsible={false}
@@ -193,13 +151,13 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
         </Callout.Info>
       )}
 
-      <NftCreditsCallout />
-
+      {/* <NftCreditsCallout /> */}
+      {/* 
       {projectHasErc20Token && unclaimedTokenBalance?.gt(0) && (
         <ClaimErc20Callout className="mt-4" unclaimed={unclaimedTokenBalance} />
-      )}
+      )} */}
 
-      <PayProjectModal />
+      {/* <PayProjectModal /> */}
     </div>
   )
 }
@@ -220,8 +178,9 @@ const ChoiceButton = ({
   if (disabled) {
     tooltip = t`Disabled for this project`
   }
-  const Button = useMemo(
-    () => (
+
+  return (
+    <Tooltip title={tooltip}>
       <button
         disabled={disabled}
         onClick={onClick}
@@ -236,10 +195,8 @@ const ChoiceButton = ({
       >
         {children}
       </button>
-    ),
-    [children, disabled, onClick, selected],
+    </Tooltip>
   )
-  return <Tooltip title={tooltip}>{Button}</Tooltip>
 }
 
 const PayRedeemInput = ({
@@ -443,7 +400,8 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
   isIssuingTokens,
 }) => {
   const { payDisabled, message } = usePayProjectDisabled()
-  const { tokenSymbol } = useProjectContext()
+  const { token } = useJBTokenContext()
+  const tokenSymbol = token?.data?.symbol
   const chosenNftRewards = useProjectSelector(
     state => state.projectCart.chosenNftRewards,
   )
@@ -464,10 +422,9 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
     pv: PV_V2,
     uri: projectMetadata?.logoUri,
   })
-  const tokenReceivedAmount = useTokensPerEth({
-    amount: payAmount ? parseFloat(payAmount) : cartPayAmount ?? 0,
-    currency: V2V3_CURRENCY_ETH,
-  })
+
+  const tokenReceivedAmount = { receivedTickets: '0' } // TODO get from sdk
+
   const insufficientBalance = useMemo(() => {
     if (!wallet.balance) return false
     const amount = cartPayAmount ?? 0
@@ -599,7 +556,9 @@ const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
   userTokenBalance,
   projectHasErc20Token,
 }) => {
-  const { tokenSymbol, distributionLimitCurrency } = useProjectContext()
+  const { token } = useJBTokenContext()
+  const tokenSymbol = token?.data?.symbol
+  const { data: payoutLimit } = usePayoutLimit()
   const { projectId, projectMetadata } = useProjectMetadataContext()
   const redeemTokensTx = useRedeemTokensTx()
   const wallet = useWallet()
@@ -634,11 +593,11 @@ const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
 
   // 0.5% slippage for USD-denominated tokens
   const slippage = useMemo(() => {
-    if (distributionLimitCurrency?.eq(V2V3_CURRENCY_USD)) {
+    if (payoutLimit?.currency === V2V3_CURRENCY_USD) {
       return ethReceivedFromTokens?.mul(1000).div(1005)
     }
     return ethReceivedFromTokens
-  }, [distributionLimitCurrency, ethReceivedFromTokens])
+  }, [payoutLimit?.currency, ethReceivedFromTokens])
 
   const redeem = useCallback(async () => {
     if (!slippage) {
@@ -814,7 +773,6 @@ const NftReward: React.FC<{
     increaseQuantity,
     decreaseQuantity,
   } = useNftCartItem(nft)
-  const { setProjectPageTab } = useProjectPageQueries()
 
   const handleRemove = useCallback(() => {
     emitConfirmationDeletionModal({
@@ -832,12 +790,7 @@ const NftReward: React.FC<{
     }
   }, [decreaseQuantity, handleRemove, quantity])
 
-  const priceText = useMemo(() => {
-    if (price === null) {
-      return '-'
-    }
-    return formatCurrencyAmount(price)
-  }, [price])
+  const priceText = price === null ? '-' : formatCurrencyAmount(price)
 
   return (
     <div className={twMerge('flex items-center justify-between', className)}>
@@ -850,11 +803,7 @@ const NftReward: React.FC<{
           }}
         />
         <div className="flex flex-col">
-          <div
-            className="flex items-center gap-2"
-            role="button"
-            onClick={() => setProjectPageTab('nft_rewards')}
-          >
+          <div className="flex items-center gap-2">
             <TruncatedText
               className="max-w-[70%] text-sm font-medium text-grey-900 hover:underline dark:text-slate-100"
               text={name}

@@ -434,13 +434,13 @@ const DownArrow = ({ className }: { className?: string }) => {
 type PayConfigurationProps = {
   userTokenBalance: number | undefined
   projectHasErc20Token: boolean
-  isIssuingTokens: boolean
+  payerIssuanceRate: PayerIssuanceRate
 }
 
 const PayConfiguration: React.FC<PayConfigurationProps> = ({
   userTokenBalance,
   projectHasErc20Token,
-  isIssuingTokens,
+  payerIssuanceRate,
 }) => {
   const { payDisabled, message } = usePayProjectDisabled()
   const { tokenSymbol } = useProjectContext()
@@ -537,7 +537,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
           />
           <PayRedeemInput
             label={t`You receive`}
-            redeemUnavailable={!isIssuingTokens}
+            redeemUnavailable={!payerIssuanceRate.enabled}
             downArrow
             readOnly
             token={{

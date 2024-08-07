@@ -2,14 +2,14 @@ import { useUniswapPriceQuery } from 'components/AMMPrices/hooks/useERC20Uniswap
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { BigNumber } from 'ethers'
+import { ProjectCartNftReward } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/components/ReduxProjectCartProvider'
+import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { BUYBACK_DELEGATE_ENABLED_PROJECT_IDS } from 'packages/v2v3/constants/buybackDelegateEnabledProjectIds'
 import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import { MAX_RESERVED_RATE } from 'packages/v2v3/utils/math'
 import { useCallback, useContext } from 'react'
 import { encodeDelegatePayMetadata } from 'utils/delegateMetadata/encodeDelegateMetadata'
 import { parseWad, stripCommas } from 'utils/format/formatNumber'
-import { ProjectCartNftReward } from '../../components/ReduxProjectCartProvider'
-import { useProjectContext } from '../useProjectContext'
 
 function usePrepareJbBuybackDelegatePayMetadata({
   weiAmount,

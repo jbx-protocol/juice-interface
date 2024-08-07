@@ -4,14 +4,14 @@ import ExternalLink from 'components/ExternalLink'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { Formik } from 'formik'
 import Image from 'next/image'
-import {
-  PayProjectModalFormValues,
-  usePayProjectModal,
-} from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/usePayProjectModal/usePayProjectModal'
 import { twMerge } from 'tailwind-merge'
 import { helpPagePath } from 'utils/routes'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
+import {
+  PayProjectModalFormValues,
+  usePayProjectModal,
+} from './hooks/usePayProjectModal/usePayProjectModal'
 
 export const PayProjectModal: React.FC = () => {
   const {

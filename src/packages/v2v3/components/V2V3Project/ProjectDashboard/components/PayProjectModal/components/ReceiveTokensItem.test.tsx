@@ -3,12 +3,10 @@
  */
 
 import { render, screen } from '@testing-library/react'
-import { useProjectPaymentTokens } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPaymentTokens'
+import { useProjectPaymentTokens } from '../hooks/useProjectPaymentTokens'
 import { ReceiveTokensItem } from './ReceiveTokensItem'
 
-jest.mock(
-  'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPaymentTokens',
-)
+jest.mock('../hooks/useProjectPaymentTokens')
 
 describe('ReceiveTokensItem', () => {
   const DefaultUseProjectPaymentTokens = {

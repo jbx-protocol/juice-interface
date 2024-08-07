@@ -3,18 +3,21 @@ import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { TxStatus } from 'models/transaction'
+import { useProjectPageQueries } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import {
-    V2V3_CURRENCY_ETH,
-    V2V3_CURRENCY_USD,
+  useProjectDispatch,
+  useProjectSelector,
+} from 'packages/v2v3/components/V2V3Project/ProjectDashboard/redux/hooks'
+import { projectCartActions } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/redux/projectCartSlice'
+import {
+  V2V3_CURRENCY_ETH,
+  V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { useCallback, useContext, useMemo, useReducer } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import * as Yup from 'yup'
-import { useProjectDispatch, useProjectSelector } from '../../redux/hooks'
-import { projectCartActions } from '../../redux/projectCartSlice'
-import { useProjectPageQueries } from '../useProjectPageQueries'
 import { payProjectModalReducer } from './payProjectModalReducer'
 import { usePayProjectTx } from './usePayProjectTx'
 

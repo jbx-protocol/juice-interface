@@ -5,16 +5,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { render, screen } from '@testing-library/react'
 import { Formik } from 'formik'
-import { usePayProjectModal } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/usePayProjectModal/usePayProjectModal'
-import { useProjectPaymentTokens } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPaymentTokens'
+import { usePayProjectModal } from '../hooks/usePayProjectModal/usePayProjectModal'
+import { useProjectPaymentTokens } from '../hooks/useProjectPaymentTokens'
 import { ReceiveSection } from './ReceiveSection'
 
-jest.mock(
-  'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/usePayProjectModal/usePayProjectModal',
-)
-jest.mock(
-  'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPaymentTokens',
-)
+jest.mock('../hooks/usePayProjectModal/usePayProjectModal')
+jest.mock('../hooks/useProjectPaymentTokens')
 
 jest.mock('./ReceiveNftItem', () => ({
   ReceiveNftItem: jest.fn().mockImplementation(() => <div>NFT</div>),

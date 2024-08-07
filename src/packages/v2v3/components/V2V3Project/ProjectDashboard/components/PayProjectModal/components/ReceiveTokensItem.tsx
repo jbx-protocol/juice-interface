@@ -4,10 +4,10 @@ import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeade
 import TooltipIcon from 'components/TooltipIcon'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useProjectHasErc20Token } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectHasErc20Token'
-import { useProjectPaymentTokens } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPaymentTokens'
 import { BUYBACK_DELEGATE_ENABLED_PROJECT_IDS } from 'packages/v2v3/constants/buybackDelegateEnabledProjectIds'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { useProjectPaymentTokens } from '../hooks/useProjectPaymentTokens'
 
 export const ReceiveTokensItem = ({ className }: { className?: string }) => {
   const { projectId } = useContext(ProjectMetadataContext)

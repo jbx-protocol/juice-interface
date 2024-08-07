@@ -5,7 +5,7 @@ import { useFormikContext } from 'formik'
 import {
   PayProjectModalFormValues,
   usePayProjectModal,
-} from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/usePayProjectModal/usePayProjectModal'
+} from '../hooks/usePayProjectModal/usePayProjectModal'
 import { MessageInput } from './MessageInput'
 
 export const MessageSection = () => {

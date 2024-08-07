@@ -1,5 +1,5 @@
 import { useTokensPerEth } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useTokensPerEth'
-import { useProjectSelector } from '../redux/hooks'
+import { useProjectSelector } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/redux/hooks'
 
 export const useProjectPaymentTokens = () => {
   const payAmount = useProjectSelector(state => state.projectCart.payAmount)

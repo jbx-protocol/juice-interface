@@ -3,8 +3,8 @@ import { useFormikContext } from 'formik'
 import {
   PayProjectModalFormValues,
   usePayProjectModal,
-} from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/usePayProjectModal/usePayProjectModal'
-import { useProjectPaymentTokens } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPaymentTokens'
+} from '../hooks/usePayProjectModal/usePayProjectModal'
+import { useProjectPaymentTokens } from '../hooks/useProjectPaymentTokens'
 import { EditRewardBeneficiary } from './EditRewardBeneficiary'
 import { ReceiveNftItem } from './ReceiveNftItem'
 import { ReceiveTokensItem } from './ReceiveTokensItem'

@@ -10,12 +10,15 @@ import { transformPayEventsRes } from "../utils/transformEventsData";
 export const useDownloadPayments = (blockNumber: number, projectId: number) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data: payEventsData } = useSubgraphQuery(PayEventsDocument, {
-    orderBy: PayEvent_OrderBy.timestamp,
-    orderDirection: OrderDirection.desc,
-    where: {
-      projectId: Number(projectId),
-    },
+  const { data: payEventsData } = useSubgraphQuery({
+    document: PayEventsDocument, 
+    variables: {
+      orderBy: PayEvent_OrderBy.timestamp,
+      orderDirection: OrderDirection.desc,
+      where: {
+        projectId: Number(projectId),
+      },
+    }
   });
   
   const downloadPayments = useCallback(async () => {

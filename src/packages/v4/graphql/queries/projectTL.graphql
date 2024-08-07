@@ -1,0 +1,130 @@
+fragment ProjectTLParts on Project {
+  currentBalance
+  volume
+  trendingScore
+}
+
+query ProjectTL(
+  $id: ID!
+  $block0: Int
+  $block1: Int
+  $block2: Int
+  $block3: Int
+  $block4: Int
+  $block5: Int
+  $block6: Int
+  $block7: Int
+  $block8: Int
+  $block9: Int
+  $block10: Int
+  $block11: Int
+  $block12: Int
+  $block13: Int
+  $block14: Int
+  $block15: Int
+  $block16: Int
+  $block17: Int
+  $block18: Int
+  $block19: Int
+  $block20: Int
+  $block21: Int
+  $block22: Int
+  $block23: Int
+  $block24: Int
+  $block25: Int
+  $block26: Int
+  $block27: Int
+  $block28: Int
+  $block29: Int
+) {
+  p0: project(id: $id, block: { number: $block0 }) {
+    ...ProjectTLParts
+  }
+  p1: project(id: $id, block: { number: $block1 }) {
+    ...ProjectTLParts
+  }
+  p2: project(id: $id, block: { number: $block2 }) {
+    ...ProjectTLParts
+  }
+  p3: project(id: $id, block: { number: $block3 }) {
+    ...ProjectTLParts
+  }
+  p4: project(id: $id, block: { number: $block4 }) {
+    ...ProjectTLParts
+  }
+  p5: project(id: $id, block: { number: $block5 }) {
+    ...ProjectTLParts
+  }
+  p6: project(id: $id, block: { number: $block6 }) {
+    ...ProjectTLParts
+  }
+  p7: project(id: $id, block: { number: $block7 }) {
+    ...ProjectTLParts
+  }
+  p8: project(id: $id, block: { number: $block8 }) {
+    ...ProjectTLParts
+  }
+  p9: project(id: $id, block: { number: $block9 }) {
+    ...ProjectTLParts
+  }
+  p10: project(id: $id, block: { number: $block10 }) {
+    ...ProjectTLParts
+  }
+  p11: project(id: $id, block: { number: $block11 }) {
+    ...ProjectTLParts
+  }
+  p12: project(id: $id, block: { number: $block12 }) {
+    ...ProjectTLParts
+  }
+  p13: project(id: $id, block: { number: $block13 }) {
+    ...ProjectTLParts
+  }
+  p14: project(id: $id, block: { number: $block14 }) {
+    ...ProjectTLParts
+  }
+  p15: project(id: $id, block: { number: $block15 }) {
+    ...ProjectTLParts
+  }
+  p16: project(id: $id, block: { number: $block16 }) {
+    ...ProjectTLParts
+  }
+  p17: project(id: $id, block: { number: $block17 }) {
+    ...ProjectTLParts
+  }
+  p18: project(id: $id, block: { number: $block18 }) {
+    ...ProjectTLParts
+  }
+  p19: project(id: $id, block: { number: $block19 }) {
+    ...ProjectTLParts
+  }
+  p20: project(id: $id, block: { number: $block20 }) {
+    ...ProjectTLParts
+  }
+  p21: project(id: $id, block: { number: $block21 }) {
+    ...ProjectTLParts
+  }
+  p22: project(id: $id, block: { number: $block22 }) {
+    ...ProjectTLParts
+  }
+  p23: project(id: $id, block: { number: $block23 }) {
+    ...ProjectTLParts
+  }
+  p24: project(id: $id, block: { number: $block24 }) {
+    ...ProjectTLParts
+  }
+  p25: project(id: $id, block: { number: $block25 }) {
+    ...ProjectTLParts
+  }
+  p26: project(id: $id, block: { number: $block26 }) {
+    ...ProjectTLParts
+  }
+  p27: project(id: $id, block: { number: $block27 }) {
+    ...ProjectTLParts
+  }
+  p28: project(id: $id, block: { number: $block28 }) {
+    ...ProjectTLParts
+  }
+  p29: project(id: $id, block: { number: $block29 }) {
+    ...ProjectTLParts
+  }
+}

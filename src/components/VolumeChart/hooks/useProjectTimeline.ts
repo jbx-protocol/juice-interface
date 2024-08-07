@@ -1,9 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
+import { PV_V4 } from 'constants/pv'
 import { readProvider } from 'constants/readProvider'
 import EthDater from 'ethereum-block-by-date'
-import { useProjectTlQuery } from 'generated/graphql'
+import { ProjectTlQuery, useProjectTlQuery } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
 import { PV } from 'models/pv'
+import { ProjectTlDocument } from 'packages/v4/graphql/client/graphql'
+import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 import { useMemo } from 'react'
 import { wadToFloat } from 'utils/format/formatNumber'
 import { getSubgraphIdForProject } from 'utils/graph'
@@ -73,23 +76,26 @@ export function useProjectTimeline({
       id: blocks ? getSubgraphIdForProject(pv, projectId) : '',
       ...blocks,
     },
+    skip: pv === PV_V4
   })
-  // TODO: const { data: v4QueryResult } = useSubgraphQuery(ProjectTlDocument, {
-  //   where: {
-  //     projectId,
-  //   },
-  // })
+
+  const { data: v4QueryResult } = useSubgraphQuery({
+    document: ProjectTlDocument, 
+    variables: {
+      id: blocks ? projectId.toString() : '',
+      ...blocks,
+    },
+    enabled: pv === PV_V4
+  })
 
   const points = useMemo(() => {
-    // TODO: if (!(v1v2v3QueryResult || v4QueryResult) || !timestamps) return
-    if (!v1v2v3QueryResult || !timestamps) return
-    // TODO: const queryResult = pv === PV_V4 ? v4QueryResult : v1v2v3QueryResult
-    const queryResult = v1v2v3QueryResult
+    const queryResult = pv === PV_V4 ? v4QueryResult : v1v2v3QueryResult
+    if (!queryResult || !timestamps) return
 
     const points: ProjectTimelinePoint[] = []
 
     for (let i = 0; i < COUNT; i++) {
-      const point = queryResult[`p${i}` as keyof typeof queryResult]
+      const point = (queryResult as ProjectTlQuery)[`p${i}` as keyof typeof queryResult]
 
       if (!point) continue
 
@@ -102,7 +108,7 @@ export function useProjectTimeline({
     }
 
     return points
-  }, [timestamps, v1v2v3QueryResult])
+  }, [timestamps, v1v2v3QueryResult, v4QueryResult, pv])
 
   return {
     points,

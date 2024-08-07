@@ -3,7 +3,7 @@ import { CartItemBadge } from 'components/CartItemBadge'
 import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
 import { useNftCartItem } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useNftCartItem'
 import { twMerge } from 'tailwind-merge'
-import { ProjectCartNftReward } from '../../ReduxProjectCartProvider'
+import { ProjectCartNftReward } from '../../../ReduxProjectCartProvider'
 
 export const ReceiveNftItem = ({
   className,

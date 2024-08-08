@@ -2,16 +2,12 @@ import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import {
-  ParticipantsDownloadDocument,
-  ParticipantsDownloadQuery,
-  QueryParticipantsArgs,
-} from 'generated/graphql'
+
 import { useBlockNumber } from 'hooks/useBlockNumber'
-import { client } from 'lib/apollo/client'
-import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useJBContractContext } from 'juice-sdk-react'
+import { ParticipantsDownloadDocument } from 'packages/v4/graphql/client/graphql'
+import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
+import { useCallback, useEffect, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { fromWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
@@ -26,7 +22,7 @@ export function DownloadTokenHoldersModal({
   open: boolean | undefined
   onCancel: VoidFunction | undefined
 }) {
-  const { projectId, projectMetadata, pv } = useContext(ProjectMetadataContext)
+  const { projectId } = useJBContractContext()
 
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
@@ -34,12 +30,27 @@ export function DownloadTokenHoldersModal({
   // Use block number 5 blocks behind chain head to allow for subgraph being a bit behind on indexing.
   const { data: latestBlockNumber } = useBlockNumber({ behindChainHeight: 5 })
 
+  const { data } = useSubgraphQuery({
+    document: ParticipantsDownloadDocument,
+    variables: {
+      where: {
+        projectId: Number(projectId),
+      },
+      block: {
+        number: blockNumber
+      }
+    },
+    enabled: Boolean(projectId && open),
+  })
+
+  const participants = data?.participants
+
   useEffect(() => {
     setBlockNumber(latestBlockNumber)
   }, [latestBlockNumber])
 
   const download = useCallback(async () => {
-    if (blockNumber === undefined || !projectId || !pv) return
+    if (blockNumber === undefined || !projectId) return
 
     const rows = [
       [
@@ -54,23 +65,6 @@ export function DownloadTokenHoldersModal({
 
     setLoading(true)
     try {
-      const participants = await paginateDepleteQuery< // TODO: need v4 queries for this
-        ParticipantsDownloadQuery,
-        QueryParticipantsArgs
-      >({
-        client,
-        document: ParticipantsDownloadDocument,
-        variables: {
-          where: {
-            projectId,
-            pv,
-          },
-          block: {
-            number: blockNumber,
-          },
-        },
-      })
-
       if (!participants) {
         emitErrorNotification(t`Error loading holders`)
         throw new Error('No data.')
@@ -92,7 +86,7 @@ export function DownloadTokenHoldersModal({
       })
 
       downloadCsvFile(
-        `@${projectMetadata?.name}_holders-block${blockNumber}.csv`,
+        `@v4-project-${projectId}_holders-block${blockNumber}.csv`,
         rows,
       )
 
@@ -101,7 +95,7 @@ export function DownloadTokenHoldersModal({
       console.error('Error downloading participants', e)
       setLoading(false)
     }
-  }, [blockNumber, projectId, tokenSymbol, projectMetadata, pv])
+  }, [blockNumber, projectId, tokenSymbol, participants])
 
   return (
     <Modal

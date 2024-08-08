@@ -9,7 +9,7 @@ import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/Titl
 // import { TransferUnclaimedTokensModalWrapper } from './components/TransferUnclaimedTokensModalWrapper'
 import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
 import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
-import { V4TokenHoldersModal } from 'packages/v4/components/V4TokenHoldersModal'
+import { V4TokenHoldersModal } from 'packages/v4/components/modals/V4TokenHoldersModal/V4TokenHoldersModal'
 import { useCallback, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
 import { useV4TokensPanel } from './hooks/useV4TokensPanel'

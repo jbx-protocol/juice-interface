@@ -12,11 +12,15 @@ import { V4ActivityList } from './V4ActivityList'
 
 export function V4ActivityPanel() {
   const { projectId } = useJBContractContext()
-  const { data } = useSubgraphQuery(ProjectsDocument, {
-    where: {
-      projectId: Number(projectId),
-    },
+  const { data } = useSubgraphQuery({
+    document: ProjectsDocument, 
+    variables: {
+      where: {
+        projectId: Number(projectId),
+      },
+    }
   })
+  
   const createdAt = data?.projects?.[0].createdAt
 
   return (

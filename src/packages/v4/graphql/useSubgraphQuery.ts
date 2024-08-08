@@ -8,10 +8,15 @@ BigInt.prototype.toJSON = function () {
   return { $bigint: this.toString() }
 }
 
-export function useSubgraphQuery<TResult, TVariables>(
+export function useSubgraphQuery<TResult, TVariables>({ 
+  document, 
+  enabled = true, 
+  variables 
+}: {
   document: TypedDocumentNode<TResult, TVariables>,
-  ...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
-): UseQueryResult<TResult> {
+  enabled?: boolean,
+  variables?: TVariables
+}): UseQueryResult<TResult> {
   return useQuery({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     queryKey: [(document.definitions[0] as any).name.value, variables],
@@ -26,5 +31,6 @@ export function useSubgraphQuery<TResult, TVariables>(
         queryKey[1] ? queryKey[1] : undefined,
       )
     },
+    enabled
   })
 }

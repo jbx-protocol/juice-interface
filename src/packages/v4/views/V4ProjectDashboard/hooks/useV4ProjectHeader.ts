@@ -35,10 +35,13 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
 
   const projectIdNum = parseInt(projectId.toString())
 
-  const { data } = useSubgraphQuery(ProjectsDocument, {
-    where: {
-      projectId: projectIdNum,
-    },
+  const { data } = useSubgraphQuery({
+    document: ProjectsDocument, 
+    variables: {
+      where: {
+        projectId: projectIdNum,
+      },
+    }
   })
 
   const projectStatsData = data?.projects?.[0]

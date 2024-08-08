@@ -18,12 +18,15 @@ export function V4ActivityList() {
   const { projectId } = useJBContractContext()
 
   // TODO: pageSize (pagination)
-  const { data: payEventsData, isLoading } = useSubgraphQuery(PayEventsDocument, {
-    orderBy: PayEvent_OrderBy.timestamp,
-    orderDirection: OrderDirection.desc,
-    where: {
-      projectId: Number(projectId),
-    },
+  const { data: payEventsData, isLoading } = useSubgraphQuery({
+    document: PayEventsDocument, 
+    variables: {
+      orderBy: PayEvent_OrderBy.timestamp,
+      orderDirection: OrderDirection.desc,
+      where: {
+        projectId: Number(projectId),
+      },
+    }
   })
 
   const payEvents = transformPayEventsRes(payEventsData) ?? []

@@ -21,7 +21,7 @@ import { PV } from 'models/pv'
 import { useState } from 'react'
 import { formatPercent } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { DownloadParticipantsModal } from '../DownloadParticipantsModal'
+import { DownloadParticipantsModal } from './DownloadParticipantsModal'
 
 interface ParticipantOption {
   label: string

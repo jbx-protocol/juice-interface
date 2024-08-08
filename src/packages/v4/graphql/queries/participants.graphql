@@ -1,0 +1,24 @@
+query Participants(
+  $where: Participant_filter
+  $first: Int
+  $skip: Int
+  $orderBy: Participant_orderBy
+  $orderDirection: OrderDirection
+) {
+  participants(
+    where: $where
+    first: $first
+    skip: $skip
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+  ) {
+    wallet {
+      id
+    }
+    volume
+    lastPaidTimestamp
+    balance
+    stakedBalance
+    id
+  }
+}

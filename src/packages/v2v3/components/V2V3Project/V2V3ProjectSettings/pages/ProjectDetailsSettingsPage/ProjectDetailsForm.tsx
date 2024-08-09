@@ -3,12 +3,15 @@ import { Button, Form, FormInstance } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { FormItems } from 'components/formItems'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { MinimalCollapse } from 'components/MinimalCollapse'
 import { RichEditor } from 'components/RichEditor'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 
 import { ProjectTagName } from 'models/project-tags'
 import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { normalizeHandle } from 'utils/format/formatHandle'
 
 export type ProjectDetailsFormFields = {
@@ -145,17 +148,21 @@ export function ProjectDetailsForm({
             <FormItems.ProjectPayDisclosure name="payDisclosure" />
           </MinimalCollapse>
         </div>
-        {/* <div>
-          <MinimalCollapse header={<Trans>Additional settings</Trans>}>
-            <Form.Item
-              name="projectRequiredOFACCheck"
-              label={t`OFAC Sanctions screening`}
-              extra={t`Activating this option enables running the user's wallet address against OFAC’s Specially Designated Nationals (SDN) list`}
-            >
-              <JuiceSwitch label={t`Check User Wallet Address`} />
-            </Form.Item>
-          </MinimalCollapse>
-        </div> */}
+
+        {featureFlagEnabled(FEATURE_FLAGS.OFAC) ? (
+          <div>
+            <MinimalCollapse header={<Trans>Additional settings</Trans>}>
+              <Form.Item
+                name="projectRequiredOFACCheck"
+                label={t`OFAC Sanctions screening`}
+                extra={t`Activating this option enables running the user's wallet address against OFAC’s Specially Designated Nationals (SDN) list`}
+              >
+                <JuiceSwitch label={t`Check User Wallet Address`} />
+              </Form.Item>
+            </MinimalCollapse>
+          </div>
+        ) : null}
+
         <div>
           <Form.Item>
             {saveButton ?? (

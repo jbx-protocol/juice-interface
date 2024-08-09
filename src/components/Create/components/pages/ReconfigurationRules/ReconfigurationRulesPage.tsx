@@ -15,10 +15,12 @@ import {
   TERMINAL_MIGRATION_EXPLANATION,
 } from 'components/strings'
 import { CREATE_FLOW } from 'constants/fathomEvents'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { trackFathomGoal } from 'lib/fathom'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { Wizard } from '../../Wizard/Wizard'
@@ -82,12 +84,14 @@ export const ReconfigurationRulesPage = () => {
               <JuiceSwitch label={t`Hold fees`} />
             </Form.Item>
 
-            {/* <Form.Item
-              name="projectRequiredOFACCheck"
-              extra={t`Disallow payments from users who appear on OFAC’s Specially Designated Nationals (SDN) list. Note: payments are still possible on other websites (for example, Etherscan).`}
-            >
-              <JuiceSwitch label={t`OFAC Sanctions screening`} />
-            </Form.Item> */}
+            {featureFlagEnabled(FEATURE_FLAGS.OFAC) ? (
+              <Form.Item
+                name="projectRequiredOFACCheck"
+                extra={t`Disallow payments from users who appear on OFAC’s Specially Designated Nationals (SDN) list. Note: payments are still possible on other websites (for example, Etherscan).`}
+              >
+                <JuiceSwitch label={t`OFAC Sanctions screening`} />
+              </Form.Item>
+            ) : null}
           </CreateCollapse.Panel>
           <CreateCollapse.Panel
             key={1}

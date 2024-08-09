@@ -1,5 +1,7 @@
 import { t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { featureFlagEnabled } from 'utils/featureFlags'
 import { ReviewDescription } from '../ReviewDescription'
 import { useRulesReview } from './hooks/useRulesReview'
 
@@ -13,7 +15,7 @@ export const RulesReview = () => {
     terminalMigration,
     controllerMigration,
     holdFees,
-    // ofac,
+    ofac,
   } = useRulesReview()
 
   return (
@@ -63,10 +65,12 @@ export const RulesReview = () => {
           <div className="text-base font-medium">{controllerMigration}</div>
         }
       />
-      {/* <ReviewDescription
-        title={t`OFAC Sanctions screening`}
-        desc={<div className="text-base font-medium">{ofac}</div>}
-      /> */}
+      {featureFlagEnabled(FEATURE_FLAGS.OFAC) ? (
+        <ReviewDescription
+          title={t`OFAC Sanctions screening`}
+          desc={<div className="text-base font-medium">{ofac}</div>}
+        />
+      ) : null}
     </div>
   )
 }

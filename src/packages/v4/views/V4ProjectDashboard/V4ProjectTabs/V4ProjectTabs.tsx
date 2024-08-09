@@ -5,6 +5,7 @@ import { useOnScreen } from 'hooks/useOnScreen'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
+import V4AboutPanel from './V4AboutPanel'
 import { V4ActivityPanel } from './V4ActivityPanel/V4ActivityPanel'
 import { V4CyclesPayoutsPanel } from './V4CyclesPayoutsPanel/V4CyclesPayoutsPanel'
 import { V4TokensPanel } from './V4TokensPanel/V4TokensPanel'
@@ -45,7 +46,7 @@ export const V4ProjectTabs = ({ className }: { className?: string }) => {
   const tabs: ProjectTabConfig[] = useMemo(
     () => [
       { id: 'activity', name: t`Activity`, panel: <V4ActivityPanel /> },
-      { id: 'about', name: t`About`, panel: <></> },
+      { id: 'about', name: t`About`, panel: <V4AboutPanel /> },
       {
         id: 'cycle_payouts',
         name: t`Cycles & Payouts`,

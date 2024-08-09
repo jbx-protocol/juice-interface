@@ -1,5 +1,5 @@
 import { Trans, t } from '@lingui/macro'
-import { EmptyScreen } from '../EmptyScreen'
+import { EmptyScreen } from 'components/Project/ProjectTabs/EmptyScreen'
 import { NftReward, NftRewardSkeleton } from './NftReward/NftReward'
 import { RedeemNftsSection } from './RedeemNftsSection/RedeemNftsSection'
 import { useNftRewardsPanel } from './hooks/useNftRewardsPanel'

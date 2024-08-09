@@ -39,15 +39,15 @@ import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
-// import { PayProjectModal } from './PayProjectModal/PayProjectModal'
-import { ProjectCartNftReward } from './ReduxProjectCartProvider'
+import { ProjectCartNftReward } from '../ReduxProjectCartProvider'
 import {
   useProjectDispatch,
   useProjectSelector,
   useProjectStore,
-} from './redux/hooks'
-import { payRedeemActions } from './redux/payRedeemSlice'
-import { projectCartActions } from './redux/projectCartSlice'
+} from '../redux/hooks'
+import { payRedeemActions } from '../redux/payRedeemSlice'
+import { projectCartActions } from '../redux/projectCartSlice'
+import { PayProjectModal } from './PayProjectModal/PayProjectModal'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
 
@@ -60,7 +60,9 @@ type PayRedeemCardProps = {
   className?: string
 }
 
-export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
+export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
+  className,
+}) => {
   const { ruleset, rulesetMetadata } = useJBRulesetContext()
   const state = useProjectSelector(state => state.payRedeem.cardState)
   const { value: hasNfts, loading: hasNftsLoading } = useHasNftRewards()
@@ -157,7 +159,7 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => 
         <ClaimErc20Callout className="mt-4" unclaimed={unclaimedTokenBalance} />
       )} */}
 
-      {/* <PayProjectModal /> */}
+      <PayProjectModal />
     </div>
   )
 }

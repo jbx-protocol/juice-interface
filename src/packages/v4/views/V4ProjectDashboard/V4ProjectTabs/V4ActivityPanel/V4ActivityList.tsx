@@ -22,14 +22,14 @@ export function V4ActivityList() {
 
   // TODO: pageSize (pagination)
   const { data: payEventsData, isLoading } = useSubgraphQuery({
-    document: PayEventsDocument,
+    document: PayEventsDocument, 
     variables: {
       orderBy: PayEvent_OrderBy.timestamp,
       orderDirection: OrderDirection.desc,
       where: {
         projectId: Number(projectId),
       },
-    },
+    }
   })
 
   const payEvents = transformPayEventsRes(payEventsData) ?? []

@@ -25,9 +25,11 @@ export function V2V3ProjectToolsDrawer({
   open?: boolean
   onClose?: VoidFunction
 }) {
-  const { projectId } = useContext(ProjectMetadataContext)
+  const { projectId, projectMetadata } = useContext(ProjectMetadataContext)
   const { payoutSplits, reservedTokensSplits, handle } =
     useContext(V2V3ProjectContext)
+
+  const hasOFAC = projectMetadata?.projectRequiredOFACCheck
 
   const isMobile = useMobile()
 
@@ -48,18 +50,21 @@ export function V2V3ProjectToolsDrawer({
         </section>
 
         <Divider />
+        
+        {hasOFAC ? null : (
+          <>
+            <section>
+              <h3 className="text-primary">
+                <Trans>Project payer addresses</Trans>
+              </h3>
 
-        <section>
-          <h3 className="text-primary">
-            <Trans>Project payer addresses</Trans>
-          </h3>
-
-          <PaymentAddressSection
-            useDeployProjectPayerTx={useDeployProjectPayerTx}
-          />
-        </section>
-
-        <Divider />
+              <PaymentAddressSection
+                useDeployProjectPayerTx={useDeployProjectPayerTx}
+              />
+            </section>
+            <Divider />
+          </>
+        )}
 
         <ExportSection
           exportPayoutsButton={

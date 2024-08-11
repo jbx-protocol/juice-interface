@@ -1,7 +1,7 @@
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useContext, useEffect, useState } from 'react'
-import { useProjectPageQueries } from './useProjectPageQueries'
+import { useProjectPageQueries } from '../../../hooks/useProjectPageQueries'
 
 export const useSuccessPayView = () => {
   const { projectMetadata, projectId } = useProjectMetadataContext()

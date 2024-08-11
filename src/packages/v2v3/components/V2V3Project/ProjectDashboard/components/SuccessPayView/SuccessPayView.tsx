@@ -5,11 +5,11 @@ import { SubscribeButton } from 'components/buttons/SubscribeButton/SubscribeBut
 import confettiAnimationJuicebox from 'data/lottie/confetti-animation-juicebox.json'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { useSuccessPayView } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useSuccessPayView'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { SuccessNftItem } from './components/SuccessNftItem'
 import { SuccessPayCard } from './components/SuccessPayCard'
 import { SuccessTokensItem } from './components/SuccessTokensItem'
+import { useSuccessPayView } from './hooks/useSuccessPayView'
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 
 export const SuccessPayView = () => {

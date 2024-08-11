@@ -17,6 +17,7 @@ import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermis
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
 import { twMerge } from 'tailwind-merge'
 import { settingsPagePath, v4ProjectRoute } from 'utils/routes'
+import { useChainId } from 'wagmi'
 import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
 import { ProjectHeaderStats } from './ProjectHeaderStats'
 
@@ -24,6 +25,7 @@ export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
 export const V4ProjectHeader = ({ className }: { className?: string }) => {
   const socialLinks = useSocialLinks()
+  const chainId = useChainId()
 
   const {
     title,
@@ -129,7 +131,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                 {gnosisSafe && projectId && (
                   <GnosisSafeBadge
                     safe={gnosisSafe}
-                    href={`${v4ProjectRoute({ projectId })}/safe`}
+                    href={`${v4ProjectRoute({ projectId, chainId })}/safe`}
                   />
                 )}
               </span>

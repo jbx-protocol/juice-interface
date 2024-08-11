@@ -30,7 +30,6 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
   const {
     title,
     subtitle,
-    chainName,
     projectId,
     owner,
     gnosisSafe,
@@ -114,10 +113,9 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                 <Subtitle subtitle={subtitle.text} />
               ))}
             <div className="text-grey-500 dark:text-slate-200">
-              {projectId && chainName ? (
+              {projectId ? (
                 <V4ProjectHandleLink
                   className="text-grey-500 dark:text-slate-200"
-                  chainName={chainName}
                   projectId={projectId}
                 />
               ) : null}

@@ -3,7 +3,6 @@ import { Tooltip } from 'antd'
 import { AllocatorBadge } from 'components/AllocatorBadge'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { JBSplit } from 'juice-sdk-core'
-import { useRouter } from 'next/router'
 import V4ProjectHandleLink from '../../V4ProjectHandleLink'
 export function JuiceboxProjectBeneficiary({
   split,
@@ -12,9 +11,6 @@ export function JuiceboxProjectBeneficiary({
   split: JBSplit
   value?: string | JSX.Element
 }) {
-  const router = useRouter()
-  const { chainName } = router.query
-
   if (!split.projectId) return null
 
   return (
@@ -23,7 +19,6 @@ export function JuiceboxProjectBeneficiary({
         <V4ProjectHandleLink
           projectId={Number(split.projectId)}
           withProjectAvatar
-          chainName={chainName as string}
         />
         <AllocatorBadge allocator={split.hook} />
       </div>

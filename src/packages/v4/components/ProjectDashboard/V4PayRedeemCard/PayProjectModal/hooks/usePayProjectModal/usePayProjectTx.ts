@@ -1,19 +1,25 @@
-import { Transaction } from 'ethers'
 import { FormikHelpers } from 'formik'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { ProjectPayReceipt } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
-import { useProjectSelector } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/redux/hooks'
-import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
-import { usePayETHPaymentTerminalTx } from 'packages/v2v3/hooks/transactor/usePayETHPaymentTerminalTx'
+import { useProjectSelector } from 'packages/v4/components/ProjectDashboard/redux/hooks'
+import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+// import { NftRewardsContext } from 'packages/v4/contexts/NftRewards/NftRewardsContext'
+// import { useProjectHasErc20 } from 'packages/v4/hooks/useProjectHasErc20'
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { NATIVE_TOKEN } from 'juice-sdk-core'
+import {
+  useJBContractContext,
+  useWriteJbMultiTerminalPay,
+} from 'juice-sdk-react'
 import { useProjectHasErc20 } from 'packages/v2v3/hooks/useProjectHasErc20'
-import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
+import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useCallback, useContext, useMemo } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
-import { parseWad } from 'utils/format/formatNumber'
+import { Address, Hash, parseEther } from 'viem'
 import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
 import { PayProjectModalFormValues } from './usePayProjectModal'
-import { usePrepareDelegatePayMetadata } from './usePrepareDelegatePayMetadata'
 
 export const usePayProjectTx = ({
   onTransactionPending: onTransactionPendingCallback,
@@ -36,24 +42,23 @@ export const usePayProjectTx = ({
   const { payAmount, chosenNftRewards } = useProjectSelector(
     state => state.projectCart,
   )
-  const {
-    nftRewards: { rewardTiers },
-  } = useContext(NftRewardsContext)
+  // const {
+  //   nftRewards: { rewardTiers },
+  // } = useContext(NftRewardsContext)
   const converter = useCurrencyConverter()
-  const payProjectTx = usePayETHPaymentTerminalTx()
   const { receivedTickets } = useProjectPaymentTokens()
   const projectHasErc20 = useProjectHasErc20()
 
   const buildPayReceipt = useCallback(
-    (e: Transaction | undefined): ProjectPayReceipt => {
+    (txHash: Hash): ProjectPayReceipt => {
       return {
         totalAmount: payAmount ?? {
           amount: 0,
-          currency: V2V3_CURRENCY_ETH,
+          currency: V4_CURRENCY_ETH,
         },
         nfts: chosenNftRewards ?? [],
         timestamp: new Date(),
-        transactionHash: e?.hash,
+        transactionHash: txHash,
         fromAddress: userAddress ?? '',
         tokensReceived: receivedTickets ?? '',
       }
@@ -63,90 +68,101 @@ export const usePayProjectTx = ({
 
   const weiAmount = useMemo(() => {
     if (!payAmount) {
-      return parseWad(0)
-    } else if (payAmount.currency === V2V3_CURRENCY_ETH) {
-      return parseWad(payAmount.amount)
+      return 0n
+    } else if (payAmount.currency === V4_CURRENCY_ETH) {
+      return parseEther(payAmount.amount.toString())
     } else {
-      return converter.usdToWei(payAmount.amount)
+      return converter.usdToWei(payAmount.amount).toBigInt()
     }
   }, [payAmount, converter])
 
-  const prepareDelegateMetadata = usePrepareDelegatePayMetadata(weiAmount, {
-    nftRewards: chosenNftRewards,
-    receivedTickets,
-  })
+  // const prepareDelegateMetadata = usePrepareDelegatePayMetadata(weiAmount, {
+  //   nftRewards: chosenNftRewards,
+  //   receivedTickets,
+  // })
+
+  const { writeContractAsync: writePay } = useWriteJbMultiTerminalPay()
+  const { contracts, projectId } = useJBContractContext()
+  const { addTransaction } = useContext(TxHistoryContext)
 
   return useCallback(
     async (
       values: PayProjectModalFormValues,
       formikHelpers: FormikHelpers<PayProjectModalFormValues>,
     ) => {
-      if (!values.userAcceptsTerms) return
+      if (
+        !weiAmount ||
+        !contracts.primaryNativeTerminal.data ||
+        !userAddress ||
+        !values.userAcceptsTerms
+      ) {
+        return
+      }
 
       const { messageString, attachedUrl } = values.message
       const memo = buildPaymentMemo({
         text: messageString,
         imageUrl: attachedUrl,
-        nftUrls: chosenNftRewards
-          .map(
-            ({ id }) =>
-              (rewardTiers ?? []).find(({ id: tierId }) => tierId === id)
-                ?.fileUrl,
-          )
-          .filter((url): url is string => !!url),
+        // nftUrls: chosenNftRewards
+        //   .map(
+        //     ({ id }) =>
+        //       (rewardTiers ?? []).find(({ id: tierId }) => tierId === id)
+        //         ?.fileUrl,
+        //   )
+        //   .filter((url): url is string => !!url),
       })
-      const beneficiary = values.beneficiaryAddress ?? userAddress
+      const beneficiary = (values.beneficiaryAddress ?? userAddress) as Address
+      const args = [
+        projectId,
+        NATIVE_TOKEN,
+        weiAmount,
+        beneficiary,
+        0n,
+        `JBM V4 ${projectId}`, // TODO update
+        '0x0',
+      ] as const
 
-      let onError = undefined
       try {
-        const success = await payProjectTx(
+        const hash = await writePay({
+          address: contracts.primaryNativeTerminal.data,
+          args,
+          value: weiAmount,
+        })
+
+        onTransactionPendingCallback(formikHelpers)
+        addTransaction?.('Pay', { hash })
+
+        const transactionReceipt = await waitForTransactionReceipt(
+          wagmiConfig,
           {
-            memo,
-            beneficiary,
-            delegateMetadata: prepareDelegateMetadata(),
-            value: weiAmount,
-            // always claim tokens if the project has an ERC20.
-            // if project has no erc20, then nothing to claim!
-            preferClaimedTokens: projectHasErc20,
-          },
-          {
-            onConfirmed(e) {
-              onTransactionConfirmedCallback(buildPayReceipt(e), formikHelpers)
-            },
-            onError(error) {
-              // This is required as the below !success check will throw a
-              // second error. The below is necessary as a user rejection does
-              // not come through here
-              // ¯\_(ツ)_/¯
-              onError = error
-            },
-            onDone() {
-              onTransactionPendingCallback(formikHelpers)
-            },
+            hash,
           },
         )
-        if (!success) {
-          onTransactionErrorCallback(
-            onError ?? new Error('Transaction failed'),
-            formikHelpers,
-          )
-        }
+
+        onTransactionConfirmedCallback(buildPayReceipt(hash), formikHelpers)
       } catch (e) {
-        onTransactionErrorCallback(e as Error, formikHelpers)
+        onTransactionErrorCallback(
+          (e as Error) ?? new Error('Transaction failed'),
+          formikHelpers,
+        )
       }
     },
     [
-      projectHasErc20,
+      // projectHasErc20,
       buildPayReceipt,
-      chosenNftRewards,
+      // chosenNftRewards,
       onTransactionConfirmedCallback,
       onTransactionErrorCallback,
       onTransactionPendingCallback,
-      payProjectTx,
-      rewardTiers,
+      // payProjectTx,
+      // rewardTiers,
       weiAmount,
       userAddress,
-      prepareDelegateMetadata,
+      // prepareDelegateMetadata,
+      projectId,
+      writePay,
+      contracts.primaryNativeTerminal.data,
+      addTransaction,
     ],
   )
 }

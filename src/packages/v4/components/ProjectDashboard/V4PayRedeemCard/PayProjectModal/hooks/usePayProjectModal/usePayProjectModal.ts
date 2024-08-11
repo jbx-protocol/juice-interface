@@ -91,11 +91,9 @@ export const usePayProjectModal = () => {
     },
   })
 
-  const primaryAmount = useMemo(() => {
-    if (!payAmount)
-      return formatCurrencyAmount({ amount: 0, currency: V2V3_CURRENCY_ETH })
-    return formatCurrencyAmount(payAmount)
-  }, [payAmount])
+  const primaryAmount = !payAmount
+    ? formatCurrencyAmount({ amount: 0, currency: V2V3_CURRENCY_ETH })
+    : formatCurrencyAmount(payAmount)
 
   const secondaryAmount = useMemo(() => {
     if (!payAmount) return undefined
@@ -112,17 +110,11 @@ export const usePayProjectModal = () => {
     })
   }, [converter, payAmount])
 
-  const pendingTransactionHash = useMemo(() => {
-    const pendingTransaction = transactions?.find(
-      tx => tx.status === TxStatus.pending,
-    )
-    return pendingTransaction?.tx?.hash
-  }, [transactions])
+  const pendingTransactionHash = transactions?.find(
+    tx => tx.status === TxStatus.pending,
+  )?.tx?.hash
 
-  const validationSchema = useMemo(
-    () => getValidationSchema(!!payDisclosure),
-    [payDisclosure],
-  )
+  const validationSchema = getValidationSchema(!!payDisclosure)
 
   return {
     open,

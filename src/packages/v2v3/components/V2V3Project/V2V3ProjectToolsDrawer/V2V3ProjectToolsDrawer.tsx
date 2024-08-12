@@ -45,14 +45,14 @@ export function V2V3ProjectToolsDrawer({
       </h1>
 
       <div className="flex flex-col gap-4">
-        <section>
-          <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
-        </section>
-
-        <Divider />
         
         {hasOFAC ? null : (
           <>
+            <section>
+              <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
+            </section>
+
+            <Divider />
             <section>
               <h3 className="text-primary">
                 <Trans>Project payer addresses</Trans>

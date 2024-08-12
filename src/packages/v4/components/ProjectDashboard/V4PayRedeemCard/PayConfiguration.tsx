@@ -2,15 +2,9 @@ import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { PV_V2 } from 'constants/pv'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { FixedInt } from 'fpnum'
 import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
 import { useWallet } from 'hooks/Wallet'
-import { formatUnits, getTokenAToBQuote } from 'juice-sdk-core'
-import {
-  useJBRulesetContext,
-  useJBTokenContext,
-  useNativeTokenSymbol,
-} from 'juice-sdk-react'
+import { useJBTokenContext } from 'juice-sdk-react'
 import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -21,6 +15,7 @@ import {
 } from '../redux/hooks'
 import { projectCartActions } from '../redux/projectCartSlice'
 import { EthereumLogo } from './EthereumLogo'
+import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
 import { PayRedeemInput } from './PayRedeemInput'
 
 type PayConfigurationProps = {
@@ -39,8 +34,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
   const wallet = useWallet()
   const { isConnected: walletConnected, connect } = useWallet()
   const { projectId, projectMetadata } = useProjectMetadataContext()
-  const { ruleset, rulesetMetadata } = useJBRulesetContext()
-  const nativeTokenSymbol = useNativeTokenSymbol()
+  const tokenReceivedAmount = useProjectPaymentTokens()
   const chosenNftRewards = useProjectSelector(
     state => state.projectCart.chosenNftRewards,
   )
@@ -60,21 +54,6 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
   const [fallbackImage, setFallbackImage] = useState<boolean>()
 
   const tokenBSymbol = token?.data?.symbol // the token the user receives (the project token)
-  const tokenA = { symbol: nativeTokenSymbol, decimals: 18 } // the token the user pays with (ETH, or the chain native token)
-  const amountBQuote =
-    ruleset.data && rulesetMetadata.data && payAmount
-      ? getTokenAToBQuote(FixedInt.parse(payAmount, tokenA.decimals), {
-          weight: ruleset.data.weight,
-          reservedPercent: rulesetMetadata.data.reservedPercent,
-        })
-      : null
-
-  const tokenReceivedAmount = {
-    receivedTickets:
-      token.data?.decimals && amountBQuote?.payerTokens
-        ? formatUnits(amountBQuote?.payerTokens, token.data?.decimals)
-        : null,
-  } // TODO get from sdk
 
   const amount = cartPayAmount ?? 0
   const insufficientBalance = !wallet.balance
@@ -84,9 +63,10 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
 
   const handleUserPayAmountChange = useCallback(
     (value: string | undefined) => {
+      const parsedValue = parseFloat(value || '0')
       dispatch(
         projectCartActions.addPayment({
-          amount: parseFloat(value || '0'),
+          amount: !Number.isNaN(parsedValue) ? parsedValue : 0,
           currency: V4_CURRENCY_ETH,
         }),
       )

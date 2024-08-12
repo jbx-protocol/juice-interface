@@ -1,9 +1,8 @@
-import { CaseReducer, PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { BigNumber } from 'ethers'
+import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { NftRewardTier } from 'models/nftRewards'
-import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
-import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
+import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { formatEther, parseEther } from 'viem'
 import {
   ProjectCartCurrencyAmount,
   ProjectCartNftReward,
@@ -48,11 +47,11 @@ const projectCartSlice = createSlice({
   reducers: {
     addPayment: (
       state,
-      action: PayloadAction<{ amount: number; currency: V2V3CurrencyOption }>,
+      action: PayloadAction<{ amount: number; currency: V4CurrencyOption }>,
     ) => {
       const nftRewards = calculateEligibleNftRewards({
         rewardTiers: state.allNftRewards,
-        weiPayAmount: parseWad(action.payload.amount.toString()),
+        weiPayAmount: parseEther(action.payload.amount.toString()),
         nftRewards: state.chosenNftRewards,
       })
       state.payAmount = {
@@ -80,21 +79,22 @@ const projectCartSlice = createSlice({
       const existingIndex = state.chosenNftRewards.findIndex(
         reward => reward.id === nftReward.id,
       )
-      const payAmount = parseWad(state.payAmount?.amount ?? 0).add(
-        parseWad(chosenNftCost ?? 0),
-      )
+      const payAmount =
+        parseEther((state.payAmount?.amount ?? 0).toString()) +
+        parseEther((chosenNftCost ?? 0).toString())
+
       if (existingIndex === -1) {
         state.payAmount = {
-          amount: Number(fromWad(payAmount)),
-          currency: state.payAmount?.currency ?? V2V3_CURRENCY_ETH,
+          amount: Number(formatEther(payAmount)),
+          currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
         }
         state.chosenNftRewards = [...state.chosenNftRewards, nftReward]
       }
       const newNftRewards = [...state.chosenNftRewards]
       newNftRewards[existingIndex] = nftReward
       state.payAmount = {
-        amount: Number(fromWad(payAmount)),
-        currency: state.payAmount?.currency ?? V2V3_CURRENCY_ETH,
+        amount: Number(formatEther(payAmount)),
+        currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
       }
       state.chosenNftRewards = newNftRewards
     },
@@ -108,14 +108,15 @@ const projectCartSlice = createSlice({
         nft => nft.id === id,
       )?.quantity
       if (quantity && quantity > 0) {
-        const nftCostBn = parseWad(removedNftCost ?? 0).mul(quantity)
-        const payAmountBn = parseWad(payAmount)
-        payAmount = Math.max(0, Number(fromWad(payAmountBn.sub(nftCostBn))))
+        const nftCostBn =
+          parseEther((removedNftCost ?? 0).toString()) * BigInt(quantity)
+        const payAmountBn = parseEther(payAmount.toString())
+        payAmount = Math.max(0, Number(formatEther(payAmountBn - nftCostBn)))
       }
       state.payAmount = payAmount
         ? {
             amount: payAmount,
-            currency: state.payAmount?.currency ?? V2V3_CURRENCY_ETH,
+            currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
           }
         : undefined
       state.chosenNftRewards = state.chosenNftRewards.filter(
@@ -139,12 +140,13 @@ const projectCartSlice = createSlice({
       const chosenNftCost = state.allNftRewards.find(
         n => n.id === id,
       )?.contributionFloor
-      const payAmount = parseWad(state.payAmount?.amount ?? 0).add(
-        parseWad(chosenNftCost ?? 0),
-      )
+      const payAmount =
+        parseEther((state.payAmount?.amount ?? 0).toString()) +
+        parseEther((chosenNftCost ?? 0).toString())
+
       state.payAmount = {
-        amount: Number(fromWad(payAmount)),
-        currency: state.payAmount?.currency ?? V2V3_CURRENCY_ETH,
+        amount: Number(formatEther(payAmount)),
+        currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
       }
       state.chosenNftRewards = newNftRewards
     },
@@ -160,16 +162,17 @@ const projectCartSlice = createSlice({
       const removedNftCost = state.allNftRewards.find(
         n => n.id === id,
       )?.contributionFloor
-      const payAmountBn = parseWad(state.payAmount?.amount ?? 0).sub(
-        parseWad(removedNftCost ?? 0),
-      )
-      const payAmount = Math.max(0, Number(fromWad(payAmountBn)))
+      const payAmountBn =
+        parseEther((state.payAmount?.amount ?? 0).toString()) -
+        parseEther((removedNftCost ?? 0).toString())
+
+      const payAmount = Math.max(0, Number(formatEther(payAmountBn)))
       const newNftRewards = [...state.chosenNftRewards]
       if (newNftRewards[existingIndex].quantity - 1 <= 0) {
         state.payAmount = payAmount
           ? {
               amount: payAmount,
-              currency: state.payAmount?.currency ?? V2V3_CURRENCY_ETH,
+              currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
             }
           : undefined
         state.chosenNftRewards = newNftRewards.filter(
@@ -183,7 +186,7 @@ const projectCartSlice = createSlice({
         state.payAmount = payAmount
           ? {
               amount: payAmount,
-              currency: state.payAmount?.currency ?? V2V3_CURRENCY_ETH,
+              currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
             }
           : undefined
         state.chosenNftRewards = newNftRewards
@@ -217,11 +220,11 @@ const calculateEligibleNftRewards = ({
   nftRewards,
 }: {
   rewardTiers: NftRewardTier[] | undefined
-  weiPayAmount: BigNumber
+  weiPayAmount: bigint
   nftRewards: ProjectCartNftReward[]
 }) => {
-  if (!rewardTiers || weiPayAmount.eq(0)) return []
-  const ethAmount = Number(fromWad(weiPayAmount))
+  if (!rewardTiers || weiPayAmount === 0n) return []
+  const ethAmount = Number(formatEther(weiPayAmount))
   const potentialRewards = rewardTiers
     .filter(tier => (tier.remainingSupply ?? Infinity) > 0)
     .filter(tier => tier.contributionFloor <= ethAmount)

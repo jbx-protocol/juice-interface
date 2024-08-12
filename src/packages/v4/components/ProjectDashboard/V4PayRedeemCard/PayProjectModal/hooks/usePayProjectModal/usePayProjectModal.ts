@@ -2,6 +2,7 @@ import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
 import { TxStatus } from 'models/transaction'
 import { useProjectPageQueries } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import {
@@ -15,8 +16,8 @@ import {
 } from 'packages/v2v3/utils/currency'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { useCallback, useContext, useMemo, useReducer } from 'react'
-import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
+import { formatEther, parseUnits } from 'viem'
 import * as Yup from 'yup'
 import { payProjectModalReducer } from './payProjectModalReducer'
 import { usePayProjectTx } from './usePayProjectTx'
@@ -96,16 +97,24 @@ export const usePayProjectModal = () => {
     : formatCurrencyAmount(payAmount)
 
   const secondaryAmount = useMemo(() => {
-    if (!payAmount) return undefined
+    if (!payAmount || Number.isNaN(payAmount.amount)) {
+      return undefined
+    }
+
     if (payAmount.currency === V2V3_CURRENCY_ETH) {
-      const amount = Number(converter.weiToUsd(parseWad(payAmount.amount)))
+      const amount = Number(
+        converter.weiToUsd(
+          parseUnits(payAmount.amount.toString(), NATIVE_TOKEN_DECIMALS),
+        ),
+      )
       return formatCurrencyAmount({
         amount,
         currency: V2V3_CURRENCY_USD,
       })
     }
+
     return formatCurrencyAmount({
-      amount: fromWad(converter.usdToWei(payAmount.amount)),
+      amount: formatEther(converter.usdToWei(payAmount.amount).toBigInt()),
       currency: V2V3_CURRENCY_ETH,
     })
   }, [converter, payAmount])

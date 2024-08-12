@@ -3,9 +3,9 @@ import ProjectLogo from 'components/ProjectLogo'
 import { PV_V4 } from 'constants/pv'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { v4ProjectRoute } from 'utils/routes'
 import { useChainId } from 'wagmi'
-import { getChainName } from '../networks'
+import { getChainName } from '../utils/networks'
+import { v4ProjectRoute } from '../utils/routes'
 
 /**
  * Renders a link to a V4 project

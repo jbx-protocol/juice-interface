@@ -1,6 +1,5 @@
 import { BigNumber, BigNumberish } from 'ethers'
 import { V2V3SettingsPageKey } from 'packages/v2v3/components/V2V3Project/V2V3ProjectSettings/ProjectSettingsDashboard'
-import { getChainName } from 'packages/v4/networks'
 import qs from 'qs'
 
 const HELP_PAGE_HOSTNAME = 'https://docs.juicebox.money'
@@ -19,17 +18,6 @@ export const v2v3ProjectRoute = ({
     : `/v2/p/${BigNumber.from(projectId).toNumber()}`
 
   return `${route}${query ? `?${qs.stringify(query)}` : ''}`
-}
-
-export const v4ProjectRoute = ({
-  chainId,
-  projectId,
-}: {
-  chainId: number
-  projectId?: number
-}) => {
-  const chainName = getChainName(chainId)
-  return `/v4/${chainName}/p/${projectId?.toString()}`
 }
 
 export function helpPagePath(path: string): string {

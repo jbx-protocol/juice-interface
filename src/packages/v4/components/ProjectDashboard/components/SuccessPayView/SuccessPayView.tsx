@@ -1,11 +1,11 @@
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { SubscribeButton } from 'components/buttons/SubscribeButton/SubscribeButton'
 import confettiAnimationJuicebox from 'data/lottie/confetti-animation-juicebox.json'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { v2v3ProjectRoute } from 'utils/routes'
+import { v4ProjectRoute } from 'packages/v4/utils/routes'
+import { useChainId } from 'wagmi'
 import { SuccessNftItem } from './components/SuccessNftItem'
 import { SuccessPayCard } from './components/SuccessPayCard'
 import { SuccessTokensItem } from './components/SuccessTokensItem'
@@ -21,8 +21,9 @@ export const SuccessPayView = () => {
     nftPaymentSuccessModal,
     nftsPurchased,
     tokensReceivedDuringTx,
-    handle,
   } = useSuccessPayView()
+
+  const chainId = useChainId()
 
   return (
     <div className="relative mt-16 w-full max-w-xl text-center">
@@ -44,7 +45,7 @@ export const SuccessPayView = () => {
           <SuccessPayCard className="mt-6" />
 
           <div className="mt-8 flex flex-col items-center justify-center gap-1 md:flex-row">
-            {projectId && (
+            {/* {projectId && (
               <SubscribeButton
                 disableTooltip
                 className="flex items-center gap-2 py-2 px-3.5 font-medium text-bluebs-500 hover:text-bluebs-300 dark:text-bluebs-300 dark:hover:text-bluebs-500"
@@ -53,9 +54,9 @@ export const SuccessPayView = () => {
               >
                 <Trans>Subscribe to updates</Trans>
               </SubscribeButton>
-            )}
+            )} */}
 
-            <Link href={v2v3ProjectRoute({ projectId, handle })}>
+            <Link href={v4ProjectRoute({ projectId, chainId })}>
               <Button
                 className="flex items-center gap-2 py-2 px-3.5 font-medium"
                 type="link"

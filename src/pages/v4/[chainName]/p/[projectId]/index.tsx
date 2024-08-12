@@ -3,25 +3,16 @@ import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { JBChainId, JBProjectProvider } from 'juice-sdk-react'
 import { useRouter } from 'next/router'
+import { ReduxProjectCartProvider } from 'packages/v4/components/ProjectDashboard/ReduxProjectCartProvider'
+import store from 'packages/v4/components/ProjectDashboard/redux/store'
 import V4ProjectMetadataProvider from 'packages/v4/contexts/V4ProjectMetadataProvider'
+import { chainNameMap } from 'packages/v4/networks'
 import { V4ProjectDashboard } from 'packages/v4/views/V4ProjectDashboard/V4ProjectDashboard'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import React, { PropsWithChildren } from 'react'
+import { Provider } from 'react-redux'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import {
-  arbitrumSepolia,
-  baseSepolia,
-  optimismSepolia,
-  sepolia,
-} from 'viem/chains'
 import { WagmiProvider } from 'wagmi'
-
-const chainNameMap: Record<string, JBChainId> = {
-  sepolia: sepolia.id,
-  opsepolia: optimismSepolia.id,
-  basesepolia: baseSepolia.id,
-  arbsepolia: arbitrumSepolia.id,
-}
 
 export default function V4ProjectPage() {
   const router = useRouter()
@@ -54,7 +45,9 @@ const Providers: React.FC<
           }}
         >
           <V4ProjectMetadataProvider projectId={BigInt(projectId)}>
-            {children}
+            <Provider store={store}>
+              <ReduxProjectCartProvider>{children}</ReduxProjectCartProvider>
+            </Provider>
           </V4ProjectMetadataProvider>
         </JBProjectProvider>
       </WagmiProvider>

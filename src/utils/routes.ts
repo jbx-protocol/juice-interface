@@ -20,16 +20,6 @@ export const v2v3ProjectRoute = ({
   return `${route}${query ? `?${qs.stringify(query)}` : ''}`
 }
 
-export const v4ProjectRoute = ({
-  projectId,
-  chainName,
-}: {
-  projectId?: number
-  chainName?: string
-}) => {
-  return `/v4/${chainName}/p/${projectId?.toString()}`
-}
-
 export function helpPagePath(path: string): string {
   return new URL(path, HELP_PAGE_HOSTNAME).toString()
 }

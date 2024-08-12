@@ -15,8 +15,10 @@ import Link from 'next/link'
 import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
+import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { twMerge } from 'tailwind-merge'
-import { settingsPagePath, v4ProjectRoute } from 'utils/routes'
+import { settingsPagePath } from 'utils/routes'
+import { useChainId } from 'wagmi'
 import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
 import { ProjectHeaderStats } from './ProjectHeaderStats'
 
@@ -24,11 +26,11 @@ export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
 export const V4ProjectHeader = ({ className }: { className?: string }) => {
   const socialLinks = useSocialLinks()
+  const chainId = useChainId()
 
   const {
     title,
     subtitle,
-    chainName,
     projectId,
     owner,
     gnosisSafe,
@@ -112,10 +114,9 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                 <Subtitle subtitle={subtitle.text} />
               ))}
             <div className="text-grey-500 dark:text-slate-200">
-              {projectId && chainName ? (
+              {projectId ? (
                 <V4ProjectHandleLink
                   className="text-grey-500 dark:text-slate-200"
-                  chainName={chainName}
                   projectId={projectId}
                 />
               ) : null}
@@ -129,7 +130,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                 {gnosisSafe && projectId && (
                   <GnosisSafeBadge
                     safe={gnosisSafe}
-                    href={`${v4ProjectRoute({ projectId })}/safe`}
+                    href={`${v4ProjectRoute({ projectId, chainId })}/safe`}
                   />
                 )}
               </span>

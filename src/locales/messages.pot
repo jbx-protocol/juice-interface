@@ -74,9 +74,6 @@ msgstr ""
 msgid "Contract address: {0}"
 msgstr ""
 
-msgid "per {currencyText} paid"
-msgstr ""
-
 msgid "No surplus"
 msgstr ""
 
@@ -477,9 +474,6 @@ msgid "If locked, this percentage can't be edited or removed until the lock expi
 msgstr ""
 
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC-20 tokens and mint them to your wallet."
-msgstr ""
-
-msgid "Receive {receivedTickets} {receivedTokenSymbolText} {suffix}"
 msgstr ""
 
 msgid "Amount to pay out"

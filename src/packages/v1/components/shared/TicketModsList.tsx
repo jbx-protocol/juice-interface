@@ -10,6 +10,7 @@ import { useSetTicketModsTx } from 'packages/v1/hooks/transactor/useSetTicketMod
 import { V1FundingCycle } from 'packages/v1/models/fundingCycle'
 import { TicketMod } from 'packages/v1/models/mods'
 import { V1OperatorPermission } from 'packages/v1/models/permissions'
+import { parseV1TicketModsCsv } from 'packages/v1/utils/csv'
 import { MODS_TOTAL_PERCENT } from 'packages/v1/utils/mods'
 import {
   useCallback,
@@ -18,7 +19,6 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { parseV1TicketModsCsv } from 'utils/csv'
 import { formatWad, permyriadToPercent } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 export default function TicketModsList({

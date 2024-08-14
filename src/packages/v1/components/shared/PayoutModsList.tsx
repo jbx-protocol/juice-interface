@@ -14,6 +14,7 @@ import { V1CurrencyOption } from 'packages/v1/models/currencyOption'
 import { V1FundingCycle } from 'packages/v1/models/fundingCycle'
 import { PayoutMod } from 'packages/v1/models/mods'
 import { V1OperatorPermission } from 'packages/v1/models/permissions'
+import { parseV1PayoutModsCsv } from 'packages/v1/utils/csv'
 import { V1CurrencyName } from 'packages/v1/utils/currency'
 import { amountSubFee } from 'packages/v1/utils/math'
 import { MODS_TOTAL_PERCENT } from 'packages/v1/utils/mods'
@@ -24,7 +25,6 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { parseV1PayoutModsCsv } from 'utils/csv'
 import {
   formatWad,
   fromWad,

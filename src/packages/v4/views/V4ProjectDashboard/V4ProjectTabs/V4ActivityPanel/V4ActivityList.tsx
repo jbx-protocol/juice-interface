@@ -1,6 +1,11 @@
-// import { ActivityEvent } from 'components/activityEventElems/ActivityElement/ActivityElement'
+import { t } from '@lingui/macro'
+import { ActivityEvent } from 'components/activityEventElems/ActivityElement/ActivityElement'
 import Loading from 'components/Loading'
-import { useJBContractContext, useJBTokenContext } from 'juice-sdk-react'
+import {
+  NativeTokenValue,
+  useJBContractContext,
+  useJBTokenContext,
+} from 'juice-sdk-react'
 import {
   OrderDirection,
   PayEvent_OrderBy,
@@ -50,7 +55,7 @@ export function V4ActivityList() {
                 className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
                 key={event.id}
               >
-                {/* <ActivityEvent
+                <ActivityEvent
                   event={{
                     ...event,
                     from: event.beneficiary,
@@ -63,10 +68,11 @@ export function V4ActivityList() {
                   }
                   extra={
                     <span>
-                      bought {event.beneficiaryTokenCount?.format(6)} {token.data?.symbol}
+                      bought {event.beneficiaryTokenCount?.format(6)}{' '}
+                      {token.data?.symbol}
                     </span>
                   }
-                /> */}
+                />
               </div>
             )
           })

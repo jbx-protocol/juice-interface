@@ -2,17 +2,13 @@ import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { ProjectTab } from 'components/Project/ProjectTabs/ProjectTab'
 import { useOnScreen } from 'hooks/useOnScreen'
-import dynamic from 'next/dynamic'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import V4AboutPanel from './V4AboutPanel'
+import { V4ActivityPanel } from './V4ActivityPanel/V4ActivityPanel'
 import { V4CyclesPayoutsPanel } from './V4CyclesPayoutsPanel/V4CyclesPayoutsPanel'
 import { V4TokensPanel } from './V4TokensPanel/V4TokensPanel'
-const V4ActivityPanel = dynamic(
-  () => import('./V4ActivityPanel/V4ActivityPanel'),
-  { ssr: false },
-)
 
 type ProjectTabConfig = {
   id: string

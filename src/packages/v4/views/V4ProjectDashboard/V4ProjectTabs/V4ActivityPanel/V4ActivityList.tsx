@@ -1,9 +1,7 @@
-import { t } from '@lingui/macro'
 import Loading from 'components/Loading'
 import {
-  NativeTokenValue,
   useJBContractContext,
-  useJBTokenContext,
+  useJBTokenContext
 } from 'juice-sdk-react'
 import {
   OrderDirection,
@@ -11,7 +9,7 @@ import {
   PayEventsDocument,
 } from 'packages/v4/graphql/client/graphql'
 import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
-import { ActivityEvent } from './activityEventElems/ActivityElement'
+// import { ActivityEvent } from './activityEventElems/ActivityElement'
 import { ActivityOptions } from './ActivityOptions'
 import { PayEvent } from './models/ActivityEvents'
 import { transformPayEventsRes } from './utils/transformEventsData'
@@ -55,7 +53,7 @@ export function V4ActivityList() {
                 className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
                 key={event.id}
               >
-                <ActivityEvent
+                {/* <ActivityEvent
                   event={{
                     ...event,
                     from: event.beneficiary,
@@ -72,7 +70,7 @@ export function V4ActivityList() {
                       {token.data?.symbol}
                     </span>
                   }
-                />
+                /> */}
               </div>
             )
           })

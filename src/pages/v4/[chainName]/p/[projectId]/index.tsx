@@ -2,8 +2,6 @@ import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { JBChainId, JBProjectProvider } from 'juice-sdk-react'
-import { loadCatalog } from 'locales/utils'
-import { GetStaticPaths, GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { ReduxProjectCartProvider } from 'packages/v4/components/ProjectDashboard/ReduxProjectCartProvider'
@@ -23,27 +21,27 @@ const V4ProjectDashboard = dynamic(
   { ssr: false },
 )
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  }
-}
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   return {
+//     paths: [],
+//     fallback: 'blocking',
+//   }
+// }
 
-export const getStaticProps: GetStaticProps<{
-  i18n: unknown
-}> = async context => {
-  const locale = context.locale as string
-  const messages = await loadCatalog(locale)
-  const i18n = { locale, messages }
+// export const getStaticProps: GetStaticProps<{
+//   i18n: unknown
+// }> = async context => {
+//   const locale = context.locale as string
+//   const messages = await loadCatalog(locale)
+//   const i18n = { locale, messages }
 
-  return {
-    props: {
-      i18n,
-    },
-    revalidate: 10, // 10 seconds https://nextjs.org/docs/api-reference/data-fetching/get-static-props#revalidate
-  }
-}
+//   return {
+//     props: {
+//       i18n,
+//     },
+//     revalidate: 10, // 10 seconds https://nextjs.org/docs/api-reference/data-fetching/get-static-props#revalidate
+//   }
+// }
 
 // This is a hack to avoid SSR for now. At the moment when this is not applied to this page, you will see a rehydration error.
 const _Wrapper: React.FC<PropsWithChildren> = ({ children }) => {

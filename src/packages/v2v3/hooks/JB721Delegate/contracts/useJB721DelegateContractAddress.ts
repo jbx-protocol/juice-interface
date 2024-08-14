@@ -15,11 +15,6 @@ const ADDRESSES: {
   }
 } = {
   [JB721DelegateVersion.JB721DELEGATE_V3_4]: {
-    [NetworkName.goerli]: {
-      JBTiered721DelegateStore: '0x155B49f303443a3334bB2EF42E10C628438a0656', // the store from 3.3
-      JBTiered721DelegateProjectDeployer:
-        '0xB5870d8eeb195E09Ac47641121889CCdBbA3E8FE', // this is in the forge deployment manifest, but the name isn't specified because of a failed verification
-    },
     [NetworkName.sepolia]: {
       JBTiered721DelegateStore: '0xd7F9Ee12b5De2388109C9dD4fAAf39BEfe4C92FB', // the store from 3.3
       JBTiered721DelegateProjectDeployer:

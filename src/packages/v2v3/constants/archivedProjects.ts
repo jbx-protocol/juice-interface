@@ -31,7 +31,6 @@ const V2ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
     PROJECT_445,
     // OCTRA,
   ],
-  [NetworkName.goerli]: [],
   [NetworkName.sepolia]: [],
 }
 

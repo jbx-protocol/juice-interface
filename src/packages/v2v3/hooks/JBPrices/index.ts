@@ -10,7 +10,7 @@ export function useJBPrices({ cv }: { cv?: CV2V3 } = {}) {
 
   useEffect(() => {
     async function load() {
-      const JBPrices = await loadJBPrices({ cv: cv ?? defaultCv })
+      const JBPrices = await loadJBPrices()
       setContract(JBPrices)
     }
 

@@ -1,8 +1,6 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { getJuicecrowdUrl } from 'utils/juicecrowd'
 import { Badge } from './Badge'
 
 type DomainBadgeProps = {
@@ -26,11 +24,6 @@ export const DomainBadge: React.FC<DomainBadgeProps> = ({
     if (domain === 'juicecrowd') return '/assets/images/juicecrowd-logo.webp'
   }, [domain])
 
-  const linkUrl = useMemo(() => {
-    if (!domain || !projectId) return undefined
-    if (domain === 'juicecrowd') return getJuicecrowdUrl(projectId)
-  }, [projectId, domain])
-
   if (!customDomainImageSrc) return null
 
   const badge = (
@@ -44,13 +37,6 @@ export const DomainBadge: React.FC<DomainBadgeProps> = ({
       {domainString}
     </Badge>
   )
-
-  if (linkUrl)
-    return (
-      <Link href={linkUrl} target="_blank" rel="noopener noreferrer">
-        {badge}
-      </Link>
-    )
 
   return badge
 }

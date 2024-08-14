@@ -6,13 +6,14 @@ import { SubscribeButtonIcon } from 'components/buttons/SubscribeButton/Subscrib
 import { useSubscribeButton } from 'components/buttons/SubscribeButton/hooks/useSubscribeButton'
 import { PV_V2 } from 'constants/pv'
 import useMobile from 'hooks/useMobile'
-import { SocialLink } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useAboutPanel'
-import { V2V3ProjectToolsDrawer } from 'packages/v2v3/components/V2V3Project/V2V3ProjectToolsDrawer'
+// import { V2V3ProjectToolsDrawer } from 'packages/v2v3/components/V2V3Project/V2V3ProjectToolsDrawer'
 import { useMemo, useState } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { PopupMenu } from '../../ui/PopupMenu'
 import { SocialLinkButton } from './SocialLinkButton'
 import { useSocialLinks } from './hooks/useSocialLinks'
+
+type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
 export function ProjectHeaderPopupMenu({
   className,
@@ -110,10 +111,10 @@ export function ProjectHeaderPopupMenu({
         ]}
       />
 
-      <V2V3ProjectToolsDrawer
+      {/* <V2V3ProjectToolsDrawer
         open={toolsIsOpen}
         onClose={() => setToolsIsOpen(false)}
-      />
+      /> */}
     </>
   )
 }

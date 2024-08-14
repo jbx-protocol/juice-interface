@@ -8,7 +8,7 @@ import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocial
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import { ProjectHeaderPopupMenu } from 'components/Project/ProjectHeader/ProjectHeaderPopupMenu'
 import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
-import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
+// import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
 import { TruncatedText } from 'components/TruncatedText'
 import useMobile from 'hooks/useMobile'
 import Link from 'next/link'
@@ -110,9 +110,9 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                   className="text-grey-700 dark:text-slate-50 md:text-lg"
                   text={subtitle.text}
                 />
-              ) : (
-                <Subtitle subtitle={subtitle.text} />
-              ))}
+              ) : null)
+              // <Subtitle subtitle={subtitle.text} />
+            }
             <div className="text-grey-500 dark:text-slate-200">
               {projectId ? (
                 <V4ProjectHandleLink

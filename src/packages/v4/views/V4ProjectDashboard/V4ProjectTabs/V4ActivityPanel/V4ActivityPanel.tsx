@@ -2,8 +2,7 @@
 import { Trans } from '@lingui/macro'
 import { ErrorBoundaryCallout } from 'components/Callout/ErrorBoundaryCallout'
 import Loading from 'components/Loading'
-import VolumeChart from 'components/VolumeChart'
-import { PV_V4 } from 'constants/pv'
+// import VolumeChart from 'components/VolumeChart'
 import { useJBContractContext } from 'juice-sdk-react'
 import { ProjectsDocument } from 'packages/v4/graphql/client/graphql'
 import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
@@ -31,12 +30,12 @@ export function V4ActivityPanel() {
             <ErrorBoundaryCallout
               message={<Trans>Volume chart failed to load.</Trans>}
             >
-              <VolumeChart
+              {/* <VolumeChart
                 height={240}
                 projectId={Number(projectId)}
                 createdAt={createdAt}
                 pv={PV_V4}
-              />
+              /> */}
             </ErrorBoundaryCallout>
           </Suspense>
         </div>

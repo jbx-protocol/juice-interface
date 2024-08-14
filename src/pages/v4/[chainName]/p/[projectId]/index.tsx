@@ -21,12 +21,6 @@ const V4ProjectDashboard = dynamic(
   { ssr: false },
 )
 
-export async function getServerSideProps() {
-  return {
-    props: {},
-  }
-}
-
 // This is a hack to avoid SSR for now. At the moment when this is not applied to this page, you will see a rehydration error.
 const _Wrapper: React.FC<PropsWithChildren> = ({ children }) => {
   const [hasMounted, setHasMounted] = React.useState(false)

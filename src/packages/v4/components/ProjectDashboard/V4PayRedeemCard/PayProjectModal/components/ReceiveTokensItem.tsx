@@ -1,10 +1,9 @@
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { CartItemBadge } from 'components/CartItemBadge'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
-import TooltipIcon from 'components/TooltipIcon'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useProjectHasErc20Token } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectHasErc20Token'
-import { BUYBACK_DELEGATE_ENABLED_PROJECT_IDS } from 'packages/v2v3/constants/buybackDelegateEnabledProjectIds'
+// import { useProjectHasErc20Token } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectHasErc20Token'
+// import { BUYBACK_DELEGATE_ENABLED_PROJECT_IDS } from 'packages/v2v3/constants/buybackDelegateEnabledProjectIds'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPaymentTokens } from '../hooks/useProjectPaymentTokens'
@@ -12,7 +11,8 @@ import { useProjectPaymentTokens } from '../hooks/useProjectPaymentTokens'
 export const ReceiveTokensItem = ({ className }: { className?: string }) => {
   const { projectId } = useContext(ProjectMetadataContext)
   const { receivedTickets, receivedTokenSymbolText } = useProjectPaymentTokens()
-  const projectHasErc20Token = useProjectHasErc20Token()
+  // const projectHasErc20Token = useProjectHasErc20Token()
+  const projectHasErc20Token = false
 
   const badgeTitle = projectHasErc20Token ? (
     'ERC-20'
@@ -23,9 +23,6 @@ export const ReceiveTokensItem = ({ className }: { className?: string }) => {
   if (receivedTickets === '0') {
     return null
   }
-
-  const buybackDelegateEnabled =
-    projectId && BUYBACK_DELEGATE_ENABLED_PROJECT_IDS.includes(projectId)
 
   return (
     <div className={twMerge('flex flex-col gap-4', className)}>
@@ -39,16 +36,7 @@ export const ReceiveTokensItem = ({ className }: { className?: string }) => {
             <Trans>{badgeTitle} Token</Trans>
           </CartItemBadge>
         </div>
-        {buybackDelegateEnabled ? (
-          <div>
-            ≥ {receivedTickets}{' '}
-            <TooltipIcon
-              tip={t`Your payment may purchase tokens from a secondary market instead of minting new tokens. You might receive more tokens depending on the swap price.`}
-            />
-          </div>
-        ) : (
-          <div>{receivedTickets}</div>
-        )}
+        <div>{receivedTickets}</div>
       </div>
     </div>
   )

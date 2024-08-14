@@ -5,8 +5,8 @@ import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeade
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import useMobile from 'hooks/useMobile'
 import moment from 'moment'
-import { useProjectPageQueries } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
-import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
+import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
+import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 

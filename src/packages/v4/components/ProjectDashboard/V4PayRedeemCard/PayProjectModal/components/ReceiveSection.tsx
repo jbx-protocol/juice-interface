@@ -6,7 +6,6 @@ import {
 } from '../hooks/usePayProjectModal/usePayProjectModal'
 import { useProjectPaymentTokens } from '../hooks/useProjectPaymentTokens'
 import { EditRewardBeneficiary } from './EditRewardBeneficiary'
-import { ReceiveNftItem } from './ReceiveNftItem'
 import { ReceiveTokensItem } from './ReceiveTokensItem'
 
 export const ReceiveSection = ({ className }: { className?: string }) => {
@@ -37,13 +36,6 @@ export const ReceiveSection = ({ className }: { className?: string }) => {
         </span>
       </div>
       <ReceiveTokensItem className="mt-5" />
-      {nftRewards.map(nftReward => (
-        <ReceiveNftItem
-          key={nftReward.id}
-          nftReward={nftReward}
-          className="mt-5"
-        />
-      ))}
     </div>
   )
 }

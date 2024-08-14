@@ -5,7 +5,7 @@ import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
 import { useWallet } from 'hooks/Wallet'
 import { useJBTokenContext } from 'juice-sdk-react'
-import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
+// import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
@@ -29,7 +29,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
   projectHasErc20Token,
   isIssuingTokens,
 }) => {
-  const { payDisabled, message } = usePayProjectDisabled()
+  // const { payDisabled, message } = usePayProjectDisabled()
   const { token } = useJBTokenContext()
   const wallet = useWallet()
   const { isConnected: walletConnected, connect } = useWallet()
@@ -95,15 +95,12 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
     }
   }, [store])
 
+  // TODO include other 'pay disabled' logic, usePayProjectDisabled etc
   const payButtonDisabled = useMemo(() => {
     if (!walletConnected) return false
-    return (
-      insufficientBalance ||
-      cartPayAmount === 0 ||
-      !cartPayAmount ||
-      payDisabled
-    )
-  }, [cartPayAmount, insufficientBalance, payDisabled, walletConnected])
+    return insufficientBalance || cartPayAmount === 0 || !cartPayAmount
+  }, [cartPayAmount, insufficientBalance, walletConnected])
+  const message = undefined
 
   return (
     <div>

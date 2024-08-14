@@ -4,17 +4,14 @@ import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
 import { TxStatus } from 'models/transaction'
-import { useProjectPageQueries } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import {
   useProjectDispatch,
   useProjectSelector,
-} from 'packages/v2v3/components/V2V3Project/ProjectDashboard/redux/hooks'
-import { projectCartActions } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/redux/projectCartSlice'
-import {
-  V2V3_CURRENCY_ETH,
-  V2V3_CURRENCY_USD,
-} from 'packages/v2v3/utils/currency'
-import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
+} from 'packages/v4/components/ProjectDashboard/redux/hooks'
+import { projectCartActions } from 'packages/v4/components/ProjectDashboard/redux/projectCartSlice'
+import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
+import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
+import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 import { useCallback, useContext, useMemo, useReducer } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatEther, parseUnits } from 'viem'
@@ -93,7 +90,7 @@ export const usePayProjectModal = () => {
   })
 
   const primaryAmount = !payAmount
-    ? formatCurrencyAmount({ amount: 0, currency: V2V3_CURRENCY_ETH })
+    ? formatCurrencyAmount({ amount: 0, currency: V4_CURRENCY_ETH })
     : formatCurrencyAmount(payAmount)
 
   const secondaryAmount = useMemo(() => {
@@ -101,7 +98,7 @@ export const usePayProjectModal = () => {
       return undefined
     }
 
-    if (payAmount.currency === V2V3_CURRENCY_ETH) {
+    if (payAmount.currency === V4_CURRENCY_ETH) {
       const amount = Number(
         converter.weiToUsd(
           parseUnits(payAmount.amount.toString(), NATIVE_TOKEN_DECIMALS),
@@ -109,13 +106,13 @@ export const usePayProjectModal = () => {
       )
       return formatCurrencyAmount({
         amount,
-        currency: V2V3_CURRENCY_USD,
+        currency: V4_CURRENCY_USD,
       })
     }
 
     return formatCurrencyAmount({
       amount: formatEther(converter.usdToWei(payAmount.amount).toBigInt()),
-      currency: V2V3_CURRENCY_ETH,
+      currency: V4_CURRENCY_ETH,
     })
   }, [converter, payAmount])
 

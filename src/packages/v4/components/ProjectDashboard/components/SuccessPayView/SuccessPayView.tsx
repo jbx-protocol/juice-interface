@@ -6,7 +6,6 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { useChainId } from 'wagmi'
-import { SuccessNftItem } from './components/SuccessNftItem'
 import { SuccessPayCard } from './components/SuccessPayCard'
 import { SuccessTokensItem } from './components/SuccessTokensItem'
 import { useSuccessPayView } from './hooks/useSuccessPayView'
@@ -83,9 +82,6 @@ export const SuccessPayView = () => {
               <Trans>Your NFTs & Rewards</Trans>
             </h3>
             <div className="mt-4">
-              {projectPayReceipt?.nfts.map(({ id }) => (
-                <SuccessNftItem key={id} id={id} />
-              ))}
               <SuccessTokensItem />
             </div>
           </div>

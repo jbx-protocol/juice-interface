@@ -12,7 +12,7 @@ import {
   useJBContractContext,
   useWriteJbMultiTerminalPay,
 } from 'juice-sdk-react'
-import { useProjectHasErc20 } from 'packages/v2v3/hooks/useProjectHasErc20'
+// import { useProjectHasErc20 } from 'packages/v2v3/hooks/useProjectHasErc20'
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useCallback, useContext, useMemo } from 'react'
@@ -47,7 +47,7 @@ export const usePayProjectTx = ({
   // } = useContext(NftRewardsContext)
   const converter = useCurrencyConverter()
   const { receivedTickets } = useProjectPaymentTokens()
-  const projectHasErc20 = useProjectHasErc20()
+  // const projectHasErc20 = useProjectHasErc20()
 
   const buildPayReceipt = useCallback(
     (txHash: Hash): ProjectPayReceipt => {

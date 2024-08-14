@@ -1,4 +1,3 @@
-
 import { Trans } from '@lingui/macro'
 import { ErrorBoundaryCallout } from 'components/Callout/ErrorBoundaryCallout'
 import Loading from 'components/Loading'
@@ -9,17 +8,17 @@ import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 import { Suspense } from 'react'
 import { V4ActivityList } from './V4ActivityList'
 
-export default function V4ActivityPanel() {
+export function V4ActivityPanel() {
   const { projectId } = useJBContractContext()
   const { data } = useSubgraphQuery({
-    document: ProjectsDocument, 
+    document: ProjectsDocument,
     variables: {
       where: {
         projectId: Number(projectId),
       },
-    }
+    },
   })
-  
+
   const createdAt = data?.projects?.[0].createdAt
 
   return (

@@ -117,7 +117,7 @@ export function PayoutSplitRow({
             <div className="flex items-center gap-3">
               <FormattedNumberInput
                 accessory={
-                  <span className="text-sm">{currencyOrPercentSymbol}</span>
+                  <div className="text-sm pt-[2px]">{currencyOrPercentSymbol}</div>
                 }
                 accessoryPosition="left"
                 value={_value}

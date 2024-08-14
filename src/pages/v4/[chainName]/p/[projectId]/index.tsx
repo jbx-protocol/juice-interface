@@ -21,7 +21,7 @@ const V4ProjectDashboard = dynamic(
   { ssr: false },
 )
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps() {
   return {
     props: {},
   }

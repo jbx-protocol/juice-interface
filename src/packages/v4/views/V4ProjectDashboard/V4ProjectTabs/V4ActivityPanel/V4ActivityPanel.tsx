@@ -9,7 +9,7 @@ import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 import { Suspense } from 'react'
 import { V4ActivityList } from './V4ActivityList'
 
-export function V4ActivityPanel() {
+export default function V4ActivityPanel() {
   const { projectId } = useJBContractContext()
   const { data } = useSubgraphQuery({
     document: ProjectsDocument, 

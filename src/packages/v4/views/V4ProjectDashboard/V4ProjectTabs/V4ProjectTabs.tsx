@@ -49,7 +49,7 @@ export const V4ProjectTabs = ({ className }: { className?: string }) => {
 
   const tabs: ProjectTabConfig[] = useMemo(
     () => [
-      // { id: 'activity', name: t`Activity`, panel: <V4ActivityPanel /> },
+      { id: 'activity', name: t`Activity`, panel: <V4ActivityPanel /> },
       { id: 'about', name: t`About`, panel: <V4AboutPanel /> },
       {
         id: 'cycle_payouts',

@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro'
-import { ActivityEvent } from 'components/activityEventElems/ActivityElement/ActivityElement'
 import Loading from 'components/Loading'
 import {
   NativeTokenValue,
@@ -12,6 +11,7 @@ import {
   PayEventsDocument,
 } from 'packages/v4/graphql/client/graphql'
 import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
+import { ActivityEvent } from './activityEventElems/ActivityElement'
 import { ActivityOptions } from './ActivityOptions'
 import { PayEvent } from './models/ActivityEvents'
 import { transformPayEventsRes } from './utils/transformEventsData'

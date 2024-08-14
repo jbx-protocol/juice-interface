@@ -4,11 +4,11 @@ import { Button, Divider } from 'antd'
 import Loading from 'components/Loading'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import { PV_V1, PV_V2 } from 'constants/pv'
+import { useProjectEvents } from 'hooks/useProjectEvents'
 import {
   ProjectEventFilter,
   ProjectEventsQueryArgs,
-  useProjectEvents,
-} from 'hooks/useProjectEvents'
+} from 'models/projectEvents'
 import { useMemo, useState } from 'react'
 import { AnyProjectEvent } from './activityEventElems/AnyProjectEvent'
 
@@ -17,7 +17,10 @@ export interface ActivityOption {
   value: ProjectEventFilter
 }
 
-export const ALL_OPT = (): ActivityOption => ({ label: t`All activity`, value: 'all' })
+export const ALL_OPT = (): ActivityOption => ({
+  label: t`All activity`,
+  value: 'all',
+})
 
 const PV1_OPTS = (): ActivityOption[] => [
   ALL_OPT(),

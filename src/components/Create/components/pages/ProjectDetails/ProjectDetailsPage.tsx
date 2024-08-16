@@ -9,7 +9,6 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { FormImageUploader } from 'components/inputs/FormImageUploader'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import PrefixedInput from 'components/inputs/PrefixedInput'
 import { RichEditor } from 'components/RichEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { constants } from 'ethers'
@@ -133,7 +132,7 @@ export const ProjectDetailsPage: React.FC<
               </Col>
               <Col span={12}>
                 <Form.Item name="projectTwitter" label={t`Twitter handle`}>
-                  <PrefixedInput prefix={'@'} />
+                  <TwitterHandleInputWrapper />
                 </Form.Item>
               </Col>
             </Row>
@@ -275,5 +274,41 @@ const AmountInput = ({
         }
       />
     </div>
+  )
+}
+
+// Exists just to solve an issue where a user might paste a twitter url instead of just the handle
+export const TwitterHandleInputWrapper = ({
+  value,
+  onChange,
+}: {
+  value?: string
+  onChange?: (val: string) => void
+}) => {
+  const [_value, _setValue] = useState<string>(value ?? '')
+  const setValue = onChange ?? _setValue
+  value = value ?? _value
+
+  const onInputChange = useCallback(
+    (value: string | undefined) => {
+      const httpOrHttpsRegex = /^(http|https):\/\//
+      if (value?.length && value.match(httpOrHttpsRegex)) {
+        const handle = value.split('/').pop()
+        if (handle) {
+          setValue(handle)
+          return
+        }
+      }
+      setValue(value ?? '')
+    },
+    [setValue],
+  )
+
+  return (
+    <JuiceInput
+      value={value}
+      onChange={e => onInputChange(e.target.value)}
+      prefix="@"
+    />
   )
 }

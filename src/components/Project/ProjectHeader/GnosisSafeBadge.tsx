@@ -1,4 +1,3 @@
-import Icon from '@ant-design/icons/Icon'
 import { plural, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { useQueuedSafeTransactions } from 'hooks/safe/useQueuedSafeTransactions'
@@ -100,7 +99,7 @@ function BadgeMightHaveNotice({
       }
     >
       <div className="relative flex">
-        <Icon component={() => <SafeIcon href={href} />} />
+        <SafeIcon href={href} />
         <Notice />
       </div>
     </Tooltip>

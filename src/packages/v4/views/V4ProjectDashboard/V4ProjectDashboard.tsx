@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 import { V4ProjectHeader } from './V4ProjectHeader'
-// import { V4ProjectTabs } from './V4ProjectTabs/V4ProjectTabs'
+import { V4ProjectTabs } from './V4ProjectTabs/V4ProjectTabs'
 
 export function V4ProjectDashboard() {
   const { projectPayReceipt } = useProjectPageQueries()
@@ -42,12 +42,12 @@ export function V4ProjectDashboard() {
                 '[@media(min-width:960px)]:order-last [@media(min-width:960px)]:min-w-[340px] [@media(min-width:960px)]:max-w-md',
               )}
             />
-            {/* <V4ProjectTabs
+            <V4ProjectTabs
               className={twMerge(
                 'mt-10 w-full',
                 '[@media(min-width:960px)]:order-first [@media(min-width:960px)]:max-w-[596px]',
               )}
-            /> */}
+            />
           </div>
         </div>
       </div>

@@ -49,7 +49,8 @@ export default async function handler(
       'image/vnd.mozilla.apng',
     ]
     if (!acceptedTypes.includes(contentType)) {
-      return res.status(403).json({ error: 'Forbidden. Invalid content-type.' })
+      res.status(403).json({ error: 'Forbidden. Invalid content-type.' })
+      return
     }
 
     // Check the file signature (magic numbers) https://en.wikipedia.org/wiki/List_of_file_signatures
@@ -69,14 +70,13 @@ export default async function handler(
         data[3] === 0x38
       ) // GIF
     ) {
-      return res
-        .status(403)
-        .json({ error: 'Forbidden. Invalid file signature.' })
+      res.status(403).json({ error: 'Forbidden. Invalid file signature.' })
+      return
     }
 
-    return res.redirect(imageUrl).end()
+    res.redirect(imageUrl).end()
   } catch (error) {
     logger.error({ error })
-    return res.status(500).json({ error: 'failed to resolve image' })
+    res.status(500).json({ error: 'failed to resolve image' })
   }
 }

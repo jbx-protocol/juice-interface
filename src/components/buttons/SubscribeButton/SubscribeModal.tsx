@@ -1,4 +1,4 @@
-import { CheckCircleOutlined } from '@ant-design/icons'
+import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import { Modal } from 'antd'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
@@ -54,7 +54,7 @@ export const SubscribeModal = () => {
 
 const CheckBullet = ({ text }: { text: ReactNode }) => (
   <div className="flex items-center gap-x-2">
-    <CheckCircleOutlined className="text-action-primary" />
+    <CheckCircleIcon className="text-action-primary" />
     {text}
   </div>
 )

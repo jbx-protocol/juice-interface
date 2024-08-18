@@ -1,4 +1,4 @@
-import { LoadingOutlined } from '@ant-design/icons'
+import LoadingOutlined from '@ant-design/icons/LoadingOutlined'
 import { Spin } from 'antd'
 import { SpinSize } from 'antd/lib/spin'
 import { twMerge } from 'tailwind-merge'

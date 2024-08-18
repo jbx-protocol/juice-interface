@@ -1,4 +1,4 @@
-import Icon from '@ant-design/icons'
+import Icon from '@ant-design/icons/Icon'
 import { plural, Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { useQueuedSafeTransactions } from 'hooks/safe/useQueuedSafeTransactions'

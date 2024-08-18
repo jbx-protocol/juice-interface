@@ -1,4 +1,4 @@
-import { EditOutlined } from '@ant-design/icons'
+import { PencilSquareIcon } from '@heroicons/react/24/outline'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
@@ -24,7 +24,7 @@ export function EditProjectHandleButton() {
           })}
           legacyBehavior
         >
-          <Button type="link" icon={<EditOutlined />}>
+          <Button type="link" icon={<PencilSquareIcon />}>
             <span>
               <Trans>Add handle</Trans>
             </span>

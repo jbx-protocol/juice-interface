@@ -1,4 +1,4 @@
-import { LockFilled } from '@ant-design/icons'
+import { LockClosedIcon } from '@heroicons/react/24/solid'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
@@ -33,7 +33,7 @@ export function PayoutTitle({ payoutSplit }: { payoutSplit: Split }) {
             'yyyy-MM-DD',
           )}`}
         >
-          <LockFilled />
+          <LockClosedIcon className="inline h-4 w-4" />
         </Tooltip>
       )}
     </div>

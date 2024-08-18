@@ -1,4 +1,4 @@
-import { LoadingOutlined } from '@ant-design/icons'
+import LoadingOutlined from '@ant-design/icons/LoadingOutlined'
 import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { formatWad } from 'utils/format/formatNumber'

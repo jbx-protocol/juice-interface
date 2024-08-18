@@ -1,12 +1,14 @@
-import { PlusOutlined } from '@ant-design/icons'
+import { PlusCircleIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
-
 import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
 import { useState } from 'react'
 import { helpPagePath } from 'utils/routes'
-import { AddEditAllocationModal, AddEditAllocationModalEntity } from '../Allocation/AddEditAllocationModal'
+import {
+  AddEditAllocationModal,
+  AddEditAllocationModalEntity,
+} from '../Allocation/AddEditAllocationModal'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
 import { PayoutTableSettings } from './PayoutTableSettings'
@@ -60,7 +62,7 @@ export function HeaderRows() {
               <Button
                 type="ghost"
                 onClick={() => setAddRecipientModalOpen(true)}
-                icon={<PlusOutlined />}
+                icon={<PlusCircleIcon className="h-4 w-4" />}
               >
                 <span>
                   <Trans>Add recipient</Trans>

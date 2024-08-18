@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { useJuiceTheme } from 'contexts/Theme/useJuiceTheme'
-import Image from "next/legacy/image"
+import Image from "next/image"
 import { twMerge } from 'tailwind-merge'
 
 export const EmptyScreen = ({

@@ -7,8 +7,8 @@ import { projectCartActions } from 'packages/v4/components/ProjectDashboard/redu
 import { useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
-// import { V4ProjectHeader } from './V4ProjectHeader'
-import { V4ProjectTabs } from './V4ProjectTabs/V4ProjectTabs'
+import { V4ProjectHeader } from './V4ProjectHeader'
+// import { V4ProjectTabs } from './V4ProjectTabs/V4ProjectTabs'
 
 export function V4ProjectDashboard() {
   const { projectPayReceipt } = useProjectPageQueries()
@@ -29,7 +29,7 @@ export function V4ProjectDashboard() {
       </div>
       <div className="flex w-full justify-center md:px-6">
         <div className="flex w-full max-w-6xl flex-col">
-          {/* <V4ProjectHeader className="mt-12 px-4 md:mt-4 md:px-0" /> */}
+          <V4ProjectHeader className="mt-12 px-4 md:mt-4 md:px-0" />
           <div
             className={twMerge(
               'mx-auto w-full min-w-0 max-w-xl px-4 md:px-0',
@@ -42,12 +42,12 @@ export function V4ProjectDashboard() {
                 '[@media(min-width:960px)]:order-last [@media(min-width:960px)]:min-w-[340px] [@media(min-width:960px)]:max-w-md',
               )}
             /> */}
-            <V4ProjectTabs
+            {/* <V4ProjectTabs
               className={twMerge(
                 'mt-10 w-full',
                 '[@media(min-width:960px)]:order-first [@media(min-width:960px)]:max-w-[596px]',
               )}
-            />
+            /> */}
           </div>
         </div>
       </div>

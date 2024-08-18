@@ -1,7 +1,6 @@
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import confettiAnimationJuicebox from 'data/lottie/confetti-animation-juicebox.json'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
@@ -9,7 +8,7 @@ import { useChainId } from 'wagmi'
 import { SuccessPayCard } from './components/SuccessPayCard'
 import { SuccessTokensItem } from './components/SuccessTokensItem'
 import { useSuccessPayView } from './hooks/useSuccessPayView'
-const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
+const Confetti = dynamic(() => import('components/Confetti'), { ssr: false })
 
 export const SuccessPayView = () => {
   const {
@@ -27,10 +26,7 @@ export const SuccessPayView = () => {
   return (
     <div className="relative mt-16 w-full max-w-xl text-center">
       {confettiVisible && (
-        <Lottie
-          className="absolute left-1/2 mx-auto w-full -translate-x-1/2"
-          animationData={confettiAnimationJuicebox}
-        />
+        <Confetti className="absolute left-1/2 mx-auto w-full -translate-x-1/2" />
       )}
       <h1 className="mb-0 font-display text-5xl font-bold">
         <Trans>Success!</Trans>

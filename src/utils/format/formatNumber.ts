@@ -161,12 +161,12 @@ export const fracDiv = (quotient: string, dividend: string) => {
 const separateThousands = (str?: string, separator = thousandsSeparator) => {
   if (!str?.trim().length) return
 
-  return str.replace(/\B(?=(\d{3})+(?!\d))/g, separator)
+  return str.replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
 
 // Strips string of all commas
 export const stripCommas = (string: string) => {
-  return string.replace(/,/g, '')
+  return string.replace(/,/g, '');
 }
 
 export const formattedNum = (

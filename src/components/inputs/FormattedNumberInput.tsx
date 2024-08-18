@@ -110,5 +110,5 @@ export default function FormattedNumberInput({
         {accessory && <div>{accessory}</div>}
       </div>
     </div>
-  )
+  );
 }

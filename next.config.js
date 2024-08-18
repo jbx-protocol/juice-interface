@@ -176,7 +176,7 @@ const nextConfig = removeImports({
           ...SECURITY_HEADERS,
         ],
       },
-    ]
+    ];
   },
   images: {
     remotePatterns: [

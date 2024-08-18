@@ -8,7 +8,7 @@ import ExternalLink from 'components/ExternalLink'
 import { SectionContainer } from 'components/Home/SectionContainer'
 import { SectionHeading } from 'components/Home/SectionHeading'
 import { XLButton } from 'components/buttons/XLButton'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import Link from 'next/link'
 import sassyBlueberry from '/public/assets/images/sassy-blueberry.webp'
 

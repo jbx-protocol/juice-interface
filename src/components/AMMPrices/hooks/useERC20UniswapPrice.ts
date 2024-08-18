@@ -37,6 +37,7 @@ interface State {
 type Props = {
   tokenSymbol: string | undefined
   tokenAddress: string | undefined
+  enabled?: boolean
 }
 
 /**
@@ -128,7 +129,11 @@ async function getPoolState(poolContract: Contract) {
  * Hook to fetch the Uniswap price for a given token.
  * Uniswap-related code inspired by https://docs.uniswap.org/sdk/guides/fetching-prices.
  */
-export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
+export function useUniswapPriceQuery({
+  tokenSymbol,
+  tokenAddress,
+  enabled,
+}: Props) {
   return useQuery({
     queryKey: ['uniswap-price', tokenSymbol, tokenAddress],
     queryFn: async () => {
@@ -186,6 +191,6 @@ export function useUniswapPriceQuery({ tokenSymbol, tokenAddress }: Props) {
       }
     },
     refetchInterval: 30000, // refetch every 30 seconds
-    enabled: Boolean(tokenAddress && tokenSymbol),
+    enabled: Boolean(tokenAddress && tokenSymbol && enabled),
   })
 }

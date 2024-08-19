@@ -4,9 +4,9 @@ import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2 } from 'constants/pv'
 import { useProjectHandleText } from 'hooks/useProjectHandleText'
 import Link from 'next/link'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { v2v3ProjectRoute } from 'utils/routes'
 
 /**
  * Renders a link to a v2v3 project that displays its handle, or fallback text if handle is missing.

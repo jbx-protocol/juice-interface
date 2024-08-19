@@ -10,10 +10,10 @@ import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { ContractVersionSelect } from 'packages/v2v3/components/V2V3Project/V2V3ProjectHeaderActions/ContractVersionSelect'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
-import { v2v3ProjectRoute } from 'utils/routes'
 import SocialLinks from './SocialLinks'
 
 function ProjectSubheading({

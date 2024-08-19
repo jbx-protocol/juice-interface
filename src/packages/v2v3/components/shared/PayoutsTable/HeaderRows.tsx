@@ -8,7 +8,7 @@ import {
   AddEditAllocationModalEntity,
 } from 'packages/v2v3/components/shared/Allocation/AddEditAllocationModal'
 import { useState } from 'react'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
 import { PayoutTableSettings } from './PayoutTableSettings'

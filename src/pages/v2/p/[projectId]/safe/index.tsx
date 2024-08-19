@@ -5,9 +5,9 @@ import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
 import { useRouter } from 'next/router'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { V2V3ProjectPageProvider } from 'packages/v2v3/contexts/V2V3ProjectPageProvider'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { useContext } from 'react'
 import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
-import { v2v3ProjectRoute } from 'utils/routes'
 
 function V2V3ProjectSafeDashboard() {
   const { handle, projectOwnerAddress } = useContext(V2V3ProjectContext)

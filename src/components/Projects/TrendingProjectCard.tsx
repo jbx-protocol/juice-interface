@@ -9,7 +9,7 @@ import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { DBProject } from 'models/dbProject'
 import Link from 'next/link'
-import { v2v3ProjectRoute } from 'utils/routes'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
 
 export default function TrendingProjectCard({

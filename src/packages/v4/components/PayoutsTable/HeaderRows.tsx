@@ -4,7 +4,7 @@ import { Button } from 'antd'
 import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
 import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
 import { useState } from 'react'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 import {
   AddEditAllocationModal,
   AddEditAllocationModalEntity,

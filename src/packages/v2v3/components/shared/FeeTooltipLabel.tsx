@@ -8,7 +8,7 @@ import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
 import { amountSubFee, formatFee } from 'packages/v2v3/utils/math'
 import { formatWad } from 'utils/format/formatNumber'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 
 export const FeeTooltipLabel = ({
   currency,

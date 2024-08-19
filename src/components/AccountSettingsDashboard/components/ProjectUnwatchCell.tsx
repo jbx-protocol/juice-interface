@@ -1,9 +1,9 @@
 import { useProjectHandleText } from 'hooks/useProjectHandleText'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import Link from 'next/link'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { v2v3ProjectRoute } from 'utils/routes'
 import { useProjectUnwatchCellData } from '../hooks/useProjectUnwatchCellData'
 import { UnwatchButton } from './UnwatchButton'
 

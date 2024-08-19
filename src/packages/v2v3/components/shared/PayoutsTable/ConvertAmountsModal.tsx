@@ -27,7 +27,7 @@ import {
 } from 'redux/hooks/useEditingDistributionLimit'
 import { parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 
 export const ConvertAmountsModal = ({
   open,

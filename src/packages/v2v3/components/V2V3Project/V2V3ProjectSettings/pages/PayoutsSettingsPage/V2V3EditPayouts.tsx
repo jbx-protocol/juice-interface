@@ -19,11 +19,11 @@ import { PayoutCard } from 'packages/v2v3/components/shared/PayoutCard/PayoutCar
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { parseV2SplitsCsv } from 'packages/v2v3/utils/csv'
 import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
+import { settingsPagePath } from 'packages/v2v3/utils/routes'
 import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
 import { twMerge } from 'tailwind-merge'
 import { formatFundingTarget } from 'utils/format/formatFundingTarget'
 import { formatPercent } from 'utils/format/formatPercent'
-import { settingsPagePath } from 'utils/routes'
 
 export const V2V3EditPayouts = ({
   editingSplits,

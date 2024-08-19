@@ -7,7 +7,7 @@ import { useWallet } from 'hooks/Wallet'
 import { FormItemInput } from 'models/formItemInput'
 import { NetworkName } from 'models/networkName'
 import { MouseEventHandler } from 'react'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 
 export const CustomStrategyInput: React.FC<
   React.PropsWithChildren<

@@ -44,7 +44,8 @@ export const LOCKED_PAYOUT_EXPLANATION = (
 
 import ExternalLink from 'components/ExternalLink'
 import Link from 'next/link'
-import { helpPagePath, v2v3ProjectRoute } from 'utils/routes'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 
 export const DISTRIBUTION_LIMIT_EXPLANATION = (
   <Trans>

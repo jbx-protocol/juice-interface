@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import Link from 'next/link'
 import { ReactNode } from 'react'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 
 const JB_FEE = 2.5
 

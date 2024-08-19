@@ -15,8 +15,8 @@ import {
   SUPPORTED_PAYMENT_TERMINALS,
   V2V3ContractName,
 } from 'packages/v2v3/models/contracts'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { useContext } from 'react'
-import { v2v3ProjectRoute } from 'utils/routes'
 import { V2V3ProjectHeaderActions } from '../V2V3ProjectHeaderActions/V2V3ProjectHeaderActions'
 
 /**

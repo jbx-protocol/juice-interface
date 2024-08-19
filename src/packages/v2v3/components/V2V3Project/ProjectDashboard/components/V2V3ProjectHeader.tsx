@@ -18,8 +18,8 @@ import { useV2V3ProjectHeader } from 'packages/v2v3/components/V2V3Project/Proje
 import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
 import { useV2V3WalletHasPermission } from 'packages/v2v3/hooks/contractReader/useV2V3WalletHasPermission'
 import { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
+import { settingsPagePath, v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { twMerge } from 'tailwind-merge'
-import { settingsPagePath, v2v3ProjectRoute } from 'utils/routes'
 import { SocialLink } from '../hooks/useAboutPanel'
 
 export const V2V3ProjectHeader = ({ className }: { className?: string }) => {

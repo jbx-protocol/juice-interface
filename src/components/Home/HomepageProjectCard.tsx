@@ -6,7 +6,7 @@ import ETHAmount from 'components/currency/ETHAmount'
 import { PV_V2 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { SubgraphQueryProject } from 'models/subgraphProjects'
-import { v2v3ProjectRoute } from 'utils/routes'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 
 function Statistic({
   name,

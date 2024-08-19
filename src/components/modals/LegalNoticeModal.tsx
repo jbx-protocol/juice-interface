@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { Modal, ModalProps } from 'antd'
 import ExternalLink from 'components/ExternalLink'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 
 export function LegalNoticeModal(props: ModalProps) {
   return (

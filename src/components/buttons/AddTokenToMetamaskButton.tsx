@@ -26,11 +26,7 @@ const useMetamask = () => {
   return ethereum as unknown as MetaMaskInpageProvider
 }
 
-function useAddTokenToWalletRequest({
-  tokenAddress,
-}:{
-  tokenAddress: Hash
-}) {
+function useAddTokenToWalletRequest({ tokenAddress }: { tokenAddress: Hash }) {
   const ethereum = useMetamask()
   const { data: tokenSymbol } = useNameOfERC20(tokenAddress)
 
@@ -53,15 +49,15 @@ function useAddTokenToWalletRequest({
   }
 }
 
-export function AddTokenToMetamaskButton({ 
+export function AddTokenToMetamaskButton({
   className,
-  tokenAddress
-}: { 
-  className: string,
+  tokenAddress,
+}: {
+  className: string
   tokenAddress: Hash
 }) {
   const addToken = useAddTokenToWalletRequest({
-    tokenAddress
+    tokenAddress,
   })
   if (!addToken) return null
 

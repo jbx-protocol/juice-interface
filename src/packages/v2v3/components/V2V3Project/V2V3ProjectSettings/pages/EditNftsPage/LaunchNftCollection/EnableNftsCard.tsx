@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import { useState } from 'react'
 import { EnableNftsModal } from './EnableNftsModal'
 import noNftsImage from '/public/assets/images/settings/no-nfts.webp'

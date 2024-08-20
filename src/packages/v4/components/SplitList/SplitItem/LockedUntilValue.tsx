@@ -1,4 +1,4 @@
-import { LockOutlined } from '@ant-design/icons'
+import { LockClosedIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { formatDate } from 'utils/format/formatDate'
@@ -27,7 +27,7 @@ export function LockedUntilValue({
       }
       className="h-22px ml-2 flex items-center text-sm text-grey-500 dark:text-grey-300"
     >
-      <LockOutlined className="mr-1" />
+      <LockClosedIcon className="mr-1 h-4 w-4" />
       <div className="flex">{value ?? lockedUntilFormatted}</div>
     </Tooltip>
   )

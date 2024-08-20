@@ -1,5 +1,4 @@
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
-import { useRouter } from 'next/router'
 import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
 import { ReactNode } from 'react'
 
@@ -16,8 +15,6 @@ export const V4ProjectAllocationRow: React.FC<V4ProjectAllocationRowProps> = ({
   amount,
   percent,
 }) => {
-  const router = useRouter()
-  const { chainName } = router.query
   return (
     <div className="flex items-center justify-between gap-3 py-3">
       <div className="flex min-w-0 items-center gap-3">
@@ -27,7 +24,6 @@ export const V4ProjectAllocationRow: React.FC<V4ProjectAllocationRowProps> = ({
               <V4ProjectHandleLink
                 className="truncate"
                 containerClassName="truncate"
-                chainName={chainName as string}
                 projectId={projectId}
                 withProjectAvatar
               />

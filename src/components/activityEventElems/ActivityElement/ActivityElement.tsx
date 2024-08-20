@@ -1,3 +1,5 @@
+import { Tooltip } from 'antd'
+import EthereumAddress from 'components/EthereumAddress'
 import EtherscanLink from 'components/EtherscanLink'
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
 import { PV_V2 } from 'constants/pv'
@@ -5,9 +7,6 @@ import { PV } from 'models/pv'
 import V1ProjectHandle from 'packages/v1/components/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
 import { formatHistoricalDate } from 'utils/format/formatDate'
-
-import { Tooltip } from 'antd'
-import EthereumAddress from 'components/EthereumAddress'
 import { ActivityElementEvent } from './activityElementEvent'
 
 const FromBeneficiary = ({

@@ -1,10 +1,9 @@
-import { InfoCircleOutlined } from '@ant-design/icons'
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import { useTrendingProjects } from 'hooks/useTrendingProjects'
-
-import { useWallet } from 'hooks/Wallet'
 import { useWalletBookmarkedIds } from 'hooks/useWalletBookmarkedProjects'
+import { useWallet } from 'hooks/Wallet'
 import RankingExplanation from './RankingExplanation'
 import TrendingProjectCard from './TrendingProjectCard'
 
@@ -44,7 +43,8 @@ export default function TrendingProjects({
       )}
 
       <p className="my-10 max-w-3xl gap-1">
-        <InfoCircleOutlined /> <RankingExplanation />
+        <InformationCircleIcon className="inline h-4 w-4" />{' '}
+        <RankingExplanation />
       </p>
     </div>
   )

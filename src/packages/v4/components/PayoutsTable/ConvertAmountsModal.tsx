@@ -6,7 +6,6 @@ import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { Parenthesis } from 'components/Parenthesis'
 import { JBSplit as Split, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
-import { useRouter } from 'next/router'
 
 import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
 import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
@@ -43,9 +42,6 @@ export const ConvertAmountsModal = ({
   const [currency, setCurrency] = useState<V4CurrencyOption>(
     distributionLimit?.currency ?? V4_CURRENCY_ETH,
   )
-
-  const router = useRouter()
-  const { chainName } = router.query 
 
   const totalPayoutsPercent = useMemo(
     () =>
@@ -143,7 +139,6 @@ export const ConvertAmountsModal = ({
                   {isJuiceboxProjectSplit(split) && allocation.projectId ? (
                     <V4ProjectHandleLink
                       projectId={Number(allocation.projectId)}
-                      chainName={chainName as string}
                     />
                   ) : (
                     <EthereumAddress address={allocation.beneficiary} />

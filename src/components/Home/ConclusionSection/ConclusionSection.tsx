@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { TickIconList } from 'components/Home/ConclusionSection/TickIconList'
 import { SectionContainer } from 'components/Home/SectionContainer'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import Link from 'next/link'
 
 export function ConclusionSection() {

@@ -42,7 +42,7 @@ export function FundingCycleListItems({
   } = useContext(V2V3ProjectContext)
 
   const formattedStartTime = fundingCycle.start
-    ? formatDate(fundingCycle.start.mul(1000))
+    ? formatDate(fundingCycle.start.mul(1000).toNumber())
     : undefined
 
   // show start if `start` is later than now
@@ -51,7 +51,9 @@ export function FundingCycleListItems({
     : false
 
   const formattedEndTime = showStart
-    ? formatDate(fundingCycle.start?.add(fundingCycle.duration).mul(1000))
+    ? formatDate(
+        fundingCycle.start?.add(fundingCycle.duration).mul(1000).toNumber(),
+      )
     : undefined
 
   const currency = V2V3CurrencyName(
@@ -97,7 +99,9 @@ export function FundingCycleListItems({
         <FundingCycleListItem
           name={t`Start`}
           value={
-            <Tooltip title={formatDateToUTC(fundingCycle.start.mul(1000))}>
+            <Tooltip
+              title={formatDateToUTC(fundingCycle.start.mul(1000).toNumber())}
+            >
               {formattedStartTime}
             </Tooltip>
           }
@@ -109,7 +113,10 @@ export function FundingCycleListItems({
           value={
             <Tooltip
               title={formatDateToUTC(
-                fundingCycle.start.add(fundingCycle.duration).mul(1000),
+                fundingCycle.start
+                  .add(fundingCycle.duration)
+                  .mul(1000)
+                  .toNumber(),
               )}
             >
               {formattedEndTime}

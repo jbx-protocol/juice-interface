@@ -1,14 +1,14 @@
-import { ArrowDownTrayIcon } from "@heroicons/react/24/outline"
-import { t } from "@lingui/macro"
-import { Button } from "antd"
-import { ActivityOption, ALL_OPT } from "components/ActivityList"
-import { JuiceListbox } from "components/inputs/JuiceListbox"
-import { ProjectEventFilter } from "hooks/useProjectEvents"
-import { useState } from "react"
-import DownloadActivityModal from "./DownloadActivityModal"
-import { ActivityEvents } from "./models/ActivityEvents"
+import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
+import { t } from '@lingui/macro'
+import { Button } from 'antd'
+import { ActivityOption, ALL_OPT } from 'components/ActivityList'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
+import { ProjectEventFilter } from 'models/projectEvents'
+import { useState } from 'react'
+import DownloadActivityModal from './DownloadActivityModal'
+import { ActivityEvents } from './models/ActivityEvents'
 
-const activityOptions: ActivityOption[] = [
+const activityOptions = (): ActivityOption[] => [
   ALL_OPT(),
   { label: t`Paid`, value: 'payEvent' },
   // TODO:: Other events:
@@ -30,18 +30,16 @@ const activityOptions: ActivityOption[] = [
   // { label: t`Created project`, value: 'projectCreateEvent' },
 ]
 
-export function ActivityOptions({
-  events
-}: {
-  events: ActivityEvents
-}) {
+export function ActivityOptions({ events }: { events: ActivityEvents }) {
   const [eventFilter, setEventFilter] = useState<ProjectEventFilter>('all')
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
 
-  const activityOption = activityOptions.find(o => o.value === eventFilter)
-  
-  const hasAnyEvents = Object.values(events).some(eventArray => eventArray && eventArray.length > 0);
+  const activityOption = activityOptions().find(o => o.value === eventFilter)
+
+  const hasAnyEvents = Object.values(events).some(
+    eventArray => eventArray && eventArray.length > 0,
+  )
   const canDownload = hasAnyEvents
 
   return (
@@ -57,7 +55,7 @@ export function ActivityOptions({
 
         <JuiceListbox
           className={canDownload ? 'w-[200px]' : 'w-[240px]'}
-          options={activityOptions}
+          options={activityOptions()}
           value={activityOption}
           onChange={v => setEventFilter(v.value)}
         />

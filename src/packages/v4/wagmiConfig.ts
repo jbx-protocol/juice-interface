@@ -1,10 +1,10 @@
+import { createConfig, http } from 'wagmi'
 import {
   arbitrumSepolia,
   baseSepolia,
   optimismSepolia,
   sepolia,
-} from 'viem/chains'
-import { createConfig, http } from 'wagmi'
+} from 'wagmi/chains'
 
 export const wagmiConfig = createConfig({
   chains: [sepolia, optimismSepolia, baseSepolia, arbitrumSepolia],

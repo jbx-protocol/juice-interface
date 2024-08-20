@@ -7,7 +7,6 @@ import {
   useJBProjectMetadataContext
 } from 'juice-sdk-react'
 import { GnosisSafe } from 'models/safe'
-import { useRouter } from 'next/router'
 import { ProjectsDocument } from 'packages/v4/graphql/client/graphql'
 import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
@@ -22,11 +21,9 @@ export interface ProjectHeaderData {
   gnosisSafe: GnosisSafe | undefined | null
   archived: boolean | undefined
   createdAtSeconds: number | undefined
-  chainName: string
 }
 
 export const useV4ProjectHeader = (): ProjectHeaderData => {
-  const router = useRouter()
   const { projectId } = useJBContractContext()
   const { metadata } = useJBProjectMetadataContext()
   const projectMetadata = metadata?.data
@@ -60,8 +57,6 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
   const totalVolume = BigInt(totalVolumeStr)
   const trendingVolume = BigInt(trendingVolumeStr)
 
-  const { chainName } = router.query
-
   const last7DaysPercent = useProjectTrendingPercentageIncrease({
     totalVolume: BigNumber.from(totalVolume ?? 0),
     trendingVolume: BigNumber.from(trendingVolume ?? 0),
@@ -73,7 +68,6 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
 
   return {
     title: projectMetadata?.name,
-    chainName: chainName as string, // TODO make this better. Single source for chain names, derived from useJBChainId.
     subtitle,
     projectId: projectIdNum,
     owner: projectOwnerAddress,

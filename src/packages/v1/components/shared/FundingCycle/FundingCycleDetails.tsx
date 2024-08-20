@@ -46,10 +46,13 @@ export default function FundingCycleDetails({
 
   if (!fundingCycle) return null
 
-  const formattedStartTime = formatDate(fundingCycle.start.mul(1000))
+  const formattedStartTime = formatDate(fundingCycle.start.mul(1000).toNumber())
 
   const formattedEndTime = formatDate(
-    fundingCycle.start.add(fundingCycle.duration.mul(SECONDS_IN_DAY)).mul(1000),
+    fundingCycle.start
+      .add(fundingCycle.duration.mul(SECONDS_IN_DAY))
+      .mul(1000)
+      .toNumber(),
   )
 
   const metadata = decodeFundingCycleMetadata(fundingCycle.metadata)
@@ -148,7 +151,9 @@ export default function FundingCycleDetails({
 
         {fundingCycle.duration.gt(0) && (
           <Descriptions.Item label={<Trans>Start</Trans>}>
-            <Tooltip title={formatDateToUTC(fundingCycle.start.mul(1000))}>
+            <Tooltip
+              title={formatDateToUTC(fundingCycle.start.mul(1000).toNumber())}
+            >
               {formattedStartTime}
             </Tooltip>
           </Descriptions.Item>
@@ -160,7 +165,8 @@ export default function FundingCycleDetails({
               title={formatDateToUTC(
                 fundingCycle.start
                   .add(fundingCycle.duration.mul(SECONDS_IN_DAY))
-                  .mul(1000),
+                  .mul(1000)
+                  .toNumber(),
               )}
             >
               {formattedEndTime}

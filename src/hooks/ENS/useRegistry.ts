@@ -10,10 +10,9 @@ async function loadENSRegistryContract(): Promise<ContractJson | undefined> {
 
   if (
     name === NetworkName.mainnet ||
-    name === NetworkName.goerli ||
     name === NetworkName.sepolia
   ) {
-    // Registry address is the same for both mainnet + goerli + sepolia
+    // Registry address is the same for both mainnet + sepolia
     return await import('hooks/ENS/contracts/ENSRegistry.json')
   }
 }

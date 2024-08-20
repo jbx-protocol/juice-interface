@@ -11,10 +11,6 @@ const MAINNET_URI_OVERRIDES: { [k: number]: string } = {
   470: `${imageUriOverridePath}/breadfruit_logo.webp`,
 }
 
-const GOERLI_URI_OVERRIDES: { [k: number]: string } = {
-  1: `${imageUriOverridePath}/juiceboxdao_logo.webp`, // the on-chain logo's filesize is too large. This is a smaller version.
-}
-
 const SEPOLIA_URI_OVERRIDES: { [k: number]: string } = {
   1: `${imageUriOverridePath}/juiceboxdao_logo.webp`, // the on-chain logo's filesize is too large. This is a smaller version.
 }
@@ -23,8 +19,6 @@ const imgOverrideForProjectId = (projectId: number) => {
   switch (readNetwork.name) {
     case NetworkName.mainnet:
       return MAINNET_URI_OVERRIDES[projectId]
-    case NetworkName.goerli:
-      return GOERLI_URI_OVERRIDES[projectId]
     case NetworkName.sepolia:
       return SEPOLIA_URI_OVERRIDES[projectId]
   }

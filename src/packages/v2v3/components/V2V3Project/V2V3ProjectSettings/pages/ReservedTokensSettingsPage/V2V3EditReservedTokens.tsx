@@ -4,9 +4,9 @@ import { CsvUpload } from 'components/inputs/CsvUpload'
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
 import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
 import { Split } from 'packages/v2v3/models/splits'
+import { parseV2SplitsCsv } from 'packages/v2v3/utils/csv'
 import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
 import { useCallback } from 'react'
-import { parseV2SplitsCsv } from 'utils/csv'
 
 export function V2V3EditReservedTokens({
   editingReservedTokensSplits,

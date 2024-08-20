@@ -1,7 +1,10 @@
-import * as constants from '@ethersproject/constants'
 import { useWallet } from 'hooks/Wallet'
-import { useJBContractContext, useReadJbPermissionsHasPermissions } from 'juice-sdk-react'
+import {
+  useJBContractContext,
+  useReadJbPermissionsHasPermissions,
+} from 'juice-sdk-react'
 import { isEqualAddress } from 'utils/address'
+import { zeroAddress } from 'viem'
 import { V4OperatorPermission } from '../models/v4Permissions'
 import useProjectOwnerOf from './useV4ProjectOwnerOf'
 
@@ -13,16 +16,16 @@ export function useV4WalletHasPermission(
   const { projectId } = useJBContractContext()
   const { data: projectOwnerAddress } = useProjectOwnerOf()
 
-  const _operator = userAddress ?? constants.AddressZero
-  const _account = projectOwnerAddress ?? constants.AddressZero
+  const _operator = userAddress ?? zeroAddress
+  const _account = projectOwnerAddress ?? zeroAddress
   const hasOperatorPermission = useReadJbPermissionsHasPermissions({
     args: [
-      _operator, 
-      _account, 
-      projectId, 
-      [BigInt(permission.toString())], 
-      true, 
-      true
+      _operator,
+      _account,
+      projectId,
+      [BigInt(permission.toString())],
+      true,
+      true,
     ],
   })
 

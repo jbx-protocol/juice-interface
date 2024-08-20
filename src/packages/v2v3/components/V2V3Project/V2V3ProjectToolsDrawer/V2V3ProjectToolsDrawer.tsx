@@ -12,7 +12,10 @@ import Link from 'next/link'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useAddToBalanceTx } from 'packages/v2v3/hooks/transactor/AddToBalanceTx'
 import { useDeployProjectPayerTx } from 'packages/v2v3/hooks/transactor/useDeployProjectPayerTx'
-import { ETHPayoutSplitGroup, ReservedTokensSplitGroup } from 'packages/v2v3/models/splits'
+import {
+  ETHPayoutSplitGroup,
+  ReservedTokensSplitGroup,
+} from 'packages/v2v3/models/splits'
 import { useContext } from 'react'
 import { v2v3ProjectRoute } from 'utils/routes'
 import { ExportSplitsButton } from './ExportSplitsButton'
@@ -45,14 +48,13 @@ export function V2V3ProjectToolsDrawer({
       </h1>
 
       <div className="flex flex-col gap-4">
-        <section>
-          <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
-        </section>
-
-        <Divider />
-        
         {hasOFAC ? null : (
           <>
+            <section>
+              <AddToProjectBalanceForm useAddToBalanceTx={useAddToBalanceTx} />
+            </section>
+
+            <Divider />
             <section>
               <h3 className="text-primary">
                 <Trans>Project payer addresses</Trans>

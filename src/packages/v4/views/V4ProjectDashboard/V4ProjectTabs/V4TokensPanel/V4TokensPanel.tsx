@@ -7,11 +7,9 @@ import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/Titl
 // import { ReservedTokensSubPanel } from './components/ReservedTokensSubPanel'
 // import { TokenRedemptionCallout } from './components/TokenRedemptionCallout'
 // import { TransferUnclaimedTokensModalWrapper } from './components/TransferUnclaimedTokensModalWrapper'
-import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
-import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
+// import { IssueErc20TokenButton } from 'components/buttons/IssueErc20TokenButton'
 import { V4TokenHoldersModal } from 'packages/v4/components/V4TokenHoldersModal'
 import { useCallback, useState } from 'react'
-import { reloadWindow } from 'utils/windowUtils'
 import { useV4TokensPanel } from './hooks/useV4TokensPanel'
 import { useV4YourBalanceMenuItems } from './hooks/useV4YourBalanceMenuItems'
 import { V4ReservedTokensSubPanel } from './V4ReservedTokensSubPanel'
@@ -58,7 +56,7 @@ export const V4TokensPanel = () => {
 
         {/* <TokenRedemptionCallout /> */}
 
-        <div className="flex-grow mb-12">
+        <div className="mb-12 flex-grow">
           {!userTokenBalanceLoading && userTokenBalance !== undefined && (
             <TitleDescriptionDisplayCard
               title={t`Your balance`}
@@ -85,9 +83,13 @@ export const V4TokensPanel = () => {
                   </div>
                 </span>
               }
-              kebabMenu={userTokenBalance.value > 0n ? {
-                items
-              } : undefined}
+              kebabMenu={
+                userTokenBalance.value > 0n
+                  ? {
+                      items,
+                    }
+                  : undefined
+              }
             />
           )}
 
@@ -183,15 +185,15 @@ const ProjectTokenCard = () => {
               </span>
             )}
           </div>
-          {projectTokenAddress && projectHasErc20Token && (
+          {/* {projectTokenAddress && projectHasErc20Token && (
             <AddTokenToMetamaskButton
               className="mt-2" 
               tokenAddress={projectTokenAddress}
             />
-          )}
-          {canCreateErc20Token && (
+          )} */}
+          {/* {canCreateErc20Token && (
             <IssueErc20TokenButton onCompleted={reloadWindow} type="link" />
-          )}
+          )} */}
         </>
       }
     />

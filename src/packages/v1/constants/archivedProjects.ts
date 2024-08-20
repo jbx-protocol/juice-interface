@@ -33,7 +33,6 @@ const V1ArchivedProjectIdsByNetwork: Partial<Record<NetworkName, number[]>> = {
     JUS_DAO,
     DEMU,
   ],
-  [NetworkName.goerli]: [],
   [NetworkName.sepolia]: [],
 }
 

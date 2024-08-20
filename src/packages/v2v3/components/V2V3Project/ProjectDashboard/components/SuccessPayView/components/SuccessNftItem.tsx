@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
+import { CartItemBadge } from 'components/CartItemBadge'
 import { NftPreview } from 'components/NftRewards/NftPreview'
+import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
 import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
 import { useContext, useMemo, useState } from 'react'
-import { CartItemBadge } from '../../CartItemBadge'
-import { SmallNftSquare } from '../../SmallNftSquare'
 
 export const SuccessNftItem = ({ id }: { id: number }) => {
   const {

@@ -1,5 +1,5 @@
 // import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import Image from 'next/image'
+import Image from "next/image"
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useCoverPhoto } from './hooks/useCoverPhoto'

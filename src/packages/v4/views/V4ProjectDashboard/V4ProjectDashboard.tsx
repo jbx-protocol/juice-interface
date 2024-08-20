@@ -1,12 +1,29 @@
 import { CoverPhoto } from 'components/Project/ProjectHeader/CoverPhoto'
+import { SuccessPayView } from 'packages/v4/components/ProjectDashboard/components/SuccessPayView/SuccessPayView'
+import { useProjectDispatch } from 'packages/v4/components/ProjectDashboard/redux/hooks'
+import { payRedeemActions } from 'packages/v4/components/ProjectDashboard/redux/payRedeemSlice'
+import { projectCartActions } from 'packages/v4/components/ProjectDashboard/redux/projectCartSlice'
+import { V4PayRedeemCard } from 'packages/v4/components/ProjectDashboard/V4PayRedeemCard/V4PayRedeemCard'
+import { useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { V4PayRedeemCard } from './V4PayRedeemCard/V4PayRedeemCard'
+import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 import { V4ProjectHeader } from './V4ProjectHeader'
 import { V4ProjectTabs } from './V4ProjectTabs/V4ProjectTabs'
 
 export function V4ProjectDashboard() {
+  const { projectPayReceipt } = useProjectPageQueries()
+
+  if (projectPayReceipt !== undefined) {
+    return (
+      <div className="flex w-full flex-col items-center pb-48">
+        <SuccessPayView />
+      </div>
+    )
+  }
+
   return (
     <>
+      <ResetStoreOnLoad />
       <div className="relative w-full">
         <CoverPhoto />
       </div>
@@ -36,4 +53,18 @@ export function V4ProjectDashboard() {
       </div>
     </>
   )
+}
+
+/**
+ * Reset the store on load.
+ */
+const ResetStoreOnLoad: React.FC = () => {
+  const dispatch = useProjectDispatch()
+
+  useEffect(() => {
+    dispatch(projectCartActions.reset())
+    dispatch(payRedeemActions.reset())
+  }, [dispatch])
+
+  return null
 }

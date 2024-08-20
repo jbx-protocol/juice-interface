@@ -20,7 +20,7 @@ export function ProjectDetailsSettingsPage() {
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
   const [projectForm] = useForm<ProjectDetailsFormFields>()
 
-  const editV2ProjectDetailsTx = useEditProjectDetailsTx()
+  const editV2ProjectDetailsTx = useEditProjectDetailsTx() // v4Todo: V4 tx
 
   const onProjectFormSaved = useCallback(async () => {
     setLoadingSaveChanges(true)

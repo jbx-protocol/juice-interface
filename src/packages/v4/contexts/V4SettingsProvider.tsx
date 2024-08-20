@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import store from 'redux/store'
 import { WagmiProvider } from 'wagmi'
 import { chainNameMap } from '../utils/networks'
+import { EditCycleFormProvider } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormContext'
 import { wagmiConfig } from '../wagmiConfig'
 import V4ProjectMetadataProvider from './V4ProjectMetadataProvider'
 
@@ -35,9 +36,9 @@ export const V4SettingsProvider: React.FC<React.PropsWithChildren> = ({
           <V4ProjectMetadataProvider projectId={projectIdBigInt}>
             <Provider store={store}>
               <TransactionProvider>
-                {/* <EditCycleFormProvider> */}
+                <EditCycleFormProvider>
                   {children}
-                {/* </EditCycleFormProvider> */}
+                </EditCycleFormProvider>
               </TransactionProvider>
             </Provider>
           </V4ProjectMetadataProvider>

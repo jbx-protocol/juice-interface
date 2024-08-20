@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
+import { EditCycleHeader } from 'components/Project/ProjectSettings/EditCycleHeader'
 import { CYCLE_EXPLANATION } from 'components/strings'
-import { EditCycleHeader } from '../EditCycleHeader'
 import CycleDeadlineDropdown from './CycleDeadlineDropdown'
 import { DetailsSectionAdvanced } from './DetailsSectionAdvanced'
 import { DurationFields } from './DurationFields'

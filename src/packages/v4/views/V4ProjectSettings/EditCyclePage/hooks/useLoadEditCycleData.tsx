@@ -70,7 +70,7 @@ export const useLoadEditCycleData = () => {
           rulesetMetadata.allowTerminalMigration,
         pausePay: rulesetMetadata.pausePay,
         payoutSplits,
-        payoutLimit: Number(payoutLimit?.amount), // TODO: format
+        payoutLimit: payoutLimit ? Number(payoutLimit.amount) : undefined, // TODO: format
         payoutLimitCurrency: V4CurrencyName(payoutLimit?.currency) ?? 'ETH',
         holdFees: rulesetMetadata?.holdFees,
         issuanceRate,

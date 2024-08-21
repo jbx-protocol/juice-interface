@@ -152,7 +152,7 @@ export const useV4FormatConfigurationTokenSection = ({
       )
     }
 
-    const queuedOwnerTokenMintingRate =
+    const queuedOwnerTokenMinting =
       upcomingRulesetMetadata?.allowOwnerMinting !== undefined ? 
         upcomingRulesetMetadata?.allowOwnerMinting
       : rulesetMetadata?.allowOwnerMinting !== undefined ?
@@ -161,8 +161,8 @@ export const useV4FormatConfigurationTokenSection = ({
 
     return flagPairToDatum(
       t`Owner token minting`,
-      currentOwnerTokenMintingRate,
-      queuedOwnerTokenMintingRate,
+      currentOwnerTokenMinting,
+      queuedOwnerTokenMinting,
     )
   }, [rulesetMetadata?.allowOwnerMinting, upcomingRulesetMetadata, upcomingRulesetLoading])
 

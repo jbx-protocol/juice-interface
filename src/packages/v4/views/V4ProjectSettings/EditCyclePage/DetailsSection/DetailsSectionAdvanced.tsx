@@ -5,9 +5,8 @@ import TooltipLabel from 'components/TooltipLabel'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import {
   CONTROLLER_CONFIG_EXPLANATION,
-  CONTROLLER_MIGRATION_EXPLANATION,
   TERMINAL_CONFIG_EXPLANATION,
-  TERMINAL_MIGRATION_EXPLANATION,
+  TERMINAL_MIGRATION_EXPLANATION
 } from 'components/strings'
 
 export function DetailsSectionAdvanced() {
@@ -42,16 +41,6 @@ export function DetailsSectionAdvanced() {
             <TooltipLabel
               tip={CONTROLLER_CONFIG_EXPLANATION}
               label={<Trans>Enable controller configurations</Trans>}
-            />
-          }
-        />
-      </Form.Item>
-      <Form.Item name="allowControllerMigration">
-        <JuiceSwitch
-          label={
-            <TooltipLabel
-              tip={CONTROLLER_MIGRATION_EXPLANATION}
-              label={<Trans>Enable controller migrations</Trans>}
             />
           }
         />

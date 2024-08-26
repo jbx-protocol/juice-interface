@@ -12,7 +12,6 @@ import { useV4BalanceOfNativeTerminal } from 'packages/v4/hooks/useV4BalanceOfNa
 import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4PayoutSplits'
 import { V4CurrencyName } from 'packages/v4/utils/currency'
 import { useEffect, useState } from 'react'
-import { fromWad } from 'utils/format/formatNumber'
 import { useV4DistributableAmount } from './hooks/useV4DistributableAmount'
 
 export default function V4DistributePayoutsModal({
@@ -40,18 +39,9 @@ export default function V4DistributePayoutsModal({
   // TODO: const v4DistributePayoutsTx = useV4DistributePayoutsTx()
 
   useEffect(() => {
-    if (!payoutLimitAmount) return
-
-    const unusedFunds = payoutLimitAmount - (usedPayoutLimit ?? 0n) ?? 0n
-    const distributable = balanceOfNativeTerminal && balanceOfNativeTerminal > unusedFunds
-      ? unusedFunds
-      : 0n
-
-    setDistributionAmount(fromWad(distributable))
+    setDistributionAmount(distributable.format())
   }, [
-    balanceOfNativeTerminal,
-    payoutLimitAmount,
-    usedPayoutLimit,
+    distributable,
   ])
 
   async function executeDistributePayoutsTx() {

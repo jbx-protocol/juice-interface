@@ -4,26 +4,26 @@ import { useWatch } from 'antd/lib/form/Form'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
 import { CurrencyName } from 'constants/currency'
-import { PayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/PayoutsTable'
-import { Split } from 'packages/v2v3/models/splits'
-import { useEditCycleFormContext } from '../EditCycleFormContext'
+import { JBSplit } from 'juice-sdk-core'
+import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
+import { useEditCycleFormContext } from './EditCycleFormContext'
 
 export function PayoutsSection() {
   const { editCycleForm } = useEditCycleFormContext()
   const payoutSplits = useWatch('payoutSplits', editCycleForm) ?? []
-  const currency = useWatch('distributionLimitCurrency', editCycleForm) ?? 'ETH'
-  const distributionLimit = useWatch('distributionLimit', editCycleForm)
+  const currency = useWatch('payoutLimitCurrency', editCycleForm) ?? 'ETH'
+  const payoutLimit = useWatch('payoutLimit', editCycleForm)
 
-  const setPayoutSplits = (payoutSplits: Split[]) =>
+  const setPayoutSplits = (payoutSplits: JBSplit[]) =>
     editCycleForm?.setFieldsValue({ payoutSplits })
 
   const setCurrency = (currency: CurrencyName) =>
     editCycleForm?.setFieldsValue({
-      distributionLimitCurrency: currency,
+      payoutLimitCurrency: currency,
     })
 
-  const setDistributionLimit = (distributionLimit: number | undefined) =>
-    editCycleForm?.setFieldsValue({ distributionLimit })
+  const setPayoutLimit = (payoutLimit: number | undefined) =>
+    editCycleForm?.setFieldsValue({ payoutLimit })
 
   return (
     <div className="flex flex-col gap-3">
@@ -32,8 +32,8 @@ export function PayoutsSection() {
         setPayoutSplits={setPayoutSplits}
         currency={currency}
         setCurrency={setCurrency}
-        distributionLimit={distributionLimit}
-        setDistributionLimit={setDistributionLimit}
+        distributionLimit={payoutLimit}
+        setDistributionLimit={setPayoutLimit}
       />
       <AdvancedDropdown>
         {/* "Enable unlimited payouts" switch? */}

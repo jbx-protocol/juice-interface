@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Button, Form } from 'antd'
 import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
 import Loading from 'components/Loading'
+import EditCycleFormSection from 'components/Project/ProjectSettings/EditCycleFormSection'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -9,7 +10,9 @@ import { settingsPagePath } from 'packages/v4/utils/routes'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { helpPagePath } from 'utils/helpPagePath'
 import { useChainId } from 'wagmi'
+import { DetailsSection } from './DetailsSection'
 import { useEditCycleFormContext } from './EditCycleFormContext'
+import { PayoutsSection } from './PayoutsSection'
 // import { DetailsSection } from './DetailsSection'
 
 export function EditCyclePage() {
@@ -81,7 +84,7 @@ export function EditCyclePage() {
           initialValues={initialFormData}
           onValuesChange={handleFormValuesChange}
         >
-          {/* <EditCycleFormSection
+          <EditCycleFormSection
             ref={detailsRef}
             title={<Trans>Details</Trans>}
             description={
@@ -91,9 +94,9 @@ export function EditCyclePage() {
             }
           >
             <DetailsSection />
-          </EditCycleFormSection> */}
+          </EditCycleFormSection>
 
-          {/* <EditCycleFormSection
+          <EditCycleFormSection
             ref={payoutsRef}
             title={<Trans>Payouts</Trans>}
             description={
@@ -103,7 +106,7 @@ export function EditCyclePage() {
             <PayoutsSection />
           </EditCycleFormSection>
 
-          <EditCycleFormSection
+          {/* <EditCycleFormSection
             ref={tokensRef}
             title={<Trans>Tokens</Trans>}
             description={

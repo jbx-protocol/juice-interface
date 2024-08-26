@@ -26,7 +26,6 @@ import {
   totalSplitsPercent, v4GetProjectOwnerRemainderSplit,
 } from 'packages/v4/utils/v4Splits'
 import { useMemo } from 'react'
-import { parseWad } from 'utils/format/formatNumber'
 import { usePayoutsTableContext } from '../context/PayoutsTableContext'
 
 export const usePayoutsTable = () => {
@@ -42,7 +41,7 @@ export const usePayoutsTable = () => {
   const distributionLimitIsInfinite = useMemo(
     () =>
       distributionLimit === undefined ||
-      parseWad(distributionLimit).eq(MAX_PAYOUT_LIMIT),
+      distributionLimit === Number(MAX_PAYOUT_LIMIT),
     [distributionLimit],
   )
 
@@ -54,7 +53,7 @@ export const usePayoutsTable = () => {
     dontApplyFee?: boolean
   }) =>
     distributionLimitIsInfinite
-      ? (payoutSplit.percent.toFloat() / ONE_BILLION) * 100
+      ? payoutSplit.percent.toFloat() * 100
       : _derivePayoutAmount({ payoutSplit, dontApplyFee })
 
   /* Total amount that leaves the treasury minus fees */
@@ -78,8 +77,9 @@ export const usePayoutsTable = () => {
   }
 
   const ownerRemainingPercentPPB =
-    SPLITS_TOTAL_PERCENT - totalSplitsPercent(payoutSplits) // parts-per-billion
-  const ownerRemainingAmount =
+    SPLITS_TOTAL_PERCENT - Number(totalSplitsPercent(payoutSplits)) // parts-per-billion
+
+    const ownerRemainingAmount =
     distributionLimit && !distributionLimitIsInfinite
       ? deriveAmountAfterFee(
           (ownerRemainingPercentPPB / ONE_BILLION) * distributionLimit,
@@ -194,30 +194,29 @@ export const usePayoutsTable = () => {
     newSplit: AddEditAllocationModalEntity & { projectOwner: false }
   }) {
     const newSplitPercent = parseFloat(newSplit.amount.value)
-    let newSplitPercentPPB = (newSplitPercent * ONE_BILLION) / 100
+    let newSplitPercentPPB = round((newSplitPercent * ONE_BILLION) / 100)
     let adjustedSplits: Split[] = payoutSplits
     let newDistributionLimit = distributionLimit
 
-    const isProject = newSplit.projectId && newSplit.projectId !== '0x00'
+    const isProject = Boolean(newSplit.projectId && newSplit.projectId !== '0x00')
 
     // If amounts (!distributionLimitIsInfinite), handle changing DL and split %s
-    if (!distributionLimitIsInfinite) {
+    if (!distributionLimitIsInfinite && distributionLimit) {
       const newAmount = isProject
         ? newSplitPercent
         : deriveAmountBeforeFee(newSplitPercent)
       // Convert the newAmount to its percentage of the new DL in parts-per-bill
-      newDistributionLimit = distributionLimit
-        ? getNewDistributionLimit({
+      newDistributionLimit = distributionLimit === 0 ? newAmount 
+        : getNewDistributionLimit({
             currentDistributionLimit: distributionLimit.toString(),
             newSplitAmount: newAmount,
             editingSplitPercent: 0,
             ownerRemainingAmount,
           })
-        : newAmount
 
       newSplitPercentPPB = round(
-        (newAmount / (newDistributionLimit ?? 0)) * ONE_BILLION,
-      )
+        (newAmount / (newDistributionLimit)) * ONE_BILLION,
+      ) 
 
       // recalculate all split percents based on newly added split amount
       if (newDistributionLimit && !distributionLimitIsInfinite) {
@@ -320,10 +319,11 @@ export const usePayoutsTable = () => {
         ? getNewDistributionLimit({
             currentDistributionLimit: distributionLimit.toString(),
             newSplitAmount: _amount,
-            editingSplitPercent: editingPayoutSplit.percent.toFloat(),
+            editingSplitPercent: Number(editingPayoutSplit.percent.value),
             ownerRemainingAmount,
           })
         : undefined // undefined means DL is infinite
+
     const newSplitPercentPPB = round(
       (_amount / (newDistributionLimit ?? 0)) * ONE_BILLION,
     )
@@ -386,7 +386,6 @@ export const usePayoutsTable = () => {
     setDistributionLimit?.(0)
     _setPayoutSplits([])
   }
-
   return {
     distributionLimit,
     distributionLimitIsInfinite,

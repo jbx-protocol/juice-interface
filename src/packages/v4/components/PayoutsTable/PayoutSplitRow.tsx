@@ -121,6 +121,7 @@ export function PayoutSplitRow({
                 value={_value}
                 onChange={onAmountPercentageInputChange}
                 className="h-10 w-28 md:w-full"
+                max={distributionLimitIsInfinite ? 100 : undefined}
               />
               <PayoutSplitRowMenu
                 onEditClick={() => setEditModalOpen(true)}

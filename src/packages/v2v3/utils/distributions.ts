@@ -147,6 +147,15 @@ export function ensureSplitsSumTo100Percent({
   return adjustedSplits
 }
 
+export function roundSplitPercents({ splits }: { splits: Split[]}) {
+  return splits.map((split) => {
+    return {
+      ...split,
+      percent: Math.round(split.percent),
+    }
+  })
+}
+
 /**
  * Adjusts exist split percents to stay the same amount when distribution limit is changed
  * @param splits {Split[]} - list of current splits to have their percents adjusted
@@ -174,6 +183,7 @@ export function adjustedSplitPercents({
       amount: currentAmount,
       distributionLimit: parseFloat(newDistributionLimit),
     })
+    
     const adjustedSplit = {
       beneficiary: split.beneficiary,
       percent: newPercent,

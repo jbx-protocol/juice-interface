@@ -12,6 +12,7 @@ import { helpPagePath } from 'utils/helpPagePath'
 import { useChainId } from 'wagmi'
 import { DetailsSection } from './DetailsSection'
 import { useEditCycleFormContext } from './EditCycleFormContext'
+import { PayoutsSection } from './PayoutsSection'
 // import { DetailsSection } from './DetailsSection'
 
 export function EditCyclePage() {
@@ -95,7 +96,7 @@ export function EditCyclePage() {
             <DetailsSection />
           </EditCycleFormSection>
 
-          {/* <EditCycleFormSection
+          <EditCycleFormSection
             ref={payoutsRef}
             title={<Trans>Payouts</Trans>}
             description={
@@ -105,7 +106,7 @@ export function EditCyclePage() {
             <PayoutsSection />
           </EditCycleFormSection>
 
-          <EditCycleFormSection
+          {/* <EditCycleFormSection
             ref={tokensRef}
             title={<Trans>Tokens</Trans>}
             description={

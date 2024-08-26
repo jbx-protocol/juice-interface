@@ -121,13 +121,13 @@ export const useV4FormatConfigurationCycleSection = ({
       return pairToDatum(t`Edit deadline`, current, null)
     }
 
-    const upcomingBallotStrategy = upcomingRuleset?.approvalHook
+    const upcomingApprovalStrategy = upcomingRuleset?.approvalHook
       ? getApprovalStrategyByAddress(upcomingRuleset.approvalHook)
       : ruleset?.approvalHook
       ? getApprovalStrategyByAddress(ruleset.approvalHook)
       : undefined
 
-    const upcoming = upcomingBallotStrategy?.name
+    const upcoming = upcomingApprovalStrategy?.name
     return pairToDatum(t`Edit deadline`, current, upcoming)
   }, [ruleset?.approvalHook, upcomingRuleset, upcomingPayoutLimitLoading])
 

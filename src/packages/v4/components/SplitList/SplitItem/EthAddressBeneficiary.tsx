@@ -1,4 +1,4 @@
-import { CrownFilled } from '@ant-design/icons'
+import CrownFilled from '@ant-design/icons/CrownFilled'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'

@@ -6,7 +6,7 @@ import { SectionHeading } from 'components/Home/SectionHeading'
 import Loading from 'components/Loading'
 import template from 'lodash/template'
 import { projectTagText } from 'models/project-tags'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 
 export const ExploreCategories = () => {
   const { tags, isLoading } = useExploreCategories()

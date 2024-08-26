@@ -1,9 +1,9 @@
+import EnterOutlined from '@ant-design/icons/EnterOutlined'
 import {
-  ArrowDownOutlined,
-  ArrowRightOutlined,
-  ArrowUpOutlined,
-  EnterOutlined,
-} from '@ant-design/icons'
+  ArrowDownIcon,
+  ArrowRightCircleIcon,
+  ArrowUpIcon,
+} from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { Trans, t } from '@lingui/macro'
 import Input from 'antd/lib/input/Input'
@@ -16,9 +16,9 @@ import { useDBProjectsQuery } from 'hooks/useDBProjects'
 import { useRouter } from 'next/router'
 import V1ProjectHandle from 'packages/v1/components/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { v2v3ProjectRoute } from 'utils/routes'
 import { QuickProjectSearchContext } from './QuickProjectSearchContext'
 
 const INPUT_ID = 'quickProjectSearch'
@@ -204,7 +204,9 @@ export const QuickProjectSearchModal = () => {
                   />
 
                   <div className="flex-1 text-right">
-                    {highlightIndex === i && <ArrowRightOutlined />}
+                    {highlightIndex === i && (
+                      <ArrowRightCircleIcon className="h-4 w-4" />
+                    )}
                   </div>
                 </div>
               ))}
@@ -227,10 +229,10 @@ export const QuickProjectSearchModal = () => {
           </span>
           <span>
             <KeyboardButton>
-              <ArrowUpOutlined />
+              <ArrowUpIcon className="h-4 w-4" />
             </KeyboardButton>
             <KeyboardButton>
-              <ArrowDownOutlined />
+              <ArrowDownIcon className="h-4 w-4" />
             </KeyboardButton>{' '}
             {t`to navigate`}
           </span>

@@ -22,15 +22,17 @@ function usePrepareJbBuybackDelegatePayMetadata({
   const { tokenAddress, tokenSymbol, fundingCycleMetadata } =
     useProjectContext()
 
+  const enabled = Boolean(
+    projectId && BUYBACK_DELEGATE_ENABLED_PROJECT_IDS.includes(projectId),
+  )
+
   const { data: priceQuery } = useUniswapPriceQuery({
     tokenAddress,
     tokenSymbol,
+    enabled,
   })
 
-  if (
-    !projectId ||
-    (projectId && !BUYBACK_DELEGATE_ENABLED_PROJECT_IDS.includes(projectId))
-  ) {
+  if (!enabled) {
     return null
   }
 

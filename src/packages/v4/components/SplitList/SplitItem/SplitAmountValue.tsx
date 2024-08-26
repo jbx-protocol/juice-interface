@@ -1,4 +1,4 @@
-import { DollarCircleOutlined } from '@ant-design/icons'
+import { CurrencyDollarIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { CurrencyName } from 'constants/currency'
@@ -81,7 +81,7 @@ export function SplitAmountValue({
           }
           className="ml-1"
         >
-          <DollarCircleOutlined />
+          <CurrencyDollarIcon className="inline h-4 w-4" />
         </Tooltip>
       )}
     </>

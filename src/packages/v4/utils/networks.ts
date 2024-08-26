@@ -1,16 +1,10 @@
 import { JBChainId } from 'juice-sdk-react'
-import {
-  arbitrumSepolia,
-  baseSepolia,
-  optimismSepolia,
-  sepolia,
-} from 'viem/chains'
 
 export const chainNameMap: Record<string, JBChainId> = {
-  sepolia: sepolia.id,
-  opsepolia: optimismSepolia.id,
-  basesepolia: baseSepolia.id,
-  arbsepolia: arbitrumSepolia.id,
+  sepolia: 11_155_111, //sepolia.id,
+  opsepolia: 11155420, // optimismSepolia.id,
+  basesepolia: 84532, // baseSepolia.id,
+  arbsepolia: 421_614, // arbitrumSepolia.id,
 }
 
 export function getChainName(chainId: number) {

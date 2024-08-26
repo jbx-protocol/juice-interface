@@ -4,15 +4,13 @@ import { isBytes, isHexString } from 'ethers/lib/utils'
 import { parseWad } from './format/formatNumber'
 
 export function isBigNumberish(value: unknown): value is BigNumberish {
-  return (
-    value != null &&
-    (BigNumber.isBigNumber(value) ||
-      (typeof value === 'number' && value % 1 === 0) ||
-      (typeof value === 'string' && !!value.match(/^-?[0-9]+$/)) ||
-      isHexString(value) ||
-      typeof value === 'bigint' ||
-      isBytes(value))
-  )
+  return value != null &&
+  (BigNumber.isBigNumber(value) ||
+    (typeof value === 'number' && value % 1 === 0) ||
+    (typeof value === 'string' && !!value.match(/^-?[0-9]+$/)) ||
+    isHexString(value) ||
+    typeof value === 'bigint' ||
+    isBytes(value));
 }
 
 export const bigNumbersDiff = (a?: BigNumber, b?: BigNumber) => {

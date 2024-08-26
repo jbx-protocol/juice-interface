@@ -1,6 +1,6 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { useContentType } from 'hooks/useContentType'
-import { ImageProps } from 'next/image'
+import { ImageProps } from "next/legacy/image"
 import { useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { fileTypeIsVideo } from 'utils/nftRewards'

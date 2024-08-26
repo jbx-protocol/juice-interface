@@ -44,7 +44,7 @@ export const useProcessedRichNote = (note: string | undefined) => {
       ?.split('\n')
       .map(line => {
         if (line.match(URLRegex)) {
-          return line.replace(/\s/g, '') //remove any whitespace
+          return line.replace(/\s/g, ''); //remove any whitespace
         }
         return ''
       })

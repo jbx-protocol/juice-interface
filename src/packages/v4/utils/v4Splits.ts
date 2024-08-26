@@ -1,6 +1,7 @@
 import * as constants from '@ethersproject/constants'
 import { JBSplit, SplitPortion, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
 import isEqual from 'lodash/isEqual'
+import round from 'lodash/round'
 import { formatWad } from 'utils/format/formatNumber'
 import { Hash } from 'viem'
 import { isFinitePayoutLimit } from './fundingCycle'
@@ -15,7 +16,7 @@ export const v4GetProjectOwnerRemainderSplit = (
   projectOwnerAddress: Hash,
   splits: JBSplit[],
 ): JBSplit & { isProjectOwner: true } => {
-  const totalSplitPercentage = v4TotalSplitsPercent(splits)
+  const totalSplitPercentage = totalSplitsPercent(splits)
   const ownerPercentage = new SplitPortion(
     SPLITS_TOTAL_PERCENT - Number(totalSplitPercentage),
   )
@@ -33,10 +34,10 @@ export const v4GetProjectOwnerRemainderSplit = (
 
 /**
  * Returns the sum of each split's percent in a list of splits
- * @param splits {Split[]} - list of splits to sum percents
+ * @param splits {JBSplit[]} - list of splits to sum percents
  * @returns {bigint} - sum of percents in part-per-billion (max = SPLITS_TOTAL_PERCENT)
  */
-export const v4TotalSplitsPercent = (splits: JBSplit[]): bigint =>
+export const totalSplitsPercent = (splits: JBSplit[]): bigint =>
   splits?.reduce((sum, split) => sum + split.percent.value, 0n) ?? 0n
 
 //  - true if the split has been removed (exists in old but not new),
@@ -239,14 +240,6 @@ export const isProjectSplit = (split: JBSplit): boolean => {
 }
 
 /**
- * Returns the sum of each split's percent in a list of splits
- * @param splits {JBSplit[]} - list of splits to sum percents
- * @returns {number} - sum of percents in part-per-billion (max = SPLITS_TOTAL_PERCENT)
- */
-export const totalSplitsPercent = (splits: JBSplit[]): number =>
-  splits?.reduce((sum, split) => sum + Number(split.percent), 0) ?? 0
-
-/**
  * Determines if two lists of splits have any diff's within them.
  * @param splits1 {JBSplit[]} - first list of splits
  * @param splits2 {JBSplit[]} - second list of splits
@@ -280,6 +273,6 @@ export function isJuiceboxProjectSplit(split: JBSplit) {
 // e.g. Converts 10 to 100000000 (10% of SPLITS_TOTAL_PERCENT)
 export const splitPortionFromFormattedPercent = (percentage: number): bigint => {
   return percentage
-    ? BigInt((percentage * SPLITS_TOTAL_PERCENT) / 100)
+    ? BigInt(round((percentage * SPLITS_TOTAL_PERCENT) / 100))
     : 0n
 }

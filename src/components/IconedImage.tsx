@@ -1,4 +1,4 @@
-import { ImageProps } from 'next/image'
+import { ImageProps } from "next/legacy/image"
 import { ReactNode } from 'react'
 import { JuiceVideoThumbnailOrImage } from './JuiceVideo/JuiceVideoThumbnailOrImage'
 

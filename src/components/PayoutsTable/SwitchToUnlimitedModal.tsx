@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 
 export function SwitchToUnlimitedModal({
   open,

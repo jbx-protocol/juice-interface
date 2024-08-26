@@ -8,7 +8,7 @@ import { useState } from 'react'
 import DownloadActivityModal from './DownloadActivityModal'
 import { ActivityEvents } from './models/ActivityEvents'
 
-const activityOptions: ActivityOption[] = [
+const activityOptions = (): ActivityOption[] => [
   ALL_OPT(),
   { label: t`Paid`, value: 'payEvent' },
   // TODO:: Other events:
@@ -35,7 +35,7 @@ export function ActivityOptions({ events }: { events: ActivityEvents }) {
 
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
 
-  const activityOption = activityOptions.find(o => o.value === eventFilter)
+  const activityOption = activityOptions().find(o => o.value === eventFilter)
 
   const hasAnyEvents = Object.values(events).some(
     eventArray => eventArray && eventArray.length > 0,
@@ -55,7 +55,7 @@ export function ActivityOptions({ events }: { events: ActivityEvents }) {
 
         <JuiceListbox
           className={canDownload ? 'w-[200px]' : 'w-[240px]'}
-          options={activityOptions}
+          options={activityOptions()}
           value={activityOption}
           onChange={v => setEventFilter(v.value)}
         />

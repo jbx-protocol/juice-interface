@@ -228,8 +228,6 @@ export function formatSgProjectsForUpdate({
         return propertiesToUpdate.length
       })
 
-  // console.log('asdf', { changedSubgraphProjects })
-
   return {
     subgraphProjects,
     updatedProperties,

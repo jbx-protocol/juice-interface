@@ -12,12 +12,9 @@ import Link from 'next/link'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useAddToBalanceTx } from 'packages/v2v3/hooks/transactor/AddToBalanceTx'
 import { useDeployProjectPayerTx } from 'packages/v2v3/hooks/transactor/useDeployProjectPayerTx'
-import {
-  ETHPayoutSplitGroup,
-  ReservedTokensSplitGroup,
-} from 'packages/v2v3/models/splits'
+import { ETHPayoutSplitGroup, ReservedTokensSplitGroup } from 'packages/v2v3/models/splits'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { useContext } from 'react'
-import { v2v3ProjectRoute } from 'utils/routes'
 import { ExportSplitsButton } from './ExportSplitsButton'
 import { PaymentAddressSection } from './PaymentAddressSection/PaymentAddressSection'
 

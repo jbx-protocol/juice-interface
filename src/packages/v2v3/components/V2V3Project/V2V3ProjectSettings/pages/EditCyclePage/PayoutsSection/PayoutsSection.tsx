@@ -2,10 +2,10 @@ import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
+import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
 import { CurrencyName } from 'constants/currency'
 import { PayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/PayoutsTable'
 import { Split } from 'packages/v2v3/models/splits'
-import { AdvancedDropdown } from '../AdvancedDropdown'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 
 export function PayoutsSection() {

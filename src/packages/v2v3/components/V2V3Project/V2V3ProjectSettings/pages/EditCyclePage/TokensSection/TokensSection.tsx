@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { EditCycleHeader } from '../EditCycleHeader'
+import { EditCycleHeader } from 'components/Project/ProjectSettings/EditCycleHeader'
 import { MintRateField } from './MintRateField'
 import { TokensSectionAdvanced } from './TokensSectionAdvanced'
 

@@ -139,20 +139,20 @@ export const useV4FormatConfigurationTokenSection = ({
     return pairToDatum(t`Redemption rate`, current, queued)
   }, [upcomingRulesetMetadata, rulesetMetadata, upcomingRulesetLoading])
 
-  const ownerTokenMintingRateDatum: ConfigurationPanelDatum = useMemo(() => {
-    const currentOwnerTokenMintingRate =
+  const ownerTokenMintingDatum: ConfigurationPanelDatum = useMemo(() => {
+    const currentOwnerTokenMinting =
       rulesetMetadata?.allowOwnerMinting !== undefined
         ? rulesetMetadata?.allowOwnerMinting
         : undefined
     if (upcomingRulesetMetadata === null || upcomingRulesetLoading) {
       return flagPairToDatum(
         t`Owner token minting`,
-        currentOwnerTokenMintingRate,
+        currentOwnerTokenMinting,
         null,
       )
     }
 
-    const queuedOwnerTokenMintingRate =
+    const queuedOwnerTokenMinting =
       upcomingRulesetMetadata?.allowOwnerMinting !== undefined ? 
         upcomingRulesetMetadata?.allowOwnerMinting
       : rulesetMetadata?.allowOwnerMinting !== undefined ?
@@ -161,8 +161,8 @@ export const useV4FormatConfigurationTokenSection = ({
 
     return flagPairToDatum(
       t`Owner token minting`,
-      currentOwnerTokenMintingRate,
-      queuedOwnerTokenMintingRate,
+      currentOwnerTokenMinting,
+      queuedOwnerTokenMinting,
     )
   }, [rulesetMetadata?.allowOwnerMinting, upcomingRulesetMetadata, upcomingRulesetLoading])
 
@@ -203,13 +203,13 @@ export const useV4FormatConfigurationTokenSection = ({
       reservedPercent: reservedPercentDatum,
       decayPercentDatum: decayPercentDatum,
       redemptionRate: redemptionRateDatum,
-      ownerTokenMintingRate: ownerTokenMintingRateDatum,
+      ownerTokenMintingRate: ownerTokenMintingDatum,
       tokenTransfers: tokenTransfersDatum,
     }
   }, [
     decayPercentDatum,
     totalIssuanceRateDatum,
-    ownerTokenMintingRateDatum,
+    ownerTokenMintingDatum,
     payerIssuanceRateDatum,
     redemptionRateDatum,
     reservedPercentDatum,

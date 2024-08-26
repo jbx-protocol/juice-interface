@@ -30,6 +30,7 @@ import {
   V2V3_CURRENCY_ETH,
 } from 'packages/v2v3/utils/currency'
 import { useContext, useMemo } from 'react'
+import { RomanStormVariables } from 'constants/romanStorm'
 import { V2V3ProjectContractsContext } from '../ProjectContracts/V2V3ProjectContractsContext'
 import { V2V3ProjectContextType } from './V2V3ProjectContext'
 
@@ -95,14 +96,35 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     },
   })
 
-  const projects = data?.projects
-  const projectStatsData = first(projects)
-  const {
-    createdAt,
-    volume: totalVolume,
-    trendingVolume,
-    paymentsCount,
-  } = projectStatsData ?? {}
+  const { data: romanStormData } = useProjectsQuery({
+    client,
+    fetchPolicy: 'no-cache',
+    skip: projectId !== RomanStormVariables.PROJECT_ID,
+    variables: {
+      where: {
+        projectId,
+        pv: PV_V2,
+      },
+      block: { number: RomanStormVariables.SNAPSHOT_BLOCK },
+    },
+  })
+
+  const projectStatsData = first(data?.projects)
+  const projectRomanStormStatsData = first(romanStormData?.projects)
+
+  let totalVolume = projectStatsData?.volume
+  let paymentsCount = projectStatsData?.paymentsCount
+
+  if (projectId === RomanStormVariables.PROJECT_ID && projectStatsData) {
+    const BIG_ZERO = BigNumber.from(0)
+
+    totalVolume = (totalVolume || BIG_ZERO).sub(
+      projectRomanStormStatsData?.volume || BIG_ZERO,
+    )
+    paymentsCount -= projectRomanStormStatsData?.paymentsCount
+  }
+
+  const { createdAt, trendingVolume } = projectStatsData ?? {}
 
   /**
    * Load funding cycle data

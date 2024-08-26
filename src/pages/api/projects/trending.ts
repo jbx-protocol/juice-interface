@@ -7,10 +7,12 @@ import {
   TrendingProjectsQuery,
 } from 'generated/graphql'
 import { serverClient } from 'lib/apollo/serverClient'
+import { BigNumber } from 'ethers'
 import { NextApiHandler } from 'next'
 import { V1ArchivedProjectIds } from 'packages/v1/constants/archivedProjects'
 import { V2ArchivedProjectIds } from 'packages/v2v3/constants/archivedProjects'
 import { getSubgraphIdForProject } from 'utils/graph'
+import { RomanStormVariables } from 'constants/romanStorm'
 
 const CACHE_MAXAGE = 60 * 5 // 5 minutes
 
@@ -47,11 +49,51 @@ const handler: NextApiHandler = async (req, res) => {
       },
     })
 
+    const projects = [...projectsRes.data.projects]
+
+    try {
+      const romanProjectIndex = projects.findIndex(
+        el => el.projectId === RomanStormVariables.PROJECT_ID && el.pv === '2',
+      )
+
+      if (romanProjectIndex >= 0) {
+        const filteredProjects = await serverClient.query<
+          TrendingProjectsQuery,
+          QueryProjectsArgs
+        >({
+          fetchPolicy: 'no-cache',
+          query: TrendingProjectsDocument,
+          variables: {
+            where: {
+              pv: '2',
+              projectId: RomanStormVariables.PROJECT_ID,
+            },
+            block: {
+              number: RomanStormVariables.SNAPSHOT_BLOCK,
+            },
+          },
+        })
+
+        const [romanProjectSnapshot] = filteredProjects.data.projects
+        const romanProject = projects[romanProjectIndex]
+
+        projects[romanProjectIndex] = {
+          ...projects[romanProjectIndex],
+          volume: BigNumber.from(romanProject.volume)
+            .sub(romanProjectSnapshot.volume)
+            .toString() as BigNumber, // Incorrect types are declared
+          paymentsCount:
+            romanProject.paymentsCount - romanProjectSnapshot.paymentsCount,
+        }
+      }
+    } catch {}
+
     res.setHeader(
       'Cache-Control',
       `s-maxage=${CACHE_MAXAGE}, stale-while-revalidate`,
     )
-    return res.status(200).json(projectsRes.data.projects)
+
+    return res.status(200).json(projects)
   } catch (e) {
     console.error(e)
     return res.status(500).json({ error: 'Something went wrong' })

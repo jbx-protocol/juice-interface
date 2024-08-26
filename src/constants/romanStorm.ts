@@ -1,0 +1,9 @@
+const PROJECT_ID = 618
+const SNAPSHOT_BLOCK = 20229376
+const SNAPSHOT_TIMESTAMP = 1720050599
+
+export const RomanStormVariables = {
+  PROJECT_ID,
+  SNAPSHOT_BLOCK,
+  SNAPSHOT_TIMESTAMP,
+}

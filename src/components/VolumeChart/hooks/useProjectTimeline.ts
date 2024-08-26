@@ -1,8 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
-import { PV_V4 } from 'constants/pv'
+import { PV_V2, PV_V4 } from 'constants/pv'
 import { readProvider } from 'constants/readProvider'
 import EthDater from 'ethereum-block-by-date'
-import { ProjectTlQuery, useProjectTlQuery } from 'generated/graphql'
+import {
+  ProjectTlQuery,
+  useProjectsQuery,
+  useProjectTlQuery,
+} from 'generated/graphql'
 import { client } from 'lib/apollo/client'
 import { PV } from 'models/pv'
 import { ProjectTlDocument } from 'packages/v4/graphql/client/graphql'
@@ -11,6 +15,8 @@ import { useMemo } from 'react'
 import { wadToFloat } from 'utils/format/formatNumber'
 import { getSubgraphIdForProject } from 'utils/graph'
 import { daysToMS, minutesToMS } from 'utils/units'
+import { RomanStormVariables } from 'constants/romanStorm'
+
 import { ProjectTimelinePoint, ProjectTimelineRange } from '../types'
 
 const COUNT = 30
@@ -24,6 +30,25 @@ export function useProjectTimeline({
   pv: PV
   range: ProjectTimelineRange
 }) {
+  const exceptionTimestamp = useMemo(() => {
+    return RomanStormVariables.PROJECT_ID === projectId
+      ? RomanStormVariables.SNAPSHOT_TIMESTAMP
+      : null
+  }, [projectId])
+
+  const { data: romanStormData } = useProjectsQuery({
+    client,
+    fetchPolicy: 'no-cache',
+    skip: projectId !== RomanStormVariables.PROJECT_ID,
+    variables: {
+      where: {
+        projectId,
+        pv: PV_V2,
+      },
+      block: { number: RomanStormVariables.SNAPSHOT_BLOCK },
+    },
+  })
+
   const { data: blockData, isLoading: isLoadingBlockNumbers } = useQuery({
     queryKey: ['block-numbers', range],
     queryFn: async () => {
@@ -70,22 +95,23 @@ export function useProjectTimeline({
     return { blocks, timestamps }
   }, [blockData])
 
-  const { data: v1v2v3QueryResult, loading: isLoadingQuery } = useProjectTlQuery({
-    client,
-    variables: {
-      id: blocks ? getSubgraphIdForProject(pv, projectId) : '',
-      ...blocks,
-    },
-    skip: pv === PV_V4
-  })
+  const { data: v1v2v3QueryResult, loading: isLoadingQuery } =
+    useProjectTlQuery({
+      client,
+      variables: {
+        id: blocks ? getSubgraphIdForProject(pv, projectId) : '',
+        ...blocks,
+      },
+      skip: pv === PV_V4,
+    })
 
   const { data: v4QueryResult } = useSubgraphQuery({
-    document: ProjectTlDocument, 
+    document: ProjectTlDocument,
     variables: {
       id: blocks ? projectId.toString() : '',
       ...blocks,
     },
-    enabled: pv === PV_V4
+    enabled: pv === PV_V4,
   })
 
   const points = useMemo(() => {
@@ -95,16 +121,31 @@ export function useProjectTimeline({
     const points: ProjectTimelinePoint[] = []
 
     for (let i = 0; i < COUNT; i++) {
-      const point = (queryResult as ProjectTlQuery)[`p${i}` as keyof typeof queryResult]
+      const point = (queryResult as ProjectTlQuery)[
+        `p${i}` as keyof typeof queryResult
+      ]
 
       if (!point) continue
+      if (exceptionTimestamp && exceptionTimestamp > timestamps[i]) {
+        points.push({
+          timestamp: timestamps[i],
+          trendingScore: 0,
+          balance: 0,
+          volume: 0,
+        })
+      } else {
+        const volume =
+          projectId === RomanStormVariables.PROJECT_ID
+            ? point.volume.sub(romanStormData?.projects[0].volume || 0)
+            : point.volume
 
-      points.push({
-        timestamp: timestamps[i],
-        trendingScore: wadToFloat(point.trendingScore),
-        balance: wadToFloat(point.currentBalance),
-        volume: wadToFloat(point.volume),
-      })
+        points.push({
+          timestamp: timestamps[i],
+          trendingScore: wadToFloat(point.trendingScore),
+          balance: wadToFloat(point.currentBalance),
+          volume: wadToFloat(volume),
+        })
+      }
     }
 
     return points

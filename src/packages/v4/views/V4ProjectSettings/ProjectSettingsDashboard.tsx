@@ -146,11 +146,11 @@ export function ProjectSettingsDashboard() {
                   <Trans>Basic details</Trans>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href={useSettingsPagePath('handle')}>
                   <Trans>Project handle</Trans>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </SettingsGroupCard>
 

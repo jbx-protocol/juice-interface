@@ -60,7 +60,9 @@ export function PayoutsTableBody() {
                         <Trans>Address or ID</Trans>
                       </Cell>
                       <Cell>
-                        <CurrencySwitcher />
+                        {hasDistributionLimit ?
+                          <CurrencySwitcher />
+                        : <Trans>Percent</Trans>}
                       </Cell>
                     </Row>
                   ) : null}
@@ -82,8 +84,8 @@ export function PayoutsTableBody() {
       </div>
       {/* Empty form items just to keep AntD useWatch happy */}
       <Form.Item name="payoutSplits" className="mb-0" />
-      <Form.Item name="distributionLimit" className="mb-0" />
-      <Form.Item name="distributionLimitCurrency" className="mb-0" />
+      <Form.Item name="payoutLimit" className="mb-0" />
+      <Form.Item name="payoutLimitCurrency" className="mb-0" />
     </>
   )
 }

@@ -1,36 +1,35 @@
 import { Trans } from '@lingui/macro'
-import { Button, Form, Tooltip } from 'antd'
+import { Button, Form } from 'antd'
 import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
 import Loading from 'components/Loading'
 import EditCycleFormSection from 'components/Project/ProjectSettings/EditCycleFormSection'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
-import { settingsPagePath } from 'packages/v2v3/utils/routes'
+import { settingsPagePath } from 'packages/v4/utils/routes'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { helpPagePath } from 'utils/helpPagePath'
+import { useChainId } from 'wagmi'
 import { DetailsSection } from './DetailsSection'
 import { useEditCycleFormContext } from './EditCycleFormContext'
-import { PayoutsSection } from './PayoutsSection/PayoutsSection'
-import { ReviewConfirmModal } from './ReviewConfirmModal'
-import { TokensSection } from './TokensSection'
-import { useEditCycleFormHasError } from './hooks/useEditCycleFormHasError'
+import { PayoutsSection } from './PayoutsSection'
+// import { DetailsSection } from './DetailsSection'
 
 export function EditCyclePage() {
   const [confirmModalOpen, setConfirmModalOpen] = useState<boolean>(false)
   const [firstRender, setFirstRender] = useState(true)
 
   const { projectId } = useContext(ProjectMetadataContext)
-  const { handle } = useContext(V2V3ProjectContext)
 
   const { editCycleForm, initialFormData, formHasUpdated, setFormHasUpdated } =
     useEditCycleFormContext()
 
-  const { error } = useEditCycleFormHasError()
+  // const { error } = useEditCycleFormHasError() TODO
 
   const router = useRouter()
   const { section } = router.query
+
+  const chainId = useChainId()
 
   const detailsRef = useRef<HTMLDivElement>(null)
   const payoutsRef = useRef<HTMLDivElement>(null)
@@ -107,7 +106,7 @@ export function EditCyclePage() {
             <PayoutsSection />
           </EditCycleFormSection>
 
-          <EditCycleFormSection
+          {/* <EditCycleFormSection
             ref={tokensRef}
             title={<Trans>Tokens</Trans>}
             description={
@@ -120,27 +119,27 @@ export function EditCyclePage() {
           <ReviewConfirmModal
             open={confirmModalOpen}
             onClose={() => setConfirmModalOpen(false)}
-          />
+          /> */}
         </Form>
       </div>
 
       <div className="flex items-center justify-end gap-4">
-        {projectId && handle ? (
-          <Link href={settingsPagePath(undefined, { projectId, handle })}>
+        {projectId ? (
+          <Link href={settingsPagePath({ projectId, chainId })}>
             <Button>
               <Trans>Cancel</Trans>
             </Button>
           </Link>
         ) : null}
-        <Tooltip title={error}>
+        {/* <Tooltip title={error}> */}
           <Button
             type="primary"
             onClick={() => setConfirmModalOpen(true)}
-            disabled={Boolean(error)}
+            disabled={false}//Boolean(error)}
           >
             <Trans>Save changes</Trans>
           </Button>
-        </Tooltip>
+        {/* </Tooltip> */}
       </div>
     </div>
   )

@@ -5,7 +5,6 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceInputNumber } from 'components/inputs/JuiceInputNumber'
 import { LOCKED_PAYOUT_EXPLANATION } from 'components/strings'
-import { BigNumber } from 'ethers'
 import { useReadJbMultiTerminalFee } from 'juice-sdk-react'
 import moment, * as Moment from 'moment'
 import { isInfinitePayoutLimit } from 'packages/v4/utils/fundingCycle'
@@ -94,7 +93,9 @@ export const AddEditAllocationModal = ({
     () =>
       !editingData?.projectOwner &&
       editingData?.projectId &&
-      editingData.projectId !== BigNumber.from(0).toHexString(),
+      editingData.projectId !== '0' &&
+      editingData.projectId !== '0x00' &&
+      editingData.projectId !== 0n.toString(),
     [editingData],
   )
 

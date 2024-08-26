@@ -45,7 +45,7 @@ const FromBeneficiary = ({
           {/* {distributionFromProjectId && (
             <div className="flex items-baseline gap-1">
               Paid from:{' '}
-              <V2V3ProjectHandleLink
+              <V4ProjectHandleLink 
                 projectId={distributionFromProjectId}
                 className="leading-5 dark:text-grey-900"
               />
@@ -56,7 +56,7 @@ const FromBeneficiary = ({
     >
       <div>
         {/* {distributionFromProjectId ? (
-          <V2V3ProjectHandleLink
+          <V4ProjectHandleLink
             projectId={distributionFromProjectId}
             className="leading-3 dark:text-grey-100"
             containerClassName="gap-2"
@@ -95,18 +95,7 @@ function Header({
       {header}
       {/* {withProjectLink && (
         <span className="ml-1">
-          {pv === PV_V2 ? (
-            <V2V3ProjectHandleLink
-              projectId={projectId}
-              className="text-grey-500 dark:text-grey-300"
-            />
-          ) : (
-            <V1ProjectHandle
-              projectId={projectId}
-              handle={handle}
-              className="text-grey-500 dark:text-grey-300"
-            />
-          )}
+          <V4ProjectHandleLink /...
         </span>
       )} */}
     </div>

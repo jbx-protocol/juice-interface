@@ -1,10 +1,10 @@
 import { Parenthesis } from 'components/Parenthesis'
 import { PayoutsSelection } from 'models/payoutsSelection'
-import { Allocation } from 'packages/v2v3/components/shared/Allocation/Allocation'
-import { usePayoutSplitAmountPercentage } from 'packages/v2v3/components/shared/Allocation/hooks/usePayoutSplitAmountPercentage'
-import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
+import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
 import { useMemo } from 'react'
 import { formatPercent } from 'utils/format/formatPercent'
+import { Allocation } from '../Allocation/Allocation'
+import { usePayoutSplitAmountPercentage } from '../Allocation/hooks/usePayoutSplitAmountPercentage'
 
 export const Amount = ({
   allocationId, // if undefined, assume owner

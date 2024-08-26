@@ -7,7 +7,6 @@ export default function CycleDeadlineDropdown({
 }: {
   className?: string
 }) {
-  // const { cv } = useContext(V2V3ContractsContext)
   // const ballotStrategies = ballotStrategiesFn({ cv })
   return (
     <Form.Item name="approvalHook" required>

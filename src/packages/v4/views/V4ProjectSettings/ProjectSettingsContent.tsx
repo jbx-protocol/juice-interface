@@ -3,10 +3,8 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Layout } from 'antd'
 import Link from 'next/link'
-import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 import { twJoin } from 'tailwind-merge'
-import { isZeroAddress } from 'utils/address'
 import { EditCyclePage } from './EditCyclePage/EditCyclePage'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { ProjectDetailsSettingsPage } from './ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
@@ -84,16 +82,15 @@ export function ProjectSettingsContent({
 }: {
   settingsPageKey: SettingsPageKey
 }) {
-  const { fundingCycleMetadata } = useContext(V2V3ProjectContext)
-  const hasExistingNfts = !isZeroAddress(fundingCycleMetadata?.dataSource)
 
   const ActiveSettingsPage = useMemo(
     () => SettingsPageComponents[settingsPageKey],
     [settingsPageKey],
   )
 
+  // const hasExistingNfts = !isZeroAddress(fundingCycleMetadata?.dataSource)
   const pageTitle =
-    V4SettingsPageKeyTitleMap(hasExistingNfts)[settingsPageKey]
+    V4SettingsPageKeyTitleMap(false)[settingsPageKey]
 
   return (
     <ProjectSettingsLayout>

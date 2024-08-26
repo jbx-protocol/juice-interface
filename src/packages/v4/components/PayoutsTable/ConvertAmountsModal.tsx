@@ -5,7 +5,7 @@ import EthereumAddress from 'components/EthereumAddress'
 import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { Parenthesis } from 'components/Parenthesis'
-import { JBSplit as Split, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
+import { JBSplit as Split } from 'juice-sdk-core'
 
 import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
 import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
@@ -23,7 +23,7 @@ import {
 } from 'redux/hooks/useEditingDistributionLimit'
 import { parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 import V4ProjectHandleLink from '../V4ProjectHandleLink'
 
 export const ConvertAmountsModal = ({
@@ -46,7 +46,7 @@ export const ConvertAmountsModal = ({
   const totalPayoutsPercent = useMemo(
     () =>
       splits
-        .map(s => (s.percent.toFloat() / SPLITS_TOTAL_PERCENT) * 100)
+        .map(s => s.percent.toFloat() * 100)
         .reduce((acc, curr) => acc + curr, 0),
     [splits],
   )

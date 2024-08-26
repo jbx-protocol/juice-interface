@@ -5,7 +5,7 @@ import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/To
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import NumberSlider from 'components/inputs/NumberSlider'
 import { useState } from 'react'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 
 export const zeroPercentDisabledNoticed = (

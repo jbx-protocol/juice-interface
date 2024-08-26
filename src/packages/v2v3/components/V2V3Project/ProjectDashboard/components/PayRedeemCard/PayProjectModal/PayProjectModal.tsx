@@ -5,7 +5,7 @@ import { JuiceModal } from 'components/modals/JuiceModal'
 import { Formik } from 'formik'
 import Image from "next/legacy/image"
 import { twMerge } from 'tailwind-merge'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
 import {

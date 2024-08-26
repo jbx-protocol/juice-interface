@@ -14,8 +14,8 @@ import useProjectENSName from 'packages/v2v3/hooks/contractReader/useProjectENSN
 import { useProjectHandleENSTextRecord } from 'packages/v2v3/hooks/contractReader/useProjectHandleENSTextRecord'
 import { useEditV2V3ProjectHandleTx } from 'packages/v2v3/hooks/transactor/useEditV2V3ProjectHandleTx'
 import { useSetENSTextRecordForHandleTx } from 'packages/v2v3/hooks/transactor/useSetENSTextRecordForHandleTx'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { v2v3ProjectRoute } from 'utils/routes'
 
 export function ProjectHandleSettingsPage() {
   const { handle } = useContext(V2V3ProjectContext)

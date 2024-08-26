@@ -13,9 +13,9 @@ import { Project } from 'generated/graphql'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import Link from 'next/link'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { twJoin } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
-import { v2v3ProjectRoute } from 'utils/routes'
 
 function Statistic({
   name,

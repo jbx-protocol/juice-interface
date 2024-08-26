@@ -19,7 +19,7 @@ import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useEditingV1FundingCycleSelector } from 'redux/hooks/useAppSelector'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromWad } from 'utils/format/formatNumber'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 
 import {
   CYCLE_EXPLANATION,

@@ -7,9 +7,10 @@ import { useHeldFeesOf } from 'packages/v2v3/hooks/contractReader/useHeldFeesOf'
 import { useV2V3WalletHasPermission } from 'packages/v2v3/hooks/contractReader/useV2V3WalletHasPermission'
 import { useProcessHeldFeesTx } from 'packages/v2v3/hooks/transactor/useProcessHeldFeesTx'
 import { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { useState } from 'react'
+import { helpPagePath } from 'utils/helpPagePath'
 import { emitErrorNotification } from 'utils/notifications'
-import { helpPagePath, v2v3ProjectRoute } from 'utils/routes'
 
 export function ProcessHeldFeesPage() {
   const [processingHeldFees, setProcessingHeldFees] = useState<boolean>()

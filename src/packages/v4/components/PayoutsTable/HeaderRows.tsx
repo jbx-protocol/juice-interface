@@ -1,10 +1,10 @@
-import { PlusCircleIcon } from '@heroicons/react/24/outline'
+import { PlusIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
 import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
 import { useState } from 'react'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 import {
   AddEditAllocationModal,
   AddEditAllocationModalEntity,
@@ -62,7 +62,8 @@ export function HeaderRows() {
               <Button
                 type="ghost"
                 onClick={() => setAddRecipientModalOpen(true)}
-                icon={<PlusCircleIcon className="h-4 w-4" />}
+                icon={<PlusIcon className="h-4 w-4" />}
+                className={'flex items-center justify-end gap-3'}
               >
                 <span>
                   <Trans>Add recipient</Trans>

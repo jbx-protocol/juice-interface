@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
+import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
 import TooltipLabel from 'components/TooltipLabel'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import {
@@ -8,7 +9,6 @@ import {
   TERMINAL_CONFIG_EXPLANATION,
   TERMINAL_MIGRATION_EXPLANATION,
 } from 'components/strings'
-import { AdvancedDropdown } from '../AdvancedDropdown'
 
 export function DetailsSectionAdvanced() {
   return (

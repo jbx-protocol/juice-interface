@@ -7,6 +7,7 @@ import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectCo
 import { useContext, useMemo } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { isZeroAddress } from 'utils/address'
+import { EditCyclePage } from './EditCyclePage/EditCyclePage'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { ProjectDetailsSettingsPage } from './ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
 import { SettingsPageKey } from './ProjectSettingsDashboard'
@@ -17,7 +18,7 @@ const SettingsPageComponents: {
 } = {
   general: ProjectDetailsSettingsPage,
   handle: () => null, //ProjectHandleSettingsPage,
-  cycle: () => null, //EditCyclePage,
+  cycle: EditCyclePage,
   // nfts: () => null, //EditNftsPage,
   payouts: () => null, //PayoutsSettingsPage,
   reservedtokens: () => null, //ReservedTokensSettingsPage,

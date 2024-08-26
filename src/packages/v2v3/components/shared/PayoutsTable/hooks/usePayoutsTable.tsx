@@ -18,6 +18,7 @@ import {
   derivePayoutAmount,
   ensureSplitsSumTo100Percent,
   getNewDistributionLimit,
+  roundSplitPercents,
 } from 'packages/v2v3/utils/distributions'
 import {
   MAX_DISTRIBUTION_LIMIT,
@@ -136,7 +137,7 @@ export const usePayoutsTable = () => {
 
   function _setPayoutSplits(splits: Split[]) {
     if (distributionLimitIsInfinite) {
-      setPayoutSplits?.(splits)
+      setPayoutSplits?.(roundSplitPercents( {splits }))
     } else {
       setPayoutSplits?.(ensureSplitsSumTo100Percent({ splits }))
     }

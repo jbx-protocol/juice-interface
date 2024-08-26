@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
-import { AdvancedDropdown } from '../AdvancedDropdown'
+import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
 import { IssuanceRateReductionField } from './IssuanceRateReductionField'
 import { RedemptionRateField } from './RedemptionRateField'
 import { ReservedTokensField } from './ReservedTokensField'

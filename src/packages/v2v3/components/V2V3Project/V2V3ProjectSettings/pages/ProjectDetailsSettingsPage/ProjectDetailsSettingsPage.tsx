@@ -1,5 +1,5 @@
 import { useForm } from 'antd/lib/form/Form'
-import { ProjectDetailsForm, ProjectDetailsFormFields } from 'components/Project/ProjectDetailsForm'
+import { ProjectDetailsForm, ProjectDetailsFormFields } from 'components/Project/ProjectSettings/ProjectDetailsForm'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'

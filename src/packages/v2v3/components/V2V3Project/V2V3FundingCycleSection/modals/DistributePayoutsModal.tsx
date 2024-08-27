@@ -12,8 +12,7 @@ import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectCo
 import { useDistributePayoutsTx } from 'packages/v2v3/hooks/transactor/useDistributePayouts'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import {
-  V2V3_CURRENCY_USD,
-  V2V3CurrencyName,
+  V2V3CurrencyName
 } from 'packages/v2v3/utils/currency'
 import { useContext, useEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
@@ -59,13 +58,6 @@ export default function DistributePayoutsModal({
 
   async function executeDistributePayoutsTx() {
     if (!distributionLimitCurrency || !distributionAmount) return
-
-    const minAmount = (
-      distributionLimitCurrency.eq(V2V3_CURRENCY_USD)
-        ? converter.usdToWei(distributionAmount)
-        : parseWad(distributionAmount)
-    )?.sub(1e12) // Arbitrary value subtracted
-    if (!minAmount) return
 
     setLoading(true)
 

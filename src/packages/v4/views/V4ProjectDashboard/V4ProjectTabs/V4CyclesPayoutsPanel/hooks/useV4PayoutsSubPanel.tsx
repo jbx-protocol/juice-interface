@@ -30,19 +30,14 @@ const calculateSplitAmountWad = (
 
 export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { splits, isLoading } = useV4CurrentUpcomingPayoutSplits(type)
-
   const { data: projectOwnerAddress } = useProjectOwnerOf()
-
   const { data: primaryNativeTerminalFee } = useReadJbMultiTerminalFee()
-
   const { distributableAmount } = useV4DistributableAmount()
 
   const { payoutLimit, payoutLimitCurrency } =
     useV4CurrentUpcomingPayoutLimit(type)
-
-  const showAmountOnPayout = useMemo(() => {
-    return payoutLimit === MAX_PAYOUT_LIMIT || payoutLimit === 0n
-  }, [payoutLimit])
+  const showAmountOnPayout =
+    payoutLimit !== MAX_PAYOUT_LIMIT && payoutLimit !== 0n
 
   const transformSplit = useCallback(
     (split: JBSplit) => {

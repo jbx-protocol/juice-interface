@@ -1,23 +1,29 @@
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { t, Trans } from '@lingui/macro'
+import { waitForTransactionReceipt } from '@wagmi/core'
 import { Button, Tooltip } from 'antd'
 import Loading from 'components/Loading'
 import { JuiceModal, JuiceModalProps } from 'components/modals/JuiceModal'
 import { PV_V4 } from 'constants/pv'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
 import { useWallet } from 'hooks/Wallet'
-import { useJBTokenContext } from 'juice-sdk-react'
-import { useRedeemTokensTx } from 'packages/v1/hooks/transactor/useRedeemTokensTx'
+import { NATIVE_TOKEN } from 'juice-sdk-core'
+import {
+  useJBContractContext,
+  useJBTokenContext,
+  useWriteJbMultiTerminalRedeemTokensOf,
+} from 'juice-sdk-react'
 import { useETHReceivedFromTokens } from 'packages/v4/hooks/useETHReceivedFromTokens'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
-import { useCallback, useMemo, useState } from 'react'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatEther, parseUnits } from 'viem'
 import { EthereumLogo } from './EthereumLogo'
 import { PayRedeemInput } from './PayRedeemInput'
-
 type RedeemConfigurationProps = {
   userTokenBalance: number | undefined
   projectHasErc20Token: boolean
@@ -31,7 +37,9 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
   const tokenSymbol = token?.data?.symbol
   const { data: payoutLimit } = usePayoutLimit()
   const { projectId, projectMetadata } = useProjectMetadataContext()
-  const redeemTokensTx = useRedeemTokensTx()
+  const { contracts } = useJBContractContext()
+  const { addTransaction } = useContext(TxHistoryContext)
+
   const wallet = useWallet()
   // TODO: We should probably break out tokens panel hook into reusable module
   const tokenLogo = useProjectLogoSrc({
@@ -55,6 +63,10 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
     ? formatEther(ethReceivedFromTokens)
     : ''
 
+  const { writeContractAsync: writeRedeem } =
+    useWriteJbMultiTerminalRedeemTokensOf()
+  const { userAddress } = useWallet()
+
   const insufficientBalance = useMemo(() => {
     if (!userTokenBalance) return false
     const amount = Number(redeemAmount || 0)
@@ -74,33 +86,54 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
       emitErrorNotification('Failed to calculate slippage')
       return
     }
+
+    if (!contracts.primaryNativeTerminal.data || !projectId) {
+      emitErrorNotification('Failed to prepare transaction')
+      return
+    }
+
+    if (!userAddress) {
+      emitErrorNotification('No wallet connected')
+      return
+    }
+
     setRedeeming(true)
-    // TODO tx
-    // const txSuccess = await redeemTokensTx(
-    //   {
-    //     redeemAmount: parseWad(redeemAmount),
-    //     minReturnedTokens: slippage,
-    //     memo: '',
-    //   },
-    //   {
-    //     onDone: () => {
-    //       setModalOpen(true)
-    //     },
-    //     onConfirmed: () => {
-    //       setRedeeming(false)
-    //     },
-    //     onError: (e: Error) => {
-    //       setRedeeming(false)
-    //       setModalOpen(false)
-    //       emitErrorNotification(e.message)
-    //     },
-    //   },
-    // )
-    if (!txSuccess) {
+
+    const args = [
+      userAddress,
+      BigInt(projectId),
+      NATIVE_TOKEN,
+      redeemAmountWei,
+      0n,
+      userAddress,
+      '0x0',
+    ] as const
+    try {
+      const hash = await writeRedeem({
+        address: contracts.primaryNativeTerminal.data,
+        args,
+      })
+      setModalOpen(true)
+
+      addTransaction?.('Redeem', { hash })
+      await waitForTransactionReceipt(wagmiConfig, {
+        hash,
+      })
+      setRedeeming(false)
+    } catch (e) {
       setRedeeming(false)
       setModalOpen(false)
+      emitErrorNotification((e as unknown as Error).message)
     }
-  }, [redeemAmount, redeemTokensTx, slippage])
+  }, [
+    slippage,
+    addTransaction,
+    contracts.primaryNativeTerminal.data,
+    projectId,
+    redeemAmountWei,
+    userAddress,
+    writeRedeem,
+  ])
 
   return (
     <>
@@ -216,8 +249,6 @@ const RedeemModal: React.FC<JuiceModalProps & { redeeming: boolean }> = ({
             </div>
           </>
         )}
-
-        {/* <ExternalLink className="mt-3">View on block explorer</ExternalLink> */}
       </div>
     </JuiceModal>
   )

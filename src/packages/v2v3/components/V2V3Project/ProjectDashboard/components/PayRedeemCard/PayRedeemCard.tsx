@@ -786,8 +786,6 @@ const RedeemModal: React.FC<JuiceModalProps & { redeeming: boolean }> = ({
             </div>
           </>
         )}
-
-        {/* <ExternalLink className="mt-3">View on block explorer</ExternalLink> */}
       </div>
     </JuiceModal>
   )

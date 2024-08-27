@@ -34,11 +34,11 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
   //   ? parseFloat(panelBalance.replaceAll(',', ''))
   //   : undefined
   const tokenBalance = 0 // TODO
-
   const redeems = {
     loading: ruleset.isLoading,
     enabled:
-      !((rulesetMetadata.data?.redemptionRate?.value ?? 0n) > 0n) || false,
+      rulesetMetadata.data?.redemptionRate &&
+      rulesetMetadata.data.redemptionRate.value > 0n,
   }
 
   const weight = ruleset.data?.weight

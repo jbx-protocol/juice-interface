@@ -7,7 +7,6 @@ import {
 } from 'juice-sdk-react'
 import { V4CurrencyOption } from '../models/v4CurrencyOption'
 import { V4_CURRENCY_ETH } from '../utils/currency'
-import { MAX_PAYOUT_LIMIT } from '../utils/math'
 
 /**
  * @todo add to sdk
@@ -38,7 +37,7 @@ export function usePayoutLimit() {
           currency: Number(payoutLimit.currency) as V4CurrencyOption,
         }
       : {
-          amount: MAX_PAYOUT_LIMIT,
+          amount: 0n,
           currency: V4_CURRENCY_ETH,
         },
     isLoading,

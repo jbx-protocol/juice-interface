@@ -1,11 +1,11 @@
 import { ArrowUpCircleIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { useJBContractContext, useReadJbTokensTotalCreditSupplyOf } from 'juice-sdk-react'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { reloadWindow } from 'utils/windowUtils'
 import V4DistributeReservedTokensModal from './V4DistributeReservedTokensModal'
+import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
 
 export const V4SendReservedTokensButton = ({
   className,
@@ -14,17 +14,14 @@ export const V4SendReservedTokensButton = ({
   className?: string
   containerClassName?: string
 }) => {
-  const { projectId } = useJBContractContext()
-  const { data: totalCreditSupply, isLoading: totalCreditSupplyLoading } = useReadJbTokensTotalCreditSupplyOf({
-    args: [projectId],
-  })
+  const { pendingReservedTokens } = useV4ReservedTokensSubPanel()
+
   const [open, setOpen] = useState(false)
   const openModal = useCallback(() => setOpen(true), [])
   const closeModal = useCallback(() => setOpen(false), [])
 
-  const distributeButtonDisabled = useMemo(() => {
-    return (totalCreditSupply ?? 0n) === 0n
-  }, [totalCreditSupply])
+  const distributeButtonDisabled =
+    !pendingReservedTokens || pendingReservedTokens === 0n
 
   return (
     <Tooltip
@@ -35,7 +32,6 @@ export const V4SendReservedTokensButton = ({
       <Button
         type="primary"
         className={twMerge('flex w-fit items-center gap-3', className)}
-        loading={totalCreditSupplyLoading}
         onClick={openModal}
         disabled={distributeButtonDisabled}
       >

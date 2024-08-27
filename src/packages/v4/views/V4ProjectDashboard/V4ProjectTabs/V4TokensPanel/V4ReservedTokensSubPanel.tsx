@@ -12,7 +12,7 @@ export const V4ReservedTokensSubPanel = ({
 }: {
   className?: string
 }) => {
-  const { reservedList, totalCreditSupply, reservedPercent } =
+  const { reservedList, pendingReservedTokensFormatted, reservedPercent } =
     useV4ReservedTokensSubPanel()
 
   const reservedPercentTooltip = (
@@ -32,8 +32,8 @@ export const V4ReservedTokensSubPanel = ({
             className="w-full min-w-min flex-[1_0_0]"
             title={t`Reserved tokens`}
             description={
-              totalCreditSupply ? (
-                <>{totalCreditSupply}</>
+              pendingReservedTokensFormatted ? (
+                <>{pendingReservedTokensFormatted}</>
               ) : (
                 <div className="h-7 w-24 animate-pulse rounded bg-grey-200 dark:bg-slate-200" />
               )
@@ -48,7 +48,7 @@ export const V4ReservedTokensSubPanel = ({
           />
         </div>
         {reservedPercent &&
-        totalCreditSupply &&
+        pendingReservedTokensFormatted &&
         reservedPercent !== '0' ? (
           <TitleDescriptionDisplayCard
             className="w-full"
@@ -57,7 +57,7 @@ export const V4ReservedTokensSubPanel = ({
               items: kebabMenuItems,
             }}
           >
-            {totalCreditSupply ||
+            {pendingReservedTokensFormatted ||
             reservedPercent ||
             (reservedList && reservedList.length > 1) ? (
               <>

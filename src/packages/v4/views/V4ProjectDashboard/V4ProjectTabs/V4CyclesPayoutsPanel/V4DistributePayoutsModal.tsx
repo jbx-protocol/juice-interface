@@ -1,17 +1,26 @@
 import { t, Trans } from '@lingui/macro'
+import { waitForTransactionReceipt } from '@wagmi/core'
 import { Form } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { FEES_EXPLANATION } from 'components/strings'
+import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
+import {
+  useJBContractContext,
+  useWriteJbMultiTerminalSendPayoutsOf,
+} from 'juice-sdk-react'
 import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
-import { useUsedPayoutLimitOf } from 'packages/v4/hooks/useUsedPayoutLimitOf'
-import { useV4BalanceOfNativeTerminal } from 'packages/v4/hooks/useV4BalanceOfNativeTerminal'
 import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4PayoutSplits'
-import { V4CurrencyName } from 'packages/v4/utils/currency'
-import { useEffect, useState } from 'react'
+import { V4_CURRENCY_ETH, V4CurrencyName } from 'packages/v4/utils/currency'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { useContext, useState } from 'react'
+import { emitErrorNotification } from 'utils/notifications'
+import { parseUnits } from 'viem'
 import { useV4DistributableAmount } from './hooks/useV4DistributableAmount'
 
 export default function V4DistributePayoutsModal({
@@ -24,52 +33,59 @@ export default function V4DistributePayoutsModal({
   onConfirmed?: VoidFunction
 }) {
   const { splits: payoutSplits } = useV4CurrentPayoutSplits()
-  const { data: usedPayoutLimit } = useUsedPayoutLimitOf()
   const { data: payoutLimit } = usePayoutLimit()
-  const { data: balanceOfNativeTerminal } = useV4BalanceOfNativeTerminal()
   const { distributableAmount: distributable } = useV4DistributableAmount()
+  const { projectId } = useProjectMetadataContext()
+  const { contracts } = useJBContractContext()
+  const { addTransaction } = useContext(TxHistoryContext)
 
-  const payoutLimitAmount = payoutLimit?.amount
-  const payoutLimitAmountCurrency = payoutLimit?.currency
+  const payoutLimitAmountCurrency = payoutLimit?.currency ?? V4_CURRENCY_ETH
 
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [distributionAmount, setDistributionAmount] = useState<string>()
 
-  // TODO: const v4DistributePayoutsTx = useV4DistributePayoutsTx()
-
-  useEffect(() => {
-    setDistributionAmount(distributable.format())
-  }, [
-    distributable,
-  ])
+  const { writeContractAsync: writeSendPayouts, data } =
+    useWriteJbMultiTerminalSendPayoutsOf()
 
   async function executeDistributePayoutsTx() {
-    if (!payoutLimitAmountCurrency || !distributionAmount) return
+    if (
+      !payoutLimitAmountCurrency ||
+      !distributionAmount ||
+      !contracts.primaryNativeTerminal.data ||
+      !projectId
+    )
+      return
 
     setLoading(true)
 
-    const txSuccessful = true
-    // TODO: const txSuccessful = await v4DistributePayoutsTx(
-    //   {
-    //     amount: distributionAmount,
-    //     currency: payoutLimitAmountCurrency,
-    //   },
-    //   {
-    //     onDone: () => {
-    //       setTransactionPending(true)
-    //     },
-    //     onConfirmed: () => {
-    //       setLoading(false)
-    //       setTransactionPending(false)
-    //       onConfirmed?.()
-    //     },
-    //   },
-    // )
+    const args = [
+      BigInt(projectId),
+      NATIVE_TOKEN,
+      parseUnits(distributionAmount, NATIVE_TOKEN_DECIMALS),
+      BigInt(payoutLimitAmountCurrency),
+      0n, // TODO?
+    ] as const
 
-    if (!txSuccessful) {
+    try {
+      const hash = await writeSendPayouts({
+        address: contracts.primaryNativeTerminal.data,
+        args,
+      })
+      setTransactionPending(true)
+
+      addTransaction?.('Send payouts', { hash })
+      await waitForTransactionReceipt(wagmiConfig, {
+        hash,
+      })
+
       setLoading(false)
       setTransactionPending(false)
+      onConfirmed?.()
+    } catch (e) {
+      setLoading(false)
+
+      emitErrorNotification((e as unknown as Error).message)
     }
   }
 

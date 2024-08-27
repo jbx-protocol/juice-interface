@@ -59,9 +59,9 @@ export function PayoutsTableBody() {
                       <Cell>
                         <Trans>Address or ID</Trans>
                       </Cell>
-                      <Cell>
-                        <CurrencySwitcher />
-                      </Cell>
+                      {hasDistributionLimit ?
+                          <CurrencySwitcher />
+                      : <Trans>Percent</Trans>}
                     </Row>
                   ) : null}
                   {payoutSplits.map((payoutSplit, index) => (

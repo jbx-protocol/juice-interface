@@ -4,8 +4,8 @@ import { Button, Modal } from 'antd'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import Link from 'next/link'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
+import { settingsPagePath, v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { ReactNode, useContext } from 'react'
-import { settingsPagePath, v2v3ProjectRoute } from 'utils/routes'
 
 export function TransactionSuccessModal({
   open,

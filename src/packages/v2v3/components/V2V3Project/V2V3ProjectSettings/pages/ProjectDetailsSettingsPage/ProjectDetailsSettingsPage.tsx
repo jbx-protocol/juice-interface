@@ -1,13 +1,11 @@
 import { useForm } from 'antd/lib/form/Form'
+import { ProjectDetailsForm, ProjectDetailsFormFields } from 'components/Project/ProjectSettings/ProjectDetailsForm'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
-import {
-  ProjectDetailsForm,
-  ProjectDetailsFormFields,
-} from 'packages/v2v3/components/V2V3Project/V2V3ProjectSettings/pages/ProjectDetailsSettingsPage/ProjectDetailsForm'
+
 import { useEditProjectDetailsTx } from 'packages/v2v3/hooks/transactor/useEditProjectDetailsTx'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { withoutHttps } from 'utils/http'

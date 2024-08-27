@@ -2,7 +2,7 @@ import { WarningOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { LanguageProvider } from 'contexts/Language/LanguageProvider'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 import ExternalLink from '../ExternalLink'
 
 const resetSite = () => {

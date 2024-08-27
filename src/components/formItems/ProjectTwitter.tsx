@@ -1,6 +1,7 @@
 import { t } from '@lingui/macro'
-import { Form, Input } from 'antd'
+import { Form } from 'antd'
 
+import { TwitterHandleInputWrapper } from 'components/Create/components/pages/ProjectDetails/ProjectDetailsPage'
 import { FormItemExt } from './formItemExt'
 
 export default function ProjectTwitter({
@@ -14,12 +15,7 @@ export default function ProjectTwitter({
       label={hideLabel ? undefined : t`Twitter handle`}
       {...formItemProps}
     >
-      <Input
-        prefix="@"
-        placeholder="juiceboxETH"
-        type="string"
-        autoComplete="off"
-      />
+      <TwitterHandleInputWrapper />
     </Form.Item>
   )
 }

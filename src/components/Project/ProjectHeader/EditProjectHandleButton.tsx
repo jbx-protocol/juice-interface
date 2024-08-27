@@ -4,8 +4,8 @@ import { Button, Tooltip } from 'antd'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import Link from 'next/link'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
+import { settingsPagePath } from 'packages/v2v3/utils/routes'
 import { useContext } from 'react'
-import { settingsPagePath } from 'utils/routes'
 
 export function EditProjectHandleButton() {
   const { projectId } = useContext(ProjectMetadataContext)

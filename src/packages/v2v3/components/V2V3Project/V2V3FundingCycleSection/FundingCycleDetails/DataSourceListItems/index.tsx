@@ -15,7 +15,7 @@ import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards
 import { V2V3FundingCycleMetadata } from 'packages/v2v3/models/fundingCycle'
 import { useContext } from 'react'
 import { formatBoolean } from 'utils/format/formatBoolean'
-import { helpPagePath } from 'utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 import { FundingCycleListItem } from '../FundingCycleListItem'
 
 function DataSourceAddressValue({ address }: { address: string | undefined }) {

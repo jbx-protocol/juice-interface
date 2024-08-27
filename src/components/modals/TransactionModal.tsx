@@ -4,7 +4,7 @@ import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { TxStatus } from 'models/transaction'
-import Image from "next/legacy/image"
+import Image from 'next/legacy/image'
 import { PropsWithChildren, useContext, useMemo } from 'react'
 import EtherscanLink from '../EtherscanLink'
 
@@ -79,6 +79,7 @@ export default function TransactionModal(props: TransactionModalProps) {
     props.okText,
     props.switchNetworkText,
   ])
+
   const modalProps = {
     ...props,
     ...{

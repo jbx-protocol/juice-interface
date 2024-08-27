@@ -73,6 +73,7 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
     const balance = userTokenBalance ?? 0
     return amount > balance
   }, [redeemAmount, userTokenBalance])
+  
   const tokenTicker = tokenSymbol || 'TOKENS'
 
   // 0.5% slippage for USD-denominated tokens

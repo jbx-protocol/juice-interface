@@ -1,9 +1,12 @@
 import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { MAX_MINT_RATE } from 'packages/v2v3/utils/math'
+import { MaxUint88 } from 'constants/numbers'
 
-// Note: "issuanceRate" = "mintRate"
+// @v4todo: add to SDK
+const MAX_ISSUANCE_RATE = Math.floor(MaxUint88 / 10 ** 18) 
+
+// Note: "MintRate" = "IssuanceRate"
 export function MintRateField() {
   return (
     <Form.Item name="issuanceRate">
@@ -11,7 +14,7 @@ export function MintRateField() {
         className="h-10 py-1 pr-4"
         min={0}
         defaultValue={0}
-        max={MAX_MINT_RATE}
+        max={MAX_ISSUANCE_RATE}
         accessory={
           <span className="mr-5 text-sm text-black dark:text-slate-100">
             <Trans>tokens per ETH paid</Trans>

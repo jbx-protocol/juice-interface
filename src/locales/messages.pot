@@ -3056,6 +3056,9 @@ msgstr ""
 msgid "Set a duration for locked cycles."
 msgstr ""
 
+msgid "Enable project token transfers"
+msgstr ""
+
 msgid "Deadline"
 msgstr ""
 
@@ -3252,6 +3255,9 @@ msgid "Juicebox provides trustless payroll capabilities to run automated payouts
 msgstr ""
 
 msgid "Notifications"
+msgstr ""
+
+msgid "Enable decay rate"
 msgstr ""
 
 msgid "Logo"

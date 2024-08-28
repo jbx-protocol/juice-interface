@@ -1,7 +1,7 @@
 import { Tooltip } from 'antd'
 import { twMerge } from 'tailwind-merge'
 import { classNames } from 'utils/classNames'
-import { DiffedItem } from '../../../shared/DiffedItem'
+import { DiffedItem } from './DiffedItem'
 
 // e.g. 'Distribution limit', 'Start', 'End', etc.
 export function FundingCycleListItem({

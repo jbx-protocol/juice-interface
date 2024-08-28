@@ -1,11 +1,8 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans, t } from '@lingui/macro'
 import { FundingCycleListItem } from 'components/FundingCycleListItem'
-import { DistributionLimitValue } from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItems/DistributionLimitValue'
-import DiffedSplitList from 'packages/v2v3/components/shared/DiffedSplits/DiffedSplitList'
-import { getV2V3CurrencyOption } from 'packages/v2v3/utils/currency'
 import { emptySectionClasses } from './DetailsSectionDiff'
 import { DiffSection } from './DiffSection'
+import { PayoutLimitValue } from './FormattedRulesetValues/DetailsSection/PayoutLimitValue'
 import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
 
 export function PayoutsSectionDiff() {
@@ -46,16 +43,16 @@ export function PayoutsSectionDiff() {
             <FundingCycleListItem
               name={t`Total payouts`}
               value={
-                <DistributionLimitValue
-                  distributionLimit={newDistributionLimit}
-                  currency={newCurrency}
+                <PayoutLimitValue
+                  payoutLimit={newDistributionLimit}
+                  currencyName={newCurrency}
                   shortName
                 />
               }
               oldValue={
-                <DistributionLimitValue
-                  distributionLimit={currentDistributionLimit}
-                  currency={currentCurrency}
+                <PayoutLimitValue
+                  payoutLimit={currentDistributionLimit}
+                  currencyName={currentCurrency}
                   shortName
                 />
               }
@@ -66,18 +63,18 @@ export function PayoutsSectionDiff() {
               <div className="mb-3 mt-2 text-sm font-semibold">
                 <Trans>Payout recipients:</Trans>
               </div>
-              <DiffedSplitList
+              {/* <DiffedSplitList
                 splits={newPayoutSplits}
                 diffSplits={currentPayoutSplits}
-                currency={BigNumber.from(getV2V3CurrencyOption(newCurrency))}
+                currency={BigNumber.from(getV4CurrencyOption(newCurrency))}
                 oldCurrency={BigNumber.from(
-                  getV2V3CurrencyOption(currentCurrency),
+                  getV4CurrencyOption(currentCurrency),
                 )}
                 totalValue={newDistributionLimit}
                 previousTotalValue={currentDistributionLimit}
                 valueFormatProps={{ precision: roundingPrecision }}
                 showDiffs
-              />
+              /> */}
             </div>
           )}
         </div>

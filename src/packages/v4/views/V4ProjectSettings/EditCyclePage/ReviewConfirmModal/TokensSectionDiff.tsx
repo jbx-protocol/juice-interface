@@ -2,6 +2,7 @@ import { Trans, t } from '@lingui/macro'
 import { FundingCycleListItem } from 'components/FundingCycleListItem'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { emptySectionClasses } from './DetailsSectionDiff'
+import DiffedSplitList from './DiffedSplits/DiffedSplitList'
 import { DiffSection } from './DiffSection'
 import { AllowedValue } from './FormattedRulesetValues/AllowedValue'
 import { IssuanceRateValue } from './FormattedRulesetValues/Tokens/IssuanceRateValue'
@@ -127,13 +128,13 @@ export function TokensSectionDiff() {
               <div className="mb-3 text-sm font-semibold">
                 <Trans>Reserved recipients:</Trans>
               </div>
-              {/* <DiffedSplitList
+              <DiffedSplitList
                 splits={newReservedSplits}
                 diffSplits={currentReservedSplits}
                 totalValue={undefined}
-                reservedRate={reservedRate}
+                reservedPercent={newReservedRate}
                 showDiffs
-              /> */}
+              />
             </div>
           )}
         </div>

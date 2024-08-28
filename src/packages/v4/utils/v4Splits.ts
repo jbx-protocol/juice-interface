@@ -44,7 +44,7 @@ export const totalSplitsPercent = (splits: JBSplit[]): bigint =>
 //  - false if new (exists in new but not old)
 //  - JBSplit if exists in old and new and there is a diff in the splits
 //  - undefined if exists in old and new and there is no diff in the splits
-type OldSplit = JBSplit | boolean | undefined
+type OldSplit = (JBSplit & { totalValue?: bigint } ) | boolean | undefined
 
 export type SplitWithDiff = JBSplit & {
   oldSplit?: OldSplit
@@ -99,7 +99,7 @@ export const sortSplits = (splits: JBSplit[]) => {
 }
 
 /* Determines if two splits AMOUNTS are equal. Extracts amounts for two splits from their respective totalValues **/
-function splitAmountsAreEqual({
+export function splitAmountsAreEqual({
   split1,
   split2,
   split1TotalValue,

@@ -1,11 +1,10 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans, t } from '@lingui/macro'
 import { FundingCycleListItem } from 'components/FundingCycleListItem'
-import { DistributionLimitValue } from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItems/DistributionLimitValue'
-import DiffedSplitList from 'packages/v2v3/components/shared/DiffedSplits/DiffedSplitList'
-import { getV2V3CurrencyOption } from 'packages/v2v3/utils/currency'
+import { getV4CurrencyOption } from 'packages/v4/utils/currency'
 import { emptySectionClasses } from './DetailsSectionDiff'
+import DiffedSplitList from './DiffedSplits/DiffedSplitList'
 import { DiffSection } from './DiffSection'
+import { PayoutLimitValue } from './FormattedRulesetValues/DetailsSection/PayoutLimitValue'
 import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
 
 export function PayoutsSectionDiff() {
@@ -46,16 +45,16 @@ export function PayoutsSectionDiff() {
             <FundingCycleListItem
               name={t`Total payouts`}
               value={
-                <DistributionLimitValue
-                  distributionLimit={newDistributionLimit}
-                  currency={newCurrency}
+                <PayoutLimitValue
+                  payoutLimit={newDistributionLimit}
+                  currencyName={newCurrency}
                   shortName
                 />
               }
               oldValue={
-                <DistributionLimitValue
-                  distributionLimit={currentDistributionLimit}
-                  currency={currentCurrency}
+                <PayoutLimitValue
+                  payoutLimit={currentDistributionLimit}
+                  currencyName={currentCurrency}
                   shortName
                 />
               }
@@ -69,9 +68,9 @@ export function PayoutsSectionDiff() {
               <DiffedSplitList
                 splits={newPayoutSplits}
                 diffSplits={currentPayoutSplits}
-                currency={BigNumber.from(getV2V3CurrencyOption(newCurrency))}
-                oldCurrency={BigNumber.from(
-                  getV2V3CurrencyOption(currentCurrency),
+                currency={BigInt(getV4CurrencyOption(newCurrency))}
+                oldCurrency={BigInt(
+                  getV4CurrencyOption(currentCurrency),
                 )}
                 totalValue={newDistributionLimit}
                 previousTotalValue={currentDistributionLimit}

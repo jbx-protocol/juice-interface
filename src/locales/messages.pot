@@ -3611,6 +3611,9 @@ msgstr ""
 msgid "Owner tools"
 msgstr ""
 
+msgid "{value} {tokenSymbol}/ETH"
+msgstr ""
+
 msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
 msgstr ""
 

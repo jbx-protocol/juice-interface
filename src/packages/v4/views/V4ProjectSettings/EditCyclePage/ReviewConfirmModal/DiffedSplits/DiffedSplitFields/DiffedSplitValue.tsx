@@ -1,21 +1,17 @@
 import { DiffedItem } from 'components/DiffedItem'
-import { BigNumber } from 'ethers'
-import { Split } from 'packages/v2v3/models/splits'
-import {
-  isFiniteDistributionLimit,
-  isInfiniteDistributionLimit,
-} from 'packages/v2v3/utils/fundingCycle'
-import { formatSplitPercent } from 'packages/v2v3/utils/math'
-import { splitAmountsAreEqual } from 'packages/v2v3/utils/v2v3Splits'
-import { SplitProps } from '../../SplitItem'
-import { SplitAmountValue } from '../../SplitItem/SplitAmountValue'
+import { JBSplit } from 'juice-sdk-core'
+
+import { SplitProps } from 'packages/v4/components/SplitList/SplitItem'
+import { SplitAmountValue } from 'packages/v4/components/SplitList/SplitItem/SplitAmountValue'
+import { isFinitePayoutLimit, isInfinitePayoutLimit } from 'packages/v4/utils/fundingCycle'
+import { splitAmountsAreEqual } from 'packages/v4/utils/v4Splits'
 
 export function DiffedSplitValue({
   splitProps,
   diffSplit,
 }: {
   splitProps: SplitProps
-  diffSplit?: Split
+  diffSplit?: JBSplit & { totalValue?: bigint }
 }) {
   const diffSplitProps: SplitProps | undefined = diffSplit
     ? {
@@ -26,8 +22,8 @@ export function DiffedSplitValue({
       }
     : undefined
 
-  const newValue = isInfiniteDistributionLimit(splitProps?.totalValue) ? (
-    <>{formatSplitPercent(BigNumber.from(splitProps.split.percent))}%</>
+  const newValue = isInfinitePayoutLimit(splitProps?.totalValue) ? (
+    <>{splitProps.split.percent.formatPercentage()}%</>
   ) : (
     <SplitAmountValue props={splitProps} hideTooltip />
   )
@@ -35,8 +31,8 @@ export function DiffedSplitValue({
   if (!diffSplitProps) return newValue
 
   const oldValue =
-    diffSplit && isInfiniteDistributionLimit(diffSplit?.totalValue) ? (
-      <>{formatSplitPercent(BigNumber.from(diffSplit.percent))}%</>
+    diffSplit && isInfinitePayoutLimit(diffSplit?.totalValue) ? (
+      <>{diffSplit.percent.formatPercentage()}%</>
     ) : (
       <SplitAmountValue
         props={{
@@ -48,8 +44,8 @@ export function DiffedSplitValue({
     )
 
   const isFiniteTotalValue =
-    isFiniteDistributionLimit(splitProps.totalValue) &&
-    isFiniteDistributionLimit(diffSplitProps.totalValue)
+    isFinitePayoutLimit(splitProps.totalValue) &&
+    isFinitePayoutLimit(diffSplitProps.totalValue)
 
   const percentsEqual =
     splitProps.split.percent === diffSplitProps.split.percent
@@ -58,8 +54,8 @@ export function DiffedSplitValue({
     ? splitAmountsAreEqual({
         split1: splitProps.split,
         split2: diffSplitProps.split,
-        split1TotalValue: splitProps.totalValue,
-        split2TotalValue: diffSplitProps.totalValue,
+        split1TotalValue: splitProps.totalValue ?? 0n,
+        split2TotalValue: diffSplitProps.totalValue ?? 0n,
       })
     : percentsEqual
 

@@ -1,9 +1,9 @@
 import { Trans, t } from '@lingui/macro'
-import { FundingCycleListItem } from 'components/FundingCycleListItem'
-import { DurationValue } from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItems/DurationValue'
 
-import { BallotStrategyValue } from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/RulesListItems/BallotStrategyValue'
+import { FundingCycleListItem } from 'components/FundingCycleListItem'
 import { DiffSection } from './DiffSection'
+import { ApprovalStrategyValue } from './FormattedRulesetValues/DetailsSection/ApprovalStrategyValue'
+import { DurationValue } from './FormattedRulesetValues/DetailsSection/DurationValue'
 import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
 
 export const emptySectionClasses = 'text-sm text-secondary pt-2 pb-3'
@@ -33,10 +33,6 @@ export function DetailsSectionDiff() {
     currentAllowTerminalMigration,
     allowTerminalMigrationHasDiff,
 
-    newAllowControllerMigration,
-    currentAllowControllerMigration,
-    allowControllerMigrationHasDiff,
-
     newSetController,
     currentSetController,
     allowSetControllerHasDiff,
@@ -65,14 +61,14 @@ export function DetailsSectionDiff() {
             <FundingCycleListItem
               name={t`Edit deadline`}
               value={
-                <BallotStrategyValue
-                  ballotStrategy={newBallot}
+                <ApprovalStrategyValue
+                  approvalStrategy={newBallot}
                   warningText={undefined}
                 />
               }
               oldValue={
-                <BallotStrategyValue
-                  ballotStrategy={currentBallot}
+                <ApprovalStrategyValue
+                  approvalStrategy={currentBallot}
                   warningText={undefined}
                 />
               }
@@ -137,21 +133,6 @@ export function DetailsSectionDiff() {
                 oldValue={
                   <span className="capitalize">
                     {currentSetController.toString()}
-                  </span>
-                }
-              />
-            )}
-            {allowControllerMigrationHasDiff && (
-              <FundingCycleListItem
-                name={t`Enable controller migrations`}
-                value={
-                  <span className="capitalize">
-                    {newAllowControllerMigration.toString()}
-                  </span>
-                }
-                oldValue={
-                  <span className="capitalize">
-                    {currentAllowControllerMigration.toString()}
                   </span>
                 }
               />

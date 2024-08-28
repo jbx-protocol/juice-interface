@@ -1,19 +1,11 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Trans, t } from '@lingui/macro'
 import { FundingCycleListItem } from 'components/FundingCycleListItem'
-import { MintRateValue } from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/TokenListItems/MintRateValue'
-import { ReservedRateValue } from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/TokenListItems/ReservedRateValue'
-import DiffedSplitList from 'packages/v2v3/components/shared/DiffedSplits/DiffedSplitList'
-import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
-import { deriveNextIssuanceRate } from 'packages/v2v3/utils/fundingCycle'
-import {
-  formatDiscountRate,
-  formatRedemptionRate,
-  formatReservedRate,
-} from 'packages/v2v3/utils/math'
-import { useContext } from 'react'
+import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { emptySectionClasses } from './DetailsSectionDiff'
+import DiffedSplitList from './DiffedSplits/DiffedSplitList'
 import { DiffSection } from './DiffSection'
+import { AllowedValue } from './FormattedRulesetValues/AllowedValue'
+import { IssuanceRateValue } from './FormattedRulesetValues/Tokens/IssuanceRateValue'
 import { useTokensSectionValues } from './hooks/useTokensSectionValues'
 
 export function TokensSectionDiff() {
@@ -43,15 +35,17 @@ export function TokensSectionDiff() {
     currentAllowMinting,
     allowMintingHasDiff,
 
-    newPauseTransfers,
-    currentPauseTransfers,
-    pauseTransfersHasDiff,
+    newTokenTransfers,
+    currentTokenTransfers,
+    tokenTransfersHasDiff,
 
-    unsafeFundingCycleProperties,
+    // unsafeFundingCycleProperties,
     tokenSymbolPlural,
   } = useTokensSectionValues()
 
-  const { fundingCycle: currentFundingCycle } = useContext(V2V3ProjectContext)
+  const { 
+    ruleset: upcomingRuleset, 
+  } = useJBUpcomingRuleset()
 
   if (!sectionHasDiff) {
     return (
@@ -61,12 +55,7 @@ export function TokensSectionDiff() {
     )
   }
 
-  const formattedReservedRate = parseFloat(formatReservedRate(newReservedRate))
-
-  const currentMintRateAfterDiscountRateApplied = deriveNextIssuanceRate({
-    weight: BigNumber.from(0),
-    previousFC: currentFundingCycle,
-  })
+  const currentMintRateAfterDiscountRateApplied = upcomingRuleset?.weight.toFloat()
 
   return (
     <DiffSection
@@ -74,15 +63,15 @@ export function TokensSectionDiff() {
         <div className="mb-5 flex flex-col gap-3 text-sm">
           {mintRateHasDiff && currentMintRateAfterDiscountRateApplied && (
             <FundingCycleListItem
-              name={t`Total issuance`}
+              name={t`Total issuance rate`}
               value={
-                <MintRateValue
+                <IssuanceRateValue
                   value={newMintRate}
                   tokenSymbol={tokenSymbolPlural}
                 />
               }
               oldValue={
-                <MintRateValue
+                <IssuanceRateValue
                   value={currentMintRateAfterDiscountRateApplied}
                   tokenSymbol={tokenSymbolPlural}
                 />
@@ -91,58 +80,47 @@ export function TokensSectionDiff() {
           )}
           {discountRateHasDiff && currentDiscountRate && (
             <FundingCycleListItem
-              name={t`Issuance reduction rate`}
-              value={`${formatDiscountRate(newDiscountRate)}%`}
-              oldValue={`${formatDiscountRate(currentDiscountRate)}%`}
+              name={t`Decay rate`}
+              value={`${newDiscountRate}%`}
+              oldValue={`${currentDiscountRate}%`}
             />
           )}
           {redemptionHasDiff && currentRedemptionRate && (
             <FundingCycleListItem
               name={t`Redemption rate`}
-              value={`${formatRedemptionRate(newRedemptionRate)}%`}
-              oldValue={`${formatRedemptionRate(currentRedemptionRate)}%`}
+              value={`${newRedemptionRate}%`}
+              oldValue={`${currentRedemptionRate}%`}
             />
           )}
           {allowMintingHasDiff && (
             <FundingCycleListItem
-              name={t`Project owner token minting`}
+              name={t`Owner token minting`}
               value={
-                <span className="capitalize">{newAllowMinting.toString()}</span>
+                <AllowedValue value={newAllowMinting} />
               }
               oldValue={
-                <span className="capitalize">
-                  {currentAllowMinting.toString()}
-                </span>
+                <AllowedValue value={currentAllowMinting} />
               }
             />
           )}
-          {pauseTransfersHasDiff && (
+          {tokenTransfersHasDiff && (
             <FundingCycleListItem
               name={t`Token transfers`}
               value={
-                <span className="capitalize">
-                  {newPauseTransfers.toString()}
-                </span>
+                <AllowedValue value={newTokenTransfers} />
               }
               oldValue={
-                <span className="capitalize">
-                  {currentPauseTransfers.toString()}
-                </span>
+                <AllowedValue value={currentTokenTransfers} />
               }
             />
           )}
           {reservedRateHasDiff && currentReservedRate && (
             <FundingCycleListItem
-              name={t`Reserved tokens`}
+              name={t`Reserved rate`}
               value={
-                <ReservedRateValue
-                  value={newReservedRate}
-                  showWarning={
-                    unsafeFundingCycleProperties?.metadataReservedRate
-                  }
-                />
+                <span>{newReservedRate}%</span>
               }
-              oldValue={<ReservedRateValue value={currentReservedRate} />}
+              oldValue={<span>{currentReservedRate}%</span>}
             />
           )}
           {reservedSplitsHasDiff && (
@@ -154,7 +132,7 @@ export function TokensSectionDiff() {
                 splits={newReservedSplits}
                 diffSplits={currentReservedSplits}
                 totalValue={undefined}
-                reservedRate={formattedReservedRate}
+                reservedPercent={newReservedRate}
                 showDiffs
               />
             </div>

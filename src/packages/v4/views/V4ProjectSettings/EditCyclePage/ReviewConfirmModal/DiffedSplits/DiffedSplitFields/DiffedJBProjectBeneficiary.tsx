@@ -1,14 +1,14 @@
 import { DiffedItem } from 'components/DiffedItem'
 import EthereumAddress from 'components/EthereumAddress'
-import { Split } from 'packages/v2v3/models/splits'
-import { JuiceboxProjectBeneficiary } from '../../SplitItem/JuiceboxProjectBeneficiary'
+import { JBSplit } from 'juice-sdk-core'
+import { JuiceboxProjectBeneficiary } from 'packages/v4/components/SplitList/SplitItem/JuiceboxProjectBeneficiary'
 
 export function DiffedJBProjectBeneficiary({
   split,
   oldSplit,
 }: {
-  split: Split
-  oldSplit?: Split
+  split: JBSplit
+  oldSplit?: JBSplit
 }) {
   const hasDiff = oldSplit && oldSplit.beneficiary !== split.beneficiary
 

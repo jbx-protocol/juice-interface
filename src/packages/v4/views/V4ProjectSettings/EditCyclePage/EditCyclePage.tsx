@@ -13,6 +13,7 @@ import { useChainId } from 'wagmi'
 import { DetailsSection } from './DetailsSection'
 import { useEditCycleFormContext } from './EditCycleFormContext'
 import { PayoutsSection } from './PayoutsSection'
+import { ReviewConfirmModal } from './ReviewConfirmModal'
 import { TokensSection } from './TokensSection'
 
 export function EditCyclePage() {
@@ -116,10 +117,10 @@ export function EditCyclePage() {
           >
             <TokensSection />
           </EditCycleFormSection>
-          {/* <ReviewConfirmModal
+          <ReviewConfirmModal
             open={confirmModalOpen}
             onClose={() => setConfirmModalOpen(false)}
-          /> */}
+          />
         </Form>
       </div>
 

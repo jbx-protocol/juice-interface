@@ -1,4 +1,5 @@
 import { t } from '@lingui/macro'
+import { FundingCycleListItem } from 'components/FundingCycleListItem'
 import {
   CONTRIBUTOR_RATE_EXPLANATION,
   DISCOUNT_RATE_EXPLANATION,
@@ -13,7 +14,6 @@ import {
   V2V3FundingCycle,
   V2V3FundingCycleMetadata,
 } from 'packages/v2v3/models/fundingCycle'
-import { FundingCycleListItem } from '../FundingCycleListItem'
 
 import { BigNumber } from 'ethers'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'

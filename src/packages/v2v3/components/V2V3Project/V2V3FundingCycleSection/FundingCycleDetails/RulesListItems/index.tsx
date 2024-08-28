@@ -1,4 +1,5 @@
 import { t } from '@lingui/macro'
+import { FundingCycleListItem } from 'components/FundingCycleListItem'
 import {
   CONTROLLER_CONFIG_EXPLANATION,
   CONTROLLER_MIGRATION_EXPLANATION,
@@ -9,7 +10,6 @@ import {
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { V2V3FundingCycleMetadata } from 'packages/v2v3/models/fundingCycle'
 import { useContext } from 'react'
-import { FundingCycleListItem } from '../FundingCycleListItem'
 import { AllowedValue } from './AllowedValue'
 import { HoldFeesValue } from './HoldFeesValue'
 import { PausePayValue } from './PausePayValue'

@@ -5,9 +5,9 @@ import {
   V2V3FundingCycleMetadata,
 } from 'packages/v2v3/models/fundingCycle'
 
+import { FundingCycleDetailsRow } from 'components/FundingCycleDetailsRow'
 import { isZeroAddress } from 'utils/address'
 import { DataSourceListItems } from './DataSourceListItems'
-import { FundingCycleDetailsRow } from './FundingCycleDetailsRow'
 import { FundingCycleListItems } from './FundingCycleListItems'
 import { RulesListItems } from './RulesListItems'
 import { TokenListItems } from './TokenListItems'

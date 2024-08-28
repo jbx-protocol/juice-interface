@@ -63,7 +63,7 @@ export const otherUnitToSeconds = ({
   unit,
 }: {
   duration: number
-  unit: DurationUnitsOption
+  unit: DurationUnitsOption | undefined
 }) => {
   if (!duration) return 0
   switch (unit) {

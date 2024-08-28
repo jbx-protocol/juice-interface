@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import { FundingCycleListItem } from 'components/FundingCycleListItem'
 import {
   DISTRIBUTION_LIMIT_EXPLANATION,
   RECONFIG_RULES_EXPLANATION,
@@ -17,7 +18,6 @@ import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
 import { getUnsafeV2V3FundingCycleProperties } from 'packages/v2v3/utils/fundingCycle'
 import { useContext } from 'react'
 import { formatDate, formatDateToUTC } from 'utils/format/formatDate'
-import { FundingCycleListItem } from '../FundingCycleListItem'
 import { BallotStrategyValue } from '../RulesListItems/BallotStrategyValue'
 import { DistributionLimitValue } from './DistributionLimitValue'
 import { DurationValue } from './DurationValue'

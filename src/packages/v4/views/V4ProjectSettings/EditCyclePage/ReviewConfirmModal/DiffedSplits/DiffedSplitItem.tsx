@@ -6,7 +6,6 @@ import {
 } from 'components/DiffedItem'
 import { SplitProps } from 'packages/v4/components/SplitList/SplitItem'
 import { ETHAddressBeneficiary } from 'packages/v4/components/SplitList/SplitItem/EthAddressBeneficiary'
-import { ReservedTokensValue } from 'packages/v4/components/SplitList/SplitItem/ReservedTokensValue'
 import { isJuiceboxProjectSplit, SplitWithDiff } from 'packages/v4/utils/v4Splits'
 import { twMerge } from 'tailwind-merge'
 import { DiffedJBProjectBeneficiary } from './DiffedSplitFields/DiffedJBProjectBeneficiary'
@@ -63,12 +62,13 @@ export function DiffedSplitItem({ props }: { props: DiffedSplitProps }) {
           diffSplit={hasDiff ? oldSplit : undefined}
           splitProps={props}
         />
-        {props.reservedPercent !== undefined ? (
+        {/* '?' icon that appears next reserved percents */}
+        {/* {props.reservedPercent !== undefined ? (
           <ReservedTokensValue
             splitPercent={props.split.percent}
             reservedPercent={props.reservedPercent}
           />
-        ) : null}
+        ) : null} */}
       </div>
     </div>
   )

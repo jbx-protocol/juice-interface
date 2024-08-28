@@ -1,6 +1,8 @@
 import { Trans, t } from '@lingui/macro'
 import { FundingCycleListItem } from 'components/FundingCycleListItem'
+import { getV4CurrencyOption } from 'packages/v4/utils/currency'
 import { emptySectionClasses } from './DetailsSectionDiff'
+import DiffedSplitList from './DiffedSplits/DiffedSplitList'
 import { DiffSection } from './DiffSection'
 import { PayoutLimitValue } from './FormattedRulesetValues/DetailsSection/PayoutLimitValue'
 import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
@@ -63,18 +65,18 @@ export function PayoutsSectionDiff() {
               <div className="mb-3 mt-2 text-sm font-semibold">
                 <Trans>Payout recipients:</Trans>
               </div>
-              {/* <DiffedSplitList
+              <DiffedSplitList
                 splits={newPayoutSplits}
                 diffSplits={currentPayoutSplits}
-                currency={BigNumber.from(getV4CurrencyOption(newCurrency))}
-                oldCurrency={BigNumber.from(
+                currency={BigInt(getV4CurrencyOption(newCurrency))}
+                oldCurrency={BigInt(
                   getV4CurrencyOption(currentCurrency),
                 )}
                 totalValue={newDistributionLimit}
                 previousTotalValue={currentDistributionLimit}
                 valueFormatProps={{ precision: roundingPrecision }}
                 showDiffs
-              /> */}
+              />
             </div>
           )}
         </div>

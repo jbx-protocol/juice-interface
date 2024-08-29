@@ -4,6 +4,7 @@ query TrendingProjects(
   $skip: Int
   $orderBy: Project_orderBy
   $orderDirection: OrderDirection
+  $block: Block_height
 ) {
   projects(
     where: $where
@@ -11,6 +12,7 @@ query TrendingProjects(
     skip: $skip
     orderBy: $orderBy
     orderDirection: desc
+    block: $block
   ) {
     id
     projectId

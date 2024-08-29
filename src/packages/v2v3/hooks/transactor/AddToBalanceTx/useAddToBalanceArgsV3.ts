@@ -1,6 +1,6 @@
+import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import { DEFAULT_MEMO, DEFAULT_METADATA } from 'constants/transactionDefaults'
 import { BigNumber } from 'ethers'
-import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
 
 export function getAddToBalanceArgsV3({
   projectId,

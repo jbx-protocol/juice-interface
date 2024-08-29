@@ -1,9 +1,9 @@
+import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
 import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'

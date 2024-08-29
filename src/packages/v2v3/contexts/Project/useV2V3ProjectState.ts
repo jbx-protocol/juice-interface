@@ -1,4 +1,5 @@
 import { PV_V2 } from 'constants/pv'
+import { RomanStormVariables } from 'constants/romanStorm'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -30,7 +31,6 @@ import {
   V2V3_CURRENCY_ETH,
 } from 'packages/v2v3/utils/currency'
 import { useContext, useMemo } from 'react'
-import { RomanStormVariables } from 'constants/romanStorm'
 import { V2V3ProjectContractsContext } from '../ProjectContracts/V2V3ProjectContractsContext'
 import { V2V3ProjectContextType } from './V2V3ProjectContext'
 
@@ -113,7 +113,7 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
   const projectRomanStormStatsData = first(romanStormData?.projects)
 
   let totalVolume = projectStatsData?.volume
-  let paymentsCount = projectStatsData?.paymentsCount
+  let paymentsCount = projectStatsData?.paymentsCount ?? 0
 
   if (projectId === RomanStormVariables.PROJECT_ID && projectStatsData) {
     const BIG_ZERO = BigNumber.from(0)
@@ -121,7 +121,7 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     totalVolume = (totalVolume || BIG_ZERO).sub(
       projectRomanStormStatsData?.volume || BIG_ZERO,
     )
-    paymentsCount -= projectRomanStormStatsData?.paymentsCount
+    paymentsCount -= projectRomanStormStatsData?.paymentsCount ?? 0
   }
 
   const { createdAt, trendingVolume } = projectStatsData ?? {}

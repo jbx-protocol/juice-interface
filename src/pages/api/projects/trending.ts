@@ -1,4 +1,6 @@
 import { PV_V1, PV_V2 } from 'constants/pv'
+import { RomanStormVariables } from 'constants/romanStorm'
+import { BigNumber } from 'ethers'
 import {
   OrderDirection,
   Project_OrderBy,
@@ -7,12 +9,10 @@ import {
   TrendingProjectsQuery,
 } from 'generated/graphql'
 import { serverClient } from 'lib/apollo/serverClient'
-import { BigNumber } from 'ethers'
 import { NextApiHandler } from 'next'
 import { V1ArchivedProjectIds } from 'packages/v1/constants/archivedProjects'
 import { V2ArchivedProjectIds } from 'packages/v2v3/constants/archivedProjects'
 import { getSubgraphIdForProject } from 'utils/graph'
-import { RomanStormVariables } from 'constants/romanStorm'
 
 const CACHE_MAXAGE = 60 * 5 // 5 minutes
 
@@ -79,9 +79,9 @@ const handler: NextApiHandler = async (req, res) => {
 
         projects[romanProjectIndex] = {
           ...projects[romanProjectIndex],
-          volume: BigNumber.from(romanProject.volume)
-            .sub(romanProjectSnapshot.volume)
-            .toString() as BigNumber, // Incorrect types are declared
+          volume: BigNumber.from(romanProject.volume ?? 0).sub(
+            BigNumber.from(romanProjectSnapshot.volume ?? 0),
+          ), // Incorrect types are declared
           paymentsCount:
             romanProject.paymentsCount - romanProjectSnapshot.paymentsCount,
         }

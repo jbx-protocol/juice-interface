@@ -133,13 +133,13 @@ export function EditCyclePage() {
           </Link>
         ) : null}
         {/* <Tooltip title={error}> */}
-          <Button
-            type="primary"
-            onClick={() => setConfirmModalOpen(true)}
-            disabled={false}//Boolean(error)}
-          >
-            <Trans>Save changes</Trans>
-          </Button>
+        <Button
+          type="primary"
+          onClick={() => setConfirmModalOpen(true)}
+          disabled={false} //Boolean(error)}
+        >
+          <Trans>Save changes</Trans>
+        </Button>
         {/* </Tooltip> */}
       </div>
     </div>

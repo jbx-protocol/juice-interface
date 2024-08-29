@@ -82,15 +82,13 @@ export function ProjectSettingsContent({
 }: {
   settingsPageKey: SettingsPageKey
 }) {
-
   const ActiveSettingsPage = useMemo(
     () => SettingsPageComponents[settingsPageKey],
     [settingsPageKey],
   )
 
   // const hasExistingNfts = !isZeroAddress(fundingCycleMetadata?.dataSource)
-  const pageTitle =
-    V4SettingsPageKeyTitleMap(false)[settingsPageKey]
+  const pageTitle = V4SettingsPageKeyTitleMap(false)[settingsPageKey]
 
   return (
     <ProjectSettingsLayout>

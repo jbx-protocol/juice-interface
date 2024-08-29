@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans, t } from '@lingui/macro'
-import { FundingCycleListItem } from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItem'
+import { FundingCycleListItem } from 'components/FundingCycleListItem'
 import { DistributionLimitValue } from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItems/DistributionLimitValue'
 import DiffedSplitList from 'packages/v2v3/components/shared/DiffedSplits/DiffedSplitList'
 import { getV2V3CurrencyOption } from 'packages/v2v3/utils/currency'

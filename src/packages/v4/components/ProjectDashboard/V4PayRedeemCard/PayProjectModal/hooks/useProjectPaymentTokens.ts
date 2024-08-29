@@ -9,6 +9,7 @@ import { useProjectSelector } from 'packages/v4/components/ProjectDashboard/redu
 import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { formatUnits } from 'viem'
+
 export const useProjectPaymentTokens = () => {
   const payAmount = useProjectSelector(state => state.projectCart.payAmount)
   const { ruleset, rulesetMetadata } = useJBRulesetContext()
@@ -19,6 +20,7 @@ export const useProjectPaymentTokens = () => {
   let payAmountWei = payAmount?.amount
   if (payAmount?.currency === V4_CURRENCY_USD) {
     // convert to wei first
+    // TODO support usd payments
   }
 
   const amountBQuote =

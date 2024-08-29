@@ -1,26 +1,26 @@
-import { WeiPerEther } from '@ethersproject/constants'
-import { SplitPortion, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
+import { formatEther, SplitPortion, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
 import {
   useJBContractContext,
   useJBRulesetMetadata,
-  useReadJbTokensTotalCreditSupplyOf,
+  useReadJbControllerPendingReservedTokenBalanceOf,
 } from 'juice-sdk-react'
 import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
 import { useMemo } from 'react'
 import assert from 'utils/assert'
-import { formatAmount } from 'utils/format/formatAmount'
 
 export const useV4ReservedTokensSubPanel = () => {
-  const { projectId } = useJBContractContext()
+  const { projectId, contracts } = useJBContractContext()
   const { data: projectOwnerAddress } = useProjectOwnerOf()
   const { splits: reservedTokensSplits } = useV4ReservedSplits()
   const { data: rulesetMetadata } = useJBRulesetMetadata()
   const reservedPercent = `${rulesetMetadata?.reservedPercent.formatPercentage()}%`
 
-  const { data: totalCreditSupply } = useReadJbTokensTotalCreditSupplyOf({
-    args: [projectId],
-  })
+  const { data: pendingReservedTokens } =
+    useReadJbControllerPendingReservedTokenBalanceOf({
+      address: contracts.controller.data ?? undefined,
+      args: [projectId],
+    })
 
   const reservedList = useMemo(() => {
     if (!projectOwnerAddress || !projectId || !reservedTokensSplits) return
@@ -78,16 +78,15 @@ export const useV4ReservedTokensSubPanel = () => {
     return processedSplits
   }, [reservedTokensSplits, projectOwnerAddress, projectId])
 
-  const totalCreditSupplyFormatted = useMemo(() => {
-    if (totalCreditSupply === undefined) return
-    return formatAmount(Number(totalCreditSupply / WeiPerEther.toBigInt()), {
-      maximumFractionDigits: 2,
-    })
-  }, [totalCreditSupply])
+  const pendingReservedTokensFormatted = useMemo(() => {
+    if (pendingReservedTokens === undefined) return
+    return formatEther(pendingReservedTokens, { fractionDigits: 6 })
+  }, [pendingReservedTokens])
 
   return {
     reservedList,
-    totalCreditSupply: totalCreditSupplyFormatted,
+    pendingReservedTokensFormatted: pendingReservedTokensFormatted,
+    pendingReservedTokens: pendingReservedTokens,
     reservedPercent,
   }
 }

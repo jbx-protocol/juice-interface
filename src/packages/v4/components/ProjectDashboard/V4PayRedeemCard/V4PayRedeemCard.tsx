@@ -11,7 +11,7 @@ import { useProjectDispatch, useProjectSelector } from '../redux/hooks'
 import { payRedeemActions } from '../redux/payRedeemSlice'
 import { PayConfiguration } from './PayConfiguration'
 import { PayProjectModal } from './PayProjectModal/PayProjectModal'
-// import { RedeemConfiguration } from './RedeemConfiguration'
+import { RedeemConfiguration } from './RedeemConfiguration'
 
 type PayRedeemCardProps = {
   className?: string
@@ -34,11 +34,11 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
   //   ? parseFloat(panelBalance.replaceAll(',', ''))
   //   : undefined
   const tokenBalance = 0 // TODO
-
   const redeems = {
     loading: ruleset.isLoading,
     enabled:
-      !((rulesetMetadata.data?.redemptionRate?.value ?? 0n) > 0n) || false,
+      rulesetMetadata.data?.redemptionRate &&
+      rulesetMetadata.data.redemptionRate.value > 0n,
   }
 
   const weight = ruleset.data?.weight
@@ -90,12 +90,12 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
               projectHasErc20Token={projectHasErc20Token}
               isIssuingTokens={isIssuingTokens}
             />
-          ) : null
-          // <RedeemConfiguration
-          //   userTokenBalance={tokenBalance}
-          //   projectHasErc20Token={projectHasErc20Token}
-          // />
-          }
+          ) : (
+            <RedeemConfiguration
+              userTokenBalance={tokenBalance}
+              projectHasErc20Token={projectHasErc20Token}
+            />
+          )}
         </div>
       </div>
 

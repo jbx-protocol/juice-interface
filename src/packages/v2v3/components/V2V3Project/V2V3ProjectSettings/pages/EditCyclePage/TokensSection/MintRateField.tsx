@@ -3,9 +3,10 @@ import { Form } from 'antd'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { MAX_MINT_RATE } from 'packages/v2v3/utils/math'
 
+// Note: "issuanceRate" = "mintRate"
 export function MintRateField() {
   return (
-    <Form.Item name="mintRate">
+    <Form.Item name="issuanceRate">
       <FormattedNumberInput
         className="h-10 py-1 pr-4"
         min={0}

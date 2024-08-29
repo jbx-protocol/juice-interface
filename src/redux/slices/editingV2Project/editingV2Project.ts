@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AmountInputValue } from 'components/Create/components/pages/ProjectDetails/ProjectDetailsPage'
-import { projectTokenSettingsToReduxFormat } from 'components/Create/utils/projectTokenSettingsToReduxFormat'
 import { CreatePage } from 'models/createPage'
 import {
   JB721GovernanceType,
@@ -13,6 +11,8 @@ import { ProjectTagName } from 'models/project-tags'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import { TreasurySelection } from 'models/treasurySelection'
+import { AmountInputValue } from 'packages/v2v3/components/Create/components/pages/ProjectDetails/ProjectDetailsPage'
+import { projectTokenSettingsToReduxFormat } from 'packages/v2v3/components/Create/utils/projectTokenSettingsToReduxFormat'
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
 import { Split } from 'packages/v2v3/models/splits'
 import {

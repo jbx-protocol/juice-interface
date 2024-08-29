@@ -4,8 +4,9 @@ query Projects(
   $skip: Int,
   $orderBy: Project_orderBy
   $orderDirection: OrderDirection
+  $block: Block_height
 ) {
-  projects(where: $where, first: $first, skip: $skip) {
+  projects(where: $where, first: $first, skip: $skip, block: $block) {
     id
     projectId
     metadataUri

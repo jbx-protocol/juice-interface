@@ -3,6 +3,7 @@ import { FormItemInput } from 'models/formItemInput'
 import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
 import { createContext, useContext } from 'react'
 import { AllocationItem } from './AllocationItem'
+import { AllocationList } from './AllocationList'
 import { useAllocation } from './hooks/useAllocation'
 
 export type AllocationSplit = Split & { id: string }
@@ -57,6 +58,7 @@ export const Allocation: React.FC<
   React.PropsWithChildren<AllocationProps & FormItemInput<AllocationSplit[]>>
 > & {
   Item: typeof AllocationItem
+  List: typeof AllocationList
   useAllocationInstance: typeof useAllocationInstance
 } = ({
   totalAllocationAmount,
@@ -85,4 +87,5 @@ export const Allocation: React.FC<
 }
 
 Allocation.useAllocationInstance = useAllocationInstance
+Allocation.List = AllocationList
 Allocation.Item = AllocationItem

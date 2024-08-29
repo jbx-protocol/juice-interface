@@ -1,7 +1,7 @@
-import { usePayoutSplitAmountPercentage } from 'components/Create/hooks/usePayoutSplitAmountPercentage'
 import { Parenthesis } from 'components/Parenthesis'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { Allocation } from 'packages/v2v3/components/shared/Allocation/Allocation'
+import { usePayoutSplitAmountPercentage } from 'packages/v2v3/components/shared/Allocation/hooks/usePayoutSplitAmountPercentage'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { useMemo } from 'react'
 import { formatPercent } from 'utils/format/formatPercent'

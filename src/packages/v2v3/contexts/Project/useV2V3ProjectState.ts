@@ -1,4 +1,5 @@
 import { PV_V2 } from 'constants/pv'
+import { RomanStormVariables } from 'constants/romanStorm'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -95,14 +96,35 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     },
   })
 
-  const projects = data?.projects
-  const projectStatsData = first(projects)
-  const {
-    createdAt,
-    volume: totalVolume,
-    trendingVolume,
-    paymentsCount,
-  } = projectStatsData ?? {}
+  const { data: romanStormData } = useProjectsQuery({
+    client,
+    fetchPolicy: 'no-cache',
+    skip: projectId !== RomanStormVariables.PROJECT_ID,
+    variables: {
+      where: {
+        projectId,
+        pv: PV_V2,
+      },
+      block: { number: RomanStormVariables.SNAPSHOT_BLOCK },
+    },
+  })
+
+  const projectStatsData = first(data?.projects)
+  const projectRomanStormStatsData = first(romanStormData?.projects)
+
+  let totalVolume = projectStatsData?.volume
+  let paymentsCount = projectStatsData?.paymentsCount ?? 0
+
+  if (projectId === RomanStormVariables.PROJECT_ID && projectStatsData) {
+    const BIG_ZERO = BigNumber.from(0)
+
+    totalVolume = (totalVolume || BIG_ZERO).sub(
+      projectRomanStormStatsData?.volume || BIG_ZERO,
+    )
+    paymentsCount -= projectRomanStormStatsData?.paymentsCount ?? 0
+  }
+
+  const { createdAt, trendingVolume } = projectStatsData ?? {}
 
   /**
    * Load funding cycle data

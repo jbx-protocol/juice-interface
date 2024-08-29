@@ -7,16 +7,17 @@ export default function CycleDeadlineDropdown({
 }: {
   className?: string
 }) {
-  // const { cv } = useContext(V2V3ContractsContext)
   // const ballotStrategies = ballotStrategiesFn({ cv })
   return (
     <Form.Item name="approvalHook" required>
       <Select className={className}>
-        {[{ name: '1 day @todo', address: '0x00'}].map((strategy: BallotStrategy) => (
-          <Select.Option key={strategy.address} value={strategy.address}>
-            <Trans>{strategy.name}</Trans>
-          </Select.Option>
-        ))}
+        {[{ name: '1 day @todo', address: '0x00' }].map(
+          (strategy: BallotStrategy) => (
+            <Select.Option key={strategy.address} value={strategy.address}>
+              <Trans>{strategy.name}</Trans>
+            </Select.Option>
+          ),
+        )}
       </Select>
     </Form.Item>
   )

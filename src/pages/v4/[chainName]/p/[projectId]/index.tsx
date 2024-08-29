@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { ReduxProjectCartProvider } from 'packages/v4/components/ProjectDashboard/ReduxProjectCartProvider'
 import store from 'packages/v4/components/ProjectDashboard/redux/store'
 import V4ProjectMetadataProvider from 'packages/v4/contexts/V4ProjectMetadataProvider'
-import { chainNameMap } from 'packages/v4/utils/networks'
+import { useCurrentRouteChainId } from 'packages/v4/hooks/useCurrentRouteChainId'
 import { V4ProjectDashboard } from 'packages/v4/views/V4ProjectDashboard/V4ProjectDashboard'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import React, { PropsWithChildren } from 'react'
@@ -41,11 +41,11 @@ const _Wrapper: React.FC<PropsWithChildren> = ({ children }) => {
 
 export default function V4ProjectPage() {
   const router = useRouter()
-  const { chainName, projectId } = router.query
-  if (!chainName || !projectId) {
+  const { projectId } = router.query
+  const chainId = useCurrentRouteChainId()
+  if (!chainId || !projectId) {
     return <div>Invalid URL</div>
   }
-  const chainId = chainNameMap[chainName as string]
 
   return (
     <_Wrapper>

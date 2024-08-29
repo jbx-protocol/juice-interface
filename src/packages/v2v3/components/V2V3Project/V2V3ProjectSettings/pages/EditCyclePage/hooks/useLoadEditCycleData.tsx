@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
-import { DefaultSettings as DefaultTokenSettings } from 'components/Create/components/pages/ProjectToken/hooks/useProjectTokenForm'
 import isEqual from 'lodash/isEqual'
+import { DefaultSettings as DefaultTokenSettings } from 'packages/v2v3/components/Create/components/pages/ProjectToken/hooks/useProjectTokenForm'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
 import { distributionLimitStringtoNumber } from 'packages/v2v3/utils/distributions'

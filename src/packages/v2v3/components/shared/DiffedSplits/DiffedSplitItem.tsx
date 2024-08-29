@@ -3,7 +3,7 @@ import {
   DIFF_OLD_BACKGROUND,
   DiffMinus,
   DiffPlus,
-} from 'packages/v2v3/components/shared/DiffedItem'
+} from 'components/DiffedItem'
 import { isJuiceboxProjectSplit } from 'packages/v2v3/utils/distributions'
 import { SplitWithDiff } from 'packages/v2v3/utils/v2v3Splits'
 import { twMerge } from 'tailwind-merge'

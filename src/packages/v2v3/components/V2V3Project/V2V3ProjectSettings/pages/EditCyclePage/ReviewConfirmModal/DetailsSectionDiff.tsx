@@ -1,5 +1,5 @@
 import { Trans, t } from '@lingui/macro'
-import { FundingCycleListItem } from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItem'
+import { FundingCycleListItem } from 'components/FundingCycleListItem'
 import { DurationValue } from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/FundingCycleListItems/DurationValue'
 
 import { BallotStrategyValue } from 'packages/v2v3/components/V2V3Project/V2V3FundingCycleSection/FundingCycleDetails/RulesListItems/BallotStrategyValue'

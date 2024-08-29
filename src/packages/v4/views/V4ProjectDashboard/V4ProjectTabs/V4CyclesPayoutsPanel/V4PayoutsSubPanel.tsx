@@ -1,6 +1,5 @@
 import { Trans, t } from '@lingui/macro'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
-import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useV4PayoutsSubPanel } from './hooks/useV4PayoutsSubPanel'
 import { V4ExportPayoutsCsvItem } from './V4ExportPayoutsCsvItem'
@@ -18,11 +17,9 @@ export const V4PayoutsSubPanel = ({
   const { payouts, isLoading, totalPayoutAmount, payoutLimit } =
     useV4PayoutsSubPanel(type)
 
-    const hasPayouts = useMemo(() => {
-    if (!payouts || payouts.length === 0 || payoutLimit === 0n)
-      return false
-    return true
-  }, [payouts, payoutLimit])
+  const hasPayouts =
+    !payouts || payouts.length === 0 || payoutLimit === 0n ? false : true
+
   return (
     <div className={twMerge(className)}>
       <h2 className="mb-0 font-heading text-2xl font-medium">

@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { DeployButtonText } from 'components/buttons/DeployProjectButtonText'
+import Loading from 'components/Loading'
 import {
   CYCLE_EXPLANATION,
   RECONFIG_RULES_EXPLANATION,
@@ -24,7 +25,7 @@ export function Create() {
   const deployedProjectId = router.query.deployedProjectId as string
   const initialStateLoading = useLoadingInitialStateFromQuery()
 
-  if (initialStateLoading) return <>XX</>//<Loading />
+  if (initialStateLoading) return <Loading />
 
   if (deployedProjectId) {
     const projectId = parseInt(deployedProjectId)

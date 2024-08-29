@@ -10,13 +10,13 @@ import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionMod
 import useMobile from 'hooks/useMobile'
 import { useModal } from 'hooks/useModal'
 import { useRouter } from 'next/router'
-import { useDeployProject } from 'packages/v2v3/components/Create/hooks/DeployProject/useDeployProject'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { helpPagePath } from 'utils/helpPagePath'
+import { useDeployProject } from '../../../hooks/DeployProject/useDeployProject'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
 import { Wizard } from '../../Wizard/Wizard'
@@ -93,7 +93,7 @@ export const ReviewDeployPage = () => {
 
     transactionModal.open()
     await deployProject({
-      onProjectDeployed: deployedProjectId => {
+      onProjectDeployed: (deployedProjectId: number) => {
         router.push({ query: { deployedProjectId } }, '/create', {
           shallow: true,
         })

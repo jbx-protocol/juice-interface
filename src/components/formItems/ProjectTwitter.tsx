@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { Form } from 'antd'
 
-import { TwitterHandleInputWrapper } from 'components/Create/components/pages/ProjectDetails/ProjectDetailsPage'
+import { TwitterHandleInputWrapper } from 'packages/v2v3/components/Create/components/pages/ProjectDetails/ProjectDetailsPage'
 import { FormItemExt } from './formItemExt'
 
 export default function ProjectTwitter({

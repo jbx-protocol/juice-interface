@@ -14,6 +14,8 @@ import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { pinFile } from 'lib/api/ipfs'
 import random from 'lodash/random'
 import { NftRewardTier } from 'models/nftRewards'
+import { CreateCollapse } from 'packages/v2v3/components/Create/components/CreateCollapse/CreateCollapse'
+import { OptionalHeader } from 'packages/v2v3/components/Create/components/OptionalHeader'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
 import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
@@ -28,8 +30,6 @@ import {
 } from 'utils/antdRules'
 import { withHttps } from 'utils/externalLink'
 import { ipfsGatewayUrl } from 'utils/ipfs'
-import { CreateCollapse } from '../../Create/components/CreateCollapse/CreateCollapse'
-import { OptionalHeader } from '../../Create/components/OptionalHeader'
 
 interface AddEditRewardModalFormProps {
   fileUrl: string

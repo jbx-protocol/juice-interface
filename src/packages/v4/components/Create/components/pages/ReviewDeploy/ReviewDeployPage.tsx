@@ -24,7 +24,6 @@ import { WizardContext } from '../../Wizard/contexts/WizardContext'
 import { FundingConfigurationReview } from './components/FundingConfigurationReview/FundingConfigurationReview'
 import { ProjectDetailsReview } from './components/ProjectDetailsReview/ProjectDetailsReview'
 import { ProjectTokenReview } from './components/ProjectTokenReview/ProjectTokenReview'
-import { RewardsReview } from './components/RewardsReview/RewardsReview'
 import { RulesReview } from './components/RulesReview/RulesReview'
 
 enum ReviewDeployKey {
@@ -149,7 +148,7 @@ export const ReviewDeployPage = () => {
           key={ReviewDeployKey.FundingConfiguration}
           header={
             <Header>
-              <Trans>Cycles & Payouts</Trans>
+              <Trans>Rulesets & Payouts</Trans>
             </Header>
           }
         >
@@ -165,7 +164,7 @@ export const ReviewDeployPage = () => {
         >
           <ProjectTokenReview />
         </CreateCollapse.Panel>
-        <CreateCollapse.Panel
+        {/* <CreateCollapse.Panel
           key={ReviewDeployKey.Rewards}
           collapsible={nftRewardsAreSet ? 'header' : 'disabled'}
           header={
@@ -175,7 +174,7 @@ export const ReviewDeployPage = () => {
           }
         >
           <RewardsReview />
-        </CreateCollapse.Panel>
+        </CreateCollapse.Panel> */}
         <CreateCollapse.Panel
           key={ReviewDeployKey.Rules}
           header={

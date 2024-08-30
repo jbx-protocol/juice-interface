@@ -3,14 +3,12 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
-import { jbControllerAbi, useJBContractContext, useWriteJbControllerLaunchProjectFor } from 'juice-sdk-react'
+import { NATIVE_TOKEN } from 'juice-sdk-core'
+import { useJBContractContext, useWriteJbControllerLaunchProjectFor } from 'juice-sdk-react'
 import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
-import {
-  getTerminalsFromFundAccessConstraints
-} from 'packages/v2v3/utils/fundingCycle'
 import { useCallback, useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
-import { encodeFunctionData, WaitForTransactionReceiptReturnType } from 'viem'
+import { WaitForTransactionReceiptReturnType } from 'viem'
 import { LaunchV2V3ProjectArgs, transformV2V3CreateArgsToV4 } from '../utils/launchProject'
 import { wagmiConfig } from '../wagmiConfig'
 
@@ -44,8 +42,9 @@ const getProjectIdFromLaunchReceipt = (
  * @returns A function that deploys a project.
  */
 export function useLaunchProjectTx() {
-  const { writeContractAsync: writeLaunchProject, data } = useWriteJbControllerLaunchProjectFor()
+  const { writeContractAsync: writeLaunchProject } = useWriteJbControllerLaunchProjectFor()
   const { contracts } = useJBContractContext()
+
   const { addTransaction } = useContext(TxHistoryContext)
 
   const { userAddress } = useWallet()
@@ -84,20 +83,28 @@ export function useLaunchProjectTx() {
         mustStartAtOrAfter, 
         groupedSplits,
         fundAccessConstraints,
-        getTerminalsFromFundAccessConstraints(
-          fundAccessConstraints,
-          contracts.primaryNativeTerminal.data,
-        ), // _terminals
+        [contracts.primaryNativeTerminal.data], // _terminals, just supporting single for now
+          // Eventually should be something like:
+          //    getTerminalsFromFundAccessConstraints(
+          //      fundAccessConstraints,
+          //      contracts.primaryNativeTerminal.data,
+          //    ),
         DEFAULT_MEMO,
       ] as LaunchV2V3ProjectArgs
 
-      const args = transformV2V3CreateArgsToV4(v2v3Args)
+      const args = transformV2V3CreateArgsToV4({
+        v2v3Args,
+        primaryNativeTerminal: contracts.primaryNativeTerminal.data,
+        tokenAddress: NATIVE_TOKEN
+      })
+
       try {
-        const encodedData = encodeFunctionData({
-          abi: jbControllerAbi, // ABI of the contract
-          functionName: 'launchProjectFor', 
-          args, 
-        })
+        // SIMULATE TX:
+        // const encodedData = encodeFunctionData({
+        //   abi: jbControllerAbi, // ABI of the contract
+        //   functionName: 'launchProjectFor', 
+        //   args, 
+        // })
 
         const hash = await writeLaunchProject({
           address: contracts.controller.data,

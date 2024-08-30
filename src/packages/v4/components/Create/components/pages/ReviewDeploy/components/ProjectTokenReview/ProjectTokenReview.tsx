@@ -38,7 +38,7 @@ export const ProjectTokenReview = () => {
         }
       />
       <ReviewDescription
-        title={t`Reserved rate`}
+        title={t`Reserved percent`}
         desc={
           <div className="text-base font-medium">
             {formatReservedRate(
@@ -60,7 +60,7 @@ export const ProjectTokenReview = () => {
         }
       />
       <ReviewDescription
-        title={t`Issuance reduction rate`}
+        title={t`Decay percent`}
         desc={
           <div className="text-base font-medium">
             {formatDiscountRate(

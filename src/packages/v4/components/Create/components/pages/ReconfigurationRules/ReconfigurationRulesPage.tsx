@@ -5,12 +5,11 @@ import { Callout } from 'components/Callout/Callout'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import {
   CONTROLLER_CONFIG_EXPLANATION,
-  CONTROLLER_MIGRATION_EXPLANATION,
   HOLD_FEES_EXPLANATION,
   PAUSE_PAYMENTS_EXPLANATION,
   RECONFIG_RULES_WARN,
   TERMINAL_CONFIG_EXPLANATION,
-  TERMINAL_MIGRATION_EXPLANATION,
+  TERMINAL_MIGRATION_EXPLANATION
 } from 'components/strings'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
@@ -124,12 +123,6 @@ export const ReconfigurationRulesPage = () => {
                 extra={TERMINAL_MIGRATION_EXPLANATION}
               >
                 <JuiceSwitch label={t`Allow Payment Terminal migration`} />
-              </Form.Item>
-              <Form.Item
-                name="allowControllerMigration"
-                extra={CONTROLLER_MIGRATION_EXPLANATION}
-              >
-                <JuiceSwitch label={t`Allow Controller migration`} />
               </Form.Item>
             </div>
           </CreateCollapse.Panel>

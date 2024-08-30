@@ -9,7 +9,9 @@ import { useWallet } from 'hooks/Wallet'
 import { NetworkName } from 'models/networkName'
 import Image from "next/legacy/image"
 import { useRouter } from 'next/router'
+import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { useCallback, useMemo, useState } from 'react'
+import { useChainId } from 'wagmi'
 import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'
 
 const NEW_DEPLOY_QUERY_PARAM = 'np'
@@ -18,10 +20,13 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   console.info('Deploy: SUCCESS', projectId)
   const router = useRouter()
   const { chain } = useWallet()
+  const chainId = useChainId()
   let deployGreeting = t`Your project was successfully created!`
   if (chain?.name) {
     deployGreeting = t`Your project was successfully created on ${chain.name}!`
   }
+
+  const projectRoute = v4ProjectRoute({ projectId, chainId })
 
   const [gotoProjectClicked, setGotoProjectClicked] = useState<boolean>(false)
 
@@ -45,10 +50,10 @@ export const DeploySuccess = ({ projectId }: { projectId: number }) => {
   const handleGoToProject = useCallback(() => {
     setGotoProjectClicked(true)
     router.push(
-      `/v2/p/${projectId}?${NEW_DEPLOY_QUERY_PARAM}=1`,
-      `/v2/p/${projectId}`,
+      `${projectRoute}?${NEW_DEPLOY_QUERY_PARAM}=1`,
+      projectRoute,
     )
-  }, [projectId, router])
+  }, [router, projectRoute])
 
   return (
     <div className="mt-4 flex flex-col items-center justify-center text-center">

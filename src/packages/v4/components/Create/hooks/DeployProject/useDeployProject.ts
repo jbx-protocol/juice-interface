@@ -10,8 +10,6 @@ import {
 } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { emitErrorNotification } from 'utils/notifications'
-import { useDeployNftProject } from './hooks/NFT/useDeployNftProject'
-import { useUploadNftRewards } from './hooks/NFT/useUploadNftRewards'
 import { useDeployStandardProject } from './hooks/useDeployStandardProject'
 
 const JUICEBOX_DOMAIN = 'juicebox'
@@ -25,8 +23,8 @@ export const useDeployProject = () => {
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
   // const isNftProject = useIsNftProject()
-  const uploadNftRewards = useUploadNftRewards()
-  const deployNftProject = useDeployNftProject()
+  // const uploadNftRewards = useUploadNftRewards()
+  // const deployNftProject = useDeployNftProject()
 
   const deployStandardProject = useDeployStandardProject()
 

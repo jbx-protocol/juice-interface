@@ -1,3 +1,4 @@
+import round from "lodash/round";
 import { V2FundingCycleMetadata } from "packages/v2/models/fundingCycle";
 import { V2V3FundAccessConstraint, V2V3FundingCycleData } from "packages/v2v3/models/fundingCycle";
 import { GroupedSplits, SplitGroup } from "packages/v2v3/models/splits";
@@ -15,7 +16,15 @@ export type LaunchV2V3ProjectArgs = [
   string // _memo
 ];
 
-export function transformV2V3CreateArgsToV4(v2v3Args: LaunchV2V3ProjectArgs) {
+export function transformV2V3CreateArgsToV4({
+  v2v3Args,
+  primaryNativeTerminal,
+  tokenAddress
+}: {
+  v2v3Args: LaunchV2V3ProjectArgs, 
+  primaryNativeTerminal: `0x${string}`
+  tokenAddress: `0x${string}`
+}) {
   const [
     _owner,
     _projectMetadata,
@@ -28,8 +37,11 @@ export function transformV2V3CreateArgsToV4(v2v3Args: LaunchV2V3ProjectArgs) {
     _memo
   ] = v2v3Args;
 
+  const mustStartAtOrAfterNum = parseInt(_mustStartAtOrAfter)
+  const now = round(new Date().getTime() / 1000)
+
   const rulesetConfigurations = [{
-    mustStartAtOrAfter: parseInt(_mustStartAtOrAfter),
+    mustStartAtOrAfter: mustStartAtOrAfterNum > now ? mustStartAtOrAfterNum : now,
     duration: _data.duration.toNumber(),
     weight: _data.weight.toBigInt(),
     decayPercent: _data.discountRate.toNumber(),
@@ -71,8 +83,8 @@ export function transformV2V3CreateArgsToV4(v2v3Args: LaunchV2V3ProjectArgs) {
     })),
 
     fundAccessLimitGroups: _fundAccessConstraints.map(constraint => ({
-      terminal: constraint.terminal as `0x${string}`,
-      token: constraint.token as `0x${string}`,
+      terminal: primaryNativeTerminal,
+      token: tokenAddress,
       payoutLimits: [{
         amount: constraint.distributionLimit.toBigInt(),
         currency: constraint.distributionLimitCurrency.toNumber(),

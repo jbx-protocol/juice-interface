@@ -8,10 +8,10 @@ import { WizardContext } from '../contexts/WizardContext'
 const stepNames = (): Record<string, string> => {
   return {
     projectDetails: t`Details`,
-    fundingCycles: t`Cycles`,
+    fundingCycles: t`Rulesets`,
     payouts: t`Payouts`,
     projectToken: t`Token`,
-    nftRewards: t`NFTs`,
+    // nftRewards: t`NFTs`,
     reconfigurationRules: t`Deadline`,
     reviewDeploy: t`Deploy`,
   }

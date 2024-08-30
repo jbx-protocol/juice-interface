@@ -41,16 +41,16 @@ const FundingCycleCallout: React.FC<React.PropsWithChildren<unknown>> = () => {
         <Callout.Warning>
           <p>
             <Trans>
-              Cycle #1 starts when you create your project. With locked cycles,
-              if you edit your project's rules during Cycle #1, those edits will
-              be <em>queued</em> for the next cycle.
+              Ruleset #1 starts when you create your project. With locked rulesets,
+              if you edit your project's rules during Ruleset #1, those edits will
+              be <em>queued</em> for the next ruleset.
             </Trans>
           </p>
           <p>
             <Trans>
               In other words: instead of taking effect immediately, those edits
-              will take effect when the next cycle starts (Cycle #2). If you
-              need more flexibility, switch to unlocked cycles.
+              will take effect when the next ruleset starts (Ruleset #2). If you
+              need more flexibility, switch to unlocked rulesets.
             </Trans>
           </p>
         </Callout.Warning>
@@ -59,10 +59,10 @@ const FundingCycleCallout: React.FC<React.PropsWithChildren<unknown>> = () => {
       return (
         <Callout.Warning>
           <Trans>
-            Cycle #1 starts when you create your project. With unlocked cycles,
+            Ruleset #1 starts when you create your project. With unlocked rulesets,
             you can edit your project's rules at any time. This gives you more
             flexibility, but may appear risky to supporters. Switching to locked
-            cycles will help you build supporter confidence.
+            rulesets will help you build supporter confidence.
           </Trans>
         </Callout.Warning>
       )
@@ -117,13 +117,13 @@ export const FundingCyclesPage = () => {
                 name="automated"
                 title={
                   <div className="inline-flex items-center gap-3">
-                    <Trans>Locked Cycles</Trans>{' '}
+                    <Trans>Locked Rulesets</Trans>{' '}
                     <CreateBadge.Recommended
                       tooltip={
                         <span>
                           <Trans>
                             <p>
-                              With Locked Cycles, your project's rules are
+                              With Locked Rulesets, your project's rules are
                               locked for a period of time.
                             </p>
                             <p>
@@ -137,20 +137,20 @@ export const FundingCyclesPage = () => {
                     />
                   </div>
                 }
-                description={t`Set a duration for locked cycles.`}
+                description={t`Set a duration for locked rulesets.`}
                 icon={<RedoOutlined />}
               >
                 <Form.Item
                   name="duration"
-                  label={t`Cycle duration`}
+                  label={t`Ruleset duration`}
                   extra={
                     <Trans>
                       <InfoCircleOutlined /> Your project's rules cannot be
-                      edited during the first cycle.
+                      edited during the first ruleset.
                     </Trans>
                   }
                   rules={lockPageRulesWrapper([
-                    durationMustExistRule({ label: t`Cycle duration` }),
+                    durationMustExistRule({ label: t`Ruleset duration` }),
                   ])}
                 >
                   <DurationInput />
@@ -158,8 +158,8 @@ export const FundingCyclesPage = () => {
               </Selection.Card>
               <Selection.Card
                 name="manual"
-                title={t`Unlocked Cycles`}
-                description={t`The project's owner can edit the project's rules and start new cycles at any time.`}
+                title={t`Unlocked Rulesets`}
+                description={t`The project's owner can edit the project's rules and start new rulesets at any time.`}
                 icon={<Icons.ManualSettings />}
               />
             </Selection>
@@ -183,14 +183,14 @@ export const FundingCyclesPage = () => {
                     <span className="text-sm font-normal">
                       <Trans>
                         Set a future date & time to start your project's first
-                        cycle.
+                        ruleset.
                       </Trans>
                     </span>
                   }
                   extra={
                     launchDate ? (
                       <Trans>
-                        Your project's first cycle will start on{' '}
+                        Your project's first ruleset will start on{' '}
                         <Tooltip
                           title={
                             launchDate.clone().format('YYYY-MM-DD') +
@@ -204,11 +204,11 @@ export const FundingCyclesPage = () => {
                         . Your project will be visible on{' '}
                         <Link href="/">juicebox.money</Link> once you finish
                         setting your project up, but supporters won't be able to
-                        pay or interact with it until the first cycle begins.
+                        pay or interact with it until the first ruleset begins.
                       </Trans>
                     ) : (
                       <Trans>
-                        Leave this blank to start your first cycle immediately
+                        Leave this blank to start your first ruleset immediately
                         after you finish setting up your project.
                       </Trans>
                     )

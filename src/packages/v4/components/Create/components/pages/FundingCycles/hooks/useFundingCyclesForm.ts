@@ -35,7 +35,7 @@ export const useFundingCyclesForm = () => {
         : undefined
 
     if (!fundingCycleData.duration?.length || selection !== 'automated') {
-      // Return default values if the user hasn't selected a funding cycle type yet.
+      // Return default values if the user hasn't selected a funding ruleset type yet.
       return { duration: { duration: 14, unit: 'days' }, selection, launchDate }
     }
 

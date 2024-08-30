@@ -88,7 +88,7 @@ export const CustomTokenSettings = () => {
 
       <Divider className="my-8" />
 
-      <Form.Item label={t`Reserved rate`}>
+      <Form.Item label={t`Reserved percent`}>
         <div className="flex flex-col gap-6">
           <Trans>
             Set aside a percentage of token issuance for the wallets and
@@ -128,13 +128,15 @@ export const CustomTokenSettings = () => {
 
       <Divider className="my-8" />
 
-      <Form.Item label={t`Issuance reduction rate`}>
+      <Form.Item label={t`Decay percent`}>
         <div className="flex flex-col gap-6">
-          <Trans>
-            The issuance rate is reduced by this percentage every cycle (every{' '}
-            {formatFundingCycleDuration(duration)}). The higher this rate, the
-            more incentive to pay this project earlier.
-          </Trans>
+          <span>
+            <Trans>
+              The issuance rate is reduced by this percentage every ruleset (every{' '}
+              <strong>{formatFundingCycleDuration(duration)}</strong>). The higher this rate, the
+              more incentive to pay this project earlier.
+            </Trans>
+          </span>
           <Form.Item
             noStyle
             name="discountRate"
@@ -155,7 +157,7 @@ export const CustomTokenSettings = () => {
             <Callout.Warning>
               <Trans>
                 The issuance reduction rate is disabled if you are using
-                unlocked cycles (because they have no duration).
+                unlocked rulesets (because they have no duration).
               </Trans>
             </Callout.Warning>
           ) : (
@@ -168,22 +170,22 @@ export const CustomTokenSettings = () => {
               ) : discountRate === 100 ? (
                 <Trans>
                   After {formatFundingCycleDuration(duration)} (your first
-                  cycle), your project will not issue any tokens unless you edit
+                  ruleset), your project will not issue any tokens unless you edit
                   the issuance rate.
                 </Trans>
               ) : (
                 <>
                   <p>
                     <Trans>
-                      Each cycle, the project will issue {discountRate}% fewer
+                      Each ruleset, the project will issue {discountRate}% fewer
                       tokens per ETH.{' '}
                     </Trans>
                   </p>
                   <p>
                     <Trans>
-                      Next cycle, the project will issue{' '}
+                      Next ruleset, the project will issue{' '}
                       {formatAmount(secondFundingCycleMintRate)} tokens per 1
-                      ETH. The cycle after that, the project will issue{' '}
+                      ETH. The ruleset after that, the project will issue{' '}
                       {formatAmount(thirdFundingCycleMintRate)} tokens per 1
                       ETH.
                     </Trans>

@@ -1,3 +1,4 @@
+import { AddressZero } from '@ethersproject/constants'
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import { BigNumber } from 'ethers'
 import { useDefaultJBETHPaymentTerminal } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
@@ -9,7 +10,6 @@ import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
-import { zeroAddress } from 'viem'
 
 export interface ReduxDistributionLimit {
   amount: BigNumber
@@ -60,7 +60,7 @@ export const useEditingDistributionLimit = (): [
       dispatch(
         editingV2ProjectActions.setFundAccessConstraints([
           {
-            terminal: defaultJBETHPaymentTerminal?.address ?? zeroAddress,
+            terminal: defaultJBETHPaymentTerminal?.address ?? AddressZero,
             token: ETH_TOKEN_ADDRESS,
             distributionLimit: fromWad(input.amount),
             distributionLimitCurrency,
@@ -76,7 +76,7 @@ export const useEditingDistributionLimit = (): [
   const setDistributionLimitAmount = useCallback(
     (input: BigNumber) => {
       const currentFundAccessConstraint = fundAccessConstraints?.[0] ?? {
-        terminal: defaultJBETHPaymentTerminal?.address ?? zeroAddress,
+        terminal: defaultJBETHPaymentTerminal?.address ?? AddressZero,
         token: ETH_TOKEN_ADDRESS,
         distributionLimitCurrency: V2V3_CURRENCY_ETH.toString(),
         overflowAllowance: '0',

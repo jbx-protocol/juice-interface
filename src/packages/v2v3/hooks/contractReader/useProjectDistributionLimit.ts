@@ -1,5 +1,5 @@
+import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import { BigNumber } from 'ethers'
-import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
 import { V2V3ContractName } from 'packages/v2v3/models/contracts'
 import { useContext } from 'react'

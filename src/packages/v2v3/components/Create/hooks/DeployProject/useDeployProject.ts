@@ -56,7 +56,7 @@ const getProjectIdFromLaunchReceipt = (
  * Attempt to find the transaction receipt from a transaction hash.
 
  * Will retry up to 5 times with a 2 second delay between each attempt. If no
- * receipt is found after 5 attempts, undefined is returned.
+ * receipt is not found after 5 attempts, undefined is returned.
  * 
  * @param txHash transaction hash
  * @returns transaction receipt or undefined

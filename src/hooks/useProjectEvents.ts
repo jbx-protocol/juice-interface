@@ -1,10 +1,13 @@
+import { useMemo } from 'react'
+
 import {
   OrderDirection,
   ProjectEvent_OrderBy,
-  useProjectEventsQuery
+  useProjectEventsQuery,
 } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
 import { ProjectEventsQueryArgs } from 'models/projectEvents'
+import { RomanStormVariables } from 'constants/romanStorm'
 
 export function useProjectEvents({
   filter,
@@ -14,6 +17,13 @@ export function useProjectEvents({
   first,
   skip,
 }: ProjectEventsQueryArgs) {
+  const projectSnapshotTimestamp = useMemo(() => {
+    if (projectId === RomanStormVariables.PROJECT_ID) {
+      return RomanStormVariables.SNAPSHOT_TIMESTAMP
+    }
+    return null
+  }, [projectId])
+
   return useProjectEventsQuery({
     client,
     variables: {
@@ -27,6 +37,9 @@ export function useProjectEvents({
       where: {
         ...(pv ? { pv } : {}),
         ...(projectId ? { projectId } : {}),
+        ...(projectSnapshotTimestamp
+          ? { timestamp_gt: projectSnapshotTimestamp }
+          : {}),
         ...(from
           ? {
               // subgraph needs addresses to be lowercased

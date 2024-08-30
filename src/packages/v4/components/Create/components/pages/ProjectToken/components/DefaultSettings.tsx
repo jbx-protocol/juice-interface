@@ -24,11 +24,11 @@ export const DefaultSettings: React.FC<
         )} tokens / ETH`,
         tooltip: MINT_RATE_EXPLANATION,
       },
-      [t`Reserved rate`]: {
+      [t`Reserved percent`]: {
         data: `${ProjectTokenForm.DefaultSettings.reservedTokensPercentage}%`,
         tooltip: RESERVED_RATE_EXPLANATION,
       },
-      [t`Issuance reduction rate`]: {
+      [t`Decay percent`]: {
         data: `${ProjectTokenForm.DefaultSettings.discountRate}%`,
         tooltip: DISCOUNT_RATE_EXPLANATION,
       },

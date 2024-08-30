@@ -73,7 +73,7 @@ export const ProjectTokenPage: React.FC<
               description={
                 <Trans>
                   Simple token rules that will work for most projects. You can
-                  edit these rules in future cycles.
+                  edit these rules in future rulesets.
                 </Trans>
               }
             >

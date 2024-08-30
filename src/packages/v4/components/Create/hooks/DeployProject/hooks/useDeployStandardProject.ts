@@ -1,5 +1,4 @@
-import { TransactionCallbacks } from 'models/transaction'
-import { useLaunchProjectTx } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
+import { LaunchTxOpts, useLaunchProjectTx } from 'packages/v4/hooks/useLaunchProjectTx'
 import { useCallback } from 'react'
 import {
   useAppSelector,
@@ -9,14 +8,13 @@ import {
 } from 'redux/hooks/useAppSelector'
 
 /**
- * Hook that returns a function that deploys a project.
+ * Hook that returns a function that deploys a v4 project.
  *
- * The distinction is made between standard and NFT projects because the NFT
- * project contract uses more gas.
+ * Takes data from the redux store built for v2v3 projects, data is converted to v4 format in useLaunchProjectTx.
  * @returns A function that deploys a project.
  */
 export const useDeployStandardProject = () => {
-  const launchProject = useLaunchProjectTx()
+  const launchProjectTx = useLaunchProjectTx()
   const {
     payoutGroupedSplits,
     reservedTokensGroupedSplits,
@@ -30,18 +28,14 @@ export const useDeployStandardProject = () => {
   const deployStandardProjectCallback = useCallback(
     async ({
       metadataCid,
-
-      onDone,
-      onConfirmed,
-      onCancelled,
+      onTransactionPending,
+      onTransactionConfirmed,
+      onTransactionError
     }: {
       metadataCid: string
-    } & Pick<
-      TransactionCallbacks,
-      'onCancelled' | 'onConfirmed' | 'onDone'
-    >) => {
+    } & LaunchTxOpts) => {
       const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
-      return await launchProject(
+      return await launchProjectTx(
         {
           owner: inputProjectOwner?.length ? inputProjectOwner : undefined,
           projectMetadataCID: metadataCid,
@@ -52,16 +46,16 @@ export const useDeployStandardProject = () => {
           groupedSplits,
         },
         {
-          onDone,
-          onConfirmed,
-          onCancelled,
+          onTransactionPending,
+          onTransactionConfirmed,
+          onTransactionError
         },
       )
     },
     [
       payoutGroupedSplits,
       reservedTokensGroupedSplits,
-      launchProject,
+      launchProjectTx,
       inputProjectOwner,
       fundingCycleData,
       fundingCycleMetadata,

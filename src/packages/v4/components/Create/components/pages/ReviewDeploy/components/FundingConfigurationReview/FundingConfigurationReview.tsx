@@ -12,7 +12,7 @@ export const FundingConfigurationReview = () => {
     <>
       <div className="flex flex-col gap-y-10 pt-5 pb-12 md:grid md:grid-cols-4">
         <ReviewDescription
-          title={t`Cycles`}
+          title={t`Rulesets`}
           desc={<div className="text-base font-medium">{fundingCycles}</div>}
         />
         <ReviewDescription

@@ -1,15 +1,14 @@
 import { t, Trans } from '@lingui/macro'
 import { DeployButtonText } from 'components/buttons/DeployProjectButtonText'
+import Loading from 'components/Loading'
 import {
-  CYCLE_EXPLANATION,
   RECONFIG_RULES_EXPLANATION,
+  RULESET_EXPLANATION,
 } from 'components/strings'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
 import { useRouter } from 'next/router'
-import { CreateBadge } from './components/CreateBadge'
 import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
-import { NftRewardsPage } from './components/pages/NftRewards/NftRewardsPage'
 import { PayoutsPage } from './components/pages/PayoutsPage/PayoutsPage'
 import { ProjectDetailsPage } from './components/pages/ProjectDetails/ProjectDetailsPage'
 import { ProjectTokenPage } from './components/pages/ProjectToken/ProjectTokenPage'
@@ -24,7 +23,7 @@ export function Create() {
   const deployedProjectId = router.query.deployedProjectId as string
   const initialStateLoading = useLoadingInitialStateFromQuery()
 
-  if (initialStateLoading) return <>XX</>//<Loading />
+  if (initialStateLoading) return <Loading />
 
   if (deployedProjectId) {
     const projectId = parseInt(deployedProjectId)
@@ -48,8 +47,8 @@ export function Create() {
           </Wizard.Page>
           <Wizard.Page
             name="fundingCycles"
-            title={t`Cycles`}
-            description={CYCLE_EXPLANATION}
+            title={t`Ruleset`}
+            description={RULESET_EXPLANATION}
           >
             <FundingCyclesPage />
           </Wizard.Page>
@@ -60,8 +59,8 @@ export function Create() {
               <Trans>
                 Pay out ETH from your project to any Ethereum wallet or Juicebox
                 project. ETH which <em>isn't</em> paid out will be available for
-                token redemptions, or for use in future cycles. Payouts reset
-                each cycle.
+                token redemptions, or for use in future rulesets. Payouts reset
+                each ruleset.
               </Trans>
             }
           >
@@ -82,7 +81,7 @@ export function Create() {
           >
             <ProjectTokenPage />
           </Wizard.Page>
-          <Wizard.Page
+          {/* <Wizard.Page
             name="nftRewards"
             title={
               <div className="flex items-center gap-3">
@@ -95,7 +94,7 @@ export function Create() {
             }
           >
             <NftRewardsPage />
-          </Wizard.Page>
+          </Wizard.Page> */}
           <Wizard.Page
             name="reconfigurationRules"
             title={<Trans>Edit Deadline</Trans>}

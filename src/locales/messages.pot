@@ -179,6 +179,9 @@ msgstr ""
 msgid "Payout recipients:"
 msgstr ""
 
+msgid "Your project's first ruleset will start on <0>{0} at {1}</0>. Your project will be visible on <1>juicebox.money</1> once you finish setting your project up, but supporters won't be able to pay or interact with it until the first ruleset begins."
+msgstr ""
+
 msgid "Lock until"
 msgstr ""
 
@@ -437,6 +440,9 @@ msgstr ""
 msgid "Payer issuance rate"
 msgstr ""
 
+msgid "None of your project's ETH can be paid out. All ETH will stay in your project for token redemptions or use in future rulesets."
+msgstr ""
+
 msgid "Project Details"
 msgstr ""
 
@@ -542,6 +548,9 @@ msgstr ""
 msgid "This cycle has upcoming changes"
 msgstr ""
 
+msgid "<0/> Your project's rules cannot be edited during the first ruleset."
+msgstr ""
+
 msgid "While enabled, the project owner can change the project's <0>payment terminals</0> at any time."
 msgstr ""
 
@@ -555,6 +564,9 @@ msgid "I have read and accept the <0>Terms of Service</0> and <1>the risks</1>."
 msgstr ""
 
 msgid "You would receive <0/>"
+msgstr ""
+
+msgid "Simple token rules that will work for most projects. You can edit these rules in future rulesets."
 msgstr ""
 
 msgid "The issuance reduction rate is disabled if you are using unlocked cycles (because they have no duration)."
@@ -833,6 +845,9 @@ msgstr ""
 msgid "Automated"
 msgstr ""
 
+msgid "Ruleset"
+msgstr ""
+
 msgid "Back to settings"
 msgstr ""
 
@@ -1046,6 +1061,9 @@ msgstr ""
 msgid "No overflow"
 msgstr ""
 
+msgid "A fixed amount of ETH can be paid out from your project each ruleset. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token redemptions or use in future rulesets."
+msgstr ""
+
 msgid "Export tokens CSV"
 msgstr ""
 
@@ -1181,6 +1199,9 @@ msgstr ""
 msgid "No results"
 msgstr ""
 
+msgid "The project's owner can edit the project's rules and start new rulesets at any time."
+msgstr ""
+
 msgid "ETH transfers to project"
 msgstr ""
 
@@ -1202,6 +1223,9 @@ msgstr ""
 msgid "Fee from <0><1/></0>"
 msgstr ""
 
+msgid "Reserved percent"
+msgstr ""
+
 msgid "Later"
 msgstr ""
 
@@ -1212,6 +1236,9 @@ msgid "100% transparent"
 msgstr ""
 
 msgid "{receivedTokenSymbolText} Token"
+msgstr ""
+
+msgid "Ruleset #1 starts when you create your project. With unlocked rulesets, you can edit your project's rules at any time. This gives you more flexibility, but may appear risky to supporters. Switching to locked rulesets will help you build supporter confidence."
 msgstr ""
 
 msgid "Issuance reduction rate:"
@@ -1416,6 +1443,9 @@ msgid "You have <0>{0} ETH</0> of unclaimed NFT credits"
 msgstr ""
 
 msgid "<0>Juicebox is a <1>governance-minimal</1> protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><2>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</2><3>Juicebox is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no way to access project's ETH or change their rules.</3>"
+msgstr ""
+
+msgid "<0>With unlocked rulesets, you can edit your project's rules at any time.</0><1>With locked rulesets, you can lock your project's rules for a period of time (like 3 minutes, 2 years, or 14 days), helping you build trust with your supporters.</1><2>This choice isn't permanent — you can switch between locked and unlocked rulesets in the future.</2>"
 msgstr ""
 
 msgid "Pay {projectTitle}"
@@ -1784,6 +1814,9 @@ msgstr ""
 msgid "Created project"
 msgstr ""
 
+msgid "Next ruleset, the project will issue {0} tokens per 1 ETH. The ruleset after that, the project will issue {1} tokens per 1 ETH."
+msgstr ""
+
 msgid "An address is required"
 msgstr ""
 
@@ -1800,6 +1833,9 @@ msgid "Project #{projectId}"
 msgstr ""
 
 msgid "Project rules"
+msgstr ""
+
+msgid "Set a duration for locked rulesets."
 msgstr ""
 
 msgid "Upload"
@@ -2103,6 +2139,9 @@ msgid "Enabled"
 msgstr ""
 
 msgid "Reset website"
+msgstr ""
+
+msgid "Decay percent"
 msgstr ""
 
 msgid "Payout allocated to this project's {versionName} payment terminal. <0>Learn more</0>."
@@ -2420,6 +2459,9 @@ msgstr ""
 msgid "While enabled, the project owner can change the project's <0>controller</0> at any time."
 msgstr ""
 
+msgid "<0>With Locked Rulesets, your project's rules are locked for a period of time.</0><1><2>This helps build trust with your contributors.</2></1>"
+msgstr ""
+
 msgid "Ruleset #"
 msgstr ""
 
@@ -2499,6 +2541,9 @@ msgid "Attach a sticker"
 msgstr ""
 
 msgid "Disclose any details to your contributors before they pay your project."
+msgstr ""
+
+msgid "The issuance rate is reduced by this percentage every ruleset (every <0>{0}</0>). The higher this rate, the more incentive to pay this project earlier."
 msgstr ""
 
 msgid "One or more reserved token recipients"
@@ -2615,6 +2660,9 @@ msgstr ""
 msgid "Your edits will take effect in <0>cycle #{0}</0>. The current cycle (#{currentFCNumber}) won't be altered."
 msgstr ""
 
+msgid "Leave this blank to start your first ruleset immediately after you finish setting up your project."
+msgstr ""
+
 msgid "All of this project's ETH will be paid out. Token holders will receive <0>no ETH</0> when redeeming their tokens."
 msgstr ""
 
@@ -2640,6 +2688,9 @@ msgid "The amount of time remaining until this project’s next Cycle."
 msgstr ""
 
 msgid "Give permissions to {0} on project #{projectId}"
+msgstr ""
+
+msgid "Pay out ETH from your project to any Ethereum wallet or Juicebox project. ETH which <0>isn't</0> paid out will be available for token redemptions, or for use in future rulesets. Payouts reset each ruleset."
 msgstr ""
 
 msgid "<0>Juicebox has had <1>multiple security audits</1>, and has handled tens of thousands of ETH through its protocol.</0><2>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</2><3>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of ETH. Please use Juicebox with caution.</3><4><5>Learn more about the risks.</5></4>"
@@ -2853,6 +2904,9 @@ msgid "Redemption rate"
 msgstr ""
 
 msgid "Paying another Juicebox project may mint its tokens. Select an address to receive these tokens."
+msgstr ""
+
+msgid "Set a future date & time to start your project's first ruleset."
 msgstr ""
 
 msgid "Get help planning or setting up my project."
@@ -3071,6 +3125,9 @@ msgstr ""
 msgid "Connect wallet to deploy"
 msgstr ""
 
+msgid "Unlocked Rulesets"
+msgstr ""
+
 msgid "Your wallet isn't allowed to process held fees."
 msgstr ""
 
@@ -3084,6 +3141,9 @@ msgid "If you don't plan on unlocking the held fees later on, you can use the bu
 msgstr ""
 
 msgid "Check User Wallet Address"
+msgstr ""
+
+msgid "Rulesets"
 msgstr ""
 
 msgid "Set ENS text record for {ensName}"
@@ -3138,6 +3198,9 @@ msgid "Prevent NFT overspending"
 msgstr ""
 
 msgid "Yes, start over"
+msgstr ""
+
+msgid "Ruleset #1 starts when you create your project. With locked rulesets, if you edit your project's rules during Ruleset #1, those edits will be <0>queued</0> for the next ruleset."
 msgstr ""
 
 msgid "All {tokensText} will go to the project owner:"
@@ -3314,6 +3377,9 @@ msgstr ""
 msgid "{0} is not a valid integer"
 msgstr ""
 
+msgid "Rulesets & Payouts"
+msgstr ""
+
 msgid "The unallocated portion of your total will go to the wallet that owns the project by default."
 msgstr ""
 
@@ -3431,6 +3497,9 @@ msgstr ""
 msgid "No changes"
 msgstr ""
 
+msgid "After {0} (your first ruleset), your project will not issue any tokens unless you edit the issuance rate."
+msgstr ""
+
 msgid "Project ENS name"
 msgstr ""
 
@@ -3444,6 +3513,9 @@ msgid "Contract"
 msgstr ""
 
 msgid "After {0} (your first cycle), your project will not issue any tokens unless you edit the issuance rate."
+msgstr ""
+
+msgid "In other words: instead of taking effect immediately, those edits will take effect when the next ruleset starts (Ruleset #2). If you need more flexibility, switch to unlocked rulesets."
 msgstr ""
 
 msgid "New NFTs will available on your project page shortly."
@@ -3558,6 +3630,9 @@ msgid "Cycles & Payouts"
 msgstr ""
 
 msgid "Redeem {tokensLabel} for ETH"
+msgstr ""
+
+msgid "Locked Rulesets"
 msgstr ""
 
 msgid "Made a mistake?"
@@ -4223,6 +4298,9 @@ msgstr ""
 msgid "The maximum supply of this NFT in circulation."
 msgstr ""
 
+msgid "Each ruleset, the project will issue {discountRate}% fewer tokens per ETH."
+msgstr ""
+
 msgid "Payout and reserved token recipients cannot exceed 100%"
 msgstr ""
 
@@ -4299,6 +4377,9 @@ msgid "Manage your notifications and email preferences."
 msgstr ""
 
 msgid "End"
+msgstr ""
+
+msgid "The issuance reduction rate is disabled if you are using unlocked rulesets (because they have no duration)."
 msgstr ""
 
 msgid "Message sent!"

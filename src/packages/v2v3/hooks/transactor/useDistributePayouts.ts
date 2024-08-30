@@ -1,4 +1,5 @@
 import { t } from '@lingui/macro'
+import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import {
   DEFAULT_MEMO,
   DEFAULT_METADATA,
@@ -8,7 +9,6 @@ import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
-import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
 import {
   PaymentTerminalVersion,

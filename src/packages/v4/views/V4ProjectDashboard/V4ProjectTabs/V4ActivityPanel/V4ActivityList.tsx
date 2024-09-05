@@ -34,7 +34,6 @@ export function V4ActivityList() {
 
   const payEvents = transformPayEventsRes(payEventsData) ?? []
 
-  if (!token?.data?.symbol) return null
   return (
     <div>
       <div className="mb-5 flex items-baseline justify-between">
@@ -69,7 +68,7 @@ export function V4ActivityList() {
                   extra={
                     <span>
                       bought {event.beneficiaryTokenCount?.format(6)}{' '}
-                      {token.data?.symbol}
+                      {token.data?.symbol ?? 'tokens'}
                     </span>
                   }
                 />

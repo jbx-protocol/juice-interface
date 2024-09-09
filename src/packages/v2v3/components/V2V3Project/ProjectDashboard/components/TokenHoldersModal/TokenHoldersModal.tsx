@@ -1,4 +1,4 @@
-import ParticipantsModal from 'components/modals/ParticipantsModal'
+import ParticipantsModal from 'packages/v2v3/components/V2V3Project/modals/ParticipantsModal'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 
 // TODO: This is hacked together - we should consider rebuilding

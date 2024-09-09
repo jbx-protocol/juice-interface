@@ -4,13 +4,17 @@ import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { NATIVE_TOKEN } from 'juice-sdk-core'
-import { useJBContractContext, useWriteJbControllerLaunchProjectFor } from 'juice-sdk-react'
+import { useWriteJbControllerLaunchProjectFor } from 'juice-sdk-react'
 import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
 import { useCallback, useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
-import { WaitForTransactionReceiptReturnType } from 'viem'
-import { LaunchV2V3ProjectArgs, transformV2V3CreateArgsToV4 } from '../utils/launchProject'
+import { Address, WaitForTransactionReceiptReturnType } from 'viem'
+import {
+  LaunchV2V3ProjectArgs,
+  transformV2V3CreateArgsToV4,
+} from '../utils/launchProject'
 import { wagmiConfig } from '../wagmiConfig'
+import { useCurrentRouteChainId } from './useCurrentRouteChainId'
 
 const CREATE_EVENT_IDX = 2
 const PROJECT_ID_TOPIC_IDX = 1
@@ -18,7 +22,7 @@ const HEX_BASE = 16
 
 export interface LaunchTxOpts {
   onTransactionPending: (hash: `0x${string}`) => void
-  onTransactionConfirmed: (hash: `0x${string}`, projectId: number) => void 
+  onTransactionConfirmed: (hash: `0x${string}`, projectId: number) => void
   onTransactionError: (error: Error) => void
 }
 
@@ -33,8 +37,23 @@ const getProjectIdFromLaunchReceipt = (
     txReceipt?.logs[CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
   if (!projectIdHex) return 0
 
-  const projectId = parseInt(projectIdHex, HEX_BASE);
+  const projectId = parseInt(projectIdHex, HEX_BASE)
   return projectId
+}
+
+// todo no ideal to hardcode these addresses
+const SUPPORTED_JB_MULTITERMINAL_ADDRESS = {
+  '84532': '0x88e8ED1Dd942B2aB4Adc1e3b50Bd0EdB9822231E' as Address,
+  '421614': '0x88e8ED1Dd942B2aB4Adc1e3b50Bd0EdB9822231E' as Address,
+  '11155111': '0x88e8ED1Dd942B2aB4Adc1e3b50Bd0EdB9822231E' as Address,
+  '11155420': '0x88e8ED1Dd942B2aB4Adc1e3b50Bd0EdB9822231E' as Address,
+}
+
+const SUPPORTED_JB_CONTROLLER_ADDRESS = {
+  '84532': '0x1e4c8DFfE8D72aeB63e8dDbE9eF89bc368cbbE99' as Address,
+  '421614': '0x1e4c8DFfE8D72aeB63e8dDbE9eF89bc368cbbE99' as Address,
+  '11155111': '0x1e4c8DFfE8D72aeB63e8dDbE9eF89bc368cbbE99' as Address,
+  '11155420': '0x1e4c8DFfE8D72aeB63e8dDbE9eF89bc368cbbE99' as Address,
 }
 
 /**
@@ -42,34 +61,40 @@ const getProjectIdFromLaunchReceipt = (
  * @returns A function that deploys a project.
  */
 export function useLaunchProjectTx() {
-  const { writeContractAsync: writeLaunchProject } = useWriteJbControllerLaunchProjectFor()
-  const { contracts } = useJBContractContext()
+  const { writeContractAsync: writeLaunchProject } =
+    useWriteJbControllerLaunchProjectFor()
+
+  const chainId = useCurrentRouteChainId()
+  const terminalAddress = chainId
+    ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainId]
+    : undefined
+
+  const controllerAddress = chainId
+    ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainId]
+    : undefined
 
   const { addTransaction } = useContext(TxHistoryContext)
 
   const { userAddress } = useWallet()
 
   return useCallback(
-    async ({
-      owner,
-      projectMetadataCID,
-      fundingCycleData,
-      fundingCycleMetadata,
-      fundAccessConstraints,
-      groupedSplits = [],
-      mustStartAtOrAfter = DEFAULT_MUST_START_AT_OR_AFTER,
-    }: LaunchV2V3ProjectData,
-    {
-      onTransactionPending: onTransactionPendingCallback,
-      onTransactionConfirmed: onTransactionConfirmedCallback,
-      onTransactionError: onTransactionErrorCallback,
-    }: LaunchTxOpts
-  ) => {
-      if (
-        !contracts.controller.data ||
-        !contracts.primaryNativeTerminal.data ||
-        !userAddress
-      ) {
+    async (
+      {
+        owner,
+        projectMetadataCID,
+        fundingCycleData,
+        fundingCycleMetadata,
+        fundAccessConstraints,
+        groupedSplits = [],
+        mustStartAtOrAfter = DEFAULT_MUST_START_AT_OR_AFTER,
+      }: LaunchV2V3ProjectData,
+      {
+        onTransactionPending: onTransactionPendingCallback,
+        onTransactionConfirmed: onTransactionConfirmedCallback,
+        onTransactionError: onTransactionErrorCallback,
+      }: LaunchTxOpts,
+    ) => {
+      if (!controllerAddress || !terminalAddress || !userAddress || !chainId) {
         return
       }
 
@@ -77,48 +102,47 @@ export function useLaunchProjectTx() {
 
       const v2v3Args = [
         _owner,
-        [projectMetadataCID, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN], 
+        [projectMetadataCID, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN],
         fundingCycleData,
-        fundingCycleMetadata, 
-        mustStartAtOrAfter, 
+        fundingCycleMetadata,
+        mustStartAtOrAfter,
         groupedSplits,
         fundAccessConstraints,
-        [contracts.primaryNativeTerminal.data], // _terminals, just supporting single for now
-          // Eventually should be something like:
-          //    getTerminalsFromFundAccessConstraints(
-          //      fundAccessConstraints,
-          //      contracts.primaryNativeTerminal.data,
-          //    ),
+        [terminalAddress], // _terminals, just supporting single for now
+        // Eventually should be something like:
+        //    getTerminalsFromFundAccessConstraints(
+        //      fundAccessConstraints,
+        //      contracts.primaryNativeTerminal.data,
+        //    ),
         DEFAULT_MEMO,
       ] as LaunchV2V3ProjectArgs
 
       const args = transformV2V3CreateArgsToV4({
         v2v3Args,
-        primaryNativeTerminal: contracts.primaryNativeTerminal.data,
-        tokenAddress: NATIVE_TOKEN
+        primaryNativeTerminal: terminalAddress,
+        tokenAddress: NATIVE_TOKEN,
       })
 
       try {
         // SIMULATE TX:
         // const encodedData = encodeFunctionData({
         //   abi: jbControllerAbi, // ABI of the contract
-        //   functionName: 'launchProjectFor', 
-        //   args, 
+        //   functionName: 'launchProjectFor',
+        //   args,
         // })
 
         const hash = await writeLaunchProject({
-          address: contracts.controller.data,
+          chainId,
+          address: controllerAddress,
           args,
         })
 
         onTransactionPendingCallback(hash)
         addTransaction?.('Launch Project', { hash })
-        const transactionReceipt: WaitForTransactionReceiptReturnType = await waitForTransactionReceipt(
-          wagmiConfig,
-          {
+        const transactionReceipt: WaitForTransactionReceiptReturnType =
+          await waitForTransactionReceipt(wagmiConfig, {
             hash,
-          },
-        )
+          })
 
         const newProjectId = getProjectIdFromLaunchReceipt(transactionReceipt)
 
@@ -130,10 +154,11 @@ export function useLaunchProjectTx() {
       }
     },
     [
-      contracts.controller.data,
+      chainId,
+      controllerAddress,
       userAddress,
       writeLaunchProject,
-      contracts.primaryNativeTerminal.data,
+      terminalAddress,
       addTransaction,
     ],
   )

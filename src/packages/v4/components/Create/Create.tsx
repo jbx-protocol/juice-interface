@@ -1,4 +1,5 @@
 import { t, Trans } from '@lingui/macro'
+import { Badge } from 'components/Badge'
 import { DeployButtonText } from 'components/buttons/DeployProjectButtonText'
 import Loading from 'components/Loading'
 import {
@@ -33,7 +34,10 @@ export function Create() {
   return (
     <div className="mt-12 md:mt-10">
       <h1 className="mb-0 text-center font-heading text-base font-medium uppercase text-black dark:text-slate-100">
-        <Trans>Create a project</Trans>
+        <span className='inline-flex gap-2'>
+          <Trans>Create a project</Trans>
+          <Badge variant="info">Beta</Badge>
+        </span>
       </h1>
       {/* TODO: Remove wizard-create once form item css override is replaced */}
       <div className="wizard-create">

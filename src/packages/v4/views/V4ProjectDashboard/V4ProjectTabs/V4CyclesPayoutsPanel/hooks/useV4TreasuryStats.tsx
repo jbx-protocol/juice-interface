@@ -1,5 +1,9 @@
 import { t } from '@lingui/macro'
-import { NativeTokenValue, useJBRulesetMetadata, useNativeTokenSurplus } from 'juice-sdk-react'
+import {
+  NativeTokenValue,
+  useJBRulesetMetadata,
+  useNativeTokenSurplus,
+} from 'juice-sdk-react'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useV4BalanceOfNativeTerminal } from 'packages/v4/hooks/useV4BalanceOfNativeTerminal'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
@@ -15,37 +19,16 @@ export const useV4TreasuryStats = () => {
 
   const { data: payoutLimit } = usePayoutLimit()
 
-  const treasuryBalance = useMemo(() => {
-    if (!_treasuryBalance) return undefined
-
-    return (
-      <NativeTokenValue
-        wei={_treasuryBalance}
-      />
-    )
-  }, [_treasuryBalance])
-
+  const treasuryBalance = <NativeTokenValue wei={_treasuryBalance ?? 0n} />
 
   const surplus = useMemo(() => {
-    if (payoutLimit && payoutLimit.amount === MAX_PAYOUT_LIMIT) return t`No surplus`
+    if (payoutLimit && payoutLimit.amount === MAX_PAYOUT_LIMIT)
+      return t`No surplus`
 
-    return (
-      <NativeTokenValue
-        wei={surplusInNativeToken ?? 0n}
-      />
-    )
-  }, [
-    surplusInNativeToken,
-    payoutLimit,
-  ])
+    return <NativeTokenValue wei={surplusInNativeToken ?? 0n} />
+  }, [surplusInNativeToken, payoutLimit])
 
-  const availableToPayout = useMemo(() => {
-    return (
-      <NativeTokenValue
-        wei={distributableAmount.value}
-      />
-    )
-  }, [distributableAmount])
+  const availableToPayout = <NativeTokenValue wei={distributableAmount.value} />
   return {
     treasuryBalance,
     availableToPayout,

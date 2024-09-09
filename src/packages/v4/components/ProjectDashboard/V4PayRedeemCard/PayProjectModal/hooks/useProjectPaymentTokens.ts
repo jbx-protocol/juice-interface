@@ -1,5 +1,5 @@
 import { FixedInt } from 'fpnum'
-import { getTokenAToBQuote } from 'juice-sdk-core'
+import { getTokenAToBQuote, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
 import {
   useJBRulesetContext,
   useJBTokenContext,
@@ -35,8 +35,8 @@ export const useProjectPaymentTokens = () => {
       : null
 
   const receivedTickets =
-    token.data?.decimals && amountBQuote?.payerTokens
-      ? formatUnits(amountBQuote?.payerTokens, token.data?.decimals)
+    amountBQuote?.payerTokens
+      ? formatUnits(amountBQuote?.payerTokens, token.data?.decimals ?? NATIVE_TOKEN_DECIMALS)
       : null
   const receivedTokenSymbolText = tokenSymbolText({
     tokenSymbol: token.data?.symbol,

@@ -1313,6 +1313,9 @@ msgstr ""
 msgid "Migrate payment terminal"
 msgstr ""
 
+msgid "Failed to create ERC20 token: {0}"
+msgstr ""
+
 msgid "Payments"
 msgstr ""
 

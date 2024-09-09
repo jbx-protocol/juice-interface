@@ -1,12 +1,9 @@
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
-import { NATIVE_TOKEN } from 'juice-sdk-core'
-import { useJBContractContext, useWriteJbControllerLaunchRulesetsFor } from 'juice-sdk-react'
+import { useJBContractContext, useWriteJbControllerSetUriOf } from 'juice-sdk-react'
 import { useCallback, useContext } from 'react'
-import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
-import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
 
-export interface EditMetadataTxOpts {
+export interface EditRulesetTxOpts {
   onTransactionPending: (hash: `0x${string}`) => void
   onTransactionConfirmed: () => void 
   onTransactionError: (error: Error) => void
@@ -16,21 +13,21 @@ export interface EditMetadataTxOpts {
  * Takes data in EditCycleFormFields format, converts it to Edit Ruleset tx format and passes it to `writeEditRuleset`
  * @returns A function that deploys a project.
  */
-export function useEditRulesetTx() {
-  const { writeContractAsync: writeEditRuleset } = useWriteJbControllerLaunchRulesetsFor()
-  const { contracts } = useJBContractContext()
+export function useEditProjectDetailsTx() {
+  const { writeContractAsync: writeEditMetadata } = useWriteJbControllerSetUriOf()
+  const { contracts, projectId } = useJBContractContext()
 
   const { addTransaction } = useContext(TxHistoryContext)
 
   const { userAddress } = useWallet()
 
   return useCallback(
-    async (formValues: EditCycleFormFields,
+    async (cid: `0x${string}`,
     {
       onTransactionPending: onTransactionPendingCallback,
       onTransactionConfirmed: onTransactionConfirmedCallback,
       onTransactionError: onTransactionErrorCallback,
-    }: EditMetadataTxOpts
+    }: EditRulesetTxOpts
   ) => {
       if (
         !contracts.controller.data ||
@@ -40,27 +37,26 @@ export function useEditRulesetTx() {
         return
       }
 
-      const args = transformEditCycleFormFieldsToTxArgs({
-        formValues,
-        primaryNativeTerminal: contracts.primaryNativeTerminal.data,
-        tokenAddress: NATIVE_TOKEN
-      })
+      const args = [
+        projectId, 
+        cid
+      ] as const
 
       try {
         // SIMULATE TX:
         // const encodedData = encodeFunctionData({
         //   abi: jbControllerAbi, // ABI of the contract
-        //   functionName: 'launchRulesetsFor', 
+        //   functionName: 'setUriOf', 
         //   args, 
         // })
 
-        const hash = await writeEditRuleset({
+        const hash = await writeEditMetadata({
           address: contracts.controller.data,
-          args,
+          args
         })
 
         onTransactionPendingCallback(hash)
-        addTransaction?.('Edit Ruleset', { hash })
+        addTransaction?.('Edit Metadata', { hash })
         // const transactionReceipt: WaitForTransactionReceiptReturnType = await waitForTransactionReceipt(
         //   wagmiConfig,
         //   {
@@ -78,8 +74,9 @@ export function useEditRulesetTx() {
     [
       contracts.controller.data,
       userAddress,
-      writeEditRuleset,
+      writeEditMetadata,
       contracts.primaryNativeTerminal.data,
+      projectId,
       addTransaction,
     ],
   )

@@ -5,6 +5,7 @@ import { Button, Layout } from 'antd'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { twJoin } from 'tailwind-merge'
+import { CreateErc20TokenSettingsPage } from './CreateErc20TokenSettingsPage'
 import { EditCyclePage } from './EditCyclePage/EditCyclePage'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { ProjectDetailsSettingsPage } from './ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
@@ -23,7 +24,7 @@ const SettingsPageComponents: {
   transferownership: () => null, //TransferOwnershipSettingsPage,
   archiveproject: () => null, //ArchiveProjectSettingsPage,
   heldfees: () => null, //ProcessHeldFeesPage,
-  createerc20: () => null, //CreateErc20TokenSettingsPage,
+  createerc20: CreateErc20TokenSettingsPage,
 }
 
 const V4SettingsPageKeyTitleMap = (

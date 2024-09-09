@@ -1,15 +1,12 @@
 import { Trans, t } from '@lingui/macro'
 import { Form } from 'antd'
-import { useWatch } from 'antd/lib/form/Form'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import TransactionModal from 'components/modals/TransactionModal'
-import { CreateCollapse } from 'packages/v2v3/components/Create/components/CreateCollapse/CreateCollapse'
-import { useState } from 'react'
-// import { useReconfigureFundingCycle } from '../../../hooks/useReconfigureFundingCycle'
-import { useEditCycleFormContext } from '../EditCycleFormContext'
-// import { usePrepareSaveEditCycleData } from '../hooks/usePrepareSaveEditCycleData'
+import { CreateCollapse } from 'packages/v4/components/Create/components/CreateCollapse/CreateCollapse'
 import { useEditRulesetTx } from 'packages/v4/hooks/useEditRulesetTx'
+import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
+import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { TransactionSuccessModal } from '../TransactionSuccessModal'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
 import { PayoutsSectionDiff } from './PayoutsSectionDiff'
@@ -39,10 +36,7 @@ export function ReviewConfirmModal({
   const formHasChanges =
     detailsSectionHasDiff || payoutsSectionHasDiff || tokensSectionHasDiff
 
-  const memo = useWatch('memo', editCycleForm)
-  // const { editingFundingCycleConfig } = usePrepareSaveEditCycleData()
   const editRulesetTx = useEditRulesetTx()
-
 
   const handleConfirm = () => {
     setConfirmLoading(true)
@@ -54,7 +48,7 @@ export function ReviewConfirmModal({
         setEditCycleSuccessModalOpen(true)
         onClose()
       },
-      onTransactionError: error => {
+      onTransactionError: (error: unknown) => {
         console.error(error)
         setConfirmLoading(false)
         emitErrorNotification(`Error launching ruleset: ${error}`)

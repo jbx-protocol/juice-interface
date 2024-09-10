@@ -1,5 +1,4 @@
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
-import { useJBContractContext } from 'juice-sdk-react'
 import isEqual from 'lodash/isEqual'
 import { CreatePage } from 'models/createPage'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
@@ -17,6 +16,7 @@ import {
 import { CreateState, ProjectState } from 'redux/slices/editingV2Project/types'
 import { isEqualAddress } from 'utils/address'
 import { parseWad } from 'utils/format/formatNumber'
+import { zeroAddress } from 'viem'
 import { DefaultSettings as DefaultTokenSettings } from '../components/pages/ProjectToken/hooks/useProjectTokenForm'
 import { projectTokenSettingsToReduxFormat } from '../utils/projectTokenSettingsToReduxFormat'
 
@@ -117,12 +117,11 @@ const parseCreateFlowStateFromInitialState = (
 export function useLoadingInitialStateFromQuery() {
   const dispatch = useDispatch()
   const router = useRouter()
-  const { contracts } = useJBContractContext()
 
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!router.isReady || !contracts.primaryNativeTerminal.data) return
+    if (!router.isReady) return
 
     const { initialState } = router.query
     if (!initialState) {
@@ -161,7 +160,7 @@ export function useLoadingInitialStateFromQuery() {
               {
                 ...DEFAULT_REDUX_STATE.fundAccessConstraints[0],
                 ...parsedInitialState.fundAccessConstraints[0],
-                terminal: contracts.primaryNativeTerminal.data,
+                terminal: zeroAddress, // filled later
                 token: ETH_TOKEN_ADDRESS,
               },
             ],
@@ -172,7 +171,7 @@ export function useLoadingInitialStateFromQuery() {
       console.warn('Error parsing initialState:', e)
     }
     setLoading(false)
-  }, [router, dispatch, contracts.primaryNativeTerminal.data])
+  }, [router, dispatch])
 
   return loading
 }

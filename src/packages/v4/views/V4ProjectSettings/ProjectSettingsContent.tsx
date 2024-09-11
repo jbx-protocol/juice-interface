@@ -5,6 +5,7 @@ import { Button, Layout } from 'antd'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { twJoin } from 'tailwind-merge'
+import { ArchiveProjectSettingsPage } from './ArchiveProjectSettingsPage'
 import { CreateErc20TokenSettingsPage } from './CreateErc20TokenSettingsPage'
 import { EditCyclePage } from './EditCyclePage/EditCyclePage'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
@@ -16,14 +17,14 @@ const SettingsPageComponents: {
   [k in SettingsPageKey]: () => JSX.Element | null
 } = {
   general: ProjectDetailsSettingsPage,
-  handle: () => null, //ProjectHandleSettingsPage,
+  // handle: () => null, //ProjectHandleSettingsPage,
   cycle: EditCyclePage,
   // nfts: () => null, //EditNftsPage,
   payouts: () => null, //PayoutsSettingsPage,
-  reservedtokens: () => null, //ReservedTokensSettingsPage,
-  transferownership: () => null, //TransferOwnershipSettingsPage,
-  archiveproject: () => null, //ArchiveProjectSettingsPage,
-  heldfees: () => null, //ProcessHeldFeesPage,
+  // reservedtokens: () => null, //ReservedTokensSettingsPage,
+  // transferownership: () => null, //TransferOwnershipSettingsPage,
+  archiveproject: ArchiveProjectSettingsPage,
+  // heldfees: () => null, //ProcessHeldFeesPage,
   createerc20: CreateErc20TokenSettingsPage,
 }
 
@@ -33,14 +34,14 @@ const V4SettingsPageKeyTitleMap = (
   [k in SettingsPageKey]: string
 } => ({
   general: t`General`,
-  handle: t`Project handle`,
+  // handle: t`Project handle`,
   cycle: t`Cycle configuration`,
   payouts: t`Payouts`,
-  reservedtokens: t`Reserved token recipients`,
+  // reservedtokens: t`Reserved token recipients`,
   // nfts: hasExistingNfts ? t`Edit NFT collection` : t`Launch New NFT Collection`,
-  transferownership: t`Transfer ownership`,
+  // transferownership: t`Transfer ownership`,
   archiveproject: t`Archive project`,
-  heldfees: t`Process held fees`,
+  // heldfees: t`Process held fees`,
   createerc20: t`Create ERC-20 token`,
 })
 

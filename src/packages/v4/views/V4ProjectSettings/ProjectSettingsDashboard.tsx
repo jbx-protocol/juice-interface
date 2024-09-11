@@ -14,14 +14,14 @@ import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 
 export type SettingsPageKey =
   | 'general'
-  | 'handle'
+  // | 'handle' -> commenting out not necessary for v4
   | 'cycle'
   // | 'nfts'
   | 'payouts'
-  | 'reservedtokens'
-  | 'transferownership'
+  // | 'reservedtokens'
+  // | 'transferownership'
   | 'archiveproject'
-  | 'heldfees'
+  // | 'heldfees'
   | 'createerc20'
 
 function SettingsCard({ children }: { children: React.ReactNode }) {
@@ -146,6 +146,11 @@ export function ProjectSettingsDashboard() {
                   <Trans>Basic details</Trans>
                 </Link>
               </li>
+              <li>
+                <Link href={useSettingsPagePath('archiveproject')}>
+                  <Trans>Archive</Trans>
+                </Link>
+              </li>
               {/* <li>
                 <Link href={useSettingsPagePath('handle')}>
                   <Trans>Project handle</Trans>
@@ -155,13 +160,13 @@ export function ProjectSettingsDashboard() {
           </SettingsGroupCard>
 
           <SettingsGroupCard
-            title={<Trans>Cycle configuration</Trans>}
+            title={<Trans>Ruleset configuration</Trans>}
             subtitle={
-              <Trans>Make changes to your cycle settings and rules</Trans>
+              <Trans>Make changes to your ruleset settings and rules</Trans>
             }
           >
             <Link href={useSettingsPagePath('cycle')}>
-              <Trans>Edit next cycle</Trans>
+              <Trans>Edit next ruleset</Trans>
             </Link>
           </SettingsGroupCard>
           <SettingsGroupCard
@@ -176,14 +181,14 @@ export function ProjectSettingsDashboard() {
                   </Link>
                 </li>
               )}
-              <li>
+              {/* <li>
                 <Link href={useSettingsPagePath('heldfees')}>
                   <Trans>Process held fees</Trans>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </SettingsGroupCard>
-          <SettingsGroupCard
+          {/* <SettingsGroupCard
             title={<Trans>Manage</Trans>}
             subtitle={<Trans>Manage your project's state and ownership</Trans>}
           >
@@ -193,13 +198,8 @@ export function ProjectSettingsDashboard() {
                   <Trans>Transfer ownership</Trans>
                 </Link>
               </li>
-              <li>
-                <Link href={useSettingsPagePath('archiveproject')}>
-                  <Trans>Archive</Trans>
-                </Link>
-              </li>
             </ul>
-          </SettingsGroupCard>
+          </SettingsGroupCard> */}
         </div>
       </section>
     </ProjectSettingsLayout>

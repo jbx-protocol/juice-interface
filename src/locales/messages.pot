@@ -227,6 +227,9 @@ msgstr ""
 msgid "Error downloading participants, try again."
 msgstr ""
 
+msgid "Edit next ruleset"
+msgstr ""
+
 msgid "Set a future date & time to start your project's first cycle."
 msgstr ""
 
@@ -1425,6 +1428,9 @@ msgid "No reserved tokens to send."
 msgstr ""
 
 msgid "What do we value?"
+msgstr ""
+
+msgid "Ruleset configuration"
 msgstr ""
 
 msgid "Add a brief one-sentence summary of your project."
@@ -3813,6 +3819,9 @@ msgid "Cycles"
 msgstr ""
 
 msgid "DeFi"
+msgstr ""
+
+msgid "Make changes to your ruleset settings and rules"
 msgstr ""
 
 msgid "While enabled, this project will use the custom behavior defined in the contract above when somebody redeems from this project. Exercise caution."

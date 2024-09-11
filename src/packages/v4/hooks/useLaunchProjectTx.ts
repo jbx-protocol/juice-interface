@@ -64,7 +64,7 @@ export function useLaunchProjectTx() {
   const { writeContractAsync: writeLaunchProject } =
     useWriteJbControllerLaunchProjectFor()
 
-  const chainId = useCurrentRouteChainId()
+  const chainId = useCurrentRouteChainId() ?? 84532 // Default to Sepolia.
   const terminalAddress = chainId
     ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainId]
     : undefined
@@ -120,7 +120,7 @@ export function useLaunchProjectTx() {
       const args = transformV2V3CreateArgsToV4({
         v2v3Args,
         primaryNativeTerminal: terminalAddress,
-        tokenAddress: NATIVE_TOKEN,
+        currencyTokenAddress: NATIVE_TOKEN,
       })
 
       try {

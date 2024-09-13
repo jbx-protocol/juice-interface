@@ -1,3 +1,4 @@
+import { Project } from 'generated/graphql'
 import { ipfsGatewayFetch } from 'lib/api/ipfs'
 import { DBProject, DBProjectRow, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
@@ -8,8 +9,6 @@ import {
 } from 'models/project-tags'
 import { ProjectMetadata, consolidateMetadata } from 'models/projectMetadata'
 import { PV } from 'models/pv'
-
-import { Project } from 'generated/graphql'
 import { formatError } from './format/formatError'
 import { parseBigNumberKeyVals } from './graph'
 import { isIpfsCID } from './ipfs'

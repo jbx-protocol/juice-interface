@@ -1,18 +1,21 @@
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { V2_BLOCKLISTED_PROJECTS } from 'constants/blocklist'
+import { PV_V4 } from 'constants/pv'
 import {
   DbProjectsDocument,
   DbProjectsQuery,
+  Dbv4ProjectsDocument,
   Project,
   QueryProjectsArgs,
 } from 'generated/graphql'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
-import { serverClient } from 'lib/apollo/serverClient'
+import { serverClient, v4ServerClient } from 'lib/apollo/serverClient'
 import { DBProject, DBProjectQueryOpts, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Database } from 'types/database.types'
 import { isHardArchived } from 'utils/archived'
+import { getSubgraphIdForProject } from 'utils/graph'
 import {
   formatDBProjectRow,
   formatSGProjectForDB,
@@ -23,15 +26,28 @@ import { dbProjects } from '../clients'
  * Query all projects from subgraph using apollo serverClient which is safe to use in edge runtime.
  */
 export async function queryAllSGProjectsForServer() {
-  const res = await paginateDepleteQuery<DbProjectsQuery, QueryProjectsArgs>({
-    client: serverClient,
-    document: DbProjectsDocument,
-  })
+  const [res, resV4] = await Promise.all([
+    paginateDepleteQuery<DbProjectsQuery, QueryProjectsArgs>({
+      client: serverClient,
+      document: DbProjectsDocument,
+    }),
+    paginateDepleteQuery<DbProjectsQuery, QueryProjectsArgs>({
+      client: v4ServerClient,
+      document: Dbv4ProjectsDocument,
+    }),
+  ])
 
   // Response must be retyped with Json<>, because the serverClient does not perform the parsing expected by generated types
   const _res = res as unknown as Json<Pick<Project, SGSBCompareKey>>[]
+  const _resV4 = resV4.map(p => {
+    return {
+      ...p,
+      id: getSubgraphIdForProject(PV_V4, p.projectId), // Patch in the subgraph ID for V4 projects (to be consitent with legacy subgraph)
+      pv: PV_V4, // Patch in the PV for V4 projects
+    }
+  }) as unknown as Json<Pick<Project, SGSBCompareKey>>[]
 
-  return _res.map(formatSGProjectForDB)
+  return [..._res, ..._resV4].map(formatSGProjectForDB)
 }
 
 /**

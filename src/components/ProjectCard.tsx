@@ -21,7 +21,7 @@ export default function ProjectCard({
   project,
   bookmarked,
 }: {
-  project?: SubgraphQueryProject
+  project?: SubgraphQueryProject & { chainId?: number }
   bookmarked?: boolean
 }) {
   const { data: metadata } = useProjectMetadata(project?.metadataUri)
@@ -57,7 +57,7 @@ export default function ProjectCard({
       : `/p/${handle}`
 
   const projectCardUrl =
-    pv === PV_V4
+    pv === PV_V4 && chainId
       ? v4ProjectRoute({
           projectId,
           chainId,

@@ -83,6 +83,7 @@ export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
     paymentsCount: p.payments_count,
     projectId: p.project_id,
     pv: p.pv as PV,
+    chainId: p.chain_id,
     redeemCount: p.redeem_count,
     redeemVolume: p.redeem_volume,
     redeemVolumeUSD: p.redeem_voume_usd,
@@ -152,7 +153,7 @@ export function formatSgProjectsForUpdate({
   retryIpfs,
   returnAllProjects,
 }: {
-  sgProjects: Json<Pick<Project, SGSBCompareKey>>[]
+  sgProjects: Json<Pick<Project & { chainId: number }, SGSBCompareKey>>[]
   dbProjects: Record<string, Json<DBProject>>
   retryIpfs?: boolean
   returnAllProjects?: boolean
@@ -243,7 +244,7 @@ export async function formatWithMetadata({
   sgProject,
   dbProject,
 }: {
-  sgProject: Json<Pick<Project, SGSBCompareKey>>
+  sgProject: Json<Pick<Project & { chainId: number }, SGSBCompareKey>>
   dbProject:
     | Pick<
         DBProject,
@@ -351,8 +352,8 @@ function padBigNumForSort(bn: string) {
 }
 
 export function formatSGProjectForDB(
-  p: Json<Pick<Project, SGSBCompareKey>>,
-): Json<Pick<Project, SGSBCompareKey>> {
+  p: Json<Pick<Project & { chainId: number }, SGSBCompareKey>>,
+): Json<Pick<Project & { chainId: number }, SGSBCompareKey>> {
   return {
     ...p,
     // Adjust BigNumber values before we compare them to database values

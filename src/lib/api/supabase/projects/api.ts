@@ -8,6 +8,7 @@ import {
   QueryProjectsArgs,
 } from 'generated/graphql'
 
+import { readNetwork } from 'constants/networks'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { serverClient, v4SepoliaServerClient } from 'lib/apollo/serverClient'
 import { DBProject, DBProjectQueryOpts, SGSBCompareKey } from 'models/dbProject'
@@ -43,7 +44,12 @@ export async function queryAllSGProjectsForServer() {
   ])
 
   // Response must be retyped with Json<>, because the serverClient does not perform the parsing expected by generated types
-  const _res = res as unknown as Json<Pick<Project, SGSBCompareKey>>[]
+  const _res = res.map(p => {
+    return {
+      ...p,
+      chainId: readNetwork.chainId,
+    }
+  }) as unknown as Json<Pick<Project & { chainId: number }, SGSBCompareKey>>[]
   const _resSepoliaV4 = resSepoliaV4.map(p => {
     return {
       ...p,
@@ -52,7 +58,7 @@ export async function queryAllSGProjectsForServer() {
       metadataUri: p.metadata,
       chainId: sepolia.id,
     }
-  }) as unknown as Json<Pick<Project, SGSBCompareKey>>[]
+  }) as unknown as Json<Pick<Project & { chainId: number }, SGSBCompareKey>>[]
 
   return [..._res, ..._resSepoliaV4].map(formatSGProjectForDB)
 }

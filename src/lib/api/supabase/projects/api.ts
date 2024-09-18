@@ -4,15 +4,19 @@ import { PV_V4 } from 'constants/pv'
 import {
   DbProjectsDocument,
   DbProjectsQuery,
-  Dbv4ProjectsDocument,
   Project,
   QueryProjectsArgs,
 } from 'generated/graphql'
+
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { serverClient, v4ServerClient } from 'lib/apollo/serverClient'
 import { DBProject, DBProjectQueryOpts, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
 import { NextApiRequest, NextApiResponse } from 'next'
+import {
+  Dbv4ProjectsDocument,
+  Dbv4ProjectsQuery,
+} from 'packages/v4/graphql/client/graphql'
 import { Database } from 'types/database.types'
 import { isHardArchived } from 'utils/archived'
 import { getSubgraphIdForProject } from 'utils/graph'
@@ -31,7 +35,7 @@ export async function queryAllSGProjectsForServer() {
       client: serverClient,
       document: DbProjectsDocument,
     }),
-    paginateDepleteQuery<DbProjectsQuery, QueryProjectsArgs>({
+    paginateDepleteQuery<Dbv4ProjectsQuery, QueryProjectsArgs>({
       client: v4ServerClient,
       document: Dbv4ProjectsDocument,
     }),
@@ -43,7 +47,8 @@ export async function queryAllSGProjectsForServer() {
     return {
       ...p,
       id: getSubgraphIdForProject(PV_V4, p.projectId), // Patch in the subgraph ID for V4 projects (to be consitent with legacy subgraph)
-      pv: PV_V4, // Patch in the PV for V4 projects
+      pv: PV_V4, // Patch in the PV for V4 projects,
+      metadataUri: p.metadata,
     }
   }) as unknown as Json<Pick<Project, SGSBCompareKey>>[]
 
@@ -109,7 +114,6 @@ export async function queryDBProjects(
   const pageSize = opts.pageSize ?? 20
   // Only sort ascending if orderBy is defined and orderDirection is 'asc'
   const ascending = opts.orderBy ? opts.orderDirection === 'asc' : false
-
   const searchFilter = createSearchFilter(opts.text)
 
   const supabase = createServerSupabaseClient<Database>({ req, res })

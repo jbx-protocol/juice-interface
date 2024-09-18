@@ -3,7 +3,7 @@ import { Button } from 'antd'
 import Search from 'antd/lib/input/Search'
 import { Footer } from 'components/Footer/Footer'
 import { PROJECTS_PAGE } from 'constants/fathomEvents'
-import { PV_V1, PV_V2 } from 'constants/pv'
+import { PV_V1, PV_V2, PV_V4 } from 'constants/pv'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import { DBProjectQueryOpts } from 'models/dbProject'
@@ -65,6 +65,7 @@ export function ProjectsView() {
   const [orderBy, setOrderBy] = useState<OrderByOption>('volume')
   const [includeV1, setIncludeV1] = useState<boolean>(true)
   const [includeV2, setIncludeV2] = useState<boolean>(true)
+  const [includeV4, setIncludeV4] = useState<boolean>(true)
   const [showArchived, setShowArchived] = useState<boolean>(false)
   const [reversed, setReversed] = useState<boolean>(false)
 
@@ -72,8 +73,10 @@ export function ProjectsView() {
     const _pv: PV[] = []
     if (includeV1) _pv.push(PV_V1)
     if (includeV2) _pv.push(PV_V2)
-    return _pv.length ? _pv : [PV_V1, PV_V2]
-  }, [includeV1, includeV2])
+    if (includeV4) _pv.push(PV_V4)
+
+    return _pv.length ? _pv : [PV_V1, PV_V2, PV_V4]
+  }, [includeV1, includeV2, includeV4])
 
   function updateRoute(
     _searchTags: ProjectTagName[],
@@ -137,8 +140,10 @@ export function ProjectsView() {
                 <ProjectsFilterAndSort
                   includeV1={includeV1}
                   includeV2={includeV2}
+                  includeV4={includeV4}
                   setIncludeV1={setIncludeV1}
                   setIncludeV2={setIncludeV2}
+                  setIncludeV4={setIncludeV4}
                   showArchived={showArchived}
                   setShowArchived={setShowArchived}
                   reversed={reversed}

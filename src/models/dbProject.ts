@@ -36,6 +36,7 @@ export type DBProject = {
   projectId: number
   createdAt: number
   pv: PV
+  chainId: number
   handle: string | null
   metadataUri: string | null
 

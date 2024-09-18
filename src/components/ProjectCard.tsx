@@ -1,16 +1,16 @@
 import * as constants from '@ethersproject/constants'
 import { BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/24/solid'
 import { Skeleton } from 'antd'
-import { PV_V2 } from 'constants/pv'
+import { PV_V2, PV_V4 } from 'constants/pv'
 import { useProjectHandleText } from 'hooks/useProjectHandleText'
-import Link from 'next/link'
-import { isHardArchived } from 'utils/archived'
-import { formatDate } from 'utils/format/formatDate'
-
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useSubtitle } from 'hooks/useSubtitle'
 import { SubgraphQueryProject } from 'models/subgraphProjects'
+import Link from 'next/link'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
+import { v4ProjectRoute } from 'packages/v4/utils/routes'
+import { isHardArchived } from 'utils/archived'
+import { formatDate } from 'utils/format/formatDate'
 import { ArchivedBadge } from './ArchivedBadge'
 import Loading from './Loading'
 import ProjectLogo from './ProjectLogo'
@@ -29,12 +29,11 @@ export default function ProjectCard({
     handle: project?.handle,
     projectId: project?.projectId,
   })
-
   const subtitle = useSubtitle(metadata)
 
   if (!project) return null
 
-  const { volume, pv, handle, projectId, createdAt } = project
+  const { volume, pv, handle, projectId, createdAt, chainId } = project
   const tags = metadata?.tags
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
@@ -58,7 +57,12 @@ export default function ProjectCard({
       : `/p/${handle}`
 
   const projectCardUrl =
-    pv === PV_V2
+    pv === PV_V4
+      ? v4ProjectRoute({
+          projectId,
+          chainId,
+        })
+      : pv === PV_V2
       ? v2v3ProjectRoute({
           projectId,
           handle,

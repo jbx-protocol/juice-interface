@@ -122,6 +122,7 @@ export function formatDBProjectRow(
     payments_count: p.paymentsCount,
     project_id: p.projectId,
     pv: p.pv,
+    chain_id: p.chainId,
     redeem_count: p.redeemCount,
     redeem_volume: p.redeemVolume,
     redeem_voume_usd: p.redeemVolumeUSD,

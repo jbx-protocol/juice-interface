@@ -9,7 +9,7 @@ import {
 } from 'generated/graphql'
 
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
-import { serverClient, v4ServerClient } from 'lib/apollo/serverClient'
+import { serverClient, v4SepoliaServerClient } from 'lib/apollo/serverClient'
 import { DBProject, DBProjectQueryOpts, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -25,34 +25,36 @@ import {
   formatSGProjectForDB,
   parseDBProjectsRow,
 } from 'utils/sgDbProjects'
+import { sepolia } from 'viem/chains'
 import { dbProjects } from '../clients'
 /**
  * Query all projects from subgraph using apollo serverClient which is safe to use in edge runtime.
  */
 export async function queryAllSGProjectsForServer() {
-  const [res, resV4] = await Promise.all([
+  const [res, resSepoliaV4] = await Promise.all([
     paginateDepleteQuery<DbProjectsQuery, QueryProjectsArgs>({
       client: serverClient,
       document: DbProjectsDocument,
     }),
     paginateDepleteQuery<Dbv4ProjectsQuery, QueryProjectsArgs>({
-      client: v4ServerClient,
+      client: v4SepoliaServerClient,
       document: Dbv4ProjectsDocument,
     }),
   ])
 
   // Response must be retyped with Json<>, because the serverClient does not perform the parsing expected by generated types
   const _res = res as unknown as Json<Pick<Project, SGSBCompareKey>>[]
-  const _resV4 = resV4.map(p => {
+  const _resSepoliaV4 = resSepoliaV4.map(p => {
     return {
       ...p,
       id: getSubgraphIdForProject(PV_V4, p.projectId), // Patch in the subgraph ID for V4 projects (to be consitent with legacy subgraph)
       pv: PV_V4, // Patch in the PV for V4 projects,
       metadataUri: p.metadata,
+      chainId: sepolia.id,
     }
   }) as unknown as Json<Pick<Project, SGSBCompareKey>>[]
 
-  return [..._res, ..._resV4].map(formatSGProjectForDB)
+  return [..._res, ..._resSepoliaV4].map(formatSGProjectForDB)
 }
 
 /**

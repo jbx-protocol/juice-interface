@@ -5,6 +5,7 @@ import SupabaseSessionProvider from 'contexts/SupabaseSession/SupabaseSessionPro
 import { initWeb3Onboard } from 'hooks/Wallet/initWeb3Onboard'
 import { useFathom } from 'lib/fathom'
 import type { AppProps } from 'next/app'
+import { getInitialThemeOption, syncTheme } from 'contexts/Theme/useJuiceTheme'
 import '../styles/index.scss'
 
 /**
@@ -15,6 +16,7 @@ import '../styles/index.scss'
 const web3Onboard = initWeb3Onboard()
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  syncTheme(getInitialThemeOption())
   useFathom()
 
   if (!pageProps.i18n) {

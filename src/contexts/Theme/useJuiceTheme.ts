@@ -3,6 +3,8 @@ import type { ThemeContextType } from 'contexts/Theme/ThemeContext'
 import { startTransition, useEffect, useState } from 'react'
 import { useMedia } from './useMedia'
 
+export const THEME_STORAGE_KEY = 'jb_theme'
+
 const userPrefersDarkMode = (): boolean => {
   if (typeof window === 'undefined') {
     return false
@@ -11,8 +13,12 @@ const userPrefersDarkMode = (): boolean => {
   return window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ?? false
 }
 
-const getInitialThemeOption = (storageKey: string) => {
-  const storedThemeOption = localStorage?.getItem(storageKey)
+export const getInitialThemeOption = () => {
+  if (typeof window === 'undefined') {
+    return false
+  }
+
+  const storedThemeOption = localStorage?.getItem(THEME_STORAGE_KEY)
   if (storedThemeOption) {
     return storedThemeOption as ThemeOption
   }
@@ -20,7 +26,23 @@ const getInitialThemeOption = (storageKey: string) => {
   return userPrefersDarkMode() ? ThemeOption.dark : ThemeOption.light
 }
 
-export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
+export const syncTheme = (themeOption: ThemeOption) => {
+  if (typeof document === 'undefined') {
+    return false
+  }
+
+  if (themeOption === ThemeOption.dark) {
+    document.body.classList.add('dark')
+  } else {
+    document.body.classList.remove('dark')
+  }
+
+  document.documentElement.style.setProperty('color-scheme', themeOption)
+
+  localStorage?.setItem(THEME_STORAGE_KEY, themeOption)
+}
+
+export function useJuiceTheme(): ThemeContextType {
   const [currentThemeOption, setCurrentThemeOption] = useState<ThemeOption>(
     'light' as ThemeOption,
   )
@@ -29,33 +51,19 @@ export function useJuiceTheme(storageKey = 'jb_theme'): ThemeContextType {
 
   // Load the theme from local storage on initial load
   useEffect(() => {
-    const initialThemeOption = getInitialThemeOption(storageKey)
-    startTransition(() => {
-      setCurrentThemeOption(initialThemeOption)
-    })
-  }, [storageKey])
+    const initialThemeOption = getInitialThemeOption(THEME_STORAGE_KEY)
+    setCurrentThemeOption(initialThemeOption)
+  }, [])
 
-  // Set the theme on the body element
-  // This is needed for tailwind css dark theme classes to work
-  useEffect(() => {
-    if (currentThemeOption === ThemeOption.dark) {
-      document.body.classList.add('dark')
-    } else {
-      document.body.classList.remove('dark')
-    }
-    document.documentElement.style.setProperty(
-      'color-scheme',
-      currentThemeOption,
-    )
-  }, [currentThemeOption])
+  function setThemeOption(themeOption: ThemeOption) {
+    syncTheme(themeOption)
+    setCurrentThemeOption(themeOption)
+  }
 
   return {
     themeOption: currentThemeOption,
     forThemeOption: map => map[currentThemeOption],
-    setThemeOption: (themeOption: ThemeOption) => {
-      setCurrentThemeOption(themeOption)
-      localStorage?.setItem(storageKey, themeOption)
-    },
+    setThemeOption,
     isMobile,
   }
 }

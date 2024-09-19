@@ -1,5 +1,4 @@
 import { JBChainId } from 'juice-sdk-react'
-import process from 'process'
 import { isBrowser } from 'utils/isBrowser'
 import { sepolia } from 'viem/chains'
 
@@ -32,25 +31,25 @@ export const v4SubgraphUri = (chainId: JBChainId) => {
 
   const env: {
     [k in JBChainId]?: {
-      browser?: string
-      server?: string
+      browserUrl?: string
+      serverUrl?: string
     }
   } = {
     [sepolia.id]: {
-      browser: process.env.NEXT_PUBLIC_V4_SEPOLIA_SUBGRAPH_URL,
-      server: process.env.V4_SEPOLIA_SUBGRAPH_URL,
+      browserUrl: process.env.NEXT_PUBLIC_V4_SEPOLIA_SUBGRAPH_URL,
+      serverUrl: process.env.V4_SEPOLIA_SUBGRAPH_URL,
     },
   } as const
 
   if (isBrowser()) {
-    uri = env?.[chainId]?.browser
+    uri = env?.[chainId]?.browserUrl
     if (!uri) {
       throw new Error(
         'NEXT_PUBLIC_V4_SUBGRAPH_URL environment variable not defined',
       )
     }
   } else {
-    uri = env?.[chainId]?.server
+    uri = env?.[chainId]?.serverUrl
     if (!uri) {
       throw new Error('V4_SUBGRAPH_URL environment variable not defined')
     }

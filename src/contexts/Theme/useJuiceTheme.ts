@@ -15,7 +15,7 @@ const userPrefersDarkMode = (): boolean => {
 
 export const getInitialThemeOption = () => {
   if (typeof window === 'undefined') {
-    return false
+    return
   }
 
   const storedThemeOption = localStorage?.getItem(THEME_STORAGE_KEY)
@@ -26,9 +26,9 @@ export const getInitialThemeOption = () => {
   return userPrefersDarkMode() ? ThemeOption.dark : ThemeOption.light
 }
 
-export const syncTheme = (themeOption: ThemeOption) => {
-  if (typeof document === 'undefined') {
-    return false
+export const syncTheme = (themeOption: ThemeOption | undefined) => {
+  if (!themeOption || typeof document === 'undefined') {
+    return
   }
 
   if (themeOption === ThemeOption.dark) {
@@ -51,7 +51,11 @@ export function useJuiceTheme(): ThemeContextType {
 
   // Load the theme from local storage on initial load
   useEffect(() => {
-    const initialThemeOption = getInitialThemeOption(THEME_STORAGE_KEY)
+    const initialThemeOption = getInitialThemeOption()
+    if (!initialThemeOption) {
+      return
+    }
+
     setCurrentThemeOption(initialThemeOption)
   }, [])
 

@@ -55,7 +55,6 @@ export async function queryAllSGProjectsForServer() {
       ...p,
       id: getSubgraphIdForProject(PV_V4, p.projectId), // Patch in the subgraph ID for V4 projects (to be consitent with legacy subgraph)
       pv: PV_V4, // Patch in the PV for V4 projects,
-      metadataUri: p.metadata,
       chainId: sepolia.id,
     }
   }) as unknown as Json<Pick<Project & { chainId: number }, SGSBCompareKey>>[]

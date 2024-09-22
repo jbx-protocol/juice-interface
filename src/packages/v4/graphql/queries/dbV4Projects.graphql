@@ -3,7 +3,7 @@ query DBV4Projects($first: Int, $skip: Int) {
     id
     projectId
     handle
-    metadata
+    metadataUri
     currentBalance
     volume
     volumeUSD

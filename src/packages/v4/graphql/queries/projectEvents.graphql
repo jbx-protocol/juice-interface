@@ -1,0 +1,206 @@
+query ProjectEvents(
+  $where: ProjectEvent_filter
+  $orderBy: ProjectEvent_orderBy
+  $orderDirection: OrderDirection
+  $first: Int
+  $skip: Int
+) {
+  projectEvents(
+    where: $where
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    first: $first
+    skip: $skip
+  ) {
+    id
+    addToBalanceEvent {
+      id
+      timestamp
+      txHash
+      from
+      amount
+      note
+      terminal
+      projectId
+      pv
+      project {
+        handle
+      }
+    }
+    burnEvent {
+      id
+      timestamp
+      txHash
+      from
+      holder
+      amount
+      projectId
+      pv
+      project {
+        handle
+      }
+    }
+    configureEvent {
+      id
+      timestamp
+      txHash
+      from
+      ballot
+      discountRate
+      duration
+      configuration
+      projectId
+      weight
+      memo
+      mustStartAtOrAfter
+      projectId
+      project {
+        handle
+      }
+      fundingCycle {
+        projectId
+        mustStartAtOrAfter
+        preferClaimedTokenOverride
+        number
+        basedOn
+        startTimestamp
+        duration
+        weight
+        discountRate
+        ballot
+        configuration
+        metadata
+        transfersPaused
+        reservedRate
+        redemptionRate
+        ballotRedemptionRate
+        pausePay
+        distributionsPaused
+        redeemPaused
+        burnPaused
+        mintingAllowed
+        dataSource
+        controllerMigrationAllowed
+        setControllerAllowed
+        setTerminalsAllowed
+        shouldHoldFees
+        terminalMigrationAllowed
+        useDataSourceForPay
+        useDataSourceForRedeem
+        useTotalOverflowForRedemptions
+        metametadata
+        withdrawnAmount
+      }
+    }
+    deployedERC20Event {
+      id
+      timestamp
+      txHash
+      from
+      symbol
+      projectId
+      pv
+      project {
+        handle
+      }
+    }
+    deployETHERC20ProjectPayerEvent {
+      id
+      timestamp
+      txHash
+      from
+      address
+      memo
+      projectId
+      project {
+        handle
+      }
+    }
+    distributePayoutsEvent {
+      id
+      timestamp
+      txHash
+      from
+      beneficiary
+      beneficiaryDistributionAmount
+      distributedAmount
+      memo
+      terminal
+      projectId
+      project {
+        handle
+      }
+    }
+    distributeReservedTokensEvent {
+      id
+      timestamp
+      txHash
+      from
+      beneficiary
+      beneficiaryTokenCount
+      tokenCount
+      projectId
+      project {
+        handle
+      }
+    }
+    payEvent {
+      id
+      timestamp
+      txHash
+      from
+      amount
+      beneficiary
+      note
+      feeFromV2Project
+      terminal
+      projectId
+      pv
+      project {
+        handle
+      }
+      distributionFromProjectId
+    }
+    printReservesEvent {
+      id
+      timestamp
+      txHash
+      from
+      beneficiary
+      beneficiaryTicketAmount
+      count
+      projectId
+      project {
+        handle
+      }
+    }
+    projectCreateEvent {
+      id
+      timestamp
+      txHash
+      from
+      projectId
+      pv
+      project {
+        handle
+      }
+    }
+    redeemEvent {
+      id
+      timestamp
+      txHash
+      from
+      amount
+      beneficiary
+      returnAmount
+      terminal
+      metadata
+      memo
+      projectId
+      pv
+      project {
+        handle
+      }
+    }
+  }
+}

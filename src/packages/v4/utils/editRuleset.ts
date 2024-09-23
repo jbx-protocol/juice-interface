@@ -51,6 +51,7 @@ export function transformEditCycleFormFieldsToTxArgs({
         useDataHookForRedeem: false, // Defaulting to false as it's not in formValues
         dataHook: "0x0000000000000000000000000000000000000000" as `0x${string}`, // Defaulting to a null address
         metadata: 0, // Assuming no additional metadata is provided
+        allowCrosschainSuckerExtension: false
       },
 
       splitGroups: [

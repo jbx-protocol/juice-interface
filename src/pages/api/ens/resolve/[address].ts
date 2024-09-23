@@ -9,7 +9,7 @@ const logger = getLogger('api/ens/resolve/[address]')
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {
-    return res.status(404)
+    return res.status(405).end()
   }
 
   try {
@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (readNetwork.name === NetworkName.sepolia) {
       // ethers v5 doesn't support ens on sepolia
-      return res.status(404).json({ error: 'ens not supported on sepolia' })
+      return res.status(400).json({ error: 'ens not supported on sepolia' })
     }
 
     let response

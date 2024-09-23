@@ -14,8 +14,10 @@ const WalletSigningRequestMessageTemplate = template(
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    if (req.method !== 'GET')
+    if (req.method !== 'GET') {
       return res.status(405).json({ message: 'Method not allowed.' })
+    }
+
     const { walletAddress } = req.query ?? {}
     if (!walletAddress || typeof walletAddress !== 'string') {
       return res.status(400).json({ message: 'Invalid request.' })

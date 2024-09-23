@@ -41,19 +41,22 @@ const getProjectIdFromLaunchReceipt = (
   return projectId
 }
 
-// todo no ideal to hardcode these addresses
+/**
+ * The contract addresses to use for deployment
+ * @todo not ideal to hardcode these addresses
+ */
 const SUPPORTED_JB_MULTITERMINAL_ADDRESS = {
-  '84532': '0x88e8ED1Dd942B2aB4Adc1e3b50Bd0EdB9822231E' as Address,
-  '421614': '0x88e8ED1Dd942B2aB4Adc1e3b50Bd0EdB9822231E' as Address,
-  '11155111': '0x88e8ED1Dd942B2aB4Adc1e3b50Bd0EdB9822231E' as Address,
-  '11155420': '0x88e8ED1Dd942B2aB4Adc1e3b50Bd0EdB9822231E' as Address,
+  '84532': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
+  '421614': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
+  '11155111': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
+  '11155420': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
 }
 
 const SUPPORTED_JB_CONTROLLER_ADDRESS = {
-  '84532': '0x1e4c8DFfE8D72aeB63e8dDbE9eF89bc368cbbE99' as Address,
-  '421614': '0x1e4c8DFfE8D72aeB63e8dDbE9eF89bc368cbbE99' as Address,
-  '11155111': '0x1e4c8DFfE8D72aeB63e8dDbE9eF89bc368cbbE99' as Address,
-  '11155420': '0x1e4c8DFfE8D72aeB63e8dDbE9eF89bc368cbbE99' as Address,
+  '84532': '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
+  '421614': '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
+  '11155111': '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
+  '11155420': '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
 }
 
 /**

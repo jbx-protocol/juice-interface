@@ -22,38 +22,33 @@ export const useLoadEditCycleData = () => {
 
   const { data: ruleset } = useJBRuleset()
   const { data: rulesetMetadata } = useJBRulesetMetadata()
-  const { 
-    ruleset: upcomingRuleset, 
-  } = useJBUpcomingRuleset()
+  const { ruleset: upcomingRuleset } = useJBUpcomingRuleset()
 
   const { splits: reservedTokensSplits } = useV4ReservedSplits()
-  const { splits: payoutSplits } = useV4CurrentPayoutSplits()
+  const { data: payoutSplits } = useV4CurrentPayoutSplits()
   const { data: payoutLimit } = usePayoutLimit()
 
   const [editCycleForm] = Form.useForm<EditCycleFormFields>()
 
   useEffect(() => {
-    if (
-      ruleset &&
-      rulesetMetadata
-    ) {
+    if (ruleset && rulesetMetadata) {
       const duration = Number(ruleset.duration)
 
       const issuanceRate = upcomingRuleset?.weight.toFloat() ?? 0
       const reservedPercent = rulesetMetadata.reservedPercent.formatPercentage()
-        // : DefaultTokenSettings.reservedTokensPercentage
+      // : DefaultTokenSettings.reservedTokensPercentage
 
       const decayPercent = ruleset.decayPercent.formatPercentage()
-        // : DefaultTokenSettings.discountRate
+      // : DefaultTokenSettings.discountRate
 
       const redemptionRate = rulesetMetadata.redemptionRate.formatPercentage()
-        // : DefaultTokenSettings.redemptionRate
+      // : DefaultTokenSettings.redemptionRate
 
       const allowOwnerMinting = rulesetMetadata.allowOwnerMinting
-          // : DefaultTokenSettings.tokenMinting
+      // : DefaultTokenSettings.tokenMinting
 
       const tokenTransfers = !rulesetMetadata.pauseCreditTransfers
-          // : DefaultTokenSettings.pauseTransfers
+      // : DefaultTokenSettings.pauseTransfers
 
       const formData: EditCycleFormFields = {
         duration: secondsToOtherUnit({
@@ -62,14 +57,11 @@ export const useLoadEditCycleData = () => {
         }),
         durationUnit: deriveDurationOption(duration),
         approvalHook: ruleset.approvalHook,
-        allowSetTerminals:
-          rulesetMetadata.allowSetTerminals,
-        allowSetController:
-          rulesetMetadata.allowSetController,
-        allowTerminalMigration:
-          rulesetMetadata.allowTerminalMigration,
+        allowSetTerminals: rulesetMetadata.allowSetTerminals,
+        allowSetController: rulesetMetadata.allowSetController,
+        allowTerminalMigration: rulesetMetadata.allowTerminalMigration,
         pausePay: rulesetMetadata.pausePay,
-        payoutSplits,
+        payoutSplits: payoutSplits ?? [],
         payoutLimit: payoutLimit ? Number(payoutLimit.amount) : undefined, // TODO: format
         payoutLimitCurrency: V4CurrencyName(payoutLimit?.currency) ?? 'ETH',
         holdFees: rulesetMetadata?.holdFees,
@@ -88,8 +80,8 @@ export const useLoadEditCycleData = () => {
       setInitialFormData(formData)
       editCycleForm.setFieldsValue(formData)
     }
-  }, [ruleset, rulesetMetadata])
-  
+  }, [ruleset, rulesetMetadata, payoutSplits])
+
   return {
     initialFormData,
     editCycleForm,

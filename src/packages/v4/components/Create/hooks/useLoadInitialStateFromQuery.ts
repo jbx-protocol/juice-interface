@@ -5,7 +5,7 @@ import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { TreasurySelection } from 'models/treasurySelection'
 import { useRouter } from 'next/router'
 import { ballotStrategiesFn } from 'packages/v2v3/constants/ballotStrategies'
-import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
@@ -49,7 +49,7 @@ const parseCreateFlowStateFromInitialState = (
 
   if (distributionLimit === undefined) {
     treasurySelection = undefined
-  } else if (distributionLimit.eq(MAX_DISTRIBUTION_LIMIT)) {
+  } else if (distributionLimit.eq(MAX_PAYOUT_LIMIT)) {
     treasurySelection = 'unlimited'
   } else if (distributionLimit.eq(0)) {
     treasurySelection = 'zero'

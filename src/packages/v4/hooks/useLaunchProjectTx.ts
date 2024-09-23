@@ -9,6 +9,7 @@ import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchP
 import { useCallback, useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { Address, WaitForTransactionReceiptReturnType } from 'viem'
+import { sepolia } from 'viem/chains'
 import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
@@ -67,7 +68,7 @@ export function useLaunchProjectTx() {
   const { writeContractAsync: writeLaunchProject } =
     useWriteJbControllerLaunchProjectFor()
 
-  const chainId = useCurrentRouteChainId() ?? 84532 // Default to Sepolia.
+  const chainId = useCurrentRouteChainId() ?? sepolia.id // default to sepolia
   const terminalAddress = chainId
     ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainId]
     : undefined

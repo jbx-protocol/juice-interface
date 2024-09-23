@@ -15,7 +15,8 @@ import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/To
 import useMobile from 'hooks/useMobile'
 import { formatFundingCycleDuration } from 'packages/v2v3/components/Create/utils/formatFundingCycleDuration'
 import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
-import { MAX_DISTRIBUTION_LIMIT, MAX_MINT_RATE } from 'packages/v2v3/utils/math'
+import { MAX_MINT_RATE } from 'packages/v2v3/utils/math'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
 import { inputMustExistRule } from 'utils/antdRules'
@@ -52,9 +53,7 @@ export const CustomTokenSettings = () => {
 
   const discountRateDisabled = !parseInt(duration)
 
-  const redemptionRateDisabled = distributionLimit?.amount.eq(
-    MAX_DISTRIBUTION_LIMIT,
-  )
+  const redemptionRateDisabled = distributionLimit?.amount.eq(MAX_PAYOUT_LIMIT)
 
   const initalMintRateAccessory = (
     <span className="mr-5">
@@ -132,9 +131,10 @@ export const CustomTokenSettings = () => {
         <div className="flex flex-col gap-6">
           <span>
             <Trans>
-              The issuance rate is reduced by this percentage every ruleset (every{' '}
-              <strong>{formatFundingCycleDuration(duration)}</strong>). The higher this rate, the
-              more incentive to pay this project earlier.
+              The issuance rate is reduced by this percentage every ruleset
+              (every <strong>{formatFundingCycleDuration(duration)}</strong>).
+              The higher this rate, the more incentive to pay this project
+              earlier.
             </Trans>
           </span>
           <Form.Item
@@ -170,8 +170,8 @@ export const CustomTokenSettings = () => {
               ) : discountRate === 100 ? (
                 <Trans>
                   After {formatFundingCycleDuration(duration)} (your first
-                  ruleset), your project will not issue any tokens unless you edit
-                  the issuance rate.
+                  ruleset), your project will not issue any tokens unless you
+                  edit the issuance rate.
                 </Trans>
               ) : (
                 <>

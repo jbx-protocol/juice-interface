@@ -1,10 +1,12 @@
+import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS, SplitGroup } from 'juice-sdk-core'
 import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
 } from 'packages/v2v3/models/fundingCycle'
-import { GroupedSplits, SplitGroup } from 'packages/v2v3/models/splits'
+import { GroupedSplits } from 'packages/v2v3/models/splits'
 import { V3FundingCycleMetadata } from 'packages/v3/models/fundingCycle'
+import { Address } from 'viem'
 
 export type LaunchV2V3ProjectArgs = [
   string, // _owner
@@ -24,8 +26,8 @@ export function transformV2V3CreateArgsToV4({
   currencyTokenAddress,
 }: {
   v2v3Args: LaunchV2V3ProjectArgs
-  primaryNativeTerminal: `0x${string}`
-  currencyTokenAddress: `0x${string}`
+  primaryNativeTerminal: Address
+  currencyTokenAddress: Address
 }) {
   const [
     _owner,
@@ -41,83 +43,86 @@ export function transformV2V3CreateArgsToV4({
 
   const mustStartAtOrAfterNum = parseInt(_mustStartAtOrAfter)
 
-  const rulesetConfigurations = [
-    {
-      mustStartAtOrAfter: mustStartAtOrAfterNum ?? 0, // 0 denotes start immediately
-      duration: _data.duration.toNumber(),
-      weight: _data.weight.toBigInt(),
-      decayPercent: _data.discountRate.toNumber(),
-      approvalHook: _data.ballot as `0x${string}`,
+  const ruleset = {
+    mustStartAtOrAfter: mustStartAtOrAfterNum ?? 0, // 0 denotes start immediately
+    duration: _data.duration.toNumber(),
+    weight: _data.weight.toBigInt(),
+    decayPercent: _data.discountRate.toNumber(),
 
-      metadata: {
-        reservedPercent: _metadata.reservedRate.toNumber(),
-        redemptionRate: _metadata.redemptionRate.toNumber(),
-        baseCurrency: 1, // Not present in v2v3, passing 1 by default
-        pausePay: _metadata.pausePay,
-        pauseRedeem: _metadata.pauseRedeem,
-        pauseCreditTransfers: Boolean(_metadata.global.pauseTransfers),
-        allowOwnerMinting: _metadata.allowMinting,
-        allowSetCustomToken: false, // Assuming false by default
-        allowTerminalMigration: _metadata.allowTerminalMigration,
-        allowSetTerminals: _metadata.global.allowSetTerminals,
-        allowSetController: _metadata.global.allowSetController,
-        allowAddAccountingContext: false, // Not present in v2v3, passing false by default
-        allowAddPriceFeed: false, // Not present in v2v3, passing false by default
-        ownerMustSendPayouts: false, // Not present in v2v3, passing false by default
-        holdFees: _metadata.holdFees,
-        useTotalSurplusForRedemptions: _metadata.useTotalOverflowForRedemptions,
-        useDataHookForPay: _metadata.useDataSourceForPay,
-        useDataHookForRedeem: _metadata.useDataSourceForRedeem,
-        dataHook: _metadata.dataSource as `0x${string}`,
-        metadata: 0,
-        allowCrosschainSuckerExtension: false,
-      },
+    approvalHook: _data.ballot as Address,
 
-      splitGroups: _groupedSplits.map(group => ({
-        groupId: BigInt(group.group),
-        splits: group.splits.map(split => ({
-          preferAddToBalance: Boolean(split.preferClaimed),
-          percent: split.percent,
-          projectId: BigInt(parseInt(split.projectId ?? '0x00', 16)),
-          beneficiary: split.beneficiary as `0x${string}`,
-          lockedUntil: split.lockedUntil ?? 0,
-          hook: split.allocator as `0x${string}`,
-        })),
-      })),
-
-      fundAccessLimitGroups: _fundAccessConstraints.map(constraint => ({
-        terminal: primaryNativeTerminal,
-        token: currencyTokenAddress,
-        payoutLimits: [
-          {
-            amount: constraint.distributionLimit.toBigInt(),
-            currency: constraint.distributionLimitCurrency.toNumber(),
-          },
-        ] as const,
-        surplusAllowances: [
-          {
-            amount: constraint.overflowAllowance.toBigInt(),
-            currency: constraint.overflowAllowanceCurrency.toNumber(),
-          },
-        ] as const,
-      })),
+    metadata: {
+      reservedPercent: _metadata.reservedRate.toNumber(),
+      redemptionRate: _metadata.redemptionRate.toNumber(),
+      baseCurrency: 1, // Not present in v2v3, passing 1 by default
+      pausePay: _metadata.pausePay,
+      pauseRedeem: _metadata.pauseRedeem,
+      pauseCreditTransfers: Boolean(_metadata.global.pauseTransfers),
+      allowOwnerMinting: _metadata.allowMinting,
+      allowSetCustomToken: false, // Assuming false by default
+      allowTerminalMigration: _metadata.allowTerminalMigration,
+      allowSetTerminals: _metadata.global.allowSetTerminals,
+      allowSetController: _metadata.global.allowSetController,
+      allowAddAccountingContext: false, // Not present in v2v3, passing false by default
+      allowAddPriceFeed: false, // Not present in v2v3, passing false by default
+      ownerMustSendPayouts: false, // Not present in v2v3, passing false by default
+      holdFees: _metadata.holdFees,
+      useTotalSurplusForRedemptions: _metadata.useTotalOverflowForRedemptions,
+      useDataHookForPay: _metadata.useDataSourceForPay,
+      useDataHookForRedeem: _metadata.useDataSourceForRedeem,
+      dataHook: _metadata.dataSource as Address,
+      metadata: 0,
+      allowCrosschainSuckerExtension: false,
     },
-  ]
+
+    splitGroups: _groupedSplits.map(group => ({
+      groupId:
+        group.group === SplitGroup.ETHPayout
+          ? BigInt(NATIVE_TOKEN)
+          : 1n, // TODO dont hardcode reserved token group as 1n
+      splits: group.splits.map(split => ({
+        preferAddToBalance: Boolean(split.preferClaimed),
+        percent: split.percent,
+        projectId: BigInt(parseInt(split.projectId ?? '0x00', 16)),
+        beneficiary: split.beneficiary as Address,
+        lockedUntil: split.lockedUntil ?? 0,
+        hook: split.allocator as Address,
+      })),
+    })),
+
+    fundAccessLimitGroups: _fundAccessConstraints.map(constraint => ({
+      terminal: primaryNativeTerminal,
+      token: currencyTokenAddress,
+      payoutLimits: [
+        {
+          amount: constraint.distributionLimit.toBigInt(),
+          currency: Number(BigInt(NATIVE_TOKEN)), // TODO support USD somehow
+        },
+      ],
+      surplusAllowances: [
+        {
+          amount: constraint.overflowAllowance.toBigInt(),
+          currency: Number(BigInt(NATIVE_TOKEN)),
+        },
+      ],
+    })),
+  }
+
+  const rulesetConfigurations = [ruleset]
 
   const terminalConfigurations = _terminals.map(terminal => ({
-    terminal: terminal as `0x${string}`,
+    terminal: terminal as Address,
     accountingContextsToAccept: [
-      // @v4todo:
-      // {
-      //   token: currencyTokenAddress,
-      //   decimals: 18,
-      //   currency: 0
-      // }
-    ] as const,
+      {
+        token: currencyTokenAddress,
+        decimals: NATIVE_TOKEN_DECIMALS,
+        currency: Number(BigInt(currencyTokenAddress)),
+      },
+    ],
   }))
 
   return [
-    _owner as `0x${string}`,
+    _owner as Address,
     _projectMetadata[0],
     rulesetConfigurations,
     terminalConfigurations,

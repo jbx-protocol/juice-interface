@@ -32,7 +32,7 @@ export default function V4DistributePayoutsModal({
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
 }) {
-  const { splits: payoutSplits } = useV4CurrentPayoutSplits()
+  const { data: payoutSplits } = useV4CurrentPayoutSplits()
   const { data: payoutLimit } = usePayoutLimit()
   const { distributableAmount: distributable } = useV4DistributableAmount()
   const { projectId } = useProjectMetadataContext()

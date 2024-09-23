@@ -1,13 +1,17 @@
 import { Form } from 'antd'
 import { CURRENCY_METADATA, CurrencyName } from 'constants/currency'
+import { BigNumber } from 'ethers'
 import { PayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/PayoutsTable'
 import { Split } from 'packages/v2v3/models/splits'
 import {
   V2V3CurrencyName,
   getV2V3CurrencyOption,
 } from 'packages/v2v3/utils/currency'
-import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
-import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'packages/v2v3/utils/splitToAllocation'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { ReactNode } from 'react'
 import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
@@ -36,7 +40,7 @@ export function CreateFlowPayoutsTable({
   const { form, initialValues } = usePayoutsForm()
   const distributionLimit = !editingDistributionLimit
     ? 0
-    : editingDistributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)
+    : editingDistributionLimit.amount.eq(MAX_PAYOUT_LIMIT)
     ? undefined
     : parseFloat(fromWad(editingDistributionLimit?.amount))
 
@@ -45,7 +49,9 @@ export function CreateFlowPayoutsTable({
 
   const setDistributionLimit = (amount: number | undefined) => {
     setDistributionLimitAmount(
-      amount === undefined ? MAX_DISTRIBUTION_LIMIT : parseWad(amount),
+      amount === undefined
+        ? BigNumber.from(MAX_PAYOUT_LIMIT)
+        : parseWad(amount),
     )
   }
   const setCurrency = (currency: CurrencyName) => {

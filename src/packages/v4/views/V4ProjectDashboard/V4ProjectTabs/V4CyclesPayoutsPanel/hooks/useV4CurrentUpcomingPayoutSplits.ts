@@ -12,11 +12,11 @@ export const useV4CurrentUpcomingPayoutSplits = (
 ) => {
   const { projectId } = useJBContractContext()
   const { data: tokenAddress } = useReadJbTokensTokenOf()
-  const { splits, isLoading: currentSplitsLoading } = useV4CurrentPayoutSplits()
+  const { data: currentSplits, isLoading: currentSplitsLoading } =
+    useV4CurrentPayoutSplits()
 
   const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } =
     useJBUpcomingRuleset()
-
   const { data: _upcomingSplits, isLoading: upcomingSplitsLoading } =
     useReadJbSplitsSplitsOf({
       args: [
@@ -37,8 +37,9 @@ export const useV4CurrentUpcomingPayoutSplits = (
   const upcomingSplits: JBSplit[] = _upcomingSplits ? [..._upcomingSplits] : []
 
   if (type === 'current') {
-    return { splits, isLoading: currentSplitsLoading }
+    return { splits: currentSplits, isLoading: currentSplitsLoading }
   }
+
   return {
     splits: upcomingSplits,
     isLoading: upcomingSplitsLoading || upcomingRulesetLoading,

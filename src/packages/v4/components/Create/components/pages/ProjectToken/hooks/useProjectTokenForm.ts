@@ -4,7 +4,6 @@ import { ONE_MILLION } from 'constants/numbers'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
 import {
-  MAX_DISTRIBUTION_LIMIT,
   discountRateFrom,
   formatDiscountRate,
   formatIssuanceRate,
@@ -14,7 +13,10 @@ import {
   redemptionRateFrom,
   reservedRateFrom,
 } from 'packages/v2v3/utils/math'
-import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'packages/v2v3/utils/splitToAllocation'
 import { useDebugValue, useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -22,6 +24,7 @@ import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionL
 import { useEditingReservedTokensSplits } from 'redux/hooks/useEditingReservedTokensSplits'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 
 export type ProjectTokensFormProps = Partial<{
   selection: ProjectTokensSelection
@@ -58,7 +61,7 @@ export const useProjectTokensForm = () => {
   const [distributionLimit] = useEditingDistributionLimit()
 
   const redemptionRateDisabled =
-    !distributionLimit || distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)
+    !distributionLimit || distributionLimit.amount.eq(MAX_PAYOUT_LIMIT)
   const discountRateDisabled = !parseInt(fundingCycleData.duration)
 
   const initialValues: ProjectTokensFormProps | undefined = useMemo(() => {

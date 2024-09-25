@@ -64,7 +64,7 @@ export default function V4DistributePayoutsModal({
       NATIVE_TOKEN,
       parseUnits(distributionAmount, NATIVE_TOKEN_DECIMALS),
       BigInt(payoutLimitAmountCurrency),
-      0n, // TODO?
+      0n,
     ] as const
 
     try {

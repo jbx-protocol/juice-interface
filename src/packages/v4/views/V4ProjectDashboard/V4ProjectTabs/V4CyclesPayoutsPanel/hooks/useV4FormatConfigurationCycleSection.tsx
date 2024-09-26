@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import { JBRulesetData } from 'juice-sdk-core'
+import { NativeTokenValue } from 'juice-sdk-react'
 import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
 import { getApprovalStrategyByAddress } from 'packages/v4/utils/approvalHooks'
 import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
@@ -83,7 +84,7 @@ export const useV4FormatConfigurationCycleSection = ({
 
   const payoutsDatum: ConfigurationPanelDatum = useMemo(() => {
     const { amount, currency } = payoutLimitAmountCurrency ?? {}
-    const currentPayout = formatPayoutAmount(amount, currency)
+    const currentPayout = <NativeTokenValue wei={amount ?? 0n} />
 
     if (
       upcomingPayoutLimitAmountCurrency === null ||

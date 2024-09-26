@@ -2,8 +2,8 @@ import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPa
 
 export const pairToDatum = (
   name: string,
-  current: string | undefined,
-  upcoming: string | undefined | null,
+  current: string | JSX.Element | undefined,
+  upcoming: string | JSX.Element | undefined | null,
   link?: string,
   easyCopy?: boolean,
 ): ConfigurationPanelDatum => {

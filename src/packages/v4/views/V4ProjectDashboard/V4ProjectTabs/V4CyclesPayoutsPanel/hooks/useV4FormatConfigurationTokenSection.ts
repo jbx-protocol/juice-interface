@@ -41,7 +41,7 @@ export const useV4FormatConfigurationTokenSection = ({
     : undefined
 
   const totalIssuanceRateDatum: ConfigurationPanelDatum = useMemo(() => {
-    const current = currentTotalIssuanceRate
+    const current = currentTotalIssuanceRate !== undefined
       ? `${currentTotalIssuanceRate} ${tokenSymbol}/ETH`
       : undefined
 
@@ -49,7 +49,7 @@ export const useV4FormatConfigurationTokenSection = ({
       return pairToDatum(t`Total issuance rate`, current, null)
     }
 
-    const queued = queuedTotalIssuanceRate
+    const queued = queuedTotalIssuanceRate !== undefined
       ? `${queuedTotalIssuanceRate} ${tokenSymbol}/ETH`
       : undefined
 
@@ -74,7 +74,7 @@ export const useV4FormatConfigurationTokenSection = ({
           currentTotalIssuanceRate * reservedPercentFloat
         : undefined
 
-    const current = currentPayerIssuanceRate
+    const current = currentPayerIssuanceRate !== undefined
       ? `${currentPayerIssuanceRate} ${tokenSymbol}/ETH`
       : undefined
 
@@ -91,7 +91,7 @@ export const useV4FormatConfigurationTokenSection = ({
       queuedTotalIssuanceRate && _reservedPercent
         ? queuedTotalIssuanceRate - queuedTotalIssuanceRate * _reservedPercent
         : undefined
-    const queued = queuedPayerIssuanceRate
+    const queued = queuedPayerIssuanceRate !== undefined
       ? `${queuedPayerIssuanceRate} ${tokenSymbol}/ETH`
       : undefined
 

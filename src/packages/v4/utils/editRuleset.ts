@@ -1,5 +1,6 @@
 import { NATIVE_TOKEN } from "juice-sdk-core";
 import round from "lodash/round";
+import { issuanceRateFrom } from "packages/v2v3/utils/math";
 import { parseWad } from "utils/format/formatNumber";
 import { otherUnitToSeconds } from "utils/format/formatTime";
 import { EditCycleFormFields } from "../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields";
@@ -22,8 +23,8 @@ export function transformEditCycleFormFieldsToTxArgs({
     duration: formValues.duration,
     unit: formValues.durationUnit.value,
   })
-  const weight = BigInt(formValues.issuanceRate);
-  const decayPercent = formValues.decayPercent;
+  const weight = BigInt(issuanceRateFrom(formValues.issuanceRate.toString()));
+  const decayPercent = round(formValues.decayPercent * 10000000);
   const approvalHook = formValues.approvalHook;
 
   const rulesetConfigurations = [
@@ -35,8 +36,8 @@ export function transformEditCycleFormFieldsToTxArgs({
       approvalHook,
 
       metadata: {
-        reservedPercent: formValues.reservedPercent,
-        redemptionRate: formValues.redemptionRate,
+        reservedPercent: formValues.reservedPercent * 100,
+        redemptionRate: formValues.redemptionRate * 100,
         baseCurrency: 1, // Assuming base currency is a constant value, typically USD
         pausePay: formValues.pausePay,
         pauseRedeem: false, // Defaulting this value since it's not in formValues

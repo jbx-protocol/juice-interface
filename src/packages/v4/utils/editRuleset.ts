@@ -1,4 +1,6 @@
+import { NATIVE_TOKEN } from "juice-sdk-core";
 import round from "lodash/round";
+import { parseWad } from "utils/format/formatNumber";
 import { otherUnitToSeconds } from "utils/format/formatTime";
 import { EditCycleFormFields } from "../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields";
 
@@ -6,10 +8,12 @@ export function transformEditCycleFormFieldsToTxArgs({
   formValues,
   primaryNativeTerminal,
   tokenAddress,
+  projectId,
 }: {
   formValues: EditCycleFormFields;
   primaryNativeTerminal: `0x${string}`;
   tokenAddress: `0x${string}`;
+  projectId: bigint;
 }) {
   const now = round(new Date().getTime() / 1000);
   const mustStartAtOrAfter = now;
@@ -56,7 +60,7 @@ export function transformEditCycleFormFieldsToTxArgs({
 
       splitGroups: [
         {
-          groupId: BigInt(1), // Assuming 1 for payout splits
+          groupId: BigInt(NATIVE_TOKEN),
           splits: formValues.payoutSplits.map((split) => ({
             preferAddToBalance: Boolean(split.preferAddToBalance),
             percent: Number(split.percent.value),
@@ -67,7 +71,7 @@ export function transformEditCycleFormFieldsToTxArgs({
           })),
         },
         {
-          groupId: BigInt(2), // Assuming 2 for reserved tokens splits
+          groupId: BigInt(1),
           splits: formValues.reservedTokensSplits.map((split) => ({
             preferAddToBalance: Boolean(split.preferAddToBalance),
             percent: Number(split.percent.value),
@@ -85,7 +89,7 @@ export function transformEditCycleFormFieldsToTxArgs({
           token: tokenAddress,
           payoutLimits: [
             {
-              amount: BigInt(formValues.payoutLimit ?? "0"),
+              amount: parseWad(formValues.payoutLimit).toBigInt(),
               currency: 1, // Assuming currency is constant (e.g., USD)
             },
           ],
@@ -100,17 +104,9 @@ export function transformEditCycleFormFieldsToTxArgs({
     },
   ];
 
-  const terminalConfigurations = [
-    {
-      terminal: primaryNativeTerminal,
-      accountingContextsToAccept: [] as const,
-    },
-  ];
-
   return [
-    BigInt(now), // Convert the current timestamp to bigint for the first argument
+    projectId,
     rulesetConfigurations,
-    terminalConfigurations,
     formValues.memo ?? "",
   ] as const;
 }

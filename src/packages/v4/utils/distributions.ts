@@ -116,7 +116,7 @@ export function ensureSplitsSumTo100Percent({
   }
 
   // Calculate the ratio to adjust each split by
-  const ratio = max / currentTotal
+  const ratio = currentTotal ? max / currentTotal : 0
 
   // Adjust each split
   const adjustedSplits = splits.map(split => { 

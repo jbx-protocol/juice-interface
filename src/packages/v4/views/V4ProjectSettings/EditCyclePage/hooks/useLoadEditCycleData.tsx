@@ -6,6 +6,7 @@ import {
   secondsToOtherUnit,
 } from 'utils/format/formatTime'
 
+import { Ether } from 'juice-sdk-core'
 import { useJBRuleset, useJBRulesetMetadata } from 'juice-sdk-react'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
@@ -29,6 +30,8 @@ export const useLoadEditCycleData = () => {
   const { data: payoutLimit } = usePayoutLimit()
 
   const [editCycleForm] = Form.useForm<EditCycleFormFields>()
+  
+  const payoutLimitAmount = new Ether(payoutLimit.amount).toFloat()
 
   useEffect(() => {
     if (ruleset && rulesetMetadata) {
@@ -62,7 +65,7 @@ export const useLoadEditCycleData = () => {
         allowTerminalMigration: rulesetMetadata.allowTerminalMigration,
         pausePay: rulesetMetadata.pausePay,
         payoutSplits: payoutSplits ?? [],
-        payoutLimit: payoutLimit ? Number(payoutLimit.amount) : undefined, // TODO: format
+        payoutLimit: payoutLimitAmount,
         payoutLimitCurrency: V4CurrencyName(payoutLimit?.currency) ?? 'ETH',
         holdFees: rulesetMetadata?.holdFees,
         issuanceRate,

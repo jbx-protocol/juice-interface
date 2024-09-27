@@ -1,9 +1,9 @@
-import { WeiPerEther } from '@ethersproject/constants'
 import { CurrencyName } from 'constants/currency'
 import { JBSplit } from 'juice-sdk-core'
 import { distributionLimitsEqual } from 'packages/v4/utils/distributions'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { splitsListsHaveDiff } from 'packages/v4/utils/v4Splits'
+import { parseWad } from 'utils/format/formatNumber'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 
 export const usePayoutsSectionValues = () => {
@@ -27,10 +27,10 @@ export const usePayoutsSectionValues = () => {
 
   const newDistributionLimitNum: number = editCycleForm?.getFieldValue('payoutLimit')
   const newDistributionLimit =
-    newDistributionLimitNum ? BigInt(newDistributionLimitNum) * WeiPerEther.toBigInt() : MAX_PAYOUT_LIMIT
+    newDistributionLimitNum ? parseWad(newDistributionLimitNum).toBigInt() : MAX_PAYOUT_LIMIT
   
   const currentDistributionLimitNum = initialFormData?.payoutLimit
-  const currentDistributionLimit = currentDistributionLimitNum ? BigInt(currentDistributionLimitNum) * WeiPerEther.toBigInt() : MAX_PAYOUT_LIMIT
+  const currentDistributionLimit = currentDistributionLimitNum ? parseWad(currentDistributionLimitNum).toBigInt() : MAX_PAYOUT_LIMIT
 
   const distributionLimitHasDiff =
     !distributionLimitsEqual(currentDistributionLimit, newDistributionLimit) ||

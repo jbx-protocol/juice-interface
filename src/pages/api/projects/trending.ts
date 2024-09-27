@@ -1,4 +1,4 @@
-import { PV_V1, PV_V2 } from 'constants/pv'
+import { PV_V1, PV_V2, PV_V4 } from 'constants/pv'
 import { RomanStormVariables } from 'constants/romanStorm'
 import { BigNumber } from 'ethers'
 import {
@@ -8,11 +8,13 @@ import {
   TrendingProjectsDocument,
   TrendingProjectsQuery,
 } from 'generated/graphql'
-import { serverClient } from 'lib/apollo/serverClient'
+import { serverClient, v4SepoliaServerClient } from 'lib/apollo/serverClient'
 import { NextApiHandler } from 'next'
 import { V1ArchivedProjectIds } from 'packages/v1/constants/archivedProjects'
 import { V2ArchivedProjectIds } from 'packages/v2v3/constants/archivedProjects'
+import { TrendingProjectsV4Document } from 'packages/v4/graphql/client/graphql'
 import { getSubgraphIdForProject } from 'utils/graph'
+import { sepolia } from 'viem/chains'
 
 const CACHE_MAXAGE = 60 * 5 // 5 minutes
 
@@ -31,25 +33,40 @@ const handler: NextApiHandler = async (req, res) => {
   const rawFirst = req.query.count // TODO probably can use Yup for this
   const first = typeof rawFirst === 'string' ? parseInt(rawFirst) : undefined
   try {
-    const projectsRes = await serverClient.query<
-      TrendingProjectsQuery,
-      QueryProjectsArgs
-    >({
-      query: TrendingProjectsDocument,
-      variables: {
-        where: {
-          trendingScore_gt: '0' as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-          ...(ARCHIVED_SUBGRAPH_IDS.length
-            ? { id_not_in: ARCHIVED_SUBGRAPH_IDS }
-            : {}), // `id_not_in: <empty-array>` will return 0 results
+    const [projectsRes, v4SepoliaProjectsRes] = await Promise.all([
+      serverClient.query<TrendingProjectsQuery, QueryProjectsArgs>({
+        query: TrendingProjectsDocument,
+        variables: {
+          where: {
+            trendingScore_gt: '0' as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+            ...(ARCHIVED_SUBGRAPH_IDS.length
+              ? { id_not_in: ARCHIVED_SUBGRAPH_IDS }
+              : {}), // `id_not_in: <empty-array>` will return 0 results
+          },
+          first,
+          orderBy: Project_OrderBy.trendingScore,
+          orderDirection: OrderDirection.desc,
         },
-        first,
-        orderBy: Project_OrderBy.trendingScore,
-        orderDirection: OrderDirection.desc,
-      },
-    })
+      }),
+      v4SepoliaServerClient.query<TrendingProjectsQuery, QueryProjectsArgs>({
+        query: TrendingProjectsV4Document,
+        variables: {
+          where: {
+            trendingScore_gt: '0' as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+          },
+          first,
+          orderBy: Project_OrderBy.trendingScore,
+          orderDirection: OrderDirection.desc,
+        },
+      }),
+    ])
 
-    const projects = [...projectsRes.data.projects]
+    const projects = [
+      ...projectsRes.data.projects,
+      ...v4SepoliaProjectsRes.data.projects.map(p => {
+        return { ...p, chainId: sepolia.id, pv: PV_V4 }
+      }),
+    ]
 
     try {
       const romanProjectIndex = projects.findIndex(

@@ -24,7 +24,7 @@ const issueErc20TokenTx = useV4IssueErc20TokenTx()
 
   const canCreateErc20Token = !projectHasErc20Token && hasIssueTicketsPermission
 
-  async function onSetENSNameFormSaved(values: IssueErc20TokenTxArgs) {
+  async function onIssueErc20FormSaved(values: IssueErc20TokenTxArgs) {
     await form.validateFields()
 
     if (!issueErc20TokenTx) {
@@ -78,7 +78,7 @@ const issueErc20TokenTx = useV4IssueErc20TokenTx()
       <Form
         className="mt-5 w-full md:max-w-sm"
         form={form}
-        onFinish={onSetENSNameFormSaved}
+        onFinish={onIssueErc20FormSaved}
       >
         <Form.Item
           name="name"

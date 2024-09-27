@@ -36,7 +36,9 @@ const handler: NextApiHandler = async (_, res) => {
       (await paginateDepleteQuery<DbProjectsQuery, QueryProjectsArgs>({
         client: serverClient,
         document: DbProjectsDocument,
-      })) as unknown as Json<Pick<Project, SGSBCompareKey>>[]
+      })) as unknown as Json<
+        Pick<Project & { chainId: number }, SGSBCompareKey>
+      >[]
     ).map(formatSGProjectForDB)
 
     report += `\n\n${dbProjectsCount} projects in database`

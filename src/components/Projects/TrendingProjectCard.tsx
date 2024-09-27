@@ -4,12 +4,13 @@ import { Skeleton } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import ProjectLogo from 'components/ProjectLogo'
-import { PV_V2 } from 'constants/pv'
+import { PV_V2, PV_V4 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { DBProject } from 'models/dbProject'
 import Link from 'next/link'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
+import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
 
 export default function TrendingProjectCard({
@@ -29,7 +30,7 @@ export default function TrendingProjectCard({
     | 'handle'
     | 'pv'
     | 'projectId'
-  >
+  > & { chainId?: number }
   rank: number
   size?: 'sm' | 'lg'
   bookmarked?: boolean
@@ -62,7 +63,12 @@ export default function TrendingProjectCard({
       prefetch={false}
       key={project.handle}
       href={
-        project.pv === PV_V2
+        project.pv === PV_V4 && project.chainId
+          ? v4ProjectRoute({
+              projectId: project.projectId,
+              chainId: project.chainId,
+            })
+          : project.pv === PV_V2
           ? v2v3ProjectRoute(project)
           : `/p/${project.handle}`
       }

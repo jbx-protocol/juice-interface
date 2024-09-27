@@ -1,5 +1,6 @@
+import { AddressZero } from '@ethersproject/constants'
+import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import { BigNumber } from 'ethers'
-import { ETH_TOKEN_ADDRESS } from 'packages/v2v3/constants/juiceboxTokens'
 import { useDefaultJBETHPaymentTerminal } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
@@ -51,7 +52,6 @@ export const useEditingDistributionLimit = (): [
 
   const setDistributionLimit = useCallback(
     (input: ReduxDistributionLimit | undefined) => {
-      if (!defaultJBETHPaymentTerminal) return
       if (!input) {
         dispatch(editingV2ProjectActions.setFundAccessConstraints([]))
         return
@@ -60,7 +60,7 @@ export const useEditingDistributionLimit = (): [
       dispatch(
         editingV2ProjectActions.setFundAccessConstraints([
           {
-            terminal: defaultJBETHPaymentTerminal?.address,
+            terminal: defaultJBETHPaymentTerminal?.address ?? AddressZero,
             token: ETH_TOKEN_ADDRESS,
             distributionLimit: fromWad(input.amount),
             distributionLimitCurrency,
@@ -75,10 +75,8 @@ export const useEditingDistributionLimit = (): [
 
   const setDistributionLimitAmount = useCallback(
     (input: BigNumber) => {
-      if (!defaultJBETHPaymentTerminal) return
-
       const currentFundAccessConstraint = fundAccessConstraints?.[0] ?? {
-        terminal: defaultJBETHPaymentTerminal?.address,
+        terminal: defaultJBETHPaymentTerminal?.address ?? AddressZero,
         token: ETH_TOKEN_ADDRESS,
         distributionLimitCurrency: V2V3_CURRENCY_ETH.toString(),
         overflowAllowance: '0',
@@ -100,12 +98,11 @@ export const useEditingDistributionLimit = (): [
 
   const setDistributionLimitCurrency = useCallback(
     (input: V2V3CurrencyOption) => {
-      if (!defaultJBETHPaymentTerminal) return
       dispatch(
         editingV2ProjectActions.setDistributionLimitCurrency(input.toString()),
       )
     },
-    [defaultJBETHPaymentTerminal, dispatch],
+    [dispatch],
   )
 
   return [

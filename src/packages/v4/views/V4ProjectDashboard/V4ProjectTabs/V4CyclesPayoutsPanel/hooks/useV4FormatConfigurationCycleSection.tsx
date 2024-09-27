@@ -2,9 +2,9 @@ import { t } from '@lingui/macro'
 import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import { JBRulesetData } from 'juice-sdk-core'
+import { NativeTokenValue } from 'juice-sdk-react'
 import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
 import { getApprovalStrategyByAddress } from 'packages/v4/utils/approvalHooks'
-import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { useMemo } from 'react'
 import { formatTime } from 'utils/format/formatTime'
@@ -71,19 +71,15 @@ export const useV4FormatConfigurationCycleSection = ({
 
   const formatPayoutAmount = (
     amount: bigint | undefined,
-    currency: V4CurrencyOption | undefined,
   ) => {
     if (amount === undefined || amount === MAX_PAYOUT_LIMIT) return t`Unlimited`
     if (amount === 0n) return t`Zero (no payouts)`
-    return formatCurrencyAmount({
-      amount: Number(amount) / 1e18, // Assuming fromWad
-      currency,
-    })
+    return <NativeTokenValue wei={amount ?? 0n} />
   }
 
   const payoutsDatum: ConfigurationPanelDatum = useMemo(() => {
     const { amount, currency } = payoutLimitAmountCurrency ?? {}
-    const currentPayout = formatPayoutAmount(amount, currency)
+    const currentPayout = formatPayoutAmount(amount)
 
     if (
       upcomingPayoutLimitAmountCurrency === null ||
@@ -96,13 +92,9 @@ export const useV4FormatConfigurationCycleSection = ({
       upcomingPayoutLimitAmountCurrency?.amount !== undefined
         ? upcomingPayoutLimitAmountCurrency.amount
         : amount
-    const upcomingPayoutLimitCurrency =
-      upcomingPayoutLimitAmountCurrency?.currency !== undefined
-        ? upcomingPayoutLimitAmountCurrency.currency
-        : currency
+        
     const upcomingPayout = formatPayoutAmount(
       upcomingPayoutLimit,
-      upcomingPayoutLimitCurrency,
     )
 
     return pairToDatum(t`Payouts`, currentPayout, upcomingPayout)

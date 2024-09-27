@@ -61,7 +61,7 @@ export function TokensSectionDiff() {
     <DiffSection
       content={
         <div className="mb-5 flex flex-col gap-3 text-sm">
-          {mintRateHasDiff && currentMintRateAfterDiscountRateApplied && (
+          {mintRateHasDiff && currentMintRateAfterDiscountRateApplied ? (
             <FundingCycleListItem
               name={t`Total issuance rate`}
               value={
@@ -77,22 +77,25 @@ export function TokensSectionDiff() {
                 />
               }
             />
-          )}
-          {discountRateHasDiff && currentDiscountRate && (
+          ) : null}
+
+          {discountRateHasDiff && currentDiscountRate ? (
             <FundingCycleListItem
               name={t`Decay rate`}
               value={`${newDiscountRate}%`}
               oldValue={`${currentDiscountRate}%`}
             />
-          )}
-          {redemptionHasDiff && currentRedemptionRate && (
+          ) : null}
+
+          {redemptionHasDiff && currentRedemptionRate ? (
             <FundingCycleListItem
               name={t`Redemption rate`}
               value={`${newRedemptionRate}%`}
               oldValue={`${currentRedemptionRate}%`}
             />
-          )}
-          {allowMintingHasDiff && (
+          ) : null}
+
+          {allowMintingHasDiff ? (
             <FundingCycleListItem
               name={t`Owner token minting`}
               value={
@@ -102,8 +105,9 @@ export function TokensSectionDiff() {
                 <AllowedValue value={currentAllowMinting} />
               }
             />
-          )}
-          {tokenTransfersHasDiff && (
+          ) : null}
+
+          {tokenTransfersHasDiff ? (
             <FundingCycleListItem
               name={t`Token transfers`}
               value={
@@ -113,8 +117,9 @@ export function TokensSectionDiff() {
                 <AllowedValue value={currentTokenTransfers} />
               }
             />
-          )}
-          {reservedRateHasDiff && currentReservedRate && (
+          ) : null}
+
+          {reservedRateHasDiff && currentReservedRate ? (
             <FundingCycleListItem
               name={t`Reserved rate`}
               value={
@@ -122,8 +127,9 @@ export function TokensSectionDiff() {
               }
               oldValue={<span>{currentReservedRate}%</span>}
             />
-          )}
-          {reservedSplitsHasDiff && (
+          ) : null}
+
+          {reservedSplitsHasDiff ? (
             <div className="pb-4">
               <div className="mb-3 text-sm font-semibold">
                 <Trans>Reserved recipients:</Trans>
@@ -136,7 +142,7 @@ export function TokensSectionDiff() {
                 showDiffs
               />
             </div>
-          )}
+          ) : null}
         </div>
       }
     />

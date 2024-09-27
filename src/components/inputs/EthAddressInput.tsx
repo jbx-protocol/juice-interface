@@ -48,8 +48,8 @@ export function EthAddressInput({
     async (address: string) => {
       onChange?.(address)
 
-      const ensNameForAddress = await resolveAddress(address)
-      if (ensNameForAddress.name) {
+      const ensNameForAddress = await resolveAddress(address).catch(() => {}) // noop, ignore errors
+      if (ensNameForAddress?.name) {
         setENSName(ensNameForAddress.name)
         setAddressForENSName(address)
       }

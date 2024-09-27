@@ -1,8 +1,6 @@
 import { WrenchScrewdriverIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { BookmarkButtonIcon } from 'components/buttons/BookmarkButton/BookmarkButtonIcon'
 import { useBookmarkButton } from 'components/buttons/BookmarkButton/hooks/useBookmarkButton'
-import { SubscribeButtonIcon } from 'components/buttons/SubscribeButton/SubscribeButtonIcon'
 import { useSubscribeButton } from 'components/buttons/SubscribeButton/hooks/useSubscribeButton'
 import { PV_V2 } from 'constants/pv'
 import useMobile from 'hooks/useMobile'
@@ -54,42 +52,42 @@ export function ProjectHeaderPopupMenu({
                 href,
               }))
             : []),
-          {
-            id: 'subscribe',
-            label: (
-              <>
-                <SubscribeButtonIcon
-                  isSubscribed={isSubscribed}
-                  className="h-5 w-5"
-                />
+          // {
+          //   id: 'subscribe',
+          //   label: (
+          //     <>
+          //       <SubscribeButtonIcon
+          //         isSubscribed={isSubscribed}
+          //         className="h-5 w-5"
+          //       />
 
-                <span className="whitespace-nowrap text-sm font-medium">
-                  <Trans>Get notifications</Trans>
-                </span>
-              </>
-            ),
-            onClick: onSubscribeButtonClicked,
-          },
-          {
-            id: 'bookmark',
-            label: (
-              <>
-                <BookmarkButtonIcon
-                  isBookmarked={isBookmarked}
-                  className="h-5 w-5"
-                />
-                <span className="whitespace-nowrap text-sm font-medium">
-                  <Trans>Save project</Trans>
-                </span>
-              </>
-            ),
-            onClick(ev) {
-              ev.preventDefault()
-              ev.stopPropagation()
+          //       <span className="whitespace-nowrap text-sm font-medium">
+          //         <Trans>Get notifications</Trans>
+          //       </span>
+          //     </>
+          //   ),
+          //   onClick: onSubscribeButtonClicked,
+          // },
+          // {
+          //   id: 'bookmark',
+          //   label: (
+          //     <>
+          //       <BookmarkButtonIcon
+          //         isBookmarked={isBookmarked}
+          //         className="h-5 w-5"
+          //       />
+          //       <span className="whitespace-nowrap text-sm font-medium">
+          //         <Trans>Save project</Trans>
+          //       </span>
+          //     </>
+          //   ),
+          //   onClick(ev) {
+          //     ev.preventDefault()
+          //     ev.stopPropagation()
 
-              onBookmarkButtonClicked()
-            },
-          },
+          //     onBookmarkButtonClicked()
+          //   },
+          // },
           {
             id: 'tools',
             label: (

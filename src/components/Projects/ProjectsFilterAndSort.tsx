@@ -21,8 +21,13 @@ export type CheckboxOnChange = (checked: boolean) => void
 export default function ProjectsFilterAndSort({
   includeV1,
   setIncludeV1,
+
   includeV2,
   setIncludeV2,
+
+  includeV4,
+  setIncludeV4,
+
   showArchived,
   setShowArchived,
   searchTags,
@@ -34,8 +39,13 @@ export default function ProjectsFilterAndSort({
 }: {
   includeV1: boolean
   setIncludeV1: CheckboxOnChange
+
   includeV2: boolean
   setIncludeV2: CheckboxOnChange
+
+  includeV4: boolean
+  setIncludeV4: CheckboxOnChange
+
   showArchived: boolean
   setShowArchived: CheckboxOnChange
   searchTags: ProjectTagName[]
@@ -67,10 +77,7 @@ export default function ProjectsFilterAndSort({
   return (
     <div className="flex max-w-[100vw] flex-wrap items-center whitespace-pre">
       <Collapse
-        className={classNames(
-          `projects-filter-collapse`,
-          'my-0 border-none bg-transparent',
-        )}
+        className="projects-filter-collapse my-0 border-none bg-transparent"
         activeKey={tagsIsOpen ? 0 : undefined}
       >
         <CollapsePanel
@@ -160,6 +167,11 @@ export default function ProjectsFilterAndSort({
               label={t`V2`}
               checked={includeV2}
               onChange={setIncludeV2}
+            />
+            <FilterCheckboxItem
+              label={t`V4`}
+              checked={includeV4}
+              onChange={setIncludeV4}
             />
             <FilterCheckboxItem
               label={t`Archived`}

@@ -21,7 +21,7 @@ import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
 import { useV2ProjectTitle } from '../useProjectTitle'
 
-export interface LaunchProjectData {
+export interface LaunchV2V3ProjectData {
   projectMetadataCID: string
   fundingCycleData: V2V3FundingCycleData
   fundingCycleMetadata: V2V3FundingCycleMetadata
@@ -31,7 +31,7 @@ export interface LaunchProjectData {
   owner?: string // If not provided, the current user's address will be used.
 }
 
-export function useLaunchProjectTx(): TransactorInstance<LaunchProjectData> {
+export function useLaunchProjectTx(): TransactorInstance<LaunchV2V3ProjectData> {
   const { transactor } = useContext(TransactionContext)
   const { contracts } = useContext(V2V3ContractsContext)
   const defaultJBController = useDefaultJBController()

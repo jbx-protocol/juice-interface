@@ -20,7 +20,7 @@ import { useJBPrices } from 'packages/v2v3/hooks/JBPrices'
 import { DEFAULT_JB_721_DELEGATE_VERSION } from 'packages/v2v3/hooks/defaultContracts/useDefaultJB721Delegate'
 import { useDefaultJBController } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBController'
 import { useDefaultJBETHPaymentTerminal } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
-import { LaunchProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
+import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
 import { useV2ProjectTitle } from 'packages/v2v3/hooks/useProjectTitle'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import {
@@ -61,7 +61,7 @@ interface JB721DelegateLaunchFundingCycleData {
 
 interface LaunchProjectWithNftsTxArgs {
   tiered721DelegateData: DeployTiered721DelegateData
-  projectData: LaunchProjectData
+  projectData: LaunchV2V3ProjectData
 }
 
 type JB721DelegateLaunchProjectData = JB721DelegateLaunchFundingCycleData & {

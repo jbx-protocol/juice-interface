@@ -191,6 +191,7 @@ export type Database = {
           payments_count: number
           project_id: number
           pv: string
+          chain_id: number
           redeem_count: number
           redeem_volume: string
           redeem_voume_usd: string
@@ -224,6 +225,7 @@ export type Database = {
           payments_count: number
           project_id: number
           pv: string
+          chain_id: number
           redeem_count: number
           redeem_volume: string
           redeem_voume_usd: string
@@ -257,6 +259,7 @@ export type Database = {
           payments_count?: number
           project_id?: number
           pv?: string
+          chain_id?: number
           redeem_count?: number
           redeem_volume?: string
           redeem_voume_usd?: string

@@ -180,7 +180,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   enableCors(res)
 
   if (req.method !== 'GET') {
-    return res.status(404)
+    return res.status(405).end()
   }
 
   try {

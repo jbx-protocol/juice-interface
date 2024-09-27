@@ -9,7 +9,7 @@ const logger = getLogger('api/juicebox/projectHandle/[projectId]')
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {
-    return res.status(404).json({ error: 'not found' })
+    return res.status(405).json({ error: 'method not supported' })
   }
 
   try {

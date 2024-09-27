@@ -9,16 +9,16 @@ import { isZeroAddress } from 'utils/address'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 import { useQuery } from '@tanstack/react-query'
-import TokenDistributionChart from 'components/TokenDistributionChart'
 import {
   OrderDirection,
-  Participant_OrderBy,
-  ParticipantsDocument,
   ParticipantsQuery,
   QueryParticipantsArgs,
+  Participant_OrderBy as V1V2V3Participant_OrderBy,
+  ParticipantsDocument as V1V2V3ParticipantsDocument,
 } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
+import TokenDistributionChart from 'packages/v2v3/components/V2V3Project/modals/ParticipantsModal/TokenDistributionChart'
 import HoldersList from './HoldersList'
 
 export default function ParticipantsModal({
@@ -41,20 +41,19 @@ export default function ParticipantsModal({
     queryFn: () =>
       paginateDepleteQuery<ParticipantsQuery, QueryParticipantsArgs>({
         client,
-        document: ParticipantsDocument,
+        document: V1V2V3ParticipantsDocument,
         variables: {
           orderDirection: OrderDirection.desc,
-          orderBy: Participant_OrderBy.balance,
+          orderBy: V1V2V3Participant_OrderBy.balance,
           where: {
             projectId,
             pv,
-            balance_gt: BigNumber.from(0),
             wallet_not: constants.AddressZero,
           },
-        },
+        }
       }),
     staleTime: 5 * 60 * 1000, // 5 min
-    enabled: Boolean(projectId && pv && open),
+    enabled: Boolean(projectId && open),
   })
 
   return (

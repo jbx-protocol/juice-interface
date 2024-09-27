@@ -1,12 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { PV_V2, PV_V4 } from 'constants/pv'
 import { readProvider } from 'constants/readProvider'
+import { RomanStormVariables } from 'constants/romanStorm'
 import EthDater from 'ethereum-block-by-date'
-import {
-  ProjectTlQuery,
-  useProjectsQuery,
-  useProjectTlQuery,
-} from 'generated/graphql'
+import { ProjectTlQuery, useProjectsQuery, useProjectTlQuery } from 'generated/graphql'
 import { client } from 'lib/apollo/client'
 import { PV } from 'models/pv'
 import { ProjectTlDocument } from 'packages/v4/graphql/client/graphql'
@@ -15,7 +12,6 @@ import { useMemo } from 'react'
 import { wadToFloat } from 'utils/format/formatNumber'
 import { getSubgraphIdForProject } from 'utils/graph'
 import { daysToMS, minutesToMS } from 'utils/units'
-import { RomanStormVariables } from 'constants/romanStorm'
 
 import { ProjectTimelinePoint, ProjectTimelineRange } from '../types'
 
@@ -105,13 +101,14 @@ export function useProjectTimeline({
       skip: pv === PV_V4,
     })
 
+
   const { data: v4QueryResult } = useSubgraphQuery({
-    document: ProjectTlDocument,
+    document: ProjectTlDocument, 
     variables: {
       id: blocks ? projectId.toString() : '',
       ...blocks,
     },
-    enabled: pv === PV_V4,
+    enabled: pv === PV_V4
   })
 
   const points = useMemo(() => {
@@ -121,9 +118,7 @@ export function useProjectTimeline({
     const points: ProjectTimelinePoint[] = []
 
     for (let i = 0; i < COUNT; i++) {
-      const point = (queryResult as ProjectTlQuery)[
-        `p${i}` as keyof typeof queryResult
-      ]
+      const point = (queryResult as ProjectTlQuery)[`p${i}` as keyof typeof queryResult]
 
       if (!point) continue
       if (exceptionTimestamp && exceptionTimestamp > timestamps[i]) {
@@ -149,7 +144,7 @@ export function useProjectTimeline({
     }
 
     return points
-  }, [timestamps, v1v2v3QueryResult, v4QueryResult, pv])
+  }, [timestamps, v1v2v3QueryResult, v4QueryResult, pv, projectId, exceptionTimestamp, romanStormData?.projects])
 
   return {
     points,

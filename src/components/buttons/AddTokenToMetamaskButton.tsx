@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import type { MetaMaskInpageProvider } from '@metamask/providers'
 import { Button } from 'antd'
 import { providers } from 'ethers'
-import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
+import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'
 import { twMerge } from 'tailwind-merge'
 import { Hash } from 'viem'
 
@@ -28,7 +28,7 @@ const useMetamask = () => {
 
 function useAddTokenToWalletRequest({ tokenAddress }: { tokenAddress: Hash }) {
   const ethereum = useMetamask()
-  const { data: tokenSymbol } = useNameOfERC20(tokenAddress)
+  const { data: tokenSymbol } = useSymbolOfERC20(tokenAddress)
 
   if (!ethereum) {
     return

@@ -3,10 +3,11 @@ import { Skeleton } from 'antd'
 import { HomepageCard } from 'components/Home/HomepageCard'
 import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
-import { PV_V2 } from 'constants/pv'
+import { PV_V2, PV_V4 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { SubgraphQueryProject } from 'models/subgraphProjects'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
+import { v4ProjectRoute } from 'packages/v4/utils/routes'
 
 function Statistic({
   name,
@@ -44,7 +45,7 @@ export function HomepageProjectCard({
   project: Pick<
     SubgraphQueryProject,
     'metadataUri' | 'volume' | 'paymentsCount' | 'handle' | 'pv' | 'projectId'
-  >
+  > & { chainId?: number }
   lazyLoad?: boolean
 }) {
   const { data: metadata, isLoading } = useProjectMetadata(project.metadataUri)
@@ -52,12 +53,17 @@ export function HomepageProjectCard({
   return (
     <HomepageCard
       href={
-        project.pv === PV_V2
+        project.pv === PV_V4 && project.chainId
+          ? v4ProjectRoute({
+              projectId: project.projectId,
+              chainId: project.chainId,
+            })
+          : project.pv === PV_V2
           ? v2v3ProjectRoute(project)
           : `/p/${project.handle}`
       }
       img={
-        metadata && !isLoading ? (
+        !isLoading ? (
           <ProjectLogo
             className="h-[192px] w-full rounded-none object-cover"
             name={metadata?.name}
@@ -69,17 +75,19 @@ export function HomepageProjectCard({
         ) : null
       }
       title={
-        metadata && !isLoading ? (
-          <div className="max-h-8 truncate font-heading text-lg font-medium text-grey-900 dark:text-slate-100 md:text-xl">
-            {metadata.name}
-          </div>
-        ) : (
+        isLoading ? (
           <Skeleton.Input
             className="h-6 w-full"
             active
             size="small"
             style={{ width: '100%' }}
           />
+        ) : !metadata ? (
+          '---'
+        ) : (
+          <div className="max-h-8 truncate font-heading text-lg font-medium text-grey-900 dark:text-slate-100 md:text-xl">
+            {metadata.name}
+          </div>
         )
       }
       description={

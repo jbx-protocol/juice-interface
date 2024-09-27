@@ -1,3 +1,4 @@
+import { Footer } from 'components/Footer/Footer'
 import { CoverPhoto } from 'components/Project/ProjectHeader/CoverPhoto'
 import { SuccessPayView } from 'packages/v4/components/ProjectDashboard/components/SuccessPayView/SuccessPayView'
 import { useProjectDispatch } from 'packages/v4/components/ProjectDashboard/redux/hooks'
@@ -27,7 +28,7 @@ export function V4ProjectDashboard() {
       <div className="relative w-full">
         <CoverPhoto />
       </div>
-      <div className="flex w-full justify-center md:px-6">
+      <div className="flex w-full justify-center md:px-6 pb-48">
         <div className="flex w-full max-w-6xl flex-col">
           <V4ProjectHeader className="mt-12 px-4 md:mt-4 md:px-0" />
           <div
@@ -51,6 +52,7 @@ export function V4ProjectDashboard() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

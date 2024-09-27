@@ -118,7 +118,7 @@ export const usePayProjectTx = ({
         weiAmount,
         beneficiary,
         0n,
-        `JBM V4 ${projectId}`, // TODO update
+        memo,
         '0x0',
       ] as const
 

@@ -1,26 +1,22 @@
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectDetailsForm, ProjectDetailsFormFields } from 'components/Project/ProjectSettings/ProjectDetailsForm'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
-import { PV_V2 } from 'constants/pv'
-import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
+import { useJBProjectMetadataContext } from 'juice-sdk-react'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
-import { revalidateProject } from 'lib/api/nextjs'
+import { useEditProjectDetailsTx } from 'packages/v4/hooks/useEditProjectDetailsTx'
 
-import { useEditProjectDetailsTx } from 'packages/v2v3/hooks/transactor/useEditProjectDetailsTx'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { withoutHttps } from 'utils/http'
-import { emitInfoNotification } from 'utils/notifications'
+import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
 
 export function ProjectDetailsSettingsPage() {
-  const { projectId } = useContext(ProjectMetadataContext)
-  const { projectMetadata, refetchProjectMetadata } = useContext(
-    ProjectMetadataContext,
-  )
+  const { metadata } = useJBProjectMetadataContext()
+  const projectMetadata = metadata.data
 
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
   const [projectForm] = useForm<ProjectDetailsFormFields>()
 
-  const editV2ProjectDetailsTx = useEditProjectDetailsTx() // v4Todo: V4 tx
+  const editProjectDetailsTx = useEditProjectDetailsTx()
 
   const onProjectFormSaved = useCallback(async () => {
     setLoadingSaveChanges(true)
@@ -49,43 +45,34 @@ export function ProjectDetailsSettingsPage() {
       return
     }
 
-    const txSuccess = await editV2ProjectDetailsTx(
-      {
-        cid: uploadedMetadata.Hash,
-      },
-      {
-        onConfirmed: async () => {
+    editProjectDetailsTx(
+      uploadedMetadata.Hash as `0x${string}`, {
+        onTransactionPending: () => null,
+        onTransactionConfirmed: () => {
+          projectForm?.resetFields()
           setLoadingSaveChanges(false)
-
           emitInfoNotification('Project details saved', {
             description: 'Your project details have been saved.',
           })
 
-          if (projectId) {
-            await revalidateProject({
-              pv: PV_V2,
-              projectId: String(projectId),
-            })
-          }
-          refetchProjectMetadata()
+          // v4Todo: part of v2, not sure if necessary 
+          // if (projectId) {
+          //   await revalidateProject({
+          //     pv: PV_V4,
+          //     projectId: String(projectId),
+          //   })
+          // }
         },
-        onError: () => {
+        onTransactionError: (error: unknown) => {
+          console.error(error)
           setLoadingSaveChanges(false)
+          emitErrorNotification(`Error launching ruleset: ${error}`)
         },
-        onCancelled: () => {
-          setLoadingSaveChanges(false)
-        },
-      },
+      }
     )
-
-    if (!txSuccess) {
-      setLoadingSaveChanges(false)
-    }
   }, [
-    editV2ProjectDetailsTx,
+    editProjectDetailsTx,
     projectForm,
-    projectId,
-    refetchProjectMetadata,
     projectMetadata,
   ])
 
@@ -100,8 +87,7 @@ export function ProjectDetailsSettingsPage() {
       coverImageUri: projectMetadata?.coverImageUri ?? '',
       description: projectMetadata?.description ?? '',
       projectTagline: projectMetadata?.projectTagline ?? '',
-      projectRequiredOFACCheck:
-        projectMetadata?.projectRequiredOFACCheck ?? false,
+      projectRequiredOFACCheck: false, // OFAC not supported in V4 yet
       twitter: projectMetadata?.twitter ?? '',
       discord,
       telegram,
@@ -117,7 +103,6 @@ export function ProjectDetailsSettingsPage() {
     projectMetadata?.coverImageUri,
     projectMetadata?.description,
     projectMetadata?.projectTagline,
-    projectMetadata?.projectRequiredOFACCheck,
     projectMetadata?.twitter,
     projectMetadata?.discord,
     projectMetadata?.telegram,

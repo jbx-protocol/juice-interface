@@ -4,8 +4,8 @@ import { Database } from 'types/database.types'
 import { Project } from 'generated/graphql'
 import { ProjectTagName } from './project-tags'
 import { PV } from './pv'
-
-export type SGSBCompareKey = Extract<keyof Project, keyof DBProject>
+type P = Project & { chainId: number }
+export type SGSBCompareKey = Extract<keyof P, keyof DBProject>
 
 /**
  * @param text Text to use for string search
@@ -36,6 +36,7 @@ export type DBProject = {
   projectId: number
   createdAt: number
   pv: PV
+  chainId: number
   handle: string | null
   metadataUri: string | null
 

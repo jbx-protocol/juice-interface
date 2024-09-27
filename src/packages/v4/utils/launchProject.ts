@@ -1,4 +1,5 @@
 import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS, SplitGroup } from 'juice-sdk-core'
+import round from 'lodash/round'
 import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
 import {
   V2V3FundAccessConstraint,
@@ -42,9 +43,10 @@ export function transformV2V3CreateArgsToV4({
   ] = v2v3Args
 
   const mustStartAtOrAfterNum = parseInt(_mustStartAtOrAfter)
+  const now = round(new Date().getTime() / 1000)
 
   const ruleset = {
-    mustStartAtOrAfter: mustStartAtOrAfterNum ?? 0, // 0 denotes start immediately
+    mustStartAtOrAfter: mustStartAtOrAfterNum > now ? mustStartAtOrAfterNum : now,
     duration: _data.duration.toNumber(),
     weight: _data.weight.toBigInt(),
     decayPercent: _data.discountRate.toNumber(),

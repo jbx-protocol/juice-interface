@@ -53,9 +53,9 @@ export const V4ReservedTokensSubPanel = ({
           <TitleDescriptionDisplayCard
             className="w-full"
             title={t`Reserved tokens list`}
-            kebabMenu={{
-              items: kebabMenuItems,
-            }}
+            // kebabMenu={{
+            //   items: kebabMenuItems,
+            // }}
           >
             {pendingReservedTokensFormatted ||
             reservedPercent ||

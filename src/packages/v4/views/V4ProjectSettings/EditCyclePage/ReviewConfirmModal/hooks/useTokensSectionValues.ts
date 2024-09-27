@@ -1,4 +1,4 @@
-import { useJBTokenContext } from 'juice-sdk-react'
+import { useJBRuleset, useJBTokenContext } from 'juice-sdk-react'
 import round from 'lodash/round'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { splitsListsHaveDiff } from 'packages/v4/utils/v4Splits'
@@ -11,6 +11,7 @@ export const useTokensSectionValues = () => {
 
   const formValues: EditCycleFormFields = editCycleForm?.getFieldsValue(true)
 
+  const { data: ruleset } = useJBRuleset()
   const { 
     ruleset: upcomingRuleset, 
   } = useJBUpcomingRuleset()
@@ -43,11 +44,13 @@ export const useTokensSectionValues = () => {
   )
 
   const onlyDiscountRateApplied =
-    upcomingRuleset &&
-    newMintRate &&
-    round(upcomingRuleset?.weight.toFloat(), 4) === round(newMintRate, 4)
+    (
+      upcomingRuleset &&
+      newMintRate &&
+      round(upcomingRuleset?.weight.toFloat(), 4) === round(newMintRate, 4)
+    ) || ruleset?.duration === 0
 
-  const mintRateHasDiff = !onlyDiscountRateApplied
+  const mintRateHasDiff = !onlyDiscountRateApplied 
 
   const reservedRateHasDiff = Boolean(
     currentReservedRate &&

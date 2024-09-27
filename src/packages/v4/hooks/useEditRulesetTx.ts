@@ -1,7 +1,7 @@
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { NATIVE_TOKEN } from 'juice-sdk-core'
-import { useJBContractContext, useWriteJbControllerLaunchRulesetsFor } from 'juice-sdk-react'
+import { useJBContractContext, useWriteJbControllerQueueRulesetsOf } from 'juice-sdk-react'
 import { useCallback, useContext } from 'react'
 import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
 import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
@@ -17,8 +17,8 @@ export interface EditMetadataTxOpts {
  * @returns A function that deploys a project.
  */
 export function useEditRulesetTx() {
-  const { writeContractAsync: writeEditRuleset } = useWriteJbControllerLaunchRulesetsFor()
-  const { contracts } = useJBContractContext()
+  const { writeContractAsync: writeEditRuleset } = useWriteJbControllerQueueRulesetsOf()
+  const { contracts, projectId } = useJBContractContext()
 
   const { addTransaction } = useContext(TxHistoryContext)
 
@@ -43,16 +43,19 @@ export function useEditRulesetTx() {
       const args = transformEditCycleFormFieldsToTxArgs({
         formValues,
         primaryNativeTerminal: contracts.primaryNativeTerminal.data,
-        tokenAddress: NATIVE_TOKEN
+        tokenAddress: NATIVE_TOKEN,
+        projectId
       })
 
       try {
         // SIMULATE TX:
         // const encodedData = encodeFunctionData({
         //   abi: jbControllerAbi, // ABI of the contract
-        //   functionName: 'launchRulesetsFor', 
+        //   functionName: 'queueRulesetsOf', 
         //   args, 
         // })
+        // console.log('contracts address: ', contracts.controller.data)
+        // console.log('encodedData: ', encodedData)
 
         const hash = await writeEditRuleset({
           address: contracts.controller.data,

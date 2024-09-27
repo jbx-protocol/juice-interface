@@ -63,7 +63,7 @@ export function HomepageProjectCard({
           : `/p/${project.handle}`
       }
       img={
-        metadata && !isLoading ? (
+        !isLoading ? (
           <ProjectLogo
             className="h-[192px] w-full rounded-none object-cover"
             name={metadata?.name}
@@ -75,17 +75,19 @@ export function HomepageProjectCard({
         ) : null
       }
       title={
-        metadata && !isLoading ? (
-          <div className="max-h-8 truncate font-heading text-lg font-medium text-grey-900 dark:text-slate-100 md:text-xl">
-            {metadata.name}
-          </div>
-        ) : (
+        isLoading ? (
           <Skeleton.Input
             className="h-6 w-full"
             active
             size="small"
             style={{ width: '100%' }}
           />
+        ) : !metadata ? (
+          '---'
+        ) : (
+          <div className="max-h-8 truncate font-heading text-lg font-medium text-grey-900 dark:text-slate-100 md:text-xl">
+            {metadata.name}
+          </div>
         )
       }
       description={

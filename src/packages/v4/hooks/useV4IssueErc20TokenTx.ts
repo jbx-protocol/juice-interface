@@ -1,15 +1,15 @@
 import { useCallback, useContext } from 'react'
 
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useJBContractContext, useWriteJbTokensDeployErc20For } from 'juice-sdk-react'
-import { zeroAddress } from 'viem'
+import { useJBContractContext, useWriteJbControllerDeployErc20For } from 'juice-sdk-react'
+import { Address, zeroAddress } from 'viem'
 import { BaseTxOpts } from '../models/transactions'
 
 export function useV4IssueErc20TokenTx() {
   const { addTransaction } = useContext(TxHistoryContext)
   const { projectId, contracts } = useJBContractContext()
 
-  const { writeContractAsync: deployErc20 } = useWriteJbTokensDeployErc20For()
+  const { writeContractAsync: deployErc20Tx } = useWriteJbControllerDeployErc20For()
 
   return useCallback  (
     async ({ name, symbol }: {
@@ -33,17 +33,20 @@ export function useV4IssueErc20TokenTx() {
       try {
         // SIMULATE TX:
         // const encodedData = encodeFunctionData({
-        //   abi: jbTokensAbi, // ABI of the contract
-        //   functionName: 'deployErc20For', 
+        //   abi: jbControllerAbi, // ABI of the contract
+        //   functionName: 'deployERC20For', 
         //   args, 
         // })
+        // console.log('contract', contracts.controller.data)
+        // console.log('encodedData', encodedData)
 
-        const hash = await deployErc20({
+        const hash = await deployErc20Tx({
           args,
+          address: contracts.controller.data as Address
         })
 
         onTransactionPendingCallback(hash)
-        addTransaction?.('Edit Ruleset', { hash })
+        addTransaction?.('Launch ERC20 Token', { hash })
         // const transactionReceipt: WaitForTransactionReceiptReturnType = await waitForTransactionReceipt(
         //   wagmiConfig,
         //   {
@@ -59,9 +62,10 @@ export function useV4IssueErc20TokenTx() {
       }
     },
     [
-      deployErc20,
+      deployErc20Tx,
       projectId,
       addTransaction,
+      contracts.controller.data,
     ],
   )
 }

@@ -1,7 +1,7 @@
-import { Tooltip } from 'antd'
 import { useContext } from 'react'
 import { PageContext } from '../contexts/PageContext'
 import { BackButton } from './components/BackButton'
+import { DoneButton } from './components/DoneButton'
 import { NextButton } from './components/NextButton'
 
 export const PageButtonControl = ({
@@ -27,15 +27,12 @@ export const PageButtonControl = ({
             onClick={onPageDone}
           />
         ) : (
-          <Tooltip title="Oops! We're experiencing an issue with project launches. Please try again later.">
-            <div className="bg-grey-500 rounded-lg px-3 py-4">Launch project</div>
-            {/* <DoneButton
-              disabled={true}//!isNextEnabled}
-              loading={isNextLoading}
-              text={doneText}
-              onClick={onPageDone}
-            /> */}
-          </Tooltip>
+          <DoneButton
+            disabled={!isNextEnabled}
+            loading={isNextLoading}
+            text={doneText}
+            onClick={onPageDone}
+          />
         )}
       </div>
     </div>

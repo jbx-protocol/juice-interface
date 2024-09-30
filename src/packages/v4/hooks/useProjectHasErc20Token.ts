@@ -1,8 +1,9 @@
-import { useReadJbTokensTokenOf } from 'juice-sdk-react'
+import { useJBTokenContext } from 'juice-sdk-react'
 import { isZeroAddress } from 'utils/address'
 
 export const useProjectHasErc20Token = () => {
-  const { data: tokenAddress } = useReadJbTokensTokenOf()
+  const { token } = useJBTokenContext()
+  const tokenAddress = token?.data?.address
 
   return Boolean(tokenAddress && !isZeroAddress(tokenAddress))
 }

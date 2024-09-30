@@ -2,8 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { waitForTransactionReceipt } from '@wagmi/core'
 import TransactionModal from 'components/modals/TransactionModal'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
-import { useJBContractContext, useReadJbTokensTokenOf, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
+import { useJBContractContext, useJBTokenContext, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
 import SplitList from 'packages/v4/components/SplitList/SplitList'
 import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
@@ -27,8 +26,9 @@ export default function V4DistributeReservedTokensModal({
   const { projectId, contracts } = useJBContractContext()
   const { splits: reservedTokensSplits } = useV4ReservedSplits()
   const { data: projectOwnerAddress } = useProjectOwnerOf()
-  const { data: tokenAddress } = useReadJbTokensTokenOf()
-  const { data: tokenSymbol } = useNameOfERC20(tokenAddress)
+
+  const { token } = useJBTokenContext()
+  const tokenSymbol = token?.data?.symbol
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()

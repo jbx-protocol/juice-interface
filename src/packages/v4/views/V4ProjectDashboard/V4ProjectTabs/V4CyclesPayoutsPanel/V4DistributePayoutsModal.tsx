@@ -6,7 +6,6 @@ import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { FEES_EXPLANATION } from 'components/strings'
-import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
 import {
@@ -35,8 +34,7 @@ export default function V4DistributePayoutsModal({
   const { data: payoutSplits } = useV4CurrentPayoutSplits()
   const { data: payoutLimit } = usePayoutLimit()
   const { distributableAmount: distributable } = useV4DistributableAmount()
-  const { projectId } = useProjectMetadataContext()
-  const { contracts } = useJBContractContext()
+  const { contracts, projectId } = useJBContractContext()
   const { addTransaction } = useContext(TxHistoryContext)
 
   const payoutLimitAmountCurrency = payoutLimit?.currency ?? V4_CURRENCY_ETH

@@ -45,7 +45,7 @@ export default function V4DistributePayoutsModal({
   const [loading, setLoading] = useState<boolean>()
   const [distributionAmount, setDistributionAmount] = useState<string>()
 
-  const { writeContractAsync: writeSendPayouts, data } =
+  const { writeContractAsync: writeSendPayouts } =
     useWriteJbMultiTerminalSendPayoutsOf()
 
   async function executeDistributePayoutsTx() {

@@ -14,8 +14,7 @@ import {
 } from 'packages/v2v3/models/fundingCycle'
 import { GroupedSplits, SplitGroup } from 'packages/v2v3/models/splits'
 import {
-  getTerminalsFromFundAccessConstraints,
-  isValidMustStartAtOrAfter,
+  isValidMustStartAtOrAfter
 } from 'packages/v2v3/utils/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
@@ -87,10 +86,7 @@ export function useLaunchProjectTx(): TransactorInstance<LaunchV2V3ProjectData> 
       mustStartAtOrAfter, // _mustStartAtOrAfter
       groupedSplits, // _groupedSplits,
       fundAccessConstraints, // _fundAccessConstraints,
-      getTerminalsFromFundAccessConstraints(
-        fundAccessConstraints,
-        defaultJBETHPaymentTerminal?.address,
-      ), // _terminals
+      [defaultJBETHPaymentTerminal?.address], // _terminals
       DEFAULT_MEMO,
     ]
 

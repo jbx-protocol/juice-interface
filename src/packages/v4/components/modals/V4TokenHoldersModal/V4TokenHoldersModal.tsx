@@ -1,8 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
-import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
-import { useJBContractContext, useReadJbTokensTokenOf } from 'juice-sdk-react'
+import { useJBContractContext, useJBTokenContext } from 'juice-sdk-react'
 import { OrderDirection, Participant_OrderBy, ParticipantsDocument } from 'packages/v4/graphql/client/graphql'
 import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 import { isZeroAddress } from 'utils/address'
@@ -19,8 +18,10 @@ export const V4TokenHoldersModal = ({
   onClose: VoidFunction
 }) => {
   const { projectId } = useJBContractContext()
-  const { data: tokenAddress } = useReadJbTokensTokenOf()
-  const { data: tokenSymbol } = useNameOfERC20(tokenAddress)
+
+  const { token } = useJBTokenContext()
+  const tokenAddress = token?.data?.address
+  const tokenSymbol = token?.data?.symbol
 
   const { data: totalTokenSupply } = useV4TotalTokenSupply()
 

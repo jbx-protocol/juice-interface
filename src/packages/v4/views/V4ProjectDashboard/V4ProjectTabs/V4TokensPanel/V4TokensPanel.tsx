@@ -17,9 +17,11 @@ import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { useCallback, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
 import { useChainId } from 'wagmi'
+import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4BalanceMenuItemsUserFlags'
 import { useV4TokensPanel } from './hooks/useV4TokensPanel'
 import { useV4YourBalanceMenuItems } from './hooks/useV4YourBalanceMenuItems'
 import { V4ClaimTokensModal } from './V4ClaimTokensModal'
+import { V4MintModal } from './V4MintModal'
 import { V4ReservedTokensSubPanel } from './V4ReservedTokensSubPanel'
 
 export const V4TokensPanel = () => {
@@ -32,6 +34,8 @@ export const V4TokensPanel = () => {
     projectToken,
     totalSupply,
   } = useV4TokensPanel()
+
+  const { canMintTokens } = useV4BalanceMenuItemsUserFlags()
 
   const [tokenHolderModalOpen, setTokenHolderModalOpen] = useState(false)
   const openTokenHolderModal = useCallback(
@@ -49,8 +53,8 @@ export const V4TokensPanel = () => {
     // setRedeemModalVisible,
     claimTokensModalVisible,
     setClaimTokensModalVisible,
-    // mintModalVisible,
-    // setMintModalVisible,
+    mintModalVisible,
+    setMintModalVisible,
     // transferUnclaimedTokensModalVisible,
     // setTransferUnclaimedTokensModalVisible,
   } = useV4YourBalanceMenuItems()
@@ -92,7 +96,7 @@ export const V4TokensPanel = () => {
                 </span>
               }
               kebabMenu={
-                userTokenBalance.value > 0n
+                userTokenBalance.value > 0n || canMintTokens
                   ? {
                       items,
                     }
@@ -157,12 +161,12 @@ export const V4TokensPanel = () => {
         onCancel={() => setClaimTokensModalVisible(false)}
         onConfirmed={reloadWindow}
       />
-      {/*<V2V3MintModal
+      <V4MintModal
         open={mintModalVisible}
         onCancel={() => setMintModalVisible(false)}
         onConfirmed={reloadWindow}
       />
-      <TransferUnclaimedTokensModalWrapper
+      {/*<TransferUnclaimedTokensModalWrapper
         open={transferUnclaimedTokensModalVisible}
         onCancel={() => setTransferUnclaimedTokensModalVisible(false)}
         onConfirmed={reloadWindow}

@@ -7,9 +7,9 @@ import EthereumAddress from 'components/EthereumAddress'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'
 import { useWallet } from 'hooks/Wallet'
-import { NativeTokenValue, useJBContractContext, useReadJbTokensCreditBalanceOf, useReadJbTokensTokenOf, useWriteJbControllerClaimTokensFor } from 'juice-sdk-react'
+import { Ether } from 'juice-sdk-core'
+import { useJBContractContext, useJBTokenContext, useReadJbTokensCreditBalanceOf, useWriteJbControllerClaimTokensFor } from 'juice-sdk-react'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useContext, useLayoutEffect, useState } from 'react'
@@ -30,8 +30,9 @@ export function V4ClaimTokensModal({
   const { projectId, contracts } = useJBContractContext()
   const { addTransaction } = useContext(TxHistoryContext)
 
-  const { data: tokenAddress } = useReadJbTokensTokenOf()
-  const { data: tokenSymbol } = useSymbolOfERC20(tokenAddress)
+  const { token } = useJBTokenContext()
+  const tokenAddress = token?.data?.address
+  const tokenSymbol = token?.data?.symbol
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
@@ -163,7 +164,7 @@ export function V4ClaimTokensModal({
           <Descriptions.Item
             label={<Trans>Your unclaimed {tokenTextLong}</Trans>}
           >
-            <NativeTokenValue wei={unclaimedBalance ?? 0n} />
+            {new Ether(unclaimedBalance ?? 0n).format()}{' '}{tokenTextShort}
           </Descriptions.Item>
 
           {hasIssuedTokens && tokenSymbol && (

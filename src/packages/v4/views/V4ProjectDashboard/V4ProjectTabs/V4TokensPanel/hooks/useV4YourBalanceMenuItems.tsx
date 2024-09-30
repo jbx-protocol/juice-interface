@@ -8,7 +8,7 @@ import { ReactNode, useMemo, useState } from 'react'
 import { useV4BalanceMenuItemsUserFlags } from './useV4BalanceMenuItemsUserFlags'
 
 export const useV4YourBalanceMenuItems = () => {
-  const { canBurnTokens, canClaimErcTokens, canMintTokens } =
+  const { canClaimErcTokens, canMintTokens } =
     useV4BalanceMenuItemsUserFlags()
 
   const [redeemModalVisible, setRedeemModalVisible] = useState(false)

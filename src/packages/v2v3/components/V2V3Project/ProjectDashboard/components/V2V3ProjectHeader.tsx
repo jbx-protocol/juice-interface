@@ -6,7 +6,6 @@ import { DomainBadge } from 'components/DomainBadge'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
-import { ProjectHeaderPopupMenu } from 'components/Project/ProjectHeader/ProjectHeaderPopupMenu'
 import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
 import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
 import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
@@ -21,6 +20,7 @@ import { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
 import { settingsPagePath, v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { twMerge } from 'tailwind-merge'
 import { SocialLink } from '../hooks/useAboutPanel'
+import { ProjectHeaderPopupMenu } from './ProjectHeaderPopupMenu'
 
 export const V2V3ProjectHeader = ({ className }: { className?: string }) => {
   const socialLinks = useSocialLinks()

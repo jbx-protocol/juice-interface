@@ -92,6 +92,9 @@ msgstr ""
 msgid "Claim {tokensLabel} as ERC-20"
 msgstr ""
 
+msgid "Save project"
+msgstr ""
+
 msgid "Total issuance"
 msgstr ""
 
@@ -2805,6 +2808,9 @@ msgid "Save recipient"
 msgstr ""
 
 msgid "We've disabled payments because the project has opted to reserve 100% of new tokens. You would receive no tokens from your payment."
+msgstr ""
+
+msgid "Get notifications"
 msgstr ""
 
 msgid "Unarchiving your project has the following effects:"

@@ -11,6 +11,7 @@ import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkBut
 import { TruncatedText } from 'components/TruncatedText'
 import useMobile from 'hooks/useMobile'
 import Link from 'next/link'
+import { ProjectHeaderPopupMenu } from 'packages/v4/components/ProjectDashboard/components/ProjectHeaderPopupMenu'
 import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
@@ -57,8 +58,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
       <div className="flex items-center justify-end gap-4">
         {projectId ? (
           isMobile ? (
-            // <ProjectHeaderPopupMenu projectId={projectId} />
-            <></>
+            <ProjectHeaderPopupMenu projectId={projectId} />
           ) : (
             <>
               <div className="flex items-center gap-6">
@@ -73,7 +73,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                     />
                   ))}
               </div>
-              {/* @v4todo: <ProjectHeaderPopupMenu projectId={projectId} /> */}
+              <ProjectHeaderPopupMenu projectId={projectId} />
               {canQueueRuleSets && (
                 <Link
                   href={settingsPagePath({ projectId, chainId }, undefined)}

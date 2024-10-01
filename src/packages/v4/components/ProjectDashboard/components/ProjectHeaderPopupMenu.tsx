@@ -1,15 +1,12 @@
 import { WrenchScrewdriverIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { useBookmarkButton } from 'components/buttons/BookmarkButton/hooks/useBookmarkButton'
-import { useSubscribeButton } from 'components/buttons/SubscribeButton/hooks/useSubscribeButton'
-import { PV_V2 } from 'constants/pv'
+import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
+import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
+import { PopupMenu } from 'components/ui/PopupMenu'
 import useMobile from 'hooks/useMobile'
-import { V2V3ProjectToolsDrawer } from 'packages/v2v3/components/V2V3Project/V2V3ProjectToolsDrawer'
 import { useMemo, useState } from 'react'
 import { twJoin } from 'tailwind-merge'
-import { PopupMenu } from '../../ui/PopupMenu'
-import { SocialLinkButton } from './SocialLinkButton'
-import { useSocialLinks } from './hooks/useSocialLinks'
+import { V4ProjectToolsDrawer } from './V4ProjectToolsDrawer'
 
 type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
@@ -24,13 +21,13 @@ export function ProjectHeaderPopupMenu({
   const isMobile = useMobile()
   const [toolsIsOpen, setToolsIsOpen] = useState<boolean>()
 
-  const { isBookmarked, onBookmarkButtonClicked } = useBookmarkButton({
-    projectId,
-    pv: PV_V2,
-  })
-  const { isSubscribed, onSubscribeButtonClicked } = useSubscribeButton({
-    projectId,
-  })
+  // const { isBookmarked, onBookmarkButtonClicked } = useBookmarkButton({
+  //   projectId,
+  //   pv: PV_V2,
+  // })
+  // const { isSubscribed, onSubscribeButtonClicked } = useSubscribeButton({
+  //   projectId,
+  // })
 
   const socialItems = useMemo(
     () => Object.entries(socialLinks).filter(([, href]) => !!href),
@@ -109,7 +106,7 @@ export function ProjectHeaderPopupMenu({
         ]}
       />
 
-      <V2V3ProjectToolsDrawer
+      <V4ProjectToolsDrawer
         open={toolsIsOpen}
         onClose={() => setToolsIsOpen(false)}
       />

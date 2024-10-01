@@ -20,7 +20,7 @@ export function V4ActivityPanel() {
     }
   })
   
-  const createdAt = data?.projects?.[0].createdAt
+  const createdAt = data?.projects?.[0]?.createdAt
 
   return (
     <div className="min-h-[384px] w-full">

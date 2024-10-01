@@ -15,9 +15,13 @@ import { useJBContractContext } from 'juice-sdk-react'
 import { V4TokenHoldersModal } from 'packages/v4/components/modals/V4TokenHoldersModal/V4TokenHoldersModal'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { useCallback, useState } from 'react'
+import { reloadWindow } from 'utils/windowUtils'
 import { useChainId } from 'wagmi'
+import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4BalanceMenuItemsUserFlags'
 import { useV4TokensPanel } from './hooks/useV4TokensPanel'
 import { useV4YourBalanceMenuItems } from './hooks/useV4YourBalanceMenuItems'
+import { V4ClaimTokensModal } from './V4ClaimTokensModal'
+import { V4MintModal } from './V4MintModal'
 import { V4ReservedTokensSubPanel } from './V4ReservedTokensSubPanel'
 
 export const V4TokensPanel = () => {
@@ -30,6 +34,8 @@ export const V4TokensPanel = () => {
     projectToken,
     totalSupply,
   } = useV4TokensPanel()
+
+  const { canMintTokens } = useV4BalanceMenuItemsUserFlags()
 
   const [tokenHolderModalOpen, setTokenHolderModalOpen] = useState(false)
   const openTokenHolderModal = useCallback(
@@ -45,10 +51,10 @@ export const V4TokensPanel = () => {
     items,
     // redeemModalVisible,
     // setRedeemModalVisible,
-    // claimTokensModalVisible,
+    claimTokensModalVisible,
     setClaimTokensModalVisible,
-    // mintModalVisible,
-    // setMintModalVisible,
+    mintModalVisible,
+    setMintModalVisible,
     // transferUnclaimedTokensModalVisible,
     // setTransferUnclaimedTokensModalVisible,
   } = useV4YourBalanceMenuItems()
@@ -68,7 +74,7 @@ export const V4TokensPanel = () => {
               title={t`Your balance`}
               description={
                 <span className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
-                  <Trans>{userTokenBalance.format()} tokens</Trans>
+                  <Trans>{userTokenBalance.format(8)} tokens</Trans>
                   <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center md:gap-4">
                     {/* {projectHasErc20Token && (
                       <Button
@@ -90,7 +96,7 @@ export const V4TokensPanel = () => {
                 </span>
               }
               kebabMenu={
-                userTokenBalance.value > 0n
+                userTokenBalance.value > 0n || canMintTokens
                   ? {
                       items,
                     }
@@ -124,7 +130,7 @@ export const V4TokensPanel = () => {
                 title={t`Total supply`}
                 description={
                   <span>
-                    {totalSupply.format()} {projectToken}
+                    {totalSupply.format(8)} {projectToken}
                   </span>
                 }
               />
@@ -149,18 +155,18 @@ export const V4TokensPanel = () => {
         open={redeemModalVisible}
         onCancel={() => setRedeemModalVisible(false)}
         onConfirmed={reloadWindow}
-      />
-      <V2V3ClaimTokensModal
+      /> */}
+      <V4ClaimTokensModal
         open={claimTokensModalVisible}
         onCancel={() => setClaimTokensModalVisible(false)}
         onConfirmed={reloadWindow}
       />
-      <V2V3MintModal
+      <V4MintModal
         open={mintModalVisible}
         onCancel={() => setMintModalVisible(false)}
         onConfirmed={reloadWindow}
       />
-      <TransferUnclaimedTokensModalWrapper
+      {/*<TransferUnclaimedTokensModalWrapper
         open={transferUnclaimedTokensModalVisible}
         onCancel={() => setTransferUnclaimedTokensModalVisible(false)}
         onConfirmed={reloadWindow}

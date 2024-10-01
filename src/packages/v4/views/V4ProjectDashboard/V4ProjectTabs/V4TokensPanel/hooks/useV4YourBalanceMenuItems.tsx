@@ -1,8 +1,6 @@
 import {
-  ArrowRightOnRectangleIcon,
-  FireIcon,
   PlusCircleIcon,
-  ReceiptRefundIcon,
+  ReceiptRefundIcon
 } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import { PopupMenuItem } from 'components/ui/PopupMenu'
@@ -10,7 +8,7 @@ import { ReactNode, useMemo, useState } from 'react'
 import { useV4BalanceMenuItemsUserFlags } from './useV4BalanceMenuItemsUserFlags'
 
 export const useV4YourBalanceMenuItems = () => {
-  const { canBurnTokens, canClaimErcTokens, canMintTokens, canTransferTokens } =
+  const { canClaimErcTokens, canMintTokens } =
     useV4BalanceMenuItemsUserFlags()
 
   const [redeemModalVisible, setRedeemModalVisible] = useState(false)
@@ -23,18 +21,18 @@ export const useV4YourBalanceMenuItems = () => {
 
   const items = useMemo(() => {
     const tokenMenuItems: PopupMenuItem[] = []
-    if (canBurnTokens) {
-      tokenMenuItems.push({
-        id: 'burn',
-        label: (
-          <TokenItemLabel
-            label={t`Burn token`}
-            icon={<FireIcon className="h-5 w-5" />}
-          />
-        ),
-        onClick: () => setRedeemModalVisible(true),
-      })
-    }
+    // if (canBurnTokens) {
+    //   tokenMenuItems.push({
+    //     id: 'burn',
+    //     label: (
+    //       <TokenItemLabel
+    //         label={t`Burn token`}
+    //         icon={<FireIcon className="h-5 w-5" />}
+    //       />
+    //     ),
+    //     onClick: () => setRedeemModalVisible(true),
+    //   })
+    // }
     if (canClaimErcTokens) {
       tokenMenuItems.push({
         id: 'claim',
@@ -59,20 +57,20 @@ export const useV4YourBalanceMenuItems = () => {
         onClick: () => setMintModalVisible(true),
       })
     }
-    if (canTransferTokens) {
-      tokenMenuItems.push({
-        id: 'transfer',
-        label: (
-          <TokenItemLabel
-            label={t`Transfer unclaimed tokens`}
-            icon={<ArrowRightOnRectangleIcon className="h-5 w-5" />}
-          />
-        ),
-        onClick: () => setTransferUnclaimedTokensModalVisible(true),
-      })
-    }
+    // if (canTransferTokens) {
+    //   tokenMenuItems.push({
+    //     id: 'transfer',
+    //     label: (
+    //       <TokenItemLabel
+    //         label={t`Transfer unclaimed tokens`}
+    //         icon={<ArrowRightOnRectangleIcon className="h-5 w-5" />}
+    //       />
+    //     ),
+    //     onClick: () => setTransferUnclaimedTokensModalVisible(true),
+    //   })
+    // }
     return tokenMenuItems
-  }, [canBurnTokens, canClaimErcTokens, canMintTokens, canTransferTokens])
+  }, [canClaimErcTokens, canMintTokens])
 
   return {
     items,

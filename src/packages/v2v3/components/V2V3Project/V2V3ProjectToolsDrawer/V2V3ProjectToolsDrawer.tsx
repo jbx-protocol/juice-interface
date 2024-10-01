@@ -1,7 +1,5 @@
 import { Trans } from '@lingui/macro'
 import { Divider, Drawer } from 'antd'
-import { AddToProjectBalanceForm } from 'components/Project/ProjectToolsDrawer/AddToProjectBalanceForm'
-import { ExportSection } from 'components/Project/ProjectToolsDrawer/ExportSection'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
@@ -9,6 +7,8 @@ import {
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import useMobile from 'hooks/useMobile'
 import Link from 'next/link'
+import { AddToProjectBalanceForm } from 'packages/v2v3/components/V2V3Project/V2V3ProjectToolsDrawer/AddToProjectBalanceForm'
+import { ExportSection } from 'packages/v2v3/components/V2V3Project/V2V3ProjectToolsDrawer/ExportSection'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useAddToBalanceTx } from 'packages/v2v3/hooks/transactor/AddToBalanceTx'
 import { useDeployProjectPayerTx } from 'packages/v2v3/hooks/transactor/useDeployProjectPayerTx'

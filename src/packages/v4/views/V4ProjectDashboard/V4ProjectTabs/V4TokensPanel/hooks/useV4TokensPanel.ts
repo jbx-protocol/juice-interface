@@ -1,11 +1,11 @@
 import { useWallet } from 'hooks/Wallet'
 import { JBProjectToken } from 'juice-sdk-core'
 import { useJBContractContext, useJBTokenContext, useReadJbTokensTotalBalanceOf } from 'juice-sdk-react'
+import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { useV4TotalTokenSupply } from 'packages/v4/hooks/useV4TotalTokenSupply'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
 import { useMemo } from 'react'
-import { isZeroAddress } from 'utils/address'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { zeroAddress } from 'viem'
 
@@ -26,7 +26,7 @@ export const useV4TokensPanel = () => {
   const hasDeployErc20Permission = useV4WalletHasPermission(
     V4OperatorPermission.DEPLOY_ERC20,
   )
-  const projectHasErc20Token = Boolean(tokenAddress && !isZeroAddress(tokenAddress))
+  const projectHasErc20Token = useProjectHasErc20Token()
 
   const { data: _userTokenBalance, isLoading: userTokenBalanceLoading } =
     useReadJbTokensTotalBalanceOf({

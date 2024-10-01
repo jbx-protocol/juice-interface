@@ -1,9 +1,11 @@
 import { useCallback, useContext } from 'react'
 
+import { waitForTransactionReceipt } from '@wagmi/core'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useJBContractContext, useWriteJbControllerDeployErc20For } from 'juice-sdk-react'
 import { Address, zeroAddress } from 'viem'
 import { BaseTxOpts } from '../models/transactions'
+import { wagmiConfig } from '../wagmiConfig'
 
 export function useV4IssueErc20TokenTx() {
   const { addTransaction } = useContext(TxHistoryContext)
@@ -47,12 +49,12 @@ export function useV4IssueErc20TokenTx() {
 
         onTransactionPendingCallback(hash)
         addTransaction?.('Launch ERC20 Token', { hash })
-        // const transactionReceipt: WaitForTransactionReceiptReturnType = await waitForTransactionReceipt(
-        //   wagmiConfig,
-        //   {
-        //     hash,
-        //   },
-        // )
+        await waitForTransactionReceipt(
+          wagmiConfig,
+          {
+            hash,
+          },
+        )
 
         onTransactionConfirmedCallback()
       } catch (e) {

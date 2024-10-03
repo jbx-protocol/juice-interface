@@ -57,7 +57,7 @@ describe('useReservedTokensSubPanel', () => {
     const { result } = renderHook(useReservedTokensSubPanel)
     expect(result.current.reservedList).toEqual([
       {
-        projectId: 1,
+        projectId: 0,
         address: '0x0000000000000000000000000000000000000000',
         percent: '97%',
       },

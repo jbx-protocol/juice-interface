@@ -31,7 +31,7 @@ export const useReservedTokensSubPanel = () => {
     if (reservedTokensSplits?.length === 0)
       return [
         {
-          projectId,
+          projectId: 0,
           address: projectOwnerAddress!,
           percent: `${formatSplitPercent(ONE_BILLION_BIG)}%`,
         },
@@ -72,7 +72,7 @@ export const useReservedTokensSubPanel = () => {
       // If it isn't, add a split at the beginning which brings the total percentage to 100%.
       else
         processedSplits.unshift({
-          projectId,
+          projectId: 0,
           address: projectOwnerAddress!,
           percent: `${formatSplitPercent(remainingPercentage)}%`,
         })

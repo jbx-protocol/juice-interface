@@ -28,7 +28,7 @@ export const useV4ReservedTokensSubPanel = () => {
     if (reservedTokensSplits?.length === 0)
       return [
         {
-          projectId: Number(projectId),
+          projectId: 0,
           address: projectOwnerAddress!,
           percent: `${new SplitPortion(
             SPLITS_TOTAL_PERCENT,
@@ -67,7 +67,7 @@ export const useV4ReservedTokensSubPanel = () => {
       // If it isn't, add a split at the beginning which brings the total percentage to 100%.
       else
         processedSplits.unshift({
-          projectId: Number(projectId),
+          projectId: 0,
           address: projectOwnerAddress!,
           percent: `${new SplitPortion(
             remainingPercentage,

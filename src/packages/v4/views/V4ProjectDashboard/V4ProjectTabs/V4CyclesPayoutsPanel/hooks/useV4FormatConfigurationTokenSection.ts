@@ -7,6 +7,7 @@ import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairTo
 import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
 import { useMemo } from 'react'
+import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export const useV4FormatConfigurationTokenSection = ({
@@ -32,6 +33,7 @@ export const useV4FormatConfigurationTokenSection = ({
 
   const decayPercentFloat = ruleset?.decayPercent.toFloat()
   const currentTotalIssuanceRate = ruleset?.weight.toFloat()
+  const currentTotalIssuanceRateFormatted = formattedNum(currentTotalIssuanceRate)
 
   const queuedTotalIssuanceRate = upcomingRuleset
     ? upcomingRuleset?.weight.toFloat()
@@ -39,10 +41,11 @@ export const useV4FormatConfigurationTokenSection = ({
       typeof decayPercentFloat !== 'undefined'
     ? currentTotalIssuanceRate - currentTotalIssuanceRate * decayPercentFloat
     : undefined
+  const queuedTotalIssuanceRateFormatted = formattedNum(queuedTotalIssuanceRate)
 
   const totalIssuanceRateDatum: ConfigurationPanelDatum = useMemo(() => {
-    const current = currentTotalIssuanceRate !== undefined
-      ? `${currentTotalIssuanceRate} ${tokenSymbol}/ETH`
+    const current = currentTotalIssuanceRateFormatted !== undefined
+      ? `${currentTotalIssuanceRateFormatted} ${tokenSymbol}/ETH`
       : undefined
 
     if (upcomingRuleset === null || upcomingRulesetLoading) {
@@ -50,16 +53,17 @@ export const useV4FormatConfigurationTokenSection = ({
     }
 
     const queued = queuedTotalIssuanceRate !== undefined
-      ? `${queuedTotalIssuanceRate} ${tokenSymbol}/ETH`
+      ? `${queuedTotalIssuanceRateFormatted} ${tokenSymbol}/ETH`
       : undefined
 
     return pairToDatum(t`Total issuance rate`, current, queued)
   }, [
     upcomingRuleset,
-    currentTotalIssuanceRate,
     tokenSymbol,
     queuedTotalIssuanceRate,
     upcomingRulesetLoading,
+    currentTotalIssuanceRateFormatted,
+    queuedTotalIssuanceRateFormatted
   ])
 
   const reservedPercentFloat = rulesetMetadata?.reservedPercent.toFloat()
@@ -73,9 +77,10 @@ export const useV4FormatConfigurationTokenSection = ({
         ? currentTotalIssuanceRate -
           currentTotalIssuanceRate * reservedPercentFloat
         : undefined
+    const currentPayerIssuanceRateFormatted = formattedNum(currentPayerIssuanceRate)
 
     const current = currentPayerIssuanceRate !== undefined
-      ? `${currentPayerIssuanceRate} ${tokenSymbol}/ETH`
+      ? `${currentPayerIssuanceRateFormatted} ${tokenSymbol}/ETH`
       : undefined
 
     if (
@@ -88,11 +93,12 @@ export const useV4FormatConfigurationTokenSection = ({
 
     const _reservedPercent = queuedReservedPercentFloat ?? reservedPercentFloat
     const queuedPayerIssuanceRate =
-      queuedTotalIssuanceRate && _reservedPercent
+      queuedTotalIssuanceRate && _reservedPercent !== undefined
         ? queuedTotalIssuanceRate - queuedTotalIssuanceRate * _reservedPercent
         : undefined
+    const queuedPayerIssuanceRateFormatted = formattedNum(queuedPayerIssuanceRate)
     const queued = queuedPayerIssuanceRate !== undefined
-      ? `${queuedPayerIssuanceRate} ${tokenSymbol}/ETH`
+      ? `${queuedPayerIssuanceRateFormatted} ${tokenSymbol}/ETH`
       : undefined
 
     return pairToDatum(t`Payer issuance rate`, current, queued)

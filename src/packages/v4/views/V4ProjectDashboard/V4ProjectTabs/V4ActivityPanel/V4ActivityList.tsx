@@ -1,30 +1,42 @@
-import { t } from '@lingui/macro'
 import Loading from 'components/Loading'
+import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import {
-  NativeTokenValue,
   useJBContractContext,
-  useJBTokenContext,
+  useReadJbTokensTokenOf
 } from 'juice-sdk-react'
 import {
   OrderDirection,
   PayEvent_OrderBy,
   PayEventsDocument,
+  ProjectEvent,
+  ProjectEvent_OrderBy
 } from 'packages/v4/graphql/client/graphql'
 import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
-import { ActivityEvent } from './activityEventElems/ActivityElement'
+import { AnyProjectEvent } from './activityEventElems/AnyProjectEvent'
 import { ActivityOptions } from './ActivityOptions'
-import { PayEvent } from './models/ActivityEvents'
 import { transformPayEventsRes } from './utils/transformEventsData'
 
 export function V4ActivityList() {
-  const { token } = useJBTokenContext()
+  const { data: tokenAddress } = useReadJbTokensTokenOf()
+  const { data: tokenSymbol } = useNameOfERC20(tokenAddress)
   const { projectId } = useJBContractContext()
 
   // TODO: pageSize (pagination)
-  const { data: payEventsData, isLoading } = useSubgraphQuery({
+  const { data: payEventsData, isLoading: payEventsLoading } = useSubgraphQuery({
     document: PayEventsDocument, 
     variables: {
       orderBy: PayEvent_OrderBy.timestamp,
+      orderDirection: OrderDirection.desc,
+      where: {
+        projectId: Number(projectId),
+      },
+    }
+  })
+
+  const { data: projectEventsData, isLoading: allEventsLoading } = useSubgraphQuery({
+    document: ProjectEventsDocument, 
+    variables: {
+      orderBy: ProjectEvent_OrderBy.timestamp,
       orderDirection: OrderDirection.desc,
       where: {
         projectId: Number(projectId),
@@ -46,31 +58,21 @@ export function V4ActivityList() {
         />
       </div>
       <div className="flex flex-col gap-3">
-        {isLoading && <Loading />}
-        {isLoading || (payEvents && payEvents.length > 0) ? (
-          payEvents?.map((event: PayEvent) => {
+        {allEventsLoading && <Loading />}
+        {payEventsLoading || (payEvents && payEvents.length > 0) ? (
+          projectEvents?.map((event: ProjectEvent) => {
             return (
               <div
                 className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
                 key={event.id}
               >
-                <ActivityEvent
-                  event={{
-                    ...event,
-                    from: event.beneficiary,
-                  }}
-                  header={t`Paid`}
-                  subject={
-                    <span className="font-heading text-lg">
-                      <NativeTokenValue wei={event.amount.value} />
-                    </span>
+                <AnyProjectEvent
+                  event={event}
+                  tokenSymbol={
+                    // tokenSymbol should only be provided if projectEvents are restricted to a specific projectId
+                    projectId === undefined ? tokenSymbol : undefined
                   }
-                  extra={
-                    <span>
-                      bought {event.beneficiaryTokenCount?.format(6)}{' '}
-                      {token.data?.symbol ?? 'tokens'}
-                    </span>
-                  }
+                  withProjectLink={!projectId}
                 />
               </div>
             )

@@ -65,7 +65,7 @@ export const V4ProjectTabs = ({ className }: { className?: string }) => {
   return (
     <div
       ref={containerRef}
-      className={twMerge('flex flex-col items-center gap-12', className)}
+      className={twMerge('flex flex-col items-center gap-12 pb-20', className)}
     >
       <Tab.Group
         as={Fragment}

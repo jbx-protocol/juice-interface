@@ -1,15 +1,65 @@
 import { t } from '@lingui/macro'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import React from 'react'
-import { classNames } from 'utils/classNames'
+import { twMerge } from 'tailwind-merge'
 import { ProjectTimelineView } from '../types'
 
-export default function TimelineViewSelector({
+export default function TimelineViewSelector(props: {
+  timelineView: ProjectTimelineView
+  setTimelineView: React.Dispatch<React.SetStateAction<ProjectTimelineView>>
+}) {
+  return (
+    <>
+      <MobileTimelineViewSelector {...props} />
+      <DesktopTimelineViewSelector {...props} />
+    </>
+  )
+}
+
+const MobileTimelineViewSelector = ({
   timelineView,
   setTimelineView,
 }: {
   timelineView: ProjectTimelineView
   setTimelineView: React.Dispatch<React.SetStateAction<ProjectTimelineView>>
-}) {
+}) => {
+  const opts = (): { label: string; value: ProjectTimelineView }[] => [
+    {
+      label: t`Volume`,
+      value: 'volume',
+    },
+    {
+      label: t`In Juicebox`,
+      value: 'balance',
+    },
+    {
+      label: t`Trending`,
+      value: 'trendingScore',
+    },
+  ]
+
+  const handleChange = (value: ProjectTimelineView) => {
+    setTimelineView(value)
+  }
+
+  return (
+    <JuiceListbox
+      className="w-full max-w-[116px] text-xs uppercase md:hidden"
+      buttonClassName="text-xs uppercase py-1 px-2"
+      options={opts()}
+      value={opts().find(o => o.value === timelineView)}
+      onChange={v => handleChange(v.value)}
+    />
+  )
+}
+
+const DesktopTimelineViewSelector = ({
+  timelineView,
+  setTimelineView,
+}: {
+  timelineView: ProjectTimelineView
+  setTimelineView: React.Dispatch<React.SetStateAction<ProjectTimelineView>>
+}) => {
   const tab = (view: ProjectTimelineView) => {
     const selected = view === timelineView
 
@@ -28,7 +78,7 @@ export default function TimelineViewSelector({
 
     return (
       <div
-        className={classNames(
+        className={twMerge(
           'cursor-pointer text-sm uppercase',
           selected
             ? 'font-medium text-grey-500 dark:text-slate-100'
@@ -40,9 +90,8 @@ export default function TimelineViewSelector({
       </div>
     )
   }
-
   return (
-    <div className="flex gap-3">
+    <div className="mb-2 hidden gap-3 md:flex">
       {tab('volume')}
       {tab('balance')}
       {tab('trendingScore')}

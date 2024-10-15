@@ -103,12 +103,12 @@ export default function FormattedNumberInput({
       />
       <div
         className={twMerge(
-          'absolute z-auto text-xs',
+          'absolute bottom-1/2 z-auto text-xs',
           accessoryPosition === 'right' ? 'right-[5px]' : 'left-[10px]',
         )}
       >
         {accessory && <div>{accessory}</div>}
       </div>
     </div>
-  );
+  )
 }

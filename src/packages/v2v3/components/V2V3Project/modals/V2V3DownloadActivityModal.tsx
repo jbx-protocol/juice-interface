@@ -42,6 +42,7 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
         onChange={val => setBlockNumber(val ? parseInt(val) : undefined)}
         accessory={
           <InputAccessoryButton
+            className="leading-none"
             content={t`Latest`}
             onClick={() => setBlockNumber(latestBlockNumber)}
             disabled={blockNumber === latestBlockNumber}

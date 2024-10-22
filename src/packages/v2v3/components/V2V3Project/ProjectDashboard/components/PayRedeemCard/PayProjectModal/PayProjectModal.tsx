@@ -3,7 +3,9 @@ import EtherscanLink from 'components/EtherscanLink'
 import ExternalLink from 'components/ExternalLink'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { Formik } from 'formik'
+import { useWallet } from 'hooks/Wallet'
 import Image from 'next/legacy/image'
+import { useNftCredits } from 'packages/v2v3/hooks/JB721Delegate/useNftCredits'
 import React, { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { helpPagePath } from 'utils/helpPagePath'
@@ -163,6 +165,8 @@ export const PayProjectModal: React.FC = () => {
 }
 
 const AmountSection = () => {
+  const { userAddress } = useWallet()
+  const { data: nftCredits } = useNftCredits(userAddress)
   const { formattedAmount, formattedNftCredits, formattedTotalAmount } =
     usePayAmounts()
 
@@ -188,7 +192,7 @@ const AmountSection = () => {
     </div>
   )
 
-  if (!formattedNftCredits)
+  if (!nftCredits?.gt(0) || !formattedNftCredits)
     return (
       <RowData
         label={t`Total amount`}

@@ -5,6 +5,7 @@ import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { ProjectPayReceipt } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import { useProjectSelector } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/redux/hooks'
 import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
+import { useNftCredits } from 'packages/v2v3/hooks/JB721Delegate/useNftCredits'
 import { usePayETHPaymentTerminalTx } from 'packages/v2v3/hooks/transactor/usePayETHPaymentTerminalTx'
 import { useProjectHasErc20 } from 'packages/v2v3/hooks/useProjectHasErc20'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
@@ -36,6 +37,7 @@ export const usePayProjectTx = ({
   const { payAmount, chosenNftRewards } = useProjectSelector(
     state => state.projectCart,
   )
+  const { data: nftCredits } = useNftCredits(userAddress)
   const {
     nftRewards: { rewardTiers },
   } = useContext(NftRewardsContext)
@@ -64,12 +66,20 @@ export const usePayProjectTx = ({
   const weiAmount = useMemo(() => {
     if (!payAmount) {
       return parseWad(0)
-    } else if (payAmount.currency === V2V3_CURRENCY_ETH) {
-      return parseWad(payAmount.amount)
-    } else {
-      return converter.usdToWei(payAmount.amount)
     }
-  }, [payAmount, converter])
+    let weiAmount =
+      payAmount.currency === V2V3_CURRENCY_ETH
+        ? parseWad(payAmount.amount)
+        : converter.usdToWei(payAmount.amount)
+    if (nftCredits) {
+      if (nftCredits.gte(weiAmount)) {
+        weiAmount = parseWad(0)
+      } else {
+        weiAmount = weiAmount.sub(nftCredits)
+      }
+    }
+    return weiAmount
+  }, [payAmount, converter, nftCredits])
 
   const prepareDelegateMetadata = usePrepareDelegatePayMetadata(weiAmount, {
     nftRewards: chosenNftRewards,
@@ -136,17 +146,17 @@ export const usePayProjectTx = ({
       }
     },
     [
-      projectHasErc20,
-      buildPayReceipt,
       chosenNftRewards,
-      onTransactionConfirmedCallback,
-      onTransactionErrorCallback,
-      onTransactionPendingCallback,
-      payProjectTx,
-      rewardTiers,
-      weiAmount,
       userAddress,
+      rewardTiers,
+      payProjectTx,
       prepareDelegateMetadata,
+      weiAmount,
+      projectHasErc20,
+      onTransactionConfirmedCallback,
+      buildPayReceipt,
+      onTransactionPendingCallback,
+      onTransactionErrorCallback,
     ],
   )
 }

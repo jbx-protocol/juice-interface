@@ -296,6 +296,9 @@ msgstr ""
 msgid "Project tokens"
 msgstr ""
 
+msgid "NFT Credits"
+msgstr ""
+
 msgid "You must grant permission to migrate your V1 tokens."
 msgstr ""
 

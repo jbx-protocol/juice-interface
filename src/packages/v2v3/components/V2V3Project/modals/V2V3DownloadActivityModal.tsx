@@ -37,19 +37,20 @@ export default function V2V3DownloadActivityModal(props: ModalProps) {
       <label className="mb-1 block">
         <Trans>Block number</Trans>
       </label>
-      <FormattedNumberInput
-        value={blockNumber?.toString()}
-        onChange={val => setBlockNumber(val ? parseInt(val) : undefined)}
-        accessory={
-          <InputAccessoryButton
-            className="leading-none"
-            content={t`Latest`}
-            onClick={() => setBlockNumber(latestBlockNumber)}
-            disabled={blockNumber === latestBlockNumber}
-          />
-        }
-        className="mb-4"
-      />
+      <div className="mb-4">
+        <FormattedNumberInput
+          value={blockNumber?.toString()}
+          onChange={val => setBlockNumber(val ? parseInt(val) : undefined)}
+          accessory={
+            <InputAccessoryButton
+              className="leading-none"
+              content={t`Latest`}
+              onClick={() => setBlockNumber(latestBlockNumber)}
+              disabled={blockNumber === latestBlockNumber}
+            />
+          }
+        />
+      </div>
 
       <div className="flex flex-col gap-2">
         <Button

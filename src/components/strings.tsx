@@ -1,4 +1,8 @@
 import { Trans } from '@lingui/macro'
+import ExternalLink from 'components/ExternalLink'
+import Link from 'next/link'
+import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
+import { helpPagePath } from 'utils/helpPagePath'
 
 export const ISSUE_ERC20_EXPLANATION = (
   <Trans>
@@ -29,15 +33,15 @@ export const CYCLE_EXPLANATION = (
       supporters.
     </p>
     <p>
-      This choice isn't permanent — you can switch between locked and unlocked
-      cycles in the future.
+      This choice isn't permanent — you can switch between locked and unlocked rulesets
+      in the future.
     </p>
   </Trans>
 )
 
 export const RULESET_EXPLANATION = (
   <Trans>
-    <p>With unlocked rulesets, you can edit your project's rules at any time.</p>
+    <p>With unlocked ruleset cycles, you can edit your project's rules at any time.</p>
     <p>
       With locked rulesets, you can lock your project's rules for a period of time
       (like 3 minutes, 2 years, or 14 days), helping you build trust with your
@@ -57,10 +61,6 @@ export const LOCKED_PAYOUT_EXPLANATION = (
   </Trans>
 )
 
-import ExternalLink from 'components/ExternalLink'
-import Link from 'next/link'
-import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
-import { helpPagePath } from 'utils/helpPagePath'
 
 export const DISTRIBUTION_LIMIT_EXPLANATION = (
   <Trans>
@@ -212,6 +212,19 @@ export const RECONFIG_RULES_EXPLANATION = (
     <p>
       For example: with a 1-day edit deadline, edits must be made at least 1 day
       before a cycle starts.
+    </p>
+  </Trans>
+)
+
+export const DEADLINE_EXPLANATION = (
+  <Trans>
+    <p>
+      Edits to this project must be made before this deadline. This gives token
+      holders time to verify the edits before they take effect.
+    </p>
+    <p>
+      For example: with a 1-day edit deadline, edits must be made at least 1 day
+      before a ruleset cycle starts.
     </p>
   </Trans>
 )

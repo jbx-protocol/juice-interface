@@ -1,11 +1,12 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
+import {
+  DEADLINE_EXPLANATION,
+  RULESET_EXPLANATION
+} from 'components/strings'
+
 import { Badge } from 'components/Badge'
 import { DeployButtonText } from 'components/buttons/DeployProjectButtonText'
 import Loading from 'components/Loading'
-import {
-  RECONFIG_RULES_EXPLANATION,
-  RULESET_EXPLANATION,
-} from 'components/strings'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
 import { useRouter } from 'next/router'
@@ -102,7 +103,7 @@ export function Create() {
           <Wizard.Page
             name="reconfigurationRules"
             title={<Trans>Edit Deadline</Trans>}
-            description={RECONFIG_RULES_EXPLANATION}
+            description={DEADLINE_EXPLANATION}
           >
             <ReconfigurationRulesPage />
           </Wizard.Page>

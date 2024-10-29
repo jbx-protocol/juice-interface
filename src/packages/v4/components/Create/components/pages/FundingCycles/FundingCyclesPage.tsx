@@ -5,6 +5,12 @@ import {
 } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
 import { Form, Tooltip } from 'antd'
+import { useContext, useEffect } from 'react'
+import {
+  FundingCyclesFormProps,
+  useFundingCyclesForm,
+} from './hooks/useFundingCyclesForm'
+
 import { useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout/Callout'
 import { DurationInput } from 'components/inputs/DurationInput'
@@ -14,7 +20,6 @@ import { trackFathomGoal } from 'lib/fathom'
 import moment from 'moment'
 import Link from 'next/link'
 import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
-import { useContext, useEffect } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import { durationMustExistRule } from 'utils/antdRules'
 import { CreateBadge } from '../../CreateBadge'
@@ -22,12 +27,8 @@ import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
 import { Icons } from '../../Icons'
 import { OptionalHeader } from '../../OptionalHeader'
 import { Selection } from '../../Selection/Selection'
-import { Wizard } from '../../Wizard/Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
-import {
-  FundingCyclesFormProps,
-  useFundingCyclesForm,
-} from './hooks/useFundingCyclesForm'
+import { Wizard } from '../../Wizard/Wizard'
 
 const FundingCycleCallout: React.FC<React.PropsWithChildren<unknown>> = () => {
   const form = Form.useFormInstance<FundingCyclesFormProps>()
@@ -41,7 +42,7 @@ const FundingCycleCallout: React.FC<React.PropsWithChildren<unknown>> = () => {
         <Callout.Warning>
           <p>
             <Trans>
-              Ruleset #1 starts when you create your project. With locked rulesets,
+              Ruleset #1 starts when you create your project. With locked ruleset cycles,
               if you edit your project's rules during Ruleset #1, those edits will
               be <em>queued</em> for the next ruleset.
             </Trans>
@@ -117,13 +118,13 @@ export const FundingCyclesPage = () => {
                 name="automated"
                 title={
                   <div className="inline-flex items-center gap-3">
-                    <Trans>Locked Rulesets</Trans>{' '}
+                    <Trans>Locked Ruleset Cycles</Trans>{' '}
                     <CreateBadge.Recommended
                       tooltip={
                         <span>
                           <Trans>
                             <p>
-                              With Locked Rulesets, your project's rules are
+                              With Locked Ruleset Cycles, your project's rules are
                               locked for a period of time.
                             </p>
                             <p>
@@ -137,7 +138,7 @@ export const FundingCyclesPage = () => {
                     />
                   </div>
                 }
-                description={t`Set a duration for locked rulesets.`}
+                description={t`Set a cycle duration for locked rulesets.`}
                 icon={<RedoOutlined />}
               >
                 <Form.Item

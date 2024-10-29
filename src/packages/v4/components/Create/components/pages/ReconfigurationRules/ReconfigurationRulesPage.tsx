@@ -1,8 +1,4 @@
-import { t, Trans } from '@lingui/macro'
-import { Form } from 'antd'
-import { useWatch } from 'antd/lib/form/Form'
-import { Callout } from 'components/Callout/Callout'
-import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
+import { Trans, t } from '@lingui/macro'
 import {
   CONTROLLER_CONFIG_EXPLANATION,
   HOLD_FEES_EXPLANATION,
@@ -11,15 +7,20 @@ import {
   TERMINAL_CONFIG_EXPLANATION,
   TERMINAL_MIGRATION_EXPLANATION
 } from 'components/strings'
+
+import { Form } from 'antd'
+import { useWatch } from 'antd/lib/form/Form'
+import { Callout } from 'components/Callout/Callout'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { trackFathomGoal } from 'lib/fathom'
 import { Selection } from 'packages/v2v3/components/Create/components/Selection/Selection'
-import { useAvailableReconfigurationStrategies } from 'packages/v2v3/components/Create/hooks/useAvailableReconfigurationStrategies'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { useAvailableReconfigurationStrategies } from '../../../hooks/useAvailableReconfigurationStrategies'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { Wizard } from '../../Wizard/Wizard'

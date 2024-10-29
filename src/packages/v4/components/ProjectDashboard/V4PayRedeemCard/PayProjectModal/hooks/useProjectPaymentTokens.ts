@@ -1,10 +1,11 @@
-import { FixedInt } from 'fpnum'
-import { getTokenAToBQuote, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
+import { NATIVE_TOKEN_DECIMALS, getTokenAToBQuote } from 'juice-sdk-core'
 import {
   useJBRulesetContext,
   useJBTokenContext,
   useNativeTokenSymbol,
 } from 'juice-sdk-react'
+
+import { FixedInt } from 'fpnum'
 import { useProjectSelector } from 'packages/v4/components/ProjectDashboard/redux/hooks'
 import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -48,7 +49,7 @@ export const useProjectPaymentTokens = () => {
     receivedTickets,
     receivedTokenSymbolText:
       receivedTokenSymbolText === 'tokens'
-        ? 'Project'
-        : receivedTokenSymbolText,
+        ? 'Project Token Credits'
+        : `${receivedTokenSymbolText} Token`,
   }
 }

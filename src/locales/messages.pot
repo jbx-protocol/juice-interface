@@ -218,6 +218,9 @@ msgstr ""
 msgid "Staked balance"
 msgstr ""
 
+msgid "<0>Edits to this project must be made before this deadline. This gives token holders time to verify the edits before they take effect.</0><1>For example: with a 1-day edit deadline, edits must be made at least 1 day before a ruleset cycle starts.</1>"
+msgstr ""
+
 msgid "While enabled, the project owner can mint any amount of project tokens."
 msgstr ""
 
@@ -233,6 +236,9 @@ msgstr ""
 msgid "Set a future date & time to start your project's first cycle."
 msgstr ""
 
+msgid "Ruleset #1 starts when you create your project. With locked ruleset cycles, if you edit your project's rules during Ruleset #1, those edits will be <0>queued</0> for the next ruleset."
+msgstr ""
+
 msgid "No"
 msgstr ""
 
@@ -243,6 +249,9 @@ msgid "Cycles:"
 msgstr ""
 
 msgid "Amount (USD)"
+msgstr ""
+
+msgid "<0>With unlocked ruleset cycles, you can edit your project's rules at any time.</0><1>With locked rulesets, you can lock your project's rules for a period of time (like 3 minutes, 2 years, or 14 days), helping you build trust with your supporters.</1><2>This choice isn't permanent — you can switch between locked and unlocked rulesets in the future.</2>"
 msgstr ""
 
 msgid "Payout recipients"
@@ -1007,6 +1016,9 @@ msgstr ""
 msgid "Redeem {0} {tokensTextShort} for ETH"
 msgstr ""
 
+msgid "<0>With Locked Ruleset Cycles, your project's rules are locked for a period of time.</0><1><2>This helps build trust with your contributors.</2></1>"
+msgstr ""
+
 msgid "Are you sure you want to remove {0}?"
 msgstr ""
 
@@ -1301,6 +1313,9 @@ msgstr ""
 msgid "Use NFTs for redemptions"
 msgstr ""
 
+msgid "Set a cycle duration for locked rulesets."
+msgstr ""
+
 msgid "Assets"
 msgstr ""
 
@@ -1347,6 +1362,9 @@ msgid "The project owner is the only payout recipient. Any ETH paid out this cyc
 msgstr ""
 
 msgid "Need help?"
+msgstr ""
+
+msgid "{receivedTokenSymbolText}"
 msgstr ""
 
 msgid "Custom strategy"
@@ -1455,9 +1473,6 @@ msgid "You have <0>{0} ETH</0> of unclaimed NFT credits"
 msgstr ""
 
 msgid "<0>Juicebox is a <1>governance-minimal</1> protocol. There are only a few levers that can be tuned, none of which impose changes for users without their consent. The Juicebox governance smart contract can adjust these levers.</0><2>The Juicebox protocol is governed by a community of JBX token holders who vote on proposals fortnightly.</2><3>Juicebox is on-chain and non-custodial. Project creators actually own their projects, and JuiceboxDAO has no way to access project's ETH or change their rules.</3>"
-msgstr ""
-
-msgid "<0>With unlocked rulesets, you can edit your project's rules at any time.</0><1>With locked rulesets, you can lock your project's rules for a period of time (like 3 minutes, 2 years, or 14 days), helping you build trust with your supporters.</1><2>This choice isn't permanent — you can switch between locked and unlocked rulesets in the future.</2>"
 msgstr ""
 
 msgid "Pay {projectTitle}"
@@ -1845,9 +1860,6 @@ msgid "Project #{projectId}"
 msgstr ""
 
 msgid "Project rules"
-msgstr ""
-
-msgid "Set a duration for locked rulesets."
 msgstr ""
 
 msgid "Upload"
@@ -2471,9 +2483,6 @@ msgstr ""
 msgid "While enabled, the project owner can change the project's <0>controller</0> at any time."
 msgstr ""
 
-msgid "<0>With Locked Rulesets, your project's rules are locked for a period of time.</0><1><2>This helps build trust with your contributors.</2></1>"
-msgstr ""
-
 msgid "Ruleset #"
 msgstr ""
 
@@ -2487,6 +2496,9 @@ msgid "Total unclaimed and claimed V1 and V2 tokens"
 msgstr ""
 
 msgid "Read case studies"
+msgstr ""
+
+msgid "{days, plural, one {Edits to an upcoming ruleset cycle must be submitted at least # day before that ruleset cycle starts.} other {Edits to an upcoming ruleset cycle must be submitted at least # days before that ruleset cycle starts.}}"
 msgstr ""
 
 msgid "tokens"
@@ -3020,6 +3032,9 @@ msgstr ""
 msgid "Your legacy balance"
 msgstr ""
 
+msgid "ERC-20"
+msgstr ""
+
 msgid "Error loading ETH transfers to project"
 msgstr ""
 
@@ -3066,6 +3081,9 @@ msgid "Project tags"
 msgstr ""
 
 msgid "Deploy NFT collection"
+msgstr ""
+
+msgid "Edits to upcoming ruleset cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner."
 msgstr ""
 
 msgid "You must <0>Edit your Cycle</0> to change your total payout amount."
@@ -3209,13 +3227,13 @@ msgstr ""
 msgid "Payout total (max.)"
 msgstr ""
 
+msgid "Locked Ruleset Cycles"
+msgstr ""
+
 msgid "Prevent NFT overspending"
 msgstr ""
 
 msgid "Yes, start over"
-msgstr ""
-
-msgid "Ruleset #1 starts when you create your project. With locked rulesets, if you edit your project's rules during Ruleset #1, those edits will be <0>queued</0> for the next ruleset."
 msgstr ""
 
 msgid "All {tokensText} will go to the project owner:"
@@ -3399,6 +3417,9 @@ msgid "The unallocated portion of your total will go to the wallet that owns the
 msgstr ""
 
 msgid "New"
+msgstr ""
+
+msgid "<0>With unlocked cycles, you can edit your project's rules at any time.</0><1>With locked cycles, you can lock your project's rules for a period of time (like 3 minutes, 2 years, or 14 days), helping you build trust with your supporters.</1><2>This choice isn't permanent — you can switch between locked and unlocked rulesets in the future.</2>"
 msgstr ""
 
 msgid "This project has no upcoming ruleset. Its rules can change at any time."
@@ -3647,9 +3668,6 @@ msgstr ""
 msgid "Redeem {tokensLabel} for ETH"
 msgstr ""
 
-msgid "Locked Rulesets"
-msgstr ""
-
 msgid "Made a mistake?"
 msgstr ""
 
@@ -3687,9 +3705,6 @@ msgid "{label} must be greater than zero"
 msgstr ""
 
 msgid "Request a feature"
-msgstr ""
-
-msgid "<0>With unlocked cycles, you can edit your project's rules at any time.</0><1>With locked cycles, you can lock your project's rules for a period of time (like 3 minutes, 2 years, or 14 days), helping you build trust with your supporters.</1><2>This choice isn't permanent — you can switch between locked and unlocked cycles in the future.</2>"
 msgstr ""
 
 msgid "I confirm that the use and redemption of crypto tokens is legal in my jurisdiction, and that I am fully responsible for compliance with all relevant laws and regulations."

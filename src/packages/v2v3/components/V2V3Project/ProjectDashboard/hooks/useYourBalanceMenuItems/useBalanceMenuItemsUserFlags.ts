@@ -47,8 +47,11 @@ export const useBalanceMenuItemsUserFlags = () => {
   )
 
   const canTransferTokens = useMemo(
-    () => !!unclaimedTokenBalance?.gt(0) || isDev,
-    [unclaimedTokenBalance, isDev],
+    () =>
+      (!!unclaimedTokenBalance?.gt(0) &&
+        !fundingCycleMetadata?.global.pauseTransfers) ||
+      isDev,
+    [unclaimedTokenBalance, fundingCycleMetadata?.global.pauseTransfers, isDev],
   )
 
   return {

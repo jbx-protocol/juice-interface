@@ -12,11 +12,12 @@ export const useUnclaimedTokenBalance = () => {
   const { data: claimedBalance } = useERC20BalanceOf(tokenAddress, userAddress)
   const { data: totalBalance } = useTotalBalanceOf(userAddress, projectId)
 
-  if (
-    typeof claimedBalance === 'undefined' ||
-    typeof totalBalance === 'undefined'
-  ) {
+  if (typeof totalBalance === 'undefined') {
     return undefined
+  }
+
+  if (typeof claimedBalance === 'undefined') {
+    return totalBalance
   }
 
   return totalBalance.sub(claimedBalance)

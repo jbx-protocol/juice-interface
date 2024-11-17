@@ -8,7 +8,13 @@ const HANDLE_REGEX = new RegExp(/\/@([^/]+).*/)
 
 const logger = getLogger('middleware/page')
 
-const GEOFENCED_PROJECT_IDS = [{ projectId: 64, blockedCountries: ['AU'] }]
+const GEOFENCED_PROJECT_IDS: {
+  path: string
+  projectId: number
+  blockedCountries: string[]
+}[] = [
+  // { path: '/v2/p/64', projectId: 64, blockedCountries: ['AU'] }, // example
+]
 
 function geofenceCheck(projectId: number, request: NextRequest) {
   const url = request.nextUrl
@@ -101,5 +107,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/@(.*)','/v2/p/64']
+  matcher: ['/@(.*)', ...GEOFENCED_PROJECT_IDS.map(p => p.path)],
 }

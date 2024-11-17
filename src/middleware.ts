@@ -50,22 +50,21 @@ export async function middleware(request: NextRequest) {
   /**
    * Geofence check
    */
-  if (GEOFENCED_PROJECT_IDS.some(p => p.projectId === projectId)) {
-    const country = geolocation(request).country
-    if (
-      country &&
-      GEOFENCED_PROJECT_IDS.find(
-        p => p.projectId === projectId,
-      )?.blockedCountries.includes(country)
-    ) {
-      logger.info('Geofenced project', {
-        originalPathname: request.nextUrl.pathname,
-        newPathname: '/404',
-        handle: handleDecoded,
-      })
-      url.pathname = '/404'
-      return NextResponse.rewrite(url)
-    }
+  const country = geolocation(request).country
+  logger.info('🌎 Geofence check', { country, projectId, handle: handleDecoded, geo: geolocation(request)})
+  if (
+    country &&
+    GEOFENCED_PROJECT_IDS.find(
+      p => p.projectId === projectId,
+    )?.blockedCountries.includes(country)
+  ) {
+    logger.info('Geofenced project', {
+      originalPathname: request.nextUrl.pathname,
+      newPathname: '/404',
+      handle: handleDecoded,
+    })
+    url.pathname = '/404'
+    return NextResponse.rewrite(url)
   }
 
   url.pathname = `/v2/p/${projectId}${trailingPath ? `/${trailingPath}` : ''}`

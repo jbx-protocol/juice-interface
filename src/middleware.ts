@@ -101,5 +101,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: '/@(.*)',
+  matcher: ['/@(.*)','/v2/p/64']
 }

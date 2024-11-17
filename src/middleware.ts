@@ -8,7 +8,7 @@ const HANDLE_REGEX = new RegExp(/\/@([^/]+).*/)
 
 const logger = getLogger('middleware/page')
 
-const GEOFENCED_PROJECT_IDS = [{ projectId: 64, blockedCountries: ['US'] }]
+const GEOFENCED_PROJECT_IDS = [{ projectId: 64, blockedCountries: ['AU'] }]
 
 export async function middleware(request: NextRequest) {
   logger.info('middleware request', { pathname: request.nextUrl.pathname })

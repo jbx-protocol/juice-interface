@@ -176,6 +176,33 @@ const nextConfig = removeImports({
           ...SECURITY_HEADERS,
         ],
       },
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "x-vercel-country",
+            value: "", // Allow this header to pass through
+          },
+        ],
+      },
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "X-Vercel-IP-Country-Region",
+            value: "", // Allow this header to pass through
+          },
+        ],
+      },
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "X-Vercel-IP-City",
+            value: "", // Allow this header to pass through
+          },
+        ],
+      },
     ];
   },
   images: {

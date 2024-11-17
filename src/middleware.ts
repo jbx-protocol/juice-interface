@@ -1,3 +1,4 @@
+import { geolocation } from '@vercel/functions'
 import { getLogger } from 'lib/logger'
 import { NextRequest, NextResponse } from 'next/server'
 import { fetchProjectIdForHandle } from 'pages/api/juicebox/project/[projectHandle]'
@@ -6,6 +7,8 @@ import { fetchProjectIdForHandle } from 'pages/api/juicebox/project/[projectHand
 const HANDLE_REGEX = new RegExp(/\/@([^/]+).*/)
 
 const logger = getLogger('middleware/page')
+
+const GEOFENCED_PROJECT_IDS = [{ projectId: 64, blockedCountries: ['US'] }]
 
 export async function middleware(request: NextRequest) {
   logger.info('middleware request', { pathname: request.nextUrl.pathname })
@@ -42,6 +45,27 @@ export async function middleware(request: NextRequest) {
     })
     url.pathname = '/404'
     return NextResponse.rewrite(url)
+  }
+
+  /**
+   * Geofence check
+   */
+  if (GEOFENCED_PROJECT_IDS.some(p => p.projectId === projectId)) {
+    const country = geolocation(request).country
+    if (
+      country &&
+      GEOFENCED_PROJECT_IDS.find(
+        p => p.projectId === projectId,
+      )?.blockedCountries.includes(country)
+    ) {
+      logger.info('Geofenced project', {
+        originalPathname: request.nextUrl.pathname,
+        newPathname: '/404',
+        handle: handleDecoded,
+      })
+      url.pathname = '/404'
+      return NextResponse.rewrite(url)
+    }
   }
 
   url.pathname = `/v2/p/${projectId}${trailingPath ? `/${trailingPath}` : ''}`

@@ -1,21 +1,23 @@
-import { ONE_BILLION } from 'constants/numbers'
-import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
 import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
-import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
-import { useLaunchProjectWithNftsTx } from 'packages/v4/hooks/useLaunchProjectWithNftsTx'
 import { JB721TierConfig, JB721TiersHookFlags } from 'packages/v4/models/nfts'
-import { useCallback } from 'react'
 import {
   useAppSelector,
   useEditingV2V3FundAccessConstraintsSelector,
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/useAppSelector'
+import { Address, parseEther, zeroAddress } from 'viem'
+
+import { ONE_BILLION } from 'constants/numbers'
+import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
+import { useLaunchProjectWithNftsTx } from 'packages/v4/hooks/JB721Delegate/transactor/useLaunchProjectWithNftsTx'
+import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
+import { useCallback } from 'react'
 import { DEFAULT_NFT_FLAGS } from 'redux/slices/editingV2Project'
 import { encodeIpfsUri } from 'utils/ipfs'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { sortNftsByContributionFloor } from 'utils/nftRewards'
-import { Address, parseEther, zeroAddress } from 'viem'
+
 export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 
 function nftRewardTierToJB721TierConfig(

@@ -1,7 +1,8 @@
 import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
+import { Address, ContractFunctionReturnType } from 'viem'
+
 import { jb721TiersHookStoreAbi } from 'juice-sdk-react'
 import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
-import { Address, ContractFunctionReturnType } from 'viem'
 import { LaunchV4ProjectGroupedSplit } from '../utils/launchProjectTransformers'
 import { FundAccessLimitGroup } from './fundAccessLimits'
 import { LaunchProjectJBTerminal } from './terminals'

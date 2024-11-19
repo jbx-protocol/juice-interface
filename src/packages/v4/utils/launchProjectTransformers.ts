@@ -1,11 +1,15 @@
-import { JBSplit, NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS, SplitGroup } from 'juice-sdk-core'
+import {
+  JBSplit,
+  NATIVE_TOKEN,
+  NATIVE_TOKEN_DECIMALS,
+  SplitGroup,
+} from 'juice-sdk-core'
+import round from 'lodash/round'
+import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
 } from 'packages/v2v3/models/fundingCycle'
-
-import round from 'lodash/round'
-import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
 import { GroupedSplits as V2V3GroupedSplits } from 'packages/v2v3/models/splits'
 import { V3FundingCycleMetadata } from 'packages/v3/models/fundingCycle'
 import { Address } from 'viem'
@@ -50,23 +54,33 @@ export function transformV2V3CreateArgsToV4({
   const now = round(new Date().getTime() / 1000)
 
   const ruleset = {
-    mustStartAtOrAfter: mustStartAtOrAfterNum > now ? mustStartAtOrAfterNum : now,
+    mustStartAtOrAfter:
+      mustStartAtOrAfterNum > now ? mustStartAtOrAfterNum : now,
     duration: _fundingCycleData.duration.toNumber(),
     weight: _fundingCycleData.weight.toBigInt(),
     decayPercent: _fundingCycleData.discountRate.toNumber(),
 
     approvalHook: _fundingCycleData.ballot as Address,
 
-    metadata: transformFCMetadataToRulesetMetadata({ fundingCycleMetadata: _fundingCycleMetadata}),
+    metadata: transformFCMetadataToRulesetMetadata({
+      fundingCycleMetadata: _fundingCycleMetadata,
+    }),
 
     splitGroups: transformV2V3SplitsToV4({ v2v3Splits: _groupedSplits }),
 
-    fundAccessLimitGroups: transformV2V3FundAccessConstraintsToV4({ v2V3FundAccessConstraints: _fundAccessConstraints, primaryNativeTerminal, currencyTokenAddress })
+    fundAccessLimitGroups: transformV2V3FundAccessConstraintsToV4({
+      v2V3FundAccessConstraints: _fundAccessConstraints,
+      primaryNativeTerminal,
+      currencyTokenAddress,
+    }),
   }
 
   const rulesetConfigurations = [ruleset]
 
-  const terminalConfigurations = generateV4LaunchTerminalConfigurationsArg({ terminals: _terminals, currencyTokenAddress })
+  const terminalConfigurations = generateV4LaunchTerminalConfigurationsArg({
+    terminals: _terminals,
+    currencyTokenAddress,
+  })
 
   return [
     _owner as Address,
@@ -77,9 +91,8 @@ export function transformV2V3CreateArgsToV4({
   ] as const
 }
 
-
 export function transformFCMetadataToRulesetMetadata({
-  fundingCycleMetadata
+  fundingCycleMetadata,
 }: {
   fundingCycleMetadata: V2FundingCycleMetadata | V3FundingCycleMetadata
 }) {
@@ -99,7 +112,8 @@ export function transformFCMetadataToRulesetMetadata({
     allowAddPriceFeed: false, // Not present in v2v3, passing false by default
     ownerMustSendPayouts: false, // Not present in v2v3, passing false by default
     holdFees: fundingCycleMetadata.holdFees,
-    useTotalSurplusForRedemptions: fundingCycleMetadata.useTotalOverflowForRedemptions,
+    useTotalSurplusForRedemptions:
+      fundingCycleMetadata.useTotalOverflowForRedemptions,
     useDataHookForPay: fundingCycleMetadata.useDataSourceForPay,
     useDataHookForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
     dataHook: fundingCycleMetadata.dataSource as Address,
@@ -109,18 +123,19 @@ export function transformFCMetadataToRulesetMetadata({
 }
 
 type LaunchProjectJBSplit = Omit<JBSplit, 'percent'> & { percent: number }
-export type LaunchV4ProjectGroupedSplit = Omit<V4GroupedSplits<SplitGroup>, 'splits'> & { splits: LaunchProjectJBSplit[] }
+export type LaunchV4ProjectGroupedSplit = Omit<
+  V4GroupedSplits<SplitGroup>,
+  'splits'
+> & { splits: LaunchProjectJBSplit[] }
 
 export function transformV2V3SplitsToV4({
-  v2v3Splits
+  v2v3Splits,
 }: {
   v2v3Splits: V2V3GroupedSplits<SplitGroup>[]
 }): LaunchV4ProjectGroupedSplit[] {
   return v2v3Splits.map(group => ({
     groupId:
-      group.group === SplitGroup.ETHPayout
-        ? Number(BigInt(NATIVE_TOKEN))
-        : 1, // TODO dont hardcode reserved token group as 1n
+      group.group === SplitGroup.ETHPayout ? Number(BigInt(NATIVE_TOKEN)) : 1, // TODO dont hardcode reserved token group as 1n
     splits: group.splits.map(split => ({
       preferAddToBalance: Boolean(split.preferClaimed),
       percent: split.percent,
@@ -135,10 +150,10 @@ export function transformV2V3SplitsToV4({
 export function transformV2V3FundAccessConstraintsToV4({
   v2V3FundAccessConstraints,
   primaryNativeTerminal,
-  currencyTokenAddress
+  currencyTokenAddress,
 }: {
   v2V3FundAccessConstraints: V2V3FundAccessConstraint[]
-  primaryNativeTerminal: Address,
+  primaryNativeTerminal: Address
   currencyTokenAddress: Address
 }): FundAccessLimitGroup[] {
   return v2V3FundAccessConstraints.map(constraint => ({
@@ -159,7 +174,7 @@ export function transformV2V3FundAccessConstraintsToV4({
   }))
 }
 
-export function generateV4LaunchTerminalConfigurationsArg({
+function generateV4LaunchTerminalConfigurationsArg({
   terminals,
   currencyTokenAddress,
 }: {

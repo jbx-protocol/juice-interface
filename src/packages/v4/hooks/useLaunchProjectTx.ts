@@ -32,7 +32,7 @@ export interface LaunchTxOpts {
  * Return the project ID created from a `launchProjectFor` transaction.
  * @param txReceipt receipt of `launchProjectFor` transaction
  */
-const getProjectIdFromLaunchReceipt = (
+export const getProjectIdFromLaunchReceipt = (
   txReceipt: WaitForTransactionReceiptReturnType,
 ): number => {
   const projectIdHex: string | undefined =
@@ -47,14 +47,14 @@ const getProjectIdFromLaunchReceipt = (
  * The contract addresses to use for deployment
  * @todo not ideal to hardcode these addresses
  */
-const SUPPORTED_JB_MULTITERMINAL_ADDRESS = {
+export const SUPPORTED_JB_MULTITERMINAL_ADDRESS = {
   '84532': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
   '421614': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
   '11155111': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
   '11155420': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
 }
 
-const SUPPORTED_JB_CONTROLLER_ADDRESS = {
+export const SUPPORTED_JB_CONTROLLER_ADDRESS = {
   '84532': '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
   '421614': '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
   '11155111': '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,

@@ -1,3 +1,6 @@
+import { TransactionCallbacks } from 'models/transaction'
+import { DEFAULT_JB_721_DELEGATE_VERSION } from 'packages/v2v3/hooks/defaultContracts/useDefaultJB721Delegate'
+import { useLaunchProjectWithNftsTx } from 'packages/v4/hooks/useLaunchProjectWithNftsTx'
 import { useCallback, useMemo } from 'react'
 import {
   useAppSelector,
@@ -5,10 +8,6 @@ import {
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/useAppSelector'
-
-import { TransactionCallbacks } from 'models/transaction'
-import { DEFAULT_JB_721_DELEGATE_VERSION } from 'packages/v2v3/hooks/defaultContracts/useDefaultJB721Delegate'
-import { useLaunchProjectWithNftsTx } from 'packages/v4/hooks/JB721Delegate/transactor/useLaunchProjectWithNftsTx'
 import { DEFAULT_NFT_FLAGS } from 'redux/slices/editingV2Project'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { buildJB721TierParams } from 'utils/nftRewards'
@@ -21,7 +20,7 @@ import { buildJB721TierParams } from 'utils/nftRewards'
  * @returns A function that deploys a project with NFT rewards.
   */
 export const useDeployNftProject = () => {
-  const launchProjectWithNftsTx = useLaunchProjectWithNftsTx() // v4ify this
+  const launchProjectWithNftsTx = useLaunchProjectWithNftsTx()
   const {
     projectMetadata,
     nftRewards,

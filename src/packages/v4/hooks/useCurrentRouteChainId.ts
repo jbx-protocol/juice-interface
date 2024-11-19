@@ -5,7 +5,7 @@ export function useCurrentRouteChainId() {
   const router = useRouter()
   const { chainName } = router.query
   if (!chainName) {
-    return null
+    return undefined
   }
 
   return chainNameMap[chainName as string]

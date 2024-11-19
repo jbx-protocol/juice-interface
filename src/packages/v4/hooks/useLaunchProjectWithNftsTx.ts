@@ -15,6 +15,7 @@ import {
 } from 'packages/v4/models/nfts'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
+import { ipfsUri } from 'utils/ipfs'
 import {
   Address,
   toBytes,
@@ -34,6 +35,7 @@ import {
   SUPPORTED_JB_CONTROLLER_ADDRESS,
   SUPPORTED_JB_MULTITERMINAL_ADDRESS,
 } from './useLaunchProjectTx'
+
 function createSalt() {
   const base: string = '0x' + Math.random().toString(16).slice(2) // idk lol
   const salt = toHex(toBytes(base, { size: 32 }))
@@ -65,7 +67,6 @@ export function useLaunchProjectWithNftsTx() {
   const defaultJBController = chainId
     ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainId]
     : undefined
-
   const defaultJBETHPaymentTerminal = chainId
     ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainId]
     : undefined
@@ -74,7 +75,7 @@ export function useLaunchProjectWithNftsTx() {
     : undefined
 
   const { writeContractAsync: writeLaunchProject } =
-    useWriteJb721TiersHookProjectDeployerLaunchProjectFor()
+  useWriteJb721TiersHookProjectDeployerLaunchProjectFor()
 
   return async (
     {
@@ -130,16 +131,21 @@ export function useLaunchProjectWithNftsTx() {
 
       return Promise.resolve(false)
     }
-    const _owner = owner?.length ? owner : userAddress
+    const _owner = (owner?.length ? owner : userAddress) as Address
 
     const deployTiered721HookData: JBDeploy721TiersHookConfig = {
       name: collectionName,
       symbol: collectionSymbol,
-      baseUri: '', // ?
-      tokenUriResolver: zeroAddress, // ?
-      contractUri: collectionUri, // ?
-      tiersConfig: tiers,
-      reserveBeneficiary: zeroAddress, //?;
+      baseUri: ipfsUri(''), // ?
+      tokenUriResolver: zeroAddress,
+      contractUri: ipfsUri(collectionUri),
+      tiersConfig: {
+        currency,
+        decimals: 18,
+        prices: zeroAddress,
+        tiers,
+      },
+      reserveBeneficiary: zeroAddress,
       flags,
     }
 
@@ -166,12 +172,17 @@ export function useLaunchProjectWithNftsTx() {
     })
 
     const args = [
-      owner,
+      _owner,
       deployTiered721HookData, //_deployTiered721HookData
-      launchProjectData, // _launchProjectData,
+      {
+        projectUri: launchProjectData[1],
+        rulesetConfigurations: launchProjectData[2],
+        terminalConfigurations: launchProjectData[3],
+        memo: launchProjectData[4],
+      }, // _launchProjectData,
       defaultJBController,
-      createSalt(),
-    ]
+      // createSalt(),
+    ] as const
 
     try {
       // SIMULATE TX: TODO update for nfts

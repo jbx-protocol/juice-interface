@@ -29,7 +29,6 @@ export const useDeployProject = () => {
   const isNftProject = useIsNftProject()
   const uploadNftRewards = useUploadNftRewards()
   const deployNftProject = useDeployNftProject()
-
   const deployStandardProject = useDeployStandardProject()
 
   const {

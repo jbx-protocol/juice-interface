@@ -123,10 +123,11 @@ export function transformFCMetadataToRulesetMetadata({
 }
 
 type LaunchProjectJBSplit = Omit<JBSplit, 'percent'> & { percent: number }
+
 export type LaunchV4ProjectGroupedSplit = Omit<
   V4GroupedSplits<SplitGroup>,
-  'splits'
-> & { splits: LaunchProjectJBSplit[] }
+  'splits' | 'groupId'
+> & { splits: LaunchProjectJBSplit[], groupId: bigint }
 
 export function transformV2V3SplitsToV4({
   v2v3Splits,
@@ -135,7 +136,7 @@ export function transformV2V3SplitsToV4({
 }): LaunchV4ProjectGroupedSplit[] {
   return v2v3Splits.map(group => ({
     groupId:
-      group.group === SplitGroup.ETHPayout ? Number(BigInt(NATIVE_TOKEN)) : 1, // TODO dont hardcode reserved token group as 1n
+      group.group === SplitGroup.ETHPayout ? BigInt(NATIVE_TOKEN) : 1n, // TODO dont hardcode reserved token group as 1n
     splits: group.splits.map(split => ({
       preferAddToBalance: Boolean(split.preferClaimed),
       percent: split.percent,

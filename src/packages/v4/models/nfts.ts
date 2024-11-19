@@ -1,5 +1,4 @@
 import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
-
 import { jb721TiersHookStoreAbi } from 'juice-sdk-react'
 import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
 import { Address, ContractFunctionReturnType } from 'viem'
@@ -8,23 +7,30 @@ import { FundAccessLimitGroup } from './fundAccessLimits'
 import { LaunchProjectJBTerminal } from './terminals'
 import { V4CurrencyOption } from './v4CurrencyOption'
 
-type JB721TierParams = Omit<
+/**
+ * @see https://github.com/Bananapus/nana-721-hook/blob/main/src/structs/JB721TierConfig.sol
+ */
+export type JB721TierConfig = Omit<
   ContractFunctionReturnType<
     typeof jb721TiersHookStoreAbi,
     'view',
     'tiersOf'
   >[0],
-  'id'
->
+  'id' | 'votingUnits'
+> & {
+  useReserveBeneficiaryAsDefault: boolean
+  useVotingUnits: boolean
+  votingUnits: number
+}
 
 type JB721InitTiersConfig = {
-  tiers: JB721TierParams[]
+  tiers: JB721TierConfig[]
   currency: number
   decimals: number
   prices: Address // JBPrices address
 }
 
-type JB721TiersHookFlags = {
+export type JB721TiersHookFlags = {
   noNewTiersWithReserves: boolean
   noNewTiersWithVotes: boolean
   noNewTiersWithOwnerMinting: boolean
@@ -70,7 +76,7 @@ interface DeployTiered721DelegateData {
   collectionName: string
   collectionSymbol: string
   currency: V4CurrencyOption
-  tiers: JB721TierParams[]
+  tiers: JB721TierConfig[]
   flags: JB721TiersHookFlags
 }
 

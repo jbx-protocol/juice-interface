@@ -21,10 +21,11 @@ const INFURA_IPFS_URLS = [
 ]
 
 const SCRIPT_SRC = [
-  'https://*.juicebox.money',
-  'https://static.hotjar.com',
-  'https://script.hotjar.com',
-  'https://cdn.usefathom.com',
+  'https://juicebox.money', // Trusted host
+  'https://*.juicebox.money', // Trusted subdomains
+  'https://static.hotjar.com', // Hotjar analytics
+  'https://script.hotjar.com', // Hotjar analytics
+  'https://cdn.usefathom.com', // Fathom analytics
   // Not working as unsafe-eval is required for metamask
   // `'sha256-kZ9E6/oLrki51Yx03/BugStfFrPlm8hjaFbaokympXo='`, // hotjar
   `'unsafe-eval'`, // hotjar
@@ -70,7 +71,7 @@ const CONNECT_SRC = [
   'https://*.supabase.co',
   'https://api.ensideas.com',
   'https://cloudflare-eth.com',
-  'https://rpc.sepolia.org/'
+  'https://rpc.sepolia.org/',
 ]
 
 const FRAME_ANCESTORS = [
@@ -177,33 +178,33 @@ const nextConfig = removeImports({
         ],
       },
       {
-        source: "/(.*)",
+        source: '/(.*)',
         headers: [
           {
-            key: "x-vercel-country",
-            value: "", // Allow this header to pass through
+            key: 'x-vercel-country',
+            value: '', // Allow this header to pass through
           },
         ],
       },
       {
-        source: "/(.*)",
+        source: '/(.*)',
         headers: [
           {
-            key: "X-Vercel-IP-Country-Region",
-            value: "", // Allow this header to pass through
+            key: 'X-Vercel-IP-Country-Region',
+            value: '', // Allow this header to pass through
           },
         ],
       },
       {
-        source: "/(.*)",
+        source: '/(.*)',
         headers: [
           {
-            key: "X-Vercel-IP-City",
-            value: "", // Allow this header to pass through
+            key: 'X-Vercel-IP-City',
+            value: '', // Allow this header to pass through
           },
         ],
       },
-    ];
+    ]
   },
   images: {
     remotePatterns: [

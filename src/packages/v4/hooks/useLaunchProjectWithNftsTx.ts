@@ -53,7 +53,7 @@ export const SUPPORTED_JB_721_TIER_STORE = {
 }
 
 /**
- * 
+ *
  * TODO still wip
  */
 export function useLaunchProjectWithNftsTx() {
@@ -132,12 +132,12 @@ export function useLaunchProjectWithNftsTx() {
     }
     const _owner = owner?.length ? owner : userAddress
 
-    const deployTiered721DelegateData: JBDeploy721TiersHookConfig = {
+    const deployTiered721HookData: JBDeploy721TiersHookConfig = {
       name: collectionName,
       symbol: collectionSymbol,
       baseUri: '', // ?
       tokenUriResolver: zeroAddress, // ?
-      contractUri: '', //collectionUri ; ?
+      contractUri: collectionUri, // ?
       tiersConfig: tiers,
       reserveBeneficiary: zeroAddress, //?;
       flags,
@@ -167,7 +167,7 @@ export function useLaunchProjectWithNftsTx() {
 
     const args = [
       owner,
-      deployTiered721DelegateData, //_deployTiered721DelegateData
+      deployTiered721HookData, //_deployTiered721HookData
       launchProjectData, // _launchProjectData,
       defaultJBController,
       createSalt(),

@@ -21,7 +21,7 @@ type JB721InitTiersConfig = {
   tiers: JB721TierParams[]
   currency: number
   decimals: number
-  prices: Address
+  prices: Address // JBPrices address
 }
 
 type JB721TiersHookFlags = {

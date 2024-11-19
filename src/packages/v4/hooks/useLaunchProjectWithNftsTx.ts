@@ -1,7 +1,3 @@
-import { waitForTransactionReceipt } from '@wagmi/core'
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
 import { DEFAULT_MEMO, NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
 import {
   jbPricesAddress,
@@ -9,33 +5,37 @@ import {
   useReadJb721TiersHookStoreTiersOf,
   useWriteJb721TiersHookProjectDeployerLaunchProjectFor,
 } from 'juice-sdk-react'
-import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import {
   JBDeploy721TiersHookConfig,
   LaunchProjectWithNftsTxArgs,
 } from 'packages/v4/models/nfts'
-import { useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
-import { ipfsUri } from 'utils/ipfs'
 import {
   Address,
+  WaitForTransactionReceiptReturnType,
   toBytes,
   toHex,
-  WaitForTransactionReceiptReturnType,
   zeroAddress,
 } from 'viem'
-import { sepolia } from 'viem/chains'
 import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
 } from '../utils/launchProjectTransformers'
-import { wagmiConfig } from '../wagmiConfig'
-import { useCurrentRouteChainId } from './useCurrentRouteChainId'
 import {
   LaunchTxOpts,
   SUPPORTED_JB_CONTROLLER_ADDRESS,
   SUPPORTED_JB_MULTITERMINAL_ADDRESS
 } from './useLaunchProjectTx'
+
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { useWallet } from 'hooks/Wallet'
+import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
+import { useContext } from 'react'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
+import { ipfsUri } from 'utils/ipfs'
+import { useChainId } from 'wagmi'
+import { wagmiConfig } from '../wagmiConfig'
 
 function createSalt() {
   const base: string = '0x' + Math.random().toString(16).slice(2) // idk lol
@@ -79,15 +79,17 @@ export function useLaunchProjectWithNftsTx() {
   const { addTransaction } = useContext(TxHistoryContext)
 
   const { userAddress } = useWallet()
-  const chainId = useCurrentRouteChainId() ?? sepolia.id // default to sepolia
+  const chainId = useChainId()
+  const chainIdStr = chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
+
   const defaultJBController = chainId
-    ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainId]
+    ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainIdStr]
     : undefined
   const defaultJBETHPaymentTerminal = chainId
-    ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainId]
+    ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainIdStr]
     : undefined
   const JBTiered721DelegateStoreAddress = chainId
-    ? SUPPORTED_JB_721_TIER_STORE[chainId]
+    ? SUPPORTED_JB_721_TIER_STORE[chainIdStr]
     : undefined
 
   const { writeContractAsync: writeLaunchProject } =
@@ -158,7 +160,7 @@ export function useLaunchProjectWithNftsTx() {
       tiersConfig: {
         currency,
         decimals: NATIVE_TOKEN_DECIMALS,
-        prices: jbPricesAddress[chainId],
+        prices: jbPricesAddress[chainIdStr],
         tiers,
       },
       reserveBeneficiary: zeroAddress,
@@ -209,7 +211,7 @@ export function useLaunchProjectWithNftsTx() {
       // })
 
       const hash = await writeLaunchProject({
-        chainId,
+        chainId: chainId as 84532 | 421614 | 11155111 | 11155420, // TODO: cleanup
         args,
       })
 

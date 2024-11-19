@@ -72,6 +72,8 @@ const CONNECT_SRC = [
   'https://api.ensideas.com',
   'https://cloudflare-eth.com',
   'https://rpc.sepolia.org/',
+  'https://sepolia-rollup.arbitrum.io/rpc', 
+  'https://sepolia.optimism.io'
 ]
 
 const FRAME_ANCESTORS = [

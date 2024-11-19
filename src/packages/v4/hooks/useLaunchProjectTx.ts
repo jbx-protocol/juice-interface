@@ -14,9 +14,8 @@ import { NATIVE_TOKEN } from 'juice-sdk-core'
 import { useWriteJbControllerLaunchProjectFor } from 'juice-sdk-react'
 import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
-import { sepolia } from 'viem/chains'
+import { useChainId } from 'wagmi'
 import { wagmiConfig } from '../wagmiConfig'
-import { useCurrentRouteChainId } from './useCurrentRouteChainId'
 
 const CREATE_EVENT_IDX = 2
 const PROJECT_ID_TOPIC_IDX = 1
@@ -69,14 +68,15 @@ export function useLaunchProjectTx() {
   const { writeContractAsync: writeLaunchProject } =
     useWriteJbControllerLaunchProjectFor()
 
-  const chainId = useCurrentRouteChainId() ?? sepolia.id // default to sepolia
-  const terminalAddress = chainId
-    ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainId]
-    : undefined
-
-  const controllerAddress = chainId
-    ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainId]
-    : undefined
+    const chainId = useChainId()
+    const chainIdStr = chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
+    const terminalAddress = chainId
+      ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainIdStr]
+      : undefined
+    
+    const controllerAddress = chainId
+      ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainIdStr]
+      : undefined
 
   const { addTransaction } = useContext(TxHistoryContext)
 

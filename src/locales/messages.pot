@@ -1865,6 +1865,9 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
+msgid "DeSci"
+msgstr ""
+
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr ""
 

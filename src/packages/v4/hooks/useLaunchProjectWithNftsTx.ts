@@ -2,8 +2,9 @@ import { waitForTransactionReceipt } from '@wagmi/core'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
-import { DEFAULT_MEMO, NATIVE_TOKEN } from 'juice-sdk-core'
+import { DEFAULT_MEMO, NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
 import {
+  jbPricesAddress,
   useJBContractContext,
   useReadJb721TiersHookStoreTiersOf,
   useWriteJb721TiersHookProjectDeployerLaunchProjectFor,
@@ -23,6 +24,7 @@ import {
   WaitForTransactionReceiptReturnType,
   zeroAddress,
 } from 'viem'
+import { sepolia } from 'viem/chains'
 import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
@@ -34,7 +36,6 @@ import {
   SUPPORTED_JB_CONTROLLER_ADDRESS,
   SUPPORTED_JB_MULTITERMINAL_ADDRESS
 } from './useLaunchProjectTx'
-import { sepolia } from 'viem/chains'
 
 function createSalt() {
   const base: string = '0x' + Math.random().toString(16).slice(2) // idk lol
@@ -151,13 +152,13 @@ export function useLaunchProjectWithNftsTx() {
     const deployTiered721HookData: JBDeploy721TiersHookConfig = {
       name: collectionName,
       symbol: collectionSymbol,
-      baseUri: ipfsUri(''), // ?
+      baseUri: ipfsUri(''),
       tokenUriResolver: zeroAddress,
       contractUri: ipfsUri(collectionUri),
       tiersConfig: {
         currency,
-        decimals: 18,
-        prices: zeroAddress,
+        decimals: NATIVE_TOKEN_DECIMALS,
+        prices: jbPricesAddress[chainId],
         tiers,
       },
       reserveBeneficiary: zeroAddress,

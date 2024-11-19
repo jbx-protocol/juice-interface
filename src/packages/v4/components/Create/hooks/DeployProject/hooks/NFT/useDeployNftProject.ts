@@ -1,7 +1,10 @@
-import { TransactionCallbacks } from 'models/transaction'
-import { useLaunchProjectWithNftsTx } from 'packages/v2v3/hooks/JB721Delegate/transactor/useLaunchProjectWithNftsTx'
-import { DEFAULT_JB_721_DELEGATE_VERSION } from 'packages/v2v3/hooks/defaultContracts/useDefaultJB721Delegate'
-import { useCallback, useMemo } from 'react'
+import { ONE_BILLION } from 'constants/numbers'
+import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
+import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
+import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
+import { useLaunchProjectWithNftsTx } from 'packages/v4/hooks/useLaunchProjectWithNftsTx'
+import { JB721TierConfig, JB721TiersHookFlags } from 'packages/v4/models/nfts'
+import { useCallback } from 'react'
 import {
   useAppSelector,
   useEditingV2V3FundAccessConstraintsSelector,
@@ -9,8 +12,72 @@ import {
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/useAppSelector'
 import { DEFAULT_NFT_FLAGS } from 'redux/slices/editingV2Project'
+import { encodeIpfsUri } from 'utils/ipfs'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
-import { buildJB721TierParams } from 'utils/nftRewards'
+import { sortNftsByContributionFloor } from 'utils/nftRewards'
+import { Address, parseEther, zeroAddress } from 'viem'
+export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
+
+function nftRewardTierToJB721TierConfig(
+  rewardTier: NftRewardTier,
+  cid: string,
+): JB721TierConfig {
+  const price = parseEther(rewardTier.contributionFloor.toString())
+  const initialSupply = rewardTier.maxSupply ?? DEFAULT_NFT_MAX_SUPPLY
+  const encodedIPFSUri = encodeIpfsUri(cid)
+
+  const reserveFrequency = rewardTier.reservedRate
+    ? rewardTier.reservedRate - 1
+    : 0
+  const reserveBeneficiary =
+    (rewardTier.beneficiary as Address | undefined) ?? zeroAddress
+  const votingUnits = parseInt(rewardTier.votingWeight ?? '0')
+  // should default to 0, with useVotingUnits `true`, to save gas
+
+  return {
+    price,
+    initialSupply,
+    votingUnits,
+    reserveFrequency,
+    reserveBeneficiary,
+    encodedIPFSUri,
+    allowOwnerMint: false,
+    useReserveBeneficiaryAsDefault: false,
+    transfersPausable: false,
+    useVotingUnits: true,
+    cannotBeRemoved: false,
+    cannotIncreaseDiscountPercent: false,
+    discountPercent: 0,
+    remainingSupply: initialSupply,
+    category: DEFAULT_JB_721_TIER_CATEGORY,
+    resolvedUri: '',
+  }
+}
+
+function buildJB721TierParams({
+  cids, // MUST BE SORTED BY CONTRIBUTION FLOOR (TODO: not ideal)
+  rewardTiers,
+}: {
+  cids: string[]
+  rewardTiers: NftRewardTier[]
+}): JB721TierConfig[] {
+  const sortedRewardTiers = sortNftsByContributionFloor(rewardTiers)
+
+  return cids.map((cid, index) => {
+    const rewardTier = sortedRewardTiers[index]
+
+    return nftRewardTierToJB721TierConfig(rewardTier, cid)
+  })
+}
+
+function toV4Flags(v2v3Flags: JBTiered721Flags): JB721TiersHookFlags {
+  return {
+    noNewTiersWithOwnerMinting: v2v3Flags.lockManualMintingChanges,
+    noNewTiersWithReserves: v2v3Flags.lockReservedTokenChanges,
+    noNewTiersWithVotes: v2v3Flags.lockVotingUnitChanges,
+    preventOverspending: v2v3Flags.preventOverspending,
+  }
+}
 
 /**
  * Hook that returns a function that deploys a project with NFT rewards.
@@ -33,22 +100,12 @@ export const useDeployNftProject = () => {
   const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
   const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
 
-  const collectionName = useMemo(
-    () =>
-      nftRewards.collectionMetadata.name
-        ? nftRewards.collectionMetadata.name
-        : projectMetadata.name,
-    [nftRewards.collectionMetadata.name, projectMetadata.name],
-  )
-  const collectionSymbol = useMemo(
-    () => nftRewards.collectionMetadata.symbol ?? '',
-    [nftRewards.collectionMetadata.symbol],
-  )
-  const nftFlags = useMemo(
-    () => nftRewards.flags ?? DEFAULT_NFT_FLAGS,
-    [nftRewards.flags],
-  )
-  const governanceType = nftRewards.governanceType
+  const collectionName = nftRewards.collectionMetadata.name
+    ? nftRewards.collectionMetadata.name
+    : projectMetadata.name
+  const collectionSymbol = nftRewards.collectionMetadata.symbol ?? ''
+  const nftFlags = nftRewards.flags ?? DEFAULT_NFT_FLAGS
+  // const governanceType = nftRewards.governanceType
   const currency = nftRewards.pricing.currency
 
   /**
@@ -63,15 +120,14 @@ export const useDeployNftProject = () => {
       rewardTierCids,
       nftCollectionMetadataUri,
 
-      onDone,
-      onConfirmed,
-      onCancelled,
-      onError,
+      onTransactionPending,
+      onTransactionConfirmed,
+      onTransactionError,
     }: {
       metadataCid: string
       rewardTierCids: string[]
       nftCollectionMetadataUri: string
-    } & TransactionCallbacks) => {
+    } & LaunchTxOpts) => {
       if (!collectionName) throw new Error('No collection name or project name')
       if (!(rewardTierCids.length && nftRewards.rewardTiers))
         throw new Error('No NFTs')
@@ -80,8 +136,8 @@ export const useDeployNftProject = () => {
       const tiers = buildJB721TierParams({
         cids: rewardTierCids,
         rewardTiers: nftRewards.rewardTiers,
-        version: DEFAULT_JB_721_DELEGATE_VERSION,
       })
+      const flags = toV4Flags(nftFlags)
 
       return await launchProjectWithNftsTx(
         {
@@ -90,9 +146,8 @@ export const useDeployNftProject = () => {
             collectionName,
             collectionSymbol,
             currency,
-            governanceType,
             tiers,
-            flags: nftFlags,
+            flags,
           },
           projectData: {
             owner: inputProjectOwner?.length ? inputProjectOwner : undefined,
@@ -108,10 +163,9 @@ export const useDeployNftProject = () => {
           },
         },
         {
-          onDone,
-          onConfirmed,
-          onCancelled,
-          onError,
+          onTransactionPending,
+          onTransactionConfirmed,
+          onTransactionError,
         },
       )
     },
@@ -123,7 +177,6 @@ export const useDeployNftProject = () => {
       reservedTokensGroupedSplits,
       launchProjectWithNftsTx,
       collectionSymbol,
-      governanceType,
       inputProjectOwner,
       fundingCycleData,
       mustStartAtOrAfter,

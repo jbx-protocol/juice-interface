@@ -1,15 +1,19 @@
-import { uploadProjectMetadata } from 'lib/api/ipfs'
-import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
 import { useCallback, useState } from 'react'
-import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import {
   useAppSelector,
   useEditingV2V3FundAccessConstraintsSelector,
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/useAppSelector'
+
+import { uploadProjectMetadata } from 'lib/api/ipfs'
+import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
 import { emitErrorNotification } from 'utils/notifications'
+import { useDeployNftProject } from './hooks/NFT/useDeployNftProject'
+import { useIsNftProject } from './hooks/NFT/useIsNftProject'
+import { useUploadNftRewards } from './hooks/NFT/useUploadNftRewards'
 import { useDeployStandardProject } from './hooks/useDeployStandardProject'
 
 const JUICEBOX_DOMAIN = 'juicebox'
@@ -22,10 +26,9 @@ export const useDeployProject = () => {
   const [isDeploying, setIsDeploying] = useState<boolean>(false)
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  // const isNftProject = useIsNftProject()
-  // const uploadNftRewards = useUploadNftRewards()
-  // const deployNftProject = useDeployNftProject()
-
+  const isNftProject = useIsNftProject()
+  const uploadNftRewards = useUploadNftRewards()
+  const deployNftProject = useDeployNftProject()
   const deployStandardProject = useDeployStandardProject()
 
   const {
@@ -89,15 +92,15 @@ export const useDeployProject = () => {
         setIsDeploying(false)
         throw new Error('Error deploying project.')
       }
-      // let nftCids: Awaited<ReturnType<typeof uploadNftRewards>> | undefined
-      // try {
-      //   if (isNftProject) {
-      //     nftCids = await uploadNftRewards()
-      //   }
-      // } catch (error) {
-      //   handleDeployFailure(error)
-      //   return
-      // }
+      let nftCids: Awaited<ReturnType<typeof uploadNftRewards>> | undefined
+      try {
+        if (isNftProject) {
+          nftCids = await uploadNftRewards()
+        }
+      } catch (error) {
+        handleDeployFailure(error)
+        return
+      }
 
       let softTargetAmount: string | undefined
       let softTargetCurrency: string | undefined
@@ -120,42 +123,42 @@ export const useDeployProject = () => {
       }
 
       try {
-        // let tx
-        // if (isNftProject) {
-        //   tx = await deployNftProject({
-        //     metadataCid: projectMetadataCid,
-        //     rewardTierCids: nftCids!.rewardTiers,
-        //     nftCollectionMetadataUri: nftCids!.nfCollectionMetadata,
-        //     ...operationCallbacks(onProjectDeployed),
-        //   })
-        // } else {
-        const tx = await deployStandardProject({
-          metadataCid: projectMetadataCid,
-          ...operationCallbacks(onProjectDeployed),
-        })
-        // }
-        // if (!tx) {
-        setIsDeploying(false)
-        setTransactionPending(false)
+        let tx
+        if (isNftProject) {
+          tx = await deployNftProject({
+            metadataCid: projectMetadataCid,
+            rewardTierCids: nftCids!.rewardTiers,
+            nftCollectionMetadataUri: nftCids!.nfCollectionMetadata,
+            ...operationCallbacks(onProjectDeployed),
+          })
+        } else {
+          tx = await deployStandardProject({
+            metadataCid: projectMetadataCid,
+            ...operationCallbacks(onProjectDeployed),
+          })
+        }
+        if (!tx) {
+          setIsDeploying(false)
+          setTransactionPending(false)
         return
-        // }
+        }
       } catch (error) {
         handleDeployFailure(error)
         return
       }
     },
     [
-      // deployNftProject,
+      deployNftProject,
       deployStandardProject,
       fundAccessConstraints,
       fundingCycleData,
       fundingCycleMetadata,
       handleDeployFailure,
-      // isNftProject,
+      isNftProject,
       operationCallbacks,
       postPayModal,
       projectMetadata,
-      // uploadNftRewards,
+      uploadNftRewards,
     ],
   )
   return {

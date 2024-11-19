@@ -10,7 +10,9 @@ import Loading from 'components/Loading'
 import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
 import { useRouter } from 'next/router'
+import { CreateBadge } from './components/CreateBadge'
 import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
+import { NftRewardsPage } from './components/pages/NftRewards/NftRewardsPage'
 import { PayoutsPage } from './components/pages/PayoutsPage/PayoutsPage'
 import { ProjectDetailsPage } from './components/pages/ProjectDetails/ProjectDetailsPage'
 import { ProjectTokenPage } from './components/pages/ProjectToken/ProjectTokenPage'
@@ -86,7 +88,7 @@ export function Create() {
           >
             <ProjectTokenPage />
           </Wizard.Page>
-          {/* <Wizard.Page
+          <Wizard.Page
             name="nftRewards"
             title={
               <div className="flex items-center gap-3">
@@ -99,7 +101,7 @@ export function Create() {
             }
           >
             <NftRewardsPage />
-          </Wizard.Page> */}
+          </Wizard.Page>
           <Wizard.Page
             name="reconfigurationRules"
             title={<Trans>Edit Deadline</Trans>}

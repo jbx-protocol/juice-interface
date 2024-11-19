@@ -22,6 +22,7 @@ import {
   serializeV2V3FundingCycleData,
   serializeV2V3FundingCycleMetadata,
 } from 'packages/v2v3/utils/serializers'
+import { JB721TiersHookFlags } from 'packages/v4/models/nfts'
 import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
 import { CreateState, ProjectState } from './types'
 
@@ -89,6 +90,14 @@ export const DEFAULT_NFT_FLAGS: JBTiered721Flags = {
   lockReservedTokenChanges: false,
   lockVotingUnitChanges: false,
   lockManualMintingChanges: false,
+  preventOverspending: false,
+}
+
+
+export const DEFAULT_NFT_FLAGS_V4: JB721TiersHookFlags = {
+  noNewTiersWithReserves: false,
+  noNewTiersWithVotes: false,
+  noNewTiersWithOwnerMinting: false,
   preventOverspending: false,
 }
 

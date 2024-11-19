@@ -21,7 +21,7 @@ export const SuccessTokensItem = () => {
           <span className="text-sm font-medium">
             <Trans>Project tokens</Trans>
           </span>
-          <CartItemBadge className="ml-2">Token</CartItemBadge>
+          <CartItemBadge className="w-fit">Token</CartItemBadge>
         </div>
         <span className="text-sm text-grey-500 dark:text-slate-200">
           {projectPayReceipt.tokensReceived}

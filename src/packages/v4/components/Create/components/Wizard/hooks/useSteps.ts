@@ -1,6 +1,7 @@
+import { useCallback, useContext, useMemo } from 'react'
+
 import { t } from '@lingui/macro'
 import { CreatePage } from 'models/createPage'
-import { useCallback, useContext, useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
 import { WizardContext } from '../contexts/WizardContext'
@@ -11,7 +12,7 @@ const stepNames = (): Record<string, string> => {
     fundingCycles: t`Rulesets`,
     payouts: t`Payouts`,
     projectToken: t`Token`,
-    // nftRewards: t`NFTs`,
+    nftRewards: t`NFTs`,
     reconfigurationRules: t`Deadline`,
     reviewDeploy: t`Deploy`,
   }

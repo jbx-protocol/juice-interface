@@ -30,17 +30,32 @@ import {
 import { wagmiConfig } from '../wagmiConfig'
 import { useCurrentRouteChainId } from './useCurrentRouteChainId'
 import {
-  getProjectIdFromLaunchReceipt,
   LaunchTxOpts,
   SUPPORTED_JB_CONTROLLER_ADDRESS,
-  SUPPORTED_JB_MULTITERMINAL_ADDRESS,
+  SUPPORTED_JB_MULTITERMINAL_ADDRESS
 } from './useLaunchProjectTx'
+import { sepolia } from 'viem/chains'
 
 function createSalt() {
   const base: string = '0x' + Math.random().toString(16).slice(2) // idk lol
   const salt = toHex(toBytes(base, { size: 32 }))
 
   return salt
+}
+
+/**
+ * Return the project ID created from a `launchProjectFor` transaction.
+ * @param txReceipt receipt of `launchProjectFor` transaction
+ */
+export const getProjectIdFromNftLaunchReceipt = (
+  txReceipt: WaitForTransactionReceiptReturnType,
+): number => {
+  const projectIdHex: string | undefined =
+    txReceipt?.logs[0]?.topics?.[1]
+  if (!projectIdHex) return 0
+
+  const projectId = parseInt(projectIdHex, 16)
+  return projectId
 }
 
 /**
@@ -63,7 +78,7 @@ export function useLaunchProjectWithNftsTx() {
   const { addTransaction } = useContext(TxHistoryContext)
 
   const { userAddress } = useWallet()
-  const chainId = useCurrentRouteChainId()
+  const chainId = useCurrentRouteChainId() ?? sepolia.id // default to sepolia
   const defaultJBController = chainId
     ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainId]
     : undefined
@@ -206,7 +221,7 @@ export function useLaunchProjectWithNftsTx() {
           hash,
         })
 
-      const newProjectId = getProjectIdFromLaunchReceipt(transactionReceipt)
+      const newProjectId = getProjectIdFromNftLaunchReceipt(transactionReceipt)
 
       onTransactionConfirmedCallback(hash, newProjectId)
     } catch (e) {

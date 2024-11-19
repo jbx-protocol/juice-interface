@@ -39,6 +39,24 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     rpcUrl: `https://sepolia.infura.io/v3/${infuraId}`,
     token: 'SepETH',
   },
+  421614: {
+    name: NetworkName.arbitrumSepolia,
+    label: 'Arbitrum Sepolia Testnet',
+    color: '#96bedc',
+    chainId: 421614,
+    token: 'ArbETH',
+    rpcUrl: `https://sepolia-rollup.arbitrum.io/rpc`,
+    blockExplorer: 'https://sepolia-explorer.arbitrum.io',
+  },
+  11155420: {
+    name: NetworkName.optimismSepolia,
+    label: 'Optimism Sepolia Testnet',
+    color: '#f01f70',
+    chainId: 11155420, 
+    token: 'OpETH',
+    rpcUrl: `https://sepolia.optimism.io`,
+    blockExplorer: 'https://optimism-sepolia.blockscout.com',
+  },
 }
 
 export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(

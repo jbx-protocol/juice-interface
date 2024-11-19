@@ -1,6 +1,8 @@
+import { Checkbox, Form } from 'antd'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Checkbox, Form } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/modals/TransactionModal'
@@ -10,7 +12,6 @@ import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionMod
 import useMobile from 'hooks/useMobile'
 import { useModal } from 'hooks/useModal'
 import { useRouter } from 'next/router'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
@@ -80,8 +81,8 @@ export const ReviewDeployPage = () => {
     goToPage?.('projectDetails')
     dispatch(editingV2ProjectActions.resetState())
   }, [dispatch, goToPage, router])
-
   const onFinish = useCallback(async () => {
+
     if (chainUnsupported) {
       await changeNetworks()
       return

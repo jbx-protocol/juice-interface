@@ -1,11 +1,12 @@
 import { LaunchTxOpts, useLaunchProjectTx } from 'packages/v4/hooks/useLaunchProjectTx'
-import { useCallback } from 'react'
 import {
   useAppSelector,
   useEditingV2V3FundAccessConstraintsSelector,
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/useAppSelector'
+
+import { useCallback } from 'react'
 
 /**
  * Hook that returns a function that deploys a v4 project.
@@ -35,6 +36,7 @@ export const useDeployStandardProject = () => {
       metadataCid: string
     } & LaunchTxOpts) => {
       const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
+
       return await launchProjectTx(
         {
           owner: inputProjectOwner?.length ? inputProjectOwner : undefined,

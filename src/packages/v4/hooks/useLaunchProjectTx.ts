@@ -135,7 +135,6 @@ export function useLaunchProjectTx() {
         //   functionName: 'launchProjectFor',
         //   args,
         // })
-
         const hash = await writeLaunchProject({
           chainId,
           address: controllerAddress,

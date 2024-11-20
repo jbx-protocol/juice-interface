@@ -2,7 +2,6 @@ import {
   useReadJb721TiersHookStoreAddress,
   useReadJb721TiersHookStoreTiersOf,
 } from 'juice-sdk-react'
-import { MAX_NFT_REWARD_TIERS } from 'packages/v2v3/constants/nftRewards'
 import { Address } from 'viem'
 
 export function useV4NftTiers({
@@ -26,7 +25,7 @@ export function useV4NftTiers({
           [], // _categories
           false, // _includeResolvedUri, return in each tier a result from a tokenUriResolver if one is included in the delegate
           0n, // _startingId
-          BigInt(limit ?? MAX_NFT_REWARD_TIERS),
+          BigInt(limit ?? 69), // MAX_NFT_REWARD_TIERS
         ] as const)
       : undefined
 

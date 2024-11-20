@@ -1,7 +1,6 @@
-import { useJBContractContext, useJBRulesetMetadata } from 'juice-sdk-react'
+import { useJBRulesetMetadata } from 'juice-sdk-react'
 import { JB721GovernanceType, NftRewardTier } from 'models/nftRewards'
 import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
-import { useNftCollectionPricingContext } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'
 import { useEffect, useMemo, useState } from 'react'
 import {
   DEFAULT_NFT_FLAGS,
@@ -15,7 +14,6 @@ export const V4NftRewardsProvider: React.FC<
   React.PropsWithChildren<unknown>
 > = ({ children }) => {
   const { data } = useJBRulesetMetadata()
-  const { projectId } = useJBContractContext()
 
   const [firstLoad, setFirstLoad] = useState(true)
 
@@ -36,8 +34,6 @@ export const V4NftRewardsProvider: React.FC<
   const loadedCIDs = CIDsOfNftRewardTiersResponse(
     tierData.map(t => ({ encodedIPFSUri: t.encodedIPFSUri })),
   )
-
-  const { data: pricing } = useNftCollectionPricingContext()
 
   // // fetch NFT metadata (its image, name etc.) from ipfs
   // const { data: loadedRewardTiers, isLoading: nftRewardTiersLoading } =
@@ -80,7 +76,8 @@ export const V4NftRewardsProvider: React.FC<
   const contextData = {
     nftRewards: {
       rewardTiers,
-      pricing: pricing ?? DEFAULT_NFT_PRICING,
+      // pricing: pricing ?? DEFAULT_NFT_PRICING, // TODO wip
+      pricing: DEFAULT_NFT_PRICING,
       // TODO: Load governance type
       governanceType: JB721GovernanceType.NONE,
       CIDs,
@@ -93,7 +90,7 @@ export const V4NftRewardsProvider: React.FC<
       postPayModal: undefined,
       // postPayModal: projectMetadata?.nftPaymentSuccessModal,
       // flags: flags ?? DEFAULT_NFT_FLAGS, TODO wip
-      flags: DEFAULT_NFT_FLAGS
+      flags: DEFAULT_NFT_FLAGS,
     },
     loading: nftsLoading,
   }

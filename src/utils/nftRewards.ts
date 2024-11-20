@@ -11,19 +11,18 @@ import {
   JB721GovernanceType,
   JB721PricingParams,
   JB721TierParams,
-  JB721TierV3,
   JBDeployTiered721DelegateData,
   JBTiered721Flags,
   JB_721_TIER_PARAMS_V3_1,
   JB_721_TIER_PARAMS_V3_2,
-  JB_721_TIER_V3_2,
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
-  NftRewardTier,
+  NftRewardTier
 } from 'models/nftRewards'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
 import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
+import { Hash } from 'viem'
 
 export function sortNftsByContributionFloor(
   rewardTiers: NftRewardTier[],
@@ -67,7 +66,9 @@ export function getNftRewardOfFloor({
 
 // returns an array of CIDs from a given array of RewardTier obj's
 export function CIDsOfNftRewardTiersResponse(
-  nftRewardTiersResponse: JB721TierV3[] | JB_721_TIER_V3_2[] | undefined,
+  nftRewardTiersResponse: {
+    encodedIPFSUri: Hash
+  }[],
 ): string[] {
   const cids =
     nftRewardTiersResponse

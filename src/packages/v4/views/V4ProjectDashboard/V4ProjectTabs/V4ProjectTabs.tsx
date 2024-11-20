@@ -1,14 +1,23 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  Fragment,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { ProjectTab } from 'components/Project/ProjectTabs/ProjectTab'
 import { useOnScreen } from 'hooks/useOnScreen'
+import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import V4AboutPanel from './V4AboutPanel'
 import { V4ActivityPanel } from './V4ActivityPanel/V4ActivityPanel'
 import { V4CyclesPayoutsPanel } from './V4CyclesPayoutsPanel/V4CyclesPayoutsPanel'
+import { V4NftRewardsPanel } from './V4NftRewardsPanel/V4NftRewardsPanel'
 import { V4TokensPanel } from './V4TokensPanel/V4TokensPanel'
 
 type ProjectTabConfig = {
@@ -20,7 +29,11 @@ type ProjectTabConfig = {
 
 export const V4ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
-
+  const {
+    nftRewards: { rewardTiers },
+  } = useContext(NftRewardsContext)
+  const hasNftRewards = (rewardTiers ?? []).length > 0
+  const showNftRewards = hasNftRewards
   const containerRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
   const isPanelVisible = useOnScreen(panelRef)
@@ -48,12 +61,12 @@ export const V4ProjectTabs = ({ className }: { className?: string }) => {
     () => [
       { id: 'activity', name: t`Activity`, panel: <V4ActivityPanel /> },
       { id: 'about', name: t`About`, panel: <V4AboutPanel /> },
-      // {
-      //   id: 'nft_rewards',
-      //   name: t`NFTs`,
-      //   panel: <NftRewardsPanel />,
-      //   hideTab: !showNftRewards,
-      // },
+      {
+        id: 'nft_rewards',
+        name: t`NFTs`,
+        panel: <V4NftRewardsPanel />,
+        hideTab: !showNftRewards,
+      },
       {
         id: 'cycle_payouts',
         name: t`Cycles & Payouts`,

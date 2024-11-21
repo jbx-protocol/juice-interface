@@ -50,14 +50,18 @@ export async function queryAllSGProjectsForServer() {
       chainId: readNetwork.chainId,
     }
   }) as unknown as Json<Pick<Project & { chainId: number }, SGSBCompareKey>>[]
-  const _resSepoliaV4 = resSepoliaV4.map(p => {
-    return {
-      ...p,
-      id: getSubgraphIdForProject(PV_V4, p.projectId), // Patch in the subgraph ID for V4 projects (to be consitent with legacy subgraph)
-      pv: PV_V4, // Patch in the PV for V4 projects,
-      chainId: sepolia.id,
-    }
-  }) as unknown as Json<Pick<Project & { chainId: number }, SGSBCompareKey>>[]
+  const _resSepoliaV4 = process.env.NEXT_PUBLIC_V4_ENABLED
+    ? (resSepoliaV4.map(p => {
+        return {
+          ...p,
+          id: getSubgraphIdForProject(PV_V4, p.projectId), // Patch in the subgraph ID for V4 projects (to be consitent with legacy subgraph)
+          pv: PV_V4, // Patch in the PV for V4 projects,
+          chainId: sepolia.id,
+        }
+      }) as unknown as Json<
+        Pick<Project & { chainId: number }, SGSBCompareKey>
+      >[])
+    : []
 
   return [..._res, ..._resSepoliaV4].map(formatSGProjectForDB)
 }

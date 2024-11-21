@@ -72,8 +72,8 @@ const CONNECT_SRC = [
   'https://api.ensideas.com',
   'https://cloudflare-eth.com',
   'https://rpc.sepolia.org/',
-  'https://sepolia-rollup.arbitrum.io/rpc', 
-  'https://sepolia.optimism.io'
+  'https://sepolia-rollup.arbitrum.io/rpc',
+  'https://sepolia.optimism.io',
 ]
 
 const FRAME_ANCESTORS = [
@@ -126,6 +126,7 @@ const SECURITY_HEADERS = [
 const nextConfig = removeImports({
   experimental: {
     esmExternals: true,
+    optimizePackageImports: ['juice-sdk-core', 'juice-sdk-react'],
   },
   staticPageGenerationTimeout: 90,
   webpack: config => {

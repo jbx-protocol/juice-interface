@@ -1,4 +1,3 @@
-import { geolocation } from '@vercel/functions'
 import { getLogger } from 'lib/logger'
 import { NextRequest, NextResponse } from 'next/server'
 import { fetchProjectIdForHandle } from 'pages/api/juicebox/project/[projectHandle]'
@@ -16,31 +15,31 @@ const GEOFENCED_PROJECT_IDS: {
   // { path: '/v2/p/64', projectId: 64, blockedCountries: ['AU'] }, // example
 ]
 
-function geofenceCheck(projectId: number, request: NextRequest) {
-  const url = request.nextUrl
+// function geofenceCheck(projectId: number, request: NextRequest) {
+//   const url = request.nextUrl
 
-  const country = geolocation(request).country
-  logger.info('🌎 Geofence check', {
-    country,
-    projectId,
-    geo: geolocation(request),
-  })
+//   const country = geolocation(request).country
+//   logger.info('🌎 Geofence check', {
+//     country,
+//     projectId,
+//     geo: geolocation(request),
+//   })
 
-  if (
-    country &&
-    GEOFENCED_PROJECT_IDS.find(
-      p => p.projectId === projectId,
-    )?.blockedCountries.includes(country)
-  ) {
-    logger.info('Geofenced project', {
-      originalPathname: request.nextUrl.pathname,
-      newPathname: '/404',
-    })
-    url.pathname = '/404'
+//   if (
+//     country &&
+//     GEOFENCED_PROJECT_IDS.find(
+//       p => p.projectId === projectId,
+//     )?.blockedCountries.includes(country)
+//   ) {
+//     logger.info('Geofenced project', {
+//       originalPathname: request.nextUrl.pathname,
+//       newPathname: '/404',
+//     })
+//     url.pathname = '/404'
 
-    return url
-  }
-}
+//     return url
+//   }
+// }
 
 export async function middleware(request: NextRequest) {
   logger.info('middleware request', { pathname: request.nextUrl.pathname })
@@ -49,13 +48,13 @@ export async function middleware(request: NextRequest) {
       return
     }
 
-    const projectId = parseInt(request.nextUrl.pathname.split('/').reverse()[0])
-    const newUrl = geofenceCheck(projectId, request)
-    if (newUrl) {
-      return NextResponse.rewrite(newUrl)
-    }
+    // const projectId = parseInt(request.nextUrl.pathname.split('/').reverse()[0])
+    // const newUrl = geofenceCheck(projectId, request)
+    // if (newUrl) {
+    //   return NextResponse.rewrite(newUrl)
+    // }
 
-    return
+    // return
   }
 
   // If request is for a handle id, add the search param with `isHandle`.
@@ -91,10 +90,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.rewrite(url)
   }
 
-  const geofenceRedirect = geofenceCheck(projectId, request)
-  if (geofenceRedirect) {
-    return NextResponse.rewrite(geofenceRedirect)
-  }
+  // const geofenceRedirect = geofenceCheck(projectId, request)
+  // if (geofenceRedirect) {
+  //   return NextResponse.rewrite(geofenceRedirect)
+  // }
 
   url.pathname = `/v2/p/${projectId}${trailingPath ? `/${trailingPath}` : ''}`
 

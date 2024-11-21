@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import Link from 'next/link'
-import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { helpPagePath } from 'utils/helpPagePath'
 
 export const ISSUE_ERC20_EXPLANATION = (
@@ -33,19 +32,22 @@ export const CYCLE_EXPLANATION = (
       supporters.
     </p>
     <p>
-      This choice isn't permanent — you can switch between locked and unlocked rulesets
-      in the future.
+      This choice isn't permanent — you can switch between locked and unlocked
+      rulesets in the future.
     </p>
   </Trans>
 )
 
 export const RULESET_EXPLANATION = (
   <Trans>
-    <p>With unlocked ruleset cycles, you can edit your project's rules at any time.</p>
     <p>
-      With locked rulesets, you can lock your project's rules for a period of time
-      (like 3 minutes, 2 years, or 14 days), helping you build trust with your
-      supporters.
+      With unlocked ruleset cycles, you can edit your project's rules at any
+      time.
+    </p>
+    <p>
+      With locked rulesets, you can lock your project's rules for a period of
+      time (like 3 minutes, 2 years, or 14 days), helping you build trust with
+      your supporters.
     </p>
     <p>
       This choice isn't permanent — you can switch between locked and unlocked
@@ -60,7 +62,6 @@ export const LOCKED_PAYOUT_EXPLANATION = (
     the cycle is edited.
   </Trans>
 )
-
 
 export const DISTRIBUTION_LIMIT_EXPLANATION = (
   <Trans>
@@ -258,8 +259,7 @@ export const FEES_EXPLANATION = (
   <Trans>
     Payouts to other Juicebox projects don't incur fees. A 2.5% fee is taken
     from all other payouts. This project's owner will receive{' '}
-    <Link href={v2v3ProjectRoute({ projectId: 1 })}>JBX</Link> in exchange for
-    fees paid.{' '}
+    <Link href="/v2/p/1">JBX</Link> in exchange for fees paid.{' '}
     <ExternalLink href={helpPagePath(`/dao/jbx/`)}>Learn more</ExternalLink>.
   </Trans>
 )

@@ -4,21 +4,19 @@ import { Form } from 'antd'
 import { NftPostPayModal } from 'components/NftRewards/NftPostPayModal'
 import TooltipLabel from 'components/TooltipLabel'
 import { CreateButton } from 'components/buttons/CreateButton/CreateButton'
-
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { useModal } from 'hooks/useModal'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { NftPostPayModalConfig } from 'models/nftRewards'
 
 export function NftPaymentSuccessFormItems({
   hidePreview,
+  postPayModalData,
 }: {
   hidePreview?: boolean
+  postPayModalData: NftPostPayModalConfig | undefined
 }) {
   const postPayModal = useModal()
-  const postPayModalData = useAppSelector(
-    state => state.editingV2Project.nftRewards.postPayModal,
-  )
   return (
     <>
       <div className="flex flex-col gap-4 pt-3 pb-2">

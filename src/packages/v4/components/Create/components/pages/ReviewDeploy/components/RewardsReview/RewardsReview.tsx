@@ -4,22 +4,21 @@ import { NftRewardTier } from 'models/nftRewards'
 import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
 import { formatEnabled } from 'utils/format/formatBoolean'
 import { v4 } from 'uuid'
 import { ReviewDescription } from '../ReviewDescription'
 
 export const RewardsReview = () => {
-  const {
-    nftRewards: { rewardTiers, flags },
-    fundingCycleMetadata,
-  } = useAppSelector(state => state.editingV2Project)
+  const { nftRewards: nftRewardsData, fundingCycleMetadata } = useAppSelector(
+    state => state.creatingV2Project,
+  )
 
   const dispatch = useAppDispatch()
 
   const rewards: NftRewardTier[] = useMemo(() => {
     return (
-      rewardTiers?.map(t => ({
+      nftRewardsData.rewardTiers?.map(t => ({
         id: parseInt(v4()),
         name: t.name,
         contributionFloor: t.contributionFloor,
@@ -33,12 +32,12 @@ export const RewardsReview = () => {
         votingWeight: t.votingWeight,
       })) ?? []
     )
-  }, [rewardTiers])
+  }, [nftRewardsData.rewardTiers])
 
   const setRewards = useCallback(
     (rewards: NftRewardTier[]) => {
       dispatch(
-        editingV2ProjectActions.setNftRewardTiers(
+        creatingV2ProjectActions.setNftRewardTiers(
           rewards.map(reward => ({
             contributionFloor: reward.contributionFloor,
             maxSupply: reward.maxSupply,
@@ -63,12 +62,16 @@ export const RewardsReview = () => {
   }, [fundingCycleMetadata.useDataSourceForRedeem])
 
   const preventOverspending = useMemo(() => {
-    return formatEnabled(flags.preventOverspending)
-  }, [flags.preventOverspending])
+    return formatEnabled(nftRewardsData.flags.preventOverspending)
+  }, [nftRewardsData.flags.preventOverspending])
 
   return (
     <div className="flex flex-col gap-12">
-      <RewardsList value={rewards} onChange={setRewards} />
+      <RewardsList
+        nftRewardsData={nftRewardsData}
+        value={rewards}
+        onChange={setRewards}
+      />
       <div className="flex flex-col gap-12 md:flex-row">
         <ReviewDescription
           title={t`Use NFTs for redemptions`}

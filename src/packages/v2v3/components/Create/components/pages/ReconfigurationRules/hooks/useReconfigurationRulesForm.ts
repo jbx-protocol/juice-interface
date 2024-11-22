@@ -6,7 +6,7 @@ import { useAvailableReconfigurationStrategies } from 'packages/v2v3/components/
 import { useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
 import { isEqualAddress, isZeroAddress } from 'utils/address'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
@@ -47,7 +47,7 @@ export const useReconfigurationRulesForm = () => {
     fundingCycleData: { ballot },
     reconfigurationRuleSelection,
     fundingCycleMetadata,
-  } = useAppSelector(state => state.editingV2Project)
+  } = useAppSelector(state => state.creatingV2Project)
   const initialValues: ReconfigurationRulesFormProps | undefined =
     useMemo(() => {
       const pausePayments = fundingCycleMetadata.pausePay
@@ -128,15 +128,17 @@ export const useReconfigurationRulesForm = () => {
         address = customAddress
         break
     }
-    dispatch(editingV2ProjectActions.setBallot(address ?? ''))
-    dispatch(editingV2ProjectActions.setReconfigurationRuleSelection(selection))
+    dispatch(creatingV2ProjectActions.setBallot(address ?? ''))
+    dispatch(
+      creatingV2ProjectActions.setReconfigurationRuleSelection(selection),
+    )
   }, [customAddress, dispatch, selection, strategies])
 
   useFormDispatchWatch({
     form,
     fieldName: 'pausePayments',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setPausePay,
+    dispatchFunction: creatingV2ProjectActions.setPausePay,
     formatter: v => !!v,
   })
 
@@ -144,7 +146,7 @@ export const useReconfigurationRulesForm = () => {
     form,
     fieldName: 'holdFees',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setHoldFees,
+    dispatchFunction: creatingV2ProjectActions.setHoldFees,
     formatter: v => !!v,
   })
 
@@ -152,7 +154,7 @@ export const useReconfigurationRulesForm = () => {
     form,
     fieldName: 'allowTerminalConfiguration',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setAllowSetTerminals,
+    dispatchFunction: creatingV2ProjectActions.setAllowSetTerminals,
     formatter: v => !!v,
   })
 
@@ -160,7 +162,7 @@ export const useReconfigurationRulesForm = () => {
     form,
     fieldName: 'allowControllerConfiguration',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setAllowSetController,
+    dispatchFunction: creatingV2ProjectActions.setAllowSetController,
     formatter: v => !!v,
   })
 
@@ -168,7 +170,7 @@ export const useReconfigurationRulesForm = () => {
     form,
     fieldName: 'allowTerminalMigration',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setAllowTerminalMigration,
+    dispatchFunction: creatingV2ProjectActions.setAllowTerminalMigration,
     formatter: v => !!v,
   })
 
@@ -176,14 +178,14 @@ export const useReconfigurationRulesForm = () => {
     form,
     fieldName: 'allowControllerMigration',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setAllowControllerMigration,
+    dispatchFunction: creatingV2ProjectActions.setAllowControllerMigration,
     formatter: v => !!v,
   })
   useFormDispatchWatch({
     form,
     fieldName: 'projectRequiredOFACCheck',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setRequiredOFACCheck,
+    dispatchFunction: creatingV2ProjectActions.setRequiredOFACCheck,
     formatter: v => v,
   })
 

@@ -1,22 +1,21 @@
-import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
-import { JB721TierConfig, JB721TiersHookFlags } from 'packages/v4/models/nfts'
-import {
-  useAppSelector,
-  useEditingV2V3FundAccessConstraintsSelector,
-  useEditingV2V3FundingCycleDataSelector,
-  useEditingV2V3FundingCycleMetadataSelector,
-} from 'redux/hooks/useAppSelector'
-import { Address, parseEther, zeroAddress } from 'viem'
-
 import { ONE_BILLION } from 'constants/numbers'
 import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
+import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
 import { useLaunchProjectWithNftsTx } from 'packages/v4/hooks/JB721Delegate/transactor/useLaunchProjectWithNftsTx'
 import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
+import { JB721TierConfig, JB721TiersHookFlags } from 'packages/v4/models/nfts'
 import { useCallback } from 'react'
-import { DEFAULT_NFT_FLAGS } from 'redux/slices/editingV2Project'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import {
+  useCreatingV2V3FundAccessConstraintsSelector,
+  useCreatingV2V3FundingCycleDataSelector,
+  useCreatingV2V3FundingCycleMetadataSelector,
+} from 'redux/hooks/v2v3/create'
+import { DEFAULT_NFT_FLAGS } from 'redux/slices/shared/v2ProjectDefaultState'
 import { encodeIpfsUri } from 'utils/ipfs'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { sortNftsByContributionFloor } from 'utils/nftRewards'
+import { Address, parseEther, zeroAddress } from 'viem'
 
 export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 
@@ -97,10 +96,10 @@ export const useDeployNftProject = () => {
     reservedTokensGroupedSplits,
     inputProjectOwner,
     mustStartAtOrAfter,
-  } = useAppSelector(state => state.editingV2Project)
-  const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
-  const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
-  const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
+  } = useAppSelector(state => state.creatingV2Project)
+  const fundingCycleMetadata = useCreatingV2V3FundingCycleMetadataSelector()
+  const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
+  const fundAccessConstraints = useCreatingV2V3FundAccessConstraintsSelector()
 
   const collectionName = nftRewards.collectionMetadata.name
     ? nftRewards.collectionMetadata.name

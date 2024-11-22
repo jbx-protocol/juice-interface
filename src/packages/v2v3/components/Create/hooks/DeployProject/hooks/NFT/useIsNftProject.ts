@@ -6,7 +6,7 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
  * @returns Whether the project to be deployed is an NFT project.
  */
 export const useIsNftProject = (): boolean => {
-  const { nftRewards } = useAppSelector(state => state.editingV2Project)
+  const { nftRewards } = useAppSelector(state => state.creatingV2Project)
 
   return useMemo(
     () =>

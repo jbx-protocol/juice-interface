@@ -6,7 +6,7 @@ import { TransactorInstance } from 'hooks/useTransactor'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
 import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import { useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
 import { useV2ProjectTitle } from '../useProjectTitle'
 import { LaunchV2V3ProjectData } from './useLaunchProjectTx'
 

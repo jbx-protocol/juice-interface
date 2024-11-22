@@ -17,7 +17,7 @@ export const useRulesReview = () => {
     reconfigurationRuleSelection,
     fundingCycleMetadata,
     projectMetadata,
-  } = useAppSelector(state => state.editingV2Project)
+  } = useAppSelector(state => state.creatingV2Project)
 
   const pausePayments = useMemo(() => {
     return formatPaused(fundingCycleMetadata.pausePay)

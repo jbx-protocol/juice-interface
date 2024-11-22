@@ -13,7 +13,7 @@ import { useWallet } from 'hooks/Wallet'
 import { NATIVE_TOKEN } from 'juice-sdk-core'
 import { useWriteJbControllerLaunchProjectFor } from 'juice-sdk-react'
 import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
 import { useChainId } from 'wagmi'
 import { wagmiConfig } from '../wagmiConfig'
 
@@ -68,15 +68,16 @@ export function useLaunchProjectTx() {
   const { writeContractAsync: writeLaunchProject } =
     useWriteJbControllerLaunchProjectFor()
 
-    const chainId = useChainId()
-    const chainIdStr = chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
-    const terminalAddress = chainId
-      ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainIdStr]
-      : undefined
-    
-    const controllerAddress = chainId
-      ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainIdStr]
-      : undefined
+  const chainId = useChainId()
+  const chainIdStr =
+    chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
+  const terminalAddress = chainId
+    ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainIdStr]
+    : undefined
+
+  const controllerAddress = chainId
+    ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainIdStr]
+    : undefined
 
   const { addTransaction } = useContext(TxHistoryContext)
 

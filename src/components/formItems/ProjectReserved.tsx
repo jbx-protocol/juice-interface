@@ -15,7 +15,7 @@ import { useState } from 'react'
 import {
   DEFAULT_FUNDING_CYCLE_METADATA,
   DEFAULT_MINT_RATE,
-} from 'redux/slices/editingV2Project'
+} from 'redux/slices/shared/v2ProjectDefaultState'
 import { formattedNum } from 'utils/format/formatNumber'
 import NumberSlider from '../inputs/NumberSlider'
 import FundingCycleDetailWarning from '../Project/FundingCycleDetailWarning'

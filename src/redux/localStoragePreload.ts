@@ -2,8 +2,8 @@ import {
   defaultProjectState as defaultV1ProjectState,
   REDUX_STORE_V1_PROJECT_VERSION,
 } from './slices/editingProject'
-import { INITIAL_REDUX_STATE as defaultV2ProjectState } from './slices/editingV2Project'
-import { REDUX_STORE_V2_PROJECT_VERSION } from './slices/editingV2Project/version'
+import { INITIAL_REDUX_STATE as defaultV2ProjectState } from './slices/shared/v2ProjectInitialReduxState'
+import { REDUX_STORE_V2_PROJECT_VERSION } from './slices/shared/v2ProjectVersion'
 import { RootState } from './store'
 
 interface PreloadedState {
@@ -31,6 +31,23 @@ export function getLocalStoragePreloadedState(
         reduxState: {
           ...parsedState.reduxState,
           editingProject: defaultV1ProjectState,
+        },
+      }
+    }
+
+    // If theres a version mismatch, reset the creatingV2Project state
+    if (
+      parsedState?.reduxState?.creatingV2Project?.version !==
+      REDUX_STORE_V2_PROJECT_VERSION
+    ) {
+      console.info(
+        'redux::creatingV2Project::default redux state changed, resetting creatingV2Project state.',
+      )
+      parsedState = {
+        ...parsedState,
+        reduxState: {
+          ...parsedState.reduxState,
+          creatingV2Project: defaultV2ProjectState,
         },
       }
     }

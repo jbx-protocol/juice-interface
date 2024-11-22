@@ -14,13 +14,18 @@ import {
   redemptionRateFrom,
   reservedRateFrom,
 } from 'packages/v2v3/utils/math'
-import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'packages/v2v3/utils/splitToAllocation'
 import { useDebugValue, useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
-import { useEditingReservedTokensSplits } from 'redux/hooks/useEditingReservedTokensSplits'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import {
+  useCreatingDistributionLimit,
+  useCreatingReservedTokensSplits,
+} from 'redux/hooks/v2v3/create'
+import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
 export type ProjectTokensFormProps = Partial<{
@@ -52,10 +57,10 @@ export const DefaultSettings: Required<
 export const useProjectTokensForm = () => {
   const [form] = Form.useForm<ProjectTokensFormProps>()
   const { fundingCycleMetadata, fundingCycleData, projectTokensSelection } =
-    useAppSelector(state => state.editingV2Project)
-  const [tokenSplits] = useEditingReservedTokensSplits()
+    useAppSelector(state => state.creatingV2Project)
+  const [tokenSplits] = useCreatingReservedTokensSplits()
   useDebugValue(form.getFieldsValue())
-  const [distributionLimit] = useEditingDistributionLimit()
+  const [distributionLimit] = useCreatingDistributionLimit()
 
   const redemptionRateDisabled =
     !distributionLimit || distributionLimit.amount.eq(MAX_DISTRIBUTION_LIMIT)
@@ -117,15 +122,15 @@ export const useProjectTokensForm = () => {
   useEffect(() => {
     // We only want to update changes when selection is set
     if (selection === undefined) return
-    dispatch(editingV2ProjectActions.setProjectTokensSelection(selection))
+    dispatch(creatingV2ProjectActions.setProjectTokensSelection(selection))
 
     if (selection === 'default') {
       form.setFieldsValue({ ...DefaultSettings })
-      dispatch(editingV2ProjectActions.setTokenSettings(DefaultSettings))
+      dispatch(creatingV2ProjectActions.setTokenSettings(DefaultSettings))
       return
     }
     dispatch(
-      editingV2ProjectActions.setTokenSettings({
+      creatingV2ProjectActions.setTokenSettings({
         ...DefaultSettings,
         ...form.getFieldsValue(),
       }),
@@ -135,7 +140,7 @@ export const useProjectTokensForm = () => {
   useFormDispatchWatch({
     form,
     fieldName: 'initialMintRate',
-    dispatchFunction: editingV2ProjectActions.setWeight,
+    dispatchFunction: creatingV2ProjectActions.setWeight,
     formatter: v => {
       if (v === undefined || typeof v !== 'string')
         return issuanceRateFrom(DefaultSettings.initialMintRate)
@@ -146,7 +151,7 @@ export const useProjectTokensForm = () => {
   useFormDispatchWatch({
     form,
     fieldName: 'reservedTokensPercentage',
-    dispatchFunction: editingV2ProjectActions.setReservedRate,
+    dispatchFunction: creatingV2ProjectActions.setReservedRate,
     formatter: v => {
       if (v === undefined || typeof v !== 'number')
         return reservedRateFrom(
@@ -161,7 +166,7 @@ export const useProjectTokensForm = () => {
     fieldName: 'reservedTokenAllocation',
     ignoreUndefined: true, // Needed to stop an infinite loop
     currentValue: tokenSplits, // Needed to stop an infinite loop
-    dispatchFunction: editingV2ProjectActions.setReservedTokensSplits,
+    dispatchFunction: creatingV2ProjectActions.setReservedTokensSplits,
     formatter: v => {
       if (v === undefined || typeof v !== 'object') return []
       return v.map(allocationToSplit)
@@ -171,7 +176,7 @@ export const useProjectTokensForm = () => {
   useFormDispatchWatch({
     form,
     fieldName: 'discountRate',
-    dispatchFunction: editingV2ProjectActions.setDiscountRate,
+    dispatchFunction: creatingV2ProjectActions.setDiscountRate,
     formatter: v => {
       if (v === undefined || typeof v !== 'number')
         return discountRateFrom(DefaultSettings.discountRate).toHexString()
@@ -182,7 +187,7 @@ export const useProjectTokensForm = () => {
   useFormDispatchWatch({
     form,
     fieldName: 'redemptionRate',
-    dispatchFunction: editingV2ProjectActions.setRedemptionRate,
+    dispatchFunction: creatingV2ProjectActions.setRedemptionRate,
     formatter: v => {
       if (v === undefined || typeof v !== 'number')
         return redemptionRateFrom(DefaultSettings.redemptionRate).toHexString()
@@ -192,7 +197,7 @@ export const useProjectTokensForm = () => {
   useFormDispatchWatch({
     form,
     fieldName: 'redemptionRate',
-    dispatchFunction: editingV2ProjectActions.setBallotRedemptionRate,
+    dispatchFunction: creatingV2ProjectActions.setBallotRedemptionRate,
     formatter: v => {
       if (v === undefined || typeof v !== 'number')
         return redemptionRateFrom(DefaultSettings.redemptionRate).toHexString()
@@ -203,7 +208,7 @@ export const useProjectTokensForm = () => {
   useFormDispatchWatch({
     form,
     fieldName: 'tokenMinting',
-    dispatchFunction: editingV2ProjectActions.setAllowMinting,
+    dispatchFunction: creatingV2ProjectActions.setAllowMinting,
     formatter: v => {
       if (typeof v !== 'boolean') return false
       return v
@@ -213,7 +218,7 @@ export const useProjectTokensForm = () => {
   useFormDispatchWatch({
     form,
     fieldName: 'pauseTransfers',
-    dispatchFunction: editingV2ProjectActions.setPauseTransfers,
+    dispatchFunction: creatingV2ProjectActions.setPauseTransfers,
     ignoreUndefined: true,
     formatter: v => {
       if (typeof v !== 'boolean') return false

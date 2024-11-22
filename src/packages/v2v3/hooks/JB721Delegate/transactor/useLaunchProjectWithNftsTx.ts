@@ -29,11 +29,9 @@ import {
   V2V3FundingCycleData,
 } from 'packages/v2v3/models/fundingCycle'
 import { GroupedSplits, SplitGroup } from 'packages/v2v3/models/splits'
-import {
-  isValidMustStartAtOrAfter
-} from 'packages/v2v3/utils/fundingCycle'
+import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import { useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
 import { buildDeployTiered721DelegateData } from 'utils/nftRewards'
 import { useJB721DelegateContractAddress } from '../contracts/useJB721DelegateContractAddress'
 import { useJBTiered721DelegateProjectDeployer } from '../contracts/useJBTiered721DelegateProjectDeployer'

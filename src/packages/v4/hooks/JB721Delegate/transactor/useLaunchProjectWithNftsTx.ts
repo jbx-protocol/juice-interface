@@ -1,4 +1,8 @@
-import { DEFAULT_MEMO, NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
+import {
+  DEFAULT_MEMO,
+  NATIVE_TOKEN,
+  NATIVE_TOKEN_DECIMALS,
+} from 'juice-sdk-core'
 import {
   jbPricesAddress,
   useJBContractContext,
@@ -9,20 +13,11 @@ import {
   JBDeploy721TiersHookConfig,
   LaunchProjectWithNftsTxArgs,
 } from 'packages/v4/models/nfts'
-import {
-  Address,
-  WaitForTransactionReceiptReturnType,
-  zeroAddress
-} from 'viem'
+import { Address, WaitForTransactionReceiptReturnType, zeroAddress } from 'viem'
 import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
 } from '../../../utils/launchProjectTransformers'
-import {
-  LaunchTxOpts,
-  SUPPORTED_JB_CONTROLLER_ADDRESS,
-  SUPPORTED_JB_MULTITERMINAL_ADDRESS
-} from '../../useLaunchProjectTx'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
@@ -31,9 +26,14 @@ import { useWallet } from 'hooks/Wallet'
 import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
 import { ipfsUri } from 'utils/ipfs'
 import { useChainId } from 'wagmi'
+import {
+  LaunchTxOpts,
+  SUPPORTED_JB_CONTROLLER_ADDRESS,
+  SUPPORTED_JB_MULTITERMINAL_ADDRESS,
+} from '../../useLaunchProjectTx'
 
 /**
  * Return the project ID created from a `launchProjectFor` transaction.
@@ -42,8 +42,7 @@ import { useChainId } from 'wagmi'
 export const getProjectIdFromNftLaunchReceipt = (
   txReceipt: WaitForTransactionReceiptReturnType,
 ): number => {
-  const projectIdHex: string | undefined =
-    txReceipt?.logs[0]?.topics?.[1]
+  const projectIdHex: string | undefined = txReceipt?.logs[0]?.topics?.[1]
   if (!projectIdHex) return 0
 
   const projectId = parseInt(projectIdHex, 16)
@@ -67,7 +66,8 @@ export function useLaunchProjectWithNftsTx() {
 
   const { userAddress } = useWallet()
   const chainId = useChainId()
-  const chainIdStr = chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
+  const chainIdStr =
+    chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
 
   const defaultJBController = chainId
     ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainIdStr]
@@ -80,7 +80,7 @@ export function useLaunchProjectWithNftsTx() {
     : undefined
 
   const { writeContractAsync: writeLaunchProject } =
-  useWriteJb721TiersHookProjectDeployerLaunchProjectFor()
+    useWriteJb721TiersHookProjectDeployerLaunchProjectFor()
 
   return async (
     {

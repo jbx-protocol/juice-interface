@@ -7,9 +7,12 @@ import {
   getV2V3CurrencyOption,
 } from 'packages/v2v3/utils/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
-import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'packages/v2v3/utils/splitToAllocation'
 import { ReactNode } from 'react'
-import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
+import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { usePayoutsForm } from '../hooks/usePayoutsForm'
 
@@ -31,7 +34,7 @@ export function CreateFlowPayoutsTable({
     ,
     setDistributionLimitAmount,
     setDistributionLimitCurrency,
-  ] = useEditingDistributionLimit()
+  ] = useCreatingDistributionLimit()
 
   const { form, initialValues } = usePayoutsForm()
   const distributionLimit = !editingDistributionLimit

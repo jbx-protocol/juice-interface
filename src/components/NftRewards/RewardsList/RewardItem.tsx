@@ -8,7 +8,7 @@ import round from 'lodash/round'
 import { NftRewardTier } from 'models/nftRewards'
 import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { ReactNode } from 'react'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
 import { isZeroAddress } from 'utils/address'
 import { hasLimitedSupply } from 'utils/nftRewards'
 import { prettyUrl } from 'utils/url'
@@ -28,10 +28,12 @@ function numberUpToPrecisionFormat(
 
 export const RewardItem = ({
   reward,
+  nftRewards,
   onEditClicked,
   onDeleteClicked,
 }: {
   reward: NftRewardTier
+  nftRewards: NftRewardsData
   onEditClicked?: () => void
   onDeleteClicked?: () => void
 }) => {
@@ -47,7 +49,6 @@ export const RewardItem = ({
     fileUrl,
   } = reward
 
-  const { nftRewards } = useAppSelector(state => state.editingV2Project)
   const nftCurrency = nftRewards?.pricing.currency
 
   const hasBeneficiary = Boolean(beneficiary) && !isZeroAddress(beneficiary)

@@ -1,7 +1,7 @@
 import { CreatePage } from 'models/createPage'
 import { useCallback, useContext, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
 import { WizardContext } from '../contexts/WizardContext'
 
 export const usePage = ({ name }: { name: string }) => {
@@ -41,14 +41,14 @@ export const usePage = ({ name }: { name: string }) => {
 
   const lockPageProgress = useCallback(() => {
     dispatch(
-      editingV2ProjectActions.addCreateSoftLockedPage(name as CreatePage),
+      creatingV2ProjectActions.addCreateSoftLockedPage(name as CreatePage),
     )
   }, [dispatch, name])
 
   const unlockPageProgress = useCallback(() => {
     // We need to make sure pages can't unsoftlock other pages :\
     dispatch(
-      editingV2ProjectActions.removeCreateSoftLockedPage(name as CreatePage),
+      creatingV2ProjectActions.removeCreateSoftLockedPage(name as CreatePage),
     )
   }, [dispatch, name])
 

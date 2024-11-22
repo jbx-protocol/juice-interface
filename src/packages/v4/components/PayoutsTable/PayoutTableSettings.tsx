@@ -4,7 +4,7 @@ import { SwitchToUnlimitedModal } from 'components/PayoutsTable/SwitchToUnlimite
 import { PopupMenu, PopupMenuItem } from 'components/ui/PopupMenu'
 import { handleConfirmationDeletion } from 'hooks/emitConfirmationDeletionModal'
 import { useState } from 'react'
-import { ReduxDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
+import { ReduxDistributionLimit } from 'redux/hooks/v2v3/shared'
 import { fromWad } from 'utils/format/formatNumber'
 import { ConvertAmountsModal } from './ConvertAmountsModal'
 import { usePayoutsTable } from './hooks/usePayoutsTable'

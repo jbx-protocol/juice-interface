@@ -21,7 +21,7 @@ export const useSteps = () => {
   const { pages, currentPage, goToPage } = useContext(WizardContext)
   const { furthestPageReached } = useEditingCreateFurthestPageReached()
   const softLockedPageQueue = useAppSelector(
-    state => state.editingV2Project.createSoftLockPageQueue,
+    state => state.creatingV2Project.createSoftLockPageQueue,
   )
 
   const firstIndexOfLockedPage = useMemo(() => {

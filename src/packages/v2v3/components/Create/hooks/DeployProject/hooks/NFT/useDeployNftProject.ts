@@ -2,13 +2,13 @@ import { TransactionCallbacks } from 'models/transaction'
 import { useLaunchProjectWithNftsTx } from 'packages/v2v3/hooks/JB721Delegate/transactor/useLaunchProjectWithNftsTx'
 import { DEFAULT_JB_721_DELEGATE_VERSION } from 'packages/v2v3/hooks/defaultContracts/useDefaultJB721Delegate'
 import { useCallback, useMemo } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
-  useAppSelector,
-  useEditingV2V3FundAccessConstraintsSelector,
-  useEditingV2V3FundingCycleDataSelector,
-  useEditingV2V3FundingCycleMetadataSelector,
-} from 'redux/hooks/useAppSelector'
-import { DEFAULT_NFT_FLAGS } from 'redux/slices/editingV2Project'
+  useCreatingV2V3FundAccessConstraintsSelector,
+  useCreatingV2V3FundingCycleDataSelector,
+  useCreatingV2V3FundingCycleMetadataSelector,
+} from 'redux/hooks/v2v3/create'
+import { DEFAULT_NFT_FLAGS } from 'redux/slices/creatingV2Project'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { buildJB721TierParams } from 'utils/nftRewards'
 
@@ -28,10 +28,10 @@ export const useDeployNftProject = () => {
     reservedTokensGroupedSplits,
     inputProjectOwner,
     mustStartAtOrAfter,
-  } = useAppSelector(state => state.editingV2Project)
-  const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
-  const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
-  const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
+  } = useAppSelector(state => state.creatingV2Project)
+  const fundingCycleMetadata = useCreatingV2V3FundingCycleMetadataSelector()
+  const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
+  const fundAccessConstraints = useCreatingV2V3FundAccessConstraintsSelector()
 
   const collectionName = useMemo(
     () =>

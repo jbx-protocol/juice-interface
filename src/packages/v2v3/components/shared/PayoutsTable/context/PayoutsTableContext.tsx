@@ -9,6 +9,7 @@ export interface PayoutsTableContextProps {
   setCurrency?: (currency: CurrencyName) => void
   distributionLimit: number | undefined
   setDistributionLimit?: (distributionLimit: number | undefined) => void
+
   hideExplaination?: boolean
   hideHeader?: boolean
   showAvatars?: boolean

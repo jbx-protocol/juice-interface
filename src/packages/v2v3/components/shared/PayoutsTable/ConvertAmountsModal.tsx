@@ -18,13 +18,13 @@ import {
 } from 'packages/v2v3/utils/distributions'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { SPLITS_TOTAL_PERCENT } from 'packages/v2v3/utils/math'
-import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'packages/v2v3/utils/splitToAllocation'
 import { isProjectSplit } from 'packages/v2v3/utils/v2v3Splits'
 import { ReactNode, useCallback, useMemo, useState } from 'react'
-import {
-  ReduxDistributionLimit,
-  useEditingDistributionLimit,
-} from 'redux/hooks/useEditingDistributionLimit'
+import { ReduxDistributionLimit } from 'redux/hooks/v2v3/shared'
 import { parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
 import { helpPagePath } from 'utils/helpPagePath'
@@ -34,16 +34,17 @@ export const ConvertAmountsModal = ({
   onOk,
   onCancel,
   splits,
+  currency: c,
 }: {
   open: boolean
   onOk: (d: ReduxDistributionLimit) => void
   onCancel: VoidFunction
   splits: Split[]
+  currency: V2V3CurrencyOption | undefined
 }) => {
-  const [distributionLimit] = useEditingDistributionLimit()
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>('')
   const [currency, setCurrency] = useState<V2V3CurrencyOption>(
-    distributionLimit?.currency ?? V2V3_CURRENCY_ETH,
+    c ?? V2V3_CURRENCY_ETH,
   )
 
   const totalPayoutsPercent = useMemo(

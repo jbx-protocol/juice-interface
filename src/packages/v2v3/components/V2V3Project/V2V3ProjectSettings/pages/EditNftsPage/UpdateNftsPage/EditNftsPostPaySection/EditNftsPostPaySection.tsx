@@ -7,6 +7,7 @@ import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { revalidateProject } from 'lib/api/nextjs'
 import { useEditProjectDetailsTx } from 'packages/v2v3/hooks/transactor/useEditProjectDetailsTx'
 import { useCallback, useContext, useState } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { emitInfoNotification } from 'utils/notifications'
 import {
   EditNftsPostPayFormFields,
@@ -19,6 +20,10 @@ export function EditNftsPostPaySection() {
     ProjectMetadataContext,
   )
   const { form, initialValues } = useEditNftsPostPayForm()
+
+  const postPayModalData = useAppSelector(
+    state => state.editingV2Project.nftRewards.postPayModal,
+  )
 
   const editProjectDetailsTx = useEditProjectDetailsTx()
 
@@ -82,7 +87,10 @@ export function EditNftsPostPaySection() {
 
   return (
     <Form form={form} initialValues={initialValues}>
-      <NftPaymentSuccessFormItems hidePreview />
+      <NftPaymentSuccessFormItems
+        hidePreview
+        postPayModalData={postPayModalData}
+      />
       <Button type="primary" onClick={onProjectFormSaved} loading={loading}>
         <Trans>Save post-pay popup</Trans>
       </Button>

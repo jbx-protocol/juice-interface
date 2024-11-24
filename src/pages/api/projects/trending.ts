@@ -63,9 +63,11 @@ const handler: NextApiHandler = async (req, res) => {
 
     const projects = [
       ...projectsRes.data.projects,
-      ...v4SepoliaProjectsRes.data.projects.map(p => {
-        return { ...p, chainId: sepolia.id, pv: PV_V4 }
-      }),
+      ...(process.env.NEXT_PUBLIC_V4_ENABLED
+        ? v4SepoliaProjectsRes.data.projects.map(p => {
+            return { ...p, chainId: sepolia.id, pv: PV_V4 }
+          })
+        : []),
     ]
 
     try {

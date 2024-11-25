@@ -8,13 +8,11 @@ import { useModal } from 'hooks/useModal'
 import { TreasurySelection } from 'models/treasurySelection'
 import { ConvertAmountsModal } from 'packages/v2v3/components/shared/PayoutsTable/ConvertAmountsModal'
 import { usePayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/hooks/usePayoutsTable'
-import {
-  V2V3_CURRENCY_ETH,
-  V2V3_CURRENCY_USD,
-} from 'packages/v2v3/utils/currency'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { ReduxDistributionLimit } from 'redux/hooks/v2v3/shared'
+import { ReduxDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
+import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
 import { fromWad } from 'utils/format/formatNumber'
 import { Icons } from '../../../Icons'
 import { RadioCard } from './RadioCard'
@@ -29,13 +27,14 @@ export function TreasuryOptionsRadio() {
   const initialTreasurySelection = useAppSelector(
     state => state.creatingV2Project.treasurySelection,
   )
+  const dispatch = useAppDispatch()
+
   const [treasuryOption, setTreasuryOption] = useState<TreasurySelection>(
     initialTreasurySelection ?? 'zero',
   )
 
   const {
     distributionLimit,
-    currency,
     setDistributionLimit,
     payoutSplits,
     setCurrency,
@@ -106,17 +105,19 @@ export function TreasuryOptionsRadio() {
         switchToZeroPayoutSelection()
       }
 
+      dispatch(creatingV2ProjectActions.setTreasurySelection(option))
       setTreasuryOption(option)
     },
     [
       treasuryOption,
       payoutSplits.length,
+      dispatch,
       switchingToAmountsModal,
-      switchingToUnlimitedModal,
       setDistributionLimit,
+      switchingToUnlimitedModal,
+      switchToUnlimitedPayouts,
       switchingToZeroAmountsModal,
       switchToZeroPayoutSelection,
-      switchToUnlimitedPayouts,
     ],
   )
 
@@ -172,7 +173,6 @@ export function TreasuryOptionsRadio() {
         onOk={switchToAmountsPayoutSelection}
         onCancel={switchingToAmountsModal.close}
         splits={payoutSplits}
-        currency={currency === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD}
       />
     </>
   )

@@ -1,9 +1,9 @@
-import { NATIVE_TOKEN } from "juice-sdk-core";
-import round from "lodash/round";
-import { issuanceRateFrom } from "packages/v2v3/utils/math";
-import { parseWad } from "utils/format/formatNumber";
-import { otherUnitToSeconds } from "utils/format/formatTime";
-import { EditCycleFormFields } from "../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields";
+import { NATIVE_TOKEN } from 'juice-sdk-core'
+import round from 'lodash/round'
+import { issuanceRateFrom } from 'packages/v2v3/utils/math'
+import { parseWad } from 'utils/format/formatNumber'
+import { otherUnitToSeconds } from 'utils/format/formatTime'
+import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
 
 export function transformEditCycleFormFieldsToTxArgs({
   formValues,
@@ -11,21 +11,21 @@ export function transformEditCycleFormFieldsToTxArgs({
   tokenAddress,
   projectId,
 }: {
-  formValues: EditCycleFormFields;
-  primaryNativeTerminal: `0x${string}`;
-  tokenAddress: `0x${string}`;
-  projectId: bigint;
+  formValues: EditCycleFormFields
+  primaryNativeTerminal: `0x${string}`
+  tokenAddress: `0x${string}`
+  projectId: bigint
 }) {
-  const now = round(new Date().getTime() / 1000);
-  const mustStartAtOrAfter = now;
+  const now = round(new Date().getTime() / 1000)
+  const mustStartAtOrAfter = now
 
   const duration = otherUnitToSeconds({
     duration: formValues.duration,
     unit: formValues.durationUnit.value,
   })
-  const weight = BigInt(issuanceRateFrom(formValues.issuanceRate.toString()));
-  const decayPercent = round(formValues.decayPercent * 10000000);
-  const approvalHook = formValues.approvalHook;
+  const weight = BigInt(issuanceRateFrom(formValues.issuanceRate.toString()))
+  const decayPercent = round(formValues.decayPercent * 10000000)
+  const approvalHook = formValues.approvalHook
 
   const rulesetConfigurations = [
     {
@@ -54,15 +54,15 @@ export function transformEditCycleFormFieldsToTxArgs({
         useTotalSurplusForRedemptions: false, // Defaulting to false as it's not in formValues
         useDataHookForPay: false, // Defaulting to false as it's not in formValues
         useDataHookForRedeem: false, // Defaulting to false as it's not in formValues
-        dataHook: "0x0000000000000000000000000000000000000000" as `0x${string}`, // Defaulting to a null address
+        dataHook: '0x0000000000000000000000000000000000000000' as `0x${string}`, // Defaulting to a null address
         metadata: 0, // Assuming no additional metadata is provided
-        allowCrosschainSuckerExtension: false
+        allowCrosschainSuckerExtension: false,
       },
 
       splitGroups: [
         {
           groupId: BigInt(NATIVE_TOKEN),
-          splits: formValues.payoutSplits.map((split) => ({
+          splits: formValues.payoutSplits.map(split => ({
             preferAddToBalance: Boolean(split.preferAddToBalance),
             percent: Number(split.percent.value),
             projectId: BigInt(split.projectId),
@@ -73,7 +73,7 @@ export function transformEditCycleFormFieldsToTxArgs({
         },
         {
           groupId: BigInt(1),
-          splits: formValues.reservedTokensSplits.map((split) => ({
+          splits: formValues.reservedTokensSplits.map(split => ({
             preferAddToBalance: Boolean(split.preferAddToBalance),
             percent: Number(split.percent.value),
             projectId: BigInt(split.projectId),
@@ -103,11 +103,7 @@ export function transformEditCycleFormFieldsToTxArgs({
         },
       ],
     },
-  ];
+  ]
 
-  return [
-    projectId,
-    rulesetConfigurations,
-    formValues.memo ?? "",
-  ] as const;
+  return [projectId, rulesetConfigurations, formValues.memo ?? ''] as const
 }

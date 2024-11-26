@@ -1,19 +1,19 @@
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { FormikHelpers } from 'formik'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useProjectSelector } from 'packages/v4/components/ProjectDashboard/redux/hooks'
-import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
-// import { NftRewardsContext } from 'packages/v4/contexts/NftRewards/NftRewardsContext'
-// import { useProjectHasErc20 } from 'packages/v4/hooks/useProjectHasErc20'
-import { waitForTransactionReceipt } from '@wagmi/core'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { NATIVE_TOKEN } from 'juice-sdk-core'
+import { DEFAULT_METADATA, NATIVE_TOKEN } from 'juice-sdk-core'
 import {
   useJBContractContext,
+  useJBRulesetContext,
+  usePreparePayMetadata,
   useWriteJbMultiTerminalPay,
 } from 'juice-sdk-react'
-// import { useProjectHasErc20 } from 'packages/v2v3/hooks/useProjectHasErc20'
+import { useProjectSelector } from 'packages/v4/components/ProjectDashboard/redux/hooks'
+import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useCallback, useContext, useMemo } from 'react'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
@@ -42,11 +42,12 @@ export const usePayProjectTx = ({
   const { payAmount, chosenNftRewards } = useProjectSelector(
     state => state.projectCart,
   )
-  // const {
-  //   nftRewards: { rewardTiers },
-  // } = useContext(NftRewardsContext)
+  const {
+    nftRewards: { rewardTiers },
+  } = useV4NftRewards()
   const converter = useCurrencyConverter()
   const { receivedTickets } = useProjectPaymentTokens()
+  // TODO: implement
   // const projectHasErc20 = useProjectHasErc20()
 
   const buildPayReceipt = useCallback(
@@ -76,10 +77,21 @@ export const usePayProjectTx = ({
     }
   }, [payAmount, converter])
 
-  // const prepareDelegateMetadata = usePrepareDelegatePayMetadata(weiAmount, {
-  //   nftRewards: chosenNftRewards,
-  //   receivedTickets,
-  // })
+  const {
+    rulesetMetadata: { data: rulesetMetadata },
+  } = useJBRulesetContext()
+  const metadata = usePreparePayMetadata(
+    rulesetMetadata?.dataHook
+      ? {
+          jb721Hook: {
+            dataHookAddress: rulesetMetadata.dataHook,
+            tierIdsToMint: chosenNftRewards
+              .map(({ id, quantity }) => Array(quantity).fill(BigInt(id)))
+              .flat(),
+          },
+        }
+      : undefined,
+  )
 
   const { writeContractAsync: writePay } = useWriteJbMultiTerminalPay()
   const { contracts, projectId } = useJBContractContext()
@@ -103,13 +115,13 @@ export const usePayProjectTx = ({
       const memo = buildPaymentMemo({
         text: messageString,
         imageUrl: attachedUrl,
-        // nftUrls: chosenNftRewards
-        //   .map(
-        //     ({ id }) =>
-        //       (rewardTiers ?? []).find(({ id: tierId }) => tierId === id)
-        //         ?.fileUrl,
-        //   )
-        //   .filter((url): url is string => !!url),
+        nftUrls: chosenNftRewards
+          .map(
+            ({ id }) =>
+              (rewardTiers ?? []).find(({ id: tierId }) => tierId === id)
+                ?.fileUrl,
+          )
+          .filter((url): url is string => !!url),
       })
       const beneficiary = (values.beneficiaryAddress ?? userAddress) as Address
       const args = [
@@ -119,9 +131,15 @@ export const usePayProjectTx = ({
         beneficiary,
         0n,
         memo,
-        '0x0',
+        metadata ?? DEFAULT_METADATA,
       ] as const
 
+      // SIMULATE TRANSACTION:
+      // const encodedData = encodeFunctionData({
+      //   abi: jbMultiTerminalAbi, // ABI of the contract
+      //   functionName: 'pay',
+      //   args,
+      // })
       try {
         const hash = await writePay({
           address: contracts.primaryNativeTerminal.data,
@@ -147,21 +165,19 @@ export const usePayProjectTx = ({
       }
     },
     [
-      // projectHasErc20,
-      buildPayReceipt,
-      // chosenNftRewards,
-      onTransactionConfirmedCallback,
-      onTransactionErrorCallback,
-      onTransactionPendingCallback,
-      // payProjectTx,
-      // rewardTiers,
       weiAmount,
-      userAddress,
-      // prepareDelegateMetadata,
-      projectId,
-      writePay,
       contracts.primaryNativeTerminal.data,
+      userAddress,
+      chosenNftRewards,
+      projectId,
+      metadata,
+      rewardTiers,
+      writePay,
+      onTransactionPendingCallback,
       addTransaction,
+      onTransactionConfirmedCallback,
+      buildPayReceipt,
+      onTransactionErrorCallback,
     ],
   )
 }

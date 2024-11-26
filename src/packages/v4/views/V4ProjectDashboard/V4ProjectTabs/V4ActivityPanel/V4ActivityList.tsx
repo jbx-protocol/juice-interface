@@ -1,38 +1,38 @@
 import { t } from '@lingui/macro'
 import Loading from 'components/Loading'
-import {
-  NativeTokenValue,
-  useJBContractContext,
-  useJBTokenContext,
-} from 'juice-sdk-react'
+import RichNote from 'components/RichNote/RichNote'
+import { NativeTokenValue, useJBContractContext } from 'juice-sdk-react'
 import {
   OrderDirection,
   PayEvent_OrderBy,
   PayEventsDocument,
 } from 'packages/v4/graphql/client/graphql'
 import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
+import React from 'react'
 import { ActivityEvent } from './activityEventElems/ActivityElement'
 import { ActivityOptions } from './ActivityOptions'
 import { PayEvent } from './models/ActivityEvents'
 import { transformPayEventsRes } from './utils/transformEventsData'
 
 export function V4ActivityList() {
-  const { token } = useJBTokenContext()
   const { projectId } = useJBContractContext()
 
   // TODO: pageSize (pagination)
   const { data: payEventsData, isLoading } = useSubgraphQuery({
-    document: PayEventsDocument, 
+    document: PayEventsDocument,
     variables: {
       orderBy: PayEvent_OrderBy.timestamp,
       orderDirection: OrderDirection.desc,
       where: {
         projectId: Number(projectId),
       },
-    }
+    },
   })
 
-  const payEvents = transformPayEventsRes(payEventsData) ?? []
+  const payEvents = React.useMemo(
+    () => transformPayEventsRes(payEventsData) ?? [],
+    [payEventsData],
+  )
 
   return (
     <div>
@@ -62,15 +62,10 @@ export function V4ActivityList() {
                   header={t`Paid`}
                   subject={
                     <span className="font-heading text-lg">
-                      <NativeTokenValue wei={event.amount.value} />
+                      <NativeTokenValue decimals={8} wei={event.amount.value} />
                     </span>
                   }
-                  extra={
-                    <span>
-                      bought {event.beneficiaryTokenCount?.format(6)}{' '}
-                      {token.data?.symbol ?? 'tokens'}
-                    </span>
-                  }
+                  extra={<RichNote note={event.note} />}
                 />
               </div>
             )

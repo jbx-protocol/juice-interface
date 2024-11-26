@@ -15,7 +15,7 @@ export function useWallet() {
   const userAddress = useUserAddress()
   const isConnected = useIsConnected()
   const chain = useChain()
-  const chainUnsupported = false//useChainUnsupported()
+  const chainUnsupported = false //useChainUnsupported()
   const balance = useWalletBalance()
 
   const [, connect] = useConnectWallet()

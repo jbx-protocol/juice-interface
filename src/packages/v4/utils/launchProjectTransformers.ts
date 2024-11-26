@@ -4,12 +4,13 @@ import {
   NATIVE_TOKEN_DECIMALS,
   SplitGroup,
 } from 'juice-sdk-core'
-import round from 'lodash/round'
-import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
 } from 'packages/v2v3/models/fundingCycle'
+
+import round from 'lodash/round'
+import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
 import { GroupedSplits as V2V3GroupedSplits } from 'packages/v2v3/models/splits'
 import { V3FundingCycleMetadata } from 'packages/v3/models/fundingCycle'
 import { Address } from 'viem'
@@ -136,7 +137,9 @@ export function transformV2V3SplitsToV4({
 }): LaunchV4ProjectGroupedSplit[] {
   return v2v3Splits.map(group => ({
     groupId:
-      group.group === SplitGroup.ETHPayout ? BigInt(NATIVE_TOKEN) : 1n, // TODO dont hardcode reserved token group as 1n
+      group.group === SplitGroup.ETHPayout
+        ? BigInt(NATIVE_TOKEN)
+        : 1n, // TODO dont hardcode reserved token group as 1n
     splits: group.splits.map(split => ({
       preferAddToBalance: Boolean(split.preferClaimed),
       percent: split.percent,

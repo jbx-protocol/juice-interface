@@ -3989,6 +3989,9 @@ msgstr ""
 msgid "tokens per ETH paid"
 msgstr ""
 
+msgid "Starts in {remainingTimeText}"
+msgstr ""
+
 msgid "Congratulations!"
 msgstr ""
 

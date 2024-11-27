@@ -40,6 +40,9 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     return upcomingFundingCycle?.duration?.isZero() ?? true
   }, [fundingCycle?.duration, type, upcomingFundingCycle?.duration])
 
+  const start =
+    type === 'current' ? fundingCycle?.start : upcomingFundingCycle?.start
+
   const upcomingCycleLength = useMemo(() => {
     if (!upcomingFundingCycle) return
     if (cycleUnlocked) return '-'
@@ -82,6 +85,7 @@ export const useCurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
     cycleLength: upcomingCycleLength,
     cycleUnlocked,
     currentCycleUnlocked,
+    start,
     hasPendingConfiguration:
       /**
        * If a cycle is unlocked, it may have a pending change.

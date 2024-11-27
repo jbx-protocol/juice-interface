@@ -1,7 +1,7 @@
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { CyclesTab } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesTab'
-import { useMemo } from 'react'
+import { useProjectContext } from '../../hooks/useProjectContext'
 import { CurrentUpcomingSubPanel } from './components/CurrentUpcomingSubPanel'
 import { HistorySubPanel } from './components/HistorySubPanel'
 
@@ -11,14 +11,15 @@ type CyclesSubPanel = {
 }
 
 export const CyclesPayoutsPanel = () => {
-  const tabs: CyclesSubPanel[] = useMemo(
-    () => [
-      { id: 'current', name: t`Current` },
-      { id: 'upcoming', name: t`Upcoming` },
-      { id: 'history', name: t`History` },
-    ],
-    [],
-  )
+  const { fundingCycle } = useProjectContext()
+
+  const tabs: CyclesSubPanel[] = [
+    // Don't show the current tab if there is no current cycle
+    fundingCycle?.number.gt(0) && { id: 'current', name: t`Current` },
+    { id: 'upcoming', name: t`Upcoming` },
+    { id: 'history', name: t`History` },
+  ].filter(Boolean) as CyclesSubPanel[]
+
   return (
     <Tab.Group as="div" className="mx-auto flex w-full flex-col gap-5">
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">

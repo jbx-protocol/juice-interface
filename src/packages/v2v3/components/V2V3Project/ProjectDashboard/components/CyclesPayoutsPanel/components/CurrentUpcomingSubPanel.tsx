@@ -1,5 +1,6 @@
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
+import { CountdownCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CountdownCallout'
 import { currentCycleRemainingLengthTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
 import { UpcomingCycleChangesCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTab/UpcomingCycleChangesCallout'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
@@ -104,8 +105,13 @@ export const CurrentUpcomingSubPanel = ({
   return (
     <div>
       <div className="flex flex-col gap-4">
-        {id === 'upcoming' && (
-          <UpcomingCycleChangesCallout 
+        {/* If the upcoming tab is selected and its the first cycle, it means they're
+        currently in Cycle 0 (i.e. the project hasn't 'started' yet.) */}
+        {id === 'upcoming' && info.cycleNumber === 1 && (
+          <CountdownCallout cycleStart={info.start?.toNumber()} />
+        )}
+        {id === 'upcoming' && info.cycleNumber && info.cycleNumber > 1 && (
+          <UpcomingCycleChangesCallout
             text={upcomingCycleChangesCalloutText}
             hasChanges={hasChanges}
             loading={loading}

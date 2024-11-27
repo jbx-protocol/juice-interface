@@ -55,6 +55,7 @@ import { projectCartActions } from '../../redux/projectCartSlice'
 import { ClaimErc20Callout } from '../ClaimErc20Callout'
 import { EthPerTokenAccordion } from '../EthPerTokenAccordion'
 import { ProjectCartNftReward } from '../ReduxProjectCartProvider'
+import { FirstCycleCountdownCallout } from './FirstCycleCountdownCallout'
 import { PayProjectModal } from './PayProjectModal/PayProjectModal'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
@@ -75,6 +76,7 @@ type PayRedeemCardProps = {
 
 export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
   const project = useProjectContext()
+  const metadata = useProjectMetadataContext()
   const state = useProjectSelector(state => state.payRedeem.cardState)
   const dispatch = useProjectDispatch()
   // TODO: We should probably break out tokens panel hook into reusable module
@@ -119,6 +121,9 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
   }
 
   const noticeText = useMemo(() => {
+    if (project.fundingCycle?.number?.isZero()) {
+      return
+    }
     const showPayerIssuance =
       !payerIssuanceRate.enabled && !payerIssuanceRate.loading
     if (!showPayerIssuance) {
@@ -127,13 +132,20 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
 
     const showNfts = hasNfts && !hasNftsLoading
     if (showNfts) {
-      return t`Project isn't currently issuing tokens, but is issuing NFTs`
+      return t`${metadata.projectMetadata?.name} is currently only issuing NFTs`
     }
 
-    return t`Project isn't currently issuing tokens`
-  }, [payerIssuanceRate, hasNfts, hasNftsLoading])
+    return t`${metadata.projectMetadata?.name} isn't currently issuing tokens`
+  }, [
+    payerIssuanceRate,
+    hasNfts,
+    hasNftsLoading,
+    metadata,
+    project.fundingCycle,
+  ])
 
   const redeemDisabled =
+    project.fundingCycle?.number?.isZero() ||
     project.fundingCycleMetadata?.redemptionRate.eq(0) ||
     isInfiniteDistributionLimit(project.distributionLimit)
 
@@ -183,15 +195,17 @@ export const PayRedeemCard: React.FC<PayRedeemCardProps> = ({ className }) => {
 
       <EthPerTokenAccordion />
 
-      {!payerIssuanceRate.enabled && !payerIssuanceRate.loading && (
-        <Callout.Info
-          className="mt-6 py-2 px-3.5 text-xs leading-5 dark:bg-slate-700"
-          collapsible={false}
-          icon={<InformationCircleIcon className="h-5 w-5" />}
-        >
-          {noticeText}
-        </Callout.Info>
-      )}
+      {!payerIssuanceRate.enabled &&
+        !payerIssuanceRate.loading &&
+        noticeText && (
+          <Callout.Info
+            className="mt-6 py-2 px-3.5 text-sm leading-5 dark:bg-slate-700"
+            collapsible={false}
+            icon={<InformationCircleIcon className="h-5 w-5" />}
+          >
+            {noticeText}
+          </Callout.Info>
+        )}
 
       <NftCreditsCallout />
 
@@ -443,7 +457,7 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
   payerIssuanceRate,
 }) => {
   const { payDisabled, message } = usePayProjectDisabled()
-  const { tokenSymbol } = useProjectContext()
+  const { tokenSymbol, fundingCycle } = useProjectContext()
   const chosenNftRewards = useProjectSelector(
     state => state.projectCart.chosenNftRewards,
   )
@@ -516,13 +530,22 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
       insufficientBalance ||
       cartPayAmount === 0 ||
       !cartPayAmount ||
-      payDisabled
+      payDisabled ||
+      fundingCycle?.number?.isZero()
     )
-  }, [cartPayAmount, insufficientBalance, payDisabled, walletConnected])
+  }, [
+    cartPayAmount,
+    insufficientBalance,
+    payDisabled,
+    walletConnected,
+    fundingCycle,
+  ])
 
   return (
     <div>
-      <div className="relative">
+      {fundingCycle?.number?.isZero() && <FirstCycleCountdownCallout />}
+
+      <div className="relative mt-3">
         <div className="flex flex-col gap-y-2">
           <PayRedeemInput
             label={t`You pay`}

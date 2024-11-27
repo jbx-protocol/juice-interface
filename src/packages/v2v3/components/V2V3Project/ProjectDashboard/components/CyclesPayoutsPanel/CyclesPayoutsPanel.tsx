@@ -13,12 +13,12 @@ type CyclesSubPanel = {
 export const CyclesPayoutsPanel = () => {
   const { fundingCycle } = useProjectContext()
 
-  const tabs: CyclesSubPanel[] = [
+  const tabs: CyclesSubPanel[] = fundingCycle ? [
     // Don't show the current tab if there is no current cycle
-    fundingCycle?.number.gt(0) && { id: 'current', name: t`Current` },
+    fundingCycle.number.gt(0) && { id: 'current', name: t`Current` },
     { id: 'upcoming', name: t`Upcoming` },
     { id: 'history', name: t`History` },
-  ].filter(Boolean) as CyclesSubPanel[]
+  ].filter(Boolean) as CyclesSubPanel[] : []
 
   return (
     <Tab.Group as="div" className="mx-auto flex w-full flex-col gap-5">

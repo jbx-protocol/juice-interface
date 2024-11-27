@@ -554,9 +554,6 @@ msgstr ""
 msgid "If locked, this payout can't be edited or removed until the lock expires or the cycle is edited."
 msgstr ""
 
-msgid "Project isn't currently issuing tokens, but is issuing NFTs"
-msgstr ""
-
 msgid "I understand"
 msgstr ""
 
@@ -2411,6 +2408,9 @@ msgstr ""
 msgid "Export a list of this cycle's reserved token recipients to CSV."
 msgstr ""
 
+msgid "Payments open in {remainingTimeText}"
+msgstr ""
+
 msgid "Redeem"
 msgstr ""
 
@@ -2871,6 +2871,9 @@ msgid "Search projects"
 msgstr ""
 
 msgid "Collection details"
+msgstr ""
+
+msgid "{0} isn't currently issuing tokens"
 msgstr ""
 
 msgid "Token ticker is required"
@@ -4005,6 +4008,9 @@ msgid "{0} is not valid URL"
 msgstr ""
 
 msgid "Amount (ETH)"
+msgstr ""
+
+msgid "{0} is currently only issuing NFTs"
 msgstr ""
 
 msgid "You haven't created any projects yet!"

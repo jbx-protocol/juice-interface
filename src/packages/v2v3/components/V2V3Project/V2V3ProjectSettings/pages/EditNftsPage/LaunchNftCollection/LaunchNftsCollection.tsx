@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
 import TransactionModal from 'components/modals/TransactionModal'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { TransactionSuccessModal } from '../../../TransactionSuccessModal'
 import { useLaunchNftsForm } from './hooks/useLaunchNftsForm'
 
@@ -14,10 +15,20 @@ export function LaunchNftsPage() {
     successModalOpen,
     setSuccessModalOpen,
   } = useLaunchNftsForm()
+
+  const postPayModalData = useAppSelector(
+    state => state.creatingV2Project.nftRewards.postPayModal,
+  )
+  const nftRewardsData = useAppSelector(
+    state => state.creatingV2Project.nftRewards,
+  )
+
   return (
     <>
       <AddNftCollectionForm
         form={form}
+        postPayModalData={postPayModalData}
+        nftRewardsData={nftRewardsData}
         okButton={
           <Button
             type="primary"

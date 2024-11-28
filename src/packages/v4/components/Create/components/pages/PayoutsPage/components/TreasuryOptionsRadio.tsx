@@ -8,9 +8,13 @@ import { useModal } from 'hooks/useModal'
 import { TreasurySelection } from 'models/treasurySelection'
 import { ConvertAmountsModal } from 'packages/v2v3/components/shared/PayoutsTable/ConvertAmountsModal'
 import { usePayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/hooks/usePayoutsTable'
+import {
+  V2V3_CURRENCY_ETH,
+  V2V3_CURRENCY_USD,
+} from 'packages/v2v3/utils/currency'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { ReduxDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
+import { ReduxDistributionLimit } from 'redux/hooks/v2v3/shared'
 import { fromWad } from 'utils/format/formatNumber'
 import { Icons } from '../../../Icons'
 import { RadioCard } from './RadioCard'
@@ -23,7 +27,7 @@ const treasuryOptions = () => [
 
 export function TreasuryOptionsRadio() {
   const initialTreasurySelection = useAppSelector(
-    state => state.editingV2Project.treasurySelection,
+    state => state.creatingV2Project.treasurySelection,
   )
 
   const [treasuryOption, setTreasuryOption] = useState<TreasurySelection>(
@@ -32,6 +36,7 @@ export function TreasuryOptionsRadio() {
 
   const {
     distributionLimit,
+    currency,
     setDistributionLimit,
     payoutSplits,
     setCurrency,
@@ -168,6 +173,7 @@ export function TreasuryOptionsRadio() {
         onOk={switchToAmountsPayoutSelection}
         onCancel={switchingToAmountsModal.close}
         splits={payoutSplits}
+        currency={currency === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD}
       />
     </>
   )

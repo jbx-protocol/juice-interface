@@ -17,7 +17,7 @@ import { formatFundingCycleDuration } from 'packages/v2v3/components/Create/util
 import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
 import { MAX_DISTRIBUTION_LIMIT, MAX_MINT_RATE } from 'packages/v2v3/utils/math'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
+import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
 import { inputMustExistRule } from 'utils/antdRules'
 import { formatAmount } from 'utils/format/formatAmount'
 import * as ProjectTokenForm from '../../hooks/useProjectTokenForm'
@@ -37,9 +37,9 @@ const calculateMintRateAfterDiscount = ({
 export const CustomTokenSettings = () => {
   const isMobile = useMobile()
   const duration = useAppSelector(
-    state => state.editingV2Project.fundingCycleData.duration,
+    state => state.creatingV2Project.fundingCycleData.duration,
   )
-  const [distributionLimit] = useEditingDistributionLimit()
+  const [distributionLimit] = useCreatingDistributionLimit()
   const form = Form.useFormInstance<ProjectTokensFormProps>()
   const discountRate =
     Form.useWatch('discountRate', form) ??

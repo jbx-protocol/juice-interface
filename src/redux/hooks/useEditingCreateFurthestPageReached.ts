@@ -2,7 +2,7 @@ import { CreatePage } from 'models/createPage'
 import { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
 
 const pageOrder: CreatePage[] = [
   'projectDetails',
@@ -17,7 +17,7 @@ const pageOrder: CreatePage[] = [
 export const useEditingCreateFurthestPageReached = () => {
   const dispatch = useDispatch()
   const furthestPageReached = useAppSelector(
-    state => state.editingV2Project.createFurthestPageReached,
+    state => state.creatingV2Project.createFurthestPageReached,
   )
 
   const setFurthestPageReached = useCallback(
@@ -25,13 +25,15 @@ export const useEditingCreateFurthestPageReached = () => {
       const currentPageIndex = pageOrder.indexOf(furthestPageReached)
       const newPageIndex = pageOrder.indexOf(page)
       if (newPageIndex > currentPageIndex) {
-        dispatch(editingV2ProjectActions.setCreateFurthestPageReached(page))
+        dispatch(creatingV2ProjectActions.setCreateFurthestPageReached(page))
       }
     },
     [dispatch, furthestPageReached],
   )
   const resetFurthestPageReached = useCallback(() => {
-    dispatch(editingV2ProjectActions.setCreateFurthestPageReached(pageOrder[0]))
+    dispatch(
+      creatingV2ProjectActions.setCreateFurthestPageReached(pageOrder[0]),
+    )
   }, [dispatch])
 
   return {

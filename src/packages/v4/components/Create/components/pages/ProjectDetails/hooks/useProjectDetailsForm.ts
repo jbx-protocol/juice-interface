@@ -8,8 +8,8 @@ import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   DEFAULT_MUST_START_AT_OR_AFTER,
-  editingV2ProjectActions,
-} from 'redux/slices/editingV2Project'
+  creatingV2ProjectActions,
+} from 'redux/slices/creatingV2Project'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 import { AmountInputValue } from '../ProjectDetailsPage'
 
@@ -40,7 +40,7 @@ type ProjectDetailsFormProps = Partial<{
 export const useProjectDetailsForm = () => {
   const [form] = useForm<ProjectDetailsFormProps>()
   const { projectMetadata, inputProjectOwner, mustStartAtOrAfter } =
-    useAppSelector(state => state.editingV2Project)
+    useAppSelector(state => state.creatingV2Project)
 
   const initialValues: ProjectDetailsFormProps = useMemo(
     () => ({
@@ -103,90 +103,90 @@ export const useProjectDetailsForm = () => {
     form,
     fieldName: 'projectName',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setName,
+    dispatchFunction: creatingV2ProjectActions.setName,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'projectTagline',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setProjectTagline,
+    dispatchFunction: creatingV2ProjectActions.setProjectTagline,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'projectDescription',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setDescription,
+    dispatchFunction: creatingV2ProjectActions.setDescription,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'tags',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setTags,
+    dispatchFunction: creatingV2ProjectActions.setTags,
     formatter: v => v ?? [],
   })
   useFormDispatchWatch({
     form,
     fieldName: 'logo',
-    dispatchFunction: editingV2ProjectActions.setLogoUri,
+    dispatchFunction: creatingV2ProjectActions.setLogoUri,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'coverImage',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setCoverImageUri,
+    dispatchFunction: creatingV2ProjectActions.setCoverImageUri,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'projectWebsite',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setInfoUri,
+    dispatchFunction: creatingV2ProjectActions.setInfoUri,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'projectTwitter',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setTwitter,
+    dispatchFunction: creatingV2ProjectActions.setTwitter,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'projectDiscord',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setDiscord,
+    dispatchFunction: creatingV2ProjectActions.setDiscord,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'projectTelegram',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setTelegram,
+    dispatchFunction: creatingV2ProjectActions.setTelegram,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'inputProjectOwner',
     ignoreUndefined: false,
-    dispatchFunction: editingV2ProjectActions.setInputProjectOwner,
+    dispatchFunction: creatingV2ProjectActions.setInputProjectOwner,
     formatter: v => v,
   })
   useFormDispatchWatch({
     form,
     fieldName: 'payButtonText',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setPayButton,
+    dispatchFunction: creatingV2ProjectActions.setPayButton,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'payDisclosure',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setPayDisclosure,
+    dispatchFunction: creatingV2ProjectActions.setPayDisclosure,
     formatter: v => v ?? '',
   })
 
@@ -194,21 +194,21 @@ export const useProjectDetailsForm = () => {
     form,
     fieldName: 'introVideoUrl',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setIntroVideoUrl,
+    dispatchFunction: creatingV2ProjectActions.setIntroVideoUrl,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'introImageUri',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setIntroImageUri,
+    dispatchFunction: creatingV2ProjectActions.setIntroImageUri,
     formatter: v => v ?? '',
   })
   useFormDispatchWatch({
     form,
     fieldName: 'softTarget',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setSoftTarget,
+    dispatchFunction: creatingV2ProjectActions.setSoftTarget,
     formatter: v => v ?? { amount: '', currency: V2V3_CURRENCY_USD },
   })
 
@@ -222,13 +222,13 @@ export const useProjectDetailsForm = () => {
     // check if launch date is in ms or seconds
     if (launchDate > 1000000000000) {
       dispatch(
-        editingV2ProjectActions.setMustStartAtOrAfter(
+        creatingV2ProjectActions.setMustStartAtOrAfter(
           (launchDate / 1000).toString(),
         ),
       )
     } else {
       dispatch(
-        editingV2ProjectActions.setMustStartAtOrAfter(launchDate.toString()),
+        creatingV2ProjectActions.setMustStartAtOrAfter(launchDate.toString()),
       )
     }
   }, [dispatch, startTimestamp])

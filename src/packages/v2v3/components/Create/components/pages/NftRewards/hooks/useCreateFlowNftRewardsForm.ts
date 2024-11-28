@@ -4,7 +4,7 @@ import { NftRewardTier } from 'models/nftRewards'
 import { useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
 import { withHttps, withoutHttp } from 'utils/externalLink'
 import {
   defaultNftCollectionDescription,
@@ -20,9 +20,9 @@ export const useCreateFlowNftRewardsForm = () => {
     postPayModal,
     governanceType,
     flags,
-  } = useAppSelector(state => state.editingV2Project.nftRewards)
+  } = useAppSelector(state => state.creatingV2Project.nftRewards)
   const { projectMetadata, fundingCycleMetadata } = useAppSelector(
-    state => state.editingV2Project,
+    state => state.creatingV2Project,
   )
   const initialValues: NftRewardsFormProps = useMemo(() => {
     const collectionName =
@@ -79,7 +79,7 @@ export const useCreateFlowNftRewardsForm = () => {
     fieldName: 'rewards',
     ignoreUndefined: true, // Needed to stop an infinite loop
     currentValue: rewardTiers,
-    dispatchFunction: editingV2ProjectActions.setNftRewardTiers,
+    dispatchFunction: creatingV2ProjectActions.setNftRewardTiers,
     formatter: v => {
       if (!v) return []
       if (typeof v !== 'object') {
@@ -106,7 +106,7 @@ export const useCreateFlowNftRewardsForm = () => {
     form,
     fieldName: 'collectionName',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setNftRewardsName,
+    dispatchFunction: creatingV2ProjectActions.setNftRewardsName,
     formatter: v => {
       if (!v || typeof v !== 'string') return ''
       return v
@@ -117,7 +117,7 @@ export const useCreateFlowNftRewardsForm = () => {
     form,
     fieldName: 'collectionSymbol',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setNftRewardsSymbol,
+    dispatchFunction: creatingV2ProjectActions.setNftRewardsSymbol,
     formatter: v => {
       if (!v || typeof v !== 'string') return ''
       return v
@@ -129,7 +129,7 @@ export const useCreateFlowNftRewardsForm = () => {
     fieldName: 'collectionDescription',
     ignoreUndefined: true,
     dispatchFunction:
-      editingV2ProjectActions.setNftRewardsCollectionDescription,
+      creatingV2ProjectActions.setNftRewardsCollectionDescription,
     formatter: v => {
       if (!v || typeof v !== 'string') return ''
       return v
@@ -140,7 +140,7 @@ export const useCreateFlowNftRewardsForm = () => {
     form,
     fieldName: 'useDataSourceForRedeem',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setUseDataSourceForRedeem,
+    dispatchFunction: creatingV2ProjectActions.setUseDataSourceForRedeem,
     formatter: v => !!v,
   })
 
@@ -148,7 +148,7 @@ export const useCreateFlowNftRewardsForm = () => {
     form,
     fieldName: 'preventOverspending',
     ignoreUndefined: true,
-    dispatchFunction: editingV2ProjectActions.setNftPreventOverspending,
+    dispatchFunction: creatingV2ProjectActions.setNftPreventOverspending,
     formatter: v => !!v,
   })
 
@@ -178,11 +178,11 @@ export const useCreateFlowNftRewardsForm = () => {
       postPayButtonText === undefined &&
       postPayButtonLink === undefined
     ) {
-      dispatch(editingV2ProjectActions.setNftPostPayModalConfig(undefined))
+      dispatch(creatingV2ProjectActions.setNftPostPayModalConfig(undefined))
       return
     }
     dispatch(
-      editingV2ProjectActions.setNftPostPayModalConfig({
+      creatingV2ProjectActions.setNftPostPayModalConfig({
         content: postPayMessage,
         ctaText: postPayButtonText,
         ctaLink: withHttps(postPayButtonLink),

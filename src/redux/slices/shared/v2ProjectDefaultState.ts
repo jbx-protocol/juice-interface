@@ -24,7 +24,7 @@ import {
 } from 'packages/v2v3/utils/serializers'
 import { JB721TiersHookFlags } from 'packages/v4/models/nfts'
 import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
-import { CreateState, ProjectState } from './types'
+import { CreateState, ProjectState } from './v2ProjectTypes'
 
 const DEFAULT_DOMAIN = 'juicebox'
 
@@ -92,7 +92,6 @@ export const DEFAULT_NFT_FLAGS: JBTiered721Flags = {
   lockManualMintingChanges: false,
   preventOverspending: false,
 }
-
 
 export const DEFAULT_NFT_FLAGS_V4: JB721TiersHookFlags = {
   noNewTiersWithReserves: false,

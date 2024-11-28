@@ -24,8 +24,8 @@ import { GroupedSplits, SplitGroup } from 'packages/v2v3/models/splits'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
 import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import { useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/editingV2Project'
-import { NftRewardsData } from 'redux/slices/editingV2Project/types'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
+import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
 import {
   buildDeployTiered721DelegateData,
   buildJB721TierParams,

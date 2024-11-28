@@ -1,15 +1,15 @@
 import { useCallback, useState } from 'react'
-import {
-  useAppSelector,
-  useEditingV2V3FundAccessConstraintsSelector,
-  useEditingV2V3FundingCycleDataSelector,
-  useEditingV2V3FundingCycleMetadataSelector,
-} from 'redux/hooks/useAppSelector'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import {
+  useCreatingV2V3FundAccessConstraintsSelector,
+  useCreatingV2V3FundingCycleDataSelector,
+  useCreatingV2V3FundingCycleMetadataSelector,
+} from 'redux/hooks/v2v3/create'
+import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
 import { emitErrorNotification } from 'utils/notifications'
 import { useDeployNftProject } from './hooks/NFT/useDeployNftProject'
 import { useIsNftProject } from './hooks/NFT/useIsNftProject'
@@ -34,10 +34,10 @@ export const useDeployProject = () => {
   const {
     projectMetadata,
     nftRewards: { postPayModal },
-  } = useAppSelector(state => state.editingV2Project)
-  const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
-  const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
-  const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
+  } = useAppSelector(state => state.creatingV2Project)
+  const fundingCycleMetadata = useCreatingV2V3FundingCycleMetadataSelector()
+  const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
+  const fundAccessConstraints = useCreatingV2V3FundAccessConstraintsSelector()
 
   const dispatch = useAppDispatch()
 
@@ -49,16 +49,14 @@ export const useDeployProject = () => {
   }, [])
 
   const operationCallbacks = useCallback(
-    (
-      onProjectDeployed?: (projectId: number) => void,
-    ): LaunchTxOpts => ({
+    (onProjectDeployed?: (projectId: number) => void): LaunchTxOpts => ({
       onTransactionPending: () => {
         console.info('Project transaction executed. Await confirmation...')
         setTransactionPending(true)
       },
       onTransactionConfirmed: async (hash, projectId) => {
         // Reset the project state
-        dispatch(editingV2ProjectActions.resetState())
+        dispatch(creatingV2ProjectActions.resetState())
         onProjectDeployed?.(projectId)
       },
       onTransactionError: error => {
@@ -140,7 +138,7 @@ export const useDeployProject = () => {
         if (!tx) {
           setIsDeploying(false)
           setTransactionPending(false)
-        return
+          return
         }
       } catch (error) {
         handleDeployFailure(error)

@@ -1,12 +1,12 @@
 import { TransactionCallbacks } from 'models/transaction'
 import { useLaunchProjectTx } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
 import { useCallback } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
-  useAppSelector,
-  useEditingV2V3FundAccessConstraintsSelector,
-  useEditingV2V3FundingCycleDataSelector,
-  useEditingV2V3FundingCycleMetadataSelector,
-} from 'redux/hooks/useAppSelector'
+  useCreatingV2V3FundAccessConstraintsSelector,
+  useCreatingV2V3FundingCycleDataSelector,
+  useCreatingV2V3FundingCycleMetadataSelector,
+} from 'redux/hooks/v2v3/create'
 
 /**
  * Hook that returns a function that deploys a project.
@@ -22,10 +22,10 @@ export const useDeployStandardProject = () => {
     reservedTokensGroupedSplits,
     inputProjectOwner,
     mustStartAtOrAfter,
-  } = useAppSelector(state => state.editingV2Project)
-  const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
-  const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
-  const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
+  } = useAppSelector(state => state.creatingV2Project)
+  const fundingCycleMetadata = useCreatingV2V3FundingCycleMetadataSelector()
+  const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
+  const fundAccessConstraints = useCreatingV2V3FundAccessConstraintsSelector()
 
   const deployStandardProjectCallback = useCallback(
     async ({

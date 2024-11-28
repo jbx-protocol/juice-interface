@@ -31,7 +31,7 @@ export const ProjectDetailsReview = () => {
       softTargetCurrency,
     },
     inputProjectOwner,
-  } = useAppSelector(state => state.editingV2Project)
+  } = useAppSelector(state => state.creatingV2Project)
 
   const youtubeUrl = useMemo(() => {
     if (!introVideoUrl) return undefined

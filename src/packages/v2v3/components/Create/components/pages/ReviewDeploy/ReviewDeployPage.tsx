@@ -15,7 +15,7 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
 import { helpPagePath } from 'utils/helpPagePath'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
@@ -65,7 +65,7 @@ export const ReviewDeployPage = () => {
   const { deployProject, isDeploying, deployTransactionPending } =
     useDeployProject()
   const nftRewards = useAppSelector(
-    state => state.editingV2Project.nftRewards.rewardTiers,
+    state => state.creatingV2Project.nftRewards.rewardTiers,
   )
 
   const nftRewardsAreSet = useMemo(
@@ -78,7 +78,7 @@ export const ReviewDeployPage = () => {
   const handleStartOverClicked = useCallback(() => {
     router.push('/create')
     goToPage?.('projectDetails')
-    dispatch(editingV2ProjectActions.resetState())
+    dispatch(creatingV2ProjectActions.resetState())
   }, [dispatch, goToPage, router])
 
   const onFinish = useCallback(async () => {

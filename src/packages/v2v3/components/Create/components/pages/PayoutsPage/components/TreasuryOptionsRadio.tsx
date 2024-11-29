@@ -8,10 +8,11 @@ import { useModal } from 'hooks/useModal'
 import { TreasurySelection } from 'models/treasurySelection'
 import { ConvertAmountsModal } from 'packages/v2v3/components/shared/PayoutsTable/ConvertAmountsModal'
 import { usePayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/hooks/usePayoutsTable'
+import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { ReduxDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
+import { ReduxDistributionLimit } from 'redux/hooks/v2v3/shared'
 import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
 import { fromWad } from 'utils/format/formatNumber'
 import { Icons } from '../../../Icons'
@@ -35,6 +36,7 @@ export function TreasuryOptionsRadio() {
 
   const {
     distributionLimit,
+    currency,
     setDistributionLimit,
     payoutSplits,
     setCurrency,
@@ -169,6 +171,7 @@ export function TreasuryOptionsRadio() {
         onClose={switchingToUnlimitedModal.close}
       />
       <ConvertAmountsModal
+        currency={currency === 'ETH' ? V4_CURRENCY_ETH : V4_CURRENCY_USD}
         open={switchingToAmountsModal.visible}
         onOk={switchToAmountsPayoutSelection}
         onCancel={switchingToAmountsModal.close}

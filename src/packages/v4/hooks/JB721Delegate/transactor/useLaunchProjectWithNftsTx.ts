@@ -1,3 +1,7 @@
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { useWallet } from 'hooks/Wallet'
 import {
   DEFAULT_MEMO,
   NATIVE_TOKEN,
@@ -9,26 +13,21 @@ import {
   useReadJb721TiersHookStoreTiersOf,
   useWriteJb721TiersHookProjectDeployerLaunchProjectFor,
 } from 'juice-sdk-react'
+import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import {
   JBDeploy721TiersHookConfig,
   LaunchProjectWithNftsTxArgs,
 } from 'packages/v4/models/nfts'
-import { Address, WaitForTransactionReceiptReturnType, zeroAddress } from 'viem'
-import {
-  LaunchV2V3ProjectArgs,
-  transformV2V3CreateArgsToV4,
-} from '../../../utils/launchProjectTransformers'
-
-import { waitForTransactionReceipt } from '@wagmi/core'
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
-import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
 import { ipfsUri } from 'utils/ipfs'
+import { Address, WaitForTransactionReceiptReturnType, zeroAddress } from 'viem'
 import { useChainId } from 'wagmi'
+import {
+  LaunchV2V3ProjectArgs,
+  transformV2V3CreateArgsToV4,
+} from '../../../utils/launchProjectTransformers'
 import {
   LaunchTxOpts,
   SUPPORTED_JB_CONTROLLER_ADDRESS,

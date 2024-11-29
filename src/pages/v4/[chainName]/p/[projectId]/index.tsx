@@ -5,7 +5,9 @@ import { JBChainId, JBProjectProvider } from 'juice-sdk-react'
 import { useRouter } from 'next/router'
 import { ReduxProjectCartProvider } from 'packages/v4/components/ProjectDashboard/ReduxProjectCartProvider'
 import store from 'packages/v4/components/ProjectDashboard/redux/store'
+import { V4NftRewardsProvider } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import V4ProjectMetadataProvider from 'packages/v4/contexts/V4ProjectMetadataProvider'
+import { V4UserNftCreditsProvider } from 'packages/v4/contexts/V4UserNftCreditsProvider'
 import { useCurrentRouteChainId } from 'packages/v4/hooks/useCurrentRouteChainId'
 import { V4ProjectDashboard } from 'packages/v4/views/V4ProjectDashboard/V4ProjectDashboard'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
@@ -71,7 +73,13 @@ const Providers: React.FC<
         >
           <V4ProjectMetadataProvider projectId={projectId}>
             <Provider store={store}>
-              <ReduxProjectCartProvider>{children}</ReduxProjectCartProvider>
+              <V4UserNftCreditsProvider>
+                <V4NftRewardsProvider>
+                  <ReduxProjectCartProvider>
+                    {children}
+                  </ReduxProjectCartProvider>
+                </V4NftRewardsProvider>
+              </V4UserNftCreditsProvider>
             </Provider>
           </V4ProjectMetadataProvider>
         </JBProjectProvider>

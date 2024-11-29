@@ -3,11 +3,13 @@ import EtherscanLink from 'components/EtherscanLink'
 import ExternalLink from 'components/ExternalLink'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { Formik } from 'formik'
-import Image from "next/legacy/image"
+import Image from 'next/legacy/image'
+import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
 import { twMerge } from 'tailwind-merge'
 import { helpPagePath } from 'utils/helpPagePath'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
+import { usePayAmounts } from './hooks/usePayAmounts'
 import {
   PayProjectModalFormValues,
   usePayProjectModal,
@@ -16,8 +18,6 @@ import {
 export const PayProjectModal: React.FC = () => {
   const {
     open,
-    primaryAmount,
-    secondaryAmount,
     validationSchema,
     isTransactionPending,
     isTransactionConfirmed,
@@ -27,6 +27,7 @@ export const PayProjectModal: React.FC = () => {
     setOpen,
     onPaySubmit,
   } = usePayProjectModal()
+  const { formattedTotalAmount } = usePayAmounts()
 
   return (
     <Formik<PayProjectModalFormValues>
@@ -50,7 +51,7 @@ export const PayProjectModal: React.FC = () => {
             position="top"
             okLoading={props.isSubmitting || isTransactionPending}
             okButtonForm="PayProjectModalForm"
-            okText={t`Pay ${primaryAmount}`}
+            okText={t`Pay ${formattedTotalAmount.primaryAmount}`}
             cancelText={
               isTransactionPending || isTransactionConfirmed
                 ? t`Close`
@@ -97,19 +98,7 @@ export const PayProjectModal: React.FC = () => {
             ) : (
               <>
                 <div className="flex flex-col divide-y divide-grey-200 dark:divide-slate-500">
-                  <div className="flex justify-between gap-3 py-3">
-                    <span className="font-medium">
-                      <Trans>Total amount</Trans>
-                    </span>
-                    <div>
-                      <span>{primaryAmount}</span>{' '}
-                      {secondaryAmount && (
-                        <span className="text-grey-500 dark:text-slate-200">
-                          ({secondaryAmount})
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                  <AmountSection />
 
                   <ReceiveSection className="py-6" />
 
@@ -170,5 +159,62 @@ export const PayProjectModal: React.FC = () => {
         </form>
       )}
     </Formik>
+  )
+}
+
+const AmountSection = () => {
+  const { data: nftCredits } = useV4UserNftCredits()
+  const { formattedAmount, formattedNftCredits, formattedTotalAmount } =
+    usePayAmounts()
+
+  const RowData = ({
+    label,
+    primaryAmount,
+    secondaryAmount,
+  }: {
+    label: React.ReactNode
+    primaryAmount: React.ReactNode
+    secondaryAmount: React.ReactNode
+  }) => (
+    <div className="flex justify-between gap-3 py-3">
+      <span className="font-medium">{label}</span>
+      <div>
+        <span>{primaryAmount}</span>{' '}
+        {secondaryAmount && (
+          <span className="text-grey-500 dark:text-slate-200">
+            ({secondaryAmount})
+          </span>
+        )}
+      </div>
+    </div>
+  )
+
+  if (!nftCredits || nftCredits <= 0n || !formattedNftCredits)
+    return (
+      <RowData
+        label={t`Total amount`}
+        primaryAmount={formattedTotalAmount?.primaryAmount}
+        secondaryAmount={formattedTotalAmount?.secondaryAmount}
+      />
+    )
+
+  return (
+    <div>
+      <RowData
+        label={t`Amount`}
+        primaryAmount={formattedAmount.primaryAmount}
+        secondaryAmount={formattedAmount.secondaryAmount}
+      />
+      <RowData
+        label={t`NFT Credits`}
+        primaryAmount={`-${formattedNftCredits.primaryAmount}`}
+        secondaryAmount={`-${formattedNftCredits.secondaryAmount}`}
+      />
+      <RowData
+        label={t`Total amount`}
+        primaryAmount={formattedTotalAmount?.primaryAmount}
+        secondaryAmount={formattedTotalAmount?.secondaryAmount}
+      />
+    </div>
   )
 }

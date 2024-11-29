@@ -12,6 +12,7 @@ import {
 } from 'juice-sdk-react'
 import { useProjectSelector } from 'packages/v4/components/ProjectDashboard/redux/hooks'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
+import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
@@ -40,6 +41,7 @@ export const usePayProjectTx = ({
   ) => void
 }) => {
   const { userAddress } = useWallet()
+  const { data: nftCredits } = useV4UserNftCredits()
   const { payAmount, chosenNftRewards } = useProjectSelector(
     state => state.projectCart,
   )
@@ -71,12 +73,21 @@ export const usePayProjectTx = ({
   const weiAmount = useMemo(() => {
     if (!payAmount) {
       return 0n
-    } else if (payAmount.currency === V4_CURRENCY_ETH) {
-      return parseEther(payAmount.amount.toString())
-    } else {
-      return converter.usdToWei(payAmount.amount).toBigInt()
     }
-  }, [payAmount, converter])
+    let weiAmount =
+      payAmount.currency === V4_CURRENCY_ETH
+        ? parseEther(payAmount.amount.toString())
+        : converter.usdToWei(payAmount.amount).toBigInt()
+    if (nftCredits) {
+      if (nftCredits >= weiAmount) {
+        weiAmount = 0n
+      } else {
+        weiAmount -= nftCredits
+      }
+    }
+
+    return weiAmount
+  }, [converter, nftCredits, payAmount])
 
   const {
     rulesetMetadata: { data: rulesetMetadata },
@@ -104,7 +115,6 @@ export const usePayProjectTx = ({
       formikHelpers: FormikHelpers<PayProjectModalFormValues>,
     ) => {
       if (
-        !weiAmount ||
         !contracts.primaryNativeTerminal.data ||
         !userAddress ||
         !values.userAcceptsTerms

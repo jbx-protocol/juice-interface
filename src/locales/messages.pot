@@ -1229,9 +1229,6 @@ msgstr ""
 msgid "Issue as ERC-20"
 msgstr ""
 
-msgid "Pay {primaryAmount}"
-msgstr ""
-
 msgid "Active"
 msgstr ""
 

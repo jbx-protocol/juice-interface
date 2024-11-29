@@ -1,6 +1,5 @@
-import { useWallet } from 'hooks/Wallet'
-import { useReadJb721TiersHookPayCreditsOf } from 'juice-sdk-react'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
+import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
 import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
 import React from 'react'
 import { useProjectDispatch } from './redux/hooks'
@@ -25,12 +24,7 @@ export const ReduxProjectCartProvider = ({
   const {
     nftRewards: { rewardTiers },
   } = useV4NftRewards()
-
-  const { userAddress } = useWallet()
-  const { data: nftCredits } = useReadJb721TiersHookPayCreditsOf({
-    address: userAddress,
-  })
-
+  const nftCredits = useV4UserNftCredits()
   const dispatch = useProjectDispatch()
 
   // Set the nfts on load
@@ -40,8 +34,9 @@ export const ReduxProjectCartProvider = ({
 
   // Set the user's NFT credits on load
   React.useEffect(() => {
-    dispatch(projectCartActions.setUserNftCredits(nftCredits ?? 0n))
-  }, [dispatch, nftCredits])
+    if (nftCredits.isLoading) return
+    dispatch(projectCartActions.setUserNftCredits(nftCredits.data ?? 0n))
+  }, [dispatch, nftCredits.isLoading, nftCredits.data])
 
   return <>{children}</>
 }

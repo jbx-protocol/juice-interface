@@ -1,17 +1,13 @@
 import { CubeIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
-import { useWallet } from 'hooks/Wallet'
 import { formatEther } from 'juice-sdk-core'
-import { useReadJb721TiersHookPayCreditsOf } from 'juice-sdk-react'
+import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
 import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 
 export function V4NftCreditsCallouts() {
   const { setProjectPageTab } = useProjectPageQueries()
-  const { userAddress } = useWallet()
-  const { data: nftCredits } = useReadJb721TiersHookPayCreditsOf({
-    address: userAddress,
-  })
+  const { data: nftCredits } = useV4UserNftCredits()
 
   if (!nftCredits || nftCredits <= 0n) {
     return null

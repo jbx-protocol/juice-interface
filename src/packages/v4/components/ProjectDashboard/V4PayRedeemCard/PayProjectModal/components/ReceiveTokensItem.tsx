@@ -2,7 +2,6 @@ import { Trans } from '@lingui/macro'
 import { CartItemBadge } from 'components/CartItemBadge'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import { twMerge } from 'tailwind-merge'
-// import { useProjectHasErc20Token } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectHasErc20Token'
 // import { BUYBACK_DELEGATE_ENABLED_PROJECT_IDS } from 'packages/v2v3/constants/buybackDelegateEnabledProjectIds'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { useProjectPaymentTokens } from '../hooks/useProjectPaymentTokens'
@@ -10,7 +9,6 @@ import { useProjectPaymentTokens } from '../hooks/useProjectPaymentTokens'
 export const ReceiveTokensItem = ({ className }: { className?: string }) => {
   const { receivedTickets, receivedTokenSymbolText } = useProjectPaymentTokens()
   const projectHasErc20Token = useProjectHasErc20Token()
-
 
   if (receivedTickets === '0') {
     return null
@@ -24,11 +22,11 @@ export const ReceiveTokensItem = ({ className }: { className?: string }) => {
           <span className="ml-3">
             <Trans>{receivedTokenSymbolText}</Trans>
           </span>
-          { projectHasErc20Token ?
+          {projectHasErc20Token ? (
             <CartItemBadge className="ml-2">
               <Trans>ERC-20</Trans>
             </CartItemBadge>
-          : null}
+          ) : null}
         </div>
         <div>{receivedTickets}</div>
       </div>

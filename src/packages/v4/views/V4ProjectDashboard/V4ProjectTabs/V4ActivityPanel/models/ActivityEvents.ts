@@ -7,6 +7,7 @@ export type PayEvent = {
   amountUSD: Ether | undefined
   beneficiary: Address
   beneficiaryTokenCount?: JBProjectToken
+  note: string
   timestamp: number
   txHash: string
 }

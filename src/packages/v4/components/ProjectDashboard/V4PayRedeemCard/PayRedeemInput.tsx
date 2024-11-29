@@ -1,10 +1,21 @@
-import { ArrowDownIcon } from '@heroicons/react/24/outline'
+import {
+  ArrowDownIcon,
+  MinusIcon,
+  PlusIcon,
+  TrashIcon,
+} from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
+import { CartItemBadge } from 'components/CartItemBadge'
+import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
+import { TruncatedText } from 'components/TruncatedText'
+import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { useNftCartItem } from 'packages/v4/hooks/useNftCartItem'
 import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
 import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
-import { ReactNode, useMemo } from 'react'
+import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import React, { ReactNode, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
 import { ProjectCartNftReward } from '../ReduxProjectCartProvider'
@@ -134,14 +145,13 @@ export const PayRedeemInput = ({
           <div className="my-2 h-[1px] w-full border-t border-grey-200 dark:border-slate-600" />
         )}
 
-        {/* {nfts && nfts?.length > 0 && (
+        {nfts && nfts?.length > 0 && (
           <div className="mt-4 space-y-4">
             {nfts.map((nft, i) => (
               <NftReward key={i} nft={nft} />
             ))}
           </div>
         )}
-         */}
       </div>
 
       {downArrow && (
@@ -206,5 +216,111 @@ const DownArrow = ({ className }: { className?: string }) => {
         <ArrowDownIcon className="h-4 w-4 stroke-2 text-grey-400 dark:text-slate-300" />
       </div>
     </div>
+  )
+}
+
+const NftReward: React.FC<{
+  nft: ProjectCartNftReward
+  className?: string
+}> = ({ nft, className }) => {
+  const {
+    price,
+    name,
+    quantity,
+    fileUrl,
+    removeNft,
+    increaseQuantity,
+    decreaseQuantity,
+  } = useNftCartItem(nft)
+  const { setProjectPageTab } = useProjectPageQueries()
+
+  const handleRemove = React.useCallback(() => {
+    emitConfirmationDeletionModal({
+      onConfirm: removeNft,
+      title: t`Remove NFT`,
+      description: t`Are you sure you want to remove this NFT?`,
+    })
+  }, [removeNft])
+
+  const handleDecreaseQuantity = React.useCallback(() => {
+    if (quantity - 1 <= 0) {
+      handleRemove()
+    } else {
+      decreaseQuantity()
+    }
+  }, [decreaseQuantity, handleRemove, quantity])
+
+  const priceText = useMemo(() => {
+    if (price === null) {
+      return '-'
+    }
+    return formatCurrencyAmount(price)
+  }, [price])
+
+  return (
+    <div
+      className={twMerge('flex items-center justify-between gap-3', className)}
+    >
+      <div className="flex min-w-0 items-center gap-3">
+        <SmallNftSquare
+          className="h-12 w-12 flex-shrink-0"
+          nftReward={{
+            fileUrl: fileUrl ?? '',
+            name: name ?? '',
+          }}
+        />
+        <div className="flex min-w-0 flex-col">
+          <div
+            className="flex min-w-0 items-center gap-2"
+            role="button"
+            onClick={() => setProjectPageTab('nft_rewards')}
+          >
+            <TruncatedText
+              className="min-w-0 max-w-[70%] text-sm font-medium text-grey-900 hover:underline dark:text-slate-100"
+              text={name}
+            />
+            <CartItemBadge>NFT</CartItemBadge>
+          </div>
+
+          <div className="text-xs">{priceText}</div>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <QuantityControl
+          quantity={quantity}
+          onIncrease={increaseQuantity}
+          onDecrease={handleDecreaseQuantity}
+        />
+        <RemoveIcon onClick={handleRemove} />
+      </div>
+    </div>
+  )
+}
+
+const RemoveIcon: React.FC<{ onClick: () => void }> = ({ onClick }) => (
+  <TrashIcon
+    data-testid="cart-item-remove-button"
+    role="button"
+    className="inline h-6 w-6 text-grey-400 dark:text-slate-300 md:h-4 md:w-4"
+    onClick={onClick}
+  />
+)
+
+const QuantityControl: React.FC<{
+  quantity: number
+  onIncrease: () => void
+  onDecrease: () => void
+}> = ({ quantity, onIncrease, onDecrease }) => {
+  return (
+    <span className="flex w-fit gap-3 rounded-lg border border-grey-200 p-1 text-sm dark:border-slate-600">
+      <button data-testid="cart-item-decrease-button" onClick={onDecrease}>
+        <MinusIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
+      </button>
+      {quantity}
+      <button data-testid="cart-item-increase-button" onClick={onIncrease}>
+        <PlusIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
+      </button>
+    </span>
   )
 }

@@ -12,6 +12,7 @@ import {
 } from 'juice-sdk-react'
 import { useProjectSelector } from 'packages/v4/components/ProjectDashboard/redux/hooks'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
+import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
@@ -47,8 +48,8 @@ export const usePayProjectTx = ({
   } = useV4NftRewards()
   const converter = useCurrencyConverter()
   const { receivedTickets } = useProjectPaymentTokens()
-  // TODO: implement
-  // const projectHasErc20 = useProjectHasErc20()
+  // TODO: is this needed for preferClaimedTokens?
+  const projectHasErc20 = useProjectHasErc20Token()
 
   const buildPayReceipt = useCallback(
     (txHash: Hash): ProjectPayReceipt => {

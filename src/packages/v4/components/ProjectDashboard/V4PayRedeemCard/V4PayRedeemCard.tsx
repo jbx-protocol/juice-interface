@@ -5,7 +5,9 @@ import { Callout } from 'components/Callout/Callout'
 import { useJBRulesetContext } from 'juice-sdk-react'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
+import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
+import { useV4TokensPanel } from 'packages/v4/views/V4ProjectDashboard/V4ProjectTabs/V4TokensPanel/hooks/useV4TokensPanel'
 import React, { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useProjectDispatch, useProjectSelector } from '../redux/hooks'
@@ -28,14 +30,14 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
   const { data: payoutLimit } = usePayoutLimit()
   const dispatch = useProjectDispatch()
 
-  const projectHasErc20Token = false // TODO
+  const projectHasErc20Token = useProjectHasErc20Token()
 
   // TODO: We should probably break out tokens panel hook into reusable module
-  // const { userTokenBalance: panelBalance } = useTokensPanel()
-  // const tokenBalance = panelBalance
-  //   ? parseFloat(panelBalance.replaceAll(',', ''))
-  //   : undefined
-  const tokenBalance = 0 // TODO
+  const { userTokenBalance: panelBalance } = useV4TokensPanel()
+  const tokenBalance = React.useMemo(() => {
+    if (!panelBalance) return undefined
+    return panelBalance.toFloat()
+  }, [panelBalance])
   const redeems = {
     loading: ruleset.isLoading,
     enabled:

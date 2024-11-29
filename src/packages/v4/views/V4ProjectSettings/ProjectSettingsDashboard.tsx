@@ -2,8 +2,13 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
-import { NativeTokenValue, useJBContractContext, useJBProjectMetadataContext } from 'juice-sdk-react'
+import {
+  NativeTokenValue,
+  useJBContractContext,
+  useJBProjectMetadataContext,
+} from 'juice-sdk-react'
 import Link from 'next/link'
+import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { useV4BalanceOfNativeTerminal } from 'packages/v4/hooks/useV4BalanceOfNativeTerminal'
 import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
@@ -58,7 +63,7 @@ export function ProjectSettingsDashboard() {
   const { metadata } = useJBProjectMetadataContext()
 
   const { distributableAmount } = useV4DistributableAmount()
-  const projectHasErc20Token = false // @v4TODO
+  const projectHasErc20Token = useProjectHasErc20Token()
   const hasIssueTicketsPermission = useV4WalletHasPermission(
     V4OperatorPermission.MINT_TOKENS,
   )
@@ -113,9 +118,7 @@ export function ProjectSettingsDashboard() {
               </div>
               <div className="text-xl">
                 {!loading ? (
-                  <NativeTokenValue
-                    wei={distributableAmount.value}
-                  />
+                  <NativeTokenValue wei={distributableAmount.value} />
                 ) : (
                   <Loading />
                 )}

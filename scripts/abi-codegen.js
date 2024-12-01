@@ -4,6 +4,9 @@
  * Behaviour differs slightly, depending on what contract we're importing.
  * 
  * The idea is: instead asyncronously importing the JSON files at runtime, we bundle them into a TS file, and import that instead.
+ * 
+ * There a multiple TS files generated. Again, behaviour differs slightly depending on the contract.
+ * 
  * This way:
  * - we reduce the number of individual files that Next/webpack builds
  * - we save on some total bundle size (the total TS files < the total JSON files)

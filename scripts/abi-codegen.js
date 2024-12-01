@@ -11,6 +11,8 @@
  * - we reduce the number of individual files that Next/webpack builds
  * - we save on some total bundle size (the total TS files < the total JSON files)
  * - src code is simpler to read and understand
+ * 
+ * Code ain't great; heads up!
  */
 
 const fs = require('fs')

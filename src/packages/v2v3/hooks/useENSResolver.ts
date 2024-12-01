@@ -1,6 +1,7 @@
 import { namehash } from 'ethers/lib/utils'
-import { useENSRegistry } from 'hooks/ENS/useRegistry'
-import { useResolver } from 'hooks/ENS/useResolver'
+import ENSRegistryData from 'hooks/ENS/contracts/ENSRegistry.json'
+import ENSResolverData from 'hooks/ENS/contracts/PublicResolverAbi.json'
+import { useLoadContractFromAddress } from 'hooks/useLoadContractFromAddress'
 import useV2ContractReader from './contractReader/useV2ContractReader'
 
 /**
@@ -9,11 +10,15 @@ import useV2ContractReader from './contractReader/useV2ContractReader'
  * @returns ENS Resolver contract
  */
 export function useResolverForENS(ensName: string | undefined) {
-  const ENSRegistry = useENSRegistry()
-
   const node = ensName
     ? namehash(ensName + (ensName.endsWith('.eth') ? '' : '.eth'))
     : undefined
+
+  // Registry address is the same for both mainnet + sepolia
+  const ENSRegistry = useLoadContractFromAddress({
+    address: ENSRegistryData.address,
+    abi: ENSRegistryData.abi,
+  })
 
   const { data: resolverAddress } = useV2ContractReader<string>({
     contract: ENSRegistry,
@@ -21,5 +26,8 @@ export function useResolverForENS(ensName: string | undefined) {
     args: node ? [node] : null,
   })
 
-  return useResolver(resolverAddress)
+  return useLoadContractFromAddress({
+    address: resolverAddress,
+    abi: ENSResolverData.abi,
+  })
 }

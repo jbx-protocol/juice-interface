@@ -15,30 +15,20 @@ export async function loadJB721DelegateJson(
 ): Promise<ContractJson | undefined> {
   console.info('Loading JB721Delegate contract json', version, contractName)
 
-  // NOTE: imports are specified explicitly to avoid Webpack causing V8 to run out of memory and crash during compilation.
-  if (contractName === 'JB721TieredGovernance') {
-    return await import(
-      `@jbx-protocol/juice-721-delegate-v${version}/out/JB721TieredGovernance.sol/JB721TieredGovernance.json`
-    )
-  }
+  const contractSet =
+    version === '3'
+      ? await import('./interfaceAbis/juice-721-delegate-interfaces-v3')
+      : version === '3-1'
+      ? await import('./interfaceAbis/juice-721-delegate-interfaces-v3-1')
+      : version === '3-2'
+      ? await import('./interfaceAbis/juice-721-delegate-interfaces-v3-2')
+      : version === '3-3'
+      ? await import('./interfaceAbis/juice-721-delegate-interfaces-v3-3')
+      : version === '3-4'
+      ? await import('./interfaceAbis/juice-721-delegate-interfaces-v3-4')
+      : undefined
 
-  if (contractName === 'IJBTiered721DelegateStore') {
-    return await import(
-      `@jbx-protocol/juice-721-delegate-v${version}/out/IJBTiered721DelegateStore.sol/IJBTiered721DelegateStore.json`
-    )
-  }
-
-  if (contractName === 'IJBTiered721Delegate') {
-    return await import(
-      `@jbx-protocol/juice-721-delegate-v${version}/out/IJBTiered721Delegate.sol/IJBTiered721Delegate.json`
-    )
-  }
-
-  if (contractName === 'IJBTiered721DelegateProjectDeployer') {
-    return await import(
-      `@jbx-protocol/juice-721-delegate-v${version}/out/IJBTiered721DelegateProjectDeployer.sol/IJBTiered721DelegateProjectDeployer.json`
-    )
-  }
+  return contractSet?.[contractName]
 }
 
 export function useJB721DelegateAbi(

@@ -135,6 +135,10 @@ const nextConfig = removeImports({
       '@ethersproject/constants',
       '@ethersproject/bignumber',
       '@ethersproject',
+      'viem',
+      'viem/chains',
+      'wagmi',
+      '@wagmi/core'
     ],
   },
   staticPageGenerationTimeout: 90,

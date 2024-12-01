@@ -28,7 +28,7 @@ export default function V2V3ProjectOFACProvider({
     queryKey: ['isAddressListedInOFAC', userAddress],
     queryFn: async () => {
       if (!enabled) {
-        return
+        return null
       }
 
       try {

@@ -6,59 +6,16 @@ import { NetworkName } from 'models/networkName'
 import { SignerOrProvider } from 'models/signerOrProvider'
 import { V1ContractName, V1Contracts } from 'packages/v1/models/contracts'
 import { useEffect, useState } from 'react'
+import * as mainnet from './juice-contracts-v1-mainnet'
 
 const loadV1Contract = async (
   contractName: V1ContractName,
   network: NetworkName,
   signerOrProvider: SignerOrProvider,
 ): Promise<Contract | undefined> => {
-  let contract: Contract | undefined
+  if (network !== NetworkName.mainnet) return
 
-  if (network === NetworkName.sepolia) return
-
-  switch (contractName) {
-    case V1ContractName.FundingCycles:
-      contract = await import(
-        `@jbx-protocol/contracts-v1/deployments/${network}/FundingCycles.json`
-      )
-      break
-    case V1ContractName.TerminalV1:
-      contract = await import(
-        `@jbx-protocol/contracts-v1/deployments/${network}/TerminalV1.json`
-      )
-      break
-    case V1ContractName.TerminalV1_1:
-      contract = await import(
-        `@jbx-protocol/contracts-v1/deployments/${network}/TerminalV1_1.json`
-      )
-      break
-    case V1ContractName.TerminalDirectory:
-      contract = await import(
-        `@jbx-protocol/contracts-v1/deployments/${network}/TerminalDirectory.json`
-      )
-      break
-    case V1ContractName.ModStore:
-      contract = await import(
-        `@jbx-protocol/contracts-v1/deployments/${network}/ModStore.json`
-      )
-      break
-    case V1ContractName.OperatorStore:
-      contract = await import(
-        `@jbx-protocol/contracts-v1/deployments/${network}/OperatorStore.json`
-      )
-      break
-    case V1ContractName.Projects:
-      contract = await import(
-        `@jbx-protocol/contracts-v1/deployments/${network}/Projects.json`
-      )
-      break
-    case V1ContractName.TicketBooth:
-      contract = await import(
-        `@jbx-protocol/contracts-v1/deployments/${network}/TicketBooth.json`
-      )
-      break
-  }
-
+  const contract = mainnet[contractName]
   if (!contract) return
 
   return new Contract(contract.address, contract.abi, signerOrProvider)

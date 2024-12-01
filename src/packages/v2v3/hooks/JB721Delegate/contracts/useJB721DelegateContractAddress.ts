@@ -30,9 +30,9 @@ const ADDRESSES: {
 }
 
 async function loadJB721DelegateDeployment(version: JB721DelegateVersion) {
-  return (await import(
-    `@jbx-protocol/juice-721-delegate-v${version}/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
-  )) as ForgeDeploy
+  return (
+    await import(`./deployments/juice-721-delegate-deployment-v${version}`)
+  )[readNetwork.chainId] as ForgeDeploy
 }
 
 export async function loadJB721DelegateAddress(
@@ -41,7 +41,9 @@ export async function loadJB721DelegateAddress(
 ) {
   const hardcodedAddress =
     ADDRESSES[version]?.[readNetwork.name]?.[contractName]
-  if (hardcodedAddress) return hardcodedAddress
+  if (hardcodedAddress) {
+    return hardcodedAddress
+  }
 
   const forgeGeployment = await loadJB721DelegateDeployment(version)
   const forgeAddress = addressFor(contractName, forgeGeployment)

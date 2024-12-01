@@ -1,3 +1,15 @@
+/**
+ * A script to generate a selection of typescript files that contain the ABI and address of JB contracts.
+ * 
+ * Behaviour differs slightly, depending on what contract we're importing.
+ * 
+ * The idea is: instead asyncronously importing the JSON files at runtime, we bundle them into a TS file, and import that instead.
+ * This way:
+ * - we reduce the number of individual files that Next/webpack builds
+ * - we save on some total bundle size (the total TS files < the total JSON files)
+ * - src code is simpler to read and understand
+ */
+
 const fs = require('fs')
 
 const core = [

@@ -283,8 +283,10 @@ const codegenV3 = network => {
 console.log('🧃 Generating Typescript files for contract deployment JSONs...')
 
 const mainnetV1 = codegenV1('mainnet')
+
 const mainnetV2 = codegenV2('mainnet')
 const sepoliaV2 = codegenV2('sepolia')
+
 const mainnetV3 = codegenV3('mainnet')
 const sepoliaV3 = codegenV3('sepolia')
 

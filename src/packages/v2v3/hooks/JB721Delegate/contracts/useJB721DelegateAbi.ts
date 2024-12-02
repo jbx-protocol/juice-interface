@@ -1,8 +1,12 @@
-import { useEffect, useState } from 'react'
-
 import { ContractInterface } from 'ethers'
 import { ContractJson } from 'models/contracts'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
+import { useEffect, useState } from 'react'
+import * as v3 from './interfaceAbis/juice-721-delegate-interfaces-v3'
+import * as v3_1 from './interfaceAbis/juice-721-delegate-interfaces-v3-1'
+import * as v3_2 from './interfaceAbis/juice-721-delegate-interfaces-v3-2'
+import * as v3_3 from './interfaceAbis/juice-721-delegate-interfaces-v3-3'
+import * as v3_4 from './interfaceAbis/juice-721-delegate-interfaces-v3-4'
 
 type JB721DelegateContractName =
   | 'JB721TieredGovernance'
@@ -18,15 +22,15 @@ export async function loadJB721DelegateJson(
 
   const contractSet =
     version === '3'
-      ? await import('./interfaceAbis/juice-721-delegate-interfaces-v3')
+      ? v3
       : version === '3-1'
-      ? await import('./interfaceAbis/juice-721-delegate-interfaces-v3-1')
+      ? v3_1
       : version === '3-2'
-      ? await import('./interfaceAbis/juice-721-delegate-interfaces-v3-2')
+      ? v3_2
       : version === '3-3'
-      ? await import('./interfaceAbis/juice-721-delegate-interfaces-v3-3')
+      ? v3_3
       : version === '3-4'
-      ? await import('./interfaceAbis/juice-721-delegate-interfaces-v3-4')
+      ? v3_4
       : undefined
 
   return contractSet?.[contractName]

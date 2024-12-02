@@ -1,15 +1,14 @@
 import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
 import { V2V3ContractName } from 'packages/v2v3/models/contracts'
+import * as mainnet from './contracts/juice-contracts-v3-mainnet'
+import * as sepolia from './contracts/juice-contracts-v3-sepolia'
 
 export const loadJuiceboxV3Contract = async (
   contractName: V2V3ContractName,
   network: NetworkName,
 ): Promise<ContractJson | undefined> => {
-  const contractSet =
-    network === 'sepolia'
-      ? await import('./contracts/juice-contracts-v3-sepolia')
-      : await import('./contracts/juice-contracts-v3-mainnet')
+  const contractSet = network === 'sepolia' ? sepolia : mainnet
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

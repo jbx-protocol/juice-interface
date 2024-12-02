@@ -1,14 +1,11 @@
+import JBProjectHandles from '@jbx-protocol/project-handles/out/JBProjectHandles.sol/JBProjectHandles.json'
 import { NETWORKS_BY_NAME } from 'constants/networks'
 import { ForgeDeploy } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
 
 export const loadJBProjectHandlesContract = async (network: NetworkName) => {
   const contractJson = {
-    abi: (
-      await import(
-        `@jbx-protocol/project-handles/out/JBProjectHandles.sol/JBProjectHandles.json`
-      )
-    ).abi,
+    abi: JBProjectHandles.abi,
     address: (
       (await import(
         `@jbx-protocol/project-handles/broadcast/Deploy.sol/${NETWORKS_BY_NAME[network].chainId}/run-latest.json`

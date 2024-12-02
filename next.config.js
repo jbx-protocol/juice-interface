@@ -132,6 +132,7 @@ const nextConfig = removeImports({
       'juice-sdk-core',
       'juice-sdk-react',
       'ethers',
+      'ethers/lib/utils',
       '@ethersproject/constants',
       '@ethersproject/bignumber',
       '@ethersproject',

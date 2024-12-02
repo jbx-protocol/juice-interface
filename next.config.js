@@ -138,7 +138,8 @@ const nextConfig = removeImports({
       'viem',
       'viem/chains',
       'wagmi',
-      '@wagmi/core'
+      '@wagmi/core',
+      '@heroicons/react'
     ],
   },
   staticPageGenerationTimeout: 90,

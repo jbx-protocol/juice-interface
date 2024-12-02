@@ -1,4 +1,3 @@
-import { JBChainId } from 'juice-sdk-react'
 import { isBrowser } from 'utils/isBrowser'
 import { sepolia } from 'viem/chains'
 
@@ -26,20 +25,15 @@ export const subgraphUri = () => {
   return url.href
 }
 
-export const v4SubgraphUri = (chainId: JBChainId) => {
+export const v4SubgraphUri = (chainId: number) => {
   let uri: string | undefined
 
-  const env: {
-    [k in JBChainId]?: {
-      browserUrl?: string
-      serverUrl?: string
-    }
-  } = {
+  const env = {
     [sepolia.id]: {
       browserUrl: process.env.NEXT_PUBLIC_V4_SEPOLIA_SUBGRAPH_URL,
       serverUrl: process.env.V4_SEPOLIA_SUBGRAPH_URL,
     },
-  } as const
+  } as Record<number, { browserUrl?: string; serverUrl?: string }>
 
   if (isBrowser()) {
     uri = env?.[chainId]?.browserUrl

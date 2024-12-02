@@ -8,7 +8,6 @@ import { CV2V3 } from 'packages/v2v3/models/cv'
 import { useCallback, useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import { emitErrorNotification } from 'utils/notifications'
-import { Hash } from 'viem'
 import { useWallet } from './Wallet'
 
 type TxOpts = Omit<TransactionOptions, 'value'>
@@ -138,7 +137,7 @@ export function useTransactor(): Transactor | undefined {
         addTransaction?.(
           txTitle,
           {
-            hash: result.hash as Hash,
+            hash: result.hash as `0x${string}`,
             timestamp: result.timestamp,
           },
           {

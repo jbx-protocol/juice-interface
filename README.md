@@ -23,7 +23,7 @@ Mention `@Peel` in [Discord](https://discord.gg/6jXrJSyDFf) and someone from our
 
 ## Development
 
-Read the [development guidelines](doc/development.md) for instructions on running the app in development.
+Read the [development guidelines](doc/development.md) for instructions on running the app in development. 
 
 ## Contributing
 

@@ -81,7 +81,8 @@ const FRAME_ANCESTORS = [
   'https://*.safe.global',
   'https://nance.app',
   'https://jbdao.org',
-  'https://nounspace.com'
+  'https://nounspace.com',
+  'https://*.nounspace.com'
 ]
 
 if (process.env.NODE_ENV === 'development') {

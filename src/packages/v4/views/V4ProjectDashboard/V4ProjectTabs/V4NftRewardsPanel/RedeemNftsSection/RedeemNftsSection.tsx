@@ -29,6 +29,7 @@ export function RedeemNftsSection() {
     !nftCredits.isLoading && nftCredits.data && nftCredits.data > 0n
 
   // if (!showRedeemSection && !showCreditSection) return null
+  if (!showCreditSection) return null
 
   return (
     <div className="flex w-full flex-col gap-4 rounded-lg bg-smoke-50 p-5 dark:bg-slate-700">

@@ -16,7 +16,8 @@ const Row = PayoutsTableRow
 const Cell = PayoutsTableCell
 
 export function PayoutsTableBody() {
-  const { topAccessory, hideHeader } = usePayoutsTableContext()
+  const { topAccessory, hideHeader, createTreasurySelection } =
+    usePayoutsTableContext()
   const {
     payoutSplits,
     currency,
@@ -27,6 +28,11 @@ export function PayoutsTableBody() {
   const emptyState = distributionLimit === 0 && !payoutSplits?.length
 
   const hasDistributionLimit = distributionLimit && distributionLimit > 0
+
+  if (createTreasurySelection === 'zero') {
+    // TODO: This feels like a hack, this should not be coupled here.
+    return <>{topAccessory}</>
+  }
 
   return (
     <>
@@ -60,9 +66,11 @@ export function PayoutsTableBody() {
                         <Trans>Address or ID</Trans>
                       </Cell>
                       <Cell>
-                        {hasDistributionLimit ?
+                        {hasDistributionLimit ? (
                           <CurrencySwitcher />
-                        : <Trans>Percent</Trans>}
+                        ) : (
+                          <Trans>Percent</Trans>
+                        )}
                       </Cell>
                     </Row>
                   ) : null}

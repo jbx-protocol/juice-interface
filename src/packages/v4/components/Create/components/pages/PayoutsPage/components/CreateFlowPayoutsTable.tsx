@@ -1,6 +1,7 @@
 import { Form } from 'antd'
 import { CURRENCY_METADATA, CurrencyName } from 'constants/currency'
 import { BigNumber } from 'ethers'
+import { TreasurySelection } from 'models/treasurySelection'
 import { PayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/PayoutsTable'
 import { Split } from 'packages/v2v3/models/splits'
 import {
@@ -24,11 +25,15 @@ export function CreateFlowPayoutsTable({
   topAccessory,
   okButton,
   addPayoutsDisabled,
+  createTreasurySelection,
 }: {
   onFinish?: VoidFunction
   okButton?: ReactNode
   topAccessory?: ReactNode
   addPayoutsDisabled?: boolean
+  // TODO: Hack to allow payout recipients to be shown on review but not on create page
+  // When zero, hides the recipients, but undefined still shows them
+  createTreasurySelection?: TreasurySelection
 }) {
   const [
     creatingDistributionLimit,
@@ -78,6 +83,7 @@ export function CreateFlowPayoutsTable({
         hideExplaination
         hideSettings
         addPayoutsDisabled={addPayoutsDisabled}
+        createTreasurySelection={createTreasurySelection}
       />
       {/* Empty form item just to keep AntD useWatch happy */}
       <Form.Item shouldUpdate name="payoutsList" className="mb-0" />

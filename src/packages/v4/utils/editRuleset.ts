@@ -4,6 +4,7 @@ import { issuanceRateFrom } from 'packages/v2v3/utils/math'
 import { parseWad } from 'utils/format/formatNumber'
 import { otherUnitToSeconds } from 'utils/format/formatTime'
 import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
+import { BASE_CURRENCY_ETH } from './shared/currency'
 
 export function transformEditCycleFormFieldsToTxArgs({
   formValues,
@@ -38,7 +39,7 @@ export function transformEditCycleFormFieldsToTxArgs({
       metadata: {
         reservedPercent: formValues.reservedPercent * 100,
         redemptionRate: formValues.redemptionRate * 100,
-        baseCurrency: 1, // Assuming base currency is a constant value, typically USD
+        baseCurrency: BASE_CURRENCY_ETH,
         pausePay: formValues.pausePay,
         pauseRedeem: false, // Defaulting this value since it's not in formValues
         pauseCreditTransfers: !formValues.tokenTransfers,

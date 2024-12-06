@@ -399,7 +399,8 @@ export function buildJB721TierParams({
       if (
         version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
         version === JB721DelegateVersion.JB721DELEGATE_V3_3 ||
-        version === JB721DelegateVersion.JB721DELEGATE_V3_4
+        version === JB721DelegateVersion.JB721DELEGATE_V3_4 ||
+        version === JB721DelegateVersion.JB721DELEGATE_V4
       ) {
         if (
           (a as JB_721_TIER_PARAMS_V3_2).price.gt(

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
+import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { isZeroAddress } from 'utils/address'
 
 export function useJB721DelegateVersion({

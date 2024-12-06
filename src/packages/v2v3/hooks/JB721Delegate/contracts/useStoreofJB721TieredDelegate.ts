@@ -1,6 +1,6 @@
 import { Contract } from 'ethers'
 import { useContractReadValue } from 'hooks/ContractReader'
-import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
+import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { useJB721TieredDelegateStore } from './useJB721TieredDelegateStore'
 
 export function useStoreOfJB721TieredDelegate({

@@ -33,7 +33,7 @@ export const EmptyScreen = ({
         <div className="font-heading text-2xl font-medium dark:text-slate-200">
           {title}
         </div>
-        {subtitle && (
+        {subtitle || (
           <div className="mt-3 text-base dark:text-slate-300">
             This project has no description.
           </div>

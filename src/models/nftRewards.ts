@@ -60,6 +60,24 @@ export type JB_721_TIER_PARAMS_V3_2 = Omit<
   useVotingUnits: boolean
 }
 
+// v4TODO: add to SDK
+export type JB_721_TIER_PARAMS_V4 = {
+  price: bigint
+  initialSupply: number
+  votingUnits: number
+  reserveFrequency: number
+  reserveBeneficiary: `0x${string}`
+  encodedIPFSUri: `0x${string}`
+  category: number
+  discountPercent: number
+  allowOwnerMint: boolean
+  useReserveBeneficiaryAsDefault: boolean
+  transfersPausable: boolean
+  useVotingUnits: boolean
+  cannotBeRemoved: boolean
+  cannotIncreaseDiscountPercent: boolean
+}
+
 // Tiers as they are stored on-chain.
 export type JB721TierV3 = JB721TierParams & {
   id: BigNumber
@@ -126,7 +144,7 @@ export enum JB721GovernanceType {
 }
 
 export interface JB721PricingParams {
-  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2)[]
+  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2 | JB_721_TIER_PARAMS_V4)[]
   currency: CurrencyOption
   decimals: number
   prices: string // address

@@ -1,5 +1,5 @@
 import { Contract } from 'ethers'
-import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
+import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { createContext } from 'react'
 
 interface JB721DelegateContracts {

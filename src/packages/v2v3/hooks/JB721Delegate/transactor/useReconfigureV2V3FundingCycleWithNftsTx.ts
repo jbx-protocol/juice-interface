@@ -1,36 +1,37 @@
+import {
+    JBDeployTiered721DelegateData,
+    JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
+} from 'models/nftRewards'
+import {
+    JBPayDataSourceFundingCycleMetadata,
+    V2V3FundAccessConstraint,
+    V2V3FundingCycleData,
+} from 'packages/v2v3/models/fundingCycle'
+import { GroupedSplits, SplitGroup } from 'packages/v2v3/models/splits'
+import {
+    buildDeployTiered721DelegateData,
+    buildJB721TierParams,
+    defaultNftCollectionName,
+} from 'utils/nftRewards'
+
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { getAddress } from 'ethers/lib/utils'
 import { TransactorInstance } from 'hooks/useTransactor'
 import omit from 'lodash/omit'
-import {
-  JBDeployTiered721DelegateData,
-  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
-} from 'models/nftRewards'
+import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
 import { useJBPrices } from 'packages/v2v3/hooks/JBPrices'
 import { ReconfigureFundingCycleTxParams } from 'packages/v2v3/hooks/transactor/useReconfigureV2V3FundingCycleTx'
 import { useV2ProjectTitle } from 'packages/v2v3/hooks/useProjectTitle'
-import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
-import {
-  JBPayDataSourceFundingCycleMetadata,
-  V2V3FundAccessConstraint,
-  V2V3FundingCycleData,
-} from 'packages/v2v3/models/fundingCycle'
-import { GroupedSplits, SplitGroup } from 'packages/v2v3/models/splits'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
 import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
 import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
-import {
-  buildDeployTiered721DelegateData,
-  buildJB721TierParams,
-  defaultNftCollectionName,
-} from 'utils/nftRewards'
 import { useJB721DelegateContractAddress } from '../contracts/useJB721DelegateContractAddress'
 import { useJBTiered721DelegateProjectDeployer } from '../contracts/useJBTiered721DelegateProjectDeployer'
 import { useProjectControllerJB721DelegateVersion } from '../contracts/useProjectJB721DelegateVersion'

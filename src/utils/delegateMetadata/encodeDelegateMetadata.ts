@@ -1,12 +1,13 @@
 import { BigNumber, BigNumberish, utils } from 'ethers'
+import {
+    JB721DelegatePayMetadata,
+    encodeJb721DelegatePayMetadata,
+} from './encodeJb721DelegateMetadata'
+
 import { createMetadata } from 'juicebox-metadata-helper'
+import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { IJBBuybackDelegate_INTERFACE_ID } from 'packages/v2v3/constants/buybackDelegate'
 import { IJBTiered721Delegate_V3_4_PAY_ID } from 'packages/v2v3/constants/nftRewards'
-import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
-import {
-  JB721DelegatePayMetadata,
-  encodeJb721DelegatePayMetadata,
-} from './encodeJb721DelegateMetadata'
 
 /**
  * Encode pay metadata for project delegate contracts.

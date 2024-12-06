@@ -1,0 +1,8 @@
+export enum JB721DelegateVersion {
+  JB721DELEGATE_V3 = '3',
+  JB721DELEGATE_V3_1 = '3-1',
+  JB721DELEGATE_V3_2 = '3-2',
+  JB721DELEGATE_V3_3 = '3-3',
+  JB721DELEGATE_V3_4 = '3-4',
+  JB721DELEGATE_V4 = '4',
+}

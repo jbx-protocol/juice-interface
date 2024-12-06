@@ -59,7 +59,7 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
       (nftRewards.nftRewards.rewardTiers ?? []).length > 0
 
     if (showNfts) {
-      return t`Project isn't currently issuing tokens, but is issuing NFTs`
+      return t`Project is currently only issuing NFTs`
     }
 
     return t`Project isn't currently issuing tokens`

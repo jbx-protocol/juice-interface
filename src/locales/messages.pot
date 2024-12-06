@@ -3389,6 +3389,9 @@ msgstr ""
 msgid "Contract permissions"
 msgstr ""
 
+msgid "Project is currently only issuing NFTs"
+msgstr ""
+
 msgid "Project configurations cannot be changed to the duration of locked cycles."
 msgstr ""
 

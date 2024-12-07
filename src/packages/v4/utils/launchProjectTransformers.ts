@@ -17,6 +17,7 @@ import { Address } from 'viem'
 import { FundAccessLimitGroup } from '../models/fundAccessLimits'
 import { GroupedSplits as V4GroupedSplits } from '../models/splits'
 import { LaunchProjectJBTerminal } from '../models/terminals'
+import { BASE_CURRENCY_ETH } from './shared/currency'
 
 export type LaunchV2V3ProjectArgs = [
   string, // _owner
@@ -100,7 +101,7 @@ export function transformFCMetadataToRulesetMetadata({
   return {
     reservedPercent: fundingCycleMetadata.reservedRate.toNumber(),
     redemptionRate: fundingCycleMetadata.redemptionRate.toNumber(),
-    baseCurrency: 1, // Not present in v2v3, passing 1 by default
+    baseCurrency: BASE_CURRENCY_ETH,
     pausePay: fundingCycleMetadata.pausePay,
     pauseRedeem: fundingCycleMetadata.pauseRedeem,
     pauseCreditTransfers: Boolean(fundingCycleMetadata.global.pauseTransfers),

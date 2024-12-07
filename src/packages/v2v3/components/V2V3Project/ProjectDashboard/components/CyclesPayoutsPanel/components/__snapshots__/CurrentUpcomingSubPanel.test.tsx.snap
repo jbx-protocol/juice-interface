@@ -136,6 +136,27 @@ exports[`CurrentUpcomingSubPanel renders "upcoming" 1`] = `
       class="flex flex-col gap-4"
     >
       <div
+        class="flex items-center gap-2 rounded-lg py-2 px-3.5 text-sm font-medium shadow-sm border-bluebs-100 bg-bluebs-25 text-bluebs-700 dark:border-bluebs-800 dark:bg-bluebs-950 dark:text-bluebs-400"
+      >
+        <svg
+          aria-hidden="true"
+          class="h-5 w-5"
+          data-slot="icon"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        Starts in 
+      </div>
+      <div
         class="grid grid-cols-2 gap-4 md:flex"
       >
         <div
@@ -375,6 +396,27 @@ exports[`CurrentUpcomingSubPanel renders a skeleton when loading "upcoming" 1`] 
     <div
       class="flex flex-col gap-4"
     >
+      <div
+        class="flex items-center gap-2 rounded-lg py-2 px-3.5 text-sm font-medium shadow-sm border-bluebs-100 bg-bluebs-25 text-bluebs-700 dark:border-bluebs-800 dark:bg-bluebs-950 dark:text-bluebs-400"
+      >
+        <svg
+          aria-hidden="true"
+          class="h-5 w-5"
+          data-slot="icon"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        Starts in 
+      </div>
       <div
         class="grid grid-cols-2 gap-4 md:flex"
       >

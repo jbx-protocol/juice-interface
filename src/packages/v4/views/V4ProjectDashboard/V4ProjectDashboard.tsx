@@ -11,7 +11,7 @@ import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 import { V4ProjectHeader } from './V4ProjectHeader'
 import { V4ProjectTabs } from './V4ProjectTabs/V4ProjectTabs'
 
-export function V4ProjectDashboard() {
+export default function V4ProjectDashboard() {
   const { projectPayReceipt } = useProjectPageQueries()
 
   if (projectPayReceipt !== undefined) {

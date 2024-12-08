@@ -132,19 +132,18 @@ export type NftCollectionMetadata = {
   description: string | undefined
 }
 
-export type NftPostPayModalConfig = {
-  ctaText: string | undefined
-  ctaLink: string | undefined
-  content: string | undefined
-}
-
 export enum JB721GovernanceType {
   NONE,
   ONCHAIN,
 }
 
 export interface JB721PricingParams {
-  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2 | JB_721_TIER_PARAMS_V4)[]
+  tiers: (
+    | JB721TierParams
+    | JB_721_TIER_PARAMS_V3_1
+    | JB_721_TIER_PARAMS_V3_2
+    | JB_721_TIER_PARAMS_V4
+  )[]
   currency: CurrencyOption
   decimals: number
   prices: string // address

@@ -1,4 +1,4 @@
-import { getAddress } from 'viem'
+import { getAddress } from 'ethers/lib/utils'
 import { Split } from '../models/splits'
 import { splitPercentFrom } from './math'
 

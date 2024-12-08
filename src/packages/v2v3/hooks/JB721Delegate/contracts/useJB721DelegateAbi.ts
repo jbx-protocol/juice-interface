@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
-
 import { ContractInterface } from 'ethers'
 import { ContractJson } from 'models/contracts'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
+import { useEffect, useState } from 'react'
 
 type JB721DelegateContractName =
   | 'JB721TieredGovernance'

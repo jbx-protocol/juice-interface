@@ -1,19 +1,18 @@
-import { Form, FormInstance } from 'antd'
-import { NftPostPayModalConfig, NftRewardTier } from 'models/nftRewards'
+import { RightOutlined } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
-
-import { CreateCollapse } from 'packages/v2v3/components/Create/components/CreateCollapse/CreateCollapse'
+import { Form, FormInstance } from 'antd'
 import ExternalLink from 'components/ExternalLink'
+import TooltipLabel from 'components/TooltipLabel'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
+import { NftPostPayModalConfig, NftRewardTier } from 'models/nftRewards'
+import { CreateCollapse } from 'packages/v2v3/components/Create/components/CreateCollapse/CreateCollapse'
+import { OptionalHeader } from 'packages/v2v3/components/Create/components/OptionalHeader'
+import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
+import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
+import { inputMustExistRule } from 'utils/antdRules'
+import { RewardsList } from '../RewardsList/RewardsList'
 import { NftAdvancedFormItems } from './NftAdvancedFormItems'
 import { NftPaymentSuccessFormItems } from './NftPaymentSuccessFormItems'
-import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
-import { OptionalHeader } from 'packages/v2v3/components/Create/components/OptionalHeader'
-import { RewardsList } from '../RewardsList/RewardsList'
-import { RightOutlined } from '@ant-design/icons'
-import TooltipLabel from 'components/TooltipLabel'
-import { inputMustExistRule } from 'utils/antdRules'
-import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
 
 export type NftRewardsFormProps = Partial<{
   rewards: NftRewardTier[]
@@ -34,7 +33,7 @@ export const AddNftCollectionForm = ({
   nftRewardsData,
   okButton,
   onFinish,
-  priceCurrencySymbol
+  priceCurrencySymbol,
 }: {
   form: FormInstance<NftRewardsFormProps>
   initialValues?: NftRewardsFormProps
@@ -61,7 +60,11 @@ export const AddNftCollectionForm = ({
       >
         <div className="flex flex-col gap-6">
           <Form.Item noStyle name="rewards">
-            <RewardsList allowCreate nftRewardsData={nftRewardsData} priceCurrencySymbol={priceCurrencySymbol} />
+            <RewardsList
+              allowCreate
+              nftRewardsData={nftRewardsData}
+              priceCurrencySymbol={priceCurrencySymbol}
+            />
           </Form.Item>
 
           {hasNfts && (

@@ -1,21 +1,17 @@
 import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
-import { SEO } from 'components/common/SEO/SEO'
+import { V2V3ProjectSEO } from 'components/ProjectPageSEO'
 import { PV_V2 } from 'constants/pv'
-import { SiteBaseUrl } from 'constants/url'
 import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvider'
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo/paginateDepleteProjectsQuery'
 import { loadCatalog } from 'locales/utils'
-import { ProjectMetadata } from 'models/projectMetadata'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { ProjectDashboard } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/ProjectDashboard'
 import { V2V3ProjectPageProvider } from 'packages/v2v3/contexts/V2V3ProjectPageProvider'
 import React, { PropsWithChildren } from 'react'
-import { cidFromUrl, ipfsPublicGatewayUrl } from 'utils/ipfs'
 import {
   ProjectPageProps,
   getProjectStaticProps,
 } from 'utils/server/pages/props'
-import { stripHtmlTags } from 'utils/string'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.BUILD_CACHE_V2_PROJECTS === 'true') {
@@ -58,43 +54,13 @@ export const getStaticProps: GetStaticProps<
   }
 }
 
-const ProjectPageSEO = ({
-  metadata,
-  projectId,
-}: {
-  metadata?: ProjectMetadata
-  projectId: number
-}) => (
-  <SEO
-    // Set known values, leave others undefined to be overridden
-    title={metadata?.name}
-    url={`${SiteBaseUrl}v2/p/${projectId}`}
-    description={
-      metadata?.projectTagline
-        ? metadata.projectTagline
-        : metadata?.description
-        ? stripHtmlTags(metadata.description)
-        : undefined
-    }
-    twitter={{
-      card: 'summary',
-      creator: metadata?.twitter,
-      handle: metadata?.twitter,
-      // Swap out all gateways with ipfs.io public gateway until we can resolve our meta tag issue.
-      image: metadata?.logoUri
-        ? ipfsPublicGatewayUrl(cidFromUrl(metadata.logoUri))
-        : undefined,
-    }}
-  />
-)
-
 export default function V2V3ProjectPage({
   metadata,
   projectId,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <ProjectPageSEO metadata={metadata} projectId={projectId} />
+      <V2V3ProjectSEO metadata={metadata} projectId={projectId} />
 
       <_Wrapper>
         <AppWrapper>

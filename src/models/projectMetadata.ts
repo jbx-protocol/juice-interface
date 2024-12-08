@@ -1,4 +1,4 @@
-import { NftPostPayModalConfig } from './nftRewards'
+import { NftPostPayModalConfig } from './nftPostPayModal'
 import { ProjectTagName, filterValidTags } from './project-tags'
 import { TokenRef } from './tokenRef'
 

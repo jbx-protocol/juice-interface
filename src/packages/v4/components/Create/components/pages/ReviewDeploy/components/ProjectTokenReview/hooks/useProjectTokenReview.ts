@@ -1,8 +1,11 @@
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
-import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'packages/v2v3/utils/splitToAllocation'
 import { useCallback, useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useEditingReservedTokensSplits } from 'redux/hooks/useEditingReservedTokensSplits'
+import { useCreatingReservedTokensSplits } from 'redux/hooks/v2v3/create'
 import { formatEnabled, formatPaused } from 'utils/format/formatBoolean'
 
 export const useProjectTokenReview = () => {
@@ -14,8 +17,8 @@ export const useProjectTokenReview = () => {
       redemptionRate,
       global,
     },
-  } = useAppSelector(state => state.editingV2Project)
-  const [tokenSplits, setTokenSplits] = useEditingReservedTokensSplits()
+  } = useAppSelector(state => state.creatingV2Project)
+  const [tokenSplits, setTokenSplits] = useCreatingReservedTokensSplits()
 
   const allocationSplits = useMemo(
     () => tokenSplits.map(splitToAllocation),

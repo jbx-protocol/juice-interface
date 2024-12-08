@@ -1,5 +1,6 @@
 import { CurrencyName } from 'constants/currency'
 import { JBSplit as Split } from 'juice-sdk-core'
+import { TreasurySelection } from 'models/treasurySelection'
 import { ReactNode, createContext, useContext } from 'react'
 
 export interface PayoutsTableContextProps {
@@ -15,6 +16,8 @@ export interface PayoutsTableContextProps {
   topAccessory?: ReactNode
   hideSettings?: boolean
   addPayoutsDisabled?: boolean
+  // TODO: Hack to allow the create payouts table to hide data if set to none.
+  createTreasurySelection?: TreasurySelection
 }
 
 export const PayoutsTableContext = createContext<

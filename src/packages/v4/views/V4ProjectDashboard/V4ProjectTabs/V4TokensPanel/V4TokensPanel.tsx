@@ -13,6 +13,7 @@ import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskB
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
 import { useJBContractContext } from 'juice-sdk-react'
 import { V4TokenHoldersModal } from 'packages/v4/components/modals/V4TokenHoldersModal/V4TokenHoldersModal'
+import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { useCallback, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
@@ -20,9 +21,12 @@ import { useChainId } from 'wagmi'
 import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4BalanceMenuItemsUserFlags'
 import { useV4TokensPanel } from './hooks/useV4TokensPanel'
 import { useV4YourBalanceMenuItems } from './hooks/useV4YourBalanceMenuItems'
+import { V4BurnOrRedeemModal } from './V4BurnOrRedeemModal'
 import { V4ClaimTokensModal } from './V4ClaimTokensModal'
 import { V4MintModal } from './V4MintModal'
+import { V4RedeemTokensButton } from './V4RedeemTokensButton'
 import { V4ReservedTokensSubPanel } from './V4ReservedTokensSubPanel'
+import { V4TokenRedemptionCallout } from './V4TokenRedemptionCallout'
 
 export const V4TokensPanel = () => {
   const {
@@ -34,6 +38,7 @@ export const V4TokensPanel = () => {
     projectToken,
     totalSupply,
   } = useV4TokensPanel()
+  const projectHasErc20Token = useProjectHasErc20Token()
 
   const { canMintTokens } = useV4BalanceMenuItemsUserFlags()
 
@@ -49,8 +54,8 @@ export const V4TokensPanel = () => {
 
   const {
     items,
-    // redeemModalVisible,
-    // setRedeemModalVisible,
+    redeemModalVisible,
+    setRedeemModalVisible,
     claimTokensModalVisible,
     setClaimTokensModalVisible,
     mintModalVisible,
@@ -66,7 +71,7 @@ export const V4TokensPanel = () => {
           <h2 className="font-heading text-2xl font-medium">Tokens</h2>
         </div>
 
-        {/* <TokenRedemptionCallout /> */}
+        <V4TokenRedemptionCallout />
 
         <div className="mb-12 flex-grow">
           {!userTokenBalanceLoading && userTokenBalance !== undefined && (
@@ -76,7 +81,7 @@ export const V4TokensPanel = () => {
                 <span className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
                   <Trans>{userTokenBalance.format(8)} tokens</Trans>
                   <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center md:gap-4">
-                    {/* {projectHasErc20Token && (
+                    {projectHasErc20Token && (
                       <Button
                         className="p-0 text-start md:text-end"
                         type="link"
@@ -87,11 +92,11 @@ export const V4TokensPanel = () => {
                       >
                         <Trans>Claim ERC-20 token</Trans>
                       </Button>
-                    )} */}
-                    {/* <RedeemTokensButton
+                    )}
+                    <V4RedeemTokensButton
                       containerClassName="w-full md:w-fit"
                       className="h-12 w-full md:h-10"
-                    /> */}
+                    />
                   </div>
                 </span>
               }
@@ -151,11 +156,11 @@ export const V4TokensPanel = () => {
         open={tokenHolderModalOpen}
         onClose={closeTokenHolderModal}
       />
-      {/* <V2V3BurnOrRedeemModal
+      <V4BurnOrRedeemModal
         open={redeemModalVisible}
         onCancel={() => setRedeemModalVisible(false)}
         onConfirmed={reloadWindow}
-      /> */}
+      />
       <V4ClaimTokensModal
         open={claimTokensModalVisible}
         onCancel={() => setClaimTokensModalVisible(false)}
@@ -179,7 +184,7 @@ const ProjectTokenCard = () => {
   const chainId = useChainId()
   const { projectId: projectIdBig } = useJBContractContext()
   const projectId = Number(projectIdBig)
-  
+
   const {
     projectToken,
     projectTokenAddress,
@@ -203,25 +208,26 @@ const ProjectTokenCard = () => {
           </div>
           {projectTokenAddress && projectHasErc20Token && (
             <AddTokenToMetamaskButton
-              className="mt-2" 
+              className="mt-2"
               tokenAddress={projectTokenAddress}
             />
           )}
           {canCreateErc20Token ? (
             <Tooltip title={ISSUE_ERC20_EXPLANATION}>
-              <a href={`${v4ProjectRoute({ chainId, projectId })}/settings/createerc20`}>
-                <Button
-                  size="small"
-                  icon={<SettingOutlined />}
-                  type='link'
-                >
+              <a
+                href={`${v4ProjectRoute({
+                  chainId,
+                  projectId,
+                })}/settings/createerc20`}
+              >
+                <Button size="small" icon={<SettingOutlined />} type="link">
                   <span>
                     <Trans>Create ERC-20 Token</Trans>
                   </span>
                 </Button>
               </a>
             </Tooltip>
-          ): null}
+          ) : null}
         </>
       }
     />

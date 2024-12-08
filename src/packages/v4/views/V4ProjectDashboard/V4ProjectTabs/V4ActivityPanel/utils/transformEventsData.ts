@@ -9,11 +9,14 @@ export function transformPayEventsRes(
     return {
       id: event.id,
       amount: new Ether(BigInt(event.amount)),
-      amountUSD: event.amountUSD ? new Ether(BigInt(event.amountUSD)) : undefined,
+      amountUSD: event.amountUSD
+        ? new Ether(BigInt(event.amountUSD))
+        : undefined,
       beneficiary: event.beneficiary,
       beneficiaryTokenCount: new JBProjectToken(
         BigInt(event.beneficiaryTokenCount),
       ),
+      note: event.note,
       timestamp: event.timestamp,
       txHash: event.txHash,
     }

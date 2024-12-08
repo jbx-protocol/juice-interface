@@ -25,19 +25,28 @@ export function useETHReceivedFromTokens(
   const redemptionRate = rulesetMetadata.data?.redemptionRate?.value
 
   if (
-    !redemptionRate ||
-    !totalSupply ||
-    !tokensReserved ||
-    !tokenAmountWei ||
-    !nativeTokenSurplus
+    redemptionRate === undefined ||
+    totalSupply === undefined ||
+    tokensReserved === undefined ||
+    tokenAmountWei === undefined ||
+    nativeTokenSurplus === undefined
   ) {
     return
   }
 
-  return getTokenRedemptionQuoteEth(tokenAmountWei, {
-    redemptionRate: Number(redemptionRate),
-    totalSupply,
-    tokensReserved,
-    overflowWei: nativeTokenSurplus,
-  })
+  try {
+    return getTokenRedemptionQuoteEth(tokenAmountWei, {
+      redemptionRate: Number(redemptionRate),
+      totalSupply,
+      tokensReserved,
+      overflowWei: nativeTokenSurplus,
+    })
+  } catch (e) {
+    // Division by zero can cause a RangeError
+    if (e instanceof RangeError) {
+      return
+    } else {
+      throw e
+    }
+  }
 }

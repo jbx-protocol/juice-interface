@@ -4,8 +4,12 @@ import { SwitchToUnlimitedModal } from 'components/PayoutsTable/SwitchToUnlimite
 import { PopupMenu, PopupMenuItem } from 'components/ui/PopupMenu'
 import { handleConfirmationDeletion } from 'hooks/emitConfirmationDeletionModal'
 import { ConvertAmountsModal } from 'packages/v2v3/components/shared/PayoutsTable/ConvertAmountsModal'
+import {
+  V2V3_CURRENCY_ETH,
+  V2V3_CURRENCY_USD,
+} from 'packages/v2v3/utils/currency'
 import { useState } from 'react'
-import { ReduxDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
+import { ReduxDistributionLimit } from 'redux/hooks/v2v3/shared'
 import { fromWad } from 'utils/format/formatNumber'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
 
@@ -20,6 +24,7 @@ export function PayoutTableSettings() {
 
   const {
     payoutSplits,
+    currency,
     distributionLimitIsInfinite,
     handleDeleteAllPayoutSplits,
     setDistributionLimit,
@@ -103,6 +108,7 @@ export function PayoutTableSettings() {
         onOk={handleSwitchToLimitedPayouts}
         onCancel={() => setSwitchToLimitedModalOpen(false)}
         splits={payoutSplits}
+        currency={currency === 'ETH' ? V2V3_CURRENCY_ETH : V2V3_CURRENCY_USD}
       />
     </>
   )

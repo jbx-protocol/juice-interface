@@ -1,11 +1,14 @@
-import { LaunchTxOpts, useLaunchProjectTx } from 'packages/v4/hooks/useLaunchProjectTx'
-import { useCallback } from 'react'
 import {
-  useAppSelector,
-  useEditingV2V3FundAccessConstraintsSelector,
-  useEditingV2V3FundingCycleDataSelector,
-  useEditingV2V3FundingCycleMetadataSelector,
-} from 'redux/hooks/useAppSelector'
+  LaunchTxOpts,
+  useLaunchProjectTx,
+} from 'packages/v4/hooks/useLaunchProjectTx'
+import { useCallback } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import {
+  useCreatingV2V3FundAccessConstraintsSelector,
+  useCreatingV2V3FundingCycleDataSelector,
+  useCreatingV2V3FundingCycleMetadataSelector,
+} from 'redux/hooks/v2v3/create'
 
 /**
  * Hook that returns a function that deploys a v4 project.
@@ -20,21 +23,22 @@ export const useDeployStandardProject = () => {
     reservedTokensGroupedSplits,
     inputProjectOwner,
     mustStartAtOrAfter,
-  } = useAppSelector(state => state.editingV2Project)
-  const fundingCycleMetadata = useEditingV2V3FundingCycleMetadataSelector()
-  const fundingCycleData = useEditingV2V3FundingCycleDataSelector()
-  const fundAccessConstraints = useEditingV2V3FundAccessConstraintsSelector()
+  } = useAppSelector(state => state.creatingV2Project)
+  const fundingCycleMetadata = useCreatingV2V3FundingCycleMetadataSelector()
+  const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
+  const fundAccessConstraints = useCreatingV2V3FundAccessConstraintsSelector()
 
   const deployStandardProjectCallback = useCallback(
     async ({
       metadataCid,
       onTransactionPending,
       onTransactionConfirmed,
-      onTransactionError
+      onTransactionError,
     }: {
       metadataCid: string
     } & LaunchTxOpts) => {
       const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
+
       return await launchProjectTx(
         {
           owner: inputProjectOwner?.length ? inputProjectOwner : undefined,
@@ -48,7 +52,7 @@ export const useDeployStandardProject = () => {
         {
           onTransactionPending,
           onTransactionConfirmed,
-          onTransactionError
+          onTransactionError,
         },
       )
     },

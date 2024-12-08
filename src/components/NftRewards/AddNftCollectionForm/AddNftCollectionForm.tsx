@@ -4,10 +4,12 @@ import { Form, FormInstance } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import TooltipLabel from 'components/TooltipLabel'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
+import { NftPostPayModalConfig } from 'models/nftPostPayModal'
 import { NftRewardTier } from 'models/nftRewards'
 import { CreateCollapse } from 'packages/v2v3/components/Create/components/CreateCollapse/CreateCollapse'
 import { OptionalHeader } from 'packages/v2v3/components/Create/components/OptionalHeader'
 import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
+import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
 import { inputMustExistRule } from 'utils/antdRules'
 import { RewardsList } from '../RewardsList/RewardsList'
 import { NftAdvancedFormItems } from './NftAdvancedFormItems'
@@ -28,11 +30,15 @@ export type NftRewardsFormProps = Partial<{
 export const AddNftCollectionForm = ({
   form,
   initialValues,
+  postPayModalData,
+  nftRewardsData,
   okButton,
   onFinish,
 }: {
   form: FormInstance<NftRewardsFormProps>
   initialValues?: NftRewardsFormProps
+  postPayModalData: NftPostPayModalConfig | undefined
+  nftRewardsData: NftRewardsData
   okButton: React.ReactNode
   onFinish?: VoidFunction
 }) => {
@@ -53,7 +59,7 @@ export const AddNftCollectionForm = ({
       >
         <div className="flex flex-col gap-6">
           <Form.Item noStyle name="rewards">
-            <RewardsList allowCreate />
+            <RewardsList allowCreate nftRewardsData={nftRewardsData} />
           </Form.Item>
 
           {hasNfts && (
@@ -122,7 +128,9 @@ export const AddNftCollectionForm = ({
                   header={<OptionalHeader header={t`Payment Success Pop-up`} />}
                   hideDivider
                 >
-                  <NftPaymentSuccessFormItems />
+                  <NftPaymentSuccessFormItems
+                    postPayModalData={postPayModalData}
+                  />
                 </CreateCollapse.Panel>
 
                 <CreateCollapse.Panel

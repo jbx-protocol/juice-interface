@@ -1,10 +1,4 @@
-import { NftFileType } from 'components/inputs/UploadNoStyle'
-import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
-import { juiceboxEmojiImageUri } from 'constants/images'
-import { WAD_DECIMALS } from 'constants/numbers'
-import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
 import { BigNumber, constants, utils } from 'ethers'
-import { pinJson } from 'lib/api/ipfs'
 import {
   IPFSNftCollectionMetadata,
   IPFSNftRewardTier,
@@ -16,14 +10,23 @@ import {
   JBTiered721Flags,
   JB_721_TIER_PARAMS_V3_1,
   JB_721_TIER_PARAMS_V3_2,
+  JB_721_TIER_PARAMS_V4,
   JB_721_TIER_V3_2,
   JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
   NftRewardTier,
 } from 'models/nftRewards'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
-import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
-import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { decodeEncodedIpfsUri, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
+
+import { NftFileType } from 'components/inputs/UploadNoStyle'
+import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
+import { juiceboxEmojiImageUri } from 'constants/images'
+import { WAD_DECIMALS } from 'constants/numbers'
+import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
+import { pinJson } from 'lib/api/ipfs'
+import { JB721DelegateVersion } from 'models/JB721Delegate'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { JB721TierV4 } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 
 export function sortNftsByContributionFloor(
   rewardTiers: NftRewardTier[],
@@ -67,7 +70,11 @@ export function getNftRewardOfFloor({
 
 // returns an array of CIDs from a given array of RewardTier obj's
 export function CIDsOfNftRewardTiersResponse(
-  nftRewardTiersResponse: JB721TierV3[] | JB_721_TIER_V3_2[] | undefined,
+  nftRewardTiersResponse:
+    | JB721TierV3[]
+    | JB_721_TIER_V3_2[]
+    | readonly JB721TierV4[]
+    | undefined,
 ): string[] {
   const cids =
     nftRewardTiersResponse
@@ -303,6 +310,38 @@ function nftRewardTierToJB721TierParamsV3_2(
   }
 }
 
+function nftRewardTierToJB721TierParamsV4(
+  rewardTier: NftRewardTier,
+  cid: string,
+): JB_721_TIER_PARAMS_V4 {
+  const price = utils.parseEther(rewardTier.contributionFloor.toString()).toBigInt();
+  const maxSupply = rewardTier.maxSupply;
+  const initialSupply = maxSupply ?? DEFAULT_NFT_MAX_SUPPLY;
+  const encodedIPFSUri = encodeIpfsUri(cid);
+
+  const reservedRate = rewardTier.reservedRate ?? 0;
+  const reservedTokenBeneficiary = rewardTier.beneficiary ?? constants.AddressZero;
+  const votingUnits = rewardTier.votingWeight ? BigNumber.from(rewardTier.votingWeight).toNumber() : 0;
+
+  return {
+    price,
+    initialSupply,
+    votingUnits,
+    reserveFrequency: reservedRate, 
+    reserveBeneficiary: reservedTokenBeneficiary,
+    encodedIPFSUri,
+    category: DEFAULT_JB_721_TIER_CATEGORY,
+    discountPercent: 0,
+    allowOwnerMint: false,
+    useReserveBeneficiaryAsDefault: false,
+    transfersPausable: false,
+    useVotingUnits: true,
+    cannotBeRemoved: false,
+    cannotIncreaseDiscountPercent: false, // Explicitly add all required properties
+  } as JB_721_TIER_PARAMS_V4;
+}
+
+
 export function buildJB721TierParams({
   cids, // MUST BE SORTED BY CONTRIBUTION FLOOR (TODO: not ideal)
   rewardTiers,
@@ -310,8 +349,8 @@ export function buildJB721TierParams({
 }: {
   cids: string[]
   rewardTiers: NftRewardTier[]
-  version: JB721DelegateVersion
-}): (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2)[] {
+  version?: JB721DelegateVersion
+}): (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2 | JB_721_TIER_PARAMS_V4)[] {
   const sortedRewardTiers = sortNftsByContributionFloor(rewardTiers)
 
   // `cids` are ordered the same as `rewardTiers` so can get corresponding values from same index
@@ -323,13 +362,17 @@ export function buildJB721TierParams({
       ):
         | JB721TierParams
         | JB_721_TIER_PARAMS_V3_1
-        | JB_721_TIER_PARAMS_V3_2 => {
+        | JB_721_TIER_PARAMS_V3_2
+        | JB_721_TIER_PARAMS_V4 => {
         const rewardTier = sortedRewardTiers[index]
         if (version === JB721DelegateVersion.JB721DELEGATE_V3) {
           return nftRewardTierToJB721TierParamsV3(rewardTier, cid)
         }
         if (version === JB721DelegateVersion.JB721DELEGATE_V3_1) {
           return nftRewardTierToJB721TierParamsV3_1(rewardTier, cid)
+        }
+        if (version === JB721DelegateVersion.JB721DELEGATE_V4) {
+          return nftRewardTierToJB721TierParamsV4(rewardTier, cid)
         }
 
         // default return v3.2 params (unchanged in 3.3, 3.4)
@@ -341,6 +384,18 @@ export function buildJB721TierParams({
       // Tiers MUST BE in ascending order when sent to contract.
 
       // bit bongy, sorry!
+      if (version === JB721DelegateVersion.JB721DELEGATE_V4) {
+        if ((a as JB_721_TIER_PARAMS_V4).price > (b as JB_721_TIER_PARAMS_V4).price) {
+          return 1
+        }
+
+        if ((a as JB_721_TIER_PARAMS_V4).price < (b as JB_721_TIER_PARAMS_V4).price) {
+          return -1
+        }
+
+        return 0
+      }
+
       if (
         version === JB721DelegateVersion.JB721DELEGATE_V3_2 ||
         version === JB721DelegateVersion.JB721DELEGATE_V3_3 ||
@@ -390,7 +445,7 @@ type DeployTiered721DelegateParams = {
   collectionName: string
   collectionSymbol: string
   currency: V2V3CurrencyOption
-  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2)[]
+  tiers: (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2 | JB_721_TIER_PARAMS_V4)[]
   ownerAddress: string
   governanceType: JB721GovernanceType
   contractAddresses: {

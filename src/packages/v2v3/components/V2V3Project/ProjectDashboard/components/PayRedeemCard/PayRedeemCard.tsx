@@ -861,23 +861,25 @@ const NftReward: React.FC<{
   }, [price])
 
   return (
-    <div className={twMerge('flex items-center justify-between', className)}>
-      <div className="flex items-center gap-3">
+    <div
+      className={twMerge('flex items-center justify-between gap-3', className)}
+    >
+      <div className="flex min-w-0 items-center gap-3">
         <SmallNftSquare
-          className="h-12 w-12"
+          className="h-12 w-12 flex-shrink-0"
           nftReward={{
             fileUrl: fileUrl ?? '',
             name: name ?? '',
           }}
         />
-        <div className="flex flex-col">
+        <div className="flex min-w-0 flex-col">
           <div
-            className="flex items-center gap-2"
+            className="flex min-w-0 items-center gap-2"
             role="button"
             onClick={() => setProjectPageTab('nft_rewards')}
           >
             <TruncatedText
-              className="max-w-[70%] text-sm font-medium text-grey-900 hover:underline dark:text-slate-100"
+              className="min-w-0 max-w-[70%] text-sm font-medium text-grey-900 hover:underline dark:text-slate-100"
               text={name}
             />
             <CartItemBadge>NFT</CartItemBadge>

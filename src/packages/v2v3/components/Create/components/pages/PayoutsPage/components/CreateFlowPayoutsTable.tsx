@@ -1,5 +1,6 @@
 import { Form } from 'antd'
 import { CURRENCY_METADATA, CurrencyName } from 'constants/currency'
+import { TreasurySelection } from 'models/treasurySelection'
 import { PayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/PayoutsTable'
 import { Split } from 'packages/v2v3/models/splits'
 import {
@@ -7,9 +8,12 @@ import {
   getV2V3CurrencyOption,
 } from 'packages/v2v3/utils/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
-import { allocationToSplit, splitToAllocation } from 'packages/v2v3/utils/splitToAllocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'packages/v2v3/utils/splitToAllocation'
 import { ReactNode } from 'react'
-import { useEditingDistributionLimit } from 'redux/hooks/useEditingDistributionLimit'
+import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { usePayoutsForm } from '../hooks/usePayoutsForm'
 
@@ -20,18 +24,22 @@ export function CreateFlowPayoutsTable({
   topAccessory,
   okButton,
   addPayoutsDisabled,
+  createTreasurySelection,
 }: {
   onFinish?: VoidFunction
   okButton?: ReactNode
   topAccessory?: ReactNode
   addPayoutsDisabled?: boolean
+  // TODO: Hack to allow payout recipients to be shown on review but not on create page
+  // When zero, hides the recipients, but undefined still shows them
+  createTreasurySelection?: TreasurySelection
 }) {
   const [
     editingDistributionLimit,
     ,
     setDistributionLimitAmount,
     setDistributionLimitCurrency,
-  ] = useEditingDistributionLimit()
+  ] = useCreatingDistributionLimit()
 
   const { form, initialValues } = usePayoutsForm()
   const distributionLimit = !editingDistributionLimit
@@ -72,6 +80,7 @@ export function CreateFlowPayoutsTable({
         hideExplaination
         hideSettings
         addPayoutsDisabled={addPayoutsDisabled}
+        createTreasurySelection={createTreasurySelection}
       />
       {/* Empty form item just to keep AntD useWatch happy */}
       <Form.Item shouldUpdate name="payoutsList" className="mb-0" />

@@ -9,6 +9,7 @@ import { WagmiProvider } from 'wagmi'
 import { chainNameMap } from '../utils/networks'
 import { EditCycleFormProvider } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormContext'
 import { wagmiConfig } from '../wagmiConfig'
+import { V4NftRewardsProvider } from './V4NftRewards/V4NftRewardsProvider'
 import V4ProjectMetadataProvider from './V4ProjectMetadataProvider'
 
 export const V4SettingsProvider: React.FC<React.PropsWithChildren> = ({
@@ -33,15 +34,17 @@ export const V4SettingsProvider: React.FC<React.PropsWithChildren> = ({
             metadata: { ipfsGatewayHostname: OPEN_IPFS_GATEWAY_HOSTNAME },
           }}
         >
-          <V4ProjectMetadataProvider projectId={projectIdBigInt}>
-            <Provider store={store}>
-              <TransactionProvider>
-                <EditCycleFormProvider>
-                  {children}
-                </EditCycleFormProvider>
-              </TransactionProvider>
-            </Provider>
-          </V4ProjectMetadataProvider>
+          <V4NftRewardsProvider>
+            <V4ProjectMetadataProvider projectId={projectIdBigInt}>
+              <Provider store={store}>
+                <TransactionProvider>
+                  <EditCycleFormProvider>
+                    {children}
+                  </EditCycleFormProvider>
+                </TransactionProvider>
+              </Provider>
+            </V4ProjectMetadataProvider>
+          </V4NftRewardsProvider>
         </JBProjectProvider>
       </WagmiProvider>
     </AppWrapper>

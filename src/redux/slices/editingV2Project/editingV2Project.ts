@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { CreatePage } from 'models/createPage'
+import { NftPostPayModalConfig } from 'models/nftPostPayModal'
 import {
   JB721GovernanceType,
   NftCollectionMetadata,
-  NftPostPayModalConfig,
   NftRewardTier,
 } from 'models/nftRewards'
 import { PayoutsSelection } from 'models/payoutsSelection'
@@ -21,17 +21,11 @@ import {
   SerializedV2V3FundingCycleMetadata,
 } from 'packages/v2v3/utils/serializers'
 import {
-  DEFAULT_REDUX_STATE,
   EMPTY_PAYOUT_GROUPED_SPLITS,
   EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
-} from './defaultState'
-import { NftRewardsData, ReduxState } from './types'
-import { REDUX_STORE_V2_PROJECT_VERSION } from './version'
-
-export const INITIAL_REDUX_STATE = {
-  version: REDUX_STORE_V2_PROJECT_VERSION,
-  ...DEFAULT_REDUX_STATE,
-}
+} from '../shared/v2ProjectDefaultState'
+import { INITIAL_REDUX_STATE } from '../shared/v2ProjectInitialReduxState'
+import { NftRewardsData, ReduxState } from '../shared/v2ProjectTypes'
 
 const editingV2ProjectSlice = createSlice({
   name: 'editingV2Project',

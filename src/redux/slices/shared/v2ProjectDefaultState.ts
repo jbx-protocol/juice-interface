@@ -22,8 +22,9 @@ import {
   serializeV2V3FundingCycleData,
   serializeV2V3FundingCycleMetadata,
 } from 'packages/v2v3/utils/serializers'
+import { JB721TiersHookFlags } from 'packages/v4/models/nfts'
 import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
-import { CreateState, ProjectState } from './types'
+import { CreateState, ProjectState } from './v2ProjectTypes'
 
 const DEFAULT_DOMAIN = 'juicebox'
 
@@ -92,6 +93,13 @@ export const DEFAULT_NFT_FLAGS: JBTiered721Flags = {
   preventOverspending: false,
 }
 
+export const DEFAULT_NFT_FLAGS_V4: JB721TiersHookFlags = {
+  noNewTiersWithReserves: false,
+  noNewTiersWithVotes: false,
+  noNewTiersWithOwnerMinting: false,
+  preventOverspending: false,
+}
+
 const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
   name: '',
   infoUri: '',
@@ -112,7 +120,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
 }
 
 const DEFAULT_CREATE_STATE: CreateState = {
-  treasurySelection: undefined,
+  treasurySelection: 'zero',
   reconfigurationRuleSelection: undefined,
   fundingCyclesPageSelection: undefined,
   createFurthestPageReached: 'projectDetails',

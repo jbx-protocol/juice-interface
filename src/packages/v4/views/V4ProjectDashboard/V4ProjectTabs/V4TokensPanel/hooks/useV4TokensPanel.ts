@@ -1,20 +1,17 @@
-import { useWallet } from 'hooks/Wallet'
 import { JBProjectToken } from 'juice-sdk-core'
-import { useJBContractContext, useJBTokenContext, useReadJbTokensTotalBalanceOf } from 'juice-sdk-react'
+import { useJBTokenContext } from 'juice-sdk-react'
+import { useV4UserTotalTokensBalance } from 'packages/v4/contexts/V4UserTotalTokensBalanceProvider'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { useV4TotalTokenSupply } from 'packages/v4/hooks/useV4TotalTokenSupply'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
 import { useMemo } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { zeroAddress } from 'viem'
 
 export const useV4TokensPanel = () => {
-  const { projectId } = useJBContractContext()
-  const { userAddress } = useWallet()
   const { token } = useJBTokenContext()
   const tokenAddress = token?.data?.address
-  
+
   const { data: _totalTokenSupply } = useV4TotalTokenSupply()
 
   const projectToken = tokenSymbolText({
@@ -29,12 +26,8 @@ export const useV4TokensPanel = () => {
   const projectHasErc20Token = useProjectHasErc20Token()
 
   const { data: _userTokenBalance, isLoading: userTokenBalanceLoading } =
-    useReadJbTokensTotalBalanceOf({
-      args: [
-        userAddress ?? zeroAddress,
-        projectId
-      ]
-    })
+    useV4UserTotalTokensBalance()
+
   const userTokenBalance = useMemo(() => {
     if (_userTokenBalance === undefined) return
     return new JBProjectToken(_userTokenBalance ?? 0n)

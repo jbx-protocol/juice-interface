@@ -13,7 +13,7 @@ export const useWizard = ({ children }: { children?: any[] }) => {
   const [currentPage, setCurrentPage] = useState<string>('')
   const { furthestPageReached } = useEditingCreateFurthestPageReached()
   const softLockedPageQueue = useAppSelector(
-    state => state.editingV2Project.createSoftLockPageQueue,
+    state => state.creatingV2Project.createSoftLockPageQueue,
   )
 
   const pages: PageProps[] = useMemo(() => {

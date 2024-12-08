@@ -1226,9 +1226,6 @@ msgstr ""
 msgid "Issue as ERC-20"
 msgstr ""
 
-msgid "Pay {primaryAmount}"
-msgstr ""
-
 msgid "Active"
 msgstr ""
 
@@ -1860,6 +1857,9 @@ msgid "Project rules"
 msgstr ""
 
 msgid "Upload"
+msgstr ""
+
+msgid "DeSci"
 msgstr ""
 
 msgid "The address that should receive the tokens minted from paying this project."
@@ -3387,6 +3387,9 @@ msgid "Connect"
 msgstr ""
 
 msgid "Contract permissions"
+msgstr ""
+
+msgid "Project is currently only issuing NFTs"
 msgstr ""
 
 msgid "Project configurations cannot be changed to the duration of locked cycles."

@@ -12,7 +12,7 @@ import {
   DEFAULT_NFT_FLAGS,
   DEFAULT_NFT_PRICING,
   EMPTY_NFT_COLLECTION_METADATA,
-} from 'redux/slices/editingV2Project'
+} from 'redux/slices/shared/v2ProjectDefaultState'
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { JB721DelegateContractsContext } from './JB721DelegateContracts/JB721DelegateContractsContext'
 

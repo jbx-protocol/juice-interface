@@ -1,7 +1,7 @@
 import { DurationOption } from 'components/inputs/DurationInput'
 import { CurrencyName } from 'constants/currency'
 import { Split } from 'packages/v2v3/models/splits'
-import { NftRewardsData } from 'redux/slices/editingV2Project/types'
+import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
 
 type DetailsSectionFields = {
   duration: number

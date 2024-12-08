@@ -8,6 +8,7 @@ import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import V4AboutPanel from './V4AboutPanel'
 import { V4ActivityPanel } from './V4ActivityPanel/V4ActivityPanel'
 import { V4CyclesPayoutsPanel } from './V4CyclesPayoutsPanel/V4CyclesPayoutsPanel'
+import { V4NftRewardsPanel } from './V4NftRewardsPanel/V4NftRewardsPanel'
 import { V4TokensPanel } from './V4TokensPanel/V4TokensPanel'
 
 type ProjectTabConfig = {
@@ -19,6 +20,8 @@ type ProjectTabConfig = {
 
 export const V4ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
+
+  const showNftRewards = true
 
   const containerRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
@@ -48,13 +51,19 @@ export const V4ProjectTabs = ({ className }: { className?: string }) => {
       { id: 'activity', name: t`Activity`, panel: <V4ActivityPanel /> },
       { id: 'about', name: t`About`, panel: <V4AboutPanel /> },
       {
+        id: 'nft_rewards',
+        name: t`NFTs`,
+        panel: <V4NftRewardsPanel />,
+        hideTab: !showNftRewards,
+      },
+      {
         id: 'cycle_payouts',
         name: t`Cycles & Payouts`,
         panel: <V4CyclesPayoutsPanel />,
       },
       { id: 'tokens', name: t`Tokens`, panel: <V4TokensPanel /> },
     ],
-    [],
+    [showNftRewards],
   )
 
   const selectedTabIndex = useMemo(() => {

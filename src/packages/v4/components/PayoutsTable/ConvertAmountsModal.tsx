@@ -14,13 +14,14 @@ import {
   derivePayoutAmount,
 } from 'packages/v4/utils/distributions'
 import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
-import { allocationToSplit, splitToAllocation } from 'packages/v4/utils/splitToAllocation'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'packages/v4/utils/splitToAllocation'
 import { isJuiceboxProjectSplit } from 'packages/v4/utils/v4Splits'
 import { ReactNode, useCallback, useMemo, useState } from 'react'
-import {
-  ReduxDistributionLimit,
-  useEditingDistributionLimit,
-} from 'redux/hooks/useEditingDistributionLimit'
+import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
+import { ReduxDistributionLimit } from 'redux/hooks/v2v3/shared'
 import { parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
 import { helpPagePath } from 'utils/helpPagePath'
@@ -37,7 +38,7 @@ export const ConvertAmountsModal = ({
   onCancel: VoidFunction
   splits: Split[]
 }) => {
-  const [distributionLimit] = useEditingDistributionLimit()
+  const [distributionLimit] = useCreatingDistributionLimit()
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>('')
   const [currency, setCurrency] = useState<V4CurrencyOption>(
     distributionLimit?.currency ?? V4_CURRENCY_ETH,
@@ -155,7 +156,9 @@ export const ConvertAmountsModal = ({
                       }),
                       currency,
                     })}{' '}
-                  <Parenthesis>{allocation.percent.formatPercentage()}%</Parenthesis>
+                  <Parenthesis>
+                    {allocation.percent.formatPercentage()}%
+                  </Parenthesis>
                 </>
               }
             />

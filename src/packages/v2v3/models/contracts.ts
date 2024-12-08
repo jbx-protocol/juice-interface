@@ -74,11 +74,3 @@ export const SUPPORTED_CONTROLLERS = [
   V2V3ContractName.JBController3_1,
 ] as const
 export type ControllerVersion = (typeof SUPPORTED_CONTROLLERS)[number]
-
-export enum JB721DelegateVersion {
-  JB721DELEGATE_V3 = '3',
-  JB721DELEGATE_V3_1 = '3-1',
-  JB721DELEGATE_V3_2 = '3-2',
-  JB721DELEGATE_V3_3 = '3-3',
-  JB721DELEGATE_V3_4 = '3-4',
-}

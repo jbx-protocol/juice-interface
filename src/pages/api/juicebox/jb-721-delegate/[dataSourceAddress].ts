@@ -1,15 +1,16 @@
+import { ForgeDeploy, addressFor } from 'forge-run-parser'
+import { NextApiRequest, NextApiResponse } from 'next'
+import { isEqualAddress, isZeroAddress } from 'utils/address'
+
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
 import { Contract } from 'ethers'
-import { ForgeDeploy, addressFor } from 'forge-run-parser'
 import { enableCors } from 'lib/api/nextjs'
 import { getLogger } from 'lib/logger'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { IJB721TieredDelegate_V3_INTERFACE_ID } from 'packages/v2v3/constants/nftRewards'
 import { loadJB721DelegateJson } from 'packages/v2v3/hooks/JB721Delegate/contracts/useJB721DelegateAbi'
 import { loadJB721DelegateAddress } from 'packages/v2v3/hooks/JB721Delegate/contracts/useJB721DelegateContractAddress'
-import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
-import { isEqualAddress, isZeroAddress } from 'utils/address'
 import JBDelegatesRegistryJson from './IJBDelegatesRegistry.json'
 
 const logger = getLogger('api/juicebox/jb-721-delegate/[dataSourceAddress]')

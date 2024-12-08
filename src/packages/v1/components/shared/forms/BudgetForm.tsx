@@ -16,7 +16,7 @@ import {
 } from 'packages/v1/utils/payouts'
 import { useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
-import { useEditingV1FundingCycleSelector } from 'redux/hooks/useAppSelector'
+import { useEditingV1FundingCycleSelector } from 'redux/hooks/v1'
 import { editingProjectActions } from 'redux/slices/editingProject'
 import { fromWad } from 'utils/format/formatNumber'
 import { helpPagePath } from 'utils/helpPagePath'

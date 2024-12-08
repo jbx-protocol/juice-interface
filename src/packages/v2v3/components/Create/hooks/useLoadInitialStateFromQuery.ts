@@ -11,10 +11,10 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
   DEFAULT_REDUX_STATE,
-  INITIAL_REDUX_STATE,
-  editingV2ProjectActions,
-} from 'redux/slices/editingV2Project'
-import { CreateState, ProjectState } from 'redux/slices/editingV2Project/types'
+  creatingV2ProjectActions,
+} from 'redux/slices/creatingV2Project'
+import { INITIAL_REDUX_STATE } from 'redux/slices/shared/v2ProjectInitialReduxState'
+import { CreateState, ProjectState } from 'redux/slices/shared/v2ProjectTypes'
 import { isEqualAddress } from 'utils/address'
 import { parseWad } from 'utils/format/formatNumber'
 import { DefaultSettings as DefaultTokenSettings } from '../components/pages/ProjectToken/hooks/useProjectTokenForm'
@@ -140,7 +140,7 @@ export function useLoadingInitialStateFromQuery() {
         parseCreateFlowStateFromInitialState(parsedInitialState)
 
       dispatch(
-        editingV2ProjectActions.setState({
+        creatingV2ProjectActions.setState({
           ...INITIAL_REDUX_STATE,
           ...createFlowState,
           ...parsedInitialState,

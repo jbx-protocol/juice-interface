@@ -1,4 +1,5 @@
 import { CurrencyName } from 'constants/currency'
+import { TreasurySelection } from 'models/treasurySelection'
 import { Split } from 'packages/v2v3/models/splits'
 import { ReactNode, createContext, useContext } from 'react'
 
@@ -9,12 +10,15 @@ export interface PayoutsTableContextProps {
   setCurrency?: (currency: CurrencyName) => void
   distributionLimit: number | undefined
   setDistributionLimit?: (distributionLimit: number | undefined) => void
+
   hideExplaination?: boolean
   hideHeader?: boolean
   showAvatars?: boolean
   topAccessory?: ReactNode
   hideSettings?: boolean
   addPayoutsDisabled?: boolean
+  // TODO: Hack to allow the create payouts table to hide data if set to none.
+  createTreasurySelection?: TreasurySelection
 }
 
 export const PayoutsTableContext = createContext<

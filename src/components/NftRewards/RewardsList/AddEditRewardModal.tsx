@@ -20,7 +20,7 @@ import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
 import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
 import {
   inputIsIntegerRule,
   inputIsValidUrlRule,
@@ -57,6 +57,7 @@ export const NEW_NFT_ID_LOWER_LIMIT = 1000000
 export const AddEditRewardModal = ({
   className,
   editingData,
+  nftRewards,
   open,
   onOk,
   onCancel,
@@ -64,6 +65,7 @@ export const AddEditRewardModal = ({
 }: {
   className?: string
   editingData?: NftRewardTier | undefined
+  nftRewards: NftRewardsData
   open?: boolean
   onOk: (reward: NftRewardTier) => void
   onCancel: VoidFunction
@@ -74,7 +76,6 @@ export const AddEditRewardModal = ({
   const [isReservingNfts, setIsReservingNfts] = useState<boolean>(false)
   const [advancedOptionsOpen, setAdvancedOptionsOpen] = useState<boolean>(false)
 
-  const { nftRewards } = useAppSelector(state => state.editingV2Project)
   const nftCurrency = nftRewards?.pricing.currency
 
   useLayoutEffect(() => {

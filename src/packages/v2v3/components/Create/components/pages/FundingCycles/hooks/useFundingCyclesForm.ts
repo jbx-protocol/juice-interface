@@ -6,8 +6,8 @@ import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   DEFAULT_MUST_START_AT_OR_AFTER,
-  editingV2ProjectActions,
-} from 'redux/slices/editingV2Project'
+  creatingV2ProjectActions,
+} from 'redux/slices/creatingV2Project'
 import {
   deriveDurationUnit,
   otherUnitToSeconds,
@@ -23,7 +23,7 @@ export type FundingCyclesFormProps = Partial<{
 export const useFundingCyclesForm = () => {
   const [form] = useForm<FundingCyclesFormProps>()
   const { fundingCycleData, fundingCyclesPageSelection, mustStartAtOrAfter } =
-    useAppSelector(state => state.editingV2Project)
+    useAppSelector(state => state.creatingV2Project)
   useDebugValue(form.getFieldsValue())
 
   const initialValues: FundingCyclesFormProps | undefined = useMemo(() => {
@@ -63,17 +63,17 @@ export const useFundingCyclesForm = () => {
   const launchDate = useWatch('launchDate', form)
 
   useEffect(() => {
-    dispatch(editingV2ProjectActions.setFundingCyclesPageSelection(selection))
+    dispatch(creatingV2ProjectActions.setFundingCyclesPageSelection(selection))
 
     // We need to handle manual case first as duration might be undefined, but
     // manual set.
     if (selection === 'manual') {
-      dispatch(editingV2ProjectActions.setDuration('0'))
+      dispatch(creatingV2ProjectActions.setDuration('0'))
       return
     }
 
     if (!selection || duration?.duration === undefined) {
-      dispatch(editingV2ProjectActions.setDuration(''))
+      dispatch(creatingV2ProjectActions.setDuration(''))
       return
     }
     if (selection === 'automated') {
@@ -81,7 +81,7 @@ export const useFundingCyclesForm = () => {
         duration: duration.duration,
         unit: duration.unit,
       })
-      dispatch(editingV2ProjectActions.setDuration(newDuration.toString()))
+      dispatch(creatingV2ProjectActions.setDuration(newDuration.toString()))
       return
     }
   }, [selection, duration, dispatch])
@@ -90,14 +90,14 @@ export const useFundingCyclesForm = () => {
     if (launchDate === undefined) return
     if (launchDate === null || !launchDate.unix().toString()) {
       dispatch(
-        editingV2ProjectActions.setMustStartAtOrAfter(
+        creatingV2ProjectActions.setMustStartAtOrAfter(
           DEFAULT_MUST_START_AT_OR_AFTER,
         ),
       )
       return
     }
     dispatch(
-      editingV2ProjectActions.setMustStartAtOrAfter(
+      creatingV2ProjectActions.setMustStartAtOrAfter(
         launchDate?.unix().toString(),
       ),
     )

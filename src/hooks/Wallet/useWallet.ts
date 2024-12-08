@@ -1,21 +1,21 @@
-import { useConnectWallet } from '@web3-onboard/react'
 import {
   useChain,
-  useChainUnsupported,
   useChangeNetworks,
   useDisconnect,
   useIsConnected,
   useSigner,
   useUserAddress,
-  useWalletBalance,
+  useWalletBalance
 } from './hooks'
+
+import { useConnectWallet } from '@web3-onboard/react'
 
 export function useWallet() {
   const signer = useSigner()
   const userAddress = useUserAddress()
   const isConnected = useIsConnected()
   const chain = useChain()
-  const chainUnsupported = useChainUnsupported()
+  const chainUnsupported = false //useChainUnsupported()
   const balance = useWalletBalance()
 
   const [, connect] = useConnectWallet()

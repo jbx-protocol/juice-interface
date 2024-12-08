@@ -5,7 +5,7 @@ import {
   reservedRateFrom,
 } from 'packages/v2v3/utils/math'
 import { allocationToSplit } from 'packages/v2v3/utils/splitToAllocation'
-import { EMPTY_RESERVED_TOKENS_GROUPED_SPLITS } from 'redux/slices/editingV2Project'
+import { EMPTY_RESERVED_TOKENS_GROUPED_SPLITS } from 'redux/slices/creatingV2Project'
 import { ProjectTokensFormProps } from '../components/pages/ProjectToken/hooks/useProjectTokenForm'
 
 export const projectTokenSettingsToReduxFormat = (

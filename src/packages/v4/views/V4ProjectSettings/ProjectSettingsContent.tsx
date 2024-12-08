@@ -1,17 +1,21 @@
-import { ChevronRightIcon } from '@heroicons/react/20/solid'
-import { ArrowLeftIcon } from '@heroicons/react/24/outline'
-import { Trans, t } from '@lingui/macro'
 import { Button, Layout } from 'antd'
-import Link from 'next/link'
-import { useMemo } from 'react'
-import { twJoin } from 'tailwind-merge'
+import { Trans, t } from '@lingui/macro'
+
 import { ArchiveProjectSettingsPage } from './ArchiveProjectSettingsPage'
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { CreateErc20TokenSettingsPage } from './CreateErc20TokenSettingsPage'
 import { EditCyclePage } from './EditCyclePage/EditCyclePage'
-import { useSettingsPagePath } from './hooks/useSettingsPagePath'
+import { EditNftsPage } from './EditNftsPage/EditNftsPage'
+import Link from 'next/link'
 import { ProjectDetailsSettingsPage } from './ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
-import { SettingsPageKey } from './ProjectSettingsDashboard'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
+import { SettingsPageKey } from './ProjectSettingsDashboard'
+import { isZeroAddress } from 'utils/address'
+import { twJoin } from 'tailwind-merge'
+import { useJBRulesetContext } from 'juice-sdk-react'
+import { useMemo } from 'react'
+import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 
 const SettingsPageComponents: {
   [k in SettingsPageKey]: () => JSX.Element | null
@@ -19,7 +23,7 @@ const SettingsPageComponents: {
   general: ProjectDetailsSettingsPage,
   // handle: () => null, //ProjectHandleSettingsPage,
   cycle: EditCyclePage,
-  // nfts: () => null, //EditNftsPage,
+  nfts: EditNftsPage,
   payouts: () => null, //PayoutsSettingsPage,
   // reservedtokens: () => null, //ReservedTokensSettingsPage,
   // transferownership: () => null, //TransferOwnershipSettingsPage,
@@ -38,7 +42,7 @@ const V4SettingsPageKeyTitleMap = (
   cycle: t`Cycle configuration`,
   payouts: t`Payouts`,
   // reservedtokens: t`Reserved token recipients`,
-  // nfts: hasExistingNfts ? t`Edit NFT collection` : t`Launch New NFT Collection`,
+  nfts: hasExistingNfts ? t`Edit NFT collection` : t`Launch New NFT Collection`,
   // transferownership: t`Transfer ownership`,
   archiveproject: t`Archive project`,
   // heldfees: t`Process held fees`,
@@ -84,13 +88,15 @@ export function ProjectSettingsContent({
 }: {
   settingsPageKey: SettingsPageKey
 }) {
+  const { rulesetMetadata } = useJBRulesetContext()
+
   const ActiveSettingsPage = useMemo(
     () => SettingsPageComponents[settingsPageKey],
     [settingsPageKey],
   )
 
-  // const hasExistingNfts = !isZeroAddress(fundingCycleMetadata?.dataSource)
-  const pageTitle = V4SettingsPageKeyTitleMap(false)[settingsPageKey]
+  const hasExistingNfts = !isZeroAddress(rulesetMetadata?.data?.dataHook)
+  const pageTitle = V4SettingsPageKeyTitleMap(hasExistingNfts)[settingsPageKey]
 
   return (
     <ProjectSettingsLayout>

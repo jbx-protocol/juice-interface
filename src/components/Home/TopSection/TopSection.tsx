@@ -22,6 +22,7 @@ import { getSubgraphIdForProject } from 'utils/graph'
 
 const HEADER_TAGS: ProjectTagName[] = [
   'dao',
+  'desci',
   'nfts',
   'fundraising',
   'art',

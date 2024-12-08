@@ -62,8 +62,8 @@ export function pinataToGatewayUrl(url: string) {
  *
  * Hex-encoded CIDs are used to store some CIDs on-chain because they are more gas-efficient.
  */
-export function encodeIpfsUri(cid: string) {
-  return '0x' + Buffer.from(base58.decode(cid).slice(2)).toString('hex')
+export function encodeIpfsUri(cid: string): `0x${string}` {
+  return `0x${Buffer.from(base58.decode(cid).slice(2)).toString('hex')}`
 }
 
 /**

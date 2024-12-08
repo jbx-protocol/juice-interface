@@ -14,7 +14,7 @@ export const useUploadNftRewards = () => {
   const {
     nftRewards,
     projectMetadata: { name: projectName, logoUri, infoUri },
-  } = useAppSelector(state => state.editingV2Project)
+  } = useAppSelector(state => state.creatingV2Project)
 
   return useCallback(async () => {
     if (!nftRewards?.rewardTiers || !nftRewards?.collectionMetadata) return

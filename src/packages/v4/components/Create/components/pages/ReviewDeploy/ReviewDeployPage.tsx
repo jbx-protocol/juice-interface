@@ -1,6 +1,8 @@
+import { Checkbox, Form } from 'antd'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+
 import { CheckCircleFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Checkbox, Form } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import ExternalLink from 'components/ExternalLink'
 import TransactionModal from 'components/modals/TransactionModal'
@@ -10,11 +12,10 @@ import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionMod
 import useMobile from 'hooks/useMobile'
 import { useModal } from 'hooks/useModal'
 import { useRouter } from 'next/router'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
-import { editingV2ProjectActions } from 'redux/slices/editingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
 import { helpPagePath } from 'utils/helpPagePath'
 import { useDeployProject } from '../../../hooks/DeployProject/useDeployProject'
 import { CreateBadge } from '../../CreateBadge'
@@ -24,6 +25,7 @@ import { WizardContext } from '../../Wizard/contexts/WizardContext'
 import { FundingConfigurationReview } from './components/FundingConfigurationReview/FundingConfigurationReview'
 import { ProjectDetailsReview } from './components/ProjectDetailsReview/ProjectDetailsReview'
 import { ProjectTokenReview } from './components/ProjectTokenReview/ProjectTokenReview'
+import { RewardsReview } from './components/RewardsReview/RewardsReview'
 import { RulesReview } from './components/RulesReview/RulesReview'
 
 enum ReviewDeployKey {
@@ -64,7 +66,7 @@ export const ReviewDeployPage = () => {
   const { deployProject, isDeploying, deployTransactionPending } =
     useDeployProject()
   const nftRewards = useAppSelector(
-    state => state.editingV2Project.nftRewards.rewardTiers,
+    state => state.creatingV2Project.nftRewards.rewardTiers,
   )
 
   const nftRewardsAreSet = useMemo(
@@ -77,10 +79,10 @@ export const ReviewDeployPage = () => {
   const handleStartOverClicked = useCallback(() => {
     router.push('/create')
     goToPage?.('projectDetails')
-    dispatch(editingV2ProjectActions.resetState())
+    dispatch(creatingV2ProjectActions.resetState())
   }, [dispatch, goToPage, router])
-
   const onFinish = useCallback(async () => {
+
     if (chainUnsupported) {
       await changeNetworks()
       return
@@ -164,7 +166,7 @@ export const ReviewDeployPage = () => {
         >
           <ProjectTokenReview />
         </CreateCollapse.Panel>
-        {/* <CreateCollapse.Panel
+        <CreateCollapse.Panel
           key={ReviewDeployKey.Rewards}
           collapsible={nftRewardsAreSet ? 'header' : 'disabled'}
           header={
@@ -174,7 +176,7 @@ export const ReviewDeployPage = () => {
           }
         >
           <RewardsReview />
-        </CreateCollapse.Panel> */}
+        </CreateCollapse.Panel>
         <CreateCollapse.Panel
           key={ReviewDeployKey.Rules}
           header={

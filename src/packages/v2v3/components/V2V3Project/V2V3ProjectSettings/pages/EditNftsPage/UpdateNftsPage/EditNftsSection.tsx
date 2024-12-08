@@ -7,12 +7,16 @@ import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
 import { useUpdateCurrentCollection } from 'packages/v2v3/components/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/useUpdateCurrentCollection'
 import { useHasNftRewards } from 'packages/v2v3/hooks/JB721Delegate/useHasNftRewards'
 import { useCallback, useState } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingFundingCycleConfig } from '../../../hooks/useEditingFundingCycleConfig'
 import { useReconfigureFundingCycle } from '../../../hooks/useReconfigureFundingCycle'
 import { TransactionSuccessModal } from '../../../TransactionSuccessModal'
 import { useEditingNfts } from '../hooks/useEditingNfts'
 
 export function EditNftsSection() {
+  const nftRewardsData = useAppSelector(
+    state => state.editingV2Project.nftRewards,
+  )
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
   const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false)
 
@@ -64,6 +68,7 @@ export function EditNftsSection() {
 
       <div className="mb-8">
         <RewardsList
+          nftRewardsData={nftRewardsData}
           value={rewardTiers}
           onChange={setRewardTiers}
           allowCreate

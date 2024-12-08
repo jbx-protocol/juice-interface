@@ -2,11 +2,6 @@ import { ContractInterface } from 'ethers'
 import { ContractJson } from 'models/contracts'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { useEffect, useState } from 'react'
-import * as v3 from './interfaceAbis/juice-721-delegate-interfaces-v3'
-import * as v3_1 from './interfaceAbis/juice-721-delegate-interfaces-v3-1'
-import * as v3_2 from './interfaceAbis/juice-721-delegate-interfaces-v3-2'
-import * as v3_3 from './interfaceAbis/juice-721-delegate-interfaces-v3-3'
-import * as v3_4 from './interfaceAbis/juice-721-delegate-interfaces-v3-4'
 
 type JB721DelegateContractName =
   | 'JB721TieredGovernance'
@@ -20,20 +15,30 @@ export async function loadJB721DelegateJson(
 ): Promise<ContractJson | undefined> {
   console.info('Loading JB721Delegate contract json', version, contractName)
 
-  const contractSet =
-    version === '3'
-      ? v3
-      : version === '3-1'
-      ? v3_1
-      : version === '3-2'
-      ? v3_2
-      : version === '3-3'
-      ? v3_3
-      : version === '3-4'
-      ? v3_4
-      : undefined
+  // NOTE: imports are specified explicitly to avoid Webpack causing V8 to run out of memory and crash during compilation.
+  if (contractName === 'JB721TieredGovernance') {
+    return await import(
+      `@jbx-protocol/juice-721-delegate-v${version}/out/JB721TieredGovernance.sol/JB721TieredGovernance.json`
+    )
+  }
 
-  return contractSet?.[contractName]
+  if (contractName === 'IJBTiered721DelegateStore') {
+    return await import(
+      `@jbx-protocol/juice-721-delegate-v${version}/out/IJBTiered721DelegateStore.sol/IJBTiered721DelegateStore.json`
+    )
+  }
+
+  if (contractName === 'IJBTiered721Delegate') {
+    return await import(
+      `@jbx-protocol/juice-721-delegate-v${version}/out/IJBTiered721Delegate.sol/IJBTiered721Delegate.json`
+    )
+  }
+
+  if (contractName === 'IJBTiered721DelegateProjectDeployer') {
+    return await import(
+      `@jbx-protocol/juice-721-delegate-v${version}/out/IJBTiered721DelegateProjectDeployer.sol/IJBTiered721DelegateProjectDeployer.json`
+    )
+  }
 }
 
 export function useJB721DelegateAbi(

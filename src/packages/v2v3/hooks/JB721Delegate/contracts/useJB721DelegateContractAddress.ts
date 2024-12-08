@@ -1,9 +1,8 @@
-import { ForgeDeploy, addressFor } from 'forge-run-parser'
-import { useEffect, useState } from 'react'
-
 import { readNetwork } from 'constants/networks'
+import { ForgeDeploy, addressFor } from 'forge-run-parser'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { NetworkName } from 'models/networkName'
+import { useEffect, useState } from 'react'
 
 /**
  * Some addresses aren't in the forge deployment manifests, so we have to hardcode them here.
@@ -30,9 +29,9 @@ const ADDRESSES: {
 }
 
 async function loadJB721DelegateDeployment(version: JB721DelegateVersion) {
-  return (
-    await import(`./deployments/juice-721-delegate-deployment-v${version}`)
-  )[readNetwork.chainId] as ForgeDeploy
+  return (await import(
+    `@jbx-protocol/juice-721-delegate-v${version}/broadcast/Deploy.s.sol/${readNetwork.chainId}/run-latest.json`
+  )) as ForgeDeploy
 }
 
 export async function loadJB721DelegateAddress(
@@ -41,9 +40,7 @@ export async function loadJB721DelegateAddress(
 ) {
   const hardcodedAddress =
     ADDRESSES[version]?.[readNetwork.name]?.[contractName]
-  if (hardcodedAddress) {
-    return hardcodedAddress
-  }
+  if (hardcodedAddress) return hardcodedAddress
 
   const forgeGeployment = await loadJB721DelegateDeployment(version)
   const forgeAddress = addressFor(contractName, forgeGeployment)

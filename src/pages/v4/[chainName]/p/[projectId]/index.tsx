@@ -1,28 +1,24 @@
 import { V4ProjectSEO } from 'components/ProjectPageSEO'
-import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { PV_V4 } from 'constants/pv'
-import { JBChainId, JBProjectProvider } from 'juice-sdk-react'
 import { loadCatalog } from 'locales/utils'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
-import { ReduxProjectCartProvider } from 'packages/v4/components/ProjectDashboard/ReduxProjectCartProvider'
-import store from 'packages/v4/components/ProjectDashboard/redux/store'
-import { V4NftRewardsProvider } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
-import V4ProjectMetadataProvider from 'packages/v4/contexts/V4ProjectMetadataProvider'
-import { V4UserNftCreditsProvider } from 'packages/v4/contexts/V4UserNftCreditsProvider'
-import { V4UserTotalTokensBalanceProvider } from 'packages/v4/contexts/V4UserTotalTokensBalanceProvider'
-import { chainNameMap } from 'packages/v4/utils/networks'
-import { V4ProjectDashboard } from 'packages/v4/views/V4ProjectDashboard/V4ProjectDashboard'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import dynamic from 'next/dynamic'
 import React, { PropsWithChildren } from 'react'
-import { Provider } from 'react-redux'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import {
   getProjectStaticProps,
   ProjectPageProps,
 } from 'utils/server/pages/props'
-import { WagmiProvider } from 'wagmi'
+
+const V4ProjectProviders = dynamic(
+  () => import('packages/v4/views/V4ProjectDashboard/V4ProjectProviders'),
+  { ssr: false },
+)
+const V4ProjectDashboard = dynamic(
+  () => import('packages/v4/views/V4ProjectDashboard/V4ProjectDashboard'),
+  { ssr: false },
+)
 
 export const getStaticPaths: GetStaticPaths = async () => {
   // TODO: static paths is convoluted with chains, needs some thought
@@ -101,7 +97,6 @@ export default function V4ProjectPage({
   if (!chainName || !projectId) {
     return <div>Invalid URL</div>
   }
-  const chainId = chainNameMap[chainName]
 
   return (
     <>
@@ -111,42 +106,10 @@ export default function V4ProjectPage({
         projectId={projectId}
       />
       <_Wrapper>
-        <Providers chainId={chainId} projectId={BigInt(projectId)}>
+        <V4ProjectProviders chainName={chainName} projectId={BigInt(projectId)}>
           <V4ProjectDashboard />
-        </Providers>
+        </V4ProjectProviders>
       </_Wrapper>
     </>
-  )
-}
-
-const Providers: React.FC<
-  PropsWithChildren & { chainId: JBChainId; projectId: bigint }
-> = ({ chainId, projectId, children }) => {
-  return (
-    <AppWrapper txHistoryProvider="wagmi">
-      <WagmiProvider config={wagmiConfig}>
-        <JBProjectProvider
-          chainId={chainId}
-          projectId={projectId}
-          ctxProps={{
-            metadata: { ipfsGatewayHostname: OPEN_IPFS_GATEWAY_HOSTNAME },
-          }}
-        >
-          <V4ProjectMetadataProvider projectId={projectId}>
-            <Provider store={store}>
-              <V4UserNftCreditsProvider>
-                <V4UserTotalTokensBalanceProvider>
-                  <V4NftRewardsProvider>
-                    <ReduxProjectCartProvider>
-                      {children}
-                    </ReduxProjectCartProvider>
-                  </V4NftRewardsProvider>
-                </V4UserTotalTokensBalanceProvider>
-              </V4UserNftCreditsProvider>
-            </Provider>
-          </V4ProjectMetadataProvider>
-        </JBProjectProvider>
-      </WagmiProvider>
-    </AppWrapper>
   )
 }

@@ -1,10 +1,10 @@
 import { CreatePage } from 'models/createPage'
 import { FundingTargetType } from 'models/fundingTargetType'
+import { NftPostPayModalConfig } from 'models/nftPostPayModal'
 import {
   JB721GovernanceType,
   JBTiered721Flags,
   NftCollectionMetadata,
-  NftPostPayModalConfig,
   NftRewardTier,
 } from 'models/nftRewards'
 import { PayoutsSelection } from 'models/payoutsSelection'

@@ -5,6 +5,7 @@ import { AnnouncementsProvider } from 'contexts/Announcements/AnnouncementsProvi
 import { paginateDepleteProjectsQueryCall } from 'lib/apollo/paginateDepleteProjectsQuery'
 import { loadCatalog } from 'locales/utils'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { ProjectDashboard } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/ProjectDashboard'
 import { V2V3ProjectPageProvider } from 'packages/v2v3/contexts/V2V3ProjectPageProvider'
 import React, { PropsWithChildren } from 'react'
 import {
@@ -65,8 +66,7 @@ export default function V2V3ProjectPage({
         <AppWrapper>
           <V2V3ProjectPageProvider projectId={projectId} metadata={metadata}>
             <AnnouncementsProvider>
-              hello
-              {/* <ProjectDashboard /> */}
+              <ProjectDashboard />
             </AnnouncementsProvider>
           </V2V3ProjectPageProvider>
         </AppWrapper>

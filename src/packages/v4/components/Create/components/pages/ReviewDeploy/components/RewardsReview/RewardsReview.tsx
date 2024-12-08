@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
+import { JBChainId, NATIVE_TOKEN_SYMBOLS } from 'juice-sdk-core'
 import { NftRewardTier } from 'models/nftRewards'
 import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
@@ -7,6 +8,7 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
 import { formatEnabled } from 'utils/format/formatBoolean'
 import { v4 } from 'uuid'
+import { useChainId } from 'wagmi'
 import { ReviewDescription } from '../ReviewDescription'
 
 export const RewardsReview = () => {
@@ -65,9 +67,12 @@ export const RewardsReview = () => {
     return formatEnabled(nftRewardsData.flags.preventOverspending)
   }, [nftRewardsData.flags.preventOverspending])
 
+  const chainId = useChainId()
+
   return (
     <div className="flex flex-col gap-12">
       <RewardsList
+        priceCurrencySymbol={NATIVE_TOKEN_SYMBOLS[chainId as JBChainId]}
         nftRewardsData={nftRewardsData}
         value={rewards}
         onChange={setRewards}

@@ -11,13 +11,12 @@ import { SettingOutlined } from '@ant-design/icons'
 import { Button, Tooltip } from 'antd'
 import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
-import { useJBContractContext } from 'juice-sdk-react'
+import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 import { V4TokenHoldersModal } from 'packages/v4/components/modals/V4TokenHoldersModal/V4TokenHoldersModal'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { useCallback, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
-import { useChainId } from 'wagmi'
 import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4BalanceMenuItemsUserFlags'
 import { useV4TokensPanel } from './hooks/useV4TokensPanel'
 import { useV4YourBalanceMenuItems } from './hooks/useV4YourBalanceMenuItems'
@@ -181,7 +180,7 @@ export const V4TokensPanel = () => {
 }
 
 const ProjectTokenCard = () => {
-  const chainId = useChainId()
+  const chainId = useJBChainId()
   const { projectId: projectIdBig } = useJBContractContext()
   const projectId = Number(projectIdBig)
 
@@ -215,10 +214,14 @@ const ProjectTokenCard = () => {
           {canCreateErc20Token ? (
             <Tooltip title={ISSUE_ERC20_EXPLANATION}>
               <a
-                href={`${v4ProjectRoute({
-                  chainId,
-                  projectId,
-                })}/settings/createerc20`}
+                href={
+                  chainId
+                    ? `${v4ProjectRoute({
+                        chainId,
+                        projectId,
+                      })}/settings/createerc20`
+                    : ''
+                }
               >
                 <Button size="small" icon={<SettingOutlined />} type="link">
                   <span>

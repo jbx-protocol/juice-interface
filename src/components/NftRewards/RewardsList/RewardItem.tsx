@@ -6,7 +6,6 @@ import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThum
 import TooltipLabel from 'components/TooltipLabel'
 import round from 'lodash/round'
 import { NftRewardTier } from 'models/nftRewards'
-import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { ReactNode } from 'react'
 import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
 import { isZeroAddress } from 'utils/address'
@@ -29,11 +28,13 @@ function numberUpToPrecisionFormat(
 export const RewardItem = ({
   reward,
   nftRewards,
+  priceCurrencySymbol,
   onEditClicked,
   onDeleteClicked,
 }: {
   reward: NftRewardTier
   nftRewards: NftRewardsData
+  priceCurrencySymbol: string
   onEditClicked?: () => void
   onDeleteClicked?: () => void
 }) => {
@@ -97,9 +98,9 @@ export const RewardItem = ({
           <div className="grid grid-cols-2 gap-y-6 gap-x-16">
             <RewardStatLine
               title={t`Minimum contribution`}
-              stat={`${numberUpToPrecisionFormat(contributionFloor)} ${
-                nftCurrency === V2V3_CURRENCY_USD ? 'USD' : 'ETH'
-              }`}
+              stat={`${numberUpToPrecisionFormat(
+                contributionFloor,
+              )} ${priceCurrencySymbol}`}
             />
             {hasLimitedSupply(maxSupply) && (
               <RewardStatLine

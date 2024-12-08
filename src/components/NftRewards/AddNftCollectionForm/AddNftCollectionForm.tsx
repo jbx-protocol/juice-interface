@@ -34,6 +34,7 @@ export const AddNftCollectionForm = ({
   nftRewardsData,
   okButton,
   onFinish,
+  priceCurrencySymbol,
 }: {
   form: FormInstance<NftRewardsFormProps>
   initialValues?: NftRewardsFormProps
@@ -41,6 +42,7 @@ export const AddNftCollectionForm = ({
   nftRewardsData: NftRewardsData
   okButton: React.ReactNode
   onFinish?: VoidFunction
+  priceCurrencySymbol: string
 }) => {
   const lockPageRulesWrapper = useLockPageRulesWrapper()
 
@@ -59,7 +61,11 @@ export const AddNftCollectionForm = ({
       >
         <div className="flex flex-col gap-6">
           <Form.Item noStyle name="rewards">
-            <RewardsList allowCreate nftRewardsData={nftRewardsData} />
+            <RewardsList
+              allowCreate
+              nftRewardsData={nftRewardsData}
+              priceCurrencySymbol={priceCurrencySymbol}
+            />
           </Form.Item>
 
           {hasNfts && (

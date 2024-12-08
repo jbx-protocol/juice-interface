@@ -1,15 +1,16 @@
-import { useJBRulesetContext, useWriteJb721TiersHookAdjustTiers } from 'juice-sdk-react'
-import { JB_721_TIER_PARAMS_V4, NftRewardTier } from 'models/nftRewards'
-import { useCallback, useContext, useState } from 'react'
-import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
-
 import { t } from '@lingui/macro'
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { NEW_NFT_ID_LOWER_LIMIT } from 'components/NftRewards/RewardsList/AddEditRewardModal'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import {
+  useJBRulesetContext,
+  useWriteJb721TiersHookAdjustTiers,
+} from 'juice-sdk-react'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
-import { SUPPORTED_JB_MULTITERMINAL_ADDRESS } from 'packages/v4/hooks/useLaunchProjectTx'
+import { JB_721_TIER_PARAMS_V4, NftRewardTier } from 'models/nftRewards'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { useCallback, useContext, useState } from 'react'
+import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
 import { emitErrorNotification } from 'utils/notifications'
 import { useChainId } from 'wagmi'
 
@@ -23,13 +24,13 @@ export function useUpdateCurrentCollection({
   onConfirmed?: VoidFunction
 }) {
   const { addTransaction } = useContext(TxHistoryContext)
-  const { rulesetMetadata: { data: rulesetMetadata }} =
-    useJBRulesetContext()
+  const {
+    rulesetMetadata: { data: rulesetMetadata },
+  } = useJBRulesetContext()
 
-  const { writeContractAsync: writeAdjustTiers } = useWriteJb721TiersHookAdjustTiers()
+  const { writeContractAsync: writeAdjustTiers } =
+    useWriteJb721TiersHookAdjustTiers()
   const chainId = useChainId()
-  const chainIdStr =
-    chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
 
   const [txLoading, setTxLoading] = useState<boolean>(false)
 
@@ -47,11 +48,11 @@ export function useUpdateCurrentCollection({
 
     // upload new rewardTiers and get their CIDs
     const rewardTiersCIDs = await pinNftRewards(newRewardTiers)
-    
+
     const tiersToAdd = buildJB721TierParams({
       cids: rewardTiersCIDs,
       rewardTiers: newRewardTiers,
-      version: JB721DelegateVersion.JB721DELEGATE_V4
+      version: JB721DelegateVersion.JB721DELEGATE_V4,
     }) as JB_721_TIER_PARAMS_V4[]
 
     if (!newRewardTiers) {
@@ -62,13 +63,10 @@ export function useUpdateCurrentCollection({
     }
     try {
       const hash = await writeAdjustTiers({
-        args: [
-          tiersToAdd,
-          editedRewardTierIds.map(id => BigInt(id)),
-        ],
+        chainId,
+        args: [tiersToAdd, editedRewardTierIds.map(id => BigInt(id))],
         address: rulesetMetadata.dataHook,
       })
-      
 
       addTransaction?.('Update NFT rewards', { hash })
       await waitForTransactionReceipt(wagmiConfig, {
@@ -82,7 +80,14 @@ export function useUpdateCurrentCollection({
 
       emitErrorNotification((e as unknown as Error).message)
     }
-  }, [editedRewardTierIds, writeAdjustTiers, onConfirmed, rewardTiers, addTransaction])
+  }, [
+    editedRewardTierIds,
+    writeAdjustTiers,
+    onConfirmed,
+    rewardTiers,
+    addTransaction,
+    rulesetMetadata?.dataHook,
+  ])
 
   return {
     updateExistingCollection,

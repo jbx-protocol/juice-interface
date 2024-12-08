@@ -1,6 +1,7 @@
 import { t } from '@lingui/macro'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
 import { NftRewardTier } from 'models/nftRewards'
+import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -65,9 +66,12 @@ export const RewardsReview = () => {
     return formatEnabled(nftRewardsData.flags.preventOverspending)
   }, [nftRewardsData.flags.preventOverspending])
 
+  const nftCurrency = nftRewardsData?.pricing.currency
+
   return (
     <div className="flex flex-col gap-12">
       <RewardsList
+        priceCurrencySymbol={nftCurrency === V2V3_CURRENCY_USD ? 'USD' : 'ETH'}
         nftRewardsData={nftRewardsData}
         value={rewards}
         onChange={setRewards}

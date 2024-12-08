@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { Provider } from 'react-redux'
 import store from 'redux/store'
 import { WagmiProvider } from 'wagmi'
-import { chainNameMap } from '../utils/networks'
+import { useCurrentRouteChainId } from '../hooks/useCurrentRouteChainId'
 import { EditCycleFormProvider } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormContext'
 import { wagmiConfig } from '../wagmiConfig'
 import { V4NftRewardsProvider } from './V4NftRewards/V4NftRewardsProvider'
@@ -16,13 +16,13 @@ export const V4SettingsProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const router = useRouter()
+  const chainId = useCurrentRouteChainId()
 
-  const { projectId: rawProjectId, chainName } = router.query
+  const { projectId: rawProjectId } = router.query
   if (!rawProjectId) return null
 
   const projectId = parseInt(rawProjectId as string)
   const projectIdBigInt = BigInt(projectId)
-  const chainId = chainNameMap[chainName as string]
 
   return (
     <AppWrapper hideNav>
@@ -38,9 +38,7 @@ export const V4SettingsProvider: React.FC<React.PropsWithChildren> = ({
             <V4ProjectMetadataProvider projectId={projectIdBigInt}>
               <Provider store={store}>
                 <TransactionProvider>
-                  <EditCycleFormProvider>
-                    {children}
-                  </EditCycleFormProvider>
+                  <EditCycleFormProvider>{children}</EditCycleFormProvider>
                 </TransactionProvider>
               </Provider>
             </V4ProjectMetadataProvider>

@@ -1,18 +1,35 @@
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { useWallet } from 'hooks/Wallet'
 import {
   DEFAULT_MEMO,
   NATIVE_TOKEN,
   NATIVE_TOKEN_DECIMALS,
 } from 'juice-sdk-core'
 import {
+  JBChainId,
   jbPricesAddress,
   useJBContractContext,
-  useWriteJb721TiersHookProjectDeployerLaunchProjectFor
+  useWriteJb721TiersHookProjectDeployerLaunchProjectFor,
 } from 'juice-sdk-react'
+import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import {
   JBDeploy721TiersHookConfig,
   LaunchProjectWithNftsTxArgs,
 } from 'packages/v4/models/nfts'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { useContext } from 'react'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
+import { ipfsUri } from 'utils/ipfs'
 import { Address, WaitForTransactionReceiptReturnType, zeroAddress } from 'viem'
+import {
+  arbitrumSepolia,
+  baseSepolia,
+  optimismSepolia,
+  sepolia,
+} from 'viem/chains'
+import { useChainId } from 'wagmi'
 import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
@@ -22,17 +39,6 @@ import {
   SUPPORTED_JB_CONTROLLER_ADDRESS,
   SUPPORTED_JB_MULTITERMINAL_ADDRESS,
 } from '../../useLaunchProjectTx'
-
-import { waitForTransactionReceipt } from '@wagmi/core'
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
-import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
-import { ipfsUri } from 'utils/ipfs'
-import { useChainId } from 'wagmi'
 
 /**
  * Return the project ID created from a `launchProjectFor` transaction.
@@ -53,10 +59,10 @@ export const getProjectIdFromNftLaunchReceipt = (
  * @todo not ideal to hardcode these addresses
  */
 export const SUPPORTED_JB_721_TIER_STORE = {
-  '84532': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-  '421614': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-  '11155111': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-  '11155420': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
+  [sepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
+  [optimismSepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
+  [arbitrumSepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
+  [baseSepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
 }
 
 export function useLaunchProjectWithNftsTx() {
@@ -65,17 +71,15 @@ export function useLaunchProjectWithNftsTx() {
 
   const { userAddress } = useWallet()
   const chainId = useChainId()
-  const chainIdStr =
-    chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
 
   const defaultJBController = chainId
-    ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainIdStr]
+    ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainId as JBChainId]
     : undefined
   const defaultJBETHPaymentTerminal = chainId
-    ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainIdStr]
+    ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainId as JBChainId]
     : undefined
   const JBTiered721DelegateStoreAddress = chainId
-    ? SUPPORTED_JB_721_TIER_STORE[chainIdStr]
+    ? SUPPORTED_JB_721_TIER_STORE[chainId as JBChainId]
     : undefined
 
   const { writeContractAsync: writeLaunchProject } =
@@ -146,7 +150,7 @@ export function useLaunchProjectWithNftsTx() {
       tiersConfig: {
         currency,
         decimals: NATIVE_TOKEN_DECIMALS,
-        prices: jbPricesAddress[chainIdStr],
+        prices: jbPricesAddress[chainId as JBChainId],
         tiers,
       },
       reserveBeneficiary: zeroAddress,

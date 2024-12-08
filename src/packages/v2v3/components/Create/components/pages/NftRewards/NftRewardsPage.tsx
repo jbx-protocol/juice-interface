@@ -1,11 +1,12 @@
 import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { trackFathomGoal } from 'lib/fathom'
+import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { useContext } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
-import { Wizard } from '../../Wizard/Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
+import { Wizard } from '../../Wizard/Wizard'
 import { useCreateFlowNftRewardsForm } from './hooks/useCreateFlowNftRewardsForm'
 
 export function NftRewardsPage() {
@@ -22,9 +23,12 @@ export function NftRewardsPage() {
 
   useSetCreateFurthestPageReached('nftRewards')
 
+  const nftCurrency = nftRewardsData?.pricing.currency
+
   return (
     <AddNftCollectionForm
       form={form}
+      priceCurrencySymbol={nftCurrency === V2V3_CURRENCY_USD ? 'USD' : 'ETH'}
       initialValues={initialValues}
       postPayModalData={postPayModalData}
       nftRewardsData={nftRewardsData}

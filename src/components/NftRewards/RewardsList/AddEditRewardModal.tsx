@@ -1,5 +1,5 @@
 import { QuestionCircleOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Form, Modal, Tooltip } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { WarningCallout } from 'components/Callout/WarningCallout'
@@ -17,7 +17,6 @@ import { NftRewardTier } from 'models/nftRewards'
 import { CreateCollapse } from 'packages/v2v3/components/Create/components/CreateCollapse/CreateCollapse'
 import { OptionalHeader } from 'packages/v2v3/components/Create/components/OptionalHeader'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
-import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
@@ -56,6 +55,7 @@ export const NEW_NFT_ID_LOWER_LIMIT = 1000000
 
 export const AddEditRewardModal = ({
   className,
+  currencySymbol,
   editingData,
   nftRewards,
   open,
@@ -64,6 +64,7 @@ export const AddEditRewardModal = ({
   withEditWarning = false,
 }: {
   className?: string
+  currencySymbol: string
   editingData?: NftRewardTier | undefined
   nftRewards: NftRewardsData
   open?: boolean
@@ -245,11 +246,7 @@ export const AddEditRewardModal = ({
           rules={[inputMustExistRule({ label: t`Minimum Contribution` })]}
         >
           <FormattedNumberInput
-            accessory={
-              <InputAccessoryButton
-                content={nftCurrency === V2V3_CURRENCY_USD ? 'USD' : 'ETH'}
-              />
-            }
+            accessory={<InputAccessoryButton content={currencySymbol} />}
           />
         </Form.Item>
         <Form.Item>

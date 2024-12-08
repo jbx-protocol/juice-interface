@@ -1,12 +1,13 @@
-import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
-import { Button } from 'antd'
 import { Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import TransactionModal from 'components/modals/TransactionModal'
-import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
+import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
+import { JBChainId, NATIVE_TOKEN_SYMBOLS } from 'juice-sdk-core'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useChainId } from 'wagmi'
+import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
 import { useLaunchNftsForm } from './hooks/useLaunchNftsForm'
 
-// v4TODO: this whole component needs to be v4-ified
 export function LaunchNftsPage() {
   const {
     form,
@@ -23,11 +24,13 @@ export function LaunchNftsPage() {
   const nftRewardsData = useAppSelector(
     state => state.creatingV2Project.nftRewards,
   )
+  const chainId = useChainId()
 
   return (
     <>
       <AddNftCollectionForm
         form={form}
+        priceCurrencySymbol={NATIVE_TOKEN_SYMBOLS[chainId as JBChainId]}
         postPayModalData={postPayModalData}
         nftRewardsData={nftRewardsData}
         okButton={

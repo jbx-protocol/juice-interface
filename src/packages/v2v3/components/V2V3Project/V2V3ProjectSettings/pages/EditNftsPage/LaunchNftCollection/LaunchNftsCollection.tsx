@@ -1,9 +1,10 @@
-import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
 import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
+import { Button } from 'antd'
+import { Trans } from '@lingui/macro'
 import TransactionModal from 'components/modals/TransactionModal'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { TransactionSuccessModal } from '../../../TransactionSuccessModal'
+import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useLaunchNftsForm } from './hooks/useLaunchNftsForm'
 
 export function LaunchNftsPage() {
@@ -23,10 +24,13 @@ export function LaunchNftsPage() {
     state => state.creatingV2Project.nftRewards,
   )
 
+  const nftCurrency = nftRewardsData?.pricing.currency
+
   return (
     <>
       <AddNftCollectionForm
         form={form}
+        priceCurrencySymbol={nftCurrency === V2V3_CURRENCY_USD ? 'USD' : 'ETH'}
         postPayModalData={postPayModalData}
         nftRewardsData={nftRewardsData}
         okButton={

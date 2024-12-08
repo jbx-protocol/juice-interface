@@ -1,17 +1,19 @@
-import { t, Trans } from '@lingui/macro'
 import { Button, Empty } from 'antd'
+import { Trans, t } from '@lingui/macro'
+import { useCallback, useState } from 'react'
+
 import { Callout } from 'components/Callout/Callout'
 import Loading from 'components/Loading'
-import TransactionModal from 'components/modals/TransactionModal'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
-import { useUpdateCurrentCollection } from 'packages/v2v3/components/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/useUpdateCurrentCollection'
-import { useHasNftRewards } from 'packages/v2v3/hooks/JB721Delegate/useHasNftRewards'
-import { useCallback, useState } from 'react'
+import TransactionModal from 'components/modals/TransactionModal'
+import { TransactionSuccessModal } from '../../../TransactionSuccessModal'
+import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingFundingCycleConfig } from '../../../hooks/useEditingFundingCycleConfig'
-import { useReconfigureFundingCycle } from '../../../hooks/useReconfigureFundingCycle'
-import { TransactionSuccessModal } from '../../../TransactionSuccessModal'
 import { useEditingNfts } from '../hooks/useEditingNfts'
+import { useHasNftRewards } from 'packages/v2v3/hooks/JB721Delegate/useHasNftRewards'
+import { useReconfigureFundingCycle } from '../../../hooks/useReconfigureFundingCycle'
+import { useUpdateCurrentCollection } from 'packages/v2v3/components/V2V3Project/V2V3ProjectSettings/pages/EditNftsPage/hooks/useUpdateCurrentCollection'
 
 export function EditNftsSection() {
   const nftRewardsData = useAppSelector(
@@ -60,6 +62,8 @@ export function EditNftsSection() {
 
   const hasDataSourceButNoNfts = hasNftRewards && !rewardTiers
 
+  const nftCurrency = nftRewardsData?.pricing.currency
+
   return (
     <>
       <Callout.Info className="text-primary mb-5 bg-smoke-100 dark:bg-slate-500">
@@ -68,6 +72,7 @@ export function EditNftsSection() {
 
       <div className="mb-8">
         <RewardsList
+          priceCurrencySymbol={nftCurrency === V2V3_CURRENCY_USD ? 'USD' : 'ETH'}
           nftRewardsData={nftRewardsData}
           value={rewardTiers}
           onChange={setRewardTiers}

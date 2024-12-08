@@ -1,9 +1,12 @@
 import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
 import { Button } from 'antd'
+import { NATIVE_TOKEN_SYMBOLS } from 'juice-sdk-core'
+import { SUPPORTED_JB_MULTITERMINAL_ADDRESS } from 'packages/v4/hooks/useLaunchProjectTx'
 import { Trans } from '@lingui/macro'
 import TransactionModal from 'components/modals/TransactionModal'
 import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useJBChainId } from 'juice-sdk-react'
 import { useLaunchNftsForm } from './hooks/useLaunchNftsForm'
 
 // v4TODO: this whole component needs to be v4-ified
@@ -23,11 +26,15 @@ export function LaunchNftsPage() {
   const nftRewardsData = useAppSelector(
     state => state.creatingV2Project.nftRewards,
   )
+  const chainId = useJBChainId()
+  const chainIdStr =
+    chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
 
   return (
     <>
       <AddNftCollectionForm
         form={form}
+        priceCurrencySymbol={NATIVE_TOKEN_SYMBOLS[chainIdStr]}
         postPayModalData={postPayModalData}
         nftRewardsData={nftRewardsData}
         okButton={

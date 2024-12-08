@@ -1,17 +1,15 @@
-import { useJBRulesetContext, useWriteJb721TiersHookAdjustTiers } from 'juice-sdk-react'
 import { JB_721_TIER_PARAMS_V4, NftRewardTier } from 'models/nftRewards'
-import { useCallback, useContext, useState } from 'react'
 import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
+import { useCallback, useContext, useState } from 'react'
+import { useJBRulesetContext, useWriteJb721TiersHookAdjustTiers } from 'juice-sdk-react'
 
-import { t } from '@lingui/macro'
-import { waitForTransactionReceipt } from '@wagmi/core'
+import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { NEW_NFT_ID_LOWER_LIMIT } from 'components/NftRewards/RewardsList/AddEditRewardModal'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { JB721DelegateVersion } from 'models/JB721Delegate'
-import { SUPPORTED_JB_MULTITERMINAL_ADDRESS } from 'packages/v4/hooks/useLaunchProjectTx'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { emitErrorNotification } from 'utils/notifications'
-import { useChainId } from 'wagmi'
+import { t } from '@lingui/macro'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { waitForTransactionReceipt } from '@wagmi/core'
 
 export function useUpdateCurrentCollection({
   rewardTiers,
@@ -27,9 +25,6 @@ export function useUpdateCurrentCollection({
     useJBRulesetContext()
 
   const { writeContractAsync: writeAdjustTiers } = useWriteJb721TiersHookAdjustTiers()
-  const chainId = useChainId()
-  const chainIdStr =
-    chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
 
   const [txLoading, setTxLoading] = useState<boolean>(false)
 
@@ -82,7 +77,7 @@ export function useUpdateCurrentCollection({
 
       emitErrorNotification((e as unknown as Error).message)
     }
-  }, [editedRewardTierIds, writeAdjustTiers, onConfirmed, rewardTiers, addTransaction])
+  }, [editedRewardTierIds, writeAdjustTiers, onConfirmed, rewardTiers, addTransaction, rulesetMetadata?.dataHook])
 
   return {
     updateExistingCollection,

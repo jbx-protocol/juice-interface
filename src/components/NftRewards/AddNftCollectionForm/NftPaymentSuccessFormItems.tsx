@@ -7,7 +7,7 @@ import { CreateButton } from 'components/buttons/CreateButton/CreateButton'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { useModal } from 'hooks/useModal'
-import { NftPostPayModalConfig } from 'models/nftRewards'
+import { NftPostPayModalConfig } from 'models/nftPostPayModal'
 
 export function NftPaymentSuccessFormItems({
   hidePreview,

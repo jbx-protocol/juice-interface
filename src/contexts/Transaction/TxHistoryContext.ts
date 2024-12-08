@@ -1,9 +1,8 @@
 import { TransactionCallbacks, TxStatus } from 'models/transaction'
 import { createContext } from 'react'
-import { Hash } from 'viem'
 
 export type TransactionType = {
-  hash: Hash
+  hash: `0x${string}`
   timestamp?: number
 }
 

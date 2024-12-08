@@ -238,7 +238,7 @@ export function useV2V3ProjectState({ projectId }: { projectId: number }) {
     balanceInDistributionLimitCurrency,
 
     // token data
-    tokenAddress,
+    tokenAddress: tokenAddress as `0x${string}`,
     tokenSymbol,
     tokenName,
     totalTokenSupply,

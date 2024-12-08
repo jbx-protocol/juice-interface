@@ -12,7 +12,6 @@ import { V2V3ClaimTokensModal } from 'packages/v2v3/components/V2V3Project/V2V3M
 import { V2V3MintModal } from 'packages/v2v3/components/V2V3Project/V2V3ManageTokensSection/AccountBalanceDescription/V2V3MintModal'
 import { useCallback, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
-import { Hash } from 'viem'
 import { TokenHoldersModal } from '../TokenHoldersModal/TokenHoldersModal'
 import { MigrateTokensButton } from './components/MigrateTokensButton'
 import { RedeemTokensButton } from './components/RedeemTokensButton'
@@ -191,7 +190,7 @@ const ProjectTokenCard = () => {
           {projectTokenAddress && projectHasErc20Token && (
             <AddTokenToMetamaskButton 
               className="mt-2" 
-              tokenAddress={projectTokenAddress as Hash}
+              tokenAddress={projectTokenAddress}
             />
           )}
           {canCreateErc20Token && (

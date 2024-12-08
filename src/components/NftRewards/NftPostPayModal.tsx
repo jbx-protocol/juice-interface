@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import Modal from 'antd/lib/modal/Modal'
-import { NftPostPayModalConfig } from 'models/nftRewards'
+import { NftPostPayModalConfig } from 'models/nftPostPayModal'
 import { withHttps } from 'utils/externalLink'
 
 export function NftPostPayModal({

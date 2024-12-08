@@ -19,7 +19,7 @@ interface V2V3ProjectLoadingStates {
 export type V2V3ProjectContextType = {
   handle: string | undefined
   createdAt: number | undefined
-  tokenAddress: string | undefined
+  tokenAddress: `0x${string}` | undefined
   tokenSymbol: string | undefined
   tokenName: string | undefined
   terminals: string[] | undefined // array of terminal addresses, 0xABC...

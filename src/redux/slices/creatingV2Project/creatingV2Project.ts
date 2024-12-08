@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { CreatePage } from 'models/createPage'
+import { NftPostPayModalConfig } from 'models/nftPostPayModal'
 import {
   JB721GovernanceType,
   NftCollectionMetadata,
-  NftPostPayModalConfig,
   NftRewardTier,
 } from 'models/nftRewards'
 import { PayoutsSelection } from 'models/payoutsSelection'

@@ -6,7 +6,7 @@ import { ReactNode, createContext } from 'react'
 
 interface ProjectOFACContextType {
   isLoading?: boolean
-  isAddressListedInOFAC?: boolean
+  isAddressListedInOFAC?: boolean | null
 }
 
 export const ProjectOFACContext = createContext<ProjectOFACContextType>({
@@ -28,7 +28,7 @@ export default function V2V3ProjectOFACProvider({
     queryKey: ['isAddressListedInOFAC', userAddress],
     queryFn: async () => {
       if (!enabled) {
-        return
+        return null
       }
 
       try {

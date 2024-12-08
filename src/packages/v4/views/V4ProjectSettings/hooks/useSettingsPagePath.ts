@@ -1,13 +1,10 @@
-import { useJBContractContext } from 'juice-sdk-react'
-import { useCurrentRouteChainId } from 'packages/v4/hooks/useCurrentRouteChainId'
+import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 import { settingsPagePath } from 'packages/v4/utils/routes'
 import { SettingsPageKey } from '../ProjectSettingsDashboard'
+
 export function useSettingsPagePath(key?: SettingsPageKey) {
   const { projectId } = useJBContractContext()
-  const chainId = useCurrentRouteChainId()
-  if (!chainId) {
-    return undefined
-  }
+  const chainId = useJBChainId()
 
   return settingsPagePath({ projectId: Number(projectId), chainId }, key)
 }

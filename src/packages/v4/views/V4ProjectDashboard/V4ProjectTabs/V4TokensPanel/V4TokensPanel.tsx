@@ -214,10 +214,14 @@ const ProjectTokenCard = () => {
           {canCreateErc20Token ? (
             <Tooltip title={ISSUE_ERC20_EXPLANATION}>
               <a
-                href={`${v4ProjectRoute({
-                  chainId,
-                  projectId,
-                })}/settings/createerc20`}
+                href={
+                  chainId
+                    ? `${v4ProjectRoute({
+                        chainId,
+                        projectId,
+                      })}/settings/createerc20`
+                    : ''
+                }
               >
                 <Button size="small" icon={<SettingOutlined />} type="link">
                   <span>

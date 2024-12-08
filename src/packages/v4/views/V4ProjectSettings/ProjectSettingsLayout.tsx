@@ -1,15 +1,14 @@
 import { Cog6ToothIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { Trans } from '@lingui/macro'
-import { useJBContractContext } from 'juice-sdk-react'
+import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 import Link from 'next/link'
-import { useCurrentRouteChainId } from 'packages/v4/hooks/useCurrentRouteChainId'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
 
 export const ProjectSettingsLayout: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const { projectId } = useJBContractContext()
-  const chainId = useCurrentRouteChainId()
+  const chainId = useJBChainId()
 
   return (
     <>
@@ -21,11 +20,7 @@ export const ProjectSettingsLayout: React.FC<React.PropsWithChildren> = ({
           </h1>
 
           <Link
-            href={
-              chainId
-                ? v4ProjectRoute({ projectId: Number(projectId), chainId })
-                : undefined
-            }
+            href={v4ProjectRoute({ projectId: Number(projectId), chainId })}
             className="text-secondary"
           >
             <XMarkIcon className="h-6 w-6" />

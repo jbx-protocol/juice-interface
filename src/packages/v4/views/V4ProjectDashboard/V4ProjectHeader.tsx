@@ -10,10 +10,10 @@ import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkBut
 // import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
 import { TruncatedText } from 'components/TruncatedText'
 import useMobile from 'hooks/useMobile'
+import { useJBChainId } from 'juice-sdk-react'
 import Link from 'next/link'
 import { ProjectHeaderPopupMenu } from 'packages/v4/components/ProjectDashboard/components/ProjectHeaderPopupMenu'
 import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
-import { useCurrentRouteChainId } from 'packages/v4/hooks/useCurrentRouteChainId'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
 import { settingsPagePath, v4ProjectRoute } from 'packages/v4/utils/routes'
@@ -25,7 +25,7 @@ export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
 export const V4ProjectHeader = ({ className }: { className?: string }) => {
   const socialLinks = useSocialLinks()
-  const chainId = useCurrentRouteChainId()
+  const chainId = useJBChainId()
 
   const {
     title,
@@ -130,11 +130,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                 {gnosisSafe && projectId && (
                   <GnosisSafeBadge
                     safe={gnosisSafe}
-                    href={
-                      chainId
-                        ? `${v4ProjectRoute({ projectId, chainId })}/safe`
-                        : undefined
-                    }
+                    href={`${v4ProjectRoute({ projectId, chainId })}/safe`}
                   />
                 )}
               </span>

@@ -1,13 +1,13 @@
 import { useSetChain } from '@web3-onboard/react'
 import { readNetwork } from 'constants/networks'
-import { useCurrentRouteChainId } from 'packages/v4/hooks/useCurrentRouteChainId'
+import { useJBChainId } from 'juice-sdk-react'
 import { useMemo } from 'react'
 
 export function useChainUnsupported() {
   const [{ connectedChain }] = useSetChain()
 
   // get v4 chain id
-  const chainId = useCurrentRouteChainId()
+  const chainId = useJBChainId()
 
   const chainUnsupported = useMemo(() => {
     if (!connectedChain) {

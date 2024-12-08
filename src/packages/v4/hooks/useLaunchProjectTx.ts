@@ -1,20 +1,28 @@
-import { useCallback, useContext } from 'react'
-import { Address, WaitForTransactionReceiptReturnType } from 'viem'
-import {
-  LaunchV2V3ProjectArgs,
-  transformV2V3CreateArgsToV4,
-} from '../utils/launchProjectTransformers'
-
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { NATIVE_TOKEN } from 'juice-sdk-core'
-import { useWriteJbControllerLaunchProjectFor } from 'juice-sdk-react'
+import {
+  JBChainId,
+  useWriteJbControllerLaunchProjectFor,
+} from 'juice-sdk-react'
 import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
+import { useCallback, useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
+import { Address, WaitForTransactionReceiptReturnType } from 'viem'
+import {
+  arbitrumSepolia,
+  baseSepolia,
+  optimismSepolia,
+  sepolia,
+} from 'viem/chains'
 import { useChainId } from 'wagmi'
+import {
+  LaunchV2V3ProjectArgs,
+  transformV2V3CreateArgsToV4,
+} from '../utils/launchProjectTransformers'
 import { wagmiConfig } from '../wagmiConfig'
 
 const CREATE_EVENT_IDX = 2
@@ -47,17 +55,17 @@ export const getProjectIdFromLaunchReceipt = (
  * @todo not ideal to hardcode these addresses
  */
 export const SUPPORTED_JB_MULTITERMINAL_ADDRESS = {
-  '84532': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-  '421614': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-  '11155111': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-  '11155420': '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
+  [sepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
+  [optimismSepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
+  [arbitrumSepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
+  [baseSepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
 }
 
 export const SUPPORTED_JB_CONTROLLER_ADDRESS = {
-  '84532': '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
-  '421614': '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
-  '11155111': '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
-  '11155420': '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
+  [sepolia.id]: '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
+  [optimismSepolia.id]: '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
+  [arbitrumSepolia.id]: '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
+  [baseSepolia.id]: '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
 }
 
 /**
@@ -69,14 +77,13 @@ export function useLaunchProjectTx() {
     useWriteJbControllerLaunchProjectFor()
 
   const chainId = useChainId()
-  const chainIdStr =
-    chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
+
   const terminalAddress = chainId
-    ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainIdStr]
+    ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainId as JBChainId]
     : undefined
 
   const controllerAddress = chainId
-    ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainIdStr]
+    ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainId as JBChainId]
     : undefined
 
   const { addTransaction } = useContext(TxHistoryContext)

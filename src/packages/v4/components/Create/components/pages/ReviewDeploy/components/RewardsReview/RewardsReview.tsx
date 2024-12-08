@@ -1,17 +1,15 @@
-import { useCallback, useMemo } from 'react'
-
-import { NATIVE_TOKEN_SYMBOLS } from 'juice-sdk-core'
-import { NftRewardTier } from 'models/nftRewards'
-import { ReviewDescription } from '../ReviewDescription'
-import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
-import { SUPPORTED_JB_MULTITERMINAL_ADDRESS } from 'packages/v4/hooks/useLaunchProjectTx'
-import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
-import { formatEnabled } from 'utils/format/formatBoolean'
 import { t } from '@lingui/macro'
+import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
+import { JBChainId, NATIVE_TOKEN_SYMBOLS } from 'juice-sdk-core'
+import { NftRewardTier } from 'models/nftRewards'
+import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useChainId } from 'wagmi'
+import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
+import { formatEnabled } from 'utils/format/formatBoolean'
 import { v4 } from 'uuid'
+import { useChainId } from 'wagmi'
+import { ReviewDescription } from '../ReviewDescription'
 
 export const RewardsReview = () => {
   const { nftRewards: nftRewardsData, fundingCycleMetadata } = useAppSelector(
@@ -70,13 +68,11 @@ export const RewardsReview = () => {
   }, [nftRewardsData.flags.preventOverspending])
 
   const chainId = useChainId()
-  const chainIdStr =
-    chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
 
   return (
     <div className="flex flex-col gap-12">
       <RewardsList
-        priceCurrencySymbol={NATIVE_TOKEN_SYMBOLS[chainIdStr]}
+        priceCurrencySymbol={NATIVE_TOKEN_SYMBOLS[chainId as JBChainId]}
         nftRewardsData={nftRewardsData}
         value={rewards}
         onChange={setRewards}

@@ -1,18 +1,17 @@
-import { createContext, useCallback, useContext, useState } from 'react'
-
-import { AddEditRewardModal } from './AddEditRewardModal'
-import { CreateButton } from 'components/buttons/CreateButton/CreateButton'
-import { Divider } from 'antd'
-import { FormItemInput } from 'models/formItemInput'
-import { MAX_NFT_REWARD_TIERS } from 'packages/v2v3/constants/nftRewards'
-import { NftRewardTier } from 'models/nftRewards'
-import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
 import { PlusCircleOutlined } from '@ant-design/icons'
-import { RewardItem } from './RewardItem'
 import { Trans } from '@lingui/macro'
-import { sortNftsByContributionFloor } from 'utils/nftRewards'
+import { Divider } from 'antd'
+import { CreateButton } from 'components/buttons/CreateButton/CreateButton'
 import { useModal } from 'hooks/useModal'
+import { FormItemInput } from 'models/formItemInput'
+import { NftRewardTier } from 'models/nftRewards'
+import { MAX_NFT_REWARD_TIERS } from 'packages/v2v3/constants/nftRewards'
+import { createContext, useCallback, useContext, useState } from 'react'
+import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
+import { sortNftsByContributionFloor } from 'utils/nftRewards'
+import { AddEditRewardModal } from './AddEditRewardModal'
 import { useRewards } from './hooks/useRewards'
+import { RewardItem } from './RewardItem'
 
 const RewardsListContext = createContext<ReturnType<typeof useRewards>>({
   rewards: [],
@@ -116,7 +115,7 @@ export const RewardsList: React.FC<React.PropsWithChildren<RewardsListProps>> &
         )}
       </div>
       <AddEditRewardModal
-        priceCurrencySymbol={priceCurrencySymbol}
+        currencySymbol={priceCurrencySymbol}
         open={modal.visible}
         editingData={selectedReward}
         nftRewards={nftRewardsData}

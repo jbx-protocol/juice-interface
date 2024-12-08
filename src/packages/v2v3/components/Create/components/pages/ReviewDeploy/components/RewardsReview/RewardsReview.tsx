@@ -1,15 +1,14 @@
-import { useCallback, useMemo } from 'react'
-
-import { NftRewardTier } from 'models/nftRewards'
-import { ReviewDescription } from '../ReviewDescription'
-import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
-import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
-import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
-import { formatEnabled } from 'utils/format/formatBoolean'
 import { t } from '@lingui/macro'
+import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
+import { NftRewardTier } from 'models/nftRewards'
+import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
+import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
+import { formatEnabled } from 'utils/format/formatBoolean'
 import { v4 } from 'uuid'
+import { ReviewDescription } from '../ReviewDescription'
 
 export const RewardsReview = () => {
   const { nftRewards: nftRewardsData, fundingCycleMetadata } = useAppSelector(

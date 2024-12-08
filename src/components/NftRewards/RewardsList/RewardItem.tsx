@@ -1,18 +1,17 @@
 import { DeleteOutlined, EditOutlined, LinkOutlined } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
-
 import EthereumAddress from 'components/EthereumAddress'
 import ExternalLink from 'components/ExternalLink'
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
-import { NftRewardTier } from 'models/nftRewards'
-import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
-import { ReactNode } from 'react'
-import { RewardItemButton } from './RewardItemButton'
 import TooltipLabel from 'components/TooltipLabel'
-import { hasLimitedSupply } from 'utils/nftRewards'
-import { isZeroAddress } from 'utils/address'
-import { prettyUrl } from 'utils/url'
 import round from 'lodash/round'
+import { NftRewardTier } from 'models/nftRewards'
+import { ReactNode } from 'react'
+import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
+import { isZeroAddress } from 'utils/address'
+import { hasLimitedSupply } from 'utils/nftRewards'
+import { prettyUrl } from 'utils/url'
+import { RewardItemButton } from './RewardItemButton'
 
 const SIGNIFICANT_FIGURE_LIMIT = 6
 
@@ -99,7 +98,9 @@ export const RewardItem = ({
           <div className="grid grid-cols-2 gap-y-6 gap-x-16">
             <RewardStatLine
               title={t`Minimum contribution`}
-              stat={`${numberUpToPrecisionFormat(contributionFloor)} ${priceCurrencySymbol}`}
+              stat={`${numberUpToPrecisionFormat(
+                contributionFloor,
+              )} ${priceCurrencySymbol}`}
             />
             {hasLimitedSupply(maxSupply) && (
               <RewardStatLine

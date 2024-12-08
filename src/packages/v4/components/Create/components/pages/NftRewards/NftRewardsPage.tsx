@@ -1,15 +1,14 @@
 import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
 import { CREATE_FLOW } from 'constants/fathomEvents'
-import { NATIVE_TOKEN_SYMBOLS } from 'juice-sdk-core'
-import { PageContext } from '../../Wizard/contexts/PageContext'
-import { SUPPORTED_JB_MULTITERMINAL_ADDRESS } from 'packages/v4/hooks/useLaunchProjectTx'
-import { Wizard } from '../../Wizard/Wizard'
+import { JBChainId, NATIVE_TOKEN_SYMBOLS } from 'juice-sdk-core'
 import { trackFathomGoal } from 'lib/fathom'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useChainId } from 'wagmi'
 import { useContext } from 'react'
-import { useCreateFlowNftRewardsForm } from './hooks/useCreateFlowNftRewardsForm'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
+import { useChainId } from 'wagmi'
+import { PageContext } from '../../Wizard/contexts/PageContext'
+import { Wizard } from '../../Wizard/Wizard'
+import { useCreateFlowNftRewardsForm } from './hooks/useCreateFlowNftRewardsForm'
 
 export function NftRewardsPage() {
   const { goToNextPage } = useContext(PageContext)
@@ -26,8 +25,6 @@ export function NftRewardsPage() {
   useSetCreateFurthestPageReached('nftRewards')
 
   const chainId = useChainId()
-  const chainIdStr =
-    chainId?.toString() as keyof typeof SUPPORTED_JB_MULTITERMINAL_ADDRESS
 
   return (
     <AddNftCollectionForm
@@ -36,7 +33,7 @@ export function NftRewardsPage() {
       postPayModalData={postPayModalData}
       nftRewardsData={nftRewardsData}
       okButton={<Wizard.Page.ButtonControl />}
-      priceCurrencySymbol={NATIVE_TOKEN_SYMBOLS[chainIdStr]}
+      priceCurrencySymbol={NATIVE_TOKEN_SYMBOLS[chainId as JBChainId]}
       onFinish={() => {
         goToNextPage?.()
         trackFathomGoal(CREATE_FLOW.NFT_NEXT_CTA)

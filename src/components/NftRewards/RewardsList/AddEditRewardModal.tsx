@@ -1,6 +1,25 @@
-import { Form, Modal, Tooltip } from 'antd'
-import { NftFileType, UploadNoStyle } from 'components/inputs/UploadNoStyle'
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
+import { Form, Modal, Tooltip } from 'antd'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
+import { WarningCallout } from 'components/Callout/WarningCallout'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
+import PrefixedInput from 'components/inputs/PrefixedInput'
+import { NftFileType, UploadNoStyle } from 'components/inputs/UploadNoStyle'
+import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
+import { pinFile } from 'lib/api/ipfs'
+import random from 'lodash/random'
+import { NftRewardTier } from 'models/nftRewards'
+import { CreateCollapse } from 'packages/v2v3/components/Create/components/CreateCollapse/CreateCollapse'
+import { OptionalHeader } from 'packages/v2v3/components/Create/components/OptionalHeader'
+import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
+import { UploadRequestOption } from 'rc-upload/lib/interface'
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
 import {
   inputIsIntegerRule,
   inputIsValidUrlRule,
@@ -8,28 +27,8 @@ import {
   inputMustExistRule,
   inputNonZeroRule,
 } from 'utils/antdRules'
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
-
-import { CreateCollapse } from 'packages/v2v3/components/Create/components/CreateCollapse/CreateCollapse'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
-import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
-import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
-import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
-import { NftRewardTier } from 'models/nftRewards'
-import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
-import { OptionalHeader } from 'packages/v2v3/components/Create/components/OptionalHeader'
-import PrefixedInput from 'components/inputs/PrefixedInput'
-import { QuestionCircleOutlined } from '@ant-design/icons'
-import { UploadRequestOption } from 'rc-upload/lib/interface'
-import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
-import { WarningCallout } from 'components/Callout/WarningCallout'
-import { ipfsGatewayUrl } from 'utils/ipfs'
-import { pinFile } from 'lib/api/ipfs'
-import random from 'lodash/random'
 import { withHttps } from 'utils/externalLink'
+import { ipfsGatewayUrl } from 'utils/ipfs'
 
 interface AddEditRewardModalFormProps {
   fileUrl: string
@@ -247,11 +246,7 @@ export const AddEditRewardModal = ({
           rules={[inputMustExistRule({ label: t`Minimum Contribution` })]}
         >
           <FormattedNumberInput
-            accessory={
-              <InputAccessoryButton
-                content={currencySymbol}
-              />
-            }
+            accessory={<InputAccessoryButton content={currencySymbol} />}
           />
         </Form.Item>
         <Form.Item>

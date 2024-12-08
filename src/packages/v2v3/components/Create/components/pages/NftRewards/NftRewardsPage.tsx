@@ -1,13 +1,13 @@
 import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
 import { CREATE_FLOW } from 'constants/fathomEvents'
-import { PageContext } from '../../Wizard/contexts/PageContext'
-import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
-import { Wizard } from '../../Wizard/Wizard'
 import { trackFathomGoal } from 'lib/fathom'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { useContext } from 'react'
-import { useCreateFlowNftRewardsForm } from './hooks/useCreateFlowNftRewardsForm'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
+import { PageContext } from '../../Wizard/contexts/PageContext'
+import { Wizard } from '../../Wizard/Wizard'
+import { useCreateFlowNftRewardsForm } from './hooks/useCreateFlowNftRewardsForm'
 
 export function NftRewardsPage() {
   const { goToNextPage } = useContext(PageContext)

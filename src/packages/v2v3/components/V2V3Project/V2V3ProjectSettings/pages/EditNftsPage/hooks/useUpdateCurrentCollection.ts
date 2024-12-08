@@ -1,11 +1,12 @@
-import { t } from '@lingui/macro'
-import { NEW_NFT_ID_LOWER_LIMIT } from 'components/NftRewards/RewardsList/AddEditRewardModal'
-import { NftRewardTier } from 'models/nftRewards'
-import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
-import { useAdjustTiersTx } from 'packages/v2v3/hooks/JB721Delegate/transactor/useAdjustTiersTx'
-import { useCallback, useContext, useState } from 'react'
+import { JB721TierParams, JB_721_TIER_PARAMS_V3_1, JB_721_TIER_PARAMS_V3_2, NftRewardTier } from 'models/nftRewards'
 import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
+import { useCallback, useContext, useState } from 'react'
+
+import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
+import { NEW_NFT_ID_LOWER_LIMIT } from 'components/NftRewards/RewardsList/AddEditRewardModal'
 import { emitErrorNotification } from 'utils/notifications'
+import { t } from '@lingui/macro'
+import { useAdjustTiersTx } from 'packages/v2v3/hooks/JB721Delegate/transactor/useAdjustTiersTx'
 
 export function useUpdateCurrentCollection({
   rewardTiers,
@@ -40,7 +41,7 @@ export function useUpdateCurrentCollection({
       cids: rewardTiersCIDs,
       rewardTiers: newRewardTiers,
       version,
-    })
+    }) as (JB721TierParams | JB_721_TIER_PARAMS_V3_1 | JB_721_TIER_PARAMS_V3_2)[]
 
     if (!newTiers) {
       emitErrorNotification(

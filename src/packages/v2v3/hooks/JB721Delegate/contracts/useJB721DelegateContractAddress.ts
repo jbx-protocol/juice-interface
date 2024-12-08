@@ -1,8 +1,9 @@
-import { readNetwork } from 'constants/networks'
 import { ForgeDeploy, addressFor } from 'forge-run-parser'
-import { NetworkName } from 'models/networkName'
-import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import { useEffect, useState } from 'react'
+
+import { readNetwork } from 'constants/networks'
+import { JB721DelegateVersion } from 'models/JB721Delegate'
+import { NetworkName } from 'models/networkName'
 
 /**
  * Some addresses aren't in the forge deployment manifests, so we have to hardcode them here.

@@ -1,14 +1,16 @@
 import * as constants from '@ethersproject/constants'
+
+import { cidFromUrl, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
+
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { useDefaultTokenUriResolver } from 'hooks/DefaultTokenUriResolver/contracts/useDefaultTokenUriResolver'
 import { TransactorInstance } from 'hooks/useTransactor'
+import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { NftCollectionMetadata } from 'models/nftRewards'
 import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
-import { JB721DelegateVersion } from 'packages/v2v3/models/contracts'
 import { useContext } from 'react'
-import { cidFromUrl, encodeIpfsUri, ipfsUri } from 'utils/ipfs'
 import { pinNftCollectionMetadata } from 'utils/nftRewards'
 import { useV2ProjectTitle } from '../useProjectTitle'
 

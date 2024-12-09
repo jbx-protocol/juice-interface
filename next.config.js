@@ -128,20 +128,6 @@ const SECURITY_HEADERS = [
 const nextConfig = removeImports({
   experimental: {
     esmExternals: true,
-    optimizePackageImports: [
-      'juice-sdk-core',
-      'juice-sdk-react',
-      'ethers',
-      'ethers/lib/utils',
-      '@ethersproject/constants',
-      '@ethersproject/bignumber',
-      '@ethersproject',
-      'viem',
-      'viem/chains',
-      'wagmi',
-      '@wagmi/core',
-      '@heroicons/react'
-    ],
   },
   staticPageGenerationTimeout: 90,
   webpack: config => {

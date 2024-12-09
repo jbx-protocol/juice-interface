@@ -7,7 +7,7 @@ import { getProjectMetadata } from '../metadata'
 export interface ProjectPageProps {
   metadata?: ProjectMetadata
   projectId: number
-  chainName?: string
+  chainName?: string | null
 }
 
 export async function getProjectStaticProps(
@@ -25,7 +25,7 @@ export async function getProjectStaticProps(
       props: {
         metadata,
         projectId,
-        chainName,
+        chainName: chainName ?? null,
       },
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

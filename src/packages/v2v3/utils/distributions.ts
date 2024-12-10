@@ -147,8 +147,8 @@ export function ensureSplitsSumTo100Percent({
   return adjustedSplits
 }
 
-export function roundSplitPercents({ splits }: { splits: Split[]}) {
-  return splits.map((split) => {
+export function roundSplitPercents({ splits }: { splits: Split[] }) {
+  return splits.map(split => {
     return {
       ...split,
       percent: Math.round(split.percent),
@@ -183,7 +183,7 @@ export function adjustedSplitPercents({
       amount: currentAmount,
       distributionLimit: parseFloat(newDistributionLimit),
     })
-    
+
     const adjustedSplit = {
       beneficiary: split.beneficiary,
       percent: newPercent,
@@ -269,5 +269,18 @@ export function distributionLimitsEqual(
   ) {
     return true
   }
-  return distributionLimit1?.eq(distributionLimit2 ?? 0)
+
+  // get around limitation of BigNumber comparison, where one value can't be undefined
+  if (
+    (typeof distributionLimit1 === 'undefined' && distributionLimit2) ||
+    (typeof distributionLimit2 === 'undefined' && distributionLimit1)
+  ) {
+    return false
+  }
+
+  if (distributionLimit1 && distributionLimit2) {
+    return distributionLimit1.eq(distributionLimit2 ?? null)
+  }
+
+  return false
 }

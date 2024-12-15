@@ -34,7 +34,7 @@ export type ProjectTokensFormProps = Partial<{
   reservedTokensPercentage: number | undefined
   reservedTokenAllocation: AllocationSplit[] | undefined
   discountRate: number | undefined
-  redemptionRate: number | undefined
+  cashOutTaxRate: number | undefined
   tokenMinting: boolean | undefined
   pauseTransfers: boolean | undefined
 }>
@@ -46,7 +46,7 @@ export const DefaultSettings: Required<
   reservedTokensPercentage: 0,
   reservedTokenAllocation: [],
   discountRate: 0,
-  redemptionRate: 100,
+  cashOutTaxRate: 100,
   tokenMinting: false,
   pauseTransfers: false,
 }
@@ -62,7 +62,7 @@ export const useProjectTokensForm = () => {
   useDebugValue(form.getFieldsValue())
   const [distributionLimit] = useCreatingDistributionLimit()
 
-  const redemptionRateDisabled =
+  const cashOutTaxRateDisabled =
     !distributionLimit || distributionLimit.amount.eq(MAX_PAYOUT_LIMIT)
   const discountRateDisabled = !parseInt(fundingCycleData.duration)
 
@@ -80,10 +80,10 @@ export const useProjectTokensForm = () => {
       !discountRateDisabled && fundingCycleData.discountRate
         ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
         : DefaultSettings.discountRate
-    const redemptionRate =
-      !redemptionRateDisabled && fundingCycleMetadata.redemptionRate
-        ? parseFloat(formatRedemptionRate(fundingCycleMetadata.redemptionRate))
-        : DefaultSettings.redemptionRate
+    const cashOutTaxRate =
+      !cashOutTaxRateDisabled && fundingCycleMetadata.cashOutTaxRate
+        ? parseFloat(formatRedemptionRate(fundingCycleMetadata.cashOutTaxRate))
+        : DefaultSettings.cashOutTaxRate
     const tokenMinting =
       fundingCycleMetadata.allowMinting !== undefined
         ? fundingCycleMetadata.allowMinting
@@ -99,7 +99,7 @@ export const useProjectTokensForm = () => {
       reservedTokensPercentage,
       reservedTokenAllocation,
       discountRate,
-      redemptionRate,
+      cashOutTaxRate,
       tokenMinting,
       pauseTransfers,
     }
@@ -108,11 +108,11 @@ export const useProjectTokensForm = () => {
     fundingCycleData.discountRate,
     fundingCycleData.weight,
     fundingCycleMetadata.allowMinting,
-    fundingCycleMetadata.redemptionRate,
+    fundingCycleMetadata.cashOutTaxRate,
     fundingCycleMetadata.reservedRate,
     fundingCycleMetadata.global.pauseTransfers,
     projectTokensSelection,
-    redemptionRateDisabled,
+    cashOutTaxRateDisabled,
     tokenSplits,
   ])
 
@@ -186,21 +186,21 @@ export const useProjectTokensForm = () => {
 
   useFormDispatchWatch({
     form,
-    fieldName: 'redemptionRate',
+    fieldName: 'cashOutTaxRate',
     dispatchFunction: creatingV2ProjectActions.setRedemptionRate,
     formatter: v => {
       if (v === undefined || typeof v !== 'number')
-        return redemptionRateFrom(DefaultSettings.redemptionRate).toHexString()
+        return redemptionRateFrom(DefaultSettings.cashOutTaxRate).toHexString()
       return redemptionRateFrom(v).toHexString()
     },
   })
   useFormDispatchWatch({
     form,
-    fieldName: 'redemptionRate',
+    fieldName: 'cashOutTaxRate',
     dispatchFunction: creatingV2ProjectActions.setBallotRedemptionRate,
     formatter: v => {
       if (v === undefined || typeof v !== 'number')
-        return redemptionRateFrom(DefaultSettings.redemptionRate).toHexString()
+        return redemptionRateFrom(DefaultSettings.cashOutTaxRate).toHexString()
       return redemptionRateFrom(v).toHexString()
     },
   })

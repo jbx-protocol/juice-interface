@@ -1,12 +1,12 @@
 import {
-  JBSplit,
-  NATIVE_TOKEN,
-  NATIVE_TOKEN_DECIMALS,
-  SplitGroup,
+    JBSplit,
+    NATIVE_TOKEN,
+    NATIVE_TOKEN_DECIMALS,
+    SplitGroup,
 } from 'juice-sdk-core'
 import {
-  V2V3FundAccessConstraint,
-  V2V3FundingCycleData,
+    V2V3FundAccessConstraint,
+    V2V3FundingCycleData,
 } from 'packages/v2v3/models/fundingCycle'
 
 import round from 'lodash/round'
@@ -60,7 +60,7 @@ export function transformV2V3CreateArgsToV4({
       mustStartAtOrAfterNum > now ? mustStartAtOrAfterNum : now,
     duration: _fundingCycleData.duration.toNumber(),
     weight: _fundingCycleData.weight.toBigInt(),
-    decayPercent: _fundingCycleData.discountRate.toNumber(),
+    weightCutPercent: _fundingCycleData.discountRate.toNumber(),
 
     approvalHook: _fundingCycleData.ballot as Address,
 
@@ -100,7 +100,7 @@ export function transformFCMetadataToRulesetMetadata({
 }) {
   return {
     reservedPercent: fundingCycleMetadata.reservedRate.toNumber(),
-    redemptionRate: fundingCycleMetadata.redemptionRate.toNumber(),
+    cashOutTaxRate: fundingCycleMetadata.cashOutTaxRate.toNumber(),
     baseCurrency: BASE_CURRENCY_ETH,
     pausePay: fundingCycleMetadata.pausePay,
     pauseRedeem: fundingCycleMetadata.pauseRedeem,
@@ -117,7 +117,7 @@ export function transformFCMetadataToRulesetMetadata({
     useTotalSurplusForRedemptions:
       fundingCycleMetadata.useTotalOverflowForRedemptions,
     useDataHookForPay: fundingCycleMetadata.useDataSourceForPay,
-    useDataHookForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
+    useDataHookForCashOut: fundingCycleMetadata.useDataSourceForRedeem,
     dataHook: fundingCycleMetadata.dataSource as Address,
     metadata: 0,
     allowCrosschainSuckerExtension: false,

@@ -1,10 +1,10 @@
 import { t } from '@lingui/macro'
 import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
 import {
-  formatDiscountRate,
-  formatIssuanceRate,
-  formatRedemptionRate,
-  formatReservedRate,
+    formatDiscountRate,
+    formatIssuanceRate,
+    formatRedemptionRate,
+    formatReservedRate,
 } from 'packages/v2v3/utils/math'
 import { formatAmount } from 'utils/format/formatAmount'
 import * as ProjectTokenForm from '../../../ProjectToken/hooks/useProjectTokenForm'
@@ -17,7 +17,7 @@ export const ProjectTokenReview = () => {
     allowTokenMinting,
     pauseTransfers,
     discountRate,
-    redemptionRate,
+    cashOutTaxRate,
     reservedRate,
     setAllocationSplits,
     weight,
@@ -76,9 +76,9 @@ export const ProjectTokenReview = () => {
         desc={
           <div className="text-base font-medium">
             {formatRedemptionRate(
-              redemptionRate
-                ? redemptionRate
-                : ProjectTokenForm.DefaultSettings.redemptionRate.toString(),
+              cashOutTaxRate
+                ? cashOutTaxRate
+                : ProjectTokenForm.DefaultSettings.cashOutTaxRate.toString(),
             ) + '%'}
           </div>
         }

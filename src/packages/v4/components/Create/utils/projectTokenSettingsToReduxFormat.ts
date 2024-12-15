@@ -22,8 +22,8 @@ export const projectTokenSettingsToReduxFormat = (
   const discountRate = discountRateFrom(
     projectTokenSettings.discountRate,
   ).toHexString()
-  const redemptionRate = redemptionRateFrom(
-    projectTokenSettings.redemptionRate,
+  const cashOutTaxRate = redemptionRateFrom(
+    projectTokenSettings.cashOutTaxRate,
   ).toHexString()
   const allowMinting = projectTokenSettings.tokenMinting
   const pauseTransfers = projectTokenSettings.pauseTransfers
@@ -33,7 +33,7 @@ export const projectTokenSettingsToReduxFormat = (
     reservedRate,
     reservedTokensGroupedSplits,
     discountRate,
-    redemptionRate,
+    cashOutTaxRate,
     allowMinting,
     pauseTransfers,
   }

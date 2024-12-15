@@ -18,11 +18,11 @@ export function RedemptionRateField() {
   const { editCycleForm, setFormHasUpdated } = useEditCycleFormContext()
 
   // Redemption rate %
-  const redemptionReductionRate = useWatch('redemptionRate', editCycleForm)
+  const redemptionReductionRate = useWatch('cashOutTaxRate', editCycleForm)
 
-  const [redemptionRateSwitchEnabled, setRedemptionRateSwitchEnabled] =
+  const [cashOutTaxRateSwitchEnabled, setRedemptionRateSwitchEnabled] =
     useState<boolean>(
-      (editCycleForm?.getFieldValue('redemptionRate') ?? 100) > 0,
+      (editCycleForm?.getFieldValue('cashOutTaxRate') ?? 100) > 0,
     )
   return (
     <div className="flex flex-col gap-5">
@@ -38,19 +38,19 @@ export function RedemptionRateField() {
             </ExternalLinkWithIcon>
           </Trans>
         }
-        value={redemptionRateSwitchEnabled}
-        extra={redemptionRateSwitchEnabled ? null : zeroPercentDisabledNoticed}
+        value={cashOutTaxRateSwitchEnabled}
+        extra={cashOutTaxRateSwitchEnabled ? null : zeroPercentDisabledNoticed}
         onChange={val => {
           setRedemptionRateSwitchEnabled(val)
           setFormHasUpdated(true)
           if (!val) {
             editCycleForm?.setFieldsValue({
-              redemptionRate: 0,
+              cashOutTaxRate: 0,
             })
           }
         }}
       />
-      {redemptionRateSwitchEnabled ? (
+      {cashOutTaxRateSwitchEnabled ? (
         <div className="flex w-full flex-col items-start justify-between gap-5 pb-5 md:flex-row md:items-center">
           <TokenRedemptionRateGraph
             value={redemptionReductionRate}
@@ -58,7 +58,7 @@ export function RedemptionRateField() {
             graphSize={200}
           />
           <NumberSlider
-            name="redemptionRate"
+            name="cashOutTaxRate"
             max={100}
             suffix="%"
             className="w-full"

@@ -5,11 +5,11 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import NumberSlider from 'components/inputs/NumberSlider'
 import {
-  MINT_RATE_EXPLANATION,
-  OWNER_MINTING_EXPLANATION,
-  OWNER_MINTING_RISK,
-  PAUSE_TRANSFERS_EXPLANATION,
-  REDEMPTION_RATE_EXPLANATION,
+    MINT_RATE_EXPLANATION,
+    OWNER_MINTING_EXPLANATION,
+    OWNER_MINTING_RISK,
+    PAUSE_TRANSFERS_EXPLANATION,
+    REDEMPTION_RATE_EXPLANATION,
 } from 'components/strings'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
 import useMobile from 'hooks/useMobile'
@@ -53,7 +53,7 @@ export const CustomTokenSettings = () => {
 
   const discountRateDisabled = !parseInt(duration)
 
-  const redemptionRateDisabled = distributionLimit?.amount.eq(MAX_PAYOUT_LIMIT)
+  const cashOutTaxRateDisabled = distributionLimit?.amount.eq(MAX_PAYOUT_LIMIT)
 
   const initalMintRateAccessory = (
     <span className="mr-5">
@@ -204,7 +204,7 @@ export const CustomTokenSettings = () => {
           <span>{REDEMPTION_RATE_EXPLANATION}</span>
           <Form.Item
             noStyle
-            name="redemptionRate"
+            name="cashOutTaxRate"
             valuePropName="sliderValue"
             rules={[inputMustExistRule({ label: t`A redemption rate` })]}
           >
@@ -213,10 +213,10 @@ export const CustomTokenSettings = () => {
               defaultValue={0}
               suffix="%"
               step={0.5}
-              disabled={redemptionRateDisabled}
+              disabled={cashOutTaxRateDisabled}
             />
           </Form.Item>
-          {redemptionRateDisabled ? (
+          {cashOutTaxRateDisabled ? (
             <Callout.Warning>
               <Trans>
                 Redemptions are disabled when all of the project's ETH is being
@@ -225,7 +225,7 @@ export const CustomTokenSettings = () => {
             </Callout.Warning>
           ) : (
             !isMobile && (
-              <Form.Item noStyle name="redemptionRate">
+              <Form.Item noStyle name="cashOutTaxRate">
                 <TokenRedemptionRateGraph graphPad={50} graphSize={300} />
               </Form.Item>
             )

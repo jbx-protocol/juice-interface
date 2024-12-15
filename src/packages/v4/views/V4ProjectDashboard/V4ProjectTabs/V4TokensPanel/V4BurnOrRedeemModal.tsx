@@ -18,7 +18,7 @@ import {
   useJBTokenContext,
   useNativeTokenSurplus,
   useWriteJbControllerBurnTokensOf,
-  useWriteJbMultiTerminalRedeemTokensOf,
+  useWriteJbMultiTerminalCashOutTokensOf,
 } from 'juice-sdk-react'
 import { useV4UserTotalTokensBalance } from 'packages/v4/contexts/V4UserTotalTokensBalanceProvider'
 import { useETHReceivedFromTokens } from 'packages/v4/hooks/useETHReceivedFromTokens'
@@ -54,7 +54,7 @@ export function V4BurnOrRedeemModal({
   const userTokenBalance = useV4UserTotalTokensBalance().data ?? 0n
 
   const { writeContractAsync: writeRedeem } =
-    useWriteJbMultiTerminalRedeemTokensOf()
+    useWriteJbMultiTerminalCashOutTokensOf()
   const { writeContractAsync: writeBurnTokens } =
     useWriteJbControllerBurnTokensOf()
 
@@ -157,8 +157,8 @@ export function V4BurnOrRedeemModal({
         args: [
           userAddress,
           BigInt(projectId),
-          NATIVE_TOKEN,
           redeemAmountBigInt,
+          NATIVE_TOKEN,
           0n,
           userAddress,
           '0x0',
@@ -278,7 +278,7 @@ export function V4BurnOrRedeemModal({
           contentStyle={{ display: 'block', textAlign: 'right' }}
         >
           <Descriptions.Item label={<Trans>Redemption rate</Trans>}>
-            {rulesetMetadata?.redemptionRate.formatPercentage()}
+            {rulesetMetadata?.cashOutTaxRate.formatPercentage()}
           </Descriptions.Item>
           <Descriptions.Item
             label={

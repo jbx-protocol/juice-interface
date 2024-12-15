@@ -28,16 +28,16 @@ export const useTokensSectionValues = () => {
 
   const newReservedRate = formValues.reservedPercent
   const newReservedSplits = formValues.reservedTokensSplits
-  const newDiscountRate = formValues.decayPercent
-  const newRedemptionRate = formValues.redemptionRate
+  const newDiscountRate = formValues.weightCutPercent
+  const newRedemptionRate = formValues.cashOutTaxRate
   const newAllowMinting = formValues.allowOwnerMinting
   const newTokenTransfers = formValues.tokenTransfers
 
   const currentMintRate = initialFormData?.issuanceRate
   const currentReservedRate = initialFormData?.reservedPercent
   const currentReservedSplits = initialFormData?.reservedTokensSplits
-  const currentDiscountRate = initialFormData?.decayPercent
-  const currentRedemptionRate = initialFormData?.redemptionRate
+  const currentDiscountRate = initialFormData?.weightCutPercent
+  const currentRedemptionRate = initialFormData?.cashOutTaxRate
   const currentAllowMinting = Boolean(initialFormData?.allowOwnerMinting)
   const currentTokenTransfers = Boolean(
     initialFormData?.tokenTransfers,

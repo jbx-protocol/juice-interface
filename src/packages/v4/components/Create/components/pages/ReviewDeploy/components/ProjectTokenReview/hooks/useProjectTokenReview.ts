@@ -1,7 +1,7 @@
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
 import {
-  allocationToSplit,
-  splitToAllocation,
+    allocationToSplit,
+    splitToAllocation,
 } from 'packages/v2v3/utils/splitToAllocation'
 import { useCallback, useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -14,7 +14,7 @@ export const useProjectTokenReview = () => {
     fundingCycleMetadata: {
       allowMinting,
       reservedRate,
-      redemptionRate,
+      cashOutTaxRate,
       global,
     },
   } = useAppSelector(state => state.creatingV2Project)
@@ -46,7 +46,7 @@ export const useProjectTokenReview = () => {
     allowTokenMinting,
     pauseTransfers,
     reservedRate,
-    redemptionRate,
+    cashOutTaxRate,
     allocationSplits,
     setAllocationSplits,
   }

@@ -13,7 +13,7 @@ import { NATIVE_TOKEN } from 'juice-sdk-core'
 import {
   useJBContractContext,
   useJBTokenContext,
-  useWriteJbMultiTerminalRedeemTokensOf,
+  useWriteJbMultiTerminalCashOutTokensOf,
 } from 'juice-sdk-react'
 import { useETHReceivedFromTokens } from 'packages/v4/hooks/useETHReceivedFromTokens'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
@@ -64,7 +64,7 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
     : ''
 
   const { writeContractAsync: writeRedeem } =
-    useWriteJbMultiTerminalRedeemTokensOf()
+    useWriteJbMultiTerminalCashOutTokensOf()
   const { userAddress } = useWallet()
 
   const insufficientBalance = useMemo(() => {

@@ -13,7 +13,7 @@ export function IssuanceRateReductionField() {
 
   // Issurance reduction rate %
   const issuanceReductionRate =
-    editCycleForm?.getFieldValue('decayPercent') ?? (0 as number)
+    editCycleForm?.getFieldValue('weightCutPercent') ?? (0 as number)
 
   const [
     issuanceReductionRateSwitchEnabled,
@@ -41,12 +41,12 @@ export function IssuanceRateReductionField() {
           setIssuanceReductionRateSwitchEnabled(val)
           setFormHasUpdated(true)
           if (!val) {
-            editCycleForm?.setFieldsValue({ decayPercent: 0 })
+            editCycleForm?.setFieldsValue({ weightCutPercent: 0 })
           }
         }}
       />
       {issuanceReductionRateSwitchEnabled ? (
-        <NumberSlider name="decayPercent" max={20} suffix="%" />
+        <NumberSlider name="weightCutPercent" max={20} suffix="%" />
       ) : null}
     </div>
   )

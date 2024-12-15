@@ -2,11 +2,11 @@ import { t } from '@lingui/macro'
 import { Divider } from 'antd'
 import TooltipLabel from 'components/TooltipLabel'
 import {
-  DISCOUNT_RATE_EXPLANATION,
-  MINT_RATE_EXPLANATION,
-  OWNER_MINTING_EXPLANATION,
-  REDEMPTION_RATE_EXPLANATION,
-  RESERVED_RATE_EXPLANATION,
+    DISCOUNT_RATE_EXPLANATION,
+    MINT_RATE_EXPLANATION,
+    OWNER_MINTING_EXPLANATION,
+    REDEMPTION_RATE_EXPLANATION,
+    RESERVED_RATE_EXPLANATION,
 } from 'components/strings'
 import { ReactNode, useMemo } from 'react'
 import { formatAmount } from 'utils/format/formatAmount'
@@ -33,7 +33,7 @@ export const DefaultSettings: React.FC<
         tooltip: DISCOUNT_RATE_EXPLANATION,
       },
       [t`Redemption rate`]: {
-        data: `${ProjectTokenForm.DefaultSettings.redemptionRate}%`,
+        data: `${ProjectTokenForm.DefaultSettings.cashOutTaxRate}%`,
         tooltip: REDEMPTION_RATE_EXPLANATION,
       },
       [t`Owner token minting`]: {

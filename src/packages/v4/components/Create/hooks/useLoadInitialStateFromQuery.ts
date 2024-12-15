@@ -9,8 +9,8 @@ import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
-  DEFAULT_REDUX_STATE,
-  creatingV2ProjectActions,
+    DEFAULT_REDUX_STATE,
+    creatingV2ProjectActions,
 } from 'redux/slices/creatingV2Project'
 import { INITIAL_REDUX_STATE } from 'redux/slices/shared/v2ProjectInitialReduxState'
 import { CreateState, ProjectState } from 'redux/slices/shared/v2ProjectTypes'
@@ -63,7 +63,7 @@ const parseCreateFlowStateFromInitialState = (
     reservedRate: initialState.fundingCycleMetadata.reservedRate,
     reservedTokensGroupedSplits: initialState.reservedTokensGroupedSplits,
     discountRate: initialState.fundingCycleData.discountRate,
-    redemptionRate: initialState.fundingCycleMetadata.redemptionRate,
+    cashOutTaxRate: initialState.fundingCycleMetadata.cashOutTaxRate,
     allowMinting: initialState.fundingCycleMetadata.allowMinting,
   }
   if (isEqual(initialTokenData, ReduxDefaultTokenSettings)) {

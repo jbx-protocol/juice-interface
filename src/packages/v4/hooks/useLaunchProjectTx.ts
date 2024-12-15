@@ -3,7 +3,7 @@ import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain
 import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
-import { NATIVE_TOKEN } from 'juice-sdk-core'
+import { jbProjectDeploymentAddresses, NATIVE_TOKEN } from 'juice-sdk-core'
 import {
   JBChainId,
   useWriteJbControllerLaunchProjectFor,
@@ -11,13 +11,7 @@ import {
 import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
 import { useCallback, useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
-import { Address, WaitForTransactionReceiptReturnType } from 'viem'
-import {
-  arbitrumSepolia,
-  baseSepolia,
-  optimismSepolia,
-  sepolia,
-} from 'viem/chains'
+import { WaitForTransactionReceiptReturnType } from 'viem'
 import { useChainId } from 'wagmi'
 import {
   LaunchV2V3ProjectArgs,
@@ -51,24 +45,6 @@ export const getProjectIdFromLaunchReceipt = (
 }
 
 /**
- * The contract addresses to use for deployment
- * @todo not ideal to hardcode these addresses
- */
-export const SUPPORTED_JB_MULTITERMINAL_ADDRESS = {
-  [sepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-  [optimismSepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-  [arbitrumSepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-  [baseSepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-}
-
-export const SUPPORTED_JB_CONTROLLER_ADDRESS = {
-  [sepolia.id]: '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
-  [optimismSepolia.id]: '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
-  [arbitrumSepolia.id]: '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
-  [baseSepolia.id]: '0x219A5cE6d1c512D5b050ad2E3d380b8746BE0Cb8' as Address,
-}
-
-/**
  * Takes data in V2V3 format, converts it to v4 format and passes it to `writeLaunchProject`
  * @returns A function that deploys a project.
  */
@@ -79,11 +55,11 @@ export function useLaunchProjectTx() {
   const chainId = useChainId()
 
   const terminalAddress = chainId
-    ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainId as JBChainId]
+    ? jbProjectDeploymentAddresses.JBMultiTerminal[chainId as JBChainId]
     : undefined
 
   const controllerAddress = chainId
-    ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainId as JBChainId]
+    ? jbProjectDeploymentAddresses.JBController[chainId as JBChainId]
     : undefined
 
   const { addTransaction } = useContext(TxHistoryContext)

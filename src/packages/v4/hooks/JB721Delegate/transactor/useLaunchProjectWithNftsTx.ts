@@ -4,6 +4,7 @@ import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import {
   DEFAULT_MEMO,
+  jbProjectDeploymentAddresses,
   NATIVE_TOKEN,
   NATIVE_TOKEN_DECIMALS,
 } from 'juice-sdk-core'
@@ -23,22 +24,12 @@ import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
 import { ipfsUri } from 'utils/ipfs'
 import { Address, WaitForTransactionReceiptReturnType, zeroAddress } from 'viem'
-import {
-  arbitrumSepolia,
-  baseSepolia,
-  optimismSepolia,
-  sepolia,
-} from 'viem/chains'
 import { useChainId } from 'wagmi'
 import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
 } from '../../../utils/launchProjectTransformers'
-import {
-  LaunchTxOpts,
-  SUPPORTED_JB_CONTROLLER_ADDRESS,
-  SUPPORTED_JB_MULTITERMINAL_ADDRESS,
-} from '../../useLaunchProjectTx'
+import { LaunchTxOpts } from '../../useLaunchProjectTx'
 
 /**
  * Return the project ID created from a `launchProjectFor` transaction.
@@ -54,17 +45,6 @@ export const getProjectIdFromNftLaunchReceipt = (
   return projectId
 }
 
-/**
- * The contract addresses to use for deployment
- * @todo not ideal to hardcode these addresses
- */
-export const SUPPORTED_JB_721_TIER_STORE = {
-  [sepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-  [optimismSepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-  [arbitrumSepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-  [baseSepolia.id]: '0x4DeF0AA5B9CA095d11705284221b2878731ab4EF' as Address,
-}
-
 export function useLaunchProjectWithNftsTx() {
   const { contracts } = useJBContractContext()
   const { addTransaction } = useContext(TxHistoryContext)
@@ -73,13 +53,13 @@ export function useLaunchProjectWithNftsTx() {
   const chainId = useChainId()
 
   const defaultJBController = chainId
-    ? SUPPORTED_JB_CONTROLLER_ADDRESS[chainId as JBChainId]
+    ? jbProjectDeploymentAddresses.JBController[chainId as JBChainId]
     : undefined
   const defaultJBETHPaymentTerminal = chainId
-    ? SUPPORTED_JB_MULTITERMINAL_ADDRESS[chainId as JBChainId]
+    ? jbProjectDeploymentAddresses.JBMultiTerminal[chainId as JBChainId]
     : undefined
   const JBTiered721DelegateStoreAddress = chainId
-    ? SUPPORTED_JB_721_TIER_STORE[chainId as JBChainId]
+    ? jbProjectDeploymentAddresses.JB721TiersHookStore[chainId as JBChainId]
     : undefined
 
   const { writeContractAsync: writeLaunchProject } =

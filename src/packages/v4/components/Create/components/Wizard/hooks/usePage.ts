@@ -1,7 +1,7 @@
 import { CreatePage } from 'models/createPage'
 import { useCallback, useContext, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
-import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { WizardContext } from '../contexts/WizardContext'
 
 export const usePage = ({ name }: { name: string }) => {

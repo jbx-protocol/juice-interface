@@ -103,8 +103,8 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
     const args = [
       userAddress,
       BigInt(projectId),
-      NATIVE_TOKEN,
       redeemAmountWei,
+      NATIVE_TOKEN,
       0n,
       userAddress,
       '0x0',

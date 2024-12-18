@@ -1,10 +1,10 @@
 import { t } from '@lingui/macro'
 import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
 import {
-    formatDiscountRate,
-    formatIssuanceRate,
-    formatRedemptionRate,
-    formatReservedRate,
+  formatDiscountRate,
+  formatIssuanceRate,
+  formatRedemptionRate,
+  formatReservedRate,
 } from 'packages/v2v3/utils/math'
 import { formatAmount } from 'utils/format/formatAmount'
 import * as ProjectTokenForm from '../../../ProjectToken/hooks/useProjectTokenForm'
@@ -78,7 +78,7 @@ export const ProjectTokenReview = () => {
             {formatRedemptionRate(
               cashOutTaxRate
                 ? cashOutTaxRate
-                : ProjectTokenForm.DefaultSettings.cashOutTaxRate.toString(),
+                : ProjectTokenForm.DefaultSettings.redemptionRate.toString(),
             ) + '%'}
           </div>
         }

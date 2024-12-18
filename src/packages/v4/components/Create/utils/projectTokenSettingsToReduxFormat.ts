@@ -5,7 +5,7 @@ import {
   reservedRateFrom,
 } from 'packages/v2v3/utils/math'
 import { allocationToSplit } from 'packages/v2v3/utils/splitToAllocation'
-import { EMPTY_RESERVED_TOKENS_GROUPED_SPLITS } from 'redux/slices/creatingV2Project'
+import { EMPTY_RESERVED_TOKENS_GROUPED_SPLITS } from 'redux/slices/v2v3/creatingV2Project'
 import { ProjectTokensFormProps } from '../components/pages/ProjectToken/hooks/useProjectTokenForm'
 
 export const projectTokenSettingsToReduxFormat = (
@@ -22,8 +22,8 @@ export const projectTokenSettingsToReduxFormat = (
   const discountRate = discountRateFrom(
     projectTokenSettings.discountRate,
   ).toHexString()
-  const cashOutTaxRate = redemptionRateFrom(
-    projectTokenSettings.cashOutTaxRate,
+  const redemptionRate = redemptionRateFrom(
+    projectTokenSettings.redemptionRate,
   ).toHexString()
   const allowMinting = projectTokenSettings.tokenMinting
   const pauseTransfers = projectTokenSettings.pauseTransfers
@@ -33,7 +33,7 @@ export const projectTokenSettingsToReduxFormat = (
     reservedRate,
     reservedTokensGroupedSplits,
     discountRate,
-    cashOutTaxRate,
+    redemptionRate,
     allowMinting,
     pauseTransfers,
   }

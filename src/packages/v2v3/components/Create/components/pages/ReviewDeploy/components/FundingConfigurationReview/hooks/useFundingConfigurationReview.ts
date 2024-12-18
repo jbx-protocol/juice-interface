@@ -13,7 +13,7 @@ import {
   useCreatingDistributionLimit,
   useCreatingPayoutSplits,
 } from 'redux/hooks/v2v3/create'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/creatingV2Project'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/creatingV2Project'
 import { formatFundingTarget } from 'utils/format/formatFundingTarget'
 
 export const useFundingConfigurationReview = () => {

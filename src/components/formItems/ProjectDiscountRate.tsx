@@ -3,7 +3,7 @@ import { Form, Switch } from 'antd'
 import FormItemLabel from 'components/FormItemLabel'
 import FormItemWarningText from 'components/FormItemWarningText'
 import { DISCOUNT_RATE_EXPLANATION } from 'components/strings'
-import { DEFAULT_FUNDING_CYCLE_DATA } from 'redux/slices/shared/v2ProjectDefaultState'
+import { DEFAULT_FUNDING_CYCLE_DATA } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
 import NumberSlider from '../inputs/NumberSlider'
 import { FormItemExt } from './formItemExt'
 

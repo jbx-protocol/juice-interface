@@ -6,12 +6,12 @@ import { useWallet } from 'hooks/Wallet'
 import { jbProjectDeploymentAddresses, NATIVE_TOKEN } from 'juice-sdk-core'
 import {
   JBChainId,
-  useWriteJbControllerLaunchProjectFor,
+  useWriteJbControllerLaunchProjectFor
 } from 'juice-sdk-react'
 import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
 import { useCallback, useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
-import { WaitForTransactionReceiptReturnType } from 'viem'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
+import { Address, WaitForTransactionReceiptReturnType } from 'viem'
 import { useChainId } from 'wagmi'
 import {
   LaunchV2V3ProjectArgs,
@@ -55,11 +55,15 @@ export function useLaunchProjectTx() {
   const chainId = useChainId()
 
   const terminalAddress = chainId
-    ? jbProjectDeploymentAddresses.JBMultiTerminal[chainId as JBChainId]
+    ? (jbProjectDeploymentAddresses.JBMultiTerminal[
+        chainId as JBChainId
+      ] as Address)
     : undefined
 
   const controllerAddress = chainId
-    ? jbProjectDeploymentAddresses.JBController[chainId as JBChainId]
+    ? (jbProjectDeploymentAddresses.JBController[
+        chainId as JBChainId
+      ] as Address)
     : undefined
 
   const { addTransaction } = useContext(TxHistoryContext)

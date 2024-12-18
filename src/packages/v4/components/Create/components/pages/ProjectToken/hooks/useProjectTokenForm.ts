@@ -25,7 +25,7 @@ import {
   useCreatingDistributionLimit,
   useCreatingReservedTokensSplits,
 } from 'redux/hooks/v2v3/create'
-import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
 export type ProjectTokensFormProps = Partial<{
@@ -34,7 +34,7 @@ export type ProjectTokensFormProps = Partial<{
   reservedTokensPercentage: number | undefined
   reservedTokenAllocation: AllocationSplit[] | undefined
   discountRate: number | undefined
-  cashOutTaxRate: number | undefined
+  redemptionRate: number | undefined
   tokenMinting: boolean | undefined
   pauseTransfers: boolean | undefined
 }>
@@ -46,7 +46,7 @@ export const DefaultSettings: Required<
   reservedTokensPercentage: 0,
   reservedTokenAllocation: [],
   discountRate: 0,
-  cashOutTaxRate: 100,
+  redemptionRate: 100,
   tokenMinting: false,
   pauseTransfers: false,
 }
@@ -81,9 +81,9 @@ export const useProjectTokensForm = () => {
         ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
         : DefaultSettings.discountRate
     const cashOutTaxRate =
-      !cashOutTaxRateDisabled && fundingCycleMetadata.cashOutTaxRate
-        ? parseFloat(formatRedemptionRate(fundingCycleMetadata.cashOutTaxRate))
-        : DefaultSettings.cashOutTaxRate
+      !cashOutTaxRateDisabled && fundingCycleMetadata.redemptionRate
+        ? parseFloat(formatRedemptionRate(fundingCycleMetadata.redemptionRate))
+        : DefaultSettings.redemptionRate
     const tokenMinting =
       fundingCycleMetadata.allowMinting !== undefined
         ? fundingCycleMetadata.allowMinting
@@ -108,7 +108,7 @@ export const useProjectTokensForm = () => {
     fundingCycleData.discountRate,
     fundingCycleData.weight,
     fundingCycleMetadata.allowMinting,
-    fundingCycleMetadata.cashOutTaxRate,
+    fundingCycleMetadata.redemptionRate,
     fundingCycleMetadata.reservedRate,
     fundingCycleMetadata.global.pauseTransfers,
     projectTokensSelection,
@@ -186,21 +186,21 @@ export const useProjectTokensForm = () => {
 
   useFormDispatchWatch({
     form,
-    fieldName: 'cashOutTaxRate',
+    fieldName: 'redemptionRate',
     dispatchFunction: creatingV2ProjectActions.setRedemptionRate,
     formatter: v => {
       if (v === undefined || typeof v !== 'number')
-        return redemptionRateFrom(DefaultSettings.cashOutTaxRate).toHexString()
+        return redemptionRateFrom(DefaultSettings.redemptionRate).toHexString()
       return redemptionRateFrom(v).toHexString()
     },
   })
   useFormDispatchWatch({
     form,
-    fieldName: 'cashOutTaxRate',
+    fieldName: 'redemptionRate',
     dispatchFunction: creatingV2ProjectActions.setBallotRedemptionRate,
     formatter: v => {
       if (v === undefined || typeof v !== 'number')
-        return redemptionRateFrom(DefaultSettings.cashOutTaxRate).toHexString()
+        return redemptionRateFrom(DefaultSettings.redemptionRate).toHexString()
       return redemptionRateFrom(v).toHexString()
     },
   })

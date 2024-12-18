@@ -21,9 +21,15 @@ import {
 } from 'packages/v4/models/nfts'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
 import { ipfsUri } from 'utils/ipfs'
-import { Address, WaitForTransactionReceiptReturnType, zeroAddress } from 'viem'
+import {
+  Address,
+  toBytes,
+  toHex,
+  WaitForTransactionReceiptReturnType,
+  zeroAddress,
+} from 'viem'
 import { useChainId } from 'wagmi'
 import {
   LaunchV2V3ProjectArgs,
@@ -53,13 +59,19 @@ export function useLaunchProjectWithNftsTx() {
   const chainId = useChainId()
 
   const defaultJBController = chainId
-    ? jbProjectDeploymentAddresses.JBController[chainId as JBChainId]
+    ? (jbProjectDeploymentAddresses.JBController[
+        chainId as JBChainId
+      ] as Address)
     : undefined
   const defaultJBETHPaymentTerminal = chainId
-    ? jbProjectDeploymentAddresses.JBMultiTerminal[chainId as JBChainId]
+    ? (jbProjectDeploymentAddresses.JBMultiTerminal[
+        chainId as JBChainId
+      ] as Address)
     : undefined
   const JBTiered721DelegateStoreAddress = chainId
-    ? jbProjectDeploymentAddresses.JB721TiersHookStore[chainId as JBChainId]
+    ? (jbProjectDeploymentAddresses.JB721TiersHookStore[
+        chainId as JBChainId
+      ] as Address)
     : undefined
 
   const { writeContractAsync: writeLaunchProject } =
@@ -169,7 +181,7 @@ export function useLaunchProjectWithNftsTx() {
         memo: launchProjectData[4],
       }, // _launchProjectData,
       defaultJBController,
-      // createSalt(),
+      createSalt(),
     ] as const
 
     try {
@@ -201,4 +213,11 @@ export function useLaunchProjectWithNftsTx() {
       )
     }
   }
+}
+
+function createSalt() {
+  const base: string = '0x' + Math.random().toString(16).slice(2) // idk lol
+  const salt = toHex(toBytes(base, { size: 32 }))
+
+  return salt
 }

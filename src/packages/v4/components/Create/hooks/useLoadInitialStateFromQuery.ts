@@ -9,11 +9,11 @@ import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
-    DEFAULT_REDUX_STATE,
-    creatingV2ProjectActions,
-} from 'redux/slices/creatingV2Project'
-import { INITIAL_REDUX_STATE } from 'redux/slices/shared/v2ProjectInitialReduxState'
-import { CreateState, ProjectState } from 'redux/slices/shared/v2ProjectTypes'
+  DEFAULT_REDUX_STATE,
+  creatingV2ProjectActions,
+} from 'redux/slices/v2v3/creatingV2Project'
+import { INITIAL_REDUX_STATE } from 'redux/slices/v2v3/shared/v2ProjectInitialReduxState'
+import { CreateState, ProjectState } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 import { isEqualAddress } from 'utils/address'
 import { parseWad } from 'utils/format/formatNumber'
 import { zeroAddress } from 'viem'
@@ -63,7 +63,7 @@ const parseCreateFlowStateFromInitialState = (
     reservedRate: initialState.fundingCycleMetadata.reservedRate,
     reservedTokensGroupedSplits: initialState.reservedTokensGroupedSplits,
     discountRate: initialState.fundingCycleData.discountRate,
-    cashOutTaxRate: initialState.fundingCycleMetadata.cashOutTaxRate,
+    cashOutTaxRate: initialState.fundingCycleMetadata.redemptionRate,
     allowMinting: initialState.fundingCycleMetadata.allowMinting,
   }
   if (isEqual(initialTokenData, ReduxDefaultTokenSettings)) {

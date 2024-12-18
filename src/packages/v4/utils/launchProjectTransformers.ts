@@ -1,12 +1,12 @@
 import {
-    JBSplit,
-    NATIVE_TOKEN,
-    NATIVE_TOKEN_DECIMALS,
-    SplitGroup,
+  JBSplit,
+  NATIVE_TOKEN,
+  NATIVE_TOKEN_DECIMALS,
+  SplitGroup,
 } from 'juice-sdk-core'
 import {
-    V2V3FundAccessConstraint,
-    V2V3FundingCycleData,
+  V2V3FundAccessConstraint,
+  V2V3FundingCycleData,
 } from 'packages/v2v3/models/fundingCycle'
 
 import round from 'lodash/round'
@@ -100,7 +100,7 @@ export function transformFCMetadataToRulesetMetadata({
 }) {
   return {
     reservedPercent: fundingCycleMetadata.reservedRate.toNumber(),
-    cashOutTaxRate: fundingCycleMetadata.cashOutTaxRate.toNumber(),
+    cashOutTaxRate: fundingCycleMetadata.redemptionRate.toNumber(),
     baseCurrency: BASE_CURRENCY_ETH,
     pausePay: fundingCycleMetadata.pausePay,
     pauseRedeem: fundingCycleMetadata.pauseRedeem,
@@ -114,7 +114,7 @@ export function transformFCMetadataToRulesetMetadata({
     allowAddPriceFeed: false, // Not present in v2v3, passing false by default
     ownerMustSendPayouts: false, // Not present in v2v3, passing false by default
     holdFees: fundingCycleMetadata.holdFees,
-    useTotalSurplusForRedemptions:
+    useTotalSurplusForCashOuts:
       fundingCycleMetadata.useTotalOverflowForRedemptions,
     useDataHookForPay: fundingCycleMetadata.useDataSourceForPay,
     useDataHookForCashOut: fundingCycleMetadata.useDataSourceForRedeem,

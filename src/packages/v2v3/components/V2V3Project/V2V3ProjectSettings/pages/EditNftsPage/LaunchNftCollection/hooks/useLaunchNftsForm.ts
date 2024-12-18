@@ -11,7 +11,7 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   DEFAULT_NFT_FLAGS,
   DEFAULT_NFT_PRICING,
-} from 'redux/slices/editingV2Project'
+} from 'redux/slices/v2v3/editingV2Project'
 import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,

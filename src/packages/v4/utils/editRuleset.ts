@@ -52,7 +52,7 @@ export function transformEditCycleFormFieldsToTxArgs({
         allowAddPriceFeed: false, // Defaulting to false as it's not in formValues
         ownerMustSendPayouts: false, // Defaulting to false as it's not in formValues
         holdFees: formValues.holdFees,
-        useTotalSurplusForRedemptions: false, // Defaulting to false as it's not in formValues
+        useTotalSurplusForCashOuts: false, // Defaulting to false as it's not in formValues
         useDataHookForPay: false, // Defaulting to false as it's not in formValues
         useDataHookForCashOut: false, // Defaulting to false as it's not in formValues
         dataHook: '0x0000000000000000000000000000000000000000' as `0x${string}`, // Defaulting to a null address

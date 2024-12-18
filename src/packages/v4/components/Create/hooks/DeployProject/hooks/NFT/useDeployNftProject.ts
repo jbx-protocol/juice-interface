@@ -11,7 +11,7 @@ import {
   useCreatingV2V3FundingCycleDataSelector,
   useCreatingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/v2v3/create'
-import { DEFAULT_NFT_FLAGS } from 'redux/slices/shared/v2ProjectDefaultState'
+import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
 import { encodeIpfsUri } from 'utils/ipfs'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { sortNftsByContributionFloor } from 'utils/nftRewards'

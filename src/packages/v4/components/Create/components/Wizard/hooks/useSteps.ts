@@ -3,7 +3,7 @@ import { useCallback, useContext, useMemo } from 'react'
 import { t } from '@lingui/macro'
 import { CreatePage } from 'models/createPage'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useEditingCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
+import { useEditingCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
 import { WizardContext } from '../contexts/WizardContext'
 
 const stepNames = (): Record<string, string> => {

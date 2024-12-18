@@ -17,7 +17,7 @@ export const ProjectTokenReview = () => {
     allowTokenMinting,
     pauseTransfers,
     discountRate,
-    redemptionRate,
+    cashOutTaxRate,
     reservedRate,
     setAllocationSplits,
     weight,
@@ -76,8 +76,8 @@ export const ProjectTokenReview = () => {
         desc={
           <div className="text-base font-medium">
             {formatRedemptionRate(
-              redemptionRate
-                ? redemptionRate
+              cashOutTaxRate
+                ? cashOutTaxRate
                 : ProjectTokenForm.DefaultSettings.redemptionRate.toString(),
             ) + '%'}
           </div>

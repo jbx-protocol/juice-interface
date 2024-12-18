@@ -9,7 +9,7 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   DEFAULT_MUST_START_AT_OR_AFTER,
   creatingV2ProjectActions,
-} from 'redux/slices/creatingV2Project'
+} from 'redux/slices/v2v3/creatingV2Project'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 import { AmountInputValue } from '../ProjectDetailsPage'
 

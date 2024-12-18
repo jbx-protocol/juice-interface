@@ -1,17 +1,17 @@
 import {
-    JBDeployTiered721DelegateData,
-    JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
+  JBDeployTiered721DelegateData,
+  JB_DEPLOY_TIERED_721_DELEGATE_DATA_V3_1,
 } from 'models/nftRewards'
 import {
-    JBPayDataSourceFundingCycleMetadata,
-    V2V3FundAccessConstraint,
-    V2V3FundingCycleData,
+  JBPayDataSourceFundingCycleMetadata,
+  V2V3FundAccessConstraint,
+  V2V3FundingCycleData,
 } from 'packages/v2v3/models/fundingCycle'
 import { GroupedSplits, SplitGroup } from 'packages/v2v3/models/splits'
 import {
-    buildDeployTiered721DelegateData,
-    buildJB721TierParams,
-    defaultNftCollectionName,
+  buildDeployTiered721DelegateData,
+  buildJB721TierParams,
+  defaultNftCollectionName,
 } from 'utils/nftRewards'
 
 import { t } from '@lingui/macro'
@@ -30,8 +30,8 @@ import { useV2ProjectTitle } from 'packages/v2v3/hooks/useProjectTitle'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
 import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import { useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
-import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
+import { NftRewardsData } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 import { useJB721DelegateContractAddress } from '../contracts/useJB721DelegateContractAddress'
 import { useJBTiered721DelegateProjectDeployer } from '../contracts/useJBTiered721DelegateProjectDeployer'
 import { useProjectControllerJB721DelegateVersion } from '../contracts/useProjectJB721DelegateVersion'

@@ -16,7 +16,7 @@ export function RedeemNftsSection() {
   // const { data: credits, loading: loadingCredits } = useNftCredits(userAddress)
 
   // const hasOverflow = primaryTerminalCurrentOverflow?.gt(0)
-  // const hasRedemptionRate = fundingCycleMetadata?.redemptionRate.gt(0)
+  // const hasRedemptionRate = fundingCycleMetadata?.cashOutTaxRate.gt(0)
   // const canRedeem =
   //   hasOverflow &&
   //   hasRedemptionRate &&

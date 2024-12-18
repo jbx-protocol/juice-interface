@@ -1,4 +1,4 @@
-import { getTokenRedemptionQuoteEth } from 'juice-sdk-core'
+import { getTokenCashOutQuoteEth } from 'juice-sdk-core'
 import {
   useJBContractContext,
   useJBRulesetContext,
@@ -22,10 +22,10 @@ export function useETHReceivedFromTokens(
       address: contracts.controller.data ?? undefined,
       args: [projectId],
     })
-  const redemptionRate = rulesetMetadata.data?.redemptionRate?.value
+  const cashOutTaxRate = rulesetMetadata.data?.cashOutTaxRate?.value
 
   if (
-    redemptionRate === undefined ||
+    cashOutTaxRate === undefined ||
     totalSupply === undefined ||
     tokensReserved === undefined ||
     tokenAmountWei === undefined ||
@@ -35,8 +35,8 @@ export function useETHReceivedFromTokens(
   }
 
   try {
-    return getTokenRedemptionQuoteEth(tokenAmountWei, {
-      redemptionRate: Number(redemptionRate),
+    return getTokenCashOutQuoteEth(tokenAmountWei, {
+      cashOutTaxRate: Number(cashOutTaxRate),
       totalSupply,
       tokensReserved,
       overflowWei: nativeTokenSurplus,

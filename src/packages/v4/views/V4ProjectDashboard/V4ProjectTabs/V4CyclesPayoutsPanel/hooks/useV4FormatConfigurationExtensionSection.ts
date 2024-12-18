@@ -60,9 +60,9 @@ export const useV4FormatConfigurationExtensionSection = ({
 
   const useForRedemptionsDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentUseForRedemptions =
-      rulesetMetadata?.useDataHookForRedeem
+      rulesetMetadata?.useDataHookForCashOut
     const upcomingUseForRedemptions =
-      upcomingRulesetMetadata?.useDataHookForRedeem
+      upcomingRulesetMetadata?.useDataHookForCashOut
 
     if (upcomingRulesetMetadata === null) {
       return flagPairToDatum(
@@ -78,7 +78,7 @@ export const useV4FormatConfigurationExtensionSection = ({
       upcomingUseForRedemptions,
     )
   }, [
-    rulesetMetadata?.useDataHookForRedeem,
+    rulesetMetadata?.useDataHookForCashOut,
     upcomingRulesetMetadata,
   ])
 

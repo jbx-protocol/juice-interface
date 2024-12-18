@@ -19,7 +19,7 @@ import { OptionalHeader } from 'packages/v2v3/components/Create/components/Optio
 import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
-import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
+import { NftRewardsData } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 import {
   inputIsIntegerRule,
   inputIsValidUrlRule,

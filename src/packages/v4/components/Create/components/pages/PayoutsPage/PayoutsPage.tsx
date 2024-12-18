@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
 import { Wizard } from '../../Wizard/Wizard'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { CreateFlowPayoutsTable } from './components/CreateFlowPayoutsTable'

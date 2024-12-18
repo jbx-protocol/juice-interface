@@ -41,8 +41,8 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
   const redeems = {
     loading: ruleset.isLoading,
     enabled:
-      rulesetMetadata.data?.redemptionRate &&
-      rulesetMetadata.data.redemptionRate.value > 0n,
+      rulesetMetadata.data?.cashOutTaxRate &&
+      rulesetMetadata.data.cashOutTaxRate.value > 0n,
   }
 
   const isIssuingTokens = React.useMemo(() => {
@@ -66,7 +66,7 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
   }, [isIssuingTokens, nftRewards.loading, nftRewards.nftRewards.rewardTiers])
 
   const redeemDisabled =
-    !rulesetMetadata.data?.redemptionRate ||
+    !rulesetMetadata.data?.cashOutTaxRate ||
     payoutLimit?.amount === MAX_PAYOUT_LIMIT
 
   return (

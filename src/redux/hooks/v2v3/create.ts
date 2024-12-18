@@ -14,7 +14,7 @@ import {
 import { useCallback, useMemo } from 'react'
 import { shallowEqual } from 'react-redux'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
-import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { useAppSelector } from '../useAppSelector'
 import { ReduxDistributionLimit } from './shared'

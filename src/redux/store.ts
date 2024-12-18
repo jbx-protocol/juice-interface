@@ -4,9 +4,9 @@ import {
   EnhancedStore,
 } from '@reduxjs/toolkit'
 import { getLocalStoragePreloadedState } from './localStoragePreload'
-import creatingV2ProjectReducer from './slices/creatingV2Project'
-import editingProjectReducer from './slices/editingProject'
-import editingV2ProjectReducer from './slices/editingV2Project'
+import editingProjectReducer from './slices/v1/editingProject'
+import creatingV2ProjectReducer from './slices/v2v3/creatingV2Project'
+import editingV2ProjectReducer from './slices/v2v3/editingV2Project'
 
 const REDUX_STATE_LOCALSTORAGE_KEY = 'jb_redux_preloadedState'
 

@@ -42,7 +42,7 @@ import { serializeV1FundingCycle } from 'packages/v1/utils/serializers'
 import { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useEditingV1FundingCycleSelector } from 'redux/hooks/v1'
-import { editingProjectActions } from 'redux/slices/editingProject'
+import { editingProjectActions } from 'redux/slices/v1/editingProject'
 import { classNames } from 'utils/classNames'
 import { drawerWidth } from 'utils/drawerWidth'
 import {

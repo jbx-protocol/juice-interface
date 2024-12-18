@@ -28,11 +28,11 @@ export const DefaultSettings: React.FC<
         data: `${ProjectTokenForm.DefaultSettings.reservedTokensPercentage}%`,
         tooltip: RESERVED_RATE_EXPLANATION,
       },
-      [t`Decay percent`]: {
+      [t`Weight cut percent`]: {
         data: `${ProjectTokenForm.DefaultSettings.discountRate}%`,
         tooltip: DISCOUNT_RATE_EXPLANATION,
       },
-      [t`Redemption rate`]: {
+      [t`Cash out tax rate`]: {
         data: `${ProjectTokenForm.DefaultSettings.redemptionRate}%`,
         tooltip: REDEMPTION_RATE_EXPLANATION,
       },

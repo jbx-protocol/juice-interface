@@ -25,7 +25,7 @@ import {
   useCreatingDistributionLimit,
   useCreatingReservedTokensSplits,
 } from 'redux/hooks/v2v3/create'
-import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
 export type ProjectTokensFormProps = Partial<{
@@ -62,7 +62,7 @@ export const useProjectTokensForm = () => {
   useDebugValue(form.getFieldsValue())
   const [distributionLimit] = useCreatingDistributionLimit()
 
-  const redemptionRateDisabled =
+  const cashOutTaxRateDisabled =
     !distributionLimit || distributionLimit.amount.eq(MAX_PAYOUT_LIMIT)
   const discountRateDisabled = !parseInt(fundingCycleData.duration)
 
@@ -80,8 +80,8 @@ export const useProjectTokensForm = () => {
       !discountRateDisabled && fundingCycleData.discountRate
         ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
         : DefaultSettings.discountRate
-    const redemptionRate =
-      !redemptionRateDisabled && fundingCycleMetadata.redemptionRate
+    const cashOutTaxRate =
+      !cashOutTaxRateDisabled && fundingCycleMetadata.redemptionRate
         ? parseFloat(formatRedemptionRate(fundingCycleMetadata.redemptionRate))
         : DefaultSettings.redemptionRate
     const tokenMinting =
@@ -99,7 +99,7 @@ export const useProjectTokensForm = () => {
       reservedTokensPercentage,
       reservedTokenAllocation,
       discountRate,
-      redemptionRate,
+      cashOutTaxRate,
       tokenMinting,
       pauseTransfers,
     }
@@ -112,7 +112,7 @@ export const useProjectTokensForm = () => {
     fundingCycleMetadata.reservedRate,
     fundingCycleMetadata.global.pauseTransfers,
     projectTokensSelection,
-    redemptionRateDisabled,
+    cashOutTaxRateDisabled,
     tokenSplits,
   ])
 

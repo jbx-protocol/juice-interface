@@ -2,7 +2,7 @@ import { CreatePage } from 'models/createPage'
 import { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 
 const pageOrder: CreatePage[] = [
   'projectDetails',

@@ -1,4 +1,3 @@
-import { GroupedSplits, SplitGroup } from 'packages/v2v3/models/splits'
 import {
   JB721GovernanceType,
   JB721TierParams,
@@ -14,29 +13,30 @@ import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
 } from 'packages/v2v3/models/fundingCycle'
+import { GroupedSplits, SplitGroup } from 'packages/v2v3/models/splits'
 
-import { DEFAULT_JB_721_DELEGATE_VERSION } from 'packages/v2v3/hooks/defaultContracts/useDefaultJB721Delegate'
-import { DEFAULT_MEMO } from 'constants/transactionDefaults'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
-import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { TransactorInstance } from 'hooks/useTransactor'
-import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
-import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { buildDeployTiered721DelegateData } from 'utils/nftRewards'
-import { getAddress } from 'ethers/lib/utils'
-import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
-import omit from 'lodash/omit'
 import { t } from '@lingui/macro'
-import { useContext } from 'react'
+import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { DEFAULT_MEMO } from 'constants/transactionDefaults'
+import { TransactionContext } from 'contexts/Transaction/TransactionContext'
+import { getAddress } from 'ethers/lib/utils'
+import { TransactorInstance } from 'hooks/useTransactor'
+import { useWallet } from 'hooks/Wallet'
+import omit from 'lodash/omit'
+import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
+import { DEFAULT_JB_721_DELEGATE_VERSION } from 'packages/v2v3/hooks/defaultContracts/useDefaultJB721Delegate'
 import { useDefaultJBController } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBController'
 import { useDefaultJBETHPaymentTerminal } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
-import { useJB721DelegateContractAddress } from '../contracts/useJB721DelegateContractAddress'
 import { useJBPrices } from 'packages/v2v3/hooks/JBPrices'
-import { useJBTiered721DelegateProjectDeployer } from '../contracts/useJBTiered721DelegateProjectDeployer'
+import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
 import { useV2ProjectTitle } from 'packages/v2v3/hooks/useProjectTitle'
-import { useWallet } from 'hooks/Wallet'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
+import { useContext } from 'react'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
+import { buildDeployTiered721DelegateData } from 'utils/nftRewards'
+import { useJB721DelegateContractAddress } from '../contracts/useJB721DelegateContractAddress'
+import { useJBTiered721DelegateProjectDeployer } from '../contracts/useJBTiered721DelegateProjectDeployer'
 
 interface DeployTiered721DelegateData {
   collectionUri: string

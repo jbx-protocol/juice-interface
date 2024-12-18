@@ -1,11 +1,11 @@
 import {
-  DEFAULT_NFT_FLAGS,
-  DEFAULT_NFT_PRICING,
-} from 'redux/slices/editingV2Project'
-import {
   EditingFundingCycleConfig,
   useEditingFundingCycleConfig,
 } from 'packages/v2v3/components/V2V3Project/V2V3ProjectSettings/hooks/useEditingFundingCycleConfig'
+import {
+  DEFAULT_NFT_FLAGS,
+  DEFAULT_NFT_PRICING,
+} from 'redux/slices/v2v3/editingV2Project'
 import {
   defaultNftCollectionDescription,
   defaultNftCollectionName,
@@ -13,12 +13,12 @@ import {
   pinNftRewards,
 } from 'utils/nftRewards'
 
-import { JB721GovernanceType } from 'models/nftRewards'
-import { NftRewardsFormProps } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useForm } from 'antd/lib/form/Form'
+import { NftRewardsFormProps } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
+import { JB721GovernanceType } from 'models/nftRewards'
 import { useReconfigureFundingCycle } from 'packages/v2v3/components/V2V3Project/V2V3ProjectSettings/hooks/useReconfigureFundingCycle'
 import { useState } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 
 // v4TODO: this whole component needs to be v4-ified
 export const useLaunchNftsForm = () => {

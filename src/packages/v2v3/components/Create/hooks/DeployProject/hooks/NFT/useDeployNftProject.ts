@@ -8,7 +8,7 @@ import {
   useCreatingV2V3FundingCycleDataSelector,
   useCreatingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/v2v3/create'
-import { DEFAULT_NFT_FLAGS } from 'redux/slices/creatingV2Project'
+import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/creatingV2Project'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { buildJB721TierParams } from 'utils/nftRewards'
 

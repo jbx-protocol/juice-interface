@@ -12,9 +12,9 @@ export const V4TokenRedemptionCallout = () => {
 
   const redemptionEnabled = React.useMemo(() => {
     if (!rulesetMetadata || payoutLimit.isLoading) return
-    // TODO: Update redemptionRate to be cashOut
+    // TODO: Update cashOutTaxRate to be cashOut
     return (
-      rulesetMetadata.redemptionRate.value > 0 &&
+      rulesetMetadata.cashOutTaxRate.value > 0 &&
       payoutLimit.data.amount !== MAX_PAYOUT_LIMIT
     )
   }, [payoutLimit.data.amount, payoutLimit.isLoading, rulesetMetadata])

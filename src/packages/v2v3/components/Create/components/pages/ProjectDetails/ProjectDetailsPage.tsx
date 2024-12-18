@@ -21,7 +21,7 @@ import {
   V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
 import { useCallback, useContext, useMemo, useState } from 'react'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'

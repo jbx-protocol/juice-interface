@@ -25,7 +25,7 @@ export function transformEditCycleFormFieldsToTxArgs({
     unit: formValues.durationUnit.value,
   })
   const weight = BigInt(issuanceRateFrom(formValues.issuanceRate.toString()))
-  const decayPercent = round(formValues.decayPercent * 10000000)
+  const weightCutPercent = round(formValues.weightCutPercent * 10000000)
   const approvalHook = formValues.approvalHook
 
   const rulesetConfigurations = [
@@ -33,12 +33,12 @@ export function transformEditCycleFormFieldsToTxArgs({
       mustStartAtOrAfter,
       duration,
       weight,
-      decayPercent,
+      weightCutPercent,
       approvalHook,
 
       metadata: {
         reservedPercent: formValues.reservedPercent * 100,
-        redemptionRate: formValues.redemptionRate * 100,
+        cashOutTaxRate: formValues.cashOutTaxRate * 100,
         baseCurrency: BASE_CURRENCY_ETH,
         pausePay: formValues.pausePay,
         pauseRedeem: false, // Defaulting this value since it's not in formValues
@@ -52,9 +52,9 @@ export function transformEditCycleFormFieldsToTxArgs({
         allowAddPriceFeed: false, // Defaulting to false as it's not in formValues
         ownerMustSendPayouts: false, // Defaulting to false as it's not in formValues
         holdFees: formValues.holdFees,
-        useTotalSurplusForRedemptions: false, // Defaulting to false as it's not in formValues
+        useTotalSurplusForCashOuts: false, // Defaulting to false as it's not in formValues
         useDataHookForPay: false, // Defaulting to false as it's not in formValues
-        useDataHookForRedeem: false, // Defaulting to false as it's not in formValues
+        useDataHookForCashOut: false, // Defaulting to false as it's not in formValues
         dataHook: '0x0000000000000000000000000000000000000000' as `0x${string}`, // Defaulting to a null address
         metadata: 0, // Assuming no additional metadata is provided
         allowCrosschainSuckerExtension: false,

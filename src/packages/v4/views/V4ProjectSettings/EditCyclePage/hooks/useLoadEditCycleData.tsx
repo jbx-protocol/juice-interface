@@ -1,9 +1,9 @@
 import { Form } from 'antd'
 import { useEffect, useState } from 'react'
 import {
-  deriveDurationOption,
-  deriveDurationUnit,
-  secondsToOtherUnit,
+    deriveDurationOption,
+    deriveDurationUnit,
+    secondsToOtherUnit,
 } from 'utils/format/formatTime'
 
 import { Ether } from 'juice-sdk-core'
@@ -41,11 +41,11 @@ export const useLoadEditCycleData = () => {
       const reservedPercent = rulesetMetadata.reservedPercent.formatPercentage()
       // : DefaultTokenSettings.reservedTokensPercentage
 
-      const decayPercent = ruleset.decayPercent.formatPercentage()
+      const weightCutPercent = ruleset.weightCutPercent.formatPercentage()
       // : DefaultTokenSettings.discountRate
 
-      const redemptionRate = rulesetMetadata.redemptionRate.formatPercentage()
-      // : DefaultTokenSettings.redemptionRate
+      const cashOutTaxRate = rulesetMetadata.cashOutTaxRate.formatPercentage()
+      // : DefaultTokenSettings.cashOutTaxRate
 
       const allowOwnerMinting = rulesetMetadata.allowOwnerMinting
       // : DefaultTokenSettings.tokenMinting
@@ -71,8 +71,8 @@ export const useLoadEditCycleData = () => {
         issuanceRate,
         reservedPercent,
         reservedTokensSplits,
-        decayPercent,
-        redemptionRate,
+        weightCutPercent,
+        cashOutTaxRate,
         allowOwnerMinting,
         tokenTransfers,
         // nftRewards: currentProjectData.nftRewards,

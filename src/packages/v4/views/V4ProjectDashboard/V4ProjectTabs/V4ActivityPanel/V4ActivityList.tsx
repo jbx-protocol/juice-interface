@@ -1,40 +1,82 @@
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { Button } from 'antd'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
-import { NativeTokenValue, useJBContractContext } from 'juice-sdk-react'
+import request from 'graphql-request'
+import {
+  NativeTokenValue,
+  useJBChainId,
+  useJBContractContext,
+} from 'juice-sdk-react'
+import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
+import { last } from 'lodash'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import {
   OrderDirection,
   ProjectEvent_OrderBy,
   ProjectEventsDocument,
 } from 'packages/v4/graphql/client/graphql'
-import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 import React from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { ActivityEvent } from './activityEventElems/ActivityElement'
 import { AnyEvent, transformEventData } from './utils/transformEventsData'
 
+const PAGE_SIZE = 10
+
 export function V4ActivityList() {
   const { projectId } = useJBContractContext()
   const tokenSymbol = useProjectContext().tokenSymbol
 
-  const { data: projectEventsData, isLoading } = useSubgraphQuery({
-    document: ProjectEventsDocument,
-    variables: {
-      orderBy: ProjectEvent_OrderBy.timestamp,
-      orderDirection: OrderDirection.desc,
-      where: {
-        projectId: Number(projectId),
-      },
+  const chainId = useJBChainId()
+  const {
+    data: projectEventsQueryResult,
+    isLoading,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['projectEvents', projectId],
+    initialPageParam: 0,
+    queryFn: async ({ pageParam = 0 }) => {
+      if (!chainId) {
+        throw new Error('useSubgraphQuery needs a chainId, none provided')
+      }
+      const uri = v4SubgraphUri(chainId)
+      const document = ProjectEventsDocument
+
+      const data = await request(uri, document, {
+        orderBy: ProjectEvent_OrderBy.timestamp,
+        orderDirection: OrderDirection.desc,
+        where: {
+          projectId: Number(projectId),
+        },
+        skip: pageParam * PAGE_SIZE,
+        first: PAGE_SIZE,
+      })
+      const mightHaveNextPage = data.projectEvents.length === PAGE_SIZE
+      return {
+        data,
+        nextCursor: mightHaveNextPage ? pageParam + PAGE_SIZE : undefined,
+      }
+    },
+    getNextPageParam: lastPage => {
+      return lastPage.nextCursor
     },
   })
+  const projectEventsData = React.useMemo(
+    () =>
+      projectEventsQueryResult?.pages.flatMap(
+        page => page.data.projectEvents,
+      ) ?? [],
+    [projectEventsQueryResult],
+  )
 
   const projectEvents = React.useMemo(
     () =>
-      projectEventsData?.projectEvents
+      projectEventsQueryResult?.pages
+        .flatMap(page => page.data.projectEvents)
         .map(transformEventData)
         .filter((event): event is AnyEvent => !!event)
         .map(e => translateEventDataToPresenter(e, tokenSymbol)) ?? [],
-    [projectEventsData?.projectEvents, tokenSymbol],
+    [projectEventsQueryResult?.pages, tokenSymbol],
   )
 
   return (
@@ -45,21 +87,26 @@ export function V4ActivityList() {
       <div className="flex flex-col gap-3">
         {isLoading && <Loading />}
         {isLoading || (projectEvents && projectEvents.length > 0) ? (
-          projectEvents?.map(event => {
-            return (
-              <div
-                className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
-                key={event.event.id}
-              >
-                <ActivityEvent
-                  event={event.event}
-                  header={event.header}
-                  subject={event.subject}
-                  extra={event.extra}
-                />
-              </div>
-            )
-          })
+          <>
+            {projectEvents?.map(event => {
+              return (
+                <div
+                  className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
+                  key={event.event.id}
+                >
+                  <ActivityEvent
+                    event={event.event}
+                    header={event.header}
+                    subject={event.subject}
+                    extra={event.extra}
+                  />
+                </div>
+              )
+            })}
+            {!!last(projectEventsQueryResult?.pages)?.nextCursor && (
+              <Button onClick={() => fetchNextPage()}>Load more</Button>
+            )}
+          </>
         ) : (
           <span className="text-zinc-500 text-sm">No activity yet.</span>
         )}

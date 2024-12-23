@@ -1,7 +1,7 @@
 import { Ether, JBProjectToken } from 'juice-sdk-core'
 import { ProjectEventsQuery } from 'packages/v4/graphql/client/graphql'
 
-type EventType =
+export type EventType =
   | 'payEvent'
   | 'addToBalanceEvent'
   | 'mintTokensEvent'

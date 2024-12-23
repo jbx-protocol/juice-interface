@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { Button } from 'antd'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
 import request from 'graphql-request'
@@ -19,7 +20,11 @@ import {
 import React from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { ActivityEvent } from './activityEventElems/ActivityElement'
-import { AnyEvent, transformEventData } from './utils/transformEventsData'
+import {
+  AnyEvent,
+  EventType,
+  transformEventData,
+} from './utils/transformEventsData'
 
 const PAGE_SIZE = 10
 
@@ -27,13 +32,15 @@ export function V4ActivityList() {
   const { projectId } = useJBContractContext()
   const tokenSymbol = useProjectContext().tokenSymbol
 
+  const [filter, setFilter] = React.useState<ProjectEventFilter>('all')
+
   const chainId = useJBChainId()
   const {
     data: projectEventsQueryResult,
     isLoading,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ['projectEvents', projectId],
+    queryKey: ['projectEvents', projectId, filter],
     initialPageParam: 0,
     queryFn: async ({ pageParam = 0 }) => {
       if (!chainId) {
@@ -47,6 +54,12 @@ export function V4ActivityList() {
         orderDirection: OrderDirection.desc,
         where: {
           projectId: Number(projectId),
+          // ProjectEvents have exactly one non-null Event field. We can use `<filter>_not: null` to return only projectEvents where the matching Event field is defined
+          ...(!filter || filter === 'all'
+            ? {}
+            : {
+                [filter + '_not']: null,
+              }),
         },
         skip: pageParam * PAGE_SIZE,
         first: PAGE_SIZE,
@@ -61,13 +74,6 @@ export function V4ActivityList() {
       return lastPage.nextCursor
     },
   })
-  const projectEventsData = React.useMemo(
-    () =>
-      projectEventsQueryResult?.pages.flatMap(
-        page => page.data.projectEvents,
-      ) ?? [],
-    [projectEventsQueryResult],
-  )
 
   const projectEvents = React.useMemo(
     () =>
@@ -81,17 +87,23 @@ export function V4ActivityList() {
 
   return (
     <div>
-      <div className="mb-5 flex items-baseline justify-between">
+      <div className="flex items-baseline justify-between">
         <h2 className="mb-6 font-heading text-2xl font-medium">Activity</h2>
       </div>
       <div className="flex flex-col gap-3">
+        <JuiceListbox
+          className="mb-5"
+          options={ACTIVITY_OPTIONS}
+          value={ACTIVITY_OPTIONS.find(o => o.value === filter)}
+          onChange={o => setFilter(o.value as ProjectEventFilter)}
+        />
         {isLoading && <Loading />}
         {isLoading || (projectEvents && projectEvents.length > 0) ? (
           <>
             {projectEvents?.map(event => {
               return (
                 <div
-                  className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
+                  className="border-smoke-200 pb-5 dark:border-grey-600 [&:not(:last-child)]:mb-5 [&:not(:last-child)]:border-b"
                   key={event.event.id}
                 >
                   <ActivityEvent
@@ -273,3 +285,30 @@ function translateEventDataToPresenter(
       }
   }
 }
+
+type ProjectEventFilter = 'all' | EventType
+
+const ACTIVITY_OPTIONS = [
+  { label: 'All activity', value: 'all' },
+  { label: 'Paid', value: 'payEvent' },
+  { label: 'Added to balance', value: 'addToBalanceEvent' },
+  { label: 'Minted tokens', value: 'mintTokensEvent' },
+  { label: 'Cashed out', value: 'cashOutEvent' },
+  { label: 'Deployed ERC20', value: 'deployedERC20Event' },
+  { label: 'Project created', value: 'projectCreateEvent' },
+  { label: 'Distributed payouts', value: 'distributePayoutsEvent' },
+  {
+    label: 'Distributed reserved tokens',
+    value: 'distributeReservedTokensEvent',
+  },
+  {
+    label: 'Distributed to reserved token split',
+    value: 'distributeToReservedTokenSplitEvent',
+  },
+  {
+    label: 'Distributed to payout split',
+    value: 'distributeToPayoutSplitEvent',
+  },
+  { label: 'Used allowance', value: 'useAllowanceEvent' },
+  { label: 'Burned', value: 'burnEvent' },
+]

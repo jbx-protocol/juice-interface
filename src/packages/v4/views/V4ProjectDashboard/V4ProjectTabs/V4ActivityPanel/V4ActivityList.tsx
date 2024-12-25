@@ -1,65 +1,124 @@
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { Button } from 'antd'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
-import { NativeTokenValue, useJBContractContext } from 'juice-sdk-react'
+import request from 'graphql-request'
+import {
+  NativeTokenValue,
+  useJBChainId,
+  useJBContractContext,
+} from 'juice-sdk-react'
+import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
+import { last } from 'lodash'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import {
   OrderDirection,
   ProjectEvent_OrderBy,
   ProjectEventsDocument,
 } from 'packages/v4/graphql/client/graphql'
-import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 import React from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { ActivityEvent } from './activityEventElems/ActivityElement'
-import { AnyEvent, transformEventData } from './utils/transformEventsData'
+import {
+  AnyEvent,
+  EventType,
+  transformEventData,
+} from './utils/transformEventsData'
+
+const PAGE_SIZE = 10
 
 export function V4ActivityList() {
   const { projectId } = useJBContractContext()
   const tokenSymbol = useProjectContext().tokenSymbol
 
-  const { data: projectEventsData, isLoading } = useSubgraphQuery({
-    document: ProjectEventsDocument,
-    variables: {
-      orderBy: ProjectEvent_OrderBy.timestamp,
-      orderDirection: OrderDirection.desc,
-      where: {
-        projectId: Number(projectId),
-      },
+  const [filter, setFilter] = React.useState<ProjectEventFilter>('all')
+
+  const chainId = useJBChainId()
+  const {
+    data: projectEventsQueryResult,
+    isLoading,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['projectEvents', projectId, filter],
+    initialPageParam: 0,
+    queryFn: async ({ pageParam = 0 }) => {
+      if (!chainId) {
+        throw new Error('useSubgraphQuery needs a chainId, none provided')
+      }
+      const uri = v4SubgraphUri(chainId)
+      const document = ProjectEventsDocument
+
+      const data = await request(uri, document, {
+        orderBy: ProjectEvent_OrderBy.timestamp,
+        orderDirection: OrderDirection.desc,
+        where: {
+          projectId: Number(projectId),
+          // ProjectEvents have exactly one non-null Event field. We can use `<filter>_not: null` to return only projectEvents where the matching Event field is defined
+          ...(!filter || filter === 'all'
+            ? {}
+            : {
+                [filter + '_not']: null,
+              }),
+        },
+        skip: pageParam * PAGE_SIZE,
+        first: PAGE_SIZE,
+      })
+      const mightHaveNextPage = data.projectEvents.length === PAGE_SIZE
+      return {
+        data,
+        nextCursor: mightHaveNextPage ? pageParam + PAGE_SIZE : undefined,
+      }
+    },
+    getNextPageParam: lastPage => {
+      return lastPage.nextCursor
     },
   })
 
   const projectEvents = React.useMemo(
     () =>
-      projectEventsData?.projectEvents
+      projectEventsQueryResult?.pages
+        .flatMap(page => page.data.projectEvents)
         .map(transformEventData)
         .filter((event): event is AnyEvent => !!event)
         .map(e => translateEventDataToPresenter(e, tokenSymbol)) ?? [],
-    [projectEventsData?.projectEvents, tokenSymbol],
+    [projectEventsQueryResult?.pages, tokenSymbol],
   )
 
   return (
     <div>
-      <div className="mb-5 flex items-baseline justify-between">
+      <div className="flex items-baseline justify-between">
         <h2 className="mb-6 font-heading text-2xl font-medium">Activity</h2>
       </div>
       <div className="flex flex-col gap-3">
+        <JuiceListbox
+          className="mb-5"
+          options={ACTIVITY_OPTIONS}
+          value={ACTIVITY_OPTIONS.find(o => o.value === filter)}
+          onChange={o => setFilter(o.value as ProjectEventFilter)}
+        />
         {isLoading && <Loading />}
         {isLoading || (projectEvents && projectEvents.length > 0) ? (
-          projectEvents?.map(event => {
-            return (
-              <div
-                className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
-                key={event.event.id}
-              >
-                <ActivityEvent
-                  event={event.event}
-                  header={event.header}
-                  subject={event.subject}
-                  extra={event.extra}
-                />
-              </div>
-            )
-          })
+          <>
+            {projectEvents?.map(event => {
+              return (
+                <div
+                  className="border-smoke-200 pb-5 dark:border-grey-600 [&:not(:last-child)]:mb-5 [&:not(:last-child)]:border-b"
+                  key={event.event.id}
+                >
+                  <ActivityEvent
+                    event={event.event}
+                    header={event.header}
+                    subject={event.subject}
+                    extra={event.extra}
+                  />
+                </div>
+              )
+            })}
+            {!!last(projectEventsQueryResult?.pages)?.nextCursor && (
+              <Button onClick={() => fetchNextPage()}>Load more</Button>
+            )}
+          </>
         ) : (
           <span className="text-zinc-500 text-sm">No activity yet.</span>
         )}
@@ -226,3 +285,30 @@ function translateEventDataToPresenter(
       }
   }
 }
+
+type ProjectEventFilter = 'all' | EventType
+
+const ACTIVITY_OPTIONS = [
+  { label: 'All activity', value: 'all' },
+  { label: 'Paid', value: 'payEvent' },
+  { label: 'Added to balance', value: 'addToBalanceEvent' },
+  { label: 'Minted tokens', value: 'mintTokensEvent' },
+  { label: 'Cashed out', value: 'cashOutEvent' },
+  { label: 'Deployed ERC20', value: 'deployedERC20Event' },
+  { label: 'Project created', value: 'projectCreateEvent' },
+  { label: 'Distributed payouts', value: 'distributePayoutsEvent' },
+  {
+    label: 'Distributed reserved tokens',
+    value: 'distributeReservedTokensEvent',
+  },
+  {
+    label: 'Distributed to reserved token split',
+    value: 'distributeToReservedTokenSplitEvent',
+  },
+  {
+    label: 'Distributed to payout split',
+    value: 'distributeToPayoutSplitEvent',
+  },
+  { label: 'Used allowance', value: 'useAllowanceEvent' },
+  { label: 'Burned', value: 'burnEvent' },
+]

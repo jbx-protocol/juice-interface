@@ -1,26 +1,27 @@
-import { t, Trans } from '@lingui/macro'
 import { Checkbox, Descriptions, Form } from 'antd'
+import { Trans, t } from '@lingui/macro'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
+import { useContext, useState } from 'react'
 import { useForm, useWatch } from 'antd/lib/form/Form'
-import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
+
+import { BigNumber } from 'ethers'
 import { Callout } from 'components/Callout/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import TransactionModal from 'components/modals/TransactionModal'
-import { TokenAmount } from 'components/TokenAmount'
+import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
-import { useWallet } from 'hooks/Wallet'
+import { TokenAmount } from 'components/TokenAmount'
+import TransactionModal from 'components/modals/TransactionModal'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
-import { useETHReceivedFromTokens } from 'packages/v2v3/hooks/contractReader/useETHReceivedFromTokens'
-import useTotalBalanceOf from 'packages/v2v3/hooks/contractReader/useTotalBalanceOf'
-import { useBurnTokensTx } from 'packages/v2v3/hooks/transactor/useBurnTokensTx'
-import { useRedeemTokensTx } from 'packages/v2v3/hooks/transactor/useRedeemTokensTx'
 import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
-import { formatRedemptionRate } from 'packages/v2v3/utils/math'
-import { useContext, useState } from 'react'
-import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
+import { formatRedemptionRate } from 'packages/v2v3/utils/math'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { useBurnTokensTx } from 'packages/v2v3/hooks/transactor/useBurnTokensTx'
+import { useETHReceivedFromTokens } from 'packages/v2v3/hooks/contractReader/useETHReceivedFromTokens'
+import { useRedeemTokensTx } from 'packages/v2v3/hooks/transactor/useRedeemTokensTx'
+import useTotalBalanceOf from 'packages/v2v3/hooks/contractReader/useTotalBalanceOf'
+import { useWallet } from 'hooks/Wallet'
 
 // This doubles as the 'Redeem' and 'Burn' modal depending on if project has overflow
 export function V2V3BurnOrRedeemModal({
@@ -187,7 +188,7 @@ export function V2V3BurnOrRedeemModal({
   const personalBalanceExceeded =
     redeemAmount && parseFloat(redeemAmount) > parseFloat(fromWad(totalBalance))
   const inUSD = distributionLimitCurrency?.eq(V2V3_CURRENCY_USD)
-
+  
   return (
     <TransactionModal
       transactionPending={transactionPending}
@@ -266,6 +267,7 @@ export function V2V3BurnOrRedeemModal({
             <TokenAmount
               amountWad={totalBalance ?? BigNumber.from(0)}
               tokenSymbol={tokenSymbol}
+              decimals={8}
             />
           </Descriptions.Item>
           <Descriptions.Item label={<Trans>Total redemption value</Trans>}>
@@ -294,7 +296,11 @@ export function V2V3BurnOrRedeemModal({
                 accessory={
                   <InputAccessoryButton
                     content={t`MAX`}
-                    onClick={() => setRedeemAmount(fromWad(totalBalance))}
+                    onClick={() => {
+                      const maxRedeemAmount = fromWad(totalBalance)
+                      setRedeemAmount(maxRedeemAmount)
+                      form.setFieldsValue({ redeemAmount: maxRedeemAmount })
+                    }}
                   />
                 }
                 disabled={totalBalance?.eq(0)}

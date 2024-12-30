@@ -1,10 +1,10 @@
-import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { BigNumber } from 'ethers'
+import { MAX_REDEMPTION_RATE } from 'packages/v2v3/utils/math'
+import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { V2BallotState } from 'models/ballot'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
-import { MAX_REDEMPTION_RATE } from 'packages/v2v3/utils/math'
-import { useContext } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
+import { useContext } from 'react'
 import { useProjectReservedTokens } from './ProjectReservedTokens'
 
 /**
@@ -52,10 +52,14 @@ export function useETHReceivedFromTokens({
   if (!fundingCycleMetadata || !realTotalTokenSupply?.gt(0) || !tokenAmount)
     return BigNumber.from(0)
 
-  const redemptionRate =
+  const redemptionRate = 
     ballotState === V2BallotState.Active
       ? fundingCycleMetadata.ballotRedemptionRate
       : fundingCycleMetadata.redemptionRate
+
+  if (redemptionRate.eq(0)) {
+    return BigNumber.from(0)
+  }
 
   const tokenAmountWad = parseWad(tokenAmount)
 
@@ -66,7 +70,7 @@ export function useETHReceivedFromTokens({
           .mul(tokenAmountWad)
           .div(realTotalTokenSupply)
       : BigNumber.from(0)
-
+      
   // numerator = r + (x(1 - r)/s)
   const numerator = redemptionRate.add(
     tokenAmountWad

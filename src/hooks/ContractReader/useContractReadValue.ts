@@ -57,13 +57,11 @@ export function useContractReadValue<C extends string, V>({
       const newValue = _formatter(result)
 
       if (_valueDidChange(value, newValue)) {
-        console.info(
-          `📗 New >`,
-          functionName,
-          { args },
-          { newValue },
-          { contract: readContract?.address },
-        )
+        console.info(`📗 New >`, functionName, {
+          args,
+          newValue,
+          contract: readContract?.address,
+        })
         setValue(newValue)
       }
     } catch (err) {

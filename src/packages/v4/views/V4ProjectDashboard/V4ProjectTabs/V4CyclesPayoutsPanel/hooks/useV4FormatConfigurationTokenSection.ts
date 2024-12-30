@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import {
-  ConfigurationPanelDatum,
-  ConfigurationPanelTableData,
+    ConfigurationPanelDatum,
+    ConfigurationPanelTableData,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
 import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
@@ -31,15 +31,15 @@ export const useV4FormatConfigurationTokenSection = ({
     plural: true,
   })
 
-  const decayPercentFloat = ruleset?.decayPercent.toFloat()
+  const weightCutPercentFloat = ruleset?.weightCutPercent.toFloat()
   const currentTotalIssuanceRate = ruleset?.weight.toFloat()
   const currentTotalIssuanceRateFormatted = formattedNum(currentTotalIssuanceRate)
 
   const queuedTotalIssuanceRate = upcomingRuleset
     ? upcomingRuleset?.weight.toFloat()
     : typeof currentTotalIssuanceRate !== 'undefined' &&
-      typeof decayPercentFloat !== 'undefined'
-    ? currentTotalIssuanceRate - currentTotalIssuanceRate * decayPercentFloat
+      typeof weightCutPercentFloat !== 'undefined'
+    ? currentTotalIssuanceRate - currentTotalIssuanceRate * weightCutPercentFloat
     : undefined
   const queuedTotalIssuanceRateFormatted = formattedNum(queuedTotalIssuanceRate)
 
@@ -129,26 +129,26 @@ export const useV4FormatConfigurationTokenSection = ({
     return pairToDatum(t`Reserved rate`, current, queued)
   }, [upcomingRulesetMetadata, rulesetMetadata, upcomingRulesetLoading])
 
-  const decayPercentDatum: ConfigurationPanelDatum = useMemo(() => {
+  const weightCutPercentDatum: ConfigurationPanelDatum = useMemo(() => {
     const current = ruleset
-      ? `${ruleset.decayPercent.formatPercentage()}%`
+      ? `${ruleset.weightCutPercent.formatPercentage()}%`
       : undefined
 
     if (upcomingRuleset === null || upcomingRulesetLoading) {
       return pairToDatum(t`Decay rate`, current, null)
     }
     const queued = upcomingRuleset
-      ? `${upcomingRuleset.decayPercent.formatPercentage()}%`
+      ? `${upcomingRuleset.weightCutPercent.formatPercentage()}%`
       : ruleset
-      ? `${ruleset.decayPercent.formatPercentage()}%`
+      ? `${ruleset.weightCutPercent.formatPercentage()}%`
       : undefined
 
     return pairToDatum(t`Decay rate`, current, queued)
   }, [ruleset, upcomingRuleset, upcomingRulesetLoading])
 
-  const redemptionRateDatum: ConfigurationPanelDatum = useMemo(() => {
+  const cashOutTaxRateDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentRedemptionRate =
-      rulesetMetadata?.redemptionRate.formatPercentage()
+      rulesetMetadata?.cashOutTaxRate.formatPercentage()
 
     const current = currentRedemptionRate
       ? `${currentRedemptionRate}%`
@@ -159,9 +159,9 @@ export const useV4FormatConfigurationTokenSection = ({
     }
 
     const queued = upcomingRulesetMetadata
-      ? `${upcomingRulesetMetadata?.redemptionRate.formatPercentage()}%`
+      ? `${upcomingRulesetMetadata?.cashOutTaxRate.formatPercentage()}%`
       : rulesetMetadata
-      ? `${rulesetMetadata.redemptionRate.formatPercentage()}%`
+      ? `${rulesetMetadata.cashOutTaxRate.formatPercentage()}%`
       : undefined
     return pairToDatum(t`Redemption rate`, current, queued)
   }, [upcomingRulesetMetadata, rulesetMetadata, upcomingRulesetLoading])
@@ -232,17 +232,17 @@ export const useV4FormatConfigurationTokenSection = ({
       totalIssuanceRate: totalIssuanceRateDatum,
       payerIssuanceRate: payerIssuanceRateDatum,
       reservedPercent: reservedPercentDatum,
-      decayPercentDatum: decayPercentDatum,
-      redemptionRate: redemptionRateDatum,
+      weightCutPercentDatum: weightCutPercentDatum,
+      cashOutTaxRate: cashOutTaxRateDatum,
       ownerTokenMintingRate: ownerTokenMintingDatum,
       tokenTransfers: tokenTransfersDatum,
     }
   }, [
-    decayPercentDatum,
+    weightCutPercentDatum,
     totalIssuanceRateDatum,
     ownerTokenMintingDatum,
     payerIssuanceRateDatum,
-    redemptionRateDatum,
+    cashOutTaxRateDatum,
     reservedPercentDatum,
     tokenTransfersDatum,
   ])

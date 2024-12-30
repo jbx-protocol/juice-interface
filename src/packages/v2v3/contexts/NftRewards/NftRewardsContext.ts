@@ -4,8 +4,8 @@ import {
   DEFAULT_NFT_FLAGS,
   DEFAULT_NFT_PRICING,
   EMPTY_NFT_COLLECTION_METADATA,
-} from 'redux/slices/shared/v2ProjectDefaultState'
-import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
+} from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
+import { NftRewardsData } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 
 type NftRewardsContextType = {
   nftRewards: NftRewardsData

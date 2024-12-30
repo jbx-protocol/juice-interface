@@ -1,4 +1,3 @@
-import { getTokenRedemptionQuoteEth } from 'juice-sdk-core'
 import {
   useJBContractContext,
   useJBRulesetContext,
@@ -6,6 +5,8 @@ import {
   useReadJbControllerPendingReservedTokenBalanceOf,
   useReadJbTokensTotalSupplyOf,
 } from 'juice-sdk-react'
+
+import { getTokenCashOutQuoteEth } from 'juice-sdk-core'
 
 export function useETHReceivedFromTokens(
   tokenAmountWei: bigint | undefined,
@@ -22,10 +23,10 @@ export function useETHReceivedFromTokens(
       address: contracts.controller.data ?? undefined,
       args: [projectId],
     })
-  const redemptionRate = rulesetMetadata.data?.redemptionRate?.value
+  const cashOutTaxRate = rulesetMetadata.data?.cashOutTaxRate?.value
 
   if (
-    redemptionRate === undefined ||
+    cashOutTaxRate === undefined ||
     totalSupply === undefined ||
     tokensReserved === undefined ||
     tokenAmountWei === undefined ||
@@ -35,12 +36,14 @@ export function useETHReceivedFromTokens(
   }
 
   try {
-    return getTokenRedemptionQuoteEth(tokenAmountWei, {
-      redemptionRate: Number(redemptionRate),
+    const eth = getTokenCashOutQuoteEth(tokenAmountWei, {
+      cashOutTaxRate: Number(cashOutTaxRate),
       totalSupply,
       tokensReserved,
       overflowWei: nativeTokenSurplus,
     })
+    // v4TODO: make SDK return 0n, not 0
+    return eth === 0 ? 0n : eth
   } catch (e) {
     // Division by zero can cause a RangeError
     if (e instanceof RangeError) {

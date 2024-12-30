@@ -9,7 +9,7 @@ import { NftRewardTier } from 'models/nftRewards'
 import { CreateCollapse } from 'packages/v2v3/components/Create/components/CreateCollapse/CreateCollapse'
 import { OptionalHeader } from 'packages/v2v3/components/Create/components/OptionalHeader'
 import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
-import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
+import { NftRewardsData } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 import { inputMustExistRule } from 'utils/antdRules'
 import { RewardsList } from '../RewardsList/RewardsList'
 import { NftAdvancedFormItems } from './NftAdvancedFormItems'
@@ -34,6 +34,7 @@ export const AddNftCollectionForm = ({
   nftRewardsData,
   okButton,
   onFinish,
+  priceCurrencySymbol,
 }: {
   form: FormInstance<NftRewardsFormProps>
   initialValues?: NftRewardsFormProps
@@ -41,6 +42,7 @@ export const AddNftCollectionForm = ({
   nftRewardsData: NftRewardsData
   okButton: React.ReactNode
   onFinish?: VoidFunction
+  priceCurrencySymbol: string
 }) => {
   const lockPageRulesWrapper = useLockPageRulesWrapper()
 
@@ -59,7 +61,11 @@ export const AddNftCollectionForm = ({
       >
         <div className="flex flex-col gap-6">
           <Form.Item noStyle name="rewards">
-            <RewardsList allowCreate nftRewardsData={nftRewardsData} />
+            <RewardsList
+              allowCreate
+              nftRewardsData={nftRewardsData}
+              priceCurrencySymbol={priceCurrencySymbol}
+            />
           </Form.Item>
 
           {hasNfts && (

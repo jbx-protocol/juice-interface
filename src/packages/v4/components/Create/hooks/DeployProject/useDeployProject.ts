@@ -9,7 +9,7 @@ import {
   useCreatingV2V3FundingCycleDataSelector,
   useCreatingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/v2v3/create'
-import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { emitErrorNotification } from 'utils/notifications'
 import { useDeployNftProject } from './hooks/NFT/useDeployNftProject'
 import { useIsNftProject } from './hooks/NFT/useIsNftProject'

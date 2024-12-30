@@ -1,7 +1,7 @@
 import { CreatePage } from 'models/createPage'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useEditingCreateFurthestPageReached } from 'redux/hooks/useEditingCreateFurthestPageReached'
+import { useEditingCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
 import { PageProps } from '../Page'
 
 const isPage = (element: PageProps | undefined) => {

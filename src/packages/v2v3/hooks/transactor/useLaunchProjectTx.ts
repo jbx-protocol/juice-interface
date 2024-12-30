@@ -15,7 +15,7 @@ import {
 import { GroupedSplits, SplitGroup } from 'packages/v2v3/models/splits'
 import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import { useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/shared/v2ProjectDefaultState'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
 import { useV2ProjectTitle } from '../useProjectTitle'
 
 export interface LaunchV2V3ProjectData {

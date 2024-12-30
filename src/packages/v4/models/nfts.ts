@@ -67,7 +67,7 @@ export type JBPayDataHookRulesetConfig = JBRulesetData & {
   terminals: string[]
   duration: bigint
   weight: bigint
-  decayPercent: bigint
+  weightCutPercent: bigint
   approvalHook: Address
   splitGroups: LaunchV4ProjectGroupedSplit[]
 }

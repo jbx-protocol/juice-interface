@@ -1,26 +1,26 @@
 import { Trans, t } from '@lingui/macro'
 import {
-  availableToPayOutTooltip,
-  treasuryBalanceTooltip,
+    availableToPayOutTooltip,
+    treasuryBalanceTooltip,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { useMemo } from 'react'
 import { useV4TreasuryStats } from './hooks/useV4TreasuryStats'
 
 export const V4TreasuryStats = () => {
-  const { availableToPayout, surplus, treasuryBalance, redemptionRate } =
+  const { availableToPayout, surplus, treasuryBalance, cashOutTaxRate } =
     useV4TreasuryStats()
 
   const surplusTooltip = useMemo(
     () =>
-      redemptionRate && redemptionRate.toFloat() > 0 ? (
+      cashOutTaxRate && cashOutTaxRate.toFloat() > 0 ? (
         <Trans>
           {surplus} is available for token redemptions or future payouts.
         </Trans>
       ) : (
         <Trans>{surplus} is available for future payouts.</Trans>
       ),
-    [surplus, redemptionRate],
+    [surplus, cashOutTaxRate],
   )
 
   return (

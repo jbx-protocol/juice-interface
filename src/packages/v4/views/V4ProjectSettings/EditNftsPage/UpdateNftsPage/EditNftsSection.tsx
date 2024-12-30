@@ -1,15 +1,16 @@
-import { Button, Empty } from 'antd'
 import { Trans, t } from '@lingui/macro'
-import { useCallback, useState } from 'react'
-
+import { Button, Empty } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import Loading from 'components/Loading'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
 import TransactionModal from 'components/modals/TransactionModal'
-import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useEditingNfts } from '../hooks/useEditingNfts'
+import { JBChainId, NATIVE_TOKEN_SYMBOLS } from 'juice-sdk-core'
 import { useHasNftRewards } from 'packages/v4/hooks/useHasNftRewards'
+import { useCallback, useState } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useChainId } from 'wagmi'
+import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
+import { useEditingNfts } from '../hooks/useEditingNfts'
 import { useUpdateCurrentCollection } from '../hooks/useUpdateCurrentCollection'
 
 // v4TODO: need to build launch NFT capabilities into this
@@ -30,6 +31,8 @@ export function EditNftsSection() {
   })
 
   const showNftRewards = hasNftRewards
+
+  const chainId = useChainId()
 
   const onNftFormSaved = useCallback(async () => {
     if (!rewardTiers) return
@@ -68,6 +71,7 @@ export function EditNftsSection() {
 
       <div className="mb-8">
         <RewardsList
+          priceCurrencySymbol={NATIVE_TOKEN_SYMBOLS[chainId as JBChainId]}
           nftRewardsData={nftRewardsData}
           value={rewardTiers}
           onChange={setRewardTiers}

@@ -60,7 +60,7 @@ export function transformV2V3CreateArgsToV4({
       mustStartAtOrAfterNum > now ? mustStartAtOrAfterNum : now,
     duration: _fundingCycleData.duration.toNumber(),
     weight: _fundingCycleData.weight.toBigInt(),
-    decayPercent: _fundingCycleData.discountRate.toNumber(),
+    weightCutPercent: _fundingCycleData.discountRate.toNumber(),
 
     approvalHook: _fundingCycleData.ballot as Address,
 
@@ -100,7 +100,7 @@ export function transformFCMetadataToRulesetMetadata({
 }) {
   return {
     reservedPercent: fundingCycleMetadata.reservedRate.toNumber(),
-    redemptionRate: fundingCycleMetadata.redemptionRate.toNumber(),
+    cashOutTaxRate: fundingCycleMetadata.redemptionRate.toNumber(),
     baseCurrency: BASE_CURRENCY_ETH,
     pausePay: fundingCycleMetadata.pausePay,
     pauseRedeem: fundingCycleMetadata.pauseRedeem,
@@ -114,10 +114,10 @@ export function transformFCMetadataToRulesetMetadata({
     allowAddPriceFeed: false, // Not present in v2v3, passing false by default
     ownerMustSendPayouts: false, // Not present in v2v3, passing false by default
     holdFees: fundingCycleMetadata.holdFees,
-    useTotalSurplusForRedemptions:
+    useTotalSurplusForCashOuts:
       fundingCycleMetadata.useTotalOverflowForRedemptions,
     useDataHookForPay: fundingCycleMetadata.useDataSourceForPay,
-    useDataHookForRedeem: fundingCycleMetadata.useDataSourceForRedeem,
+    useDataHookForCashOut: fundingCycleMetadata.useDataSourceForRedeem,
     dataHook: fundingCycleMetadata.dataSource as Address,
     metadata: 0,
     allowCrosschainSuckerExtension: false,

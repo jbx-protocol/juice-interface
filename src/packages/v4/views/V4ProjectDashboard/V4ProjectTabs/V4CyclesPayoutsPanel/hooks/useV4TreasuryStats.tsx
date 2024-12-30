@@ -1,8 +1,8 @@
 import { t } from '@lingui/macro'
 import {
-  NativeTokenValue,
-  useJBRulesetMetadata,
-  useNativeTokenSurplus,
+    NativeTokenValue,
+    useJBRulesetMetadata,
+    useNativeTokenSurplus,
 } from 'juice-sdk-react'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useV4BalanceOfNativeTerminal } from 'packages/v4/hooks/useV4BalanceOfNativeTerminal'
@@ -33,6 +33,6 @@ export const useV4TreasuryStats = () => {
     treasuryBalance,
     availableToPayout,
     surplus,
-    redemptionRate: rulesetMetadata?.redemptionRate,
+    cashOutTaxRate: rulesetMetadata?.cashOutTaxRate,
   }
 }

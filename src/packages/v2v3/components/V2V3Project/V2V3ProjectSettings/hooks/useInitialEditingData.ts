@@ -24,8 +24,8 @@ import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import {
   DEFAULT_MUST_START_AT_OR_AFTER,
   editingV2ProjectActions,
-} from 'redux/slices/editingV2Project'
-import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
+} from 'redux/slices/v2v3/editingV2Project'
+import { NftRewardsData } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { fromWad } from 'utils/format/formatNumber'
 

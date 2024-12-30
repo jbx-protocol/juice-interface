@@ -1,9 +1,9 @@
 import {
   defaultProjectState as defaultV1ProjectState,
   REDUX_STORE_V1_PROJECT_VERSION,
-} from './slices/editingProject'
-import { INITIAL_REDUX_STATE as defaultV2ProjectState } from './slices/shared/v2ProjectInitialReduxState'
-import { REDUX_STORE_V2_PROJECT_VERSION } from './slices/shared/v2ProjectVersion'
+} from './slices/v1/editingProject'
+import { INITIAL_REDUX_STATE as defaultV2ProjectState } from './slices/v2v3/shared/v2ProjectInitialReduxState'
+import { REDUX_STORE_V2_PROJECT_VERSION } from './slices/v2v3/shared/v2ProjectVersion'
 import { RootState } from './store'
 
 interface PreloadedState {

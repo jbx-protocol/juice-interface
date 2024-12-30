@@ -7462,16 +7462,7 @@ cross-inspect@1.0.0:
   dependencies:
     tslib "^2.4.0"
 
-cross-spawn@^7.0.0, cross-spawn@^7.0.2:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
-  integrity sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==
-  dependencies:
-    path-key "^3.1.0"
-    shebang-command "^2.0.0"
-    which "^2.0.1"
-
-cross-spawn@^7.0.3:
+cross-spawn@^7.0.0, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.6.tgz#8a58fe78f00dcd70c370451759dfbfaf03e8ee9f"
   integrity sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==
@@ -12187,18 +12178,18 @@ jsx-ast-utils@^3.3.5:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
-juice-sdk-core@^11.5.0-alpha:
-  version "11.5.0-alpha"
-  resolved "https://registry.yarnpkg.com/juice-sdk-core/-/juice-sdk-core-11.5.0-alpha.tgz#40ae9e4a44a86dc74777842bb18b30ae36373344"
-  integrity sha512-0T/v1OHsG99tO/Zo5pY1tbJzKjh0KB4bEMLAnJSRNOeb6hAKiS77xgcth22uYRRpZc4OLZWFjszR+FC2dAKQUg==
+juice-sdk-core@^12.2.4-alpha:
+  version "12.2.4-alpha"
+  resolved "https://registry.yarnpkg.com/juice-sdk-core/-/juice-sdk-core-12.2.4-alpha.tgz#b6c2d03b25a9c5660cdb82a83cb5a0d994f3a313"
+  integrity sha512-LvcjZCD3rNPrYXKQlG/WRaOA05yA+pjJFMROKWNk2vIBK/tdEglaeagwo1OXpW5JqjaoQ3RS83nT+aC8YvQSVA==
   dependencies:
     bs58 "^5.0.0"
     fpnum "^1.0.0"
 
-juice-sdk-react@^11.6.0-alpha:
-  version "11.6.0-alpha"
-  resolved "https://registry.yarnpkg.com/juice-sdk-react/-/juice-sdk-react-11.6.0-alpha.tgz#5ddc6a42f2586ed3b694bde5b8ad76b9ad788b9c"
-  integrity sha512-9ji5COnA0aaqXQOnqbqpohaOXPE7tTNz9J9FlA2d4jG9wlXjYDJrpCAB42g1p1Ojvel6zsLLzuY7aT25UrYFjg==
+juice-sdk-react@^12.2.4-alpha:
+  version "12.2.4-alpha"
+  resolved "https://registry.yarnpkg.com/juice-sdk-react/-/juice-sdk-react-12.2.4-alpha.tgz#2d53d1296d7d0817c3a7dda75b99570df12661f2"
+  integrity sha512-SX/WvlCANpgS568Ohdf7q+yC2jLY4vTUUGjgmZD2XUgCZTbfPorgUbZ4pxWwWgtfxydq6vyoPHcUUjWItMEPWw==
 
 juice@^10.0.0:
   version "10.0.0"

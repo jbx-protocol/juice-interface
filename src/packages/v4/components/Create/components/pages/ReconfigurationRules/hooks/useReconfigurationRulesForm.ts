@@ -6,7 +6,7 @@ import { useAvailableReconfigurationStrategies } from 'packages/v2v3/components/
 import { useEffect, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { creatingV2ProjectActions } from 'redux/slices/creatingV2Project'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { isEqualAddress, isZeroAddress } from 'utils/address'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 

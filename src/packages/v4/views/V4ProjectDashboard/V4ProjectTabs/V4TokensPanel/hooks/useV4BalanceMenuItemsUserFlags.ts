@@ -22,10 +22,10 @@ export const useV4BalanceMenuItemsUserFlags = () => {
     () => !!(surplusInNativeToken && surplusInNativeToken > 0n),
     [surplusInNativeToken],
   )
-  const redemptionRateIsZero = !!(rulesetMetadata && rulesetMetadata.redemptionRate.value === 0n)
+  const cashOutTaxRateIsZero = !!(rulesetMetadata && rulesetMetadata.cashOutTaxRate.value === 0n)
   const redeemDisabled = useMemo(
-    () => !hasOverflow || redemptionRateIsZero,
-    [hasOverflow, redemptionRateIsZero],
+    () => !hasOverflow || cashOutTaxRateIsZero,
+    [hasOverflow, cashOutTaxRateIsZero],
   )
   const projectHasIssuedTokens = useMemo(
     () => !!tokenAddress && !isZeroAddress(tokenAddress),

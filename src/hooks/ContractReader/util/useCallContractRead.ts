@@ -19,16 +19,13 @@ export async function callContractRead<T extends string>({
   try {
     console.info(`📚 Read >`, functionName)
     return await readContract[functionName](...(args ?? []))
-  } catch (err) {
-    console.error(
-      `📕 Read error >`,
-      functionName,
-      { args },
-      { err },
-      { contract: readContract.address },
-      { contracts },
-    )
+  } catch (error) {
+    console.error(`📕 Read error >`, functionName, error, {
+      args,
+      contract: readContract.address,
+      contracts,
+    })
 
-    throw err
+    throw error
   }
 }

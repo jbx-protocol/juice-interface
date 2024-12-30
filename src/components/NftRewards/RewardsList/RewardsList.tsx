@@ -7,11 +7,11 @@ import { FormItemInput } from 'models/formItemInput'
 import { NftRewardTier } from 'models/nftRewards'
 import { MAX_NFT_REWARD_TIERS } from 'packages/v2v3/constants/nftRewards'
 import { createContext, useCallback, useContext, useState } from 'react'
-import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
+import { NftRewardsData } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 import { sortNftsByContributionFloor } from 'utils/nftRewards'
 import { AddEditRewardModal } from './AddEditRewardModal'
-import { RewardItem } from './RewardItem'
 import { useRewards } from './hooks/useRewards'
+import { RewardItem } from './RewardItem'
 
 const RewardsListContext = createContext<ReturnType<typeof useRewards>>({
   rewards: [],
@@ -34,6 +34,7 @@ type RewardsListProps = FormItemInput<NftRewardTier[]> & {
   allowCreate?: boolean
   withEditWarning?: boolean
   nftRewardsData: NftRewardsData
+  priceCurrencySymbol: string
 }
 
 interface RewardsListChildrenExports {
@@ -44,6 +45,7 @@ interface RewardsListChildrenExports {
 export const RewardsList: React.FC<React.PropsWithChildren<RewardsListProps>> &
   RewardsListChildrenExports = ({
   allowCreate = false,
+  priceCurrencySymbol,
   value,
   onChange,
   withEditWarning,
@@ -82,6 +84,7 @@ export const RewardsList: React.FC<React.PropsWithChildren<RewardsListProps>> &
               <div key={reward.id}>
                 <RewardItem
                   nftRewards={nftRewardsData}
+                  priceCurrencySymbol={priceCurrencySymbol}
                   reward={reward}
                   onEditClicked={() => {
                     setSelectedReward(reward)
@@ -112,6 +115,7 @@ export const RewardsList: React.FC<React.PropsWithChildren<RewardsListProps>> &
         )}
       </div>
       <AddEditRewardModal
+        currencySymbol={priceCurrencySymbol}
         open={modal.visible}
         editingData={selectedReward}
         nftRewards={nftRewardsData}

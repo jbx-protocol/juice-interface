@@ -46,7 +46,7 @@ export const useProjectTokenReview = () => {
     allowTokenMinting,
     pauseTransfers,
     reservedRate,
-    redemptionRate,
+    cashOutTaxRate: redemptionRate,
     allocationSplits,
     setAllocationSplits,
   }

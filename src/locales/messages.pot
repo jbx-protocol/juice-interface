@@ -227,6 +227,9 @@ msgstr ""
 msgid "Extended functionality for project owners"
 msgstr ""
 
+msgid "Weight cut percent"
+msgstr ""
+
 msgid "Error downloading participants, try again."
 msgstr ""
 
@@ -4569,6 +4572,9 @@ msgid "Project contracts directory"
 msgstr ""
 
 msgid "Save profile details"
+msgstr ""
+
+msgid "Cash out tax rate"
 msgstr ""
 
 msgid "Current owner"

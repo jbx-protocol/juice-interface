@@ -10,6 +10,7 @@ import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkBut
 // import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
 import { TruncatedText } from 'components/TruncatedText'
 import useMobile from 'hooks/useMobile'
+import { useJBChainId } from 'juice-sdk-react'
 import Link from 'next/link'
 import { ProjectHeaderPopupMenu } from 'packages/v4/components/ProjectDashboard/components/ProjectHeaderPopupMenu'
 import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
@@ -17,7 +18,6 @@ import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermis
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
 import { settingsPagePath, v4ProjectRoute } from 'packages/v4/utils/routes'
 import { twMerge } from 'tailwind-merge'
-import { useChainId } from 'wagmi'
 import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
 import { ProjectHeaderStats } from './ProjectHeaderStats'
 
@@ -25,7 +25,7 @@ export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
 export const V4ProjectHeader = ({ className }: { className?: string }) => {
   const socialLinks = useSocialLinks()
-  const chainId = useChainId()
+  const chainId = useJBChainId()
 
   const {
     title,
@@ -103,13 +103,14 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
         </div>
         <div className="flex flex-col justify-between gap-8 md:flex-row md:gap-12">
           <div className="flex min-w-0 flex-col gap-3">
-            {subtitle &&
-              (subtitle.type === 'tagline' ? (
-                <TruncatedText
-                  className="text-grey-700 dark:text-slate-50 md:text-lg"
-                  text={subtitle.text}
-                />
-              ) : null)
+            {
+              subtitle &&
+                (subtitle.type === 'tagline' ? (
+                  <TruncatedText
+                    className="text-grey-700 dark:text-slate-50 md:text-lg"
+                    text={subtitle.text}
+                  />
+                ) : null)
               // <Subtitle subtitle={subtitle.text} />
             }
             <div className="text-grey-500 dark:text-slate-200">

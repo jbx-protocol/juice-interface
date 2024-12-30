@@ -13,7 +13,7 @@ import {
   useEditingV2V3FundingCycleDataSelector,
   useEditingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/v2v3/edit'
-import { NftRewardsData } from 'redux/slices/shared/v2ProjectTypes'
+import { NftRewardsData } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 
 export interface EditingFundingCycleConfig {
   editingPayoutGroupedSplits: ETHPayoutGroupedSplits

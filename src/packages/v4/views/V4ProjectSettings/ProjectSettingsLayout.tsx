@@ -18,13 +18,14 @@ export const ProjectSettingsLayout: React.FC<React.PropsWithChildren> = ({
             <Cog6ToothIcon className="h-6 w-6" />
             <Trans>Manage project</Trans>
           </h1>
-
-          <Link
-            href={v4ProjectRoute({ projectId: Number(projectId), chainId })}
-            className="text-secondary"
-          >
-            <XMarkIcon className="h-6 w-6" />
-          </Link>
+          {chainId ? (
+            <Link
+              href={v4ProjectRoute({ projectId: Number(projectId), chainId })}
+              className="text-secondary"
+            >
+              <XMarkIcon className="h-6 w-6" />
+            </Link>
+          ) : null}
         </div>
       </header>
 

@@ -74,7 +74,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                   ))}
               </div>
               <ProjectHeaderPopupMenu projectId={projectId} />
-              {canQueueRuleSets && (
+              {canQueueRuleSets && chainId && (
                 <Link
                   href={settingsPagePath({ projectId, chainId }, undefined)}
                   legacyBehavior
@@ -127,7 +127,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                 <Trans>
                   Owned by: <EthereumAddress address={owner} />
                 </Trans>
-                {gnosisSafe && projectId && (
+                {gnosisSafe && projectId && chainId && (
                   <GnosisSafeBadge
                     safe={gnosisSafe}
                     href={`${v4ProjectRoute({ projectId, chainId })}/safe`}

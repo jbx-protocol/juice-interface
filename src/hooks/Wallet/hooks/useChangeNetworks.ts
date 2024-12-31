@@ -3,6 +3,10 @@ import { useCallback } from 'react'
 
 import { readNetwork } from 'constants/networks'
 
+/**
+ * Attempts to sync the user wallet's chain with the readNetwork (hard-coded per environment)
+ * @returns function to sync the user wallet's chain with the readNetwork
+ */
 export function useChangeNetworks() {
   const [{ chains }, setChain] = useSetChain()
 

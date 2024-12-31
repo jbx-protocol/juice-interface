@@ -12186,10 +12186,10 @@ juice-sdk-core@^12.2.4-alpha:
     bs58 "^5.0.0"
     fpnum "^1.0.0"
 
-juice-sdk-react@^12.2.4-alpha:
-  version "12.2.4-alpha"
-  resolved "https://registry.yarnpkg.com/juice-sdk-react/-/juice-sdk-react-12.2.4-alpha.tgz#2d53d1296d7d0817c3a7dda75b99570df12661f2"
-  integrity sha512-SX/WvlCANpgS568Ohdf7q+yC2jLY4vTUUGjgmZD2XUgCZTbfPorgUbZ4pxWwWgtfxydq6vyoPHcUUjWItMEPWw==
+juice-sdk-react@^12.2.5-alpha:
+  version "12.2.5-alpha"
+  resolved "https://registry.yarnpkg.com/juice-sdk-react/-/juice-sdk-react-12.2.5-alpha.tgz#399a1a2d9a8c7142739bf5578dd2cf9d1b4b75b5"
+  integrity sha512-lZnWIBVvo8xwwCQwyhkmvETxIOFP1vwrmekUihwZaPsbzyvrWekvPk7YkgfEWk2W4wClt13g2i9so24vYz2DEQ==
 
 juice@^10.0.0:
   version "10.0.0"

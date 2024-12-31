@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { Contract, providers } from 'ethers'
 import { simulateTransaction } from 'lib/tenderly'
@@ -7,7 +8,10 @@ import { TransactionOptions } from 'models/transaction'
 import { CV2V3 } from 'packages/v2v3/models/cv'
 import { useCallback, useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { emitErrorNotification } from 'utils/notifications'
+import {
+  emitErrorNotification,
+  emitInfoNotification,
+} from 'utils/notifications'
 import { useWallet } from './Wallet'
 
 type TxOpts = Omit<TransactionOptions, 'value'>
@@ -91,6 +95,9 @@ export function useTransactor(): Transactor | undefined {
     ) => {
       if (chainUnsupported) {
         await changeNetworks()
+        emitInfoNotification(
+          t`Your wallet has been changed to ${readNetwork.name}. Try transaction again.`,
+        )
         options?.onDone?.()
         return false
       }

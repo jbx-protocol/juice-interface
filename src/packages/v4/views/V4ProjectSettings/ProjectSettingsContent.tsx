@@ -1,21 +1,21 @@
-import { Button, Layout } from 'antd'
 import { Trans, t } from '@lingui/macro'
+import { Button, Layout } from 'antd'
 
-import { ArchiveProjectSettingsPage } from './ArchiveProjectSettingsPage'
-import { ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { useJBRulesetContext } from 'juice-sdk-react'
+import Link from 'next/link'
+import { useMemo } from 'react'
+import { twJoin } from 'tailwind-merge'
+import { isZeroAddress } from 'utils/address'
+import { ArchiveProjectSettingsPage } from './ArchiveProjectSettingsPage'
 import { CreateErc20TokenSettingsPage } from './CreateErc20TokenSettingsPage'
 import { EditCyclePage } from './EditCyclePage/EditCyclePage'
 import { EditNftsPage } from './EditNftsPage/EditNftsPage'
-import Link from 'next/link'
-import { ProjectDetailsSettingsPage } from './ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
-import { ProjectSettingsLayout } from './ProjectSettingsLayout'
-import { SettingsPageKey } from './ProjectSettingsDashboard'
-import { isZeroAddress } from 'utils/address'
-import { twJoin } from 'tailwind-merge'
-import { useJBRulesetContext } from 'juice-sdk-react'
-import { useMemo } from 'react'
 import { useSettingsPagePath } from './hooks/useSettingsPagePath'
+import { ProjectDetailsSettingsPage } from './ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
+import { SettingsPageKey } from './ProjectSettingsDashboard'
+import { ProjectSettingsLayout } from './ProjectSettingsLayout'
 
 const SettingsPageComponents: {
   [k in SettingsPageKey]: () => JSX.Element | null
@@ -62,7 +62,7 @@ function Breadcrumbs({
     <ul className={twJoin('flex items-center gap-2 text-sm', className)}>
       <li>
         <Link
-          href={useSettingsPagePath()}
+          href={useSettingsPagePath() ?? ''}
           className="text-secondary flex items-center gap-2 font-medium"
         >
           <Trans>Manage</Trans>
@@ -73,7 +73,7 @@ function Breadcrumbs({
 
       <li>
         <Link
-          href={useSettingsPagePath(settingsPageKey)}
+          href={useSettingsPagePath(settingsPageKey) ?? ''}
           className="font-medium"
         >
           <Trans>{pageTitle}</Trans>
@@ -105,7 +105,7 @@ export function ProjectSettingsContent({
         className="mb-7"
         settingsPageKey={settingsPageKey}
       />
-      <Link href={useSettingsPagePath()}>
+      <Link href={useSettingsPagePath() ?? ''}>
         <Button type="default" className="mb-7 px-3" size="small">
           <ArrowLeftIcon className="h-4 w-4" />
         </Button>

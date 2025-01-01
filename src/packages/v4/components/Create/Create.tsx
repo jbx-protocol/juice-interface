@@ -1,26 +1,26 @@
-import { Trans, t } from '@lingui/macro'
 import {
   DEADLINE_EXPLANATION,
   RULESET_EXPLANATION
 } from 'components/strings'
+import { Trans, t } from '@lingui/macro'
 
 import { Badge } from 'components/Badge'
-import { DeployButtonText } from 'components/buttons/DeployProjectButtonText'
-import Loading from 'components/Loading'
-import { readNetwork } from 'constants/networks'
-import { NetworkName } from 'models/networkName'
-import { useRouter } from 'next/router'
 import { CreateBadge } from './components/CreateBadge'
+import { DeployProjectButtonText } from './DeployProjectButtonText'
+import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
+import Loading from 'components/Loading'
+import { NetworkName } from 'models/networkName'
 import { NftRewardsPage } from './components/pages/NftRewards/NftRewardsPage'
 import { PayoutsPage } from './components/pages/PayoutsPage/PayoutsPage'
 import { ProjectDetailsPage } from './components/pages/ProjectDetails/ProjectDetailsPage'
 import { ProjectTokenPage } from './components/pages/ProjectToken/ProjectTokenPage'
 import { ReconfigurationRulesPage } from './components/pages/ReconfigurationRules/ReconfigurationRulesPage'
-import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { ReviewDeployPage } from './components/pages/ReviewDeploy/ReviewDeployPage'
 import { Wizard } from './components/Wizard/Wizard'
+import { readNetwork } from 'constants/networks'
 import { useLoadingInitialStateFromQuery } from './hooks/useLoadInitialStateFromQuery'
+import { useRouter } from 'next/router'
 
 export function Create() {
   const router = useRouter()
@@ -44,7 +44,7 @@ export function Create() {
       </h1>
       {/* TODO: Remove wizard-create once form item css override is replaced */}
       <div className="wizard-create">
-        <Wizard className="pb-28" doneText={<DeployButtonText />}>
+        <Wizard className="pb-28" doneText={<DeployProjectButtonText />}>
           <Wizard.Page
             name="projectDetails"
             title={t`Project Details`}

@@ -1,24 +1,26 @@
-import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
-import isEqual from 'lodash/isEqual'
-import { CreatePage } from 'models/createPage'
-import { ProjectTokensSelection } from 'models/projectTokenSelection'
-import { TreasurySelection } from 'models/treasurySelection'
-import { useRouter } from 'next/router'
-import { ballotStrategiesFn } from 'packages/v2v3/constants/ballotStrategies'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { CreateState, ProjectState } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 import {
   DEFAULT_REDUX_STATE,
   creatingV2ProjectActions,
 } from 'redux/slices/v2v3/creatingV2Project'
+import { useEffect, useState } from 'react'
+
+import { CreatePage } from 'models/createPage'
+import { DEFAULT_PROJECT_CHAIN_ID } from 'constants/networks'
+import { DefaultSettings as DefaultTokenSettings } from '../components/pages/ProjectToken/hooks/useProjectTokenForm'
+import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import { INITIAL_REDUX_STATE } from 'redux/slices/v2v3/shared/v2ProjectInitialReduxState'
-import { CreateState, ProjectState } from 'redux/slices/v2v3/shared/v2ProjectTypes'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
+import { ProjectTokensSelection } from 'models/projectTokenSelection'
+import { TreasurySelection } from 'models/treasurySelection'
+import { ballotStrategiesFn } from 'packages/v2v3/constants/ballotStrategies'
+import isEqual from 'lodash/isEqual'
 import { isEqualAddress } from 'utils/address'
 import { parseWad } from 'utils/format/formatNumber'
-import { zeroAddress } from 'viem'
-import { DefaultSettings as DefaultTokenSettings } from '../components/pages/ProjectToken/hooks/useProjectTokenForm'
 import { projectTokenSettingsToReduxFormat } from '../utils/projectTokenSettingsToReduxFormat'
+import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
+import { zeroAddress } from 'viem'
 
 const ReduxDefaultTokenSettings =
   projectTokenSettingsToReduxFormat(DefaultTokenSettings)
@@ -100,6 +102,7 @@ const parseCreateFlowStateFromInitialState = (
   }
 
   return {
+    projectChainId: DEFAULT_PROJECT_CHAIN_ID,
     fundingCyclesPageSelection,
     treasurySelection,
     fundingTargetSelection: undefined, // TODO: Remove

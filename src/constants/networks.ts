@@ -59,6 +59,8 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
 }
 
+export type SupportedChainId = keyof typeof NETWORKS;
+
 export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
   (acc, curr) => ({
     ...acc,
@@ -66,6 +68,8 @@ export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
   }),
   {} as Record<NetworkName, NetworkInfo>,
 )
+
+export const DEFAULT_PROJECT_CHAIN_ID = NETWORKS_BY_NAME.mainnet.chainId
 
 export const readNetwork =
   NETWORKS_BY_NAME[process.env.NEXT_PUBLIC_INFURA_NETWORK]

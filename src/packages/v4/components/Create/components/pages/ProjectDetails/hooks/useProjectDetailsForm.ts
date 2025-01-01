@@ -1,20 +1,24 @@
-import { Form } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
-import { ProjectTagName } from 'models/project-tags'
-import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
-import { useEffect, useMemo } from 'react'
-import { useAppDispatch } from 'redux/hooks/useAppDispatch'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   DEFAULT_MUST_START_AT_OR_AFTER,
   creatingV2ProjectActions,
 } from 'redux/slices/v2v3/creatingV2Project'
-import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
+import { DEFAULT_PROJECT_CHAIN_ID, SupportedChainId } from 'constants/networks'
+import { useEffect, useMemo } from 'react'
+
 import { AmountInputValue } from '../ProjectDetailsPage'
+import { Form } from 'antd'
+import { ProjectTagName } from 'models/project-tags'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useForm } from 'antd/lib/form/Form'
+import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
+import { useWallet } from 'hooks/Wallet'
 
 type ProjectDetailsFormProps = Partial<{
   projectName: string
+  projectChainId: SupportedChainId
   projectTagline: string
   projectDescription: string
   logo: string
@@ -39,12 +43,16 @@ type ProjectDetailsFormProps = Partial<{
 
 export const useProjectDetailsForm = () => {
   const [form] = useForm<ProjectDetailsFormProps>()
-  const { projectMetadata, inputProjectOwner, mustStartAtOrAfter } =
+  const { projectChainId, projectMetadata, inputProjectOwner, mustStartAtOrAfter } =
     useAppSelector(state => state.creatingV2Project)
 
+  const { chain } = useWallet() 
+
+  const defaultChainId = chain?.id ? parseInt(chain.id) : DEFAULT_PROJECT_CHAIN_ID
   const initialValues: ProjectDetailsFormProps = useMemo(
     () => ({
       projectName: projectMetadata.name,
+      projectChainId: projectChainId ?? defaultChainId,
       projectTagline: projectMetadata.projectTagline,
       projectDescription: projectMetadata.description,
       logo: projectMetadata.logoUri,
@@ -78,6 +86,8 @@ export const useProjectDetailsForm = () => {
     }),
     [
       projectMetadata.name,
+      projectChainId,
+      defaultChainId,
       projectMetadata.projectTagline,
       projectMetadata.description,
       projectMetadata.logoUri,
@@ -105,6 +115,13 @@ export const useProjectDetailsForm = () => {
     ignoreUndefined: true,
     dispatchFunction: creatingV2ProjectActions.setName,
     formatter: v => v ?? '',
+  })
+  useFormDispatchWatch({
+    form,
+    fieldName: 'projectChainId',
+    ignoreUndefined: true,
+    dispatchFunction: creatingV2ProjectActions.setProjectChainId,
+    formatter: v => v ?? DEFAULT_PROJECT_CHAIN_ID,
   })
   useFormDispatchWatch({
     form,

@@ -1,0 +1,38 @@
+import { NETWORKS } from 'constants/networks'
+import { Trans } from '@lingui/macro'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import useMobile from 'hooks/useMobile'
+import { useWallet } from 'hooks/Wallet'
+
+export function DeployProjectButtonText() {
+  const isMobile = useMobile()
+  const { isConnected, chain } = useWallet()
+
+  const {
+    projectChainId,
+  } = useAppSelector(state => state.creatingV2Project)
+
+  const walletConnectedToWrongChain = chain?.id && projectChainId !== parseInt(chain.id)
+
+  if (!isConnected) {
+    return isMobile ? (
+      <Trans>Connect wallet</Trans>
+    ) : (
+      <Trans>Connect wallet to deploy</Trans>
+    )
+  }
+
+  if (walletConnectedToWrongChain) {
+    return isMobile ? (
+      <Trans>Change network</Trans>
+    ) : (
+      <Trans>Change networks to deploy</Trans>
+    )
+  }
+
+  if (chain?.name && !isMobile) {
+    return <Trans>Deploy project to {NETWORKS[projectChainId]?.label}</Trans>
+  }
+
+  return <Trans>Deploy project</Trans>
+}

@@ -1,30 +1,29 @@
-import { ONE_MILLION } from 'constants/numbers'
+import { BigNumber, constants } from 'ethers'
+import { CreateState, ProjectState } from './v2ProjectTypes'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { constants } from 'ethers'
-
-import { BigNumber } from 'ethers'
 import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewards'
 import {
   LATEST_METADATA_VERSION,
   ProjectMetadata,
 } from 'models/projectMetadata'
 import {
-  V2V3_CURRENCY_ETH,
-  V2V3_CURRENCY_USD,
-} from 'packages/v2v3/utils/currency'
-import { issuanceRateFrom, redemptionRateFrom } from 'packages/v2v3/utils/math'
-import {
   SerializedV2V3FundingCycleData,
   SerializedV2V3FundingCycleMetadata,
   serializeV2V3FundingCycleData,
   serializeV2V3FundingCycleMetadata,
 } from 'packages/v2v3/utils/serializers'
+import {
+  V2V3_CURRENCY_ETH,
+  V2V3_CURRENCY_USD,
+} from 'packages/v2v3/utils/currency'
+import { issuanceRateFrom, redemptionRateFrom } from 'packages/v2v3/utils/math'
+
 import { JB721TiersHookFlags } from 'packages/v4/models/nfts'
+import { ONE_MILLION } from 'constants/numbers'
 import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
-import { CreateState, ProjectState } from './v2ProjectTypes'
 
 const DEFAULT_DOMAIN = 'juicebox'
 
@@ -120,6 +119,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
 }
 
 const DEFAULT_CREATE_STATE: CreateState = {
+  projectChainId: 0, // not necessary for v2v3
   treasurySelection: 'zero',
   reconfigurationRuleSelection: undefined,
   fundingCyclesPageSelection: undefined,

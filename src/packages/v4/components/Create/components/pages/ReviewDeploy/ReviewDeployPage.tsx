@@ -1,32 +1,32 @@
 import { Checkbox, Form } from 'antd'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
-import { CheckCircleFilled } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
 import { Callout } from 'components/Callout/Callout'
-import ExternalLink from 'components/ExternalLink'
-import TransactionModal from 'components/modals/TransactionModal'
-import { TERMS_OF_SERVICE_URL } from 'constants/links'
-import { useWallet } from 'hooks/Wallet'
-import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
-import useMobile from 'hooks/useMobile'
-import { useModal } from 'hooks/useModal'
-import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
-import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
-import { helpPagePath } from 'utils/helpPagePath'
-import { useDeployProject } from '../../../hooks/DeployProject/useDeployProject'
+import { CheckCircleFilled } from '@ant-design/icons'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
-import { Wizard } from '../../Wizard/Wizard'
-import { WizardContext } from '../../Wizard/contexts/WizardContext'
+import ExternalLink from 'components/ExternalLink'
 import { FundingConfigurationReview } from './components/FundingConfigurationReview/FundingConfigurationReview'
 import { ProjectDetailsReview } from './components/ProjectDetailsReview/ProjectDetailsReview'
 import { ProjectTokenReview } from './components/ProjectTokenReview/ProjectTokenReview'
 import { RewardsReview } from './components/RewardsReview/RewardsReview'
 import { RulesReview } from './components/RulesReview/RulesReview'
+import { TERMS_OF_SERVICE_URL } from 'constants/links'
+import { Trans } from '@lingui/macro'
+import TransactionModal from 'components/modals/TransactionModal'
+import { Wizard } from '../../Wizard/Wizard'
+import { WizardContext } from '../../Wizard/contexts/WizardContext'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
+import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
+import { helpPagePath } from 'utils/helpPagePath'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useDeployProject } from '../../../hooks/DeployProject/useDeployProject'
+import { useDispatch } from 'react-redux'
+import useMobile from 'hooks/useMobile'
+import { useModal } from 'hooks/useModal'
+import { useRouter } from 'next/router'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
+import { useWallet } from 'hooks/Wallet'
 
 enum ReviewDeployKey {
   ProjectDetails = 0,
@@ -58,7 +58,7 @@ export const ReviewDeployPage = () => {
   useSetCreateFurthestPageReached('reviewDeploy')
   const { goToPage } = useContext(WizardContext)
   const isMobile = useMobile()
-  const { chainUnsupported, changeNetworks, isConnected, connect } = useWallet()
+  const { changeNetworks, isConnected, connect, chain } = useWallet()
   const router = useRouter()
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
   const termsAccepted = Form.useWatch('termsAccepted', form)
@@ -68,6 +68,9 @@ export const ReviewDeployPage = () => {
   const nftRewards = useAppSelector(
     state => state.creatingV2Project.nftRewards.rewardTiers,
   )
+  const {
+    projectChainId,
+  } = useAppSelector(state => state.creatingV2Project) 
 
   const nftRewardsAreSet = useMemo(
     () => nftRewards && nftRewards?.length > 0,
@@ -81,10 +84,13 @@ export const ReviewDeployPage = () => {
     goToPage?.('projectDetails')
     dispatch(creatingV2ProjectActions.resetState())
   }, [dispatch, goToPage, router])
+
+  const walletConnectedToWrongChain = chain?.id && projectChainId !== parseInt(chain.id)
+
   const onFinish = useCallback(async () => {
 
-    if (chainUnsupported) {
-      await changeNetworks()
+    if (walletConnectedToWrongChain) {
+      await changeNetworks(projectChainId)
       return
     }
     if (!isConnected) {
@@ -102,8 +108,9 @@ export const ReviewDeployPage = () => {
       },
     })
   }, [
-    chainUnsupported,
+    walletConnectedToWrongChain,
     changeNetworks,
+    projectChainId,
     connect,
     deployProject,
     isConnected,

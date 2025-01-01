@@ -1,34 +1,36 @@
-import { RightOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
 import { Col, Form, Row } from 'antd'
-import { Callout } from 'components/Callout/Callout'
-import { FormItems } from 'components/formItems'
-import { EthAddressInput } from 'components/inputs/EthAddressInput'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { FormImageUploader } from 'components/inputs/FormImageUploader'
-import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
-import { JuiceInput } from 'components/inputs/JuiceTextInput'
-import { RichEditor } from 'components/RichEditor'
-import { CREATE_FLOW } from 'constants/fathomEvents'
-import { constants } from 'ethers'
-import { useWallet } from 'hooks/Wallet'
-import { trackFathomGoal } from 'lib/fathom'
-import Link from 'next/link'
-import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
-import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { Trans, t } from '@lingui/macro'
 import {
   V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
-import { useCallback, useContext, useMemo, useState } from 'react'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
-import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
+import { useCallback, useContext, useState } from 'react'
+
+import { CREATE_FLOW } from 'constants/fathomEvents'
+import { Callout } from 'components/Callout/Callout'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
+import { EthAddressInput } from 'components/inputs/EthAddressInput'
+import { FormImageUploader } from 'components/inputs/FormImageUploader'
+import { FormItems } from 'components/formItems'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { JuiceInput } from 'components/inputs/JuiceTextInput'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
+import Link from 'next/link'
 import { OptionalHeader } from '../../OptionalHeader'
 import { PageContext } from '../../Wizard/contexts/PageContext'
+import { ProjectChainSelect } from './ProjectChainSelect'
+import { RichEditor } from 'components/RichEditor'
+import { RightOutlined } from '@ant-design/icons'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { Wizard } from '../../Wizard/Wizard'
+import { constants } from 'ethers'
+import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
+import { trackFathomGoal } from 'lib/fathom'
+import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
 import { useProjectDetailsForm } from './hooks/useProjectDetailsForm'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
+import { useWallet } from 'hooks/Wallet'
 
 export const ProjectDetailsPage: React.FC<
   React.PropsWithChildren<unknown>
@@ -44,32 +46,6 @@ export const ProjectDetailsPage: React.FC<
 
   const projectOwnerDifferentThanWalletAddress =
     inputWalletAddress && wallet.userAddress !== inputWalletAddress
-
-  const startTimestamp = Form.useWatch('startTimestamp', formProps.form)
-
-  // just for juicecrowd
-  const launchDate = useMemo(() => {
-    if (!startTimestamp) {
-      return null
-    }
-    const number = Number(startTimestamp)
-    if (isNaN(number)) {
-      return null
-    }
-
-    let date
-    if (number > 1000000000000) {
-      date = new Date(number)
-    } else {
-      date = new Date(number * 1000)
-    }
-
-    // format in local timezone
-    return {
-      local: date.toLocaleString(),
-      utc: date.toUTCString(),
-    }
-  }, [startTimestamp])
 
   return (
     <Form
@@ -93,6 +69,14 @@ export const ProjectDetailsPage: React.FC<
           ])}
         >
           <JuiceInput />
+        </Form.Item>
+
+        <Form.Item
+          name="projectChainId"
+          label={t`Project chain`}
+          required
+        >
+          <ProjectChainSelect />
         </Form.Item>
 
         <Form.Item

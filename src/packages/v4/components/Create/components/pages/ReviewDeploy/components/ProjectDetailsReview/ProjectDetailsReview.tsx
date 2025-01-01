@@ -1,18 +1,21 @@
 import { Trans, t } from '@lingui/macro'
+
 import EthereumAddress from 'components/EthereumAddress'
+import { NETWORKS } from 'constants/networks'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
-import { RichPreview } from 'components/RichPreview/RichPreview'
-import { useWallet } from 'hooks/Wallet'
-import { useMemo } from 'react'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { ipfsUriToGatewayUrl } from 'utils/ipfs'
-import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
 import { ReviewDescription } from '../ReviewDescription'
+import { RichPreview } from 'components/RichPreview/RichPreview'
+import { ipfsUriToGatewayUrl } from 'utils/ipfs'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useMemo } from 'react'
+import { useWallet } from 'hooks/Wallet'
+import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
 
 export const ProjectDetailsReview = () => {
   const { userAddress } = useWallet()
   const {
+    projectChainId,
     projectMetadata: {
       description,
       discord,
@@ -27,8 +30,6 @@ export const ProjectDetailsReview = () => {
       tags,
       introVideoUrl,
       introImageUri,
-      softTargetAmount,
-      softTargetCurrency,
     },
     inputProjectOwner,
   } = useAppSelector(state => state.creatingV2Project)
@@ -68,7 +69,15 @@ export const ProjectDetailsReview = () => {
         }
       />
       <ReviewDescription
-        className="col-span-3"
+        title={t`Project chain`}
+        desc={
+          <div className="overflow-hidden text-ellipsis text-base font-medium">
+            {NETWORKS[projectChainId]?.label}
+          </div>
+        }
+      />
+      <ReviewDescription
+        className="col-span-2"
         title={t`Tagline`}
         desc={
           projectTagline ? (

@@ -1,4 +1,5 @@
 import { JBChainId } from 'juice-sdk-react'
+import { TESTNET_IDS } from 'constants/networks'
 
 export const chainNameMap: Record<string, JBChainId> = {
   sepolia: 11_155_111, //sepolia.id,
@@ -9,4 +10,8 @@ export const chainNameMap: Record<string, JBChainId> = {
 
 export function getChainName(chainId: number) {
   return Object.entries(chainNameMap).find(([, id]) => id === chainId)?.[0]
+}
+
+export function isTestnet(chainId: number) {
+  return TESTNET_IDS.has(chainId)
 }

@@ -1,7 +1,9 @@
 import { Button, Divider } from 'antd'
+import { JBChainId, useJBChainId, useSuckers } from 'juice-sdk-react'
 import { settingsPagePath, v4ProjectRoute } from 'packages/v4/utils/routes'
 
 import { Badge } from 'components/Badge'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { Cog6ToothIcon } from '@heroicons/react/24/outline'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
@@ -10,14 +12,14 @@ import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeade
 import { ProjectHeaderPopupMenu } from 'packages/v4/components/ProjectDashboard/components/ProjectHeaderPopupMenu'
 import { ProjectHeaderStats } from './ProjectHeaderStats'
 import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
+import { Sucker } from 'packages/v4/models/suckers'
 import { Trans } from '@lingui/macro'
-// import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
 import { TruncatedText } from 'components/TruncatedText'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
 import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
 import { twMerge } from 'tailwind-merge'
-import { useJBChainId } from 'juice-sdk-react'
 import useMobile from 'hooks/useMobile'
+// import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
 import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
 import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
@@ -27,6 +29,7 @@ export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 export const V4ProjectHeader = ({ className }: { className?: string }) => {
   const socialLinks = useSocialLinks()
   const chainId = useJBChainId()
+  const { data: suckers } = useSuckers() as { data: Sucker[] }
 
   const {
     title,
@@ -94,10 +97,28 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
       </div>
 
       <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-5">
           <h1 className="mb-0 font-heading text-3xl font-medium leading-none dark:text-slate-50 md:text-4xl">
             {title}
           </h1>
+          <div className="flex gap-2">
+            {suckers?.map((pair) => {
+              if (!pair || !pair?.peerChainId || !pair?.projectId) return null;
+              return (
+                <Link
+                  className="underline"
+                  key={pair?.peerChainId}
+                  href={`${v4ProjectRoute({ chainId: pair?.peerChainId, projectId: Number(pair.projectId) })}`}
+                >
+                  <ChainLogo
+                    chainId={pair.peerChainId as JBChainId}
+                    width={18}
+                    height={18}
+                  />
+                </Link>
+              );
+            })}
+          </div>
         </div>
         <div className="flex">
           {archived ? <Badge variant="warning">Archived</Badge> : null}

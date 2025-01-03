@@ -35,7 +35,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       'Cache-Control',
       `s-maxage=${86400 * 7}, stale-while-revalidate`,
     )
-    const data = { suckers }
+    const data = {
+      suckers: suckers.map(s => {
+        return {
+          ...s,
+          projectId: Number(s.projectId),
+        }
+      }),
+    }
     logger.info({ data })
     return res.status(200).json(data)
   } catch (err) {

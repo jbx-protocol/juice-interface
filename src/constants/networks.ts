@@ -39,6 +39,15 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     rpcUrl: `https://sepolia.infura.io/v3/${infuraId}`,
     token: 'SepETH',
   },
+  42161: {
+    name: NetworkName.arbitrumOne,
+    label: 'Arbitrum One',
+    color: '#28a0f0',
+    chainId: 42161,
+    token: 'ArbETH',
+    rpcUrl: `https://arbitrum-mainnet.infura.io/v3/${infuraId}`,
+    blockExplorer: 'https://arbiscan.io',
+  },
   421614: {
     name: NetworkName.arbitrumSepolia,
     label: 'Arbitrum Sepolia Testnet',
@@ -57,7 +66,18 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     rpcUrl: `https://sepolia.optimism.io`,
     blockExplorer: 'https://optimism-sepolia.blockscout.com',
   },
+  84532: {
+    name: NetworkName.baseSepolia,
+    label: 'Base Sepolia',
+    color: '#00d395',
+    chainId: 84532,
+    token: 'BaseETH',
+    rpcUrl: `https://sepolia.base.org`,
+    blockExplorer: 'https://sepolia.basescan.org',
+  },
 }
+
+export const TESTNET_IDS = new Set([11155111, 421614, 11155420, 84531])
 
 export type SupportedChainId = keyof typeof NETWORKS;
 

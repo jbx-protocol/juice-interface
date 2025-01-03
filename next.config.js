@@ -66,6 +66,7 @@ const CONNECT_SRC = [
   'https://*.safe.global',
   'https://*.snapshot.org',
   'https://*.wallet.coinbase.com',
+  'https://api.blocknative.com', // used for tx gas estimation across chains
   'wss://www.walletlink.org/rpc', // Coinbase
   ...WALLET_CONNECT_URLS,
   'https://*.supabase.co',

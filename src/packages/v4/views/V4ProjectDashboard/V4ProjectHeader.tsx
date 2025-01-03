@@ -1,25 +1,26 @@
-import { Cog6ToothIcon } from '@heroicons/react/24/outline'
-import { Trans } from '@lingui/macro'
 import { Button, Divider } from 'antd'
+import { settingsPagePath, v4ProjectRoute } from 'packages/v4/utils/routes'
+
 import { Badge } from 'components/Badge'
+import { Cog6ToothIcon } from '@heroicons/react/24/outline'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
-import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
+import Link from 'next/link'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
+import { ProjectHeaderPopupMenu } from 'packages/v4/components/ProjectDashboard/components/ProjectHeaderPopupMenu'
+import { ProjectHeaderStats } from './ProjectHeaderStats'
 import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
+import { Trans } from '@lingui/macro'
 // import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
 import { TruncatedText } from 'components/TruncatedText'
-import useMobile from 'hooks/useMobile'
-import { useJBChainId } from 'juice-sdk-react'
-import Link from 'next/link'
-import { ProjectHeaderPopupMenu } from 'packages/v4/components/ProjectDashboard/components/ProjectHeaderPopupMenu'
-import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
-import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
-import { settingsPagePath, v4ProjectRoute } from 'packages/v4/utils/routes'
+import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
 import { twMerge } from 'tailwind-merge'
+import { useJBChainId } from 'juice-sdk-react'
+import useMobile from 'hooks/useMobile'
+import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
 import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
-import { ProjectHeaderStats } from './ProjectHeaderStats'
+import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 
 export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
@@ -74,7 +75,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                   ))}
               </div>
               <ProjectHeaderPopupMenu projectId={projectId} />
-              {canQueueRuleSets && (
+              {canQueueRuleSets && chainId && (
                 <Link
                   href={settingsPagePath({ projectId, chainId }, undefined)}
                   legacyBehavior
@@ -127,7 +128,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                 <Trans>
                   Owned by: <EthereumAddress address={owner} />
                 </Trans>
-                {gnosisSafe && projectId && (
+                {gnosisSafe && projectId && chainId && (
                   <GnosisSafeBadge
                     safe={gnosisSafe}
                     href={`${v4ProjectRoute({ projectId, chainId })}/safe`}

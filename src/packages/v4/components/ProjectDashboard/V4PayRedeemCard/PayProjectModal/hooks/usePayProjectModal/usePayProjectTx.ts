@@ -1,27 +1,29 @@
-import { waitForTransactionReceipt } from '@wagmi/core'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { FormikHelpers } from 'formik'
-import { useWallet } from 'hooks/Wallet'
-import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { Address, Hash, parseEther } from 'viem'
 import { DEFAULT_METADATA, NATIVE_TOKEN } from 'juice-sdk-core'
+import { useCallback, useContext, useMemo } from 'react'
 import {
+  useJBChainId,
   useJBContractContext,
   useJBRulesetContext,
   usePreparePayMetadata,
   useWriteJbMultiTerminalPay,
 } from 'juice-sdk-react'
+
+import { FormikHelpers } from 'formik'
+import { PayProjectModalFormValues } from './usePayProjectModal'
+import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { buildPaymentMemo } from 'utils/buildPaymentMemo'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
+import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
 import { useProjectSelector } from 'packages/v4/components/ProjectDashboard/redux/hooks'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
-import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
-import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
-import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { useWallet } from 'hooks/Wallet'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { useCallback, useContext, useMemo } from 'react'
-import { buildPaymentMemo } from 'utils/buildPaymentMemo'
-import { Address, Hash, parseEther } from 'viem'
-import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
-import { PayProjectModalFormValues } from './usePayProjectModal'
+import { waitForTransactionReceipt } from '@wagmi/core'
 
 export const usePayProjectTx = ({
   onTransactionPending: onTransactionPendingCallback,
@@ -49,6 +51,8 @@ export const usePayProjectTx = ({
     nftRewards: { rewardTiers },
   } = useV4NftRewards()
   const converter = useCurrencyConverter()
+  const defaultChainId = useJBChainId()
+
   const { receivedTickets } = useProjectPaymentTokens()
   // TODO: is this needed for preferClaimedTokens?
   const projectHasErc20 = useProjectHasErc20Token()
@@ -117,7 +121,8 @@ export const usePayProjectTx = ({
       if (
         !contracts.primaryNativeTerminal.data ||
         !userAddress ||
-        !values.userAcceptsTerms
+        !values.userAcceptsTerms ||
+        !values.chainId
       ) {
         return
       }
@@ -135,6 +140,8 @@ export const usePayProjectTx = ({
           .filter((url): url is string => !!url),
       })
       const beneficiary = (values.beneficiaryAddress ?? userAddress) as Address
+      const chainId = values.chainId || defaultChainId
+      
       const args = [
         projectId,
         NATIVE_TOKEN,
@@ -153,6 +160,7 @@ export const usePayProjectTx = ({
       // })
       try {
         const hash = await writePay({
+          chainId,
           address: contracts.primaryNativeTerminal.data,
           args,
           value: weiAmount,

@@ -1,22 +1,23 @@
-import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { PV_V2 } from 'constants/pv'
-import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
-import { useWallet } from 'hooks/Wallet'
-import { useJBTokenContext } from 'juice-sdk-react'
-// import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
-import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { Trans, t } from '@lingui/macro'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   useProjectDispatch,
   useProjectSelector,
   useProjectStore,
 } from '../redux/hooks'
-import { projectCartActions } from '../redux/projectCartSlice'
+
 import { EthereumLogo } from './EthereumLogo'
-import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
+import { PV_V2 } from 'constants/pv'
 import { PayRedeemInput } from './PayRedeemInput'
+import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { projectCartActions } from '../redux/projectCartSlice'
+import { useJBTokenContext } from 'juice-sdk-react'
+import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
+// import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
+import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
+import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
+import { useWallet } from 'hooks/Wallet'
 
 type PayConfigurationProps = {
   userTokenBalance: number | undefined

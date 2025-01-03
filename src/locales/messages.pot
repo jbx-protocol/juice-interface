@@ -32,6 +32,9 @@ msgstr ""
 msgid "The number of tokens set aside for reserved token recipients when someone pays this project 1 ETH."
 msgstr ""
 
+msgid "Change networks to pay"
+msgstr ""
+
 msgid "\"Editing\" an NFT creates a copy of it. The old version won't be available, and the new version will have a new token ID."
 msgstr ""
 
@@ -888,6 +891,9 @@ msgid "Add a banner to the top of your project's page."
 msgstr ""
 
 msgid "Hold fees"
+msgstr ""
+
+msgid "Chain selection"
 msgstr ""
 
 msgid "Grant NFT permissions"

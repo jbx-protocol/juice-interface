@@ -3,7 +3,6 @@ import { JBChainId } from 'juice-sdk-react'
 import { enableCors } from 'lib/api/nextjs'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { version } from 'os'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { Address } from 'viem'
 
@@ -36,7 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       'Cache-Control',
       `s-maxage=${86400 * 7}, stale-while-revalidate`,
     )
-    const data = { version, terminalStoreAddress }
+    const data = { terminalStoreAddress }
     logger.info({ data })
     return res.status(200).json(data)
   } catch (err) {

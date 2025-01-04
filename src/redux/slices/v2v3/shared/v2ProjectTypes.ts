@@ -14,7 +14,6 @@ import {
   SerializedV2V3FundingCycleMetadata,
 } from 'packages/v2v3/utils/serializers'
 
-import { SupportedChainId } from 'constants/networks'
 import { CreatePage } from 'models/createPage'
 import { FundingTargetType } from 'models/fundingTargetType'
 import { NftPostPayModalConfig } from 'models/nftPostPayModal'
@@ -37,7 +36,7 @@ export type NftRewardsData = {
 
 export interface CreateState {
   fundingCyclesPageSelection: 'automated' | 'manual' | undefined
-  projectChainId: SupportedChainId | undefined
+  projectChainId: number // v4TODO: should be JBChainId
   treasurySelection: TreasurySelection | undefined
   fundingTargetSelection: FundingTargetType | undefined
   payoutsSelection: PayoutsSelection | undefined

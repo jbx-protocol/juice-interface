@@ -9,7 +9,7 @@ type NetworkInfo = {
   name: NetworkName
   label: string
   color: string
-  chainId: number
+  chainId: number, // should be JBChainId
   blockExplorer: string
   rpcUrl: string
   token: string
@@ -57,6 +57,15 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     rpcUrl: `https://sepolia-rollup.arbitrum.io/rpc`,
     blockExplorer: 'https://sepolia-explorer.arbitrum.io',
   },
+  10: {
+    name: NetworkName.optimism,
+    label: 'Optimism',
+    color: '#ff0420',
+    chainId: 10,
+    token: 'OpETH',
+    rpcUrl: `https://optimism-mainnet.infura.io/v3/${infuraId}`,
+    blockExplorer: 'https://optimistic.etherscan.io',
+  },
   11155420: {
     name: NetworkName.optimismSepolia,
     label: 'Optimism Sepolia Testnet',
@@ -65,6 +74,15 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     token: 'OpETH',
     rpcUrl: `https://sepolia.optimism.io`,
     blockExplorer: 'https://optimism-sepolia.blockscout.com',
+  },
+  8453: {
+    name: NetworkName.base,
+    label: 'Base',
+    color: '#00d395',
+    chainId: 8453,
+    token: 'BaseETH',
+    rpcUrl: `https://mainnet.base.org`,
+    blockExplorer: 'https://basescan.org',
   },
   84532: {
     name: NetworkName.baseSepolia,
@@ -75,11 +93,27 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     rpcUrl: `https://sepolia.base.org`,
     blockExplorer: 'https://sepolia.basescan.org',
   },
+  137: {
+    name: NetworkName.polygon,
+    label: 'Polygon',
+    color: '#8247e5',
+    chainId: 137,
+    token: 'MATIC',
+    rpcUrl: `https://polygon-mainnet.infura.io/v3/${infuraId}`,
+    blockExplorer: 'https://polygonscan.com',
+  },
+  1442: {
+    name: NetworkName.polygonSepolia,
+    label: 'Polygon Sepolia Testnet',
+    color: '#9f7bea',
+    chainId: 1442,
+    token: 'MATIC',
+    rpcUrl: `https://sepolia-polygon.io/rpc`,
+    blockExplorer: 'https://sepolia.polygonscan.com',
+  },
 }
 
-export const TESTNET_IDS = new Set([11155111, 421614, 11155420, 84531])
-
-export type SupportedChainId = keyof typeof NETWORKS;
+export const TESTNET_IDS = new Set<number>([11155111, 421614, 11155420, 84531, 1442]);
 
 export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
   (acc, curr) => ({

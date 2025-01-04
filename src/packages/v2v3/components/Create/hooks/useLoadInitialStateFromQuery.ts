@@ -1,25 +1,25 @@
-import { CreateState, ProjectState } from 'redux/slices/v2v3/shared/v2ProjectTypes'
+import { useEffect, useState } from 'react'
 import {
   DEFAULT_REDUX_STATE,
   creatingV2ProjectActions,
 } from 'redux/slices/v2v3/creatingV2Project'
-import { useEffect, useState } from 'react'
+import { CreateState, ProjectState } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 
-import { CreatePage } from 'models/createPage'
-import { DefaultSettings as DefaultTokenSettings } from '../components/pages/ProjectToken/hooks/useProjectTokenForm'
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
-import { INITIAL_REDUX_STATE } from 'redux/slices/v2v3/shared/v2ProjectInitialReduxState'
-import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
+import isEqual from 'lodash/isEqual'
+import { CreatePage } from 'models/createPage'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { TreasurySelection } from 'models/treasurySelection'
+import { useRouter } from 'next/router'
 import { ballotStrategiesFn } from 'packages/v2v3/constants/ballotStrategies'
-import isEqual from 'lodash/isEqual'
+import { useDefaultJBETHPaymentTerminal } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
+import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'
+import { useDispatch } from 'react-redux'
+import { INITIAL_REDUX_STATE } from 'redux/slices/v2v3/shared/v2ProjectInitialReduxState'
 import { isEqualAddress } from 'utils/address'
 import { parseWad } from 'utils/format/formatNumber'
+import { DefaultSettings as DefaultTokenSettings } from '../components/pages/ProjectToken/hooks/useProjectTokenForm'
 import { projectTokenSettingsToReduxFormat } from '../utils/projectTokenSettingsToReduxFormat'
-import { useDefaultJBETHPaymentTerminal } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
-import { useDispatch } from 'react-redux'
-import { useRouter } from 'next/router'
 
 const ReduxDefaultTokenSettings =
   projectTokenSettingsToReduxFormat(DefaultTokenSettings)
@@ -101,7 +101,7 @@ const parseCreateFlowStateFromInitialState = (
   }
 
   return {
-    projectChainId: 0, // not necessary for v2v3
+    projectChainId: 84532, // not necessary for v2v3
     fundingCyclesPageSelection,
     treasurySelection,
     fundingTargetSelection: undefined, // TODO: Remove

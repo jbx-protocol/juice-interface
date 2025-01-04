@@ -2,34 +2,34 @@ import { Button, Divider } from 'antd'
 import { JBChainId, useJBChainId, useSuckers } from 'juice-sdk-react'
 import { settingsPagePath, v4ProjectRoute } from 'packages/v4/utils/routes'
 
-import { Badge } from 'components/Badge'
-import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { Cog6ToothIcon } from '@heroicons/react/24/outline'
+import { Trans } from '@lingui/macro'
+import { Badge } from 'components/Badge'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
-import Link from 'next/link'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
-import { ProjectHeaderPopupMenu } from 'packages/v4/components/ProjectDashboard/components/ProjectHeaderPopupMenu'
-import { ProjectHeaderStats } from './ProjectHeaderStats'
 import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
-import { Sucker } from 'packages/v4/models/suckers'
-import { Trans } from '@lingui/macro'
 import { TruncatedText } from 'components/TruncatedText'
-import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
-import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
-import { twMerge } from 'tailwind-merge'
 import useMobile from 'hooks/useMobile'
+import { SuckerPair } from 'juice-sdk-core'
+import Link from 'next/link'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
+import { ProjectHeaderPopupMenu } from 'packages/v4/components/ProjectDashboard/components/ProjectHeaderPopupMenu'
+import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
+import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
+import { twMerge } from 'tailwind-merge'
+import { ProjectHeaderStats } from './ProjectHeaderStats'
 // import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
 import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
-import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
+import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
 
 export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
 export const V4ProjectHeader = ({ className }: { className?: string }) => {
   const socialLinks = useSocialLinks()
   const chainId = useJBChainId()
-  const { data: suckers } = useSuckers() as { data: Sucker[] }
+  const { data: suckers } = useSuckers() as { data: SuckerPair[] }
 
   const {
     title,

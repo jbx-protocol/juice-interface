@@ -19,7 +19,7 @@ export const V4SettingsProvider: React.FC<React.PropsWithChildren> = ({
   const chainId = useCurrentRouteChainId()
 
   const { projectId: rawProjectId } = router.query
-  if (!rawProjectId) return null
+  if (!rawProjectId || !chainId) return null
 
   const projectId = parseInt(rawProjectId as string)
   const projectIdBigInt = BigInt(projectId)

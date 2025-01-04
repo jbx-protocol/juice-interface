@@ -1,10 +1,10 @@
-import { Trans, t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Empty } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import Loading from 'components/Loading'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
 import TransactionModal from 'components/modals/TransactionModal'
-import { JBChainId, NATIVE_TOKEN_SYMBOLS } from 'juice-sdk-core'
+import { JB_CHAINS, JBChainId } from 'juice-sdk-core'
 import { useHasNftRewards } from 'packages/v4/hooks/useHasNftRewards'
 import { useCallback, useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -71,7 +71,9 @@ export function EditNftsSection() {
 
       <div className="mb-8">
         <RewardsList
-          priceCurrencySymbol={NATIVE_TOKEN_SYMBOLS[chainId as JBChainId]}
+          priceCurrencySymbol={
+            JB_CHAINS[chainId as JBChainId].nativeTokenSymbol
+          }
           nftRewardsData={nftRewardsData}
           value={rewardTiers}
           onChange={setRewardTiers}

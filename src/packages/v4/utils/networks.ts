@@ -1,15 +1,8 @@
-import { JBChainId } from 'juice-sdk-react'
 import { TESTNET_IDS } from 'constants/networks'
-
-export const chainNameMap: Record<string, JBChainId> = {
-  sepolia: 11_155_111, //sepolia.id,
-  opsepolia: 11155420, // optimismSepolia.id,
-  basesepolia: 84532, // baseSepolia.id,
-  arbsepolia: 421_614, // arbitrumSepolia.id,
-}
+import { JB_CHAINS, JBChainId } from 'juice-sdk-core'
 
 export function getChainName(chainId: number) {
-  return Object.entries(chainNameMap).find(([, id]) => id === chainId)?.[0]
+  return JB_CHAINS[chainId as JBChainId].name
 }
 
 export function isTestnet(chainId: number) {

@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import TransactionModal from 'components/modals/TransactionModal'
 import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
-import { JBChainId, NATIVE_TOKEN_SYMBOLS } from 'juice-sdk-core'
+import { JB_CHAINS, JBChainId } from 'juice-sdk-core'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useChainId } from 'wagmi'
 import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
@@ -30,7 +30,7 @@ export function LaunchNftsPage() {
     <>
       <AddNftCollectionForm
         form={form}
-        priceCurrencySymbol={NATIVE_TOKEN_SYMBOLS[chainId as JBChainId]}
+        priceCurrencySymbol={JB_CHAINS[chainId as JBChainId].nativeTokenSymbol}
         postPayModalData={postPayModalData}
         nftRewardsData={nftRewardsData}
         okButton={

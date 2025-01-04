@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
-import { JBChainId, NATIVE_TOKEN_SYMBOLS } from 'juice-sdk-core'
+import { JB_CHAINS, JBChainId } from 'juice-sdk-core'
 import { NftRewardTier } from 'models/nftRewards'
 import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
@@ -72,7 +72,7 @@ export const RewardsReview = () => {
   return (
     <div className="flex flex-col gap-12">
       <RewardsList
-        priceCurrencySymbol={NATIVE_TOKEN_SYMBOLS[chainId as JBChainId]}
+        priceCurrencySymbol={JB_CHAINS[chainId as JBChainId].nativeTokenSymbol}
         nftRewardsData={nftRewardsData}
         value={rewards}
         onChange={setRewards}

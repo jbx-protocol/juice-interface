@@ -1,6 +1,6 @@
 import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
 import { CREATE_FLOW } from 'constants/fathomEvents'
-import { JBChainId, NATIVE_TOKEN_SYMBOLS } from 'juice-sdk-core'
+import { JB_CHAINS, JBChainId } from 'juice-sdk-core'
 import { trackFathomGoal } from 'lib/fathom'
 import { useContext } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -33,7 +33,7 @@ export function NftRewardsPage() {
       postPayModalData={postPayModalData}
       nftRewardsData={nftRewardsData}
       okButton={<Wizard.Page.ButtonControl />}
-      priceCurrencySymbol={NATIVE_TOKEN_SYMBOLS[chainId as JBChainId]}
+      priceCurrencySymbol={JB_CHAINS[chainId as JBChainId].nativeTokenSymbol}
       onFinish={() => {
         goToNextPage?.()
         trackFathomGoal(CREATE_FLOW.NFT_NEXT_CTA)

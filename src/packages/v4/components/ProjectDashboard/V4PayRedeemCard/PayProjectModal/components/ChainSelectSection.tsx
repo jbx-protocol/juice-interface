@@ -6,7 +6,6 @@ import axios from 'axios'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import { NETWORKS } from 'constants/networks'
 import { useFormikContext } from 'formik'
-import { SuckerPair } from 'juice-sdk-core'
 import { PayProjectModalFormValues } from '../hooks/usePayProjectModal/usePayProjectModal'
 import { useProjectPaymentTokens } from '../hooks/useProjectPaymentTokens'
 
@@ -18,8 +17,7 @@ export const ChainSelectSection = () => {
   const { receivedTokenSymbolText } = useProjectPaymentTokens()
 
   const suckersQuery = useSuckers()
-  const suckers = (suckersQuery.data as { suckers: SuckerPair[] | null })
-    ?.suckers
+  const suckers = suckersQuery.data
 
   const defaultChainId = useJBChainId()
   const { values, setFieldValue } =

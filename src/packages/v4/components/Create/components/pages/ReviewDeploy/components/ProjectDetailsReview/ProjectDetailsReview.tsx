@@ -1,16 +1,16 @@
 import { Trans, t } from '@lingui/macro'
 
 import EthereumAddress from 'components/EthereumAddress'
-import { NETWORKS } from 'constants/networks'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
-import { ReviewDescription } from '../ReviewDescription'
 import { RichPreview } from 'components/RichPreview/RichPreview'
-import { ipfsUriToGatewayUrl } from 'utils/ipfs'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useMemo } from 'react'
+import { NETWORKS } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
+import React, { useMemo } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
+import { ReviewDescription } from '../ReviewDescription'
 
 export const ProjectDetailsReview = () => {
   const { userAddress } = useWallet()
@@ -34,13 +34,18 @@ export const ProjectDetailsReview = () => {
     inputProjectOwner,
   } = useAppSelector(state => state.creatingV2Project)
 
-  const youtubeUrl = useMemo(() => {
-    if (!introVideoUrl) return undefined
-    const url = new URL(introVideoUrl)
-    const videoId = url.searchParams.get('v')
-    if (!videoId) return undefined
-    return `https://www.youtube.com/embed/${videoId}`
-  }, [introVideoUrl])
+  const projectChainName = React.useMemo(
+    () => (projectChainId ? NETWORKS[projectChainId]?.label : undefined),
+    [projectChainId],
+  )
+
+  // const youtubeUrl = useMemo(() => {
+  //   if (!introVideoUrl) return undefined
+  //   const url = new URL(introVideoUrl)
+  //   const videoId = url.searchParams.get('v')
+  //   if (!videoId) return undefined
+  //   return `https://www.youtube.com/embed/${videoId}`
+  // }, [introVideoUrl])
 
   const ownerAddress = inputProjectOwner ?? userAddress
 
@@ -68,14 +73,16 @@ export const ProjectDetailsReview = () => {
           </div>
         }
       />
-      <ReviewDescription
-        title={t`Project chain`}
-        desc={
-          <div className="overflow-hidden text-ellipsis text-base font-medium">
-            {NETWORKS[projectChainId]?.label}
-          </div>
-        }
-      />
+      {projectChainName && (
+        <ReviewDescription
+          title={t`Project chain`}
+          desc={
+            <div className="overflow-hidden text-ellipsis text-base font-medium">
+              {projectChainName}
+            </div>
+          }
+        />
+      )}
       <ReviewDescription
         className="col-span-2"
         title={t`Tagline`}
@@ -160,6 +167,7 @@ export const ProjectDetailsReview = () => {
           className="row-span-2"
           title={t`Project cover photo`}
           desc={
+            // eslint-disable-next-line @next/next/no-img-element
             <img width={144} src={coverImageSrc} alt={`${name} cover photo`} />
           }
         />

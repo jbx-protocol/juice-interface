@@ -1,9 +1,16 @@
-import { WrenchScrewdriverIcon } from '@heroicons/react/24/outline'
+import {
+  Cog6ToothIcon,
+  WrenchScrewdriverIcon,
+} from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
 import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
 import { PopupMenu } from 'components/ui/PopupMenu'
 import useMobile from 'hooks/useMobile'
+import { useJBChainId } from 'juice-sdk-react'
+import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
+import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
+import { settingsPagePath } from 'packages/v4/utils/routes'
 import { useMemo, useState } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { V4ProjectToolsDrawer } from './V4ProjectToolsDrawer'
@@ -19,6 +26,10 @@ export function ProjectHeaderPopupMenu({
 }) {
   const socialLinks = useSocialLinks()
   const isMobile = useMobile()
+  const canQueueRuleSets = useV4WalletHasPermission(
+    V4OperatorPermission.QUEUE_RULESETS,
+  )
+  const chainId = useJBChainId()
   const [toolsIsOpen, setToolsIsOpen] = useState<boolean>()
 
   // const { isBookmarked, onBookmarkButtonClicked } = useBookmarkButton({
@@ -85,6 +96,23 @@ export function ProjectHeaderPopupMenu({
           //     onBookmarkButtonClicked()
           //   },
           // },
+          ...(isMobile && chainId && canQueueRuleSets
+            ? [
+                {
+                  id: 'manage',
+                  label: (
+                    <>
+                      <Cog6ToothIcon className="text-primary h-5 w-5" />
+
+                      <span className="text-primary whitespace-nowrap text-sm font-medium">
+                        <Trans>Manage project</Trans>
+                      </span>
+                    </>
+                  ),
+                  href: settingsPagePath({ chainId, projectId }),
+                },
+              ]
+            : []),
           {
             id: 'tools',
             label: (

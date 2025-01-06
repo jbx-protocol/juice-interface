@@ -1,5 +1,5 @@
 import { SettingsPageKey } from '../views/V4ProjectSettings/ProjectSettingsDashboard'
-import { getChainName } from './networks'
+import { getChainSlug } from './networks'
 
 export const v4ProjectRoute = ({
   chainId,
@@ -8,14 +8,14 @@ export const v4ProjectRoute = ({
   chainId: number
   projectId?: number
 }) => {
-  const chainName = getChainName(chainId)
-  return `/v4/${chainName}/p/${projectId?.toString()}`
+  const chainSlug = getChainSlug(chainId)
+  return `/v4/${chainSlug}/p/${projectId?.toString()}`
 }
 
 export const settingsPagePath = (
   {
     projectId,
-    chainId
+    chainId,
   }: {
     projectId: number
     chainId: number
@@ -27,4 +27,3 @@ export const settingsPagePath = (
     projectId,
   })}/settings/${settingsPage ?? ''}`
 }
-

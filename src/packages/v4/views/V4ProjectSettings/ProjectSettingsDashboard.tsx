@@ -4,19 +4,19 @@ import {
   useJBProjectMetadataContext,
 } from 'juice-sdk-react'
 
+import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
-import Link from 'next/link'
 import Loading from 'components/Loading'
-import { ProjectSettingsLayout } from './ProjectSettingsLayout'
-import { Trans } from '@lingui/macro'
-import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
+import Link from 'next/link'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
-import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
-import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { useV4BalanceOfNativeTerminal } from 'packages/v4/hooks/useV4BalanceOfNativeTerminal'
-import { useV4DistributableAmount } from '../V4ProjectDashboard/V4ProjectTabs/V4CyclesPayoutsPanel/hooks/useV4DistributableAmount'
+import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
+import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
+import { useV4DistributableAmount } from '../V4ProjectDashboard/V4ProjectTabs/V4CyclesPayoutsPanel/hooks/useV4DistributableAmount'
+import { useSettingsPagePath } from './hooks/useSettingsPagePath'
+import { ProjectSettingsLayout } from './ProjectSettingsLayout'
 
 export type SettingsPageKey =
   | 'general'
@@ -146,12 +146,12 @@ export function ProjectSettingsDashboard() {
           >
             <ul>
               <li>
-                <Link href={useSettingsPagePath('general')}>
+                <Link href={useSettingsPagePath('general') ?? ''}>
                   <Trans>Basic details</Trans>
                 </Link>
               </li>
               <li>
-                <Link href={useSettingsPagePath('archiveproject')}>
+                <Link href={useSettingsPagePath('archiveproject') ?? ''}>
                   <Trans>Archive</Trans>
                 </Link>
               </li>
@@ -169,7 +169,7 @@ export function ProjectSettingsDashboard() {
               <Trans>Make changes to your ruleset settings and rules</Trans>
             }
           >
-            <Link href={useSettingsPagePath('cycle')}>
+            <Link href={useSettingsPagePath('cycle') ?? ''}>
               <Trans>Edit next ruleset</Trans>
             </Link>
           </SettingsGroupCard>
@@ -179,7 +179,7 @@ export function ProjectSettingsDashboard() {
           >
             <ul>
               <li>
-                <Link href={useSettingsPagePath('nfts')}>
+                <Link href={useSettingsPagePath('nfts') ?? ''}>
                   <Trans>NFTs</Trans>
                 </Link>
               </li>
@@ -192,7 +192,7 @@ export function ProjectSettingsDashboard() {
             <ul>
               {canCreateErc20Token && (
                 <li>
-                  <Link href={erc20Path}>
+                  <Link href={erc20Path ?? ''}>
                     <Trans>Create ERC-20 Token</Trans>
                   </Link>
                 </li>

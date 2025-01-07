@@ -16,7 +16,7 @@ export interface ContractReaderProps<ContractName extends string, V> {
 }
 
 export function useContractReader<ContractName extends string, V>({
-  contract,
+  contract, // name of the contract
   contracts,
   functionName,
   args,

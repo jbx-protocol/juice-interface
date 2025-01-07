@@ -3,6 +3,10 @@ import { SupportedChainId, readNetwork } from 'constants/networks'
 import { useCallback } from 'react'
 import { useSetChain } from '@web3-onboard/react'
 
+/**
+ * Attempts to sync the user wallet's chain with the readNetwork (hard-coded per environment)
+ * @returns function to sync the user wallet's chain with the readNetwork
+ */
 export function useChangeNetworks() {
   const [{ chains }, setChain] = useSetChain()
 

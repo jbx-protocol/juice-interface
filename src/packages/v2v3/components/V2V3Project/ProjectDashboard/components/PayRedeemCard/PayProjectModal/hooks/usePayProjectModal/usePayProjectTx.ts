@@ -139,7 +139,10 @@ export const usePayProjectTx = ({
         )
         if (!success) {
           onTransactionErrorCallback(
-            onError ?? new Error('Transaction failed'),
+            onError ??
+              new Error(
+                'Payment failed. Make sure your wallet has funds, is set to the correct chain (e.g. mainnet) and try again. If problems persist, click "Reset Website".',
+              ),
             formikHelpers,
           )
         }

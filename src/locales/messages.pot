@@ -2240,6 +2240,9 @@ msgstr ""
 msgid "Redeem your {tokensLabel} to reclaim a portion of the ETH not needed for payouts. Any {tokensLabel} you redeem will be burned."
 msgstr ""
 
+msgid "Your wallet has been changed to {0}. Try transaction again."
+msgstr ""
+
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr ""
 

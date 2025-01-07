@@ -5,7 +5,7 @@ import { Fragment } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export interface JuiceListboxOption<T> {
-  label: string | React.ReactNode
+  label: string
   value: T
 }
 

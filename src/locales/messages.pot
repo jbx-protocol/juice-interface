@@ -563,9 +563,6 @@ msgstr ""
 msgid "I understand"
 msgstr ""
 
-msgid "This cycle has upcoming changes"
-msgstr ""
-
 msgid "<0/> Your project's rules cannot be edited during the first ruleset."
 msgstr ""
 
@@ -1341,6 +1338,9 @@ msgid "Migrate payment terminal"
 msgstr ""
 
 msgid "Failed to create ERC20 token: {0}"
+msgstr ""
+
+msgid "This upcoming cycle has no changes"
 msgstr ""
 
 msgid "Payments"
@@ -2852,9 +2852,6 @@ msgstr ""
 msgid "Edit {projectTitle}'s rules"
 msgstr ""
 
-msgid "This cycle has no upcoming changes"
-msgstr ""
-
 msgid "Software"
 msgstr ""
 
@@ -3210,6 +3207,9 @@ msgid "Redeem {tokensTextLong} for ETH"
 msgstr ""
 
 msgid "No description"
+msgstr ""
+
+msgid "This upcoming cycle has changes"
 msgstr ""
 
 msgid "Connect wallet to send payouts"

@@ -1904,6 +1904,9 @@ msgstr ""
 msgid "The amount of ETH in the wallet that owns this project."
 msgstr ""
 
+msgid "A project chain"
+msgstr ""
+
 msgid "Get paid in ETH, program your own payouts, token issuance, and redemptions to easily run your treasury completely on-chain — as your community grows, you can update your treasury's rules to grow with it."
 msgstr ""
 

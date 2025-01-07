@@ -32,6 +32,9 @@ msgstr ""
 msgid "The number of tokens set aside for reserved token recipients when someone pays this project 1 ETH."
 msgstr ""
 
+msgid "Change networks to pay"
+msgstr ""
+
 msgid "\"Editing\" an NFT creates a copy of it. The old version won't be available, and the new version will have a new token ID."
 msgstr ""
 
@@ -560,9 +563,6 @@ msgstr ""
 msgid "I understand"
 msgstr ""
 
-msgid "This cycle has upcoming changes"
-msgstr ""
-
 msgid "<0/> Your project's rules cannot be edited during the first ruleset."
 msgstr ""
 
@@ -890,6 +890,9 @@ msgstr ""
 msgid "Hold fees"
 msgstr ""
 
+msgid "Chain selection"
+msgstr ""
+
 msgid "Grant NFT permissions"
 msgstr ""
 
@@ -1196,6 +1199,9 @@ msgstr ""
 msgid "Check your email for a confirmation link and retry subscribing."
 msgstr ""
 
+msgid "Project chain"
+msgstr ""
+
 msgid "Claim ERC-20 token"
 msgstr ""
 
@@ -1332,6 +1338,9 @@ msgid "Migrate payment terminal"
 msgstr ""
 
 msgid "Failed to create ERC20 token: {0}"
+msgstr ""
+
+msgid "This upcoming cycle has no changes"
 msgstr ""
 
 msgid "Payments"
@@ -1893,6 +1902,9 @@ msgid "Get notified when a contributor supports this project"
 msgstr ""
 
 msgid "The amount of ETH in the wallet that owns this project."
+msgstr ""
+
+msgid "A project chain"
 msgstr ""
 
 msgid "Get paid in ETH, program your own payouts, token issuance, and redemptions to easily run your treasury completely on-chain — as your community grows, you can update your treasury's rules to grow with it."
@@ -2846,9 +2858,6 @@ msgstr ""
 msgid "Edit {projectTitle}'s rules"
 msgstr ""
 
-msgid "This cycle has no upcoming changes"
-msgstr ""
-
 msgid "Software"
 msgstr ""
 
@@ -3204,6 +3213,9 @@ msgid "Redeem {tokensTextLong} for ETH"
 msgstr ""
 
 msgid "No description"
+msgstr ""
+
+msgid "This upcoming cycle has changes"
 msgstr ""
 
 msgid "Connect wallet to send payouts"

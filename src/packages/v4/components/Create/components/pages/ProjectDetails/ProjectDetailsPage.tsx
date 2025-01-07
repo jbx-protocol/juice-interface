@@ -1,6 +1,13 @@
-import { RightOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Col, Form, Row } from 'antd'
+import {
+  V2V3_CURRENCY_ETH,
+  V2V3_CURRENCY_USD,
+} from 'packages/v2v3/utils/currency'
+import { useCallback, useContext, useState } from 'react'
+import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
+
+import { RightOutlined } from '@ant-design/icons'
 import { Callout } from 'components/Callout/Callout'
 import { FormItems } from 'components/formItems'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
@@ -16,19 +23,14 @@ import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
 import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import {
-  V2V3_CURRENCY_ETH,
-  V2V3_CURRENCY_USD,
-} from 'packages/v2v3/utils/currency'
-import { useCallback, useContext, useMemo, useState } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
-import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
 import { OptionalHeader } from '../../OptionalHeader'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { Wizard } from '../../Wizard/Wizard'
 import { useProjectDetailsForm } from './hooks/useProjectDetailsForm'
+import { ProjectChainSelect } from './ProjectChainSelect'
 
 export const ProjectDetailsPage: React.FC<
   React.PropsWithChildren<unknown>
@@ -44,32 +46,6 @@ export const ProjectDetailsPage: React.FC<
 
   const projectOwnerDifferentThanWalletAddress =
     inputWalletAddress && wallet.userAddress !== inputWalletAddress
-
-  const startTimestamp = Form.useWatch('startTimestamp', formProps.form)
-
-  // just for juicecrowd
-  const launchDate = useMemo(() => {
-    if (!startTimestamp) {
-      return null
-    }
-    const number = Number(startTimestamp)
-    if (isNaN(number)) {
-      return null
-    }
-
-    let date
-    if (number > 1000000000000) {
-      date = new Date(number)
-    } else {
-      date = new Date(number * 1000)
-    }
-
-    // format in local timezone
-    return {
-      local: date.toLocaleString(),
-      utc: date.toUTCString(),
-    }
-  }, [startTimestamp])
 
   return (
     <Form
@@ -93,6 +69,17 @@ export const ProjectDetailsPage: React.FC<
           ])}
         >
           <JuiceInput />
+        </Form.Item>
+
+        <Form.Item
+          name="projectChainId"
+          label={t`Project chain`}
+          required
+          rules={lockPageRulesWrapper([
+            inputMustExistRule({ label: t`A project chain` }),
+          ])}
+        >
+          <ProjectChainSelect />
         </Form.Item>
 
         <Form.Item

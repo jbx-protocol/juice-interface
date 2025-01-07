@@ -1,11 +1,8 @@
-import { ONE_MILLION } from 'constants/numbers'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { constants } from 'ethers'
-
-import { BigNumber } from 'ethers'
+import { BigNumber, constants } from 'ethers'
 import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewards'
 import {
   LATEST_METADATA_VERSION,
@@ -22,9 +19,11 @@ import {
   serializeV2V3FundingCycleData,
   serializeV2V3FundingCycleMetadata,
 } from 'packages/v2v3/utils/serializers'
+import { CreateState, ProjectState } from './v2ProjectTypes'
+
+import { ONE_MILLION } from 'constants/numbers'
 import { JB721TiersHookFlags } from 'packages/v4/models/nfts'
 import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
-import { CreateState, ProjectState } from './v2ProjectTypes'
 
 const DEFAULT_DOMAIN = 'juicebox'
 
@@ -120,6 +119,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
 }
 
 const DEFAULT_CREATE_STATE: CreateState = {
+  projectChainId: undefined, // not necessary for v2v3
   treasurySelection: 'zero',
   reconfigurationRuleSelection: undefined,
   fundingCyclesPageSelection: undefined,

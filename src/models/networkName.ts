@@ -4,4 +4,6 @@ export enum NetworkName {
   sepolia = 'sepolia',
   arbitrumSepolia = 'arbitrumSepolia',
   optimismSepolia = 'optimismSepolia',
+  arbitrumOne = 'arbitrumOne',
+  baseSepolia = 'baseSepolia',
 }

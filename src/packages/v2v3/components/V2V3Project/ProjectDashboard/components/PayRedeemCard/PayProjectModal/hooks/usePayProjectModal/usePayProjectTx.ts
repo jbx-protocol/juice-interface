@@ -71,15 +71,17 @@ export const usePayProjectTx = ({
       payAmount.currency === V2V3_CURRENCY_ETH
         ? parseWad(payAmount.amount)
         : converter.usdToWei(payAmount.amount)
-    if (nftCredits) {
-      if (nftCredits.gte(weiAmount)) {
-        weiAmount = parseWad(0)
-      } else {
-        weiAmount = weiAmount.sub(nftCredits)
+    if (chosenNftRewards.length > 0) {
+      if (nftCredits) {
+        if (nftCredits.gte(weiAmount)) {
+          weiAmount = parseWad(0)
+        } else {
+          weiAmount = weiAmount.sub(nftCredits)
+        }
       }
     }
     return weiAmount
-  }, [payAmount, converter, nftCredits])
+  }, [payAmount, converter, chosenNftRewards.length, nftCredits])
 
   const prepareDelegateMetadata = usePrepareDelegatePayMetadata(weiAmount, {
     nftRewards: chosenNftRewards,

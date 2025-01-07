@@ -24,6 +24,7 @@ describe('useFormatConfigurationCyclesSection', () => {
 
   const mockUpcomingFundingCycle = {
     duration: BigNumber.from(20000),
+    start: BigNumber.from(1),
     ballot: '0x0000000000000000000000000000000000000001',
   }
 
@@ -57,7 +58,7 @@ describe('useFormatConfigurationCyclesSection', () => {
     }
     const expectedStartTime = {
       name: 'Start time',
-      new: '1970-01-01, Thursday, 02:46:40 AM UTC',
+      new: '1970-01-01, Thursday, 12:00:01 AM UTC', // BigNumber.from(1)
       // new: '1970-01-01, Wednesday, 09:46:40 PM EST',
       easyCopy: true,
     }

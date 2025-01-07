@@ -13,7 +13,9 @@ import { usePayProjectModal } from './usePayProjectModal/usePayProjectModal'
 
 export const usePayAmounts = () => {
   const converter = useCurrencyConverter()
-  const { payAmount } = useProjectSelector(state => state.projectCart)
+  const { payAmount, chosenNftRewards } = useProjectSelector(
+    state => state.projectCart,
+  )
   const { primaryAmount, secondaryAmount } = usePayProjectModal()
   const { userAddress } = useWallet()
   const { data: nftCreditsData } = useNftCredits(userAddress)
@@ -36,7 +38,7 @@ export const usePayAmounts = () => {
   }, [converter, payAmount])
 
   const appliedNFTCreditsRaw = React.useMemo(() => {
-    if (!payAmountRaw || !nftCreditsData) return
+    if (!payAmountRaw || !nftCreditsData || !chosenNftRewards.length) return
 
     const nftCreditsApplied = payAmountRaw.eth.lt(nftCreditsData)
       ? payAmountRaw.eth
@@ -49,7 +51,7 @@ export const usePayAmounts = () => {
       eth,
       usd,
     }
-  }, [converter, nftCreditsData, payAmountRaw])
+  }, [chosenNftRewards.length, converter, nftCreditsData, payAmountRaw])
 
   const formattedNftCredits = React.useMemo(() => {
     if (!appliedNFTCreditsRaw || !payAmount) return

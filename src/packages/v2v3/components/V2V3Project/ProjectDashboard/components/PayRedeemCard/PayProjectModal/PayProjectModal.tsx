@@ -9,6 +9,7 @@ import { useNftCredits } from 'packages/v2v3/hooks/JB721Delegate/useNftCredits'
 import React, { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { helpPagePath } from 'utils/helpPagePath'
+import { useProjectSelector } from '../../../redux/hooks'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
 import { usePayAmounts } from './hooks/usePayAmounts'
@@ -167,6 +168,7 @@ export const PayProjectModal: React.FC = () => {
 const AmountSection = () => {
   const { userAddress } = useWallet()
   const { data: nftCredits } = useNftCredits(userAddress)
+  const { chosenNftRewards } = useProjectSelector(state => state.projectCart)
   const { formattedAmount, formattedNftCredits, formattedTotalAmount } =
     usePayAmounts()
 
@@ -192,7 +194,11 @@ const AmountSection = () => {
     </div>
   )
 
-  if (!nftCredits?.gt(0) || !formattedNftCredits)
+  if (
+    !nftCredits?.gt(0) ||
+    !formattedNftCredits ||
+    chosenNftRewards.length === 0
+  )
     return (
       <RowData
         label={t`Total amount`}

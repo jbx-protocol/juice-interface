@@ -49,10 +49,12 @@ export const useFormatConfigurationCyclesSection = ({
   const startTimeDatum: ConfigurationPanelDatum = useMemo(() => {
     const formattedTime =
       upcomingFundingCycle === null
-        ? formatTime(fundingCycle?.start.toNumber())
-        : fundingCycle?.duration.isZero()
+        ? formatTime(fundingCycle?.start?.toNumber())
+        : fundingCycle?.duration.isZero() &&
+          getBallotStrategyByAddress(fundingCycle?.ballot)?.durationSeconds ===
+            0
         ? t`Any time`
-        : formatTime(fundingCycle?.start.add(fundingCycle?.duration).toNumber())
+        : formatTime(upcomingFundingCycle?.start?.toNumber())
 
     const formatTimeDatum: ConfigurationPanelDatum = {
       name: t`Start time`,
@@ -60,7 +62,12 @@ export const useFormatConfigurationCyclesSection = ({
       easyCopy: true,
     }
     return formatTimeDatum
-  }, [fundingCycle?.start, fundingCycle?.duration, upcomingFundingCycle])
+  }, [
+    fundingCycle?.start,
+    fundingCycle?.duration,
+    upcomingFundingCycle,
+    fundingCycle?.ballot,
+  ])
 
   const payoutsDatum: ConfigurationPanelDatum = useMemo(() => {
     const formatCurrency = (currency: BigNumber | undefined) => {

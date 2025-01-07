@@ -1,9 +1,10 @@
 import { Listbox, Transition } from '@headlessui/react'
+
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { Fragment } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-interface JuiceListboxOption<T> {
+export interface JuiceListboxOption<T> {
   label: string
   value: T
 }

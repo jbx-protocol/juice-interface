@@ -1,4 +1,7 @@
-import { WrenchScrewdriverIcon } from '@heroicons/react/24/outline'
+import {
+  Cog6ToothIcon,
+  WrenchScrewdriverIcon,
+} from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
 import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
@@ -9,9 +12,13 @@ import { useSubscribeButton } from 'components/buttons/SubscribeButton/hooks/use
 import { PopupMenu } from 'components/ui/PopupMenu'
 import { PV_V2 } from 'constants/pv'
 import useMobile from 'hooks/useMobile'
+import { useV2V3WalletHasPermission } from 'packages/v2v3/hooks/contractReader/useV2V3WalletHasPermission'
+import { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
+import { settingsPagePath } from 'packages/v2v3/utils/routes'
 import { useMemo, useState } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { V2V3ProjectToolsDrawer } from '../../V2V3ProjectToolsDrawer'
+import { useV2V3ProjectHeader } from '../hooks/useV2V3ProjectHeader'
 
 type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
@@ -22,8 +29,12 @@ export function ProjectHeaderPopupMenu({
   className?: string
   projectId: number
 }) {
+  const { handle } = useV2V3ProjectHeader()
   const socialLinks = useSocialLinks()
   const isMobile = useMobile()
+  const canReconfigure = useV2V3WalletHasPermission(
+    V2V3OperatorPermission.RECONFIGURE,
+  )
   const [toolsIsOpen, setToolsIsOpen] = useState<boolean>()
 
   const { isBookmarked, onBookmarkButtonClicked } = useBookmarkButton({
@@ -90,6 +101,23 @@ export function ProjectHeaderPopupMenu({
               onBookmarkButtonClicked()
             },
           },
+          ...(isMobile && canReconfigure
+            ? [
+                {
+                  id: 'manage',
+                  label: (
+                    <>
+                      <Cog6ToothIcon className="text-primary h-5 w-5" />
+
+                      <span className="text-primary whitespace-nowrap text-sm font-medium">
+                        <Trans>Manage project</Trans>
+                      </span>
+                    </>
+                  ),
+                  href: settingsPagePath(undefined, { handle, projectId }),
+                },
+              ]
+            : []),
           {
             id: 'tools',
             label: (

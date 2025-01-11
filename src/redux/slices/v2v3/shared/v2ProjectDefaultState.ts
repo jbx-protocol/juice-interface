@@ -119,7 +119,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
 }
 
 const DEFAULT_CREATE_STATE: CreateState = {
-  projectChainId: undefined, // not necessary for v2v3
+  projectChainId: 1, // not necessary for v2v3
   treasurySelection: 'zero',
   reconfigurationRuleSelection: undefined,
   fundingCyclesPageSelection: undefined,

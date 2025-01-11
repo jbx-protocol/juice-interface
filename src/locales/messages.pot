@@ -77,9 +77,6 @@ msgstr ""
 msgid "Contract address: {0}"
 msgstr ""
 
-msgid "No surplus"
-msgstr ""
-
 msgid "Trust"
 msgstr ""
 
@@ -384,9 +381,6 @@ msgid "Reserved NFTs"
 msgstr ""
 
 msgid "Basic details"
-msgstr ""
-
-msgid "{surplus} is available for future payouts."
 msgstr ""
 
 msgid "Your project can receive payments through the juicebox.money app."
@@ -1076,9 +1070,6 @@ msgstr ""
 msgid "1. Set ENS name"
 msgstr ""
 
-msgid "{surplus} is available for token redemptions or future payouts."
-msgstr ""
-
 msgid "No overflow"
 msgstr ""
 
@@ -1473,6 +1464,9 @@ msgid "If you're not sure if you need to claim, you probably don't."
 msgstr ""
 
 msgid "File"
+msgstr ""
+
+msgid "{surplusElement} is available across all chains for token redemptions or future payouts."
 msgstr ""
 
 msgid "You have <0>{0} ETH</0> of unclaimed NFT credits"
@@ -3270,6 +3264,9 @@ msgid "Transfer {tokenTextShort}"
 msgstr ""
 
 msgid "Owner token minting is not available for V1.0 projects. Owner token minting can be enabled by editing the project's cycle."
+msgstr ""
+
+msgid "{surplusElement} is available across all chains for future payouts."
 msgstr ""
 
 msgid "<0/> reclaimed from project"

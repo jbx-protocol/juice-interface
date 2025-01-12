@@ -1,21 +1,18 @@
-import {
-  DEFAULT_PROJECT_CHAIN_ID,
-  NETWORKS,
-  SupportedChainId,
-} from 'constants/networks'
-
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
+import { DEFAULT_PROJECT_CHAIN_ID, NETWORKS } from 'constants/networks'
+import { JB_CHAINS } from 'juice-sdk-core'
+import { JBChainId } from 'juice-sdk-react'
 
 export const ProjectChainSelect: React.FC<
   React.PropsWithChildren<{
-    value?: SupportedChainId
-    onChange?: (value: SupportedChainId) => void
+    value?: JBChainId
+    onChange?: (value: JBChainId) => void
   }>
 > = ({ value, onChange }) => {
   const networkOptions = () =>
-    Object.entries(NETWORKS).map(([chainId, networkInfo]) => ({
-      label: networkInfo.label,
-      value: parseInt(chainId),
+    Object.values(JB_CHAINS).map(chain => ({
+      label: chain.name,
+      value: chain.chain.id as JBChainId,
     }))
 
   return (

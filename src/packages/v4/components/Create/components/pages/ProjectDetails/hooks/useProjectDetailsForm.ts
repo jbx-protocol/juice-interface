@@ -1,4 +1,3 @@
-import { DEFAULT_PROJECT_CHAIN_ID, SupportedChainId } from 'constants/networks'
 import { useEffect, useMemo } from 'react'
 import {
   DEFAULT_MUST_START_AT_OR_AFTER,
@@ -7,7 +6,9 @@ import {
 
 import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { DEFAULT_PROJECT_CHAIN_ID } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
+import { JBChainId } from 'juice-sdk-core'
 import { ProjectTagName } from 'models/project-tags'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
@@ -18,7 +19,7 @@ import { AmountInputValue } from '../ProjectDetailsPage'
 
 type ProjectDetailsFormProps = Partial<{
   projectName: string
-  projectChainId: SupportedChainId
+  projectChainId: JBChainId
   projectTagline: string
   projectDescription: string
   logo: string

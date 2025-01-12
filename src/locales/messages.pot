@@ -77,9 +77,6 @@ msgstr ""
 msgid "Contract address: {0}"
 msgstr ""
 
-msgid "No surplus"
-msgstr ""
-
 msgid "Trust"
 msgstr ""
 
@@ -216,9 +213,6 @@ msgid "Built by the best"
 msgstr ""
 
 msgid "{0} tokens"
-msgstr ""
-
-msgid "Staked balance"
 msgstr ""
 
 msgid "<0>Edits to this project must be made before this deadline. This gives token holders time to verify the edits before they take effect.</0><1>For example: with a 1-day edit deadline, edits must be made at least 1 day before a ruleset cycle starts.</1>"
@@ -384,9 +378,6 @@ msgid "Reserved NFTs"
 msgstr ""
 
 msgid "Basic details"
-msgstr ""
-
-msgid "{surplus} is available for future payouts."
 msgstr ""
 
 msgid "Your project can receive payments through the juicebox.money app."
@@ -767,6 +758,9 @@ msgstr ""
 msgid "Saved projects"
 msgstr ""
 
+msgid "Unclaimed token balance"
+msgstr ""
+
 msgid "The redemption rate determines how token holders can burn their tokens to reclaim a portion of the ETH not needed for payouts."
 msgstr ""
 
@@ -1074,9 +1068,6 @@ msgid "The amount of ETH that this project has right now."
 msgstr ""
 
 msgid "1. Set ENS name"
-msgstr ""
-
-msgid "{surplus} is available for token redemptions or future payouts."
 msgstr ""
 
 msgid "No overflow"
@@ -1473,6 +1464,9 @@ msgid "If you're not sure if you need to claim, you probably don't."
 msgstr ""
 
 msgid "File"
+msgstr ""
+
+msgid "{surplusElement} is available across all chains for token redemptions or future payouts."
 msgstr ""
 
 msgid "You have <0>{0} ETH</0> of unclaimed NFT credits"
@@ -2504,9 +2498,6 @@ msgstr ""
 msgid "Ruleset #"
 msgstr ""
 
-msgid "Unstaked balance"
-msgstr ""
-
 msgid "Recommended"
 msgstr ""
 
@@ -2942,6 +2933,9 @@ msgstr ""
 msgid "If your project has \"hold fees\" enabled, instead of processing that that 2.5% fee immediately, the fee gets held within the Juicebox contracts. These fees can be unlocked by transferring the ETH back to your project."
 msgstr ""
 
+msgid "Claimed token balance"
+msgstr ""
+
 msgid "Redemption rate"
 msgstr ""
 
@@ -3270,6 +3264,9 @@ msgid "Transfer {tokenTextShort}"
 msgstr ""
 
 msgid "Owner token minting is not available for V1.0 projects. Owner token minting can be enabled by editing the project's cycle."
+msgstr ""
+
+msgid "{surplusElement} is available across all chains for future payouts."
 msgstr ""
 
 msgid "<0/> reclaimed from project"

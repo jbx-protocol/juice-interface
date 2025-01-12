@@ -8,6 +8,4 @@ export enum NetworkName {
   optimismSepolia = 'optimismSepolia',
   base = 'base',
   baseSepolia = 'baseSepolia',
-  polygon = 'polygon',
-  polygonSepolia = 'polygonSepolia',
 }

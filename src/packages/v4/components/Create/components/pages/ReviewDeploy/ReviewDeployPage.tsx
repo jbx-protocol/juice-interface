@@ -1,32 +1,32 @@
 import { Checkbox, Form } from 'antd'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
-import { Callout } from 'components/Callout/Callout'
 import { CheckCircleFilled } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
+import { Callout } from 'components/Callout/Callout'
+import ExternalLink from 'components/ExternalLink'
+import TransactionModal from 'components/modals/TransactionModal'
+import { TERMS_OF_SERVICE_URL } from 'constants/links'
+import { useWallet } from 'hooks/Wallet'
+import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
+import useMobile from 'hooks/useMobile'
+import { useModal } from 'hooks/useModal'
+import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
+import { helpPagePath } from 'utils/helpPagePath'
+import { useDeployProject } from '../../../hooks/DeployProject/useDeployProject'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
-import ExternalLink from 'components/ExternalLink'
+import { Wizard } from '../../Wizard/Wizard'
+import { WizardContext } from '../../Wizard/contexts/WizardContext'
 import { FundingConfigurationReview } from './components/FundingConfigurationReview/FundingConfigurationReview'
 import { ProjectDetailsReview } from './components/ProjectDetailsReview/ProjectDetailsReview'
 import { ProjectTokenReview } from './components/ProjectTokenReview/ProjectTokenReview'
 import { RewardsReview } from './components/RewardsReview/RewardsReview'
 import { RulesReview } from './components/RulesReview/RulesReview'
-import { TERMS_OF_SERVICE_URL } from 'constants/links'
-import { Trans } from '@lingui/macro'
-import TransactionModal from 'components/modals/TransactionModal'
-import { Wizard } from '../../Wizard/Wizard'
-import { WizardContext } from '../../Wizard/contexts/WizardContext'
-import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
-import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
-import { helpPagePath } from 'utils/helpPagePath'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useDeployProject } from '../../../hooks/DeployProject/useDeployProject'
-import { useDispatch } from 'react-redux'
-import useMobile from 'hooks/useMobile'
-import { useModal } from 'hooks/useModal'
-import { useRouter } from 'next/router'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
-import { useWallet } from 'hooks/Wallet'
 
 enum ReviewDeployKey {
   ProjectDetails = 0,
@@ -213,7 +213,7 @@ export const ReviewDeployPage = () => {
                   Terms of Service
                 </ExternalLink>{' '}
                 and{' '}
-                <ExternalLink href={helpPagePath(`/dev/learn/risks`)}>
+                <ExternalLink href={helpPagePath(`/v4/learn/risks`)}>
                   the risks
                 </ExternalLink>
                 .

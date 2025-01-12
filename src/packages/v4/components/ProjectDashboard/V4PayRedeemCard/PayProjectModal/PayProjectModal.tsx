@@ -1,7 +1,7 @@
 import { Trans, t } from '@lingui/macro'
 import {
-  PayProjectModalFormValues,
-  usePayProjectModal,
+    PayProjectModalFormValues,
+    usePayProjectModal,
 } from './hooks/usePayProjectModal/usePayProjectModal'
 
 import EtherscanLink from 'components/EtherscanLink'
@@ -159,7 +159,7 @@ export const PayProjectModal: React.FC = () => {
                               I understand and accept this project's notice and
                               the{' '}
                               <ExternalLink
-                                href={helpPagePath('dev/learn/risks')}
+                                href={helpPagePath('v4/learn/risks')}
                               >
                                 risks
                               </ExternalLink>{' '}
@@ -169,7 +169,7 @@ export const PayProjectModal: React.FC = () => {
                             <Trans>
                               I understand and accept the{' '}
                               <ExternalLink
-                                href={helpPagePath('dev/learn/risks')}
+                                href={helpPagePath('v4/learn/risks')}
                               >
                                 risks
                               </ExternalLink>{' '}

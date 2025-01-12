@@ -205,7 +205,7 @@ export const ReviewDeployPage = () => {
                   Terms of Service
                 </ExternalLink>{' '}
                 and{' '}
-                <ExternalLink href={helpPagePath(`/dev/learn/risks`)}>
+                <ExternalLink href={helpPagePath(`/v4/learn/risks`)}>
                   the risks
                 </ExternalLink>
                 .

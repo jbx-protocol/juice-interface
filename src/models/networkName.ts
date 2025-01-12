@@ -2,7 +2,7 @@ export enum NetworkName {
   localhost = 'localhost',
   mainnet = 'mainnet',
   sepolia = 'sepolia',
-  arbitrumOne = 'arbitrumOne',
+  arbitrum = 'arbitrum',
   arbitrumSepolia = 'arbitrumSepolia',
   optimism = 'optimism',
   optimismSepolia = 'optimismSepolia',

@@ -21,6 +21,7 @@ import {
 } from 'packages/v2v3/utils/serializers'
 import { CreateState, ProjectState } from './v2ProjectTypes'
 
+import { DEFAULT_PROJECT_CHAIN_ID } from 'constants/networks'
 import { ONE_MILLION } from 'constants/numbers'
 import { JB721TiersHookFlags } from 'packages/v4/models/nfts'
 import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
@@ -119,7 +120,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
 }
 
 const DEFAULT_CREATE_STATE: CreateState = {
-  projectChainId: 1, // not necessary for v2v3
+  projectChainId: DEFAULT_PROJECT_CHAIN_ID, //  not necessary for v2v3
   treasurySelection: 'zero',
   reconfigurationRuleSelection: undefined,
   fundingCyclesPageSelection: undefined,

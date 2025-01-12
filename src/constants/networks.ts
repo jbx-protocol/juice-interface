@@ -1,3 +1,4 @@
+import { JBChainId } from 'juice-sdk-core'
 import { NetworkName } from 'models/networkName'
 import { isBrowser } from 'utils/isBrowser'
 
@@ -9,7 +10,7 @@ type NetworkInfo = {
   name: NetworkName
   label: string
   color: string
-  chainId: number, // should be JBChainId
+  chainId: number // should be JBChainId
   blockExplorer: string
   rpcUrl: string
   token: string
@@ -40,8 +41,8 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     token: 'SepETH',
   },
   42161: {
-    name: NetworkName.arbitrumOne,
-    label: 'Arbitrum One',
+    name: NetworkName.arbitrum,
+    label: 'Arbitrum',
     color: '#28a0f0',
     chainId: 42161,
     token: 'ArbETH',
@@ -70,7 +71,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     name: NetworkName.optimismSepolia,
     label: 'Optimism Sepolia Testnet',
     color: '#f01f70',
-    chainId: 11155420, 
+    chainId: 11155420,
     token: 'OpETH',
     rpcUrl: `https://sepolia.optimism.io`,
     blockExplorer: 'https://optimism-sepolia.blockscout.com',
@@ -113,7 +114,9 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
 }
 
-export const TESTNET_IDS = new Set<number>([11155111, 421614, 11155420, 84531, 1442]);
+export const TESTNET_IDS = new Set<number>([
+  11155111, 421614, 11155420, 84531, 1442,
+])
 
 export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
   (acc, curr) => ({
@@ -123,7 +126,8 @@ export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
   {} as Record<NetworkName, NetworkInfo>,
 )
 
-export const DEFAULT_PROJECT_CHAIN_ID = NETWORKS_BY_NAME.mainnet.chainId
+export const DEFAULT_PROJECT_CHAIN_ID = NETWORKS_BY_NAME.mainnet
+  .chainId as unknown as JBChainId // TODO once mainnet is a JBChainId, this wont be necessary
 
 export const readNetwork =
   NETWORKS_BY_NAME[process.env.NEXT_PUBLIC_INFURA_NETWORK]

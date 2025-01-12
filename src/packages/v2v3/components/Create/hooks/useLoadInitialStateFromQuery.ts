@@ -3,9 +3,13 @@ import {
   DEFAULT_REDUX_STATE,
   creatingV2ProjectActions,
 } from 'redux/slices/v2v3/creatingV2Project'
-import { CreateState, ProjectState } from 'redux/slices/v2v3/shared/v2ProjectTypes'
+import {
+  CreateState,
+  ProjectState,
+} from 'redux/slices/v2v3/shared/v2ProjectTypes'
 
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
+import { DEFAULT_PROJECT_CHAIN_ID } from 'constants/networks'
 import isEqual from 'lodash/isEqual'
 import { CreatePage } from 'models/createPage'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
@@ -101,7 +105,7 @@ const parseCreateFlowStateFromInitialState = (
   }
 
   return {
-    projectChainId: 84532, // not necessary for v2v3
+    projectChainId: DEFAULT_PROJECT_CHAIN_ID, // not necessary for v2v3
     fundingCyclesPageSelection,
     treasurySelection,
     fundingTargetSelection: undefined, // TODO: Remove

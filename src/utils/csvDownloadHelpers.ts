@@ -46,8 +46,8 @@ export async function downloadParticipants(
       t`Total ETH paid`,
       t`USD value of ETH paid`,
       t`Balance`,
-      t`Staked balance`,
-      t`Unstaked balance`,
+      t`Unclaimed token balance`,
+      t`Claimed token balance`,
     ], // CSV header row
   ]
 

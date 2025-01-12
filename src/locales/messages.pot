@@ -215,9 +215,6 @@ msgstr ""
 msgid "{0} tokens"
 msgstr ""
 
-msgid "Staked balance"
-msgstr ""
-
 msgid "<0>Edits to this project must be made before this deadline. This gives token holders time to verify the edits before they take effect.</0><1>For example: with a 1-day edit deadline, edits must be made at least 1 day before a ruleset cycle starts.</1>"
 msgstr ""
 
@@ -759,6 +756,9 @@ msgid "You receive"
 msgstr ""
 
 msgid "Saved projects"
+msgstr ""
+
+msgid "Unclaimed token balance"
 msgstr ""
 
 msgid "The redemption rate determines how token holders can burn their tokens to reclaim a portion of the ETH not needed for payouts."
@@ -2498,9 +2498,6 @@ msgstr ""
 msgid "Ruleset #"
 msgstr ""
 
-msgid "Unstaked balance"
-msgstr ""
-
 msgid "Recommended"
 msgstr ""
 
@@ -2934,6 +2931,9 @@ msgid "Payments to this project are paused in this cycle."
 msgstr ""
 
 msgid "If your project has \"hold fees\" enabled, instead of processing that that 2.5% fee immediately, the fee gets held within the Juicebox contracts. These fees can be unlocked by transferring the ETH back to your project."
+msgstr ""
+
+msgid "Claimed token balance"
 msgstr ""
 
 msgid "Redemption rate"

@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
 import TooltipLabel from 'components/TooltipLabel'
+import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import {
   CONTROLLER_CONFIG_EXPLANATION,
@@ -9,6 +10,7 @@ import {
   TERMINAL_CONFIG_EXPLANATION,
   TERMINAL_MIGRATION_EXPLANATION,
 } from 'components/strings'
+import moment from 'moment'
 
 export function DetailsSectionAdvanced() {
   return (
@@ -64,9 +66,8 @@ export function DetailsSectionAdvanced() {
           </span>
         }
       >
-        <Form.Item name="mustStartAtOrAfter" noStyle>
-          <input></input>
-          {/* <JuiceDatePicker
+        <Form.Item valuePropName={'date'} name="mustStartAtOrAfter" noStyle>
+          <JuiceDatePicker
             showNow={false}
             showToday={false}
             format="YYYY-MM-DD HH:mm:ss"
@@ -77,8 +78,8 @@ export function DetailsSectionAdvanced() {
                 return false
               return true
             }}
-            // showTime={{ defaultValue: moment('00:00:00') }}
-          /> */}
+            showTime={{ defaultValue: moment('00:00:00') }}
+          />
         </Form.Item>
       </Form.Item>
     </AdvancedDropdown>

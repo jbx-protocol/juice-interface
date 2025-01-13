@@ -14,6 +14,7 @@ import {
 } from 'packages/v2v3/utils/math'
 import { deserializeV2V3FundingCycleData } from 'packages/v2v3/utils/serializers'
 import { useEffect, useRef, useState } from 'react'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/creatingV2Project'
 import {
   deriveDurationOption,
   deriveDurationUnit,
@@ -78,6 +79,7 @@ export const useLoadEditCycleData = () => {
           : DefaultTokenSettings.pauseTransfers
 
       const formData = {
+        mustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
         duration: secondsToOtherUnit({
           duration,
           unit: deriveDurationUnit(duration),

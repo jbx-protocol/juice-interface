@@ -123,9 +123,11 @@ export const usePrepareSaveEditCycleData = () => {
     editingFundingCycleData,
     editingFundAccessConstraints,
     editingNftRewards,
-    editingMustStartAtOrAfter: formValues.mustStartAtOrAfter
-      ? moment(formValues.mustStartAtOrAfter).unix().toString()
-      : DEFAULT_MUST_START_AT_OR_AFTER,
+    editingMustStartAtOrAfter:
+      formValues.mustStartAtOrAfter &&
+      formValues.mustStartAtOrAfter !== DEFAULT_MUST_START_AT_OR_AFTER
+        ? moment(formValues.mustStartAtOrAfter).unix().toString()
+        : DEFAULT_MUST_START_AT_OR_AFTER,
   }
 
   return {

@@ -2921,6 +2921,9 @@ msgstr ""
 msgid "Twitter handle"
 msgstr ""
 
+msgid "Check your changes carefully. Each deploy will incur a gas fee."
+msgstr ""
+
 msgid "<0/> fee"
 msgstr ""
 
@@ -3315,9 +3318,6 @@ msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this 
 msgstr ""
 
 msgid "Previous value"
-msgstr ""
-
-msgid "Please check your changes carefully. Each deploy will incur a gas fee."
 msgstr ""
 
 msgid "Owner token minting:"

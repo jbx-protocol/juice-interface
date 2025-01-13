@@ -99,23 +99,22 @@ export const CurrentUpcomingSubPanel = ({
   }
 
   const upcomingCycleChangesCalloutText = hasChanges
-    ? t`This cycle has upcoming changes`
-    : t`This cycle has no upcoming changes`
+    ? t`This upcoming cycle has changes`
+    : t`This upcoming cycle has no changes`
 
   return (
     <div>
       <div className="flex flex-col gap-4">
-        {/* If the upcoming tab is selected and its the first cycle, it means they're
-        currently in Cycle 0 (i.e. the project hasn't 'started' yet.) */}
-        {id === 'upcoming' && info.cycleNumber === 1 && (
-          <CountdownCallout cycleStart={info.start?.toNumber()} />
-        )}
         {id === 'upcoming' && info.cycleNumber && info.cycleNumber > 1 && (
-          <UpcomingCycleChangesCallout
-            text={upcomingCycleChangesCalloutText}
-            hasChanges={hasChanges}
-            loading={loading}
-          />
+          <>
+            <CountdownCallout cycleStart={info.start?.toNumber()} />
+
+            <UpcomingCycleChangesCallout
+              text={upcomingCycleChangesCalloutText}
+              hasChanges={hasChanges}
+              loading={loading}
+            />
+          </>
         )}
 
         <div className="grid grid-cols-2 gap-4 md:flex">

@@ -1,24 +1,25 @@
+import { useEffect, useMemo } from 'react'
 import {
   DEFAULT_MUST_START_AT_OR_AFTER,
   creatingV2ProjectActions,
 } from 'redux/slices/v2v3/creatingV2Project'
-import { DEFAULT_PROJECT_CHAIN_ID, SupportedChainId } from 'constants/networks'
-import { useEffect, useMemo } from 'react'
 
-import { AmountInputValue } from '../ProjectDetailsPage'
 import { Form } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
+import { DEFAULT_PROJECT_CHAIN_ID } from 'constants/networks'
+import { useWallet } from 'hooks/Wallet'
+import { JBChainId } from 'juice-sdk-core'
 import { ProjectTagName } from 'models/project-tags'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useForm } from 'antd/lib/form/Form'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
-import { useWallet } from 'hooks/Wallet'
+import { AmountInputValue } from '../ProjectDetailsPage'
 
 type ProjectDetailsFormProps = Partial<{
   projectName: string
-  projectChainId: SupportedChainId
+  projectChainId: JBChainId
   projectTagline: string
   projectDescription: string
   logo: string
@@ -43,12 +44,18 @@ type ProjectDetailsFormProps = Partial<{
 
 export const useProjectDetailsForm = () => {
   const [form] = useForm<ProjectDetailsFormProps>()
-  const { projectChainId, projectMetadata, inputProjectOwner, mustStartAtOrAfter } =
-    useAppSelector(state => state.creatingV2Project)
+  const {
+    projectChainId,
+    projectMetadata,
+    inputProjectOwner,
+    mustStartAtOrAfter,
+  } = useAppSelector(state => state.creatingV2Project)
 
-  const { chain } = useWallet() 
+  const { chain } = useWallet()
 
-  const defaultChainId = chain?.id ? parseInt(chain.id) : DEFAULT_PROJECT_CHAIN_ID
+  const defaultChainId = chain?.id
+    ? parseInt(chain.id)
+    : DEFAULT_PROJECT_CHAIN_ID
   const initialValues: ProjectDetailsFormProps = useMemo(
     () => ({
       projectName: projectMetadata.name,

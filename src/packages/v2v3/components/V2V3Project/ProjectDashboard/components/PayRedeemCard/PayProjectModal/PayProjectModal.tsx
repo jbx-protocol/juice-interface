@@ -14,8 +14,8 @@ import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
 import { usePayAmounts } from './hooks/usePayAmounts'
 import {
-  PayProjectModalFormValues,
-  usePayProjectModal,
+    PayProjectModalFormValues,
+    usePayProjectModal,
 } from './hooks/usePayProjectModal/usePayProjectModal'
 
 export const PayProjectModal: React.FC = () => {
@@ -135,7 +135,7 @@ export const PayProjectModal: React.FC = () => {
                             I understand and accept this project's notice and
                             the{' '}
                             <ExternalLink
-                              href={helpPagePath('dev/learn/risks')}
+                              href={helpPagePath('v4/learn/risks')}
                             >
                               risks
                             </ExternalLink>{' '}
@@ -145,7 +145,7 @@ export const PayProjectModal: React.FC = () => {
                           <Trans>
                             I understand and accept the{' '}
                             <ExternalLink
-                              href={helpPagePath('dev/learn/risks')}
+                              href={helpPagePath('v4/learn/risks')}
                             >
                               risks
                             </ExternalLink>{' '}

@@ -1,32 +1,32 @@
-import {
-  EMPTY_PAYOUT_GROUPED_SPLITS,
-  EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
-} from '../shared/v2ProjectDefaultState'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import {
   JB721GovernanceType,
   NftCollectionMetadata,
   NftRewardTier,
 } from 'models/nftRewards'
-import { NftRewardsData, ReduxState } from '../shared/v2ProjectTypes'
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import {
   SerializedV2V3FundAccessConstraint,
   SerializedV2V3FundingCycleData,
   SerializedV2V3FundingCycleMetadata,
 } from 'packages/v2v3/utils/serializers'
+import {
+  EMPTY_PAYOUT_GROUPED_SPLITS,
+  EMPTY_RESERVED_TOKENS_GROUPED_SPLITS,
+} from '../shared/v2ProjectDefaultState'
+import { NftRewardsData, ReduxState } from '../shared/v2ProjectTypes'
 
-import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
-import { AmountInputValue } from 'packages/v2v3/components/Create/components/pages/ProjectDetails/ProjectDetailsPage'
 import { CreatePage } from 'models/createPage'
-import { INITIAL_REDUX_STATE } from '../shared/v2ProjectInitialReduxState'
 import { NftPostPayModalConfig } from 'models/nftPostPayModal'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { ProjectTagName } from 'models/project-tags'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
-import { Split } from 'packages/v2v3/models/splits'
 import { TreasurySelection } from 'models/treasurySelection'
+import { AmountInputValue } from 'packages/v2v3/components/Create/components/pages/ProjectDetails/ProjectDetailsPage'
 import { projectTokenSettingsToReduxFormat } from 'packages/v2v3/components/Create/utils/projectTokenSettingsToReduxFormat'
+import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
+import { Split } from 'packages/v2v3/models/splits'
+import { INITIAL_REDUX_STATE } from '../shared/v2ProjectInitialReduxState'
 
 const creatingV2ProjectSlice = createSlice({
   name: 'creatingV2Project',
@@ -39,8 +39,8 @@ const creatingV2ProjectSlice = createSlice({
     setName: (state, action: PayloadAction<string>) => {
       state.projectMetadata.name = action.payload
     },
-    setProjectChainId: (state, action: PayloadAction<number>) => {
-      state.projectChainId = action.payload
+    setProjectChainId: (state, action: PayloadAction<number>) => { // v4TODO: Should use JBChainId type
+      state.projectChainId = action.payload as 84532 | 421614 | 11155111 | 11155420 // shouldn't need this
     },
     setProjectTagline: (state, action: PayloadAction<string>) => {
       state.projectMetadata.projectTagline = action.payload

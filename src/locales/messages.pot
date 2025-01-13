@@ -77,9 +77,6 @@ msgstr ""
 msgid "Contract address: {0}"
 msgstr ""
 
-msgid "No surplus"
-msgstr ""
-
 msgid "Trust"
 msgstr ""
 
@@ -216,9 +213,6 @@ msgid "Built by the best"
 msgstr ""
 
 msgid "{0} tokens"
-msgstr ""
-
-msgid "Staked balance"
 msgstr ""
 
 msgid "<0>Edits to this project must be made before this deadline. This gives token holders time to verify the edits before they take effect.</0><1>For example: with a 1-day edit deadline, edits must be made at least 1 day before a ruleset cycle starts.</1>"
@@ -384,9 +378,6 @@ msgid "Reserved NFTs"
 msgstr ""
 
 msgid "Basic details"
-msgstr ""
-
-msgid "{surplus} is available for future payouts."
 msgstr ""
 
 msgid "Your project can receive payments through the juicebox.money app."
@@ -561,9 +552,6 @@ msgid "If locked, this payout can't be edited or removed until the lock expires 
 msgstr ""
 
 msgid "I understand"
-msgstr ""
-
-msgid "This cycle has upcoming changes"
 msgstr ""
 
 msgid "<0/> Your project's rules cannot be edited during the first ruleset."
@@ -768,6 +756,9 @@ msgid "You receive"
 msgstr ""
 
 msgid "Saved projects"
+msgstr ""
+
+msgid "Unclaimed token balance"
 msgstr ""
 
 msgid "The redemption rate determines how token holders can burn their tokens to reclaim a portion of the ETH not needed for payouts."
@@ -1079,9 +1070,6 @@ msgstr ""
 msgid "1. Set ENS name"
 msgstr ""
 
-msgid "{surplus} is available for token redemptions or future payouts."
-msgstr ""
-
 msgid "No overflow"
 msgstr ""
 
@@ -1343,6 +1331,9 @@ msgstr ""
 msgid "Failed to create ERC20 token: {0}"
 msgstr ""
 
+msgid "This upcoming cycle has no changes"
+msgstr ""
+
 msgid "Payments"
 msgstr ""
 
@@ -1473,6 +1464,9 @@ msgid "If you're not sure if you need to claim, you probably don't."
 msgstr ""
 
 msgid "File"
+msgstr ""
+
+msgid "{surplusElement} is available across all chains for token redemptions or future payouts."
 msgstr ""
 
 msgid "You have <0>{0} ETH</0> of unclaimed NFT credits"
@@ -1904,6 +1898,9 @@ msgstr ""
 msgid "The amount of ETH in the wallet that owns this project."
 msgstr ""
 
+msgid "A project chain"
+msgstr ""
+
 msgid "Get paid in ETH, program your own payouts, token issuance, and redemptions to easily run your treasury completely on-chain — as your community grows, you can update your treasury's rules to grow with it."
 msgstr ""
 
@@ -2237,6 +2234,9 @@ msgstr ""
 msgid "Redeem your {tokensLabel} to reclaim a portion of the ETH not needed for payouts. Any {tokensLabel} you redeem will be burned."
 msgstr ""
 
+msgid "Your wallet has been changed to {0}. Try transaction again."
+msgstr ""
+
 msgid "<0>{tokenSymbol} ERC-20 address:</0> <1/>"
 msgstr ""
 
@@ -2496,9 +2496,6 @@ msgid "While enabled, the project owner can change the project's <0>controller</
 msgstr ""
 
 msgid "Ruleset #"
-msgstr ""
-
-msgid "Unstaked balance"
 msgstr ""
 
 msgid "Recommended"
@@ -2852,9 +2849,6 @@ msgstr ""
 msgid "Edit {projectTitle}'s rules"
 msgstr ""
 
-msgid "This cycle has no upcoming changes"
-msgstr ""
-
 msgid "Software"
 msgstr ""
 
@@ -2927,6 +2921,9 @@ msgstr ""
 msgid "Twitter handle"
 msgstr ""
 
+msgid "Check your changes carefully. Each deploy will incur a gas fee."
+msgstr ""
+
 msgid "<0/> fee"
 msgstr ""
 
@@ -2937,6 +2934,9 @@ msgid "Payments to this project are paused in this cycle."
 msgstr ""
 
 msgid "If your project has \"hold fees\" enabled, instead of processing that that 2.5% fee immediately, the fee gets held within the Juicebox contracts. These fees can be unlocked by transferring the ETH back to your project."
+msgstr ""
+
+msgid "Claimed token balance"
 msgstr ""
 
 msgid "Redemption rate"
@@ -3212,6 +3212,9 @@ msgstr ""
 msgid "No description"
 msgstr ""
 
+msgid "This upcoming cycle has changes"
+msgstr ""
+
 msgid "Connect wallet to send payouts"
 msgstr ""
 
@@ -3266,6 +3269,9 @@ msgstr ""
 msgid "Owner token minting is not available for V1.0 projects. Owner token minting can be enabled by editing the project's cycle."
 msgstr ""
 
+msgid "{surplusElement} is available across all chains for future payouts."
+msgstr ""
+
 msgid "<0/> reclaimed from project"
 msgstr ""
 
@@ -3312,9 +3318,6 @@ msgid "Display ERC-20 tokens and other Juicebox project tokens that are in this 
 msgstr ""
 
 msgid "Previous value"
-msgstr ""
-
-msgid "Please check your changes carefully. Each deploy will incur a gas fee."
 msgstr ""
 
 msgid "Owner token minting:"

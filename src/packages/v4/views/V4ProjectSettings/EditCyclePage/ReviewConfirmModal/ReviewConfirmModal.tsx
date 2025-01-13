@@ -73,7 +73,7 @@ export function ReviewConfirmModal({
       >
         <p className="text-secondary text-sm">
           <Trans>
-            Please check your changes carefully. Each deploy will incur a gas
+            Check your changes carefully. Each deploy will incur a gas
             fee.
           </Trans>
         </p>

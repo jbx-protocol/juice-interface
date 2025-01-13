@@ -40,6 +40,9 @@ export function DetailsSectionDiff() {
     newSetController,
     currentSetController,
     allowSetControllerHasDiff,
+
+    mustStartAtOrAfter,
+    hasMustStartAtOrAfter,
   } = useDetailsSectionValues()
 
   if (!sectionHasDiff) {
@@ -152,6 +155,16 @@ export function DetailsSectionDiff() {
                 oldValue={
                   <span className="capitalize">
                     {currentAllowControllerMigration.toString()}
+                  </span>
+                }
+              />
+            )}
+            {hasMustStartAtOrAfter && (
+              <FundingCycleListItem
+                name={t`Start time`}
+                value={
+                  <span className="capitalize">
+                    {mustStartAtOrAfter.toString()}
                   </span>
                 }
               />

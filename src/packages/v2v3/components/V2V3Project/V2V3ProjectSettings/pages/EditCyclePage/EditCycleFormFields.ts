@@ -12,6 +12,7 @@ type DetailsSectionFields = {
   allowControllerMigration: boolean
   allowTerminalMigration: boolean
   pausePay: boolean
+  mustStartAtOrAfter: string
 }
 
 type PayoutsSectionFields = {

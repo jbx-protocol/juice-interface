@@ -12,9 +12,9 @@ export const V4ConfigurationDisplayCard = ({
 }) => {
   const title = useMemo(() => {
     if (type === 'current') {
-      return t`Current cycle`
+      return t`Current ruleset cycle`
     }
-    return t`Upcoming cycle`
+    return t`Upcoming ruleset cycle`
   }, [type])
 
   return (

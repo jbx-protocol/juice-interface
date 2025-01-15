@@ -39,7 +39,7 @@ export const V4RedeemTokensButton = ({
 
   const redeemDisabledTooltip = useMemo(() => {
     if (!userTokenBalance || userTokenBalance === 0n)
-      return t`No tokens to redeem.`
+      return t`No tokens to cash out.`
     if (!hasSurplus)
       return t`This project has no ETH, or is using all of its ETH for payouts.`
     if (payoutLimit === 0n) return t`This project has redemptions turned off.`
@@ -59,7 +59,7 @@ export const V4RedeemTokensButton = ({
         disabled={redeemTokensDisabled}
         onClick={redeemTokensDisabled ? undefined : openModal}
       >
-        <Trans>Redeem tokens</Trans>
+        <Trans>Cash out tokens</Trans>
       </Button>
       <V4BurnOrRedeemModal
         open={open}

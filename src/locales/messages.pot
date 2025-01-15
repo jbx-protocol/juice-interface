@@ -260,6 +260,9 @@ msgstr ""
 msgid "The portion this recipient will receive out of the {reservedRate}% of the project's reserved token issuance."
 msgstr ""
 
+msgid "Cash out your tokens for a portion of this project's treasury"
+msgstr ""
+
 msgid "Reserved rate:"
 msgstr ""
 
@@ -456,6 +459,9 @@ msgid "None of your project's ETH can be paid out. All ETH will stay in your pro
 msgstr ""
 
 msgid "Project Details"
+msgstr ""
+
+msgid "No ETH can be paid out from the project. The ETH can only be accessed by token holders that cash out their tokens."
 msgstr ""
 
 msgid "This account hasn't contributed to any projects yet."
@@ -867,6 +873,9 @@ msgid "Create a project payer address for {projectTitle}"
 msgstr ""
 
 msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
+msgstr ""
+
+msgid "Cash out {tokenTicker}"
 msgstr ""
 
 msgid "USD value of ETH received"
@@ -1337,6 +1346,9 @@ msgstr ""
 msgid "Payments"
 msgstr ""
 
+msgid "Cash out your tokens to reclaim some ETH that isn't needed for payouts. This cycle's <0>redemption rate</0> determines the amount of ETH you'll receive."
+msgstr ""
+
 msgid "Juicebox Project"
 msgstr ""
 
@@ -1371,6 +1383,9 @@ msgid "Delisted project"
 msgstr ""
 
 msgid "Transfer ETH to this project"
+msgstr ""
+
+msgid "When people pay your project, they receive its tokens. Project tokens can be used for governance or community access, and token holders can cash out their tokens to reclaim some ETH from your project. You can also reserve some tokens for recipients of your choosing."
 msgstr ""
 
 msgid "Using a duration is recommended. Without one, you can edit your cycle at any time, which may appear risky."
@@ -1634,6 +1649,9 @@ msgstr ""
 msgid "Juicebox project"
 msgstr ""
 
+msgid "Connect wallet to cash out"
+msgstr ""
+
 msgid "No upcoming cycle"
 msgstr ""
 
@@ -1697,7 +1715,13 @@ msgstr ""
 msgid "Edited"
 msgstr ""
 
+msgid "Cash out tokens for a portion of this project's treasury"
+msgstr ""
+
 msgid "Send {tokensText}"
+msgstr ""
+
+msgid "You cash out"
 msgstr ""
 
 msgid "Not set"
@@ -2202,6 +2226,9 @@ msgid "Set ENS name"
 msgstr ""
 
 msgid "Controller migration"
+msgstr ""
+
+msgid "You can cash out your {tokenTextLong} for ETH without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right-hand corner of this project."
 msgstr ""
 
 msgid "JBX membership fee ({0}%):"
@@ -2966,6 +2993,9 @@ msgstr ""
 msgid "Download project activity CSVs"
 msgstr ""
 
+msgid "Cash out"
+msgstr ""
+
 msgid "Cycle duration"
 msgstr ""
 
@@ -3231,6 +3261,9 @@ msgid "Redeem NFTs for ETH"
 msgstr ""
 
 msgid "Juicebox is built for the people, by the people."
+msgstr ""
+
+msgid "Cash out tokens"
 msgstr ""
 
 msgid "Sent payouts"
@@ -3540,6 +3573,9 @@ msgid "This project has been delisted and can't be paid."
 msgstr ""
 
 msgid "NFTs, tokens and rewards will be sent to <0/>"
+msgstr ""
+
+msgid "Cash out {tokensTextLong} for ETH"
 msgstr ""
 
 msgid "See the code"
@@ -3935,6 +3971,9 @@ msgstr ""
 msgid "payout"
 msgstr ""
 
+msgid "Tokens to cash out"
+msgstr ""
+
 msgid "Cycle"
 msgstr ""
 
@@ -4272,6 +4311,9 @@ msgid "Visit jbdao.org"
 msgstr ""
 
 msgid "Allow Controller migration"
+msgstr ""
+
+msgid "No tokens to cash out."
 msgstr ""
 
 msgid "Turn on unlimited payouts, and convert all your payout amounts to percentages."

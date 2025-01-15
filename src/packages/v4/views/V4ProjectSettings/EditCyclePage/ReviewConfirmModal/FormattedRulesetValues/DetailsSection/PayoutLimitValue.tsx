@@ -31,7 +31,7 @@ export function PayoutLimitValue({
         ) : distributionLimitIsZero ? (
           <Trans>
             No ETH can be paid out from the project. The ETH can only be
-            accessed by token holders that redeem their tokens.
+            accessed by token holders that cash out their tokens.
           </Trans>
         ) : (
           <Trans>
@@ -56,9 +56,7 @@ export function PayoutLimitValue({
   ) : distributionLimitIsZero ? (
     <>{shortName ? <Trans>Zero</Trans> : <Trans>Zero (no payouts)</Trans>}</>
   ) : (
-    <NativeTokenValue 
-      wei={payoutLimit}
-    />
+    <NativeTokenValue wei={payoutLimit} />
   )
 
   return (

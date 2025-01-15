@@ -144,9 +144,9 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
             <PayRedeemInput
               label={
                 <Tooltip
-                  title={t`Redeem your tokens for a portion of this project's treasury`}
+                  title={t`Cash out your tokens for a portion of this project's treasury`}
                 >
-                  {t`You redeem`}
+                  {t`You cash out`}
                 </Tooltip>
               }
               token={{
@@ -196,10 +196,10 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
             insufficientBalance ? (
               <Trans>Insufficient balance</Trans>
             ) : (
-              <Trans>Redeem {tokenTicker}</Trans>
+              <Trans>Cash out {tokenTicker}</Trans>
             )
           ) : (
-            <Trans>Connect wallet to redeem</Trans>
+            <Trans>Connect wallet to cash out</Trans>
           )}
         </Button>
       </div>

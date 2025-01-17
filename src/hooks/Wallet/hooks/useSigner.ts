@@ -1,5 +1,5 @@
 import { useConnectWallet } from '@web3-onboard/react'
-import { readProvider } from 'constants/readProvider'
+import { providers } from 'ethers'
 import { useMemo } from 'react'
 import { useChainUnsupported } from './useChainUnsupported'
 
@@ -11,8 +11,7 @@ export function useSigner() {
       return undefined
     }
 
-    return readProvider
-    // return new providers.Web3Provider(wallet.provider, 'any')
+    return new providers.Web3Provider(wallet.provider, 'any')
   }, [wallet])
 
   const signer = useMemo(() => {

@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro'
-import { useConnectWallet } from '@web3-onboard/react'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
@@ -86,7 +85,7 @@ export function useTransactor(): Transactor | undefined {
 
   const { chain, userAddress } = useWallet()
   const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
-  const [{ wallet }] = useConnectWallet()
+  const { signer } = useWallet()
 
   return useCallback(
     async (
@@ -103,18 +102,19 @@ export function useTransactor(): Transactor | undefined {
         options?.onDone?.()
         return false
       }
-      if (!isConnected || !wallet) {
+      if (!isConnected) {
         await connect()
         options?.onDone?.()
         return false
       }
-
-      const signer = new providers.Web3Provider(wallet.provider).getSigner()
       if (!signer || !chain) {
         options?.onDone?.()
         return false
       }
 
+      /**
+       * Create a new contract instance with the signer.
+       */
       const contract = new Contract(
         _contract.address,
         _contract.interface,
@@ -189,7 +189,7 @@ export function useTransactor(): Transactor | undefined {
     [
       chainUnsupported,
       isConnected,
-      wallet,
+      signer,
       chain,
       changeNetworks,
       connect,

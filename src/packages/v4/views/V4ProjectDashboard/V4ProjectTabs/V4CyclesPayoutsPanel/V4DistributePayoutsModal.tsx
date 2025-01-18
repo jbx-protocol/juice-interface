@@ -1,4 +1,12 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
+import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
+import {
+  useJBContractContext,
+  useWriteJbMultiTerminalSendPayoutsOf,
+} from 'juice-sdk-react'
+import { V4CurrencyName, V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { useContext, useState } from 'react'
+
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { Form } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
@@ -7,17 +15,10 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { FEES_EXPLANATION } from 'components/strings'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
-import {
-  useJBContractContext,
-  useWriteJbMultiTerminalSendPayoutsOf,
-} from 'juice-sdk-react'
 import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
-import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4PayoutSplits'
-import { V4_CURRENCY_ETH, V4CurrencyName } from 'packages/v4/utils/currency'
+import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4CurrentPayoutSplits'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { parseUnits } from 'viem'
 import { useV4DistributableAmount } from './hooks/useV4DistributableAmount'

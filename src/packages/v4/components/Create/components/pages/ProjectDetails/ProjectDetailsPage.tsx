@@ -1,5 +1,6 @@
 import { Trans, t } from '@lingui/macro'
 import { Col, Form, Row } from 'antd'
+import { JBChainId, JB_CHAINS } from 'juice-sdk-core'
 import {
   V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD,
@@ -23,6 +24,7 @@ import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
 import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { ProjectChainSelect } from 'packages/v4/components/ProjectDashboard/ProjectChainSelect'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
 import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
@@ -30,7 +32,6 @@ import { OptionalHeader } from '../../OptionalHeader'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { Wizard } from '../../Wizard/Wizard'
 import { useProjectDetailsForm } from './hooks/useProjectDetailsForm'
-import { ProjectChainSelect } from './ProjectChainSelect'
 
 export const ProjectDetailsPage: React.FC<
   React.PropsWithChildren<unknown>
@@ -46,6 +47,12 @@ export const ProjectDetailsPage: React.FC<
 
   const projectOwnerDifferentThanWalletAddress =
     inputWalletAddress && wallet.userAddress !== inputWalletAddress
+  
+  const networkOptions = 
+    Object.values(JB_CHAINS).map(chain => ({
+      label: chain.name,
+      value: chain.chain.id as JBChainId,
+    }))
 
   return (
     <Form
@@ -79,7 +86,8 @@ export const ProjectDetailsPage: React.FC<
             inputMustExistRule({ label: t`A project chain` }),
           ])}
         >
-          <ProjectChainSelect />
+          {/* v4TODO: turn into a multiselect */}
+          <ProjectChainSelect options={networkOptions} />
         </Form.Item>
 
         <Form.Item

@@ -1,5 +1,6 @@
-import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
+
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { currentCycleRemainingLengthTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
 import { UpcomingCycleChangesCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTab/UpcomingCycleChangesCallout'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
@@ -127,6 +128,7 @@ export const V4CurrentUpcomingSubPanel = ({
             />
           )}
         </div>
+        {/* Gets data from useV4CurrentUpcomingConfigurationPanel */}
         <V4ConfigurationDisplayCard type={info.type} />
       </div>
 

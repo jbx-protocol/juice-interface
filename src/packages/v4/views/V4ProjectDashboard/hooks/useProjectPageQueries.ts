@@ -1,12 +1,13 @@
+import { useCallback, useMemo } from 'react'
+
 import { useRouter } from 'next/router'
 import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
-import { useCallback, useMemo } from 'react'
 
 type ProjectPageTab =
   | 'activity'
   | 'about'
   | 'nft_rewards'
-  | 'cycle_payouts'
+  | 'ruleset_payouts'
   | 'tokens'
 
 export type ProjectPayReceipt = {

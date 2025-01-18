@@ -1,8 +1,9 @@
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { ProjectTab } from 'components/Project/ProjectTabs/ProjectTab'
 import { useOnScreen } from 'hooks/useOnScreen'
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import V4AboutPanel from './V4AboutPanel'
@@ -57,7 +58,7 @@ export const V4ProjectTabs = ({ className }: { className?: string }) => {
         hideTab: !showNftRewards,
       },
       {
-        id: 'cycle_payouts',
+        id: 'ruleset_payouts',
         name: t`Rulesets & Payouts`,
         panel: <V4CyclesPayoutsPanel />,
       },

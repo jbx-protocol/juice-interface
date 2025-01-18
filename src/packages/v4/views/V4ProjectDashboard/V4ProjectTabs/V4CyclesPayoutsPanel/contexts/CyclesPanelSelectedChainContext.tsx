@@ -19,7 +19,6 @@ export const CyclesPanelSelectedChainProvider: React.FC<React.PropsWithChildren<
   children,
 }) => {
   const [selectedChainId, setSelectedChainId] = useState<JBChainId>()
-
   const projectPageChainId = useJBChainId()
 
   useEffect(() => {

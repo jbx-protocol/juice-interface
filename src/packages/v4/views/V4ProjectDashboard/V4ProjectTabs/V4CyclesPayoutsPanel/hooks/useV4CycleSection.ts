@@ -1,5 +1,5 @@
 import { ConfigurationPanelTableData } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
-import { useJBRuleset } from 'juice-sdk-react'
+import { useJBRulesetByChain } from 'packages/v4/hooks/useJBRulesetByChain'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useUpcomingPayoutLimit } from 'packages/v4/hooks/useUpcomingPayoutLimit'
@@ -11,8 +11,7 @@ export const useV4CycleSection = (
 ): ConfigurationPanelTableData => {
   const { selectedChainId } = useCyclesPanelSelectedChain()
 
-  // !!!!!!!!v4TODO: let this take optional chainId (SDK) and pass selectedChainId
-  const { data: ruleset } = useJBRuleset()
+  const { ruleset } = useJBRulesetByChain(selectedChainId)
   
   const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } = useJBUpcomingRuleset(selectedChainId)
 

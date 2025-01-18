@@ -1,13 +1,14 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
+import { useJBContractContext, useJBTokenContext, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
+import { useContext, useState } from 'react'
+
 import { waitForTransactionReceipt } from '@wagmi/core'
 import TransactionModal from 'components/modals/TransactionModal'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useJBContractContext, useJBTokenContext, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
 import SplitList from 'packages/v4/components/SplitList/SplitList'
-import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
@@ -25,7 +26,7 @@ export default function V4DistributeReservedTokensModal({
 
   const { projectId, contracts } = useJBContractContext()
   const { splits: reservedTokensSplits } = useV4ReservedSplits()
-  const { data: projectOwnerAddress } = useProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
 
   const { token } = useJBTokenContext()
   const tokenSymbol = token?.data?.symbol

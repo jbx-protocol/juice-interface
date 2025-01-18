@@ -8,6 +8,7 @@ import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import V4AboutPanel from './V4AboutPanel'
 import { V4ActivityPanel } from './V4ActivityPanel/V4ActivityPanel'
+import { CyclesPanelSelectedChainProvider } from './V4CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
 import { V4CyclesPayoutsPanel } from './V4CyclesPayoutsPanel/V4CyclesPayoutsPanel'
 import { V4NftRewardsPanel } from './V4NftRewardsPanel/V4NftRewardsPanel'
 import { V4TokensPanel } from './V4TokensPanel/V4TokensPanel'
@@ -60,7 +61,7 @@ export const V4ProjectTabs = ({ className }: { className?: string }) => {
       {
         id: 'ruleset_payouts',
         name: t`Rulesets & Payouts`,
-        panel: <V4CyclesPayoutsPanel />,
+        panel: <CyclesPanelSelectedChainProvider><V4CyclesPayoutsPanel /></CyclesPanelSelectedChainProvider>,
       },
       { id: 'tokens', name: t`Tokens`, panel: <V4TokensPanel /> },
     ],

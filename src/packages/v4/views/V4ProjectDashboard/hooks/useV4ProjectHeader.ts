@@ -1,17 +1,18 @@
-import { useQuery } from '@tanstack/react-query'
-import { BigNumber } from 'ethers'
-import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
-import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { SubtitleType, useSubtitle } from 'hooks/useSubtitle'
 import {
   useJBContractContext,
   useJBProjectMetadataContext,
   useSuckers,
 } from 'juice-sdk-react'
+
+import { useQuery } from '@tanstack/react-query'
+import { BigNumber } from 'ethers'
+import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
+import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { GnosisSafe } from 'models/safe'
 import { ProjectsDocument } from 'packages/v4/graphql/client/graphql'
 import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
-import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { fetchProjectsBySuckers } from 'packages/v4/utils/fetchProjectsBySuckers'
 import React from 'react'
 
@@ -33,7 +34,7 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
   const { metadata } = useJBProjectMetadataContext()
   const projectMetadata = metadata?.data
 
-  const { data: projectOwnerAddress } = useProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
 
   const projectIdNum = parseInt(projectId.toString())
 

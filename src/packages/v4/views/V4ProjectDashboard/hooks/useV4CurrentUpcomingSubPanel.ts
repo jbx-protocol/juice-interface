@@ -1,10 +1,10 @@
 import {
-  useJBRuleset,
-  useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf,
+  useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf
 } from 'juice-sdk-react'
 
 import { t } from '@lingui/macro'
 import { V4ApprovalStatus } from 'models/ballot'
+import { useJBRulesetByChain } from 'packages/v4/hooks/useJBRulesetByChain'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { useMemo } from 'react'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
@@ -13,8 +13,7 @@ import { useCyclesPanelSelectedChain } from '../V4ProjectTabs/V4CyclesPayoutsPan
 export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   const { selectedChainId } = useCyclesPanelSelectedChain()
   
-  // !!!!!!!!v4TODO: let this take optional chainId (SDK) and pass selectedChainId
-  const { data: ruleset, isLoading: rulesetLoading } = useJBRuleset()
+  const { ruleset, isLoading: rulesetLoading } = useJBRulesetByChain(selectedChainId)
   const { ruleset: latestUpcomingRuleset, isLoading: upcomingRulesetsLoading } =
     useJBUpcomingRuleset(selectedChainId)
 

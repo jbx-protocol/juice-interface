@@ -13,7 +13,7 @@ import { useJBUpcomingRuleset } from './useJBUpcomingRuleset'
 import { useProjectIdOfChain } from './useProjectIdOfChain'
 
 export const useV4UpcomingPayoutSplits = (chainId?: JBChainId) => {
-  const projectIdOfChainId = useProjectIdOfChain({ chainId })
+  const projectId = useProjectIdOfChain({ chainId })
 
   const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } =
     useJBUpcomingRuleset(chainId)
@@ -22,7 +22,7 @@ export const useV4UpcomingPayoutSplits = (chainId?: JBChainId) => {
 
   const { data, isLoading } = useReadJbSplitsSplitsOf({
     args: [
-      BigInt(projectIdOfChainId ?? 0),
+      BigInt(projectId ?? 0),
       BigInt(upcomingRuleset?.id ?? 0),
       groupId,
     ],
@@ -41,7 +41,7 @@ export const useV4UpcomingPayoutSplits = (chainId?: JBChainId) => {
     return { data: undefined, isLoading: true }
   }
 
-  if (!projectIdOfChainId) return { data: undefined, isLoading: false}
+  if (!projectId) return { data: undefined, isLoading: false}
 
 
   return { data, isLoading }

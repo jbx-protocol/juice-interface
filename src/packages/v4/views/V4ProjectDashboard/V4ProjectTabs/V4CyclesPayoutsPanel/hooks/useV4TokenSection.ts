@@ -1,6 +1,7 @@
-import { useJBRuleset, useJBRulesetMetadata, useJBTokenContext } from 'juice-sdk-react'
+import { useJBTokenContext } from 'juice-sdk-react'
 
 import { ConfigurationPanelTableData } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
+import { useJBRulesetByChain } from 'packages/v4/hooks/useJBRulesetByChain'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { useCyclesPanelSelectedChain } from '../contexts/CyclesPanelSelectedChainContext'
 import { useV4FormatConfigurationTokenSection } from './useV4FormatConfigurationTokenSection'
@@ -13,9 +14,7 @@ export const useV4TokenSection = (
 
   const { selectedChainId } = useCyclesPanelSelectedChain()
 
-  // !!!!!!!!v4TODO: let these take optional chainId (SDK) and pass selectedChainId
-  const { data: ruleset } = useJBRuleset()
-  const { data: rulesetMetadata } = useJBRulesetMetadata()
+  const { ruleset, rulesetMetadata } = useJBRulesetByChain(selectedChainId)
 
   const { 
     ruleset: upcomingRuleset, 

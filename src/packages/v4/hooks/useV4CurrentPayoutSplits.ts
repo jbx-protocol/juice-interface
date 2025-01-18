@@ -13,7 +13,7 @@ import {
 import { useProjectIdOfChain } from './useProjectIdOfChain'
 
 export const useV4CurrentPayoutSplits = (chainId?: JBChainId) => {
-  const projectIdOfChainId = useProjectIdOfChain({ chainId })
+  const projectId = useProjectIdOfChain({ chainId })
 
   const { data: tokenAddress } = useReadJbTokensTokenOf()
   const { data: ruleset, isLoading: rulesetIsLoading } = useJBRuleset()
@@ -21,7 +21,7 @@ export const useV4CurrentPayoutSplits = (chainId?: JBChainId) => {
   const groupId = BigInt(tokenAddress ?? NATIVE_TOKEN) // contracts say this is: `uint256(uint160(tokenAddress))`
 
   const { data, isLoading } = useReadJbSplitsSplitsOf({
-    args: [BigInt(projectIdOfChainId ?? 0), rulesetId, groupId],
+    args: [BigInt(projectId ?? 0), rulesetId, groupId],
     query: {
       select(data) {
         return data.map(
@@ -36,8 +36,6 @@ export const useV4CurrentPayoutSplits = (chainId?: JBChainId) => {
   })
 
   if (rulesetIsLoading) return { data: undefined, isLoading: true}
-
-  if (!projectIdOfChainId) return { data: undefined, isLoading: false}
 
   return { data, isLoading }
 }

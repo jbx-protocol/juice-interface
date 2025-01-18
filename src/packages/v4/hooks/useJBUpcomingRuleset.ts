@@ -20,17 +20,15 @@ export function useJBUpcomingRuleset(chainId?: JBChainId): {
   rulesetMetadata: JBRulesetMetadata | undefined
   isLoading: boolean
 } {
-  const { contracts } = useJBContractContext()
+  const { contracts, projectId: defaultProjectId } = useJBContractContext()
 
-  const projectIdOfChain = useProjectIdOfChain({ chainId }) 
+  const projectId = useProjectIdOfChain({ chainId }) 
   
   const { data, isLoading } = useReadJbControllerUpcomingRulesetOf({
     address: contracts.controller?.data ?? undefined,
-    args: [BigInt(projectIdOfChain ?? 0)],
+    args: [BigInt(projectId ?? defaultProjectId)],
     chainId
   })
-
-  if (!projectIdOfChain) return { ruleset: undefined, rulesetMetadata: undefined, isLoading: false }
   
   const _latestUpcomingRuleset = data?.[0]
   const _latestUpcomingRulesetMetadata = data?.[1]

@@ -27,6 +27,7 @@ export const ProjectChainSelect: React.FC<
 
   return (
     <JuiceListbox
+      className="text-sm font-normal"
       value={{
         label: NETWORKS[value ?? DEFAULT_PROJECT_CHAIN_ID]?.label,
         value,

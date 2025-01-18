@@ -1,9 +1,10 @@
 import { JBSplit, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
 import { NativeTokenValue, useReadJbMultiTerminalFee } from 'juice-sdk-react'
-import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import { useCallback, useMemo } from 'react'
+
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { v4GetProjectOwnerRemainderSplit } from 'packages/v4/utils/v4Splits'
-import { useCallback, useMemo } from 'react'
 import assert from 'utils/assert'
 import { feeForAmount } from 'utils/math'
 import { useV4CurrentUpcomingPayoutLimit } from './useV4CurrentUpcomingPayoutLimit'
@@ -30,7 +31,7 @@ const calculateSplitAmountWad = (
 
 export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { splits, isLoading } = useV4CurrentUpcomingPayoutSplits(type)
-  const { data: projectOwnerAddress } = useProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
   const { data: primaryNativeTerminalFee } = useReadJbMultiTerminalFee()
   const { distributableAmount } = useV4DistributableAmount()
 

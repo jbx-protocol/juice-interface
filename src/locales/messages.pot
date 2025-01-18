@@ -2819,6 +2819,9 @@ msgstr ""
 msgid "Transfer unclaimed {0}"
 msgstr ""
 
+msgid "Ok"
+msgstr ""
+
 msgid "Cannot set payouts because your <0>Total payouts</0> is Zero."
 msgstr ""
 
@@ -4278,9 +4281,6 @@ msgid "I have another question!"
 msgstr ""
 
 msgid "Manage your project's state and ownership"
-msgstr ""
-
-msgid "Ruleset cycle"
 msgstr ""
 
 msgid "The amount of reserved tokens currently available to be distributed to the recipients below."

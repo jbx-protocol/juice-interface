@@ -11,7 +11,7 @@ import Loading from 'components/Loading'
 import Link from 'next/link'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { useV4BalanceOfNativeTerminal } from 'packages/v4/hooks/useV4BalanceOfNativeTerminal'
-import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
 import { useV4DistributableAmount } from '../V4ProjectDashboard/V4ProjectTabs/V4CyclesPayoutsPanel/hooks/useV4DistributableAmount'
@@ -57,7 +57,7 @@ function SettingsGroupCard({
 }
 
 export function ProjectSettingsDashboard() {
-  const { data: projectOwnerAddress } = useProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
   const { data: balance, isLoading: loading } = useV4BalanceOfNativeTerminal()
 
   const { projectId } = useJBContractContext()

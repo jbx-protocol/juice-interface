@@ -20,12 +20,9 @@ export function useV2V3ContractLoader({ cv }: { cv: CV2V3 | undefined }) {
       try {
         const network = readNetwork.name
 
-        // Contracts can be used read-only without a signer, but require a signer to create transactions.
-        const signerOrProvider = signer ?? readProvider
-
         const contractLoaders = await Promise.all(
           Object.values(V2V3ContractName).map(contractName =>
-            loadV2V3Contract(contractName, network, signerOrProvider, cv),
+            loadV2V3Contract(contractName, network, readProvider, cv),
           ),
         )
 

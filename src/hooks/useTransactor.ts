@@ -83,12 +83,13 @@ export type TransactorInstance<T = undefined> = (
 export function useTransactor(): Transactor | undefined {
   const { addTransaction } = useContext(TxHistoryContext)
 
-  const { chain, signer, userAddress } = useWallet()
+  const { chain, userAddress } = useWallet()
   const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
+  const { signer } = useWallet()
 
   return useCallback(
     async (
-      contract: Contract,
+      _contract: Contract,
       functionName: string,
       args: unknown[],
       options?: TransactionOptions,
@@ -110,6 +111,15 @@ export function useTransactor(): Transactor | undefined {
         options?.onDone?.()
         return false
       }
+
+      /**
+       * Create a new contract instance with the signer.
+       */
+      const contract = new Contract(
+        _contract.address,
+        _contract.interface,
+        signer,
+      )
 
       logTx({ functionName, contract, args, options })
 

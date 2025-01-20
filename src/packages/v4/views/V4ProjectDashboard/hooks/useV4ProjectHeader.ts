@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import { BigNumber } from 'ethers'
-import request from 'graphql-request'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { SubtitleType, useSubtitle } from 'hooks/useSubtitle'
@@ -9,11 +8,11 @@ import {
   useJBProjectMetadataContext,
   useSuckers,
 } from 'juice-sdk-react'
-import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
 import { GnosisSafe } from 'models/safe'
 import { ProjectsDocument } from 'packages/v4/graphql/client/graphql'
 import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import { fetchProjectsBySuckers } from 'packages/v4/utils/fetchProjectsBySuckers'
 
 export interface ProjectHeaderData {
   title: string | undefined
@@ -102,22 +101,9 @@ const useTotalPaymentsCount = () => {
       if (!suckers?.length) {
         return 0
       }
-      return await Promise.allSettled(
-        suckers.map(async sucker => {
-          const uri = v4SubgraphUri(sucker.peerChainId)
-          return await request(uri, ProjectsDocument, {
-            where: {
-              projectId: Number(sucker.projectId),
-            },
-          })
-        }),
-      ).then(results => {
+      return await fetchProjectsBySuckers(suckers).then(results => {
         return results.reduce((acc, result) => {
-          if (result.status === 'rejected') {
-            console.error(result.reason)
-            return acc
-          }
-          return acc + (result.value.projects[0]?.paymentsCount ?? 0)
+          return acc + (result.data.paymentsCount ?? 0)
         }, 0)
       })
     },

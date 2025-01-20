@@ -3,12 +3,10 @@ import { Button } from 'antd'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
+import { NETWORKS } from 'constants/networks'
 import request from 'graphql-request'
-import {
-  NativeTokenValue,
-  useJBChainId,
-  useJBContractContext,
-} from 'juice-sdk-react'
+import { JBChainId, SuckerPair } from 'juice-sdk-core'
+import { NativeTokenValue, useJBChainId, useSuckers } from 'juice-sdk-react'
 import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
 import { last } from 'lodash'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
@@ -29,50 +27,26 @@ import {
 const PAGE_SIZE = 10
 
 export function V4ActivityList() {
-  const { projectId } = useJBContractContext()
   const tokenSymbol = useProjectContext().tokenSymbol
+  const chainId = useJBChainId()
+  const { data: suckers, isLoading: suckersLoading } = useSuckers()
 
+  const [selectedChainId, setSelectedChainId] = React.useState(chainId)
   const [filter, setFilter] = React.useState<ProjectEventFilter>('all')
 
-  const chainId = useJBChainId()
+  const supportedChains = React.useMemo(
+    () =>
+      CHAIN_OPTIONS.filter(o => suckers?.find(s => s.peerChainId === o.value)),
+    [suckers],
+  )
+
   const {
     data: projectEventsQueryResult,
     isLoading,
     fetchNextPage,
-  } = useInfiniteQuery({
-    queryKey: ['projectEvents', projectId, filter],
-    initialPageParam: 0,
-    queryFn: async ({ pageParam = 0 }) => {
-      if (!chainId) {
-        throw new Error('useSubgraphQuery needs a chainId, none provided')
-      }
-      const uri = v4SubgraphUri(chainId)
-      const document = ProjectEventsDocument
-
-      const data = await request(uri, document, {
-        orderBy: ProjectEvent_OrderBy.timestamp,
-        orderDirection: OrderDirection.desc,
-        where: {
-          projectId: Number(projectId),
-          // ProjectEvents have exactly one non-null Event field. We can use `<filter>_not: null` to return only projectEvents where the matching Event field is defined
-          ...(!filter || filter === 'all'
-            ? {}
-            : {
-                [filter + '_not']: null,
-              }),
-        },
-        skip: pageParam * PAGE_SIZE,
-        first: PAGE_SIZE,
-      })
-      const mightHaveNextPage = data.projectEvents.length === PAGE_SIZE
-      return {
-        data,
-        nextCursor: mightHaveNextPage ? pageParam + PAGE_SIZE : undefined,
-      }
-    },
-    getNextPageParam: lastPage => {
-      return lastPage.nextCursor
-    },
+  } = useOmnichainSubgraphProjectQuery({
+    sucker: suckers?.find(s => s.peerChainId === selectedChainId),
+    filter,
   })
 
   const projectEvents = React.useMemo(
@@ -87,8 +61,14 @@ export function V4ActivityList() {
 
   return (
     <div>
-      <div className="flex items-baseline justify-between">
+      <div className="flex items-baseline justify-between gap-5">
         <h2 className="mb-6 font-heading text-2xl font-medium">Activity</h2>
+        <JuiceListbox
+          className="w-full min-w-0 max-w-[224px]"
+          value={CHAIN_OPTIONS.find(o => o.value === selectedChainId)}
+          options={supportedChains}
+          onChange={o => setSelectedChainId(o.value as JBChainId)}
+        />
       </div>
       <div className="flex flex-col gap-3">
         <JuiceListbox
@@ -97,8 +77,10 @@ export function V4ActivityList() {
           value={ACTIVITY_OPTIONS.find(o => o.value === filter)}
           onChange={o => setFilter(o.value as ProjectEventFilter)}
         />
-        {isLoading && <Loading />}
-        {isLoading || (projectEvents && projectEvents.length > 0) ? (
+        {(isLoading || suckersLoading) && <Loading />}
+        {isLoading ||
+        suckersLoading ||
+        (projectEvents && projectEvents.length > 0) ? (
           <>
             {projectEvents?.map(event => {
               return (
@@ -312,3 +294,96 @@ const ACTIVITY_OPTIONS = [
   { label: 'Used allowance', value: 'useAllowanceEvent' },
   { label: 'Burned', value: 'burnEvent' },
 ]
+
+const useOmnichainSubgraphProjectQuery = ({
+  filter,
+  sucker,
+}: {
+  filter?: ProjectEventFilter
+  sucker: SuckerPair | undefined
+}) => {
+  const result = useInfiniteQuery({
+    queryKey: ['projectEvents', sucker?.projectId, sucker?.peerChainId, filter],
+    initialPageParam: 0,
+    queryFn: async ({ pageParam = 0 }) => {
+      if (!sucker) return { data: { projectEvents: [] }, nextCursor: undefined }
+      const uri = v4SubgraphUri(sucker.peerChainId)
+      const document = ProjectEventsDocument
+
+      const data = await request(uri, document, {
+        orderBy: ProjectEvent_OrderBy.timestamp,
+        orderDirection: OrderDirection.desc,
+        where: {
+          projectId: Number(sucker.projectId),
+          // ProjectEvents have exactly one non-null Event field. We can use `<filter>_not: null` to return only projectEvents where the matching Event field is defined
+          ...(!filter || filter === 'all'
+            ? {}
+            : {
+                [filter + '_not']: null,
+              }),
+        },
+        skip: pageParam * PAGE_SIZE,
+        first: PAGE_SIZE,
+      })
+      const mightHaveNextPage = data.projectEvents.length === PAGE_SIZE
+      return {
+        data,
+        nextCursor: mightHaveNextPage ? pageParam + PAGE_SIZE : undefined,
+      }
+    },
+    getNextPageParam: lastPage => {
+      return lastPage.nextCursor
+    },
+  })
+
+  return result
+}
+
+const CHAIN_OPTIONS = Object.entries(NETWORKS).map(
+  ([chainId, networkInfo]) => ({
+    label: networkInfo.label,
+    value: parseInt(chainId),
+  }),
+)
+
+// TODO: Chain options as icons
+// const Chain: React.FC<PropsWithChildren> = ({ children }) => {
+//   return (
+//     <div className="flex h-6 w-6 items-center justify-center">{children}</div>
+//   )
+// }
+
+// const CHAIN_OPTIONS = [
+//   {
+//     label: (
+//       <Chain>
+//         <EthereumLogo />
+//       </Chain>
+//     ),
+//     value: 'ethereum' as const,
+//   },
+//   {
+//     label: (
+//       <Chain>
+//         <OptimismLogoIcon />
+//       </Chain>
+//     ),
+//     value: 'optimism' as const,
+//   },
+//   {
+//     label: (
+//       <Chain>
+//         <ArbitrumLogoIcon />
+//       </Chain>
+//     ),
+//     value: 'arbitrum' as const,
+//   },
+//   {
+//     label: (
+//       <Chain>
+//         <BaseLogoIcon />
+//       </Chain>
+//     ),
+//     value: 'base' as const,
+//   },
+// ]

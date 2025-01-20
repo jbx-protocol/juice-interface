@@ -6,6 +6,9 @@ import { settingsPagePath } from 'packages/v4/utils/routes'
 export function useSettingsPagePath(key?: SettingsPageKey) {
   const { projectId } = useJBContractContext()
   const chainId = useJBChainId()
+  if (!chainId || !projectId) {
+    return undefined
+  }
 
   if (!projectId || !chainId) {
     return ''

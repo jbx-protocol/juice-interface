@@ -1,22 +1,23 @@
-import {
-  PayProjectModalFormValues,
-  usePayProjectModal,
-} from './hooks/usePayProjectModal/usePayProjectModal'
 import { Trans, t } from '@lingui/macro'
+import {
+    PayProjectModalFormValues,
+    usePayProjectModal,
+} from './hooks/usePayProjectModal/usePayProjectModal'
 
-import { ChainSelectSection } from './components/ChainSelectSection'
 import EtherscanLink from 'components/EtherscanLink'
 import ExternalLink from 'components/ExternalLink'
-import { Formik } from 'formik'
-import Image from 'next/legacy/image'
 import { JuiceModal } from 'components/modals/JuiceModal'
+import { Formik } from 'formik'
+import { useWallet } from 'hooks/Wallet'
+import { JBChainId } from 'juice-sdk-react'
+import Image from 'next/legacy/image'
+import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
+import { twMerge } from 'tailwind-merge'
+import { helpPagePath } from 'utils/helpPagePath'
+import { ChainSelectSection } from './components/ChainSelectSection'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
-import { helpPagePath } from 'utils/helpPagePath'
-import { twMerge } from 'tailwind-merge'
 import { usePayAmounts } from './hooks/usePayAmounts'
-import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
-import { useWallet } from 'hooks/Wallet'
 
 export const PayProjectModal: React.FC = () => {
   const {
@@ -49,7 +50,7 @@ export const PayProjectModal: React.FC = () => {
         const walletConnectedToWrongChain =
           walletChain?.id && values.chainId !== parseInt(walletChain.id)
         if (walletConnectedToWrongChain) {
-          await changeNetworks(values.chainId) 
+          await changeNetworks(values.chainId as JBChainId) 
           return
         }
         if (!walletChain) {
@@ -158,7 +159,7 @@ export const PayProjectModal: React.FC = () => {
                               I understand and accept this project's notice and
                               the{' '}
                               <ExternalLink
-                                href={helpPagePath('dev/learn/risks')}
+                                href={helpPagePath('v4/learn/risks')}
                               >
                                 risks
                               </ExternalLink>{' '}
@@ -168,7 +169,7 @@ export const PayProjectModal: React.FC = () => {
                             <Trans>
                               I understand and accept the{' '}
                               <ExternalLink
-                                href={helpPagePath('dev/learn/risks')}
+                                href={helpPagePath('v4/learn/risks')}
                               >
                                 risks
                               </ExternalLink>{' '}

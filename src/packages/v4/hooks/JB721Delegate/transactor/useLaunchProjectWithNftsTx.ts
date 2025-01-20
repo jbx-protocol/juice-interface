@@ -1,12 +1,15 @@
-import { waitForTransactionReceipt } from '@wagmi/core'
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
+import {
+  Address,
+  WaitForTransactionReceiptReturnType,
+  toBytes,
+  toHex,
+  zeroAddress,
+} from 'viem'
 import {
   DEFAULT_MEMO,
-  jbProjectDeploymentAddresses,
   NATIVE_TOKEN,
   NATIVE_TOKEN_DECIMALS,
+  jbProjectDeploymentAddresses,
 } from 'juice-sdk-core'
 import {
   JBChainId,
@@ -14,28 +17,26 @@ import {
   useJBContractContext,
   useWriteJb721TiersHookProjectDeployerLaunchProjectFor,
 } from 'juice-sdk-react'
-import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import {
   JBDeploy721TiersHookConfig,
   LaunchProjectWithNftsTxArgs,
 } from 'packages/v4/models/nfts'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
-import { ipfsUri } from 'utils/ipfs'
-import {
-  Address,
-  toBytes,
-  toHex,
-  WaitForTransactionReceiptReturnType,
-  zeroAddress,
-} from 'viem'
-import { useChainId } from 'wagmi'
 import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
 } from '../../../utils/launchProjectTransformers'
+
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
+import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { LaunchTxOpts } from '../../useLaunchProjectTx'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { ipfsUri } from 'utils/ipfs'
+import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
+import { useChainId } from 'wagmi'
+import { useContext } from 'react'
+import { useWallet } from 'hooks/Wallet'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { waitForTransactionReceipt } from '@wagmi/core'
 
 /**
  * Return the project ID created from a `launchProjectFor` transaction.
@@ -193,7 +194,7 @@ export function useLaunchProjectWithNftsTx() {
       // })
 
       const hash = await writeLaunchProject({
-        chainId: chainId as 84532 | 421614 | 11155111 | 11155420, // TODO: cleanup
+        chainId: chainId as JBChainId,
         args,
       })
 

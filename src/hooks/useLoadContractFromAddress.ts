@@ -3,7 +3,6 @@ import { Contract, ContractInterface } from 'ethers'
 import { isAddress } from 'ethers/lib/utils'
 import { useEffect, useState } from 'react'
 import { isZeroAddress } from 'utils/address'
-import { useWallet } from './Wallet'
 
 const isInputAddressValid = (
   address: string | undefined,
@@ -23,15 +22,13 @@ export const useLoadContractFromAddress = <ABI extends ContractInterface>({
 }) => {
   const [contract, setContract] = useState<Contract>()
 
-  const { signer } = useWallet()
-
   useEffect(() => {
     if (!abi || !isInputAddressValid(address)) {
       return setContract(undefined)
     }
 
-    setContract(new Contract(address, abi, signer ?? readProvider))
-  }, [address, abi, signer])
+    setContract(new Contract(address, abi, readProvider))
+  }, [address, abi])
 
   return contract
 }

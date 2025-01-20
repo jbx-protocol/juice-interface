@@ -172,7 +172,7 @@ export default function QAs(): {
             Juicebox with caution.
           </p>
           <p>
-            <ExternalLink href={helpPagePath('/dev/learn/risks/')}>
+            <ExternalLink href={helpPagePath('/v4/learn/risks/')}>
               Learn more about the risks.
             </ExternalLink>
           </p>

@@ -1,5 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
+import moment from 'moment'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
 import {
   V2V3FundAccessConstraint,
@@ -122,7 +123,11 @@ export const usePrepareSaveEditCycleData = () => {
     editingFundingCycleData,
     editingFundAccessConstraints,
     editingNftRewards,
-    editingMustStartAtOrAfter: DEFAULT_MUST_START_AT_OR_AFTER,
+    editingMustStartAtOrAfter:
+      formValues.mustStartAtOrAfter &&
+      formValues.mustStartAtOrAfter !== DEFAULT_MUST_START_AT_OR_AFTER
+        ? moment(formValues.mustStartAtOrAfter).unix().toString()
+        : DEFAULT_MUST_START_AT_OR_AFTER,
   }
 
   return {

@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { Contract, providers } from 'ethers'
 import { simulateTransaction } from 'lib/tenderly'
@@ -7,7 +8,10 @@ import { TransactionOptions } from 'models/transaction'
 import { CV2V3 } from 'packages/v2v3/models/cv'
 import { useCallback, useContext } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { emitErrorNotification } from 'utils/notifications'
+import {
+  emitErrorNotification,
+  emitInfoNotification,
+} from 'utils/notifications'
 import { useWallet } from './Wallet'
 
 type TxOpts = Omit<TransactionOptions, 'value'>
@@ -79,18 +83,22 @@ export type TransactorInstance<T = undefined> = (
 export function useTransactor(): Transactor | undefined {
   const { addTransaction } = useContext(TxHistoryContext)
 
-  const { chain, signer, userAddress } = useWallet()
+  const { chain, userAddress } = useWallet()
   const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
+  const { signer } = useWallet()
 
   return useCallback(
     async (
-      contract: Contract,
+      _contract: Contract,
       functionName: string,
       args: unknown[],
       options?: TransactionOptions,
     ) => {
       if (chainUnsupported) {
         await changeNetworks()
+        emitInfoNotification(
+          t`Your wallet has been changed to ${readNetwork.name}. Try transaction again.`,
+        )
         options?.onDone?.()
         return false
       }
@@ -103,6 +111,15 @@ export function useTransactor(): Transactor | undefined {
         options?.onDone?.()
         return false
       }
+
+      /**
+       * Create a new contract instance with the signer.
+       */
+      const contract = new Contract(
+        _contract.address,
+        _contract.interface,
+        signer,
+      )
 
       logTx({ functionName, contract, args, options })
 

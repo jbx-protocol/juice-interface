@@ -1,8 +1,8 @@
 import { Cog6ToothIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 
-import Link from 'next/link'
 import { Trans } from '@lingui/macro'
+import Link from 'next/link'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
 
 export const ProjectSettingsLayout: React.FC<React.PropsWithChildren> = ({

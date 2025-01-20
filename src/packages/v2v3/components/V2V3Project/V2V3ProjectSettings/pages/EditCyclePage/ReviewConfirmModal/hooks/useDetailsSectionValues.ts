@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { getBallotStrategyByAddress } from 'packages/v2v3/utils/ballotStrategies'
 import { useContext } from 'react'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/creatingV2Project'
 import { otherUnitToSeconds } from 'utils/format/formatTime'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 
@@ -67,12 +68,17 @@ export const useDetailsSectionValues = () => {
   )
   const allowSetControllerHasDiff = currentSetController !== newSetController
 
+  const mustStartAtOrAfter = editCycleForm?.getFieldValue('mustStartAtOrAfter')
+  const hasMustStartAtOrAfter =
+    mustStartAtOrAfter !== DEFAULT_MUST_START_AT_OR_AFTER
+
   const advancedOptionsHasDiff =
     pausePayHasDiff ||
     allowSetTerminalsHasDiff ||
     allowSetControllerHasDiff ||
     allowControllerMigrationHasDiff ||
-    allowTerminalMigrationHasDiff
+    allowTerminalMigrationHasDiff ||
+    hasMustStartAtOrAfter
 
   const sectionHasDiff =
     durationHasDiff || ballotHasDiff || advancedOptionsHasDiff
@@ -108,5 +114,8 @@ export const useDetailsSectionValues = () => {
 
     advancedOptionsHasDiff,
     sectionHasDiff,
+
+    mustStartAtOrAfter,
+    hasMustStartAtOrAfter,
   }
 }

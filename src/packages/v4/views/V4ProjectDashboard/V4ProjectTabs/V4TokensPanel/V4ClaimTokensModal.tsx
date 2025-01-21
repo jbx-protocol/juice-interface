@@ -9,7 +9,12 @@ import TransactionModal from 'components/modals/TransactionModal'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { Ether } from 'juice-sdk-core'
-import { useJBContractContext, useJBTokenContext, useReadJbTokensCreditBalanceOf, useWriteJbControllerClaimTokensFor } from 'juice-sdk-react'
+import {
+  useJBContractContext,
+  useJBTokenContext,
+  useReadJbTokensCreditBalanceOf,
+  useWriteJbControllerClaimTokensFor,
+} from 'juice-sdk-react'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useContext, useLayoutEffect, useState } from 'react'
@@ -68,22 +73,22 @@ export function V4ClaimTokensModal({
       userAddress,
       projectId,
       parseWad(claimAmount).toBigInt(),
-      userAddress
+      userAddress,
     ] as const
 
     try {
       // SIMULATE TX:
       // const encodedData = encodeFunctionData({
-      //   abi: jbControllerAbi, 
-      //   functionName: 'claimTokensFor', 
-      //   args, 
+      //   abi: jbControllerAbi,
+      //   functionName: 'claimTokensFor',
+      //   args,
       // })
       // console.log('encodedData:', encodedData)
       // console.log('contract:', contracts.controller.data)
 
       const hash = await writeClaimTokens({
         address: contracts.controller.data,
-        args, 
+        args,
       })
       setTransactionPending(true)
 
@@ -152,10 +157,10 @@ export function V4ClaimTokensModal({
           </p>
           <p>
             <Trans>
-              You can redeem your {tokenTextLong} for ETH without claiming them.
-              You can transfer your unclaimed {tokenTextLong} to another address
-              from the Tools menu, which can be accessed from the wrench icon in
-              the upper right-hand corner of this project.
+              You can cash out your {tokenTextLong} for ETH without claiming
+              them. You can transfer your unclaimed {tokenTextLong} to another
+              address from the Tools menu, which can be accessed from the wrench
+              icon in the upper right-hand corner of this project.
             </Trans>
           </p>
         </div>
@@ -164,7 +169,7 @@ export function V4ClaimTokensModal({
           <Descriptions.Item
             label={<Trans>Your unclaimed {tokenTextLong}</Trans>}
           >
-            {new Ether(unclaimedBalance ?? 0n).format()}{' '}{tokenTextShort}
+            {new Ether(unclaimedBalance ?? 0n).format()} {tokenTextShort}
           </Descriptions.Item>
 
           {hasIssuedTokens && tokenSymbol && (

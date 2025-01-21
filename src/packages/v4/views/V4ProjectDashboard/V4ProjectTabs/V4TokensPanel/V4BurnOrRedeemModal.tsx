@@ -120,7 +120,7 @@ export function V4BurnOrRedeemModal({
       includeTokenWord: true,
     })
     if (canRedeem) {
-      return t`Redeem ${tokensTextLong} for ETH`
+      return t`Cash out ${tokensTextLong} for ETH`
     }
     return t`Burn ${tokensTextLong}`
   }, [canRedeem, token.data?.symbol])
@@ -247,7 +247,7 @@ export function V4BurnOrRedeemModal({
               </Callout.Info>
               <div>
                 <Trans>
-                  Redeem your tokens to reclaim some ETH that isn't needed for
+                  Cash out your tokens to reclaim some ETH that isn't needed for
                   payouts. This cycle's <strong>redemption rate</strong>{' '}
                   determines the amount of ETH you'll receive.
                 </Trans>
@@ -307,7 +307,7 @@ export function V4BurnOrRedeemModal({
               name="redeemAmount"
               label={
                 canRedeem ? (
-                  <Trans>Tokens to redeem</Trans>
+                  <Trans>Tokens to cash out</Trans>
                 ) : (
                   <Trans>Tokens to burn</Trans>
                 )

@@ -86,13 +86,13 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
           {redeemDisabled ? null : (
             <ChoiceButton
               selected={state === 'redeem'}
-              tooltip={t`Redeem tokens for a portion of this project's treasury`}
+              tooltip={t`Cash out tokens for a portion of this project's treasury`}
               onClick={() => {
                 dispatch(payRedeemActions.changeToRedeem())
               }}
               disabled={!redeems.enabled}
             >
-              <Trans>Redeem</Trans>
+              <Trans>Cash out</Trans>
             </ChoiceButton>
           )}
         </div>

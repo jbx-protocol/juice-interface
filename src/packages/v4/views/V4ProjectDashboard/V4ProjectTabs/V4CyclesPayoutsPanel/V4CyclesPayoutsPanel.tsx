@@ -1,5 +1,5 @@
 import { Tab } from '@headlessui/react'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { CyclesTab } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesTab'
 import { useMemo } from 'react'
 import { V4CurrentUpcomingSubPanel } from './V4CurrentUpcomingSubPanel'
@@ -21,7 +21,9 @@ export const V4CyclesPayoutsPanel = () => {
   return (
     <Tab.Group as="div" className="mx-auto flex w-full flex-col gap-5">
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-        <h2 className="mb-0 font-heading text-2xl font-medium">Cycle</h2>
+        <h2 className="mb-0 font-heading text-2xl font-medium">
+          <Trans>Ruleset cycle</Trans>
+        </h2>
         <Tab.List className="flex gap-2">
           {tabs.map(tab => (
             <CyclesTab key={tab.id} name={tab.name} />

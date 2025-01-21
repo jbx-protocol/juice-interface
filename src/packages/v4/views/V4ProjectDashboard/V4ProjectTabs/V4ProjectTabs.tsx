@@ -58,7 +58,7 @@ export const V4ProjectTabs = ({ className }: { className?: string }) => {
       },
       {
         id: 'cycle_payouts',
-        name: t`Cycles & Payouts`,
+        name: t`Rulesets & Payouts`,
         panel: <V4CyclesPayoutsPanel />,
       },
       { id: 'tokens', name: t`Tokens`, panel: <V4TokensPanel /> },

@@ -11,7 +11,6 @@ type BallotOption = Record<
   Partial<Record<NetworkName, string>>
 >
 
-
 // v4TODO: Apply real v4 addresses
 const BALLOT_ADDRESSES: BallotOption = {
   ONE_DAY: {
@@ -52,7 +51,7 @@ export function ballotStrategiesFn({
     {
       id: 'none',
       name: t`No deadline`,
-      description: t`Edits to upcoming ruleset cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner.`,
+      description: t`Edits to upcoming ruleset cycles will take effect when the current ruleset cycle ends. A project with no deadline is vulnerable to last-second edits by its owner.`,
       address: constants.AddressZero,
       durationSeconds: 0,
     },
@@ -80,4 +79,3 @@ export function ballotStrategiesFn({
   ]
   return ballotStrategies
 }
-

@@ -1082,6 +1082,9 @@ msgstr ""
 msgid "Transaction hash"
 msgstr ""
 
+msgid "Current ruleset cycle"
+msgstr ""
+
 msgid "Cycle length"
 msgstr ""
 
@@ -2492,6 +2495,9 @@ msgstr ""
 msgid "Games"
 msgstr ""
 
+msgid "Upcoming ruleset cycle"
+msgstr ""
+
 msgid "While enabled, the project owner can change the project's <0>controller</0> at any time."
 msgstr ""
 
@@ -3098,9 +3104,6 @@ msgstr ""
 msgid "Deploy NFT collection"
 msgstr ""
 
-msgid "Edits to upcoming ruleset cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner."
-msgstr ""
-
 msgid "You must <0>Edit your Cycle</0> to change your total payout amount."
 msgstr ""
 
@@ -3503,6 +3506,9 @@ msgstr ""
 msgid "The amount of ETH which can be paid out from this project during the cycle. Payouts reset each cycle."
 msgstr ""
 
+msgid "Ruleset cycle configuration"
+msgstr ""
+
 msgid "Safe, Snapshot, or even on-chain governance: Juicebox uses simple standards and works with all of your favorite Ethereum tools."
 msgstr ""
 
@@ -3899,6 +3905,9 @@ msgstr ""
 msgid "Create token"
 msgstr ""
 
+msgid "Edits to upcoming ruleset cycles will take effect when the current ruleset cycle ends. A project with no deadline is vulnerable to last-second edits by its owner."
+msgstr ""
+
 msgid "Save project details"
 msgstr ""
 
@@ -4230,6 +4239,9 @@ msgid "I have another question!"
 msgstr ""
 
 msgid "Manage your project's state and ownership"
+msgstr ""
+
+msgid "Ruleset cycle"
 msgstr ""
 
 msgid "The amount of reserved tokens currently available to be distributed to the recipients below."

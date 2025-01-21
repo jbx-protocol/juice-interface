@@ -15,7 +15,7 @@ export default function DurationInputAndSelect({
     <div className="flex">
       <Form.Item
         name="duration"
-        label={hideTitle ? null : <Trans>Funding cycle duration</Trans>}
+        label={hideTitle ? null : <Trans>Ruleset duration</Trans>}
         className="w-full"
         required
       >

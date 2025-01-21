@@ -9,12 +9,11 @@ import ExternalLink from 'components/ExternalLink'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { Formik } from 'formik'
 import { useWallet } from 'hooks/Wallet'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId, useJBChainId } from 'juice-sdk-react'
 import Image from 'next/legacy/image'
 import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
 import { twMerge } from 'tailwind-merge'
 import { helpPagePath } from 'utils/helpPagePath'
-import { sepolia } from 'viem/chains'
 import { ChainSelectSection } from './components/ChainSelectSection'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
@@ -34,6 +33,7 @@ export const PayProjectModal: React.FC = () => {
   } = usePayProjectModal()
   const { formattedTotalAmount } = usePayAmounts()
   const { chain: walletChain, changeNetworks, connect } = useWallet()
+  const jbChainId = useJBChainId()
 
   const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
 
@@ -46,7 +46,7 @@ export const PayProjectModal: React.FC = () => {
         },
         userAcceptsTerms: false,
         beneficiaryAddress: undefined,
-        chainId: walletChainId ?? sepolia.id,
+        chainId: walletChainId ?? jbChainId,
       }}
       validationSchema={validationSchema}
       onSubmit={async (values, actions) => {

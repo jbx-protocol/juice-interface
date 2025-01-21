@@ -5,7 +5,6 @@ import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Tok
 import { useV4TotalTokenSupply } from 'packages/v4/hooks/useV4TotalTokenSupply'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
-import { useMemo } from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 
 export const useV4TokensPanel = () => {
@@ -28,21 +27,17 @@ export const useV4TokensPanel = () => {
   const { data: _userTokenBalance, isLoading: userTokenBalanceLoading } =
     useV4UserTotalTokensBalance()
 
-  const userTokenBalance = useMemo(() => {
-    if (_userTokenBalance === undefined) return
-    return new JBProjectToken(_userTokenBalance ?? 0n)
-  }, [_userTokenBalance])
+  const userTokenBalance =
+    _userTokenBalance !== undefined
+      ? new JBProjectToken(_userTokenBalance ?? 0n)
+      : undefined
 
   // const { totalLegacyTokenBalance, v1ClaimedBalance } =
   //   useTotalLegacyTokenBalance({ projectId })
 
-  const totalTokenSupply = useMemo(() => {
-    return new JBProjectToken(_totalTokenSupply ?? 0n)
-  }, [_totalTokenSupply])
+  const totalTokenSupply = new JBProjectToken(_totalTokenSupply ?? 0n)
 
-  const canCreateErc20Token = useMemo(() => {
-    return !projectHasErc20Token && hasDeployErc20Permission
-  }, [hasDeployErc20Permission, projectHasErc20Token])
+  const canCreateErc20Token = !projectHasErc20Token && hasDeployErc20Permission
 
   return {
     userTokenBalance,

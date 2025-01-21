@@ -4,7 +4,6 @@ import {
   useReadJbTokensTotalBalanceOf,
 } from 'juice-sdk-react'
 import React, { PropsWithChildren } from 'react'
-import { zeroAddress } from 'viem'
 
 const V4UserTotalTokensBalanceContext = React.createContext<{
   data: bigint | undefined
@@ -20,7 +19,7 @@ export const V4UserTotalTokensBalanceProvider: React.FC<PropsWithChildren> = ({
   const { userAddress } = useWallet()
   const { projectId } = useJBContractContext()
   const value = useReadJbTokensTotalBalanceOf({
-    args: [userAddress ?? zeroAddress, projectId],
+    args: userAddress ? [userAddress, projectId] : undefined,
   })
 
   return (

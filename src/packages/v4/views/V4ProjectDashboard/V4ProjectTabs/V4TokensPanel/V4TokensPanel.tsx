@@ -11,11 +11,19 @@ import { SettingOutlined } from '@ant-design/icons'
 import { Button, Tooltip } from 'antd'
 import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
-import { useJBChainId, useJBContractContext, useSuckersUserTokenBalance } from 'juice-sdk-react'
+import { NETWORKS } from 'constants/networks'
+import { JBChainId } from 'juice-sdk-core'
+import {
+  NativeTokenValue,
+  useJBChainId,
+  useJBContractContext,
+  useSuckersUserTokenBalance,
+} from 'juice-sdk-react'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { V4TokenHoldersModal } from 'packages/v4/components/modals/V4TokenHoldersModal/V4TokenHoldersModal'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
 import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4BalanceMenuItemsUserFlags'
 import { useV4TokensPanel } from './hooks/useV4TokensPanel'
@@ -37,7 +45,7 @@ export const V4TokensPanel = () => {
     totalSupply,
   } = useV4TokensPanel()
   const projectHasErc20Token = useProjectHasErc20Token()
-  const balances = useSuckersUserTokenBalance()
+  const { data: suckersBalance } = useSuckersUserTokenBalance()
 
   const { canMintTokens } = useV4BalanceMenuItemsUserFlags()
 
@@ -63,6 +71,52 @@ export const V4TokensPanel = () => {
     // setTransferUnclaimedTokensModalVisible,
   } = useV4YourBalanceMenuItems()
 
+  const totalBalance =
+    suckersBalance?.reduce((acc, curr) => {
+      return acc + curr.balance.value
+    }, 0n) ?? 0n
+
+  const tokenBalance = useMemo(() => {
+    // NOTE: Don't think we need this since other chains payouts limits may be different?
+    // if (payoutLimit && payoutLimit.amount === MAX_PAYOUT_LIMIT)
+    //   return t`No surplus`
+    return (
+      <Tooltip
+        title={
+          suckersBalance?.length && suckersBalance.length > 0 ? (
+            <div className="flex flex-col gap-2">
+              {suckersBalance?.map((balance, index) => (
+                <div
+                  className="flex items-center justify-between gap-4"
+                  key={suckersBalance[index].chainId}
+                >
+                  <div
+                    key={suckersBalance[index].chainId}
+                    className="flex items-center gap-2"
+                  >
+                    <ChainLogo
+                      chainId={suckersBalance[index].chainId as JBChainId}
+                    />
+                    <span>{NETWORKS[balance.chainId].label}</span>
+                  </div>
+                  {/* (NOTE: Following comment copied from Revnet: 
+                  "TODO maybe show USD-converted value here instead?" */}
+                  <span className="whitespace-nowrap font-medium">
+                    <NativeTokenValue wei={balance.balance.value ?? 0n} />
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : undefined
+        }
+      >
+        <span>
+          <NativeTokenValue wei={totalBalance} />
+        </span>
+      </Tooltip>
+    )
+  }, [totalBalance, suckersBalance])
+
   return (
     <>
       <div className="flex w-full flex-col items-stretch gap-5">
@@ -73,12 +127,13 @@ export const V4TokensPanel = () => {
         <V4TokenRedemptionCallout />
 
         <div className="mb-12 flex-grow">
-          {!userTokenBalanceLoading && userTokenBalance !== undefined && (
+          {!userTokenBalanceLoading && (
             <TitleDescriptionDisplayCard
               title={t`Your balance`}
               description={
                 <span className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
-                  <Trans>{userTokenBalance.format(8)} tokens</Trans>
+                  {tokenBalance}
+
                   <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center md:gap-4">
                     {projectHasErc20Token && (
                       <Button
@@ -100,7 +155,7 @@ export const V4TokensPanel = () => {
                 </span>
               }
               kebabMenu={
-                userTokenBalance.value > 0n || canMintTokens
+                totalBalance > 0n || canMintTokens
                   ? {
                       items,
                     }

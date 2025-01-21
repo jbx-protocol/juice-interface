@@ -243,7 +243,7 @@ export function V4BurnOrRedeemModal({
           {canRedeem ? (
             <div className="flex flex-col gap-4">
               <Callout.Info>
-                <Trans>Tokens are burned when they are redeemed.</Trans>
+                <Trans>Tokens are burned when they are cashed out.</Trans>
               </Callout.Info>
               <div>
                 <Trans>
@@ -297,7 +297,7 @@ export function V4BurnOrRedeemModal({
             />
           </Descriptions.Item>
           <Descriptions.Item label={<Trans>Total redemption value</Trans>}>
-            <ETHAmount amount={BigNumber.from(maxClaimable)} />
+           {formatEther(maxClaimable)} ETH
           </Descriptions.Item>
         </Descriptions>
 

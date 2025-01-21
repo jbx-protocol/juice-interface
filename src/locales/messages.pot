@@ -1424,6 +1424,9 @@ msgstr ""
 msgid "Recipient"
 msgstr ""
 
+msgid "Tokens are burned when they are cashed out."
+msgstr ""
+
 msgid "The amount of ETH in this project’s treasury."
 msgstr ""
 

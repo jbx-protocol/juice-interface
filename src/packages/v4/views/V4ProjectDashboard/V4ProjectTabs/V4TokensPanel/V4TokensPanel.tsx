@@ -11,7 +11,7 @@ import { SettingOutlined } from '@ant-design/icons'
 import { Button, Tooltip } from 'antd'
 import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
-import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
+import { useJBChainId, useJBContractContext, useSuckersUserTokenBalance } from 'juice-sdk-react'
 import { V4TokenHoldersModal } from 'packages/v4/components/modals/V4TokenHoldersModal/V4TokenHoldersModal'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
@@ -29,7 +29,6 @@ import { V4TokenRedemptionCallout } from './V4TokenRedemptionCallout'
 
 export const V4TokensPanel = () => {
   const {
-    userTokenBalance,
     userTokenBalanceLoading,
     // userLegacyTokenBalance,
     // projectHasLegacyTokens,
@@ -38,6 +37,7 @@ export const V4TokensPanel = () => {
     totalSupply,
   } = useV4TokensPanel()
   const projectHasErc20Token = useProjectHasErc20Token()
+  const balances = useSuckersUserTokenBalance()
 
   const { canMintTokens } = useV4BalanceMenuItemsUserFlags()
 

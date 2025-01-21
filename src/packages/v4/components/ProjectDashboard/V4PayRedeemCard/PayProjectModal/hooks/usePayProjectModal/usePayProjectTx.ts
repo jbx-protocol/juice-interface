@@ -1,6 +1,4 @@
-import { Address, Hash, parseEther } from 'viem'
 import { DEFAULT_METADATA, NATIVE_TOKEN } from 'juice-sdk-core'
-import { useCallback, useContext, useMemo } from 'react'
 import {
   useJBChainId,
   useJBContractContext,
@@ -8,22 +6,24 @@ import {
   usePreparePayMetadata,
   useWriteJbMultiTerminalPay,
 } from 'juice-sdk-react'
+import { useCallback, useContext, useMemo } from 'react'
+import { Address, Hash, parseEther } from 'viem'
 
-import { FormikHelpers } from 'formik'
-import { PayProjectModalFormValues } from './usePayProjectModal'
-import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { waitForTransactionReceipt } from '@wagmi/core'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
-import { buildPaymentMemo } from 'utils/buildPaymentMemo'
+import { FormikHelpers } from 'formik'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
-import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
+import { useWallet } from 'hooks/Wallet'
 import { useProjectSelector } from 'packages/v4/components/ProjectDashboard/redux/hooks'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
-import { useWallet } from 'hooks/Wallet'
+import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
+import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { waitForTransactionReceipt } from '@wagmi/core'
+import { buildPaymentMemo } from 'utils/buildPaymentMemo'
+import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
+import { PayProjectModalFormValues } from './usePayProjectModal'
 
 export const usePayProjectTx = ({
   onTransactionPending: onTransactionPendingCallback,
@@ -141,7 +141,7 @@ export const usePayProjectTx = ({
       })
       const beneficiary = (values.beneficiaryAddress ?? userAddress) as Address
       const chainId = values.chainId || defaultChainId
-      
+
       const args = [
         projectId,
         NATIVE_TOKEN,
@@ -197,6 +197,7 @@ export const usePayProjectTx = ({
       onTransactionConfirmedCallback,
       buildPayReceipt,
       onTransactionErrorCallback,
+      defaultChainId,
     ],
   )
 }

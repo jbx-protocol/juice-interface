@@ -79,9 +79,10 @@ export const ChainSelectSection = () => {
         }}
         options={networkOptions.map(option => ({
           ...option,
-          label: `${option.label} - Gas: ${
-            gasEstimates[option.value] || 'Loading...'
-          }`,
+          label: `${option.label}`
+          //  - Gas: ${
+          //   gasEstimates[option.value] || 'Loading...'
+          // }`,
         }))}
       />
     </div>

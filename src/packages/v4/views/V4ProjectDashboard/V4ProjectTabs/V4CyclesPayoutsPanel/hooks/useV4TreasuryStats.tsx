@@ -1,5 +1,3 @@
-import { Tooltip } from 'antd'
-import { NETWORKS } from 'constants/networks'
 import {
   JBChainId,
   NativeTokenValue,
@@ -7,13 +5,14 @@ import {
   useSuckersNativeTokenBalance,
   useSuckersNativeTokenSurplus,
 } from 'juice-sdk-react'
+
+import { Tooltip } from 'antd'
+import { NETWORKS } from 'constants/networks'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { useMemo } from 'react'
-import { useV4DistributableAmount } from './useV4DistributableAmount'
 
 export const useV4TreasuryStats = () => {
   const { data: rulesetMetadata } = useJBRulesetMetadata()
-  const { distributableAmount } = useV4DistributableAmount()
 
   const { data: suckersBalance } = useSuckersNativeTokenBalance()
   const totalBalance =
@@ -32,6 +31,18 @@ export const useV4TreasuryStats = () => {
     ethSurplusByChain?.reduce((acc, curr) => {
       return acc + curr.surplus
     }, 0n) ?? 0n
+
+  const distributableAmountByChain = suckersBalance?.map((chainBalanceObj) => {
+    const chainSurplus = ethSurplusByChain?.find((chainSurplus) => chainSurplus.chainId === chainBalanceObj.chainId)?.surplus ?? 0n
+    return {
+      chainId: chainBalanceObj.chainId,
+      projectId: chainBalanceObj.projectId,
+      distributableAmount: chainBalanceObj.balance - chainSurplus
+    }
+  })
+
+  const totalDistributableAmount = 
+    distributableAmountByChain?.reduce((acc, curr) => acc + curr.distributableAmount, 0n) ?? 0n
 
   const treasuryBalance = useMemo(() => {
     // NOTE: Don't think we need this since other chains payouts limits may be different?
@@ -115,7 +126,41 @@ export const useV4TreasuryStats = () => {
     )
   }, [totalEthSurplus, ethSurplusByChain])
 
-  const availableToPayout = <NativeTokenValue wei={distributableAmount.value} />
+  const availableToPayout = useMemo(() => {
+    return (
+      <Tooltip
+        title={
+          distributableAmountByChain?.length && distributableAmountByChain.length > 0 ? (
+            <div className="flex flex-col gap-2">
+              {distributableAmountByChain?.map((distributableAmountObj, index) => (
+                <div
+                  className="flex items-center justify-between gap-4"
+                  key={distributableAmountByChain[index].chainId}
+                >
+                  <div
+                    key={distributableAmountByChain[index].chainId}
+                    className="flex items-center gap-2"
+                  >
+                    <ChainLogo
+                      chainId={distributableAmountByChain[index].chainId as JBChainId}
+                    />
+                    <span>{NETWORKS[distributableAmountObj.chainId].label}</span>
+                  </div>
+                  <span className="whitespace-nowrap font-medium">
+                    <NativeTokenValue wei={distributableAmountObj.distributableAmount ?? 0n} />
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : undefined
+        }
+      >
+        <span>
+          <NativeTokenValue wei={totalDistributableAmount} />
+        </span>
+      </Tooltip>
+    )}, [totalDistributableAmount, distributableAmountByChain]
+  )
 
   return {
     treasuryBalance,

@@ -1,6 +1,8 @@
 import { Trans, t } from '@lingui/macro'
+
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { reservedTokensTooltip } from 'components/Project/ProjectTabs/TokensPanelTooltips'
+import { ProjectChainSelect } from 'packages/v4/components/ProjectDashboard/ProjectChainSelect'
 import { twMerge } from 'tailwind-merge'
 import { V4ProjectAllocationRow } from '../V4CyclesPayoutsPanel/V4ProjectAllocationRow'
 import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
@@ -12,7 +14,8 @@ export const V4ReservedTokensSubPanel = ({
 }: {
   className?: string
 }) => {
-  const { reservedList, pendingReservedTokensFormatted, reservedPercent } =
+
+  const { selectedChainId, setSelectedChainId, reservedList, pendingReservedTokensFormatted, reservedPercent } =
     useV4ReservedTokensSubPanel()
 
   const reservedPercentTooltip = (
@@ -24,7 +27,15 @@ export const V4ReservedTokensSubPanel = ({
   return (
     <div className={twMerge(className)}>
       <h2 className="mb-0 font-heading text-2xl font-medium">
+        <div className="flex justify-between items-center">
         <Trans>Reserved tokens</Trans>
+          { selectedChainId ? 
+            <ProjectChainSelect
+              value={selectedChainId} 
+              onChange={(chainId) => setSelectedChainId(chainId)} 
+            />
+          : null }
+        </div>
       </h2>
       <div className="mt-5 flex flex-col items-center gap-4">
         <div className="flex w-full flex-wrap items-center gap-4">

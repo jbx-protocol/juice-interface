@@ -21,6 +21,7 @@ interface JuiceListboxProps<T> {
 export function JuiceListbox<T>(props: JuiceListboxProps<T>) {
   const { value, onChange, options, buttonClassName, className, disabled } =
     props
+
   return (
     <Listbox value={value} onChange={onChange} disabled={disabled}>
       <div className={twMerge('relative', className)}>

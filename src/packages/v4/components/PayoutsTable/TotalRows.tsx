@@ -1,11 +1,12 @@
 import { Trans, t } from '@lingui/macro'
+
 import { Tooltip } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import { PayoutsTableCell } from 'components/PayoutsTable/PayoutsTableCell'
 import { PayoutsTableRow } from 'components/PayoutsTable/PayoutsTableRow'
 import TooltipLabel from 'components/TooltipLabel'
 import round from 'lodash/round'
-import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
 
 const Row = PayoutsTableRow
@@ -31,7 +32,7 @@ export function TotalRows() {
       ? round(distributionLimit, roundingPrecision)
       : t`Unlimited`
 
-  const { data: projectOwnerAddress } = useProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
 
   const subTotalExceedsMax = distributionLimitIsInfinite && subTotal > 100
 

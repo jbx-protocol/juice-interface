@@ -1,25 +1,36 @@
-import { formatEther, SplitPortion, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
+import { JBChainId, SPLITS_TOTAL_PERCENT, SplitPortion, formatEther } from 'juice-sdk-core'
 import {
+  useJBChainId,
   useJBContractContext,
-  useJBRulesetMetadata,
-  useReadJbControllerPendingReservedTokenBalanceOf,
+  useReadJbControllerPendingReservedTokenBalanceOf
 } from 'juice-sdk-react'
-import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import { useEffect, useMemo, useState } from 'react'
+
+import { useJBRulesetByChain } from 'packages/v4/hooks/useJBRulesetByChain'
+import { useProjectIdOfChain } from 'packages/v4/hooks/useProjectIdOfChain'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
-import { useMemo } from 'react'
 import assert from 'utils/assert'
 
 export const useV4ReservedTokensSubPanel = () => {
-  const { projectId, contracts } = useJBContractContext()
-  const { data: projectOwnerAddress } = useProjectOwnerOf()
-  const { splits: reservedTokensSplits } = useV4ReservedSplits()
-  const { data: rulesetMetadata } = useJBRulesetMetadata()
+  const { contracts } = useJBContractContext()
+  const projectPageChainId = useJBChainId()
+
+  const [selectedChainId, setSelectedChainId] = useState<JBChainId>()
+
+  const projectId = useProjectIdOfChain({ chainId: selectedChainId })
+
+  const { data: projectOwnerAddress } = useV4ProjectOwnerOf(selectedChainId)
+  const { splits: reservedTokensSplits } = useV4ReservedSplits(selectedChainId)
+
+  const { rulesetMetadata } = useJBRulesetByChain(selectedChainId)
   const reservedPercent = `${rulesetMetadata?.reservedPercent.formatPercentage()}%`
 
   const { data: pendingReservedTokens } =
     useReadJbControllerPendingReservedTokenBalanceOf({
       address: contracts.controller.data ?? undefined,
-      args: [projectId],
+      args: [BigInt(projectId ?? 0)],
+      chainId: selectedChainId
     })
 
   const reservedList = useMemo(() => {
@@ -83,7 +94,13 @@ export const useV4ReservedTokensSubPanel = () => {
     return formatEther(pendingReservedTokens, { fractionDigits: 6 })
   }, [pendingReservedTokens])
 
+  useEffect(() => {
+    setSelectedChainId(projectPageChainId)
+  }, [projectPageChainId])
+
   return {
+    selectedChainId,
+    setSelectedChainId,
     reservedList,
     pendingReservedTokensFormatted: pendingReservedTokensFormatted,
     pendingReservedTokens: pendingReservedTokens,

@@ -1,10 +1,12 @@
-import { useJBContractContext, useReadJbProjectsOwnerOf } from "juice-sdk-react";
+import { JBChainId } from "juice-sdk-core";
+import { useReadJbProjectsOwnerOf } from "juice-sdk-react";
+import { useProjectIdOfChain } from "./useProjectIdOfChain";
 
-const useProjectOwnerOf = () => {
-  const { projectId } = useJBContractContext();
+const useV4ProjectOwnerOf = (chainId?: JBChainId) => {
+  const projectId = useProjectIdOfChain({ chainId })
 
   const { data: projectOwnerAddress, isLoading } = useReadJbProjectsOwnerOf({
-    args: [projectId],
+    args: [BigInt(projectId ?? 0)],
   });
 
   return {
@@ -13,4 +15,4 @@ const useProjectOwnerOf = () => {
   };
 };
 
-export default useProjectOwnerOf;
+export default useV4ProjectOwnerOf;

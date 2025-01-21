@@ -7,21 +7,29 @@ import {
   WeightCutPercent,
 } from 'juice-sdk-core'
 import {
+  JBChainId,
   useJBContractContext,
-  useReadJbControllerUpcomingRulesetOf,
+  useReadJbControllerUpcomingRulesetOf
 } from 'juice-sdk-react'
 
-// @todo: add to SDK
-export function useJBUpcomingRuleset(): {
+import { useProjectIdOfChain } from './useProjectIdOfChain'
+
+// @v4todo: add to SDK
+export function useJBUpcomingRuleset(chainId?: JBChainId): {
   ruleset: JBRulesetData | undefined
   rulesetMetadata: JBRulesetMetadata | undefined
   isLoading: boolean
 } {
-  const { contracts, projectId } = useJBContractContext()
+  const { contracts, projectId: defaultProjectId } = useJBContractContext()
+
+  const projectId = useProjectIdOfChain({ chainId }) 
+  
   const { data, isLoading } = useReadJbControllerUpcomingRulesetOf({
     address: contracts.controller?.data ?? undefined,
-    args: [projectId],
+    args: [BigInt(projectId ?? defaultProjectId)],
+    chainId
   })
+  
   const _latestUpcomingRuleset = data?.[0]
   const _latestUpcomingRulesetMetadata = data?.[1]
   const upcomingWeight = new RulesetWeight(_latestUpcomingRuleset?.weight ?? 0n)

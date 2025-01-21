@@ -1,17 +1,21 @@
-import { t } from '@lingui/macro'
 import {
-  useJBRuleset,
-  useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf,
+  useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf
 } from 'juice-sdk-react'
+
+import { t } from '@lingui/macro'
 import { V4ApprovalStatus } from 'models/ballot'
+import { useJBRulesetByChain } from 'packages/v4/hooks/useJBRulesetByChain'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { useMemo } from 'react'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
+import { useCyclesPanelSelectedChain } from '../V4ProjectTabs/V4CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
 
 export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
-  const { data: ruleset, isLoading: rulesetLoading } = useJBRuleset()
+  const { selectedChainId } = useCyclesPanelSelectedChain()
+  
+  const { ruleset, isLoading: rulesetLoading } = useJBRulesetByChain(selectedChainId)
   const { ruleset: latestUpcomingRuleset, isLoading: upcomingRulesetsLoading } =
-    useJBUpcomingRuleset()
+    useJBUpcomingRuleset(selectedChainId)
 
   const { data: approvalStatus } =
     useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf()
@@ -28,10 +32,10 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
 
   const rulesetUnlocked = useMemo(() => {
     if (type === 'current') {
-      return ruleset?.duration === 0 ?? true
+      return Boolean(ruleset?.duration && ruleset?.duration === 0) ?? true
     }
-    return latestUpcomingRuleset?.duration == 0 ?? true
-  }, [ruleset?.duration, type, latestUpcomingRuleset?.duration])
+    return Boolean(latestUpcomingRuleset && latestUpcomingRuleset.duration === 0) ?? true
+  }, [ruleset?.duration, type, latestUpcomingRuleset])
 
   const upcomingRulesetLength = useMemo(() => {
     if (!latestUpcomingRuleset)
@@ -45,7 +49,7 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
 
   /** Determines if the CURRENT cycle is unlocked.
    * This is used to check if the upcoming cycle can start at any time. */
-  const currentRulesetUnlocked = ruleset?.duration === 0 ?? true
+  const currentRulesetUnlocked = Boolean(ruleset && ruleset?.duration === 0) ?? true
 
   const status = rulesetUnlocked ? t`Unlocked` : t`Locked`
 

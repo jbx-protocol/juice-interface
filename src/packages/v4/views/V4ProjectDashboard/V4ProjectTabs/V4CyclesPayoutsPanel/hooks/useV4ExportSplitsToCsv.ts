@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { JBSplit } from 'juice-sdk-core'
 import { useJBContractContext } from 'juice-sdk-react'
-import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { v4GetProjectOwnerRemainderSplit } from 'packages/v4/utils/v4Splits'
 import { useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
@@ -52,7 +52,7 @@ export const useV4ExportSplitsToCsv = (
   splitName = 'splits',
   fcNumber?: number,
 ) => {
-  const { data: projectOwnerAddress } = useProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
   const { projectId } = useJBContractContext()
   const [loading, setLoading] = useState<boolean>(false)
 

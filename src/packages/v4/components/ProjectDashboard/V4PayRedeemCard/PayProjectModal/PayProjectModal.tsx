@@ -1,7 +1,7 @@
 import { Trans, t } from '@lingui/macro'
 import {
-    PayProjectModalFormValues,
-    usePayProjectModal,
+  PayProjectModalFormValues,
+  usePayProjectModal,
 } from './hooks/usePayProjectModal/usePayProjectModal'
 
 import EtherscanLink from 'components/EtherscanLink'
@@ -14,6 +14,7 @@ import Image from 'next/legacy/image'
 import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
 import { twMerge } from 'tailwind-merge'
 import { helpPagePath } from 'utils/helpPagePath'
+import { sepolia } from 'viem/chains'
 import { ChainSelectSection } from './components/ChainSelectSection'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
@@ -34,6 +35,8 @@ export const PayProjectModal: React.FC = () => {
   const { formattedTotalAmount } = usePayAmounts()
   const { chain: walletChain, changeNetworks, connect } = useWallet()
 
+  const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
+
   return (
     <Formik<PayProjectModalFormValues>
       initialValues={{
@@ -43,18 +46,17 @@ export const PayProjectModal: React.FC = () => {
         },
         userAcceptsTerms: false,
         beneficiaryAddress: undefined,
-        chainId: undefined,
+        chainId: walletChainId ?? sepolia.id,
       }}
       validationSchema={validationSchema}
       onSubmit={async (values, actions) => {
-        const walletConnectedToWrongChain =
-          walletChain?.id && values.chainId !== parseInt(walletChain.id)
+        const walletConnectedToWrongChain = values.chainId !== walletChainId
         if (walletConnectedToWrongChain) {
-          await changeNetworks(values.chainId as JBChainId) 
+          await changeNetworks(values.chainId as JBChainId)
           return
         }
         if (!walletChain) {
-          await connect() 
+          await connect()
           return
         }
         await onPaySubmit(values, actions)

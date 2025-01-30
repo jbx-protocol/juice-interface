@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getPublicClient } from '@wagmi/core'
+import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import {
   JB_CHAIN_SLUGS,
   readJbDirectoryControllerOf,
@@ -34,10 +35,16 @@ const V4GetMetadataCidFromContract = async (
   const client = getPublicClient(wagmiConfig, {
     chainId,
   }) as PublicClient
-  const metadata = await sdkGetProjectMetadata(client, {
-    jbControllerAddress,
-    projectId: BigInt(projectId),
-  })
+  const metadata = await sdkGetProjectMetadata(
+    client,
+    {
+      jbControllerAddress,
+      projectId: BigInt(projectId),
+    },
+    {
+      ipfsGatewayHostname: OPEN_IPFS_GATEWAY_HOSTNAME,
+    },
+  )
 
   return metadata
 }

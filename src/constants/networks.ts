@@ -108,7 +108,10 @@ export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
   {} as Record<NetworkName, NetworkInfo>,
 )
 
-export const DEFAULT_PROJECT_CHAIN_ID = NETWORKS_BY_NAME.mainnet
+/**
+ * TODO update to mainnet when we go to prod
+ */
+export const DEFAULT_PROJECT_CHAIN_ID = NETWORKS_BY_NAME.sepolia
   .chainId as unknown as JBChainId // TODO once mainnet is a JBChainId, this wont be necessary
 
 export const readNetwork =

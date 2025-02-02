@@ -1,9 +1,10 @@
 import { Trans, t } from '@lingui/macro'
-import { useJBContractContext, useJBTokenContext, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
+import { useJBChainId, useJBContractContext, useJBTokenContext, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
 import { useContext, useState } from 'react'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
 import TransactionModal from 'components/modals/TransactionModal'
+import { NETWORKS } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import SplitList from 'packages/v4/components/SplitList/SplitList'
 import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
@@ -23,6 +24,8 @@ export default function V4DistributeReservedTokensModal({
   onConfirmed?: VoidFunction
 }) {
   const { addTransaction } = useContext(TxHistoryContext)
+
+  const jbChainId = useJBChainId()
 
   const { projectId, contracts } = useJBContractContext()
   const { splits: reservedTokensSplits } = useV4ReservedSplits()
@@ -90,9 +93,11 @@ export default function V4DistributeReservedTokensModal({
     plural: false,
   })
 
+  if (!jbChainId) return null
+
   return (
     <TransactionModal
-      title={<Trans>Send reserved {tokenTextPlural}</Trans>}
+      title={<Trans>Send reserved {tokenTextPlural} on {NETWORKS[jbChainId].label}</Trans>}
       open={open}
       onOk={() => sendReservedTokens()}
       okText={t`Send ${tokenTextPlural}`}
@@ -101,7 +106,7 @@ export default function V4DistributeReservedTokensModal({
       transactionPending={transactionPending}
       onCancel={onCancel}
       width={640}
-      centered={true}
+      centered
     >
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">

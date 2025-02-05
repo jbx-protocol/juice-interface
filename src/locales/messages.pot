@@ -890,9 +890,6 @@ msgstr ""
 msgid "Hold fees"
 msgstr ""
 
-msgid "Chain selection"
-msgstr ""
-
 msgid "Grant NFT permissions"
 msgstr ""
 

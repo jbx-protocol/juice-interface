@@ -53,7 +53,7 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
   })
 
   const userTokenBalance = parseFloat(
-    formatUnits(_userTokenBalance?.toString() ?? '0', JB_TOKEN_DECIMALS),
+    formatUnits(_userTokenBalance ?? 0n, JB_TOKEN_DECIMALS),
   )
   const redeems = {
     loading: ruleset.isLoading,

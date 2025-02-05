@@ -63,7 +63,10 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
     token?.data?.decimals ?? 18,
   )
 
-  const ethReceivedFromTokens = useETHReceivedFromTokens(redeemAmountWei)
+  const ethReceivedFromTokens = useETHReceivedFromTokens(
+    redeemAmountWei,
+    selectedChainId,
+  )
   const tokenFromRedeemAmount = ethReceivedFromTokens
     ? formatEther(ethReceivedFromTokens)
     : ''

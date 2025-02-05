@@ -1,7 +1,4 @@
-import {
-  JuiceListbox,
-  JuiceListboxOption,
-} from 'components/inputs/JuiceListbox'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import { NETWORKS } from 'constants/networks'
 import { JBChainId, SuckerPair } from 'juice-sdk-core'
 import { ChainLogo } from './ChainLogo'
@@ -14,10 +11,10 @@ function ChainSelectOption({
   label: string
 }) {
   return (
-    <div className="flex items-center gap-2">
+    <span className="mr-4 flex items-center gap-2 whitespace-nowrap">
       <ChainLogo chainId={chainId as JBChainId} />
-      {label}
-    </div>
+      <span className="whitespace-nowrap">{label}</span>
+    </span>
   )
 }
 
@@ -26,11 +23,8 @@ export const ChainSelect = ({
   onChange,
   suckers,
 }: {
-  value: {
-    label: string
-    value: number
-  }
-  onChange: (chainId: JuiceListboxOption<number>) => void
+  value: JBChainId | undefined
+  onChange: (chainId: JBChainId) => void
   suckers: SuckerPair[]
 }) => {
   const allowedChainIds = new Set(suckers?.map(sucker => sucker.peerChainId))
@@ -47,11 +41,18 @@ export const ChainSelect = ({
     }))
 
   const _value = {
-    ...value,
-    label: <ChainLogo chainId={value.value as JBChainId} />,
+    value,
+    label: value ? <ChainLogo chainId={value} /> : 'Select chain',
   }
 
   return (
-    <JuiceListbox value={_value} onChange={onChange} options={networkOptions} />
+    <JuiceListbox
+      value={_value}
+      onChange={({ value: selectedChainId }) => {
+        onChange(selectedChainId as JBChainId)
+      }}
+      options={networkOptions}
+      buttonClassName="w-18"
+    />
   )
 }

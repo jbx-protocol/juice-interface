@@ -1,25 +1,25 @@
 import * as Yup from 'yup'
 
-import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
-import { formatEther, parseUnits } from 'viem'
-import { useCallback, useContext, useMemo, useReducer } from 'react'
 import {
   useProjectDispatch,
   useProjectSelector,
 } from 'packages/v4/components/ProjectDashboard/redux/hooks'
+import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
+import { useCallback, useContext, useMemo, useReducer } from 'react'
+import { formatEther, parseUnits } from 'viem'
 
-import { NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { TxStatus } from 'models/transaction'
-import { emitErrorNotification } from 'utils/notifications'
-import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
-import { payProjectModalReducer } from './payProjectModalReducer'
-import { projectCartActions } from 'packages/v4/components/ProjectDashboard/redux/projectCartSlice'
-import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { usePayProjectTx } from './usePayProjectTx'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useWallet } from 'hooks/Wallet'
+import { NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
+import { TxStatus } from 'models/transaction'
+import { projectCartActions } from 'packages/v4/components/ProjectDashboard/redux/projectCartSlice'
+import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
+import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { emitErrorNotification } from 'utils/notifications'
+import { payProjectModalReducer } from './payProjectModalReducer'
+import { usePayProjectTx } from './usePayProjectTx'
 
 const ValidationSchema = Yup.object().shape({
   message: Yup.object().shape({
@@ -31,7 +31,6 @@ const ValidationSchema = Yup.object().shape({
     'You must accept the terms and conditions',
   ),
   beneficiaryAddress: Yup.string(),
-  chainId: Yup.number()
 })
 
 const getValidationSchema = (projectHasPayNotice: boolean) =>

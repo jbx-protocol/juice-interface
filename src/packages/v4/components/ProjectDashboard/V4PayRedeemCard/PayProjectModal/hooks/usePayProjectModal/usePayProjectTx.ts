@@ -1,5 +1,6 @@
 import { DEFAULT_METADATA, NATIVE_TOKEN } from 'juice-sdk-core'
 import {
+  JBChainId,
   useJBChainId,
   useJBContractContext,
   useJBRulesetContext,
@@ -117,12 +118,12 @@ export const usePayProjectTx = ({
     async (
       values: PayProjectModalFormValues,
       formikHelpers: FormikHelpers<PayProjectModalFormValues>,
+      chainId: JBChainId,
     ) => {
       if (
         !contracts.primaryNativeTerminal.data ||
         !userAddress ||
-        !values.userAcceptsTerms ||
-        !values.chainId
+        !values.userAcceptsTerms
       ) {
         return
       }
@@ -140,7 +141,6 @@ export const usePayProjectTx = ({
           .filter((url): url is string => !!url),
       })
       const beneficiary = (values.beneficiaryAddress ?? userAddress) as Address
-      const chainId = values.chainId || defaultChainId
 
       const args = [
         projectId,
@@ -197,7 +197,6 @@ export const usePayProjectTx = ({
       onTransactionConfirmedCallback,
       buildPayReceipt,
       onTransactionErrorCallback,
-      defaultChainId,
     ],
   )
 }

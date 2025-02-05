@@ -1,14 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { JBChainId } from 'juice-sdk-core'
 
 export type PayRedeemState = {
   cardState: 'pay' | 'redeem'
   // TODO: Move projectCart slice here
+  chainId: JBChainId | undefined
 }
 
 const payRedeemSlice = createSlice({
   name: 'payRedeem',
   initialState: {
     cardState: 'pay',
+    chainId: undefined,
   } as PayRedeemState,
   reducers: {
     changeToPay: state => {
@@ -19,6 +22,9 @@ const payRedeemSlice = createSlice({
     },
     reset: state => {
       state.cardState = 'pay'
+    },
+    setChainId: (state, action) => {
+      state.chainId = action.payload
     },
   },
 })

@@ -2,7 +2,7 @@ import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { Callout } from 'components/Callout/Callout'
-import { useJBRulesetContext } from 'juice-sdk-react'
+import { useJBChainId, useJBRulesetContext, useSuckers } from 'juice-sdk-react'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
@@ -10,6 +10,7 @@ import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { useV4TokensPanel } from 'packages/v4/views/V4ProjectDashboard/V4ProjectTabs/V4TokensPanel/hooks/useV4TokensPanel'
 import React, { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { ChainSelect } from '../../ChainSelect'
 import { useProjectDispatch, useProjectSelector } from '../redux/hooks'
 import { payRedeemActions } from '../redux/payRedeemSlice'
 import { PayConfiguration } from './PayConfiguration'
@@ -26,6 +27,7 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
 }) => {
   const { ruleset, rulesetMetadata } = useJBRulesetContext()
   const state = useProjectSelector(state => state.payRedeem.cardState)
+  const chainId = useProjectSelector(state => state.payRedeem.chainId)
   const nftRewards = useV4NftRewards()
   const { data: payoutLimit } = usePayoutLimit()
   const dispatch = useProjectDispatch()
@@ -68,6 +70,8 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
   const redeemDisabled =
     !rulesetMetadata.data?.cashOutTaxRate ||
     payoutLimit?.amount === MAX_PAYOUT_LIMIT
+  const currentChainId = useJBChainId()
+  const { data: suckers } = useSuckers()
 
   return (
     <div className={twMerge('flex flex-col', className)}>
@@ -76,25 +80,39 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
           'flex flex-col rounded-lg border border-grey-200 bg-white p-5 pb-6 shadow-[0_6px_16px_0_rgba(0,_0,_0,_0.04)] dark:border-slate-600 dark:bg-slate-700',
         )}
       >
-        <div>
-          <ChoiceButton
-            selected={state === 'pay'}
-            onClick={() => dispatch(payRedeemActions.changeToPay())}
-          >
-            <Trans>Pay</Trans>
-          </ChoiceButton>
-          {redeemDisabled ? null : (
+        <div className="flex items-center justify-between">
+          <div>
             <ChoiceButton
-              selected={state === 'redeem'}
-              tooltip={t`Cash out tokens for a portion of this project's treasury`}
-              onClick={() => {
-                dispatch(payRedeemActions.changeToRedeem())
-              }}
-              disabled={!redeems.enabled}
+              selected={state === 'pay'}
+              onClick={() => dispatch(payRedeemActions.changeToPay())}
             >
-              <Trans>Cash out</Trans>
+              <Trans>Pay</Trans>
             </ChoiceButton>
-          )}
+            {redeemDisabled ? null : (
+              <ChoiceButton
+                selected={state === 'redeem'}
+                tooltip={t`Cash out tokens for a portion of this project's treasury`}
+                onClick={() => {
+                  dispatch(payRedeemActions.changeToRedeem())
+                }}
+                disabled={!redeems.enabled}
+              >
+                <Trans>Cash out</Trans>
+              </ChoiceButton>
+            )}
+          </div>
+
+          <div>
+            {suckers && suckers.length > 1 ? (
+              <ChainSelect
+                value={chainId ?? currentChainId}
+                onChange={selectedChainId =>
+                  dispatch(payRedeemActions.setChainId(selectedChainId))
+                }
+                suckers={suckers}
+              />
+            ) : null}
+          </div>
         </div>
 
         <div className="mt-5">

@@ -14,7 +14,7 @@ import Image from 'next/legacy/image'
 import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
 import { twMerge } from 'tailwind-merge'
 import { helpPagePath } from 'utils/helpPagePath'
-import { ChainSelectSection } from './components/ChainSelectSection'
+import { useProjectSelector } from '../../redux/hooks'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
 import { usePayAmounts } from './hooks/usePayAmounts'
@@ -32,8 +32,11 @@ export const PayProjectModal: React.FC = () => {
     onPaySubmit,
   } = usePayProjectModal()
   const { formattedTotalAmount } = usePayAmounts()
+  const defaultChainId = useJBChainId()
+  const selectedChainId =
+    useProjectSelector(state => state.payRedeem.chainId) ?? defaultChainId
+
   const { chain: walletChain, changeNetworks, connect } = useWallet()
-  const jbChainId = useJBChainId()
 
   const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
 
@@ -46,25 +49,27 @@ export const PayProjectModal: React.FC = () => {
         },
         userAcceptsTerms: false,
         beneficiaryAddress: undefined,
-        chainId: walletChainId ?? jbChainId,
       }}
       validationSchema={validationSchema}
       onSubmit={async (values, actions) => {
-        const walletConnectedToWrongChain = values.chainId !== walletChainId
+        const walletConnectedToWrongChain = selectedChainId !== walletChainId
         if (walletConnectedToWrongChain) {
-          await changeNetworks(values.chainId as JBChainId)
+          await changeNetworks(selectedChainId as JBChainId)
           return
         }
         if (!walletChain) {
           await connect()
           return
         }
-        await onPaySubmit(values, actions)
+        if (!selectedChainId) {
+          return // TODO probably prompt user somehow idk
+        }
+        await onPaySubmit(values, actions, selectedChainId)
       }}
     >
       {props => {
         const walletConnectedToWrongChain =
-          walletChain?.id && props.values.chainId !== parseInt(walletChain.id)
+          walletChain?.id && selectedChainId !== parseInt(walletChain.id)
 
         return (
           <form name="PayProjectModalForm" onSubmit={props.handleSubmit}>
@@ -128,8 +133,6 @@ export const PayProjectModal: React.FC = () => {
                     <AmountSection />
 
                     <ReceiveSection className="py-6" />
-
-                    <ChainSelectSection />
 
                     <div className="py-6">
                       <MessageSection />

@@ -9,8 +9,9 @@ import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
 import { useWallet } from 'hooks/Wallet'
-import { NATIVE_TOKEN } from 'juice-sdk-core'
+import { JB_TOKEN_DECIMALS, NATIVE_TOKEN } from 'juice-sdk-core'
 import {
+  useJBChainId,
   useJBContractContext,
   useJBTokenContext,
   useWriteJbMultiTerminalCashOutTokensOf,
@@ -19,9 +20,10 @@ import { useETHReceivedFromTokens } from 'packages/v4/hooks/useETHReceivedFromTo
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { formatEther, parseUnits } from 'viem'
+import { useProjectSelector } from '../redux/hooks'
 import { EthereumLogo } from './EthereumLogo'
 import { PayRedeemInput } from './PayRedeemInput'
 type RedeemConfigurationProps = {
@@ -52,6 +54,9 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
   const [fallbackImage, setFallbackImage] = useState<boolean>()
   const [modalOpen, setModalOpen] = useState(false)
   const [redeeming, setRedeeming] = useState(false)
+  const defaultChainId = useJBChainId()
+  const selectedChainId =
+    useProjectSelector(state => state.payRedeem.chainId) ?? defaultChainId
 
   const redeemAmountWei = parseUnits(
     redeemAmount || '0',
@@ -67,12 +72,9 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
     useWriteJbMultiTerminalCashOutTokensOf()
   const { userAddress } = useWallet()
 
-  const insufficientBalance = useMemo(() => {
-    if (!userTokenBalance) return false
-    const amount = Number(redeemAmount || 0)
-    const balance = userTokenBalance ?? 0
-    return amount > balance
-  }, [redeemAmount, userTokenBalance])
+  const insufficientBalance =
+    redeemAmountWei >
+    parseUnits(userTokenBalance?.toString() ?? '0', JB_TOKEN_DECIMALS)
 
   const tokenTicker = tokenSymbol || 'TOKENS'
 
@@ -83,6 +85,11 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
       : ethReceivedFromTokens
 
   const redeem = useCallback(async () => {
+    if (Number(wallet.chain?.id) !== selectedChainId) {
+      wallet.changeNetworks(selectedChainId)
+      return
+    }
+
     if (!slippage) {
       emitErrorNotification('Failed to calculate slippage')
       return
@@ -111,6 +118,7 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
     ] as const
     try {
       const hash = await writeRedeem({
+        chainId: selectedChainId,
         address: contracts.primaryNativeTerminal.data,
         args,
       })
@@ -134,6 +142,8 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
     redeemAmountWei,
     userAddress,
     writeRedeem,
+    selectedChainId,
+    wallet,
   ])
 
   return (
@@ -195,6 +205,8 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
           {wallet.isConnected ? (
             insufficientBalance ? (
               <Trans>Insufficient balance</Trans>
+            ) : Number(wallet.chain?.id) !== selectedChainId ? (
+              <Trans>Change networks to cash out</Trans>
             ) : (
               <Trans>Cash out {tokenTicker}</Trans>
             )

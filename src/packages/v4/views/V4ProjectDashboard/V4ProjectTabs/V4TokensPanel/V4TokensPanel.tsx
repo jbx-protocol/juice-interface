@@ -1,17 +1,16 @@
 import { SettingOutlined } from '@ant-design/icons'
-import { Trans, t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
 import EthereumAddress from 'components/EthereumAddress'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
 import { NETWORKS } from 'constants/networks'
-import { JBChainId } from 'juice-sdk-core'
+import { formatUnits, JB_TOKEN_DECIMALS, JBChainId } from 'juice-sdk-core'
 import {
-  NativeTokenValue,
   useJBChainId,
   useJBContractContext,
-  useSuckersUserTokenBalance,
+  useSuckersUserTokenBalance
 } from 'juice-sdk-react'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { V4TokenHoldersModal } from 'packages/v4/components/modals/V4TokenHoldersModal/V4TokenHoldersModal'
@@ -28,11 +27,8 @@ import { V4ReservedTokensSubPanel } from './V4ReservedTokensSubPanel'
 import { V4TokenRedemptionCallout } from './V4TokenRedemptionCallout'
 
 export const V4TokensPanel = () => {
-  const {
-    userTokenBalanceLoading,
-    projectToken,
-    totalSupply,
-  } = useV4TokensPanel()
+  const { userTokenBalanceLoading, projectToken, totalSupply } =
+    useV4TokensPanel()
   const projectHasErc20Token = useProjectHasErc20Token()
   const { data: suckersBalance } = useSuckersUserTokenBalance()
 
@@ -89,7 +85,7 @@ export const V4TokensPanel = () => {
                   {/* (NOTE: Following comment copied from Revnet: 
                   "TODO maybe show USD-converted value here instead?" */}
                   <span className="whitespace-nowrap font-medium">
-                    <NativeTokenValue wei={balance.balance.value ?? 0n} />
+                    {balance.balance.format()} {projectToken}
                   </span>
                 </div>
               ))}
@@ -98,11 +94,11 @@ export const V4TokensPanel = () => {
         }
       >
         <span>
-          <NativeTokenValue wei={totalBalance} />
+          {formatUnits(totalBalance, JB_TOKEN_DECIMALS)} {projectToken}
         </span>
       </Tooltip>
     )
-  }, [totalBalance, suckersBalance])
+  }, [totalBalance, suckersBalance, projectToken])
 
   return (
     <>

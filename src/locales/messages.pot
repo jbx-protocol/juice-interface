@@ -2822,6 +2822,9 @@ msgstr ""
 msgid "The onchain memo for each payment made through this address. The project's payment feed will include the memo alongside the payment."
 msgstr ""
 
+msgid "Change networks to cash out"
+msgstr ""
+
 msgid "No activity yet"
 msgstr ""
 

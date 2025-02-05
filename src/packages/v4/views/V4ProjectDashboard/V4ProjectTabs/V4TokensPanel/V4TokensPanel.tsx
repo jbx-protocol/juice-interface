@@ -1,15 +1,9 @@
-import { Trans, t } from '@lingui/macro'
-import EthereumAddress from 'components/EthereumAddress'
-import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
-// import { TokenHoldersModal } from '../TokenHoldersModal/TokenHoldersModal'
-// import { MigrateTokensButton } from './components/MigrateTokensButton'
-// import { RedeemTokensButton } from './components/RedeemTokensButton'
-// import { ReservedTokensSubPanel } from './components/ReservedTokensSubPanel'
-// import { TokenRedemptionCallout } from './components/TokenRedemptionCallout'
-// import { TransferUnclaimedTokensModalWrapper } from './components/TransferUnclaimedTokensModalWrapper'
 import { SettingOutlined } from '@ant-design/icons'
+import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
+import EthereumAddress from 'components/EthereumAddress'
+import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
 import { NETWORKS } from 'constants/networks'
 import { JBChainId } from 'juice-sdk-core'
@@ -28,19 +22,14 @@ import { reloadWindow } from 'utils/windowUtils'
 import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4BalanceMenuItemsUserFlags'
 import { useV4TokensPanel } from './hooks/useV4TokensPanel'
 import { useV4YourBalanceMenuItems } from './hooks/useV4YourBalanceMenuItems'
-import { V4BurnOrRedeemModal } from './V4BurnOrRedeemModal'
 import { V4ClaimTokensModal } from './V4ClaimTokensModal'
 import { V4MintModal } from './V4MintModal'
-import { V4RedeemTokensButton } from './V4RedeemTokensButton'
 import { V4ReservedTokensSubPanel } from './V4ReservedTokensSubPanel'
 import { V4TokenRedemptionCallout } from './V4TokenRedemptionCallout'
 
 export const V4TokensPanel = () => {
   const {
     userTokenBalanceLoading,
-    // userLegacyTokenBalance,
-    // projectHasLegacyTokens,
-    // userV1ClaimedBalance,
     projectToken,
     totalSupply,
   } = useV4TokensPanel()
@@ -61,8 +50,6 @@ export const V4TokensPanel = () => {
 
   const {
     items,
-    redeemModalVisible,
-    setRedeemModalVisible,
     claimTokensModalVisible,
     setClaimTokensModalVisible,
     mintModalVisible,
@@ -147,10 +134,6 @@ export const V4TokensPanel = () => {
                         <Trans>Claim ERC-20 token</Trans>
                       </Button>
                     )}
-                    <V4RedeemTokensButton
-                      containerClassName="w-full md:w-fit"
-                      className="h-12 w-full md:h-10"
-                    />
                   </div>
                 </span>
               }
@@ -163,23 +146,6 @@ export const V4TokensPanel = () => {
               }
             />
           )}
-
-          {/* {projectHasLegacyTokens && userLegacyTokenBalance?.gt(0) ? (
-            <TitleDescriptionDisplayCard
-              className="mt-4 flex flex-col items-center gap-5 md:flex-row"
-              title={t`Your legacy balance`}
-              description={
-                <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
-                  <TokenAmount amountWad={userLegacyTokenBalance} />
-                  <MigrateTokensButton
-                    totalLegacyTokenBalance={userLegacyTokenBalance}
-                    v1ClaimedBalance={userV1ClaimedBalance}
-                    className="h-12 w-full md:h-10 md:w-fit"
-                  />
-                </div>
-              }
-            />
-          ) : null} */}
 
           <div className="mt-4 flex flex-col gap-4">
             <div className="flex flex-col gap-4 md:flex-row">
@@ -209,11 +175,6 @@ export const V4TokensPanel = () => {
       <V4TokenHoldersModal
         open={tokenHolderModalOpen}
         onClose={closeTokenHolderModal}
-      />
-      <V4BurnOrRedeemModal
-        open={redeemModalVisible}
-        onCancel={() => setRedeemModalVisible(false)}
-        onConfirmed={reloadWindow}
       />
       <V4ClaimTokensModal
         open={claimTokensModalVisible}

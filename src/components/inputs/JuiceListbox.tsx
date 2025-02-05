@@ -50,7 +50,7 @@ export function JuiceListbox<T>(props: JuiceListboxProps<T>) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-smoke-300 bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-slate-300 dark:bg-slate-800 sm:text-sm">
+          <Listbox.Options className="absolute z-10 mt-1 max-h-60 rounded-lg border border-smoke-300 bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-slate-300 dark:bg-slate-800 sm:text-sm">
             {options.map((option, optionIdx) => (
               <Listbox.Option
                 key={optionIdx}
@@ -63,13 +63,11 @@ export function JuiceListbox<T>(props: JuiceListboxProps<T>) {
               >
                 {({ selected }) => (
                   <>
-                    <span
-                      className={`block truncate ${
-                        selected ? 'font-bold' : 'font-normal'
-                      }`}
+                    <div
+                      className={`${selected ? 'font-bold' : 'font-normal'}`}
                     >
                       {option.label}
-                    </span>
+                    </div>
                   </>
                 )}
               </Listbox.Option>

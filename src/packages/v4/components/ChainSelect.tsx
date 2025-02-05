@@ -3,7 +3,23 @@ import {
   JuiceListboxOption,
 } from 'components/inputs/JuiceListbox'
 import { NETWORKS } from 'constants/networks'
-import { SuckerPair } from 'juice-sdk-core'
+import { JBChainId, SuckerPair } from 'juice-sdk-core'
+import { ChainLogo } from './ChainLogo'
+
+function ChainSelectOption({
+  chainId,
+  label,
+}: {
+  chainId: number
+  label: string
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      <ChainLogo chainId={chainId as JBChainId} />
+      {label}
+    </div>
+  )
+}
 
 export const ChainSelect = ({
   value,
@@ -21,35 +37,21 @@ export const ChainSelect = ({
   const networkOptions = Object.entries(NETWORKS)
     .filter(([chainId]) => allowedChainIds.has(parseInt(chainId)))
     .map(([chainId, networkInfo]) => ({
-      label: networkInfo.label,
-      value: parseInt(chainId),
+      label: (
+        <ChainSelectOption
+          chainId={parseInt(chainId)}
+          label={networkInfo.label}
+        />
+      ),
+      value: parseInt(chainId) as JBChainId,
     }))
 
-  // const fetchGasEstimates = async () => {
-  //   const estimates = await Promise.allSettled(
-  //     Array.from(allowedChainIds).map(async chainId => {
-  //       await estimateGas(config, {
-  //         chainId: chainId,
-  //         // TODO pass in tx data and contract address
-  //         // to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
-  //         // value: parseEther('0.01'),
-  //       })
-  //     }),
-  //   )
-  //   // setGasEstimates(estimates)
-  // }
+  const _value = {
+    ...value,
+    label: <ChainLogo chainId={value.value as JBChainId} />,
+  }
 
   return (
-    <JuiceListbox
-      value={value}
-      onChange={onChange}
-      options={networkOptions.map(option => ({
-        ...option,
-        label: `${option.label}`,
-        //  - Gas: ${
-        //   gasEstimates[option.value] || 'Loading...'
-        // }`,
-      }))}
-    />
+    <JuiceListbox value={_value} onChange={onChange} options={networkOptions} />
   )
 }

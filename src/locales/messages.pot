@@ -890,9 +890,6 @@ msgstr ""
 msgid "Hold fees"
 msgstr ""
 
-msgid "Chain selection"
-msgstr ""
-
 msgid "Grant NFT permissions"
 msgstr ""
 
@@ -1346,9 +1343,6 @@ msgstr ""
 msgid "Payments"
 msgstr ""
 
-msgid "Cash out your tokens to reclaim some ETH that isn't needed for payouts. This cycle's <0>redemption rate</0> determines the amount of ETH you'll receive."
-msgstr ""
-
 msgid "Juicebox Project"
 msgstr ""
 
@@ -1419,9 +1413,6 @@ msgid "Contact a contributor"
 msgstr ""
 
 msgid "Recipient"
-msgstr ""
-
-msgid "Tokens are burned when they are cashed out."
 msgstr ""
 
 msgid "The amount of ETH in this project’s treasury."
@@ -2663,6 +2654,9 @@ msgstr ""
 msgid "Recipients will recieve payouts in ETH"
 msgstr ""
 
+msgid "Send reserved {tokenTextPlural} on {0}"
+msgstr ""
+
 msgid "{0} must be numeric"
 msgstr ""
 
@@ -2826,6 +2820,9 @@ msgid "Cannot set payouts because your <0>Total payouts</0> is Zero."
 msgstr ""
 
 msgid "The onchain memo for each payment made through this address. The project's payment feed will include the memo alongside the payment."
+msgstr ""
+
+msgid "Change networks to cash out"
 msgstr ""
 
 msgid "No activity yet"
@@ -3269,9 +3266,6 @@ msgstr ""
 msgid "Juicebox is built for the people, by the people."
 msgstr ""
 
-msgid "Cash out tokens"
-msgstr ""
-
 msgid "Sent payouts"
 msgstr ""
 
@@ -3582,9 +3576,6 @@ msgid "This project has been delisted and can't be paid."
 msgstr ""
 
 msgid "NFTs, tokens and rewards will be sent to <0/>"
-msgstr ""
-
-msgid "Cash out {tokensTextLong} for ETH"
 msgstr ""
 
 msgid "See the code"
@@ -3983,9 +3974,6 @@ msgstr ""
 msgid "payout"
 msgstr ""
 
-msgid "Tokens to cash out"
-msgstr ""
-
 msgid "Cycle"
 msgstr ""
 
@@ -4323,9 +4311,6 @@ msgid "Visit jbdao.org"
 msgstr ""
 
 msgid "Allow Controller migration"
-msgstr ""
-
-msgid "No tokens to cash out."
 msgstr ""
 
 msgid "Turn on unlimited payouts, and convert all your payout amounts to percentages."

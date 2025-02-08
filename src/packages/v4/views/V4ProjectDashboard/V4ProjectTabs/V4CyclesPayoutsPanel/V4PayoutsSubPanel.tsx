@@ -1,6 +1,7 @@
 import { Trans, t } from '@lingui/macro'
 import { availableToPayOutTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
+import { TruncatedText } from 'components/TruncatedText'
 import { NETWORKS } from 'constants/networks'
 import { JBChainId } from 'juice-sdk-core'
 import { NativeTokenValue } from 'juice-sdk-react'
@@ -70,11 +71,13 @@ export const V4PayoutsSubPanel = ({
                     >
                       <span className="flex items-center gap-3">
                         <ChainLogo chainId={sucker.chainId as JBChainId} />
-                        <span className="text-sm font-medium text-grey-900 dark:text-slate-50">
-                          {NETWORKS[sucker.chainId].label}
-                        </span>
+
+                        <TruncatedText
+                          className="text-sm font-medium text-grey-900 dark:text-slate-50"
+                          text={NETWORKS[sucker.chainId].label}
+                        />
                       </span>
-                      <span className="text-sm text-grey-900 dark:text-slate-50">
+                      <span className="flex-shrink-0 flex-nowrap text-sm text-grey-900 dark:text-slate-50">
                         <NativeTokenValue wei={sucker.balance} />
                       </span>
                     </div>

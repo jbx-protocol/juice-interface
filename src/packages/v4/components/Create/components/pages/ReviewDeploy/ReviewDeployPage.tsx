@@ -2,6 +2,7 @@ import { Checkbox, Form } from 'antd'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 import { CheckCircleFilled } from '@ant-design/icons'
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Callout } from 'components/Callout/Callout'
 import ExternalLink from 'components/ExternalLink'
@@ -68,9 +69,7 @@ export const ReviewDeployPage = () => {
   const nftRewards = useAppSelector(
     state => state.creatingV2Project.nftRewards.rewardTiers,
   )
-  const {
-    projectChainId,
-  } = useAppSelector(state => state.creatingV2Project) 
+  const { projectChainId } = useAppSelector(state => state.creatingV2Project)
 
   const nftRewardsAreSet = useMemo(
     () => nftRewards && nftRewards?.length > 0,
@@ -85,10 +84,10 @@ export const ReviewDeployPage = () => {
     dispatch(creatingV2ProjectActions.resetState())
   }, [dispatch, goToPage, router])
 
-  const walletConnectedToWrongChain = chain?.id && projectChainId !== parseInt(chain.id)
+  const walletConnectedToWrongChain =
+    chain?.id && projectChainId !== parseInt(chain.id)
 
   const onFinish = useCallback(async () => {
-
     if (walletConnectedToWrongChain) {
       await changeNetworks(projectChainId)
       return
@@ -177,9 +176,20 @@ export const ReviewDeployPage = () => {
           key={ReviewDeployKey.Rewards}
           collapsible={nftRewardsAreSet ? 'header' : 'disabled'}
           header={
-            <Header skipped={!nftRewardsAreSet}>
-              <Trans>NFTs</Trans>
-            </Header>
+            <div className="flex items-center gap-3.5">
+              <Header skipped={!nftRewardsAreSet}>
+                <Trans>NFTs</Trans>
+              </Header>
+              {/* TODO: Only show this when there is multiple chains selected */}
+              <Callout
+                className="items-center bg-bluebs-25 py-2 px-3 text-bluebs-700"
+                iconComponent={
+                  <InformationCircleIcon className="h-6 w-6 text-bluebs-700" />
+                }
+              >
+                NFTs will be deployed across all selected chains
+              </Callout>
+            </div>
           }
         >
           <RewardsReview />

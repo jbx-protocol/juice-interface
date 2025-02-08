@@ -71,12 +71,13 @@ export function V4ActivityList() {
         />
       </div>
       <div className="flex flex-col gap-3">
-        <JuiceListbox
+        {/* // TODO: Disabled until further notice */}
+        {/* <JuiceListbox
           className="mb-5"
           options={ACTIVITY_OPTIONS}
           value={ACTIVITY_OPTIONS.find(o => o.value === filter)}
           onChange={o => setFilter(o.value as ProjectEventFilter)}
-        />
+        /> */}
         {(isLoading || suckersLoading) && <Loading />}
         {isLoading ||
         suckersLoading ||

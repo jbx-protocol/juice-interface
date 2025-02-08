@@ -1,9 +1,9 @@
-import { t } from '@lingui/macro'
+import { ChainLogo } from './ChainLogo'
+import { JBChainId } from 'juice-sdk-core'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import { NETWORKS } from 'constants/networks'
-import { JBChainId } from 'juice-sdk-core'
 import React from 'react'
-import { ChainLogo } from './ChainLogo'
+import { t } from '@lingui/macro'
 
 function ChainSelectOption({
   chainId,
@@ -73,7 +73,9 @@ export const ChainSelect = ({
       className={className}
       value={_value}
       onChange={({ value: selectedChainId }) => {
-        onChange(selectedChainId as JBChainId)
+        if (selectedChainId) {
+          onChange(selectedChainId)
+        }
       }}
       options={networkOptions}
     />

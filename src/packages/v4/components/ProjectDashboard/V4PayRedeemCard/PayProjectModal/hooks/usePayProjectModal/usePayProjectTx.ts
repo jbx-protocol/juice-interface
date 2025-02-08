@@ -161,7 +161,12 @@ export const usePayProjectTx = ({
       try {
         const hash = await writePay({
           chainId,
-          address: contracts.primaryNativeTerminal.data,
+          address: contracts.primaryNativeTerminal.data, 
+          // v4TODO Q: shouldnt above be:
+          // useReadJbDirectoryPrimaryTerminalOf({
+          //   chainId: selectedChainId,
+          //   args: [projectId, NATIVE_TOKEN],
+          // })   ???
           args,
           value: weiAmount,
         })

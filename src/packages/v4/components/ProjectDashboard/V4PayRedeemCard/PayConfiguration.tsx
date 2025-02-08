@@ -1,23 +1,24 @@
-import { Button, Tooltip } from 'antd'
 import { Trans, t } from '@lingui/macro'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Button } from 'antd'
+import { useCallback, useEffect, useState } from 'react'
 import {
   useProjectDispatch,
   useProjectSelector,
   useProjectStore,
 } from '../redux/hooks'
 
-import { EthereumLogo } from './EthereumLogo'
 import { PV_V2 } from 'constants/pv'
-import { PayRedeemInput } from './PayRedeemInput'
+import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
+import { useJBTokenContext } from 'juice-sdk-react'
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { projectCartActions } from '../redux/projectCartSlice'
-import { useJBTokenContext } from 'juice-sdk-react'
-import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
+import { EthereumLogo } from './EthereumLogo'
+import { PayRedeemInput } from './PayRedeemInput'
 // import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
 import { useWallet } from 'hooks/Wallet'
+import React from 'react'
+import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
 
 type PayConfigurationProps = {
   userTokenBalance: number | undefined
@@ -51,8 +52,11 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
     uri: projectMetadata?.logoUri,
   })
 
+  const payInputRef = React.useRef<HTMLInputElement>(null)
+
   const [payAmount, setPayAmount] = useState<string>()
   const [fallbackImage, setFallbackImage] = useState<boolean>()
+  const [error, setError] = useState<string>()
 
   const tokenBSymbol = token?.data?.symbol // the token the user receives (the project token)
 
@@ -64,6 +68,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
 
   const handleUserPayAmountChange = useCallback(
     (value: string | undefined) => {
+      setError(undefined)
       const parsedValue = parseFloat(value || '0')
       dispatch(
         projectCartActions.addPayment({
@@ -81,8 +86,14 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
       connect()
       return
     }
+    if (insufficientBalance || cartPayAmount === 0 || !cartPayAmount) {
+      setError('Insufficient balance')
+      payInputRef.current?.focus()
+      return
+    }
+    setError(undefined)
     dispatch(projectCartActions.openPayModal())
-  }, [connect, dispatch, walletConnected])
+  }, [cartPayAmount, connect, dispatch, insufficientBalance, walletConnected])
 
   // Update the pay amount input from the cart
   useEffect(() => {
@@ -96,18 +107,15 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
     }
   }, [store])
 
-  // TODO include other 'pay disabled' logic, usePayProjectDisabled etc
-  const payButtonDisabled = useMemo(() => {
-    if (!walletConnected) return false
-    return insufficientBalance || cartPayAmount === 0 || !cartPayAmount
-  }, [cartPayAmount, insufficientBalance, walletConnected])
-  const message = undefined
-
   return (
     <div>
       <div className="relative">
         <div className="flex flex-col gap-y-2">
           <PayRedeemInput
+            ref={payInputRef}
+            className={
+              !!error ? 'border-error-500 dark:border-error-500' : undefined
+            }
             label={t`You pay`}
             token={{
               balance: wallet.balance,
@@ -118,6 +126,9 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
             value={payAmount ?? cartPayAmount?.toString()}
             onChange={handleUserPayAmountChange}
           />
+          {error && (
+            <div className="text-error-500 dark:text-error-500">{error}</div>
+          )}
           <PayRedeemInput
             label={t`You receive`}
             redeemUnavailable={!isIssuingTokens}
@@ -149,26 +160,23 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
         </div>
       </div>
 
-      <Tooltip className="w-full flex-1" title={message}>
-        <Button
-          style={{ display: 'block', width: '100%' }}
-          type="primary"
-          className="mt-6"
-          size="large"
-          disabled={payButtonDisabled}
-          onClick={payProject}
-        >
-          {walletConnected ? (
-            insufficientBalance ? (
-              <Trans>Insufficient balance</Trans>
-            ) : (
-              <Trans>Pay project</Trans>
-            )
+      <Button
+        style={{ display: 'block', width: '100%' }}
+        type="primary"
+        className="mt-6"
+        size="large"
+        onClick={payProject}
+      >
+        {walletConnected ? (
+          insufficientBalance ? (
+            <Trans>Insufficient balance</Trans>
           ) : (
-            <Trans>Connect wallet</Trans>
-          )}
-        </Button>
-      </Tooltip>
+            <Trans>Pay project</Trans>
+          )
+        ) : (
+          <Trans>Connect wallet</Trans>
+        )}
+      </Button>
     </div>
   )
 }

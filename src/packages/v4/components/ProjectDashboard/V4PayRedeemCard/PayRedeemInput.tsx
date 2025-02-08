@@ -23,32 +23,35 @@ import { EthereumLogo } from './EthereumLogo'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
 
-export const PayRedeemInput = ({
-  className,
-  label,
-  downArrow,
-  readOnly,
-  redeemUnavailable,
-  token,
-  nfts,
-  value,
-  onChange,
-}: {
-  className?: string
-  label?: React.ReactNode
-  downArrow?: boolean
-  readOnly?: boolean
-  redeemUnavailable?: boolean
-  token: {
-    type?: 'eth' | 'native' | 'erc20'
-    ticker: string
-    image: ReactNode
-    balance: string | undefined
-  }
-  nfts?: ProjectCartNftReward[]
-  value?: string | undefined
-  onChange?: (value: string | undefined) => void
-}) => {
+const _PayRedeemInput = (
+  {
+    className,
+    label,
+    downArrow,
+    readOnly,
+    redeemUnavailable,
+    token,
+    nfts,
+    value,
+    onChange,
+  }: {
+    className?: string
+    label?: React.ReactNode
+    downArrow?: boolean
+    readOnly?: boolean
+    redeemUnavailable?: boolean
+    token: {
+      type?: 'eth' | 'native' | 'erc20'
+      ticker: string
+      image: ReactNode
+      balance: string | undefined
+    }
+    nfts?: ProjectCartNftReward[]
+    value?: string | undefined
+    onChange?: (value: string | undefined) => void
+  },
+  ref: React.Ref<HTMLInputElement>,
+) => {
   token.type = token.type || 'native'
 
   const converter = useCurrencyConverter()
@@ -114,6 +117,7 @@ export const PayRedeemInput = ({
           <div className="space-y-2">
             <div className="flex w-full justify-between gap-2">
               <input
+                ref={ref}
                 className="min-w-0 bg-transparent text-3xl font-medium text-grey-900 placeholder:text-grey-300 focus:outline-none dark:text-slate-100 dark:placeholder-slate-400"
                 // TODO: Format and de-format
                 value={value}
@@ -324,3 +328,5 @@ const QuantityControl: React.FC<{
     </span>
   )
 }
+
+export const PayRedeemInput = React.forwardRef(_PayRedeemInput)

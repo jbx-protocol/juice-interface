@@ -83,7 +83,7 @@ const FRAME_ANCESTORS = [
   'https://nance.app',
   'https://jbdao.org',
   'https://nounspace.com',
-  'https://*.nounspace.com'
+  'https://*.nounspace.com',
 ]
 
 if (process.env.NODE_ENV === 'development') {
@@ -127,8 +127,42 @@ const SECURITY_HEADERS = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = removeImports({
+  modularizeImports: {
+    '@heroicons/react/20/solid': {
+      transform: '@heroicons/react/20/solid/{{member}}',
+    },
+    '@heroicons/react/20/outline': {
+      transform: '@heroicons/react/20/outline/{{member}}',
+    },
+    '@heroicons/react/24/solid': {
+      transform: '@heroicons/react/24/solid/{{member}}',
+    },
+    '@heroicons/react/24/outline': {
+      transform: '@heroicons/react/24/outline/{{member}}',
+    },
+    lodash: {
+      transform: 'lodash/{{member}}',
+    },
+    antd: {
+      transform: 'antd/es/{{member}}',
+    },
+    '@headlessui/react': {
+      transform: '@headlessui/react/{{member}}',
+    },
+  },
   experimental: {
     esmExternals: true,
+    optimizePackageImports: [
+      // TODO: For whatever reason, doesnt work on current version of next (^14.2.10)
+      // TODO: once on a later version, replace the modularizeImports with this
+      // '@heroicons/react/20/solid',
+      // '@heroicons/react/20/outline',
+      // '@heroicons/react/24/solid',
+      // '@heroicons/react/24/outline',
+      // 'lodash',
+      // 'antd',
+      // '@headlessui/react',
+    ],
   },
   staticPageGenerationTimeout: 90,
   webpack: config => {

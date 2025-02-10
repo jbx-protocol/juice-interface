@@ -1,4 +1,4 @@
-import { BigNumber, BigNumberish } from 'ethers'
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import { V1ContractName } from 'packages/v1/models/contracts'
 import { TicketMod } from 'packages/v1/models/mods'
 import { useMemo } from 'react'

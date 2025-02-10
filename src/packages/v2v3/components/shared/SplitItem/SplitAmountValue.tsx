@@ -1,10 +1,10 @@
 import { DollarCircleOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import { CurrencyName } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
@@ -31,7 +31,8 @@ export function SplitAmountValue({
   const isJuiceboxProject = isJuiceboxProjectSplit(props.split)
   const hasFee = !isJuiceboxProject && !props.dontApplyFeeToAmount
   const _feeAmount = hasFee
-    ? feeForAmount(splitValue?.toBigInt(), primaryETHTerminalFee?.toBigInt()) ?? 0n
+    ? feeForAmount(splitValue?.toBigInt(), primaryETHTerminalFee?.toBigInt()) ??
+      0n
     : 0n
   const feeAmount = BigNumber.from(_feeAmount)
   const valueAfterFees = splitValue ? splitValue.sub(feeAmount) : 0

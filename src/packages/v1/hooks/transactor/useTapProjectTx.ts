@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 import { V1UserContext } from 'packages/v1/contexts/User/V1UserContext'
 import { useContext } from 'react'

@@ -2,7 +2,7 @@ import { formatBytes32String } from 'ethers/lib/utils'
 import { V1UserContext } from 'packages/v1/contexts/User/V1UserContext'
 import { useContext } from 'react'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'

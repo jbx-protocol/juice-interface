@@ -1,5 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { BigNumber } from 'ethers'
 import tailwind from 'lib/tailwind'
 import { ParticipantsQuery } from 'packages/v4/graphql/client/graphql'
 import { useContext, useMemo } from 'react'

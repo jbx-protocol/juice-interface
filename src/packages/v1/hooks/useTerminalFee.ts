@@ -1,4 +1,5 @@
-import { BigNumber, Contract } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
+import { Contract } from '@ethersproject/contracts'
 import { V1UserContext } from 'packages/v1/contexts/User/V1UserContext'
 import { V1TerminalVersion } from 'packages/v1/models/terminals'
 import { useContext, useEffect, useState } from 'react'

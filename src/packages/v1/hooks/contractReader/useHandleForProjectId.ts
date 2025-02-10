@@ -1,4 +1,6 @@
-import { BigNumber, BigNumberish, BytesLike, utils } from 'ethers'
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { BytesLike } from '@ethersproject/bytes'
+import { parseBytes32String } from '@ethersproject/strings'
 import { V1ContractName } from 'packages/v1/models/contracts'
 import { useCallback } from 'react'
 
@@ -16,7 +18,7 @@ export default function useHandleForProjectId(
       if (val === undefined || val === null) {
         return undefined
       }
-      return utils.parseBytes32String(val)
+      return parseBytes32String(val)
     }, []),
   })
 }

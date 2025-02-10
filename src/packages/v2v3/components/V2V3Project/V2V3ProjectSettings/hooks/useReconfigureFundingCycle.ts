@@ -1,6 +1,7 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { PV_V2 } from 'constants/pv'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber, constants } from 'ethers'
 import { revalidateProject } from 'lib/api/nextjs'
 import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'

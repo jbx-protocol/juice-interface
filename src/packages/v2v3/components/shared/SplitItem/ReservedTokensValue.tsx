@@ -1,6 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
-import { BigNumber } from 'ethers'
 import { formatSplitPercent } from 'packages/v2v3/utils/math'
 
 export function ReservedTokensValue({

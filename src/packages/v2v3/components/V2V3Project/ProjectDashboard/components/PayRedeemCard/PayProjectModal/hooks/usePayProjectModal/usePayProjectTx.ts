@@ -1,4 +1,4 @@
-import { Transaction } from 'ethers'
+import { Transaction } from '@ethersproject/transactions'
 import { FormikHelpers } from 'formik'
 import { useWallet } from 'hooks/Wallet'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'

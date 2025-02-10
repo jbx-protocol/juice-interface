@@ -1,3 +1,4 @@
+import { isAddress } from '@ethersproject/address'
 import { t } from '@lingui/macro'
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { Form, Input } from 'antd'
@@ -6,9 +7,12 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { utils } from 'ethers'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
-import { useJBContractContext, useReadJbTokensTokenOf, useWriteJbControllerMintTokensOf } from 'juice-sdk-react'
+import {
+  useJBContractContext,
+  useReadJbTokensTokenOf,
+  useWriteJbControllerMintTokensOf,
+} from 'juice-sdk-react'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useContext, useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
@@ -50,12 +54,7 @@ export function V4MintModal({
     const memo = formValues.memo
     const beneficiary = formValues.beneficary as Address
 
-    if (
-      !contracts.controller.data ||
-      !beneficiary ||
-      !amount ||
-      !projectId
-    )
+    if (!contracts.controller.data || !beneficiary || !amount || !projectId)
       return
 
     setLoading(true)
@@ -123,7 +122,7 @@ export function V4MintModal({
               required: true,
               validateTrigger: 'onCreate',
               validator: (rule, value) => {
-                if (!value || !utils.isAddress(value))
+                if (!value || !isAddress(value))
                   return Promise.reject('Not a valid ETH address')
                 else return Promise.resolve()
               },

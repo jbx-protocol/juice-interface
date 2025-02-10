@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { FundingCycleListItem } from 'components/FundingCycleListItem'
@@ -6,7 +7,6 @@ import {
   RECONFIG_RULES_EXPLANATION,
 } from 'components/strings'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
-import { BigNumber } from 'ethers'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import {

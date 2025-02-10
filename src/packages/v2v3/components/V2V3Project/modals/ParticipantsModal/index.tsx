@@ -3,7 +3,8 @@ import { Modal } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 
-import { BigNumber, constants } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { useContext } from 'react'
 import { isZeroAddress } from 'utils/address'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -50,7 +51,7 @@ export default function ParticipantsModal({
             pv,
             wallet_not: constants.AddressZero,
           },
-        }
+        },
       }),
     staleTime: 5 * 60 * 1000, // 5 min
     enabled: Boolean(projectId && open),

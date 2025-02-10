@@ -1,7 +1,8 @@
-import { BigNumber, BigNumberish, utils } from 'ethers'
+import { defaultAbiCoder } from '@ethersproject/abi'
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 import {
-    JB721DelegatePayMetadata,
-    encodeJb721DelegatePayMetadata,
+  JB721DelegatePayMetadata,
+  encodeJb721DelegatePayMetadata,
 } from './encodeJb721DelegateMetadata'
 
 import { createMetadata } from 'juicebox-metadata-helper'
@@ -60,7 +61,7 @@ export function encodeDelegatePayMetadata({
   if (jbBuybackDelegate) {
     delegateIds.push(IJBBuybackDelegate_INTERFACE_ID)
     metadatas.push(
-      utils.defaultAbiCoder.encode(
+      defaultAbiCoder.encode(
         ['uint256', 'uint256'],
         [
           BigNumber.from(jbBuybackDelegate.amountToSwap).toHexString(),

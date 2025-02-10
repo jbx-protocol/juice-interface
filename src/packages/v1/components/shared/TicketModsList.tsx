@@ -1,7 +1,7 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Button, Modal, Space } from 'antd'
 import { CsvUpload } from 'components/inputs/CsvUpload'
-import { BigNumber } from 'ethers'
 import Mod from 'packages/v1/components/shared/Mod'
 import ProjectTicketMods from 'packages/v1/components/shared/ProjectTicketMods'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'

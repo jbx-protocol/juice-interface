@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
 import { useContext, useMemo } from 'react'
 

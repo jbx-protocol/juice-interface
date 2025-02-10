@@ -1,7 +1,7 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { FundingCyclesQuery } from 'generated/graphql'
 import moment from 'moment'
 import useProjectDistributionLimit from 'packages/v2v3/hooks/contractReader/useProjectDistributionLimit'
@@ -9,8 +9,8 @@ import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import {
-    sgFCToV2V3FundingCycle,
-    sgFCToV2V3FundingCycleMetadata,
+  sgFCToV2V3FundingCycle,
+  sgFCToV2V3FundingCycleMetadata,
 } from 'packages/v2v3/utils/fundingCycle'
 import React, { Fragment, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'

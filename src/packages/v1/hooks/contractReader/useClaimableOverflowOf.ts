@@ -1,5 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 import { useContext, useMemo } from 'react'

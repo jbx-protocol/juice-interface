@@ -1,4 +1,4 @@
-import { utils } from 'ethers'
+import { getAddress } from '@ethersproject/address'
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { authCheck } from 'lib/auth'
@@ -86,7 +86,7 @@ const compileEmailMetadata = async ({
   metadata: { transactionHash },
 }: OnPayEvent): Promise<EmailMetadata> => {
   const formattedAmount = fromWad(amount.toString())
-  const normalizedPayerAddress = utils.getAddress(payer)
+  const normalizedPayerAddress = getAddress(payer)
   const { name: payerEnsName } = await resolveAddressEnsIdeas(
     normalizedPayerAddress,
   )

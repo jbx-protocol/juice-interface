@@ -1,5 +1,5 @@
+import { ContractInterface } from '@ethersproject/contracts'
 import { readNetwork } from 'constants/networks'
-import { ContractInterface } from 'ethers'
 import { useLoadContractFromAddress } from 'hooks/useLoadContractFromAddress'
 import { ContractJson } from 'models/contracts'
 import { NetworkName } from 'models/networkName'
@@ -8,10 +8,7 @@ import { useEffect, useState } from 'react'
 async function loadENSRegistryContract(): Promise<ContractJson | undefined> {
   const { name } = readNetwork
 
-  if (
-    name === NetworkName.mainnet ||
-    name === NetworkName.sepolia
-  ) {
+  if (name === NetworkName.mainnet || name === NetworkName.sepolia) {
     // Registry address is the same for both mainnet + sepolia
     return await import('hooks/ENS/contracts/ENSRegistry.json')
   }

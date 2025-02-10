@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useWallet } from 'hooks/Wallet'
 import useV2ContractReader from 'packages/v2v3/hooks/contractReader/useV2ContractReader'
 import { useJBTokenStoreForV3Token } from '../contracts/useJBTokenStoreForV3Token'

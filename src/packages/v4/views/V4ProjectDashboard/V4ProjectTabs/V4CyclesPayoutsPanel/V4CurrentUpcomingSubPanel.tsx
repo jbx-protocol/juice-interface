@@ -31,7 +31,8 @@ export const V4CurrentUpcomingSubPanel = ({
 }: {
   id: 'current' | 'upcoming'
 }) => {
-  const [rulesetCrossChainDiffModalOpen, setRulesetCrossChainDiffModalOpen] = useState<boolean>(false)
+  const [rulesetCrossChainDiffModalOpen, setRulesetCrossChainDiffModalOpen] =
+    useState<boolean>(false)
 
   const info = useV4CurrentUpcomingSubPanel(id)
   const { hasChanges, loading } = useV4UpcomingRulesetHasChanges()
@@ -93,11 +94,11 @@ export const V4CurrentUpcomingSubPanel = ({
     <>
       <div>
         <div className="absolute left-44 top-[-6px]">
-          { selectedChainId ?
+          {selectedChainId ? (
             <div className="flex items-center gap-1">
-              <ProjectChainSelect 
-                value={selectedChainId} 
-                onChange={(chainId) => setSelectedChainId(chainId)} 
+              <ProjectChainSelect
+                value={selectedChainId}
+                onChange={chainId => setSelectedChainId(chainId)}
               />
               {/* { rulesetsDiffAcrossChains?.length ? 
                 <Tooltip
@@ -111,7 +112,7 @@ export const V4CurrentUpcomingSubPanel = ({
                 </Tooltip>
               : null} */}
             </div>
-          : null }
+          ) : null}
         </div>
         <div className="flex flex-col gap-4">
           {id === 'upcoming' && (
@@ -155,7 +156,9 @@ export const V4CurrentUpcomingSubPanel = ({
                 className="col-span-2 md:flex-1"
                 title={t`Ruleset duration`}
                 description={
-                  info.rulesetLength?.toString() ?? <Skeleton className="w-40" />
+                  info.rulesetLength?.toString() ?? (
+                    <Skeleton className="w-40" />
+                  )
                 }
                 tooltip={rulesetLengthTooltip}
               />

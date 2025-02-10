@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Database } from 'types/database.types'
 
 import { Project } from 'generated/graphql'

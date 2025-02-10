@@ -1,4 +1,4 @@
-import { Contract } from 'ethers'
+import { Contract } from '@ethersproject/contracts'
 import { useContractReadValue } from 'hooks/ContractReader'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { useJB721TieredDelegateStore } from './useJB721TieredDelegateStore'

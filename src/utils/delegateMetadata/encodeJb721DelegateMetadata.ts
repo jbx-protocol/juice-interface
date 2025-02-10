@@ -1,9 +1,10 @@
-import { constants, utils } from 'ethers'
+import { defaultAbiCoder } from '@ethersproject/abi'
+import * as constants from '@ethersproject/constants'
 import {
-    IJB721Delegate_V3_2_INTERFACE_ID,
-    IJB721Delegate_V3_INTERFACE_ID,
-    IJBTiered721Delegate_V3_2_INTERFACE_ID,
-    IJBTiered721Delegate_V3_4_REDEEM_ID,
+  IJB721Delegate_V3_2_INTERFACE_ID,
+  IJB721Delegate_V3_INTERFACE_ID,
+  IJBTiered721Delegate_V3_2_INTERFACE_ID,
+  IJBTiered721Delegate_V3_4_REDEEM_ID,
 } from 'packages/v2v3/constants/nftRewards'
 
 import { DEFAULT_ALLOW_OVERSPENDING } from 'constants/transactionDefaults'
@@ -91,7 +92,7 @@ function encodeJB721DelegateV3PayMetadata(
     metadata.tierIdsToMint,
   ]
 
-  const encoded = utils.defaultAbiCoder.encode(
+  const encoded = defaultAbiCoder.encode(
     ['bytes32', 'bytes32', 'bytes4', 'bool', 'bool', 'bool', 'uint16[]'],
     args,
   )
@@ -112,7 +113,7 @@ function encodeJB721DelegateV3_1PayMetadata(
     metadata.tierIdsToMint,
   ]
 
-  const encoded = utils.defaultAbiCoder.encode(
+  const encoded = defaultAbiCoder.encode(
     ['bytes32', 'bytes32', 'bytes4', 'bool', 'uint16[]'],
     args,
   )
@@ -133,7 +134,7 @@ function encodeJB721DelegateV3_2PayMetadata(
     metadata.tierIdsToMint,
   ]
 
-  const encoded = utils.defaultAbiCoder.encode(
+  const encoded = defaultAbiCoder.encode(
     ['bytes32', 'bytes32', 'bytes4', 'bool', 'uint16[]'],
     args,
   )
@@ -149,7 +150,7 @@ function encodeJB721DelegateV3_4PayMetadata(
     metadata.tierIdsToMint,
   ]
 
-  const encoded = utils.defaultAbiCoder.encode(['bool', 'uint16[]'], args)
+  const encoded = defaultAbiCoder.encode(['bool', 'uint16[]'], args)
 
   return encoded
 }
@@ -161,7 +162,7 @@ function encodeJB721DelegateV3RedeemMetadata(tokenIdsToRedeem: string[]) {
     tokenIdsToRedeem,
   ]
 
-  const encoded = utils.defaultAbiCoder.encode(
+  const encoded = defaultAbiCoder.encode(
     ['bytes32', 'bytes4', 'uint256[]'],
     args,
   )
@@ -176,7 +177,7 @@ function encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem: string[]) {
     tokenIdsToRedeem,
   ]
 
-  const encoded = utils.defaultAbiCoder.encode(
+  const encoded = defaultAbiCoder.encode(
     ['bytes32', 'bytes4', 'uint256[]'],
     args,
   )
@@ -186,7 +187,7 @@ function encodeJB721DelegateV3_2RedeemMetadata(tokenIdsToRedeem: string[]) {
 
 function encodeJB721DelegateV3_4RedeemMetadata(tokenIdsToRedeem: string[]) {
   const args = [tokenIdsToRedeem]
-  const encoded = utils.defaultAbiCoder.encode(['uint256[]'], args)
+  const encoded = defaultAbiCoder.encode(['uint256[]'], args)
   const result = createMetadata(
     [IJBTiered721Delegate_V3_4_REDEEM_ID],
     [encoded],

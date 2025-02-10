@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { PayoutsSelection } from 'models/payoutsSelection'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 

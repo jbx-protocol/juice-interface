@@ -1,6 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
 import { CURRENCY_METADATA, CurrencyName } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import { TreasurySelection } from 'models/treasurySelection'
 import { PayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/PayoutsTable'
 import { Split } from 'packages/v2v3/models/splits'

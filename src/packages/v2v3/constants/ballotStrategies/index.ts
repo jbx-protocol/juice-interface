@@ -1,9 +1,9 @@
 import { plural, t } from '@lingui/macro'
 
+import * as constants from '@ethersproject/constants'
 import { CV_V2 } from 'constants/cv'
 import { readNetwork } from 'constants/networks'
 import { SECONDS_IN_DAY } from 'constants/numbers'
-import { constants } from 'ethers'
 import { NetworkName } from 'models/networkName'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import { CV2V3 } from 'packages/v2v3/models/cv'

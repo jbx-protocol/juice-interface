@@ -1,6 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { ChartBarSquareIcon, ChartPieIcon } from '@heroicons/react/24/outline'
 import Loading from 'components/Loading'
-import { BigNumber } from 'ethers'
 import { ParticipantsQuery } from 'generated/graphql'
 import { useState } from 'react'
 import TokenAreaChart from './TokenAreaChart'

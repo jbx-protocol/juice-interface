@@ -9,6 +9,7 @@ import { useCallback, useContext, useState } from 'react'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 
 import { RightOutlined } from '@ant-design/icons'
+import * as constants from '@ethersproject/constants'
 import { Callout } from 'components/Callout/Callout'
 import { FormItems } from 'components/formItems'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
@@ -18,7 +19,6 @@ import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { RichEditor } from 'components/RichEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
-import { constants } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
@@ -47,12 +47,11 @@ export const ProjectDetailsPage: React.FC<
 
   const projectOwnerDifferentThanWalletAddress =
     inputWalletAddress && wallet.userAddress !== inputWalletAddress
-  
-  const networkOptions = 
-    Object.values(JB_CHAINS).map(chain => ({
-      label: chain.name,
-      value: chain.chain.id as JBChainId,
-    }))
+
+  const networkOptions = Object.values(JB_CHAINS).map(chain => ({
+    label: chain.name,
+    value: chain.chain.id as JBChainId,
+  }))
 
   return (
     <Form

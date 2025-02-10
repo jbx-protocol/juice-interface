@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
 import {
   V2V3FundAccessConstraint,

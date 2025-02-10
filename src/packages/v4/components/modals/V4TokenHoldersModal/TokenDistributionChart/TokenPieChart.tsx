@@ -1,6 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import EthereumAddress from 'components/EthereumAddress'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
-import { BigNumber } from 'ethers'
 import tailwind from 'lib/tailwind'
 import { ParticipantsQuery } from 'packages/v4/graphql/client/graphql'
 import { useContext, useEffect, useMemo, useState } from 'react'

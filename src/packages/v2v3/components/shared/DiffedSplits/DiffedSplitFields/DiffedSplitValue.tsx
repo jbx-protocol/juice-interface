@@ -1,5 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { DiffedItem } from 'components/DiffedItem'
-import { BigNumber } from 'ethers'
 import { Split } from 'packages/v2v3/models/splits'
 import {
   isFiniteDistributionLimit,

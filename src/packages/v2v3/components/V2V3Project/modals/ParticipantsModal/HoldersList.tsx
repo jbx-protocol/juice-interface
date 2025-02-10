@@ -3,6 +3,8 @@ import {
   SortAscendingOutlined,
   SortDescendingOutlined,
 } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { Trans, t } from '@lingui/macro'
 import { Button } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
@@ -10,7 +12,6 @@ import Loading from 'components/Loading'
 import { TokenAmount } from 'components/TokenAmount'
 import ETHAmount from 'components/currency/ETHAmount'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
-import { BigNumber, constants } from 'ethers'
 import {
   OrderDirection,
   Participant_OrderBy,

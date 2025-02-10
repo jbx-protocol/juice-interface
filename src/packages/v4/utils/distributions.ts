@@ -1,12 +1,14 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 
-import { JBSplit as Split, SplitPortion, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
+import {
+  JBSplit as Split,
+  SplitPortion,
+  SPLITS_TOTAL_PERCENT,
+} from 'juice-sdk-core'
 import round from 'lodash/round'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { isInfinitePayoutLimit } from './fundingCycle'
-import {
-  MAX_PAYOUT_LIMIT,
-} from './math'
+import { MAX_PAYOUT_LIMIT } from './math'
 import { splitPortionFromFormattedPercent } from './v4Splits'
 
 export const JB_FEE = 0.025
@@ -45,9 +47,9 @@ export function derivePayoutAmount({
   dontApplyFee?: boolean
 }) {
   if (!distributionLimit) return 0
-  const amountBeforeFee =
-    payoutSplit.percent.toFloat() * distributionLimit
-  if (isJuiceboxProjectSplit(payoutSplit) || dontApplyFee) return amountBeforeFee // projects dont have fee applied
+  const amountBeforeFee = payoutSplit.percent.toFloat() * distributionLimit
+  if (isJuiceboxProjectSplit(payoutSplit) || dontApplyFee)
+    return amountBeforeFee // projects dont have fee applied
   return deriveAmountAfterFee(amountBeforeFee)
 }
 
@@ -80,7 +82,9 @@ export function getDistributionPercentFromAmount({
   amount: number
   distributionLimit: number
 }) {
-  return Number(splitPortionFromFormattedPercent((amount / distributionLimit) * 100))
+  return Number(
+    splitPortionFromFormattedPercent((amount / distributionLimit) * 100),
+  )
 }
 
 /**
@@ -89,10 +93,7 @@ export function getDistributionPercentFromAmount({
  * @returns {number} sum of all split percentanges
  */
 export function getTotalSplitsPercentage(splits: Split[]) {
-  return splits.reduce(
-    (acc, curr) => acc + curr.percent.formatPercentage(),
-    0,
-  )
+  return splits.reduce((acc, curr) => acc + curr.percent.formatPercentage(), 0)
 }
 
 /**
@@ -108,7 +109,10 @@ export function ensureSplitsSumTo100Percent({
   splits: Split[]
 }): Split[] {
   // Calculate the percent total of the splits
-  const currentTotal = splits.reduce((sum, split) => sum + split.percent.value, 0n)
+  const currentTotal = splits.reduce(
+    (sum, split) => sum + split.percent.value,
+    0n,
+  )
   const max = BigInt(SPLITS_TOTAL_PERCENT)
   // If the current total is already equal to SPLITS_TOTAL_PERCENT, no adjustment needed
   if (currentTotal === max) {
@@ -119,12 +123,13 @@ export function ensureSplitsSumTo100Percent({
   const ratio = currentTotal ? max / currentTotal : 0
 
   // Adjust each split
-  const adjustedSplits = splits.map(split => { 
-    split.percent = new SplitPortion(Math.round(split.percent.toFloat() * Number(ratio)))
+  const adjustedSplits = splits.map(split => {
+    split.percent = new SplitPortion(
+      Math.round(split.percent.toFloat() * Number(ratio)),
+    )
     return split
-  
   })
-  
+
   // Calculate the total after adjustment
   const adjustedTotal = adjustedSplits.reduce(
     (sum, split) => sum + split.percent.toFloat(),
@@ -136,10 +141,14 @@ export function ensureSplitsSumTo100Percent({
   // If there's STILL a difference due to rounding errors, adjust the largest split
   const difference = SPLITS_TOTAL_PERCENT - adjustedTotal
   const largestSplitIndex = adjustedSplits.findIndex(
-    split => split.percent.toFloat() === Math.max(...adjustedSplits.map(s => s.percent.toFloat())),
+    split =>
+      split.percent.toFloat() ===
+      Math.max(...adjustedSplits.map(s => s.percent.toFloat())),
   )
   if (adjustedSplits[largestSplitIndex]) {
-    adjustedSplits[largestSplitIndex].percent = new SplitPortion(round(adjustedSplits[largestSplitIndex].percent.toFloat()) + difference)
+    adjustedSplits[largestSplitIndex].percent = new SplitPortion(
+      round(adjustedSplits[largestSplitIndex].percent.toFloat()) + difference,
+    )
   }
   return adjustedSplits
 }

@@ -1,7 +1,7 @@
 import { PlusCircleOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { CreateButton } from 'components/buttons/CreateButton/CreateButton'
-import { BigNumber } from 'ethers'
 import { useModal } from 'hooks/useModal'
 import { amountFromPercent } from 'packages/v2v3/utils/distributions'
 import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'

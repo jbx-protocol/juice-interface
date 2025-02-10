@@ -1,4 +1,4 @@
-import { Contract } from 'ethers'
+import { Contract } from '@ethersproject/contracts'
 import { V2V3ContractName } from 'packages/v2v3/models/contracts'
 import { V2V3OperatorPermission } from 'packages/v2v3/models/v2v3Permissions'
 

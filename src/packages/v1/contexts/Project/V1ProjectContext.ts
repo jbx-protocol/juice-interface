@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { V1FundingCycle } from 'packages/v1/models/fundingCycle'
 import { PayoutMod, TicketMod } from 'packages/v1/models/mods'
 import { V1TerminalName, V1TerminalVersion } from 'packages/v1/models/terminals'

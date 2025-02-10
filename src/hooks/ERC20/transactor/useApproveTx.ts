@@ -1,6 +1,7 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { Contract } from '@ethersproject/contracts'
 import { t } from '@lingui/macro'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { BigNumber, Contract } from 'ethers'
 import {
   TransactorInstance,
   handleTransactionException,

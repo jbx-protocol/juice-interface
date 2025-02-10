@@ -1,4 +1,4 @@
-import { BigNumberish } from 'ethers'
+import { BigNumberish } from '@ethersproject/bignumber'
 import Link from 'next/link'
 import useHandleForProjectId from 'packages/v1/hooks/contractReader/useHandleForProjectId'
 import { twMerge } from 'tailwind-merge'

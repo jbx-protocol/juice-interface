@@ -1,6 +1,9 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Split } from 'packages/v2v3/models/splits'
-import { getProjectOwnerRemainderSplit, sortSplits } from 'packages/v2v3/utils/v2v3Splits'
+import {
+  getProjectOwnerRemainderSplit,
+  sortSplits,
+} from 'packages/v2v3/utils/v2v3Splits'
 import { useMemo } from 'react'
 import { SplitItem, SplitProps } from './SplitItem'
 

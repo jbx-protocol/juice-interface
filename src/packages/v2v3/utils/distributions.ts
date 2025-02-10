@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Split } from 'packages/v2v3/models/splits'
 
 import { ONE_BILLION } from 'constants/numbers'

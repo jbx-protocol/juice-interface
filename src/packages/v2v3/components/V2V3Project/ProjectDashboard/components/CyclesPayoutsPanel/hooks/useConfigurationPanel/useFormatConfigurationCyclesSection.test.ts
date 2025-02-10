@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { BigNumber } from '@ethersproject/bignumber'
 import { renderHook } from '@testing-library/react-hooks'
-import { BigNumber } from 'ethers'
 import { parseWad } from 'utils/format/formatNumber'
 import { useFormatConfigurationCyclesSection } from './useFormatConfigurationCyclesSection'
 

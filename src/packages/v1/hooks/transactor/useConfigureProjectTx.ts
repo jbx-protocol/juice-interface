@@ -1,10 +1,10 @@
+import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { constants } from 'ethers'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 import { V1UserContext } from 'packages/v1/contexts/User/V1UserContext'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { TransactorInstance } from 'hooks/useTransactor'
 import {
   V1FundingCycleMetadata,

@@ -1,4 +1,4 @@
-import { ContractInterface } from 'ethers'
+import { ContractInterface } from '@ethersproject/contracts'
 import { ContractJson } from 'models/contracts'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { useEffect, useState } from 'react'

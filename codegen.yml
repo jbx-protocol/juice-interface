@@ -8,7 +8,7 @@ generates:
       - 'typescript-operations'
       - 'typescript-react-apollo'
       - add:
-          content: "import { BigNumber } from 'ethers'"
+          content: "import { BigNumber } from '@ethersproject/bignumber'"
   ./graphql.schema.json:
     plugins:
       - 'introspection'

@@ -1,5 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { ONE_BILLION } from 'constants/numbers'
-import { BigNumber } from 'ethers'
 
 export type WeightFunction = (
   weight: BigNumber | undefined,
@@ -47,5 +47,5 @@ export const feeForAmount = (
   feePerBillion: bigint | undefined,
 ): bigint | undefined => {
   if (!feePerBillion || !amountWad) return
-  return amountWad * feePerBillion / BigInt(ONE_BILLION)
+  return (amountWad * feePerBillion) / BigInt(ONE_BILLION)
 }

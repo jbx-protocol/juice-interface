@@ -5,8 +5,8 @@ import {
   useSuckers,
 } from 'juice-sdk-react'
 
+import { BigNumber } from '@ethersproject/bignumber'
 import { useQuery } from '@tanstack/react-query'
-import { BigNumber } from 'ethers'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { GnosisSafe } from 'models/safe'

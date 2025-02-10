@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import coinbaseWalletModule from '@web3-onboard/coinbase'
 import Onboard from '@web3-onboard/core'
 import safeModule from '@web3-onboard/gnosis'
@@ -5,7 +6,6 @@ import injectedModule from '@web3-onboard/injected-wallets'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import config from 'config/seo_meta.json'
 import { NETWORKS, readNetwork } from 'constants/networks'
-import { BigNumber } from 'ethers'
 import { unpadLeadingZerosString } from 'utils/bigNumbers'
 
 export function initWeb3Onboard() {

@@ -1,4 +1,4 @@
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 import { getAddress } from 'ethers/lib/utils'
 
 export function safeGetAddress(

@@ -1,4 +1,4 @@
-import { ContractInterface } from 'ethers'
+import { ContractInterface } from '@ethersproject/contracts'
 
 export interface ContractJson {
   address: string | undefined

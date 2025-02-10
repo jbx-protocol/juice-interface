@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { V1TerminalName } from 'packages/v1/models/terminals'
 import { useMemo } from 'react'
 import { bigNumbersDiff } from 'utils/bigNumbers'

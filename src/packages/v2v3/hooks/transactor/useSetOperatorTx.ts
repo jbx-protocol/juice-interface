@@ -1,7 +1,7 @@
+import { Contract } from '@ethersproject/contracts'
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
-import { Contract } from 'ethers'
 import {
   handleTransactionException,
   TransactorInstance,

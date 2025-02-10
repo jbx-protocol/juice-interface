@@ -1,6 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { ONE_BILLION } from 'constants/numbers'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { useProjectReservedTokens } from 'packages/v2v3/hooks/contractReader/ProjectReservedTokens'
 import {

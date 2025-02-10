@@ -1,11 +1,12 @@
 import { t, Trans } from '@lingui/macro'
 
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import { Button, Form, Input, Space } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { getTotalPercentage } from 'components/formItems/formHelpers'
 import { CsvUpload } from 'components/inputs/CsvUpload'
 import { CurrencyContext } from 'contexts/CurrencyContext'
-import { BigNumber, constants } from 'ethers'
 import ProjectPayoutMods from 'packages/v1/components/shared/ProjectPayMods/ProjectPayoutMods'
 import { V1CurrencyOption } from 'packages/v1/models/currencyOption'
 import { PayoutMod } from 'packages/v1/models/mods'

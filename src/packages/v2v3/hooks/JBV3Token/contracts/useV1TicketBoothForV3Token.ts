@@ -1,5 +1,5 @@
+import { Contract } from '@ethersproject/contracts'
 import V1TicketBoothJson from '@jbx-protocol/contracts-v1/deployments/mainnet/TicketBooth.json'
-import { Contract } from 'ethers'
 import { useContractReadValue } from 'hooks/ContractReader'
 import { useLoadContractFromAddress } from 'hooks/useLoadContractFromAddress'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'

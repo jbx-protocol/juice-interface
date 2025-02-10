@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3ContractName } from 'packages/v2v3/models/contracts'
 import useContractReader from './useV2ContractReader'
 

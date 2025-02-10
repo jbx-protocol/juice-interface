@@ -1,4 +1,4 @@
-import { Contract } from 'ethers'
+import { Contract } from '@ethersproject/contracts'
 import { useContractReadValue } from 'hooks/ContractReader'
 import { useLoadContractFromAddress } from 'hooks/useLoadContractFromAddress'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'

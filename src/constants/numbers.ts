@@ -1,6 +1,6 @@
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 
 export const WAD_DECIMALS = 18
 

@@ -8,7 +8,7 @@ import request from 'graphql-request'
 import { JBChainId, SuckerPair } from 'juice-sdk-core'
 import { NativeTokenValue, useJBChainId, useSuckers } from 'juice-sdk-react'
 import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
-import { last } from 'lodash'
+import last from 'lodash/last'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import {
   OrderDirection,

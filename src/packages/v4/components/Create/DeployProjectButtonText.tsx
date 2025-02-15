@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import { NETWORKS } from 'constants/networks'
 import useMobile from 'hooks/useMobile'
 import { useWallet } from 'hooks/Wallet'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -29,9 +28,5 @@ export function DeployProjectButtonText() {
     )
   }
 
-  if (projectChainId && NETWORKS[projectChainId]?.label && !isMobile) {
-    return <Trans>Deploy project to {NETWORKS[projectChainId].label}</Trans>
-  }
-
-  return <Trans>Deploy project</Trans>
+  return <Trans>Launch project</Trans>
 }

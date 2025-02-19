@@ -1,14 +1,40 @@
 import { createConfig, http } from 'wagmi'
 import {
+  arbitrum,
   arbitrumSepolia,
+  base,
   baseSepolia,
+  mainnet,
+  optimism,
   optimismSepolia,
   sepolia,
 } from 'wagmi/chains'
 
 export const wagmiConfig = createConfig({
-  chains: [sepolia, optimismSepolia, baseSepolia, arbitrumSepolia],
+  chains: [
+    mainnet,
+    optimism,
+    arbitrum,
+    base,
+    sepolia,
+    optimismSepolia,
+    baseSepolia,
+    arbitrumSepolia,
+  ],
   transports: {
+    [mainnet.id]: http(
+      `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
+    ),
+    [optimism.id]: http(
+      `https://optimism.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
+    ),
+    [arbitrum.id]: http(
+      `https://arbitrum.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
+    ),
+    [base.id]: http(
+      `https://base.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
+    ),
+
     [sepolia.id]: http(
       `https://sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
     ),

@@ -26,13 +26,13 @@ export const wagmiConfig = createConfig({
       `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
     ),
     [optimism.id]: http(
-      `https://optimism.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
+      `https://optimism-mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
     ),
     [arbitrum.id]: http(
-      `https://arbitrum.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
+      `https://arbitrum-mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
     ),
     [base.id]: http(
-      `https://base.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
+      `https://base-mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
     ),
 
     [sepolia.id]: http(

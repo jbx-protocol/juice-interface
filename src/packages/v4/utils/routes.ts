@@ -9,7 +9,7 @@ export const v4ProjectRoute = ({
   projectId?: number
 }) => {
   const chainSlug = getChainSlug(chainId)
-  return `/v4/${chainSlug}/p/${projectId?.toString()}`
+  return `/v4/${chainSlug}:${projectId?.toString()}`
 }
 
 export const settingsPagePath = (

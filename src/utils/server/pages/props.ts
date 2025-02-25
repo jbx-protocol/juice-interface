@@ -1,4 +1,5 @@
 import { PV_V2 } from 'constants/pv'
+import { JBChainId } from 'juice-sdk-core'
 import { ProjectMetadata } from 'models/projectMetadata'
 import { PV } from 'models/pv'
 import { GetStaticPropsResult } from 'next'
@@ -7,16 +8,16 @@ import { getProjectMetadata } from '../metadata'
 export interface ProjectPageProps {
   metadata?: ProjectMetadata
   projectId: number
-  chainName?: string | null
+  chainId?: JBChainId | null
 }
 
 export async function getProjectStaticProps(
   projectId: number,
   pv: PV = PV_V2,
-  chainName?: string | undefined,
+  chainId?: JBChainId | undefined,
 ): Promise<GetStaticPropsResult<ProjectPageProps>> {
   try {
-    const metadata = await getProjectMetadata(projectId, pv, chainName)
+    const metadata = await getProjectMetadata(projectId, pv, chainId)
     if (!metadata) {
       return { notFound: true }
     }
@@ -25,7 +26,7 @@ export async function getProjectStaticProps(
       props: {
         metadata,
         projectId,
-        chainName: chainName ?? null,
+        chainId: chainId ?? null,
       },
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

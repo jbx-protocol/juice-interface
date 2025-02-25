@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PV_V1, PV_V2, PV_V4 } from 'constants/pv'
+import { JBChainId } from 'juice-sdk-core'
 import { PV } from 'models/pv'
 import { findProjectMetadata } from './ipfs'
 
@@ -9,7 +10,7 @@ import { findProjectMetadata } from './ipfs'
 export const getProjectMetadata = async (
   projectId: string | number,
   pv: PV = PV_V2,
-  chain?: string | undefined,
+  chainId?: JBChainId | undefined,
 ) => {
   if (typeof projectId === 'string') {
     projectId = Number(projectId)
@@ -25,6 +26,6 @@ export const getProjectMetadata = async (
       return findProjectMetadata({ metadataCid })
     case PV_V4:
       const { getV4ProjectMetadata } = await import('./v4Metadata')
-      return getV4ProjectMetadata(projectId, chain)
+      return getV4ProjectMetadata(projectId, chainId)
   }
 }

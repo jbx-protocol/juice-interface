@@ -1,4 +1,5 @@
 import { SiteBaseUrl } from 'constants/url'
+import { JBChainId, toJbUrn } from 'juice-sdk-core'
 import { ProjectMetadata } from 'models/projectMetadata'
 import { cidFromUrl, ipfsPublicGatewayUrl } from 'utils/ipfs'
 import { stripHtmlTags } from 'utils/string'
@@ -40,13 +41,11 @@ export const V2V3ProjectSEO: React.FC<{
 
 export const V4ProjectSEO: React.FC<{
   metadata?: ProjectMetadata
-  chainName: string
+  chainId: JBChainId
   projectId: number
-}> = ({ metadata, chainName, projectId }) => {
+}> = ({ metadata, chainId, projectId }) => {
+  const urn = toJbUrn(chainId, BigInt(projectId))
   return (
-    <ProjectPageSEO
-      metadata={metadata}
-      url={`${SiteBaseUrl}v4/${chainName}/p/${projectId}`}
-    />
+    <ProjectPageSEO metadata={metadata} url={`${SiteBaseUrl}v4/p/${urn}`} />
   )
 }

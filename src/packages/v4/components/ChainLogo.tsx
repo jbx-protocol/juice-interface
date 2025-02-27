@@ -1,5 +1,5 @@
 import { NETWORKS } from 'constants/networks'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from 'juice-sdk-core'
 import Image from 'next/image'
 import {
   arbitrum,

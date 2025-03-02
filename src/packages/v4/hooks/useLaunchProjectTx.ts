@@ -1,22 +1,19 @@
 import { waitForTransactionReceipt } from '@wagmi/core'
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { DEFAULT_MEMO } from 'constants/transactionDefaults'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
-import { jbProjectDeploymentAddresses, NATIVE_TOKEN } from 'juice-sdk-core'
+import { jbControllerAbi } from 'juice-sdk-core'
 import {
   JBChainId,
-  useWriteJbControllerLaunchProjectFor
+  useWriteJbControllerLaunchProjectFor,
 } from 'juice-sdk-react'
-import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
 import { useCallback, useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
-import { Address, WaitForTransactionReceiptReturnType } from 'viem'
-import { useChainId } from 'wagmi'
 import {
-  LaunchV2V3ProjectArgs,
-  transformV2V3CreateArgsToV4,
-} from '../utils/launchProjectTransformers'
+  Address,
+  ContractFunctionArgs,
+  WaitForTransactionReceiptReturnType,
+} from 'viem'
+import { useChainId } from 'wagmi'
+import { useDeployOmnichainProject } from '../components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
+import { useStandardProjectLaunchData } from '../components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
 import { wagmiConfig } from '../wagmiConfig'
 
 const CREATE_EVENT_IDX = 2
@@ -49,72 +46,31 @@ export const getProjectIdFromLaunchReceipt = (
  * @returns A function that deploys a project.
  */
 export function useLaunchProjectTx() {
+  const { addTransaction } = useContext(TxHistoryContext)
   const { writeContractAsync: writeLaunchProject } =
     useWriteJbControllerLaunchProjectFor()
-
+  const deployOmnichainProject = useDeployOmnichainProject()
   const chainId = useChainId()
-
-  const terminalAddress = chainId
-    ? (jbProjectDeploymentAddresses.JBMultiTerminal[
-        chainId as JBChainId
-      ] as Address)
-    : undefined
-
-  const controllerAddress = chainId
-    ? (jbProjectDeploymentAddresses.JBController[
-        chainId as JBChainId
-      ] as Address)
-    : undefined
-
-  const { addTransaction } = useContext(TxHistoryContext)
-
-  const { userAddress } = useWallet()
+  const getLaunchData = useStandardProjectLaunchData()
 
   return useCallback(
     async (
-      {
-        owner,
-        projectMetadataCID,
-        fundingCycleData,
-        fundingCycleMetadata,
-        fundAccessConstraints,
-        groupedSplits = [],
-        mustStartAtOrAfter = DEFAULT_MUST_START_AT_OR_AFTER,
-      }: LaunchV2V3ProjectData,
+      launchProjectForData: ContractFunctionArgs<
+        typeof jbControllerAbi,
+        'nonpayable',
+        'launchProjectFor'
+      >,
+      controllerAddress: Address | undefined,
+      chainId: JBChainId | undefined,
       {
         onTransactionPending: onTransactionPendingCallback,
         onTransactionConfirmed: onTransactionConfirmedCallback,
         onTransactionError: onTransactionErrorCallback,
       }: LaunchTxOpts,
     ) => {
-      if (!controllerAddress || !terminalAddress || !userAddress || !chainId) {
-        return
+      if (!chainId || !controllerAddress) {
+        throw new Error('Chain ID and controller address are required')
       }
-
-      const _owner = owner && owner.length ? owner : userAddress
-
-      const v2v3Args = [
-        _owner,
-        [projectMetadataCID, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN],
-        fundingCycleData,
-        fundingCycleMetadata,
-        mustStartAtOrAfter,
-        groupedSplits,
-        fundAccessConstraints,
-        [terminalAddress], // _terminals, just supporting single for now
-        // Eventually should be something like:
-        //    getTerminalsFromFundAccessConstraints(
-        //      fundAccessConstraints,
-        //      contracts.primaryNativeTerminal.data,
-        //    ),
-        DEFAULT_MEMO,
-      ] as LaunchV2V3ProjectArgs
-
-      const args = transformV2V3CreateArgsToV4({
-        v2v3Args,
-        primaryNativeTerminal: terminalAddress,
-        currencyTokenAddress: NATIVE_TOKEN,
-      })
 
       try {
         // SIMULATE TX:
@@ -126,7 +82,7 @@ export function useLaunchProjectTx() {
         const hash = await writeLaunchProject({
           chainId,
           address: controllerAddress,
-          args,
+          args: launchProjectForData,
         })
 
         onTransactionPendingCallback(hash)
@@ -146,11 +102,10 @@ export function useLaunchProjectTx() {
       }
     },
     [
+      getLaunchData,
+      deployOmnichainProject,
       chainId,
-      controllerAddress,
-      userAddress,
       writeLaunchProject,
-      terminalAddress,
       addTransaction,
     ],
   )

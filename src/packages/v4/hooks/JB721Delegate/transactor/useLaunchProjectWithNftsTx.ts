@@ -1,14 +1,8 @@
 import {
-  Address,
-  WaitForTransactionReceiptReturnType,
-  toBytes,
-  toHex,
-  zeroAddress,
-} from 'viem'
-import {
   DEFAULT_MEMO,
   NATIVE_TOKEN,
   NATIVE_TOKEN_DECIMALS,
+  createSalt,
   jbProjectDeploymentAddresses,
 } from 'juice-sdk-core'
 import {
@@ -22,21 +16,26 @@ import {
   LaunchProjectWithNftsTxArgs,
 } from 'packages/v4/models/nfts'
 import {
+  Address,
+  WaitForTransactionReceiptReturnType,
+  zeroAddress
+} from 'viem'
+import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
 } from '../../../utils/launchProjectTransformers'
 
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { LaunchTxOpts } from '../../useLaunchProjectTx'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { ipfsUri } from 'utils/ipfs'
-import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
-import { useChainId } from 'wagmi'
-import { useContext } from 'react'
-import { useWallet } from 'hooks/Wallet'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { waitForTransactionReceipt } from '@wagmi/core'
+import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { useWallet } from 'hooks/Wallet'
+import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { useContext } from 'react'
+import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
+import { ipfsUri } from 'utils/ipfs'
+import { useChainId } from 'wagmi'
+import { LaunchTxOpts } from '../../useLaunchProjectTx'
 
 /**
  * Return the project ID created from a `launchProjectFor` transaction.
@@ -214,11 +213,4 @@ export function useLaunchProjectWithNftsTx() {
       )
     }
   }
-}
-
-function createSalt() {
-  const base: string = '0x' + Math.random().toString(16).slice(2) // idk lol
-  const salt = toHex(toBytes(base, { size: 32 }))
-
-  return salt
 }

@@ -60,6 +60,7 @@ import { EthPerTokenAccordion } from '../EthPerTokenAccordion'
 import { ProjectCartNftReward } from '../ReduxProjectCartProvider'
 import { FirstCycleCountdownCallout } from './FirstCycleCountdownCallout'
 import { PayProjectModal } from './PayProjectModal/PayProjectModal'
+import { PreventOverspendingPayCard } from './PreventOverspendingPayCard'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
 
@@ -382,7 +383,7 @@ const PayRedeemInput = ({
           <div className="mt-4 space-y-4">
             {nfts?.map((nft, i) => {
               const quantity = cartNfts?.find(cartNft => cartNft.id === nft.id)?.quantity ?? 0
-              return <NftReward key={i} nft={nft} quantity={quantity} />
+              return <PayRedeemCardNftReward key={i} nft={nft} quantity={quantity} />
             })}
           </div>
         )}
@@ -453,7 +454,7 @@ const DownArrow = ({ className }: { className?: string }) => {
   )
 }
 
-type PayConfigurationProps = {
+export type PayConfigurationProps = {
   userTokenBalance: number | undefined
   projectHasErc20Token: boolean
   payerIssuanceRate: PayerIssuanceRate
@@ -466,6 +467,10 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
 }) => {
   const { payDisabled, message } = usePayProjectDisabled()
   const { tokenSymbol, fundingCycle } = useProjectContext()
+  const {
+    nftRewards: { rewardTiers, flags: { preventOverspending } },
+  } = useContext(NftRewardsContext)
+
   const chosenNftRewards = useProjectSelector(
     state => state.projectCart.chosenNftRewards,
   )
@@ -555,45 +560,51 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
 
       <div className="relative mt-3">
         <div className="flex flex-col gap-y-2">
-          <PayRedeemInput
-            label={t`You pay`}
-            token={{
-              balance: wallet.balance,
-              image: <EthereumLogo />,
-              ticker: 'ETH',
-              type: 'eth',
-            }}
-            value={payAmount ?? cartPayAmount?.toString()}
-            onChange={handleUserPayAmountChange}
-          />
-          <PayRedeemInput
-            label={t`You receive`}
-            redeemUnavailable={!payerIssuanceRate.enabled}
-            downArrow
-            readOnly
-            token={{
-              balance: userTokenBalance?.toString(),
-              image:
-                tokenLogo && !fallbackImage ? (
-                  <img
-                    src={tokenLogo}
-                    alt="Token logo"
-                    onError={() => setFallbackImage(true)}
-                  />
-                ) : (
-                  '🧃'
-                ),
-              ticker: tokenTicker,
-              type: projectHasErc20Token ? 'erc20' : 'native',
-            }}
-            cartNfts={chosenNftRewards}
-            value={
-              tokenReceivedAmount.receivedTickets &&
-              !!parseFloat(tokenReceivedAmount.receivedTickets)
-                ? tokenReceivedAmount.receivedTickets
-                : ''
-            }
-          />
+          { rewardTiers?.length && preventOverspending ? (
+            <PreventOverspendingPayCard />
+          ): (
+          <>
+            <PayRedeemInput
+              label={t`You pay`}
+              token={{
+                balance: wallet.balance,
+                image: <EthereumLogo />,
+                ticker: 'ETH',
+                type: 'eth',
+              }}
+              value={payAmount ?? cartPayAmount?.toString()}
+              onChange={handleUserPayAmountChange}
+            />
+            <PayRedeemInput
+              label={t`You receive`}
+              redeemUnavailable={!payerIssuanceRate.enabled}
+              downArrow
+              readOnly
+              token={{
+                balance: userTokenBalance?.toString(),
+                image:
+                  tokenLogo && !fallbackImage ? (
+                    <img
+                      src={tokenLogo}
+                      alt="Token logo"
+                      onError={() => setFallbackImage(true)}
+                    />
+                  ) : (
+                    '🧃'
+                  ),
+                ticker: tokenTicker,
+                type: projectHasErc20Token ? 'erc20' : 'native',
+              }}
+              cartNfts={chosenNftRewards}
+              value={
+                tokenReceivedAmount.receivedTickets &&
+                !!parseFloat(tokenReceivedAmount.receivedTickets)
+                  ? tokenReceivedAmount.receivedTickets
+                  : ''
+              }
+            />
+          </>
+        )}
         </div>
       </div>
 
@@ -830,7 +841,7 @@ const EthereumLogo = () => {
   )
 }
 
-const NftReward: React.FC<{
+export const PayRedeemCardNftReward: React.FC<{
   nft: NftRewardTier
   quantity: number
   className?: string

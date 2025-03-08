@@ -1,14 +1,14 @@
-import { DEFAULT_METADATA, NATIVE_TOKEN } from 'juice-sdk-core'
+import { DEFAULT_METADATA, NATIVE_TOKEN, readJbDirectoryPrimaryTerminalOf } from 'juice-sdk-core'
 import {
   JBChainId,
   useJBChainId,
   useJBContractContext,
   useJBRulesetContext,
   usePreparePayMetadata,
-  useWriteJbMultiTerminalPay,
+  useWriteJbMultiTerminalPay
 } from 'juice-sdk-react'
 import { useCallback, useContext, useMemo } from 'react'
-import { Address, Hash, parseEther } from 'viem'
+import { Address, Hash, parseEther, zeroAddress } from 'viem'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
@@ -128,6 +128,11 @@ export const usePayProjectTx = ({
         return
       }
 
+      const terminalAddress = await readJbDirectoryPrimaryTerminalOf(wagmiConfig, {
+        chainId,
+        args: [projectId ?? 0n, NATIVE_TOKEN],
+      })
+
       const { messageString, attachedUrl } = values.message
       const memo = buildPaymentMemo({
         text: messageString,
@@ -158,10 +163,11 @@ export const usePayProjectTx = ({
       //   functionName: 'pay',
       //   args,
       // })
+      
       try {
         const hash = await writePay({
           chainId,
-          address: contracts.primaryNativeTerminal.data,
+          address: terminalAddress ?? zeroAddress, 
           args,
           value: weiAmount,
         })

@@ -9,7 +9,6 @@ import assert from 'utils/assert'
 import { feeForAmount } from 'utils/math'
 import { useV4CurrentUpcomingPayoutLimit } from './useV4CurrentUpcomingPayoutLimit'
 import { useV4CurrentUpcomingPayoutSplits } from './useV4CurrentUpcomingPayoutSplits'
-import { useV4DistributableAmount } from './useV4DistributableAmount'
 
 const splitHasFee = (split: JBSplit) => {
   return split.projectId || split.projectId > 0n
@@ -33,7 +32,7 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
   const { splits, isLoading } = useV4CurrentUpcomingPayoutSplits(type)
   const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
   const { data: primaryNativeTerminalFee } = useReadJbMultiTerminalFee()
-  const { distributableAmount } = useV4DistributableAmount()
+  // const { distributableAmount } = useV4DistributableAmount()
 
   const { payoutLimit, payoutLimitCurrency } =
     useV4CurrentUpcomingPayoutLimit(type)
@@ -81,8 +80,9 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
       // We don't need to worry about upcoming as this is informational only
       type === 'current' &&
       splits.length === 0 &&
-      payoutLimit === 0n &&
-      distributableAmount.value === 0n
+      payoutLimit === 0n
+      // V4TODO: use aggregated distributableAmount val here instead
+      // && distributableAmount.value === 0n
     ) {
       return []
     }
@@ -98,7 +98,6 @@ export const useV4PayoutsSubPanel = (type: 'current' | 'upcoming') => {
       .sort((a, b) => Number(b.percent) - Number(a.percent))
       .map(transformSplit)
   }, [
-    distributableAmount,
     projectOwnerAddress,
     splits,
     isLoading,

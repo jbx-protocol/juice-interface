@@ -1,5 +1,6 @@
 import {
   NativeTokenValue,
+  useJBChainId,
   useJBContractContext,
   useJBProjectMetadataContext,
 } from 'juice-sdk-react'
@@ -58,12 +59,15 @@ function SettingsGroupCard({
 
 export function ProjectSettingsDashboard() {
   const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
-  const { data: balance, isLoading: loading } = useV4BalanceOfNativeTerminal()
 
   const { projectId } = useJBContractContext()
   const { metadata } = useJBProjectMetadataContext()
 
-  const { distributableAmount } = useV4DistributableAmount()
+  const chainId = useJBChainId()
+
+  const { data: balance, isLoading: loading } = useV4BalanceOfNativeTerminal({ chainId, projectId })
+  const { distributableAmount } = useV4DistributableAmount({ chainId, projectId })
+
   const projectHasErc20Token = useProjectHasErc20Token()
   const hasIssueTicketsPermission = useV4WalletHasPermission(
     V4OperatorPermission.MINT_TOKENS,

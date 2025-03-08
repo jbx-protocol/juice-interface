@@ -1,22 +1,23 @@
-import { SettingOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
-import EthereumAddress from 'components/EthereumAddress'
-import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
-import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
-import { NETWORKS } from 'constants/networks'
-import { formatUnits, JB_TOKEN_DECIMALS, JBChainId } from 'juice-sdk-core'
+import { JBChainId, JB_TOKEN_DECIMALS, formatUnits } from 'juice-sdk-core'
 import {
   useJBChainId,
   useJBContractContext,
   useSuckersUserTokenBalance
 } from 'juice-sdk-react'
+import { useCallback, useMemo, useState } from 'react'
+
+import { SettingOutlined } from '@ant-design/icons'
+import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
+import EthereumAddress from 'components/EthereumAddress'
+import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
+import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
+import { NETWORKS } from 'constants/networks'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { V4TokenHoldersModal } from 'packages/v4/components/modals/V4TokenHoldersModal/V4TokenHoldersModal'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
-import { useCallback, useMemo, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
 import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4BalanceMenuItemsUserFlags'
 import { useV4TokensPanel } from './hooks/useV4TokensPanel'
@@ -27,7 +28,7 @@ import { V4ReservedTokensSubPanel } from './V4ReservedTokensSubPanel'
 import { V4TokenRedemptionCallout } from './V4TokenRedemptionCallout'
 
 export const V4TokensPanel = () => {
-  const { userTokenBalanceLoading, projectToken, totalSupply } =
+  const { userTokenBalanceLoading, projectToken, totalTokenSupplyElement } =
     useV4TokensPanel()
   const projectHasErc20Token = useProjectHasErc20Token()
   const { data: suckersBalance } = useSuckersUserTokenBalance()
@@ -149,11 +150,7 @@ export const V4TokensPanel = () => {
               <TitleDescriptionDisplayCard
                 className="w-full"
                 title={t`Total supply`}
-                description={
-                  <span>
-                    {totalSupply.format(8)} {projectToken}
-                  </span>
-                }
+                description={totalTokenSupplyElement}
               />
             </div>
             <a

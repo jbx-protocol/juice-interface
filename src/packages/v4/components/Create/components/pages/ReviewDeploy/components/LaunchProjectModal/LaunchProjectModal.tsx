@@ -33,7 +33,7 @@ export const LaunchProjectModal: React.FC<{
   const getLaunchData = useStandardProjectLaunchData()
   const deployOmnichainProject = useDeployOmnichainProject()
   const { sendRelayrTx } = useSendRelayrTx()
-  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>()
+  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(sepolia.id)
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
 
   const selectedChains = React.useMemo(() => {
@@ -78,7 +78,7 @@ export const LaunchProjectModal: React.FC<{
   }
 
   async function onClickLaunch() {
-    const data = txQuote?.payment_info.find(p => p.chain === selectedGasChain)
+    const data = txQuote?.payment_info.find(p => Number(p.chain) === Number(selectedGasChain))
     if (!data) {
       console.error('No payment info found for chain', selectedGasChain)
       return

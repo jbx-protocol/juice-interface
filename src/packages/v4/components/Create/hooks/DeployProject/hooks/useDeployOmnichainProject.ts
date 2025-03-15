@@ -1,11 +1,11 @@
 import { useWallet } from 'hooks/Wallet'
 import {
+  createSalt,
   JBChainId,
   jbOmnichainDeployerAbi,
-  jbOmnichainDeployerAddress,
   parseSuckerDeployerConfig,
 } from 'juice-sdk-core'
-import { jbControllerAbi, useGetRelayrTxQuote } from 'juice-sdk-react'
+import { jbControllerAbi, jbOmnichainDeployerAddress, useGetRelayrTxQuote } from 'juice-sdk-react'
 import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
 export function useDeployOmnichainProject() {
@@ -23,6 +23,7 @@ export function useDeployOmnichainProject() {
     if (!userAddress) {
       return
     }
+    const salt = createSalt()
 
     const relayrTransactions = chainIds.map(chainId => {
       const suckerDeploymentConfiguration = parseSuckerDeployerConfig(
@@ -36,7 +37,11 @@ export function useDeployOmnichainProject() {
         deployData[2],
         deployData[3],
         deployData[4],
-        suckerDeploymentConfiguration,
+        {
+          deployerConfigurations:
+            suckerDeploymentConfiguration.deployerConfigurations,
+          salt,
+        },
       ] as const
 
       const encodedData = encodeFunctionData({

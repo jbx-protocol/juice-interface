@@ -9,12 +9,12 @@ import {
 } from 'juice-sdk-react'
 import React, { createContext } from 'react'
 import { DEFAULT_NFT_FLAGS_V4, DEFAULT_NFT_PRICING, EMPTY_NFT_COLLECTION_METADATA } from 'redux/slices/v2v3/editingV2Project'
+import { ContractFunctionReturnType, zeroAddress } from 'viem'
 
 import { JB721GovernanceType } from 'models/nftRewards'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V4NftRewardsData } from 'packages/v4/models/nfts'
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
-import { ContractFunctionReturnType } from 'viem'
 import { useNftRewards } from './useNftRewards'
 
 // TODO: This should be imported from the SDK

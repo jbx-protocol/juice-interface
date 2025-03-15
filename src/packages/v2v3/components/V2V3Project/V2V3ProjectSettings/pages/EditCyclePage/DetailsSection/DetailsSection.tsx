@@ -1,4 +1,6 @@
 import { Trans } from '@lingui/macro'
+import { Form } from 'antd'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { EditCycleHeader } from 'components/Project/ProjectSettings/EditCycleHeader'
 import { CYCLE_EXPLANATION } from 'components/strings'
 import CycleDeadlineDropdown from './CycleDeadlineDropdown'
@@ -26,7 +28,10 @@ export function DetailsSection() {
             </Trans>
           }
         />
-        <CycleDeadlineDropdown className="h-10" />
+        <CycleDeadlineDropdown className="h-10 mb-4" />
+        <Form.Item name="pausePay">
+          <JuiceSwitch label={<Trans>Disable payments to this project</Trans>} />
+        </Form.Item>
       </div>
       <DetailsSectionAdvanced />
     </>

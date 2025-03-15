@@ -1,15 +1,14 @@
 import { Trans, t } from "@lingui/macro";
 
-import { NftRewardsContext } from "packages/v2v3/contexts/NftRewards/NftRewardsContext";
-import { useContext } from "react";
-import { useProjectSelector } from "../../redux/hooks";
-import { PayRedeemCardNftReward } from "./PayRedeemCard";
+import { useV4NftRewards } from "packages/v4/contexts/V4NftRewards/V4NftRewardsProvider";
+import { useProjectSelector } from "../redux/hooks";
+import { PayRedeemCardNftReward } from "./PayRedeemInput";
 
 // Pay cards that show when project has NFTs and preventOverspending flag is enabled
 export function PreventOverspendingPayCard() {
   const {
       nftRewards: { rewardTiers: nfts },
-    } = useContext(NftRewardsContext)
+    } = useV4NftRewards()
 
   const cartNfts = useProjectSelector(
     state => state.projectCart.chosenNftRewards,

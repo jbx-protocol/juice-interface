@@ -1,12 +1,24 @@
 import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
+import { JB721GovernanceType, NftCollectionMetadata, NftRewardTier } from 'models/nftRewards'
 import { Address, ContractFunctionReturnType } from 'viem'
 
 import { jb721TiersHookStoreAbi } from 'juice-sdk-react'
+import { NftPricingContext } from 'packages/v2v3/hooks/JB721Delegate/contractReader/useNftCollectionPricingContext'
 import { LaunchV2V3ProjectData } from 'packages/v2v3/hooks/transactor/useLaunchProjectTx'
 import { LaunchV4ProjectGroupedSplit } from '../utils/launchProjectTransformers'
 import { FundAccessLimitGroup } from './fundAccessLimits'
 import { LaunchProjectJBTerminal } from './terminals'
 import { V4CurrencyOption } from './v4CurrencyOption'
+
+export type V4NftRewardsData = {
+  rewardTiers: NftRewardTier[] | undefined
+  CIDs: string[] | undefined // points to locations of the NFTs' json on IPFS
+  collectionMetadata: NftCollectionMetadata
+  flags: JB721TiersHookFlags
+  governanceType: JB721GovernanceType
+  pricing: NftPricingContext
+}
+
 
 /**
  * @see https://github.com/Bananapus/nana-721-hook/blob/main/src/structs/JB721TierConfig.sol

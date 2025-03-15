@@ -1,7 +1,10 @@
 import { Trans, t } from '@lingui/macro'
 import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
 import {
+  JBChainId,
   useJBContractContext,
+  useReadJbDirectoryPrimaryTerminalOf,
+  useSuckers,
   useWriteJbMultiTerminalSendPayoutsOf,
 } from 'juice-sdk-react'
 import { V4CurrencyName, V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
@@ -14,7 +17,9 @@ import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { FEES_EXPLANATION } from 'components/strings'
+import { NETWORKS } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4CurrentPayoutSplits'
@@ -34,24 +39,39 @@ export default function V4DistributePayoutsModal({
 }) {
   const { data: payoutSplits } = useV4CurrentPayoutSplits()
   const { data: payoutLimit } = usePayoutLimit()
-  const { distributableAmount: distributable } = useV4DistributableAmount()
-  const { contracts, projectId } = useJBContractContext()
+  const { projectId } = useJBContractContext()
   const { addTransaction } = useContext(TxHistoryContext)
+
+  const { data: suckers } = useSuckers()
 
   const payoutLimitAmountCurrency = payoutLimit?.currency ?? V4_CURRENCY_ETH
 
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
   const [distributionAmount, setDistributionAmount] = useState<string>()
+  const [selectedChainId, setSelectedChainId] = useState<JBChainId>()
 
   const { writeContractAsync: writeSendPayouts } =
     useWriteJbMultiTerminalSendPayoutsOf()
+  
+  const { data: terminalAddress } = useReadJbDirectoryPrimaryTerminalOf({
+    chainId: selectedChainId,
+    args: [projectId, NATIVE_TOKEN],
+  })
 
+  const selectedChainProjectId = suckers?.find((sucker) => sucker.peerChainId === selectedChainId)?.projectId
+
+  const { distributableAmount: distributable } = useV4DistributableAmount({
+    chainId: selectedChainId,
+    projectId: selectedChainProjectId
+  })
+  
   async function executeDistributePayoutsTx() {
     if (
       !payoutLimitAmountCurrency ||
       !distributionAmount ||
-      !contracts.primaryNativeTerminal.data ||
+      !selectedChainId ||
+      !terminalAddress ||
       !projectId
     )
       return
@@ -63,17 +83,18 @@ export default function V4DistributePayoutsModal({
       NATIVE_TOKEN,
       parseUnits(distributionAmount, NATIVE_TOKEN_DECIMALS),
       BigInt(payoutLimitAmountCurrency),
-      0n, // TODO?
+      0n, // minTokensPaidOut
     ] as const
 
     try {
       const hash = await writeSendPayouts({
-        address: contracts.primaryNativeTerminal.data,
+        address: terminalAddress, // TODOv4 Q: or should this just be contracts.primaryNativeTerminal.address?
+        chainId: selectedChainId,
         args,
       })
       setTransactionPending(true)
 
-      addTransaction?.('Send payouts', { hash })
+      addTransaction?.(`Send payouts on ${NETWORKS[selectedChainId]?.label}`, { hash })
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
       })
@@ -111,6 +132,19 @@ export default function V4DistributePayoutsModal({
     >
       <div className="flex flex-col gap-6">
         <Form layout="vertical">
+          {suckers && suckers.length > 1 ?
+            <Form.Item
+              className="mb-0"
+              label={<Trans>Chain</Trans>}
+            >
+              <ChainSelect
+                value={selectedChainId}
+                onChange={setSelectedChainId}
+                suckers={suckers}
+                showSelectedName
+              />
+            </Form.Item>
+          : null }
           <Form.Item
             className="mb-0"
             label={<Trans>Amount to pay out</Trans>}

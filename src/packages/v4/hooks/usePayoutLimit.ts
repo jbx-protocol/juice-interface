@@ -1,10 +1,12 @@
 import * as constants from '@ethersproject/constants'
-import { NATIVE_TOKEN } from 'juice-sdk-core'
+
 import {
   useJBContractContext,
   useJBRuleset,
   useReadJbFundAccessLimitsPayoutLimitsOf,
 } from 'juice-sdk-react'
+
+import { NATIVE_TOKEN } from 'juice-sdk-core'
 import { V4CurrencyOption } from '../models/v4CurrencyOption'
 import { V4_CURRENCY_ETH } from '../utils/currency'
 

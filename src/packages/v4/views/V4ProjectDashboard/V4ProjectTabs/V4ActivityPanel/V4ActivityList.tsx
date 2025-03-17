@@ -1,3 +1,15 @@
+import { NativeTokenValue, useJBChainId, useSuckers } from 'juice-sdk-react'
+import {
+  OrderDirection,
+  ProjectEvent_OrderBy,
+  ProjectEventsDocument,
+} from 'packages/v4/graphql/client/graphql'
+import {
+  AnyEvent,
+  EventType,
+  transformEventData,
+} from './utils/transformEventsData'
+
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { Button } from 'antd'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
@@ -5,24 +17,14 @@ import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
 import { NETWORKS } from 'constants/networks'
 import request from 'graphql-request'
-import { JBChainId, SuckerPair } from 'juice-sdk-core'
-import { NativeTokenValue, useJBChainId, useSuckers } from 'juice-sdk-react'
+import { SuckerPair } from 'juice-sdk-core'
 import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
 import last from 'lodash/last'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import {
-  OrderDirection,
-  ProjectEvent_OrderBy,
-  ProjectEventsDocument,
-} from 'packages/v4/graphql/client/graphql'
+import { ProjectChainSelect } from 'packages/v4/components/ProjectDashboard/ProjectChainSelect'
 import React from 'react'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { ActivityEvent } from './activityEventElems/ActivityElement'
-import {
-  AnyEvent,
-  EventType,
-  transformEventData,
-} from './utils/transformEventsData'
 
 const PAGE_SIZE = 10
 
@@ -63,11 +65,9 @@ export function V4ActivityList() {
     <div>
       <div className="flex items-baseline justify-between gap-5">
         <h2 className="mb-6 font-heading text-2xl font-medium">Activity</h2>
-        <JuiceListbox
-          className="w-full min-w-0 max-w-[224px]"
-          value={CHAIN_OPTIONS.find(o => o.value === selectedChainId)}
-          options={supportedChains}
-          onChange={o => setSelectedChainId(o.value as JBChainId)}
+        <ProjectChainSelect 
+          value={selectedChainId}
+          onChange={setSelectedChainId}
         />
       </div>
       <div className="flex flex-col gap-3">

@@ -1,14 +1,11 @@
+import { JBChainId } from 'juice-sdk-react'
 import {
   LaunchTxOpts,
   useLaunchProjectTx,
 } from 'packages/v4/hooks/useLaunchProjectTx'
 import { useCallback } from 'react'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import {
-  useCreatingV2V3FundAccessConstraintsSelector,
-  useCreatingV2V3FundingCycleDataSelector,
-  useCreatingV2V3FundingCycleMetadataSelector,
-} from 'redux/hooks/v2v3/create'
+import { useChainId } from 'wagmi'
+import { useStandardProjectLaunchData } from './useStandardProjectLaunchData'
 
 /**
  * Hook that returns a function that deploys a v4 project.
@@ -18,15 +15,9 @@ import {
  */
 export const useDeployStandardProject = () => {
   const launchProjectTx = useLaunchProjectTx()
-  const {
-    payoutGroupedSplits,
-    reservedTokensGroupedSplits,
-    inputProjectOwner,
-    mustStartAtOrAfter,
-  } = useAppSelector(state => state.creatingV2Project)
-  const fundingCycleMetadata = useCreatingV2V3FundingCycleMetadataSelector()
-  const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
-  const fundAccessConstraints = useCreatingV2V3FundAccessConstraintsSelector()
+  const getLaunchData = useStandardProjectLaunchData()
+
+  const chainId = useChainId()
 
   const deployStandardProjectCallback = useCallback(
     async ({
@@ -37,18 +28,15 @@ export const useDeployStandardProject = () => {
     }: {
       metadataCid: string
     } & LaunchTxOpts) => {
-      const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
+      const { args, controllerAddress } = getLaunchData({
+        projectMetadataCID: metadataCid,
+        chainId: chainId as JBChainId,
+      })
 
       return await launchProjectTx(
-        {
-          owner: inputProjectOwner?.length ? inputProjectOwner : undefined,
-          projectMetadataCID: metadataCid,
-          fundingCycleData,
-          fundingCycleMetadata,
-          mustStartAtOrAfter,
-          fundAccessConstraints,
-          groupedSplits,
-        },
+        args,
+        controllerAddress,
+        chainId as JBChainId,
         {
           onTransactionPending,
           onTransactionConfirmed,
@@ -56,16 +44,7 @@ export const useDeployStandardProject = () => {
         },
       )
     },
-    [
-      payoutGroupedSplits,
-      reservedTokensGroupedSplits,
-      launchProjectTx,
-      inputProjectOwner,
-      fundingCycleData,
-      fundingCycleMetadata,
-      mustStartAtOrAfter,
-      fundAccessConstraints,
-    ],
+    [getLaunchData, chainId, launchProjectTx],
   )
 
   return deployStandardProjectCallback

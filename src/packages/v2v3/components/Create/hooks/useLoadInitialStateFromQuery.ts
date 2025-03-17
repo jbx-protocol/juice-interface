@@ -9,7 +9,6 @@ import {
 } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
-import { DEFAULT_PROJECT_CHAIN_ID } from 'constants/networks'
 import isEqual from 'lodash/isEqual'
 import { CreatePage } from 'models/createPage'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
@@ -105,7 +104,7 @@ const parseCreateFlowStateFromInitialState = (
   }
 
   return {
-    projectChainId: DEFAULT_PROJECT_CHAIN_ID, // not necessary for v2v3
+    selectedRelayrChainIds: {},
     fundingCyclesPageSelection,
     treasurySelection,
     fundingTargetSelection: undefined, // TODO: Remove

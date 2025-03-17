@@ -37,7 +37,7 @@ export type NftRewardsData = {
 
 export interface CreateState {
   fundingCyclesPageSelection: 'automated' | 'manual' | undefined
-  projectChainId: JBChainId
+  selectedRelayrChainIds: { [k in JBChainId]?: boolean }
   treasurySelection: TreasurySelection | undefined
   fundingTargetSelection: FundingTargetType | undefined
   payoutsSelection: PayoutsSelection | undefined

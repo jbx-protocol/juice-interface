@@ -1196,9 +1196,6 @@ msgstr ""
 msgid "Check your email for a confirmation link and retry subscribing."
 msgstr ""
 
-msgid "Project chain"
-msgstr ""
-
 msgid "Claim ERC-20 token"
 msgstr ""
 
@@ -1562,6 +1559,9 @@ msgstr ""
 msgid "Payments made"
 msgstr ""
 
+msgid "Pay gas on"
+msgstr ""
+
 msgid "Reserved recipients:"
 msgstr ""
 
@@ -1914,9 +1914,6 @@ msgid "Get notified when a contributor supports this project"
 msgstr ""
 
 msgid "The amount of ETH in the wallet that owns this project."
-msgstr ""
-
-msgid "A project chain"
 msgstr ""
 
 msgid "Get paid in ETH, program your own payouts, token issuance, and redemptions to easily run your treasury completely on-chain — as your community grows, you can update your treasury's rules to grow with it."
@@ -3785,6 +3782,9 @@ msgstr ""
 msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
 msgstr ""
 
+msgid "Gas quote"
+msgstr ""
+
 msgid "Reserved issuance rate"
 msgstr ""
 
@@ -4229,6 +4229,9 @@ msgstr ""
 msgid "For fundraising"
 msgstr ""
 
+msgid "Select chain"
+msgstr ""
+
 msgid "Launch New NFT Collection"
 msgstr ""
 
@@ -4374,6 +4377,9 @@ msgid "Pay project"
 msgstr ""
 
 msgid "Sent reserved tokens (v1)"
+msgstr ""
+
+msgid "Launch project"
 msgstr ""
 
 msgid "Spaces are not allowed"

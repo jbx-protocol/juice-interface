@@ -27,7 +27,7 @@ export function JuiceListbox<T>(props: JuiceListboxProps<T>) {
       <div className={twMerge('relative', className)}>
         <Listbox.Button
           className={twMerge(
-            'flex w-full items-center justify-between gap-1 rounded-lg border border-smoke-300 bg-smoke-50 py-2 px-3 dark:border-slate-300 dark:bg-slate-600 dark:placeholder:text-slate-300',
+            'flex h-full w-full items-center justify-between gap-1 rounded-lg border border-smoke-300 bg-smoke-50 py-2 px-3 dark:border-slate-300 dark:bg-slate-600 dark:placeholder:text-slate-300',
             disabled
               ? 'cursor-not-allowed text-grey-400 dark:text-slate-300'
               : 'cursor-pointer text-black dark:text-slate-100',
@@ -50,7 +50,7 @@ export function JuiceListbox<T>(props: JuiceListboxProps<T>) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Listbox.Options className="absolute z-10 mt-1 max-h-60 rounded-lg border border-smoke-300 bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-slate-300 dark:bg-slate-800 sm:text-sm">
+          <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full rounded-lg border border-smoke-300 bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-slate-300 dark:bg-slate-800 sm:text-sm">
             {options.map((option, optionIdx) => (
               <Listbox.Option
                 key={optionIdx}

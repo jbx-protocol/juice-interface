@@ -14,7 +14,6 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react'
@@ -70,26 +69,33 @@ const Header: React.FC<React.PropsWithChildren<{ skipped?: boolean }>> = ({
 
 export const ReviewDeployPage = () => {
   const chainRef = useRef<HTMLDivElement>(null)
+
   useSetCreateFurthestPageReached('reviewDeploy')
+
   const { goToPage } = useContext(WizardContext)
   const isMobile = useMobile()
-  const { changeNetworks, isConnected, connect, chain } = useWallet()
+  const { isConnected, connect } = useWallet()
   const router = useRouter()
-  const [form] = Form.useForm<{ termsAccepted: boolean }>()
-  const termsAccepted = Form.useWatch('termsAccepted', form)
   const transactionModal = useModal()
-  const { deployProject, isDeploying, deployTransactionPending } =
-    useDeployProject()
+  const dispatch = useDispatch()
+  const { isDeploying } = useDeployProject()
   const nftRewards = useAppSelector(
     state => state.creatingV2Project.nftRewards.rewardTiers,
   )
-
-  const nftRewardsAreSet = useMemo(
-    () => nftRewards && nftRewards?.length > 0,
-    [nftRewards],
+  const selectedRelayrChains = useAppSelector(
+    state => state.creatingV2Project.selectedRelayrChainIds,
   )
 
-  const dispatch = useDispatch()
+  const [chainError, setChainError] = useState<string | null>(null)
+  const [activeKey, setActiveKey] = useState<ReviewDeployKey[]>(
+    !isMobile ? [ReviewDeployKey.ProjectDetails] : [],
+  )
+
+  const [form] = Form.useForm<{ termsAccepted: boolean }>()
+  const termsAccepted = Form.useWatch('termsAccepted', form)
+  const nftRewardsAreSet = nftRewards && nftRewards?.length > 0
+  const hasChainSelected = Object.values(selectedRelayrChains).some(Boolean)
+  const isNextEnabled = termsAccepted
 
   const handleStartOverClicked = useCallback(() => {
     router.push('/create')
@@ -97,32 +103,20 @@ export const ReviewDeployPage = () => {
     dispatch(creatingV2ProjectActions.resetState())
   }, [dispatch, goToPage, router])
 
-  const [chainError, setChainError] = useState<string | null>(null)
-  const selectedRelayrChains = useAppSelector(
-    state => state.creatingV2Project.selectedRelayrChainIds,
-  )
-  const isAtLeastOneChainSelected = useMemo(() => {
-    return Object.values(selectedRelayrChains).some(Boolean)
-  }, [selectedRelayrChains])
-
   const onFinish = useCallback(async () => {
     if (!isConnected) {
       await connect()
       return
     }
 
-    if (!isAtLeastOneChainSelected) {
+    if (!hasChainSelected) {
       setChainError('Please select at least one chain to deploy your project.')
       chainRef.current?.scrollIntoView({ behavior: 'smooth' })
       return
     }
 
     transactionModal.open()
-  }, [isConnected, isAtLeastOneChainSelected, transactionModal, connect])
-
-  const [activeKey, setActiveKey] = useState<ReviewDeployKey[]>(
-    !isMobile ? [ReviewDeployKey.ProjectDetails] : [],
-  )
+  }, [isConnected, hasChainSelected, transactionModal, connect])
 
   const handleOnChange = (key: string | string[]) => {
     if (typeof key === 'string') {
@@ -154,7 +148,6 @@ export const ReviewDeployPage = () => {
     [dispatch],
   )
 
-  const isNextEnabled = termsAccepted
   return (
     <>
       <div ref={chainRef}>

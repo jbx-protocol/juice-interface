@@ -3,8 +3,6 @@ import { DEADLINE_EXPLANATION, RULESET_EXPLANATION } from 'components/strings'
 
 import { Badge } from 'components/Badge'
 import Loading from 'components/Loading'
-import { readNetwork } from 'constants/networks'
-import { NetworkName } from 'models/networkName'
 import { useRouter } from 'next/router'
 import { CreateBadge } from './components/CreateBadge'
 import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
@@ -112,8 +110,7 @@ export function Create() {
             title={t`Review & Deploy`}
             description={
               <Trans>
-                Review your project and deploy it to{' '}
-                {readNetwork.name ?? NetworkName.mainnet}.
+                Review your project before deploying.
               </Trans>
             }
           >

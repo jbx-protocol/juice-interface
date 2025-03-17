@@ -24,7 +24,6 @@ import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
 import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { ProjectChainSelect } from 'packages/v4/components/ProjectDashboard/ProjectChainSelect'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
 import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
@@ -75,18 +74,6 @@ export const ProjectDetailsPage: React.FC<
           ])}
         >
           <JuiceInput />
-        </Form.Item>
-
-        <Form.Item
-          name="projectChainId"
-          label={t`Project chain`}
-          required
-          rules={lockPageRulesWrapper([
-            inputMustExistRule({ label: t`A project chain` }),
-          ])}
-        >
-          {/* v4TODO: turn into a multiselect */}
-          <ProjectChainSelect options={networkOptions} />
         </Form.Item>
 
         <Form.Item

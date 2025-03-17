@@ -83,7 +83,6 @@ export const ReviewDeployPage = () => {
   const nftRewards = useAppSelector(
     state => state.creatingV2Project.nftRewards.rewardTiers,
   )
-  const { projectChainId } = useAppSelector(state => state.creatingV2Project)
 
   const nftRewardsAreSet = useMemo(
     () => nftRewards && nftRewards?.length > 0,
@@ -98,9 +97,6 @@ export const ReviewDeployPage = () => {
     dispatch(creatingV2ProjectActions.resetState())
   }, [dispatch, goToPage, router])
 
-  const walletConnectedToWrongChain =
-    chain?.id && projectChainId !== parseInt(chain.id)
-
   const [chainError, setChainError] = useState<string | null>(null)
   const selectedRelayrChains = useAppSelector(
     state => state.creatingV2Project.selectedRelayrChainIds,
@@ -110,10 +106,6 @@ export const ReviewDeployPage = () => {
   }, [selectedRelayrChains])
 
   const onFinish = useCallback(async () => {
-    if (walletConnectedToWrongChain) {
-      await changeNetworks(projectChainId)
-      return
-    }
     if (!isConnected) {
       await connect()
       return
@@ -126,15 +118,7 @@ export const ReviewDeployPage = () => {
     }
 
     transactionModal.open()
-  }, [
-    walletConnectedToWrongChain,
-    isConnected,
-    isAtLeastOneChainSelected,
-    transactionModal,
-    changeNetworks,
-    projectChainId,
-    connect,
-  ])
+  }, [isConnected, isAtLeastOneChainSelected, transactionModal, connect])
 
   const [activeKey, setActiveKey] = useState<ReviewDeployKey[]>(
     !isMobile ? [ReviewDeployKey.ProjectDetails] : [],

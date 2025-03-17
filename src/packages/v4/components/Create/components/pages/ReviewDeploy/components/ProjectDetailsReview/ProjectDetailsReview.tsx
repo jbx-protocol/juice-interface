@@ -4,9 +4,8 @@ import EthereumAddress from 'components/EthereumAddress'
 import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
 import { RichPreview } from 'components/RichPreview/RichPreview'
-import { NETWORKS } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
@@ -15,7 +14,6 @@ import { ReviewDescription } from '../ReviewDescription'
 export const ProjectDetailsReview = () => {
   const { userAddress } = useWallet()
   const {
-    projectChainId,
     projectMetadata: {
       description,
       discord,
@@ -33,11 +31,6 @@ export const ProjectDetailsReview = () => {
     },
     inputProjectOwner,
   } = useAppSelector(state => state.creatingV2Project)
-
-  const projectChainName = React.useMemo(
-    () => (projectChainId ? NETWORKS[projectChainId]?.label : undefined),
-    [projectChainId],
-  )
 
   // const youtubeUrl = useMemo(() => {
   //   if (!introVideoUrl) return undefined
@@ -73,16 +66,6 @@ export const ProjectDetailsReview = () => {
           </div>
         }
       />
-      {projectChainName && (
-        <ReviewDescription
-          title={t`Project chain`}
-          desc={
-            <div className="overflow-hidden text-ellipsis text-base font-medium">
-              {projectChainName}
-            </div>
-          }
-        />
-      )}
       <ReviewDescription
         className="col-span-2"
         title={t`Tagline`}

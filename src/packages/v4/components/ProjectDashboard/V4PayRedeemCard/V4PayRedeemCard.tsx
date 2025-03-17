@@ -125,7 +125,7 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
                 onChange={selectedChainId =>
                   dispatch(payRedeemActions.setChainId(selectedChainId))
                 }
-                suckers={suckers}
+                chainIds={suckers.map(sucker => sucker.peerChainId)}
               />
             ) : null}
           </div>

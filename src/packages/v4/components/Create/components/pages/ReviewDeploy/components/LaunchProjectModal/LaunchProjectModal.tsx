@@ -33,7 +33,10 @@ export const LaunchProjectModal: React.FC<{
   const getLaunchData = useStandardProjectLaunchData()
   const deployOmnichainProject = useDeployOmnichainProject()
   const { sendRelayrTx } = useSendRelayrTx()
-  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(sepolia.id)
+  
+  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(
+    sepolia.id,
+  )
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
 
   const selectedChains = React.useMemo(() => {
@@ -78,7 +81,9 @@ export const LaunchProjectModal: React.FC<{
   }
 
   async function onClickLaunch() {
-    const data = txQuote?.payment_info.find(p => Number(p.chain) === Number(selectedGasChain))
+    const data = txQuote?.payment_info.find(
+      p => Number(p.chain) === Number(selectedGasChain),
+    )
     if (!data) {
       console.error('No payment info found for chain', selectedGasChain)
       return
@@ -110,15 +115,14 @@ export const LaunchProjectModal: React.FC<{
           </div>
           <div className="flex-1">
             <Trans>Pay gas on</Trans>
-            {/* // TODO: use selectedRelayrChainIds values and wire up */}
             <ChainSelect
               className="mt-1 h-12"
               showTitle
-              value={sepolia.id}
+              value={selectedGasChain}
               onChange={c => {
-                setSelectedGasChain(sepolia.id)
+                setSelectedGasChain(c)
               }}
-              suckers={[{ peerChainId: sepolia.id, projectId: -1n }]}
+              chainIds={selectedChains.map(c => c.chainId)}
             />
           </div>
         </div>

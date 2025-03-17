@@ -40,14 +40,6 @@ const creatingV2ProjectSlice = createSlice({
     setName: (state, action: PayloadAction<string>) => {
       state.projectMetadata.name = action.payload
     },
-    setProjectChainId: (state, action: PayloadAction<number>) => {
-      // v4TODO: Should use JBChainId type
-      state.projectChainId = action.payload as
-        | 84532
-        | 421614
-        | 11155111
-        | 11155420 // shouldn't need this
-    },
     setProjectTagline: (state, action: PayloadAction<string>) => {
       state.projectMetadata.projectTagline = action.payload
     },

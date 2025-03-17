@@ -1,17 +1,8 @@
 import { CheckIcon } from '@heroicons/react/24/outline'
-import { ArbitrumLogoIcon } from 'components/icons/Arbitrum'
-import { BaseLogoIcon } from 'components/icons/Base'
-import { OptimismLogoIcon } from 'components/icons/Optimism'
 import { JB_CHAINS, JBChainId } from 'juice-sdk-core'
-import { EthereumLogo } from 'packages/v4/components/ProjectDashboard/V4PayRedeemCard/EthereumLogo'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import React, { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import {
-  arbitrumSepolia,
-  baseSepolia,
-  optimismSepolia,
-  sepolia,
-} from 'viem/chains'
 
 export const CreateChainSelectButton: React.FC<{
   chainId: JBChainId
@@ -22,7 +13,7 @@ export const CreateChainSelectButton: React.FC<{
   const value = _value ?? checked
   const onChange = _onChange ?? setChecked
 
-  const chain = React.useMemo(() => JB_CHAINS[chainId], [chainId])
+  const chain = JB_CHAINS[chainId]
   return (
     <button
       className={twMerge(
@@ -34,7 +25,9 @@ export const CreateChainSelectButton: React.FC<{
       onClick={() => onChange(!value)}
     >
       <div className="flex items-center gap-2">
-        <span className="h-6 w-6">{ICON_PER_CHAIN[chainId]}</span>
+        <span className="h-6 w-6">
+          <ChainLogo chainId={chainId as JBChainId} />
+        </span>
         <span>{chain.name}</span>
       </div>
       {value ? (
@@ -46,10 +39,4 @@ export const CreateChainSelectButton: React.FC<{
       )}
     </button>
   )
-}
-const ICON_PER_CHAIN: Record<JBChainId, React.ReactNode> = {
-  [sepolia.id]: <EthereumLogo />,
-  [optimismSepolia.id]: <OptimismLogoIcon />,
-  [baseSepolia.id]: <BaseLogoIcon />,
-  [arbitrumSepolia.id]: <ArbitrumLogoIcon />,
 }

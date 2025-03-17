@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import { NETWORKS } from 'constants/networks'
-import { JBChainId, SuckerPair } from 'juice-sdk-core'
+import { JBChainId } from 'juice-sdk-core'
 import React from 'react'
 import { ChainLogo } from './ChainLogo'
 
@@ -24,29 +24,26 @@ export const ChainSelect = ({
   className,
   value,
   onChange,
-  suckers,
+  chainIds,
   showTitle = false,
 }: {
   className?: string
   value: JBChainId | undefined
   onChange: (chainId: JBChainId) => void
-  suckers: SuckerPair[]
+  chainIds: JBChainId[]
   showTitle?: boolean
 }) => {
-  const networkOptions = React.useMemo(() => {
-    const allowedChainIds = new Set(suckers?.map(sucker => sucker.peerChainId))
-    return Object.entries(NETWORKS)
-      .filter(([chainId]) => allowedChainIds.has(parseInt(chainId)))
-      .map(([chainId, networkInfo]) => ({
-        label: (
-          <ChainSelectOption
-            chainId={parseInt(chainId)}
-            label={networkInfo.label}
-          />
-        ),
-        value: parseInt(chainId) as JBChainId,
-      }))
-  }, [suckers])
+  const networkOptions = Object.entries(NETWORKS)
+    .filter(([chainId]) => chainIds.includes(parseInt(chainId) as JBChainId))
+    .map(([chainId, networkInfo]) => ({
+      label: (
+        <ChainSelectOption
+          chainId={parseInt(chainId)}
+          label={networkInfo.label}
+        />
+      ),
+      value: parseInt(chainId) as JBChainId,
+    }))
 
   const _value = React.useMemo(() => {
     const defaultValue = {

@@ -8,34 +8,42 @@ import {
 } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { Callout } from 'components/Callout/Callout'
-import { CartItemBadge } from 'components/CartItemBadge'
-import Loading from 'components/Loading'
-import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
-import { TruncatedText } from 'components/TruncatedText'
-import { EthereumIcon } from 'components/icons/Ethereum'
 import { JuiceModal, JuiceModalProps } from 'components/modals/JuiceModal'
-import { PV_V2 } from 'constants/pv'
-import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useWallet } from 'hooks/Wallet'
-import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
-import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
-import { useHasNftRewards } from 'packages/v2v3/hooks/JB721Delegate/useHasNftRewards'
-import { useETHReceivedFromTokens } from 'packages/v2v3/hooks/contractReader/useETHReceivedFromTokens'
-import { useRedeemTokensTx } from 'packages/v2v3/hooks/transactor/useRedeemTokensTx'
-import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import {
   V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD,
 } from 'packages/v2v3/utils/currency'
+import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
+import {
+  useProjectDispatch,
+  useProjectSelector,
+  useProjectStore,
+} from '../../redux/hooks'
+
+import { Callout } from 'components/Callout/Callout'
+import { CartItemBadge } from 'components/CartItemBadge'
+import { EthereumIcon } from 'components/icons/Ethereum'
+import Loading from 'components/Loading'
+import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
+import { TruncatedText } from 'components/TruncatedText'
+import { PV_V2 } from 'constants/pv'
+import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
+import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
+import { useWallet } from 'hooks/Wallet'
+import { NftRewardTier } from 'models/nftRewards'
+import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
+import { useETHReceivedFromTokens } from 'packages/v2v3/hooks/contractReader/useETHReceivedFromTokens'
+import { useHasNftRewards } from 'packages/v2v3/hooks/JB721Delegate/useHasNftRewards'
+import { useRedeemTokensTx } from 'packages/v2v3/hooks/transactor/useRedeemTokensTx'
+import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import { formatCurrencyAmount } from 'packages/v2v3/utils/formatCurrencyAmount'
 import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { computeIssuanceRate } from 'packages/v2v3/utils/math'
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
-import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { NftCreditsCallout } from '../../../NftCreditsCallout'
 import { useNftCartItem } from '../../hooks/useNftCartItem'
@@ -45,11 +53,6 @@ import { useProjectPageQueries } from '../../hooks/useProjectPageQueries'
 import { useTokensPanel } from '../../hooks/useTokensPanel'
 import { useTokensPerEth } from '../../hooks/useTokensPerEth'
 import { useUnclaimedTokenBalance } from '../../hooks/useUnclaimedTokenBalance'
-import {
-  useProjectDispatch,
-  useProjectSelector,
-  useProjectStore,
-} from '../../redux/hooks'
 import { payRedeemActions } from '../../redux/payRedeemSlice'
 import { projectCartActions } from '../../redux/projectCartSlice'
 import { ClaimErc20Callout } from '../ClaimErc20Callout'
@@ -57,6 +60,7 @@ import { EthPerTokenAccordion } from '../EthPerTokenAccordion'
 import { ProjectCartNftReward } from '../ReduxProjectCartProvider'
 import { FirstCycleCountdownCallout } from './FirstCycleCountdownCallout'
 import { PayProjectModal } from './PayProjectModal/PayProjectModal'
+import { PreventOverspendingPayCard } from './PreventOverspendingPayCard'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
 
@@ -263,7 +267,7 @@ const PayRedeemInput = ({
   readOnly,
   redeemUnavailable,
   token,
-  nfts,
+  cartNfts,
   value,
   onChange,
 }: {
@@ -278,10 +282,14 @@ const PayRedeemInput = ({
     image: ReactNode
     balance: string | undefined
   }
-  nfts?: ProjectCartNftReward[]
+  cartNfts?: ProjectCartNftReward[]
   value?: string | undefined
   onChange?: (value: string | undefined) => void
 }) => {
+  const {
+    nftRewards: { rewardTiers: nfts },
+  } = useContext(NftRewardsContext)
+
   token.type = token.type || 'native'
 
   const converter = useCurrencyConverter()
@@ -368,14 +376,15 @@ const PayRedeemInput = ({
           </div>
         )}
         {/* Only show spacer if redeem is available and nfts are not empty */}
-        {!redeemUnavailable && !!nfts?.length && (
+        {!redeemUnavailable && !!cartNfts?.length && (
           <div className="my-2 h-[1px] w-full border-t border-grey-200 dark:border-slate-600" />
         )}
-        {nfts && nfts?.length > 0 && (
+        {nfts && nfts?.length > 0 && readOnly && (
           <div className="mt-4 space-y-4">
-            {nfts.map((nft, i) => (
-              <NftReward key={i} nft={nft} />
-            ))}
+            {nfts?.map((nft, i) => {
+              const quantity = cartNfts?.find(cartNft => cartNft.id === nft.id)?.quantity ?? 0
+              return <PayRedeemCardNftReward key={i} nft={nft} quantity={quantity} />
+            })}
           </div>
         )}
       </div>
@@ -445,7 +454,7 @@ const DownArrow = ({ className }: { className?: string }) => {
   )
 }
 
-type PayConfigurationProps = {
+export type PayConfigurationProps = {
   userTokenBalance: number | undefined
   projectHasErc20Token: boolean
   payerIssuanceRate: PayerIssuanceRate
@@ -458,6 +467,10 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
 }) => {
   const { payDisabled, message } = usePayProjectDisabled()
   const { tokenSymbol, fundingCycle } = useProjectContext()
+  const {
+    nftRewards: { rewardTiers, flags: { preventOverspending } },
+  } = useContext(NftRewardsContext)
+
   const chosenNftRewards = useProjectSelector(
     state => state.projectCart.chosenNftRewards,
   )
@@ -547,45 +560,51 @@ const PayConfiguration: React.FC<PayConfigurationProps> = ({
 
       <div className="relative mt-3">
         <div className="flex flex-col gap-y-2">
-          <PayRedeemInput
-            label={t`You pay`}
-            token={{
-              balance: wallet.balance,
-              image: <EthereumLogo />,
-              ticker: 'ETH',
-              type: 'eth',
-            }}
-            value={payAmount ?? cartPayAmount?.toString()}
-            onChange={handleUserPayAmountChange}
-          />
-          <PayRedeemInput
-            label={t`You receive`}
-            redeemUnavailable={!payerIssuanceRate.enabled}
-            downArrow
-            readOnly
-            token={{
-              balance: userTokenBalance?.toString(),
-              image:
-                tokenLogo && !fallbackImage ? (
-                  <img
-                    src={tokenLogo}
-                    alt="Token logo"
-                    onError={() => setFallbackImage(true)}
-                  />
-                ) : (
-                  '🧃'
-                ),
-              ticker: tokenTicker,
-              type: projectHasErc20Token ? 'erc20' : 'native',
-            }}
-            nfts={chosenNftRewards}
-            value={
-              tokenReceivedAmount.receivedTickets &&
-              !!parseFloat(tokenReceivedAmount.receivedTickets)
-                ? tokenReceivedAmount.receivedTickets
-                : ''
-            }
-          />
+          { rewardTiers?.length && preventOverspending ? (
+            <PreventOverspendingPayCard />
+          ): (
+          <>
+            <PayRedeemInput
+              label={t`You pay`}
+              token={{
+                balance: wallet.balance,
+                image: <EthereumLogo />,
+                ticker: 'ETH',
+                type: 'eth',
+              }}
+              value={payAmount ?? cartPayAmount?.toString()}
+              onChange={handleUserPayAmountChange}
+            />
+            <PayRedeemInput
+              label={t`You receive`}
+              redeemUnavailable={!payerIssuanceRate.enabled}
+              downArrow
+              readOnly
+              token={{
+                balance: userTokenBalance?.toString(),
+                image:
+                  tokenLogo && !fallbackImage ? (
+                    <img
+                      src={tokenLogo}
+                      alt="Token logo"
+                      onError={() => setFallbackImage(true)}
+                    />
+                  ) : (
+                    '🧃'
+                  ),
+                ticker: tokenTicker,
+                type: projectHasErc20Token ? 'erc20' : 'native',
+              }}
+              cartNfts={chosenNftRewards}
+              value={
+                tokenReceivedAmount.receivedTickets &&
+                !!parseFloat(tokenReceivedAmount.receivedTickets)
+                  ? tokenReceivedAmount.receivedTickets
+                  : ''
+              }
+            />
+          </>
+        )}
         </div>
       </div>
 
@@ -822,19 +841,23 @@ const EthereumLogo = () => {
   )
 }
 
-const NftReward: React.FC<{
-  nft: ProjectCartNftReward
+export const PayRedeemCardNftReward: React.FC<{
+  nft: NftRewardTier
+  quantity: number
   className?: string
-}> = ({ nft, className }) => {
+}> = ({ nft, className, quantity }) => {
   const {
     price,
     name,
-    quantity,
     fileUrl,
+    upsertNft,
     removeNft,
     increaseQuantity,
     decreaseQuantity,
-  } = useNftCartItem(nft)
+  } = useNftCartItem({
+    id: nft.id,
+    quantity
+  } as ProjectCartNftReward)
   const { setProjectPageTab } = useProjectPageQueries()
 
   const handleRemove = useCallback(() => {
@@ -844,6 +867,14 @@ const NftReward: React.FC<{
       description: t`Are you sure you want to remove this NFT?`,
     })
   }, [removeNft])
+
+  const handleIncreaseQuantity = useCallback(() => {
+    if (quantity === 0) {
+      upsertNft()
+    } else {
+      increaseQuantity()
+    }
+  }, [increaseQuantity, quantity, upsertNft])
 
   const handleDecreaseQuantity = useCallback(() => {
     if (quantity - 1 <= 0) {
@@ -892,7 +923,7 @@ const NftReward: React.FC<{
       <div className="flex items-center gap-3">
         <QuantityControl
           quantity={quantity}
-          onIncrease={increaseQuantity}
+          onIncrease={handleIncreaseQuantity}
           onDecrease={handleDecreaseQuantity}
         />
         <RemoveIcon onClick={handleRemove} />

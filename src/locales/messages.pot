@@ -3140,6 +3140,9 @@ msgstr ""
 msgid "You must <0>Edit your Cycle</0> to change your total payout amount."
 msgstr ""
 
+msgid "You pay Ξ{0}"
+msgstr ""
+
 msgid "Pay disclosure"
 msgstr ""
 

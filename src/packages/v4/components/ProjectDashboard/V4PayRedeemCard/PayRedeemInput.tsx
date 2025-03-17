@@ -4,6 +4,8 @@ import {
   PlusIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline'
+import React, { ReactNode, useMemo } from 'react'
+
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { CartItemBadge } from 'components/CartItemBadge'
@@ -11,11 +13,12 @@ import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
 import { TruncatedText } from 'components/TruncatedText'
 import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { NftRewardTier } from 'models/nftRewards'
+import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { useNftCartItem } from 'packages/v4/hooks/useNftCartItem'
 import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
 import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
 import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
-import React, { ReactNode, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formatAmount } from 'utils/format/formatAmount'
 import { ProjectCartNftReward } from '../ReduxProjectCartProvider'
@@ -30,7 +33,7 @@ export const PayRedeemInput = ({
   readOnly,
   redeemUnavailable,
   token,
-  nfts,
+  cartNfts,
   value,
   onChange,
 }: {
@@ -45,11 +48,14 @@ export const PayRedeemInput = ({
     image: ReactNode
     balance: string | undefined
   }
-  nfts?: ProjectCartNftReward[]
+  cartNfts?: ProjectCartNftReward[]
   value?: string | undefined
   onChange?: (value: string | undefined) => void
 }) => {
   token.type = token.type || 'native'
+  const {
+      nftRewards: { rewardTiers: nfts },
+    } = useV4NftRewards()
 
   const converter = useCurrencyConverter()
 
@@ -147,9 +153,10 @@ export const PayRedeemInput = ({
 
         {nfts && nfts?.length > 0 && (
           <div className="mt-4 space-y-4">
-            {nfts.map((nft, i) => (
-              <NftReward key={i} nft={nft} />
-            ))}
+            {nfts.map((nft, i) => {
+              const quantity = cartNfts?.find(cartNft => cartNft.id === nft.id)?.quantity ?? 0
+              return <PayRedeemCardNftReward key={i} nft={nft} quantity={quantity} />
+            })}
           </div>
         )}
       </div>
@@ -219,19 +226,22 @@ const DownArrow = ({ className }: { className?: string }) => {
   )
 }
 
-const NftReward: React.FC<{
-  nft: ProjectCartNftReward
+export const PayRedeemCardNftReward: React.FC<{
+  nft: NftRewardTier
+  quantity: number
   className?: string
-}> = ({ nft, className }) => {
+}> = ({ nft, className, quantity }) => {
   const {
     price,
     name,
-    quantity,
     fileUrl,
     removeNft,
     increaseQuantity,
     decreaseQuantity,
-  } = useNftCartItem(nft)
+  } = useNftCartItem({
+      id: nft.id,
+      quantity
+    } as ProjectCartNftReward)
   const { setProjectPageTab } = useProjectPageQueries()
 
   const handleRemove = React.useCallback(() => {

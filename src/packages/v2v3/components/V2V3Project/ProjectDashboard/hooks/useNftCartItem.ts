@@ -1,6 +1,7 @@
+import { useCallback, useContext, useMemo } from 'react'
+
 import { NftRewardsContext } from 'packages/v2v3/contexts/NftRewards/NftRewardsContext'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
-import { useCallback, useContext, useMemo } from 'react'
 import { ProjectCartNftReward } from '../components/ReduxProjectCartProvider'
 import { useProjectDispatch } from '../redux/hooks'
 import { projectCartActions } from '../redux/projectCartSlice'
@@ -23,6 +24,10 @@ export const useNftCartItem = ({ id, quantity }: ProjectCartNftReward) => {
     }),
     [quantity, rewardTier?.contributionFloor],
   )
+  const upsertNft = useCallback(
+    () => dispatch(projectCartActions.upsertNftReward({ id, quantity: 1 })),
+    [dispatch, id],
+  )
   const removeNft = useCallback(
     () => dispatch(projectCartActions.removeNftReward({ id })),
     [dispatch, id],
@@ -41,6 +46,7 @@ export const useNftCartItem = ({ id, quantity }: ProjectCartNftReward) => {
     fileUrl: rewardTier?.fileUrl,
     quantity,
     price,
+    upsertNft,
     removeNft,
     increaseQuantity,
     decreaseQuantity,

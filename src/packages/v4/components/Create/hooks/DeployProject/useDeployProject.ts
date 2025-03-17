@@ -159,6 +159,7 @@ export const useDeployProject = () => {
       uploadNftRewards,
     ],
   )
+
   return {
     isDeploying,
     deployTransactionPending: transactionPending,

@@ -75,6 +75,7 @@ const CONNECT_SRC = [
   'https://rpc.sepolia.org/',
   'https://sepolia-rollup.arbitrum.io/rpc',
   'https://sepolia.optimism.io',
+  'https://relayr-api-staging.up.railway.app',
 ]
 
 const FRAME_ANCESTORS = [

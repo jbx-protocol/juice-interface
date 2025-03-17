@@ -7,15 +7,22 @@ import {
   ExclamationCircleIcon,
 } from '@heroicons/react/24/solid'
 import { t, Trans } from '@lingui/macro'
+import { Button } from 'antd'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { NETWORKS } from 'constants/networks'
 import { JBChainId } from 'juice-sdk-core'
+import { RelayrPostBundleResponse, useSendRelayrTx } from 'juice-sdk-react'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
-import React from 'react'
+import { useDeployOmnichainProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
+import { useStandardProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
+import React, { useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { twMerge } from 'tailwind-merge'
 import { sepolia } from 'viem/chains'
+
+const JUICEBOX_DOMAIN = 'juicebox'
 
 export const LaunchProjectModal: React.FC<{
   className?: string
@@ -23,6 +30,12 @@ export const LaunchProjectModal: React.FC<{
   setOpen: (open: boolean) => void
 }> = props => {
   const createData = useAppSelector(state => state.creatingV2Project)
+  const getLaunchData = useStandardProjectLaunchData()
+  const deployOmnichainProject = useDeployOmnichainProject()
+  const { sendRelayrTx } = useSendRelayrTx()
+  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(sepolia.id)
+  const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
+
   const selectedChains = React.useMemo(() => {
     return (
       Object.entries(createData.selectedRelayrChainIds)
@@ -33,6 +46,46 @@ export const LaunchProjectModal: React.FC<{
       label: NETWORKS[c].label,
     }))
   }, [createData.selectedRelayrChainIds])
+  const chainIds = selectedChains.map(c => c.chainId)
+
+  /**
+   * Fetches a quote for the omnichain transaction.
+   *
+   * This is step 1 of the launch process.
+   * The user then needs to accept the quote and actually execute the transaction.
+   */
+  async function onOk() {
+    let projectMetadataCid: string | undefined
+    try {
+      projectMetadataCid = (
+        await uploadProjectMetadata({
+          ...createData.projectMetadata,
+          domain: JUICEBOX_DOMAIN,
+        })
+      ).Hash
+    } catch (error) {
+      console.error(error)
+      return
+    }
+
+    const { args: launchData } = getLaunchData({
+      projectMetadataCID: projectMetadataCid,
+      chainId: sepolia.id,
+    })
+
+    const _txQuote = await deployOmnichainProject(launchData, chainIds)
+    setTxQuote(_txQuote)
+  }
+
+  async function onClickLaunch() {
+    const data = txQuote?.payment_info.find(p => Number(p.chain) === Number(selectedGasChain))
+    if (!data) {
+      console.error('No payment info found for chain', selectedGasChain)
+      return
+    }
+
+    await sendRelayrTx?.(data)
+  }
 
   return (
     <JuiceModal
@@ -40,8 +93,8 @@ export const LaunchProjectModal: React.FC<{
       title={t`Launch project`}
       okText={t`Launch project`}
       cancelText={t`Cancel`}
-      open={props.open}
-      setOpen={props.setOpen}
+      onOk={onOk}
+      {...props}
     >
       <div className="flex flex-col divide-y divide-grey-200 dark:divide-grey-800">
         <div className="flex items-start gap-4 pb-6">
@@ -57,12 +110,14 @@ export const LaunchProjectModal: React.FC<{
           </div>
           <div className="flex-1">
             <Trans>Pay gas on</Trans>
-            {/* // TODO: use correct values and wire up */}
+            {/* // TODO: use selectedRelayrChainIds values and wire up */}
             <ChainSelect
               className="mt-1 h-12"
               showTitle
               value={sepolia.id}
-              onChange={() => {}}
+              onChange={c => {
+                setSelectedGasChain(sepolia.id)
+              }}
               suckers={[{ peerChainId: sepolia.id, projectId: -1n }]}
             />
           </div>
@@ -81,6 +136,11 @@ export const LaunchProjectModal: React.FC<{
           </div>
         </div>
         <div className="h-2"></div> {/* Spacer */}
+        {txQuote && (
+          <div>
+            <Button onClick={onClickLaunch}>Actually launch</Button>
+          </div>
+        )}
       </div>
     </JuiceModal>
   )

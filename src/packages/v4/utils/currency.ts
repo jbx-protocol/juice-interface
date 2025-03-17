@@ -9,9 +9,8 @@ import {
   V4CurrencyUSD,
 } from '../models/v4CurrencyOption'
 
-// TODO: This is for backward compatibility - correct token codes are listed as comments
-export const V4_CURRENCY_ETH: V4CurrencyETH = 1 // TODO: 61166
-export const V4_CURRENCY_USD: V4CurrencyUSD = 2 // TODO: 1
+export const V4_CURRENCY_ETH: V4CurrencyETH = 61166 
+export const V4_CURRENCY_USD: V4CurrencyUSD = 1 
 
 export const V4_CURRENCY_METADATA: Record<V4CurrencyOption, CurrencyMetadata> =
   {

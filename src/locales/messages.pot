@@ -1109,6 +1109,9 @@ msgstr ""
 msgid "Redemption rate determines what proportion of this project's treasury can be reclaimed by a token holder by redeeming their tokens."
 msgstr ""
 
+msgid "Review your project before deploying."
+msgstr ""
+
 msgid "Collection Name"
 msgstr ""
 

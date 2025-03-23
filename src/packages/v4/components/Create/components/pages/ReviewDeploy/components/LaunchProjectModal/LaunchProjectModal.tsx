@@ -17,19 +17,22 @@ import { JBChainId } from 'juice-sdk-core'
 import {
   jbControllerAbi,
   RelayrPostBundleResponse,
+  useGetRelayrTxBundle,
   useSendRelayrTx,
 } from 'juice-sdk-react'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
+import { useRouter } from 'next/router'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { useDeployOmnichainProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
 import { useStandardProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { twMerge } from 'tailwind-merge'
 import { emitErrorNotification } from 'utils/notifications'
 import { ContractFunctionArgs, hexToBigInt } from 'viem'
 import { sepolia } from 'viem/chains'
+import { TxLoadingContent } from './TxLoadingContent'
 
 const JUICEBOX_DOMAIN = 'juicebox'
 
@@ -41,7 +44,9 @@ export const LaunchProjectModal: React.FC<{
   const createData = useAppSelector(state => state.creatingV2Project)
   const getLaunchData = useStandardProjectLaunchData()
   const deployOmnichainProject = useDeployOmnichainProject()
-  const { sendRelayrTx } = useSendRelayrTx()
+  const router = useRouter()
+  const getRelayrBundle = useGetRelayrTxBundle()
+  const { sendRelayrTx, isPending, data: txData } = useSendRelayrTx()
 
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(
     sepolia.id,
@@ -72,59 +77,53 @@ export const LaunchProjectModal: React.FC<{
    * This is step 1 of the launch process.
    * The user then needs to accept the quote and actually execute the transaction.
    */
-  const getTxQuote = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async (ev?: any) => {
-      ev?.preventDefault()
-      ev?.stopPropagation()
-      setTxQuoteLoading(true)
+  const getTxQuote = useCallback(async () => {
+    setTxQuoteLoading(true)
 
-      try {
-        const projectMetadataCid = (
-          await uploadProjectMetadata({
-            ...createData.projectMetadata,
-            domain: JUICEBOX_DOMAIN,
-          })
-        ).Hash
+    try {
+      const projectMetadataCid = (
+        await uploadProjectMetadata({
+          ...createData.projectMetadata,
+          domain: JUICEBOX_DOMAIN,
+        })
+      ).Hash
 
-        const launchData = chainIds.reduce(
-          (
-            acc: {
-              [k in JBChainId]?: ContractFunctionArgs<
-                typeof jbControllerAbi,
-                'nonpayable',
-                'launchProjectFor'
-              >
-            },
-            chainId,
-          ) => {
-            const { args } = getLaunchData({
-              projectMetadataCID: projectMetadataCid,
-              chainId,
-            })
-
-            acc[chainId] = args
-            return acc
+      const launchData = chainIds.reduce(
+        (
+          acc: {
+            [k in JBChainId]?: ContractFunctionArgs<
+              typeof jbControllerAbi,
+              'nonpayable',
+              'launchProjectFor'
+            >
           },
-          {},
-        )
+          chainId,
+        ) => {
+          const { args } = getLaunchData({
+            projectMetadataCID: projectMetadataCid,
+            chainId,
+          })
 
-        const _txQuote = await deployOmnichainProject(launchData, chainIds)
-        setTxQuote(_txQuote)
-      } catch (error) {
-        console.error(error)
-        return
-      } finally {
-        setTxQuoteLoading(false)
-      }
-    },
-    [
-      chainIds,
-      createData.projectMetadata,
-      deployOmnichainProject,
-      getLaunchData,
-    ],
-  )
+          acc[chainId] = args
+          return acc
+        },
+        {},
+      )
+
+      const _txQuote = await deployOmnichainProject(launchData, chainIds)
+      setTxQuote(_txQuote)
+    } catch (error) {
+      console.error(error)
+      return
+    } finally {
+      setTxQuoteLoading(false)
+    }
+  }, [
+    chainIds,
+    createData.projectMetadata,
+    deployOmnichainProject,
+    getLaunchData,
+  ])
 
   async function onClickLaunch() {
     if (!txQuote) {
@@ -143,7 +142,8 @@ export const LaunchProjectModal: React.FC<{
     }
 
     try {
-      await sendRelayrTx?.(data)
+      sendRelayrTx?.(data)
+      getRelayrBundle.startPolling(txQuote.bundle_uuid)
     } catch (e) {
       emitErrorNotification('Failed to launch project', {
         description: (e as Error).message,
@@ -152,6 +152,15 @@ export const LaunchProjectModal: React.FC<{
       setTxLoading(false)
     }
   }
+
+  useEffect(() => {
+    if (getRelayrBundle.isComplete) {
+      router.push({ query: { deployedProjectId: 69 } }, '/create', {
+        shallow: true,
+      })
+      props.setOpen(false)
+    }
+  }, [getRelayrBundle.isComplete, props, router])
 
   return (
     <JuiceModal
@@ -163,70 +172,78 @@ export const LaunchProjectModal: React.FC<{
       okLoading={txLoading || txQuoteLoading}
       {...props}
     >
-      <div className="flex flex-col divide-y divide-grey-200 dark:divide-grey-800">
-        <div className="py-6">
-          <span className="flex items-center gap-3">Chains to deploy</span>
-          <div className="mt-6 flex flex-col gap-6">
-            {selectedChains.map(chain => (
-              <ChainIdentifier
-                key={chain.chainId}
-                chainId={chain.chainId}
-                label={chain.label}
-                state="ready"
-              />
-            ))}
-          </div>
-        </div>
-        {txQuoteLoading || txQuoteCost ? (
+      {isPending && txData ? (
+        <TxLoadingContent txHash={txData} chainId={selectedGasChain} />
+      ) : (
+        <div className="flex flex-col divide-y divide-grey-200 dark:divide-grey-800">
           <div className="py-6">
-            <div className="flex items-start gap-4 pb-3">
-              <div className="flex-1">
-                <Trans>Gas quote</Trans>
+            <span className="flex items-center gap-3">Chains to deploy</span>
+            <div className="mt-6 flex flex-col gap-6">
+              {selectedChains.map(chain => (
+                <ChainIdentifier
+                  key={chain.chainId}
+                  chainId={chain.chainId}
+                  label={chain.label}
+                  state="ready"
+                />
+              ))}
+            </div>
+          </div>
+          {txQuoteLoading || txQuoteCost ? (
+            <div className="py-6">
+              <div className="flex items-start gap-4 pb-3">
+                <div className="flex-1">
+                  <Trans>Gas quote</Trans>
 
-                <div className="mt-1 flex h-12 w-full items-center justify-between rounded-lg border border-grey-100 bg-grey-50 px-3 text-grey-600 dark:border-slate-300 dark:bg-slate-600 dark:text-slate-100">
-                  <div className="flex items-center gap-2.5">
-                    <GasIcon className="h-5 w-5" />
-                    <div className="text-base font-medium leading-none">
-                      {txQuoteLoading || !txQuoteCost ? (
-                        '--'
-                      ) : (
-                        <ETHAmount
-                          amount={BigNumber.from(txQuoteCost?.toString())}
-                        />
-                      )}
+                  <div className="mt-1 flex h-12 w-full items-center justify-between rounded-lg border border-grey-100 bg-grey-50 px-3 text-grey-600 dark:border-slate-300 dark:bg-slate-600 dark:text-slate-100">
+                    <div className="flex items-center gap-2.5">
+                      <GasIcon className="h-5 w-5" />
+                      <div className="text-base font-medium leading-none">
+                        {txQuoteLoading || !txQuoteCost ? (
+                          '--'
+                        ) : (
+                          <ETHAmount
+                            amount={BigNumber.from(txQuoteCost?.toString())}
+                          />
+                        )}
+                      </div>
                     </div>
+                    <Button type="text" className="p-0" onClick={getTxQuote}>
+                      {txQuoteLoading ? (
+                        <Loading size="default" />
+                      ) : (
+                        <ArrowPathIcon className="h-6 w-6 " />
+                      )}
+                    </Button>
                   </div>
-                  <Button type="text" className="p-0" onClick={getTxQuote}>
-                    {txQuoteLoading ? (
-                      <Loading size="default" />
-                    ) : (
-                      <ArrowPathIcon className="h-6 w-6 " />
-                    )}
-                  </Button>
+                </div>
+                <div className="flex-1">
+                  <Trans>Pay gas on</Trans>
+                  <ChainSelect
+                    className="mt-1 h-12"
+                    showTitle
+                    value={selectedGasChain}
+                    onChange={c => {
+                      setSelectedGasChain(c)
+                    }}
+                    // TODO ask Ba5ed about how to specifiy chain ID to get quote for
+                    // chainIds={selectedChains.map(c => c.chainId)}
+                    chainIds={[sepolia.id]}
+                  />
                 </div>
               </div>
-              <div className="flex-1">
-                <Trans>Pay gas on</Trans>
-                <ChainSelect
-                  className="mt-1 h-12"
-                  showTitle
-                  value={selectedGasChain}
-                  onChange={c => {
-                    setSelectedGasChain(c)
-                  }}
-                  // TODO ask Ba5ed about how to specifiy chain ID to get quote for
-                  // chainIds={selectedChains.map(c => c.chainId)}
-                  chainIds={[sepolia.id]}
-                />
-              </div>
+              <span
+                role="button"
+                className="mb-4 text-xs underline hover:opacity-75"
+                onClick={getTxQuote}
+              >
+                Retry launch quote
+              </span>
             </div>
-            <span role="button" className="underline text-xs mb-4 hover:opacity-75" onClick={getTxQuote}>
-              Retry launch quote
-            </span>
-          </div>
-        ) : null}
-        <div className="h-2"></div> {/* Spacer */}
-      </div>
+          ) : null}
+          <div className="h-2"></div> {/* Spacer */}
+        </div>
+      )}
     </JuiceModal>
   )
 }

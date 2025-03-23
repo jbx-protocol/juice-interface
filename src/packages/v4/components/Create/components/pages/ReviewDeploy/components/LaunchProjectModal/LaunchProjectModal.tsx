@@ -142,7 +142,7 @@ export const LaunchProjectModal: React.FC<{
     }
 
     try {
-      sendRelayrTx?.(data)
+      await sendRelayrTx?.(data)
       getRelayrBundle.startPolling(txQuote.bundle_uuid)
     } catch (e) {
       emitErrorNotification('Failed to launch project', {

@@ -1,21 +1,23 @@
-import { ONE_BILLION } from 'constants/numbers'
-import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
-import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
-import { useLaunchProjectWithNftsTx } from 'packages/v4/hooks/JB721Delegate/transactor/useLaunchProjectWithNftsTx'
-import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
+import { Address, parseEther, zeroAddress } from 'viem'
 import { JB721TierConfig, JB721TiersHookFlags } from 'packages/v4/models/nfts'
-import { useCallback } from 'react'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
 import {
   useCreatingV2V3FundAccessConstraintsSelector,
   useCreatingV2V3FundingCycleDataSelector,
   useCreatingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/v2v3/create'
+
+import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
 import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
-import { encodeIpfsUri } from 'utils/ipfs'
+import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
 import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
+import { ONE_BILLION } from 'constants/numbers'
+import { convertV2V3CurrencyOptionToV4 } from 'packages/v4/utils/currency'
+import { encodeIpfsUri } from 'utils/ipfs'
 import { sortNftsByContributionFloor } from 'utils/nftRewards'
-import { Address, parseEther, zeroAddress } from 'viem'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useCallback } from 'react'
+import { useLaunchProjectWithNftsTx } from 'packages/v4/hooks/JB721Delegate/transactor/useLaunchProjectWithNftsTx'
 
 export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 
@@ -107,7 +109,7 @@ export const useDeployNftProject = () => {
   const collectionSymbol = nftRewards.collectionMetadata.symbol ?? ''
   const nftFlags = nftRewards.flags ?? DEFAULT_NFT_FLAGS
   // const governanceType = nftRewards.governanceType
-  const currency = nftRewards.pricing.currency
+  const currency = convertV2V3CurrencyOptionToV4(nftRewards.pricing.currency)
 
   /**
    * Deploy a project with NFT rewards.

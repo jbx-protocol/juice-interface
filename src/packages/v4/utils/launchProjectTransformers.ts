@@ -3,15 +3,16 @@ import {
   NATIVE_TOKEN,
   NATIVE_TOKEN_DECIMALS,
   SplitGroup,
+  SplitPortion,
 } from 'juice-sdk-core'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
 } from 'packages/v2v3/models/fundingCycle'
+import { GroupedSplits as V2V3GroupedSplits, Split as V2V3Split } from 'packages/v2v3/models/splits'
 
 import round from 'lodash/round'
 import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
-import { GroupedSplits as V2V3GroupedSplits } from 'packages/v2v3/models/splits'
 import { V3FundingCycleMetadata } from 'packages/v3/models/fundingCycle'
 import { Address } from 'viem'
 import { FundAccessLimitGroup } from '../models/fundAccessLimits'
@@ -68,7 +69,7 @@ export function transformV2V3CreateArgsToV4({
       fundingCycleMetadata: _fundingCycleMetadata,
     }),
 
-    splitGroups: transformV2V3SplitsToV4({ v2v3Splits: _groupedSplits }),
+    splitGroups: transformV2V3SplitGroupToV4({ v2v3SplitGroup: _groupedSplits }),
 
     fundAccessLimitGroups: transformV2V3FundAccessConstraintsToV4({
       v2V3FundAccessConstraints: _fundAccessConstraints,
@@ -131,12 +132,13 @@ export type LaunchV4ProjectGroupedSplit = Omit<
   'splits' | 'groupId'
 > & { splits: LaunchProjectJBSplit[]; groupId: bigint }
 
-export function transformV2V3SplitsToV4({
-  v2v3Splits,
+
+export function transformV2V3SplitGroupToV4({
+  v2v3SplitGroup,
 }: {
-  v2v3Splits: V2V3GroupedSplits<SplitGroup>[]
+  v2v3SplitGroup: V2V3GroupedSplits<SplitGroup>[]
 }): LaunchV4ProjectGroupedSplit[] {
-  return v2v3Splits.map(group => ({
+  return v2v3SplitGroup.map(group => ({
     groupId: group.group === SplitGroup.ETHPayout ? BigInt(NATIVE_TOKEN) : 1n, // TODO dont hardcode reserved token group as 1n
     splits: group.splits.map(split => ({
       preferAddToBalance: Boolean(split.preferClaimed),
@@ -192,5 +194,20 @@ function generateV4LaunchTerminalConfigurationsArg({
         currency: Number(BigInt(currencyTokenAddress)),
       },
     ],
+  }))
+}
+
+export function transformV2V3SplitsToV4({
+  v2v3Splits
+}: {
+  v2v3Splits: V2V3Split[]
+}): JBSplit[] {
+  return v2v3Splits.map(split => ({
+    preferAddToBalance: Boolean(split.preferClaimed),
+    percent: new SplitPortion(split.percent),
+    projectId: BigInt(parseInt(split.projectId ?? '0x00', 16)),
+    beneficiary: split.beneficiary as Address,
+    lockedUntil: split.lockedUntil ?? 0,
+    hook: split.allocator as Address,
   }))
 }

@@ -1,6 +1,7 @@
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
 import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
 import { ReactNode } from 'react'
+import { useChainId } from 'wagmi'
 
 type V4ProjectAllocationRowProps = {
   projectId: number | undefined
@@ -15,6 +16,7 @@ export const V4ProjectAllocationRow: React.FC<V4ProjectAllocationRowProps> = ({
   amount,
   percent,
 }) => {
+  const chainId = useChainId()
   return (
     <div className="flex items-center justify-between gap-3 py-3">
       <div className="flex min-w-0 items-center gap-3">
@@ -25,6 +27,7 @@ export const V4ProjectAllocationRow: React.FC<V4ProjectAllocationRowProps> = ({
                 className="truncate"
                 containerClassName="truncate"
                 projectId={projectId}
+                chainId={chainId}
                 withProjectAvatar
               />
             </>

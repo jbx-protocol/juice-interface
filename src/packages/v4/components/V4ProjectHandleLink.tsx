@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
 import ProjectLogo from 'components/ProjectLogo'
 import { PV_V4 } from 'constants/pv'
+import { JBChainId } from 'juice-sdk-react'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { useChainId } from 'wagmi'
 import { getChainName } from '../utils/networks'
 import { v4ProjectRoute } from '../utils/routes'
 
@@ -16,14 +16,15 @@ export default function V4ProjectHandleLink({
   name,
   projectId,
   withProjectAvatar = false,
+  chainId
 }: {
   className?: string
   containerClassName?: string
   name?: string | null
   projectId: number
   withProjectAvatar?: boolean
+  chainId: number | JBChainId
 }) {
-  const chainId = useChainId()
   const chainName = getChainName(chainId)
 
   return (

@@ -3,6 +3,7 @@ import { Tooltip } from 'antd'
 import { AllocatorBadge } from 'components/AllocatorBadge'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { JBSplit } from 'juice-sdk-core'
+import { useChainId } from 'wagmi'
 import V4ProjectHandleLink from '../../V4ProjectHandleLink'
 export function JuiceboxProjectBeneficiary({
   split,
@@ -11,13 +12,15 @@ export function JuiceboxProjectBeneficiary({
   split: JBSplit
   value?: string | JSX.Element
 }) {
-  if (!split.projectId) return null
+  const chainId = useChainId()
 
+  if (!split.projectId) return null
   return (
     <div>
       <div className="flex gap-2">
         <V4ProjectHandleLink
           projectId={Number(split.projectId)}
+          chainId={chainId}
           withProjectAvatar
         />
         <AllocatorBadge allocator={split.hook} />

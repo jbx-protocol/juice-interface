@@ -1,31 +1,32 @@
-import { Divider, Modal } from 'antd'
-import { ReactNode, useCallback, useMemo, useState } from 'react'
 import { Trans, t } from '@lingui/macro'
+import { Divider, Modal } from 'antd'
 import { V4_CURRENCY_ETH, V4_CURRENCY_USD, convertV2V3CurrencyOptionToV4 } from 'packages/v4/utils/currency'
-import {
-  allocationToSplit,
-  splitToAllocation,
-} from 'packages/v4/utils/splitToAllocation'
 import {
   deriveAmountAfterFee,
   derivePayoutAmount,
 } from 'packages/v4/utils/distributions'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'packages/v4/utils/splitToAllocation'
+import { ReactNode, useCallback, useMemo, useState } from 'react'
 
 import CurrencySwitch from 'components/currency/CurrencySwitch'
 import EthereumAddress from 'components/EthereumAddress'
 import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { Parenthesis } from 'components/Parenthesis'
-import { ReduxPayoutLimit } from 'packages/v4/models/fundAccessLimits'
 import { JBSplit as Split } from 'juice-sdk-core'
+import { ReduxPayoutLimit } from 'packages/v4/models/fundAccessLimits'
 import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
-import V4ProjectHandleLink from '../V4ProjectHandleLink'
 import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
+import { isJuiceboxProjectSplit } from 'packages/v4/utils/v4Splits'
+import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
+import { parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
 import { helpPagePath } from 'utils/helpPagePath'
-import { isJuiceboxProjectSplit } from 'packages/v4/utils/v4Splits'
-import { parseWad } from 'utils/format/formatNumber'
-import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
+import { useChainId } from 'wagmi'
+import V4ProjectHandleLink from '../V4ProjectHandleLink'
 
 export const ConvertAmountsModal = ({
   open,
@@ -38,6 +39,7 @@ export const ConvertAmountsModal = ({
   onCancel: VoidFunction
   splits: Split[]
 }) => {
+  const chainId = useChainId()
   const [distributionLimit] = useCreatingDistributionLimit()
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>('')
   
@@ -140,6 +142,7 @@ export const ConvertAmountsModal = ({
                   {isJuiceboxProjectSplit(split) && allocation.projectId ? (
                     <V4ProjectHandleLink
                       projectId={Number(allocation.projectId)}
+                      chainId={chainId}
                     />
                   ) : (
                     <EthereumAddress address={allocation.beneficiary} />

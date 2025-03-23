@@ -4,6 +4,7 @@ import { DEADLINE_EXPLANATION, RULESET_EXPLANATION } from 'components/strings'
 import { Badge } from 'components/Badge'
 import Loading from 'components/Loading'
 import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 import { CreateBadge } from './components/CreateBadge'
 import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
 import { NftRewardsPage } from './components/pages/NftRewards/NftRewardsPage'
@@ -19,14 +20,29 @@ import { useLoadingInitialStateFromQuery } from './hooks/useLoadInitialStateFrom
 
 export function Create() {
   const router = useRouter()
-  const deployedProjectId = router.query.deployedProjectId as string
+  const projectIdsRaw = router.query.projectIds as string
   const initialStateLoading = useLoadingInitialStateFromQuery()
+  const projectIds = useMemo(() => {
+    if (!projectIdsRaw) {
+      return undefined
+    }
+    try {
+      const projectIdsParsed = JSON.parse(projectIdsRaw)
+      return projectIdsParsed.map((p: { id: string; c: string }) => {
+        return {
+          chainId: parseInt(p.c),
+          projectId: parseInt(p.id),
+        }
+      })
+    } catch (error) {
+      return undefined
+    }
+  }, [projectIdsRaw])
 
   if (initialStateLoading) return <Loading />
 
-  if (deployedProjectId) {
-    const projectId = parseInt(deployedProjectId)
-    return <DeploySuccess projectId={projectId} />
+  if (projectIds) {
+    return <DeploySuccess projectIds={projectIds} />
   }
 
   return (
@@ -108,11 +124,7 @@ export function Create() {
             className="max-w-full md:w-full md:max-w-3xl"
             name="reviewDeploy"
             title={t`Review & Deploy`}
-            description={
-              <Trans>
-                Review your project before deploying.
-              </Trans>
-            }
+            description={<Trans>Review your project before deploying.</Trans>}
           >
             <ReviewDeployPage />
           </Wizard.Page>

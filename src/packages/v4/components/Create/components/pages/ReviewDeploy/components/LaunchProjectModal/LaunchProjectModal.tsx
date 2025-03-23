@@ -53,7 +53,7 @@ export const LaunchProjectModal: React.FC<{
   )
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
-  const [txLoading, setTxLoading] = useState(false)
+  const [txSigning, setTxSigning] = useState(false)
 
   const txQuoteCostHex = txQuote?.payment_info.find(
     p => Number(p.chain) === Number(selectedGasChain),
@@ -70,6 +70,7 @@ export const LaunchProjectModal: React.FC<{
     }))
   }, [createData.selectedRelayrChainIds])
   const chainIds = selectedChains.map(c => c.chainId)
+  const txLoading = txData && !getRelayrBundle.isComplete
 
   /**
    * Fetches a quote for the omnichain transaction.
@@ -131,13 +132,13 @@ export const LaunchProjectModal: React.FC<{
       return
     }
 
-    setTxLoading(true)
+    setTxSigning(true)
     const data = txQuote?.payment_info.find(
       p => Number(p.chain) === Number(selectedGasChain),
     )
     if (!data) {
       console.error('No payment info found for chain', selectedGasChain)
-      setTxLoading(false)
+      setTxSigning(false)
       return
     }
 
@@ -149,18 +150,24 @@ export const LaunchProjectModal: React.FC<{
         description: (e as Error).message,
       })
     } finally {
-      setTxLoading(false)
+      setTxSigning(false)
     }
   }
 
   useEffect(() => {
     if (getRelayrBundle.isComplete) {
-      router.push({ query: { deployedProjectId: 69 } }, '/create', {
+      const projectIds = JSON.stringify(
+        chainIds.map(chainId => ({
+          id: 69, // TODO get from tx
+          c: chainId,
+        })),
+      )
+      router.push({ query: { projectIds } }, '/create', {
         shallow: true,
       })
       props.setOpen(false)
     }
-  }, [getRelayrBundle.isComplete, props, router])
+  }, [getRelayrBundle.isComplete, props, router, chainIds])
 
   return (
     <JuiceModal
@@ -172,7 +179,7 @@ export const LaunchProjectModal: React.FC<{
       okLoading={txLoading || txQuoteLoading}
       {...props}
     >
-      {isPending && txData ? (
+      {txLoading ? (
         <TxLoadingContent txHash={txData} chainId={selectedGasChain} />
       ) : (
         <div className="flex flex-col divide-y divide-grey-200 dark:divide-grey-800">
@@ -308,7 +315,7 @@ const GasIcon: React.FC<{ className?: string }> = ({ className }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_246_7385)">
+      <g clipPath="url(#clip0_246_7385)">
         <path
           fillRule="evenodd"
           clipRule="evenodd"

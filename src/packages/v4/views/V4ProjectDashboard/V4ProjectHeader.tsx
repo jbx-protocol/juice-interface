@@ -136,10 +136,11 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
               // <Subtitle subtitle={subtitle.text} />
             }
             <div className="text-grey-500 dark:text-slate-200">
-              {projectId ? (
+              {projectId && chainId ? (
                 <V4ProjectHandleLink
                   className="text-grey-500 dark:text-slate-200"
                   projectId={projectId}
+                  chainId={chainId}
                 />
               ) : null}
 

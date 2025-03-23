@@ -4,6 +4,7 @@ import { Tooltip } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import { isProjectSplit } from 'packages/v4/utils/v4Splits'
 import { formatDate } from 'utils/format/formatDate'
+import { useChainId } from 'wagmi'
 import V4ProjectHandleLink from '../../V4ProjectHandleLink'
 import { AllocationSplit } from '../Allocation'
 
@@ -12,10 +13,14 @@ export function AllocationItemTitle({
 }: {
   allocation: AllocationSplit
 }) {
+  const chainId = useChainId()
   return (
     <div className="flex items-center gap-2">
       {isProjectSplit(allocation) && allocation.projectId ? (
-        <V4ProjectHandleLink projectId={Number(allocation.projectId)} />
+        <V4ProjectHandleLink
+          chainId={chainId}
+          projectId={Number(allocation.projectId)}
+        />
       ) : (
         <EthereumAddress address={allocation.beneficiary} />
       )}

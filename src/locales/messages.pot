@@ -920,6 +920,9 @@ msgstr ""
 msgid "Saved!"
 msgstr ""
 
+msgid "Get launch quote"
+msgstr ""
+
 msgid "This ruleset has upcoming changes"
 msgstr ""
 

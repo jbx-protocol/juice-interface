@@ -23,7 +23,7 @@ export const ProjectChainSelect: React.FC<
 
   const _options = projectAvailableChains ?? options
   
-  if (!_options) return null
+  if (!_options || _options.length <= 1) return null
 
   return (
     <JuiceListbox

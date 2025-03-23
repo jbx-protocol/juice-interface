@@ -1,31 +1,31 @@
-import { t, Trans } from '@lingui/macro'
 import { Divider, Modal } from 'antd'
+import { ReactNode, useCallback, useMemo, useState } from 'react'
+import { Trans, t } from '@lingui/macro'
+import { V4_CURRENCY_ETH, V4_CURRENCY_USD, convertV2V3CurrencyOptionToV4 } from 'packages/v4/utils/currency'
+import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'packages/v4/utils/splitToAllocation'
+import {
+  deriveAmountAfterFee,
+  derivePayoutAmount,
+} from 'packages/v4/utils/distributions'
+
 import CurrencySwitch from 'components/currency/CurrencySwitch'
 import EthereumAddress from 'components/EthereumAddress'
 import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { Parenthesis } from 'components/Parenthesis'
+import { ReduxPayoutLimit } from 'packages/v4/models/fundAccessLimits'
 import { JBSplit as Split } from 'juice-sdk-core'
-
 import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
-import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
-import {
-  deriveAmountAfterFee,
-  derivePayoutAmount,
-} from 'packages/v4/utils/distributions'
+import V4ProjectHandleLink from '../V4ProjectHandleLink'
 import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
-import {
-  allocationToSplit,
-  splitToAllocation,
-} from 'packages/v4/utils/splitToAllocation'
-import { isJuiceboxProjectSplit } from 'packages/v4/utils/v4Splits'
-import { ReactNode, useCallback, useMemo, useState } from 'react'
-import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
-import { ReduxDistributionLimit } from 'redux/hooks/v2v3/shared'
-import { parseWad } from 'utils/format/formatNumber'
 import { formatPercent } from 'utils/format/formatPercent'
 import { helpPagePath } from 'utils/helpPagePath'
-import V4ProjectHandleLink from '../V4ProjectHandleLink'
+import { isJuiceboxProjectSplit } from 'packages/v4/utils/v4Splits'
+import { parseWad } from 'utils/format/formatNumber'
+import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
 
 export const ConvertAmountsModal = ({
   open,
@@ -34,15 +34,15 @@ export const ConvertAmountsModal = ({
   splits,
 }: {
   open: boolean
-  onOk: (d: ReduxDistributionLimit) => void
+  onOk: (d: ReduxPayoutLimit) => void
   onCancel: VoidFunction
   splits: Split[]
 }) => {
   const [distributionLimit] = useCreatingDistributionLimit()
   const [newDistributionLimit, setNewDistributionLimit] = useState<string>('')
-  const [currency, setCurrency] = useState<V4CurrencyOption>(
-    distributionLimit?.currency ?? V4_CURRENCY_ETH,
-  )
+  
+  const initialCurrency = distributionLimit?.currency ? convertV2V3CurrencyOptionToV4(distributionLimit.currency) : V4_CURRENCY_ETH
+  const [currency, setCurrency] = useState<V4CurrencyOption>(initialCurrency)
 
   const totalPayoutsPercent = useMemo(
     () =>
@@ -59,7 +59,7 @@ export const ConvertAmountsModal = ({
 
   const onModalOk = useCallback(() => {
     onOk({
-      amount: parseWad(parseFloat(newDistributionLimit)),
+      amount: parseWad(parseFloat(newDistributionLimit)).toBigInt(),
       currency,
     })
   }, [currency, newDistributionLimit, onOk])

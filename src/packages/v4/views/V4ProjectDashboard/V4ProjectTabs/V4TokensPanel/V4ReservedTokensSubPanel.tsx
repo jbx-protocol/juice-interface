@@ -1,14 +1,15 @@
 import { Trans, t } from '@lingui/macro'
 
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { Skeleton } from 'antd'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
-import { reservedTokensTooltip } from 'components/Project/ProjectTabs/TokensPanelTooltips'
-import { ProjectChainSelect } from 'packages/v4/components/ProjectDashboard/ProjectChainSelect'
-import { twMerge } from 'tailwind-merge'
-import { V4ProjectAllocationRow } from '../V4CyclesPayoutsPanel/V4ProjectAllocationRow'
-import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
 import { V4ExportReservedTokensCsvItem } from './V4ExportReservedTokensCsvItem'
+import { V4ProjectAllocationRow } from '../V4CyclesPayoutsPanel/V4ProjectAllocationRow'
 import { V4SendReservedTokensButton } from './V4SendReservedTokensButton'
+import { reservedTokensTooltip } from 'components/Project/ProjectTabs/TokensPanelTooltips'
+import { twMerge } from 'tailwind-merge'
+import { useSuckers } from 'juice-sdk-react'
+import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
 
 export const V4ReservedTokensSubPanel = ({
   className,
@@ -18,6 +19,8 @@ export const V4ReservedTokensSubPanel = ({
 
   const { selectedChainId, setSelectedChainId, reservedList, aggregatedPendingReservedTokens, pendingReservedTokensElement, reservedPercent } =
     useV4ReservedTokensSubPanel()
+
+  const { data: suckers } = useSuckers()
 
   const reservedPercentTooltip = (
     <Trans>
@@ -30,10 +33,11 @@ export const V4ReservedTokensSubPanel = ({
       <h2 className="mb-0 font-heading text-2xl font-medium">
         <div className="flex justify-between items-center">
         <Trans>Reserved tokens</Trans>
-          { selectedChainId ? 
-            <ProjectChainSelect
+          { selectedChainId && suckers && suckers.length > 1 ? 
+            <ChainSelect
               value={selectedChainId} 
               onChange={(chainId) => setSelectedChainId(chainId)} 
+              chainIds={suckers.map(s => s.peerChainId)}
             />
           : null }
         </div>

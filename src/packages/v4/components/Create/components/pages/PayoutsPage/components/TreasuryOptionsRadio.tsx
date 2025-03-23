@@ -1,22 +1,24 @@
-import { StopOutlined } from '@ant-design/icons'
-import { RadioGroup } from '@headlessui/react'
-import { t } from '@lingui/macro'
-import { Callout } from 'components/Callout/Callout'
-import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
-import { SwitchToUnlimitedModal } from 'components/PayoutsTable/SwitchToUnlimitedModal'
-import { useModal } from 'hooks/useModal'
-import { TreasurySelection } from 'models/treasurySelection'
-import { ConvertAmountsModal } from 'packages/v2v3/components/shared/PayoutsTable/ConvertAmountsModal'
-import { usePayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/hooks/usePayoutsTable'
-import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useAppDispatch } from 'redux/hooks/useAppDispatch'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { ReduxDistributionLimit } from 'redux/hooks/v2v3/shared'
-import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
-import { fromWad } from 'utils/format/formatNumber'
+
+import { Callout } from 'components/Callout/Callout'
+import { ConvertAmountsModal } from 'packages/v4/components/PayoutsTable/ConvertAmountsModal'
+import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
 import { Icons } from '../../../Icons'
 import { RadioCard } from './RadioCard'
+import { RadioGroup } from '@headlessui/react'
+import { ReduxPayoutLimit } from 'packages/v4/models/fundAccessLimits'
+import { StopOutlined } from '@ant-design/icons'
+import { SwitchToUnlimitedModal } from 'components/PayoutsTable/SwitchToUnlimitedModal'
+import { TreasurySelection } from 'models/treasurySelection'
+import { convertV4CurrencyOptionToV2V3 } from 'packages/v4/utils/currency'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
+import { fromWad } from 'utils/format/formatNumber'
+import { t } from '@lingui/macro'
+import { transformV2V3SplitsToV4 } from 'packages/v4/utils/launchProjectTransformers'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useModal } from 'hooks/useModal'
+import { usePayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/hooks/usePayoutsTable'
 
 const treasuryOptions = () => [
   { name: t`None`, value: 'zero', icon: <StopOutlined /> },
@@ -59,9 +61,9 @@ export function TreasuryOptionsRadio() {
   }, [treasuryOption])
 
   const switchToAmountsPayoutSelection = useCallback(
-    (newDistributionLimit: ReduxDistributionLimit) => {
+    (newDistributionLimit: ReduxPayoutLimit) => {
       setDistributionLimit(parseInt(fromWad(newDistributionLimit.amount)))
-      setCurrency(newDistributionLimit.currency)
+      setCurrency(convertV4CurrencyOptionToV2V3(newDistributionLimit.currency))
       setTreasuryOption('amount')
       switchingToAmountsModal.close()
     },
@@ -174,8 +176,7 @@ export function TreasuryOptionsRadio() {
         open={switchingToAmountsModal.visible}
         onOk={switchToAmountsPayoutSelection}
         onCancel={switchingToAmountsModal.close}
-        splits={payoutSplits}
-        currency={currency === 'ETH' ? V4_CURRENCY_ETH : V4_CURRENCY_USD}
+        splits={transformV2V3SplitsToV4({ v2v3Splits: payoutSplits })}
       />
     </>
   )

@@ -48,9 +48,9 @@ export function JuiceListbox<T>(props: JuiceListboxProps<T>) {
           as={Fragment}
           leave="transition ease-in duration-100"
           leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+          leaveTo="opacity-0" 
         >
-          <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full rounded-lg border border-smoke-300 bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-slate-300 dark:bg-slate-800 sm:text-sm">
+          <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-min rounded-lg border border-smoke-300 bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-slate-300 dark:bg-slate-800 sm:text-sm">
             {options.map((option, optionIdx) => (
               <Listbox.Option
                 key={optionIdx}

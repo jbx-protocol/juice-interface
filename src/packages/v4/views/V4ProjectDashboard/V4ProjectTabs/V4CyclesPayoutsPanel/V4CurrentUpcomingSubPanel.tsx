@@ -1,19 +1,20 @@
 import { Trans, t } from '@lingui/macro'
 
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
-import { currentCycleRemainingLengthTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
-import { UpcomingCycleChangesCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTab/UpcomingCycleChangesCallout'
-import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
-import { ProjectChainSelect } from 'packages/v4/components/ProjectDashboard/ProjectChainSelect'
 import { RulesetCountdownProvider } from 'packages/v4/contexts/RulesetCountdownProvider'
-import { useState } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { useRulesetCountdown } from '../../hooks/useRulesetCountdown'
-import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
-import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
-import { useV4UpcomingRulesetHasChanges } from './hooks/useV4UpcomingRulesetHasChanges'
+import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
+import { UpcomingCycleChangesCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTab/UpcomingCycleChangesCallout'
 import { V4ConfigurationDisplayCard } from './V4ConfigurationDisplayCard'
 import { V4PayoutsSubPanel } from './V4PayoutsSubPanel'
+import { currentCycleRemainingLengthTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
+import { twMerge } from 'tailwind-merge'
+import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
+import { useRulesetCountdown } from '../../hooks/useRulesetCountdown'
+import { useState } from 'react'
+import { useSuckers } from 'juice-sdk-react'
+import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
+import { useV4UpcomingRulesetHasChanges } from './hooks/useV4UpcomingRulesetHasChanges'
 
 function CountdownClock({ rulesetUnlocked }: { rulesetUnlocked: boolean }) {
   const { timeRemainingText } = useRulesetCountdown()
@@ -39,6 +40,8 @@ export const V4CurrentUpcomingSubPanel = ({
   const { selectedChainId, setSelectedChainId } = useCyclesPanelSelectedChain()
   // const { data: rulesetsDiffAcrossChains } = useProjectRulesetsDiffAcrossChains({ rulesetNumber: info.rulesetNumber} )
 
+  const { data: suckers} = useSuckers()
+  
   const rulesetLengthTooltip =
     info.type === 'current' ? currentCycleRemainingLengthTooltip : undefined
 
@@ -96,10 +99,14 @@ export const V4CurrentUpcomingSubPanel = ({
         <div className="absolute left-44 top-[-6px]">
           {selectedChainId ? (
             <div className="flex items-center gap-1">
-              <ProjectChainSelect
-                value={selectedChainId}
-                onChange={chainId => setSelectedChainId(chainId)}
-              />
+              {suckers && suckers.length > 1 ? (
+                <ChainSelect 
+                  value={selectedChainId} 
+                  onChange={(chainId) => setSelectedChainId(chainId)} 
+                  chainIds={suckers.map(s => s.peerChainId)}
+                  showTitle
+                />
+              ): null}
               {/* { rulesetsDiffAcrossChains?.length ? 
                 <Tooltip
                   title={

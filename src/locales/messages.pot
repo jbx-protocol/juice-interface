@@ -4511,6 +4511,9 @@ msgstr ""
 msgid "Project contracts"
 msgstr ""
 
+msgid "Chain"
+msgstr ""
+
 msgid "Failed to update project metadata"
 msgstr ""
 

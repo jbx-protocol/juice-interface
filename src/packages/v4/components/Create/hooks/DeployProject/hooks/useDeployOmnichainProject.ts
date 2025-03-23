@@ -5,7 +5,11 @@ import {
   jbOmnichainDeployerAbi,
   parseSuckerDeployerConfig,
 } from 'juice-sdk-core'
-import { jbControllerAbi, jbOmnichainDeployerAddress, useGetRelayrTxQuote } from 'juice-sdk-react'
+import {
+  jbControllerAbi,
+  jbOmnichainDeployerAddress,
+  useGetRelayrTxQuote,
+} from 'juice-sdk-react'
 import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
 export function useDeployOmnichainProject() {
@@ -13,11 +17,13 @@ export function useDeployOmnichainProject() {
   const { getRelayrTxQuote } = useGetRelayrTxQuote()
 
   async function deployOmnichainProject(
-    deployData: ContractFunctionArgs<
-      typeof jbControllerAbi,
-      'nonpayable',
-      'launchProjectFor'
-    >,
+    deployData: {
+      [k in JBChainId]?: ContractFunctionArgs<
+        typeof jbControllerAbi,
+        'nonpayable',
+        'launchProjectFor'
+      >
+    },
     chainIds: JBChainId[],
   ) {
     if (!userAddress) {
@@ -31,12 +37,17 @@ export function useDeployOmnichainProject() {
         chainIds,
       )
 
+      const chainDeployData = deployData[chainId]
+      if (!chainDeployData) {
+        throw new Error('No deploy data for chain: ' + chainId)
+      }
+
       const args = [
-        deployData[0],
-        deployData[1],
-        deployData[2],
-        deployData[3],
-        deployData[4],
+        chainDeployData[0],
+        chainDeployData[1],
+        chainDeployData[2],
+        chainDeployData[3],
+        chainDeployData[4],
         {
           deployerConfigurations:
             suckerDeploymentConfiguration.deployerConfigurations,

@@ -26,12 +26,15 @@ import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { useDeployOmnichainProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
 import { useStandardProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
+import { getProjectIdFromLaunchReceipt } from 'packages/v4/hooks/useLaunchProjectTx'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { twMerge } from 'tailwind-merge'
 import { emitErrorNotification } from 'utils/notifications'
 import { ContractFunctionArgs, hexToBigInt } from 'viem'
+import { getTransactionReceipt } from 'viem/actions'
 import { sepolia } from 'viem/chains'
+import { useConfig } from 'wagmi'
 import { TxLoadingContent } from './TxLoadingContent'
 
 const JUICEBOX_DOMAIN = 'juicebox'
@@ -154,20 +157,43 @@ export const LaunchProjectModal: React.FC<{
     }
   }
 
+  const config = useConfig()
+
   useEffect(() => {
-    if (getRelayrBundle.isComplete) {
-      const projectIds = JSON.stringify(
-        chainIds.map(chainId => ({
-          id: 69, // TODO get from tx
-          c: chainId,
-        })),
-      )
-      router.push({ query: { projectIds } }, '/create', {
-        shallow: true,
-      })
-      props.setOpen(false)
+    async function doit() {
+      if (getRelayrBundle.isComplete) {
+        const txs = await Promise.all(
+          getRelayrBundle.response.transactions.map(tx => {
+            return getTransactionReceipt(
+              config.getClient({ chainId: tx.request.chain }),
+              // @ts-ignore
+              { hash: tx.status.data.hash },
+            )
+          }),
+        )
+
+        const projectIds = JSON.stringify(
+          getRelayrBundle.response.transactions.map((tx, idx) => ({
+            id: getProjectIdFromLaunchReceipt(txs[idx]), // TODO get from tx
+            c: tx.request.chain,
+          })),
+        )
+        router.push({ query: { projectIds } }, '/create', {
+          shallow: true,
+        })
+        props.setOpen(false)
+      }
     }
-  }, [getRelayrBundle.isComplete, props, router, chainIds])
+
+    doit()
+  }, [
+    config,
+    getRelayrBundle.isComplete,
+    getRelayrBundle.response,
+    props,
+    router,
+    chainIds,
+  ])
 
   return (
     <JuiceModal

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { getChainName } from '../utils/networks'
 import { v4ProjectRoute } from '../utils/routes'
+import { ChainLogo } from './ChainLogo'
 
 /**
  * Renders a link to a V4 project
@@ -16,7 +17,7 @@ export default function V4ProjectHandleLink({
   name,
   projectId,
   withProjectAvatar = false,
-  chainId
+  chainId,
 }: {
   className?: string
   containerClassName?: string
@@ -44,13 +45,12 @@ export default function V4ProjectHandleLink({
         href={v4ProjectRoute({ projectId, chainId })}
         as={v4ProjectRoute({ projectId, chainId })}
         className={twMerge(
-          'select-all font-medium capitalize leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100',
+          'select-all font-medium capitalize leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100 flex items-center gap-2',
           className,
         )}
       >
-        <Trans>
-          {chainName} Project #{projectId}
-        </Trans>
+        <ChainLogo chainId={chainId} width={18} height={18} />
+        <Trans>Project #{projectId}</Trans>
       </Link>
     </div>
   )

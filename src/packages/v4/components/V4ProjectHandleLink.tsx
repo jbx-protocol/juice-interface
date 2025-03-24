@@ -49,7 +49,7 @@ export default function V4ProjectHandleLink({
           className,
         )}
       >
-        <ChainLogo chainId={chainId} width={18} height={18} />
+        <ChainLogo chainId={chainId as JBChainId} width={18} height={18} />
         <Trans>Project #{projectId}</Trans>
       </Link>
     </div>

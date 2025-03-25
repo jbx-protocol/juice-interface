@@ -1,38 +1,43 @@
 import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import { Head } from 'components/common/Head/Head'
-import { CV_V3 } from 'constants/cv'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { SiteBaseUrl } from 'constants/url'
-import { TransactionProvider } from 'contexts/Transaction/TransactionProvider'
-import { Create as V2V3Create } from 'packages/v2v3/components/Create/Create'
-import { V2V3ContractsProvider } from 'packages/v2v3/contexts/Contracts/V2V3ContractsProvider'
-import { V2V3CurrencyProvider } from 'packages/v2v3/contexts/V2V3CurrencyProvider'
-import { Create as V4Create } from 'packages/v4/components/Create/Create'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import dynamic from 'next/dynamic'
 import { Provider } from 'react-redux'
 import store from 'redux/store'
 import { featureFlagEnabled } from 'utils/featureFlags'
 import globalGetServerSideProps from 'utils/next-server/globalGetServerSideProps'
-import { WagmiProvider } from 'wagmi'
+
+const V2V3Create = dynamic(
+  () => import('packages/v2v3/components/Create/Create'),
+  { ssr: false },
+)
+const V2V3CreateProviders = dynamic(
+  () => import('packages/v2v3/components/Create/CreateProviders'),
+  { ssr: false },
+)
+
+const V4Create = dynamic(() => import('packages/v4/components/Create/Create'), {
+  ssr: false,
+})
+const V4CreateProviders = dynamic(
+  () => import('packages/v4/components/Create/CreateProviders'),
+  {
+    ssr: false,
+  },
+)
 
 export default function CreatePage() {
-  let contentByVersion = (
-    <V2V3ContractsProvider initialCv={CV_V3}>
-      <TransactionProvider>
-        <V2V3CurrencyProvider>
-          <V2V3Create />
-        </V2V3CurrencyProvider>
-      </TransactionProvider>
-    </V2V3ContractsProvider>
+  const contentByVersion = featureFlagEnabled(FEATURE_FLAGS.V4) ? (
+    <V4CreateProviders>
+      <V4Create />
+    </V4CreateProviders>
+  ) : (
+    <V2V3CreateProviders>
+      <V2V3Create />
+    </V2V3CreateProviders>
   )
 
-  if (featureFlagEnabled(FEATURE_FLAGS.V4)) {
-    contentByVersion = (
-      <WagmiProvider config={wagmiConfig}>
-        <V4Create />
-      </WagmiProvider>
-    )
-  }
   return (
     <>
       <Head

@@ -1,6 +1,7 @@
 import * as constants from '@ethersproject/constants'
 
 import {
+  useJBChainId,
   useJBContractContext,
   useJBRuleset,
   useReadJbFundAccessLimitsPayoutLimitsOf,
@@ -14,6 +15,7 @@ import { V4_CURRENCY_ETH } from '../utils/currency'
  * @todo add to sdk
  */
 export function usePayoutLimit() {
+  const chainId = useJBChainId()
   const {
     projectId,
     contracts: { primaryNativeTerminal, fundAccessLimits },
@@ -21,13 +23,17 @@ export function usePayoutLimit() {
   const { data: ruleset } = useJBRuleset()
   const { data: payoutLimits, isLoading } =
     useReadJbFundAccessLimitsPayoutLimitsOf({
+      chainId,
       address: fundAccessLimits.data ?? undefined,
-      args: [
+      args: primaryNativeTerminal.data && fundAccessLimits.data ? [
         projectId,
         BigInt(ruleset?.id ?? 0),
         primaryNativeTerminal.data ?? constants.AddressZero,
         NATIVE_TOKEN,
-      ],
+      ] : undefined,
+      query: {
+        enabled: Boolean(fundAccessLimits.data && primaryNativeTerminal.data)
+      }
     })
 
   const payoutLimit = payoutLimits?.[0]

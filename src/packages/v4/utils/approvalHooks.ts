@@ -1,8 +1,9 @@
 import { SECONDS_IN_DAY, SEVEN_DAYS_IN_HOURS, THREE_DAYS_IN_SECONDS } from 'constants/numbers'
 
-import { t } from '@lingui/macro'
 import { ApprovalHook } from 'models/approvalHooks'
+import { durationBallotStrategyDescription } from 'packages/v2v3/constants/ballotStrategies'
 import { isEqualAddress } from 'utils/address'
+import { t } from '@lingui/macro'
 import { zeroAddress } from 'viem'
 
 /**
@@ -13,21 +14,21 @@ export const getAvailableApprovalStrategies = (): ApprovalHook[] => [
     id: 'sevenDay',
     address: '0x05505582a553669f540ba2dd0b55fc75b8176c40',
     name: t`7-day deadline`,
-    description: 'Approval after 7 days',
+    description: durationBallotStrategyDescription(7),
     durationSeconds: SEVEN_DAYS_IN_HOURS,
   },
   {
     id: 'oneDay',
     address: '0xd7ce0fe638e02a31fc7c8c231684d85ad9b2ca3d',
     name: t`1-day deadline`,
-    description: 'Approval after 1 day',
+    description: durationBallotStrategyDescription(1),
     durationSeconds: SECONDS_IN_DAY,
   },
   {
     id: 'threeDay',
     address: '0xba8a653a5cc985d2f1458e80a9700490c11ab981',
     name: t`3-day deadline`,
-    description: 'Approval after 3 days',
+    description: durationBallotStrategyDescription(3),
     durationSeconds: THREE_DAYS_IN_SECONDS,
     isDefault: true
   },

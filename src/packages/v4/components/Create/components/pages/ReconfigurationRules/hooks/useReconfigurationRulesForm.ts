@@ -1,13 +1,13 @@
+import { useEffect, useMemo } from 'react'
+import { isEqualAddress, isZeroAddress } from 'utils/address'
+
 import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { readNetwork } from 'constants/networks'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
-import { useAvailableReconfigurationStrategies } from 'packages/v2v3/components/Create/hooks/useAvailableReconfigurationStrategies'
-import { useEffect, useMemo } from 'react'
+import { getAvailableApprovalStrategies } from 'packages/v4/utils/approvalHooks'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
-import { isEqualAddress, isZeroAddress } from 'utils/address'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
 type ReconfigurationRulesFormProps = Partial<{
@@ -25,9 +25,7 @@ type ReconfigurationRulesFormProps = Partial<{
 
 export const useReconfigurationRulesForm = () => {
   const [form] = useForm<ReconfigurationRulesFormProps>()
-  const strategies = useAvailableReconfigurationStrategies(
-    readNetwork.name,
-  ).map(({ address, id, isDefault }) => ({ address, name: id, isDefault }))
+  const strategies = getAvailableApprovalStrategies()
   const defaultStrategy = useMemo(
     () => strategies.find(s => s.isDefault),
     [strategies],
@@ -63,7 +61,7 @@ export const useReconfigurationRulesForm = () => {
       // By default, ballot is addressZero
       if (!reconfigurationRuleSelection && isZeroAddress(ballot))
         return {
-          selection: defaultStrategy.name,
+          selection: defaultStrategy.id,
           pausePayments,
           pauseTransfers,
           allowTerminalConfiguration,
@@ -88,7 +86,7 @@ export const useReconfigurationRulesForm = () => {
       }
 
       return {
-        selection: found.name,
+        selection: found.id,
         pausePayments,
         pauseTransfers,
         holdFees,
@@ -105,7 +103,7 @@ export const useReconfigurationRulesForm = () => {
       fundingCycleMetadata.allowControllerMigration,
       reconfigurationRuleSelection,
       ballot,
-      defaultStrategy.name,
+      defaultStrategy.id,
       strategies,
     ])
 

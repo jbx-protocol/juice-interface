@@ -2531,9 +2531,6 @@ msgstr ""
 msgid "Read case studies"
 msgstr ""
 
-msgid "{days, plural, one {Edits to an upcoming ruleset cycle must be submitted at least # day before that ruleset cycle starts.} other {Edits to an upcoming ruleset cycle must be submitted at least # days before that ruleset cycle starts.}}"
-msgstr ""
-
 msgid "tokens"
 msgstr ""
 
@@ -3939,9 +3936,6 @@ msgid "{badgeTitle} Token"
 msgstr ""
 
 msgid "Create token"
-msgstr ""
-
-msgid "Edits to upcoming ruleset cycles will take effect when the current ruleset cycle ends. A project with no deadline is vulnerable to last-second edits by its owner."
 msgstr ""
 
 msgid "Save project details"

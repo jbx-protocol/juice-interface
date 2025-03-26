@@ -1,4 +1,5 @@
 import {
+  ETH_CURRENCY_ID,
   JBSplit,
   NATIVE_TOKEN,
   NATIVE_TOKEN_DECIMALS,
@@ -9,18 +10,20 @@ import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
 } from 'packages/v2v3/models/fundingCycle'
-import { GroupedSplits as V2V3GroupedSplits, Split as V2V3Split } from 'packages/v2v3/models/splits'
+import {
+  GroupedSplits as V2V3GroupedSplits,
+  Split as V2V3Split,
+} from 'packages/v2v3/models/splits'
 
-import { Address } from 'viem'
-import { BASE_CURRENCY_ETH } from './shared/currency'
-import { FundAccessLimitGroup } from '../models/fundAccessLimits'
-import { LaunchProjectJBTerminal } from '../models/terminals'
+import round from 'lodash/round'
 import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V3FundingCycleMetadata } from 'packages/v3/models/fundingCycle'
+import { Address } from 'viem'
+import { FundAccessLimitGroup } from '../models/fundAccessLimits'
 import { GroupedSplits as V4GroupedSplits } from '../models/splits'
+import { LaunchProjectJBTerminal } from '../models/terminals'
 import { convertV2V3CurrencyOptionToV4 } from './currency'
-import round from 'lodash/round'
 
 export type LaunchV2V3ProjectArgs = [
   string, // _owner
@@ -71,7 +74,9 @@ export function transformV2V3CreateArgsToV4({
       fundingCycleMetadata: _fundingCycleMetadata,
     }),
 
-    splitGroups: transformV2V3SplitGroupToV4({ v2v3SplitGroup: _groupedSplits }),
+    splitGroups: transformV2V3SplitGroupToV4({
+      v2v3SplitGroup: _groupedSplits,
+    }),
 
     fundAccessLimitGroups: transformV2V3FundAccessConstraintsToV4({
       v2V3FundAccessConstraints: _fundAccessConstraints,
@@ -104,7 +109,7 @@ export function transformFCMetadataToRulesetMetadata({
   return {
     reservedPercent: fundingCycleMetadata.reservedRate.toNumber(),
     cashOutTaxRate: fundingCycleMetadata.redemptionRate.toNumber(),
-    baseCurrency: BASE_CURRENCY_ETH,
+    baseCurrency: ETH_CURRENCY_ID,
     pausePay: fundingCycleMetadata.pausePay,
     pauseRedeem: fundingCycleMetadata.pauseRedeem,
     pauseCreditTransfers: Boolean(fundingCycleMetadata.global.pauseTransfers),
@@ -133,7 +138,6 @@ export type LaunchV4ProjectGroupedSplit = Omit<
   V4GroupedSplits<SplitGroup>,
   'splits' | 'groupId'
 > & { splits: LaunchProjectJBSplit[]; groupId: bigint }
-
 
 export function transformV2V3SplitGroupToV4({
   v2v3SplitGroup,
@@ -168,13 +172,15 @@ export function transformV2V3FundAccessConstraintsToV4({
     payoutLimits: [
       {
         amount: constraint.distributionLimit.toBigInt(),
-        currency: convertV2V3CurrencyOptionToV4(constraint.distributionLimitCurrency.toNumber() as V2V3CurrencyOption)
+        currency: convertV2V3CurrencyOptionToV4(
+          constraint.distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+        ),
       },
     ],
     surplusAllowances: [
       {
         amount: constraint.overflowAllowance.toBigInt(),
-        currency: Number(BigInt(NATIVE_TOKEN)),
+        currency: ETH_CURRENCY_ID,
       },
     ],
   }))
@@ -193,14 +199,14 @@ function generateV4LaunchTerminalConfigurationsArg({
       {
         token: currencyTokenAddress,
         decimals: NATIVE_TOKEN_DECIMALS,
-        currency: Number(BigInt(currencyTokenAddress)),
+        currency: ETH_CURRENCY_ID,
       },
     ],
   }))
 }
 
 export function transformV2V3SplitsToV4({
-  v2v3Splits
+  v2v3Splits,
 }: {
   v2v3Splits: V2V3Split[]
 }): JBSplit[] {

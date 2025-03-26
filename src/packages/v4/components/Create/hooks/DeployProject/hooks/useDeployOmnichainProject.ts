@@ -3,7 +3,7 @@ import {
   createSalt,
   JBChainId,
   jbOmnichainDeployerAbi,
-  parseSuckerDeployerConfig,
+  parseSuckerDeployerConfig
 } from 'juice-sdk-core'
 import {
   jbControllerAbi,
@@ -60,6 +60,21 @@ export function useDeployOmnichainProject() {
         functionName: 'launchProjectFor',
         args,
       })
+      /**
+       * UNCOMMENT THIS BLOCK TO GET TENDERLY SIM DATA
+       */
+      // const controllerData =  encodeFunctionData({
+      //   abi: jbControllerAbi, // ABI of the contract
+      //   functionName: 'launchProjectFor',
+      //   args: [
+      //     chainDeployData[0],
+      //     chainDeployData[1],
+      //     chainDeployData[2],
+      //     chainDeployData[3],
+      //     chainDeployData[4],
+      //   ]
+      // })
+      // console.log('controllerData', chainId, controllerData, jbProjectDeploymentAddresses.JBController)
 
       return {
         data: {

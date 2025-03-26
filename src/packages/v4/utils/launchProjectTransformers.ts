@@ -11,14 +11,16 @@ import {
 } from 'packages/v2v3/models/fundingCycle'
 import { GroupedSplits as V2V3GroupedSplits, Split as V2V3Split } from 'packages/v2v3/models/splits'
 
-import round from 'lodash/round'
-import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
-import { V3FundingCycleMetadata } from 'packages/v3/models/fundingCycle'
 import { Address } from 'viem'
-import { FundAccessLimitGroup } from '../models/fundAccessLimits'
-import { GroupedSplits as V4GroupedSplits } from '../models/splits'
-import { LaunchProjectJBTerminal } from '../models/terminals'
 import { BASE_CURRENCY_ETH } from './shared/currency'
+import { FundAccessLimitGroup } from '../models/fundAccessLimits'
+import { LaunchProjectJBTerminal } from '../models/terminals'
+import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
+import { V3FundingCycleMetadata } from 'packages/v3/models/fundingCycle'
+import { GroupedSplits as V4GroupedSplits } from '../models/splits'
+import { convertV2V3CurrencyOptionToV4 } from './currency'
+import round from 'lodash/round'
 
 export type LaunchV2V3ProjectArgs = [
   string, // _owner
@@ -166,7 +168,7 @@ export function transformV2V3FundAccessConstraintsToV4({
     payoutLimits: [
       {
         amount: constraint.distributionLimit.toBigInt(),
-        currency: Number(BigInt(NATIVE_TOKEN)), // TODO support USD somehow
+        currency: convertV2V3CurrencyOptionToV4(constraint.distributionLimitCurrency.toNumber() as V2V3CurrencyOption)
       },
     ],
     surplusAllowances: [

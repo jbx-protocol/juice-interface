@@ -1,14 +1,16 @@
-import { t } from '@lingui/macro'
+import { AmountInCurrency } from 'components/currency/AmountInCurrency'
+import { BigNumber } from 'ethers'
 import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
-import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import { JBRulesetData } from 'juice-sdk-core'
-import { NativeTokenValue } from 'juice-sdk-react'
-import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
-import { getApprovalStrategyByAddress } from 'packages/v4/utils/approvalHooks'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
-import { useMemo } from 'react'
+import { V4CurrencyName } from 'packages/v4/utils/currency'
+import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
 import { formatTime } from 'utils/format/formatTime'
+import { getApprovalStrategyByAddress } from 'packages/v4/utils/approvalHooks'
+import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
+import { t } from '@lingui/macro'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
+import { useMemo } from 'react'
 
 export const useV4FormatConfigurationCycleSection = ({
   ruleset,
@@ -71,15 +73,16 @@ export const useV4FormatConfigurationCycleSection = ({
 
   const formatPayoutAmount = (
     amount: bigint | undefined,
+    currency: V4CurrencyOption | undefined,
   ) => {
     if (amount === undefined || amount === MAX_PAYOUT_LIMIT) return t`Unlimited`
     if (amount === 0n) return t`Zero (no payouts)`
-    return <NativeTokenValue wei={amount ?? 0n} />
+    return <AmountInCurrency amount={BigNumber.from(amount ?? 0n)} currency={V4CurrencyName(currency)} />
   }
 
   const payoutsDatum: ConfigurationPanelDatum = useMemo(() => {
     const { amount, currency } = payoutLimitAmountCurrency ?? {}
-    const currentPayout = formatPayoutAmount(amount)
+    const currentPayout = formatPayoutAmount(amount, currency)
 
     if (
       upcomingPayoutLimitAmountCurrency === null ||
@@ -95,6 +98,7 @@ export const useV4FormatConfigurationCycleSection = ({
         
     const upcomingPayout = formatPayoutAmount(
       upcomingPayoutLimit,
+      upcomingPayoutLimitAmountCurrency?.currency,
     )
 
     return pairToDatum(t`Payouts`, currentPayout, upcomingPayout)

@@ -1,10 +1,10 @@
-import { NATIVE_CURRENCY_ID, NATIVE_TOKEN } from 'juice-sdk-core'
+import { ETH_CURRENCY_ID, NATIVE_TOKEN } from 'juice-sdk-core'
 import {
   JBChainId,
   useJBRulesetContext,
   useJBTerminalContext,
   useReadJbDirectoryPrimaryTerminalOf,
-  useReadJbTerminalStoreUsedPayoutLimitOf
+  useReadJbTerminalStoreUsedPayoutLimitOf,
 } from 'juice-sdk-react'
 
 import { zeroAddress } from 'viem'
@@ -13,7 +13,7 @@ export const useUsedPayoutLimitOf = ({
   chainId,
   projectId,
 }: {
-  chainId: JBChainId | undefined,
+  chainId: JBChainId | undefined
   projectId: bigint | undefined
 }) => {
   const { store } = useJBTerminalContext()
@@ -29,11 +29,11 @@ export const useUsedPayoutLimitOf = ({
       address: store.data ?? undefined,
       chainId,
       args: [
-        terminalAddress ?? zeroAddress, 
+        terminalAddress ?? zeroAddress,
         projectId ?? 0n,
         NATIVE_TOKEN,
         BigInt(ruleset.data?.cycleNumber ?? 0),
-        BigInt(NATIVE_CURRENCY_ID),
+        BigInt(ETH_CURRENCY_ID),
       ],
     })
 

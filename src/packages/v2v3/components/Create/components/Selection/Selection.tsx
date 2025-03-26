@@ -1,6 +1,7 @@
 import React, { CSSProperties, useCallback, useState } from 'react'
-import { twMerge } from 'tailwind-merge'
+
 import { SelectionCard } from './SelectionCard'
+import { twMerge } from 'tailwind-merge'
 
 export const SelectionContext = React.createContext<{
   selection?: string | undefined

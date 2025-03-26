@@ -1,14 +1,15 @@
-import { useEffect, useMemo } from 'react'
 import { isEqualAddress, isZeroAddress } from 'utils/address'
+import { useEffect, useMemo } from 'react'
 
 import { Form } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { getAvailableApprovalStrategies } from 'packages/v4/utils/approvalHooks'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
+import { useForm } from 'antd/lib/form/Form'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
+import { zeroAddress } from 'viem'
 
 type ReconfigurationRulesFormProps = Partial<{
   selection: ReconfigurationStrategy
@@ -112,15 +113,15 @@ export const useReconfigurationRulesForm = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    let address: string | undefined
+    let address: string | undefined = zeroAddress;
     switch (selection) {
       case 'threeDay':
       case 'oneDay':
-        address = strategies.find(s => s.name === selection)?.address
+        address = strategies.find(s => s.id === selection)?.address
         break
       case 'none':
       case 'sevenDay':
-        address = strategies.find(s => s.name === selection)?.address
+        address = strategies.find(s => s.id === selection)?.address
         break
       case 'custom':
         address = customAddress

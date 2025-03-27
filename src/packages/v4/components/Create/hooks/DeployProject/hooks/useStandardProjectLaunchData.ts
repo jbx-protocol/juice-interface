@@ -1,21 +1,22 @@
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { useWallet } from 'hooks/Wallet'
 import {
   DEFAULT_MEMO,
   JBChainId,
-  jbProjectDeploymentAddresses,
   NATIVE_TOKEN,
+  jbProjectDeploymentAddresses,
 } from 'juice-sdk-core'
 import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
 } from 'packages/v4/utils/launchProjectTransformers'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   useCreatingV2V3FundAccessConstraintsSelector,
   useCreatingV2V3FundingCycleDataSelector,
   useCreatingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/v2v3/create'
+
+import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { useWallet } from 'hooks/Wallet'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { Address } from 'viem'
 
 /**

@@ -1,16 +1,19 @@
-import { t, Trans } from '@lingui/macro'
+import * as ProjectTokenForm from '../../hooks/useProjectTokenForm'
+
+import { Trans, t } from '@lingui/macro'
 import { Divider, Form } from 'antd'
+import {
+  MINT_RATE_EXPLANATION,
+  OWNER_MINTING_EXPLANATION,
+  OWNER_MINTING_RISK,
+  PAUSE_TRANSFERS_EXPLANATION,
+  REDEMPTION_RATE_EXPLANATION,
+} from 'components/strings'
+
 import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import NumberSlider from 'components/inputs/NumberSlider'
-import {
-    MINT_RATE_EXPLANATION,
-    OWNER_MINTING_EXPLANATION,
-    OWNER_MINTING_RISK,
-    PAUSE_TRANSFERS_EXPLANATION,
-    REDEMPTION_RATE_EXPLANATION,
-} from 'components/strings'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
 import useMobile from 'hooks/useMobile'
 import { formatFundingCycleDuration } from 'packages/v2v3/components/Create/utils/formatFundingCycleDuration'
@@ -21,7 +24,6 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
 import { inputMustExistRule } from 'utils/antdRules'
 import { formatAmount } from 'utils/format/formatAmount'
-import * as ProjectTokenForm from '../../hooks/useProjectTokenForm'
 import { ProjectTokensFormProps } from '../../hooks/useProjectTokenForm'
 import { ReservedTokenRateCallout } from './ReservedTokenRateCallout'
 
@@ -204,7 +206,7 @@ export const CustomTokenSettings = () => {
           <span>{REDEMPTION_RATE_EXPLANATION}</span>
           <Form.Item
             noStyle
-            name="cashOutTaxRate"
+            name="redemptionRate"
             valuePropName="sliderValue"
             rules={[inputMustExistRule({ label: t`A redemption rate` })]}
           >
@@ -225,7 +227,7 @@ export const CustomTokenSettings = () => {
             </Callout.Warning>
           ) : (
             !isMobile && (
-              <Form.Item noStyle name="cashOutTaxRate">
+              <Form.Item noStyle name="redemptionRate">
                 <TokenRedemptionRateGraph graphPad={50} graphSize={300} />
               </Form.Item>
             )

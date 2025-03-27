@@ -14,6 +14,7 @@ import {
   GroupedSplits as V2V3GroupedSplits,
   Split as V2V3Split,
 } from 'packages/v2v3/models/splits'
+import { convertV2V3CurrencyOptionToV4 } from './currency'
 
 import round from 'lodash/round'
 import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
@@ -23,7 +24,6 @@ import { Address } from 'viem'
 import { FundAccessLimitGroup } from '../models/fundAccessLimits'
 import { GroupedSplits as V4GroupedSplits } from '../models/splits'
 import { LaunchProjectJBTerminal } from '../models/terminals'
-import { convertV2V3CurrencyOptionToV4 } from './currency'
 
 export type LaunchV2V3ProjectArgs = [
   string, // _owner

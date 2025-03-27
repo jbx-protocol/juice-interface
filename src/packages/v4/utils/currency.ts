@@ -12,8 +12,8 @@ import {
 
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 
-export const V4_CURRENCY_ETH: V4CurrencyETH = 61166 
-export const V4_CURRENCY_USD: V4CurrencyUSD = 1 
+export const V4_CURRENCY_ETH: V4CurrencyETH = 1 
+export const V4_CURRENCY_USD: V4CurrencyUSD = 2
 
 export const V4_CURRENCY_METADATA: Record<V4CurrencyOption, CurrencyMetadata> =
   {

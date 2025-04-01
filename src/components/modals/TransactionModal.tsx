@@ -21,6 +21,7 @@ const PendingTransactionModalBody = () => {
 
   const pendingTx = transactions?.find(tx => tx.status === TxStatus.pending)
   const pendingTxHash = pendingTx?.tx?.hash
+  const pendingTxChainId = pendingTx?.tx?.chainId
 
   return (
     <div className="my-8 mx-0 flex h-full w-full items-center justify-center">
@@ -45,7 +46,11 @@ const PendingTransactionModalBody = () => {
         </p>
         {pendingTxHash ? (
           <p>
-            <EtherscanLink value={pendingTxHash} type="tx">
+            <EtherscanLink
+              value={pendingTxHash}
+              chainId={pendingTxChainId}
+              type="tx"
+            >
               <Trans>View on Etherscan</Trans>
             </EtherscanLink>
           </p>

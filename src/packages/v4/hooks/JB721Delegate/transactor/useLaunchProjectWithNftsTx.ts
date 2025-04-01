@@ -193,10 +193,11 @@ export function useLaunchProjectWithNftsTx() {
       })
 
       onTransactionPendingCallback(hash)
-      addTransaction?.('Launch Project', { hash })
+      addTransaction?.('Launch Project', { hash, chainId })
       const transactionReceipt: WaitForTransactionReceiptReturnType =
         await waitForTransactionReceipt(wagmiConfig, {
           hash,
+          chainId,
         })
 
       const newProjectId = getProjectIdFromNftLaunchReceipt(transactionReceipt)

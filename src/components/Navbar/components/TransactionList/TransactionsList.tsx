@@ -93,7 +93,7 @@ export function TransactionsList({
                 <ExternalLink
                   key={`txitem-${tx.id}`}
                   href={
-                    tx.tx?.hash ? etherscanLink('tx', tx.tx.hash) : undefined
+                    tx.tx?.hash ? etherscanLink('tx', tx.tx.hash, tx.tx.chainId) : undefined
                   }
                   className="block px-5 py-3 text-black hover:bg-smoke-50 dark:text-grey-50 dark:hover:bg-slate-600"
                 >

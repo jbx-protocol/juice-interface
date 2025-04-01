@@ -26,7 +26,6 @@ export const useDeployStandardProject = () => {
       chainId: JBChainId
       metadataCid: string
     } & LaunchTxOpts) => {
-      debugger
       const { args, controllerAddress } = getLaunchData({
         projectMetadataCID: metadataCid,
         chainId: chainId as JBChainId,

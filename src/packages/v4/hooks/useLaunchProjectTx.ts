@@ -11,8 +11,6 @@ import {
   ContractFunctionArgs,
   WaitForTransactionReceiptReturnType,
 } from 'viem'
-import { useChainId } from 'wagmi'
-import { useDeployOmnichainProject } from '../components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
 import { useStandardProjectLaunchData } from '../components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
 import { wagmiConfig } from '../wagmiConfig'
 
@@ -49,8 +47,6 @@ export function useLaunchProjectTx() {
   const { addTransaction } = useContext(TxHistoryContext)
   const { writeContractAsync: writeLaunchProject } =
     useWriteJbControllerLaunchProjectFor()
-  const deployOmnichainProject = useDeployOmnichainProject()
-  const chainId = useChainId()
   const getLaunchData = useStandardProjectLaunchData()
 
   return useCallback(
@@ -86,10 +82,11 @@ export function useLaunchProjectTx() {
         })
 
         onTransactionPendingCallback(hash)
-        addTransaction?.('Launch Project', { hash })
+        addTransaction?.('Launch Project', { hash, chainId })
         const transactionReceipt: WaitForTransactionReceiptReturnType =
           await waitForTransactionReceipt(wagmiConfig, {
             hash,
+            chainId,
           })
 
         const newProjectId = getProjectIdFromLaunchReceipt(transactionReceipt)
@@ -101,12 +98,6 @@ export function useLaunchProjectTx() {
         )
       }
     },
-    [
-      getLaunchData,
-      deployOmnichainProject,
-      chainId,
-      writeLaunchProject,
-      addTransaction,
-    ],
+    [writeLaunchProject, addTransaction],
   )
 }

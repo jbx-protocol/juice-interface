@@ -1,3 +1,5 @@
+import { Trans, t } from '@lingui/macro'
+import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
 import {
   JBChainId,
   useJBContractContext,
@@ -5,28 +7,26 @@ import {
   useSuckers,
   useWriteJbMultiTerminalSendPayoutsOf,
 } from 'juice-sdk-react'
-import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
-import { Trans, t } from '@lingui/macro'
 import { V4CurrencyName, V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { useContext, useState } from 'react'
 
-import { Callout } from 'components/Callout/Callout'
-import { ChainSelect } from 'packages/v4/components/ChainSelect'
-import { FEES_EXPLANATION } from 'components/strings'
+import { waitForTransactionReceipt } from '@wagmi/core'
 import { Form } from 'antd'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
-import { NETWORKS } from 'constants/networks'
-import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
+import { Callout } from 'components/Callout/Callout'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
+import { FEES_EXPLANATION } from 'components/strings'
+import { NETWORKS } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { emitErrorNotification } from 'utils/notifications'
-import { parseUnits } from 'viem'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4CurrentPayoutSplits'
-import { useV4DistributableAmount } from './hooks/useV4DistributableAmount'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { waitForTransactionReceipt } from '@wagmi/core'
+import { emitErrorNotification } from 'utils/notifications'
+import { parseUnits } from 'viem'
+import { useV4DistributableAmount } from './hooks/useV4DistributableAmount'
 
 export default function V4DistributePayoutsModal({
   open,
@@ -97,6 +97,7 @@ export default function V4DistributePayoutsModal({
       addTransaction?.(`Send payouts on ${NETWORKS[selectedChainId]?.label}`, { hash })
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
+        chainId: selectedChainId,
       })
 
       setLoading(false)

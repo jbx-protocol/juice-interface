@@ -4,9 +4,7 @@ import {
   useLaunchProjectTx,
 } from 'packages/v4/hooks/useLaunchProjectTx'
 import { useCallback } from 'react'
-import { useChainId } from 'wagmi'
 import { useStandardProjectLaunchData } from './useStandardProjectLaunchData'
-
 /**
  * Hook that returns a function that deploys a v4 project.
  *
@@ -17,17 +15,18 @@ export const useDeployStandardProject = () => {
   const launchProjectTx = useLaunchProjectTx()
   const getLaunchData = useStandardProjectLaunchData()
 
-  const chainId = useChainId()
-
   const deployStandardProjectCallback = useCallback(
     async ({
+      chainId,
       metadataCid,
       onTransactionPending,
       onTransactionConfirmed,
       onTransactionError,
     }: {
+      chainId: JBChainId
       metadataCid: string
     } & LaunchTxOpts) => {
+      debugger
       const { args, controllerAddress } = getLaunchData({
         projectMetadataCID: metadataCid,
         chainId: chainId as JBChainId,
@@ -44,7 +43,7 @@ export const useDeployStandardProject = () => {
         },
       )
     },
-    [getLaunchData, chainId, launchProjectTx],
+    [getLaunchData, launchProjectTx],
   )
 
   return deployStandardProjectCallback

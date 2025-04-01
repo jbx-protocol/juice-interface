@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 
+import { JBChainId } from 'juice-sdk-react'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
@@ -74,8 +75,10 @@ export const useDeployProject = () => {
    */
   const deployProject = useCallback(
     async ({
+      chainId,
       onProjectDeployed,
     }: {
+      chainId: JBChainId,
       onProjectDeployed?: (projectId: number) => void
     }) => {
       setIsDeploying(true)
@@ -124,6 +127,7 @@ export const useDeployProject = () => {
         let tx
         if (isNftProject) {
           tx = await deployNftProject({
+            chainId,
             metadataCid: projectMetadataCid,
             rewardTierCids: nftCids!.rewardTiers,
             nftCollectionMetadataUri: nftCids!.nfCollectionMetadata,
@@ -131,6 +135,7 @@ export const useDeployProject = () => {
           })
         } else {
           tx = await deployStandardProject({
+            chainId,
             metadataCid: projectMetadataCid,
             ...operationCallbacks(onProjectDeployed),
           })

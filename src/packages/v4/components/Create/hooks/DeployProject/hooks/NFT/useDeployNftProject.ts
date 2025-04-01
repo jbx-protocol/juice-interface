@@ -1,23 +1,24 @@
-import { Address, parseEther, zeroAddress } from 'viem'
-import { JB721TierConfig, JB721TiersHookFlags } from 'packages/v4/models/nfts'
 import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
+import { JB721TierConfig, JB721TiersHookFlags } from 'packages/v4/models/nfts'
 import {
   useCreatingV2V3FundAccessConstraintsSelector,
   useCreatingV2V3FundingCycleDataSelector,
   useCreatingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/v2v3/create'
+import { Address, parseEther, zeroAddress } from 'viem'
 
-import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
-import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
-import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
-import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { ONE_BILLION } from 'constants/numbers'
-import { convertV2V3CurrencyOptionToV4 } from 'packages/v4/utils/currency'
-import { encodeIpfsUri } from 'utils/ipfs'
-import { sortNftsByContributionFloor } from 'utils/nftRewards'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useCallback } from 'react'
+import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
+import { JBChainId } from 'juice-sdk-react'
 import { useLaunchProjectWithNftsTx } from 'packages/v4/hooks/JB721Delegate/transactor/useLaunchProjectWithNftsTx'
+import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
+import { convertV2V3CurrencyOptionToV4 } from 'packages/v4/utils/currency'
+import { useCallback } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
+import { encodeIpfsUri } from 'utils/ipfs'
+import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
+import { sortNftsByContributionFloor } from 'utils/nftRewards'
 
 export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
 
@@ -119,6 +120,7 @@ export const useDeployNftProject = () => {
    */
   const deployNftProjectCallback = useCallback(
     async ({
+      chainId,
       metadataCid,
       rewardTierCids,
       nftCollectionMetadataUri,
@@ -127,6 +129,7 @@ export const useDeployNftProject = () => {
       onTransactionConfirmed,
       onTransactionError,
     }: {
+      chainId: JBChainId,
       metadataCid: string
       rewardTierCids: string[]
       nftCollectionMetadataUri: string
@@ -143,6 +146,7 @@ export const useDeployNftProject = () => {
       const flags = toV4Flags(nftFlags)
 
       return await launchProjectWithNftsTx(
+        chainId,
         {
           tiered721DelegateData: {
             collectionUri: nftCollectionMetadataUri,

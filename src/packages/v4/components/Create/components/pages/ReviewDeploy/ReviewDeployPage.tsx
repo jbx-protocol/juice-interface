@@ -3,6 +3,7 @@ import { Trans } from '@lingui/macro'
 import { Checkbox, Form } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import ExternalLink from 'components/ExternalLink'
+import TransactionModal from 'components/modals/TransactionModal'
 import { TERMS_OF_SERVICE_URL } from 'constants/links'
 import { useWallet } from 'hooks/Wallet'
 import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
@@ -74,11 +75,12 @@ export const ReviewDeployPage = () => {
 
   const { goToPage } = useContext(WizardContext)
   const isMobile = useMobile()
-  const { isConnected, connect } = useWallet()
+  const { isConnected, connect, chain, changeNetworks } = useWallet()
   const router = useRouter()
-  const transactionModal = useModal()
+  const omnichainDeployModal = useModal()
   const dispatch = useDispatch()
-  const { isDeploying } = useDeployProject()
+  const { deployProject, isDeploying, deployTransactionPending } =
+    useDeployProject()
   const nftRewards = useAppSelector(
     state => state.creatingV2Project.nftRewards.rewardTiers,
   )
@@ -94,7 +96,7 @@ export const ReviewDeployPage = () => {
   const [form] = Form.useForm<{ termsAccepted: boolean }>()
   const termsAccepted = Form.useWatch('termsAccepted', form)
   const nftRewardsAreSet = nftRewards && nftRewards?.length > 0
-  const hasChainSelected = Object.values(selectedRelayrChains).some(Boolean)
+
   const isNextEnabled = termsAccepted
 
   const handleStartOverClicked = useCallback(() => {
@@ -104,7 +106,11 @@ export const ReviewDeployPage = () => {
   }, [dispatch, goToPage, router])
 
   const onFinish = useCallback(async () => {
-    if (!isConnected) {
+    const hasChainSelected = Object.values(selectedRelayrChains).some(Boolean)
+    const isSingleChainSelected =
+      Object.values(selectedRelayrChains).filter(Boolean).length === 1
+
+    if (!isConnected || !chain) {
       await connect()
       return
     }
@@ -114,9 +120,49 @@ export const ReviewDeployPage = () => {
       chainRef.current?.scrollIntoView({ behavior: 'smooth' })
       return
     }
+    // don't use omnichain deployer when only one chain selected
+    if (isSingleChainSelected) {
+      const selectedChainId = parseInt(
+        Object.entries(selectedRelayrChains).find(
+          ([_, selected]) => selected,
+        )?.[0] ?? '0',
+      ) as JBChainId
+      if (selectedChainId !== parseInt(chain.id)) {
+        await changeNetworks(selectedChainId)
+      }
+      await deployProject({
+        chainId: selectedChainId,
+        onProjectDeployed: deployedProjectId => {
+          router.push(
+            {
+              query: {
+                projectIds: JSON.stringify([
+                  { id: deployedProjectId, c: selectedChainId },
+                ]),
+              },
+            },
+            '/create',
+            {
+              shallow: true,
+            },
+          )
+        },
+      })
+      return
+    }
 
-    transactionModal.open()
-  }, [isConnected, hasChainSelected, transactionModal, connect])
+    // else, use omnichain
+    omnichainDeployModal.open()
+  }, [
+    selectedRelayrChains,
+    chain,
+    changeNetworks,
+    deployProject,
+    router,
+    isConnected,
+    omnichainDeployModal,
+    connect,
+  ])
 
   const handleOnChange = (key: string | string[]) => {
     if (typeof key === 'string') {
@@ -300,8 +346,12 @@ export const ReviewDeployPage = () => {
         </span>
       </div>
       <LaunchProjectModal
-        open={transactionModal.visible}
-        setOpen={transactionModal.close}
+        open={omnichainDeployModal.visible}
+        setOpen={omnichainDeployModal.close}
+      />
+      <TransactionModal
+        open={deployTransactionPending}
+        transactionPending={deployTransactionPending}
       />
     </>
   )

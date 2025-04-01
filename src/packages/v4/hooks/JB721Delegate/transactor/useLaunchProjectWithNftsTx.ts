@@ -15,11 +15,7 @@ import {
   JBDeploy721TiersHookConfig,
   LaunchProjectWithNftsTxArgs,
 } from 'packages/v4/models/nfts'
-import {
-  Address,
-  WaitForTransactionReceiptReturnType,
-  zeroAddress
-} from 'viem'
+import { Address, WaitForTransactionReceiptReturnType, zeroAddress } from 'viem'
 import {
   LaunchV2V3ProjectArgs,
   transformV2V3CreateArgsToV4,
@@ -34,7 +30,6 @@ import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useContext } from 'react'
 import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
 import { ipfsUri } from 'utils/ipfs'
-import { useChainId } from 'wagmi'
 import { LaunchTxOpts } from '../../useLaunchProjectTx'
 
 /**
@@ -56,28 +51,12 @@ export function useLaunchProjectWithNftsTx() {
   const { addTransaction } = useContext(TxHistoryContext)
 
   const { userAddress } = useWallet()
-  const chainId = useChainId()
-
-  const defaultJBController = chainId
-    ? (jbProjectDeploymentAddresses.JBController[
-        chainId as JBChainId
-      ] as Address)
-    : undefined
-  const defaultJBETHPaymentTerminal = chainId
-    ? (jbProjectDeploymentAddresses.JBMultiTerminal[
-        chainId as JBChainId
-      ] as Address)
-    : undefined
-  const JBTiered721DelegateStoreAddress = chainId
-    ? (jbProjectDeploymentAddresses.JB721TiersHookStore[
-        chainId as JBChainId
-      ] as Address)
-    : undefined
 
   const { writeContractAsync: writeLaunchProject } =
     useWriteJb721TiersHookProjectDeployerLaunchProjectFor()
 
   return async (
+    chainId: JBChainId,
     {
       tiered721DelegateData: {
         collectionUri,
@@ -103,6 +82,22 @@ export function useLaunchProjectWithNftsTx() {
       onTransactionError: onTransactionErrorCallback,
     }: LaunchTxOpts,
   ) => {
+    const defaultJBController = chainId
+      ? (jbProjectDeploymentAddresses.JBController[
+          chainId as JBChainId
+        ] as Address)
+      : undefined
+    const defaultJBETHPaymentTerminal = chainId
+      ? (jbProjectDeploymentAddresses.JBMultiTerminal[
+          chainId as JBChainId
+        ] as Address)
+      : undefined
+    const JBTiered721DelegateStoreAddress = chainId
+      ? (jbProjectDeploymentAddresses.JB721TiersHookStore[
+          chainId as JBChainId
+        ] as Address)
+      : undefined
+
     if (
       !userAddress ||
       !contracts ||
@@ -198,10 +193,11 @@ export function useLaunchProjectWithNftsTx() {
       })
 
       onTransactionPendingCallback(hash)
-      addTransaction?.('Launch Project', { hash })
+      addTransaction?.('Launch Project', { hash, chainId })
       const transactionReceipt: WaitForTransactionReceiptReturnType =
         await waitForTransactionReceipt(wagmiConfig, {
           hash,
+          chainId,
         })
 
       const newProjectId = getProjectIdFromNftLaunchReceipt(transactionReceipt)

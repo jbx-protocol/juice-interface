@@ -18,10 +18,10 @@ const pollTransaction = async (
   if (!txLog.tx?.hash) {
     return txLog
   }
-
   try {
     // this throws if the tx hasnt been mined
     const response = await getTransactionReceipt(wagmiConfig, {
+      chainId: txLog.tx.chainId,
       hash: txLog.tx.hash,
     })
 
@@ -33,8 +33,6 @@ const pollTransaction = async (
   } catch {
     return txLog
   }
-
-  return txLog
 }
 
 export default function WagmiTxHistoryProvider({

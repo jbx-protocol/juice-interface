@@ -133,9 +133,19 @@ export const ReviewDeployPage = () => {
       await deployProject({
         chainId: selectedChainId,
         onProjectDeployed: deployedProjectId => {
-          router.push({ query: { deployedProjectId } }, '/create', {
-            shallow: true,
-          })
+          router.push(
+            {
+              query: {
+                projectIds: JSON.stringify([
+                  { id: deployedProjectId, c: selectedChainId },
+                ]),
+              },
+            },
+            '/create',
+            {
+              shallow: true,
+            },
+          )
         },
       })
       return

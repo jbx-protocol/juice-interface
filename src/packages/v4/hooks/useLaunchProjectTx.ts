@@ -11,7 +11,6 @@ import {
   ContractFunctionArgs,
   WaitForTransactionReceiptReturnType,
 } from 'viem'
-import { useStandardProjectLaunchData } from '../components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
 import { wagmiConfig } from '../wagmiConfig'
 
 const CREATE_EVENT_IDX = 2
@@ -47,7 +46,6 @@ export function useLaunchProjectTx() {
   const { addTransaction } = useContext(TxHistoryContext)
   const { writeContractAsync: writeLaunchProject } =
     useWriteJbControllerLaunchProjectFor()
-  const getLaunchData = useStandardProjectLaunchData()
 
   return useCallback(
     async (

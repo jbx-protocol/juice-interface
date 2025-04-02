@@ -1,35 +1,16 @@
 import {
-  DEFAULT_MEMO,
-  NATIVE_TOKEN,
-  NATIVE_TOKEN_DECIMALS,
-  createSalt,
-  jbProjectDeploymentAddresses,
-} from 'juice-sdk-core'
-import {
   JBChainId,
-  jbPricesAddress,
   useJBContractContext,
   useWriteJb721TiersHookProjectDeployerLaunchProjectFor,
 } from 'juice-sdk-react'
-import {
-  JBDeploy721TiersHookConfig,
-  LaunchProjectWithNftsTxArgs,
-} from 'packages/v4/models/nfts'
-import { Address, WaitForTransactionReceiptReturnType, zeroAddress } from 'viem'
-import {
-  LaunchV2V3ProjectArgs,
-  transformV2V3CreateArgsToV4,
-} from '../../../utils/launchProjectTransformers'
+import { WaitForTransactionReceiptReturnType } from 'viem'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
-import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
+import { useNftProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useNftProjectLaunchData'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useContext } from 'react'
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
-import { ipfsUri } from 'utils/ipfs'
 import { LaunchTxOpts } from '../../useLaunchProjectTx'
 
 /**
@@ -54,130 +35,31 @@ export function useLaunchProjectWithNftsTx() {
 
   const { writeContractAsync: writeLaunchProject } =
     useWriteJb721TiersHookProjectDeployerLaunchProjectFor()
+  const getLaunchData = useNftProjectLaunchData()
 
   return async (
     chainId: JBChainId,
     {
-      tiered721DelegateData: {
-        collectionUri,
-        collectionName,
-        collectionSymbol,
-        currency,
-        tiers,
-        flags,
-      },
-      projectData: {
-        projectMetadataCID,
-        fundingCycleData,
-        fundingCycleMetadata,
-        fundAccessConstraints,
-        groupedSplits = [],
-        mustStartAtOrAfter = DEFAULT_MUST_START_AT_OR_AFTER,
-        owner,
-      },
-    }: LaunchProjectWithNftsTxArgs,
+      projectMetadataCID,
+      nftCollectionMetadataUri,
+      rewardTierCids,
+    }: {
+      projectMetadataCID: string
+      nftCollectionMetadataUri: string
+      rewardTierCids: string[]
+    },
     {
       onTransactionPending: onTransactionPendingCallback,
       onTransactionConfirmed: onTransactionConfirmedCallback,
       onTransactionError: onTransactionErrorCallback,
     }: LaunchTxOpts,
   ) => {
-    const defaultJBController = chainId
-      ? (jbProjectDeploymentAddresses.JBController[
-          chainId as JBChainId
-        ] as Address)
-      : undefined
-    const defaultJBETHPaymentTerminal = chainId
-      ? (jbProjectDeploymentAddresses.JBMultiTerminal[
-          chainId as JBChainId
-        ] as Address)
-      : undefined
-    const JBTiered721DelegateStoreAddress = chainId
-      ? (jbProjectDeploymentAddresses.JB721TiersHookStore[
-          chainId as JBChainId
-        ] as Address)
-      : undefined
-
-    if (
-      !userAddress ||
-      !contracts ||
-      !defaultJBController ||
-      !defaultJBETHPaymentTerminal ||
-      !JBTiered721DelegateStoreAddress ||
-      !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
-    ) {
-      const missingParam = !userAddress
-        ? 'userAddress'
-        : !contracts
-        ? 'contracts'
-        : !defaultJBController
-        ? 'defaultJBController'
-        : !JBTiered721DelegateStoreAddress
-        ? 'JBTiered721DelegateProjectDeployer'
-        : null
-
-      onTransactionErrorCallback?.(
-        new DOMException(
-          `Transaction failed, missing argument "${
-            missingParam ?? '<unknown>'
-          }".`,
-        ),
-      )
-
-      return Promise.resolve(false)
-    }
-    const _owner = (owner?.length ? owner : userAddress) as Address
-
-    const deployTiered721HookData: JBDeploy721TiersHookConfig = {
-      name: collectionName,
-      symbol: collectionSymbol,
-      baseUri: ipfsUri(''),
-      tokenUriResolver: zeroAddress,
-      contractUri: ipfsUri(collectionUri),
-      tiersConfig: {
-        currency,
-        decimals: NATIVE_TOKEN_DECIMALS,
-        prices: jbPricesAddress[chainId as JBChainId],
-        tiers,
-      },
-      reserveBeneficiary: zeroAddress,
-      flags,
-    }
-
-    const v2v3LaunchProjectArgs = [
-      _owner,
-      [projectMetadataCID, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN],
-      fundingCycleData,
-      fundingCycleMetadata,
-      mustStartAtOrAfter,
-      groupedSplits,
-      fundAccessConstraints,
-      [defaultJBETHPaymentTerminal], // _terminals, just supporting single for now
-      // Eventually should be something like:
-      //    getTerminalsFromFundAccessConstraints(
-      //      fundAccessConstraints,
-      //      contracts.primaryNativeTerminal.data,
-      //    ),
-      DEFAULT_MEMO,
-    ] as LaunchV2V3ProjectArgs
-    const launchProjectData = transformV2V3CreateArgsToV4({
-      v2v3Args: v2v3LaunchProjectArgs,
-      primaryNativeTerminal: defaultJBETHPaymentTerminal,
-      currencyTokenAddress: NATIVE_TOKEN,
+    const { args } = getLaunchData({
+      projectMetadataCID,
+      nftCollectionMetadataUri,
+      rewardTierCids,
+      chainId: chainId as JBChainId,
     })
-
-    const args = [
-      _owner,
-      deployTiered721HookData, //_deployTiered721HookData
-      {
-        projectUri: launchProjectData[1],
-        rulesetConfigurations: launchProjectData[2],
-        terminalConfigurations: launchProjectData[3],
-        memo: launchProjectData[4],
-      }, // _launchProjectData,
-      defaultJBController,
-      createSalt(),
-    ] as const
 
     try {
       // SIMULATE TX: TODO update for nfts
@@ -203,10 +85,13 @@ export function useLaunchProjectWithNftsTx() {
       const newProjectId = getProjectIdFromNftLaunchReceipt(transactionReceipt)
 
       onTransactionConfirmedCallback(hash, newProjectId)
+
+      return false
     } catch (e) {
       onTransactionErrorCallback(
         (e as Error) ?? new Error('Transaction failed'),
       )
+      return true
     }
   }
 }

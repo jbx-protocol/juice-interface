@@ -3,9 +3,10 @@ import {
   createSalt,
   JBChainId,
   jbOmnichainDeployerAbi,
-  parseSuckerDeployerConfig
+  parseSuckerDeployerConfig,
 } from 'juice-sdk-core'
 import {
+  jb721TiersHookProjectDeployerAbi,
   jbControllerAbi,
   jbOmnichainDeployerAddress,
   useGetRelayrTxQuote,
@@ -91,5 +92,79 @@ export function useDeployOmnichainProject() {
     return await getRelayrTxQuote(relayrTransactions)
   }
 
-  return deployOmnichainProject
+  async function deployOmnichainNftProject(
+    deployData: {
+      [k in JBChainId]?: ContractFunctionArgs<
+        typeof jb721TiersHookProjectDeployerAbi,
+        'nonpayable',
+        'launchProjectFor'
+      >
+    },
+    chainIds: JBChainId[],
+  ) {
+    if (!userAddress) {
+      return
+    }
+    const salt = createSalt()
+
+    const relayrTransactions = chainIds.map(chainId => {
+      const suckerDeploymentConfiguration = parseSuckerDeployerConfig(
+        chainId,
+        chainIds,
+      )
+
+      const chainDeployData = deployData[chainId]
+      if (!chainDeployData) {
+        throw new Error('No deploy data for chain: ' + chainId)
+      }
+
+      const args = [
+        chainDeployData[0],
+        chainDeployData[1],
+        chainDeployData[2],
+        salt,
+        {
+          deployerConfigurations:
+            suckerDeploymentConfiguration.deployerConfigurations,
+          salt,
+        },
+      ] as const
+
+      const encodedData = encodeFunctionData({
+        abi: jbOmnichainDeployerAbi, // ABI of the contract
+        functionName: 'launch721ProjectFor',
+        args,
+      })
+      /**
+       * UNCOMMENT THIS BLOCK TO GET TENDERLY SIM DATA
+       */
+      // const controllerData =  encodeFunctionData({
+      //   abi: jbControllerAbi, // ABI of the contract
+      //   functionName: 'launchProjectFor',
+      //   args: [
+      //     chainDeployData[0],
+      //     chainDeployData[1],
+      //     chainDeployData[2],
+      //     chainDeployData[3],
+      //     chainDeployData[4],
+      //   ]
+      // })
+      // console.log('controllerData', chainId, controllerData, jbProjectDeploymentAddresses.JBController)
+
+      return {
+        data: {
+          from: userAddress,
+          to: jbOmnichainDeployerAddress[chainId],
+          value: 0n,
+          gas: 1_000_000n * BigInt(chainIds.length),
+          data: encodedData,
+        },
+        chainId,
+      }
+    })
+
+    return await getRelayrTxQuote(relayrTransactions)
+  }
+
+  return { deployOmnichainProject, deployOmnichainNftProject }
 }

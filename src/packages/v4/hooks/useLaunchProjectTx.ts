@@ -90,10 +90,12 @@ export function useLaunchProjectTx() {
         const newProjectId = getProjectIdFromLaunchReceipt(transactionReceipt)
 
         onTransactionConfirmedCallback(hash, newProjectId)
+        return false
       } catch (e) {
         onTransactionErrorCallback(
           (e as Error) ?? new Error('Transaction failed'),
         )
+        return true
       }
     },
     [writeLaunchProject, addTransaction],

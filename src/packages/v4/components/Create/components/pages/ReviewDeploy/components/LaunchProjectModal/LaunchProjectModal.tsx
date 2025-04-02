@@ -15,6 +15,7 @@ import { JuiceModal } from 'components/modals/JuiceModal'
 import { NETWORKS } from 'constants/networks'
 import { JBChainId } from 'juice-sdk-core'
 import {
+  jb721TiersHookProjectDeployerAbi,
   jbControllerAbi,
   RelayrPostBundleResponse,
   useGetRelayrTxBundle,
@@ -22,8 +23,11 @@ import {
 } from 'juice-sdk-react'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { useRouter } from 'next/router'
+import { useUploadNftRewards } from 'packages/v2v3/components/Create/hooks/DeployProject/hooks/NFT/useUploadNftRewards'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { useIsNftProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useIsNftProject'
+import { useNftProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useNftProjectLaunchData'
 import { useDeployOmnichainProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
 import { useStandardProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
 import { getProjectIdFromLaunchReceipt } from 'packages/v4/hooks/useLaunchProjectTx'
@@ -45,8 +49,10 @@ export const LaunchProjectModal: React.FC<{
   setOpen: (open: boolean) => void
 }> = props => {
   const createData = useAppSelector(state => state.creatingV2Project)
-  const getLaunchData = useStandardProjectLaunchData()
-  const deployOmnichainProject = useDeployOmnichainProject()
+  const getStandardProjectLaunchData = useStandardProjectLaunchData()
+  const getNftProjectLaunchData = useNftProjectLaunchData()
+  const { deployOmnichainProject, deployOmnichainNftProject } =
+    useDeployOmnichainProject()
   const router = useRouter()
   const getRelayrBundle = useGetRelayrTxBundle()
   const { sendRelayrTx, isPending, data: txData } = useSendRelayrTx()
@@ -57,6 +63,8 @@ export const LaunchProjectModal: React.FC<{
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
   const [txSigning, setTxSigning] = useState(false)
+  const isNftProject = useIsNftProject()
+  const uploadNftRewards = useUploadNftRewards()
 
   const txQuoteCostHex = txQuote?.payment_info.find(
     p => Number(p.chain) === Number(selectedGasChain),
@@ -91,31 +99,68 @@ export const LaunchProjectModal: React.FC<{
           domain: JUICEBOX_DOMAIN,
         })
       ).Hash
+      if (isNftProject) {
+        const {
+          rewardTiers: rewardTierCids,
+          nfCollectionMetadata: nftCollectionMetadataUri,
+        } = (await uploadNftRewards()) ?? {}
+        if (!rewardTierCids || !nftCollectionMetadataUri) {
+          emitErrorNotification('Failed to upload NFT rewards')
+          return
+        }
 
-      const launchData = chainIds.reduce(
-        (
-          acc: {
-            [k in JBChainId]?: ContractFunctionArgs<
-              typeof jbControllerAbi,
-              'nonpayable',
-              'launchProjectFor'
-            >
-          },
-          chainId,
-        ) => {
-          const { args } = getLaunchData({
-            projectMetadataCID: projectMetadataCid,
+        const launchData = chainIds.reduce(
+          (
+            acc: {
+              [k in JBChainId]?: ContractFunctionArgs<
+                typeof jb721TiersHookProjectDeployerAbi,
+                'nonpayable',
+                'launchProjectFor'
+              >
+            },
             chainId,
-          })
+          ) => {
+            const { args } = getNftProjectLaunchData({
+              projectMetadataCID: projectMetadataCid,
+              chainId,
+              rewardTierCids,
+              nftCollectionMetadataUri,
+            })
 
-          acc[chainId] = args
-          return acc
-        },
-        {},
-      )
+            acc[chainId] = args
+            return acc
+          },
+          {},
+        )
 
-      const _txQuote = await deployOmnichainProject(launchData, chainIds)
-      setTxQuote(_txQuote)
+        const _txQuote = await deployOmnichainNftProject(launchData, chainIds)
+        setTxQuote(_txQuote)
+      } else {
+        const launchData = chainIds.reduce(
+          (
+            acc: {
+              [k in JBChainId]?: ContractFunctionArgs<
+                typeof jbControllerAbi,
+                'nonpayable',
+                'launchProjectFor'
+              >
+            },
+            chainId,
+          ) => {
+            const { args } = getStandardProjectLaunchData({
+              projectMetadataCID: projectMetadataCid,
+              chainId,
+            })
+
+            acc[chainId] = args
+            return acc
+          },
+          {},
+        )
+
+        const _txQuote = await deployOmnichainProject(launchData, chainIds)
+        setTxQuote(_txQuote)
+      }
     } catch (error) {
       console.error(error)
       return
@@ -123,10 +168,14 @@ export const LaunchProjectModal: React.FC<{
       setTxQuoteLoading(false)
     }
   }, [
+    getNftProjectLaunchData,
+    uploadNftRewards,
+    isNftProject,
     chainIds,
     createData.projectMetadata,
     deployOmnichainProject,
-    getLaunchData,
+    deployOmnichainNftProject,
+    getStandardProjectLaunchData,
   ])
 
   async function onClickLaunch() {

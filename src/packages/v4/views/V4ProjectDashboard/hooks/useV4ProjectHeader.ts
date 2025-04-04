@@ -95,7 +95,7 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
       return projectStatsData?.trendingVolume ?? 0n
     }
     return omnichainProjects.data.reduce((acc, result) => {
-      return acc + BigInt(result.data?.trendingVolume)
+      return acc + BigInt(result.data?.trendingVolume ?? 0)
     }, 0n)
   }, [
     omnichainProjects.data,

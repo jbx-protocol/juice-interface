@@ -19,6 +19,7 @@ import { V4TokenHoldersModal } from 'packages/v4/components/modals/V4TokenHolder
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { reloadWindow } from 'utils/windowUtils'
+import { ReservedTokensSelectedChainProvider } from '../V4CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
 import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4BalanceMenuItemsUserFlags'
 import { useV4TokensPanel } from './hooks/useV4TokensPanel'
 import { useV4YourBalanceMenuItems } from './hooks/useV4YourBalanceMenuItems'
@@ -161,8 +162,9 @@ export const V4TokensPanel = () => {
               <Trans>View token holders</Trans>
             </a>
           </div>
-
-          <V4ReservedTokensSubPanel className="mt-12" />
+          <ReservedTokensSelectedChainProvider>
+            <V4ReservedTokensSubPanel className="mt-12" />
+          </ReservedTokensSelectedChainProvider>
         </div>
       </div>
       <V4TokenHoldersModal

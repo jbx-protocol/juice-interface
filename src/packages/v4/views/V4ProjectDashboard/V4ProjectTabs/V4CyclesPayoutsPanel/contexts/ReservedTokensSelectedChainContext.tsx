@@ -3,19 +3,19 @@ import { createContext, useContext, useEffect } from 'react'
 
 import { useState } from 'react'
 
-type CyclesPanelSelectedChainContextType = {
+type ReservedTokensSelectedChainContextType = {
   selectedChainId: JBChainId | undefined
   setSelectedChainId: (chainId: JBChainId) => void
 }
 
-export const CyclesPanelSelectedChainContext = createContext<CyclesPanelSelectedChainContextType>({
+export const ReservedTokensSelectedChainContext = createContext<ReservedTokensSelectedChainContextType>({
   selectedChainId: undefined,
   setSelectedChainId: () => {
-    console.error('CyclesPanelSelectedChainContext.setSelectedChainId called but no provider set')
+    console.error('ReservedTokensSelectedChainContext.setSelectedChainId called but no provider set')
   },
 })
 
-export const CyclesPanelSelectedChainProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+export const ReservedTokensSelectedChainProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
   const [selectedChainId, setSelectedChainId] = useState<JBChainId>()
@@ -26,22 +26,22 @@ export const CyclesPanelSelectedChainProvider: React.FC<React.PropsWithChildren<
   }, [projectPageChainId])
 
   return (
-    <CyclesPanelSelectedChainContext.Provider
+    <ReservedTokensSelectedChainContext.Provider
       value={{
         selectedChainId,
         setSelectedChainId
       }}
     >
       {children}
-    </CyclesPanelSelectedChainContext.Provider>
+    </ReservedTokensSelectedChainContext.Provider>
   )
 }
 
-export const useCyclesPanelSelectedChain = () => {
-  const context = useContext(CyclesPanelSelectedChainContext)
+export const useReservedTokensSelectedChain = () => {
+  const context = useContext(ReservedTokensSelectedChainContext)
   if (!context) {
     throw new Error(
-      'useCyclesPanelSelectedChain must be used within a CyclesPanelSelectedChainProvider',
+      'useReservedTokensSelectedChain must be used within a ReservedTokensSelectedChainProvider',
     )
   }
   return context

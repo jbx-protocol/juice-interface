@@ -7,8 +7,7 @@ import {
   useProjectStore,
 } from '../redux/hooks'
 
-import { PV_V2 } from 'constants/pv'
-import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
+import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
 import { useJBTokenContext } from 'juice-sdk-react'
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { projectCartActions } from '../redux/projectCartSlice'
@@ -51,11 +50,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
   const dispatch = useProjectDispatch()
   const store = useProjectStore()
 
-  const tokenLogo = useProjectLogoSrc({
-    projectId,
-    pv: PV_V2,
-    uri: projectMetadata?.logoUri,
-  })
+  const { projectLogoUri: tokenLogo } = useProjectHeaderLogo()
 
   const [payAmount, setPayAmount] = useState<string>()
   const [fallbackImage, setFallbackImage] = useState<boolean>()

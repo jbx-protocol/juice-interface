@@ -1,16 +1,13 @@
-import {
-  JBChainId,
-  useJBContractContext,
-  useWriteJb721TiersHookProjectDeployerLaunchProjectFor,
-} from 'juice-sdk-react'
-import { WaitForTransactionReceiptReturnType } from 'viem'
-
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
+import {
+  JBChainId,
+  useWriteJb721TiersHookProjectDeployerLaunchProjectFor,
+} from 'juice-sdk-react'
 import { useNftProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useNftProjectLaunchData'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useContext } from 'react'
+import { WaitForTransactionReceiptReturnType } from 'viem'
 import { LaunchTxOpts } from '../../useLaunchProjectTx'
 
 /**
@@ -28,11 +25,7 @@ export const getProjectIdFromNftLaunchReceipt = (
 }
 
 export function useLaunchProjectWithNftsTx() {
-  const { contracts } = useJBContractContext()
   const { addTransaction } = useContext(TxHistoryContext)
-
-  const { userAddress } = useWallet()
-
   const { writeContractAsync: writeLaunchProject } =
     useWriteJb721TiersHookProjectDeployerLaunchProjectFor()
   const getLaunchData = useNftProjectLaunchData()

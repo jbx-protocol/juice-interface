@@ -223,7 +223,9 @@ export const LaunchProjectModal: React.FC<{
 
         const projectIds = JSON.stringify(
           getRelayrBundle.response.transactions.map((tx, idx) => ({
-            id: getProjectIdFromLaunchReceipt(txs[idx]), // TODO get from tx
+            id: getProjectIdFromLaunchReceipt(txs[idx], {
+              omnichain721: isNftProject,
+            }),
             c: tx.request.chain,
           })),
         )
@@ -236,6 +238,7 @@ export const LaunchProjectModal: React.FC<{
 
     doit()
   }, [
+    isNftProject,
     config,
     getRelayrBundle.isComplete,
     getRelayrBundle.response,

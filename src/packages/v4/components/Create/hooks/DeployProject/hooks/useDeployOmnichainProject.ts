@@ -135,6 +135,8 @@ export function useDeployOmnichainProject() {
         functionName: 'launch721ProjectFor',
         args,
       })
+      // console.log('encodedData', chainId, encodedData)
+
       /**
        * UNCOMMENT THIS BLOCK TO GET TENDERLY SIM DATA
        */
@@ -155,6 +157,7 @@ export function useDeployOmnichainProject() {
         data: {
           from: userAddress,
           to: jbOmnichainDeployerAddress[chainId],
+          // to: '0x29f83557ca30d4283c1EB8b6118d1B4808EAA190' as Address,
           value: 0n,
           gas: 1_000_000n * BigInt(chainIds.length),
           data: encodedData,

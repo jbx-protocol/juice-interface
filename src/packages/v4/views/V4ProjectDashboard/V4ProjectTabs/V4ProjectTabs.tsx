@@ -1,9 +1,10 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { ProjectTab } from 'components/Project/ProjectTabs/ProjectTab'
 import { useOnScreen } from 'hooks/useOnScreen'
+import { V4NftRewardsContext } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import V4AboutPanel from './V4AboutPanel'
@@ -22,8 +23,16 @@ type ProjectTabConfig = {
 
 export const V4ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
-
-  const showNftRewards = true
+  const {
+      nftRewards: { rewardTiers },
+    } = useContext(V4NftRewardsContext)
+    
+  const hasNftRewards = useMemo(
+      () => (rewardTiers ?? []).length !== 0,
+      [rewardTiers],
+    )
+  
+  const showNftRewards = hasNftRewards
 
   const containerRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)

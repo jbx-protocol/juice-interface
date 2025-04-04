@@ -1,10 +1,10 @@
 import { DEFAULT_METADATA, NATIVE_TOKEN, readJbDirectoryPrimaryTerminalOf } from 'juice-sdk-core'
 import {
   JBChainId,
-  useJBChainId,
   useJBContractContext,
   useJBRulesetContext,
   usePreparePayMetadata,
+  useSuckers,
   useWriteJbMultiTerminalPay
 } from 'juice-sdk-react'
 import { useCallback, useContext, useMemo } from 'react'
@@ -52,7 +52,7 @@ export const usePayProjectTx = ({
     nftRewards: { rewardTiers },
   } = useV4NftRewards()
   const converter = useCurrencyConverter()
-  const defaultChainId = useJBChainId()
+  const { data: suckers } = useSuckers()
 
   const { receivedTickets } = useProjectPaymentTokens()
   // TODO: is this needed for preferClaimedTokens?
@@ -111,7 +111,7 @@ export const usePayProjectTx = ({
   )
 
   const { writeContractAsync: writePay } = useWriteJbMultiTerminalPay()
-  const { contracts, projectId } = useJBContractContext()
+  const { contracts } = useJBContractContext()
   const { addTransaction } = useContext(TxHistoryContext)
 
   return useCallback(
@@ -120,10 +120,14 @@ export const usePayProjectTx = ({
       formikHelpers: FormikHelpers<PayProjectModalFormValues>,
       chainId: JBChainId,
     ) => {
+      const projectId = suckers?.find(
+        ({ peerChainId }) => chainId === peerChainId)?.projectId
+        
       if (
         !contracts.primaryNativeTerminal.data ||
         !userAddress ||
-        !values.userAcceptsTerms
+        !values.userAcceptsTerms ||
+        !projectId
       ) {
         return
       }
@@ -194,7 +198,7 @@ export const usePayProjectTx = ({
       contracts.primaryNativeTerminal.data,
       userAddress,
       chosenNftRewards,
-      projectId,
+      suckers,
       metadata,
       rewardTiers,
       writePay,

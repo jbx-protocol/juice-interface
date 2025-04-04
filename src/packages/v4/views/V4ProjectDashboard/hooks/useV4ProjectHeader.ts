@@ -67,7 +67,7 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
       return projectStatsData?.paymentsCount ?? 0
     }
     return omnichainProjects.data.reduce((acc, result) => {
-      return acc + (result.data.paymentsCount ?? 0)
+      return acc + (result.data?.paymentsCount ?? 0)
     }, 0)
   }, [
     omnichainProjects.data,
@@ -82,7 +82,7 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
       return projectStatsData?.volume ?? 0n
     }
     return omnichainProjects.data.reduce((acc, result) => {
-      return acc + BigInt(result.data.volume)
+      return acc + BigInt(result.data?.volume ?? 0)
     }, 0n)
   }, [
     omnichainProjects.data,
@@ -95,7 +95,7 @@ export const useV4ProjectHeader = (): ProjectHeaderData => {
       return projectStatsData?.trendingVolume ?? 0n
     }
     return omnichainProjects.data.reduce((acc, result) => {
-      return acc + BigInt(result.data.trendingVolume)
+      return acc + BigInt(result.data?.trendingVolume)
     }, 0n)
   }, [
     omnichainProjects.data,

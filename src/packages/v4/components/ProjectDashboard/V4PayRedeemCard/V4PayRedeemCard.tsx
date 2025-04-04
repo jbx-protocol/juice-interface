@@ -1,25 +1,26 @@
-import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
+import {
+  useJBChainId,
+  useJBRulesetContext,
+  useReadJbTokensTotalBalanceOf,
+  useSuckers
+} from 'juice-sdk-react'
+import React, { ReactNode } from 'react'
+import { useProjectDispatch, useProjectSelector } from '../redux/hooks'
+
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { Tooltip } from 'antd'
 import { Callout } from 'components/Callout/Callout'
 import { useWallet } from 'hooks/Wallet'
 import { JB_TOKEN_DECIMALS } from 'juice-sdk-core'
-import {
-  useJBChainId,
-  useJBContractContext,
-  useJBRulesetContext,
-  useReadJbTokensTotalBalanceOf,
-  useSuckers,
-} from 'juice-sdk-react'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
+import { useProjectIdOfChain } from 'packages/v4/hooks/useProjectIdOfChain'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
-import React, { ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { formatUnits } from 'viem'
 import { ChainSelect } from '../../ChainSelect'
-import { useProjectDispatch, useProjectSelector } from '../redux/hooks'
 import { payRedeemActions } from '../redux/payRedeemSlice'
 import { PayConfiguration } from './PayConfiguration'
 import { PayProjectModal } from './PayProjectModal/PayProjectModal'
@@ -40,16 +41,17 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
   const { data: payoutLimit } = usePayoutLimit()
   const dispatch = useProjectDispatch()
   const { userAddress } = useWallet()
-  const { projectId } = useJBContractContext()
   const projectHasErc20Token = useProjectHasErc20Token()
   const defaultChainId = useJBChainId()
   const selectedChainId =
     useProjectSelector(state => state.payRedeem.chainId) ?? defaultChainId
+    
+  const projectId = useProjectIdOfChain({ chainId: selectedChainId })
 
   // TODO: We should probably break out tokens panel hook into reusable module
   const { data: _userTokenBalance } = useReadJbTokensTotalBalanceOf({
     chainId: selectedChainId,
-    args: userAddress ? [userAddress, projectId] : undefined,
+    args: userAddress && projectId ? [userAddress, projectId] : undefined,
   })
 
   const userTokenBalance = parseFloat(

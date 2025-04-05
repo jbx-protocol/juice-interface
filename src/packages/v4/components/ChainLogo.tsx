@@ -27,16 +27,19 @@ const chainIdToLogo: Record<JBChainId, string> = {
 }
 
 export const ChainLogo = ({
+  className,
   chainId,
   width,
   height,
 }: {
+  className?: string
   chainId: JBChainId
   width?: number
   height?: number
 }) => {
   return (
     <Image
+      className={className}
       src={chainIdToLogo[chainId]}
       alt={`${NETWORKS[chainId].label} Logo`}
       width={width ?? 20}

@@ -1,5 +1,6 @@
 import {
   JBChainId,
+  NativeTokenValue,
   useJBRulesetMetadata,
   useSuckersNativeTokenBalance,
   useSuckersNativeTokenSurplus
@@ -33,58 +34,27 @@ export const useV4TreasuryStats = () => {
       return acc + curr.surplus
     }, 0n) ?? 0n
 
-  const distributableAmountByChain = suckersBalance?.map((chainBalanceObj) => {
-    const chainSurplus = ethSurplusByChain?.find((chainSurplus) => chainSurplus.chainId === chainBalanceObj.chainId)?.surplus ?? 0n
+  const distributableAmountByChain = suckersBalance?.map(chainBalanceObj => {
+    const chainSurplus =
+      ethSurplusByChain?.find(
+        chainSurplus => chainSurplus.chainId === chainBalanceObj.chainId,
+      )?.surplus ?? 0n
     return {
       chainId: chainBalanceObj.chainId,
       projectId: chainBalanceObj.projectId,
-      distributableAmount: chainBalanceObj.balance - chainSurplus
+      distributableAmount: chainBalanceObj.balance - chainSurplus,
     }
   })
 
-  const totalDistributableAmount = 
-    distributableAmountByChain?.reduce((acc, curr) => acc + curr.distributableAmount, 0n) ?? 0n
+  const totalDistributableAmount =
+    distributableAmountByChain?.reduce(
+      (acc, curr) => acc + curr.distributableAmount,
+      0n,
+    ) ?? 0n
 
-  const treasuryBalance = useMemo(() => {
-    // NOTE: Don't think we need this since other chains payouts limits may be different?
-    // if (payoutLimit && payoutLimit.amount === MAX_PAYOUT_LIMIT)
-    //   return t`No surplus`
-    return (
-      <Tooltip
-        title={
-          suckersBalance?.length && suckersBalance.length > 0 ? (
-            <div className="flex flex-col gap-2">
-              {suckersBalance?.map((balance, index) => (
-                <div
-                  className="flex items-center justify-between gap-4"
-                  key={suckersBalance[index].chainId}
-                >
-                  <div
-                    key={suckersBalance[index].chainId}
-                    className="flex items-center gap-2"
-                  >
-                    <ChainLogo
-                      chainId={suckersBalance[index].chainId as JBChainId}
-                    />
-                    <span>{NETWORKS[balance.chainId].label}</span>
-                  </div>
-                  {/* (NOTE: Following comment copied from Revnet: 
-                  "TODO maybe show USD-converted value here instead?" */}
-                  <span className="whitespace-nowrap font-medium">
-                    <AmountInCurrency amount={BigNumber.from(balance.balance ?? 0n)} currency="ETH" />
-                  </span>
-                </div>
-              ))}
-            </div>
-          ) : undefined
-        }
-      >
-        <span>
-          <AmountInCurrency amount={BigNumber.from(totalBalance)} currency="ETH" hideTooltip />
-        </span>
-      </Tooltip>
-    )
-  }, [totalBalance, suckersBalance])
+  const totalTreasuryBalance = useMemo(() => {
+    return <NativeTokenValue wei={totalBalance} />
+  }, [totalBalance])
 
   const surplusElement = useMemo(() => {
     // NOTE: Don't think we need this since other chains payouts limits may be different?
@@ -131,27 +101,36 @@ export const useV4TreasuryStats = () => {
     return (
       <Tooltip
         title={
-          distributableAmountByChain?.length && distributableAmountByChain.length > 0 ? (
+          distributableAmountByChain?.length &&
+          distributableAmountByChain.length > 0 ? (
             <div className="flex flex-col gap-2">
-              {distributableAmountByChain?.map((distributableAmountObj, index) => (
-                <div
-                  className="flex items-center justify-between gap-4"
-                  key={distributableAmountByChain[index].chainId}
-                >
+              {distributableAmountByChain?.map(
+                (distributableAmountObj, index) => (
                   <div
+                    className="flex items-center justify-between gap-4"
                     key={distributableAmountByChain[index].chainId}
-                    className="flex items-center gap-2"
                   >
-                    <ChainLogo
-                      chainId={distributableAmountByChain[index].chainId as JBChainId}
-                    />
-                    <span>{NETWORKS[distributableAmountObj.chainId].label}</span>
+                    <div
+                      key={distributableAmountByChain[index].chainId}
+                      className="flex items-center gap-2"
+                    >
+                      <ChainLogo
+                        chainId={
+                          distributableAmountByChain[index].chainId as JBChainId
+                        }
+                      />
+                      <span>
+                        {NETWORKS[distributableAmountObj.chainId].label}
+                      </span>
+                    </div>
+                    <span className="whitespace-nowrap font-medium">
+                      <NativeTokenValue
+                        wei={distributableAmountObj.distributableAmount ?? 0n}
+                      />
+                    </span>
                   </div>
-                  <span className="whitespace-nowrap font-medium">
-                    <AmountInCurrency amount={BigNumber.from(distributableAmountObj.distributableAmount ?? 0n)} currency="ETH" />
-                  </span>
-                </div>
-              ))}
+                ),
+              )}
             </div>
           ) : undefined
         }
@@ -160,11 +139,14 @@ export const useV4TreasuryStats = () => {
           <AmountInCurrency amount={BigNumber.from(totalDistributableAmount ?? 0n)} currency="ETH" hideTooltip />
         </span>
       </Tooltip>
-    )}, [totalDistributableAmount, distributableAmountByChain]
-  )
+    )
+  }, [totalDistributableAmount, distributableAmountByChain])
 
   return {
-    treasuryBalance,
+    totalTreasuryBalance: totalTreasuryBalance,
+    suckersBalance: suckersBalance
+      ? suckersBalance.toSorted((a, b) => Number(b.balance - a.balance))
+      : [],
     availableToPayout,
     surplusElement,
     cashOutTaxRate: rulesetMetadata?.cashOutTaxRate,

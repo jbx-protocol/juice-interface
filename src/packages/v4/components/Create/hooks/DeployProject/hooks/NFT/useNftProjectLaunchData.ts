@@ -6,13 +6,13 @@ import {
 } from 'juice-sdk-core'
 import { JBChainId, jbPricesAddress } from 'juice-sdk-react'
 import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
-import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
 import {
   JB721TierConfig,
   JB721TiersHookFlags,
   JBDeploy721TiersHookConfig,
 } from 'packages/v4/models/nfts'
 import { convertV2V3CurrencyOptionToV4 } from 'packages/v4/utils/currency'
+import { isValidMustStartAtOrAfter } from 'packages/v4/utils/fundingCycle'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useCreatingV2V3FundingCycleDataSelector } from 'redux/hooks/v2v3/create'
 import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/creatingV2Project'
@@ -56,7 +56,10 @@ export function useNftProjectLaunchData() {
 
     if (
       !defaultJBController ||
-      !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
+      !isValidMustStartAtOrAfter(
+        BigInt(mustStartAtOrAfter),
+        BigInt(fundingCycleData.duration.toString()),
+      )
     ) {
       throw new Error(`Error deploying project: Missing required parameter`)
     }

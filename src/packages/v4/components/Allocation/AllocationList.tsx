@@ -1,6 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { CreateButton } from 'components/buttons/CreateButton/CreateButton'
-import { BigNumber } from 'ethers'
 import { useModal } from 'hooks/useModal'
 
 import { SplitPortion, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
@@ -83,7 +83,8 @@ export const AllocationList = ({
       }
 
       const totalAmount = parseFloat(fromWad(totalAllocationAmount))
-      const removedAmount = (allocation.percent.formatPercentage() / 100) * totalAmount
+      const removedAmount =
+        (allocation.percent.formatPercentage() / 100) * totalAmount
 
       const totalAmountAfterRemoval = roundIfCloseToNextInteger(
         totalAmount - removedAmount,
@@ -166,11 +167,10 @@ export const AllocationList = ({
             ? allocations.find(a => a.id === result.previousId)
             : undefined
 
-
           if (existingAllocation) {
             const existingAmount =
               (existingAllocation.percent.formatPercentage() / 100.0) * total
-              total = Math.max(0, total - existingAmount)
+            total = Math.max(0, total - existingAmount)
           }
 
           const newOrEditedAllocation = entityToAllocation(result)
@@ -188,8 +188,7 @@ export const AllocationList = ({
                 amount: total.toString(),
               })
 
-              const newPercent =
-                (currentAmount / total) * 100
+              const newPercent = (currentAmount / total) * 100
               return {
                 ...allocation,
                 percent: new SplitPortion(newPercent),
@@ -262,7 +261,10 @@ const entityToAllocation = (
   entity: AddEditAllocationModalEntity & { projectOwner: false },
 ): AllocationSplit => {
   const allocationProps = {
-    id: allocationId(entity.beneficiary!, entity.projectId ? `pid-${entity.projectId}` : undefined),
+    id: allocationId(
+      entity.beneficiary!,
+      entity.projectId ? `pid-${entity.projectId}` : undefined,
+    ),
     beneficiary: entity.beneficiary ?? zeroAddress,
     projectId: BigInt(entity.projectId ?? 0),
     lockedUntil: entity.lockedUntil ?? 0,

@@ -5,11 +5,9 @@ import {
   formatEther
 } from 'juice-sdk-core';
 import {
-  useJBChainId,
-  useJBContractContext,
-  useReadJbControllerPendingReservedTokenBalanceOf
+  useReadJbControllerPendingReservedTokenBalanceOf,
+  useReadJbDirectoryControllerOf
 } from 'juice-sdk-react';
-import { useEffect, useMemo, useState } from 'react';
 
 import { Tooltip } from 'antd';
 import { NETWORKS } from 'constants/networks';
@@ -19,26 +17,31 @@ import { useProjectIdOfChain } from 'packages/v4/hooks/useProjectIdOfChain';
 import { useSuckersPendingReservedTokens } from 'packages/v4/hooks/useSuckersPendingReservedTokens';
 import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf';
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits';
+import { useMemo } from 'react';
 import assert from 'utils/assert';
+import { useReservedTokensSelectedChain } from '../../V4CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext';
 
 export const useV4ReservedTokensSubPanel = () => {
-  const { contracts } = useJBContractContext()
-  const projectPageChainId = useJBChainId()
-
-  const [selectedChainId, setSelectedChainId] = useState<JBChainId>()
-
+  const {selectedChainId, setSelectedChainId} = useReservedTokensSelectedChain()
   const projectId = useProjectIdOfChain({ chainId: selectedChainId })
-
+  
   const { data: projectOwnerAddress } = useV4ProjectOwnerOf(selectedChainId)
   const { splits: reservedTokensSplits } = useV4ReservedSplits(selectedChainId)
 
   const { rulesetMetadata } = useJBRulesetByChain(selectedChainId)
   const reservedPercent = rulesetMetadata ? <>{rulesetMetadata?.reservedPercent.formatPercentage()}%</>: undefined
+  const projectIdBigInt = BigInt(projectId ?? 0)
+  
+  // This should be fine to replace with SDK contractContext
+  const { data: controllerAddress} = useReadJbDirectoryControllerOf({
+      chainId: selectedChainId,
+      args: [projectIdBigInt],
+    })
 
   const { data: pendingReservedTokens } =
     useReadJbControllerPendingReservedTokenBalanceOf({
-      address: contracts.controller.data ?? undefined,
-      args: [BigInt(projectId ?? 0)],
+      address: controllerAddress,
+      args: [projectIdBigInt],
       chainId: selectedChainId,
     })
 
@@ -93,7 +96,7 @@ export const useV4ReservedTokensSubPanel = () => {
       return [
         {
           projectId: 0,
-          address: projectOwnerAddress!,
+          address: projectOwnerAddress,
           percent: `${new SplitPortion(SPLITS_TOTAL_PERCENT).formatPercentage()}%`,
         },
       ]
@@ -108,7 +111,7 @@ export const useV4ReservedTokensSubPanel = () => {
 
         return {
           projectId: Number(split.projectId),
-          address: split.beneficiary!,
+          address: split.beneficiary,
           percent: `${split.percent.formatPercentage()}%`,
         }
       })
@@ -135,11 +138,7 @@ export const useV4ReservedTokensSubPanel = () => {
 
     return processedSplits
   }, [reservedTokensSplits, projectOwnerAddress, projectId])
-
-  useEffect(() => {
-    setSelectedChainId(projectPageChainId)
-  }, [projectPageChainId])
-
+  
   return {
     selectedChainId,
     setSelectedChainId,

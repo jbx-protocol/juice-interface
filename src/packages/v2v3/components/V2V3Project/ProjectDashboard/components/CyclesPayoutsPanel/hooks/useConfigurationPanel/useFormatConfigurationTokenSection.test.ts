@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { BigNumber } from '@ethersproject/bignumber'
 import { renderHook } from '@testing-library/react-hooks'
 import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
 import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
-import { BigNumber } from 'ethers'
 import {
   computeIssuanceRate,
   formatDiscountRate,

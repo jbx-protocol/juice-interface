@@ -3,10 +3,12 @@ import {
   NativeTokenValue,
   useJBRulesetMetadata,
   useSuckersNativeTokenBalance,
-  useSuckersNativeTokenSurplus,
+  useSuckersNativeTokenSurplus
 } from 'juice-sdk-react'
 
+import { BigNumber } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
+import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { NETWORKS } from 'constants/networks'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { useMemo } from 'react'
@@ -80,7 +82,7 @@ export const useV4TreasuryStats = () => {
                   {/* (NOTE: Following comment copied from Revnet: 
                   "TODO maybe show USD-converted value here instead?" */}
                   <span className="whitespace-nowrap font-medium">
-                    <NativeTokenValue wei={surplus.surplus ?? 0n} />
+                    <AmountInCurrency amount={BigNumber.from(surplus.surplus)} currency="ETH" />
                   </span>
                 </div>
               ))}
@@ -89,7 +91,7 @@ export const useV4TreasuryStats = () => {
         }
       >
         <span>
-          <NativeTokenValue wei={totalEthSurplus} />
+          <AmountInCurrency amount={BigNumber.from(totalEthSurplus)} currency="ETH" hideTooltip />
         </span>
       </Tooltip>
     )
@@ -134,7 +136,7 @@ export const useV4TreasuryStats = () => {
         }
       >
         <span>
-          <NativeTokenValue wei={totalDistributableAmount} />
+          <AmountInCurrency amount={BigNumber.from(totalDistributableAmount ?? 0n)} currency="ETH" hideTooltip />
         </span>
       </Tooltip>
     )

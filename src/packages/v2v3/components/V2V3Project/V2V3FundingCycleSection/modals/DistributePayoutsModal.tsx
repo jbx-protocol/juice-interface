@@ -1,3 +1,4 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
@@ -5,15 +6,12 @@ import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { FEES_EXPLANATION } from 'components/strings'
-import { BigNumber } from 'ethers'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { PayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/PayoutsTable'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { useDistributePayoutsTx } from 'packages/v2v3/hooks/transactor/useDistributePayouts'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import {
-  V2V3CurrencyName
-} from 'packages/v2v3/utils/currency'
+import { V2V3CurrencyName } from 'packages/v2v3/utils/currency'
 import { useContext, useEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
 

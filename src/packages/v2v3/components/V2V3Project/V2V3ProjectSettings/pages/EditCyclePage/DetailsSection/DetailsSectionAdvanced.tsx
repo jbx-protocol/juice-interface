@@ -1,23 +1,21 @@
-import { Trans } from '@lingui/macro'
-import { Form } from 'antd'
-import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
-import TooltipLabel from 'components/TooltipLabel'
-import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
-import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import {
   CONTROLLER_CONFIG_EXPLANATION,
   CONTROLLER_MIGRATION_EXPLANATION,
   TERMINAL_CONFIG_EXPLANATION,
   TERMINAL_MIGRATION_EXPLANATION,
 } from 'components/strings'
+
+import { Trans } from '@lingui/macro'
+import { Form } from 'antd'
+import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
+import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
+import TooltipLabel from 'components/TooltipLabel'
 import moment from 'moment'
 
 export function DetailsSectionAdvanced() {
   return (
     <AdvancedDropdown>
-      <Form.Item name="pausePay">
-        <JuiceSwitch label={<Trans>Disable payments to this project</Trans>} />
-      </Form.Item>
       <Form.Item name="allowSetTerminals">
         <JuiceSwitch
           label={

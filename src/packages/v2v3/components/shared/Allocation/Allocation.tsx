@@ -1,5 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { AllocationItem } from 'components/Allocation/AllocationItem'
-import { BigNumber } from 'ethers'
 import { FormItemInput } from 'models/formItemInput'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { Split } from 'packages/v2v3/models/splits'

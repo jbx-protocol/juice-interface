@@ -1,8 +1,3 @@
-import { Form } from 'antd'
-import { useWatch } from 'antd/lib/form/Form'
-import { ONE_MILLION } from 'constants/numbers'
-import { ProjectTokensSelection } from 'models/projectTokenSelection'
-import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
 import {
   discountRateFrom,
   formatDiscountRate,
@@ -17,14 +12,20 @@ import {
   allocationToSplit,
   splitToAllocation,
 } from 'packages/v2v3/utils/splitToAllocation'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { useDebugValue, useEffect, useMemo } from 'react'
-import { useAppDispatch } from 'redux/hooks/useAppDispatch'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   useCreatingDistributionLimit,
   useCreatingReservedTokensSplits,
 } from 'redux/hooks/v2v3/create'
+
+import { Form } from 'antd'
+import { useWatch } from 'antd/lib/form/Form'
+import { ONE_MILLION } from 'constants/numbers'
+import { ProjectTokensSelection } from 'models/projectTokenSelection'
+import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
+import { useAppDispatch } from 'redux/hooks/useAppDispatch'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
 
@@ -80,7 +81,9 @@ export const useProjectTokensForm = () => {
       !discountRateDisabled && fundingCycleData.discountRate
         ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
         : DefaultSettings.discountRate
-    const cashOutTaxRate =
+    
+    // redemptionRate is referred to cashOutTaxRate in other places  
+    const redemptionRate =
       !cashOutTaxRateDisabled && fundingCycleMetadata.redemptionRate
         ? parseFloat(formatRedemptionRate(fundingCycleMetadata.redemptionRate))
         : DefaultSettings.redemptionRate
@@ -99,7 +102,7 @@ export const useProjectTokensForm = () => {
       reservedTokensPercentage,
       reservedTokenAllocation,
       discountRate,
-      cashOutTaxRate,
+      redemptionRate,
       tokenMinting,
       pauseTransfers,
     }

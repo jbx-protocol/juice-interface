@@ -1,8 +1,9 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { BigNumber, constants } from 'ethers'
 import { JB721GovernanceType, JBTiered721Flags } from 'models/nftRewards'
 import {
   LATEST_METADATA_VERSION,
@@ -21,8 +22,8 @@ import {
 } from 'packages/v2v3/utils/serializers'
 import { CreateState, ProjectState } from './v2ProjectTypes'
 
-import { DEFAULT_PROJECT_CHAIN_ID } from 'constants/networks'
 import { ONE_MILLION } from 'constants/numbers'
+import { JBChainId } from 'juice-sdk-react'
 import { JB721TiersHookFlags } from 'packages/v4/models/nfts'
 import { projectDescriptionTemplate } from 'templates/create/projectDescriptionTemplate'
 
@@ -120,7 +121,7 @@ const DEFAULT_PROJECT_METADATA_STATE: ProjectMetadata = {
 }
 
 const DEFAULT_CREATE_STATE: CreateState = {
-  projectChainId: DEFAULT_PROJECT_CHAIN_ID, //  not necessary for v2v3
+  selectedRelayrChainIds: {} as Record<JBChainId, boolean>, // not necessary for v2v3
   treasurySelection: 'zero',
   reconfigurationRuleSelection: undefined,
   fundingCyclesPageSelection: undefined,

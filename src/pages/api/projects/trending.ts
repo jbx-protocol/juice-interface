@@ -1,6 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { PV_V1, PV_V2, PV_V4 } from 'constants/pv'
 import { RomanStormVariables } from 'constants/romanStorm'
-import { BigNumber } from 'ethers'
 import {
   OrderDirection,
   Project_OrderBy,

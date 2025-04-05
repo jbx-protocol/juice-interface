@@ -1,5 +1,6 @@
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { formatUnits, parseUnits } from '@ethersproject/units'
 import { WAD_DECIMALS } from 'constants/numbers'
-import { BigNumber, BigNumberish, utils } from 'ethers'
 import round from 'lodash/round'
 
 type FormatConfig = {
@@ -27,7 +28,7 @@ const thousandsSeparator = ','
  *
  */
 export const parseWad = (value?: BigNumberish) =>
-  utils.parseUnits(value?.toString() || '0', WAD_DECIMALS)
+  parseUnits(value?.toString() || '0', WAD_DECIMALS)
 
 /**
  * Returns a string representation of a given [wadValue]
@@ -42,7 +43,7 @@ export const parseWad = (value?: BigNumberish) =>
  *
  */
 export const fromWad = (wadValue?: BigNumberish) => {
-  const result = utils.formatUnits(wadValue ?? '0')
+  const result = formatUnits(wadValue ?? '0')
   return result.substring(result.length - 2) === '.0'
     ? result.substring(0, result.length - 2)
     : result
@@ -161,12 +162,12 @@ export const fracDiv = (quotient: string, dividend: string) => {
 const separateThousands = (str?: string, separator = thousandsSeparator) => {
   if (!str?.trim().length) return
 
-  return str.replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+  return str.replace(/\B(?=(\d{3})+(?!\d))/g, separator)
 }
 
 // Strips string of all commas
 export const stripCommas = (string: string) => {
-  return string.replace(/,/g, '');
+  return string.replace(/,/g, '')
 }
 
 export const formattedNum = (

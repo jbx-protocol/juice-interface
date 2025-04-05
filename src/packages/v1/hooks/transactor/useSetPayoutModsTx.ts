@@ -1,11 +1,11 @@
+import * as constants from '@ethersproject/constants'
 import { t } from '@lingui/macro'
 import { NULL_ALLOCATOR_ADDRESS } from 'constants/contracts/mainnet/Allocators'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { constants } from 'ethers'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 import { V1UserContext } from 'packages/v1/contexts/User/V1UserContext'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useWallet } from 'hooks/Wallet'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { PayoutMod } from 'packages/v1/models/mods'

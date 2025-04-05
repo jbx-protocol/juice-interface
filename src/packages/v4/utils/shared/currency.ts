@@ -1,1 +1,0 @@
-export const BASE_CURRENCY_ETH = 61166

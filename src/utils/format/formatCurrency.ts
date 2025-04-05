@@ -1,4 +1,4 @@
-import { BigNumber, BigNumberish } from 'ethers'
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 
 import { CurrencyName } from 'constants/currency'
 import round from 'lodash/round'

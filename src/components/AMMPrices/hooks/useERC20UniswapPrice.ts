@@ -1,3 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { Contract } from '@ethersproject/contracts'
 import { useQuery } from '@tanstack/react-query'
 import { Token } from '@uniswap/sdk-core'
 import IUniswapV3FactoryABI from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json'
@@ -11,7 +13,6 @@ import { WETH } from 'constants/contracts/tokens'
 import { readNetwork } from 'constants/networks'
 import { WAD_DECIMALS } from 'constants/numbers'
 import { readProvider } from 'constants/readProvider'
-import { BigNumber, Contract } from 'ethers'
 import { isZeroAddress } from 'utils/address'
 
 interface Immutables {

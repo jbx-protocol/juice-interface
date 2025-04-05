@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { useJBProjectHandles } from 'packages/v2v3/hooks/JBProjectHandles/contracts/useJBProjectHandles'
 import { useCallback, useMemo } from 'react'
 import useV2ContractReader from './useV2ContractReader'

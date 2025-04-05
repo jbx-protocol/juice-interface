@@ -1,10 +1,9 @@
-import { NATIVE_TOKEN } from 'juice-sdk-core'
+import { ETH_CURRENCY_ID, NATIVE_TOKEN } from 'juice-sdk-core'
 import round from 'lodash/round'
 import { issuanceRateFrom } from 'packages/v2v3/utils/math'
 import { parseWad } from 'utils/format/formatNumber'
 import { otherUnitToSeconds } from 'utils/format/formatTime'
 import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
-import { BASE_CURRENCY_ETH } from './shared/currency'
 
 export function transformEditCycleFormFieldsToTxArgs({
   formValues,
@@ -39,7 +38,7 @@ export function transformEditCycleFormFieldsToTxArgs({
       metadata: {
         reservedPercent: formValues.reservedPercent * 100,
         cashOutTaxRate: formValues.cashOutTaxRate * 100,
-        baseCurrency: BASE_CURRENCY_ETH,
+        baseCurrency: ETH_CURRENCY_ID,
         pausePay: formValues.pausePay,
         pauseRedeem: false, // Defaulting this value since it's not in formValues
         pauseCreditTransfers: !formValues.tokenTransfers,

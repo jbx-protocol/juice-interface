@@ -1,7 +1,7 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Tooltip } from 'antd'
 import ETHToUSD from 'components/currency/ETHToUSD'
 import { CurrencyName } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import DistributionLimit from 'packages/v2v3/components/shared/DistributionLimit'
 
 export function DistributionLimitValue({

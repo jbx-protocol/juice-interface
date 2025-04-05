@@ -1,8 +1,7 @@
-
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
 import { FUNDING_CYCLE_WARNING_TEXT } from 'constants/fundingWarningText'
-import { BigNumber } from 'ethers'
 import { detailedTimeString } from 'utils/format/formatTime'
 
 export function DurationValue({

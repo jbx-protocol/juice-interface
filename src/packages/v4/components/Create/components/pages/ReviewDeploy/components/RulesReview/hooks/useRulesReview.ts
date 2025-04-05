@@ -1,17 +1,15 @@
-import { readNetwork } from 'constants/networks'
-import { useAvailableReconfigurationStrategies } from 'packages/v2v3/components/Create/hooks/useAvailableReconfigurationStrategies'
-import { useMemo } from 'react'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
 import {
   formatAllowed,
   formatBoolean,
   formatPaused,
 } from 'utils/format/formatBoolean'
 
+import { getAvailableApprovalStrategies } from 'packages/v4/utils/approvalHooks'
+import { useMemo } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+
 export const useRulesReview = () => {
-  const availableBallotStrategies = useAvailableReconfigurationStrategies(
-    readNetwork.name,
-  )
+  const availableBallotStrategies = getAvailableApprovalStrategies()
   const {
     fundingCycleData: { ballot: customAddress },
     reconfigurationRuleSelection,

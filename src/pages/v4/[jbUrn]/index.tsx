@@ -1,6 +1,7 @@
 import { V4ProjectSEO } from 'components/ProjectPageSEO'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
 import { PV_V4 } from 'constants/pv'
+import { jbUrn } from 'juice-sdk-core'
 import { loadCatalog } from 'locales/utils'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
@@ -49,12 +50,12 @@ export const getStaticProps: GetStaticProps<
 
   if (!context.params) throw new Error('params not supplied')
 
-  const projectId = parseInt(context.params.projectId as string)
-  const chainName = context.params.chainName as string
+  const { projectId, chainId } = jbUrn(context.params.jbUrn as string) ?? {}
+
   const props = (await getProjectStaticProps(
-    projectId,
+    Number(projectId),
     PV_V4,
-    chainName,
+    chainId,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   )) as any
   if (props?.props) {
@@ -92,9 +93,9 @@ const _Wrapper: React.FC<PropsWithChildren> = ({ children }) => {
 export default function V4ProjectPage({
   metadata,
   projectId,
-  chainName,
+  chainId,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  if (!chainName || !projectId) {
+  if (!chainId || !projectId) {
     return <div>Invalid URL</div>
   }
 
@@ -102,11 +103,11 @@ export default function V4ProjectPage({
     <>
       <V4ProjectSEO
         metadata={metadata}
-        chainName={chainName}
+        chainId={chainId}
         projectId={projectId}
       />
       <_Wrapper>
-        <V4ProjectProviders chainName={chainName} projectId={BigInt(projectId)}>
+        <V4ProjectProviders chainId={chainId} projectId={BigInt(projectId)}>
           <V4ProjectDashboard />
         </V4ProjectProviders>
       </_Wrapper>

@@ -12178,18 +12178,18 @@ jsx-ast-utils@^3.3.5:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
-juice-sdk-core@^14.0.0-alpha:
-  version "14.0.0-alpha"
-  resolved "https://registry.yarnpkg.com/juice-sdk-core/-/juice-sdk-core-14.0.0-alpha.tgz#3630d016c71e1bb47c7d9a5e6194e3941713d541"
-  integrity sha512-RxebJmmtA2G6chWFOTlitLkduodQl1INMcpPsd5LG59P8kTu/6Y+4fg8T1mW6JtbJ9c3syh5aRvbiHMbXdMCQQ==
+juice-sdk-core@^1.7.4-beta:
+  version "1.7.4-beta"
+  resolved "https://registry.yarnpkg.com/juice-sdk-core/-/juice-sdk-core-1.7.4-beta.tgz#38fd1577ae84f6e1b4115d9423a4199f61b95108"
+  integrity sha512-OYQWTTb3gZrmm5Kf1LdwMYLQl19C1xN6Tdw9dy4RykQr5278qQvaOamdjMhieVe8IqzMyfbL/cMkBLi0Exa6mQ==
   dependencies:
     bs58 "^5.0.0"
     fpnum "^1.0.0"
 
-juice-sdk-react@^14.0.0-alpha:
-  version "14.0.0-alpha"
-  resolved "https://registry.yarnpkg.com/juice-sdk-react/-/juice-sdk-react-14.0.0-alpha.tgz#7c1e65a2437e6cf44cf7b1bb8660164d1d728fad"
-  integrity sha512-PInUvvJo/+BYoT89TROaKoh54HWWDZIOCWKDYvXxI53iqipDLKgP71eD/iZ/uLFpyVFWWZsmJ/4gtTQkla9mTQ==
+juice-sdk-react@^1.7.8-beta:
+  version "1.7.8-beta"
+  resolved "https://registry.yarnpkg.com/juice-sdk-react/-/juice-sdk-react-1.7.8-beta.tgz#8a433be5d7acad3547a28fdce58547d6031c059f"
+  integrity sha512-lnQbSGudo1u/aNfKOuFcPD7CgkrxN7XEd7CBtxHiidASXimWmk0mnOKsZd4y7Qfa5RSzbdxa5v71Ip1zMxWyRQ==
 
 juice@^10.0.0:
   version "10.0.0"
@@ -16330,6 +16330,11 @@ reusify@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
+
+revnet-sdk@^1.0.1-beta:
+  version "1.0.1-beta"
+  resolved "https://registry.yarnpkg.com/revnet-sdk/-/revnet-sdk-1.0.1-beta.tgz#d83a5ccf7b57baf9190b3182a80b27c32b63d3f7"
+  integrity sha512-jdTnVqZ3RohlWI83y0E1LtoLnt47JZHKRHc7kbucv5zdR/uL7/o7SrXrk92OBT+6TGiV5Tx2XgMwfnaAyW92Ng==
 
 rfdc@^1.3.0:
   version "1.3.0"

@@ -1,6 +1,5 @@
 import { AppWrapper } from 'components/common/CoreAppWrapper/CoreAppWrapper'
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
-import { JB_CHAIN_SLUGS } from 'juice-sdk-core'
 import { JBChainId, JBProjectProvider } from 'juice-sdk-react'
 import { ReduxProjectCartProvider } from 'packages/v4/components/ProjectDashboard/ReduxProjectCartProvider'
 import store from 'packages/v4/components/ProjectDashboard/redux/store'
@@ -12,11 +11,10 @@ import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import React, { PropsWithChildren } from 'react'
 import { Provider } from 'react-redux'
 import { WagmiProvider } from 'wagmi'
-const V4ProjectProviders: React.FC<
-  PropsWithChildren & { chainName: string; projectId: bigint }
-> = ({ chainName, projectId, children }) => {
-  const chainId = JB_CHAIN_SLUGS[chainName].chain.id as JBChainId
 
+const V4ProjectProviders: React.FC<
+  PropsWithChildren & { chainId: JBChainId; projectId: bigint }
+> = ({ chainId, projectId, children }) => {
   return (
     <AppWrapper txHistoryProvider="wagmi">
       <WagmiProvider config={wagmiConfig}>

@@ -1,8 +1,8 @@
 import { CaretDownFilled, CloseCircleOutlined } from '@ant-design/icons'
+import * as constants from '@ethersproject/constants'
 import { Button, Form, Input } from 'antd'
-import { constants } from 'ethers'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { TokenRef } from 'models/tokenRef'
 
 import ProjectHandleFormItem from './ProjectHandle/ProjectHandleFormItem'

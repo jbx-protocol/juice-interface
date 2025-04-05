@@ -9,7 +9,7 @@ type CyclesPanelSelectedChainContextType = {
 }
 
 export const CyclesPanelSelectedChainContext = createContext<CyclesPanelSelectedChainContextType>({
-  selectedChainId: 84532, // v4TODO
+  selectedChainId: undefined,
   setSelectedChainId: () => {
     console.error('CyclesPanelSelectedChainContext.setSelectedChainId called but no provider set')
   },

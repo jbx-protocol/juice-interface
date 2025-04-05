@@ -1,5 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
-import { BigNumber } from 'ethers'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { Split } from 'packages/v2v3/models/splits'
@@ -31,7 +31,8 @@ const calculateSplitAmountWad = (
     ?.mul(split.percent)
     .div(SPLITS_TOTAL_PERCENT)
   const feeAmount = splitHasFee(split)
-    ? feeForAmount(splitValue?.toBigInt(), primaryETHTerminalFee?.toBigInt()) ?? 0n
+    ? feeForAmount(splitValue?.toBigInt(), primaryETHTerminalFee?.toBigInt()) ??
+      0n
     : BigNumber.from(0)
   return splitValue?.sub(feeAmount)
 }

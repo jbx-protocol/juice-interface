@@ -1,5 +1,5 @@
-import { Button, Tooltip } from 'antd'
 import { Trans, t } from '@lingui/macro'
+import { Button, Tooltip } from 'antd'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   useProjectDispatch,
@@ -7,17 +7,18 @@ import {
   useProjectStore,
 } from '../redux/hooks'
 
-import { EthereumLogo } from './EthereumLogo'
-import { PV_V2 } from 'constants/pv'
-import { PayRedeemInput } from './PayRedeemInput'
+import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
+import { useJBTokenContext } from 'juice-sdk-react'
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { projectCartActions } from '../redux/projectCartSlice'
-import { useJBTokenContext } from 'juice-sdk-react'
-import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
+import { EthereumLogo } from './EthereumLogo'
+import { PayRedeemInput } from './PayRedeemInput'
+import { PreventOverspendingPayCard } from './PreventOverspendingPayCard'
 // import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
 import { useWallet } from 'hooks/Wallet'
+import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
+import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
 
 type PayConfigurationProps = {
   userTokenBalance: number | undefined
@@ -39,17 +40,17 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
   const chosenNftRewards = useProjectSelector(
     state => state.projectCart.chosenNftRewards,
   )
+  const {
+    nftRewards: { rewardTiers, flags: { preventOverspending } },
+  } = useV4NftRewards()
+
   const cartPayAmount = useProjectSelector(
     state => state.projectCart.payAmount?.amount,
   )
   const dispatch = useProjectDispatch()
   const store = useProjectStore()
 
-  const tokenLogo = useProjectLogoSrc({
-    projectId,
-    pv: PV_V2,
-    uri: projectMetadata?.logoUri,
-  })
+  const { projectLogoUri: tokenLogo } = useProjectHeaderLogo()
 
   const [payAmount, setPayAmount] = useState<string>()
   const [fallbackImage, setFallbackImage] = useState<boolean>()
@@ -107,6 +108,10 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
     <div>
       <div className="relative">
         <div className="flex flex-col gap-y-2">
+          { rewardTiers?.length && preventOverspending ? (
+            <PreventOverspendingPayCard />
+          ): (
+                    <>
           <PayRedeemInput
             label={t`You pay`}
             token={{
@@ -138,7 +143,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
               ticker: tokenBTicker,
               type: projectHasErc20Token ? 'erc20' : 'native',
             }}
-            nfts={chosenNftRewards}
+            cartNfts={chosenNftRewards}
             value={
               tokenReceivedAmount.receivedTickets &&
               !!parseFloat(tokenReceivedAmount.receivedTickets)
@@ -146,6 +151,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
                 : ''
             }
           />
+          </>)}
         </div>
       </div>
 

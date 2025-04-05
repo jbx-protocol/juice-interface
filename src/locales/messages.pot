@@ -920,6 +920,9 @@ msgstr ""
 msgid "Saved!"
 msgstr ""
 
+msgid "Get launch quote"
+msgstr ""
+
 msgid "This ruleset has upcoming changes"
 msgstr ""
 
@@ -1109,6 +1112,9 @@ msgstr ""
 msgid "Redemption rate determines what proportion of this project's treasury can be reclaimed by a token holder by redeeming their tokens."
 msgstr ""
 
+msgid "Review your project before deploying."
+msgstr ""
+
 msgid "Collection Name"
 msgstr ""
 
@@ -1194,9 +1200,6 @@ msgid "{0, plural, one {# NFT} other {# NFTs}}"
 msgstr ""
 
 msgid "Check your email for a confirmation link and retry subscribing."
-msgstr ""
-
-msgid "Project chain"
 msgstr ""
 
 msgid "Claim ERC-20 token"
@@ -1562,6 +1565,9 @@ msgstr ""
 msgid "Payments made"
 msgstr ""
 
+msgid "Pay gas on"
+msgstr ""
+
 msgid "Reserved recipients:"
 msgstr ""
 
@@ -1841,9 +1847,6 @@ msgstr ""
 msgid "Untitled project"
 msgstr ""
 
-msgid "{chainName} Project #{projectId}"
-msgstr ""
-
 msgid "<0>Supporters can burn their tokens to reclaim some of the ETH not needed for payouts. The amount of ETH they receive depends on the redemption rate.</0><1>At 100%, redemptions are 1:1 — somebody redeeming 10% of all project tokens will receive 10% of the available ETH. At 0%, redemptions are turned off.</1><2>Anywhere else, redemptions take place along a bonding curve, meaning people who redeem first will get less ETH per token, and people who redeem later will get more ETH per token.</2><3>Learn more in this <4>short video</4>.</3>"
 msgstr ""
 
@@ -1914,9 +1917,6 @@ msgid "Get notified when a contributor supports this project"
 msgstr ""
 
 msgid "The amount of ETH in the wallet that owns this project."
-msgstr ""
-
-msgid "A project chain"
 msgstr ""
 
 msgid "Get paid in ETH, program your own payouts, token issuance, and redemptions to easily run your treasury completely on-chain — as your community grows, you can update your treasury's rules to grow with it."
@@ -2531,9 +2531,6 @@ msgstr ""
 msgid "Read case studies"
 msgstr ""
 
-msgid "{days, plural, one {Edits to an upcoming ruleset cycle must be submitted at least # day before that ruleset cycle starts.} other {Edits to an upcoming ruleset cycle must be submitted at least # days before that ruleset cycle starts.}}"
-msgstr ""
-
 msgid "tokens"
 msgstr ""
 
@@ -3135,6 +3132,9 @@ msgid "Deploy NFT collection"
 msgstr ""
 
 msgid "You must <0>Edit your Cycle</0> to change your total payout amount."
+msgstr ""
+
+msgid "You pay Ξ{0}"
 msgstr ""
 
 msgid "Pay disclosure"
@@ -3782,6 +3782,9 @@ msgstr ""
 msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
 msgstr ""
 
+msgid "Gas quote"
+msgstr ""
+
 msgid "Reserved issuance rate"
 msgstr ""
 
@@ -3933,9 +3936,6 @@ msgid "{badgeTitle} Token"
 msgstr ""
 
 msgid "Create token"
-msgstr ""
-
-msgid "Edits to upcoming ruleset cycles will take effect when the current ruleset cycle ends. A project with no deadline is vulnerable to last-second edits by its owner."
 msgstr ""
 
 msgid "Save project details"
@@ -4226,6 +4226,9 @@ msgstr ""
 msgid "For fundraising"
 msgstr ""
 
+msgid "Select chain"
+msgstr ""
+
 msgid "Launch New NFT Collection"
 msgstr ""
 
@@ -4373,6 +4376,9 @@ msgstr ""
 msgid "Sent reserved tokens (v1)"
 msgstr ""
 
+msgid "Launch project"
+msgstr ""
+
 msgid "Spaces are not allowed"
 msgstr ""
 
@@ -4497,6 +4503,9 @@ msgid "Tools"
 msgstr ""
 
 msgid "Project contracts"
+msgstr ""
+
+msgid "Chain"
 msgstr ""
 
 msgid "Failed to update project metadata"

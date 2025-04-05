@@ -2,8 +2,8 @@ import { Form, Input, Modal, Switch } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 
+import * as constants from '@ethersproject/constants'
 import { t, Trans } from '@lingui/macro'
-import { constants } from 'ethers'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 
 import { isAddress } from 'ethers/lib/utils'

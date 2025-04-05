@@ -1,7 +1,7 @@
+import * as providers from '@ethersproject/providers'
 import { Trans } from '@lingui/macro'
 import type { MetaMaskInpageProvider } from '@metamask/providers'
 import { Button } from 'antd'
-import { providers } from 'ethers'
 import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'
 import { twMerge } from 'tailwind-merge'
 
@@ -25,7 +25,11 @@ const useMetamask = () => {
   return ethereum as unknown as MetaMaskInpageProvider
 }
 
-function useAddTokenToWalletRequest({ tokenAddress }: { tokenAddress: string }) {
+function useAddTokenToWalletRequest({
+  tokenAddress,
+}: {
+  tokenAddress: string
+}) {
   const ethereum = useMetamask()
   const { data: tokenSymbol } = useSymbolOfERC20(tokenAddress)
 

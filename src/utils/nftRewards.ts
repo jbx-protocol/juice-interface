@@ -1,4 +1,6 @@
-import { BigNumber, constants, utils } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
+import { parseEther } from '@ethersproject/units'
 import {
   IPFSNftCollectionMetadata,
   IPFSNftRewardTier,
@@ -209,7 +211,7 @@ function nftRewardTierToJB721TierParamsV3(
   rewardTier: NftRewardTier,
   cid: string,
 ): JB721TierParams {
-  const contributionFloorWei = utils.parseEther(
+  const contributionFloorWei = parseEther(
     rewardTier.contributionFloor.toString(),
   )
   const maxSupply = rewardTier.maxSupply
@@ -243,7 +245,7 @@ function nftRewardTierToJB721TierParamsV3_1(
   rewardTier: NftRewardTier,
   cid: string,
 ): JB_721_TIER_PARAMS_V3_1 {
-  const contributionFloorWei = utils.parseEther(
+  const contributionFloorWei = parseEther(
     rewardTier.contributionFloor.toString(),
   )
   const maxSupply = rewardTier.maxSupply
@@ -281,7 +283,7 @@ function nftRewardTierToJB721TierParamsV3_2(
   rewardTier: NftRewardTier,
   cid: string,
 ): JB_721_TIER_PARAMS_V3_2 {
-  const price = utils.parseEther(rewardTier.contributionFloor.toString())
+  const price = parseEther(rewardTier.contributionFloor.toString())
   const maxSupply = rewardTier.maxSupply
   const initialQuantity = BigNumber.from(maxSupply ?? DEFAULT_NFT_MAX_SUPPLY)
   const encodedIPFSUri = encodeIpfsUri(cid)
@@ -314,9 +316,7 @@ function nftRewardTierToJB721TierParamsV4(
   rewardTier: NftRewardTier,
   cid: string,
 ): JB_721_TIER_PARAMS_V4 {
-  const price = utils
-    .parseEther(rewardTier.contributionFloor.toString())
-    .toBigInt()
+  const price = parseEther(rewardTier.contributionFloor.toString()).toBigInt()
   const maxSupply = rewardTier.maxSupply
   const initialSupply = maxSupply ?? DEFAULT_NFT_MAX_SUPPLY
   const encodedIPFSUri = encodeIpfsUri(cid)

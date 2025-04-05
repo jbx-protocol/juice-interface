@@ -1,6 +1,6 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 
 import {
   V1FundingCycle,

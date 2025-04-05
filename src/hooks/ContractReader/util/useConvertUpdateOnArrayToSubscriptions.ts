@@ -1,4 +1,4 @@
-import { Contract, EventFilter } from 'ethers'
+import { Contract, EventFilter } from '@ethersproject/contracts'
 import { ContractUpdateOn } from '../types'
 import { getContract } from './getContract'
 

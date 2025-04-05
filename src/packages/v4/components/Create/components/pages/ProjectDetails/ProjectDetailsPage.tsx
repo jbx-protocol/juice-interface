@@ -9,6 +9,7 @@ import { useCallback, useContext, useState } from 'react'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 
 import { RightOutlined } from '@ant-design/icons'
+import * as constants from '@ethersproject/constants'
 import { Callout } from 'components/Callout/Callout'
 import { FormItems } from 'components/formItems'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
@@ -18,13 +19,11 @@ import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { RichEditor } from 'components/RichEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
-import { constants } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
 import { useLockPageRulesWrapper } from 'packages/v2v3/components/Create/hooks/useLockPageRulesWrapper'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
-import { ProjectChainSelect } from 'packages/v4/components/ProjectDashboard/ProjectChainSelect'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
 import { inputIsLengthRule } from 'utils/antdRules/inputIsLengthRule'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
@@ -47,12 +46,11 @@ export const ProjectDetailsPage: React.FC<
 
   const projectOwnerDifferentThanWalletAddress =
     inputWalletAddress && wallet.userAddress !== inputWalletAddress
-  
-  const networkOptions = 
-    Object.values(JB_CHAINS).map(chain => ({
-      label: chain.name,
-      value: chain.chain.id as JBChainId,
-    }))
+
+  const networkOptions = Object.values(JB_CHAINS).map(chain => ({
+    label: chain.name,
+    value: chain.chain.id as JBChainId,
+  }))
 
   return (
     <Form
@@ -76,18 +74,6 @@ export const ProjectDetailsPage: React.FC<
           ])}
         >
           <JuiceInput />
-        </Form.Item>
-
-        <Form.Item
-          name="projectChainId"
-          label={t`Project chain`}
-          required
-          rules={lockPageRulesWrapper([
-            inputMustExistRule({ label: t`A project chain` }),
-          ])}
-        >
-          {/* v4TODO: turn into a multiselect */}
-          <ProjectChainSelect options={networkOptions} />
         </Form.Item>
 
         <Form.Item

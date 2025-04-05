@@ -1,9 +1,11 @@
+import { JBChainId } from 'juice-sdk-react'
 import { TransactionCallbacks, TxStatus } from 'models/transaction'
 import { createContext } from 'react'
 
 export type TransactionType = {
   hash: `0x${string}`
   timestamp?: number
+  chainId?: JBChainId
 }
 
 export type TransactionLog = {

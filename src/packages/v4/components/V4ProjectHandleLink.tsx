@@ -1,11 +1,12 @@
 import { Trans } from '@lingui/macro'
 import ProjectLogo from 'components/ProjectLogo'
 import { PV_V4 } from 'constants/pv'
+import { JBChainId } from 'juice-sdk-react'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { useChainId } from 'wagmi'
 import { getChainName } from '../utils/networks'
 import { v4ProjectRoute } from '../utils/routes'
+import { ChainLogo } from './ChainLogo'
 
 /**
  * Renders a link to a V4 project
@@ -16,14 +17,15 @@ export default function V4ProjectHandleLink({
   name,
   projectId,
   withProjectAvatar = false,
+  chainId,
 }: {
   className?: string
   containerClassName?: string
   name?: string | null
   projectId: number
   withProjectAvatar?: boolean
+  chainId: number | JBChainId
 }) {
-  const chainId = useChainId()
   const chainName = getChainName(chainId)
 
   return (
@@ -43,13 +45,12 @@ export default function V4ProjectHandleLink({
         href={v4ProjectRoute({ projectId, chainId })}
         as={v4ProjectRoute({ projectId, chainId })}
         className={twMerge(
-          'select-all font-medium capitalize leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100',
+          'select-all font-medium capitalize leading-[22px] text-grey-900 hover:text-bluebs-500 hover:underline dark:text-slate-100 flex items-center gap-2',
           className,
         )}
       >
-        <Trans>
-          {chainName} Project #{projectId}
-        </Trans>
+        <ChainLogo chainId={chainId as JBChainId} width={18} height={18} />
+        <Trans>Project #{projectId}</Trans>
       </Link>
     </div>
   )

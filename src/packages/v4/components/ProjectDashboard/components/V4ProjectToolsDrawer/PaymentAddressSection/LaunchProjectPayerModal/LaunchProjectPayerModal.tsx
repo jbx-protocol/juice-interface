@@ -1,4 +1,5 @@
 import { ToolOutlined } from '@ant-design/icons'
+import * as providers from '@ethersproject/providers'
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
@@ -7,7 +8,6 @@ import { Callout } from 'components/Callout/Callout'
 import EtherscanLink from 'components/EtherscanLink'
 import TransactionModal from 'components/modals/TransactionModal'
 import { PROJECT_PAYER_ADDRESS_EXPLANATION } from 'components/strings'
-import { providers } from 'ethers'
 import { useState } from 'react'
 import AdvancedOptionsCollapse from './AdvancedOptionsCollapse'
 
@@ -106,7 +106,7 @@ export function LaunchProjectPayerModal({
         title={t`Create a project payer address`}
         okText={t`Create project payer address`}
         connectWalletText={t`Connect wallet to deploy`}
-        onOk={() => null}//deployProjectPayer}
+        onOk={() => null} //deployProjectPayer}
         onCancel={() => onClose()}
         confirmLoading={loadingProjectPayer}
         transactionPending={transactionPending}

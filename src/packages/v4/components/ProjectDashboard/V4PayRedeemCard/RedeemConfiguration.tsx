@@ -1,14 +1,6 @@
-import { CheckCircleIcon } from '@heroicons/react/24/outline'
-import { t, Trans } from '@lingui/macro'
-import { waitForTransactionReceipt } from '@wagmi/core'
+import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import Loading from 'components/Loading'
 import { JuiceModal, JuiceModalProps } from 'components/modals/JuiceModal'
-import { PV_V4 } from 'constants/pv'
-import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
-import { useWallet } from 'hooks/Wallet'
 import { JB_TOKEN_DECIMALS, NATIVE_TOKEN } from 'juice-sdk-core'
 import {
   useJBChainId,
@@ -16,16 +8,25 @@ import {
   useJBTokenContext,
   useWriteJbMultiTerminalCashOutTokensOf,
 } from 'juice-sdk-react'
+import { useCallback, useContext, useState } from 'react'
+import { formatEther, parseUnits } from 'viem'
+
+import { CheckCircleIcon } from '@heroicons/react/24/outline'
+import { waitForTransactionReceipt } from '@wagmi/core'
+import Loading from 'components/Loading'
+import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { useWallet } from 'hooks/Wallet'
 import { useETHReceivedFromTokens } from 'packages/v4/hooks/useETHReceivedFromTokens'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
+import { useProjectIdOfChain } from 'packages/v4/hooks/useProjectIdOfChain'
 import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { useCallback, useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
-import { formatEther, parseUnits } from 'viem'
 import { useProjectSelector } from '../redux/hooks'
 import { EthereumLogo } from './EthereumLogo'
 import { PayRedeemInput } from './PayRedeemInput'
+
 type RedeemConfigurationProps = {
   userTokenBalance: number | undefined
   projectHasErc20Token: boolean
@@ -38,17 +39,12 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
   const { token } = useJBTokenContext()
   const tokenSymbol = token?.data?.symbol
   const { data: payoutLimit } = usePayoutLimit()
-  const { projectId, projectMetadata } = useProjectMetadataContext()
   const { contracts } = useJBContractContext()
   const { addTransaction } = useContext(TxHistoryContext)
+  const { projectLogoUri } = useProjectHeaderLogo()
 
   const wallet = useWallet()
   // TODO: We should probably break out tokens panel hook into reusable module
-  const tokenLogo = useProjectLogoSrc({
-    projectId,
-    pv: PV_V4,
-    uri: projectMetadata?.logoUri,
-  })
 
   const [redeemAmount, setRedeemAmount] = useState<string>()
   const [fallbackImage, setFallbackImage] = useState<boolean>()
@@ -57,6 +53,8 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
   const defaultChainId = useJBChainId()
   const selectedChainId =
     useProjectSelector(state => state.payRedeem.chainId) ?? defaultChainId
+
+  const projectId = useProjectIdOfChain({ chainId: selectedChainId })
 
   const redeemAmountWei = parseUnits(
     redeemAmount || '0',
@@ -165,9 +163,9 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
               token={{
                 balance: userTokenBalance?.toString(),
                 image:
-                  tokenLogo && !fallbackImage ? (
+                  projectLogoUri && !fallbackImage ? (
                     <img
-                      src={tokenLogo}
+                      src={projectLogoUri}
                       alt="Token logo"
                       onError={() => setFallbackImage(true)}
                     />

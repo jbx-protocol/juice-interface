@@ -1,12 +1,12 @@
+import * as constants from '@ethersproject/constants'
 import {
   MaxUint232,
   MaxUint88,
   ONE_BILLION,
   TEN_THOUSAND,
 } from 'constants/numbers'
-import { constants } from 'ethers'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { parseEther } from 'ethers/lib/utils'
 import round from 'lodash/round'
 import { JBFee } from 'packages/v2v3/models/fee'
@@ -238,7 +238,8 @@ export const amountSubFee = (
   feePerBillion: BigNumber | undefined,
 ): BigNumber | undefined => {
   if (!feePerBillion || !amountWad) return
-  const feeAmount = feeForAmount(amountWad.toBigInt(), feePerBillion.toBigInt()) ?? 0
+  const feeAmount =
+    feeForAmount(amountWad.toBigInt(), feePerBillion.toBigInt()) ?? 0
   return amountWad.sub(feeAmount)
 }
 
@@ -247,7 +248,10 @@ export const amountSubFee = (
 // and return the sum of them all
 export function sumHeldFees(fees: JBFee[]) {
   return fees.reduce((sum, heldFee) => {
-    const amountWad = feeForAmount(heldFee.amount.toBigInt(), BigInt(heldFee.fee))
+    const amountWad = feeForAmount(
+      heldFee.amount.toBigInt(),
+      BigInt(heldFee.fee),
+    )
     const amountNum = parseFloat(fromWad(amountWad))
     return sum + (amountNum ?? 0)
   }, 0)

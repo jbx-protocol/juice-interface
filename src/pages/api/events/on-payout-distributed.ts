@@ -1,11 +1,12 @@
-import { BigNumber, utils } from 'ethers'
+import { getAddress } from '@ethersproject/address'
+import { BigNumber } from '@ethersproject/bignumber'
 import {
-    DistributePayoutsEventsDocument,
-    DistributePayoutsEventsQuery,
-    ProjectsDocument,
-    ProjectsQuery,
-    QueryDistributePayoutsEventsArgs,
-    QueryProjectsArgs,
+  DistributePayoutsEventsDocument,
+  DistributePayoutsEventsQuery,
+  ProjectsDocument,
+  ProjectsQuery,
+  QueryDistributePayoutsEventsArgs,
+  QueryProjectsArgs,
 } from 'generated/graphql'
 import { emailServerClient } from 'lib/api/postmark'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
@@ -92,7 +93,7 @@ const splitDistributionToRecipient = async ({
       href = `https://juicebox.money/v2/p/${splitProjectId}`
     }
   } else {
-    const normalizedRecipientAddress = utils.getAddress(beneficiary)
+    const normalizedRecipientAddress = getAddress(beneficiary)
     const { name: recipientEnsName } = await resolveAddressEnsIdeas(
       normalizedRecipientAddress,
     )
@@ -128,7 +129,7 @@ const compileEmailMetadata = async ({
     amount,
     currency: V2V3_CURRENCY_ETH,
   })!
-  const normalizedPayerAddress = utils.getAddress(from)
+  const normalizedPayerAddress = getAddress(from)
   const { name: payerEnsName } = await resolveAddressEnsIdeas(
     normalizedPayerAddress,
   )

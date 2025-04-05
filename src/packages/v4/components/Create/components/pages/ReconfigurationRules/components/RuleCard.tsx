@@ -1,12 +1,12 @@
-import EthereumAddress from 'components/EthereumAddress'
+import { ApprovalHook } from 'models/approvalHooks'
 import { CreateBadge } from 'packages/v2v3/components/Create/components/CreateBadge'
+import EthereumAddress from 'components/EthereumAddress'
 import { Selection } from 'packages/v2v3/components/Create/components/Selection/Selection'
-import { AvailableReconfigurationStrategy } from 'packages/v2v3/components/Create/hooks/useAvailableReconfigurationStrategies'
 
 export const RuleCard = ({
   strategy,
 }: {
-  strategy: AvailableReconfigurationStrategy
+  strategy: ApprovalHook
 }) => {
   return (
     <Selection.Card

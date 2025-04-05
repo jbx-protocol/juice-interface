@@ -1,28 +1,33 @@
-import { useInfiniteQuery } from '@tanstack/react-query'
-import { Button } from 'antd'
-import { JuiceListbox } from 'components/inputs/JuiceListbox'
-import Loading from 'components/Loading'
-import RichNote from 'components/RichNote/RichNote'
-import { NETWORKS } from 'constants/networks'
-import request from 'graphql-request'
-import { JBChainId, SuckerPair } from 'juice-sdk-core'
-import { NativeTokenValue, useJBChainId, useSuckers } from 'juice-sdk-react'
-import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
-import { last } from 'lodash'
-import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { SplitPortion, SuckerPair } from 'juice-sdk-core'
+import { useJBChainId, useSuckers } from 'juice-sdk-react'
 import {
   OrderDirection,
   ProjectEvent_OrderBy,
   ProjectEventsDocument,
 } from 'packages/v4/graphql/client/graphql'
-import React from 'react'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { ActivityEvent } from './activityEventElems/ActivityElement'
 import {
   AnyEvent,
   EventType,
   transformEventData,
 } from './utils/transformEventsData'
+
+import { BigNumber } from '@ethersproject/bignumber'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { Button } from 'antd'
+import { AmountInCurrency } from 'components/currency/AmountInCurrency'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
+import Loading from 'components/Loading'
+import RichNote from 'components/RichNote/RichNote'
+import { NETWORKS } from 'constants/networks'
+import request from 'graphql-request'
+import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
+import last from 'lodash/last'
+import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { ProjectChainSelect } from 'packages/v4/components/ProjectDashboard/ProjectChainSelect'
+import React from 'react'
+import { fromWad } from 'utils/format/formatNumber'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { ActivityEvent } from './activityEventElems/ActivityElement'
 
 const PAGE_SIZE = 10
 
@@ -63,11 +68,9 @@ export function V4ActivityList() {
     <div>
       <div className="flex items-baseline justify-between gap-5">
         <h2 className="mb-6 font-heading text-2xl font-medium">Activity</h2>
-        <JuiceListbox
-          className="w-full min-w-0 max-w-[224px]"
-          value={CHAIN_OPTIONS.find(o => o.value === selectedChainId)}
-          options={supportedChains}
-          onChange={o => setSelectedChainId(o.value as JBChainId)}
+        <ProjectChainSelect 
+          value={selectedChainId}
+          onChange={setSelectedChainId}
         />
       </div>
       <div className="flex flex-col gap-3">
@@ -120,7 +123,11 @@ function translateEventDataToPresenter(
         header: 'Paid',
         subject: (
           <span className="font-heading text-lg">
-            <NativeTokenValue decimals={8} wei={event.amount.value} />
+            <AmountInCurrency
+              amount={BigNumber.from(event.amount.value)} 
+              currency="ETH"
+              hideTooltip
+            />
           </span>
         ),
         extra: <RichNote note={event.note} />,
@@ -131,7 +138,11 @@ function translateEventDataToPresenter(
         header: 'Added to balance',
         subject: (
           <span className="font-heading text-lg">
-            <NativeTokenValue decimals={8} wei={event.amount.value} />
+            <AmountInCurrency
+              amount={BigNumber.from(event.amount.value)} 
+              currency="ETH"
+              hideTooltip
+            />
           </span>
         ),
         extra: event.note ? <RichNote note={event.note} /> : null,
@@ -158,10 +169,13 @@ function translateEventDataToPresenter(
         header: 'Cashed out',
         subject: (
           <span className="font-heading text-lg">
-            <NativeTokenValue decimals={8} wei={event.reclaimAmount.value} />
+            <AmountInCurrency
+              amount={BigNumber.from(event.reclaimAmount.value)} 
+              currency="ETH"
+              hideTooltip
+            />
           </span>
         ),
-        extra: <RichNote note={event.metadata} />,
       }
     case 'deployedERC20Event':
       return {
@@ -183,7 +197,11 @@ function translateEventDataToPresenter(
         header: 'Distributed payouts',
         subject: (
           <span className="font-heading text-lg">
-            <NativeTokenValue decimals={8} wei={event.amount.value} />
+            <AmountInCurrency
+              amount={BigNumber.from(event.amount.value)} 
+              currency="ETH"
+              hideTooltip
+            />
           </span>
         ),
         extra: (
@@ -198,7 +216,7 @@ function translateEventDataToPresenter(
         header: 'Distributed reserved tokens',
         subject: (
           <span className="font-heading text-lg">
-            {Number(event.tokenCount)}{' '}
+            {fromWad(event.tokenCount)}{' '}
             {tokenSymbolText({ tokenSymbol, plural: event.tokenCount > 1 })}
           </span>
         ),
@@ -210,13 +228,13 @@ function translateEventDataToPresenter(
         header: 'Distributed to reserved token split',
         subject: (
           <span className="font-heading text-lg">
-            {Number(event.tokenCount)}{' '}
+            {fromWad(event.tokenCount)}{' '}
             {tokenSymbolText({ tokenSymbol, plural: event.tokenCount > 1 })}
           </span>
         ),
         extra: (
           <RichNote
-            note={`Percent: ${event.percent}, Split project: ${event.splitProjectId}`}
+            note={`Percent: ${new SplitPortion(event.percent).formatPercentage()}%, Split project: ${event.splitProjectId}`}
           />
         ),
       }
@@ -226,12 +244,16 @@ function translateEventDataToPresenter(
         header: 'Distributed to payout split',
         subject: (
           <span className="font-heading text-lg">
-            <NativeTokenValue decimals={8} wei={event.amount.value} />
+            <AmountInCurrency
+              amount={BigNumber.from(event.amount.value)} 
+              currency="ETH"
+              hideTooltip
+            />
           </span>
         ),
         extra: (
           <RichNote
-            note={`Percent: ${event.percent}, Split project: ${event.splitProjectId}`}
+            note={`Percent: ${new SplitPortion(event.percent).formatPercentage()}%, Split project: ${event.splitProjectId}`}
           />
         ),
       }
@@ -241,7 +263,11 @@ function translateEventDataToPresenter(
         header: 'Used allowance',
         subject: (
           <span className="font-heading text-lg">
-            <NativeTokenValue decimals={8} wei={event.amount.value} />
+            <AmountInCurrency
+              amount={BigNumber.from(event.amount.value)} 
+              currency="ETH"
+              hideTooltip
+            />
           </span>
         ),
         extra: <RichNote note={event.note} />,
@@ -261,7 +287,7 @@ function translateEventDataToPresenter(
         ),
         extra: (
           <RichNote
-            note={`Staked: ${event.stakedAmount.value}, ERC20: ${event.erc20Amount.value}`}
+            note={`Staked: ${fromWad(event.stakedAmount.value)}, ERC20: ${fromWad(event.erc20Amount.value)}`}
           />
         ),
       }

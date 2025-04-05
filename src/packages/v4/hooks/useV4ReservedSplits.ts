@@ -11,7 +11,6 @@ const RESERVED_SPLITS_GROUP_ID = 1n
 export const useV4ReservedSplits = (chainId?: JBChainId) => {
   const projectId = useProjectIdOfChain({ chainId })
   const { data: ruleset } = useJBRuleset()
-
   const { data: _splits, isLoading: currentSplitsLoading } =
     useReadJbSplitsSplitsOf({
       args: [BigInt(projectId ?? 0), BigInt(ruleset?.id ?? 0), RESERVED_SPLITS_GROUP_ID],
@@ -23,6 +22,7 @@ export const useV4ReservedSplits = (chainId?: JBChainId) => {
           }))
         },
       },
+      chainId
     })
   
   const splits: JBSplit[] = _splits ? [..._splits] : []

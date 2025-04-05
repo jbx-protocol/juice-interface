@@ -1,4 +1,4 @@
-import { Contract } from 'ethers'
+import { Contract } from '@ethersproject/contracts'
 import { V2V3ContractsContext } from 'packages/v2v3/contexts/Contracts/V2V3ContractsContext'
 import { CV2V3 } from 'packages/v2v3/models/cv'
 import { useContext, useEffect, useState } from 'react'

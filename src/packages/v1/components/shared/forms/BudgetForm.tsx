@@ -1,9 +1,9 @@
+import * as constants from '@ethersproject/constants'
 import { Trans } from '@lingui/macro'
 import { Button, Divider, Form, Space, Switch } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import FormItemWarningText from 'components/FormItemWarningText'
 import { FormItems } from 'components/formItems'
-import { constants } from 'ethers'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 
 import { useTerminalFee } from 'packages/v1/hooks/useTerminalFee'

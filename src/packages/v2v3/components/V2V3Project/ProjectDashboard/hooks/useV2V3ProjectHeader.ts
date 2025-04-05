@@ -1,5 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
 import { SubtitleType, useSubtitle } from 'hooks/useSubtitle'

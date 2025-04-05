@@ -1,4 +1,5 @@
-import { BigNumber, constants } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
+import * as constants from '@ethersproject/constants'
 import isEqual from 'lodash/isEqual'
 import { isFiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { SPLITS_TOTAL_PERCENT } from 'packages/v2v3/utils/math'

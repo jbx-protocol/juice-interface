@@ -21,6 +21,9 @@ if (typeof window !== 'undefined') {
   hostname = window.location.hostname
 }
 
+/**
+ * @TODO should be JB_CHAINS from sdk
+ */
 export const NETWORKS: Record<number, NetworkInfo> = {
   1: {
     name: NetworkName.mainnet,
@@ -29,7 +32,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     chainId: 1,
     token: 'ETH',
     rpcUrl: `https://mainnet.infura.io/v3/${infuraId}`,
-    blockExplorer: 'https://etherscan.io/',
+    blockExplorer: 'https://etherscan.io',
   },
   11155111: {
     name: NetworkName.sepolia,

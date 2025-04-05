@@ -23,7 +23,6 @@ import { Address } from 'viem'
  * Hook that returns a function that deploys a v4 project.
  *
  * Takes data from the redux store built for v2v3 projects, data is converted to v4 format in useLaunchProjectTx.
- * @returns A function that deploys a project.
  */
 export function useStandardProjectLaunchData() {
   const {

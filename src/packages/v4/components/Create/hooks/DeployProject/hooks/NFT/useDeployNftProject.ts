@@ -1,10 +1,5 @@
 import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
 import { JB721TierConfig, JB721TiersHookFlags } from 'packages/v4/models/nfts'
-import {
-  useCreatingV2V3FundAccessConstraintsSelector,
-  useCreatingV2V3FundingCycleDataSelector,
-  useCreatingV2V3FundingCycleMetadataSelector,
-} from 'redux/hooks/v2v3/create'
 import { Address, parseEther, zeroAddress } from 'viem'
 
 import { ONE_BILLION } from 'constants/numbers'
@@ -12,12 +7,8 @@ import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
 import { JBChainId } from 'juice-sdk-react'
 import { useLaunchProjectWithNftsTx } from 'packages/v4/hooks/JB721Delegate/transactor/useLaunchProjectWithNftsTx'
 import { LaunchTxOpts } from 'packages/v4/hooks/useLaunchProjectTx'
-import { convertV2V3CurrencyOptionToV4 } from 'packages/v4/utils/currency'
 import { useCallback } from 'react'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
 import { encodeIpfsUri } from 'utils/ipfs'
-import { NFT_FUNDING_CYCLE_METADATA_OVERRIDES } from 'utils/nftFundingCycleMetadataOverrides'
 import { sortNftsByContributionFloor } from 'utils/nftRewards'
 
 export const DEFAULT_NFT_MAX_SUPPLY = ONE_BILLION - 1
@@ -92,25 +83,6 @@ function toV4Flags(v2v3Flags: JBTiered721Flags): JB721TiersHookFlags {
   */
 export const useDeployNftProject = () => {
   const launchProjectWithNftsTx = useLaunchProjectWithNftsTx()
-  const {
-    projectMetadata,
-    nftRewards,
-    payoutGroupedSplits,
-    reservedTokensGroupedSplits,
-    inputProjectOwner,
-    mustStartAtOrAfter,
-  } = useAppSelector(state => state.creatingV2Project)
-  const fundingCycleMetadata = useCreatingV2V3FundingCycleMetadataSelector()
-  const fundingCycleData = useCreatingV2V3FundingCycleDataSelector()
-  const fundAccessConstraints = useCreatingV2V3FundAccessConstraintsSelector()
-
-  const collectionName = nftRewards.collectionMetadata.name
-    ? nftRewards.collectionMetadata.name
-    : projectMetadata.name
-  const collectionSymbol = nftRewards.collectionMetadata.symbol ?? ''
-  const nftFlags = nftRewards.flags ?? DEFAULT_NFT_FLAGS
-  // const governanceType = nftRewards.governanceType
-  const currency = convertV2V3CurrencyOptionToV4(nftRewards.pricing.currency)
 
   /**
    * Deploy a project with NFT rewards.
@@ -129,45 +101,21 @@ export const useDeployNftProject = () => {
       onTransactionConfirmed,
       onTransactionError,
     }: {
-      chainId: JBChainId,
+      chainId: JBChainId
       metadataCid: string
       rewardTierCids: string[]
       nftCollectionMetadataUri: string
     } & LaunchTxOpts) => {
-      if (!collectionName) throw new Error('No collection name or project name')
-      if (!(rewardTierCids.length && nftRewards.rewardTiers))
+      if (!rewardTierCids.length) {
         throw new Error('No NFTs')
-
-      const groupedSplits = [payoutGroupedSplits, reservedTokensGroupedSplits]
-      const tiers = buildJB721TierParams({
-        cids: rewardTierCids,
-        rewardTiers: nftRewards.rewardTiers,
-      })
-      const flags = toV4Flags(nftFlags)
+      }
 
       return await launchProjectWithNftsTx(
         chainId,
         {
-          tiered721DelegateData: {
-            collectionUri: nftCollectionMetadataUri,
-            collectionName,
-            collectionSymbol,
-            currency,
-            tiers,
-            flags,
-          },
-          projectData: {
-            owner: inputProjectOwner?.length ? inputProjectOwner : undefined,
-            projectMetadataCID: metadataCid,
-            fundingCycleData,
-            mustStartAtOrAfter,
-            fundingCycleMetadata: {
-              ...fundingCycleMetadata,
-              ...NFT_FUNDING_CYCLE_METADATA_OVERRIDES,
-            },
-            fundAccessConstraints,
-            groupedSplits,
-          },
+          projectMetadataCID: metadataCid,
+          rewardTierCids,
+          nftCollectionMetadataUri,
         },
         {
           onTransactionPending,
@@ -176,21 +124,7 @@ export const useDeployNftProject = () => {
         },
       )
     },
-    [
-      collectionName,
-      nftRewards.rewardTiers,
-      currency,
-      payoutGroupedSplits,
-      reservedTokensGroupedSplits,
-      launchProjectWithNftsTx,
-      collectionSymbol,
-      inputProjectOwner,
-      fundingCycleData,
-      mustStartAtOrAfter,
-      fundingCycleMetadata,
-      fundAccessConstraints,
-      nftFlags,
-    ],
+    [launchProjectWithNftsTx],
   )
 
   return deployNftProjectCallback

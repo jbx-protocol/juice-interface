@@ -14,7 +14,9 @@ import {
 import { wagmiConfig } from '../wagmiConfig'
 
 const CREATE_EVENT_IDX = 2
+const OMNICHAIN_721_CREATE_EVENT_IDX = 10
 const PROJECT_ID_TOPIC_IDX = 1
+const OMNICHAIN_721_PROJECT_ID_TOPIC_IDX = 2
 const HEX_BASE = 16
 
 export interface LaunchTxOpts {
@@ -29,9 +31,22 @@ export interface LaunchTxOpts {
  */
 export const getProjectIdFromLaunchReceipt = (
   txReceipt: WaitForTransactionReceiptReturnType,
+  {
+    omnichain721 = false,
+  }: {
+    omnichain721?: boolean
+  } = {},
 ): number => {
+  const launchProjectLog =
+    txReceipt?.logs[
+      omnichain721 ? OMNICHAIN_721_CREATE_EVENT_IDX : CREATE_EVENT_IDX
+    ]
+
   const projectIdHex: string | undefined =
-    txReceipt?.logs[CREATE_EVENT_IDX]?.topics?.[PROJECT_ID_TOPIC_IDX]
+    launchProjectLog?.topics?.[
+      omnichain721 ? OMNICHAIN_721_PROJECT_ID_TOPIC_IDX : PROJECT_ID_TOPIC_IDX
+    ]
+
   if (!projectIdHex) return 0
 
   const projectId = parseInt(projectIdHex, HEX_BASE)
@@ -90,10 +105,12 @@ export function useLaunchProjectTx() {
         const newProjectId = getProjectIdFromLaunchReceipt(transactionReceipt)
 
         onTransactionConfirmedCallback(hash, newProjectId)
+        return false
       } catch (e) {
         onTransactionErrorCallback(
           (e as Error) ?? new Error('Transaction failed'),
         )
+        return true
       }
     },
     [writeLaunchProject, addTransaction],

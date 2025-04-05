@@ -1,5 +1,5 @@
-import { readNetwork } from 'constants/networks'
-import { JB_CHAINS, JBChainId } from 'juice-sdk-core'
+import { NETWORKS, readNetwork } from 'constants/networks'
+import { JBChainId } from 'juice-sdk-core'
 import { NetworkName } from 'models/networkName'
 
 export const etherscanLink = (
@@ -7,8 +7,8 @@ export const etherscanLink = (
   hash: string,
   chainId?: JBChainId,
 ) => {
-  if (chainId) {
-    return `https://${JB_CHAINS[chainId].etherscanHostname}/${type}/${hash}`
+  if (chainId && NETWORKS[chainId]) {
+    return `https://${NETWORKS[chainId].blockExplorer}/${type}/${hash}`
   }
 
   let subdomain = ''

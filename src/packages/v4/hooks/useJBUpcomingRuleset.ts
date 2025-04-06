@@ -9,10 +9,10 @@ import {
 import {
   JBChainId,
   useJBContractContext,
+  useJBProjectId,
   useReadJbControllerUpcomingRulesetOf
 } from 'juice-sdk-react'
 
-import { useProjectIdOfChain } from './useProjectIdOfChain'
 
 // @v4todo: add to SDK
 export function useJBUpcomingRuleset(chainId?: JBChainId): {
@@ -22,7 +22,7 @@ export function useJBUpcomingRuleset(chainId?: JBChainId): {
 } {
   const { contracts, projectId: defaultProjectId } = useJBContractContext()
 
-  const projectId = useProjectIdOfChain({ chainId }) 
+  const { projectId } = useJBProjectId(chainId)
   
   const { data, isLoading } = useReadJbControllerUpcomingRulesetOf({
     address: contracts.controller?.data ?? undefined,

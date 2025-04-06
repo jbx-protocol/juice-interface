@@ -1,15 +1,25 @@
-import { CashOutTaxRate, JBChainId, JBRulesetData, JBRulesetMetadata, ReservedPercent, RulesetWeight, WeightCutPercent } from "juice-sdk-core";
-import { useJBContractContext, useReadJbControllerCurrentRulesetOf } from "juice-sdk-react";
-
-import { useProjectIdOfChain } from "./useProjectIdOfChain";
+import {
+  CashOutTaxRate,
+  JBChainId,
+  JBRulesetData,
+  JBRulesetMetadata,
+  ReservedPercent,
+  RulesetWeight,
+  WeightCutPercent,
+} from 'juice-sdk-core'
+import {
+  useJBContractContext,
+  useJBProjectId,
+  useReadJbControllerCurrentRulesetOf,
+} from 'juice-sdk-react'
 
 export function useJBRulesetByChain(chainId: JBChainId | undefined) {
-  const { contracts } = useJBContractContext();
-  const projectId = useProjectIdOfChain({ chainId }) 
+  const { contracts } = useJBContractContext()
+  const { projectId } = useJBProjectId(chainId)
   const { data, isLoading } = useReadJbControllerCurrentRulesetOf({
     chainId,
     address: contracts?.controller?.data ?? undefined,
-    args: [BigInt(projectId ?? 0)],
+    args: projectId ? [projectId] : undefined,
     query: {
       select([ruleset, rulesetMetadata]) {
         return [
@@ -22,13 +32,13 @@ export function useJBRulesetByChain(chainId: JBChainId | undefined) {
             ...rulesetMetadata,
             cashOutTaxRate: new CashOutTaxRate(rulesetMetadata.cashOutTaxRate),
             reservedPercent: new ReservedPercent(
-              rulesetMetadata.reservedPercent
+              rulesetMetadata.reservedPercent,
             ),
           },
-        ];
+        ]
       },
     },
-  });
+  })
 
   if (!chainId) {
     return {

@@ -2,41 +2,44 @@ import {
   JBChainId,
   SPLITS_TOTAL_PERCENT,
   SplitPortion,
-  formatEther
-} from 'juice-sdk-core';
+  formatEther,
+} from 'juice-sdk-core'
 import {
+  useJBProjectId,
   useReadJbControllerPendingReservedTokenBalanceOf,
-  useReadJbDirectoryControllerOf
-} from 'juice-sdk-react';
+  useReadJbDirectoryControllerOf,
+} from 'juice-sdk-react'
 
-import { Tooltip } from 'antd';
-import { NETWORKS } from 'constants/networks';
-import { ChainLogo } from 'packages/v4/components/ChainLogo';
-import { useJBRulesetByChain } from 'packages/v4/hooks/useJBRulesetByChain';
-import { useProjectIdOfChain } from 'packages/v4/hooks/useProjectIdOfChain';
-import { useSuckersPendingReservedTokens } from 'packages/v4/hooks/useSuckersPendingReservedTokens';
-import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf';
-import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits';
-import { useMemo } from 'react';
-import assert from 'utils/assert';
-import { useReservedTokensSelectedChain } from '../../V4CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext';
+import { Tooltip } from 'antd'
+import { NETWORKS } from 'constants/networks'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
+import { useJBRulesetByChain } from 'packages/v4/hooks/useJBRulesetByChain'
+import { useSuckersPendingReservedTokens } from 'packages/v4/hooks/useSuckersPendingReservedTokens'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
+import { useMemo } from 'react'
+import assert from 'utils/assert'
+import { useReservedTokensSelectedChain } from '../../V4CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
 
 export const useV4ReservedTokensSubPanel = () => {
-  const {selectedChainId, setSelectedChainId} = useReservedTokensSelectedChain()
-  const projectId = useProjectIdOfChain({ chainId: selectedChainId })
-  
+  const { selectedChainId, setSelectedChainId } =
+    useReservedTokensSelectedChain()
+
+  const { projectId } = useJBProjectId(selectedChainId)
+
   const { data: projectOwnerAddress } = useV4ProjectOwnerOf(selectedChainId)
   const { splits: reservedTokensSplits } = useV4ReservedSplits(selectedChainId)
 
   const { rulesetMetadata } = useJBRulesetByChain(selectedChainId)
-  const reservedPercent = rulesetMetadata ? <>{rulesetMetadata?.reservedPercent.formatPercentage()}%</>: undefined
+  const reservedPercent = rulesetMetadata ? (
+    <>{rulesetMetadata?.reservedPercent.formatPercentage()}%</>
+  ) : undefined
   const projectIdBigInt = BigInt(projectId ?? 0)
-  
-  // This should be fine to replace with SDK contractContext
-  const { data: controllerAddress} = useReadJbDirectoryControllerOf({
-      chainId: selectedChainId,
-      args: [projectIdBigInt],
-    })
+
+  const { data: controllerAddress } = useReadJbDirectoryControllerOf({
+    chainId: selectedChainId,
+    args: [projectIdBigInt],
+  })
 
   const { data: pendingReservedTokens } =
     useReadJbControllerPendingReservedTokenBalanceOf({
@@ -50,13 +53,14 @@ export const useV4ReservedTokensSubPanel = () => {
     return formatEther(pendingReservedTokens, { fractionDigits: 6 })
   }, [pendingReservedTokens])
 
-  const { data: suckersPendingReservedTokens } = useSuckersPendingReservedTokens()
+  const { data: suckersPendingReservedTokens } =
+    useSuckersPendingReservedTokens()
 
-  const aggregatedPendingReservedTokens = 
-      suckersPendingReservedTokens?.reduce(
-        (acc, curr) => acc + curr.pendingReservedTokens,
-        0n,
-      ) ?? 0n
+  const aggregatedPendingReservedTokens =
+    suckersPendingReservedTokens?.reduce(
+      (acc, curr) => acc + curr.pendingReservedTokens,
+      0n,
+    ) ?? 0n
 
   const pendingReservedTokensElement = useMemo(() => {
     return (
@@ -65,20 +69,24 @@ export const useV4ReservedTokensSubPanel = () => {
           suckersPendingReservedTokens?.length &&
           suckersPendingReservedTokens.length > 0 ? (
             <div className="flex flex-col gap-2">
-              {suckersPendingReservedTokens.map(({ chainId, pendingReservedTokens }) => (
-                <div
-                  className="flex items-center justify-between gap-4"
-                  key={chainId}
-                >
-                  <div className="flex items-center gap-2">
-                    <ChainLogo chainId={chainId as JBChainId} />
-                    <span>{NETWORKS[chainId].label}</span>
+              {suckersPendingReservedTokens.map(
+                ({ chainId, pendingReservedTokens }) => (
+                  <div
+                    className="flex items-center justify-between gap-4"
+                    key={chainId}
+                  >
+                    <div className="flex items-center gap-2">
+                      <ChainLogo chainId={chainId as JBChainId} />
+                      <span>{NETWORKS[chainId].label}</span>
+                    </div>
+                    <span className="whitespace-nowrap font-medium">
+                      {formatEther(pendingReservedTokens, {
+                        fractionDigits: 6,
+                      })}
+                    </span>
                   </div>
-                  <span className="whitespace-nowrap font-medium">
-                    {formatEther(pendingReservedTokens, { fractionDigits: 6 })}
-                  </span>
-                </div>
-              ))}
+                ),
+              )}
             </div>
           ) : undefined
         }
@@ -97,7 +105,9 @@ export const useV4ReservedTokensSubPanel = () => {
         {
           projectId: 0,
           address: projectOwnerAddress,
-          percent: `${new SplitPortion(SPLITS_TOTAL_PERCENT).formatPercentage()}%`,
+          percent: `${new SplitPortion(
+            SPLITS_TOTAL_PERCENT,
+          ).formatPercentage()}%`,
         },
       ]
     }
@@ -131,14 +141,16 @@ export const useV4ReservedTokensSubPanel = () => {
         processedSplits.unshift({
           projectId: 0,
           address: projectOwnerAddress!,
-          percent: `${new SplitPortion(remainingPercentage).formatPercentage()}%`,
+          percent: `${new SplitPortion(
+            remainingPercentage,
+          ).formatPercentage()}%`,
         })
       }
     }
 
     return processedSplits
   }, [reservedTokensSplits, projectOwnerAddress, projectId])
-  
+
   return {
     selectedChainId,
     setSelectedChainId,

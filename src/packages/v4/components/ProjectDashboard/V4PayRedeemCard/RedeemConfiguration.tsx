@@ -5,6 +5,7 @@ import { JB_TOKEN_DECIMALS, NATIVE_TOKEN } from 'juice-sdk-core'
 import {
   useJBChainId,
   useJBContractContext,
+  useJBProjectId,
   useJBTokenContext,
   useWriteJbMultiTerminalCashOutTokensOf,
 } from 'juice-sdk-react'
@@ -19,7 +20,6 @@ import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { useETHReceivedFromTokens } from 'packages/v4/hooks/useETHReceivedFromTokens'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
-import { useProjectIdOfChain } from 'packages/v4/hooks/useProjectIdOfChain'
 import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { emitErrorNotification } from 'utils/notifications'
@@ -54,7 +54,7 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
   const selectedChainId =
     useProjectSelector(state => state.payRedeem.chainId) ?? defaultChainId
 
-  const projectId = useProjectIdOfChain({ chainId: selectedChainId })
+  const { projectId } = useJBProjectId(selectedChainId)
 
   const redeemAmountWei = parseUnits(
     redeemAmount || '0',

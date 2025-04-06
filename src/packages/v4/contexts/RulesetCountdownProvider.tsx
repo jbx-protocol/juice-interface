@@ -1,5 +1,5 @@
 import { useCountdownClock } from 'components/Project/hooks/useCountdownClock'
-import { useJBRuleset } from 'juice-sdk-react'
+import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
 import { createContext } from 'react'
 
 type RulesetCountdownContextType = {
@@ -20,11 +20,13 @@ export const RulesetCountdownProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const { data: ruleset } = useJBRuleset()
+  const { projectId, chainId } = useJBProjectId()
+  const { ruleset } = useJBRuleset({
+    projectId,
+    chainId,
+  })
 
-  const endEpochSeconds = ruleset
-    ? Number(ruleset.start + ruleset.duration)
-    : 0
+  const endEpochSeconds = ruleset ? Number(ruleset.start + ruleset.duration) : 0
   const { remainingTimeText, secondsRemaining } =
     useCountdownClock(endEpochSeconds)
 

@@ -19,19 +19,22 @@ export function usePayoutLimitOfChain({
   chainId,
   projectId,
 }: {
-  chainId: JBChainId | undefined,
+  chainId: JBChainId | undefined
   projectId: bigint | undefined
 }) {
   const {
     contracts: { fundAccessLimits },
   } = useJBContractContext()
 
-  const { data: ruleset } = useJBRuleset() // !!!!!v4TODO: pass chainId here once sdk updated
+  const { ruleset } = useJBRuleset({
+    projectId,
+    chainId,
+  })
 
   const { data: terminalAddress } = useReadJbDirectoryPrimaryTerminalOf({
-      chainId,
-      args: [projectId ?? 0n, NATIVE_TOKEN],
-    })
+    chainId,
+    args: [projectId ?? 0n, NATIVE_TOKEN],
+  })
   const { data: payoutLimits, isLoading } =
     useReadJbFundAccessLimitsPayoutLimitsOf({
       address: fundAccessLimits.data ?? undefined,

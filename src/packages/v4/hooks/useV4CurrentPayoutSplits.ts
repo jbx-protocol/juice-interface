@@ -1,22 +1,20 @@
-import {
-  JBSplit,
-  NATIVE_TOKEN,
-  SplitPortion
-} from 'juice-sdk-core'
+import { JBSplit, NATIVE_TOKEN, SplitPortion } from 'juice-sdk-core'
 import {
   JBChainId,
+  useJBProjectId,
   useJBRuleset,
   useReadJbSplitsSplitsOf,
-  useReadJbTokensTokenOf
+  useReadJbTokensTokenOf,
 } from 'juice-sdk-react'
 
-import { useProjectIdOfChain } from './useProjectIdOfChain'
-
 export const useV4CurrentPayoutSplits = (chainId?: JBChainId) => {
-  const projectId = useProjectIdOfChain({ chainId })
+  const { projectId } = useJBProjectId(chainId)
 
   const { data: tokenAddress } = useReadJbTokensTokenOf()
-  const { data: ruleset, isLoading: rulesetIsLoading } = useJBRuleset()
+  const { ruleset, isLoading: rulesetIsLoading } = useJBRuleset({
+    projectId,
+    chainId,
+  })
   const rulesetId = BigInt(ruleset?.id ?? 0)
   const groupId = BigInt(tokenAddress ?? NATIVE_TOKEN) // contracts say this is: `uint256(uint160(tokenAddress))`
 
@@ -32,10 +30,10 @@ export const useV4CurrentPayoutSplits = (chainId?: JBChainId) => {
         )
       },
     },
-    chainId
+    chainId,
   })
 
-  if (rulesetIsLoading) return { data: undefined, isLoading: true}
+  if (rulesetIsLoading) return { data: undefined, isLoading: true }
 
   return { data, isLoading }
 }

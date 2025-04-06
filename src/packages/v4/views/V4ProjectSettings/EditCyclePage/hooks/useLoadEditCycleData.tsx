@@ -1,4 +1,4 @@
-import { useJBRuleset, useJBRulesetMetadata } from 'juice-sdk-react'
+import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
 import { useEffect, useState } from 'react'
 import {
   deriveDurationOption,
@@ -21,8 +21,11 @@ export const useLoadEditCycleData = () => {
     EditCycleFormFields | undefined
   >(undefined)
 
-  const { data: ruleset } = useJBRuleset()
-  const { data: rulesetMetadata } = useJBRulesetMetadata()
+  const { projectId, chainId } = useJBProjectId()
+  const { ruleset, rulesetMetadata } = useJBRuleset({
+    projectId,
+    chainId,
+  })
   const { ruleset: upcomingRuleset } = useJBUpcomingRuleset()
 
   const { splits: reservedTokensSplits } = useV4ReservedSplits()
@@ -30,7 +33,7 @@ export const useLoadEditCycleData = () => {
   const { data: payoutLimit } = usePayoutLimit()
 
   const [editCycleForm] = Form.useForm<EditCycleFormFields>()
-  
+
   const payoutLimitAmount = new Ether(payoutLimit.amount).toFloat()
 
   useEffect(() => {

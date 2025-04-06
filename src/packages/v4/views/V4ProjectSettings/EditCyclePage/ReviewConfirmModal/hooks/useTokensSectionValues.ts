@@ -1,4 +1,8 @@
-import { useJBRuleset, useJBTokenContext } from 'juice-sdk-react'
+import {
+  useJBProjectId,
+  useJBRuleset,
+  useJBTokenContext,
+} from 'juice-sdk-react'
 import round from 'lodash/round'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { splitsListsHaveDiff } from 'packages/v4/utils/v4Splits'
@@ -11,10 +15,12 @@ export const useTokensSectionValues = () => {
 
   const formValues: EditCycleFormFields = editCycleForm?.getFieldsValue(true)
 
-  const { data: ruleset } = useJBRuleset()
-  const { 
-    ruleset: upcomingRuleset, 
-  } = useJBUpcomingRuleset()
+  const { projectId, chainId } = useJBProjectId()
+  const { ruleset } = useJBRuleset({
+    projectId,
+    chainId,
+  })
+  const { ruleset: upcomingRuleset } = useJBUpcomingRuleset()
 
   const { token } = useJBTokenContext()
   const tokenSymbol = token?.data?.symbol
@@ -39,22 +45,18 @@ export const useTokensSectionValues = () => {
   const currentDiscountRate = initialFormData?.weightCutPercent
   const currentRedemptionRate = initialFormData?.cashOutTaxRate
   const currentAllowMinting = Boolean(initialFormData?.allowOwnerMinting)
-  const currentTokenTransfers = Boolean(
-    initialFormData?.tokenTransfers,
-  )
+  const currentTokenTransfers = Boolean(initialFormData?.tokenTransfers)
 
   const onlyDiscountRateApplied =
-    (
-      upcomingRuleset &&
+    (upcomingRuleset &&
       newMintRate &&
-      round(upcomingRuleset?.weight.toFloat(), 4) === round(newMintRate, 4)
-    ) || ruleset?.duration === 0
+      round(upcomingRuleset?.weight.toFloat(), 4) === round(newMintRate, 4)) ||
+    ruleset?.duration === 0
 
-  const mintRateHasDiff = !onlyDiscountRateApplied 
+  const mintRateHasDiff = !onlyDiscountRateApplied
 
   const reservedRateHasDiff = Boolean(
-    currentReservedRate &&
-      newReservedRate !== currentReservedRate,
+    currentReservedRate && newReservedRate !== currentReservedRate,
   )
 
   const reservedSplitsHasDiff = splitsListsHaveDiff(
@@ -63,13 +65,11 @@ export const useTokensSectionValues = () => {
   )
 
   const discountRateHasDiff = Boolean(
-    currentDiscountRate &&
-      newDiscountRate !== currentDiscountRate,
+    currentDiscountRate && newDiscountRate !== currentDiscountRate,
   )
 
   const redemptionHasDiff =
-    currentRedemptionRate &&
-    newRedemptionRate !== currentRedemptionRate
+    currentRedemptionRate && newRedemptionRate !== currentRedemptionRate
 
   const allowMintingHasDiff = Boolean(newAllowMinting !== currentAllowMinting)
 

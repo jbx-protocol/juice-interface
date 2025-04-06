@@ -1,9 +1,10 @@
 import { Trans, t } from '@lingui/macro'
 import {
   useJBChainId,
+  useJBProjectId,
   useJBRulesetContext,
   useReadJbTokensTotalBalanceOf,
-  useSuckers
+  useSuckers,
 } from 'juice-sdk-react'
 import React, { ReactNode } from 'react'
 import { useProjectDispatch, useProjectSelector } from '../redux/hooks'
@@ -16,7 +17,6 @@ import { JB_TOKEN_DECIMALS } from 'juice-sdk-core'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
-import { useProjectIdOfChain } from 'packages/v4/hooks/useProjectIdOfChain'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { twMerge } from 'tailwind-merge'
 import { formatUnits } from 'viem'
@@ -45,8 +45,8 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
   const defaultChainId = useJBChainId()
   const selectedChainId =
     useProjectSelector(state => state.payRedeem.chainId) ?? defaultChainId
-    
-  const projectId = useProjectIdOfChain({ chainId: selectedChainId })
+
+  const { projectId } = useJBProjectId(selectedChainId)
 
   // TODO: We should probably break out tokens panel hook into reusable module
   const { data: _userTokenBalance } = useReadJbTokensTotalBalanceOf({

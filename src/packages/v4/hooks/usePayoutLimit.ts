@@ -3,6 +3,7 @@ import * as constants from '@ethersproject/constants'
 import {
   useJBChainId,
   useJBContractContext,
+  useJBProjectId,
   useJBRuleset,
   useReadJbFundAccessLimitsPayoutLimitsOf,
 } from 'juice-sdk-react'
@@ -17,23 +18,29 @@ import { V4_CURRENCY_ETH } from '../utils/currency'
 export function usePayoutLimit() {
   const chainId = useJBChainId()
   const {
-    projectId,
     contracts: { primaryNativeTerminal, fundAccessLimits },
   } = useJBContractContext()
-  const { data: ruleset } = useJBRuleset()
+  const { projectId } = useJBProjectId()
+  const { ruleset } = useJBRuleset({
+    projectId,
+    chainId,
+  })
   const { data: payoutLimits, isLoading } =
     useReadJbFundAccessLimitsPayoutLimitsOf({
       chainId,
       address: fundAccessLimits.data ?? undefined,
-      args: primaryNativeTerminal.data && fundAccessLimits.data ? [
-        projectId,
-        BigInt(ruleset?.id ?? 0),
-        primaryNativeTerminal.data ?? constants.AddressZero,
-        NATIVE_TOKEN,
-      ] : undefined,
+      args:
+        primaryNativeTerminal.data && fundAccessLimits.data && projectId
+          ? [
+              projectId,
+              BigInt(ruleset?.id ?? 0),
+              primaryNativeTerminal.data ?? constants.AddressZero,
+              NATIVE_TOKEN,
+            ]
+          : undefined,
       query: {
-        enabled: Boolean(fundAccessLimits.data && primaryNativeTerminal.data)
-      }
+        enabled: Boolean(fundAccessLimits.data && primaryNativeTerminal.data),
+      },
     })
 
   const payoutLimit = payoutLimits?.[0]

@@ -107,7 +107,7 @@
     "he": "^1.2.0",
     "jsonwebtoken": "^9.0.0",
     "juice-sdk-core": "^1.7.4-beta",
-    "juice-sdk-react": "^1.7.8-beta",
+    "juice-sdk-react": "^1.8.4-beta",
     "juicebox-metadata-helper": "0.1.7",
     "less": "4.1.2",
     "lodash": "^4.17.21",

@@ -3,6 +3,7 @@ import { NATIVE_TOKEN, NATIVE_TOKEN_DECIMALS } from 'juice-sdk-core'
 import {
   JBChainId,
   useJBChainId,
+  useJBProjectId,
   useReadJbDirectoryPrimaryTerminalOf,
   useSuckers,
   useWriteJbMultiTerminalSendPayoutsOf
@@ -22,7 +23,6 @@ import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
-import { useProjectIdOfChain } from 'packages/v4/hooks/useProjectIdOfChain'
 import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4CurrentPayoutSplits'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { emitErrorNotification } from 'utils/notifications'
@@ -42,14 +42,18 @@ export default function V4DistributePayoutsModal({
   const { addTransaction } = useContext(TxHistoryContext)
   const defaultChainId = useJBChainId()
 
-  const [selectedChainId, setSelectedChainId] = useState<JBChainId | undefined>(defaultChainId)
+  const [selectedChainId, setSelectedChainId] = useState<JBChainId | undefined>(
+    defaultChainId,
+  )
 
   const { data: suckers } = useSuckers()
-  const selectedChainProjectId = suckers?.find((sucker) => sucker.peerChainId === selectedChainId)?.projectId
+  const selectedChainProjectId = suckers?.find(
+    sucker => sucker.peerChainId === selectedChainId,
+  )?.projectId
 
   const { distributableAmount: distributable } = useV4DistributableAmount({
     chainId: selectedChainId,
-    projectId: selectedChainProjectId
+    projectId: selectedChainProjectId,
   })
 
   const { data: payoutSplits } = useV4CurrentPayoutSplits(selectedChainId)
@@ -58,18 +62,19 @@ export default function V4DistributePayoutsModal({
 
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
-  const [distributionAmount, setDistributionAmount] = useState<string | undefined>(distributable.format())
+  const [distributionAmount, setDistributionAmount] = useState<
+    string | undefined
+  >(distributable.format())
 
-  const projectId = useProjectIdOfChain({ chainId: selectedChainId })
-
+  const { projectId } = useJBProjectId(selectedChainId)
   const { writeContractAsync: writeSendPayouts } =
     useWriteJbMultiTerminalSendPayoutsOf()
-  
+
   const { data: terminalAddress } = useReadJbDirectoryPrimaryTerminalOf({
     chainId: selectedChainId,
     args: [BigInt(projectId ?? 0), NATIVE_TOKEN],
   })
-  
+
   async function executeDistributePayoutsTx() {
     if (
       !payoutLimitAmountCurrency ||
@@ -98,7 +103,9 @@ export default function V4DistributePayoutsModal({
       })
       setTransactionPending(true)
 
-      addTransaction?.(`Send payouts on ${NETWORKS[selectedChainId]?.label}`, { hash })
+      addTransaction?.(`Send payouts on ${NETWORKS[selectedChainId]?.label}`, {
+        hash,
+      })
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
         chainId: selectedChainId,
@@ -137,11 +144,8 @@ export default function V4DistributePayoutsModal({
     >
       <div className="flex flex-col gap-6">
         <Form layout="vertical">
-          {suckers && suckers.length > 1 ?
-            <Form.Item
-              className="mb-4"
-              label={<Trans>Chain</Trans>}
-            >
+          {suckers && suckers.length > 1 ? (
+            <Form.Item className="mb-4" label={<Trans>Chain</Trans>}>
               <ChainSelect
                 value={selectedChainId}
                 onChange={setSelectedChainId}
@@ -149,7 +153,7 @@ export default function V4DistributePayoutsModal({
                 showTitle
               />
             </Form.Item>
-          : null }
+          ) : null}
           <Form.Item
             className="mb-0"
             label={<Trans>Amount to pay out</Trans>}

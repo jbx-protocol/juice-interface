@@ -4,6 +4,7 @@ import {
   JBChainId,
   useJBContractContext,
   useJBRuleset,
+  useReadJbDirectoryPrimaryTerminalOf,
   useReadJbFundAccessLimitsPayoutLimitsOf,
 } from 'juice-sdk-react'
 
@@ -22,9 +23,15 @@ export function usePayoutLimitOfChain({
   projectId: bigint | undefined
 }) {
   const {
-    contracts: { primaryNativeTerminal, fundAccessLimits },
+    contracts: { fundAccessLimits },
   } = useJBContractContext()
-  const { data: ruleset } = useJBRuleset()
+
+  const { data: ruleset } = useJBRuleset() // !!!!!v4TODO: pass chainId here once sdk updated
+
+  const { data: terminalAddress } = useReadJbDirectoryPrimaryTerminalOf({
+      chainId,
+      args: [projectId ?? 0n, NATIVE_TOKEN],
+    })
   const { data: payoutLimits, isLoading } =
     useReadJbFundAccessLimitsPayoutLimitsOf({
       address: fundAccessLimits.data ?? undefined,
@@ -32,11 +39,7 @@ export function usePayoutLimitOfChain({
       args: [
         projectId ?? 0n,
         BigInt(ruleset?.id ?? 0),
-        primaryNativeTerminal.data ?? constants.AddressZero, // v4TODO: should be below?
-        // useReadJbDirectoryPrimaryTerminalOf({
-          //   chainId,
-          //   args: [projectId, NATIVE_TOKEN],
-          // })  
+        terminalAddress ?? constants.AddressZero,
         NATIVE_TOKEN,
       ],
     })

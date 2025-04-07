@@ -1,6 +1,5 @@
 import { useSetChain } from '@web3-onboard/react'
 import { readNetwork } from 'constants/networks'
-import { useJBChainId } from 'juice-sdk-react'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { featureFlagEnabled } from 'utils/featureFlags'
@@ -8,27 +7,23 @@ import { featureFlagEnabled } from 'utils/featureFlags'
 export function useChainUnsupported() {
   const [{ connectedChain }] = useSetChain()
 
-  // get v4 chain id
-  const chainId = useJBChainId()
   const router = useRouter()
 
   const chainUnsupported = useMemo(() => {
-    if (!connectedChain) {
+    if (!connectedChain || router.pathname.includes('/v4')) {
       return false
     }
 
-    // dont show button on create flow tho. here be bong smoke.
-    if (featureFlagEnabled('v4') && router.pathname.includes('/create')) {
+    const isV4Create = featureFlagEnabled('v4') && router.pathname.includes('/create')
+    const isV4ProjectPage = router.pathname.includes('/v4')
+    
+    // dont show buttons on v4 stuff
+    if (isV4Create || isV4ProjectPage) {
       return false
     }
-
-    // account for v4
-    if (chainId) {
-      return Number(connectedChain.id) !== chainId
-    }
-
+    
     return Number(connectedChain.id) !== readNetwork.chainId
-  }, [connectedChain, chainId, router])
+  }, [connectedChain, router])
 
   return chainUnsupported
 }

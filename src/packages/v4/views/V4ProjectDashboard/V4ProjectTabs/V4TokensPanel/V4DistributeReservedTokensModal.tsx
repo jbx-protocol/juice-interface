@@ -55,7 +55,9 @@ export default function V4DistributeReservedTokensModal({
       // !distributionAmount ||
       !contracts.controller.data ||
       !projectId
-    )
+    ) {
+      return
+    }
 
     // Check if wallet is connected to wrong chain
     if (walletConnectedToWrongChain) {

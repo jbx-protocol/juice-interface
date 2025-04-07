@@ -6,6 +6,7 @@ import { waitForTransactionReceipt } from '@wagmi/core'
 import TransactionModal from 'components/modals/TransactionModal'
 import { NETWORKS } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { useWallet } from 'hooks/Wallet'
 import { JBChainId } from 'juice-sdk-core'
 import SplitList from 'packages/v4/components/SplitList/SplitList'
 import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
@@ -38,12 +39,15 @@ export default function V4DistributeReservedTokensModal({
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  // const distributeReservedTokensTx = useDistributeReservedTokens()
   const { writeContractAsync: writeSendReservedTokens, data } =
     useWriteJbControllerSendReservedTokensToSplitsOf()
 
   const { pendingReservedTokens, pendingReservedTokensFormatted } =
     useV4ReservedTokensSubPanel()
+    
+  const { chain: walletChain, changeNetworks, connect } = useWallet()
+  const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
+  const walletConnectedToWrongChain = chainId !== walletChainId
 
   async function sendReservedTokens() {
     if (
@@ -52,13 +56,26 @@ export default function V4DistributeReservedTokensModal({
       !contracts.controller.data ||
       !projectId
     )
+
+    // Check if wallet is connected to wrong chain
+    if (walletConnectedToWrongChain) {
+      try {
+        await changeNetworks(chainId)
+        return
+      } catch (e) {
+        emitErrorNotification((e as unknown as Error).message)
+        return
+      }
+    }
+    
+    if (!walletChain) {
+      await connect()
       return
+    }
 
     setLoading(true)
 
-    const args = [
-      BigInt(projectId)
-    ] as const
+    const args = [BigInt(projectId)] as const
 
     try {
       const hash = await writeSendReservedTokens({
@@ -102,7 +119,11 @@ export default function V4DistributeReservedTokensModal({
       title={<Trans>Send reserved {tokenTextPlural} on {NETWORKS[chainId].label}</Trans>}
       open={open}
       onOk={() => sendReservedTokens()}
-      okText={t`Send ${tokenTextPlural}`}
+      okText={
+        walletConnectedToWrongChain
+          ? t`Change networks to send reserved ${tokenTextPlural}`
+          : t`Send ${tokenTextPlural}`
+      }
       connectWalletText={t`Connect wallet to send reserved ${tokenTextPlural}`}
       confirmLoading={loading}
       transactionPending={transactionPending}

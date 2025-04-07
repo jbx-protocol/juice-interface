@@ -2210,6 +2210,9 @@ msgstr ""
 msgid "Check {lastEmailUpdated} and verify your new email address."
 msgstr ""
 
+msgid "Change networks to send payouts"
+msgstr ""
+
 msgid "Set splits for {projectTitle}"
 msgstr ""
 

@@ -3368,6 +3368,9 @@ msgstr ""
 msgid "Unlocked"
 msgstr ""
 
+msgid "Change networks to send reserved {tokenTextPlural}"
+msgstr ""
+
 msgid "Amount"
 msgstr ""
 

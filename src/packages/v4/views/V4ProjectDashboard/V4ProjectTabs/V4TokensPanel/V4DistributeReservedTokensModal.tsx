@@ -1,11 +1,12 @@
 import { Trans, t } from '@lingui/macro'
-import { useJBChainId, useJBContractContext, useJBTokenContext, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
+import { useJBContractContext, useJBTokenContext, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
 import { useContext, useState } from 'react'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
 import TransactionModal from 'components/modals/TransactionModal'
 import { NETWORKS } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { JBChainId } from 'juice-sdk-core'
 import SplitList from 'packages/v4/components/SplitList/SplitList'
 import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
@@ -18,14 +19,14 @@ export default function V4DistributeReservedTokensModal({
   open,
   onCancel,
   onConfirmed,
+  chainId
 }: {
   open?: boolean
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
+  chainId: JBChainId
 }) {
   const { addTransaction } = useContext(TxHistoryContext)
-
-  const jbChainId = useJBChainId()
 
   const { projectId, contracts } = useJBContractContext()
   const { splits: reservedTokensSplits } = useV4ReservedSplits()
@@ -63,6 +64,7 @@ export default function V4DistributeReservedTokensModal({
       const hash = await writeSendReservedTokens({
         address: contracts.controller.data,
         args,
+        chainId
       })
       setTransactionPending(true)
 
@@ -93,11 +95,11 @@ export default function V4DistributeReservedTokensModal({
     plural: false,
   })
 
-  if (!jbChainId) return null
+  if (!chainId) return null
 
   return (
     <TransactionModal
-      title={<Trans>Send reserved {tokenTextPlural} on {NETWORKS[jbChainId].label}</Trans>}
+      title={<Trans>Send reserved {tokenTextPlural} on {NETWORKS[chainId].label}</Trans>}
       open={open}
       onOk={() => sendReservedTokens()}
       okText={t`Send ${tokenTextPlural}`}

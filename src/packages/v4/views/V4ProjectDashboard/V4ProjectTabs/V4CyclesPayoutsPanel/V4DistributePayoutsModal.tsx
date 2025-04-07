@@ -20,6 +20,7 @@ import TransactionModal from 'components/modals/TransactionModal'
 import { FEES_EXPLANATION } from 'components/strings'
 import { NETWORKS } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { useWallet } from 'hooks/Wallet'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
@@ -75,6 +76,11 @@ export default function V4DistributePayoutsModal({
     args: [BigInt(projectId ?? 0), NATIVE_TOKEN],
   })
 
+  const { chain: walletChain, changeNetworks, connect } = useWallet()
+  const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
+  
+  const walletConnectedToWrongChain = selectedChainId !== walletChainId
+
   async function executeDistributePayoutsTx() {
     if (
       !payoutLimitAmountCurrency ||
@@ -84,6 +90,22 @@ export default function V4DistributePayoutsModal({
       !projectId
     )
       return
+
+    // Check if wallet is connected to wrong chain
+    if (walletConnectedToWrongChain) {
+      try {
+        await changeNetworks(selectedChainId as JBChainId)
+        return
+      } catch (e) {
+        emitErrorNotification((e as unknown as Error).message)
+        return
+      }
+    }
+    
+    if (!walletChain) {
+      await connect()
+      return
+    }
 
     setLoading(true)
 
@@ -97,7 +119,7 @@ export default function V4DistributePayoutsModal({
 
     try {
       const hash = await writeSendPayouts({
-        address: terminalAddress, // TODOv4 Q: or should this just be contracts.primaryNativeTerminal.address?
+        address: terminalAddress,
         chainId: selectedChainId,
         args,
       })
@@ -137,7 +159,11 @@ export default function V4DistributePayoutsModal({
       }}
       confirmLoading={loading}
       transactionPending={transactionPending}
-      okText={t`Send payouts`}
+      okText={
+        walletConnectedToWrongChain
+          ? t`Change networks to send payouts`
+          : t`Send payouts`
+      }
       connectWalletText={t`Connect wallet to send payouts`}
       width={640}
       className="top-[40px]"

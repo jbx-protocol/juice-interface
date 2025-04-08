@@ -8,7 +8,7 @@ import {
   useSuckers,
   useWriteJbMultiTerminalSendPayoutsOf
 } from 'juice-sdk-react'
-import { V4CurrencyName, V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { V4CurrencyName } from 'packages/v4/utils/currency'
 import { useContext, useState } from 'react'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
@@ -52,14 +52,12 @@ export default function V4DistributePayoutsModal({
     sucker => sucker.peerChainId === selectedChainId,
   )?.projectId
 
-  const { distributableAmount: distributable } = useV4DistributableAmount({
+  const { distributableAmount: distributable, currency: distributableCurrency } = useV4DistributableAmount({
     chainId: selectedChainId,
     projectId: selectedChainProjectId,
   })
 
   const { data: payoutSplits } = useV4CurrentPayoutSplits(selectedChainId)
-
-  const payoutLimitAmountCurrency = payoutLimit?.currency ?? V4_CURRENCY_ETH
 
   const [transactionPending, setTransactionPending] = useState<boolean>()
   const [loading, setLoading] = useState<boolean>()
@@ -83,7 +81,7 @@ export default function V4DistributePayoutsModal({
 
   async function executeDistributePayoutsTx() {
     if (
-      !payoutLimitAmountCurrency ||
+      !distributableCurrency ||
       !distributionAmount ||
       !selectedChainId ||
       !terminalAddress ||
@@ -113,7 +111,7 @@ export default function V4DistributePayoutsModal({
       BigInt(projectId),
       NATIVE_TOKEN,
       parseUnits(distributionAmount, NATIVE_TOKEN_DECIMALS),
-      1n,//BigInt(payoutLimitAmountCurrency), !!v4TODO: usd payouts when available to payout exceeds limit will probably break
+      BigInt(distributableCurrency),
       0n, // minTokensPaidOut
     ] as const
 
@@ -143,7 +141,7 @@ export default function V4DistributePayoutsModal({
     }
   }
 
-  const currencyName = V4CurrencyName(payoutLimitAmountCurrency)
+  const currencyName = V4CurrencyName(distributableCurrency)
 
   return (
     <TransactionModal

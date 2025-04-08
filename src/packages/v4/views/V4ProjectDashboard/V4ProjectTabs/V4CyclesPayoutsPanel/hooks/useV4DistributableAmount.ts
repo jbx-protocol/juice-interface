@@ -1,8 +1,10 @@
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { JBProjectToken } from 'juice-sdk-core'
 import { JBChainId } from 'juice-sdk-react'
 import { usePayoutLimitOfChain } from 'packages/v4/hooks/usePayoutLimitOfChain'
 import { useUsedPayoutLimitOf } from 'packages/v4/hooks/useUsedPayoutLimitOf'
 import { useV4BalanceOfNativeTerminal } from 'packages/v4/hooks/useV4BalanceOfNativeTerminal'
+import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 
 export const useV4DistributableAmount = ({
@@ -15,6 +17,7 @@ export const useV4DistributableAmount = ({
   const { data: usedPayoutLimit } = useUsedPayoutLimitOf({ chainId, projectId })
   const { data: _treasuryBalance } = useV4BalanceOfNativeTerminal( { chainId, projectId })
   const { data: payoutLimit } = usePayoutLimitOfChain({ chainId, projectId })
+  const converter = useCurrencyConverter()
 
   const effectiveDistributionLimit = payoutLimit?.amount ?? MAX_PAYOUT_LIMIT
   const distributedAmount = usedPayoutLimit ?? 0n
@@ -25,11 +28,14 @@ export const useV4DistributableAmount = ({
       ? effectiveDistributionLimit
       : effectiveDistributionLimit - distributedAmount
 
-  const distributableAmount =
+  const distributableAmountEth =
     treasuryBalance > distributable ? distributable : treasuryBalance
 
+  const distributableAmountUsd = converter.wadToCurrency(distributableAmountEth, 'USD', 'ETH')?.toBigInt() ?? 0n
+  const distributableAmountInPayoutLimitCurrency = payoutLimit?.currency === V4_CURRENCY_ETH ? distributableAmountEth : distributableAmountUsd
+
   return {
-    distributableAmount: new JBProjectToken(distributableAmount),
+    distributableAmount: new JBProjectToken(distributableAmountInPayoutLimitCurrency),
     currency: payoutLimit?.currency,
   }
 }

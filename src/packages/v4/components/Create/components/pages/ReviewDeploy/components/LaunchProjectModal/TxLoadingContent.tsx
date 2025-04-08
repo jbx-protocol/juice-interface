@@ -26,7 +26,7 @@ export function TxLoadingContent({
       <h2 className="mt-4 font-heading text-2xl font-medium text-black dark:text-slate-100">
         <Trans>Transaction pending...</Trans>
       </h2>
-      <p>
+      <p className="text-center">
         <Trans>
           Your transaction has been submitted and is awaiting confirmation.
         </Trans>

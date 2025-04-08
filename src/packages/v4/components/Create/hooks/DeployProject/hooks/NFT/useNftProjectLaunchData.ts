@@ -1,8 +1,7 @@
-import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
 import {
+  NATIVE_TOKEN_DECIMALS,
   createSalt,
   jbProjectDeploymentAddresses,
-  NATIVE_TOKEN_DECIMALS,
 } from 'juice-sdk-core'
 import { JBChainId, jbPricesAddress } from 'juice-sdk-react'
 import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
@@ -11,14 +10,16 @@ import {
   JB721TiersHookFlags,
   JBDeploy721TiersHookConfig,
 } from 'packages/v4/models/nfts'
+import { encodeIpfsUri, ipfsUri } from 'utils/ipfs'
+import { Address, parseEther, zeroAddress } from 'viem'
+
+import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
 import { convertV2V3CurrencyOptionToV4 } from 'packages/v4/utils/currency'
 import { isValidMustStartAtOrAfter } from 'packages/v4/utils/fundingCycle'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useCreatingV2V3FundingCycleDataSelector } from 'redux/hooks/v2v3/create'
 import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/creatingV2Project'
-import { encodeIpfsUri, ipfsUri } from 'utils/ipfs'
 import { sortNftsByContributionFloor } from 'utils/nftRewards'
-import { Address, parseEther, zeroAddress } from 'viem'
 import { useStandardProjectLaunchData } from '../useStandardProjectLaunchData'
 import { DEFAULT_NFT_MAX_SUPPLY } from './useDeployNftProject'
 
@@ -53,7 +54,6 @@ export function useNftProjectLaunchData() {
           chainId as JBChainId
         ] as Address)
       : undefined
-
     if (
       !defaultJBController ||
       !isValidMustStartAtOrAfter(

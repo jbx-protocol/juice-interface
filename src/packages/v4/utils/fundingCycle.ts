@@ -26,5 +26,5 @@ export const isValidMustStartAtOrAfter = (
   mustStartAtOrAfter: bigint,
   fundingCycleDuration: bigint,
 ): boolean => {
-  return mustStartAtOrAfter + fundingCycleDuration > MaxUint54
+  return (mustStartAtOrAfter + fundingCycleDuration) < MaxUint54
 }

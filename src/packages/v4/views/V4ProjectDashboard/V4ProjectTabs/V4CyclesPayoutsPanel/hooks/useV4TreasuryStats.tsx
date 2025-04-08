@@ -1,6 +1,5 @@
 import {
   JBChainId,
-  NativeTokenValue,
   useJBRulesetMetadata,
   useSuckersNativeTokenBalance,
   useSuckersNativeTokenSurplus
@@ -53,7 +52,7 @@ export const useV4TreasuryStats = () => {
     ) ?? 0n
 
   const totalTreasuryBalance = useMemo(() => {
-    return <NativeTokenValue wei={totalBalance} />
+    return <AmountInCurrency amount={BigNumber.from(totalBalance ?? 0n)} currency="ETH" />
   }, [totalBalance])
 
   const surplusElement = useMemo(() => {
@@ -124,9 +123,7 @@ export const useV4TreasuryStats = () => {
                       </span>
                     </div>
                     <span className="whitespace-nowrap font-medium">
-                      <NativeTokenValue
-                        wei={distributableAmountObj.distributableAmount ?? 0n}
-                      />
+                      <AmountInCurrency amount={BigNumber.from(distributableAmountObj.distributableAmount ?? 0n)} currency="ETH" />
                     </span>
                   </div>
                 ),

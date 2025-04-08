@@ -113,7 +113,7 @@ export default function V4DistributePayoutsModal({
       BigInt(projectId),
       NATIVE_TOKEN,
       parseUnits(distributionAmount, NATIVE_TOKEN_DECIMALS),
-      BigInt(payoutLimitAmountCurrency),
+      1n,//BigInt(payoutLimitAmountCurrency), !!v4TODO: usd payouts when available to payout exceeds limit will probably break
       0n, // minTokensPaidOut
     ] as const
 

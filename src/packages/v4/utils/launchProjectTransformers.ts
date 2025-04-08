@@ -14,7 +14,6 @@ import {
   GroupedSplits as V2V3GroupedSplits,
   Split as V2V3Split,
 } from 'packages/v2v3/models/splits'
-import { convertV2V3CurrencyOptionToV4 } from './currency'
 
 import round from 'lodash/round'
 import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
@@ -24,6 +23,9 @@ import { Address } from 'viem'
 import { FundAccessLimitGroup } from '../models/fundAccessLimits'
 import { GroupedSplits as V4GroupedSplits } from '../models/splits'
 import { LaunchProjectJBTerminal } from '../models/terminals'
+import { convertV2V3CurrencyOptionToV4 } from './currency'
+
+const NATIVE_TOKEN_CURRENCY_ID = 61166 // v4TODO: put in SDK
 
 export type LaunchV2V3ProjectArgs = [
   string, // _owner
@@ -197,9 +199,10 @@ function generateV4LaunchTerminalConfigurationsArg({
     terminal: terminal as Address,
     accountingContextsToAccept: [
       {
-        token: currencyTokenAddress,
+        token: currencyTokenAddress, // NATIVE_TOKEN
         decimals: NATIVE_TOKEN_DECIMALS,
-        currency: ETH_CURRENCY_ID,
+        currency: NATIVE_TOKEN_CURRENCY_ID, //61166
+        // Jango - "anytime the NATIVE_TOKEN (0x00...eee) is being associated with a currency, use 61166"
       },
     ],
   }))

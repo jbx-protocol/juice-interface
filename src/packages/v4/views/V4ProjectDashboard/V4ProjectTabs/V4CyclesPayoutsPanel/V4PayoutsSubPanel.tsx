@@ -1,10 +1,12 @@
 import { Trans, t } from '@lingui/macro'
+
+import { BigNumber } from '@ethersproject/bignumber'
+import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { availableToPayOutTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
 import { TruncatedText } from 'components/TruncatedText'
 import { NETWORKS } from 'constants/networks'
 import { JBChainId } from 'juice-sdk-core'
-import { NativeTokenValue } from 'juice-sdk-react'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import React from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -78,7 +80,7 @@ export const V4PayoutsSubPanel = ({
                         />
                       </span>
                       <span className="flex-shrink-0 flex-nowrap text-sm text-grey-900 dark:text-slate-50">
-                        <NativeTokenValue wei={sucker.balance} />
+                        <AmountInCurrency amount={BigNumber.from(sucker.balance)} currency="ETH" />
                       </span>
                     </div>
                   ))}

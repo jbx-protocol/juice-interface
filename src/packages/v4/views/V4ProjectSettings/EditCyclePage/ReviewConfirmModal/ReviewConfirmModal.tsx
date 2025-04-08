@@ -40,6 +40,7 @@ export function ReviewConfirmModal({
 
   const handleConfirm = () => {
     setConfirmLoading(true)
+    // TODO(aeolin) do a relayr tx here if the datasource is omnichain
     editRulesetTx(editCycleForm?.getFieldsValue(true), {
       onTransactionPending: () => null,
       onTransactionConfirmed: () => {

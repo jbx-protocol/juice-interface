@@ -11,7 +11,7 @@ import {
   jbOmnichainDeployerAddress,
   useGetRelayrTxQuote,
 } from 'juice-sdk-react'
-import { Address, ContractFunctionArgs, encodeFunctionData } from 'viem'
+import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
 export function useDeployOmnichainProject() {
   const { userAddress } = useWallet()
@@ -135,7 +135,7 @@ export function useDeployOmnichainProject() {
         functionName: 'launch721ProjectFor',
         args,
       })
-     // console.log('encodedData', chainId, encodedData)
+      // console.log('encodedData', chainId, encodedData)
 
       /**
        * UNCOMMENT THIS BLOCK TO GET TENDERLY SIM DATA
@@ -156,9 +156,7 @@ export function useDeployOmnichainProject() {
       return {
         data: {
           from: userAddress,
-          // to: jbOmnichainDeployerAddress[chainId],
-          // TODO temporary, make sure jango updates the github repo, then update sdk so that the above address works ^
-          to: '0x29f83557ca30d4283c1EB8b6118d1B4808EAA190' as Address,
+          to: jbOmnichainDeployerAddress[chainId],
           value: 0n,
           gas: 1_000_000n * BigInt(chainIds.length),
           data: encodedData,

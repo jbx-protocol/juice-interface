@@ -6,7 +6,7 @@ import {
   JBRulesetContext,
   useJBChainId,
   useJBContractContext,
-  useWriteJbControllerQueueRulesetsOf
+  useWriteJbControllerQueueRulesetsOf,
 } from 'juice-sdk-react'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useCallback, useContext } from 'react'
@@ -70,13 +70,7 @@ export function useEditRulesetTx() {
         // console.log('encodedData: ', encodedData)
 
         const hash = await writeEditRuleset({
-          address:
-            // chainId &&
-            // rulesetMetadata.data?.dataHook ===
-            //   jbOmnichainDeployerAddress[chainId]
-            //   ? jbOmnichainDeployerAddress[chainId]
-            //   : 
-              contracts.controller.data,
+          address: contracts.controller.data,
           args,
         })
 
@@ -94,8 +88,6 @@ export function useEditRulesetTx() {
       }
     },
     [
-      // rulesetMetadata.data?.dataHook,
-      // chainId,
       projectId,
       contracts.controller.data,
       userAddress,

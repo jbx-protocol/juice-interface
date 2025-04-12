@@ -25,6 +25,10 @@ export const useNftCartItem = ({ id, quantity }: ProjectCartNftReward) => {
     }),
     [quantity, rewardTier?.contributionFloor],
   )
+  const upsertNft = React.useCallback(
+      () => dispatch(projectCartActions.upsertNftReward({ id, quantity: 1 })),
+    [dispatch, id]
+  )
 
   const removeNft = React.useCallback(
     () => dispatch(projectCartActions.removeNftReward({ id })),
@@ -46,6 +50,7 @@ export const useNftCartItem = ({ id, quantity }: ProjectCartNftReward) => {
     fileUrl: rewardTier?.fileUrl,
     quantity,
     price,
+    upsertNft,
     removeNft,
     increaseQuantity,
     decreaseQuantity,

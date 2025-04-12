@@ -4280,6 +4280,9 @@ msgstr ""
 msgid "Manage your project's state and ownership"
 msgstr ""
 
+msgid "ETH"
+msgstr ""
+
 msgid "The amount of reserved tokens currently available to be distributed to the recipients below."
 msgstr ""
 

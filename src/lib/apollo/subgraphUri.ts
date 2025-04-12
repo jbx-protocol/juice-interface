@@ -84,7 +84,7 @@ export const v4SubgraphUri = (chainId: number) => {
   } else {
     uri = env?.[chainId]?.serverUrl
     if (!uri) {
-      throw new Error('V4_SUBGRAPH_URL environment variable not defined')
+      throw new Error('Subgraph url for chain not defined: ' + chainId, )
     }
   }
 

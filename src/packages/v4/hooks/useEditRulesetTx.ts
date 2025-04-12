@@ -94,6 +94,8 @@ export function useEditRulesetTx() {
       }
     },
     [
+      rulesetMetadata.data?.dataHook,
+      chainId,
       projectId,
       contracts.controller.data,
       userAddress,

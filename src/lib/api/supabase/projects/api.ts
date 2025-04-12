@@ -9,8 +9,7 @@ import {
 } from 'generated/graphql'
 
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { readNetwork } from 'constants/networks'
-import { JB_CHAINS } from 'juice-sdk-core'
+import { MAINNET_IDS, readNetwork, TESTNET_IDS } from 'constants/networks'
 import { JBChainId } from 'juice-sdk-react'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { serverClient } from 'lib/apollo/serverClient'
@@ -36,22 +35,28 @@ import { dbProjects } from '../clients'
  * Query all projects from subgraph using apollo serverClient which is safe to use in edge runtime.
  */
 export async function queryAllSGProjectsForServer() {
+  const chains = Array.from(
+    process.env.NEXT_PUBLIC_TESTNET === 'true' ? TESTNET_IDS : MAINNET_IDS,
+  )
+
   const [res, ...rest] = await Promise.all([
     paginateDepleteQuery<DbProjectsQuery, QueryProjectsArgs>({
       client: serverClient,
       document: DbProjectsDocument,
     }),
-    ...Object.keys(JB_CHAINS).map(chainId => {
-      const client = new ApolloClient({
-        uri: v4SubgraphUri(parseInt(chainId) as JBChainId),
-        cache: new InMemoryCache(),
-      })
+    ...(process.env.NEXT_PUBLIC_V4_ENABLED === 'true'
+      ? chains.map(chainId => {
+          const client = new ApolloClient({
+            uri: v4SubgraphUri(chainId as JBChainId),
+            cache: new InMemoryCache(),
+          })
 
-      return paginateDepleteQuery<Dbv4ProjectsQuery, QueryProjectsArgs>({
-        client,
-        document: Dbv4ProjectsDocument,
-      })
-    }),
+          return paginateDepleteQuery<Dbv4ProjectsQuery, QueryProjectsArgs>({
+            client,
+            document: Dbv4ProjectsDocument,
+          })
+        })
+      : []),
   ])
 
   // Response must be retyped with Json<>, because the serverClient does not perform the parsing expected by generated types
@@ -61,8 +66,8 @@ export async function queryAllSGProjectsForServer() {
       chainId: readNetwork.chainId,
     }
   }) as unknown as Json<Pick<Project & { chainId: number }, SGSBCompareKey>>[]
-  const normalised = process.env.NEXT_PUBLIC_V4_ENABLED
-    ? Object.keys(JB_CHAINS).flatMap((chainId, idx) => {
+  let normalised = process.env.NEXT_PUBLIC_V4_ENABLED
+    ? chains.flatMap((chainId, idx) => {
         return rest[idx].map(p => {
           return {
             ...p,

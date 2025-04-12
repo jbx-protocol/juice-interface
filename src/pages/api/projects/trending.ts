@@ -1,26 +1,29 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { BigNumber } from '@ethersproject/bignumber'
 import { PV_V1, PV_V2, PV_V4 } from 'constants/pv'
 import { RomanStormVariables } from 'constants/romanStorm'
 import {
-  OrderDirection,
-  Project_OrderBy,
   QueryProjectsArgs,
   TrendingProjectsDocument,
   TrendingProjectsQuery,
 } from 'generated/graphql'
-import { JB_CHAINS } from 'juice-sdk-core'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from 'juice-sdk-core'
+import { sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { serverClient } from 'lib/apollo/serverClient'
-import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
 import { NextApiHandler } from 'next'
 import { V1ArchivedProjectIds } from 'packages/v1/constants/archivedProjects'
 import { V2ArchivedProjectIds } from 'packages/v2v3/constants/archivedProjects'
-import {
-  TrendingProjectsV4Document
-} from 'packages/v4/graphql/client/graphql'
 import { getSubgraphIdForProject } from 'utils/graph'
-import { sepolia } from 'viem/chains'
+import { parseDBProjectsRow } from 'utils/sgDbProjects'
+import {
+  arbitrum,
+  arbitrumSepolia,
+  base,
+  baseSepolia,
+  mainnet,
+  optimism,
+  optimismSepolia,
+  sepolia,
+} from 'viem/chains'
 
 const CACHE_MAXAGE = 60 * 5 // 5 minutes
 
@@ -36,54 +39,53 @@ const ARCHIVED_SUBGRAPH_IDS = [
 ]
 
 const handler: NextApiHandler = async (req, res) => {
-  const rawFirst = req.query.count // TODO probably can use Yup for this
-  const first = typeof rawFirst === 'string' ? parseInt(rawFirst) : undefined
+  const rawFirst = req.query.count
+  const limit = typeof rawFirst === 'string' ? parseInt(rawFirst) : undefined
+
   try {
-    const [projectsRes, v4SepoliaProjectsRes] = await Promise.all([
-      serverClient.query<TrendingProjectsQuery, QueryProjectsArgs>({
-        query: TrendingProjectsDocument,
-        variables: {
-          where: {
-            trendingScore_gt: '0' as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-            ...(ARCHIVED_SUBGRAPH_IDS.length
-              ? { id_not_in: ARCHIVED_SUBGRAPH_IDS }
-              : {}), // `id_not_in: <empty-array>` will return 0 results
-          },
-          first,
-          orderBy: Project_OrderBy.trendingScore,
-          orderDirection: OrderDirection.desc,
-        },
-      }),
-      ...Object.keys(JB_CHAINS).map(chainId => {
-        const client = new ApolloClient({
-          uri: v4SubgraphUri(parseInt(chainId) as JBChainId),
-          cache: new InMemoryCache(),
-        })
+    // Query trending projects from Supabase database
+    const { data: projectsData, error } = await sudoPublicDbClient
+      .from('projects')
+      .select('*')
+      .gt('trending_score', '0')
+      // .not('id', 'in', ARCHIVED_SUBGRAPH_IDS)
+      // .not('id', 'in', V2_BLOCKLISTED_PROJECTS)
+      .not('archived', 'is', true)
+      .order('trending_score', { ascending: false })
+      .limit(limit || 100)
 
-        return client.query<TrendingProjectsQuery, QueryProjectsArgs>({
-          query: TrendingProjectsV4Document,
-          variables: {
-            where: {
-              trendingScore_gt: '0' as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-            },
-            first,
-            orderBy: Project_OrderBy.trendingScore,
-            orderDirection: OrderDirection.desc,
-          },
-        })
-      }),
-    ])
+    if (error) {
+      throw error
+    }
 
-    const projects = [
-      ...projectsRes.data.projects,
-      ...(process.env.NEXT_PUBLIC_V4_ENABLED
-        ? v4SepoliaProjectsRes.data.projects.map(p => {
-            return { ...p, chainId: sepolia.id, pv: PV_V4 }
-          })
-        : []),
-    ]
+    // Parse DB projects into the format expected by the frontend
+    let projects = projectsData.map(parseDBProjectsRow)
+    if (process.env.NEXT_PUBLIC_V4_ENABLED === 'true') {
+      projects = projects.filter(p => p.pv === PV_V4)
+    } else {
+      projects = projects.filter(p => p.pv !== PV_V4)
+    }
+    if (process.env.NEXT_PUBLIC_TESTNET === 'true') {
+      projects = projects.filter(p =>
+        (
+          [
+            sepolia.id,
+            optimismSepolia.id,
+            baseSepolia.id,
+            arbitrumSepolia.id,
+          ] as JBChainId[]
+        ).includes(p.chainId),
+      )
+    } else {
+      projects = projects.filter(p =>
+        (
+          [mainnet.id, optimism.id, base.id, arbitrum.id] as JBChainId[]
+        ).includes(p.chainId),
+      )
+    }
 
     try {
+      // Handle the Roman Storm special case
       const romanProjectIndex = projects.findIndex(
         el => el.projectId === RomanStormVariables.PROJECT_ID && el.pv === '2',
       )
@@ -111,9 +113,9 @@ const handler: NextApiHandler = async (req, res) => {
 
         projects[romanProjectIndex] = {
           ...projects[romanProjectIndex],
-          volume: BigNumber.from(romanProject.volume ?? 0).sub(
-            BigNumber.from(romanProjectSnapshot.volume ?? 0),
-          ), // Incorrect types are declared
+          volume: BigNumber.from(romanProject.volume ?? 0)
+            .sub(BigNumber.from(romanProjectSnapshot.volume ?? 0))
+            .toString(), // Incorrect types are declared
           paymentsCount:
             romanProject.paymentsCount - romanProjectSnapshot.paymentsCount,
         }

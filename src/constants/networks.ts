@@ -99,9 +99,9 @@ export const NETWORKS: Record<number, NetworkInfo> = {
   },
 }
 
-export const TESTNET_IDS = new Set<number>([
-  11155111, 421614, 11155420, 84531, 1442,
-])
+export const TESTNET_IDS = new Set<number>([11155111, 421614, 11155420, 84532])
+
+export const MAINNET_IDS = new Set<number>([1, 42161, 10, 8453])
 
 export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
   (acc, curr) => ({

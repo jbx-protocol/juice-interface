@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Database } from 'types/database.types'
 
 import { Project } from 'generated/graphql'
+import { JBChainId } from 'juice-sdk-react'
 import { ProjectTagName } from './project-tags'
 import { PV } from './pv'
 type P = Project & { chainId: number }
@@ -36,7 +37,7 @@ export type DBProject = {
   projectId: number
   createdAt: number
   pv: PV
-  chainId: number
+  chainId: JBChainId
   handle: string | null
   metadataUri: string | null
 

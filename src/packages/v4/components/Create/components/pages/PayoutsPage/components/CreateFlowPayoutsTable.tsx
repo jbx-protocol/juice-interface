@@ -2,7 +2,6 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
 import { CURRENCY_METADATA, CurrencyName } from 'constants/currency'
 import { TreasurySelection } from 'models/treasurySelection'
-import { PayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/PayoutsTable'
 import { Split } from 'packages/v2v3/models/splits'
 import {
   V2V3CurrencyName,
@@ -12,6 +11,7 @@ import {
   allocationToSplit,
   splitToAllocation,
 } from 'packages/v2v3/utils/splitToAllocation'
+import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { ReactNode } from 'react'
 import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'

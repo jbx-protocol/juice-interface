@@ -5,9 +5,11 @@ import { PV_V2, PV_V4 } from 'constants/pv'
 import { useProjectHandleText } from 'hooks/useProjectHandleText'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useSubtitle } from 'hooks/useSubtitle'
+import { JBChainId } from 'juice-sdk-react'
 import { SubgraphQueryProject } from 'models/subgraphProjects'
 import Link from 'next/link'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { isHardArchived } from 'utils/archived'
 import { formatDate } from 'utils/format/formatDate'
@@ -87,27 +89,41 @@ export default function ProjectCard({
         </div>
         <div className="min-w-0 flex-1 overflow-hidden overflow-ellipsis font-normal">
           {metadata ? (
-            <span className="m-0 font-heading text-xl leading-8 text-black dark:text-slate-100">
+            <span className="m-0 flex items-center gap-2 font-heading text-xl leading-8 text-black dark:text-slate-100">
               {metadata.name}
             </span>
           ) : (
             <Skeleton paragraph={false} title={{ width: 120 }} active />
           )}
 
-          <div>
-            <span className="font-medium text-black dark:text-slate-100">
-              {handleText}
-            </span>
-          </div>
+          {handle ? (
+            <div className="my-1">
+              <span className="flex items-center gap-1 font-medium text-black dark:text-slate-100">
+                {handleText}
+              </span>
+            </div>
+          ) : null}
 
-          <div>
-            <span className="mr-1 font-medium text-black dark:text-slate-100">
-              <ETHAmount amount={volume} precision={precision} />
-            </span>
+          <div className="flex items-center gap-2">
+            {chainId ? (
+              <div>
+                <ChainLogo
+                  chainId={chainId as JBChainId}
+                  width={18}
+                  height={18}
+                />
+              </div>
+            ) : null}
+            <div>
+              <span className="mr-1 font-medium text-black dark:text-slate-100">
+                <ETHAmount amount={volume} precision={precision} />
+              </span>
 
-            <span className="text-grey-500 dark:text-grey-300">
-              since {!!createdAt && formatDate(createdAt * 1000, 'yyyy-MM-DD')}
-            </span>
+              <span className="text-grey-500 dark:text-grey-300">
+                since{' '}
+                {!!createdAt && formatDate(createdAt * 1000, 'yyyy-MM-DD')}
+              </span>
+            </div>
           </div>
 
           {tags?.length ? (

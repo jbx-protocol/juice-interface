@@ -1,7 +1,10 @@
 import { isBrowser } from 'utils/isBrowser'
 import {
+  arbitrum,
   arbitrumSepolia,
+  base,
   baseSepolia,
+  mainnet,
   optimism,
   optimismSepolia,
   sepolia,
@@ -35,10 +38,23 @@ export const v4SubgraphUri = (chainId: number) => {
   let uri: string | undefined
 
   const env = {
+    [mainnet.id]: {
+      browserUrl: process.env.NEXT_PUBLIC_ETHEREUM_SUBGRAPH_URL,
+      serverUrl: process.env.V4_ETHEREUM_SUBGRAPH_URL,
+    },
     [optimism.id]: {
       browserUrl: process.env.NEXT_PUBLIC_V4_OPTIMISM_SUBGRAPH_URL,
       serverUrl: process.env.V4_OPTIMISM_SUBGRAPH_URL,
     },
+    [base.id]: {
+      browserUrl: process.env.NEXT_PUBLIC_V4_BASE_SUBGRAPH_URL,
+      serverUrl: process.env.V4_BASE_SUBGRAPH_URL,
+    },
+    [arbitrum.id]: {
+      browserUrl: process.env.NEXT_PUBLIC_V4_ARBITRUM_SUBGRAPH_URL,
+      serverUrl: process.env.V4_ARBITRUM_SUBGRAPH_URL,
+    },
+
     // Test nets
     [sepolia.id]: {
       browserUrl: process.env.NEXT_PUBLIC_V4_SEPOLIA_SUBGRAPH_URL,

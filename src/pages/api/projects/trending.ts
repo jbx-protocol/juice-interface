@@ -1,3 +1,4 @@
+import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { BigNumber } from '@ethersproject/bignumber'
 import { PV_V1, PV_V2, PV_V4 } from 'constants/pv'
 import { RomanStormVariables } from 'constants/romanStorm'
@@ -8,11 +9,16 @@ import {
   TrendingProjectsDocument,
   TrendingProjectsQuery,
 } from 'generated/graphql'
-import { serverClient, v4SepoliaServerClient } from 'lib/apollo/serverClient'
+import { JB_CHAINS } from 'juice-sdk-core'
+import { JBChainId } from 'juice-sdk-react'
+import { serverClient } from 'lib/apollo/serverClient'
+import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
 import { NextApiHandler } from 'next'
 import { V1ArchivedProjectIds } from 'packages/v1/constants/archivedProjects'
 import { V2ArchivedProjectIds } from 'packages/v2v3/constants/archivedProjects'
-import { TrendingProjectsV4Document } from 'packages/v4/graphql/client/graphql'
+import {
+  TrendingProjectsV4Document
+} from 'packages/v4/graphql/client/graphql'
 import { getSubgraphIdForProject } from 'utils/graph'
 import { sepolia } from 'viem/chains'
 
@@ -48,16 +54,23 @@ const handler: NextApiHandler = async (req, res) => {
           orderDirection: OrderDirection.desc,
         },
       }),
-      v4SepoliaServerClient.query<TrendingProjectsQuery, QueryProjectsArgs>({
-        query: TrendingProjectsV4Document,
-        variables: {
-          where: {
-            trendingScore_gt: '0' as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+      ...Object.keys(JB_CHAINS).map(chainId => {
+        const client = new ApolloClient({
+          uri: v4SubgraphUri(parseInt(chainId) as JBChainId),
+          cache: new InMemoryCache(),
+        })
+
+        return client.query<TrendingProjectsQuery, QueryProjectsArgs>({
+          query: TrendingProjectsV4Document,
+          variables: {
+            where: {
+              trendingScore_gt: '0' as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+            },
+            first,
+            orderBy: Project_OrderBy.trendingScore,
+            orderDirection: OrderDirection.desc,
           },
-          first,
-          orderBy: Project_OrderBy.trendingScore,
-          orderDirection: OrderDirection.desc,
-        },
+        })
       }),
     ])
 

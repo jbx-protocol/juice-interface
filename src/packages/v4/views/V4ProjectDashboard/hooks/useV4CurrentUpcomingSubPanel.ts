@@ -1,7 +1,10 @@
 import { t } from '@lingui/macro'
-import { useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf } from 'juice-sdk-react'
+import {
+  useJBProjectId,
+  useJBRuleset,
+  useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf,
+} from 'juice-sdk-react'
 import { V4ApprovalStatus } from 'models/approvalHooks'
-import { useJBRulesetByChain } from 'packages/v4/hooks/useJBRulesetByChain'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { useMemo } from 'react'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
@@ -9,9 +12,11 @@ import { useCyclesPanelSelectedChain } from '../V4ProjectTabs/V4CyclesPayoutsPan
 
 export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   const { selectedChainId } = useCyclesPanelSelectedChain()
-
-  const { ruleset, isLoading: rulesetLoading } =
-    useJBRulesetByChain(selectedChainId)
+  const { projectId } = useJBProjectId()
+  const { ruleset, isLoading: rulesetLoading } = useJBRuleset({
+    chainId: selectedChainId,
+    projectId,
+  })
   const { ruleset: latestUpcomingRuleset, isLoading: upcomingRulesetsLoading } =
     useJBUpcomingRuleset(selectedChainId)
 
@@ -53,24 +58,16 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   const currentRulesetUnlocked =
     Boolean(ruleset && ruleset?.duration === 0) ?? true
 
-  const status = rulesetUnlocked ? t`Unlocked` : t`Locked`
+  const status = (type === 'current' ? currentRulesetUnlocked : rulesetUnlocked)
+    ? t`Unlocked`
+    : t`Locked`
 
-  // Short circuit current for faster loading
-  if (type === 'current') {
-    if (rulesetLoading) return { loading: true, type }
-    return {
-      loading: false,
-      type,
-      rulesetNumber,
-      status,
-    }
-  }
-
-  if (rulesetLoading || upcomingRulesetsLoading)
+  if (rulesetLoading || upcomingRulesetsLoading) {
     return {
       loading: true,
       type,
     }
+  }
 
   return {
     loading: false,

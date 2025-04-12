@@ -1,20 +1,20 @@
 import { Trans, t } from '@lingui/macro'
 
-import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
-import { RulesetCountdownProvider } from 'packages/v4/contexts/RulesetCountdownProvider'
-import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
+import { currentCycleRemainingLengthTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
 import { UpcomingCycleChangesCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTab/UpcomingCycleChangesCallout'
+import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
+import { useSuckers } from 'juice-sdk-react'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { RulesetCountdownProvider } from 'packages/v4/contexts/RulesetCountdownProvider'
+import { useState } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { useRulesetCountdown } from '../../hooks/useRulesetCountdown'
+import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
+import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
+import { useV4UpcomingRulesetHasChanges } from './hooks/useV4UpcomingRulesetHasChanges'
 import { V4ConfigurationDisplayCard } from './V4ConfigurationDisplayCard'
 import { V4PayoutsSubPanel } from './V4PayoutsSubPanel'
-import { currentCycleRemainingLengthTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
-import { twMerge } from 'tailwind-merge'
-import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
-import { useRulesetCountdown } from '../../hooks/useRulesetCountdown'
-import { useState } from 'react'
-import { useSuckers } from 'juice-sdk-react'
-import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
-import { useV4UpcomingRulesetHasChanges } from './hooks/useV4UpcomingRulesetHasChanges'
 
 function CountdownClock({ rulesetUnlocked }: { rulesetUnlocked: boolean }) {
   const { timeRemainingText } = useRulesetCountdown()
@@ -152,7 +152,7 @@ export const V4CurrentUpcomingSubPanel = ({
                 description={
                   <RulesetCountdownProvider>
                     <CountdownClock
-                      rulesetUnlocked={Boolean(info.rulesetUnlocked)}
+                      rulesetUnlocked={Boolean(info.currentRulesetUnlocked)}
                     />
                   </RulesetCountdownProvider>
                 }

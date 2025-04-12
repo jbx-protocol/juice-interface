@@ -74,13 +74,13 @@ const handler: NextApiHandler = async (req, res) => {
             baseSepolia.id,
             arbitrumSepolia.id,
           ] as JBChainId[]
-        ).includes(p.chainId),
+        ).includes(p.chainId as JBChainId),
       )
     } else {
       projects = projects.filter(p =>
         (
           [mainnet.id, optimism.id, base.id, arbitrum.id] as JBChainId[]
-        ).includes(p.chainId),
+        ).includes(p.chainId as JBChainId),
       )
     }
 

@@ -77,14 +77,12 @@ export const v4SubgraphUri = (chainId: number) => {
   if (isBrowser()) {
     uri = env?.[chainId]?.browserUrl
     if (!uri) {
-      throw new Error(
-        'NEXT_PUBLIC_V4_SUBGRAPH_URL environment variable not defined',
-      )
+      throw new Error('Public subgraph url for chain not defined: ' + chainId)
     }
   } else {
     uri = env?.[chainId]?.serverUrl
     if (!uri) {
-      throw new Error('Subgraph url for chain not defined: ' + chainId, )
+      throw new Error('Subgraph url for chain not defined: ' + chainId)
     }
   }
 

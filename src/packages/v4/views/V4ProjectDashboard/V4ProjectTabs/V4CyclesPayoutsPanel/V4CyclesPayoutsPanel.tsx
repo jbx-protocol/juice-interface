@@ -1,8 +1,8 @@
-import { CyclesTab } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesTab'
 import { Tab } from '@headlessui/react'
-import { V4CurrentUpcomingSubPanel } from './V4CurrentUpcomingSubPanel'
 import { t } from '@lingui/macro'
+import { CyclesTab } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesTab'
 import { useMemo } from 'react'
+import { V4CurrentUpcomingSubPanel } from './V4CurrentUpcomingSubPanel'
 
 type V4CyclesSubPanel = {
   id: 'current' | 'upcoming' | 'history'

@@ -23,7 +23,7 @@ import request from 'graphql-request'
 import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
 import last from 'lodash/last'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { ProjectChainSelect } from 'packages/v4/components/ProjectDashboard/ProjectChainSelect'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import React from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -68,10 +68,13 @@ export function V4ActivityList() {
     <div>
       <div className="flex items-baseline justify-between gap-5">
         <h2 className="mb-6 font-heading text-2xl font-medium">Activity</h2>
-        <ProjectChainSelect 
-          value={selectedChainId}
-          onChange={setSelectedChainId}
-        />
+        {suckers && suckers.length > 0 ? (
+          <ChainSelect
+            value={selectedChainId}
+            onChange={chainId => setSelectedChainId(chainId)}
+            chainIds={suckers?.map(s => s.peerChainId)}
+          />
+        ) : null}
       </div>
       <div className="flex flex-col gap-3">
         <JuiceListbox
@@ -124,7 +127,7 @@ function translateEventDataToPresenter(
         subject: (
           <span className="font-heading text-lg">
             <AmountInCurrency
-              amount={BigNumber.from(event.amount.value)} 
+              amount={BigNumber.from(event.amount.value)}
               currency="ETH"
               hideTooltip
             />
@@ -139,7 +142,7 @@ function translateEventDataToPresenter(
         subject: (
           <span className="font-heading text-lg">
             <AmountInCurrency
-              amount={BigNumber.from(event.amount.value)} 
+              amount={BigNumber.from(event.amount.value)}
               currency="ETH"
               hideTooltip
             />
@@ -170,7 +173,7 @@ function translateEventDataToPresenter(
         subject: (
           <span className="font-heading text-lg">
             <AmountInCurrency
-              amount={BigNumber.from(event.reclaimAmount.value)} 
+              amount={BigNumber.from(event.reclaimAmount.value)}
               currency="ETH"
               hideTooltip
             />
@@ -198,7 +201,7 @@ function translateEventDataToPresenter(
         subject: (
           <span className="font-heading text-lg">
             <AmountInCurrency
-              amount={BigNumber.from(event.amount.value)} 
+              amount={BigNumber.from(event.amount.value)}
               currency="ETH"
               hideTooltip
             />
@@ -234,7 +237,9 @@ function translateEventDataToPresenter(
         ),
         extra: (
           <RichNote
-            note={`Percent: ${new SplitPortion(event.percent).formatPercentage()}%, Split project: ${event.splitProjectId}`}
+            note={`Percent: ${new SplitPortion(
+              event.percent,
+            ).formatPercentage()}%, Split project: ${event.splitProjectId}`}
           />
         ),
       }
@@ -245,7 +250,7 @@ function translateEventDataToPresenter(
         subject: (
           <span className="font-heading text-lg">
             <AmountInCurrency
-              amount={BigNumber.from(event.amount.value)} 
+              amount={BigNumber.from(event.amount.value)}
               currency="ETH"
               hideTooltip
             />
@@ -253,7 +258,9 @@ function translateEventDataToPresenter(
         ),
         extra: (
           <RichNote
-            note={`Percent: ${new SplitPortion(event.percent).formatPercentage()}%, Split project: ${event.splitProjectId}`}
+            note={`Percent: ${new SplitPortion(
+              event.percent,
+            ).formatPercentage()}%, Split project: ${event.splitProjectId}`}
           />
         ),
       }
@@ -264,7 +271,7 @@ function translateEventDataToPresenter(
         subject: (
           <span className="font-heading text-lg">
             <AmountInCurrency
-              amount={BigNumber.from(event.amount.value)} 
+              amount={BigNumber.from(event.amount.value)}
               currency="ETH"
               hideTooltip
             />
@@ -287,7 +294,9 @@ function translateEventDataToPresenter(
         ),
         extra: (
           <RichNote
-            note={`Staked: ${fromWad(event.stakedAmount.value)}, ERC20: ${fromWad(event.erc20Amount.value)}`}
+            note={`Staked: ${fromWad(
+              event.stakedAmount.value,
+            )}, ERC20: ${fromWad(event.erc20Amount.value)}`}
           />
         ),
       }

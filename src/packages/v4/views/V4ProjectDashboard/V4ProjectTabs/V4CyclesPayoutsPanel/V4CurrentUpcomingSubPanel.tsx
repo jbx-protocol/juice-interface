@@ -40,8 +40,8 @@ export const V4CurrentUpcomingSubPanel = ({
   const { selectedChainId, setSelectedChainId } = useCyclesPanelSelectedChain()
   // const { data: rulesetsDiffAcrossChains } = useProjectRulesetsDiffAcrossChains({ rulesetNumber: info.rulesetNumber} )
 
-  const { data: suckers} = useSuckers()
-  
+  const { data: suckers } = useSuckers()
+
   const rulesetLengthTooltip =
     info.type === 'current' ? currentCycleRemainingLengthTooltip : undefined
 
@@ -100,13 +100,12 @@ export const V4CurrentUpcomingSubPanel = ({
           {selectedChainId ? (
             <div className="flex items-center gap-1">
               {suckers && suckers.length > 1 ? (
-                <ChainSelect 
-                  value={selectedChainId} 
-                  onChange={(chainId) => setSelectedChainId(chainId)} 
+                <ChainSelect
+                  value={selectedChainId}
+                  onChange={chainId => setSelectedChainId(chainId)}
                   chainIds={suckers.map(s => s.peerChainId)}
-                  showTitle
                 />
-              ): null}
+              ) : null}
               {/* { rulesetsDiffAcrossChains?.length ? 
                 <Tooltip
                   title={

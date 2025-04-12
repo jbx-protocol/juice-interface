@@ -6,9 +6,10 @@ import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt
 // @ts-ignore
-BigInt.prototype.toJSON = function () {
-  return { $bigint: this.toString() }
-}
+// commented out because it fucks with metamask sometimes
+// BigInt.prototype.toJSON = function () {
+//   return { $bigint: this.toString() }
+// }
 
 export function useSubgraphQuery<TResult, TVariables>({
   document,

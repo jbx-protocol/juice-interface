@@ -32,7 +32,9 @@ import { useDeployOmnichainProject } from 'packages/v4/components/Create/hooks/D
 import { useStandardProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
 import { getProjectIdFromLaunchReceipt } from 'packages/v4/hooks/useLaunchProjectTx'
 import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { twMerge } from 'tailwind-merge'
 import { emitErrorNotification } from 'utils/notifications'
 import { ContractFunctionArgs, hexToBigInt } from 'viem'
@@ -65,6 +67,7 @@ export const LaunchProjectModal: React.FC<{
   const [txSigning, setTxSigning] = useState(false)
   const isNftProject = useIsNftProject()
   const uploadNftRewards = useUploadNftRewards()
+  const dispatch = useDispatch()
 
   const txQuoteCostHex = txQuote?.payment_info.find(
     p => Number(p.chain) === Number(selectedGasChain),
@@ -229,6 +232,9 @@ export const LaunchProjectModal: React.FC<{
             c: tx.request.chain,
           })),
         )
+
+        dispatch(creatingV2ProjectActions.resetState())
+
         router.push({ query: { projectIds } }, '/create', {
           shallow: true,
         })
@@ -238,6 +244,7 @@ export const LaunchProjectModal: React.FC<{
 
     doit()
   }, [
+    dispatch,
     isNftProject,
     config,
     getRelayrBundle.isComplete,

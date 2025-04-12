@@ -497,6 +497,9 @@ msgstr ""
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC-20 tokens and mint them to your wallet."
 msgstr ""
 
+msgid "Manage project on {0}"
+msgstr ""
+
 msgid "Amount to pay out"
 msgstr ""
 

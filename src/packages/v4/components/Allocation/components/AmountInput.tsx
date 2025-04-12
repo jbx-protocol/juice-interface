@@ -1,9 +1,11 @@
-import CurrencySwitch from 'components/currency/CurrencySwitch'
-import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-
-import { AmountPercentageInput } from 'components/Allocation/types'
 import { V4_CURRENCY_ETH, V4_CURRENCY_USD } from 'packages/v4/utils/currency'
 import { useCallback, useState } from 'react'
+
+import { Trans } from '@lingui/macro'
+import { AmountPercentageInput } from 'components/Allocation/types'
+import CurrencySwitch from 'components/currency/CurrencySwitch'
+import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
+import { usePayoutsTableContext } from '../../PayoutsTable/context/PayoutsTableContext'
 import { Allocation } from '../Allocation'
 
 export const AmountInput = ({
@@ -19,6 +21,7 @@ export const AmountInput = ({
 
   const { allocationCurrency, setCurrency } = Allocation.useAllocationInstance()
   const currency = allocationCurrency ?? V4_CURRENCY_ETH
+  const { usdDisabled } = usePayoutsTableContext()
 
   const onAmountInputChange = useCallback(
     (amount: AmountPercentageInput | undefined) => {
@@ -37,13 +40,17 @@ export const AmountInput = ({
         value={amount.value}
         onChange={val => onAmountInputChange(val ? { value: val } : undefined)}
         accessory={
-          <CurrencySwitch
-            currency={currency === V4_CURRENCY_ETH ? 'ETH' : 'USD'}
-            onCurrencyChange={c =>
-              setCurrency(c === 'ETH' ? V4_CURRENCY_ETH : V4_CURRENCY_USD)
-            }
-            className="rounded"
-          />
+          usdDisabled ? (
+            <div className="px-2 text-sm font-medium text-grey-500"><Trans>ETH</Trans></div>
+          ) : (
+            <CurrencySwitch
+              currency={currency === V4_CURRENCY_ETH ? 'ETH' : 'USD'}
+              onCurrencyChange={c =>
+                setCurrency(c === 'ETH' ? V4_CURRENCY_ETH : V4_CURRENCY_USD)
+              }
+              className="rounded"
+            />
+          )
         }
       />
     </div>

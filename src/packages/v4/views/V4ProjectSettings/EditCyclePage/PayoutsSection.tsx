@@ -33,6 +33,7 @@ export function PayoutsSection() {
         currency={currency}
         setCurrency={setCurrency}
         distributionLimit={payoutLimit}
+        usdDisabled
         setDistributionLimit={setPayoutLimit}
       />
       <AdvancedDropdown>

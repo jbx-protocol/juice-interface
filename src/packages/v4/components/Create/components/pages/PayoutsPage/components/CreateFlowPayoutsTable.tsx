@@ -1,9 +1,4 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { Form } from 'antd'
 import { CURRENCY_METADATA, CurrencyName } from 'constants/currency'
-import { TreasurySelection } from 'models/treasurySelection'
-import { PayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/PayoutsTable'
-import { Split } from 'packages/v2v3/models/splits'
 import {
   V2V3CurrencyName,
   getV2V3CurrencyOption,
@@ -12,10 +7,16 @@ import {
   allocationToSplit,
   splitToAllocation,
 } from 'packages/v2v3/utils/splitToAllocation'
+import { fromWad, parseWad } from 'utils/format/formatNumber'
+
+import { BigNumber } from '@ethersproject/bignumber'
+import { Form } from 'antd'
+import { TreasurySelection } from 'models/treasurySelection'
+import { PayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/PayoutsTable'
+import { Split } from 'packages/v2v3/models/splits'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { ReactNode } from 'react'
 import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
-import { fromWad, parseWad } from 'utils/format/formatNumber'
 import { usePayoutsForm } from '../hooks/usePayoutsForm'
 
 const DEFAULT_CURRENCY_NAME = CURRENCY_METADATA.ETH.name
@@ -82,6 +83,7 @@ export function CreateFlowPayoutsTable({
         topAccessory={topAccessory}
         hideExplaination
         hideSettings
+        usdDisabled
         addPayoutsDisabled={addPayoutsDisabled}
         createTreasurySelection={createTreasurySelection}
       />

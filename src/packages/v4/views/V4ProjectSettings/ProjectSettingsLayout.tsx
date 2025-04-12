@@ -2,6 +2,7 @@ import { Cog6ToothIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 
 import { Trans } from '@lingui/macro'
+import { JB_CHAINS } from 'juice-sdk-core'
 import Link from 'next/link'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
 
@@ -17,16 +18,20 @@ export const ProjectSettingsLayout: React.FC<React.PropsWithChildren> = ({
         <div className="mx-auto flex max-w-5xl items-center justify-between p-5">
           <h1 className="m-0 flex items-center gap-2 font-heading text-xl font-medium">
             <Cog6ToothIcon className="h-6 w-6" />
-            <Trans>Manage project</Trans>
+            {chainId ? (
+              <Trans>Manage project on {JB_CHAINS[chainId]?.name}</Trans>
+            ) : (
+              <Trans>Manage project</Trans>
+            )}
           </h1>
-          {chainId ?
+          {chainId ? (
             <Link
               href={v4ProjectRoute({ projectId: Number(projectId), chainId })}
               className="text-secondary"
             >
               <XMarkIcon className="h-6 w-6" />
             </Link>
-          : null}
+          ) : null}
         </div>
       </header>
 

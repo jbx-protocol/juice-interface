@@ -194,7 +194,7 @@ function translateEventDataToPresenter(
     case 'distributePayoutsEvent':
       return {
         event,
-        header: 'Distributed payouts',
+        header: 'Send payouts',
         subject: (
           <span className="font-heading text-lg">
             <AmountInCurrency
@@ -213,7 +213,7 @@ function translateEventDataToPresenter(
     case 'distributeReservedTokensEvent':
       return {
         event,
-        header: 'Distributed reserved tokens',
+        header: 'Send reserved tokens',
         subject: (
           <span className="font-heading text-lg">
             {fromWad(event.tokenCount)}{' '}
@@ -225,7 +225,7 @@ function translateEventDataToPresenter(
     case 'distributeToReservedTokenSplitEvent':
       return {
         event,
-        header: 'Distributed to reserved token split',
+        header: 'Send to reserved token split',
         subject: (
           <span className="font-heading text-lg">
             {fromWad(event.tokenCount)}{' '}
@@ -241,7 +241,7 @@ function translateEventDataToPresenter(
     case 'distributeToPayoutSplitEvent':
       return {
         event,
-        header: 'Distributed to payout split',
+        header: 'Send to payout split',
         subject: (
           <span className="font-heading text-lg">
             <AmountInCurrency
@@ -304,17 +304,17 @@ const ACTIVITY_OPTIONS = [
   { label: 'Cashed out', value: 'cashOutEvent' },
   { label: 'Deployed ERC20', value: 'deployedERC20Event' },
   { label: 'Project created', value: 'projectCreateEvent' },
-  { label: 'Distributed payouts', value: 'distributePayoutsEvent' },
+  { label: 'Send payouts', value: 'distributePayoutsEvent' },
   {
-    label: 'Distributed reserved tokens',
+    label: 'Send reserved tokens',
     value: 'distributeReservedTokensEvent',
   },
   {
-    label: 'Distributed to reserved token split',
+    label: 'Send to reserved token split',
     value: 'distributeToReservedTokenSplitEvent',
   },
   {
-    label: 'Distributed to payout split',
+    label: 'Send to payout split',
     value: 'distributeToPayoutSplitEvent',
   },
   { label: 'Used allowance', value: 'useAllowanceEvent' },

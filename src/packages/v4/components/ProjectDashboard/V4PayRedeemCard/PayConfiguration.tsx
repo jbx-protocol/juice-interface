@@ -1,15 +1,14 @@
-import { Trans, t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
+import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
+import { useJBTokenContext } from 'juice-sdk-react'
+import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   useProjectDispatch,
   useProjectSelector,
   useProjectStore,
 } from '../redux/hooks'
-
-import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
-import { useJBTokenContext } from 'juice-sdk-react'
-import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { projectCartActions } from '../redux/projectCartSlice'
 import { EthereumLogo } from './EthereumLogo'
 import { PayRedeemInput } from './PayRedeemInput'

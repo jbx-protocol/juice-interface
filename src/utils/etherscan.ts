@@ -8,7 +8,7 @@ export const etherscanLink = (
   chainId?: JBChainId,
 ) => {
   if (chainId && NETWORKS[chainId]) {
-    return `https://${NETWORKS[chainId].blockExplorer}/${type}/${hash}`
+    return `${NETWORKS[chainId].blockExplorer}/${type}/${hash}`
   }
 
   let subdomain = ''

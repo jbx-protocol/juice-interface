@@ -1,15 +1,16 @@
 import { BoltIcon, ChevronUpIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import {
+  TransactionLog,
+  TxHistoryContext,
+} from 'contexts/Transaction/TxHistoryContext'
+import { useContext, useEffect, useMemo, useState } from 'react'
+
 import { Trans } from '@lingui/macro'
 import { Divider } from 'antd'
 import BadgeIcon from 'components/BadgeIcon'
 import ExternalLink from 'components/ExternalLink'
 import Loading from 'components/Loading'
-import {
-  TransactionLog,
-  TxHistoryContext,
-} from 'contexts/Transaction/TxHistoryContext'
 import { TxStatus } from 'models/transaction'
-import { useContext, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { etherscanLink } from 'utils/etherscan'
 import { formatHistoricalDate } from 'utils/format/formatDate'
@@ -70,7 +71,7 @@ export function TransactionsList({
       {isExpanded && (
         <div
           className={twMerge(
-            'z-10 rounded-lg border border-smoke-300 bg-white pt-5 shadow-lg ring-1 ring-black ring-opacity-5 dark:border-slate-300 dark:bg-slate-800',
+            'z-100 rounded-lg border border-smoke-300 bg-white pt-5 shadow-lg ring-1 ring-black ring-opacity-5 dark:border-slate-300 dark:bg-slate-800',
             listClassName,
           )}
         >

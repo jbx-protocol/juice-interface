@@ -189,25 +189,27 @@ export function ProjectSettingsDashboard() {
               </li>
             </ul>
           </SettingsGroupCard>
-          <SettingsGroupCard
-            title={<Trans>Tools</Trans>}
-            subtitle={<Trans>Extended functionality for project owners</Trans>}
-          >
-            <ul>
-              {canCreateErc20Token && (
-                <li>
-                  <Link href={erc20Path ?? ''}>
-                    <Trans>Create ERC-20 Token</Trans>
+          {canCreateErc20Token && (
+            <SettingsGroupCard
+              title={<Trans>Tools</Trans>}
+              subtitle={<Trans>Extended functionality for project owners</Trans>}
+            >
+              <ul>
+              {/* {canCreateErc20Token && ( */}
+                  <li>
+                    <Link href={erc20Path ?? ''}>
+                      <Trans>Create ERC-20 Token</Trans>
+                    </Link>
+                  </li>
+                {/* )} */}
+                {/* <li>
+                  <Link href={useSettingsPagePath('heldfees')}>
+                    <Trans>Process held fees</Trans>
                   </Link>
-                </li>
-              )}
-              {/* <li>
-                <Link href={useSettingsPagePath('heldfees')}>
-                  <Trans>Process held fees</Trans>
-                </Link>
-              </li> */}
-            </ul>
-          </SettingsGroupCard>
+                </li> */}
+              </ul>
+            </SettingsGroupCard>
+          )}
           {/* <SettingsGroupCard
             title={<Trans>Manage</Trans>}
             subtitle={<Trans>Manage your project's state and ownership</Trans>}

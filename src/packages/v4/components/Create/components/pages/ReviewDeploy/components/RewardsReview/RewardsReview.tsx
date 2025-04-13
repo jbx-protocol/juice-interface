@@ -8,7 +8,6 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { formatEnabled } from 'utils/format/formatBoolean'
 import { v4 } from 'uuid'
-import { useChainId } from 'wagmi'
 import { ReviewDescription } from '../ReviewDescription'
 
 export const RewardsReview = () => {
@@ -67,12 +66,10 @@ export const RewardsReview = () => {
     return formatEnabled(nftRewardsData.flags.preventOverspending)
   }, [nftRewardsData.flags.preventOverspending])
 
-  const chainId = useChainId()
-
   return (
     <div className="flex flex-col gap-12">
       <RewardsList
-        priceCurrencySymbol={'ETH'}//JB_CHAINS[chainId as JBChainId].nativeTokenSymbol} -> I dont think `sepETH/opETH/etc` makes sense here
+        priceCurrencySymbol={'ETH'} //JB_CHAINS[chainId as JBChainId].nativeTokenSymbol} -> I dont think `sepETH/opETH/etc` makes sense here
         nftRewardsData={nftRewardsData}
         value={rewards}
         onChange={setRewards}

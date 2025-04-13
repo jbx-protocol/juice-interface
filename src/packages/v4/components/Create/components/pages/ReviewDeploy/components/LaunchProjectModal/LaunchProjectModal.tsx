@@ -1,4 +1,3 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import {
   ArrowPathIcon,
   EllipsisHorizontalIcon,
@@ -7,20 +6,24 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon,
 } from '@heroicons/react/24/solid'
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
+import {
+  RelayrPostBundleResponse,
+  jb721TiersHookProjectDeployerAbi,
+  jbControllerAbi,
+  useGetRelayrTxBundle,
+  useSendRelayrTx,
+} from 'juice-sdk-react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { ContractFunctionArgs, hexToBigInt } from 'viem'
+
+import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from 'antd'
 import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { NETWORKS } from 'constants/networks'
 import { JBChainId } from 'juice-sdk-core'
-import {
-  jb721TiersHookProjectDeployerAbi,
-  jbControllerAbi,
-  RelayrPostBundleResponse,
-  useGetRelayrTxBundle,
-  useSendRelayrTx,
-} from 'juice-sdk-react'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { useRouter } from 'next/router'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
@@ -31,13 +34,11 @@ import { useUploadNftRewards } from 'packages/v4/components/Create/hooks/DeployP
 import { useDeployOmnichainProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
 import { useStandardProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
 import { getProjectIdFromLaunchReceipt } from 'packages/v4/hooks/useLaunchProjectTx'
-import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { twMerge } from 'tailwind-merge'
 import { emitErrorNotification } from 'utils/notifications'
-import { ContractFunctionArgs, hexToBigInt } from 'viem'
 import { getTransactionReceipt } from 'viem/actions'
 import { sepolia } from 'viem/chains'
 import { useConfig } from 'wagmi'
@@ -262,7 +263,7 @@ export const LaunchProjectModal: React.FC<{
       okText={!txQuote ? t`Get launch quote` : t`Launch project`}
       cancelText={t`Cancel`}
       onOk={onClickLaunch}
-      okLoading={txLoading || txQuoteLoading}
+      okLoading={txSigning || txLoading || txQuoteLoading}
       {...props}
     >
       {txLoading ? (

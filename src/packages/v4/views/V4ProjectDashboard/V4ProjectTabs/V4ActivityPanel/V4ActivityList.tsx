@@ -209,7 +209,7 @@ function translateEventDataToPresenter(
         ),
         extra: (
           <RichNote
-            note={`Fee: ${event.fee.value}, Paid out: ${event.amountPaidOut.value}`}
+            note={`Paid out: Ξ${event.amountPaidOut.format()}, Fee: Ξ${event.fee.format()}`}
           />
         ),
       }

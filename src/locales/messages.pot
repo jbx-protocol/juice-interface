@@ -2198,9 +2198,6 @@ msgstr ""
 msgid "Reset website"
 msgstr ""
 
-msgid "Decay percent"
-msgstr ""
-
 msgid "Payout allocated to this project's {versionName} payment terminal. <0>Learn more</0>."
 msgstr ""
 
@@ -3873,9 +3870,6 @@ msgid "Edit recipient"
 msgstr ""
 
 msgid "(0%)"
-msgstr ""
-
-msgid "Decay rate"
 msgstr ""
 
 msgid "Tokens per ETH contributed"

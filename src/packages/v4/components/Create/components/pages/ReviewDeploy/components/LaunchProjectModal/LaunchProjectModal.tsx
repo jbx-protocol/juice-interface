@@ -68,6 +68,7 @@ export const LaunchProjectModal: React.FC<{
   const isNftProject = useIsNftProject()
   const uploadNftRewards = useUploadNftRewards()
   const dispatch = useDispatch()
+  const config = useConfig()
 
   const txQuoteCostHex = txQuote?.payment_info.find(
     p => Number(p.chain) === Number(selectedGasChain),
@@ -85,6 +86,8 @@ export const LaunchProjectModal: React.FC<{
   }, [createData.selectedRelayrChainIds])
   const chainIds = selectedChains.map(c => c.chainId)
   const txLoading = txData && !getRelayrBundle.isComplete
+  // bongs. re-capture nft state so that the 'succes' page doesnt bong out upon reseting the form state
+  const [nftProject, setNftProject] = useState(false)
 
   /**
    * Fetches a quote for the omnichain transaction.
@@ -103,6 +106,7 @@ export const LaunchProjectModal: React.FC<{
         })
       ).Hash
       if (isNftProject) {
+        setNftProject(true)
         const {
           rewardTiers: rewardTierCids,
           nfCollectionMetadata: nftCollectionMetadataUri,
@@ -208,9 +212,6 @@ export const LaunchProjectModal: React.FC<{
       setTxSigning(false)
     }
   }
-
-  const config = useConfig()
-
   useEffect(() => {
     async function doit() {
       if (getRelayrBundle.isComplete) {
@@ -227,17 +228,17 @@ export const LaunchProjectModal: React.FC<{
         const projectIds = JSON.stringify(
           getRelayrBundle.response.transactions.map((tx, idx) => ({
             id: getProjectIdFromLaunchReceipt(txs[idx], {
-              omnichain721: isNftProject,
+              omnichain721: nftProject,
             }),
             c: tx.request.chain,
           })),
         )
 
-        dispatch(creatingV2ProjectActions.resetState())
-
-        router.push({ query: { projectIds } }, '/create', {
+        await router.push({ query: { projectIds } }, '/create', {
           shallow: true,
         })
+
+        dispatch(creatingV2ProjectActions.resetState())
         props.setOpen(false)
       }
     }
@@ -245,7 +246,7 @@ export const LaunchProjectModal: React.FC<{
     doit()
   }, [
     dispatch,
-    isNftProject,
+    nftProject,
     config,
     getRelayrBundle.isComplete,
     getRelayrBundle.response,

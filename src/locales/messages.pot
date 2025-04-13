@@ -2411,6 +2411,9 @@ msgstr ""
 msgid "to close"
 msgstr ""
 
+msgid "Change networks to mint tokens"
+msgstr ""
+
 msgid "Disallow payments from users who appear on OFAC’s Specially Designated Nationals (SDN) list. Note: payments are still possible on other websites (for example, Etherscan)."
 msgstr ""
 
@@ -3816,6 +3819,9 @@ msgid "Changes to your collection details may not be reflected in some marketpla
 msgstr ""
 
 msgid "My account"
+msgstr ""
+
+msgid "Connect wallet to mint tokens"
 msgstr ""
 
 msgid "When enabled, supporters can only mint NFTs by paying their exact price. This ensures that they can reclaim their full payment amount if they redeem their NFT."

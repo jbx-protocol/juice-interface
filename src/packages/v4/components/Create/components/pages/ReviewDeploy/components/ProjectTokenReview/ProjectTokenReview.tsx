@@ -1,10 +1,10 @@
 import * as ProjectTokenForm from '../../../ProjectToken/hooks/useProjectTokenForm'
 
 import {
-    formatDiscountRate,
-    formatIssuanceRate,
-    formatRedemptionRate,
-    formatReservedRate,
+  formatDiscountRate,
+  formatIssuanceRate,
+  formatRedemptionRate,
+  formatReservedRate,
 } from 'packages/v2v3/utils/math'
 
 import { t } from '@lingui/macro'
@@ -75,7 +75,7 @@ export const ProjectTokenReview = () => {
         />
       )}
       <ReviewDescription
-        title={t`Decay percent`}
+        title={t`Weight cut percent`}
         desc={
           <div className="text-base font-medium">
             {formatDiscountRate(

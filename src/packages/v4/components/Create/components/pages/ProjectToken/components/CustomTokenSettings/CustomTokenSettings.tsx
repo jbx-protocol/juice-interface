@@ -130,7 +130,7 @@ export const CustomTokenSettings = () => {
 
       <Divider className="my-8" />
 
-      <Form.Item label={t`Decay percent`}>
+      <Form.Item label={t`Weight cut percent`}>
         <div className="flex flex-col gap-6">
           <span>
             <Trans>

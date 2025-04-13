@@ -136,7 +136,7 @@ export const useV4FormatConfigurationTokenSection = ({
       : undefined
 
     if (upcomingRuleset === null || upcomingRulesetLoading) {
-      return pairToDatum(t`Decay rate`, current, null)
+      return pairToDatum(t`Weight cut percent`, current, null)
     }
     const queued = upcomingRuleset
       ? `${upcomingRuleset.weightCutPercent.formatPercentage()}%`
@@ -144,7 +144,7 @@ export const useV4FormatConfigurationTokenSection = ({
       ? `${ruleset.weightCutPercent.formatPercentage()}%`
       : undefined
 
-    return pairToDatum(t`Decay rate`, current, queued)
+    return pairToDatum(t`Weight cut percent`, current, queued)
   }, [ruleset, upcomingRuleset, upcomingRulesetLoading])
 
   const cashOutTaxRateDatum: ConfigurationPanelDatum = useMemo(() => {

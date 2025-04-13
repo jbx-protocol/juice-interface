@@ -82,7 +82,7 @@ export function TokensSectionDiff() {
 
           {discountRateHasDiff && currentDiscountRate ? (
             <FundingCycleListItem
-              name={t`Decay rate`}
+              name={t`Weight cut percent`}
               value={`${newDiscountRate}%`}
               oldValue={`${currentDiscountRate}%`}
             />

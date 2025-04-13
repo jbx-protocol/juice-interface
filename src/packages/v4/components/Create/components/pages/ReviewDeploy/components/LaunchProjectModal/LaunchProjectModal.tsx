@@ -40,7 +40,7 @@ import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { twMerge } from 'tailwind-merge'
 import { emitErrorNotification } from 'utils/notifications'
 import { getTransactionReceipt } from 'viem/actions'
-import { sepolia } from 'viem/chains'
+import { mainnet, sepolia } from 'viem/chains'
 import { useConfig } from 'wagmi'
 import { TxLoadingContent } from './TxLoadingContent'
 
@@ -61,7 +61,7 @@ export const LaunchProjectModal: React.FC<{
   const { sendRelayrTx, isPending, data: txData } = useSendRelayrTx()
 
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(
-    sepolia.id,
+    process.env.NEXT_PUBLIC_TESTNET == 'true' ? sepolia.id : mainnet.id,
   )
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
@@ -324,7 +324,11 @@ export const LaunchProjectModal: React.FC<{
                     }}
                     // TODO ask Ba5ed about how to specifiy chain ID to get quote for
                     // chainIds={selectedChains.map(c => c.chainId)}
-                    chainIds={[sepolia.id]}
+                    chainIds={[
+                      process.env.NEXT_PUBLIC_TESTNET == 'true'
+                        ? sepolia.id
+                        : mainnet.id,
+                    ]}
                   />
                 </div>
               </div>

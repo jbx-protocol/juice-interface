@@ -24,8 +24,12 @@ import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCrea
 import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { helpPagePath } from 'utils/helpPagePath'
 import {
+  arbitrum,
   arbitrumSepolia,
+  base,
   baseSepolia,
+  mainnet,
+  optimism,
   optimismSepolia,
   sepolia,
 } from 'viem/chains'
@@ -194,6 +198,61 @@ export const ReviewDeployPage = () => {
     [dispatch],
   )
 
+  const chainOpts =
+    process.env.NEXT_PUBLIC_TESTNET === 'true'
+      ? [
+          <CreateChainSelectButton
+            chainId={sepolia.id}
+            key={sepolia.id}
+            value={selectedRelayrChains[sepolia.id]}
+            onChange={onChainSelected(sepolia.id)}
+          />,
+          <CreateChainSelectButton
+            chainId={baseSepolia.id}
+            key={optimismSepolia.id}
+            value={selectedRelayrChains[baseSepolia.id]}
+            onChange={onChainSelected(baseSepolia.id)}
+          />,
+          <CreateChainSelectButton
+            chainId={optimismSepolia.id}
+            key={optimismSepolia.id}
+            value={selectedRelayrChains[optimismSepolia.id]}
+            onChange={onChainSelected(optimismSepolia.id)}
+          />,
+          <CreateChainSelectButton
+            chainId={arbitrumSepolia.id}
+            key={optimismSepolia.id}
+            value={selectedRelayrChains[arbitrumSepolia.id]}
+            onChange={onChainSelected(arbitrumSepolia.id)}
+          />,
+        ]
+      : [
+          <CreateChainSelectButton
+            chainId={mainnet.id}
+            key={mainnet.id}
+            value={selectedRelayrChains[mainnet.id]}
+            onChange={onChainSelected(mainnet.id)}
+          />,
+          <CreateChainSelectButton
+            chainId={base.id}
+            key={base.id}
+            value={selectedRelayrChains[base.id]}
+            onChange={onChainSelected(base.id)}
+          />,
+          <CreateChainSelectButton
+            chainId={optimism.id}
+            key={optimism.id}
+            value={selectedRelayrChains[optimism.id]}
+            onChange={onChainSelected(optimism.id)}
+          />,
+          <CreateChainSelectButton
+            chainId={arbitrum.id}
+            key={arbitrum.id}
+            value={selectedRelayrChains[arbitrum.id]}
+            onChange={onChainSelected(arbitrum.id)}
+          />,
+        ]
+
   return (
     <>
       <div ref={chainRef}>
@@ -201,26 +260,7 @@ export const ReviewDeployPage = () => {
           Select chains:
         </h4>
         <div className="flex flex-wrap items-center gap-3">
-          <CreateChainSelectButton
-            chainId={sepolia.id}
-            value={selectedRelayrChains[sepolia.id]}
-            onChange={onChainSelected(sepolia.id)}
-          />
-          <CreateChainSelectButton
-            chainId={optimismSepolia.id}
-            value={selectedRelayrChains[optimismSepolia.id]}
-            onChange={onChainSelected(optimismSepolia.id)}
-          />
-          <CreateChainSelectButton
-            chainId={baseSepolia.id}
-            value={selectedRelayrChains[baseSepolia.id]}
-            onChange={onChainSelected(baseSepolia.id)}
-          />
-          <CreateChainSelectButton
-            chainId={arbitrumSepolia.id}
-            value={selectedRelayrChains[arbitrumSepolia.id]}
-            onChange={onChainSelected(arbitrumSepolia.id)}
-          />
+          {chainOpts.map(c => c)}
         </div>
         {chainError && (
           <p className="mt-2 text-error-500 dark:text-error-400">

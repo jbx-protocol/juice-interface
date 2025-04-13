@@ -1,20 +1,28 @@
+import { Form, Input } from 'antd'
+import {
+  JBChainId,
+  useJBChainId,
+  useJBProjectId,
+  useReadJbDirectoryControllerOf,
+  useReadJbTokensTokenOf,
+  useSuckers,
+  useWriteJbControllerMintTokensOf
+} from 'juice-sdk-react'
+import { useContext, useState } from 'react'
+
 import { isAddress } from '@ethersproject/address'
 import { t } from '@lingui/macro'
 import { waitForTransactionReceipt } from '@wagmi/core'
-import { Form, Input } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
+import { NETWORKS } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
-import {
-  useJBContractContext,
-  useReadJbTokensTokenOf,
-  useWriteJbControllerMintTokensOf,
-} from 'juice-sdk-react'
+import { useWallet } from 'hooks/Wallet'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { useContext, useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -41,12 +49,28 @@ export function V4MintModal({
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
+  
+  const defaultChainId = useJBChainId()
+  const [selectedChainId, setSelectedChainId] = useState<JBChainId | undefined>(
+    defaultChainId,
+  )
 
-  const { projectId, contracts } = useJBContractContext()
   const { addTransaction } = useContext(TxHistoryContext)
+  const { projectId } = useJBProjectId(selectedChainId)
+  const { data: suckers } = useSuckers()
+
+  const { data: controllerAddress } = useReadJbDirectoryControllerOf({
+    chainId: selectedChainId,
+    args: [BigInt(projectId ?? 0)],
+  })
 
   const { data: tokenAddress } = useReadJbTokensTokenOf()
   const { data: tokenSymbol } = useNameOfERC20(tokenAddress)
+
+  const { chain: walletChain, changeNetworks, connect } = useWallet()
+  const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
+  
+  const walletConnectedToWrongChain = selectedChainId !== walletChainId
 
   async function executeMintTx() {
     const formValues = form.getFieldsValue(true) as MintForm
@@ -54,8 +78,24 @@ export function V4MintModal({
     const memo = formValues.memo
     const beneficiary = formValues.beneficary as Address
 
-    if (!contracts.controller.data || !beneficiary || !amount || !projectId)
+    if (!controllerAddress || !beneficiary || !amount || !projectId || !selectedChainId)
       return
+
+    // Check if wallet is connected to wrong chain
+    if (walletConnectedToWrongChain) {
+      try {
+        await changeNetworks(selectedChainId as JBChainId)
+        return
+      } catch (e) {
+        emitErrorNotification((e as unknown as Error).message)
+        return
+      }
+    }
+    
+    if (!walletChain) {
+      await connect()
+      return
+    }
 
     setLoading(true)
 
@@ -69,14 +109,18 @@ export function V4MintModal({
 
     try {
       const hash = await writeMintTokens({
-        address: contracts.controller.data,
+        address: controllerAddress,
+        chainId: selectedChainId,
         args,
       })
       setTransactionPending(true)
 
-      addTransaction?.('Mint tokens', { hash })
+      addTransaction?.(`Mint tokens on ${NETWORKS[selectedChainId]?.label}`, {
+        hash,
+      })
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
+        chainId: selectedChainId,
       })
 
       setLoading(false)
@@ -109,11 +153,27 @@ export function V4MintModal({
       confirmLoading={loading}
       transactionPending={transactionPending}
       onCancel={onCancel}
-      okText={t`Mint ${tokensTokenLower}`}
+      okText={
+        walletConnectedToWrongChain
+          ? t`Change networks to mint tokens`
+          : t`Mint ${tokensTokenLower}`
+      }
+      connectWalletText={t`Connect wallet to mint tokens`}
     >
       <p>Mint new tokens to a specified address.</p>
 
       <Form layout="vertical" form={form}>
+        {suckers && suckers.length > 1 ? (
+          <Form.Item className="mb-4" label={t`Chain`}>
+            <ChainSelect
+              value={selectedChainId}
+              onChange={setSelectedChainId}
+              chainIds={suckers.map(s => s.peerChainId)}
+              showTitle
+            />
+          </Form.Item>
+        ) : null}
+        
         <Form.Item
           label={t`Token receiver`}
           name="beneficary"

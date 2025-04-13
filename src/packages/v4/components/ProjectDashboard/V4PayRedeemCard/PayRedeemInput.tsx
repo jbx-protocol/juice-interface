@@ -36,7 +36,9 @@ export const PayRedeemInput = ({
   cartNfts,
   value,
   onChange,
+  actionType,
 }: {
+  actionType?: 'pay' | 'redeem'
   className?: string
   label?: React.ReactNode
   downArrow?: boolean
@@ -54,8 +56,8 @@ export const PayRedeemInput = ({
 }) => {
   token.type = token.type || 'native'
   const {
-      nftRewards: { rewardTiers: nfts },
-    } = useV4NftRewards()
+    nftRewards: { rewardTiers: nfts },
+  } = useV4NftRewards()
 
   const converter = useCurrencyConverter()
 
@@ -151,11 +153,14 @@ export const PayRedeemInput = ({
           <div className="my-2 h-[1px] w-full border-t border-grey-200 dark:border-slate-600" />
         )}
 
-        {nfts && nfts?.length > 0 && readOnly && (
+        {nfts && nfts?.length > 0 && readOnly && actionType === 'pay' && (
           <div className="mt-4 space-y-4">
             {nfts.map((nft, i) => {
-              const quantity = cartNfts?.find(cartNft => cartNft.id === nft.id)?.quantity ?? 0
-              return <PayRedeemCardNftReward key={i} nft={nft} quantity={quantity} />
+              const quantity =
+                cartNfts?.find(cartNft => cartNft.id === nft.id)?.quantity ?? 0
+              return (
+                <PayRedeemCardNftReward key={i} nft={nft} quantity={quantity} />
+              )
             })}
           </div>
         )}
@@ -240,9 +245,9 @@ export const PayRedeemCardNftReward: React.FC<{
     increaseQuantity,
     decreaseQuantity,
   } = useNftCartItem({
-      id: nft.id,
-      quantity
-    } as ProjectCartNftReward)
+    id: nft.id,
+    quantity,
+  } as ProjectCartNftReward)
   const { setProjectPageTab } = useProjectPageQueries()
 
   const handleRemove = React.useCallback(() => {
@@ -254,12 +259,12 @@ export const PayRedeemCardNftReward: React.FC<{
   }, [removeNft])
 
   const handleIncreaseQuantity = useCallback(() => {
-      if (quantity === 0) {
-        upsertNft()
-      } else {
-        increaseQuantity()
-      }
-    }, [increaseQuantity, quantity, upsertNft])
+    if (quantity === 0) {
+      upsertNft()
+    } else {
+      increaseQuantity()
+    }
+  }, [increaseQuantity, quantity, upsertNft])
 
   const handleDecreaseQuantity = React.useCallback(() => {
     if (quantity - 1 <= 0) {

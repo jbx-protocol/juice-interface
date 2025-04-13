@@ -199,7 +199,7 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
           size="large"
           loading={redeeming}
           disabled={
-            insufficientBalance || redeemAmount === '0' || !redeemAmount
+            insufficientBalance || redeemAmount === '0' || !redeemAmount || !tokenFromRedeemAmount || tokenFromRedeemAmount === '0'
           }
           onClick={redeem}
         >

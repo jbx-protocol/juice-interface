@@ -1,9 +1,35 @@
-import { ChainLogo } from './ChainLogo'
-import { JBChainId } from 'juice-sdk-core'
+import { t } from '@lingui/macro'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import { NETWORKS } from 'constants/networks'
+import { JBChainId } from 'juice-sdk-core'
 import React from 'react'
-import { t } from '@lingui/macro'
+import { ChainLogo } from './ChainLogo'
+
+import {
+  arbitrum,
+  arbitrumSepolia,
+  base,
+  baseSepolia,
+  mainnet,
+  optimism,
+  optimismSepolia,
+  sepolia,
+} from 'viem/chains'
+
+/**
+ * Preferred chain ordering
+ */
+const chainOrder = [
+  mainnet.id,
+  base.id,
+  optimism.id,
+  arbitrum.id,
+
+  sepolia.id,
+  baseSepolia.id,
+  optimismSepolia.id,
+  arbitrumSepolia.id,
+]
 
 function ChainSelectOption({
   chainId,
@@ -44,6 +70,15 @@ export const ChainSelect = ({
       ),
       value: parseInt(chainId) as JBChainId,
     }))
+    .sort((a, b) => {
+      const aChainId = chainOrder.indexOf(a.value)
+      const bChainId = chainOrder.indexOf(b.value)
+      if (aChainId === -1 || bChainId === -1) {
+        return 0
+      }
+
+      return aChainId - bChainId
+    })
 
   const _value = React.useMemo(() => {
     const defaultValue = {

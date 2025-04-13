@@ -39,7 +39,7 @@ export const v4SubgraphUri = (chainId: number) => {
 
   const env = {
     [mainnet.id]: {
-      browserUrl: process.env.NEXT_PUBLIC_ETHEREUM_SUBGRAPH_URL,
+      browserUrl: process.env.NEXT_PUBLIC_V4_ETHEREUM_SUBGRAPH_URL,
       serverUrl: process.env.V4_ETHEREUM_SUBGRAPH_URL,
     },
     [optimism.id]: {

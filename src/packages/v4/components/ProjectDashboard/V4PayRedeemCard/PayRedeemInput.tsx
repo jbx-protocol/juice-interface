@@ -4,7 +4,7 @@ import {
   PlusIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline'
-import React, { ReactNode, useMemo } from 'react'
+import React, { ReactNode, useCallback, useMemo } from 'react'
 
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
@@ -36,7 +36,9 @@ export const PayRedeemInput = ({
   cartNfts,
   value,
   onChange,
+  actionType,
 }: {
+  actionType?: 'pay' | 'redeem'
   className?: string
   label?: React.ReactNode
   downArrow?: boolean
@@ -54,8 +56,8 @@ export const PayRedeemInput = ({
 }) => {
   token.type = token.type || 'native'
   const {
-      nftRewards: { rewardTiers: nfts },
-    } = useV4NftRewards()
+    nftRewards: { rewardTiers: nfts },
+  } = useV4NftRewards()
 
   const converter = useCurrencyConverter()
 
@@ -147,15 +149,18 @@ export const PayRedeemInput = ({
           </div>
         )}
         {/* Only show spacer if redeem is available and nfts are not empty */}
-        {!redeemUnavailable && !!nfts?.length && (
+        {!redeemUnavailable && !!cartNfts?.length && (
           <div className="my-2 h-[1px] w-full border-t border-grey-200 dark:border-slate-600" />
         )}
 
-        {nfts && nfts?.length > 0 && (
+        {nfts && nfts?.length > 0 && readOnly && actionType === 'pay' && (
           <div className="mt-4 space-y-4">
             {nfts.map((nft, i) => {
-              const quantity = cartNfts?.find(cartNft => cartNft.id === nft.id)?.quantity ?? 0
-              return <PayRedeemCardNftReward key={i} nft={nft} quantity={quantity} />
+              const quantity =
+                cartNfts?.find(cartNft => cartNft.id === nft.id)?.quantity ?? 0
+              return (
+                <PayRedeemCardNftReward key={i} nft={nft} quantity={quantity} />
+              )
             })}
           </div>
         )}
@@ -235,13 +240,14 @@ export const PayRedeemCardNftReward: React.FC<{
     price,
     name,
     fileUrl,
+    upsertNft,
     removeNft,
     increaseQuantity,
     decreaseQuantity,
   } = useNftCartItem({
-      id: nft.id,
-      quantity
-    } as ProjectCartNftReward)
+    id: nft.id,
+    quantity,
+  } as ProjectCartNftReward)
   const { setProjectPageTab } = useProjectPageQueries()
 
   const handleRemove = React.useCallback(() => {
@@ -251,6 +257,14 @@ export const PayRedeemCardNftReward: React.FC<{
       description: t`Are you sure you want to remove this NFT?`,
     })
   }, [removeNft])
+
+  const handleIncreaseQuantity = useCallback(() => {
+    if (quantity === 0) {
+      upsertNft()
+    } else {
+      increaseQuantity()
+    }
+  }, [increaseQuantity, quantity, upsertNft])
 
   const handleDecreaseQuantity = React.useCallback(() => {
     if (quantity - 1 <= 0) {
@@ -299,7 +313,7 @@ export const PayRedeemCardNftReward: React.FC<{
       <div className="flex items-center gap-3">
         <QuantityControl
           quantity={quantity}
-          onIncrease={increaseQuantity}
+          onIncrease={handleIncreaseQuantity}
           onDecrease={handleDecreaseQuantity}
         />
         <RemoveIcon onClick={handleRemove} />

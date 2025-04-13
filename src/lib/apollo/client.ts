@@ -5,8 +5,8 @@ import {
   HttpLink,
   InMemoryCache,
 } from '@apollo/client'
+import { BigNumber } from '@ethersproject/bignumber'
 import { FunctionsMap, withScalars } from 'apollo-link-scalars'
-import { BigNumber } from 'ethers'
 import { IntrospectionQuery, buildClientSchema } from 'graphql'
 import { isBigNumberish } from 'utils/bigNumbers'
 import introspectionResult from '../../../graphql.schema.json'

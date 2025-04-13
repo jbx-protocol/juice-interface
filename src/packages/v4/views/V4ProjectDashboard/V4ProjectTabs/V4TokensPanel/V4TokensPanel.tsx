@@ -1,43 +1,38 @@
 import { Trans, t } from '@lingui/macro'
+import { Button, Tooltip } from 'antd'
+import { JBChainId, JB_TOKEN_DECIMALS, formatUnits } from 'juice-sdk-core'
+import {
+  useJBChainId,
+  useJBContractContext,
+  useSuckersUserTokenBalance
+} from 'juice-sdk-react'
+import { useCallback, useMemo, useState } from 'react'
+
+import { SettingOutlined } from '@ant-design/icons'
+import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
 import EthereumAddress from 'components/EthereumAddress'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
-// import { TokenHoldersModal } from '../TokenHoldersModal/TokenHoldersModal'
-// import { MigrateTokensButton } from './components/MigrateTokensButton'
-// import { RedeemTokensButton } from './components/RedeemTokensButton'
-// import { ReservedTokensSubPanel } from './components/ReservedTokensSubPanel'
-// import { TokenRedemptionCallout } from './components/TokenRedemptionCallout'
-// import { TransferUnclaimedTokensModalWrapper } from './components/TransferUnclaimedTokensModalWrapper'
-import { SettingOutlined } from '@ant-design/icons'
-import { Button, Tooltip } from 'antd'
-import { AddTokenToMetamaskButton } from 'components/buttons/AddTokenToMetamaskButton'
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
-import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
+import { NETWORKS } from 'constants/networks'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { V4TokenHoldersModal } from 'packages/v4/components/modals/V4TokenHoldersModal/V4TokenHoldersModal'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
-import { useCallback, useState } from 'react'
 import { reloadWindow } from 'utils/windowUtils'
+import { ReservedTokensSelectedChainProvider } from '../V4CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
 import { useV4BalanceMenuItemsUserFlags } from './hooks/useV4BalanceMenuItemsUserFlags'
 import { useV4TokensPanel } from './hooks/useV4TokensPanel'
 import { useV4YourBalanceMenuItems } from './hooks/useV4YourBalanceMenuItems'
-import { V4BurnOrRedeemModal } from './V4BurnOrRedeemModal'
 import { V4ClaimTokensModal } from './V4ClaimTokensModal'
 import { V4MintModal } from './V4MintModal'
-import { V4RedeemTokensButton } from './V4RedeemTokensButton'
 import { V4ReservedTokensSubPanel } from './V4ReservedTokensSubPanel'
 import { V4TokenRedemptionCallout } from './V4TokenRedemptionCallout'
 
 export const V4TokensPanel = () => {
-  const {
-    userTokenBalance,
-    userTokenBalanceLoading,
-    // userLegacyTokenBalance,
-    // projectHasLegacyTokens,
-    // userV1ClaimedBalance,
-    projectToken,
-    totalSupply,
-  } = useV4TokensPanel()
+  const { userTokenBalanceLoading, projectToken, totalTokenSupplyElement } =
+    useV4TokensPanel()
   const projectHasErc20Token = useProjectHasErc20Token()
+  const { data: suckersBalance } = useSuckersUserTokenBalance()
 
   const { canMintTokens } = useV4BalanceMenuItemsUserFlags()
 
@@ -53,8 +48,6 @@ export const V4TokensPanel = () => {
 
   const {
     items,
-    redeemModalVisible,
-    setRedeemModalVisible,
     claimTokensModalVisible,
     setClaimTokensModalVisible,
     mintModalVisible,
@@ -62,6 +55,52 @@ export const V4TokensPanel = () => {
     // transferUnclaimedTokensModalVisible,
     // setTransferUnclaimedTokensModalVisible,
   } = useV4YourBalanceMenuItems()
+
+  const totalBalance =
+    suckersBalance?.reduce((acc, curr) => {
+      return acc + curr.balance.value
+    }, 0n) ?? 0n
+
+  const tokenBalance = useMemo(() => {
+    // NOTE: Don't think we need this since other chains payouts limits may be different?
+    // if (payoutLimit && payoutLimit.amount === MAX_PAYOUT_LIMIT)
+    //   return t`No surplus`
+    return (
+      <Tooltip
+        title={
+          suckersBalance?.length && suckersBalance.length > 0 ? (
+            <div className="flex flex-col gap-2">
+              {suckersBalance?.map((balance, index) => (
+                <div
+                  className="flex items-center justify-between gap-4"
+                  key={suckersBalance[index].chainId}
+                >
+                  <div
+                    key={suckersBalance[index].chainId}
+                    className="flex items-center gap-2"
+                  >
+                    <ChainLogo
+                      chainId={suckersBalance[index].chainId as JBChainId}
+                    />
+                    <span>{NETWORKS[balance.chainId].label}</span>
+                  </div>
+                  {/* (NOTE: Following comment copied from Revnet: 
+                  "TODO maybe show USD-converted value here instead?" */}
+                  <span className="whitespace-nowrap font-medium">
+                    {balance.balance.format()} {projectToken}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : undefined
+        }
+      >
+        <span>
+          {formatUnits(totalBalance, JB_TOKEN_DECIMALS)} {projectToken}
+        </span>
+      </Tooltip>
+    )
+  }, [totalBalance, suckersBalance, projectToken])
 
   return (
     <>
@@ -73,12 +112,13 @@ export const V4TokensPanel = () => {
         <V4TokenRedemptionCallout />
 
         <div className="mb-12 flex-grow">
-          {!userTokenBalanceLoading && userTokenBalance !== undefined && (
+          {!userTokenBalanceLoading && (
             <TitleDescriptionDisplayCard
               title={t`Your balance`}
               description={
                 <span className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
-                  <Trans>{userTokenBalance.format(8)} tokens</Trans>
+                  {tokenBalance}
+
                   <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center md:gap-4">
                     {projectHasErc20Token && (
                       <Button
@@ -92,15 +132,11 @@ export const V4TokensPanel = () => {
                         <Trans>Claim ERC-20 token</Trans>
                       </Button>
                     )}
-                    <V4RedeemTokensButton
-                      containerClassName="w-full md:w-fit"
-                      className="h-12 w-full md:h-10"
-                    />
                   </div>
                 </span>
               }
               kebabMenu={
-                userTokenBalance.value > 0n || canMintTokens
+                totalBalance > 0n || canMintTokens
                   ? {
                       items,
                     }
@@ -109,34 +145,13 @@ export const V4TokensPanel = () => {
             />
           )}
 
-          {/* {projectHasLegacyTokens && userLegacyTokenBalance?.gt(0) ? (
-            <TitleDescriptionDisplayCard
-              className="mt-4 flex flex-col items-center gap-5 md:flex-row"
-              title={t`Your legacy balance`}
-              description={
-                <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
-                  <TokenAmount amountWad={userLegacyTokenBalance} />
-                  <MigrateTokensButton
-                    totalLegacyTokenBalance={userLegacyTokenBalance}
-                    v1ClaimedBalance={userV1ClaimedBalance}
-                    className="h-12 w-full md:h-10 md:w-fit"
-                  />
-                </div>
-              }
-            />
-          ) : null} */}
-
           <div className="mt-4 flex flex-col gap-4">
             <div className="flex flex-col gap-4 md:flex-row">
               <ProjectTokenCard />
               <TitleDescriptionDisplayCard
                 className="w-full"
                 title={t`Total supply`}
-                description={
-                  <span>
-                    {totalSupply.format(8)} {projectToken}
-                  </span>
-                }
+                description={totalTokenSupplyElement}
               />
             </div>
             <a
@@ -147,18 +162,14 @@ export const V4TokensPanel = () => {
               <Trans>View token holders</Trans>
             </a>
           </div>
-
-          <V4ReservedTokensSubPanel className="mt-12" />
+          <ReservedTokensSelectedChainProvider>
+            <V4ReservedTokensSubPanel className="mt-12" />
+          </ReservedTokensSelectedChainProvider>
         </div>
       </div>
       <V4TokenHoldersModal
         open={tokenHolderModalOpen}
         onClose={closeTokenHolderModal}
-      />
-      <V4BurnOrRedeemModal
-        open={redeemModalVisible}
-        onCancel={() => setRedeemModalVisible(false)}
-        onConfirmed={reloadWindow}
       />
       <V4ClaimTokensModal
         open={claimTokensModalVisible}

@@ -6,13 +6,12 @@ import {
 import { CreateState, ProjectState } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
-import { DEFAULT_PROJECT_CHAIN_ID } from 'constants/networks'
 import isEqual from 'lodash/isEqual'
 import { CreatePage } from 'models/createPage'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { TreasurySelection } from 'models/treasurySelection'
 import { useRouter } from 'next/router'
-import { ballotStrategiesFn } from 'packages/v2v3/constants/ballotStrategies'
+import { getAvailableApprovalStrategies } from 'packages/v4/utils/approvalHooks'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { useDispatch } from 'react-redux'
 import { INITIAL_REDUX_STATE } from 'redux/slices/v2v3/shared/v2ProjectInitialReduxState'
@@ -75,7 +74,7 @@ const parseCreateFlowStateFromInitialState = (
   }
 
   const reconfigurationRuleSelection =
-    ballotStrategiesFn({}).find(s =>
+    getAvailableApprovalStrategies().find(s =>
       isEqualAddress(s.address, initialState.fundingCycleData.ballot),
     )?.id ?? 'threeDay'
 
@@ -102,7 +101,7 @@ const parseCreateFlowStateFromInitialState = (
   }
 
   return {
-    projectChainId: DEFAULT_PROJECT_CHAIN_ID,
+    selectedRelayrChainIds: {},
     fundingCyclesPageSelection,
     treasurySelection,
     fundingTargetSelection: undefined, // TODO: Remove

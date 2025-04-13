@@ -1,16 +1,19 @@
-import { t, Trans } from '@lingui/macro'
+import * as ProjectTokenForm from '../../hooks/useProjectTokenForm'
+
+import { Trans, t } from '@lingui/macro'
 import { Divider, Form } from 'antd'
+import {
+  CASH_OUT_TAX_RATE_EXPLANATION,
+  MINT_RATE_EXPLANATION,
+  OWNER_MINTING_EXPLANATION,
+  OWNER_MINTING_RISK,
+  PAUSE_TRANSFERS_EXPLANATION,
+} from 'components/strings'
+
 import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import NumberSlider from 'components/inputs/NumberSlider'
-import {
-    MINT_RATE_EXPLANATION,
-    OWNER_MINTING_EXPLANATION,
-    OWNER_MINTING_RISK,
-    PAUSE_TRANSFERS_EXPLANATION,
-    REDEMPTION_RATE_EXPLANATION,
-} from 'components/strings'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
 import useMobile from 'hooks/useMobile'
 import { formatFundingCycleDuration } from 'packages/v2v3/components/Create/utils/formatFundingCycleDuration'
@@ -21,7 +24,6 @@ import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
 import { inputMustExistRule } from 'utils/antdRules'
 import { formatAmount } from 'utils/format/formatAmount'
-import * as ProjectTokenForm from '../../hooks/useProjectTokenForm'
 import { ProjectTokensFormProps } from '../../hooks/useProjectTokenForm'
 import { ReservedTokenRateCallout } from './ReservedTokenRateCallout'
 
@@ -49,6 +51,7 @@ export const CustomTokenSettings = () => {
     Form.useWatch('initialMintRate', form) ??
       ProjectTokenForm.DefaultSettings.initialMintRate,
   )
+  const cashOutTaxRate = Form.useWatch('redemptionRate', form) ?? 0
   const tokenMinting = Form.useWatch('tokenMinting', form) ?? false
 
   const discountRateDisabled = !parseInt(duration)
@@ -127,7 +130,7 @@ export const CustomTokenSettings = () => {
 
       <Divider className="my-8" />
 
-      <Form.Item label={t`Decay percent`}>
+      <Form.Item label={t`Weight cut percent`}>
         <div className="flex flex-col gap-6">
           <span>
             <Trans>
@@ -199,14 +202,14 @@ export const CustomTokenSettings = () => {
 
       <Divider className="my-8" />
 
-      <Form.Item label={t`Redemption rate`}>
+      <Form.Item label={t`Cash out tax rate`}>
         <div className="flex flex-col gap-6">
-          <span>{REDEMPTION_RATE_EXPLANATION}</span>
+          <span>{CASH_OUT_TAX_RATE_EXPLANATION}</span>
           <Form.Item
             noStyle
-            name="cashOutTaxRate"
+            name="redemptionRate"
             valuePropName="sliderValue"
-            rules={[inputMustExistRule({ label: t`A redemption rate` })]}
+            rules={[inputMustExistRule({ label: t`A cash out tax rate` })]}
           >
             <NumberSlider
               min={0}
@@ -225,9 +228,11 @@ export const CustomTokenSettings = () => {
             </Callout.Warning>
           ) : (
             !isMobile && (
-              <Form.Item noStyle name="cashOutTaxRate">
-                <TokenRedemptionRateGraph graphPad={50} graphSize={300} />
-              </Form.Item>
+                <TokenRedemptionRateGraph 
+                  value={100 - cashOutTaxRate}
+                  graphPad={50} 
+                  graphSize={300} 
+                />
             )
           )}
         </div>

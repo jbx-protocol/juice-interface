@@ -33,7 +33,6 @@ export const EditCycleFormProvider: FC<PropsWithChildren<unknown>> = ({
   const [formHasUpdated, setFormHasUpdated] = useState<boolean>(false)
 
   const { initialFormData, editCycleForm } = useLoadEditCycleData()
-
   return (
     <EditCycleDataContext.Provider
       value={{

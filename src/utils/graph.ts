@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { PV } from 'models/pv'
 import { isBigNumberish } from './bigNumbers'
 

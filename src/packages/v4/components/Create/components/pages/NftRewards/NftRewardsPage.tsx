@@ -1,11 +1,12 @@
+import { JBChainId, JB_CHAINS } from 'juice-sdk-core'
+
 import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
 import { CREATE_FLOW } from 'constants/fathomEvents'
-import { JB_CHAINS, JBChainId } from 'juice-sdk-core'
+import { useJBChainId } from 'juice-sdk-react'
 import { trackFathomGoal } from 'lib/fathom'
 import { useContext } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
-import { useChainId } from 'wagmi'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { Wizard } from '../../Wizard/Wizard'
 import { useCreateFlowNftRewardsForm } from './hooks/useCreateFlowNftRewardsForm'
@@ -24,7 +25,7 @@ export function NftRewardsPage() {
 
   useSetCreateFurthestPageReached('nftRewards')
 
-  const chainId = useChainId()
+  const chainId = useJBChainId()
 
   return (
     <AddNftCollectionForm

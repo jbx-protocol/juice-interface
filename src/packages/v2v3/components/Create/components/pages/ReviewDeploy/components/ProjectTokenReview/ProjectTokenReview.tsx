@@ -6,6 +6,7 @@ import {
   formatRedemptionRate,
   formatReservedRate,
 } from 'packages/v2v3/utils/math'
+import React from 'react'
 import { formatAmount } from 'utils/format/formatAmount'
 import * as ProjectTokenForm from '../../../ProjectToken/hooks/useProjectTokenForm'
 import { ReviewDescription } from '../ReviewDescription'
@@ -22,6 +23,15 @@ export const ProjectTokenReview = () => {
     setAllocationSplits,
     weight,
   } = useProjectTokenReview()
+
+  const showReservedTokenRecipients = React.useMemo(() => {
+    return (
+      (reservedRate.length > 0
+        ? BigInt(reservedRate)
+        : BigInt(ProjectTokenForm.DefaultSettings.reservedTokensPercentage)) >
+      0n
+    )
+  }, [reservedRate])
 
   return (
     <div className="flex flex-col gap-y-10 pt-5 pb-12 md:grid md:grid-cols-4">
@@ -49,16 +59,19 @@ export const ProjectTokenReview = () => {
           </div>
         }
       />
-      <ReviewDescription
-        className="col-span-2"
-        title={t`Reserved token recipients`}
-        desc={
-          <ReservedTokensList
-            value={allocationSplits}
-            onChange={setAllocationSplits}
-          />
-        }
-      />
+      {showReservedTokenRecipients && (
+        <ReviewDescription
+          className="col-span-2"
+          title={t`Reserved token recipients`}
+          desc={
+            <ReservedTokensList
+              value={allocationSplits}
+              onChange={setAllocationSplits}
+              isEditable={false}
+            />
+          }
+        />
+      )}
       <ReviewDescription
         title={t`Issuance reduction rate`}
         desc={

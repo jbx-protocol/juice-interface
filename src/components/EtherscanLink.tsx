@@ -1,4 +1,5 @@
 import { LinkIcon } from '@heroicons/react/24/outline'
+import { JBChainId } from 'juice-sdk-core'
 import { MouseEventHandler } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { etherscanLink } from 'utils/etherscan'
@@ -13,7 +14,8 @@ const EtherscanLink: React.FC<
     type: 'tx' | 'address'
     truncated?: boolean
     truncateTo?: number
-    onClick?: MouseEventHandler
+    onClick?: MouseEventHandler,
+    chainId?: JBChainId
   }>
 > = ({
   className,
@@ -24,6 +26,7 @@ const EtherscanLink: React.FC<
   truncateTo,
   children,
   onClick,
+  chainId
 }) => {
   if (!value) return null
 
@@ -37,7 +40,7 @@ const EtherscanLink: React.FC<
         'text-current hover:text-bluebs-500 hover:underline',
         className,
       )}
-      href={etherscanLink(type, value)}
+      href={etherscanLink(type, value, chainId)}
       onClick={onClick}
     >
       {type === 'tx' ? (

@@ -1,7 +1,7 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
 import { CurrencyName } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import { getV2V3CurrencyOption } from 'packages/v2v3/utils/currency'
 import { isInfiniteDistributionLimit } from 'packages/v2v3/utils/fundingCycle'
 import { twMerge } from 'tailwind-merge'

@@ -1,19 +1,19 @@
-import { Tooltip } from 'antd'
-import { NETWORKS } from 'constants/networks'
 import {
   JBChainId,
-  NativeTokenValue,
   useJBRulesetMetadata,
   useSuckersNativeTokenBalance,
-  useSuckersNativeTokenSurplus,
+  useSuckersNativeTokenSurplus
 } from 'juice-sdk-react'
+
+import { BigNumber } from '@ethersproject/bignumber'
+import { Tooltip } from 'antd'
+import { AmountInCurrency } from 'components/currency/AmountInCurrency'
+import { NETWORKS } from 'constants/networks'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { useMemo } from 'react'
-import { useV4DistributableAmount } from './useV4DistributableAmount'
 
 export const useV4TreasuryStats = () => {
   const { data: rulesetMetadata } = useJBRulesetMetadata()
-  const { distributableAmount } = useV4DistributableAmount()
 
   const { data: suckersBalance } = useSuckersNativeTokenBalance()
   const totalBalance =
@@ -33,46 +33,27 @@ export const useV4TreasuryStats = () => {
       return acc + curr.surplus
     }, 0n) ?? 0n
 
-  const treasuryBalance = useMemo(() => {
-    // NOTE: Don't think we need this since other chains payouts limits may be different?
-    // if (payoutLimit && payoutLimit.amount === MAX_PAYOUT_LIMIT)
-    //   return t`No surplus`
-    return (
-      <Tooltip
-        title={
-          suckersBalance?.length && suckersBalance.length > 0 ? (
-            <div className="flex flex-col gap-2">
-              {suckersBalance?.map((balance, index) => (
-                <div
-                  className="flex items-center justify-between gap-4"
-                  key={suckersBalance[index].chainId}
-                >
-                  <div
-                    key={suckersBalance[index].chainId}
-                    className="flex items-center gap-2"
-                  >
-                    <ChainLogo
-                      chainId={suckersBalance[index].chainId as JBChainId}
-                    />
-                    <span>{NETWORKS[balance.chainId].label}</span>
-                  </div>
-                  {/* (NOTE: Following comment copied from Revnet: 
-                  "TODO maybe show USD-converted value here instead?" */}
-                  <span className="whitespace-nowrap font-medium">
-                    <NativeTokenValue wei={balance.balance ?? 0n} />
-                  </span>
-                </div>
-              ))}
-            </div>
-          ) : undefined
-        }
-      >
-        <span>
-          <NativeTokenValue wei={totalBalance} />
-        </span>
-      </Tooltip>
-    )
-  }, [totalBalance, suckersBalance])
+  const distributableAmountByChain = suckersBalance?.map(chainBalanceObj => {
+    const chainSurplus =
+      ethSurplusByChain?.find(
+        chainSurplus => chainSurplus.chainId === chainBalanceObj.chainId,
+      )?.surplus ?? 0n
+    return {
+      chainId: chainBalanceObj.chainId,
+      projectId: chainBalanceObj.projectId,
+      distributableAmount: chainBalanceObj.balance - chainSurplus,
+    }
+  })
+
+  const totalDistributableAmount =
+    distributableAmountByChain?.reduce(
+      (acc, curr) => acc + curr.distributableAmount,
+      0n,
+    ) ?? 0n
+
+  const totalTreasuryBalance = useMemo(() => {
+    return <AmountInCurrency amount={BigNumber.from(totalBalance ?? 0n)} currency="ETH" />
+  }, [totalBalance])
 
   const surplusElement = useMemo(() => {
     // NOTE: Don't think we need this since other chains payouts limits may be different?
@@ -100,7 +81,7 @@ export const useV4TreasuryStats = () => {
                   {/* (NOTE: Following comment copied from Revnet: 
                   "TODO maybe show USD-converted value here instead?" */}
                   <span className="whitespace-nowrap font-medium">
-                    <NativeTokenValue wei={surplus.surplus ?? 0n} />
+                    <AmountInCurrency amount={BigNumber.from(surplus.surplus)} currency="ETH" />
                   </span>
                 </div>
               ))}
@@ -109,16 +90,60 @@ export const useV4TreasuryStats = () => {
         }
       >
         <span>
-          <NativeTokenValue wei={totalEthSurplus} />
+          <AmountInCurrency amount={BigNumber.from(totalEthSurplus)} currency="ETH" hideTooltip />
         </span>
       </Tooltip>
     )
   }, [totalEthSurplus, ethSurplusByChain])
 
-  const availableToPayout = <NativeTokenValue wei={distributableAmount.value} />
+  const availableToPayout = useMemo(() => {
+    return (
+      <Tooltip
+        title={
+          distributableAmountByChain?.length &&
+          distributableAmountByChain.length > 0 ? (
+            <div className="flex flex-col gap-2">
+              {distributableAmountByChain?.map(
+                (distributableAmountObj, index) => (
+                  <div
+                    className="flex items-center justify-between gap-4"
+                    key={distributableAmountByChain[index].chainId}
+                  >
+                    <div
+                      key={distributableAmountByChain[index].chainId}
+                      className="flex items-center gap-2"
+                    >
+                      <ChainLogo
+                        chainId={
+                          distributableAmountByChain[index].chainId as JBChainId
+                        }
+                      />
+                      <span>
+                        {NETWORKS[distributableAmountObj.chainId].label}
+                      </span>
+                    </div>
+                    <span className="whitespace-nowrap font-medium">
+                      <AmountInCurrency amount={BigNumber.from(distributableAmountObj.distributableAmount ?? 0n)} currency="ETH" />
+                    </span>
+                  </div>
+                ),
+              )}
+            </div>
+          ) : undefined
+        }
+      >
+        <span>
+          <AmountInCurrency amount={BigNumber.from(totalDistributableAmount ?? 0n)} currency="ETH" hideTooltip />
+        </span>
+      </Tooltip>
+    )
+  }, [totalDistributableAmount, distributableAmountByChain])
 
   return {
-    treasuryBalance,
+    totalTreasuryBalance: totalTreasuryBalance,
+    suckersBalance: suckersBalance
+      ? suckersBalance.toSorted((a, b) => Number(b.balance - a.balance))
+      : [],
     availableToPayout,
     surplusElement,
     cashOutTaxRate: rulesetMetadata?.cashOutTaxRate,

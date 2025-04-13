@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { CurrencyOption } from './currencyOption'
 
 // How we store reward tiers for use around the app

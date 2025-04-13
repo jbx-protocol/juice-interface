@@ -1,4 +1,5 @@
 import { Project } from 'generated/graphql'
+import { JBChainId } from 'juice-sdk-core'
 import { ipfsGatewayFetch } from 'lib/api/ipfs'
 import { DBProject, DBProjectRow, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
@@ -83,7 +84,7 @@ export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
     paymentsCount: p.payments_count,
     projectId: p.project_id,
     pv: p.pv as PV,
-    chainId: p.chain_id,
+    chainId: p.chain_id as JBChainId,
     redeemCount: p.redeem_count,
     redeemVolume: p.redeem_volume,
     redeemVolumeUSD: p.redeem_voume_usd,

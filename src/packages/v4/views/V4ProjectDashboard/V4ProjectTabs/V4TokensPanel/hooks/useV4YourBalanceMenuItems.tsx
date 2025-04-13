@@ -1,11 +1,11 @@
 import {
-  FireIcon,
   PlusCircleIcon,
-  ReceiptRefundIcon,
+  ReceiptRefundIcon
 } from '@heroicons/react/24/outline'
+import { ReactNode, useMemo, useState } from 'react'
+
 import { t } from '@lingui/macro'
 import { PopupMenuItem } from 'components/ui/PopupMenu'
-import { ReactNode, useMemo, useState } from 'react'
 import { useV4BalanceMenuItemsUserFlags } from './useV4BalanceMenuItemsUserFlags'
 
 export const useV4YourBalanceMenuItems = () => {
@@ -22,18 +22,19 @@ export const useV4YourBalanceMenuItems = () => {
 
   const items = useMemo(() => {
     const tokenMenuItems: PopupMenuItem[] = []
-    if (canBurnTokens) {
-      tokenMenuItems.push({
-        id: 'burn',
-        label: (
-          <TokenItemLabel
-            label={t`Burn token`}
-            icon={<FireIcon className="h-5 w-5" />}
-          />
-        ),
-        onClick: () => setRedeemModalVisible(true),
-      })
-    }
+    // V4TODO:
+    // if (canBurnTokens) {
+    //   tokenMenuItems.push({
+    //     id: 'burn',
+    //     label: (
+    //       <TokenItemLabel
+    //         label={t`Burn token`}
+    //         icon={<FireIcon className="h-5 w-5" />}
+    //       />
+    //     ),
+    //     onClick: () => setRedeemModalVisible(true),
+    //   })
+    // }
     if (canClaimErcTokens) {
       tokenMenuItems.push({
         id: 'claim',

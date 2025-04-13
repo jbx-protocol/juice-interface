@@ -1,6 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import { Split } from 'packages/v2v3/models/splits'
 import { formatSplitPercent } from 'packages/v2v3/utils/math'

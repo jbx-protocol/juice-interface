@@ -1,18 +1,22 @@
-import { ArrowUpCircleIcon } from '@heroicons/react/24/outline'
-import { Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
 import { useCallback, useState } from 'react'
+
+import { ArrowUpCircleIcon } from '@heroicons/react/24/outline'
+import { Trans } from '@lingui/macro'
+import { JBChainId } from 'juice-sdk-react'
 import { twMerge } from 'tailwind-merge'
 import { reloadWindow } from 'utils/windowUtils'
-import V4DistributeReservedTokensModal from './V4DistributeReservedTokensModal'
 import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
+import V4DistributeReservedTokensModal from './V4DistributeReservedTokensModal'
 
 export const V4SendReservedTokensButton = ({
   className,
   containerClassName,
+  chainId
 }: {
   className?: string
   containerClassName?: string
+  chainId: JBChainId | undefined
 }) => {
   const { pendingReservedTokens } = useV4ReservedTokensSubPanel()
 
@@ -22,7 +26,7 @@ export const V4SendReservedTokensButton = ({
 
   const distributeButtonDisabled =
     !pendingReservedTokens || pendingReservedTokens === 0n
-
+  if (!chainId) return null
   return (
     <Tooltip
       title={<Trans>No reserved tokens to send.</Trans>}
@@ -42,6 +46,7 @@ export const V4SendReservedTokensButton = ({
         open={open}
         onCancel={closeModal}
         onConfirmed={reloadWindow}
+        chainId={chainId}
       />
     </Tooltip>
   )

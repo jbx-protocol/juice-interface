@@ -1,6 +1,6 @@
-import { constants } from 'ethers'
+import * as constants from '@ethersproject/constants'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 
 import { amountAddFee, amountSubFee } from 'packages/v1/utils/math'
 import {

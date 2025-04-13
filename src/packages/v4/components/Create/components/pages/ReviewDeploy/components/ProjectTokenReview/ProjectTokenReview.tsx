@@ -1,13 +1,16 @@
-import { t } from '@lingui/macro'
-import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
+import * as ProjectTokenForm from '../../../ProjectToken/hooks/useProjectTokenForm'
+
 import {
   formatDiscountRate,
   formatIssuanceRate,
   formatRedemptionRate,
   formatReservedRate,
 } from 'packages/v2v3/utils/math'
+
+import { t } from '@lingui/macro'
+import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
+import React from 'react'
 import { formatAmount } from 'utils/format/formatAmount'
-import * as ProjectTokenForm from '../../../ProjectToken/hooks/useProjectTokenForm'
 import { ReviewDescription } from '../ReviewDescription'
 import { useProjectTokenReview } from './hooks/useProjectTokenReview'
 
@@ -22,6 +25,15 @@ export const ProjectTokenReview = () => {
     setAllocationSplits,
     weight,
   } = useProjectTokenReview()
+
+  const showReservedTokenRecipients = React.useMemo(() => {
+    return (
+      (reservedRate.length > 0
+        ? BigInt(reservedRate)
+        : BigInt(ProjectTokenForm.DefaultSettings.reservedTokensPercentage)) >
+      0n
+    )
+  }, [reservedRate])
 
   return (
     <div className="flex flex-col gap-y-10 pt-5 pb-12 md:grid md:grid-cols-4">
@@ -49,18 +61,21 @@ export const ProjectTokenReview = () => {
           </div>
         }
       />
+      {showReservedTokenRecipients && (
+        <ReviewDescription
+          className="col-span-2"
+          title={t`Reserved token recipients`}
+          desc={
+            <ReservedTokensList
+              value={allocationSplits}
+              onChange={setAllocationSplits}
+              isEditable={false}
+            />
+          }
+        />
+      )}
       <ReviewDescription
-        className="col-span-2"
-        title={t`Reserved token recipients`}
-        desc={
-          <ReservedTokensList
-            value={allocationSplits}
-            onChange={setAllocationSplits}
-          />
-        }
-      />
-      <ReviewDescription
-        title={t`Decay percent`}
+        title={t`Weight cut percent`}
         desc={
           <div className="text-base font-medium">
             {formatDiscountRate(
@@ -72,7 +87,7 @@ export const ProjectTokenReview = () => {
         }
       />
       <ReviewDescription
-        title={t`Redemption rate`}
+        title={t`Cash out tax rate`}
         desc={
           <div className="text-base font-medium">
             {formatRedemptionRate(

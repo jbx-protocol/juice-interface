@@ -1,10 +1,11 @@
 import { ReceiptPercentIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { PopupMenu, PopupMenuItem } from 'components/ui/PopupMenu'
+
 import { Trans } from '@lingui/macro'
 import { SwitchToUnlimitedModal } from 'components/PayoutsTable/SwitchToUnlimitedModal'
-import { PopupMenu, PopupMenuItem } from 'components/ui/PopupMenu'
 import { handleConfirmationDeletion } from 'hooks/emitConfirmationDeletionModal'
+import { ReduxPayoutLimit } from 'packages/v4/models/fundAccessLimits'
 import { useState } from 'react'
-import { ReduxDistributionLimit } from 'redux/hooks/v2v3/shared'
 import { fromWad } from 'utils/format/formatNumber'
 import { ConvertAmountsModal } from './ConvertAmountsModal'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
@@ -27,7 +28,7 @@ export function PayoutTableSettings() {
     setSplits100Percent,
   } = usePayoutsTable()
 
-  const handleSwitchToLimitedPayouts = (newLimit: ReduxDistributionLimit) => {
+  const handleSwitchToLimitedPayouts = (newLimit: ReduxPayoutLimit) => {
     setDistributionLimit(parseFloat(fromWad(newLimit.amount)))
     setCurrency(newLimit.currency)
     setSwitchToLimitedModalOpen(false)

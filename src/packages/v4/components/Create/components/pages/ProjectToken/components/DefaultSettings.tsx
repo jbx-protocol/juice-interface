@@ -1,17 +1,19 @@
-import { t } from '@lingui/macro'
-import { Divider } from 'antd'
-import TooltipLabel from 'components/TooltipLabel'
+import * as ProjectTokenForm from '../hooks/useProjectTokenForm'
+
 import {
+  CASH_OUT_TAX_RATE_EXPLANATION,
   DISCOUNT_RATE_EXPLANATION,
   MINT_RATE_EXPLANATION,
   OWNER_MINTING_EXPLANATION,
-  REDEMPTION_RATE_EXPLANATION,
   RESERVED_RATE_EXPLANATION,
 } from 'components/strings'
 import { ReactNode, useMemo } from 'react'
+
+import { t } from '@lingui/macro'
+import { Divider } from 'antd'
+import TooltipLabel from 'components/TooltipLabel'
 import { formatAmount } from 'utils/format/formatAmount'
 import { formatBoolean } from 'utils/format/formatBoolean'
-import * as ProjectTokenForm from '../hooks/useProjectTokenForm'
 
 export const DefaultSettings: React.FC<
   React.PropsWithChildren<unknown>
@@ -34,7 +36,7 @@ export const DefaultSettings: React.FC<
       },
       [t`Cash out tax rate`]: {
         data: `${ProjectTokenForm.DefaultSettings.redemptionRate}%`,
-        tooltip: REDEMPTION_RATE_EXPLANATION,
+        tooltip: CASH_OUT_TAX_RATE_EXPLANATION,
       },
       [t`Owner token minting`]: {
         data: formatBoolean(ProjectTokenForm.DefaultSettings.tokenMinting),

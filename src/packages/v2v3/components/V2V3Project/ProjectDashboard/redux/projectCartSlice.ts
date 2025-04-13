@@ -1,5 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { CaseReducer, PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { BigNumber } from 'ethers'
 import { NftRewardTier } from 'models/nftRewards'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'

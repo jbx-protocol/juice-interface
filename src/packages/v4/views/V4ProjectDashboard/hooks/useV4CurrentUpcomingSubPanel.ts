@@ -1,17 +1,25 @@
 import { t } from '@lingui/macro'
 import {
+  useJBProjectId,
   useJBRuleset,
   useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf,
 } from 'juice-sdk-react'
-import { V4ApprovalStatus } from 'models/ballot'
+import { V4ApprovalStatus } from 'models/approvalHooks'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { useMemo } from 'react'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
+import { useCyclesPanelSelectedChain } from '../V4ProjectTabs/V4CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
 
 export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
-  const { data: ruleset, isLoading: rulesetLoading } = useJBRuleset()
+  const { selectedChainId } = useCyclesPanelSelectedChain()
+  const { projectId } = useJBProjectId(selectedChainId)
+  const { ruleset, isLoading: rulesetLoading } = useJBRuleset({
+    chainId: selectedChainId,
+    projectId,
+  })
+
   const { ruleset: latestUpcomingRuleset, isLoading: upcomingRulesetsLoading } =
-    useJBUpcomingRuleset()
+    useJBUpcomingRuleset(selectedChainId)
 
   const { data: approvalStatus } =
     useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf()
@@ -28,10 +36,13 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
 
   const rulesetUnlocked = useMemo(() => {
     if (type === 'current') {
-      return ruleset?.duration === 0 ?? true
+      return Boolean(ruleset?.duration && ruleset?.duration === 0) ?? true
     }
-    return latestUpcomingRuleset?.duration == 0 ?? true
-  }, [ruleset?.duration, type, latestUpcomingRuleset?.duration])
+    return (
+      Boolean(latestUpcomingRuleset && latestUpcomingRuleset.duration === 0) ??
+      true
+    )
+  }, [ruleset?.duration, type, latestUpcomingRuleset])
 
   const upcomingRulesetLength = useMemo(() => {
     if (!latestUpcomingRuleset)
@@ -45,26 +56,19 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
 
   /** Determines if the CURRENT cycle is unlocked.
    * This is used to check if the upcoming cycle can start at any time. */
-  const currentRulesetUnlocked = ruleset?.duration === 0 ?? true
+  const currentRulesetUnlocked =
+    Boolean(ruleset && ruleset?.duration === 0) ?? true
 
-  const status = rulesetUnlocked ? t`Unlocked` : t`Locked`
+  const status = (type === 'current' ? currentRulesetUnlocked : rulesetUnlocked)
+    ? t`Unlocked`
+    : t`Locked`
 
-  // Short circuit current for faster loading
-  if (type === 'current') {
-    if (rulesetLoading) return { loading: true, type }
-    return {
-      loading: false,
-      type,
-      rulesetNumber,
-      status,
-    }
-  }
-
-  if (rulesetLoading || upcomingRulesetsLoading)
+  if (rulesetLoading || upcomingRulesetsLoading) {
     return {
       loading: true,
       type,
     }
+  }
 
   return {
     loading: false,

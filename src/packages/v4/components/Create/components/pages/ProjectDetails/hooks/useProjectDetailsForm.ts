@@ -8,7 +8,6 @@ import { Form } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { DEFAULT_PROJECT_CHAIN_ID } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
-import { JBChainId } from 'juice-sdk-core'
 import { ProjectTagName } from 'models/project-tags'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
@@ -19,7 +18,6 @@ import { AmountInputValue } from '../ProjectDetailsPage'
 
 type ProjectDetailsFormProps = Partial<{
   projectName: string
-  projectChainId: JBChainId
   projectTagline: string
   projectDescription: string
   logo: string
@@ -44,12 +42,8 @@ type ProjectDetailsFormProps = Partial<{
 
 export const useProjectDetailsForm = () => {
   const [form] = useForm<ProjectDetailsFormProps>()
-  const {
-    projectChainId,
-    projectMetadata,
-    inputProjectOwner,
-    mustStartAtOrAfter,
-  } = useAppSelector(state => state.creatingV2Project)
+  const { projectMetadata, inputProjectOwner, mustStartAtOrAfter } =
+    useAppSelector(state => state.creatingV2Project)
 
   const { chain } = useWallet()
 
@@ -59,7 +53,6 @@ export const useProjectDetailsForm = () => {
   const initialValues: ProjectDetailsFormProps = useMemo(
     () => ({
       projectName: projectMetadata.name,
-      projectChainId: projectChainId ?? defaultChainId,
       projectTagline: projectMetadata.projectTagline,
       projectDescription: projectMetadata.description,
       logo: projectMetadata.logoUri,
@@ -93,8 +86,6 @@ export const useProjectDetailsForm = () => {
     }),
     [
       projectMetadata.name,
-      projectChainId,
-      defaultChainId,
       projectMetadata.projectTagline,
       projectMetadata.description,
       projectMetadata.logoUri,
@@ -122,13 +113,6 @@ export const useProjectDetailsForm = () => {
     ignoreUndefined: true,
     dispatchFunction: creatingV2ProjectActions.setName,
     formatter: v => v ?? '',
-  })
-  useFormDispatchWatch({
-    form,
-    fieldName: 'projectChainId',
-    ignoreUndefined: true,
-    dispatchFunction: creatingV2ProjectActions.setProjectChainId,
-    formatter: v => v ?? DEFAULT_PROJECT_CHAIN_ID,
   })
   useFormDispatchWatch({
     form,

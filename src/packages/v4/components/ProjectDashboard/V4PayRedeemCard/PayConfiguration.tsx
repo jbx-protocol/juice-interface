@@ -1,16 +1,14 @@
-import { Trans, t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
+import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
+import { useJBTokenContext } from 'juice-sdk-react'
+import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   useProjectDispatch,
   useProjectSelector,
   useProjectStore,
 } from '../redux/hooks'
-
-import { PV_V2 } from 'constants/pv'
-import { useProjectLogoSrc } from 'hooks/useProjectLogoSrc'
-import { useJBTokenContext } from 'juice-sdk-react'
-import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { projectCartActions } from '../redux/projectCartSlice'
 import { EthereumLogo } from './EthereumLogo'
 import { PayRedeemInput } from './PayRedeemInput'
@@ -42,7 +40,10 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
     state => state.projectCart.chosenNftRewards,
   )
   const {
-    nftRewards: { rewardTiers, flags: { preventOverspending } },
+    nftRewards: {
+      rewardTiers,
+      flags: { preventOverspending },
+    },
   } = useV4NftRewards()
 
   const cartPayAmount = useProjectSelector(
@@ -51,11 +52,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
   const dispatch = useProjectDispatch()
   const store = useProjectStore()
 
-  const tokenLogo = useProjectLogoSrc({
-    projectId,
-    pv: PV_V2,
-    uri: projectMetadata?.logoUri,
-  })
+  const { projectLogoUri: tokenLogo } = useProjectHeaderLogo()
 
   const [payAmount, setPayAmount] = useState<string>()
   const [fallbackImage, setFallbackImage] = useState<boolean>()
@@ -113,50 +110,52 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
     <div>
       <div className="relative">
         <div className="flex flex-col gap-y-2">
-          { rewardTiers?.length && preventOverspending ? (
+          {rewardTiers?.length && preventOverspending ? (
             <PreventOverspendingPayCard />
-          ): (
-                    <>
-          <PayRedeemInput
-            label={t`You pay`}
-            token={{
-              balance: wallet.balance,
-              image: <EthereumLogo />,
-              ticker: 'ETH',
-              type: 'eth',
-            }}
-            value={payAmount ?? cartPayAmount?.toString()}
-            onChange={handleUserPayAmountChange}
-          />
-          <PayRedeemInput
-            label={t`You receive`}
-            redeemUnavailable={!isIssuingTokens}
-            downArrow
-            readOnly
-            token={{
-              balance: userTokenBalance?.toString(),
-              image:
-                tokenLogo && !fallbackImage ? (
-                  <img
-                    src={tokenLogo}
-                    alt="Token logo"
-                    onError={() => setFallbackImage(true)}
-                  />
-                ) : (
-                  '🧃'
-                ),
-              ticker: tokenBTicker,
-              type: projectHasErc20Token ? 'erc20' : 'native',
-            }}
-            cartNfts={chosenNftRewards}
-            value={
-              tokenReceivedAmount.receivedTickets &&
-              !!parseFloat(tokenReceivedAmount.receivedTickets)
-                ? tokenReceivedAmount.receivedTickets
-                : ''
-            }
-          />
-          </>)}
+          ) : (
+            <>
+              <PayRedeemInput
+                label={t`You pay`}
+                token={{
+                  balance: wallet.balance,
+                  image: <EthereumLogo />,
+                  ticker: 'ETH',
+                  type: 'eth',
+                }}
+                value={payAmount ?? cartPayAmount?.toString()}
+                onChange={handleUserPayAmountChange}
+              />
+              <PayRedeemInput
+                actionType="pay"
+                label={t`You receive`}
+                redeemUnavailable={!isIssuingTokens}
+                downArrow
+                readOnly
+                token={{
+                  balance: userTokenBalance?.toString(),
+                  image:
+                    tokenLogo && !fallbackImage ? (
+                      <img
+                        src={tokenLogo}
+                        alt="Token logo"
+                        onError={() => setFallbackImage(true)}
+                      />
+                    ) : (
+                      '🧃'
+                    ),
+                  ticker: tokenBTicker,
+                  type: projectHasErc20Token ? 'erc20' : 'native',
+                }}
+                cartNfts={chosenNftRewards}
+                value={
+                  tokenReceivedAmount.receivedTickets &&
+                  !!parseFloat(tokenReceivedAmount.receivedTickets)
+                    ? tokenReceivedAmount.receivedTickets
+                    : ''
+                }
+              />
+            </>
+          )}
         </div>
       </div>
 

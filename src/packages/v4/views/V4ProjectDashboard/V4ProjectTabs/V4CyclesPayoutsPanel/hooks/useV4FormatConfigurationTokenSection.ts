@@ -1,11 +1,12 @@
-import { t } from '@lingui/macro'
 import {
-    ConfigurationPanelDatum,
-    ConfigurationPanelTableData,
+  ConfigurationPanelDatum,
+  ConfigurationPanelTableData,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
+import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
+
+import { t } from '@lingui/macro'
 import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
 import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
-import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
 import { useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -135,7 +136,7 @@ export const useV4FormatConfigurationTokenSection = ({
       : undefined
 
     if (upcomingRuleset === null || upcomingRulesetLoading) {
-      return pairToDatum(t`Decay rate`, current, null)
+      return pairToDatum(t`Weight cut percent`, current, null)
     }
     const queued = upcomingRuleset
       ? `${upcomingRuleset.weightCutPercent.formatPercentage()}%`
@@ -143,19 +144,18 @@ export const useV4FormatConfigurationTokenSection = ({
       ? `${ruleset.weightCutPercent.formatPercentage()}%`
       : undefined
 
-    return pairToDatum(t`Decay rate`, current, queued)
+    return pairToDatum(t`Weight cut percent`, current, queued)
   }, [ruleset, upcomingRuleset, upcomingRulesetLoading])
 
   const cashOutTaxRateDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentRedemptionRate =
       rulesetMetadata?.cashOutTaxRate.formatPercentage()
-
-    const current = currentRedemptionRate
+    const current = currentRedemptionRate !== undefined
       ? `${currentRedemptionRate}%`
       : undefined
 
     if (upcomingRulesetMetadata === null || upcomingRulesetLoading) {
-      return pairToDatum(t`Redemption rate`, current, null)
+      return pairToDatum(t`Cash out tax rate`, current, null)
     }
 
     const queued = upcomingRulesetMetadata
@@ -163,7 +163,7 @@ export const useV4FormatConfigurationTokenSection = ({
       : rulesetMetadata
       ? `${rulesetMetadata.cashOutTaxRate.formatPercentage()}%`
       : undefined
-    return pairToDatum(t`Redemption rate`, current, queued)
+    return pairToDatum(t`Cash out tax rate`, current, queued)
   }, [upcomingRulesetMetadata, rulesetMetadata, upcomingRulesetLoading])
 
   const ownerTokenMintingDatum: ConfigurationPanelDatum = useMemo(() => {

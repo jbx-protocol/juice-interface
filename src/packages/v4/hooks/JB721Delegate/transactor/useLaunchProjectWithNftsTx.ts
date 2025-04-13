@@ -1,42 +1,14 @@
-import {
-  Address,
-  WaitForTransactionReceiptReturnType,
-  toBytes,
-  toHex,
-  zeroAddress,
-} from 'viem'
-import {
-  DEFAULT_MEMO,
-  NATIVE_TOKEN,
-  NATIVE_TOKEN_DECIMALS,
-  jbProjectDeploymentAddresses,
-} from 'juice-sdk-core'
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import {
   JBChainId,
-  jbPricesAddress,
-  useJBContractContext,
   useWriteJb721TiersHookProjectDeployerLaunchProjectFor,
 } from 'juice-sdk-react'
-import {
-  JBDeploy721TiersHookConfig,
-  LaunchProjectWithNftsTxArgs,
-} from 'packages/v4/models/nfts'
-import {
-  LaunchV2V3ProjectArgs,
-  transformV2V3CreateArgsToV4,
-} from '../../../utils/launchProjectTransformers'
-
-import { DEFAULT_MUST_START_AT_OR_AFTER } from 'redux/slices/v2v3/shared/v2ProjectDefaultState'
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { LaunchTxOpts } from '../../useLaunchProjectTx'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { ipfsUri } from 'utils/ipfs'
-import { isValidMustStartAtOrAfter } from 'packages/v2v3/utils/fundingCycle'
-import { useChainId } from 'wagmi'
-import { useContext } from 'react'
-import { useWallet } from 'hooks/Wallet'
+import { useNftProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useNftProjectLaunchData'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { waitForTransactionReceipt } from '@wagmi/core'
+import { useContext } from 'react'
+import { WaitForTransactionReceiptReturnType } from 'viem'
+import { LaunchTxOpts } from '../../useLaunchProjectTx'
 
 /**
  * Return the project ID created from a `launchProjectFor` transaction.
@@ -53,137 +25,34 @@ export const getProjectIdFromNftLaunchReceipt = (
 }
 
 export function useLaunchProjectWithNftsTx() {
-  const { contracts } = useJBContractContext()
   const { addTransaction } = useContext(TxHistoryContext)
-
-  const { userAddress } = useWallet()
-  const chainId = useChainId()
-
-  const defaultJBController = chainId
-    ? (jbProjectDeploymentAddresses.JBController[
-        chainId as JBChainId
-      ] as Address)
-    : undefined
-  const defaultJBETHPaymentTerminal = chainId
-    ? (jbProjectDeploymentAddresses.JBMultiTerminal[
-        chainId as JBChainId
-      ] as Address)
-    : undefined
-  const JBTiered721DelegateStoreAddress = chainId
-    ? (jbProjectDeploymentAddresses.JB721TiersHookStore[
-        chainId as JBChainId
-      ] as Address)
-    : undefined
-
   const { writeContractAsync: writeLaunchProject } =
     useWriteJb721TiersHookProjectDeployerLaunchProjectFor()
+  const getLaunchData = useNftProjectLaunchData()
 
   return async (
+    chainId: JBChainId,
     {
-      tiered721DelegateData: {
-        collectionUri,
-        collectionName,
-        collectionSymbol,
-        currency,
-        tiers,
-        flags,
-      },
-      projectData: {
-        projectMetadataCID,
-        fundingCycleData,
-        fundingCycleMetadata,
-        fundAccessConstraints,
-        groupedSplits = [],
-        mustStartAtOrAfter = DEFAULT_MUST_START_AT_OR_AFTER,
-        owner,
-      },
-    }: LaunchProjectWithNftsTxArgs,
+      projectMetadataCID,
+      nftCollectionMetadataUri,
+      rewardTierCids,
+    }: {
+      projectMetadataCID: string
+      nftCollectionMetadataUri: string
+      rewardTierCids: string[]
+    },
     {
       onTransactionPending: onTransactionPendingCallback,
       onTransactionConfirmed: onTransactionConfirmedCallback,
       onTransactionError: onTransactionErrorCallback,
     }: LaunchTxOpts,
   ) => {
-    if (
-      !userAddress ||
-      !contracts ||
-      !defaultJBController ||
-      !defaultJBETHPaymentTerminal ||
-      !JBTiered721DelegateStoreAddress ||
-      !isValidMustStartAtOrAfter(mustStartAtOrAfter, fundingCycleData.duration)
-    ) {
-      const missingParam = !userAddress
-        ? 'userAddress'
-        : !contracts
-        ? 'contracts'
-        : !defaultJBController
-        ? 'defaultJBController'
-        : !JBTiered721DelegateStoreAddress
-        ? 'JBTiered721DelegateProjectDeployer'
-        : null
-
-      onTransactionErrorCallback?.(
-        new DOMException(
-          `Transaction failed, missing argument "${
-            missingParam ?? '<unknown>'
-          }".`,
-        ),
-      )
-
-      return Promise.resolve(false)
-    }
-    const _owner = (owner?.length ? owner : userAddress) as Address
-
-    const deployTiered721HookData: JBDeploy721TiersHookConfig = {
-      name: collectionName,
-      symbol: collectionSymbol,
-      baseUri: ipfsUri(''),
-      tokenUriResolver: zeroAddress,
-      contractUri: ipfsUri(collectionUri),
-      tiersConfig: {
-        currency,
-        decimals: NATIVE_TOKEN_DECIMALS,
-        prices: jbPricesAddress[chainId as JBChainId],
-        tiers,
-      },
-      reserveBeneficiary: zeroAddress,
-      flags,
-    }
-
-    const v2v3LaunchProjectArgs = [
-      _owner,
-      [projectMetadataCID, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN],
-      fundingCycleData,
-      fundingCycleMetadata,
-      mustStartAtOrAfter,
-      groupedSplits,
-      fundAccessConstraints,
-      [defaultJBETHPaymentTerminal], // _terminals, just supporting single for now
-      // Eventually should be something like:
-      //    getTerminalsFromFundAccessConstraints(
-      //      fundAccessConstraints,
-      //      contracts.primaryNativeTerminal.data,
-      //    ),
-      DEFAULT_MEMO,
-    ] as LaunchV2V3ProjectArgs
-    const launchProjectData = transformV2V3CreateArgsToV4({
-      v2v3Args: v2v3LaunchProjectArgs,
-      primaryNativeTerminal: defaultJBETHPaymentTerminal,
-      currencyTokenAddress: NATIVE_TOKEN,
+    const { args } = getLaunchData({
+      projectMetadataCID,
+      nftCollectionMetadataUri,
+      rewardTierCids,
+      chainId: chainId as JBChainId,
     })
-
-    const args = [
-      _owner,
-      deployTiered721HookData, //_deployTiered721HookData
-      {
-        projectUri: launchProjectData[1],
-        rulesetConfigurations: launchProjectData[2],
-        terminalConfigurations: launchProjectData[3],
-        memo: launchProjectData[4],
-      }, // _launchProjectData,
-      defaultJBController,
-      createSalt(),
-    ] as const
 
     try {
       // SIMULATE TX: TODO update for nfts
@@ -199,26 +68,23 @@ export function useLaunchProjectWithNftsTx() {
       })
 
       onTransactionPendingCallback(hash)
-      addTransaction?.('Launch Project', { hash })
+      addTransaction?.('Launch Project', { hash, chainId })
       const transactionReceipt: WaitForTransactionReceiptReturnType =
         await waitForTransactionReceipt(wagmiConfig, {
           hash,
+          chainId,
         })
 
       const newProjectId = getProjectIdFromNftLaunchReceipt(transactionReceipt)
 
       onTransactionConfirmedCallback(hash, newProjectId)
+
+      return false
     } catch (e) {
       onTransactionErrorCallback(
         (e as Error) ?? new Error('Transaction failed'),
       )
+      return true
     }
   }
-}
-
-function createSalt() {
-  const base: string = '0x' + Math.random().toString(16).slice(2) // idk lol
-  const salt = toHex(toBytes(base, { size: 32 }))
-
-  return salt
 }

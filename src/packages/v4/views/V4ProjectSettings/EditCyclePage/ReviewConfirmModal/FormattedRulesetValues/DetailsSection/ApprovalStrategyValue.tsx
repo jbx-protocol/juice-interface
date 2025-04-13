@@ -1,13 +1,13 @@
 import { Tooltip } from 'antd'
 import EtherscanLink from 'components/EtherscanLink'
 import FundingCycleDetailWarning from 'components/Project/FundingCycleDetailWarning'
-import { BallotStrategy } from 'models/ballot'
+import { ApprovalHook } from 'models/approvalHooks'
 
 export function ApprovalStrategyValue({
   approvalStrategy,
   warningText,
 }: {
-  approvalStrategy: BallotStrategy
+  approvalStrategy: ApprovalHook
   warningText: string | undefined
 }) {
   return (

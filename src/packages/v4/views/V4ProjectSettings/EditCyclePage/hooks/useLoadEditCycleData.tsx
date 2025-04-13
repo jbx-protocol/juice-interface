@@ -1,16 +1,16 @@
-import { Form } from 'antd'
-import { useEffect, useState } from 'react'
+import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
+import { useEffect, useMemo, useState } from 'react'
 import {
-    deriveDurationOption,
-    deriveDurationUnit,
-    secondsToOtherUnit,
+  deriveDurationOption,
+  deriveDurationUnit,
+  secondsToOtherUnit,
 } from 'utils/format/formatTime'
 
+import { Form } from 'antd'
 import { Ether } from 'juice-sdk-core'
-import { useJBRuleset, useJBRulesetMetadata } from 'juice-sdk-react'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
-import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4PayoutSplits'
+import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4CurrentPayoutSplits'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
 import { V4CurrencyName } from 'packages/v4/utils/currency'
 import { EditCycleFormFields } from '../EditCycleFormFields'
@@ -21,8 +21,11 @@ export const useLoadEditCycleData = () => {
     EditCycleFormFields | undefined
   >(undefined)
 
-  const { data: ruleset } = useJBRuleset()
-  const { data: rulesetMetadata } = useJBRulesetMetadata()
+  const { projectId, chainId } = useJBProjectId()
+  const { ruleset, rulesetMetadata } = useJBRuleset({
+    projectId,
+    chainId,
+  })
   const { ruleset: upcomingRuleset } = useJBUpcomingRuleset()
 
   const { splits: reservedTokensSplits } = useV4ReservedSplits()
@@ -30,60 +33,97 @@ export const useLoadEditCycleData = () => {
   const { data: payoutLimit } = usePayoutLimit()
 
   const [editCycleForm] = Form.useForm<EditCycleFormFields>()
-  
-  const payoutLimitAmount = new Ether(payoutLimit.amount).toFloat()
 
-  useEffect(() => {
-    if (ruleset && rulesetMetadata) {
-      const duration = Number(ruleset.duration)
+  const payoutLimitAmount = useMemo(
+    () => new Ether(payoutLimit.amount).toFloat(),
+    [payoutLimit.amount]
+  )
 
-      const issuanceRate = upcomingRuleset?.weight.toFloat() ?? 0
-      const reservedPercent = rulesetMetadata.reservedPercent.formatPercentage()
-      // : DefaultTokenSettings.reservedTokensPercentage
+  const duration = useMemo(
+    () => Number(ruleset?.duration ?? 0),
+    [ruleset?.duration]
+  )
 
-      const weightCutPercent = ruleset.weightCutPercent.formatPercentage()
-      // : DefaultTokenSettings.discountRate
+  const issuanceRate = useMemo(
+    () => upcomingRuleset?.weight?.toFloat() ?? 0,
+    [upcomingRuleset?.weight]
+  )
 
-      const cashOutTaxRate = rulesetMetadata.cashOutTaxRate.formatPercentage()
-      // : DefaultTokenSettings.cashOutTaxRate
+  const reservedPercent = useMemo(
+    () => rulesetMetadata?.reservedPercent?.formatPercentage() ?? 0,
+    [rulesetMetadata?.reservedPercent]
+  )
 
-      const allowOwnerMinting = rulesetMetadata.allowOwnerMinting
-      // : DefaultTokenSettings.tokenMinting
+  const weightCutPercent = useMemo(
+    () => ruleset?.weightCutPercent?.formatPercentage() ?? 0,
+    [ruleset?.weightCutPercent]
+  )
 
-      const tokenTransfers = !rulesetMetadata.pauseCreditTransfers
-      // : DefaultTokenSettings.pauseTransfers
+  const cashOutTaxRate = useMemo(
+    () => rulesetMetadata?.cashOutTaxRate?.formatPercentage() ?? 0,
+    [rulesetMetadata?.cashOutTaxRate]
+  )
 
-      const formData: EditCycleFormFields = {
-        duration: secondsToOtherUnit({
-          duration,
-          unit: deriveDurationUnit(duration),
-        }),
-        durationUnit: deriveDurationOption(duration),
-        approvalHook: ruleset.approvalHook,
-        allowSetTerminals: rulesetMetadata.allowSetTerminals,
-        allowSetController: rulesetMetadata.allowSetController,
-        allowTerminalMigration: rulesetMetadata.allowTerminalMigration,
-        pausePay: rulesetMetadata.pausePay,
-        payoutSplits: payoutSplits ?? [],
-        payoutLimit: payoutLimitAmount,
-        payoutLimitCurrency: V4CurrencyName(payoutLimit?.currency) ?? 'ETH',
-        holdFees: rulesetMetadata?.holdFees,
-        issuanceRate,
-        reservedPercent,
-        reservedTokensSplits,
-        weightCutPercent,
-        cashOutTaxRate,
-        allowOwnerMinting,
-        tokenTransfers,
-        // nftRewards: currentProjectData.nftRewards,
-        // useDataSourceForRedeem:
-        //   rulesetMetadata.useDataSourceForRedeem,
-        memo: '',
-      }
-      setInitialFormData(formData)
-      editCycleForm.setFieldsValue(formData)
+  const allowOwnerMinting = useMemo(
+    () => rulesetMetadata?.allowOwnerMinting ?? false,
+    [rulesetMetadata?.allowOwnerMinting]
+  )
+
+  const tokenTransfers = useMemo(
+    () => !rulesetMetadata?.pauseCreditTransfers,
+    [rulesetMetadata?.pauseCreditTransfers]
+  )
+
+  const memoizedFormData: EditCycleFormFields | undefined = useMemo(() => {
+    if (!ruleset || !rulesetMetadata) return undefined
+
+    return {
+      duration: secondsToOtherUnit({
+        duration,
+        unit: deriveDurationUnit(duration),
+      }),
+      durationUnit: deriveDurationOption(duration),
+      approvalHook: ruleset.approvalHook,
+      allowSetTerminals: rulesetMetadata.allowSetTerminals,
+      allowSetController: rulesetMetadata.allowSetController,
+      allowTerminalMigration: rulesetMetadata.allowTerminalMigration,
+      pausePay: rulesetMetadata.pausePay,
+      payoutSplits: payoutSplits ?? [],
+      payoutLimit: payoutLimitAmount,
+      payoutLimitCurrency: V4CurrencyName(payoutLimit?.currency) ?? 'ETH',
+      holdFees: rulesetMetadata?.holdFees,
+      issuanceRate,
+      reservedPercent,
+      reservedTokensSplits,
+      weightCutPercent,
+      cashOutTaxRate,
+      allowOwnerMinting,
+      tokenTransfers,
+      memo: '',
     }
-  }, [ruleset, rulesetMetadata, payoutSplits])
+  }, [
+    ruleset,
+    rulesetMetadata,
+    payoutSplits,
+    payoutLimitAmount,
+    payoutLimit?.currency,
+    reservedTokensSplits,
+    duration,
+    issuanceRate,
+    reservedPercent,
+    weightCutPercent,
+    cashOutTaxRate,
+    allowOwnerMinting,
+    tokenTransfers,
+  ])
+
+  // ✅ EFFECT DEPENDS ONLY ON STABLE FORM DATA
+  useEffect(() => {
+    if (!memoizedFormData || initialFormData) return
+
+    setInitialFormData(memoizedFormData)
+    editCycleForm.setFieldsValue(memoizedFormData)
+  }, [memoizedFormData, initialFormData, editCycleForm])
 
   return {
     initialFormData,

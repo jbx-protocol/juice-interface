@@ -39,7 +39,7 @@ const V4SettingsPageKeyTitleMap = (
 } => ({
   general: t`General`,
   // handle: t`Project handle`,
-  cycle: t`Cycle configuration`,
+  cycle: t`Ruleset cycle configuration`,
   payouts: t`Payouts`,
   // reservedtokens: t`Reserved token recipients`,
   nfts: hasExistingNfts ? t`Edit NFT collection` : t`Launch New NFT Collection`,

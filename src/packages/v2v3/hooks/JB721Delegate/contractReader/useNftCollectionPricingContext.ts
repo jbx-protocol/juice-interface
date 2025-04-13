@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { JB721DelegateContractsContext } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsContext'
 import useV2ContractReader from 'packages/v2v3/hooks/contractReader/useV2ContractReader'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'

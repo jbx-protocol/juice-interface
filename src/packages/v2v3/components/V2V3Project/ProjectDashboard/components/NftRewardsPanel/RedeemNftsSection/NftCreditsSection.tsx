@@ -1,7 +1,7 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import TooltipIcon from 'components/TooltipIcon'
 import ETHAmount from 'components/currency/ETHAmount'
-import { BigNumber } from 'ethers'
 
 export function NftCreditsSection({ credits }: { credits: BigNumber }) {
   return (

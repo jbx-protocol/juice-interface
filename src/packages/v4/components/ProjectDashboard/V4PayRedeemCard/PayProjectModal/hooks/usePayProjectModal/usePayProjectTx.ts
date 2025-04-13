@@ -1,29 +1,30 @@
-import { Address, Hash, parseEther } from 'viem'
-import { DEFAULT_METADATA, NATIVE_TOKEN } from 'juice-sdk-core'
-import { useCallback, useContext, useMemo } from 'react'
+import { DEFAULT_METADATA, NATIVE_TOKEN, readJbDirectoryPrimaryTerminalOf } from 'juice-sdk-core'
 import {
-  useJBChainId,
+  JBChainId,
   useJBContractContext,
   useJBRulesetContext,
   usePreparePayMetadata,
-  useWriteJbMultiTerminalPay,
+  useSuckers,
+  useWriteJbMultiTerminalPay
 } from 'juice-sdk-react'
+import { useCallback, useContext, useMemo } from 'react'
+import { Address, Hash, parseEther, zeroAddress } from 'viem'
 
-import { FormikHelpers } from 'formik'
-import { PayProjectModalFormValues } from './usePayProjectModal'
-import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { waitForTransactionReceipt } from '@wagmi/core'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
-import { buildPaymentMemo } from 'utils/buildPaymentMemo'
+import { FormikHelpers } from 'formik'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
-import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
+import { useWallet } from 'hooks/Wallet'
 import { useProjectSelector } from 'packages/v4/components/ProjectDashboard/redux/hooks'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
-import { useWallet } from 'hooks/Wallet'
+import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
+import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { waitForTransactionReceipt } from '@wagmi/core'
+import { buildPaymentMemo } from 'utils/buildPaymentMemo'
+import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
+import { PayProjectModalFormValues } from './usePayProjectModal'
 
 export const usePayProjectTx = ({
   onTransactionPending: onTransactionPendingCallback,
@@ -51,7 +52,7 @@ export const usePayProjectTx = ({
     nftRewards: { rewardTiers },
   } = useV4NftRewards()
   const converter = useCurrencyConverter()
-  const defaultChainId = useJBChainId()
+  const { data: suckers } = useSuckers()
 
   const { receivedTickets } = useProjectPaymentTokens()
   // TODO: is this needed for preferClaimedTokens?
@@ -110,22 +111,31 @@ export const usePayProjectTx = ({
   )
 
   const { writeContractAsync: writePay } = useWriteJbMultiTerminalPay()
-  const { contracts, projectId } = useJBContractContext()
+  const { contracts } = useJBContractContext()
   const { addTransaction } = useContext(TxHistoryContext)
 
   return useCallback(
     async (
       values: PayProjectModalFormValues,
       formikHelpers: FormikHelpers<PayProjectModalFormValues>,
+      chainId: JBChainId,
     ) => {
+      const projectId = suckers?.find(
+        ({ peerChainId }) => chainId === peerChainId)?.projectId
+        
       if (
         !contracts.primaryNativeTerminal.data ||
         !userAddress ||
         !values.userAcceptsTerms ||
-        !values.chainId
+        !projectId
       ) {
         return
       }
+
+      const terminalAddress = await readJbDirectoryPrimaryTerminalOf(wagmiConfig, {
+        chainId,
+        args: [projectId ?? 0n, NATIVE_TOKEN],
+      })
 
       const { messageString, attachedUrl } = values.message
       const memo = buildPaymentMemo({
@@ -140,8 +150,7 @@ export const usePayProjectTx = ({
           .filter((url): url is string => !!url),
       })
       const beneficiary = (values.beneficiaryAddress ?? userAddress) as Address
-      const chainId = values.chainId || defaultChainId
-      
+
       const args = [
         projectId,
         NATIVE_TOKEN,
@@ -158,10 +167,11 @@ export const usePayProjectTx = ({
       //   functionName: 'pay',
       //   args,
       // })
+      
       try {
         const hash = await writePay({
           chainId,
-          address: contracts.primaryNativeTerminal.data,
+          address: terminalAddress ?? zeroAddress, 
           args,
           value: weiAmount,
         })
@@ -188,7 +198,7 @@ export const usePayProjectTx = ({
       contracts.primaryNativeTerminal.data,
       userAddress,
       chosenNftRewards,
-      projectId,
+      suckers,
       metadata,
       rewardTiers,
       writePay,

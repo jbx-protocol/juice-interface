@@ -1,8 +1,4 @@
 import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
-import { Trans } from '@lingui/macro'
-import { PopupMenu } from 'components/ui/PopupMenu'
-import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import round from 'lodash/round'
 import {
   V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD,
@@ -12,11 +8,16 @@ import {
   payoutsTableMenuItemsIconClass,
   payoutsTableMenuItemsLabelClass,
 } from './PayoutTableSettings'
+
+import { Trans } from '@lingui/macro'
+import { PopupMenu } from 'components/ui/PopupMenu'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import round from 'lodash/round'
 import { usePayoutsTableContext } from './context/PayoutsTableContext'
 import { usePayoutsTable } from './hooks/usePayoutsTable'
 
 export function CurrencySwitcher() {
-  const { setCurrency: setCurrencyName } = usePayoutsTableContext()
+  const { setCurrency: setCurrencyName, usdDisabled } = usePayoutsTableContext()
   const { currency, setCurrency, distributionLimit, setDistributionLimit } =
     usePayoutsTable()
   const converter = useCurrencyConverter()
@@ -28,11 +29,11 @@ export function CurrencySwitcher() {
       ) : (
         <Trans>Amount (USD)</Trans>
       )}
-      {setCurrencyName ? <ChevronDownIcon className="h-4 w-4" /> : null}
+      {setCurrencyName && !usdDisabled ? <ChevronDownIcon className="h-4 w-4" /> : null}
     </div>
   )
 
-  if (!setCurrencyName) {
+  if (!setCurrencyName || usdDisabled) {
     return button
   }
 

@@ -1,78 +1,57 @@
-import { useInfiniteQuery } from '@tanstack/react-query'
-import { Button } from 'antd'
-import { JuiceListbox } from 'components/inputs/JuiceListbox'
-import Loading from 'components/Loading'
-import RichNote from 'components/RichNote/RichNote'
-import request from 'graphql-request'
-import {
-  NativeTokenValue,
-  useJBChainId,
-  useJBContractContext,
-} from 'juice-sdk-react'
-import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
-import { last } from 'lodash'
-import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { SplitPortion, SuckerPair } from 'juice-sdk-core'
+import { useJBChainId, useSuckers } from 'juice-sdk-react'
 import {
   OrderDirection,
   ProjectEvent_OrderBy,
   ProjectEventsDocument,
 } from 'packages/v4/graphql/client/graphql'
-import React from 'react'
-import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { ActivityEvent } from './activityEventElems/ActivityElement'
 import {
   AnyEvent,
   EventType,
   transformEventData,
 } from './utils/transformEventsData'
 
+import { BigNumber } from '@ethersproject/bignumber'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { Button } from 'antd'
+import { AmountInCurrency } from 'components/currency/AmountInCurrency'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
+import Loading from 'components/Loading'
+import RichNote from 'components/RichNote/RichNote'
+import { NETWORKS } from 'constants/networks'
+import request from 'graphql-request'
+import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
+import last from 'lodash/last'
+import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import React from 'react'
+import { fromWad } from 'utils/format/formatNumber'
+import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { ActivityEvent } from './activityEventElems/ActivityElement'
+
 const PAGE_SIZE = 10
 
 export function V4ActivityList() {
-  const { projectId } = useJBContractContext()
   const tokenSymbol = useProjectContext().tokenSymbol
+  const chainId = useJBChainId()
+  const { data: suckers, isLoading: suckersLoading } = useSuckers()
 
+  const [selectedChainId, setSelectedChainId] = React.useState(chainId)
   const [filter, setFilter] = React.useState<ProjectEventFilter>('all')
 
-  const chainId = useJBChainId()
+  const supportedChains = React.useMemo(
+    () =>
+      CHAIN_OPTIONS.filter(o => suckers?.find(s => s.peerChainId === o.value)),
+    [suckers],
+  )
+
   const {
     data: projectEventsQueryResult,
     isLoading,
     fetchNextPage,
-  } = useInfiniteQuery({
-    queryKey: ['projectEvents', projectId, filter],
-    initialPageParam: 0,
-    queryFn: async ({ pageParam = 0 }) => {
-      if (!chainId) {
-        throw new Error('useSubgraphQuery needs a chainId, none provided')
-      }
-      const uri = v4SubgraphUri(chainId)
-      const document = ProjectEventsDocument
-
-      const data = await request(uri, document, {
-        orderBy: ProjectEvent_OrderBy.timestamp,
-        orderDirection: OrderDirection.desc,
-        where: {
-          projectId: Number(projectId),
-          // ProjectEvents have exactly one non-null Event field. We can use `<filter>_not: null` to return only projectEvents where the matching Event field is defined
-          ...(!filter || filter === 'all'
-            ? {}
-            : {
-                [filter + '_not']: null,
-              }),
-        },
-        skip: pageParam * PAGE_SIZE,
-        first: PAGE_SIZE,
-      })
-      const mightHaveNextPage = data.projectEvents.length === PAGE_SIZE
-      return {
-        data,
-        nextCursor: mightHaveNextPage ? pageParam + PAGE_SIZE : undefined,
-      }
-    },
-    getNextPageParam: lastPage => {
-      return lastPage.nextCursor
-    },
+  } = useOmnichainSubgraphProjectQuery({
+    sucker: suckers?.find(s => s.peerChainId === selectedChainId),
+    filter,
   })
 
   const projectEvents = React.useMemo(
@@ -87,8 +66,15 @@ export function V4ActivityList() {
 
   return (
     <div>
-      <div className="flex items-baseline justify-between">
+      <div className="flex items-baseline justify-between gap-5">
         <h2 className="mb-6 font-heading text-2xl font-medium">Activity</h2>
+        {suckers && suckers.length > 0 ? (
+          <ChainSelect
+            value={selectedChainId}
+            onChange={chainId => setSelectedChainId(chainId)}
+            chainIds={suckers?.map(s => s.peerChainId)}
+          />
+        ) : null}
       </div>
       <div className="flex flex-col gap-3">
         <JuiceListbox
@@ -97,8 +83,10 @@ export function V4ActivityList() {
           value={ACTIVITY_OPTIONS.find(o => o.value === filter)}
           onChange={o => setFilter(o.value as ProjectEventFilter)}
         />
-        {isLoading && <Loading />}
-        {isLoading || (projectEvents && projectEvents.length > 0) ? (
+        {(isLoading || suckersLoading) && <Loading />}
+        {isLoading ||
+        suckersLoading ||
+        (projectEvents && projectEvents.length > 0) ? (
           <>
             {projectEvents?.map(event => {
               return (
@@ -138,7 +126,11 @@ function translateEventDataToPresenter(
         header: 'Paid',
         subject: (
           <span className="font-heading text-lg">
-            <NativeTokenValue decimals={8} wei={event.amount.value} />
+            <AmountInCurrency
+              amount={BigNumber.from(event.amount.value)}
+              currency="ETH"
+              hideTooltip
+            />
           </span>
         ),
         extra: <RichNote note={event.note} />,
@@ -149,7 +141,11 @@ function translateEventDataToPresenter(
         header: 'Added to balance',
         subject: (
           <span className="font-heading text-lg">
-            <NativeTokenValue decimals={8} wei={event.amount.value} />
+            <AmountInCurrency
+              amount={BigNumber.from(event.amount.value)}
+              currency="ETH"
+              hideTooltip
+            />
           </span>
         ),
         extra: event.note ? <RichNote note={event.note} /> : null,
@@ -176,10 +172,13 @@ function translateEventDataToPresenter(
         header: 'Cashed out',
         subject: (
           <span className="font-heading text-lg">
-            <NativeTokenValue decimals={8} wei={event.reclaimAmount.value} />
+            <AmountInCurrency
+              amount={BigNumber.from(event.reclaimAmount.value)}
+              currency="ETH"
+              hideTooltip
+            />
           </span>
         ),
-        extra: <RichNote note={event.metadata} />,
       }
     case 'deployedERC20Event':
       return {
@@ -198,25 +197,29 @@ function translateEventDataToPresenter(
     case 'distributePayoutsEvent':
       return {
         event,
-        header: 'Distributed payouts',
+        header: 'Send payouts',
         subject: (
           <span className="font-heading text-lg">
-            <NativeTokenValue decimals={8} wei={event.amount.value} />
+            <AmountInCurrency
+              amount={BigNumber.from(event.amount.value)}
+              currency="ETH"
+              hideTooltip
+            />
           </span>
         ),
         extra: (
           <RichNote
-            note={`Fee: ${event.fee.value}, Paid out: ${event.amountPaidOut.value}`}
+            note={`Paid out: Ξ${event.amountPaidOut.format()}, Fee: Ξ${event.fee.format()}`}
           />
         ),
       }
     case 'distributeReservedTokensEvent':
       return {
         event,
-        header: 'Distributed reserved tokens',
+        header: 'Send reserved tokens',
         subject: (
           <span className="font-heading text-lg">
-            {Number(event.tokenCount)}{' '}
+            {fromWad(event.tokenCount)}{' '}
             {tokenSymbolText({ tokenSymbol, plural: event.tokenCount > 1 })}
           </span>
         ),
@@ -225,31 +228,39 @@ function translateEventDataToPresenter(
     case 'distributeToReservedTokenSplitEvent':
       return {
         event,
-        header: 'Distributed to reserved token split',
+        header: 'Send to reserved token split',
         subject: (
           <span className="font-heading text-lg">
-            {Number(event.tokenCount)}{' '}
+            {fromWad(event.tokenCount)}{' '}
             {tokenSymbolText({ tokenSymbol, plural: event.tokenCount > 1 })}
           </span>
         ),
         extra: (
           <RichNote
-            note={`Percent: ${event.percent}, Split project: ${event.splitProjectId}`}
+            note={`Percent: ${new SplitPortion(
+              event.percent,
+            ).formatPercentage()}%, Split project: ${event.splitProjectId}`}
           />
         ),
       }
     case 'distributeToPayoutSplitEvent':
       return {
         event,
-        header: 'Distributed to payout split',
+        header: 'Send to payout split',
         subject: (
           <span className="font-heading text-lg">
-            <NativeTokenValue decimals={8} wei={event.amount.value} />
+            <AmountInCurrency
+              amount={BigNumber.from(event.amount.value)}
+              currency="ETH"
+              hideTooltip
+            />
           </span>
         ),
         extra: (
           <RichNote
-            note={`Percent: ${event.percent}, Split project: ${event.splitProjectId}`}
+            note={`Percent: ${new SplitPortion(
+              event.percent,
+            ).formatPercentage()}%, Split project: ${event.splitProjectId}`}
           />
         ),
       }
@@ -259,7 +270,11 @@ function translateEventDataToPresenter(
         header: 'Used allowance',
         subject: (
           <span className="font-heading text-lg">
-            <NativeTokenValue decimals={8} wei={event.amount.value} />
+            <AmountInCurrency
+              amount={BigNumber.from(event.amount.value)}
+              currency="ETH"
+              hideTooltip
+            />
           </span>
         ),
         extra: <RichNote note={event.note} />,
@@ -279,7 +294,9 @@ function translateEventDataToPresenter(
         ),
         extra: (
           <RichNote
-            note={`Staked: ${event.stakedAmount.value}, ERC20: ${event.erc20Amount.value}`}
+            note={`Staked: ${fromWad(
+              event.stakedAmount.value,
+            )}, ERC20: ${fromWad(event.erc20Amount.value)}`}
           />
         ),
       }
@@ -296,19 +313,112 @@ const ACTIVITY_OPTIONS = [
   { label: 'Cashed out', value: 'cashOutEvent' },
   { label: 'Deployed ERC20', value: 'deployedERC20Event' },
   { label: 'Project created', value: 'projectCreateEvent' },
-  { label: 'Distributed payouts', value: 'distributePayoutsEvent' },
+  { label: 'Send payouts', value: 'distributePayoutsEvent' },
   {
-    label: 'Distributed reserved tokens',
+    label: 'Send reserved tokens',
     value: 'distributeReservedTokensEvent',
   },
   {
-    label: 'Distributed to reserved token split',
+    label: 'Send to reserved token split',
     value: 'distributeToReservedTokenSplitEvent',
   },
   {
-    label: 'Distributed to payout split',
+    label: 'Send to payout split',
     value: 'distributeToPayoutSplitEvent',
   },
   { label: 'Used allowance', value: 'useAllowanceEvent' },
   { label: 'Burned', value: 'burnEvent' },
 ]
+
+const useOmnichainSubgraphProjectQuery = ({
+  filter,
+  sucker,
+}: {
+  filter?: ProjectEventFilter
+  sucker: SuckerPair | undefined
+}) => {
+  const result = useInfiniteQuery({
+    queryKey: ['projectEvents', sucker?.projectId, sucker?.peerChainId, filter],
+    initialPageParam: 0,
+    queryFn: async ({ pageParam = 0 }) => {
+      if (!sucker) return { data: { projectEvents: [] }, nextCursor: undefined }
+      const uri = v4SubgraphUri(sucker.peerChainId)
+      const document = ProjectEventsDocument
+
+      const data = await request(uri, document, {
+        orderBy: ProjectEvent_OrderBy.timestamp,
+        orderDirection: OrderDirection.desc,
+        where: {
+          projectId: Number(sucker.projectId),
+          // ProjectEvents have exactly one non-null Event field. We can use `<filter>_not: null` to return only projectEvents where the matching Event field is defined
+          ...(!filter || filter === 'all'
+            ? {}
+            : {
+                [filter + '_not']: null,
+              }),
+        },
+        skip: pageParam * PAGE_SIZE,
+        first: PAGE_SIZE,
+      })
+      const mightHaveNextPage = data.projectEvents.length === PAGE_SIZE
+      return {
+        data,
+        nextCursor: mightHaveNextPage ? pageParam + PAGE_SIZE : undefined,
+      }
+    },
+    getNextPageParam: lastPage => {
+      return lastPage.nextCursor
+    },
+  })
+
+  return result
+}
+
+const CHAIN_OPTIONS = Object.entries(NETWORKS).map(
+  ([chainId, networkInfo]) => ({
+    label: networkInfo.label,
+    value: parseInt(chainId),
+  }),
+)
+
+// TODO: Chain options as icons
+// const Chain: React.FC<PropsWithChildren> = ({ children }) => {
+//   return (
+//     <div className="flex h-6 w-6 items-center justify-center">{children}</div>
+//   )
+// }
+
+// const CHAIN_OPTIONS = [
+//   {
+//     label: (
+//       <Chain>
+//         <EthereumLogo />
+//       </Chain>
+//     ),
+//     value: 'ethereum' as const,
+//   },
+//   {
+//     label: (
+//       <Chain>
+//         <OptimismLogoIcon />
+//       </Chain>
+//     ),
+//     value: 'optimism' as const,
+//   },
+//   {
+//     label: (
+//       <Chain>
+//         <ArbitrumLogoIcon />
+//       </Chain>
+//     ),
+//     value: 'arbitrum' as const,
+//   },
+//   {
+//     label: (
+//       <Chain>
+//         <BaseLogoIcon />
+//       </Chain>
+//     ),
+//     value: 'base' as const,
+//   },
+// ]

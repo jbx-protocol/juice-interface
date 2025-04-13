@@ -1,8 +1,8 @@
+import { useCallback, useMemo } from 'react'
+
 import { t } from '@lingui/macro'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
-import { JB_CHAINS, JBChainId } from 'juice-sdk-core'
 import { NftRewardTier } from 'models/nftRewards'
-import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
@@ -72,7 +72,7 @@ export const RewardsReview = () => {
   return (
     <div className="flex flex-col gap-12">
       <RewardsList
-        priceCurrencySymbol={JB_CHAINS[chainId as JBChainId].nativeTokenSymbol}
+        priceCurrencySymbol={'ETH'}//JB_CHAINS[chainId as JBChainId].nativeTokenSymbol} -> I dont think `sepETH/opETH/etc` makes sense here
         nftRewardsData={nftRewardsData}
         value={rewards}
         onChange={setRewards}

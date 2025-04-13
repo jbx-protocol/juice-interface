@@ -1,31 +1,49 @@
-import Image from "next/image";
-import { JBChainId } from "juice-sdk-react";
-import { NETWORKS } from "constants/networks";
+import { NETWORKS } from 'constants/networks'
+import { JBChainId } from 'juice-sdk-core'
+import Image from 'next/image'
+import {
+  arbitrum,
+  arbitrumSepolia,
+  base,
+  baseSepolia,
+  mainnet,
+  optimism,
+  optimismSepolia,
+  sepolia,
+} from 'viem/chains'
 
-const chainIdToLogo: Record<number, string> = {
-  1: "/assets/images/chain-logos/mainnet.svg",
-  11155111: "/assets/images/chain-logos/mainnet.svg",
-  42161: "/assets/images/chain-logos/arbitrum.svg",
-  421614: "/assets/images/chain-logos/arbitrum.svg",
-  11155420: "/assets/images/chain-logos/optimism.svg",
-  84532: "/assets/images/chain-logos/base.svg",
-};
+const chainIdToLogo: Record<JBChainId, string> = {
+  [mainnet.id]: '/assets/images/chain-logos/mainnet.svg',
+  [sepolia.id]: '/assets/images/chain-logos/mainnet.svg',
+
+  [arbitrum.id]: '/assets/images/chain-logos/arbitrum.svg',
+  [arbitrumSepolia.id]: '/assets/images/chain-logos/arbitrum.svg',
+
+  [optimism.id]: '/assets/images/chain-logos/optimism.svg',
+  [optimismSepolia.id]: '/assets/images/chain-logos/optimism.svg',
+
+  [base.id]: '/assets/images/chain-logos/base.svg',
+  [baseSepolia.id]: '/assets/images/chain-logos/base.svg',
+}
 
 export const ChainLogo = ({
+  className,
   chainId,
   width,
   height,
 }: {
-  chainId: JBChainId;
-  width?: number;
-  height?: number;
+  className?: string
+  chainId: JBChainId
+  width?: number
+  height?: number
 }) => {
   return (
     <Image
+      className={className}
       src={chainIdToLogo[chainId]}
       alt={`${NETWORKS[chainId].label} Logo`}
       width={width ?? 20}
       height={height ?? 20}
     />
-  );
-};
+  )
+}

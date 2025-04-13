@@ -1,40 +1,16 @@
-import { JBSplit, SplitPortion } from 'juice-sdk-core'
-import {
-  useJBContractContext,
-  useReadJbSplitsSplitsOf,
-  useReadJbTokensTokenOf,
-} from 'juice-sdk-react'
-import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
-import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4PayoutSplits'
+import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4CurrentPayoutSplits'
+import { useV4UpcomingPayoutSplits } from 'packages/v4/hooks/useV4UpcomingPayoutSplits'
+import { useCyclesPanelSelectedChain } from '../contexts/CyclesPanelSelectedChainContext'
 
 export const useV4CurrentUpcomingPayoutSplits = (
   type: 'current' | 'upcoming',
 ) => {
-  const { projectId } = useJBContractContext()
-  const { data: tokenAddress } = useReadJbTokensTokenOf()
+  const { selectedChainId } = useCyclesPanelSelectedChain()
+  
   const { data: currentSplits, isLoading: currentSplitsLoading } =
-    useV4CurrentPayoutSplits()
+    useV4CurrentPayoutSplits(selectedChainId)
 
-  const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } =
-    useJBUpcomingRuleset()
-  const { data: _upcomingSplits, isLoading: upcomingSplitsLoading } =
-    useReadJbSplitsSplitsOf({
-      args: [
-        projectId,
-        BigInt(upcomingRuleset?.id ?? 0),
-        BigInt(tokenAddress ?? 0),
-      ],
-      query: {
-        select(data) {
-          return data.map(d => ({
-            ...d,
-            percent: new SplitPortion(d.percent),
-          }))
-        },
-      },
-    })
-
-  const upcomingSplits: JBSplit[] = _upcomingSplits ? [..._upcomingSplits] : []
+  const { data: upcomingSplits, isLoading: upcomingSplitsLoading } = useV4UpcomingPayoutSplits(selectedChainId)
 
   if (type === 'current') {
     return { splits: currentSplits, isLoading: currentSplitsLoading }
@@ -42,6 +18,6 @@ export const useV4CurrentUpcomingPayoutSplits = (
 
   return {
     splits: upcomingSplits,
-    isLoading: upcomingSplitsLoading || upcomingRulesetLoading,
+    isLoading: upcomingSplitsLoading,
   }
 }

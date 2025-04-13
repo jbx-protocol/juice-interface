@@ -1,5 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import * as providers from '@ethersproject/providers'
 import { readProvider } from 'constants/readProvider'
-import { BigNumber, providers } from 'ethers'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { TransactionCallbacks } from 'models/transaction'
 import { useCallback, useState } from 'react'

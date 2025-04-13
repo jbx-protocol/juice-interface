@@ -1,9 +1,10 @@
+import * as constants from '@ethersproject/constants'
+
 import { plural, t } from '@lingui/macro'
 
 import { CV_V2 } from 'constants/cv'
 import { readNetwork } from 'constants/networks'
 import { SECONDS_IN_DAY } from 'constants/numbers'
-import { constants } from 'ethers'
 import { NetworkName } from 'models/networkName'
 import { ReconfigurationStrategy } from 'models/reconfigurationStrategy'
 import { CV2V3 } from 'packages/v2v3/models/cv'
@@ -49,7 +50,7 @@ interface BallotStrategy {
   durationSeconds: number
 }
 
-const durationBallotStrategyDescription = (days: number) =>
+export const durationBallotStrategyDescription = (days: number) =>
   plural(days, {
     one: 'Edits to an upcoming cycle must be submitted at least # day before that cycle starts.',
     other:

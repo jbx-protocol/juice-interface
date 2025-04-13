@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useV1SetOperatorTx } from 'packages/v1/hooks/transactor/useV1SetOperatorTx'
 import { V1OperatorPermission } from 'packages/v1/models/permissions'

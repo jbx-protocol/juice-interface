@@ -1,11 +1,12 @@
-import { constants } from 'ethers'
-
-import { BigNumber } from 'ethers'
+import { BigNumber, constants } from 'ethers'
 
 export const WAD_DECIMALS = 18
 
 export const SECONDS_IN_DAY = 24 * 60 * 60
 export const SECONDS_IN_HOUR = 60 * 60
+export const THREE_HOURS_IN_SECONDS = SECONDS_IN_HOUR * 3
+export const THREE_DAYS_IN_SECONDS = SECONDS_IN_DAY * 3
+export const SEVEN_DAYS_IN_HOURS = SECONDS_IN_DAY * 7
 
 export const PROJECT_PAY_CHARACTER_LIMIT = 16
 

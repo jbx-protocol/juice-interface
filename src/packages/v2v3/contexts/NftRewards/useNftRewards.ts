@@ -1,6 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import { BigNumber } from 'ethers'
 import {
   IPFSNftRewardTier,
   JB721TierV3,

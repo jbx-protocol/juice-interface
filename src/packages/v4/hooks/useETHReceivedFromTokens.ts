@@ -1,29 +1,31 @@
 import {
+  JBChainId,
   useJBContractContext,
-  useJBRulesetContext,
   useNativeTokenSurplus,
   useReadJbControllerPendingReservedTokenBalanceOf,
   useReadJbTokensTotalSupplyOf,
 } from 'juice-sdk-react'
 
 import { getTokenCashOutQuoteEth } from 'juice-sdk-core'
+import { useJBRulesetByChain } from './useJBRulesetByChain'
 
 export function useETHReceivedFromTokens(
   tokenAmountWei: bigint | undefined,
+  chainId: JBChainId | undefined,
 ): bigint | undefined {
   const { projectId, contracts } = useJBContractContext()
-  const { rulesetMetadata } = useJBRulesetContext()
   const { data: totalSupply } = useReadJbTokensTotalSupplyOf({
     args: [projectId],
   })
   const { data: nativeTokenSurplus } = useNativeTokenSurplus()
-
+  const { rulesetMetadata } = useJBRulesetByChain(chainId)
   const { data: tokensReserved } =
     useReadJbControllerPendingReservedTokenBalanceOf({
+      chainId,
       address: contracts.controller.data ?? undefined,
       args: [projectId],
     })
-  const cashOutTaxRate = rulesetMetadata.data?.cashOutTaxRate?.value
+  const cashOutTaxRate = rulesetMetadata?.cashOutTaxRate?.value
 
   if (
     cashOutTaxRate === undefined ||

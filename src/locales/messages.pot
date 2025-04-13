@@ -212,9 +212,6 @@ msgstr ""
 msgid "Built by the best"
 msgstr ""
 
-msgid "{0} tokens"
-msgstr ""
-
 msgid "<0>Edits to this project must be made before this deadline. This gives token holders time to verify the edits before they take effect.</0><1>For example: with a 1-day edit deadline, edits must be made at least 1 day before a ruleset cycle starts.</1>"
 msgstr ""
 
@@ -258,6 +255,9 @@ msgid "Payout recipients"
 msgstr ""
 
 msgid "The portion this recipient will receive out of the {reservedRate}% of the project's reserved token issuance."
+msgstr ""
+
+msgid "Cash out your tokens for a portion of this project's treasury"
 msgstr ""
 
 msgid "Reserved rate:"
@@ -458,6 +458,9 @@ msgstr ""
 msgid "Project Details"
 msgstr ""
 
+msgid "No ETH can be paid out from the project. The ETH can only be accessed by token holders that cash out their tokens."
+msgstr ""
+
 msgid "This account hasn't contributed to any projects yet."
 msgstr ""
 
@@ -492,6 +495,9 @@ msgid "If locked, this percentage can't be edited or removed until the lock expi
 msgstr ""
 
 msgid "Claiming {tokenSymbol} tokens will convert your {tokenSymbol} balance to ERC-20 tokens and mint them to your wallet."
+msgstr ""
+
+msgid "Manage project on {0}"
 msgstr ""
 
 msgid "Amount to pay out"
@@ -845,6 +851,9 @@ msgstr ""
 msgid "Skipped"
 msgstr ""
 
+msgid "Incentivise long-term token holding with a cash out tax rate. <0>Learn more</0>"
+msgstr ""
+
 msgid "Set operator for {projectTitle}"
 msgstr ""
 
@@ -869,6 +878,9 @@ msgstr ""
 msgid "How SharkDAO raised over 1,000 ETH to buy 6 Nouns NFTs and become the largest sub-DAO of Nouns DAO"
 msgstr ""
 
+msgid "Cash out {tokenTicker}"
+msgstr ""
+
 msgid "USD value of ETH received"
 msgstr ""
 
@@ -882,9 +894,6 @@ msgid "Add a banner to the top of your project's page."
 msgstr ""
 
 msgid "Hold fees"
-msgstr ""
-
-msgid "Chain selection"
 msgstr ""
 
 msgid "Grant NFT permissions"
@@ -915,6 +924,9 @@ msgid "Adding an edit deadline is recommended. Projects with no deadline will ap
 msgstr ""
 
 msgid "Saved!"
+msgstr ""
+
+msgid "Get launch quote"
 msgstr ""
 
 msgid "This ruleset has upcoming changes"
@@ -1058,6 +1070,9 @@ msgstr ""
 msgid "Change ENS name"
 msgstr ""
 
+msgid "A cash out tax rate"
+msgstr ""
+
 msgid "{overflow} is available for future payouts."
 msgstr ""
 
@@ -1082,6 +1097,9 @@ msgstr ""
 msgid "Transaction hash"
 msgstr ""
 
+msgid "Current ruleset cycle"
+msgstr ""
+
 msgid "Cycle length"
 msgstr ""
 
@@ -1101,6 +1119,9 @@ msgid "Your total legacy tokens"
 msgstr ""
 
 msgid "Redemption rate determines what proportion of this project's treasury can be reclaimed by a token holder by redeeming their tokens."
+msgstr ""
+
+msgid "Review your project before deploying."
 msgstr ""
 
 msgid "Collection Name"
@@ -1188,9 +1209,6 @@ msgid "{0, plural, one {# NFT} other {# NFTs}}"
 msgstr ""
 
 msgid "Check your email for a confirmation link and retry subscribing."
-msgstr ""
-
-msgid "Project chain"
 msgstr ""
 
 msgid "Claim ERC-20 token"
@@ -1355,6 +1373,9 @@ msgstr ""
 msgid "Convert to USD"
 msgstr ""
 
+msgid "JUICEBOX V4 IS BRAND NEW. We highly recommend you talk to JuiceboxDAO or Juiceworks before launching your project to help make sure things look good. If you know what you're doing, carry on."
+msgstr ""
+
 msgid "The project owner is the only payout recipient. Any ETH paid out this cycle will go to them."
 msgstr ""
 
@@ -1371,6 +1392,9 @@ msgid "Delisted project"
 msgstr ""
 
 msgid "Transfer ETH to this project"
+msgstr ""
+
+msgid "When people pay your project, they receive its tokens. Project tokens can be used for governance or community access, and token holders can cash out their tokens to reclaim some ETH from your project. You can also reserve some tokens for recipients of your choosing."
 msgstr ""
 
 msgid "Using a duration is recommended. Without one, you can edit your cycle at any time, which may appear risky."
@@ -1553,6 +1577,9 @@ msgstr ""
 msgid "Payments made"
 msgstr ""
 
+msgid "Pay gas on"
+msgstr ""
+
 msgid "Reserved recipients:"
 msgstr ""
 
@@ -1634,6 +1661,9 @@ msgstr ""
 msgid "Juicebox project"
 msgstr ""
 
+msgid "Connect wallet to cash out"
+msgstr ""
+
 msgid "No upcoming cycle"
 msgstr ""
 
@@ -1697,7 +1727,13 @@ msgstr ""
 msgid "Edited"
 msgstr ""
 
+msgid "Cash out tokens for a portion of this project's treasury"
+msgstr ""
+
 msgid "Send {tokensText}"
+msgstr ""
+
+msgid "You cash out"
 msgstr ""
 
 msgid "Not set"
@@ -1823,9 +1859,6 @@ msgstr ""
 msgid "Untitled project"
 msgstr ""
 
-msgid "{chainName} Project #{projectId}"
-msgstr ""
-
 msgid "<0>Supporters can burn their tokens to reclaim some of the ETH not needed for payouts. The amount of ETH they receive depends on the redemption rate.</0><1>At 100%, redemptions are 1:1 — somebody redeeming 10% of all project tokens will receive 10% of the available ETH. At 0%, redemptions are turned off.</1><2>Anywhere else, redemptions take place along a bonding curve, meaning people who redeem first will get less ETH per token, and people who redeem later will get more ETH per token.</2><3>Learn more in this <4>short video</4>.</3>"
 msgstr ""
 
@@ -1896,9 +1929,6 @@ msgid "Get notified when a contributor supports this project"
 msgstr ""
 
 msgid "The amount of ETH in the wallet that owns this project."
-msgstr ""
-
-msgid "A project chain"
 msgstr ""
 
 msgid "Get paid in ETH, program your own payouts, token issuance, and redemptions to easily run your treasury completely on-chain — as your community grows, you can update your treasury's rules to grow with it."
@@ -2171,9 +2201,6 @@ msgstr ""
 msgid "Reset website"
 msgstr ""
 
-msgid "Decay percent"
-msgstr ""
-
 msgid "Payout allocated to this project's {versionName} payment terminal. <0>Learn more</0>."
 msgstr ""
 
@@ -2192,6 +2219,9 @@ msgstr ""
 msgid "Check {lastEmailUpdated} and verify your new email address."
 msgstr ""
 
+msgid "Change networks to send payouts"
+msgstr ""
+
 msgid "Set splits for {projectTitle}"
 msgstr ""
 
@@ -2202,6 +2232,9 @@ msgid "Set ENS name"
 msgstr ""
 
 msgid "Controller migration"
+msgstr ""
+
+msgid "You can cash out your {tokenTextLong} for ETH without claiming them. You can transfer your unclaimed {tokenTextLong} to another address from the Tools menu, which can be accessed from the wrench icon in the upper right-hand corner of this project."
 msgstr ""
 
 msgid "JBX membership fee ({0}%):"
@@ -2384,6 +2417,9 @@ msgstr ""
 msgid "to close"
 msgstr ""
 
+msgid "Change networks to mint tokens"
+msgstr ""
+
 msgid "Disallow payments from users who appear on OFAC’s Specially Designated Nationals (SDN) list. Note: payments are still possible on other websites (for example, Etherscan)."
 msgstr ""
 
@@ -2492,6 +2528,9 @@ msgstr ""
 msgid "Games"
 msgstr ""
 
+msgid "Upcoming ruleset cycle"
+msgstr ""
+
 msgid "While enabled, the project owner can change the project's <0>controller</0> at any time."
 msgstr ""
 
@@ -2505,9 +2544,6 @@ msgid "Total unclaimed and claimed V1 and V2 tokens"
 msgstr ""
 
 msgid "Read case studies"
-msgstr ""
-
-msgid "{days, plural, one {Edits to an upcoming ruleset cycle must be submitted at least # day before that ruleset cycle starts.} other {Edits to an upcoming ruleset cycle must be submitted at least # days before that ruleset cycle starts.}}"
 msgstr ""
 
 msgid "tokens"
@@ -2628,6 +2664,9 @@ msgid "Enable controller config"
 msgstr ""
 
 msgid "Recipients will recieve payouts in ETH"
+msgstr ""
+
+msgid "Send reserved {tokenTextPlural} on {0}"
 msgstr ""
 
 msgid "{0} must be numeric"
@@ -2786,10 +2825,16 @@ msgstr ""
 msgid "Transfer unclaimed {0}"
 msgstr ""
 
+msgid "Ok"
+msgstr ""
+
 msgid "Cannot set payouts because your <0>Total payouts</0> is Zero."
 msgstr ""
 
 msgid "The onchain memo for each payment made through this address. The project's payment feed will include the memo alongside the payment."
+msgstr ""
+
+msgid "Change networks to cash out"
 msgstr ""
 
 msgid "No activity yet"
@@ -2966,6 +3011,9 @@ msgstr ""
 msgid "Download project activity CSVs"
 msgstr ""
 
+msgid "Cash out"
+msgstr ""
+
 msgid "Cycle duration"
 msgstr ""
 
@@ -3077,6 +3125,9 @@ msgstr ""
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building. Join thousands of projects sippin' the Juice."
 msgstr ""
 
+msgid "Enable cash out tax rate"
+msgstr ""
+
 msgid "Your transaction was successful."
 msgstr ""
 
@@ -3096,9 +3147,6 @@ msgid "Project tags"
 msgstr ""
 
 msgid "Deploy NFT collection"
-msgstr ""
-
-msgid "Edits to upcoming ruleset cycles will take effect when the current cycle ends. A project with no deadline is vulnerable to last-second edits by its owner."
 msgstr ""
 
 msgid "You must <0>Edit your Cycle</0> to change your total payout amount."
@@ -3335,6 +3383,9 @@ msgstr ""
 msgid "Unlocked"
 msgstr ""
 
+msgid "Change networks to send reserved {tokenTextPlural}"
+msgstr ""
+
 msgid "Amount"
 msgstr ""
 
@@ -3504,6 +3555,9 @@ msgid "Volume chart failed to load."
 msgstr ""
 
 msgid "The amount of ETH which can be paid out from this project during the cycle. Payouts reset each cycle."
+msgstr ""
+
+msgid "Ruleset cycle configuration"
 msgstr ""
 
 msgid "Safe, Snapshot, or even on-chain governance: Juicebox uses simple standards and works with all of your favorite Ethereum tools."
@@ -3749,6 +3803,9 @@ msgstr ""
 msgid "<0>Juicebox is a programmable crypto fundraising platform for web3. It helps people fund, operate, and scale their projects transparently using Ethereum, which is a type of programmable cryptocurrency.</0><1>Juicebox is funded and owned by its community.</1>"
 msgstr ""
 
+msgid "Gas quote"
+msgstr ""
+
 msgid "Reserved issuance rate"
 msgstr ""
 
@@ -3771,6 +3828,9 @@ msgid "Changes to your collection details may not be reflected in some marketpla
 msgstr ""
 
 msgid "My account"
+msgstr ""
+
+msgid "Connect wallet to mint tokens"
 msgstr ""
 
 msgid "When enabled, supporters can only mint NFTs by paying their exact price. This ensures that they can reclaim their full payment amount if they redeem their NFT."
@@ -3813,9 +3873,6 @@ msgid "Edit recipient"
 msgstr ""
 
 msgid "(0%)"
-msgstr ""
-
-msgid "Decay rate"
 msgstr ""
 
 msgid "Tokens per ETH contributed"
@@ -4079,6 +4136,9 @@ msgstr ""
 msgid "Error downloading ETH transfers to project, try again."
 msgstr ""
 
+msgid "<0>Supporters can burn their tokens to reclaim some of the ETH not needed for payouts. The amount of ETH they receive depends on the cash out rate.</0><1>At 0%, cash outs are 1:1 — somebody cashing out 10% of all project tokens will receive 10% of the available ETH. At 0%, cash outs are turned off.</1><2>Anywhere else, cash outs take place along a bonding curve, meaning people who cash out first will get less ETH per token, and people who cash out later will get more ETH per token.</2><3>Learn more in this <4>short video</4>.</3>"
+msgstr ""
+
 msgid "Edit reserved token recipients"
 msgstr ""
 
@@ -4190,6 +4250,9 @@ msgstr ""
 msgid "For fundraising"
 msgstr ""
 
+msgid "Select chain"
+msgstr ""
+
 msgid "Launch New NFT Collection"
 msgstr ""
 
@@ -4233,6 +4296,9 @@ msgid "I have another question!"
 msgstr ""
 
 msgid "Manage your project's state and ownership"
+msgstr ""
+
+msgid "ETH"
 msgstr ""
 
 msgid "The amount of reserved tokens currently available to be distributed to the recipients below."
@@ -4335,6 +4401,9 @@ msgid "Pay project"
 msgstr ""
 
 msgid "Sent reserved tokens (v1)"
+msgstr ""
+
+msgid "Launch project"
 msgstr ""
 
 msgid "Spaces are not allowed"
@@ -4461,6 +4530,9 @@ msgid "Tools"
 msgstr ""
 
 msgid "Project contracts"
+msgstr ""
+
+msgid "Chain"
 msgstr ""
 
 msgid "Failed to update project metadata"

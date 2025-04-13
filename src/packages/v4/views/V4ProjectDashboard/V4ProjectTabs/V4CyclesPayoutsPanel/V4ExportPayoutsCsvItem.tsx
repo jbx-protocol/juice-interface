@@ -1,7 +1,7 @@
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline'
 import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { useJBRuleset } from 'juice-sdk-react'
+import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
 import { twMerge } from 'tailwind-merge'
 import { useV4CurrentUpcomingPayoutSplits } from './hooks/useV4CurrentUpcomingPayoutSplits'
 import { useV4ExportSplitsToCsv } from './hooks/useV4ExportSplitsToCsv'
@@ -11,8 +11,13 @@ export const V4ExportPayoutsCsvItem = ({
 }: {
   type: 'current' | 'upcoming'
 }) => {
-  const { splits: payoutSplits, isLoading } = useV4CurrentUpcomingPayoutSplits(type)
-  const { data: ruleset } = useJBRuleset()
+  const { splits: payoutSplits, isLoading } =
+    useV4CurrentUpcomingPayoutSplits(type)
+  const { projectId, chainId } = useJBProjectId()
+  const { ruleset } = useJBRuleset({
+    projectId,
+    chainId,
+  })
   const fcNumber = ruleset
     ? type === 'current'
       ? Number(ruleset.cycleNumber)

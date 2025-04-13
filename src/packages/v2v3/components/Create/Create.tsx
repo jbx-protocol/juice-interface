@@ -1,27 +1,27 @@
+import { Trans, t } from '@lingui/macro'
 import {
   CYCLE_EXPLANATION,
   RECONFIG_RULES_EXPLANATION,
 } from 'components/strings'
-import { Trans, t } from '@lingui/macro'
 
-import { CreateBadge } from './components/CreateBadge'
-import { DeployButtonText } from 'packages/v2v3/components/Create/components/DeployProjectButtonText'
-import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
-import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
 import Loading from 'components/Loading'
+import { readNetwork } from 'constants/networks'
 import { NetworkName } from 'models/networkName'
+import { useRouter } from 'next/router'
+import { DeployButtonText } from 'packages/v2v3/components/Create/components/DeployProjectButtonText'
+import { CreateBadge } from './components/CreateBadge'
+import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
 import { NftRewardsPage } from './components/pages/NftRewards/NftRewardsPage'
 import { PayoutsPage } from './components/pages/PayoutsPage/PayoutsPage'
 import { ProjectDetailsPage } from './components/pages/ProjectDetails/ProjectDetailsPage'
 import { ProjectTokenPage } from './components/pages/ProjectToken/ProjectTokenPage'
 import { ReconfigurationRulesPage } from './components/pages/ReconfigurationRules/ReconfigurationRulesPage'
+import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { ReviewDeployPage } from './components/pages/ReviewDeploy/ReviewDeployPage'
 import { Wizard } from './components/Wizard/Wizard'
-import { readNetwork } from 'constants/networks'
 import { useLoadingInitialStateFromQuery } from './hooks/useLoadInitialStateFromQuery'
-import { useRouter } from 'next/router'
 
-export function Create() {
+export default function Create() {
   const router = useRouter()
   const deployedProjectId = router.query.deployedProjectId as string
   const initialStateLoading = useLoadingInitialStateFromQuery()

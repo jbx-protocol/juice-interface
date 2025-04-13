@@ -1,6 +1,6 @@
 import { Form } from 'antd'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 
 import { Trans } from '@lingui/macro'
 

@@ -1,23 +1,31 @@
 import {
+  ETH_CURRENCY_ID,
   JBSplit,
   NATIVE_TOKEN,
   NATIVE_TOKEN_DECIMALS,
   SplitGroup,
+  SplitPortion,
 } from 'juice-sdk-core'
 import {
   V2V3FundAccessConstraint,
   V2V3FundingCycleData,
 } from 'packages/v2v3/models/fundingCycle'
+import {
+  GroupedSplits as V2V3GroupedSplits,
+  Split as V2V3Split,
+} from 'packages/v2v3/models/splits'
 
 import round from 'lodash/round'
 import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
-import { GroupedSplits as V2V3GroupedSplits } from 'packages/v2v3/models/splits'
+import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V3FundingCycleMetadata } from 'packages/v3/models/fundingCycle'
 import { Address } from 'viem'
 import { FundAccessLimitGroup } from '../models/fundAccessLimits'
 import { GroupedSplits as V4GroupedSplits } from '../models/splits'
 import { LaunchProjectJBTerminal } from '../models/terminals'
-import { BASE_CURRENCY_ETH } from './shared/currency'
+import { convertV2V3CurrencyOptionToV4 } from './currency'
+
+const NATIVE_TOKEN_CURRENCY_ID = 61166 // v4TODO: put in SDK
 
 export type LaunchV2V3ProjectArgs = [
   string, // _owner
@@ -68,7 +76,9 @@ export function transformV2V3CreateArgsToV4({
       fundingCycleMetadata: _fundingCycleMetadata,
     }),
 
-    splitGroups: transformV2V3SplitsToV4({ v2v3Splits: _groupedSplits }),
+    splitGroups: transformV2V3SplitGroupToV4({
+      v2v3SplitGroup: _groupedSplits,
+    }),
 
     fundAccessLimitGroups: transformV2V3FundAccessConstraintsToV4({
       v2V3FundAccessConstraints: _fundAccessConstraints,
@@ -101,7 +111,7 @@ export function transformFCMetadataToRulesetMetadata({
   return {
     reservedPercent: fundingCycleMetadata.reservedRate.toNumber(),
     cashOutTaxRate: fundingCycleMetadata.redemptionRate.toNumber(),
-    baseCurrency: BASE_CURRENCY_ETH,
+    baseCurrency: ETH_CURRENCY_ID,
     pausePay: fundingCycleMetadata.pausePay,
     pauseRedeem: fundingCycleMetadata.pauseRedeem,
     pauseCreditTransfers: Boolean(fundingCycleMetadata.global.pauseTransfers),
@@ -131,12 +141,12 @@ export type LaunchV4ProjectGroupedSplit = Omit<
   'splits' | 'groupId'
 > & { splits: LaunchProjectJBSplit[]; groupId: bigint }
 
-export function transformV2V3SplitsToV4({
-  v2v3Splits,
+export function transformV2V3SplitGroupToV4({
+  v2v3SplitGroup,
 }: {
-  v2v3Splits: V2V3GroupedSplits<SplitGroup>[]
+  v2v3SplitGroup: V2V3GroupedSplits<SplitGroup>[]
 }): LaunchV4ProjectGroupedSplit[] {
-  return v2v3Splits.map(group => ({
+  return v2v3SplitGroup.map(group => ({
     groupId: group.group === SplitGroup.ETHPayout ? BigInt(NATIVE_TOKEN) : 1n, // TODO dont hardcode reserved token group as 1n
     splits: group.splits.map(split => ({
       preferAddToBalance: Boolean(split.preferClaimed),
@@ -164,13 +174,15 @@ export function transformV2V3FundAccessConstraintsToV4({
     payoutLimits: [
       {
         amount: constraint.distributionLimit.toBigInt(),
-        currency: Number(BigInt(NATIVE_TOKEN)), // TODO support USD somehow
+        currency: convertV2V3CurrencyOptionToV4(
+          constraint.distributionLimitCurrency.toNumber() as V2V3CurrencyOption,
+        ),
       },
     ],
     surplusAllowances: [
       {
         amount: constraint.overflowAllowance.toBigInt(),
-        currency: Number(BigInt(NATIVE_TOKEN)),
+        currency: ETH_CURRENCY_ID,
       },
     ],
   }))
@@ -187,10 +199,26 @@ function generateV4LaunchTerminalConfigurationsArg({
     terminal: terminal as Address,
     accountingContextsToAccept: [
       {
-        token: currencyTokenAddress,
+        token: currencyTokenAddress, // NATIVE_TOKEN
         decimals: NATIVE_TOKEN_DECIMALS,
-        currency: Number(BigInt(currencyTokenAddress)),
+        currency: NATIVE_TOKEN_CURRENCY_ID, //61166
+        // Jango - "anytime the NATIVE_TOKEN (0x00...eee) is being associated with a currency, use 61166"
       },
     ],
+  }))
+}
+
+export function transformV2V3SplitsToV4({
+  v2v3Splits,
+}: {
+  v2v3Splits: V2V3Split[]
+}): JBSplit[] {
+  return v2v3Splits.map(split => ({
+    preferAddToBalance: Boolean(split.preferClaimed),
+    percent: new SplitPortion(split.percent),
+    projectId: BigInt(parseInt(split.projectId ?? '0x00', 16)),
+    beneficiary: split.beneficiary as Address,
+    lockedUntil: split.lockedUntil ?? 0,
+    hook: split.allocator as Address,
   }))
 }

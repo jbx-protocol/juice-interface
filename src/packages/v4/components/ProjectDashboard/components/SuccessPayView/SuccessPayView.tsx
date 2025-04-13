@@ -1,10 +1,10 @@
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
+import { useJBChainId } from 'juice-sdk-react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
-import { useChainId } from 'wagmi'
 import { SuccessNftItem } from './components/SuccessNftItem'
 import { SuccessPayCard } from './components/SuccessPayCard'
 import { SuccessTokensItem } from './components/SuccessTokensItem'
@@ -22,7 +22,9 @@ export const SuccessPayView = () => {
     tokensReceivedDuringTx,
   } = useSuccessPayView()
 
-  const chainId = useChainId()
+  const chainId = useJBChainId()
+
+  if (!chainId) return null
 
   return (
     <div className="relative mt-16 w-full max-w-xl text-center">

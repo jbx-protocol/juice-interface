@@ -1,16 +1,17 @@
-import { t } from '@lingui/macro'
-import { waitForTransactionReceipt } from '@wagmi/core'
-import { NEW_NFT_ID_LOWER_LIMIT } from 'components/NftRewards/RewardsList/AddEditRewardModal'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import {
   useJBRulesetContext,
   useWriteJb721TiersHookAdjustTiers,
 } from 'juice-sdk-react'
-import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { JB_721_TIER_PARAMS_V4, NftRewardTier } from 'models/nftRewards'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { useCallback, useContext, useState } from 'react'
 import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
+
+import { t } from '@lingui/macro'
+import { waitForTransactionReceipt } from '@wagmi/core'
+import { NEW_NFT_ID_LOWER_LIMIT } from 'components/NftRewards/RewardsList/AddEditRewardModal'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { JB721DelegateVersion } from 'models/JB721Delegate'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { emitErrorNotification } from 'utils/notifications'
 import { useChainId } from 'wagmi'
 
@@ -87,6 +88,7 @@ export function useUpdateCurrentCollection({
     rewardTiers,
     addTransaction,
     rulesetMetadata?.dataHook,
+    chainId,
   ])
 
   return {

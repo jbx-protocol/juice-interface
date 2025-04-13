@@ -1,10 +1,10 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { PV_V2 } from 'constants/pv'
 import { RomanStormVariables } from 'constants/romanStorm'
 import {
   ETH_PAYOUT_SPLIT_GROUP,
   RESERVED_TOKEN_SPLIT_GROUP,
 } from 'constants/splits'
-import { BigNumber } from 'ethers'
 import { useProjectsQuery } from 'generated/graphql'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import useSymbolOfERC20 from 'hooks/ERC20/useSymbolOfERC20'

@@ -1,8 +1,8 @@
 /**
  * @jest-environment jsdom
  */
+import { BigNumber } from '@ethersproject/bignumber'
 import { render } from '@testing-library/react'
-import { BigNumber } from 'ethers'
 import { useProjectPageQueries } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectPageQueries'
 import {
   ProjectHeaderData,

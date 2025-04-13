@@ -1,4 +1,5 @@
 import { CrownFilled, LockOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Trans, t } from '@lingui/macro'
 import { Space, Tooltip } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
@@ -7,7 +8,6 @@ import {
   NULL_ALLOCATOR_ADDRESS,
   V1_V3_ALLOCATOR_ADDRESS,
 } from 'constants/contracts/mainnet/Allocators'
-import { BigNumber } from 'ethers'
 import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 import { PayoutMod, TicketMod } from 'packages/v1/models/mods'
 import V2V3ProjectLink from 'packages/v2v3/components/shared/V2V3ProjectLink'

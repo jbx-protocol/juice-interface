@@ -15,6 +15,7 @@ import {
 } from '../shared/v2ProjectDefaultState'
 import { NftRewardsData, ReduxState } from '../shared/v2ProjectTypes'
 
+import { JBChainId } from 'juice-sdk-core'
 import { CreatePage } from 'models/createPage'
 import { NftPostPayModalConfig } from 'models/nftPostPayModal'
 import { PayoutsSelection } from 'models/payoutsSelection'
@@ -38,9 +39,6 @@ const creatingV2ProjectSlice = createSlice({
     resetState: () => INITIAL_REDUX_STATE,
     setName: (state, action: PayloadAction<string>) => {
       state.projectMetadata.name = action.payload
-    },
-    setProjectChainId: (state, action: PayloadAction<number>) => { // v4TODO: Should use JBChainId type
-      state.projectChainId = action.payload as 84532 | 421614 | 11155111 | 11155420 // shouldn't need this
     },
     setProjectTagline: (state, action: PayloadAction<string>) => {
       state.projectMetadata.projectTagline = action.payload
@@ -320,6 +318,15 @@ const creatingV2ProjectSlice = createSlice({
     },
     setSoftTargetCurrency: (state, action: PayloadAction<string>) => {
       state.projectMetadata.softTargetCurrency = action.payload
+    },
+    setSelectedRelayrChainId: (
+      state,
+      action: PayloadAction<{ chainId: JBChainId; selected: boolean }>,
+    ) => {
+      state.selectedRelayrChainIds = {
+        ...state.selectedRelayrChainIds,
+        [action.payload.chainId]: action.payload.selected,
+      }
     },
   },
 })

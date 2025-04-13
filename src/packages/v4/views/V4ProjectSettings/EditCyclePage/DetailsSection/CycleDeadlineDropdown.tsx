@@ -1,17 +1,19 @@
-import { Trans } from '@lingui/macro'
 import { Form, Select } from 'antd'
+
+import { Trans } from '@lingui/macro'
 import { BallotStrategy } from 'models/ballot'
+import { getAvailableApprovalStrategies } from 'packages/v4/utils/approvalHooks'
 
 export default function CycleDeadlineDropdown({
   className,
 }: {
   className?: string
 }) {
-  // const ballotStrategies = ballotStrategiesFn({ cv })
+  const ballotStrategies = getAvailableApprovalStrategies()
   return (
     <Form.Item name="approvalHook" required>
       <Select className={className}>
-        {[{ name: '1 day @todo', address: '0x00' }].map(
+        {ballotStrategies.map(
           (strategy: BallotStrategy) => (
             <Select.Option key={strategy.address} value={strategy.address}>
               <Trans>{strategy.name}</Trans>

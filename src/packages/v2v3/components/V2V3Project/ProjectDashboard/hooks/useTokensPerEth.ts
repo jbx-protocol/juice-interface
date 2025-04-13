@@ -1,5 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { CurrencyContext } from 'contexts/CurrencyContext'
-import { BigNumber } from 'ethers'
 import useWeiConverter from 'hooks/useWeiConverter'
 import { CurrencyOption } from 'models/currencyOption'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'

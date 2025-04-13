@@ -1,4 +1,4 @@
-import { Contract } from 'ethers'
+import { Contract } from '@ethersproject/contracts'
 import { useLoadContractFromAddress } from 'hooks/useLoadContractFromAddress'
 import useTokenUriResolverAddress from 'packages/v2v3/hooks/contractReader/TokenUriResolverAddress'
 import JBTokenUriResolverJson from './JBTokenUriResolver.json'

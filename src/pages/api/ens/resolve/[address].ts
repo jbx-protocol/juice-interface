@@ -1,45 +1,50 @@
+import { getPublicClient } from '@wagmi/core'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
-import { isAddress } from 'ethers/lib/utils'
 import { getLogger } from 'lib/logger'
 import { NetworkName } from 'models/networkName'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { isAddress } from 'viem'
 
 const logger = getLogger('api/ens/resolve/[address]')
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {
+    logger.error(`invalid method - ${req.method}`)
     return res.status(405).end()
   }
 
   try {
     const addressOrEnsName = req.query.address as string | undefined
     if (!addressOrEnsName) {
+      logger.error('address is required')
       return res.status(400).json({ error: 'address is required' })
-    }
-
-    if (readNetwork.name === NetworkName.sepolia) {
-      // ethers v5 doesn't support ens on sepolia
-      return res.status(400).json({ error: 'ens not supported on sepolia' })
     }
 
     let response
 
-    if (isAddress(addressOrEnsName)) {
-      const name = await readProvider.lookupAddress(addressOrEnsName)
-      response = {
-        address: addressOrEnsName,
-        name,
+    if (readNetwork.name === NetworkName.sepolia) {
+      // wagmi client ens resolution
+      response = await resolveUsingWagmiClient(addressOrEnsName)
+    } else {
+      // Legacy ethers v5 ens resolution
+      if (isAddress(addressOrEnsName)) {
+        const name = await readProvider.lookupAddress(addressOrEnsName)
+        response = {
+          address: addressOrEnsName,
+          name,
+        }
       }
-    }
 
-    if (addressOrEnsName.endsWith('.eth')) {
-      const address = await readProvider.resolveName(addressOrEnsName)
-      if (!address) response = undefined
+      if (addressOrEnsName.endsWith('.eth')) {
+        const address = await readProvider.resolveName(addressOrEnsName)
+        if (!address) response = undefined
 
-      response = {
-        address,
-        name: addressOrEnsName,
+        response = {
+          address,
+          name: addressOrEnsName,
+        }
       }
     }
 
@@ -60,3 +65,37 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 export default handler
+
+// Minimise changing too much code but as ethers v5 doesn't support ens on sepolia, we can remove the check for sepolia and just use the wagmi client to resolve the address
+const resolveUsingWagmiClient = async (addressOrEnsName: string) => {
+  if (readNetwork.name !== NetworkName.sepolia) {
+    throw new Error('wagmi resolution only supported for sepolia')
+  }
+
+  const client = getPublicClient(wagmiConfig, {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    chainId: readNetwork.chainId as any,
+  })
+
+  let response
+
+  if (isAddress(addressOrEnsName)) {
+    const name = await client.getEnsName({ address: addressOrEnsName })
+    response = {
+      address: addressOrEnsName,
+      name,
+    }
+  }
+
+  if (addressOrEnsName.endsWith('.eth')) {
+    const address = await client.getEnsAddress({ name: addressOrEnsName })
+    if (!address) response = undefined
+
+    response = {
+      address,
+      name: addressOrEnsName,
+    }
+  }
+
+  return response
+}

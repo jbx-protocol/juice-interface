@@ -1,5 +1,6 @@
 import { Trans, t } from '@lingui/macro'
 import { Col, Form, Row } from 'antd'
+import { JBChainId, JB_CHAINS } from 'juice-sdk-core'
 import {
   V2V3_CURRENCY_ETH,
   V2V3_CURRENCY_USD,
@@ -8,6 +9,7 @@ import { useCallback, useContext, useState } from 'react'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 
 import { RightOutlined } from '@ant-design/icons'
+import * as constants from '@ethersproject/constants'
 import { Callout } from 'components/Callout/Callout'
 import { FormItems } from 'components/formItems'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
@@ -17,7 +19,6 @@ import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { RichEditor } from 'components/RichEditor'
 import { CREATE_FLOW } from 'constants/fathomEvents'
-import { constants } from 'ethers'
 import { useWallet } from 'hooks/Wallet'
 import { trackFathomGoal } from 'lib/fathom'
 import Link from 'next/link'
@@ -30,7 +31,6 @@ import { OptionalHeader } from '../../OptionalHeader'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { Wizard } from '../../Wizard/Wizard'
 import { useProjectDetailsForm } from './hooks/useProjectDetailsForm'
-import { ProjectChainSelect } from './ProjectChainSelect'
 
 export const ProjectDetailsPage: React.FC<
   React.PropsWithChildren<unknown>
@@ -46,6 +46,11 @@ export const ProjectDetailsPage: React.FC<
 
   const projectOwnerDifferentThanWalletAddress =
     inputWalletAddress && wallet.userAddress !== inputWalletAddress
+
+  const networkOptions = Object.values(JB_CHAINS).map(chain => ({
+    label: chain.name,
+    value: chain.chain.id as JBChainId,
+  }))
 
   return (
     <Form
@@ -69,17 +74,6 @@ export const ProjectDetailsPage: React.FC<
           ])}
         >
           <JuiceInput />
-        </Form.Item>
-
-        <Form.Item
-          name="projectChainId"
-          label={t`Project chain`}
-          required
-          rules={lockPageRulesWrapper([
-            inputMustExistRule({ label: t`A project chain` }),
-          ])}
-        >
-          <ProjectChainSelect />
         </Form.Item>
 
         <Form.Item

@@ -1,7 +1,7 @@
 import { Dialog } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
-import { Button } from 'antd'
+import { Button, ButtonProps } from 'antd'
 import useMobile from 'hooks/useMobile'
 import { PropsWithChildren, ReactNode, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -32,6 +32,7 @@ export type JuiceModalProps = {
   okText?: ReactNode
   okButtonClassName?: string
   hideOkButton?: boolean
+  disableOkButton?: boolean
   okLoading?: boolean
   cancelText?: ReactNode
   cancelButtonClassName?: string
@@ -60,6 +61,7 @@ export const JuiceModal = ({
   okLoading = false,
   okButtonClassName,
   hideOkButton,
+  disableOkButton,
   cancelText = t`Cancel`,
   cancelButtonClassName,
   hideCancelButton,
@@ -148,6 +150,7 @@ export const JuiceModal = ({
                   )}
                   loading={okLoading}
                   onClick={onOk}
+                  disabled={disableOkButton}
                 >
                   {okText}
                 </CTAButton>
@@ -182,12 +185,14 @@ const CTAButton = ({
   form,
   onClick,
   children,
+  ...props
 }: PropsWithChildren<{
   loading: boolean
   className?: string
   form?: string
   onClick?: VoidFunction
-}>) => (
+}> &
+  ButtonProps) => (
   <Button
     type="primary"
     htmlType={form ? 'submit' : 'button'}
@@ -197,6 +202,7 @@ const CTAButton = ({
       className,
     )}
     onClick={onClick}
+    {...props}
   >
     {children}
   </Button>

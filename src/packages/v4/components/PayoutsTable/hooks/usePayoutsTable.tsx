@@ -52,7 +52,7 @@ export const usePayoutsTable = () => {
     payoutSplit: Split
     dontApplyFee?: boolean
   }) =>
-    distributionLimitIsInfinite
+    distributionLimitIsInfinite && payoutSplit.percent
       ? payoutSplit.percent.toFloat() * 100
       : _derivePayoutAmount({ payoutSplit, dontApplyFee })
 

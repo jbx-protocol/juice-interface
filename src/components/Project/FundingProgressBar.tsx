@@ -1,7 +1,7 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { Progress, Tooltip } from 'antd'
 import { JUICE_ORANGE } from 'constants/theme/colors'
-import { BigNumber } from 'ethers'
 import { useMemo, useState } from 'react'
 import { fracDiv } from 'utils/format/formatNumber'
 

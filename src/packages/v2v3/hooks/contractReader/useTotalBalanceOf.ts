@@ -1,4 +1,5 @@
-import { BigNumber, BigNumberish, Contract } from 'ethers'
+import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+import { Contract } from '@ethersproject/contracts'
 import { V2V3ContractName } from 'packages/v2v3/models/contracts'
 import { bigNumbersDiff } from 'utils/bigNumbers'
 

@@ -3,9 +3,11 @@ import { Modal, ModalProps } from 'antd'
 import { readNetwork } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
+import { JBChainId } from 'juice-sdk-react'
 import { TxStatus } from 'models/transaction'
 import Image from 'next/legacy/image'
 import { PropsWithChildren, useContext, useMemo } from 'react'
+import { useChainId } from 'wagmi'
 import EtherscanLink from '../EtherscanLink'
 
 type TransactionModalProps = PropsWithChildren<
@@ -21,6 +23,8 @@ const PendingTransactionModalBody = () => {
 
   const pendingTx = transactions?.find(tx => tx.status === TxStatus.pending)
   const pendingTxHash = pendingTx?.tx?.hash
+  const pendingTxChainId = pendingTx?.tx?.chainId
+  const chainId = useChainId()
 
   return (
     <div className="my-8 mx-0 flex h-full w-full items-center justify-center">
@@ -45,7 +49,11 @@ const PendingTransactionModalBody = () => {
         </p>
         {pendingTxHash ? (
           <p>
-            <EtherscanLink value={pendingTxHash} type="tx">
+            <EtherscanLink
+              value={pendingTxHash}
+              chainId={pendingTxChainId ?? (chainId as JBChainId)}
+              type="tx"
+            >
               <Trans>View on Etherscan</Trans>
             </EtherscanLink>
           </p>

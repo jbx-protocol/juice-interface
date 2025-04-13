@@ -1,8 +1,8 @@
+import * as constants from '@ethersproject/constants'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { constants } from 'ethers'
 import { V1_CURRENCY_USD } from 'packages/v1/constants/currency'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { ProjectTagName } from 'models/project-tags'
 import {
   LATEST_METADATA_VERSION,

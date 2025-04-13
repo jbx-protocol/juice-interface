@@ -1,13 +1,17 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
+import { useJBContractContext, useJBTokenContext, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
+import { useContext, useState } from 'react'
+
 import { waitForTransactionReceipt } from '@wagmi/core'
 import TransactionModal from 'components/modals/TransactionModal'
+import { NETWORKS } from 'constants/networks'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useJBContractContext, useJBTokenContext, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
+import { useWallet } from 'hooks/Wallet'
+import { JBChainId } from 'juice-sdk-core'
 import SplitList from 'packages/v4/components/SplitList/SplitList'
-import useProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { useContext, useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
@@ -16,16 +20,18 @@ export default function V4DistributeReservedTokensModal({
   open,
   onCancel,
   onConfirmed,
+  chainId
 }: {
   open?: boolean
   onCancel?: VoidFunction
   onConfirmed?: VoidFunction
+  chainId: JBChainId
 }) {
   const { addTransaction } = useContext(TxHistoryContext)
 
   const { projectId, contracts } = useJBContractContext()
   const { splits: reservedTokensSplits } = useV4ReservedSplits()
-  const { data: projectOwnerAddress } = useProjectOwnerOf()
+  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
 
   const { token } = useJBTokenContext()
   const tokenSymbol = token?.data?.symbol
@@ -33,12 +39,15 @@ export default function V4DistributeReservedTokensModal({
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  // const distributeReservedTokensTx = useDistributeReservedTokens()
   const { writeContractAsync: writeSendReservedTokens, data } =
     useWriteJbControllerSendReservedTokensToSplitsOf()
 
   const { pendingReservedTokens, pendingReservedTokensFormatted } =
     useV4ReservedTokensSubPanel()
+    
+  const { chain: walletChain, changeNetworks, connect } = useWallet()
+  const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
+  const walletConnectedToWrongChain = chainId !== walletChainId
 
   async function sendReservedTokens() {
     if (
@@ -46,19 +55,35 @@ export default function V4DistributeReservedTokensModal({
       // !distributionAmount ||
       !contracts.controller.data ||
       !projectId
-    )
+    ) {
       return
+    }
+
+    // Check if wallet is connected to wrong chain
+    if (walletConnectedToWrongChain) {
+      try {
+        await changeNetworks(chainId)
+        return
+      } catch (e) {
+        emitErrorNotification((e as unknown as Error).message)
+        return
+      }
+    }
+    
+    if (!walletChain) {
+      await connect()
+      return
+    }
 
     setLoading(true)
 
-    const args = [
-      BigInt(projectId)
-    ] as const
+    const args = [BigInt(projectId)] as const
 
     try {
       const hash = await writeSendReservedTokens({
         address: contracts.controller.data,
         args,
+        chainId
       })
       setTransactionPending(true)
 
@@ -89,18 +114,24 @@ export default function V4DistributeReservedTokensModal({
     plural: false,
   })
 
+  if (!chainId) return null
+
   return (
     <TransactionModal
-      title={<Trans>Send reserved {tokenTextPlural}</Trans>}
+      title={<Trans>Send reserved {tokenTextPlural} on {NETWORKS[chainId].label}</Trans>}
       open={open}
       onOk={() => sendReservedTokens()}
-      okText={t`Send ${tokenTextPlural}`}
+      okText={
+        walletConnectedToWrongChain
+          ? t`Change networks to send reserved ${tokenTextPlural}`
+          : t`Send ${tokenTextPlural}`
+      }
       connectWalletText={t`Connect wallet to send reserved ${tokenTextPlural}`}
       confirmLoading={loading}
       transactionPending={transactionPending}
       onCancel={onCancel}
       width={640}
-      centered={true}
+      centered
     >
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">

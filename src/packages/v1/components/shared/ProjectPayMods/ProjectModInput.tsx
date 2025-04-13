@@ -1,4 +1,5 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
+import { BigNumber } from '@ethersproject/bignumber'
 import { Button, Col, Row, Space } from 'antd'
 import { AllocatorBadge } from 'components/AllocatorBadge'
 import EthereumAddress from 'components/EthereumAddress'
@@ -8,7 +9,6 @@ import {
   V1_V3_ALLOCATOR_ADDRESS,
 } from 'constants/contracts/mainnet/Allocators'
 import { CurrencyName } from 'constants/currency'
-import { BigNumber } from 'ethers'
 import { amountSubFee } from 'packages/v1/utils/math'
 import { PropsWithChildren } from 'react'
 import { isEqualAddress, isZeroAddress } from 'utils/address'

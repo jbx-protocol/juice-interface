@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { V1ContractName } from 'packages/v1/models/contracts'
 import { V1FundingCycle } from 'packages/v1/models/fundingCycle'
 import { V1TerminalName } from 'packages/v1/models/terminals'

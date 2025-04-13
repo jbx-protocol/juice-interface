@@ -14,13 +14,12 @@ import { Callout } from 'components/Callout/Callout'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { readNetwork } from 'constants/networks'
 import { trackFathomGoal } from 'lib/fathom'
 import { Selection } from 'packages/v2v3/components/Create/components/Selection/Selection'
+import { getAvailableApprovalStrategies } from 'packages/v4/utils/approvalHooks'
 import { useContext } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
 import { featureFlagEnabled } from 'utils/featureFlags'
-import { useAvailableReconfigurationStrategies } from '../../../hooks/useAvailableReconfigurationStrategies'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { Wizard } from '../../Wizard/Wizard'
@@ -37,9 +36,7 @@ export const ReconfigurationRulesPage = () => {
   const selection = useWatch('selection', form)
   const isNextEnabled = !!selection
 
-  const reconfigurationStrategies = useAvailableReconfigurationStrategies(
-    readNetwork.name,
-  )
+  const reconfigurationStrategies = getAvailableApprovalStrategies()
 
   return (
     <Form

@@ -6,7 +6,7 @@ import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
 import { createContactMessage } from 'lib/api/discord'
-import Image from "next/legacy/image"
+import Image from 'next/legacy/image'
 import { useContext, useState } from 'react'
 import contactHeroDark from '/public/assets/images/contact-hero-od.webp'
 import contactHeroLight from '/public/assets/images/contact-hero-ol.webp'
@@ -208,7 +208,7 @@ interface FormValues {
 
 interface ListboxOption {
   value: string
-  label: string
+  label: string | JSX.Element
 }
 const contactTypeOptions = (): ListboxOption[] => [
   { value: 'email', label: t`Email` },

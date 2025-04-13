@@ -54,7 +54,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
         year: 'numeric',
       })
     : undefined
-
+  
   return (
     <div className={twMerge('relative flex w-full flex-col', className)}>
       <ProjectHeaderLogo className="absolute -top-[146px] left-3.5 rounded-[0.85rem] border-6 border-white dark:border-slate-900 md:left-0" />
@@ -135,11 +135,12 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                 ) : null)
               // <Subtitle subtitle={subtitle.text} />
             }
-            <div className="text-grey-500 dark:text-slate-200">
-              {projectId ? (
+            <div className="text-grey-500 dark:text-slate-200 flex items-center">
+              {projectId && chainId ? (
                 <V4ProjectHandleLink
                   className="text-grey-500 dark:text-slate-200"
                   projectId={projectId}
+                  chainId={chainId}
                 />
               ) : null}
 

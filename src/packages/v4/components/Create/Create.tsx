@@ -1,43 +1,54 @@
-import {
-  DEADLINE_EXPLANATION,
-  RULESET_EXPLANATION
-} from 'components/strings'
 import { Trans, t } from '@lingui/macro'
+import { DEADLINE_EXPLANATION, RULESET_EXPLANATION } from 'components/strings'
 
 import { Badge } from 'components/Badge'
-import { CreateBadge } from './components/CreateBadge'
-import { DeployProjectButtonText } from './DeployProjectButtonText'
-import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
-import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
 import Loading from 'components/Loading'
-import { NetworkName } from 'models/networkName'
+import { useRouter } from 'next/router'
+import { useMemo } from 'react'
+import { CreateBadge } from './components/CreateBadge'
+import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
 import { NftRewardsPage } from './components/pages/NftRewards/NftRewardsPage'
 import { PayoutsPage } from './components/pages/PayoutsPage/PayoutsPage'
 import { ProjectDetailsPage } from './components/pages/ProjectDetails/ProjectDetailsPage'
 import { ProjectTokenPage } from './components/pages/ProjectToken/ProjectTokenPage'
 import { ReconfigurationRulesPage } from './components/pages/ReconfigurationRules/ReconfigurationRulesPage'
+import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { ReviewDeployPage } from './components/pages/ReviewDeploy/ReviewDeployPage'
 import { Wizard } from './components/Wizard/Wizard'
-import { readNetwork } from 'constants/networks'
+import { DeployProjectButtonText } from './DeployProjectButtonText'
 import { useLoadingInitialStateFromQuery } from './hooks/useLoadInitialStateFromQuery'
-import { useRouter } from 'next/router'
 
-export function Create() {
+export default function Create() {
   const router = useRouter()
-  const deployedProjectId = router.query.deployedProjectId as string
+  const projectIdsRaw = router.query.projectIds as string
   const initialStateLoading = useLoadingInitialStateFromQuery()
+  const projectIds = useMemo(() => {
+    if (!projectIdsRaw) {
+      return undefined
+    }
+    try {
+      const projectIdsParsed = JSON.parse(projectIdsRaw)
+      return projectIdsParsed.map((p: { id: string; c: string }) => {
+        return {
+          chainId: parseInt(p.c),
+          projectId: parseInt(p.id),
+        }
+      })
+    } catch (error) {
+      return undefined
+    }
+  }, [projectIdsRaw])
 
   if (initialStateLoading) return <Loading />
 
-  if (deployedProjectId) {
-    const projectId = parseInt(deployedProjectId)
-    return <DeploySuccess projectId={projectId} />
+  if (projectIds) {
+    return <DeploySuccess projectIds={projectIds} />
   }
 
   return (
     <div className="mt-12 md:mt-10">
       <h1 className="mb-0 text-center font-heading text-base font-medium uppercase text-black dark:text-slate-100">
-        <span className='inline-flex gap-2'>
+        <span className="inline-flex gap-2">
           <Trans>Create a project</Trans>
           <Badge variant="info">Beta</Badge>
         </span>
@@ -80,7 +91,7 @@ export function Create() {
               <Trans>
                 When people pay your project, they receive its tokens. Project
                 tokens can be used for governance or community access, and token
-                holders can redeem their tokens to reclaim some ETH from your
+                holders can cash out their tokens to reclaim some ETH from your
                 project. You can also reserve some tokens for recipients of your
                 choosing.
               </Trans>
@@ -113,12 +124,7 @@ export function Create() {
             className="max-w-full md:w-full md:max-w-3xl"
             name="reviewDeploy"
             title={t`Review & Deploy`}
-            description={
-              <Trans>
-                Review your project and deploy it to{' '}
-                {readNetwork.name ?? NetworkName.mainnet}.
-              </Trans>
-            }
+            description={<Trans>Review your project before deploying.</Trans>}
           >
             <ReviewDeployPage />
           </Wizard.Page>

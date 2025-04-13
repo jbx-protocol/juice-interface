@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { percentToPermyriad } from 'utils/format/formatNumber'
 import { PayoutMod, TicketMod } from '../models/mods'
 

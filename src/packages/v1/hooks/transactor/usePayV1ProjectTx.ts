@@ -3,9 +3,9 @@ import { V1ProjectContext } from 'packages/v1/contexts/Project/V1ProjectContext'
 import { V1UserContext } from 'packages/v1/contexts/User/V1UserContext'
 import { useContext } from 'react'
 
+import { BigNumber } from '@ethersproject/bignumber'
 import { t } from '@lingui/macro'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { BigNumber } from 'ethers'
 import { TransactorInstance } from 'hooks/useTransactor'
 import { useV1ProjectTitle } from '../useProjectTitle'
 

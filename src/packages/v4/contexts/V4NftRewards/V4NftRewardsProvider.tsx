@@ -72,7 +72,7 @@ export const V4NftRewardsProvider: React.FC<
   const currency = Number(p.data ? p.data[0] : 0) as V2V3CurrencyOption
 
   const flags = useReadJb721TiersHookStoreFlagsOf({
-    address: '0x7b1F4Ba6312A104E645B06Ab97e4CaA1ef0F773f',
+    address: storeAddress.data,
   })
 
   const { data: collectionMetadataUri } =

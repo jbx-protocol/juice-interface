@@ -1,6 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { AddressZero } from '@ethersproject/constants'
 import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
-import { BigNumber } from 'ethers'
 import { useDefaultJBETHPaymentTerminal } from 'packages/v2v3/hooks/defaultContracts/useDefaultJBETHPaymentTerminal'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { Split } from 'packages/v2v3/models/splits'

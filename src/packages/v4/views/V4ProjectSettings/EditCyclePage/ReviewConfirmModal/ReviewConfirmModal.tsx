@@ -1,4 +1,4 @@
-import { Trans, t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import TransactionModal from 'components/modals/TransactionModal'
@@ -40,6 +40,7 @@ export function ReviewConfirmModal({
 
   const handleConfirm = () => {
     setConfirmLoading(true)
+
     editRulesetTx(editCycleForm?.getFieldsValue(true), {
       onTransactionPending: () => null,
       onTransactionConfirmed: () => {
@@ -73,8 +74,7 @@ export function ReviewConfirmModal({
       >
         <p className="text-secondary text-sm">
           <Trans>
-            Check your changes carefully. Each deploy will incur a gas
-            fee.
+            Check your changes carefully. Each deploy will incur a gas fee.
           </Trans>
         </p>
         <CreateCollapse>

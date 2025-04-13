@@ -1,4 +1,4 @@
-import { Contract } from 'ethers'
+import { Contract } from '@ethersproject/contracts'
 import { abi } from './JBV3TokenAbi'
 
 import { useLoadContractFromAddress } from 'hooks/useLoadContractFromAddress'

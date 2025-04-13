@@ -15,7 +15,7 @@ import {
   V2V3FundingCycleMetadata,
 } from 'packages/v2v3/models/fundingCycle'
 
-import { BigNumber } from 'ethers'
+import { BigNumber } from '@ethersproject/bignumber'
 import { V2V3ProjectContext } from 'packages/v2v3/contexts/Project/V2V3ProjectContext'
 import {
   deriveNextIssuanceRate,

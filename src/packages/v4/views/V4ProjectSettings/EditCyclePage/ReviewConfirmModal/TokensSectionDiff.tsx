@@ -1,9 +1,10 @@
 import { Trans, t } from '@lingui/macro'
+
 import { FundingCycleListItem } from 'components/FundingCycleListItem'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { emptySectionClasses } from './DetailsSectionDiff'
-import DiffedSplitList from './DiffedSplits/DiffedSplitList'
 import { DiffSection } from './DiffSection'
+import DiffedSplitList from './DiffedSplits/DiffedSplitList'
 import { AllowedValue } from './FormattedRulesetValues/AllowedValue'
 import { IssuanceRateValue } from './FormattedRulesetValues/Tokens/IssuanceRateValue'
 import { useTokensSectionValues } from './hooks/useTokensSectionValues'
@@ -81,7 +82,7 @@ export function TokensSectionDiff() {
 
           {discountRateHasDiff && currentDiscountRate ? (
             <FundingCycleListItem
-              name={t`Decay rate`}
+              name={t`Weight cut percent`}
               value={`${newDiscountRate}%`}
               oldValue={`${currentDiscountRate}%`}
             />
@@ -89,7 +90,7 @@ export function TokensSectionDiff() {
 
           {redemptionHasDiff && currentRedemptionRate ? (
             <FundingCycleListItem
-              name={t`Redemption rate`}
+              name={t`Cash out tax rate`}
               value={`${newRedemptionRate}%`}
               oldValue={`${currentRedemptionRate}%`}
             />

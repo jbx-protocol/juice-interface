@@ -1,4 +1,4 @@
-import { Contract } from 'ethers'
+import { Contract } from '@ethersproject/contracts'
 import { useLoadContractFromAddress } from 'hooks/useLoadContractFromAddress'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { useJB721DelegateAbi } from 'packages/v2v3/hooks/JB721Delegate/contracts/useJB721DelegateAbi'

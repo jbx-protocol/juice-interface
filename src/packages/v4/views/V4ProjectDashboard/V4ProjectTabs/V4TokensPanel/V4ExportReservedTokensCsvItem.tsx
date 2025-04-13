@@ -1,12 +1,13 @@
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline'
 import { Trans } from '@lingui/macro'
-import { useJBRuleset } from 'juice-sdk-react'
+import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
 import { useV4ExportSplitsToCsv } from '../V4CyclesPayoutsPanel/hooks/useV4ExportSplitsToCsv'
 
 export const V4ExportReservedTokensCsvItem = () => {
   const { splits: reservedTokensSplits } = useV4ReservedSplits()
-  const { data: ruleset } = useJBRuleset()
+  const { projectId, chainId } = useJBProjectId()
+  const { ruleset } = useJBRuleset({ projectId, chainId })
   const { exportSplitsToCsv } = useV4ExportSplitsToCsv(
     reservedTokensSplits ?? [],
     'reserved-tokens',

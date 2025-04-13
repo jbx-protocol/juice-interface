@@ -1,12 +1,15 @@
+import { Fragment, useContext, useEffect, useMemo, useRef, useState } from 'react'
+
 import { Tab } from '@headlessui/react'
 import { t } from '@lingui/macro'
 import { ProjectTab } from 'components/Project/ProjectTabs/ProjectTab'
 import { useOnScreen } from 'hooks/useOnScreen'
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import { V4NftRewardsContext } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 import { twMerge } from 'tailwind-merge'
 import { useProjectPageQueries } from '../hooks/useProjectPageQueries'
 import V4AboutPanel from './V4AboutPanel'
 import { V4ActivityPanel } from './V4ActivityPanel/V4ActivityPanel'
+import { CyclesPanelSelectedChainProvider } from './V4CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
 import { V4CyclesPayoutsPanel } from './V4CyclesPayoutsPanel/V4CyclesPayoutsPanel'
 import { V4NftRewardsPanel } from './V4NftRewardsPanel/V4NftRewardsPanel'
 import { V4TokensPanel } from './V4TokensPanel/V4TokensPanel'
@@ -20,8 +23,16 @@ type ProjectTabConfig = {
 
 export const V4ProjectTabs = ({ className }: { className?: string }) => {
   const { projectPageTab, setProjectPageTab } = useProjectPageQueries()
-
-  const showNftRewards = true
+  const {
+      nftRewards: { rewardTiers },
+    } = useContext(V4NftRewardsContext)
+    
+  const hasNftRewards = useMemo(
+      () => (rewardTiers ?? []).length !== 0,
+      [rewardTiers],
+    )
+  
+  const showNftRewards = hasNftRewards
 
   const containerRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
@@ -57,9 +68,9 @@ export const V4ProjectTabs = ({ className }: { className?: string }) => {
         hideTab: !showNftRewards,
       },
       {
-        id: 'cycle_payouts',
-        name: t`Cycles & Payouts`,
-        panel: <V4CyclesPayoutsPanel />,
+        id: 'ruleset_payouts',
+        name: t`Rulesets & Payouts`,
+        panel: <CyclesPanelSelectedChainProvider><V4CyclesPayoutsPanel /></CyclesPanelSelectedChainProvider>,
       },
       { id: 'tokens', name: t`Tokens`, panel: <V4TokensPanel /> },
     ],

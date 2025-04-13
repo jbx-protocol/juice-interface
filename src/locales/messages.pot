@@ -1373,6 +1373,9 @@ msgstr ""
 msgid "Convert to USD"
 msgstr ""
 
+msgid "JUICEBOX V4 IS BRAND NEW. We highly recommend you talk to JuiceboxDAO or Juiceworks before launching your project to help make sure things look good. If you know what you're doing, carry on."
+msgstr ""
+
 msgid "The project owner is the only payout recipient. Any ETH paid out this cycle will go to them."
 msgstr ""
 

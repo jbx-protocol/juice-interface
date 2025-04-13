@@ -61,7 +61,7 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
     loading: ruleset.isLoading,
     enabled:
       rulesetMetadata.data?.cashOutTaxRate &&
-      rulesetMetadata.data.cashOutTaxRate.value > 0n,
+      rulesetMetadata.data.cashOutTaxRate.value < 100n,
   }
 
   const isIssuingTokens = React.useMemo(() => {

@@ -1,6 +1,6 @@
 import {
-    ConfigurationPanelDatum,
-    ConfigurationPanelTableData,
+  ConfigurationPanelDatum,
+  ConfigurationPanelTableData,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
 
@@ -150,8 +150,7 @@ export const useV4FormatConfigurationTokenSection = ({
   const cashOutTaxRateDatum: ConfigurationPanelDatum = useMemo(() => {
     const currentRedemptionRate =
       rulesetMetadata?.cashOutTaxRate.formatPercentage()
-
-    const current = currentRedemptionRate
+    const current = currentRedemptionRate !== undefined
       ? `${currentRedemptionRate}%`
       : undefined
 

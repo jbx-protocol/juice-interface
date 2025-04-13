@@ -1,5 +1,10 @@
 import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import {
+  deriveDurationOption,
+  deriveDurationUnit,
+  secondsToOtherUnit,
+} from 'utils/format/formatTime'
 
 import { Form } from 'antd'
 import { Ether } from 'juice-sdk-core'
@@ -8,11 +13,6 @@ import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4CurrentPayoutSplits'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
 import { V4CurrencyName } from 'packages/v4/utils/currency'
-import {
-  deriveDurationOption,
-  deriveDurationUnit,
-  secondsToOtherUnit,
-} from 'utils/format/formatTime'
 import { EditCycleFormFields } from '../EditCycleFormFields'
 
 /** Loads project FC data directly into an AntD form instance */
@@ -34,31 +34,50 @@ export const useLoadEditCycleData = () => {
 
   const [editCycleForm] = Form.useForm<EditCycleFormFields>()
 
-  useEffect(() => {
-    if (!ruleset || !rulesetMetadata) {
-      return
-    }
-    const payoutLimitAmount = new Ether(payoutLimit.amount).toFloat()
+  const payoutLimitAmount = useMemo(
+    () => new Ether(payoutLimit.amount).toFloat(),
+    [payoutLimit.amount]
+  )
 
-    const duration = Number(ruleset.duration)
+  const duration = useMemo(
+    () => Number(ruleset?.duration ?? 0),
+    [ruleset?.duration]
+  )
 
-    const issuanceRate = upcomingRuleset?.weight.toFloat() ?? 0
-    const reservedPercent = rulesetMetadata.reservedPercent.formatPercentage()
-    // : DefaultTokenSettings.reservedTokensPercentage
+  const issuanceRate = useMemo(
+    () => upcomingRuleset?.weight?.toFloat() ?? 0,
+    [upcomingRuleset?.weight]
+  )
 
-    const weightCutPercent = ruleset.weightCutPercent.formatPercentage()
-    // : DefaultTokenSettings.discountRate
+  const reservedPercent = useMemo(
+    () => rulesetMetadata?.reservedPercent?.formatPercentage() ?? 0,
+    [rulesetMetadata?.reservedPercent]
+  )
 
-    const cashOutTaxRate = rulesetMetadata.cashOutTaxRate.formatPercentage()
-    // : DefaultTokenSettings.cashOutTaxRate
+  const weightCutPercent = useMemo(
+    () => ruleset?.weightCutPercent?.formatPercentage() ?? 0,
+    [ruleset?.weightCutPercent]
+  )
 
-    const allowOwnerMinting = rulesetMetadata.allowOwnerMinting
-    // : DefaultTokenSettings.tokenMinting
+  const cashOutTaxRate = useMemo(
+    () => rulesetMetadata?.cashOutTaxRate?.formatPercentage() ?? 0,
+    [rulesetMetadata?.cashOutTaxRate]
+  )
 
-    const tokenTransfers = !rulesetMetadata.pauseCreditTransfers
-    // : DefaultTokenSettings.pauseTransfers
+  const allowOwnerMinting = useMemo(
+    () => rulesetMetadata?.allowOwnerMinting ?? false,
+    [rulesetMetadata?.allowOwnerMinting]
+  )
 
-    const formData: EditCycleFormFields = {
+  const tokenTransfers = useMemo(
+    () => !rulesetMetadata?.pauseCreditTransfers,
+    [rulesetMetadata?.pauseCreditTransfers]
+  )
+
+  const memoizedFormData: EditCycleFormFields | undefined = useMemo(() => {
+    if (!ruleset || !rulesetMetadata) return undefined
+
+    return {
       duration: secondsToOtherUnit({
         duration,
         unit: deriveDurationUnit(duration),
@@ -80,25 +99,31 @@ export const useLoadEditCycleData = () => {
       cashOutTaxRate,
       allowOwnerMinting,
       tokenTransfers,
-      // nftRewards: currentProjectData.nftRewards,
-      // useDataSourceForRedeem:
-      //   rulesetMetadata.useDataSourceForRedeem,
       memo: '',
     }
-    if (!initialFormData) {
-      setInitialFormData(formData)
-    }
-    editCycleForm.setFieldsValue(formData)
   }, [
-    initialFormData,
-    editCycleForm,
     ruleset,
     rulesetMetadata,
     payoutSplits,
-    payoutLimit,
+    payoutLimitAmount,
+    payoutLimit?.currency,
     reservedTokensSplits,
-    upcomingRuleset?.weight,
+    duration,
+    issuanceRate,
+    reservedPercent,
+    weightCutPercent,
+    cashOutTaxRate,
+    allowOwnerMinting,
+    tokenTransfers,
   ])
+
+  // ✅ EFFECT DEPENDS ONLY ON STABLE FORM DATA
+  useEffect(() => {
+    if (!memoizedFormData || initialFormData) return
+
+    setInitialFormData(memoizedFormData)
+    editCycleForm.setFieldsValue(memoizedFormData)
+  }, [memoizedFormData, initialFormData, editCycleForm])
 
   return {
     initialFormData,

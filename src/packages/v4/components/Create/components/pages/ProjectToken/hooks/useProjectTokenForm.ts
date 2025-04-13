@@ -35,6 +35,8 @@ export type ProjectTokensFormProps = Partial<{
   reservedTokensPercentage: number | undefined
   reservedTokenAllocation: AllocationSplit[] | undefined
   discountRate: number | undefined
+  // In v4 this is supposed to be called cashOutTaxRate
+  // redemptionRate is wrong because redemptionRate actually equals (100 - cashOutTaxRate)
   redemptionRate: number | undefined
   tokenMinting: boolean | undefined
   pauseTransfers: boolean | undefined
@@ -47,7 +49,7 @@ export const DefaultSettings: Required<
   reservedTokensPercentage: 0,
   reservedTokenAllocation: [],
   discountRate: 0,
-  redemptionRate: 100,
+  redemptionRate: 0,
   tokenMinting: false,
   pauseTransfers: false,
 }

@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
 import { useWatch } from 'antd/lib/form/Form'
 import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
-import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import NumberSlider from 'components/inputs/NumberSlider'
+import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
 import { useState } from 'react'
 import { helpPagePath } from 'utils/helpPagePath'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
@@ -17,7 +17,7 @@ export const zeroPercentDisabledNoticed = (
 export function RedemptionRateField() {
   const { editCycleForm, setFormHasUpdated } = useEditCycleFormContext()
 
-  // Redemption rate %
+  // Cash out tax rate %
   const redemptionReductionRate = useWatch('cashOutTaxRate', editCycleForm)
 
   const [cashOutTaxRateSwitchEnabled, setRedemptionRateSwitchEnabled] =
@@ -27,10 +27,10 @@ export function RedemptionRateField() {
   return (
     <div className="flex flex-col gap-5">
       <JuiceSwitch
-        label={<Trans>Enable redemption rate</Trans>}
+        label={<Trans>Enable cash out tax rate</Trans>}
         description={
           <Trans>
-            Incentivise long-term token holding with a redemption rate.{' '}
+            Incentivise long-term token holding with a cash out tax rate.{' '}
             <ExternalLinkWithIcon
               href={helpPagePath('/dev/learn/glossary/redemption-rate')}
             >

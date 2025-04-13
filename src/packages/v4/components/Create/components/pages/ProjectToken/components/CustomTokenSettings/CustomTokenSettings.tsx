@@ -3,11 +3,11 @@ import * as ProjectTokenForm from '../../hooks/useProjectTokenForm'
 import { Trans, t } from '@lingui/macro'
 import { Divider, Form } from 'antd'
 import {
+  CASH_OUT_TAX_RATE_EXPLANATION,
   MINT_RATE_EXPLANATION,
   OWNER_MINTING_EXPLANATION,
   OWNER_MINTING_RISK,
   PAUSE_TRANSFERS_EXPLANATION,
-  REDEMPTION_RATE_EXPLANATION,
 } from 'components/strings'
 
 import { Callout } from 'components/Callout/Callout'
@@ -51,6 +51,7 @@ export const CustomTokenSettings = () => {
     Form.useWatch('initialMintRate', form) ??
       ProjectTokenForm.DefaultSettings.initialMintRate,
   )
+  const cashOutTaxRate = Form.useWatch('redemptionRate', form) ?? 0
   const tokenMinting = Form.useWatch('tokenMinting', form) ?? false
 
   const discountRateDisabled = !parseInt(duration)
@@ -201,14 +202,14 @@ export const CustomTokenSettings = () => {
 
       <Divider className="my-8" />
 
-      <Form.Item label={t`Redemption rate`}>
+      <Form.Item label={t`Cash out tax rate`}>
         <div className="flex flex-col gap-6">
-          <span>{REDEMPTION_RATE_EXPLANATION}</span>
+          <span>{CASH_OUT_TAX_RATE_EXPLANATION}</span>
           <Form.Item
             noStyle
             name="redemptionRate"
             valuePropName="sliderValue"
-            rules={[inputMustExistRule({ label: t`A redemption rate` })]}
+            rules={[inputMustExistRule({ label: t`A cash out tax rate` })]}
           >
             <NumberSlider
               min={0}
@@ -227,9 +228,11 @@ export const CustomTokenSettings = () => {
             </Callout.Warning>
           ) : (
             !isMobile && (
-              <Form.Item noStyle name="redemptionRate">
-                <TokenRedemptionRateGraph graphPad={50} graphSize={300} />
-              </Form.Item>
+                <TokenRedemptionRateGraph 
+                  value={100 - cashOutTaxRate}
+                  graphPad={50} 
+                  graphSize={300} 
+                />
             )
           )}
         </div>

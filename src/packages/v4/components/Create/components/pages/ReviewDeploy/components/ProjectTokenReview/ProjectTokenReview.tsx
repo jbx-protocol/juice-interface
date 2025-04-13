@@ -1,14 +1,16 @@
+import * as ProjectTokenForm from '../../../ProjectToken/hooks/useProjectTokenForm'
+
+import {
+    formatDiscountRate,
+    formatIssuanceRate,
+    formatRedemptionRate,
+    formatReservedRate,
+} from 'packages/v2v3/utils/math'
+
 import { t } from '@lingui/macro'
 import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
-import {
-  formatDiscountRate,
-  formatIssuanceRate,
-  formatRedemptionRate,
-  formatReservedRate,
-} from 'packages/v2v3/utils/math'
 import React from 'react'
 import { formatAmount } from 'utils/format/formatAmount'
-import * as ProjectTokenForm from '../../../ProjectToken/hooks/useProjectTokenForm'
 import { ReviewDescription } from '../ReviewDescription'
 import { useProjectTokenReview } from './hooks/useProjectTokenReview'
 
@@ -85,7 +87,7 @@ export const ProjectTokenReview = () => {
         }
       />
       <ReviewDescription
-        title={t`Redemption rate`}
+        title={t`Cash out tax rate`}
         desc={
           <div className="text-base font-medium">
             {formatRedemptionRate(

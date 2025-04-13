@@ -77,6 +77,33 @@ export const DISCOUNT_RATE_EXPLANATION = (
   </Trans>
 )
 
+export const CASH_OUT_TAX_RATE_EXPLANATION = (
+  <Trans>
+    <p>
+      Supporters can burn their tokens to reclaim some of the ETH not needed for
+      payouts. The amount of ETH they receive depends on the cash out rate.
+    </p>
+    <p>
+      At 0%, cash outs are 1:1 — somebody cashing out 10% of all project
+      tokens will receive 10% of the available ETH. At 0%, cash outs are
+      turned off.
+    </p>
+    <p>
+      Anywhere else, cash outs take place along a bonding curve, meaning
+      people who cash out first will get less ETH per token, and people who cash out
+      later will get more ETH per token.
+    </p>
+    <p>
+      Learn more in this{' '}
+      <ExternalLink href="https://youtu.be/dxqc3yMqi5M">
+        {' '}
+        short video
+      </ExternalLink>
+      .
+    </p>
+  </Trans>
+)
+
 export const REDEMPTION_RATE_EXPLANATION = (
   <Trans>
     <p>

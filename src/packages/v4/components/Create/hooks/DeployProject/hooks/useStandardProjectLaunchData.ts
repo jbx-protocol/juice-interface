@@ -39,9 +39,14 @@ export function useStandardProjectLaunchData() {
   return ({
     projectMetadataCID,
     chainId,
+    /**
+     * Add a x minute buffer to the start time of the project.
+     */
+    withStartBuffer,
   }: {
     projectMetadataCID: string
     chainId: JBChainId
+    withStartBuffer?: boolean
   }) => {
     const terminalAddress = chainId
       ? (jbProjectDeploymentAddresses.JBMultiTerminal[
@@ -66,12 +71,16 @@ export function useStandardProjectLaunchData() {
         ? inputProjectOwner
         : userAddress
 
+    const _mustStartAtOrAfter = withStartBuffer
+      ? mustStartAtOrAfter + 60 * 5 // 5 minutes
+      : mustStartAtOrAfter
+
     const v2v3Args = [
       _owner,
       [projectMetadataCID, JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN],
       fundingCycleData,
       fundingCycleMetadata,
-      mustStartAtOrAfter,
+      _mustStartAtOrAfter,
       groupedSplits,
       fundAccessConstraints,
       [terminalAddress], // _terminals, just supporting single for now

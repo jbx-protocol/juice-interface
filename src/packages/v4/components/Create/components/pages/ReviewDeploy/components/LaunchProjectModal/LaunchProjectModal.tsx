@@ -133,6 +133,7 @@ export const LaunchProjectModal: React.FC<{
               chainId,
               rewardTierCids,
               nftCollectionMetadataUri,
+              withStartBuffer: true,
             })
 
             acc[chainId] = args
@@ -158,6 +159,7 @@ export const LaunchProjectModal: React.FC<{
             const { args } = getStandardProjectLaunchData({
               projectMetadataCID: projectMetadataCid,
               chainId,
+              withStartBuffer: true,
             })
 
             acc[chainId] = args

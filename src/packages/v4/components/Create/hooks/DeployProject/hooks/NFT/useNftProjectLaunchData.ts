@@ -43,11 +43,16 @@ export function useNftProjectLaunchData() {
     rewardTierCids,
     nftCollectionMetadataUri,
     chainId,
+    /**
+     * Add a x minute buffer to the start time of the project.
+     */
+    withStartBuffer
   }: {
     projectMetadataCID: string
     nftCollectionMetadataUri: string
     rewardTierCids: string[]
     chainId: JBChainId
+    withStartBuffer?: boolean
   }) => {
     const defaultJBController = chainId
       ? (jbProjectDeploymentAddresses.JBController[
@@ -93,6 +98,7 @@ export function useNftProjectLaunchData() {
     const { args: standardProjLaunchData } = getStandardProjectLaunchData({
       projectMetadataCID,
       chainId,
+      withStartBuffer,
     })
 
     const args = [

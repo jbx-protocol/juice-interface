@@ -20,7 +20,7 @@ export function usePayoutLimit() {
   const {
     contracts: { primaryNativeTerminal, fundAccessLimits },
   } = useJBContractContext()
-  const { projectId } = useJBProjectId()
+  const { projectId } = useJBProjectId(chainId)
   const { ruleset } = useJBRuleset({
     projectId,
     chainId,

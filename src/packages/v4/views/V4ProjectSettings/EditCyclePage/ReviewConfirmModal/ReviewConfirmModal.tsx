@@ -2,13 +2,9 @@ import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import TransactionModal from 'components/modals/TransactionModal'
-import {
-  JBRulesetContext,
-  useJBProjectId
-} from 'juice-sdk-react'
 import { CreateCollapse } from 'packages/v4/components/Create/components/CreateCollapse/CreateCollapse'
 import { useEditRulesetTx } from 'packages/v4/hooks/useEditRulesetTx'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { TransactionSuccessModal } from '../TransactionSuccessModal'
@@ -27,8 +23,6 @@ export function ReviewConfirmModal({
   open: boolean
   onClose: VoidFunction
 }) {
-  const { rulesetMetadata } = useContext(JBRulesetContext)
-  const { chainId } = useJBProjectId()
   const [editCycleSuccessModalOpen, setEditCycleSuccessModalOpen] =
     useState<boolean>(false)
   const [confirmLoading, setConfirmLoading] = useState<boolean>(false)

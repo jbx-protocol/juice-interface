@@ -12,11 +12,12 @@ import { useCyclesPanelSelectedChain } from '../V4ProjectTabs/V4CyclesPayoutsPan
 
 export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   const { selectedChainId } = useCyclesPanelSelectedChain()
-  const { projectId } = useJBProjectId()
+  const { projectId } = useJBProjectId(selectedChainId)
   const { ruleset, isLoading: rulesetLoading } = useJBRuleset({
     chainId: selectedChainId,
     projectId,
   })
+
   const { ruleset: latestUpcomingRuleset, isLoading: upcomingRulesetsLoading } =
     useJBUpcomingRuleset(selectedChainId)
 

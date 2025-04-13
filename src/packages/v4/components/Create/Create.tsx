@@ -50,7 +50,7 @@ export default function Create() {
       <h1 className="mb-0 text-center font-heading text-base font-medium uppercase text-black dark:text-slate-100">
         <span className="inline-flex gap-2">
           <Trans>Create a project</Trans>
-          <Badge variant="info">Beta</Badge>
+          <Badge variant="info">V4</Badge>
         </span>
       </h1>
       {/* TODO: Remove wizard-create once form item css override is replaced */}

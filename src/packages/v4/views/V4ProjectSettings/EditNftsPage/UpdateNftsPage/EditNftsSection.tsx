@@ -4,7 +4,6 @@ import { Callout } from 'components/Callout/Callout'
 import Loading from 'components/Loading'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
 import TransactionModal from 'components/modals/TransactionModal'
-import { JB_CHAINS, JBChainId } from 'juice-sdk-core'
 import { useHasNftRewards } from 'packages/v4/hooks/useHasNftRewards'
 import { useCallback, useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
@@ -71,9 +70,7 @@ export function EditNftsSection() {
 
       <div className="mb-8">
         <RewardsList
-          priceCurrencySymbol={
-            JB_CHAINS[chainId as JBChainId].nativeTokenSymbol
-          }
+          priceCurrencySymbol={'ETH'}
           nftRewardsData={nftRewardsData}
           value={rewardTiers}
           onChange={setRewardTiers}

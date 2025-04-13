@@ -53,7 +53,7 @@ export function RedemptionRateField() {
       {cashOutTaxRateSwitchEnabled ? (
         <div className="flex w-full flex-col items-start justify-between gap-5 pb-5 md:flex-row md:items-center">
           <TokenRedemptionRateGraph
-            value={redemptionReductionRate}
+            value={100 - redemptionReductionRate}
             graphPad={50}
             graphSize={200}
           />

@@ -4,16 +4,19 @@ import EtherscanLink from 'components/EtherscanLink'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import useMobile from 'hooks/useMobile'
+import { JBChainId } from 'juice-sdk-react'
 import moment from 'moment'
 import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
 import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 import { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { useChainId } from 'wagmi'
 
 export const SuccessPayCard = ({ className }: { className?: string }) => {
   const isMobile = useMobile()
   const { name } = useProjectMetadataContext().projectMetadata ?? {}
   const { projectPayReceipt } = useProjectPageQueries()
+  const chainId = useChainId()
 
   const transactionDateString = useMemo(() => {
     if (!projectPayReceipt?.timestamp) return null
@@ -57,6 +60,7 @@ export const SuccessPayCard = ({ className }: { className?: string }) => {
                 linkClassName="text-black dark:text-slate-50"
                 type="tx"
                 value={projectPayReceipt.transactionHash}
+                chainId={chainId as JBChainId}
               />
             )}
           </div>

@@ -7,11 +7,9 @@ import TransactionModal from 'components/modals/TransactionModal'
 import { useHasNftRewards } from 'packages/v4/hooks/useHasNftRewards'
 import { useCallback, useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useChainId } from 'wagmi'
 import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
 import { useEditingNfts } from '../hooks/useEditingNfts'
 import { useUpdateCurrentCollection } from '../hooks/useUpdateCurrentCollection'
-
 // v4TODO: need to build launch NFT capabilities into this
 export function EditNftsSection() {
   const nftRewardsData = useAppSelector(
@@ -30,8 +28,6 @@ export function EditNftsSection() {
   })
 
   const showNftRewards = hasNftRewards
-
-  const chainId = useChainId()
 
   const onNftFormSaved = useCallback(async () => {
     if (!rewardTiers) return

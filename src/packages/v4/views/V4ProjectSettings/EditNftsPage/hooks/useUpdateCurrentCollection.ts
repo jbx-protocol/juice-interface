@@ -1,4 +1,5 @@
 import {
+  useJBChainId,
   useJBRulesetContext,
   useWriteJb721TiersHookAdjustTiers,
 } from 'juice-sdk-react'
@@ -13,7 +14,6 @@ import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { emitErrorNotification } from 'utils/notifications'
-import { useChainId } from 'wagmi'
 
 export function useUpdateCurrentCollection({
   rewardTiers,
@@ -31,7 +31,7 @@ export function useUpdateCurrentCollection({
 
   const { writeContractAsync: writeAdjustTiers } =
     useWriteJb721TiersHookAdjustTiers()
-  const chainId = useChainId()
+  const chainId = useJBChainId()
 
   const [txLoading, setTxLoading] = useState<boolean>(false)
 

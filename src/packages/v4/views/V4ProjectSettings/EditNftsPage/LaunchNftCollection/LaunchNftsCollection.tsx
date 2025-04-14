@@ -3,10 +3,8 @@ import { Button } from 'antd'
 import TransactionModal from 'components/modals/TransactionModal'
 import { AddNftCollectionForm } from 'components/NftRewards/AddNftCollectionForm/AddNftCollectionForm'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useChainId } from 'wagmi'
 import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
 import { useLaunchNftsForm } from './hooks/useLaunchNftsForm'
-
 export function LaunchNftsPage() {
   const {
     form,
@@ -23,7 +21,6 @@ export function LaunchNftsPage() {
   const nftRewardsData = useAppSelector(
     state => state.creatingV2Project.nftRewards,
   )
-  const chainId = useChainId()
 
   return (
     <>

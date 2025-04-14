@@ -124,7 +124,7 @@ export function EditCyclePage() {
       </div>
 
       <div className="flex items-center justify-end gap-4">
-        {projectId ? (
+        {projectId && chainId ? (
           <Link href={settingsPagePath({ projectId, chainId })}>
             <Button>
               <Trans>Cancel</Trans>

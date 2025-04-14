@@ -4652,6 +4652,9 @@ msgstr ""
 msgid "{0}% of supply"
 msgstr ""
 
+msgid "New: Juicebox is now omnichain"
+msgstr ""
+
 msgid "Overflow"
 msgstr ""
 

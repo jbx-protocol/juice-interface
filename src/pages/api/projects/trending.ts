@@ -60,9 +60,7 @@ const handler: NextApiHandler = async (req, res) => {
 
     // Parse DB projects into the format expected by the frontend
     let projects = projectsData.map(parseDBProjectsRow)
-    if (process.env.NEXT_PUBLIC_V4_ENABLED === 'true') {
-      projects = projects.filter(p => p.pv === PV_V4)
-    } else {
+    if (process.env.NEXT_PUBLIC_V4_ENABLED !== 'true') {
       projects = projects.filter(p => p.pv !== PV_V4)
     }
     if (process.env.NEXT_PUBLIC_TESTNET === 'true') {

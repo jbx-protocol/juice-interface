@@ -14,14 +14,18 @@ export function useChainUnsupported() {
       return false
     }
 
-    const isV4Create = featureFlagEnabled('v4') && router.pathname.includes('/create')
+    const isV4GeneralPage =
+      featureFlagEnabled('v4') &&
+      (router.pathname.includes('/create') ||
+        router.pathname.includes('/projects') ||
+        router.pathname === '/')
     const isV4ProjectPage = router.pathname.includes('/v4')
-    
+
     // dont show buttons on v4 stuff
-    if (isV4Create || isV4ProjectPage) {
+    if (isV4GeneralPage || isV4ProjectPage) {
       return false
     }
-    
+
     return Number(connectedChain.id) !== readNetwork.chainId
   }, [connectedChain, router])
 

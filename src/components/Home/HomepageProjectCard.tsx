@@ -5,8 +5,10 @@ import ProjectLogo from 'components/ProjectLogo'
 import ETHAmount from 'components/currency/ETHAmount'
 import { PV_V2, PV_V4 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
+import { JBChainId } from 'juice-sdk-react'
 import { SubgraphQueryProject } from 'models/subgraphProjects'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
 
 function Statistic({
@@ -64,14 +66,21 @@ export function HomepageProjectCard({
       }
       img={
         !isLoading ? (
-          <ProjectLogo
-            className="h-[192px] w-full rounded-none object-cover"
-            name={metadata?.name}
-            projectId={project.projectId}
-            uri={metadata?.logoUri}
-            pv={project.pv}
-            lazyLoad={lazyLoad}
-          />
+          <div className="relative">
+            <ProjectLogo
+              className="h-[192px] w-full rounded-none object-cover"
+              name={metadata?.name}
+              projectId={project.projectId}
+              uri={metadata?.logoUri}
+              pv={project.pv}
+              lazyLoad={lazyLoad}
+            />
+            {project.chainId ? (
+              <div className="absolute right-2 top-2 z-10 rounded-full bg-white p-1 shadow-md dark:bg-slate-900">
+                <ChainLogo chainId={project.chainId as JBChainId} />
+              </div>
+            ) : null}
+          </div>
         ) : null
       }
       title={

@@ -7,9 +7,11 @@ import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2, PV_V4 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
+import { JBChainId } from 'juice-sdk-react'
 import { DBProject } from 'models/dbProject'
 import Link from 'next/link'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { TRENDING_WINDOW_DAYS } from './RankingExplanation'
 
@@ -99,12 +101,15 @@ export default function TrendingProjectCard({
           )}
 
           <div className="flex w-full flex-wrap text-black dark:text-slate-100">
-            <span className="flex flex-wrap items-baseline">
-              <span className="mt-1 font-medium">
-                <ETHAmount amount={project.trendingVolume} />{' '}
+            <span className="flex flex-wrap items-center gap-1">
+              {project.chainId ? (
+                <ChainLogo chainId={project.chainId as JBChainId} />
+              ) : null}
+              <span className="font-medium">
+                <ETHAmount amount={project.trendingVolume} />
               </span>
               <span className="font-medium text-grey-500 dark:text-grey-300">
-                <Trans>last {TRENDING_WINDOW_DAYS} days</Trans>{' '}
+                <Trans>last {TRENDING_WINDOW_DAYS} days</Trans>
               </span>
               <span className="font-medium text-juice-400 dark:text-juice-300">
                 {percentGainText && <>{percentGainText}</>}

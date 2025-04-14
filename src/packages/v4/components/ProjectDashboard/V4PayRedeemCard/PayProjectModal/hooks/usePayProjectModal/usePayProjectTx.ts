@@ -1,11 +1,16 @@
-import { DEFAULT_METADATA, NATIVE_TOKEN, readJbDirectoryPrimaryTerminalOf } from 'juice-sdk-core'
+import {
+  DEFAULT_METADATA,
+  NATIVE_TOKEN,
+  readJbDirectoryPrimaryTerminalOf,
+} from 'juice-sdk-core'
 import {
   JBChainId,
   useJBContractContext,
+  useJBProjectId,
   useJBRulesetContext,
   usePreparePayMetadata,
   useSuckers,
-  useWriteJbMultiTerminalPay
+  useWriteJbMultiTerminalPay,
 } from 'juice-sdk-react'
 import { useCallback, useContext, useMemo } from 'react'
 import { Address, Hash, parseEther, zeroAddress } from 'viem'
@@ -23,6 +28,7 @@ import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
+import { emitErrorNotification } from 'utils/notifications'
 import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
 import { PayProjectModalFormValues } from './usePayProjectModal'
 
@@ -53,6 +59,7 @@ export const usePayProjectTx = ({
   } = useV4NftRewards()
   const converter = useCurrencyConverter()
   const { data: suckers } = useSuckers()
+  const { projectId } = useJBProjectId()
 
   const { receivedTickets } = useProjectPaymentTokens()
   // TODO: is this needed for preferClaimedTokens?
@@ -120,22 +127,29 @@ export const usePayProjectTx = ({
       formikHelpers: FormikHelpers<PayProjectModalFormValues>,
       chainId: JBChainId,
     ) => {
-      const projectId = suckers?.find(
-        ({ peerChainId }) => chainId === peerChainId)?.projectId
-        
+      const _projectId =
+        suckers && suckers.length > 0
+          ? suckers?.find(({ peerChainId }) => chainId === peerChainId)
+              ?.projectId
+          : projectId
+
       if (
         !contracts.primaryNativeTerminal.data ||
         !userAddress ||
         !values.userAcceptsTerms ||
-        !projectId
+        !_projectId
       ) {
+        emitErrorNotification('Something went wrong! Try again.')
         return
       }
 
-      const terminalAddress = await readJbDirectoryPrimaryTerminalOf(wagmiConfig, {
-        chainId,
-        args: [projectId ?? 0n, NATIVE_TOKEN],
-      })
+      const terminalAddress = await readJbDirectoryPrimaryTerminalOf(
+        wagmiConfig,
+        {
+          chainId,
+          args: [projectId ?? 0n, NATIVE_TOKEN],
+        },
+      )
 
       const { messageString, attachedUrl } = values.message
       const memo = buildPaymentMemo({
@@ -152,7 +166,7 @@ export const usePayProjectTx = ({
       const beneficiary = (values.beneficiaryAddress ?? userAddress) as Address
 
       const args = [
-        projectId,
+        _projectId,
         NATIVE_TOKEN,
         weiAmount,
         beneficiary,
@@ -167,11 +181,11 @@ export const usePayProjectTx = ({
       //   functionName: 'pay',
       //   args,
       // })
-      
+
       try {
         const hash = await writePay({
           chainId,
-          address: terminalAddress ?? zeroAddress, 
+          address: terminalAddress ?? zeroAddress,
           args,
           value: weiAmount,
         })
@@ -194,6 +208,7 @@ export const usePayProjectTx = ({
       }
     },
     [
+      projectId,
       weiAmount,
       contracts.primaryNativeTerminal.data,
       userAddress,

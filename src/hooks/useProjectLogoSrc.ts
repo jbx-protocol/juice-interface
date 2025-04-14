@@ -23,9 +23,9 @@ const SEPOLIA_URI_OVERRIDES: { [k: number]: { [j: string]: string } } = {
 const imgOverrideForProjectId = (projectId: number, pv: PV) => {
   switch (readNetwork.name) {
     case NetworkName.mainnet:
-      return MAINNET_URI_OVERRIDES[pv][projectId]
+      return MAINNET_URI_OVERRIDES[pv]?.[projectId]
     case NetworkName.sepolia:
-      return SEPOLIA_URI_OVERRIDES[pv][projectId]
+      return SEPOLIA_URI_OVERRIDES[pv]?.[projectId]
   }
 }
 

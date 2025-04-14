@@ -1,4 +1,5 @@
 import { readNetwork } from 'constants/networks'
+import { PV_V2 } from 'constants/pv'
 import { NetworkName } from 'models/networkName'
 import { PV } from 'models/pv'
 import { useMemo } from 'react'
@@ -6,21 +7,25 @@ import { cidFromUrl, ipfsGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
 
 // Override some project logos.
 const imageUriOverridePath = '/assets/images/image-uri-overrides'
-const MAINNET_URI_OVERRIDES: { [k: number]: string } = {
-  1: `${imageUriOverridePath}/juiceboxdao_logo.webp`, // the on-chain logo's filesize is too large. This is a smaller version.
-  470: `${imageUriOverridePath}/breadfruit_logo.webp`,
+const MAINNET_URI_OVERRIDES: { [k: number]: { [j: string]: string } } = {
+  1: {
+    [PV_V2]: `${imageUriOverridePath}/juiceboxdao_logo.webp`,
+  }, // the on-chain logo's filesize is too large. This is a smaller version.
+  470: {
+    [PV_V2]: `${imageUriOverridePath}/breadfruit_logo.webp`,
+  },
 }
 
-const SEPOLIA_URI_OVERRIDES: { [k: number]: string } = {
-  1: `${imageUriOverridePath}/juiceboxdao_logo.webp`, // the on-chain logo's filesize is too large. This is a smaller version.
+const SEPOLIA_URI_OVERRIDES: { [k: number]: { [j: string]: string } } = {
+  1: { [PV_V2]: `${imageUriOverridePath}/juiceboxdao_logo.webp` }, // the on-chain logo's filesize is too large. This is a smaller version.
 }
 
-const imgOverrideForProjectId = (projectId: number) => {
+const imgOverrideForProjectId = (projectId: number, pv: PV) => {
   switch (readNetwork.name) {
     case NetworkName.mainnet:
-      return MAINNET_URI_OVERRIDES[projectId]
+      return MAINNET_URI_OVERRIDES[pv][projectId]
     case NetworkName.sepolia:
-      return SEPOLIA_URI_OVERRIDES[projectId]
+      return SEPOLIA_URI_OVERRIDES[pv][projectId]
   }
 }
 
@@ -40,8 +45,8 @@ export const useProjectLogoSrc = ({
    * If URI isn't passed or is undefined, use the API logo. THIS REQUIRES PV + PROJECT ID
    */
   const imageSrc = useMemo(() => {
-    if (projectId) {
-      const override = imgOverrideForProjectId(projectId)
+    if (projectId && pv) {
+      const override = imgOverrideForProjectId(projectId, pv)
       if (override) return override
     }
 

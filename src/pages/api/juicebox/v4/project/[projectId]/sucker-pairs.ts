@@ -7,6 +7,9 @@ import { wagmiConfig } from 'packages/v4/wagmiConfig'
 
 const logger = getLogger('api/v4/project/[projectId]/sucker-pairs')
 
+/**
+ * All the chains that the project is on. For single chain projects, that chain is included (length=1).
+ */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   enableCors(res)
 
@@ -35,13 +38,27 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       'Cache-Control',
       `s-maxage=${86400 * 7}, stale-while-revalidate`,
     )
-    const data = {
-      suckers: suckers.map(s => {
+
+    const normalisedSuckers: {
+      projectId: number
+      peerChainId: JBChainId
+    }[] =
+      suckers?.map(s => {
         return {
           ...s,
           projectId: Number(s.projectId),
         }
-      }),
+      }) ?? []
+
+    // add the current chain if it's not already in there
+    if (!normalisedSuckers.find(s => s.peerChainId === chainId)) {
+      normalisedSuckers.push({
+        projectId: Number(projectId),
+        peerChainId: chainId,
+      })
+    }
+    const data = {
+      suckers: normalisedSuckers,
     }
     logger.info({ data })
     return res.status(200).json(data)

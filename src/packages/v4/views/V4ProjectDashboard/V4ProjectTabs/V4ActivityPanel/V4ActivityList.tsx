@@ -39,12 +39,6 @@ export function V4ActivityList() {
   const [selectedChainId, setSelectedChainId] = React.useState(chainId)
   const [filter, setFilter] = React.useState<ProjectEventFilter>('all')
 
-  const supportedChains = React.useMemo(
-    () =>
-      CHAIN_OPTIONS.filter(o => suckers?.find(s => s.peerChainId === o.value)),
-    [suckers],
-  )
-
   const {
     data: projectEventsQueryResult,
     isLoading,

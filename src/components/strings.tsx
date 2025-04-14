@@ -85,7 +85,7 @@ export const CASH_OUT_TAX_RATE_EXPLANATION = (
     </p>
     <p>
       At 0%, cash outs are 1:1 — somebody cashing out 10% of all project
-      tokens will receive 10% of the available ETH. At 0%, cash outs are
+      tokens will receive 10% of the available ETH. At 100%, cash outs are
       turned off.
     </p>
     <p>

@@ -4,18 +4,17 @@ import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
 import Loading from 'components/Loading'
 import EditCycleFormSection from 'components/Project/ProjectSettings/EditCycleFormSection'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
+import { useJBChainId } from 'juice-sdk-react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { settingsPagePath } from 'packages/v4/utils/routes'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { helpPagePath } from 'utils/helpPagePath'
-import { useChainId } from 'wagmi'
 import { DetailsSection } from './DetailsSection'
 import { useEditCycleFormContext } from './EditCycleFormContext'
 import { PayoutsSection } from './PayoutsSection'
 import { ReviewConfirmModal } from './ReviewConfirmModal'
 import { TokensSection } from './TokensSection'
-
 export function EditCyclePage() {
   const [confirmModalOpen, setConfirmModalOpen] = useState<boolean>(false)
   const [firstRender, setFirstRender] = useState(true)
@@ -30,7 +29,7 @@ export function EditCyclePage() {
   const router = useRouter()
   const { section } = router.query
 
-  const chainId = useChainId()
+  const chainId = useJBChainId()
 
   const detailsRef = useRef<HTMLDivElement>(null)
   const payoutsRef = useRef<HTMLDivElement>(null)

@@ -4007,6 +4007,9 @@ msgstr ""
 msgid "Customization"
 msgstr ""
 
+msgid "<0>Supporters can burn their tokens to reclaim some of the ETH not needed for payouts. The amount of ETH they receive depends on the cash out rate.</0><1>At 0%, cash outs are 1:1 — somebody cashing out 10% of all project tokens will receive 10% of the available ETH. At 100%, cash outs are turned off.</1><2>Anywhere else, cash outs take place along a bonding curve, meaning people who cash out first will get less ETH per token, and people who cash out later will get more ETH per token.</2><3>Learn more in this <4>short video</4>.</3>"
+msgstr ""
+
 msgid "No limit"
 msgstr ""
 
@@ -4134,9 +4137,6 @@ msgid "Review your project and deploy it to {0}."
 msgstr ""
 
 msgid "Error downloading ETH transfers to project, try again."
-msgstr ""
-
-msgid "<0>Supporters can burn their tokens to reclaim some of the ETH not needed for payouts. The amount of ETH they receive depends on the cash out rate.</0><1>At 0%, cash outs are 1:1 — somebody cashing out 10% of all project tokens will receive 10% of the available ETH. At 0%, cash outs are turned off.</1><2>Anywhere else, cash outs take place along a bonding curve, meaning people who cash out first will get less ETH per token, and people who cash out later will get more ETH per token.</2><3>Learn more in this <4>short video</4>.</3>"
 msgstr ""
 
 msgid "Edit reserved token recipients"

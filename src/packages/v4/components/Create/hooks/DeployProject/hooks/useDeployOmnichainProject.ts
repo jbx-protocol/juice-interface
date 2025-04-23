@@ -3,10 +3,12 @@ import {
   createSalt,
   JBChainId,
   jbOmnichainDeployerAbi,
+  jbProjectDeploymentAddresses,
   parseSuckerDeployerConfig,
 } from 'juice-sdk-core'
 import {
   jb721TiersHookProjectDeployerAbi,
+  jb721TiersHookProjectDeployerAddress,
   jbControllerAbi,
   jbOmnichainDeployerAddress,
   useGetRelayrTxQuote,
@@ -61,21 +63,23 @@ export function useDeployOmnichainProject() {
         functionName: 'launchProjectFor',
         args,
       })
-      /**
-       * UNCOMMENT THIS BLOCK TO GET TENDERLY SIM DATA
-       */
-      // const controllerData =  encodeFunctionData({
-      //   abi: jbControllerAbi, // ABI of the contract
-      //   functionName: 'launchProjectFor',
-      //   args: [
-      //     chainDeployData[0],
-      //     chainDeployData[1],
-      //     chainDeployData[2],
-      //     chainDeployData[3],
-      //     chainDeployData[4],
-      //   ]
-      // })
-      // console.log('controllerData', chainId, controllerData, jbProjectDeploymentAddresses.JBController)
+
+      const controllerData = encodeFunctionData({
+        abi: jbControllerAbi, // ABI of the contract
+        functionName: 'launchProjectFor',
+        args: [
+          chainDeployData[0],
+          chainDeployData[1],
+          chainDeployData[2],
+          chainDeployData[3],
+          chainDeployData[4],
+        ],
+      })
+      console.info('🧃launchProjectFor calldata (simulate in Tenderly):', {
+        chainId,
+        calldata: controllerData,
+        address: jbProjectDeploymentAddresses.JBController,
+      })
 
       return {
         data: {
@@ -135,30 +139,31 @@ export function useDeployOmnichainProject() {
         functionName: 'launch721ProjectFor',
         args,
       })
-      // console.log('encodedData', chainId, encodedData)
 
-      /**
-       * UNCOMMENT THIS BLOCK TO GET TENDERLY SIM DATA
-       */
-      // const controllerData =  encodeFunctionData({
-      //   abi: jbControllerAbi, // ABI of the contract
-      //   functionName: 'launchProjectFor',
-      //   args: [
-      //     chainDeployData[0],
-      //     chainDeployData[1],
-      //     chainDeployData[2],
-      //     chainDeployData[3],
-      //     chainDeployData[4],
-      //   ]
-      // })
-      // console.log('controllerData', chainId, controllerData, jbProjectDeploymentAddresses.JBController)
+      const controllerData = encodeFunctionData({
+        abi: jb721TiersHookProjectDeployerAbi, // ABI of the contract
+        functionName: 'launchProjectFor',
+        args: chainDeployData,
+      })
+      console.info('🧃721 launchProjectFor calldata (simulate in Tenderly):', {
+        jb721TiersHookProjectDeployer: {
+          chainId,
+          calldata: controllerData,
+          address: jb721TiersHookProjectDeployerAddress[chainId],
+        },
+        jbOmnichainDeployer: {
+          chainId,
+          calldata: encodedData,
+          address: jbOmnichainDeployerAddress[chainId],
+        },
+      })
 
       return {
         data: {
           from: userAddress,
           to: jbOmnichainDeployerAddress[chainId],
           value: 0n,
-          gas: 1_000_000n * BigInt(chainIds.length),
+          gas: 3_000_000n * BigInt(chainIds.length), // Bigger mutliple for NFTS. TODO ba5sed might have a better suggestion here.
           data: encodedData,
         },
         chainId,

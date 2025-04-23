@@ -72,7 +72,7 @@ export const RewardItem = ({
       </div>
 
       <div className="flex flex-col gap-8 md:flex-row">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 flex-shrink-0">
           <JuiceVideoThumbnailOrImage
             className="h-44 w-44"
             src={fileUrl.toString() ?? '/assets/banana-od.webp'}

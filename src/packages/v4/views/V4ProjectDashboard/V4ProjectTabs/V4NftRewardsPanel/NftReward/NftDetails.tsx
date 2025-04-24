@@ -1,7 +1,9 @@
 import { Skeleton } from 'antd'
 import { TruncatedText } from 'components/TruncatedText'
 import ETHAmount from 'components/currency/ETHAmount'
+import { useJBChainId } from 'juice-sdk-react'
 import { NftRewardTier } from 'models/nftRewards'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { twMerge } from 'tailwind-merge'
 import { parseWad } from 'utils/format/formatNumber'
 
@@ -16,6 +18,8 @@ export function NftDetails({
   hideAttributes?: boolean
   remainingSupplyText: string
 }) {
+  const chainId = useJBChainId()
+
   return (
     <div
       className={twMerge(
@@ -35,7 +39,7 @@ export function NftDetails({
         />
       </Skeleton>
       {!hideAttributes ? (
-        <div className="mt-1 flex flex-col justify-between gap-1.5 md:mt-3 md:flex-row md:items-center">
+        <div className="mt-1 flex flex-col justify-between gap-x-1.5 gap-y-1  md:mt-3 md:flex-row md:items-center flex-wrap">
           {rewardTier?.contributionFloor ? (
             <Skeleton
               className="mt-1"
@@ -56,9 +60,14 @@ export function NftDetails({
             title={false}
             paragraph={{ rows: 1, width: ['50%'] }}
           >
-            <span className="text-xs text-grey-400 dark:text-slate-300">
-              {remainingSupplyText}
-            </span>
+            <div className='whitespace-nowrap'>
+              <span className="text-xs text-grey-400 dark:text-slate-300">
+                {remainingSupplyText} on{' '}
+              </span>
+              {chainId ? (
+                <ChainLogo chainId={chainId} className="ml-1 inline-block" />
+              ) : null}
+            </div>
           </Skeleton>
         </div>
       ) : null}

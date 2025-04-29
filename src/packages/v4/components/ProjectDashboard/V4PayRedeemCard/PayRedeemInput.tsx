@@ -9,8 +9,10 @@ import React, { ReactNode, useCallback, useMemo } from 'react'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { CartItemBadge } from 'components/CartItemBadge'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
 import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
 import { TruncatedText } from 'components/TruncatedText'
+import { CURRENCY_METADATA } from 'constants/currency'
 import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { NftRewardTier } from 'models/nftRewards'
@@ -274,13 +276,6 @@ export const PayRedeemCardNftReward: React.FC<{
     }
   }, [decreaseQuantity, handleRemove, quantity])
 
-  const priceText = useMemo(() => {
-    if (price === null) {
-      return '-'
-    }
-    return formatCurrencyAmount(price)
-  }, [price])
-
   return (
     <div
       className={twMerge('flex items-center justify-between gap-3', className)}
@@ -306,7 +301,10 @@ export const PayRedeemCardNftReward: React.FC<{
             <CartItemBadge>NFT</CartItemBadge>
           </div>
 
-          <div className="text-xs">{priceText}</div>
+          <div className="text-xs">
+            <CurrencySymbol currency={CURRENCY_METADATA.ETH.name} />{' '}
+            {nft.contributionFloor}
+          </div>
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 import {
   jb721TiersHookStoreAbi,
+  useJBProjectId,
   useJBRulesetContext,
   useReadJb721TiersHookContractUri,
   useReadJb721TiersHookPricingContext,
@@ -8,7 +9,11 @@ import {
   useReadJb721TiersHookStoreTiersOf,
 } from 'juice-sdk-react'
 import React, { createContext } from 'react'
-import { DEFAULT_NFT_FLAGS_V4, DEFAULT_NFT_PRICING, EMPTY_NFT_COLLECTION_METADATA } from 'redux/slices/v2v3/editingV2Project'
+import {
+  DEFAULT_NFT_FLAGS_V4,
+  DEFAULT_NFT_PRICING,
+  EMPTY_NFT_COLLECTION_METADATA,
+} from 'redux/slices/v2v3/editingV2Project'
 import { ContractFunctionReturnType, zeroAddress } from 'viem'
 
 import { JB721GovernanceType } from 'models/nftRewards'
@@ -16,6 +21,8 @@ import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V4NftRewardsData } from 'packages/v4/models/nfts'
 import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { useNftRewards } from './useNftRewards'
+
+const NFT_PAGE_SIZE = 100n
 
 // TODO: This should be imported from the SDK
 export type JB721TierV4 = ContractFunctionReturnType<
@@ -46,6 +53,7 @@ export const V4NftRewardsProvider: React.FC<
   React.PropsWithChildren<unknown>
 > = ({ children }) => {
   const jbRuleSet = useJBRulesetContext()
+  const { projectId, chainId } = useJBProjectId()
   const dataHookAddress = jbRuleSet.rulesetMetadata.data?.dataHook
 
   const storeAddress = useReadJb721TiersHookStoreAddress({
@@ -59,12 +67,12 @@ export const V4NftRewardsProvider: React.FC<
       [], // _categories
       false, // _includeResolvedUri, return in each tier a result from a tokenUriResolver if one is included in the delegate
       0n, // _startingId
-      10n, // limit
+      NFT_PAGE_SIZE, // limit
     ],
   })
 
   const { data: loadedRewardTiers, isLoading: nftRewardTiersLoading } =
-    useNftRewards(tiersOf.data ?? [], 4, storeAddress.data)
+    useNftRewards(tiersOf.data ?? [], projectId, chainId, storeAddress.data)
 
   const loadedCIDs = CIDsOfNftRewardTiersResponse(tiersOf.data ?? [])
 
@@ -75,8 +83,9 @@ export const V4NftRewardsProvider: React.FC<
     address: storeAddress.data,
   })
 
-  const { data: collectionMetadataUri } =
-      useReadJb721TiersHookContractUri({ address: dataHookAddress})
+  const { data: collectionMetadataUri } = useReadJb721TiersHookContractUri({
+    address: dataHookAddress,
+  })
 
   const loading = React.useMemo(
     () =>
@@ -102,7 +111,7 @@ export const V4NftRewardsProvider: React.FC<
       governanceType: JB721GovernanceType.NONE,
       collectionMetadata: {
         ...EMPTY_NFT_COLLECTION_METADATA,
-        uri: collectionMetadataUri
+        uri: collectionMetadataUri,
       },
       flags: flags.data ?? DEFAULT_NFT_FLAGS_V4,
     },

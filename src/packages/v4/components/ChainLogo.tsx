@@ -1,3 +1,4 @@
+import { Tooltip } from 'antd'
 import { NETWORKS } from 'constants/networks'
 import { JBChainId } from 'juice-sdk-core'
 import Image from 'next/image'
@@ -38,12 +39,14 @@ export const ChainLogo = ({
   height?: number
 }) => {
   return (
-    <Image
-      className={className}
-      src={chainIdToLogo[chainId]}
-      alt={`${NETWORKS[chainId].label} Logo`}
-      width={width ?? 20}
-      height={height ?? 20}
-    />
+    <Tooltip title={NETWORKS[chainId].label}>
+      <Image
+        className={className}
+        src={chainIdToLogo[chainId]}
+        alt={`${NETWORKS[chainId].label} Logo`}
+        width={width ?? 20}
+        height={height ?? 20}
+      />
+    </Tooltip>
   )
 }

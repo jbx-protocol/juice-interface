@@ -20,7 +20,7 @@ export const V4NftRewardsPanel = () => {
       <RedeemNftsSection />
 
       {!nftsLoading && rewardTiers?.length ? (
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-2 md:gap-6">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-2 md:gap-6 max-h-[800px] overflow-y-auto">
           {rewardTiers?.map((tier, i) => (
             <div key={i} className="flex">
               <NftReward

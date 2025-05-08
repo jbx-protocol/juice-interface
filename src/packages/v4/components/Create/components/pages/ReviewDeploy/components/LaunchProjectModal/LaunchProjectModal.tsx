@@ -16,6 +16,7 @@ import {
 } from 'juice-sdk-react'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ContractFunctionArgs, hexToBigInt } from 'viem'
+import { mainnet, sepolia } from 'viem/chains'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from 'antd'
@@ -40,7 +41,6 @@ import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { twMerge } from 'tailwind-merge'
 import { emitErrorNotification } from 'utils/notifications'
 import { getTransactionReceipt } from 'viem/actions'
-import { mainnet, sepolia } from 'viem/chains'
 import { useConfig } from 'wagmi'
 import { TxLoadingContent } from './TxLoadingContent'
 
@@ -398,7 +398,7 @@ const LoadingIcon: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 )
 
-const GasIcon: React.FC<{ className?: string }> = ({ className }) => {
+export const GasIcon: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <svg
       className={className}

@@ -1,13 +1,23 @@
 import { Trans, t } from '@lingui/macro'
 import { Button, Form, Input } from 'antd'
+import { RelayrPostBundleResponse, jbControllerAbi, useGetRelayrTxBundle, useJBContractContext, useSendRelayrTx, useSuckers } from 'juice-sdk-react'
+import { useEffect, useMemo, useState } from 'react'
+import { ContractFunctionArgs, zeroAddress } from 'viem'
+import { mainnet, sepolia } from 'viem/chains'
+
+import { BigNumber } from '@ethersproject/bignumber'
 import { IssueErc20TokenTxArgs } from 'components/buttons/IssueErc20TokenButton'
+import ETHAmount from 'components/currency/ETHAmount'
 import TransactionModal from 'components/modals/TransactionModal'
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
+import { JBChainId } from 'juice-sdk-core'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { GasIcon } from 'packages/v4/components/Create/components/pages/ReviewDeploy/components/LaunchProjectModal/LaunchProjectModal'
+import { useDeployOmnichainErc20 } from 'packages/v4/hooks/useDeployOmnichainErc20'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { useV4IssueErc20TokenTx } from 'packages/v4/hooks/useV4IssueErc20TokenTx'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
-import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 
 export function CreateErc20TokenSettingsPage() {
@@ -16,13 +26,114 @@ export function CreateErc20TokenSettingsPage() {
   const [transactionModalOpen, setTransactionModalOpen] =
     useState<boolean>(false)
   const [transactionPending, setTransactionPending] = useState<boolean>(false)
-const issueErc20TokenTx = useV4IssueErc20TokenTx()
+  const issueErc20TokenTx = useV4IssueErc20TokenTx()
   const projectHasErc20Token = useProjectHasErc20Token()
   const hasIssueTicketsPermission = useV4WalletHasPermission(
     V4OperatorPermission.DEPLOY_ERC20,
   )
 
   const canCreateErc20Token = !projectHasErc20Token && hasIssueTicketsPermission
+
+  const { deployOmnichainErc20 } = useDeployOmnichainErc20()
+  const [txQuoteResponse, setTxQuote] = useState<RelayrPostBundleResponse>()
+  const [txQuoteLoading, setTxQuoteLoading] = useState<boolean>(false)
+  const [txSigning, setTxSigning] = useState<boolean>(false)
+  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(process.env.NEXT_PUBLIC_TESTNET === 'true' ? sepolia.id : mainnet.id)
+  const relayrBundle = useGetRelayrTxBundle()
+  const { sendRelayrTx } = useSendRelayrTx()
+  const { projectId: _singleChainProjectId } = useJBContractContext() // still used for single-chain flow
+  const { data: suckers } = useSuckers()
+
+  const chainIds = useMemo(
+    () => suckers?.map(s => s.peerChainId) ?? [],
+    [suckers]
+  )
+
+  useEffect(() => {
+    if (chainIds.length) setSelectedGasChain(chainIds[0])
+  }, [chainIds])
+
+  async function getMultiChainQuote() {
+    if (!suckers || !suckers.length) {
+      emitErrorNotification(t`No chains available for multi-chain deployment`)
+      return
+    }
+    setTxQuoteLoading(true)
+    try {
+      const values = form.getFieldsValue()
+      const deployData = suckers.reduce(
+        (
+          acc: Record<
+            JBChainId,
+            ContractFunctionArgs<typeof jbControllerAbi, 'nonpayable', 'deployERC20For'>
+          >,
+          { peerChainId, projectId: remoteProjectId },
+        ) => {
+          acc[peerChainId as keyof typeof acc] = [
+            remoteProjectId,
+            values.name,
+            values.symbol,
+            `${zeroAddress}000000000000000000000000`,
+          ] as ContractFunctionArgs<
+            typeof jbControllerAbi,
+            'nonpayable',
+            'deployERC20For'
+          >
+          return acc
+        },
+        {} as Record<
+          JBChainId,
+          ContractFunctionArgs<typeof jbControllerAbi, 'nonpayable', 'deployERC20For'>
+        >,
+      )
+      const quote = await deployOmnichainErc20(deployData, chainIds)
+      setTxQuote(quote!)
+    } catch (e) {
+      emitErrorNotification((e as Error).message)
+    } finally {
+      setTxQuoteLoading(false)
+    }
+  }
+
+  async function onLaunchMulti() {
+    if (!txQuoteResponse) {
+      // get quote first
+      await getMultiChainQuote()
+      return
+    }
+    // open pending modal
+    setTransactionPending(true)
+    setTxSigning(true)
+    const payment = txQuoteResponse.payment_info.find(
+      p => Number(p.chain) === Number(selectedGasChain)
+    )
+    if (!payment) {
+      emitErrorNotification(t`No payment info for selected chain`)
+      setTxSigning(false)
+      setTransactionPending(false)
+      return
+    }
+    try {
+      await sendRelayrTx?.(payment)
+      setTransactionModalOpen(true)
+      relayrBundle.startPolling(txQuoteResponse.bundle_uuid)
+    } catch (e) {
+      emitErrorNotification((e as Error).message)
+      setTransactionPending(false)
+      setTransactionModalOpen(false)
+    } finally {
+      setTxSigning(false)
+    }
+  }
+
+  useEffect(() => {
+    if (relayrBundle.isComplete) {
+      // close modal on complete then reload
+      setTransactionPending(false)
+      setTransactionModalOpen(false)
+      window.location.reload()
+    }
+  }, [relayrBundle.isComplete])
 
   async function onIssueErc20FormSaved(values: IssueErc20TokenTxArgs) {
     await form.validateFields()
@@ -72,9 +183,16 @@ const issueErc20TokenTx = useV4IssueErc20TokenTx()
     )
   }
 
+  const isMultiChain = suckers && suckers.length > 1
+  const txQuote = txQuoteResponse?.payment_info.find(
+    p => Number(p.chain) === Number(selectedGasChain),
+  )?.amount
   return (
     <>
-      <p>{ISSUE_ERC20_EXPLANATION}</p>
+      {isMultiChain ? (
+        <p>Create an ERC-20 token on each of your project's chains, and allow your supporters to claim your project's tokens as that ERC-20 on each. This makes your tokens compatible with tools like Uniswap.</p>
+      ):
+      <p>{ISSUE_ERC20_EXPLANATION}</p>}
       <Form
         className="mt-5 w-full md:max-w-sm"
         form={form}
@@ -99,25 +217,56 @@ const issueErc20TokenTx = useV4IssueErc20TokenTx()
             }
           />
         </Form.Item>
-        <Button
-          className="mt-3"
-          htmlType="submit"
-          loading={loading}
-          type="primary"
-        >
-          <span>
-            <Trans>Create ERC-20 Token</Trans>
-          </span>
-        </Button>
       </Form>
+
+      <div className="mt-8">
+        <div className="mt-4 space-y-4">
+          <div>
+          {txQuoteLoading || txQuoteResponse ? (
+            <>
+            <span><Trans>Gas quote</Trans></span>
+              <div className="mt-2 flex items-center justify-start gap-4">
+                <div className="flex items-center gap-2">
+                  <GasIcon className="h-5 w-5" />
+                  {txQuote ?
+                    <ETHAmount
+                      amount={BigNumber.from(txQuote
+                      )}
+                    />
+                  : '--'}
+                </div>
+                <Button onClick={getMultiChainQuote} loading={txQuoteLoading}>
+                  {txQuoteResponse ? <Trans>Refresh quote</Trans> : <Trans>Get quote</Trans>}
+                </Button>
+              </div>
+              </>
+            ) : null}
+          </div>
+          <div>
+            <span><Trans>Pay gas on</Trans></span>
+            <ChainSelect
+              className="mt-1"
+              showTitle
+              value={selectedGasChain}
+              onChange={setSelectedGasChain}
+              chainIds={chainIds}
+            />
+          </div>
+          <Button type="primary" onClick={onLaunchMulti} loading={txSigning || txQuoteLoading}>
+            {txQuote ? <>{isMultiChain ?
+              <Trans>Launch Multi-Chain ERC-20</Trans>
+            : <Trans>Launch ERC-20</Trans>}</> : <Trans>Get launch quote</Trans>}
+          </Button>
+        </div>
+      </div>
 
       <TransactionModal
         transactionPending={transactionPending}
-        title={t`Create ERC-20 Token`}
+        title={isMultiChain ? t`Launch Multi-Chain ERC-20` : t`Create ERC-20 Token`}
         open={transactionModalOpen}
         onCancel={() => setTransactionModalOpen(false)}
         onOk={() => setTransactionModalOpen(false)}
-        confirmLoading={loading}
+        confirmLoading={loading || txSigning}
         centered
       />
     </>

@@ -1,4 +1,4 @@
-import { JBChainId, createSalt, jbProjectDeploymentAddresses } from 'juice-sdk-core'
+import { JBChainId, jbProjectDeploymentAddresses } from 'juice-sdk-core'
 import { jbControllerAbi, useGetRelayrTxQuote } from 'juice-sdk-react'
 import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
@@ -16,7 +16,6 @@ export function useDeployOmnichainErc20() {
     chainIds: JBChainId[],
   ) {
     if (!userAddress) return
-    const salt = createSalt()
 
     const relayrTransactions = chainIds.map(chainId => {
       const args = deployData[chainId]

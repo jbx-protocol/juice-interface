@@ -1,8 +1,9 @@
 import { Trans, t } from '@lingui/macro'
 import { Button, Form, Input } from 'antd'
+import { JBChainId, createSalt } from 'juice-sdk-core'
 import { RelayrPostBundleResponse, jbControllerAbi, useGetRelayrTxBundle, useJBContractContext, useSendRelayrTx, useSuckers } from 'juice-sdk-react'
 import { useEffect, useMemo, useState } from 'react'
-import { ContractFunctionArgs, zeroAddress } from 'viem'
+import { ContractFunctionArgs } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
 
 import { BigNumber } from '@ethersproject/bignumber'
@@ -10,7 +11,6 @@ import { IssueErc20TokenTxArgs } from 'components/buttons/IssueErc20TokenButton'
 import ETHAmount from 'components/currency/ETHAmount'
 import TransactionModal from 'components/modals/TransactionModal'
 import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
-import { JBChainId } from 'juice-sdk-core'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { GasIcon } from 'packages/v4/components/Create/components/pages/ReviewDeploy/components/LaunchProjectModal/LaunchProjectModal'
 import { useDeployOmnichainErc20 } from 'packages/v4/hooks/useDeployOmnichainErc20'
@@ -60,6 +60,7 @@ export function CreateErc20TokenSettingsPage() {
     }
     setTxQuoteLoading(true)
     try {
+      const salt = createSalt()
       const values = form.getFieldsValue()
       const deployData = suckers.reduce(
         (
@@ -73,7 +74,7 @@ export function CreateErc20TokenSettingsPage() {
             remoteProjectId,
             values.name,
             values.symbol,
-            `${zeroAddress}000000000000000000000000`,
+            salt,
           ] as ContractFunctionArgs<
             typeof jbControllerAbi,
             'nonpayable',

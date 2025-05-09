@@ -584,6 +584,9 @@ msgstr ""
 msgid "The issuance reduction rate is disabled if you are using unlocked cycles (because they have no duration)."
 msgstr ""
 
+msgid "Launch Multi-Chain ERC-20"
+msgstr ""
+
 msgid "While payments to this project are paused, your project will not be able to receive payments. Transferring ETH to this project will still work."
 msgstr ""
 
@@ -684,6 +687,9 @@ msgid "While transfers are paused, this project's tokens can't be transferred to
 msgstr ""
 
 msgid "Project token"
+msgstr ""
+
+msgid "Launch ERC-20"
 msgstr ""
 
 msgid "Setup new NFTs for {projectTitle}"
@@ -3371,6 +3377,9 @@ msgstr ""
 msgid "Previous value"
 msgstr ""
 
+msgid "No chains available for multi-chain deployment"
+msgstr ""
+
 msgid "Owner token minting:"
 msgstr ""
 
@@ -3749,6 +3758,9 @@ msgstr ""
 msgid "Redeem {tokensLabel} for ETH"
 msgstr ""
 
+msgid "Refresh quote"
+msgstr ""
+
 msgid "Made a mistake?"
 msgstr ""
 
@@ -4028,6 +4040,9 @@ msgstr ""
 msgid "Switch to unlimited"
 msgstr ""
 
+msgid "No payment info for selected chain"
+msgstr ""
+
 msgid "7 days"
 msgstr ""
 
@@ -4272,6 +4287,9 @@ msgid "Project Token"
 msgstr ""
 
 msgid "View token info"
+msgstr ""
+
+msgid "Get quote"
 msgstr ""
 
 msgid "Unchanged"

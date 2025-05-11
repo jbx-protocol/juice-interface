@@ -1,20 +1,24 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
+
 import { Form } from 'antd'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import TransactionModal from 'components/modals/TransactionModal'
+import { useWallet } from 'hooks/Wallet'
+import { useJBChainId } from 'juice-sdk-react'
 import { CreateCollapse } from 'packages/v4/components/Create/components/CreateCollapse/CreateCollapse'
 import { useEditRulesetTx } from 'packages/v4/hooks/useEditRulesetTx'
 import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
+import { useChainId } from 'wagmi'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { TransactionSuccessModal } from '../TransactionSuccessModal'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
-import { PayoutsSectionDiff } from './PayoutsSectionDiff'
-import { SectionCollapseHeader } from './SectionCollapseHeader'
-import { TokensSectionDiff } from './TokensSectionDiff'
 import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
 import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
 import { useTokensSectionValues } from './hooks/useTokensSectionValues'
+import { PayoutsSectionDiff } from './PayoutsSectionDiff'
+import { SectionCollapseHeader } from './SectionCollapseHeader'
+import { TokensSectionDiff } from './TokensSectionDiff'
 
 export function ReviewConfirmModal({
   open,
@@ -38,8 +42,27 @@ export function ReviewConfirmModal({
 
   const editRulesetTx = useEditRulesetTx()
 
-  const handleConfirm = () => {
+  const { changeNetworks } = useWallet()
+  const chainId = useJBChainId()
+  const walletChainId = useChainId()
+  const walletConnectedToWrongChain = chainId !== walletChainId
+
+  const handleConfirm = async () => {
     setConfirmLoading(true)
+
+    if (walletConnectedToWrongChain) {
+      if (chainId) {
+        try {
+          await changeNetworks(chainId)
+          setConfirmLoading(false)
+        } catch (error) {
+          console.error(error)
+          setConfirmLoading(false)
+          emitErrorNotification(`Error changing networks: ${error}`)
+        }
+        return
+      }
+    }
 
     editRulesetTx(editCycleForm?.getFieldsValue(true), {
       onTransactionPending: () => null,
@@ -66,7 +89,13 @@ export function ReviewConfirmModal({
         title={<Trans>Review & confirm</Trans>}
         destroyOnClose
         onOk={handleConfirm}
-        okText={<Trans>Deploy changes</Trans>}
+        okText={
+          walletConnectedToWrongChain ? (
+            <Trans>Change networks to deploy</Trans>
+          ) : (
+            <Trans>Deploy changes</Trans>
+          )
+        }
         okButtonProps={{ disabled: !formHasChanges }}
         cancelButtonProps={{ hidden: true }}
         onCancel={onClose}

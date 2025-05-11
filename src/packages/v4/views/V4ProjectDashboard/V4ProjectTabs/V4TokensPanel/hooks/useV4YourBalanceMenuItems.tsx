@@ -2,10 +2,13 @@ import {
   PlusCircleIcon,
   ReceiptRefundIcon
 } from '@heroicons/react/24/outline'
+import { useJBProjectId, useReadJbTokensCreditBalanceOf } from 'juice-sdk-react'
 import { ReactNode, useMemo, useState } from 'react'
 
 import { t } from '@lingui/macro'
 import { PopupMenuItem } from 'components/ui/PopupMenu'
+import { useWallet } from 'hooks/Wallet'
+import { zeroAddress } from 'viem'
 import { useV4BalanceMenuItemsUserFlags } from './useV4BalanceMenuItemsUserFlags'
 
 export const useV4YourBalanceMenuItems = () => {
@@ -19,6 +22,15 @@ export const useV4YourBalanceMenuItems = () => {
     transferUnclaimedTokensModalVisible,
     setTransferUnclaimedTokensModalVisible,
   ] = useState(false)
+
+  const { userAddress } = useWallet()
+
+  const { projectId, chainId } = useJBProjectId()
+
+  const { data: unclaimedBalance } = useReadJbTokensCreditBalanceOf({
+    args: [userAddress ?? zeroAddress, projectId ?? 0n],
+    chainId
+  })
 
   const items = useMemo(() => {
     const tokenMenuItems: PopupMenuItem[] = []
@@ -84,6 +96,7 @@ export const useV4YourBalanceMenuItems = () => {
     setMintModalVisible,
     transferUnclaimedTokensModalVisible,
     setTransferUnclaimedTokensModalVisible,
+    unclaimedBalance
   }
 }
 

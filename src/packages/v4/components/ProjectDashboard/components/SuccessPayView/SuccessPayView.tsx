@@ -5,6 +5,7 @@ import { useJBChainId } from 'juice-sdk-react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { v4ProjectRoute } from 'packages/v4/utils/routes'
+import { useEffect } from 'react'
 import { SuccessNftItem } from './components/SuccessNftItem'
 import { SuccessPayCard } from './components/SuccessPayCard'
 import { SuccessTokensItem } from './components/SuccessTokensItem'
@@ -23,6 +24,11 @@ export const SuccessPayView = () => {
   } = useSuccessPayView()
 
   const chainId = useJBChainId()
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   if (!chainId) return null
 

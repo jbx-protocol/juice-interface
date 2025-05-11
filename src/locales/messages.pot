@@ -3203,6 +3203,9 @@ msgstr ""
 msgid "Locked until <0>{value}</0>"
 msgstr ""
 
+msgid "Change networks to claim"
+msgstr ""
+
 msgid "The edits you make below may take effect, depending on the project's custom edit deadline contract."
 msgstr ""
 
@@ -3947,6 +3950,9 @@ msgstr ""
 msgid "Pay out ETH to Ethereum wallets or Juicebox projects. You can use this to pay your contributors, charities, projects you depend on, or anyone else."
 msgstr ""
 
+msgid "Claim {0} {tokenTextShort} as ERC-20 tokens"
+msgstr ""
+
 msgid "Deploy project to {0}"
 msgstr ""
 
@@ -4412,6 +4418,9 @@ msgstr ""
 msgid "Build and launch your NFT project right here on Juicebox with built-in redemptions."
 msgstr ""
 
+msgid "Amount of {0} {tokenTextShort} to claim as ERC-20"
+msgstr ""
+
 msgid "A message from {name}"
 msgstr ""
 
@@ -4512,6 +4521,9 @@ msgid "Advanced options"
 msgstr ""
 
 msgid "Current redemption rate: {0}%"
+msgstr ""
+
+msgid "Your unclaimed {0} {tokenTextLong}"
 msgstr ""
 
 msgid "Start time"

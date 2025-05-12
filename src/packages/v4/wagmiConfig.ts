@@ -11,16 +11,9 @@ import {
 } from 'wagmi/chains'
 
 export const wagmiConfig = createConfig({
-  chains: [
-    mainnet,
-    optimism,
-    arbitrum,
-    base,
-    sepolia,
-    optimismSepolia,
-    baseSepolia,
-    arbitrumSepolia,
-  ],
+  chains: process.env.NEXT_PUBLIC_TESTNET === 'true'
+    ? [sepolia, optimismSepolia, baseSepolia, arbitrumSepolia]
+    : [mainnet, optimism, arbitrum, base],
   transports: {
     [mainnet.id]: http(
       `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,

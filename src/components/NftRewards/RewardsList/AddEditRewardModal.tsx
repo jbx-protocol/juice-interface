@@ -1,6 +1,16 @@
-import { QuestionCircleOutlined } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
 import { Form, Modal, Tooltip } from 'antd'
+import { NftFileType, UploadNoStyle } from 'components/inputs/UploadNoStyle'
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import {
+    inputIsIntegerRule,
+    inputIsValidUrlRule,
+    inputMustBeEthAddressRule,
+    inputMustExistRule,
+    inputNonZeroRule,
+} from 'utils/antdRules'
+
+import { QuestionCircleOutlined } from '@ant-design/icons'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import { WarningCallout } from 'components/Callout/WarningCallout'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
@@ -9,7 +19,6 @@ import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
 import PrefixedInput from 'components/inputs/PrefixedInput'
-import { NftFileType, UploadNoStyle } from 'components/inputs/UploadNoStyle'
 import { VIDEO_FILE_TYPES } from 'constants/fileTypes'
 import { pinFile } from 'lib/api/ipfs'
 import random from 'lodash/random'
@@ -18,15 +27,7 @@ import { CreateCollapse } from 'packages/v2v3/components/Create/components/Creat
 import { OptionalHeader } from 'packages/v2v3/components/Create/components/OptionalHeader'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
 import { UploadRequestOption } from 'rc-upload/lib/interface'
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import { NftRewardsData } from 'redux/slices/v2v3/shared/v2ProjectTypes'
-import {
-  inputIsIntegerRule,
-  inputIsValidUrlRule,
-  inputMustBeEthAddressRule,
-  inputMustExistRule,
-  inputNonZeroRule,
-} from 'utils/antdRules'
 import { withHttps } from 'utils/externalLink'
 import { ipfsGatewayUrl } from 'utils/ipfs'
 
@@ -240,10 +241,10 @@ export const AddEditRewardModal = ({
         </Form.Item>
         <Form.Item
           name="contributionFloor"
-          label={t`Minimum Contribution`}
+          label={t`Price`}
           extra={t`Contributors will receive this NFT when they contribute at least this amount.`}
           required
-          rules={[inputMustExistRule({ label: t`Minimum Contribution` })]}
+          rules={[inputMustExistRule({ label: t`Price` })]}
         >
           <FormattedNumberInput
             accessory={<InputAccessoryButton content={currencySymbol} />}

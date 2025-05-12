@@ -1,5 +1,6 @@
 import { DeleteOutlined, EditOutlined, LinkOutlined } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
+
 import EthereumAddress from 'components/EthereumAddress'
 import ExternalLink from 'components/ExternalLink'
 import { JuiceVideoThumbnailOrImage } from 'components/JuiceVideo/JuiceVideoThumbnailOrImage'
@@ -97,7 +98,7 @@ export const RewardItem = ({
 
           <div className="grid grid-cols-2 gap-y-6 gap-x-16">
             <RewardStatLine
-              title={t`Minimum contribution`}
+              title={t`Price`}
               stat={`${numberUpToPrecisionFormat(
                 contributionFloor,
               )} ${priceCurrencySymbol}`}

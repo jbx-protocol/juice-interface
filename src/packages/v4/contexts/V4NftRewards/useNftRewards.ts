@@ -1,16 +1,16 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { UseQueryResult, useQuery } from '@tanstack/react-query'
+import { IPFSNftRewardTier, NftRewardTier } from 'models/nftRewards'
+import { cidFromUrl, decodeEncodedIpfsUri, ipfsGatewayUrl } from 'utils/ipfs'
+
 import axios from 'axios'
 import { formatEther } from 'juice-sdk-core'
 import { JBChainId } from 'juice-sdk-react'
-import { IPFSNftRewardTier, NftRewardTier } from 'models/nftRewards'
 import { withHttps } from 'utils/externalLink'
-import { cidFromUrl, decodeEncodedIpfsUri, ipfsGatewayUrl } from 'utils/ipfs'
 import { JB721TierV4 } from './V4NftRewardsProvider'
 
 async function fetchRewardTierMetadata({ tier }: { tier: JB721TierV4 }) {
   const tierCid = decodeEncodedIpfsUri(tier.encodedIPFSUri)
   const url = ipfsGatewayUrl(tierCid)
-
   const response = await axios.get(url)
   const tierMetadata: IPFSNftRewardTier = response.data
 
@@ -48,7 +48,6 @@ export const useNftRewards = (
   dataSourceAddress: string | undefined,
 ): UseQueryResult<NftRewardTier[]> => {
   const enabled = Boolean(tiers?.length)
-
   return useQuery({
     queryKey: ['nftRewards', projectId?.toString(), chainId, dataSourceAddress],
     enabled,

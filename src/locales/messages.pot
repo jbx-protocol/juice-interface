@@ -2291,9 +2291,6 @@ msgstr ""
 msgid "No, keep"
 msgstr ""
 
-msgid "Minimum Contribution"
-msgstr ""
-
 msgid "Incentivise long-term token holding with a redemption rate. <0>Learn more</0>"
 msgstr ""
 
@@ -2811,6 +2808,9 @@ msgid "V1 Edit Cycle"
 msgstr ""
 
 msgid "This address will receive any tokens minted when this project is paid."
+msgstr ""
+
+msgid "Price"
 msgstr ""
 
 msgid "Edit NFT"
@@ -3849,9 +3849,6 @@ msgid "When enabled, supporters can only mint NFTs by paying their exact price. 
 msgstr ""
 
 msgid "Discord link"
-msgstr ""
-
-msgid "Minimum contribution"
 msgstr ""
 
 msgid "Success!"

@@ -2419,7 +2419,7 @@ msgstr "启用选项，平台费用将保留在项目内，不会自动进行处
 msgid "No, keep"
 msgstr "否，保留"
 
-msgid "Minimum Contribution"
+msgid "Price"
 msgstr "最低捐赠金额"
 
 msgid "Incentivise long-term token holding with a redemption rate. <0>Learn more</0>"
@@ -3964,7 +3964,7 @@ msgstr "启用选项，支持者只有支付准确的价格才能铸造 NFT。�
 msgid "Discord link"
 msgstr "Discord 链接"
 
-msgid "Minimum contribution"
+msgid "Price"
 msgstr "最低捐赠金额"
 
 msgid "Success!"

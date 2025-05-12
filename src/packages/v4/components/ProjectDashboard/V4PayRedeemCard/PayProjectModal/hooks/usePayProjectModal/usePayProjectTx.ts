@@ -9,7 +9,7 @@ import {
   useJBRulesetContext,
   usePreparePayMetadata,
   useSuckers,
-  useWriteJbMultiTerminalPay
+  useWriteJbMultiTerminalPay,
 } from 'juice-sdk-react'
 import { useCallback, useContext, useMemo } from 'react'
 import { Address, Hash, parseEther, zeroAddress } from 'viem'
@@ -138,15 +138,30 @@ export const usePayProjectTx = ({
         wagmiConfig,
         {
           chainId,
-          args: [projectId ?? 0n, NATIVE_TOKEN],
+          args: [_projectId ?? 0n, NATIVE_TOKEN],
         },
       )
+
+      console.info('🧃 PAY STATE', {
+        terminalAddress,
+        projectId: _projectId,
+        chainId,
+        userAddress,
+        acceptedTerms: values.userAcceptsTerms,
+        suckers,
+      })
+
+      if (!values.userAcceptsTerms) {
+        emitErrorNotification(
+          'You must accept the terms and conditions to proceed.',
+        )
+        return
+      }
 
       if (
         !terminalAddress ||
         terminalAddress === zeroAddress ||
         !userAddress ||
-        !values.userAcceptsTerms ||
         !_projectId
       ) {
         emitErrorNotification('Something went wrong! Try again.')

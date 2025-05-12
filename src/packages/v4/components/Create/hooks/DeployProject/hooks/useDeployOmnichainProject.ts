@@ -1,7 +1,6 @@
-import { useWallet } from 'hooks/Wallet'
 import {
-  createSalt,
   JBChainId,
+  createSalt,
   jbOmnichainDeployerAbi,
   jbProjectDeploymentAddresses,
   parseSuckerDeployerConfig,
@@ -14,6 +13,8 @@ import {
   useGetRelayrTxQuote,
 } from 'juice-sdk-react'
 import { ContractFunctionArgs, encodeFunctionData } from 'viem'
+
+import { useWallet } from 'hooks/Wallet'
 
 export function useDeployOmnichainProject() {
   const { userAddress } = useWallet()

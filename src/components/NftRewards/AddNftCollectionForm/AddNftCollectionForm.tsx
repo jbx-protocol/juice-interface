@@ -1,9 +1,10 @@
-import { RightOutlined } from '@ant-design/icons'
 import { Trans, t } from '@lingui/macro'
 import { Form, FormInstance } from 'antd'
+
+import { RightOutlined } from '@ant-design/icons'
 import ExternalLink from 'components/ExternalLink'
-import TooltipLabel from 'components/TooltipLabel'
 import { JuiceInput } from 'components/inputs/JuiceTextInput'
+import TooltipLabel from 'components/TooltipLabel'
 import { NftPostPayModalConfig } from 'models/nftPostPayModal'
 import { NftRewardTier } from 'models/nftRewards'
 import { CreateCollapse } from 'packages/v2v3/components/Create/components/CreateCollapse/CreateCollapse'
@@ -13,7 +14,6 @@ import { NftRewardsData } from 'redux/slices/v2v3/shared/v2ProjectTypes'
 import { inputMustExistRule } from 'utils/antdRules'
 import { RewardsList } from '../RewardsList/RewardsList'
 import { NftAdvancedFormItems } from './NftAdvancedFormItems'
-import { NftPaymentSuccessFormItems } from './NftPaymentSuccessFormItems'
 
 export type NftRewardsFormProps = Partial<{
   rewards: NftRewardTier[]
@@ -129,15 +129,6 @@ export const AddNftCollectionForm = ({
               </Form.Item>
 
               <CreateCollapse>
-                <CreateCollapse.Panel
-                  key={2}
-                  header={<OptionalHeader header={t`Payment Success Pop-up`} />}
-                  hideDivider
-                >
-                  <NftPaymentSuccessFormItems
-                    postPayModalData={postPayModalData}
-                  />
-                </CreateCollapse.Panel>
 
                 <CreateCollapse.Panel
                   key={3}

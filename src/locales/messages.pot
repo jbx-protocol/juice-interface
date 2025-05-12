@@ -1793,9 +1793,6 @@ msgstr ""
 msgid "Delete all"
 msgstr ""
 
-msgid "Payment Success Pop-up"
-msgstr ""
-
 msgid "Not ready? Your project will be saved as a 'draft' as long as you don't clear your browser's data."
 msgstr ""
 

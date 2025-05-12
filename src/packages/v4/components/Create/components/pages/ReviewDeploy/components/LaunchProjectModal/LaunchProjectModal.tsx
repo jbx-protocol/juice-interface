@@ -141,7 +141,6 @@ export const LaunchProjectModal: React.FC<{
           },
           {},
         )
-
         const _txQuote = await deployOmnichainNftProject(launchData, chainIds)
         setTxQuote(_txQuote)
       } else {

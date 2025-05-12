@@ -58,6 +58,7 @@ export const V4NftRewardsProvider: React.FC<
 
   const storeAddress = useReadJb721TiersHookStoreAddress({
     address: dataHookAddress,
+    chainId
   })
 
   const tiersOf = useReadJb721TiersHookStoreTiersOf({
@@ -69,6 +70,7 @@ export const V4NftRewardsProvider: React.FC<
       0n, // _startingId
       NFT_PAGE_SIZE, // limit
     ],
+    chainId
   })
 
   const { data: loadedRewardTiers, isLoading: nftRewardTiersLoading } =
@@ -81,10 +83,13 @@ export const V4NftRewardsProvider: React.FC<
 
   const flags = useReadJb721TiersHookStoreFlagsOf({
     address: storeAddress.data,
+    args: [dataHookAddress ?? zeroAddress],
+    chainId
   })
 
   const { data: collectionMetadataUri } = useReadJb721TiersHookContractUri({
     address: dataHookAddress,
+    chainId
   })
 
   const loading = React.useMemo(

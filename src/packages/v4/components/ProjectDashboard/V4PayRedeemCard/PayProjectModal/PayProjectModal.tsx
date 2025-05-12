@@ -14,6 +14,7 @@ import Image from 'next/legacy/image'
 import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
 import { twMerge } from 'tailwind-merge'
 import { helpPagePath } from 'utils/helpPagePath'
+import { emitInfoNotification } from 'utils/notifications'
 import { useProjectSelector } from '../../redux/hooks'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
@@ -55,6 +56,7 @@ export const PayProjectModal: React.FC = () => {
         const walletConnectedToWrongChain = selectedChainId !== walletChainId
         if (walletConnectedToWrongChain) {
           await changeNetworks(selectedChainId as JBChainId)
+          emitInfoNotification(`Network changed to ${selectedChainId}, try paying again.`)
           return
         }
         if (!walletChain) {

@@ -125,6 +125,7 @@ export const usePayProjectTx = ({
       formikHelpers: FormikHelpers<PayProjectModalFormValues>,
       chainId: JBChainId,
     ) => {
+      // find project id for the given chain
       const _projectId =
         suckers && suckers.length > 0
           ? suckers?.find(({ peerChainId }) => chainId === peerChainId)

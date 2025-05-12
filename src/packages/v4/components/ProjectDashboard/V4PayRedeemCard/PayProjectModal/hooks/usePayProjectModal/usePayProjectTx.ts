@@ -5,12 +5,11 @@ import {
 } from 'juice-sdk-core'
 import {
   JBChainId,
-  useJBContractContext,
   useJBProjectId,
   useJBRulesetContext,
   usePreparePayMetadata,
   useSuckers,
-  useWriteJbMultiTerminalPay,
+  useWriteJbMultiTerminalPay
 } from 'juice-sdk-react'
 import { useCallback, useContext, useMemo } from 'react'
 import { Address, Hash, parseEther, zeroAddress } from 'viem'
@@ -118,7 +117,6 @@ export const usePayProjectTx = ({
   )
 
   const { writeContractAsync: writePay } = useWriteJbMultiTerminalPay()
-  const { contracts } = useJBContractContext()
   const { addTransaction } = useContext(TxHistoryContext)
 
   return useCallback(
@@ -133,16 +131,8 @@ export const usePayProjectTx = ({
               ?.projectId
           : projectId
 
-      if (
-        !contracts.primaryNativeTerminal.data ||
-        !userAddress ||
-        !values.userAcceptsTerms ||
-        !_projectId
-      ) {
-        emitErrorNotification('Something went wrong! Try again.')
-        return
-      }
-
+      // fetch the terminal address for the project on the chain. We don't necessarily know this ahead of time
+      // (if the chain is different from the current route.)
       const terminalAddress = await readJbDirectoryPrimaryTerminalOf(
         wagmiConfig,
         {
@@ -150,6 +140,17 @@ export const usePayProjectTx = ({
           args: [projectId ?? 0n, NATIVE_TOKEN],
         },
       )
+
+      if (
+        !terminalAddress ||
+        terminalAddress === zeroAddress ||
+        !userAddress ||
+        !values.userAcceptsTerms ||
+        !_projectId
+      ) {
+        emitErrorNotification('Something went wrong! Try again.')
+        return
+      }
 
       const { messageString, attachedUrl } = values.message
       const memo = buildPaymentMemo({
@@ -185,7 +186,7 @@ export const usePayProjectTx = ({
       try {
         const hash = await writePay({
           chainId,
-          address: terminalAddress ?? zeroAddress,
+          address: terminalAddress,
           args,
           value: weiAmount,
         })
@@ -210,7 +211,6 @@ export const usePayProjectTx = ({
     [
       projectId,
       weiAmount,
-      contracts.primaryNativeTerminal.data,
       userAddress,
       chosenNftRewards,
       suckers,

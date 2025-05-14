@@ -20,7 +20,6 @@ import {
 
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
-import { ONE_MILLION } from 'constants/numbers'
 import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
@@ -45,7 +44,7 @@ export type ProjectTokensFormProps = Partial<{
 export const DefaultSettings: Required<
   Omit<ProjectTokensFormProps, 'selection'>
 > = {
-  initialMintRate: ONE_MILLION.toString(),
+  initialMintRate: "0",
   reservedTokensPercentage: 0,
   reservedTokenAllocation: [],
   discountRate: 0,

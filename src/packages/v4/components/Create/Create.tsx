@@ -115,7 +115,10 @@ export default function Create() {
               </div>
             }
             description={
-              <Trans>Reward your supporters with custom NFTs.</Trans>
+              <Trans>
+                <p>Reward your supporters with custom NFTs.</p>
+                <p>You can modify each NFT's image later, as well as add new NFTs or remove ones you no longer want. You will not be able to modify any NFT's price or total supply after project launch.</p>
+              </Trans>
             }
           >
             <NftRewardsPage />

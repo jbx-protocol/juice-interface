@@ -73,8 +73,7 @@ export const ProjectTokenPage: React.FC<
               icon={<Icons.Tokens />}
               description={
                 <Trans>
-                  Simple token rules that will work for most projects. You can
-                  edit these rules in future rulesets.
+                  No tokens issued.
                 </Trans>
               }
             >

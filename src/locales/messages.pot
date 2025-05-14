@@ -569,9 +569,6 @@ msgstr ""
 msgid "You would receive <0/>"
 msgstr ""
 
-msgid "Simple token rules that will work for most projects. You can edit these rules in future rulesets."
-msgstr ""
-
 msgid "The issuance reduction rate is disabled if you are using unlocked cycles (because they have no duration)."
 msgstr ""
 
@@ -1547,6 +1544,9 @@ msgstr ""
 msgid "Balance exceeded"
 msgstr ""
 
+msgid "No tokens issued."
+msgstr ""
+
 msgid "Set aside a percentage of freshly minted NFTs."
 msgstr ""
 
@@ -1839,6 +1839,9 @@ msgid "About the protocol"
 msgstr ""
 
 msgid "OFAC Sanctions screening"
+msgstr ""
+
+msgid "<0>Reward your supporters with custom NFTs.</0><1>You can modify each NFT's image later, as well as add new NFTs or remove ones you no longer want. You will not be able to modify any NFT's price or total supply after project launch.</1>"
 msgstr ""
 
 msgid "Existing project payer addresses can be found in the Tools drawer (<0/>) on the project page."

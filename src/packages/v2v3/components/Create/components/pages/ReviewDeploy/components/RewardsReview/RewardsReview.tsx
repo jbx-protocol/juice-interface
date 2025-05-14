@@ -1,8 +1,9 @@
+import { useCallback, useMemo } from 'react'
+
 import { t } from '@lingui/macro'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
 import { NftRewardTier } from 'models/nftRewards'
 import { V2V3_CURRENCY_USD } from 'packages/v2v3/utils/currency'
-import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
@@ -86,7 +87,7 @@ export const RewardsReview = () => {
           }
         />
         <ReviewDescription
-          title={t`Prevent NFT overspending`}
+          title={t`Payments restricted to NFT purchases`}
           desc={
             <div className="text-base font-medium">{preventOverspending}</div>
           }

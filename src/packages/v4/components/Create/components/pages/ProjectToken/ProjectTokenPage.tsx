@@ -1,11 +1,12 @@
+import { Trans, t } from '@lingui/macro'
+import { useContext, useEffect } from 'react'
+
 import { SettingOutlined } from '@ant-design/icons'
-import { t, Trans } from '@lingui/macro'
 import { Form } from 'antd'
 import { useWatch } from 'antd/lib/form/Form'
 import { Callout } from 'components/Callout/Callout'
 import { CREATE_FLOW } from 'constants/fathomEvents'
 import { trackFathomGoal } from 'lib/fathom'
-import { useContext, useEffect } from 'react'
 import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
 import { CreateBadge } from '../../CreateBadge'
 import { Icons } from '../../Icons'
@@ -66,7 +67,7 @@ export const ProjectTokenPage: React.FC<
               name="default"
               title={
                 <div className="flex items-center gap-3">
-                  <Trans>Basic Token Rules</Trans> <CreateBadge.Default />
+                  <Trans>None</Trans> <CreateBadge.Default />
                 </div>
               }
               icon={<Icons.Tokens />}
@@ -81,7 +82,7 @@ export const ProjectTokenPage: React.FC<
             </Selection.Card>
             <Selection.Card
               name="custom"
-              title={t`Custom Token Rules`}
+              title={t`Custom`}
               icon={<SettingOutlined />}
               description={
                 <Trans>Set up custom rules for your project's tokens.</Trans>

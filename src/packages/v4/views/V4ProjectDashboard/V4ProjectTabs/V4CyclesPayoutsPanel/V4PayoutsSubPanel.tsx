@@ -37,7 +37,7 @@ export const V4PayoutsSubPanel = ({
     () =>
       cashOutTaxRate && cashOutTaxRate.toFloat() > 0 ? (
         <Trans>
-          {surplusElement} is available across all chains for token redemptions
+          {surplusElement} is available across all chains for token cash outs
           or future payouts.
         </Trans>
       ) : (

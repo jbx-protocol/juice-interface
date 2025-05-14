@@ -1042,7 +1042,7 @@ msgstr "最小信任"
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr "最高 {MAX_DESCRIPTION_LENGTH} 个字符"
 
-msgid "% tokens redeemed"
+msgid "% tokens cashed out"
 msgstr "% 代币已赎回"
 
 msgid "<0>No payouts.</0> All of the project's ETH will be available for redemptions."
@@ -3421,7 +3421,7 @@ msgstr "每个周期，项目每 ETH 将少发行 {discountRate}% 的代币。"
 msgid "Payout total (max.)"
 msgstr ""
 
-msgid "Prevent NFT overspending"
+msgid "Payments restricted to NFT purchases"
 msgstr "防止付款超出 NFT 价格"
 
 msgid "V1 project handle"

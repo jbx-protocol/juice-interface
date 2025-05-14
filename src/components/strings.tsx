@@ -41,6 +41,9 @@ export const CYCLE_EXPLANATION = (
 export const RULESET_EXPLANATION = (
   <Trans>
     <p>
+      Up next, you'll set your project's payout and token issuance rules.
+    </p>
+    <p>
       With unlocked ruleset cycles, you can edit your project's rules at any
       time.
     </p>
@@ -276,9 +279,7 @@ export const HOLD_FEES_EXPLANATION = (
 
 export const PREVENT_OVERSPENDING_EXPLANATION = (
   <Trans>
-    When enabled, supporters can only mint NFTs by paying their exact price.
-    This ensures that they can reclaim their full payment amount if they redeem
-    their NFT.
+    When enabled, your project will only accept payments by selling NFTs, supporters cannot pay the project without buying an NFT. This ensures that they can reclaim their full payment amount if they redeem their NFT.
   </Trans>
 )
 

@@ -1,8 +1,9 @@
+import { useCallback, useMemo } from 'react'
+import { CartesianGrid, Label, Line, LineChart, XAxis, YAxis } from 'recharts'
+
 import { t } from '@lingui/macro'
 import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/formItems/ProjectRedemptionRate'
 import { JUICE_ORANGE } from 'constants/theme/colors'
-import { useCallback, useMemo } from 'react'
-import { CartesianGrid, Label, Line, LineChart, XAxis, YAxis } from 'recharts'
 
 const NUM_POINTS = 10
 
@@ -55,7 +56,7 @@ export const TokenRedemptionRateGraph = ({
         <XAxis
           {...axisProps}
           dataKey="x"
-          label={<Label className="text-sm" value={t`% tokens redeemed`} />}
+          label={<Label className="text-sm" value={t`% tokens cashed out`} />}
         />
         <YAxis
           {...axisProps}

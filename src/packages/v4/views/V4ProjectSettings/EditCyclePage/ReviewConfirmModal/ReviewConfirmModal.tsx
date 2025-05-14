@@ -170,7 +170,7 @@ export function ReviewConfirmModal({
             <div className="text-secondary pb-6">
               <Trans>
                 Changes will take effect in your next cycle as long as it starts
-                after your edit deadline.
+                after your Rule change deadline.
               </Trans>
             </div>
           </>

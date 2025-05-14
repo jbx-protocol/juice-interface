@@ -103,6 +103,30 @@ export const ReviewDeployPage = () => {
 
   const isNextEnabled = termsAccepted
 
+  // Set default selected chains when the component loads
+  useEffect(() => {
+    const isTestnet = process.env.NEXT_PUBLIC_TESTNET === 'true'
+    
+    // For testnet, select Sepolia
+    if (isTestnet) {
+      dispatch(
+        creatingV2ProjectActions.setSelectedRelayrChainId({
+          chainId: sepolia.id,
+          selected: true,
+        }),
+      )
+    } 
+    // For mainnet, select Ethereum
+    else {
+      dispatch(
+        creatingV2ProjectActions.setSelectedRelayrChainId({
+          chainId: mainnet.id,
+          selected: true,
+        }),
+      )
+    }
+  }, [dispatch])
+
   const handleStartOverClicked = useCallback(() => {
     router.push('/create')
     goToPage?.('projectDetails')

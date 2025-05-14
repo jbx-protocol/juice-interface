@@ -221,9 +221,6 @@ msgstr ""
 msgid "Extended functionality for project owners"
 msgstr ""
 
-msgid "Weight cut percent"
-msgstr ""
-
 msgid "Error downloading participants, try again."
 msgstr ""
 
@@ -246,9 +243,6 @@ msgid "Cycles:"
 msgstr ""
 
 msgid "Amount (USD)"
-msgstr ""
-
-msgid "<0>With unlocked ruleset cycles, you can edit your project's rules at any time.</0><1>With locked rulesets, you can lock your project's rules for a period of time (like 3 minutes, 2 years, or 14 days), helping you build trust with your supporters.</1><2>This choice isn't permanent — you can switch between locked and unlocked rulesets in the future.</2>"
 msgstr ""
 
 msgid "Payout recipients"
@@ -450,9 +444,6 @@ msgid "Due to your <0>{0}</0> contract, edits you make will not take effect unti
 msgstr ""
 
 msgid "Payer issuance rate"
-msgstr ""
-
-msgid "None of your project's ETH can be paid out. All ETH will stay in your project for token redemptions or use in future rulesets."
 msgstr ""
 
 msgid "Project Details"
@@ -791,6 +782,9 @@ msgstr ""
 msgid "Convert to amounts"
 msgstr ""
 
+msgid "Custom"
+msgstr ""
+
 msgid "Enable issuance reduction rate"
 msgstr ""
 
@@ -995,9 +989,6 @@ msgstr ""
 msgid "Maximum {MAX_DESCRIPTION_LENGTH} characters"
 msgstr ""
 
-msgid "% tokens redeemed"
-msgstr ""
-
 msgid "<0>No payouts.</0> All of the project's ETH will be available for redemptions."
 msgstr ""
 
@@ -1005,6 +996,9 @@ msgid "Manual"
 msgstr ""
 
 msgid "Your project will appear as 'archived'."
+msgstr ""
+
+msgid "<0>Up next, you'll set your project's payout and token issuance rules.</0><1>With unlocked ruleset cycles, you can edit your project's rules at any time.</1><2>With locked rulesets, you can lock your project's rules for a period of time (like 3 minutes, 2 years, or 14 days), helping you build trust with your supporters.</2><3>This choice isn't permanent — you can switch between locked and unlocked rulesets in the future.</3>"
 msgstr ""
 
 msgid "Bringing together members from around the world with the help of blockchain technology and decentralized governance, MoonDAO has demonstrated that sometimes setting ambitious and even outlandish goals can pay off when they resonate with your audience. Their unique mission goes beyond memes, though, and taps into a deeper human curiosity about what might exist beyond planet Earth. To learn more about the story of MoonDAO, listen to co-founders Pablo and Kori on episode 7 of the Juicebox podcast: <0>https://podcast.juicebox.money</0>."
@@ -1092,9 +1086,6 @@ msgid "1. Set ENS name"
 msgstr ""
 
 msgid "No overflow"
-msgstr ""
-
-msgid "A fixed amount of ETH can be paid out from your project each ruleset. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token redemptions or use in future rulesets."
 msgstr ""
 
 msgid "Export tokens CSV"
@@ -1283,6 +1274,9 @@ msgstr ""
 msgid "This project has paused payments this cycle."
 msgstr ""
 
+msgid "A fixed amount of ETH can be paid out from your project each ruleset. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token cash outs or use in future rulesets."
+msgstr ""
+
 msgid "Not able to process fees"
 msgstr ""
 
@@ -1320,6 +1314,9 @@ msgid "Contact onboarding"
 msgstr ""
 
 msgid "Contact WAGMI Studios"
+msgstr ""
+
+msgid "This cycle has token cash outs {0}"
 msgstr ""
 
 msgid "Deploy"
@@ -1398,9 +1395,6 @@ msgid "Delisted project"
 msgstr ""
 
 msgid "Transfer ETH to this project"
-msgstr ""
-
-msgid "When people pay your project, they receive its tokens. Project tokens can be used for governance or community access, and token holders can cash out their tokens to reclaim some ETH from your project. You can also reserve some tokens for recipients of your choosing."
 msgstr ""
 
 msgid "Using a duration is recommended. Without one, you can edit your cycle at any time, which may appear risky."
@@ -1494,9 +1488,6 @@ msgid "If you're not sure if you need to claim, you probably don't."
 msgstr ""
 
 msgid "File"
-msgstr ""
-
-msgid "{surplusElement} is available across all chains for token redemptions or future payouts."
 msgstr ""
 
 msgid "You have <0>{0} ETH</0> of unclaimed NFT credits"
@@ -1710,6 +1701,9 @@ msgid "Approve tokens on ERC20 contract {0}"
 msgstr ""
 
 msgid "projects"
+msgstr ""
+
+msgid "New NFTs will be available in your next cycle as long as it starts after your Rule change deadline."
 msgstr ""
 
 msgid "Migrate tokens"
@@ -2279,6 +2273,9 @@ msgstr ""
 msgid "Deployed a project payer address"
 msgstr ""
 
+msgid "<0>Anyone can pay ETH to your project. If you wish, specify to which Ethereum wallets or other Juicebox projects this ETH can be split as it comes in.</0><1>ETH which <2>isn't</2> paid out will be available for token cash outs, or for use in future rulesets. Payouts reset each ruleset.</1><3>Payouts reset each ruleset.</3>"
+msgstr ""
+
 msgid "Join thousands of projects using Juicebox to fund, operate, and scale their ideas & communities transparently on Ethereum."
 msgstr ""
 
@@ -2489,6 +2486,9 @@ msgstr ""
 msgid "Enable payment terminal migrations"
 msgstr ""
 
+msgid "When enabled, your project will only accept payments by selling NFTs, supporters cannot pay the project without buying an NFT. This ensures that they can reclaim their full payment amount if they redeem their NFT."
+msgstr ""
+
 msgid "You would receive at least <0/>"
 msgstr ""
 
@@ -2531,7 +2531,13 @@ msgstr ""
 msgid "Upcoming ruleset cycle"
 msgstr ""
 
+msgid "Issuance cut percent"
+msgstr ""
+
 msgid "While enabled, the project owner can change the project's <0>controller</0> at any time."
+msgstr ""
+
+msgid "An issuance cut percent"
 msgstr ""
 
 msgid "Ruleset #"
@@ -2672,6 +2678,9 @@ msgstr ""
 msgid "{0} must be numeric"
 msgstr ""
 
+msgid "{surplusElement} is available across all chains for token cash outs or future payouts."
+msgstr ""
+
 msgid "The message that will be shown to supporters after they receive an NFT."
 msgstr ""
 
@@ -2762,9 +2771,6 @@ msgstr ""
 msgid "Give permissions to {0} on project #{projectId}"
 msgstr ""
 
-msgid "Pay out ETH from your project to any Ethereum wallet or Juicebox project. ETH which <0>isn't</0> paid out will be available for token redemptions, or for use in future rulesets. Payouts reset each ruleset."
-msgstr ""
-
 msgid "<0>Juicebox has had <1>multiple security audits</1>, and has handled tens of thousands of ETH through its protocol.</0><2>However, Juicebox is still experimental software. Although the Juicebox contract team have done their part to shape the smart contracts for public use and have tested the code thoroughly, the risk of exploits is never 0%.</2><3>Due to their public nature, any exploits to the contracts may have irreversible consequences, including loss of ETH. Please use Juicebox with caution.</3><4><5>Learn more about the risks.</5></4>"
 msgstr ""
 
@@ -2829,6 +2835,9 @@ msgid "Transfer unclaimed {0}"
 msgstr ""
 
 msgid "Ok"
+msgstr ""
+
+msgid "None of your project's ETH can be paid out. All ETH will stay in your project for token cash outs or use in future rulesets."
 msgstr ""
 
 msgid "Cannot set payouts because your <0>Total payouts</0> is Zero."
@@ -3305,9 +3314,6 @@ msgstr ""
 msgid "Locked Ruleset Cycles"
 msgstr ""
 
-msgid "Prevent NFT overspending"
-msgstr ""
-
 msgid "Yes, start over"
 msgstr ""
 
@@ -3353,6 +3359,9 @@ msgstr ""
 msgid "Available payout"
 msgstr ""
 
+msgid "Rule change deadline"
+msgstr ""
+
 msgid "Notice from {name}"
 msgstr ""
 
@@ -3381,6 +3390,9 @@ msgid "No chains available for multi-chain deployment"
 msgstr ""
 
 msgid "Owner token minting:"
+msgstr ""
+
+msgid "The issuance cut percent is disabled if you are using unlocked rulesets (because they have no duration)."
 msgstr ""
 
 msgid "<0/> reserved"
@@ -3540,6 +3552,9 @@ msgid "Project settings"
 msgstr ""
 
 msgid "The issuance rate will not change unless you edit it. There will be less of an incentive to support this project early on."
+msgstr ""
+
+msgid "% tokens cashed out"
 msgstr ""
 
 msgid "Connect wallet to claim"
@@ -3843,9 +3858,6 @@ msgid "My account"
 msgstr ""
 
 msgid "Connect wallet to mint tokens"
-msgstr ""
-
-msgid "When enabled, supporters can only mint NFTs by paying their exact price. This ensures that they can reclaim their full payment amount if they redeem their NFT."
 msgstr ""
 
 msgid "Discord link"
@@ -4208,6 +4220,9 @@ msgstr ""
 msgid "There's nothing here"
 msgstr ""
 
+msgid "Changes will take effect in your next cycle as long as it starts after your Rule change deadline."
+msgstr ""
+
 msgid "Locked cycles"
 msgstr ""
 
@@ -4538,9 +4553,6 @@ msgstr ""
 msgid "End"
 msgstr ""
 
-msgid "The issuance reduction rate is disabled if you are using unlocked rulesets (because they have no duration)."
-msgstr ""
-
 msgid "Message sent!"
 msgstr ""
 
@@ -4550,6 +4562,9 @@ msgstr ""
 msgid "Last {TRENDING_WINDOW_DAYS} days"
 msgstr ""
 
+msgid "Payments restricted to NFT purchases"
+msgstr ""
+
 msgid "Tools"
 msgstr ""
 
@@ -4557,6 +4572,9 @@ msgid "Project contracts"
 msgstr ""
 
 msgid "Chain"
+msgstr ""
+
+msgid "<0>When people pay your project, they receive its tokens.</0> <1>Project tokens can be used for governance or community access, and token holders can cash out their tokens to reclaim some ETH from your project depending on how you set your rules.</1> You can also reserve some tokens for recipients of your choosing.<2>You can also reserve some of your tokens split to your choice of recipients.</2>"
 msgstr ""
 
 msgid "Failed to update project metadata"

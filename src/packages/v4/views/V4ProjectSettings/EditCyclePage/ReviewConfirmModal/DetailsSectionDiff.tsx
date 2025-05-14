@@ -59,7 +59,7 @@ export function DetailsSectionDiff() {
           )}
           {ballotHasDiff && currentBallot && (
             <FundingCycleListItem
-              name={t`Edit deadline`}
+              name={t`Rule change deadline`}
               value={
                 <ApprovalStrategyValue
                   approvalStrategy={newBallot}

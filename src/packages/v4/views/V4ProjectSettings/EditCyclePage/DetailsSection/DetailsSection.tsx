@@ -19,7 +19,7 @@ export function DetailsSection() {
       </div>
       <div className="flex flex-col gap-2">
         <EditCycleHeader
-          title={<Trans>Edit deadline</Trans>}
+          title={<Trans>Rule change deadline</Trans>}
           description={
             <Trans>
               Edits to cycles must occur before the selected period. Deadlines

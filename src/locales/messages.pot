@@ -3773,9 +3773,6 @@ msgstr ""
 msgid "Redeem {tokensLabel} for ETH"
 msgstr ""
 
-msgid "Refresh quote"
-msgstr ""
-
 msgid "Made a mistake?"
 msgstr ""
 

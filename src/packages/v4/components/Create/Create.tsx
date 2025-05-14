@@ -75,10 +75,17 @@ export default function Create() {
             title={t`Payouts`}
             description={
               <Trans>
-                Pay out ETH from your project to any Ethereum wallet or Juicebox
-                project. ETH which <em>isn't</em> paid out will be available for
-                token redemptions, or for use in future rulesets. Payouts reset
-                each ruleset.
+                <p>
+                  Anyone can pay ETH to your project. If you wish, specify to which Ethereum wallets or other Juicebox projects this ETH can be split as it comes in.
+                </p>
+                <p>
+                  ETH which <em>isn't</em> paid out will be available for
+                  token cash outs, or for use in future rulesets. Payouts reset
+                  each ruleset.
+                </p>
+                <p>
+                  Payouts reset each ruleset.
+                </p>
               </Trans>
             }
           >
@@ -89,11 +96,11 @@ export default function Create() {
             title={t`Token`}
             description={
               <Trans>
-                When people pay your project, they receive its tokens. Project
-                tokens can be used for governance or community access, and token
-                holders can cash out their tokens to reclaim some ETH from your
-                project. You can also reserve some tokens for recipients of your
+                <p>When people pay your project, they receive its tokens.</p> 
+                <p>Project tokens can be used for governance or community access, and token holders can cash out their tokens to reclaim some ETH from your project depending on how you set your rules.</p> 
+                You can also reserve some tokens for recipients of your
                 choosing.
+                <p>You can also reserve some of your tokens split to your choice of recipients.</p>
               </Trans>
             }
           >
@@ -115,7 +122,7 @@ export default function Create() {
           </Wizard.Page>
           <Wizard.Page
             name="reconfigurationRules"
-            title={<Trans>Edit Deadline</Trans>}
+            title={<Trans>Rule change deadline</Trans>}
             description={DEADLINE_EXPLANATION}
           >
             <ReconfigurationRulesPage />

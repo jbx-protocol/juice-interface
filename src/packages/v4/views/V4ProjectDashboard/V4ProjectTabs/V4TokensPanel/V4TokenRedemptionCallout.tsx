@@ -1,9 +1,10 @@
+import React, { useMemo } from 'react'
+
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { t } from '@lingui/macro'
 import { useJBRulesetContext } from 'juice-sdk-react'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
-import React, { useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export const V4TokenRedemptionCallout = () => {
@@ -24,7 +25,7 @@ export const V4TokenRedemptionCallout = () => {
     [redemptionEnabled],
   )
 
-  const text = t`This cycle has token redemptions ${
+  const text = t`This cycle has token cash outs ${
     redemptionEnabled ? 'enabled' : 'disabled'
   }`
 

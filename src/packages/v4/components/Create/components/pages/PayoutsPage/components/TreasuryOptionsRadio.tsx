@@ -1,24 +1,24 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Callout } from 'components/Callout/Callout'
-import { ConvertAmountsModal } from 'packages/v4/components/PayoutsTable/ConvertAmountsModal'
-import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
-import { Icons } from '../../../Icons'
-import { RadioCard } from './RadioCard'
-import { RadioGroup } from '@headlessui/react'
-import { ReduxPayoutLimit } from 'packages/v4/models/fundAccessLimits'
 import { StopOutlined } from '@ant-design/icons'
-import { SwitchToUnlimitedModal } from 'components/PayoutsTable/SwitchToUnlimitedModal'
-import { TreasurySelection } from 'models/treasurySelection'
-import { convertV4CurrencyOptionToV2V3 } from 'packages/v4/utils/currency'
-import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
-import { fromWad } from 'utils/format/formatNumber'
+import { RadioGroup } from '@headlessui/react'
 import { t } from '@lingui/macro'
+import { Callout } from 'components/Callout/Callout'
+import { DeleteConfirmationModal } from 'components/modals/DeleteConfirmationModal'
+import { SwitchToUnlimitedModal } from 'components/PayoutsTable/SwitchToUnlimitedModal'
+import { useModal } from 'hooks/useModal'
+import { TreasurySelection } from 'models/treasurySelection'
+import { usePayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/hooks/usePayoutsTable'
+import { ConvertAmountsModal } from 'packages/v4/components/PayoutsTable/ConvertAmountsModal'
+import { ReduxPayoutLimit } from 'packages/v4/models/fundAccessLimits'
+import { convertV4CurrencyOptionToV2V3 } from 'packages/v4/utils/currency'
 import { transformV2V3SplitsToV4 } from 'packages/v4/utils/launchProjectTransformers'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useModal } from 'hooks/useModal'
-import { usePayoutsTable } from 'packages/v2v3/components/shared/PayoutsTable/hooks/usePayoutsTable'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
+import { fromWad } from 'utils/format/formatNumber'
+import { Icons } from '../../../Icons'
+import { RadioCard } from './RadioCard'
 
 const treasuryOptions = () => [
   { name: t`None`, value: 'zero', icon: <StopOutlined /> },
@@ -52,11 +52,11 @@ export function TreasuryOptionsRadio() {
   const calloutText = useMemo(() => {
     switch (treasuryOption) {
       case 'amount':
-        return t`A fixed amount of ETH can be paid out from your project each ruleset. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token redemptions or use in future rulesets.`
+        return t`A fixed amount of ETH can be paid out from your project each ruleset. You can send specific ETH amounts (or ETH amounts based on USD values) to one or more recipients. Any remaining ETH will stay in your project for token cash outs or use in future rulesets.`
       case 'unlimited':
         return t`All of your project's ETH can be paid out at any time. You can send percentages of that ETH to one or more recipients.`
       case 'zero':
-        return t`None of your project's ETH can be paid out. All ETH will stay in your project for token redemptions or use in future rulesets.`
+        return t`None of your project's ETH can be paid out. All ETH will stay in your project for token cash outs or use in future rulesets.`
     }
   }, [treasuryOption])
 

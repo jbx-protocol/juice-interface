@@ -21,7 +21,7 @@ export const RulesReview = () => {
   return (
     <div className="flex flex-col gap-x-5 gap-y-10 pt-5 pb-8 md:grid md:grid-cols-4">
       <ReviewDescription
-        title={t`Edit deadline`}
+        title={t`Rule change deadline`}
         desc={
           <div className="text-base font-medium">
             {strategy ? (

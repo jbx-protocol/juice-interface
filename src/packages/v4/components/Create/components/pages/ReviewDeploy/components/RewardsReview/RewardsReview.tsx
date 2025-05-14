@@ -84,7 +84,7 @@ export const RewardsReview = () => {
           }
         />
         <ReviewDescription
-          title={t`Prevent NFT overspending`}
+          title={t`Payments restricted to NFT purchases`}
           desc={
             <div className="text-base font-medium">{preventOverspending}</div>
           }

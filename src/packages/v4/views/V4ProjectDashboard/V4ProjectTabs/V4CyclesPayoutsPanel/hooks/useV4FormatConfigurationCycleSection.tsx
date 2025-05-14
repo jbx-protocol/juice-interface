@@ -1,16 +1,16 @@
-import { AmountInCurrency } from 'components/currency/AmountInCurrency'
-import { BigNumber } from 'ethers'
-import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
-import { JBRulesetData } from 'juice-sdk-core'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
-import { V4CurrencyName } from 'packages/v4/utils/currency'
-import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
-import { formatTime } from 'utils/format/formatTime'
-import { getApprovalStrategyByAddress } from 'packages/v4/utils/approvalHooks'
-import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import { t } from '@lingui/macro'
-import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
+import { AmountInCurrency } from 'components/currency/AmountInCurrency'
+import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
+import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
+import { BigNumber } from 'ethers'
+import { JBRulesetData } from 'juice-sdk-core'
+import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
+import { getApprovalStrategyByAddress } from 'packages/v4/utils/approvalHooks'
+import { V4CurrencyName } from 'packages/v4/utils/currency'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { useMemo } from 'react'
+import { formatTime } from 'utils/format/formatTime'
+import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
 
 export const useV4FormatConfigurationCycleSection = ({
   ruleset,
@@ -114,7 +114,7 @@ export const useV4FormatConfigurationCycleSection = ({
       : undefined
     const current = currentApprovalStrategy?.name
     if (upcomingRuleset === null || upcomingPayoutLimitLoading) {
-      return pairToDatum(t`Edit deadline`, current, null)
+      return pairToDatum(t`Rule change deadline`, current, null)
     }
 
     const upcomingApprovalStrategy = upcomingRuleset?.approvalHook
@@ -124,7 +124,7 @@ export const useV4FormatConfigurationCycleSection = ({
       : undefined
 
     const upcoming = upcomingApprovalStrategy?.name
-    return pairToDatum(t`Edit deadline`, current, upcoming)
+    return pairToDatum(t`Rule change deadline`, current, upcoming)
   }, [ruleset?.approvalHook, upcomingRuleset, upcomingPayoutLimitLoading])
 
   return useMemo(() => {

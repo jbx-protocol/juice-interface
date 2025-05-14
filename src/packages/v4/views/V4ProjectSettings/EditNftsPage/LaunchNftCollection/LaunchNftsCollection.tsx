@@ -52,7 +52,7 @@ export function LaunchNftsPage() {
             <div className="text-secondary pb-6">
               <Trans>
                 New NFTs will be available in your next cycle as long as it
-                starts after your edit deadline.
+                starts after your Rule change deadline.
               </Trans>
             </div>
           </>

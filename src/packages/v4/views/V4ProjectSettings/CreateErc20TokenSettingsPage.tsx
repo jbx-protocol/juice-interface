@@ -3,7 +3,6 @@ import { Button, Form, Input } from 'antd'
 import { JBChainId, createSalt } from 'juice-sdk-core'
 import { RelayrPostBundleResponse, jbControllerAbi, useGetRelayrTxBundle, useJBContractContext, useSendRelayrTx, useSuckers } from 'juice-sdk-react'
 import { useEffect, useMemo, useState } from 'react'
-import { ContractFunctionArgs } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
 
 import { BigNumber } from '@ethersproject/bignumber'
@@ -19,6 +18,7 @@ import { useV4IssueErc20TokenTx } from 'packages/v4/hooks/useV4IssueErc20TokenTx
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
 import { emitErrorNotification } from 'utils/notifications'
+import { ContractFunctionArgs } from 'viem'
 
 export function CreateErc20TokenSettingsPage() {
   const [form] = Form.useForm<IssueErc20TokenTxArgs>()
@@ -236,27 +236,33 @@ export function CreateErc20TokenSettingsPage() {
                     />
                   : '--'}
                 </div>
-                <Button onClick={getMultiChainQuote} loading={txQuoteLoading}>
-                  {txQuoteResponse ? <Trans>Refresh quote</Trans> : <Trans>Get quote</Trans>}
-                </Button>
               </div>
               </>
             ) : null}
           </div>
-          <div>
-            <span><Trans>Pay gas on</Trans></span>
-            <ChainSelect
-              className="mt-1"
-              showTitle
-              value={selectedGasChain}
-              onChange={setSelectedGasChain}
-              chainIds={chainIds}
-            />
-          </div>
+          {txQuoteResponse ? (
+              <span
+              role="button"
+              className="mb-4 text-xs underline hover:opacity-75"
+              onClick={getMultiChainQuote}
+            >
+              Retry quote
+            </span>
+            ) : null}
+          {txQuoteResponse ? (
+            <div>
+              <span><Trans>Pay gas on</Trans></span>
+              <ChainSelect
+                className="mt-1 max-w-sm"
+                showTitle
+                value={selectedGasChain}
+                onChange={setSelectedGasChain}
+                chainIds={chainIds}
+              />
+            </div>
+          ): null}
           <Button type="primary" onClick={onLaunchMulti} loading={txSigning || txQuoteLoading}>
-            {txQuote ? <>{isMultiChain ?
-              <Trans>Launch Multi-Chain ERC-20</Trans>
-            : <Trans>Launch ERC-20</Trans>}</> : <Trans>Get launch quote</Trans>}
+            {txQuote ? <>{<Trans>Launch ERC-20</Trans>}</> : <Trans>Get quote</Trans>}
           </Button>
         </div>
       </div>

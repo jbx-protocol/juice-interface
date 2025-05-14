@@ -115,10 +115,10 @@ export const FundingCyclesPage = () => {
           <Form.Item noStyle name="selection">
             <Selection className="w-full" defocusOnSelect>
               <Selection.Card
-                name="automated"
+                name="manual"
                 title={
                   <div className="inline-flex items-center gap-3">
-                    <Trans>Locked Ruleset Cycles</Trans>{' '}
+                    <Trans>Unlocked Rulesets</Trans>
                     <CreateBadge.Recommended
                       tooltip={
                         <span>
@@ -136,6 +136,16 @@ export const FundingCyclesPage = () => {
                         </span>
                       }
                     />
+                  </div>
+                }
+                description={t`The project's owner can edit the project's rules and start new rulesets at any time.`}
+                icon={<Icons.ManualSettings />}
+              />
+              <Selection.Card
+                name="automated"
+                title={
+                  <div className="inline-flex items-center gap-3">
+                    <Trans>Locked Ruleset Cycles</Trans>{' '}
                   </div>
                 }
                 description={t`Set a cycle duration for locked rulesets.`}
@@ -157,12 +167,6 @@ export const FundingCyclesPage = () => {
                   <DurationInput />
                 </Form.Item>
               </Selection.Card>
-              <Selection.Card
-                name="manual"
-                title={t`Unlocked Rulesets`}
-                description={t`The project's owner can edit the project's rules and start new rulesets at any time.`}
-                icon={<Icons.ManualSettings />}
-              />
             </Selection>
           </Form.Item>
           {selection && (

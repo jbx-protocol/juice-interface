@@ -23,7 +23,7 @@ type TokenSectionFields = {
   issuanceRate: number
   reservedPercent: number // percentage
   reservedTokensSplits: JBSplit[]
-  weightCutPercent: number // "Discount / Issuance reduction rate"
+  weightCutPercent: number // "Discount / issuance cut percent"
   cashOutTaxRate: number
   allowOwnerMinting: boolean
   tokenTransfers: boolean 

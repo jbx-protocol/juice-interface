@@ -1,11 +1,11 @@
 import * as ProjectTokenForm from '../hooks/useProjectTokenForm'
 
 import {
-  CASH_OUT_TAX_RATE_EXPLANATION,
-  DISCOUNT_RATE_EXPLANATION,
-  MINT_RATE_EXPLANATION,
-  OWNER_MINTING_EXPLANATION,
-  RESERVED_RATE_EXPLANATION,
+    CASH_OUT_TAX_RATE_EXPLANATION,
+    DISCOUNT_RATE_EXPLANATION,
+    MINT_RATE_EXPLANATION,
+    OWNER_MINTING_EXPLANATION,
+    RESERVED_RATE_EXPLANATION,
 } from 'components/strings'
 import { ReactNode, useMemo } from 'react'
 
@@ -30,7 +30,7 @@ export const DefaultSettings: React.FC<
         data: `${ProjectTokenForm.DefaultSettings.reservedTokensPercentage}%`,
         tooltip: RESERVED_RATE_EXPLANATION,
       },
-      [t`Weight cut percent`]: {
+      [t`Issuance cut percent`]: {
         data: `${ProjectTokenForm.DefaultSettings.discountRate}%`,
         tooltip: DISCOUNT_RATE_EXPLANATION,
       },

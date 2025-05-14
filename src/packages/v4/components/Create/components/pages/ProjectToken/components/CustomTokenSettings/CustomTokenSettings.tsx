@@ -14,6 +14,7 @@ import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import NumberSlider from 'components/inputs/NumberSlider'
+import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
 import useMobile from 'hooks/useMobile'
 import { formatFundingCycleDuration } from 'packages/v2v3/components/Create/utils/formatFundingCycleDuration'
@@ -128,134 +129,132 @@ export const CustomTokenSettings = () => {
         </div>
       </Form.Item>
 
-      <Divider className="my-8" />
+      <Divider className="mt-8 mb-0" />
 
-      <Form.Item label={t`Weight cut percent`}>
-        <div className="flex flex-col gap-6">
-          <span>
-            <Trans>
-              The issuance rate is reduced by this percentage every ruleset
-              (every <strong>{formatFundingCycleDuration(duration)}</strong>).
-              The higher this rate, the more incentive to pay this project
-              earlier.
-            </Trans>
-          </span>
-          <Form.Item
-            noStyle
-            name="discountRate"
-            valuePropName="sliderValue"
-            rules={[
-              inputMustExistRule({ label: t`An issuance reduction rate` }),
-            ]}
-          >
-            <NumberSlider
-              disabled={discountRateDisabled}
-              min={0}
-              defaultValue={0}
-              suffix="%"
-              step={0.5}
-            />
-          </Form.Item>
-          {discountRateDisabled ? (
-            <Callout.Warning>
+      <AdvancedDropdown className='mt-0'>
+        <Form.Item label={t`Issuance cut percent`}>
+          <div className="flex flex-col gap-6">
+            <span>
               <Trans>
-                The issuance reduction rate is disabled if you are using
-                unlocked rulesets (because they have no duration).
+                The issuance rate is reduced by this percentage every ruleset
+                (every <strong>{formatFundingCycleDuration(duration)}</strong>).
+                The higher this rate, the more incentive to pay this project
+                earlier.
               </Trans>
-            </Callout.Warning>
-          ) : (
-            <Callout.Info>
-              {discountRate === 0 ? (
+            </span>
+            <Form.Item
+              noStyle
+              name="discountRate"
+              valuePropName="sliderValue"
+              rules={[
+                inputMustExistRule({ label: t`An issuance cut percent` }),
+              ]}
+            >
+              <NumberSlider
+                disabled={discountRateDisabled}
+                min={0}
+                defaultValue={0}
+                suffix="%"
+                step={0.5}
+              />
+            </Form.Item>
+            {discountRateDisabled ? (
+              <Callout.Warning>
                 <Trans>
-                  The issuance rate will not change unless you edit it. There
-                  will be less of an incentive to support this project early on.
+                  The issuance cut percent is disabled if you are using
+                  unlocked rulesets (because they have no duration).
                 </Trans>
-              ) : discountRate === 100 ? (
-                <Trans>
-                  After {formatFundingCycleDuration(duration)} (your first
-                  ruleset), your project will not issue any tokens unless you
-                  edit the issuance rate.
-                </Trans>
-              ) : (
-                <>
-                  <p>
-                    <Trans>
-                      Each ruleset, the project will issue {discountRate}% fewer
-                      tokens per ETH.{' '}
-                    </Trans>
-                  </p>
-                  <p>
-                    <Trans>
-                      Next ruleset, the project will issue{' '}
-                      {formatAmount(secondFundingCycleMintRate)} tokens per 1
-                      ETH. The ruleset after that, the project will issue{' '}
-                      {formatAmount(thirdFundingCycleMintRate)} tokens per 1
-                      ETH.
-                    </Trans>
-                  </p>
-                </>
-              )}
-            </Callout.Info>
-          )}
-        </div>
-      </Form.Item>
-
-      <Divider className="my-8" />
-
-      <Form.Item label={t`Cash out tax rate`}>
-        <div className="flex flex-col gap-6">
-          <span>{CASH_OUT_TAX_RATE_EXPLANATION}</span>
-          <Form.Item
-            noStyle
-            name="redemptionRate"
-            valuePropName="sliderValue"
-            rules={[inputMustExistRule({ label: t`A cash out tax rate` })]}
-          >
-            <NumberSlider
-              min={0}
-              defaultValue={0}
-              suffix="%"
-              step={0.5}
-              disabled={cashOutTaxRateDisabled}
-            />
-          </Form.Item>
-          {cashOutTaxRateDisabled ? (
-            <Callout.Warning>
-              <Trans>
-                Redemptions are disabled when all of the project's ETH is being
-                used for payouts (when payouts are unlimited).
-              </Trans>
-            </Callout.Warning>
-          ) : (
-            !isMobile && (
-                <TokenRedemptionRateGraph 
-                  value={100 - cashOutTaxRate}
-                  graphPad={50} 
-                  graphSize={300} 
-                />
-            )
-          )}
-        </div>
-      </Form.Item>
-
-      <Divider className="my-8" />
-
-      <div className="flex flex-col gap-y-5">
-        <div>
-          <Form.Item extra={OWNER_MINTING_EXPLANATION} name="tokenMinting">
-            <JuiceSwitch label={t`Owner token minting`} />
-          </Form.Item>
-          {tokenMinting && (
-            <Callout.Warning className="mb-5">
-              {OWNER_MINTING_RISK}
-            </Callout.Warning>
-          )}
-        </div>
-
-        <Form.Item name="pauseTransfers" extra={PAUSE_TRANSFERS_EXPLANATION}>
-          <JuiceSwitch label={t`Pause token transfers`} />
+              </Callout.Warning>
+            ) : (
+              <Callout.Info>
+                {discountRate === 0 ? (
+                  <Trans>
+                    The issuance rate will not change unless you edit it. There
+                    will be less of an incentive to support this project early on.
+                  </Trans>
+                ) : discountRate === 100 ? (
+                  <Trans>
+                    After {formatFundingCycleDuration(duration)} (your first
+                    ruleset), your project will not issue any tokens unless you
+                    edit the issuance rate.
+                  </Trans>
+                ) : (
+                  <>
+                    <p>
+                      <Trans>
+                        Each ruleset, the project will issue {discountRate}% fewer
+                        tokens per ETH.{' '}
+                      </Trans>
+                    </p>
+                    <p>
+                      <Trans>
+                        Next ruleset, the project will issue{' '}
+                        {formatAmount(secondFundingCycleMintRate)} tokens per 1
+                        ETH. The ruleset after that, the project will issue{' '}
+                        {formatAmount(thirdFundingCycleMintRate)} tokens per 1
+                        ETH.
+                      </Trans>
+                    </p>
+                  </>
+                )}
+              </Callout.Info>
+            )}
+          </div>
         </Form.Item>
-      </div>
+
+        <Form.Item label={t`Cash out tax rate`}>
+          <div className="flex flex-col gap-6">
+            <span>{CASH_OUT_TAX_RATE_EXPLANATION}</span>
+            <Form.Item
+              noStyle
+              name="redemptionRate"
+              valuePropName="sliderValue"
+              rules={[inputMustExistRule({ label: t`A cash out tax rate` })]}
+            >
+              <NumberSlider
+                min={0}
+                defaultValue={0}
+                suffix="%"
+                step={0.5}
+                disabled={cashOutTaxRateDisabled}
+              />
+            </Form.Item>
+            {cashOutTaxRateDisabled ? (
+              <Callout.Warning>
+                <Trans>
+                  Redemptions are disabled when all of the project's ETH is being
+                  used for payouts (when payouts are unlimited).
+                </Trans>
+              </Callout.Warning>
+            ) : (
+              !isMobile && (
+                  <TokenRedemptionRateGraph 
+                    value={100 - cashOutTaxRate}
+                    graphPad={50} 
+                    graphSize={300} 
+                  />
+              )
+            )}
+          </div>
+        </Form.Item>
+
+        <div className="flex flex-col gap-y-5">
+          <div>
+            <Form.Item extra={OWNER_MINTING_EXPLANATION} name="tokenMinting">
+              <JuiceSwitch label={t`Owner token minting`} />
+            </Form.Item>
+            {tokenMinting && (
+              <Callout.Warning className="mb-5">
+                {OWNER_MINTING_RISK}
+              </Callout.Warning>
+            )}
+          </div>
+
+          <Form.Item name="pauseTransfers" extra={PAUSE_TRANSFERS_EXPLANATION}>
+            <JuiceSwitch label={t`Pause token transfers`} />
+          </Form.Item>
+        </div>
+      </AdvancedDropdown>
     </>
   )
 }

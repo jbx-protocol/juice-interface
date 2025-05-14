@@ -1,6 +1,6 @@
 import {
-  ConfigurationPanelDatum,
-  ConfigurationPanelTableData,
+    ConfigurationPanelDatum,
+    ConfigurationPanelTableData,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
 
@@ -136,7 +136,7 @@ export const useV4FormatConfigurationTokenSection = ({
       : undefined
 
     if (upcomingRuleset === null || upcomingRulesetLoading) {
-      return pairToDatum(t`Weight cut percent`, current, null)
+      return pairToDatum(t`Issuance cut percent`, current, null)
     }
     const queued = upcomingRuleset
       ? `${upcomingRuleset.weightCutPercent.formatPercentage()}%`
@@ -144,7 +144,7 @@ export const useV4FormatConfigurationTokenSection = ({
       ? `${ruleset.weightCutPercent.formatPercentage()}%`
       : undefined
 
-    return pairToDatum(t`Weight cut percent`, current, queued)
+    return pairToDatum(t`Issuance cut percent`, current, queued)
   }, [ruleset, upcomingRuleset, upcomingRulesetLoading])
 
   const cashOutTaxRateDatum: ConfigurationPanelDatum = useMemo(() => {

@@ -1,9 +1,10 @@
-import { Trans } from '@lingui/macro'
-import { useFormikContext } from 'formik'
 import {
   PayProjectModalFormValues,
   usePayProjectModal,
 } from '../hooks/usePayProjectModal/usePayProjectModal'
+
+import { Trans } from '@lingui/macro'
+import { useFormikContext } from 'formik'
 import { useProjectPaymentTokens } from '../hooks/useProjectPaymentTokens'
 import { EditRewardBeneficiary } from './EditRewardBeneficiary'
 import { ReceiveNftItem } from './ReceiveNftItem'
@@ -14,8 +15,8 @@ export const ReceiveSection = ({ className }: { className?: string }) => {
   const { receivedTickets } = useProjectPaymentTokens()
   const { values, setFieldValue } =
     useFormikContext<PayProjectModalFormValues>()
-
-  if (nftRewards.length === 0 && receivedTickets === '0') {
+  const hasReceivedTickets = receivedTickets && receivedTickets !== '0'
+  if (nftRewards.length === 0 && !hasReceivedTickets) {
     return null
   }
 

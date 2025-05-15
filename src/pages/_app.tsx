@@ -2,10 +2,10 @@ import { Web3OnboardProvider } from '@web3-onboard/react'
 import { Head } from 'components/common/Head/Head'
 import { LanguageProvider } from 'contexts/Language/LanguageProvider'
 import SupabaseSessionProvider from 'contexts/SupabaseSession/SupabaseSessionProvider'
+import { getInitialThemeOption, syncTheme } from 'contexts/Theme/useJuiceTheme'
 import { initWeb3Onboard } from 'hooks/Wallet/initWeb3Onboard'
 import { useFathom } from 'lib/fathom'
 import type { AppProps } from 'next/app'
-import { getInitialThemeOption, syncTheme } from 'contexts/Theme/useJuiceTheme'
 import '../styles/index.scss'
 
 /**

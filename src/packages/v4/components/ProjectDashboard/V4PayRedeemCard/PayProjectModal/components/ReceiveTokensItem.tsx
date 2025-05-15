@@ -10,7 +10,7 @@ export const ReceiveTokensItem = ({ className }: { className?: string }) => {
   const { receivedTickets, receivedTokenSymbolText } = useProjectPaymentTokens()
   const projectHasErc20Token = useProjectHasErc20Token()
 
-  if (receivedTickets === '0') {
+  if (!receivedTickets || receivedTickets === '0') {
     return null
   }
 

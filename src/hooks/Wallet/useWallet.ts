@@ -2,14 +2,13 @@ import {
   useChain,
   useChainUnsupported,
   useChangeNetworks,
+  useConnect,
   useDisconnect,
   useIsConnected,
   useSigner,
   useUserAddress,
   useWalletBalance,
 } from './hooks'
-
-import { useConnectWallet } from '@web3-onboard/react'
 
 export function useWallet() {
   const signer = useSigner()
@@ -19,7 +18,7 @@ export function useWallet() {
   const chainUnsupported = useChainUnsupported()
   const balance = useWalletBalance()
 
-  const [, connect] = useConnectWallet()
+  const connect = useConnect()
   const disconnect = useDisconnect()
   const changeNetworks = useChangeNetworks()
 

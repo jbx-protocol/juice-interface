@@ -9,18 +9,14 @@ import {
   optimismSepolia,
   sepolia,
 } from 'wagmi/chains'
+import { safe } from 'wagmi/connectors'
 
 export const wagmiConfig = createConfig({
-  chains: [
-    mainnet,
-    optimism,
-    arbitrum,
-    base,
-    sepolia,
-    optimismSepolia,
-    baseSepolia,
-    arbitrumSepolia,
-  ],
+  chains:
+    process.env.NEXT_PUBLIC_TESTNET === 'true'
+      ? [sepolia, optimismSepolia, baseSepolia, arbitrumSepolia]
+      : [mainnet, optimism, arbitrum, base],
+  connectors: [safe()],
   transports: {
     [mainnet.id]: http(
       `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,

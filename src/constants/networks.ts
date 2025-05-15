@@ -16,11 +16,6 @@ type NetworkInfo = {
   token: string
 }
 
-let hostname = 'localhost'
-if (typeof window !== 'undefined') {
-  hostname = window.location.hostname
-}
-
 /**
  * @TODO should be JB_CHAINS from sdk
  */
@@ -58,7 +53,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     color: '#96bedc',
     chainId: 421614,
     token: 'ArbETH',
-    rpcUrl: `https://sepolia-rollup.arbitrum.io/rpc`,
+    rpcUrl: `https://arbitrum-mainnet.infura.io/v3/${infuraId}`,
     blockExplorer: 'https://sepolia-explorer.arbitrum.io',
   },
   10: {
@@ -76,7 +71,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     color: '#f01f70',
     chainId: 11155420,
     token: 'OpETH',
-    rpcUrl: `https://sepolia.optimism.io`,
+    rpcUrl: `https://optimism-sepolia.infura.io/v3/${infuraId}`,
     blockExplorer: 'https://optimism-sepolia.blockscout.com',
   },
   8453: {
@@ -85,7 +80,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     color: '#00d395',
     chainId: 8453,
     token: 'BaseETH',
-    rpcUrl: `https://mainnet.base.org`,
+    rpcUrl: `https://base-mainnet.infura.io/v3/${infuraId}`,
     blockExplorer: 'https://basescan.org',
   },
   84532: {
@@ -94,7 +89,7 @@ export const NETWORKS: Record<number, NetworkInfo> = {
     color: '#00d395',
     chainId: 84532,
     token: 'BaseETH',
-    rpcUrl: `https://sepolia.base.org`,
+    rpcUrl: `https://base-sepolia.infura.io/v3/${infuraId}`,
     blockExplorer: 'https://sepolia.basescan.org',
   },
 }
@@ -117,5 +112,8 @@ export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
 export const DEFAULT_PROJECT_CHAIN_ID = NETWORKS_BY_NAME.sepolia
   .chainId as unknown as JBChainId // TODO once mainnet is a JBChainId, this wont be necessary
 
+/**
+ * @note NOT used in JBV4!
+ */
 export const readNetwork =
   NETWORKS_BY_NAME[process.env.NEXT_PUBLIC_INFURA_NETWORK]

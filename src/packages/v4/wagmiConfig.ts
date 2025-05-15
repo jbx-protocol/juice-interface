@@ -13,9 +13,24 @@ import { safe } from 'wagmi/connectors'
 
 export const wagmiConfig = createConfig({
   chains:
-    process.env.NEXT_PUBLIC_TESTNET === 'true'
-      ? [sepolia, optimismSepolia, baseSepolia, arbitrumSepolia]
-      : [mainnet, optimism, arbitrum, base],
+    /**
+     * TODO we should probably not include testnets on the prod site, and vice verse. Just for max safety.
+     * The problem now though, is both the prod and testnet sites rely on some prod API routes
+     * that use the SDK, which ultimately uses this wagmi config.
+     */
+    // process.env.NEXT_PUBLIC_TESTNET === 'true'
+    //   ? [sepolia, optimismSepolia, baseSepolia, arbitrumSepolia]
+    //   : [mainnet, optimism, arbitrum, base],
+    [
+      mainnet,
+      optimism,
+      arbitrum,
+      base,
+      sepolia,
+      optimismSepolia,
+      baseSepolia,
+      arbitrumSepolia,
+    ],
   connectors: [safe()],
   transports: {
     [mainnet.id]: http(

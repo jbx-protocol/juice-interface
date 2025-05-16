@@ -1094,6 +1094,9 @@ msgstr ""
 msgid "Current ruleset cycle"
 msgstr ""
 
+msgid "Not ready? Your project will be saved as a 'draft' as long as you don't clear your browser's data. You can also save to a file below."
+msgstr ""
+
 msgid "Cycle length"
 msgstr ""
 
@@ -2633,6 +2636,9 @@ msgstr ""
 msgid "No distributable reserved tokens have been configured for this project."
 msgstr ""
 
+msgid "Load draft"
+msgstr ""
+
 msgid "Owned by: <0/>"
 msgstr ""
 
@@ -3500,6 +3506,9 @@ msgstr ""
 msgid "The project's owner can edit the project's rules and start new cycles at any time."
 msgstr ""
 
+msgid "Saved"
+msgstr ""
+
 msgid "Reserve 1 NFT of every"
 msgstr ""
 
@@ -3558,6 +3567,9 @@ msgid "The issuance rate will not change unless you edit it. There will be less 
 msgstr ""
 
 msgid "% tokens cashed out"
+msgstr ""
+
+msgid "Save draft to file"
 msgstr ""
 
 msgid "Connect wallet to claim"

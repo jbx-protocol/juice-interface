@@ -1,16 +1,4 @@
-import { CheckCircleFilled } from '@ant-design/icons'
-import { Trans } from '@lingui/macro'
 import { Checkbox, Form } from 'antd'
-import { Callout } from 'components/Callout/Callout'
-import ExternalLink from 'components/ExternalLink'
-import TransactionModal from 'components/modals/TransactionModal'
-import { TERMS_OF_SERVICE_URL } from 'constants/links'
-import { useWallet } from 'hooks/Wallet'
-import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
-import useMobile from 'hooks/useMobile'
-import { useModal } from 'hooks/useModal'
-import { JBChainId } from 'juice-sdk-core'
-import { useRouter } from 'next/router'
 import React, {
   useCallback,
   useContext,
@@ -18,11 +6,6 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { useDispatch } from 'react-redux'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
-import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
-import { helpPagePath } from 'utils/helpPagePath'
 import {
   arbitrum,
   arbitrumSepolia,
@@ -33,11 +16,29 @@ import {
   optimismSepolia,
   sepolia,
 } from 'viem/chains'
+
+import { CheckCircleFilled } from '@ant-design/icons'
+import { Trans } from '@lingui/macro'
+import { Callout } from 'components/Callout/Callout'
+import ExternalLink from 'components/ExternalLink'
+import TransactionModal from 'components/modals/TransactionModal'
+import { TERMS_OF_SERVICE_URL } from 'constants/links'
+import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
+import useMobile from 'hooks/useMobile'
+import { useModal } from 'hooks/useModal'
+import { useWallet } from 'hooks/Wallet'
+import { JBChainId } from 'juice-sdk-core'
+import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
+import { helpPagePath } from 'utils/helpPagePath'
 import { useDeployProject } from '../../../hooks/DeployProject/useDeployProject'
 import { CreateBadge } from '../../CreateBadge'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
-import { Wizard } from '../../Wizard/Wizard'
 import { WizardContext } from '../../Wizard/contexts/WizardContext'
+import { Wizard } from '../../Wizard/Wizard'
 import { CreateChainSelectButton } from './components/CreateChainSelectButton'
 import { FundingConfigurationReview } from './components/FundingConfigurationReview/FundingConfigurationReview'
 import { LaunchProjectModal } from './components/LaunchProjectModal/LaunchProjectModal'
@@ -45,6 +46,7 @@ import { ProjectDetailsReview } from './components/ProjectDetailsReview/ProjectD
 import { ProjectTokenReview } from './components/ProjectTokenReview/ProjectTokenReview'
 import { RewardsReview } from './components/RewardsReview/RewardsReview'
 import { RulesReview } from './components/RulesReview/RulesReview'
+import { SaveCreateStateToFile } from './SaveCreateStateToFile'
 
 enum ReviewDeployKey {
   ProjectDetails = 0,
@@ -392,9 +394,10 @@ export const ReviewDeployPage = () => {
         <div>
           <Trans>
             Not ready? Your project will be saved as a 'draft' as long as you
-            don't clear your browser's data.
+            don't clear your browser's data. You can also save to a file below.
           </Trans>
         </div>
+        <div><SaveCreateStateToFile /></div>
         <span>
           <Trans>Made a mistake?</Trans>{' '}
           <a

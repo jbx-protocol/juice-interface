@@ -1,3 +1,5 @@
+import * as constants from '@ethersproject/constants'
+
 import { Trans, t } from '@lingui/macro'
 import { Col, Form, Row } from 'antd'
 import { JBChainId, JB_CHAINS } from 'juice-sdk-core'
@@ -9,7 +11,6 @@ import { useCallback, useContext, useState } from 'react'
 import { inputMustBeEthAddressRule, inputMustExistRule } from 'utils/antdRules'
 
 import { RightOutlined } from '@ant-design/icons'
-import * as constants from '@ethersproject/constants'
 import { Callout } from 'components/Callout/Callout'
 import { FormItems } from 'components/formItems'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
@@ -31,6 +32,7 @@ import { OptionalHeader } from '../../OptionalHeader'
 import { PageContext } from '../../Wizard/contexts/PageContext'
 import { Wizard } from '../../Wizard/Wizard'
 import { useProjectDetailsForm } from './hooks/useProjectDetailsForm'
+import { LoadCreateStateFromFile } from './LoadCreateStateFromFile'
 
 export const ProjectDetailsPage: React.FC<
   React.PropsWithChildren<unknown>
@@ -196,14 +198,17 @@ export const ProjectDetailsPage: React.FC<
 
       <Wizard.Page.ButtonControl />
 
-      <div className="mt-12 text-center">
-        <Trans>Need help?</Trans>
+      <div className="mt-12 flex justify-between">
         <div>
-          <Link href="/contact" className="text-sm hover:underline">
-            <Trans>Contact a contributor</Trans>{' '}
-            <RightOutlined className="text-xs" />
-          </Link>
+          <Trans>Need help?</Trans>
+          <div>
+            <Link href="/contact" className="text-sm hover:underline">
+              <Trans>Contact a contributor</Trans>{' '}
+              <RightOutlined className="text-xs" />
+            </Link>
+          </div>
         </div>
+          <LoadCreateStateFromFile />
       </div>
     </Form>
   )

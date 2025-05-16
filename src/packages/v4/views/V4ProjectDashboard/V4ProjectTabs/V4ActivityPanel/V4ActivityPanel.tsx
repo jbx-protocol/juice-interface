@@ -3,24 +3,25 @@ import { ErrorBoundaryCallout } from 'components/Callout/ErrorBoundaryCallout'
 import Loading from 'components/Loading'
 import VolumeChart from 'components/VolumeChart'
 import { PV_V4 } from 'constants/pv'
-import { useJBContractContext } from 'juice-sdk-react'
-import { ProjectsDocument } from 'packages/v4/graphql/client/graphql'
-import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
+import { useProjectQuery } from 'generated/v4/graphql'
+import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
+import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { Suspense } from 'react'
 import { V4ActivityList } from './V4ActivityList'
 
 export function V4ActivityPanel() {
   const { projectId } = useJBContractContext()
-  const { data } = useSubgraphQuery({
-    document: ProjectsDocument, 
+  const chainId = useJBChainId()
+
+  const { data } = useProjectQuery({
+    client: bendystrawClient,
     variables: {
-      where: {
-        projectId: Number(projectId),
-      },
-    }
+      projectId: Number(projectId),
+      chainId: chainId || 0,
+    },
   })
-  
-  const createdAt = data?.projects?.[0]?.createdAt
+
+  const createdAt = data?.project?.createdAt
 
   return (
     <div className="min-h-[384px] w-full">

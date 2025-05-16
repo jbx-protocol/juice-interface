@@ -2,12 +2,15 @@ import { Tooltip } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import EtherscanLink from 'components/EtherscanLink'
 import { JuiceboxAccountLink } from 'components/JuiceboxAccountLink'
+import { JBChainId } from 'juice-sdk-react'
 import { PV } from 'models/pv'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { formatHistoricalDate } from 'utils/format/formatDate'
 
 export interface ActivityElementEvent {
   timestamp: number
   txHash: string
+  chainId: number
   from: string
   beneficiary?: string
   terminal?: string
@@ -150,12 +153,18 @@ export function ActivityEvent({
   return (
     <>
       <div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <Header
             header={header}
             projectId={withProjectLink ? event.projectId : undefined}
             pv={withProjectLink ? event.pv || pv : undefined}
             handle={withProjectLink ? event.project?.handle : undefined}
+          />
+          <div className="flex-1" />
+          <ChainLogo
+            chainId={event.chainId as JBChainId}
+            width={18}
+            height={18}
           />
           <TimestampVersion {...event} />
         </div>

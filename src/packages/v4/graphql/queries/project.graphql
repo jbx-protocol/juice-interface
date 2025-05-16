@@ -1,12 +1,20 @@
-query Projects($where: Project_filter, $first: Int, $skip: Int, $block: Block_height) {
-  projects(where: $where, first: $first, skip: $skip, block: $block) {
-    projectId
-    metadataUri
-    handle
-    contributorsCount
+query Projects($where: projectFilter) {
+  projects(where: $where) {
+    items {
+      projectId
+      metadataUri
+      handle
+      createdAt
+      volume
+      trendingVolume
+      paymentsCount
+    }
+  }
+}
+
+query Project($chainId: Float!, $projectId: Float!) {
+  project(chainId: $chainId, projectId: $projectId) {
+    suckerGroupId
     createdAt
-    volume
-    trendingVolume
-    paymentsCount
   }
 }

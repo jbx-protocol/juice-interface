@@ -1,0 +1,18 @@
+query SuckerGroup($id: String!) {
+  suckerGroup(id: $id) {
+    createdAt
+    paymentsCount
+    redeemCount
+    volume
+    volumeUsd
+    redeemVolume
+    redeemVolumeUsd
+    nftsMintedCount
+    balance
+    tokenSupply
+    trendingScore
+    trendingVolume
+    trendingPaymentsCount
+    contributorsCount
+  }
+}

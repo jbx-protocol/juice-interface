@@ -3,16 +3,17 @@ import { PV_V2, PV_V4 } from 'constants/pv'
 import { readProvider } from 'constants/readProvider'
 import { RomanStormVariables } from 'constants/romanStorm'
 import EthDater from 'ethereum-block-by-date'
-import { ProjectTlQuery, useProjectsQuery, useProjectTlQuery } from 'generated/graphql'
+import { useProjectsQuery, useProjectTlQuery } from 'generated/graphql'
+import { useProjectQuery, useSuckerGroupTlQuery } from 'generated/v4/graphql'
 import { client } from 'lib/apollo/client'
 import { PV } from 'models/pv'
-import { ProjectTlDocument } from 'packages/v4/graphql/client/graphql'
-import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 import { useMemo } from 'react'
 import { wadToFloat } from 'utils/format/formatNumber'
 import { getSubgraphIdForProject } from 'utils/graph'
 import { daysToMS, minutesToMS } from 'utils/units'
 
+import { useJBChainId } from 'juice-sdk-react'
+import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { ProjectTimelinePoint, ProjectTimelineRange } from '../types'
 
 const COUNT = 30
@@ -26,6 +27,8 @@ export function useProjectTimeline({
   pv: PV
   range: ProjectTimelineRange
 }) {
+  const chainId = useJBChainId()
+
   const exceptionTimestamp = useMemo(() => {
     return RomanStormVariables.PROJECT_ID === projectId
       ? RomanStormVariables.SNAPSHOT_TIMESTAMP
@@ -35,7 +38,7 @@ export function useProjectTimeline({
   const { data: romanStormData } = useProjectsQuery({
     client,
     fetchPolicy: 'no-cache',
-    skip: projectId !== RomanStormVariables.PROJECT_ID,
+    skip: projectId !== RomanStormVariables.PROJECT_ID || pv === PV_V4,
     variables: {
       where: {
         projectId,
@@ -101,24 +104,32 @@ export function useProjectTimeline({
       skip: pv === PV_V4,
     })
 
-
-  const { data: v4QueryResult } = useSubgraphQuery({
-    document: ProjectTlDocument, 
+  const { data: project } = useProjectQuery({
+    client: bendystrawClient,
     variables: {
-      id: blocks ? projectId.toString() : '',
-      ...blocks,
+      chainId: chainId || 0,
+      projectId,
     },
-    enabled: pv === PV_V4
+    skip: pv !== PV_V4 || !chainId || !projectId,
   })
 
-  const points = useMemo(() => {
-    const queryResult = pv === PV_V4 ? v4QueryResult : v1v2v3QueryResult
-    if (!queryResult || !timestamps) return
+  const { data: v4QueryResult } = useSuckerGroupTlQuery({
+    client: bendystrawClient,
+    skip: pv !== PV_V4 || !project?.project?.suckerGroupId,
+    variables: {
+      suckerGroupId: project?.project?.suckerGroupId,
+      startTimestamp: timestamps?.[0],
+      endTimestamp: timestamps?.[timestamps.length - 1],
+    },
+  })
+
+  const v1v2v3Points = useMemo(() => {
+    if (!v1v2v3QueryResult || !timestamps) return
 
     const points: ProjectTimelinePoint[] = []
 
     for (let i = 0; i < COUNT; i++) {
-      const point = (queryResult as ProjectTlQuery)[`p${i}` as keyof typeof queryResult]
+      const point = v1v2v3QueryResult[`p${i}` as keyof typeof v1v2v3QueryResult]
 
       if (!point) continue
       if (exceptionTimestamp && exceptionTimestamp > timestamps[i]) {
@@ -144,10 +155,66 @@ export function useProjectTimeline({
     }
 
     return points
-  }, [timestamps, v1v2v3QueryResult, v4QueryResult, pv, projectId, exceptionTimestamp, romanStormData?.projects])
+  }, [
+    timestamps,
+    v1v2v3QueryResult,
+    projectId,
+    exceptionTimestamp,
+    romanStormData?.projects,
+  ])
+
+  // unlike v1v2v3 points where we always query an arbitrary number of points for a specified time window, we can trust that v4 points only exist where a change has occurred, leaving no need to "fill in the gaps".
+  const v4Points: ProjectTimelinePoint[] | undefined = useMemo(() => {
+    if (!v4QueryResult || !timestamps || !project?.project) return
+
+    // first point before the current timestamp range. If undefined, assume project was created within timestamp range
+    const previous = v4QueryResult.previous.items.length
+      ? v4QueryResult.previous.items[0]
+      : undefined
+    // last point within the timestamp range
+    const final =
+      v4QueryResult.range.items[v4QueryResult.range.items.length - 1]
+
+    // extrapolate first point. If project was created before timestamp window, use previous point data. Otherwise use project.createdAt
+    const firstPoint = previous
+      ? {
+          timestamp: timestamps[0],
+          volume: wadToFloat(previous.volume),
+          balance: wadToFloat(previous.balance),
+          trendingScore: wadToFloat(previous.trendingScore),
+        }
+      : {
+          timestamp: project.project.createdAt,
+          volume: 0,
+          balance: 0,
+          trendingScore: 0,
+        }
+
+    // extrapolate last point to fill in data since last project update.
+    const lastPoint = {
+      timestamp: timestamps?.[timestamps.length - 1],
+      volume: wadToFloat(final.volume),
+      balance: wadToFloat(final.balance),
+      trendingScore: wadToFloat(final.trendingScore),
+    }
+
+    return [
+      firstPoint,
+      ...v4QueryResult.range.items.map(
+        ({ volume, balance, trendingScore, timestamp }) => ({
+          timestamp,
+          volume: wadToFloat(volume),
+          balance: wadToFloat(balance),
+          trendingScore: wadToFloat(trendingScore),
+        }),
+      ),
+      lastPoint,
+    ]
+  }, [v4QueryResult, timestamps, project?.project?.createdAt])
 
   return {
-    points,
+    v1v2v3Points,
+    v4Points,
     loading: isLoadingBlockNumbers || isLoadingQuery,
   }
 }

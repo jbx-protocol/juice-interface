@@ -10,10 +10,10 @@ import {
 
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { readNetwork } from 'constants/networks'
+import { bendystrawUri } from 'lib/apollo/bendystrawUri'
 import { paginateDepleteBendystrawQuery } from 'lib/apollo/paginateDepleteBendystrawQuery'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { serverClient } from 'lib/apollo/serverClient'
-import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
 import { DBProject, DBProjectQueryOpts, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -48,7 +48,7 @@ export async function queryAllSGProjectsForServer() {
             Dbv4ProjectsQueryVariables
           >({
             client: new ApolloClient({
-              uri: `${v4SubgraphUri()}/graphql`,
+              uri: `${bendystrawUri()}/graphql`,
               cache: new InMemoryCache(),
             }),
             document: Dbv4ProjectsDocument,

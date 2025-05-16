@@ -6,7 +6,7 @@ import {
 } from '@apollo/client';
 import { FunctionsMap, withScalars } from 'apollo-link-scalars';
 import { IntrospectionQuery, buildClientSchema } from 'graphql';
-import { v4SubgraphUri } from 'lib/apollo/subgraphUri';
+import { bendystrawUri } from 'lib/apollo/bendystrawUri';
 import introspectionResult from '../../packages/v4/graphql/graphql.schema.json';
 (BigInt.prototype as unknown as { toJSON: unknown }).toJSON = function () {
   return this.toString()
@@ -67,7 +67,7 @@ const typesMap: FunctionsMap = {
 const scalarsLink = withScalars({ schema, typesMap })
 
 const httpLink = new HttpLink({
-  uri: `${v4SubgraphUri()}/graphql`,
+  uri: `${bendystrawUri()}/graphql`,
 })
 
 export const bendystrawClient = new ApolloClient({

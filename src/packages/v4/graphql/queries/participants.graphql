@@ -1,24 +1,30 @@
 query Participants(
-  $where: Participant_filter
-  $first: Int
-  $skip: Int
-  $orderBy: Participant_orderBy
-  $orderDirection: OrderDirection
+  $where: participantFilter
+  $limit: Int
+  $after: String
+  $orderBy: String
+  $orderDirection: String
 ) {
   participants(
     where: $where
-    first: $first
-    skip: $skip
+    limit: $limit
+    after: $after
     orderBy: $orderBy
     orderDirection: $orderDirection
   ) {
-    wallet {
-      id
+    pageInfo {
+      hasNextPage
+      endCursor
     }
-    volume
-    lastPaidTimestamp
-    balance
-    stakedBalance
-    id
+    items {
+      address
+      projectId
+      volume
+      lastPaidTimestamp
+      balance
+      creditBalance
+      erc20Balance
+      chainId
+    }
   }
 }

@@ -1,32 +1,30 @@
 query PayEvents(
-  $where: payEventFilter
-  $orderBy: String
-  $orderDirection: String
-  $limit: Int
-  $after: String
+  $where: PayEvent_filter
+  $orderBy: PayEvent_orderBy
+  $orderDirection: OrderDirection
+  $first: Int
+  $skip: Int
 ) {
   payEvents(
     where: $where
     orderBy: $orderBy
     orderDirection: $orderDirection
-    limit: $limit
-    after: $after
+    first: $first
+    skip: $skip
   ) {
-    items {
+    id
+    amount
+    amountUSD
+    beneficiary
+    note
+    timestamp
+    beneficiaryTokenCount
+    from
+    txHash
+    project {
       id
-      chainId
-      amount
-      beneficiary
-      memo
-      timestamp
-      newlyIssuedTokenCount
-      from
-      txHash
-      project {
-        id
-        projectId
-        handle
-      }
+      projectId
+      handle
     }
   }
 }

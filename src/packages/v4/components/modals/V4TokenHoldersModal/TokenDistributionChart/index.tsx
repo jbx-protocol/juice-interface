@@ -10,7 +10,7 @@ export default function TokenDistributionChart({
   isLoading,
   tokenSupply,
 }: {
-  participants: ParticipantsQuery['participants']['items'] | undefined
+  participants: ParticipantsQuery['participants'] | undefined
   isLoading?: boolean
   tokenSupply: bigint | undefined
 }) {

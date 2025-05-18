@@ -1,8 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { PV } from 'models/pv'
-import { CSSProperties, useMemo, useState } from 'react'
+import { CSSProperties, useState } from 'react'
 
-import { PV_V4 } from 'constants/pv'
 import RangeSelector from './components/RangeSelector'
 import TimelineChart from './components/TimelineChart'
 import TimelineViewSelector from './components/TimelineViewSelector'
@@ -26,20 +25,11 @@ export default function VolumeChart({
 
   const [range, setRange] = useTimelineRange({ createdAt })
 
-  const { v1v2v3Points, v4Points, loading } = useProjectTimeline({
+  const { points, loading } = useProjectTimeline({
     projectId,
     pv,
     range,
   })
-
-  const points = useMemo(() => {
-    switch (pv) {
-      case PV_V4:
-        return v4Points
-      default:
-        return v1v2v3Points
-    }
-  }, [pv, v1v2v3Points, v4Points])
 
   return (
     <div>

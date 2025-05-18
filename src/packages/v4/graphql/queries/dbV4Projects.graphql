@@ -1,36 +1,25 @@
-query DBV4Projects($where: projectFilter, $limit: Int, $after: String) {
-  projects(where: $where, limit: $limit, after: $after) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    items {
-      id
-      projectId
-      chainId
-      handle
-      name
-      description
-      logoUri
-      tags
-      metadataUri
-      balance
-      volume
-      volumeUsd
-      redeemVolume
-      redeemVolumeUsd
-      redeemCount
-      creator
-      owner
-      nftsMintedCount
-      contributorsCount
-      createdAt
-      trendingScore
-      trendingVolume
-      deployer
-      paymentsCount
-      trendingPaymentsCount
-      createdWithinTrendingWindow
-    }
+query DBV4Projects($first: Int, $skip: Int) {
+  projects(first: $first, skip: $skip) {
+    id
+    projectId
+    handle
+    metadataUri
+    currentBalance
+    volume
+    volumeUSD
+    redeemVolume
+    redeemVolumeUSD
+    redeemCount
+    creator
+    owner
+    contributorsCount
+    nftsMintedCount
+    createdAt
+    trendingScore
+    trendingVolume
+    deployer
+    paymentsCount
+    trendingPaymentsCount
+    createdWithinTrendingWindow
   }
 }

@@ -1,35 +1,27 @@
 import { t } from '@lingui/macro'
-import { usePayEventsQuery, useProjectQuery } from 'generated/v4/graphql'
 import { Ether } from 'juice-sdk-core'
-import { useJBChainId } from 'juice-sdk-react'
-import { bendystrawClient } from 'lib/apollo/bendystrawClient'
+import {
+  OrderDirection,
+  PayEvent_OrderBy,
+  PayEventsDocument,
+} from 'packages/v4/graphql/client/graphql'
+import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 import { useCallback, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { emitErrorNotification } from 'utils/notifications'
 
 export const useDownloadPayments = (blockNumber: number, projectId: number) => {
   const [isLoading, setIsLoading] = useState(false)
-  const chainId = useJBChainId()
 
-  const { data: project } = useProjectQuery({
-    client: bendystrawClient,
+  const { data: payEventsData } = useSubgraphQuery({
+    document: PayEventsDocument,
     variables: {
-      chainId: Number(chainId),
-      projectId,
-    },
-    skip: !chainId,
-  })
-
-  const { data: payEventsData } = usePayEventsQuery({
-    client: bendystrawClient,
-    variables: {
-      orderBy: 'timestamp',
-      orderDirection: 'desc',
+      orderBy: PayEvent_OrderBy.timestamp,
+      orderDirection: OrderDirection.desc,
       where: {
-        suckerGroupId: project?.project?.suckerGroupId,
+        projectId: Number(projectId),
       },
     },
-    skip: !project?.project?.suckerGroupId,
   })
 
   const downloadPayments = useCallback(async () => {
@@ -44,12 +36,11 @@ export const useDownloadPayments = (blockNumber: number, projectId: number) => {
         // t`USD value of ETH paid`, //TODO: not working for V4 (check subgraph
         t`Payer`,
         t`Transaction hash`,
-        t`Chain id`,
       ], // CSV header row
     ]
 
     try {
-      const payEvents = payEventsData?.payEvents.items
+      const payEvents = payEventsData?.payEvents
 
       if (!payEvents) {
         emitErrorNotification(t`Error loading payouts`)
@@ -69,7 +60,6 @@ export const useDownloadPayments = (blockNumber: number, projectId: number) => {
           // p.amountUSD ? p.amountUSD.format() : 'n/a', TODO: not working for V4 (check subgraph)
           p.beneficiary,
           p.txHash,
-          p.chainId.toString(),
         ])
       })
 

@@ -9,18 +9,17 @@ import {
 } from 'generated/graphql'
 
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { readNetwork } from 'constants/networks'
-import { bendystrawUri } from 'lib/apollo/bendystrawUri'
-import { paginateDepleteBendystrawQuery } from 'lib/apollo/paginateDepleteBendystrawQuery'
+import { MAINNET_IDS, readNetwork, TESTNET_IDS } from 'constants/networks'
+import { JBChainId } from 'juice-sdk-react'
 import { paginateDepleteQuery } from 'lib/apollo/paginateDepleteQuery'
 import { serverClient } from 'lib/apollo/serverClient'
+import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
 import { DBProject, DBProjectQueryOpts, SGSBCompareKey } from 'models/dbProject'
 import { Json } from 'models/json'
 import { NextApiRequest, NextApiResponse } from 'next'
 import {
   Dbv4ProjectsDocument,
   Dbv4ProjectsQuery,
-  Dbv4ProjectsQueryVariables,
 } from 'packages/v4/graphql/client/graphql'
 import { Database } from 'types/database.types'
 import { isHardArchived } from 'utils/archived'
@@ -36,49 +35,53 @@ import { dbProjects } from '../clients'
  * Query all projects from subgraph using apollo serverClient which is safe to use in edge runtime.
  */
 export async function queryAllSGProjectsForServer() {
-  const [v1v2v3, v4] = await Promise.all([
+  const chains = Array.from(
+    process.env.NEXT_PUBLIC_TESTNET === 'true' ? TESTNET_IDS : MAINNET_IDS,
+  )
+
+  const [res, ...rest] = await Promise.all([
     paginateDepleteQuery<DbProjectsQuery, QueryProjectsArgs>({
       client: serverClient,
       document: DbProjectsDocument,
     }),
     ...(process.env.NEXT_PUBLIC_V4_ENABLED === 'true'
-      ? [
-          paginateDepleteBendystrawQuery<
-            Dbv4ProjectsQuery,
-            Dbv4ProjectsQueryVariables
-          >({
-            client: new ApolloClient({
-              uri: `${bendystrawUri()}/graphql`,
-              cache: new InMemoryCache(),
-            }),
+      ? chains.map(chainId => {
+          const client = new ApolloClient({
+            uri: v4SubgraphUri(chainId as JBChainId),
+            cache: new InMemoryCache(),
+          })
+
+          return paginateDepleteQuery<Dbv4ProjectsQuery, QueryProjectsArgs>({
+            client,
             document: Dbv4ProjectsDocument,
-          }),
-        ]
+          })
+        })
       : []),
   ])
 
   // Response must be retyped with Json<>, because the serverClient does not perform the parsing expected by generated types
-  const v1v2v3WithChainId = v1v2v3.map(p => {
+  const _res = res.map(p => {
     return {
       ...p,
       chainId: readNetwork.chainId,
     }
   }) as unknown as Json<Pick<Project & { chainId: number }, SGSBCompareKey>>[]
-  let v4Parsed = process.env.NEXT_PUBLIC_V4_ENABLED
-    ? (v4.map(p => {
-        return {
-          ...p,
-          id: getSubgraphIdForProject(PV_V4, p.projectId) + `_${p.chainId}`, // Patch in the subgraph ID for V4 projects (to be consitent with legacy subgraph)
-          currentBalance: p.balance, // currentBalance renamed -> balance in bendystraw
-          pv: PV_V4, // Patch in the PV for V4 projects,
-          chainId: p.chainId,
-        }
-      }) as unknown as Json<
-        Pick<Project & { chainId: number }, SGSBCompareKey>
-      >[])
+  let normalised = process.env.NEXT_PUBLIC_V4_ENABLED
+    ? chains.flatMap((chainId, idx) => {
+        return rest[idx].map(p => {
+          return {
+            ...p,
+            id: getSubgraphIdForProject(PV_V4, p.projectId) + `_${chainId}`, // Patch in the subgraph ID for V4 projects (to be consitent with legacy subgraph)
+            pv: PV_V4, // Patch in the PV for V4 projects,
+            chainId,
+          }
+        }) as unknown as Json<
+          Pick<Project & { chainId: number }, SGSBCompareKey>
+        >[]
+      })
     : []
 
-  return [...v1v2v3WithChainId, ...v4Parsed].map(formatSGProjectForDB)
+  return [..._res, ...normalised].map(formatSGProjectForDB)
 }
 
 /**

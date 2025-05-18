@@ -2,11 +2,11 @@ import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { useParticipantsQuery, useProjectQuery } from 'generated/v4/graphql'
 
 import { useBlockNumber } from 'hooks/useBlockNumber'
-import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
-import { bendystrawClient } from 'lib/apollo/bendystrawClient'
+import { useJBContractContext } from 'juice-sdk-react'
+import { ParticipantsDownloadDocument } from 'packages/v4/graphql/client/graphql'
+import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
 import { useCallback, useEffect, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { fromWad } from 'utils/format/formatNumber'
@@ -23,7 +23,6 @@ export function DownloadTokenHoldersModal({
   onCancel: VoidFunction | undefined
 }) {
   const { projectId } = useJBContractContext()
-  const chainId = useJBChainId()
 
   const [blockNumber, setBlockNumber] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
@@ -31,26 +30,20 @@ export function DownloadTokenHoldersModal({
   // Use block number 5 blocks behind chain head to allow for subgraph being a bit behind on indexing.
   const { data: latestBlockNumber } = useBlockNumber({ behindChainHeight: 5 })
 
-  const { data: project } = useProjectQuery({
-    client: bendystrawClient,
-    variables: {
-      projectId: Number(projectId),
-      chainId: Number(chainId),
-    },
-    skip: !projectId || !chainId,
-  })
-
-  const { data: _participants } = useParticipantsQuery({
-    client: bendystrawClient,
+  const { data } = useSubgraphQuery({
+    document: ParticipantsDownloadDocument,
     variables: {
       where: {
-        suckerGroupId: project?.project?.suckerGroupId,
+        projectId: Number(projectId),
       },
+      block: {
+        number: blockNumber
+      }
     },
-    skip: !project?.project?.suckerGroupId,
+    enabled: Boolean(projectId && open),
   })
 
-  const participants = _participants?.participants.items
+  const participants = data?.participants
 
   useEffect(() => {
     setBlockNumber(latestBlockNumber)
@@ -67,7 +60,6 @@ export function DownloadTokenHoldersModal({
         'Claimed balance',
         'Total ETH paid',
         'Last paid timestamp',
-        'Chain ID',
       ], // CSV header row
     ]
 
@@ -84,13 +76,12 @@ export function DownloadTokenHoldersModal({
         if (date.includes(',')) date = date.split(',')[1]
 
         rows.push([
-          p.address ?? '--',
+          p.wallet.id ?? '--',
           fromWad(p.balance),
-          fromWad(p.creditBalance),
+          fromWad(p.stakedBalance),
           fromWad(p.erc20Balance),
           fromWad(p.volume),
           date,
-          p.chainId.toString(),
         ])
       })
 
@@ -128,7 +119,6 @@ export function DownloadTokenHoldersModal({
           <Trans>Block number</Trans>
         </label>
         <FormattedNumberInput
-          disabled // TODO disabled temporarily. Need to implement participants query by block number via bendystraw
           value={blockNumber?.toString()}
           onChange={val => setBlockNumber(val ? parseInt(val) : undefined)}
           accessory={

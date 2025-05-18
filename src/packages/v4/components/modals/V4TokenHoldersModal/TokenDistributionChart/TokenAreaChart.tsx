@@ -24,7 +24,7 @@ export default function TokenAreaChart({
   participants,
 }: {
   tokenSupply: bigint | undefined
-  participants: ParticipantsQuery['participants']['items'] | undefined
+  participants: ParticipantsQuery['participants'] | undefined
 }) {
   const { themeOption } = useContext(ThemeContext)
 

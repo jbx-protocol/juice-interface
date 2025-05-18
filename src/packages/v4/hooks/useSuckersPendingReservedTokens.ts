@@ -4,10 +4,8 @@ import {
   readJbDirectoryControllerOf
 } from "juice-sdk-core";
 import { useJBChainId, useJBContractContext, useSuckers } from "juice-sdk-react";
-
 import { useConfig } from "wagmi";
 import { useQuery } from "wagmi/query";
-import { wagmiConfig } from "../wagmiConfig";
 
 export function useSuckersPendingReservedTokens() {
   const config = useConfig();
@@ -34,7 +32,7 @@ export function useSuckersPendingReservedTokens() {
         pairs.map(async pair => {
           const { peerChainId, projectId: peerProjectId } = pair;
 
-          const controllerAddress = await readJbDirectoryControllerOf(wagmiConfig, {
+          const controllerAddress = await readJbDirectoryControllerOf(config, {
             chainId,
             args: [BigInt(projectId)],
           })

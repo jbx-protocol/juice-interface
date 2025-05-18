@@ -5090,15 +5090,6 @@
     "@walletconnect/ethereum-provider" "2.17.0"
     cbw-sdk "npm:@coinbase/wallet-sdk@3.9.3"
 
-"@wagmi/core@2.10.4":
-  version "2.10.4"
-  resolved "https://registry.yarnpkg.com/@wagmi/core/-/core-2.10.4.tgz#13113dc5a9817e731671cb7cb457f2571e98aa24"
-  integrity sha512-X/PW4zckkSQ/y4LwkQ5cwLKv551I6kVorH3VsTQghxYt0Vj9K5/XhCCRQg5Q200u6fiUCJ+2WjpmhZu3XYNU9w==
-  dependencies:
-    eventemitter3 "5.0.1"
-    mipd "0.0.5"
-    zustand "4.4.1"
-
 "@wagmi/core@2.15.2":
   version "2.15.2"
   resolved "https://registry.yarnpkg.com/@wagmi/core/-/core-2.15.2.tgz#5bc934b4bca0d7fac1062c920a5366716f069613"
@@ -5428,17 +5419,6 @@
     "@web3-onboard/common" "^2.4.1"
     "@web3-onboard/core" "2.22.2"
     use-sync-external-store "1.0.0"
-
-"@web3-onboard/wagmi@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/wagmi/-/wagmi-2.0.1.tgz#283bbac7aa8817a91aadeb8ee23f5b1cdeae8080"
-  integrity sha512-j/WQ85MaMJzf0MbRMlPh/7xt72u7F6dUifhwjnlr6yWtl56PB5fNgc/LLD0ax923Zd0cRujUvkw4LW8OtRUxbg==
-  dependencies:
-    "@wagmi/core" "2.10.4"
-    "@web3-onboard/common" "^2.4.1"
-    eventemitter3 "^4.0.7"
-    joi "17.9.1"
-    viem "2.12.0"
 
 "@web3-onboard/walletconnect@^2.6.1":
   version "2.6.1"
@@ -13504,13 +13484,6 @@ minizlib@^3.0.1:
     minipass "^7.0.4"
     rimraf "^5.0.5"
 
-mipd@0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/mipd/-/mipd-0.0.5.tgz#367ee796531c23f0631f129038700b1406663aec"
-  integrity sha512-gbKA784D2WKb5H/GtqEv+Ofd1S9Zj+Z/PGDIl1u1QAbswkxD28BQ5bSXQxkeBzPBABg1iDSbiwGG1XqlOxRspA==
-  dependencies:
-    viem "^1.1.4"
-
 mipd@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mipd/-/mipd-0.0.7.tgz#bb5559e21fa18dc3d9fe1c08902ef14b7ce32fd9"
@@ -18745,7 +18718,7 @@ viem@2.12.0, viem@^2.1.1:
     isows "1.0.4"
     ws "8.13.0"
 
-viem@^1.0.0, viem@^1.1.4, viem@^1.5.3:
+viem@^1.0.0, viem@^1.5.3:
   version "1.21.4"
   resolved "https://registry.yarnpkg.com/viem/-/viem-1.21.4.tgz#883760e9222540a5a7e0339809202b45fe6a842d"
   integrity sha512-BNVYdSaUjeS2zKQgPs+49e5JKocfo60Ib2yiXOWBT6LuVxY1I/6fFX3waEtpXvL1Xn4qu+BVitVtMh9lyThyhQ==
@@ -19615,13 +19588,6 @@ zod@^3.11.5:
   version "3.22.2"
   resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.2.tgz#3add8c682b7077c05ac6f979fea6998b573e157b"
   integrity sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==
-
-zustand@4.4.1:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/zustand/-/zustand-4.4.1.tgz#0cd3a3e4756f21811bd956418fdc686877e8b3b0"
-  integrity sha512-QCPfstAS4EBiTQzlaGP1gmorkh/UL1Leaj2tdj+zZCZ/9bm0WS7sI2wnfD5lpOszFqWJ1DcPnGoY8RDL61uokw==
-  dependencies:
-    use-sync-external-store "1.2.0"
 
 zustand@5.0.0:
   version "5.0.0"

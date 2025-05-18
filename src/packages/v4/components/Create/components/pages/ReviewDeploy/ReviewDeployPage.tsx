@@ -397,7 +397,9 @@ export const ReviewDeployPage = () => {
             don't clear your browser's data. You can also save to a file below.
           </Trans>
         </div>
-        <div><SaveCreateStateToFile /></div>
+        <div className="flex items-center gap-2">
+          <SaveCreateStateToFile />
+        </div>
         <span>
           <Trans>Made a mistake?</Trans>{' '}
           <a

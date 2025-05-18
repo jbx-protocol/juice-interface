@@ -1,8 +1,8 @@
 import { CheckOutlined, DownloadOutlined } from '@ant-design/icons'
+import { Button, Tooltip } from 'antd'
 import React, { useCallback, useState } from 'react'
 
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
 import { useSelector } from 'react-redux'
 import { RootState } from 'redux/store'
 
@@ -17,6 +17,7 @@ export const SaveCreateStateToFile: React.FC = () => {
     link.href = url
     link.download = `${creatingState.projectMetadata?.name || 'draft'}.jb`
     link.click()
+
     URL.revokeObjectURL(url)
     
     setIsSaved(true)
@@ -26,12 +27,13 @@ export const SaveCreateStateToFile: React.FC = () => {
   }, [creatingState])
 
   return (
-    <Button 
-      type="default" 
-      icon={isSaved ? <CheckOutlined /> : <DownloadOutlined />} 
-      onClick={handleSave}
-    >
-      <span>{isSaved ? <Trans>Saved</Trans> : <Trans>Save draft to file</Trans>}</span>
-    </Button>
+    <Tooltip title={isSaved ? <Trans>Saved</Trans> : <Trans>Save draft to file</Trans>}>
+      <Button 
+        type="text"
+        icon={isSaved ? <CheckOutlined /> : <DownloadOutlined />} 
+        onClick={handleSave}
+        aria-label={isSaved ? "Saved" : "Save draft to file"}
+      />
+    </Tooltip>
   )
 }

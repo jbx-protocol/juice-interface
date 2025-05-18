@@ -76,11 +76,7 @@ const CONNECT_SRC = [
   'https://sepolia-rollup.arbitrum.io/rpc',
   'https://sepolia.optimism.io',
   'https://relayr-api-staging.up.railway.app',
-  'https://api.relayr.ba5ed.com',
-  'https://bendystraw.xyz',
-  'https://bendystraw.xyz/*',
-  'https://testnet.bendystraw.xyz',
-  'https://testnet.bendystraw.xyz/*',
+  'https://api.relayr.ba5ed.com'
 ]
 
 const FRAME_ANCESTORS = [

@@ -1,5 +1,10 @@
-import { SplitPortion } from 'juice-sdk-core'
-import { useJBChainId, useJBContractContext, useSuckers } from 'juice-sdk-react'
+import { SplitPortion, SuckerPair } from 'juice-sdk-core'
+import { useJBChainId, useSuckers } from 'juice-sdk-react'
+import {
+  OrderDirection,
+  ProjectEvent_OrderBy,
+  ProjectEventsDocument,
+} from 'packages/v4/graphql/client/graphql'
 import {
   AnyEvent,
   EventType,
@@ -7,16 +12,19 @@ import {
 } from './utils/transformEventsData'
 
 import { BigNumber } from '@ethersproject/bignumber'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { Button } from 'antd'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import RichNote from 'components/RichNote/RichNote'
 import { NETWORKS } from 'constants/networks'
-import { useActivityEventsQuery, useProjectQuery } from 'generated/v4/graphql'
-import { bendystrawClient } from 'lib/apollo/bendystrawClient'
+import request from 'graphql-request'
+import { v4SubgraphUri } from 'lib/apollo/subgraphUri'
+import last from 'lodash/last'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import React, { useState } from 'react'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import React from 'react'
 import { fromWad } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { ActivityEvent } from './activityEventElems/ActivityElement'
@@ -25,51 +33,43 @@ const PAGE_SIZE = 10
 
 export function V4ActivityList() {
   const tokenSymbol = useProjectContext().tokenSymbol
-  const { projectId } = useJBContractContext()
   const chainId = useJBChainId()
   const { data: suckers, isLoading: suckersLoading } = useSuckers()
 
-  const [endCursor, setEndCursor] = useState<string | null>(null)
-
+  const [selectedChainId, setSelectedChainId] = React.useState(chainId)
   const [filter, setFilter] = React.useState<ProjectEventFilter>('all')
 
-  // Load the bendystraw project to get its suckerGroupId
-  const { data: project } = useProjectQuery({
-    client: bendystrawClient,
-    variables: {
-      chainId: Number(chainId),
-      projectId: Number(projectId),
-    },
-    skip: !chainId || !projectId,
-  })
-
-  const { data: activityEvents, loading } = useActivityEventsQuery({
-    client: bendystrawClient,
-    skip: !project?.project?.suckerGroupId,
-    variables: {
-      where: {
-        suckerGroupId: project?.project?.suckerGroupId,
-        ...(filter === 'all' ? {} : { [`${filter}_not`]: null }),
-      },
-      orderBy: 'timestamp',
-      orderDirection: 'desc',
-      after: endCursor,
-      limit: PAGE_SIZE,
-    },
+  const {
+    data: projectEventsQueryResult,
+    isLoading,
+    fetchNextPage,
+  } = useOmnichainSubgraphProjectQuery({
+    sucker: suckers?.find(s => s.peerChainId === selectedChainId),
+    filter,
   })
 
   const projectEvents = React.useMemo(
     () =>
-      activityEvents?.activityEvents.items
+      projectEventsQueryResult?.pages
+        .flatMap(page => page.data.projectEvents)
         .map(transformEventData)
         .filter((event): event is AnyEvent => !!event)
         .map(e => translateEventDataToPresenter(e, tokenSymbol)) ?? [],
-    [activityEvents?.activityEvents.items, tokenSymbol],
+    [projectEventsQueryResult?.pages, tokenSymbol],
   )
 
   return (
     <div>
-      <h2 className="mb-6 font-heading text-2xl font-medium">Activity</h2>
+      <div className="flex items-baseline justify-between gap-5">
+        <h2 className="mb-6 font-heading text-2xl font-medium">Activity</h2>
+        {suckers && suckers.length > 0 ? (
+          <ChainSelect
+            value={selectedChainId}
+            onChange={chainId => setSelectedChainId(chainId)}
+            chainIds={suckers?.map(s => s.peerChainId)}
+          />
+        ) : null}
+      </div>
       <div className="flex flex-col gap-3">
         <JuiceListbox
           className="mb-5"
@@ -77,8 +77,8 @@ export function V4ActivityList() {
           value={ACTIVITY_OPTIONS.find(o => o.value === filter)}
           onChange={o => setFilter(o.value as ProjectEventFilter)}
         />
-        {(loading || suckersLoading) && <Loading />}
-        {loading ||
+        {(isLoading || suckersLoading) && <Loading />}
+        {isLoading ||
         suckersLoading ||
         (projectEvents && projectEvents.length > 0) ? (
           <>
@@ -97,14 +97,8 @@ export function V4ActivityList() {
                 </div>
               )
             })}
-            {activityEvents?.activityEvents.pageInfo.hasNextPage && (
-              <Button
-                onClick={() =>
-                  setEndCursor(activityEvents.activityEvents.pageInfo.endCursor)
-                }
-              >
-                Load more
-              </Button>
+            {!!last(projectEventsQueryResult?.pages)?.nextCursor && (
+              <Button onClick={() => fetchNextPage()}>Load more</Button>
             )}
           </>
         ) : (
@@ -313,22 +307,66 @@ const ACTIVITY_OPTIONS = [
   { label: 'Cashed out', value: 'cashOutEvent' },
   { label: 'Deployed ERC20', value: 'deployedERC20Event' },
   { label: 'Project created', value: 'projectCreateEvent' },
-  { label: 'Send payouts', value: 'sendPayoutsEvent' },
+  { label: 'Send payouts', value: 'distributePayoutsEvent' },
   {
     label: 'Send reserved tokens',
-    value: 'sendReservedTokensToSplitsEvent',
+    value: 'distributeReservedTokensEvent',
   },
   {
     label: 'Send to reserved token split',
-    value: 'sendReservedTokensToSplitEvent',
+    value: 'distributeToReservedTokenSplitEvent',
   },
   {
     label: 'Send to payout split',
-    value: 'sendPayoutsToSplitEvent',
+    value: 'distributeToPayoutSplitEvent',
   },
   { label: 'Used allowance', value: 'useAllowanceEvent' },
   { label: 'Burned', value: 'burnEvent' },
 ]
+
+const useOmnichainSubgraphProjectQuery = ({
+  filter,
+  sucker,
+}: {
+  filter?: ProjectEventFilter
+  sucker: SuckerPair | undefined
+}) => {
+  const result = useInfiniteQuery({
+    queryKey: ['projectEvents', sucker?.projectId, sucker?.peerChainId, filter],
+    initialPageParam: 0,
+    queryFn: async ({ pageParam = 0 }) => {
+      if (!sucker) return { data: { projectEvents: [] }, nextCursor: undefined }
+      const uri = v4SubgraphUri(sucker.peerChainId)
+      const document = ProjectEventsDocument
+
+      const data = await request(uri, document, {
+        orderBy: ProjectEvent_OrderBy.timestamp,
+        orderDirection: OrderDirection.desc,
+        where: {
+          projectId: Number(sucker.projectId),
+          // ProjectEvents have exactly one non-null Event field. We can use `<filter>_not: null` to return only projectEvents where the matching Event field is defined
+          ...(!filter || filter === 'all'
+            ? {}
+            : {
+                [filter + '_not']: null,
+              }),
+        },
+        skip: pageParam * PAGE_SIZE,
+        first: PAGE_SIZE,
+      })
+      const mightHaveNextPage = data.projectEvents.length === PAGE_SIZE
+      return {
+        data,
+        nextCursor: mightHaveNextPage ? pageParam + PAGE_SIZE : undefined,
+      }
+    },
+    getNextPageParam: lastPage => {
+      return lastPage.nextCursor
+    },
+  })
+
+  return result
+}
 
 const CHAIN_OPTIONS = Object.entries(NETWORKS).map(
   ([chainId, networkInfo]) => ({

@@ -1,0 +1,29 @@
+query TrendingProjectsV4(
+  $where: Project_filter
+  $first: Int
+  $skip: Int
+  $orderBy: Project_orderBy
+  $orderDirection: OrderDirection
+  $block: Block_height
+) {
+  projects(
+    where: $where
+    first: $first
+    skip: $skip
+    orderBy: $orderBy
+    orderDirection: desc
+    block: $block
+  ) {
+    id
+    projectId
+    handle
+    createdAt
+    metadataUri
+    volume
+    trendingScore
+    paymentsCount
+    trendingPaymentsCount
+    trendingVolume
+    createdWithinTrendingWindow
+  }
+}

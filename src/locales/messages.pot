@@ -995,9 +995,6 @@ msgstr ""
 msgid "Your project will appear as 'archived'."
 msgstr ""
 
-msgid "Chain id"
-msgstr ""
-
 msgid "<0>Up next, you'll set your project's payout and token issuance rules.</0><1>With unlocked ruleset cycles, you can edit your project's rules at any time.</1><2>With locked rulesets, you can lock your project's rules for a period of time (like 3 minutes, 2 years, or 14 days), helping you build trust with your supporters.</2><3>This choice isn't permanent — you can switch between locked and unlocked rulesets in the future.</3>"
 msgstr ""
 

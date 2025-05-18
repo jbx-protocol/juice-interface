@@ -20,7 +20,7 @@ export default function TokenPieChart({
   size,
 }: {
   tokenSupply: bigint | undefined
-  participants: ParticipantsQuery['participants']['items'] | undefined
+  participants: ParticipantsQuery['participants'] | undefined
   size: number
 }) {
   const { themeOption } = useContext(ThemeContext)
@@ -41,7 +41,7 @@ export default function TokenPieChart({
     )
 
     const _chartData: Entry[] = visibleWallets.map(w => ({
-      wallet: w.address,
+      wallet: w.wallet.id,
       balance: parseFloat(fromWad(w.balance)),
       percent:
         parseFloat(fromWad(w.balance)) / parseFloat(fromWad(tokenSupply)),

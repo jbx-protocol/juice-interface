@@ -8,7 +8,7 @@ export function useConnect() {
   const { connect: connectWagmi } = useConnectWagmi()
 
   const _connect = useCallback(
-    async (opts: ConnectOptions) => {
+    async (opts?: ConnectOptions) => {
       const walletState = await connect(opts)
       const wagmiConnector = walletState[0]?.wagmiConnector
       if (wagmiConnector) {

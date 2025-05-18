@@ -266,14 +266,10 @@ export async function formatWithMetadata({
 }> {
   const { metadataUri } = sgProject
 
-  const _metadataUri = metadataUri?.includes('ipfs://')
-    ? metadataUri.split('ipfs://')[1]
-    : metadataUri
-
   // if metadataUri is missing or invalid, or no retries remaining for unresolved metadata
   if (
-    !_metadataUri ||
-    !isIpfsCID(_metadataUri) ||
+    !metadataUri ||
+    !isIpfsCID(metadataUri) ||
     (dbProject?._hasUnresolvedMetadata && dbProject?._metadataRetriesLeft === 0)
   ) {
     return {
@@ -309,7 +305,7 @@ export async function formatWithMetadata({
   try {
     // We need to use a timeout here, because if the object can't be found the request may never resolve. We use 30 seconds to stay well below the max of 60 seconds for vercel edge functions.
     const { data: metadata } = await ipfsGatewayFetch<ProjectMetadata>(
-      _metadataUri,
+      metadataUri,
       {
         timeout: 30000,
       },
@@ -352,8 +348,8 @@ export async function formatWithMetadata({
 }
 
 // BigNumber values are stored as strings. To sort by these they must have an equal number of digits, so we pad them with leading 0s up to a 32 char length.
-function padBigNumForSort(bn: string | null) {
-  return (bn || '0').padStart(32, '0')
+function padBigNumForSort(bn: string) {
+  return bn.padStart(32, '0')
 }
 
 export function formatSGProjectForDB(

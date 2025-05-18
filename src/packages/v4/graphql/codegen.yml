@@ -1,14 +1,7 @@
 overwrite: true
-schema: https://bendystraw.xyz
+schema: ${NEXT_PUBLIC_V4_SEPOLIA_SUBGRAPH_URL}
 documents: 'src/packages/v4/graphql/queries/**/*.graphql'
 generates:
-  src/generated/v4/graphql.ts:
-    plugins:
-      - 'typescript'
-      - 'typescript-operations'
-      - 'typescript-react-apollo'
-      - add:
-          content: "import { BigNumber } from '@ethersproject/bignumber'"
   src/packages/v4/graphql/client/:
     preset: 'client'
   src/packages/v4/graphql/graphql.schema.json:

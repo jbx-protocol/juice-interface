@@ -1,4 +1,5 @@
 import { Session, useSupabaseClient } from '@supabase/auth-helpers-react'
+
 import { AuthAPI } from 'lib/api/auth'
 import { useCallback } from 'react'
 import { Database } from 'types/database.types'
@@ -29,10 +30,10 @@ export const useWalletSignIn = () => {
   return useCallback(async () => {
     if (wallet.chainUnsupported) {
       const walletChanged = await wallet.changeNetworks()
-      if (!walletChanged) {
-        console.error('Wallet did not change networks')
-        throw new Error('Wallet did not change networks')
-      }
+      // if (!walletChanged) {
+      //   console.error('Wallet did not change networks')
+      //   throw new Error('Wallet did not change networks')
+      // }
     }
 
     if (!wallet.signer || !wallet.userAddress) {

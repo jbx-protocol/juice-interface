@@ -62,7 +62,7 @@ export function TokensSectionDiff() {
     <DiffSection
       content={
         <div className="mb-5 flex flex-col gap-3 text-sm">
-          {mintRateHasDiff && currentMintRateAfterDiscountRateApplied ? (
+          {mintRateHasDiff && currentMintRateAfterDiscountRateApplied !== undefined ? (
             <FundingCycleListItem
               name={t`Total issuance rate`}
               value={
@@ -80,7 +80,7 @@ export function TokensSectionDiff() {
             />
           ) : null}
 
-          {discountRateHasDiff && currentDiscountRate ? (
+          {discountRateHasDiff && currentDiscountRate !== undefined ? (
             <FundingCycleListItem
               name={t`Issuance cut percent`}
               value={`${newDiscountRate}%`}
@@ -88,7 +88,7 @@ export function TokensSectionDiff() {
             />
           ) : null}
 
-          {redemptionHasDiff && currentRedemptionRate ? (
+          {redemptionHasDiff && currentRedemptionRate !== undefined ? (
             <FundingCycleListItem
               name={t`Cash out tax rate`}
               value={`${newRedemptionRate}%`}
@@ -120,7 +120,7 @@ export function TokensSectionDiff() {
             />
           ) : null}
 
-          {reservedRateHasDiff && currentReservedRate ? (
+          {reservedRateHasDiff && (currentReservedRate !== undefined) ? (
             <FundingCycleListItem
               name={t`Reserved rate`}
               value={

@@ -1,3 +1,5 @@
+import { JBSplit, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
+
 import { Trans } from '@lingui/macro'
 import { useWatch } from 'antd/lib/form/Form'
 import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
@@ -5,7 +7,6 @@ import { FormItems } from 'components/formItems'
 import { ItemNoInput } from 'components/formItems/ItemNoInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
-import { JBSplit, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
 import { V4EditReservedTokens } from 'packages/v4/components/V4EditReservedTokens'
 import { totalSplitsPercent } from 'packages/v4/utils/v4Splits'
 import { useState } from 'react'
@@ -56,6 +57,10 @@ export function ReservedTokensField() {
           <FormItems.ProjectReserved
             hideLabel
             name="reservedPercent"
+            onChange={(val: number | undefined) => {
+              editCycleForm?.setFieldsValue({ reservedPercent: val })
+              setFormHasUpdated(true)
+            }}
             issuanceRate={totalIssuanceRate}
             value={reservedTokens}
             hideExplainer

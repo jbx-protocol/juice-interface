@@ -3,6 +3,7 @@ import {
   useJBRuleset,
   useJBTokenContext,
 } from 'juice-sdk-react'
+
 import round from 'lodash/round'
 import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { splitsListsHaveDiff } from 'packages/v4/utils/v4Splits'
@@ -33,6 +34,7 @@ export const useTokensSectionValues = () => {
   const newMintRate = formValues.issuanceRate
 
   const newReservedRate = formValues.reservedPercent
+
   const newReservedSplits = formValues.reservedTokensSplits
   const newDiscountRate = formValues.weightCutPercent
   const newRedemptionRate = formValues.cashOutTaxRate
@@ -48,15 +50,15 @@ export const useTokensSectionValues = () => {
   const currentTokenTransfers = Boolean(initialFormData?.tokenTransfers)
 
   const onlyDiscountRateApplied =
-    (upcomingRuleset &&
-      newMintRate &&
+    (upcomingRuleset !== undefined &&
+      newMintRate !== undefined &&
       round(upcomingRuleset?.weight.toFloat(), 4) === round(newMintRate, 4)) ||
     ruleset?.duration === 0
 
   const mintRateHasDiff = !onlyDiscountRateApplied
 
   const reservedRateHasDiff = Boolean(
-    currentReservedRate && newReservedRate !== currentReservedRate,
+    newReservedRate !== currentReservedRate,
   )
 
   const reservedSplitsHasDiff = splitsListsHaveDiff(
@@ -65,11 +67,11 @@ export const useTokensSectionValues = () => {
   )
 
   const discountRateHasDiff = Boolean(
-    currentDiscountRate && newDiscountRate !== currentDiscountRate,
+    newDiscountRate !== currentDiscountRate,
   )
 
   const redemptionHasDiff =
-    currentRedemptionRate && newRedemptionRate !== currentRedemptionRate
+    newRedemptionRate !== currentRedemptionRate
 
   const allowMintingHasDiff = Boolean(newAllowMinting !== currentAllowMinting)
 

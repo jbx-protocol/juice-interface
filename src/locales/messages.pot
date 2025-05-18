@@ -2843,6 +2843,9 @@ msgstr ""
 msgid "Create a project payer address"
 msgstr ""
 
+msgid "Pay gas on:"
+msgstr ""
+
 msgid "NFTs are burned when they are redeemed."
 msgstr ""
 
@@ -3174,6 +3177,9 @@ msgid "Accessible via the URL <0>{exampleHandleUrl}</0>."
 msgstr ""
 
 msgid "Project tags"
+msgstr ""
+
+msgid "Get edit quote"
 msgstr ""
 
 msgid "Deploy NFT collection"

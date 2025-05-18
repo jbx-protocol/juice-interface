@@ -1,9 +1,68 @@
 import { ETH_CURRENCY_ID, NATIVE_TOKEN } from 'juice-sdk-core'
+
 import round from 'lodash/round'
 import { issuanceRateFrom } from 'packages/v2v3/utils/math'
 import { parseWad } from 'utils/format/formatNumber'
 import { otherUnitToSeconds } from 'utils/format/formatTime'
 import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
+
+export type EditCycleTxArgs = readonly [
+  projectId: bigint,
+  rulesetConfigurations: {
+    mustStartAtOrAfter: number
+    duration: number
+    weight: bigint
+    weightCutPercent: number
+    approvalHook: `0x${string}`
+    metadata: {
+      reservedPercent: number
+      cashOutTaxRate: number
+      baseCurrency: number
+      pausePay: boolean
+      pauseRedeem: boolean
+      pauseCreditTransfers: boolean
+      allowOwnerMinting: boolean
+      allowSetCustomToken: boolean
+      allowTerminalMigration: boolean
+      allowSetTerminals: boolean
+      allowSetController: boolean
+      allowAddAccountingContext: boolean
+      allowAddPriceFeed: boolean
+      ownerMustSendPayouts: boolean
+      holdFees: boolean
+      useTotalSurplusForCashOuts: boolean
+      useDataHookForPay: boolean
+      useDataHookForCashOut: boolean
+      dataHook: `0x${string}`
+      metadata: number
+      allowCrosschainSuckerExtension: boolean
+    }
+    splitGroups: {
+      groupId: bigint
+      splits: {
+        preferAddToBalance: boolean
+        percent: number
+        projectId: bigint
+        beneficiary: `0x${string}`
+        lockedUntil: number
+        hook: `0x${string}`
+      }[]
+    }[]
+    fundAccessLimitGroups: {
+      terminal: `0x${string}`
+      token: `0x${string}`
+      payoutLimits: {
+        amount: bigint
+        currency: number
+      }[]
+      surplusAllowances: {
+        amount: bigint
+        currency: number
+      }[]
+    }[]
+  }[],
+  memo: string
+]
 
 export function transformEditCycleFormFieldsToTxArgs({
   formValues,
@@ -15,7 +74,7 @@ export function transformEditCycleFormFieldsToTxArgs({
   primaryNativeTerminal: `0x${string}`
   tokenAddress: `0x${string}`
   projectId: bigint
-}) {
+}): EditCycleTxArgs {
   const now = round(new Date().getTime() / 1000)
   const mustStartAtOrAfter = now
 

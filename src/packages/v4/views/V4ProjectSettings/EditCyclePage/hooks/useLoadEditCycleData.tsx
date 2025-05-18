@@ -120,7 +120,6 @@ export const useLoadEditCycleData = () => {
   // ✅ EFFECT DEPENDS ONLY ON STABLE FORM DATA
   useEffect(() => {
     if (!memoizedFormData || initialFormData) return
-
     setInitialFormData(memoizedFormData)
     editCycleForm.setFieldsValue(memoizedFormData)
   }, [memoizedFormData, initialFormData, editCycleForm])

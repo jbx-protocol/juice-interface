@@ -1,16 +1,22 @@
 import { Trans, t } from '@lingui/macro'
+import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
+import { useJBChainId, useJBContractContext, useSuckers } from 'juice-sdk-react'
+import { EditCycleTxArgs, transformEditCycleFormFieldsToTxArgs } from 'packages/v4/utils/editRuleset'
+import { useEffect, useState } from 'react'
 
+import { BigNumber } from '@ethersproject/bignumber'
 import { Form } from 'antd'
+import ETHAmount from 'components/currency/ETHAmount'
 import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import TransactionModal from 'components/modals/TransactionModal'
 import { useWallet } from 'hooks/Wallet'
-import { useJBChainId } from 'juice-sdk-react'
+import type { RelayrPostBundleResponse } from 'juice-sdk-react'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { CreateCollapse } from 'packages/v4/components/Create/components/CreateCollapse/CreateCollapse'
-import { useEditRulesetTx } from 'packages/v4/hooks/useEditRulesetTx'
-import { useState } from 'react'
 import { emitErrorNotification } from 'utils/notifications'
 import { useChainId } from 'wagmi'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
+import { useOmnichainEditCycle } from '../hooks/useOmnichainEditCycle'
 import { TransactionSuccessModal } from '../TransactionSuccessModal'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
 import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
@@ -40,72 +46,132 @@ export function ReviewConfirmModal({
   const formHasChanges =
     detailsSectionHasDiff || payoutsSectionHasDiff || tokensSectionHasDiff
 
-  const editRulesetTx = useEditRulesetTx()
-
   const { changeNetworks } = useWallet()
   const chainId = useJBChainId()
   const walletChainId = useChainId()
   const walletConnectedToWrongChain = chainId !== walletChainId
 
-  const handleConfirm = async () => {
-    setConfirmLoading(true)
+  // Omnichain edit state
+  const { getEditQuote, sendRelayrTx, getRelayrBundle } = useOmnichainEditCycle()
+  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId | undefined>(chainId)
+  const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
+  const [txQuoteLoading, setTxQuoteLoading] = useState(false)
+  const [txSigning, setTxSigning] = useState(false)
 
-    if (walletConnectedToWrongChain) {
-      if (chainId) {
-        try {
-          await changeNetworks(chainId)
-          setConfirmLoading(false)
-        } catch (error) {
-          console.error(error)
-          setConfirmLoading(false)
-          emitErrorNotification(`Error changing networks: ${error}`)
-        }
+  const { data: suckers } = useSuckers()
+
+  const projectChains = suckers?.map(s => s.peerChainId) || []
+
+  const txQuoteCostHex = txQuote?.payment_info.find(p => Number(p.chain) === selectedGasChain)?.amount
+  const txQuoteCost = txQuoteCostHex ? BigInt(txQuoteCostHex) : null
+
+  // Fetch omnichain edit quote
+  const { contracts } = useJBContractContext()
+
+  const getQuote = async () => {
+    setTxQuoteLoading(true)
+    try {
+      const formVals = editCycleForm!.getFieldsValue(true)
+      if (!contracts.primaryNativeTerminal.data) throw new Error('Terminal not ready')
+      
+      const editData: Record<number, EditCycleTxArgs> = {}
+      
+      if (!suckers || suckers.length === 0) {
+        throw new Error('No project chains available')
+      }
+      
+      for (const sucker of suckers) {
+        const chainId = sucker.peerChainId
+        const chainProjectId = sucker.projectId
+        
+        // Calculate specific args for this chain using its projectId
+        const chainArgs = transformEditCycleFormFieldsToTxArgs({
+          formValues: formVals,
+          primaryNativeTerminal: contracts.primaryNativeTerminal.data,
+          tokenAddress: NATIVE_TOKEN,
+          projectId: BigInt(chainProjectId),
+        })
+        
+        editData[chainId as JBChainId] = chainArgs
+      }
+      
+      const quote = await getEditQuote(editData, projectChains)
+      setTxQuote(quote!)    
+    } catch (e) {
+      emitErrorNotification((e as Error).message)
+    } finally {
+      setTxQuoteLoading(false)
+    }
+  }
+
+  // Confirm omnichain edit
+  const handleConfirmOmni = async () => {
+    // If quote isn't fetched yet, get it
+    if (!txQuote) return getQuote()
+    
+    // Check if wallet is connected to the right chain
+    if (walletConnectedToWrongChain && selectedGasChain) {
+      try {
+        await changeNetworks(selectedGasChain)
+      } catch (error) {
+        console.error(error)
+        emitErrorNotification(`Error changing networks: ${error}`)
         return
       }
     }
-
-    editRulesetTx(editCycleForm?.getFieldsValue(true), {
-      onTransactionPending: () => null,
-      onTransactionConfirmed: () => {
-        editCycleForm?.resetFields()
-        setConfirmLoading(false)
-        setEditCycleSuccessModalOpen(true)
-        onClose()
-      },
-      onTransactionError: (error: unknown) => {
-        console.error(error)
-        setConfirmLoading(false)
-        emitErrorNotification(`Error launching ruleset: ${error}`)
-      },
-    })
+    setConfirmLoading(true)
+    setTxSigning(true)
+    try {
+      // Find payment info for selected chain
+      const payment = txQuote.payment_info.find(p => Number(p.chain) === selectedGasChain)
+      if (!payment) {
+        throw new Error('No payment info found for selected chain')
+      }
+      
+      // Send the relayr transaction
+      await sendRelayrTx(payment)
+      
+      // Start polling for transaction status
+      getRelayrBundle.startPolling(txQuote.bundle_uuid)
+      
+    } catch (error) {
+      console.error(error)
+      emitErrorNotification(`Error launching ruleset: ${error}`)
+    } finally {
+      setTxSigning(false)
+    }
   }
+
+  // Poll and handle completion
+  useEffect(() => {
+    if (getRelayrBundle.isComplete) {
+      // Reset form and show success modal
+      editCycleForm!.resetFields()
+      setConfirmLoading(false)
+      setEditCycleSuccessModalOpen(true)
+      onClose()
+    } else if (getRelayrBundle.error) {
+      // Handle error
+      console.error(getRelayrBundle.error)
+      setConfirmLoading(false)
+      emitErrorNotification(`Error deploying changes: ${getRelayrBundle.error}`)
+    }
+  }, [getRelayrBundle.isComplete, getRelayrBundle.error, editCycleForm, onClose])
 
   const panelProps = { className: 'text-lg' }
 
   return (
-    <>
+    <>      
       <TransactionModal
         open={open}
         title={<Trans>Review & confirm</Trans>}
-        destroyOnClose
-        onOk={handleConfirm}
-        okText={
-          walletConnectedToWrongChain ? (
-            <Trans>Change networks to deploy</Trans>
-          ) : (
-            <Trans>Deploy changes</Trans>
-          )
-        }
+        onOk={handleConfirmOmni}
+        okText={!txQuote ? <Trans>Get edit quote</Trans> : <Trans>Deploy changes</Trans>}
         okButtonProps={{ disabled: !formHasChanges }}
+        confirmLoading={confirmLoading || txQuoteLoading || txSigning}
         cancelButtonProps={{ hidden: true }}
         onCancel={onClose}
-        confirmLoading={confirmLoading}
-      >
-        <p className="text-secondary text-sm">
-          <Trans>
-            Check your changes carefully. Each deploy will incur a gas fee.
-          </Trans>
-        </p>
+      >      
         <CreateCollapse>
           <CreateCollapse.Panel
             key={0}
@@ -158,6 +224,18 @@ export function ReviewConfirmModal({
             showCount={true}
           />
         </Form.Item>
+        {txQuote ? (
+          <div className="mb-4 mt-10">
+            <div className="flex items-center justify-between">
+              <span><Trans>Gas quote</Trans>:</span>
+              <ETHAmount amount={txQuoteCost ? BigNumber.from(txQuoteCost.toString()) : BigNumber.from(0)} />
+            </div>
+            <div className="mt-2 flex items-center justify-between">
+              <span><Trans>Pay gas on:</Trans></span>
+              <ChainSelect value={selectedGasChain} onChange={setSelectedGasChain} chainIds={projectChains} showTitle/>
+            </div>
+          </div>
+        ): null}
       </TransactionModal>
       <TransactionSuccessModal
         open={editCycleSuccessModalOpen}

@@ -1,7 +1,6 @@
 import { Trans, t } from '@lingui/macro'
 import { DEADLINE_EXPLANATION, RULESET_EXPLANATION } from 'components/strings'
 
-import { Badge } from 'components/Badge'
 import Loading from 'components/Loading'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
@@ -9,14 +8,26 @@ import { CreateBadge } from './components/CreateBadge'
 import { FundingCyclesPage } from './components/pages/FundingCycles/FundingCyclesPage'
 import { NftRewardsPage } from './components/pages/NftRewards/NftRewardsPage'
 import { PayoutsPage } from './components/pages/PayoutsPage/PayoutsPage'
+import { LoadCreateStateFromFile } from './components/pages/ProjectDetails/LoadCreateStateFromFile'
 import { ProjectDetailsPage } from './components/pages/ProjectDetails/ProjectDetailsPage'
 import { ProjectTokenPage } from './components/pages/ProjectToken/ProjectTokenPage'
 import { ReconfigurationRulesPage } from './components/pages/ReconfigurationRules/ReconfigurationRulesPage'
 import { DeploySuccess } from './components/pages/ReviewDeploy/components/DeploySuccess'
 import { ReviewDeployPage } from './components/pages/ReviewDeploy/ReviewDeployPage'
+import { SaveCreateStateToFile } from './components/pages/ReviewDeploy/SaveCreateStateToFile'
 import { Wizard } from './components/Wizard/Wizard'
 import { DeployProjectButtonText } from './DeployProjectButtonText'
 import { useLoadingInitialStateFromQuery } from './hooks/useLoadInitialStateFromQuery'
+
+// Component to combine save and load icons
+const SaveLoadIcons = () => {
+  return (
+    <div className="flex items-center gap-1">
+      <SaveCreateStateToFile />
+      <LoadCreateStateFromFile />
+    </div>
+  )
+}
 
 export default function Create() {
   const router = useRouter()
@@ -50,11 +61,12 @@ export default function Create() {
       <h1 className="mb-0 text-center font-heading text-base font-medium uppercase text-black dark:text-slate-100">
         <span className="inline-flex gap-2">
           <Trans>Create a project</Trans>
-          <Badge variant="info">V4</Badge>
         </span>
       </h1>
+      <div className="flex justify-end max-w-5xl"><SaveLoadIcons /></div>
       {/* TODO: Remove wizard-create once form item css override is replaced */}
       <div className="wizard-create">
+
         <Wizard className="pb-28" doneText={<DeployProjectButtonText />}>
           <Wizard.Page
             name="projectDetails"

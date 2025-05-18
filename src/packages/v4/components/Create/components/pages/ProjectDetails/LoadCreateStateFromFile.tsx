@@ -1,8 +1,8 @@
+import { Button, Tooltip } from 'antd'
 import React, { useCallback, useRef } from 'react'
 
 import { UploadOutlined } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
-import { Button } from 'antd'
 
 export const LoadCreateStateFromFile: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -30,13 +30,14 @@ export const LoadCreateStateFromFile: React.FC = () => {
 
   return (
     <>
-      <Button
-        type="default"
-        icon={<UploadOutlined />}
-        onClick={() => fileInputRef.current?.click()}
-      >
-        <span><Trans>Load draft</Trans></span>
-      </Button>
+      <Tooltip title={<Trans>Load draft</Trans>}>
+        <Button
+          type="text"
+          icon={<UploadOutlined />}
+          onClick={() => fileInputRef.current?.click()}
+          aria-label="Load draft"
+        />
+      </Tooltip>
       <input
         ref={fileInputRef}
         type="file"

@@ -1,21 +1,22 @@
+import { ConnectOptions } from '@web3-onboard/core'
 import { useConnectWallet } from '@web3-onboard/react'
-import { useEffect } from 'react'
+import { useCallback } from 'react'
 import { useConnect as useConnectWagmi } from 'wagmi'
 
 export function useConnect() {
-  const [{ wallet }, connect] = useConnectWallet()
+  const [, connect] = useConnectWallet()
   const { connect: connectWagmi } = useConnectWagmi()
 
-  /**
-   * Patch in wagmi connector to web3-onboard connector. Whenever the wallet changes, sync wagmi
-   *
-   * TODO this is firing way too much, but whatevs
-   */
-  useEffect(() => {
-    if (wallet?.wagmiConnector) {
-      connectWagmi({ connector: wallet.wagmiConnector })
-    }
-  }, [wallet, connectWagmi])
+  const _connect = useCallback(
+    async (opts: ConnectOptions) => {
+      const walletState = await connect(opts)
+      const wagmiConnector = walletState[0]?.wagmiConnector
+      if (wagmiConnector) {
+        await connectWagmi({ connector: wagmiConnector })
+      }
+    },
+    [connect, connectWagmi],
+  )
 
-  return connect
+  return _connect
 }

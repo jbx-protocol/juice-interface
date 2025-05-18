@@ -10,42 +10,44 @@ import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
 import { TokenAmount } from 'components/TokenAmount'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
-import { NativeTokenValue } from 'juice-sdk-react'
-import { OrderDirection, Participant_OrderBy, ParticipantsDocument } from 'packages/v4/graphql/client/graphql'
-import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
+import { useParticipantsQuery } from 'generated/v4/graphql'
+import { NativeTokenValue, useJBChainId } from 'juice-sdk-react'
+import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { useEffect, useState } from 'react'
 import { formatPercent } from 'utils/format/formatNumber'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { DownloadTokenHoldersModal } from './DownloadTokenHoldersModal'
 
-interface ParticipantOption {
-  label: string
-  value: Participant_OrderBy
+type Participant = {
+  volume: bigint
+  lastPaidTimestamp: number
+  balance: bigint
+  creditBalance: bigint
+  address: string
 }
 
-type Participant = {
-  volume: bigint;
-  lastPaidTimestamp: number;
-  balance: bigint;
-  stakedBalance: bigint;
-  id: string;
-  wallet: {
-      id: string;
-  };
+type OrderBy = keyof Pick<
+  Participant,
+  'volume' | 'lastPaidTimestamp' | 'balance'
+>
+
+interface ParticipantOption {
+  label: string
+  value: OrderBy
 }
 
 const participantOptions = (tokenText: string): ParticipantOption[] => [
   {
     label: t`${tokenText} balance`,
-    value: Participant_OrderBy.balance,
+    value: 'balance',
   },
   {
     label: t`Total paid`,
-    value: Participant_OrderBy.volume,
+    value: 'volume',
   },
   {
     label: t`Last paid`,
-    value: Participant_OrderBy.lastPaidTimestamp,
+    value: 'lastPaidTimestamp',
   },
 ]
 
@@ -60,14 +62,15 @@ export default function HoldersList({
   tokenSymbol: string | undefined
   totalTokenSupply: bigint | undefined
 }) {
-  const [sortPayerReports, setSortPayerReports] = useState<Participant_OrderBy>(
-    Participant_OrderBy.balance,
-  )
-  const [sortPayerReportsDirection, setSortPayerReportsDirection] =
-    useState<OrderDirection>(OrderDirection.desc)
-  const [pageNumber, setPageNumber] = useState<number>(0)
+  const [sortPayerReports, setSortPayerReports] = useState<OrderBy>('balance')
+  const [sortPayerReportsDirection, setSortPayerReportsDirection] = useState<
+    'asc' | 'desc'
+  >('desc')
+  const [endCursor, setEndCursor] = useState<string | null>(null)
   const [participants, setParticipants] = useState<Participant[]>([])
   const [downloadModalVisible, setDownloadModalVisible] = useState<boolean>()
+
+  const chainId = useJBChainId()
 
   const pOptions = participantOptions(
     tokenSymbolText({
@@ -80,34 +83,35 @@ export default function HoldersList({
     option => option.value === sortPayerReports,
   )
 
-  const { data, isLoading } = useSubgraphQuery({
-    document: ParticipantsDocument,
+  const { data, loading } = useParticipantsQuery({
+    client: bendystrawClient,
     variables: {
       orderDirection: sortPayerReportsDirection,
       orderBy: sortPayerReports,
-      first: pageSize,
-      skip: pageNumber * pageSize,
+      limit: pageSize,
+      after: endCursor,
       where: {
         projectId: Number(projectId),
+        chainId: Number(chainId),
       },
     },
-    enabled: Boolean(projectId),
+    skip: !projectId || !chainId,
   })
 
   useEffect(() => {
-    if (data?.participants) {
+    if (data?.participants.items) {
       setParticipants(prev => {
-        const newParticipants = data.participants.filter(
-          newParticipant => !prev.some(prevParticipant => prevParticipant.id === newParticipant.id)
+        const newParticipants = data.participants.items.filter(
+          newParticipant =>
+            !prev.some(
+              prevParticipant =>
+                prevParticipant.address === newParticipant.address,
+            ),
         )
         return [...prev, ...newParticipants]
       })
     }
   }, [data])
-
-  const loadMore = () => {
-    setPageNumber(prevPage => prevPage + 1)
-  }
 
   return (
     <div>
@@ -119,7 +123,7 @@ export default function HoldersList({
           value={participantOption}
           onChange={v => {
             setSortPayerReports(v.value)
-            setPageNumber(0)
+            setEndCursor(null)
             setParticipants([])
           }}
         />
@@ -127,17 +131,15 @@ export default function HoldersList({
           className="cursor-pointer p-2"
           onClick={() => {
             setSortPayerReportsDirection(
-              sortPayerReportsDirection === OrderDirection.asc
-                ? OrderDirection.desc
-                : OrderDirection.asc,
+              sortPayerReportsDirection === 'asc' ? 'desc' : 'asc',
             )
-            setPageNumber(0)
+            setEndCursor(null)
             setParticipants([])
           }}
         >
           {
             // these icons are visually confusing and reversed on purpose
-            sortPayerReportsDirection === OrderDirection.asc ? (
+            sortPayerReportsDirection === 'asc' ? (
               <SortDescendingOutlined />
             ) : (
               <SortAscendingOutlined />
@@ -155,12 +157,12 @@ export default function HoldersList({
       {participants.map(p => (
         <div
           className="mb-5 border-b border-smoke-200 pb-5 dark:border-grey-600"
-          key={p.id}
+          key={p.address}
         >
           <div className="flex content-between justify-between">
             <div>
               <div className="mr-2 leading-6">
-                <EthereumAddress address={p.wallet.id} />
+                <EthereumAddress address={p.address} />
               </div>
               <div className="text-xs text-grey-400 dark:text-slate-200">
                 <Trans>
@@ -171,19 +173,21 @@ export default function HoldersList({
 
             <div className="text-right">
               <div className="leading-6">
-                <TokenAmount 
+                <TokenAmount
                   amountWad={BigNumber.from(p.balance)} // TODO: make TokenAmount take bigint
-                  tokenSymbol={tokenSymbol} 
+                  tokenSymbol={tokenSymbol}
                 />{' '}
-                ({formatPercent(
-                    BigNumber.from(p.balance),  // TODO: make formatPercent take bigint
-                    BigNumber.from(totalTokenSupply)
-                  )}%)
+                (
+                {formatPercent(
+                  BigNumber.from(p.balance), // TODO: make formatPercent take bigint
+                  BigNumber.from(totalTokenSupply),
+                )}
+                %)
               </div>
               <div className="text-xs text-grey-400 dark:text-slate-200">
                 <Trans>
                   <TokenAmount
-                    amountWad={BigNumber.from(p.stakedBalance)} // TODO: make TokenAmount take bigint
+                    amountWad={BigNumber.from(p.creditBalance)} // TODO: make TokenAmount take bigint
                     tokenSymbol={tokenSymbol}
                   />{' '}
                   unclaimed
@@ -194,16 +198,16 @@ export default function HoldersList({
         </div>
       ))}
 
-      {isLoading && pageNumber === 0 && (
+      {loading && (
         <div>
           <Loading />
         </div>
       )}
 
-      {participants.length > 0 && participants.length % pageSize === 0 && (
+      {participants.length > 0 && data?.participants.pageInfo.hasNextPage && (
         <div
           className="cursor-pointer text-center text-grey-500 dark:text-grey-300"
-          onClick={loadMore}
+          onClick={() => setEndCursor(data.participants.pageInfo.endCursor)}
         >
           <Trans>Load more...</Trans>
         </div>

@@ -1,6 +1,7 @@
 import { Ether, JBProjectToken } from 'juice-sdk-core'
-import { ProjectEventsQuery } from 'packages/v4/graphql/client/graphql'
+import { ActivityEventsQuery } from 'packages/v4/graphql/client/graphql'
 
+// TODO Event types can be updated to bendystraw schema, currently there are mismatched event names + properties
 export type EventType =
   | 'payEvent'
   | 'addToBalanceEvent'
@@ -23,6 +24,7 @@ export interface Event {
   txHash: string
   from: string
   caller: string
+  chainId: number
 }
 
 export interface PayEvent extends Event {
@@ -142,7 +144,7 @@ function extractBaseEventData(event: any): AnyEvent {
     // @ts-ignore
     type: null,
     id: event.id,
-    projectId: event.project.id,
+    projectId: event.projectId,
     timestamp: event.timestamp,
     txHash: event.txHash,
     from: event.from,
@@ -150,135 +152,147 @@ function extractBaseEventData(event: any): AnyEvent {
   }
 }
 
+// TODO update AnyEvent types to match bendystraw
 export function transformEventData(
-  data: ProjectEventsQuery['projectEvents'][0],
+  data: ActivityEventsQuery['activityEvents']['items'][number],
 ): AnyEvent | null {
   if (data.payEvent) {
     return {
       ...extractBaseEventData(data.payEvent),
+      chainId: data.chainId,
       type: 'payEvent',
       amount: new Ether(BigInt(data.payEvent.amount)),
-      note: data.payEvent.note,
+      note: data.payEvent.memo || '',
       distributionFromProjectId: data.payEvent.distributionFromProjectId,
       beneficiary: data.payEvent.beneficiary,
       feeFromProject: data.payEvent.feeFromProject,
       beneficiaryTokenCount: new JBProjectToken(
-        BigInt(data.payEvent.beneficiaryTokenCount),
+        BigInt(data.payEvent.newlyIssuedTokenCount),
       ),
     }
   }
   if (data.addToBalanceEvent) {
     return {
       ...extractBaseEventData(data.addToBalanceEvent),
+      chainId: data.chainId,
       type: 'addToBalanceEvent',
       amount: new Ether(BigInt(data.addToBalanceEvent.amount)),
-      note: data.addToBalanceEvent.note,
+      note: data.addToBalanceEvent.memo,
     }
   }
   if (data.mintTokensEvent) {
     return {
       ...extractBaseEventData(data.mintTokensEvent),
+      chainId: data.chainId,
       type: 'mintTokensEvent',
-      amount: new Ether(BigInt(data.mintTokensEvent.amount)),
+      amount: new Ether(BigInt(data.mintTokensEvent.tokenCount)),
       beneficiary: data.mintTokensEvent.beneficiary,
-      note: data.mintTokensEvent.memo,
+      note: data.mintTokensEvent.memo || '',
     }
   }
-  if (data.cashOutEvent) {
+  if (data.cashOutTokensEvent) {
     return {
-      ...extractBaseEventData(data.cashOutEvent),
+      ...extractBaseEventData(data.cashOutTokensEvent),
+      chainId: data.chainId,
       type: 'cashOutEvent',
-      metadata: data.cashOutEvent.metadata,
-      holder: data.cashOutEvent.holder,
-      beneficiary: data.cashOutEvent.beneficiary,
-      cashOutCount: new Ether(BigInt(data.cashOutEvent.cashOutCount)),
-      reclaimAmount: new Ether(BigInt(data.cashOutEvent.reclaimAmount)),
+      metadata: data.cashOutTokensEvent.metadata,
+      holder: data.cashOutTokensEvent.holder,
+      beneficiary: data.cashOutTokensEvent.beneficiary,
+      cashOutCount: new Ether(BigInt(data.cashOutTokensEvent.cashOutCount)),
+      reclaimAmount: new Ether(BigInt(data.cashOutTokensEvent.reclaimAmount)),
     }
   }
-  if (data.deployedERC20Event) {
+  if (data.deployErc20Event) {
     return {
-      ...extractBaseEventData(data.deployedERC20Event),
+      ...extractBaseEventData(data.deployErc20Event),
+      chainId: data.chainId,
       type: 'deployedERC20Event',
-      symbol: data.deployedERC20Event.symbol,
-      address: data.deployedERC20Event.address,
+      symbol: data.deployErc20Event.symbol,
+      address: data.deployErc20Event.token,
     }
   }
   if (data.projectCreateEvent) {
     return {
       ...extractBaseEventData(data.projectCreateEvent),
+      chainId: data.chainId,
       type: 'projectCreateEvent',
     }
   }
-  if (data.distributePayoutsEvent) {
+  if (data.sendPayoutsEvent) {
     return {
-      ...extractBaseEventData(data.distributePayoutsEvent),
+      ...extractBaseEventData(data.sendPayoutsEvent),
+      chainId: data.chainId,
       type: 'distributePayoutsEvent',
-      amount: new Ether(BigInt(data.distributePayoutsEvent.amount)),
-      amountPaidOut: new Ether(
-        BigInt(data.distributePayoutsEvent.amountPaidOut),
-      ),
-      rulesetCycleNumber: data.distributePayoutsEvent.rulesetCycleNumber,
-      rulesetId: data.distributePayoutsEvent.rulesetId,
-      fee: new Ether(BigInt(data.distributePayoutsEvent.fee)),
+      amount: new Ether(BigInt(data.sendPayoutsEvent.amount)),
+      amountPaidOut: new Ether(BigInt(data.sendPayoutsEvent.amountPaidOut)),
+      rulesetCycleNumber: BigInt(data.sendPayoutsEvent.rulesetCycleNumber),
+      rulesetId: BigInt(data.sendPayoutsEvent.rulesetId),
+      fee: new Ether(BigInt(data.sendPayoutsEvent.fee)),
     }
   }
-  if (data.distributeReservedTokensEvent) {
+  if (data.sendReservedTokensToSplitsEvent) {
     return {
-      ...extractBaseEventData(data.distributeReservedTokensEvent),
+      ...extractBaseEventData(data.sendReservedTokensToSplitsEvent),
+      chainId: data.chainId,
       type: 'distributeReservedTokensEvent',
-      rulesetCycleNumber: data.distributeReservedTokensEvent.rulesetCycleNumber,
-      tokenCount: data.distributeReservedTokensEvent.tokenCount,
+      rulesetCycleNumber:
+        data.sendReservedTokensToSplitsEvent.rulesetCycleNumber,
+      tokenCount: data.sendReservedTokensToSplitsEvent.tokenCount,
     }
   }
-  if (data.distributeToReservedTokenSplitEvent) {
+  if (data.sendReservedTokensToSplitEvent) {
     return {
-      ...extractBaseEventData(data.distributeToReservedTokenSplitEvent),
+      ...extractBaseEventData(data.sendReservedTokensToSplitEvent),
+      chainId: data.chainId,
       type: 'distributeToReservedTokenSplitEvent',
-      tokenCount: data.distributeToReservedTokenSplitEvent.tokenCount,
+      tokenCount: data.sendReservedTokensToSplitEvent.tokenCount,
       preferAddToBalance:
-        data.distributeToReservedTokenSplitEvent.preferAddToBalance,
-      percent: data.distributeToReservedTokenSplitEvent.percent,
-      splitProjectId: data.distributeToReservedTokenSplitEvent.splitProjectId,
-      beneficiary: data.distributeToReservedTokenSplitEvent.beneficiary,
-      lockedUntil: data.distributeToReservedTokenSplitEvent.lockedUntil,
+        data.sendReservedTokensToSplitEvent.preferAddToBalance,
+      percent: data.sendReservedTokensToSplitEvent.percent,
+      splitProjectId: data.sendReservedTokensToSplitEvent.splitProjectId,
+      beneficiary: data.sendReservedTokensToSplitEvent.beneficiary,
+      lockedUntil: data.sendReservedTokensToSplitEvent.lockedUntil,
     }
   }
-  if (data.distributeToPayoutSplitEvent) {
+  if (data.sendPayoutToSplitEvent) {
     return {
-      ...extractBaseEventData(data.distributeToPayoutSplitEvent),
+      ...extractBaseEventData(data.sendPayoutToSplitEvent),
+      chainId: data.chainId,
       type: 'distributeToPayoutSplitEvent',
-      amount: new Ether(BigInt(data.distributeToPayoutSplitEvent.amount)),
-      preferAddToBalance: data.distributeToPayoutSplitEvent.preferAddToBalance,
-      percent: data.distributeToPayoutSplitEvent.percent,
-      splitProjectId: data.distributeToPayoutSplitEvent.splitProjectId,
-      beneficiary: data.distributeToPayoutSplitEvent.beneficiary,
-      lockedUntil: data.distributeToPayoutSplitEvent.lockedUntil,
+      amount: new Ether(BigInt(data.sendPayoutToSplitEvent.amount)),
+      preferAddToBalance: data.sendPayoutToSplitEvent.preferAddToBalance,
+      percent: data.sendPayoutToSplitEvent.percent,
+      splitProjectId: data.sendPayoutToSplitEvent.splitProjectId,
+      beneficiary: data.sendPayoutToSplitEvent.beneficiary,
+      lockedUntil: data.sendPayoutToSplitEvent.lockedUntil,
     }
   }
   if (data.useAllowanceEvent) {
     return {
       ...extractBaseEventData(data.useAllowanceEvent),
+      chainId: data.chainId,
       type: 'useAllowanceEvent',
-      rulesetId: data.useAllowanceEvent.rulesetId,
+      rulesetId: BigInt(data.useAllowanceEvent.rulesetId),
       rulesetCycleNumber: data.useAllowanceEvent.rulesetCycleNumber,
       beneficiary: data.useAllowanceEvent.beneficiary,
       amount: new Ether(BigInt(data.useAllowanceEvent.amount)),
       distributedAmount: new Ether(
-        BigInt(data.useAllowanceEvent.distributedAmount),
+        BigInt(data.useAllowanceEvent.amountPaidOut),
       ),
       netDistributedamount: new Ether(
-        BigInt(data.useAllowanceEvent.netDistributedamount),
+        BigInt(data.useAllowanceEvent.netAmountPaidOut),
       ),
-      note: data.useAllowanceEvent.memo,
+      note: data.useAllowanceEvent.memo || '',
     }
   }
   if (data.burnEvent) {
     return {
       ...extractBaseEventData(data.burnEvent),
+      chainId: data.chainId,
       type: 'burnEvent',
-      holder: data.burnEvent.holder,
+      holder: data.burnEvent.from,
       amount: new Ether(BigInt(data.burnEvent.amount)),
-      stakedAmount: new Ether(BigInt(data.burnEvent.stakedAmount)),
+      stakedAmount: new Ether(BigInt(data.burnEvent.creditAmount)),
       erc20Amount: new Ether(BigInt(data.burnEvent.erc20Amount)),
     }
   }

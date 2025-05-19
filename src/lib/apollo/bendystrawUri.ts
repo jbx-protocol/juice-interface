@@ -7,5 +7,9 @@ export const bendystrawUri = () => {
 
   const url = new URL(uri)
 
+  if (url.href.endsWith('/')) {
+    return url.href.substring(0, url.href.length - 1)
+  }
+
   return url.href
 }

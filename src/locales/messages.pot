@@ -1907,6 +1907,9 @@ msgstr ""
 msgid "The address that should receive the tokens minted from paying this project."
 msgstr ""
 
+msgid "Network"
+msgstr ""
+
 msgid "Transparency"
 msgstr ""
 

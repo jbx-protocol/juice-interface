@@ -1,3 +1,8 @@
+import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
+import { useJBChainId, useJBContractContext, useJBProjectId, useSuckers, useWriteJbMultiTerminalAddToBalanceOf } from 'juice-sdk-react'
+import { useContext, useState } from 'react'
+import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
+
 import { Trans } from '@lingui/macro'
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { Form } from 'antd'
@@ -6,27 +11,38 @@ import TransactorButton from 'components/buttons/TransactorButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
-import { NATIVE_TOKEN } from 'juice-sdk-core'
-import { useJBContractContext, useWriteJbMultiTerminalAddToBalanceOf } from 'juice-sdk-react'
 import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { useContext, useState } from 'react'
 import { parseWad } from 'utils/format/formatNumber'
-import { emitErrorNotification } from 'utils/notifications'
-import { reloadWindow } from 'utils/windowUtils'
+import { ChainSelect } from '../../../../components/ChainSelect'
 
 export function AddToProjectBalanceForm() {
-  const { contracts, projectId } = useJBContractContext()
+  const defaultChainId = useJBChainId()
+  const { data: suckers } = useSuckers()
+  const [selectedChainId, setSelectedChainId] = useState<JBChainId | undefined>(defaultChainId)
+  const { contracts } = useJBContractContext()
+
+  const { projectId } = useJBProjectId(selectedChainId)
   const { addTransaction } = useContext(TxHistoryContext)
 
   const [loadingAddToBalance, setLoadingAddToBalance] = useState<boolean>()
 
-  const { userAddress } = useWallet()
+  const { userAddress, chain: walletChain, changeNetworks, isConnected } = useWallet()
+  const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
+  const walletConnectedToWrongChain = isConnected && selectedChainId !== walletChainId
 
   const [addToBalanceForm] = Form.useForm<{ amount: string }>()
 
   const { writeContractAsync: writeAddToBalance } =
   useWriteJbMultiTerminalAddToBalanceOf()
   
+  const handleChainChange = (chainId: JBChainId) => {
+    setSelectedChainId(chainId)
+  }
+
+  async function handleNetworkChange() {
+    await changeNetworks(selectedChainId)
+    emitInfoNotification(`Network changed to ${selectedChainId}, please try again.`)
+  }
 
   async function addToBalance() {
     const amount = parseWad(addToBalanceForm.getFieldValue('amount')).toBigInt()
@@ -52,15 +68,15 @@ export function AddToProjectBalanceForm() {
       const hash = await writeAddToBalance({
         address: contracts.primaryNativeTerminal.data,
         args,
+        chainId: selectedChainId,
       })
 
-      addTransaction?.('Send payouts', { hash })
+      addTransaction?.('Add to balance', { hash })
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
       })
 
-      reloadWindow()
-
+      emitInfoNotification(`Transaction successful!`)
       setLoadingAddToBalance(false)
     } catch (e) {
       setLoadingAddToBalance(false)
@@ -79,6 +95,18 @@ export function AddToProjectBalanceForm() {
           Transfer ETH from your wallet to this project without minting tokens.
         </Trans>
       </p>
+      
+      {suckers && suckers.length > 1 && (
+        <Form.Item label={<Trans>Network</Trans>}>
+          <ChainSelect
+            className="w-full"
+            value={selectedChainId}
+            onChange={handleChainChange}
+            chainIds={suckers.map(sucker => sucker.peerChainId)}
+            showTitle
+          />
+        </Form.Item>
+      )}
 
       <Form.Item name="amount" label={<Trans>Transfer amount</Trans>}>
         <FormattedNumberInput
@@ -87,11 +115,15 @@ export function AddToProjectBalanceForm() {
         />
       </Form.Item>
       <TransactorButton
-        onClick={() => addToBalance()}
+        onClick={walletConnectedToWrongChain ? handleNetworkChange : addToBalance}
         loading={loadingAddToBalance}
         size="small"
         type="primary"
-        text={<Trans>Transfer ETH to project</Trans>}
+        text={
+          walletConnectedToWrongChain
+            ? <Trans>Change network to transfer</Trans>
+            : <Trans>Transfer ETH to project</Trans>
+        }
         disabled={!userAddress}
         connectWalletText={<Trans>Connect wallet to transfer ETH</Trans>}
       />

@@ -1,9 +1,13 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
-import { useJBContractContext, useJBTokenContext } from 'juice-sdk-react'
-import { OrderDirection, Participant_OrderBy, ParticipantsDocument } from 'packages/v4/graphql/client/graphql'
-import { useSubgraphQuery } from 'packages/v4/graphql/useSubgraphQuery'
+import { useParticipantsQuery } from 'generated/v4/graphql'
+import {
+  useJBChainId,
+  useJBContractContext,
+  useJBTokenContext,
+} from 'juice-sdk-react'
+import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { isZeroAddress } from 'utils/address'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useV4TotalTokenSupply } from '../../../hooks/useV4TotalTokenSupply'
@@ -18,6 +22,7 @@ export const V4TokenHoldersModal = ({
   onClose: VoidFunction
 }) => {
   const { projectId } = useJBContractContext()
+  const chainId = useJBChainId()
 
   const { token } = useJBTokenContext()
   const tokenAddress = token?.data?.address
@@ -25,16 +30,17 @@ export const V4TokenHoldersModal = ({
 
   const { data: totalTokenSupply } = useV4TotalTokenSupply()
 
-  const { data, isLoading } = useSubgraphQuery({
-    document: ParticipantsDocument,
+  const { data, loading } = useParticipantsQuery({
+    client: bendystrawClient,
     variables: {
-      orderDirection: OrderDirection.desc,
-      orderBy: Participant_OrderBy.balance,
+      orderDirection: 'desc',
+      orderBy: 'balance',
       where: {
         projectId: Number(projectId),
+        chainId: Number(chainId),
       },
     },
-    enabled: Boolean(projectId && open),
+    skip: !projectId || !open || !chainId,
   })
 
   const allParticipants = data?.participants
@@ -63,13 +69,13 @@ export const V4TokenHoldersModal = ({
                 </Trans>
               </div>
             )}
-            <div>{allParticipants?.length} wallets</div>
+            <div>{allParticipants?.items.length} wallets</div>
           </div>
 
           <div className="flex items-center justify-center">
             <TokenDistributionChart
-              participants={allParticipants}
-              isLoading={isLoading}
+              participants={allParticipants?.items}
+              isLoading={loading}
               tokenSupply={totalTokenSupply}
             />
           </div>

@@ -1,4 +1,7 @@
 import { Trans, t } from '@lingui/macro'
+import { JBChainId, useJBChainId } from 'juice-sdk-react'
+import { useEffect, useState } from 'react'
+import { useProjectDispatch, useProjectSelector } from '../../redux/hooks'
 import {
   PayProjectModalFormValues,
   usePayProjectModal,
@@ -9,13 +12,14 @@ import ExternalLink from 'components/ExternalLink'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import { Formik } from 'formik'
 import { useWallet } from 'hooks/Wallet'
-import { JBChainId, useJBChainId } from 'juice-sdk-react'
+import { useSuckers } from 'juice-sdk-react'
 import Image from 'next/legacy/image'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
 import { twMerge } from 'tailwind-merge'
 import { helpPagePath } from 'utils/helpPagePath'
 import { emitInfoNotification } from 'utils/notifications'
-import { useProjectSelector } from '../../redux/hooks'
+import { payRedeemActions } from '../../redux/payRedeemSlice'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
 import { usePayAmounts } from './hooks/usePayAmounts'
@@ -34,12 +38,23 @@ export const PayProjectModal: React.FC = () => {
   } = usePayProjectModal()
   const { formattedTotalAmount } = usePayAmounts()
   const defaultChainId = useJBChainId()
-  const selectedChainId =
-    useProjectSelector(state => state.payRedeem.chainId) ?? defaultChainId
+  const reduxChainId = useProjectSelector(state => state.payRedeem.chainId)
+  const [selectedChainId, setSelectedChainId] = useState<JBChainId | undefined>(reduxChainId ?? defaultChainId)
+  const dispatch = useProjectDispatch()
+  const { data: suckers } = useSuckers()
+
+  useEffect(() => {
+    setSelectedChainId(reduxChainId)
+  }, [open])
 
   const { chain: walletChain, changeNetworks, connect } = useWallet()
 
   const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
+
+  const handleChainChange = (chainId: JBChainId) => {
+    setSelectedChainId(chainId)
+    dispatch(payRedeemActions.setChainId(chainId))
+  }
 
   return (
     <Formik<PayProjectModalFormValues>
@@ -132,6 +147,19 @@ export const PayProjectModal: React.FC = () => {
               ) : (
                 <>
                   <div className="flex flex-col divide-y divide-grey-200 dark:divide-slate-500">
+                    {suckers && suckers.length > 1 && (
+                      <div className="flex items-center justify-between py-6">
+                        <span className="font-medium"><Trans>Network</Trans></span>
+                        <ChainSelect
+                          className="min-w-[175px]"
+                          value={selectedChainId}
+                          onChange={handleChainChange}
+                          chainIds={suckers.map(sucker => sucker.peerChainId)}
+                          showTitle
+                        />
+                      </div>
+                    )}
+
                     <AmountSection />
 
                     <ReceiveSection className="py-6" />

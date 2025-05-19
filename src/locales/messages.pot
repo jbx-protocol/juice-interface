@@ -953,6 +953,9 @@ msgstr ""
 msgid "Changes will take effect in your next cycle as long as it starts after your edit deadline."
 msgstr ""
 
+msgid "Change network to transfer"
+msgstr ""
+
 msgid "Reserved token recipients cannot exceed 100%"
 msgstr ""
 
@@ -1905,6 +1908,9 @@ msgid "DeSci"
 msgstr ""
 
 msgid "The address that should receive the tokens minted from paying this project."
+msgstr ""
+
+msgid "Network"
 msgstr ""
 
 msgid "Transparency"

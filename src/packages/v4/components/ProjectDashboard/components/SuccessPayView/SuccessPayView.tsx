@@ -72,16 +72,16 @@ export const SuccessPayView = () => {
           </div>
         </div>
 
-        {nftsPurchased && nftPaymentSuccessModal && (
+        {nftsPurchased && nftPaymentSuccessModal ? (
           <div className="flex flex-col gap-4 py-10 text-start">
             <h3 className="mb-0 font-heading text-xl font-medium">
               <Trans>A message from {name}</Trans>
             </h3>
             <p>{nftPaymentSuccessModal.content}</p>
           </div>
-        )}
+        ): null}
 
-        {(nftsPurchased || tokensReceivedDuringTx) && (
+        {(nftsPurchased || tokensReceivedDuringTx) ? (
           <div className="flex flex-col gap-4 py-10 text-start">
             <h3 className="mb-0 font-heading text-xl font-medium">
               <Trans>Your NFTs & Rewards</Trans>
@@ -93,7 +93,7 @@ export const SuccessPayView = () => {
               <SuccessTokensItem />
             </div>
           </div>
-        )}
+        ): null}
       </div>
     </div>
   )

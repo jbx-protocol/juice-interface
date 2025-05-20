@@ -24,7 +24,7 @@ export function useConnect() {
        * This may be flaky, idk.
        */
       const connector = connectors.find(
-        c => c.name.toLowerCase() === connectedWalletLabel.toLowerCase(),
+        c => c.name.toLowerCase() === connectedWalletLabel?.toLowerCase(),
       )
       if (connector) {
         await connectWagmi({ connector })

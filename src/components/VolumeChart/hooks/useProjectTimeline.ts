@@ -172,8 +172,9 @@ export function useProjectTimeline({
       ? v4QueryResult.previous.items[0]
       : undefined
     // last point within the timestamp range
-    const final =
-      v4QueryResult.range.items[v4QueryResult.range.items.length - 1]
+    const final = v4QueryResult.range.items.length
+      ? v4QueryResult.range.items[v4QueryResult.range.items.length - 1]
+      : undefined
 
     // extrapolate first point. If project was created before timestamp window, use previous point data. Otherwise use project.createdAt
     const firstPoint = previous
@@ -193,9 +194,9 @@ export function useProjectTimeline({
     // extrapolate last point to fill in data since last project update.
     const lastPoint = {
       timestamp: timestamps?.[timestamps.length - 1],
-      volume: wadToFloat(final.volume),
-      balance: wadToFloat(final.balance),
-      trendingScore: wadToFloat(final.trendingScore),
+      volume: wadToFloat(final?.volume),
+      balance: wadToFloat(final?.balance),
+      trendingScore: wadToFloat(final?.trendingScore),
     }
 
     return [

@@ -63,7 +63,7 @@ export default function Create() {
           <Trans>Create a project</Trans>
         </span>
       </h1>
-      <div className="flex justify-end max-w-5xl"><SaveLoadIcons /></div>
+      <div className="flex justify-end m-auto max-w-3xl mt-[-32px]"><SaveLoadIcons /></div>
       {/* TODO: Remove wizard-create once form item css override is replaced */}
       <div className="wizard-create">
 

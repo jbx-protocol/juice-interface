@@ -3500,6 +3500,9 @@ msgstr ""
 msgid "Connect"
 msgstr ""
 
+msgid "<0>You'll first get a quote to see the current cost of deploying your changes across all chains.</0> You'll need to approve a signature for each chain to generate the quote. Once ready, you can pay the quoted amount on your preferred chain."
+msgstr ""
+
 msgid "Contract permissions"
 msgstr ""
 
@@ -3672,6 +3675,9 @@ msgid "After {0} (your first ruleset), your project will not issue any tokens un
 msgstr ""
 
 msgid "Project ENS name"
+msgstr ""
+
+msgid "<0>You'll first get a quote to see the current cost of deploying your project across all chains.</0> You'll need to approve a signature for each chain to generate the quote. Once ready, you can pay the quoted amount on your preferred chain."
 msgstr ""
 
 msgid "Go to project"

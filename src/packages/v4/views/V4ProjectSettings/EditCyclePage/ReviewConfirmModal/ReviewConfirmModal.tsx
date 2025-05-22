@@ -171,7 +171,7 @@ export function ReviewConfirmModal({
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
         cancelButtonProps={{ hidden: true }}
         onCancel={onClose}
-      >      
+      >           
         <CreateCollapse>
           <CreateCollapse.Panel
             key={0}
@@ -217,13 +217,20 @@ export function ReviewConfirmModal({
         </div>
         <Form.Item name="memo">
           <JuiceTextArea
-            rows={4}
+            rows={1}
             name="memo"
             placeholder={t`Add an on-chain note about this cycle.`}
             maxLength={256}
             showCount={true}
           />
         </Form.Item>
+        {!txQuote && (
+          <div className="mb-6 rounded-lg bg-bluebs-50 p-4 text-sm dark:bg-slate-800">
+            <Trans>
+              <p>You'll first get a quote to see the current cost of deploying your changes across all chains.</p> You'll need to approve a signature for each chain to generate the quote. Once ready, you can pay the quoted amount on your preferred chain.
+            </Trans>
+          </div>
+        )}
         {txQuote ? (
           <div className="mb-4 mt-10">
             <div className="flex items-center justify-between">

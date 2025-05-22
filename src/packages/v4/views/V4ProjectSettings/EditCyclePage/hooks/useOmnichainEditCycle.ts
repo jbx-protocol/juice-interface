@@ -1,5 +1,5 @@
-import { JBChainId, createSalt, jbProjectDeploymentAddresses } from 'juice-sdk-core'
-import { jbControllerAbi, useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from 'juice-sdk-react'
+import { JBChainId, createSalt, jbOmnichainDeployerAbi, jbProjectDeploymentAddresses } from 'juice-sdk-core'
+import { useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from 'juice-sdk-react'
 import { Address, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
@@ -25,7 +25,7 @@ export function useOmnichainEditCycle() {
       if (!args) throw new Error(`No edit data for chain ${chainId}`)
       // ensure same salt in args if needed by transformEditCycleFormFieldsToTxArgs
       console.info('Edit cycle tx args', args)
-      const encoded = encodeFunctionData({ abi: jbControllerAbi, functionName: 'queueRulesetsOf', args })
+      const encoded = encodeFunctionData({ abi: jbOmnichainDeployerAbi, functionName: 'queueRulesetsOf', args })
       const to = jbProjectDeploymentAddresses.JBController[chainId] as Address
       return {
         data: { from: userAddress, to, value: 0n, gas: 200_000n * BigInt(chainIds.length), data: encoded },

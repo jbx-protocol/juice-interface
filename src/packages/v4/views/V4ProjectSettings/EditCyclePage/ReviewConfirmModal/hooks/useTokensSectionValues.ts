@@ -52,8 +52,7 @@ export const useTokensSectionValues = () => {
   const onlyDiscountRateApplied =
     (upcomingRuleset !== undefined &&
       newMintRate !== undefined &&
-      round(upcomingRuleset?.weight.toFloat(), 4) === round(newMintRate, 4)) ||
-    ruleset?.duration === 0
+      round(upcomingRuleset?.weight.toFloat(), 4) === round(newMintRate, 4))
 
   const mintRateHasDiff = !onlyDiscountRateApplied
 

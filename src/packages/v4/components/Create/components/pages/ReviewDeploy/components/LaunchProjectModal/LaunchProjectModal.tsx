@@ -312,6 +312,13 @@ export const LaunchProjectModal: React.FC<{
                     </Button>
                   </div>
                 </div>
+                {!txQuote ? (
+                  <div className="mb-6 rounded-lg bg-bluebs-50 p-4 text-sm dark:bg-slate-800">
+                    <Trans>
+                      <p>You'll first get a quote to see the current cost of deploying your project across all chains.</p> You'll need to approve a signature for each chain to generate the quote. Once ready, you can pay the quoted amount on your preferred chain.
+                    </Trans>
+                  </div>
+                ): null}
                 <div className="flex-1">
                   <Trans>Pay gas on</Trans>
                   <ChainSelect

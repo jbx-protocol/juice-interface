@@ -1,30 +1,30 @@
-import { Trans, t } from '@lingui/macro'
-import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
-import { useJBChainId, useJBContractContext, useSuckers } from 'juice-sdk-react'
 import { EditCycleTxArgs, transformEditCycleFormFieldsToTxArgs } from 'packages/v4/utils/editRuleset'
+import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
+import { Trans, t } from '@lingui/macro'
 import { useEffect, useState } from 'react'
+import { useJBChainId, useJBContractContext, useSuckers } from 'juice-sdk-react'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { Form } from 'antd'
-import ETHAmount from 'components/currency/ETHAmount'
-import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
-import TransactionModal from 'components/modals/TransactionModal'
-import { useWallet } from 'hooks/Wallet'
-import type { RelayrPostBundleResponse } from 'juice-sdk-react'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { CreateCollapse } from 'packages/v4/components/Create/components/CreateCollapse/CreateCollapse'
-import { emitErrorNotification } from 'utils/notifications'
-import { useChainId } from 'wagmi'
-import { useEditCycleFormContext } from '../EditCycleFormContext'
-import { useOmnichainEditCycle } from '../hooks/useOmnichainEditCycle'
-import { TransactionSuccessModal } from '../TransactionSuccessModal'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
-import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
-import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
-import { useTokensSectionValues } from './hooks/useTokensSectionValues'
+import ETHAmount from 'components/currency/ETHAmount'
+import { Form } from 'antd'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
 import { PayoutsSectionDiff } from './PayoutsSectionDiff'
+import type { RelayrPostBundleResponse } from 'juice-sdk-react'
 import { SectionCollapseHeader } from './SectionCollapseHeader'
 import { TokensSectionDiff } from './TokensSectionDiff'
+import TransactionModal from 'components/modals/TransactionModal'
+import { TransactionSuccessModal } from '../TransactionSuccessModal'
+import { emitErrorNotification } from 'utils/notifications'
+import { useChainId } from 'wagmi'
+import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
+import { useEditCycleFormContext } from '../EditCycleFormContext'
+import { useOmnichainEditCycle } from '../hooks/useOmnichainEditCycle'
+import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
+import { useTokensSectionValues } from './hooks/useTokensSectionValues'
+import { useWallet } from 'hooks/Wallet'
 
 export function ReviewConfirmModal({
   open,
@@ -225,11 +225,11 @@ export function ReviewConfirmModal({
           />
         </Form.Item>
         {!txQuote && (
-          <div className="mb-6 rounded-lg bg-bluebs-50 p-4 text-sm dark:bg-slate-800">
+          <p className="rounded-lg py-4 text-sm">
             <Trans>
               <p>You'll first get a quote to see the current cost of deploying your changes across all chains.</p> You'll need to approve a signature for each chain to generate the quote. Once ready, you can pay the quoted amount on your preferred chain.
             </Trans>
-          </div>
+          </p>
         )}
         {txQuote ? (
           <div className="mb-4 mt-10">

@@ -1,12 +1,12 @@
-import { Trans } from '@lingui/macro'
-import { Form } from 'antd'
-import { useWatch } from 'antd/lib/form/Form'
-import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
 import { CurrencyName } from 'constants/currency'
+import { Form } from 'antd'
 import { JBSplit } from 'juice-sdk-core'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
+import { Trans } from '@lingui/macro'
 import { useEditCycleFormContext } from './EditCycleFormContext'
+import { useWatch } from 'antd/lib/form/Form'
 
 export function PayoutsSection() {
   const { editCycleForm } = useEditCycleFormContext()

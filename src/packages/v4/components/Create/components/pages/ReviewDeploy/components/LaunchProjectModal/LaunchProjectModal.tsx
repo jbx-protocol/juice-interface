@@ -6,7 +6,8 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon,
 } from '@heroicons/react/24/solid'
-import { Trans, t } from '@lingui/macro'
+import { ContractFunctionArgs, hexToBigInt } from 'viem'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   RelayrPostBundleResponse,
   jb721TiersHookProjectDeployerAbi,
@@ -14,35 +15,34 @@ import {
   useGetRelayrTxBundle,
   useSendRelayrTx,
 } from 'juice-sdk-react'
-import React, { useCallback, useEffect, useState } from 'react'
-import { ContractFunctionArgs, hexToBigInt } from 'viem'
+import { Trans, t } from '@lingui/macro'
 import { mainnet, sepolia } from 'viem/chains'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from 'antd'
-import ETHAmount from 'components/currency/ETHAmount'
-import Loading from 'components/Loading'
-import { JuiceModal } from 'components/modals/JuiceModal'
-import { NETWORKS } from 'constants/networks'
-import { JBChainId } from 'juice-sdk-core'
-import { uploadProjectMetadata } from 'lib/api/ipfs'
-import { useRouter } from 'next/router'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import ETHAmount from 'components/currency/ETHAmount'
+import { JBChainId } from 'juice-sdk-core'
+import { JuiceModal } from 'components/modals/JuiceModal'
+import Loading from 'components/Loading'
+import { NETWORKS } from 'constants/networks'
+import { TxLoadingContent } from './TxLoadingContent'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
+import { emitErrorNotification } from 'utils/notifications'
+import { getProjectIdFromLaunchReceipt } from 'packages/v4/hooks/useLaunchProjectTx'
+import { getTransactionReceipt } from 'viem/actions'
+import { twMerge } from 'tailwind-merge'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useConfig } from 'wagmi'
+import { useDeployOmnichainProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
+import { useDispatch } from 'react-redux'
 import { useIsNftProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useIsNftProject'
 import { useNftProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useNftProjectLaunchData'
-import { useUploadNftRewards } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useUploadNftRewards'
-import { useDeployOmnichainProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
+import { useRouter } from 'next/router'
 import { useStandardProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
-import { getProjectIdFromLaunchReceipt } from 'packages/v4/hooks/useLaunchProjectTx'
-import { useDispatch } from 'react-redux'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
-import { twMerge } from 'tailwind-merge'
-import { emitErrorNotification } from 'utils/notifications'
-import { getTransactionReceipt } from 'viem/actions'
-import { useConfig } from 'wagmi'
-import { TxLoadingContent } from './TxLoadingContent'
+import { useUploadNftRewards } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useUploadNftRewards'
 
 const JUICEBOX_DOMAIN = 'juicebox'
 
@@ -284,6 +284,13 @@ export const LaunchProjectModal: React.FC<{
               ))}
             </div>
           </div>
+          {!txQuote ? (
+            <p className="rounded-lg py-4 text-sm">
+              <Trans>
+                <p>You'll first get a quote to see the current cost of deploying your project across all chains.</p> You'll need to approve a signature for each chain to generate the quote. Once ready, you can pay the quoted amount on your preferred chain.
+              </Trans>
+            </p>
+          ): null}
           {txQuoteLoading || txQuoteCost ? (
             <div className="py-6">
               <div className="flex items-start gap-4 pb-3">
@@ -312,13 +319,7 @@ export const LaunchProjectModal: React.FC<{
                     </Button>
                   </div>
                 </div>
-                {!txQuote ? (
-                  <div className="mb-6 rounded-lg bg-bluebs-50 p-4 text-sm dark:bg-slate-800">
-                    <Trans>
-                      <p>You'll first get a quote to see the current cost of deploying your project across all chains.</p> You'll need to approve a signature for each chain to generate the quote. Once ready, you can pay the quoted amount on your preferred chain.
-                    </Trans>
-                  </div>
-                ): null}
+
                 <div className="flex-1">
                   <Trans>Pay gas on</Trans>
                   <ChainSelect

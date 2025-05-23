@@ -22,11 +22,11 @@ export const useLoadEditCycleData = () => {
   >(undefined)
 
   const { projectId, chainId } = useJBProjectId()
-  const { ruleset, rulesetMetadata } = useJBRuleset({ projectId, chainId })
-  const { ruleset: upcomingRuleset } = useJBUpcomingRuleset()
-  const { splits: reservedTokensSplits } = useV4ReservedSplits()
-  const { data: payoutSplits } = useV4CurrentPayoutSplits()
-  const { data: payoutLimit } = usePayoutLimit()
+  const { ruleset, rulesetMetadata, isLoading: rulesetLoading } = useJBRuleset({ projectId, chainId })
+  const { ruleset: upcomingRuleset, isLoading: upcomingRulesetLoading } = useJBUpcomingRuleset()
+  const { splits: reservedTokensSplits, isLoading: reservedSplitsLoading } = useV4ReservedSplits()
+  const { data: payoutSplits, isLoading: payoutsLoading } = useV4CurrentPayoutSplits()
+  const { data: payoutLimit, isLoading: payoutLimitLoading } = usePayoutLimit()
 
   const [editCycleForm] = Form.useForm<EditCycleFormFields>()
 
@@ -41,8 +41,8 @@ export const useLoadEditCycleData = () => {
   )
 
   const issuanceRate = useMemo(
-    () => (upcomingRuleset ? upcomingRuleset.weight?.toFloat() : undefined),
-    [upcomingRuleset]
+    () => (duration === 0 ? ruleset?.weight?.toFloat() : upcomingRuleset?.weight?.toFloat()),
+    [upcomingRuleset, ruleset, duration]
   )
 
   const reservedPercent = useMemo(
@@ -77,7 +77,12 @@ export const useLoadEditCycleData = () => {
       upcomingRuleset !== undefined &&
       payoutSplits !== undefined &&
       payoutLimit !== undefined &&
-      reservedTokensSplits !== undefined,
+      reservedTokensSplits !== undefined &&
+      !rulesetLoading &&
+      !upcomingRulesetLoading &&
+      !payoutsLoading &&
+      !payoutLimitLoading &&
+      !reservedSplitsLoading,
     [
       ruleset,
       rulesetMetadata,
@@ -85,27 +90,32 @@ export const useLoadEditCycleData = () => {
       payoutSplits,
       payoutLimit,
       reservedTokensSplits,
+      rulesetLoading,
+      upcomingRulesetLoading,
+      payoutsLoading,
+      payoutLimitLoading,
+      reservedSplitsLoading,
     ]
   )
 
   const memoizedFormData = useMemo(() => {
-    if (!isDataLoaded || !ruleset || !rulesetMetadata || !duration) return undefined
+    if (!isDataLoaded) return undefined
 
     return {
       duration: secondsToOtherUnit({
-        duration: duration,
+        duration: duration ?? 0,
         unit: deriveDurationUnit(duration),
       }),
       durationUnit: deriveDurationOption(duration),
-      approvalHook: ruleset.approvalHook,
-      allowSetTerminals: rulesetMetadata.allowSetTerminals,
-      allowSetController: rulesetMetadata.allowSetController,
-      allowTerminalMigration: rulesetMetadata.allowSetController,
-      pausePay: rulesetMetadata.pausePay,
+      approvalHook: ruleset?.approvalHook,
+      allowSetTerminals: rulesetMetadata?.allowSetTerminals,
+      allowSetController: rulesetMetadata?.allowSetController,
+      allowTerminalMigration: rulesetMetadata?.allowSetController,
+      pausePay: rulesetMetadata?.pausePay,
       payoutSplits: payoutSplits ?? [],
       payoutLimit: payoutLimitAmount,
       payoutLimitCurrency: V4CurrencyName(payoutLimit.currency) ?? 'ETH',
-      holdFees: rulesetMetadata.holdFees,
+      holdFees: rulesetMetadata?.holdFees,
       issuanceRate: issuanceRate,
       reservedPercent: reservedPercent,
       reservedTokensSplits: reservedTokensSplits ?? [],
@@ -133,7 +143,9 @@ export const useLoadEditCycleData = () => {
   ])
 
   useEffect(() => {
-    if (!isDataLoaded || initialFormData) return
+    if (!isDataLoaded || initialFormData) {
+      return
+    }
     setInitialFormData(memoizedFormData as EditCycleFormFields) 
     editCycleForm.setFieldsValue(memoizedFormData as EditCycleFormFields)
   }, [isDataLoaded, memoizedFormData, initialFormData, editCycleForm])

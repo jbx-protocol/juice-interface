@@ -1,11 +1,11 @@
 import { processUniqueSplits, v4GetProjectOwnerRemainderSplit } from 'packages/v4/utils/v4Splits'
 
-import { JBSplit as Split } from 'juice-sdk-core'
-import round from 'lodash/round'
-import { SplitProps } from 'packages/v4/components/SplitList/SplitItem'
-import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
-import { useMemo } from 'react'
 import { DiffedSplitItem } from './DiffedSplitItem'
+import { JBSplit as Split } from 'juice-sdk-core'
+import { SplitProps } from 'packages/v4/components/SplitList/SplitItem'
+import round from 'lodash/round'
+import { useMemo } from 'react'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 
 const JB_PERCENT_PRECISION = 2
 
@@ -57,8 +57,8 @@ export default function DiffedSplitList({
   const diffOwnerSplitHasPercent =
     diffOwnerSplit && roundedDiffOwnerSplitPercent !== 0
 
-  const ownerSplitIsNew = ownerSplit?.percent && !diffOwnerSplitHasPercent
-
+  const ownerSplitPercent = ownerSplit?.percent.value
+  const ownerSplitIsNew = ownerSplitPercent && ownerSplitPercent > 0 && !diffOwnerSplitHasPercent
   const currencyHasDiff = Boolean(
     oldCurrency && currency && (oldCurrency !== currency),
   )
@@ -95,7 +95,7 @@ export default function DiffedSplitList({
           />
         )
       })}
-      {ownerSplit?.percent ? (
+      {ownerSplit?.percent.value ? (
         <DiffedSplitItem
           props={{
             split: {

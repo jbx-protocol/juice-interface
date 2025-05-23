@@ -20,6 +20,7 @@ import { mainnet, sepolia } from 'viem/chains'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from 'antd'
+import { Callout } from 'components/Callout/Callout'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import ETHAmount from 'components/currency/ETHAmount'
@@ -285,11 +286,13 @@ export const LaunchProjectModal: React.FC<{
             </div>
           </div>
           {!txQuote ? (
-            <p className="rounded-lg py-4 text-sm">
-              <Trans>
-                <p>You'll first get a quote to see the current cost of deploying your project across all chains.</p> You'll need to approve a signature for each chain to generate the quote. Once ready, you can pay the quoted amount on your preferred chain.
-              </Trans>
-            </p>
+            <div className="rounded-lg py-4 text-sm">
+              <Callout.Info>
+                <Trans>
+                You'll be prompted a wallet signature for each of this project's chains before submitting the final transaction.
+                </Trans>
+              </Callout.Info>
+            </div>
           ): null}
           {txQuoteLoading || txQuoteCost ? (
             <div className="py-6">

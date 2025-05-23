@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useJBChainId, useJBContractContext, useSuckers } from 'juice-sdk-react'
 
 import { BigNumber } from '@ethersproject/bignumber'
+import { Callout } from 'components/Callout/Callout'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { CreateCollapse } from 'packages/v4/components/Create/components/CreateCollapse/CreateCollapse'
 import { DetailsSectionDiff } from './DetailsSectionDiff'
@@ -225,11 +226,13 @@ export function ReviewConfirmModal({
           />
         </Form.Item>
         {!txQuote && (
-          <p className="rounded-lg py-4 text-sm">
-            <Trans>
-              <p>You'll first get a quote to see the current cost of deploying your changes across all chains.</p> You'll need to approve a signature for each chain to generate the quote. Once ready, you can pay the quoted amount on your preferred chain.
-            </Trans>
-          </p>
+          <div className="mt-10 py-4 text-sm stroke-tertiary border-t rounded-none">
+              <Callout.Info>
+              <Trans>
+              You'll be prompted a wallet signature for each of this project's chains before submitting the final transaction.
+              </Trans>
+              </Callout.Info>
+          </div>
         )}
         {txQuote ? (
           <div className="mb-4 mt-10">

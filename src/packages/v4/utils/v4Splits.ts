@@ -1,10 +1,12 @@
 import * as constants from '@ethersproject/constants'
-import { JBSplit, SplitPortion, SPLITS_TOTAL_PERCENT } from 'juice-sdk-core'
-import isEqual from 'lodash/isEqual'
-import round from 'lodash/round'
-import { formatWad } from 'utils/format/formatNumber'
+
+import { JBSplit, SPLITS_TOTAL_PERCENT, SplitPortion } from 'juice-sdk-core'
+
 import { Hash } from 'viem'
+import { formatWad } from 'utils/format/formatNumber'
+import isEqual from 'lodash/isEqual'
 import { isFinitePayoutLimit } from './fundingCycle'
+import round from 'lodash/round'
 
 /**
  * Return a Split object that represents the remaining percentage allocated to the project owner.

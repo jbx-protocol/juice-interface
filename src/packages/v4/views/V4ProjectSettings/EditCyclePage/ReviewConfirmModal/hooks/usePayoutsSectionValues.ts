@@ -1,9 +1,9 @@
 import { CurrencyName } from 'constants/currency'
 import { JBSplit } from 'juice-sdk-core'
-import { distributionLimitsEqual } from 'packages/v4/utils/distributions'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
-import { splitsListsHaveDiff } from 'packages/v4/utils/v4Splits'
+import { distributionLimitsEqual } from 'packages/v4/utils/distributions'
 import { parseWad } from 'utils/format/formatNumber'
+import { splitsListsHaveDiff } from 'packages/v4/utils/v4Splits'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
 
 export const usePayoutsSectionValues = () => {

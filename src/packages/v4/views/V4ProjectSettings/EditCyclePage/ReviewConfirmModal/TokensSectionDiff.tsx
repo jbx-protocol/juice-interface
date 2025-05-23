@@ -1,18 +1,19 @@
 import { Trans, t } from '@lingui/macro'
 
-import { FundingCycleListItem } from 'components/FundingCycleListItem'
-import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
-import { emptySectionClasses } from './DetailsSectionDiff'
+import { AllowedValue } from './FormattedRulesetValues/AllowedValue'
 import { DiffSection } from './DiffSection'
 import DiffedSplitList from './DiffedSplits/DiffedSplitList'
-import { AllowedValue } from './FormattedRulesetValues/AllowedValue'
+import { FundingCycleListItem } from 'components/FundingCycleListItem'
 import { IssuanceRateValue } from './FormattedRulesetValues/Tokens/IssuanceRateValue'
+import { emptySectionClasses } from './DetailsSectionDiff'
+import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { useTokensSectionValues } from './hooks/useTokensSectionValues'
 
 export function TokensSectionDiff() {
   const {
     sectionHasDiff,
 
+    currentMintRate,
     newMintRate,
     mintRateHasDiff,
 
@@ -56,13 +57,11 @@ export function TokensSectionDiff() {
     )
   }
 
-  const currentMintRateAfterDiscountRateApplied = upcomingRuleset?.weight.toFloat()
-
   return (
     <DiffSection
       content={
         <div className="mb-5 flex flex-col gap-3 text-sm">
-          {mintRateHasDiff && currentMintRateAfterDiscountRateApplied !== undefined ? (
+          {mintRateHasDiff && currentMintRate !== undefined ? (
             <FundingCycleListItem
               name={t`Total issuance rate`}
               value={
@@ -73,7 +72,7 @@ export function TokensSectionDiff() {
               }
               oldValue={
                 <IssuanceRateValue
-                  value={currentMintRateAfterDiscountRateApplied}
+                  value={currentMintRate}
                   tokenSymbol={tokenSymbolPlural}
                 />
               }

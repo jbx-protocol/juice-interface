@@ -1,20 +1,22 @@
-import { Trans } from '@lingui/macro'
 import { Button, Form } from 'antd'
-import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
-import Loading from 'components/Loading'
-import EditCycleFormSection from 'components/Project/ProjectSettings/EditCycleFormSection'
-import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useJBChainId } from 'juice-sdk-react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { settingsPagePath } from 'packages/v4/utils/routes'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { helpPagePath } from 'utils/helpPagePath'
+
 import { DetailsSection } from './DetailsSection'
-import { useEditCycleFormContext } from './EditCycleFormContext'
+import EditCycleFormSection from 'components/Project/ProjectSettings/EditCycleFormSection'
+import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
+import Link from 'next/link'
+import Loading from 'components/Loading'
 import { PayoutsSection } from './PayoutsSection'
+import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { ReviewConfirmModal } from './ReviewConfirmModal'
 import { TokensSection } from './TokensSection'
+import { Trans } from '@lingui/macro'
+import { helpPagePath } from 'utils/helpPagePath'
+import { settingsPagePath } from 'packages/v4/utils/routes'
+import { useEditCycleFormContext } from './EditCycleFormContext'
+import { useJBChainId } from 'juice-sdk-react'
+import { useRouter } from 'next/router'
+
 export function EditCyclePage() {
   const [confirmModalOpen, setConfirmModalOpen] = useState<boolean>(false)
   const [firstRender, setFirstRender] = useState(true)
@@ -23,6 +25,7 @@ export function EditCyclePage() {
 
   const { editCycleForm, initialFormData, formHasUpdated, setFormHasUpdated } =
     useEditCycleFormContext()
+  
 
   // const { error } = useEditCycleFormHasError() TODO
 

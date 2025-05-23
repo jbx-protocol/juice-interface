@@ -4,12 +4,12 @@ import {
   useJBTokenContext,
 } from 'juice-sdk-react'
 
+import { EditCycleFormFields } from '../../EditCycleFormFields'
 import round from 'lodash/round'
-import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 import { splitsListsHaveDiff } from 'packages/v4/utils/v4Splits'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useEditCycleFormContext } from '../../EditCycleFormContext'
-import { EditCycleFormFields } from '../../EditCycleFormFields'
+import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
 
 export const useTokensSectionValues = () => {
   const { editCycleForm, initialFormData } = useEditCycleFormContext()
@@ -50,9 +50,9 @@ export const useTokensSectionValues = () => {
   const currentTokenTransfers = Boolean(initialFormData?.tokenTransfers)
 
   const onlyDiscountRateApplied =
-    (upcomingRuleset !== undefined &&
+    (currentMintRate !== undefined &&
       newMintRate !== undefined &&
-      round(upcomingRuleset?.weight.toFloat(), 4) === round(newMintRate, 4))
+      round(currentMintRate, 4) === round(newMintRate, 4))
 
   const mintRateHasDiff = !onlyDiscountRateApplied
 

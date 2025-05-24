@@ -1,20 +1,21 @@
 import { Trans, t } from '@lingui/macro'
 
-import { InformationCircleIcon } from '@heroicons/react/24/outline'
-import { currentCycleRemainingLengthTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
-import { UpcomingCycleChangesCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTab/UpcomingCycleChangesCallout'
-import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
-import { useSuckers } from 'juice-sdk-react'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { RulesetCountdownProvider } from 'packages/v4/contexts/RulesetCountdownProvider'
-import { useState } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { useRulesetCountdown } from '../../hooks/useRulesetCountdown'
-import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
-import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
-import { useV4UpcomingRulesetHasChanges } from './hooks/useV4UpcomingRulesetHasChanges'
+import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
+import { UpcomingCycleChangesCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTab/UpcomingCycleChangesCallout'
 import { V4ConfigurationDisplayCard } from './V4ConfigurationDisplayCard'
 import { V4PayoutsSubPanel } from './V4PayoutsSubPanel'
+import { currentCycleRemainingLengthTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
+import { twMerge } from 'tailwind-merge'
+import { useCountdownClock } from 'components/Project/hooks/useCountdownClock'
+import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
+import { useRulesetCountdown } from '../../hooks/useRulesetCountdown'
+import { useState } from 'react'
+import { useSuckers } from 'juice-sdk-react'
+import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
+import { useV4UpcomingRulesetHasChanges } from './hooks/useV4UpcomingRulesetHasChanges'
 
 function CountdownClock({ rulesetUnlocked }: { rulesetUnlocked: boolean }) {
   const { timeRemainingText } = useRulesetCountdown()
@@ -25,6 +26,18 @@ function CountdownClock({ rulesetUnlocked }: { rulesetUnlocked: boolean }) {
     return <Skeleton className="w-40" />
   }
   return <>{remainingTime}</>
+}
+
+// Countdown for upcoming start time
+function StartCountdown({
+  startEpochSeconds,
+}: {
+  startEpochSeconds: number | undefined
+}) {
+  const { remainingTimeText: time } = useCountdownClock((startEpochSeconds ?? 0) / 1000, true)
+  if (!time) return <Skeleton className="w-40" />
+
+  return <>{time}</>
 }
 
 export const V4CurrentUpcomingSubPanel = ({
@@ -121,13 +134,13 @@ export const V4CurrentUpcomingSubPanel = ({
           ) : null}
         </div>
         <div className="flex flex-col gap-4">
-          {id === 'upcoming' && (
+          {id === 'upcoming' && info.rulesetNumber !== 1 ? (
             <UpcomingCycleChangesCallout
               text={upcomingRulesetChangesCalloutText}
               loading={loading}
               hasChanges={hasChanges}
             />
-          )}
+          ): null}
 
           <div className="grid grid-cols-2 gap-4 md:flex">
             <TitleDescriptionDisplayCard
@@ -135,6 +148,17 @@ export const V4CurrentUpcomingSubPanel = ({
               title={t`Ruleset #`}
               description={info.rulesetNumber?.toString() ?? <Skeleton />}
             />
+            {id === 'upcoming' && info.rulesetNumber === 1 ? (
+              <TitleDescriptionDisplayCard
+                className="w-full md:max-w-[132px]"
+                title={t`Starts in`}
+                description={
+                  <StartCountdown
+                    startEpochSeconds={info.start}
+                  />
+                }
+              />
+            ) : null}
             <TitleDescriptionDisplayCard
               className="w-full md:w-fit"
               title={t`Status`}

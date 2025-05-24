@@ -1,4 +1,4 @@
-type Format = 'long' | 'short'
+type Format = 'long' | 'short' | 'minimal'
 type CaseFormat = 'sentence' | 'lower'
 export const timeSecondsToDateString = (
   timeInSeconds: number,
@@ -34,6 +34,25 @@ export const timeSecondsToDateString = (
       if (i === 3) {
         formatted = `${s} Second${s > 1 || s === 0 ? 's' : ''}`
         break
+      }
+      break
+    }
+    case 'minimal': {
+      // Show maximum of 2 units, starting with the most significant non-zero unit
+      const units = [
+        { value: days, suffix: 'd' },
+        { value: hours, suffix: 'h' },
+        { value: minutes, suffix: 'm' },
+        { value: seconds, suffix: 's' },
+      ]
+      const nonZeroUnits = units.filter(unit => unit.value > 0)
+
+      if (nonZeroUnits.length === 0) {
+        formatted = '0s'
+      } else {
+        // Take up to 2 most significant units
+        const relevantUnits = nonZeroUnits.slice(0, 2)
+        formatted = relevantUnits.map(unit => `${unit.value}${unit.suffix}`).join(' ')
       }
       break
     }

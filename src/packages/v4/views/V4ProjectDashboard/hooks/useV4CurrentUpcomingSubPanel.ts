@@ -1,14 +1,15 @@
-import { t } from '@lingui/macro'
 import {
   useJBProjectId,
   useJBRuleset,
   useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf,
 } from 'juice-sdk-react'
+
 import { V4ApprovalStatus } from 'models/approvalHooks'
-import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
-import { useMemo } from 'react'
+import { t } from '@lingui/macro'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
 import { useCyclesPanelSelectedChain } from '../V4ProjectTabs/V4CyclesPayoutsPanel/contexts/CyclesPanelSelectedChainContext'
+import { useJBUpcomingRuleset } from 'packages/v4/hooks/useJBUpcomingRuleset'
+import { useMemo } from 'react'
 
 export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
   const { selectedChainId } = useCyclesPanelSelectedChain()
@@ -20,6 +21,13 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
 
   const { ruleset: latestUpcomingRuleset, isLoading: upcomingRulesetsLoading } =
     useJBUpcomingRuleset(selectedChainId)
+
+  const start = useMemo(() => {
+    if (type === 'upcoming') {
+      return latestUpcomingRuleset?.start
+    }
+    return ruleset?.start
+  }, [type, latestUpcomingRuleset?.start, ruleset?.start])
 
   const { data: approvalStatus } =
     useReadJbRulesetsCurrentApprovalStatusForLatestRulesetOf()
@@ -87,5 +95,6 @@ export const useV4CurrentUpcomingSubPanel = (type: 'current' | 'upcoming') => {
       typeof approvalStatus !== 'undefined' &&
       approvalStatus !== null &&
       approvalStatus === V4ApprovalStatus.Approved,
+    start,
   }
 }

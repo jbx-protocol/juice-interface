@@ -1,8 +1,9 @@
-import { Tab } from '@headlessui/react'
-import { t } from '@lingui/macro'
 import { CyclesTab } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesTab'
-import { useMemo } from 'react'
+import { Tab } from '@headlessui/react'
 import { V4CurrentUpcomingSubPanel } from './V4CurrentUpcomingSubPanel'
+import { t } from '@lingui/macro'
+import { useMemo } from 'react'
+import { useV4CurrentUpcomingSubPanel } from '../../hooks/useV4CurrentUpcomingSubPanel'
 
 type V4CyclesSubPanel = {
   id: 'current' | 'upcoming' | 'history'
@@ -10,14 +11,20 @@ type V4CyclesSubPanel = {
 }
 
 export const V4CyclesPayoutsPanel = () => {
-  const tabs: V4CyclesSubPanel[] = useMemo(
-    () => [
+  const upcomingInfo = useV4CurrentUpcomingSubPanel('upcoming')
+  const tabs: V4CyclesSubPanel[] = useMemo(() => {
+    // If upcoming ruleset is cycle #1 (scheduled launch), hide "Current"
+    if (!upcomingInfo.loading && upcomingInfo.rulesetNumber === 1) {
+      return [
+        { id: 'upcoming', name: t`Upcoming` },
+      ]
+    }
+    return [
       { id: 'current', name: t`Current` },
       { id: 'upcoming', name: t`Upcoming` },
       // { id: 'history', name: t`History` },
-    ],
-    [],
-  )
+    ]
+  }, [upcomingInfo.loading, upcomingInfo.rulesetNumber])
 
   return (
     <>

@@ -1,9 +1,9 @@
-import { useCallback, useMemo } from 'react'
 import { CartesianGrid, Label, Line, LineChart, XAxis, YAxis } from 'recharts'
+import { useCallback, useMemo } from 'react'
 
-import { t } from '@lingui/macro'
 import { DEFAULT_BONDING_CURVE_RATE_PERCENTAGE } from 'components/formItems/ProjectRedemptionRate'
 import { JUICE_ORANGE } from 'constants/theme/colors'
+import { t } from '@lingui/macro'
 
 const NUM_POINTS = 10
 
@@ -65,7 +65,7 @@ export const TokenRedemptionRateGraph = ({
             <Label
               className="text-sm"
               transform="rotate(-90)"
-              value={t`Token redeem value`}
+              value={t`Token cash out value`}
               angle={-90}
             />
           }

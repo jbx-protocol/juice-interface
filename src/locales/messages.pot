@@ -440,6 +440,9 @@ msgstr ""
 msgid "MAX"
 msgstr ""
 
+msgid "Token cash out value"
+msgstr ""
+
 msgid "2. Set text record"
 msgstr ""
 
@@ -729,9 +732,6 @@ msgid "Enter a number of tokens that your project contributors will receive when
 msgstr ""
 
 msgid "<0/>{0} distributed"
-msgstr ""
-
-msgid "Token redeem value"
 msgstr ""
 
 msgid "Set reserved tokens of {projectTitle}"
@@ -3528,6 +3528,9 @@ msgid "Saved"
 msgstr ""
 
 msgid "Reserve 1 NFT of every"
+msgstr ""
+
+msgid "Starts in"
 msgstr ""
 
 msgid "NFT Projects"

@@ -1,16 +1,25 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { Button, Empty } from 'antd'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+
+import { BigNumber } from '@ethersproject/bignumber'
 import { Callout } from 'components/Callout/Callout'
 import Loading from 'components/Loading'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
+import ETHAmount from 'components/currency/ETHAmount'
 import TransactionModal from 'components/modals/TransactionModal'
+import { JBChainId } from 'juice-sdk-core'
+import type { RelayrPostBundleResponse } from 'juice-sdk-react'
+import { useSuckers } from 'juice-sdk-react'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { useHasNftRewards } from 'packages/v4/hooks/useHasNftRewards'
-import { useCallback, useState } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { emitErrorNotification } from 'utils/notifications'
 import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
 import { useEditingNfts } from '../hooks/useEditingNfts'
+import { useOmnichainUpdateCurrentCollection } from '../hooks/useOmnichainUpdateCurrentCollection'
 import { useUpdateCurrentCollection } from '../hooks/useUpdateCurrentCollection'
-// v4TODO: need to build launch NFT capabilities into this
+
 export function EditNftsSection() {
   const nftRewardsData = useAppSelector(
     state => state.editingV2Project.nftRewards,
@@ -22,10 +31,25 @@ export function EditNftsSection() {
     useEditingNfts()
   const hasNftRewards = useHasNftRewards()
   const { updateExistingCollection, txLoading } = useUpdateCurrentCollection({
+    rewardTiers: rewardTiers!,
     editedRewardTierIds,
-    rewardTiers,
     onConfirmed: () => setSuccessModalOpen(true),
   })
+
+  const { getUpdateQuote, sendRelayrTx, relayrBundle } = useOmnichainUpdateCurrentCollection()
+  const [selectedRelayrChains, setSelectedRelayrChains] = useState<Partial<Record<JBChainId, boolean>>>(() => ({}))
+  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>()
+  const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
+  const [txQuoteLoading, setTxQuoteLoading] = useState(false)
+  const [txSigning, setTxSigning] = useState(false)
+
+  const { data: suckers } = useSuckers()
+  const chainIds = useMemo(() => suckers?.map(s => s.peerChainId as JBChainId) ?? [], [suckers])
+  useEffect(() => { 
+    if (chainIds.length && !selectedGasChain) setSelectedGasChain(chainIds[0]) 
+  }, [chainIds, selectedGasChain])
+
+  const activeChains = Object.entries(selectedRelayrChains).filter(([_,v]) => v).map(([k]) => Number(k) as JBChainId)
 
   const showNftRewards = hasNftRewards
 
@@ -37,26 +61,46 @@ export function EditNftsSection() {
     setSubmitLoading(false)
   }, [rewardTiers, updateExistingCollection])
 
-  // const editingFundingCycleConfig = useEditingFundingCycleConfig()
-  // const {
-  //   reconfigureLoading: removeDatasourceLoading,
-  //   reconfigureFundingCycle,
-  // } = useReconfigureFundingCycle({
-  //   editingFundingCycleConfig,
-  //   memo: 'Detach NFT collection',
-  //   removeDatasource: true,
-  //   onComplete: () => setSuccessModalOpen(true),
-  // })
+  // Replace updateExistingCollection for omnichain
+  const onEditSave = async () => {
+    if (activeChains.length <= 1) {
+      // single chain: use existing
+      setSubmitLoading(true)
+      await updateExistingCollection()
+      setSubmitLoading(false)
+      return
+    }
+    if (!txQuote) {
+      setTxQuoteLoading(true)
+      try {
+        const quote = await getUpdateQuote(rewardTiers!, editedRewardTierIds, activeChains)
+        setTxQuote(quote!)      
+      } catch (e) {
+        emitErrorNotification((e as Error).message)
+      } finally {
+        setTxQuoteLoading(false)
+      }
+      return
+    }
+    // send tx
+    setTxSigning(true)
+    const payment = txQuote.payment_info.find(p => Number(p.chain) === selectedGasChain)
+    if (!payment) { setTxSigning(false); return }
+    await sendRelayrTx(payment)
+    relayrBundle.startPolling(txQuote.bundle_uuid)
+    setTxSigning(false)
+  }
 
-  // const removeDatasource = () => {
-  //   reconfigureFundingCycle()
-  // }
+  // poll bundle
+  useEffect(() => {
+    if (relayrBundle.isComplete) {
+      setSuccessModalOpen(true)
+    }
+  }, [relayrBundle.isComplete])
 
   if (loading) return <Loading className="mt-20" />
 
   const allNftsRemoved = showNftRewards && rewardTiers?.length === 0
-
-  // const hasDataSourceButNoNfts = hasNftRewards && !rewardTiers
 
   return (
     <>
@@ -99,39 +143,33 @@ export function EditNftsSection() {
         </Callout.Warning>
       )}
 
-      <Button
-        onClick={onNftFormSaved}
-        htmlType="submit"
-        type="primary"
-        loading={submitLoading}
-      >
-        <span>
-          <Trans>Edit NFTs</Trans>
-        </span>
-      </Button>
-
-      {/* {hasDataSourceButNoNfts && (
-        <Callout.Warning className="mt-5 bg-smoke-100 dark:bg-slate-500">
-          <div>
-            <strong className="text-lg">Danger Zone</strong>
+      {/* chain toggles */}
+      {chainIds.length > 1 && (
+        <div className="mb-4 flex gap-2">
+          {chainIds.map(c => (
+            <Button key={c} type={selectedRelayrChains[c] ? 'primary':'default'} onClick={() => setSelectedRelayrChains(prev => ({ ...prev, [c]: !prev[c] }))}>
+              {c}
+            </Button>
+          ))}
+        </div>
+      )}
+      {/* gas quote & pay chain */}
+      {txQuote && (
+        <div className="mb-4">
+          <div className="flex items-center justify-between">
+            <span><Trans>Gas quote</Trans>:</span>
+            <ETHAmount amount={BigNumber.from(txQuote.payment_info.find(p => Number(p.chain) === selectedGasChain)?.amount ?? '0')} />
           </div>
-          <p>
-            This will remove the NFT <strong>Extension Contract</strong> from
-            your project's next funding cycle. You can relaunch a new NFT
-            collection for later cycles.
-          </p>
-          <Button
-            onClick={removeDatasource}
-            htmlType="submit"
-            type="default"
-            loading={removeDatasourceLoading}
-          >
-            <span>
-              <Trans>Detach NFTs</Trans>
-            </span>
-          </Button>
-        </Callout.Warning>
-      )} */}
+          <div className="mt-2">
+            <Trans>Pay gas on</Trans>
+            <ChainSelect value={selectedGasChain} onChange={setSelectedGasChain} chainIds={activeChains} />
+          </div>
+        </div>
+      )}
+      {/* override button */}
+      <Button onClick={onEditSave} htmlType="submit" type="primary" loading={txQuoteLoading || txSigning || submitLoading}>
+        <span><Trans>Edit NFTs</Trans></span>
+      </Button>
 
       <TransactionModal transactionPending open={txLoading} />
       <TransactionSuccessModal

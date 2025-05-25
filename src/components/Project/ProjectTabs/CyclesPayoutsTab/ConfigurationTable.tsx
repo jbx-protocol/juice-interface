@@ -1,11 +1,13 @@
 import { MinusCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
-import { t } from '@lingui/macro'
-import { Tooltip } from 'antd'
-import ExternalLink from 'components/ExternalLink'
-import { TruncatedText } from 'components/TruncatedText'
-import CopyTextButton from 'components/buttons/CopyTextButton'
 import { ReactNode, useMemo } from 'react'
+import { useJBProjectId, useJBRuleset } from 'juice-sdk-react'
+
 import { ConfigurationPanelTableData } from './ConfigurationPanel'
+import CopyTextButton from 'components/buttons/CopyTextButton'
+import ExternalLink from 'components/ExternalLink'
+import { Tooltip } from 'antd'
+import { TruncatedText } from 'components/TruncatedText'
+import { t } from '@lingui/macro'
 
 export const ConfigurationTable = ({
   title,
@@ -14,6 +16,12 @@ export const ConfigurationTable = ({
   title: ReactNode
   data: ConfigurationPanelTableData
 }) => {
+  const { projectId, chainId } = useJBProjectId()
+  const { ruleset } = useJBRuleset({
+    projectId,
+    chainId
+  })
+  const firstCycleNotStarted = ruleset?.cycleNumber === 0
   const rows = useMemo(
     () =>
       Object.entries(data).map(([id, d]) => {
@@ -26,7 +34,7 @@ export const ConfigurationTable = ({
             loading: true,
           }
         }
-        if (d.old === undefined || d.old === d.new) {
+        if (d.old === undefined || d.old === d.new || firstCycleNotStarted) {
           return {
             id,
             name: d.name,

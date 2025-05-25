@@ -1,15 +1,15 @@
 import { Trans, t } from '@lingui/macro'
 
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { Skeleton } from 'antd'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
-import { reservedTokensTooltip } from 'components/Project/ProjectTabs/TokensPanelTooltips'
-import { useSuckers } from 'juice-sdk-react'
-import { ChainSelect } from 'packages/v4/components/ChainSelect'
-import { twMerge } from 'tailwind-merge'
-import { V4ProjectAllocationRow } from '../V4CyclesPayoutsPanel/V4ProjectAllocationRow'
-import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
 import { V4ExportReservedTokensCsvItem } from './V4ExportReservedTokensCsvItem'
+import { V4ProjectAllocationRow } from '../V4CyclesPayoutsPanel/V4ProjectAllocationRow'
 import { V4SendReservedTokensButton } from './V4SendReservedTokensButton'
+import { reservedTokensTooltip } from 'components/Project/ProjectTabs/TokensPanelTooltips'
+import { twMerge } from 'tailwind-merge'
+import { useSuckers } from 'juice-sdk-react'
+import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
 
 export const V4ReservedTokensSubPanel = ({
   className,
@@ -63,7 +63,6 @@ export const V4ReservedTokensSubPanel = ({
             tooltip={reservedPercentTooltip}
           />
         </div>
-        {aggregatedPendingReservedTokens ? (
           <TitleDescriptionDisplayCard
             className="w-full"
             title={t`Reserved tokens list`}
@@ -75,7 +74,10 @@ export const V4ReservedTokensSubPanel = ({
             reservedPercent ||
             (reservedList && reservedList.length > 1) ? (
               <>
-                <div className="mt-4 flex w-full flex-col divide-y divide-grey-200 border-b border-grey-200 dark:divide-slate-500 dark:border-slate-500">
+                <div className={twMerge(
+                  "mt-4 flex w-full flex-col divide-y divide-grey-200 dark:divide-slate-500",
+                  aggregatedPendingReservedTokens ? "border-b border-grey-200 dark:border-slate-500" : ""
+                )}>
                   {reservedList
                     ? reservedList.map(props => (
                         <V4ProjectAllocationRow
@@ -85,12 +87,13 @@ export const V4ReservedTokensSubPanel = ({
                       ))
                     : null}
                 </div>
-
+              {aggregatedPendingReservedTokens ? (
                 <V4SendReservedTokensButton
                   className="z-0 w-full justify-center md:w-auto"
                   containerClassName="md:self-end mt-6 inline-flex"
                   chainId={selectedChainId}
                 />
+              ) : null}
               </>
             ) : (
               <div className="mt-5">
@@ -101,7 +104,6 @@ export const V4ReservedTokensSubPanel = ({
               </div>
             )}
           </TitleDescriptionDisplayCard>
-        ) : null}
       </div>
     </div>
   )

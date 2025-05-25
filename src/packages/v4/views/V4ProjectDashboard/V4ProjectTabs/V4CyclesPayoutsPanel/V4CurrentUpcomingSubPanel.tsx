@@ -1,6 +1,7 @@
 import { Trans, t } from '@lingui/macro'
 
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { CountdownCallout } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CountdownCallout'
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import { RulesetCountdownProvider } from 'packages/v4/contexts/RulesetCountdownProvider'
 import { TitleDescriptionDisplayCard } from 'components/Project/ProjectTabs/TitleDescriptionDisplayCard'
@@ -9,7 +10,6 @@ import { V4ConfigurationDisplayCard } from './V4ConfigurationDisplayCard'
 import { V4PayoutsSubPanel } from './V4PayoutsSubPanel'
 import { currentCycleRemainingLengthTooltip } from 'components/Project/ProjectTabs/CyclesPayoutsTab/CyclesPanelTooltips'
 import { twMerge } from 'tailwind-merge'
-import { useCountdownClock } from 'components/Project/hooks/useCountdownClock'
 import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
 import { useRulesetCountdown } from '../../hooks/useRulesetCountdown'
 import { useState } from 'react'
@@ -26,18 +26,6 @@ function CountdownClock({ rulesetUnlocked }: { rulesetUnlocked: boolean }) {
     return <Skeleton className="w-40" />
   }
   return <>{remainingTime}</>
-}
-
-// Countdown for upcoming start time
-function StartCountdown({
-  startEpochSeconds,
-}: {
-  startEpochSeconds: number | undefined
-}) {
-  const { remainingTimeText: time } = useCountdownClock((startEpochSeconds ?? 0) / 1000, true)
-  if (!time) return <Skeleton className="w-40" />
-
-  return <>{time}</>
 }
 
 export const V4CurrentUpcomingSubPanel = ({
@@ -134,6 +122,11 @@ export const V4CurrentUpcomingSubPanel = ({
           ) : null}
         </div>
         <div className="flex flex-col gap-4">
+          {id === 'upcoming' && info.rulesetNumber && info.rulesetNumber === 1 ? (
+            <CountdownCallout
+              cycleStart={(info.start ?? 0) / 1000}
+            />
+          ) : null}
           {id === 'upcoming' && info.rulesetNumber !== 1 ? (
             <UpcomingCycleChangesCallout
               text={upcomingRulesetChangesCalloutText}
@@ -148,17 +141,6 @@ export const V4CurrentUpcomingSubPanel = ({
               title={t`Ruleset #`}
               description={info.rulesetNumber?.toString() ?? <Skeleton />}
             />
-            {id === 'upcoming' && info.rulesetNumber === 1 ? (
-              <TitleDescriptionDisplayCard
-                className="w-full md:max-w-[132px]"
-                title={t`Starts in`}
-                description={
-                  <StartCountdown
-                    startEpochSeconds={info.start}
-                  />
-                }
-              />
-            ) : null}
             <TitleDescriptionDisplayCard
               className="w-full md:w-fit"
               title={t`Status`}

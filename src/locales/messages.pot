@@ -3530,9 +3530,6 @@ msgstr ""
 msgid "Reserve 1 NFT of every"
 msgstr ""
 
-msgid "Starts in"
-msgstr ""
-
 msgid "NFT Projects"
 msgstr ""
 

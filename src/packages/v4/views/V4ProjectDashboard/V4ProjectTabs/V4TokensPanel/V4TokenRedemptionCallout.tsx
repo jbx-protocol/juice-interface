@@ -1,24 +1,34 @@
 import React, { useMemo } from 'react'
+import { useJBProjectId, useJBRulesetContext, useJBUpcomingRuleset } from 'juice-sdk-react'
 
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
-import { t } from '@lingui/macro'
-import { useJBRulesetContext } from 'juice-sdk-react'
-import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
+import { t } from '@lingui/macro'
 import { twMerge } from 'tailwind-merge'
+import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 
 export const V4TokenRedemptionCallout = () => {
-  const rulesetMetadata = useJBRulesetContext().rulesetMetadata.data
+  const { rulesetMetadata: currentRulesetMetadata, ruleset } = useJBRulesetContext()
+  const { projectId, chainId } = useJBProjectId()
+  const { 
+    rulesetMetadata: upcomingRulesetMetadata, 
+  } = useJBUpcomingRuleset({ projectId, chainId })
+
+  let _rulesetMetadata = currentRulesetMetadata.data
+
+  if (ruleset.data?.cycleNumber === 0) {
+    _rulesetMetadata = upcomingRulesetMetadata
+  }
   const payoutLimit = usePayoutLimit()
 
   const redemptionEnabled = React.useMemo(() => {
-    if (!rulesetMetadata || payoutLimit.isLoading) return
+    if (!_rulesetMetadata || payoutLimit.isLoading) return
     // TODO: Update cashOutTaxRate to be cashOut
     return (
-      rulesetMetadata.cashOutTaxRate.value > 0 &&
+      _rulesetMetadata.cashOutTaxRate.value > 0 &&
       payoutLimit.data.amount !== MAX_PAYOUT_LIMIT
     )
-  }, [payoutLimit.data.amount, payoutLimit.isLoading, rulesetMetadata])
+  }, [payoutLimit.data.amount, payoutLimit.isLoading, _rulesetMetadata])
 
   const loading = useMemo(
     () => redemptionEnabled === undefined,

@@ -2,6 +2,7 @@ import { JBChainId, JBSplit, SplitPortion } from 'juice-sdk-core'
 import {
   useJBProjectId,
   useJBRuleset,
+  useJBUpcomingRuleset,
   useReadJbSplitsSplitsOf,
 } from 'juice-sdk-react'
 const RESERVED_SPLITS_GROUP_ID = 1n
@@ -11,11 +12,21 @@ export const useV4ReservedSplits = (chainId?: JBChainId) => {
     projectId,
     chainId,
   })
+  const { ruleset: upcomingRuleset } = useJBUpcomingRuleset(
+    {
+      projectId,
+      chainId,
+    },
+  )
+  let _ruleset = ruleset
+  if (ruleset?.cycleNumber === 0) {
+    _ruleset = upcomingRuleset
+  }
   const { data: _splits, isLoading: currentSplitsLoading } =
     useReadJbSplitsSplitsOf({
       args: [
         BigInt(projectId ?? 0),
-        BigInt(ruleset?.id ?? 0),
+        BigInt(_ruleset?.id ?? 0),
         RESERVED_SPLITS_GROUP_ID,
       ],
       query: {

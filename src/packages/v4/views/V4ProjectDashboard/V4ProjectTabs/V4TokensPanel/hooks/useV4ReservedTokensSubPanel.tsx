@@ -6,20 +6,21 @@ import {
 } from 'juice-sdk-core'
 import {
   useJBProjectId,
+  useJBUpcomingRuleset,
   useReadJbControllerPendingReservedTokenBalanceOf,
   useReadJbDirectoryControllerOf,
 } from 'juice-sdk-react'
 
-import { Tooltip } from 'antd'
-import { NETWORKS } from 'constants/networks'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
+import { NETWORKS } from 'constants/networks'
+import { Tooltip } from 'antd'
+import assert from 'utils/assert'
 import { useJBRulesetByChain } from 'packages/v4/hooks/useJBRulesetByChain'
+import { useMemo } from 'react'
+import { useReservedTokensSelectedChain } from '../../V4CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
 import { useSuckersPendingReservedTokens } from 'packages/v4/hooks/useSuckersPendingReservedTokens'
 import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
-import { useMemo } from 'react'
-import assert from 'utils/assert'
-import { useReservedTokensSelectedChain } from '../../V4CyclesPayoutsPanel/contexts/ReservedTokensSelectedChainContext'
 
 export const useV4ReservedTokensSubPanel = () => {
   const { selectedChainId, setSelectedChainId } =
@@ -30,9 +31,17 @@ export const useV4ReservedTokensSubPanel = () => {
   const { data: projectOwnerAddress } = useV4ProjectOwnerOf(selectedChainId)
   const { splits: reservedTokensSplits } = useV4ReservedSplits(selectedChainId)
 
-  const { rulesetMetadata } = useJBRulesetByChain(selectedChainId)
-  const reservedPercent = rulesetMetadata ? (
-    <>{rulesetMetadata?.reservedPercent.formatPercentage()}%</>
+  const { rulesetMetadata, ruleset } = useJBRulesetByChain(selectedChainId)
+  const { rulesetMetadata: upcomingRulesetMetadata } = useJBUpcomingRuleset({ projectId, chainId: selectedChainId })
+  
+  let _rulesetMetadata
+  if (ruleset?.cycleNumber === 0) {
+    _rulesetMetadata = upcomingRulesetMetadata
+  } else {
+    _rulesetMetadata = rulesetMetadata
+  }
+  const reservedPercent = _rulesetMetadata ? (
+    <>{_rulesetMetadata?.reservedPercent.formatPercentage()}%</>
   ) : undefined
   const projectIdBigInt = BigInt(projectId ?? 0)
 

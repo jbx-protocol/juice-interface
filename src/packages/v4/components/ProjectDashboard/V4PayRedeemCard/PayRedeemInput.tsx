@@ -6,25 +6,24 @@ import {
 } from '@heroicons/react/24/outline'
 import React, { ReactNode, useCallback, useMemo } from 'react'
 
-import { t } from '@lingui/macro'
-import { Tooltip } from 'antd'
-import { CartItemBadge } from 'components/CartItemBadge'
-import CurrencySymbol from 'components/currency/CurrencySymbol'
-import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
-import { TruncatedText } from 'components/TruncatedText'
 import { CURRENCY_METADATA } from 'constants/currency'
-import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
-import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
-import { NftRewardTier } from 'models/nftRewards'
-import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
-import { useNftCartItem } from 'packages/v4/hooks/useNftCartItem'
-import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
-import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
-import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
-import { twMerge } from 'tailwind-merge'
-import { formatAmount } from 'utils/format/formatAmount'
-import { ProjectCartNftReward } from '../ReduxProjectCartProvider'
+import CurrencySymbol from 'components/currency/CurrencySymbol'
 import { EthereumLogo } from './EthereumLogo'
+import { NftRewardTier } from 'models/nftRewards'
+import { ProjectCartNftReward } from '../ReduxProjectCartProvider'
+import { SmallNftSquare } from 'components/NftRewards/SmallNftSquare'
+import { Tooltip } from 'antd'
+import { TruncatedText } from 'components/TruncatedText'
+import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
+import { emitConfirmationDeletionModal } from 'hooks/emitConfirmationDeletionModal'
+import { formatAmount } from 'utils/format/formatAmount'
+import { formatCurrencyAmount } from 'packages/v4/utils/formatCurrencyAmount'
+import { t } from '@lingui/macro'
+import { twMerge } from 'tailwind-merge'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
+import { useNftCartItem } from 'packages/v4/hooks/useNftCartItem'
+import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
+import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
 
@@ -295,10 +294,9 @@ export const PayRedeemCardNftReward: React.FC<{
             onClick={() => setProjectPageTab('nft_rewards')}
           >
             <TruncatedText
-              className="min-w-0 max-w-[70%] text-sm font-medium text-grey-900 hover:underline dark:text-slate-100"
+              className="min-w-0 text-sm font-medium text-grey-900 hover:underline dark:text-slate-100"
               text={name}
             />
-            <CartItemBadge>NFT</CartItemBadge>
           </div>
 
           <div className="text-xs">
@@ -314,7 +312,6 @@ export const PayRedeemCardNftReward: React.FC<{
           onIncrease={handleIncreaseQuantity}
           onDecrease={handleDecreaseQuantity}
         />
-        <RemoveIcon onClick={handleRemove} />
       </div>
     </div>
   )

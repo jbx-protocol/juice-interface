@@ -1,15 +1,15 @@
 import {
-    ConfigurationPanelDatum,
-    ConfigurationPanelTableData,
+  ConfigurationPanelDatum,
+  ConfigurationPanelTableData,
 } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { JBRulesetData, JBRulesetMetadata } from 'juice-sdk-core'
 
-import { t } from '@lingui/macro'
 import { flagPairToDatum } from 'components/Project/ProjectTabs/utils/flagPairToDatum'
-import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
-import { useMemo } from 'react'
 import { formattedNum } from 'utils/format/formatNumber'
+import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
+import { t } from '@lingui/macro'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+import { useMemo } from 'react'
 
 export const useV4FormatConfigurationTokenSection = ({
   ruleset,

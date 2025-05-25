@@ -110,10 +110,9 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
     return insufficientBalance || cartPayAmount === 0 || !cartPayAmount
   }, [cartPayAmount, insufficientBalance, walletConnected])
   const message = undefined
-
   return (
     <div>
-      {ruleset?.cycleNumber && ruleset.cycleNumber === 0 ? <FirstCycleCountdownCallout />: null}
+      {ruleset?.cycleNumber === 0 ? <FirstCycleCountdownCallout />: null}
       <div className="relative">
         <div className="flex flex-col gap-y-2">
           {rewardTiers?.length && preventOverspending ? (

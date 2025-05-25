@@ -1,13 +1,22 @@
-import { useForm } from 'antd/lib/form/Form'
 import { ProjectDetailsForm, ProjectDetailsFormFields } from 'components/Project/ProjectSettings/ProjectDetailsForm'
+import { RelayrPostBundleResponse, useJBProjectMetadataContext, useSuckers } from 'juice-sdk-react'
+import { useCallback, useEffect, useState } from 'react'
+
+import { BigNumber } from '@ethersproject/bignumber'
+import { Callout } from 'components/Callout/Callout'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import ETHAmount from 'components/currency/ETHAmount'
+import { JBChainId } from 'juice-sdk-core'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
-import { useJBProjectMetadataContext } from 'juice-sdk-react'
+import { Trans } from '@lingui/macro'
+import TransactionModal from 'components/modals/TransactionModal'
+import { TransactionSuccessModal } from '../EditCyclePage/TransactionSuccessModal'
+import { emitErrorNotification } from 'utils/notifications'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { useEditProjectDetailsTx } from 'packages/v4/hooks/useEditProjectDetailsTx'
-
-import { useCallback, useEffect, useState } from 'react'
+import { useForm } from 'antd/lib/form/Form'
+import { useOmnichainEditProjectDetailsTx } from 'packages/v4/hooks/useOmnichainEditProjectDetailsTx'
 import { withoutHttps } from 'utils/http'
-import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
 
 export function ProjectDetailsSettingsPage() {
   const { metadata } = useJBProjectMetadataContext()
@@ -16,13 +25,26 @@ export function ProjectDetailsSettingsPage() {
   const [loadingSaveChanges, setLoadingSaveChanges] = useState<boolean>()
   const [projectForm] = useForm<ProjectDetailsFormFields>()
 
+  // Omnichain edit state
+  const { getEditQuote, sendRelayrTx, getRelayrBundle } = useOmnichainEditProjectDetailsTx()
+  const { data: suckers } = useSuckers()
+  const projectChains = suckers?.map(s => s.peerChainId) || []
+  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId | undefined>(projectChains[0])
+  const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
+  const [txQuoteLoading, setTxQuoteLoading] = useState(false)
+  const [txSigning, setTxSigning] = useState(false)
+  const [confirmLoading, setConfirmLoading] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [cid, setCid] = useState<`0x${string}`>()
+  const [successOpen, setSuccessOpen] = useState(false)
+
   const editProjectDetailsTx = useEditProjectDetailsTx()
 
   const onProjectFormSaved = useCallback(async () => {
     setLoadingSaveChanges(true)
 
+    // upload metadata
     const fields = projectForm.getFieldsValue(true)
-
     const uploadedMetadata = await uploadProjectMetadata({
       ...projectMetadata,
       name: fields.name,
@@ -45,36 +67,59 @@ export function ProjectDetailsSettingsPage() {
       return
     }
 
-    editProjectDetailsTx(
-      uploadedMetadata.Hash as `0x${string}`, {
-        onTransactionPending: () => null,
-        onTransactionConfirmed: () => {
-          projectForm?.resetFields()
-          setLoadingSaveChanges(false)
-          emitInfoNotification('Project details saved', {
-            description: 'Your project details have been saved.',
-          })
-
-          // v4Todo: part of v2, not sure if necessary 
-          // if (projectId) {
-          //   await revalidateProject({
-          //     pv: PV_V4,
-          //     projectId: String(projectId),
-          //   })
-          // }
-        },
-        onTransactionError: (error: unknown) => {
-          console.error(error)
-          setLoadingSaveChanges(false)
-          emitErrorNotification(`Error launching ruleset: ${error}`)
-        },
-      }
-    )
+    const hash = uploadedMetadata.Hash as `0x${string}`
+    setCid(hash)
+    setLoadingSaveChanges(false)
+    setModalOpen(true)
   }, [
     editProjectDetailsTx,
     projectForm,
     projectMetadata,
   ])
+
+  // request omnichain quote
+  const handleGetQuote = async () => {
+    setTxQuoteLoading(true)
+    try {
+      const quote = await getEditQuote(cid!)
+      setTxQuote(quote)
+    } catch (e) {
+      emitErrorNotification((e as Error).message)
+    } finally {
+      setTxQuoteLoading(false)
+    }
+  }
+
+  // confirm omnichain save
+  const handleConfirm = async () => {
+    if (!txQuote) return handleGetQuote()
+    setConfirmLoading(true)
+    setTxSigning(true)
+    try {
+      const payment = txQuote.payment_info.find((p) => Number(p.chain) === selectedGasChain)
+      if (!payment) throw new Error('No payment info for selected chain')
+      await sendRelayrTx(payment)
+      getRelayrBundle.startPolling(txQuote.bundle_uuid)
+    } catch (e) {
+      emitErrorNotification((e as Error).message)
+      setConfirmLoading(false)
+    } finally {
+      setTxSigning(false)
+    }
+  }
+
+  // poll for completion
+  useEffect(() => {
+    if (getRelayrBundle.isComplete) {
+      projectForm.resetFields()
+      setConfirmLoading(false)
+      setModalOpen(false)
+      setSuccessOpen(true)
+    } else if (getRelayrBundle.error) {
+      emitErrorNotification(getRelayrBundle.error as string)
+      setConfirmLoading(false)
+    }
+  }, [getRelayrBundle.isComplete, getRelayrBundle.error])
 
   const resetProjectForm = useCallback(() => {
     const infoUri = withoutHttps(projectMetadata?.infoUri ?? '')
@@ -120,11 +165,53 @@ export function ProjectDetailsSettingsPage() {
   }, [resetProjectForm])
 
   return (
-    <ProjectDetailsForm
-      form={projectForm}
-      onFinish={onProjectFormSaved}
-      hideProjectHandle
-      loading={loadingSaveChanges}
-    />
+    <>
+      <ProjectDetailsForm
+        form={projectForm}
+        onFinish={onProjectFormSaved}
+        hideProjectHandle
+        loading={loadingSaveChanges}
+      />
+      <TransactionModal
+        open={modalOpen}
+        title={<Trans>Review & confirm changes</Trans>}
+        onOk={handleConfirm}
+        okText={!txQuote ? <Trans>Get edit quote</Trans> : <Trans>Save changes</Trans>}
+        confirmLoading={confirmLoading || txQuoteLoading || txSigning}
+        cancelButtonProps={{ hidden: true }}
+        onCancel={() => setModalOpen(false)}
+      >
+        {!txQuote && (
+          <div className="py-4 text-sm">
+            <Callout.Info>
+              <Trans>
+                You'll be prompted a wallet signature for each of this project's chains before submitting.
+              </Trans>
+            </Callout.Info>
+          </div>
+        )}
+        {txQuote && (
+          <>
+            <div className="flex justify-between mb-2">
+              <span><Trans>Gas quote:</Trans></span>
+              <ETHAmount amount={BigNumber.from(txQuote.payment_info.find((p) => Number(p.chain) === selectedGasChain)?.amount || '0')} />
+            </div>
+            <div className="flex justify-between">
+              <span><Trans>Pay gas on:</Trans></span>
+              <ChainSelect value={selectedGasChain} onChange={setSelectedGasChain} chainIds={projectChains} showTitle />
+            </div>
+          </>
+        )}
+      </TransactionModal>
+      <TransactionSuccessModal
+        open={successOpen}
+        onClose={() => setSuccessOpen(false)}
+        content={
+          <div className="text-center">
+            <Trans>Your project details have been updated across all chains.</Trans>
+          </div>
+        }
+      />
+    </>
   )
 }

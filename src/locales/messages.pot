@@ -1364,6 +1364,9 @@ msgstr ""
 msgid "This upcoming cycle has no changes"
 msgstr ""
 
+msgid "Gas quote:"
+msgstr ""
+
 msgid "Payments"
 msgstr ""
 
@@ -2294,6 +2297,9 @@ msgstr ""
 msgid "<0>Anyone can pay ETH to your project. If you wish, specify to which Ethereum wallets or other Juicebox projects this ETH can be split as it comes in.</0><1>ETH which <2>isn't</2> paid out will be available for token cash outs, or for use in future rulesets. Payouts reset each ruleset.</1><3>Payouts reset each ruleset.</3>"
 msgstr ""
 
+msgid "Your project details have been updated across all chains."
+msgstr ""
+
 msgid "Join thousands of projects using Juicebox to fund, operate, and scale their ideas & communities transparently on Ethereum."
 msgstr ""
 
@@ -2736,6 +2742,9 @@ msgid "We do everything in the light, for everyone to see."
 msgstr ""
 
 msgid "Enable project owner token minting"
+msgstr ""
+
+msgid "Review & confirm changes"
 msgstr ""
 
 msgid "Set aside a percentage of token issuance for the wallets and Juicebox projects of your choosing."
@@ -3831,6 +3840,9 @@ msgid "Limited supply"
 msgstr ""
 
 msgid "Juicebox Native"
+msgstr ""
+
+msgid "You'll be prompted a wallet signature for each of this project's chains before submitting."
 msgstr ""
 
 msgid "How long one cycle will last. Your project's rules are locked during each cycle. Edits you make to your project's rules during a cycle will only take effect at the start of the next cycle."

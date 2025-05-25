@@ -1,25 +1,26 @@
+import { ContractFunctionReturnType, zeroAddress } from 'viem'
+import {
+  DEFAULT_NFT_FLAGS_V4,
+  DEFAULT_NFT_PRICING,
+  EMPTY_NFT_COLLECTION_METADATA,
+} from 'redux/slices/v2v3/editingV2Project'
+import React, { createContext } from 'react'
 import {
   jb721TiersHookStoreAbi,
   useJBProjectId,
   useJBRulesetContext,
+  useJBUpcomingRuleset,
   useReadJb721TiersHookContractUri,
   useReadJb721TiersHookPricingContext,
   useReadJb721TiersHookStoreAddress,
   useReadJb721TiersHookStoreFlagsOf,
   useReadJb721TiersHookStoreTiersOf,
 } from 'juice-sdk-react'
-import React, { createContext } from 'react'
-import {
-  DEFAULT_NFT_FLAGS_V4,
-  DEFAULT_NFT_PRICING,
-  EMPTY_NFT_COLLECTION_METADATA,
-} from 'redux/slices/v2v3/editingV2Project'
-import { ContractFunctionReturnType, zeroAddress } from 'viem'
 
+import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { JB721GovernanceType } from 'models/nftRewards'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V4NftRewardsData } from 'packages/v4/models/nfts'
-import { CIDsOfNftRewardTiersResponse } from 'utils/nftRewards'
 import { useNftRewards } from './useNftRewards'
 
 const NFT_PAGE_SIZE = 100n
@@ -54,7 +55,14 @@ export const V4NftRewardsProvider: React.FC<
 > = ({ children }) => {
   const jbRuleSet = useJBRulesetContext()
   const { projectId, chainId } = useJBProjectId()
-  const dataHookAddress = jbRuleSet.rulesetMetadata.data?.dataHook
+  const upcomingRuleset = useJBUpcomingRuleset({ projectId, chainId })
+  let dataHookAddress = jbRuleSet.rulesetMetadata.data?.dataHook
+  
+  if (jbRuleSet.ruleset.data?.cycleNumber === 0) {
+    // If the ruleset is the first one, we use the upcoming ruleset's data hook address
+    // (projects that haven't started yet)
+    dataHookAddress = upcomingRuleset?.rulesetMetadata?.dataHook
+  }
 
   const storeAddress = useReadJb721TiersHookStoreAddress({
     address: dataHookAddress,

@@ -1,24 +1,24 @@
-import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
+import { Trans, t } from '@lingui/macro'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useJBProjectId, useJBRuleset, useJBTokenContext } from 'juice-sdk-react'
 import {
   useProjectDispatch,
   useProjectSelector,
   useProjectStore,
 } from '../redux/hooks'
 
-import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
-import { useJBTokenContext } from 'juice-sdk-react'
-import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
-import { projectCartActions } from '../redux/projectCartSlice'
 import { EthereumLogo } from './EthereumLogo'
+import { FirstCycleCountdownCallout } from './FirstCycleCountdownCallout'
 import { PayRedeemInput } from './PayRedeemInput'
 import { PreventOverspendingPayCard } from './PreventOverspendingPayCard'
-// import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
-import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
-import { useWallet } from 'hooks/Wallet'
-import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
+import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
+import { projectCartActions } from '../redux/projectCartSlice'
+import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
 import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
+import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
+// import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
+import { useWallet } from 'hooks/Wallet'
 
 type PayConfigurationProps = {
   userTokenBalance: number | undefined
@@ -35,7 +35,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
   const { token } = useJBTokenContext()
   const wallet = useWallet()
   const { isConnected: walletConnected, connect } = useWallet()
-  const { projectId, projectMetadata } = useProjectMetadataContext()
+
   const tokenReceivedAmount = useProjectPaymentTokens()
   const chosenNftRewards = useProjectSelector(
     state => state.projectCart.chosenNftRewards,
@@ -46,6 +46,10 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
       flags: { preventOverspending },
     },
   } = useV4NftRewards()
+
+  const { projectId, chainId} = useJBProjectId()
+
+  const { ruleset } = useJBRuleset({ projectId, chainId })
 
   const cartPayAmount = useProjectSelector(
     state => state.projectCart.payAmount?.amount,
@@ -109,6 +113,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
 
   return (
     <div>
+      {ruleset?.cycleNumber && ruleset.cycleNumber === 0 ? <FirstCycleCountdownCallout />: null}
       <div className="relative">
         <div className="flex flex-col gap-y-2">
           {rewardTiers?.length && preventOverspending ? (

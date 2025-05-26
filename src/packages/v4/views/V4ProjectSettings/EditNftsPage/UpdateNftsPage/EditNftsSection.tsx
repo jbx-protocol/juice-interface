@@ -1,31 +1,57 @@
-import { t, Trans } from '@lingui/macro'
 import { Button, Empty } from 'antd'
+import { Trans, t } from '@lingui/macro'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+
+import { BigNumber } from '@ethersproject/bignumber'
 import { Callout } from 'components/Callout/Callout'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import ETHAmount from 'components/currency/ETHAmount'
+import { JBChainId } from 'juice-sdk-core'
 import Loading from 'components/Loading'
+import type { RelayrPostBundleResponse } from 'juice-sdk-react'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
 import TransactionModal from 'components/modals/TransactionModal'
-import { useHasNftRewards } from 'packages/v4/hooks/useHasNftRewards'
-import { useCallback, useState } from 'react'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
+import { emitErrorNotification } from 'utils/notifications'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useEditingNfts } from '../hooks/useEditingNfts'
+import { useHasNftRewards } from 'packages/v4/hooks/useHasNftRewards'
+import { useOmnichainUpdateCurrentCollection } from '../hooks/useOmnichainUpdateCurrentCollection'
+import { useSuckers } from 'juice-sdk-react'
 import { useUpdateCurrentCollection } from '../hooks/useUpdateCurrentCollection'
-// v4TODO: need to build launch NFT capabilities into this
+
 export function EditNftsSection() {
   const nftRewardsData = useAppSelector(
     state => state.editingV2Project.nftRewards,
   )
   const [submitLoading, setSubmitLoading] = useState<boolean>(false)
   const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [confirmLoading, setConfirmLoading] = useState(false)
 
   const { rewardTiers, setRewardTiers, editedRewardTierIds, loading } =
     useEditingNfts()
   const hasNftRewards = useHasNftRewards()
   const { updateExistingCollection, txLoading } = useUpdateCurrentCollection({
+    rewardTiers: rewardTiers!,
     editedRewardTierIds,
-    rewardTiers,
     onConfirmed: () => setSuccessModalOpen(true),
   })
+
+  const { getUpdateQuote, sendRelayrTx, relayrBundle } = useOmnichainUpdateCurrentCollection()
+  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>()
+  const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
+  const [txQuoteLoading, setTxQuoteLoading] = useState(false)
+  const [txSigning, setTxSigning] = useState(false)
+
+  const { data: suckers } = useSuckers()
+  const chainIds = useMemo(() => suckers?.map(s => s.peerChainId as JBChainId) ?? [], [suckers])
+  useEffect(() => { 
+    if (chainIds.length && !selectedGasChain) setSelectedGasChain(chainIds[0]) 
+  }, [chainIds, selectedGasChain])
+
+  // always use all project chains
+  const activeChains = chainIds
 
   const showNftRewards = hasNftRewards
 
@@ -37,26 +63,43 @@ export function EditNftsSection() {
     setSubmitLoading(false)
   }, [rewardTiers, updateExistingCollection])
 
-  // const editingFundingCycleConfig = useEditingFundingCycleConfig()
-  // const {
-  //   reconfigureLoading: removeDatasourceLoading,
-  //   reconfigureFundingCycle,
-  // } = useReconfigureFundingCycle({
-  //   editingFundingCycleConfig,
-  //   memo: 'Detach NFT collection',
-  //   removeDatasource: true,
-  //   onComplete: () => setSuccessModalOpen(true),
-  // })
-
-  // const removeDatasource = () => {
-  //   reconfigureFundingCycle()
-  // }
+  // omnichain modal handlers
+  const handleGetQuote = async () => {
+    setTxQuoteLoading(true)
+    try {
+      const quote = await getUpdateQuote(rewardTiers!, editedRewardTierIds, activeChains)
+      setTxQuote(quote!)      
+    } catch (e) {
+      emitErrorNotification((e as Error).message)
+    } finally {
+      setTxQuoteLoading(false)
+    }
+  }
+  const handleConfirm = async () => {
+    if (!txQuote) return handleGetQuote()
+    setConfirmLoading(true)
+    setTxSigning(true)
+    try {
+      const payment = txQuote.payment_info.find(p => Number(p.chain) === selectedGasChain)
+      if (!payment) throw new Error('No payment info for selected chain')
+      await sendRelayrTx(payment)
+      relayrBundle.startPolling(txQuote.bundle_uuid)
+    } catch (e) {
+      emitErrorNotification((e as Error).message)
+    } finally {
+      setTxSigning(false)
+    }
+  }
+  useEffect(() => {
+    if (relayrBundle.isComplete) {
+      setModalOpen(false)
+      setSuccessModalOpen(true)
+    }
+  }, [relayrBundle.isComplete])
 
   if (loading) return <Loading className="mt-20" />
 
   const allNftsRemoved = showNftRewards && rewardTiers?.length === 0
-
-  // const hasDataSourceButNoNfts = hasNftRewards && !rewardTiers
 
   return (
     <>
@@ -99,41 +142,42 @@ export function EditNftsSection() {
         </Callout.Warning>
       )}
 
-      <Button
-        onClick={onNftFormSaved}
-        htmlType="submit"
-        type="primary"
-        loading={submitLoading}
-      >
-        <span>
-          <Trans>Edit NFTs</Trans>
-        </span>
+      {/* trigger omnichain modal */}
+      <Button type="primary" onClick={() => setModalOpen(true)} loading={submitLoading || txQuoteLoading || txSigning}>
+        <span><Trans>Edit NFTs</Trans></span>
       </Button>
 
-      {/* {hasDataSourceButNoNfts && (
-        <Callout.Warning className="mt-5 bg-smoke-100 dark:bg-slate-500">
-          <div>
-            <strong className="text-lg">Danger Zone</strong>
-          </div>
-          <p>
-            This will remove the NFT <strong>Extension Contract</strong> from
-            your project's next funding cycle. You can relaunch a new NFT
-            collection for later cycles.
-          </p>
-          <Button
-            onClick={removeDatasource}
-            htmlType="submit"
-            type="default"
-            loading={removeDatasourceLoading}
-          >
-            <span>
-              <Trans>Detach NFTs</Trans>
-            </span>
-          </Button>
-        </Callout.Warning>
-      )} */}
+      {/* omnichain review & confirm modal */}
+      <TransactionModal
+        open={modalOpen}
+        title={<Trans>Edit NFTs</Trans>}
+        onOk={handleConfirm}
+        okText={!txQuote ? <Trans>Get edit quote</Trans> : <Trans>Edit NFTs</Trans>}
+        confirmLoading={confirmLoading || txQuoteLoading || txSigning}
+        cancelButtonProps={{ hidden: true }}
+        onCancel={() => setModalOpen(false)}
+      >
+        {!txQuote && (
+          <Callout.Info>
+            <Trans>
+              You'll be prompted a wallet signature for each of this project's chains before final submission.
+            </Trans>
+          </Callout.Info>
+        )}
+        {txQuote && (
+          <>
+            <div className="flex justify-between mb-2">
+              <span><Trans>Gas quote:</Trans></span>
+              <ETHAmount amount={BigNumber.from(txQuote.payment_info.find(p => Number(p.chain) === selectedGasChain)?.amount || '0')} />
+            </div>
+            <div className="flex justify-between">
+              <span><Trans>Pay gas on:</Trans></span>
+              <ChainSelect value={selectedGasChain} onChange={setSelectedGasChain} chainIds={chainIds} showTitle />
+            </div>
+          </>
+        )}
+      </TransactionModal>
 
-      <TransactionModal transactionPending open={txLoading} />
       <TransactionSuccessModal
         open={successModalOpen}
         onClose={() => setSuccessModalOpen(false)}

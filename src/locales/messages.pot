@@ -1217,6 +1217,9 @@ msgstr ""
 msgid "Check your email for a confirmation link and retry subscribing."
 msgstr ""
 
+msgid "You'll be prompted a wallet signature for each of this project's chains before final submission."
+msgstr ""
+
 msgid "Claim ERC-20 token"
 msgstr ""
 

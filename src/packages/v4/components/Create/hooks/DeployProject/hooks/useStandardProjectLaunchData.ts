@@ -14,15 +14,15 @@ import {
   useCreatingV2V3FundingCycleMetadataSelector,
 } from 'redux/hooks/v2v3/create'
 
-import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
-import { useWallet } from 'hooks/Wallet'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { Address } from 'viem'
+import { JUICEBOX_MONEY_PROJECT_METADATA_DOMAIN } from 'constants/metadataDomain'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useWallet } from 'hooks/Wallet'
 
 /**
  * Hook that returns a function that deploys a v4 project.
  *
- * Takes data from the redux store built for v2v3 projects, data is converted to v4 format in useLaunchProjectTx.
+ * Takes  data from the redux store built for v2v3 projects, data is converted to v4 format in useLaunchProjectTx.
  */
 export function useStandardProjectLaunchData() {
   const {

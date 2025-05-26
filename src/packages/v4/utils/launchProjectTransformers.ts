@@ -15,15 +15,15 @@ import {
   Split as V2V3Split,
 } from 'packages/v2v3/models/splits'
 
-import round from 'lodash/round'
+import { Address } from 'viem'
+import { FundAccessLimitGroup } from '../models/fundAccessLimits'
+import { LaunchProjectJBTerminal } from '../models/terminals'
 import { V2FundingCycleMetadata } from 'packages/v2/models/fundingCycle'
 import { V2V3CurrencyOption } from 'packages/v2v3/models/currencyOption'
 import { V3FundingCycleMetadata } from 'packages/v3/models/fundingCycle'
-import { Address } from 'viem'
-import { FundAccessLimitGroup } from '../models/fundAccessLimits'
 import { GroupedSplits as V4GroupedSplits } from '../models/splits'
-import { LaunchProjectJBTerminal } from '../models/terminals'
 import { convertV2V3CurrencyOptionToV4 } from './currency'
+import round from 'lodash/round'
 
 const NATIVE_TOKEN_CURRENCY_ID = 61166 // v4TODO: put in SDK
 
@@ -60,7 +60,14 @@ export function transformV2V3CreateArgsToV4({
     _memo,
   ] = v2v3Args
 
-  const mustStartAtOrAfterNum = parseInt(_mustStartAtOrAfter)
+  let mustStartAtOrAfterNum = parseInt(_mustStartAtOrAfter)
+  // check if mustStartAtOrAfterNum is in ms or seconds, ensure in seconds
+  if (mustStartAtOrAfterNum > 1000000000000) {
+    mustStartAtOrAfterNum = round(
+      mustStartAtOrAfterNum = mustStartAtOrAfterNum / 1000,
+    ) // convert ms to seconds
+  }
+  
   const now = round(new Date().getTime() / 1000)
 
   const ruleset = {

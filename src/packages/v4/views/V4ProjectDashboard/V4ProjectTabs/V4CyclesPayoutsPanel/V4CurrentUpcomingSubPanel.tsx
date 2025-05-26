@@ -124,7 +124,7 @@ export const V4CurrentUpcomingSubPanel = ({
         <div className="flex flex-col gap-4">
           {id === 'upcoming' && info.rulesetNumber && info.rulesetNumber === 1 ? (
             <CountdownCallout
-              cycleStart={(info.start ?? 0) / 1000}
+              cycleStart={info.start}
             />
           ) : null}
           {id === 'upcoming' && info.rulesetNumber !== 1 ? (

@@ -8,7 +8,7 @@ import { useCountdownClock } from 'components/Project/hooks/useCountdownClock'
 export function FirstCycleCountdownCallout() {
   const { projectId, chainId } = useJBProjectId()
   const upcomingRuleset = useJBUpcomingRuleset({ projectId, chainId })
-  const start = (upcomingRuleset?.ruleset?.start ?? 0) / 1000 // Convert milliseconds to seconds
+  const start = upcomingRuleset?.ruleset?.start
   const { remainingTimeText } = useCountdownClock(start)
 
   if (!start) {

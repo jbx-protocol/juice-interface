@@ -1,16 +1,16 @@
-import { t } from '@lingui/macro'
 import { AmountInCurrency } from 'components/currency/AmountInCurrency'
-import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
-import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
 import { BigNumber } from 'ethers'
+import { ConfigurationPanelDatum } from 'components/Project/ProjectTabs/CyclesPayoutsTab/ConfigurationPanel'
 import { JBRulesetData } from 'juice-sdk-core'
-import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
-import { getApprovalStrategyByAddress } from 'packages/v4/utils/approvalHooks'
-import { V4CurrencyName } from 'packages/v4/utils/currency'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
-import { useMemo } from 'react'
+import { V4CurrencyName } from 'packages/v4/utils/currency'
+import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
 import { formatTime } from 'utils/format/formatTime'
+import { getApprovalStrategyByAddress } from 'packages/v4/utils/approvalHooks'
+import { pairToDatum } from 'components/Project/ProjectTabs/utils/pairToDatum'
+import { t } from '@lingui/macro'
 import { timeSecondsToDateString } from 'utils/timeSecondsToDateString'
+import { useMemo } from 'react'
 
 export const useV4FormatConfigurationCycleSection = ({
   ruleset,
@@ -53,13 +53,17 @@ export const useV4FormatConfigurationCycleSection = ({
 
   const upcomingRulesetStart = ruleset?.start
     ? ruleset.start + (ruleset?.duration || 0)
+    : upcomingRuleset?.start ?
+      upcomingRuleset.start
     : 0
 
   const startTimeDatum: ConfigurationPanelDatum = useMemo(() => {
     const formattedTime =
       upcomingRuleset === null
         ? formatTime(ruleset?.start)
-        : ruleset?.duration === 0
+        : ruleset?.cycleNumber === 0 // First cycle hasn't started yet
+        ? formatTime(upcomingRulesetStart)
+        : ruleset?.duration === 0 
         ? t`Any time`
         : formatTime(upcomingRulesetStart)
 

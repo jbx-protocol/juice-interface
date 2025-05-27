@@ -253,7 +253,7 @@ const AmountSection = () => {
     </div>
   )
 
-  if (!nftCredits || nftCredits <= 0n || !formattedNftCredits)
+  if (!nftCredits || nftCredits <= 0n || !formattedNftCredits.primaryAmount)
     return (
       <RowData
         label={t`Total amount`}

@@ -1,12 +1,13 @@
-import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { NftRewardTier } from 'models/nftRewards'
-import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
-import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
-import { formatEther, parseEther } from 'viem'
+import { CaseReducer, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import {
   ProjectCartCurrencyAmount,
   ProjectCartNftReward,
 } from '../ReduxProjectCartProvider'
+import { formatEther, parseEther } from 'viem'
+
+import { NftRewardTier } from 'models/nftRewards'
+import { V4CurrencyOption } from 'packages/v4/models/v4CurrencyOption'
+import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 
 export type ProjectCartState = {
   payAmount: ProjectCartCurrencyAmount | undefined
@@ -100,25 +101,6 @@ const projectCartSlice = createSlice({
     },
     removeNftReward: (state, action: PayloadAction<{ id: number }>) => {
       const { id } = action.payload
-      let payAmount = state.payAmount?.amount ?? 0
-      const removedNftCost = state.allNftRewards.find(
-        n => n.id === id,
-      )?.contributionFloor
-      const quantity = state.chosenNftRewards.find(
-        nft => nft.id === id,
-      )?.quantity
-      if (quantity && quantity > 0) {
-        const nftCostBn =
-          parseEther((removedNftCost ?? 0).toString()) * BigInt(quantity)
-        const payAmountBn = parseEther(payAmount.toString())
-        payAmount = Math.max(0, Number(formatEther(payAmountBn - nftCostBn)))
-      }
-      state.payAmount = payAmount
-        ? {
-            amount: payAmount,
-            currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
-          }
-        : undefined
       state.chosenNftRewards = state.chosenNftRewards.filter(
         reward => reward.id !== id,
       )
@@ -159,22 +141,9 @@ const projectCartSlice = createSlice({
         reward => reward.id === id,
       )
       if (existingIndex === -1) return
-      const removedNftCost = state.allNftRewards.find(
-        n => n.id === id,
-      )?.contributionFloor
-      const payAmountBn =
-        parseEther((state.payAmount?.amount ?? 0).toString()) -
-        parseEther((removedNftCost ?? 0).toString())
 
-      const payAmount = Math.max(0, Number(formatEther(payAmountBn)))
       const newNftRewards = [...state.chosenNftRewards]
       if (newNftRewards[existingIndex].quantity - 1 <= 0) {
-        state.payAmount = payAmount
-          ? {
-              amount: payAmount,
-              currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
-            }
-          : undefined
         state.chosenNftRewards = newNftRewards.filter(
           reward => reward.id !== newNftRewards[existingIndex].id,
         )
@@ -183,12 +152,6 @@ const projectCartSlice = createSlice({
           ...newNftRewards[existingIndex],
           quantity: newNftRewards[existingIndex].quantity - 1,
         }
-        state.payAmount = payAmount
-          ? {
-              amount: payAmount,
-              currency: state.payAmount?.currency ?? V4_CURRENCY_ETH,
-            }
-          : undefined
         state.chosenNftRewards = newNftRewards
       }
     },

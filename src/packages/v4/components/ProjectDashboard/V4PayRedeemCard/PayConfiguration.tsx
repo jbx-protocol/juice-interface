@@ -129,6 +129,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
                 }}
                 value={payAmount ?? cartPayAmount?.toString()}
                 onChange={handleUserPayAmountChange}
+                cardType="input"
               />
               <PayRedeemInput
                 actionType="pay"

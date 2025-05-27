@@ -39,8 +39,10 @@ export const PayRedeemInput = ({
   value,
   onChange,
   actionType,
+  cardType,
 }: {
   actionType?: 'pay' | 'redeem'
+  cardType?: 'input' | 'receive'
   className?: string
   label?: React.ReactNode
   downArrow?: boolean
@@ -145,7 +147,7 @@ export const PayRedeemInput = ({
                 <span>
                   {convertedValue ? formatCurrencyAmount(convertedValue) : null}
                 </span>
-                <NftCreditsDisplay />
+                {cardType === 'input' ? <NftCreditsDisplay />: null}
               </div>
               <span>
                 {token.balance && <>Balance: {formatAmount(token.balance)}</>}
@@ -346,8 +348,8 @@ const NftCreditsDisplay = () => {
   if (!nftCredits || nftCredits <= 0n || !formattedNftCredits?.primaryAmount) return null
 
   return (
-    <div className="text-xs text-grey-600 dark:text-slate-200">
-      {t`${formattedNftCredits.primaryAmount} NFT credits will apply`}
+    <div className="text-xs text-grey-600 dark:text-slate-200 pb-1">
+      <strong>{t`${formattedNftCredits.primaryAmount} NFT credits will apply`}</strong>
     </div>
   )
 }

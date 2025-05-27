@@ -23,6 +23,16 @@ import { ActivityEvent } from './activityEventElems/ActivityElement'
 
 const PAGE_SIZE = 10
 
+const IGNORED_EVENTS = ['mintNftEvent']
+
+const baseEventFilter = IGNORED_EVENTS.reduce(
+  (acc, curr) => ({
+    ...acc,
+    [curr]: null,
+  }),
+  {},
+)
+
 export function V4ActivityList() {
   const tokenSymbol = useProjectContext().tokenSymbol
   const { projectId } = useJBContractContext()
@@ -49,7 +59,9 @@ export function V4ActivityList() {
     variables: {
       where: {
         suckerGroupId: project?.project?.suckerGroupId,
-        ...(filter === 'all' ? {} : { [`${filter}_not`]: null }),
+        ...(filter === 'all'
+          ? baseEventFilter
+          : { ...baseEventFilter, [`${filter}_not`]: null }),
       },
       orderBy: 'timestamp',
       orderDirection: 'desc',

@@ -1,8 +1,7 @@
 import {
   ArrowDownIcon,
   MinusIcon,
-  PlusIcon,
-  TrashIcon,
+  PlusIcon
 } from '@heroicons/react/24/outline'
 import React, { ReactNode, useCallback, useMemo } from 'react'
 
@@ -22,8 +21,10 @@ import { t } from '@lingui/macro'
 import { twMerge } from 'tailwind-merge'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useNftCartItem } from 'packages/v4/hooks/useNftCartItem'
+import { usePayAmounts } from './PayProjectModal/hooks/usePayAmounts'
 import { useProjectPageQueries } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
+import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
 
 const MAX_AMOUNT = BigInt(Number.MAX_SAFE_INTEGER)
 
@@ -38,8 +39,10 @@ export const PayRedeemInput = ({
   value,
   onChange,
   actionType,
+  cardType,
 }: {
   actionType?: 'pay' | 'redeem'
+  cardType?: 'input' | 'receive'
   className?: string
   label?: React.ReactNode
   downArrow?: boolean
@@ -140,9 +143,12 @@ export const PayRedeemInput = ({
               />
             </div>
             <div className="flex min-h-[22px] justify-between">
-              <span>
-                {convertedValue && formatCurrencyAmount(convertedValue)}
-              </span>
+              <div>
+                <span>
+                  {convertedValue ? formatCurrencyAmount(convertedValue) : null}
+                </span>
+                {cardType === 'input' ? <NftCreditsDisplay />: null}
+              </div>
               <span>
                 {token.balance && <>Balance: {formatAmount(token.balance)}</>}
               </span>
@@ -317,15 +323,6 @@ export const PayRedeemCardNftReward: React.FC<{
   )
 }
 
-const RemoveIcon: React.FC<{ onClick: () => void }> = ({ onClick }) => (
-  <TrashIcon
-    data-testid="cart-item-remove-button"
-    role="button"
-    className="inline h-6 w-6 text-grey-400 dark:text-slate-300 md:h-4 md:w-4"
-    onClick={onClick}
-  />
-)
-
 const QuantityControl: React.FC<{
   quantity: number
   onIncrease: () => void
@@ -341,5 +338,18 @@ const QuantityControl: React.FC<{
         <PlusIcon className="h-4 w-4 text-grey-500 dark:text-slate-200" />
       </button>
     </span>
+  )
+}
+
+const NftCreditsDisplay = () => {
+  const { data: nftCredits } = useV4UserNftCredits()
+  const { formattedNftCredits } = usePayAmounts()
+
+  if (!nftCredits || nftCredits <= 0n || !formattedNftCredits?.primaryAmount) return null
+
+  return (
+    <div className="text-xs text-grey-600 dark:text-slate-200 pb-1">
+      <strong>{t`${formattedNftCredits.primaryAmount} NFT credits will apply`}</strong>
+    </div>
   )
 }

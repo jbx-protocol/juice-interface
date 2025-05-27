@@ -662,6 +662,9 @@ msgstr ""
 msgid "{name}"
 msgstr ""
 
+msgid "{0} NFT credits will apply"
+msgstr ""
+
 msgid "Deploy an address which forwards ETH directly to your project's payouts."
 msgstr ""
 

@@ -1,28 +1,28 @@
-import { Trans, t } from '@lingui/macro'
 import { JBChainId, useJBChainId } from 'juice-sdk-react'
-import { useEffect, useState } from 'react'
-import { useProjectDispatch, useProjectSelector } from '../../redux/hooks'
 import {
   PayProjectModalFormValues,
   usePayProjectModal,
 } from './hooks/usePayProjectModal/usePayProjectModal'
+import { Trans, t } from '@lingui/macro'
+import { useEffect, useState } from 'react'
+import { useProjectDispatch, useProjectSelector } from '../../redux/hooks'
 
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import EtherscanLink from 'components/EtherscanLink'
 import ExternalLink from 'components/ExternalLink'
-import { JuiceModal } from 'components/modals/JuiceModal'
 import { Formik } from 'formik'
-import { useWallet } from 'hooks/Wallet'
-import { useSuckers } from 'juice-sdk-react'
 import Image from 'next/legacy/image'
-import { ChainSelect } from 'packages/v4/components/ChainSelect'
-import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
-import { twMerge } from 'tailwind-merge'
-import { helpPagePath } from 'utils/helpPagePath'
-import { emitInfoNotification } from 'utils/notifications'
-import { payRedeemActions } from '../../redux/payRedeemSlice'
+import { JuiceModal } from 'components/modals/JuiceModal'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
+import { emitInfoNotification } from 'utils/notifications'
+import { helpPagePath } from 'utils/helpPagePath'
+import { payRedeemActions } from '../../redux/payRedeemSlice'
+import { twMerge } from 'tailwind-merge'
 import { usePayAmounts } from './hooks/usePayAmounts'
+import { useSuckers } from 'juice-sdk-react'
+import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
+import { useWallet } from 'hooks/Wallet'
 
 export const PayProjectModal: React.FC = () => {
   const {
@@ -37,14 +37,15 @@ export const PayProjectModal: React.FC = () => {
     onPaySubmit,
   } = usePayProjectModal()
   const { formattedTotalAmount } = usePayAmounts()
-  const defaultChainId = useJBChainId()
+  const projectPageChainId = useJBChainId()
   const reduxChainId = useProjectSelector(state => state.payRedeem.chainId)
-  const [selectedChainId, setSelectedChainId] = useState<JBChainId | undefined>(reduxChainId ?? defaultChainId)
+  const defaultChainId = reduxChainId ?? projectPageChainId ?? 1
+  const [selectedChainId, setSelectedChainId] = useState<JBChainId>(defaultChainId)
   const dispatch = useProjectDispatch()
   const { data: suckers } = useSuckers()
 
   useEffect(() => {
-    setSelectedChainId(reduxChainId)
+    setSelectedChainId(defaultChainId)
   }, [open])
 
   const { chain: walletChain, changeNetworks, connect } = useWallet()

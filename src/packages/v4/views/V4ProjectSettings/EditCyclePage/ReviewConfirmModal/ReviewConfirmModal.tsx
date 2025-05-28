@@ -57,7 +57,6 @@ export function ReviewConfirmModal({
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId | undefined>(chainId)
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
-  const [txSigning, setTxSigning] = useState(false)
 
   const { data: suckers } = useSuckers()
 
@@ -105,7 +104,6 @@ export function ReviewConfirmModal({
     }
   }
 
-  // Confirm omnichain edit
   const handleConfirmOmni = async () => {
     // If quote isn't fetched yet, get it
     if (!txQuote) return getQuote()
@@ -121,7 +119,6 @@ export function ReviewConfirmModal({
       }
     }
     setConfirmLoading(true)
-    setTxSigning(true)
     try {
       // Find payment info for selected chain
       const payment = txQuote.payment_info.find(p => Number(p.chain) === selectedGasChain)
@@ -131,15 +128,12 @@ export function ReviewConfirmModal({
       
       // Send the relayr transaction
       await sendRelayrTx(payment)
-      
       // Start polling for transaction status
       relayrBundle.startPolling(txQuote.bundle_uuid)
       
     } catch (error) {
       console.error(error)
       emitErrorNotification(`Error launching ruleset: ${error}`)
-    } finally {
-      setTxSigning(false)
     }
   }
 
@@ -161,6 +155,8 @@ export function ReviewConfirmModal({
 
   const panelProps = { className: 'text-lg' }
 
+  const txSigning = Boolean(relayrBundle.uuid) && !relayrBundle.isComplete
+  
   return (
     <>      
       <TransactionModal
@@ -170,7 +166,7 @@ export function ReviewConfirmModal({
         okText={!txQuote ? <Trans>Get edit quote</Trans> : <Trans>Deploy changes</Trans>}
         okButtonProps={{ disabled: !formHasChanges }}
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
-        transactionPending={confirmLoading}
+        transactionPending={txSigning}
         chainIds={projectChains}
         relayrResponse={relayrBundle.response}
         cancelButtonProps={{ hidden: true }}

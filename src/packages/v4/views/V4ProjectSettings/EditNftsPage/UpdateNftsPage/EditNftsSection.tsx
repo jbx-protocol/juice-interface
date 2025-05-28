@@ -1,6 +1,6 @@
 import { Button, Empty } from 'antd'
 import { Trans, t } from '@lingui/macro'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Callout } from 'components/Callout/Callout'
@@ -42,7 +42,6 @@ export function EditNftsSection() {
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>()
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
-  const [txSigning, setTxSigning] = useState(false)
 
   const { data: suckers } = useSuckers()
   const chainIds = useMemo(() => suckers?.map(s => s.peerChainId as JBChainId) ?? [], [suckers])
@@ -54,14 +53,6 @@ export function EditNftsSection() {
   const activeChains = chainIds
 
   const showNftRewards = hasNftRewards
-
-  const onNftFormSaved = useCallback(async () => {
-    if (!rewardTiers) return
-
-    setSubmitLoading(true)
-    await updateExistingCollection()
-    setSubmitLoading(false)
-  }, [rewardTiers, updateExistingCollection])
 
   // omnichain modal handlers
   const handleGetQuote = async () => {
@@ -78,7 +69,6 @@ export function EditNftsSection() {
   const handleConfirm = async () => {
     if (!txQuote) return handleGetQuote()
     setConfirmLoading(true)
-    setTxSigning(true)
     try {
       const payment = txQuote.payment_info.find(p => Number(p.chain) === selectedGasChain)
       if (!payment) throw new Error('No payment info for selected chain')
@@ -87,8 +77,6 @@ export function EditNftsSection() {
       relayrBundle.startPolling(txQuote.bundle_uuid)
     } catch (e) {
       emitErrorNotification((e as Error).message)
-    } finally {
-      setTxSigning(false)
     }
   }
   useEffect(() => {
@@ -101,7 +89,9 @@ export function EditNftsSection() {
   if (loading) return <Loading className="mt-20" />
 
   const allNftsRemoved = showNftRewards && rewardTiers?.length === 0
-
+  
+  const txSigning = Boolean(relayrBundle.uuid) && !relayrBundle.isComplete
+  
   return (
     <>
       <Callout.Info className="text-primary mb-5 bg-smoke-100 dark:bg-slate-500">
@@ -157,7 +147,7 @@ export function EditNftsSection() {
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
         cancelButtonProps={{ hidden: true }}
         onCancel={() => setModalOpen(false)}
-        transactionPending={confirmLoading}
+        transactionPending={txSigning}
         chainIds={activeChains}
         relayrResponse={relayrBundle.response}
       >

@@ -1,24 +1,24 @@
-import { Trans, t } from '@lingui/macro'
 import { Button, Form, Input } from 'antd'
 import { JBChainId, createSalt } from 'juice-sdk-core'
 import { RelayrPostBundleResponse, jbControllerAbi, useGetRelayrTxBundle, useJBContractContext, useSendRelayrTx, useSuckers } from 'juice-sdk-react'
-import { useEffect, useMemo, useState } from 'react'
+import { Trans, t } from '@lingui/macro'
 import { mainnet, sepolia } from 'viem/chains'
+import { useEffect, useMemo, useState } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { IssueErc20TokenTxArgs } from 'components/buttons/IssueErc20TokenButton'
-import ETHAmount from 'components/currency/ETHAmount'
-import TransactionModal from 'components/modals/TransactionModal'
-import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { ContractFunctionArgs } from 'viem'
+import ETHAmount from 'components/currency/ETHAmount'
 import { GasIcon } from 'packages/v4/components/Create/components/pages/ReviewDeploy/components/LaunchProjectModal/LaunchProjectModal'
+import { ISSUE_ERC20_EXPLANATION } from 'components/strings'
+import { IssueErc20TokenTxArgs } from 'components/buttons/IssueErc20TokenButton'
+import TransactionModal from 'components/modals/TransactionModal'
+import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
+import { emitErrorNotification } from 'utils/notifications'
 import { useDeployOmnichainErc20 } from 'packages/v4/hooks/useDeployOmnichainErc20'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { useV4IssueErc20TokenTx } from 'packages/v4/hooks/useV4IssueErc20TokenTx'
 import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
-import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
-import { emitErrorNotification } from 'utils/notifications'
-import { ContractFunctionArgs } from 'viem'
 
 export function CreateErc20TokenSettingsPage() {
   const [form] = Form.useForm<IssueErc20TokenTxArgs>()
@@ -37,7 +37,6 @@ export function CreateErc20TokenSettingsPage() {
   const { deployOmnichainErc20 } = useDeployOmnichainErc20()
   const [txQuoteResponse, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState<boolean>(false)
-  const [txSigning, setTxSigning] = useState<boolean>(false)
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(process.env.NEXT_PUBLIC_TESTNET === 'true' ? sepolia.id : mainnet.id)
   const relayrBundle = useGetRelayrTxBundle()
   const { sendRelayrTx } = useSendRelayrTx()
@@ -48,6 +47,9 @@ export function CreateErc20TokenSettingsPage() {
     () => suckers?.map(s => s.peerChainId) ?? [],
     [suckers]
   )
+
+  // Add txSigning state based on relayr bundle
+  const txSigning = Boolean(relayrBundle.uuid) && !relayrBundle.isComplete
 
   useEffect(() => {
     if (chainIds.length) setSelectedGasChain(chainIds[0])
@@ -104,13 +106,11 @@ export function CreateErc20TokenSettingsPage() {
     }
     // open pending modal
     setTransactionPending(true)
-    setTxSigning(true)
     const payment = txQuoteResponse.payment_info.find(
       p => Number(p.chain) === Number(selectedGasChain)
     )
     if (!payment) {
       emitErrorNotification(t`No payment info for selected chain`)
-      setTxSigning(false)
       setTransactionPending(false)
       return
     }
@@ -122,8 +122,6 @@ export function CreateErc20TokenSettingsPage() {
       emitErrorNotification((e as Error).message)
       setTransactionPending(false)
       setTransactionModalOpen(false)
-    } finally {
-      setTxSigning(false)
     }
   }
 

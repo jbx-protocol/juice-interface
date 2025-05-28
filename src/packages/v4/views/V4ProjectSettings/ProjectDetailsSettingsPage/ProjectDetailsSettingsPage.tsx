@@ -1,6 +1,6 @@
 import { ProjectDetailsForm, ProjectDetailsFormFields } from 'components/Project/ProjectSettings/ProjectDetailsForm'
 import { RelayrPostBundleResponse, useJBProjectMetadataContext, useSuckers } from 'juice-sdk-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Callout } from 'components/Callout/Callout'
@@ -27,16 +27,22 @@ export function ProjectDetailsSettingsPage() {
 
   // Omnichain edit state
   const { getEditQuote, sendRelayrTx, relayrBundle } = useOmnichainEditProjectDetailsTx()
-  const { data: suckers } = useSuckers()
-  const projectChains = suckers?.map(s => s.peerChainId) || []
-  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId | undefined>(projectChains[0])
+  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>()
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
-  const [txQuoteLoading, setTxQuoteLoading] = useState(false)
-  const [txSigning, setTxSigning] = useState(false)
-  const [confirmLoading, setConfirmLoading] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
-  const [cid, setCid] = useState<`0x${string}`>()
+  const [confirmLoading, setConfirmLoading] = useState(false)
   const [successOpen, setSuccessOpen] = useState(false)
+  const [txQuoteLoading, setTxQuoteLoading] = useState(false)
+  const [cid, setCid] = useState<`0x${string}`>()
+
+  const txSigning = Boolean(relayrBundle.uuid) && !relayrBundle.isComplete
+
+  const { data: suckers } = useSuckers()
+  const chainIds = useMemo(() => suckers?.map(s => s.peerChainId) ?? [], [suckers])
+
+  useEffect(() => {
+    if (chainIds.length) setSelectedGasChain(chainIds[0])
+  }, [chainIds])
 
   const editProjectDetailsTx = useEditProjectDetailsTx()
 
@@ -94,7 +100,6 @@ export function ProjectDetailsSettingsPage() {
   const handleConfirm = async () => {
     if (!txQuote) return handleGetQuote()
     setConfirmLoading(true)
-    setTxSigning(true)
     try {
       const payment = txQuote.payment_info.find((p) => Number(p.chain) === selectedGasChain)
       if (!payment) throw new Error('No payment info for selected chain')
@@ -103,8 +108,6 @@ export function ProjectDetailsSettingsPage() {
     } catch (e) {
       emitErrorNotification((e as Error).message)
       setConfirmLoading(false)
-    } finally {
-      setTxSigning(false)
     }
   }
 
@@ -198,7 +201,7 @@ export function ProjectDetailsSettingsPage() {
             </div>
             <div className="flex justify-between">
               <span><Trans>Pay gas on:</Trans></span>
-              <ChainSelect value={selectedGasChain} onChange={setSelectedGasChain} chainIds={projectChains} showTitle />
+              <ChainSelect value={selectedGasChain} onChange={setSelectedGasChain} chainIds={chainIds} showTitle />
             </div>
           </>
         )}

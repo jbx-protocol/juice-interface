@@ -9,6 +9,30 @@ import { JBChainId } from 'juice-sdk-core'
 import { RelayrGetBundleResponse } from 'juice-sdk-react'
 import { Skeleton } from 'antd'
 
+interface ChainTxLinkProps {
+  chainId: JBChainId
+  txHash?: Hash
+}
+
+function ChainTxLink({ chainId, txHash }: ChainTxLinkProps) {
+  return (
+    <div className="flex items-center gap-2">
+      <ChainLogo chainId={chainId} />
+      {txHash ? (
+        <EtherscanLink value={txHash} type="tx" chainId={chainId}>
+          <Trans>View on {NETWORKS[chainId].label}</Trans>
+        </EtherscanLink>
+      ) : (
+        <Skeleton.Input 
+          active 
+          size="small" 
+          style={{ width: 200, height: 20 }} 
+        />
+      )}
+    </div>
+  )
+}
+
 export function OmnichainTxLoadingContent({
   relayrResponse,
   chainIds,
@@ -24,11 +48,6 @@ export function OmnichainTxLoadingContent({
       // @ts-ignore
       hash: tx.status.data.transaction?.hash ?? tx.status.data.hash as Hash
     })) || []
-
-  const sortedChainTxHashes = chainTxHashes.sort((a, b) => 
-    sortChainIds([a.chainId, b.chainId]).indexOf(a.chainId) - 
-    sortChainIds([a.chainId, b.chainId]).indexOf(b.chainId)
-  )
 
   const sortedChainIds = chainIds ? sortChainIds(chainIds) : []
 
@@ -53,32 +72,18 @@ export function OmnichainTxLoadingContent({
         </Trans>
       </p>
       
-      {chainTxHashes.length > 0 ? (
-        <div className="mt-4 flex flex-col gap-2">
-          {sortedChainTxHashes.map(({ chainId, hash }) => (
-            <div key={chainId} className="flex items-center gap-2">
-              <ChainLogo chainId={chainId} />
-              <EtherscanLink value={hash} type="tx" chainId={chainId}>
-                <Trans>View on {NETWORKS[chainId].label}</Trans>
-              </EtherscanLink>
-            </div>
-          ))}
-        </div>
-      ) : (
-        // Show skeleton with as many chains as there will be
-        <div className="mt-4 flex flex-col gap-2">
-          {sortedChainIds.map((chainId) => (
-            <div key={chainId} className="flex items-center gap-2">
-              <ChainLogo chainId={chainId} />
-              <Skeleton.Input 
-                active 
-                size="small" 
-                style={{ width: 200, height: 20 }} 
-              />
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="mt-4 flex flex-col gap-2">
+        {sortedChainIds.map((chainId) => {
+          const txHash = chainTxHashes.find(tx => tx.chainId === chainId)?.hash
+          return (
+            <ChainTxLink
+              key={chainId}
+              chainId={chainId}
+              txHash={txHash}
+            />
+          )
+        })}
+      </div>
     </div>
   )
 }

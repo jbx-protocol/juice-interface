@@ -29,6 +29,32 @@ query Participants(
   }
 }
 
+query WalletContributions(
+  $address: String
+  $orderBy: String
+  $orderDirection: String
+  $limit: Int
+) {
+  participants(
+    where: { address: $address, volume_gt: "0" }
+    orderBy: $orderBy
+    orderDirection: $orderDirection
+    limit: $limit
+  ) {
+    items {
+      projectId
+      volume
+      lastPaidTimestamp
+      project {
+        id
+        metadataUri
+        handle
+      }
+    }
+  }
+}
+
+
 query ParticipantSnapshots($where: participantSnapshotFilter) {
   participantSnapshots(where: $where) {
     items {

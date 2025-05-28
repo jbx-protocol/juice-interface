@@ -1,23 +1,20 @@
 import { SettingOutlined } from '@ant-design/icons'
 import { t, Trans } from '@lingui/macro'
 import { Button, Tabs } from 'antd'
-import ActivityList from 'components/ActivityList'
+import ActivityListAnyV from 'components/ActivityListAnyV'
 import { SocialButton } from 'components/buttons/SocialButton'
 import EthereumAddress from 'components/EthereumAddress'
 import Grid from 'components/Grid'
 import { Etherscan } from 'components/icons/Etherscan'
-import { JuiceListbox } from 'components/inputs/JuiceListbox'
 import Loading from 'components/Loading'
 import Paragraph from 'components/Paragraph'
 import ProjectCard from 'components/ProjectCard'
 import WalletContributionCard from 'components/WalletContributionCard'
-import {
-  OrderDirection,
-  Participant_OrderBy,
-  Project_OrderBy,
-  useProjectsQuery,
-  useWalletContributionsQuery,
-} from 'generated/graphql'
+import { PV_V4 } from 'constants/pv'
+import { BigNumber } from 'ethers'
+import { useWalletContributionsQuery } from 'generated/graphql'
+import { useWalletContributionsQuery as useV4WalletContributionsQuery } from 'generated/v4/graphql'
+import { useDBProjectsQuery } from 'hooks/useDBProjects'
 import useMobile from 'hooks/useMobile'
 import {
   useWalletBookmarkedIds,
@@ -25,6 +22,7 @@ import {
 } from 'hooks/useWalletBookmarkedProjects'
 import { useWalletSignIn } from 'hooks/useWalletSignIn'
 import { useWallet } from 'hooks/Wallet'
+import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { client } from 'lib/apollo/client'
 import { Profile } from 'models/database'
 import { SubgraphQueryProject } from 'models/subgraphProjects'
@@ -57,31 +55,35 @@ function ProjectsList({ projects }: { projects: SubgraphQueryProject[] }) {
 }
 
 function ContributedList({ address }: { address: string }) {
-  const orderByOpts = (): { label: string; value: Participant_OrderBy }[] => [
-    {
-      label: t`Highest paid`,
-      value: Participant_OrderBy.volume,
-    },
-    {
-      label: t`Recent`,
-      value: Participant_OrderBy.lastPaidTimestamp,
-    },
-  ]
+  const { data: participants, loading: contributionsLoading } =
+    useWalletContributionsQuery({
+      client,
+      variables: {
+        wallet: address.toLowerCase(),
+        first: 1000,
+      },
+    })
 
-  const [orderBy, setOrderBy] = useState<Participant_OrderBy>(
-    orderByOpts()[0].value,
-  )
-
-  const { data, loading: contributionsLoading } = useWalletContributionsQuery({
-    client,
+  const { data: v4Participants } = useV4WalletContributionsQuery({
+    client: bendystrawClient,
     variables: {
-      wallet: address.toLowerCase(),
-      orderBy,
-      orderDirection: OrderDirection.desc,
+      address,
     },
   })
 
-  const contributions = data?.participants
+  const contributions = [
+    ...(participants?.participants ?? []),
+    ...(v4Participants?.participants.items
+      .filter(p => !!p.project)
+      .map(p => ({
+        ...p,
+        pv: PV_V4,
+        volume: BigNumber.from(p.volume),
+        project: p.project!, // for typing non-null
+      })) ?? []),
+  ]
+    // auto sort by lastPaidTimestamp, desc. we can't dynamically sort because we must aggregate two lists
+    .sort((a, b) => (a.lastPaidTimestamp > b.lastPaidTimestamp ? -1 : 1))
 
   const { userAddress } = useWallet()
 
@@ -111,13 +113,6 @@ function ContributedList({ address }: { address: string }) {
 
   return (
     <div>
-      <JuiceListbox
-        className="mb-6 w-[240px]"
-        options={orderByOpts()}
-        value={orderByOpts().find(o => o.value === orderBy)}
-        onChange={v => setOrderBy(v.value)}
-      />
-
       <Grid>
         {contributions?.map(c => (
           <WalletContributionCard contribution={c} key={c.project.id} />
@@ -128,22 +123,15 @@ function ContributedList({ address }: { address: string }) {
 }
 
 function OwnedProjectsList({ address }: { address: string }) {
-  const { data, loading } = useProjectsQuery({
-    client,
-    variables: {
-      where: {
-        owner: address,
-      },
-      orderBy: Project_OrderBy.createdAt,
-      orderDirection: OrderDirection.desc,
-    },
+  const { data: projects, isLoading } = useDBProjectsQuery({
+    owner: address,
+    orderBy: 'created_at',
+    orderDirection: 'desc',
   })
-
-  const projects = data?.projects
 
   const { userAddress } = useWallet()
 
-  if (loading) return <Loading />
+  if (isLoading) return <Loading />
 
   if (!projects || projects.length === 0)
     return (
@@ -199,20 +187,13 @@ function SavedProjectsList({ address }: { address: string }) {
 }
 
 function CreatedProjectsList({ address }: { address: string }) {
-  const { data, loading } = useProjectsQuery({
-    client,
-    variables: {
-      where: {
-        owner: address,
-      },
-    },
+  const { data: projects, isLoading } = useDBProjectsQuery({
+    creator: address,
   })
-
-  const projects = data?.projects
 
   const { userAddress } = useWallet()
 
-  if (loading) return <Loading />
+  if (isLoading) return <Loading />
 
   if (!projects || projects.length === 0)
     return (
@@ -272,7 +253,7 @@ export function AccountDashboard({
     {
       label: t`Activity`,
       key: 'activity',
-      children: <ActivityList from={address} />,
+      children: <ActivityListAnyV from={address} />,
     },
     {
       label: t`Contributions`,

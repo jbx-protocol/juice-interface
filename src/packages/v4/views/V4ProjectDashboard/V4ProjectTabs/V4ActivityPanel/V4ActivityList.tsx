@@ -127,7 +127,8 @@ export function V4ActivityList() {
   )
 }
 
-function translateEventDataToPresenter(
+// TODO this should be exported from somewhere else. Components are currently awkward due to shared dependencies on v1v2v3 and v4 parts
+export function translateEventDataToPresenter(
   event: AnyEvent,
   tokenSymbol: string | undefined,
 ) {

@@ -1,8 +1,9 @@
-import { t, Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
+
 import EtherscanLink from 'components/EtherscanLink'
-import { JBChainId } from 'juice-sdk-core'
-import Image from 'next/image'
 import { Hash } from 'viem'
+import Image from 'next/image'
+import { JBChainId } from 'juice-sdk-core'
 
 export function TxLoadingContent({
   txHash,

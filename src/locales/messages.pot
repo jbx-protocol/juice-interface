@@ -3617,6 +3617,9 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
+msgid "Your transactions have been submitted across multiple chains and are awaiting confirmation."
+msgstr ""
+
 msgid "Cannot use zero address"
 msgstr ""
 
@@ -3801,6 +3804,9 @@ msgid "With an auction estimate of $10-15 million at Sotheby's, ConstitutionDAO 
 msgstr ""
 
 msgid "Current Redemption Rate:"
+msgstr ""
+
+msgid "View on {0}"
 msgstr ""
 
 msgid "Connected wallet not authorized"
@@ -4650,6 +4656,9 @@ msgid "Reserved tokens"
 msgstr ""
 
 msgid "Invalid type - contact Juicebox Support"
+msgstr ""
+
+msgid "Multi-chain transaction pending..."
 msgstr ""
 
 msgid "Save changes"

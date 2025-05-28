@@ -170,6 +170,9 @@ export function ReviewConfirmModal({
         okText={!txQuote ? <Trans>Get edit quote</Trans> : <Trans>Deploy changes</Trans>}
         okButtonProps={{ disabled: !formHasChanges }}
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
+        transactionPending={confirmLoading}
+        chainIds={projectChains}
+        relayrResponse={getRelayrBundle.response}
         cancelButtonProps={{ hidden: true }}
         onCancel={onClose}
       >           

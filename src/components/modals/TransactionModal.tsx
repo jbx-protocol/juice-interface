@@ -1,30 +1,50 @@
-import { t, Trans } from '@lingui/macro'
+import { JBChainId, RelayrGetBundleResponse } from 'juice-sdk-react'
 import { Modal, ModalProps } from 'antd'
-import { readNetwork } from 'constants/networks'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
-import { JBChainId } from 'juice-sdk-react'
-import { TxStatus } from 'models/transaction'
-import Image from 'next/legacy/image'
 import { PropsWithChildren, useContext, useMemo } from 'react'
-import { useChainId } from 'wagmi'
+import { Trans, t } from '@lingui/macro'
+
 import EtherscanLink from '../EtherscanLink'
+import Image from 'next/legacy/image'
+import { OmnichainTxLoadingContent } from 'packages/v4/components/Create/components/pages/ReviewDeploy/components/LaunchProjectModal/OmnichainTxLoadingContent'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { TxStatus } from 'models/transaction'
+import { readNetwork } from 'constants/networks'
+import { useChainId } from 'wagmi'
+import { useWallet } from 'hooks/Wallet'
 
 type TransactionModalProps = PropsWithChildren<
   ModalProps & {
     transactionPending?: boolean
     connectWalletText?: string
     switchNetworkText?: string
+    // New props for omnichain support
+    relayrResponse?: RelayrGetBundleResponse
+    chainIds?: JBChainId[]
   }
 >
 
-const PendingTransactionModalBody = () => {
-  const { transactions } = useContext(TxHistoryContext)
+type PendingTransactionModalBodyProps = {
+  relayrResponse?: RelayrGetBundleResponse
+  chainIds?: JBChainId[]
+}
 
+const PendingTransactionModalBody = ({ 
+  relayrResponse, 
+  chainIds 
+}: PendingTransactionModalBodyProps) => {
+  const { transactions } = useContext(TxHistoryContext)
+  const chainId = useChainId()
+
+  const isOmnichainTx = chainIds && chainIds.length > 1
+
+  if (isOmnichainTx) {
+    return <OmnichainTxLoadingContent relayrResponse={relayrResponse} chainIds={chainIds} />
+  }
+
+  // Otherwise, show single-chain transaction content
   const pendingTx = transactions?.find(tx => tx.status === TxStatus.pending)
   const pendingTxHash = pendingTx?.tx?.hash
   const pendingTxChainId = pendingTx?.tx?.chainId
-  const chainId = useChainId()
 
   return (
     <div className="my-8 mx-0 flex h-full w-full items-center justify-center">
@@ -104,7 +124,10 @@ export default function TransactionModal(props: TransactionModalProps) {
   return (
     <Modal {...modalProps}>
       {props.transactionPending ? (
-        <PendingTransactionModalBody />
+        <PendingTransactionModalBody 
+          relayrResponse={props.relayrResponse} 
+          chainIds={props.chainIds}
+        />
       ) : (
         props.children
       )}

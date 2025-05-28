@@ -178,6 +178,7 @@ export function ProjectDetailsSettingsPage() {
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
         transactionPending={txSigning}
         chainIds={projectChains}
+        relayrResponse={relayrBundle.response}
         cancelButtonProps={{ hidden: true }}
         onCancel={() => setModalOpen(false)}
       >

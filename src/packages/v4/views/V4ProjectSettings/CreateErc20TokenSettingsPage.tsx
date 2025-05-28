@@ -22,10 +22,9 @@ import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermis
 
 export function CreateErc20TokenSettingsPage() {
   const [form] = Form.useForm<IssueErc20TokenTxArgs>()
-  const [loading, setLoading] = useState<boolean>()
+  const [confirmLoading, setConfirmLoading] = useState<boolean>()
   const [transactionModalOpen, setTransactionModalOpen] =
     useState<boolean>(false)
-  const [transactionPending, setTransactionPending] = useState<boolean>(false)
   const issueErc20TokenTx = useV4IssueErc20TokenTx()
   const projectHasErc20Token = useProjectHasErc20Token()
   const hasIssueTicketsPermission = useV4WalletHasPermission(
@@ -105,13 +104,13 @@ export function CreateErc20TokenSettingsPage() {
       return
     }
     // open pending modal
-    setTransactionPending(true)
+    setConfirmLoading(true)
     const payment = txQuoteResponse.payment_info.find(
       p => Number(p.chain) === Number(selectedGasChain)
     )
     if (!payment) {
       emitErrorNotification(t`No payment info for selected chain`)
-      setTransactionPending(false)
+      setConfirmLoading(false)
       return
     }
     try {
@@ -120,7 +119,7 @@ export function CreateErc20TokenSettingsPage() {
       relayrBundle.startPolling(txQuoteResponse.bundle_uuid)
     } catch (e) {
       emitErrorNotification((e as Error).message)
-      setTransactionPending(false)
+      setConfirmLoading(false)
       setTransactionModalOpen(false)
     }
   }
@@ -128,7 +127,7 @@ export function CreateErc20TokenSettingsPage() {
   useEffect(() => {
     if (relayrBundle.isComplete) {
       // close modal on complete then reload
-      setTransactionPending(false)
+      setConfirmLoading(false)
       setTransactionModalOpen(false)
       window.location.reload()
     }
@@ -142,27 +141,27 @@ export function CreateErc20TokenSettingsPage() {
       return
     }
 
-    setLoading(true)
+    setConfirmLoading(true)
 
     issueErc20TokenTx(
       { name: values.name, symbol: values.symbol },
       {
         onTransactionPending: () => {
-          setTransactionPending(true)
+          setConfirmLoading(true)
           setTransactionModalOpen(true)
         },
         onTransactionConfirmed: () => {
-          setTransactionPending(false)
+          setConfirmLoading(false)
           setTransactionModalOpen(false)
-          setLoading(false)
+          setConfirmLoading(false)
           setTimeout(() => {
             window.location.reload()
           }, 1000)
         },
         onTransactionError: (e: Error) => {
-          setTransactionPending(false)
+          setConfirmLoading(false)
           setTransactionModalOpen(false)
-          setLoading(false)
+          setConfirmLoading(false)
           emitErrorNotification(e.message)
           emitErrorNotification(
             t`Failed to create ERC20 token: ${e.message}`,
@@ -259,19 +258,21 @@ export function CreateErc20TokenSettingsPage() {
               />
             </div>
           ): null}
-          <Button type="primary" onClick={onLaunchMulti} loading={txSigning || txQuoteLoading}>
+          <Button type="primary" onClick={onLaunchMulti} loading={confirmLoading || txSigning || txQuoteLoading}>
             {txQuote ? <>{<Trans>Launch ERC-20</Trans>}</> : <Trans>Get quote</Trans>}
           </Button>
         </div>
       </div>
 
       <TransactionModal
-        transactionPending={transactionPending}
+        transactionPending={txSigning}
         title={isMultiChain ? t`Launch Multi-Chain ERC-20` : t`Create ERC-20 Token`}
         open={transactionModalOpen}
         onCancel={() => setTransactionModalOpen(false)}
         onOk={() => setTransactionModalOpen(false)}
-        confirmLoading={loading || txSigning}
+        confirmLoading={confirmLoading || txSigning}
+        chainIds={chainIds}
+        relayrResponse={relayrBundle.response}
         centered
       />
     </>

@@ -50,7 +50,6 @@ export function OmnichainTxLoadingContent({
     })) || []
 
   const sortedChainIds = chainIds ? sortChainIds(chainIds) : []
-
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       <Image

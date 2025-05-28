@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import EthereumAddress from 'components/EthereumAddress'
 import { ThemeContext } from 'contexts/Theme/ThemeContext'
+import { JBChainId } from 'juice-sdk-core'
 import tailwind from 'lib/tailwind'
 import { ParticipantsQuery } from 'packages/v4/graphql/client/graphql'
 import { useContext, useEffect, useMemo, useState } from 'react'
@@ -12,6 +13,7 @@ type Entry = {
   walletsCount?: number
   balance: number | undefined
   percent: number
+  chainId?: JBChainId
 }
 
 export default function TokenPieChart({
@@ -45,6 +47,7 @@ export default function TokenPieChart({
       balance: parseFloat(fromWad(w.balance)),
       percent:
         parseFloat(fromWad(w.balance)) / parseFloat(fromWad(tokenSupply)),
+      chainId: w.chainId as JBChainId,
     }))
 
     // If any remainder wallets, include them as a single entry
@@ -126,7 +129,10 @@ export default function TokenPieChart({
           <>
             <div className={activeWallet.walletsCount ? '' : 'font-medium'}>
               {activeWallet.wallet ? (
-                <EthereumAddress address={activeWallet.wallet} />
+                <EthereumAddress
+                  address={activeWallet.wallet}
+                  chainId={activeWallet.chainId}
+                />
               ) : (
                 `${formattedNum(activeWallet.walletsCount)} wallets`
               )}

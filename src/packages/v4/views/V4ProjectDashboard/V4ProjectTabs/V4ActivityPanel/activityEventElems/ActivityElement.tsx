@@ -105,7 +105,11 @@ function Header({
   )
 }
 
-function TimestampVersion({ timestamp, txHash }: ActivityElementEvent) {
+function TimestampVersion({
+  timestamp,
+  txHash,
+  chainId,
+}: ActivityElementEvent) {
   return (
     <div className="text-right">
       {timestamp && (
@@ -115,6 +119,7 @@ function TimestampVersion({ timestamp, txHash }: ActivityElementEvent) {
             value={txHash}
             type="tx"
             className="text-grey-500 dark:text-grey-300"
+            chainId={chainId as JBChainId}
           />
         </div>
       )}

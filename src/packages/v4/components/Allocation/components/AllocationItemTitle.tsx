@@ -2,6 +2,7 @@ import { LockFilled } from '@ant-design/icons'
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
+import { JBChainId } from 'juice-sdk-core'
 import { isProjectSplit } from 'packages/v4/utils/v4Splits'
 import { formatDate } from 'utils/format/formatDate'
 import { useChainId } from 'wagmi'
@@ -22,7 +23,10 @@ export function AllocationItemTitle({
           projectId={Number(allocation.projectId)}
         />
       ) : (
-        <EthereumAddress address={allocation.beneficiary} />
+        <EthereumAddress
+          address={allocation.beneficiary}
+          chainId={chainId as JBChainId}
+        />
       )}
       {!!allocation.lockedUntil && (
         <Tooltip

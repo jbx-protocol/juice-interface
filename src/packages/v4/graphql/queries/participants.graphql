@@ -45,6 +45,7 @@ query WalletContributions(
       projectId
       volume
       lastPaidTimestamp
+      chainId
       project {
         id
         metadataUri

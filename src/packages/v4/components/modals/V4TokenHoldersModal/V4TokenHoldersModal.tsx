@@ -65,7 +65,8 @@ export const V4TokenHoldersModal = ({
             {tokenAddress && !isZeroAddress(tokenAddress) && (
               <div>
                 <Trans>
-                  Token address: <EthereumAddress address={tokenAddress} />
+                  Token address:{' '}
+                  <EthereumAddress address={tokenAddress} chainId={chainId} />
                 </Trans>
               </div>
             )}

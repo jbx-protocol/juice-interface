@@ -5,14 +5,17 @@ import ProjectLogo from 'components/ProjectLogo'
 import { ProjectTagsList } from 'components/ProjectTags/ProjectTagsList'
 import { RichPreview } from 'components/RichPreview/RichPreview'
 import { useWallet } from 'hooks/Wallet'
+import { JBChainId } from 'juice-sdk-core'
 import { useMemo } from 'react'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { wrapNonAnchorsInAnchor } from 'utils/wrapNonAnchorsInAnchor'
+import { useChainId } from 'wagmi'
 import { ReviewDescription } from '../ReviewDescription'
 
 export const ProjectDetailsReview = () => {
   const { userAddress } = useWallet()
+  const chainId = useChainId()
   const {
     projectMetadata: {
       description,
@@ -160,7 +163,10 @@ export const ProjectDetailsReview = () => {
         title={t`Project owner`}
         desc={
           ownerAddress ? (
-            <EthereumAddress address={ownerAddress} />
+            <EthereumAddress
+              address={ownerAddress}
+              chainId={chainId as JBChainId}
+            />
           ) : (
             <Trans>Wallet not connected</Trans>
           )

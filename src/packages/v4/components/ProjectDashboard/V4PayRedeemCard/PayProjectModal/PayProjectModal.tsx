@@ -1,28 +1,28 @@
+import { Trans, t } from '@lingui/macro'
 import { JBChainId, useJBChainId } from 'juice-sdk-react'
+import { useEffect, useState } from 'react'
+import { useProjectDispatch, useProjectSelector } from '../../redux/hooks'
 import {
   PayProjectModalFormValues,
   usePayProjectModal,
 } from './hooks/usePayProjectModal/usePayProjectModal'
-import { Trans, t } from '@lingui/macro'
-import { useEffect, useState } from 'react'
-import { useProjectDispatch, useProjectSelector } from '../../redux/hooks'
 
-import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import EtherscanLink from 'components/EtherscanLink'
 import ExternalLink from 'components/ExternalLink'
-import { Formik } from 'formik'
-import Image from 'next/legacy/image'
 import { JuiceModal } from 'components/modals/JuiceModal'
+import { Formik } from 'formik'
+import { useWallet } from 'hooks/Wallet'
+import { useSuckers } from 'juice-sdk-react'
+import Image from 'next/legacy/image'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
+import { twMerge } from 'tailwind-merge'
+import { helpPagePath } from 'utils/helpPagePath'
+import { emitInfoNotification } from 'utils/notifications'
+import { payRedeemActions } from '../../redux/payRedeemSlice'
 import { MessageSection } from './components/MessageSection'
 import { ReceiveSection } from './components/ReceiveSection'
-import { emitInfoNotification } from 'utils/notifications'
-import { helpPagePath } from 'utils/helpPagePath'
-import { payRedeemActions } from '../../redux/payRedeemSlice'
-import { twMerge } from 'tailwind-merge'
 import { usePayAmounts } from './hooks/usePayAmounts'
-import { useSuckers } from 'juice-sdk-react'
-import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvider'
-import { useWallet } from 'hooks/Wallet'
 
 export const PayProjectModal: React.FC = () => {
   const {
@@ -40,7 +40,8 @@ export const PayProjectModal: React.FC = () => {
   const projectPageChainId = useJBChainId()
   const reduxChainId = useProjectSelector(state => state.payRedeem.chainId)
   const defaultChainId = reduxChainId ?? projectPageChainId ?? 1
-  const [selectedChainId, setSelectedChainId] = useState<JBChainId>(defaultChainId)
+  const [selectedChainId, setSelectedChainId] =
+    useState<JBChainId>(defaultChainId)
   const dispatch = useProjectDispatch()
   const { data: suckers } = useSuckers()
 
@@ -72,7 +73,9 @@ export const PayProjectModal: React.FC = () => {
         const walletConnectedToWrongChain = selectedChainId !== walletChainId
         if (walletConnectedToWrongChain) {
           await changeNetworks(selectedChainId as JBChainId)
-          emitInfoNotification(`Network changed to ${selectedChainId}, try paying again.`)
+          emitInfoNotification(
+            `Network changed to ${selectedChainId}, try paying again.`,
+          )
           return
         }
         if (!walletChain) {
@@ -139,7 +142,15 @@ export const PayProjectModal: React.FC = () => {
                   </p>
                   {pendingTransactionHash ? (
                     <p>
-                      <EtherscanLink value={pendingTransactionHash} type="tx">
+                      <EtherscanLink
+                        value={pendingTransactionHash}
+                        type="tx"
+                        chainId={
+                          walletChain?.id
+                            ? (parseInt(walletChain.id) as JBChainId)
+                            : undefined
+                        }
+                      >
                         <Trans>View on Etherscan</Trans>
                       </EtherscanLink>
                     </p>
@@ -150,7 +161,9 @@ export const PayProjectModal: React.FC = () => {
                   <div className="flex flex-col divide-y divide-grey-200 dark:divide-slate-500">
                     {suckers && suckers.length > 1 && (
                       <div className="flex items-center justify-between py-6">
-                        <span className="font-medium"><Trans>Network</Trans></span>
+                        <span className="font-medium">
+                          <Trans>Network</Trans>
+                        </span>
                         <ChainSelect
                           className="min-w-[175px]"
                           value={selectedChainId}

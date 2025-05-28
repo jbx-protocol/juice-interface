@@ -65,8 +65,14 @@ export function ProjectSettingsDashboard() {
 
   const chainId = useJBChainId()
 
-  const { data: balance, isLoading: loading } = useV4BalanceOfNativeTerminal({ chainId, projectId })
-  const { distributableAmount } = useV4DistributableAmount({ chainId, projectId })
+  const { data: balance, isLoading: loading } = useV4BalanceOfNativeTerminal({
+    chainId,
+    projectId,
+  })
+  const { distributableAmount } = useV4DistributableAmount({
+    chainId,
+    projectId,
+  })
 
   const projectHasErc20Token = useProjectHasErc20Token()
   const hasIssueTicketsPermission = useV4WalletHasPermission(
@@ -97,7 +103,11 @@ export function ProjectSettingsDashboard() {
 
                 <span className="text-secondary">
                   <Trans>
-                    Owned by: <EthereumAddress address={projectOwnerAddress} />
+                    Owned by:{' '}
+                    <EthereumAddress
+                      address={projectOwnerAddress}
+                      chainId={chainId}
+                    />
                   </Trans>
                 </span>
               </div>
@@ -192,15 +202,17 @@ export function ProjectSettingsDashboard() {
           {canCreateErc20Token && (
             <SettingsGroupCard
               title={<Trans>Tools</Trans>}
-              subtitle={<Trans>Extended functionality for project owners</Trans>}
+              subtitle={
+                <Trans>Extended functionality for project owners</Trans>
+              }
             >
               <ul>
-              {/* {canCreateErc20Token && ( */}
-                  <li>
-                    <Link href={erc20Path ?? ''}>
-                      <Trans>Create ERC-20 Token</Trans>
-                    </Link>
-                  </li>
+                {/* {canCreateErc20Token && ( */}
+                <li>
+                  <Link href={erc20Path ?? ''}>
+                    <Trans>Create ERC-20 Token</Trans>
+                  </Link>
+                </li>
                 {/* )} */}
                 {/* <li>
                   <Link href={useSettingsPagePath('heldfees')}>

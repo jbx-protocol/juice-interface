@@ -2,6 +2,7 @@ import { Tooltip } from 'antd'
 import CopyTextButton from 'components/buttons/CopyTextButton'
 import EtherscanLink from 'components/EtherscanLink'
 import { useEnsName } from 'hooks/useEnsName'
+import { JBChainId } from 'juice-sdk-core'
 import Link from 'next/link'
 import { MouseEventHandler, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -21,6 +22,7 @@ export interface EthereumAddressProps {
   href?: string
   truncateTo?: number
   showEnsLoading?: boolean
+  chainId?: JBChainId
 }
 
 export default function EthereumAddress({
@@ -36,6 +38,7 @@ export default function EthereumAddress({
   withEnsAvatar = false,
   truncateTo,
   showEnsLoading = false,
+  chainId,
 }: EthereumAddressProps) {
   const { data: ensName, isLoading } = useEnsName(address, {
     enabled: !ensDisabled,
@@ -94,6 +97,7 @@ export default function EthereumAddress({
             onClick={onClick}
             type="address"
             value={address}
+            chainId={chainId}
           >
             {formattedAddress}
           </EtherscanLink>

@@ -4,7 +4,7 @@ import { JBChainId, JB_TOKEN_DECIMALS, formatUnits } from 'juice-sdk-core'
 import {
   useJBChainId,
   useJBContractContext,
-  useSuckersUserTokenBalance
+  useSuckersUserTokenBalance,
 } from 'juice-sdk-react'
 import { useCallback, useMemo, useState } from 'react'
 
@@ -52,7 +52,7 @@ export const V4TokensPanel = () => {
     setClaimTokensModalVisible,
     mintModalVisible,
     setMintModalVisible,
-    unclaimedBalance
+    unclaimedBalance,
     // transferUnclaimedTokensModalVisible,
     // setTransferUnclaimedTokensModalVisible,
   } = useV4YourBalanceMenuItems()
@@ -121,7 +121,9 @@ export const V4TokensPanel = () => {
                   {tokenBalance}
 
                   <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center md:gap-4">
-                    {projectHasErc20Token && unclaimedBalance && unclaimedBalance > 0n ? (
+                    {projectHasErc20Token &&
+                    unclaimedBalance &&
+                    unclaimedBalance > 0n ? (
                       <Button
                         className="p-0 text-start md:text-end"
                         type="link"
@@ -132,7 +134,7 @@ export const V4TokensPanel = () => {
                       >
                         <Trans>Claim ERC-20 token</Trans>
                       </Button>
-                    ): null}
+                    ) : null}
                   </div>
                 </span>
               }
@@ -213,7 +215,11 @@ const ProjectTokenCard = () => {
             <ProjectTokenBadge />
             {projectHasErc20Token && (
               <span className="text-xs font-normal text-grey-500 dark:text-slate-200">
-                <EthereumAddress address={projectTokenAddress} truncateTo={4} />
+                <EthereumAddress
+                  address={projectTokenAddress}
+                  truncateTo={4}
+                  chainId={chainId}
+                />
               </span>
             )}
           </div>

@@ -4,8 +4,10 @@ import { Trans } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
+import { JBChainId } from 'juice-sdk-core'
 import { useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { useChainId } from 'wagmi'
 import { useEditRewardBeneficiary } from '../hooks/useEditRewardBeneficiary/useEditRewardBeneficiary'
 
 export const EditRewardBeneficiary = ({
@@ -26,6 +28,8 @@ export const EditRewardBeneficiary = ({
     handleInputChanged,
     handleInputBlur,
   } = useEditRewardBeneficiary(value, onChange)
+
+  const chainId = useChainId()
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -74,6 +78,7 @@ export const EditRewardBeneficiary = ({
                   address={address}
                   truncateTo={4}
                   showEnsLoading
+                  chainId={chainId as JBChainId}
                 />
               ) : (
                 <Trans>Owner wallet</Trans>

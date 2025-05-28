@@ -85,6 +85,7 @@ export const SuccessPayCard = ({ className }: { className?: string }) => {
             linkClassName="text-black text-base dark:text-slate-100"
             type="tx"
             value={projectPayReceipt.transactionHash}
+            chainId={chainId as JBChainId}
           />
         </div>
       )}

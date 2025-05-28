@@ -10,7 +10,8 @@ import EthereumAddress from 'components/EthereumAddress'
 import Loading from 'components/Loading'
 import { TokenAmount } from 'components/TokenAmount'
 import { JuiceListbox } from 'components/inputs/JuiceListbox'
-import { useParticipantsQuery } from 'generated/v4/graphql'
+import { useParticipantsQuery, useProjectQuery } from 'generated/v4/graphql'
+import { JBChainId } from 'juice-sdk-core'
 import { NativeTokenValue, useJBChainId } from 'juice-sdk-react'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { useEffect, useState } from 'react'
@@ -24,6 +25,7 @@ type Participant = {
   balance: bigint
   creditBalance: bigint
   address: string
+  chainId: JBChainId
 }
 
 type OrderBy = keyof Pick<
@@ -83,6 +85,13 @@ export default function HoldersList({
     option => option.value === sortPayerReports,
   )
 
+  const { data: project } = useProjectQuery({
+    variables: {
+      projectId: Number(projectId),
+      chainId: Number(chainId),
+    },
+  })
+
   const { data, loading } = useParticipantsQuery({
     client: bendystrawClient,
     variables: {
@@ -91,8 +100,7 @@ export default function HoldersList({
       limit: pageSize,
       after: endCursor,
       where: {
-        projectId: Number(projectId),
-        chainId: Number(chainId),
+        suckerGroupId: project?.project?.suckerGroupId,
       },
     },
     skip: !projectId || !chainId,
@@ -101,13 +109,15 @@ export default function HoldersList({
   useEffect(() => {
     if (data?.participants.items) {
       setParticipants(prev => {
-        const newParticipants = data.participants.items.filter(
-          newParticipant =>
-            !prev.some(
-              prevParticipant =>
-                prevParticipant.address === newParticipant.address,
-            ),
-        )
+        const newParticipants = data.participants.items
+          .filter(
+            newParticipant =>
+              !prev.some(
+                prevParticipant =>
+                  prevParticipant.address === newParticipant.address,
+              ),
+          )
+          .map(p => ({ ...p, chainId: p.chainId as JBChainId }))
         return [...prev, ...newParticipants]
       })
     }
@@ -162,7 +172,7 @@ export default function HoldersList({
           <div className="flex content-between justify-between">
             <div>
               <div className="mr-2 leading-6">
-                <EthereumAddress address={p.address} />
+                <EthereumAddress address={p.address} chainId={p.chainId} />
               </div>
               <div className="text-xs text-grey-400 dark:text-slate-200">
                 <Trans>

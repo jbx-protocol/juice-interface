@@ -1,7 +1,9 @@
 import { t } from '@lingui/macro'
 import EthereumAddress from 'components/EthereumAddress'
 import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { JBChainId } from 'juice-sdk-core'
 import { featureFlagEnabled } from 'utils/featureFlags'
+import { useChainId } from 'wagmi'
 import { ReviewDescription } from '../ReviewDescription'
 import { useRulesReview } from './hooks/useRulesReview'
 
@@ -17,6 +19,7 @@ export const RulesReview = () => {
     holdFees,
     ofac,
   } = useRulesReview()
+  const chainId = useChainId()
 
   return (
     <div className="flex flex-col gap-x-5 gap-y-10 pt-5 pb-8 md:grid md:grid-cols-4">
@@ -27,7 +30,10 @@ export const RulesReview = () => {
             {strategy ? (
               strategy
             ) : customAddress ? (
-              <EthereumAddress address={customAddress} />
+              <EthereumAddress
+                address={customAddress}
+                chainId={chainId as JBChainId}
+              />
             ) : (
               '??'
             )}

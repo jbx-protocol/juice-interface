@@ -54,7 +54,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
         year: 'numeric',
       })
     : undefined
-  
+
   return (
     <div className={twMerge('relative flex w-full flex-col', className)}>
       <ProjectHeaderLogo className="absolute -top-[146px] left-3.5 rounded-[0.85rem] border-6 border-white dark:border-slate-900 md:left-0" />
@@ -102,13 +102,16 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
             {title}
           </h1>
           <div className="flex gap-2">
-            {suckers?.map((pair) => {
-              if (!pair || !pair?.peerChainId || !pair?.projectId) return null;
+            {suckers?.map(pair => {
+              if (!pair || !pair?.peerChainId || !pair?.projectId) return null
               return (
                 <Link
                   className="underline"
                   key={pair?.peerChainId}
-                  href={`${v4ProjectRoute({ chainId: pair?.peerChainId, projectId: Number(pair.projectId) })}`}
+                  href={`${v4ProjectRoute({
+                    chainId: pair?.peerChainId,
+                    projectId: Number(pair.projectId),
+                  })}`}
                 >
                   <ChainLogo
                     chainId={pair.peerChainId as JBChainId}
@@ -116,7 +119,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                     height={18}
                   />
                 </Link>
-              );
+              )
             })}
           </div>
         </div>
@@ -135,7 +138,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                 ) : null)
               // <Subtitle subtitle={subtitle.text} />
             }
-            <div className="text-grey-500 dark:text-slate-200 flex items-center">
+            <div className="flex items-center text-grey-500 dark:text-slate-200">
               {projectId && chainId ? (
                 <V4ProjectHandleLink
                   className="text-grey-500 dark:text-slate-200"
@@ -148,7 +151,8 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
 
               <span className="inline-flex items-center gap-1">
                 <Trans>
-                  Owned by: <EthereumAddress address={owner} />
+                  Owned by:{' '}
+                  <EthereumAddress address={owner} chainId={chainId} />
                 </Trans>
                 {gnosisSafe && projectId && chainId && (
                   <GnosisSafeBadge

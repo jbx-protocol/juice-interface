@@ -5,7 +5,7 @@ import {
   useJBContractContext,
   useJBProjectId,
   useJBTokenContext,
-  useWriteJbControllerClaimTokensFor
+  useWriteJbControllerClaimTokensFor,
 } from 'juice-sdk-react'
 import { useContext, useLayoutEffect, useState } from 'react'
 import { fromWad, parseWad } from 'utils/format/formatNumber'
@@ -105,7 +105,7 @@ export function V4ClaimTokensModal({
       const hash = await writeClaimTokens({
         address: contracts.controller.data,
         args,
-        chainId
+        chainId,
       })
       setTransactionPending(true)
 
@@ -139,11 +139,17 @@ export function V4ClaimTokensModal({
 
   return (
     <TransactionModal
-      title={t`Claim ${getChainName(chainId)} ${tokenTextShort} as ERC-20 tokens`}
+      title={t`Claim ${getChainName(
+        chainId,
+      )} ${tokenTextShort} as ERC-20 tokens`}
       connectWalletText={t`Connect wallet to claim`}
       open={open}
       onOk={executeClaimTokensTx}
-      okText={walletConnectedToWrongChain ? t`Change networks to claim` : t`Claim ${tokenTextShort}`}
+      okText={
+        walletConnectedToWrongChain
+          ? t`Change networks to claim`
+          : t`Claim ${tokenTextShort}`
+      }
       confirmLoading={loading}
       transactionPending={transactionPending}
       okButtonProps={{ disabled: parseWad(claimAmount).eq(0) }}
@@ -186,7 +192,11 @@ export function V4ClaimTokensModal({
 
         <Descriptions size="small" layout="horizontal" column={1}>
           <Descriptions.Item
-            label={<Trans>Your unclaimed {getChainName(chainId)} {tokenTextLong}</Trans>}
+            label={
+              <Trans>
+                Your unclaimed {getChainName(chainId)} {tokenTextLong}
+              </Trans>
+            }
           >
             {new Ether(unclaimedBalance ?? 0n).format()} {tokenTextShort}
           </Descriptions.Item>
@@ -195,13 +205,17 @@ export function V4ClaimTokensModal({
             <Descriptions.Item
               label={<Trans>{tokenSymbol} ERC-20 address</Trans>}
             >
-              <EthereumAddress address={tokenAddress} />
+              <EthereumAddress address={tokenAddress} chainId={chainId} />
             </Descriptions.Item>
           )}
         </Descriptions>
 
         <Form layout="vertical">
-          <Form.Item label={t`Amount of ${getChainName(chainId)} ${tokenTextShort} to claim as ERC-20`}>
+          <Form.Item
+            label={t`Amount of ${getChainName(
+              chainId,
+            )} ${tokenTextShort} to claim as ERC-20`}
+          >
             <FormattedNumberInput
               min={0}
               max={parseFloat(fromWad(unclaimedBalance))}

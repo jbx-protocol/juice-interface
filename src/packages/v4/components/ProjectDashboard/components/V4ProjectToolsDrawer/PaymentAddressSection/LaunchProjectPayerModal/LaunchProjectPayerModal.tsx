@@ -8,7 +8,9 @@ import { Callout } from 'components/Callout/Callout'
 import EtherscanLink from 'components/EtherscanLink'
 import TransactionModal from 'components/modals/TransactionModal'
 import { PROJECT_PAYER_ADDRESS_EXPLANATION } from 'components/strings'
+import { JBChainId } from 'juice-sdk-core'
 import { useState } from 'react'
+import { useChainId } from 'wagmi'
 import AdvancedOptionsCollapse from './AdvancedOptionsCollapse'
 
 const DEPLOY_EVENT_IDX = 0
@@ -48,6 +50,8 @@ export function LaunchProjectPayerModal({
   const [advancedOptionsForm] = useForm<AdvancedOptionsFields>()
 
   const [confirmedModalVisible, setConfirmedModalVisible] = useState<boolean>()
+
+  const chainId = useChainId()
 
   // const deployProjectPayerTx = useDeployProjectPayerTx()
 
@@ -145,6 +149,7 @@ export function LaunchProjectPayerModal({
           className="text-base"
           value={projectPayerAddress}
           type="address"
+          chainId={chainId as JBChainId}
         />{' '}
         <CopyTextButton className="text-2xl" value={projectPayerAddress} />
         <p className="mt-7">

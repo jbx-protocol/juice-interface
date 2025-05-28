@@ -1067,9 +1067,6 @@ msgstr ""
 msgid "Deployed project payer"
 msgstr ""
 
-msgid "Recent"
-msgstr ""
-
 msgid "Project description"
 msgstr ""
 
@@ -2100,9 +2097,6 @@ msgid "If enabled, project tokens will be minted to a custom beneficiary address
 msgstr ""
 
 msgid "Disabled for this project"
-msgstr ""
-
-msgid "Highest paid"
 msgstr ""
 
 msgid "Community owned"

@@ -19,6 +19,7 @@ query ActivityEvents(
     items {
       id
       chainId
+      timestamp
       payEvent {
         id
         projectId

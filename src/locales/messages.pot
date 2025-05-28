@@ -2531,6 +2531,9 @@ msgstr ""
 msgid "Project payer addresses"
 msgstr ""
 
+msgid "This project's tokens are not yet ERC-20"
+msgstr ""
+
 msgid "Tokens to redeem"
 msgstr ""
 

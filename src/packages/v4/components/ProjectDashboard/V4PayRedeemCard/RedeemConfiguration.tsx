@@ -1,7 +1,9 @@
-import { Trans, t } from '@lingui/macro'
 import { Button, Tooltip } from 'antd'
-import { JuiceModal, JuiceModalProps } from 'components/modals/JuiceModal'
 import { JB_TOKEN_DECIMALS, NATIVE_TOKEN } from 'juice-sdk-core'
+import { JuiceModal, JuiceModalProps } from 'components/modals/JuiceModal'
+import { Trans, t } from '@lingui/macro'
+import { formatEther, parseUnits } from 'viem'
+import { useCallback, useContext, useState } from 'react'
 import {
   useJBChainId,
   useJBContractContext,
@@ -9,23 +11,22 @@ import {
   useJBTokenContext,
   useWriteJbMultiTerminalCashOutTokensOf,
 } from 'juice-sdk-react'
-import { useCallback, useContext, useState } from 'react'
-import { formatEther, parseUnits } from 'viem'
 
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
-import { waitForTransactionReceipt } from '@wagmi/core'
+import { EthereumLogo } from './EthereumLogo'
 import Loading from 'components/Loading'
-import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
+import { PayRedeemInput } from './PayRedeemInput'
+import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
+import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
+import { emitErrorNotification } from 'utils/notifications'
 import { useETHReceivedFromTokens } from 'packages/v4/hooks/useETHReceivedFromTokens'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
-import { V4_CURRENCY_USD } from 'packages/v4/utils/currency'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
-import { emitErrorNotification } from 'utils/notifications'
+import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
 import { useProjectSelector } from '../redux/hooks'
-import { EthereumLogo } from './EthereumLogo'
-import { PayRedeemInput } from './PayRedeemInput'
+import { useWallet } from 'hooks/Wallet'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { waitForTransactionReceipt } from '@wagmi/core'
 
 type RedeemConfigurationProps = {
   userTokenBalance: number | undefined
@@ -162,16 +163,7 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
               }
               token={{
                 balance: userTokenBalance?.toString(),
-                image:
-                  projectLogoUri && !fallbackImage ? (
-                    <img
-                      src={projectLogoUri}
-                      alt="Token logo"
-                      onError={() => setFallbackImage(true)}
-                    />
-                  ) : (
-                    '🧃'
-                  ),
+                image: <ProjectHeaderLogo className="h-full w-full" />,
                 ticker: tokenTicker,
                 type: projectHasErc20Token ? 'erc20' : 'native',
               }}

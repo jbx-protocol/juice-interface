@@ -203,7 +203,7 @@ const TokenBadge = ({
           isErc20 !== undefined
             ? isErc20
               ? t`ERC-20 token`
-              : t`This project's tokens are not ERC-20`
+              : t`This project's tokens are not yet ERC-20`
             : undefined
         }
       >

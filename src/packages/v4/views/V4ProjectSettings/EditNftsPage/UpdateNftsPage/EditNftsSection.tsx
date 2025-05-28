@@ -82,6 +82,7 @@ export function EditNftsSection() {
     try {
       const payment = txQuote.payment_info.find(p => Number(p.chain) === selectedGasChain)
       if (!payment) throw new Error('No payment info for selected chain')
+
       await sendRelayrTx(payment)
       relayrBundle.startPolling(txQuote.bundle_uuid)
     } catch (e) {
@@ -156,6 +157,9 @@ export function EditNftsSection() {
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
         cancelButtonProps={{ hidden: true }}
         onCancel={() => setModalOpen(false)}
+        transactionPending={confirmLoading}
+        chainIds={activeChains}
+        relayrResponse={relayrBundle.response}
       >
         {!txQuote && (
           <Callout.Info>

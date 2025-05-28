@@ -1,13 +1,15 @@
-import { JBChainId, jbProjectDeploymentAddresses } from 'juice-sdk-core'
-import { jbControllerAbi, useGetRelayrTxQuote } from 'juice-sdk-react'
 import { ContractFunctionArgs, encodeFunctionData } from 'viem'
+import { JBChainId, jbProjectDeploymentAddresses } from 'juice-sdk-core'
+import { jbControllerAbi, useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from 'juice-sdk-react'
 
-import { useWallet } from 'hooks/Wallet'
 import { Address } from 'viem'
+import { useWallet } from 'hooks/Wallet'
 
 export function useDeployOmnichainErc20() {
   const { userAddress } = useWallet()
   const { getRelayrTxQuote } = useGetRelayrTxQuote()
+  const { sendRelayrTx } = useSendRelayrTx()
+  const relayrBundle = useGetRelayrTxBundle()
 
   async function deployOmnichainErc20(
     deployData: {
@@ -42,5 +44,5 @@ export function useDeployOmnichainErc20() {
     return getRelayrTxQuote(relayrTransactions)
   }
 
-  return { deployOmnichainErc20 }
+  return { deployOmnichainErc20, sendRelayrTx, relayrBundle }
 }

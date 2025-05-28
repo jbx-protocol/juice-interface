@@ -1,11 +1,11 @@
+import { Address, encodeFunctionData } from 'viem'
 import { JBChainId, createSalt } from 'juice-sdk-core'
-import { jb721TiersHookAbi, useGetRelayrTxBundle, useGetRelayrTxQuote, useJBRulesetContext, useSendRelayrTx } from 'juice-sdk-react'
 import { JB_721_TIER_PARAMS_V4, NftRewardTier } from 'models/nftRewards'
 import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
+import { jb721TiersHookAbi, useGetRelayrTxBundle, useGetRelayrTxQuote, useJBRulesetContext, useSendRelayrTx } from 'juice-sdk-react'
 
-import { useWallet } from 'hooks/Wallet'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
-import { Address, encodeFunctionData } from 'viem'
+import { useWallet } from 'hooks/Wallet'
 
 export function useOmnichainUpdateCurrentCollection() {
   const { userAddress } = useWallet()

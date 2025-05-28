@@ -53,7 +53,7 @@ export function ReviewConfirmModal({
   const walletConnectedToWrongChain = chainId !== walletChainId
 
   // Omnichain edit state
-  const { getEditQuote, sendRelayrTx, getRelayrBundle } = useOmnichainEditCycle()
+  const { getEditQuote, sendRelayrTx, relayrBundle } = useOmnichainEditCycle()
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId | undefined>(chainId)
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
@@ -133,7 +133,7 @@ export function ReviewConfirmModal({
       await sendRelayrTx(payment)
       
       // Start polling for transaction status
-      getRelayrBundle.startPolling(txQuote.bundle_uuid)
+      relayrBundle.startPolling(txQuote.bundle_uuid)
       
     } catch (error) {
       console.error(error)
@@ -145,19 +145,19 @@ export function ReviewConfirmModal({
 
   // Poll and handle completion
   useEffect(() => {
-    if (getRelayrBundle.isComplete) {
+    if (relayrBundle.isComplete) {
       // Reset form and show success modal
       editCycleForm!.resetFields()
       setConfirmLoading(false)
       setEditCycleSuccessModalOpen(true)
       onClose()
-    } else if (getRelayrBundle.error) {
+    } else if (relayrBundle.error) {
       // Handle error
-      console.error(getRelayrBundle.error)
+      console.error(relayrBundle.error)
       setConfirmLoading(false)
-      emitErrorNotification(`Error deploying changes: ${getRelayrBundle.error}`)
+      emitErrorNotification(`Error deploying changes: ${relayrBundle.error}`)
     }
-  }, [getRelayrBundle.isComplete, getRelayrBundle.error, editCycleForm, onClose])
+  }, [relayrBundle.isComplete, relayrBundle.error, editCycleForm, onClose])
 
   const panelProps = { className: 'text-lg' }
 
@@ -172,7 +172,7 @@ export function ReviewConfirmModal({
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
         transactionPending={confirmLoading}
         chainIds={projectChains}
-        relayrResponse={getRelayrBundle.response}
+        relayrResponse={relayrBundle.response}
         cancelButtonProps={{ hidden: true }}
         onCancel={onClose}
       >           

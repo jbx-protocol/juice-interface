@@ -26,7 +26,7 @@ export function ProjectDetailsSettingsPage() {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
 
   // Omnichain edit state
-  const { getEditQuote, sendRelayrTx, getRelayrBundle } = useOmnichainEditProjectDetailsTx()
+  const { getEditQuote, sendRelayrTx, relayrBundle } = useOmnichainEditProjectDetailsTx()
   const { data: suckers } = useSuckers()
   const projectChains = suckers?.map(s => s.peerChainId) || []
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId | undefined>(projectChains[0])
@@ -99,7 +99,7 @@ export function ProjectDetailsSettingsPage() {
       const payment = txQuote.payment_info.find((p) => Number(p.chain) === selectedGasChain)
       if (!payment) throw new Error('No payment info for selected chain')
       await sendRelayrTx(payment)
-      getRelayrBundle.startPolling(txQuote.bundle_uuid)
+      relayrBundle.startPolling(txQuote.bundle_uuid)
     } catch (e) {
       emitErrorNotification((e as Error).message)
       setConfirmLoading(false)
@@ -110,16 +110,16 @@ export function ProjectDetailsSettingsPage() {
 
   // poll for completion
   useEffect(() => {
-    if (getRelayrBundle.isComplete) {
+    if (relayrBundle.isComplete) {
       projectForm.resetFields()
       setConfirmLoading(false)
       setModalOpen(false)
       setSuccessOpen(true)
-    } else if (getRelayrBundle.error) {
-      emitErrorNotification(getRelayrBundle.error as string)
+    } else if (relayrBundle.error) {
+      emitErrorNotification(relayrBundle.error as string)
       setConfirmLoading(false)
     }
-  }, [getRelayrBundle.isComplete, getRelayrBundle.error])
+  }, [relayrBundle.isComplete, relayrBundle.error])
 
   const resetProjectForm = useCallback(() => {
     const infoUri = withoutHttps(projectMetadata?.infoUri ?? '')

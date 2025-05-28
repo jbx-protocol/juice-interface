@@ -1,3 +1,4 @@
+import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 import {
   JBChainId,
   createSalt,
@@ -10,15 +11,18 @@ import {
   jb721TiersHookProjectDeployerAddress,
   jbControllerAbi,
   jbOmnichainDeployerAddress,
+  useGetRelayrTxBundle,
   useGetRelayrTxQuote,
+  useSendRelayrTx,
 } from 'juice-sdk-react'
-import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
 
 export function useDeployOmnichainProject() {
   const { userAddress } = useWallet()
   const { getRelayrTxQuote } = useGetRelayrTxQuote()
+  const { sendRelayrTx } = useSendRelayrTx()
+  const relayrBundle = useGetRelayrTxBundle()
 
   async function deployOmnichainProject(
     deployData: {
@@ -174,5 +178,5 @@ export function useDeployOmnichainProject() {
     return await getRelayrTxQuote(relayrTransactions)
   }
 
-  return { deployOmnichainProject, deployOmnichainNftProject }
+  return { deployOmnichainProject, deployOmnichainNftProject, sendRelayrTx, relayrBundle }
 }

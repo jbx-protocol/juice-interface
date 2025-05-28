@@ -1,15 +1,15 @@
+import { Address, encodeFunctionData } from 'viem'
 import { JBChainId, createSalt, jbOmnichainDeployerAbi, jbProjectDeploymentAddresses } from 'juice-sdk-core'
 import { useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from 'juice-sdk-react'
-import { Address, encodeFunctionData } from 'viem'
 
-import { useWallet } from 'hooks/Wallet'
 import { EditCycleTxArgs } from 'packages/v4/utils/editRuleset'
+import { useWallet } from 'hooks/Wallet'
 
 export function useOmnichainEditCycle() {
   const { userAddress } = useWallet()
   const { getRelayrTxQuote } = useGetRelayrTxQuote()
   const { sendRelayrTx } = useSendRelayrTx()
-  const getRelayrBundle = useGetRelayrTxBundle()
+  const relayrBundle = useGetRelayrTxBundle()
 
   /**
    * Build and fetch a Relayr quote for editing across multiple chains
@@ -35,5 +35,5 @@ export function useOmnichainEditCycle() {
     return getRelayrTxQuote(txs)
   }
 
-  return { getEditQuote, sendRelayrTx, getRelayrBundle }
+  return { getEditQuote, sendRelayrTx, relayrBundle }
 }

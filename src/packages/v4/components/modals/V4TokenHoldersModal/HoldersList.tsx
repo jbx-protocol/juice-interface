@@ -90,6 +90,7 @@ export default function HoldersList({
       projectId: Number(projectId),
       chainId: Number(chainId),
     },
+    skip: !projectId || !chainId,
   })
 
   const { data, loading } = useParticipantsQuery({
@@ -103,7 +104,7 @@ export default function HoldersList({
         suckerGroupId: project?.project?.suckerGroupId,
       },
     },
-    skip: !projectId || !chainId,
+    skip: !project?.project?.suckerGroupId,
   })
 
   useEffect(() => {

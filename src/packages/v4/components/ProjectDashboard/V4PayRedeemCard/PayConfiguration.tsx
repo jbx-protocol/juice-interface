@@ -12,6 +12,7 @@ import { EthereumLogo } from './EthereumLogo'
 import { FirstCycleCountdownCallout } from './FirstCycleCountdownCallout'
 import { PayRedeemInput } from './PayRedeemInput'
 import { PreventOverspendingPayCard } from './PreventOverspendingPayCard'
+import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { projectCartActions } from '../redux/projectCartSlice'
 import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
@@ -147,7 +148,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
                         onError={() => setFallbackImage(true)}
                       />
                     ) : (
-                      '🧃'
+                      <ProjectHeaderLogo className="h-full w-full" />
                     ),
                   ticker: tokenBTicker,
                   type: projectHasErc20Token ? 'erc20' : 'native',

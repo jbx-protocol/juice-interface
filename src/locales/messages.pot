@@ -2576,6 +2576,9 @@ msgstr ""
 msgid "Ruleset #"
 msgstr ""
 
+msgid "Confirm changes"
+msgstr ""
+
 msgid "Recommended"
 msgstr ""
 
@@ -2751,9 +2754,6 @@ msgid "We do everything in the light, for everyone to see."
 msgstr ""
 
 msgid "Enable project owner token minting"
-msgstr ""
-
-msgid "Review & confirm changes"
 msgstr ""
 
 msgid "Set aside a percentage of token issuance for the wallets and Juicebox projects of your choosing."

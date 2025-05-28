@@ -53,11 +53,10 @@ export function ReviewConfirmModal({
   const walletConnectedToWrongChain = chainId !== walletChainId
 
   // Omnichain edit state
-  const { getEditQuote, sendRelayrTx, getRelayrBundle } = useOmnichainEditCycle()
+  const { getEditQuote, sendRelayrTx, relayrBundle } = useOmnichainEditCycle()
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId | undefined>(chainId)
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
-  const [txSigning, setTxSigning] = useState(false)
 
   const { data: suckers } = useSuckers()
 
@@ -105,7 +104,6 @@ export function ReviewConfirmModal({
     }
   }
 
-  // Confirm omnichain edit
   const handleConfirmOmni = async () => {
     // If quote isn't fetched yet, get it
     if (!txQuote) return getQuote()
@@ -121,7 +119,6 @@ export function ReviewConfirmModal({
       }
     }
     setConfirmLoading(true)
-    setTxSigning(true)
     try {
       // Find payment info for selected chain
       const payment = txQuote.payment_info.find(p => Number(p.chain) === selectedGasChain)
@@ -131,36 +128,35 @@ export function ReviewConfirmModal({
       
       // Send the relayr transaction
       await sendRelayrTx(payment)
-      
       // Start polling for transaction status
-      getRelayrBundle.startPolling(txQuote.bundle_uuid)
+      relayrBundle.startPolling(txQuote.bundle_uuid)
       
     } catch (error) {
       console.error(error)
       emitErrorNotification(`Error launching ruleset: ${error}`)
-    } finally {
-      setTxSigning(false)
     }
   }
 
   // Poll and handle completion
   useEffect(() => {
-    if (getRelayrBundle.isComplete) {
+    if (relayrBundle.isComplete) {
       // Reset form and show success modal
       editCycleForm!.resetFields()
       setConfirmLoading(false)
       setEditCycleSuccessModalOpen(true)
       onClose()
-    } else if (getRelayrBundle.error) {
+    } else if (relayrBundle.error) {
       // Handle error
-      console.error(getRelayrBundle.error)
+      console.error(relayrBundle.error)
       setConfirmLoading(false)
-      emitErrorNotification(`Error deploying changes: ${getRelayrBundle.error}`)
+      emitErrorNotification(`Error deploying changes: ${relayrBundle.error}`)
     }
-  }, [getRelayrBundle.isComplete, getRelayrBundle.error, editCycleForm, onClose])
+  }, [relayrBundle.isComplete, relayrBundle.error, editCycleForm, onClose])
 
   const panelProps = { className: 'text-lg' }
 
+  const txSigning = Boolean(relayrBundle.uuid) && !relayrBundle.isComplete
+  
   return (
     <>      
       <TransactionModal
@@ -170,6 +166,9 @@ export function ReviewConfirmModal({
         okText={!txQuote ? <Trans>Get edit quote</Trans> : <Trans>Deploy changes</Trans>}
         okButtonProps={{ disabled: !formHasChanges }}
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
+        transactionPending={txSigning}
+        chainIds={projectChains}
+        relayrResponse={relayrBundle.response}
         cancelButtonProps={{ hidden: true }}
         onCancel={onClose}
       >           

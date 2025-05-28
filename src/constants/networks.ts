@@ -107,6 +107,25 @@ export const NETWORKS_BY_NAME = Object.values(NETWORKS).reduce(
 )
 
 /**
+ * Sort chain IDs in a predefined order
+ * @param chainIds Array of chain IDs to sort
+ * @returns Sorted array of chain IDs
+ */
+export function sortChainIds(chainIds: JBChainId[]): JBChainId[] {
+  // Hardcoded order: Ethereum, Sepolia, Arbitrum, Arbitrum Sepolia, Optimism, Optimism Sepolia, Base, Base Sepolia
+  const chainOrder = [1, 11155111, 42161, 421614, 10, 11155420, 8453, 84532]
+
+  return chainIds.sort((a, b) => {
+    const indexA = chainOrder.indexOf(a)
+    const indexB = chainOrder.indexOf(b)
+    // If a chain ID is not in the predefined order, put it at the end
+    if (indexA === -1) return 1
+    if (indexB === -1) return -1
+    return indexA - indexB
+  })
+}
+
+/**
  * TODO update to mainnet when we go to prod
  */
 export const DEFAULT_PROJECT_CHAIN_ID = NETWORKS_BY_NAME.sepolia

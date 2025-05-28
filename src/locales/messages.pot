@@ -2576,6 +2576,9 @@ msgstr ""
 msgid "Ruleset #"
 msgstr ""
 
+msgid "Confirm changes"
+msgstr ""
+
 msgid "Recommended"
 msgstr ""
 
@@ -2753,9 +2756,6 @@ msgstr ""
 msgid "Enable project owner token minting"
 msgstr ""
 
-msgid "Review & confirm changes"
-msgstr ""
-
 msgid "Set aside a percentage of token issuance for the wallets and Juicebox projects of your choosing."
 msgstr ""
 
@@ -2844,6 +2844,9 @@ msgid "@{handle} not found"
 msgstr ""
 
 msgid "Deployed ERC20 token"
+msgstr ""
+
+msgid "Timestamp (seconds)"
 msgstr ""
 
 msgid "Notice from {0}"
@@ -3614,6 +3617,9 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
+msgid "Your transactions have been submitted across multiple chains and are awaiting confirmation."
+msgstr ""
+
 msgid "Cannot use zero address"
 msgstr ""
 
@@ -3800,6 +3806,9 @@ msgstr ""
 msgid "Current Redemption Rate:"
 msgstr ""
 
+msgid "View on {0}"
+msgstr ""
+
 msgid "Connected wallet not authorized"
 msgstr ""
 
@@ -3849,9 +3858,6 @@ msgid "Limited supply"
 msgstr ""
 
 msgid "Juicebox Native"
-msgstr ""
-
-msgid "You'll be prompted a wallet signature for each of this project's chains before submitting."
 msgstr ""
 
 msgid "How long one cycle will last. Your project's rules are locked during each cycle. Edits you make to your project's rules during a cycle will only take effect at the start of the next cycle."
@@ -4647,6 +4653,9 @@ msgid "Reserved tokens"
 msgstr ""
 
 msgid "Invalid type - contact Juicebox Support"
+msgstr ""
+
+msgid "Multi-chain transaction pending..."
 msgstr ""
 
 msgid "Save changes"

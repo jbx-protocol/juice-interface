@@ -9,7 +9,7 @@ export function useOmnichainEditProjectDetailsTx() {
   const { userAddress } = useWallet()
   const { getRelayrTxQuote } = useGetRelayrTxQuote()
   const { sendRelayrTx } = useSendRelayrTx()
-  const getRelayrBundle = useGetRelayrTxBundle()
+  const relayrBundle = useGetRelayrTxBundle()
   const { data: suckers } = useSuckers()
 
   async function getEditQuote(
@@ -35,5 +35,5 @@ export function useOmnichainEditProjectDetailsTx() {
     return getRelayrTxQuote(txs)
   }
 
-  return { getEditQuote, sendRelayrTx, getRelayrBundle }
+  return { getEditQuote, sendRelayrTx, relayrBundle }
 }

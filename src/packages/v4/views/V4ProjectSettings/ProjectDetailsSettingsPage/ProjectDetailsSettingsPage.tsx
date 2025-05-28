@@ -26,13 +26,12 @@ export function ProjectDetailsSettingsPage() {
   const [projectForm] = useForm<ProjectDetailsFormFields>()
 
   // Omnichain edit state
-  const { getEditQuote, sendRelayrTx, getRelayrBundle } = useOmnichainEditProjectDetailsTx()
+  const { getEditQuote, sendRelayrTx, relayrBundle } = useOmnichainEditProjectDetailsTx()
   const { data: suckers } = useSuckers()
   const projectChains = suckers?.map(s => s.peerChainId) || []
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId | undefined>(projectChains[0])
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
-  const [txSigning, setTxSigning] = useState(false)
   const [confirmLoading, setConfirmLoading] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [cid, setCid] = useState<`0x${string}`>()
@@ -94,32 +93,29 @@ export function ProjectDetailsSettingsPage() {
   const handleConfirm = async () => {
     if (!txQuote) return handleGetQuote()
     setConfirmLoading(true)
-    setTxSigning(true)
     try {
       const payment = txQuote.payment_info.find((p) => Number(p.chain) === selectedGasChain)
       if (!payment) throw new Error('No payment info for selected chain')
       await sendRelayrTx(payment)
-      getRelayrBundle.startPolling(txQuote.bundle_uuid)
+      relayrBundle.startPolling(txQuote.bundle_uuid)
     } catch (e) {
       emitErrorNotification((e as Error).message)
       setConfirmLoading(false)
-    } finally {
-      setTxSigning(false)
     }
   }
 
   // poll for completion
   useEffect(() => {
-    if (getRelayrBundle.isComplete) {
+    if (relayrBundle.isComplete) {
       projectForm.resetFields()
       setConfirmLoading(false)
       setModalOpen(false)
       setSuccessOpen(true)
-    } else if (getRelayrBundle.error) {
-      emitErrorNotification(getRelayrBundle.error as string)
+    } else if (relayrBundle.error) {
+      emitErrorNotification(relayrBundle.error as string)
       setConfirmLoading(false)
     }
-  }, [getRelayrBundle.isComplete, getRelayrBundle.error])
+  }, [relayrBundle.isComplete, relayrBundle.error])
 
   const resetProjectForm = useCallback(() => {
     const infoUri = withoutHttps(projectMetadata?.infoUri ?? '')
@@ -164,6 +160,8 @@ export function ProjectDetailsSettingsPage() {
     }, 0)
   }, [resetProjectForm])
 
+  const txSigning = Boolean(relayrBundle.uuid) && !relayrBundle.isComplete
+
   return (
     <>
       <ProjectDetailsForm
@@ -174,10 +172,13 @@ export function ProjectDetailsSettingsPage() {
       />
       <TransactionModal
         open={modalOpen}
-        title={<Trans>Review & confirm changes</Trans>}
+        title={<Trans>Confirm changes</Trans>}
         onOk={handleConfirm}
         okText={!txQuote ? <Trans>Get edit quote</Trans> : <Trans>Save changes</Trans>}
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
+        transactionPending={txSigning}
+        chainIds={projectChains}
+        relayrResponse={relayrBundle.response}
         cancelButtonProps={{ hidden: true }}
         onCancel={() => setModalOpen(false)}
       >
@@ -185,7 +186,7 @@ export function ProjectDetailsSettingsPage() {
           <div className="py-4 text-sm">
             <Callout.Info>
               <Trans>
-                You'll be prompted a wallet signature for each of this project's chains before submitting.
+                You'll be prompted a wallet signature for each of this project's chains before submitting the final transaction.
               </Trans>
             </Callout.Info>
           </div>

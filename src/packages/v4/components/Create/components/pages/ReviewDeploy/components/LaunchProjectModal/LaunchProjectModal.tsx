@@ -28,7 +28,7 @@ import { JBChainId } from 'juice-sdk-core'
 import { JuiceModal } from 'components/modals/JuiceModal'
 import Loading from 'components/Loading'
 import { NETWORKS } from 'constants/networks'
-import { TxLoadingContent } from './TxLoadingContent'
+import { OmnichainTxLoadingContent } from './OmnichainTxLoadingContent'
 import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { emitErrorNotification } from 'utils/notifications'
 import { getProjectIdFromLaunchReceipt } from 'packages/v4/hooks/useLaunchProjectTx'
@@ -58,7 +58,7 @@ export const LaunchProjectModal: React.FC<{
   const { deployOmnichainProject, deployOmnichainNftProject } =
     useDeployOmnichainProject()
   const router = useRouter()
-  const getRelayrBundle = useGetRelayrTxBundle()
+  const relayrBundle = useGetRelayrTxBundle()
   const { sendRelayrTx, isPending, data: txData } = useSendRelayrTx()
 
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(
@@ -87,7 +87,7 @@ export const LaunchProjectModal: React.FC<{
     }))
   }, [createData.selectedRelayrChainIds])
   const chainIds = selectedChains.map(c => c.chainId)
-  const txLoading = txData && !getRelayrBundle.isComplete
+  const txLoading = txData && !relayrBundle.isComplete
   // bongs. re-capture nft state so that the 'succes' page doesnt bong out upon reseting the form state
   const [nftProject, setNftProject] = useState(false)
 
@@ -206,7 +206,7 @@ export const LaunchProjectModal: React.FC<{
 
     try {
       await sendRelayrTx?.(data)
-      getRelayrBundle.startPolling(txQuote.bundle_uuid)
+      relayrBundle.startPolling(txQuote.bundle_uuid)
     } catch (e) {
       emitErrorNotification('Failed to launch project', {
         description: (e as Error).message,
@@ -217,9 +217,9 @@ export const LaunchProjectModal: React.FC<{
   }
   useEffect(() => {
     async function doit() {
-      if (getRelayrBundle.isComplete) {
+      if (relayrBundle.isComplete) {
         const txs = await Promise.all(
-          getRelayrBundle.response.transactions.map(tx => {
+          relayrBundle.response.transactions.map(tx => {
             return getTransactionReceipt(
               config.getClient({ chainId: tx.request.chain }),
               // @ts-ignore
@@ -229,7 +229,7 @@ export const LaunchProjectModal: React.FC<{
         )
 
         const projectIds = JSON.stringify(
-          getRelayrBundle.response.transactions.map((tx, idx) => ({
+          relayrBundle.response.transactions.map((tx, idx) => ({
             id: getProjectIdFromLaunchReceipt(txs[idx], {
               omnichain721: nftProject,
             }),
@@ -251,8 +251,8 @@ export const LaunchProjectModal: React.FC<{
     dispatch,
     nftProject,
     config,
-    getRelayrBundle.isComplete,
-    getRelayrBundle.response,
+    relayrBundle.isComplete,
+    relayrBundle.response,
     props,
     router,
     chainIds,
@@ -269,7 +269,10 @@ export const LaunchProjectModal: React.FC<{
       {...props}
     >
       {txLoading ? (
-        <TxLoadingContent txHash={txData} chainId={selectedGasChain} />
+        <OmnichainTxLoadingContent
+          relayrResponse={relayrBundle.response}
+          chainIds={chainIds}
+        />
       ) : (
         <div className="flex flex-col divide-y divide-grey-200 dark:divide-grey-800">
           <div className="py-6">

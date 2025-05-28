@@ -1,17 +1,24 @@
 import { t, Trans } from '@lingui/macro'
+import { useQuery } from '@tanstack/react-query'
 import { Modal } from 'antd'
+import axios from 'axios'
 import InputAccessoryButton from 'components/buttons/InputAccessoryButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
-import { useParticipantsQuery, useProjectQuery } from 'generated/v4/graphql'
+import {
+  ParticipantSnapshotsQuery,
+  useProjectQuery,
+} from 'generated/v4/graphql'
 
-import { useBlockNumber } from 'hooks/useBlockNumber'
 import { useJBChainId, useJBContractContext } from 'juice-sdk-react'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
+import { bendystrawUri } from 'lib/apollo/bendystrawUri'
 import { useCallback, useEffect, useState } from 'react'
 import { downloadCsvFile } from 'utils/csv'
 import { fromWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
+
+const nowSecs = () => Math.floor(Date.now().valueOf() / 1000)
 
 export function DownloadTokenHoldersModal({
   tokenSymbol,
@@ -25,11 +32,8 @@ export function DownloadTokenHoldersModal({
   const { projectId } = useJBContractContext()
   const chainId = useJBChainId()
 
-  const [blockNumber, setBlockNumber] = useState<number>()
+  const [timestamp, setTimestamp] = useState<number>()
   const [loading, setLoading] = useState<boolean>()
-
-  // Use block number 5 blocks behind chain head to allow for subgraph being a bit behind on indexing.
-  const { data: latestBlockNumber } = useBlockNumber({ behindChainHeight: 5 })
 
   const { data: project } = useProjectQuery({
     client: bendystrawClient,
@@ -40,24 +44,29 @@ export function DownloadTokenHoldersModal({
     skip: !projectId || !chainId,
   })
 
-  const { data: _participants } = useParticipantsQuery({
-    client: bendystrawClient,
-    variables: {
-      where: {
-        suckerGroupId: project?.project?.suckerGroupId,
-      },
-    },
-    skip: !project?.project?.suckerGroupId,
+  const suckerGroupId = project?.project?.suckerGroupId
+
+  const { data: snapshots } = useQuery({
+    queryKey: [suckerGroupId, timestamp],
+    queryFn: () =>
+      axios.post<ParticipantSnapshotsQuery['participantSnapshots']['items']>(
+        `${bendystrawUri()}/participants`,
+        {
+          body: {
+            timestamp,
+            suckerGroupId,
+          },
+        },
+      ),
+    enabled: !!suckerGroupId,
   })
 
-  const participants = _participants?.participants.items
-
   useEffect(() => {
-    setBlockNumber(latestBlockNumber)
-  }, [latestBlockNumber])
+    setTimestamp(nowSecs())
+  }, [])
 
   const download = useCallback(async () => {
-    if (blockNumber === undefined || !projectId) return
+    if (!timestamp || !suckerGroupId) return
 
     const rows = [
       [
@@ -66,45 +75,39 @@ export function DownloadTokenHoldersModal({
         'Unclaimed balance',
         'Claimed balance',
         'Total ETH paid',
-        'Last paid timestamp',
         'Chain ID',
       ], // CSV header row
     ]
 
     setLoading(true)
     try {
-      if (!participants) {
+      if (!snapshots?.data) {
         emitErrorNotification(t`Error loading holders`)
         throw new Error('No data.')
       }
 
-      participants.forEach(p => {
-        let date = new Date((p.lastPaidTimestamp ?? 0) * 1000).toUTCString()
-
-        if (date.includes(',')) date = date.split(',')[1]
-
+      snapshots.data.forEach(p => {
         rows.push([
           p.address ?? '--',
           fromWad(p.balance),
           fromWad(p.creditBalance),
           fromWad(p.erc20Balance),
           fromWad(p.volume),
-          date,
           p.chainId.toString(),
         ])
       })
 
       downloadCsvFile(
-        `@v4-project-${projectId}_holders-block${blockNumber}.csv`,
+        `@v4-project-${suckerGroupId}_holders-timestamp-${timestamp}.csv`,
         rows,
       )
 
       setLoading(false)
     } catch (e) {
-      console.error('Error downloading participants', e)
+      console.error('Error downloading participant snapshots', e)
       setLoading(false)
     }
-  }, [blockNumber, projectId, tokenSymbol, participants])
+  }, [timestamp, suckerGroupId, tokenSymbol, snapshots])
 
   return (
     <Modal
@@ -125,17 +128,15 @@ export function DownloadTokenHoldersModal({
         </h4>
 
         <label className="mt-5 mb-1 block">
-          <Trans>Block number</Trans>
+          <Trans>Timestamp (seconds)</Trans>
         </label>
         <FormattedNumberInput
-          disabled // TODO disabled temporarily. Need to implement participants query by block number via bendystraw
-          value={blockNumber?.toString()}
-          onChange={val => setBlockNumber(val ? parseInt(val) : undefined)}
+          value={timestamp?.toString()}
+          onChange={val => setTimestamp(val ? parseInt(val) : undefined)}
           accessory={
             <InputAccessoryButton
               content={t`Latest`}
-              onClick={() => setBlockNumber(latestBlockNumber)}
-              disabled={blockNumber === latestBlockNumber}
+              onClick={() => setTimestamp(nowSecs)}
             />
           }
         />

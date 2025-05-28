@@ -2843,6 +2843,9 @@ msgstr ""
 msgid "Deployed ERC20 token"
 msgstr ""
 
+msgid "Timestamp (seconds)"
+msgstr ""
+
 msgid "Notice from {0}"
 msgstr ""
 

@@ -28,3 +28,21 @@ query Participants(
     }
   }
 }
+
+query ParticipantSnapshots($where: participantSnapshotFilter) {
+  participantSnapshots(where: $where) {
+    items {
+      chainId
+      projectId
+      suckerGroupId
+      timestamp
+      block
+      address
+      volume
+      volumeUsd
+      balance
+      creditBalance
+      erc20Balance
+    }
+  }
+}

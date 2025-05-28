@@ -32,7 +32,6 @@ export function ProjectDetailsSettingsPage() {
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId | undefined>(projectChains[0])
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
-  const [txSigning, setTxSigning] = useState(false)
   const [confirmLoading, setConfirmLoading] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [cid, setCid] = useState<`0x${string}`>()
@@ -161,6 +160,8 @@ export function ProjectDetailsSettingsPage() {
     }, 0)
   }, [resetProjectForm])
 
+  const txSigning = Boolean(relayrBundle.uuid) && !relayrBundle.isComplete
+
   return (
     <>
       <ProjectDetailsForm
@@ -175,6 +176,8 @@ export function ProjectDetailsSettingsPage() {
         onOk={handleConfirm}
         okText={!txQuote ? <Trans>Get edit quote</Trans> : <Trans>Save changes</Trans>}
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
+        transactionPending={txSigning}
+        chainIds={projectChains}
         cancelButtonProps={{ hidden: true }}
         onCancel={() => setModalOpen(false)}
       >
@@ -182,7 +185,7 @@ export function ProjectDetailsSettingsPage() {
           <div className="py-4 text-sm">
             <Callout.Info>
               <Trans>
-                You'll be prompted a wallet signature for each of this project's chains before submitting.
+                You'll be prompted a wallet signature for each of this project's chains before submitting the final transaction.
               </Trans>
             </Callout.Info>
           </div>

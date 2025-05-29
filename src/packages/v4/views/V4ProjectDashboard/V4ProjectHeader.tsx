@@ -2,27 +2,27 @@ import { Button, Divider } from 'antd'
 import { JBChainId, useJBChainId, useSuckers } from 'juice-sdk-react'
 import { settingsPagePath, v4ProjectRoute } from 'packages/v4/utils/routes'
 
-import { Cog6ToothIcon } from '@heroicons/react/24/outline'
-import { Trans } from '@lingui/macro'
 import { Badge } from 'components/Badge'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
+import { Cog6ToothIcon } from '@heroicons/react/24/outline'
 import EthereumAddress from 'components/EthereumAddress'
 import { GnosisSafeBadge } from 'components/Project/ProjectHeader/GnosisSafeBadge'
-import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
-import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
-import { TruncatedText } from 'components/TruncatedText'
-import useMobile from 'hooks/useMobile'
-import { SuckerPair } from 'juice-sdk-core'
 import Link from 'next/link'
-import { ChainLogo } from 'packages/v4/components/ChainLogo'
+import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import { ProjectHeaderPopupMenu } from 'packages/v4/components/ProjectDashboard/components/ProjectHeaderPopupMenu'
-import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
-import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
-import { twMerge } from 'tailwind-merge'
 import { ProjectHeaderStats } from './ProjectHeaderStats'
+import { SocialLinkButton } from 'components/Project/ProjectHeader/SocialLinkButton'
+import { SuckerPair } from 'juice-sdk-core'
+import { Trans } from '@lingui/macro'
+import { TruncatedText } from 'components/TruncatedText'
+import { V4OperatorPermission } from 'packages/v4/models/v4Permissions'
+import V4ProjectHandleLink from 'packages/v4/components/V4ProjectHandleLink'
+import { twMerge } from 'tailwind-merge'
+import useMobile from 'hooks/useMobile'
 // import { Subtitle } from 'components/Project/ProjectHeader/Subtitle'
 import { useSocialLinks } from 'components/Project/ProjectHeader/hooks/useSocialLinks'
-import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
+import { useV4WalletHasPermission } from 'packages/v4/hooks/useV4WalletHasPermission'
 
 export type SocialLink = 'twitter' | 'discord' | 'telegram' | 'website'
 
@@ -138,7 +138,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                 ) : null)
               // <Subtitle subtitle={subtitle.text} />
             }
-            <div className="flex items-center text-grey-500 dark:text-slate-200">
+            <div className="flex flex-col gap-2 text-grey-500 dark:text-slate-200 sm:flex-row sm:items-center">
               {projectId && chainId ? (
                 <V4ProjectHandleLink
                   className="text-grey-500 dark:text-slate-200"
@@ -147,7 +147,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                 />
               ) : null}
 
-              <Divider className="mx-4" type="vertical" />
+              {!isMobile && <Divider className="mx-4" type="vertical" />}
 
               <span className="inline-flex items-center gap-1">
                 <Trans>
@@ -163,7 +163,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
               </span>
               {createdAt ? (
                 <>
-                  <Divider className="mx-4" type="vertical" />
+                  {!isMobile && <Divider className="mx-4" type="vertical" />}
                   <span>Created {createdAt}</span>
                 </>
               ) : null}

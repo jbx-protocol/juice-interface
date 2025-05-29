@@ -1,4 +1,4 @@
-import { createConfig, http } from 'wagmi'
+import { createConfig, http } from 'wagmi';
 import {
   arbitrum,
   arbitrumSepolia,
@@ -8,8 +8,11 @@ import {
   optimism,
   optimismSepolia,
   sepolia,
-} from 'wagmi/chains'
-import { safe } from 'wagmi/connectors'
+} from 'wagmi/chains';
+import { coinbaseWallet, injected, safe } from 'wagmi/connectors';
+
+const appName = 'Juicebox';
+const appLogoUrl = 'https://juicebox.money/assets/juice-logo-full_black.svg';
 
 export const wagmiConfig = createConfig({
   chains:
@@ -31,7 +34,18 @@ export const wagmiConfig = createConfig({
       baseSepolia,
       arbitrumSepolia,
     ],
-  connectors: [safe()],
+  connectors: [
+      injected(),
+      coinbaseWallet({
+        appName,
+        appLogoUrl,
+        preference: 'all', // This forces Smart Wallet which works better in mobile
+        version: '4', // Use version 4 for better mobile support
+        headlessMode: false, // Ensure UI is shown for mobile
+      }),
+      // walletConnect({ projectId: walletConnectProjectId }),
+      safe(),
+    ],
   transports: {
     [mainnet.id]: http(
       `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,

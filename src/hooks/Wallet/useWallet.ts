@@ -8,7 +8,7 @@ import {
   useSigner,
   useUserAddress,
   useWalletBalance,
-} from './hooks'
+} from './hooks';
 
 export function useWallet() {
   const signer = useSigner()

@@ -39,7 +39,8 @@ export const wagmiConfig = createConfig({
       coinbaseWallet({
         appName,
         appLogoUrl,
-        preference: { options: 'all' },
+        preference: 'smartWalletOnly', // This forces Smart Wallet which works better in mobile
+        version: '4', // Use version 4 for better mobile support
       }),
       // walletConnect({ projectId: walletConnectProjectId }),
       safe(),

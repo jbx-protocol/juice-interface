@@ -6,6 +6,7 @@ query DBV4Projects($where: projectFilter, $limit: Int, $after: String) {
     }
     items {
       id
+      suckerGroupId
       projectId
       chainId
       handle

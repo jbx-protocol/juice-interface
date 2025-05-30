@@ -1,7 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { Modal } from 'antd'
 import EthereumAddress from 'components/EthereumAddress'
-import { useParticipantsQuery } from 'generated/v4/graphql'
+import { useParticipantsQuery, useProjectQuery } from 'generated/v4/graphql'
 import {
   useJBChainId,
   useJBContractContext,
@@ -30,17 +30,25 @@ export const V4TokenHoldersModal = ({
 
   const { data: totalTokenSupply } = useV4TotalTokenSupply()
 
+  const { data: project } = useProjectQuery({
+    client: bendystrawClient,
+    variables: {
+      projectId: Number(projectId),
+      chainId: Number(chainId),
+    },
+    skip: !projectId || !open || !chainId,
+  })
+
   const { data, loading } = useParticipantsQuery({
     client: bendystrawClient,
     variables: {
       orderDirection: 'desc',
       orderBy: 'balance',
       where: {
-        projectId: Number(projectId),
-        chainId: Number(chainId),
+        suckerGroupId: project?.project?.suckerGroupId,
       },
     },
-    skip: !projectId || !open || !chainId,
+    skip: !project?.project?.suckerGroupId,
   })
 
   const allParticipants = data?.participants

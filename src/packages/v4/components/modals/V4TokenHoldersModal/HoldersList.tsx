@@ -86,6 +86,7 @@ export default function HoldersList({
   )
 
   const { data: project } = useProjectQuery({
+    client: bendystrawClient,
     variables: {
       projectId: Number(projectId),
       chainId: Number(chainId),

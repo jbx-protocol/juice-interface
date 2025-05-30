@@ -1,3 +1,4 @@
+import React, { ReactNode } from 'react'
 import { Trans, t } from '@lingui/macro'
 import {
   useJBChainId,
@@ -6,26 +7,25 @@ import {
   useReadJbTokensTotalBalanceOf,
   useSuckers,
 } from 'juice-sdk-react'
-import React, { ReactNode } from 'react'
 import { useProjectDispatch, useProjectSelector } from '../redux/hooks'
 
-import { InformationCircleIcon } from '@heroicons/react/24/outline'
-import { Tooltip } from 'antd'
 import { Callout } from 'components/Callout/Callout'
-import { useWallet } from 'hooks/Wallet'
-import { JB_TOKEN_DECIMALS } from 'juice-sdk-core'
-import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
-import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
-import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
-import { twMerge } from 'tailwind-merge'
-import { formatUnits } from 'viem'
 import { ChainSelect } from '../../ChainSelect'
-import { payRedeemActions } from '../redux/payRedeemSlice'
+import { InformationCircleIcon } from '@heroicons/react/24/outline'
+import { JB_TOKEN_DECIMALS } from 'juice-sdk-core'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import { PayConfiguration } from './PayConfiguration'
 import { PayProjectModal } from './PayProjectModal/PayProjectModal'
 import { RedeemConfiguration } from './RedeemConfiguration'
+import { Tooltip } from 'antd'
 import { V4NftCreditsCallouts } from './V4NftCreditsCallouts'
+import { formatUnits } from 'viem'
+import { payRedeemActions } from '../redux/payRedeemSlice'
+import { twMerge } from 'tailwind-merge'
+import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
+import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
+import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
+import { useWallet } from 'hooks/Wallet'
 
 type PayRedeemCardProps = {
   className?: string
@@ -83,10 +83,13 @@ export const V4PayRedeemCard: React.FC<PayRedeemCardProps> = ({
 
     return t`Project isn't currently issuing tokens`
   }, [isIssuingTokens, nftRewards.loading, nftRewards.nftRewards.rewardTiers])
+  const cashOutTaxRateIsMax = rulesetMetadata.data?.cashOutTaxRate && rulesetMetadata.data.cashOutTaxRate.value === rulesetMetadata.data.cashOutTaxRate.max
 
   const redeemDisabled =
-    !rulesetMetadata.data?.cashOutTaxRate ||
-    payoutLimit?.amount === MAX_PAYOUT_LIMIT
+    cashOutTaxRateIsMax ||
+    payoutLimit?.amount === MAX_PAYOUT_LIMIT ||
+    ruleset.data?.cycleNumber === 0
+    
   const currentChainId = useJBChainId()
   const { data: suckers } = useSuckers()
 

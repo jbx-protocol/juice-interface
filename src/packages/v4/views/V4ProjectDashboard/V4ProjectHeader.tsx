@@ -134,6 +134,7 @@ export const V4ProjectHeader = ({ className }: { className?: string }) => {
                   <TruncatedText
                     className="text-grey-700 dark:text-slate-50 md:text-lg"
                     text={subtitle.text}
+                    lines={3}
                   />
                 ) : null)
               // <Subtitle subtitle={subtitle.text} />

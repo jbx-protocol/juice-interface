@@ -7,7 +7,7 @@ import ProjectLogo from 'components/ProjectLogo'
 import { PV_V2, PV_V4 } from 'constants/pv'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useProjectTrendingPercentageIncrease } from 'hooks/useProjectTrendingPercentageIncrease'
-import { JBChainId } from 'juice-sdk-react'
+import { JBChainId } from 'juice-sdk-core'
 import { DBProject } from 'models/dbProject'
 import Link from 'next/link'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
@@ -32,7 +32,7 @@ export default function TrendingProjectCard({
     | 'handle'
     | 'pv'
     | 'projectId'
-  > & { chainId?: number }
+  > & { chainIds?: JBChainId[] }
   rank: number
   size?: 'sm' | 'lg'
   bookmarked?: boolean
@@ -65,10 +65,10 @@ export default function TrendingProjectCard({
       prefetch={false}
       key={project.handle}
       href={
-        project.pv === PV_V4 && project.chainId
+        project.pv === PV_V4 && project.chainIds?.length
           ? v4ProjectRoute({
               projectId: project.projectId,
-              chainId: project.chainId,
+              chainId: project.chainIds[0],
             })
           : project.pv === PV_V2
           ? v2v3ProjectRoute(project)
@@ -100,20 +100,15 @@ export default function TrendingProjectCard({
             <Skeleton paragraph={false} title={{ width: 120 }} active />
           )}
 
-          <div className="flex w-full flex-wrap text-black dark:text-slate-100">
-            <span className="flex flex-wrap items-center gap-1">
-              {project.chainId ? (
-                <ChainLogo chainId={project.chainId as JBChainId} />
-              ) : null}
-              <span className="font-medium">
-                <ETHAmount amount={project.trendingVolume} />
-              </span>
-              <span className="font-medium text-grey-500 dark:text-grey-300">
-                <Trans>last {TRENDING_WINDOW_DAYS} days</Trans>
-              </span>
-              <span className="font-medium text-juice-400 dark:text-juice-300">
-                {percentGainText && <>{percentGainText}</>}
-              </span>
+          <div className="flex w-full flex-wrap items-center text-black dark:text-slate-100 gap-1">
+            <span className="font-medium">
+              <ETHAmount amount={project.trendingVolume} />
+            </span>
+            <span className="font-medium text-grey-500 dark:text-grey-300">
+              <Trans>last {TRENDING_WINDOW_DAYS} days</Trans>
+            </span>
+            <span className="font-medium text-juice-400 dark:text-juice-300">
+              {percentGainText && <>{percentGainText}</>}
             </span>
           </div>
 
@@ -123,6 +118,16 @@ export default function TrendingProjectCard({
               one="# payment"
               other="# payments"
             />
+          </div>
+
+          <div className="flex gap-2 mt-2">
+            {project.chainIds ? (
+              project.chainIds?.map(c => (
+                <ChainLogo key={c} chainId={c} width={18} height={18} />
+              ))
+            ) : (
+              <ChainLogo chainId={1} width={18} height={18} />
+            )}
           </div>
         </div>
 

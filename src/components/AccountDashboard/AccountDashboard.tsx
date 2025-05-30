@@ -14,7 +14,7 @@ import { PV_V4 } from 'constants/pv'
 import { BigNumber } from 'ethers'
 import { useWalletContributionsQuery } from 'generated/graphql'
 import { useWalletContributionsQuery as useV4WalletContributionsQuery } from 'generated/v4/graphql'
-import { useDBProjectsQuery } from 'hooks/useDBProjects'
+import { useDBProjectsAggregateQuery } from 'hooks/useDBProjects'
 import useMobile from 'hooks/useMobile'
 import {
   useWalletBookmarkedIds,
@@ -25,7 +25,7 @@ import { useWallet } from 'hooks/Wallet'
 import { bendystrawClient } from 'lib/apollo/bendystrawClient'
 import { client } from 'lib/apollo/client'
 import { Profile } from 'models/database'
-import { SubgraphQueryProject } from 'models/subgraphProjects'
+import { DBProjectsAggregate } from 'models/dbProject'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import SocialLinks from 'packages/v1/components/V1Project/V1ProjectHeader/SocialLinks'
@@ -34,7 +34,7 @@ import { isEqualAddress } from 'utils/address'
 import { ensAvatarUrlForAddress } from 'utils/ens'
 import { etherscanLink } from 'utils/etherscan'
 
-function ProjectsList({ projects }: { projects: SubgraphQueryProject[] }) {
+function ProjectsList({ projects }: { projects: DBProjectsAggregate[] }) {
   const { userAddress } = useWallet()
 
   const { ids: bookmarkedProjectIds } = useWalletBookmarkedIds({
@@ -123,7 +123,7 @@ function ContributedList({ address }: { address: string }) {
 }
 
 function OwnedProjectsList({ address }: { address: string }) {
-  const { data: projects, isLoading } = useDBProjectsQuery({
+  const { data: projects, isLoading } = useDBProjectsAggregateQuery({
     owner: address,
     orderBy: 'created_at',
     orderDirection: 'desc',
@@ -187,7 +187,7 @@ function SavedProjectsList({ address }: { address: string }) {
 }
 
 function CreatedProjectsList({ address }: { address: string }) {
-  const { data: projects, isLoading } = useDBProjectsQuery({
+  const { data: projects, isLoading } = useDBProjectsAggregateQuery({
     creator: address,
   })
 

@@ -1,5 +1,6 @@
+import { JBChainId } from 'juice-sdk-core'
 import { enableCors } from 'lib/api/nextjs'
-import { queryDBProjects } from 'lib/api/supabase/projects'
+import { queryDBProjectsAggregates } from 'lib/api/supabase/projects'
 import { DBProjectQueryOpts } from 'models/dbProject'
 import { ProjectTagName } from 'models/project-tags'
 import { NextApiHandler } from 'next'
@@ -22,7 +23,7 @@ const handler: NextApiHandler = async (req, res) => {
     orderBy,
     owner,
     creator,
-    projectId,
+    chainIds,
     ids,
   } = req.query
 
@@ -51,8 +52,8 @@ const handler: NextApiHandler = async (req, res) => {
     return
   }
 
-  if (projectId && (Array.isArray(projectId) || isNaN(parseInt(projectId)))) {
-    res.status(400).send('ProjectId is not a number')
+  if (chainIds && typeof chainIds !== 'string') {
+    res.status(400).send('Invalid chainIds')
     return
   }
 
@@ -89,14 +90,14 @@ const handler: NextApiHandler = async (req, res) => {
     return
   }
 
+  const _chainIds = chainIds?.split(',').map(i => parseInt(i) as JBChainId)
+
   const _pageSize = pageSize ? parseInt(pageSize) : undefined
 
   const _page = page ? parseInt(page) : undefined
 
-  const _projectId = projectId ? parseInt(projectId) : undefined
-
   try {
-    const { data: results } = await queryDBProjects(req, res, {
+    const { data: results } = await queryDBProjectsAggregates(req, res, {
       text,
       tags: tags?.split(',') as ProjectTagName[],
       pageSize: _pageSize,
@@ -108,7 +109,7 @@ const handler: NextApiHandler = async (req, res) => {
       orderBy: orderBy as DBProjectQueryOpts['orderBy'],
       owner,
       creator,
-      projectId: _projectId,
+      chainIds: _chainIds,
       ids: ids?.split(','),
     })
 

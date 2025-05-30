@@ -37,7 +37,10 @@ const handler: NextApiHandler = async (_, res) => {
         client: serverClient,
         document: DbProjectsDocument,
       })) as unknown as Json<
-        Pick<Project & { chainId: number }, SGSBCompareKey>
+        Pick<
+          Project & { chainId: number; suckerGroupId: string },
+          SGSBCompareKey
+        >
       >[]
     ).map(formatSGProjectForDB)
 

@@ -55,6 +55,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",
+    "@getpara/react-sdk": "2.0.0-alpha.18",
+    "@getpara/evm-wallet-connectors": "2.0.0-alpha.18",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.4",
     "@jbx-protocol/contracts-v1": "2.0.0",

@@ -38,7 +38,7 @@
     "supabase:login": "supabase login",
     "supabase:pushdb": "supabase db push",
     "supabase:diffdb": "supabase db diff",
-    "supabase:generate:local": "supabase gen types typescript --local > src/types/database.types.ts"
+    "supabase:generate:linked": "supabase gen types typescript --linked > src/types/database.types.ts"
   },
   "browserslist": {
     "production": [

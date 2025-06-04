@@ -1,7 +1,13 @@
 import { Project } from 'generated/graphql'
 import { JBChainId } from 'juice-sdk-core'
 import { ipfsGatewayFetch } from 'lib/api/ipfs'
-import { DBProject, DBProjectRow, SGSBCompareKey } from 'models/dbProject'
+import {
+  DBProject,
+  DBProjectRow,
+  DBProjectsAggregate,
+  DBProjectsAggregateRow,
+  SGSBCompareKey,
+} from 'models/dbProject'
 import { Json } from 'models/json'
 import {
   ProjectTagName,
@@ -43,6 +49,7 @@ export const sgDbCompareKeys: SGSBCompareKey[] = [
   'paymentsCount',
   'trendingPaymentsCount',
   'createdWithinTrendingWindow',
+  'suckerGroupId',
 ]
 
 export const parseDBProject = (r: DBProjectRow): DBProject =>
@@ -62,6 +69,66 @@ export const parseDBProjectJson = (j: Json<DBProject>): DBProject => ({
     'redeemVolumeUSD',
   ]),
 })
+
+export const parseDBProjectsAggregate = (
+  r: DBProjectsAggregateRow,
+): DBProjectsAggregate =>
+  parseDBProjectsAggregateJson(parseDBProjectsAggregateRow(r))
+
+export const parseDBProjectsAggregateJson = (
+  j: Json<Omit<DBProject, '_updatedAt'>> & { chainIds?: JBChainId[] },
+): Omit<DBProject, '_updatedAt'> & { chainIds?: JBChainId[] } => ({
+  ...j,
+  tags: j.tags ?? [],
+  ...parseBigNumberKeyVals(j, [
+    'currentBalance',
+    'volume',
+    'volumeUSD',
+    'trendingScore',
+    'trendingVolume',
+    'redeemVolume',
+    'redeemVolumeUSD',
+  ]),
+})
+
+// Parse DB Project row, converting property names from snake_case to camelCase
+export function parseDBProjectsAggregateRow(
+  p: DBProjectsAggregateRow,
+): Json<DBProjectsAggregate> {
+  return {
+    archived: p.archived,
+    contributorsCount: p.contributors_count,
+    createdAt: p.created_at,
+    createdWithinTrendingWindow: p.created_within_trending_window,
+    creator: p.creator,
+    currentBalance: p.current_balance,
+    deployer: p.deployer,
+    description: p.description,
+    handle: p.handle,
+    id: p.id,
+    logoUri: p.logo_uri,
+    metadataUri: p.metadata_uri,
+    name: p.name,
+    nftsMintedCount: p.nfts_minted_count,
+    owner: p.owner,
+    paymentsCount: p.payments_count,
+    projectId: p.project_id,
+    pv: p.pv as PV,
+    chainId: p.chain_id as JBChainId,
+    chainIds: p.chain_ids as JBChainId[], // this only applies if parsing a row from the projects_aggregate db view
+    redeemCount: p.redeem_count,
+    redeemVolume: p.redeem_volume,
+    redeemVolumeUSD: p.redeem_volume_usd,
+    suckerGroupId: p.sucker_group_id,
+    tags: p.tags as ProjectTagName[],
+    terminal: p.terminal,
+    volume: p.volume,
+    volumeUSD: p.volume_usd,
+    trendingPaymentsCount: p.trending_payments_count,
+    trendingScore: p.trending_score,
+    trendingVolume: p.trending_volume,
+  }
+}
 
 // Parse DB Project row, converting property names from snake_case to camelCase
 export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
@@ -87,7 +154,8 @@ export function parseDBProjectsRow(p: DBProjectRow): Json<DBProject> {
     chainId: p.chain_id as JBChainId,
     redeemCount: p.redeem_count,
     redeemVolume: p.redeem_volume,
-    redeemVolumeUSD: p.redeem_voume_usd,
+    redeemVolumeUSD: p.redeem_volume_usd,
+    suckerGroupId: p.sucker_group_id,
     tags: p.tags as ProjectTagName[],
     terminal: p.terminal,
     volume: p.volume,
@@ -127,7 +195,8 @@ export function formatDBProjectRow(
     chain_id: p.chainId,
     redeem_count: p.redeemCount,
     redeem_volume: p.redeemVolume,
-    redeem_voume_usd: p.redeemVolumeUSD,
+    redeem_volume_usd: p.redeemVolumeUSD,
+    sucker_group_id: p.suckerGroupId,
     tags: p.tags,
     terminal: p.terminal,
     trending_payments_count: p.trendingPaymentsCount,
@@ -154,7 +223,9 @@ export function formatSgProjectsForUpdate({
   retryIpfs,
   returnAllProjects,
 }: {
-  sgProjects: Json<Pick<Project & { chainId: number }, SGSBCompareKey>>[]
+  sgProjects: Json<
+    Pick<Project & { chainId: number; suckerGroupId: string }, SGSBCompareKey>
+  >[]
   dbProjects: Record<string, Json<DBProject>>
   retryIpfs?: boolean
   returnAllProjects?: boolean
@@ -245,7 +316,9 @@ export async function formatWithMetadata({
   sgProject,
   dbProject,
 }: {
-  sgProject: Json<Pick<Project & { chainId: number }, SGSBCompareKey>>
+  sgProject: Json<
+    Pick<Project & { chainId: number; suckerGroupId: string }, SGSBCompareKey>
+  >
   dbProject:
     | Pick<
         DBProject,
@@ -279,6 +352,7 @@ export async function formatWithMetadata({
     return {
       project: {
         ...sgProject,
+        chainId: sgProject.chainId as JBChainId,
         _hasUnresolvedMetadata: true,
         _metadataRetriesLeft: 0,
         name: null,
@@ -297,6 +371,7 @@ export async function formatWithMetadata({
     return {
       project: {
         ...sgProject,
+        chainId: sgProject.chainId as JBChainId,
         archived,
         description,
         logoUri,
@@ -321,6 +396,7 @@ export async function formatWithMetadata({
     return {
       project: {
         ...sgProject,
+        chainId: sgProject.chainId as JBChainId,
         name: name ?? null,
         description: description ?? null,
         logoUri: logoUri ?? null,
@@ -339,6 +415,7 @@ export async function formatWithMetadata({
       retriesRemaining,
       project: {
         ...sgProject,
+        chainId: sgProject.chainId as JBChainId,
         _hasUnresolvedMetadata: true,
         _metadataRetriesLeft: retriesRemaining,
         name: null,
@@ -353,12 +430,20 @@ export async function formatWithMetadata({
 
 // BigNumber values are stored as strings. To sort by these they must have an equal number of digits, so we pad them with leading 0s up to a 32 char length.
 function padBigNumForSort(bn: string | null) {
+  if (bn?.includes('-')) {
+    // hacky handling of negative values
+    return `-${bn.split('-')[1].padStart(31, '0')}`
+  }
   return (bn || '0').padStart(32, '0')
 }
 
 export function formatSGProjectForDB(
-  p: Json<Pick<Project & { chainId: number }, SGSBCompareKey>>,
-): Json<Pick<Project & { chainId: number }, SGSBCompareKey>> {
+  p: Json<
+    Pick<Project & { chainId: number; suckerGroupId: string }, SGSBCompareKey>
+  >,
+): Json<
+  Pick<Project & { chainId: number; suckerGroupId: string }, SGSBCompareKey>
+> {
   return {
     ...p,
     // Adjust BigNumber values before we compare them to database values

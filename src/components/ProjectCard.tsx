@@ -5,8 +5,7 @@ import { PV_V2, PV_V4 } from 'constants/pv'
 import { useProjectHandleText } from 'hooks/useProjectHandleText'
 import { useProjectMetadata } from 'hooks/useProjectMetadata'
 import { useSubtitle } from 'hooks/useSubtitle'
-import { JBChainId } from 'juice-sdk-react'
-import { SubgraphQueryProject } from 'models/subgraphProjects'
+import { DBProjectsAggregate } from 'models/dbProject'
 import Link from 'next/link'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
@@ -23,7 +22,7 @@ export default function ProjectCard({
   project,
   bookmarked,
 }: {
-  project?: SubgraphQueryProject & { chainId?: number }
+  project?: DBProjectsAggregate
   bookmarked?: boolean
 }) {
   const { data: metadata } = useProjectMetadata(project?.metadataUri)
@@ -35,7 +34,8 @@ export default function ProjectCard({
 
   if (!project) return null
 
-  const { volume, pv, handle, projectId, createdAt, chainId } = project
+  const { volume, pv, handle, projectId, createdAt, chainIds, chainId } =
+    project
   const tags = metadata?.tags
 
   // If the total paid is greater than 0, but less than 10 ETH, show two decimal places.
@@ -59,7 +59,7 @@ export default function ProjectCard({
       : `/p/${handle}`
 
   const projectCardUrl =
-    pv === PV_V4 && chainId
+    pv === PV_V4
       ? v4ProjectRoute({
           projectId,
           chainId,
@@ -104,26 +104,14 @@ export default function ProjectCard({
             </div>
           ) : null}
 
-          <div className="flex items-center gap-2">
-            {chainId ? (
-              <div>
-                <ChainLogo
-                  chainId={chainId as JBChainId}
-                  width={18}
-                  height={18}
-                />
-              </div>
-            ) : null}
-            <div>
-              <span className="mr-1 font-medium text-black dark:text-slate-100">
-                <ETHAmount amount={volume} precision={precision} />
-              </span>
+          <div>
+            <span className="mr-1 font-medium text-black dark:text-slate-100">
+              <ETHAmount amount={volume} precision={precision} />
+            </span>
 
-              <span className="text-grey-500 dark:text-grey-300">
-                since{' '}
-                {!!createdAt && formatDate(createdAt * 1000, 'yyyy-MM-DD')}
-              </span>
-            </div>
+            <span className="text-grey-500 dark:text-grey-300">
+              since {!!createdAt && formatDate(createdAt * 1000, 'yyyy-MM-DD')}
+            </span>
           </div>
 
           {tags?.length ? (
@@ -135,6 +123,16 @@ export default function ProjectCard({
               {subtitle.text}
             </div>
           ) : null}
+
+          <div className="mt-2 flex items-center gap-2">
+            {chainIds ? (
+              chainIds.map(c => (
+                <ChainLogo key={c} chainId={c} width={18} height={18} />
+              ))
+            ) : (
+              <ChainLogo chainId={1} width={18} height={18} />
+            )}
+          </div>
         </div>
         {bookmarked && (
           <BookmarkIconSolid className="absolute top-4 right-0 h-4 text-black dark:text-slate-100 md:right-4" />

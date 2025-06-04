@@ -3,7 +3,7 @@ import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
 import { useWallet } from 'hooks/Wallet'
-import { useDBProjectsInfiniteQuery } from 'hooks/useDBProjects'
+import { useDBProjectsAggregateInfiniteQuery } from 'hooks/useDBProjects'
 import { useLoadMoreContent } from 'hooks/useLoadMore'
 import { useWalletBookmarkedIds } from 'hooks/useWalletBookmarkedProjects'
 import { DBProjectQueryOpts } from 'models/dbProject'
@@ -36,7 +36,7 @@ export default function AllProjects({
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useDBProjectsInfiniteQuery({
+  } = useDBProjectsAggregateInfiniteQuery({
     text: searchText,
     tags: searchTags,
     pv,

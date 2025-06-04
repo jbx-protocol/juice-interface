@@ -5,51 +5,54 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import axios from 'axios'
-import { DBProject, DBProjectQueryOpts, DBProjectRow } from 'models/dbProject'
-import { Json } from 'models/json'
+import {
+  DBProjectQueryOpts,
+  DBProjectsAggregate,
+  DBProjectsAggregateRow
+} from 'models/dbProject'
 import { formatQueryParams } from 'utils/queryParams'
-import { parseDBProject } from 'utils/sgDbProjects'
+import { parseDBProjectsAggregate } from 'utils/sgDbProjects'
 
 const DEFAULT_STALE_TIME = 60 * 1000 // 60 seconds
 
-export function useDBProjectsQuery(
+export function useDBProjectsAggregateQuery(
   opts: DBProjectQueryOpts | null,
   reactQueryOptions?: Partial<
     UseQueryOptions<
-      DBProject[],
+      DBProjectsAggregate[],
       Error,
-      DBProject[],
+      DBProjectsAggregate[],
       readonly [string, DBProjectQueryOpts | null]
     >
   >,
 ) {
   return useQuery<
-    DBProject[],
+    DBProjectsAggregate[],
     Error,
-    DBProject[],
+    DBProjectsAggregate[],
     readonly [string, DBProjectQueryOpts | null]
   >({
     queryKey: ['dbp-query', opts],
     queryFn: () =>
       opts
         ? axios
-            .get<Json<DBProjectRow>[]>(
+            .get<DBProjectsAggregateRow[]>(
               `/api/projects?${formatQueryParams(opts)}`,
             )
-            .then(res => res.data?.map(parseDBProject))
-        : Promise.resolve([] as DBProject[]),
+            .then(res => res.data?.map(parseDBProjectsAggregate))
+        : Promise.resolve([] as DBProjectsAggregate[]),
     staleTime: DEFAULT_STALE_TIME,
     ...reactQueryOptions,
   })
 }
 
-export function useDBProjectsInfiniteQuery(
+export function useDBProjectsAggregateInfiniteQuery(
   opts: DBProjectQueryOpts,
   reactQueryOptions?: UseInfiniteQueryOptions<
-    DBProject[],
+    DBProjectsAggregate[],
     Error,
-    DBProject[],
-    DBProject[],
+    DBProjectsAggregate[],
+    DBProjectsAggregate[],
     readonly [string, DBProjectQueryOpts]
   >,
 ) {
@@ -58,7 +61,7 @@ export function useDBProjectsInfiniteQuery(
     queryFn: async ({ queryKey, pageParam }) => {
       const { pageSize, ...evaluatedOpts } = queryKey[1]
 
-      const res = await axios.get<DBProjectRow[] | undefined>(
+      const res = await axios.get<DBProjectsAggregateRow[] | undefined>(
         `/api/projects?${formatQueryParams({
           ...evaluatedOpts,
           page: (pageParam as number) ?? 0,
@@ -66,7 +69,7 @@ export function useDBProjectsInfiniteQuery(
         })}`,
       )
 
-      return res?.data?.map(parseDBProject) ?? []
+      return res?.data?.map(parseDBProjectsAggregate) ?? []
     },
     initialPageParam: 0,
     staleTime: DEFAULT_STALE_TIME,

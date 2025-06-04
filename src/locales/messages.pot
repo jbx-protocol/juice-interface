@@ -1109,6 +1109,9 @@ msgstr ""
 msgid "Cycle length"
 msgstr ""
 
+msgid "When enabled, token holders can redeem their tokens for a portion of the project's ETH treasury."
+msgstr ""
+
 msgid "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
 msgstr ""
 
@@ -1935,6 +1938,9 @@ msgid "Juicebox is the best-in-class tool for crowdfunding your project with ETH
 msgstr ""
 
 msgid "Project tokens will be minted to this beneficiary address. The address that made the payment <0>won't receive any project tokens.</0>"
+msgstr ""
+
+msgid "Cash outs are disabled. Token holders will not be able to redeem their tokens for ETH."
 msgstr ""
 
 msgid "V2 3-day deadline"
@@ -2889,6 +2895,9 @@ msgid "Change networks to cash out"
 msgstr ""
 
 msgid "No activity yet"
+msgstr ""
+
+msgid "Enable cash outs"
 msgstr ""
 
 msgid "What does Juicebox actually do?"

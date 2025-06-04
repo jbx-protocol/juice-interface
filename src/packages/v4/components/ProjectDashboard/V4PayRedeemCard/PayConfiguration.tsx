@@ -1,12 +1,8 @@
 import { Button, Tooltip } from 'antd'
 import { Trans, t } from '@lingui/macro'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useJBProjectId, useJBRuleset, useJBTokenContext } from 'juice-sdk-react'
-import {
-  useProjectDispatch,
-  useProjectSelector,
-  useProjectStore,
-} from '../redux/hooks'
+import { useJBChainId, useJBProjectId, useJBRuleset, useJBTokenContext } from 'juice-sdk-react'
+import { useProjectDispatch, useProjectSelector, useProjectStore } from '../redux/hooks'
 
 import { EthereumLogo } from './EthereumLogo'
 import { FirstCycleCountdownCallout } from './FirstCycleCountdownCallout'
@@ -15,6 +11,7 @@ import { PreventOverspendingPayCard } from './PreventOverspendingPayCard'
 import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeaderLogo'
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { projectCartActions } from '../redux/projectCartSlice'
+import { useBalance } from 'wagmi'
 import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
 import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
@@ -36,6 +33,14 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
   const { token } = useJBTokenContext()
   const wallet = useWallet()
   const { isConnected: walletConnected, connect } = useWallet()
+  const defaultChainId = useJBChainId()
+  
+  const selectedChainId = useProjectSelector(state => state.payRedeem.chainId) ?? defaultChainId
+
+  const { data: selectedChainBalance } = useBalance({
+    address: wallet.userAddress as `0x${string}`,
+    chainId: selectedChainId,
+  })
 
   const tokenReceivedAmount = useProjectPaymentTokens()
   const chosenNftRewards = useProjectSelector(
@@ -66,9 +71,9 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
   const tokenBSymbol = token?.data?.symbol // the token the user receives (the project token)
 
   const amount = cartPayAmount ?? 0
-  const insufficientBalance = !wallet.balance
+  const insufficientBalance = !selectedChainBalance?.formatted
     ? false
-    : amount > parseFloat(wallet.balance)
+    : amount > parseFloat(selectedChainBalance.formatted)
   const tokenBTicker = tokenBSymbol || 'TOKENS'
 
   const handleUserPayAmountChange = useCallback(

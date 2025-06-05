@@ -24,7 +24,7 @@ import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4CurrentPayoutSplits'
 import { V4CurrencyName } from 'packages/v4/utils/currency'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
 import { emitErrorNotification } from 'utils/notifications'
 import { parseUnits } from 'viem'
 import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
@@ -126,6 +126,7 @@ export default function V4DistributePayoutsModal({
       addTransaction?.(`Send payouts on ${NETWORKS[selectedChainId]?.label}`, {
         hash,
       })
+      const wagmiConfig = getWagmiConfig();
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
         chainId: selectedChainId,

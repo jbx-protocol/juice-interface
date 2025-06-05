@@ -11,11 +11,12 @@ import TransactorButton from 'components/buttons/TransactorButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { parseWad } from 'utils/format/formatNumber'
 import { ChainSelect } from '../../../../components/ChainSelect'
+import { useConfig } from 'wagmi'
 
 export function AddToProjectBalanceForm() {
+  const wagmiConfig = useConfig()
   const defaultChainId = useJBChainId()
   const { data: suckers } = useSuckers()
   const [selectedChainId, setSelectedChainId] = useState<JBChainId | undefined>(defaultChainId)

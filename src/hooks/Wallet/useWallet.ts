@@ -1,26 +1,29 @@
 import {
-  useChain,
-  useChainUnsupported,
-  useChangeNetworks,
-  useConnect,
-  useDisconnect,
-  useIsConnected,
-  useSigner,
-  useUserAddress,
+  useAccount,
+  useLogout,
+  useModal,
+  useWallet as useParaWallet,
   useWalletBalance,
-} from './hooks';
+} from '@getpara/react-sdk'
 
 export function useWallet() {
-  const signer = useSigner()
-  const userAddress = useUserAddress()
-  const isConnected = useIsConnected()
-  const chain = useChain()
-  const chainUnsupported = useChainUnsupported()
-  const balance = useWalletBalance()
+  const { data: paraAccount } = useAccount()
+  const { data: paraWallet } = useParaWallet()
+  const { logout: paraLogout } = useLogout()
+  const { openModal } = useModal()
+  const signer = null
+  const userAddress = paraWallet?.address
+  const isConnected = paraAccount?.isConnected ?? false
+  const chain = null
+  const chainUnsupported = false
+  const balanceQuery = useWalletBalance({
+    walletId: paraWallet?.id ?? '',
+  })
 
-  const connect = useConnect()
-  const disconnect = useDisconnect()
-  const changeNetworks = useChangeNetworks()
+  const balance = balanceQuery.data ?? '0'
+
+  const disconnect = () => paraLogout()
+  const changeNetworks = null
 
   return {
     signer,
@@ -34,5 +37,3 @@ export function useWallet() {
     changeNetworks,
   }
 }
-
-export type Wallet = ReturnType<typeof useWallet>

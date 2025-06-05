@@ -22,7 +22,7 @@ import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import { useWallet } from 'hooks/Wallet'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
 import { parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -118,6 +118,7 @@ export function V4MintModal({
       addTransaction?.(`Mint tokens on ${NETWORKS[selectedChainId]?.label}`, {
         hash,
       })
+      const wagmiConfig = getWagmiConfig();
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
         chainId: selectedChainId,

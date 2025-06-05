@@ -12,7 +12,7 @@ import { waitForTransactionReceipt } from '@wagmi/core'
 import { NEW_NFT_ID_LOWER_LIMIT } from 'components/NftRewards/RewardsList/AddEditRewardModal'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
 import { emitErrorNotification } from 'utils/notifications'
 
 export function useUpdateCurrentCollection({
@@ -70,6 +70,7 @@ export function useUpdateCurrentCollection({
       })
 
       addTransaction?.('Update NFT rewards', { hash })
+      const wagmiConfig = getWagmiConfig();
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
       })

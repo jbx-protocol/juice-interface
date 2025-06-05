@@ -1,5 +1,9 @@
 import type { TExternalWallet } from '@getpara/react-common'
-import type { Environment, TOAuthMethod } from '@getpara/react-sdk'
+import type {
+  Environment,
+  ParaModalProps,
+  TOAuthMethod,
+} from '@getpara/react-sdk'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import dynamic from 'next/dynamic'
 import { http } from 'wagmi'
@@ -92,10 +96,14 @@ const ParaProvider = dynamic(
   },
 )
 
-const paraModalConfig = {
+const paraModalConfig: ParaModalProps = {
   disableEmailLogin: false,
   disablePhoneLogin: false,
   oAuthMethods: OAUTH_METHODS,
+  theme: {
+    font: 'Beatrice',
+    borderRadius: 'lg',
+  },
 }
 
 const appConfig = {
@@ -138,3 +146,5 @@ export const ParaProviders = ({ children }: { children: React.ReactNode }) => {
     </ReactQueryProvider>
   )
 }
+
+export default ParaProviders

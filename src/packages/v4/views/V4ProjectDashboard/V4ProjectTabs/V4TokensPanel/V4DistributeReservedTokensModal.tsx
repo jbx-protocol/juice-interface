@@ -11,7 +11,7 @@ import { JBChainId } from 'juice-sdk-core'
 import SplitList from 'packages/v4/components/SplitList/SplitList'
 import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
@@ -88,6 +88,7 @@ export default function V4DistributeReservedTokensModal({
       setTransactionPending(true)
 
       addTransaction?.('Send reserved tokens', { hash })
+      const wagmiConfig = getWagmiConfig();
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
       })

@@ -1,11 +1,23 @@
+import '@getpara/react-sdk/styles.css'
 import { Head } from 'components/common/Head/Head'
 import { LanguageProvider } from 'contexts/Language/LanguageProvider'
-import { ParaProviders } from 'contexts/Para/Providers'
 import SupabaseSessionProvider from 'contexts/SupabaseSession/SupabaseSessionProvider'
 import { getInitialThemeOption, syncTheme } from 'contexts/Theme/useJuiceTheme'
 import { useFathom } from 'lib/fathom'
 import type { AppProps } from 'next/app'
+import dynamic from 'next/dynamic'
 import '../styles/index.scss'
+
+//Dynamic import the ParaProviders to avoid SSR issues
+const ParaProviders = dynamic(
+  async () => {
+    const { ParaProviders } = await import('contexts/Para/Providers')
+    return { default: ParaProviders }
+  },
+  {
+    ssr: false,
+  },
+)
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   syncTheme(getInitialThemeOption())

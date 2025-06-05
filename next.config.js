@@ -30,6 +30,14 @@ const SCRIPT_SRC = [
   // `'sha256-kZ9E6/oLrki51Yx03/BugStfFrPlm8hjaFbaokympXo='`, // hotjar
   `'unsafe-eval'`, // hotjar
   `'unsafe-inline'`, // MetaMask
+  'https://*.getpara.com', // Para API
+  'https://*.usecapsule.com', // Para (Formerly Capsule) API
+]
+
+const WORKER_SRC = [
+  'blob:', // Required for Para/Capsule blob workers
+  'https://*.getpara.com', // Para API
+  'https://*.usecapsule.com', // Para (Formerly Capsule) API
 ]
 
 const STYLE_SRC = [
@@ -81,6 +89,11 @@ const CONNECT_SRC = [
   'https://bendystraw.xyz/*',
   'https://testnet.bendystraw.xyz',
   'https://testnet.bendystraw.xyz/*',
+  'https://*.getpara.com', // Para API
+  'https://*.usecapsule.com', // Para (Formerly Capsule) API
+  'https://*.ingest.sentry.io', // Sentry error tracking for Para
+  'https://*.ingest.us.sentry.io', // Sentry US region
+  'https://ipfs.io',
 ]
 
 const FRAME_ANCESTORS = [
@@ -100,6 +113,8 @@ const FRAME_SRC = [
   'https://verify.walletconnect.com/',
   'https://youtube.com',
   'https://www.youtube.com/',
+  'https://*.getpara.com', // Para API
+  'https://*.usecapsule.com', // Para (Formerly Capsule) API
 ]
 
 const ContentSecurityPolicy = `
@@ -114,6 +129,7 @@ const ContentSecurityPolicy = `
   media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')};
   frame-ancestors ${FRAME_ANCESTORS.join(' ')};
   form-action 'self';
+  worker-src 'self' ${WORKER_SRC.join(' ')};
 `
 
 const SECURITY_HEADERS = [

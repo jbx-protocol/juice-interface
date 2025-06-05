@@ -3,7 +3,7 @@ import { JBChainId } from 'juice-sdk-react'
 import { enableCors } from 'lib/api/nextjs'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
 
 const logger = getLogger('api/v4/project/[projectId]/sucker-pairs')
 
@@ -26,7 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .status(400)
         .json({ error: 'projectId and chainId is required' })
     }
-
+    const wagmiConfig = getWagmiConfig();
     const suckers = await resolveSuckers({
       config: wagmiConfig,
       chainId,

@@ -8,7 +8,7 @@ import {
   useJBContractContext,
   useWriteJbControllerQueueRulesetsOf,
 } from 'juice-sdk-react'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
 import { useCallback, useContext } from 'react'
 import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
 import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
@@ -76,6 +76,7 @@ export function useEditRulesetTx() {
 
         onTransactionPendingCallback(hash)
         addTransaction?.('Edit Ruleset', { hash })
+        const wagmiConfig = getWagmiConfig();
         await waitForTransactionReceipt(wagmiConfig, {
           hash,
         })

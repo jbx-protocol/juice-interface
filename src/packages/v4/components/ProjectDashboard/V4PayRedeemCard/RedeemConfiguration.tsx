@@ -25,7 +25,7 @@ import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
 import { useProjectSelector } from '../redux/hooks'
 import { useWallet } from 'hooks/Wallet'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
 import { waitForTransactionReceipt } from '@wagmi/core'
 
 type RedeemConfigurationProps = {
@@ -127,6 +127,9 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
       setModalOpen(true)
 
       addTransaction?.('Redeem', { hash })
+
+      const wagmiConfig = getWagmiConfig();
+
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
       })

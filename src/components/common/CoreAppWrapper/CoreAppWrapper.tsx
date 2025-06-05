@@ -4,7 +4,6 @@ import { SiteNavigation } from 'components/Navbar/SiteNavigation'
 import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickProjectSearchProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
-import { useInitWallet } from 'hooks/Wallet'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
@@ -59,7 +58,6 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
   hideNav,
 }) => {
   const router = useRouter()
-  useInitWallet()
 
   // run on initial mount
   useEffect(() => {

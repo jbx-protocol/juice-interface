@@ -10,7 +10,7 @@ import {
   jb721TiersHookProjectDeployerAbi,
   jb721TiersHookProjectDeployerAddress,
   jbControllerAbi,
-  jbOmnichainDeployerAddress,
+  jbOmnichainDeployer4_1Address,
   useGetRelayrTxBundle,
   useGetRelayrTxQuote,
   useSendRelayrTx,
@@ -89,7 +89,7 @@ export function useDeployOmnichainProject() {
       return {
         data: {
           from: userAddress,
-          to: jbOmnichainDeployerAddress[chainId],
+          to: jbOmnichainDeployer4_1Address[chainId],
           value: 0n,
           gas: 1_000_000n * BigInt(chainIds.length),
           data: encodedData,
@@ -159,14 +159,14 @@ export function useDeployOmnichainProject() {
         jbOmnichainDeployer: {
           chainId,
           calldata: encodedData,
-          address: jbOmnichainDeployerAddress[chainId],
+          address: jbOmnichainDeployer4_1Address[chainId],
         },
       })
 
       return {
         data: {
           from: userAddress,
-          to: jbOmnichainDeployerAddress[chainId],
+          to: jbOmnichainDeployer4_1Address[chainId],
           value: 0n,
           gas: 3_000_000n * BigInt(chainIds.length), // Bigger mutliple for NFTS. TODO ba5sed might have a better suggestion here.
           data: encodedData,

@@ -38,7 +38,7 @@
     "supabase:login": "supabase login",
     "supabase:pushdb": "supabase db push",
     "supabase:diffdb": "supabase db diff",
-    "supabase:generate:local": "supabase gen types typescript --local > src/types/database.types.ts"
+    "supabase:generate:linked": "supabase gen types typescript --linked > src/types/database.types.ts"
   },
   "browserslist": {
     "production": [
@@ -111,8 +111,8 @@
     "graphql": "^16.8.1",
     "he": "^1.2.0",
     "jsonwebtoken": "^9.0.0",
-    "juice-sdk-core": "^1.8.1-beta",
-    "juice-sdk-react": "^1.9.2-beta",
+    "juice-sdk-core": "^1.8.5-beta",
+    "juice-sdk-react": "^1.9.5-beta",
     "juicebox-metadata-helper": "0.1.7",
     "less": "4.1.2",
     "lodash": "^4.17.21",

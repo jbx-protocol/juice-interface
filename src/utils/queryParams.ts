@@ -1,6 +1,9 @@
 export function formatQueryParams(
   obj:
-    | Record<string, string | string[] | boolean | number | undefined>
+    | Record<
+        string,
+        string | string[] | number[] | boolean | number | undefined
+      >
     | undefined,
 ) {
   if (!obj) return ''

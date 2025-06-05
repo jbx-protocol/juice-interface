@@ -13,10 +13,28 @@ export const useV4UpcomingRulesetHasChanges = () => {
   )
 
   const hasChanges = useMemo(
-    () =>
-      Object.values(data).some(value => {
-        return Object.values(value ?? {}).some(v => v.old !== v.new)
-      }),
+    () => {
+      const changedItems: unknown[] = []
+      
+      const result = Object.values(data).some(value => {
+        return Object.values(value ?? {}).some(v => {
+          if (v.name === 'Start time') {
+            return false
+          }
+          
+          if (v.old !== v.new) {
+            changedItems.push({
+              old: v.old,
+              new: v.new,
+              item: v
+            })
+            return true
+          }
+          return false
+        })
+      })
+      return result
+    },
     [data],
   )
 

@@ -1,11 +1,13 @@
-import { BigNumber } from '@ethersproject/bignumber'
+import { PropsWithChildren, useCallback } from 'react'
+import { Trans, t } from '@lingui/macro'
+
 import { ArrowTrendingUpIcon } from '@heroicons/react/24/outline'
-import { t, Trans } from '@lingui/macro'
-import ETHAmount from 'components/currency/ETHAmount'
+import { BigNumber } from 'ethers'
 import { ProjectHeaderStat } from 'components/Project/ProjectHeader/ProjectHeaderStat'
 import { TRENDING_WINDOW_DAYS } from 'components/Projects/RankingExplanation'
-import { PropsWithChildren, useCallback } from 'react'
+import USDAmount from 'components/currency/USDAmount'
 import { twMerge } from 'tailwind-merge'
+import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
 import { useProjectPageQueries } from './hooks/useProjectPageQueries'
 import { useV4ProjectHeader } from './hooks/useV4ProjectHeader'
 
@@ -18,6 +20,9 @@ export function ProjectHeaderStats() {
     [setProjectPageTab],
   )
 
+  const converter = useCurrencyConverter()
+  const usdTotalAmount = converter.wadToCurrency(totalVolume, 'USD', 'ETH')
+
   return (
     <div className="flex min-w-0 gap-12 md:shrink-0">
       <a role="button" onClick={openActivityTab}>
@@ -26,8 +31,7 @@ export function ProjectHeaderStats() {
       <ProjectHeaderStat
         label={t`Total raised`}
         stat={
-          // TODO: make ETHAmount take BigInts
-          <ETHAmount amount={BigNumber.from(totalVolume ?? 0)} precision={2} />
+          <USDAmount amount={usdTotalAmount ?? BigNumber.from(0)} precision={2} />
         }
       />
       {last7DaysPercent !== Infinity ? (

@@ -1,15 +1,17 @@
-import { Layout } from 'antd'
+import React, { useEffect } from 'react'
+
 import { Content } from 'antd/lib/layout/layout'
-import { SiteNavigation } from 'components/Navbar/SiteNavigation'
-import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickProjectSearchProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
+import { Layout } from 'antd'
+import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickProjectSearchProvider'
+import { SiteNavigation } from 'components/Navbar/SiteNavigation'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
-import { twJoin } from 'tailwind-merge'
 import { redirectTo } from 'utils/windowUtils'
+import { twJoin } from 'tailwind-merge'
+import { useRouter } from 'next/router'
+
 const EthersTxHistoryProvider = dynamic(
   () => import('contexts/Transaction/EthersTxHistoryProvider'),
   { ssr: false },
@@ -18,6 +20,21 @@ const WagmiTxHistoryProvider = dynamic(
   () => import('contexts/Transaction/WagmiTxHistoryProvider'),
   { ssr: false },
 )
+
+const useAdjustUrl = () => {
+  const router = useRouter()
+
+  useEffect(() => {
+    const { asPath, isReady } = router
+
+    // Decode %3A back to : for v4 project routes
+    const newPath = asPath.replace(/\/v4\/([^%]+)%3A(\d+)/g, '/v4/$1:$2')
+    if (newPath !== asPath) {
+      history.replaceState(history.state, '', newPath)
+      return
+    }
+  }, [router])
+}
 
 /**
  * Contains all the core app providers used by each page.
@@ -58,6 +75,7 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
   hideNav,
 }) => {
   const router = useRouter()
+  useAdjustUrl()
 
   // run on initial mount
   useEffect(() => {

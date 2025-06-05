@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import Grid from 'components/Grid'
 import Loading from 'components/Loading'
 import ProjectCard from 'components/ProjectCard'
-import { useDBProjectsInfiniteQuery } from 'hooks/useDBProjects'
+import { useDBProjectsAggregateInfiniteQuery } from 'hooks/useDBProjects'
 import { useWalletBookmarkedIds } from 'hooks/useWalletBookmarkedProjects'
 import { useWallet } from 'hooks/Wallet'
 import { useEffect, useRef } from 'react'
@@ -18,7 +18,7 @@ export default function LatestProjects() {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
-  } = useDBProjectsInfiniteQuery({
+  } = useDBProjectsAggregateInfiniteQuery({
     orderBy: 'created_at',
     pageSize,
     orderDirection: 'desc',

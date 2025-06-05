@@ -1,4 +1,8 @@
 import {
+  allocationToSplit,
+  splitToAllocation,
+} from 'packages/v2v3/utils/splitToAllocation'
+import {
   discountRateFrom,
   formatDiscountRate,
   formatIssuanceRate,
@@ -9,24 +13,20 @@ import {
   reservedRateFrom,
 } from 'packages/v2v3/utils/math'
 import {
-  allocationToSplit,
-  splitToAllocation,
-} from 'packages/v2v3/utils/splitToAllocation'
-import { useDebugValue, useEffect, useMemo } from 'react'
-import {
   useCreatingDistributionLimit,
   useCreatingReservedTokensSplits,
 } from 'redux/hooks/v2v3/create'
+import { useDebugValue, useEffect, useMemo } from 'react'
 
-import { Form } from 'antd'
-import { useWatch } from 'antd/lib/form/Form'
-import { ProjectTokensSelection } from 'models/projectTokenSelection'
 import { AllocationSplit } from 'packages/v2v3/components/shared/Allocation/Allocation'
+import { Form } from 'antd'
 import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
+import { ProjectTokensSelection } from 'models/projectTokenSelection'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { useAppDispatch } from 'redux/hooks/useAppDispatch'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
 import { useFormDispatchWatch } from '../../hooks/useFormDispatchWatch'
+import { useWatch } from 'antd/lib/form/Form'
 
 export type ProjectTokensFormProps = Partial<{
   selection: ProjectTokensSelection
@@ -37,6 +37,7 @@ export type ProjectTokensFormProps = Partial<{
   // In v4 this is supposed to be called cashOutTaxRate
   // redemptionRate is wrong because redemptionRate actually equals (100 - cashOutTaxRate)
   redemptionRate: number | undefined
+  enableCashOuts: boolean | undefined
   tokenMinting: boolean | undefined
   pauseTransfers: boolean | undefined
 }>
@@ -48,7 +49,8 @@ export const DefaultSettings: Required<
   reservedTokensPercentage: 0,
   reservedTokenAllocation: [],
   discountRate: 0,
-  redemptionRate: 0,
+  redemptionRate: 100,
+  enableCashOuts: false,
   tokenMinting: false,
   pauseTransfers: false,
 }
@@ -83,11 +85,17 @@ export const useProjectTokensForm = () => {
         ? parseFloat(formatDiscountRate(fundingCycleData.discountRate))
         : DefaultSettings.discountRate
     
-    // redemptionRate is referred to cashOutTaxRate in other places  
+    // redemptionRate is referred to cashOutTaxRate in other places, it actually means cashOutRate here
     const redemptionRate =
       !cashOutTaxRateDisabled && fundingCycleMetadata.redemptionRate
         ? parseFloat(formatRedemptionRate(fundingCycleMetadata.redemptionRate))
         : DefaultSettings.redemptionRate
+
+        const enableCashOuts =
+      fundingCycleMetadata.redemptionRate !== undefined
+        ? redemptionRate !== 100
+        : DefaultSettings.enableCashOuts
+
     const tokenMinting =
       fundingCycleMetadata.allowMinting !== undefined
         ? fundingCycleMetadata.allowMinting
@@ -106,6 +114,7 @@ export const useProjectTokensForm = () => {
       redemptionRate,
       tokenMinting,
       pauseTransfers,
+      enableCashOuts,
     }
   }, [
     discountRateDisabled,

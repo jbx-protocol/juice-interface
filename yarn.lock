@@ -12400,18 +12400,18 @@ jsprim@^1.2.2:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
-juice-sdk-core@^1.8.1-beta:
-  version "1.8.1-beta"
-  resolved "https://registry.yarnpkg.com/juice-sdk-core/-/juice-sdk-core-1.8.1-beta.tgz#73c43293d50c3dd1754db08a516903b9f4d4c5c3"
-  integrity sha512-2nOQLBkestfz35i0dD19LiOVCrqifXlPgXmrSe2ZUDU4rS8/x9rvWdfyw9LJ3g6kpCfNoNNoV3KMN1xNWoNQlQ==
+juice-sdk-core@^1.8.5-beta:
+  version "1.8.5-beta"
+  resolved "https://registry.yarnpkg.com/juice-sdk-core/-/juice-sdk-core-1.8.5-beta.tgz#f9e6cb45cab73671ce31c012851d3768f29105bb"
+  integrity sha512-0crqhpCNXC/uxsI7R6UW8tU3pM4ImTPJGHtdLpO9B+vs92jR/TYkk7mOkSPlERxEYXuFpVZqnFp7uiysAjFlEw==
   dependencies:
     bs58 "^5.0.0"
     fpnum "^1.0.0"
 
-juice-sdk-react@^1.9.2-beta:
-  version "1.9.2-beta"
-  resolved "https://registry.yarnpkg.com/juice-sdk-react/-/juice-sdk-react-1.9.2-beta.tgz#02c129e47a9738063ec68ed02546652da73a3e9d"
-  integrity sha512-aXmWajV3HpMfGoDUgZCNWDIEpvWb7pPbWiUBlIKCLQp7EMV+5vnW03NigMdJ+F+JhsL6Xc8kLNk8J8VIq4g1Uw==
+juice-sdk-react@^1.9.5-beta:
+  version "1.9.5-beta"
+  resolved "https://registry.yarnpkg.com/juice-sdk-react/-/juice-sdk-react-1.9.5-beta.tgz#be45e231d3e75558c8f3edb0afc2f3ed65a7af99"
+  integrity sha512-e/icSp0Nc8GeF8i6RTlBq8X7p6cEF2Wkix0tE1AmkQbHRRSklYz2sdegeDq4tLTWMcbPFN3Y9FgkDAVKB2Tf1A==
 
 juice@^10.0.0:
   version "10.0.1"

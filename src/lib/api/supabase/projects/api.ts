@@ -63,7 +63,9 @@ export async function queryAllSGProjectsForServer() {
       ...p,
       chainId: readNetwork.chainId,
     }
-  }) as unknown as Json<Pick<Project & { chainId: number }, SGSBCompareKey>>[]
+  }) as unknown as Json<
+    Pick<Project & { chainId: number; suckerGroupId: string }, SGSBCompareKey>
+  >[]
   let v4Parsed = process.env.NEXT_PUBLIC_V4_ENABLED
     ? (v4.map(p => {
         return {
@@ -71,10 +73,12 @@ export async function queryAllSGProjectsForServer() {
           id: getSubgraphIdForProject(PV_V4, p.projectId) + `_${p.chainId}`, // Patch in the subgraph ID for V4 projects (to be consitent with legacy subgraph)
           currentBalance: p.balance, // currentBalance renamed -> balance in bendystraw
           pv: PV_V4, // Patch in the PV for V4 projects,
-          chainId: p.chainId,
         }
       }) as unknown as Json<
-        Pick<Project & { chainId: number }, SGSBCompareKey>
+        Pick<
+          Project & { chainId: number; suckerGroupId: string },
+          SGSBCompareKey
+        >
       >[])
     : []
 
@@ -130,7 +134,7 @@ export async function writeDBProjects(
  * @param opts Search, sort, and filter options
  * @returns Raw SQL query response
  */
-export async function queryDBProjects(
+export async function queryDBProjectsAggregates(
   req: NextApiRequest,
   res: NextApiResponse,
   opts: DBProjectQueryOpts,
@@ -145,7 +149,7 @@ export async function queryDBProjects(
   const supabase = createServerSupabaseClient<Database>({ req, res })
 
   let query = supabase
-    .from('projects')
+    .from('projects_aggregate')
     .select('*')
     .order(orderBy, { ascending })
     .range(page * pageSize, (page + 1) * pageSize - 1)
@@ -158,7 +162,7 @@ export async function queryDBProjects(
   if (opts.pv?.length) query = query.in('pv', opts.pv)
   if (opts.owner) query = query.ilike('owner', opts.owner)
   if (opts.creator) query = query.ilike('creator', opts.creator)
-  if (opts.projectId) query = query.eq('project_id', opts.projectId)
+  if (opts.chainIds) query = query.in('chain_ids', opts.chainIds)
   if (opts.ids) query = query.in('id', opts.ids)
   if (opts.tags?.length) query = query.overlaps('tags', opts.tags)
   if (searchFilter) query = query.or(searchFilter)

@@ -1,27 +1,27 @@
-import {
-  NATIVE_TOKEN_DECIMALS,
-  createSalt,
-  jbProjectDeploymentAddresses,
-} from 'juice-sdk-core'
-import { JBChainId, jbPricesAddress } from 'juice-sdk-react'
-import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
+import { Address, parseEther, zeroAddress } from 'viem'
 import {
   JB721TierConfig,
   JB721TiersHookFlags,
   JBDeploy721TiersHookConfig,
 } from 'packages/v4/models/nfts'
+import { JBChainId, jbPricesAddress } from 'juice-sdk-react'
+import { JBTiered721Flags, NftRewardTier } from 'models/nftRewards'
+import {
+  NATIVE_TOKEN_DECIMALS,
+  createSalt,
+  jbProjectDeploymentAddresses,
+} from 'juice-sdk-core'
 import { encodeIpfsUri, ipfsUri } from 'utils/ipfs'
-import { Address, parseEther, zeroAddress } from 'viem'
 
 import { DEFAULT_JB_721_TIER_CATEGORY } from 'constants/transactionDefaults'
+import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/creatingV2Project'
+import { DEFAULT_NFT_MAX_SUPPLY } from './useDeployNftProject'
 import { convertV2V3CurrencyOptionToV4 } from 'packages/v4/utils/currency'
 import { isValidMustStartAtOrAfter } from 'packages/v4/utils/fundingCycle'
+import { sortNftsByContributionFloor } from 'utils/nftRewards'
 import { useAppSelector } from 'redux/hooks/useAppSelector'
 import { useCreatingV2V3FundingCycleDataSelector } from 'redux/hooks/v2v3/create'
-import { DEFAULT_NFT_FLAGS } from 'redux/slices/v2v3/creatingV2Project'
-import { sortNftsByContributionFloor } from 'utils/nftRewards'
 import { useStandardProjectLaunchData } from '../useStandardProjectLaunchData'
-import { DEFAULT_NFT_MAX_SUPPLY } from './useDeployNftProject'
 
 export function useNftProjectLaunchData() {
   const { projectMetadata, nftRewards, mustStartAtOrAfter } = useAppSelector(
@@ -55,7 +55,7 @@ export function useNftProjectLaunchData() {
     withStartBuffer?: boolean
   }) => {
     const defaultJBController = chainId
-      ? (jbProjectDeploymentAddresses.JBController[
+      ? (jbProjectDeploymentAddresses.JBController4_1[
           chainId as JBChainId
         ] as Address)
       : undefined

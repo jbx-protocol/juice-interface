@@ -9,8 +9,10 @@ import {
 import {
   jb721TiersHookProjectDeployerAbi,
   jb721TiersHookProjectDeployerAddress,
+  jbController4_1Address,
   jbControllerAbi,
-  jbOmnichainDeployerAddress,
+  jbOmnichainDeployer4_1Abi,
+  jbOmnichainDeployer4_1Address,
   useGetRelayrTxBundle,
   useGetRelayrTxQuote,
   useSendRelayrTx,
@@ -89,7 +91,7 @@ export function useDeployOmnichainProject() {
       return {
         data: {
           from: userAddress,
-          to: jbOmnichainDeployerAddress[chainId],
+          to: jbOmnichainDeployer4_1Address[chainId],
           value: 0n,
           gas: 1_000_000n * BigInt(chainIds.length),
           data: encodedData,
@@ -137,10 +139,11 @@ export function useDeployOmnichainProject() {
             suckerDeploymentConfiguration.deployerConfigurations,
           salt,
         },
+        jbController4_1Address[1] // all chains use the same controller
       ] as const
 
       const encodedData = encodeFunctionData({
-        abi: jbOmnichainDeployerAbi, // ABI of the contract
+        abi: jbOmnichainDeployer4_1Abi, // ABI of the contract
         functionName: 'launch721ProjectFor',
         args,
       })
@@ -159,14 +162,14 @@ export function useDeployOmnichainProject() {
         jbOmnichainDeployer: {
           chainId,
           calldata: encodedData,
-          address: jbOmnichainDeployerAddress[chainId],
+          address: jbOmnichainDeployer4_1Address[chainId],
         },
       })
 
       return {
         data: {
           from: userAddress,
-          to: jbOmnichainDeployerAddress[chainId],
+          to: jbOmnichainDeployer4_1Address[chainId],
           value: 0n,
           gas: 3_000_000n * BigInt(chainIds.length), // Bigger mutliple for NFTS. TODO ba5sed might have a better suggestion here.
           data: encodedData,

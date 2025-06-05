@@ -1,17 +1,18 @@
-import { waitForTransactionReceipt } from '@wagmi/core'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { jbControllerAbi } from 'juice-sdk-core'
-import {
-  JBChainId,
-  useWriteJbControllerLaunchProjectFor,
-} from 'juice-sdk-react'
-import { useCallback, useContext } from 'react'
 import {
   Address,
   ContractFunctionArgs,
   WaitForTransactionReceiptReturnType,
 } from 'viem'
+import {
+  JBChainId,
+  useWriteJbController4_1LaunchProjectFor,
+} from 'juice-sdk-react'
+import { useCallback, useContext } from 'react'
+
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { jbControllerAbi } from 'juice-sdk-core'
 import { wagmiConfig } from '../wagmiConfig'
+import { waitForTransactionReceipt } from '@wagmi/core'
 
 const CREATE_EVENT_IDX = 2
 const OMNICHAIN_721_CREATE_EVENT_IDX = 10
@@ -60,7 +61,7 @@ export const getProjectIdFromLaunchReceipt = (
 export function useLaunchProjectTx() {
   const { addTransaction } = useContext(TxHistoryContext)
   const { writeContractAsync: writeLaunchProject } =
-    useWriteJbControllerLaunchProjectFor()
+    useWriteJbController4_1LaunchProjectFor()
 
   return useCallback(
     async (
@@ -90,7 +91,6 @@ export function useLaunchProjectTx() {
         // })
         const hash = await writeLaunchProject({
           chainId,
-          address: controllerAddress,
           args: launchProjectForData,
         })
 

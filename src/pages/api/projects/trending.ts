@@ -9,11 +9,12 @@ import {
 import { JBChainId } from 'juice-sdk-core'
 import { sudoPublicDbClient } from 'lib/api/supabase/clients'
 import { serverClient } from 'lib/apollo/serverClient'
+import { DBProjectsAggregateRow } from 'models/dbProject'
 import { NextApiHandler } from 'next'
 import { V1ArchivedProjectIds } from 'packages/v1/constants/archivedProjects'
 import { V2ArchivedProjectIds } from 'packages/v2v3/constants/archivedProjects'
 import { getSubgraphIdForProject } from 'utils/graph'
-import { parseDBProjectsRow } from 'utils/sgDbProjects'
+import { parseDBProjectsAggregateRow } from 'utils/sgDbProjects'
 import {
   arbitrum,
   arbitrumSepolia,
@@ -45,7 +46,7 @@ const handler: NextApiHandler = async (req, res) => {
   try {
     // Query trending projects from Supabase database
     const { data: projectsData, error } = await sudoPublicDbClient
-      .from('projects')
+      .from('projects_aggregate')
       .select('*')
       .gt('trending_score', '0')
       // .not('id', 'in', ARCHIVED_SUBGRAPH_IDS)
@@ -59,7 +60,9 @@ const handler: NextApiHandler = async (req, res) => {
     }
 
     // Parse DB projects into the format expected by the frontend
-    let projects = projectsData.map(parseDBProjectsRow)
+    let projects = (projectsData as DBProjectsAggregateRow[]).map(
+      parseDBProjectsAggregateRow,
+    )
     if (process.env.NEXT_PUBLIC_V4_ENABLED !== 'true') {
       projects = projects.filter(p => p.pv !== PV_V4)
     }
@@ -72,13 +75,13 @@ const handler: NextApiHandler = async (req, res) => {
             baseSepolia.id,
             arbitrumSepolia.id,
           ] as JBChainId[]
-        ).includes(p.chainId as JBChainId),
+        ).some(c => p.chainId === c || p.chainIds?.includes(c)),
       )
     } else {
       projects = projects.filter(p =>
-        (
-          [mainnet.id, optimism.id, base.id, arbitrum.id] as JBChainId[]
-        ).includes(p.chainId as JBChainId),
+        ([mainnet.id, optimism.id, base.id, arbitrum.id] as JBChainId[]).some(
+          c => p.chainId === c || p.chainIds?.includes(c),
+        ),
       )
     }
 

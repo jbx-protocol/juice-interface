@@ -12,11 +12,12 @@ import Loading from 'components/Loading'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
 import ETHAmount from 'components/currency/ETHAmount'
 import { PV_V2 } from 'constants/pv'
-import { useDBProjectsQuery } from 'hooks/useDBProjects'
+import { useDBProjectsAggregateQuery } from 'hooks/useDBProjects'
 import { useRouter } from 'next/router'
 import V1ProjectHandle from 'packages/v1/components/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
+import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { QuickProjectSearchContext } from './QuickProjectSearchContext'
@@ -34,7 +35,7 @@ export const QuickProjectSearchModal = () => {
 
   const router = useRouter()
 
-  const { data: searchResults, isLoading } = useDBProjectsQuery(
+  const { data: searchResults, isLoading } = useDBProjectsAggregateQuery(
     {
       text: searchText,
       pageSize: MAX_RESULTS,
@@ -202,6 +203,14 @@ export const QuickProjectSearchModal = () => {
                     size="small"
                     versionText={`V${p.pv}`}
                   />
+
+                  <div className="flex gap-2">
+                    {p.chainIds?.map(c => (
+                      <div key={c}>
+                        <ChainLogo width={18} height={18} chainId={c} />
+                      </div>
+                    ))}
+                  </div>
 
                   <div className="flex-1 text-right">
                     {highlightIndex === i && (

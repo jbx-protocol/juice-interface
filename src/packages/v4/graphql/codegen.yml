@@ -1,5 +1,5 @@
 overwrite: true
-schema: https://bendystraw.xyz
+schema: https://bendystraw.xyz/schema
 documents: 'src/packages/v4/graphql/queries/**/*.graphql'
 generates:
   src/generated/v4/graphql.ts:

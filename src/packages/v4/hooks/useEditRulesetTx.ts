@@ -1,14 +1,13 @@
 import {
   JBRulesetContext,
-  jbController4_1Address,
   useJBContractContext,
   useWriteJbController4_1QueueRulesetsOf,
   useWriteJbControllerQueueRulesetsOf
 } from 'juice-sdk-react'
+import { NATIVE_TOKEN, jbProjectDeploymentAddresses } from 'juice-sdk-core'
 import { useCallback, useContext } from 'react'
 
 import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
-import { NATIVE_TOKEN } from 'juice-sdk-core'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
 import { useWallet } from 'hooks/Wallet'
@@ -37,7 +36,7 @@ export function useEditRulesetTx() {
   
   let writeEditRuleset = writeEditController4Ruleset
 
-  if (projectControllerAddress && projectControllerAddress === jbController4_1Address[1]) {
+  if (projectControllerAddress && projectControllerAddress === jbProjectDeploymentAddresses.JBController4_1[1]) {
     console.info('Using v4.1 controller for edit ruleset transaction')
     writeEditRuleset = writeEditController4_1Ruleset
   } else {

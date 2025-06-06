@@ -1,3 +1,4 @@
+import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 import {
   JBChainId,
   createSalt,
@@ -8,15 +9,12 @@ import {
 import {
   jb721TiersHookProjectDeployerAbi,
   jb721TiersHookProjectDeployerAddress,
-  jbController4_1Address,
-  jbControllerAbi,
   jbOmnichainDeployer4_1Abi,
   jbOmnichainDeployer4_1Address,
   useGetRelayrTxBundle,
   useGetRelayrTxQuote,
   useSendRelayrTx,
 } from 'juice-sdk-react'
-import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
 
@@ -29,7 +27,7 @@ export function useDeployOmnichainProject() {
   async function deployOmnichainProject(
     deployData: {
       [k in JBChainId]?: ContractFunctionArgs<
-        typeof jbControllerAbi,
+        typeof jbController4_1Abi,
         'nonpayable',
         'launchProjectFor'
       >
@@ -68,7 +66,7 @@ export function useDeployOmnichainProject() {
       const encodedData = encodeFunctionData({
         abi: jbOmnichainDeployer4_1Abi, // ABI of the contract
         functionName: 'launchProjectFor',
-        args: [...args, jbController4_1Address[chainId]],
+        args: [...args, jbProjectDeploymentAddresses.JBController4_1[chainId] as `0x${string}`],
       })
 
       const controllerData = encodeFunctionData({
@@ -139,7 +137,7 @@ export function useDeployOmnichainProject() {
             suckerDeploymentConfiguration.deployerConfigurations,
           salt,
         },
-        jbController4_1Address[1] // all chains use the same controller
+        jbProjectDeploymentAddresses.JBController4_1[chainId] as `0x${string}` // all chains use the same controller
       ] as const
 
       const encodedData = encodeFunctionData({

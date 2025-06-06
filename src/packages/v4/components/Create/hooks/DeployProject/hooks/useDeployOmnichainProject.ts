@@ -114,6 +114,7 @@ export function useDeployOmnichainProject() {
     if (!userAddress) {
       return
     }
+
     const salt = createSalt()
 
     const relayrTransactions = chainIds.map(chainId => {

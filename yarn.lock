@@ -12313,18 +12313,18 @@ jsx-ast-utils@^3.3.5:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
-juice-sdk-core@^1.8.5-beta:
-  version "1.8.5-beta"
-  resolved "https://registry.yarnpkg.com/juice-sdk-core/-/juice-sdk-core-1.8.5-beta.tgz#f9e6cb45cab73671ce31c012851d3768f29105bb"
-  integrity sha512-0crqhpCNXC/uxsI7R6UW8tU3pM4ImTPJGHtdLpO9B+vs92jR/TYkk7mOkSPlERxEYXuFpVZqnFp7uiysAjFlEw==
+juice-sdk-core@^1.8.6-beta:
+  version "1.8.6-beta"
+  resolved "https://registry.yarnpkg.com/juice-sdk-core/-/juice-sdk-core-1.8.6-beta.tgz#c38539421a54e4bcf0308adae2e4a912a0760cb6"
+  integrity sha512-wEBYFb1DL3prBq0jvA1J8t9DA+neQUTY/Zw5XP3bVYrZEo/KpQM90Wnowz2tRRYr1Uu0BaKAMy4jZeciBLf+Zg==
   dependencies:
     bs58 "^5.0.0"
     fpnum "^1.0.0"
 
-juice-sdk-react@^1.9.6-beta:
-  version "1.9.6-beta"
-  resolved "https://registry.yarnpkg.com/juice-sdk-react/-/juice-sdk-react-1.9.6-beta.tgz#7d9d0e3c7c9a266b70e64cd32d69e31bed338905"
-  integrity sha512-ibqy5WZhuZbxlCjed6xSmDYmtgAoU0p9sI/Uz4BdQ2iOD9O5+G5aN9LIQPJxs9Vos98hi0kf3hjCufaqLOiLEw==
+juice-sdk-react@^1.9.8-beta:
+  version "1.9.8-beta"
+  resolved "https://registry.yarnpkg.com/juice-sdk-react/-/juice-sdk-react-1.9.8-beta.tgz#2c8648e9f9ef0bca460fdf0fd0f89053e3cda215"
+  integrity sha512-LuvfSM9Wuhfd3zahQrg3XWmvaPbFrnzZyKE0lPEQBMfWnXuhj+aoHQLpRlqhCDve1bBjf7Es8kYLBmZ/0Ku6+g==
 
 juice@^10.0.0:
   version "10.0.0"
@@ -19247,6 +19247,7 @@ wordwrapjs@^4.0.0:
     typical "^5.2.0"
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==

@@ -1,10 +1,9 @@
-import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 import {
   JBChainId,
   createSalt,
-  jbOmnichainDeployerAbi,
+  jbController4_1Abi,
   jbProjectDeploymentAddresses,
-  parseSuckerDeployerConfig,
+  parseSuckerDeployerConfig
 } from 'juice-sdk-core'
 import {
   jb721TiersHookProjectDeployerAbi,
@@ -17,6 +16,7 @@ import {
   useGetRelayrTxQuote,
   useSendRelayrTx,
 } from 'juice-sdk-react'
+import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
 import { useWallet } from 'hooks/Wallet'
 
@@ -66,13 +66,13 @@ export function useDeployOmnichainProject() {
       ] as const
 
       const encodedData = encodeFunctionData({
-        abi: jbOmnichainDeployerAbi, // ABI of the contract
+        abi: jbOmnichainDeployer4_1Abi, // ABI of the contract
         functionName: 'launchProjectFor',
-        args,
+        args: [...args, jbController4_1Address[chainId]],
       })
 
       const controllerData = encodeFunctionData({
-        abi: jbControllerAbi, // ABI of the contract
+        abi: jbController4_1Abi, // ABI of the contract
         functionName: 'launchProjectFor',
         args: [
           chainDeployData[0],

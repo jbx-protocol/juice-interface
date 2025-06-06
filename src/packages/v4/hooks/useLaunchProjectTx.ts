@@ -10,7 +10,7 @@ import {
 import { useCallback, useContext } from 'react'
 
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { jbControllerAbi } from 'juice-sdk-core'
+import { jbController4_1Abi } from 'juice-sdk-core'
 import { wagmiConfig } from '../wagmiConfig'
 import { waitForTransactionReceipt } from '@wagmi/core'
 
@@ -66,7 +66,7 @@ export function useLaunchProjectTx() {
   return useCallback(
     async (
       launchProjectForData: ContractFunctionArgs<
-        typeof jbControllerAbi,
+        typeof jbController4_1Abi,
         'nonpayable',
         'launchProjectFor'
       >,
@@ -90,7 +90,7 @@ export function useLaunchProjectTx() {
         //   args,
         // })
         const hash = await writeLaunchProject({
-          chainId,
+          address: controllerAddress,
           args: launchProjectForData,
         })
 

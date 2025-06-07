@@ -2,14 +2,14 @@ import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 import {
   JBChainId,
   createSalt,
-  jbOmnichainDeployerAbi,
+  jbController4_1Abi,
   jbProjectDeploymentAddresses,
-  parseSuckerDeployerConfig,
+  parseSuckerDeployerConfig
 } from 'juice-sdk-core'
 import {
   jb721TiersHookProjectDeployerAbi,
   jb721TiersHookProjectDeployerAddress,
-  jbControllerAbi,
+  jbOmnichainDeployer4_1Abi,
   jbOmnichainDeployer4_1Address,
   useGetRelayrTxBundle,
   useGetRelayrTxQuote,
@@ -27,7 +27,7 @@ export function useDeployOmnichainProject() {
   async function deployOmnichainProject(
     deployData: {
       [k in JBChainId]?: ContractFunctionArgs<
-        typeof jbControllerAbi,
+        typeof jbController4_1Abi,
         'nonpayable',
         'launchProjectFor'
       >
@@ -64,13 +64,13 @@ export function useDeployOmnichainProject() {
       ] as const
 
       const encodedData = encodeFunctionData({
-        abi: jbOmnichainDeployerAbi, // ABI of the contract
+        abi: jbOmnichainDeployer4_1Abi, // ABI of the contract
         functionName: 'launchProjectFor',
-        args,
+        args: [...args, jbProjectDeploymentAddresses.JBController4_1[chainId] as `0x${string}`],
       })
 
       const controllerData = encodeFunctionData({
-        abi: jbControllerAbi, // ABI of the contract
+        abi: jbController4_1Abi, // ABI of the contract
         functionName: 'launchProjectFor',
         args: [
           chainDeployData[0],
@@ -114,6 +114,7 @@ export function useDeployOmnichainProject() {
     if (!userAddress) {
       return
     }
+
     const salt = createSalt()
 
     const relayrTransactions = chainIds.map(chainId => {
@@ -137,10 +138,11 @@ export function useDeployOmnichainProject() {
             suckerDeploymentConfiguration.deployerConfigurations,
           salt,
         },
+        jbProjectDeploymentAddresses.JBController4_1[chainId] as `0x${string}` // all chains use the same controller
       ] as const
 
       const encodedData = encodeFunctionData({
-        abi: jbOmnichainDeployerAbi, // ABI of the contract
+        abi: jbOmnichainDeployer4_1Abi, // ABI of the contract
         functionName: 'launch721ProjectFor',
         args,
       })

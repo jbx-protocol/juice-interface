@@ -6,6 +6,7 @@ import type {
 } from '@getpara/react-sdk'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import dynamic from 'next/dynamic'
+import { Transport } from 'viem'
 import { http } from 'wagmi'
 import {
   arbitrum,
@@ -83,7 +84,7 @@ const transports = {
   [optimismSepolia.id]: createInfuraTransport('optimism-sepolia'),
   [baseSepolia.id]: createInfuraTransport('base-sepolia'),
   [arbitrumSepolia.id]: createInfuraTransport('arbitrum-sepolia'),
-} as const
+} as Record<number, Transport>
 
 const ParaProvider = dynamic(
   async () => {

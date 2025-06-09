@@ -91,6 +91,8 @@ const CONNECT_SRC = [
   'https://testnet.bendystraw.xyz/*',
   'https://*.getpara.com', // Para API
   'https://*.usecapsule.com', // Para (Formerly Capsule) API
+  'wss://*.getpara.com',
+  'wss://*.usecapsule.com',
   'https://*.ingest.sentry.io', // Sentry error tracking for Para
   'https://*.ingest.us.sentry.io', // Sentry US region
   'https://ipfs.io',

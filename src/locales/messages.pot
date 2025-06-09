@@ -2711,9 +2711,6 @@ msgstr ""
 msgid "Recipients will recieve payouts in ETH"
 msgstr ""
 
-msgid "Send reserved {tokenTextPlural} on {0}"
-msgstr ""
-
 msgid "{0} must be numeric"
 msgstr ""
 

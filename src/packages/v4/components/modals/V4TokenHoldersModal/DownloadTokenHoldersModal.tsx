@@ -52,10 +52,8 @@ export function DownloadTokenHoldersModal({
       axios.post<ParticipantSnapshotsQuery['participantSnapshots']['items']>(
         `${bendystrawUri()}/participants`,
         {
-          body: {
-            timestamp,
-            suckerGroupId,
-          },
+          timestamp,
+          suckerGroupId,
         },
       ),
     enabled: !!suckerGroupId,

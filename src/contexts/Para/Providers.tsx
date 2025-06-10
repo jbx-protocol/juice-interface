@@ -1,13 +1,12 @@
-import type { TExternalWallet } from '@getpara/react-common'
-import type {
-  Environment,
-  ParaModalProps,
-  TOAuthMethod,
+import { type TExternalWallet } from '@getpara/react-common'
+import {
+  ParaProvider,
+  type Environment,
+  type ParaModalProps,
+  type TOAuthMethod,
 } from '@getpara/react-sdk'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
-import dynamic from 'next/dynamic'
-import { Transport } from 'viem'
-import { http } from 'wagmi'
+import { http, Transport } from 'wagmi'
 import {
   arbitrum,
   arbitrumSepolia,
@@ -86,17 +85,6 @@ const transports = {
   [arbitrumSepolia.id]: createInfuraTransport('arbitrum-sepolia'),
 } as Record<number, Transport>
 
-const ParaProvider = dynamic(
-  async () => {
-    const { ParaProvider } = await import('@getpara/react-sdk')
-    return { default: ParaProvider }
-  },
-  {
-    ssr: false,
-    loading: () => null,
-  },
-)
-
 const paraModalConfig: ParaModalProps = {
   disableEmailLogin: false,
   disablePhoneLogin: false,
@@ -117,6 +105,7 @@ const externalWalletConfig = {
   appUrl: APP_URL,
   evmConnector: {
     config: {
+      //no connectors[] set as its handled by ParaProvider
       chains: SUPPORTED_CHAINS,
       transports,
     },

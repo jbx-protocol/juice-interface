@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { twMerge } from 'tailwind-merge'
 import { JuicePlayIcon } from './JuicePlayIcon'
+import { twMerge } from 'tailwind-merge'
+import { useState } from 'react'
 
 export type PlayIconPosition = 'hidden' | 'default' | 'center'
 
@@ -34,13 +34,16 @@ export function JuiceVideoThumbnail({
       ) : null}
       <video
         muted
+        preload="auto"
+        loop
+        autoPlay
         className={twMerge('h-full w-full', videoClassName)}
         onLoadedData={() => {
           setLoading(false)
           onLoaded?.()
         }}
       >
-        <source src={src} type="video/mp4" />
+        <source src={src} />
         Your browser does not support the video tag.
       </video>
     </div>

@@ -1,11 +1,12 @@
-import { LoadingOutlined } from '@ant-design/icons'
-import { useContentType } from 'hooks/useContentType'
-import { ImageProps } from "next/legacy/image"
-import { useCallback, useState } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { fileTypeIsVideo } from 'utils/nftRewards'
-import { JuiceVideoOrImgPreview } from './JuiceVideoOrImgPreview'
 import { JuiceVideoThumbnail, PlayIconPosition } from './JuiceVideoThumbnail'
+import { useCallback, useState } from 'react'
+
+import { ImageProps } from "next/legacy/image"
+import { JuiceVideoOrImgPreview } from './JuiceVideoOrImgPreview'
+import { LoadingOutlined } from '@ant-design/icons'
+import { fileTypeIsVideo } from 'utils/nftRewards'
+import { twMerge } from 'tailwind-merge'
+import { useContentType } from 'hooks/useContentType'
 
 type JuiceVideoThumbnailOrImageProps = {
   playIconPosition?: PlayIconPosition

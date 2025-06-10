@@ -3,8 +3,8 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BigNumber } from '@ethersproject/bignumber'
-import { renderHook } from '@testing-library/react-hooks'
 import { parseWad } from 'utils/format/formatNumber'
+import { renderHook } from '@testing-library/react-hooks'
 import { useFormatConfigurationCyclesSection } from './useFormatConfigurationCyclesSection'
 
 // Use EST timezone for start time tests
@@ -62,7 +62,7 @@ describe('useFormatConfigurationCyclesSection', () => {
       // new: '1970-01-01, Wednesday, 09:46:40 PM EST',
       easyCopy: true,
     }
-    const expectedPayouts = { name: 'Payouts', old: 'Ξ100', new: 'US$200' }
+    const expectedPayouts = { name: 'Payouts', old: 'Ξ100', new: '$200' }
     const expectedEditDeadline = {
       name: 'Edit deadline',
       old: 'No deadline',

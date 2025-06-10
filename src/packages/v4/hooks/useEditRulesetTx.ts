@@ -1,17 +1,18 @@
-import { waitForTransactionReceipt } from '@wagmi/core'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
-import { NATIVE_TOKEN } from 'juice-sdk-core'
 import {
   JBRulesetContext,
-  useJBChainId,
   useJBContractContext,
-  useWriteJbControllerQueueRulesetsOf,
+  useWriteJbController4_1QueueRulesetsOf,
+  useWriteJbControllerQueueRulesetsOf
 } from 'juice-sdk-react'
-import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
+import { NATIVE_TOKEN, jbProjectDeploymentAddresses } from 'juice-sdk-core'
 import { useCallback, useContext } from 'react'
-import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
+
 import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
+import { useWallet } from 'hooks/Wallet'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { waitForTransactionReceipt } from '@wagmi/core'
 
 export interface EditMetadataTxOpts {
   onTransactionPending: (hash: `0x${string}`) => void
@@ -24,12 +25,23 @@ export interface EditMetadataTxOpts {
  * @returns A function that deploys a project.
  */
 export function useEditRulesetTx() {
-  const chainId = useJBChainId()
-  const { writeContractAsync: writeEditRuleset } =
+  const { writeContractAsync: writeEditController4Ruleset } =
     useWriteJbControllerQueueRulesetsOf()
 
-  const { contracts, projectId } = useJBContractContext()
+  const { writeContractAsync: writeEditController4_1Ruleset } =
+    useWriteJbController4_1QueueRulesetsOf()
 
+  const { contracts, projectId } = useJBContractContext()
+  const projectControllerAddress = contracts.controller.data
+  
+  let writeEditRuleset = writeEditController4Ruleset
+
+  if (projectControllerAddress && projectControllerAddress === jbProjectDeploymentAddresses.JBController4_1[1]) {
+    console.info('Using v4.1 controller for edit ruleset transaction')
+    writeEditRuleset = writeEditController4_1Ruleset
+  } else {
+    console.info('Using v4 controller for edit ruleset transaction')
+  }
   const { addTransaction } = useContext(TxHistoryContext)
   const { rulesetMetadata } = useContext(JBRulesetContext)
 
@@ -76,7 +88,6 @@ export function useEditRulesetTx() {
 
         onTransactionPendingCallback(hash)
         addTransaction?.('Edit Ruleset', { hash })
-        const wagmiConfig = getWagmiConfig();
         await waitForTransactionReceipt(wagmiConfig, {
           hash,
         })

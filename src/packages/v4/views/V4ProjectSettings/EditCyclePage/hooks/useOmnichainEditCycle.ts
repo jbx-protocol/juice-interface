@@ -1,8 +1,8 @@
-import { Address, encodeFunctionData } from 'viem'
-import { JBChainId, createSalt, jbOmnichainDeployerAbi, jbProjectDeploymentAddresses } from 'juice-sdk-core'
-import { useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from 'juice-sdk-react'
+import { JBChainId, createSalt, jbOmnichainDeployer4_1Address } from 'juice-sdk-core'
+import { jbOmnichainDeployer4_1Abi, useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from 'juice-sdk-react'
 
 import { EditCycleTxArgs } from 'packages/v4/utils/editRuleset'
+import { encodeFunctionData } from 'viem'
 import { useWallet } from 'hooks/Wallet'
 
 export function useOmnichainEditCycle() {
@@ -10,6 +10,9 @@ export function useOmnichainEditCycle() {
   const { getRelayrTxQuote } = useGetRelayrTxQuote()
   const { sendRelayrTx } = useSendRelayrTx()
   const relayrBundle = useGetRelayrTxBundle()
+  const { contracts } = useJBContractContext()
+
+  const projectControllerAddress = contracts.controller.data
 
   /**
    * Build and fetch a Relayr quote for editing across multiple chains
@@ -18,15 +21,16 @@ export function useOmnichainEditCycle() {
     editData: Record<JBChainId, EditCycleTxArgs>,
     chainIds: JBChainId[],
   ) {
-    if (!userAddress) return
+    if (!userAddress || !projectControllerAddress) return
     const salt = createSalt()
     const txs = chainIds.map(chainId => {
-      const args = editData[chainId]
-      if (!args) throw new Error(`No edit data for chain ${chainId}`)
+      const baseArgs = editData[chainId]
+      if (!baseArgs) throw new Error(`No edit data for chain ${chainId}`)
+      const args = [...baseArgs, projectControllerAddress] as const
       // ensure same salt in args if needed by transformEditCycleFormFieldsToTxArgs
       console.info('Edit cycle tx args', args)
-      const encoded = encodeFunctionData({ abi: jbOmnichainDeployerAbi, functionName: 'queueRulesetsOf', args })
-      const to = jbProjectDeploymentAddresses.JBController[chainId] as Address
+      const encoded = encodeFunctionData({ abi: jbOmnichainDeployer4_1Abi, functionName: 'queueRulesetsOf', args})
+      const to = jbOmnichainDeployer4_1Address[1]
       return {
         data: { from: userAddress, to, value: 0n, gas: 200_000n * BigInt(chainIds.length), data: encoded },
         chainId,

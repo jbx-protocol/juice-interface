@@ -1,26 +1,26 @@
+import { JBChainId, formatEther } from 'juice-sdk-core'
 import { Trans, t } from '@lingui/macro'
-import { useJBContractContext, useJBTokenContext, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { useJBProjectId, useJBTokenContext, useReadJbControllerPendingReservedTokenBalanceOf, useReadJbDirectoryControllerOf, useSuckers, useWriteJbControllerSendReservedTokensToSplitsOf } from 'juice-sdk-react'
 
-import { waitForTransactionReceipt } from '@wagmi/core'
-import TransactionModal from 'components/modals/TransactionModal'
-import { NETWORKS } from 'constants/networks'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
-import { JBChainId } from 'juice-sdk-core'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import SplitList from 'packages/v4/components/SplitList/SplitList'
-import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
-import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
-import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
+import TransactionModal from 'components/modals/TransactionModal'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
-import { useV4ReservedTokensSubPanel } from './hooks/useV4ReservedTokensSubPanel'
+import { useMemo } from 'react'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import { useV4ReservedSplits } from 'packages/v4/hooks/useV4ReservedSplits'
+import { useWallet } from 'hooks/Wallet'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
+import { waitForTransactionReceipt } from '@wagmi/core'
 
 export default function V4DistributeReservedTokensModal({
   open,
   onCancel,
   onConfirmed,
-  chainId
+  chainId: defaultChainId
 }: {
   open?: boolean
   onCancel?: VoidFunction
@@ -28,10 +28,22 @@ export default function V4DistributeReservedTokensModal({
   chainId: JBChainId
 }) {
   const { addTransaction } = useContext(TxHistoryContext)
+  
+  // Chain selection state - separate from the hook's chain
+  const [selectedChainId, setSelectedChainId] = useState<JBChainId>(defaultChainId)
+  const { data: suckers } = useSuckers()
 
-  const { projectId, contracts } = useJBContractContext()
-  const { splits: reservedTokensSplits } = useV4ReservedSplits()
-  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
+  // Reset to default chain when modal opens
+  useEffect(() => {
+    if (open) {
+      setSelectedChainId(defaultChainId)
+    }
+  }, [open, defaultChainId])
+
+  // Get data for the selected chain in the modal
+  const { projectId } = useJBProjectId(selectedChainId)
+  const { data: projectOwnerAddress } = useV4ProjectOwnerOf(selectedChainId)
+  const { splits: reservedTokensSplits } = useV4ReservedSplits(selectedChainId)
 
   const { token } = useJBTokenContext()
   const tokenSymbol = token?.data?.symbol
@@ -39,21 +51,35 @@ export default function V4DistributeReservedTokensModal({
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
 
-  const { writeContractAsync: writeSendReservedTokens, data } =
+  const { writeContractAsync: writeSendReservedTokens } =
     useWriteJbControllerSendReservedTokensToSplitsOf()
 
-  const { pendingReservedTokens, pendingReservedTokensFormatted } =
-    useV4ReservedTokensSubPanel()
+  // Get controller and pending tokens for selected chain
+  const projectIdBigInt = BigInt(projectId ?? 0)
+  const { data: controllerAddress } = useReadJbDirectoryControllerOf({
+    chainId: selectedChainId,
+    args: [projectIdBigInt],
+  })
+
+  const { data: pendingReservedTokens } =
+    useReadJbControllerPendingReservedTokenBalanceOf({
+      address: controllerAddress,
+      args: [projectIdBigInt],
+      chainId: selectedChainId,
+    })
+
+  const pendingReservedTokensFormatted = useMemo(() => {
+    if (pendingReservedTokens === undefined) return
+    return formatEther(pendingReservedTokens, { fractionDigits: 6 })
+  }, [pendingReservedTokens])
     
   const { chain: walletChain, changeNetworks, connect } = useWallet()
   const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
-  const walletConnectedToWrongChain = chainId !== walletChainId
+  const walletConnectedToWrongChain = selectedChainId !== walletChainId
 
   async function sendReservedTokens() {
     if (
-      // !payoutLimitAmountCurrency ||
-      // !distributionAmount ||
-      !contracts.controller.data ||
+      !controllerAddress ||
       !projectId
     ) {
       return
@@ -62,7 +88,7 @@ export default function V4DistributeReservedTokensModal({
     // Check if wallet is connected to wrong chain
     if (walletConnectedToWrongChain) {
       try {
-        await changeNetworks(chainId)
+        await changeNetworks(selectedChainId)
         return
       } catch (e) {
         emitErrorNotification((e as unknown as Error).message)
@@ -81,14 +107,13 @@ export default function V4DistributeReservedTokensModal({
 
     try {
       const hash = await writeSendReservedTokens({
-        address: contracts.controller.data,
+        address: controllerAddress,
         args,
-        chainId
+        chainId: selectedChainId
       })
       setTransactionPending(true)
 
       addTransaction?.('Send reserved tokens', { hash })
-      const wagmiConfig = getWagmiConfig();
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
       })
@@ -115,11 +140,11 @@ export default function V4DistributeReservedTokensModal({
     plural: false,
   })
 
-  if (!chainId) return null
+  if (!selectedChainId) return null
 
   return (
     <TransactionModal
-      title={<Trans>Send reserved {tokenTextPlural} on {NETWORKS[chainId].label}</Trans>}
+      title={<Trans>Send reserved {tokenTextPlural}</Trans>}
       open={open}
       onOk={() => sendReservedTokens()}
       okText={
@@ -135,6 +160,21 @@ export default function V4DistributeReservedTokensModal({
       centered
     >
       <div className="flex flex-col gap-6">
+        {suckers && suckers.length > 1 && (
+          <div className="flex items-center justify-between">
+            <span className="font-medium">
+              <Trans>Network</Trans>
+            </span>
+            <ChainSelect
+              className="min-w-[175px]"
+              value={selectedChainId}
+              onChange={setSelectedChainId}
+              chainIds={suckers.map(sucker => sucker.peerChainId)}
+              showTitle
+            />
+          </div>
+        )}
+        
         <div className="flex justify-between">
           <Trans>
             Reserved {tokenTextPlural}:{' '}

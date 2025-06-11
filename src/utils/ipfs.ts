@@ -1,18 +1,58 @@
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
 import { base58 } from 'ethers/lib/utils'
 import round from 'lodash/round'
+import { CID } from 'multiformats/cid'
 import { UploadProgressEvent } from 'rc-upload/lib/interface'
 
 const IPFS_URL_REGEX = /ipfs:\/\/(.+)/
 
 /**
- * Return a URL to our open IPFS gateway for the given cid USING INFURA.
- *
- * The 'open' gateway returns any content that is available on IPFS,
- * not just the content we have pinned.
+ * Return a URL to eth.sucks gateway for the given cid (primary gateway).
+ * Uses CIDv1 conversion for better caching.
  */
 export const ipfsGatewayUrl = (cid: string | undefined): string => {
   return `https://${OPEN_IPFS_GATEWAY_HOSTNAME}/ipfs/${cid}`
+}
+
+/**
+ * Return a URL to ETH Sucks gateway for the given CID.
+ * Uses the new ipfs.banny.eth.sucks format.
+ */
+export const ethSucksGatewayUrl = (cid: string | undefined): string => {
+  if (!cid) return ''
+  // this can use either v0 or v1 CID according to Livid
+  return `https://ipfs.banny.eth.sucks/ipfs/${cid}`
+}
+
+/**
+ * Return a URL to Pinata gateway for the given CID.
+ * Uses the original CID format.
+ */
+export const pinataGatewayUrl = (cid: string | undefined): string => {
+  if (!cid) return ''
+  return `https://gateway.pinata.cloud/ipfs/${cid}`
+}
+
+/**
+ * Converts IPFS CID v0 to CID v1
+ * Example: QmeXh2xA846Pb6NdRUWXtPHG1WFnQ7uk3944Rgq57znzKV -> bafybeihqr4bc32lg74ovmyjfv1mszxhhwtrc2dckiojbskdjcrgr5barq
+ */
+export const convertToV1CID = (cid: string): string => {
+  // If already a v1 CID (starts with 'baf'), return as is
+  if (cid.startsWith('baf')) {
+    return cid
+  }
+
+  try {
+    // Parse the CID using multiformats library
+    const parsedCid = CID.parse(cid)
+    
+    // Convert to v1 and return as string
+    return parsedCid.toV1().toString()
+  } catch (e) {
+    console.error('Failed to convert CID:', e)
+    return cid
+  }
 }
 
 /**
@@ -44,16 +84,34 @@ export function ipfsUriToGatewayUrl(ipfsUri: string): string {
 }
 
 /**
- * Convert `ipfs://` urls or urls using old gateway to a url using the new gateway.
- * e.g.- ipfs://123 -> https://new-gateway.io/ipfs/123
- *     - https://old-gateway.io/ipfs/123 -> https://new-gateway.io/ipfs/123
+ * Convert `ipfs://` urls or urls using old gateway to eth.sucks gateway with CIDv1.
+ * Falls back to Infura gateway if eth.sucks fails.
+ * e.g.- ipfs://123 -> https://123v1.eth.sucks/
+ *     - https://old-gateway.io/ipfs/123 -> https://123v1.eth.sucks/
  */
 export function pinataToGatewayUrl(url: string) {
+  let cid: string | undefined
+
+  if (url.startsWith('https://jbx.mypinata.cloud')) {
+    cid = cidFromUrl(url)
+  } else if (url.startsWith('ipfs://')) {
+    cid = cidFromIpfsUri(url)
+  } else {
+    return url
+  }
+
+  // Try eth.sucks first with CIDv1 if we have a valid CID
+  if (cid && isIpfsCID(cid)) {
+    return ethSucksGatewayUrl(cid)
+  }
+
+  // Fallback to original Infura gateway logic
   if (url.startsWith('https://jbx.mypinata.cloud')) {
     return ipfsGatewayUrl(cidFromUrl(url))
   } else if (url.startsWith('ipfs://')) {
     return ipfsUriToGatewayUrl(url)
   }
+  
   return url
 }
 

@@ -47,7 +47,7 @@ export function HomepageProjectCard({
   project: Pick<
     SubgraphQueryProject,
     'metadataUri' | 'volume' | 'paymentsCount' | 'handle' | 'pv' | 'projectId'
-  > & { chainId?: number }
+  > & { chainId?: number; chainIds?: number[] }
   lazyLoad?: boolean
 }) {
   const { data: metadata, isLoading } = useProjectMetadata(project.metadataUri)
@@ -75,9 +75,15 @@ export function HomepageProjectCard({
               pv={project.pv}
               lazyLoad={lazyLoad}
             />
-            {project.chainId ? (
-              <div className="absolute right-2 top-2 z-10 rounded-full bg-white p-1 shadow-md dark:bg-slate-900">
-                <ChainLogo chainId={project.chainId as JBChainId} />
+            {project.chainIds ? (
+              <div className="absolute right-2 top-2 z-10 flex flex-col rounded-full bg-white p-1 pb-2 shadow-md dark:bg-slate-900">
+                {project.chainIds.map(c => (
+                  <div key={c} className="h-4 w-5">
+                    <div className="h-5 w-5">
+                      <ChainLogo chainId={c as JBChainId} />
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : null}
           </div>

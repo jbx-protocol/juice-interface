@@ -1,10 +1,10 @@
 import { getPublicClient } from '@wagmi/core'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { getLogger } from 'lib/logger'
 import { NetworkName } from 'models/networkName'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
 import { isAddress } from 'viem'
 
 const logger = getLogger('api/ens/resolve/[address]')
@@ -71,7 +71,6 @@ const resolveUsingWagmiClient = async (addressOrEnsName: string) => {
   if (readNetwork.name !== NetworkName.sepolia) {
     throw new Error('wagmi resolution only supported for sepolia')
   }
-const wagmiConfig = getWagmiConfig();
   const client = getPublicClient(wagmiConfig, {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     chainId: readNetwork.chainId as any,
@@ -80,7 +79,7 @@ const wagmiConfig = getWagmiConfig();
   let response
 
   if (isAddress(addressOrEnsName)) {
-    const name = await client.getEnsName({ address: addressOrEnsName })
+    const name = await client?.getEnsName({ address: addressOrEnsName })
     response = {
       address: addressOrEnsName,
       name,
@@ -88,7 +87,7 @@ const wagmiConfig = getWagmiConfig();
   }
 
   if (addressOrEnsName.endsWith('.eth')) {
-    const address = await client.getEnsAddress({ name: addressOrEnsName })
+    const address = await client?.getEnsAddress({ name: addressOrEnsName })
     if (!address) response = undefined
 
     response = {

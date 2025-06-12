@@ -5,7 +5,7 @@ import {
   useJBProjectId,
   useReadJbDirectoryPrimaryTerminalOf,
   useSuckers,
-  useWriteJbMultiTerminalSendPayoutsOf
+  useWriteJbMultiTerminalSendPayoutsOf,
 } from 'juice-sdk-react'
 import { useContext, useState } from 'react'
 
@@ -17,6 +17,7 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { FEES_EXPLANATION } from 'components/strings'
 import { NETWORKS } from 'constants/networks'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
@@ -24,7 +25,6 @@ import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4CurrentPayoutSplits'
 import { V4CurrencyName } from 'packages/v4/utils/currency'
-import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
 import { emitErrorNotification } from 'utils/notifications'
 import { parseUnits } from 'viem'
 import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'
@@ -52,7 +52,10 @@ export default function V4DistributePayoutsModal({
     sucker => sucker.peerChainId === selectedChainId,
   )?.projectId
 
-  const { distributableAmount: distributable, currency: distributableCurrency } = useV4DistributableAmount({
+  const {
+    distributableAmount: distributable,
+    currency: distributableCurrency,
+  } = useV4DistributableAmount({
     chainId: selectedChainId,
     projectId: selectedChainProjectId,
   })
@@ -76,7 +79,7 @@ export default function V4DistributePayoutsModal({
 
   const { chain: walletChain, changeNetworks, connect } = useWallet()
   const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
-  
+
   const walletConnectedToWrongChain = selectedChainId !== walletChainId
 
   async function executeDistributePayoutsTx() {
@@ -99,7 +102,7 @@ export default function V4DistributePayoutsModal({
         return
       }
     }
-    
+
     if (!walletChain) {
       await connect()
       return
@@ -126,7 +129,6 @@ export default function V4DistributePayoutsModal({
       addTransaction?.(`Send payouts on ${NETWORKS[selectedChainId]?.label}`, {
         hash,
       })
-      const wagmiConfig = getWagmiConfig();
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
         chainId: selectedChainId,

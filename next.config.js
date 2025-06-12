@@ -8,11 +8,15 @@ const removeImports = require('next-remove-imports')({
   matchImports: '\\.(less|css|scss|sass|styl)$',
 })
 
+// Add Web3Modal URLs as WalletConnect is now Web3Modal (Reown)
 const WALLET_CONNECT_URLS = [
   'https://*.walletconnect.com',
   'https://*.walletconnect.org',
   'wss://*.walletconnect.org',
   'wss://*.walletconnect.com',
+  'https://api.web3modal.org',
+  'https://*.web3modal.org',
+  'wss://*.web3modal.org',
 ]
 
 const INFURA_IPFS_URLS = [

@@ -1,12 +1,13 @@
+import { createParaWagmiConfig } from '@getpara/evm-wallet-connectors'
 import { type TExternalWallet } from '@getpara/react-common'
-import {
+import ParaWeb, {
   ParaProvider,
   type Environment,
   type ParaModalProps,
   type TOAuthMethod,
 } from '@getpara/react-sdk'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
-import { http, Transport } from 'wagmi'
+import { http } from 'wagmi'
 import {
   arbitrum,
   arbitrumSepolia,
@@ -18,11 +19,13 @@ import {
   sepolia,
 } from 'wagmi/chains'
 
-const APP_NAME = 'Juicebox'
-const APP_LOGO_URL = 'https://juicebox.money/assets/juice-logo-full_black.svg'
-const APP_DESCRIPTION =
-  'Juicebox is a platform for building and funding projects with community support.'
-const APP_URL = 'https://juicebox.money'
+const APP_CONFIG = {
+  name: 'Juicebox',
+  logoUrl: 'https://juicebox.money/assets/juice-logo-full_black.svg',
+  description:
+    'Juicebox is a platform for building and funding projects with community support.',
+  url: 'https://juicebox.money',
+}
 
 const OAUTH_METHODS: TOAuthMethod[] = [
   'GOOGLE',
@@ -51,17 +54,17 @@ const SUPPORTED_CHAINS = [
   optimismSepolia,
   baseSepolia,
   arbitrumSepolia,
-] as const
+]
 
 const requiredEnvVars = {
   PARA_API_KEY: process.env.NEXT_PUBLIC_PARA_API_KEY,
   INFURA_ID: process.env.NEXT_PUBLIC_INFURA_ID,
   WALLET_CONNECT_PROJECT_ID: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
-} as const
+}
 
 const missingEnvVars = Object.entries(requiredEnvVars)
   .filter(([_, value]) => !value)
-  .map(([key]) => `NEXT_PUBLIC_${key}`)
+  .map(([key]) => key)
 
 if (missingEnvVars.length > 0) {
   throw new Error(
@@ -71,8 +74,10 @@ if (missingEnvVars.length > 0) {
 
 const { PARA_API_KEY, INFURA_ID, WALLET_CONNECT_PROJECT_ID } = requiredEnvVars
 
-const createInfuraTransport = (network: string) =>
-  http(`https://${network}.infura.io/v3/${INFURA_ID}`)
+const createInfuraTransport = (network: string) => {
+  const url = `https://${network}.infura.io/v3/${INFURA_ID}`
+  return http(url)
+}
 
 const transports = {
   [mainnet.id]: createInfuraTransport('mainnet'),
@@ -83,7 +88,20 @@ const transports = {
   [optimismSepolia.id]: createInfuraTransport('optimism-sepolia'),
   [baseSepolia.id]: createInfuraTransport('base-sepolia'),
   [arbitrumSepolia.id]: createInfuraTransport('arbitrum-sepolia'),
-} as Record<number, Transport>
+}
+
+const paraClient = new ParaWeb(
+  (process.env.NEXT_PUBLIC_PARA_ENV as Environment) || 'BETA',
+  PARA_API_KEY,
+)
+
+// create a wagmiConfig instance outside of the ParaProvider so its accessible globally
+export const wagmiConfig = createParaWagmiConfig(paraClient, {
+  //@ts-ignore Project has multiple dependencies all with different versions of wagmi/viem creating type conflicts.
+  chains: SUPPORTED_CHAINS,
+  transports: transports,
+  wallets: SUPPORTED_WALLETS,
+})
 
 const paraModalConfig: ParaModalProps = {
   disableEmailLogin: false,
@@ -96,18 +114,17 @@ const paraModalConfig: ParaModalProps = {
 }
 
 const appConfig = {
-  appName: APP_NAME,
+  appName: APP_CONFIG.name,
 }
 
 const externalWalletConfig = {
-  appDescription: APP_DESCRIPTION,
-  appIcon: APP_LOGO_URL,
-  appUrl: APP_URL,
+  appDescription: APP_CONFIG.description,
+  appIcon: APP_CONFIG.logoUrl,
+  appUrl: APP_CONFIG.url,
   evmConnector: {
     config: {
-      //no connectors[] set as its handled by ParaProvider
       chains: SUPPORTED_CHAINS,
-      transports,
+      transports: transports,
     },
     wagmiProviderProps: {},
   },
@@ -121,12 +138,7 @@ export const ParaProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <ReactQueryProvider>
       <ParaProvider
-        paraClientConfig={{
-          env:
-            (process.env.NEXT_PUBLIC_PARA_ENV as Environment) ||
-            ('BETA' as Environment),
-          apiKey: PARA_API_KEY!,
-        }}
+        paraClientConfig={paraClient}
         config={appConfig}
         paraModalConfig={paraModalConfig}
         externalWalletConfig={externalWalletConfig}

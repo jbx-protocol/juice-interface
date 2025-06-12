@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getWagmiConfig } from '@getpara/evm-wallet-connectors'
 import { getPublicClient } from '@wagmi/core'
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import {
   readJbDirectoryControllerOf,
   getProjectMetadata as sdkGetProjectMetadata,
@@ -28,7 +28,6 @@ const V4GetMetadataCidFromContract = async (
   chainId: JBChainId,
 ) => {
   if (!chainId) throw new Error('Chain id not found for chain')
-  const wagmiConfig = getWagmiConfig()
   const jbControllerAddress = await readJbDirectoryControllerOf(wagmiConfig, {
     chainId,
     args: [BigInt(projectId)],

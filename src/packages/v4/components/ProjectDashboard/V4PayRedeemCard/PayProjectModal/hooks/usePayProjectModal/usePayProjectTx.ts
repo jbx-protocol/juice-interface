@@ -15,6 +15,7 @@ import { useCallback, useContext, useMemo } from 'react'
 import { Address, Hash, parseEther, zeroAddress } from 'viem'
 
 import { waitForTransactionReceipt } from '@wagmi/core'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { FormikHelpers } from 'formik'
 import { useCurrencyConverter } from 'hooks/useCurrencyConverter'
@@ -25,7 +26,6 @@ import { useV4UserNftCredits } from 'packages/v4/contexts/V4UserNftCreditsProvid
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { ProjectPayReceipt } from 'packages/v4/views/V4ProjectDashboard/hooks/useProjectPageQueries'
-import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
 import { buildPaymentMemo } from 'utils/buildPaymentMemo'
 import { emitErrorNotification } from 'utils/notifications'
 import { useProjectPaymentTokens } from '../useProjectPaymentTokens'
@@ -132,7 +132,6 @@ export const usePayProjectTx = ({
               ?.projectId
           : projectId
 
-        const wagmiConfig = getWagmiConfig();
       // fetch the terminal address for the project on the chain. We don't necessarily know this ahead of time
       // (if the chain is different from the current route.)
       const terminalAddress = await readJbDirectoryPrimaryTerminalOf(

@@ -21,7 +21,7 @@
     "i18n:extract": "./scripts/extract-translations-template.sh",
     "i18n:extract-source-locale": "NODE_ENV=development lingui extract --locale en",
     "i18n:lint": "./scripts/lint-translations-template.sh",
-    "postinstall": "yarn i18n:compile && ./scripts/clean-deps.sh && patch-package",
+    "postinstall": "yarn i18n:compile && ./scripts/clean-deps.sh && patch-package && yarn setup-para",
     "lint": "next lint",
     "lint-staged": "lint-staged",
     "lint:fix": "yarn lint --fix",
@@ -54,7 +54,8 @@
     "node": ">=20.0.0"
   },
   "resolutions": {
-    "@getpara/react-common": "file:../web-sdk/packages/react-common"
+    "@getpara/react-common": "file:../web-sdk/packages/react-common",
+    "@getpara/web-sdk": "file:../web-sdk/packages/web-sdk"
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",

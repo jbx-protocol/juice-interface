@@ -2,6 +2,7 @@ import '@getpara/react-sdk/styles.css'
 import { Head } from 'components/common/Head/Head'
 import { LanguageProvider } from 'contexts/Language/LanguageProvider'
 import ParaProviders from 'contexts/Para/Providers'
+import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import SupabaseSessionProvider from 'contexts/SupabaseSession/SupabaseSessionProvider'
 import { getInitialThemeOption, syncTheme } from 'contexts/Theme/useJuiceTheme'
 import { useFathom } from 'lib/fathom'
@@ -22,11 +23,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <LanguageProvider i18n={pageProps.i18n}>
       {/* Default HEAD - overwritten by specific page SEO */}
       <Head />
-      <ParaProviders>
-        <SupabaseSessionProvider initialSession={pageProps.initialSession}>
-          <Component {...pageProps} />
-        </SupabaseSessionProvider>
-      </ParaProviders>
+      <ReactQueryProvider>
+        <ParaProviders>
+          <SupabaseSessionProvider initialSession={pageProps.initialSession}>
+            <Component {...pageProps} />
+          </SupabaseSessionProvider>
+        </ParaProviders>
+      </ReactQueryProvider>
     </LanguageProvider>
   )
 }

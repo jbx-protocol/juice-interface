@@ -1,4 +1,3 @@
-import { getWagmiConfig } from '@getpara/evm-wallet-connectors'
 import {
   useAccount,
   useLogout,
@@ -8,10 +7,10 @@ import {
 } from '@getpara/react-sdk'
 import { signMessage } from '@wagmi/core'
 import { readNetwork } from 'constants/networks'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { useChainId, useChains, useSwitchChain } from 'wagmi'
 
 export function useWallet() {
-  const wagmiConfig = getWagmiConfig()
   const { data: paraAccount } = useAccount()
   const { data: paraWallet } = useParaWallet()
   const { logout: paraLogout } = useLogout()

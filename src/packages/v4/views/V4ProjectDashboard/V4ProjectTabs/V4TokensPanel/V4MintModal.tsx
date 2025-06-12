@@ -6,7 +6,7 @@ import {
   useReadJbDirectoryControllerOf,
   useReadJbTokensTokenOf,
   useSuckers,
-  useWriteJbControllerMintTokensOf
+  useWriteJbControllerMintTokensOf,
 } from 'juice-sdk-react'
 import { useContext, useState } from 'react'
 
@@ -18,11 +18,11 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { NETWORKS } from 'constants/networks'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import { useWallet } from 'hooks/Wallet'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
-import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
 import { parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
@@ -49,7 +49,7 @@ export function V4MintModal({
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
-  
+
   const defaultChainId = useJBChainId()
   const [selectedChainId, setSelectedChainId] = useState<JBChainId | undefined>(
     defaultChainId,
@@ -69,7 +69,7 @@ export function V4MintModal({
 
   const { chain: walletChain, changeNetworks, connect } = useWallet()
   const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
-  
+
   const walletConnectedToWrongChain = selectedChainId !== walletChainId
 
   async function executeMintTx() {
@@ -78,7 +78,13 @@ export function V4MintModal({
     const memo = formValues.memo
     const beneficiary = formValues.beneficary as Address
 
-    if (!controllerAddress || !beneficiary || !amount || !projectId || !selectedChainId)
+    if (
+      !controllerAddress ||
+      !beneficiary ||
+      !amount ||
+      !projectId ||
+      !selectedChainId
+    )
       return
 
     // Check if wallet is connected to wrong chain
@@ -91,7 +97,7 @@ export function V4MintModal({
         return
       }
     }
-    
+
     if (!walletChain) {
       await connect()
       return
@@ -118,7 +124,6 @@ export function V4MintModal({
       addTransaction?.(`Mint tokens on ${NETWORKS[selectedChainId]?.label}`, {
         hash,
       })
-      const wagmiConfig = getWagmiConfig();
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
         chainId: selectedChainId,
@@ -174,7 +179,7 @@ export function V4MintModal({
             />
           </Form.Item>
         ) : null}
-        
+
         <Form.Item
           label={t`Token receiver`}
           name="beneficary"

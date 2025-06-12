@@ -21,11 +21,11 @@ import { useWallet } from 'hooks/Wallet'
 import { Ether } from 'juice-sdk-core'
 import { useProjectHasErc20Token } from 'packages/v4/hooks/useProjectHasErc20Token'
 import { getChainName } from 'packages/v4/utils/networks'
-import { getWagmiConfig } from '@getpara/evm-wallet-connectors';
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'
 import { useChainId } from 'wagmi'
 import { useV4YourBalanceMenuItems } from './hooks/useV4YourBalanceMenuItems'
+import { wagmiConfig } from 'contexts/Para/Providers'
 
 export function V4ClaimTokensModal({
   open,
@@ -110,7 +110,6 @@ export function V4ClaimTokensModal({
       setTransactionPending(true)
 
       addTransaction?.('Claim tokens as ERC20', { hash })
-      const wagmiConfig = getWagmiConfig();
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
       })

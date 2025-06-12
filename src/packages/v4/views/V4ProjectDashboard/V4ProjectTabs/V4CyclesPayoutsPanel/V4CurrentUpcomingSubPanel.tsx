@@ -60,12 +60,14 @@ export const V4CurrentUpcomingSubPanel = ({
     info.type === 'upcoming' &&
     info.currentRulesetUnlocked &&
     /**
-     * Always show 'upcoming' tab if it's FC 1
+     * Always show 'upcoming' tab if it's FC 0
      * (which happens when Scheduled Launch is used,
      * mustStartAtOrAfter is in the future)
      */
-    info.rulesetNumber !== 1 &&
-    !info.hasPendingConfiguration
+    info.rulesetNumber !== 0 &&
+    !info.hasPendingConfiguration &&
+    // Edge case: if currentRulesetUnlocked but hasChanges, show upcoming cycle
+    !hasChanges
 
   if (hasNoUpcomingRuleset) {
     return (

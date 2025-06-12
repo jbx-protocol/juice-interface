@@ -4,6 +4,7 @@ import { LanguageProvider } from 'contexts/Language/LanguageProvider'
 import ParaProviders from 'contexts/Para/Providers'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import SupabaseSessionProvider from 'contexts/SupabaseSession/SupabaseSessionProvider'
+import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import { getInitialThemeOption, syncTheme } from 'contexts/Theme/useJuiceTheme'
 import { useFathom } from 'lib/fathom'
 import type { AppProps } from 'next/app'
@@ -23,13 +24,16 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <LanguageProvider i18n={pageProps.i18n}>
       {/* Default HEAD - overwritten by specific page SEO */}
       <Head />
-      <ReactQueryProvider>
-        <ParaProviders>
-          <SupabaseSessionProvider initialSession={pageProps.initialSession}>
-            <Component {...pageProps} />
-          </SupabaseSessionProvider>
-        </ParaProviders>
-      </ReactQueryProvider>
+      {/* Moving ThemeProvider up so Para can react to the theme changes and update modal*/}
+      <ThemeProvider>
+        <ReactQueryProvider>
+          <ParaProviders>
+            <SupabaseSessionProvider initialSession={pageProps.initialSession}>
+              <Component {...pageProps} />
+            </SupabaseSessionProvider>
+          </ParaProviders>
+        </ReactQueryProvider>
+      </ThemeProvider>
     </LanguageProvider>
   )
 }

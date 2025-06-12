@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 
 import { Content } from 'antd/lib/layout/layout'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
-import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
 import { Layout } from 'antd'
 import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickProjectSearchProvider'
@@ -58,13 +57,11 @@ export const AppWrapper: React.FC<
   return (
     <React.StrictMode>
       <TxHistoryProvider>
-        <ThemeProvider>
           <EtherPriceProvider>
             <QuickProjectSearchProvider>
               <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
             </QuickProjectSearchProvider>
           </EtherPriceProvider>
-        </ThemeProvider>
       </TxHistoryProvider>
     </React.StrictMode>
   )

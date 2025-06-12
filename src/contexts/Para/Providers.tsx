@@ -6,7 +6,10 @@ import ParaWeb, {
   type ParaModalProps,
   type TOAuthMethod,
 } from '@getpara/react-sdk'
+import { ThemeOption } from 'constants/theme/themeOption'
 import ReactQueryProvider from 'contexts/ReactQueryProvider'
+import { ThemeContext } from 'contexts/Theme/ThemeContext'
+import { useContext } from 'react'
 import { http } from 'wagmi'
 import {
   arbitrum,
@@ -101,17 +104,22 @@ export const wagmiConfig = createParaWagmiConfig(paraClient, {
   chains: SUPPORTED_CHAINS,
   transports: transports,
   wallets: SUPPORTED_WALLETS,
+  ssr: true,
 })
 
-const paraModalConfig: ParaModalProps = {
+const paraModalConfig: (theme: ThemeOption) => ParaModalProps = (
+  theme: ThemeOption,
+) => ({
   disableEmailLogin: false,
   disablePhoneLogin: false,
   oAuthMethods: OAUTH_METHODS,
   theme: {
-    font: 'Beatrice',
+    backgroundColor: theme === ThemeOption.light ? '#ffffff' : '#16141d',
+    foregroundColor: '#5777eb',
     borderRadius: 'lg',
+    mode: theme,
   },
-}
+})
 
 const appConfig = {
   appName: APP_CONFIG.name,
@@ -135,12 +143,15 @@ const externalWalletConfig = {
 }
 
 export const ParaProviders = ({ children }: { children: React.ReactNode }) => {
+  const { themeOption } = useContext(ThemeContext)
+
   return (
     <ReactQueryProvider>
       <ParaProvider
         paraClientConfig={paraClient}
         config={appConfig}
-        paraModalConfig={paraModalConfig}
+        paraModalConfig={paraModalConfig(themeOption)}
+        // @ts-ignore
         externalWalletConfig={externalWalletConfig}
       >
         {children}

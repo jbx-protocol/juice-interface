@@ -54,8 +54,10 @@
     "node": ">=20.0.0"
   },
   "resolutions": {
-    "@getpara/react-common": "file:../web-sdk/packages/react-common",
-    "@getpara/web-sdk": "file:../web-sdk/packages/web-sdk"
+    "@getpara/react-sdk": "file:../web-sdk/packages/react-sdk",
+    "@getpara/evm-wallet-connectors": "file:../web-sdk/packages/evm-wallet-connectors",
+    "@getpara/web-sdk": "file:../web-sdk/packages/web-sdk",
+    "@getpara/react-common": "file:../web-sdk/packages/react-common"
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",

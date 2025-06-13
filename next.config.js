@@ -26,6 +26,7 @@ const INFURA_IPFS_URLS = [
 
 const ETH_SUCKS_URLS = [
   'https://ipfs.banny.eth.sucks',
+  'https://ipfs.banny.eth.sucks/*',
 ]
 
 const SCRIPT_SRC = [

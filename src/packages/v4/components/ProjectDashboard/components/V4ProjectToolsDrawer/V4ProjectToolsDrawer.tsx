@@ -1,8 +1,8 @@
 import { Divider, Drawer } from 'antd'
 
 import { Trans } from '@lingui/macro'
-import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import useMobile from 'hooks/useMobile'
+import { useJBProjectMetadataContext } from 'juice-sdk-react'
 import { AddToProjectBalanceForm } from './AddToProjectBalanceForm'
 
 export function V4ProjectToolsDrawer({
@@ -12,8 +12,8 @@ export function V4ProjectToolsDrawer({
   open?: boolean
   onClose?: VoidFunction
 }) {
-  const { projectMetadata } = useProjectMetadataContext()
-  const hasOFAC = projectMetadata?.projectRequiredOFACCheck
+  const { metadata } = useJBProjectMetadataContext()
+  const hasOFAC = metadata?.data?.projectRequiredOFACCheck
 
   const isMobile = useMobile()
 

@@ -1,15 +1,16 @@
-import { ArrowSmallRightIcon, SparklesIcon } from '@heroicons/react/24/outline'
-import { Trans } from '@lingui/macro'
-import { Badge } from 'components/Badge'
 import {
   HomepageProjectCard,
   HomepageProjectCardSkeleton,
 } from 'components/Home/HomepageProjectCard'
+
+import { ArrowSmallRightIcon } from '@heroicons/react/24/outline'
+import { Trans } from '@lingui/macro'
+import { Badge } from 'components/Badge'
+import { XLButton } from 'components/buttons/XLButton'
 import { ProjectCarousel } from 'components/Home/ProjectCarousel'
 import { SectionContainer } from 'components/Home/SectionContainer'
 import { SectionHeading } from 'components/Home/SectionHeading'
 import { ProjectTag } from 'components/ProjectTags/ProjectTag'
-import { XLButton } from 'components/buttons/XLButton'
 import { HOMEPAGE } from 'constants/fathomEvents'
 import { PV_V1 } from 'constants/pv'
 import { useProjectsQuery } from 'generated/graphql'
@@ -75,12 +76,6 @@ export function TopSection() {
 
   return (
     <SectionContainer className="pt-6 pb-24 md:px-0 md:pt-10">
-      <div className="mb-3 flex w-full items-center justify-center px-5">
-        <Badge variant="info">
-          <SparklesIcon className="inline h-4 w-4" />
-          <Trans>New: Juicebox is now omnichain</Trans>
-        </Badge>
-      </div>
       <div className="flex justify-center">
         <ul className="mb-5 flex gap-2 overflow-y-auto py-4">
           {HEADER_TAGS.map(tag => (
@@ -105,7 +100,7 @@ export function TopSection() {
         subheading={
           <Trans>
             Join thousands of projects using Juicebox to fund, operate, and
-            scale their ideas & communities transparently on Ethereum.
+            scale their ideas & communities transparently across Ethereum.
           </Trans>
         }
       />

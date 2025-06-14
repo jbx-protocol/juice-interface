@@ -2306,9 +2306,6 @@ msgstr ""
 msgid "Your project details have been updated across all chains."
 msgstr ""
 
-msgid "Join thousands of projects using Juicebox to fund, operate, and scale their ideas & communities transparently on Ethereum."
-msgstr ""
-
 msgid "Percent"
 msgstr ""
 
@@ -2775,6 +2772,9 @@ msgid "Allow a few days for your project to appear in the \"archived\" projects 
 msgstr ""
 
 msgid "Your edits will take effect in <0>cycle #{0}</0>. The current cycle (#{currentFCNumber}) won't be altered."
+msgstr ""
+
+msgid "Join thousands of projects using Juicebox to fund, operate, and scale their ideas & communities transparently across Ethereum."
 msgstr ""
 
 msgid "Leave this blank to start your first ruleset immediately after you finish setting up your project."
@@ -4752,9 +4752,6 @@ msgid "Thank you, your payment was successful."
 msgstr ""
 
 msgid "{0}% of supply"
-msgstr ""
-
-msgid "New: Juicebox is now omnichain"
 msgstr ""
 
 msgid "Overflow"

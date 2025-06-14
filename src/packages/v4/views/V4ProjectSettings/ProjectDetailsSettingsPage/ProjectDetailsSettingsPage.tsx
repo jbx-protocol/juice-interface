@@ -108,6 +108,8 @@ export function ProjectDetailsSettingsPage() {
   useEffect(() => {
     if (relayrBundle.isComplete) {
       projectForm.resetFields()
+      // refresh project metadata to pick up updated OFAC setting
+      metadata.refetch?.()
       setConfirmLoading(false)
       setModalOpen(false)
       setSuccessOpen(true)
@@ -115,7 +117,7 @@ export function ProjectDetailsSettingsPage() {
       emitErrorNotification(relayrBundle.error as string)
       setConfirmLoading(false)
     }
-  }, [relayrBundle.isComplete, relayrBundle.error])
+  }, [relayrBundle.isComplete, relayrBundle.error, metadata])
 
   const resetProjectForm = useCallback(() => {
     const infoUri = withoutHttps(projectMetadata?.infoUri ?? '')
@@ -128,7 +130,7 @@ export function ProjectDetailsSettingsPage() {
       coverImageUri: projectMetadata?.coverImageUri ?? '',
       description: projectMetadata?.description ?? '',
       projectTagline: projectMetadata?.projectTagline ?? '',
-      projectRequiredOFACCheck: false, // OFAC not supported in V4 yet
+      projectRequiredOFACCheck: projectMetadata?.projectRequiredOFACCheck ?? false,
       twitter: projectMetadata?.twitter ?? '',
       discord,
       telegram,

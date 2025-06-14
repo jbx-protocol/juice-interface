@@ -16,11 +16,28 @@ interface JuiceListboxProps<T> {
   value?: JuiceListboxOption<T>
   options: JuiceListboxOption<T>[]
   onChange?: (value: JuiceListboxOption<T>) => void
+  dropdownPosition?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left'
 }
 
 export function JuiceListbox<T>(props: JuiceListboxProps<T>) {
-  const { value, onChange, options, buttonClassName, className, disabled } =
+  const { value, onChange, options, buttonClassName, className, disabled, dropdownPosition = 'bottom-right' } =
     props
+
+  const getDropdownClasses = () => {
+    const baseClasses = "absolute z-10 max-h-60 overflow-auto rounded-lg border border-smoke-300 bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-slate-300 dark:bg-slate-800 sm:text-sm"
+    
+    switch (dropdownPosition) {
+      case 'bottom-left':
+        return `${baseClasses} mt-1 right-0`
+      case 'top-right':
+        return `${baseClasses} mb-1 bottom-full left-0`
+      case 'top-left':
+        return `${baseClasses} mb-1 bottom-full right-0`
+      case 'bottom-right':
+      default:
+        return `${baseClasses} mt-1 left-0`
+    }
+  }
 
   return (
     <Listbox value={value} onChange={onChange} disabled={disabled}>
@@ -50,7 +67,7 @@ export function JuiceListbox<T>(props: JuiceListboxProps<T>) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0" 
         >
-          <Listbox.Options className="absolute z-10 mt-1 max-h-60 overflow-auto rounded-lg border border-smoke-300 bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-slate-300 dark:bg-slate-800 sm:text-sm">
+          <Listbox.Options className={getDropdownClasses()}>
             {options.map((option, optionIdx) => (
               <Listbox.Option
                 key={optionIdx}

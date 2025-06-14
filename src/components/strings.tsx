@@ -1,6 +1,6 @@
+import { Trans } from '@lingui/macro'
 import ExternalLink from 'components/ExternalLink'
 import Link from 'next/link'
-import { Trans } from '@lingui/macro'
 import { helpPagePath } from 'utils/helpPagePath'
 
 export const ISSUE_ERC20_EXPLANATION = (
@@ -83,7 +83,7 @@ export const DISCOUNT_RATE_EXPLANATION = (
 export const CASH_OUT_TAX_RATE_EXPLANATION = (
   <Trans>
     <p>
-      Supporters can burn their tokens to reclaim some of the ETH not needed for
+      Supporters can cash out their tokens to reclaim some of the ETH not needed for
       payouts. The amount of ETH they receive depends on the cash out rate.
     </p>
     <p>
@@ -110,7 +110,7 @@ export const CASH_OUT_TAX_RATE_EXPLANATION = (
 export const REDEMPTION_RATE_EXPLANATION = (
   <Trans>
     <p>
-      Supporters can burn their tokens to reclaim some of the ETH not needed for
+      Supporters can cash out their tokens to reclaim some of the ETH not needed for
       payouts. The amount of ETH they receive depends on the redemption rate.
     </p>
     <p>

@@ -1,5 +1,7 @@
 import * as ProjectTokenForm from '../../hooks/useProjectTokenForm'
 
+import { Trans, t } from '@lingui/macro'
+import { Divider, Form } from 'antd'
 import {
   CASH_OUT_TAX_RATE_EXPLANATION,
   MINT_RATE_EXPLANATION,
@@ -7,28 +9,26 @@ import {
   OWNER_MINTING_RISK,
   PAUSE_TRANSFERS_EXPLANATION,
 } from 'components/strings'
-import { Divider, Form } from 'antd'
 import { MAX_MINT_RATE, redemptionRateFrom } from 'packages/v2v3/utils/math'
-import { Trans, t } from '@lingui/macro'
 
-import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
 import { Callout } from 'components/Callout/Callout'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
-import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
 import NumberSlider from 'components/inputs/NumberSlider'
+import { AdvancedDropdown } from 'components/Project/ProjectSettings/AdvancedDropdown'
+import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
+import useMobile from 'hooks/useMobile'
+import { formatFundingCycleDuration } from 'packages/v2v3/components/Create/utils/formatFundingCycleDuration'
+import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
+import { MAX_PAYOUT_LIMIT } from 'packages/v4/utils/math'
+import { useCallback } from 'react'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
+import { inputMustExistRule } from 'utils/antdRules'
+import { formatAmount } from 'utils/format/formatAmount'
 import { ProjectTokensFormProps } from '../../hooks/useProjectTokenForm'
 import { ReservedTokenRateCallout } from './ReservedTokenRateCallout'
-import { ReservedTokensList } from 'packages/v2v3/components/shared/ReservedTokensList'
-import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
-import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
-import { formatAmount } from 'utils/format/formatAmount'
-import { formatFundingCycleDuration } from 'packages/v2v3/components/Create/utils/formatFundingCycleDuration'
-import { inputMustExistRule } from 'utils/antdRules'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useCallback } from 'react'
-import { useCreatingDistributionLimit } from 'redux/hooks/v2v3/create'
-import useMobile from 'hooks/useMobile'
 
 const calculateMintRateAfterDiscount = ({
   mintRate,
@@ -216,7 +216,7 @@ export const CustomTokenSettings = () => {
 
         <Form.Item label={t`Cash out tax rate`}>
           <div className="flex flex-col gap-6">
-            <Form.Item className="mt-2 mb-0" name="enableCashOuts" extra={t`When enabled, token holders can redeem their tokens for a portion of the project's ETH treasury.`}
+            <Form.Item className="mt-2 mb-0" name="enableCashOuts" extra={t`When enabled, token holders can cash out their tokens for a portion of the project's ETH treasury.`}
 >
               <JuiceSwitch 
                 label={t`Enable cash outs`}
@@ -244,7 +244,7 @@ export const CustomTokenSettings = () => {
                 {cashOutTaxRateDisabled ? (
                   <Callout.Warning>
                     <Trans>
-                      Redemptions are disabled when all of the project's ETH is being
+                      Cash outs are disabled when all of the project's ETH is being
                       used for payouts (when payouts are unlimited).
                     </Trans>
                   </Callout.Warning>

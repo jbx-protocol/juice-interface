@@ -3,20 +3,20 @@ import { RelayrPostBundleResponse, useJBProjectMetadataContext, useSuckers } fro
 import { useCallback, useEffect, useState } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
-import { Callout } from 'components/Callout/Callout'
-import { ChainSelect } from 'packages/v4/components/ChainSelect'
-import ETHAmount from 'components/currency/ETHAmount'
-import { JBChainId } from 'juice-sdk-core'
-import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { Trans } from '@lingui/macro'
-import TransactionModal from 'components/modals/TransactionModal'
-import { TransactionSuccessModal } from '../EditCyclePage/TransactionSuccessModal'
-import { emitErrorNotification } from 'utils/notifications'
-import { uploadProjectMetadata } from 'lib/api/ipfs'
-import { useEditProjectDetailsTx } from 'packages/v4/hooks/useEditProjectDetailsTx'
 import { useForm } from 'antd/lib/form/Form'
+import { Callout } from 'components/Callout/Callout'
+import ETHAmount from 'components/currency/ETHAmount'
+import TransactionModal from 'components/modals/TransactionModal'
+import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
+import { JBChainId } from 'juice-sdk-core'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { useEditProjectDetailsTx } from 'packages/v4/hooks/useEditProjectDetailsTx'
 import { useOmnichainEditProjectDetailsTx } from 'packages/v4/hooks/useOmnichainEditProjectDetailsTx'
 import { withoutHttps } from 'utils/http'
+import { emitErrorNotification } from 'utils/notifications'
+import { TransactionSuccessModal } from '../EditCyclePage/TransactionSuccessModal'
 
 export function ProjectDetailsSettingsPage() {
   const { metadata } = useJBProjectMetadataContext()
@@ -109,7 +109,6 @@ export function ProjectDetailsSettingsPage() {
     if (relayrBundle.isComplete) {
       projectForm.resetFields()
       // refresh project metadata to pick up updated OFAC setting
-      metadata.refetch?.()
       setConfirmLoading(false)
       setModalOpen(false)
       setSuccessOpen(true)
@@ -117,7 +116,7 @@ export function ProjectDetailsSettingsPage() {
       emitErrorNotification(relayrBundle.error as string)
       setConfirmLoading(false)
     }
-  }, [relayrBundle.isComplete, relayrBundle.error, metadata])
+  }, [relayrBundle.isComplete, relayrBundle.error])
 
   const resetProjectForm = useCallback(() => {
     const infoUri = withoutHttps(projectMetadata?.infoUri ?? '')

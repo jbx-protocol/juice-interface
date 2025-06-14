@@ -1,12 +1,12 @@
 import { CV_V3 } from 'constants/cv'
+import ProjectOFACProvider from 'contexts/ProjectOFACProvider'
 import { JB721DelegateContractsProvider } from 'packages/v2v3/contexts/NftRewards/JB721DelegateContracts/JB721DelegateContractsProvider'
 import { NftRewardsProvider } from 'packages/v2v3/contexts/NftRewards/NftRewardsProvider'
-import ProjectOFACProvider from './ProjectOFACProvider'
 import { ProjectPageProps } from 'utils/server/pages/props'
 import { V2V3ContractsProvider } from './Contracts/V2V3ContractsProvider'
+import V2V3ProjectProvider from './Project/V2V3ProjectProvider'
 import { V2V3ProjectContractsProvider } from './ProjectContracts/V2V3ProjectContractsProvider'
 import V2V3ProjectMetadataProvider from './V2V3ProjectMetadataProvider'
-import V2V3ProjectProvider from './Project/V2V3ProjectProvider'
 
 /**
  * Provide all the necessary contexts to render a V2V3 Project.

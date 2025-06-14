@@ -1,11 +1,10 @@
 import { Trans } from '@lingui/macro'
 import { useWatch } from 'antd/lib/form/Form'
-import { ExternalLinkWithIcon } from 'components/ExternalLinkWithIcon'
 import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import NumberSlider from 'components/inputs/NumberSlider'
+import { CASH_OUT_TAX_RATE_EXPLANATION } from 'components/strings'
 import { TokenRedemptionRateGraph } from 'components/TokenRedemptionRateGraph/TokenRedemptionRateGraph'
 import { useState } from 'react'
-import { helpPagePath } from 'utils/helpPagePath'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 
 export const zeroPercentDisabledNoticed = (
@@ -27,29 +26,29 @@ export function RedemptionRateField() {
   return (
     <div className="flex flex-col gap-5">
       <JuiceSwitch
-        label={<Trans>Enable cash out tax rate</Trans>}
+        label={<Trans>Enable cash outs</Trans>}
         description={
           <Trans>
-            Incentivise long-term token holding with a cash out tax rate.{' '}
-            <ExternalLinkWithIcon
-              href={helpPagePath('/dev/learn/glossary/redemption-rate')}
-            >
-              <Trans>Learn more</Trans>
-            </ExternalLinkWithIcon>
+            When enabled, token holders can cash out their tokens for a portion of the project's ETH treasury.
           </Trans>
         }
         value={cashOutTaxRateSwitchEnabled}
-        extra={cashOutTaxRateSwitchEnabled ? null : zeroPercentDisabledNoticed}
+        // extra={cashOutTaxRateSwitchEnabled ? null : zeroPercentDisabledNoticed}
         onChange={val => {
           setRedemptionRateSwitchEnabled(val)
           setFormHasUpdated(true)
           if (!val) {
+            editCycleForm?.setFieldsValue({
+              cashOutTaxRate: 100,
+            })
+          } else {
             editCycleForm?.setFieldsValue({
               cashOutTaxRate: 0,
             })
           }
         }}
       />
+      {cashOutTaxRateSwitchEnabled ? <span>{CASH_OUT_TAX_RATE_EXPLANATION}</span>: null}
       {cashOutTaxRateSwitchEnabled ? (
         <div className="flex w-full flex-col items-start justify-between gap-5 pb-5 md:flex-row md:items-center">
           <TokenRedemptionRateGraph

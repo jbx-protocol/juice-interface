@@ -1,8 +1,9 @@
-import { useQuery } from '@tanstack/react-query'
+import { ReactNode, createContext } from 'react'
+
 import axios from 'axios'
 import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
+import { useQuery } from '@tanstack/react-query'
 import { useWallet } from 'hooks/Wallet'
-import { ReactNode, createContext } from 'react'
 
 interface ProjectOFACContextType {
   isLoading?: boolean
@@ -14,7 +15,7 @@ export const ProjectOFACContext = createContext<ProjectOFACContextType>({
   isAddressListedInOFAC: undefined,
 })
 
-export default function V2V3ProjectOFACProvider({
+export default function ProjectOFACProvider({
   children,
 }: {
   children?: ReactNode

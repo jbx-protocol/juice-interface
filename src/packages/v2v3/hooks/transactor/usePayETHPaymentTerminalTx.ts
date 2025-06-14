@@ -1,15 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { t } from '@lingui/macro'
-import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import { DEFAULT_MIN_RETURNED_TOKENS } from 'constants/transactionDefaults'
+import { ETH_TOKEN_ADDRESS } from 'constants/juiceboxTokens'
 import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { TransactionContext } from 'contexts/Transaction/TransactionContext'
 import { TransactorInstance } from 'hooks/useTransactor'
-import { useProjectIsOFACListed } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectIsOFACListed'
 import { V2V3ProjectContractsContext } from 'packages/v2v3/contexts/ProjectContracts/V2V3ProjectContractsContext'
+import { t } from '@lingui/macro'
 import { useContext } from 'react'
-import { useV2V3BlockedProject } from '../useBlockedProject'
+import { useProjectIsOFACListed } from 'hooks/useProjectIsOFACListed'
 import { useV2ProjectTitle } from '../useProjectTitle'
+import { useV2V3BlockedProject } from '../useBlockedProject'
 
 const DEFAULT_DELEGATE_METADATA = 0
 

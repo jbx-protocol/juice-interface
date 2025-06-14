@@ -12,10 +12,10 @@ import { ProjectHeaderLogo } from 'components/Project/ProjectHeader/ProjectHeade
 import { V4_CURRENCY_ETH } from 'packages/v4/utils/currency'
 import { projectCartActions } from '../redux/projectCartSlice'
 import { useBalance } from 'wagmi'
+import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import { useProjectHeaderLogo } from 'components/Project/ProjectHeader/hooks/useProjectHeaderLogo'
 import { useProjectPaymentTokens } from './PayProjectModal/hooks/useProjectPaymentTokens'
 import { useV4NftRewards } from 'packages/v4/contexts/V4NftRewards/V4NftRewardsProvider'
-// import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import { useWallet } from 'hooks/Wallet'
 
 type PayConfigurationProps = {
@@ -29,7 +29,7 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
   projectHasErc20Token,
   isIssuingTokens,
 }) => {
-  // const { payDisabled, message } = usePayProjectDisabled()
+  const { payDisabled, message: payDisabledMessage, loading: payDisabledLoading } = usePayProjectDisabled()
   const { token } = useJBTokenContext()
   const wallet = useWallet()
   const { isConnected: walletConnected, connect } = useWallet()
@@ -113,9 +113,9 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
   // TODO include other 'pay disabled' logic, usePayProjectDisabled etc
   const payButtonDisabled = useMemo(() => {
     if (!walletConnected) return false
-    return insufficientBalance || cartPayAmount === 0 || !cartPayAmount
-  }, [cartPayAmount, insufficientBalance, walletConnected])
-  const message = undefined
+    return insufficientBalance || !cartPayAmount || payDisabled
+  }, [cartPayAmount, insufficientBalance, walletConnected, payDisabled])
+  const tooltipMessage = payDisabled ? payDisabledMessage : undefined
   return (
     <div>
       {ruleset?.cycleNumber === 0 ? <FirstCycleCountdownCallout />: null}
@@ -171,13 +171,13 @@ export const PayConfiguration: React.FC<PayConfigurationProps> = ({
         </div>
       </div>
 
-      <Tooltip className="w-full flex-1" title={message}>
+      <Tooltip className="w-full flex-1" title={tooltipMessage}>
         <Button
           style={{ display: 'block', width: '100%' }}
           type="primary"
           className="mt-6"
           size="large"
-          disabled={payButtonDisabled}
+          disabled={payButtonDisabled || payDisabledLoading}
           onClick={payProject}
         >
           {walletConnected ? (

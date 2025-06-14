@@ -1,10 +1,3 @@
-import { t } from '@lingui/macro'
-import { JuiceListbox } from 'components/inputs/JuiceListbox'
-import { NETWORKS } from 'constants/networks'
-import { JBChainId } from 'juice-sdk-core'
-import React from 'react'
-import { ChainLogo } from './ChainLogo'
-
 import {
   arbitrum,
   arbitrumSepolia,
@@ -15,6 +8,13 @@ import {
   optimismSepolia,
   sepolia,
 } from 'viem/chains'
+
+import { t } from '@lingui/macro'
+import { JuiceListbox } from 'components/inputs/JuiceListbox'
+import { NETWORKS } from 'constants/networks'
+import { JBChainId } from 'juice-sdk-core'
+import React from 'react'
+import { ChainLogo } from './ChainLogo'
 
 /**
  * Preferred chain ordering
@@ -52,12 +52,14 @@ export const ChainSelect = ({
   onChange,
   chainIds,
   showTitle = false,
+  dropdownPosition,
 }: {
   className?: string
   value: JBChainId | undefined
   onChange: (chainId: JBChainId) => void
   chainIds: JBChainId[]
   showTitle?: boolean
+  dropdownPosition?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left'
 }) => {
   const networkOptions = Object.entries(NETWORKS)
     .filter(([chainId]) => chainIds.includes(parseInt(chainId) as JBChainId))
@@ -113,6 +115,7 @@ export const ChainSelect = ({
         }
       }}
       options={networkOptions}
+      dropdownPosition={dropdownPosition}
     />
   )
 }

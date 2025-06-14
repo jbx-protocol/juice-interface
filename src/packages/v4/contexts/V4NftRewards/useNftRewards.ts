@@ -31,9 +31,14 @@ async function fetchRewardTierMetadata({ tier }: { tier: JB721TierV4 }) {
 
     // Some projects have image links hard-coded to the old IPFS gateway.
     const pinataRegex = /^(https?:\/\/jbx\.mypinata\.cloud)/
+    const infuraRegex = /^(https?:\/\/jbm\.infura-ipfs\.io\/ipfs\/)/
+    
     if (tierMetadata?.image && pinataRegex.test(tierMetadata.image)) {
       const imageUrlCid = cidFromUrl(tierMetadata.image)
       tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Use eth.sucks for images too
+    } else if (tierMetadata?.image && infuraRegex.test(tierMetadata.image)) {
+      const imageUrlCid = cidFromUrl(tierMetadata.image)
+      tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert Infura URLs to eth.sucks
     }
 
     const rawContributionFloor = tier.price
@@ -50,11 +55,16 @@ async function fetchRewardTierMetadata({ tier }: { tier: JB721TierV4 }) {
       const maxSupply = tier.initialSupply
       const rawContributionFloor = tier.price
 
-      // Handle Pinata image links
+      // Handle Pinata and Infura image links
       const pinataRegex = /^(https?:\/\/jbx\.mypinata\.cloud)/
+      const infuraRegex = /^(https?:\/\/jbm\.infura-ipfs\.io\/ipfs\/)/
+      
       if (tierMetadata?.image && pinataRegex.test(tierMetadata.image)) {
         const imageUrlCid = cidFromUrl(tierMetadata.image)
         tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Still prefer eth.sucks for images
+      } else if (tierMetadata?.image && infuraRegex.test(tierMetadata.image)) {
+        const imageUrlCid = cidFromUrl(tierMetadata.image)
+        tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert Infura URLs to eth.sucks
       }
 
       return processMetadata(tier, tierMetadata, maxSupply, rawContributionFloor)
@@ -69,11 +79,16 @@ async function fetchRewardTierMetadata({ tier }: { tier: JB721TierV4 }) {
         const maxSupply = tier.initialSupply
         const rawContributionFloor = tier.price
 
-        // Handle Pinata image links
+        // Handle Pinata and Infura image links
         const pinataRegex = /^(https?:\/\/jbx\.mypinata\.cloud)/
+        const infuraRegex = /^(https?:\/\/jbm\.infura-ipfs\.io\/ipfs\/)/
+        
         if (tierMetadata?.image && pinataRegex.test(tierMetadata.image)) {
           const imageUrlCid = cidFromUrl(tierMetadata.image)
           tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Still prefer eth.sucks for images
+        } else if (tierMetadata?.image && infuraRegex.test(tierMetadata.image)) {
+          const imageUrlCid = cidFromUrl(tierMetadata.image)
+          tierMetadata.image = ethSucksGatewayUrl(imageUrlCid) // Convert Infura URLs to eth.sucks
         }
 
         return processMetadata(tier, tierMetadata, maxSupply, rawContributionFloor)

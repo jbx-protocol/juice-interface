@@ -8,11 +8,15 @@ const removeImports = require('next-remove-imports')({
   matchImports: '\\.(less|css|scss|sass|styl)$',
 })
 
+// Add Web3Modal URLs as WalletConnect is now Web3Modal (Reown)
 const WALLET_CONNECT_URLS = [
   'https://*.walletconnect.com',
   'https://*.walletconnect.org',
   'wss://*.walletconnect.org',
   'wss://*.walletconnect.com',
+  'https://api.web3modal.org',
+  'https://*.web3modal.org',
+  'wss://*.web3modal.org',
 ]
 
 const INFURA_IPFS_URLS = [
@@ -35,6 +39,14 @@ const SCRIPT_SRC = [
   // `'sha256-kZ9E6/oLrki51Yx03/BugStfFrPlm8hjaFbaokympXo='`, // hotjar
   `'unsafe-eval'`, // hotjar
   `'unsafe-inline'`, // MetaMask
+  'https://*.getpara.com', // Para API
+  'https://*.usecapsule.com', // Para (Formerly Capsule) API
+]
+
+const WORKER_SRC = [
+  'blob:', // Required for Para/Capsule blob workers
+  'https://*.getpara.com', // Para API
+  'https://*.usecapsule.com', // Para (Formerly Capsule) API
 ]
 
 const STYLE_SRC = [
@@ -88,6 +100,13 @@ const CONNECT_SRC = [
   'https://bendystraw.xyz/*',
   'https://testnet.bendystraw.xyz',
   'https://testnet.bendystraw.xyz/*',
+  'https://*.getpara.com', // Para API
+  'https://*.usecapsule.com', // Para (Formerly Capsule) API
+  'wss://*.getpara.com',
+  'wss://*.usecapsule.com',
+  'https://*.ingest.sentry.io', // Sentry error tracking for Para
+  'https://*.ingest.us.sentry.io', // Sentry US region
+  'https://ipfs.io',
 ]
 
 const FRAME_ANCESTORS = [
@@ -107,6 +126,8 @@ const FRAME_SRC = [
   'https://verify.walletconnect.com/',
   'https://youtube.com',
   'https://www.youtube.com/',
+  'https://*.getpara.com', // Para API
+  'https://*.usecapsule.com', // Para (Formerly Capsule) API
 ]
 
 const ContentSecurityPolicy = `
@@ -121,6 +142,7 @@ const ContentSecurityPolicy = `
   media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')} ${ETH_SUCKS_URLS.join(' ')};
   frame-ancestors ${FRAME_ANCESTORS.join(' ')};
   form-action 'self';
+  worker-src 'self' ${WORKER_SRC.join(' ')};
 `
 
 const SECURITY_HEADERS = [

@@ -1,6 +1,8 @@
-import { Trans } from '@lingui/macro'
 import { Divider, Drawer } from 'antd'
+
+import { Trans } from '@lingui/macro'
 import useMobile from 'hooks/useMobile'
+import { useJBProjectMetadataContext } from 'juice-sdk-react'
 import { AddToProjectBalanceForm } from './AddToProjectBalanceForm'
 
 export function V4ProjectToolsDrawer({
@@ -10,7 +12,8 @@ export function V4ProjectToolsDrawer({
   open?: boolean
   onClose?: VoidFunction
 }) {
-  // const hasOFAC = projectMetadata?.projectRequiredOFACCheck
+  const { metadata } = useJBProjectMetadataContext()
+  const hasOFAC = metadata?.data?.projectRequiredOFACCheck
 
   const isMobile = useMobile()
 
@@ -26,23 +29,23 @@ export function V4ProjectToolsDrawer({
       </h1>
 
       <div className="flex flex-col gap-4">
-        {/* {hasOFAC ? null : ( */}
-        <>
-          <section>
-            <AddToProjectBalanceForm />
-          </section>
+        {hasOFAC ? null : (
+          <>
+            <section>
+              <AddToProjectBalanceForm />
+            </section>
 
-          <Divider />
-          {/* @v4todo: <section>
-            <h3 className="text-primary">
-              <Trans>Project payer addresses</Trans>
-            </h3>
+            <Divider />
+            {/* @v4todo: <section>
+              <h3 className="text-primary">
+                <Trans>Project payer addresses</Trans>
+              </h3>
 
-            <PaymentAddressSection />
-          </section>
-          <Divider /> */}
-        </>
-        {/* )} */}
+              <PaymentAddressSection />
+            </section>
+            <Divider /> */}
+          </>
+        )}
 
         {/* <ExportSection
           exportPayoutsButton={

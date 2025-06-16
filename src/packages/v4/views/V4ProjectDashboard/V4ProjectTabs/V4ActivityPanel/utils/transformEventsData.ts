@@ -1,4 +1,5 @@
 import { Ether, JBProjectToken } from 'juice-sdk-core'
+
 import { ActivityEventsQuery } from 'packages/v4/graphql/client/graphql'
 
 // TODO Event types can be updated to bendystraw schema, currently there are mismatched event names + properties
@@ -251,7 +252,7 @@ export function transformEventData(
       percent: data.sendReservedTokensToSplitEvent.percent,
       splitProjectId: data.sendReservedTokensToSplitEvent.splitProjectId,
       beneficiary: data.sendReservedTokensToSplitEvent.beneficiary,
-      lockedUntil: data.sendReservedTokensToSplitEvent.lockedUntil,
+      lockedUntil: Number(data.sendReservedTokensToSplitEvent.lockedUntil),
     }
   }
   if (data.sendPayoutToSplitEvent) {
@@ -264,7 +265,7 @@ export function transformEventData(
       percent: data.sendPayoutToSplitEvent.percent,
       splitProjectId: data.sendPayoutToSplitEvent.splitProjectId,
       beneficiary: data.sendPayoutToSplitEvent.beneficiary,
-      lockedUntil: data.sendPayoutToSplitEvent.lockedUntil,
+      lockedUntil: Number(data.sendPayoutToSplitEvent.lockedUntil),
     }
   }
   if (data.useAllowanceEvent) {

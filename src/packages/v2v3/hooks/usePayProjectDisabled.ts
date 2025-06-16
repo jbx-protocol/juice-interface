@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
-import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
-import { useProjectIsOFACListed } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectIsOFACListed'
+import { useProjectIsOFACListed } from 'hooks/useProjectIsOFACListed'
+import { useProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import { useV2V3BlockedProject } from './useBlockedProject'
 
 export enum PayDisabledReason {

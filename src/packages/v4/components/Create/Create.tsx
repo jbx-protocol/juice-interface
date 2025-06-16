@@ -109,10 +109,8 @@ export default function Create() {
             description={
               <Trans>
                 <p>When people pay your project, they receive its tokens.</p> 
-                <p>Project tokens can be used for governance or community access, and token holders can cash out their tokens to reclaim some ETH from your project depending on how you set your rules.</p> 
-                You can also reserve some tokens for recipients of your
-                choosing.
-                <p>You can also reserve some of your tokens split to your choice of recipients.</p>
+                <p>Tokens can be cashed out to reclaim ETH from your project depending on how you set your rules below – useful for refunds or sharing funds. They can also be used for utilities across other platforms, like governance or community access.</p> 
+                <p>You can reserve some of your tokens as they are issued and split to your choice of recipients.</p>
               </Trans>
             }
           >

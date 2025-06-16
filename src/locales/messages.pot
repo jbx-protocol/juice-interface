@@ -77,6 +77,9 @@ msgstr ""
 msgid "Redemptions"
 msgstr ""
 
+msgid "<0>When people pay your project, they receive its tokens.</0> <1>Tokens can be cashed out to reclaim ETH from your project depending on how you set your rules below – useful for refunds or sharing funds. They can also be used for utilities across other platforms, like governance or community access.</1> <2>You can reserve some of your tokens as they are issued and split to your choice of recipients.</2>"
+msgstr ""
+
 msgid "Contract address: {0}"
 msgstr ""
 
@@ -854,9 +857,6 @@ msgstr ""
 msgid "Skipped"
 msgstr ""
 
-msgid "Incentivise long-term token holding with a cash out tax rate. <0>Learn more</0>"
-msgstr ""
-
 msgid "Set operator for {projectTitle}"
 msgstr ""
 
@@ -1109,9 +1109,6 @@ msgstr ""
 msgid "Cycle length"
 msgstr ""
 
-msgid "When enabled, token holders can redeem their tokens for a portion of the project's ETH treasury."
-msgstr ""
-
 msgid "Contributors who pay this address from a custodial service platform (like Coinbase) <0>won't receive project tokens</0>."
 msgstr ""
 
@@ -1260,6 +1257,9 @@ msgid "Active"
 msgstr ""
 
 msgid "{0} {tokenSymbol}/ETH"
+msgstr ""
+
+msgid "Cash outs are disabled when all of the project's ETH is being used for payouts (when payouts are unlimited)."
 msgstr ""
 
 msgid "Fee from <0><1/></0>"
@@ -1880,9 +1880,6 @@ msgstr ""
 msgid "Untitled project"
 msgstr ""
 
-msgid "<0>Supporters can burn their tokens to reclaim some of the ETH not needed for payouts. The amount of ETH they receive depends on the redemption rate.</0><1>At 100%, redemptions are 1:1 — somebody redeeming 10% of all project tokens will receive 10% of the available ETH. At 0%, redemptions are turned off.</1><2>Anywhere else, redemptions take place along a bonding curve, meaning people who redeem first will get less ETH per token, and people who redeem later will get more ETH per token.</2><3>Learn more in this <4>short video</4>.</3>"
-msgstr ""
-
 msgid "This project has no upcoming cycle. Its rules can change at any time."
 msgstr ""
 
@@ -1947,6 +1944,9 @@ msgid "V2 3-day deadline"
 msgstr ""
 
 msgid "Discord"
+msgstr ""
+
+msgid "<0>Supporters can cash out their tokens to reclaim some of the ETH not needed for payouts. The amount of ETH they receive depends on the cash out rate.</0><1>At 0%, cash outs are 1:1 — somebody cashing out 10% of all project tokens will receive 10% of the available ETH. At 100%, cash outs are turned off.</1><2>Anywhere else, cash outs take place along a bonding curve, meaning people who cash out first will get less ETH per token, and people who cash out later will get more ETH per token.</2><3>Learn more in this <4>short video</4>.</3>"
 msgstr ""
 
 msgid "Website"
@@ -2304,9 +2304,6 @@ msgid "<0>Anyone can pay ETH to your project. If you wish, specify to which Ethe
 msgstr ""
 
 msgid "Your project details have been updated across all chains."
-msgstr ""
-
-msgid "Join thousands of projects using Juicebox to fund, operate, and scale their ideas & communities transparently on Ethereum."
 msgstr ""
 
 msgid "Percent"
@@ -2777,6 +2774,9 @@ msgstr ""
 msgid "Your edits will take effect in <0>cycle #{0}</0>. The current cycle (#{currentFCNumber}) won't be altered."
 msgstr ""
 
+msgid "Join thousands of projects using Juicebox to fund, operate, and scale their ideas & communities transparently across Ethereum."
+msgstr ""
+
 msgid "Leave this blank to start your first ruleset immediately after you finish setting up your project."
 msgstr ""
 
@@ -3180,9 +3180,6 @@ msgid "Edit deadline"
 msgstr ""
 
 msgid "Juicebox gives you the tools to automate web3 fundraising so you can focus on building. Join thousands of projects sippin' the Juice."
-msgstr ""
-
-msgid "Enable cash out tax rate"
 msgstr ""
 
 msgid "Your transaction was successful."
@@ -3713,6 +3710,9 @@ msgstr ""
 msgid "After {0} (your first cycle), your project will not issue any tokens unless you edit the issuance rate."
 msgstr ""
 
+msgid "<0>Supporters can cash out their tokens to reclaim some of the ETH not needed for payouts. The amount of ETH they receive depends on the redemption rate.</0><1>At 100%, redemptions are 1:1 — somebody redeeming 10% of all project tokens will receive 10% of the available ETH. At 0%, redemptions are turned off.</1><2>Anywhere else, redemptions take place along a bonding curve, meaning people who redeem first will get less ETH per token, and people who redeem later will get more ETH per token.</2><3>Learn more in this <4>short video</4>.</3>"
+msgstr ""
+
 msgid "In other words: instead of taking effect immediately, those edits will take effect when the next ruleset starts (Ruleset #2). If you need more flexibility, switch to unlocked rulesets."
 msgstr ""
 
@@ -4088,9 +4088,6 @@ msgstr ""
 msgid "Customization"
 msgstr ""
 
-msgid "<0>Supporters can burn their tokens to reclaim some of the ETH not needed for payouts. The amount of ETH they receive depends on the cash out rate.</0><1>At 0%, cash outs are 1:1 — somebody cashing out 10% of all project tokens will receive 10% of the available ETH. At 100%, cash outs are turned off.</1><2>Anywhere else, cash outs take place along a bonding curve, meaning people who cash out first will get less ETH per token, and people who cash out later will get more ETH per token.</2><3>Learn more in this <4>short video</4>.</3>"
-msgstr ""
-
 msgid "No limit"
 msgstr ""
 
@@ -4320,6 +4317,9 @@ msgid "<0>Learn more</0> about cycles."
 msgstr ""
 
 msgid "Amounts"
+msgstr ""
+
+msgid "When enabled, token holders can cash out their tokens for a portion of the project's ETH treasury."
 msgstr ""
 
 msgid "This will delete the payout for <0/>."
@@ -4631,9 +4631,6 @@ msgstr ""
 msgid "Chain"
 msgstr ""
 
-msgid "<0>When people pay your project, they receive its tokens.</0> <1>Project tokens can be used for governance or community access, and token holders can cash out their tokens to reclaim some ETH from your project depending on how you set your rules.</1> You can also reserve some tokens for recipients of your choosing.<2>You can also reserve some of your tokens split to your choice of recipients.</2>"
-msgstr ""
-
 msgid "Failed to update project metadata"
 msgstr ""
 
@@ -4752,9 +4749,6 @@ msgid "Thank you, your payment was successful."
 msgstr ""
 
 msgid "{0}% of supply"
-msgstr ""
-
-msgid "New: Juicebox is now omnichain"
 msgstr ""
 
 msgid "Overflow"

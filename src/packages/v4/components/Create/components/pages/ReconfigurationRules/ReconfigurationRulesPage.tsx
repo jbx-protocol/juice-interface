@@ -1,4 +1,3 @@
-import { Trans, t } from '@lingui/macro'
 import {
   CONTROLLER_CONFIG_EXPLANATION,
   HOLD_FEES_EXPLANATION,
@@ -7,25 +6,26 @@ import {
   TERMINAL_CONFIG_EXPLANATION,
   TERMINAL_MIGRATION_EXPLANATION
 } from 'components/strings'
+import { Trans, t } from '@lingui/macro'
 
-import { Form } from 'antd'
-import { useWatch } from 'antd/lib/form/Form'
-import { Callout } from 'components/Callout/Callout'
-import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
 import { CREATE_FLOW } from 'constants/fathomEvents'
-import { FEATURE_FLAGS } from 'constants/featureFlags'
-import { trackFathomGoal } from 'lib/fathom'
-import { Selection } from 'packages/v2v3/components/Create/components/Selection/Selection'
-import { getAvailableApprovalStrategies } from 'packages/v4/utils/approvalHooks'
-import { useContext } from 'react'
-import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
-import { featureFlagEnabled } from 'utils/featureFlags'
+import { Callout } from 'components/Callout/Callout'
 import { CreateCollapse } from '../../CreateCollapse/CreateCollapse'
-import { PageContext } from '../../Wizard/contexts/PageContext'
-import { Wizard } from '../../Wizard/Wizard'
 import { CustomRuleCard } from './components/CustomRuleCard'
+import { FEATURE_FLAGS } from 'constants/featureFlags'
+import { Form } from 'antd'
+import { JuiceSwitch } from 'components/inputs/JuiceSwitch'
+import { PageContext } from '../../Wizard/contexts/PageContext'
 import { RuleCard } from './components/RuleCard'
+import { Selection } from 'packages/v2v3/components/Create/components/Selection/Selection'
+import { Wizard } from '../../Wizard/Wizard'
+import { featureFlagEnabled } from 'utils/featureFlags'
+import { getAvailableApprovalStrategies } from 'packages/v4/utils/approvalHooks'
+import { trackFathomGoal } from 'lib/fathom'
+import { useContext } from 'react'
 import { useReconfigurationRulesForm } from './hooks/useReconfigurationRulesForm'
+import { useSetCreateFurthestPageReached } from 'redux/hooks/v2v3/useEditingCreateFurthestPageReached'
+import { useWatch } from 'antd/lib/form/Form'
 
 export const ReconfigurationRulesPage = () => {
   useSetCreateFurthestPageReached('reconfigurationRules')
@@ -81,14 +81,12 @@ export const ReconfigurationRulesPage = () => {
               <JuiceSwitch label={t`Hold fees`} />
             </Form.Item>
 
-            {featureFlagEnabled(FEATURE_FLAGS.OFAC) ? (
-              <Form.Item
-                name="projectRequiredOFACCheck"
-                extra={t`Disallow payments from users who appear on OFAC’s Specially Designated Nationals (SDN) list. Note: payments are still possible on other websites (for example, Etherscan).`}
-              >
-                <JuiceSwitch label={t`OFAC Sanctions screening`} />
-              </Form.Item>
-            ) : null}
+            <Form.Item
+              name="projectRequiredOFACCheck"
+              extra={t`Disallow payments from users who appear on OFAC’s Specially Designated Nationals (SDN) list. Note: payments are still possible on other websites (for example, Etherscan).`}
+            >
+              <JuiceSwitch label={t`OFAC Sanctions screening`} />
+            </Form.Item>
           </CreateCollapse.Panel>
           <CreateCollapse.Panel
             key={1}

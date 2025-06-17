@@ -79,7 +79,7 @@ const resolveUsingWagmiClient = async (addressOrEnsName: string) => {
   let response
 
   if (isAddress(addressOrEnsName)) {
-    const name = await client?.getEnsName({ address: addressOrEnsName })
+    const name = await client.getEnsName({ address: addressOrEnsName })
     response = {
       address: addressOrEnsName,
       name,
@@ -87,7 +87,7 @@ const resolveUsingWagmiClient = async (addressOrEnsName: string) => {
   }
 
   if (addressOrEnsName.endsWith('.eth')) {
-    const address = await client?.getEnsAddress({ name: addressOrEnsName })
+    const address = await client.getEnsAddress({ name: addressOrEnsName })
     if (!address) response = undefined
 
     response = {

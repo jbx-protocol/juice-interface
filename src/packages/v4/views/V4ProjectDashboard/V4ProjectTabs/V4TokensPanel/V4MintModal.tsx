@@ -49,7 +49,7 @@ export function V4MintModal({
 
   const [loading, setLoading] = useState<boolean>()
   const [transactionPending, setTransactionPending] = useState<boolean>()
-
+  
   const defaultChainId = useJBChainId()
   const [selectedChainId, setSelectedChainId] = useState<JBChainId | undefined>(
     defaultChainId,
@@ -69,7 +69,7 @@ export function V4MintModal({
 
   const { chain: walletChain, changeNetworks, connect } = useWallet()
   const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
-
+  
   const walletConnectedToWrongChain = selectedChainId !== walletChainId
 
   async function executeMintTx() {
@@ -78,13 +78,7 @@ export function V4MintModal({
     const memo = formValues.memo
     const beneficiary = formValues.beneficary as Address
 
-    if (
-      !controllerAddress ||
-      !beneficiary ||
-      !amount ||
-      !projectId ||
-      !selectedChainId
-    )
+    if (!controllerAddress || !beneficiary || !amount || !projectId || !selectedChainId)
       return
 
     // Check if wallet is connected to wrong chain
@@ -97,7 +91,7 @@ export function V4MintModal({
         return
       }
     }
-
+    
     if (!walletChain) {
       await connect()
       return
@@ -179,7 +173,7 @@ export function V4MintModal({
             />
           </Form.Item>
         ) : null}
-
+        
         <Form.Item
           label={t`Token receiver`}
           name="beneficary"

@@ -111,13 +111,13 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
     setRedeeming(true)
 
     const args = [
-      userAddress as `0x${string}`,
+      userAddress,
       BigInt(projectId),
       redeemAmountWei,
       NATIVE_TOKEN,
       0n,
-      userAddress as `0x${string}`,
-      '0x0' as `0x${string}`,
+      userAddress,
+      '0x0',
     ] as const
     try {
       const hash = await writeRedeem({
@@ -128,7 +128,6 @@ export const RedeemConfiguration: React.FC<RedeemConfigurationProps> = ({
       setModalOpen(true)
 
       addTransaction?.('Redeem', { hash })
-
       await waitForTransactionReceipt(wagmiConfig, {
         hash,
       })

@@ -52,10 +52,7 @@ export default function V4DistributePayoutsModal({
     sucker => sucker.peerChainId === selectedChainId,
   )?.projectId
 
-  const {
-    distributableAmount: distributable,
-    currency: distributableCurrency,
-  } = useV4DistributableAmount({
+  const { distributableAmount: distributable, currency: distributableCurrency } = useV4DistributableAmount({
     chainId: selectedChainId,
     projectId: selectedChainProjectId,
   })
@@ -79,7 +76,7 @@ export default function V4DistributePayoutsModal({
 
   const { chain: walletChain, changeNetworks, connect } = useWallet()
   const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
-
+  
   const walletConnectedToWrongChain = selectedChainId !== walletChainId
 
   async function executeDistributePayoutsTx() {
@@ -102,7 +99,7 @@ export default function V4DistributePayoutsModal({
         return
       }
     }
-
+    
     if (!walletChain) {
       await connect()
       return

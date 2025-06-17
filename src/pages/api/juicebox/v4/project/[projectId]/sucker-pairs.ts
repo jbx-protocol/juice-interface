@@ -1,9 +1,9 @@
-import { wagmiConfig } from 'contexts/Para/Providers'
 import { resolveSuckers } from 'juice-sdk-core'
 import { JBChainId } from 'juice-sdk-react'
 import { enableCors } from 'lib/api/nextjs'
 import { getLogger } from 'lib/logger'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { wagmiConfig } from 'contexts/Para/Providers'
 
 const logger = getLogger('api/v4/project/[projectId]/sucker-pairs')
 

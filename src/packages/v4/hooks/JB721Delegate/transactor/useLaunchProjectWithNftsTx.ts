@@ -1,11 +1,11 @@
 import { waitForTransactionReceipt } from '@wagmi/core'
-import { wagmiConfig } from 'contexts/Para/Providers'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import {
   JBChainId,
   useWriteJb721TiersHookProjectDeployerLaunchProjectFor,
 } from 'juice-sdk-react'
 import { useNftProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useNftProjectLaunchData'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { useContext } from 'react'
 import { WaitForTransactionReceiptReturnType } from 'viem'
 import { LaunchTxOpts } from '../../useLaunchProjectTx'
@@ -69,7 +69,6 @@ export function useLaunchProjectWithNftsTx() {
 
       onTransactionPendingCallback(hash)
       addTransaction?.('Launch Project', { hash, chainId })
-
       const transactionReceipt: WaitForTransactionReceiptReturnType =
         await waitForTransactionReceipt(wagmiConfig, {
           hash,

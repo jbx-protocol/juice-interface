@@ -1,18 +1,18 @@
-import { NATIVE_TOKEN, jbProjectDeploymentAddresses } from 'juice-sdk-core'
 import {
   JBRulesetContext,
   useJBContractContext,
   useWriteJbController4_1QueueRulesetsOf,
-  useWriteJbControllerQueueRulesetsOf,
+  useWriteJbControllerQueueRulesetsOf
 } from 'juice-sdk-react'
+import { NATIVE_TOKEN, jbProjectDeploymentAddresses } from 'juice-sdk-core'
 import { useCallback, useContext } from 'react'
 
-import { waitForTransactionReceipt } from '@wagmi/core'
-import { wagmiConfig } from 'contexts/Para/Providers'
-import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
-import { useWallet } from 'hooks/Wallet'
-import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
 import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
+import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
+import { transformEditCycleFormFieldsToTxArgs } from '../utils/editRuleset'
+import { useWallet } from 'hooks/Wallet'
+import { wagmiConfig } from 'contexts/Para/Providers'
+import { waitForTransactionReceipt } from '@wagmi/core'
 
 export interface EditMetadataTxOpts {
   onTransactionPending: (hash: `0x${string}`) => void
@@ -36,10 +36,7 @@ export function useEditRulesetTx() {
 
   let writeEditRuleset = writeEditController4Ruleset
 
-  if (
-    projectControllerAddress &&
-    projectControllerAddress === jbProjectDeploymentAddresses.JBController4_1[1]
-  ) {
+  if (projectControllerAddress && projectControllerAddress === jbProjectDeploymentAddresses.JBController4_1[1]) {
     console.info('Using v4.1 controller for edit ruleset transaction')
     writeEditRuleset = writeEditController4_1Ruleset
   } else {

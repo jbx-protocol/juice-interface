@@ -1,10 +1,10 @@
 import { getPublicClient } from '@wagmi/core'
 import { readNetwork } from 'constants/networks'
 import { readProvider } from 'constants/readProvider'
-import { wagmiConfig } from 'contexts/Para/Providers'
 import { getLogger } from 'lib/logger'
 import { NetworkName } from 'models/networkName'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { isAddress } from 'viem'
 
 const logger = getLogger('api/ens/resolve/[address]')

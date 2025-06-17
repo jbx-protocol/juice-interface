@@ -1,14 +1,17 @@
-import '@getpara/react-sdk/styles.css'
 import { Head } from 'components/common/Head/Head'
 import { LanguageProvider } from 'contexts/Language/LanguageProvider'
-import ParaProviders from 'contexts/Para/Providers'
-import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import SupabaseSessionProvider from 'contexts/SupabaseSession/SupabaseSessionProvider'
-import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
 import { getInitialThemeOption, syncTheme } from 'contexts/Theme/useJuiceTheme'
 import { useFathom } from 'lib/fathom'
 import type { AppProps } from 'next/app'
+import ParaProviders from 'contexts/Para/Providers'
+import ReactQueryProvider from 'contexts/ReactQueryProvider'
+import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
+import '@getpara/react-sdk/styles.css'
 import '../styles/index.scss'
+
+
+
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   syncTheme(getInitialThemeOption())

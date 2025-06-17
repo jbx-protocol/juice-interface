@@ -5,7 +5,7 @@ import {
   useJBProjectId,
   useReadJbDirectoryPrimaryTerminalOf,
   useSuckers,
-  useWriteJbMultiTerminalSendPayoutsOf,
+  useWriteJbMultiTerminalSendPayoutsOf
 } from 'juice-sdk-react'
 import { useContext, useState } from 'react'
 
@@ -17,7 +17,6 @@ import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { FEES_EXPLANATION } from 'components/strings'
 import { NETWORKS } from 'constants/networks'
-import { wagmiConfig } from 'contexts/Para/Providers'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
@@ -25,6 +24,7 @@ import { PayoutsTable } from 'packages/v4/components/PayoutsTable/PayoutsTable'
 import { usePayoutLimit } from 'packages/v4/hooks/usePayoutLimit'
 import { useV4CurrentPayoutSplits } from 'packages/v4/hooks/useV4CurrentPayoutSplits'
 import { V4CurrencyName } from 'packages/v4/utils/currency'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { emitErrorNotification } from 'utils/notifications'
 import { parseUnits } from 'viem'
 import { useCyclesPanelSelectedChain } from './contexts/CyclesPanelSelectedChainContext'

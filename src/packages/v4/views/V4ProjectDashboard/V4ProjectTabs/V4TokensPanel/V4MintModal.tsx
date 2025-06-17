@@ -6,7 +6,7 @@ import {
   useReadJbDirectoryControllerOf,
   useReadJbTokensTokenOf,
   useSuckers,
-  useWriteJbControllerMintTokensOf,
+  useWriteJbControllerMintTokensOf
 } from 'juice-sdk-react'
 import { useContext, useState } from 'react'
 
@@ -18,11 +18,11 @@ import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { NETWORKS } from 'constants/networks'
-import { wagmiConfig } from 'contexts/Para/Providers'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import useNameOfERC20 from 'hooks/ERC20/useNameOfERC20'
 import { useWallet } from 'hooks/Wallet'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { parseWad } from 'utils/format/formatNumber'
 import { emitErrorNotification } from 'utils/notifications'
 import { tokenSymbolText } from 'utils/tokenSymbolText'

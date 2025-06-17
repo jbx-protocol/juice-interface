@@ -10,9 +10,9 @@ import { buildJB721TierParams, pinNftRewards } from 'utils/nftRewards'
 import { t } from '@lingui/macro'
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { NEW_NFT_ID_LOWER_LIMIT } from 'components/NftRewards/RewardsList/AddEditRewardModal'
-import { wagmiConfig } from 'contexts/Para/Providers'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { JB721DelegateVersion } from 'models/JB721Delegate'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { emitErrorNotification } from 'utils/notifications'
 
 export function useUpdateCurrentCollection({

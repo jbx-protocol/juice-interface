@@ -1,9 +1,9 @@
 import { getTransactionReceipt } from '@wagmi/core'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { TxStatus } from 'models/transaction'
 import { ReactNode, useEffect } from 'react'
 import { TransactionLog, TxHistoryContext } from './TxHistoryContext'
 import { useTransactions } from './useTransactions'
-import { wagmiConfig } from 'contexts/Para/Providers'
 
 const nowSeconds = () => Math.round(new Date().valueOf() / 1000)
 

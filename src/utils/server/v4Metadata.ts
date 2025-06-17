@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getPublicClient } from '@wagmi/core'
 import { OPEN_IPFS_GATEWAY_HOSTNAME } from 'constants/ipfs'
-import { wagmiConfig } from 'contexts/Para/Providers'
 import {
   readJbDirectoryControllerOf,
   getProjectMetadata as sdkGetProjectMetadata,
 } from 'juice-sdk-core'
 import { JBChainId } from 'juice-sdk-react'
+import { wagmiConfig } from 'contexts/Para/Providers'
 import { PublicClient } from 'viem'
 
 export const getV4ProjectMetadata = async (

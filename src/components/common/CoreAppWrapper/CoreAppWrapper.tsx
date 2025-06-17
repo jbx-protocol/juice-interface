@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react'
 
-import { Layout } from 'antd'
 import { Content } from 'antd/lib/layout/layout'
-import { SiteNavigation } from 'components/Navbar/SiteNavigation'
-import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickProjectSearchProvider'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
-import { installJuiceboxWindowObject } from 'lib/juicebox'
+import { Layout } from 'antd'
+import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickProjectSearchProvider'
+import { SiteNavigation } from 'components/Navbar/SiteNavigation'
+
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
-import { twJoin } from 'tailwind-merge'
+import { installJuiceboxWindowObject } from 'lib/juicebox'
 import { redirectTo } from 'utils/windowUtils'
+import { twJoin } from 'tailwind-merge'
+import { useRouter } from 'next/router'
 
 const EthersTxHistoryProvider = dynamic(
   () => import('contexts/Transaction/EthersTxHistoryProvider'),

@@ -37,6 +37,7 @@ const OAUTH_METHODS: TOAuthMethod[] = [
   'DISCORD',
   'TELEGRAM',
   'FACEBOOK',
+  'FARCASTER',
 ]
 
 const SUPPORTED_WALLETS: TExternalWallet[] = [
@@ -46,6 +47,7 @@ const SUPPORTED_WALLETS: TExternalWallet[] = [
   'RABBY',
   'WALLETCONNECT',
   'ZERION',
+  'PHANTOM',
 ]
 
 const SUPPORTED_CHAINS = [

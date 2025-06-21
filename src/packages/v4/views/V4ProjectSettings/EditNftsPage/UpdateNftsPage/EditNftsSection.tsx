@@ -1,24 +1,27 @@
-import { Button, Empty } from 'antd'
 import { Trans, t } from '@lingui/macro'
+import { Button, Empty } from 'antd'
 import { useEffect, useMemo, useState } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Callout } from 'components/Callout/Callout'
-import { ChainSelect } from 'packages/v4/components/ChainSelect'
-import ETHAmount from 'components/currency/ETHAmount'
-import { JBChainId } from 'juice-sdk-core'
 import Loading from 'components/Loading'
-import type { RelayrPostBundleResponse } from 'juice-sdk-react'
 import { RewardsList } from 'components/NftRewards/RewardsList/RewardsList'
+import ETHAmount from 'components/currency/ETHAmount'
 import TransactionModal from 'components/modals/TransactionModal'
-import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
-import { emitErrorNotification } from 'utils/notifications'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useEditingNfts } from '../hooks/useEditingNfts'
-import { useHasNftRewards } from 'packages/v4/hooks/useHasNftRewards'
-import { useOmnichainUpdateCurrentCollection } from '../hooks/useOmnichainUpdateCurrentCollection'
+import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
+import { JBChainId } from 'juice-sdk-core'
+import type { RelayrPostBundleResponse } from 'juice-sdk-react'
 import { useSuckers } from 'juice-sdk-react'
+import { ChainSelect } from 'packages/v4/components/ChainSelect'
+import { useHasNftRewards } from 'packages/v4/hooks/useHasNftRewards'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { emitErrorNotification } from 'utils/notifications'
+import { TransactionSuccessModal } from '../../EditCyclePage/TransactionSuccessModal'
+import { useEditingNfts } from '../hooks/useEditingNfts'
+import { useOmnichainUpdateCurrentCollection } from '../hooks/useOmnichainUpdateCurrentCollection'
 import { useUpdateCurrentCollection } from '../hooks/useUpdateCurrentCollection'
+import QueueSafeEditNftsTxsModal from './components/QueueSafeEditNftsTxsModal'
 
 export function EditNftsSection() {
   const nftRewardsData = useAppSelector(
@@ -28,6 +31,7 @@ export function EditNftsSection() {
   const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [confirmLoading, setConfirmLoading] = useState(false)
+  const [safeModalOpen, setSafeModalOpen] = useState(false)
 
   const { rewardTiers, setRewardTiers, editedRewardTierIds, loading } =
     useEditingNfts()
@@ -49,6 +53,12 @@ export function EditNftsSection() {
     if (chainIds.length && !selectedGasChain) setSelectedGasChain(chainIds[0]) 
   }, [chainIds, selectedGasChain])
 
+  // Project owner and Gnosis Safe detection
+  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
+  const { data: gnosisSafeData } = useGnosisSafe(projectOwnerAddress)
+  const isProjectOwnerGnosisSafe = Boolean(gnosisSafeData)
+  const isOmnichainProject = chainIds.length > 1
+
   // always use all project chains
   const activeChains = chainIds
 
@@ -67,6 +77,11 @@ export function EditNftsSection() {
     }
   }
   const handleConfirm = async () => {
+    if (!isOmnichainProject) {
+      // Use single-chain transaction for non-omnichain projects
+      return handleSingleChainUpdate()
+    }
+    
     if (!txQuote) return handleGetQuote()
     setConfirmLoading(true)
     try {
@@ -77,6 +92,21 @@ export function EditNftsSection() {
       relayrBundle.startPolling(txQuote.bundle_uuid)
     } catch (e) {
       emitErrorNotification((e as Error).message)
+    }
+  }
+
+  // handle single-chain update using original updateExistingCollection
+  const handleSingleChainUpdate = async () => {
+    setConfirmLoading(true)
+    try {
+      await updateExistingCollection()
+      setConfirmLoading(false)
+      setModalOpen(false)
+      setSuccessModalOpen(true)
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      emitErrorNotification(`Failed to update NFTs: ${errorMessage}`)
+      setConfirmLoading(false)
     }
   }
   useEffect(() => {
@@ -133,32 +163,58 @@ export function EditNftsSection() {
         </Callout.Warning>
       )}
 
-      {/* trigger omnichain modal */}
-      <Button type="primary" onClick={() => setModalOpen(true)} loading={submitLoading || txQuoteLoading || txSigning}>
+      {/* trigger modal - check if Safe + omnichain */}
+      <Button 
+        type="primary" 
+        onClick={() => {
+          // Check if project owner is Gnosis Safe and project is omnichain
+          if (isProjectOwnerGnosisSafe && isOmnichainProject) {
+            setSafeModalOpen(true)
+          } else {
+            setModalOpen(true)
+          }
+        }} 
+        loading={submitLoading || txQuoteLoading || txSigning}
+      >
         <span><Trans>Edit NFTs</Trans></span>
       </Button>
 
-      {/* omnichain review & confirm modal */}
+      {/* review & confirm modal */}
       <TransactionModal
         open={modalOpen}
         title={<Trans>Edit NFTs</Trans>}
         onOk={handleConfirm}
-        okText={!txQuote ? <Trans>Get edit quote</Trans> : <Trans>Edit NFTs</Trans>}
+        okText={
+          !isOmnichainProject ? (
+            <Trans>Edit NFTs</Trans>
+          ) : !txQuote ? (
+            <Trans>Get edit quote</Trans>
+          ) : (
+            <Trans>Edit NFTs</Trans>
+          )
+        }
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
         cancelButtonProps={{ hidden: true }}
         onCancel={() => setModalOpen(false)}
         transactionPending={txSigning}
-        chainIds={activeChains}
+        chainIds={isOmnichainProject ? activeChains : undefined}
         relayrResponse={relayrBundle.response}
       >
-        {!txQuote && (
+        {!isOmnichainProject ? (
+          <div className="py-4 text-sm">
+            <Callout.Info>
+              <Trans>
+                You'll be prompted a wallet signature to submit the transaction.
+              </Trans>
+            </Callout.Info>
+          </div>
+        ) : !txQuote ? (
           <Callout.Info>
             <Trans>
               You'll be prompted a wallet signature for each of this project's chains before final submission.
             </Trans>
           </Callout.Info>
-        )}
-        {txQuote && (
+        ) : (
           <>
             <div className="flex justify-between mb-2">
               <span><Trans>Gas quote:</Trans></span>
@@ -187,6 +243,14 @@ export function EditNftsSection() {
             </div>
           </>
         }
+      />
+
+      <QueueSafeEditNftsTxsModal
+        open={safeModalOpen}
+        onCancel={() => setSafeModalOpen(false)}
+        rewardTiers={rewardTiers || []}
+        editedRewardTierIds={editedRewardTierIds}
+        onSuccess={() => setSuccessModalOpen(true)}
       />
     </>
   )

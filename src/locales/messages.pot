@@ -281,6 +281,9 @@ msgstr ""
 msgid "See example"
 msgstr ""
 
+msgid "Transfer ownership of this project on all chains where it exists. This action will transfer ownership on each of your project's chains simultaneously."
+msgstr ""
+
 msgid "{0}% of total token issuance."
 msgstr ""
 
@@ -471,6 +474,9 @@ msgid "Add payout"
 msgstr ""
 
 msgid "This project has no description"
+msgstr ""
+
+msgid "No chains available for multi-chain transfer"
 msgstr ""
 
 msgid "Everything we do is to ensure that Juicebox is trustworthy."
@@ -1493,6 +1499,9 @@ msgstr ""
 msgid "Ruleset configuration"
 msgstr ""
 
+msgid "Recipient address is required"
+msgstr ""
+
 msgid "Add a brief one-sentence summary of your project."
 msgstr ""
 
@@ -1721,6 +1730,9 @@ msgstr ""
 msgid "Approve tokens on ERC20 contract {0}"
 msgstr ""
 
+msgid "Transfer Multi-Chain Ownership"
+msgstr ""
+
 msgid "projects"
 msgstr ""
 
@@ -1773,6 +1785,9 @@ msgid "0% fee"
 msgstr ""
 
 msgid "Is not greater than zero"
+msgstr ""
+
+msgid "Transfer Project Ownership"
 msgstr ""
 
 msgid "Transaction pending..."
@@ -2528,6 +2543,9 @@ msgstr ""
 msgid "Project payer addresses"
 msgstr ""
 
+msgid "Missing project owner or project ID"
+msgstr ""
+
 msgid "This project's tokens are not yet ERC-20"
 msgstr ""
 
@@ -2709,6 +2727,9 @@ msgid "Recipients will recieve payouts in ETH"
 msgstr ""
 
 msgid "{0} must be numeric"
+msgstr ""
+
+msgid "Please enter a recipient address"
 msgstr ""
 
 msgid "{surplusElement} is available across all chains for token cash outs or future payouts."

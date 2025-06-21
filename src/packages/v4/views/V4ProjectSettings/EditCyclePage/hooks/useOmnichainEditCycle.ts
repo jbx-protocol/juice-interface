@@ -1,9 +1,9 @@
 import { JBChainId, createSalt, jbOmnichainDeployer4_1Address } from 'juice-sdk-core'
 import { jbOmnichainDeployer4_1Abi, useGetRelayrTxBundle, useGetRelayrTxQuote, useJBContractContext, useSendRelayrTx } from 'juice-sdk-react'
 
+import { useWallet } from 'hooks/Wallet'
 import { EditCycleTxArgs } from 'packages/v4/utils/editRuleset'
 import { encodeFunctionData } from 'viem'
-import { useWallet } from 'hooks/Wallet'
 
 export function useOmnichainEditCycle() {
   const { userAddress } = useWallet()

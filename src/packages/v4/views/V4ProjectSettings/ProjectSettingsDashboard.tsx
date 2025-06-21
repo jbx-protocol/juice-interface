@@ -26,7 +26,7 @@ export type SettingsPageKey =
   | 'nfts'
   | 'payouts'
   // | 'reservedtokens'
-  // | 'transferownership'
+  | 'transferownership'
   | 'archiveproject'
   // | 'heldfees'
   | 'createerc20'
@@ -222,18 +222,18 @@ export function ProjectSettingsDashboard() {
               </ul>
             </SettingsGroupCard>
           )}
-          {/* <SettingsGroupCard
+          <SettingsGroupCard
             title={<Trans>Manage</Trans>}
             subtitle={<Trans>Manage your project's state and ownership</Trans>}
           >
             <ul>
               <li>
-                <Link href={useSettingsPagePath('transferownership')}>
+                <Link href={useSettingsPagePath('transferownership') ?? ''}>
                   <Trans>Transfer ownership</Trans>
                 </Link>
               </li>
             </ul>
-          </SettingsGroupCard> */}
+          </SettingsGroupCard>
         </div>
       </section>
     </ProjectSettingsLayout>

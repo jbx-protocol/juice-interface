@@ -16,6 +16,7 @@ import { useSettingsPagePath } from './hooks/useSettingsPagePath'
 import { ProjectDetailsSettingsPage } from './ProjectDetailsSettingsPage/ProjectDetailsSettingsPage'
 import { SettingsPageKey } from './ProjectSettingsDashboard'
 import { ProjectSettingsLayout } from './ProjectSettingsLayout'
+import { TransferOwnershipSettingsPage } from './TransferOwnershipSettingsPage'
 
 const SettingsPageComponents: {
   [k in SettingsPageKey]: () => JSX.Element | null
@@ -26,7 +27,7 @@ const SettingsPageComponents: {
   nfts: EditNftsPage,
   payouts: () => null, //PayoutsSettingsPage,
   // reservedtokens: () => null, //ReservedTokensSettingsPage,
-  // transferownership: () => null, //TransferOwnershipSettingsPage,
+  transferownership: TransferOwnershipSettingsPage,
   archiveproject: ArchiveProjectSettingsPage,
   // heldfees: () => null, //ProcessHeldFeesPage,
   createerc20: CreateErc20TokenSettingsPage,
@@ -43,7 +44,7 @@ const V4SettingsPageKeyTitleMap = (
   payouts: t`Payouts`,
   // reservedtokens: t`Reserved token recipients`,
   nfts: hasExistingNfts ? t`Edit NFT collection` : t`Launch New NFT Collection`,
-  // transferownership: t`Transfer ownership`,
+  transferownership: t`Transfer ownership`,
   archiveproject: t`Archive project`,
   // heldfees: t`Process held fees`,
   createerc20: t`Create ERC-20 token`,

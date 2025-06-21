@@ -9,14 +9,17 @@ import { Callout } from 'components/Callout/Callout'
 import ETHAmount from 'components/currency/ETHAmount'
 import TransactionModal from 'components/modals/TransactionModal'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
+import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
 import { JBChainId } from 'juice-sdk-core'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { useEditProjectDetailsTx } from 'packages/v4/hooks/useEditProjectDetailsTx'
 import { useOmnichainEditProjectDetailsTx } from 'packages/v4/hooks/useOmnichainEditProjectDetailsTx'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { withoutHttps } from 'utils/http'
 import { emitErrorNotification } from 'utils/notifications'
 import { TransactionSuccessModal } from '../EditCyclePage/TransactionSuccessModal'
+import QueueSafeProjectDetailsTxsModal from './components/QueueSafeProjectDetailsTxsModal'
 
 export function ProjectDetailsSettingsPage() {
   const { metadata } = useJBProjectMetadataContext()
@@ -36,6 +39,13 @@ export function ProjectDetailsSettingsPage() {
   const [modalOpen, setModalOpen] = useState(false)
   const [cid, setCid] = useState<`0x${string}`>()
   const [successOpen, setSuccessOpen] = useState(false)
+  const [safeModalOpen, setSafeModalOpen] = useState(false)
+
+  // Project owner and Gnosis Safe detection
+  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
+  const { data: gnosisSafeData } = useGnosisSafe(projectOwnerAddress)
+  const isProjectOwnerGnosisSafe = Boolean(gnosisSafeData)
+  const isOmnichainProject = projectChains.length > 1
 
   const editProjectDetailsTx = useEditProjectDetailsTx()
 
@@ -69,11 +79,18 @@ export function ProjectDetailsSettingsPage() {
     const hash = uploadedMetadata.Hash as `0x${string}`
     setCid(hash)
     setLoadingSaveChanges(false)
-    setModalOpen(true)
+
+    // Check if project owner is Gnosis Safe and project is omnichain
+    if (isProjectOwnerGnosisSafe && isOmnichainProject) {
+      setSafeModalOpen(true)
+    } else {
+      setModalOpen(true)
+    }
   }, [
-    editProjectDetailsTx,
     projectForm,
     projectMetadata,
+    isProjectOwnerGnosisSafe,
+    isOmnichainProject,
   ])
 
   // request omnichain quote
@@ -91,6 +108,11 @@ export function ProjectDetailsSettingsPage() {
 
   // confirm omnichain save
   const handleConfirm = async () => {
+    if (!isOmnichainProject) {
+      // Use single-chain transaction for non-omnichain projects
+      return handleSingleChainSave()
+    }
+    
     if (!txQuote) return handleGetQuote()
     setConfirmLoading(true)
     try {
@@ -104,6 +126,36 @@ export function ProjectDetailsSettingsPage() {
     }
   }
 
+  // handle single-chain save using original editProjectDetailsTx
+  const handleSingleChainSave = useCallback(async () => {
+    if (!cid) return
+    
+    setConfirmLoading(true)
+    try {
+      await editProjectDetailsTx(cid, {
+        onTransactionPending: () => {
+          // Transaction pending
+        },
+        onTransactionConfirmed: () => {
+          projectForm.resetFields()
+          setConfirmLoading(false)
+          setModalOpen(false)
+          setSuccessOpen(true)
+        },
+        onTransactionError: (error) => {
+          console.error('Transaction error:', error)
+          emitErrorNotification(`Failed to save project details: ${error.message}`)
+          setConfirmLoading(false)
+        }
+      })
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      console.error('Failed to save project details', error)
+      emitErrorNotification(`Failed to save project details: ${errorMessage}`)
+      setConfirmLoading(false)
+    }
+  }, [cid, editProjectDetailsTx, projectForm])
+
   // poll for completion
   useEffect(() => {
     if (relayrBundle.isComplete) {
@@ -116,7 +168,7 @@ export function ProjectDetailsSettingsPage() {
       emitErrorNotification(relayrBundle.error as string)
       setConfirmLoading(false)
     }
-  }, [relayrBundle.isComplete, relayrBundle.error])
+  }, [relayrBundle.isComplete, relayrBundle.error, projectForm])
 
   const resetProjectForm = useCallback(() => {
     const infoUri = withoutHttps(projectMetadata?.infoUri ?? '')
@@ -145,6 +197,7 @@ export function ProjectDetailsSettingsPage() {
     projectMetadata?.coverImageUri,
     projectMetadata?.description,
     projectMetadata?.projectTagline,
+    projectMetadata?.projectRequiredOFACCheck,
     projectMetadata?.twitter,
     projectMetadata?.discord,
     projectMetadata?.telegram,
@@ -175,15 +228,31 @@ export function ProjectDetailsSettingsPage() {
         open={modalOpen}
         title={<Trans>Confirm changes</Trans>}
         onOk={handleConfirm}
-        okText={!txQuote ? <Trans>Get edit quote</Trans> : <Trans>Save changes</Trans>}
+        okText={
+          !isOmnichainProject ? (
+            <Trans>Save changes</Trans>
+          ) : !txQuote ? (
+            <Trans>Get edit quote</Trans>
+          ) : (
+            <Trans>Save changes</Trans>
+          )
+        }
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
         transactionPending={txSigning}
-        chainIds={projectChains}
+        chainIds={isOmnichainProject ? projectChains : undefined}
         relayrResponse={relayrBundle.response}
         cancelButtonProps={{ hidden: true }}
         onCancel={() => setModalOpen(false)}
       >
-        {!txQuote && (
+        {!isOmnichainProject ? (
+          <div className="py-4 text-sm">
+            <Callout.Info>
+              <Trans>
+                You'll be prompted a wallet signature to submit the transaction.
+              </Trans>
+            </Callout.Info>
+          </div>
+        ) : !txQuote ? (
           <div className="py-4 text-sm">
             <Callout.Info>
               <Trans>
@@ -191,8 +260,7 @@ export function ProjectDetailsSettingsPage() {
               </Trans>
             </Callout.Info>
           </div>
-        )}
-        {txQuote && (
+        ) : (
           <>
             <div className="flex justify-between mb-2">
               <span><Trans>Gas quote:</Trans></span>
@@ -213,6 +281,12 @@ export function ProjectDetailsSettingsPage() {
             <Trans>Your project details have been updated across all chains.</Trans>
           </div>
         }
+      />
+      <QueueSafeProjectDetailsTxsModal
+        open={safeModalOpen}
+        onCancel={() => setSafeModalOpen(false)}
+        form={projectForm}
+        projectMetadata={projectMetadata ?? undefined}
       />
     </>
   )

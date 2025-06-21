@@ -170,6 +170,9 @@ msgstr ""
 msgid "Twitter"
 msgstr ""
 
+msgid "Loading project chains..."
+msgstr ""
+
 msgid "Issue tokens or NFTs to your supporters and use them for governance, token-gated websites, or redemptions. With flexible token issuance and redemption, your project automatically scales to meet your supporters' demand."
 msgstr ""
 
@@ -281,6 +284,9 @@ msgstr ""
 msgid "See example"
 msgstr ""
 
+msgid "Transfer ownership of this project on all chains where it exists. This action will transfer ownership on each of your project's chains simultaneously."
+msgstr ""
+
 msgid "{0}% of total token issuance."
 msgstr ""
 
@@ -324,6 +330,9 @@ msgid "{0} remaining"
 msgstr ""
 
 msgid "How your project will be paid and pay out in ETH."
+msgstr ""
+
+msgid "Since your project owner is a Gnosis Safe and this is an omnichain project, you need to submit separate transactions on each chain. Click the button for each chain to submit the project details update transaction."
 msgstr ""
 
 msgid "Save payouts"
@@ -471,6 +480,9 @@ msgid "Add payout"
 msgstr ""
 
 msgid "This project has no description"
+msgstr ""
+
+msgid "No chains available for multi-chain transfer"
 msgstr ""
 
 msgid "Everything we do is to ensure that Juicebox is trustworthy."
@@ -812,6 +824,9 @@ msgstr ""
 msgid "Reliability"
 msgstr ""
 
+msgid "All transactions completed!"
+msgstr ""
+
 msgid "Explore"
 msgstr ""
 
@@ -957,6 +972,9 @@ msgid "Using crowdfunding platforms for films has been around for a while, but J
 msgstr ""
 
 msgid "Changes will take effect in your next cycle as long as it starts after your edit deadline."
+msgstr ""
+
+msgid "You'll be prompted a wallet signature to submit the transaction."
 msgstr ""
 
 msgid "Change network to transfer"
@@ -1194,6 +1212,9 @@ msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr ""
 
 msgid "Project tokens will be minted to the address that made the payment."
+msgstr ""
+
+msgid "Transactions have been completed on all chains. You can now close this modal."
 msgstr ""
 
 msgid "Migrate legacy tokens"
@@ -1493,6 +1514,9 @@ msgstr ""
 msgid "Ruleset configuration"
 msgstr ""
 
+msgid "Recipient address is required"
+msgstr ""
+
 msgid "Add a brief one-sentence summary of your project."
 msgstr ""
 
@@ -1721,6 +1745,9 @@ msgstr ""
 msgid "Approve tokens on ERC20 contract {0}"
 msgstr ""
 
+msgid "Transfer Multi-Chain Ownership"
+msgstr ""
+
 msgid "projects"
 msgstr ""
 
@@ -1773,6 +1800,9 @@ msgid "0% fee"
 msgstr ""
 
 msgid "Is not greater than zero"
+msgstr ""
+
+msgid "Transfer Project Ownership"
 msgstr ""
 
 msgid "Transaction pending..."
@@ -2528,6 +2558,9 @@ msgstr ""
 msgid "Project payer addresses"
 msgstr ""
 
+msgid "Missing project owner or project ID"
+msgstr ""
+
 msgid "This project's tokens are not yet ERC-20"
 msgstr ""
 
@@ -2709,6 +2742,9 @@ msgid "Recipients will recieve payouts in ETH"
 msgstr ""
 
 msgid "{0} must be numeric"
+msgstr ""
+
+msgid "Please enter a recipient address"
 msgstr ""
 
 msgid "{surplusElement} is available across all chains for token cash outs or future payouts."
@@ -3305,6 +3341,9 @@ msgstr ""
 msgid "Rulesets"
 msgstr ""
 
+msgid "Switch to {chainName}"
+msgstr ""
+
 msgid "Set ENS text record for {ensName}"
 msgstr ""
 
@@ -3339,6 +3378,9 @@ msgid "Balance"
 msgstr ""
 
 msgid "Redeem NFTs for ETH"
+msgstr ""
+
+msgid "Queue Safe Project Details Transactions"
 msgstr ""
 
 msgid "Juicebox is built for the people, by the people."
@@ -3531,6 +3573,9 @@ msgid "Project configurations cannot be changed to the duration of locked cycles
 msgstr ""
 
 msgid "This project has redemptions turned off."
+msgstr ""
+
+msgid "Execute on {chainName}"
 msgstr ""
 
 msgid "Through community ownership and pooling resources, SharkDAO offered a way for members to participate in the Nouns ecosystem despite the high barrier to entry. SharkDAO members can own as little as one $SHARK token and become an active voice in Nouns DAO governance through the sub-DAO. To learn more about the story of SharkDAO, listen to Dropnerd on episode 5 of the Juicebox podcast: <0>https://podcast.juicebox.money</0>."
@@ -4088,6 +4133,9 @@ msgstr ""
 msgid "Customization"
 msgstr ""
 
+msgid "Completed"
+msgstr ""
+
 msgid "No limit"
 msgstr ""
 
@@ -4197,6 +4245,9 @@ msgid "Cycle #1 starts when you create your project. With locked cycles, if you 
 msgstr ""
 
 msgid "Notice from {projectName}"
+msgstr ""
+
+msgid "Queue on {chainName}"
 msgstr ""
 
 msgid "Making it fun & exciting to discover, launch and manage projects."
@@ -4626,6 +4677,9 @@ msgid "Tools"
 msgstr ""
 
 msgid "Project contracts"
+msgstr ""
+
+msgid "Currently connected"
 msgstr ""
 
 msgid "Chain"

@@ -1,9 +1,9 @@
-import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 import { JBChainId, jbProjectDeploymentAddresses } from 'juice-sdk-core'
 import { jbControllerAbi, useGetRelayrTxBundle, useGetRelayrTxQuote, useSendRelayrTx } from 'juice-sdk-react'
+import { ContractFunctionArgs, encodeFunctionData } from 'viem'
 
-import { Address } from 'viem'
 import { useWallet } from 'hooks/Wallet'
+import { Address } from 'viem'
 
 export function useDeployOmnichainErc20() {
   const { userAddress } = useWallet()

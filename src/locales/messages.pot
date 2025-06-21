@@ -170,6 +170,9 @@ msgstr ""
 msgid "Twitter"
 msgstr ""
 
+msgid "Loading project chains..."
+msgstr ""
+
 msgid "Issue tokens or NFTs to your supporters and use them for governance, token-gated websites, or redemptions. With flexible token issuance and redemption, your project automatically scales to meet your supporters' demand."
 msgstr ""
 
@@ -327,6 +330,9 @@ msgid "{0} remaining"
 msgstr ""
 
 msgid "How your project will be paid and pay out in ETH."
+msgstr ""
+
+msgid "Since your project owner is a Gnosis Safe and this is an omnichain project, you need to submit separate transactions on each chain. Click the button for each chain to submit the project details update transaction."
 msgstr ""
 
 msgid "Save payouts"
@@ -818,6 +824,9 @@ msgstr ""
 msgid "Reliability"
 msgstr ""
 
+msgid "All transactions completed!"
+msgstr ""
+
 msgid "Explore"
 msgstr ""
 
@@ -963,6 +972,9 @@ msgid "Using crowdfunding platforms for films has been around for a while, but J
 msgstr ""
 
 msgid "Changes will take effect in your next cycle as long as it starts after your edit deadline."
+msgstr ""
+
+msgid "You'll be prompted a wallet signature to submit the transaction."
 msgstr ""
 
 msgid "Change network to transfer"
@@ -2564,6 +2576,9 @@ msgstr ""
 msgid "Unarchive project"
 msgstr ""
 
+msgid "Project details have been updated on all chains. You can now close this modal."
+msgstr ""
+
 msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
 msgstr ""
 
@@ -3326,6 +3341,9 @@ msgstr ""
 msgid "Rulesets"
 msgstr ""
 
+msgid "Switch to {chainName}"
+msgstr ""
+
 msgid "Set ENS text record for {ensName}"
 msgstr ""
 
@@ -3360,6 +3378,9 @@ msgid "Balance"
 msgstr ""
 
 msgid "Redeem NFTs for ETH"
+msgstr ""
+
+msgid "Queue Safe Project Details Transactions"
 msgstr ""
 
 msgid "Juicebox is built for the people, by the people."
@@ -4109,6 +4130,9 @@ msgstr ""
 msgid "Customization"
 msgstr ""
 
+msgid "Completed"
+msgstr ""
+
 msgid "No limit"
 msgstr ""
 
@@ -4218,6 +4242,9 @@ msgid "Cycle #1 starts when you create your project. With locked cycles, if you 
 msgstr ""
 
 msgid "Notice from {projectName}"
+msgstr ""
+
+msgid "Queue on {chainName}"
 msgstr ""
 
 msgid "Making it fun & exciting to discover, launch and manage projects."
@@ -4647,6 +4674,9 @@ msgid "Tools"
 msgstr ""
 
 msgid "Project contracts"
+msgstr ""
+
+msgid "Currently connected"
 msgstr ""
 
 msgid "Chain"

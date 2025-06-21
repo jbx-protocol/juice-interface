@@ -1214,6 +1214,9 @@ msgstr ""
 msgid "Project tokens will be minted to the address that made the payment."
 msgstr ""
 
+msgid "Transactions have been completed on all chains. You can now close this modal."
+msgstr ""
+
 msgid "Migrate legacy tokens"
 msgstr ""
 
@@ -2576,9 +2579,6 @@ msgstr ""
 msgid "Unarchive project"
 msgstr ""
 
-msgid "Project details have been updated on all chains. You can now close this modal."
-msgstr ""
-
 msgid "CSV data wasn't ready for export. Wait a few seconds and try again."
 msgstr ""
 
@@ -3573,6 +3573,9 @@ msgid "Project configurations cannot be changed to the duration of locked cycles
 msgstr ""
 
 msgid "This project has redemptions turned off."
+msgstr ""
+
+msgid "Execute on {chainName}"
 msgstr ""
 
 msgid "Through community ownership and pooling resources, SharkDAO offered a way for members to participate in the Nouns ecosystem despite the high barrier to entry. SharkDAO members can own as little as one $SHARK token and become an active voice in Nouns DAO governance through the sub-DAO. To learn more about the story of SharkDAO, listen to Dropnerd on episode 5 of the Juicebox podcast: <0>https://podcast.juicebox.money</0>."

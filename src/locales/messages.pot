@@ -59,6 +59,9 @@ msgstr ""
 msgid "Deploy changes"
 msgstr ""
 
+msgid "Since your project owner is a Gnosis Safe and this is an omnichain project, you need to queue separate transactions on each chain."
+msgstr ""
+
 msgid "How should I set up my project?"
 msgstr ""
 
@@ -168,6 +171,9 @@ msgid "Where to Contact You"
 msgstr ""
 
 msgid "Twitter"
+msgstr ""
+
+msgid "Loading project chains..."
 msgstr ""
 
 msgid "Issue tokens or NFTs to your supporters and use them for governance, token-gated websites, or redemptions. With flexible token issuance and redemption, your project automatically scales to meet your supporters' demand."
@@ -348,6 +354,9 @@ msgid "Token minting enabled"
 msgstr ""
 
 msgid "Edits to an upcoming cycle must be submitted at least 7 days before that cycle starts."
+msgstr ""
+
+msgid "You can execute each transaction through the Safe interface when the required signatures are collected."
 msgstr ""
 
 msgid "<0>When you pay a project, you <1>may</1> receive that project's tokens or NFTs (depending on how the project is set up).</0><2>By default, these tokens represent a partial claim on the project's ETH, and they are often used for governance rights, community access, or other membership perks.</2><3>All of this can change from project to project. Read everything carefully, and make sure you understand the project's rules before you support it. If you need help, <4>contact us</4>, or stop by the <5>Juicebox Discord server</5>.</3>"
@@ -963,6 +972,9 @@ msgid "Using crowdfunding platforms for films has been around for a while, but J
 msgstr ""
 
 msgid "Changes will take effect in your next cycle as long as it starts after your edit deadline."
+msgstr ""
+
+msgid "You'll be prompted a wallet signature to submit the transaction."
 msgstr ""
 
 msgid "Change network to transfer"
@@ -2585,6 +2597,9 @@ msgstr ""
 msgid "While enabled, the project owner can change the project's <0>controller</0> at any time."
 msgstr ""
 
+msgid "All transactions queued to Safe!"
+msgstr ""
+
 msgid "An issuance cut percent"
 msgstr ""
 
@@ -3326,6 +3341,9 @@ msgstr ""
 msgid "Rulesets"
 msgstr ""
 
+msgid "Switch to {chainName}"
+msgstr ""
+
 msgid "Set ENS text record for {ensName}"
 msgstr ""
 
@@ -3360,6 +3378,9 @@ msgid "Balance"
 msgstr ""
 
 msgid "Redeem NFTs for ETH"
+msgstr ""
+
+msgid "Queue Safe Project Details Transactions"
 msgstr ""
 
 msgid "Juicebox is built for the people, by the people."
@@ -3552,6 +3573,9 @@ msgid "Project configurations cannot be changed to the duration of locked cycles
 msgstr ""
 
 msgid "This project has redemptions turned off."
+msgstr ""
+
+msgid "Execute on {chainName}"
 msgstr ""
 
 msgid "Through community ownership and pooling resources, SharkDAO offered a way for members to participate in the Nouns ecosystem despite the high barrier to entry. SharkDAO members can own as little as one $SHARK token and become an active voice in Nouns DAO governance through the sub-DAO. To learn more about the story of SharkDAO, listen to Dropnerd on episode 5 of the Juicebox podcast: <0>https://podcast.juicebox.money</0>."
@@ -3876,6 +3900,9 @@ msgid "Project not found"
 msgstr ""
 
 msgid "Limited supply"
+msgstr ""
+
+msgid "Safe transaction queued on {0}"
 msgstr ""
 
 msgid "Juicebox Native"
@@ -4220,6 +4247,9 @@ msgstr ""
 msgid "Notice from {projectName}"
 msgstr ""
 
+msgid "Queue on {chainName}"
+msgstr ""
+
 msgid "Making it fun & exciting to discover, launch and manage projects."
 msgstr ""
 
@@ -4322,6 +4352,9 @@ msgstr ""
 msgid "Juicebox Project ID"
 msgstr ""
 
+msgid "Wallet connected to this chain"
+msgstr ""
+
 msgid "Events"
 msgstr ""
 
@@ -4413,6 +4446,9 @@ msgid "ETH"
 msgstr ""
 
 msgid "The amount of reserved tokens currently available to be distributed to the recipients below."
+msgstr ""
+
+msgid "View in Safe"
 msgstr ""
 
 msgid "Set text record for {0}"

@@ -44,6 +44,9 @@ msgstr ""
 msgid "Project treasury version"
 msgstr ""
 
+msgid "Queue on Safe"
+msgstr ""
+
 msgid "<0>When Juicebox projects make payouts to external wallets (like \"vitalik.eth\"), they incur a {JB_FEE}% fee, which is paid to <1>JuiceboxDAO</1>. In exchange, they receive JuiceboxDAO's project tokens, allowing them to govern the protocol. They can also redeem these tokens to reclaim some of the fees.</0><2><3>Payouts to other Juicebox projects don't incur any fees.</3></2><4><5>Learn more about fees</5>.</4>"
 msgstr ""
 
@@ -87,6 +90,9 @@ msgid "Contract address: {0}"
 msgstr ""
 
 msgid "Trust"
+msgstr ""
+
+msgid "Queue Safe Ruleset Transactions"
 msgstr ""
 
 msgid "Copy to clipboard"
@@ -1952,6 +1958,9 @@ msgstr ""
 msgid "Network"
 msgstr ""
 
+msgid "Ruleset must start at or after"
+msgstr ""
+
 msgid "Transparency"
 msgstr ""
 
@@ -2466,6 +2475,9 @@ msgid "<0>View transactions.</0>"
 msgstr ""
 
 msgid "to close"
+msgstr ""
+
+msgid "Set your new ruleset to begin after you expect all required signatures and executions across every chain to be completed."
 msgstr ""
 
 msgid "Change networks to mint tokens"
@@ -4047,6 +4059,9 @@ msgid "Memo (optional)"
 msgstr ""
 
 msgid "Cycles"
+msgstr ""
+
+msgid "Since your project owned by a Safe wallet, you need to queue separate transactions on each chain."
 msgstr ""
 
 msgid "DeFi"

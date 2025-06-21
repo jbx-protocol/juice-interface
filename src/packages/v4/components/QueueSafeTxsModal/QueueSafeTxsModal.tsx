@@ -1,13 +1,15 @@
 import { Button, Modal, Spin, Tooltip } from 'antd'
 import { JBChainId, useSuckers } from 'juice-sdk-react'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
 
 import { ApiFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { NETWORKS } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
+import { useRouter } from 'next/router'
 import { SafeProposeTransactionResponse } from 'packages/v4/hooks/useProposeSafeTransaction'
+import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { twMerge } from 'tailwind-merge'
 import { safeTxUrl } from 'utils/safe'
 
@@ -25,6 +27,7 @@ export interface QueueSafeTxsModalProps {
     execute?: (chainName: string) => React.ReactNode
   }
   onTxComplete?: (chainId: JBChainId, result: SafeProposeTransactionResponse) => void
+  onAllComplete?: VoidFunction
 }
 
 export default function QueueSafeTxsModal({
@@ -35,6 +38,7 @@ export default function QueueSafeTxsModal({
   onExecuteChain,
   safeAddress,
   onTxComplete,
+  onAllComplete,
   buttonTextOverride,
 }: QueueSafeTxsModalProps) {
   const [isLoading, setIsLoading] = useState(false)
@@ -43,7 +47,8 @@ export default function QueueSafeTxsModal({
   const [txResults, setTxResults] = useState<Map<JBChainId, SafeProposeTransactionResponse>>(new Map())
   
   const { chain: walletChain, changeNetworks, connect, userAddress } = useWallet()
-  
+  const router = useRouter()
+
   const { data: suckers } = useSuckers()
   const chains = useMemo(() => {
     if (!suckers?.length) return []
@@ -96,6 +101,13 @@ export default function QueueSafeTxsModal({
 
   const allChainsCompleted = chains.length > 0 && chains.every((chainId: JBChainId) => completedChains.has(chainId))
 
+  // Call onAllComplete when all chains are completed
+  useEffect(() => {
+    if (allChainsCompleted && onAllComplete) {
+      onAllComplete()
+    }
+  }, [allChainsCompleted, onAllComplete])
+
   const handleCancel = useCallback(() => {
     setCompletedChains(new Set())
     setTxResults(new Map())
@@ -106,6 +118,9 @@ export default function QueueSafeTxsModal({
   const getChainName = (chainId: JBChainId): string => {
     return NETWORKS[chainId]?.label || `Chain ${chainId}`
   }
+  const goToProject = useCallback(() => {
+    router.push(v4ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId  }))
+  }, [router, suckers])
 
   return (
     <Modal
@@ -117,8 +132,8 @@ export default function QueueSafeTxsModal({
           <Trans>Cancel</Trans>
         </Button>,
         allChainsCompleted && (
-          <Button key="done" type="primary" onClick={handleCancel}>
-            <Trans>Done</Trans>
+          <Button key="done" type="primary" onClick={() => goToProject()}>
+            <Trans>Go to project</Trans>
           </Button>
         ),
       ].filter(Boolean)}

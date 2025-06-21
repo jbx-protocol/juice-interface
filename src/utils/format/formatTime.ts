@@ -1,11 +1,11 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
-import { t } from '@lingui/macro'
-
 import {
   DurationOption,
   durationOptions,
 } from 'components/inputs/DurationInput'
 import { SECONDS_IN_DAY, SECONDS_IN_HOUR } from 'constants/numbers'
+
+import { t } from '@lingui/macro'
 import { DurationUnitsOption } from 'models/time'
 
 export function detailedTimeString({
@@ -136,7 +136,7 @@ export const formatTime = (timestamp: number | undefined) => {
     second: '2-digit',
     hour12: true,
     timeZoneName: 'short',
-    timeZone: 'UTC',
+    // timeZone: 'UTC',
   }
   const timeWeekdayString = timeDate.toLocaleString('en-US', formatOptions)
   return isoDateString + ', ' + timeWeekdayString

@@ -1,6 +1,5 @@
-import Safe, { SafeTransactionOptionalProps } from '@safe-global/protocol-kit'
+import Safe, { Eip1193Provider, SafeTransactionOptionalProps } from '@safe-global/protocol-kit'
 import { MetaTransactionData, OperationType } from '@safe-global/types-kit'
-import { emitErrorNotification } from 'utils/notifications'
 
 import SafeApiKit from '@safe-global/api-kit'
 import { estimateTxBaseGas } from '@safe-global/protocol-kit'
@@ -8,6 +7,7 @@ import { NETWORKS } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
 import { JBChainId } from 'juice-sdk-core'
 import { useState } from 'react'
+import { emitErrorNotification } from 'utils/notifications'
 import { getAddress } from 'viem'
 
 // constants for gas estimation
@@ -58,7 +58,7 @@ export function useProposeSafeTransaction({ safeAddress }: ProposeSafeTransactio
       const checksumSafeAddress = getAddress(safeAddress)
       
       const protocolKit = await Safe.init({
-        provider: eip1193Provider ?? '',
+        provider: eip1193Provider as unknown as Eip1193Provider,
         signer: checksumUserAddress,
         safeAddress: checksumSafeAddress,
       })

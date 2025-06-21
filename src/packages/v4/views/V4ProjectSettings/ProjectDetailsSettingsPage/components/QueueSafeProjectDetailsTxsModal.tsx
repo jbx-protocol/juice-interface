@@ -1,11 +1,11 @@
 import { Trans, t } from '@lingui/macro'
 import { FormInstance, useWatch } from 'antd/lib/form/Form'
-import { JBChainId, JBProjectMetadata, jbControllerAbi, jbProjectDeploymentAddresses } from 'juice-sdk-core'
+import { JBChainId, JBProjectMetadata, jbControllerAbi } from 'juice-sdk-core'
+import { useJBContractContext, useSuckers } from 'juice-sdk-react'
 import { SafeProposeTransactionResponse, useProposeSafeTransaction } from 'packages/v4/hooks/useProposeSafeTransaction'
 
 import { ProjectDetailsFormFields } from 'components/Project/ProjectSettings/ProjectDetailsForm'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
-import { useSuckers } from 'juice-sdk-react'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import QueueSafeTxsModal from 'packages/v4/components/QueueSafeTxsModal'
 import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
@@ -19,7 +19,6 @@ export interface QueueSafeProjectDetailsTxsModalProps {
   onCancel: VoidFunction
   form?: FormInstance<ProjectDetailsFormFields>
   projectMetadata?: JBProjectMetadata
-  safeAddress: string
 }
 export default function QueueSafeProjectDetailsTxsModal({
   open,
@@ -30,6 +29,7 @@ export default function QueueSafeProjectDetailsTxsModal({
   const {data: safeAddress} = useV4ProjectOwnerOf()
   const { proposeTransaction } = useProposeSafeTransaction({ safeAddress: safeAddress || '' })
   const { data: suckers } = useSuckers()
+  const { contracts } = useJBContractContext()
   const formData = useWatch([], form) as ProjectDetailsFormFields | undefined
 
   const handleExecuteProjectDetailsOnChain = useCallback(async (chainId: JBChainId) => {
@@ -62,7 +62,6 @@ export default function QueueSafeProjectDetailsTxsModal({
 
     // 2. Prepare chain-specific transaction data
     const projectId = BigInt(sucker.projectId)
-    const controllerAddress = jbProjectDeploymentAddresses.JBController[chainId] as `0x${string}`
     
     const data = encodeFunctionData({
       abi: jbControllerAbi,
@@ -72,7 +71,7 @@ export default function QueueSafeProjectDetailsTxsModal({
 
     // 3. Propose the transaction to the Safe service
     const result: SafeProposeTransactionResponse = await proposeTransaction({
-      to: controllerAddress,
+      to: contracts.controller.data ?? '',
       data,
       value: '0',
       chainId
@@ -82,7 +81,7 @@ export default function QueueSafeProjectDetailsTxsModal({
         t`Safe transaction queued on ${getChainName(chainId)}`
     )
     return result
-  }, [formData, projectMetadata, safeAddress, suckers, proposeTransaction])
+  }, [formData, projectMetadata, safeAddress, suckers, proposeTransaction, contracts.controller.data])
 
   return (
     <QueueSafeTxsModal

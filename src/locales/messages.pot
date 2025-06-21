@@ -2894,6 +2894,9 @@ msgstr ""
 msgid "Timestamp (seconds)"
 msgstr ""
 
+msgid "Queue Safe NFT Edit Transactions"
+msgstr ""
+
 msgid "Notice from {0}"
 msgstr ""
 

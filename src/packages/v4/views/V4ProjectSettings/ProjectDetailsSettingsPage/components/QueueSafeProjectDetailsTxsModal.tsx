@@ -19,7 +19,6 @@ export interface QueueSafeProjectDetailsTxsModalProps {
   onCancel: VoidFunction
   form?: FormInstance<ProjectDetailsFormFields>
   projectMetadata?: JBProjectMetadata
-  safeAddress: string
 }
 export default function QueueSafeProjectDetailsTxsModal({
   open,

@@ -341,9 +341,6 @@ msgstr ""
 msgid "How your project will be paid and pay out in ETH."
 msgstr ""
 
-msgid "Since your project owner is a Gnosis Safe and this is an omnichain project, you need to submit separate transactions on each chain. Click the button for each chain to submit the project details update transaction."
-msgstr ""
-
 msgid "Save payouts"
 msgstr ""
 
@@ -836,9 +833,6 @@ msgstr ""
 msgid "Reliability"
 msgstr ""
 
-msgid "All transactions completed!"
-msgstr ""
-
 msgid "Explore"
 msgstr ""
 
@@ -1224,9 +1218,6 @@ msgid "Move your {tokensLabel} from the Juicebox contract to your wallet."
 msgstr ""
 
 msgid "Project tokens will be minted to the address that made the payment."
-msgstr ""
-
-msgid "Transactions have been completed on all chains. You can now close this modal."
 msgstr ""
 
 msgid "Migrate legacy tokens"
@@ -4160,9 +4151,6 @@ msgstr ""
 msgid "Customization"
 msgstr ""
 
-msgid "Completed"
-msgstr ""
-
 msgid "No limit"
 msgstr ""
 
@@ -4710,9 +4698,6 @@ msgid "Tools"
 msgstr ""
 
 msgid "Project contracts"
-msgstr ""
-
-msgid "Currently connected"
 msgstr ""
 
 msgid "Chain"

@@ -1,13 +1,18 @@
+import { Trans, t } from '@lingui/macro'
 import { FormInstance, useWatch } from 'antd/lib/form/Form'
-import { JBChainId, JBProjectMetadata } from 'juice-sdk-core'
+import { JBChainId, JBProjectMetadata, jbControllerAbi } from 'juice-sdk-core'
+import { useJBContractContext, useSuckers } from 'juice-sdk-react'
+import { SafeProposeTransactionResponse, useProposeSafeTransaction } from 'packages/v4/hooks/useProposeSafeTransaction'
 
-import { Trans } from '@lingui/macro'
 import { ProjectDetailsFormFields } from 'components/Project/ProjectSettings/ProjectDetailsForm'
 import { PROJECT_PAY_CHARACTER_LIMIT } from 'constants/numbers'
 import { uploadProjectMetadata } from 'lib/api/ipfs'
 import QueueSafeTxsModal from 'packages/v4/components/QueueSafeTxsModal'
-import { useEditProjectDetailsTx } from 'packages/v4/hooks/useEditProjectDetailsTx'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
+import { getChainName } from 'packages/v4/utils/networks'
 import { useCallback } from 'react'
+import { emitInfoNotification } from 'utils/notifications'
+import { encodeFunctionData } from 'viem'
 
 export interface QueueSafeProjectDetailsTxsModalProps {
   open: boolean
@@ -21,15 +26,22 @@ export default function QueueSafeProjectDetailsTxsModal({
   form,
   projectMetadata,
 }: QueueSafeProjectDetailsTxsModalProps) {
-  const editProjectDetailsTx = useEditProjectDetailsTx()
+  const {data: safeAddress} = useV4ProjectOwnerOf()
+  const { proposeTransaction } = useProposeSafeTransaction({ safeAddress: safeAddress || '' })
+  const { data: suckers } = useSuckers()
+  const { contracts } = useJBContractContext()
   const formData = useWatch([], form) as ProjectDetailsFormFields | undefined
 
   const handleExecuteProjectDetailsOnChain = useCallback(async (chainId: JBChainId) => {
-    if (!formData) {
-      throw new Error('Form data is required')
-    }
+    if (!formData) throw new Error('Form data is required')
+    if (!safeAddress) throw new Error('Safe address is required')
+    if (!suckers) throw new Error('No project chains available')
 
-    // Upload metadata first
+    // Find the sucker for this specific chain to get the correct project ID
+    const sucker = suckers.find(s => s.peerChainId === chainId)
+    if (!sucker) throw new Error(`No project found for chain ${chainId}`)
+
+    // 1. Upload metadata
     const uploadedMetadata = await uploadProjectMetadata({
       name: formData.name || projectMetadata?.name || '',
       description: formData.description || projectMetadata?.description || '',
@@ -45,29 +57,31 @@ export default function QueueSafeProjectDetailsTxsModal({
       payDisclosure: formData.payDisclosure || '',
       tags: formData.tags || [],
     })
-
-    if (!uploadedMetadata.Hash) {
-      throw new Error('Failed to upload metadata')
-    }
-
+    if (!uploadedMetadata.Hash) throw new Error('Failed to upload metadata')
     const hash = uploadedMetadata.Hash as `0x${string}`
 
-    // Use the single-chain edit logic with Promise wrapper for error handling
-    return new Promise<void>((resolve, reject) => {
-      editProjectDetailsTx(hash, {
-        onTransactionPending: () => {
-          // Transaction pending
-        },
-        onTransactionConfirmed: () => {
-          resolve()
-        },
-        onTransactionError: (error) => {
-          console.error('Transaction error:', error)
-          reject(new Error(`Failed to save project details on chain ${chainId}: ${error.message}`))
-        }
-      }).catch(reject)
+    // 2. Prepare chain-specific transaction data
+    const projectId = BigInt(sucker.projectId)
+    
+    const data = encodeFunctionData({
+      abi: jbControllerAbi,
+      functionName: 'setUriOf',
+      args: [projectId, hash],
     })
-  }, [formData, projectMetadata, editProjectDetailsTx])
+
+    // 3. Propose the transaction to the Safe service
+    const result: SafeProposeTransactionResponse = await proposeTransaction({
+      to: contracts.controller.data ?? '',
+      data,
+      value: '0',
+      chainId
+    })
+    
+    emitInfoNotification(
+        t`Safe transaction queued on ${getChainName(chainId)}`
+    )
+    return result
+  }, [formData, projectMetadata, safeAddress, suckers, proposeTransaction, contracts.controller.data])
 
   return (
     <QueueSafeTxsModal
@@ -77,11 +91,11 @@ export default function QueueSafeProjectDetailsTxsModal({
       description={
         <Trans>
           Since your project owner is a Gnosis Safe and this is an omnichain project,
-          you need to submit separate transactions on each chain. Click the button for each
-          chain to submit the project details update transaction.
+          you need to queue separate transactions on each chain.
         </Trans>
       }
       onExecuteChain={handleExecuteProjectDetailsOnChain}
+      safeAddress={safeAddress || ''}
       buttonTextOverride={{
         execute: (chainName: string) => <Trans>Queue on {chainName}</Trans>
       }}

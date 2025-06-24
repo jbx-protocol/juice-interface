@@ -44,6 +44,9 @@ msgstr ""
 msgid "Project treasury version"
 msgstr ""
 
+msgid "Queue on Safe"
+msgstr ""
+
 msgid "<0>When Juicebox projects make payouts to external wallets (like \"vitalik.eth\"), they incur a {JB_FEE}% fee, which is paid to <1>JuiceboxDAO</1>. In exchange, they receive JuiceboxDAO's project tokens, allowing them to govern the protocol. They can also redeem these tokens to reclaim some of the fees.</0><2><3>Payouts to other Juicebox projects don't incur any fees.</3></2><4><5>Learn more about fees</5>.</4>"
 msgstr ""
 
@@ -57,6 +60,9 @@ msgid "Art"
 msgstr ""
 
 msgid "Deploy changes"
+msgstr ""
+
+msgid "Since your project owner is a Gnosis Safe and this is an omnichain project, you need to queue separate transactions on each chain."
 msgstr ""
 
 msgid "How should I set up my project?"
@@ -84,6 +90,9 @@ msgid "Contract address: {0}"
 msgstr ""
 
 msgid "Trust"
+msgstr ""
+
+msgid "Queue Safe Ruleset Transactions"
 msgstr ""
 
 msgid "Copy to clipboard"
@@ -354,6 +363,9 @@ msgid "Token minting enabled"
 msgstr ""
 
 msgid "Edits to an upcoming cycle must be submitted at least 7 days before that cycle starts."
+msgstr ""
+
+msgid "You can execute each transaction through the Safe interface when the required signatures are collected."
 msgstr ""
 
 msgid "<0>When you pay a project, you <1>may</1> receive that project's tokens or NFTs (depending on how the project is set up).</0><2>By default, these tokens represent a partial claim on the project's ETH, and they are often used for governance rights, community access, or other membership perks.</2><3>All of this can change from project to project. Read everything carefully, and make sure you understand the project's rules before you support it. If you need help, <4>contact us</4>, or stop by the <5>Juicebox Discord server</5>.</3>"
@@ -1955,6 +1967,9 @@ msgstr ""
 msgid "Network"
 msgstr ""
 
+msgid "Ruleset must start at or after"
+msgstr ""
+
 msgid "Transparency"
 msgstr ""
 
@@ -2471,6 +2486,9 @@ msgstr ""
 msgid "to close"
 msgstr ""
 
+msgid "Set your new ruleset to begin after you expect all required signatures and executions across every chain to be completed."
+msgstr ""
+
 msgid "Change networks to mint tokens"
 msgstr ""
 
@@ -2598,6 +2616,9 @@ msgid "Issuance cut percent"
 msgstr ""
 
 msgid "While enabled, the project owner can change the project's <0>controller</0> at any time."
+msgstr ""
+
+msgid "All transactions queued to Safe!"
 msgstr ""
 
 msgid "An issuance cut percent"
@@ -3902,6 +3923,9 @@ msgstr ""
 msgid "Limited supply"
 msgstr ""
 
+msgid "Safe transaction queued on {0}"
+msgstr ""
+
 msgid "Juicebox Native"
 msgstr ""
 
@@ -4044,6 +4068,9 @@ msgid "Memo (optional)"
 msgstr ""
 
 msgid "Cycles"
+msgstr ""
+
+msgid "Since your project owned by a Safe wallet, you need to queue separate transactions on each chain."
 msgstr ""
 
 msgid "DeFi"
@@ -4352,6 +4379,9 @@ msgstr ""
 msgid "Juicebox Project ID"
 msgstr ""
 
+msgid "Wallet connected to this chain"
+msgstr ""
+
 msgid "Events"
 msgstr ""
 
@@ -4443,6 +4473,9 @@ msgid "ETH"
 msgstr ""
 
 msgid "The amount of reserved tokens currently available to be distributed to the recipients below."
+msgstr ""
+
+msgid "View in Safe"
 msgstr ""
 
 msgid "Set text record for {0}"

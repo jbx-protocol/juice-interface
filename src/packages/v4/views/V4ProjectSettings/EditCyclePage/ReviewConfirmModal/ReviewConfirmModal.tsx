@@ -1,31 +1,36 @@
-import { EditCycleTxArgs, transformEditCycleFormFieldsToTxArgs } from 'packages/v4/utils/editRuleset'
-import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
 import { Trans, t } from '@lingui/macro'
-import { useEffect, useState } from 'react'
+import { JBChainId, NATIVE_TOKEN } from 'juice-sdk-core'
 import { useJBChainId, useJBContractContext, useSuckers } from 'juice-sdk-react'
+import { EditCycleTxArgs, transformEditCycleFormFieldsToTxArgs } from 'packages/v4/utils/editRuleset'
+import { useEffect, useState } from 'react'
 
 import { BigNumber } from '@ethersproject/bignumber'
+import { Form } from 'antd'
 import { Callout } from 'components/Callout/Callout'
+import ETHAmount from 'components/currency/ETHAmount'
+import { JuiceDatePicker } from 'components/inputs/JuiceDatePicker'
+import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
+import TransactionModal from 'components/modals/TransactionModal'
+import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
+import { useWallet } from 'hooks/Wallet'
+import type { RelayrPostBundleResponse } from 'juice-sdk-react'
+import moment from 'moment'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
 import { CreateCollapse } from 'packages/v4/components/Create/components/CreateCollapse/CreateCollapse'
-import { DetailsSectionDiff } from './DetailsSectionDiff'
-import ETHAmount from 'components/currency/ETHAmount'
-import { Form } from 'antd'
-import { JuiceTextArea } from 'components/inputs/JuiceTextArea'
-import { PayoutsSectionDiff } from './PayoutsSectionDiff'
-import type { RelayrPostBundleResponse } from 'juice-sdk-react'
-import { SectionCollapseHeader } from './SectionCollapseHeader'
-import { TokensSectionDiff } from './TokensSectionDiff'
-import TransactionModal from 'components/modals/TransactionModal'
-import { TransactionSuccessModal } from '../TransactionSuccessModal'
+import QueueSafeEditRulesetTxsModal from 'packages/v4/components/QueueSafeEditRulesetTxsModal'
+import useV4ProjectOwnerOf from 'packages/v4/hooks/useV4ProjectOwnerOf'
 import { emitErrorNotification } from 'utils/notifications'
 import { useChainId } from 'wagmi'
-import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
 import { useEditCycleFormContext } from '../EditCycleFormContext'
 import { useOmnichainEditCycle } from '../hooks/useOmnichainEditCycle'
+import { TransactionSuccessModal } from '../TransactionSuccessModal'
+import { DetailsSectionDiff } from './DetailsSectionDiff'
+import { useDetailsSectionValues } from './hooks/useDetailsSectionValues'
 import { usePayoutsSectionValues } from './hooks/usePayoutsSectionValues'
 import { useTokensSectionValues } from './hooks/useTokensSectionValues'
-import { useWallet } from 'hooks/Wallet'
+import { PayoutsSectionDiff } from './PayoutsSectionDiff'
+import { SectionCollapseHeader } from './SectionCollapseHeader'
+import { TokensSectionDiff } from './TokensSectionDiff'
 
 export function ReviewConfirmModal({
   open,
@@ -37,6 +42,7 @@ export function ReviewConfirmModal({
   const [editCycleSuccessModalOpen, setEditCycleSuccessModalOpen] =
     useState<boolean>(false)
   const [confirmLoading, setConfirmLoading] = useState<boolean>(false)
+  const [safeModalOpen, setSafeModalOpen] = useState<boolean>(false)
 
   const { editCycleForm } = useEditCycleFormContext()
 
@@ -52,6 +58,11 @@ export function ReviewConfirmModal({
   const walletChainId = useChainId()
   const walletConnectedToWrongChain = chainId !== walletChainId
 
+  // Project owner and Gnosis Safe detection
+  const { data: projectOwnerAddress } = useV4ProjectOwnerOf()
+  const { data: gnosisSafeData } = useGnosisSafe(projectOwnerAddress)
+  const isProjectOwnerGnosisSafe = Boolean(gnosisSafeData)
+
   // Omnichain edit state
   const { getEditQuote, sendRelayrTx, relayrBundle } = useOmnichainEditCycle()
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId | undefined>(chainId)
@@ -61,6 +72,7 @@ export function ReviewConfirmModal({
   const { data: suckers } = useSuckers()
 
   const projectChains = suckers?.map(s => s.peerChainId) || []
+  const isOmnichainProject = projectChains.length > 1
 
   const txQuoteCostHex = txQuote?.payment_info.find(p => Number(p.chain) === selectedGasChain)?.amount
   const txQuoteCost = txQuoteCostHex ? BigInt(txQuoteCostHex) : null
@@ -105,6 +117,12 @@ export function ReviewConfirmModal({
   }
 
   const handleConfirmOmni = async () => {
+    // Check if project owner is Gnosis Safe and project is omnichain
+    if (isProjectOwnerGnosisSafe && isOmnichainProject) {
+      setSafeModalOpen(true)
+      return
+    }
+
     // If quote isn't fetched yet, get it
     if (!txQuote) return getQuote()
     
@@ -156,14 +174,15 @@ export function ReviewConfirmModal({
   const panelProps = { className: 'text-lg' }
 
   const txSigning = Boolean(relayrBundle.uuid) && !relayrBundle.isComplete
-  
+  const okText = isProjectOwnerGnosisSafe ? <Trans>Queue on Safe</Trans> : !txQuote ? <Trans>Get edit quote</Trans> : <Trans>Deploy changes</Trans>
+
   return (
     <>      
       <TransactionModal
         open={open}
         title={<Trans>Review & confirm</Trans>}
         onOk={handleConfirmOmni}
-        okText={!txQuote ? <Trans>Get edit quote</Trans> : <Trans>Deploy changes</Trans>}
+        okText={okText}
         okButtonProps={{ disabled: !formHasChanges }}
         confirmLoading={confirmLoading || txQuoteLoading || txSigning}
         transactionPending={txSigning}
@@ -227,9 +246,52 @@ export function ReviewConfirmModal({
         {!txQuote && (
           <div className="mt-10 py-4 text-sm stroke-tertiary border-t rounded-none">
               <Callout.Info>
-              <Trans>
-              You'll be prompted a wallet signature for each of this project's chains before submitting the final transaction.
-              </Trans>
+              {isProjectOwnerGnosisSafe && isOmnichainProject ? (
+                <>
+                <Trans>
+                    Set your new ruleset to begin after you expect all required signatures and executions across every chain to be completed.
+                </Trans>
+                
+                <Form.Item name="mustStartAtOrAfter" noStyle>
+                <div className="mt-4">
+                    <Form.Item 
+                      name="mustStartAtOrAfter" 
+                      label={<Trans>Ruleset must start at or after</Trans>}
+                      noStyle
+                    />
+                    <JuiceDatePicker
+                      showNow={false}
+                      showToday={false}
+                      format="YYYY-MM-DD HH:mm:ss"
+                      value={editCycleForm?.getFieldValue('mustStartAtOrAfter') ? moment.unix(editCycleForm.getFieldValue('mustStartAtOrAfter')) : undefined}
+                      onChange={(moment)=> {
+                        if (moment) {
+                          editCycleForm?.setFieldsValue({
+                            mustStartAtOrAfter: moment.unix(),
+                          })
+                        }
+                      }}
+                      disabledDate={current => {
+                        if (!current) return false
+                        const now = moment()
+                        if (
+                          current.isSame(now, 'day') ||
+                          current.isAfter(now, 'day')
+                        )
+                          return false
+                        return true
+                      }}
+                      showTime={{ defaultValue: moment('00:00:00') }}
+                    />
+                    {/* </Form.Item> */}
+                  </div>
+                </Form.Item>
+                </>
+              ) : (
+                <Trans>
+                  You'll be prompted a wallet signature for each of this project's chains before submitting the final transaction.
+                </Trans>
+              )}
               </Callout.Info>
           </div>
         )}
@@ -262,6 +324,14 @@ export function ReviewConfirmModal({
             </div>
           </>
         }
+      />
+      <QueueSafeEditRulesetTxsModal
+        open={safeModalOpen}
+        onCancel={() => {
+          setSafeModalOpen(false)
+        }}
+        safeAddress={projectOwnerAddress || ''}
+        formValues={editCycleForm?.getFieldsValue(true) || {}}
       />
     </>
   )

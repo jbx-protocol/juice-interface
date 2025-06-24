@@ -1,25 +1,33 @@
-import { Button, Modal, Spin } from 'antd'
+import { Button, Modal, Spin, Tooltip } from 'antd'
 import { JBChainId, useSuckers } from 'juice-sdk-react'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
 
+import { ApiFilled } from '@ant-design/icons'
 import { Trans } from '@lingui/macro'
 import { NETWORKS } from 'constants/networks'
 import { useWallet } from 'hooks/Wallet'
+import { useRouter } from 'next/router'
+import { SafeProposeTransactionResponse } from 'packages/v4/hooks/useProposeSafeTransaction'
+import { v4ProjectRoute } from 'packages/v4/utils/routes'
 import { twMerge } from 'tailwind-merge'
+import { safeTxUrl } from 'utils/safe'
 
 export interface QueueSafeTxsModalProps {
   open: boolean
   onCancel: VoidFunction
   title: React.ReactNode
   description: React.ReactNode
-  onExecuteChain: (chainId: JBChainId) => Promise<void>
+  onExecuteChain: (chainId: JBChainId) => Promise<SafeProposeTransactionResponse>
+  safeAddress: string
   buttonTextOverride?: {
     completed?: React.ReactNode
     connectWallet?: React.ReactNode
     switchChain?: (chainName: string) => React.ReactNode
     execute?: (chainName: string) => React.ReactNode
   }
+  onTxComplete?: (chainId: JBChainId, result: SafeProposeTransactionResponse) => void
+  onAllComplete?: VoidFunction
 }
 
 export default function QueueSafeTxsModal({
@@ -28,14 +36,19 @@ export default function QueueSafeTxsModal({
   title,
   description,
   onExecuteChain,
+  safeAddress,
+  onTxComplete,
+  onAllComplete,
   buttonTextOverride,
 }: QueueSafeTxsModalProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [loadingChainId, setLoadingChainId] = useState<JBChainId | null>(null)
   const [completedChains, setCompletedChains] = useState<Set<JBChainId>>(new Set())
+  const [txResults, setTxResults] = useState<Map<JBChainId, SafeProposeTransactionResponse>>(new Map())
   
   const { chain: walletChain, changeNetworks, connect, userAddress } = useWallet()
-  
+  const router = useRouter()
+
   const { data: suckers } = useSuckers()
   const chains = useMemo(() => {
     if (!suckers?.length) return []
@@ -57,7 +70,7 @@ export default function QueueSafeTxsModal({
       try {
         await changeNetworks(chainId)
         emitInfoNotification(
-          `Network changed to ${NETWORKS[chainId]?.label || chainId}, please try again.`,
+          `Network changed to ${NETWORKS[chainId]?.label || chainId}.`,
         )
       } catch (error: unknown) {
         console.error('Failed to change networks:', error)
@@ -71,9 +84,11 @@ export default function QueueSafeTxsModal({
     setLoadingChainId(chainId)
     
     try {
-      await onExecuteChain(chainId)
-      // Mark this chain as completed
+      const result = await onExecuteChain(chainId)
+      // Mark this chain as completed and store the result
       setCompletedChains(prev => new Set([...prev, chainId]))
+      setTxResults(prev => new Map([...prev, [chainId, result]]))
+      if (onTxComplete) onTxComplete(chainId, result)
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error'
       console.error('Failed to execute transaction on chain', chainId, error)
@@ -82,12 +97,20 @@ export default function QueueSafeTxsModal({
       setIsLoading(false)
       setLoadingChainId(null)
     }
-  }, [userAddress, walletChain, changeNetworks, connect, onExecuteChain])
+  }, [userAddress, walletChain, changeNetworks, connect, onExecuteChain, onTxComplete])
 
   const allChainsCompleted = chains.length > 0 && chains.every((chainId: JBChainId) => completedChains.has(chainId))
 
+  // Call onAllComplete when all chains are completed
+  useEffect(() => {
+    if (allChainsCompleted && onAllComplete) {
+      onAllComplete()
+    }
+  }, [allChainsCompleted, onAllComplete])
+
   const handleCancel = useCallback(() => {
     setCompletedChains(new Set())
+    setTxResults(new Map())
     setLoadingChainId(null)
     onCancel()
   }, [onCancel])
@@ -95,6 +118,9 @@ export default function QueueSafeTxsModal({
   const getChainName = (chainId: JBChainId): string => {
     return NETWORKS[chainId]?.label || `Chain ${chainId}`
   }
+  const goToProject = useCallback(() => {
+    router.push(v4ProjectRoute({ projectId: Number(suckers?.[0].projectId ?? 1), chainId: suckers?.[0].peerChainId  }))
+  }, [router, suckers])
 
   return (
     <Modal
@@ -106,8 +132,8 @@ export default function QueueSafeTxsModal({
           <Trans>Cancel</Trans>
         </Button>,
         allChainsCompleted && (
-          <Button key="done" type="primary" onClick={handleCancel}>
-            <Trans>Done</Trans>
+          <Button key="done" type="primary" onClick={() => goToProject()}>
+            <Trans>Go to project</Trans>
           </Button>
         ),
       ].filter(Boolean)}
@@ -130,6 +156,7 @@ export default function QueueSafeTxsModal({
         <div className="space-y-3">
           {chains.map((chainId: JBChainId) => {
             const isCompleted = completedChains.has(chainId)
+            const txResult = txResults.get(chainId)
             const walletChainId = walletChain?.id ? parseInt(walletChain.id) : undefined
             const isCurrentChain = walletChainId === chainId
             const walletConnectedToWrongChain = walletChain && chainId !== walletChainId
@@ -139,7 +166,7 @@ export default function QueueSafeTxsModal({
             // Determine button text based on wallet state
             let buttonText: React.ReactNode
             if (isCompleted) {
-              buttonText = buttonTextOverride?.completed || <Trans>Completed</Trans>
+              buttonText = buttonTextOverride?.completed || <Trans>Queued</Trans>
             } else if (!walletChain) {
               buttonText = buttonTextOverride?.connectWallet || <Trans>Connect wallet</Trans>
             } else if (walletConnectedToWrongChain) {
@@ -153,17 +180,35 @@ export default function QueueSafeTxsModal({
             }
             
             return (
-              <div key={chainId} className="flex items-center justify-between p-4 border rounded-lg">
+              <div key={chainId} className="flex items-center justify-between p-4 border rounded-lg border-smoke-500 dark:border-smoke-300">
                 <div className="flex items-center space-x-3">
                   <div className={twMerge(
                     "w-3 h-3 rounded-full",
-                    isCompleted ? "bg-green-500" : "bg-grey-300"
+                    isCompleted ? "bg-success-500" : "bg-grey-300"
                   )} />
                   <div>
-                    <div className="font-medium">{chainName}</div>
-                    {isCurrentChain && (
-                      <div className="text-xs text-blue-500">
-                        <Trans>Currently connected</Trans>
+                    <div className="font-medium flex items-center gap-2">
+                      {chainName}
+                      {isCurrentChain && (
+                        <Tooltip title={<Trans>Wallet connected to this chain</Trans>}>
+                          <ApiFilled className="text-blue-500  mb-1" style={{ fontSize: '16px' }} />
+                        </Tooltip>
+                      )}
+                    </div>
+                    {isCompleted && txResult && (
+                      <div className="text-xs mt-1">
+                        <a
+                          href={safeTxUrl({
+                            chainId,
+                            safeAddress,
+                            txHash: txResult.safeTxHash,
+                          })}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 hover:text-blue-600 underline"
+                        >
+                          <Trans>View in Safe</Trans>
+                        </a>
                       </div>
                     )}
                   </div>
@@ -182,18 +227,18 @@ export default function QueueSafeTxsModal({
           })}
         </div>
 
-        {allChainsCompleted && (
-          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+        {allChainsCompleted ? (
+          <div className="mt-4 p-4 bg-success-50 border border-success-200 rounded-lg">
             <div className="text-green-800 font-medium">
-              <Trans>All transactions completed!</Trans>
+              <Trans>All transactions queued to Safe!</Trans>
             </div>
             <div className="text-green-600 text-sm mt-1">
               <Trans>
-                Transactions have been completed on all chains. You can now close this modal.
+                You can execute each transaction through the Safe interface when the required signatures are collected.
               </Trans>
             </div>
           </div>
-        )}
+        ): null}
       </div>
     </Modal>
   )

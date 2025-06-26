@@ -1,10 +1,10 @@
 import { ETH_CURRENCY_ID, NATIVE_TOKEN } from 'juice-sdk-core'
 
-import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
-import { issuanceRateFrom } from 'packages/v2v3/utils/math'
-import { otherUnitToSeconds } from 'utils/format/formatTime'
-import { parseWad } from 'utils/format/formatNumber'
 import round from 'lodash/round'
+import { issuanceRateFrom } from 'packages/v2v3/utils/math'
+import { parseWad } from 'utils/format/formatNumber'
+import { otherUnitToSeconds } from 'utils/format/formatTime'
+import { EditCycleFormFields } from '../views/V4ProjectSettings/EditCyclePage/EditCycleFormFields'
 
 export type EditCycleTxArgs = readonly [
   projectId: bigint,
@@ -77,10 +77,9 @@ export function transformEditCycleFormFieldsToTxArgs({
 }): EditCycleTxArgs {
   const now = round(new Date().getTime() / 1000)
   
-  // mustStartAtOrAfter = now + 3 minutes
+  // Use custom mustStartAtOrAfter if provided (for Safe projects), otherwise default to now + 5 minutes
   // allow for different chains taking different times to process the tx
-  const mustStartAtOrAfter = now + 3 * 60 
-
+  const mustStartAtOrAfter = formValues.mustStartAtOrAfter ?? (now + 5 * 60) 
   const duration = otherUnitToSeconds({
     duration: formValues.duration,
     unit: formValues.durationUnit.value,

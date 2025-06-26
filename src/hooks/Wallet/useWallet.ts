@@ -10,11 +10,15 @@ import { readNetwork } from 'constants/networks'
 import { wagmiConfig } from 'contexts/Para/Providers'
 import { useChainId, useChains, useSwitchChain } from 'wagmi'
 
+import { useEip1193Provider } from './hooks/useEip1193Provider';
+
 export function useWallet() {
   const { data: paraAccount } = useAccount()
   const { data: paraWallet } = useParaWallet()
   const { logout: paraLogout } = useLogout()
   const { openModal } = useModal()
+  const eip1193Provider = useEip1193Provider()
+
 
   const chains = useChains()
   const chainId = useChainId()
@@ -59,6 +63,7 @@ export function useWallet() {
   return {
     signer,
     userAddress,
+    eip1193Provider,
     isConnected,
     chain: {
       id: String(chain?.id ?? chainId),

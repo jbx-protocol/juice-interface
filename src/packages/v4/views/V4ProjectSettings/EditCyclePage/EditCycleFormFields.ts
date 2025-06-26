@@ -40,4 +40,5 @@ export type EditCycleFormFields = DetailsSectionFields &
   // NftSectionFields 
   & {
     memo: string | undefined
+    mustStartAtOrAfter?: number // timestamp in seconds, optional for omni Safe projects
   }

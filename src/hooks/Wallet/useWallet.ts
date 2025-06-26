@@ -8,16 +8,16 @@ import {
 import { signMessage } from '@wagmi/core'
 import { readNetwork } from 'constants/networks'
 import { wagmiConfig } from 'contexts/Para/Providers'
-import { useChainId, useChains, useSwitchChain } from 'wagmi'
-
-import { useEip1193Provider } from './hooks/useEip1193Provider';
+import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
+import { EIP1193Provider } from 'viem'
 
 export function useWallet() {
   const { data: paraAccount } = useAccount()
   const { data: paraWallet } = useParaWallet()
   const { logout: paraLogout } = useLogout()
   const { openModal } = useModal()
-  const eip1193Provider = useEip1193Provider()
+  const { data: walletClient } = useWalletClient()
+  const eip1193Provider = walletClient?.transport as EIP1193Provider | undefined
 
 
   const chains = useChains()

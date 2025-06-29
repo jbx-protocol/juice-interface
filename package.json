@@ -21,7 +21,7 @@
     "i18n:extract": "./scripts/extract-translations-template.sh",
     "i18n:extract-source-locale": "NODE_ENV=development lingui extract --locale en",
     "i18n:lint": "./scripts/lint-translations-template.sh",
-    "postinstall": "yarn i18n:compile && ./scripts/clean-deps.sh && patch-package",
+    "postinstall": "yarn i18n:compile && ./scripts/clean-deps.sh && patch-package && yarn setup-para",
     "lint": "next lint",
     "lint-staged": "lint-staged",
     "lint:fix": "yarn lint --fix",
@@ -55,6 +55,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",
+    "@getpara/react-sdk": "2.0.0-alpha.26",
+    "@getpara/evm-wallet-connectors": "2.0.0-alpha.26",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.4",
     "@jbx-protocol/contracts-v1": "2.0.0",
@@ -143,8 +145,8 @@
     "tiny-invariant": "^1.2.0",
     "use-deep-compare-effect": "^1.6.1",
     "uuid": "^8.3.2",
-    "viem": "2.12.0",
-    "wagmi": "^2.12.5",
+    "viem": "2.24.2",
+    "wagmi": "^2.14.16",
     "yarn": "^1.22.22",
     "yup": "^1.4.0"
   },

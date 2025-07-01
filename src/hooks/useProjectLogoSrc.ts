@@ -1,9 +1,10 @@
+import { cidFromUrl, ethSucksGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
+
 import { readNetwork } from 'constants/networks'
 import { PV_V2 } from 'constants/pv'
 import { NetworkName } from 'models/networkName'
 import { PV } from 'models/pv'
 import { useMemo } from 'react'
-import { cidFromUrl, ipfsGatewayUrl, ipfsUriToGatewayUrl } from 'utils/ipfs'
 
 // Override some project logos.
 const imageUriOverridePath = '/assets/images/image-uri-overrides'
@@ -61,11 +62,11 @@ export const useProjectLogoSrc = ({
 
     // Some older JB projects have a logo URI hardcoded to use Pinata.
     // JBM no longer uses Pinata.
-    // This rewrites those URLs to use the Infura gateway.
+    // This rewrites those URLs to use the eth.sucks gateway.
     if (uri.startsWith('https://jbx.mypinata.cloud')) {
       const cid = cidFromUrl(uri)
       // Use `/api/image/[url].ts` to validate filetype.
-      return `/api/image/${encodeURIComponent(ipfsGatewayUrl(cid))}`
+      return `/api/image/${encodeURIComponent(ethSucksGatewayUrl(cid))}`
     }
 
     return `/api/image/${encodeURIComponent(ipfsUriToGatewayUrl(uri))}`

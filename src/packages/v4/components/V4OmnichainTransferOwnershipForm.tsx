@@ -1,19 +1,15 @@
 import { Trans, t } from '@lingui/macro'
 import { Button, Form, Statistic } from 'antd'
-import { RelayrPostBundleResponse, useGetRelayrTxBundle, useJBContractContext, useSendRelayrTx, useSuckers } from 'juice-sdk-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { emitErrorNotification, emitInfoNotification } from 'utils/notifications'
-import { mainnet, sepolia } from 'viem/chains'
 
-import { BigNumber } from '@ethersproject/bignumber'
-import ETHAmount from 'components/currency/ETHAmount'
 import EthereumAddress from 'components/EthereumAddress'
 import { EthAddressInput } from 'components/inputs/EthAddressInput'
 import TransactionModal from 'components/modals/TransactionModal'
 import { JBChainId } from 'juice-sdk-core'
-import { ChainSelect } from 'packages/v4/components/ChainSelect'
-import { GasIcon } from 'packages/v4/components/Create/components/pages/ReviewDeploy/components/LaunchProjectModal/LaunchProjectModal'
-import { useTransferOmnichainProjectOwnership } from 'packages/v4/hooks/useTransferOmnichainProjectOwnership'
+import { useSuckers } from 'juice-sdk-react'
+import QueueTransferOwnershipTxsModal from 'packages/v4/components/QueueTransferOwnershipTxsModal'
+import { useTransferOwnershipOnChain } from 'packages/v4/hooks/useTransferOwnershipOnChain'
 import { useTransferProjectOwnershipTx } from 'packages/v4/hooks/useTransferProjectOwnershipTx'
 import { Address } from 'viem'
 
@@ -23,118 +19,22 @@ export function V4OmnichainTransferOwnershipForm({
   ownerAddress: string | undefined
 }) {
   const [form] = Form.useForm<{ to: string }>()
-  const [confirmLoading, setConfirmLoading] = useState<boolean>()
   const [transactionModalOpen, setTransactionModalOpen] = useState<boolean>(false)
   const [loadingTransferOwnership, setLoadingTransferOwnership] = useState<boolean>()
+  const [queueSafeModalOpen, setQueueSafeModalOpen] = useState<boolean>(false)
   
   // Single chain transfer
   const transferProjectOwnershipTx = useTransferProjectOwnershipTx()
   
   // Multi-chain transfer
-  const { transferOmnichainProjectOwnership } = useTransferOmnichainProjectOwnership()
-  const [txQuoteResponse, setTxQuote] = useState<RelayrPostBundleResponse>()
-  const [txQuoteLoading, setTxQuoteLoading] = useState<boolean>(false)
-  const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(process.env.NEXT_PUBLIC_TESTNET === 'true' ? sepolia.id : mainnet.id)
-  const relayrBundle = useGetRelayrTxBundle()
-  const { sendRelayrTx } = useSendRelayrTx()
-  const { projectId } = useJBContractContext()
+  const { transferOwnershipOnChain } = useTransferOwnershipOnChain()
+  
   const { data: suckers } = useSuckers()
 
   const chainIds = useMemo(
     () => suckers?.map(s => s.peerChainId) ?? [],
     [suckers]
   )
-
-  // Add txSigning state based on relayr bundle
-  const txSigning = Boolean(relayrBundle.uuid) && !relayrBundle.isComplete
-
-  useEffect(() => {
-    if (chainIds.length) setSelectedGasChain(chainIds[0])
-  }, [chainIds])
-
-  async function getMultiChainQuote() {
-
-    if (!suckers || !suckers.length) {
-      emitErrorNotification(t`No chains available for multi-chain transfer`)
-      return
-    }
-    if (!ownerAddress || !projectId) {
-      emitErrorNotification(t`Missing project owner or project ID`)
-      return
-    }
-    
-    const newOwnerAddress = form.getFieldValue('to')
-    if (!newOwnerAddress) {
-      emitErrorNotification(t`Please enter a recipient address`)
-      return
-    }
-
-    setTxQuoteLoading(true)
-    try {
-      const transferData = suckers.reduce(
-        (
-          acc: Record<JBChainId, { from: Address, to: Address, tokenId: bigint }>,
-          { peerChainId, projectId: remoteProjectId },
-        ) => {
-          acc[peerChainId as keyof typeof acc] = {
-            from: ownerAddress as Address,
-            to: newOwnerAddress as Address,
-            tokenId: remoteProjectId,
-          }
-          return acc
-        },
-        {} as Record<JBChainId, { from: Address, to: Address, tokenId: bigint }>,
-      )
-
-      const quote = await transferOmnichainProjectOwnership(transferData, chainIds)
-      setTxQuote(quote!)
-    } catch (e) {
-      console.error('❌ Error getting quote:', e)
-      emitErrorNotification((e as Error).message)
-    } finally {
-      setTxQuoteLoading(false)
-    }
-  }
-
-  async function onTransferMulti() {
-    if (!txQuoteResponse) {
-      // get quote first
-      await getMultiChainQuote()
-      return
-    }
-    
-    // open pending modal
-    setConfirmLoading(true)
-    const payment = txQuoteResponse.payment_info.find(
-      p => Number(p.chain) === Number(selectedGasChain)
-    )
-    if (!payment) {
-      emitErrorNotification(t`No payment info for selected chain`)
-      setConfirmLoading(false)
-      return
-    }
-    try {
-      await sendRelayrTx?.(payment)
-      setTransactionModalOpen(true)
-      relayrBundle.startPolling(txQuoteResponse.bundle_uuid)
-    } catch (e) {
-      console.error('❌ Error sending relayr tx:', e)
-      emitErrorNotification((e as Error).message)
-      setConfirmLoading(false)
-      setTransactionModalOpen(false)
-    }
-  }
-
-  useEffect(() => {
-    if (relayrBundle.isComplete) {
-      // close modal on complete then reload
-      setConfirmLoading(false)
-      setTransactionModalOpen(false)
-      form.resetFields()
-      emitInfoNotification('Project ownership transferred successfully on all chains!')
-      window.location.reload()
-    }
-  }, [relayrBundle.isComplete, form])
 
   async function transferOwnership() {
     const newOwnerAddress = form.getFieldValue('to')
@@ -174,10 +74,21 @@ export function V4OmnichainTransferOwnershipForm({
     )
   }
 
+  function handleTransferOnAllChains() {
+    const newOwnerAddress = form.getFieldValue('to')
+    if (!newOwnerAddress) {
+      emitErrorNotification('Please enter a recipient address')
+      return
+    }
+    if (!ownerAddress) {
+      emitErrorNotification('Current owner address not found')
+      return
+    }
+    
+    setQueueSafeModalOpen(true)
+  }
+
   const isMultiChain = suckers && suckers.length > 1
-  const txQuote = txQuoteResponse?.payment_info.find(
-    p => Number(p.chain) === Number(selectedGasChain),
-  )?.amount
 
   return (
     <>
@@ -206,58 +117,15 @@ export function V4OmnichainTransferOwnershipForm({
       {isMultiChain ? (
         <>
           <p className="mt-4">
-            <Trans>Transfer ownership of this project on all chains where it exists. This action will transfer ownership on each of your project's chains simultaneously.</Trans>
+            <Trans>Transfer ownership of this project on all chains where it exists. This action will transfer ownership on each of your project's chains separately.</Trans>
           </p>
           <div className="mt-8">
-            <div className="mt-4 space-y-4">
-              <div>
-                {txQuoteLoading || txQuoteResponse ? (
-                  <>
-                    <span><Trans>Gas quote</Trans></span>
-                    <div className="mt-2 flex items-center justify-start gap-4">
-                      <div className="flex items-center gap-2">
-                        <GasIcon className="h-5 w-5" />
-                        {txQuote ?
-                          <ETHAmount
-                            amount={BigNumber.from(txQuote)}
-                          />
-                        : '--'}
-                      </div>
-                    </div>
-                  </>
-                ) : null}
-              </div>
-              {txQuoteResponse ? (
-                <span
-                  role="button"
-                  className="mb-4 text-xs underline hover:opacity-75"
-                  onClick={getMultiChainQuote}
-                >
-                  Retry quote
-                </span>
-              ) : null}
-              {txQuoteResponse ? (
-                <div>
-                  <span><Trans>Pay gas on</Trans></span>
-                  <ChainSelect
-                    className="mt-1 max-w-sm"
-                    showTitle
-                    value={selectedGasChain}
-                    onChange={setSelectedGasChain}
-                    chainIds={chainIds}
-                  />
-                </div>
-              ): null}
-              <Button 
-                type="primary" 
-                onClick={() => {
-                  onTransferMulti()
-                }} 
-                loading={confirmLoading || txSigning || txQuoteLoading}
-              >
-                {txQuote ? <Trans>Transfer ownership</Trans> : <Trans>Get quote</Trans>}
-              </Button>
-            </div>
+            <Button 
+              type="primary" 
+              onClick={handleTransferOnAllChains}
+            >
+              <Trans>Transfer ownership on all chains</Trans>
+            </Button>
           </div>
         </>
       ) : (
@@ -273,15 +141,38 @@ export function V4OmnichainTransferOwnershipForm({
       )}
 
       <TransactionModal
-        transactionPending={txSigning || loadingTransferOwnership}
-        title={isMultiChain ? t`Transfer Multi-Chain Ownership` : t`Transfer Project Ownership`}
+        transactionPending={loadingTransferOwnership}
+        title={t`Transfer Project Ownership`}
         open={transactionModalOpen}
         onCancel={() => setTransactionModalOpen(false)}
         onOk={() => setTransactionModalOpen(false)}
-        confirmLoading={confirmLoading || txSigning || loadingTransferOwnership}
-        chainIds={chainIds}
-        relayrResponse={relayrBundle.response}
+        confirmLoading={loadingTransferOwnership}
         centered
+      />
+
+      <QueueTransferOwnershipTxsModal
+        open={queueSafeModalOpen}
+        onCancel={() => setQueueSafeModalOpen(false)}
+        title={<Trans>Transfer Ownership on All Chains</Trans>}
+        description={
+          <Trans>
+            Transfer project ownership on each chain where your project exists. You'll need to confirm each transaction separately.
+          </Trans>
+        }
+        onExecuteChain={async (chainId: JBChainId) => {
+          const toAddress = form.getFieldValue('to') as Address
+          return await transferOwnershipOnChain(chainId, ownerAddress as Address, toAddress)
+        }}
+        fromAddress={ownerAddress as Address}
+        toAddress={form.getFieldValue('to') as Address}
+        onTxComplete={(chainId: JBChainId, txHash: string) => {
+          emitInfoNotification('Ownership transferred successfully!')
+        }}
+        onAllComplete={() => {
+          setQueueSafeModalOpen(false)
+          form.resetFields()
+          emitInfoNotification('Project ownership transferred successfully on all chains!')
+        }}
       />
     </>
   )

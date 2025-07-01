@@ -293,9 +293,6 @@ msgstr ""
 msgid "See example"
 msgstr ""
 
-msgid "Transfer ownership of this project on all chains where it exists. This action will transfer ownership on each of your project's chains simultaneously."
-msgstr ""
-
 msgid "{0}% of total token issuance."
 msgstr ""
 
@@ -491,9 +488,6 @@ msgstr ""
 msgid "This project has no description"
 msgstr ""
 
-msgid "No chains available for multi-chain transfer"
-msgstr ""
-
 msgid "Everything we do is to ensure that Juicebox is trustworthy."
 msgstr ""
 
@@ -576,6 +570,9 @@ msgid "All ETH can be paid out from the project. No ETH will be available for re
 msgstr ""
 
 msgid "If locked, this payout can't be edited or removed until the lock expires or the cycle is edited."
+msgstr ""
+
+msgid "Since your project is owned by a Safe wallet, you need to queue separate transactions on each chain."
 msgstr ""
 
 msgid "I understand"
@@ -759,6 +756,9 @@ msgid "Enter a number of tokens that your project contributors will receive when
 msgstr ""
 
 msgid "<0/>{0} distributed"
+msgstr ""
+
+msgid "Project ownership has been successfully transferred to {toAddress} on all chains."
 msgstr ""
 
 msgid "Set reserved tokens of {projectTitle}"
@@ -981,6 +981,9 @@ msgid "Changes will take effect in your next cycle as long as it starts after yo
 msgstr ""
 
 msgid "You'll be prompted a wallet signature to submit the transaction."
+msgstr ""
+
+msgid "Transfer ownership on all chains"
 msgstr ""
 
 msgid "Change network to transfer"
@@ -1748,9 +1751,6 @@ msgstr ""
 msgid "Approve tokens on ERC20 contract {0}"
 msgstr ""
 
-msgid "Transfer Multi-Chain Ownership"
-msgstr ""
-
 msgid "projects"
 msgstr ""
 
@@ -1982,6 +1982,9 @@ msgstr ""
 msgid "Discord"
 msgstr ""
 
+msgid "Transfer project ownership on each chain where your project exists. You'll need to confirm each transaction separately."
+msgstr ""
+
 msgid "<0>Supporters can cash out their tokens to reclaim some of the ETH not needed for payouts. The amount of ETH they receive depends on the cash out rate.</0><1>At 0%, cash outs are 1:1 — somebody cashing out 10% of all project tokens will receive 10% of the available ETH. At 100%, cash outs are turned off.</1><2>Anywhere else, cash outs take place along a bonding curve, meaning people who cash out first will get less ETH per token, and people who cash out later will get more ETH per token.</2><3>Learn more in this <4>short video</4>.</3>"
 msgstr ""
 
@@ -2124,6 +2127,9 @@ msgid "Export data"
 msgstr ""
 
 msgid "Show a disclosure, a message, or a warning to supporters before they pay your project"
+msgstr ""
+
+msgid "Ownership transferred on all chains!"
 msgstr ""
 
 msgid "The project owner can edit the next cycle's rules at any time."
@@ -2567,9 +2573,6 @@ msgstr ""
 msgid "Project payer addresses"
 msgstr ""
 
-msgid "Missing project owner or project ID"
-msgstr ""
-
 msgid "This project's tokens are not yet ERC-20"
 msgstr ""
 
@@ -2756,9 +2759,6 @@ msgstr ""
 msgid "{0} must be numeric"
 msgstr ""
 
-msgid "Please enter a recipient address"
-msgstr ""
-
 msgid "{surplusElement} is available across all chains for token cash outs or future payouts."
 msgstr ""
 
@@ -2915,6 +2915,9 @@ msgstr ""
 msgid "Create a project payer address"
 msgstr ""
 
+msgid "Transfer Ownership on All Chains"
+msgstr ""
+
 msgid "Pay gas on:"
 msgstr ""
 
@@ -3068,6 +3071,9 @@ msgstr ""
 msgid "Other Rules"
 msgstr ""
 
+msgid "Transfer ownership of this project on all chains where it exists. This action will transfer ownership on each of your project's chains separately."
+msgstr ""
+
 msgid "I Agree"
 msgstr ""
 
@@ -3210,6 +3216,9 @@ msgid "Error loading ETH transfers to project"
 msgstr ""
 
 msgid "ETH transfers"
+msgstr ""
+
+msgid "View transaction"
 msgstr ""
 
 msgid "Remaining time"
@@ -3854,6 +3863,9 @@ msgstr ""
 msgid "Deployed ERC20"
 msgstr ""
 
+msgid "Transfer on {chainName}"
+msgstr ""
+
 msgid "The wallet address that reserved NFTs will be sent to"
 msgstr ""
 
@@ -4152,6 +4164,9 @@ msgid "Has Juicebox been audited? What are the risks?"
 msgstr ""
 
 msgid "Customization"
+msgstr ""
+
+msgid "Completed"
 msgstr ""
 
 msgid "No limit"
@@ -4632,6 +4647,9 @@ msgid "A reserved rate"
 msgstr ""
 
 msgid "Manage"
+msgstr ""
+
+msgid "Queue Safe Transfer Ownership Transactions"
 msgstr ""
 
 msgid "Token rules"

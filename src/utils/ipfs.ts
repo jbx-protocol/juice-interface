@@ -74,13 +74,13 @@ export const cidFromIpfsUri = (ipfsUri: string) =>
   ipfsUri.match(IPFS_URL_REGEX)?.[1]
 
 /**
- * Returns a native IPFS link (`ipfs://`) as a https link.
+ * Returns a native IPFS link (`ipfs://`) as a https link using eth.sucks gateway.
  */
 export function ipfsUriToGatewayUrl(ipfsUri: string): string {
   if (!isIpfsUri(ipfsUri)) return ipfsUri
 
   const suffix = cidFromIpfsUri(ipfsUri)
-  return ipfsGatewayUrl(suffix)
+  return ethSucksGatewayUrl(suffix)
 }
 
 /**

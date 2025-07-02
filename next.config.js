@@ -192,6 +192,7 @@ const nextConfig = removeImports({
     esmExternals: 'loose',
     swcPlugins: [['@lingui/swc-plugin', {}]],
   },
+  swcMinify: true,
   transpilePackages: [
     '@getpara/ethers-v5-integration',
     'rc-align',
@@ -229,7 +230,6 @@ const nextConfig = removeImports({
     'rc-util',
     'rc-virtual-list',
   ],
-  swcMinify: true,
   webpack: config => {
     config.resolve.fallback = { fs: false, module: false }
     config.plugins.push(

@@ -187,12 +187,21 @@ const nextConfig = removeImports({
       transform: '@headlessui/react/{{member}}',
     },
   },
-  staticPageGenerationTimeout: 90,
   experimental: {
-    esmExternals: 'loose',
-    swcPlugins: [['@lingui/swc-plugin', {}]],
+    esmExternals: true,
+    optimizePackageImports: [
+      // TODO: For whatever reason, doesnt work on current version of next (^14.2.10)
+      // TODO: once on a later version, replace the modularizeImports with this
+      // '@heroicons/react/20/solid',
+      // '@heroicons/react/20/outline',
+      // '@heroicons/react/24/solid',
+      // '@heroicons/react/24/outline',
+      // 'lodash',
+      // 'antd',
+      // '@headlessui/react',
+    ],
   },
-  swcMinify: true,
+  staticPageGenerationTimeout: 90,
   transpilePackages: [
     '@getpara/ethers-v5-integration',
     'rc-align',

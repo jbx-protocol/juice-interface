@@ -76,6 +76,10 @@ const resolveUsingWagmiClient = async (addressOrEnsName: string) => {
     chainId: readNetwork.chainId as any,
   })
 
+  if (!client) {
+    throw new Error('Failed to get public client')
+  }
+
   let response
 
   if (isAddress(addressOrEnsName)) {

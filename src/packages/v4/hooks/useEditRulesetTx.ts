@@ -66,8 +66,8 @@ export function useEditRulesetTx() {
 
       const args = transformEditCycleFormFieldsToTxArgs({
         formValues,
-        primaryNativeTerminal: contracts.primaryNativeTerminal.data,
-        tokenAddress: NATIVE_TOKEN,
+        primaryNativeTerminal: contracts.primaryNativeTerminal.data as `0x${string}`,
+        tokenAddress: NATIVE_TOKEN as `0x${string}`,
         projectId,
       })
 

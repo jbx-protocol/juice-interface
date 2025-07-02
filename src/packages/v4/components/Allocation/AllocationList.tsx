@@ -297,7 +297,7 @@ const allocationToEntity = (
   return {
     projectOwner: false,
     projectId: alloc.projectId.toString(),
-    beneficiary: alloc.beneficiary,
+    beneficiary: alloc.beneficiary as `0x${string}`,
     amount,
     lockedUntil: alloc.lockedUntil,
   }

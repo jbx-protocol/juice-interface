@@ -139,7 +139,9 @@ const ContentSecurityPolicy = `
   connect-src 'self' ${CONNECT_SRC.join(' ')};
   manifest-src 'self';
   frame-src ${FRAME_SRC.join(' ')};
-  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(' ')} ${ETH_SUCKS_URLS.join(' ')};
+  media-src 'self' https://jbx.mypinata.cloud ${INFURA_IPFS_URLS.join(
+    ' ',
+  )} ${ETH_SUCKS_URLS.join(' ')};
   frame-ancestors ${FRAME_ANCESTORS.join(' ')};
   form-action 'self';
   worker-src 'self' ${WORKER_SRC.join(' ')};
@@ -185,29 +187,63 @@ const nextConfig = removeImports({
       transform: '@headlessui/react/{{member}}',
     },
   },
-  experimental: {
-    esmExternals: true,
-    optimizePackageImports: [
-      // TODO: For whatever reason, doesnt work on current version of next (^14.2.10)
-      // TODO: once on a later version, replace the modularizeImports with this
-      // '@heroicons/react/20/solid',
-      // '@heroicons/react/20/outline',
-      // '@heroicons/react/24/solid',
-      // '@heroicons/react/24/outline',
-      // 'lodash',
-      // 'antd',
-      // '@headlessui/react',
-    ],
-  },
   staticPageGenerationTimeout: 90,
+  experimental: {
+    esmExternals: 'loose',
+    swcPlugins: [['@lingui/swc-plugin', {}]],
+  },
+  transpilePackages: [
+    '@getpara/ethers-v5-integration',
+    'rc-align',
+    'rc-cascader',
+    'rc-collapse',
+    'rc-dialog',
+    'rc-drawer',
+    'rc-dropdown',
+    'rc-field-form',
+    'rc-image',
+    'rc-input',
+    'rc-input-number',
+    'rc-mentions',
+    'rc-menu',
+    'rc-motion',
+    'rc-notification',
+    'rc-overflow',
+    'rc-pagination',
+    'rc-picker',
+    'rc-progress',
+    'rc-rate',
+    'rc-resize-observer',
+    'rc-segmented',
+    'rc-select',
+    'rc-slider',
+    'rc-steps',
+    'rc-table',
+    'rc-tabs',
+    'rc-textarea',
+    'rc-tooltip',
+    'rc-tree',
+    'rc-tree-select',
+    'rc-trigger',
+    'rc-upload',
+    'rc-util',
+    'rc-virtual-list',
+  ],
+  swcMinify: true,
   webpack: config => {
     config.resolve.fallback = { fs: false, module: false }
-    // Adds __DEV__ to the build to fix bug in apollo client `__DEV__ is not defined`.
     config.plugins.push(
       new webpack.DefinePlugin({
         __DEV__: process.env.NODE_ENV !== 'production',
       }),
     )
+    config.module.rules.push({
+      test: /\.m?js$/,
+      type: 'javascript/auto',
+      resolve: {
+        fullySpecified: false,
+      },
+    })
 
     return config
   },

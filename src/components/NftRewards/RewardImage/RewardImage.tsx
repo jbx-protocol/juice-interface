@@ -12,6 +12,7 @@ export const RewardImage = ({
       src={src}
       className={classNames('object-cover object-center', props.className)}
       onClick={stopPropagation(props.onClick)}
+      alt=""
     />
   )
 }

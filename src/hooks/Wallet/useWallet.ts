@@ -1,15 +1,15 @@
+import { ParaEthersV5Signer } from '@getpara/ethers-v5-integration'
 import {
   useAccount,
+  useClient,
   useLogout,
   useModal,
   useWallet as useParaWallet,
   useWalletBalance,
 } from '@getpara/react-sdk'
-import { signMessage } from '@wagmi/core'
 import { readNetwork } from 'constants/networks'
-import { wagmiConfig } from 'contexts/Para/Providers'
-import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 import { EIP1193Provider } from 'viem'
+import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 
 export function useWallet() {
   const { data: paraAccount } = useAccount()
@@ -17,8 +17,8 @@ export function useWallet() {
   const { logout: paraLogout } = useLogout()
   const { openModal } = useModal()
   const { data: walletClient } = useWalletClient()
+  const client = useClient()
   const eip1193Provider = walletClient?.transport as EIP1193Provider | undefined
-
 
   const chains = useChains()
   const chainId = useChainId()
@@ -26,21 +26,12 @@ export function useWallet() {
 
   const chain = chains.find(c => c.id === chainId)
 
-  const signer = {
-    signMessage: async (message: string) => {
-      if (
-        !paraAccount?.isConnected ||
-        !paraWallet?.id ||
-        !paraWallet?.address
-      ) {
-        throw new Error('Wallet not connected')
-      }
-      return await signMessage(wagmiConfig, {
-        account: paraWallet.address as `0x${string}`,
-        message,
-      })
-    },
-  }
+  // The Para Ethers V5 Signer satisfies signer requirements
+  const paraSigner =
+    client && paraAccount?.isConnected
+      ? new ParaEthersV5Signer(client)
+      : undefined
+
   const userAddress = paraWallet?.address
   const isConnected = paraAccount?.isConnected ?? false
   const chainUnsupported = false
@@ -61,7 +52,7 @@ export function useWallet() {
   }
 
   return {
-    signer,
+    signer: paraSigner,
     userAddress,
     eip1193Provider,
     isConnected,

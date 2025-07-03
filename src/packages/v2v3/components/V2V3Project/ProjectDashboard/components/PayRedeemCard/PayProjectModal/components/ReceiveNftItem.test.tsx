@@ -11,7 +11,7 @@ jest.mock(
 
 jest.mock('components/NftRewards/SmallNftSquare', () => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  SmallNftSquare: ({ nftReward: { fileUrl } }: any) => <img src={fileUrl} alt="" />,
+  SmallNftSquare: ({ nftReward: { fileUrl } }: any) => <img src={fileUrl} />,
 }))
 
 describe('ReceiveNftItem', () => {

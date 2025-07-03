@@ -86,7 +86,7 @@ export function useTransactor(): Transactor | undefined {
 
   const { chain, userAddress } = useWallet()
   const { chainUnsupported, isConnected, changeNetworks, connect } = useWallet()
-  const { eip1193Provider } = useWallet()
+  const { signer } = useWallet()
 
   return useCallback(
     async (
@@ -108,16 +108,14 @@ export function useTransactor(): Transactor | undefined {
         options?.onDone?.()
         return false
       }
-      if (!eip1193Provider || !chain) {
+      if (!signer || !chain) {
         options?.onDone?.()
         return false
       }
 
       /**
-       * Create a new contract instance with the provider.
+       * Create a new contract instance with the signer.
        */
-      const provider = new providers.Web3Provider(eip1193Provider as providers.ExternalProvider)
-      const signer = provider.getSigner()
       const contract = new Contract(
         _contract.address,
         _contract.interface,
@@ -192,7 +190,7 @@ export function useTransactor(): Transactor | undefined {
     [
       chainUnsupported,
       isConnected,
-      eip1193Provider,
+      signer,
       chain,
       changeNetworks,
       connect,

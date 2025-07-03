@@ -11,7 +11,7 @@ import TransactorButton from 'components/buttons/TransactorButton'
 import FormattedNumberInput from 'components/inputs/FormattedNumberInput'
 import { TxHistoryContext } from 'contexts/Transaction/TxHistoryContext'
 import { useWallet } from 'hooks/Wallet'
-import { wagmiConfig } from 'contexts/Para/Providers'
+import { wagmiConfig } from 'packages/v4/wagmiConfig'
 import { parseWad } from 'utils/format/formatNumber'
 import { ChainSelect } from '../../../../components/ChainSelect'
 

@@ -6,8 +6,7 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon,
 } from '@heroicons/react/24/solid'
-import { ContractFunctionArgs, hexToBigInt } from 'viem'
-import React, { useCallback, useEffect, useState } from 'react'
+import { Trans, t } from '@lingui/macro'
 import {
   RelayrPostBundleResponse,
   jb721TiersHookProjectDeployerAbi,
@@ -15,35 +14,39 @@ import {
   useGetRelayrTxBundle,
   useSendRelayrTx,
 } from 'juice-sdk-react'
-import { Trans, t } from '@lingui/macro'
+import React, { useCallback, useEffect, useState } from 'react'
+import { ContractFunctionArgs, hexToBigInt } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from 'antd'
 import { Callout } from 'components/Callout/Callout'
+import ETHAmount from 'components/currency/ETHAmount'
+import Loading from 'components/Loading'
+import { JuiceModal } from 'components/modals/JuiceModal'
+import { NETWORKS } from 'constants/networks'
+import { useGnosisSafe } from 'hooks/safe/useGnosisSafe'
+import { JBChainId } from 'juice-sdk-core'
+import { uploadProjectMetadata } from 'lib/api/ipfs'
+import { useRouter } from 'next/router'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { ChainSelect } from 'packages/v4/components/ChainSelect'
-import ETHAmount from 'components/currency/ETHAmount'
-import { JBChainId } from 'juice-sdk-core'
-import { JuiceModal } from 'components/modals/JuiceModal'
-import Loading from 'components/Loading'
-import { NETWORKS } from 'constants/networks'
-import { OmnichainTxLoadingContent } from './OmnichainTxLoadingContent'
-import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
-import { emitErrorNotification } from 'utils/notifications'
-import { getProjectIdFromLaunchReceipt } from 'packages/v4/hooks/useLaunchProjectTx'
-import { getTransactionReceipt } from 'viem/actions'
-import { twMerge } from 'tailwind-merge'
-import { uploadProjectMetadata } from 'lib/api/ipfs'
-import { useAppSelector } from 'redux/hooks/useAppSelector'
-import { useConfig } from 'wagmi'
-import { useDeployOmnichainProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
-import { useDispatch } from 'react-redux'
 import { useIsNftProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useIsNftProject'
 import { useNftProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useNftProjectLaunchData'
-import { useRouter } from 'next/router'
-import { useStandardProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
 import { useUploadNftRewards } from 'packages/v4/components/Create/hooks/DeployProject/hooks/NFT/useUploadNftRewards'
+import { useDeployOmnichainProject } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useDeployOmnichainProject'
+import { useStandardProjectLaunchData } from 'packages/v4/components/Create/hooks/DeployProject/hooks/useStandardProjectLaunchData'
+import QueueSafeLaunchProjectTxsModal from 'packages/v4/components/QueueSafeTxsModal/QueueSafeLaunchProjectTxsModal'
+import { getProjectIdFromLaunchReceipt } from 'packages/v4/hooks/useLaunchProjectTx'
+import { useDispatch } from 'react-redux'
+import { useAppSelector } from 'redux/hooks/useAppSelector'
+import { creatingV2ProjectActions } from 'redux/slices/v2v3/creatingV2Project'
+import { twMerge } from 'tailwind-merge'
+import { emitErrorNotification } from 'utils/notifications'
+import { isSafeSigner } from 'utils/safe'
+import { getTransactionReceipt } from 'viem/actions'
+import { useAccount, useConfig } from 'wagmi'
+import { OmnichainTxLoadingContent } from './OmnichainTxLoadingContent'
 
 const JUICEBOX_DOMAIN = 'juicebox'
 
@@ -60,6 +63,7 @@ export const LaunchProjectModal: React.FC<{
   const router = useRouter()
   const relayrBundle = useGetRelayrTxBundle()
   const { sendRelayrTx, isPending, data: txData } = useSendRelayrTx()
+  const { address: userAddress } = useAccount()
 
   const [selectedGasChain, setSelectedGasChain] = useState<JBChainId>(
     process.env.NEXT_PUBLIC_TESTNET == 'true' ? sepolia.id : mainnet.id,
@@ -67,10 +71,22 @@ export const LaunchProjectModal: React.FC<{
   const [txQuote, setTxQuote] = useState<RelayrPostBundleResponse>()
   const [txQuoteLoading, setTxQuoteLoading] = useState(false)
   const [txSigning, setTxSigning] = useState(false)
+  const [showSafeQueueModal, setShowSafeQueueModal] = useState(false)
+  const [metadataUploaded, setMetadataUploaded] = useState(false)
+  const [projectMetadataCid, setProjectMetadataCid] = useState<string>()
+  const [uploadedNftData, setUploadedNftData] = useState<{
+    rewardTierCids: string[]
+    nftCollectionMetadataUri: string
+  }>()
+  
   const isNftProject = useIsNftProject()
   const uploadNftRewards = useUploadNftRewards()
   const dispatch = useDispatch()
   const config = useConfig()
+
+  // Safe detection
+  const { data: gnosisSafe } = useGnosisSafe(userAddress)
+  const isSafe = gnosisSafe && isSafeSigner({ address: userAddress, safe: gnosisSafe })
 
   const txQuoteCostHex = txQuote?.payment_info.find(
     p => Number(p.chain) === Number(selectedGasChain),
@@ -92,6 +108,55 @@ export const LaunchProjectModal: React.FC<{
   const [nftProject, setNftProject] = useState(false)
 
   /**
+   * Upload metadata and NFT data (if applicable) for the project.
+   * This is separated out so it can be done before showing the Safe queue modal.
+   */
+  const uploadMetadata = useCallback(async () => {
+    if (metadataUploaded && projectMetadataCid) {
+      return { projectMetadataCid, uploadedNftData }
+    }
+
+    try {
+      const cid = (
+        await uploadProjectMetadata({
+          ...createData.projectMetadata,
+          domain: JUICEBOX_DOMAIN,
+        })
+      ).Hash
+      setProjectMetadataCid(cid)
+
+      let nftData: typeof uploadedNftData
+      if (isNftProject) {
+        setNftProject(true)
+        const result = await uploadNftRewards()
+        if (!result?.rewardTiers || !result?.nfCollectionMetadata) {
+          emitErrorNotification('Failed to upload NFT rewards')
+          return null
+        }
+        nftData = {
+          rewardTierCids: result.rewardTiers,
+          nftCollectionMetadataUri: result.nfCollectionMetadata,
+        }
+        setUploadedNftData(nftData)
+      }
+
+      setMetadataUploaded(true)
+      return { projectMetadataCid: cid, uploadedNftData: nftData }
+    } catch (error) {
+      console.error('Failed to upload metadata:', error)
+      emitErrorNotification('Failed to upload project metadata')
+      return null
+    }
+  }, [
+    metadataUploaded,
+    projectMetadataCid,
+    uploadedNftData,
+    createData.projectMetadata,
+    isNftProject,
+    uploadNftRewards,
+  ])
+
+  /**
    * Fetches a quote for the omnichain transaction.
    *
    * This is step 1 of the launch process.
@@ -101,23 +166,14 @@ export const LaunchProjectModal: React.FC<{
     setTxQuoteLoading(true)
 
     try {
-      const projectMetadataCid = (
-        await uploadProjectMetadata({
-          ...createData.projectMetadata,
-          domain: JUICEBOX_DOMAIN,
-        })
-      ).Hash
-      if (isNftProject) {
-        setNftProject(true)
-        const {
-          rewardTiers: rewardTierCids,
-          nfCollectionMetadata: nftCollectionMetadataUri,
-        } = (await uploadNftRewards()) ?? {}
-        if (!rewardTierCids || !nftCollectionMetadataUri) {
-          emitErrorNotification('Failed to upload NFT rewards')
-          return
-        }
+      const uploadResult = await uploadMetadata()
+      if (!uploadResult) {
+        return
+      }
 
+      const { projectMetadataCid, uploadedNftData } = uploadResult
+
+      if (isNftProject && uploadedNftData) {
         const launchData = chainIds.reduce(
           (
             acc: {
@@ -132,8 +188,8 @@ export const LaunchProjectModal: React.FC<{
             const { args } = getNftProjectLaunchData({
               projectMetadataCID: projectMetadataCid,
               chainId,
-              rewardTierCids,
-              nftCollectionMetadataUri,
+              rewardTierCids: uploadedNftData.rewardTierCids,
+              nftCollectionMetadataUri: uploadedNftData.nftCollectionMetadataUri,
               withStartBuffer: true,
             })
 
@@ -178,17 +234,61 @@ export const LaunchProjectModal: React.FC<{
       setTxQuoteLoading(false)
     }
   }, [
-    getNftProjectLaunchData,
-    uploadNftRewards,
+    uploadMetadata,
     isNftProject,
     chainIds,
-    createData.projectMetadata,
-    deployOmnichainProject,
+    getNftProjectLaunchData,
     deployOmnichainNftProject,
     getStandardProjectLaunchData,
+    deployOmnichainProject,
   ])
 
+  /**
+   * Handle launching via Safe queue modal for multi-chain projects.
+   * This uploads metadata first, then opens the Safe queue modal.
+   */
+  const handleSafeLaunch = useCallback(async () => {
+    setTxQuoteLoading(true)
+    
+    try {
+      const uploadResult = await uploadMetadata()
+      if (!uploadResult) {
+        return
+      }
+
+      // Close the launch modal and open the Safe queue modal
+      props.setOpen(false)
+      setShowSafeQueueModal(true)
+    } catch (error) {
+      console.error('Failed to prepare Safe launch:', error)
+      emitErrorNotification('Failed to prepare project launch')
+    } finally {
+      setTxQuoteLoading(false)
+    }
+  }, [uploadMetadata, props])
+
+  /**
+   * Handle successful Safe queue completion.
+   * This redirects to a success page indicating transactions are queued.
+   */
+  const handleSafeQueueSuccess = useCallback(async () => {
+    // Create a special query parameter to indicate Safe queue success
+    await router.push({ query: { safeQueued: 'true', chains: chainIds.join(',') } }, '/create', {
+      shallow: true,
+    })
+
+    dispatch(creatingV2ProjectActions.resetState())
+    setShowSafeQueueModal(false)
+  }, [router, chainIds, dispatch])
+
   async function onClickLaunch() {
+    // For Safe wallets with multiple chains, use the Safe queue flow
+    if (isSafe && chainIds.length > 1) {
+      await handleSafeLaunch()
+      return
+    }
+
+    // For single-chain launches or non-Safe wallets, use the standard relayr flow
     if (!txQuote) {
       getTxQuote()
       return
@@ -259,15 +359,16 @@ export const LaunchProjectModal: React.FC<{
   ])
 
   return (
-    <JuiceModal
-      className="max-w-lg"
-      title={t`Launch project`}
-      okText={!txQuote ? t`Get launch quote` : t`Launch project`}
-      cancelText={t`Cancel`}
-      onOk={onClickLaunch}
-      okLoading={txSigning || txLoading || txQuoteLoading}
-      {...props}
-    >
+    <>
+      <JuiceModal
+        className="max-w-lg"
+        title={t`Launch project`}
+        okText={!txQuote ? t`Get launch quote` : t`Launch project`}
+        cancelText={t`Cancel`}
+        onOk={onClickLaunch}
+        okLoading={txSigning || txLoading || txQuoteLoading}
+        {...props}
+      >
       {txLoading ? (
         <OmnichainTxLoadingContent
           relayrResponse={relayrBundle.response}
@@ -358,6 +459,26 @@ export const LaunchProjectModal: React.FC<{
         </div>
       )}
     </JuiceModal>
+    
+    {/* Safe Queue Modal for multi-chain launches */}
+    {showSafeQueueModal && projectMetadataCid && userAddress && gnosisSafe && (
+      <QueueSafeLaunchProjectTxsModal
+        open={showSafeQueueModal}
+        onCancel={() => setShowSafeQueueModal(false)}
+        onComplete={handleSafeQueueSuccess}
+        launchData={{
+          projectMetadataCID: projectMetadataCid,
+          isNftProject: !!nftProject,
+          nftData: uploadedNftData ? {
+            rewardTierCids: uploadedNftData.rewardTierCids,
+            nftCollectionMetadataUri: uploadedNftData.nftCollectionMetadataUri,
+          } : undefined,
+        }}
+        chains={chainIds}
+        safeAddress={userAddress}
+      />
+    )}
+    </>
   )
 }
 

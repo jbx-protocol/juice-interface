@@ -68,6 +68,9 @@ msgstr ""
 msgid "How should I set up my project?"
 msgstr ""
 
+msgid "Your project launch transactions are now waiting for execution in your Safe wallet. Once the required signatures are collected, you can execute them through the Safe interface."
+msgstr ""
+
 msgid "To switch to 'Limited' payouts, enter a total amount to pay out of the treasury to split between your recipients."
 msgstr ""
 
@@ -554,6 +557,9 @@ msgstr ""
 msgid "Edit {allocationName}"
 msgstr ""
 
+msgid "Your project launch transactions will be queued to your Safe wallet on each selected chain. Once the required signatures are collected for each transaction, you can execute them through the Safe interface."
+msgstr ""
+
 msgid "Newsletter"
 msgstr ""
 
@@ -738,6 +744,9 @@ msgid "Delete token allocation"
 msgstr ""
 
 msgid "Current handle"
+msgstr ""
+
+msgid "Get help in JuiceboxDAO Discord"
 msgstr ""
 
 msgid "Telegram link"
@@ -2741,6 +2750,9 @@ msgstr ""
 msgid "This project is archived and can't be paid."
 msgstr ""
 
+msgid "Your project launch transactions have been queued to your Safe wallet!"
+msgstr ""
+
 msgid "No NFTs"
 msgstr ""
 
@@ -2775,6 +2787,9 @@ msgid "Edit project"
 msgstr ""
 
 msgid "Fund your thing"
+msgstr ""
+
+msgid "Execute transactions in Safe:"
 msgstr ""
 
 msgid "Compare"
@@ -3509,6 +3524,9 @@ msgstr ""
 msgid "The issuance cut percent is disabled if you are using unlocked rulesets (because they have no duration)."
 msgstr ""
 
+msgid "Your project launch transaction will be queued to your Safe wallet for execution. Once the required signatures are collected, you can execute the transaction through the Safe interface."
+msgstr ""
+
 msgid "<0/> reserved"
 msgstr ""
 
@@ -3690,6 +3708,9 @@ msgid "Your transactions have been submitted across multiple chains and are awai
 msgstr ""
 
 msgid "Cannot use zero address"
+msgstr ""
+
+msgid "Queue launch transaction to Safe"
 msgstr ""
 
 msgid "Allowed"
@@ -4188,6 +4209,9 @@ msgid "CSV download failed."
 msgstr ""
 
 msgid "Switch to unlimited"
+msgstr ""
+
+msgid "Queue launch transactions to Safe ({chainCount} chains)"
 msgstr ""
 
 msgid "No payment info for selected chain"

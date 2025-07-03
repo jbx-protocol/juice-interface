@@ -1,36 +1,65 @@
+import { ParaEthersV5Signer } from '@getpara/ethers-v5-integration'
 import {
-  useChain,
-  useChainUnsupported,
-  useChangeNetworks,
-  useConnect,
-  useDisconnect,
-  useIsConnected,
-  useSigner,
-  useUserAddress,
+  useAccount,
+  useClient,
+  useLogout,
+  useModal,
+  useWallet as useParaWallet,
   useWalletBalance,
-} from './hooks';
-
-import { useEip1193Provider } from './hooks/useEip1193Provider';
+} from '@getpara/react-sdk'
+import { readNetwork } from 'constants/networks'
+import { EIP1193Provider } from 'viem'
+import { useChainId, useChains, useSwitchChain, useWalletClient } from 'wagmi'
 
 export function useWallet() {
-  const signer = useSigner()
-  const userAddress = useUserAddress()
-  const isConnected = useIsConnected()
-  const chain = useChain()
-  const eip1193Provider = useEip1193Provider()
-  const chainUnsupported = useChainUnsupported()
-  const balance = useWalletBalance()
+  const { data: paraAccount } = useAccount()
+  const { data: paraWallet } = useParaWallet()
+  const { logout: paraLogout } = useLogout()
+  const { openModal } = useModal()
+  const { data: walletClient } = useWalletClient()
+  const client = useClient()
+  const eip1193Provider = walletClient?.transport as EIP1193Provider | undefined
 
-  const connect = useConnect()
-  const disconnect = useDisconnect()
-  const changeNetworks = useChangeNetworks()
+  const chains = useChains()
+  const chainId = useChainId()
+  const { switchChain } = useSwitchChain()
+
+  const chain = chains.find(c => c.id === chainId)
+
+  // The Para Ethers V5 Signer satisfies signer requirements
+  const paraSigner =
+    client && paraAccount?.isConnected
+      ? new ParaEthersV5Signer(client)
+      : undefined
+
+  const userAddress = paraWallet?.address
+  const isConnected = paraAccount?.isConnected ?? false
+  const chainUnsupported = false
+  const balanceQuery = useWalletBalance({
+    walletId: paraWallet?.id ?? '',
+  })
+
+  const balance = balanceQuery.data ?? '0'
+  const connect = () => {
+    if (isConnected) {
+      return Promise.resolve()
+    }
+    return openModal()
+  }
+  const disconnect = () => paraLogout()
+  const changeNetworks = (chainId?: number) => {
+    switchChain({ chainId: chainId ?? readNetwork.chainId })
+  }
 
   return {
-    signer,
+    signer: paraSigner,
     userAddress,
     eip1193Provider,
     isConnected,
-    chain,
+    chain: {
+      id: String(chain?.id ?? chainId),
+      name: chain?.name ?? 'Unknown',
+    },
     chainUnsupported,
     balance,
     connect,
@@ -38,5 +67,3 @@ export function useWallet() {
     changeNetworks,
   }
 }
-
-export type Wallet = ReturnType<typeof useWallet>

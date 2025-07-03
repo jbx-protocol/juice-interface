@@ -1,19 +1,17 @@
-import { Web3OnboardProvider } from '@web3-onboard/react'
 import { Head } from 'components/common/Head/Head'
 import { LanguageProvider } from 'contexts/Language/LanguageProvider'
 import SupabaseSessionProvider from 'contexts/SupabaseSession/SupabaseSessionProvider'
 import { getInitialThemeOption, syncTheme } from 'contexts/Theme/useJuiceTheme'
-import { initWeb3Onboard } from 'hooks/Wallet/initWeb3Onboard'
 import { useFathom } from 'lib/fathom'
 import type { AppProps } from 'next/app'
+import ParaProviders from 'contexts/Para/Providers'
+import ReactQueryProvider from 'contexts/ReactQueryProvider'
+import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
+import '@getpara/react-sdk/styles.css'
 import '../styles/index.scss'
 
-/**
- * Init Web3 Onboard
- *
- * Must be called outside component scope, to ensure it is called before component lifecycle starts and hooks execute.
- */
-const web3Onboard = initWeb3Onboard()
+
+
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   syncTheme(getInitialThemeOption())
@@ -29,11 +27,16 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <LanguageProvider i18n={pageProps.i18n}>
       {/* Default HEAD - overwritten by specific page SEO */}
       <Head />
-      <Web3OnboardProvider web3Onboard={web3Onboard}>
-        <SupabaseSessionProvider initialSession={pageProps.initialSession}>
-          <Component {...pageProps} />
-        </SupabaseSessionProvider>
-      </Web3OnboardProvider>
+      {/* Moving ThemeProvider up so Para can react to the theme changes and update modal*/}
+      <ThemeProvider>
+        <ReactQueryProvider>
+          <ParaProviders>
+            <SupabaseSessionProvider initialSession={pageProps.initialSession}>
+              <Component {...pageProps} />
+            </SupabaseSessionProvider>
+          </ParaProviders>
+        </ReactQueryProvider>
+      </ThemeProvider>
     </LanguageProvider>
   )
 }

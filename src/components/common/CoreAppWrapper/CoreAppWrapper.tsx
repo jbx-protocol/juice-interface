@@ -4,17 +4,13 @@ import { Content } from 'antd/lib/layout/layout'
 import { EtherPriceProvider } from 'contexts/EtherPrice/EtherPriceProvider'
 import { Layout } from 'antd'
 import { QuickProjectSearchProvider } from 'components/QuickProjectSearch/QuickProjectSearchProvider'
-import ReactQueryProvider from 'contexts/ReactQueryProvider'
 import { SiteNavigation } from 'components/Navbar/SiteNavigation'
-import { ThemeProvider } from 'contexts/Theme/ThemeProvider'
-import { WagmiProvider } from 'wagmi'
+
 import dynamic from 'next/dynamic'
 import { installJuiceboxWindowObject } from 'lib/juicebox'
 import { redirectTo } from 'utils/windowUtils'
 import { twJoin } from 'tailwind-merge'
-import { useInitWallet } from 'hooks/Wallet'
 import { useRouter } from 'next/router'
-import { wagmiConfig } from 'packages/v4/wagmiConfig'
 
 const EthersTxHistoryProvider = dynamic(
   () => import('contexts/Transaction/EthersTxHistoryProvider'),
@@ -61,19 +57,13 @@ export const AppWrapper: React.FC<
 
   return (
     <React.StrictMode>
-      <WagmiProvider config={wagmiConfig}>
-        <ReactQueryProvider>
-          <TxHistoryProvider>
-            <ThemeProvider>
-              <EtherPriceProvider>
-                <QuickProjectSearchProvider>
-                  <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
-                </QuickProjectSearchProvider>
-              </EtherPriceProvider>
-            </ThemeProvider>
-          </TxHistoryProvider>
-        </ReactQueryProvider>
-      </WagmiProvider>
+      <TxHistoryProvider>
+        <EtherPriceProvider>
+          <QuickProjectSearchProvider>
+            <_Wrapper hideNav={hideNav}>{children}</_Wrapper>
+          </QuickProjectSearchProvider>
+        </EtherPriceProvider>
+      </TxHistoryProvider>
     </React.StrictMode>
   )
 }
@@ -83,7 +73,6 @@ const _Wrapper: React.FC<React.PropsWithChildren<{ hideNav?: boolean }>> = ({
   hideNav,
 }) => {
   const router = useRouter()
-  useInitWallet()
   useAdjustUrl()
 
   // run on initial mount

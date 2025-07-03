@@ -5,12 +5,12 @@ import { PayoutsTableRow } from 'components/PayoutsTable/PayoutsTableRow'
 import { getV4CurrencyOption } from 'packages/v4/utils/currency'
 import { twMerge } from 'tailwind-merge'
 import { Allocation } from '../Allocation/Allocation'
+import { usePayoutsTableContext } from './context/PayoutsTableContext'
 import { CurrencySwitcher } from './CurrencySwitcher'
 import { HeaderRows } from './HeaderRows'
+import { usePayoutsTable } from './hooks/usePayoutsTable'
 import { PayoutSplitRow } from './PayoutSplitRow'
 import { TotalRows } from './TotalRows'
-import { usePayoutsTableContext } from './context/PayoutsTableContext'
-import { usePayoutsTable } from './hooks/usePayoutsTable'
 
 const Row = PayoutsTableRow
 const Cell = PayoutsTableCell
@@ -47,7 +47,7 @@ export function PayoutsTableBody() {
             <div>
               {emptyState ? (
                 <Row className="text-center">
-                  <Cell colSpan={4} className="text-tertiary py-32">
+                  <Cell colSpan={4} className="text-tertiary py-8">
                     <Trans>No payout recipients</Trans>
                   </Cell>
                 </Row>

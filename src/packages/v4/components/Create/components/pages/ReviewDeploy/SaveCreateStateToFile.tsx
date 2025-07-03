@@ -27,12 +27,12 @@ export const SaveCreateStateToFile: React.FC = () => {
   }, [creatingState])
 
   return (
-    <Tooltip title={isSaved ? <Trans>Saved</Trans> : <Trans>Save draft to file</Trans>}>
+    <Tooltip title={isSaved ? <Trans>Exported</Trans> : <Trans>Export draft to file</Trans>}>
       <Button 
         type="text"
         icon={isSaved ? <CheckOutlined /> : <DownloadOutlined />} 
         onClick={handleSave}
-        aria-label={isSaved ? "Saved" : "Save draft to file"}
+        aria-label={isSaved ? "Exported" : "Export draft to file"}
       />
     </Tooltip>
   )

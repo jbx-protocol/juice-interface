@@ -17,6 +17,7 @@ import {
 import React, { useCallback, useEffect, useState } from 'react'
 import { ContractFunctionArgs, hexToBigInt } from 'viem'
 import { mainnet, sepolia } from 'viem/chains'
+import { useAccount, useConfig } from 'wagmi'
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from 'antd'
@@ -45,7 +46,6 @@ import { twMerge } from 'tailwind-merge'
 import { emitErrorNotification } from 'utils/notifications'
 import { isSafeSigner } from 'utils/safe'
 import { getTransactionReceipt } from 'viem/actions'
-import { useAccount, useConfig } from 'wagmi'
 import { OmnichainTxLoadingContent } from './OmnichainTxLoadingContent'
 
 const JUICEBOX_DOMAIN = 'juicebox'
@@ -409,7 +409,12 @@ export const LaunchProjectModal: React.FC<{
                       <GasIcon className="h-5 w-5" />
                       <div className="text-base font-medium leading-none">
                         {txQuoteLoading || !txQuoteCost ? (
-                          '--'
+                          <div className="flex flex-col">
+                            <span>--</span>
+                            <span className="text-xs text-grey-500 mt-1">
+                              <Trans>This sometimes takes up to a minute</Trans>
+                            </span>
+                          </div>
                         ) : (
                           <ETHAmount
                             amount={BigNumber.from(txQuoteCost?.toString())}

@@ -66,7 +66,7 @@ export function NftPreview({
               src={fileUrl}
               alt={rewardTier.name}
             />
-            <div className="mt-6 flex flex-col gap-2 text-start">
+            <div className="mt-6 flex flex-col gap-2 text-start pb-6">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <span className="min-w-0 flex-grow-[99999] font-heading text-2xl md:text-3xl">
                   {rewardTier.name}
@@ -89,7 +89,7 @@ export function NftPreview({
               </div>
 
               {actionButton && isMobile ? (
-                <div className="mt-3">{actionButton}</div>
+                <div className="mt-3 mb-6">{actionButton}</div>
               ) : null}
             </div>
           </div>

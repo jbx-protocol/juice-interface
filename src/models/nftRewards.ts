@@ -9,6 +9,7 @@ export type NftRewardTier = {
   id: number
   maxSupply: number | undefined
   remainingSupply: number | undefined
+  perChainSupply?: { chainId: number; remainingSupply: number }[]
   reservedRate: number | undefined
   beneficiary: string | undefined
   votingWeight: string | undefined

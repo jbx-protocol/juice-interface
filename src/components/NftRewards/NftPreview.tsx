@@ -7,6 +7,7 @@ import { ProjectMetadataContext } from 'contexts/ProjectMetadataContext'
 import useMobile from 'hooks/useMobile'
 import { NftRewardTier } from 'models/nftRewards'
 import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
+import { RemainingSupplyWithTooltip } from 'packages/v4/views/V4ProjectDashboard/V4ProjectTabs/V4NftRewardsPanel/NftReward/RemainingSupplyWithTooltip'
 import { useContext } from 'react'
 
 export function NftPreview({
@@ -38,14 +39,15 @@ export function NftPreview({
     setOpen(false)
   }
 
-  const remainingSupplyText = hasUnlimitedSupply ? (
-    <Trans>REMAINING SUPPLY: Unlimited</Trans>
-  ) : isSoldOut ? (
-    <Trans>REMAINING SUPPLY: Sold out</Trans>
-  ) : (
-    <Trans>
-      REMAINING SUPPLY: {rewardTier.remainingSupply}/{rewardTier.maxSupply}
-    </Trans>
+  const remainingSupplyElement = (
+    <div className="flex text-xs text-grey-400 md:mt-1">
+      <Trans>REMAINING SUPPLY: </Trans>
+      <RemainingSupplyWithTooltip
+        remainingSupply={rewardTier.remainingSupply}
+        maxSupply={rewardTier.maxSupply}
+        perChainSupply={rewardTier.perChainSupply}
+      />
+    </div>
   )
 
   return (
@@ -84,9 +86,7 @@ export function NftPreview({
                   {rewardTier.description}
                 </span>
               )}
-              <div className="flex text-xs text-grey-400 md:mt-1">
-                {remainingSupplyText}
-              </div>
+              {remainingSupplyElement}
 
               {actionButton && isMobile ? (
                 <div className="mt-3 mb-6">{actionButton}</div>

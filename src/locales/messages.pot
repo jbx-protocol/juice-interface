@@ -128,9 +128,6 @@ msgstr ""
 msgid "You have <0/> unclaimed {ticker} tokens."
 msgstr ""
 
-msgid "REMAINING SUPPLY: Unlimited"
-msgstr ""
-
 msgid "project owner"
 msgstr ""
 
@@ -327,6 +324,9 @@ msgid "NFT Credits"
 msgstr ""
 
 msgid "You must grant permission to migrate your V1 tokens."
+msgstr ""
+
+msgid "Note: This same supply limit applies across each chains where your project is deployed."
 msgstr ""
 
 msgid "Add an on-chain memo to this payment."
@@ -1253,6 +1253,9 @@ msgstr ""
 msgid "This contract manages NFT minting and redeeming for this project."
 msgstr ""
 
+msgid "{remainingSupply} remaining"
+msgstr ""
+
 msgid "None"
 msgstr ""
 
@@ -1308,6 +1311,9 @@ msgid "Cash outs are disabled when all of the project's ETH is being used for pa
 msgstr ""
 
 msgid "Fee from <0><1/></0>"
+msgstr ""
+
+msgid "REMAINING SUPPLY:"
 msgstr ""
 
 msgid "Reserved percent"
@@ -2484,6 +2490,9 @@ msgid "You must confirm your compliance."
 msgstr ""
 
 msgid "{pageTitle}"
+msgstr ""
+
+msgid "Remaining supply by chain:"
 msgstr ""
 
 msgid "Paused"
@@ -4662,12 +4671,6 @@ msgid "Latest"
 msgstr ""
 
 msgid "Enable payment terminal config"
-msgstr ""
-
-msgid "REMAINING SUPPLY: Sold out"
-msgstr ""
-
-msgid "REMAINING SUPPLY: {0}/{1}"
 msgstr ""
 
 msgid "A reserved rate"

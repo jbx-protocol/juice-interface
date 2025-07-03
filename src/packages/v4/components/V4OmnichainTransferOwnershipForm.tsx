@@ -103,6 +103,9 @@ export function V4OmnichainTransferOwnershipForm({
             )}
           />
           <div>
+            <div className="mb-2 text-sm text-grey-600 dark:text-grey-400">
+              <Trans>Ensure this address exists on all chains where your project is deployed</Trans>
+            </div>
             <Form.Item 
               name="to" 
               label={t`Recipient address`}

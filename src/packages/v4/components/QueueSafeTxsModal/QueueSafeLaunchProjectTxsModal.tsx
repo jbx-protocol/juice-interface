@@ -1,0 +1,75 @@
+import { SafeLaunchProjectData, useProposeSafeLaunchProjectTx } from 'packages/v4/hooks/useProposeSafeLaunchProjectTx'
+
+import { Trans } from '@lingui/macro'
+import { JBChainId } from 'juice-sdk-react'
+import { SafeProposeTransactionResponse } from 'packages/v4/hooks/useProposeSafeTransaction'
+import { useMemo } from 'react'
+import QueueSafeTxsModal from './QueueSafeTxsModal'
+
+export interface QueueSafeLaunchProjectTxsModalProps {
+  open: boolean
+  onCancel: VoidFunction
+  onComplete: VoidFunction
+  launchData: SafeLaunchProjectData
+  chains: JBChainId[]
+  safeAddress: string
+}
+
+export default function QueueSafeLaunchProjectTxsModal({
+  open,
+  onCancel,
+  onComplete,
+  launchData,
+  chains,
+  safeAddress,
+}: QueueSafeLaunchProjectTxsModalProps) {
+  const { proposeLaunchProjectTx } = useProposeSafeLaunchProjectTx({ safeAddress })
+
+  const handleExecuteOnChain = async (chainId: JBChainId): Promise<SafeProposeTransactionResponse> => {
+    return await proposeLaunchProjectTx(chainId, launchData)
+  }
+
+  const title = useMemo(() => {
+    const chainCount = chains.length
+    if (chainCount === 1) {
+      return <Trans>Queue launch transaction to Safe</Trans>
+    }
+    return <Trans>Queue launch transactions to Safe ({chainCount} chains)</Trans>
+  }, [chains.length])
+
+  const description = useMemo(() => {
+    if (chains.length === 1) {
+      return (
+        <Trans>
+          Your project launch transaction will be queued to your Safe wallet for execution.
+          Once the required signatures are collected, you can execute the transaction through the Safe interface.
+        </Trans>
+      )
+    }
+    return (
+      <Trans>
+        Your project launch transactions will be queued to your Safe wallet on each selected chain.
+        Once the required signatures are collected for each transaction, you can execute them through the Safe interface.
+      </Trans>
+    )
+  }, [chains.length])
+
+  return (
+    <QueueSafeTxsModal
+      open={open}
+      onCancel={onCancel}
+      onAllComplete={onComplete}
+      title={title}
+      description={description}
+      onExecuteChain={handleExecuteOnChain}
+      safeAddress={safeAddress}
+      chains={chains}
+      buttonTextOverride={{
+        completed: <Trans>Queued</Trans>,
+        connectWallet: <Trans>Connect wallet</Trans>,
+        switchChain: (chainName: string) => <Trans>Switch to {chainName}</Trans>,
+        execute: (chainName: string) => <Trans>Queue on {chainName}</Trans>,
+      }}
+    />
+  )
+}

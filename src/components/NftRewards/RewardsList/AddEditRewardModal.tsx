@@ -3,11 +3,11 @@ import { Form, Modal, Tooltip } from 'antd'
 import { NftFileType, UploadNoStyle } from 'components/inputs/UploadNoStyle'
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import {
-    inputIsIntegerRule,
-    inputIsValidUrlRule,
-    inputMustBeEthAddressRule,
-    inputMustExistRule,
-    inputNonZeroRule,
+  inputIsIntegerRule,
+  inputIsValidUrlRule,
+  inputMustBeEthAddressRule,
+  inputMustExistRule,
+  inputNonZeroRule,
 } from 'utils/antdRules'
 
 import { QuestionCircleOutlined } from '@ant-design/icons'
@@ -260,7 +260,14 @@ export const AddEditRewardModal = ({
             {limitedSupply && (
               <Form.Item
                 name="maxSupply"
-                extra={t`The maximum supply of this NFT in circulation.`}
+                extra={
+                  <div className="flex flex-col gap-1">
+                    <span>{t`The maximum supply of this NFT in circulation.`}</span>
+                    <span className="text-xs text-orange-600 dark:text-orange-400">
+                      <Trans>Note: This same supply limit applies across each chains where your project is deployed.</Trans>
+                    </span>
+                  </div>
+                }
                 rules={[
                   inputMustExistRule({ label: t`Max Supply` }),
                   inputNonZeroRule({ label: t`Max Supply` }),

@@ -312,7 +312,7 @@ export const ReviewDeployPage = () => {
           key={ReviewDeployKey.FundingConfiguration}
           header={
             <Header>
-              <Trans>Rulesets & Payouts</Trans>
+              <Trans>Rulesets & Funds</Trans>
             </Header>
           }
         >

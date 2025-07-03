@@ -30,12 +30,12 @@ export const LoadCreateStateFromFile: React.FC = () => {
 
   return (
     <>
-      <Tooltip title={<Trans>Load draft</Trans>}>
+      <Tooltip title={<Trans>Import draft</Trans>}>
         <Button
           type="text"
           icon={<UploadOutlined />}
           onClick={() => fileInputRef.current?.click()}
-          aria-label="Load draft"
+          aria-label="Import draft"
         />
       </Tooltip>
       <input

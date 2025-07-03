@@ -1,6 +1,6 @@
 import { Skeleton } from 'antd'
-import { TruncatedText } from 'components/TruncatedText'
 import ETHAmount from 'components/currency/ETHAmount'
+import { TruncatedText } from 'components/TruncatedText'
 import { useJBChainId } from 'juice-sdk-react'
 import { NftRewardTier } from 'models/nftRewards'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
@@ -11,12 +11,12 @@ export function NftDetails({
   rewardTier,
   loading,
   hideAttributes,
-  remainingSupplyText,
+  remainingSupplyElement,
 }: {
   rewardTier: NftRewardTier | undefined
   loading: boolean | undefined
   hideAttributes?: boolean
-  remainingSupplyText: string
+  remainingSupplyElement: React.ReactElement
 }) {
   const chainId = useJBChainId()
 
@@ -62,7 +62,7 @@ export function NftDetails({
           >
             <div className='whitespace-nowrap'>
               <span className="text-xs text-grey-400 dark:text-slate-300">
-                {remainingSupplyText} on{' '}
+                {remainingSupplyElement} on{' '}
               </span>
               {chainId ? (
                 <ChainLogo chainId={chainId} className="ml-1 inline-block" />

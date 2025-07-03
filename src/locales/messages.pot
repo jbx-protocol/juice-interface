@@ -68,6 +68,9 @@ msgstr ""
 msgid "How should I set up my project?"
 msgstr ""
 
+msgid "Your project launch transactions are now waiting for execution in your Safe wallet. Once the required signatures are collected, you can execute them through the Safe interface."
+msgstr ""
+
 msgid "To switch to 'Limited' payouts, enter a total amount to pay out of the treasury to split between your recipients."
 msgstr ""
 
@@ -125,9 +128,6 @@ msgstr ""
 msgid "You have <0/> unclaimed {ticker} tokens."
 msgstr ""
 
-msgid "REMAINING SUPPLY: Unlimited"
-msgstr ""
-
 msgid "project owner"
 msgstr ""
 
@@ -153,6 +153,9 @@ msgid "Add NFT"
 msgstr ""
 
 msgid "Since their launch in August 2021, SharkDAO has raised over 1000 ETH on Juicebox, acquired six Nouns, and brought together over 900 members. They remain active nearly two years later collaborating with artists for NFT drops and working on governance in the Nouns ecosystem. NounsDAO has passed several SharkDAO proposals including <0>Nouns-based short films</0> and <1>FOMO Nouns</1>. SharkDAO has also <2>helped provide eye exams and glasses to thousands of kids in need</2>, donated 5 ETH to the <3>Coral Restoration Foundation</3>, and started a <4>Juicebox project</4> which raised 60+ ETH for co-founder <5>Del Piero</5>'s son's leukemia treatment."
+msgstr ""
+
+msgid "Funds"
 msgstr ""
 
 msgid "Grant permission"
@@ -321,6 +324,9 @@ msgid "NFT Credits"
 msgstr ""
 
 msgid "You must grant permission to migrate your V1 tokens."
+msgstr ""
+
+msgid "Note: This same supply limit applies across each chains where your project is deployed."
 msgstr ""
 
 msgid "Add an on-chain memo to this payment."
@@ -554,6 +560,9 @@ msgstr ""
 msgid "Edit {allocationName}"
 msgstr ""
 
+msgid "Your project launch transactions will be queued to your Safe wallet on each selected chain. Once the required signatures are collected for each transaction, you can execute them through the Safe interface."
+msgstr ""
+
 msgid "Newsletter"
 msgstr ""
 
@@ -621,6 +630,9 @@ msgid "Project owners can archive their Juicebox projects in their project's set
 msgstr ""
 
 msgid "Flexible"
+msgstr ""
+
+msgid "Export draft to file"
 msgstr ""
 
 msgid "Send reserved {tokensText}"
@@ -738,6 +750,9 @@ msgid "Delete token allocation"
 msgstr ""
 
 msgid "Current handle"
+msgstr ""
+
+msgid "Get help in JuiceboxDAO Discord"
 msgstr ""
 
 msgid "Telegram link"
@@ -1208,6 +1223,9 @@ msgstr ""
 msgid "This address will receive any tokens minted when the recipient project gets paid."
 msgstr ""
 
+msgid "Import draft"
+msgstr ""
+
 msgid "Bio"
 msgstr ""
 
@@ -1233,6 +1251,9 @@ msgid "Failed to send message."
 msgstr ""
 
 msgid "This contract manages NFT minting and redeeming for this project."
+msgstr ""
+
+msgid "{remainingSupply} remaining"
 msgstr ""
 
 msgid "None"
@@ -1290,6 +1311,9 @@ msgid "Cash outs are disabled when all of the project's ETH is being used for pa
 msgstr ""
 
 msgid "Fee from <0><1/></0>"
+msgstr ""
+
+msgid "REMAINING SUPPLY:"
 msgstr ""
 
 msgid "Reserved percent"
@@ -1647,6 +1671,9 @@ msgid "Transfer unclaimed {tokenTextShort}"
 msgstr ""
 
 msgid "Explore Projects"
+msgstr ""
+
+msgid "Rulesets & Funds"
 msgstr ""
 
 msgid "Your NFTs & Rewards"
@@ -2465,6 +2492,9 @@ msgstr ""
 msgid "{pageTitle}"
 msgstr ""
 
+msgid "Remaining supply by chain:"
+msgstr ""
+
 msgid "Paused"
 msgstr ""
 
@@ -2618,9 +2648,6 @@ msgstr ""
 msgid "An issuance cut percent"
 msgstr ""
 
-msgid "Ruleset #"
-msgstr ""
-
 msgid "Confirm changes"
 msgstr ""
 
@@ -2711,9 +2738,6 @@ msgstr ""
 msgid "No distributable reserved tokens have been configured for this project."
 msgstr ""
 
-msgid "Load draft"
-msgstr ""
-
 msgid "Owned by: <0/>"
 msgstr ""
 
@@ -2739,6 +2763,9 @@ msgid "All of your project's ETH can be paid out at any time. You can send perce
 msgstr ""
 
 msgid "This project is archived and can't be paid."
+msgstr ""
+
+msgid "Your project launch transactions have been queued to your Safe wallet!"
 msgstr ""
 
 msgid "No NFTs"
@@ -2775,6 +2802,9 @@ msgid "Edit project"
 msgstr ""
 
 msgid "Fund your thing"
+msgstr ""
+
+msgid "Execute transactions in Safe:"
 msgstr ""
 
 msgid "Compare"
@@ -3416,6 +3446,9 @@ msgstr ""
 msgid "Sent payouts"
 msgstr ""
 
+msgid "This sometimes takes up to a minute"
+msgstr ""
+
 msgid "Token address: <0/>"
 msgstr ""
 
@@ -3507,6 +3540,9 @@ msgid "Owner token minting:"
 msgstr ""
 
 msgid "The issuance cut percent is disabled if you are using unlocked rulesets (because they have no duration)."
+msgstr ""
+
+msgid "Your project launch transaction will be queued to your Safe wallet for execution. Once the required signatures are collected, you can execute the transaction through the Safe interface."
 msgstr ""
 
 msgid "<0/> reserved"
@@ -3614,9 +3650,6 @@ msgstr ""
 msgid "The project's owner can edit the project's rules and start new cycles at any time."
 msgstr ""
 
-msgid "Saved"
-msgstr ""
-
 msgid "Reserve 1 NFT of every"
 msgstr ""
 
@@ -3627,9 +3660,6 @@ msgid "Reserved token recipients"
 msgstr ""
 
 msgid "{0} is not a valid integer"
-msgstr ""
-
-msgid "Rulesets & Payouts"
 msgstr ""
 
 msgid "The unallocated portion of your total will go to the wallet that owns the project by default."
@@ -3677,9 +3707,6 @@ msgstr ""
 msgid "% tokens cashed out"
 msgstr ""
 
-msgid "Save draft to file"
-msgstr ""
-
 msgid "Connect wallet to claim"
 msgstr ""
 
@@ -3690,6 +3717,9 @@ msgid "Your transactions have been submitted across multiple chains and are awai
 msgstr ""
 
 msgid "Cannot use zero address"
+msgstr ""
+
+msgid "Queue launch transaction to Safe"
 msgstr ""
 
 msgid "Allowed"
@@ -4190,6 +4220,9 @@ msgstr ""
 msgid "Switch to unlimited"
 msgstr ""
 
+msgid "Queue launch transactions to Safe ({chainCount} chains)"
+msgstr ""
+
 msgid "No payment info for selected chain"
 msgstr ""
 
@@ -4640,12 +4673,6 @@ msgstr ""
 msgid "Enable payment terminal config"
 msgstr ""
 
-msgid "REMAINING SUPPLY: Sold out"
-msgstr ""
-
-msgid "REMAINING SUPPLY: {0}/{1}"
-msgstr ""
-
 msgid "A reserved rate"
 msgstr ""
 
@@ -4671,6 +4698,9 @@ msgid "{formattedTimeLeft} left"
 msgstr ""
 
 msgid "Project handle"
+msgstr ""
+
+msgid "Exported"
 msgstr ""
 
 msgid "Manage your project's NFTs and rewards"

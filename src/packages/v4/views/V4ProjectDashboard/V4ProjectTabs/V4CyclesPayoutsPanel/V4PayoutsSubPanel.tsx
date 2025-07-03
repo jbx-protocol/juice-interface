@@ -54,7 +54,7 @@ export const V4PayoutsSubPanel = ({
   return (
     <div className={twMerge(className)}>
       <h2 className="mb-0 font-heading text-2xl font-medium">
-        <Trans>Treasury & Payouts</Trans>
+        <Trans>Funds</Trans>
       </h2>
       <div className="mt-5 flex flex-col items-center gap-4">
         {type === 'current' && (
@@ -89,15 +89,15 @@ export const V4PayoutsSubPanel = ({
             <div className="flex w-full flex-wrap items-center gap-4">
               <TitleDescriptionDisplayCard
                 className="flex flex-1"
-                title={t`Surplus`}
-                description={surplusElement}
-                tooltip={surplusTooltip}
-              />
-              <TitleDescriptionDisplayCard
-                className="flex flex-1"
                 title={t`Available to pay out`}
                 description={availableToPayout}
                 tooltip={availableToPayOutTooltip}
+              />
+              <TitleDescriptionDisplayCard
+                className="flex flex-1"
+                title={t`Surplus`}
+                description={surplusElement}
+                tooltip={surplusTooltip}
               />
             </div>
           </>

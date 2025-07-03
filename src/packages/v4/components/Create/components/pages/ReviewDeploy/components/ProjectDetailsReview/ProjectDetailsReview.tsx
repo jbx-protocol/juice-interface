@@ -139,6 +139,7 @@ export const ProjectDetailsReview = () => {
         desc={tags?.length ? <ProjectTagsList tags={tags} /> : t`No tags`}
       />
       <ReviewDescription
+        className="col-span-4"
         title={t`Payment notice`}
         desc={
           payDisclosure ? (

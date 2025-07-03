@@ -1,18 +1,19 @@
+import { useMemo, useState } from 'react'
+
 import { t } from '@lingui/macro'
 import { Tooltip } from 'antd'
 import { NftPreview } from 'components/NftRewards/NftPreview'
 import { NftRewardTier } from 'models/nftRewards'
-import { DEFAULT_NFT_MAX_SUPPLY } from 'packages/v2v3/constants/nftRewards'
 import { usePayProjectDisabled } from 'packages/v2v3/hooks/usePayProjectDisabled'
 import { useProjectSelector } from 'packages/v4/components/ProjectDashboard/redux/hooks'
 import { useNftRewardsEnabledForPay } from 'packages/v4/hooks/useNftRewardsEnabledForPay'
-import { useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ipfsUriToGatewayUrl } from 'utils/ipfs'
 import { AddNftButton } from './AddNftButton'
 import { NftDetails } from './NftDetails'
 import { NftThumbnail } from './NftThumbnail'
 import { PreviewAddRemoveNftButton } from './PreviewAddRemoveNftButton'
+import { RemainingSupplyWithTooltip } from './RemainingSupplyWithTooltip'
 import { RemoveNftButton } from './RemoveNftButton'
 
 type NftRewardProps = {
@@ -61,11 +62,13 @@ export function NftReward({
 
   const remainingSupply = rewardTier?.remainingSupply
   const hasRemainingSupply = remainingSupply && remainingSupply > 0
-  const remainingSupplyText = !hasRemainingSupply
-    ? t`SOLD OUT`
-    : rewardTier.maxSupply === DEFAULT_NFT_MAX_SUPPLY
-    ? t`Unlimited`
-    : t`${rewardTier?.remainingSupply} remaining`
+  const remainingSupplyElement = (
+    <RemainingSupplyWithTooltip
+      remainingSupply={remainingSupply}
+      maxSupply={rewardTier?.maxSupply}
+      perChainSupply={rewardTier?.perChainSupply}
+    />
+  )
 
   const disabled = Boolean(
     !hasRemainingSupply || !nftsEnabledForPay || payDisabled,
@@ -110,7 +113,7 @@ export function NftReward({
             rewardTier={rewardTier}
             loading={loading || payDisabledLoading}
             hideAttributes={hideAttributes}
-            remainingSupplyText={remainingSupplyText}
+            remainingSupplyElement={remainingSupplyElement}
           />
           {!disabled &&
             (isSelected ? (

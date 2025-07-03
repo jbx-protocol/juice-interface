@@ -13,7 +13,7 @@ jest.mock('utils/format/formatTime', () => ({
 
 import { BigNumber } from '@ethersproject/bignumber'
 import { parseWad } from 'utils/format/formatNumber'
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react'
 import { useFormatConfigurationCyclesSection } from './useFormatConfigurationCyclesSection'
 
 describe('useFormatConfigurationCyclesSection', () => {

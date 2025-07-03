@@ -29,7 +29,7 @@
     "pristine": "rm -Rf node_modules && yarn cache clean --all && yarn install",
     "start": "NEXT_PUBLIC_VERSION=$(git rev-parse --short HEAD) next start",
     "pretest": "yarn i18n:compile && yarn codegen",
-    "test": "jest",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
     "ts:compile": "tsc --noEmit --incremental",
     "ts:prune": "ts-prune",
     "supabase:start": "supabase start",

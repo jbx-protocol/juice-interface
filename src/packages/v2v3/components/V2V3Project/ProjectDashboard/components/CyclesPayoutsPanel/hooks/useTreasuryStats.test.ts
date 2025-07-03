@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import { BigNumber } from '@ethersproject/bignumber'
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react'
 import { useProjectContext } from 'packages/v2v3/components/V2V3Project/ProjectDashboard/hooks/useProjectContext'
 import { V2V3_CURRENCY_ETH } from 'packages/v2v3/utils/currency'
 import { MAX_DISTRIBUTION_LIMIT } from 'packages/v2v3/utils/math'

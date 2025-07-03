@@ -632,6 +632,9 @@ msgstr ""
 msgid "Flexible"
 msgstr ""
 
+msgid "Export draft to file"
+msgstr ""
+
 msgid "Send reserved {tokensText}"
 msgstr ""
 
@@ -1218,6 +1221,9 @@ msgid "Address"
 msgstr ""
 
 msgid "This address will receive any tokens minted when the recipient project gets paid."
+msgstr ""
+
+msgid "Import draft"
 msgstr ""
 
 msgid "Bio"
@@ -2723,9 +2729,6 @@ msgstr ""
 msgid "No distributable reserved tokens have been configured for this project."
 msgstr ""
 
-msgid "Load draft"
-msgstr ""
-
 msgid "Owned by: <0/>"
 msgstr ""
 
@@ -3434,6 +3437,9 @@ msgstr ""
 msgid "Sent payouts"
 msgstr ""
 
+msgid "This sometimes takes up to a minute"
+msgstr ""
+
 msgid "Token address: <0/>"
 msgstr ""
 
@@ -3635,9 +3641,6 @@ msgstr ""
 msgid "The project's owner can edit the project's rules and start new cycles at any time."
 msgstr ""
 
-msgid "Saved"
-msgstr ""
-
 msgid "Reserve 1 NFT of every"
 msgstr ""
 
@@ -3693,9 +3696,6 @@ msgid "The issuance rate will not change unless you edit it. There will be less 
 msgstr ""
 
 msgid "% tokens cashed out"
-msgstr ""
-
-msgid "Save draft to file"
 msgstr ""
 
 msgid "Connect wallet to claim"
@@ -4695,6 +4695,9 @@ msgid "{formattedTimeLeft} left"
 msgstr ""
 
 msgid "Project handle"
+msgstr ""
+
+msgid "Exported"
 msgstr ""
 
 msgid "Manage your project's NFTs and rewards"

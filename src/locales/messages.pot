@@ -158,6 +158,9 @@ msgstr ""
 msgid "Since their launch in August 2021, SharkDAO has raised over 1000 ETH on Juicebox, acquired six Nouns, and brought together over 900 members. They remain active nearly two years later collaborating with artists for NFT drops and working on governance in the Nouns ecosystem. NounsDAO has passed several SharkDAO proposals including <0>Nouns-based short films</0> and <1>FOMO Nouns</1>. SharkDAO has also <2>helped provide eye exams and glasses to thousands of kids in need</2>, donated 5 ETH to the <3>Coral Restoration Foundation</3>, and started a <4>Juicebox project</4> which raised 60+ ETH for co-founder <5>Del Piero</5>'s son's leukemia treatment."
 msgstr ""
 
+msgid "Funds"
+msgstr ""
+
 msgid "Grant permission"
 msgstr ""
 
@@ -1658,6 +1661,9 @@ msgstr ""
 msgid "Explore Projects"
 msgstr ""
 
+msgid "Rulesets & Funds"
+msgstr ""
+
 msgid "Your NFTs & Rewards"
 msgstr ""
 
@@ -2625,9 +2631,6 @@ msgid "All transactions queued to Safe!"
 msgstr ""
 
 msgid "An issuance cut percent"
-msgstr ""
-
-msgid "Ruleset #"
 msgstr ""
 
 msgid "Confirm changes"
@@ -3645,9 +3648,6 @@ msgid "Reserved token recipients"
 msgstr ""
 
 msgid "{0} is not a valid integer"
-msgstr ""
-
-msgid "Rulesets & Funds"
 msgstr ""
 
 msgid "The unallocated portion of your total will go to the wallet that owns the project by default."

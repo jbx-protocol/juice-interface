@@ -3350,6 +3350,9 @@ msgstr ""
 msgid "Your wallet isn't allowed to process held fees."
 msgstr ""
 
+msgid "Ensure this address exists on all chains where your project is deployed"
+msgstr ""
+
 msgid "View token holders"
 msgstr ""
 

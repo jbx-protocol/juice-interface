@@ -1,16 +1,18 @@
-import EnterOutlined from '@ant-design/icons/EnterOutlined'
 import {
   ArrowDownIcon,
   ArrowRightCircleIcon,
   ArrowUpIcon,
 } from '@heroicons/react/24/outline'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { Trans, t } from '@lingui/macro'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+
+import EnterOutlined from '@ant-design/icons/EnterOutlined'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import Input from 'antd/lib/input/Input'
 import Modal from 'antd/lib/modal/Modal'
+import ETHAmount from 'components/currency/ETHAmount'
 import Loading from 'components/Loading'
 import { ProjectVersionBadge } from 'components/ProjectVersionBadge'
-import ETHAmount from 'components/currency/ETHAmount'
 import { PV_V2 } from 'constants/pv'
 import { useDBProjectsAggregateQuery } from 'hooks/useDBProjects'
 import { useRouter } from 'next/router'
@@ -18,7 +20,6 @@ import V1ProjectHandle from 'packages/v1/components/shared/V1ProjectHandle'
 import V2V3ProjectHandleLink from 'packages/v2v3/components/shared/V2V3ProjectHandleLink'
 import { v2v3ProjectRoute } from 'packages/v2v3/utils/routes'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { QuickProjectSearchContext } from './QuickProjectSearchContext'
 
@@ -236,7 +237,7 @@ export const QuickProjectSearchModal = () => {
             </KeyboardButton>{' '}
             {t`to select`}
           </span>
-          <span>
+          <div className="flex items-center gap-2">
             <KeyboardButton>
               <ArrowUpIcon className="h-4 w-4" />
             </KeyboardButton>
@@ -244,7 +245,7 @@ export const QuickProjectSearchModal = () => {
               <ArrowDownIcon className="h-4 w-4" />
             </KeyboardButton>{' '}
             {t`to navigate`}
-          </span>
+          </div>
           <span>
             <KeyboardButton>esc</KeyboardButton> {t`to close`}
           </span>

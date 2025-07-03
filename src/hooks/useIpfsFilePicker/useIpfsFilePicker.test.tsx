@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { act } from '@testing-library/react'
-import { renderHook } from '@testing-library/react'
+import { renderHook } from '@testing-library/react-hooks'
 import useFilePicker from 'hooks/useFilePicker'
 import { pinFile } from 'lib/api/ipfs'
 import { ipfsGatewayUrl } from 'utils/ipfs'

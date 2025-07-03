@@ -2,19 +2,18 @@
  * @jest-environment jsdom
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-// Mock formatTime to avoid timezone-dependent test failures
-jest.mock('utils/format/formatTime', () => ({
-  formatTime: jest.fn((timestamp) => {
-    if (timestamp === 1) return '1970-01-01, Thursday, 12:00:01 AM UTC'
-    return undefined
-  })
-}))
-
 import { BigNumber } from '@ethersproject/bignumber'
 import { parseWad } from 'utils/format/formatNumber'
-import { renderHook } from '@testing-library/react'
+import { renderHook } from '@testing-library/react-hooks'
 import { useFormatConfigurationCyclesSection } from './useFormatConfigurationCyclesSection'
+
+// Use EST timezone for start time tests
+beforeAll(() => {
+  process.env.TZ = 'UTC'
+})
+afterAll(() => {
+  delete process.env.TZ
+})
 
 describe('useFormatConfigurationCyclesSection', () => {
   const mockFundingCycle = {

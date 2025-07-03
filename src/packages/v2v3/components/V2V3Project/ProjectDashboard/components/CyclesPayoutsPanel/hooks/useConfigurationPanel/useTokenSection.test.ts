@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { renderHook } from '@testing-library/react'
+import { renderHook } from '@testing-library/react-hooks'
 import { useOtherRulesSection } from './useOtherRulesSection'
 
 // Mock the hooks used inside your custom hook

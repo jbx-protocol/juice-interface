@@ -204,6 +204,10 @@ const nextConfig = removeImports({
   staticPageGenerationTimeout: 90,
   transpilePackages: [
     '@getpara/ethers-v5-integration',
+    '@ant-design/icons',
+    '@ant-design/icons-svg',
+    '@ant-design/react-slick',
+    '@ant-design/colors',
     'rc-align',
     'rc-cascader',
     'rc-collapse',

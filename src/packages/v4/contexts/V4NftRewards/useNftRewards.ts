@@ -143,7 +143,7 @@ export const useNftRewards = (
   projectId: bigint | undefined,
   chainId: JBChainId | undefined,
   dataSourceAddress: string | undefined,
-  dataHookAddress: string | undefined,
+  dataHookAddress: `0x${string}` | undefined,
 ): UseQueryResult<NftRewardTier[]> => {
   const config = useConfig()
   const enabled = Boolean(tiers?.length && dataSourceAddress)
@@ -161,7 +161,7 @@ export const useNftRewards = (
             const chainTiers = await readJb721TiersHookStoreTiersOf(config, {
               address: dataSourceAddress as `0x${string}`,
               args: [
-                dataHookAddress ?? zeroAddress,
+                dataHookAddress ?? zeroAddress as `0x${string}`,
                 [], // _categories
                 false, // _includeResolvedUri
                 0n, // _startingId

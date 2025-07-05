@@ -71,6 +71,7 @@ export const RemainingSupplyWithTooltip: React.FC<RemainingSupplyWithTooltipProp
     >
       <span className="cursor-help">
         {remainingSupplyText}
+        {!showMaxSupply ? ` remaining`: null}
       </span>
     </Tooltip>
   )

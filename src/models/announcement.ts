@@ -1,12 +1,12 @@
 import { JuiceModalProps } from 'components/modals/JuiceModal'
-import { Wallet } from 'hooks/Wallet'
+import { useWallet } from 'hooks/Wallet'
 import { NextRouter } from 'next/router'
 
 type AnnouncementCondition = (props: {
   router: NextRouter
   isProjectOwner: boolean
   wallet: Pick<
-    Wallet,
+    ReturnType<typeof useWallet>,
     'userAddress' | 'isConnected' | 'chain' | 'chainUnsupported'
   >
 }) => boolean

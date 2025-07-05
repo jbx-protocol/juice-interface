@@ -9,6 +9,7 @@
     ],
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-redeclare": "error",
-    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "@next/next/no-img-element": "off"
   }
 }

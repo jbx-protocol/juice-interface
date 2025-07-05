@@ -1,7 +1,6 @@
-import { Trans } from '@lingui/macro'
-
 import { SafetyOutlined } from '@ant-design/icons'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
+import { Trans } from '@lingui/macro'
 import { Button } from 'antd'
 import ExternalLink from 'components/ExternalLink'
 import { NETWORKS } from 'constants/networks'
@@ -10,25 +9,31 @@ import Image from 'next/legacy/image'
 import { ChainLogo } from 'packages/v4/components/ChainLogo'
 import { useMemo } from 'react'
 import { safeTxUrl } from 'utils/safe'
-import { useAccount } from 'wagmi'
 import DeploySuccessHero from '/public/assets/images/create-success-hero.webp'
 
 export const SafeQueueSuccess = ({
   chains,
+  safeAddress,
+  txResults,
 }: {
   chains: JBChainId[]
+  safeAddress: string
+  txResults?: Map<JBChainId, { safeTxHash: string }>
 }) => {
-  const { address: userAddress } = useAccount()
-
   const safeUrls = useMemo(() => {
-    if (!userAddress) return []
-    
-    return chains.map(chainId => ({
-      chainId,
-      chainName: NETWORKS[chainId]?.label || `Chain ${chainId}`,
-      url: safeTxUrl({ chainId, safeAddress: userAddress }),
-    }))
-  }, [chains, userAddress])
+    return chains.map(chainId => {
+      const txResult = txResults?.get(chainId)
+      return {
+        chainId,
+        chainName: NETWORKS[chainId]?.label || `Chain ${chainId}`,
+        url: safeTxUrl({ 
+          chainId, 
+          safeAddress,
+          txHash: txResult?.safeTxHash 
+        }),
+      }
+    })
+  }, [chains, safeAddress, txResults])
 
   return (
     <div className="mt-4 flex flex-col items-center justify-center text-center">
@@ -49,7 +54,7 @@ export const SafeQueueSuccess = ({
         <Trans>Your project launch transactions have been queued to your Safe wallet!</Trans>
       </div>
       
-      <div className="mb-6 max-w-lg text-sm text-grey-500 dark:text-slate-400">
+      <div className="mb-6 max-w-lg text-sm text-grey-500 dark:text-slate-300">
         <Trans>
           Your project launch transactions are now waiting for execution in your Safe wallet. 
           Once the required signatures are collected, you can execute them through the Safe interface.
